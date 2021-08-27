@@ -1,3 +1,3 @@
-module github.com/pulumi/pulumi-hugo-internal/themes/default
+module github.com/pulumi/registry/themes/default
 
 go 1.16

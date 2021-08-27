@@ -1,6 +1,6 @@
-# pulumi-hugo-internal
+# Registry
 
-A private repo for collaborating on content before publishing on pulumi.com. See below for details and usage guidelines.
+A private repo for Registry content before publishing on pulumi.com. See below for details and usage guidelines.
 
 ## Installing tools and prerequisites
 

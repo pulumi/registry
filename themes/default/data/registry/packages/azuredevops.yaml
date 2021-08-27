@@ -1,0 +1,10 @@
+name: azuredevops
+title: azuredevops
+description: A Pulumi package for creating and managing Azure DevOps.
+updated_on: 1629933844
+publisher: Pulumi
+category: Infrastructure
+package_status: ga
+version: v2.1.1
+featured: false
+native: false

@@ -1,0 +1,10 @@
+name: vault
+title: vault
+description: A Pulumi package for creating and managing vault cloud resources.
+updated_on: 1629933936
+publisher: Pulumi
+category: Infrastructure
+package_status: ga
+version: v4.3.0
+featured: false
+native: false

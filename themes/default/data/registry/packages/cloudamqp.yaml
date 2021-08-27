@@ -1,0 +1,10 @@
+name: cloudamqp
+title: cloudamqp
+description: A Pulumi package for creating and managing CloudAMQP resources.
+updated_on: 1629933849
+publisher: Pulumi
+category: Cloud
+package_status: ga
+version: v3.1.0
+featured: false
+native: false

@@ -1,0 +1,10 @@
+name: github
+title: github
+description: A Pulumi package for creating and managing github cloud resources.
+updated_on: 1629933878
+publisher: Pulumi
+category: Version Control System
+package_status: ga
+version: v4.3.0
+featured: false
+native: false

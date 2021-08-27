@@ -1,0 +1,10 @@
+name: yandex
+title: yandex
+description: A Pulumi package for creating and managing yandex cloud resources.
+updated_on: 1629933940
+publisher: Pulumi
+category: Cloud
+package_status: ga
+version: v0.5.0
+featured: false
+native: false

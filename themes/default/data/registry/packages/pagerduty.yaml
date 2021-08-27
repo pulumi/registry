@@ -1,0 +1,10 @@
+name: pagerduty
+title: pagerduty
+description: A Pulumi package for creating and managing pagerduty cloud resources.
+updated_on: 1629933914
+publisher: Pulumi
+category: Infrastructure
+package_status: ga
+version: v2.1.1
+featured: false
+native: false

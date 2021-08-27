@@ -1,0 +1,8 @@
+package: "aws"
+
+tutorials:
+  - name: "Get started with AWS EC2"
+    rel_link: "/docs/tutorials/aws/ec2-webserver/"
+
+  - name: "Running Containers on ECS Fargate"
+    rel_link: "/docs/tutorials/aws/ecs-fargate/"

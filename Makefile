@@ -34,6 +34,3 @@ ci-pull-request-closed:
 ci-scheduled:
 	./scripts/ci/scheduled.sh
 
-.PHONY: new-blog-post
-new-blog-post:
-	./scripts/new/blog-post.sh "$(shell bash -c 'read -p "Slug (e.g., 'my-new-post'): " slug; echo $$slug')"

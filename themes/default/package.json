@@ -1,0 +1,13 @@
+{
+  "name": "pulumi-hugo-current",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "ensure": "yarn install",
+    "build": "echo 'Nothing to build'",
+    "test": "echo 'Nothing to test.'"
+  },
+  "dependencies": {
+    "typescript": "^3.9.6"
+  }
+}

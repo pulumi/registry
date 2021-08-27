@@ -1,0 +1,6 @@
+_vendor
+node_modules
+/resources
+themes/*/resources
+public
+.DS_Store

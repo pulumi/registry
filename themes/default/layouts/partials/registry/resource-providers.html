@@ -1,7 +1,6 @@
 <div class="r-tiles flex-wrap">
     {{ range $.Site.Data.registry.packages }}
     {{ $status := dict "ga" "Generally Available" "public_preview" "Public Preview" }}
-    {{ if eq .featured false }}
     <div class="p-4">
         <div class="r-tile"
              data-category="{{ lower .category }}"
@@ -30,6 +29,5 @@
             </a>
         </div>
     </div>
-    {{ end }}
     {{ end }}
 </div>

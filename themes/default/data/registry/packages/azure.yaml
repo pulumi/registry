@@ -8,5 +8,5 @@ publisher: Pulumi
 category: Cloud
 package_status: ga
 version: v4.15.0
-featured: true
+featured: false
 native: false

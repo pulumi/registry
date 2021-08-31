@@ -1,0 +1,8 @@
+package: "azure"
+
+tutorials:
+  - name: "Azure App Service Running Docker Containers on Linux"
+    rel_link: "/docs/tutorials/azure/azure-cs-appservice-docker/"
+
+  - name: "Azure Kubernetes Service (AKS) Cluster and Helm Chart"
+    rel_link: "/docs/tutorials/azure/azure-cs-aks-helm/"

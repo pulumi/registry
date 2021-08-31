@@ -1,0 +1,10 @@
+name: f5bigip
+title: f5bigip
+description: A Pulumi package for creating and managing F5 BigIP resources.
+updated_on: 1629933871
+publisher: Pulumi
+category: Network
+package_status: ga
+version: v3.4.0
+featured: false
+native: false

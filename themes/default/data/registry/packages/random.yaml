@@ -1,0 +1,10 @@
+name: random
+title: random
+description: A Pulumi package to safely use randomness in Pulumi programs.
+updated_on: 1629933922
+publisher: Pulumi
+category: Utility
+package_status: ga
+version: v4.2.0
+featured: false
+native: false

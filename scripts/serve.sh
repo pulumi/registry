@@ -14,4 +14,4 @@ pushd "${LOCAL_THEME_PATH}"
 popd
 
 # Just run Hugo.
-hugo serve --buildDrafts --buildFuture --ignoreVendorPaths="github.com/pulumi/pulumi-hugo-internal/**/*" | grep -v -e 'WARN .* REF_NOT_FOUND'
+hugo serve --buildDrafts --buildFuture --ignoreVendorPaths="github.com/pulumi/registry/**/*" | grep -v -e 'WARN .* REF_NOT_FOUND'

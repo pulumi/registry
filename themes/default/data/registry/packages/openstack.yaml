@@ -1,0 +1,10 @@
+name: openstack
+title: openstack
+description: A Pulumi package for creating and managing OpenStack cloud resources.
+updated_on: 1629933909
+publisher: Pulumi
+category: Cloud
+package_status: ga
+version: v3.3.0
+featured: false
+native: false

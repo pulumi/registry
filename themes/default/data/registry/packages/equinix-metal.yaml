@@ -1,0 +1,10 @@
+name: equinix-metal
+title: equinix-metal
+description: A Pulumi package for creating and managing equinix-metal cloud resources.
+updated_on: 1629933865
+publisher: Pulumi
+category: Cloud
+package_status: ga
+version: v2.0.0
+featured: false
+native: false

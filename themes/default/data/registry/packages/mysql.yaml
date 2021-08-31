@@ -1,0 +1,10 @@
+name: mysql
+title: mysql
+description: A Pulumi package for creating and managing mysql cloud resources.
+updated_on: 1629933899
+publisher: Pulumi
+category: Database
+package_status: ga
+version: v3.0.0
+featured: false
+native: false

@@ -1,0 +1,10 @@
+name: postgresql
+title: postgresql
+description: A Pulumi package for creating and managing postgresql cloud resources.
+updated_on: 1629933916
+publisher: Pulumi
+category: Database
+package_status: ga
+version: v3.1.0
+featured: false
+native: false

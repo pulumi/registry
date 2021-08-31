@@ -1,7 +1,7 @@
 #!/bin/bash
 
 repo_name() {
-    echo "pulumi-hugo-internal"
+    echo "registry"
 }
 
 aws_region() {

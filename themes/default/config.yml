@@ -1,3 +1,5 @@
 module:
   hugoVersion:
     min: 0.81.0
+  permalinks:
+    registry: /registry/:title/:section

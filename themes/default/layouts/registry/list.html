@@ -1,9 +1,9 @@
 {{ define "main" }}
 <div class="container mx-auto px-4 lg:px-0 py-8 mt-2">
     {{ if and (.Params.h1) (not .Params.notitle) }}
-    <h1>{{ .Params.h1 }}</h1>
+        <h1>{{ .Params.h1 }}</h1>
     {{ else if and (ne .Title "") (not .Params.notitle) }}
-    <h1>{{ .Title }}</h1>
+        <h1>{{ .Title }}</h1>
     {{ end }}
 
     <h4>Pulumi Packages</h4>
@@ -13,6 +13,6 @@
     {{ partial "registry/featured-providers.html" . }}
 
     <h5>A - Z Packages ({{ len $.Site.Data.registry.packages }})</h5>
-    {{ partial "registry/resource-providers.html" . }}
+    {{ partial "registry/resource-providers.html" }}
 </div>
 {{ end }}

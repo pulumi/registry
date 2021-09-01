@@ -1,13 +1,20 @@
 {
-  "name": "pulumi-hugo",
-  "version": "0.0.1",
-  "private": true,
-  "repository": "git@github.com:pulumi/pulumi-hugo",
-  "author": "Christian Nunciato <c@nunciato.org>",
-  "license": "MIT",
-  "dependencies": {
-    "concurrently": "^6.0.0",
-    "js-yaml": "^3.13.1",
-    "markdownlint": "^0.17.2"
-  }
+    "name": "pulumi-registry",
+    "version": "0.0.1",
+    "private": true,
+    "repository": "git@github.com:pulumi/pulumi-registry",
+    "license": "MIT",
+    "dependencies": {
+        "@pulumi/facet": "^0.0.22",
+        "concurrently": "^6.0.0",
+        "js-yaml": "^3.13.1",
+        "markdownlint": "^0.17.2",
+        "ts-loader": "^9.2.5",
+        "typescript": "^4.4.2",
+        "webpack": "^5.51.1",
+        "webpack-cli": "^4.8.0"
+    },
+    "scripts": {
+        "build": "yarn run webpack"
+    }
 }

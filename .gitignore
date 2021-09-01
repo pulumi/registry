@@ -5,3 +5,4 @@ node_modules
 themes/*/resources
 public
 .DS_Store
+static/js/local-bundle.js

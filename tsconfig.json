@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "esModuleInterop": true,
+        "removeComments": true,
+        "sourceMap": true,
+        "sourceRoot": "/",
+        "experimentalDecorators": true,
+        "outDir": "static/js"
+    },
+    "files": [
+        "src/main.ts"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}

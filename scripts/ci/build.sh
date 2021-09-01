@@ -23,6 +23,9 @@ export LOCAL_THEME_PATH="_vendor/github.com/pulumi/pulumi-hugo/themes/default/"
 yarn --cwd "${LOCAL_THEME_PATH}" run ensure
 yarn --cwd "${LOCAL_THEME_PATH}" run build
 
+# Run the local build.
+yarn run build
+
 printf "Running Hugo...\n\n"
 export REPO_THEME_PATH="themes/default/"
 export HUGO_BASEURL="http://$(origin_bucket_prefix)-$(build_identifier).s3-website.$(aws_region).amazonaws.com"

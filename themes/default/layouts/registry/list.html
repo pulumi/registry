@@ -10,9 +10,9 @@
     Packages are APIs to use Pulumi with Clouds, Infrastructure, Databases, Monitoring, Networks, Version control, and Utilities.
 
     <h5>Featured Cloud Providers</h5>
-    {{ partial "registry/featured-providers.html" . }}
+    {{ partial "registry/featured-providers" . }}
 
     <h5>A - Z Packages ({{ len $.Site.Data.registry.packages }})</h5>
-    {{ partial "registry/resource-providers.html" }}
+    {{ partial "registry/resource-providers" . }}
 </div>
 {{ end }}

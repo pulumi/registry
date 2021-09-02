@@ -1,0 +1,21 @@
+{{ define "main" }}
+    <div class="container mx-auto px-4 py-8 mt-2">
+        {{ partial "registry/header.html" . }}
+
+        <div class="lg:flex">
+            <div class="lg:w-9/12 lg:px-4">        
+                {{ .Content }}
+            </div>
+
+            <div class="lg:w-3/12 lg:pl-8">
+                <div class="sticky-sidebar">
+                    <div class="ml-2 hidden lg:block">
+                        {{ partial "docs/right-nav.html" . }}
+                    </div>
+
+                    {{ partial "right-nav-ad.html" }}
+                </div>
+            </div>
+        </div>
+    </div>
+{{ end }}

@@ -1,19 +1,46 @@
-<div>
-    <div class="lg:flex">
+<div class="container">
+    <div class="lg:flex mb-2">
         <h3>{{ with .GetPage "_index.md" }}{{ .Title }}{{ end }}</h3>
     </div>
 
-    <div class="lg:flex">
-            <div class="lg:w-2/12 lg:px-2">
+    <div class="lg:flex lg:w-6/12 mb-8">
+        <div class="flex-1">
+            Version X
+        </div>
+        <div class="flex-1">
+            Last updated: date
+        </div>
+        <div class="flex-1">
+            <a href="google.com">Source code</a>
+        </div>
+        <div class="flex-1">
+            Author: First Last
+        </div>
+    </div>
+
+    <div class="lg:flex lg:w-12/12 mb-8">
+        <div class="p-2 mr-4" style='background-color: #D7DECB'>
+            Cloud
+        </div>
+        <div class="p-2 mr-4" style='background-color: #DFD6F0'>
+            Native Cloud Provider
+        </div>
+        <div class="p-2 mr-4" style='background-color: #FCDBDF'>
+            Generally available
+        </div>
+    </div>
+
+    <div class="lg:flex lg:w-10/12">
+            <div class="flex-1">
                 <a href="{{ relref . "_index.md" }}">Overview</p>
             </div>
-            <div class="lg:w-2/12 lg:px-2">
+            <div class="flex-1">
                 <a href="{{ relref . "installation" }}">Installation & Configuration</p>
             </div>
-            <div class="lg:w-2/12 lg:px-2">
+            <div class="flex-1">
                 <a href="{{ relref . "api" }}">API</p>
             </div>
-            <div class="lg:w-2/12 lg:px-2">
+            <div class="flex-1">
                 <a href="{{ relref . "how-to" }}">How-to Guides</p>
             </div>
     </div>

@@ -1,0 +1,5 @@
+{{ if isset .Params "content_path" }}
+    {{ with .GetPage .Params.content_path }}{{ .Content }}{{ end }}
+{{ else }}
+    {{ .Content }}
+{{ end }}

@@ -1,4 +1,5 @@
 ---
+title: API
 layout: api
 ---
 ### What is Lorem Ipsum?

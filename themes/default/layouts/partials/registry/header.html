@@ -1,31 +1,39 @@
 {{ $providerName := path.Base .File.Dir }}
 {{ $docsFile := path.Join "docs/intro/cloud-providers/" $providerName }}
+{{ $logoURL := "" }}
+{{ $publisher := "" }}
+{{ $updated_on := "" }}
 
+{{ with (index .Site.Data.registry.packages ($providerName)) }}
+    {{ if (isset . "logo" )}}
+        {{ $logoURL = .logo }}
+    {{ end }}
+    {{ $publisher = .publisher }}
+    {{ $updated_on = .updated_on }}
+{{ end }}
 
 <div class="container">
     <div class="lg:flex mb-2">
-        {{ with (index .Site.Data.registry.packages ($providerName)) }}
-            {{ if (isset . "logo" )}}
-                <img src={{ .logo }} class="h-16 px-8 pb-4">
-            {{ end }}
+        {{ if (not (eq $logoURL "" ))}}
+            <img src={{ $logoURL }} class="h-16 px-8 pb-4">
         {{ end }}
         <div class="flex-1">
             <h3>{{ with .GetPage $docsFile }}{{ .Title }}{{ end }}</h3>
         </div>
     </div>
 
-    <div class="lg:flex lg:w-6/12 mb-8">
-        <div class="flex-1">
+    <div class="lg:flex mb-8">
+        <div class="mr-8">
             Version X
         </div>
-        <div class="flex-1">
-            Last updated: date
+        <div class="mr-8">
+            <span class="font-bold">Last updated</span>: {{ ((time $updated_on).Format "Mon Jan 2 2006") }}
         </div>
-        <div class="flex-1">
+        <div class="mr-8">
             <a href="google.com">Source code</a>
         </div>
-        <div class="flex-1">
-            Author: First Last
+        <div class="mr-8">
+            <span class="font-bold">Author</span>: {{ $publisher }}
         </div>
     </div>
 
@@ -41,18 +49,18 @@
         </div>
     </div>
 
-    <div class="lg:flex lg:w-10/12">
-            <div class="flex-1">
-                <a href="{{ relref . "_index.md" }}">Overview</p>
+    <div class="lg:flex">
+            <div class="border-b-4 pr-4 mr-8">
+                <a class="pb-1" href="{{ relref . "_index.md" }}">Overview</p>
             </div>
-            <div class="flex-1">
-                <a href="{{ relref . "installation" }}">Installation & Configuration</p>
+            <div class="border-b-4 pr-4 mr-8">
+                <a class="pb-1" href="{{ relref . "installation" }}">Installation & Configuration</p>
             </div>
-            <div class="flex-1">
-                <a href="{{ relref . "api" }}">API</p>
+            <div class="border-b-4 pr-4 mr-8">
+                <a class="pb-1" href="{{ relref . "api" }}">API</p>
             </div>
-            <div class="flex-1">
-                <a href="{{ relref . "how-to" }}">How-to Guides</p>
+            <div class="border-b-4 pr-4 mr-8">
+                <a class="pb-1" href="{{ relref . "how-to" }}">How-to Guides</p>
             </div>
     </div>
 </div>

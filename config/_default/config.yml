@@ -15,6 +15,24 @@ module:
           target: layouts
         - source: data
           target: data
+    - path: github.com/pulumi/theme
+      mounts:
+        - source: assets
+          target: assets
+        - source: static
+          target: static
+        - source: layouts
+          target: layouts
+        - source: src
+          target: assets
+        - source: .npmrc
+          target: assets
+        - source: tsconfig.json
+          target: assets
+        - source: webpack.config.js
+          target: assets
+        - source: yarn.lock
+          target: assets
     - path: github.com/pulumi/pulumi-hugo/themes/default
       mounts:
         - source: content
@@ -29,14 +47,6 @@ module:
           target: assets
         - source: archetypes
           target: archetypes
-        - source: components
-          target: assets
-        - source: package.json
-          target: assets
-        - source: tsconfig.json
-          target: assets
-        - source: yarn.lock
-          target: assets
 
 disableKinds:
   - category

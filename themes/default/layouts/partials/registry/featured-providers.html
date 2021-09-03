@@ -1,57 +1,56 @@
-<div class="r-tiles flex-wrap">
+<div class="featured-providers r-tiles flex-wrap">
     {{ range $.Site.Data.registry.packages }}
-    {{ $status := dict "ga" "Generally Available" "public-preview" "Public Preview" }}
-    {{ if eq .featured true }}
-    {{ $pkg := .name }}
-    <div class="p-4">
-        <div class="r-tile featured"
-             data-category="{{ lower .category }}"
-             data-status="{{ lower .package_status }}"
-             data-native="{{ .native }}"
-             data-component="{{ .component }}">
-            <div class="flex flex-row h-full">
-                <img class="logo" src="/logos/pkg/{{ $pkg }}.svg" alt="{{ .title }}">
-                <div class="flex w-full flex-col font-normal">
-                    <a class="text-lg" href="/docs/intro/cloud-providers/{{ $pkg }}" title="{{ .title }}">
-                        {{.title}}
-                    </a>
-                    <div class="flex w-full mt-4 text-xs">
-                        <span class="mr-8">Last updated on {{ time .updated_on | time.Format ":date_medium" }}</span>
-                        <span>Published by {{ .publisher }}</span>
-                    </div>
-                    <p class="description text-base">{{.description}}</p>
-                    {{ $hasFeaturedProblems := false }}
-                    {{ range $.Site.Data.registry.getstarted }}
-                    {{ if eq .package $pkg }}
-                    {{ $hasFeaturedProblems = true }}
-                    <pulumi-examples use-div-toggle="true" collapse-all="true" class="flex-1 mt-4">
-                        <div>
-                            <div class="toggle text-sm font-normal" onclick="event.preventDefault()">Featured problems to solve</div>
-                            <div class="featured-ex-container">
-                                <ul class="list-none">
-                                    {{ range .tutorials }}
-                                    <li><a href="{{ .rel_link }}" title="{{ .name }}">{{ .name }}</a></li>
-                                    {{ end }}
-                                </ul>
+        {{ $status := dict "ga" "Generally Available" "public-preview" "Public Preview" }}
+        {{ if eq .featured true }}
+            {{ $pkg := .name }}
+            <div class="p-4 package">
+                <div class="r-tile featured"
+                    data-category="{{ lower .category }}"
+                    data-status="{{ lower .package_status }}"
+                    data-native="{{ .native }}"
+                    data-component="{{ .component }}">
+                    <div class="flex flex-row h-full">
+                        <img class="logo" src="/logos/pkg/{{ $pkg }}.svg" alt="{{ .title }}">
+                        <div class="flex w-full flex-col font-normal">
+                            <a class="text-lg" href="/docs/intro/cloud-providers/{{ $pkg }}" title="{{ .title }}">
+                                {{.title}}
+                            </a>
+                            <div class="flex w-full mt-4 text-xs">
+                                <span class="mr-8">Last updated on {{ time .updated_on | time.Format ":date_medium" }}</span>
+                                <span>Published by {{ .publisher }}</span>
+                            </div>
+                            <p class="description text-base">{{.description}}</p>
+                            {{ $hasFeaturedProblems := false }}
+                            {{ range $.Site.Data.registry.getstarted }}
+                                {{ if eq .package $pkg }}
+                                    {{ $hasFeaturedProblems = true }}
+                                    <pulumi-disclosure>
+                                        <span slot="start">+</span>
+                                        <span slot="title">Featured problems to solve</span>
+                                        <ul class="list-none">
+                                            {{ range .tutorials }}
+                                                <li>
+                                                    <a href="{{ .rel_link }}" title="{{ .name }}">{{ .name }}</a>
+                                                </li>
+                                            {{ end }}
+                                        </ul>
+                                    </pulumi-disclosure>
+                                {{ end }}
+                            {{ end }}
+                            {{ if eq $hasFeaturedProblems false }}
+                            <div class="flex-1"></div>
+                            {{ end }}
+                            <div class="flex flex-row w-full mt-4 text-sm package-tags">
+                                <div class="package-tag package-category {{ lower .category }}">{{ .category }}</div>
+                                {{ if eq .native true }}
+                                <div class="package-tag text-white native-package">Native Cloud Provider</div>
+                                {{ end }}
+                                <div class="package-tag package-status {{ lower .package_status }}">{{ index $status .package_status }}</div>
                             </div>
                         </div>
-                    </pulumi-examples>
-                    {{ end }}
-                    {{ end }}
-                    {{ if eq $hasFeaturedProblems false }}
-                    <div class="flex-1"></div>
-                    {{ end }}
-                    <div class="flex flex-row w-full mt-4 text-sm package-tags">
-                        <div class="package-tag package-category {{ lower .category }}">{{ .category }}</div>
-                        {{ if eq .native true }}
-                        <div class="package-tag text-white native-package">Native Cloud Provider</div>
-                        {{ end }}
-                        <div class="package-tag package-status {{ lower .package_status }}">{{ index $status .package_status }}</div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    {{ end }}
+        {{ end }}
     {{ end }}
 </div>

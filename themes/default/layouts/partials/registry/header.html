@@ -1,9 +1,14 @@
 {{ $providerName := path.Base .File.Dir }}
+{{ $docsFile := path.Join "docs/intro/cloud-providers/" $providerName }}
+
 
 <div class="container">
     <div class="lg:flex mb-2">
-        <img src={{ with (index .Site.Data.registry.packages ($providerName)) }}{{ .logo }}{{ end }} class="h-16 px-8 pb-4">
-        {{ $docsFile := path.Join "docs/intro/cloud-providers/" $providerName }}
+        {{ with (index .Site.Data.registry.packages ($providerName)) }}
+            {{ if (isset . "logo" )}}
+                <img src={{ .logo }} class="h-16 px-8 pb-4">
+            {{ end }}
+        {{ end }}
         <div class="flex-1">
             <h3>{{ with .GetPage $docsFile }}{{ .Title }}{{ end }}</h3>
         </div>

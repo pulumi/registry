@@ -1,9 +1,9 @@
-<div class="r-tiles flex-wrap">
+<div class="featured-providers r-tiles flex-wrap">
     {{ range $.Site.Data.registry.packages }}
         {{ $status := dict "ga" "Generally Available" "public-preview" "Public Preview" }}
         {{ if eq .featured true }}
             {{ $pkg := .name }}
-            <div class="p-4">
+            <div class="p-4 package">
                 <div class="r-tile featured"
                     data-category="{{ lower .category }}"
                     data-status="{{ lower .package_status }}"

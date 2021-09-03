@@ -8,3 +8,4 @@ package_status: ga
 version: v3.3.1
 featured: false
 native: false
+logo: "/logos/tech/linode.svg"

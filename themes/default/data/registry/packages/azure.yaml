@@ -10,3 +10,4 @@ package_status: ga
 version: v4.15.0
 featured: false
 native: false
+logo: "/logos/tech/azure.svg"

@@ -4,7 +4,9 @@
 
         <div class="lg:flex">
             <div class="lg:w-12/12 lg:px-4">        
-                {{ partial "registry/content.html" . }}
+                {{ $basedir := path.Base .File.Dir }}
+                {{ $input := path.Join "docs/intro/cloud-providers/" $basedir }}
+                {{ with .GetPage $input }}{{ .Content }}{{ end }}
             </div>
         </div>
     </div>

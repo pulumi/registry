@@ -1,5 +1,3 @@
-{{ if isset .Params "content_path" }}
-    {{ with .GetPage .Params.content_path }}{{ .Content }}{{ end }}
-{{ else }}
-    {{ .Content }}
-{{ end }}
+{{ $basedir := path.Base .File.Dir }}
+{{ $input := path.Join "docs/intro/cloud-providers/" $basedir }}
+{{ with .GetPage $input }}{{ .Content }}{{ end }}

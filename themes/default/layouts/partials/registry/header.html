@@ -1,6 +1,8 @@
 <div class="container">
     <div class="lg:flex mb-2">
-        <h3>{{ with .GetPage "_index.md" }}{{ .Title }}{{ end }}</h3>
+        {{ $basedir := path.Base .File.Dir }}
+        {{ $input := path.Join "docs/intro/cloud-providers/" $basedir }}
+        <h3>{{ with .GetPage $input }}{{ .Title }}{{ end }}</h3>
     </div>
 
     <div class="lg:flex lg:w-6/12 mb-8">

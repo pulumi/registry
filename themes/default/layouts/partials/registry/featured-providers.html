@@ -9,45 +9,48 @@
                     data-status="{{ lower .package_status }}"
                     data-native="{{ .native }}"
                     data-component="{{ .component }}">
-                    <div class="flex flex-row h-full">
+                    <div class="r-tile-header">
                         <img class="logo" src="/logos/pkg/{{ $pkg }}.svg" alt="{{ .title }}">
-                        <div class="flex w-full flex-col font-normal">
-                            <a class="text-lg" href="/docs/intro/cloud-providers/{{ $pkg }}" title="{{ .title }}">
-                                {{.title}}
-                            </a>
-                            <div class="flex w-full mt-4 text-xs">
-                                <span class="mr-8">Last updated on {{ time .updated_on | time.Format ":date_medium" }}</span>
-                                <span>Published by {{ .publisher }}</span>
-                            </div>
-                            <p class="description text-base">{{.description}}</p>
-                            {{ $hasFeaturedProblems := false }}
-                            {{ range $.Site.Data.registry.getstarted }}
-                                {{ if eq .package $pkg }}
-                                    {{ $hasFeaturedProblems = true }}
-                                    <pulumi-disclosure>
-                                        <span slot="start">+</span>
-                                        <span slot="title">Featured problems to solve</span>
-                                        <ul class="list-none">
-                                            {{ range .tutorials }}
-                                                <li>
-                                                    <a href="{{ .rel_link }}" title="{{ .name }}">{{ .name }}</a>
-                                                </li>
-                                            {{ end }}
-                                        </ul>
-                                    </pulumi-disclosure>
-                                {{ end }}
-                            {{ end }}
-                            {{ if eq $hasFeaturedProblems false }}
-                            <div class="flex-1"></div>
-                            {{ end }}
-                            <div class="flex flex-row w-full mt-4 text-sm package-tags">
-                                <div class="package-tag package-category {{ lower .category }}">{{ .category }}</div>
-                                {{ if eq .native true }}
-                                <div class="package-tag text-white native-package">Native Cloud Provider</div>
-                                {{ end }}
-                                <div class="package-tag package-status {{ lower .package_status }}">{{ index $status .package_status }}</div>
-                            </div>
+                        <div class="flex-1"></div>
+                        <a class="header-link" href="/docs/intro/cloud-providers/{{ $pkg }}" title="{{ .title }}">View Package</a>
+                    </div>
+                    <div class="r-tile-content">
+                        <a class="title-link" href="/docs/intro/cloud-providers/{{ $pkg }}" title="{{ .title }}">
+                            {{.title}}
+                        </a>
+                        <div class="flex flex-col mt-4 text-xs justify-evenly">
+                            <span>Last updated on {{ time .updated_on | time.Format ":date_medium" }}</span>
+                            <span style="height: 10px"></span>
+                            <span>Published by {{ .publisher }}</span>
                         </div>
+                        <p class="description text-base">{{.description}}</p>
+                        {{ $hasFeaturedProblems := false }}
+                        {{ range $.Site.Data.registry.getstarted }}
+                        {{ if eq .package $pkg }}
+                        {{ $hasFeaturedProblems = true }}
+                        <pulumi-disclosure>
+                            <span slot="start">+</span>
+                            <span slot="title">Featured problems to solve</span>
+                            <ul class="list-none">
+                                {{ range .tutorials }}
+                                <li>
+                                    <a href="{{ .rel_link }}" title="{{ .name }}">{{ .name }}</a>
+                                </li>
+                                {{ end }}
+                            </ul>
+                        </pulumi-disclosure>
+                        {{ end }}
+                        {{ end }}
+                        {{ if eq $hasFeaturedProblems false }}
+                        <div class="flex-1"></div>
+                        {{ end }}
+                    </div>
+                    <div class="r-tile-footer flex flex-row w-full mt-4 text-sm package-tags">
+                        <div class="package-tag package-category {{ lower .category }}">{{ .category }}</div>
+                        {{ if eq .native true }}
+                        <div class="package-tag text-white native-package">Native Cloud Provider</div>
+                        {{ end }}
+                        <div class="package-tag package-status {{ lower .package_status }}">{{ index $status .package_status }}</div>
                     </div>
                 </div>
             </div>

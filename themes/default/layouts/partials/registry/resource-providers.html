@@ -1,33 +1,36 @@
 <div class="resource-providers r-tiles flex-wrap">
     {{ range $.Site.Data.registry.packages }}
-        {{ $status := dict "ga" "Generally Available" "public_preview" "Public Preview" }}
-        <div class="p-4 package">
-            <div class="r-tile"
-                data-category="{{ lower .category }}"
-                data-status="{{ lower .package_status }}"
-                data-native="{{ .native }}"
-                data-component="{{ .component }}">
-                <a class="font-display text-lg" href="/docs/intro/cloud-providers/{{ .name }}" title="{{ .title }}">
-                    <div class="flex flex-row h-full">
-                        <img class="logo" src="/logos/pkg/{{ .name }}.svg" alt="{{ .title }}">
-                        <div class="flex w-full flex-col font-normal">
-                            <span class="lg">{{.title}}</span>
-                            <div class="flex w-full mt-4 text-xs">
-                                <span class="mr-8">Last updated on {{ time .updated_on | time.Format ":date_medium" }}</span>
-                                <span>Published by {{ .publisher }}</span>
-                            </div>
-                            <div class="flex-1"></div>
-                            <div class="flex flex-row w-full mt-6 text-sm package-tags">
-                                <div class="package-tag package-category {{ lower .category }}">{{ .category }}</div>
-                                {{ if eq .native true }}
-                                <div class="package-tag text-white native-package">Native Cloud Provider</div>
-                                {{ end }}
-                                <div class="package-tag package-status {{ lower .package_status }}">{{ index $status .package_status }}</div>
-                            </div>
-                        </div>
-                    </div>
+    {{ $status := dict "ga" "Generally Available" "public-preview" "Public Preview" }}
+    {{ $pkg := .name }}
+    <div class="p-4 package">
+        <div class="r-tile"
+             data-category="{{ lower .category }}"
+             data-status="{{ lower .package_status }}"
+             data-native="{{ .native }}"
+             data-component="{{ .component }}">
+            <div class="r-tile-header">
+                <img class="logo" src="/logos/pkg/{{ $pkg }}.svg" alt="{{ .title }}">
+                <div class="flex-1"></div>
+                <a class="header-link" href="/docs/intro/cloud-providers/{{ $pkg }}" title="{{ .title }}">View Package</a>
+            </div>
+            <div class="r-tile-content">
+                <a class="title-link" href="/docs/intro/cloud-providers/{{ $pkg }}" title="{{ .title }}">
+                    {{.title}}
                 </a>
+                <div class="flex flex-col mt-4 text-xs justify-evenly">
+                    <span>Last updated on {{ time .updated_on | time.Format ":date_medium" }}</span>
+                    <span style="height: 10px"></span>
+                    <span>Published by {{ .publisher }}</span>
+                </div>
+            </div>
+            <div class="r-tile-footer flex flex-row w-full mt-4 text-sm package-tags">
+                <div class="package-tag package-category {{ lower .category }}">{{ .category }}</div>
+                {{ if eq .native true }}
+                <div class="package-tag text-white native-package">Native Cloud Provider</div>
+                {{ end }}
+                <div class="package-tag package-status {{ lower .package_status }}">{{ index $status .package_status }}</div>
             </div>
         </div>
+    </div>
     {{ end }}
 </div>

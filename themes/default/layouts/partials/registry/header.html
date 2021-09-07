@@ -1,53 +1,45 @@
 {{ $providerName := path.Base .File.Dir }}
 {{ $docsFile := path.Join "docs/intro/cloud-providers/" $providerName }}
-{{ $logoURL := "" }}
-{{ $publisher := "" }}
-{{ $updated_on := "" }}
-
-{{ with (index .Site.Data.registry.packages ($providerName)) }}
-    {{ if (isset . "logo" )}}
-        {{ $logoURL = .logo }}
-    {{ end }}
-    {{ $publisher = .publisher }}
-    {{ $updated_on = .updated_on }}
-{{ end }}
 
 <div class="container">
     <div class="lg:flex mb-2">
-        {{ if (not (eq $logoURL "" ))}}
-            <img src={{ $logoURL }} class="h-16 px-8 pb-4">
+        {{ with (index $.Site.Data.registry.packages ($providerName)) }}
+            {{ if (isset . "logo" )}}
+                <img src={{ .logo }} class="h-16 px-8 pb-4">
+            {{ end }}
         {{ end }}
         <div class="flex-1">
             <h3>{{ with .GetPage $docsFile }}{{ .Title }}{{ end }}</h3>
         </div>
     </div>
 
-    <div class="lg:flex mb-8">
-        <div class="mr-8">
-            Version X
+    {{ with (index $.Site.Data.registry.packages ($providerName)) }}
+        <div class="lg:flex mb-8">
+            <div class="mr-8">
+                Version X
+            </div>
+            <div class="mr-8">
+                <span class="font-bold">Last updated</span>: {{ ((time .updated_on).Format "Mon Jan 2 2006") }}
+            </div>
+            <div class="mr-8">
+                <a style="text-decoration: revert; color: revert;" href="https://github.com/pulumi/pulumi-{{ $providerName }}">Source code</a>
+            </div>
+            <div class="mr-8">
+                <span class="font-bold">Author</span>: {{ .publisher }}
+            </div>
         </div>
-        <div class="mr-8">
-            <span class="font-bold">Last updated</span>: {{ ((time $updated_on).Format "Mon Jan 2 2006") }}
-        </div>
-        <div class="mr-8">
-            <a style="text-decoration: revert; color: revert;" href="https://github.com/pulumi/pulumi-{{ $providerName }}">Source code</a>
-        </div>
-        <div class="mr-8">
-            <span class="font-bold">Author</span>: {{ $publisher }}
-        </div>
-    </div>
 
-    <div class="lg:flex lg:w-12/12 mb-8">
-        <div class="p-2 mr-4" style='background-color: #D7DECB'>
-            Cloud
+        <div class="lg:flex lg:w-12/12 mb-8">
+            {{ range .tags }}
+                {{ with (index $.Site.Data.registry.tags .) }}
+                    <div class="p-2 mr-4" style='background-color: {{ .color }}'>
+                        {{ .name }}
+                    </div>
+                {{ end }}
+            {{ end }}
         </div>
-        <div class="p-2 mr-4" style='background-color: #DFD6F0'>
-            Native Cloud Provider
-        </div>
-        <div class="p-2 mr-4" style='background-color: #FCDBDF'>
-            Generally available
-        </div>
-    </div>
+    {{ end }}
+
 
     <div class="lg:flex mb-4">
             <div class="{{ if (eq .File.ContentBaseName "_index") }} border-b-4  border-blue-600 {{ end }} pb-2 pl-2 pr-2 mr-8">

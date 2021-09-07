@@ -9,3 +9,5 @@ version: v2.2.0
 featured: false
 native: false
 logo: "/logos/tech/auth0.svg"
+tags:
+  - "generally-available"

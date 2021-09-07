@@ -44,10 +44,5 @@ echo "Installing Node.js modules..."
 yarn install
 yarn --cwd themes/default run ensure
 
-# Fetch and install the pulumi-hugo module.
-hugo mod get github.com/pulumi/pulumi-hugo/themes/default
-hugo mod vendor
-
-export LOCAL_THEME_PATH="_vendor/github.com/pulumi/pulumi-hugo/themes/default/"
-yarn --cwd "${LOCAL_THEME_PATH}" run ensure
-yarn --cwd "${LOCAL_THEME_PATH}" run build
+# Fetch and install the Pulumi theme.
+hugo mod get github.com/pulumi/theme

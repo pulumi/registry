@@ -30,20 +30,20 @@
                         {{ $hasFeaturedProblems = true }}
                         <pulumi-accordion>
                             <pulumi-accordion-item slot="item">
-                                <div slot="heading" class="-m-1.5 text-base">Featured problems to solve</div>
-                                <ul class="list-none text-base">
+                                <div slot="heading" class="heading">How-to Guides</div>
+                                <ul class="list">
                                     {{ range .tutorials }}
                                     <li>
                                         <a href="{{ .rel_link }}" title="{{ .name }}">{{ .name }}</a>
                                     </li>
                                     {{ end }}
                                 </ul>
-                                <svg style="stroke: #000000;" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" slot="collapsed-icon">
-                                    <path d="M9 5.44446V12.5556" stroke-linecap="round" stroke-linejoin="round"></path>
-                                    <path d="M5.44446 9H12.5556" stroke-linecap="round" stroke-linejoin="round"></path>
+                                <svg width="26" height="26" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" slot="collapsed-icon">
+                                    <path d="M9 5.44446V12.5556" stroke-width="0.075rem" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    <path d="M5.44446 9H12.5556" stroke-width="0.075rem" stroke-linecap="round" stroke-linejoin="round"></path>
                                 </svg>
-                                <svg style="stroke: #000000;" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" slot="expanded-icon">
-                                    <path d="M5.44446 9H12.5556" stroke-linecap="round" stroke-linejoin="round"></path>
+                                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" slot="expanded-icon">
+                                    <path d="M5.44446 9H12.5556" stroke-width="0.075rem" stroke-linecap="round" stroke-linejoin="round"></path>
                                 </svg>
                             </pulumi-accordion-item>
                         </pulumi-accordion>
@@ -56,7 +56,7 @@
                     <div class="r-tile-footer flex flex-row w-full mt-4 text-sm package-tags">
                         <div class="package-tag package-category {{ anchorize .category }}">{{ .category }}</div>
                         {{ if eq .native true }}
-                        <div class="package-tag text-white native-package">Native Cloud Provider</div>
+                        <div class="package-tag native-package">Native Cloud Provider</div>
                         {{ end }}
                         <div class="package-tag package-status {{ anchorize .package_status }}">{{ index $status .package_status }}</div>
                     </div>

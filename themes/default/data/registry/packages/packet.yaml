@@ -1,7 +1,7 @@
 name: packet
 title: packet
 description: A Pulumi package for creating and managing Packet cloud resources.
-updated_on: 1629933912
+updated_on: 1631118109
 publisher: Pulumi
 category: Cloud
 package_status: ga

@@ -1,11 +1,11 @@
 name: docker
 title: docker
 description: A Pulumi package for interacting with Docker in Pulumi programs
-updated_on: 1629933863
+updated_on: 1631118061
 publisher: Pulumi
 category: Infrastructure
 package_status: ga
-version: v3.0.0
+version: v3.1.0
 featured: false
 native: false
 logo: "/logos/tech/docker.png"

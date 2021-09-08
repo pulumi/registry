@@ -3,11 +3,11 @@ title: azure
 description: A Pulumi package based on the azurerm Terraform Provider for creating
   and managing Microsoft Azure cloud resources. Consider using the Pulumi Azure Native
   package for full coverage of Azure resources.
-updated_on: 1629933837
+updated_on: 1631118033
 publisher: Pulumi
 category: Cloud
 package_status: ga
-version: v4.15.0
-featured: false
+version: v4.17.0
+featured: true
 native: false
 logo: "/logos/tech/azure.svg"

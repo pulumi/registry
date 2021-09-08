@@ -1,7 +1,7 @@
 name: gitlab
 title: gitlab
 description: A Pulumi package for creating and managing GitLab resources.
-updated_on: 1629933880
+updated_on: 1631118078
 publisher: Pulumi
 category: Version Control System
 package_status: ga

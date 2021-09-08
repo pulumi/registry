@@ -1,7 +1,7 @@
 name: vsphere
 title: vsphere
 description: A Pulumi package for creating vsphere resources
-updated_on: 1629933930
+updated_on: 1631118128
 publisher: Pulumi
 category: Cloud
 package_status: ga

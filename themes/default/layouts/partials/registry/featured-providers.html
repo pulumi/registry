@@ -46,11 +46,11 @@
                         {{ end }}
                     </div>
                     <div class="r-tile-footer flex flex-row w-full mt-4 text-sm package-tags">
-                        <div class="package-tag package-category {{ lower .category }}">{{ .category }}</div>
+                        <div class="package-tag package-category {{ anchorize .category }}">{{ .category }}</div>
                         {{ if eq .native true }}
                         <div class="package-tag text-white native-package">Native Cloud Provider</div>
                         {{ end }}
-                        <div class="package-tag package-status {{ lower .package_status }}">{{ index $status .package_status }}</div>
+                        <div class="package-tag package-status {{ anchorize .package_status }}">{{ index $status .package_status }}</div>
                     </div>
                 </div>
             </div>

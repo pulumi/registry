@@ -2,15 +2,15 @@
 {{ $docsFile := path.Join "docs/intro/cloud-providers/" $providerName }}
 
 <div class="container">
-    <div class="lg:flex mb-2">
-        {{ with (index $.Site.Data.registry.packages ($providerName)) }}
-            {{ if (isset . "logo" )}}
-                <img src={{ .logo }} class="h-16 px-8 pb-4">
-            {{ end }}
+    {{ with (index $.Site.Data.registry.packages ($providerName)) }}
+        {{ if (isset . "logo" )}}
+            <div class="lg:flex mb-2">
+                <img src={{ .logo }} class="h-12 pb-4">
+            </div>
         {{ end }}
-        <div class="flex-1">
-            <h3>{{ with .GetPage $docsFile }}{{ .Title }}{{ end }}</h3>
-        </div>
+    {{ end }}
+    <div class="lg:flex mb-2">
+        <h3>{{ with .GetPage $docsFile }}{{ .Title }}{{ end }}</h3>
     </div>
 
     {{ with (index $.Site.Data.registry.packages ($providerName)) }}

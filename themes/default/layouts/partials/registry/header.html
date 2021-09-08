@@ -42,16 +42,16 @@
 
 
     <div class="lg:flex mb-4">
-            <div class="{{ if (eq .File.ContentBaseName "_index") }} border-b-4  border-blue-600 {{ end }} pb-2 pl-2 pr-2 mr-8">
+            <div class="{{ if (eq .File.ContentBaseName "_index") }} border-b-2 border-blue-600 {{ end }} pb-2 pl-2 pr-2 mr-8">
                 <a class="pb-2" href="{{ relref . "_index.md" }}">Overview</a>
             </div>
-            <div class="{{ if (eq .File.ContentBaseName "installation-configuration") }} border-b-4  border-blue-600 {{ end }} pb-2 pl-2 pr-2 mr-8">
+            <div class="{{ if (eq .File.ContentBaseName "installation-configuration") }} border-b-2 border-blue-600 {{ end }} pb-2 pl-2 pr-2 mr-8">
                 <a class="pb-2" href="{{ relref . "installation-configuration" }}">Installation & Configuration</a>
             </div>
-            <div class="{{ if (eq .File.ContentBaseName "api-docs") }} border-b-4  border-blue-600 {{ end }} pb-2 pl-2 pr-2 mr-8">
+            <div class="{{ if (eq .File.ContentBaseName "api-docs") }} border-b-2 border-blue-600 {{ end }} pb-2 pl-2 pr-2 mr-8">
                 <a class="pb-2" href="{{ relref . "api-docs" }}">API Docs</a>
             </div>
-            <div class="{{ if (eq .File.ContentBaseName "how-to-guides") }} border-b-4  border-blue-600 {{ end }} pb-2 pl-2 pr-2 mr-8">
+            <div class="{{ if (eq .File.ContentBaseName "how-to-guides") }} border-b-2 border-blue-600 {{ end }} pb-2 pl-2 pr-2 mr-8">
                 <a class="pb-2" href="{{ relref . "how-to-guides" }}">How-to Guides</a>
             </div>
     </div>

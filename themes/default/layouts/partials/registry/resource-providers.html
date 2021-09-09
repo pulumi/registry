@@ -2,7 +2,7 @@
     {{ range $.Site.Data.registry.packages }}
     {{ $status := dict "ga" "Generally Available" "public-preview" "Public Preview" }}
     {{ $pkg := .name }}
-    <div class="p-4 package">
+    <div class="package">
         <div class="r-tile"
              data-category="{{ lower .category }}"
              data-status="{{ lower .package_status }}"

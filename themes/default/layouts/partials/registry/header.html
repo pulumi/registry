@@ -16,7 +16,7 @@
     {{ with (index $.Site.Data.registry.packages ($providerName)) }}
         <div class="lg:flex mb-8">
             <div class="mr-8">
-                Version X
+                Version {{ .version }}
             </div>
             <div class="mr-8">
                 <span class="font-bold">Last updated</span>: {{ ((time .updated_on).Format "Mon Jan 2 2006") }}

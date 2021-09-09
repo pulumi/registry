@@ -23,7 +23,7 @@
                     <span>Published by {{ .publisher }}</span>
                 </div>
             </div>
-            <div class="r-tile-footer flex flex-row w-full mt-4 text-sm package-tags">
+            <div class="r-tile-footer flex flex-row w-full mt-4 text-sm r-package-tags">
                 <div class="package-tag package-category {{ anchorize .category }}">{{ .category }}</div>
                 {{ if eq .native true }}
                 <div class="package-tag text-white native-package">Native Cloud Provider</div>

@@ -1,7 +1,8 @@
 name: cloudinit
 title: cloudinit
 description: A Pulumi package for creating and managing cloudinit cloud resources.
-updated_on: 1631118050
+logo: /logos/pkg/cloudinit.svg
+updated_on: 1631644579
 publisher: Pulumi
 category: Utility
 package_status: ga

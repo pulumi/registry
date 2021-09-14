@@ -1,11 +1,11 @@
 name: dnsimple
 title: dnsimple
 description: A Pulumi package for creating and managing dnsimple cloud resources.
-updated_on: 1631118058
+logo: /logos/pkg/dnsimple.svg
+updated_on: 1631644588
 publisher: Pulumi
 category: Network
 package_status: ga
 version: v3.2.0
 featured: false
 native: false
-logo: "/logos/tech/dnsimple.svg"

@@ -1,11 +1,11 @@
 name: akamai
 title: akamai
 description: A Pulumi package for creating and managing akamai cloud resources.
-updated_on: 1631118023
+logo: /logos/pkg/akamai.svg
+updated_on: 1631644521
 publisher: Pulumi
 category: Network
 package_status: ga
 version: v2.3.0
 featured: false
 native: false
-logo: "/logos/tech/akamai.png"

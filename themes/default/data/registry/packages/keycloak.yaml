@@ -1,11 +1,11 @@
 name: keycloak
 title: keycloak
 description: A Pulumi package for creating and managing keycloak cloud resources.
-updated_on: 1631118086
+logo: /logos/pkg/keycloak.svg
+updated_on: 1631644624
 publisher: Pulumi
 category: Infrastructure
 package_status: ga
 version: v4.3.0
 featured: false
 native: false
-logo: "/logos/tech/keycloak.svg"

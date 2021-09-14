@@ -1,11 +1,11 @@
 name: signalfx
 title: signalfx
 description: A Pulumi package for creating and managing SignalFx resources.
-updated_on: 1631118122
+logo: /logos/pkg/signalfx.svg
+updated_on: 1631644662
 publisher: Pulumi
 category: Monitoring
 package_status: ga
-version: v5.0.2
+version: v5.0.3
 featured: false
 native: false
-logo: "/logos/tech/signalfx.png"

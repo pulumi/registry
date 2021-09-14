@@ -1,7 +1,8 @@
 name: yandex
 title: yandex
 description: A Pulumi package for creating and managing yandex cloud resources.
-updated_on: 1631118139
+logo: /logos/pkg/yandex.svg
+updated_on: 1631644681
 publisher: Pulumi
 category: Cloud
 package_status: public_preview

@@ -1,11 +1,11 @@
 name: azuread
 title: azuread
 description: A Pulumi package for creating and managing azuread cloud resources.
-updated_on: 1631118039
+logo: /logos/pkg/azuread.svg
+updated_on: 1631644568
 publisher: Pulumi
 category: Infrastructure
 package_status: ga
-version: v5.0.0
+version: v5.2.0
 featured: false
 native: false
-logo: "/logos/tech/azuread.svg"

@@ -1,11 +1,11 @@
 name: opsgenie
 title: opsgenie
 description: A Pulumi package for creating and managing opsgenie cloud resources.
-updated_on: 1631118107
+logo: /logos/pkg/opsgenie.svg
+updated_on: 1631644646
 publisher: Pulumi
 category: Infrastructure
 package_status: ga
 version: v1.0.2
 featured: false
 native: false
-logo: "/logos/tech/opsgenie.svg"

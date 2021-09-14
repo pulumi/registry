@@ -8,3 +8,4 @@ package_status: ga
 version: v2.0.0
 featured: false
 native: false
+logo: "/logos/tech/equinix-metal.svg"

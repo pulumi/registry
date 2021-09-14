@@ -1,0 +1,3 @@
+{{ $basedir := path.Base .File.Dir }}
+{{ $input := path.Join "docs/intro/cloud-providers/" $basedir }}
+{{ with .GetPage $input }}{{ .Content }}{{ end }}

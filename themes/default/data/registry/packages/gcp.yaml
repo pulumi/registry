@@ -8,3 +8,4 @@ package_status: ga
 version: v5.16.0
 featured: false
 native: false
+logo: "/logos/tech/gcp.svg"

@@ -1,3 +1,4 @@
 module:
   hugoVersion:
     min: 0.81.0
+

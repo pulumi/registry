@@ -1,0 +1,58 @@
+{{ $providerName := path.Base .File.Dir }}
+{{ $docsFile := path.Join "docs/intro/cloud-providers/" $providerName }}
+
+<div class="container">
+    {{ with (index $.Site.Data.registry.packages ($providerName)) }}
+        {{ if (isset . "logo" )}}
+            <div class="lg:flex mb-2">
+                <img src={{ .logo }} class="h-12 pb-4">
+            </div>
+        {{ end }}
+    {{ end }}
+    <div class="lg:flex mb-2">
+        <h3>{{ with .GetPage $docsFile }}{{ .Title }}{{ end }}</h3>
+    </div>
+
+    {{ with (index $.Site.Data.registry.packages ($providerName)) }}
+        <div class="lg:flex mb-8">
+            <div class="mr-8">
+                Version {{ .version }}
+            </div>
+            <div class="mr-8">
+                <span class="font-bold">Last updated</span>: {{ ((time .updated_on).Format "Mon Jan 2 2006") }}
+            </div>
+            <div class="mr-8">
+                <a style="text-decoration: revert; color: revert;" href="https://github.com/pulumi/pulumi-{{ $providerName }}">Source code</a>
+            </div>
+            <div class="mr-8">
+                <span class="font-bold">Author</span>: {{ .publisher }}
+            </div>
+        </div>
+
+        <div class="lg:flex lg:w-12/12 mb-8">
+            {{ range .tags }}
+                {{ with (index $.Site.Data.registry.tags .) }}
+                    <div class="p-2 mr-4" style='background-color: {{ .color }}'>
+                        {{ .name }}
+                    </div>
+                {{ end }}
+            {{ end }}
+        </div>
+    {{ end }}
+
+
+    <div class="lg:flex mb-4">
+            <div class="{{ if (eq .File.ContentBaseName "_index") }} border-b-2 border-blue-600 {{ end }} pb-2 pl-2 pr-2 mr-8">
+                <a class="pb-2" href="{{ relref . "_index.md" }}">Overview</a>
+            </div>
+            <div class="{{ if (eq .File.ContentBaseName "installation-configuration") }} border-b-2 border-blue-600 {{ end }} pb-2 pl-2 pr-2 mr-8">
+                <a class="pb-2" href="{{ relref . "installation-configuration" }}">Installation & Configuration</a>
+            </div>
+            <div class="{{ if (eq .File.ContentBaseName "api-docs") }} border-b-2 border-blue-600 {{ end }} pb-2 pl-2 pr-2 mr-8">
+                <a class="pb-2" href="{{ relref . "api-docs" }}">API Docs</a>
+            </div>
+            <div class="{{ if (eq .File.ContentBaseName "how-to-guides") }} border-b-2 border-blue-600 {{ end }} pb-2 pl-2 pr-2 mr-8">
+                <a class="pb-2" href="{{ relref . "how-to-guides" }}">How-to Guides</a>
+            </div>
+    </div>
+</div>

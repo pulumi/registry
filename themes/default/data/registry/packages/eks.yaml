@@ -8,3 +8,4 @@ package_status: ga
 version: v0.33.0
 featured: false
 native: true
+logo: "/logos/tech/eks.svg"

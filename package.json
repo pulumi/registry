@@ -1,8 +1,8 @@
 {
-  "name": "pulumi-hugo",
+  "name": "registry",
   "version": "0.0.1",
   "private": true,
-  "repository": "git@github.com:pulumi/pulumi-hugo",
+  "repository": "git@github.com:pulumi/registry",
   "author": "Christian Nunciato <c@nunciato.org>",
   "license": "MIT",
   "dependencies": {

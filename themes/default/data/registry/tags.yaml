@@ -1,0 +1,9 @@
+cloud:
+  name: "Cloud"
+  color: "#D7DECB"
+native-cloud-provider:
+  name: "Native Cloud Provider"
+  color: "#DFD6F0"
+generally-available:
+  name: "Generally available"
+  color: "#FCDBDF"

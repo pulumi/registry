@@ -1,36 +1,5 @@
 {{ define "main" }}
-    <div class="container mx-auto px-4 lg:px-0 py-8 mt-2">
-        <pulumi-filter-select class="flex">
-
-            <!-- Package-type options -->
-            <pulumi-filter-select-option-group name="type">
-                <span slot="label">Type</span>
-                <pulumi-filter-select-option value="native">Native Provider</pulumi-option>
-                <pulumi-filter-select-option value="provider">Provider</pulumi-option>
-                <pulumi-filter-select-option value="component">Component</pulumi-option>
-            </pulumi-filter-select-option-group>
-
-            <!-- Use-case options -->
-            <pulumi-filter-select-option-group name="category" class="mx-16">
-                <span slot="label">Use Case</span>
-                <pulumi-filter-select-option value="cloud">Cloud</pulumi-option>
-                <pulumi-filter-select-option value="infrastructure">Infrastructure</pulumi-option>
-                <pulumi-filter-select-option value="monitoring">Monitoring</pulumi-option>
-                <pulumi-filter-select-option value="network">Network</pulumi-option>
-                <pulumi-filter-select-option value="database">Database</pulumi-option>
-                <pulumi-filter-select-option value="version control">Version control</pulumi-option>
-                <pulumi-filter-select-option value="utility">Utility</pulumi-option>
-            </pulumi-filter-select-option-group>
-
-            <!-- Status options -->
-            <pulumi-filter-select-option-group name="status">
-                <span slot="label">Status</span>
-                <pulumi-filter-select-option value="ga">Generally Available</pulumi-option>
-                <pulumi-filter-select-option value="preview">Public Preview</pulumi-option>
-                <pulumi-filter-select-option value="deprecated">Deprecated</pulumi-option>
-            </pulumi-filter-select-option-group>
-
-        </pulumi-filter-select>
+    <div class="container mx-auto px-4 py-8 mt-2">
 
         {{ if and (.Params.h1) (not .Params.notitle) }}
             <h1>{{ .Params.h1 }}</h1>
@@ -39,7 +8,50 @@
         {{ end }}
 
         <h4>Pulumi Packages</h4>
-        Packages are APIs to use Pulumi with Clouds, Infrastructure, Databases, Monitoring, Networks, Version control, and Utilities.
+        <p>
+            Packages are APIs to use Pulumi with Clouds, Infrastructure, Databases, Monitoring, Networks, Version control, and Utilities.
+        </p>
+
+        <div class="my-8">
+            <h6>Filters</h6>
+            <pulumi-filter-select class="flex">
+
+                <!-- Package-type options -->
+                <pulumi-filter-select-option-group name="type">
+                    <div class="toggle" slot="toggle">Type</div>
+                    <div class="options">
+                        <pulumi-filter-select-option value="native">Native Provider</pulumi-option>
+                        <pulumi-filter-select-option value="provider">Provider</pulumi-option>
+                        <pulumi-filter-select-option value="component">Component</pulumi-option>
+                    </div>
+                </pulumi-filter-select-option-group>
+
+                <!-- Use-case options -->
+                <pulumi-filter-select-option-group name="category" class="mx-4">
+                    <div class="toggle" slot="toggle">Use Case</div>
+                    <div class="options">
+                        <pulumi-filter-select-option value="cloud">Cloud</pulumi-option>
+                        <pulumi-filter-select-option value="database">Database</pulumi-option>
+                        <pulumi-filter-select-option value="infrastructure">Infrastructure</pulumi-option>
+                        <pulumi-filter-select-option value="monitoring">Monitoring</pulumi-option>
+                        <pulumi-filter-select-option value="network">Network</pulumi-option>
+                        <pulumi-filter-select-option value="utility">Utility</pulumi-option>
+                        <pulumi-filter-select-option value="version control">Version control</pulumi-option>
+                    </div>
+                </pulumi-filter-select-option-group>
+
+                <!-- Status options -->
+                <pulumi-filter-select-option-group name="status">
+                    <div class="toggle" slot="toggle">Status</div>
+                    <div class="options">
+                        <pulumi-filter-select-option value="ga">Generally Available</pulumi-option>
+                        <pulumi-filter-select-option value="preview">Public Preview</pulumi-option>
+                        <pulumi-filter-select-option value="deprecated">Deprecated</pulumi-option>
+                    </div>
+                </pulumi-filter-select-option-group>
+
+            </pulumi-filter-select>
+        </div>
 
         <h5>Featured Cloud Providers</h5>
         {{ partial "registry/featured-providers" . }}

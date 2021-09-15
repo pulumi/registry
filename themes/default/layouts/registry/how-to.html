@@ -3,10 +3,15 @@
         {{ partial "registry/header.html" . }}
 
         <div class="lg:flex">
-            <div class="lg:w-12/12 lg:px-4">        
-                {{ $basedir := path.Base .File.Dir }}
-                {{ $input := path.Join "docs/intro/cloud-providers/" $basedir }}
-                {{ with .GetPage $input }}{{ .Content }}{{ end }}
+            <div class="lg:w-12/12 lg:px-4">
+                <h4 class="pb-8">How-to Guides</h4>
+                {{ $providerName := path.Base .File.Dir }}
+                {{ $tutorialPath := path.Join "docs/tutorials/" $providerName }}
+                {{ with .GetPage $tutorialPath }}
+                    {{ range .Pages }}
+                        <div class="pb-4"><a style="text-decoration: revert; color: revert;" href="{{ relref . .File.BaseFileName }}">{{ .Title }}</a></div>
+                    {{ end }}
+                {{ end }}
             </div>
         </div>
     </div>

@@ -12,8 +12,6 @@ layout: overview
 The AzureDevOps provider for Pulumi can be used to provision any of the cloud resources available in [AzureDevOps](https://azure.microsoft.com/en-us/services/devops/).
 The AzureDevOps provider must be configured with credentials to deploy and update resources in AzureDevOps.
 
-See the [full API documentation]({{< relref "/docs/reference/pkg/azuredevops" >}}) for complete details of the available AzureDevOps provider APIs.
-
 ## Setup
 
 The AzureDevOps provider supports several options for providing access to AzureDevOps credentials.  See the [AzureDevOps setup page]({{< relref "setup" >}}) for details.

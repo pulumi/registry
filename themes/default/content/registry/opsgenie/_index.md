@@ -12,8 +12,6 @@ layout: overview
 The Opsgenie provider for Pulumi can be used to provision any of the resources available for Opsgenie.
 The Opsgenie provider must be configured with credentials to deploy and update resources in Opsgenie.
 
-See the [full API documentation]({{< relref "/docs/reference/pkg/opsgenie" >}}) for complete details of the available Opsgenie provider APIs.
-
 ## Setup
 
 The Opsgenie provider supports several options for providing access to Opsgenie credentials.  See the [Opsgenie setup page]({{< relref "setup" >}}) for details.

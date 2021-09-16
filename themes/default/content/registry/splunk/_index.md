@@ -12,8 +12,6 @@ layout: overview
 The Splunk provider for Pulumi can be used to provision any of the cloud resources available in [Splunk](https://www.splunk.com/).
 The Splunk provider must be configured with credentials to deploy and update resources in Splunk.
 
-See the [full API documentation]({{< relref "/docs/reference/pkg/splunk" >}}) for complete details of the available Splunk provider APIs.
-
 ## Setup
 
 The Splunk provider supports several options for providing access to Splunk credentials.  See the [Splunk setup page]({{< relref "setup" >}}) for details.

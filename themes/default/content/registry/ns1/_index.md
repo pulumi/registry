@@ -12,8 +12,6 @@ layout: overview
 The NS1 provider for Pulumi can be used to provision any of the cloud resources available in [NS1](https://www.ns1.com/).
 The NS1 provider must be configured with credentials to deploy and update resources in NS1.
 
-See the [full API documentation]({{< relref "/docs/reference/pkg/ns1" >}}) for complete details of the available NS1 provider APIs.
-
 ## Setup
 
 The NS1 provider supports several options for providing access to NS1 credentials.  See the [NS1 setup page]({{< relref "setup" >}}) for details.

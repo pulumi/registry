@@ -11,8 +11,6 @@ layout: overview
 
 The Okta provider for Pulumi can be used to provision any of the resources available in [Okta](https://www.okta.com/).
 
-See the [full API documentation]({{< relref "/docs/reference/pkg/okta" >}}) for complete details of the available Okta provider APIs.
-
 ## Setup
 
 The Okta provider supports several options for interacting with Okta.  See the [Okta setup page]({{< relref "setup" >}}) for details.

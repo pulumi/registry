@@ -12,8 +12,6 @@ layout: overview
 The Venafi provider for Pulumi can be used to provision cloud resources available in [Venafi](https://www.venafi.com/).
 The Venafi provider must be configured with credentials to deploy and update resources in Venafi.
 
-See the [full API documentation]({{< relref "/docs/reference/pkg/venafi" >}}) for complete details of the available Venafi provider APIs.
-
 ## Setup
 
 The Venafi provider supports several options for providing access to Venafi credentials.  See the [Venafi setup page]({{< relref "setup" >}}) for details.

@@ -11,8 +11,6 @@ layout: overview
 
 The Docker provider for Pulumi can be used to provision any of the resources available in [Docker](https://www.docker.com/).
 
-See the [full API documentation]({{< relref "/docs/reference/pkg/docker" >}}) for complete details of the available Docker provider APIs.
-
 ## Setup
 
 The Docker provider supports several options for interacting with Docker.  See the [Docker setup page]({{< relref "setup" >}}) for details.

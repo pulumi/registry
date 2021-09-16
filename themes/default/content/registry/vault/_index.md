@@ -11,8 +11,6 @@ layout: overview
 
 The HashiCorp Vault provider for Pulumi can be used to provision any of the resources available in [Vault](https://www.vaultproject.io/).
 
-See the [full API documentation]({{< relref "/docs/reference/pkg/vault" >}}) for complete details of the available Vault provider APIs.
-
 ## Setup
 
 The Vault provider supports several options for interacting with HashiCorp Vault.  See the [Vault setup page]({{< relref "setup" >}}) for details.

@@ -12,8 +12,6 @@ layout: overview
 
 The native Azure provider for Pulumi can be used to provision any of the cloud resources available in [Azure](https://azure.microsoft.com/en-us/) via Azure Resource Manager (ARM). The Azure provider must be configured with credentials to deploy and update resources in Azure.
 
-See the [full API documentation]({{< relref "/docs/reference/pkg/azure-native" >}}) for complete details of the available Azure provider APIs.
-
 ## Setup
 
 The native Azure provider supports several options for providing access to Azure credentials.  See [Azure setup page]({{< relref "/docs/intro/cloud-providers/azure/setup" >}}) for details.

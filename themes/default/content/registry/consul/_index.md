@@ -11,8 +11,6 @@ layout: overview
 
 The HashiCorp Consul provider for Pulumi can be used to provision any of the resources available in [Consul](https://www.consul.io/).
 
-See the [full API documentation]({{< relref "/docs/reference/pkg/consul" >}}) for complete details of the available Consul provider APIs.
-
 ## Setup
 
 The Consul provider supports several options for interacting with HashiCorp Consul.  See the [Consul setup page]({{< relref "setup" >}}) for details.

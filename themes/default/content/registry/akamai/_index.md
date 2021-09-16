@@ -12,8 +12,6 @@ layout: overview
 The Akamai provider for Pulumi can be used to provision any of the cloud resources available in [Akamai](https://www.akamai.com/).
 The Akamai provider must be configured with credentials to deploy and update resources in Akamai.
 
-See the [full API documentation]({{< relref "/docs/reference/pkg/akamai" >}}) for complete details of the available Akamai provider APIs.
-
 ## Setup
 
 The Akamai provider supports several options for providing access to Akamai credentials.  See the [Akamai setup page]({{< relref "setup" >}}) for details.

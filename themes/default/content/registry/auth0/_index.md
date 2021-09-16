@@ -12,8 +12,6 @@ layout: overview
 The Auth0 provider for Pulumi can be used to provision any of the cloud resources available in [Auth0](https://auth0.com/).
 The Auth0 provider must be configured with credentials to deploy and update resources in Auth0.
 
-See the [full API documentation]({{< relref "/docs/reference/pkg/auth0" >}}) for complete details of the available Auth0 provider APIs.
-
 ## Setup
 
 The Auth0 provider supports several options for providing access to Auth0 credentials.  See the [Auth0 setup page]({{< relref "setup" >}}) for details.

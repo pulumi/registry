@@ -1,5 +1,6 @@
 {{ $providerName := path.Base .File.Dir }}
-{{ $docsFile := path.Join "docs/intro/cloud-providers/" $providerName }}
+{{ $docsPath := path.Join "docs/intro/cloud-providers/" $providerName }}
+{{ $tutorialsPath := path.Join "docs/tutorials/" $providerName }}
 
 <div class="container">
     {{ with (index $.Site.Data.registry.packages ($providerName)) }}
@@ -10,7 +11,7 @@
         {{ end }}
     {{ end }}
     <div class="lg:flex mb-2">
-        <h3>{{ with .GetPage $docsFile }}{{ .Title }}{{ end }}</h3>
+        <h3>{{ with .GetPage $docsPath }}{{ .Title }}{{ end }}</h3>
     </div>
 
     {{ with (index $.Site.Data.registry.packages ($providerName)) }}
@@ -54,7 +55,13 @@
             <div class="{{ if (eq .File.ContentBaseName "how-to-guides") }} border-b-2 border-blue-600 {{ end }} pb-2 pl-2 pr-2 mr-8">
                 <a class="pb-2" href="{{ relref . "how-to-guides" }}">
                     How-to Guides
-                    <span class="p-1 rounded-full bg-gray-400">{{ with .GetPage (path.Join "docs/tutorials/" $providerName) }}{{ len .Pages }}{{ end }}</span>
+                    <span class="p-1 ml-1 rounded-full bg-gray-400">
+                        {{ if fileExists $tutorialsPath }}
+                            {{ with .GetPage $tutorialsPath }}{{ len .Pages}}{{ end }}
+                        {{ else }}
+                            0
+                        {{ end }}
+                    </span>
                 </a>
             </div>
     </div>

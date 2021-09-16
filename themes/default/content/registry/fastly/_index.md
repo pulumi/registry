@@ -9,8 +9,6 @@ menu:
 layout: overview
 ---
 
-<img src="/logos/tech/fastly.png" align="right" class="h-16 px-8 pb-4">
-
 The Fastly provider for Pulumi can be used to provision any of the cloud resources available in [Fastly](https://www.fastly.com/).
 The Fastly provider must be configured with credentials to deploy and update resources in Fastly.
 

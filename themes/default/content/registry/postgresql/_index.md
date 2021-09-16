@@ -9,8 +9,6 @@ menu:
 layout: overview
 ---
 
-<img src="/logos/tech/postgresql.png" align="right" class="h-16 px-8 pb-4">
-
 The PostgreSQL provider for Pulumi can be used to provision any of the resources available for PostgreSQL.
 The PostgreSQL provider must be configured with credentials to deploy and update resources in PostgreSQL.
 

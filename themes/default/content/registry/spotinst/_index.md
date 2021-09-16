@@ -9,8 +9,6 @@ menu:
 layout: overview
 ---
 
-<img src="/logos/tech/spotinst.png" align="right" class="h-16 px-8 pb-4">
-
 The Spotinst provider for Pulumi can be used to provision any of the resources available in [Spotinst](https://spotinst.com/).
 
 See the [full API documentation]({{< relref "/docs/reference/pkg/spotinst" >}}) for complete details of the available Spotinst provider APIs.

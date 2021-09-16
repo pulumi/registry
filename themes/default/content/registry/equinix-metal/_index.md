@@ -13,8 +13,6 @@ aliases:
 layout: overview
 ---
 
-<img src="/logos/tech/equinix-metal.svg" align="right" class="h-16 px-8 pb-4">
-
 The Equinix Metal provider for Pulumi can be used to provision any of the cloud resources available in [Equinix Metal](https://metal.equinix.com/).
 The Equinix Metal provider must be configured with credentials to deploy and update resources in Equinix Metal.
 

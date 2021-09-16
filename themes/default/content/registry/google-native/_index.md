@@ -15,8 +15,6 @@ layout: overview
 The Google Cloud Native provider is currently in public preview.
 {{< /notes >}}
 
-<img src="/logos/tech/gcp.svg" align="right" class="h-16 px-8 pb-4">
-
 The Google Cloud Native provider for Pulumi can be used to provision any of the cloud resources available in [Google Cloud](https://cloud.google.com/). The provider must be configured with credentials to deploy and update resources in Google Cloud.
 
 See the [full API documentation]({{< relref "/docs/reference/pkg/google-native" >}}) for complete details of the available provider APIs.

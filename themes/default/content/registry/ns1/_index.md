@@ -9,8 +9,6 @@ menu:
 layout: overview
 ---
 
-<img src="/logos/tech/ns1.png" align="right" class="h-16 px-8 pb-4">
-
 The NS1 provider for Pulumi can be used to provision any of the cloud resources available in [NS1](https://www.ns1.com/).
 The NS1 provider must be configured with credentials to deploy and update resources in NS1.
 

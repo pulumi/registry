@@ -9,8 +9,6 @@ menu:
 layout: overview
 ---
 
-<img src="/logos/tech/pagerduty.svg" align="right" class="h-16 px-8 pb-4">
-
 The PagerDuty provider for Pulumi can be used to provision any of the cloud resources available in [PagerDuty](https://www.pagerduty.com/).
 The PagerDuty provider must be configured with credentials to deploy and update resources in PagerDuty.
 

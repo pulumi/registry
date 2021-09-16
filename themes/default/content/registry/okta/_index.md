@@ -9,8 +9,6 @@ menu:
 layout: overview
 ---
 
-<img src="/logos/tech/okta.png" align="right" class="h-16 px-8 pb-4">
-
 The Okta provider for Pulumi can be used to provision any of the resources available in [Okta](https://www.okta.com/).
 
 See the [full API documentation]({{< relref "/docs/reference/pkg/okta" >}}) for complete details of the available Okta provider APIs.

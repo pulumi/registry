@@ -9,8 +9,6 @@ menu:
 layout: overview
 ---
 
-<img src="/logos/tech/aiven.svg" align="right" class="h-16 px-8 pb-4">
-
 The Aiven provider for Pulumi can be used to provision any of the cloud resources available in [Aiven](https://aiven.io/).
 The Aiven provider must be configured with credentials to deploy and update resources in Aiven.
 

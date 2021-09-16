@@ -9,8 +9,6 @@ menu:
 layout: overview
 ---
 
-<img src="/logos/tech/akamai.png" align="right" class="h-16 px-8 pb-4">
-
 The Akamai provider for Pulumi can be used to provision any of the cloud resources available in [Akamai](https://www.akamai.com/).
 The Akamai provider must be configured with credentials to deploy and update resources in Akamai.
 

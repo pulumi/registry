@@ -11,8 +11,6 @@ aliases: ["/docs/reference/clouds/gcp/"]
 layout: overview
 ---
 
-<img src="/logos/tech/gcp.svg" align="right" class="h-16 px-8 pb-4">
-
 The Google Cloud Platform (GCP) provider for Pulumi can be used to provision any of the cloud resources available in [GCP](https://cloud.google.com/).  The GCP provider must be configured with credentials to deploy and update resources in Google Cloud.
 
 See the [full API documentation]({{< relref "/docs/reference/pkg/gcp" >}}) for complete details of the available GCP provider APIs.

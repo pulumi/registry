@@ -9,8 +9,6 @@ menu:
 layout: overview
 ---
 
-<img src="/logos/tech/hetzner.png" align="right" class="h-16 px-8 pb-4">
-
 The Hetzner Cloud provider for Pulumi can be used to provision any of the cloud resources available in [Hetzner Cloud](https://www.hetzner.com/cloud).
 The Hetzner Cloud provider must be configured with credentials to deploy and update resources in Hetzner Cloud.
 

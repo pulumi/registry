@@ -9,8 +9,6 @@ menu:
 layout: overview
 ---
 
-<img src="/logos/tech/f5bigip.svg" align="right" class="h-16 px-8 pb-4">
-
 The F5 BIG-IP provider for Pulumi can be used to provision any of the resources available with [F5 BIG-IP](https://www.f5.com/products/big-ip-services).
 The F5 BIG-IP provider must be configured with credentials to deploy and update the resources.
 

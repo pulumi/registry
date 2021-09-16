@@ -9,8 +9,6 @@ menu:
 layout: overview
 ---
 
-<img src="/logos/tech/mailgun.png" align="right" class="h-16 px-8 pb-4">
-
 The Mailgun provider for Pulumi can be used to provision any of the cloud resources available in [Mailgun](https://www.mailgun.com/).
 The Mailgun provider must be configured with credentials to deploy and update resources in Mailgun.
 

@@ -1,6 +1,7 @@
 ---
 title: DNSimple Setup
 meta_desc: This page provides an overview on how to configure credentials for the Pulumi DNSimple Provider.
+layout: installation
 ---
 
 The [Pulumi DNSimple provider]({{< relref "./" >}}) uses the DNSimple SDK to manage and provision resources.

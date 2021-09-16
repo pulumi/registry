@@ -1,6 +1,7 @@
 ---
 title: F5 BIG-IP Setup
 meta_desc: This page provides an overview on how to configure credentials for the Pulumi F5 BIG-IP Provider.
+layout: installation
 ---
 
 The [Pulumi F5 BIG-IP provider]({{< relref "./" >}}) uses the F5 BIG-IP SDK to manage and provision resources.

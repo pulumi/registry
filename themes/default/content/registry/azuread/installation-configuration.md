@@ -1,6 +1,7 @@
 ---
 title: AzureDevOps Setup
 meta_desc: This page provides an overview on how to configure credentials for the Pulumi AzureDevOps Provider.
+layout: installation
 ---
 
 The [Pulumi AzureDevOps provider]({{< relref "./" >}}) uses the AzureDevOps SDK to manage and provision resources.

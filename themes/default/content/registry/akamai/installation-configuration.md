@@ -1,6 +1,7 @@
 ---
 title: Akamai Setup
 meta_desc: This page provides an overview on how to configure credentials for the Pulumi Akamai Provider.
+layout: installation
 ---
 
 The [Pulumi Akamai provider]({{< relref "./" >}}) uses the Akamai SDK to manage and provision resources.

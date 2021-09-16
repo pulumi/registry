@@ -6,6 +6,7 @@ menu:
     parent: cloud-providers
     identifier: clouds-f5bigip
     weight: 2
+layout: overview
 ---
 
 <img src="/logos/tech/f5bigip.svg" align="right" class="h-16 px-8 pb-4">

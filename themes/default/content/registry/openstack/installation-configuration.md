@@ -2,6 +2,7 @@
 title: OpenStack Setup
 meta_desc: This page provides an overview on how to set up the Pulumi OpenStack Provider with proper credentials.
 aliases: ["/docs/reference/clouds/openstack/setup/"]
+layout: installation
 ---
 
 <!-- markdownlint-disable url -->

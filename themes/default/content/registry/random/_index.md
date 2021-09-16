@@ -6,6 +6,7 @@ menu:
     parent: cloud-providers
     identifier: clouds-random
     weight: 2
+layout: overview
 ---
 
 The Random provider for Pulumi can be used to help introduce random values when dealing with Pulumi resources.

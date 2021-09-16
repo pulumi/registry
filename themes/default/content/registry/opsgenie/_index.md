@@ -6,6 +6,7 @@ menu:
     parent: cloud-providers
     identifier: clouds-opsgenie
     weight: 2
+layout: overview
 ---
 
 <img src="/logos/tech/opsgenie.svg" align="right" class="h-16 px-8 pb-4">

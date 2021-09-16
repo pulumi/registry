@@ -7,6 +7,7 @@ menu:
     identifier: clouds-azure
     weight: 1
 aliases: ["/docs/reference/clouds/azure/"]
+layout: overview
 ---
 
 <img src="/logos/tech/azure.svg" align="right" class="h-16 px-8 pb-4">

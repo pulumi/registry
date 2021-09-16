@@ -1,6 +1,7 @@
 ---
 title: PostgreSQL Setup
 meta_desc: This page provides an overview on how to configure credentials for the Pulumi PostgreSQL Provider.
+layout: installation
 ---
 
 The [Pulumi PostgreSQL provider]({{< relref "./" >}}) uses the PostgreSQL SDK to manage and provision resources.

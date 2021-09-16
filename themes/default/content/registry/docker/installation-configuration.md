@@ -1,6 +1,7 @@
 ---
 title: Docker Setup
 meta_desc: This page provides an overview on how to configure the Pulumi Docker Provider.
+layout: installation
 ---
 
 The [Pulumi Docker provider]({{< relref "./" >}}) uses the Docker SDK to manage resources.

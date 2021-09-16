@@ -6,6 +6,7 @@ menu:
     parent: cloud-providers
     identifier: clouds-rancher2
     weight: 2
+layout: overview
 ---
 
 <img src="/logos/tech/rancher.svg" align="right" class="h-16 px-8 pb-4">

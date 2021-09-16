@@ -8,6 +8,7 @@ menu:
     weight: 2
 
 aliases: ["/docs/reference/clouds/vsphere/"]
+layout: overview
 ---
 
 The vSphere provider for Pulumi can be used to provision any of the cloud resources available in [vSphere](https://www.vmware.com/products/vsphere.html).

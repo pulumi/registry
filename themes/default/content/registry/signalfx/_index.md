@@ -6,6 +6,7 @@ menu:
     parent: cloud-providers
     identifier: clouds-signalfx
     weight: 2
+layout: overview
 ---
 
 <img src="/logos/tech/signalfx.png" align="right" class="h-16 px-8 pb-4">

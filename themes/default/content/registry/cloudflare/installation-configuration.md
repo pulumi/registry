@@ -1,6 +1,7 @@
 ---
 title: Cloudflare Setup
 meta_desc: This page provides an overview on how to configure the Pulumi Cloudflare Provider.
+layout: installation
 ---
 
 The [Pulumi Cloudflare provider]({{< relref "./" >}}) uses the Cloudflare SDK to manage resources.

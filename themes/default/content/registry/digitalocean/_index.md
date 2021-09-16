@@ -8,6 +8,7 @@ menu:
     weight: 2
 
 aliases: ["/docs/reference/clouds/digitalocean/"]
+layout: overview
 ---
 
 <img src="/logos/tech/digitalocean.svg" align="right" class="h-16 px-8 pb-4">

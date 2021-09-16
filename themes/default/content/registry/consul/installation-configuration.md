@@ -1,6 +1,7 @@
 ---
 title: HashiCorp Consul Setup
 meta_desc: This page provides an overview on how to configure the Pulumi Consul Provider.
+layout: installation
 ---
 
 The [Pulumi Consul provider]({{< relref "./" >}}) uses the Consul SDK to manage resources.

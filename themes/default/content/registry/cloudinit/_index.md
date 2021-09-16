@@ -6,6 +6,7 @@ menu:
     parent: cloud-providers
     identifier: clouds-cloudinit
     weight: 2
+layout: overview
 ---
 
 The cloud-init provider for Pulumi can be used to render valid MIME-multipart cloud-init config.

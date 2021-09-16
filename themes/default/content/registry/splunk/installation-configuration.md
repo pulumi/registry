@@ -1,6 +1,7 @@
 ---
 title: Splunk Setup
 meta_desc: This page provides an overview on how to configure credentials for the Pulumi Splunk Provider.
+layout: installation
 ---
 
 The [Pulumi Splunk provider]({{< relref "./" >}}) uses the Splunk SDK to manage and provision resources.

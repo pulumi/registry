@@ -5,6 +5,7 @@ aliases:
    - "/docs/intro/cloud-providers/packet/setup/"
    - "/docs/reference/clouds/packet/setup/"
 
+layout: installation
 ---
 
 The [Pulumi Equinix Metal provider]({{< relref "./" >}}) uses the Equinix Metal SDK to manage and provision resources.

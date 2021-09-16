@@ -1,6 +1,7 @@
 ---
 title: Alibaba Cloud Setup
 meta_desc: This page provides an overview on how to configure credentials for the Pulumi Alibaba Cloud Provider.
+layout: installation
 ---
 
 The [Pulumi Alibaba Cloud provider]({{< relref "./" >}}) uses the Alibaba Cloud SDK to manage and provision resources.

@@ -1,6 +1,7 @@
 ---
 title: MongoDB Atlas Setup
 meta_desc: This page provides an overview on how to configure credentials for the Pulumi MongoDB Atlas Provider.
+layout: installation
 ---
 
 The [Pulumi MongoDB Atlas provider]({{< relref "./" >}}) uses the MongoDB Atlas SDK to manage and provision resources.

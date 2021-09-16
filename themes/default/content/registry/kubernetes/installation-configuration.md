@@ -2,6 +2,7 @@
 title: Kubernetes Setup
 meta_desc: This page provides an overview on how to seup the Kubernetes Provider for Pulumi.
 aliases: ["/docs/reference/clouds/kubernetes/setup/"]
+layout: installation
 ---
 
 <!-- markdownlint-disable url -->

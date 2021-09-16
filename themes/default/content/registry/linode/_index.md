@@ -8,6 +8,7 @@ menu:
     weight: 2
 
 aliases: ["/docs/reference/clouds/linode/"]
+layout: overview
 ---
 
 <img src="/logos/tech/linode.svg" align="right" class="h-16 px-8 pb-4">

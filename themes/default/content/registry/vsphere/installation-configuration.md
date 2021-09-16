@@ -3,6 +3,7 @@ title: vSphere Setup
 meta_desc: This page provides an overview on how to setup use Pulumi and the vSphere SDK to
            manage and provision resources.
 aliases: ["/docs/reference/clouds/vsphere/setup/"]
+layout: installation
 ---
 
 The [Pulumi vSphere provider]({{< relref "./" >}}) uses the vSphere SDK to manage and provision resources.

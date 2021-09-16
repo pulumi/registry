@@ -1,6 +1,7 @@
 ---
 title: Rancher2 Setup
 meta_desc: This page provides an overview on how to configure credentials for the Pulumi Rancher2 Provider.
+layout: installation
 ---
 
 The [Pulumi Rancher2 provider]({{< relref "./" >}}) uses the Rancher2 SDK to manage and provision resources.

@@ -3,6 +3,7 @@ title: Google Cloud Platform (GCP) Setup
 meta_desc: This page provides an overview on how to setup the Google Cloud
            Platform Provider with Pulumi.
 aliases: ["/docs/reference/clouds/gcp/setup/"]
+layout: installation
 ---
 
 [Pulumi Google Cloud Platform Provider]: {{< relref "./" >}}

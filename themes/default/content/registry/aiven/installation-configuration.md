@@ -1,6 +1,7 @@
 ---
 title: Aiven Setup
 meta_desc: This page provides an overview on how to configure credentials for the Pulumi Aiven Provider.
+layout: installation
 ---
 
 The [Pulumi Aiven provider]({{< relref "./" >}}) uses the Aiven SDK to manage and provision resources.

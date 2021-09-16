@@ -1,6 +1,7 @@
 ---
 title: Venafi Setup
 meta_desc: This page provides an overview on how to configure credentials for the Pulumi Venafi Provider.
+layout: installation
 ---
 
 The [Pulumi Venafi provider]({{< relref "./" >}}) uses the Venafi SDK to manage and provision resources.

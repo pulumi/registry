@@ -6,6 +6,7 @@ menu:
     parent: cloud-providers
     identifier: clouds-mysql
     weight: 2
+layout: overview
 ---
 
 <img src="/logos/tech/mysql.png" align="right" class="h-16 px-8 pb-4">

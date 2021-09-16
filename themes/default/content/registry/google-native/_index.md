@@ -8,6 +8,7 @@ menu:
     weight: 1
 
 aliases: ["/docs/reference/clouds/google-native/"]
+layout: overview
 ---
 
 {{< notes >}}

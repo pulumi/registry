@@ -1,6 +1,7 @@
 ---
 title: GitLab Setup
 meta_desc: This page provides an overview on how to configure credentials for the Pulumi GitLab Provider.
+layout: installation
 ---
 
 The [Pulumi GitLab provider]({{< relref "./" >}}) uses the GitLab SDK to manage and provision resources.

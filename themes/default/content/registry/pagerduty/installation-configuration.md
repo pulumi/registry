@@ -1,6 +1,7 @@
 ---
 title: PagerDuty Setup
 meta_desc: This page provides an overview on how to configure credentials for the Pulumi PagerDuty Provider.
+layout: installation
 ---
 
 The [Pulumi PagerDuty provider]({{< relref "./" >}}) uses the PagerDuty SDK to manage and provision resources.

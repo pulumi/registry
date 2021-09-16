@@ -12,10 +12,6 @@ layout: overview
 The Fastly provider for Pulumi can be used to provision any of the cloud resources available in [Fastly](https://www.fastly.com/).
 The Fastly provider must be configured with credentials to deploy and update resources in Fastly.
 
-## Setup
-
-The Fastly provider supports several options for providing access to Fastly credentials.  See the [Fastly setup page]({{< relref "setup" >}}) for details.
-
 ## Example
 
 {{< chooser language "javascript,typescript,python,go,csharp" >}}

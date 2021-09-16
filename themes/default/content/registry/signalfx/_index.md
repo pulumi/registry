@@ -12,10 +12,6 @@ layout: overview
 The SignalFx provider for Pulumi can be used to provision any of the cloud resources available in [SignalFx](https://signalfx.com/).
 The SignalFx provider must be configured with credentials to deploy and update resources in SignalFx.
 
-## Setup
-
-The SignalFx provider supports several options for providing access to SignalFx credentials.  See the [SignalFx setup page]({{< relref "setup" >}}) for details.
-
 ## Example
 
 {{< chooser language "javascript,typescript,python,go,csharp" >}}

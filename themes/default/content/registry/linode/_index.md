@@ -14,10 +14,6 @@ layout: overview
 The Linode provider for Pulumi can be used to provision any of the cloud resources available in [Linode](https://www.linode.com).
 The Linode provider must be configured with credentials to deploy and update resources in Linode.
 
-## Setup
-
-The Linode provider supports several options for providing access to Linode credentials.  See [Linode setup page]({{< relref "/docs/intro/cloud-providers/linode/setup" >}}) for details.
-
 ## Example
 
 {{< chooser language "javascript,typescript,python,go,csharp" >}}

@@ -12,27 +12,6 @@ layout: overview
 
 The native Azure provider for Pulumi can be used to provision any of the cloud resources available in [Azure](https://azure.microsoft.com/en-us/) via Azure Resource Manager (ARM). The Azure provider must be configured with credentials to deploy and update resources in Azure.
 
-## Setup
-
-The native Azure provider supports several options for providing access to Azure credentials.  See [Azure setup page]({{< relref "/docs/intro/cloud-providers/azure/setup" >}}) for details.
-
-## Getting Started
-
-The quickest way to get started with Azure is to follow the [Get Started]({{< relref "/docs/get-started/azure" >}}) guide.
-
-From there, you can dive deeper with additional Azure examples:
-
-* [Azure Function Apps](https://github.com/pulumi/examples/tree/master/azure-ts-functions): Create a serverless function
-* [Azure AppService with SQL and AppInsights](https://github.com/pulumi/examples/tree/master/azure-ts-appservice): Build an AppService web application that uses SQL and AppInsights
-* [Azure Kubernetes Service (AKS) Cluster](https://github.com/pulumi/examples/tree/master/azure-ts-aks): Create an AKS cluster
-* [Azure Container Instances](https://github.com/pulumi/examples/tree/master/azure-ts-aci): Deploy a web app to Azure Container Intances
-
-## Migration
-
-The differences between the classic Azure provider and the native Azure provider and the process of migration are outlined in the [Migration Guide]({{< relref "./from-classic" >}}) guide.
-
-If you are migrating from Azure Resource Manager templates, read our [Migrate From Azure Resource Manager]({{< relref "/docs/guides/adopting/from_azure" >}}) guide.
-
 ## Example
 
 {{< chooser language "typescript,python,csharp,go" >}}

@@ -12,10 +12,6 @@ layout: overview
 The DNSimple provider for Pulumi can be used to provision any of the cloud resources available in [DNSimple](https://dnsimple.com/).
 The DNSimple provider must be configured with credentials to deploy and update resources in DNSimple.
 
-## Setup
-
-The DNSimple provider supports several options for providing access to DNSimple credentials.  See the [DNSimple setup page]({{< relref "setup" >}}) for details.
-
 ## Example
 
 {{< chooser language "javascript,typescript,python,go,csharp" >}}

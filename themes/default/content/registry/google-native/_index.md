@@ -17,19 +17,6 @@ The Google Cloud Native provider is currently in public preview.
 
 The Google Cloud Native provider for Pulumi can be used to provision any of the cloud resources available in [Google Cloud](https://cloud.google.com/). The provider must be configured with credentials to deploy and update resources in Google Cloud.
 
-## Setup
-
-The Google Cloud Native provider supports several options for providing access to Google Cloud credentials.  See [setup page]({{< relref "setup" >}}) for details.
-
-## Getting Started
-
-The Google Cloud Native provider is currently in <strong> public preview</strong>. The quickest way to get started with Google Cloud is to follow the steps described in the [README](https://github.com/pulumi/pulumi-google-native#readme).
-
-Some interesting examples are available complete with instructions:
-
-* [Google Cloud Functions](https://github.com/pulumi/examples/tree/master/google-native-ts-functions): Create a serverless function
-* [Ruby on Rails on GKE and Google Cloud SQL](https://github.com/pulumi/examples/tree/master/google-native-ts-k8s-ruby-on-rails-postgresql): Containerized Ruby on Rails app using Google Cloud SQL PostgresSQL, GKE and Google container registry.
-
 ## Example
 
 {{< chooser language "typescript,python,go,csharp" >}}

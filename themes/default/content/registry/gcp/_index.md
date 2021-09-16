@@ -13,24 +13,6 @@ layout: overview
 
 The Google Cloud Platform (GCP) provider for Pulumi can be used to provision any of the cloud resources available in [GCP](https://cloud.google.com/).  The GCP provider must be configured with credentials to deploy and update resources in Google Cloud.
 
-## Setup
-
-The GCP provider supports several options for providing access to Google Cloud credentials.  See [GCP setup page]({{< relref "setup" >}}) for details.
-
-## Getting Started
-
-The quickest way to get started with GCP is to follow the [Get Started]({{< relref "/docs/get-started/gcp" >}}) guide.
-
-Additionally, a tutorial is available to follow:
-
-* [Virtual Machine]({{< relref "/docs/tutorials/gcp/gce-webserver" >}}): Create a Debian virtual machine web server instance
-
-In addition to the tutorial, several interesting examples are available complete with instructions:
-
-* [Google Cloud Functions](https://github.com/pulumi/examples/tree/master/gcp-ts-functions): Create a serverless function
-* [Google Kubernetes Engine](https://github.com/pulumi/examples/tree/master/gcp-ts-gke): Create a GKE cluster and deploy an NGINX pod into it
-* [Ruby on Rails on GKE and Google Cloud SQL](https://github.com/pulumi/examples/tree/master/gcp-ts-k8s-ruby-on-rails-postgresql): Containerized Ruby on Rails app using Google Cloud SQL PostgresSQL, GKE and Docker Hub.
-
 ## Example
 
 {{< chooser language "javascript,typescript,python,go,csharp" >}}

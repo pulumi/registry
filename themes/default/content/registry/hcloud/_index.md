@@ -12,10 +12,6 @@ layout: overview
 The Hetzner Cloud provider for Pulumi can be used to provision any of the cloud resources available in [Hetzner Cloud](https://www.hetzner.com/cloud).
 The Hetzner Cloud provider must be configured with credentials to deploy and update resources in Hetzner Cloud.
 
-## Setup
-
-The Hetzner Cloud provider supports several options for providing access to Hetzner Cloud credentials.  See the [Hetzner Cloud setup page]({{< relref "setup" >}}) for details.
-
 ## Example
 
 {{< chooser language "javascript,typescript,python,go,csharp" >}}

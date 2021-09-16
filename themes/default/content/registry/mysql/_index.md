@@ -12,10 +12,6 @@ layout: overview
 The MySQL provider for Pulumi can be used to provision any of the resources available for MySQL.
 The MySQL provider must be configured with credentials to deploy and update resources in MySQL.
 
-## Setup
-
-The MySQL provider supports several options for providing access to MySQL credentials.  See the [MySQL setup page]({{< relref "setup" >}}) for details.
-
 ## Example
 
 {{< chooser language "javascript,typescript,python,go,csharp" >}}

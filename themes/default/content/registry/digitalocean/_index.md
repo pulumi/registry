@@ -14,10 +14,6 @@ layout: overview
 The DigitalOcean provider for Pulumi can be used to provision any of the cloud resources available in [DigitalOcean](https://www.digitalocean.com/).
 The DigitalOcean provider must be configured with credentials to deploy and update resources in a DigitalOcean cloud.
 
-## Setup
-
-The DigitalOcean provider supports several options for providing access to DigitalOcean credentials.  See the [DigitalOcean setup page]({{< relref "setup" >}}) for details.
-
 ## Example
 
 {{< chooser language "javascript,typescript,python,go,csharp" >}}

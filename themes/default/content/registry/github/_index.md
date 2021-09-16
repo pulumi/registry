@@ -12,10 +12,6 @@ layout: overview
 The GitHub provider for Pulumi can be used to provision any of the cloud resources available in [GitHub](https://github.com/).
 The GitHub provider must be configured with credentials to deploy and update resources in GitHub.
 
-## Setup
-
-The GitHub provider supports several options for providing access to GitHub credentials.  See the [GitHub setup page]({{< relref "setup" >}}) for details.
-
 ## Example
 
 {{< chooser language "javascript,typescript,python,go,csharp" >}}

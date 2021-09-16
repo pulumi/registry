@@ -12,10 +12,6 @@ layout: overview
 The PagerDuty provider for Pulumi can be used to provision any of the cloud resources available in [PagerDuty](https://www.pagerduty.com/).
 The PagerDuty provider must be configured with credentials to deploy and update resources in PagerDuty.
 
-## Setup
-
-The PagerDuty provider supports several options for providing access to PagerDuty credentials.  See the [PagerDuty setup page]({{< relref "setup" >}}) for details.
-
 ## Example
 
 {{< chooser language "javascript,typescript,python,go,csharp" >}}

@@ -11,10 +11,6 @@ layout: overview
 
 The Okta provider for Pulumi can be used to provision any of the resources available in [Okta](https://www.okta.com/).
 
-## Setup
-
-The Okta provider supports several options for interacting with Okta.  See the [Okta setup page]({{< relref "setup" >}}) for details.
-
 ## Example
 
 {{< chooser language "javascript,typescript,python,go,csharp" >}}

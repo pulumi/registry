@@ -16,11 +16,6 @@ layout: overview
 The Equinix Metal provider for Pulumi can be used to provision any of the cloud resources available in [Equinix Metal](https://metal.equinix.com/).
 The Equinix Metal provider must be configured with credentials to deploy and update resources in Equinix Metal.
 
-## Setup
-
-The Equinix Metal provider supports several options for providing access to Equinix Metal credentials. See
-[Equinix Metal setup page]({{< relref "/docs/intro/cloud-providers/equinix-metal/setup" >}}) for details.
-
 ## Example
 
 {{< chooser language "javascript,typescript,python,go,csharp" >}}

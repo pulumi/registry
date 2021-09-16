@@ -11,10 +11,6 @@ layout: overview
 
 The Spotinst provider for Pulumi can be used to provision any of the resources available in [Spotinst](https://spotinst.com/).
 
-## Setup
-
-The Spotinst provider supports several options for interacting with Spotinst.  See the [Spotinst setup page]({{< relref "setup" >}}) for details.
-
 ## Example
 
 {{< chooser language "javascript,typescript,python,go,csharp" >}}

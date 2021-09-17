@@ -1,6 +1,117 @@
 ---
-title: Overview
-meta_desc: |
-    Overview of infrastructure as code in the Pulumi <placeholder> package
+title: Linode
+meta_desc: This page provides an overview of the Linode SDK for Pulumi.
+menu:
+  intro:
+    parent: cloud-providers
+    identifier: clouds-linode
+    weight: 2
+
+aliases: ["/docs/reference/clouds/linode/"]
 layout: overview
 ---
+
+The Linode provider for Pulumi can be used to provision any of the cloud resources available in [Linode](https://www.linode.com).
+The Linode provider must be configured with credentials to deploy and update resources in Linode.
+
+## Example
+
+{{< chooser language "javascript,typescript,python,go,csharp" >}}
+
+{{% choosable language javascript %}}
+
+```javascript
+const linode = require("@pulumi/linode")
+const domain = new linode.Domain("my-domain", {
+  domain: "foobar.example",
+  soaEmail: "example@foobar.example",
+  type: "master",
+});
+```
+
+{{% /choosable %}}
+{{% choosable language typescript %}}
+
+```typescript
+import * as linode from "@pulumi/linode";
+const domain = new linode.Domain("my-domain", {
+  domain: "foobar.example",
+  soaEmail: "example@foobar.example",
+  type: "master",
+});
+```
+
+{{% /choosable %}}
+{{% choosable language python %}}
+
+```python
+import pulumi_linode as linode
+domain = linode.Domain("my-domain",
+  domain='foobar.example',
+  soa_email='example@foobar.example',
+  type='master',
+)
+```
+
+{{% /choosable %}}
+{{% choosable language go %}}
+
+```go
+import (
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	linode "github.com/pulumi/pulumi-linode/sdk/v3/go/linode"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		domain, err := linode.NewDomain(ctx, "test", &linode.DomainArgs{
+			Domain:   pulumi.String("foobar.example"),
+			SoaEmail: pulumi.String("example@foobar.example"),
+			Type:     pulumi.String("master"),
+		})
+		if err != nil {
+			return err
+		}
+
+		return nil
+	})
+}
+
+```
+
+{{% /choosable %}}
+{{% choosable language csharp %}}
+
+```csharp
+using System.Threading.Tasks;
+using Pulumi;
+using Pulumi.Linode;
+
+class Program
+{
+    static Task Main() =>
+        Deployment.Run(() => {
+            var domain = new Linode.Domain("my-domain", new Linode.DomainArgs
+            {
+                Domain = "foobar.example",
+                SoaEmail = "example@foobar.example",
+                Type = "master",
+            });
+        });
+}
+```
+
+{{% /choosable %}}
+
+{{< /chooser >}}
+
+## Libraries
+
+The following packages are available in packager managers:
+
+* JavaScript/TypeScript: [`@pulumi/linode`](https://www.npmjs.com/package/@pulumi/linode)
+* Python: [`pulumi-linode`](https://pypi.org/project/pulumi-linode/)
+* Go: [`github.com/pulumi/pulumi-linode/sdk/v3/go/linode`](https://github.com/pulumi/pulumi-linode)
+* .NET: [`Pulumi.Linode`](https://www.nuget.org/packages/Pulumi.Linode)
+
+The Linode provider is open source and available in the [pulumi/pulumi-linode](https://github.com/pulumi/pulumi-linode) repo.

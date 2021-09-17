@@ -8,4 +8,4 @@ package_status: ga
 version: v2.3.0
 featured: false
 native: false
-logo: "/logos/tech/akamai.png"
+logo: "/logos/tech/akamai.svg"

@@ -4,7 +4,7 @@ meta_desc: This page provides an overview on how to configure the Pulumi Consul 
 layout: installation
 ---
 
-The [Pulumi Consul provider]({{< relref "./" >}}) uses the Consul SDK to manage resources.
+The Pulumi Consul provider uses the Consul SDK to manage resources.
 
 > Pulumi relies on the Consul SDK to authenticate requests from your computer to HashiCorp Consul. Your credentials are never sent
 > to pulumi.com.

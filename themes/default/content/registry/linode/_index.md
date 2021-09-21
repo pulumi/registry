@@ -1,11 +1,6 @@
 ---
 title: Linode
 meta_desc: This page provides an overview of the Linode SDK for Pulumi.
-menu:
-  intro:
-    parent: cloud-providers
-    identifier: clouds-linode
-    weight: 2
 
 aliases: ["/docs/reference/clouds/linode/"]
 layout: overview

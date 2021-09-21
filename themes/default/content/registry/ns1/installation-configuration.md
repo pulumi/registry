@@ -4,12 +4,12 @@ meta_desc: This page provides an overview on how to configure credentials for th
 layout: installation
 ---
 
-The [Pulumi NS1 provider]({{< relref "./" >}}) uses the NS1 SDK to manage and provision resources.
+The Pulumi NS1 provider uses the NS1 SDK to manage and provision resources.
 
 > Pulumi relies on the NS1 SDK to authenticate requests from your computer to NS1. Your credentials are never sent
 > to pulumi.com.
 
-The [Pulumi NS1 Provider]({{< relref "./" >}}) needs to be configured with NS1 credentials
+The Pulumi NS1 Provider needs to be configured with NS1 credentials
 before it can be used to create resources.
 
 ### Configuring Credentials

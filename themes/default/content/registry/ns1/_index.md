@@ -1,11 +1,6 @@
 ---
 title: NS1
 meta_desc: This page provides an overview of the NS1 Provider for Pulumi.
-menu:
-  intro:
-    parent: cloud-providers
-    identifier: clouds-ns1
-    weight: 2
 layout: overview
 ---
 

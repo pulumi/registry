@@ -5,12 +5,12 @@ aliases: ["/docs/reference/clouds/digitalocean/setup/"]
 layout: installation
 ---
 
-The [Pulumi DigitalOcean provider]({{< relref "./" >}}) uses the DigitalOcean SDK to manage and provision resources.
+The Pulumi DigitalOcean provider uses the DigitalOcean SDK to manage and provision resources.
 
 > Pulumi relies on the DigitalOcean SDK to authenticate requests from your computer to DigitalOcean. Your credentials are never sent
 > to pulumi.com.
 
-The [Pulumi DigitalOcean Provider]({{< relref "./" >}}) needs to be configured with DigitalOcean credentials
+The Pulumi DigitalOcean Provider needs to be configured with DigitalOcean credentials
 before it can be used to create resources.
 
 ### Configuring Credentials

@@ -1,11 +1,6 @@
 ---
 title: Azure Classic
 meta_desc: The classic Azure provider for Pulumi can be used to provision any of the cloud resources available in Azure.
-menu:
-  intro:
-    parent: cloud-providers
-    identifier: clouds-azure-classic
-    weight: 2
 layout: overview
 ---
 

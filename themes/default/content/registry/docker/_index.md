@@ -1,11 +1,6 @@
 ---
 title: Docker
 meta_desc: This page provides an overview of the Docker Provider for Pulumi.
-menu:
-  intro:
-    parent: cloud-providers
-    identifier: clouds-docker
-    weight: 2
 layout: overview
 ---
 

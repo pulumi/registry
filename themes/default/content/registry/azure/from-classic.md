@@ -3,7 +3,7 @@ title: Migration from classic Azure to Azure-Native
 meta_desc: How to migrate from the classic Azure provider to the native Azure provider.
 ---
 
-Pulumi currently has two providers to manage resources in Microsoft Azure: [classic Pulumi Azure]({{< relref "/docs/reference/pkg/azure" >}}) and [native Pulumi Azure]({{< relref "./" >}}). This guide explains the differences between the two providers, our recommendations about using them, and a migration guide from the classic Azure provider to the native Azure provider.
+Pulumi currently has two providers to manage resources in Microsoft Azure: classic Pulumi Azure. This guide explains the differences between the two providers, our recommendations about using them, and a migration guide from the classic Azure provider to the native Azure provider.
 
 ## Key Difference between Azure and Azure-Native
 
@@ -17,7 +17,7 @@ Because of this difference, the SDKs of the two providers are not compatible wit
 
 Configurations of the native Azure provider and the classic Azure provider are similar. However, for the new provider, each setting has to start with `azure-native` instead of `azure`. For instance, the active subscription is configured with `azure-native:subscriptionId` instead of `azure:subscriptionId`.
 
-You can find all the configuration settings in the Configuration section of [Azure-Native]({{< relref "./" >}}).
+You can find all the configuration settings in the Configuration section of Azure-Native.
 
 ## Use the native Azure provider for new projects
 

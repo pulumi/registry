@@ -1,11 +1,6 @@
 ---
 title: Random
 meta_desc: This page provides an overview of the Random Provider for Pulumi.
-menu:
-  intro:
-    parent: cloud-providers
-    identifier: clouds-random
-    weight: 2
 layout: overview
 ---
 

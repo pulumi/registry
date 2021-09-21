@@ -4,12 +4,12 @@ meta_desc: This page provides an overview on how to configure credentials for th
 layout: installation
 ---
 
-The [Pulumi DNSimple provider]({{< relref "./" >}}) uses the DNSimple SDK to manage and provision resources.
+The Pulumi DNSimple provider uses the DNSimple SDK to manage and provision resources.
 
 > Pulumi relies on the DNSimple SDK to authenticate requests from your computer to DNSimple. Your credentials are never sent
 > to pulumi.com.
 
-The [Pulumi DNSimple Provider]({{< relref "./" >}}) needs to be configured with DNSimple credentials
+The Pulumi DNSimple Provider needs to be configured with DNSimple credentials
 before it can be used to create resources.
 
 ### Configuring Credentials

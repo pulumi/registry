@@ -6,7 +6,7 @@ aliases: ["/docs/reference/clouds/azure/setup/"]
 layout: installation
 ---
 
-The [native Azure provider for Pulumi]({{< relref "./" >}}) uses the Azure SDK to manage and provision resources.
+The native Azure provider for Pulumi uses the Azure SDK to manage and provision resources.
 
 > Pulumi relies on the Azure SDK to authenticate requests from your computer to Azure. Your credentials are never sent to pulumi.com.
 

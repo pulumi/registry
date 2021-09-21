@@ -1,11 +1,6 @@
 ---
 title: Auth0
 meta_desc: This page provides an overview of the Auth0 Provider for Pulumi.
-menu:
-  intro:
-    parent: cloud-providers
-    identifier: clouds-auth0
-    weight: 2
 layout: overview
 ---
 

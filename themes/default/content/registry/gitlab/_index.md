@@ -1,11 +1,6 @@
 ---
 title: GitLab
 meta_desc: This page provides an overview of the GitLab Provider for Pulumi.
-menu:
-  intro:
-    parent: cloud-providers
-    identifier: clouds-gitlab
-    weight: 2
 layout: overview
 ---
 

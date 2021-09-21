@@ -4,12 +4,12 @@ meta_desc: This page provides an overview on how to configure credentials for th
 layout: installation
 ---
 
-The [Pulumi Akamai provider]({{< relref "./" >}}) uses the Akamai SDK to manage and provision resources.
+The Pulumi Akamai provider uses the Akamai SDK to manage and provision resources.
 
 > Pulumi relies on the Akamai SDK to authenticate requests from your computer to Akamai. Your credentials are never sent
 > to pulumi.com.
 
-The [Pulumi Akamai Provider]({{< relref "./" >}}) needs to be configured with Akamai credentials
+The Pulumi Akamai Provider needs to be configured with Akamai credentials
 before it can be used to create resources.
 
 ### Configuring Credentials

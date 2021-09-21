@@ -1,11 +1,6 @@
 ---
 title: Rancher2
 meta_desc: This page provides an overview of the Rancher2 Provider for Pulumi.
-menu:
-  intro:
-    parent: cloud-providers
-    identifier: clouds-rancher2
-    weight: 2
 layout: overview
 ---
 

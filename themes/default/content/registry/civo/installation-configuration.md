@@ -4,12 +4,12 @@ meta_desc: This page provides an overview on how to configure credentials for th
 layout: installation
 ---
 
-The [Pulumi Civo provider]({{< relref "./" >}}) uses the Civo SDK to manage and provision resources.
+The Pulumi Civo provider uses the Civo SDK to manage and provision resources.
 
 > Pulumi relies on the Civo SDK to authenticate requests from your computer to Civo. Your credentials are never sent
 > to pulumi.com.
 
-The [Pulumi Civo Provider]({{< relref "./" >}}) needs to be configured with Civo credentials
+The Pulumi Civo Provider needs to be configured with Civo credentials
 before it can be used to create resources.
 
 ### Configuring Credentials

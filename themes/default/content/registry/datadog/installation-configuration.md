@@ -4,12 +4,12 @@ meta_desc: This page provides an overview on how to configure credentials for th
 layout: installation
 ---
 
-The [Pulumi Datadog provider]({{< relref "./" >}}) uses the Datadog SDK to manage and provision resources.
+The Pulumi Datadog provider uses the Datadog SDK to manage and provision resources.
 
 > Pulumi relies on the Datadog SDK to authenticate requests from your computer to Datadog. Your credentials are never sent
 > to pulumi.com.
 
-The [Pulumi Datadog Provider]({{< relref "./" >}}) needs to be configured with Datadog credentials
+The Pulumi Datadog Provider needs to be configured with Datadog credentials
 before it can be used to create resources.
 
 ### Configuring Credentials

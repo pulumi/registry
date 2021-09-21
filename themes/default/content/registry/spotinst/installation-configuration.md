@@ -4,7 +4,7 @@ meta_desc: This page provides an overview on how to configure the Pulumi Spotins
 layout: installation
 ---
 
-The [Pulumi Spotinst provider]({{< relref "./" >}}) uses the Spotinst SDK to manage resources.
+The Pulumi Spotinst provider uses the Spotinst SDK to manage resources.
 
 > Pulumi relies on the Spotinst SDK to authenticate requests from your computer to Spotinst. Your credentials are never sent
 > to pulumi.com.

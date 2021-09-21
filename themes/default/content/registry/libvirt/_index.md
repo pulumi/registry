@@ -1,11 +1,6 @@
 ---
 title: libvirt
 meta_desc: This page provides an overview of the libvirt Provider for Pulumi.
-menu:
-  intro:
-    parent: cloud-providers
-    identifier: clouds-libvirt
-    weight: 2
 layout: overview
 ---
 

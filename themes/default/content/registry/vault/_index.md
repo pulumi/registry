@@ -1,11 +1,6 @@
 ---
 title: HashiCorp Vault
 meta_desc: This page provides an overview of the HashiCorp Vault Provider for Pulumi.
-menu:
-  intro:
-    parent: cloud-providers
-    identifier: clouds-vault
-    weight: 2
 layout: overview
 ---
 

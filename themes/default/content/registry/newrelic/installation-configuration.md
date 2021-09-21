@@ -4,12 +4,12 @@ meta_desc: This page provides an overview on how to configure credentials for th
 layout: installation
 ---
 
-The [Pulumi New Relic provider]({{< relref "./" >}}) uses the New Relic SDK to manage and provision resources.
+The Pulumi New Relic provider uses the New Relic SDK to manage and provision resources.
 
 > Pulumi relies on the New Relic SDK to authenticate requests from your computer to New Relic. Your credentials are never sent
 > to pulumi.com.
 
-The [Pulumi New Relic Provider]({{< relref "./" >}}) needs to be configured with New Relic credentials
+The Pulumi New Relic Provider needs to be configured with New Relic credentials
 before it can be used to create resources.
 
 ### Configuring Credentials

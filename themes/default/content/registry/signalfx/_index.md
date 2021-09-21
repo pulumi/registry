@@ -1,11 +1,6 @@
 ---
 title: SignalFx
 meta_desc: This page provides an overview of the SignalFx Provider for Pulumi.
-menu:
-  intro:
-    parent: cloud-providers
-    identifier: clouds-signalfx
-    weight: 2
 layout: overview
 ---
 

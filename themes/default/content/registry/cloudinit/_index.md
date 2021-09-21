@@ -1,11 +1,6 @@
 ---
 title: cloud-init
 meta_desc: This page provides an overview of the cloud-init Provider for Pulumi.
-menu:
-  intro:
-    parent: cloud-providers
-    identifier: clouds-cloudinit
-    weight: 2
 layout: overview
 ---
 

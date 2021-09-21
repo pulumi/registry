@@ -4,12 +4,12 @@ meta_desc: This page provides an overview on how to configure credentials for th
 layout: installation
 ---
 
-The [Pulumi PagerDuty provider]({{< relref "./" >}}) uses the PagerDuty SDK to manage and provision resources.
+The Pulumi PagerDuty provider uses the PagerDuty SDK to manage and provision resources.
 
 > Pulumi relies on the PagerDuty SDK to authenticate requests from your computer to PagerDuty. Your credentials are never sent
 > to pulumi.com.
 
-The [Pulumi PagerDuty Provider]({{< relref "./" >}}) needs to be configured with PagerDuty credentials
+The Pulumi PagerDuty Provider needs to be configured with PagerDuty credentials
 before it can be used to create resources.
 
 ### Configuring Credentials

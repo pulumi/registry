@@ -1,11 +1,6 @@
 ---
 title: Datadog
 meta_desc: This page provides an overview of the Datadog Provider for Pulumi.
-menu:
-  intro:
-    parent: cloud-providers
-    identifier: clouds-datadog
-    weight: 2
 layout: overview
 ---
 

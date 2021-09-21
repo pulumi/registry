@@ -1,11 +1,6 @@
 ---
 title: Minio
 meta_desc: This page provides an overview of the Minio Provider for Pulumi.
-menu:
-  intro:
-    parent: cloud-providers
-    identifier: clouds-minio
-    weight: 2
 layout: overview
 ---
 

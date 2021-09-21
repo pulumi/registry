@@ -1,11 +1,6 @@
 ---
 title: Aiven
 meta_desc: This page provides an overview of the Aiven Provider for Pulumi.
-menu:
-  intro:
-    parent: cloud-providers
-    identifier: clouds-aiven
-    weight: 2
 layout: overview
 ---
 

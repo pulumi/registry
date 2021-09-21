@@ -1,11 +1,6 @@
 ---
 title: F5 BIG-IP
 meta_desc: This page provides an overview of the F5 BIG-IP Provider for Pulumi.
-menu:
-  intro:
-    parent: cloud-providers
-    identifier: clouds-f5bigip
-    weight: 2
 layout: overview
 ---
 

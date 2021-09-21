@@ -1,11 +1,6 @@
 ---
 title: New Relic
 meta_desc: This page provides an overview of the New Relic Provider for Pulumi.
-menu:
-  intro:
-    parent: cloud-providers
-    identifier: clouds-newrelic
-    weight: 2
 layout: overview
 ---
 

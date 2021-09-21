@@ -6,9 +6,7 @@ aliases: ["/docs/reference/clouds/gcp/setup/"]
 layout: installation
 ---
 
-[Pulumi Google Cloud Platform Provider]: {{< relref "./" >}}
-
-The [Pulumi Google Cloud Platform Provider] needs to be configured with Google credentials
+The Pulumi Google Cloud Platform Provider needs to be configured with Google credentials
 before it can be used to create resources.
 
 {{% configure-gcp %}}

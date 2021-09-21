@@ -1,21 +1,12 @@
 ---
 title: OpenStack
 meta_desc: The OpenStack provider for Pulumi can be used to provision any of the cloud resources available in OpenStack.
-menu:
-  intro:
-    parent: cloud-providers
-    identifier: clouds-openstack
-    weight: 2
 
 aliases: ["/docs/reference/clouds/openstack/"]
 layout: overview
 ---
 
 The OpenStack provider for Pulumi can be used to provision any of the private and public cloud resources available in [OpenStack](https://www.openstack.org/).  The OpenStack provider must be configured with credentials to deploy and update resources in an OpenStack cloud.
-
-## OpenStack Provider Setup
-
-The OpenStack provider supports several options for providing access to OpenStack credentials.  See the [OpenStack setup page]({{< relref "setup" >}}) for details.
 
 ## Example
 

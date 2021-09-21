@@ -1,11 +1,6 @@
 ---
 title: MySQL
 meta_desc: This page provides an overview of the MySQL Provider for Pulumi.
-menu:
-  intro:
-    parent: cloud-providers
-    identifier: clouds-mysql
-    weight: 2
 layout: overview
 ---
 

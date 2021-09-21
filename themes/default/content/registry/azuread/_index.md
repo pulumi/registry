@@ -1,11 +1,6 @@
 ---
 title: AzureAD
 meta_desc: This page provides an overview of the Azure Active Directoy Provider for Pulumi.
-menu:
-  intro:
-    parent: cloud-providers
-    identifier: clouds-azuread
-    weight: 2
 layout: overview
 ---
 

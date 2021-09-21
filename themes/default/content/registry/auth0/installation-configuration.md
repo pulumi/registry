@@ -4,12 +4,12 @@ meta_desc: This page provides an overview on how to configure credentials for th
 layout: installation
 ---
 
-The [Pulumi Auth0 provider]({{< relref "./" >}}) uses the Auth0 SDK to manage and provision resources.
+The Pulumi Auth0 provider uses the Auth0 SDK to manage and provision resources.
 
 > Pulumi relies on the Auth0 SDK to authenticate requests from your computer to Auth0. Your credentials are never sent
 > to pulumi.com.
 
-The [Pulumi Auth0 Provider]({{< relref "./" >}}) needs to be configured with Auth0 credentials
+The Pulumi Auth0 Provider needs to be configured with Auth0 credentials
 before it can be used to create resources.
 
 ### Configuring Credentials

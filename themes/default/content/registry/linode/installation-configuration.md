@@ -5,11 +5,11 @@ aliases: ["/docs/reference/clouds/linode/setup/"]
 layout: installation
 ---
 
-The [Pulumi Linode provider]({{< relref "./" >}}) uses the Linode SDK to manage and provision resources.
+The Pulumi Linode provider uses the Linode SDK to manage and provision resources.
 
 > Pulumi relies on the Linode SDK to authenticate requests from your computer to Linode. Your credentials are never sent
 > to pulumi.com.
-The [Pulumi Linode Provider]({{< relref "./" >}}) needs to be configured with Linode credentials
+The Pulumi Linode Provider needs to be configured with Linode credentials
 before it can be used to create resources.
 
 ### Configuring Credentials

@@ -4,12 +4,12 @@ meta_desc: This page provides an overview on how to configure credentials for th
 layout: installation
 ---
 
-The [Pulumi Kafka provider]({{< relref "./" >}}) uses the Kafka SDK to manage and provision resources.
+The Pulumi Kafka provider uses the Kafka SDK to manage and provision resources.
 
 > Pulumi relies on the Kafka SDK to authenticate requests from your computer to Kafka. Your credentials are never sent
 > to pulumi.com.
 
-The [Pulumi Kafka Provider]({{< relref "./" >}}) needs to be configured with Kafka credentials
+The Pulumi Kafka Provider needs to be configured with Kafka credentials
 before it can be used to create resources.
 
 ### Configuring Credentials

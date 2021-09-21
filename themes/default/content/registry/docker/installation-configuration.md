@@ -4,7 +4,7 @@ meta_desc: This page provides an overview on how to configure the Pulumi Docker 
 layout: installation
 ---
 
-The [Pulumi Docker provider]({{< relref "./" >}}) uses the Docker SDK to manage resources.
+The Pulumi Docker provider uses the Docker SDK to manage resources.
 
 > Pulumi relies on the Docker SDK to authenticate requests from your computer to Docker. Your credentials are never sent
 > to pulumi.com.

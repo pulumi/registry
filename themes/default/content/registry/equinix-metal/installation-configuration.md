@@ -8,12 +8,12 @@ aliases:
 layout: installation
 ---
 
-The [Pulumi Equinix Metal provider]({{< relref "./" >}}) uses the Equinix Metal SDK to manage and provision resources.
+The Pulumi Equinix Metal provider uses the Equinix Metal SDK to manage and provision resources.
 
 > Pulumi relies on the Equinix Metal SDK to authenticate requests from your computer to Equinix Metal. Your credentials are never sent
 > to pulumi.com.
 
-The [Pulumi Equinix Metal Provider]({{< relref "./" >}}) needs to be configured with Equinix Metal credentials
+The Pulumi Equinix Metal Provider needs to be configured with Equinix Metal credentials
 before it can be used to create resources.
 
 ### Configuring Credentials

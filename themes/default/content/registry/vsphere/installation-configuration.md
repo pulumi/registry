@@ -6,12 +6,12 @@ aliases: ["/docs/reference/clouds/vsphere/setup/"]
 layout: installation
 ---
 
-The [Pulumi vSphere provider]({{< relref "./" >}}) uses the vSphere SDK to manage and provision resources.
+The Pulumi vSphere provider uses the vSphere SDK to manage and provision resources.
 
 > Pulumi relies on the vSphere SDK to authenticate requests from your computer to vSphere. Your credentials are never sent
 > to pulumi.com.
 
-The [Pulumi vSphere Provider]({{< relref "./" >}}) needs to be configured with vSphere credentials
+The Pulumi vSphere Provider needs to be configured with vSphere credentials
 before it can be used to create resources.
 
 ### Configuring Credentials

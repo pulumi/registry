@@ -4,7 +4,7 @@ meta_desc: This page provides an overview on how to configure the Pulumi Cloudfl
 layout: installation
 ---
 
-The [Pulumi Cloudflare provider]({{< relref "./" >}}) uses the Cloudflare SDK to manage resources.
+The Pulumi Cloudflare provider uses the Cloudflare SDK to manage resources.
 
 > Pulumi relies on the Cloudflare SDK to authenticate requests from your computer to Cloudflare. Your credentials are never sent
 > to pulumi.com.

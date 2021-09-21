@@ -4,12 +4,12 @@ meta_desc: This page provides an overview on how to configure credentials for th
 layout: installation
 ---
 
-The [Pulumi Hetzner Cloud provider]({{< relref "./" >}}) uses the Hetzner Cloud SDK to manage and provision resources.
+The Pulumi Hetzner Cloud provider uses the Hetzner Cloud SDK to manage and provision resources.
 
 > Pulumi relies on the Hetzner Cloud SDK to authenticate requests from your computer to Hetzner Cloud. Your credentials are never sent
 > to pulumi.com.
 
-The [Pulumi Hetzner Cloud Provider]({{< relref "./" >}}) needs to be configured with Hetzner Cloud credentials
+The Pulumi Hetzner Cloud Provider needs to be configured with Hetzner Cloud credentials
 before it can be used to create resources.
 
 ### Configuring Credentials

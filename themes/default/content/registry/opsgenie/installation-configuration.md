@@ -4,12 +4,12 @@ meta_desc: This page provides an overview on how to configure credentials for th
 layout: installation
 ---
 
-The [Pulumi Opsgenie provider]({{< relref "./" >}}) uses the Opsgenie SDK to manage and provision resources.
+The Pulumi Opsgenie provider uses the Opsgenie SDK to manage and provision resources.
 
 > Pulumi relies on the Opsgenie SDK to authenticate requests from your computer to Opsgenie. Your credentials are never sent
 > to pulumi.com.
 
-The [Pulumi Opsgenie Provider]({{< relref "./" >}}) needs to be configured with Opsgenie credentials
+The Pulumi Opsgenie Provider needs to be configured with Opsgenie credentials
 before it can be used to manage resources.
 
 ### Configuring Credentials

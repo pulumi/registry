@@ -4,12 +4,12 @@ meta_desc: This page provides an overview on how to configure credentials for th
 layout: installation
 ---
 
-The [Pulumi Splunk provider]({{< relref "./" >}}) uses the Splunk SDK to manage and provision resources.
+The Pulumi Splunk provider uses the Splunk SDK to manage and provision resources.
 
 > Pulumi relies on the Splunk SDK to authenticate requests from your computer to Splunk. Your credentials are never sent
 > to pulumi.com.
 
-The [Pulumi Splunk Provider]({{< relref "./" >}}) needs to be configured with Splunk credentials
+The Pulumi Splunk Provider needs to be configured with Splunk credentials
 before it can be used to create resources.
 
 ### Configuring Credentials

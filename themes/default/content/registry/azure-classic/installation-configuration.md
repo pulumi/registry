@@ -5,7 +5,7 @@ meta_desc: This page provides an overview of how to set up and configure credent
 layout: installation
 ---
 
-The [Pulumi Azure provider]({{< relref "./" >}}) uses the Azure SDK to manage and provision resources.
+The Pulumi Azure provider uses the Azure SDK to manage and provision resources.
 
 > Pulumi relies on the Azure SDK to authenticate requests from your computer to Azure. Your credentials are never sent
 > to pulumi.com.

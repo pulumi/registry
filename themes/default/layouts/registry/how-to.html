@@ -5,12 +5,41 @@
         <div class="lg:flex">
             <div class="lg:w-12/12 lg:px-4">
                 <h4 class="pb-8">How-to Guides</h4>
+
                 {{ $providerName := path.Base .File.Dir }}
-                {{ $tutorialPath := path.Join "docs/tutorials/" $providerName }}
-                {{ with .GetPage $tutorialPath }}
-                    {{ range .Pages }}
-                        <div class="pb-4"><a style="text-decoration: revert; color: revert;" href="{{ relref . .File.BaseFileName }}">{{ .Title }}</a></div>
-                    {{ end }}
+                {{ $tutorialsIndex := path.Join "docs/reference/pkg/" $providerName "/_index.md" }}
+                <pulumi-chooser type="language" options="typescript,javascript,python,go,csharp"></pulumi-chooser>
+
+                {{ with $.Site.GetPage $tutorialsIndex }}
+                    <pulumi-choosable type="language" value="typescript">
+                        {{ range where .Pages "Params.language" "ts" }}
+                            <div class="pb-4"><a style="text-decoration: revert; color: revert;" href="{{ relref . .File.BaseFileName }}">{{ .Title }}</a></div>
+                        {{ end }}
+                    </pulumi-choosable>
+
+                    <pulumi-choosable type="language" value="javascript">
+                        {{ range where .Pages "Params.language" "js" }}
+                            <div class="pb-4"><a style="text-decoration: revert; color: revert;" href="{{ relref . .File.BaseFileName }}">{{ .Title }}</a></div>
+                        {{ end }}\
+                    </pulumi-choosable>
+
+                    <pulumi-choosable type="language" value="python">
+                        {{ range where .Pages "Params.language" "py" }}
+                            <div class="pb-4"><a style="text-decoration: revert; color: revert;" href="{{ relref . .File.BaseFileName }}">{{ .Title }}</a></div>
+                        {{ end }}
+                    </pulumi-choosable>
+
+                    <pulumi-choosable type="language" value="go">
+                        {{ range where .Pages "Params.language" "go" }}
+                            <div class="pb-4"><a style="text-decoration: revert; color: revert;" href="{{ relref . .File.BaseFileName }}">{{ .Title }}</a></div>
+                        {{ end }}
+                    </pulumi-choosable>
+
+                    <pulumi-choosable type="language" value="csharp">
+                        {{ range where .Pages "Params.language" "cs" }}
+                            <div class="pb-4"><a style="text-decoration: revert; color: revert;" href="{{ relref . .File.BaseFileName }}">{{ .Title }}</a></div>
+                        {{ end }}
+                    </pulumi-choosable>
                 {{ end }}
             </div>
         </div>

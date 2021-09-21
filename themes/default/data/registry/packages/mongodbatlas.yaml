@@ -1,8 +1,8 @@
 name: mongodbatlas
 title: mongodbatlas
 description: A Pulumi package for creating and managing mongodbatlas cloud resources.
-logo: /logos/pkg/mongodbatlas.svg
-updated_on: 1631644633
+logo_url: ""
+updated_on: 1632258872
 publisher: Pulumi
 category: Database
 package_status: ga

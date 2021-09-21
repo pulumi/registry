@@ -1,8 +1,8 @@
 name: mysql
 title: mysql
 description: A Pulumi package for creating and managing mysql cloud resources.
-logo: /logos/pkg/mysql.svg
-updated_on: 1631644635
+logo_url: ""
+updated_on: 1632258874
 publisher: Pulumi
 category: Database
 package_status: ga

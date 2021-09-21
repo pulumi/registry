@@ -1,8 +1,8 @@
 name: auth0
 title: auth0
 description: A Pulumi package for creating and managing auth0 cloud resources.
-logo: /logos/pkg/auth0.svg
-updated_on: 1631644525
+logo_url: ""
+updated_on: 1632258780
 publisher: Pulumi
 category: Infrastructure
 package_status: ga

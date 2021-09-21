@@ -2,11 +2,11 @@ name: aws
 title: aws
 description: A Pulumi package for creating and managing Amazon Web Services (AWS)
   cloud resources.
-logo: /logos/pkg/aws.svg
-updated_on: 1631644529
+logo_url: ""
+updated_on: 1632258785
 publisher: Pulumi
 category: Cloud
 package_status: ga
-version: v4.20.0
+version: v4.21.1
 featured: true
 native: false

@@ -1,11 +1,11 @@
 name: azure-native
 title: azure-native
 description: A native Pulumi package for creating and managing Azure resources.
-logo: /logos/pkg/azure-native.svg
-updated_on: 1631644565
+logo_url: ""
+updated_on: 1632258807
 publisher: Pulumi
 category: Cloud
 package_status: ga
-version: v1.28.0
+version: v1.29.0
 featured: true
 native: true

@@ -1,11 +1,11 @@
 name: gcp
 title: gcp
 description: A Pulumi package for creating and managing Google Cloud Platform resources.
-logo: /logos/pkg/gcp.svg
-updated_on: 1631644604
+logo_url: ""
+updated_on: 1632258847
 publisher: Pulumi
 category: Cloud
 package_status: ga
-version: v5.19.0
+version: v5.20.0
 featured: false
 native: false

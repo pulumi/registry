@@ -1,8 +1,8 @@
 name: rancher2
 title: rancher2
 description: A Pulumi package for creating and managing rancher2 resources.
-logo: /logos/pkg/rancher2.svg
-updated_on: 1631644657
+logo_url: ""
+updated_on: 1632258894
 publisher: Pulumi
 category: Infrastructure
 package_status: ga

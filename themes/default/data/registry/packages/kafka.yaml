@@ -1,8 +1,8 @@
 name: kafka
 title: kafka
 description: A Pulumi package for creating and managing Kafka.
-logo: /logos/pkg/kafka.svg
-updated_on: 1631644619
+logo_url: ""
+updated_on: 1632258858
 publisher: Pulumi
 category: Infrastructure
 package_status: ga

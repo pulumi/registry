@@ -1,8 +1,8 @@
 name: hcloud
 title: hcloud
 description: A Pulumi package for creating and managing hcloud cloud resources.
-logo: /logos/pkg/hcloud.svg
-updated_on: 1631644616
+logo_url: ""
+updated_on: 1632258855
 publisher: Pulumi
 category: Cloud
 package_status: ga

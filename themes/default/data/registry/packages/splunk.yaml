@@ -1,8 +1,8 @@
 name: splunk
 title: splunk
 description: A Pulumi package for creating and managing splunk cloud resources.
-logo: /logos/pkg/splunk.svg
-updated_on: 1631644666
+logo_url: ""
+updated_on: 1632258904
 publisher: Pulumi
 category: Infrastructure
 package_status: ga

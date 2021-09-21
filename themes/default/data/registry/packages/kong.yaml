@@ -1,8 +1,8 @@
 name: kong
 title: kong
 description: A Pulumi package for creating and managing Kong resources.
-logo: /logos/pkg/kong.svg
-updated_on: 1631644626
+logo_url: ""
+updated_on: 1632258865
 publisher: Pulumi
 category: Infrastructure
 package_status: ga

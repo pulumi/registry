@@ -1,7 +1,6 @@
 ---
 title: Google Cloud Platform (GCP)
 meta_desc: This page provides on an overview of the Google Cloud Platform (GCP) provider for Pulumi.
-
 aliases: ["/docs/reference/clouds/gcp/"]
 layout: overview
 ---

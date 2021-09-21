@@ -1,11 +1,6 @@
 ---
 title: Splunk
 meta_desc: This page provides an overview of the Splunk Provider for Pulumi.
-menu:
-  intro:
-    parent: cloud-providers
-    identifier: clouds-splunk
-    weight: 2
 layout: overview
 ---
 

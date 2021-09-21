@@ -1,11 +1,6 @@
 ---
 title: CloudAMQP
 meta_desc: This page provides an overview of the CloudAMQP Provider for Pulumi.
-menu:
-  intro:
-    parent: cloud-providers
-    identifier: clouds-cloudamqp
-    weight: 2
 layout: overview
 ---
 

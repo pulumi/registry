@@ -1,11 +1,6 @@
 ---
 title: RabbitMQ
 meta_desc: This page provides an overview of the RabbitMQ Provider for Pulumi.
-menu:
-  intro:
-    parent: cloud-providers
-    identifier: clouds-rabbitmq
-    weight: 2
 layout: overview
 ---
 

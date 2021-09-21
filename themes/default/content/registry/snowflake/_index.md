@@ -1,11 +1,6 @@
 ---
 title: Snowflake
 meta_desc: This page provides an overview of the Snowflake Provider for Pulumi.
-menu:
-  intro:
-    parent: cloud-providers
-    identifier: clouds-snowflake
-    weight: 2
 layout: overview
 ---
 

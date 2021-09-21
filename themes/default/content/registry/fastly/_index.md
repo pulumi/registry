@@ -1,11 +1,6 @@
 ---
 title: Fastly
 meta_desc: This page provides an overview of the Fastly Provider for Pulumi.
-menu:
-  intro:
-    parent: cloud-providers
-    identifier: clouds-fastly
-    weight: 2
 layout: overview
 ---
 

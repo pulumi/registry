@@ -1,11 +1,6 @@
 ---
 title: Okta
 meta_desc: This page provides an overview of the Okta Provider for Pulumi.
-menu:
-  intro:
-    parent: cloud-providers
-    identifier: clouds-okta
-    weight: 2
 layout: overview
 ---
 

@@ -1,11 +1,6 @@
 ---
 title: Akamai
 meta_desc: This page provides an overview of the Akamai Provider for Pulumi.
-menu:
-  intro:
-    parent: cloud-providers
-    identifier: clouds-akamai
-    weight: 2
 layout: overview
 ---
 

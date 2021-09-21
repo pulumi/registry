@@ -1,11 +1,6 @@
 ---
 title: Hetzner Cloud
 meta_desc: This page provides an overview of the Hetzner Cloud Provider for Pulumi.
-menu:
-  intro:
-    parent: cloud-providers
-    identifier: clouds-hcloud
-    weight: 2
 layout: overview
 ---
 

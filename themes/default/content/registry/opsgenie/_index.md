@@ -1,11 +1,6 @@
 ---
 title: Opsgenie
 meta_desc: This page provides an overview of the Opsgenie Provider for Pulumi.
-menu:
-  intro:
-    parent: cloud-providers
-    identifier: clouds-opsgenie
-    weight: 2
 layout: overview
 ---
 

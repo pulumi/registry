@@ -1,11 +1,6 @@
 ---
 title: GitHub
 meta_desc: This page provides an overview of the GitHub Provider for Pulumi.
-menu:
-  intro:
-    parent: cloud-providers
-    identifier: clouds-github
-    weight: 2
 layout: overview
 ---
 

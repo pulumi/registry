@@ -1,11 +1,6 @@
 ---
 title: Equinix Metal
 meta_desc: This page provides an overview of the Equinix Metal provider for Pulumi.
-menu:
-  intro:
-    parent: cloud-providers
-    identifier: clouds-equinix-metal
-    weight: 2
 
 aliases:
   - "/docs/reference/clouds/packet/"

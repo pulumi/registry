@@ -1,11 +1,6 @@
 ---
 title: MongoDB Atlas
 meta_desc: This page provides an overview of the MongoDB Atlas Provider for Pulumi.
-menu:
-  intro:
-    parent: cloud-providers
-    identifier: clouds-mongodbatlas
-    weight: 2
 layout: overview
 ---
 

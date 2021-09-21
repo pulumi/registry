@@ -14,5 +14,5 @@ before it can be used to create resources.
 {{% configure-gcp %}}
 
 {{% notes "info" %}}
-If you are using Pulumi in an non-interactive setting (such as a CI/CD system) you will need to [configure and use a service account]({{< relref "service-account" >}}) instead.
+If you are using Pulumi in an non-interactive setting (such as a CI/CD system) you will need to [configure and use a service account]({{< ref "docs/intro/cloud-providers/gcp/service-account" >}}) instead.
 {{% /notes %}}

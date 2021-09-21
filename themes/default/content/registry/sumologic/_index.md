@@ -1,11 +1,6 @@
 ---
 title: SumoLogic
 meta_desc: This page provides an overview of the SumoLogic Provider for Pulumi.
-menu:
-intro:
-parent: cloud-providers
-identifier: clouds-sumologic
-weight: 2
 layout: overview
 ---
 

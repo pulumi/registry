@@ -1,11 +1,6 @@
 ---
 title: Rancher Kubernetes Engine
 meta_desc: This page provides an overview of the RKE Provider for Pulumi.
-menu:
-  intro:
-    parent: cloud-providers
-    identifier: clouds-rke
-    weight: 2
 layout: overview
 ---
 

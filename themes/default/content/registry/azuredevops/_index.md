@@ -1,11 +1,6 @@
 ---
 title: AzureDevOps
 meta_desc: This page provides an overview of the AzureDevOps Provider for Pulumi.
-menu:
-  intro:
-    parent: cloud-providers
-    identifier: clouds-azuredevops
-    weight: 2
 layout: overview
 ---
 

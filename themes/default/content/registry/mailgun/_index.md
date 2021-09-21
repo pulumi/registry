@@ -1,11 +1,6 @@
 ---
 title: Mailgun
 meta_desc: This page provides an overview of the Mailgun Provider for Pulumi.
-menu:
-  intro:
-    parent: cloud-providers
-    identifier: clouds-mailgun
-    weight: 2
 layout: overview
 ---
 

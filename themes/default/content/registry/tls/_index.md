@@ -1,11 +1,6 @@
 ---
 title: TLS
 meta_desc: This page provides an overview of the TLS Provider for Pulumi.
-menu:
-  intro:
-    parent: cloud-providers
-    identifier: clouds-tls
-    weight: 2
 layout: overview
 ---
 

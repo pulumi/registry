@@ -1,11 +1,6 @@
 ---
 title: Kubernetes
 meta_desc: This page provides an overview of how Pulumi works with Kubernetes.
-menu:
-  intro:
-    parent: cloud-providers
-    identifier: clouds-kubernetes
-    weight: 1
 
 aliases: ["/docs/reference/clouds/kubernetes/"]
 layout: overview

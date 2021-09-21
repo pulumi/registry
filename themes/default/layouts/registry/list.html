@@ -1,5 +1,5 @@
 {{ define "main" }}
-    <div class="container mx-auto px-4 py-8 mt-2">
+    <div class="container mx-auto px-4 pt-8 mt-2">
 
         {{ if and (.Params.h1) (not .Params.notitle) }}
             <h1>{{ .Params.h1 }}</h1>
@@ -9,7 +9,8 @@
 
         <h4>Pulumi Packages</h4>
         <p>
-            Packages are APIs to use Pulumi with Clouds, Infrastructure, Databases, Monitoring, Networks, Version control, and Utilities.
+            Packages are APIs to use Pulumi with Clouds, Infrastructure, Databases, Monitoring,
+            Networks, Version control, and Utilities.
         </p>
 
         <div class="my-8">
@@ -27,7 +28,7 @@
                 </pulumi-filter-select-option-group>
 
                 <!-- Use-case options -->
-                <pulumi-filter-select-option-group name="category" class="mx-4">
+                <pulumi-filter-select-option-group name="category" class="mx-1 md:mx-4">
                     <div class="toggle" slot="toggle">Use Case</div>
                     <div class="options">
                         <pulumi-filter-select-option value="cloud">Cloud</pulumi-option>
@@ -36,7 +37,7 @@
                         <pulumi-filter-select-option value="monitoring">Monitoring</pulumi-option>
                         <pulumi-filter-select-option value="network">Network</pulumi-option>
                         <pulumi-filter-select-option value="utility">Utility</pulumi-option>
-                        <pulumi-filter-select-option value="version control">Version control</pulumi-option>
+                        <pulumi-filter-select-option value="version control system">Version control</pulumi-option>
                     </div>
                 </pulumi-filter-select-option-group>
 
@@ -51,11 +52,17 @@
 
             </pulumi-filter-select>
         </div>
+    </div>
 
-        <h5>Featured Cloud Providers</h5>
-        {{ partial "registry/featured-providers" . }}
+    <div class="packages container mx-auto pb-16">
+        <section class="my-8">
+            <h5 class="px-4">Featured Cloud Providers</h5>
+            {{ partial "registry/index/featured-packages" . }}
+        </section>
 
-        <h5>A - Z Packages ({{ len $.Site.Data.registry.packages }})</h5>
-        {{ partial "registry/resource-providers" . }}
+        <section class="my-8">
+            <h5 class="px-4">All Packages ({{ len $.Site.Data.registry.packages }})</h5>
+            {{ partial "registry/index/all-packages" . }}
+        </section>
     </div>
 {{ end }}

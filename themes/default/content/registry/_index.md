@@ -7,4 +7,6 @@ no_on_this_page: true
 menu:
     header:
         weight: 3
+aliases:
+    - "/docs/intro/cloud-providers/"
 ---

@@ -47,23 +47,47 @@
 
     <div class="packages container mx-auto pb-16 z-0">
         <section class="featured-packages my-8">
+            {{ $featured := slice }}
+            {{ $all := $.Site.Data.registry.packages }}
+
+            {{ range $.Site.Data.registry.packages }}
+                {{ if .featured }}
+                    {{ $featured = $featured | append . }}
+                {{ end }}
+            {{ end }}
+
             <h2 class="px-4 inline-flex items-center">
                 Featured Cloud Providers
                 <span class="featured-count ml-2 py-1 px-4 rounded-full bg-violet-600 text-white text-xl">
-                    {{ len $.Site.Data.registry.packages }}
+                    {{ len $featured }}
                 </span>
             </h2>
-            {{ partial "registry/index/featured-packages" . }}
+            <div class="flex flex-wrap">
+                {{ range $featured }}
+                    {{ partial "registry/index/package" (dict "package" . "getStartedData" $.Site.Data.registry.getstarted "featured" true) }}
+                {{ end }}
+            </div>
         </section>
 
         <section class="all-packages my-8">
             <h2 class="px-4 inline-flex items-center">
                 A-Z Packages
                 <span class="all-count ml-2 py-1 px-4 rounded-full bg-violet-600 text-white text-xl">
-                    {{ len $.Site.Data.registry.packages }}
+                    {{ len $all }}
                 </span>
             </h2>
-            {{ partial "registry/index/all-packages" . }}
+            <div class="flex flex-wrap">
+                {{ range $all }}
+                    {{ partial "registry/index/package" (dict "package" .) }}
+                {{ end }}
+                <div class="no-results px-4">
+                    <p>
+                        Looks like we don't have any packages that match your filters.
+                        Adjust or clear the filters and try again.
+                    </p>
+                    <button class="reset btn btn-lg">Clear all filters</button>
+                </div>
+            </div>
         </section>
     </div>
 {{ end }}

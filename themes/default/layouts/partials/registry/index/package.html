@@ -12,7 +12,6 @@
             >
             <div class="flex flex-wrap">
                 <div class="flex w-full items-center justify-between mb-4">
-<<<<<<< HEAD
                     <a href="{{ $href }}">
                         {{ $url := printf "/logos/pkg/%s.svg" $packageName }}
                         {{ if .package.logo_url }}
@@ -21,10 +20,6 @@
                             {{ $url = .package.logo_url }}
                         {{ end }}
                         <img onerror="this.classList.add('opacity-0');" class="h-12" src="{{ $url }}" alt="{{ .package.title }}">
-=======
-                    <a href="{{ $href }}" class="w-1/2">
-                        <img onerror="this.classList.add('opacity-0');" class="{{ if .featured }}h-12{{ else }}h-8{{ end }}" src="/logos/pkg/{{ $packageName }}.svg" alt="{{ .package.title }}">
->>>>>>> 895dca0 (Update styles and behavior of the registry index page)
                     </a>
                     <a href="{{ $href }}" class="hidden md:block whitespace-nowrap ml-4 text-sm text-blue-600 font-semibold hover:underline">
                         View package
@@ -43,11 +38,16 @@
                     </div>
 
                     {{ if .featured }}
+                        <p>
+                            <span class="text-gray-900 font-display">
+                                {{ .package.description }}
+                            </span>
+                        </p>
                         {{ $packageData := index .getStartedData $packageName }}
                         {{ with $packageData.tutorials}}
                             <pulumi-accordion class="my-4 text-base rounded bg-white border-2 border-gray-900 group hover:bg-gray-900 hover:text-white transition-all">
                                 <pulumi-accordion-item slot="item" class="text-base pl-1">
-                                    <div slot="heading" class="text-base group-hover:text-white whitespace-nowrap"></div>
+                                    <div slot="heading" class="text-base group-hover:text-white whitespace-nowrap">Featured How-to Guides</div>
                                     <i slot="collapsed-icon" class="far fa-plus-square"></i>
                                     <i slot="expanded-icon" class="far fa-minus-square"></i>
                                     <ul class="m-0 p-0 list-none">
@@ -60,11 +60,6 @@
                                 </pulumi-accordion-item>
                             </pulumi-accordion>
                         {{ end }}
-                        <p>
-                            <span class="text-gray-900 font-display">
-                                {{ .package.description }}
-                            </span>
-                        </p>
                     {{ end }}
 
                     <!-- Fixed-height spacer accounts for the minimum space required by the tags. -->

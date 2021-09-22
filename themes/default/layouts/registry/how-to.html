@@ -3,14 +3,15 @@
         {{ partial "registry/header.html" . }}
 
         <div class="lg:flex">
-            <div class="lg:w-12/12 lg:px-4">
+            <div class="lg:w-9/12 lg:px-4">
                 <h4 class="pb-8">How-to Guides</h4>
 
                 {{ $providerName := path.Base .File.Dir }}
-                {{ $tutorialsIndex := path.Join "docs/reference/pkg/" $providerName "/_index.md" }}
-                <pulumi-chooser type="language" options="typescript,javascript,python,go,csharp"></pulumi-chooser>
+                {{ $tutorialsIndex := path.Join "docs/tutorials/" $providerName "/_index.md" }}
 
-                {{ with $.Site.GetPage $tutorialsIndex }}
+                <div><pulumi-chooser type="language" options="typescript,javascript,python,go,csharp"></pulumi-chooser></div>
+
+                {{ with .GetPage $tutorialsIndex }}
                     <pulumi-choosable type="language" value="typescript">
                         {{ range where .Pages "Params.language" "ts" }}
                             <div class="pb-4"><a style="text-decoration: revert; color: revert;" href="{{ relref . .File.BaseFileName }}">{{ .Title }}</a></div>

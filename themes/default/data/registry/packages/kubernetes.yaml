@@ -2,10 +2,10 @@ name: kubernetes
 title: kubernetes
 description: A Pulumi package for creating and managing Kubernetes resources.
 logo_url: ""
-updated_on: 1632258861
+updated_on: 1632352236
 publisher: Pulumi
 category: Cloud
 package_status: ga
 version: v3.7.2
-featured: true
+featured: false
 native: true

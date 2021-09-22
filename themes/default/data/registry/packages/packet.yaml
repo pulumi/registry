@@ -2,7 +2,7 @@ name: packet
 title: packet
 description: A Pulumi package for creating and managing Packet cloud resources.
 logo_url: ""
-updated_on: 1632258886
+updated_on: 1632352261
 publisher: Pulumi
 category: Cloud
 package_status: ga

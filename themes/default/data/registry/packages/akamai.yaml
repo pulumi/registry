@@ -2,7 +2,7 @@ name: akamai
 title: akamai
 description: A Pulumi package for creating and managing akamai cloud resources.
 logo_url: ""
-updated_on: 1632258775
+updated_on: 1632352163
 publisher: Pulumi
 category: Network
 package_status: ga

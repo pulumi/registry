@@ -2,7 +2,7 @@ name: rabbitmq
 title: rabbitmq
 description: A Pulumi package for creating and managing RabbitMQ resources.
 logo_url: ""
-updated_on: 1632258892
+updated_on: 1632352268
 publisher: Pulumi
 category: Infrastructure
 package_status: ga

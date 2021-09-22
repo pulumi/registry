@@ -1,8 +1,10 @@
 ---
 title: DigitalOcean Setup
 meta_desc: This page provides an overview on how to configure credentials for the Pulumi DigitalOcean Provider.
-aliases: ["/docs/reference/clouds/digitalocean/setup/"]
 layout: installation
+aliases:
+    - "/docs/reference/clouds/digitalocean/setup/"
+    - "/docs/intro/cloud-providers/digitalocean/setup/"
 ---
 
 The Pulumi DigitalOcean provider uses the DigitalOcean SDK to manage and provision resources.

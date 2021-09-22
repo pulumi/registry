@@ -1,11 +1,11 @@
 ---
 title: Equinix Metal Setup
 meta_desc: This page provides an overview of how to setup the Equinix Metal SDK to manage and provision resources.
-aliases: 
-   - "/docs/intro/cloud-providers/packet/setup/"
-   - "/docs/reference/clouds/packet/setup/"
-
 layout: installation
+aliases: 
+    - "/docs/intro/cloud-providers/packet/setup/"
+    - "/docs/reference/clouds/packet/setup/"
+    - "/docs/intro/cloud-providers/equinix-metal/setup/"
 ---
 
 The Pulumi Equinix Metal provider uses the Equinix Metal SDK to manage and provision resources.

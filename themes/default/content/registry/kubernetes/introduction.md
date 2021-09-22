@@ -2,7 +2,9 @@
 title: Kubernetes Introduction
 meta_desc: This page provides an introduction to Kubernetes and how Pulumi can help provision and manage
            Kubernetes resources.
-aliases: ["/docs/reference/clouds/kubernetes/introduction/"]
+aliases:
+    - "/docs/reference/clouds/kubernetes/introduction/"
+    - "/docs/intro/cloud-providers/kubernetes/setup/"
 ---
 
 ## Using Pulumi

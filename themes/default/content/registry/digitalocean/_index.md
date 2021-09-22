@@ -4,7 +4,7 @@ meta_desc: This page provides an overview of the DigitalOcean Provider for Pulum
 layout: overview
 aliases:
     - "/docs/reference/clouds/digitalocean/"
-    - "/docs/intro/cloud-providers/do/"
+    - "/docs/intro/cloud-providers/digitalocean/"
 ---
 
 The DigitalOcean provider for Pulumi can be used to provision any of the cloud resources available in [DigitalOcean](https://www.digitalocean.com/).

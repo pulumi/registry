@@ -2,6 +2,8 @@
 title: Docker Setup
 meta_desc: This page provides an overview on how to configure the Pulumi Docker Provider.
 layout: installation
+aliases:    
+    - "/docs/intro/cloud-providers/docker/setup/"
 ---
 
 The Pulumi Docker provider uses the Docker SDK to manage resources.

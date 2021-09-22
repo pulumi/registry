@@ -2,8 +2,10 @@
 title: Kubernetes
 meta_desc: This page provides an overview of how Pulumi works with Kubernetes.
 
-aliases: ["/docs/reference/clouds/kubernetes/"]
 layout: overview
+aliases:
+    - "/docs/reference/clouds/kubernetes/"
+    - "/docs/intro/cloud-providers/kubernetes/"
 ---
 
 [Kubernetes][k8s] is an open source project for running and managing containerized applications

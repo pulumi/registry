@@ -1,8 +1,10 @@
 ---
 title: Linode SDK Setup
 meta_desc: This page provides an overview on how to setup the Linode SDK for Pulumi.
-aliases: ["/docs/reference/clouds/linode/setup/"]
 layout: installation
+aliases:
+    - "/docs/reference/clouds/linode/setup/"
+    - "/docs/intro/cloud-providers/linode/setup"
 ---
 
 The Pulumi Linode provider uses the Linode SDK to manage and provision resources.

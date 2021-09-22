@@ -2,6 +2,8 @@
 title: Okta Setup
 meta_desc: This page provides an overview on how to configure the Pulumi Okta Provider.
 layout: installation
+aliases:
+    - "/docs/intro/cloud-providers/okta/setup"
 ---
 
 The Pulumi Okta provider uses the Okta SDK to manage resources.

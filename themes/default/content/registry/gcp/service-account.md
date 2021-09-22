@@ -2,7 +2,9 @@
 title: Setup Service Account
 meta_desc: This page provides an overview of how set up a Google Cloud Platform Service Account
            with Pulumi.
-aliases: ["/docs/reference/clouds/gcp/service-account/"]
+aliases:
+    - "/docs/reference/clouds/gcp/service-account/"
+    - "/docs/intro/cloud-providers/gcp/service-account/"
 ---
 
 [Google Cloud Platform Credentials]: https://console.cloud.google.com/apis/credentials

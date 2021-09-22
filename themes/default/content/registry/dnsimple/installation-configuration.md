@@ -2,6 +2,8 @@
 title: DNSimple Setup
 meta_desc: This page provides an overview on how to configure credentials for the Pulumi DNSimple Provider.
 layout: installation
+aliases:
+    - "/docs/intro/cloud-providers/dnsimple/setup/"
 ---
 
 The Pulumi DNSimple provider uses the DNSimple SDK to manage and provision resources.

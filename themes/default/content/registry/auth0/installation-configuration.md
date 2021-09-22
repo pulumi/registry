@@ -2,6 +2,8 @@
 title: Auth0 Setup
 meta_desc: This page provides an overview on how to configure credentials for the Pulumi Auth0 Provider.
 layout: installation
+aliases:
+    - "/docs/intro/cloud-providers/auth0/setup/"
 ---
 
 The Pulumi Auth0 provider uses the Auth0 SDK to manage and provision resources.

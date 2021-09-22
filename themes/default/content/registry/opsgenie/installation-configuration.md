@@ -2,6 +2,8 @@
 title: Opsgenie Setup
 meta_desc: This page provides an overview on how to configure credentials for the Pulumi Opsgenie Provider.
 layout: installation
+aliases:
+    - "/docs/intro/cloud-providers/opsgenie/setup/"
 ---
 
 The Pulumi Opsgenie provider uses the Opsgenie SDK to manage and provision resources.

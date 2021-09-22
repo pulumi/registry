@@ -2,6 +2,8 @@
 title: SumoLogic Setup
 meta_desc: This page provides an overview on how to configure credentials for the Pulumi SumoLogic Provider.
 layout: installation
+aliases:
+    - "/docs/intro/cloud-providers/sumologic/setup/"
 ---
 
 The Pulumi SumoLogic provider uses the SumoLogic SDK to manage and provision resources.

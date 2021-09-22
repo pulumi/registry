@@ -2,6 +2,8 @@
 title: NS1 Setup
 meta_desc: This page provides an overview on how to configure credentials for the Pulumi NS1 Provider.
 layout: installation
+aliases:
+    - "/docs/intro/cloud-providers/ns1/setup/"
 ---
 
 The Pulumi NS1 provider uses the NS1 SDK to manage and provision resources.

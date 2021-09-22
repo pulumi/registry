@@ -2,6 +2,8 @@
 title: Minio Setup
 meta_desc: This page provides an overview on how to configure credentials for the Pulumi Minio Provider.
 layout: installation
+aliases:
+    - "/docs/intro/cloud-providers/minio/setup/"
 ---
 
 The Pulumi Minio provider uses the Minio SDK to manage and provision resources.

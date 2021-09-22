@@ -2,6 +2,8 @@
 title: Wavefront Setup
 meta_desc: This page provides an overview on how to configure credentials for the Pulumi Wavefront Provider.
 layout: installation
+aliases:
+    - "/docs/intro/cloud-providers/wavefront/setup/"
 ---
 
 The Pulumi Wavefront provider uses the Wavefront SDK to manage and provision resources.

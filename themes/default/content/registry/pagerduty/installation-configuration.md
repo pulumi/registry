@@ -2,6 +2,8 @@
 title: PagerDuty Setup
 meta_desc: This page provides an overview on how to configure credentials for the Pulumi PagerDuty Provider.
 layout: installation
+aliases:
+    - "/docs/intro/cloud-providers/pagerduty/setup/"
 ---
 
 The Pulumi PagerDuty provider uses the PagerDuty SDK to manage and provision resources.

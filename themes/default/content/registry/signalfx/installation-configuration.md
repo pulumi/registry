@@ -2,6 +2,8 @@
 title: SignalFx Setup
 meta_desc: This page provides an overview on how to configure credentials for the Pulumi SignalFx Provider.
 layout: installation
+aliases:
+    - "/docs/intro/cloud-providers/signalfx/setup/"
 ---
 
 The Pulumi SignalFx provider uses the SignalFx SDK to manage and provision resources.

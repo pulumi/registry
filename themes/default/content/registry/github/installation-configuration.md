@@ -2,6 +2,8 @@
 title: GitHub Setup
 meta_desc: This page provides an overview on how to configure credentials for the Pulumi GitHub Provider.
 layout: installation
+aliases:
+    - "/docs/intro/cloud-providers/github/setup/"
 ---
 
 The Pulumi GitHub provider uses the GitHub SDK to manage and provision resources.

@@ -2,6 +2,8 @@
 title: RabbitMQ Setup
 meta_desc: This page provides an overview on how to configure credentials for the Pulumi RabbitMQ Provider.
 layout: installation
+aliases:
+    - "/docs/intro/cloud-providers/rabbitmq/setup/"
 ---
 
 The Pulumi RabbitMQ provider uses the RabbitMQ SDK to manage and provision resources.

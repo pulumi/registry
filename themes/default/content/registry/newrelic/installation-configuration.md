@@ -2,6 +2,8 @@
 title: New Relic Setup
 meta_desc: This page provides an overview on how to configure credentials for the Pulumi New Relic Provider.
 layout: installation
+aliases:
+    - "/docs/intro/cloud-providers/newrelic/setup/"
 ---
 
 The Pulumi New Relic provider uses the New Relic SDK to manage and provision resources.

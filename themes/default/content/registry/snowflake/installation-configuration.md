@@ -2,6 +2,8 @@
 title: Snowflake Setup
 meta_desc: This page provides an overview on how to configure credentials for the Pulumi Snowflake Provider.
 layout: installation
+aliases:
+    - "/docs/intro/cloud-providers/cloudamqp/setup/"
 ---
 
 The Pulumi Snowflake provider uses the Snowflake SDK to manage and provision resources.

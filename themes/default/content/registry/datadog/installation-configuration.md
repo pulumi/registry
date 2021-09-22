@@ -2,6 +2,8 @@
 title: Datadog Setup
 meta_desc: This page provides an overview on how to configure credentials for the Pulumi Datadog Provider.
 layout: installation
+aliases:
+    - "/docs/intro/cloud-providers/datadog/setup/"
 ---
 
 The Pulumi Datadog provider uses the Datadog SDK to manage and provision resources.

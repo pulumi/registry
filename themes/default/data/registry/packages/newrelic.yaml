@@ -1,11 +1,11 @@
 name: newrelic
 title: newrelic
 description: A Pulumi package for creating and managing New Relic resources.
-updated_on: 1629933901
+logo_url: ""
+updated_on: 1632258876
 publisher: Pulumi
 category: Monitoring
 package_status: ga
 version: v4.4.0
 featured: false
 native: false
-logo: "/logos/tech/newrelic.svg"

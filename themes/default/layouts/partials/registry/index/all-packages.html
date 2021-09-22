@@ -1,0 +1,9 @@
+<div class="all-packages flex flex-wrap">
+    {{ range $.Site.Data.registry.packages }}
+        {{ partial "registry/index/package" (dict "package" . "getStartedData" $.Site.Data.registry.getstarted) }}
+    {{ end }}
+
+    <div class="no-results px-4">
+        None found. <a class="reset text-blue-600 underline" role="button">Reset filters</a>.
+    </div>
+</div>

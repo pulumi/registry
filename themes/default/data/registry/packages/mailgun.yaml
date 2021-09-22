@@ -1,11 +1,11 @@
 name: mailgun
 title: mailgun
 description: A Pulumi package for creating and managing Mailgun resources.
-updated_on: 1629933895
+logo_url: ""
+updated_on: 1632258869
 publisher: Pulumi
 category: Infrastructure
 package_status: ga
 version: v3.1.0
 featured: false
 native: false
-logo: "/logos/tech/mailgun.png"

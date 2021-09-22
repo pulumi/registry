@@ -1,11 +1,11 @@
 name: okta
 title: okta
 description: A Pulumi package for creating and managing okta resources.
-updated_on: 1629933906
+logo_url: ""
+updated_on: 1632258880
 publisher: Pulumi
 category: Infrastructure
 package_status: ga
-version: v3.1.1
+version: v3.2.0
 featured: false
 native: false
-logo: "/logos/tech/okta.png"

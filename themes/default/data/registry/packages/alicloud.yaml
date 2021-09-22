@@ -1,11 +1,11 @@
 name: alicloud
 title: alicloud
 description: A Pulumi package for creating and managing AliCloud resources.
-updated_on: 1629933830
+logo_url: ""
+updated_on: 1632258778
 publisher: Pulumi
 category: Cloud
 package_status: ga
-version: v3.6.0
+version: v3.7.0
 featured: false
 native: false
-logo: "/logos/tech/alicloud.png"

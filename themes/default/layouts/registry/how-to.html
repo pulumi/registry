@@ -21,7 +21,7 @@
                     <pulumi-choosable type="language" value="javascript">
                         {{ range where .Pages "Params.language" "js" }}
                             <div class="pb-4"><a style="text-decoration: revert; color: revert;" href="{{ relref . .File.BaseFileName }}">{{ .Title }}</a></div>
-                        {{ end }}\
+                        {{ end }}
                     </pulumi-choosable>
 
                     <pulumi-choosable type="language" value="python">

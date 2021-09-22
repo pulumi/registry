@@ -2,6 +2,8 @@
 title: Okta
 meta_desc: This page provides an overview of the Okta Provider for Pulumi.
 layout: overview
+aliases:
+    - "/docs/intro/cloud-providers/okta/"
 ---
 
 The Okta provider for Pulumi can be used to provision any of the resources available in [Okta](https://www.okta.com/).

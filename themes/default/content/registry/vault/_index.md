@@ -2,6 +2,8 @@
 title: HashiCorp Vault
 meta_desc: This page provides an overview of the HashiCorp Vault Provider for Pulumi.
 layout: overview
+aliases:
+    - "/docs/intro/cloud-providers/vault/"
 ---
 
 The HashiCorp Vault provider for Pulumi can be used to provision any of the resources available in [Vault](https://www.vaultproject.io/).

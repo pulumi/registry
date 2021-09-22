@@ -2,6 +2,8 @@
 title: HashiCorp Consul
 meta_desc: This page provides an overview of the HashiCorp Consul Provider for Pulumi.
 layout: overview
+aliases:
+    - "/docs/intro/cloud-providers/consul/"
 ---
 
 The HashiCorp Consul provider for Pulumi can be used to provision any of the resources available in [Consul](https://www.consul.io/).

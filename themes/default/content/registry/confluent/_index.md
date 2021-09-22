@@ -2,6 +2,8 @@
 title: Confluent Cloud
 meta_desc: This page provides an overview of the Confluent Cloud Provider for Pulumi.
 layout: overview
+aliases:
+    - "/docs/intro/cloud-providers/ccloud/"
 ---
 
 The Confluent Cloud provider for Pulumi can be used to provision any of the cloud resources available in [Confluent Cloud](https://confluent.cloud/).

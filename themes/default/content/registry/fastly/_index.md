@@ -2,6 +2,8 @@
 title: Fastly
 meta_desc: This page provides an overview of the Fastly Provider for Pulumi.
 layout: overview
+aliases:
+    - "/docs/intro/cloud-providers/fastly/"
 ---
 
 The Fastly provider for Pulumi can be used to provision any of the cloud resources available in [Fastly](https://www.fastly.com/).

@@ -2,6 +2,8 @@
 title: Docker
 meta_desc: This page provides an overview of the Docker Provider for Pulumi.
 layout: overview
+aliases:
+    - "/docs/intro/cloud-providers/docker/"
 ---
 
 The Docker provider for Pulumi can be used to provision any of the resources available in [Docker](https://www.docker.com/).

@@ -2,6 +2,8 @@
 title: PostgreSQL
 meta_desc: This page provides an overview of the PostgreSQL Provider for Pulumi.
 layout: overview
+aliases:
+    - "/docs/intro/cloud-providers/postgresql/"
 ---
 
 The PostgreSQL provider for Pulumi can be used to provision any of the resources available for PostgreSQL.

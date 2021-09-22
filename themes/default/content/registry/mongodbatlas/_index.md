@@ -2,6 +2,8 @@
 title: MongoDB Atlas
 meta_desc: This page provides an overview of the MongoDB Atlas Provider for Pulumi.
 layout: overview
+aliases:
+    - "/docs/intro/cloud-providers/mongodbatlas/"
 ---
 
 The MongoDB Atlas provider for Pulumi can be used to provision any of the resources available for MongoDB Atlas.

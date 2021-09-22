@@ -2,6 +2,8 @@
 title: NS1
 meta_desc: This page provides an overview of the NS1 Provider for Pulumi.
 layout: overview
+aliases:
+    - "/docs/intro/cloud-providers/ns1/"
 ---
 
 The NS1 provider for Pulumi can be used to provision any of the cloud resources available in [NS1](https://www.ns1.com/).

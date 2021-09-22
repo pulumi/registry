@@ -2,6 +2,8 @@
 title: libvirt
 meta_desc: This page provides an overview of the libvirt Provider for Pulumi.
 layout: overview
+aliases:
+    - "/docs/intro/cloud-providers/libvirt/"
 ---
 
 A Pulumi provider that lets you provision servers on a libvirt host using Pulumi.

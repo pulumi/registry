@@ -2,6 +2,8 @@
 title: GitLab
 meta_desc: This page provides an overview of the GitLab Provider for Pulumi.
 layout: overview
+aliases:
+    - "/docs/intro/cloud-providers/gitlab/"
 ---
 
 The GitLab provider for Pulumi can be used to provision any of the cloud resources available in [GitLab](https://about.gitlab.com/).

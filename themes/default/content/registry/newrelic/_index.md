@@ -2,6 +2,8 @@
 title: New Relic
 meta_desc: This page provides an overview of the New Relic Provider for Pulumi.
 layout: overview
+aliases:
+    - "/docs/intro/cloud-providers/newrelic/"
 ---
 
 The New Relic provider for Pulumi can be used to provision any of the cloud resources available in [New Relic](https://newrelic.com/).

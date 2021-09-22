@@ -4,6 +4,8 @@ meta_desc: This page provides an overview of the AWS Provider for Pulumi.
 
 aliases: ["/docs/reference/clouds/aws/"]
 layout: overview
+aliases:
+    - "/docs/intro/cloud-providers/aws/"
 ---
 
 The Amazon Web Services (AWS) provider for Pulumi can be used to provision any of the cloud resources available in [AWS](https://aws.amazon.com/).  The AWS provider must be configured with credentials to deploy and update resources in AWS.

@@ -2,6 +2,8 @@
 title: AzureAD
 meta_desc: This page provides an overview of the Azure Active Directoy Provider for Pulumi.
 layout: overview
+aliases:
+    - "/docs/intro/cloud-providers/azad/"
 ---
 
 The AzureAD provider for Pulumi can be used to provision any of the Azure Active Directory resources available in [Azure](https://azure.microsoft.com/en-us/).

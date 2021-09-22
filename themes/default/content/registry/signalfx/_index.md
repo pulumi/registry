@@ -2,6 +2,8 @@
 title: SignalFx
 meta_desc: This page provides an overview of the SignalFx Provider for Pulumi.
 layout: overview
+aliases:
+    - "/docs/intro/cloud-providers/signalfx/"
 ---
 
 The SignalFx provider for Pulumi can be used to provision any of the cloud resources available in [SignalFx](https://signalfx.com/).

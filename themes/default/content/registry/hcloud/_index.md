@@ -2,6 +2,8 @@
 title: Hetzner Cloud
 meta_desc: This page provides an overview of the Hetzner Cloud Provider for Pulumi.
 layout: overview
+aliases:
+    - "/docs/intro/cloud-providers/hcloud/"
 ---
 
 The Hetzner Cloud provider for Pulumi can be used to provision any of the cloud resources available in [Hetzner Cloud](https://www.hetzner.com/cloud).

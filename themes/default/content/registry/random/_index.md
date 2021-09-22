@@ -2,6 +2,8 @@
 title: Random
 meta_desc: This page provides an overview of the Random Provider for Pulumi.
 layout: overview
+aliases:
+    - "/docs/intro/cloud-providers/random/"
 ---
 
 The Random provider for Pulumi can be used to help introduce random values when dealing with Pulumi resources.

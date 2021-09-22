@@ -2,6 +2,8 @@
 title: Cloudflare
 meta_desc: This page provides an overview of the Cloudflare Provider for Pulumi.
 layout: overview
+aliases:
+    - "/docs/intro/cloud-providers/cloudflare/"
 ---
 
 The Cloudflare provider for Pulumi can be used to provision any of the resources available in [Cloudflare](https://www.cloudflare.com/).

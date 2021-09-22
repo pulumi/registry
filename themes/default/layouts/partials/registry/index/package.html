@@ -1,5 +1,5 @@
 {{ $packageName := .package.name }}
-{{ $href := printf "/registry/%s" $packageName }}
+{{ $href := printf "/registry/packages/%s" $packageName }}
 {{ $status := dict "ga" "Generally Available" "public-preview" "Public Preview" }}
 
 <div class="package my-4 lg:w-1/2 px-4">

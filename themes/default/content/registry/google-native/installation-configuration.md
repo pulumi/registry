@@ -3,8 +3,8 @@ title: Google-Native Setup
 meta_desc: This page provides an overview on how to setup the native Google Cloud
            (Google-Native) provider with Pulumi.
 layout: installation
-aliases
-    - "/docs/reference/clouds/google-native/setup/"]
+aliases:
+    - "/docs/reference/clouds/google-native/setup/"
     - "/docs/intro/cloud-providers/google-native/setup/"
 ---
 

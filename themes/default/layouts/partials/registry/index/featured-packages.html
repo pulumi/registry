@@ -1,11 +1,9 @@
-<div class="featured-packages flex flex-wrap">
+<div class="flex flex-wrap">
     {{ range $.Site.Data.registry.packages }}
         {{ if .featured }}
-            {{ partial "registry/index/package" (dict "package" . "getStartedData" $.Site.Data.registry.getstarted) }}
+            {{ partial "registry/index/package" (dict "package" . "getStartedData" $.Site.Data.registry.getstarted "featured" true) }}
         {{ end }}
     {{ end }}
 
-    <div class="no-results px-4">
-        None found. <a class="reset text-blue-600 underline" role="button">Reset filters</a>.
-    </div>
+    {{ partial "registry/index/no-packages" }}
 </div>

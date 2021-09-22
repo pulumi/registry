@@ -7,14 +7,14 @@
             <h1>{{ .Title }}</h1>
         {{ end }}
 
-        <h4>Pulumi Packages</h4>
+        <h1>Pulumi Packages</h1>
         <p>
             Packages are APIs to use Pulumi with Clouds, Infrastructure, Databases, Monitoring,
             Networks, Version control, and Utilities.
         </p>
 
-        <div class="my-8">
-            <h6>Filters</h6>
+        <div class="my-12 relative z-10">
+            <h4 class="text-xl">Filters</h4>
             <pulumi-filter-select class="flex">
 
                 <!-- Package-type options -->
@@ -41,27 +41,28 @@
                     </div>
                 </pulumi-filter-select-option-group>
 
-                <!-- Status options -->
-                <pulumi-filter-select-option-group name="status">
-                    <div class="toggle" slot="toggle">Status</div>
-                    <div class="options">
-                        <pulumi-filter-select-option value="ga">Generally Available</pulumi-option>
-                        <pulumi-filter-select-option value="preview">Public Preview</pulumi-option>
-                    </div>
-                </pulumi-filter-select-option-group>
-
             </pulumi-filter-select>
         </div>
     </div>
 
-    <div class="packages container mx-auto pb-16">
-        <section class="my-8">
-            <h5 class="px-4">Featured Cloud Providers</h5>
+    <div class="packages container mx-auto pb-16 z-0">
+        <section class="featured-packages my-8">
+            <h2 class="px-4 inline-flex items-center">
+                Featured Cloud Providers
+                <span class="featured-count ml-2 py-1 px-4 rounded-full bg-violet-600 text-white text-xl">
+                    {{ len $.Site.Data.registry.packages }}
+                </span>
+            </h2>
             {{ partial "registry/index/featured-packages" . }}
         </section>
 
-        <section class="my-8">
-            <h5 class="px-4">All Packages ({{ len $.Site.Data.registry.packages }})</h5>
+        <section class="all-packages my-8">
+            <h2 class="px-4 inline-flex items-center">
+                A-Z Packages
+                <span class="all-count ml-2 py-1 px-4 rounded-full bg-violet-600 text-white text-xl">
+                    {{ len $.Site.Data.registry.packages }}
+                </span>
+            </h2>
             {{ partial "registry/index/all-packages" . }}
         </section>
     </div>

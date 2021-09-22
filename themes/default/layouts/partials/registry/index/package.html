@@ -1,5 +1,5 @@
 {{ $packageName := .package.name }}
-{{ $href := printf "/docs/intro/cloud-providers/%s" $packageName }}
+{{ $href := printf "/registry/%s" $packageName }}
 {{ $status := dict "ga" "Generally Available" "public-preview" "Public Preview" }}
 
 <div class="package my-4 lg:w-1/2 px-4">
@@ -25,7 +25,7 @@
                 </div>
                 <div class="">
                     <h5 class="text-gray-900">
-                        <a href="/docs/intro/cloud-providers/{{ $packageName }}" title="{{ .package.title }}">
+                        <a href="{{ $href }}" title="{{ .package.title }}">
                             {{ .package.title }}
                         </a>
                     </h5>

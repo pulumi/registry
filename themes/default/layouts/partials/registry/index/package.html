@@ -17,7 +17,15 @@
             <div class="flex flex-wrap">
                 <div class="flex w-full items-center justify-between mb-4">
                     <a href="{{ $href }}">
-                        <img onerror="this.classList.add('opacity-0');" class="h-12" src="/logos/pkg/{{ $packageName }}.svg" alt="{{ .package.title }}">
+                        {{ if ne .package.logo_url "" }}
+                            <!--
+                                It is ok to load the logo_url directly without sanitizing it since we will
+                                validate packages before we add them to the registry.
+                             -->
+                            <img onerror="this.classList.add('opacity-0');" class="h-12" src="{{ .package.logo_url }}" alt="{{ .package.title }}">
+                        {{ else }}
+                            <img onerror="this.classList.add('opacity-0');" class="h-12" src="/logos/pkg/{{ $packageName }}.svg" alt="{{ .package.title }}">
+                        {{ end }}
                     </a>
                     <a href="{{ $href }}" class="hidden md:block whitespace-nowrap ml-4 text-sm text-blue-600 hover:underline">
                         View package

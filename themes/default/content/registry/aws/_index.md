@@ -1,10 +1,9 @@
 ---
 title: AWS
 meta_desc: This page provides an overview of the AWS Provider for Pulumi.
-
-aliases: ["/docs/reference/clouds/aws/"]
 layout: overview
 aliases:
+    - "/docs/reference/clouds/aws/"
     - "/docs/intro/cloud-providers/aws/"
 ---
 

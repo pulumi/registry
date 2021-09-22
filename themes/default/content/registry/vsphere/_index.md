@@ -1,10 +1,9 @@
 ---
 title: vSphere
 meta_desc: This page provides an overview of the vSphere provider for Pulumi.
-
-aliases: ["/docs/reference/clouds/vsphere/"]
 layout: overview
 aliases:
+    - "/docs/reference/clouds/vsphere/"
     - "/docs/intro/cloud-providers/vsphere/"
 ---
 

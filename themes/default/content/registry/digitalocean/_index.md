@@ -1,10 +1,9 @@
 ---
 title: DigitalOcean
 meta_desc: This page provides an overview of the DigitalOcean Provider for Pulumi.
-
-aliases: ["/docs/reference/clouds/digitalocean/"]
 layout: overview
 aliases:
+    - "/docs/reference/clouds/digitalocean/"
     - "/docs/intro/cloud-providers/do/"
 ---
 

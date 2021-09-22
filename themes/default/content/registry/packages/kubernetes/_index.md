@@ -38,10 +38,6 @@ Kubernetes and Pulumi can:
 
 The Kubernetes provider for Pulumi can be used to provision any resources available in the Kubernetes API.  The Kubernetes provider must be configured with a `kubeconfig` or other credentials to connect to a taret Kubernetes cluster.
 
-### Setup
-
-The Kubernetes provider supports several options for providing access to a Kubernetes cluster.  See the [Kubernetes setup page]({{< relref "/docs/intro/cloud-providers/kubernetes/setup" >}}) for details.
-
 ### Getting Started
 
 The quickest way to get started with Kubernetes is to follow the [Get Started]({{< relref "/docs/get-started/kubernetes" >}}) guide.

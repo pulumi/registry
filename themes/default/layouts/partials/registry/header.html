@@ -19,32 +19,14 @@
     </div>
 
     {{ with (index $.Site.Data.registry.packages ($providerName)) }}
-        <div class="lg:flex mb-8">
-            <div class="mr-8">
-                Version {{ .version }}
-            </div>
-            <div class="mr-8">
-                <span class="font-bold">Last updated</span>: {{ ((time .updated_on).Format "Mon Jan 2 2006") }}
-            </div>
-            <div class="mr-8">
-                <a style="text-decoration: revert; color: revert;" href="https://github.com/pulumi/pulumi-{{ $providerName }}">Source code</a>
-            </div>
-            <div class="mr-8">
-                <span class="font-bold">Author</span>: {{ .publisher }}
-            </div>
-        </div>
-
-        <div class="lg:flex lg:w-12/12 mb-8">
-            {{ range .tags }}
-                {{ with (index $.Site.Data.registry.tags .) }}
-                    <div class="p-2 mr-4" style='background-color: {{ .color }}'>
-                        {{ .name }}
-                    </div>
-                {{ end }}
-            {{ end }}
+        <div class="lg:flex mb-4">
+            {{ .version }} published on {{ ((time .updated_on).Format "Mon Jan 2 2006") }} by {{ .publisher }}
         </div>
     {{ end }}
 
+    <div class="lg:flex mb-8">
+        <a style="text-decoration: revert; color: revert;" class="pul-link" href="https://github.com/pulumi/pulumi-{{ $providerName }}">Source code</a>
+    </div>
 
     <div class="lg:flex mb-8">
             <div class="{{ if (eq .File.ContentBaseName "_index") }} border-b-2 border-blue-600 {{ end }} pb-2 pl-2 pr-2 mr-8">

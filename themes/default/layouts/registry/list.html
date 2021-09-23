@@ -45,26 +45,34 @@
         </div>
     </div>
 
+    {{ $allGetStarted := $.Site.Data.registry.getstarted }}
+    {{ $allPackages := $.Site.Data.registry.packages }}
+
+    {{ $featuredPackages := slice }}
+    {{ range $allPackages }}
+        {{ if .featured }}
+            {{ $featuredPackages = $featuredPackages | append . }}
+        {{ end }}
+    {{ end }}
+
     <div class="packages container mx-auto pb-16 z-0">
         <section class="featured-packages my-8">
-            {{ $featured := slice }}
-            {{ $all := $.Site.Data.registry.packages }}
-
-            {{ range $.Site.Data.registry.packages }}
-                {{ if .featured }}
-                    {{ $featured = $featured | append . }}
-                {{ end }}
-            {{ end }}
-
             <h2 class="px-4 inline-flex items-center">
                 Featured Cloud Providers
                 <span class="featured-count ml-2 py-1 px-4 rounded-full bg-violet-600 text-white text-xl">
-                    {{ len $featured }}
+                    {{ len $featuredPackages }}
                 </span>
             </h2>
             <div class="flex flex-wrap">
-                {{ range $featured }}
-                    {{ partial "registry/index/package" (dict "package" . "getStartedData" $.Site.Data.registry.getstarted "featured" true) }}
+                {{ range $featuredPackages }}
+                    {{ $getStartedForPackage := index $allGetStarted .name }}
+                    {{ $howtosForPackage := slice }}
+                    {{ if (and $getStartedForPackage $getStartedForPackage.tutorials) }}
+                        {{ range $getStartedForPackage.tutorials }}
+                            {{ $howtosForPackage = $howtosForPackage | append . }}
+                        {{ end }}
+                    {{ end }}
+                    {{ partial "registry/index/package" (dict "package" . "featured" true "howtos" $howtosForPackage) }}
                 {{ end }}
             </div>
         </section>
@@ -73,20 +81,20 @@
             <h2 class="px-4 inline-flex items-center">
                 A-Z Packages
                 <span class="all-count ml-2 py-1 px-4 rounded-full bg-violet-600 text-white text-xl">
-                    {{ len $all }}
+                    {{ len $allPackages }}
                 </span>
             </h2>
             <div class="flex flex-wrap">
-                {{ range $all }}
+                {{ range $allPackages }}
                     {{ partial "registry/index/package" (dict "package" .) }}
                 {{ end }}
-                <div class="no-results px-4">
-                    <p>
-                        Looks like we don't have any packages that match your filters.
-                        Adjust or clear the filters and try again.
-                    </p>
-                    <button class="reset btn btn-lg">Clear all filters</button>
-                </div>
+            </div>
+            <div class="no-results px-4">
+                <p>
+                    Looks like we don't have any packages that match your filters.
+                    Adjust or clear the filters and try again.
+                </p>
+                <button class="reset btn btn-lg">Clear all filters</button>
             </div>
         </section>
     </div>

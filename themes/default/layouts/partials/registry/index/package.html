@@ -43,15 +43,14 @@
                                 {{ .package.description }}
                             </span>
                         </p>
-                        {{ $packageData := index .getStartedData $packageName }}
-                        {{ with $packageData.tutorials}}
+                        {{ if .howtos }}
                             <pulumi-accordion class="my-4 text-base rounded bg-white border-2 border-gray-900 group hover:bg-gray-900 hover:text-white transition-all">
                                 <pulumi-accordion-item slot="item" class="text-base pl-1">
                                     <div slot="heading" class="text-base group-hover:text-white whitespace-nowrap">Featured How-to Guides</div>
                                     <i slot="collapsed-icon" class="far fa-plus-square"></i>
                                     <i slot="expanded-icon" class="far fa-minus-square"></i>
                                     <ul class="m-0 p-0 list-none">
-                                        {{ range $packageData.tutorials }}
+                                        {{ range .howtos }}
                                             <li class="mt-0">
                                                 <a class="underline" href="{{ .rel_link }}">{{ .name }}</a>
                                             </li>

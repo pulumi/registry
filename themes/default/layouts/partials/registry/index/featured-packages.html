@@ -1,7 +1,0 @@
-<div class="flex flex-wrap">
-    {{ range $.Site.Data.registry.packages }}
-        {{ if .featured }}
-            {{ partial "registry/index/package" (dict "package" . "getStartedData" $.Site.Data.registry.getstarted "featured" true) }}
-        {{ end }}
-    {{ end }}
-</div>

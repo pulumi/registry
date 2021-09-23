@@ -1,19 +1,15 @@
 {{ $packageName := .package.name }}
 {{ $href := printf "/registry/packages/%s" $packageName }}
-{{ $status := dict "ga" "Generally Available" "public-preview" "Public Preview" }}
 
 <div class="package my-4 lg:w-1/2 px-4">
-    <div class="rounded-xl shadow-lg border border-gray-200 h-full">
+    <div class="rounded-xl shadow-lg border border-gray-200 h-full relative">
         <div class="p-8"
             data-provider="{{ if ne .package.component true }}true{{ else }}false{{ end }}"
             data-native="{{ if eq .package.native true }}true{{ else }}false{{ end }}"
             data-component="{{ if eq .package.component true }}true{{ else }}false{{ end }}"
-
             data-type="{{ if .package.component }}component{{ else if .package.native }}native-provider{{ else }}provider{{ end }}"
             data-category="{{ lower .package.category }}"
-            data-status="{{ lower .package.package_status }}"
             >
-
             <div class="flex flex-wrap">
                 <div class="flex w-full items-center justify-between mb-4">
                     <a href="{{ $href }}">
@@ -25,46 +21,51 @@
                         {{ end }}
                         <img onerror="this.classList.add('opacity-0');" class="h-12" src="{{ $url }}" alt="{{ .package.title }}">
                     </a>
-                    <a href="{{ $href }}" class="hidden md:block whitespace-nowrap ml-4 text-sm text-blue-600 hover:underline">
+                    <a href="{{ $href }}" class="hidden md:block whitespace-nowrap ml-4 text-sm text-blue-600 font-semibold hover:underline">
                         View package
                     </a>
                 </div>
-                <div class="">
-                    <h5 class="text-gray-900">
+                <div class="w-full">
+                    <h3 class="text-gray-900">
                         <a href="{{ $href }}" title="{{ .package.title }}">
                             {{ .package.title }}
                         </a>
-                    </h5>
-                    <div class="text-sm font-display text-gray-800 leading-relaxed">
+                    </h3>
+                    <div class="text-sm font-display text-gray-800 leading-relaxed mb-2">
                         {{ .package.version }} published on
                         <time>{{ time .package.updated_on | time.Format "Monday, Jan 2, 2006" }}</time>
                         by {{ .package.publisher }}
                     </div>
-                    <p>
-                        <span class="text-gray-900">
-                            {{ .package.description }}
-                        </span>
-                    </p>
 
-                    {{ $packageData := index .getStartedData $packageName }}
-                    {{ with $packageData.tutorials}}
-                        <pulumi-accordion class="my-4 text-base rounded bg-gray-100 border-2 border-gray-200">
-                            <pulumi-accordion-item slot="item" class="text-base pl-1">
-                                <div slot="heading" class="text-base">Featured How-to Guides</div>
-                                <i slot="collapsed-icon" class="far fa-plus-square"></i>
-                                <i slot="expanded-icon" class="far fa-minus-square"></i>
-                                <ul class="m-0 p-0 list-none">
-                                    {{ range $packageData.tutorials }}
-                                        <li class="mt-0">
-                                            <a class="underline" href="{{ .rel_link }}">{{ .name }}</a>
-                                        </li>
-                                    {{ end }}
-                                </ul>
-                            </pulumi-accordion-item>
-                        </pulumi-accordion>
+                    {{ if .featured }}
+                        <p>
+                            <span class="text-gray-900 font-display">
+                                {{ .package.description }}
+                            </span>
+                        </p>
+                        {{ if .howtos }}
+                            <pulumi-accordion class="my-4 text-base rounded bg-white border-2 border-gray-900 group hover:bg-gray-900 hover:text-white transition-all">
+                                <pulumi-accordion-item slot="item" class="text-base pl-1">
+                                    <div slot="heading" class="text-base group-hover:text-white whitespace-nowrap">Featured How-to Guides</div>
+                                    <i slot="collapsed-icon" class="far fa-plus-square"></i>
+                                    <i slot="expanded-icon" class="far fa-minus-square"></i>
+                                    <ul class="m-0 p-0 list-none">
+                                        {{ range .howtos }}
+                                            <li class="mt-0">
+                                                <a class="underline" href="{{ .rel_link }}">{{ .name }}</a>
+                                            </li>
+                                        {{ end }}
+                                    </ul>
+                                </pulumi-accordion-item>
+                            </pulumi-accordion>
+                        {{ end }}
                     {{ end }}
 
-                    <ul class="package-tags">
+                    <!-- Fixed-height spacer accounts for the minimum space required by the tags. -->
+                    <div class="h-14"></div>
+
+                    <!-- Tags are anchored to the bottom of the card. -->
+                    <ul class="package-tags mt-2 absolute bottom-8">
                         <li class="package-tag-type">
                             {{ if .package.native }}
                                 Native Provider
@@ -75,7 +76,6 @@
                             {{ end }}
                         </li>
                         <li class="package-tag-category">{{ .package.category }}</li>
-                        <li class="package-tag-status">{{ index $status .package.package_status }}</li>
                     </ul>
                 </div>
             </div>

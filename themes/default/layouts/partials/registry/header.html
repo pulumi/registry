@@ -1,58 +1,87 @@
-{{ $providerName := path.Base .File.Dir }}
-{{ $docsFile := path.Join "docs/intro/cloud-providers/" $providerName }}
-
-<div class="container">
-    {{ with (index $.Site.Data.registry.packages ($providerName)) }}
-        {{ if (isset . "logo" )}}
-            <div class="lg:flex mb-2">
-                <img src={{ .logo }} class="h-12 pb-4">
-            </div>
-        {{ end }}
-    {{ end }}
-    <div class="lg:flex mb-2">
-        <h3>{{ with .GetPage $docsFile }}{{ .Title }}{{ end }}</h3>
+<nav class="top-nav-bar transition-all bg-black">
+    <div class="top-nav-container lg:container lg:px-4 text-white">
+        <a data-track="header-pulumi-logo" class="block" href="/">
+            <img class="h-8" src="/images/logo/logo-on-black.svg" alt="Pulumi logo">
+        </a>
+        <div class="flex-1"></div>
+        <ul class="hidden w-full lg:flex lg:w-1/2 justify-end items-center order-first lg:order-last">
+            <li class="github-widget mr-8">
+                <a data-track="header-github-pulumi" class="github-button" href="https://github.com/pulumi/pulumi" data-size="small" data-show-count="true" aria-label="Star pulumi/pulumi on GitHub">
+                    Star
+                </a>
+            </li>
+            <li class="mr-8">
+                <a data-track="header-slack" href="https://slack.pulumi.com/" target="_blank">
+                    <i class="fab fa-slack"></i>
+                    Slack
+                </a>
+            </li>
+            <li class="mr-8">
+                <a data-track="header-github" href="{{ relref . "/docs" }}">
+                    <i class="fas fa-book mr-0.5"></i>
+                    Docs
+                </a>
+            </li>
+            <li class="mr-8">
+                <a data-track="header-github" href="{{ relref . "/registry" }}">
+                <i class="fas fa-archive mr-0.5"></i>
+                Registry
+                </a>
+            </li>
+            <li><a data-track="header-console" href="https://app.pulumi.com/" target="_blank">
+                <i class="fas fa-user-circle"></i>
+                Sign In
+            </a></li>
+        </ul>
     </div>
+</nav>
 
-    {{ with (index $.Site.Data.registry.packages ($providerName)) }}
-        <div class="lg:flex mb-8">
-            <div class="mr-8">
-                Version {{ .version }}
-            </div>
-            <div class="mr-8">
-                <span class="font-bold">Last updated</span>: {{ ((time .updated_on).Format "Mon Jan 2 2006") }}
-            </div>
-            <div class="mr-8">
-                <a style="text-decoration: revert; color: revert;" href="https://github.com/pulumi/pulumi-{{ $providerName }}">Source code</a>
-            </div>
-            <div class="mr-8">
-                <span class="font-bold">Author</span>: {{ .publisher }}
-            </div>
-        </div>
+<div class="header-container">
+    <nav class="lg:container lg:mx-auto lg:px-4">
+        <header>
+            <div class="flex flex-col lg:flex-row">
+                <input class="mobile-menu-toggle" type="checkbox" id="mobile-menu" name="mobile-menu" />
+                <span class="mobile-menu-icon">
+                    <label class="mobile-menu-closed" for="mobile-menu">
+                        {{ partial "icon" (dict "icon" "hamburger-closed") }}
+                    </label>
+                    <label class="mobile-menu-open hidden" for="mobile-menu">
+                        {{ partial "icon" (dict "icon" "hamburger-open") }}
+                    </label>
+                </span>
 
-        <div class="lg:flex lg:w-12/12 mb-8">
-            {{ range .tags }}
-                {{ with (index $.Site.Data.registry.tags .) }}
-                    <div class="p-2 mr-4" style='background-color: {{ .color }}'>
-                        {{ .name }}
+                <ul class="mobile-menu">
+                    <ul>
+                        <li class="mobile-menu-item whitespace-nowrap"><a href="{{ relref . "/cloud-engineering" }}">Cloud Engineering</a></li>
+                        <li class="mobile-menu-subitem"><a href="{{ relref . "/cloud-engineering" }}">Overview</a></li>
+                        <li class="mobile-menu-subitem"><a href="{{ relref . "/solutions" }}">Solutions</a></li>
+                        <li class="mobile-menu-subitem"><a href="{{ relref . "/case-studies" }}">Case Studies</a></li>
+
+                        <li class="mobile-menu-item"><a href="{{ relref . "/product" }}">Products</a></li>
+
+                        <li class="mobile-menu-item"><a href="{{ relref . "/pricing" }}">Pricing</a></li>
+
+                        <li class="mobile-menu-item"><a href="{{ relref . "/docs" }}">Docs</a></li>
+
+                        <li class="mobile-menu-item"><a href="#">Learn</a></li>
+                        <li class="mobile-menu-subitem"><a href="{{ relref . "/blog" }}">Blog</a></li>
+                        <li class="mobile-menu-subitem"><a href="{{ relref . "/events-workshops" }}">Events & Workshops</a></li>
+                        <li class="mobile-menu-subitem"><a href="{{ relref . "/docs/tutorials" }}">Tutorials</a></li>
+                        <li class="mobile-menu-subitem"><a href="{{ relref . "/resources#upcoming" }}">Workshops</a></li>
+                    </ul>
+                    <div class="flex items-center justify-between py-4 px-2 border-t my-4 mx-2 border-gray-200">
+                        <a href="https://github.com/pulumi/pulumi">GitHub</a>
+                        <a href="{{ relref . "/docs" }}">Docs</a>
+                        <a href="https://slack.pulumi.com/">Slack</a>
+                        <a href="https://app.pulumi.com/">Sign In</a>
                     </div>
-                {{ end }}
-            {{ end }}
-        </div>
-    {{ end }}
-
-
-    <div class="lg:flex mb-4">
-            <div class="{{ if (eq .File.ContentBaseName "_index") }} border-b-2 border-blue-600 {{ end }} pb-2 pl-2 pr-2 mr-8">
-                <a class="pb-2" href="{{ relref . "_index.md" }}">Overview</a>
+                    <div class="text-center bg-violet-600 text-white py-4">
+                        <a class="block" data-track="header-get-started-mobile" href="{{ relref . "/docs/get-started" }}" title="Get started with Pulumi by creating your first project">
+                        Get Started
+                        </a>
+                    </div>
+                </ul>
             </div>
-            <div class="{{ if (eq .File.ContentBaseName "installation-configuration") }} border-b-2 border-blue-600 {{ end }} pb-2 pl-2 pr-2 mr-8">
-                <a class="pb-2" href="{{ relref . "installation-configuration" }}">Installation & Configuration</a>
-            </div>
-            <div class="{{ if (eq .File.ContentBaseName "api-docs") }} border-b-2 border-blue-600 {{ end }} pb-2 pl-2 pr-2 mr-8">
-                <a class="pb-2" href="{{ relref . "api-docs" }}">API Docs</a>
-            </div>
-            <div class="{{ if (eq .File.ContentBaseName "how-to-guides") }} border-b-2 border-blue-600 {{ end }} pb-2 pl-2 pr-2 mr-8">
-                <a class="pb-2" href="{{ relref . "how-to-guides" }}">How-to Guides</a>
-            </div>
-    </div>
+        </header>
+    </nav>
 </div>

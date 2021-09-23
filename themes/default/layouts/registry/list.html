@@ -59,7 +59,7 @@
         <section class="featured-packages my-8">
             <h2 class="px-4 inline-flex items-center">
                 Featured Cloud Providers
-                <span class="featured-count ml-2 py-1 px-4 rounded-full bg-violet-600 text-white text-xl">
+                <span class="featured-count ml-4 py-1 px-4 rounded-full bg-violet-600 text-white text-lg">
                     {{ len $featuredPackages }}
                 </span>
             </h2>
@@ -80,7 +80,7 @@
         <section class="all-packages my-8">
             <h2 class="px-4 inline-flex items-center">
                 A-Z Packages
-                <span class="all-count ml-2 py-1 px-4 rounded-full bg-violet-600 text-white text-xl">
+                <span class="all-count ml-4 py-1 px-4 rounded-full bg-violet-600 text-white text-lg">
                     {{ len $allPackages }}
                 </span>
             </h2>
@@ -88,13 +88,13 @@
                 {{ range $allPackages }}
                     {{ partial "registry/index/package" (dict "package" .) }}
                 {{ end }}
-            </div>
-            <div class="no-results px-4">
-                <p>
-                    Looks like we don't have any packages that match your filters.
-                    Adjust or clear the filters and try again.
-                </p>
-                <button class="reset btn btn-lg">Clear all filters</button>
+                <div class="no-results px-4">
+                    <p>
+                        Looks like we don't have any packages that match your filters.
+                        Adjust or clear the filters and try again.
+                    </p>
+                    <button class="reset btn btn-lg">Clear all filters</button>
+                </div>
             </div>
         </section>
     </div>

@@ -2,7 +2,7 @@ name: azuredevops
 title: azuredevops
 description: A Pulumi package for creating and managing Azure DevOps.
 logo_url: ""
-updated_on: 1632258813
+updated_on: 1632352191
 publisher: Pulumi
 category: Infrastructure
 package_status: ga

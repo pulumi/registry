@@ -2,7 +2,7 @@ name: vault
 title: vault
 description: A Pulumi package for creating and managing vault cloud resources.
 logo_url: ""
-updated_on: 1632258912
+updated_on: 1632352287
 publisher: Pulumi
 category: Infrastructure
 package_status: ga

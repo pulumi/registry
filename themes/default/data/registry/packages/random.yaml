@@ -2,7 +2,7 @@ name: random
 title: random
 description: A Pulumi package to safely use randomness in Pulumi programs.
 logo_url: ""
-updated_on: 1632258897
+updated_on: 1632352272
 publisher: Pulumi
 category: Utility
 package_status: ga

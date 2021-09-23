@@ -2,7 +2,7 @@ name: equinix-metal
 title: equinix-metal
 description: A Pulumi package for creating and managing equinix-metal cloud resources.
 logo_url: ""
-updated_on: 1632258836
+updated_on: 1632352213
 publisher: Pulumi
 category: Cloud
 package_status: ga

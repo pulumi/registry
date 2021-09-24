@@ -1,11 +1,17 @@
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", function() {
         const logoNavMenuButton = $(".logo-nav-button");
-        logoNavMenuButton.click(function() {
+        const bgMask = $(".logo-nav-bg-mask");
+
+        function toggleMenu() {
             const logoNavMenu = $("#logo-nav-menu");
             logoNavMenu.toggleClass("hidden");
             logoNavMenuButton.attr("aria-expanded", logoNavMenu.is(":visible"));
             $(".logo-nav-button .mobile-menu-toggle-icon").toggleClass("hidden");
-        });
+            bgMask.toggleClass("hidden");
+        }
+
+        logoNavMenuButton.click(toggleMenu);
+        bgMask.click(toggleMenu);
     });
 </script>

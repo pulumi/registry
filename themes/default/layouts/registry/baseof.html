@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en-US" prefix="og: http://ogp.me/ns#">
     {{ partial "head.html" . }}
+    {{ partial "registry/scripts.html" .}}
+
     <body class="section-{{ .Section }}">
         <pulumi-root></pulumi-root>
         {{ partial "registry/header.html" . }}

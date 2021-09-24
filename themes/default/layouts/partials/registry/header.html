@@ -1,4 +1,4 @@
-<nav class="top-nav-bar registry transition-all bg-black sm">
+<nav class="top-nav-bar registry transition-all sm">
     <div class="top-nav-container lg:container lg:px-4 text-white">
         <div data-track="header-pulumi-logo" class="logo-nav-button flex flex-row block cursor-pointer items-center" aria-haspopup="true" aria-controls="logo-nav-menu">
             <img class="h-8" src="/images/logo/logo-on-black.svg" alt="Pulumi logo">
@@ -7,10 +7,10 @@
             <i class="sm:hidden fa fa-bars text-white text-2xl mobile-menu-toggle-icon"></i>
             <i class="sm:hidden hidden fa fa-times text-white text-2xl mobile-menu-toggle-icon"></i>
         </div>
-        <ul id="logo-nav-menu" role="menu" class="logo-nav-menu hidden bg-black rounded-0 text-white z-50">
+        <ul id="logo-nav-menu" role="menu" class="logo-nav-menu hidden rounded-0 text-white z-50">
             <li role="none"><a role="menuitem" href="/">Pulumi Home</a></li>
             <li role="none"><a role="menuitem" href="{{ relref . "/docs/get-started" }}">Get Started</a></li>
-            <li role="none"><a role="menuitem" href="{{ relref . "/cloud-engineering" }}">Cloud Engineering</li>
+            <li role="none"><a role="menuitem" href="{{ relref . "/cloud-engineering" }}">Cloud Engineering</a></li>
             <li role="none"><a role="menuitem" href="{{ relref . "/product" }}">Products</a></li>
             <li role="none"><a role="menuitem" href="{{ relref . "/pricing" }}">Pricing</a></li>
             <li role="none"><a role="menuitem" href="{{ relref . "/docs" }}">Docs</a></li>
@@ -27,7 +27,9 @@
         <div class="flex-1"></div>
         <ul class="hidden w-full lg:flex lg:w-1/2 justify-end items-center order-first lg:order-last">
             <li class="github-widget mr-8">
-                <a data-track="header-github-pulumi" class="github-button" href="https://github.com/pulumi/pulumi" data-size="small" data-show-count="true" aria-label="Star pulumi/pulumi on GitHub">
+                <a data-track="header-github-pulumi" class="github-button" href="https://github.com/pulumi/pulumi"
+                   data-size="small" data-show-count="true" aria-label="Star pulumi/pulumi on GitHub"
+                   target="_blank" rel="noopener">
                     Star
                 </a>
             </li>

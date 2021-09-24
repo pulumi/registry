@@ -2,7 +2,10 @@
     document.addEventListener("DOMContentLoaded", function() {
         const logoNavMenuButton = $(".logo-nav-button");
         logoNavMenuButton.click(function() {
-            $("#logo-nav-menu").toggleClass("hidden");
+            const logoNavMenu = $("#logo-nav-menu");
+            logoNavMenu.toggleClass("hidden");
+            logoNavMenuButton.attr("aria-expanded", logoNavMenu.is(":visible"));
+            $(".logo-nav-button .mobile-menu-toggle-icon").toggleClass("hidden");
         });
     });
 </script>

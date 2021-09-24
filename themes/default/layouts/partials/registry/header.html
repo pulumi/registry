@@ -3,18 +3,26 @@
         <div data-track="header-pulumi-logo" class="logo-nav-button flex flex-row block cursor-pointer items-center" aria-haspopup="true" aria-controls="logo-nav-menu">
             <img class="h-8" src="/images/logo/logo-on-black.svg" alt="Pulumi logo">
             <i class="fa fa-chevron-down ml-4 hidden md:block"></i>
-            <div class="flex-1 md:hidden"></div>
+            <div class="sm:hidden flex-1"></div>
+            <i class="sm:hidden fa fa-bars text-white text-2xl mobile-menu-toggle-icon"></i>
+            <i class="sm:hidden hidden fa fa-times text-white text-2xl mobile-menu-toggle-icon"></i>
         </div>
         <ul id="logo-nav-menu" role="menu" class="logo-nav-menu hidden bg-black rounded-0 text-white z-50">
-            <li role="menuitem"><a href="/">Pulumi Home</a></li>
-            <li role="menuitem"><a href="{{ relref . "/docs/get-started" }}">Get Started</a></li>
-            <li role="menuitem"><a href="{{ relref . "/cloud-engineering" }}">Cloud Engineering</li>
-            <li role="menuitem"><a href="{{ relref . "/product" }}">Products</a></li>
-            <li role="menuitem"><a href="{{ relref . "/pricing" }}">Pricing</a></li>
-            <li role="menuitem"><a href="{{ relref . "/docs" }}">Docs</a></li>
-            <li role="menuitem"><a href="{{ relref . "/blog" }}">Blog</a></li>
-            <li role="menuitem"><a href="{{ relref . "/learn-pulumi" }}">Learn Pulumi</a></li>
-            <li role="menuitem"><a href="{{ relref . "/events-workshops" }}">Events & Workshops</a></li>
+            <li role="none"><a role="menuitem" href="/">Pulumi Home</a></li>
+            <li role="none"><a role="menuitem" href="{{ relref . "/docs/get-started" }}">Get Started</a></li>
+            <li role="none"><a role="menuitem" href="{{ relref . "/cloud-engineering" }}">Cloud Engineering</li>
+            <li role="none"><a role="menuitem" href="{{ relref . "/product" }}">Products</a></li>
+            <li role="none"><a role="menuitem" href="{{ relref . "/pricing" }}">Pricing</a></li>
+            <li role="none"><a role="menuitem" href="{{ relref . "/docs" }}">Docs</a></li>
+            <li role="none"><a role="menuitem" href="{{ relref . "/blog" }}">Blog</a></li>
+            <li role="none"><a role="menuitem" href="{{ relref . "/learn-pulumi" }}">Learn Pulumi</a></li>
+            <li role="none"><a role="menuitem" href="{{ relref . "/events-workshops" }}">Events & Workshops</a></li>
+            <ul role="menu" class="sm:hidden">
+                <li role="none"><a role="menuitem" href="https://github.com/pulumi/pulumi">GitHub</a></li>
+                <li role="none"><a role="menuitem" href="https://slack.pulumi.com">Slack</a></li>
+                <li role="none"><a role="menuitem" href="{{ relref . "/registry" }}">Registry</a></li>
+                <li role="none"><a role="menuitem" href="https://app.pulumi.com">Sign In</a></li>
+            </ul>
         </ul>
         <div class="flex-1"></div>
         <ul class="hidden w-full lg:flex lg:w-1/2 justify-end items-center order-first lg:order-last">

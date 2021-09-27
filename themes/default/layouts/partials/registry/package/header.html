@@ -3,9 +3,9 @@
 
 <div class="container">
     {{ with (index $.Site.Data.registry.packages ($providerName)) }}
-        {{ if (isset . "logo" )}}
+        {{ if (isset . "logo_url" )}}
             <div class="lg:flex mb-2">
-                <img src={{ .logo }} class="h-12 pb-4">
+                <img src={{ .logo_url }} class="h-12 pb-4">
             </div>
         {{ end }}
     {{ end }}

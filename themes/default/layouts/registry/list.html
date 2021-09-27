@@ -9,8 +9,9 @@
 
         <h1>Pulumi Packages</h1>
         <p>
-            Packages are APIs to use Pulumi with Clouds, Infrastructure, Databases, Monitoring,
-            Networks, Version control, and Utilities.
+            Discover Provider packages that give you direct access to all of a cloud provider’s resources and Component
+            packages that let you get started quickly with common cloud architectures.
+            You can <a href="https://github.com/pulumi/registry">create and publish your own packages</a> too!
         </p>
 
         <div class="my-12 relative z-10">
@@ -72,7 +73,7 @@
                             {{ $howtosForPackage = $howtosForPackage | append . }}
                         {{ end }}
                     {{ end }}
-                    {{ partial "registry/index/package" (dict "package" . "featured" true "howtos" $howtosForPackage) }}
+                    {{ partial "registry/package" (dict "package" . "featured" true "howtos" $howtosForPackage) }}
                 {{ end }}
             </div>
         </section>
@@ -86,7 +87,7 @@
             </h2>
             <div class="flex flex-wrap">
                 {{ range $allPackages }}
-                    {{ partial "registry/index/package" (dict "package" .) }}
+                    {{ partial "registry/package" (dict "package" .) }}
                 {{ end }}
                 <div class="no-results px-4">
                     <p>

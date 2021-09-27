@@ -1,5 +1,5 @@
 {{ range where .package.Pages "Params.language" .language }}
-    <div class="pb-4"><a style="text-decoration: revert; color: revert;" href="{{ relref .package .package.File.BaseFileName }}" target="_blank">{{ .Title }}</a></div>
+    <div class="pb-4"><a style="text-decoration: revert; color: revert;" href="{{ relref . .File.BaseFileName }}" target="_blank">{{ .Title }}</a></div>
 {{ end }}
 
 {{ if (eq (len (where .package.Pages "Params.language" .language)) 0) }}

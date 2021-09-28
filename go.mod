@@ -3,9 +3,9 @@ module github.com/pulumi/registry
 go 1.16
 
 require (
-	github.com/pulumi/pulumi-hugo/themes/default v0.0.0-20210920175349-6ece72b1e55a // indirect
-	github.com/pulumi/registry/themes/default v0.0.0-20210916205127-04dd45dfff38 // indirect
-	github.com/pulumi/theme v0.0.0-20210927214738-96b9ab97afd1 // indirect
+	github.com/pulumi/pulumi-hugo/themes/default v0.0.0-20210928001316-cc7f287da3db // indirect
+	github.com/pulumi/registry/themes/default v0.0.0-20210927233147-6d9e62ba8825 // indirect
+	github.com/pulumi/theme v0.0.0-20210927232844-820360db3296 // indirect
 )
 
 // The override is needed because this repo is currently private and module at themes/default

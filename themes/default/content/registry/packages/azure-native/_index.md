@@ -1,5 +1,5 @@
 ---
-title: Azure-Native
+title: Azure Native
 meta_desc: The native Azure provider for Pulumi can be used to provision any of the cloud resources available in Azure via Azure Resource Manager (ARM).
 layout: overview
 aliases:

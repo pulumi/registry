@@ -1,54 +1,61 @@
-{{ $providerName := path.Base .File.Dir }}
-{{ $docsPath := path.Join "docs/intro/cloud-providers/" $providerName }}
-{{ $tutorialsPath := path.Join "docs/tutorials/" $providerName }}
-{{ $guidesCount := 0 }}
-{{ if fileExists $tutorialsPath }}
-    {{ with .GetPage $tutorialsPath }}{{ $guidesCount = len .Pages }}{{ end }}
-{{ end }}
-
-<div class="container">
-    {{ with (index $.Site.Data.registry.packages ($providerName)) }}
-        {{ if (isset . "logo" )}}
-            <div class="lg:flex mb-2">
-                <img src={{ .logo }} class="h-12 pb-4">
-            </div>
-        {{ end }}
-    {{ end }}
-    <div class="lg:flex mb-2">
-        <h3>{{ with .GetPage $docsPath }}{{ .Title }}{{ end }}</h3>
-    </div>
-
-    {{ with (index $.Site.Data.registry.packages ($providerName)) }}
-        <div class="lg:flex mb-4">
-            {{ .version }} published on {{ ((time .updated_on).Format "Mon Jan 2 2006") }} by {{ .publisher }}
+<nav class="top-nav-bar registry transition-all p-4">
+    <div class="top-nav-container lg:container lg:px-4 text-white">
+        <div data-track="header-pulumi-logo" class="logo-nav-button" aria-haspopup="true" aria-controls="logo-nav-menu">
+            <img class="h-8" src="/images/logo/logo-on-black.svg" alt="Pulumi logo">
+            <i class="fa fa-chevron-down ml-4 hidden md:block"></i>
+            <div class="sm:hidden flex-1"></div>
+            <i class="sm:hidden fa fa-bars text-white text-2xl mobile-menu-toggle-icon"></i>
+            <i class="sm:hidden hidden fa fa-times text-white text-2xl mobile-menu-toggle-icon"></i>
         </div>
-    {{ end }}
-
-    <div class="lg:flex mb-8">
-        <a class="text-blue-600 underline" href="https://github.com/pulumi/pulumi-{{ $providerName }}">Source code</a>
-    </div>
-
-    <div class="lg:flex mb-8">
-            <div class="{{ if (eq .File.ContentBaseName "_index") }} border-b-2 border-blue-600 {{ end }} pb-2 pl-2 pr-2 mr-8">
-                <a class="pb-2" href="{{ relref . .Page.Dir }}">Overview</a>
-            </div>
-            <div class="{{ if (eq .File.ContentBaseName "installation-configuration") }} border-b-2 border-blue-600 {{ end }} pb-2 pl-2 pr-2 mr-8">
-                <a class="pb-2" href="{{ relref . (path.Join .Page.Dir "installation-configuration") }}">Installation & Configuration</a>
-            </div>
-            <div class="{{ if (eq .File.ContentBaseName "api-docs") }} border-b-2 border-blue-600 {{ end }} pb-2 pl-2 pr-2 mr-8">
-                <a class="pb-2" href="{{ relref . (path.Join .Page.Dir "api-docs") }}">API Docs</a>
-            </div>
-            <div class="{{ if (eq .File.ContentBaseName "how-to-guides") }} border-b-2 border-blue-600 {{ end }} pb-2 pl-2 pr-2 mr-8">
-                <a class="pb-2" href="{{ relref . (path.Join .Page.Dir "how-to-guides") }}">
-                    How-to Guides
-                    {{ partial "count-pill" (dict "count" $guidesCount) }}
-                    </span>
+        <ul id="logo-nav-menu" role="menu" class="logo-nav-menu hidden">
+            <li role="none"><a role="menuitem" href="/">Pulumi Home</a></li>
+            <li role="none"><a role="menuitem" href="{{ relref . "/docs/get-started" }}">Get Started</a></li>
+            <li role="none"><a role="menuitem" href="{{ relref . "/cloud-engineering" }}">Cloud Engineering</a></li>
+            <li role="none"><a role="menuitem" href="{{ relref . "/product" }}">Products</a></li>
+            <li role="none"><a role="menuitem" href="{{ relref . "/pricing" }}">Pricing</a></li>
+            <li role="none"><a role="menuitem" href="{{ relref . "/docs" }}">Docs</a></li>
+            <li role="none"><a role="menuitem" href="{{ relref . "/blog" }}">Blog</a></li>
+            <li role="none"><a role="menuitem" href="{{ relref . "/learn-pulumi" }}">Learn Pulumi</a></li>
+            <li role="none"><a role="menuitem" href="{{ relref . "/events-workshops" }}">Events & Workshops</a></li>
+            <ul role="menu" class="sm:hidden">
+                <li role="none"><a role="menuitem" href="https://github.com/pulumi/pulumi">GitHub</a></li>
+                <li role="none"><a role="menuitem" href="https://slack.pulumi.com">Slack</a></li>
+                <li role="none"><a role="menuitem" href="{{ relref . "/registry" }}">Registry</a></li>
+                <li role="none"><a role="menuitem" href="https://app.pulumi.com">Sign In</a></li>
+            </ul>
+        </ul>
+        <div class="flex-1"></div>
+        <ul class="hidden w-full lg:flex lg:w-1/2 justify-end items-center order-first lg:order-last">
+            <li class="github-widget mr-8">
+                <a data-track="header-github-pulumi" class="github-button" href="https://github.com/pulumi/pulumi"
+                   data-size="small" data-show-count="true" aria-label="Star pulumi/pulumi on GitHub">
+                    Star
                 </a>
-            </div>
+            </li>
+            <li class="mr-8">
+                <a data-track="header-slack" href="https://slack.pulumi.com/">
+                    <i class="fab fa-slack"></i>
+                    Slack
+                </a>
+            </li>
+            <li class="mr-8">
+                <a data-track="header-github" href="{{ relref . "/docs" }}">
+                    <i class="fas fa-book mr-0.5"></i>
+                    Docs
+                </a>
+            </li>
+            <li class="mr-8">
+                <a data-track="header-github" href="{{ relref . "/registry" }}">
+                <i class="fas fa-archive mr-0.5"></i>
+                Registry
+                </a>
+            </li>
+            <li><a data-track="header-console" href="https://app.pulumi.com/" target="_blank">
+                <i class="fas fa-user-circle"></i>
+                Sign In
+            </a></li>
+        </ul>
     </div>
-    <div class="lg:flex mb-4">
-        <span class="inline-flex items-center">
-            <a href="https://github.com/pulumi/registry/blob/master/themes/default/content/registry/packages/{{ $providerName }}/{{ .File.LogicalName }}">Edit this page</a>
-        </span>
-    </div>
-</div>
+</nav>
+
+<div class="logo-nav-bg-mask hidden"></div>

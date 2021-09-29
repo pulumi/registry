@@ -51,6 +51,12 @@
         </div>
     {{ end }}
 
+    <div class="lg:flex">
+        {{ if in (slice "how-to-guide" ) .Page.Layout }}
+            {{ partial "registry/package/how-to-guides/breadcrumb.html" . }}
+        {{ end }}
+    </div>
+
     <div class="lg:flex mb-4">
         <span class="inline-flex items-center">
             <a href="https://github.com/pulumi/registry/blob/master/themes/default/content/registry/packages/{{ $packageName }}/{{ .File.LogicalName }}">Edit this page</a>

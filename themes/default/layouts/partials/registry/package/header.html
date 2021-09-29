@@ -2,7 +2,7 @@
 {{ $packageName := index $directories 2 }}
 {{ $packageSection := index (split (index $directories 3) ".") 0 }}
 
-{{ $docsPath := path.Join "docs/intro/cloud-providers/" $packageName }}
+{{ $packageHome := path.Join "registry/" $packageName }}
 {{ $tutorialsPath := printf "%v" (delimit (slice "/registry/packages/" $packageName "/how-to-guides") "") }}
 
 {{ $guidesCount := 0 }}
@@ -17,7 +17,7 @@
         </div>
     {{ end }}
     <div class="lg:flex mb-2">
-        <h3>{{ with .GetPage $docsPath }}{{ .Title }}{{ end }}</h3>
+        <h3>{{ with .GetPage $packageHome }}{{ .Title }}{{ end }}</h3>
     </div>
 
     {{ with (index $.Site.Data.registry.packages ($packageName)) }}

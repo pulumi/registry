@@ -6,8 +6,6 @@
     <div class="lg:flex">
 
         <div class="lg:w-6/12 lg:px-4">
-            {{ partial "docs/breadcrumb.html" . }}
-
             {{ $basedir := path.Base .File.Dir }}
             {{ $input := path.Join "docs/reference/pkg/" $basedir }}
             {{ with .GetPage $input }}{{ .Content }}{{ end }}

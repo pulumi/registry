@@ -1,13 +1,17 @@
-{{ $providerName := path.Base .File.Dir }}
-{{ $docsPath := path.Join "docs/intro/cloud-providers/" $providerName }}
-{{ $tutorialsPath := path.Join "docs/tutorials/" $providerName }}
+{{ $directories := (split .Page.File "/")}}
+{{ $packageName := index $directories 2 }}
+{{ $packageSection := index (split (index $directories 3) ".") 0 }}
+
+{{ $docsPath := path.Join "docs/intro/cloud-providers/" $packageName }}
+{{ $tutorialsPath := printf "%v" (delimit (slice "/registry/packages/" $packageName "/how-to-guides") "") }}
+
 {{ $guidesCount := 0 }}
 {{ if fileExists $tutorialsPath }}
     {{ with .GetPage $tutorialsPath }}{{ $guidesCount = len .Pages }}{{ end }}
 {{ end }}
 
 <div class="container">
-    {{ with (index $.Site.Data.registry.packages ($providerName)) }}
+    {{ with (index $.Site.Data.registry.packages ($packageName)) }}
         <div class="lg:flex mb-2 pb-4">
             {{ partial "registry/package/icon.html" . }}
         </div>
@@ -16,37 +20,40 @@
         <h3>{{ with .GetPage $docsPath }}{{ .Title }}{{ end }}</h3>
     </div>
 
-    {{ with (index $.Site.Data.registry.packages ($providerName)) }}
+    {{ with (index $.Site.Data.registry.packages ($packageName)) }}
         <div class="lg:flex mb-4">
             {{ .version }} published on {{ ((time .updated_on).Format "Mon Jan 2 2006") }} by {{ .publisher }}
         </div>
     {{ end }}
 
     <div class="lg:flex mb-8">
-        <a class="text-blue-600 underline" href="https://github.com/pulumi/pulumi-{{ $providerName }}">Source code</a>
+        <a class="text-blue-600 underline" href="https://github.com/pulumi/pulumi-{{ $packageName }}">Source code</a>
     </div>
 
-    <div class="lg:flex mb-8">
-            <div class="{{ if (eq .File.ContentBaseName "_index") }} border-b-2 border-blue-600 {{ end }} pb-2 pl-2 pr-2 mr-8">
-                <a class="pb-2" href="{{ relref . .Page.Dir }}">Overview</a>
-            </div>
-            <div class="{{ if (eq .File.ContentBaseName "installation-configuration") }} border-b-2 border-blue-600 {{ end }} pb-2 pl-2 pr-2 mr-8">
-                <a class="pb-2" href="{{ relref . (path.Join .Page.Dir "installation-configuration") }}">Installation & Configuration</a>
-            </div>
-            <div class="{{ if (eq .File.ContentBaseName "api-docs") }} border-b-2 border-blue-600 {{ end }} pb-2 pl-2 pr-2 mr-8">
-                <a class="pb-2" href="{{ relref . (path.Join .Page.Dir "api-docs") }}">API Docs</a>
-            </div>
-            <div class="{{ if (eq .File.ContentBaseName "how-to-guides") }} border-b-2 border-blue-600 {{ end }} pb-2 pl-2 pr-2 mr-8">
-                <a class="pb-2" href="{{ relref . (path.Join .Page.Dir "how-to-guides") }}">
-                    How-to Guides
-                    {{ partial "count-pill" (dict "count" $guidesCount) }}
-                    </span>
-                </a>
-            </div>
-    </div>
+    {{ with .GetPage (path.Join "registry/packages" $packageName) }}
+        <div class="lg:flex mb-8">
+                <div class="{{ if (eq $packageSection "_index") }} border-b-2 border-blue-600 {{ end }} pb-2 pl-2 pr-2 mr-8">
+                    <a class="pb-2" href="{{ relref . .Page.Dir }}">Overview</a>
+                </div>
+                <div class="{{ if (eq $packageSection "installation-configuration") }} border-b-2 border-blue-600 {{ end }} pb-2 pl-2 pr-2 mr-8">
+                    <a class="pb-2" href="{{ relref . (path.Join .Page.Dir "installation-configuration") }}">Installation & Configuration</a>
+                </div>
+                <div class="{{ if (eq $packageSection "api-docs") }} border-b-2 border-blue-600 {{ end }} pb-2 pl-2 pr-2 mr-8">
+                    <a class="pb-2" href="{{ relref . (path.Join .Page.Dir "api-docs") }}">API Docs</a>
+                </div>
+                <div class="{{ if (eq $packageSection "how-to-guides") }} border-b-2 border-blue-600 {{ end }} pb-2 pl-2 pr-2 mr-8">
+                    <a class="pb-2" href="{{ relref . (path.Join .Page.Dir "how-to-guides") }}">
+                        How-to Guides
+                        {{ partial "count-pill" (dict "count" $guidesCount) }}
+                        </span>
+                    </a>
+                </div>
+        </div>
+    {{ end }}
+
     <div class="lg:flex mb-4">
         <span class="inline-flex items-center">
-            <a href="https://github.com/pulumi/registry/blob/master/themes/default/content/registry/packages/{{ $providerName }}/{{ .File.LogicalName }}">Edit this page</a>
+            <a href="https://github.com/pulumi/registry/blob/master/themes/default/content/registry/packages/{{ $packageName }}/{{ .File.LogicalName }}">Edit this page</a>
         </span>
     </div>
 </div>

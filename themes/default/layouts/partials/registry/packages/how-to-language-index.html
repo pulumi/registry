@@ -1,0 +1,9 @@
+{{ range where .package.Pages "Params.language" .language }}
+    <div class="pb-4">
+        <a class="text-blue-600 underline" href="{{ relref . .Path }}">{{ .Title }}</a>
+    </div>
+{{ end }}
+
+{{ if (eq (len (where .package.Pages "Params.language" .language)) 0) }}
+    There are no guides yet for this package in this language.
+{{ end }}

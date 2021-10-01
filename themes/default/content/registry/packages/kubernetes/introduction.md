@@ -66,5 +66,5 @@ Check out [Pulumi: A Better Way to Kubernetes][better-way-to-k8s] for details!
 [better-way-to-k8s]: {{< relref "pulumi-a-better-way-to-kubernetes" >}}
 [create-before-replace]: {{< relref "/docs/intro/concepts/resources#autonaming" >}}
 [programming-model]: {{< relref "/docs/intro/concepts" >}}
-[cluster-management]: {{< relref "/docs/tutorials/kubernetes#clusters" >}}
+[cluster-management]: {{< relref "/registry/package/kubernetes/how-to-guides" >}}
 <!-- markdownlint-enable url -->

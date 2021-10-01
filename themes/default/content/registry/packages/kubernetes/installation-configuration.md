@@ -10,9 +10,9 @@ aliases:
 <!-- markdownlint-disable url -->
 [pulumi-kubernetes-provider]: {{< relref "./" >}}
 [client-go]: https://github.com/kubernetes/client-go
-[gke-tutorial]: {{< relref "/docs/tutorials/kubernetes/gke" >}}
-[eks-tutorial]: {{< relref "/docs/tutorials/kubernetes/eks" >}}
-[aks-tutorial]: {{< relref "/docs/tutorials/kubernetes/aks" >}}
+[gke-tutorial]: {{< relref "/registry/packages/kubernetes/how-to-guides/gke" >}}
+[eks-tutorial]: {{< relref "/registry/packages/kubernetes/how-to-guides/eks" >}}
+[aks-tutorial]: {{< relref "/registry/packages/kubernetes/how-to-guides/aks" >}}
 [Heptio AWS quickstart]: https://aws.amazon.com/quickstart/architecture/heptio-kubernetes/
 [provider-args]: {{< relref "/docs/reference/pkg/kubernetes/provider" >}}
 [provider-kubeconfig]: {{< relref "/docs/reference/pkg/kubernetes/provider#inputs" >}}

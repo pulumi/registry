@@ -1,11 +1,11 @@
 name: cloudflare
-title: cloudflare
+title: Cloudflare
 description: A Pulumi package for creating and managing Cloudflare cloud resources.
 logo_url: ""
-updated_on: 1632352198
+updated_on: 1633127257
 publisher: Pulumi
 category: Network
 package_status: ga
-version: v3.5.0
+version: v4.0.0
 featured: false
 native: false

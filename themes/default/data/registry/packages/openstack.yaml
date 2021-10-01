@@ -1,8 +1,8 @@
 name: openstack
-title: openstack
+title: OpenStack
 description: A Pulumi package for creating and managing OpenStack cloud resources.
 logo_url: ""
-updated_on: 1632352257
+updated_on: 1633127319
 publisher: Pulumi
 category: Cloud
 package_status: ga

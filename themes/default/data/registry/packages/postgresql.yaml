@@ -1,8 +1,8 @@
 name: postgresql
-title: postgresql
+title: PostgreSQL
 description: A Pulumi package for creating and managing postgresql cloud resources.
 logo_url: ""
-updated_on: 1632352266
+updated_on: 1633127327
 publisher: Pulumi
 category: Database
 package_status: ga

@@ -1,11 +1,11 @@
 name: datadog
-title: datadog
+title: Datadog
 description: A Pulumi package for creating and managing Datadog resources.
 logo_url: ""
-updated_on: 1632352205
+updated_on: 1633127265
 publisher: Pulumi
 category: Monitoring
 package_status: ga
-version: v4.1.0
+version: v4.2.0
 featured: false
 native: false

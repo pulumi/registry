@@ -1,0 +1,11 @@
+name: libvirt
+title: libvirt
+description: A Pulumi package for creating and managing libvirt cloud resources.
+logo_url: ""
+updated_on: 1633127301
+publisher: Pulumi
+category: Cloud
+package_status: public_preview
+version: v0.1.0
+featured: false
+native: false

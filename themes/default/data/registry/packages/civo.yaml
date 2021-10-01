@@ -1,8 +1,8 @@
 name: civo
-title: civo
+title: Civo
 description: A Pulumi package for creating and managing Civo cloud resources.
 logo_url: ""
-updated_on: 1632352193
+updated_on: 1633127253
 publisher: Pulumi
 category: Cloud
 package_status: ga

@@ -10,6 +10,7 @@ aliases:
 
 The Yandex Cloud provider for Pulumi can be used to provision cloud resources available in [Yandex Cloud](https://cloud.yandex.com/).
 The Yandex Cloud provider must be configured with credentials to deploy and update resources in Yandex Cloud.
+
 ## Example
 
 {{< chooser language "javascript,typescript,python,go,csharp" >}}

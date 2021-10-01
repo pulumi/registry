@@ -4,7 +4,7 @@ meta_desc: 'This page provides an overview of the AWS Native Provider for Pulumi
 layout: overview
 aliases:
     - "/docs/reference/clouds/aws-native/"
-    - "/docs/intro/cloud-providers/aws/"
+    - "/docs/intro/cloud-providers/aws-native/"
 ---
 {{% notes type="info" %}}
 The AWS Native provider is currently in public preview

@@ -42,13 +42,7 @@ The Kubernetes provider for Pulumi can be used to provision any resources availa
 
 The quickest way to get started with Kubernetes is to follow the [Get Started]({{< relref "/docs/get-started/kubernetes" >}}) guide.
 
-Additional Kubernetes tutorials are available covering:
-
-- [Clusters]({{< relref "/docs/tutorials/kubernetes#clusters" >}}) on AWS, Azure and GCP
-- [Workloads]({{< relref "/docs/tutorials/kubernetes#workloads" >}}) including Guestbook, Helm Charts, Stateless Apps, and more
-- [Day Two Tasks]({{< relref "/docs/tutorials/kubernetes#day-two-tasks" >}}) including gated deployments and zero downtime upgrades
-- And [many more]({{< relref "/docs/tutorials/kubernetes#other-examples-and-tutorials" >}}) examples and tutorials
-
+See How-to guides for additional tutorials.
 ### Libraries
 
 The following packages are available in package managers:

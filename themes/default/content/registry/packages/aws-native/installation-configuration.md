@@ -145,4 +145,4 @@ $ export AWS_SECRET_ACCESS_KEY=<YOUR_SECRET_ACCESS_KEY>
 As an optional step, if you have multiple AWS profiles set up, you can specify a different profile to use with Pulumi through one of the following methods:
 
 * Set `AWS_PROFILE` as an environment variable.
-* After creating your project, run `pulumi config set aws-native:profile <profilename>`. For more configuration options, see [AWS Native Configuration]({{< relref "/docs/intro/cloud-providers/aws-native#configuration" >}}).
+* After creating your project, run `pulumi config set aws-native:profile <profilename>`. For more configuration options, see [AWS Native Configuration]({{< relref "/registry/packages/aws-native#configuration" >}}).

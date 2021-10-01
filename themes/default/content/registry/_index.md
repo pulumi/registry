@@ -1,8 +1,8 @@
 ---
-title: Registry
+title: Pulumi Registry
 notitle: true
-linktitle: Registry
-meta_desc: Packages are APIs to use Pulumi with Clouds, Infrastructure, Databases, Monitoring, Networks, Version control, and Utilities.
+linktitle: Pulumi Registry
+meta_desc: The Pulumi Registry hosts Providers that give direct access to all of a cloud provider’s resources and Components for common cloud architectures.
 no_on_this_page: true
 menu:
     header:

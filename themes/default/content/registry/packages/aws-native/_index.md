@@ -16,12 +16,6 @@ The AWS Native provider offers same-day support for all new AWS features and rel
 
 The AWS Native provider must be configured with credentials to deploy and update resources in AWS.
 
-See the [full API documentation]({{< relref "/docs/reference/pkg/aws-native" >}}) for complete details of the available AWS Native provider APIs and resource coverage.
-
-## Setup
-
-The AWS Native provider supports several options for providing access to AWS credentials.  See [AWS Native setup page]({{< relref "setup" >}}) for details.
-
 ## Getting Started
 
 {{< youtube oKxaZCyu2OQ >}}

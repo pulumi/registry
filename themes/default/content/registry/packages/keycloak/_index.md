@@ -11,12 +11,6 @@ aliases:
 The Keycloak provider for Pulumi can be used to provision any of the cloud resources available via [Keycloak](https://rancher.com/).
 The Keycloak provider must be configured with credentials to deploy and update resources for Rancher.
 
-See the [full API documentation]({{< relref "/docs/reference/pkg/keycloak" >}}) for complete details of the available Keycloak provider APIs.
-
-## Setup
-
-The Keycloak provider supports several options for providing access to Keycloak credentials.  See the [Keycloak setup page]({{< relref "setup" >}}) for details.
-
 ## Example
 
 {{< chooser language "javascript,typescript,python,go,csharp" >}}

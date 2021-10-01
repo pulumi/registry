@@ -10,13 +10,6 @@ aliases:
 
 The Yandex Cloud provider for Pulumi can be used to provision cloud resources available in [Yandex Cloud](https://cloud.yandex.com/).
 The Yandex Cloud provider must be configured with credentials to deploy and update resources in Yandex Cloud.
-
-See the [full API documentation]({{< relref "/docs/reference/pkg/yandex" >}}) for complete details of the available Yandex Cloud provider APIs.
-
-## Setup
-
-The Yandex Cloud provider supports several options for providing access to Yandex Cloud credentials.  See the [Yandex Cloud setup page]({{< relref "setup" >}}) for details.
-
 ## Example
 
 {{< chooser language "javascript,typescript,python,go,csharp" >}}

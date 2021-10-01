@@ -10,12 +10,6 @@ aliases:
 
 The HashiCorp Nomad provider for Pulumi can be used to provision any of the resources available in [Nomad](https://www.nomadproject.io/).
 
-See the [full API documentation]({{< relref "/docs/reference/pkg/nomad" >}}) for complete details of the available Nomad provider APIs.
-
-## Setup
-
-The Nomad provider supports several options for interacting with HashiCorp Nomad.  See the [Nomad setup page]({{< relref "setup" >}}) for details.
-
 ## Example
 
 {{< chooser language "javascript,typescript,python,go,csharp" >}}

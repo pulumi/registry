@@ -11,12 +11,6 @@ aliases:
 The Kong provider for Pulumi can be used to provision any of the cloud resources available in [Kong](https://konghq.com/kong).
 The Kong provider must be configured with credentials to deploy and update resources in Mailgun.
 
-See the [full API documentation]({{< relref "/docs/reference/pkg/kong" >}}) for complete details of the available Kong provider APIs.
-
-## Setup
-
-The Kong provider supports several options for providing access to Kong credentials.  See the [Kong setup page]({{< relref "setup" >}}) for details.
-
 ## Example
 
 {{< chooser language "javascript,typescript,python,go,csharp" >}}

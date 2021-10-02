@@ -22,9 +22,9 @@ For AWS-specific use cases, see also the [awsx]({{< relref "/docs/reference/pkg/
 
 The easiest way to start with the Cloud Framework is to follow one of the tutorials:
 
-* [A simple serverless REST API]({{< relref "rest-api" >}}): Deploy cloud-agnostic managed REST API
-* [A simple containerized app]({{< relref "service" >}}): Deploy cloud-agnostic containerized services
-* [Serverless + Containers + Infrastructure]({{< relref "thumbnailer" >}}): Deploy a complete cloud-agnostic application using a combination of buckets, serverless functions and containers.
+* [A simple serverless REST API]({{< relref "/registry/packages/cloudfx/how-to-guides/rest-api" >}}): Deploy cloud-agnostic managed REST API
+* [A simple containerized app]({{< relref "/registry/packages/cloudfx/how-to-guides/service" >}}): Deploy cloud-agnostic containerized services
+* [Serverless + Containers + Infrastructure]({{< relref "/registry/packages/cloudfx/how-to-guides/thumbnailer" >}}): Deploy a complete cloud-agnostic application using a combination of buckets, serverless functions and containers.
 
 In addition to the tutorials, several interesting examples are available with instructions:
 
@@ -61,7 +61,7 @@ The Cloud Framework is open source and available in the [pulumi/pulumi-cloud](ht
 
 ## Authentication
 
-Authentication options must be set for the target cloud provider. See the [AWS setup page]({{< relref "/docs/intro/cloud-providers/aws/setup" >}}) for details (more providers for the Cloud Framework coming soon).
+Authentication options must be set for the target cloud provider. See the [AWS setup page]({{< relref "/registry/packages/aws/installation-configuration" >}}) for details (more providers for the Cloud Framework coming soon).
 
 ## Configuration
 

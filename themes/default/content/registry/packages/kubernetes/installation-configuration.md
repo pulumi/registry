@@ -10,9 +10,9 @@ aliases:
 <!-- markdownlint-disable url -->
 [pulumi-kubernetes-provider]: {{< relref "./" >}}
 [client-go]: https://github.com/kubernetes/client-go
-[gke-tutorial]: {{< relref "/docs/tutorials/kubernetes/gke" >}}
-[eks-tutorial]: {{< relref "/docs/tutorials/kubernetes/eks" >}}
-[aks-tutorial]: {{< relref "/docs/tutorials/kubernetes/aks" >}}
+[gke-tutorial]: {{< relref "/registry/packages/kubernetes/how-to-guides/gke" >}}
+[eks-tutorial]: {{< relref "/registry/packages/kubernetes/how-to-guides/eks" >}}
+[aks-tutorial]: {{< relref "/registry/packages/kubernetes/how-to-guides/aks" >}}
 [Heptio AWS quickstart]: https://aws.amazon.com/quickstart/architecture/heptio-kubernetes/
 [provider-args]: {{< relref "/docs/reference/pkg/kubernetes/provider" >}}
 [provider-kubeconfig]: {{< relref "/docs/reference/pkg/kubernetes/provider#inputs" >}}
@@ -36,7 +36,7 @@ following steps.
 
 1. [Install the Pulumi CLI][install].
 1. Install a package manager for your Pulumi program language runtime, such as [npm] or [Yarn] for [Node.js][nodejs], or PyPI for Python.
-1. Provision a Kubernetes cluster. For a new managed Kubernetes cluster, check out the [cluster guides.]({{< relref "/docs/tutorials/kubernetes#clusters" >}})
+1. Provision a Kubernetes cluster. For a new managed Kubernetes cluster, check out the [guides.]({{< relref "/registry/packages/kubernetes/how-to-guides" >}})
 1. Download [`kubectl`](https://kubernetes.io/docs/tasks/tools/install-kubectl/) and verify the cluster is up and running.
 
 ## Steps

@@ -43,6 +43,7 @@ The Kubernetes provider for Pulumi can be used to provision any resources availa
 The quickest way to get started with Kubernetes is to follow the [Get Started]({{< relref "/docs/get-started/kubernetes" >}}) guide.
 
 See How-to guides for additional tutorials.
+
 ### Libraries
 
 The following packages are available in package managers:

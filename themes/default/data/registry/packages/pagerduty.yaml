@@ -2,7 +2,7 @@ name: pagerduty
 title: PagerDuty
 description: A Pulumi package for creating and managing pagerduty cloud resources.
 logo_url: ""
-updated_on: 1633360779
+updated_on: 1632754402
 publisher: Pulumi
 category: Infrastructure
 package_status: ga

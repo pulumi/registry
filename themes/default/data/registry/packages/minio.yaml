@@ -2,7 +2,7 @@ name: minio
 title: MinIO
 description: A Pulumi package for creating and managing minio cloud resources.
 logo_url: ""
-updated_on: 1633360759
+updated_on: 1625092003
 publisher: Pulumi
 category: Cloud
 package_status: public_preview

@@ -2,7 +2,7 @@ name: rke
 title: Rancher RKE
 description: A Pulumi package for creating and managing rke cloud resources.
 logo_url: ""
-updated_on: 1633360790
+updated_on: 1621019180
 publisher: Pulumi
 category: Infrastructure
 package_status: ga

@@ -1,8 +1,8 @@
 name: alicloud
-title: alicloud
+title: Alibaba Cloud
 description: A Pulumi package for creating and managing AliCloud resources.
 logo_url: ""
-updated_on: 1632352165
+updated_on: 1633360678
 publisher: Pulumi
 category: Cloud
 package_status: ga

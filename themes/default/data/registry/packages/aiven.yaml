@@ -1,11 +1,11 @@
 name: aiven
-title: aiven
+title: Aiven
 description: A Pulumi package for creating and managing Aiven cloud resources.
 logo_url: ""
-updated_on: 1632352161
+updated_on: 1633360672
 publisher: Pulumi
 category: Infrastructure
 package_status: ga
-version: v4.1.4
+version: v4.2.1
 featured: false
 native: false

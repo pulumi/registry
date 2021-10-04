@@ -1,8 +1,8 @@
 name: dnsimple
-title: dnsimple
+title: DNSimple
 description: A Pulumi package for creating and managing dnsimple cloud resources.
 logo_url: ""
-updated_on: 1632352209
+updated_on: 1633360719
 publisher: Pulumi
 category: Network
 package_status: ga

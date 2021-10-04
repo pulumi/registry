@@ -3,7 +3,7 @@ title: AWS Native
 description: A native Pulumi package for creating and managing Amazon Web Services
   (AWS) resources.
 logo_url: ""
-updated_on: 1633360686
+updated_on: 1633005898
 publisher: Pulumi
 category: Cloud
 package_status: public_preview

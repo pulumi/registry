@@ -2,7 +2,7 @@ name: google-native
 title: Google Cloud Native
 description: A native Pulumi package for creating and managing Google Cloud resources.
 logo_url: ""
-updated_on: 1633360735
+updated_on: 1628264180
 publisher: Pulumi
 category: Cloud
 package_status: public_preview

@@ -2,7 +2,7 @@ name: venafi
 title: Venafi
 description: A Pulumi package for creating and managing venafi cloud resources.
 logo_url: ""
-updated_on: 1633360808
+updated_on: 1632764588
 publisher: Pulumi
 category: Infrastructure
 package_status: ga

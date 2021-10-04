@@ -2,7 +2,7 @@ name: mongodbatlas
 title: MongoDB Atlas
 description: A Pulumi package for creating and managing mongodbatlas cloud resources.
 logo_url: ""
-updated_on: 1633127309
+updated_on: 1633360761
 publisher: Pulumi
 category: Database
 package_status: ga

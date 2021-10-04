@@ -2,7 +2,7 @@ name: wavefront
 title: Wavefront
 description: A Pulumi package for creating and managing wavefront cloud resources.
 logo_url: ""
-updated_on: 1633127356
+updated_on: 1633360813
 publisher: Pulumi
 category: Monitoring
 package_status: ga

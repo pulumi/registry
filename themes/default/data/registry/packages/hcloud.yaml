@@ -2,7 +2,7 @@ name: hcloud
 title: Hetzner Cloud
 description: A Pulumi package for creating and managing hcloud cloud resources.
 logo_url: ""
-updated_on: 1633127290
+updated_on: 1633360742
 publisher: Pulumi
 category: Cloud
 package_status: ga

@@ -2,7 +2,7 @@ name: consul
 title: Consul
 description: A Pulumi package for creating and managing consul resources.
 logo_url: ""
-updated_on: 1633127263
+updated_on: 1633360713
 publisher: Pulumi
 category: Infrastructure
 package_status: ga

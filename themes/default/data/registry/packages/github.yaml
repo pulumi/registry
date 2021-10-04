@@ -2,10 +2,10 @@ name: github
 title: GitHub
 description: A Pulumi package for creating and managing github cloud resources.
 logo_url: ""
-updated_on: 1633127286
+updated_on: 1633360737
 publisher: Pulumi
 category: Version Control System
 package_status: ga
-version: v4.4.0
+version: v4.5.0
 featured: false
 native: false

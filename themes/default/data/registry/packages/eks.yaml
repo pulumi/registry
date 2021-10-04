@@ -1,8 +1,8 @@
 name: eks
-title: EKS
+title: Amazon EKS
 description: Pulumi Amazon Web Services (AWS) EKS Components.
 logo_url: ""
-updated_on: 1633127273
+updated_on: 1633360724
 publisher: Pulumi
 category: Cloud
 package_status: public_preview

@@ -2,10 +2,10 @@ name: spotinst
 title: Spotinst
 description: A Pulumi package for creating and managing spotinst cloud resources.
 logo_url: ""
-updated_on: 1633127343
+updated_on: 1633360798
 publisher: Pulumi
 category: Infrastructure
 package_status: ga
-version: v3.8.0
+version: v3.9.0
 featured: false
 native: false

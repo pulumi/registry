@@ -2,7 +2,7 @@ name: fastly
 title: Fastly
 description: A Pulumi package for creating and managing fastly cloud resources.
 logo_url: ""
-updated_on: 1633127277
+updated_on: 1633360728
 publisher: Pulumi
 category: Cloud
 package_status: ga

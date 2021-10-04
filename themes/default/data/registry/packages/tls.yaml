@@ -1,8 +1,8 @@
 name: tls
-title: tls
+title: TLS
 description: A Pulumi package to create TLS resources in Pulumi programs.
 logo_url: ""
-updated_on: 1632352285
+updated_on: 1633360802
 publisher: Pulumi
 category: Utility
 package_status: ga

@@ -1,0 +1,11 @@
+name: confluent
+title: Confluent Cloud
+description: A Pulumi package for creating and managing confluent cloud resources.
+logo_url: ""
+updated_on: 1633360710
+publisher: Pulumi
+category: Cloud
+package_status: public_preview
+version: v0.1.2
+featured: false
+native: false

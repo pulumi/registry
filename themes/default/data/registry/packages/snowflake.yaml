@@ -1,0 +1,11 @@
+name: snowflake
+title: Snowflake
+description: A Pulumi package for creating and managing snowflake cloud resources.
+logo_url: ""
+updated_on: 1633360794
+publisher: Pulumi
+category: Cloud
+package_status: public_preview
+version: v0.2.1
+featured: false
+native: false

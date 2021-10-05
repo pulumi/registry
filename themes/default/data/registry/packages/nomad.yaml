@@ -1,8 +1,8 @@
-name: minio
-title: MinIO
-description: A Pulumi package for creating and managing minio cloud resources.
+name: nomad
+title: Nomad
+description: A Pulumi package for creating and managing nomad cloud resources.
 logo_url: ""
-updated_on: 1625092003
+updated_on: 1623771857
 publisher: Pulumi
 category: Infrastructure
 package_status: public_preview

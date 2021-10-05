@@ -1,1 +1,6 @@
-<pulumi-api-doc-filterable-nav></pulumi-api-doc-filterable-nav>
+{{ $directories := (split .Page.File "/")}}
+{{ $packageName := index $directories 2 }}
+{{ $packageNavPath := printf "https://www.pulumi.com/registry/packages/navs/%s.json" $packageName }}
+{{ $packageNavData := getJSON $packageNavPath }}
+
+<pulumi-api-doc-filterable-nav nodes="{{ jsonify $packageNavData }}"></pulumi-api-doc-filterable-nav>

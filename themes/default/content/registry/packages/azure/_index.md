@@ -5,7 +5,9 @@ layout: overview
 ---
 
 {{% notes %}}
-We recommend using the [native Azure provider for Pulumi]({{< relref "/registry/packages/azure" >}}) to provision Azure infrastructure.
+We recommend using the [Azure Native provider]({{< relref "/docs/intro/cloud-providers/azure" >}}) to provision Azure infrastructure. Azure Native provides complete coverage of Azure resources and same-day access to new resources and resource updates because it’s built and automatically from the Azure Resource Manager API.
+
+Azure Classic is based on the Terraform AzureRM provider. It has fewer resources and resource options and receives new Azure features more slowly than Azure Native. However, Azure Classic remains fully-supported for existing usage.
 {{% /notes %}}
 
 The classic Azure provider for Pulumi can be used to provision any of the cloud resources available in [Azure](https://azure.microsoft.com/en-us/) via Azure Resource Manager (ARM).  The Azure provider must be configured with credentials to deploy and update resources in Azure.

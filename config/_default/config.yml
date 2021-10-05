@@ -2,7 +2,6 @@ languageCode: en-us
 title: Pulumi - Modern Infrastructure as Code
 
 refLinksErrorLevel: WARNING
-ignoreErrors: ["error-remote-getjson"]
 
 module:
   imports:

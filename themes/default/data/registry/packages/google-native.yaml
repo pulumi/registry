@@ -7,5 +7,5 @@ publisher: Pulumi
 category: Cloud
 package_status: public_preview
 version: v0.7.0
-featured: true
+featured: false
 native: true

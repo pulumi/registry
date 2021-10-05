@@ -2,8 +2,6 @@
 title: Rancher2
 meta_desc: This page provides an overview of the Rancher2 Provider for Pulumi.
 layout: overview
-aliases:
-    - "/docs/intro/cloud-providers/rancher2/"
 ---
 
 The Rancher2 provider for Pulumi can be used to provision any of the cloud resources available via [Rancher](https://rancher.com/).

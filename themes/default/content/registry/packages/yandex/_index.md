@@ -2,8 +2,6 @@
 title: Yandex
 meta_desc: This page provides an overview of the Yandex Cloud Provider for Pulumi.
 layout: overview
-aliases:
-    - "/docs/intro/cloud-providers/yandex/"
 ---
 
 <img src="/logos/tech/yandex.svg" align="right" class="h-16 px-8 pb-4">

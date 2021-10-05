@@ -3,8 +3,6 @@ title: Azure Setup
 meta_desc: This page provides an overview of how to set up and configure credentials
            for the Pulumi Azure Provider.
 layout: installation
-aliases:
-    - "/docs/intro/cloud-providers/azure-classic/setup/"
 ---
 
 The Pulumi Azure provider uses the Azure SDK to manage and provision resources.

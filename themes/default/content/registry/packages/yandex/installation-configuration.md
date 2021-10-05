@@ -2,8 +2,6 @@
 title: Yandex Cloud Setup
 meta_desc: This page provides an overview on how to configure credentials for the Pulumi Yandex Cloud Provider.
 layout: installation
-aliases:
-    - "/docs/intro/cloud-providers/yandex/setup/"
 ---
 
 The [Pulumi Yandex Cloud provider]({{< relref "./" >}}) uses the Yandex Cloud SDK to manage and provision resources.

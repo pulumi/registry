@@ -2,8 +2,6 @@
 title: Snowflake
 meta_desc: This page provides an overview of the Snowflake Provider for Pulumi.
 layout: overview
-aliases:
-    - "/docs/intro/cloud-providers/snowflake/"
 ---
 
 The Snowflake provider for Pulumi can be used to provision any of the cloud resources available in [Snowflake](https://www.snowflake.com/).

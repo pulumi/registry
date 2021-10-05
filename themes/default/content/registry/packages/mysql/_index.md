@@ -2,8 +2,6 @@
 title: MySQL
 meta_desc: This page provides an overview of the MySQL Provider for Pulumi.
 layout: overview
-aliases:
-    - "/docs/intro/cloud-providers/mysql/"
 ---
 
 The MySQL provider for Pulumi can be used to provision any of the resources available for MySQL.

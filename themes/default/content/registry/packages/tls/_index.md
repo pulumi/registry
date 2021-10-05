@@ -2,8 +2,6 @@
 title: TLS
 meta_desc: This page provides an overview of the TLS Provider for Pulumi.
 layout: overview
-aliases:
-    - "/docs/intro/cloud-providers/tls/"
 ---
 
 The TLS provider for Pulumi can be used to help to create TLS keys and certitifcate for use with Pulumi resources.

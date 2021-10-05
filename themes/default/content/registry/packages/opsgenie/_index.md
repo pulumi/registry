@@ -2,8 +2,6 @@
 title: Opsgenie
 meta_desc: This page provides an overview of the Opsgenie Provider for Pulumi.
 layout: overview
-aliases:
-    - "/docs/intro/cloud-providers/opsgenie/"
 ---
 
 The Opsgenie provider for Pulumi can be used to provision any of the resources available for Opsgenie.

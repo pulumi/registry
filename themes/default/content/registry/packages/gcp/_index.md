@@ -2,9 +2,6 @@
 title: Google Cloud Platform (GCP)
 meta_desc: This page provides on an overview of the Google Cloud Platform (GCP) provider for Pulumi.
 layout: overview
-aliases:
-    - "/docs/reference/clouds/gcp/"
-    - "/docs/intro/cloud-providers/gcp/"
 ---
 
 The Google Cloud Platform (GCP) provider for Pulumi can be used to provision any of the cloud resources available in [GCP](https://cloud.google.com/).  The GCP provider must be configured with credentials to deploy and update resources in Google Cloud.

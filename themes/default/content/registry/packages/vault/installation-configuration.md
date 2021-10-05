@@ -2,8 +2,6 @@
 title: HashiCorp Vault Setup
 meta_desc: This page provides an overview on how to configure the Pulumi Vault Provider.
 layout: installation
-aliases:
-    - "/docs/intro/cloud-providers/vault/setup/"
 ---
 
 The Pulumi Vault provider uses the Vault SDK to manage resources.

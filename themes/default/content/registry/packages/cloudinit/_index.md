@@ -2,8 +2,6 @@
 title: cloud-init
 meta_desc: This page provides an overview of the cloud-init Provider for Pulumi.
 layout: overview
-aliases:
-    - "/docs/intro/cloud-providers/cloudinit/"
 ---
 
 The cloud-init provider for Pulumi can be used to render valid MIME-multipart cloud-init config.

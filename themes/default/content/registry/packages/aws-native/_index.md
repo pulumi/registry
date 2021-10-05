@@ -20,7 +20,7 @@ The AWS Native provider must be configured with credentials to deploy and update
 
 {{< youtube oKxaZCyu2OQ >}}
 
-Some [examples](https://github.com/pulumi/pulumi-aws-native/tree/master/examples) are available complete with instructions to try AWS Native provider in action. Also note that the AWS Native provider interoperates seemlessly with [AWS Classic provider]({{< relref "/docs/reference/pkg/aws" >}}) as illustrated by the following example:
+Some [examples](https://github.com/pulumi/pulumi-aws-native/tree/master/examples) are available complete with instructions to try AWS Native provider in action. Also note that the AWS Native provider interoperates seemlessly with [AWS Classic provider]({{< relref "/registry/packages/aws/api-docs" >}}) as illustrated by the following example:
 
 ## Example
 
@@ -233,4 +233,4 @@ The AWS Native provider accepts the following configuration settings.  These can
 * `skipRequestingAccountId`: (Optional) Skip requesting the account ID. Used for AWS API implementations that do not have IAM/STS API and/or metadata API.
 -->
 
-In addition, several more configuration options are planned to be added soon to provide parity with the [Classic AWS provider]({{< relref "/docs/reference/pkg/aws" >}}), check the [Github Issues](https://github.com/pulumi/pulumi-aws-native/issues?q=is%3Aissue+is%3Aopen+label%3Aprovider-config) for more details.
+In addition, several more configuration options are planned to be added soon to provide parity with the [Classic AWS provider]({{< relref "/registry/packages/aws/api-docs" >}}), check the [Github Issues](https://github.com/pulumi/pulumi-aws-native/issues?q=is%3Aissue+is%3Aopen+label%3Aprovider-config) for more details.

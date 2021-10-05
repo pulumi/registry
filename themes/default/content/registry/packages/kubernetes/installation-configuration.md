@@ -14,8 +14,8 @@ aliases:
 [eks-tutorial]: {{< relref "/registry/packages/kubernetes/how-to-guides/eks" >}}
 [aks-tutorial]: {{< relref "/registry/packages/kubernetes/how-to-guides/aks" >}}
 [Heptio AWS quickstart]: https://aws.amazon.com/quickstart/architecture/heptio-kubernetes/
-[provider-args]: {{< relref "/docs/reference/pkg/kubernetes/provider" >}}
-[provider-kubeconfig]: {{< relref "/docs/reference/pkg/kubernetes/provider#inputs" >}}
+[provider-args]: {{< relref "/registry/packages/kubernetes/api-docs/provider" >}}
+[provider-kubeconfig]: {{< relref "/registry/packages/kubernetes/api-docs/provider#inputs" >}}
 [kubeconfig]: https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/
 [install]: {{< relref "/docs/get-started/install" >}}
 [nodejs]: https://nodejs.org/en/

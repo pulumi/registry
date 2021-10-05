@@ -27,7 +27,7 @@
     {{ end }}
 
     <div class="lg:flex mb-8">
-        <a class="text-blue-600 underline" href="https://github.com/pulumi/pulumi-{{ $packageName }}">Source code</a>
+        <a class="text-blue-600 underline" target="_blank" href="https://github.com/pulumi/pulumi-{{ $packageName }}">Source code</a>
     </div>
 
     {{ with .GetPage (path.Join "registry/packages" $packageName) }}

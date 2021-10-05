@@ -108,7 +108,7 @@ The [Version Guide]({{< relref "./version-guide" >}}) describes the versioning i
 
 ## Configuration
 
-The native Azure provider accepts the following configuration settings. These can be provided via `pulumi config set azure-native:<option>`, or passed to the constructor of [Provider]({{< relref "/docs/reference/pkg/azure-native/provider" >}}) to construct a specific instance of the Azure provider.
+The native Azure provider accepts the following configuration settings. These can be provided via `pulumi config set azure-native:<option>`, or passed to the constructor of [Provider]({{< relref "/registry/packages/azure-native/api-docs/provider" >}}) to construct a specific instance of the Azure provider.
 
 * `auxiliaryTenantIds`: (Optional) It can also be sourced from the following environment variable: ARM_AUXILIARY_TENANT_IDS
 * `clientCertificatePassword`: (Optional) The password associated with the Client Certificate. For use when authenticating as a Service Principal using a Client Certificate It can also be sourced from the following environment variable: ARM_CLIENT_CERTIFICATE_PASSWORD

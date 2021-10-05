@@ -27,7 +27,7 @@
                     </h3>
                     <div class="text-sm font-display text-gray-800 leading-relaxed mb-2">
                         {{ .package.version }} published on
-                        <time>{{ time .package.updated_on | time.Format "Monday, Jan 2, 2006" }}</time>
+                        <time>{{ time .package.updated_on | time.Format "Mon Jan 2 2006" }}</time>
                         by {{ .package.publisher }}
                     </div>
 

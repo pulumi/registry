@@ -6,9 +6,7 @@
     <div class="lg:flex">
 
         <div class="lg:w-6/12 lg:px-4">
-            {{ $basedir := path.Base .File.Dir }}
-            {{ $input := path.Join "docs/reference/pkg/" $basedir }}
-            {{ with .GetPage $input }}{{ .Content }}{{ end }}
+            {{ .Content }}{
         </div>
 
         <div class="lg:w-3/12 lg:pl-8">

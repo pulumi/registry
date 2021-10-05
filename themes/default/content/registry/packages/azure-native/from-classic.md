@@ -86,7 +86,7 @@ config:
 
 Let's run through the steps to migrate our first resource: the resource group.
 
-1. Identify the type of the new resource in the native provider. In our case, it’s going to be a ResourceGroup resource in the resources module. Note that both names can be different from the names in the Azure provider. We can find the new resource in the [API Reference docs](https://www.pulumi.com/docs/reference/pkg/azure-native/resources/resourcegroup/).
+1. Identify the type of the new resource in the native provider. In our case, it’s going to be a ResourceGroup resource in the resources module. Note that both names can be different from the names in the Azure provider. We can find the new resource in the [API Reference docs](https://www.pulumi.com/registry/packages/azure-native/api-docs/resources/resourcegroup/).
 
 2. Scroll down the API Reference doc to the Import section and copy the import command:
 `pulumi import azure-native:resources/latest:ResourceGroup my-resource-group /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/my-resource-group`
@@ -187,7 +187,7 @@ and the `urn` should be like
 
 Follow the same steps to migrate the storage account.
 
-Locate the resource in the [API docs](https://www.pulumi.com/docs/reference/pkg/azure-native/storage/storageaccount/).
+Locate the resource in the [API docs](https://www.pulumi.com/registry/packages/azure-native/api-docs/storage/storageaccount/).
 
 Compose and run the import command:
 

@@ -9,7 +9,7 @@
 {{ define "breadcrumbnav" }}
     <!-- Don't include the website home page in the breadcrumb. -->
     {{ if .p1.Parent }}
-        {{ if ne .p1.Parent.Title "Registry" }}
+        {{ if ne .p1.Parent.Title "Pulumi Registry" }}
             {{ template "breadcrumbnav" (dict "p1" .p1.Parent "p2" .p2) }}
                 <!-- If the page is a redirect page, don't include it in the breadcrumb. -->
             {{ if not (isset .p1.Params "redirect_to") }}

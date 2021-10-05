@@ -1,10 +1,13 @@
 ---
 title: AWS-Native
 meta_desc: 'This page provides an overview of the AWS Native Provider for Pulumi: AWS-Native.'
-layout: overview
-aliases:
-    - "/docs/reference/clouds/aws-native/"
-    - "/docs/intro/cloud-providers/aws-native/"
+menu:
+  intro:
+    parent: cloud-providers
+    identifier: clouds-aws-native
+    weight: 1
+
+aliases: ["/docs/reference/clouds/aws-native/"]
 ---
 {{% notes type="info" %}}
 The AWS Native provider is currently in public preview
@@ -20,7 +23,13 @@ The AWS Native provider must be configured with credentials to deploy and update
 
 {{< youtube oKxaZCyu2OQ >}}
 
-Some [examples](https://github.com/pulumi/pulumi-aws-native/tree/master/examples) are available complete with instructions to try AWS Native provider in action. Also note that the AWS Native provider interoperates seemlessly with [AWS Classic provider]({{< relref "/registry/packages/aws/api-docs" >}}) as illustrated by the following example:
+Some examples are available complete with instructions to try AWS Native provider in action:
+
+* [Create an ECS Cluster on AWS](https://github.com/pulumi/examples/tree/master/aws-native-ts-ecs)
+* [Host a Static Website on Amazon S3](https://github.com/pulumi/examples/tree/master/aws-native-ts-s3-folder)
+* [Launch a Simple AWS Step Function State Machine With Lambda Functions](https://github.com/pulumi/examples/tree/master/aws-native-ts-stepfunctions)
+
+The example below illustrates how to create an Object Lambda access point which transforms object requests to a bucket.
 
 ## Example
 
@@ -29,6 +38,8 @@ Some [examples](https://github.com/pulumi/pulumi-aws-native/tree/master/examples
 {{% choosable language typescript %}}
 
 ```typescript
+import * as awsnative from "@pulumi/aws-native";
+
 const bucket = new awsnative.s3.Bucket("source");
 
 const accessPoint = new awsnative.s3.AccessPoint("ap", {
@@ -158,6 +169,8 @@ func main() {
 {{% /chooser %}}
 
 More examples of using AWS Native will be available in [the Pulumi examples repo](https://github.com/pulumi/examples) soon.
+
+Also note that the AWS Native provider interoperates seamlessly with [AWS Classic provider]({{< relref "/registry/packages/aws/api-docs" >}}).
 
 ## Libraries
 

@@ -4,7 +4,7 @@ description: A Pulumi package for creating and managing confluent cloud resource
 logo_url: ""
 updated_on: 1628182648
 publisher: Pulumi
-category: Cloud
+category: Infrastructure
 package_status: public_preview
 version: v0.1.2
 featured: false

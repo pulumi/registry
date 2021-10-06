@@ -8,4 +8,5 @@ category: Cloud
 package_status: public_preview
 version: v0.33.0
 featured: false
-native: true
+native: false
+component: true

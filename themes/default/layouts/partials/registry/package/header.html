@@ -32,22 +32,22 @@
 
     {{ with .GetPage (path.Join "registry/packages" $packageName) }}
         <div class="lg:flex mb-8">
-                <div class="{{ if (eq $packageSection "_index") }} border-b-2 border-blue-600 {{ end }} pb-2 pl-2 pr-2 mr-8">
-                    <a class="pb-2" href="{{ relref . .File.Dir }}">Overview</a>
-                </div>
-                <div class="{{ if (eq $packageSection "installation-configuration") }} border-b-2 border-blue-600 {{ end }} pb-2 pl-2 pr-2 mr-8">
-                    <a class="pb-2" href="{{ relref . (path.Join .File.Dir "installation-configuration") }}">Installation & Configuration</a>
-                </div>
-                <div class="{{ if (eq $packageSection "api-docs") }} border-b-2 border-blue-600 {{ end }} pb-2 pl-2 pr-2 mr-8">
-                    <a class="pb-2" href="{{ relref . (path.Join .File.Dir "api-docs") }}">API Docs</a>
-                </div>
-                <div class="{{ if (eq $packageSection "how-to-guides") }} border-b-2 border-blue-600 {{ end }} pb-2 pl-2 pr-2 mr-8">
-                    <a class="pb-2" href="{{ relref . (path.Join .File.Dir "how-to-guides") }}">
-                        How-to Guides
-                        {{ partial "count-pill" (dict "count" $guidesCount "selected" (eq $packageSection "how-to-guides")) }}
-                        </span>
-                    </a>
-                </div>
+            <div class="{{ if (eq $packageSection "_index") }} border-b-2 border-blue-600 {{ end }} pb-2 pl-2 pr-2 mr-8">
+                <a class="pb-2" href="{{ relref . .File.Dir }}">Overview</a>
+            </div>
+            <div class="{{ if (eq $packageSection "installation-configuration") }} border-b-2 border-blue-600 {{ end }} pb-2 pl-2 pr-2 mr-8">
+                <a class="pb-2" href="{{ relref . (path.Join .File.Dir "installation-configuration") }}">Installation & Configuration</a>
+            </div>
+            <div class="{{ if (eq $packageSection "api-docs") }} border-b-2 border-blue-600 {{ end }} pb-2 pl-2 pr-2 mr-8">
+                <a class="pb-2" href="{{ relref . (path.Join .File.Dir "api-docs") }}">API Docs</a>
+            </div>
+            <div class="{{ if (eq $packageSection "how-to-guides") }} border-b-2 border-blue-600 {{ end }} pb-2 pl-2 pr-2 mr-8">
+                <a class="pb-2" href="{{ relref . (path.Join .File.Dir "how-to-guides") }}">
+                    How-to Guides
+                    {{ partial "count-pill" (dict "count" $guidesCount "selected" (eq $packageSection "how-to-guides")) }}
+                    </span>
+                </a>
+            </div>
         </div>
     {{ end }}
 

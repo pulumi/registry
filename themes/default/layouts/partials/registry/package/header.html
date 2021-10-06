@@ -2,7 +2,7 @@
 {{ $packageName := index $directories 2 }}
 {{ $packageSection := index (split (index $directories 3) ".") 0 }}
 
-{{ $packageHome := path.Join "registry/" $packageName }}
+{{ $packageHome := path.Join "registry/packages" $packageName }}
 {{ $tutorialsPath := printf "%v" (delimit (slice "/registry/packages/" $packageName "/how-to-guides") "") }}
 
 {{ $guidesCount := 0 }}
@@ -11,13 +11,19 @@
 {{ end }}
 
 <div class="container">
+    <div class="mb-8 text-blue-600 font-display">
+        <span>&larr;</span>
+        <a href="{{ relref . "/registry" }}" class="hover:underline">All packages</a>
+    </div>
+
     {{ with (index $.Site.Data.registry.packages ($packageName)) }}
-        <div class="lg:flex mb-2 pb-4">
+        <div class="lg:flex mb-8">
             {{ partial "registry/package/icon.html" . }}
         </div>
     {{ end }}
+
     <div class="lg:flex mb-2">
-        <h3>{{ with .GetPage $packageHome }}{{ .Title }}{{ end }}</h3>
+        <h2 class="text-4xl">{{ with .GetPage $packageHome }}{{ .Title }}{{ end }}</h2>
     </div>
 
     {{ with (index $.Site.Data.registry.packages ($packageName)) }}
@@ -26,12 +32,16 @@
         </div>
     {{ end }}
 
-    <div class="lg:flex mb-8">
-        <a class="text-blue-600 underline" href="https://github.com/pulumi/pulumi-{{ $packageName }}">Source code</a>
+    <div class="lg:flex items-center mb-8">
+        <i class="fab fa-github text-lg"></i>
+        <span class="text-blue-600 flex flex-wrap items-center">
+            <a class="text-blue-600 underline font-display ml-2 mr-1.5" href="https://github.com/pulumi/pulumi-{{ $packageName }}" target="_blank" rel="noopener noreferrer">Source code</a>
+            <i class="fas fa-external-link-alt text-sm"></i>
+        </span>
     </div>
 
     {{ with .GetPage (path.Join "registry/packages" $packageName) }}
-        <div class="lg:flex mb-8">
+        <div class="lg:flex mb-8 font-display text-lg">
             <div class="{{ if (eq $packageSection "_index") }} border-b-2 border-blue-600 {{ end }} pb-2 pl-2 pr-2 mr-8">
                 <a class="pb-2" href="{{ relref . .File.Dir }}">Overview</a>
             </div>
@@ -44,7 +54,9 @@
             <div class="{{ if (eq $packageSection "how-to-guides") }} border-b-2 border-blue-600 {{ end }} pb-2 pl-2 pr-2 mr-8">
                 <a class="pb-2" href="{{ relref . (path.Join .File.Dir "how-to-guides") }}">
                     How-to Guides
-                    {{ partial "count-pill" (dict "count" $guidesCount "selected" (eq $packageSection "how-to-guides")) }}
+                    {{ if gt $guidesCount 0 }}
+                        {{ partial "count-pill" (dict "count" $guidesCount "selected" (eq $packageSection "how-to-guides")) }}
+                    {{ end }}
                     </span>
                 </a>
             </div>

@@ -2,8 +2,6 @@
 title: DNSimple
 meta_desc: This page provides an overview of the DNSimple Provider for Pulumi.
 layout: overview
-aliases:
-    - "/docs/intro/cloud-providers/dnsimple/"
 ---
 
 The DNSimple provider for Pulumi can be used to provision any of the cloud resources available in [DNSimple](https://dnsimple.com/).

@@ -4,7 +4,6 @@ meta_desc: This page provides an introduction to Kubernetes and how Pulumi can h
            Kubernetes resources.
 aliases:
     - "/docs/reference/clouds/kubernetes/introduction/"
-    - "/docs/intro/cloud-providers/kubernetes/setup/"
 ---
 
 ## Using Pulumi

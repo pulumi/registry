@@ -2,8 +2,6 @@
 title: Civo Setup
 meta_desc: This page provides an overview on how to configure credentials for the Pulumi Civo Provider.
 layout: installation
-aliases:
-    - "/docs/intro/cloud-providers/civo/setup/"
 ---
 
 The Pulumi Civo provider uses the Civo SDK to manage and provision resources.

@@ -1,13 +1,7 @@
 ---
 title: AWS-Native
 meta_desc: 'This page provides an overview of the AWS Native Provider for Pulumi: AWS-Native.'
-menu:
-  intro:
-    parent: cloud-providers
-    identifier: clouds-aws-native
-    weight: 1
-
-aliases: ["/docs/reference/clouds/aws-native/"]
+layout: overview
 ---
 {{% notes type="info" %}}
 The AWS Native provider is currently in public preview
@@ -23,13 +17,7 @@ The AWS Native provider must be configured with credentials to deploy and update
 
 {{< youtube oKxaZCyu2OQ >}}
 
-Some examples are available complete with instructions to try AWS Native provider in action:
-
-* [Create an ECS Cluster on AWS](https://github.com/pulumi/examples/tree/master/aws-native-ts-ecs)
-* [Host a Static Website on Amazon S3](https://github.com/pulumi/examples/tree/master/aws-native-ts-s3-folder)
-* [Launch a Simple AWS Step Function State Machine With Lambda Functions](https://github.com/pulumi/examples/tree/master/aws-native-ts-stepfunctions)
-
-The example below illustrates how to create an Object Lambda access point which transforms object requests to a bucket.
+Some [examples](https://github.com/pulumi/pulumi-aws-native/tree/master/examples) are available complete with instructions to try AWS Native provider in action. Also note that the AWS Native provider interoperates seemlessly with [AWS Classic provider]({{< relref "/registry/packages/aws/api-docs" >}}) as illustrated by the following example:
 
 ## Example
 

@@ -3,9 +3,6 @@ title: AWS-Native Setup
 meta_desc: This page provides an overview of how to setup and configure credentials
            for the Pulumi AWS-Native Provider.
 layout: installation
-aliases:
-    - "/docs/reference/clouds/aws-native/setup/"
-    - "/docs/intro/cloud-providers/aws-native/setup/"
 ---
 
 <!-- markdownlint-disable url -->

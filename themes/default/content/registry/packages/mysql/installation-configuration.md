@@ -2,8 +2,6 @@
 title: MySQL Setup
 meta_desc: This page provides an overview on how to configure credentials for the Pulumi MySQL Provider.
 layout: installation
-aliases:
-    - "/docs/intro/cloud-providers/mysql/setup/"
 ---
 
 The Pulumi MySQL provider uses the MySQL SDK to manage and provision resources.

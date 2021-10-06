@@ -2,8 +2,6 @@
 title: RabbitMQ
 meta_desc: This page provides an overview of the RabbitMQ Provider for Pulumi.
 layout: overview
-aliases:
-    - "/docs/intro/cloud-providers/rabbitmq/"
 ---
 
 The RabbitMQ provider for Pulumi can be used to provision any of the resources available for RabbitMQ.

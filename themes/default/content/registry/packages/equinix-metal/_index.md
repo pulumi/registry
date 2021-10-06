@@ -1,11 +1,6 @@
 ---
 title: Equinix Metal
 meta_desc: This page provides an overview of the Equinix Metal provider for Pulumi.
-
-aliases:
-  - "/docs/reference/clouds/packet/"
-  - "/docs/intro/cloud-providers/packet/"
-  - "/docs/intro/cloud-providers/equinix-metal/"
 layout: overview
 ---
 

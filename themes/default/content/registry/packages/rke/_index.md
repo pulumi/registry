@@ -2,8 +2,6 @@
 title: Rancher Kubernetes Engine
 meta_desc: This page provides an overview of the RKE Provider for Pulumi.
 layout: overview
-aliases:
-    - "/docs/intro/cloud-providers/rke/"
 ---
 
 The RKE provider for Pulumi can be used to provision Kubernetes clusters using the [Rancher Kubernetes Engine](https://github.com/rancher/rke).

@@ -3,9 +3,6 @@ title: AWS Setup
 meta_desc: This page provides an overview of how to setup and configure credentials
            for the Pulumi AWS Provider.
 layout: installation
-aliases:
-    - "/docs/reference/clouds/aws/setup/"
-    - "/docs/intro/cloud-providers/aws/setup/"
 ---
 
 <!-- markdownlint-disable url -->

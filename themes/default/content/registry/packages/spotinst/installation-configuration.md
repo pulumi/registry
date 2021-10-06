@@ -2,8 +2,6 @@
 title: Spotinst Setup
 meta_desc: This page provides an overview on how to configure the Pulumi Spotinst Provider.
 layout: installation
-aliases:
-    - "/docs/intro/cloud-providers/spotinst/setup"
 ---
 
 The Pulumi Spotinst provider uses the Spotinst SDK to manage resources.

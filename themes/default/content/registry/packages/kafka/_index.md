@@ -2,8 +2,6 @@
 title: Kafka
 meta_desc: This page provides an overview of the Kafka Provider for Pulumi.
 layout: overview
-aliases:
-    - "/docs/intro/cloud-providers/kafka/"
 ---
 
 The Kafka provider for Pulumi can be used to provision any of the resources available for Kafka.

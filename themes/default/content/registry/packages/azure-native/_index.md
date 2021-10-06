@@ -2,9 +2,6 @@
 title: Azure Native
 meta_desc: The native Azure provider for Pulumi can be used to provision any of the cloud resources available in Azure via Azure Resource Manager (ARM).
 layout: overview
-aliases:
-    - "/docs/reference/clouds/azure/"
-    - "/docs/intro/cloud-providers/azure/"
 ---
 
 The native Azure provider for Pulumi can be used to provision any of the cloud resources available in [Azure](https://azure.microsoft.com/en-us/) via Azure Resource Manager (ARM). The Azure provider must be configured with credentials to deploy and update resources in Azure.

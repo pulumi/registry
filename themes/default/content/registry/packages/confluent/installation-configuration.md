@@ -2,8 +2,6 @@
 title: Confluent Cloud Setup
 meta_desc: This page provides an overview on how to configure credentials for the Pulumi Confluent Cloud Provider.
 layout: installation
-aliases:
-    - "/docs/intro/cloud-providers/confluent/setup/"
 ---
 
 The Pulumi Confluent Cloud provider uses the Confluent Cloud SDK to manage and provision resources.

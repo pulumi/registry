@@ -2,8 +2,6 @@
 title: Kong
 meta_desc: This page provides an overview of the Kong Provider for Pulumi.
 layout: overview
-aliases:
-    - "/docs/intro/cloud-providers/kong/"
 ---
 
 <img src="/logos/tech/kong.svg" align="right" class="h-16 px-8 pb-4">

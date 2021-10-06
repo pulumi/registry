@@ -2,8 +2,6 @@
 title: Keycloak
 meta_desc: This page provides an overview of the Keycloak Provider for Pulumi.
 layout: overview
-aliases:
-    - "/docs/intro/cloud-providers/keycloak/"
 ---
 
 <img src="/logos/tech/keycloak.svg" align="right" class="h-16 px-8 pb-4">

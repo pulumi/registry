@@ -2,8 +2,6 @@
 title: Spotinst
 meta_desc: This page provides an overview of the Spotinst Provider for Pulumi.
 layout: overview
-aliases:
-    - "/docs/intro/cloud-providers/spotinst/"
 ---
 
 The Spotinst provider for Pulumi can be used to provision any of the resources available in [Spotinst](https://spotinst.com/).

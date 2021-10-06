@@ -2,9 +2,6 @@
 title: vSphere
 meta_desc: This page provides an overview of the vSphere provider for Pulumi.
 layout: overview
-aliases:
-    - "/docs/reference/clouds/vsphere/"
-    - "/docs/intro/cloud-providers/vsphere/"
 ---
 
 The vSphere provider for Pulumi can be used to provision any of the cloud resources available in [vSphere](https://www.vmware.com/products/vsphere.html).

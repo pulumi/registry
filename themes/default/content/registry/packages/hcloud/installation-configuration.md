@@ -2,8 +2,6 @@
 title: Hetzner Cloud Setup
 meta_desc: This page provides an overview on how to configure credentials for the Pulumi Hetzner Cloud Provider.
 layout: installation
-aliases:
-    - "/docs/intro/cloud-providers/hcloud/setup/"
 ---
 
 The Pulumi Hetzner Cloud provider uses the Hetzner Cloud SDK to manage and provision resources.

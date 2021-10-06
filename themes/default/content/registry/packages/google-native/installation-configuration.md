@@ -1,17 +1,13 @@
 ---
-title: Google-Native Setup
-meta_desc: This page provides an overview on how to setup the native Google Cloud
-           (Google-Native) provider with Pulumi.
+title: Google Native Setup
+meta_desc: Set up credentials to use the Pulumi Google Cloud Provider and choose configuration options to customize how the provider works.
 layout: installation
 ---
 
-[Google-Native Provider]: {{< relref "./" >}}
-
-The [Google-Native Provider] needs to be configured with Google credentials
-before it can be used to create resources.
+To provision resources with the Pulumi Google Cloud Provider, you need to have Google credentials.
 
 {{% configure-gcp %}}
 
 {{% notes "info" %}}
-If you are using Pulumi in an non-interactive setting (such as a CI/CD system) you will need to [configure and use a service account]({{< ref "/registry/packages/gcp/service-account" >}}) instead.
+If you are using Pulumi in an non-interactive setting (such as a CI/CD system) you will need to [configure and use a service account]({{< relref "service-account" >}}) instead.
 {{% /notes %}}

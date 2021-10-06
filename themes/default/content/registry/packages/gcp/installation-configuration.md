@@ -1,12 +1,10 @@
 ---
-title: Google Cloud Platform (GCP) Setup
-meta_desc: This page provides an overview on how to setup the Google Cloud
-           Platform Provider with Pulumi.
+title: Google Cloud (GCP) Classic Setup
+meta_desc: Set up credentials to use the Pulumi Google Cloud Provider and choose configuration options to customize how the provider works.
 layout: installation
 ---
 
-The Pulumi Google Cloud Platform Provider needs to be configured with Google credentials
-before it can be used to create resources.
+To provision resources with the Pulumi Google Cloud Provider, you need to have Google credentials.
 
 {{% configure-gcp %}}
 
@@ -14,23 +12,21 @@ before it can be used to create resources.
 If you are using Pulumi in an non-interactive setting (such as a CI/CD system) you will need to [configure and use a service account]({{< relref "service-account" >}}) instead.
 {{% /notes %}}
 
-## Optional Settings
+## Configuration
 
-The Pulumi Google Cloud Platform Provider accepts these environment variables
-to further configure the provider:
+Use `pulumi config set aws:<option>` or pass options to the [constructor of `new gcp.Provider`]({{< relref "/registry/packages/gcp/api-docs/provider" >}}).
 
-* `GOOGLE_PROJECT` - The default project for new resources, if one is not specified
-when creating a resource
-* `GOOGLE_REGION` - The default region for new resources, if one is not specified
-when creating a resource
-* `GOOGLE_ZONE` - The default zone for new resources, if one is not specified when
-creating a resource.
+| Option        | Required/Optional | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+|---------------|-------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `project`     | Required          | The ID of the project to apply any resources to. This can also be specified using any of the following environment variables (listed in order of precedence): `GOOGLE_PROJECT`, `GOOGLE_CLOUD_PROJECT`, `GCLOUD_PROJECT`, `CLOUDSDK_CORE_PROJECT`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| `credentials` | Optional          | Contents of a file that contains your service account private key in JSON format. You can download your existing Google Cloud service account file from the Google Cloud Console, or you can create a new one from the same page. Credentials can also be specified using any of the following environment variables (listed in order of precedence): `GOOGLE_CREDENTIALS`, `GOOGLE_CLOUD_KEYFILE_JSON`, `GCLOUD_KEYFILE_JSON`. The `GOOGLE_APPLICATION_CREDENTIALS` environment variable can also contain the path of a file to obtain credentials from. If no credentials are specified, the provider will fall back to using the Google Application Default Credentials. If you are running Pulumi from a GCE instance, see [Creating and Enabling Service Accounts for Instances](https://cloud.google.com/compute/docs/access/create-enable-service-accounts-for-instances) for details. |
+| `region`      | Optional          | The region to operate under, if not specified by a given resource. This can also be specified using any of the following environment variables (listed in order of precedence): `GOOGLE_REGION`, `GCLOUD_REGION`, `CLOUDSDK_COMPUTE_REGION`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| `zone`        | Optional          | The zone to operate under, if not specified by a given resource.  This can also be specified using any of the following environment variables (listed in order of precedence): `GOOGLE_ZONE`, `GCLOUD_ZONE`, `CLOUDSDK_COMPUTE_ZONE`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
 
-If these values are not provided, some resources may require you to provide these
-values as `project`, `region`, or `zone` properties.  You may also set these values per project using `pulumi config`:
+### Use environment variables
 
-```bash
-$ pulumi config set gcp:project <your-project-here>
-$ pulumi config set gcp:region <your-region-here>
-$ pulumi config set gcp:zone <your-zone-here>
-```
+We recommend using `pulumi config` for the options above, but you can also set many of the options above as environment variables instead.
+
+* `GOOGLE_PROJECT` - The default project for new resources, if one is not specified when creating a resource
+* `GOOGLE_REGION` - The default region for new resources, if one is not specified when creating a resource
+* `GOOGLE_ZONE` - The default zone for new resources, if one is not specified when creating a resource.

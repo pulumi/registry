@@ -1,10 +1,20 @@
 ---
-title: Google Cloud Platform (GCP)
-meta_desc: This page provides on an overview of the Google Cloud Platform (GCP) provider for Pulumi.
+title: Google Cloud (GCP) Classic
+meta_desc: Use Pulumi's GCP Provider to manage and provision Google Cloud resources using infrastructure as code.
 layout: overview
 ---
 
-The Google Cloud Platform (GCP) provider for Pulumi can be used to provision any of the cloud resources available in [GCP](https://cloud.google.com/).  The GCP provider must be configured with credentials to deploy and update resources in Google Cloud.
+The Google Cloud Platform (GCP) provider for Pulumi can provision many of the cloud resources available in [Google Cloud](https://cloud.google.com/).
+
+The GCP provider must be configured with credentials to deploy and update resources in Google Cloud; see the [Installation & Configuration page]({{<relref "./installation-configuration">}}) for instructions.
+
+**New to Pulumi and Google Cloud?** [Get started with Google Cloud using our tutorial]({{<relref "/docs/get-started/gcp">}})
+
+{{% notes %}}
+Pulumi has a new Google Cloud provider: the [Pulumi Google Native Provider]({{<relref "/registry/packages/google-native">}}). Google Native gives you same-day access to all new Google Cloud resources.
+
+Consider trying [Google Native]({{<relref "/registry/packages/google-native">}}) if you need Google Cloud resources that aren't available in this provider.
+{{% /notes %}}
 
 ## Example
 
@@ -78,25 +88,13 @@ class Program
 
 {{< /chooser >}}
 
-You can find additional examples of using Google Cloud in
-[the Pulumi examples repo](https://github.com/pulumi/examples).
+Visit the [How-to Guides page]({{<relref "./how-to-guides">}}) to find step-by-step guides for specific scenarios like creating a serverless application using Google Cloud Functions or setting up a Google Kubernetes Engine (GKE) cluster.
 
-## Libraries
+## SDK packages
 
-The following packages are available in packager managers:
+The Google Cloud (GCP) Classic provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/gcp`](https://www.npmjs.com/package/@pulumi/gcp)
 * Python: [`pulumi-gcp`](https://pypi.org/project/pulumi-gcp/)
 * Go: [`github.com/pulumi/pulumi-gcp/sdk/v5/go/gcp`](https://github.com/pulumi/pulumi-gcp)
 * .NET: [`Pulumi.Gcp`](https://www.nuget.org/packages/Pulumi.Gcp)
-
-The GCP provider is open source and available in the [pulumi/pulumi-gcp](https://github.com/pulumi/pulumi-gcp) repo.
-
-## Configuration
-
-The GCP provider accepts the following configuration settings.  These can be provided to the default GCP provider via `pulumi config set gcp:<option>`, or passed to the constructor of `new gcp.Provider` to construct a specific instance of the GCP provider.
-
-* `project`: (Required) The ID of the project to apply any resources to. This can also be specified using any of the following environment variables (listed in order of precedence): `GOOGLE_PROJECT`, `GOOGLE_CLOUD_PROJECT`, `GCLOUD_PROJECT`, `CLOUDSDK_CORE_PROJECT`.
-* `credentials`: (Optional) Contents of a file that contains your service account private key in JSON format. You can download your existing Google Cloud service account file from the Google Cloud Console, or you can create a new one from the same page. Credentials can also be specified using any of the following environment variables (listed in order of precedence): `GOOGLE_CREDENTIALS`, `GOOGLE_CLOUD_KEYFILE_JSON`, `GCLOUD_KEYFILE_JSON`. The `GOOGLE_APPLICATION_CREDENTIALS` environment variable can also contain the path of a file to obtain credentials from. If no credentials are specified, the provider will fall back to using the Google Application Default Credentials. If you are running Pulumi from a GCE instance, see [Creating and Enabling Service Accounts for Instances](https://cloud.google.com/compute/docs/access/create-enable-service-accounts-for-instances) for details.
-* `region`: (Optional) The region to operate under, if not specified by a given resource. This can also be specified using any of the following environment variables (listed in order of precedence): `GOOGLE_REGION`, `GCLOUD_REGION`, `CLOUDSDK_COMPUTE_REGION`.
-* `zone`: (Optional) The zone to operate under, if not specified by a given resource.  This can also be specified using any of the following environment variables (listed in order of precedence): `GOOGLE_ZONE`, `GCLOUD_ZONE`, `CLOUDSDK_COMPUTE_ZONE`.

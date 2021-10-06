@@ -1,0 +1,12 @@
+name: aws-s3-replicated-bucket
+title: AWS S3 Replicated Bucket
+description: A Pulumi Component for managing replicated buckets in Amazon S3
+logo_url: ""
+updated_on: 1633554624
+publisher: Pulumi
+category: Cloud
+package_status: ga
+version: v0.0.1
+featured: false
+native: false
+component: true

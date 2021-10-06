@@ -2,8 +2,8 @@
 {{ $packageName := index $directories 2 }}
 {{ $packageSection := index (split (index $directories 3) ".") 0 }}
 
-{{ $packageHome := path.Join "registry/" $packageName }}
-{{ $tutorialsPath := printf "%v" (delimit (slice "/registry/packages/" $packageName "/how-to-guides") "") }}
+{{ $packageHome := path.Join "registry/packages/" $packageName }}
+{{ $tutorialsPath := path.Join $packageHome "/how-to-guides" }}
 
 {{ $guidesCount := 0 }}
 {{ if fileExists $tutorialsPath }}

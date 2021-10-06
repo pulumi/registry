@@ -1,6 +1,6 @@
 ---
-title: Package Name
-meta_desc: 
+title: "Azure Quickstart: Container Registry Geo-Replicated"
+meta_desc: Create a geo-replicated Azure Container Registry instance that automatically synchronizes registry content across more than one Azure region.
 layout: overview
 ---
 

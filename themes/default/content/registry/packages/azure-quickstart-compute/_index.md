@@ -1,6 +1,6 @@
 ---
-title: Package Name
-meta_desc: 
+title: "Azure Quickstart: Compute"
+meta_desc: Use Pulumi's Component for deploying compute in Azure using infrastructure as code.
 layout: overview
 ---
 

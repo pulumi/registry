@@ -1,6 +1,6 @@
 ---
-title: Package Name
-meta_desc: 
+title: Google Cloud Project Scaffold
+meta_desc: Scaffold a Google Cloud Project to quickly get started
 layout: overview
 ---
 

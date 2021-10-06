@@ -1,6 +1,6 @@
 ---
-title: Package Name
-meta_desc: 
+title: "AWS Quick Start: Redshift"
+meta_desc: Deploy an Amazon Redshift data warehouse on the AWS Cloud for big data and analytics
 layout: overview
 ---
 

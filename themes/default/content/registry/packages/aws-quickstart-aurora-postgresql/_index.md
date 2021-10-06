@@ -1,6 +1,6 @@
 ---
-title: Package Name
-meta_desc: 
+title: "AWS Quick Start: Aurora PostgreSQL"
+meta_desc: Deploy an Amazon Aurora PostgreSQL database on the AWS Cloud with high availability and failover support
 layout: overview
 ---
 

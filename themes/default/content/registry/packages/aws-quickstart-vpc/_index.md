@@ -1,6 +1,6 @@
 ---
-title: Package Name
-meta_desc: 
+title: "AWS Quick Start: VPC"
+meta_desc: Use this Pulumi Component to set up Virtual Private Clouds (VPCs) that are the flexible networking foundation for AWS Cloud infrastructures
 layout: overview
 ---
 

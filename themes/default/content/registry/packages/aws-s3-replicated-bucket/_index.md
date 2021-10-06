@@ -1,6 +1,6 @@
 ---
-title: Package Name
-meta_desc: 
+title: AWS S3 Replicated Bucket
+meta_desc: Use Pulumi's Component for creating AWS S3 buckets that are replicated across regions using infrastructure as code.
 layout: overview
 ---
 

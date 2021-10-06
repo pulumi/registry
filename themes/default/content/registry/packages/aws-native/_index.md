@@ -26,6 +26,8 @@ Some [examples](https://github.com/pulumi/pulumi-aws-native/tree/master/examples
 {{% choosable language typescript %}}
 
 ```typescript
+import * as awsnative from "@pulumi/aws-native";
+
 const bucket = new awsnative.s3.Bucket("source");
 
 const accessPoint = new awsnative.s3.AccessPoint("ap", {
@@ -155,6 +157,8 @@ func main() {
 {{% /chooser %}}
 
 More examples of using AWS Native will be available in [the Pulumi examples repo](https://github.com/pulumi/examples) soon.
+
+Also note that the AWS Native provider interoperates seamlessly with [AWS Classic provider]({{< relref "/registry/packages/aws/api-docs" >}}).
 
 ## Libraries
 

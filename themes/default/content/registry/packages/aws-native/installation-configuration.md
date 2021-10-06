@@ -1,5 +1,5 @@
 ---
-title: AWS-Native Setup
+title: AWS Native Setup
 meta_desc: Set up credentials to use the Pulumi AWS Native Provider and choose configuration options to customize how the provider works.
 layout: installation
 ---

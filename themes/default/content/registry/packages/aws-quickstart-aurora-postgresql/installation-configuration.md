@@ -1,6 +1,6 @@
 ---
-title: Package Name Setup
-meta_desc: 
+title: "AWS Quick Start: Aurora PostgreSQL Setup"
+meta_desc: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vestibulum vel.
 layout: installation
 ---
 

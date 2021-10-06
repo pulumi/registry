@@ -1,6 +1,6 @@
 ---
-title: Package Name Setup
-meta_desc: 
+title: AWS API Gateway Setup
+meta_desc: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vestibulum vel.
 layout: installation
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: Run My Darn Container
-meta_desc: eploy your container to the 3 major cloud providers with just a few lines of code.
+meta_desc: Deploy your container to the 3 major cloud providers with just a few lines of code.
 layout: overview
 ---
 

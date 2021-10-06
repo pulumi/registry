@@ -1,6 +1,6 @@
 ---
-title: Package Name Setup
-meta_desc: 
+title: Google Cloud Project Scaffold Setup
+meta_desc: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vestibulum vel.
 layout: installation
 ---
 

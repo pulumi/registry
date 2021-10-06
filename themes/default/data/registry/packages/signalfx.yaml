@@ -9,3 +9,4 @@ package_status: ga
 version: v5.0.4
 featured: false
 native: false
+component: false

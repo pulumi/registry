@@ -2,10 +2,11 @@ name: digitalocean
 title: DigitalOcean
 description: A Pulumi package for creating and managing Digital Ocean cloud resources.
 logo_url: ""
-updated_on: 1630497773
+updated_on: 1633527019
 publisher: Pulumi
 category: Cloud
 package_status: ga
-version: v4.6.1
+version: v4.7.0
 featured: false
 native: false
+component: false

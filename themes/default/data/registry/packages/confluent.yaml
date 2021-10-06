@@ -9,3 +9,4 @@ package_status: public_preview
 version: v0.1.2
 featured: false
 native: false
+component: false

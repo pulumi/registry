@@ -93,7 +93,7 @@ class Program
         Deployment.Run(() => {
             // Create an EKS cluster with default settings.
             var cluster = new Cluster("eks-cluster");
-            
+
             // Export the cluster's kubeconfig.
             Kubeconfig = cluster.Kubeconfig;
         });

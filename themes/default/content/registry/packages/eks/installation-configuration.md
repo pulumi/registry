@@ -26,4 +26,4 @@ These are not required but are recommended if you plan on interacting with your 
 
 ## Getting Your AWS Credentials
 
-See the AWS Provider's [Installation & Configuration]({{ relref "/registry/packages/aws/installation-configuration" }}) page for information on how to get AWS credentials.
+See the AWS Provider's [Installation & Configuration]({{< relref "/registry/packages/aws/installation-configuration" >}}) page for information on how to get AWS credentials.

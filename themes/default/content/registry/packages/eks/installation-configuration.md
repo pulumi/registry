@@ -1,16 +1,20 @@
 ---
-title: Pulumi Amazon EKS Component Setup
-meta_desc: This page provides an overview on how to configure credentials for the Pulumi component for Amazon EKS.
+title: Pulumi Amazon EKS Setup
+meta_desc: Information on how to set up credentials to use the Amazon EKS component.
 layout: installation
 ---
 
-The Pulumi Amazon EKS provider uses the AWS SDK to manage and provision resources.
+<!-- markdownlint-disable url -->
+[iam-user-console]: https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html#id_users_create_console
+[iam-manage-keys]: https://docs.aws.amazon.com/general/latest/gr/managing-aws-access-keys.html
+[configure-aws-cli]: https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html
+<!-- markdownlint-enable url -->
 
-> Pulumi relies on the AWS SDK to authenticate requests from your computer to the resources. Your credentials are never sent
-> to pulumi.com.
+{{< aws-resource-note >}}
 
-The Pulumi Amazon EKS Provider needs to be configured with AWS credentials
-before it can be used to create resources.
+To provision a Kubernetes cluster with the Amazon EKS component, you need to have AWS credentials. Use the instructions on the AWS Classic Provider's [Installation & Configuration page]({{ relref "/registry/packages/aws/installation-configuration" }}) to get credentials if needed.
+
+**Your AWS credentials are never sent to Pulumi.com.** Pulumi uses the AWS SDK and the credentials in your environment to authenticate requests from your computer to AWS.
 
 ## Prerequisites
 
@@ -23,7 +27,3 @@ These are not required but are recommended if you plan on interacting with your 
 
 * [`kubectl`](https://kubernetes.io/docs/tasks/tools/install-kubectl/): the standard Kubernetes command line interface.
 * [`helm`](https://helm.sh/docs/using_helm/): if you plan on deploying Helm charts to your cluster.
-
-## Getting Your AWS Credentials
-
-See the AWS Provider's [Installation & Configuration]({{< relref "/registry/packages/aws/installation-configuration" >}}) page for information on how to get AWS credentials.

@@ -1,6 +1,6 @@
 ---
 title: AWS Native
-meta_desc: Use Pulumi's AWS Native Provider to manage Amazon Web Services resources using infrastructure as code. Build with the latest AWS resources & updates.
+meta_desc: Learn how you can use Pulumi's AWS Native Provider to reduce the complexity of provisioning and managing resources on AWS.
 menu:
   intro:
     parent: cloud-providers

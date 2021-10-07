@@ -1,6 +1,6 @@
 ---
 title: Azure Classic
-meta_desc: Use Pulumi's AWS Classic Provider to manage and provision Azure resources using infrastructure as code. Uses the Azure Resource Manager (ARM) APIs.
+meta_desc: Learn how to use Pulumi's Azure Classic Provider to reduce the complexity of managing and provisioning Azure resources with Azure Resource Manager (ARM) APIs.
 layout: overview
 ---
 

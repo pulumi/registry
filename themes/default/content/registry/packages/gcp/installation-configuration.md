@@ -1,6 +1,6 @@
 ---
 title: Google Cloud (GCP) Classic Setup
-meta_desc: Set up credentials to use the Pulumi Google Cloud Provider and choose configuration options to customize how the provider works.
+meta_desc: How to set up credentials to use the Pulumi GCP Provider and choose configuration options to tailor the provider to suit your use case.
 layout: installation
 ---
 
@@ -14,7 +14,7 @@ If you are using Pulumi in an non-interactive setting (such as a CI/CD system) y
 
 ## Configuration
 
-Use `pulumi config set aws:<option>` or pass options to the [constructor of `new gcp.Provider`]({{< relref "/registry/packages/gcp/api-docs/provider" >}}).
+Use `pulumi config set gcp:<option>` or pass options to the [constructor of `new gcp.Provider`]({{< relref "/registry/packages/gcp/api-docs/provider" >}}).
 
 | Option        | Required/Optional | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
 |---------------|-------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|

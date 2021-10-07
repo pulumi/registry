@@ -1,6 +1,6 @@
 ---
 title: AWS Classic
-meta_desc: Use Pulumi's AWS Classic Provider to manage and provision Amazon Web Services resources using infrastructure as code.
+meta_desc: Learn how you can use Pulumi's AWS Classic Provider to reduce the complexity of provisioning and managing resources on AWS.
 layout: overview
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: Azure Classic Setup
-meta_desc: Set up credentials to use the Pulumi Azure Provider and choose configuration options to customize how the provider works.
+meta_desc: How to set up credentials to use the Pulumi Azure Classic Provider and choose configuration options to tailor the provider to suit your use case.
 layout: installation
 ---
 

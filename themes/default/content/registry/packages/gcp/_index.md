@@ -1,6 +1,6 @@
 ---
 title: Google Cloud (GCP) Classic
-meta_desc: Use Pulumi's GCP Provider to manage and provision Google Cloud resources using infrastructure as code.
+meta_desc: Learn how to use Pulumi's GCP Provider to reduce the complexity of managing and provisioning GCP resources.
 layout: overview
 ---
 

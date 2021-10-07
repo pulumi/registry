@@ -4,7 +4,6 @@ meta_desc: Information on how to set up credentials to use the Amazon EKS compon
 layout: installation
 ---
 
-
 {{< aws-resource-note >}}
 
 To provision a Kubernetes cluster with the Amazon EKS component, you need to have AWS credentials. Use the instructions on the AWS Classic Provider's [Installation & Configuration page]({{< relref "/registry/packages/aws/installation-configuration" >}}) to get credentials if needed.

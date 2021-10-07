@@ -108,7 +108,7 @@ class Program
 
 The following packages are available in packager managers:
 
-* JavaScript/TypeScript: [`@pulumi/f5bigip`](https://www.npmjs.com/package/@pulumi/eks)
+* JavaScript/TypeScript: [`@pulumi/eks`](https://www.npmjs.com/package/@pulumi/eks)
 * Python: [`pulumi_eks`](https://pypi.org/project/pulumi-eks//)
 * Go: [`github.com/pulumi/pulumi-eks/sdk/go/eks`](https://github.com/pulumi/pulumi-eks)
 * .NET: [`Pulumi.Eks`](https://www.nuget.org/packages/Pulumi.Eks)

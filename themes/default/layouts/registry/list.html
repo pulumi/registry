@@ -1,16 +1,10 @@
 {{ define "main" }}
-    <div class="container mx-auto px-4 pt-8 mt-2 mb-12">
+    <div class="container mx-auto px-4">
         {{ if and (.Params.h1) (not .Params.notitle) }}
             <h1>{{ .Params.h1 }}</h1>
         {{ else if and (ne .Title "") (not .Params.notitle) }}
             <h1>{{ .Title }}</h1>
         {{ end }}
-
-        <h1>Pulumi Packages</h1>
-        <p>
-            Discover packages that give you direct access to all resources and components.</br>
-            You can <a href="https://github.com/pulumi/registry" class="underline">contribute your own packages</a>, too!
-        </p>
     </div>
 
     {{ $allGetStarted := $.Site.Data.registry.getstarted }}
@@ -81,11 +75,14 @@
             </div>
 
             <h2 class="px-4 inline-flex items-center">
-                A-Z Packages
+                A &ndash; Z Packages
                 <span class="all-count ml-4 py-0.5 px-3 rounded-full bg-violet-600 text-white text-lg">
                     {{ len $allPackages }}
                 </span>
             </h2>
+            <p class="px-4 mt-0">
+                <a href="https://github.com/pulumi/registry" class="font-display underline text-lg">Contribute your own packages</a>
+            </p>
             <div class="flex flex-wrap">
                 {{ range $allPackages }}
                     {{ partial "registry/package" (dict "package" .) }}

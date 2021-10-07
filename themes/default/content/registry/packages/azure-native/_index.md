@@ -1,10 +1,14 @@
 ---
 title: Azure Native
-meta_desc: The native Azure provider for Pulumi can be used to provision any of the cloud resources available in Azure via Azure Resource Manager (ARM).
+meta_desc: Learn how to use Pulumi's Azure Native Provider to reduce the complexity of managing and provisioning Azure resources with Azure Resource Manager (ARM) APIs.
 layout: overview
 ---
 
-The native Azure provider for Pulumi can be used to provision any of the cloud resources available in [Azure](https://azure.microsoft.com/en-us/) via Azure Resource Manager (ARM). The Azure provider must be configured with credentials to deploy and update resources in Azure.
+The Azure Native provider for Pulumi can be used to provision all of the cloud resources available in [Azure](https://azure.microsoft.com/en-us/). It manages and provisions resources using the [Azure Resource Manager (ARM) APIs](https://docs.microsoft.com/en-us/rest/api/resources/).
+
+Azure Native must be configured with credentials to deploy and update resources in Azure; see the [Installation & Configuration page]({{<relref "./installation-configuration">}}) for instructions.
+
+**New to Pulumi and Azure?** [Get started with Azure using our tutorial]({{<relref "/docs/get-started/azure">}})
 
 ## Example
 
@@ -78,49 +82,38 @@ func main() {
 
 {{< /chooser >}}
 
-Above is one example of an Azure resource group using Pulumi. You can find additional examples in [the Pulumi examples repo](https://github.com/pulumi/examples).
+Visit the [How-to Guides page]({{<relref "./how-to-guides">}}) to find step-by-step guides for specific scenarios like running an app in Azure App Service or setting up a serverless Azure Function.
 
-## Libraries
+## Migration
 
-The following packages are available in package managers:
+### From Azure Classic
+
+If you're already using the [Pulumi Azure Classic Provider]({{<relref "/registry/packages/azure">}}) and would like to migrate to Azure Native, use the [migration guide]({{<relref "./from-classic">}}).
+
+### From Azure Resource Manager (ARM) templates
+
+If you have Azure Resource Manager (ARM) templates that you'd like to migrate to Pulumi, use the [Migrate From Azure Resource Manager guide]({{<relref "/docs/guides/adopting/from_azure">}}).
+
+## Manage incompatible resources using the Azure SDK
+
+Some Azure resources aren't included in Azure Native because they're not compatible with the [Pulumi resource model]({{<relref "docs/intro/concepts/how-pulumi-works">}}). If you need to manage these kinds of resources, you can use convenience helpers provided by Azure Native to set up an Azure SDK client and credentials in your preferred language. Use these how-to guides to get started:
+
+* [Typescript]({{<relref "/registry/packages/azure-native/how-to-guides/azure-ts-call-azure-sdk">}})
+* [Go]({{<relref "/registry/packages/azure-native/how-to-guides/azure-go-call-azure-sdk">}})
+* [C#]({{<relref "/registry/packages/azure-native/how-to-guides/azure-cs-call-azure-api">}})
+* [Python]({{<relref "/registry/packages/azure-native/how-to-guides/azure-cs-call-azure-sdk">}})
+
+## How resources are versioned
+
+Azure Native provides access to all API versions of each Azure resource so that you can access the entire Azure API surface and pin to the version you prefer.
+
+Read the [version guide]({{< relref "./version-guide" >}}) to learn more about how you can manage the Azure API versions you're using, including both module-per-version and top-level-resources approaches.
+
+## SDK packages
+
+The Azure Native provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/azure-native`](https://www.npmjs.com/package/@pulumi/azure-native)
 * Python: [`pulumi-azure-native`](https://pypi.org/project/pulumi-azure-native/)
 * Go: [`github.com/pulumi/pulumi-azure-native/sdk/go/azure`](https://github.com/pulumi/pulumi-azure-native)
 * .NET: [`Pulumi.AzureNative`](https://www.nuget.org/packages/Pulumi.AzureNative)
-
-The native Azure provider SDKs are open source and available in the [pulumi/pulumi-azure-native](https://github.com/pulumi/pulumi-azure-native) repo.
-
-## Easy SDK Integration
-
-The native Azure provider SDKs provide convenience helpers to hydrate an Azure SDK client in each supported language seeded with the provider's configured credentials. This allows users to operate on resources that are not compatible with Pulumi's resource model and may not be included in the Pulumi SDKs. See below for links to examples in each of the supported languages that demonstrate invoking the Azure SDK client:
-
-* [Typescript](https://github.com/pulumi/examples/tree/master/azure-ts-call-azure-sdk)
-* [Go](https://github.com/pulumi/examples/tree/master/azure-go-call-azure-sdk)
-* [C#](https://github.com/pulumi/examples/tree/master/azure-cs-call-azure-api)
-* [Python](https://github.com/pulumi/examples/tree/master/azure-py-call-azure-sdk)
-
-## Versioning
-
-The native Azure provider SDKs provide access to all API versions of each Azure resource. This way, you can access the entire Azure API surface and pin to the version you prefer.
-
-The [Version Guide]({{< relref "./version-guide" >}}) describes the versioning in detail, including both module-per-version and top-level-resources approaches.
-
-## Configuration
-
-The native Azure provider accepts the following configuration settings. These can be provided via `pulumi config set azure-native:<option>`, or passed to the constructor of [Provider]({{< relref "/registry/packages/azure-native/api-docs/provider" >}}) to construct a specific instance of the Azure provider.
-
-* `auxiliaryTenantIds`: (Optional) It can also be sourced from the following environment variable: ARM_AUXILIARY_TENANT_IDS
-* `clientCertificatePassword`: (Optional) The password associated with the Client Certificate. For use when authenticating as a Service Principal using a Client Certificate It can also be sourced from the following environment variable: ARM_CLIENT_CERTIFICATE_PASSWORD
-* `clientCertificatePath`: (Optional) The path to the Client Certificate associated with the Service Principal for use when authenticating as a Service Principal using a Client Certificate. It can also be sourced from the following environment variable: ARM_CLIENT_CERTIFICATE_PATH
-* `clientId`: (Optional) The Client ID which should be used. It can also be sourced from the following environment variable: ARM_CLIENT_ID
-* `clientSecret`: (Optional) The Client Secret which should be used. For use When authenticating as a Service Principal using a Client Secret. It can also be sourced from the following environment variable: ARM_CLIENT_SECRET
-* `disablePulumiPartnerId`: (Optional) This will disable the Pulumi Partner ID which is used if a custom partnerId isn’t specified. It can also be sourced from the following environment variable: ARM_DISABLE_PULUMI_PARTNER_ID
-* `environment`: (Optional) The Cloud Environment which should be used. Possible values are public, usgovernment, german, and china. Defaults to public. It can also be sourced from the following environment variable: ARM_ENVIRONMENT
-* `msiEndpoint`: (Optional) The path to a custom endpoint for Managed Service Identity - in most circumstances this should be detected automatically. It can also be sourced from the following environment variable: ARM_MSI_ENDPOINT
-* `partnerId`: (Optional) A GUID/UUID that is registered with Microsoft to facilitate partner resource usage attribution. It can also be sourced from the following environment variable: ARM_PARTNER_ID
-* `subscriptionId`: (Optional) The Subscription ID which should be used. It can also be sourced from the following environment variable: ARM_SUBSCRIPTION_ID
-* `tenantId`: (Optional) The Tenant ID which should be used. It can also be sourced from the following environment variable: ARM_TENANT_ID
-* `useMsi`: (Optional) Allowed Managed Service Identity be used for Authentication. It can also be sourced from the following environment variable: ARM_USE_MSI
-
-For Pulumi support and troubleshooting, click the links in the sidebar on the left of the page.

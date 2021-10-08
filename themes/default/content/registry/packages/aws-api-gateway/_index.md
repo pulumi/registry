@@ -49,7 +49,8 @@ import pulumi_aws_api_gateway as apigateway
 api = apigateway.RestAPI('api', routes=[
     apigateway.RouteArgs(path="/", method=apigateway.Method.GET, event_handler=f),
     apigateway.RouteArgs(path="/www", method=apigateway.Method.GET, local_path="www", index=False),
-    apigateway.RouteArgs(path="/integration", target=apigateway.TargetArgs(uri="https://www.google.com", type=apigateway.IntegrationType.Http_proxy))
+    apigateway.RouteArgs(path="/integration",
+        target=apigateway.TargetArgs(uri="https://www.google.com", type=apigateway.IntegrationType.Http_proxy))
 ])
 
 pulumi.export('url', api.url)
@@ -121,7 +122,12 @@ class MyStack : Stack
             Routes =
             {
                 new ApiGateway.RouteArgs{ Path = "/", Method = ApiGateway.Method.GET, EventHandler = f },
-                new ApiGateway.RouteArgs{ Path = "/www", Method = ApiGateway.Method.GET, LocalPath = "www", Index = false },
+                new ApiGateway.RouteArgs{
+                    Path = "/www",
+                    Method = ApiGateway.Method.GET,
+                    LocalPath = "www",
+                    Index = false
+                },
                 new ApiGateway.RouteArgs{
                     Path = "/integration",
                     Target = new ApiGateway.TargetArgs{

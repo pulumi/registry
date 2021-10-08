@@ -5,7 +5,22 @@
 
         <div class="lg:flex">
             <div class="lg:w-6/12">
-                {{ .Content }}
+                {{ if not (in .Page.File "api-docs/_index.md") }}
+                    <div class="lg:flex">
+                        {{ partial "registry/package/how-to-guides/breadcrumb.html" . }}
+                    </div>
+                {{ end }}
+                <!--Don't show the title in the top-most index page.-->
+                {{ if not (in .Page.File "api-docs/_index.md") }}
+                    {{ if and (.Params.h1) (not .Params.notitle) }}
+                    <h1 class="-mt-2">{{ .Params.h1 }}</h1>
+                    {{ else if and (ne .Title "") (not .Params.notitle) }}
+                    <h1 class="-mt-2">{{ .Title }}</h1>
+                    {{ end }}
+                {{ end }}
+                <section data-swiftype-index="true" class="lg:-mt-2">
+                    {{ .Content }}
+                </section>
             </div>
 
             <div class="lg:w-3/12 lg:pl-8">

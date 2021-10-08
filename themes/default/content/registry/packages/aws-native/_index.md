@@ -1,12 +1,6 @@
 ---
 title: AWS Native
 meta_desc: Learn how you can use Pulumi's AWS Native Provider to reduce the complexity of provisioning and managing resources on AWS.
-menu:
-  intro:
-    parent: cloud-providers
-    identifier: clouds-aws-native
-    weight: 1
-
 layout: overview
 aliases:
     - "/docs/reference/clouds/aws-native/"

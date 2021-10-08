@@ -137,7 +137,7 @@ Each top-level resource maps internally to a specific API version. The native Az
 
 Because of that, top-level resources may miss newly released features shipped in brand-new API versions after the last major release. In such cases, you are encouraged to use explicitly versioned modules to access the latest Azure functionality.
 
-The [API reference docs]({{< relref "/docs/reference/pkg/azure-native/" >}}) describe top-level resources and do not currently show any module-per-version variations.
+The [API reference docs]({{< relref "/registry/packages/azure-native/api-docs/" >}}) describe top-level resources and do not currently show any module-per-version variations.
 
 ## Switching Between API Versions
 

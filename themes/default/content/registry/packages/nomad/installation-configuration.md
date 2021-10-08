@@ -2,8 +2,6 @@
 title: HashiCorp Nomad Setup
 meta_desc: This page provides an overview on how to configure the Pulumi Nomad Provider.
 layout: installation
-aliases:
-    - "/docs/intro/cloud-providers/nomad/setup/"
 ---
 
 The [Pulumi Nomad provider]({{< relref "./" >}}) uses the Nomad SDK to manage resources.

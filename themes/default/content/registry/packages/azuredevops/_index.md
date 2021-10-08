@@ -2,8 +2,6 @@
 title: AzureDevOps
 meta_desc: This page provides an overview of the AzureDevOps Provider for Pulumi.
 layout: overview
-aliases:
-    - "/docs/intro/cloud-providers/azuredevops/"
 ---
 
 The AzureDevOps provider for Pulumi can be used to provision any of the cloud resources available in [AzureDevOps](https://azure.microsoft.com/en-us/services/devops/).

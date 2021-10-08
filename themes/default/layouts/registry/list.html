@@ -1,17 +1,10 @@
 {{ define "main" }}
-    <div class="container mx-auto px-4 pt-8 mt-2 mb-12">
+    <div class="container mx-auto px-4">
         {{ if and (.Params.h1) (not .Params.notitle) }}
             <h1>{{ .Params.h1 }}</h1>
         {{ else if and (ne .Title "") (not .Params.notitle) }}
             <h1>{{ .Title }}</h1>
         {{ end }}
-
-        <h1>Pulumi Packages</h1>
-        <p>
-            Discover packages that give you direct access to all resources and components.
-            <br />
-            You can <a href="https://github.com/pulumi/registry" class="underline">create and publish your own packages</a>, too!
-        </p>
     </div>
 
     {{ $allGetStarted := $.Site.Data.registry.getstarted }}
@@ -37,43 +30,59 @@
         </section>
 
         <section class="all-packages my-8">
-            <div class="mt-12 mb-2 px-4  relative z-10">
+            <div class="mt-12 mb-2 px-4 relative z-10">
                 <h4 class="text-lg">Filters</h4>
-                <pulumi-filter-select class="flex">
+                <div class="flex flex-col md:flex-row md:items-start">
+                    <pulumi-filter-select>
 
-                    <!-- Package-type options -->
-                    <pulumi-filter-select-option-group name="type">
-                        <div class="toggle" slot="toggle">Type</div>
-                        <div class="options">
-                            <pulumi-filter-select-option value="native">Native Provider</pulumi-option>
-                            <pulumi-filter-select-option value="provider">Provider</pulumi-option>
-                            <pulumi-filter-select-option value="component">Component</pulumi-option>
-                        </div>
-                    </pulumi-filter-select-option-group>
+                        <!-- Package-type options -->
+                        <pulumi-filter-select-option-group name="type">
+                            <div class="toggle" slot="toggle">Type</div>
+                            <div class="options">
+                                <pulumi-filter-select-option value="native-provider" label="Native Provider">Native Provider</pulumi-option>
+                                <pulumi-filter-select-option value="provider" label="Provider">Provider</pulumi-option>
+                                <pulumi-filter-select-option value="component" label="Component">Component</pulumi-option>
+                            </div>
+                        </pulumi-filter-select-option-group>
 
-                    <!-- Use-case options -->
-                    <pulumi-filter-select-option-group name="category" class="mx-1 md:mx-4">
-                        <div class="toggle" slot="toggle">Use Case</div>
-                        <div class="options">
-                            <pulumi-filter-select-option value="cloud">Cloud</pulumi-option>
-                            <pulumi-filter-select-option value="database">Database</pulumi-option>
-                            <pulumi-filter-select-option value="infrastructure">Infrastructure</pulumi-option>
-                            <pulumi-filter-select-option value="monitoring">Monitoring</pulumi-option>
-                            <pulumi-filter-select-option value="network">Network</pulumi-option>
-                            <pulumi-filter-select-option value="utility">Utility</pulumi-option>
-                            <pulumi-filter-select-option value="version control system">Version control</pulumi-option>
-                        </div>
-                    </pulumi-filter-select-option-group>
+                        <!-- Use-case options -->
+                        <pulumi-filter-select-option-group name="category" class="mx-1 md:mx-4">
+                            <div class="toggle" slot="toggle">Use Case</div>
+                            <div class="options">
+                                <pulumi-filter-select-option value="cloud" label="Cloud">Cloud</pulumi-option>
+                                <pulumi-filter-select-option value="database" label="Database">Database</pulumi-option>
+                                <pulumi-filter-select-option value="infrastructure" label="Infrastructure">Infrastructure</pulumi-option>
+                                <pulumi-filter-select-option value="monitoring" label="Monitoring">Monitoring</pulumi-option>
+                                <pulumi-filter-select-option value="network" label="Network">Network</pulumi-option>
+                                <pulumi-filter-select-option value="utility" label="Utility">Utility</pulumi-option>
+                                <pulumi-filter-select-option value="version control system" label="Version Control">Version Control</pulumi-option>
+                            </div>
+                        </pulumi-filter-select-option-group>
 
-                </pulumi-filter-select>
+                    </pulumi-filter-select>
+
+                    <!-- The list of active filters. -->
+                    <ul class="package-tags active-tags"></ul>
+
+                    <!-- The template used for displaying active filters. -->
+                    <template id="active-tag-template">
+                        <li>
+                            <span></span>
+                            <button class="ml-2 text-base hover:text-gray-900" title="Clear filter">&times;</a>
+                        </li>
+                    </template>
+                </div>
             </div>
 
             <h2 class="px-4 inline-flex items-center">
-                A-Z Packages
+                A &ndash; Z Packages
                 <span class="all-count ml-4 py-0.5 px-3 rounded-full bg-violet-600 text-white text-lg">
                     {{ len $allPackages }}
                 </span>
             </h2>
+            <p class="px-4 mt-0">
+                <a href="https://github.com/pulumi/registry" class="font-display underline text-lg">Contribute your own packages</a>
+            </p>
             <div class="flex flex-wrap">
                 {{ range $allPackages }}
                     {{ partial "registry/package" (dict "package" .) }}

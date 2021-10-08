@@ -2,8 +2,6 @@
 title: Kong Setup
 meta_desc: This page provides an overview on how to configure credentials for the Pulumi Kong Provider.
 layout: installation
-aliases:
-    - "/docs/intro/cloud-providers/kong/setup/"
 ---
 
 The [Pulumi Kong provider]({{< relref "./" >}}) uses the Kong SDK to manage and provision resources.

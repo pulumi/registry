@@ -2,8 +2,6 @@
 title: Auth0
 meta_desc: This page provides an overview of the Auth0 Provider for Pulumi.
 layout: overview
-aliases:
-    - "/docs/intro/cloud-providers/auth0/"
 ---
 
 The Auth0 provider for Pulumi can be used to provision any of the cloud resources available in [Auth0](https://auth0.com/).

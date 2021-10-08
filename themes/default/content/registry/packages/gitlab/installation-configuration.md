@@ -2,8 +2,6 @@
 title: GitLab Setup
 meta_desc: This page provides an overview on how to configure credentials for the Pulumi GitLab Provider.
 layout: installation
-aliases:
-    - "/docs/intro/cloud-providers/gitlab/setup/"
 ---
 
 The Pulumi GitLab provider uses the GitLab SDK to manage and provision resources.

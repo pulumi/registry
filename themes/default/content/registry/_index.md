@@ -8,5 +8,5 @@ menu:
     header:
         weight: 3
 aliases:
-    - "/docs/intro/cloud-providers/"
+    - /registry/packages
 ---

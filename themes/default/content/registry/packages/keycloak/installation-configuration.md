@@ -2,8 +2,6 @@
 title: Keycloak Setup
 meta_desc: This page provides an overview on how to configure credentials for the Pulumi Keycloak Provider.
 layout: installation
-aliases:
-    - "/docs/intro/cloud-providers/keycloak/setup/"
 ---
 
 The [Pulumi Keycloak provider]({{< relref "./" >}}) uses the Keycloak SDK to manage and provision resources.

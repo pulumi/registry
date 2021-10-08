@@ -2,8 +2,6 @@
 title: Minio
 meta_desc: This page provides an overview of the Minio Provider for Pulumi.
 layout: overview
-aliases:
-    - "/docs/intro/cloud-providers/minio/"
 ---
 
 The Minio provider for Pulumi can be used to provision any of the cloud resources available in [Minio](https://min.io/).

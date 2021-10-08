@@ -1,17 +1,18 @@
 ---
-title: Google-Native
-meta_desc: 'This page provides an overview of the Google Cloud Native provider for Pulumi: Google-Native.'
+title: Google Native
+meta_desc: Learn how to use Pulumi's Google Native Provider to reduce the complexity of managing and provisioning GCP resources.
 layout: overview
-aliases:
-    - "/docs/reference/clouds/google-native/"
-    - "/docs/intro/cloud-providers/google-native/"
 ---
 
 {{< notes >}}
-The Google Cloud Native provider is currently in public preview.
+Google Native is in public preview.
+
+For new projects, we recommend using Google Native. For existing projects, [Google Cloud Classic]({{<relref "/registry/packages/gcp">}}) remains fully supported; at this time, we recommend waiting to migrate existing projects to Google Native.
 {{< /notes >}}
 
-The Google Cloud Native provider for Pulumi can be used to provision any of the cloud resources available in [Google Cloud](https://cloud.google.com/). The provider must be configured with credentials to deploy and update resources in Google Cloud.
+The Google Native provider for Pulumi can provision many of the cloud resources available in [Google Cloud](https://cloud.google.com/).
+
+The Google Native provider must be configured with credentials to deploy and update resources in Google Cloud; see the [Installation & Configuration page]({{<relref "./installation-configuration">}}) for instructions.
 
 ## Example
 
@@ -117,16 +118,13 @@ class Program
 
 {{< /chooser >}}
 
-You can find additional examples of using the Google Cloud Native provider in
-[the Pulumi examples repo](https://github.com/pulumi/examples).
+Visit the [How-to Guides page]({{<relref "./how-to-guides">}}) to find step-by-step guides for specific scenarios like creating a serverless application using Google Cloud Functions or setting up a Google Kubernetes Engine (GKE) cluster.
 
-## Libraries
+## SDK packages
 
-The following packages are available in package managers:
+The Google Native provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/google-native`](https://www.npmjs.com/package/@pulumi/google-native)
 * Python: [`pulumi-google-native`](https://pypi.org/project/pulumi-google-native/)
 * Go: [`github.com/pulumi/pulumi-google-native/sdk/go/google`](https://github.com/pulumi/pulumi-google-native)
 * .NET: [`Pulumi.GoogleNative`](https://www.nuget.org/packages/Pulumi.GoogleNative)
-
-The Google Cloud Native provider is open source and available in the [pulumi/pulumi-google-native](https://github.com/pulumi/pulumi-google-native) repo.

@@ -2,8 +2,6 @@
 title: CloudAMQP Setup
 meta_desc: This page provides an overview on how to configure credentials for the Pulumi CloudAMQP Provider.
 layout: installation
-aliases:
-    - "/docs/intro/cloud-providers/cloudamqp/setup/"
 ---
 
 The Pulumi CloudAMQP provider uses the CloudAMQP SDK to manage and provision resources.

@@ -2,8 +2,6 @@
 title: Mailgun Setup
 meta_desc: This page provides an overview on how to configure credentials for the Pulumi Mailgun Provider.
 layout: installation
-aliases:
-    - "/docs/intro/cloud-providers/mailgun/setup/"
 ---
 
 The Pulumi Mailgun provider uses the Mailgun SDK to manage and provision resources.

@@ -2,8 +2,6 @@
 title: HashiCorp Nomad
 meta_desc: This page provides an overview of the HashiCorp Nomad Provider for Pulumi.
 layout: overview
-aliases:
-    - "/docs/intro/cloud-providers/nomad/"
 ---
 
 <img src="/logos/tech/nomad.svg" align="right" class="h-16 px-8 pb-4">

@@ -80,13 +80,12 @@ class MyStack : Stack
 
     public MyStack()
     {
-
         var bucket = new S3.ReplicatedBucket(ctx, "bucket", new S3.ReplicatedBucketArgs{
             DestinationRegion = "us-east-1"
         });
 
-        this.SrcBucket = bucket.SourceBucket.Arn
-        this.DstBucket = bucket.DestinationBucket.Arn
+        this.SrcBucket = bucket.SourceBucket.Arn;
+        this.DstBucket = bucket.DestinationBucket.Arn;
     }
 }
 ```

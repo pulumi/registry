@@ -13,9 +13,9 @@
                 <!--Don't show the title in the top-most index page.-->
                 {{ if not (in .Page.File "api-docs/_index.md") }}
                     {{ if and (.Params.h1) (not .Params.notitle) }}
-                        <h1 class="-mt-2 mb-4">{{ .Params.h1 }}</h1>
+                        <h1 class="-mt-2 mb-8">{{ .Params.h1 }}</h1>
                     {{ else if and (ne .Title "") (not .Params.notitle) }}
-                        <h1 class="-mt-2 mb-4">{{ .Title }}</h1>
+                        <h1 class="-mt-2 mb-8">{{ .Title }}</h1>
                     {{ end }}
                 {{ end }}
                 <section data-swiftype-index="true" class="lg:-mt-2">

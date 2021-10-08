@@ -2,7 +2,6 @@
 {{ $packageName := index $directories 2 }}
 {{ $packageNavPath := printf "https://www.pulumi.com/registry/packages/navs/%s.json" $packageName }}
 {{ $packageNavData := getJSON $packageNavPath }}
-{{ $baseUrl := .Site.BaseURL }}
-{{ $baseDirectory := printf "%sregistry/packages/%s/api-docs/" $baseUrl $packageName }}
+{{ $baseDirectory := printf "/registry/packages/%s/api-docs/" $packageName }}
 
 <pulumi-api-doc-filterable-nav base-directory={{ $baseDirectory }} nodes="{{ jsonify $packageNavData }}"></pulumi-api-doc-filterable-nav>

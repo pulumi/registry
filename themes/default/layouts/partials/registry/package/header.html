@@ -27,12 +27,12 @@
     </div>
 
     {{ with (index $.Site.Data.registry.packages ($packageName)) }}
-        <div class="lg:flex mb-4">
-            {{ .version }} published on {{ ((time .updated_on).Format "Mon Jan 2 2006") }} by {{ .publisher }}
+        <div class="lg:flex mb-4 font-display">
+            {{ .version }} published on {{ ((time .updated_on).Format "Monday, Jan 2, 2006") }} by {{ .publisher }}
         </div>
     {{ end }}
 
-    <div class="lg:flex items-center mb-8">
+    <div class="flex items-center mb-8">
         <i class="fab fa-github text-lg"></i>
         <span class="text-blue-600 flex flex-wrap items-center">
             <a class="text-blue-600 underline font-display ml-2 mr-1.5" href="https://github.com/pulumi/pulumi-{{ $packageName }}" target="_blank" rel="noopener noreferrer">Source code</a>

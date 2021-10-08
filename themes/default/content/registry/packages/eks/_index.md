@@ -4,6 +4,8 @@ meta_desc: Learn how you can use Pulumi's Amazon EKS component to set up an AWS 
 layout: overview
 ---
 
+[![Deploy](https://get.pulumi.com/new/button.svg)](https://app.pulumi.com/new)
+
 Amazon EKS is a Pulumi Component that creates and manages the resources necessary to run an [EKS Kubernetes cluster](https://aws.amazon.com/eks/) in AWS. Use this component to quickly set up an EKS cluster in just a few lines of code.
 
 Amazon EKS must be configured with credentials to deploy and update resources in AWS; see the [Installation & Configuration page]({{<relref "./installation-configuration">}}) for instructions.

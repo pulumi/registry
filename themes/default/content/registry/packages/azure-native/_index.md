@@ -101,7 +101,7 @@ Some Azure resources aren't included in Azure Native because they're not compati
 * [Typescript]({{<relref "/registry/packages/azure-native/how-to-guides/azure-ts-call-azure-sdk">}})
 * [Go]({{<relref "/registry/packages/azure-native/how-to-guides/azure-go-call-azure-sdk">}})
 * [C#]({{<relref "/registry/packages/azure-native/how-to-guides/azure-cs-call-azure-api">}})
-* [Python]({{<relref "/registry/packages/azure-native/how-to-guides/azure-cs-call-azure-sdk">}})
+* [Python]({{<relref "/registry/packages/azure-native/how-to-guides/azure-py-call-azure-sdk">}})
 
 ## How resources are versioned
 

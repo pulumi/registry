@@ -61,12 +61,4 @@
             </div>
         </div>
     {{ end }}
-
-    <div class="lg:flex">
-        {{ if in (slice "api" "how-to-guide" ) .Page.Layout }}
-            {{ if not (in .Page.File "api-docs/_index.md") }}
-                {{ partial "registry/package/how-to-guides/breadcrumb.html" . }}
-            {{ end }}
-        {{ end }}
-    </div>
 </div>

@@ -4,6 +4,12 @@
 
         <div class="lg:flex">
             <div class="lg:w-9/12">
+                {{ if not (in .Page.File "how-to-guides/_index.md") }}
+                    <div class="lg:flex">
+                        {{ partial "registry/package/how-to-guides/breadcrumb.html" . }}
+                    </div>
+                {{ end }}
+
                 {{ .Content }}
             </div>
 
@@ -12,8 +18,6 @@
                     <div class="ml-2 hidden lg:block">
                         {{ partial "registry/package/right-nav.html" . }}
                     </div>
-
-                    {{ partial "right-nav-ad.html" }}
                 </div>
             </div>
         </div>

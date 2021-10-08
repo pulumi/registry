@@ -1,0 +1,12 @@
+name: coredns-helm
+title: CoreDNS (Helm Chart)
+description: Deploy CoreDNS using this Pulumi component
+logo_url: ""
+updated_on: 1633554624
+publisher: Pulumi
+category: Network
+package_status: ga
+version: v0.0.1
+featured: false
+native: false
+component: true

@@ -23,16 +23,6 @@ module:
           target: static
         - source: layouts
           target: layouts
-        - source: src
-          target: assets
-        - source: .npmrc
-          target: assets
-        - source: tsconfig.json
-          target: assets
-        - source: webpack.config.js
-          target: assets
-        - source: yarn.lock
-          target: assets
     - path: github.com/pulumi/pulumi-hugo/themes/default
       mounts:
         - source: content

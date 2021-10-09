@@ -12,7 +12,7 @@ For new projects, we recommend using Google Native. For existing projects, [Goog
 
 The Google Native provider for Pulumi can provision many of the cloud resources available in [Google Cloud](https://cloud.google.com/).
 
-The Google Native provider must be configured with credentials to deploy and update resources in Google Cloud; see the [Installation & Configuration page]({{<relref "./installation-configuration">}}) for instructions.
+The Google Native provider must be configured with credentials to deploy and update resources in Google Cloud; see the [Installation & Configuration]({{<relref "./installation-configuration">}}) for instructions.
 
 ## Example
 
@@ -118,7 +118,7 @@ class Program
 
 {{< /chooser >}}
 
-Visit the [How-to Guides page]({{<relref "./how-to-guides">}}) to find step-by-step guides for specific scenarios like creating a serverless application using Google Cloud Functions or setting up a Google Kubernetes Engine (GKE) cluster.
+Visit the [How-to Guides]({{<relref "./how-to-guides">}}) to find step-by-step guides for specific scenarios like creating a serverless application using Google Cloud Functions or setting up a Google Kubernetes Engine (GKE) cluster.
 
 ## SDK packages
 

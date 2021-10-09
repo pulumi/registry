@@ -17,7 +17,7 @@ The AWS Native provider for Pulumi can provision many of the cloud resources ava
 
 [Hundreds of AWS resources]({{<relref "/registry/packages/aws-native/api-docs">}}) are available in AWS Native. As AWS Cloud Control API adds resources, we will update AWS Native to include them.
 
-AWS Native must be configured with credentials to deploy and update resources in AWS; see the [Installation & Configuration page]({{<relref "./installation-configuration">}}) for instructions.
+AWS Native must be configured with credentials to deploy and update resources in AWS; see the [Installation & Configuration]({{<relref "./installation-configuration">}}) for instructions.
 
 {{< youtube oKxaZCyu2OQ >}}
 
@@ -165,7 +165,7 @@ func main() {
 
 {{% /chooser %}}
 
-Visit the [How-to Guides page]({{<relref "./how-to-guides">}}) to find more step-by-step guides for specific scenarios like setting up an EKS cluster.
+Visit the [How-to Guides]({{<relref "./how-to-guides">}}) to find more step-by-step guides for specific scenarios like setting up an EKS cluster.
 
 ## SDK packages
 

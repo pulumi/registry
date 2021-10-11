@@ -12,7 +12,7 @@ Azure Classic is based on the Terraform AzureRM provider. It has fewer resources
 
 The Azure Classic provider for Pulumi can be used to provision many of the cloud resources available in [Azure](https://azure.microsoft.com/en-us/). It manages and provisions resources using the [Azure Resource Manager (ARM) APIs](https://docs.microsoft.com/en-us/rest/api/resources/).
 
-Azure Classic must be configured with credentials to deploy and update resources in Azure; see the [Installation & Configuration]({{<relref "./installation-configuration">}}) for instructions.
+Azure Classic must be configured with credentials to deploy and update resources in Azure; see [Installation & Configuration]({{<relref "./installation-configuration">}}) for instructions.
 
 ## Example
 

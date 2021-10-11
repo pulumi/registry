@@ -6,7 +6,7 @@ layout: overview
 
 The Google Cloud Platform (GCP) provider for Pulumi can provision many of the cloud resources available in [Google Cloud](https://cloud.google.com/).
 
-The GCP provider must be configured with credentials to deploy and update resources in Google Cloud; see the [Installation & Configuration]({{<relref "./installation-configuration">}}) for instructions.
+The GCP provider must be configured with credentials to deploy and update resources in Google Cloud; see [Installation & Configuration]({{<relref "./installation-configuration">}}) for instructions.
 
 **New to Pulumi and Google Cloud?** [Get started with Google Cloud using our tutorial]({{<relref "/docs/get-started/gcp">}})
 

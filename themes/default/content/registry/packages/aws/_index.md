@@ -6,7 +6,7 @@ layout: overview
 
 The Amazon Web Services (AWS) provider for Pulumi can provision many of the cloud resources available in [AWS](https://aws.amazon.com/). It uses the AWS SDK to manage and provision resources.
 
-The AWS provider must be configured with credentials to deploy and update resources in AWS; see the [Installation & Configuration]({{<relref "./installation-configuration">}}) for instructions.
+The AWS provider must be configured with credentials to deploy and update resources in AWS; see [Installation & Configuration]({{<relref "./installation-configuration">}}) for instructions.
 
 **New to Pulumi and AWS?** [Get started with AWS using our tutorial]({{<relref "/docs/get-started/aws">}})
 

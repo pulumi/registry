@@ -1,6 +1,6 @@
 {{ range where .package.Pages "Params.language" .language }}
     <div class="pb-4">
-        <a class="text-blue-600 underline" href="{{ relref . .Path }}">{{ .Title }}</a>
+        <a class="text-blue-600 underline" href="{{ relref . .Path }}">{{ .Params.h1 }}</a>
     </div>
 {{ end }}
 

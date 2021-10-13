@@ -2,11 +2,11 @@ name: azuread
 title: Azure Active Directory
 description: A Pulumi package for creating and managing azuread cloud resources.
 logo_url: ""
-updated_on: 1633527059
+updated_on: 1633618926
 publisher: Pulumi
 category: Infrastructure
 package_status: ga
-version: v5.4.0
+version: v5.5.0
 featured: false
 native: false
 component: false

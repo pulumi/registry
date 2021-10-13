@@ -73,10 +73,10 @@
                 </span>
             </h2>
             <p class="px-4 mt-0">
-                <a href="https://github.com/pulumi/registry" class="font-display underline text-lg">Contribute your own packages</a>
+                <a href="{{ relref . "/docs/guides/pulumi-packages/contribute-to-pulumi-registry" }}" class="font-display underline text-lg">Contribute your own packages</a>
             </p>
             <div class="flex flex-wrap">
-                {{ range $allPackages }}
+                {{ range (sort $allPackages "title") }}
                     {{ partial "registry/package" (dict "package" .) }}
                 {{ end }}
                 <div class="no-results px-4">

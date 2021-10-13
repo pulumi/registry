@@ -3,11 +3,11 @@ title: AWS Classic
 description: A Pulumi package for creating and managing Amazon Web Services (AWS)
   cloud resources.
 logo_url: ""
-updated_on: 1632951273
+updated_on: 1633979275
 publisher: Pulumi
 category: Cloud
 package_status: ga
-version: v4.22.1
+version: v4.24.1
 featured: true
 native: false
 component: false

@@ -7,6 +7,10 @@ no_on_this_page: true
 menu:
     header:
         weight: 3
+    intro:
+        identifier: cloud-providers
+        name: Cloud Providers
+        weight: 6
 aliases:
     - /registry/packages
 ---

@@ -23,7 +23,7 @@
     {{ end }}
 
     <div class="lg:flex mb-2">
-        <h2 class="text-4xl">{{ with .GetPage $packageHome }}{{ .Title }}{{ end }}</h2>
+        <h1 class="text-4xl">{{ with .GetPage $packageHome }}{{ .Title }}{{ end }}</h1>
     </div>
 
     {{ with (index $.Site.Data.registry.packages ($packageName)) }}
@@ -41,33 +41,35 @@
     </div>
 
     {{ with .GetPage (path.Join "registry/packages" $packageName) }}
-        <div class="flex mb-8 font-display text-base md:text-lg">
-            <div class="{{ if (eq $packageSection "_index") }} border-b-2 border-blue-600 {{ end }} pb-2 px-2 mr-2 md:mr-4 lg:mr-6">
-                <a class="flex items-center" href="{{ relref . .File.Dir }}">Overview</a>
+        <nav>
+            <div class="flex mb-8 font-display text-base md:text-lg">
+                <div class="{{ if (eq $packageSection "_index") }} border-b-2 border-blue-600 {{ end }} pb-2 px-2 mr-2 md:mr-4 lg:mr-6">
+                    <a class="flex items-center" href="{{ relref . .File.Dir }}">Overview</a>
+                </div>
+                <div class="{{ if (eq $packageSection "installation-configuration") }} border-b-2 border-blue-600 {{ end }} pb-2 px-2 mx-2 md:mx-4 lg:mx-6">
+                    <a class="flex items-center" href="{{ relref . (path.Join .File.Dir "installation-configuration") }}">
+                        <span class="md:hidden">Install</span>
+                        <span class="hidden md:block">Installation &amp; Configuration</span>
+                    </a>
+                </div>
+                <div class="{{ if (eq $packageSection "api-docs") }} border-b-2 border-blue-600 {{ end }} pb-2 px-2 mx-2 md:mx-4 lg:mx-6">
+                    <a class="flex items-center" href="{{ relref . (path.Join .File.Dir "api-docs") }}">
+                        <span class="md:hidden">API</span>
+                        <span class="hidden md:block">API Docs</span>
+                    </a>
+                </div>
+                <div class="{{ if (eq $packageSection "how-to-guides") }} border-b-2 border-blue-600 {{ end }} pb-2 px-2 ml-2 md:ml-4 lg:ml-6">
+                    <a class="flex items-center" href="{{ relref . (path.Join .File.Dir "how-to-guides") }}">
+                        <span class="md:hidden">Guides</span>
+                        <span class="hidden md:block">How-to Guides</span>
+                        {{ if gt $guidesCount 0 }}
+                            <span class="hidden md:inline">
+                                {{ partial "count-pill" (dict "count" $guidesCount "selected" (eq $packageSection "how-to-guides")) }}
+                            </span>
+                        {{ end }}
+                    </a>
+                </div>
             </div>
-            <div class="{{ if (eq $packageSection "installation-configuration") }} border-b-2 border-blue-600 {{ end }} pb-2 px-2 mx-2 md:mx-4 lg:mx-6">
-                <a class="flex items-center" href="{{ relref . (path.Join .File.Dir "installation-configuration") }}">
-                    <span class="md:hidden">Install</span>
-                    <span class="hidden md:block">Installation &amp; Configuration</span>
-                </a>
-            </div>
-            <div class="{{ if (eq $packageSection "api-docs") }} border-b-2 border-blue-600 {{ end }} pb-2 px-2 mx-2 md:mx-4 lg:mx-6">
-                <a class="flex items-center" href="{{ relref . (path.Join .File.Dir "api-docs") }}">
-                    <span class="md:hidden">API</span>
-                    <span class="hidden md:block">API Docs</span>
-                </a>
-            </div>
-            <div class="{{ if (eq $packageSection "how-to-guides") }} border-b-2 border-blue-600 {{ end }} pb-2 px-2 ml-2 md:ml-4 lg:ml-6">
-                <a class="flex items-center" href="{{ relref . (path.Join .File.Dir "how-to-guides") }}">
-                    <span class="md:hidden">Guides</span>
-                    <span class="hidden md:block">How-to Guides</span>
-                    {{ if gt $guidesCount 0 }}
-                        <span class="hidden md:inline">
-                            {{ partial "count-pill" (dict "count" $guidesCount "selected" (eq $packageSection "how-to-guides")) }}
-                        </span>
-                    {{ end }}
-                </a>
-            </div>
-        </div>
+        </nav>
     {{ end }}
 </div>

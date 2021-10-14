@@ -1,0 +1,12 @@
+name: aws-apigateway
+title: AWS API Gateway
+description: ""
+logo_url: ""
+updated_on: 1634152498
+publisher: Pulumi
+category: Cloud
+package_status: public_preview
+version: v0.0.4
+featured: false
+native: false
+component: true

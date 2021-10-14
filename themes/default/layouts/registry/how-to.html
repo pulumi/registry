@@ -7,6 +7,16 @@
                 {{ if (eq (len .Pages) 0) }}
                     There are no guides yet for this package.
                 {{ else }}
+                    {{ if not (eq (len (where .Pages "Params.language" "==" nil)) 0) }}
+                        <h2>Featured Guides</h2>
+
+                        {{ range where .Pages "Params.language" "==" nil }}
+                            <div class="pb-4">
+                                <a class="text-blue-600 underline" href="{{ relref . .Path }}">{{ .Title }}</a>
+                            </div>
+                        {{ end }}
+                    {{ end }}
+
                     <div><pulumi-chooser type="language" options="typescript,javascript,python,go,csharp"></pulumi-chooser></div>
 
                     <pulumi-choosable type="language" value="typescript">

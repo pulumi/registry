@@ -90,6 +90,7 @@ func main() {
 {{% /choosable %}}
 
 {{% choosable language csharp %}}
+
 ```csharp
 using Pulumi;
 using Pulumi.Aws.S3;
@@ -117,6 +118,9 @@ class MyStack : Stack
     public Output<string> Endpoint { get; set; }
 }
 ```
+
+{{% /choosable %}}
+
 {{< /chooser >}}
 
 ## SDK packages

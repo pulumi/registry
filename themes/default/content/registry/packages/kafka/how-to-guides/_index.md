@@ -1,6 +1,6 @@
 ---
-title: How-to Guides
+title: Kafka How-to Guides
 meta_desc: |
-    Tutorials for using infrastructure as code in the Pulumi <placeholder> package
+    Tutorials for using infrastructure as code in the Pulumi Kafka package
 layout: how-to
 ---

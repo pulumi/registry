@@ -1,6 +1,6 @@
 ---
-title: How-to Guides
+title: Splunk How-to Guides
 meta_desc: |
-    Tutorials for using infrastructure as code in the Pulumi <placeholder> package
+    Tutorials for using infrastructure as code in the Pulumi Splunk package
 layout: how-to
 ---

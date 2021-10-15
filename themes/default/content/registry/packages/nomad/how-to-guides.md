@@ -1,6 +1,6 @@
 ---
-title: How-to Guides
+title: HashiCorp Nomad How-to Guides
 meta_desc: |
-    Tutorials for using infrastructure as code in the Pulumi <placeholder> package
+    Tutorials for using infrastructure as code in the Pulumi HashiCorp Nomad package
 layout: how-to
 ---

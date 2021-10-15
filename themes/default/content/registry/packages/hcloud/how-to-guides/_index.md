@@ -1,6 +1,6 @@
 ---
-title: How-to Guides
+title: Hetzner Cloud How-to Guides
 meta_desc: |
-    Tutorials for using infrastructure as code in the Pulumi <placeholder> package
+    Tutorials for using infrastructure as code in the Pulumi Hetzner Cloud package
 layout: how-to
 ---

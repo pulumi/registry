@@ -1,6 +1,6 @@
 ---
-title: How-to Guides
+title: Azure Native How-to Guides
 meta_desc: |
-    Tutorials for using infrastructure as code in the Pulumi <placeholder> package
+    Tutorials for using infrastructure as code in the Pulumi Azure Native package
 layout: how-to
 ---

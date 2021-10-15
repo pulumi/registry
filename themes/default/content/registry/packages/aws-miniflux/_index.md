@@ -123,7 +123,7 @@ class MyStack : Stack
 
 The AWS API Gateway provider is available as a package in all Pulumi languages:
 
-* JavaScript/TypeScript: [`@pulumi/aws-apigateway`](https://www.npmjs.com/package/@pulumi/aws)
-* Python: [`pulumi-aws-apigateway`](https://pypi.org/project/pulumi-aws-apigateway/)
-* Go: [`github.com/pulumi/pulumi-aws-apigateway/sdk/go/apigateway`](https://github.com/pulumi/pulumi-aws-apigateway)
-* .NET: [`Pulumi.AwsApiGateway`](https://www.nuget.org/packages/Pulumi.AwsApiGateway)
+* JavaScript/TypeScript: [`@pulumi/aws-miniflux`](https://www.npmjs.com/package/@pulumi/aws-miniflux)
+* Python: [`pulumi-aws-miniflux`](https://pypi.org/project/pulumi-aws-miniflux/)
+* Go: [`github.com/pulumi/pulumi-aws-miniflux/sdk/go/apigateway`](https://github.com/pulumi/pulumi-aws-miniflux)
+* .NET: [`Pulumi.AwsMiniflux`](https://www.nuget.org/packages/Pulumi.AwsMiniflux)

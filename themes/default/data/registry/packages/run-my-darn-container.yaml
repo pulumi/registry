@@ -1,0 +1,12 @@
+name: run-my-darn-container
+title: Run My Darn Container
+description: ""
+logo_url: ""
+updated_on: 1634333875
+publisher: Lee Briggs
+category: Infrastructure
+package_status: public_preview
+version: v0.2.0
+featured: false
+native: false
+component: true

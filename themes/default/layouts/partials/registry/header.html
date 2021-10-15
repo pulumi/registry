@@ -77,12 +77,19 @@
     </div>
     <div class="dot-overlay"></div>
     <div class="registry-hero-title container mx-auto w-full px-4">
-        <a href="{{ relref . "/registry" }}">
-            <i class="fas fa-archive title-icon"></i>
-        </a>
-        <a href="{{ relref . "/registry" }}">
-            <h1 class="title-text-content">Pulumi Registry</h1>
-        </a>
+        <div class="flex items-center">
+            <a href="{{ relref . "/registry" }}">
+                <i class="fas fa-archive title-icon"></i>
+            </a>
+            <a href="{{ relref . "/registry" }}">
+                {{/* Only use an h1 on the index page. */}}
+                {{ if eq .Title "Pulumi Registry"}}
+                    <h1 class="title-text-content">Pulumi Registry</h1>
+                {{ else }}
+                    <span class="title-text-content">Pulumi Registry</span>
+                {{ end }}
+            </a>
+        </div>
         <div class="flex-1"></div>
         <script>
             (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){

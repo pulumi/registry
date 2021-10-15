@@ -1,6 +1,6 @@
 ---
-title: How-to Guides
+title: MySQL How-to Guides
 meta_desc: |
-    Tutorials for using infrastructure as code in the Pulumi <placeholder> package
+    Tutorials for using infrastructure as code in the Pulumi MySQL package
 layout: how-to
 ---

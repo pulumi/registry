@@ -1,6 +1,6 @@
-name: gcp-project-scaffold
-title: Google Cloud Project Scaffold
-description: Scaffold a Google Cloud Project to quickly get started
+name: gcp-global-cloudrun
+title: Google Global Cloud Run
+description: Deploy a Globally Loadbalanced Google CloudRun Service
 logo_url: ""
 updated_on: 1633554624
 publisher: Pulumi

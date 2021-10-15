@@ -1,4 +1,4 @@
-name: aws-quickstart-aurora-postgresql
+name: aws-quickstart-aurora-postgres
 title: "AWS Quick Start: Aurora PostgreSQL"
 description: Deploy an Amazon Aurora PostgreSQL database on the AWS Cloud with high availability and failover support
 logo_url: ""

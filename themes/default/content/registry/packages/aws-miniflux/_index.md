@@ -121,7 +121,7 @@ class MyStack : Stack
 
 ## SDK packages
 
-The AWS API Gateway provider is available as a package in all Pulumi languages:
+The AWS Miniflux component is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/aws-miniflux`](https://www.npmjs.com/package/@pulumi/aws-miniflux)
 * Python: [`pulumi-aws-miniflux`](https://pypi.org/project/pulumi-aws-miniflux/)

@@ -1,5 +1,5 @@
 ---
-title: Pulumi Azure Quickstart ACR Geo Replicated
+title: Azure Quickstart ACR Geo Replicated
 meta_desc: Information on how to set up credentials to use the Azure Quickstart ACR Geo Replicated Registry component.
 layout: installation
 ---

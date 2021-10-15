@@ -1,5 +1,5 @@
 ---
-title: Pulumi GCP Global CloudRun
+title: GCP Global CloudRun
 meta_desc: Information on how to set up credentials to use the AWS API Gateway component.
 layout: installation
 ---

@@ -2,11 +2,11 @@ name: aws-miniflux
 title: Miniflux
 description: ""
 logo_url: ""
-updated_on: 1634265653
+updated_on: 1634334277
 publisher: Christian Nunciato
 category: Infrastructure
 package_status: public_preview
-version: v0.0.17
+version: v0.1.0
 featured: false
 native: false
 component: true

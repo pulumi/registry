@@ -1,6 +1,6 @@
 ---
-title: Pulumi AWS Miniflux Setup
-meta_desc: Information on how to set up credentials to use the AWS Miniflux component.
+title: Run My Darn Container Setup
+meta_desc: Information on how to set up credentials to use the Run My Darn Container component.
 layout: installation
 ---
 

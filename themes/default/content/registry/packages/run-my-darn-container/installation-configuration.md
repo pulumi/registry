@@ -1,11 +1,15 @@
 ---
-title: Pulumi AWS Miniflux Setup
-meta_desc: Information on how to set up credentials to use the AWS Miniflux component.
+title: Pulumi Run My Darn Container Setup
+meta_desc: Information on how to set up credentials to use the Run My Darn Container component.
 layout: installation
 ---
 
-{{< aws-resource-note >}}
+To provision a container in one of the cloud providers with the this component, you need to have credentials.
 
-To provision a Miniflux installation with the this component, you need to have AWS credentials. Use the instructions on the AWS Classic Provider's [Installation & Configuration]({{< relref "/registry/packages/aws/installation-configuration" >}}) to get credentials if needed.
+For AWS, use the instructions from the AWS Classic Provider's [Installation & Configuration]({{< relref "/registry/packages/aws/installation-configuration" >}}) to get credentials if needed.
 
-**Your AWS credentials are never sent to Pulumi.com.** Pulumi uses the AWS SDK and the credentials in your environment to authenticate requests from your computer to AWS.
+For Azure, use the instructions from the Azure Native Provider's [Installation & Configuration]({{< relref "/registry/packages/azure-native/installation-configuration" >}}) to get credentials if needed.
+
+For Google, use the instructions from the GCP Classic Provider's [Installation & Configuration]({{< relref "/registry/packages/gcp/installation-configuration" >}}) to get credentials if needed.
+
+**Your credentials are never sent to Pulumi.com.** Pulumi uses the respective cloud SDKs and the credentials in your environment to authenticate requests from your computer to the cloud providers.

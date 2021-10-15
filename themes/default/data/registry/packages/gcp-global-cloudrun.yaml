@@ -1,0 +1,12 @@
+name: gcp-global-cloudrun
+title: GCP Global CloudRun
+description: Deploy a Google Cloud Run Service to multiple regions
+logo_url: ""
+updated_on: 1634327564
+publisher: Paul Stack
+category: Cloud
+package_status: public_preview
+version: v0.0.3
+featured: false
+native: false
+component: true

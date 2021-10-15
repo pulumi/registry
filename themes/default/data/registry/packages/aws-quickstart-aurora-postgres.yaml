@@ -1,12 +1,12 @@
 name: aws-quickstart-aurora-postgres
-title: "AWS Quick Start: Aurora PostgreSQL"
+title: AWS QuickStart Aurora Postgres
 description: Deploy an Amazon Aurora PostgreSQL database on the AWS Cloud with high availability and failover support
 logo_url: ""
-updated_on: 1633554624
+updated_on: 1634321119
 publisher: Pulumi
 category: Cloud
-package_status: ga
-version: v0.0.1
+package_status: public_preview
+version: v0.0.3
 featured: false
 native: false
 component: true

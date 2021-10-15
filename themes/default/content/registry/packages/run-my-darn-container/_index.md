@@ -89,7 +89,7 @@ func main() {
 			return err
 		}
 
-		ctx.Export("awsUrl", aws.Url)
+		ctx.Export("AWSUrl", aws.Url)
 		return nil
 	})
 }
@@ -107,18 +107,17 @@ class MyStack : Stack
 {
     public MyStack()
     {
-        // Create a new Miniflux service.
+        // Create a new AWS container instance.
         var aws = new Pulumi.RunMyDarnContainer.AWSInstance("example", new Pulumi.RunMyDarnContainer.AWSInstanceArgs{
             Image = "public.ecr.aws/aws-containers/hello-app-runner:latest",
 			Port = 8000,
         });
 
-        // Export the URL of the service.
-        this.Endpoint = aws.Url;
+        this.AWSUrl = aws.Url;
     }
 
     [Output]
-    public Output<string> Endpoint { get; set; }
+    public Output<string> AWSUrl { get; set; }
 }
 ```
 
@@ -130,7 +129,7 @@ class MyStack : Stack
 
 The Run My Darn Container component is available as a package in all Pulumi languages:
 
-* JavaScript/TypeScript: [`@pulumi/run-my-darn-container`](https://www.npmjs.com/package/@pulumi/aws-miniflux)
-* Python: [`pulumi-run-my-darn-container`](https://pypi.org/project/pulumi-aws-miniflux/)
+* JavaScript/TypeScript: [`@pulumi/run-my-darn-container`](https://www.npmjs.com/package/@pulumi/run-my-darn-container)
+* Python: [`pulumi-run-my-darn-container`](https://pypi.org/project/pulumi-run-my-darn-container/)
 * Go: [`github.com/pulumi/pulumi-run-my-darn-container/sdk/go/container`](github.com/pulumi/pulumi-run-my-darn-container)
 * .NET: [`Pulumi.RunMyDarnContainer`](https://www.nuget.org/packages/Pulumi.RunMyDarnContainer)

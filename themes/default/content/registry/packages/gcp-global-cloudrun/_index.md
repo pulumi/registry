@@ -4,7 +4,7 @@ meta_desc: Easily create a globally load balanced CloudRun application in Google
 layout: overview
 ---
 
-Easily create a Globally Loadbalanced CloudRun Application in Google Cloud. This component exposes the ability to create a globally load balanced CloudRun application in Google Cloud as a package available in all Pulumi languages.
+Easily create a globally load-balanced Google Cloud Run application using this component, which is available in all Pulumi languages.
 
 Example:
 

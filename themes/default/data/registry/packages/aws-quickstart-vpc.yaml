@@ -1,12 +1,12 @@
 name: aws-quickstart-vpc
-title: "AWS Quick Start: VPC"
+title: AWS QuickStart VPC
 description: Flexible networking foundation for AWS Cloud infrastructures
 logo_url: ""
-updated_on: 1633554624
+updated_on: 1634311020
 publisher: Pulumi
 category: Cloud
-package_status: ga
-version: v0.0.1
+package_status: public_preview
+version: v0.0.2
 featured: false
 native: false
 component: true

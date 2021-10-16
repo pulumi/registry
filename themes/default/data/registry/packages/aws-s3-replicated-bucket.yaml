@@ -1,6 +1,6 @@
 name: aws-s3-replicated-bucket
 title: AWS S3 Replicated Bucket
-description: A Pulumi Component for managing replicated buckets in Amazon S3
+description: ""
 logo_url: ""
 updated_on: 1633620811
 publisher: Lee Zen

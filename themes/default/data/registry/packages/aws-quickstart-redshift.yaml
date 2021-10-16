@@ -1,6 +1,6 @@
 name: aws-quickstart-redshift
 title: AWS QuickStart Redshift
-description: Deploy an Amazon Redshift data warehouse on the AWS Cloud for big data and analytics
+description: ""
 logo_url: ""
 updated_on: 1634320836
 publisher: Pulumi

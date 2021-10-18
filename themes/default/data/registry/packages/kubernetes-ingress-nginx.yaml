@@ -1,0 +1,12 @@
+name: kubernetes-ingress-nginx
+title: NGINX Ingress Controller
+description: ""
+logo_url: ""
+updated_on: 1634553277
+publisher: Joe Duffy
+category: Infrastructure
+package_status: public_preview
+version: v0.0.1
+featured: false
+native: false
+component: true

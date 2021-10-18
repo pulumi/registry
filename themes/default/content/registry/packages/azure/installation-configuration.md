@@ -2,6 +2,8 @@
 title: Azure Classic Setup
 meta_desc: How to set up credentials to use the Pulumi Azure Classic Provider and choose configuration options to tailor the provider to suit your use case.
 layout: installation
+aliases:
+   - "/docs/intro/cloud-providers/azure-classic/setup"
 ---
 
 To provision resources with the Pulumi Azure provider, you need to have an Azure CLI installed and you need to have Azure credentials. These instructions assume you're using the [Azure CLI 2.0](https://github.com/Azure/azure-cli).

@@ -8,7 +8,7 @@ The Amazon Web Services (AWS) provider for Pulumi can provision many of the clou
 
 The AWS provider must be configured with credentials to deploy and update resources in AWS; see [Installation & Configuration]({{<relref "./installation-configuration">}}) for instructions.
 
-**New to Pulumi and AWS?** [Get started with AWS using our tutorial]({{<relref "/docs/get-started/aws">}})
+**New to Pulumi and AWS?** [Get started with AWS using our tutorial]({{<relref "/docs/get-started/aws">}}).
 
 {{% notes %}}
 Pulumi has a new AWS provider: the [Pulumi AWS Native Provider]({{<relref "/registry/packages/aws-native">}}). AWS Native gives you same-day access to all new AWS resources and includes coverage of all resources in the [AWS Cloud Control API](https://aws.amazon.com/blogs/aws/announcing-aws-cloud-control-api/).

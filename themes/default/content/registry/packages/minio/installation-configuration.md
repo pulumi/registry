@@ -16,7 +16,7 @@ before it can be used to create resources.
 
 Once obtained, there are two ways to communicate your authorization tokens to Pulumi:
 
-1. Set the environment variables `MAILGUN_API_KEY`, `MINIO_ACCESS_KEY` and `MINIO_SECRET_KEY`:
+1. Set the environment variables `MINIO_ENDPOINT`, `MINIO_ACCESS_KEY` and `MINIO_SECRET_KEY`:
 
     ```bash
     $ export MINIO_ENDPOINT=XXXXXXXXXXXXXX
@@ -27,7 +27,7 @@ Once obtained, there are two ways to communicate your authorization tokens to Pu
 2. Set them using configuration, if you prefer that they be stored alongside your Pulumi stack for easy multi-user access:
 
     ```bash
-    $ pulumi config set minio:minioServer XXXXXXXXXXXXXX --secret
+    $ pulumi config set minio:minioServer XXXXXXXXXXXXXX
     $ pulumi config set minio:minioAccessKey YYYYYYYYYYYYYY --secret
     $ pulumi config set minio:minioSecretKey ZZZZZZZZZZZZZZ --secret
     ```

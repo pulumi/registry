@@ -1,0 +1,19 @@
+<!-- Don't show the breadcrumb on the main overview landing page. -->
+<ol class="breadcrumb">
+    {{ template "overviewbreadcrumb" (dict "p1" . "p2" .) }}
+</ol>
+
+{{ define "overviewbreadcrumb" }}
+    {{ if .p1.Parent }}
+        <!-- Don't include the website home page in the breadcrumb. -->
+        {{ if ne .p1.Title "Pulumi Registry" }}
+            {{ template "overviewbreadcrumb" (dict "p1" .p1.Parent "p2" .p2) }}
+            <!-- If the page is a redirect page, don't include it in the breadcrumb. -->
+            {{ if not (isset .p1.Params "redirect_to") }}
+                <li {{ if eq .p1 .p2 }}class="active"{{ end }}>
+                    <a data-track="breadcrumb" href="{{ .p1.RelPermalink }}">{{ .p1.LinkTitle }}</a>
+                </li>
+            {{ end }}
+        {{ end }}
+    {{ end }}
+{{ end }}

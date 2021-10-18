@@ -4,6 +4,13 @@
 
         <div class="lg:flex">
             <div class="lg:w-8/12">
+                {{ if not (in .Page.File "_index.md") }}
+                    <div class="lg:flex">
+                        {{ partial "registry/package/overview/breadcrumb.html" . }}
+                    </div>
+                    <h1 class="text-3xl mt-5">{{ .Params.title }}</h1>
+                {{ end }}
+
                 {{ .Content }}
             </div>
             <div class="lg:w-1/12"></div>

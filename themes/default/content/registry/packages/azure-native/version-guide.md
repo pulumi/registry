@@ -1,6 +1,8 @@
 ---
 title: Azure-Native Version Guide
 meta_desc: How Azure API versions are represented in the native Azure provider for Pulumi.
+aliases:
+    - "/docs/intro/cloud-providers/azure/version-guide"
 ---
 
 The native Azure provider SDKs follow the semantic versioning convention, similarly to other Pulumi providers. At the same time, Azure API is structured around date-based API versions defined per Azure resource provider.

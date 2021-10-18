@@ -6,11 +6,11 @@ layout: overview
 
 cert-manager is a Kubernetes add-on to automate the management and issuance of TLS certificates from various issuing sources.
 
-It will ensure certificates are valid and up to date periodically, and attempt to renew certificates at an appropriate time before expiry. 
+It will ensure certificates are valid and up to date periodically, and attempt to renew certificates at an appropriate time before expiry.
 
 The Pulumi Component for cert-manager helps teams easily manage cert-manager installations as a package available in all Pulumi languages.
 
-cert-manager was created by [Jetstack](https://jetstack.io) and is now a [CNCF Member Project](https://cert-manager.io/). 
+cert-manager was created by [Jetstack](https://jetstack.io) and is now a [CNCF Member Project](https://cert-manager.io/).
 
 Example:
 

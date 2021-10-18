@@ -1,10 +1,16 @@
 ---
-title: Jetstack Cert Manager
-meta_desc: Use Pulumi's Component for offers a Pulumi-friendly and strongly-typed way to manage Cert Manager installations using infrastructure as code.
+title: cert-manager
+meta_desc: Use Pulumi's Component for cert-manager offers a Pulumi-friendly and strongly-typed way to manage cert-manager installations using infrastructure as code.
 layout: overview
 ---
 
-Easily manage Jetstack Cert Manager installations as a package available in all Pulumi languages.
+cert-manager is a Kubernetes add-on to automate the management and issuance of TLS certificates from various issuing sources.
+
+It will ensure certificates are valid and up to date periodically, and attempt to renew certificates at an appropriate time before expiry. 
+
+The Pulumi Component for cert-manager helps teams easily manage cert-manager installations as a package available in all Pulumi languages.
+
+cert-manager was created by [Jetstack](https://jetstack.io) and is now a [CNCF Member Project](https://cert-manager.io/). 
 
 Example:
 
@@ -22,7 +28,7 @@ const ns = new k8s.core.v1.Namespace("sandbox-ns", {
     metadata: { name: nsName },
 });
 
-// Install a cert manager into our cluster.
+// Install cert-manager into our cluster.
 const manager = new certmanager.CertManager("cert-manager", {
     installCRDs: true,
     helmOptions: {
@@ -43,7 +49,7 @@ from pulumi_kubernetes_cert_manager import CertManager, ReleaseArgs
 ns_name = 'sandbox'
 ns = Namespace('sandbox-ns', metadata={ 'name': ns_name })
 
-# Install a cert manager into our cluster.
+# Install cert-manager into our cluster.
 manager = CertManager('cert-manager',
                       install_crds=True,
                       helm_options=ReleaseArgs(
@@ -57,7 +63,7 @@ manager = CertManager('cert-manager',
 
 ## SDK packages
 
-The Jetstack Cert Manager provider is available as a package in all Pulumi languages:
+The cert-manager provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/kubernetes-cert-manager`](https://www.npmjs.com/package/@pulumi/kubernetes-cert-manager)
 * Python: [`pulumi-kubernetes-cert-manager`](https://pypi.org/project/pulumi-kubernetes-cert-manager/)

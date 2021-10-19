@@ -2,11 +2,11 @@ name: gcp
 title: Google Cloud Classic
 description: A Pulumi package for creating and managing Google Cloud Platform resources.
 logo_url: ""
-updated_on: 1634070296
+updated_on: 1634670175
 publisher: Pulumi
 category: Cloud
 package_status: ga
-version: v5.24.0
+version: v5.25.0
 featured: true
 native: false
 component: false

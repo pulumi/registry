@@ -115,5 +115,26 @@
 
             </div>
         </div>
+        <script>
+            const observer = new MutationObserver((mutations, observer) => {
+                mutations.forEach(mutation => {
+                    mutation.addedNodes.forEach(n => {
+                        if (n.classList.contains("st-ui-result") && !n.href.includes("registry")) {
+                            n.remove();
+                        }
+                    });
+                });
+            });
+
+            // Start listening for DOM mutation events for the search results.
+            observer.observe(
+                document.querySelector("#search-container #search-results"),
+                {
+                    attributes: false,
+                    childList: true,
+                    subtree: true,
+                },
+            );
+        </script>
     </div>
 </header>

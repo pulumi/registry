@@ -116,9 +116,16 @@
             </div>
         </div>
         <script>
+            // We want to restrict the results to just the ones from the registry.
+            // Create a MutationObserver and attach it to the #search-results container above.
+            // The `subtree` modifications property will allow our callback to be called
+            // whenever search result nodes (the `<a>` tag elements) will be added to the
+            // container.
             const observer = new MutationObserver((mutations, observer) => {
                 mutations.forEach(mutation => {
                     mutation.addedNodes.forEach(n => {
+                        // Remove the result if its URL does not contain `registry`.
+                        // We can make this a bit more restrictive if we need to later.
                         if (n.classList.contains("st-ui-result") && !n.href.includes("registry")) {
                             n.remove();
                         }

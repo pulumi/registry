@@ -37,13 +37,5 @@ if [[ -z "$(which yarn)" ]]; then
     exit 1
 fi
 
-echo "Ignoring changes to go.mod and go.sum. See the README for details."
-git update-index --skip-worktree go.mod go.sum
-
 echo "Installing Node.js modules..."
 yarn install
-yarn --cwd themes/default run ensure
-
-# Fetch and install the Pulumi theme.
-hugo mod get github.com/pulumi/theme
-hugo mod tidy

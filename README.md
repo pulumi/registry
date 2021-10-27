@@ -16,6 +16,8 @@ This repository is a [Hugo module](https://gohugo.io/hugo-modules/) that doubles
 
 * Layouts and content for pulumi.com marketing pages, CLI docs, the blog, etc., all of which are managed in the [pulumi/pulumi-hugo](https://github.com/pulumi/pulumi-hugo) repository.
 
+    <img src="https://user-images.githubusercontent.com/274700/139131567-b8e3c43d-6407-4638-ae4e-4ad3f3794d89.png" width="60%">
+
 You can, however, develop locally with this repository using content from these other Hugo-module repositories, either by loading their content remotely or pointing your Hugo development server to local clones of them. More on this below.
 
 ## Using this repository
@@ -42,6 +44,8 @@ When you do this, Hugo will load the latest versions of:
 * The [pulumi/theme](https://github.com/pulumi/theme) module, which contains our CSS and JavaScript bundles (web components, styles, etc.).
 
 ... and then start a development server at http://localhost:1313. Any changes you make to the content, layouts, or other [Hugo component folders](https://gohugo.io/getting-started/directory-structure/) should be reloaded automatically.
+
+### Developing alongside another Hugo module
 
 If you want to develop another module alongside this one -- e.g., add a new web component to use in the Registry, or to make changes to Registry-specific CSS -- you can point your development server to a local clone of [pulumi/theme](https://github.com/pulumi/theme). To do that, first clone the repository, then add a `replace` line to the `go.mod` file at the root of _this_ repository to override the existing reference to `pulumi/theme` temporarily. For instance:
 

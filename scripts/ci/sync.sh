@@ -87,7 +87,7 @@ set_bucket_for_commit "$(git_sha)" "$destination_bucket" "$(aws_region)"
 # Finally, post a comment to the PR that directs the user to the resulting bucket URL.
 pr_comment_api_url="$(cat "$GITHUB_EVENT_PATH" | jq -r ".pull_request._links.comments.href")"
 post_github_pr_comment \
-    "Your site preview for commit $(git_sha_short) is ready! :tada:\n\n${s3_website_url}." \
+    "Your site preview for commit $(git_sha_short) is ready! :tada:\n\n${s3_website_url}/registry." \
     $pr_comment_api_url
 
 echo "Done! The bucket website is now built and available at ${s3_website_url}."

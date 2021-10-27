@@ -29,7 +29,7 @@ jobs:
 
       - name: Fetch the latest sibling modules
         run: |
-          hugo mod get github.com/pulumi/theme
+          hugo mod get github.com/pulumi/theme@release
           hugo mod get github.com/pulumi/pulumi-hugo
           hugo mod tidy
 

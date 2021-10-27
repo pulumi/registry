@@ -43,4 +43,4 @@ Once obtained, there are two ways to communicate your authorization tokens to Pu
     ```
 
 Remember to pass `--secret` when setting any secret keys so that they are properly encrypted. A full set of configuration parameters
-can be found listed on the [Project README](https://github.com/pulumi/pulumi-cloudamqp/blob/master/README.md).
+is listed in the [Snowflake Resource Provider README](https://github.com/pulumi/pulumi-snowflake/blob/master/README.md).

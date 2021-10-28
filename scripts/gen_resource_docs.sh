@@ -22,7 +22,7 @@ INSTALL_RESOURCE_PLUGIN_VERSION=${3:-}
 # /provider/cmd/pulumi-resource-${provider}/schema.[json|yaml].
 SCHEMA_FILE_PATH=${4:-}
 
-PACKDIR="themes/default/content/registry/packages/"
+PACKDIR="themes/api-docs/content/registry/packages/"
 ABSOLUTEPACKDIR="$(pwd)/$PACKDIR"
 PACKAGE_TREE_OUT_DIR="../../themes/default/static/registry/packages/navs"
 TOOL_RESDOCGEN="./tools/resourcedocsgen/"

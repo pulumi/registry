@@ -5,6 +5,12 @@ refLinksErrorLevel: WARNING
 
 module:
   imports:
+    - path: github.com/pulumi/registry/themes/api-docs
+      mounts:
+        - source: content/registry/packages/aws
+          target: content/registry/packages/aws
+        - source: content/registry/packages/aiven
+          target: content/registry/packages/aiven
     - path: github.com/pulumi/registry/themes/default
       mounts:
         - source: content

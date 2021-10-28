@@ -104,7 +104,6 @@ var categoryLookup = map[string]pkg.PackageCategory{
 	"rancher2":                            pkg.PackageCategoryInfrastructure,
 	"random":                              pkg.PackageCategoryUtility,
 	"rke":                                 pkg.PackageCategoryInfrastructure,
-	"run-my-darn-container":               pkg.PackageCategoryInfrastructure,
 	"shipa":                               pkg.PackageCategoryCloud,
 	"signalfx":                            pkg.PackageCategoryMonitoring,
 	"snowflake":                           pkg.PackageCategoryInfrastructure,
@@ -202,7 +201,6 @@ var titleLookup = map[string]string{
 	"rancher2":                            "Rancher 2",
 	"random":                              "random",
 	"rke":                                 "Rancher RKE",
-	"run-my-darn-container":               "Run My Darn Container",
 	"shipa":                               "Shipa",
 	"signalfx":                            "SignalFx",
 	"snowflake":                           "Snowflake",
@@ -357,8 +355,9 @@ func getCategoryFromKeywords(keywords []string) (pkg.PackageCategory, error) {
 		return defaultPackageCategory, nil
 	}
 
+	categoryName := strings.Replace(*categoryTag, "category/", "", -1)
 	var category pkg.PackageCategory
-	if n, ok := categoryNameMap[*categoryTag]; !ok {
+	if n, ok := categoryNameMap[categoryName]; !ok {
 		return defaultPackageCategory, errors.New(fmt.Sprintf("invalid category tag %s", *categoryTag))
 	} else {
 		category = n

@@ -16,8 +16,8 @@ for cloud in "aws" "aws-native" "classic-azure" "azure" "gcp" "kubernetes" ; do
         dest=$cloud
     fi
 
-    mkdir -p ./content/registry/packages/$dest
-    mkdir -p ./content/registry/packages/$dest/how-to-guides
-    cp $TUTORIAL_OUT/tutorials/$cloud/* ./content/registry/packages/$dest/how-to-guides/
+    mkdir -p ./themes/default/content/registry/packages/$dest
+    mkdir -p ./themes/default/content/registry/packages/$dest/how-to-guides
+    cp $TUTORIAL_OUT/tutorials/$cloud/* ./themes/default/content/registry/packages/$dest/how-to-guides/
 done
 rm -rf $TUTORIAL_OUT

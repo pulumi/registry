@@ -3,11 +3,6 @@ title: Pulumi - Modern Infrastructure as Code
 
 refLinksErrorLevel: WARNING
 
-ignoreFiles:
-  - api-docs
-  - !aws\api-docs
-  - !aiven\api-docs
-
 module:
   imports:
     - path: github.com/pulumi/registry/themes/default

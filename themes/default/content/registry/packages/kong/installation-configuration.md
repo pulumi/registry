@@ -19,8 +19,6 @@ The Kong provider is available as a package in all Pulumi languages:
 * Go: [`github.com/pulumi/pulumi-kong/sdk/v4/go/kong`](https://github.com/pulumi/pulumi-kong)
 * .NET: [`Pulumi.Kong`](https://www.nuget.org/packages/Pulumi.Kong)
 
-The Kong provider is open source and available in the [pulumi/pulumi-kong](https://github.com/pulumi/pulumi-kong) repo.
-
 ## Configuring Credentials
 
 Once obtained, there are two ways to communicate your authorization tokens to Pulumi:

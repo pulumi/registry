@@ -5,10 +5,8 @@ layout: installation
 ---
 
 The Pulumi AzureAD provider uses the AzureAD SDK to manage and provision resources.
-
-> Pulumi relies on the AzureAD SDK to authenticate requests from your computer to AzureAD. Your credentials are never sent
-> to pulumi.com.
-
+Pulumi relies on the AzureAD SDK to authenticate requests from your computer to AzureAD. Your credentials are never sent
+to pulumi.com.
 The Pulumi AzureAD Provider needs to be configured with AzureAD credentials
 before it can be used to create resources.
 

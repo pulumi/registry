@@ -6,7 +6,7 @@ layout: overview
 
 Easily create AWS Redshift Cluster based on the AWS QuickStart Redshift guide as a package available in all Pulumi languages.
 
-Example:
+## Example
 
 {{< chooser language "typescript" >}}
 

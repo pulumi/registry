@@ -10,7 +10,6 @@ to pulumi.com.
 The Pulumi Wavefront Provider needs to be configured with Wavefront credentials
 before it can be used to create resources.
 
-
 ## Installation
 
 The Wavefront provider is available as a package in all Pulumi languages:

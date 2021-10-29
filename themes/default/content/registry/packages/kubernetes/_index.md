@@ -33,7 +33,7 @@ Kubernetes and Pulumi can:
 
 ## Pulumi Kubernetes Provider
 
-The Kubernetes provider for Pulumi can be used to provision any resources available in the Kubernetes API.  The Kubernetes provider must be configured with a `kubeconfig` or other credentials to connect to a taret Kubernetes cluster.
+The Kubernetes provider for Pulumi can be used to provision any resources available in the Kubernetes API.  The Kubernetes provider must be configured with a `kubeconfig` or other credentials to connect to a target Kubernetes cluster.
 
 ### Getting Started
 

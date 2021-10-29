@@ -1,6 +1,6 @@
 ---
 title: Datadog
-meta_desc: This page provides an overview of the Datadog Provider for Pulumi.
+meta_desc: Provides an overview of the Datadog Provider for Pulumi.
 layout: overview
 ---
 

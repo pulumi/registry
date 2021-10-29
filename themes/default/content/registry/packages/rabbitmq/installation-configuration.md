@@ -1,6 +1,6 @@
 ---
 title: RabbitMQ Setup
-meta_desc: This page provides an overview on how to configure credentials for the Pulumi RabbitMQ Provider.
+meta_desc: Provides an overview on how to configure credentials for the Pulumi RabbitMQ Provider.
 layout: installation
 ---
 
@@ -39,5 +39,5 @@ Once obtained, there are two ways to communicate your authorization tokens to Pu
     $ pulumi config set rabbitmq:password ZZZZZZZZZZZZZZ --secret
     ```
 
-Remember to pass `--secret` when setting `rabbitmq:username` and `rabbitmq:password` so that they are properly encrypted. A full set of configuration parameters
-can be found listed on the [Project README](https://github.com/pulumi/pulumi-rabbitmq/blob/master/README.md).
+Remember to pass `--secret` when setting `rabbitmq:username` and `rabbitmq:password` so that they are properly encrypted. The complete list of
+configuration parameters is in the [RabbitMQ provider README](https://github.com/pulumi/pulumi-rabbitmq/blob/master/README.md).

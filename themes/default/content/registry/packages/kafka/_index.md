@@ -1,6 +1,6 @@
 ---
 title: Kafka
-meta_desc: This page provides an overview of the Kafka Provider for Pulumi.
+meta_desc: Provides an overview of the Kafka Provider for Pulumi.
 layout: overview
 ---
 

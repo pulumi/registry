@@ -1,6 +1,6 @@
 ---
 title: Keycloak
-meta_desc: This page provides an overview of the Keycloak Provider for Pulumi.
+meta_desc: Provides an overview of the Keycloak Provider for Pulumi.
 layout: overview
 ---
 

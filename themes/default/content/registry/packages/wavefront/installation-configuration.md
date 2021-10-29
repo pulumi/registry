@@ -1,6 +1,6 @@
 ---
 title: Wavefront Setup
-meta_desc: This page provides an overview on how to configure credentials for the Pulumi Wavefront Provider.
+meta_desc: Provides an overview on how to configure credentials for the Pulumi Wavefront Provider.
 layout: installation
 ---
 
@@ -37,5 +37,5 @@ Once obtained, there are two ways to communicate your authorization tokens to Pu
     $ pulumi config set wavefront:address YYYYYYYYYYYYYY
     ```
 
-Remember to pass `--secret` when setting `wavefront:token` so that it is properly encrypted. A full set of configuration parameters
-can be found listed on the [Project README](https://github.com/pulumi/pulumi-wavefront/blob/master/README.md).
+Remember to pass `--secret` when setting `wavefront:token` so that it is properly encrypted. The complete list of
+configuration parameters is in the [Wavefront provider README](https://github.com/pulumi/pulumi-wavefront/blob/master/README.md).

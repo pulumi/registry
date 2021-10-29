@@ -1,6 +1,6 @@
 ---
 title: Random
-meta_desc: This page provides an overview of the Random Provider for Pulumi.
+meta_desc: Provides an overview of the Random Provider for Pulumi.
 layout: overview
 ---
 

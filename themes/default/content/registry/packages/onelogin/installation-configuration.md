@@ -1,6 +1,6 @@
 ---
 title: onelogin Setup
-meta_desc: This page provides an overview on how to configure credentials for the Pulumi onelogin Provider.
+meta_desc: Provides an overview on how to configure credentials for the Pulumi onelogin Provider.
 layout: installation
 ---
 
@@ -27,6 +27,6 @@ The following environment variables used to configure the OneLogin provider:
 * `onelogin:region` - the region.
 * `onelogin:url` - the api url for your region. It can also be sourced from the environment variable `ONELOGIN_OAPI_URL`.
 
-Remember to pass `--secret` when setting `onelogin:clientSecret` so that it is properly encrypted. A
-full set of configuration parameters can be found listed on the
-[Project README](https://github.com/pulumi/pulumi-onelogin/blob/master/README.md).
+Remember to pass `--secret` when setting `onelogin:clientSecret` so that it is properly encrypted. The complete list of
+configuration parameters is in the
+[OneLogin provider README](https://github.com/pulumi/pulumi-onelogin/blob/master/README.md).

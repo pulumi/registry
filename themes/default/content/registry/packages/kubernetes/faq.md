@@ -1,6 +1,6 @@
 ---
 title: Kubernetes FAQ
-meta_desc: This page provides Frequently Asked Questions about Kubernetes and Pulumi.
+meta_desc: provides Frequently Asked Questions about Kubernetes and Pulumi.
 aliases: ["/docs/reference/clouds/kubernetes/faq/"]
 ---
 

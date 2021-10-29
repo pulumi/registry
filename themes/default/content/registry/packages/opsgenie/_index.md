@@ -1,6 +1,6 @@
 ---
 title: Opsgenie
-meta_desc: This page provides an overview of the Opsgenie Provider for Pulumi.
+meta_desc: Provides an overview of the Opsgenie Provider for Pulumi.
 layout: overview
 ---
 

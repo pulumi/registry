@@ -1,6 +1,6 @@
 ---
 title: Spotinst Setup
-meta_desc: This page provides an overview on how to configure the Pulumi Spotinst Provider.
+meta_desc: Provides an overview on how to configure the Pulumi Spotinst Provider.
 layout: installation
 ---
 

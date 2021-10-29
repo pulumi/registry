@@ -1,6 +1,6 @@
 ---
 title: New Relic
-meta_desc: This page provides an overview of the New Relic Provider for Pulumi.
+meta_desc: Provides an overview of the New Relic Provider for Pulumi.
 layout: overview
 ---
 

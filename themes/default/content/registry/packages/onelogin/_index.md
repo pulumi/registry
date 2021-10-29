@@ -1,6 +1,6 @@
 ---
 title: onelogin
-meta_desc: This page provides an overview of the onelogin Provider for Pulumi.
+meta_desc: Provides an overview of the onelogin Provider for Pulumi.
 layout: overview
 ---
 

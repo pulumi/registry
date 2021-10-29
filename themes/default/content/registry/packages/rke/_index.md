@@ -1,6 +1,6 @@
 ---
 title: Rancher Kubernetes Engine
-meta_desc: This page provides an overview of the RKE Provider for Pulumi.
+meta_desc: Provides an overview of the RKE Provider for Pulumi.
 layout: overview
 ---
 

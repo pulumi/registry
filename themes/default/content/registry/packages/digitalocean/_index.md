@@ -1,6 +1,6 @@
 ---
 title: DigitalOcean
-meta_desc: This page provides an overview of the DigitalOcean Provider for Pulumi.
+meta_desc: Provides an overview of the DigitalOcean Provider for Pulumi.
 layout: overview
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: Hetzner Cloud Setup
-meta_desc: This page provides an overview on how to configure credentials for the Pulumi Hetzner Cloud Provider.
+meta_desc: Provides an overview on how to configure credentials for the Pulumi Hetzner Cloud Provider.
 layout: installation
 ---
 
@@ -35,6 +35,6 @@ Once obtained, there are two ways to communicate your authorization tokens to Pu
     $ pulumi config set hcloud:token XXXXXXXXXXXXXX --secret
     ```
 
-Remember to pass `--secret` when setting `hcloud:token` so that it is properly encrypted. A
-full set of configuration parameters can be found listed on the
-[Project README](https://github.com/pulumi/pulumi-hcloud/blob/master/README.md).
+Remember to pass `--secret` when setting `hcloud:token` so that it is properly encrypted. The complete list of
+configuration parameters is in the 
+[Hetzner Cloud provider README](https://github.com/pulumi/pulumi-hcloud/blob/master/README.md).

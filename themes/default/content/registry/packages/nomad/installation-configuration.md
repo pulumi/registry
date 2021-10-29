@@ -1,6 +1,6 @@
 ---
 title: HashiCorp Nomad Setup
-meta_desc: This page provides an overview on how to configure the Pulumi Nomad Provider.
+meta_desc: Provides an overview on how to configure the Pulumi Nomad Provider.
 layout: installation
 ---
 
@@ -35,5 +35,6 @@ Once obtained, there are two ways to communicate your configuration tokens to Pu
     $ pulumi config set nomad:secretId YYYYYY --secret
     ```
 
-A full set of configuration parameters can be found listed on the [Project README](https://github.com/pulumi/pulumi-nomad/blob/master/README.md).
+The complete list of
+configuration parameters is in the  [HashiCorp Nomad provider README](https://github.com/pulumi/pulumi-nomad/blob/master/README.md).
 Remember to pass `--secret` when setting `secretId` so that it is properly encrypted.

@@ -1,6 +1,6 @@
 ---
 title: Yandex Cloud Setup
-meta_desc: This page provides an overview on how to configure credentials for the Pulumi Yandex Cloud Provider.
+meta_desc: Provides an overview on how to configure credentials for the Pulumi Yandex Cloud Provider.
 layout: installation
 ---
 
@@ -39,5 +39,6 @@ Once obtained, there are two ways to communicate your configuration to Pulumi:
     $ pulumi config set yandex:yandex:folderId ZZZZZZ
     ```
 
-A full set of configuration parameters can be found listed on the [Project README](https://github.com/pulumi/pulumi-yandex/blob/master/README.md).
+The complete list of
+configuration parameters is in the [Yandex Cloud provider README](https://github.com/pulumi/pulumi-yandex/blob/master/README.md).
 Remember to pass `--secret` when setting `token` so that it is properly encrypted.

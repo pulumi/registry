@@ -1,6 +1,6 @@
 ---
 title: Aiven Setup
-meta_desc: This page provides an overview on how to configure credentials for the Pulumi Aiven Provider.
+meta_desc: Provides an overview on how to configure credentials for the Pulumi Aiven Provider.
 layout: installation
 ---
 
@@ -35,5 +35,5 @@ Once obtained, there are two ways to communicate your authorization tokens to Pu
     $ pulumi config set aiven:apiToken XXXXXXXXXXXXXX --secret
     ```
 
-Remember to pass `--secret` when setting `aiven:apiToken` so that it is properly encrypted. A full set of configuration parameters
-can be found listed on the [Project README](https://github.com/pulumi/pulumi-aiven/blob/master/README.md).
+Remember to pass `--secret` when setting `aiven:apiToken` so that it is properly encrypted. The complete list of
+configuration parameters is in the [Avien Provider README](https://github.com/pulumi/pulumi-aiven/blob/master/README.md).

@@ -1,6 +1,6 @@
 ---
 title: F5 BIG-IP
-meta_desc: This page provides an overview of the F5 BIG-IP Provider for Pulumi.
+meta_desc: Provides an overview of the F5 BIG-IP Provider for Pulumi.
 layout: overview
 ---
 

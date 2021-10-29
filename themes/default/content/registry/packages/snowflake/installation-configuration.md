@@ -1,6 +1,6 @@
 ---
 title: Snowflake Setup
-meta_desc: This page provides an overview on how to configure credentials for the Pulumi Snowflake Provider.
+meta_desc: Provides an overview on how to configure credentials for the Pulumi Snowflake Provider.
 layout: installation
 ---
 
@@ -49,5 +49,5 @@ Once obtained, there are two ways to communicate your authorization tokens to Pu
     $ pulumi config set snowflake:username ZZZZZZZZZZZZZZ
     ```
 
-Remember to pass `--secret` when setting any secret keys so that they are properly encrypted. A full set of configuration parameters
-is listed in the [Snowflake Resource Provider README](https://github.com/pulumi/pulumi-snowflake/blob/master/README.md).
+Remember to pass `--secret` when setting any secret keys so that they are properly encrypted. The complete list of
+configuration parameters is in the [Snowflake Resource provider README](https://github.com/pulumi/pulumi-snowflake/blob/master/README.md).

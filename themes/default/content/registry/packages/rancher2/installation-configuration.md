@@ -1,6 +1,6 @@
 ---
 title: Rancher2 Setup
-meta_desc: This page provides an overview on how to configure credentials for the Pulumi Rancher2 Provider.
+meta_desc: Provides an overview on how to configure credentials for the Pulumi Rancher2 Provider.
 layout: installation
 ---
 
@@ -39,5 +39,5 @@ Once obtained, there are two ways to communicate your authorization tokens to Pu
     $ pulumi config set rancher2:secretKey ZZZZZZZZZZZZZZ --secret
     ```
 
-Remember to pass `--secret` when setting `rancher2:accessKey` and `rancher2:secretKey` so that they are properly encrypted. A full set of configuration parameters
-can be found listed on the [Project README](https://github.com/pulumi/pulumi-rancher2/blob/master/README.md).
+Remember to pass `--secret` when setting `rancher2:accessKey` and `rancher2:secretKey` so that they are properly encrypted. The complete list of
+configuration parameters is in the [Rancher2 provider README](https://github.com/pulumi/pulumi-rancher2/blob/master/README.md).

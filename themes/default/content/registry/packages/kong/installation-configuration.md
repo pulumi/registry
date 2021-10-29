@@ -1,6 +1,6 @@
 ---
 title: Kong Setup
-meta_desc: This page provides an overview on how to configure credentials for the Pulumi Kong Provider.
+meta_desc: Provides an overview on how to configure credentials for the Pulumi Kong Provider.
 layout: installation
 ---
 
@@ -39,5 +39,5 @@ Once obtained, there are two ways to communicate your authorization tokens to Pu
     $ pulumi config set kong:kongAdminPassword YYYYYYYYYYYYYY --secret
     ```
 
-Remember to pass `--secret` when setting `kong:kongAdminPassword` so that it is properly encrypted. A full set of configuration parameters
-can be found listed on the [Project README](https://github.com/pulumi/pulumi-kong/blob/master/README.md).
+Remember to pass `--secret` when setting `kong:kongAdminPassword` so that it is properly encrypted. The complete list of
+configuration parameters is in the [Kong provider README](https://github.com/pulumi/pulumi-kong/blob/master/README.md).

@@ -1,6 +1,6 @@
 ---
 title: Opsgenie Setup
-meta_desc: This page provides an overview on how to configure credentials for the Pulumi Opsgenie Provider.
+meta_desc: Provides an overview on how to configure credentials for the Pulumi Opsgenie Provider.
 layout: installation
 ---
 
@@ -37,5 +37,5 @@ In order to communicate your configuration details to Pulumi:
     $ pulumi config set opsgenie:apiUrl YYYYYYYYYYYYYY
     ```
 
-If you are going to set `opsgenie:apiKey`, please remember to pass `--secret` so that it is properly encrypted. A full set
-of configuration parameters can be found listed on the [Project README](https://github.com/pulumi/pulumi-opsgenie/blob/master/README.md).
+If you are going to set `opsgenie:apiKey`, please remember to pass `--secret` so that it is properly encrypted. The complete list of
+configuration parameters is in the [Opsgenie provider README](https://github.com/pulumi/pulumi-opsgenie/blob/master/README.md).

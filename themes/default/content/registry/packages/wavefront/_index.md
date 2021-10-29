@@ -1,6 +1,6 @@
 ---
 title: Wavefront
-meta_desc: This page provides an overview of the Wavefront Provider for Pulumi.
+meta_desc: Provides an overview of the Wavefront Provider for Pulumi.
 layout: overview
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: GitHub
-meta_desc: This page provides an overview of the GitHub Provider for Pulumi.
+meta_desc: Provides an overview of the GitHub Provider for Pulumi.
 layout: overview
 ---
 

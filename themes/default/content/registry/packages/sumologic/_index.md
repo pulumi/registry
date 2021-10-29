@@ -1,6 +1,6 @@
 ---
 title: SumoLogic
-meta_desc: This page provides an overview of the SumoLogic Provider for Pulumi.
+meta_desc: Provides an overview of the SumoLogic Provider for Pulumi.
 layout: overview
 ---
 

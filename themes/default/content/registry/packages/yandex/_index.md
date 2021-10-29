@@ -1,6 +1,6 @@
 ---
 title: Yandex
-meta_desc: This page provides an overview of the Yandex Cloud Provider for Pulumi.
+meta_desc: Provides an overview of the Yandex Cloud Provider for Pulumi.
 layout: overview
 ---
 

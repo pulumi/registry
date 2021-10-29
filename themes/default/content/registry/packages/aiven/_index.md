@@ -1,6 +1,6 @@
 ---
 title: Aiven
-meta_desc: This page provides an overview of the Aiven Provider for Pulumi.
+meta_desc: Provides an overview of the Aiven Provider for Pulumi.
 layout: overview
 ---
 

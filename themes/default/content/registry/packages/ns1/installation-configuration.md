@@ -1,6 +1,6 @@
 ---
 title: NS1 Setup
-meta_desc: This page provides an overview on how to configure credentials for the Pulumi NS1 Provider.
+meta_desc: Provides an overview on how to configure credentials for the Pulumi NS1 Provider.
 layout: installation
 ---
 
@@ -35,6 +35,6 @@ Once obtained, there are two ways to communicate your authorization tokens to Pu
     $ pulumi config set ns1:apikey XXXXXXXXXXXXXX --secret
     ```
 
-Remember to pass `--secret` when setting `ns1:apiKey` so that it is properly encrypted. A
-full set of configuration parameters can be found listed on the
-[Project README](https://github.com/pulumi/pulumi-ns1/blob/master/README.md).
+Remember to pass `--secret` when setting `ns1:apiKey` so that it is properly encrypted. The complete list of
+configuration parameters is in the
+[NS1 provider README](https://github.com/pulumi/pulumi-ns1/blob/master/README.md).

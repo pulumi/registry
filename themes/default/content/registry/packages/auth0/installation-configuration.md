@@ -1,6 +1,6 @@
 ---
 title: Auth0 Setup
-meta_desc: This page provides an overview on how to configure credentials for the Pulumi Auth0 Provider.
+meta_desc: Provides an overview on how to configure credentials for the Pulumi Auth0 Provider.
 layout: installation
 ---
 
@@ -39,6 +39,5 @@ Once obtained, there are two ways to communicate your authorization tokens to Pu
     $ pulumi config set auth0:clientSecret ZZZZZZZZZZZZZZ --secret
     ```
 
-Remember to pass `--secret` when setting `auth0:clientId` and `auth0:clientSecret` so that it is properly encrypted. A
-full set of configuration parameters can be found listed on the
-[Project README](https://github.com/pulumi/pulumi-auth0/blob/master/README.md).
+Remember to pass `--secret` when setting `auth0:clientId` and `auth0:clientSecret` so that it is properly encrypted. The complete list of
+configuration parameters is in the [Auth0 Pprovider README](https://github.com/pulumi/pulumi-auth0/blob/master/README.md).

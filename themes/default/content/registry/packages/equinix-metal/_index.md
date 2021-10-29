@@ -1,6 +1,6 @@
 ---
 title: Equinix Metal
-meta_desc: This page provides an overview of the Equinix Metal provider for Pulumi.
+meta_desc: Provides an overview of the Equinix Metal provider for Pulumi.
 layout: overview
 ---
 

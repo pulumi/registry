@@ -1,6 +1,6 @@
 ---
 title: MySQL
-meta_desc: This page provides an overview of the MySQL Provider for Pulumi.
+meta_desc: Provides an overview of the MySQL Provider for Pulumi.
 layout: overview
 ---
 

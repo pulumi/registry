@@ -1,6 +1,6 @@
 ---
 title: libvirt
-meta_desc: This page provides an overview of the libvirt Provider for Pulumi.
+meta_desc: Provides an overview of the libvirt Provider for Pulumi.
 layout: overview
 ---
 

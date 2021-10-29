@@ -1,6 +1,6 @@
 ---
 title: F5 BIG-IP Setup
-meta_desc: This page provides an overview on how to configure credentials for the Pulumi F5 BIG-IP Provider.
+meta_desc: Provides an overview on how to configure credentials for the Pulumi F5 BIG-IP Provider.
 layout: installation
 ---
 
@@ -41,5 +41,5 @@ Once obtained, there are two ways to communicate your authorization tokens to Pu
     $ pulumi config set f5bigip:password ZZZZZZZZZZZZZZ --secret
     ```
 
-Remember to pass `--secret` when setting `f5bigip:password` so that it is properly encrypted. A full set of configuration parameters
-can be found listed on the [Project README](https://github.com/pulumi/pulumi-f5bigip/blob/master/README.md).
+Remember to pass `--secret` when setting `f5bigip:password` so that it is properly encrypted. The complete list of
+configuration parameters is in the [F5 BIG-IP provider README](https://github.com/pulumi/pulumi-f5bigip/blob/master/README.md).

@@ -1,6 +1,6 @@
 ---
 title: cloud-init
-meta_desc: This page provides an overview of the cloud-init Provider for Pulumi.
+meta_desc: Provides an overview of the cloud-init Provider for Pulumi.
 layout: overview
 ---
 

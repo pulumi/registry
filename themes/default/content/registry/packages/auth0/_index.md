@@ -1,6 +1,6 @@
 ---
 title: Auth0
-meta_desc: This page provides an overview of the Auth0 Provider for Pulumi.
+meta_desc: Provides an overview of the Auth0 Provider for Pulumi.
 layout: overview
 ---
 

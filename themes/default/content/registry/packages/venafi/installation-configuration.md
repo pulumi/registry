@@ -1,13 +1,13 @@
 ---
 title: Venafi Setup
-meta_desc: This page provides an overview on how to configure credentials for the Pulumi Venafi Provider.
+meta_desc: Provides an overview on how to configure credentials for the Pulumi Venafi Provider.
 layout: installation
 ---
 
 The Pulumi Venafi provider uses the Venafi SDK to manage and provision resources.
 Pulumi relies on the Venafi SDK to authenticate requests from your computer to Venafi. Your credentials are never sent
 to pulumi.com.
-The Pulumi Venafi Provider needs to be configured with Venafi credentials
+The Pulumi Venafi provider needs to be configured with Venafi credentials
 before it can be used to create resources.
 
 ## Installation
@@ -21,8 +21,8 @@ The Venafi provider is available as a package in all Pulumi languages:
 
 ## Configuring Credentials
 
-A full set of configuration parameters
-can be found listed on the [Project README](https://github.com/pulumi/pulumi-venafi/blob/master/README.md). But here
+The complete list of
+configuration parameters is in the [Pulumi Venafi provider README](https://github.com/pulumi/pulumi-venafi/blob/master/README.md). But here
 are the most common setups
 
 ### Venafi Trust Protection Platform

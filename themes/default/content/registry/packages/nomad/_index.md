@@ -1,6 +1,6 @@
 ---
 title: HashiCorp Nomad
-meta_desc: This page provides an overview of the HashiCorp Nomad Provider for Pulumi.
+meta_desc: Provides an overview of the HashiCorp Nomad Provider for Pulumi.
 layout: overview
 ---
 

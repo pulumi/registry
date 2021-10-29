@@ -1,6 +1,6 @@
 ---
 title: GitLab Setup
-meta_desc: This page provides an overview on how to configure credentials for the Pulumi GitLab Provider.
+meta_desc: Provides an overview on how to configure credentials for the Pulumi GitLab Provider.
 layout: installation
 ---
 
@@ -35,5 +35,5 @@ Once obtained, there are two ways to communicate your authorization tokens to Pu
     $ pulumi config set gitlab:token XXXXXXXXXXXXXX --secret
     ```
 
-Remember to pass `--secret` when setting `gitlab:token` so that it is properly encrypted. A full set of configuration parameters
-can be found listed on the [Project README](https://github.com/pulumi/pulumi-gitlab/blob/master/README.md).
+Remember to pass `--secret` when setting `gitlab:token` so that it is properly encrypted. The complete list of
+configuration parameters is in the [GitLab provider README](https://github.com/pulumi/pulumi-gitlab/blob/master/README.md).

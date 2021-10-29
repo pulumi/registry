@@ -1,6 +1,6 @@
 ---
 title: AzureDevOps
-meta_desc: This page provides an overview of the AzureDevOps Provider for Pulumi.
+meta_desc: Provides an overview of the AzureDevOps Provider for Pulumi.
 layout: overview
 ---
 

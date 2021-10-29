@@ -1,6 +1,6 @@
 ---
 title: Spotinst
-meta_desc: This page provides an overview of the Spotinst Provider for Pulumi.
+meta_desc: Provides an overview of the Spotinst Provider for Pulumi.
 layout: overview
 ---
 

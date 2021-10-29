@@ -1,6 +1,6 @@
 ---
 title: MySQL Setup
-meta_desc: This page provides an overview on how to configure credentials for the Pulumi MySQL Provider.
+meta_desc: Provides an overview on how to configure credentials for the Pulumi MySQL Provider.
 layout: installation
 ---
 
@@ -37,5 +37,5 @@ In order to communicate your configuration details to Pulumi:
     $ pulumi config set mysql:username YYYYYYYYYYYYYY
     ```
 
-If you are going to set `mysql:password`, please remember to pass `--secret` so that it is properly encrypted. A full set
-of configuration parameters can be found listed on the [Project README](https://github.com/pulumi/pulumi-mysql/blob/master/README.md).
+If you are going to set `mysql:password`, please remember to pass `--secret` so that it is properly encrypted.The complete list of
+configuration parameters is in the [MySQL provider README](https://github.com/pulumi/pulumi-mysql/blob/master/README.md).

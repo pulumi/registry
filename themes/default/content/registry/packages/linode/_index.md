@@ -1,6 +1,6 @@
 ---
 title: Linode
-meta_desc: This page provides an overview of the Linode SDK for Pulumi.
+meta_desc: Provides an overview of the Linode SDK for Pulumi.
 layout: overview
 ---
 

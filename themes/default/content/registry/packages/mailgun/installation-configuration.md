@@ -1,6 +1,6 @@
 ---
 title: Mailgun Setup
-meta_desc: This page provides an overview on how to configure credentials for the Pulumi Mailgun Provider.
+meta_desc: Provides an overview on how to configure credentials for the Pulumi Mailgun Provider.
 layout: installation
 ---
 
@@ -35,5 +35,5 @@ Once obtained, there are two ways to communicate your authorization tokens to Pu
     $ pulumi config set mailgun:apiKey XXXXXXXXXXXXXX --secret
     ```
 
-Remember to pass `--secret` when setting `mailgun:apiKey` so that it is properly encrypted. A full set of configuration parameters
-can be found listed on the [Project README](https://github.com/pulumi/pulumi-mailgun/blob/master/README.md).
+Remember to pass `--secret` when setting `mailgun:apiKey` so that it is properly encrypted. The complete list of
+configuration parameters is in the [Mailgun provider README](https://github.com/pulumi/pulumi-mailgun/blob/master/README.md).

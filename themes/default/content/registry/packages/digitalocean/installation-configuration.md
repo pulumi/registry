@@ -1,6 +1,6 @@
 ---
 title: DigitalOcean Setup
-meta_desc: This page provides an overview on how to configure credentials for the Pulumi DigitalOcean Provider.
+meta_desc: Provides an overview on how to configure credentials for the Pulumi DigitalOcean Provider.
 layout: installation
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: SignalFx Setup
-meta_desc: This page provides an overview on how to configure credentials for the Pulumi SignalFx Provider.
+meta_desc: Provides an overview on how to configure credentials for the Pulumi SignalFx Provider.
 layout: installation
 ---
 
@@ -35,5 +35,5 @@ Once obtained, there are two ways to communicate your authorization tokens to Pu
     $ pulumi config set signalfx:authToken XXXXXXXXXXXXXX --secret
     ```
 
-Remember to pass `--secret` when setting `signalfx:authToken` so that it is properly encrypted. A full set of configuration parameters
-can be found listed on the [Project README](https://github.com/pulumi/pulumi-signalfx/blob/master/README.md).
+Remember to pass `--secret` when setting `signalfx:authToken` so that it is properly encrypted. The complete list of
+configuration parameters is in the [SignalFx provider README](https://github.com/pulumi/pulumi-signalfx/blob/master/README.md).

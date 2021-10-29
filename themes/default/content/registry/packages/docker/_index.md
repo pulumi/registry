@@ -1,6 +1,6 @@
 ---
 title: Docker
-meta_desc: This page provides an overview of the Docker Provider for Pulumi.
+meta_desc: Provides an overview of the Docker Provider for Pulumi.
 layout: overview
 ---
 

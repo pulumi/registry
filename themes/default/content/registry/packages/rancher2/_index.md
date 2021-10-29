@@ -1,6 +1,6 @@
 ---
 title: Rancher2
-meta_desc: This page provides an overview of the Rancher2 Provider for Pulumi.
+meta_desc: Provides an overview of the Rancher2 Provider for Pulumi.
 layout: overview
 ---
 

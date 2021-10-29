@@ -1,6 +1,6 @@
 ---
 title: MongoDB Atlas Setup
-meta_desc: This page provides an overview on how to configure credentials for the Pulumi MongoDB Atlas Provider.
+meta_desc: Provides an overview on how to configure credentials for the Pulumi MongoDB Atlas Provider.
 layout: installation
 ---
 
@@ -37,5 +37,5 @@ In order to communicate your configuration details to Pulumi:
     $ pulumi config set mongodbatlas:privateKey YYYYYYYYYYYYYY --secret
     ```
 
-If you are going to set `mongodbatlas:privateKey` and `mongodbatlas:publicKey`, please remember to pass `--secret` so that they is properly encrypted. A full set
-of configuration parameters can be found listed on the [Project README](https://github.com/pulumi/pulumi-mongodbatlas/blob/master/README.md).
+If you are going to set `mongodbatlas:privateKey` and `mongodbatlas:publicKey`, please remember to pass `--secret` so that they is properly encrypted. The complete list of
+configuration parameters is in the [MongoDB Atlas provider README](https://github.com/pulumi/pulumi-mongodbatlas/blob/master/README.md).

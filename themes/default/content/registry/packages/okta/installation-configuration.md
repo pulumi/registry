@@ -1,6 +1,6 @@
 ---
 title: Okta Setup
-meta_desc: This page provides an overview on how to configure the Pulumi Okta Provider.
+meta_desc: Provides an overview on how to configure the Pulumi Okta Provider.
 layout: installation
 ---
 

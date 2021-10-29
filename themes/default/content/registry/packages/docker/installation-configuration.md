@@ -1,6 +1,6 @@
 ---
 title: Docker Setup
-meta_desc: This page provides an overview on how to configure the Pulumi Docker Provider.
+meta_desc: Provides an overview on how to configure the Pulumi Docker Provider.
 layout: installation
 ---
 

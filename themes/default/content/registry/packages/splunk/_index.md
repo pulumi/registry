@@ -1,6 +1,6 @@
 ---
 title: Splunk
-meta_desc: This page provides an overview of the Splunk Provider for Pulumi.
+meta_desc: Provides an overview of the Splunk Provider for Pulumi.
 layout: overview
 ---
 

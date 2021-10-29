@@ -1,6 +1,6 @@
 ---
 title: MongoDB Atlas
-meta_desc: This page provides an overview of the MongoDB Atlas Provider for Pulumi.
+meta_desc: Provides an overview of the MongoDB Atlas Provider for Pulumi.
 layout: overview
 ---
 

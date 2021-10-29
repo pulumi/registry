@@ -1,6 +1,6 @@
 ---
 title: Kafka Setup
-meta_desc: This page provides an overview on how to configure credentials for the Pulumi Kafka Provider.
+meta_desc: Provides an overview on how to configure credentials for the Pulumi Kafka Provider.
 layout: installation
 ---
 
@@ -31,4 +31,5 @@ In order to communicate your configuration details to Pulumi:
     $ pulumi config set kafka:bootstrapServers ["127.0.0.1:9092"]
     ```
 
-A full set of configuration parameters can be found listed on the [Project README](https://github.com/pulumi/pulumi-kafka/blob/master/README.md).
+The complete list of
+configuration parameters is in the [Kafka provider README](https://github.com/pulumi/pulumi-kafka/blob/master/README.md).

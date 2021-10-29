@@ -1,6 +1,6 @@
 ---
 title: Alibaba Cloud Setup
-meta_desc: This page provides an overview on how to configure credentials for the Pulumi Alibaba Cloud Provider.
+meta_desc: Provides an overview on how to configure credentials for the Pulumi Alibaba Cloud Provider.
 layout: installation
 ---
 
@@ -38,4 +38,5 @@ Once obtained, there are two ways to communicate your authorization tokens to Pu
     ```
 
 Remember to pass `--secret` when setting `alicloud:secretKey` and `alicloud:accessKe` so that they are properly encrypted.
-A full set of configuration parameters can be found listed on the [Project README](https://github.com/pulumi/pulumi-alicloud/blob/master/README.md).
+The complete list of
+configuration parameters is in the [Alibaba Cloud provider](https://github.com/pulumi/pulumi-alicloud/blob/master/README.md).

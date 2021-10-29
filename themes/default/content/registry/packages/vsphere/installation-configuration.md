@@ -1,6 +1,6 @@
 ---
 title: vSphere Setup
-meta_desc: This page provides an overview on how to setup use Pulumi and the vSphere SDK to
+meta_desc: Provides an overview on how to setup use Pulumi and the vSphere SDK to
            manage and provision resources.
 layout: installation
 ---

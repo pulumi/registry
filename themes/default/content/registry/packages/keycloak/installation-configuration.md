@@ -1,13 +1,13 @@
 ---
 title: Keycloak Setup
-meta_desc: This page provides an overview on how to configure credentials for the Pulumi Keycloak Provider.
+meta_desc: Provides an overview on how to configure credentials for the Pulumi Keycloak Provider.
 layout: installation
 ---
 
-The [Pulumi Keycloak provider]({{< relref "./" >}}) uses the Keycloak SDK to manage and provision resources.
+The Pulumi Keycloak provider uses the Keycloak SDK to manage and provision resources.
 Pulumi relies on the Keycloak SDK to authenticate requests from your computer to Keycloak. Your credentials are never sent
 to pulumi.com.
-The [Pulumi Keycloak Provider]({{< relref "./" >}}) needs to be configured with Keycloak credentials
+The Pulumi Keycloak Provider needs to be configured with Keycloak credentials
 before it can be used to create resources.
 
 ## Installation
@@ -39,5 +39,5 @@ Once obtained, there are two ways to communicate your authorization tokens to Pu
     $ pulumi config set keycloak:clientSecret ZZZZZZZZZZZZZZ --secret
     ```
 
-Remember to pass `--secret` when setting `keycloak:clientId` and `keycloak:clientSecret` so that they are properly encrypted. A full set of configuration parameters
-can be found listed on the [Project README](https://github.com/pulumi/pulumi-keycloak/blob/master/README.md).
+Remember to pass `--secret` when setting `keycloak:clientId` and `keycloak:clientSecret` so that they are properly encrypted. The complete list of
+configuration parameters is in the [Keycloak provider README](https://github.com/pulumi/pulumi-keycloak/blob/master/README.md).

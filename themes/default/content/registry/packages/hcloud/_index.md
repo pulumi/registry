@@ -1,6 +1,6 @@
 ---
 title: Hetzner Cloud
-meta_desc: This page provides an overview of the Hetzner Cloud Provider for Pulumi.
+meta_desc: Provides an overview of the Hetzner Cloud Provider for Pulumi.
 layout: overview
 ---
 

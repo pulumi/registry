@@ -1,6 +1,6 @@
 ---
 title: Confluent Cloud
-meta_desc: This page provides an overview of the Confluent Cloud Provider for Pulumi.
+meta_desc: Provides an overview of the Confluent Cloud Provider for Pulumi.
 layout: overview
 ---
 

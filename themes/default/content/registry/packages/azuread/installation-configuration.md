@@ -1,6 +1,6 @@
 ---
 title: AzureAD Setup
-meta_desc: This page provides an overview on how to configure credentials for the Pulumi AzureAD Provider.
+meta_desc: Provides an overview on how to configure credentials for the Pulumi AzureAD Provider.
 layout: installation
 ---
 

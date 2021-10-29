@@ -1,6 +1,6 @@
 ---
 title: HashiCorp Consul
-meta_desc: This page provides an overview of the HashiCorp Consul Provider for Pulumi.
+meta_desc: Provides an overview of the HashiCorp Consul Provider for Pulumi.
 layout: overview
 ---
 

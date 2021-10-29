@@ -1,6 +1,6 @@
 ---
 title: Kubernetes
-meta_desc: This page provides an overview of how Pulumi works with Kubernetes.
+meta_desc: Provides an overview of how Pulumi works with Kubernetes.
 
 layout: overview
 ---

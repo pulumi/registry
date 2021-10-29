@@ -1,6 +1,6 @@
 ---
 title: SumoLogic Setup
-meta_desc: This page provides an overview on how to configure credentials for the Pulumi SumoLogic Provider.
+meta_desc: Provides an overview on how to configure credentials for the Pulumi SumoLogic Provider.
 layout: installation
 ---
 
@@ -39,5 +39,5 @@ Once obtained, there are two ways to communicate your authorization tokens to Pu
     $ pulumi config set sumologic:environment ZZZZZZZZZZZZZZ
     ```
 
-Remember to pass `--secret` when setting `sumologic:accessId` and `sumologic:accessKey` so that they are properly encrypted. A full set of configuration parameters
-can be found listed on the [Project README](https://github.com/pulumi/pulumi-sumologic/blob/master/README.md).
+Remember to pass `--secret` when setting `sumologic:accessId` and `sumologic:accessKey` so that they are properly encrypted. The complete list of
+configuration parameters is in the [SumoLogic provider README](https://github.com/pulumi/pulumi-sumologic/blob/master/README.md).

@@ -11,6 +11,7 @@ To provision a Miniflux installation with the this component, you need to have A
 **Your AWS credentials are never sent to Pulumi.com.** Pulumi uses the AWS SDK and the credentials in your environment to authenticate requests from your computer to AWS.
 
 ## Installation
+
 The AWS Miniflux component is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/aws-miniflux`](https://www.npmjs.com/package/@pulumi/aws-miniflux)

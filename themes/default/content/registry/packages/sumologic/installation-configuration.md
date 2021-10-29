@@ -19,7 +19,6 @@ The SumoLogic provider is available as a package in all Pulumi languages:
 * Go: [`github.com/pulumi/pulumi-sumologic/sdk/go/sumologic`](https://github.com/pulumi/pulumi-sumologic)
 * .NET: [`Pulumi.SumoLogic`](https://www.nuget.org/packages/Pulumi.SumoLogic)
 
-
 ## Configuring Credentials
 
 Once obtained, there are two ways to communicate your authorization tokens to Pulumi:

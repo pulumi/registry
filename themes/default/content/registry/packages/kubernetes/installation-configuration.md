@@ -50,8 +50,8 @@ following steps.
 By default, Pulumi will look for a kubeconfig file in the following locations,
 just like `kubectl`:
 
-* The environment variable: `$KUBECONFIG`,
-* Or in current user's default kubeconfig directory: `~/.kube/config`
+- The environment variable: `$KUBECONFIG`,
+- Or in current user's default kubeconfig directory: `~/.kube/config`
 
 If the kubeconfig file is not in either of these locations, Pulumi will **not** find it, and it will
 fail to authenticate against the cluster. Set one of these locations to a valid kubeconfig file, if you have not done so

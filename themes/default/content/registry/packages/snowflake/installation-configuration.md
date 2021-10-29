@@ -19,7 +19,6 @@ The Snowflake provider is available as a package in all Pulumi languages:
 * Go: [`github.com/pulumi/pulumi-snowflake/sdk/go/snowflake`](https://github.com/pulumi/pulumi-snowflake)
 * .NET: [`Pulumi.Snowflake`](https://www.nuget.org/packages/Pulumi.Snowflake)
 
-
 ## Authentication against Snowflake
 
 The Snowflake provider support multiple ways to authenticate:

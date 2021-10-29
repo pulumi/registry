@@ -10,7 +10,6 @@ to pulumi.com.
 The [Pulumi Keycloak Provider]({{< relref "./" >}}) needs to be configured with Keycloak credentials
 before it can be used to create resources.
 
-
 ## Installation
 
 The Keycloak provider is available as a package in all Pulumi languages:

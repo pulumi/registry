@@ -25,12 +25,3 @@ const resourceGroupName = new azure.core.ResourceGroup("my-group", {
 ```
 
 Visit the [How-to Guides]({{<relref "./how-to-guides">}}) to find step-by-step guides for specific scenarios like running an app in Azure App Service or setting up a serverless Azure Function.
-
-## SDK packages
-
-The Azure Classic provider is available as a package in all Pulumi languages:
-
-* JavaScript/TypeScript: [`@pulumi/azure`](https://www.npmjs.com/package/@pulumi/azure)
-* Python: [`pulumi-azure`](https://pypi.org/project/pulumi-azure/)
-* Go: [`github.com/pulumi/pulumi-azure/sdk/v4/go/azure`](https://github.com/pulumi/pulumi-azure)
-* .NET: [`Pulumi.Azure`](https://www.nuget.org/packages/Pulumi.Azure)

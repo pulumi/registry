@@ -5,9 +5,17 @@ layout: installation
 ---
 
 The Pulumi Cloudflare provider uses the Cloudflare SDK to manage resources.
+Pulumi relies on the Cloudflare SDK to authenticate requests from your computer to Cloudflare. Your credentials are never sent
+to pulumi.com.
 
-> Pulumi relies on the Cloudflare SDK to authenticate requests from your computer to Cloudflare. Your credentials are never sent
-> to pulumi.com.
+## Installation
+
+The Cloudflare provider is available as a package in all Pulumi languages:
+
+* JavaScript/TypeScript: [`@pulumi/cloudflare`](https://www.npmjs.com/package/@pulumi/cloudflare)
+* Python: [`pulumi-cloudflare`](https://pypi.org/project/pulumi-cloudflare/)
+* Go: [`github.com/pulumi/pulumi-cloudflare/sdk/v3/go/cloudflare`](https://github.com/pulumi/pulumi-cloudflare)
+* .NET: [`Pulumi.Cloudflare`](https://www.nuget.org/packages/Pulumi.Cloudflare)
 
 ### Configuring The Provider
 

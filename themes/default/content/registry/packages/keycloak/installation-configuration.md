@@ -5,14 +5,22 @@ layout: installation
 ---
 
 The [Pulumi Keycloak provider]({{< relref "./" >}}) uses the Keycloak SDK to manage and provision resources.
-
-> Pulumi relies on the Keycloak SDK to authenticate requests from your computer to Keycloak. Your credentials are never sent
-> to pulumi.com.
-
+Pulumi relies on the Keycloak SDK to authenticate requests from your computer to Keycloak. Your credentials are never sent
+to pulumi.com.
 The [Pulumi Keycloak Provider]({{< relref "./" >}}) needs to be configured with Keycloak credentials
 before it can be used to create resources.
 
-### Configuring Credentials
+
+## Installation
+
+The Keycloak provider is available as a package in all Pulumi languages:
+
+* JavaScript/TypeScript: [`@pulumi/keycloak`](https://www.npmjs.com/package/@pulumi/keycloak)
+* Python: [`pulumi-keycloak`](https://pypi.org/project/pulumi-keycloak/)
+* Go: [`github.com/pulumi/pulumi-keycloak/sdk/v4/go/keycloak`](https://github.com/pulumi/pulumi-keycloak)
+* .NET: [`Pulumi.Keycloak`](https://www.nuget.org/packages/Pulumi.Keycloak)
+
+## Configuring Credentials
 
 Once obtained, there are two ways to communicate your authorization tokens to Pulumi:
 

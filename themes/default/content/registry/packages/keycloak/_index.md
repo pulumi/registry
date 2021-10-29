@@ -4,8 +4,6 @@ meta_desc: This page provides an overview of the Keycloak Provider for Pulumi.
 layout: overview
 ---
 
-<img src="/logos/tech/keycloak.svg" align="right" class="h-16 px-8 pb-4">
-
 The Keycloak provider for Pulumi can be used to provision any of the cloud resources available via [Keycloak](https://rancher.com/).
 The Keycloak provider must be configured with credentials to deploy and update resources for Rancher.
 
@@ -92,14 +90,3 @@ class Program
 {{% /choosable %}}
 
 {{< /chooser >}}
-
-## Libraries
-
-The following packages are available in packager managers:
-
-* JavaScript/TypeScript: [`@pulumi/keycloak`](https://www.npmjs.com/package/@pulumi/keycloak)
-* Python: [`pulumi-keycloak`](https://pypi.org/project/pulumi-keycloak/)
-* Go: [`github.com/pulumi/pulumi-keycloak/sdk/v4/go/keycloak`](https://github.com/pulumi/pulumi-keycloak)
-* .NET: [`Pulumi.Keycloak`](https://www.nuget.org/packages/Pulumi.Keycloak)
-
-The Keycloak provider is open source and available in the [pulumi/pulumi-keycloak](https://github.com/pulumi/pulumi-keycloak) repo.

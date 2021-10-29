@@ -5,14 +5,21 @@ layout: installation
 ---
 
 The Pulumi Fastly provider uses the Fastly SDK to manage and provision resources.
-
-> Pulumi relies on the Fastly SDK to authenticate requests from your computer to Fastly. Your credentials are never sent
-> to pulumi.com.
-
+Pulumi relies on the Fastly SDK to authenticate requests from your computer to Fastly. Your credentials are never sent
+to pulumi.com.
 The Pulumi Fastly Provider needs to be configured with Fastly credentials
 before it can be used to create resources.
 
-### Configuring Credentials
+## Installation
+
+The Fastly provider is available as a package in all Pulumi languages:
+
+* JavaScript/TypeScript: [`@pulumi/fastly`](https://www.npmjs.com/package/@pulumi/fastly)
+* Python: [`pulumi-fastly`](https://pypi.org/project/pulumi-fastly/)
+* Go: [`github.com/pulumi/pulumi-fastly/sdk/v3/go/fastly`](https://github.com/pulumi/pulumi-fastly)
+* .NET: [`Pulumi.Fastly`](https://www.nuget.org/packages/Pulumi.Fastly)
+
+## Configuring Credentials
 
 Once obtained, there are two ways to communicate your authorization tokens to Pulumi:
 

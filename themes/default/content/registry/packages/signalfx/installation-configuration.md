@@ -5,14 +5,21 @@ layout: installation
 ---
 
 The Pulumi SignalFx provider uses the SignalFx SDK to manage and provision resources.
-
-> Pulumi relies on the SignalFx SDK to authenticate requests from your computer to SignalFx. Your credentials are never sent
-> to pulumi.com.
-
+Pulumi relies on the SignalFx SDK to authenticate requests from your computer to SignalFx. Your credentials are never sent
+to pulumi.com.
 The Pulumi SignalFx Provider needs to be configured with SignalFx credentials
 before it can be used to create resources.
 
-### Configuring Credentials
+## Installation
+
+The SignalFx provider is available as a package in all Pulumi languages:
+
+* JavaScript/TypeScript: [`@pulumi/signalfx`](https://www.npmjs.com/package/@pulumi/signalfx)
+* Python: [`pulumi-signalfx`](https://pypi.org/project/pulumi-signalfx/)
+* Go: [`github.com/pulumi/pulumi-signalfx/sdk/v5/go/signalfx`](https://github.com/pulumi/pulumi-signalfx)
+* .NET: [`Pulumi.Signalfx`](https://www.nuget.org/packages/Pulumi.Signalfx)
+
+## Configuring Credentials
 
 Once obtained, there are two ways to communicate your authorization tokens to Pulumi:
 

@@ -60,12 +60,3 @@ manager = CertManager('cert-manager',
 {{% /choosable %}}
 
 {{< /chooser >}}
-
-## SDK packages
-
-The cert-manager provider is available as a package in all Pulumi languages:
-
-* JavaScript/TypeScript: [`@pulumi/kubernetes-cert-manager`](https://www.npmjs.com/package/@pulumi/kubernetes-cert-manager)
-* Python: [`pulumi-kubernetes-cert-manager`](https://pypi.org/project/pulumi-kubernetes-cert-manager/)
-* Go: [`github.com/pulumi/pulumi-kubernetes-cert-manager/sdk/go/kubernetes`](https://github.com/pulumi/pulumi-kubernetes-cert-manager)
-* .NET: [`Pulumi.KubernetesCertManager`](https://www.nuget.org/packages/Pulumi.KubernetesCertManager)

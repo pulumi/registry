@@ -77,12 +77,3 @@ dns = CoreDNS('dns',
 {{% /choosable %}}
 
 {{< /chooser >}}
-
-## SDK packages
-
-The CoreDNS provider is available as a package in all Pulumi languages:
-
-* JavaScript/TypeScript: [`@pulumi/kubernetes-coredns`](https://www.npmjs.com/package/@pulumi/kubernetes-coredns)
-* Python: [`pulumi-kubernetes-coredns`](https://pypi.org/project/pulumi-kubernetes-coredns/)
-* Go: [`github.com/pulumi/pulumi-kubernetes-coredns/sdk/go/kubernetes`](https://github.com/pulumi/pulumi-kubernetes-coredns)
-* .NET: [`Pulumi.KubernetesCoreDNS`](https://www.nuget.org/packages/Pulumi.KubernetesCoreDNS)

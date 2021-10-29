@@ -5,14 +5,21 @@ layout: installation
 ---
 
 The Pulumi Akamai provider uses the Akamai SDK to manage and provision resources.
-
-> Pulumi relies on the Akamai SDK to authenticate requests from your computer to Akamai. Your credentials are never sent
-> to pulumi.com.
-
+Pulumi relies on the Akamai SDK to authenticate requests from your computer to Akamai. Your credentials are never sent
+to pulumi.com.
 The Pulumi Akamai Provider needs to be configured with Akamai credentials
 before it can be used to create resources.
 
-### Configuring Credentials
+## Installation
+
+The Akamai provider is available as a package in all Pulumi languages:
+
+* JavaScript/TypeScript: [`@pulumi/akamai`](https://www.npmjs.com/package/@pulumi/akamai)
+* Python: [`pulumi-akamai`](https://pypi.org/project/pulumi-akamai/)
+* Go: [`github.com/pulumi/pulumi-akamai/sdk/v2/go/akamai`](https://github.com/pulumi/pulumi-akamai)
+* .NET: [`Pulumi.Akamai`](https://www.nuget.org/packages/Pulumi.Akamai)
+
+## Configuring Credentials
 
 Once obtained, there are two ways to communicate your authorization tokens to Pulumi:
 

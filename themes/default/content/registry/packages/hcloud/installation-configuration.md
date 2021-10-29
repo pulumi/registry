@@ -5,14 +5,21 @@ layout: installation
 ---
 
 The Pulumi Hetzner Cloud provider uses the Hetzner Cloud SDK to manage and provision resources.
-
-> Pulumi relies on the Hetzner Cloud SDK to authenticate requests from your computer to Hetzner Cloud. Your credentials are never sent
-> to pulumi.com.
-
+Pulumi relies on the Hetzner Cloud SDK to authenticate requests from your computer to Hetzner Cloud. Your credentials are never sent
+to pulumi.com.
 The Pulumi Hetzner Cloud Provider needs to be configured with Hetzner Cloud credentials
 before it can be used to create resources.
 
-### Configuring Credentials
+## Libraries
+
+The Hetzner Cloud provider is available as a package in all Pulumi languages:
+
+* JavaScript/TypeScript: [`@pulumi/hcloud`](https://www.npmjs.com/package/@pulumi/hcloud)
+* Python: [`pulumi-hcloud`](https://pypi.org/project/pulumi-hcloud/)
+* Go: [`github.com/pulumi/pulumi-hcloud/sdk/go/hcloud`](https://github.com/pulumi/pulumi-hcloud)
+* .NET: [`Pulumi.HCloud`](https://www.nuget.org/packages/Pulumi.HCloud)
+
+## Configuring Credentials
 
 Once obtained, there are two ways to communicate your authorization tokens to Pulumi:
 

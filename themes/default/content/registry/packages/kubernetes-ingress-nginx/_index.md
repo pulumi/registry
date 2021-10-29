@@ -229,12 +229,3 @@ app_ingress = Ingress(f'{app_base}-ingress',
 {{% /choosable %}}
 
 {{< /chooser >}}
-
-## SDK packages
-
-The NGINX Ingress Controller provider is available as a package in all Pulumi languages:
-
-* JavaScript/TypeScript: [`@pulumi/kubernetes-ingress-nginx`](https://www.npmjs.com/package/@pulumi/kubernetes-ingress-nginx)
-* Python: [`pulumi-kubernetes-ingress-nginx`](https://pypi.org/project/pulumi-kubernetes-ingress-nginx/)
-* Go: [`github.com/pulumi/pulumi-kubernetes-ingress-nginx/sdk/go/kubernetes`](https://github.com/pulumi/pulumi-kubernetes-ingress-nginx)
-* .NET: [`Pulumi.KubernetesIngressNginx`](https://www.nuget.org/packages/Pulumi.KubernetesIngressNginx)

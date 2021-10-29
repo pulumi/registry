@@ -34,12 +34,3 @@ export const natgatewayIPs = myVpc.natGatewayIPs;
 {{% /choosable %}}
 
 {{< /chooser >}}
-
-## SDK packages
-
-The AWS API Gateway provider is available as a package in all Pulumi languages:
-
-* JavaScript/TypeScript: [`@pulumi/aws-quickstart-vpc`](https://www.npmjs.com/package/@pulumi/aws-quickstart-vpc)
-* Python: [`pulumi-aws-quickstart-vpc`](https://pypi.org/project/pulumi-aws-quickstart-vpc/)
-* Go: [`github.com/pulumi/pulumi-aws-quickstart-vpc/sdk/go/aws`](https://github.com/pulumi/pulumi-aws-quickstart-vpc)
-* .NET: [`Pulumi.AwsQuickStartVpc`](https://www.nuget.org/packages/Pulumi.AwsQuickStartVpc)

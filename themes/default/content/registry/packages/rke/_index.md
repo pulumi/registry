@@ -148,12 +148,3 @@ class Program
 {{% /choosable %}}
 
 {{< /chooser >}}
-
-## Libraries
-
-The following packages are available in packager managers:
-
-* JavaScript/TypeScript: [`@pulumi/rke`](https://www.npmjs.com/package/@pulumi/rke)
-* Python: [`pulumi-rke`](https://pypi.org/project/pulumi-rke/)
-* Go: [`github.com/pulumi/pulumi-rke/sdk/go/rke`](https://github.com/pulumi/pulumi-rke)
-* .NET: [`Pulumi.Rke`](https://www.nuget.org/packages/Pulumi.Rke)

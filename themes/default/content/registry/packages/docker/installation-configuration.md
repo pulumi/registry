@@ -5,11 +5,19 @@ layout: installation
 ---
 
 The Pulumi Docker provider uses the Docker SDK to manage resources.
+Pulumi relies on the Docker SDK to authenticate requests from your computer to Docker. Your credentials are never sent
+to pulumi.com.
 
-> Pulumi relies on the Docker SDK to authenticate requests from your computer to Docker. Your credentials are never sent
-> to pulumi.com.
+## Installation
 
-### Configuring The Provider
+The Docker provider is available as a package in all Pulumi languages:
+
+* JavaScript/TypeScript: [`@pulumi/docker`](https://www.npmjs.com/package/@pulumi/docker)
+* Python: [`pulumi-docker`](https://pypi.org/project/pulumi-docker/)
+* Go: [`github.com/pulumi/pulumi-docker/sdk/v3/go/docker`](https://github.com/pulumi/pulumi-docker)
+* .NET: [`Pulumi.Docker`](https://www.nuget.org/packages/Pulumi.Docker)
+
+## Configuring The Provider
 
 Once obtained, there are two ways to communicate your configuration tokens to Pulumi:
 

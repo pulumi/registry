@@ -12,7 +12,16 @@ The Pulumi F5 BIG-IP provider uses the F5 BIG-IP SDK to manage and provision res
 The Pulumi F5 BIG-IP Provider needs to be configured with F5 BIG-IP credentials
 before it can be used to create resources.
 
-### Configuring Credentials
+## Installation
+
+The F5 BIG-IP provider is available as a package in all Pulumi languages:
+
+* JavaScript/TypeScript: [`@pulumi/f5bigip`](https://www.npmjs.com/package/@pulumi/f5bigip)
+* Python: [`pulumi-f5bigip`](https://pypi.org/project/pulumi-f5bigip/)
+* Go: [`github.com/pulumi/pulumi-f5bigip/sdk/v3/go/f5bigip`](https://github.com/pulumi/pulumi-f5bigip)
+* .NET: [`Pulumi.F5bigip`](https://www.nuget.org/packages/Pulumi.F5bigip)
+
+## Configuring Credentials
 
 Once obtained, there are two ways to communicate your authorization tokens to Pulumi:
 

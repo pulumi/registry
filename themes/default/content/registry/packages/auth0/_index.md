@@ -105,14 +105,3 @@ class Program
 {{% /choosable %}}
 
 {{< /chooser >}}
-
-## Libraries
-
-The following packages are available in packager managers:
-
-* JavaScript/TypeScript: [`@pulumi/auth0`](https://www.npmjs.com/package/@pulumi/auth0)
-* Python: [`pulumi-auth0`](https://pypi.org/project/pulumi-auth0/)
-* Go: [`github.com/pulumi/pulumi-auth0/sdk/v2/go/auth0`](https://github.com/pulumi/pulumi-auth0)
-* .NET: [`Pulumi.Auth0`](https://www.nuget.org/packages/Pulumi.Auth0)
-
-The Auth0 provider is open source and available in the [pulumi/pulumi-auth0](https://github.com/pulumi/pulumi-auth0) repo.

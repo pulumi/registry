@@ -12,7 +12,16 @@ The Pulumi Kafka provider uses the Kafka SDK to manage and provision resources.
 The Pulumi Kafka Provider needs to be configured with Kafka credentials
 before it can be used to create resources.
 
-### Configuring Credentials
+## Installation
+
+The Kafka Cloud provider is available as a package in all Pulumi languages:
+
+* JavaScript/TypeScript: [`@pulumi/kafka`](https://www.npmjs.com/package/@pulumi/kafka)
+* Python: [`pulumi-kafka`](https://pypi.org/project/pulumi-kafka/)
+* Go: [`github.com/pulumi/pulumi-kafka/sdk/v3/go/kafka`](https://github.com/pulumi/pulumi-kafka)
+* .NET: [`Pulumi.Kafka`](https://www.nuget.org/packages/Pulumi.Kafka)
+
+## Configuring Credentials
 
 In order to communicate your configuration details to Pulumi:
 

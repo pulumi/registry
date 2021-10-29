@@ -12,7 +12,16 @@ The Pulumi Datadog provider uses the Datadog SDK to manage and provision resourc
 The Pulumi Datadog Provider needs to be configured with Datadog credentials
 before it can be used to create resources.
 
-### Configuring Credentials
+## Installation
+
+The Datadog provider is available as a package in all Pulumi languages:
+
+* JavaScript/TypeScript: [`@pulumi/datadog`](https://www.npmjs.com/package/@pulumi/datadog)
+* Python: [`pulumi-datadog`](https://pypi.org/project/pulumi-datadog/)
+* Go: [`github.com/pulumi/pulumi-datadog/sdk/v3/go/datadog`](https://github.com/pulumi/pulumi-datadog)
+* .NET: [`Pulumi.Datadog`](https://www.nuget.org/packages/Pulumi.Datadog)
+
+## Configuring Credentials
 
 Once obtained, there are two ways to communicate your authorization tokens to Pulumi:
 

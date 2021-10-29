@@ -5,14 +5,21 @@ layout: installation
 ---
 
 The Pulumi Opsgenie provider uses the Opsgenie SDK to manage and provision resources.
-
-> Pulumi relies on the Opsgenie SDK to authenticate requests from your computer to Opsgenie. Your credentials are never sent
-> to pulumi.com.
-
+Pulumi relies on the Opsgenie SDK to authenticate requests from your computer to Opsgenie. Your credentials are never sent
+to pulumi.com.
 The Pulumi Opsgenie Provider needs to be configured with Opsgenie credentials
 before it can be used to manage resources.
 
-### Configuring Credentials
+## Installation
+
+The Opsgenie provider is available as a package in all Pulumi languages:
+
+* JavaScript/TypeScript: [`@pulumi/opsgenie`](https://www.npmjs.com/package/@pulumi/opsgenie)
+* Python: [`pulumi-opsgenie`](https://pypi.org/project/pulumi-opsgenie/)
+* Go: [`github.com/pulumi/pulumi-opsgenie/sdk/go/opsgenie`](https://github.com/pulumi/pulumi-opsgenie)
+* .NET: [`Pulumi.Opsgenie`](https://www.nuget.org/packages/Pulumi.Opsgenie)
+
+## Configuring Credentials
 
 In order to communicate your configuration details to Pulumi:
 

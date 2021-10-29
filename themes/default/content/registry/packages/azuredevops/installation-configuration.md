@@ -5,14 +5,20 @@ layout: installation
 ---
 
 The Pulumi AzureDevOps provider uses the AzureDevOps SDK to manage and provision resources.
-
-> Pulumi relies on the AzureDevOps SDK to authenticate requests from your computer to AzureDevOps. Your credentials are never sent
-> to pulumi.com.
-
+Pulumi relies on the AzureDevOps SDK to authenticate requests from your computer to AzureDevOps. Your credentials are never sent to pulumi.com.
 The Pulumi AzureDevOps Provider needs to be configured with AzureDevOps credentials
 before it can be used to create resources.
 
-### Configuring Credentials
+## Installation
+
+The AzureDevOps provider is available as a package in all Pulumi languages:
+
+* JavaScript/TypeScript: [`@pulumi/azuredevops`](https://www.npmjs.com/package/@pulumi/azuredevops)
+* Python: [`pulumi-azuredevops`](https://pypi.org/project/pulumi-azuredevops/)
+* Go: [`github.com/pulumi/pulumi-azuredevops/sdk/v2/go/azuredevops`](https://github.com/pulumi/pulumi-azuredevops)
+* .NET: [`Pulumi.AzureDevOps`](https://www.nuget.org/packages/Pulumi.AzureDevOps)
+
+## Configuring Credentials
 
 Once obtained, there are two ways to communicate your authorization tokens to Pulumi:
 

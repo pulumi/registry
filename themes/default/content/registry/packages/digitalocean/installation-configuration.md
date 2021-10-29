@@ -12,7 +12,16 @@ The Pulumi DigitalOcean provider uses the DigitalOcean SDK to manage and provisi
 The Pulumi DigitalOcean Provider needs to be configured with DigitalOcean credentials
 before it can be used to create resources.
 
-### Configuring Credentials
+## Installation
+
+The DigitalOcean provider is available as a package in all Pulumi languages:
+
+* JavaScript/TypeScript: [`@pulumi/digitalocean`](https://www.npmjs.com/package/@pulumi/digitalocean)
+* Python: [`pulumi-digitalocean`](https://pypi.org/project/pulumi-digitalocean/)
+* Go: [`github.com/pulumi/pulumi-digitalocean/sdk/v4/go/digitalocean`](https://github.com/pulumi/pulumi-digitalocean)
+* .NET: [`Pulumi.DigitalOcean`](https://www.nuget.org/packages/Pulumi.DigitalOcean)
+
+## Configuring Credentials
 
 Once obtained, there are two ways to communicate your authorization tokens to Pulumi:
 

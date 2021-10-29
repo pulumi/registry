@@ -17,6 +17,15 @@ To provision resources with the Pulumi AWS provider, you need to have AWS creden
 
 **Your AWS credentials are never sent to Pulumi.com.** Pulumi uses the AWS SDK and the credentials in your environment to authenticate requests from your computer to AWS.
 
+## Installation
+
+The AWS Native provider is available as a package in all Pulumi languages:
+
+* JavaScript/TypeScript: [`@pulumi/aws-native`](https://www.npmjs.com/package/@pulumi/aws-native)
+* Python: [`pulumi-aws-native`](https://pypi.org/project/pulumi-aws-native/)
+* Go: [`github.com/pulumi/pulumi-aws-native/sdk/go/aws`](https://github.com/pulumi/pulumi-aws-native/tree/master/sdk/go/aws)
+* .NET: [`Pulumi.AwsNative`](https://www.nuget.org/packages/Pulumi.AwsNative)
+
 ## Setup
 
 ### Get your credentials

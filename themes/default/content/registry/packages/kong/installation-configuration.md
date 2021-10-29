@@ -5,14 +5,23 @@ layout: installation
 ---
 
 The [Pulumi Kong provider]({{< relref "./" >}}) uses the Kong SDK to manage and provision resources.
-
-> Pulumi relies on the Kong SDK to authenticate requests from your computer to Kong. Your credentials are never sent
-> to pulumi.com.
-
+Pulumi relies on the Kong SDK to authenticate requests from your computer to Kong. Your credentials are never sent
+to pulumi.com.
 The [Pulumi Kong Provider]({{< relref "./" >}}) needs to be configured with Kong credentials
 before it can be used to create resources.
 
-### Configuring Credentials
+## Installation
+
+The Kong provider is available as a package in all Pulumi languages:
+
+* JavaScript/TypeScript: [`@pulumi/kong`](https://www.npmjs.com/package/@pulumi/kong)
+* Python: [`pulumi-kong`](https://pypi.org/project/pulumi-kong/)
+* Go: [`github.com/pulumi/pulumi-kong/sdk/v4/go/kong`](https://github.com/pulumi/pulumi-kong)
+* .NET: [`Pulumi.Kong`](https://www.nuget.org/packages/Pulumi.Kong)
+
+The Kong provider is open source and available in the [pulumi/pulumi-kong](https://github.com/pulumi/pulumi-kong) repo.
+
+## Configuring Credentials
 
 Once obtained, there are two ways to communicate your authorization tokens to Pulumi:
 

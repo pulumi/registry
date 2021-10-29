@@ -80,14 +80,3 @@ class Program
 {{% /choosable %}}
 
 {{< /chooser >}}
-
-## Libraries
-
-The following packages are available in packager managers:
-
-* JavaScript/TypeScript: [`@pulumi/mysql`](https://www.npmjs.com/package/@pulumi/mysql)
-* Python: [`pulumi-mysql`](https://pypi.org/project/pulumi-mysql/)
-* Go: [`github.com/pulumi/pulumi-mysql/sdk/v3/go/mysql`](https://github.com/pulumi/pulumi-mysql)
-* .NET: [`Pulumi.Mysql`](https://www.nuget.org/packages/Pulumi.Mysql)
-
-The MySQL provider is open source and available in the [pulumi/pulumi-mysql](https://github.com/pulumi/pulumi-mysql) repo.

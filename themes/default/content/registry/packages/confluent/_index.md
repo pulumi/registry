@@ -83,12 +83,3 @@ class Program
 {{% /choosable %}}
 
 {{< /chooser >}}
-
-## Libraries
-
-The following packages are available in packager managers:
-
-* JavaScript/TypeScript: [`@pulumi/confluent`](https://www.npmjs.com/package/@pulumi/confluent)
-* Python: [`pulumi-confluent`](https://pypi.org/project/pulumi-confluent/)
-* Go: [`github.com/pulumi/pulumi-confluent/sdk/go/confluent`](https://github.com/pulumi/pulumi-confluent)
-* .NET: [`Pulumi.Confluent`](https://www.nuget.org/packages/Pulumi.Confluent)

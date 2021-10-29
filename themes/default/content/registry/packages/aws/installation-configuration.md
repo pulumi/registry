@@ -13,9 +13,18 @@ layout: installation
 
 {{< aws-resource-note >}}
 
-To provision resources with the Pulumi AWS provider, you need to have AWS credentials. You can use the instructions on this page if you plan to use AWS credentials from a shared credentials file (which the AWS CLI usually manages for you) or from an environment variable. For other credential options, see the [AWS documentation](https://docs.aws.amazon.com/sdk-for-go/v1/developer-guide/configuring-sdk.html).
+To provision resources with the Pulumi AWS Classic provider, you need to have AWS credentials. You can use the instructions on this page if you plan to use AWS credentials from a shared credentials file (which the AWS CLI usually manages for you) or from an environment variable. For other credential options, see the [AWS documentation](https://docs.aws.amazon.com/sdk-for-go/v1/developer-guide/configuring-sdk.html).
 
 **Your AWS credentials are never sent to Pulumi.com.** Pulumi uses the AWS SDK and the credentials in your environment to authenticate requests from your computer to AWS.
+
+## Installation
+
+The AWS Classic provider is available as a package in all Pulumi languages:
+
+* JavaScript/TypeScript: [`@pulumi/aws`](https://www.npmjs.com/package/@pulumi/aws)
+* Python: [`pulumi-aws`](https://pypi.org/project/pulumi-aws/)
+* Go: [`github.com/pulumi/pulumi-aws/sdk/v4/go/aws`](https://github.com/pulumi/pulumi-aws)
+* .NET: [`Pulumi.Aws`](https://www.nuget.org/packages/Pulumi.Aws)
 
 ## Setup
 

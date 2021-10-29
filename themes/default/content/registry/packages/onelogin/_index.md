@@ -96,14 +96,3 @@ class Program
 {{% /choosable %}}
 
 {{< /chooser >}}
-
-## Libraries
-
-The following packages are available in packager managers:
-
-* JavaScript/TypeScript: [`@pulumi/onelogin`](https://www.npmjs.com/package/@pulumi/onelogin)
-* Python: [`pulumi-onelogin`](https://pypi.org/project/pulumi-onelogin/)
-* Go: [`github.com/pulumi/pulumi-onelogin/sdk/go/onelogin`](https://github.com/pulumi/pulumi-onelogin)
-* .NET: [`Pulumi.Onelogin`](https://www.nuget.org/packages/Pulumi.Onelogin)
-
-The onelogin provider is open source and available in the [pulumi/pulumi-onelogin](https://github.com/pulumi/pulumi-onelogin) repo.

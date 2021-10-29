@@ -12,7 +12,16 @@ The Pulumi Confluent Cloud provider uses the Confluent Cloud SDK to manage and p
 The Pulumi Confluent Cloud Provider needs to be configured with Confluent Cloud credentials
 before it can be used to create resources.
 
-### Configuring Credentials
+## Installation
+
+The Confluent Cloud provider is available as a package in all Pulumi languages:
+
+* JavaScript/TypeScript: [`@pulumi/confluent`](https://www.npmjs.com/package/@pulumi/confluent)
+* Python: [`pulumi-confluent`](https://pypi.org/project/pulumi-confluent/)
+* Go: [`github.com/pulumi/pulumi-confluent/sdk/go/confluent`](https://github.com/pulumi/pulumi-confluent)
+* .NET: [`Pulumi.Confluent`](https://www.nuget.org/packages/Pulumi.Confluent)
+
+## Configuring Credentials
 
 Once obtained, there are two ways to communicate your authorization tokens to Pulumi:
 

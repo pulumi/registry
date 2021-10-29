@@ -80,14 +80,3 @@ class Program
 {{% /choosable %}}
 
 {{< /chooser >}}
-
-## Libraries
-
-The following packages are available in packager managers:
-
-* JavaScript/TypeScript: [`@pulumi/newrelic`](https://www.npmjs.com/package/@pulumi/newrelic)
-* Python: [`pulumi-newrelic`](https://pypi.org/project/pulumi-newrelic/)
-* Go: [`github.com/pulumi/pulumi-newrelic/sdk/v4/go/newrelic`](https://github.com/pulumi/pulumi-newrelic)
-* .NET: [`Pulumi.Newrelic`](https://www.nuget.org/packages/Pulumi.Newrelic)
-
-The New Relic provider is open source and available in the [pulumi/pulumi-newrelic](https://github.com/pulumi/pulumi-newrelic) repo.

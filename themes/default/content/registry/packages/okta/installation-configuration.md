@@ -5,11 +5,19 @@ layout: installation
 ---
 
 The Pulumi Okta provider uses the Okta SDK to manage resources.
+Pulumi relies on the Okta SDK to authenticate requests from your computer to Okta. Your credentials are never sent
+to pulumi.com.
 
-> Pulumi relies on the Okta SDK to authenticate requests from your computer to Okta. Your credentials are never sent
-> to pulumi.com.
+## Installation
 
-### Configuring The Provider
+The Okta provider is available as a package in all Pulumi languages:
+
+* JavaScript/TypeScript: [`@pulumi/okta`](https://www.npmjs.com/package/@pulumi/okta)
+* Python: [`pulumi-okta`](https://pypi.org/project/pulumi-okta/)
+* Go: [`github.com/pulumi/pulumi-okta/sdk/v3/go/okta`](https://github.com/pulumi/pulumi-okta)
+* .NET: [`Pulumi.Okta`](https://www.nuget.org/packages/Pulumi.Okta)
+
+## Configuring The Provider
 
 Once obtained, there are two ways to communicate your configuration tokens to Pulumi:
 

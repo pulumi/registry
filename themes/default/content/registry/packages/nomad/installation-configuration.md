@@ -5,11 +5,19 @@ layout: installation
 ---
 
 The [Pulumi Nomad provider]({{< relref "./" >}}) uses the Nomad SDK to manage resources.
+Pulumi relies on the Nomad SDK to authenticate requests from your computer to HashiCorp Nomad. Your credentials are never sent
+to pulumi.com.
 
-> Pulumi relies on the Nomad SDK to authenticate requests from your computer to HashiCorp Nomad. Your credentials are never sent
-> to pulumi.com.
+## Installation
 
-### Configuring The Provider
+The HashiCorp Nomad provider is available as a package in all Pulumi languages:
+
+* JavaScript/TypeScript: [`@pulumi/nomad`](https://www.npmjs.com/package/@pulumi/nomad)
+* Python: [`pulumi-nomad`](https://pypi.org/project/pulumi-nomad/)
+* Go: [`github.com/pulumi/pulumi-nomad/sdk/go/nomad`](https://github.com/pulumi/pulumi-nomad)
+* .NET: [`Pulumi.Nomad`](https://www.nuget.org/packages/Pulumi.Nomad)
+
+## Configuring The Provider
 
 Once obtained, there are two ways to communicate your configuration tokens to Pulumi:
 

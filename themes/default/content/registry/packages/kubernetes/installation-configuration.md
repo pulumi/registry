@@ -26,6 +26,15 @@ By default, Pulumi will use a local [kubeconfig] if available, or one can be pas
 
 With the `kubeconfig` available, Pulumi communicates with the API Server using the official Kubernetes [client-go] library, just like `kubectl` does.
 
+## Installation
+
+The Kubernetes provider is available as a package in all Pulumi languages:
+
+- JavaScript/TypeScript: [`@pulumi/kubernetes`](https://www.npmjs.com/package/@pulumi/kubernetes)
+- Python: [`pulumi-kubernetes`](https://pypi.org/project/pulumi-kubernetes/)
+- Go: [`github.com/pulumi/pulumi-kubernetes/sdk/go/kubernetes`](https://github.com/pulumi/pulumi-kubernetes)
+- .NET: [`Pulumi.Kubernetes`](https://www.nuget.org/packages/Pulumi.Kubernetes)
+
 ## Pre-Requisites
 
 If you do not have a cluster set up and running yet, you'll need to do the

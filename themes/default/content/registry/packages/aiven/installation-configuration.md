@@ -5,14 +5,21 @@ layout: installation
 ---
 
 The Pulumi Aiven provider uses the Aiven SDK to manage and provision resources.
-
-> Pulumi relies on the Aiven SDK to authenticate requests from your computer to Aiven. Your credentials are never sent
-> to pulumi.com.
-
+Pulumi relies on the Aiven SDK to authenticate requests from your computer to Aiven. Your credentials are never sent
+to pulumi.com.
 The Pulumi Aiven Provider needs to be configured with Aiven credentials
 before it can be used to create resources.
 
-### Configuring Credentials
+## Installation
+
+The Avien provider is available as a package in all Pulumi languages:
+
+* JavaScript/TypeScript: [`@pulumi/aiven`](https://www.npmjs.com/package/@pulumi/aiven)
+* Python: [`pulumi-aiven`](https://pypi.org/project/pulumi-aiven/)
+* Go: [`github.com/pulumi/pulumi-aiven/sdk/v4/go/aiven`](https://github.com/pulumi/pulumi-aiven)
+* .NET: [`Pulumi.Aiven`](https://www.nuget.org/packages/Pulumi.Aiven)
+
+## Configuring Credentials
 
 Once obtained, there are two ways to communicate your authorization tokens to Pulumi:
 

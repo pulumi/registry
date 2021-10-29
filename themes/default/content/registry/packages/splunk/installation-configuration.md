@@ -5,14 +5,21 @@ layout: installation
 ---
 
 The Pulumi Splunk provider uses the Splunk SDK to manage and provision resources.
-
-> Pulumi relies on the Splunk SDK to authenticate requests from your computer to Splunk. Your credentials are never sent
-> to pulumi.com.
-
+Pulumi relies on the Splunk SDK to authenticate requests from your computer to Splunk. Your credentials are never sent
+to pulumi.com.
 The Pulumi Splunk Provider needs to be configured with Splunk credentials
 before it can be used to create resources.
 
-### Configuring Credentials
+## Installation
+
+The Splunk provider is available as a package in all Pulumi languages:
+
+* JavaScript/TypeScript: [`@pulumi/splunk`](https://www.npmjs.com/package/@pulumi/splunk)
+* Python: [`pulumi-splunk`](https://pypi.org/project/pulumi-splunk/)
+* Go: [`github.com/pulumi/pulumi-splunk/sdk/go/splunk`](https://github.com/pulumi/pulumi-splunk)
+* .NET: [`Pulumi.Splunk`](https://www.nuget.org/packages/Pulumi.Splunk)
+
+## Configuring Credentials
 
 Once obtained, there are two ways to communicate your authorization tokens to Pulumi:
 

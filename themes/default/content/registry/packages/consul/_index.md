@@ -90,14 +90,3 @@ class Program
 {{% /choosable %}}
 
 {{< /chooser >}}
-
-## Libraries
-
-The following packages are available in packager managers:
-
-* JavaScript/TypeScript: [`@pulumi/consul`](https://www.npmjs.com/package/@pulumi/consul)
-* Python: [`pulumi-consul`](https://pypi.org/project/pulumi-consul/)
-* Go: [`github.com/pulumi/pulumi-consul/sdk/v3/go/consul`](https://github.com/pulumi/pulumi-consul)
-* .NET: [`Pulumi.Consul`](https://www.nuget.org/packages/Pulumi.Consul)
-
-The HashiCorp Consul provider is open source and available in the [pulumi/pulumi-consul](https://github.com/pulumi/pulumi-consul) repo.

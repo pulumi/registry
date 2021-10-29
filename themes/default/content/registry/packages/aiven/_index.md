@@ -111,14 +111,3 @@ class Program
 {{% /choosable %}}
 
 {{< /chooser >}}
-
-## Libraries
-
-The following packages are available in packager managers:
-
-* JavaScript/TypeScript: [`@pulumi/aiven`](https://www.npmjs.com/package/@pulumi/aiven)
-* Python: [`pulumi-aiven`](https://pypi.org/project/pulumi-aiven/)
-* Go: [`github.com/pulumi/pulumi-aiven/sdk/v4/go/aiven`](https://github.com/pulumi/pulumi-aiven)
-* .NET: [`Pulumi.Aiven`](https://www.nuget.org/packages/Pulumi.Aiven)
-
-The Aiven provider is open source and available in the [pulumi/pulumi-aiven](https://github.com/pulumi/pulumi-aiven) repo.

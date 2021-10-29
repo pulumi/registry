@@ -80,12 +80,3 @@ class Program
 {{% /choosable %}}
 
 {{< /chooser >}}
-
-## Libraries
-
-The following packages are available in packager managers:
-
-* JavaScript/TypeScript: [`@pulumi/minio`](https://www.npmjs.com/package/@pulumi/minio)
-* Python: [`pulumi-minio`](https://pypi.org/project/pulumi-minio/)
-* Go: [`github.com/pulumi/pulumi-minio/sdk/go/minio`](https://github.com/pulumi/pulumi-minio)
-* .NET: [`Pulumi.Minio`](https://www.nuget.org/packages/Pulumi.Minio)

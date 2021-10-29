@@ -144,14 +144,3 @@ class Program
 {{% /choosable %}}
 
 {{< /chooser >}}
-
-## Libraries
-
-The following packages are available in packager managers:
-
-* JavaScript/TypeScript: [`@pulumi/fastly`](https://www.npmjs.com/package/@pulumi/fastly)
-* Python: [`pulumi-fastly`](https://pypi.org/project/pulumi-fastly/)
-* Go: [`github.com/pulumi/pulumi-fastly/sdk/v3/go/fastly`](https://github.com/pulumi/pulumi-fastly)
-* .NET: [`Pulumi.Fastly`](https://www.nuget.org/packages/Pulumi.Fastly)
-
-The Fastly provider is open source and available in the [pulumi/pulumi-fastly](https://github.com/pulumi/pulumi-fastly) repo.

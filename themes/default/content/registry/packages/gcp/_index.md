@@ -89,12 +89,3 @@ class Program
 {{< /chooser >}}
 
 Visit the [How-to Guides]({{<relref "./how-to-guides">}}) to find step-by-step guides for specific scenarios like creating a serverless application using Google Cloud Functions or setting up a Google Kubernetes Engine (GKE) cluster.
-
-## SDK packages
-
-The Google Cloud (GCP) Classic provider is available as a package in all Pulumi languages:
-
-* JavaScript/TypeScript: [`@pulumi/gcp`](https://www.npmjs.com/package/@pulumi/gcp)
-* Python: [`pulumi-gcp`](https://pypi.org/project/pulumi-gcp/)
-* Go: [`github.com/pulumi/pulumi-gcp/sdk/v5/go/gcp`](https://github.com/pulumi/pulumi-gcp)
-* .NET: [`Pulumi.Gcp`](https://www.nuget.org/packages/Pulumi.Gcp)

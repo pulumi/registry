@@ -5,14 +5,21 @@ layout: installation
 ---
 
 The Pulumi GitLab provider uses the GitLab SDK to manage and provision resources.
-
-> Pulumi relies on the GitLab SDK to authenticate requests from your computer to GitLab. Your credentials are never sent
-> to pulumi.com.
-
+Pulumi relies on the GitLab SDK to authenticate requests from your computer to GitLab. Your credentials are never sent
+to pulumi.com.
 The Pulumi GitLab Provider needs to be configured with GitLab credentials
 before it can be used to create resources.
 
-### Configuring Credentials
+## Installation
+
+The GitLab provider is available as a package in all Pulumi languages:
+
+* JavaScript/TypeScript: [`@pulumi/gitlab`](https://www.npmjs.com/package/@pulumi/gitlab)
+* Python: [`pulumi-gitlab`](https://pypi.org/project/pulumi-gitlab/)
+* Go: [`github.com/pulumi/pulumi-gitlab/sdk/v3/go/gitlab`](https://github.com/pulumi/pulumi-gitlab)
+* .NET: [`Pulumi.Gitlab`](https://www.nuget.org/packages/Pulumi.Gitlab)
+
+## Configuring Credentials
 
 Once obtained, there are two ways to communicate your authorization tokens to Pulumi:
 

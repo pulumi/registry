@@ -78,14 +78,3 @@ class Program
 {{% /choosable %}}
 
 {{< /chooser >}}
-
-## Libraries
-
-The following packages are available in packager managers:
-
-* JavaScript/TypeScript: [`@pulumi/spotinst`](https://www.npmjs.com/package/@pulumi/spotinst)
-* Python: [`pulumi-spotinst`](https://pypi.org/project/pulumi-spotinst/)
-* Go: [`github.com/pulumi/pulumi-spotinst/sdk/v3/go/spotinst`](https://github.com/pulumi/pulumi-spotinst)
-* .NET: [`Pulumi.Spotinst`](https://www.nuget.org/packages/Pulumi.Spotinst)
-
-The Spotinst provider is open source and available in the [pulumi/pulumi-spotinst](https://github.com/pulumi/pulumi-spotinst) repo.

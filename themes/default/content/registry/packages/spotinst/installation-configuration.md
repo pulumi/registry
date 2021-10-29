@@ -5,11 +5,19 @@ layout: installation
 ---
 
 The Pulumi Spotinst provider uses the Spotinst SDK to manage resources.
+Pulumi relies on the Spotinst SDK to authenticate requests from your computer to Spotinst. Your credentials are never sent
+to pulumi.com.
 
-> Pulumi relies on the Spotinst SDK to authenticate requests from your computer to Spotinst. Your credentials are never sent
-> to pulumi.com.
+## Installation
 
-### Configuring The Provider
+The Spotinst provider is available as a package in all Pulumi languages:
+
+* JavaScript/TypeScript: [`@pulumi/spotinst`](https://www.npmjs.com/package/@pulumi/spotinst)
+* Python: [`pulumi-spotinst`](https://pypi.org/project/pulumi-spotinst/)
+* Go: [`github.com/pulumi/pulumi-spotinst/sdk/v3/go/spotinst`](https://github.com/pulumi/pulumi-spotinst)
+* .NET: [`Pulumi.Spotinst`](https://www.nuget.org/packages/Pulumi.Spotinst)
+
+## Configuration
 
 Once obtained, there are two ways to communicate your configuration tokens to Pulumi:
 

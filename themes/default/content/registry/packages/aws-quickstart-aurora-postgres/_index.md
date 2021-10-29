@@ -32,12 +32,3 @@ const myDb = new aurora.Cluster("demo-cluster", {
 {{% /choosable %}}
 
 {{< /chooser >}}
-
-## SDK packages
-
-The AWS API Gateway provider is available as a package in all Pulumi languages:
-
-* JavaScript/TypeScript: [`@pulumi/aws-quickstart-aurora-postgres`](https://www.npmjs.com/package/@pulumi/aws-quickstart-aurora-postgres)
-* Python: [`pulumi-aws-quickstart-aurora-postgres`](https://pypi.org/project/pulumi-aws-quickstart-aurora-postgres/)
-* Go: [`github.com/pulumi/pulumi-aws-quickstart-aurora-postgres/sdk/go/aws`](https://github.com/pulumi/pulumi-aws-quickstart-aurora-postgres)
-* .NET: [`Pulumi.AwsQuickStartAuroraPostgres`](https://www.nuget.org/packages/Pulumi.AwsQuickStartAuroraPostgres)

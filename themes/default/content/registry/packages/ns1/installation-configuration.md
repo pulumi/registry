@@ -5,14 +5,21 @@ layout: installation
 ---
 
 The Pulumi NS1 provider uses the NS1 SDK to manage and provision resources.
-
-> Pulumi relies on the NS1 SDK to authenticate requests from your computer to NS1. Your credentials are never sent
-> to pulumi.com.
-
+Pulumi relies on the NS1 SDK to authenticate requests from your computer to NS1. Your credentials are never sent
+to pulumi.com.
 The Pulumi NS1 Provider needs to be configured with NS1 credentials
 before it can be used to create resources.
 
-### Configuring Credentials
+## Installation
+
+The NS1 provider is available as a package in all Pulumi languages:
+
+* JavaScript/TypeScript: [`@pulumi/ns1`](https://www.npmjs.com/package/@pulumi/ns1)
+* Python: [`pulumi-ns1`](https://pypi.org/project/pulumi-ns1/)
+* Go: [`github.com/pulumi/pulumi-ns1/sdk/v2/go/ns1`](https://github.com/pulumi/pulumi-ns1)
+* .NET: [`Pulumi.NS1`](https://www.nuget.org/packages/Pulumi.Ns1)
+
+## Configuring Credentials
 
 Once obtained, there are two ways to communicate your authorization tokens to Pulumi:
 

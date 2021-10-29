@@ -12,7 +12,16 @@ The Pulumi Civo provider uses the Civo SDK to manage and provision resources.
 The Pulumi Civo Provider needs to be configured with Civo credentials
 before it can be used to create resources.
 
-### Configuring Credentials
+## Installation
+
+The Civo provider is available as a package in all Pulumi languages:
+
+* JavaScript/TypeScript: [`@pulumi/civo`](https://www.npmjs.com/package/@pulumi/civo)
+* Python: [`pulumi-civo`](https://pypi.org/project/pulumi-civo/)
+* Go: [`github.com/pulumi/pulumi-civo/sdk/go/civo`](https://github.com/pulumi/pulumi-civo)
+* .NET: [`Pulumi.Civo`](https://www.nuget.org/packages/Pulumi.Civo)
+
+## Configuring Credentials
 
 Once obtained, there are two ways to communicate your authorization tokens to Pulumi:
 

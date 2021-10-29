@@ -166,12 +166,3 @@ func main() {
 {{% /chooser %}}
 
 Visit the [How-to Guides]({{<relref "./how-to-guides">}}) to find more step-by-step guides for specific scenarios like setting up an EKS cluster.
-
-## SDK packages
-
-The AWS provider is available as a package in all Pulumi languages:
-
-* JavaScript/TypeScript: [`@pulumi/aws-native`](https://www.npmjs.com/package/@pulumi/aws-native)
-* Python: [`pulumi-aws-native`](https://pypi.org/project/pulumi-aws-native/)
-* Go: [`github.com/pulumi/pulumi-aws-native/sdk/go/aws`](https://github.com/pulumi/pulumi-aws-native/tree/master/sdk/go/aws)
-* .NET: [`Pulumi.AwsNative`](https://www.nuget.org/packages/Pulumi.AwsNative)

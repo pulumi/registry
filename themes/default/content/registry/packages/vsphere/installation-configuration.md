@@ -6,14 +6,21 @@ layout: installation
 ---
 
 The Pulumi vSphere provider uses the vSphere SDK to manage and provision resources.
-
-> Pulumi relies on the vSphere SDK to authenticate requests from your computer to vSphere. Your credentials are never sent
-> to pulumi.com.
-
+Pulumi relies on the vSphere SDK to authenticate requests from your computer to vSphere. Your credentials are never sent
+to pulumi.com.
 The Pulumi vSphere Provider needs to be configured with vSphere credentials
 before it can be used to create resources.
 
-### Configuring Credentials
+## Installation
+
+The vSphere provider is available as a package in all Pulumi languages:
+
+* JavaScript/TypeScript: [`@pulumi/vsphere`](https://www.npmjs.com/package/@pulumi/vsphere)
+* Python: [`pulumi-vsphere`](https://pypi.org/project/pulumi-vsphere/)
+* Go: [`github.com/pulumi/pulumi-vsphere/sdk/v3/go/vsphere`](https://github.com/pulumi/pulumi-vsphere)
+* .NET: [`Pulumi.Vsphere`](https://www.nuget.org/packages/Pulumi.Vsphere)
+
+## Configuring Credentials
 
 Once obtained, there are two ways to communicate your authorization tokens to Pulumi:
 

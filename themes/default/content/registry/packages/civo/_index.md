@@ -91,14 +91,3 @@ class Program
 {{% /choosable %}}
 
 {{< /chooser >}}
-
-## Libraries
-
-The following packages are available in packager managers:
-
-* JavaScript/TypeScript: [`@pulumi/civo`](https://www.npmjs.com/package/@pulumi/civo)
-* Python: [`pulumi-civo`](https://pypi.org/project/pulumi-civo/)
-* Go: [`github.com/pulumi/pulumi-civo/sdk/go/civo`](https://github.com/pulumi/pulumi-civo)
-* .NET: [`Pulumi.Civo`](https://www.nuget.org/packages/Pulumi.Civo)
-
-The Civo provider is open source and available in the [pulumi/pulumi-civo](https://github.com/pulumi/pulumi-civo) repo.

@@ -83,12 +83,3 @@ func main() {
 {{% /choosable %}}
 
 {{< /chooser >}}
-
-## SDK packages
-
-The AWS API Gateway provider is available as a package in all Pulumi languages:
-
-* JavaScript/TypeScript: [`@pulumi/aws-gcp-global-cloudrun`](https://www.npmjs.com/package/@pulumi/gcp-global-cloudrun)
-* Python: [`pulumi-gcp-global-cloudrun`](https://pypi.org/project/pulumi-gcp-global-cloudrun/)
-* Go: [`github.com/pulumi/pulumi-gcp-global-cloudrun/sdk/go/gcp`](https://github.com/pulumi/pulumi-gcp-global-cloudrun)
-* .NET: [`Pulumi.GcpGlobalCloudRun`](https://www.nuget.org/packages/Pulumi.GcpGlobalCloudRun)

@@ -5,14 +5,21 @@ layout: installation
 ---
 
 The Pulumi Minio provider uses the Minio SDK to manage and provision resources.
-
-> Pulumi relies on the Minio SDK to authenticate requests from your computer to Minio. Your credentials are never sent
-> to pulumi.com.
-
+Pulumi relies on the Minio SDK to authenticate requests from your computer to Minio. Your credentials are never sent
+to pulumi.com.
 The Pulumi Minio Provider needs to be configured with Minio credentials
 before it can be used to create resources.
 
-### Configuring Credentials
+## Installation
+
+The Minio provider is available as a package in all Pulumi languages:
+
+* JavaScript/TypeScript: [`@pulumi/minio`](https://www.npmjs.com/package/@pulumi/minio)
+* Python: [`pulumi-minio`](https://pypi.org/project/pulumi-minio/)
+* Go: [`github.com/pulumi/pulumi-minio/sdk/go/minio`](https://github.com/pulumi/pulumi-minio)
+* .NET: [`Pulumi.Minio`](https://www.nuget.org/packages/Pulumi.Minio)
+
+## Configuring Credentials
 
 Once obtained, there are two ways to communicate your authorization tokens to Pulumi:
 

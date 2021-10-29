@@ -79,12 +79,3 @@ restAPI, err := apigateway.NewRestAPI(ctx, "api", &apigateway.RestAPIArgs{
 {{% /choosable %}}
 
 {{< /chooser >}}
-
-## SDK packages
-
-The AWS API Gateway provider is available as a package in all Pulumi languages:
-
-* JavaScript/TypeScript: [`@pulumi/aws-apigateway`](https://www.npmjs.com/package/@pulumi/aws)
-* Python: [`pulumi-aws-apigateway`](https://pypi.org/project/pulumi-aws-apigateway/)
-* Go: [`github.com/pulumi/pulumi-aws-apigateway/sdk/go/apigateway`](https://github.com/pulumi/pulumi-aws-apigateway)
-* .NET: [`Pulumi.AwsApiGateway`](https://www.nuget.org/packages/Pulumi.AwsApiGateway)

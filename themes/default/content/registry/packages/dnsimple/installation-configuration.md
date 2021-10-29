@@ -12,7 +12,16 @@ The Pulumi DNSimple provider uses the DNSimple SDK to manage and provision resou
 The Pulumi DNSimple Provider needs to be configured with DNSimple credentials
 before it can be used to create resources.
 
-### Configuring Credentials
+## Installation
+
+The DNSimple provider is available as a package in all Pulumi languages:
+
+* JavaScript/TypeScript: [`@pulumi/dnsimple`](https://www.npmjs.com/package/@pulumi/dnsimple)
+* Python: [`pulumi-dnsimple`](https://pypi.org/project/pulumi-dnsimple/)
+* Go: [`github.com/pulumi/pulumi-dnsimple/sdk/v3/go/dnsimple`](https://github.com/pulumi/pulumi-dnsimple)
+* .NET: [`Pulumi.Dnsimple`](https://www.nuget.org/packages/Pulumi.Dnsimple)
+
+## Configuring Credentials
 
 Once obtained, there are two ways to communicate your authorization tokens to Pulumi:
 

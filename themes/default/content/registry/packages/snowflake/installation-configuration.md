@@ -5,14 +5,22 @@ layout: installation
 ---
 
 The Pulumi Snowflake provider uses the Snowflake SDK to manage and provision resources.
-
-> Pulumi relies on the Snowflake SDK to authenticate requests from your computer to Snowflake. Your credentials are never sent
-> to pulumi.com.
-
+Pulumi relies on the Snowflake SDK to authenticate requests from your computer to Snowflake. Your credentials are never sent
+to pulumi.com.
 The Pulumi Snowflake Provider needs to be configured with Snowflake credentials
 before it can be used to create resources.
 
-### Authentication against Snowflake
+## Installation
+
+The Snowflake provider is available as a package in all Pulumi languages:
+
+* JavaScript/TypeScript: [`@pulumi/snowflake`](https://www.npmjs.com/package/@pulumi/snowflake)
+* Python: [`pulumi-snowflake`](https://pypi.org/project/pulumi-snowflake/)
+* Go: [`github.com/pulumi/pulumi-snowflake/sdk/go/snowflake`](https://github.com/pulumi/pulumi-snowflake)
+* .NET: [`Pulumi.Snowflake`](https://www.nuget.org/packages/Pulumi.Snowflake)
+
+
+## Authentication against Snowflake
 
 The Snowflake provider support multiple ways to authenticate:
 
@@ -22,7 +30,7 @@ The Snowflake provider support multiple ways to authenticate:
 * Browser Auth
 * Private Key
 
-### Configuring Credentials
+## Configuring Credentials
 
 Once obtained, there are two ways to communicate your authorization tokens to Pulumi:
 

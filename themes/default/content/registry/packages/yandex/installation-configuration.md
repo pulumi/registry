@@ -5,14 +5,21 @@ layout: installation
 ---
 
 The [Pulumi Yandex Cloud provider]({{< relref "./" >}}) uses the Yandex Cloud SDK to manage and provision resources.
-
-> Pulumi relies on the Yandex Cloud SDK to authenticate requests from your computer to Yandex Cloud. Your credentials are never sent
-> to pulumi.com.
-
+Pulumi relies on the Yandex Cloud SDK to authenticate requests from your computer to Yandex Cloud. Your credentials are never sent
+to pulumi.com.
 The [Pulumi Yandex Cloud Provider]({{< relref "./" >}}) needs to be configured with Yandex Cloud credentials
 before it can be used to create resources.
 
-### Configuring The Provider
+## Installation
+
+The Yandex provider is available as a package in all Pulumi languages:
+
+* JavaScript/TypeScript: [`@pulumi/yandex`](https://www.npmjs.com/package/@pulumi/yandex)
+* Python: [`pulumi-yandex`](https://pypi.org/project/pulumi-yandex/)
+* Go: [`github.com/pulumi/pulumi-yandex/sdk/go/yandex`](https://github.com/pulumi/pulumi-yandex)
+* .NET: [`Pulumi.Yandex`](https://www.nuget.org/packages/Pulumi.Yandex)
+
+## Configuring The Provider
 
 Once obtained, there are two ways to communicate your configuration to Pulumi:
 

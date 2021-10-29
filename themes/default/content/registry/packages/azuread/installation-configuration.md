@@ -1,16 +1,25 @@
 ---
-title: AzureDevOps Setup
-meta_desc: This page provides an overview on how to configure credentials for the Pulumi AzureDevOps Provider.
+title: AzureAD Setup
+meta_desc: This page provides an overview on how to configure credentials for the Pulumi AzureAD Provider.
 layout: installation
 ---
 
-The Pulumi AzureDevOps provider uses the AzureDevOps SDK to manage and provision resources.
+The Pulumi AzureAD provider uses the AzureAD SDK to manage and provision resources.
 
-> Pulumi relies on the AzureDevOps SDK to authenticate requests from your computer to AzureDevOps. Your credentials are never sent
+> Pulumi relies on the AzureAD SDK to authenticate requests from your computer to AzureAD. Your credentials are never sent
 > to pulumi.com.
 
-The Pulumi AzureDevOps Provider needs to be configured with AzureDevOps credentials
+The Pulumi AzureAD Provider needs to be configured with AzureAD credentials
 before it can be used to create resources.
+
+## Installation
+
+The AzureAD provider is available as a package in all Pulumi languages:
+
+* JavaScript/TypeScript: [`@pulumi/azuread`](https://www.npmjs.com/package/@pulumi/azuread)
+* Python: [`pulumi-azuread`](https://pypi.org/project/pulumi-azuread/)
+* Go: [`github.com/pulumi/pulumi-azuread/sdk/v4/go/azuread`](https://github.com/pulumi/pulumi-azuread)
+* .NET: [`Pulumi.AzureAD`](https://www.nuget.org/packages/Pulumi.AzureAD)
 
 ## Credentials
 

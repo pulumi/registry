@@ -4,8 +4,6 @@ meta_desc: This page provides an overview of the HashiCorp Nomad Provider for Pu
 layout: overview
 ---
 
-<img src="/logos/tech/nomad.svg" align="right" class="h-16 px-8 pb-4">
-
 The HashiCorp Nomad provider for Pulumi can be used to provision any of the resources available in [Nomad](https://www.nomadproject.io/).
 
 ## Example
@@ -81,14 +79,3 @@ class Program
 {{% /choosable %}}
 
 {{< /chooser >}}
-
-## Libraries
-
-The following packages are available in packager managers:
-
-* JavaScript/TypeScript: [`@pulumi/nomad`](https://www.npmjs.com/package/@pulumi/nomad)
-* Python: [`pulumi-nomad`](https://pypi.org/project/pulumi-nomad/)
-* Go: [`github.com/pulumi/pulumi-nomad/sdk/go/nomad`](https://github.com/pulumi/pulumi-nomad)
-* .NET: [`Pulumi.Nomad`](https://www.nuget.org/packages/Pulumi.Nomad)
-
-The HashiCorp Nomad provider is open source and available in the [pulumi/pulumi-nomad](https://github.com/pulumi/pulumi-nomad) repo.

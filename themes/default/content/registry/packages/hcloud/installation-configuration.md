@@ -36,5 +36,5 @@ Once obtained, there are two ways to communicate your authorization tokens to Pu
     ```
 
 Remember to pass `--secret` when setting `hcloud:token` so that it is properly encrypted. The complete list of
-configuration parameters is in the 
+configuration parameters is in the
 [Hetzner Cloud provider README](https://github.com/pulumi/pulumi-hcloud/blob/master/README.md).

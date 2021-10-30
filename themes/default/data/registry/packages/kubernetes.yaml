@@ -8,5 +8,5 @@ category: Cloud
 package_status: ga
 version: v3.8.3
 featured: true
-native: false
+native: true
 component: false

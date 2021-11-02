@@ -6,7 +6,7 @@ updated_on: 1635867901
 publisher: Pulumi
 category: Cloud
 package_status: ga
-version: v1.44.0
+version: v1.44.1
 featured: true
 native: true
 component: false

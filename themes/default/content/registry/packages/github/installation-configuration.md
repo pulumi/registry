@@ -1,20 +1,27 @@
 ---
 title: GitHub Setup
-meta_desc: This page provides an overview on how to configure credentials for the Pulumi GitHub Provider.
+meta_desc: Provides an overview on how to configure credentials for the Pulumi GitHub Provider.
 layout: installation
 ---
 
 The Pulumi GitHub provider uses the GitHub SDK to manage and provision resources.
 
-> Pulumi relies on the GitHub SDK to authenticate requests from your computer to GitHub. Your credentials are never sent
-> to pulumi.com.
+## Installation
 
+The GitHub provider is available as a package in all Pulumi languages:
+
+* JavaScript/TypeScript: [`@pulumi/github`](https://www.npmjs.com/package/@pulumi/github)
+* Python: [`pulumi-github`](https://pypi.org/project/pulumi-github/)
+* Go: [`github.com/pulumi/pulumi-github/sdk/v4/go/github`](https://github.com/pulumi/pulumi-github)
+* .NET: [`Pulumi.Github`](https://www.nuget.org/packages/Pulumi.Github)
+
+## Configuring Credentials
+
+Pulumi relies on the GitHub SDK to authenticate requests from your computer to GitHub. Your credentials are never sent to pulumi.com.
 The Pulumi GitHub Provider needs to be configured with GitHub credentials
 before it can be used to create resources.
 
-### Configuring Credentials
-
-Once obtained, there are two ways to communicate your authorization tokens to Pulumi:
+Once the credetials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
 
 1. Set the environment variable `GITHUB_TOKEN`.
 
@@ -42,4 +49,5 @@ Remember to pass `--secret` when setting `github:token` so that it is properly e
     $ pulumi config set github:owner YYYYYYYYYYYYYY
     ```
 
-A full set of configuration parameters can be found listed on the [Project README](https://github.com/pulumi/pulumi-github/blob/master/README.md).
+The complete list of
+configuration parameters is in the [GitHub provider README](https://github.com/pulumi/pulumi-github/blob/master/README.md).

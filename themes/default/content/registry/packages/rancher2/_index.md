@@ -1,6 +1,6 @@
 ---
 title: Rancher2
-meta_desc: This page provides an overview of the Rancher2 Provider for Pulumi.
+meta_desc: Provides an overview of the Rancher2 Provider for Pulumi.
 layout: overview
 ---
 
@@ -105,14 +105,3 @@ class Program
 {{% /choosable %}}
 
 {{< /chooser >}}
-
-## Libraries
-
-The following packages are available in packager managers:
-
-* JavaScript/TypeScript: [`@pulumi/rancher2`](https://www.npmjs.com/package/@pulumi/rancher2)
-* Python: [`pulumi-rancher2`](https://pypi.org/project/pulumi-rancher2/)
-* Go: [`github.com/pulumi/pulumi-rancher2/sdk/v3/go/rancher2`](https://github.com/pulumi/pulumi-rancher2)
-* .NET: [`Pulumi.Rancher2`](https://www.nuget.org/packages/Pulumi.Rancher2)
-
-The Rancher2 provider is open source and available in the [pulumi/pulumi-rancher2](https://github.com/pulumi/pulumi-rancher2) repo.

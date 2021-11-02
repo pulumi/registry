@@ -119,12 +119,3 @@ class Program
 {{< /chooser >}}
 
 Visit the [How-to Guides]({{<relref "./how-to-guides">}}) to find step-by-step guides for specific scenarios like creating a serverless application using Google Cloud Functions or setting up a Google Kubernetes Engine (GKE) cluster.
-
-## SDK packages
-
-The Google Native provider is available as a package in all Pulumi languages:
-
-* JavaScript/TypeScript: [`@pulumi/google-native`](https://www.npmjs.com/package/@pulumi/google-native)
-* Python: [`pulumi-google-native`](https://pypi.org/project/pulumi-google-native/)
-* Go: [`github.com/pulumi/pulumi-google-native/sdk/go/google`](https://github.com/pulumi/pulumi-google-native)
-* .NET: [`Pulumi.GoogleNative`](https://www.nuget.org/packages/Pulumi.GoogleNative)

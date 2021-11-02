@@ -1,6 +1,6 @@
 ---
 title: Opsgenie
-meta_desc: This page provides an overview of the Opsgenie Provider for Pulumi.
+meta_desc: Provides an overview of the Opsgenie Provider for Pulumi.
 layout: overview
 ---
 
@@ -79,14 +79,3 @@ class Program
 {{% /choosable %}}
 
 {{< /chooser >}}
-
-## Libraries
-
-The following packages are available in packager managers:
-
-* JavaScript/TypeScript: [`@pulumi/opsgenie`](https://www.npmjs.com/package/@pulumi/opsgenie)
-* Python: [`pulumi-opsgenie`](https://pypi.org/project/pulumi-opsgenie/)
-* Go: [`github.com/pulumi/pulumi-opsgenie/sdk/go/opsgenie`](https://github.com/pulumi/pulumi-opsgenie)
-* .NET: [`Pulumi.Opsgenie`](https://www.nuget.org/packages/Pulumi.Opsgenie)
-
-The Opsgenie provider is open source and available in the [pulumi/pulumi-opsgenie](https://github.com/pulumi/pulumi-opsgenie) repo.

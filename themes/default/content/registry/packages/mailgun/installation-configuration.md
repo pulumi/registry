@@ -1,20 +1,28 @@
 ---
 title: Mailgun Setup
-meta_desc: This page provides an overview on how to configure credentials for the Pulumi Mailgun Provider.
+meta_desc: Provides an overview on how to configure credentials for the Pulumi Mailgun Provider.
 layout: installation
 ---
 
 The Pulumi Mailgun provider uses the Mailgun SDK to manage and provision resources.
 
-> Pulumi relies on the Mailgun SDK to authenticate requests from your computer to Mailgun. Your credentials are never sent
-> to pulumi.com.
+## Installation
 
+The Mailgun provider is available as a package in all Pulumi languages:
+
+* JavaScript/TypeScript: [`@pulumi/mailgun`](https://www.npmjs.com/package/@pulumi/mailgun)
+* Python: [`pulumi-mailgun`](https://pypi.org/project/pulumi-mailgun/)
+* Go: [`github.com/pulumi/pulumi-mailgun/sdk/v3/go/mailgun`](https://github.com/pulumi/pulumi-mailgun)
+* .NET: [`Pulumi.Mailgun`](https://www.nuget.org/packages/Pulumi.Mailgun)
+
+## Configuring Credentials
+
+Pulumi relies on the Mailgun SDK to authenticate requests from your computer to Mailgun. Your credentials are never sent
+to pulumi.com.
 The Pulumi Mailgun Provider needs to be configured with Mailgun credentials
 before it can be used to create resources.
 
-### Configuring Credentials
-
-Once obtained, there are two ways to communicate your authorization tokens to Pulumi:
+Once the credetials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
 
 1. Set the environment variable `MAILGUN_API_KEY`:
 
@@ -28,5 +36,5 @@ Once obtained, there are two ways to communicate your authorization tokens to Pu
     $ pulumi config set mailgun:apiKey XXXXXXXXXXXXXX --secret
     ```
 
-Remember to pass `--secret` when setting `mailgun:apiKey` so that it is properly encrypted. A full set of configuration parameters
-can be found listed on the [Project README](https://github.com/pulumi/pulumi-mailgun/blob/master/README.md).
+Remember to pass `--secret` when setting `mailgun:apiKey` so that it is properly encrypted. The complete list of
+configuration parameters is in the [Mailgun provider README](https://github.com/pulumi/pulumi-mailgun/blob/master/README.md).

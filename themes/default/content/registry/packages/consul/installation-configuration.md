@@ -1,17 +1,24 @@
 ---
 title: HashiCorp Consul Setup
-meta_desc: This page provides an overview on how to configure the Pulumi Consul Provider.
+meta_desc: Provides an overview on how to configure the Pulumi Consul Provider.
 layout: installation
 ---
 
 The Pulumi Consul provider uses the Consul SDK to manage resources.
 
-> Pulumi relies on the Consul SDK to authenticate requests from your computer to HashiCorp Consul. Your credentials are never sent
-> to pulumi.com.
+## Installation
 
-### Configuring The Provider
+The HashiCorp Consul provider is available as a package in all Pulumi languages:
 
-Once obtained, there are two ways to communicate your configuration parameters to Pulumi:
+* JavaScript/TypeScript: [`@pulumi/consul`](https://www.npmjs.com/package/@pulumi/consul)
+* Python: [`pulumi-consul`](https://pypi.org/project/pulumi-consul/)
+* Go: [`github.com/pulumi/pulumi-consul/sdk/v3/go/consul`](https://github.com/pulumi/pulumi-consul)
+* .NET: [`Pulumi.Consul`](https://www.nuget.org/packages/Pulumi.Consul)
+
+## Configuring The Provider
+
+Pulumi relies on the Consul SDK to authenticate requests from your computer to HashiCorp Consul. Your credentials are never sent
+to pulumi.com. Once the credetials are obtained, there are two ways to communicate your configuration parameters to Pulumi:
 
 1. Set the environment variable `CONSUL_HTTP_ADDR`:
 
@@ -25,4 +32,5 @@ Once obtained, there are two ways to communicate your configuration parameters t
     $ pulumi config set consul:address XXXXXX
     ```
 
-A full set of configuration parameters can be found listed on the [Project README](https://github.com/pulumi/pulumi-consul/blob/master/README.md).
+The complete list of
+configuration parameters is in the [HashiCorp Consul provider README](https://github.com/pulumi/pulumi-consul/blob/master/README.md).

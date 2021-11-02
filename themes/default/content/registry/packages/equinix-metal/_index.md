@@ -1,6 +1,6 @@
 ---
 title: Equinix Metal
-meta_desc: This page provides an overview of the Equinix Metal provider for Pulumi.
+meta_desc: Provides an overview of the Equinix Metal provider for Pulumi.
 layout: overview
 ---
 
@@ -88,14 +88,3 @@ class Program
 {{% /choosable %}}
 
 {{< /chooser >}}
-
-## Libraries
-
-The following packages are available in packager managers:
-
-* JavaScript/TypeScript: [`@pulumi/equinix-metal`](https://www.npmjs.com/package/@pulumi/equinix-metal)
-* Python: [`pulumi-equinix-metal`](https://pypi.org/project/pulumi-equinix-metal/)
-* Go: [`github.com/pulumi/pulumi-equinix-metal/sdk/v2/go/equinix`](https://github.com/pulumi/pulumi-equinix-metal)
-* .NET: [`Pulumi.EquinixMetal`](https://www.nuget.org/packages/Pulumi.EquinixMetal)
-
-The Equinix Metal provider is open source and available in the [pulumi/pulumi-equinix-metal](https://github.com/pulumi/pulumi-equinix-metal) repo.

@@ -1,6 +1,6 @@
 ---
 title: GitLab
-meta_desc: This page provides an overview of the GitLab Provider for Pulumi.
+meta_desc: Provides an overview of the GitLab Provider for Pulumi.
 layout: overview
 ---
 
@@ -95,14 +95,3 @@ class Program
 {{% /choosable %}}
 
 {{< /chooser >}}
-
-## Libraries
-
-The following packages are available in packager managers:
-
-* JavaScript/TypeScript: [`@pulumi/gitlab`](https://www.npmjs.com/package/@pulumi/gitlab)
-* Python: [`pulumi-gitlab`](https://pypi.org/project/pulumi-gitlab/)
-* Go: [`github.com/pulumi/pulumi-gitlab/sdk/v3/go/gitlab`](https://github.com/pulumi/pulumi-gitlab)
-* .NET: [`Pulumi.Gitlab`](https://www.nuget.org/packages/Pulumi.Gitlab)
-
-The GitLab provider is open source and available in the [pulumi/pulumi-gitlab](https://github.com/pulumi/pulumi-gitlab) repo.

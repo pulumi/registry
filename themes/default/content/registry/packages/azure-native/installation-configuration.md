@@ -4,15 +4,22 @@ meta_desc: How to set up credentials to use the Pulumi Azure Native Provider and
 layout: installation
 ---
 
-To provision resources with the Pulumi Azure provider, you need to have an Azure CLI installed and you need to have Azure credentials. These instructions assume you're using the [Azure CLI 2.0](https://github.com/Azure/azure-cli).
-
-**Your Azure credentials are never sent to Pulumi.com.** Pulumi uses the Azure SDK and the credentials in your environment to authenticate requests from your computer to Azure.
-
 {{% notes type="info" %}}
 Pulumi Azure also works with the legacy [Azure xPlat CLI](https://github.com/Azure/azure-xplat-cli) but we recommend using the CLI 2.0 for the best experience.
 {{% /notes %}}
 
+## Installation
+
+The Azure Native provider is available as a package in all Pulumi languages:
+
+* JavaScript/TypeScript: [`@pulumi/azure-native`](https://www.npmjs.com/package/@pulumi/azure-native)
+* Python: [`pulumi-azure-native`](https://pypi.org/project/pulumi-azure-native/)
+* Go: [`github.com/pulumi/pulumi-azure-native/sdk/go/azure`](https://github.com/pulumi/pulumi-azure-native)
+* .NET: [`Pulumi.AzureNative`](https://www.nuget.org/packages/Pulumi.AzureNative)
+
 ## Setup
+
+To provision resources with the Pulumi Azure provider, you need to have an Azure CLI installed and you need to have Azure credentials. These instructions assume you're using the [Azure CLI 2.0](https://github.com/Azure/azure-cli). Your Azure credentials are never sent to Pulumi.com. Pulumi uses the Azure SDK and the credentials in your environment to authenticate requests from your computer to Azure.
 
 Pulumi can authenticate to Azure using a Service Principal or the Azure CLI.
 

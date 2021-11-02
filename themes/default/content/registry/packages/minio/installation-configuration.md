@@ -1,20 +1,28 @@
 ---
 title: Minio Setup
-meta_desc: This page provides an overview on how to configure credentials for the Pulumi Minio Provider.
+meta_desc: Provides an overview on how to configure credentials for the Pulumi Minio Provider.
 layout: installation
 ---
 
 The Pulumi Minio provider uses the Minio SDK to manage and provision resources.
 
-> Pulumi relies on the Minio SDK to authenticate requests from your computer to Minio. Your credentials are never sent
-> to pulumi.com.
+## Installation
 
+The Minio provider is available as a package in all Pulumi languages:
+
+* JavaScript/TypeScript: [`@pulumi/minio`](https://www.npmjs.com/package/@pulumi/minio)
+* Python: [`pulumi-minio`](https://pypi.org/project/pulumi-minio/)
+* Go: [`github.com/pulumi/pulumi-minio/sdk/go/minio`](https://github.com/pulumi/pulumi-minio)
+* .NET: [`Pulumi.Minio`](https://www.nuget.org/packages/Pulumi.Minio)
+
+## Configuring Credentials
+
+Pulumi relies on the Minio SDK to authenticate requests from your computer to Minio. Your credentials are never sent
+to pulumi.com.
 The Pulumi Minio Provider needs to be configured with Minio credentials
 before it can be used to create resources.
 
-### Configuring Credentials
-
-Once obtained, there are two ways to communicate your authorization tokens to Pulumi:
+Once the credetials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
 
 1. Set the environment variables `MINIO_ENDPOINT`, `MINIO_ACCESS_KEY` and `MINIO_SECRET_KEY`:
 
@@ -32,5 +40,5 @@ Once obtained, there are two ways to communicate your authorization tokens to Pu
     $ pulumi config set minio:minioSecretKey ZZZZZZZZZZZZZZ --secret
     ```
 
-Remember to pass `--secret` when setting `minio:minioAccessKey` and `minio:minioSecretKey` so that they are properly encrypted. A full set of configuration parameters
-can be found listed on the [Project README](https://github.com/pulumi/pulumi-minio/blob/master/README.md).
+Remember to pass `--secret` when setting `minio:minioAccessKey` and `minio:minioSecretKey` so that they are properly encrypted. The complete list of
+configuration parameters is in the [Minio provider README](https://github.com/pulumi/pulumi-minio/blob/master/README.md).

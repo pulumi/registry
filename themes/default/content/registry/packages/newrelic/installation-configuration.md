@@ -1,21 +1,29 @@
 ---
 title: New Relic Setup
-meta_desc: This page provides an overview on how to configure credentials for the Pulumi New Relic Provider.
+meta_desc: Provides an overview on how to configure credentials for the Pulumi New Relic Provider.
 layout: installation
 ---
 
 The Pulumi New Relic provider uses the New Relic SDK to manage and provision resources.
 
-> Pulumi relies on the New Relic SDK to authenticate requests from your computer to New Relic. Your credentials are never sent
-> to pulumi.com.
+## Installation
 
+The New Relic provider is available as a package in all Pulumi languages:
+
+* JavaScript/TypeScript: [`@pulumi/newrelic`](https://www.npmjs.com/package/@pulumi/newrelic)
+* Python: [`pulumi-newrelic`](https://pypi.org/project/pulumi-newrelic/)
+* Go: [`github.com/pulumi/pulumi-newrelic/sdk/v4/go/newrelic`](https://github.com/pulumi/pulumi-newrelic)
+* .NET: [`Pulumi.Newrelic`](https://www.nuget.org/packages/Pulumi.Newrelic)
+
+## Configuring Credentials
+
+Pulumi relies on the New Relic SDK to authenticate requests from your computer to New Relic. Your credentials are never sent
+to pulumi.com.
 The Pulumi New Relic Provider needs to be configured with New Relic credentials
 before it can be used to create resources.
 
-### Configuring Credentials
-
 You can find information in the [New Relic](https://docs.newrelic.com/docs/apis/intro-apis/new-relic-api-keys/) docs
-regarding how to create the specific keys. Once obtained, there are two ways to communicate your authorization tokens to Pulumi:
+regarding how to create the specific keys. Once the credetials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
 
 1. Set the environment variables `NEWRELIC_API_KEY`, `NEW_RELIC_API_KEY` and `NEW_RELIC_ADMIN_API_KEY`:
 
@@ -33,5 +41,5 @@ regarding how to create the specific keys. Once obtained, there are two ways to 
     $ pulumi config set newrelic:adminApiKey ZZZZZZZZZZZZ --secret
     ```
 
-Remember to pass `--secret` when setting `newrelic:apiKey` and `newrelic:adminApiKey` so that it is properly encrypted. A full set of configuration parameters
-can be found listed on the [Project README](https://github.com/pulumi/pulumi-newrelic/blob/master/README.md).
+Remember to pass `--secret` when setting `newrelic:apiKey` and `newrelic:adminApiKey` so that it is properly encrypted. The complete list of
+configuration parameters is in the [New Relic provider README](https://github.com/pulumi/pulumi-newrelic/blob/master/README.md).

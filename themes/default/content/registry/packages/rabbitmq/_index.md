@@ -1,6 +1,6 @@
 ---
 title: RabbitMQ
-meta_desc: This page provides an overview of the RabbitMQ Provider for Pulumi.
+meta_desc: Provides an overview of the RabbitMQ Provider for Pulumi.
 layout: overview
 ---
 
@@ -90,14 +90,3 @@ class Program
 {{% /choosable %}}
 
 {{< /chooser >}}
-
-## Libraries
-
-The following packages are available in packager managers:
-
-* JavaScript/TypeScript: [`@pulumi/rabbitmq`](https://www.npmjs.com/package/@pulumi/rabbitmq)
-* Python: [`pulumi-rabbitmq`](https://pypi.org/project/pulumi-rabbitmq/)
-* Go: [`github.com/pulumi/pulumi-rabbitmq/sdk/v3/go/rabbitmq`](https://github.com/pulumi/pulumi-rabbitmq)
-* .NET: [`Pulumi.Rabbitmq`](https://www.nuget.org/packages/Pulumi.Rabbitmq)
-
-The RabbitMQ provider is open source and available in the [pulumi/pulumi-rabbitmq](https://github.com/pulumi/pulumi-rabbitmq) repo.

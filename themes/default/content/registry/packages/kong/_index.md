@@ -1,10 +1,8 @@
 ---
 title: Kong
-meta_desc: This page provides an overview of the Kong Provider for Pulumi.
+meta_desc: Provides an overview of the Kong Provider for Pulumi.
 layout: overview
 ---
-
-<img src="/logos/tech/kong.svg" align="right" class="h-16 px-8 pb-4">
 
 The Kong provider for Pulumi can be used to provision any of the cloud resources available in [Kong](https://konghq.com/kong).
 The Kong provider must be configured with credentials to deploy and update resources in Mailgun.
@@ -97,14 +95,3 @@ class Program
 {{% /choosable %}}
 
 {{< /chooser >}}
-
-## Libraries
-
-The following packages are available in packager managers:
-
-* JavaScript/TypeScript: [`@pulumi/kong`](https://www.npmjs.com/package/@pulumi/kong)
-* Python: [`pulumi-kong`](https://pypi.org/project/pulumi-kong/)
-* Go: [`github.com/pulumi/pulumi-kong/sdk/v4/go/kong`](https://github.com/pulumi/pulumi-kong)
-* .NET: [`Pulumi.Kong`](https://www.nuget.org/packages/Pulumi.Kong)
-
-The Kong provider is open source and available in the [pulumi/pulumi-kong](https://github.com/pulumi/pulumi-kong) repo.

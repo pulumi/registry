@@ -1,6 +1,6 @@
 ---
 title: Docker
-meta_desc: This page provides an overview of the Docker Provider for Pulumi.
+meta_desc: Provides an overview of the Docker Provider for Pulumi.
 layout: overview
 ---
 
@@ -114,14 +114,3 @@ class Program
 {{% /choosable %}}
 
 {{< /chooser >}}
-
-## Libraries
-
-The following packages are available in packager managers:
-
-* JavaScript/TypeScript: [`@pulumi/docker`](https://www.npmjs.com/package/@pulumi/docker)
-* Python: [`pulumi-docker`](https://pypi.org/project/pulumi-docker/)
-* Go: [`github.com/pulumi/pulumi-docker/sdk/v3/go/docker`](https://github.com/pulumi/pulumi-docker)
-* .NET: [`Pulumi.Docker`](https://www.nuget.org/packages/Pulumi.Docker)
-
-The Docker provider is open source and available in the [pulumi/pulumi-docker](https://github.com/pulumi/pulumi-docker) repo.

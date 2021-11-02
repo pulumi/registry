@@ -1,6 +1,6 @@
 ---
 title: DNSimple
-meta_desc: This page provides an overview of the DNSimple Provider for Pulumi.
+meta_desc: Provides an overview of the DNSimple Provider for Pulumi.
 layout: overview
 ---
 
@@ -106,14 +106,3 @@ class Program
 {{% /choosable %}}
 
 {{< /chooser >}}
-
-## Libraries
-
-The following packages are available in packager managers:
-
-* JavaScript/TypeScript: [`@pulumi/dnsimple`](https://www.npmjs.com/package/@pulumi/dnsimple)
-* Python: [`pulumi-dnsimple`](https://pypi.org/project/pulumi-dnsimple/)
-* Go: [`github.com/pulumi/pulumi-dnsimple/sdk/v3/go/dnsimple`](https://github.com/pulumi/pulumi-dnsimple)
-* .NET: [`Pulumi.Dnsimple`](https://www.nuget.org/packages/Pulumi.Dnsimple)
-
-The DNSimple provider is open source and available in the [pulumi/pulumi-dnsimple](https://github.com/pulumi/pulumi-dnsimple) repo.

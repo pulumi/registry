@@ -8,7 +8,16 @@ layout: installation
 
 To provision a Kubernetes cluster with the Amazon EKS component, you need to have AWS credentials. Use the instructions on the AWS Classic Provider's [Installation & Configuration]({{< relref "/registry/packages/aws/installation-configuration" >}}) to get credentials if needed.
 
-**Your AWS credentials are never sent to Pulumi.com.** Pulumi uses the AWS SDK and the credentials in your environment to authenticate requests from your computer to AWS.
+Your AWS credentials are never sent to pulumi.com. Pulumi uses the AWS SDK and the credentials in your environment to authenticate requests from your computer to AWS.
+
+## Installation
+
+The Amazon EKS provider is available as a package in all Pulumi languages:
+
+* JavaScript/TypeScript: [`@pulumi/eks`](https://www.npmjs.com/package/@pulumi/eks)
+* Python: [`pulumi_eks`](https://pypi.org/project/pulumi-eks//)
+* Go: [`github.com/pulumi/pulumi-eks/sdk/go/eks`](https://github.com/pulumi/pulumi-eks)
+* .NET: [`Pulumi.Eks`](https://www.nuget.org/packages/Pulumi.Eks)
 
 ## Prerequisites
 

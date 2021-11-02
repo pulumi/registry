@@ -1,10 +1,8 @@
 ---
 title: Yandex
-meta_desc: This page provides an overview of the Yandex Cloud Provider for Pulumi.
+meta_desc: Provides an overview of the Yandex Cloud Provider for Pulumi.
 layout: overview
 ---
-
-<img src="/logos/tech/yandex.svg" align="right" class="h-16 px-8 pb-4">
 
 The Yandex Cloud provider for Pulumi can be used to provision cloud resources available in [Yandex Cloud](https://cloud.yandex.com/).
 The Yandex Cloud provider must be configured with credentials to deploy and update resources in Yandex Cloud.
@@ -81,14 +79,3 @@ class Program
 {{% /choosable %}}
 
 {{< /chooser >}}
-
-## Libraries
-
-The following packages are available in packager managers:
-
-* JavaScript/TypeScript: [`@pulumi/yandex`](https://www.npmjs.com/package/@pulumi/yandex)
-* Python: [`pulumi-yandex`](https://pypi.org/project/pulumi-yandex/)
-* Go: [`github.com/pulumi/pulumi-yandex/sdk/go/yandex`](https://github.com/pulumi/pulumi-yandex)
-* .NET: [`Pulumi.Yandex`](https://www.nuget.org/packages/Pulumi.Yandex)
-
-The Yandex Cloud provider is open source and available in the [pulumi/pulumi-yandex](https://github.com/pulumi/pulumi-yandex) repo.

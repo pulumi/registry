@@ -32,12 +32,3 @@ Pulumi offers Components that provide simpler interfaces and higher-productivity
 
 * [Amazon EKS]({{<relref "/registry/packages/eks">}})
 * [Crosswalk for AWS]({{<relref "/docs/guides/crosswalk/aws">}}), which includes API Gateway, CloudWatch, Elastic Container Registry, Elastic Container Service, Elastic Kubernetes Service, Elastic Load Balancing, Identity & Access Management, Lambda, Virtual Private Cloud, and more
-
-## SDK packages
-
-The AWS provider is available as a package in all Pulumi languages:
-
-* JavaScript/TypeScript: [`@pulumi/aws`](https://www.npmjs.com/package/@pulumi/aws)
-* Python: [`pulumi-aws`](https://pypi.org/project/pulumi-aws/)
-* Go: [`github.com/pulumi/pulumi-aws/sdk/v4/go/aws`](https://github.com/pulumi/pulumi-aws)
-* .NET: [`Pulumi.Aws`](https://www.nuget.org/packages/Pulumi.Aws)

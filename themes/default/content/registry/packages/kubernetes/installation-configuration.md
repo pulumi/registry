@@ -1,6 +1,6 @@
 ---
 title: Kubernetes Setup
-meta_desc: This page provides an overview on how to setup the Kubernetes Provider for Pulumi.
+meta_desc: Provides an overview on how to setup the Kubernetes Provider for Pulumi.
 layout: installation
 ---
 
@@ -26,6 +26,15 @@ By default, Pulumi will use a local [kubeconfig] if available, or one can be pas
 
 With the `kubeconfig` available, Pulumi communicates with the API Server using the official Kubernetes [client-go] library, just like `kubectl` does.
 
+## Installation
+
+The Kubernetes provider is available as a package in all Pulumi languages:
+
+- JavaScript/TypeScript: [`@pulumi/kubernetes`](https://www.npmjs.com/package/@pulumi/kubernetes)
+- Python: [`pulumi-kubernetes`](https://pypi.org/project/pulumi-kubernetes/)
+- Go: [`github.com/pulumi/pulumi-kubernetes/sdk/go/kubernetes`](https://github.com/pulumi/pulumi-kubernetes)
+- .NET: [`Pulumi.Kubernetes`](https://www.nuget.org/packages/Pulumi.Kubernetes)
+
 ## Pre-Requisites
 
 If you do not have a cluster set up and running yet, you'll need to do the
@@ -41,8 +50,8 @@ following steps.
 By default, Pulumi will look for a kubeconfig file in the following locations,
 just like `kubectl`:
 
-* The environment variable: `$KUBECONFIG`,
-* Or in current user's default kubeconfig directory: `~/.kube/config`
+- The environment variable: `$KUBECONFIG`,
+- Or in current user's default kubeconfig directory: `~/.kube/config`
 
 If the kubeconfig file is not in either of these locations, Pulumi will **not** find it, and it will
 fail to authenticate against the cluster. Set one of these locations to a valid kubeconfig file, if you have not done so
@@ -117,9 +126,9 @@ The Kubernetes provider accepts the following configuration settings.  These can
 
 A few Pulumi-specific annotations can be applied to Kubernetes resources managed by Pulumi to control aspects of how Pulumi deploys and manages the Kubernetes resource:
 
-* `pulumi.com/skipAwait`: Disables Pulumi's default await logic that waits for a Kubernetes resource to become "ready" before marking the resource as having created or updated succesfully.
-* `pulumi.com/timeoutSeconds`: Specifies the number of seconds that the Pulumi Kubernetes provider will wait for the resource to become "ready".
+- `pulumi.com/skipAwait`: Disables Pulumi's default await logic that waits for a Kubernetes resource to become "ready" before marking the resource as having created or updated succesfully.
+- `pulumi.com/timeoutSeconds`: Specifies the number of seconds that the Pulumi Kubernetes provider will wait for the resource to become "ready".
 
 In addition, the Pulumi provider may write the following annotations onto resources it manages:
 
-* `pulumi.com/autonamed`: Indicates that the Pulumi Kubernetes provider decided to autoname the resource (instead of using an explicitly provided `metadata.name`).
+- `pulumi.com/autonamed`: Indicates that the Pulumi Kubernetes provider decided to autoname the resource (instead of using an explicitly provided `metadata.name`).

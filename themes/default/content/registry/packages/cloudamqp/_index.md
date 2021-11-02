@@ -1,6 +1,6 @@
 ---
 title: CloudAMQP
-meta_desc: This page provides an overview of the CloudAMQP Provider for Pulumi.
+meta_desc: Provides an overview of the CloudAMQP Provider for Pulumi.
 layout: overview
 ---
 
@@ -96,14 +96,3 @@ class Program
 {{% /choosable %}}
 
 {{< /chooser >}}
-
-## Libraries
-
-The following packages are available in packager managers:
-
-* JavaScript/TypeScript: [`@pulumi/cloudamqp`](https://www.npmjs.com/package/@pulumi/cloudamqp)
-* Python: [`pulumi-cloudamqp`](https://pypi.org/project/pulumi-cloudamqp/)
-* Go: [`github.com/pulumi/pulumi-cloudamqp/sdk/v3/go/cloudamqp`](https://github.com/pulumi/pulumi-cloudamqp)
-* .NET: [`Pulumi.Cloudamqp`](https://www.nuget.org/packages/Pulumi.Cloudamqp)
-
-The CloudAMQP provider is open source and available in the [pulumi/pulumi-cloudamqp](https://github.com/pulumi/pulumi-cloudamqp) repo.

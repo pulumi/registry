@@ -6,7 +6,7 @@ layout: overview
 
 Easily create Azure ACR Registries that are replicated across Azure locations as a package available in all Pulumi languages.
 
-Example:
+## Example
 
 {{< chooser language "typescript,python,go" >}}
 
@@ -88,12 +88,3 @@ func main() {
 {{% /choosable %}}
 
 {{< /chooser >}}
-
-## SDK packages
-
-The AWS API Gateway provider is available as a package in all Pulumi languages:
-
-* JavaScript/TypeScript: [`@pulumi/aws-s3-replicated-bucket`](https://www.npmjs.com/package/@pulumi/aws-s3-replicated-bucket)
-* Python: [`pulumi-aws-s3-replicated-bucket`](https://pypi.org/project/pulumi-aws-s3-replicated-bucket/)
-* Go: [`github.com/pulumi/pulumi-aws-s3-replicated-bucket/sdk/go/aws`](https://github.com/pulumi/pulumi-aws-s3-replicated-bucket)
-* .NET: [`Pulumi.AwsS3ReplicatedBucket`](https://www.nuget.org/packages/Pulumi.AwsS3ReplicatedBucket)

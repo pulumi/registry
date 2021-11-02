@@ -1,6 +1,6 @@
 ---
 title: Kubernetes
-meta_desc: This page provides an overview of how Pulumi works with Kubernetes.
+meta_desc: Provides an overview of how Pulumi works with Kubernetes.
 
 layout: overview
 ---
@@ -38,19 +38,6 @@ The Kubernetes provider for Pulumi can be used to provision any resources availa
 ### Getting Started
 
 The quickest way to get started with Kubernetes is to follow the [Get Started]({{< relref "/docs/get-started/kubernetes" >}}) guide.
-
-See How-to guides for additional tutorials.
-
-### Libraries
-
-The following packages are available in package managers:
-
-- JavaScript/TypeScript: [`@pulumi/kubernetes`](https://www.npmjs.com/package/@pulumi/kubernetes)
-- Python: [`pulumi-kubernetes`](https://pypi.org/project/pulumi-kubernetes/)
-- Go: [`github.com/pulumi/pulumi-kubernetes/sdk/go/kubernetes`](https://github.com/pulumi/pulumi-kubernetes)
-- .NET: [`Pulumi.Kubernetes`](https://www.nuget.org/packages/Pulumi.Kubernetes)
-
-The Kubernetes provider is open source and available in the [pulumi/pulumi-kubernetes](https://github.com/pulumi/pulumi-kubernetes) repo.
 
 ## Additional Pulumi Packages for Kubernetes Users
 

@@ -1,6 +1,6 @@
 ---
 title: SignalFx
-meta_desc: This page provides an overview of the SignalFx Provider for Pulumi.
+meta_desc: Provides an overview of the SignalFx Provider for Pulumi.
 layout: overview
 ---
 
@@ -90,14 +90,3 @@ class Program
 {{% /choosable %}}
 
 {{< /chooser >}}
-
-## Libraries
-
-The following packages are available in packager managers:
-
-* JavaScript/TypeScript: [`@pulumi/signalfx`](https://www.npmjs.com/package/@pulumi/signalfx)
-* Python: [`pulumi-signalfx`](https://pypi.org/project/pulumi-signalfx/)
-* Go: [`github.com/pulumi/pulumi-signalfx/sdk/v5/go/signalfx`](https://github.com/pulumi/pulumi-signalfx)
-* .NET: [`Pulumi.Signalfx`](https://www.nuget.org/packages/Pulumi.Signalfx)
-
-The SignalFx provider is open source and available in the [pulumi/pulumi-signalfx](https://github.com/pulumi/pulumi-signalfx) repo.

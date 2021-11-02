@@ -1,6 +1,6 @@
 ---
 title: Hetzner Cloud
-meta_desc: This page provides an overview of the Hetzner Cloud Provider for Pulumi.
+meta_desc: Provides an overview of the Hetzner Cloud Provider for Pulumi.
 layout: overview
 ---
 
@@ -91,14 +91,3 @@ class Program
 {{% /choosable %}}
 
 {{< /chooser >}}
-
-## Libraries
-
-The following packages are available in packager managers:
-
-* JavaScript/TypeScript: [`@pulumi/hcloud`](https://www.npmjs.com/package/@pulumi/hcloud)
-* Python: [`pulumi-hcloud`](https://pypi.org/project/pulumi-hcloud/)
-* Go: [`github.com/pulumi/pulumi-hcloud/sdk/go/hcloud`](https://github.com/pulumi/pulumi-hcloud)
-* .NET: [`Pulumi.HCloud`](https://www.nuget.org/packages/Pulumi.HCloud)
-
-The Hetzner Cloud provider is open source and available in the [pulumi/pulumi-hcloud](https://github.com/pulumi/pulumi-hcloud) repo.

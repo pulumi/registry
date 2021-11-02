@@ -1,6 +1,6 @@
 ---
 title: DigitalOcean
-meta_desc: This page provides an overview of the DigitalOcean Provider for Pulumi.
+meta_desc: Provides an overview of the DigitalOcean Provider for Pulumi.
 layout: overview
 ---
 
@@ -96,14 +96,3 @@ class Program
 {{% /choosable %}}
 
 {{< /chooser >}}
-
-## Libraries
-
-The following packages are available in packager managers:
-
-* JavaScript/TypeScript: [`@pulumi/digitalocean`](https://www.npmjs.com/package/@pulumi/digitalocean)
-* Python: [`pulumi-digitalocean`](https://pypi.org/project/pulumi-digitalocean/)
-* Go: [`github.com/pulumi/pulumi-digitalocean/sdk/v4/go/digitalocean`](https://github.com/pulumi/pulumi-digitalocean)
-* .NET: [`Pulumi.DigitalOcean`](https://www.nuget.org/packages/Pulumi.DigitalOcean)
-
-The DigitalOcean provider is open source and available in the [pulumi/pulumi-digitalocean](https://github.com/pulumi/pulumi-digitalocean) repo.

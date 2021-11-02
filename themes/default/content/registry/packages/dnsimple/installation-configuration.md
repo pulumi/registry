@@ -1,20 +1,27 @@
 ---
 title: DNSimple Setup
-meta_desc: This page provides an overview on how to configure credentials for the Pulumi DNSimple Provider.
+meta_desc: Provides an overview on how to configure credentials for the Pulumi DNSimple Provider.
 layout: installation
 ---
 
 The Pulumi DNSimple provider uses the DNSimple SDK to manage and provision resources.
 
-> Pulumi relies on the DNSimple SDK to authenticate requests from your computer to DNSimple. Your credentials are never sent
-> to pulumi.com.
+## Installation
 
-The Pulumi DNSimple Provider needs to be configured with DNSimple credentials
+The DNSimple provider is available as a package in all Pulumi languages:
+
+* JavaScript/TypeScript: [`@pulumi/dnsimple`](https://www.npmjs.com/package/@pulumi/dnsimple)
+* Python: [`pulumi-dnsimple`](https://pypi.org/project/pulumi-dnsimple/)
+* Go: [`github.com/pulumi/pulumi-dnsimple/sdk/v3/go/dnsimple`](https://github.com/pulumi/pulumi-dnsimple)
+* .NET: [`Pulumi.Dnsimple`](https://www.nuget.org/packages/Pulumi.Dnsimple)
+
+## Configuring Credentials
+
+Pulumi relies on the DNSimple SDK to authenticate requests from your computer to DNSimple. Your credentials are never sent
+to pulumi.com. The Pulumi DNSimple Provider needs to be configured with DNSimple credentials
 before it can be used to create resources.
 
-### Configuring Credentials
-
-Once obtained, there are two ways to communicate your authorization tokens to Pulumi:
+Once the credetials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
 
 1. Set the environment variable `DNSIMPLE_TOKEN` and `DNSIMPLE_ACCOUNT`:
 
@@ -30,5 +37,5 @@ Once obtained, there are two ways to communicate your authorization tokens to Pu
     $ pulumi config set dnsimple:account YYYYYYYYYYYYYY --secret
     ```
 
-Remember to pass `--secret` when setting `dnsimple:token` and `dnsimple:account` so that they are properly encrypted. A full set of configuration parameters
-can be found listed on the [Project README](https://github.com/pulumi/pulumi-dnsimple/blob/master/README.md).
+Remember to pass `--secret` when setting `dnsimple:token` and `dnsimple:account` so that they are properly encrypted. The complete list of
+configuration parameters is in the [DNSimple provider README](https://github.com/pulumi/pulumi-dnsimple/blob/master/README.md).

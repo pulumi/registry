@@ -1,20 +1,28 @@
 ---
 title: Wavefront Setup
-meta_desc: This page provides an overview on how to configure credentials for the Pulumi Wavefront Provider.
+meta_desc: Provides an overview on how to configure credentials for the Pulumi Wavefront Provider.
 layout: installation
 ---
 
 The Pulumi Wavefront provider uses the Wavefront SDK to manage and provision resources.
 
-> Pulumi relies on the Wavefront SDK to authenticate requests from your computer to Wavefront. Your credentials are never sent
-> to pulumi.com.
+## Installation
 
+The Wavefront provider is available as a package in all Pulumi languages:
+
+* JavaScript/TypeScript: [`@pulumi/wavefront`](https://www.npmjs.com/package/@pulumi/wavefront)
+* Python: [`pulumi-wavefront`](https://pypi.org/project/pulumi-wavefront/)
+* Go: [`github.com/pulumi/pulumi-wavefront/sdk/go/wavefront`](https://github.com/pulumi/pulumi-wavefront)
+* .NET: [`Pulumi.Wavefront`](https://www.nuget.org/packages/Pulumi.Wavefront)
+
+## Configuring Credentials
+
+Pulumi relies on the Wavefront SDK to authenticate requests from your computer to Wavefront. Your credentials are never sent
+to pulumi.com.
 The Pulumi Wavefront Provider needs to be configured with Wavefront credentials
 before it can be used to create resources.
 
-### Configuring Credentials
-
-Once obtained, there are two ways to communicate your authorization tokens to Pulumi:
+Once the credetials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
 
 1. Set the environment variables for `WAVEFRONT_TOKEN` and `WAVEFRONT_ADDRESS`:
 
@@ -30,5 +38,5 @@ Once obtained, there are two ways to communicate your authorization tokens to Pu
     $ pulumi config set wavefront:address YYYYYYYYYYYYYY
     ```
 
-Remember to pass `--secret` when setting `wavefront:token` so that it is properly encrypted. A full set of configuration parameters
-can be found listed on the [Project README](https://github.com/pulumi/pulumi-wavefront/blob/master/README.md).
+Remember to pass `--secret` when setting `wavefront:token` so that it is properly encrypted. The complete list of
+configuration parameters is in the [Wavefront provider README](https://github.com/pulumi/pulumi-wavefront/blob/master/README.md).

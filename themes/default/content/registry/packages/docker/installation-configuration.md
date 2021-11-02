@@ -1,17 +1,26 @@
 ---
 title: Docker Setup
-meta_desc: This page provides an overview on how to configure the Pulumi Docker Provider.
+meta_desc: Provides an overview on how to configure the Pulumi Docker Provider.
 layout: installation
 ---
 
 The Pulumi Docker provider uses the Docker SDK to manage resources.
 
-> Pulumi relies on the Docker SDK to authenticate requests from your computer to Docker. Your credentials are never sent
-> to pulumi.com.
+## Installation
 
-### Configuring The Provider
+The Docker provider is available as a package in all Pulumi languages:
 
-Once obtained, there are two ways to communicate your configuration tokens to Pulumi:
+* JavaScript/TypeScript: [`@pulumi/docker`](https://www.npmjs.com/package/@pulumi/docker)
+* Python: [`pulumi-docker`](https://pypi.org/project/pulumi-docker/)
+* Go: [`github.com/pulumi/pulumi-docker/sdk/v3/go/docker`](https://github.com/pulumi/pulumi-docker)
+* .NET: [`Pulumi.Docker`](https://www.nuget.org/packages/Pulumi.Docker)
+
+## Configuring The Provider
+
+Pulumi relies on the Docker SDK to authenticate requests from your computer to Docker. Your credentials are never sent
+to pulumi.com.
+
+Once the credetials are obtained, there are two ways to communicate your configuration tokens to Pulumi:
 
 1. Set the environment variable `DOCKER_HOST`:
 

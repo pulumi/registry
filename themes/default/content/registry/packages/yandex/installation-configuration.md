@@ -1,20 +1,28 @@
 ---
 title: Yandex Cloud Setup
-meta_desc: This page provides an overview on how to configure credentials for the Pulumi Yandex Cloud Provider.
+meta_desc: Provides an overview on how to configure credentials for the Pulumi Yandex Cloud Provider.
 layout: installation
 ---
 
-The [Pulumi Yandex Cloud provider]({{< relref "./" >}}) uses the Yandex Cloud SDK to manage and provision resources.
+The Pulumi Yandex Cloud provider uses the Yandex Cloud SDK to manage and provision resources.
 
-> Pulumi relies on the Yandex Cloud SDK to authenticate requests from your computer to Yandex Cloud. Your credentials are never sent
-> to pulumi.com.
+## Installation
 
-The [Pulumi Yandex Cloud Provider]({{< relref "./" >}}) needs to be configured with Yandex Cloud credentials
+The Yandex provider is available as a package in all Pulumi languages:
+
+* JavaScript/TypeScript: [`@pulumi/yandex`](https://www.npmjs.com/package/@pulumi/yandex)
+* Python: [`pulumi-yandex`](https://pypi.org/project/pulumi-yandex/)
+* Go: [`github.com/pulumi/pulumi-yandex/sdk/go/yandex`](https://github.com/pulumi/pulumi-yandex)
+* .NET: [`Pulumi.Yandex`](https://www.nuget.org/packages/Pulumi.Yandex)
+
+## Configuring The Provider
+
+Pulumi relies on the Yandex Cloud SDK to authenticate requests from your computer to Yandex Cloud. Your credentials are never sent
+to pulumi.com.
+The Pulumi Yandex Cloud Provider needs to be configured with Yandex Cloud credentials
 before it can be used to create resources.
 
-### Configuring The Provider
-
-Once obtained, there are two ways to communicate your configuration to Pulumi:
+Once the credetials are obtained, there are two ways to communicate your configuration to Pulumi:
 
 1. Set the environment variables `YC_TOKEN` or `YC_SERVICE_ACCOUNT_KEY_FILE` and `YC_CLOUD_ID` and `YC_FOLDER_ID`:
 
@@ -32,5 +40,6 @@ Once obtained, there are two ways to communicate your configuration to Pulumi:
     $ pulumi config set yandex:yandex:folderId ZZZZZZ
     ```
 
-A full set of configuration parameters can be found listed on the [Project README](https://github.com/pulumi/pulumi-yandex/blob/master/README.md).
+The complete list of
+configuration parameters is in the [Yandex Cloud provider README](https://github.com/pulumi/pulumi-yandex/blob/master/README.md).
 Remember to pass `--secret` when setting `token` so that it is properly encrypted.

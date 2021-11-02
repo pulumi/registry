@@ -31,7 +31,7 @@ environments, particularly in CI, a Service Principal is recommended.
 
 ## CLI Authentication
 
-Simply login to the Azure CLI and Pulumi will automatically use your credentials:
+Login to the Azure CLI and Pulumi will automatically use your credentials:
 
 ```bash
 $ az login
@@ -67,7 +67,7 @@ Service Principal is the recommended way to connect Pulumi to Azure in a team or
 
 ### Configuring Authorization Tokens
 
-Once obtained, there are two ways to communicate your authorization tokens to Pulumi:
+Once the credetials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
 
 1. Set the environment variables `ARM_CLIENT_ID`, `ARM_CLIENT_SECRET` and `ARM_TENANT_ID` respectively
 

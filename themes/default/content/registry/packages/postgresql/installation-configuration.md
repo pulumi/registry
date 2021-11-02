@@ -5,10 +5,6 @@ layout: installation
 ---
 
 The Pulumi PostgreSQL provider uses the PostgreSQL SDK to manage and provision resources.
-Pulumi relies on the PostgreSQL SDK to authenticate requests from your computer to PostgreSQL. Your credentials are never sent
-to pulumi.com.
-The Pulumi PostgreSQL Provider needs to be configured with PostgreSQL credentials
-before it can be used to manage resources.
 
 ## Installation
 
@@ -20,6 +16,11 @@ The PostgreSQL provider is available as a package in all Pulumi languages:
 * .NET: [`Pulumi.Postgresql`](https://www.nuget.org/packages/Pulumi.Postgresql)
 
 ## Configuring Credentials
+
+Pulumi relies on the PostgreSQL SDK to authenticate requests from your computer to PostgreSQL. Your credentials are never sent
+to pulumi.com.
+The Pulumi PostgreSQL Provider needs to be configured with PostgreSQL credentials
+before it can be used to manage resources.
 
 In order to communicate your configuration details to Pulumi:
 

@@ -5,10 +5,6 @@ layout: installation
 ---
 
 The Pulumi Alibaba Cloud provider uses the Alibaba Cloud SDK to manage and provision resources.
-Pulumi relies on the Alibaba Cloud SDK to authenticate requests from your computer to Alibaba Cloud. Your credentials are never sent
-to pulumi.com.
-The Pulumi Alibaba Cloud Provider needs to be configured with Alibaba Cloud credentials
-before it can be used to create resources.
 
 ## Installation
 
@@ -21,7 +17,10 @@ The Alibaba Cloud provider is available as a package in all Pulumi languages:
 
 ## Configuring Credentials
 
-Once obtained, there are two ways to communicate your authorization tokens to Pulumi:
+Pulumi relies on the Alibaba Cloud SDK to authenticate requests from your computer to Alibaba Cloud. Your credentials are never sent
+to pulumi.com. The Pulumi Alibaba Cloud Provider needs to be configured with Alibaba Cloud credentials
+before it can be used to create resources.
+Once the credetials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
 
 1. Set the environment variables `ALICLOUD_ACCESS_KEY` and `ALICLOUD_SECRET_KEY`:
 

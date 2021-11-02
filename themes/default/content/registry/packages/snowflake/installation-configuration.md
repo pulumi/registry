@@ -31,7 +31,7 @@ The Snowflake provider support multiple ways to authenticate:
 
 ## Configuring Credentials
 
-Once obtained, there are two ways to communicate your authorization tokens to Pulumi:
+Once the credetials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
 
 1. Set the environment variables `SNOWFLAKE_ACCOUNT`, `SNOWFLAKE_REGION` and `SNOWFLAKE_USERNAME` with the correct combination of authentication variables:
 

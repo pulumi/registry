@@ -6,12 +6,6 @@ layout: installation
 
 The Pulumi CloudAMQP provider uses the CloudAMQP SDK to manage and provision resources.
 
-> Pulumi relies on the CloudAMQP SDK to authenticate requests from your computer to CloudAMQP. Your credentials are never sent
-> to pulumi.com.
-
-The Pulumi CloudAMQP Provider needs to be configured with CloudAMQP credentials
-before it can be used to create resources.
-
 ## Installation
 
 The CloudAMQP provider is available as a package in all Pulumi languages:
@@ -21,9 +15,11 @@ The CloudAMQP provider is available as a package in all Pulumi languages:
 * Go: [`github.com/pulumi/pulumi-cloudamqp/sdk/v3/go/cloudamqp`](https://github.com/pulumi/pulumi-cloudamqp)
 * .NET: [`Pulumi.Cloudamqp`](https://www.nuget.org/packages/Pulumi.Cloudamqp)
 
-### Configuring Credentials
+## Configuring Credentials
 
-Once obtained, there are two ways to communicate your authorization tokens to Pulumi:
+Pulumi relies on the CloudAMQP SDK to authenticate requests from your computer to CloudAMQP. Your credentials are never sent
+to pulumi.com. The Pulumi CloudAMQP Provider needs to be configured with CloudAMQP credentials
+before it can be used to create resources. Once the credetials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
 
 1. Set the environment variable `CLOUDAMQP_APIKEY`:
 

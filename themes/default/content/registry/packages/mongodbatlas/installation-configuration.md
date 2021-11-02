@@ -5,10 +5,6 @@ layout: installation
 ---
 
 The Pulumi MongoDB Atlas provider uses the MongoDB Atlas SDK to manage and provision resources.
-Pulumi relies on the MongoDB Atlas SDK to authenticate requests from your computer to MongoDB Atlas. Your credentials are never sent
-to pulumi.com.
-The Pulumi MongoDB Atlas Provider needs to be configured with MongoDB Atlas credentials
-before it can be used to manage resources.
 
 ## Installation
 
@@ -20,6 +16,10 @@ The MongoDB Atlas provider is available as a package in all Pulumi languages:
 * .NET: [`Pulumi.Mongodbatlas`](https://www.nuget.org/packages/Pulumi.Mongodbatlas)
 
 ## Configuring Credentials
+
+Pulumi relies on the MongoDB Atlas SDK to authenticate requests from your computer to MongoDB Atlas. Your credentials are never sent
+to pulumi.com. The Pulumi MongoDB Atlas Provider needs to be configured with MongoDB Atlas credentials
+before it can be used to manage resources.
 
 In order to communicate your configuration details to Pulumi:
 

@@ -5,10 +5,6 @@ layout: installation
 ---
 
 The Pulumi MySQL provider uses the MySQL SDK to manage and provision resources.
-Pulumi relies on the MySQL SDK to authenticate requests from your computer to MySQL. Your credentials are never sent
-to pulumi.com.
-The Pulumi MySQL Provider needs to be configured with MySQL credentials
-before it can be used to manage resources.
 
 ## Installation
 
@@ -20,6 +16,10 @@ The MySQL Atlas provider is available as a package in all Pulumi languages:
 * .NET: [`Pulumi.Mysql`](https://www.nuget.org/packages/Pulumi.Mysql)
 
 ## Configuring Credentials
+
+Pulumi relies on the MySQL SDK to authenticate requests from your computer to MySQL. Your credentials are never sent
+to pulumi.com. The Pulumi MySQL Provider needs to be configured with MySQL credentials
+before it can be used to manage resources.
 
 In order to communicate your configuration details to Pulumi:
 

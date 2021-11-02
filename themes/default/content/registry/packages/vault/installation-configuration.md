@@ -19,7 +19,7 @@ The HashiCorp Vault provider is available as a package in all Pulumi languages:
 
 ## Configuration
 
-Once obtained, there are two ways to communicate your configuration tokens to Pulumi:
+Once the credetials are obtained, there are two ways to communicate your configuration tokens to Pulumi:
 
 1. Set the environment variables `VAULT_ADDR` and `VAULT_TOKEN`:
 

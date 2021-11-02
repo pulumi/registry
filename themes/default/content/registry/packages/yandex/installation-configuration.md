@@ -21,7 +21,7 @@ The Yandex provider is available as a package in all Pulumi languages:
 
 ## Configuring The Provider
 
-Once obtained, there are two ways to communicate your configuration to Pulumi:
+Once the credetials are obtained, there are two ways to communicate your configuration to Pulumi:
 
 1. Set the environment variables `YC_TOKEN` or `YC_SERVICE_ACCOUNT_KEY_FILE` and `YC_CLOUD_ID` and `YC_FOLDER_ID`:
 

@@ -21,7 +21,7 @@ The Fastly provider is available as a package in all Pulumi languages:
 
 ## Configuring Credentials
 
-Once obtained, there are two ways to communicate your authorization tokens to Pulumi:
+Once the credetials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
 
 1. Set the environment variable `FASTLY_API_KEY`:
 

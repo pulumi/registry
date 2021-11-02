@@ -6,12 +6,6 @@ layout: installation
 
 The Pulumi Kafka provider uses the Kafka SDK to manage and provision resources.
 
-> Pulumi relies on the Kafka SDK to authenticate requests from your computer to Kafka. Your credentials are never sent
-> to pulumi.com.
-
-The Pulumi Kafka Provider needs to be configured with Kafka credentials
-before it can be used to create resources.
-
 ## Installation
 
 The Kafka Cloud provider is available as a package in all Pulumi languages:
@@ -22,6 +16,10 @@ The Kafka Cloud provider is available as a package in all Pulumi languages:
 * .NET: [`Pulumi.Kafka`](https://www.nuget.org/packages/Pulumi.Kafka)
 
 ## Configuring Credentials
+
+Pulumi relies on the Kafka SDK to authenticate requests from your computer to Kafka. Your credentials are never sent
+to pulumi.com. The Pulumi Kafka Provider needs to be configured with Kafka credentials
+before it can be used to create resources.
 
 In order to communicate your configuration details to Pulumi:
 

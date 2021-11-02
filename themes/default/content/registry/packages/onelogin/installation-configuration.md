@@ -4,9 +4,6 @@ meta_desc: Provides an overview on how to configure credentials for the Pulumi o
 layout: installation
 ---
 
-The Pulumi OneLogin Provider needs to be configured with OneLogin credentials
-before it can be used to create resources.
-
 ## Installation
 
 The OneLogin provider is available as a package in all Pulumi languages:
@@ -17,6 +14,9 @@ The OneLogin provider is available as a package in all Pulumi languages:
 * .NET: [`Pulumi.Onelogin`](https://www.nuget.org/packages/Pulumi.Onelogin)
 
 ## Configuring Credentials
+
+The Pulumi OneLogin Provider needs to be configured with OneLogin credentials
+before it can be used to create resources.
 
 You'll need admin access to a OneLogin account where you can create API credentials.
 Create a set of API credentials with manage all permission.

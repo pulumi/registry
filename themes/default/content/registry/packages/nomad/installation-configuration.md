@@ -19,7 +19,7 @@ The HashiCorp Nomad provider is available as a package in all Pulumi languages:
 
 ## Configuring The Provider
 
-Once obtained, there are two ways to communicate your configuration tokens to Pulumi:
+Once the credetials are obtained, there are two ways to communicate your configuration tokens to Pulumi:
 
 1. Set the environment variables `NOMAD_ADDR` and `NOMAD_TOKEN`:
 

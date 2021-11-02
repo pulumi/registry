@@ -8,7 +8,7 @@ The Pulumi Aiven provider uses the Aiven SDK to manage and provision resources.
 
 ## Installation
 
-The Avien provider is available as a package in all Pulumi languages:
+The Aiven provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/aiven`](https://www.npmjs.com/package/@pulumi/aiven)
 * Python: [`pulumi-aiven`](https://pypi.org/project/pulumi-aiven/)

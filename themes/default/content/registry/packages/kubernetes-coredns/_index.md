@@ -6,7 +6,7 @@ layout: overview
 
 Easily manage CoreDNS installations as a package available in all Pulumi languages.
 
-Example:
+## Example
 
 {{< chooser language "typescript,python" >}}
 

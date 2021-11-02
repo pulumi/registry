@@ -5,10 +5,6 @@ layout: installation
 ---
 
 The Pulumi PagerDuty provider uses the PagerDuty SDK to manage and provision resources.
-Pulumi relies on the PagerDuty SDK to authenticate requests from your computer to PagerDuty. Your credentials are never sent
-to pulumi.com.
-The Pulumi PagerDuty Provider needs to be configured with PagerDuty credentials
-before it can be used to create resources.
 
 ## Installation
 
@@ -20,6 +16,11 @@ The PagerDuty provider is available as a package in all Pulumi languages:
 * .NET: [`Pulumi.Pagerduty`](https://www.nuget.org/packages/Pulumi.Pagerduty)
 
 ## Configuring Credentials
+
+Pulumi relies on the PagerDuty SDK to authenticate requests from your computer to PagerDuty. Your credentials are never sent
+to pulumi.com.
+The Pulumi PagerDuty Provider needs to be configured with PagerDuty credentials
+before it can be used to create resources.
 
 Once the credetials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
 

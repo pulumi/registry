@@ -6,12 +6,6 @@ layout: installation
 
 The Pulumi Equinix Metal provider uses the Equinix Metal SDK to manage and provision resources.
 
-> Pulumi relies on the Equinix Metal SDK to authenticate requests from your computer to Equinix Metal. Your credentials are never sent
-> to pulumi.com.
-
-The Pulumi Equinix Metal Provider needs to be configured with Equinix Metal credentials
-before it can be used to create resources.
-
 ## Installation
 
 The Equinix Metal provider is available as a package in all Pulumi languages:
@@ -22,6 +16,10 @@ The Equinix Metal provider is available as a package in all Pulumi languages:
 * .NET: [`Pulumi.EquinixMetal`](https://www.nuget.org/packages/Pulumi.EquinixMetal)
 
 ## Configuring Credentials
+
+Pulumi relies on the Equinix Metal SDK to authenticate requests from your computer to Equinix Metal. Your credentials are never sent
+to pulumi.com. The Pulumi Equinix Metal Provider needs to be configured with Equinix Metal credentials
+before it can be used to create resources.
 
 Once the credetials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
 

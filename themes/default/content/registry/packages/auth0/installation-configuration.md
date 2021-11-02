@@ -38,4 +38,4 @@ before it can be used to create resources. Once the credetials are obtained, the
     ```
 
 Remember to pass `--secret` when setting `auth0:clientId` and `auth0:clientSecret` so that it is properly encrypted. The complete list of
-configuration parameters is in the [Auth0 Pprovider README](https://github.com/pulumi/pulumi-auth0/blob/master/README.md).
+configuration parameters is in the [Auth0 Provider README](https://github.com/pulumi/pulumi-auth0/blob/master/README.md).

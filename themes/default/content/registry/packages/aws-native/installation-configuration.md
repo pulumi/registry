@@ -13,10 +13,6 @@ layout: installation
 
 {{< aws-resource-note >}}
 
-To provision resources with the Pulumi AWS provider, you need to have AWS credentials. You can use the instructions on if you plan to use AWS credentials from a shared credentials file (which the AWS CLI usually manages for you) or from an environment variable. For other credential options, see the [AWS documentation](https://docs.aws.amazon.com/sdk-for-go/v1/developer-guide/configuring-sdk.html).
-
-**Your AWS credentials are never sent to Pulumi.com.** Pulumi uses the AWS SDK and the credentials in your environment to authenticate requests from your computer to AWS.
-
 ## Installation
 
 The AWS Native provider is available as a package in all Pulumi languages:
@@ -27,6 +23,10 @@ The AWS Native provider is available as a package in all Pulumi languages:
 * .NET: [`Pulumi.AwsNative`](https://www.nuget.org/packages/Pulumi.AwsNative)
 
 ## Setup
+
+To provision resources with the Pulumi AWS provider, you need to have AWS credentials. You can use the instructions on if you plan to use AWS credentials from a shared credentials file (which the AWS CLI usually manages for you) or from an environment variable. For other credential options, see the [AWS documentation](https://docs.aws.amazon.com/sdk-for-go/v1/developer-guide/configuring-sdk.html).
+
+Your AWS credentials are never sent to pulumi.com. Pulumi uses the AWS SDK and the credentials in your environment to authenticate requests from your computer to AWS.
 
 ### Get your credentials
 

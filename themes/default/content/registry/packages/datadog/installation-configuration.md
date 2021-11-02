@@ -6,12 +6,6 @@ layout: installation
 
 The Pulumi Datadog provider uses the Datadog SDK to manage and provision resources.
 
-> Pulumi relies on the Datadog SDK to authenticate requests from your computer to Datadog. Your credentials are never sent
-> to pulumi.com.
-
-The Pulumi Datadog Provider needs to be configured with Datadog credentials
-before it can be used to create resources.
-
 ## Installation
 
 The Datadog provider is available as a package in all Pulumi languages:
@@ -22,6 +16,10 @@ The Datadog provider is available as a package in all Pulumi languages:
 * .NET: [`Pulumi.Datadog`](https://www.nuget.org/packages/Pulumi.Datadog)
 
 ## Configuring Credentials
+
+Pulumi relies on the Datadog SDK to authenticate requests from your computer to Datadog. Your credentials are never sent
+to pulumi.com. The Pulumi Datadog Provider needs to be configured with Datadog credentials
+before it can be used to create resources.
 
 Once the credetials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
 

@@ -6,7 +6,7 @@ layout: overview
 
 Easily create a globally load-balanced Google Cloud Run application using this component, which is available in all Pulumi languages.
 
-Example:
+## Example
 
 {{< chooser language "typescript,python,go" >}}
 

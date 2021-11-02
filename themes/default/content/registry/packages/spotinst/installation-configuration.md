@@ -5,8 +5,6 @@ layout: installation
 ---
 
 The Pulumi Spotinst provider uses the Spotinst SDK to manage resources.
-Pulumi relies on the Spotinst SDK to authenticate requests from your computer to Spotinst. Your credentials are never sent
-to pulumi.com.
 
 ## Installation
 
@@ -18,6 +16,9 @@ The Spotinst provider is available as a package in all Pulumi languages:
 * .NET: [`Pulumi.Spotinst`](https://www.nuget.org/packages/Pulumi.Spotinst)
 
 ## Configuration
+
+Pulumi relies on the Spotinst SDK to authenticate requests from your computer to Spotinst. Your credentials are never sent
+to pulumi.com.
 
 Once the credetials are obtained, there are two ways to communicate your configuration tokens to Pulumi:
 

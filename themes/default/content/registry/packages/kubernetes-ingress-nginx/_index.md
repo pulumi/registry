@@ -6,7 +6,7 @@ layout: overview
 
 Easily manage NGINX Ingress Controller installations as a package available in all Pulumi languages.
 
-Example:
+## Example
 
 {{< chooser language "typescript,python" >}}
 

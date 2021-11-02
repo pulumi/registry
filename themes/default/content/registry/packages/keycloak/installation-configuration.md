@@ -5,10 +5,6 @@ layout: installation
 ---
 
 The Pulumi Keycloak provider uses the Keycloak SDK to manage and provision resources.
-Pulumi relies on the Keycloak SDK to authenticate requests from your computer to Keycloak. Your credentials are never sent
-to pulumi.com.
-The Pulumi Keycloak Provider needs to be configured with Keycloak credentials
-before it can be used to create resources.
 
 ## Installation
 
@@ -20,6 +16,11 @@ The Keycloak provider is available as a package in all Pulumi languages:
 * .NET: [`Pulumi.Keycloak`](https://www.nuget.org/packages/Pulumi.Keycloak)
 
 ## Configuring Credentials
+
+Pulumi relies on the Keycloak SDK to authenticate requests from your computer to Keycloak. Your credentials are never sent
+to pulumi.com.
+The Pulumi Keycloak Provider needs to be configured with Keycloak credentials
+before it can be used to create resources.
 
 Once the credetials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
 

@@ -5,10 +5,6 @@ layout: installation
 ---
 
 The Pulumi Rancher2 provider uses the Rancher2 SDK to manage and provision resources.
-Pulumi relies on the Rancher2 SDK to authenticate requests from your computer to Rancher2. Your credentials are never sent
-to pulumi.com.
-The Pulumi Rancher2 Provider needs to be configured with Rancher2 credentials
-before it can be used to create resources.
 
 ## Installation
 
@@ -20,6 +16,11 @@ The Rancher2 provider is available as a package in all Pulumi languages:
 * .NET: [`Pulumi.Rancher2`](https://www.nuget.org/packages/Pulumi.Rancher2)
 
 ## Configuring Credentials
+
+Pulumi relies on the Rancher2 SDK to authenticate requests from your computer to Rancher2. Your credentials are never sent
+to pulumi.com.
+The Pulumi Rancher2 Provider needs to be configured with Rancher2 credentials
+before it can be used to create resources.
 
 Once the credetials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
 

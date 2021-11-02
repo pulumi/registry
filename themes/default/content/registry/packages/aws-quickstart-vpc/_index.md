@@ -6,7 +6,7 @@ layout: overview
 
 Easily create an AWS Virtual Private Cloud (VPC) using this Pulumi component based on the AWS QuickStart VPC guide.
 
-Example:
+## Example
 
 {{< chooser language "typescript" >}}
 

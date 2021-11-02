@@ -5,10 +5,6 @@ layout: installation
 ---
 
 The Pulumi Snowflake provider uses the Snowflake SDK to manage and provision resources.
-Pulumi relies on the Snowflake SDK to authenticate requests from your computer to Snowflake. Your credentials are never sent
-to pulumi.com.
-The Pulumi Snowflake Provider needs to be configured with Snowflake credentials
-before it can be used to create resources.
 
 ## Installation
 
@@ -30,6 +26,11 @@ The Snowflake provider support multiple ways to authenticate:
 * Private Key
 
 ## Configuring Credentials
+
+Pulumi relies on the Snowflake SDK to authenticate requests from your computer to Snowflake. Your credentials are never sent
+to pulumi.com.
+The Pulumi Snowflake Provider needs to be configured with Snowflake credentials
+before it can be used to create resources.
 
 Once the credetials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
 

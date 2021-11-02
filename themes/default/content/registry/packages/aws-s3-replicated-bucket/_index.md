@@ -6,7 +6,7 @@ layout: overview
 
 Easily create AWS S3 buckets that are replicated across AWS regions as a package available in all Pulumi languages.
 
-Example:
+## Example
 
 {{< chooser language "typescript,python,go,csharp" >}}
 

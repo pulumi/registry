@@ -4,11 +4,7 @@ meta_desc: Provides an overview on how to configure credentials for the Pulumi K
 layout: installation
 ---
 
-The [Pulumi Kong provider]({{< relref "./" >}}) uses the Kong SDK to manage and provision resources.
-Pulumi relies on the Kong SDK to authenticate requests from your computer to Kong. Your credentials are never sent
-to pulumi.com.
-The [Pulumi Kong Provider]({{< relref "./" >}}) needs to be configured with Kong credentials
-before it can be used to create resources.
+The Pulumi Kong provider uses the Kong SDK to manage and provision resources.
 
 ## Installation
 
@@ -20,6 +16,11 @@ The Kong provider is available as a package in all Pulumi languages:
 * .NET: [`Pulumi.Kong`](https://www.nuget.org/packages/Pulumi.Kong)
 
 ## Configuring Credentials
+
+Pulumi relies on the Kong SDK to authenticate requests from your computer to Kong. Your credentials are never sent
+to pulumi.com.
+The Pulumi Kong Provider needs to be configured with Kong credentials
+before it can be used to create resources.
 
 Once the credetials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
 

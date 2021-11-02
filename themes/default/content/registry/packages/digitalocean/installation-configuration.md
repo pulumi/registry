@@ -6,12 +6,6 @@ layout: installation
 
 The Pulumi DigitalOcean provider uses the DigitalOcean SDK to manage and provision resources.
 
-> Pulumi relies on the DigitalOcean SDK to authenticate requests from your computer to DigitalOcean. Your credentials are never sent
-> to pulumi.com.
-
-The Pulumi DigitalOcean Provider needs to be configured with DigitalOcean credentials
-before it can be used to create resources.
-
 ## Installation
 
 The DigitalOcean provider is available as a package in all Pulumi languages:
@@ -22,6 +16,10 @@ The DigitalOcean provider is available as a package in all Pulumi languages:
 * .NET: [`Pulumi.DigitalOcean`](https://www.nuget.org/packages/Pulumi.DigitalOcean)
 
 ## Configuring Credentials
+
+Pulumi relies on the DigitalOcean SDK to authenticate requests from your computer to DigitalOcean. Your credentials are never sent
+to pulumi.com. The Pulumi DigitalOcean Provider needs to be configured with DigitalOcean credentials
+before it can be used to create resources.
 
 Once the credetials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
 

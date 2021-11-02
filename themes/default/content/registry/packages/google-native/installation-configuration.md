@@ -4,14 +4,6 @@ meta_desc: How to set up credentials to use the Pulumi Google Native Provider an
 layout: installation
 ---
 
-To provision resources with the Pulumi Google Cloud Provider, you need to have Google credentials.
-
-{{% configure-gcp %}}
-
-{{% notes "info" %}}
-If you are using Pulumi in an non-interactive setting (such as a CI/CD system) you will need to [configure and use a service account]({{< relref "service-account" >}}) instead.
-{{% /notes %}}
-
 ## Installation
 
 The Google Native provider is available as a package in all Pulumi languages:
@@ -20,3 +12,13 @@ The Google Native provider is available as a package in all Pulumi languages:
 * Python: [`pulumi-google-native`](https://pypi.org/project/pulumi-google-native/)
 * Go: [`github.com/pulumi/pulumi-google-native/sdk/go/google`](https://github.com/pulumi/pulumi-google-native)
 * .NET: [`Pulumi.GoogleNative`](https://www.nuget.org/packages/Pulumi.GoogleNative)
+
+## Configuration
+
+To provision resources with the Pulumi Google Cloud Provider, you need to have Google credentials.
+
+{{% configure-gcp %}}
+
+{{% notes "info" %}}
+If you are using Pulumi in an non-interactive setting (such as a CI/CD system) you will need to [configure and use a service account]({{< relref "service-account" >}}) instead.
+{{% /notes %}}

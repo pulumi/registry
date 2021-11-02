@@ -4,11 +4,7 @@ meta_desc: Provides an overview on how to configure credentials for the Pulumi Y
 layout: installation
 ---
 
-The [Pulumi Yandex Cloud provider]({{< relref "./" >}}) uses the Yandex Cloud SDK to manage and provision resources.
-Pulumi relies on the Yandex Cloud SDK to authenticate requests from your computer to Yandex Cloud. Your credentials are never sent
-to pulumi.com.
-The [Pulumi Yandex Cloud Provider]({{< relref "./" >}}) needs to be configured with Yandex Cloud credentials
-before it can be used to create resources.
+The Pulumi Yandex Cloud provider uses the Yandex Cloud SDK to manage and provision resources.
 
 ## Installation
 
@@ -20,6 +16,11 @@ The Yandex provider is available as a package in all Pulumi languages:
 * .NET: [`Pulumi.Yandex`](https://www.nuget.org/packages/Pulumi.Yandex)
 
 ## Configuring The Provider
+
+Pulumi relies on the Yandex Cloud SDK to authenticate requests from your computer to Yandex Cloud. Your credentials are never sent
+to pulumi.com.
+The Pulumi Yandex Cloud Provider needs to be configured with Yandex Cloud credentials
+before it can be used to create resources.
 
 Once the credetials are obtained, there are two ways to communicate your configuration to Pulumi:
 

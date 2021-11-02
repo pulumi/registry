@@ -19,7 +19,9 @@ The Akamai provider is available as a package in all Pulumi languages:
 
 Pulumi relies on the Akamai SDK to authenticate requests from your computer to Akamai. Your credentials are never sent
 to pulumi.com. The Pulumi Akamai Provider needs to be configured with Akamai credentials
-before it can be used to create resources. Once the credentials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
+before it can be used to create resources.
+
+Once the credentials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
 
 1. Create environment variables in the format:
 

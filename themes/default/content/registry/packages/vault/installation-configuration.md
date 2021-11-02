@@ -5,8 +5,6 @@ layout: installation
 ---
 
 The Pulumi Vault provider uses the Vault SDK to manage resources.
-Pulumi relies on the Vault SDK to authenticate requests from your computer to HashiCorp Vault. Your credentials are never sent
-to pulumi.com.
 
 ## Installation
 
@@ -18,6 +16,9 @@ The HashiCorp Vault provider is available as a package in all Pulumi languages:
 * .NET: [`Pulumi.Vault`](https://www.nuget.org/packages/Pulumi.Vault)
 
 ## Configuration
+
+Pulumi relies on the Vault SDK to authenticate requests from your computer to HashiCorp Vault. Your credentials are never sent
+to pulumi.com.
 
 Once the credetials are obtained, there are two ways to communicate your configuration tokens to Pulumi:
 

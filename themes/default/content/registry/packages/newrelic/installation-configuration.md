@@ -5,10 +5,6 @@ layout: installation
 ---
 
 The Pulumi New Relic provider uses the New Relic SDK to manage and provision resources.
-Pulumi relies on the New Relic SDK to authenticate requests from your computer to New Relic. Your credentials are never sent
-to pulumi.com.
-The Pulumi New Relic Provider needs to be configured with New Relic credentials
-before it can be used to create resources.
 
 ## Installation
 
@@ -20,6 +16,11 @@ The New Relic provider is available as a package in all Pulumi languages:
 * .NET: [`Pulumi.Newrelic`](https://www.nuget.org/packages/Pulumi.Newrelic)
 
 ## Configuring Credentials
+
+Pulumi relies on the New Relic SDK to authenticate requests from your computer to New Relic. Your credentials are never sent
+to pulumi.com.
+The Pulumi New Relic Provider needs to be configured with New Relic credentials
+before it can be used to create resources.
 
 You can find information in the [New Relic](https://docs.newrelic.com/docs/apis/intro-apis/new-relic-api-keys/) docs
 regarding how to create the specific keys. Once the credetials are obtained, there are two ways to communicate your authorization tokens to Pulumi:

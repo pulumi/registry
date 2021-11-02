@@ -5,8 +5,6 @@ layout: installation
 ---
 
 The Pulumi Okta provider uses the Okta SDK to manage resources.
-Pulumi relies on the Okta SDK to authenticate requests from your computer to Okta. Your credentials are never sent
-to pulumi.com.
 
 ## Installation
 
@@ -18,6 +16,9 @@ The Okta provider is available as a package in all Pulumi languages:
 * .NET: [`Pulumi.Okta`](https://www.nuget.org/packages/Pulumi.Okta)
 
 ## Configuring The Provider
+
+Pulumi relies on the Okta SDK to authenticate requests from your computer to Okta. Your credentials are never sent
+to pulumi.com.
 
 Once the credetials are obtained, there are two ways to communicate your configuration tokens to Pulumi:
 

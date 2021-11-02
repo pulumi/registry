@@ -6,12 +6,6 @@ layout: installation
 
 The Pulumi F5 BIG-IP provider uses the F5 BIG-IP SDK to manage and provision resources.
 
-> Pulumi relies on the F5 BIG-IP SDK to authenticate requests from your computer to the resources. Your credentials are never sent
-> to pulumi.com.
-
-The Pulumi F5 BIG-IP Provider needs to be configured with F5 BIG-IP credentials
-before it can be used to create resources.
-
 ## Installation
 
 The F5 BIG-IP provider is available as a package in all Pulumi languages:
@@ -22,6 +16,10 @@ The F5 BIG-IP provider is available as a package in all Pulumi languages:
 * .NET: [`Pulumi.F5bigip`](https://www.nuget.org/packages/Pulumi.F5bigip)
 
 ## Configuring Credentials
+
+Pulumi relies on the F5 BIG-IP SDK to authenticate requests from your computer to the resources. Your credentials are never sent
+to pulumi.com. The Pulumi F5 BIG-IP Provider needs to be configured with F5 BIG-IP credentials
+before it can be used to create resources.
 
 Once the credetials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
 

@@ -6,12 +6,6 @@ layout: installation
 
 The Pulumi DNSimple provider uses the DNSimple SDK to manage and provision resources.
 
-> Pulumi relies on the DNSimple SDK to authenticate requests from your computer to DNSimple. Your credentials are never sent
-> to pulumi.com.
-
-The Pulumi DNSimple Provider needs to be configured with DNSimple credentials
-before it can be used to create resources.
-
 ## Installation
 
 The DNSimple provider is available as a package in all Pulumi languages:
@@ -22,6 +16,10 @@ The DNSimple provider is available as a package in all Pulumi languages:
 * .NET: [`Pulumi.Dnsimple`](https://www.nuget.org/packages/Pulumi.Dnsimple)
 
 ## Configuring Credentials
+
+Pulumi relies on the DNSimple SDK to authenticate requests from your computer to DNSimple. Your credentials are never sent
+to pulumi.com. The Pulumi DNSimple Provider needs to be configured with DNSimple credentials
+before it can be used to create resources.
 
 Once the credetials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
 

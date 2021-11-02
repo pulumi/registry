@@ -5,8 +5,6 @@ layout: installation
 ---
 
 The [Pulumi Nomad provider]({{< relref "./" >}}) uses the Nomad SDK to manage resources.
-Pulumi relies on the Nomad SDK to authenticate requests from your computer to HashiCorp Nomad. Your credentials are never sent
-to pulumi.com.
 
 ## Installation
 
@@ -18,6 +16,9 @@ The HashiCorp Nomad provider is available as a package in all Pulumi languages:
 * .NET: [`Pulumi.Nomad`](https://www.nuget.org/packages/Pulumi.Nomad)
 
 ## Configuring The Provider
+
+Pulumi relies on the Nomad SDK to authenticate requests from your computer to HashiCorp Nomad. Your credentials are never sent
+to pulumi.com.
 
 Once the credetials are obtained, there are two ways to communicate your configuration tokens to Pulumi:
 

@@ -6,7 +6,7 @@ layout: overview
 
 Easily create Azure ACR Registries that are replicated across Azure locations as a package available in all Pulumi languages.
 
-Example:
+## Example
 
 {{< chooser language "typescript,python,go" >}}
 

@@ -5,10 +5,6 @@ layout: installation
 ---
 
 The Pulumi Venafi provider uses the Venafi SDK to manage and provision resources.
-Pulumi relies on the Venafi SDK to authenticate requests from your computer to Venafi. Your credentials are never sent
-to pulumi.com.
-The Pulumi Venafi provider needs to be configured with Venafi credentials
-before it can be used to create resources.
 
 ## Installation
 
@@ -20,6 +16,11 @@ The Venafi provider is available as a package in all Pulumi languages:
 * .NET: [`Pulumi.Venafi`](https://www.nuget.org/packages/Pulumi.Venafi)
 
 ## Configuring Credentials
+
+Pulumi relies on the Venafi SDK to authenticate requests from your computer to Venafi. Your credentials are never sent
+to pulumi.com.
+The Pulumi Venafi provider needs to be configured with Venafi credentials
+before it can be used to create resources.
 
 The complete list of
 configuration parameters is in the [Pulumi Venafi provider README](https://github.com/pulumi/pulumi-venafi/blob/master/README.md). But here

@@ -5,10 +5,6 @@ layout: installation
 ---
 
 The Pulumi SumoLogic provider uses the SumoLogic SDK to manage and provision resources.
-Pulumi relies on the SumoLogic SDK to authenticate requests from your computer to SumoLogic. Your credentials are never sent
-to pulumi.com.
-The Pulumi SumoLogic Provider needs to be configured with SumoLogic credentials
-before it can be used to create resources.
 
 ## Installation
 
@@ -20,6 +16,11 @@ The SumoLogic provider is available as a package in all Pulumi languages:
 * .NET: [`Pulumi.SumoLogic`](https://www.nuget.org/packages/Pulumi.SumoLogic)
 
 ## Configuring Credentials
+
+Pulumi relies on the SumoLogic SDK to authenticate requests from your computer to SumoLogic. Your credentials are never sent
+to pulumi.com.
+The Pulumi SumoLogic Provider needs to be configured with SumoLogic credentials
+before it can be used to create resources.
 
 Once the credetials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
 

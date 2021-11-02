@@ -5,10 +5,6 @@ layout: installation
 ---
 
 The Pulumi Mailgun provider uses the Mailgun SDK to manage and provision resources.
-Pulumi relies on the Mailgun SDK to authenticate requests from your computer to Mailgun. Your credentials are never sent
-to pulumi.com.
-The Pulumi Mailgun Provider needs to be configured with Mailgun credentials
-before it can be used to create resources.
 
 ## Installation
 
@@ -20,6 +16,11 @@ The Mailgun provider is available as a package in all Pulumi languages:
 * .NET: [`Pulumi.Mailgun`](https://www.nuget.org/packages/Pulumi.Mailgun)
 
 ## Configuring Credentials
+
+Pulumi relies on the Mailgun SDK to authenticate requests from your computer to Mailgun. Your credentials are never sent
+to pulumi.com.
+The Pulumi Mailgun Provider needs to be configured with Mailgun credentials
+before it can be used to create resources.
 
 Once the credetials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
 

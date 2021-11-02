@@ -34,4 +34,4 @@ before it can be used to create resources. Once the credentials obtained, there 
     ```
 
 Remember to pass `--secret` when setting `aiven:apiToken` so that it is properly encrypted. The complete list of
-configuration parameters is in the [Avien Provider README](https://github.com/pulumi/pulumi-aiven/blob/master/README.md).
+configuration parameters is in the [Aiven Provider README](https://github.com/pulumi/pulumi-aiven/blob/master/README.md).

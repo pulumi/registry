@@ -5,9 +5,6 @@ layout: installation
 ---
 
 The Pulumi GitHub provider uses the GitHub SDK to manage and provision resources.
-Pulumi relies on the GitHub SDK to authenticate requests from your computer to GitHub. Your credentials are never sent to pulumi.com.
-The Pulumi GitHub Provider needs to be configured with GitHub credentials
-before it can be used to create resources.
 
 ## Installation
 
@@ -19,6 +16,10 @@ The GitHub provider is available as a package in all Pulumi languages:
 * .NET: [`Pulumi.Github`](https://www.nuget.org/packages/Pulumi.Github)
 
 ## Configuring Credentials
+
+Pulumi relies on the GitHub SDK to authenticate requests from your computer to GitHub. Your credentials are never sent to pulumi.com.
+The Pulumi GitHub Provider needs to be configured with GitHub credentials
+before it can be used to create resources.
 
 Once the credetials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
 

@@ -5,10 +5,6 @@ layout: installation
 ---
 
 The Pulumi RabbitMQ provider uses the RabbitMQ SDK to manage and provision resources.
-Pulumi relies on the RabbitMQ SDK to authenticate requests from your computer to RabbitMQ. Your credentials are never sent
-to pulumi.com.
-The Pulumi RabbitMQ Provider needs to be configured with RabbitMQ credentials
-before it can be used to create resources.
 
 ## Installation
 
@@ -20,6 +16,11 @@ The RabbitMQ provider is available as a package in all Pulumi languages:
 * .NET: [`Pulumi.Rabbitmq`](https://www.nuget.org/packages/Pulumi.Rabbitmq)
 
 ## Configuring Credentials
+
+Pulumi relies on the RabbitMQ SDK to authenticate requests from your computer to RabbitMQ. Your credentials are never sent
+to pulumi.com.
+The Pulumi RabbitMQ Provider needs to be configured with RabbitMQ credentials
+before it can be used to create resources.
 
 Once the credetials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
 

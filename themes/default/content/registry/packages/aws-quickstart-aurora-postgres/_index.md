@@ -6,7 +6,7 @@ layout: overview
 
 Easily create AWS Aurora Postgres Cluster based on the AWS QuickStart Aurora Postgres guide as a package available in all Pulumi languages.
 
-Example:
+## Example
 
 {{< chooser language "typescript" >}}
 

@@ -8,7 +8,7 @@
                     <div class="lg:flex">
                         {{ partial "registry/package/how-to-guides/breadcrumb.html" . }}
                     </div>
-                    <h1 class="text-3xl mt-5">{{ .Params.h1 }}</h1>
+                    <h1 class="text-3xl mt-5">{{ cond (isset .Params "h1") .Params.h1 .Params.title }}</h1>
                 {{ end }}
 
                 {{ .Content }}

@@ -1,4 +1,4 @@
-# Registry
+# registry
 
 [Pulumi Registry](https://pulumi.com/registry) is the global index of everything you can do with Pulumi.
 
@@ -8,31 +8,62 @@ We’re always eager to expand that index with new [Pulumi Packages](https://www
 
 ## About this repository
 
-This repository is a [Hugo module](https://gohugo.io/hugo-modules/) that doubles as a development server to make it easier to work on the pages that make up Pulumi Registry. It contains most of the Hugo `content` and `layouts` files comprising what you see at https://pulumi.com/registry -- but not everything. A few things you won't find in this repository include:
+This repository is consumed by https://github.com/pulumi/docs to produce the website you see at https://pulumi.com. If you're interested in contributing some documentation for a Pulumi package, you've come to the right place! 🙌
+
+This repository is a [Hugo module](https://gohugo.io/hugo-modules/) that doubles as a development server to make it easier to work on the pages that make up Pulumi Registry. It contains most of the Hugo `content` and `layouts` files comprising what you see at https://pulumi.com/registry. **It does not contain every page of the Pulumi website**, because many of those pages (e.g., those comprising our CLI and SDK docs) are generated from source code, so they aren't meant to be edited by humans directly.
+
+Because of this, many of the links you follow when browsing around on the development server (to paths underneath `/docs/reference` for example) will fail to resolve because their content files are checked into a different repository. When we build the Pulumi website, we merge this module along with any others into a single build artifact, but when you're working within an individual module like this one, you may find you're unable to reach certain pages or verify the links you may want to make to them.
+
+See below to learn more about contributing, submitting pull requests, merging, and releasing.
+
+### What's in this repo
+
+* Hand-authored, Registry-specific content and documentation, including package overview pages and install guides.
+* Registry-specific Hugo module components (layouts, partials, shortcodes, data).
+
+### What's not in this repo
 
 * Package-level API navigation, documentation, and how-to guides. These files are still built and checked into the [pulumi/docs](https://github.com/pulumi/docs) repository. (We're [working on bringing them into this repository](https://github.com/pulumi/registry/issues/237), though.)
+* Generated documentation for the Pulumi CLI and SDK. You'll find this at https://github.com/pulumi/docs.
+* CSS and JavaScript source code. You'll find these at https://github.com/pulumi/theme.
+* Most content and layouts for pulumi.com. You'll find these at https://github.com/pulumi/pulumi-hugo.
+* Templates for generating package documentation. You'll find these at https://github.com/pulumi/pulumi.
 
-* JavaScript, CSS, and web components. We build the JavaScript and CSS bundles that power the Pulumi website (and therefore the Registry) in the [pulumi/theme](https://github.com/pulumi/theme) repository.
+## Contributing
 
-* Layouts and content for pulumi.com marketing pages, CLI docs, the blog, etc., all of which are managed in the [pulumi/pulumi-hugo](https://github.com/pulumi/pulumi-hugo) repository.
+Before you get started, be sure to read the [contributing guide](CONTRIBUTING.md) and review our [code of conduct](CODE_OF_CONDUCT.md).
 
-    <img src="https://user-images.githubusercontent.com/274700/139131567-b8e3c43d-6407-4638-ae4e-4ad3f3794d89.png" width="60%">
+## Toolchain
 
-You can, however, develop locally with this repository using content from these other Hugo-module repositories, either by loading their content remotely or pointing your Hugo development server to local clones of them. More on this below.
+We build the Pulumi website statically with Hugo, manage our Node.js dependencies with Yarn, and write most of our documentation in Markdown. Below is a list of the tools you'll need to run the website locally:
 
-## Using this repository
+* [Go](https://golang.org/)
+* [Hugo](https://gohugo.io)
+* [Node.js](https://nodejs.org/en/)
+* [Yarn](https://classic.yarnpkg.com/en/)
 
-### Installing dependencies
+### CSS and JavaScript Tools
 
-First, run `make ensure` to check for the appropriate tools, versions, and install any dependencies. The script will let you know if you're missing anything important.
+We also use a handful of tools for compiling and managing our CSS and JavaScript assets, including:
+
+* [Sass](https://sass-lang.com/)
+* [TailwindCSS](https://tailwindcss.com/)
+* [Stencil.js](https://stenciljs.com/)
+* [TypeScript](https://www.typescriptlang.org/)
+
+You don't need to install these tools individually or globally; the scripts below will handle everything for you. But if you'd like to contribute any CSS or JavaScript, you'll probably want to understand how to work with each of these tools as well.
+
+## Installing prerequisites
+
+Run `make ensure` to check for the appropriate tools and versions and install any dependencies. The script will let you know if you're missing anything important.
 
 ```
 make ensure
 ```
 
-### Running Hugo locally
+## Running the development server
 
-Once you've run `make ensure` successfully, you're ready to run the development server:
+Once you've run `make ensure` successfully, you're ready to run the development server. If you're only planning on writing Markdown or working with Hugo layouts, this command should be all you need:
 
 ```
 make serve
@@ -47,7 +78,7 @@ When you do this, Hugo will load the latest versions of:
 
 ### Developing alongside another Hugo module
 
-If you want to develop another module alongside this one -- e.g., add a new web component to use in the Registry, or to make changes to Registry-specific CSS -- you can point your development server to a local clone of [pulumi/theme](https://github.com/pulumi/theme). To do that, first clone the repository, then add a `replace` line to the `go.mod` file at the root of _this_ repository to override the existing reference to `pulumi/theme` temporarily. For instance:
+If you want to develop another module alongside this one -- e.g., to make changes to Registry-specific CSS -- you can point your development server to a local clone of that module. To do so, first clone the repository you want to use, then add a `replace` line to the `go.mod` file at the root of _this_ repository to override the existing reference to the module temporarily. For instance, to make changes to [pulumi/theme](https://github.com/pulumi/theme) as you develop in this repo:
 
 ```
 module github.com/pulumi/pulumi-hugo
@@ -66,7 +97,7 @@ replace github.com/pulumi/theme => ../theme
 
 Be sure to remove the `replace` line before you commit.
 
-### Linking to pages that don't exist in this repository
+### Linking to pages that aren't in this repository
 
 If you want to link to a page that exists on https://pulumi.com but not in this repository, you can still use a [Hugo `relref`](https://gohugo.io/content-management/shortcodes/#ref-and-relref) in the usual way -- you'll just need to make sure the path you're linking to does exist (or will exist by the time you merge your change). For example, to add a link pointing to the [Pulumi CLI documentation](https://www.pulumi.com/docs/reference/cli/) (which does not exist in this repository), you'd use:
 
@@ -94,9 +125,25 @@ rm -rf ./themes/default/content/registry/packages/aws/api-docs/
 rm -f ./themes/default/static/registry/packages/navs/aws.json
 ```
 
-## Submitting, merging and releasing
+## Linting and testing
 
-When you're ready to submit a pull request, make sure you've removed anything that doesn't seem to belong (`go.mod`/`go.sum` changes, content from pulumi/docs, etc.) and submit the PR in the usual way.
+To check your code and your Markdown files for problems before submitting, run:
+
+```
+make lint test
+```
+
+## Tidying up
+
+To clear away any module caches or build artifacts, run:
+
+```
+make clean
+```
+
+## Submitting and merging pull requests
+
+When you're ready to submit a pull request, make sure you've removed anything that doesn't seem to belong (`go.mod`/`go.sum` changes, content from pulumi/docs, etc.) and [submit the PR](pulls) in the usual way.
 
 If you're doing work in another repository that's associated with the changes in your PR, you can "pin" your PR branch to another module repository branch by pointing Hugo to that branch. To do that, use `hugo mod get` and pass a reference to the target branch:
 
@@ -107,3 +154,7 @@ hugo mod get github.com/pulumi/theme@my-special-branch
 This will modify `go.mod` and `go.sum` accordingly and result in a PR preview that incorporates your changes from the other branch. Just be sure to remove these changes before you're ready to merge.
 
 Once your PR is approved and merged into the default branch of this repository, an automated process that runs on [pulumi/docs](https://github.com/pulumi/docs) will detect your changes and produce a PR and integration build containing content from all other Hugo modules. Once that PR build completes and is approved and merged into pulumi/docs, your changes will be deployed to https://pulumi.com.
+
+<p align="center">
+    <img src="https://user-images.githubusercontent.com/274700/139970838-36931fe4-451c-4cd9-ae72-1178a6ef1537.png" width="75%">
+</p>

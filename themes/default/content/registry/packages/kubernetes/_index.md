@@ -1,6 +1,6 @@
 ---
 title: Kubernetes
-meta_desc: This page provides an overview of how Pulumi works with Kubernetes.
+meta_desc: Provides an overview of how Pulumi works with Kubernetes.
 
 layout: overview
 ---
@@ -33,49 +33,11 @@ Kubernetes and Pulumi can:
 
 ## Pulumi Kubernetes Provider
 
-The Kubernetes provider for Pulumi can be used to provision any resources available in the Kubernetes API.  The Kubernetes provider must be configured with a `kubeconfig` or other credentials to connect to a taret Kubernetes cluster.
+The Kubernetes provider for Pulumi can be used to provision any resources available in the Kubernetes API.  The Kubernetes provider must be configured with a `kubeconfig` or other credentials to connect to a target Kubernetes cluster.
 
 ### Getting Started
 
 The quickest way to get started with Kubernetes is to follow the [Get Started]({{< relref "/docs/get-started/kubernetes" >}}) guide.
-
-See How-to guides for additional tutorials.
-
-### Libraries
-
-The following packages are available in package managers:
-
-- JavaScript/TypeScript: [`@pulumi/kubernetes`](https://www.npmjs.com/package/@pulumi/kubernetes)
-- Python: [`pulumi-kubernetes`](https://pypi.org/project/pulumi-kubernetes/)
-- Go: [`github.com/pulumi/pulumi-kubernetes/sdk/go/kubernetes`](https://github.com/pulumi/pulumi-kubernetes)
-- .NET: [`Pulumi.Kubernetes`](https://www.nuget.org/packages/Pulumi.Kubernetes)
-
-The Kubernetes provider is open source and available in the [pulumi/pulumi-kubernetes](https://github.com/pulumi/pulumi-kubernetes) repo.
-
-### Configuration
-
-The Kubernetes provider accepts the following configuration settings.  These can be provided to the default Kubernetes provider via `pulumi config set kubernetes:<option>`, or passed to the constructor of `new kubernetes.Provider` to construct a specific instance of the Kubernetes provider.
-
-- `cluster`: (Optional) If present, the name of the kubeconfig cluster to use.
-- `context`: (Optional) If present, the name of the kubeconfig context to use.
-- `enableDryRun`: (Optional) BETA FEATURE - If present and set to true, enable server-side diff calculations. This feature is in developer preview, and is disabled by default. This config can be specified in the following ways, using this precedence: (1) this `enableDryRun` parameter or (2) the `PULUMI_K8S_ENABLE_DRY_RUN` environment variable.
-- `kubeconfig`: (Optional) The contents of a kubeconfig file. If this is set, this config will be used instead of `$KUBECONFIG`.
-- `namespace`: (Optional) The contents of a kubeconfig file. If this is set, this config will be used instead of `$KUBECONFIG`.
-- `renderYamlToDirectory`: (Optional) BETA FEATURE - If present, render resource manifests to this directory. In this mode, resources will not be created on a Kubernetes cluster, but the rendered manifests will be kept in sync with changes to the Pulumi program. This feature is in developer preview, and is disabled by default. Note that some computed Outputs such as status fields will not be populated since the resources are not created on a Kubernetes cluster. These Output values will remain undefined,
-and may result in an error if they are referenced by other resources. Also note that any secret values
-used in these resources will be rendered in plain text to the resulting YAML.
-- `suppressDeprecationWarnings`: (Optional) If present and set to true, suppress `apiVersion` deprecation warnings from the CLI. This config can be specified in the following ways, using this precedence: (1) this `suppressDeprecationWarnings` parameter or (2) the `PULUMI_K8S_SUPPRESS_DEPRECATION_WARNINGS` environment variable.
-
-### Annotations
-
-A few Pulumi-specific annotations can be applied to Kubernetes resources managed by Pulumi to control aspects of how Pulumi deploys and manages the Kubernetes resource:
-
-- `pulumi.com/skipAwait`: Disables Pulumi's default await logic that waits for a Kubernetes resource to become "ready" before marking the resource as having created or updated succesfully.
-- `pulumi.com/timeoutSeconds`: Specifies the number of seconds that the Pulumi Kubernetes provider will wait for the resource to become "ready".
-
-In addition, the Pulumi provider may write the following annotations onto resources it manages:
-
-- `pulumi.com/autonamed`: Indicates that the Pulumi Kubernetes provider decided to autoname the resource (instead of using an explicitly provided `metadata.name`).
 
 ## Additional Pulumi Packages for Kubernetes Users
 

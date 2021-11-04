@@ -1,6 +1,6 @@
 ---
 title: Akamai
-meta_desc: This page provides an overview of the Akamai Provider for Pulumi.
+meta_desc: Provides an overview of the Akamai Provider for Pulumi.
 layout: overview
 ---
 
@@ -135,14 +135,3 @@ class Program
 {{% /choosable %}}
 
 {{< /chooser >}}
-
-## Libraries
-
-The following packages are available in packager managers:
-
-* JavaScript/TypeScript: [`@pulumi/akamai`](https://www.npmjs.com/package/@pulumi/akamai)
-* Python: [`pulumi-akamai`](https://pypi.org/project/pulumi-akamai/)
-* Go: [`github.com/pulumi/pulumi-akamai/sdk/v2/go/akamai`](https://github.com/pulumi/pulumi-akamai)
-* .NET: [`Pulumi.Akamai`](https://www.nuget.org/packages/Pulumi.Akamai)
-
-The Akamai provider is open source and available in the [pulumi/pulumi-akamai](https://github.com/pulumi/pulumi-akamai) repo.

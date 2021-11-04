@@ -6,7 +6,7 @@ layout: overview
 
 Easily create AWS Redshift Cluster based on the AWS QuickStart Redshift guide as a package available in all Pulumi languages.
 
-Example:
+## Example
 
 {{< chooser language "typescript" >}}
 
@@ -28,12 +28,3 @@ const cluster = new redshift.Cluster("demo-cluster", {
 {{% /choosable %}}
 
 {{< /chooser >}}
-
-## SDK packages
-
-The AWS API Gateway provider is available as a package in all Pulumi languages:
-
-* JavaScript/TypeScript: [`@pulumi/aws-quickstart-redshift`](https://www.npmjs.com/package/@pulumi/aws-quickstart-redshift)
-* Python: [`pulumi-aws-quickstart-redshift`](https://pypi.org/project/pulumi-aws-quickstart-redshift/)
-* Go: [`github.com/pulumi/pulumi-aws-quickstart-redshift/sdk/go/aws`](https://github.com/pulumi/pulumi-aws-quickstart-redshift)
-* .NET: [`Pulumi.AwsQuickStartRedshift`](https://www.nuget.org/packages/Pulumi.AwsQuickStartRedshift)

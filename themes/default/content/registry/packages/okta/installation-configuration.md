@@ -1,17 +1,26 @@
 ---
 title: Okta Setup
-meta_desc: This page provides an overview on how to configure the Pulumi Okta Provider.
+meta_desc: Provides an overview on how to configure the Pulumi Okta Provider.
 layout: installation
 ---
 
 The Pulumi Okta provider uses the Okta SDK to manage resources.
 
-> Pulumi relies on the Okta SDK to authenticate requests from your computer to Okta. Your credentials are never sent
-> to pulumi.com.
+## Installation
 
-### Configuring The Provider
+The Okta provider is available as a package in all Pulumi languages:
 
-Once obtained, there are two ways to communicate your configuration tokens to Pulumi:
+* JavaScript/TypeScript: [`@pulumi/okta`](https://www.npmjs.com/package/@pulumi/okta)
+* Python: [`pulumi-okta`](https://pypi.org/project/pulumi-okta/)
+* Go: [`github.com/pulumi/pulumi-okta/sdk/v3/go/okta`](https://github.com/pulumi/pulumi-okta)
+* .NET: [`Pulumi.Okta`](https://www.nuget.org/packages/Pulumi.Okta)
+
+## Configuring The Provider
+
+Pulumi relies on the Okta SDK to authenticate requests from your computer to Okta. Your credentials are never sent
+to pulumi.com.
+
+Once the credetials are obtained, there are two ways to communicate your configuration tokens to Pulumi:
 
 1. Set the environment variables `OKTA_ORG_NAME`, `OKTA_BASE_URL` and `OKTA_API_TOKEN`:
 

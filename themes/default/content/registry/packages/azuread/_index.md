@@ -1,6 +1,6 @@
 ---
 title: AzureAD
-meta_desc: This page provides an overview of the Azure Active Directoy Provider for Pulumi.
+meta_desc: Provides an overview of the Azure Active Directoy Provider for Pulumi.
 layout: overview
 ---
 
@@ -90,14 +90,3 @@ class Program
 {{% /choosable %}}
 
 {{< /chooser >}}
-
-## Libraries
-
-The following packages are available in packager managers:
-
-* JavaScript/TypeScript: [`@pulumi/azuread`](https://www.npmjs.com/package/@pulumi/azuread)
-* Python: [`pulumi-azuread`](https://pypi.org/project/pulumi-azuread/)
-* Go: [`github.com/pulumi/pulumi-azuread/sdk/v4/go/azuread`](https://github.com/pulumi/pulumi-azuread)
-* .NET: [`Pulumi.AzureAD`](https://www.nuget.org/packages/Pulumi.AzureAD)
-
-The AzureAD provider is open source and available in the [pulumi/pulumi-azuread](https://github.com/pulumi/pulumi-azuread) repo.

@@ -1,6 +1,6 @@
 ---
 title: Venafi
-meta_desc: This page provides an overview of the Venafi Provider for Pulumi.
+meta_desc: Provides an overview of the Venafi Provider for Pulumi.
 layout: overview
 ---
 
@@ -133,14 +133,3 @@ class Program
 {{% /choosable %}}
 
 {{< /chooser >}}
-
-## Libraries
-
-The following packages are available in packager managers:
-
-* JavaScript/TypeScript: [`@pulumi/venafi`](https://www.npmjs.com/package/@pulumi/venafi)
-* Python: [`pulumi-venafi`](https://pypi.org/project/pulumi-venafi/)
-* Go: [`github.com/pulumi/pulumi-venafi/sdk/go/venafi`](https://github.com/pulumi/pulumi-venafi)
-* .NET: [`Pulumi.Venafi`](https://www.nuget.org/packages/Pulumi.Venafi)
-
-The Venafi provider is open source and available in the [pulumi/pulumi-venafi](https://github.com/pulumi/pulumi-venafi) repo.

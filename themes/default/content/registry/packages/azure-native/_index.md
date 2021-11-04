@@ -108,12 +108,3 @@ Some Azure resources aren't included in Azure Native because they're not compati
 Azure Native provides access to all API versions of each Azure resource so that you can access the entire Azure API surface and pin to the version you prefer.
 
 Read the [version guide]({{< relref "./version-guide" >}}) to learn more about how you can manage the Azure API versions you're using, including both module-per-version and top-level-resources approaches.
-
-## SDK packages
-
-The Azure Native provider is available as a package in all Pulumi languages:
-
-* JavaScript/TypeScript: [`@pulumi/azure-native`](https://www.npmjs.com/package/@pulumi/azure-native)
-* Python: [`pulumi-azure-native`](https://pypi.org/project/pulumi-azure-native/)
-* Go: [`github.com/pulumi/pulumi-azure-native/sdk/go/azure`](https://github.com/pulumi/pulumi-azure-native)
-* .NET: [`Pulumi.AzureNative`](https://www.nuget.org/packages/Pulumi.AzureNative)

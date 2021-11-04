@@ -1,6 +1,6 @@
 ---
 title: Alibaba Cloud
-meta_desc: This page provides an overview of the Alibaba Cloud Provider for Pulumi.
+meta_desc: Provides an overview of the Alibaba Cloud Provider for Pulumi.
 layout: overview
 ---
 
@@ -91,14 +91,3 @@ class Program
 {{% /choosable %}}
 
 {{< /chooser >}}
-
-## Libraries
-
-The following packages are available in package managers:
-
-* JavaScript/TypeScript: [`@pulumi/alicloud`](https://www.npmjs.com/package/@pulumi/alicloud)
-* Python: [`pulumi-alicloud`](https://pypi.org/project/pulumi-alicloud/)
-* Go: [`github.com/pulumi/pulumi-alicloud/sdk/v3/go/alicloud`](https://github.com/pulumi/pulumi-alicloud)
-* .NET: [`Pulumi.Alicloud`](https://www.nuget.org/packages/Pulumi.Alicloud)
-
-The Alibaba Cloud provider is open source and available in the [pulumi/pulumi-alicloud](https://github.com/pulumi/pulumi-alicloud) repo.

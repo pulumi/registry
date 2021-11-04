@@ -1,6 +1,6 @@
 ---
 title: Packet Setup
-meta_desc: This page provides an overview of how to setup the Packet SDK to manage and provision resources.
+meta_desc: Provides an overview of how to setup the Packet SDK to manage and provision resources.
 layout: installation
 ---
 

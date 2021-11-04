@@ -1,6 +1,6 @@
 ---
 title: cloud-init
-meta_desc: This page provides an overview of the cloud-init Provider for Pulumi.
+meta_desc: Provides an overview of the cloud-init Provider for Pulumi.
 layout: overview
 ---
 
@@ -123,14 +123,3 @@ class Program
 {{% /choosable %}}
 
 {{< /chooser >}}
-
-## Libraries
-
-The following packages are available in packager managers:
-
-* JavaScript/TypeScript: [`@pulumi/cloudinit`](https://www.npmjs.com/package/@pulumi/cloudinit)
-* Python: [`pulumi-cloudinit`](https://pypi.org/project/pulumi-cloudinit/)
-* Go: [`github.com/pulumi/pulumi-cloudinit/sdk/go/cloudinit`](https://github.com/pulumi/pulumi-cloudinit)
-* .NET: [`Pulumi.CloudInit`](https://www.nuget.org/packages/Pulumi.CloudInit)
-
-The cloud-init provider is open source and available in the [pulumi/pulumi-cloudinit](https://github.com/pulumi/pulumi-cloudinit) repo.

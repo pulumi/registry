@@ -1,6 +1,6 @@
 ---
 title: F5 BIG-IP
-meta_desc: This page provides an overview of the F5 BIG-IP Provider for Pulumi.
+meta_desc: Provides an overview of the F5 BIG-IP Provider for Pulumi.
 layout: overview
 ---
 
@@ -111,14 +111,3 @@ class Program
 {{% /choosable %}}
 
 {{< /chooser >}}
-
-## Libraries
-
-The following packages are available in packager managers:
-
-* JavaScript/TypeScript: [`@pulumi/f5bigip`](https://www.npmjs.com/package/@pulumi/f5bigip)
-* Python: [`pulumi-f5bigip`](https://pypi.org/project/pulumi-f5bigip/)
-* Go: [`github.com/pulumi/pulumi-f5bigip/sdk/v3/go/f5bigip`](https://github.com/pulumi/pulumi-f5bigip)
-* .NET: [`Pulumi.F5bigip`](https://www.nuget.org/packages/Pulumi.F5bigip)
-
-The F5 BIG-IP provider is open source and available in the [pulumi/pulumi-f5bigip](https://github.com/pulumi/pulumi-f5bigip) repo.

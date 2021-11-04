@@ -1,20 +1,25 @@
 ---
 title: Aiven Setup
-meta_desc: This page provides an overview on how to configure credentials for the Pulumi Aiven Provider.
+meta_desc: Provides an overview on how to configure credentials for the Pulumi Aiven Provider.
 layout: installation
 ---
 
 The Pulumi Aiven provider uses the Aiven SDK to manage and provision resources.
 
-> Pulumi relies on the Aiven SDK to authenticate requests from your computer to Aiven. Your credentials are never sent
-> to pulumi.com.
+## Installation
 
-The Pulumi Aiven Provider needs to be configured with Aiven credentials
-before it can be used to create resources.
+The Aiven provider is available as a package in all Pulumi languages:
 
-### Configuring Credentials
+* JavaScript/TypeScript: [`@pulumi/aiven`](https://www.npmjs.com/package/@pulumi/aiven)
+* Python: [`pulumi-aiven`](https://pypi.org/project/pulumi-aiven/)
+* Go: [`github.com/pulumi/pulumi-aiven/sdk/v4/go/aiven`](https://github.com/pulumi/pulumi-aiven)
+* .NET: [`Pulumi.Aiven`](https://www.nuget.org/packages/Pulumi.Aiven)
 
-Once obtained, there are two ways to communicate your authorization tokens to Pulumi:
+## Configuring Credentials
+
+Pulumi relies on the Aiven SDK to authenticate requests from your computer to Aiven. Your credentials are never sent
+to pulumi.com. The Pulumi Aiven Provider needs to be configured with Aiven credentials
+before it can be used to create resources. Once the credentials obtained, there are two ways to communicate your authorization tokens to Pulumi:
 
 1. Set the environment variable `AIVEN_TOKEN`:
 
@@ -28,5 +33,5 @@ Once obtained, there are two ways to communicate your authorization tokens to Pu
     $ pulumi config set aiven:apiToken XXXXXXXXXXXXXX --secret
     ```
 
-Remember to pass `--secret` when setting `aiven:apiToken` so that it is properly encrypted. A full set of configuration parameters
-can be found listed on the [Project README](https://github.com/pulumi/pulumi-aiven/blob/master/README.md).
+Remember to pass `--secret` when setting `aiven:apiToken` so that it is properly encrypted. The complete list of
+configuration parameters is in the [Aiven Provider README](https://github.com/pulumi/pulumi-aiven/blob/master/README.md).

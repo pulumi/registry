@@ -1,6 +1,6 @@
 ---
 title: Packet
-meta_desc: This page provides an overview of the Packet provider for Pulumi.
+meta_desc: Provides an overview of the Packet provider for Pulumi.
 layout: overview
 ---
 

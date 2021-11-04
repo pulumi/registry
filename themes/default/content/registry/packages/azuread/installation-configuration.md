@@ -1,18 +1,25 @@
 ---
-title: AzureDevOps Setup
-meta_desc: This page provides an overview on how to configure credentials for the Pulumi AzureDevOps Provider.
+title: AzureAD Setup
+meta_desc: Provides an overview on how to configure credentials for the Pulumi AzureAD Provider.
 layout: installation
 ---
 
-The Pulumi AzureDevOps provider uses the AzureDevOps SDK to manage and provision resources.
+The Pulumi AzureAD provider uses the AzureAD SDK to manage and provision resources.
 
-> Pulumi relies on the AzureDevOps SDK to authenticate requests from your computer to AzureDevOps. Your credentials are never sent
-> to pulumi.com.
+## Installation
 
-The Pulumi AzureDevOps Provider needs to be configured with AzureDevOps credentials
-before it can be used to create resources.
+The AzureAD provider is available as a package in all Pulumi languages:
+
+* JavaScript/TypeScript: [`@pulumi/azuread`](https://www.npmjs.com/package/@pulumi/azuread)
+* Python: [`pulumi-azuread`](https://pypi.org/project/pulumi-azuread/)
+* Go: [`github.com/pulumi/pulumi-azuread/sdk/v4/go/azuread`](https://github.com/pulumi/pulumi-azuread)
+* .NET: [`Pulumi.AzureAD`](https://www.nuget.org/packages/Pulumi.AzureAD)
 
 ## Credentials
+
+Pulumi relies on the AzureAD SDK to authenticate requests from your computer to AzureAD. Your credentials are never sent
+to pulumi.com. The Pulumi AzureAD Provider needs to be configured with AzureAD credentials
+before it can be used to create resources.
 
 Pulumi can authenticate to Azure using a Service Principal or the Azure CLI.
 
@@ -24,7 +31,7 @@ environments, particularly in CI, a Service Principal is recommended.
 
 ## CLI Authentication
 
-Simply login to the Azure CLI and Pulumi will automatically use your credentials:
+Login to the Azure CLI and Pulumi will automatically use your credentials:
 
 ```bash
 $ az login
@@ -60,7 +67,7 @@ Service Principal is the recommended way to connect Pulumi to Azure in a team or
 
 ### Configuring Authorization Tokens
 
-Once obtained, there are two ways to communicate your authorization tokens to Pulumi:
+Once the credetials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
 
 1. Set the environment variables `ARM_CLIENT_ID`, `ARM_CLIENT_SECRET` and `ARM_TENANT_ID` respectively
 

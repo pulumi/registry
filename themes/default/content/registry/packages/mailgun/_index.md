@@ -1,6 +1,6 @@
 ---
 title: Mailgun
-meta_desc: This page provides an overview of the Mailgun Provider for Pulumi.
+meta_desc: Provides an overview of the Mailgun Provider for Pulumi.
 layout: overview
 ---
 
@@ -120,14 +120,3 @@ class Program
 {{% /choosable %}}
 
 {{< /chooser >}}
-
-## Libraries
-
-The following packages are available in packager managers:
-
-* JavaScript/TypeScript: [`@pulumi/mailgun`](https://www.npmjs.com/package/@pulumi/mailgun)
-* Python: [`pulumi-mailgun`](https://pypi.org/project/pulumi-mailgun/)
-* Go: [`github.com/pulumi/pulumi-mailgun/sdk/v3/go/mailgun`](https://github.com/pulumi/pulumi-mailgun)
-* .NET: [`Pulumi.Mailgun`](https://www.nuget.org/packages/Pulumi.Mailgun)
-
-The Mailgun provider is open source and available in the [pulumi/pulumi-mailgun](https://github.com/pulumi/pulumi-mailgun) repo.

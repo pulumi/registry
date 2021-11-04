@@ -4,6 +4,17 @@ meta_desc: How to set up credentials to use the Pulumi GCP Provider and choose c
 layout: installation
 ---
 
+## Installation
+
+The Google Cloud (GCP) Classic provider is available as a package in all Pulumi languages:
+
+* JavaScript/TypeScript: [`@pulumi/gcp`](https://www.npmjs.com/package/@pulumi/gcp)
+* Python: [`pulumi-gcp`](https://pypi.org/project/pulumi-gcp/)
+* Go: [`github.com/pulumi/pulumi-gcp/sdk/v5/go/gcp`](https://github.com/pulumi/pulumi-gcp)
+* .NET: [`Pulumi.Gcp`](https://www.nuget.org/packages/Pulumi.Gcp)
+
+## Configuration
+
 To provision resources with the Pulumi Google Cloud Provider, you need to have Google credentials.
 
 {{% configure-gcp %}}
@@ -11,8 +22,6 @@ To provision resources with the Pulumi Google Cloud Provider, you need to have G
 {{% notes "info" %}}
 If you are using Pulumi in an non-interactive setting (such as a CI/CD system) you will need to [configure and use a service account]({{< relref "service-account" >}}) instead.
 {{% /notes %}}
-
-## Configuration
 
 Use `pulumi config set gcp:<option>` or pass options to the [constructor of `new gcp.Provider`]({{< relref "/registry/packages/gcp/api-docs/provider" >}}).
 

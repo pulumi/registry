@@ -1,26 +1,34 @@
 ---
 title: Venafi Setup
-meta_desc: This page provides an overview on how to configure credentials for the Pulumi Venafi Provider.
+meta_desc: Provides an overview on how to configure credentials for the Pulumi Venafi Provider.
 layout: installation
 ---
 
 The Pulumi Venafi provider uses the Venafi SDK to manage and provision resources.
 
-> Pulumi relies on the Venafi SDK to authenticate requests from your computer to Venafi. Your credentials are never sent
-> to pulumi.com.
+## Installation
 
-The Pulumi Venafi Provider needs to be configured with Venafi credentials
+The Venafi provider is available as a package in all Pulumi languages:
+
+* JavaScript/TypeScript: [`@pulumi/venafi`](https://www.npmjs.com/package/@pulumi/venafi)
+* Python: [`pulumi-venafi`](https://pypi.org/project/pulumi-venafi/)
+* Go: [`github.com/pulumi/pulumi-venafi/sdk/go/venafi`](https://github.com/pulumi/pulumi-venafi)
+* .NET: [`Pulumi.Venafi`](https://www.nuget.org/packages/Pulumi.Venafi)
+
+## Configuring Credentials
+
+Pulumi relies on the Venafi SDK to authenticate requests from your computer to Venafi. Your credentials are never sent
+to pulumi.com.
+The Pulumi Venafi provider needs to be configured with Venafi credentials
 before it can be used to create resources.
 
-### Configuring Credentials
-
-A full set of configuration parameters
-can be found listed on the [Project README](https://github.com/pulumi/pulumi-venafi/blob/master/README.md). But here
+The complete list of
+configuration parameters is in the [Pulumi Venafi provider README](https://github.com/pulumi/pulumi-venafi/blob/master/README.md). But here
 are the most common setups
 
-#### Venafi Trust Protection Platform
+### Venafi Trust Protection Platform
 
-Once obtained, there are two ways to communicate your authorization tokens to Pulumi when talking to Venafi TPP:
+Once the credetials are obtained, there are two ways to communicate your authorization tokens to Pulumi when talking to Venafi TPP:
 
 1. Setting the environment variables `VENAFI_URL`, `VENAFI_TOKEN` and `VENAFI_ZONE`:
 
@@ -40,7 +48,7 @@ Once obtained, there are two ways to communicate your authorization tokens to Pu
 
 Remember to pass `--secret` when setting `venafi:accessToken` so that it is properly encrypted.
 
-##### Generating an Access Token
+#### Generating an Access Token
 
 To generate an access token for TPP Admin, make a `POST` request to the TPP Admin URL. An example would be as
 follows:
@@ -71,7 +79,7 @@ This will return a response as follows:
 
 The `access_token` in the response is the value to use for `venafi:accessToken` or `VENAFI_TOKEN`.
 
-##### Refreshing an Access Token
+#### Refreshing an Access Token
 
 To refresh a specific token, we can make a `POST` request to the TPP Admin URL using the `refresh_token` from the oauth
 request. An example would be:
@@ -99,9 +107,9 @@ This will return a response as follows:
 
 The `access_token` in the response is the value to use for `venafi:accessToken` or `VENAFI_TOKEN`.
 
-#### Venafi as a Service
+### Venafi as a Service
 
-Once obtained, there are two ways to communicate your authorization tokens to Pulumi when talking to Venafi TPP:
+Once the credetials are obtained, there are two ways to communicate your authorization tokens to Pulumi when talking to Venafi TPP:
 
 1. Set the environment variables `VENAFI_API`, and `VENAFI_ZONE`:
 

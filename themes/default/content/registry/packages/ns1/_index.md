@@ -1,6 +1,6 @@
 ---
 title: NS1
-meta_desc: This page provides an overview of the NS1 Provider for Pulumi.
+meta_desc: Provides an overview of the NS1 Provider for Pulumi.
 layout: overview
 ---
 
@@ -91,14 +91,3 @@ class Program
 {{% /choosable %}}
 
 {{< /chooser >}}
-
-## Libraries
-
-The following packages are available in packager managers:
-
-* JavaScript/TypeScript: [`@pulumi/ns1`](https://www.npmjs.com/package/@pulumi/ns1)
-* Python: [`pulumi-ns1`](https://pypi.org/project/pulumi-ns1/)
-* Go: [`github.com/pulumi/pulumi-ns1/sdk/v2/go/ns1`](https://github.com/pulumi/pulumi-ns1)
-* .NET: [`Pulumi.NS1`](https://www.nuget.org/packages/Pulumi.Ns1)
-
-The NS1 provider is open source and available in the [pulumi/pulumi-ns1](https://github.com/pulumi/pulumi-ns1) repo.

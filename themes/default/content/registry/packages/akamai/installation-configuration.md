@@ -1,20 +1,27 @@
 ---
 title: Akamai Setup
-meta_desc: This page provides an overview on how to configure credentials for the Pulumi Akamai Provider.
+meta_desc: Provides an overview on how to configure credentials for the Pulumi Akamai Provider.
 layout: installation
 ---
 
 The Pulumi Akamai provider uses the Akamai SDK to manage and provision resources.
 
-> Pulumi relies on the Akamai SDK to authenticate requests from your computer to Akamai. Your credentials are never sent
-> to pulumi.com.
+## Installation
 
-The Pulumi Akamai Provider needs to be configured with Akamai credentials
+The Akamai provider is available as a package in all Pulumi languages:
+
+* JavaScript/TypeScript: [`@pulumi/akamai`](https://www.npmjs.com/package/@pulumi/akamai)
+* Python: [`pulumi-akamai`](https://pypi.org/project/pulumi-akamai/)
+* Go: [`github.com/pulumi/pulumi-akamai/sdk/v2/go/akamai`](https://github.com/pulumi/pulumi-akamai)
+* .NET: [`Pulumi.Akamai`](https://www.nuget.org/packages/Pulumi.Akamai)
+
+## Configuring Credentials
+
+Pulumi relies on the Akamai SDK to authenticate requests from your computer to Akamai. Your credentials are never sent
+to pulumi.com. The Pulumi Akamai Provider needs to be configured with Akamai credentials
 before it can be used to create resources.
 
-### Configuring Credentials
-
-Once obtained, there are two ways to communicate your authorization tokens to Pulumi:
+Once the credentials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
 
 1. Create environment variables in the format:
 
@@ -42,4 +49,4 @@ Once obtained, there are two ways to communicate your authorization tokens to Pu
     ```
 
 A full set of configuration parameters
-can be found listed on the [Project README](https://github.com/pulumi/pulumi-akamai/blob/master/README.md).
+is listed in the [Akamai Provider README](https://github.com/pulumi/pulumi-akamai/blob/master/README.md).

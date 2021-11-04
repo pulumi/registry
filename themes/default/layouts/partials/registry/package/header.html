@@ -23,7 +23,7 @@
     {{ end }}
 
     <div class="lg:flex mb-2">
-        <h1 class="text-4xl">{{ with .GetPage $packageHome }}{{ .Title }}{{ end }}</h1>
+        <h1 class="text-4xl no-anchor">{{ with .GetPage $packageHome }}{{ .Title }}{{ end }}</h1>
     </div>
 
     {{ with (index $.Site.Data.registry.packages ($packageName)) }}

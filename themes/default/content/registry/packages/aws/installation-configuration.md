@@ -30,7 +30,7 @@ Your AWS credentials are never sent to pulumi.com. Pulumi uses the AWS SDK and t
 
 ### Get your credentials
 
-First, make sure you have an IAM user in [the AWS console][iam-user-console] with **Programmatic access** and ensure it has sufficient permissions to deploy and manage your program's resources. If you know the precise resource types you wish to create and delete, we recommend restrciting your IAM user's access to just those types.
+First, make sure you have an IAM user in [the AWS console][iam-user-console] with **Programmatic access** and ensure it has sufficient permissions to deploy and manage your program's resources. If you know the precise resource types you wish to create and delete, we recommend restricting your IAM user's access to just those types.
 
 You'll also need [an access key][iam-manage-keys] for your user. There are two parts to each key, which you'll see in the IAM console after you create it:
 

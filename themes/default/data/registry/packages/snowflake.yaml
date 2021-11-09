@@ -2,11 +2,11 @@ name: snowflake
 title: Snowflake
 description: A Pulumi package for creating and managing snowflake cloud resources.
 logo_url: ""
-updated_on: 1632765197
+updated_on: 1636484254
 publisher: Pulumi
 category: Infrastructure
 package_status: public_preview
-version: v0.2.1
+version: v0.3.0
 featured: false
 native: false
 component: false

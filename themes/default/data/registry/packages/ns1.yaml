@@ -2,11 +2,11 @@ name: ns1
 title: NS1
 description: A Pulumi package for creating and managing ns1 cloud resources.
 logo_url: ""
-updated_on: 1633348422
+updated_on: 1636661998
 publisher: Pulumi
 category: Network
 package_status: ga
-version: v2.2.1
+version: v2.3.0
 featured: false
 native: false
 component: false

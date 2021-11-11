@@ -2,11 +2,11 @@ name: linode
 title: Linode
 description: A Pulumi package for creating and managing linode cloud resources.
 logo_url: ""
-updated_on: 1632763342
+updated_on: 1636658458
 publisher: Pulumi
 category: Cloud
 package_status: ga
-version: v3.4.0
+version: v3.5.0
 featured: false
 native: false
 component: false

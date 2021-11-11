@@ -1,12 +1,14 @@
-name: aws-s3-replicated-bucket
-title: AWS S3 Replicated Bucket
-description: A Pulumi Component for managing replicated buckets in Amazon S3
-logo_url: ""
-updated_on: 1633620811
-publisher: Lee Zen
 category: Cloud
-package_status: public_preview
-version: v0.0.6
-featured: false
-native: false
 component: true
+description: ""
+featured: false
+logo_url: ""
+name: aws-s3-replicated-bucket
+native: false
+package_status: public_preview
+publisher: Lee Zen
+repo_url: ""
+schema_file_path: /schema.json
+title: AWS S3 Replicated Bucket
+updated_on: 1633620811
+version: v0.0.6

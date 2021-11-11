@@ -1,12 +1,14 @@
-name: azure-quickstart-acr-geo-replication
-title: Azure QuickStart ACR Geo Replication
-description: Create a geo-replicated Azure Container Registry instance that automatically synchronizes registry content across more than one Azure region.
-logo_url: ""
-updated_on: 1634329412
-publisher: Ian Wahbe
 category: Cloud
-package_status: public_preview
-version: v0.0.3
-featured: false
-native: false
 component: true
+description: ""
+featured: false
+logo_url: ""
+name: azure-quickstart-acr-geo-replication
+native: false
+package_status: public_preview
+publisher: Ian Wahbe
+repo_url: ""
+schema_file_path: /schema.json
+title: Azure QuickStart ACR Geo Replication
+updated_on: 1634329412
+version: v0.0.3

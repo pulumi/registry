@@ -2,11 +2,11 @@ name: nomad
 title: Nomad
 description: A Pulumi package for creating and managing nomad cloud resources.
 logo_url: ""
-updated_on: 1623771857
+updated_on: 1636661806
 publisher: Pulumi
 category: Infrastructure
 package_status: public_preview
-version: v0.1.0
+version: v0.2.0
 featured: false
 native: false
 component: false

@@ -1,12 +1,14 @@
-name: packet
-title: Packet
-description: A Pulumi package for creating and managing Packet cloud resources.
-logo_url: ""
-updated_on: 1605199362
-publisher: Pulumi
 category: Cloud
-package_status: ga
-version: v3.2.2
-featured: false
-native: false
 component: false
+description: A Pulumi package for creating and managing Packet cloud resources.
+featured: false
+logo_url: ""
+name: packet
+native: false
+package_status: ga
+publisher: Pulumi
+repo_url: https://github.com/pulumi/pulumi-packet
+schema_file_path: /provider/cmd/pulumi-resource-packet/schema.json
+title: Packet
+updated_on: 1605199362
+version: v3.2.2

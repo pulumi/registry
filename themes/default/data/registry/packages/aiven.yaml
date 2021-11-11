@@ -1,12 +1,14 @@
-name: aiven
-title: Aiven
-description: A Pulumi package for creating and managing Aiven cloud resources.
-logo_url: ""
-updated_on: 1633348450
-publisher: Pulumi
 category: Infrastructure
-package_status: ga
-version: v4.2.1
-featured: false
-native: false
 component: false
+description: A Pulumi package for creating and managing Aiven cloud resources.
+featured: false
+logo_url: ""
+name: aiven
+native: false
+package_status: ga
+publisher: Pulumi
+repo_url: https://github.com/pulumi/pulumi-aiven
+schema_file_path: /provider/cmd/pulumi-resource-aiven/schema.json
+title: Aiven
+updated_on: 1633348450
+version: v4.2.1

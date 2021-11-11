@@ -1,12 +1,14 @@
-name: hcloud
-title: Hetzner Cloud
-description: A Pulumi package for creating and managing hcloud cloud resources.
-logo_url: ""
-updated_on: 1636658484
-publisher: Pulumi
 category: Cloud
-package_status: ga
-version: v1.6.0
-featured: false
-native: false
 component: false
+description: A Pulumi package for creating and managing hcloud cloud resources.
+featured: false
+logo_url: ""
+name: hcloud
+native: false
+package_status: ga
+publisher: Pulumi
+repo_url: https://github.com/pulumi/pulumi-hcloud
+schema_file_path: /provider/cmd/pulumi-resource-hcloud/schema.json
+title: Hetzner Cloud
+updated_on: 1636658484
+version: v1.6.0

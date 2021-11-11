@@ -1,12 +1,14 @@
-name: alicloud
-title: Alibaba Cloud
-description: A Pulumi package for creating and managing AliCloud resources.
-logo_url: ""
-updated_on: 1633365195
-publisher: Pulumi
 category: Cloud
-package_status: ga
-version: v3.8.0
-featured: false
-native: false
 component: false
+description: A Pulumi package for creating and managing AliCloud resources.
+featured: false
+logo_url: ""
+name: alicloud
+native: false
+package_status: ga
+publisher: Pulumi
+repo_url: https://github.com/pulumi/pulumi-alicloud
+schema_file_path: /provider/cmd/pulumi-resource-alicloud/schema.json
+title: Alibaba Cloud
+updated_on: 1633365195
+version: v3.8.0

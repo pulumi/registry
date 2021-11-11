@@ -1,12 +1,14 @@
-name: minio
-title: MinIO
-description: A Pulumi package for creating and managing minio cloud resources.
-logo_url: ""
-updated_on: 1636661625
-publisher: Pulumi
 category: Infrastructure
-package_status: public_preview
-version: v0.2.0
-featured: false
-native: false
 component: false
+description: A Pulumi package for creating and managing minio cloud resources.
+featured: false
+logo_url: ""
+name: minio
+native: false
+package_status: public_preview
+publisher: Pulumi
+repo_url: https://github.com/pulumi/pulumi-minio
+schema_file_path: /provider/cmd/pulumi-resource-minio/schema.json
+title: MinIO
+updated_on: 1636661625
+version: v0.2.0

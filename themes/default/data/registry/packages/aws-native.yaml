@@ -1,13 +1,15 @@
-name: aws-native
-title: AWS Native
+category: Cloud
+component: false
 description: A native Pulumi package for creating and managing Amazon Web Services
   (AWS) resources.
-logo_url: ""
-updated_on: 1636376999
-publisher: Pulumi
-category: Cloud
-package_status: public_preview
-version: v0.4.0
 featured: false
+logo_url: ""
+name: aws-native
 native: true
-component: false
+package_status: public_preview
+publisher: Pulumi
+repo_url: https://github.com/pulumi/pulumi-aws-native
+schema_file_path: /provider/cmd/pulumi-resource-aws-native/schema.json
+title: AWS Native
+updated_on: 1636376999
+version: v0.4.0

@@ -1,12 +1,14 @@
-name: sumologic
-title: Sumo Logic
-description: A Pulumi package for creating and managing sumologic cloud resources.
-logo_url: ""
-updated_on: 1635518933
-publisher: Pulumi
 category: Monitoring
-package_status: public_preview
-version: v0.2.0
-featured: false
-native: false
 component: false
+description: A Pulumi package for creating and managing sumologic cloud resources.
+featured: false
+logo_url: ""
+name: sumologic
+native: false
+package_status: public_preview
+publisher: Pulumi
+repo_url: https://github.com/pulumi/pulumi-sumologic
+schema_file_path: /provider/cmd/pulumi-resource-sumologic/schema.json
+title: Sumo Logic
+updated_on: 1635518933
+version: v0.2.0

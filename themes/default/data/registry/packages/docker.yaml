@@ -1,12 +1,14 @@
-name: docker
-title: Docker
-description: A Pulumi package for interacting with Docker in Pulumi programs
-logo_url: ""
-updated_on: 1630502018
-publisher: Pulumi
 category: Infrastructure
-package_status: ga
-version: v3.1.0
-featured: false
-native: false
 component: false
+description: A Pulumi package for interacting with Docker in Pulumi programs
+featured: false
+logo_url: ""
+name: docker
+native: false
+package_status: ga
+publisher: Pulumi
+repo_url: https://github.com/pulumi/pulumi-docker
+schema_file_path: /provider/cmd/pulumi-resource-docker/schema.json
+title: Docker
+updated_on: 1630502018
+version: v3.1.0

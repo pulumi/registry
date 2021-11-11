@@ -1,12 +1,14 @@
-name: postgresql
-title: PostgreSQL
-description: A Pulumi package for creating and managing postgresql cloud resources.
-logo_url: ""
-updated_on: 1636663500
-publisher: Pulumi
 category: Database
-package_status: ga
-version: v3.3.0
-featured: false
-native: false
 component: false
+description: A Pulumi package for creating and managing postgresql cloud resources.
+featured: false
+logo_url: ""
+name: postgresql
+native: false
+package_status: ga
+publisher: Pulumi
+repo_url: https://github.com/pulumi/pulumi-postgresql
+schema_file_path: /provider/cmd/pulumi-resource-postgresql/schema.json
+title: PostgreSQL
+updated_on: 1636663500
+version: v3.3.0

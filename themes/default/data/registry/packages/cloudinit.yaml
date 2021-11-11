@@ -1,12 +1,14 @@
-name: cloudinit
-title: cloud-init
-description: A Pulumi package for creating and managing cloudinit cloud resources.
-logo_url: ""
-updated_on: 1633975483
-publisher: Pulumi
 category: Utility
-package_status: ga
-version: v1.2.2
-featured: false
-native: false
 component: false
+description: A Pulumi package for creating and managing cloudinit cloud resources.
+featured: false
+logo_url: ""
+name: cloudinit
+native: false
+package_status: ga
+publisher: Pulumi
+repo_url: https://github.com/pulumi/pulumi-cloudinit
+schema_file_path: /provider/cmd/pulumi-resource-cloudinit/schema.json
+title: cloud-init
+updated_on: 1633975483
+version: v1.2.2

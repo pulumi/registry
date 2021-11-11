@@ -1,12 +1,14 @@
-name: dnsimple
-title: DNSimple
-description: A Pulumi package for creating and managing dnsimple cloud resources.
-logo_url: ""
-updated_on: 1622138343
-publisher: Pulumi
 category: Network
-package_status: ga
-version: v3.2.0
-featured: false
-native: false
 component: false
+description: A Pulumi package for creating and managing dnsimple cloud resources.
+featured: false
+logo_url: ""
+name: dnsimple
+native: false
+package_status: ga
+publisher: Pulumi
+repo_url: https://github.com/pulumi/pulumi-dnsimple
+schema_file_path: /provider/cmd/pulumi-resource-dnsimple/schema.json
+title: DNSimple
+updated_on: 1622138343
+version: v3.2.0

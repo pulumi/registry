@@ -1,12 +1,14 @@
-name: gitlab
-title: GitLab
-description: A Pulumi package for creating and managing GitLab resources.
-logo_url: ""
-updated_on: 1627993993
-publisher: Pulumi
 category: Version Control System
-package_status: ga
-version: v4.2.0
-featured: false
-native: false
 component: false
+description: A Pulumi package for creating and managing GitLab resources.
+featured: false
+logo_url: ""
+name: gitlab
+native: false
+package_status: ga
+publisher: Pulumi
+repo_url: https://github.com/pulumi/pulumi-gitlab
+schema_file_path: /provider/cmd/pulumi-resource-gitlab/schema.json
+title: GitLab
+updated_on: 1627993993
+version: v4.2.0

@@ -1,12 +1,14 @@
-name: openstack
-title: OpenStack
-description: A Pulumi package for creating and managing OpenStack cloud resources.
-logo_url: ""
-updated_on: 1636663325
-publisher: Pulumi
 category: Cloud
-package_status: ga
-version: v3.5.0
-featured: false
-native: false
 component: false
+description: A Pulumi package for creating and managing OpenStack cloud resources.
+featured: false
+logo_url: ""
+name: openstack
+native: false
+package_status: ga
+publisher: Pulumi
+repo_url: https://github.com/pulumi/pulumi-openstack
+schema_file_path: /provider/cmd/pulumi-resource-openstack/schema.json
+title: OpenStack
+updated_on: 1636663325
+version: v3.5.0

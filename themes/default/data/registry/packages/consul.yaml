@@ -1,12 +1,14 @@
-name: consul
-title: Consul
-description: A Pulumi package for creating and managing consul resources.
-logo_url: ""
-updated_on: 1635435074
-publisher: Pulumi
 category: Infrastructure
-package_status: ga
-version: v3.4.0
-featured: false
-native: false
 component: false
+description: A Pulumi package for creating and managing consul resources.
+featured: false
+logo_url: ""
+name: consul
+native: false
+package_status: ga
+publisher: Pulumi
+repo_url: https://github.com/pulumi/pulumi-consul
+schema_file_path: /provider/cmd/pulumi-resource-consul/schema.json
+title: Consul
+updated_on: 1635435074
+version: v3.4.0

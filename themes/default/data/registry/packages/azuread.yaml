@@ -1,12 +1,14 @@
-name: azuread
-title: Azure Active Directory
-description: A Pulumi package for creating and managing azuread cloud resources.
-logo_url: ""
-updated_on: 1635535185
-publisher: Pulumi
 category: Infrastructure
-package_status: ga
-version: v5.7.0
-featured: false
-native: false
 component: false
+description: A Pulumi package for creating and managing azuread cloud resources.
+featured: false
+logo_url: ""
+name: azuread
+native: false
+package_status: ga
+publisher: Pulumi
+repo_url: https://github.com/pulumi/pulumi-azuread
+schema_file_path: /provider/cmd/pulumi-resource-azuread/schema.json
+title: Azure Active Directory
+updated_on: 1635535185
+version: v5.7.0

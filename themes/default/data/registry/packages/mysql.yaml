@@ -2,11 +2,11 @@ name: mysql
 title: MySQL
 description: A Pulumi package for creating and managing mysql cloud resources.
 logo_url: ""
-updated_on: 1618844168
+updated_on: 1636661748
 publisher: Pulumi
 category: Database
 package_status: ga
-version: v3.0.0
+version: v3.1.0
 featured: false
 native: false
 component: false

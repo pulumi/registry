@@ -7,7 +7,7 @@ name: aws-quickstart-aurora-postgres
 native: false
 package_status: public_preview
 publisher: Pulumi
-repo_url: ""
+repo_url: "https://github.com/pulumi/pulumi-aws-quickstart-aurora-postgres"
 schema_file_path: /schema.yaml
 title: AWS QuickStart Aurora Postgres
 updated_on: 1634321119

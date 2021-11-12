@@ -7,7 +7,7 @@ name: aws-quickstart-redshift
 native: false
 package_status: public_preview
 publisher: Pulumi
-repo_url: ""
+repo_url: "https://github.com/pulumi/pulumi-aws-quickstart-redshift"
 schema_file_path: /schema.yaml
 title: AWS QuickStart Redshift
 updated_on: 1634320836

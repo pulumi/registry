@@ -7,7 +7,7 @@ name: aws-miniflux
 native: false
 package_status: public_preview
 publisher: Christian Nunciato
-repo_url: ""
+repo_url: "https://github.com/pulumi/pulumi-aws-miniflux"
 schema_file_path: /schema.json
 title: Miniflux
 updated_on: 1634334277

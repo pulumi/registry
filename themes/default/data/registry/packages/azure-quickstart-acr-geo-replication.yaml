@@ -7,7 +7,7 @@ name: azure-quickstart-acr-geo-replication
 native: false
 package_status: public_preview
 publisher: Ian Wahbe
-repo_url: ""
+repo_url: "https://github.com/pulumi/pulumi-azure-quickstart-acr-geo-replication"
 schema_file_path: /schema.json
 title: Azure QuickStart ACR Geo Replication
 updated_on: 1634329412

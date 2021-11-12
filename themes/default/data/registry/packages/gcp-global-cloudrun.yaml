@@ -7,7 +7,7 @@ name: gcp-global-cloudrun
 native: false
 package_status: public_preview
 publisher: Paul Stack
-repo_url: ""
+repo_url: "https://github.com/pulumi/pulumi-gcp-global-cloudrun"
 schema_file_path: /provider/cmd/pulumi-resource-gcp-global-cloudrun/schema.json
 title: GCP Global CloudRun
 updated_on: 1634327564

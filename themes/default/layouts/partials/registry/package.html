@@ -1,5 +1,5 @@
 {{ $packageName := .package.name }}
-{{ $href := printf "/registry/packages/%s" $packageName }}
+{{ $href := printf "/registry/packages/%s/" $packageName }}
 
 {{ $packageCategory := lower .package.category }}
 {{ $packageCategoryName := .package.category }}

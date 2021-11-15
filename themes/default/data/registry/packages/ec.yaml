@@ -2,11 +2,11 @@ name: ec
 title: ec
 description: A Pulumi package for creating and managing ElasticCloud resources.
 logo_url: ""
-updated_on: 1635954661
+updated_on: 1636972768
 publisher: Pulumi
-category: Infrastructure
+category: Cloud
 package_status: public_preview
-version: v0.1.0
+version: v0.2.0
 featured: false
 native: false
 component: false

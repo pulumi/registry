@@ -1,12 +1,14 @@
-name: wavefront
-title: Wavefront
-description: A Pulumi package for creating and managing wavefront cloud resources.
-logo_url: ""
-updated_on: 1618855708
-publisher: Pulumi
 category: Monitoring
-package_status: ga
-version: v1.0.0
-featured: false
-native: false
 component: false
+description: A Pulumi package for creating and managing wavefront cloud resources.
+featured: false
+logo_url: ""
+name: wavefront
+native: false
+package_status: ga
+publisher: Pulumi
+repo_url: https://github.com/pulumi/pulumi-wavefront
+schema_file_path: /provider/cmd/pulumi-resource-wavefront/schema.json
+title: Wavefront
+updated_on: 1618855708
+version: v1.0.0

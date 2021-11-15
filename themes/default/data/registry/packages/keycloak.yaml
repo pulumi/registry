@@ -1,12 +1,14 @@
-name: keycloak
-title: Keycloak
-description: A Pulumi package for creating and managing keycloak cloud resources.
-logo_url: ""
-updated_on: 1636658963
-publisher: Pulumi
 category: Infrastructure
-package_status: ga
-version: v4.6.0
-featured: false
-native: false
 component: false
+description: A Pulumi package for creating and managing keycloak cloud resources.
+featured: false
+logo_url: ""
+name: keycloak
+native: false
+package_status: ga
+publisher: Pulumi
+repo_url: https://github.com/pulumi/pulumi-keycloak
+schema_file_path: /provider/cmd/pulumi-resource-keycloak/schema.json
+title: Keycloak
+updated_on: 1636658963
+version: v4.6.0

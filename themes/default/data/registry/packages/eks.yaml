@@ -1,12 +1,14 @@
-name: eks
-title: Amazon EKS
-description: Pulumi Amazon Web Services (AWS) EKS Components.
-logo_url: ""
-updated_on: 1633474310
-publisher: Pulumi
 category: Cloud
-package_status: public_preview
-version: v0.34.0
-featured: false
-native: false
 component: true
+description: Pulumi Amazon Web Services (AWS) EKS Components.
+featured: false
+logo_url: ""
+name: eks
+native: false
+package_status: public_preview
+publisher: Pulumi
+repo_url: https://github.com/pulumi/pulumi-eks
+schema_file_path: /provider/cmd/pulumi-resource-eks/schema.json
+title: Amazon EKS
+updated_on: 1636570432
+version: v0.35.0

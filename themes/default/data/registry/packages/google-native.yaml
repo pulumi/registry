@@ -1,12 +1,14 @@
-name: google-native
-title: Google Cloud Native
-description: A native Pulumi package for creating and managing Google Cloud resources.
-logo_url: ""
-updated_on: 1633713130
-publisher: Pulumi
 category: Cloud
-package_status: public_preview
-version: v0.8.0
-featured: false
-native: true
 component: false
+description: A native Pulumi package for creating and managing Google Cloud resources.
+featured: false
+logo_url: ""
+name: google-native
+native: true
+package_status: public_preview
+publisher: Pulumi
+repo_url: https://github.com/pulumi/pulumi-google-native
+schema_file_path: /provider/cmd/pulumi-resource-google-native/schema.json
+title: Google Cloud Native
+updated_on: 1633713130
+version: v0.8.0

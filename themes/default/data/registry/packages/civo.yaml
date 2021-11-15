@@ -1,12 +1,14 @@
-name: civo
-title: Civo
-description: A Pulumi package for creating and managing Civo cloud resources.
-logo_url: ""
-updated_on: 1636379054
-publisher: Pulumi
 category: Cloud
-package_status: ga
-version: v2.0.0
-featured: false
-native: false
 component: false
+description: A Pulumi package for creating and managing Civo cloud resources.
+featured: false
+logo_url: ""
+name: civo
+native: false
+package_status: ga
+publisher: Pulumi
+repo_url: https://github.com/pulumi/pulumi-civo
+schema_file_path: /provider/cmd/pulumi-resource-civo/schema.json
+title: Civo
+updated_on: 1636379054
+version: v2.0.0

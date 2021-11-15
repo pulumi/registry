@@ -1,12 +1,14 @@
-name: aws-apigateway
-title: AWS API Gateway
-description: ""
-logo_url: ""
-updated_on: 1634152498
-publisher: Pulumi
 category: Cloud
-package_status: public_preview
-version: v0.0.4
-featured: false
-native: false
 component: true
+description: ""
+featured: false
+logo_url: ""
+name: aws-apigateway
+native: false
+package_status: public_preview
+publisher: Pulumi
+repo_url: "https://github.com/pulumi/pulumi-aws-apigateway"
+schema_file_path: /schema.yaml
+title: AWS API Gateway
+updated_on: 1634152498
+version: v0.0.4

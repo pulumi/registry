@@ -1,12 +1,14 @@
-name: akamai
-title: Akamai
-description: A Pulumi package for creating and managing akamai cloud resources.
-logo_url: ""
-updated_on: 1632763461
-publisher: Pulumi
 category: Network
-package_status: ga
-version: v2.4.0
-featured: false
-native: false
 component: false
+description: A Pulumi package for creating and managing akamai cloud resources.
+featured: false
+logo_url: ""
+name: akamai
+native: false
+package_status: ga
+publisher: Pulumi
+repo_url: https://github.com/pulumi/pulumi-akamai
+schema_file_path: /provider/cmd/pulumi-resource-akamai/schema.json
+title: Akamai
+updated_on: 1632763461
+version: v2.4.0

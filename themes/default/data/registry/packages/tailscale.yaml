@@ -1,12 +1,14 @@
-name: tailscale
-title: tailscale
-description: A Pulumi package for creating and managing Tailscale cloud resources.
-logo_url: ""
-updated_on: 1635447151
-publisher: Pulumi
-category: Infrastructure
-package_status: ga
-version: v0.1.0
-featured: false
-native: false
+category: Cloud
 component: false
+description: A Pulumi package for creating and managing xyz cloud resources.
+featured: false
+logo_url: ""
+name: tailscale
+native: false
+package_status: public_preview
+publisher: Pulumi
+repo_url: https://github.com/pulumi/pulumi-tailscale
+schema_file_path: /provider/cmd/pulumi-resource-tailscale/schema.json
+title: tailscale
+updated_on: 1635447151
+version: v0.1.0

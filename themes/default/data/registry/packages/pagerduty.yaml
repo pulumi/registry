@@ -1,12 +1,14 @@
-name: pagerduty
-title: PagerDuty
-description: A Pulumi package for creating and managing pagerduty cloud resources.
-logo_url: ""
-updated_on: 1636663400
-publisher: Pulumi
 category: Infrastructure
-package_status: ga
-version: v3.1.0
-featured: false
-native: false
 component: false
+description: A Pulumi package for creating and managing pagerduty cloud resources.
+featured: false
+logo_url: ""
+name: pagerduty
+native: false
+package_status: ga
+publisher: Pulumi
+repo_url: https://github.com/pulumi/pulumi-pagerduty
+schema_file_path: /provider/cmd/pulumi-resource-pagerduty/schema.json
+title: PagerDuty
+updated_on: 1636663400
+version: v3.1.0

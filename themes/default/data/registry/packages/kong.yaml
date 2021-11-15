@@ -1,12 +1,14 @@
-name: kong
-title: Kong
-description: A Pulumi package for creating and managing Kong resources.
-logo_url: ""
-updated_on: 1636658835
-publisher: Pulumi
 category: Infrastructure
-package_status: ga
-version: v4.4.0
-featured: false
-native: false
 component: false
+description: A Pulumi package for creating and managing Kong resources.
+featured: false
+logo_url: ""
+name: kong
+native: false
+package_status: ga
+publisher: Pulumi
+repo_url: https://github.com/pulumi/pulumi-kong
+schema_file_path: /provider/cmd/pulumi-resource-kong/schema.json
+title: Kong
+updated_on: 1636658835
+version: v4.4.0

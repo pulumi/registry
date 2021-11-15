@@ -1,12 +1,14 @@
-name: yandex
-title: Yandex
-description: A Pulumi package for creating and managing yandex cloud resources.
-logo_url: ""
-updated_on: 1636656630
-publisher: Pulumi
 category: Cloud
-package_status: public_preview
-version: v0.9.0
-featured: false
-native: false
 component: false
+description: A Pulumi package for creating and managing yandex cloud resources.
+featured: false
+logo_url: ""
+name: yandex
+native: false
+package_status: public_preview
+publisher: Pulumi
+repo_url: https://github.com/pulumi/pulumi-yandex
+schema_file_path: /provider/cmd/pulumi-resource-yandex/schema.json
+title: Yandex
+updated_on: 1636656630
+version: v0.9.0

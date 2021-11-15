@@ -1,12 +1,14 @@
-name: fastly
-title: Fastly
-description: A Pulumi package for creating and managing fastly cloud resources.
-logo_url: ""
-updated_on: 1636972951
-publisher: Pulumi
 category: Cloud
-package_status: ga
-version: v3.9.0
-featured: false
-native: false
 component: false
+description: A Pulumi package for creating and managing fastly cloud resources.
+featured: false
+logo_url: ""
+name: fastly
+native: false
+package_status: ga
+publisher: Pulumi
+repo_url: https://github.com/pulumi/pulumi-fastly
+schema_file_path: /provider/cmd/pulumi-resource-fastly/schema.json
+title: Fastly
+updated_on: 1636972951
+version: v3.9.0

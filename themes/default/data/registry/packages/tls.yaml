@@ -1,12 +1,14 @@
-name: tls
-title: TLS
-description: A Pulumi package to create TLS resources in Pulumi programs.
-logo_url: ""
-updated_on: 1618839216
-publisher: Pulumi
 category: Utility
-package_status: ga
-version: v4.0.0
-featured: false
-native: false
 component: false
+description: A Pulumi package to create TLS resources in Pulumi programs.
+featured: false
+logo_url: ""
+name: tls
+native: false
+package_status: ga
+publisher: Pulumi
+repo_url: https://github.com/pulumi/pulumi-tls
+schema_file_path: /provider/cmd/pulumi-resource-tls/schema.json
+title: TLS
+updated_on: 1618839216
+version: v4.0.0

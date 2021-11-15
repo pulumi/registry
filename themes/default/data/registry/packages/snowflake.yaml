@@ -1,12 +1,14 @@
-name: snowflake
-title: Snowflake
-description: A Pulumi package for creating and managing snowflake cloud resources.
-logo_url: ""
-updated_on: 1636484254
-publisher: Pulumi
 category: Infrastructure
-package_status: public_preview
-version: v0.3.0
-featured: false
-native: false
 component: false
+description: A Pulumi package for creating and managing snowflake cloud resources.
+featured: false
+logo_url: ""
+name: snowflake
+native: false
+package_status: public_preview
+publisher: Pulumi
+repo_url: https://github.com/pulumi/pulumi-snowflake
+schema_file_path: /provider/cmd/pulumi-resource-snowflake/schema.json
+title: Snowflake
+updated_on: 1636484254
+version: v0.3.0

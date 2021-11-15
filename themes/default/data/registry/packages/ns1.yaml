@@ -1,12 +1,14 @@
-name: ns1
-title: NS1
-description: A Pulumi package for creating and managing ns1 cloud resources.
-logo_url: ""
-updated_on: 1636661998
-publisher: Pulumi
 category: Network
-package_status: ga
-version: v2.3.0
-featured: false
-native: false
 component: false
+description: A Pulumi package for creating and managing ns1 cloud resources.
+featured: false
+logo_url: ""
+name: ns1
+native: false
+package_status: ga
+publisher: Pulumi
+repo_url: https://github.com/pulumi/pulumi-ns1
+schema_file_path: /provider/cmd/pulumi-resource-ns1/schema.json
+title: NS1
+updated_on: 1636661998
+version: v2.3.0

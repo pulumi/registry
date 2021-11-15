@@ -1,12 +1,14 @@
-name: mysql
-title: MySQL
-description: A Pulumi package for creating and managing mysql cloud resources.
-logo_url: ""
-updated_on: 1636661748
-publisher: Pulumi
 category: Database
-package_status: ga
-version: v3.1.0
-featured: false
-native: false
 component: false
+description: A Pulumi package for creating and managing mysql cloud resources.
+featured: false
+logo_url: ""
+name: mysql
+native: false
+package_status: ga
+publisher: Pulumi
+repo_url: https://github.com/pulumi/pulumi-mysql
+schema_file_path: /provider/cmd/pulumi-resource-mysql/schema.json
+title: MySQL
+updated_on: 1636661748
+version: v3.1.0

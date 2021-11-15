@@ -1,12 +1,14 @@
-name: mongodbatlas
-title: MongoDB Atlas
-description: A Pulumi package for creating and managing mongodbatlas cloud resources.
-logo_url: ""
-updated_on: 1635777723
-publisher: Pulumi
 category: Database
-package_status: ga
-version: v3.0.1
-featured: false
-native: false
 component: false
+description: A Pulumi package for creating and managing mongodbatlas cloud resources.
+featured: false
+logo_url: ""
+name: mongodbatlas
+native: false
+package_status: ga
+publisher: Pulumi
+repo_url: https://github.com/pulumi/pulumi-mongodbatlas
+schema_file_path: /provider/cmd/pulumi-resource-mongodbatlas/schema.json
+title: MongoDB Atlas
+updated_on: 1635777723
+version: v3.0.1

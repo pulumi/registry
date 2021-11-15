@@ -1,12 +1,14 @@
-name: vsphere
-title: vSphere
-description: A Pulumi package for creating vsphere resources
-logo_url: ""
-updated_on: 1626096955
-publisher: Pulumi
 category: Cloud
-package_status: ga
-version: v4.0.1
-featured: false
-native: false
 component: false
+description: A Pulumi package for creating vsphere resources
+featured: false
+logo_url: ""
+name: vsphere
+native: false
+package_status: ga
+publisher: Pulumi
+repo_url: https://github.com/pulumi/pulumi-vsphere
+schema_file_path: /provider/cmd/pulumi-resource-vsphere/schema.json
+title: vSphere
+updated_on: 1626096955
+version: v4.0.1

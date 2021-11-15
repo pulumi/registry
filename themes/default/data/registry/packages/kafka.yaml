@@ -1,12 +1,14 @@
-name: kafka
-title: Kafka
-description: A Pulumi package for creating and managing Kafka.
-logo_url: ""
-updated_on: 1636658519
-publisher: Pulumi
 category: Infrastructure
-package_status: ga
-version: v3.1.0
-featured: false
-native: false
 component: false
+description: A Pulumi package for creating and managing Kafka.
+featured: false
+logo_url: ""
+name: kafka
+native: false
+package_status: ga
+publisher: Pulumi
+repo_url: https://github.com/pulumi/pulumi-kafka
+schema_file_path: /provider/cmd/pulumi-resource-kafka/schema.json
+title: Kafka
+updated_on: 1636658519
+version: v3.1.0

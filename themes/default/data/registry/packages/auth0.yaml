@@ -1,12 +1,14 @@
-name: auth0
-title: Auth0
-description: A Pulumi package for creating and managing auth0 cloud resources.
-logo_url: ""
-updated_on: 1622119559
-publisher: Pulumi
 category: Infrastructure
-package_status: ga
-version: v2.2.0
-featured: false
-native: false
 component: false
+description: A Pulumi package for creating and managing auth0 cloud resources.
+featured: false
+logo_url: ""
+name: auth0
+native: false
+package_status: ga
+publisher: Pulumi
+repo_url: https://github.com/pulumi/pulumi-auth0
+schema_file_path: /provider/cmd/pulumi-resource-auth0/schema.json
+title: Auth0
+updated_on: 1622119559
+version: v2.2.0

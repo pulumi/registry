@@ -1,15 +1,17 @@
-name: azure
-title: Azure Classic
+category: Cloud
+component: false
 description: A Pulumi package for creating and managing Microsoft Azure cloud resources,
   based on the Terraform azurerm provider. We recommend using the [Azure Native provider](https://github.com/pulumi/pulumi-azure-native)
   to provision Azure infrastructure. Azure Native provides complete coverage of Azure
   resources and same-day access to new resources and resource updates.
-logo_url: ""
-updated_on: 1636154973
-publisher: Pulumi
-category: Cloud
-package_status: ga
-version: v4.26.0
 featured: false
+logo_url: ""
+name: azure
 native: false
-component: false
+package_status: ga
+publisher: Pulumi
+repo_url: https://github.com/pulumi/pulumi-azure
+schema_file_path: /provider/cmd/pulumi-resource-azure/schema.json
+title: Azure Classic
+updated_on: 1636154973
+version: v4.26.0

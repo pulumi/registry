@@ -1,12 +1,14 @@
-name: newrelic
-title: New Relic
-description: A Pulumi package for creating and managing New Relic resources.
-logo_url: ""
-updated_on: 1636661939
-publisher: Pulumi
 category: Monitoring
-package_status: ga
-version: v4.7.0
-featured: false
-native: false
 component: false
+description: A Pulumi package for creating and managing New Relic resources.
+featured: false
+logo_url: ""
+name: newrelic
+native: false
+package_status: ga
+publisher: Pulumi
+repo_url: https://github.com/pulumi/pulumi-newrelic
+schema_file_path: /provider/cmd/pulumi-resource-newrelic/schema.json
+title: New Relic
+updated_on: 1636661939
+version: v4.7.0

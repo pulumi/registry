@@ -1,0 +1,14 @@
+category: Cloud
+component: false
+description: A Pulumi package for creating and managing artifactory cloud resources.
+featured: false
+logo_url: ""
+name: artifactory
+native: false
+repo_url: https://github.com/pulumi/pulumi-artifactory
+schema_file_path: /provider/cmd/pulumi-resource-artifactory/schema.json
+publisher: Pulumi
+package_status: ga
+title: artifactory
+updated_on: 1637006214
+version: v0.1.0

@@ -109,14 +109,7 @@ resourcedocsgen docs registry "<package name>" \
     --logtostderr
 ```
 
-or if you prefer, using a specific commit hash
-```
-resourcedocsgen docs registry "<package name>" \
-    --commitSha "${PR_COMMIT_HASH}" \
-    --baseDocsOutDir "themes/default/content/registry/packages" \
-    --basePackageTreeJSONOutDir "themes/default/static/registry/packages/navs" \
-    --logtostderr
-```
+or if you prefer using a specific commit hash use the `--commitSha` flag instead.
 
 Run `resourcedocsgen docs registry --help` for help regarding its use. The README for the [`resourcedocsgen`](https://github.com/pulumi/docs/blob/master/tools/resourcedocsgen/README.md) tool has more info on generating API docs.
 

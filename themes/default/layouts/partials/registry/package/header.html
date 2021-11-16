@@ -3,7 +3,7 @@
 {{ $packageSection := index (split (index $directories 3) ".") 0 }}
 
 {{ $packageHome := path.Join "registry/packages" $packageName }}
-{{ $tutorialsPath := printf "%v" (delimit (slice "/registry/packages/" $packageName "/how-to-guides") "") }}
+{{ $tutorialsPath := printf "%v" (delimit (slice "/registry/packages/" $packageName "/how-to-guides/") "") }}
 
 {{ $guidesCount := 0 }}
 {{ if fileExists $tutorialsPath }}

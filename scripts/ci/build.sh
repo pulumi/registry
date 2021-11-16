@@ -19,6 +19,6 @@ resourcedocsgen docs registry \
 printf "Running Hugo...\n\n"
 export REPO_THEME_PATH="themes/default/"
 export HUGO_BASEURL="http://$(origin_bucket_prefix)-$(build_identifier).s3-website.$(aws_region).amazonaws.com"
-hugo --minify --templateMetrics --buildDrafts --buildFuture -e "preview" | grep -v -e 'WARN .* REF_NOT_FOUND'
+GOGC=5 hugo --minify --templateMetrics --buildDrafts --buildFuture -e "preview" | grep -v -e 'WARN .* REF_NOT_FOUND'
 
 printf "Done!\n\n"

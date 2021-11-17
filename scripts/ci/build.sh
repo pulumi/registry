@@ -7,14 +7,23 @@ source ./scripts/ci/common.sh
 # URL to the Pulumi conversion service.
 export PULUMI_CONVERT_URL="${PULUMI_CONVERT_URL:-$(pulumi stack output --stack pulumi/tf2pulumi-service/production url)}"
 
-echo "Generating API docs for all packages for PR preview..."
+echo "Generating API docs for featured packages only..."
 echo ""
-go install github.com/pulumi/docs/tools/resourcedocsgen@master
-resourcedocsgen docs registry \
-    --commitSha "$(git_sha_short)" \
-    --baseDocsOutDir "themes/default/content/registry/packages" \
-    --basePackageTreeJSONOutDir "themes/default/static/registry/packages/navs" \
-    --logtostderr
+
+PKGS=(
+    "aws"
+    "azure-native"
+    "gcp"
+    "kubernetes"
+)
+for PKG in "${PKGS[@]}" ; do \
+    go install github.com/pulumi/docs/tools/resourcedocsgen@master
+    resourcedocsgen docs registry ${PKG} \
+        --commitSha "$(git_sha_short)" \
+        --baseDocsOutDir "themes/default/content/registry/packages" \
+        --basePackageTreeJSONOutDir "themes/default/static/registry/packages/navs" \
+        --logtostderr
+done
 
 printf "Running Hugo...\n\n"
 export REPO_THEME_PATH="themes/default/"

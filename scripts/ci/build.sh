@@ -7,19 +7,19 @@ source ./scripts/ci/common.sh
 # URL to the Pulumi conversion service.
 export PULUMI_CONVERT_URL="${PULUMI_CONVERT_URL:-$(pulumi stack output --stack pulumi/tf2pulumi-service/production url)}"
 
-echo "Generating API docs for featured packages only..."
-echo ""
-
 go install github.com/pulumi/docs/tools/resourcedocsgen@master
 
 PKGS=(
+    "aiven"
     "aws"
     "azure-native"
-    "gcp"
-    "kubernetes"
 )
+
+echo "Generating API docs for ${PKGS[*]}..."
+echo ""
+
 for PKG in "${PKGS[@]}" ; do \
-    resourcedocsgen docs registry ${PKG} \
+    resourcedocsgen docs registry "${PKG}" \
         --commitSha "$(git_sha_short)" \
         --baseDocsOutDir "themes/default/content/registry/packages" \
         --basePackageTreeJSONOutDir "themes/default/static/registry/packages/navs" \

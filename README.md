@@ -10,7 +10,7 @@ We’re always eager to expand that index with new [Pulumi Packages](https://www
 
 This repository is a [Hugo module](https://gohugo.io/hugo-modules/) that doubles as a development server to make it easier to work on the pages that make up Pulumi Registry. It contains most of the Hugo `content` and `layouts` files comprising what you see at https://pulumi.com/registry -- but not everything. A few things you won't find in this repository include:
 
-* Package-level API navigation, documentation, and how-to guides. These files are still built and checked into the [pulumi/docs](https://github.com/pulumi/docs) repository. (We're [working on bringing them into this repository](https://github.com/pulumi/registry/issues/237), though.)
+* Package-level how-to guides. These files are still built and checked into the [pulumi/docs](https://github.com/pulumi/docs) repository. (We're [working on bringing them into this repository](https://github.com/pulumi/registry/issues/237), though.)
 
 * JavaScript, CSS, and web components. We build the JavaScript and CSS bundles that power the Pulumi website (and therefore the Registry) in the [pulumi/theme](https://github.com/pulumi/theme) repository.
 
@@ -78,13 +78,40 @@ If you want to link to a page that exists on https://pulumi.com but not in this 
 
 ### Temporarily pulling in content from pulumi/docs
 
-If the change you're working on requires content from pulumi/docs -- e.g., the aforementioned how-to guides or package documentation -- you may want to be able to see some of that content as you develop. To do that, just copy the files you need from the [`content` folder of pulumi/docs](https://github.com/pulumi/docs/tree/master/content) into the `content` folder of this repository (and/or the [`static` folder](https://github.com/pulumi/docs/tree/master/content), if you're working on API Docs changes), if you're looking for the JSON files that power the API Docs navigation), remembering to remove those files before you commit. For example:
+If the change you're working on requires content from pulumi/docs -- e.g., the aforementioned how-to guides -- you may
+want to be able to see some of that content as you develop. To do that, just copy the files you need from the
+[`content` folder of pulumi/docs](https://github.com/pulumi/docs/tree/master/content) into the `content` folder of this
+repository, remembering to remove those files before you commit. For example:
 
 ```
-# Copy the AWS API docs and navigation from a local/sibling clone of pulumi/docs.
-cp -R ../docs/content/registry/packages/aws/api-docs ./themes/default/content/registry/packages/aws/
-cp ../docs/static/registry/packages/navs/aws.json ./themes/default/static/registry/packages/navs/
+# Copy the AWS how-to guides from a local/sibling clone of pulumi/docs.
+cp ../docs/content/registry/packages/aws/how-to-guides ./themes/default/content/registry/packages/aws/
 ```
+
+#### Temporarily generating API docs for packages
+
+The API docs for packages can be generated on-demand using the `resourcedocsgen` tool. The PR build for this repo, for instance,
+generates the API docs for all packages from the latest commit hash of the PR being built. Likewise, as long as your branch
+is pushed up to GH, you can generate API docs using any commit hash from your PR branch locally as well. This is because
+the `resourcedocsgen` will attempt to clone the `registry` repo at the commit hash you specify in a temp location in order
+to read the package metadata files from it.
+
+For example,
+
+```
+go install github.com/pulumi/docs/tools/resourcedocsgen@master
+
+# Generate docs for a single package using your PR branch name locally.
+resourcedocsgen docs registry "<package name>" \
+    --branch "<your PR branch name>" \
+    --baseDocsOutDir "themes/default/content/registry/packages" \
+    --basePackageTreeJSONOutDir "themes/default/static/registry/packages/navs" \
+    --logtostderr
+```
+
+or if you prefer using a specific commit hash use the `--commitSha` flag instead.
+
+Run `resourcedocsgen docs registry --help` for help regarding its use. The README for the [`resourcedocsgen`](https://github.com/pulumi/docs/blob/master/tools/resourcedocsgen/README.md) tool has more info on generating API docs.
 
 Again, just be sure to remove these files before you commit:
 
@@ -93,6 +120,9 @@ Again, just be sure to remove these files before you commit:
 rm -rf ./themes/default/content/registry/packages/aws/api-docs/
 rm -f ./themes/default/static/registry/packages/navs/aws.json
 ```
+
+or if you copied the `how-to-guides` for a package from `docs`, remove the individual markdown files from the respective `how-to-guides` folder for that
+package.
 
 ## Submitting, merging and releasing
 

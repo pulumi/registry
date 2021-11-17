@@ -10,6 +10,8 @@ export PULUMI_CONVERT_URL="${PULUMI_CONVERT_URL:-$(pulumi stack output --stack p
 echo "Generating API docs for featured packages only..."
 echo ""
 
+go install github.com/pulumi/docs/tools/resourcedocsgen@master
+
 PKGS=(
     "aws"
     "azure-native"
@@ -17,7 +19,6 @@ PKGS=(
     "kubernetes"
 )
 for PKG in "${PKGS[@]}" ; do \
-    go install github.com/pulumi/docs/tools/resourcedocsgen@master
     resourcedocsgen docs registry ${PKG} \
         --commitSha "$(git_sha_short)" \
         --baseDocsOutDir "themes/default/content/registry/packages" \

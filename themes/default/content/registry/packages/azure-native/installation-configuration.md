@@ -61,7 +61,7 @@ A Service Principal is an application in Azure Active Directory with three autho
 
 To use a Service Principal, you must first create one. If you already have one, skip this section.
 
-You can create a Service Principal [using the Azure CLI]((https://docs.microsoft.com/en-us/cli/azure/create-an-azure-service-principal-azure-cli?view=azure-cli-latest)), [using the Azure Cloud Shell](https://shell.azure.com/), or [using the Azure Portal](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-create-service-principal-portal?view=azure-cli-latest).
+You can create a Service Principal [using the Azure CLI](https://docs.microsoft.com/en-us/cli/azure/create-an-azure-service-principal-azure-cli?view=azure-cli-latest), [using the Azure Cloud Shell](https://shell.azure.com/), or [using the Azure Portal](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-create-service-principal-portal?view=azure-cli-latest).
 
 After creating a Service Principal, you will obtain three important tokens, mapping to the three shown earlier:
 

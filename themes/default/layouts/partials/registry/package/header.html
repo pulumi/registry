@@ -30,15 +30,15 @@
         <div class="lg:flex mb-4 font-display">
             {{ .version }} published on {{ ((time .updated_on).Format "Monday, Jan 2, 2006") }} by {{ .publisher }}
         </div>
-    {{ end }}
 
-    <div class="flex items-center mb-8">
-        <i class="fab fa-github text-lg"></i>
-        <span class="text-blue-600 flex flex-wrap items-center">
-            <a class="text-blue-600 underline font-display ml-2 mr-1.5" href="https://github.com/pulumi/pulumi-{{ $packageName }}" target="_blank" rel="noopener noreferrer">Source code</a>
-            <i class="fas fa-external-link-alt text-sm"></i>
-        </span>
-    </div>
+        <div class="flex items-center mb-8">
+            <i class="fab fa-github text-lg"></i>
+            <span class="text-blue-600 flex flex-wrap items-center">
+                <a class="text-blue-600 underline font-display ml-2 mr-1.5" href="{{ .repo_url }}" target="_blank" rel="noopener noreferrer">Source code</a>
+                <i class="fas fa-external-link-alt text-sm"></i>
+            </span>
+        </div>
+    {{ end }}
 
     {{ with .GetPage (path.Join "registry/packages" $packageName) }}
         <nav>

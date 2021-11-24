@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-google-native
 schema_file_path: /provider/cmd/pulumi-resource-google-native/schema.json
 title: Google Cloud Native
-updated_on: 1633713130
-version: v0.8.0
+updated_on: 1637741293
+version: v0.9.0

@@ -11,10 +11,6 @@ menu:
         identifier: cloud-providers
         name: Cloud Providers
         weight: 6
-    userguides:
-        identifier: tutorials
-        name: Tutorials
-        weight: 1
 aliases:
     - /registry/packages
     - /docs/tutorials

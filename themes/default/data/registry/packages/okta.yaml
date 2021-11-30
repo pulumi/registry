@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-okta
 schema_file_path: /provider/cmd/pulumi-resource-okta/schema.json
 title: Okta
-updated_on: 1636663263
-version: v3.4.0
+updated_on: 1638259270
+version: v3.5.0

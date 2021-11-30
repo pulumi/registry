@@ -100,17 +100,17 @@ Once you have the Service Principal's authorization tokens, choose one of the wa
 1. Set them using configuration (and remember to pass `--secret` when setting `clientSecret` so that it is properly encrypted):
 
     ```bash
-    $ pulumi config set azure:clientId <clientID>
-    $ pulumi config set azure:clientSecret <clientSecret> --secret
-    $ pulumi config set azure:tenantId <tenantID>
-    $ pulumi config set azure:subscriptionId <subscriptionId>
+    $ pulumi config set azure-native:clientId <clientID>
+    $ pulumi config set azure-native:clientSecret <clientSecret> --secret
+    $ pulumi config set azure-native:tenantId <tenantID>
+    $ pulumi config set azure-native:subscriptionId <subscriptionId>
     ```
 
 1. Set the environment variables `ARM_CLIENT_ID`, `ARM_CLIENT_SECRET`, `ARM_TENANT_ID`, and `ARM_SUBSCRIPTION_ID`
 
 ## Configuration options
 
-Use `pulumi config set azure:<option>` or pass options to the [constructor of `new azure-native.Provider`]({{< relref "/registry/packages/azure-native/api-docs/provider" >}}).
+Use `pulumi config set azure-native:<option>` or pass options to the [constructor of `new azure-native.Provider`]({{< relref "/registry/packages/azure-native/api-docs/provider" >}}).
 
 | Option                      | Required/Optional | Description                                                                                                                                                                                                                                         |
 |-----------------------------|-------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|

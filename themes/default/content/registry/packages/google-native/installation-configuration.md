@@ -23,7 +23,6 @@ To provision resources with the Pulumi Google Cloud Provider, you need to have G
 If you are using Pulumi in an non-interactive setting (such as a CI/CD system) you will need to [configure and use a service account]({{< relref "service-account" >}}) instead.
 {{% /notes %}}
 
-
 Use `pulumi config set google-native:<option>` or pass options to the [constructor of `new Provider`]({{< relref "/registry/packages/google-native/api-docs/provider" >}}).
 
 | Option        | Required/Optional | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |

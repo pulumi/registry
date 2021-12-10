@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-confluent
 schema_file_path: /provider/cmd/pulumi-resource-confluent/schema.json
 title: Confluent Cloud
-updated_on: 1638259032
-version: v0.2.1
+updated_on: 1639155544
+version: v0.2.2

@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-sumologic
 schema_file_path: /provider/cmd/pulumi-resource-sumologic/schema.json
 title: Sumo Logic
-updated_on: 1637261618
-version: v0.3.0
+updated_on: 1640018682
+version: v0.4.1

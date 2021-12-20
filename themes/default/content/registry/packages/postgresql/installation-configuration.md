@@ -35,7 +35,7 @@ In order to communicate your configuration details to Pulumi:
 
     ```bash
     $ pulumi config set postgresql:host XXXXXXXXXXXXXX
-    $ pulumi config set postgresql:user YYYYYYYYYYYYYY
+    $ pulumi config set postgresql:username YYYYYYYYYYYYYY
     ```
 
 If you are going to set `postgresql:password`, please remember to pass `--secret` so that it is properly encrypted. The complete list of

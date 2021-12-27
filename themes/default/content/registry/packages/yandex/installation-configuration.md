@@ -37,7 +37,7 @@ Once the credetials are obtained, there are two ways to communicate your configu
     ```bash
     $ pulumi config set yandex:token XXXXXX --secret
     $ pulumi config set yandex:cloudId YYYYYY
-    $ pulumi config set yandex:yandex:folderId ZZZZZZ
+    $ pulumi config set yandex:folderId ZZZZZZ
     ```
 
 The complete list of

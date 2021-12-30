@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-equinix-metal
 schema_file_path: /provider/cmd/pulumi-resource-equinix-metal/schema.json
 title: Equinix Metal
-updated_on: 1637247732
-version: v3.2.0
+updated_on: 1640872106
+version: v3.2.1

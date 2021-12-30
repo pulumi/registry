@@ -48,7 +48,7 @@ export const output = random.stdout;
 package main
 
 import (
-	"github.com/pulumi/pulumi-command/sdk/v3/go/command/local"
+	"github.com/pulumi/pulumi-command/sdk/go/command/local"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -81,6 +81,10 @@ Note that implicit and explicit (`dependsOn`) dependencies can be used to contro
 Because the `Command` and `CopyFile` resources replace on changes to their connection, if the EC2 instance is replaced, the commands will all re-run on the new instance (and the `delete` operations will run on the old instance).
 
 Note also that `deleteBeforeReplace` can be composed with `Command` resources to ensure that the `delete` operation on an "old" instance is run before the `create` operation of the new instance, in case a scarce resource is managed by the command.  Similarly, other resource options can naturally be applied to `Command` resources, like `ignoreChanges`.
+
+{{< chooser language "typescript" >}}
+
+{{% choosable language typescript %}}
 
 ```ts
 import { interpolate, Config } from "@pulumi/pulumi";
@@ -161,6 +165,10 @@ export const publicHostName = server.publicDns;
 export const hostnameStdout = hostname.stdout;
 ```
 
+{{% /choosable %}}
+
+{{< /chooser >}}
+
 ### Invoking a Lambda during Pulumi deployment
 
 There may be cases where it is useful to run some code within an AWS Lambda or other serverless function during the deployment.  For example, this may allow running some code from within a VPC, or with a specific role, without needing to have persistent compute available (such as the EC2 example above).
@@ -168,6 +176,10 @@ There may be cases where it is useful to run some code within an AWS Lambda or o
 Note that the Lambda function itself can be created within the same Pulumi program, and then invoked after creation.
 
 The example below simply creates some random value within the Lambda, which is a very roundabout way of doing the same thing as the first "random" example above, but this pattern can be used for more complex scenarios where the Lambda does things a local script could not.
+
+{{< chooser language "typescript" >}}
+
+{{% choosable language typescript %}}
 
 ```ts
 import { local } from "@pulumi/command";
@@ -193,11 +205,19 @@ const rand = new local.Command("execf", {
 export const output = rand.stdout;
 ```
 
+{{% /choosable %}}
+
+{{< /chooser >}}
+
 ### Using `local.Command` with CURL to manage external REST API
 
 This example uses `local.Command` to create a simple resource provider for managing GitHub labels, by invoking `curl` commands on `create` and `delete` commands against the GitHub REST API.  A similar approach could be applied to build other simple providers against any REST API directly from within Pulumi programs in any language.  This approach is somewhat limited by the fact that `local.Command` does not yet support `diff`/`update`/`read`.  Support for those may be [added in the future](https://github.com/pulumi/pulumi-command/issues/20).
 
 This example also shows how `local.Command` can be used as an implementation detail inside a nicer abstraction, like the `GitHubLabel` component defined below.
+
+{{< chooser language "typescript" >}}
+
+{{% choosable language typescript %}}
 
 ```ts
 import * as pulumi from "@pulumi/pulumi";
@@ -246,6 +266,10 @@ const label = new GitHubLabel("l", {
 export const labelUrl = label.url;
 ```
 
+{{% /choosable %}}
+
+{{< /chooser >}}
+
 ```sh
 # create_label.sh
 curl \
@@ -271,6 +295,10 @@ curl \
 
 There are cases where it's important to run some cleanup operation before destroying a resource, in case destroying the resource does not properly handle orderly cleanup.  For example, destroying an EKS Cluster will not ensure that all Kubernetes object finalizers are run, which may lead to leaking external resources managed by those Kubernetes resources.  This example shows how we can use a `delete`-only `Command` to ensure some cleanup is run within a cluster before destroying it.
 
+{{< chooser language "typescript" >}}
+
+{{% choosable language typescript %}}
+
 ```ts
 import { local } from "@pulumi/command";
 import * as eks from "@pulumi/eks";
@@ -289,3 +317,7 @@ const cleanupKubernetesNamespaces = new local.Command("cleanupKubernetesNamespac
     },
 });
 ```
+
+{{% /choosable %}}
+
+{{< /chooser >}}

@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-azuredevops
 schema_file_path: /provider/cmd/pulumi-resource-azuredevops/schema.json
 title: Azure DevOps
-updated_on: 1637596080
-version: v2.3.0
+updated_on: 1640872135
+version: v2.3.1

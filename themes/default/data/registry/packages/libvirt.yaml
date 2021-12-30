@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-libvirt
 schema_file_path: /provider/cmd/pulumi-resource-libvirt/schema.json
 title: libvirt
-updated_on: 1636661660
-version: v0.2.0
+updated_on: 1640888238
+version: v0.2.1

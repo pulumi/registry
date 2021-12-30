@@ -19,7 +19,7 @@ Some users may have experience with Terraform "provisioners", and the Command pa
 You can use the Command package from a Pulumi program written in any Pulumi language: C#, Go, JavaScript/TypeScript, and Python.
 You'll need to [install and configure the Pulumi CLI](https://pulumi.com/docs/get-started/install) if you haven't already.
 
-> **NOTE**: The Command package is in preview.  The API design may change ahead of general availability based on [user feedback](https://github.com/pulumi/pulumi-command/issues). 
+> **NOTE**: The Command package is in preview.  The API design may change ahead of general availability based on [user feedback](https://github.com/pulumi/pulumi-command/issues).
 
 ## Examples
 
@@ -43,7 +43,6 @@ export const output = random.stdout;
 
 {{% /choosable %}}
 {{% choosable language go %}}
-
 
 ```go
 package main
@@ -72,7 +71,6 @@ func main() {
 {{% /choosable %}}
 
 {{< /chooser >}}
-
 
 ### Remote provisioning of an EC2 instance
 
@@ -167,7 +165,7 @@ export const hostnameStdout = hostname.stdout;
 
 There may be cases where it is useful to run some code within an AWS Lambda or other serverless function during the deployment.  For example, this may allow running some code from within a VPC, or with a specific role, without needing to have persistent compute available (such as the EC2 example above).
 
-Note that the Lambda function itself can be created within the same Pulumi program, and then invoked after creation.  
+Note that the Lambda function itself can be created within the same Pulumi program, and then invoked after creation.
 
 The example below simply creates some random value within the Lambda, which is a very roundabout way of doing the same thing as the first "random" example above, but this pattern can be used for more complex scenarios where the Lambda does things a local script could not.
 
@@ -195,7 +193,7 @@ const rand = new local.Command("execf", {
 export const output = rand.stdout;
 ```
 
-### Using `local.Command `with CURL to manage external REST API
+### Using `local.Command` with CURL to manage external REST API
 
 This example uses `local.Command` to create a simple resource provider for managing GitHub labels, by invoking `curl` commands on `create` and `delete` commands against the GitHub REST API.  A similar approach could be applied to build other simple providers against any REST API directly from within Pulumi programs in any language.  This approach is somewhat limited by the fact that `local.Command` does not yet support `diff`/`update`/`read`.  Support for those may be [added in the future](https://github.com/pulumi/pulumi-command/issues/20).
 
@@ -283,7 +281,7 @@ const cluster = new eks.Cluster("cluster", {});
 
 // We could also use `RemoteCommand` to run this from within a node in the cluster
 const cleanupKubernetesNamespaces = new local.Command("cleanupKubernetesNamespaces", {
-    // This will run before the cluster is destroyed.  Everything else will need to 
+    // This will run before the cluster is destroyed.  Everything else will need to
     // depend on this resource to ensure this cleanup doesn't happen too early.
     delete: "kubectl delete --all namespaces",
     environment: {

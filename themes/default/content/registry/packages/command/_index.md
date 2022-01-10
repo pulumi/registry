@@ -94,6 +94,8 @@ random = local.Command("random",
 pulumi.export("random", random.stdout)
 ```
 
+{{% /choosable %}}
+
 {{% choosable language go %}}
 
 ```go

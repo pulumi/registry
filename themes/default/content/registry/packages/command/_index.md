@@ -27,7 +27,21 @@ You'll need to [install and configure the Pulumi CLI](https://pulumi.com/docs/ge
 
 The simplest use case for `local.Command` is to just run a command on `create`, which can return some value which will be stored in the state file, and will be persistent for the life of the stack (or until the resource is destroyed or replaced).  The example below uses this as an alternative to the `random` package to create some randomness which is stored in Pulumi state.
 
-{{< chooser language "typescript,go" >}}
+{{< chooser language "javascript,typescript,python,go,csharp" >}}
+
+{{% choosable language javascript %}}
+
+```js
+const command = require("@pulumi/command");
+
+const random = new command.local.Command("random", {
+    create: "openssl rand -hex 16"
+});
+
+exports.output = random.stdout;
+```
+
+{{% /choosable %}}
 
 {{% choosable language typescript %}}
 
@@ -42,6 +56,46 @@ export const output = random.stdout;
 ```
 
 {{% /choosable %}}
+{{% choosable language csharp %}}
+
+```csharp
+using Pulumi;
+using Pulumi.Command.Local;
+
+class MyStack : Stack
+{
+    public MyStack()
+    {
+        var command = new Command("random", new CommandArgs
+        {
+            Create = "openssl rand -hex 16"
+        });
+
+        this.StdOut = command.Stdout;
+    }
+
+    [Output]
+    public Output<string> StdOut {get;set;}
+}
+```
+
+{{% /choosable %}}
+
+{{% choosable language python %}}
+
+```python
+import pulumi
+from pulumi_command import local
+
+random = local.Command("random",
+    create="openssl rand -hex 16"
+)
+
+pulumi.export("random", random.stdout)
+```
+
+{{% /choosable %}}
+
 {{% choosable language go %}}
 
 ```go

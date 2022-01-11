@@ -1,0 +1,14 @@
+category: Infrastructure
+component: false
+description: A Pulumi package for creating and managing scaleway cloud resources.
+featured: false
+logo_url: "https://raw.githubusercontent.com/jaxxstorm/pulumi-scaleway/master/assets/scaleway-svgrepo-com.svg"
+name: scaleway
+native: false
+package_status: public_preview
+publisher: jaxxstorm
+repo_url: https://github.com/jaxxstorm/pulumi-scaleway
+schema_file_path: /provider/cmd/pulumi-resource-scaleway/schema.json
+title: scaleway
+updated_on: 1641860860
+version: v0.1.7

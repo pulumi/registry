@@ -13,6 +13,16 @@ The Pulumi Scaleway provider is available as a package in all Pulumi languages:
 * Go: [`github.com/jaxxstorm/pulumi-scaleway/sdk/go/scaleway`](https://pkg.go.dev/github.com/jaxxstorm/pulumi-scaleway/sdk)
 * .NET: [`Pulumi.Scaleway`](https://www.nuget.org/packages/Pulumi.Scaleway)
 
+### Provider Binary
+
+The Scaleway provider binary is a third party binary. It can be installed using the `pulumi plugin` command.
+
+```bash
+pulumi plugin install resource scaleway v0.1.7 --server https://dl.briggs.work/pulumi/releases/plugins
+```
+
+Replace the version string with your desired version.
+
 ## Setup
 
 To provision resources with the Pulumi Scaleway provider, you need to have Scaleway credentials. Scaleway maintains documentation on how to create API keys [here](https://www.scaleway.com/en/docs/console/my-project/how-to/generate-api-key/)

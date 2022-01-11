@@ -8,7 +8,7 @@ layout: installation
 
 The Pulumi Scaleway provider is available as a package in all Pulumi languages:
 
-* JavaScript/TypeScript: [`@pulumi/scaleway`](https://www.npmjs.com/package/@jaxxstorm/scaleway)
+* JavaScript/TypeScript: [`@jaxxstorm/pulumi-scaleway`](https://www.npmjs.com/package/@jaxxstorm/scaleway)
 * Python: [`pulumi_scaleway`](https://pypi.org/project/pulumi-scaleway/)
 * Go: [`github.com/jaxxstorm/pulumi-scaleway/sdk/go/scaleway`](https://pkg.go.dev/github.com/jaxxstorm/pulumi-scaleway/sdk)
 * .NET: [`Pulumi.Scaleway`](https://www.nuget.org/packages/Pulumi.Scaleway)

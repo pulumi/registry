@@ -6,7 +6,7 @@ logo_url: ""
 name: scaleway
 native: false
 package_status: public_preview
-publisher: jaxxstorm
+publisher: Lee Briggs
 repo_url: https://github.com/jaxxstorm/pulumi-scaleway
 schema_file_path: /provider/cmd/pulumi-resource-scaleway/schema.json
 title: scaleway

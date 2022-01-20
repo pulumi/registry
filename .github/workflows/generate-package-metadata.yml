@@ -1,0 +1,32 @@
+name: Check for Community Package Updates
+on:
+  - workflow_dispatch
+env:
+  GITHUB_TOKEN: ${{ secrets.PULUMI_BOT_TOKEN }}
+jobs:
+  generate-packages-list:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - id: set-matrix
+        run: echo "::set-output name=matrix::$(python generate_package_list.py)'"
+        working-directory: community-packages
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+
+  check-for-package-update:
+    needs: generate-packages-list
+    runs-on: ubuntu-latest
+    strategy:
+      # GitHub recommends only issuing 1 API request per second, and never
+      # concurrently.  For more information, see:
+      # https://docs.github.com/en/rest/guides/best-practices-for-integrators#dealing-with-secondary-rate-limits
+      max-parallel: 1
+      matrix: ${{fromJson(needs.generate-packages-list.outputs.matrix)}}
+    steps:
+      - name: Provider RepoSlug
+        run: echo ${{ matrix.repoSlug }}
+      - name: SchemaFile
+        run: echo ${{ matrix.schemaFile }}
+      - name: Sleep to prevent hitting secondary rate limits
+        run: sleep 1

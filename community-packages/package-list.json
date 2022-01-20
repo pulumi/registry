@@ -1,0 +1,8 @@
+{
+  "include": [
+    {
+      "repoSlug": "jaxxstorm/pulumi-scaleway",
+      "schemaFile": "provider/cmd/pulumi-resource-scaleway/schema.json"
+    }
+  ]
+}

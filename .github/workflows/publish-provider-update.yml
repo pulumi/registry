@@ -34,7 +34,6 @@ jobs:
       - name: Create registry PR
         uses: peter-evans/create-pull-request@v3
         with:
-          path: registry
           token: ${{ secrets.PULUMI_BOT_TOKEN }}
           committer: Pulumi Bot <bot@pulumi.com>
           author: Pulumi Bot <bot@pulumi.com>

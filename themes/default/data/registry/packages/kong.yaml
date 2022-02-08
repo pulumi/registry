@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-kong
 schema_file_path: /provider/cmd/pulumi-resource-kong/schema.json
 title: Kong
-updated_on: 1636658835
-version: v4.4.0
+updated_on: 1644339627
+version: v4.4.1

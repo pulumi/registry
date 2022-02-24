@@ -65,14 +65,14 @@ import (
 
 func main() {
 	pulumi.Run(func(ctx *pulumi.Context) error {
-		image, err := docker.NewRemoteImage(ctx, "ubuntu", &docker.RemoteImageArgs{
+		image, err := do.NewRemoteImage(ctx, "ubuntu", &docker.RemoteImageArgs{
 			Name: pulumi.String("ubuntu:precise"),
 		})
 		if err != nil {
 			return err
 		}
 
-		container, err := docker.NewContainer(ctx, "ubuntu", &docker.ContainerArgs{
+		container, err := do.NewContainer(ctx, "ubuntu", &docker.ContainerArgs{
 			Image: image.Latest(),
 		})
 		if err != nil {

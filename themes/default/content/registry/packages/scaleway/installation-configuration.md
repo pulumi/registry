@@ -1,3 +1,4 @@
+
 ---
 title: Scaleway Setup
 meta_desc: Information on how to install the Scaleway provider.
@@ -25,7 +26,7 @@ Replace the version string with your desired version.
 
 ## Setup
 
-To provision resources with the Pulumi Scaleway provider, you need to have Scaleway API credentials. [See the Scaleway documentation](https://www.scaleway.com/en/docs/console/my-project/how-to/generate-api-key/) for details.
+To provision resources with the Pulumi Scaleway provider, you need to have Scaleway credentials. [Scaleway API keys documentation](https://www.scaleway.com/en/docs/console/my-project/how-to/generate-api-key/)
 
 ### Set environment variables
 
@@ -40,6 +41,7 @@ $ export SCW_SECRET_KEY=<SCW_SECRET_KEY>
 ```
 
 {{% /choosable %}}
+
 
 {{% choosable os macos %}}
 
@@ -66,8 +68,9 @@ Use `pulumi config set scaleway:<option>` or pass options to the [constructor of
 
 | Option | Required/Optional | Description |
 |-----|------|----|
-| `access_key`| Required | [Scaleway access key](https://console.scaleway.com/project/credentials) |
+| `access_key`| Required [Scaleway access key](https://console.scaleway.com/project/credentials) |
 | `secret_key`| Required | [Scaleway secret key](https://console.scaleway.com/project/credentials) |
 | `project_id` | Required | The [project ID](https://console.scaleway.com/project/settings) that will be used as default value for all resources. |
-| `region` | Optional | The [region](https://registry.terraform.io/providers/scaleway/scaleway/latest/guides/regions_and_zones#regions) that will be used as default value for all resources. (fr-par if none specified) |
-| `zome` | Optional | The [zone](https://registry.terraform.io/providers/scaleway/scaleway/latest/guides/regions_and_zones#zones) that will be used as default value for all resources. (fr-par-1 if none specified)
+| `region` | Optional | The [project ID](https://console.scaleway.com/project/settings) The [region](https://registry.terraform.io/providers/scaleway/scaleway/latest/guides/regions_and_zones#regions) that will be used as default value for all resources. (fr-par if none specified) |
+
+| `zome` | Optional | The [project ID](https://console.scaleway.com/project/settings) The [zone](https://registry.terraform.io/providers/scaleway/scaleway/latest/guides/regions_and_zones#zones) that will be used as default value for all resources. (fr-par-1 if none specified)

@@ -35,7 +35,7 @@ Once the credetials are obtained, there are two ways to communicate your authori
     $ pulumi config set digitalocean:token XXXXXXXXXXXXXX --secret
     ```
 
-Remember to pass `--secret` when setting `spaces_secret_key` so that it is properly encrypted.
+Remember to pass `--secret` when setting `token` so that it is properly encrypted.
 
 ### Spaces API Credentials
 

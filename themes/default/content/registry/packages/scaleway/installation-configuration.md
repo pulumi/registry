@@ -25,7 +25,7 @@ Replace the version string with your desired version.
 
 ## Setup
 
-To provision resources with the Pulumi Scaleway provider, you need to have Scaleway credentials. Scaleway maintains documentation on how to create API keys [here](https://www.scaleway.com/en/docs/console/my-project/how-to/generate-api-key/)
+To provision resources with the Pulumi Scaleway provider, you need to have Scaleway credentials. [Scaleway API keys documentation](https://www.scaleway.com/en/docs/console/my-project/how-to/generate-api-key/)
 
 ### Set environment variables
 

@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-aiven
 schema_file_path: /provider/cmd/pulumi-resource-aiven/schema.json
 title: Aiven
-updated_on: 1633348450
-version: v4.2.1
+updated_on: 1646125949
+version: v4.4.0

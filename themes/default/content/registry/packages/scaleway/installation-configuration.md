@@ -1,4 +1,3 @@
-
 ---
 title: Scaleway Setup
 meta_desc: Information on how to install the Scaleway provider.
@@ -41,7 +40,6 @@ $ export SCW_SECRET_KEY=<SCW_SECRET_KEY>
 ```
 
 {{% /choosable %}}
-
 
 {{% choosable os macos %}}
 

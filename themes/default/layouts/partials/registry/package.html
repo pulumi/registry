@@ -82,26 +82,29 @@
 
                     <div class="maintainer flex items-center flex-grow justify-end mt-2 absolute bottom-8 h-14">
                         <div class="text-right">
-                            <pulumi-tooltip>
+                            {{ if (eq (.package.publisher) "Pulumi") }}
                                 <div class="flex items-center pt-1">
-                                <span class="pr-2">{{ $packageLabel }}</span>
-                    
-                                {{ if (eq (.package.publisher) "Pulumi") }}
+                                    <pulumi-tooltip>
+                                        <span class="font-display label pr-2">{{ $packageLabel }}</span>
+                                        <span slot="content">
+                                            Package maintained by Pulumi
+                                        </span>
+                                    </pulumi-tooltip>
                                     <img src="/icons/check-verified.svg">
-                                    </div>
-                                    <span slot="content">
-                                        Package maintained by Pulumi
-                                    </span>
-                                {{ end }}
-                    
-                                {{ if not (eq (.package.publisher) "Pulumi") }}
-                                <img src="/icons/people.svg">
                                 </div>
-                                <span slot="content">
-                                    Package contributed by a community member
-                                </span>
-                                {{ end }}
-                            </pulumi-tooltip>
+                            {{ end }}
+                
+                            {{ if not (eq (.package.publisher) "Pulumi") }}
+                                <div class="flex items-center pt-1">
+                                    <pulumi-tooltip>
+                                        <span class="font-display label pr-2">{{ $packageLabel }}</span>
+                                        <span slot="content">
+                                            Package contributed by a community member
+                                        </span>
+                                    </pulumi-tooltip>
+                                    <img src="/icons/people.svg">
+                                </div>
+                            {{ end }}
                         </div>
                     </div>
                 </div>

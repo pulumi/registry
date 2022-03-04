@@ -22,8 +22,40 @@
         </div>
     {{ end }}
 
-    <div class="lg:flex mb-2">
+    <div class="lg:flex mb-2 max-w-5xl">
         <h1 class="text-4xl no-anchor">{{ with .GetPage $packageHome }}{{ .Title }}{{ end }}</h1>
+
+        {{ with (index $.Site.Data.registry.packages ($packageName)) }}
+            <div class="flex-grow justify-end">
+                {{ if (eq (.publisher) "Pulumi") }}
+                    <div class="flex lg:justify-end mt-2.5">
+                        <pulumi-tooltip>
+                            <div class="h-10 flex py-2 px-6 bg-blue-100 bg-opacity-70 rounded-xl items-center">
+                                <span class="font-display pr-2">Pulumi Official</span>
+                                <img src="/icons/check-verified.svg">
+                            </div>
+                            <span slot="content">
+                                Package maintained by Pulumi
+                            </span>
+                        </pulumi-tooltip>
+                    </div>
+                {{ end }}
+
+                {{ if not (eq (.publisher) "Pulumi") }}                      
+                    <div class="flex lg:justify-end mt-2.5">
+                        <pulumi-tooltip>
+                            <div class="h-10 flex py-2 px-6 bg-gray-300 bg-opacity-70 rounded-xl items-center">
+                                <span class="font-display  pr-2">Community</span>
+                                <img src="/icons/people.svg">
+                            </div>
+                            <span slot="content">
+                                Package contributed by a community member
+                            </span>
+                        </pulumi-tooltip>
+                    </div>
+                {{ end }}
+            </div>
+        {{end}}
     </div>
 
     {{ with (index $.Site.Data.registry.packages ($packageName)) }}

@@ -14,6 +14,26 @@ The Event Store Cloud (ESC) provider is available as a package in all Pulumi lan
 
 ## Setup
 
+### Download the provider
+
+For projects that use .NET and Go Pulumi SDK you have to install the provider before trying to update the stack.
+
+Use the following command to add the plugin to your environment:
+
+```
+pulumi plugin install resource eventstorecloud v[version] \
+  --server https://github.com/EventStore/pulumi-eventstorecloud/releases/download/[version]
+```
+
+Example:
+
+```
+pulumi plugin install resource eventstorecloud v0.2.3 \
+  --server https://github.com/EventStore/pulumi-eventstorecloud/releases/download/0.2.3
+```
+
+### Configure the provider
+
 The Pulumi provider needs credentials to authenticate requests from your computer to Event Store Cloud. Your credentials are never sent
 to pulumi.com. The provider needs to be configured with Event Store Cloud credentials before it can be used to create resources.
 

@@ -1,0 +1,14 @@
+category: Infrastructure
+component: false
+description: A Pulumi package for creating and managing Event Store Cloud resources.
+featured: false
+logo_url: ""
+name: eventstorecloud
+native: false
+package_status: ga
+publisher: EventStore
+repo_url: https://github.com/EventStore/pulumi-eventstorecloud
+schema_file_path: /provider/cmd/pulumi-resource-eventstorecloud/schema.json
+title: Event Store Cloud
+updated_on: 1646660233
+version: v0.2.3

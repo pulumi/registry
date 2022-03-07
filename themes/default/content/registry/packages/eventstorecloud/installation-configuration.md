@@ -61,7 +61,7 @@ Once the credentials are obtained, there are two ways to communicate your author
     ```
 
 {{% notes "info" %}}
-Required options can be omitted if you configure them using environment variables. 
+Required options can be omitted if you configure them using environment variables.
 {{% /notes %}}
 
 | Option           | Required/Optional | Description                                                                                             |

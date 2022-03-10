@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-ec
 schema_file_path: /provider/cmd/pulumi-resource-ec/schema.json
 title: ec
-updated_on: 1645814023
-version: v0.3.0
+updated_on: 1646930770
+version: v0.4.0

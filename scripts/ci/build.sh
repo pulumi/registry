@@ -13,6 +13,7 @@ PKGS=(
     "aiven"
     "aws"
     "kubernetes"
+    "google-native"
 )
 
 echo "Generating API docs for ${PKGS[*]}..."

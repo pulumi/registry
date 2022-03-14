@@ -12,6 +12,7 @@ go install github.com/pulumi/docs/tools/resourcedocsgen@master
 PKGS=(
     "aiven"
     "aws"
+    "kubernetes"
 )
 
 echo "Generating API docs for ${PKGS[*]}..."

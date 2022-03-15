@@ -29,7 +29,7 @@ Example:
 
 ```
 pulumi plugin install resource eventstorecloud v0.2.3 \
-  --server https://github.com/EventStore/pulumi-eventstorecloud/releases/download/0.2.3
+  --server https://github.com/EventStore/pulumi-eventstorecloud/releases/download/v0.2.3
 ```
 
 ### Configure the provider

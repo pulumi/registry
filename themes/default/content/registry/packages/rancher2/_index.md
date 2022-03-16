@@ -4,8 +4,10 @@ meta_desc: Provides an overview of the Rancher2 Provider for Pulumi.
 layout: overview
 ---
 
+{{% overview-description %}}
 The Rancher2 provider for Pulumi can be used to provision any of the cloud resources available via [Rancher](https://rancher.com/).
 The Rancher2 provider must be configured with credentials to deploy and update resources for Rancher.
+{{% /overview-description %}}
 
 ## Example
 

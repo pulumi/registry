@@ -4,7 +4,9 @@ meta_desc: Easily create a Miniflux installation on AWS using Pulumi.
 layout: overview
 ---
 
+{{% overview-description %}}
 Easily create an installation of Miniflux, the excellent open-source RSS server, using Pulumi.
+{{% /overview-description %}}
 
 ## Example
 

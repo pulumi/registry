@@ -4,8 +4,10 @@ meta_desc: Provides an overview of the NS1 Provider for Pulumi.
 layout: overview
 ---
 
+{{% overview-description %}}
 The NS1 provider for Pulumi can be used to provision any of the cloud resources available in [NS1](https://www.ns1.com/).
 The NS1 provider must be configured with credentials to deploy and update resources in NS1.
+{{% /overview-description %}}
 
 ## Example
 

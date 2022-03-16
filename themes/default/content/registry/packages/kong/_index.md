@@ -4,8 +4,10 @@ meta_desc: Provides an overview of the Kong Provider for Pulumi.
 layout: overview
 ---
 
+{{% overview-description %}}
 The Kong provider for Pulumi can be used to provision any of the cloud resources available in [Kong](https://konghq.com/kong).
 The Kong provider must be configured with credentials to deploy and update resources in Mailgun.
+{{% /overview-description %}}
 
 ## Example
 

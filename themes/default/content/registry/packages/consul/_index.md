@@ -4,7 +4,9 @@ meta_desc: Provides an overview of the HashiCorp Consul Provider for Pulumi.
 layout: overview
 ---
 
+{{% overview-description %}}
 The HashiCorp Consul provider for Pulumi can be used to provision any of the resources available in [Consul](https://www.consul.io/).
+{{% /overview-description %}}
 
 ## Example
 

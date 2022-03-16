@@ -4,8 +4,10 @@ meta_desc: Provides an overview of the Checkly Provider for Pulumi.
 layout: overview
 ---
 
+{{% overview-description %}}
 The Checkly provider for Pulumi can be used to provision any of the monitoring resources available in [Checkly](https://checklhyhq.com/).
 The Checkly provider must be configured with the an `API Key` and also set the target `Account ID` in order to deploy Checkly resources.
+{{% /overview-description %}}
 
 ## Example
 

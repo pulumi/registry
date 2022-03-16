@@ -4,7 +4,9 @@ meta_desc: Provides an overview of the Docker Provider for Pulumi.
 layout: overview
 ---
 
+{{% overview-description %}}
 The Docker provider for Pulumi can be used to provision any of the resources available in [Docker](https://www.docker.com/).
+{{% /overview-description %}}
 
 ## Example
 

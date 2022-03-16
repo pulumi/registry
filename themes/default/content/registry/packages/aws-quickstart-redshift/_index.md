@@ -4,7 +4,9 @@ meta_desc: Use Pulumi's Component for creating an AWS QuickStart Redshift Cluste
 layout: overview
 ---
 
+{{% overview-description %}}
 Easily create AWS Redshift Cluster based on the AWS QuickStart Redshift guide as a package available in all Pulumi languages.
+{{% /overview-description %}}
 
 ## Example
 

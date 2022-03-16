@@ -4,8 +4,10 @@ meta_desc: Provides an overview of the DNSimple Provider for Pulumi.
 layout: overview
 ---
 
+{{% overview-description %}}
 The DNSimple provider for Pulumi can be used to provision any of the cloud resources available in [DNSimple](https://dnsimple.com/).
 The DNSimple provider must be configured with credentials to deploy and update resources in DNSimple.
+{{% /overview-description %}}
 
 ## Example
 

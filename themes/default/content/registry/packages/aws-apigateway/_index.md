@@ -4,7 +4,9 @@ meta_desc: Easily create AWS API Gateway REST APIs using Pulumi.
 layout: overview
 ---
 
+{{% overview-description %}}
 Easily create AWS API Gateway REST APIs using Pulumi. This component exposes the Crosswalk for AWS functionality documented in the [Pulumi AWS API Gateway guide]({{< relref "/docs/guides/crosswalk/aws/api-gateway" >}}) as a package available in all Pulumi languages.
+{{% /overview-description %}}
 
 Example:
 

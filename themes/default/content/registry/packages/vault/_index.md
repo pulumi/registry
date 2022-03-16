@@ -4,7 +4,9 @@ meta_desc: Provides an overview of the HashiCorp Vault Provider for Pulumi.
 layout: overview
 ---
 
+{{% overview-description %}}
 The HashiCorp Vault provider for Pulumi can be used to provision any of the resources available in [Vault](https://www.vaultproject.io/).
+{{% /overview-description %}}
 
 ## Example
 

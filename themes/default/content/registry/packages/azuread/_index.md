@@ -4,8 +4,10 @@ meta_desc: Provides an overview of the Azure Active Directoy Provider for Pulumi
 layout: overview
 ---
 
+{{% overview-description %}}
 The AzureAD provider for Pulumi can be used to provision any of the Azure Active Directory resources available in [Azure](https://azure.microsoft.com/en-us/).
 The AzureAD provider must be configured with credentials to deploy and update resources in Azure.
+{{% /overview-description %}}
 
 ## Example
 

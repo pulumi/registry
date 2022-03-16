@@ -4,8 +4,10 @@ meta_desc: Provides an overview of the Snowflake Provider for Pulumi.
 layout: overview
 ---
 
+{{% overview-description %}}
 The Snowflake provider for Pulumi can be used to provision any of the cloud resources available in [Snowflake](https://www.snowflake.com/).
 The Snowflake provider must be configured with credentials to deploy and update resources in Snowflake.
+{{% /overview-description %}}
 
 ## Example
 

@@ -4,9 +4,11 @@ meta_desc: Learn how you can use Pulumi's AWS Classic Provider to reduce the com
 layout: overview
 ---
 
+{{% overview-description %}}
 The Amazon Web Services (AWS) provider for Pulumi can provision many of the cloud resources available in [AWS](https://aws.amazon.com/). It uses the AWS SDK to manage and provision resources.
 
 The AWS provider must be configured with credentials to deploy and update resources in AWS; see [Installation & Configuration]({{<relref "./installation-configuration">}}) for instructions.
+{{% /overview-description %}}
 
 **New to Pulumi and AWS?** [Get started with AWS using our tutorial]({{<relref "/docs/get-started/aws">}}).
 

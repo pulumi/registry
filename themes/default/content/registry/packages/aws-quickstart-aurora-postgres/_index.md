@@ -4,7 +4,9 @@ meta_desc: Use Pulumi's Component for creating an AWS QuickStart Aurora Postgres
 layout: overview
 ---
 
+{{% overview-description %}}
 Easily create AWS Aurora Postgres Cluster based on the AWS QuickStart Aurora Postgres guide as a package available in all Pulumi languages.
+{{% /overview-description %}}
 
 ## Example
 

@@ -4,7 +4,9 @@ meta_desc: Use Pulumi's Component for managing NGINX Ingress Controller installa
 layout: overview
 ---
 
+{{% overview-description %}}
 Easily manage NGINX Ingress Controller installations as a package available in all Pulumi languages.
+{{% /overview-description %}}
 
 ## Example
 

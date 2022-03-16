@@ -4,8 +4,10 @@ meta_desc: Provides an overview of the vSphere provider for Pulumi.
 layout: overview
 ---
 
+{{% overview-description %}}
 The vSphere provider for Pulumi can be used to provision any of the cloud resources available in [vSphere](https://www.vmware.com/products/vsphere.html).
 The vSphere provider must be configured with credentials to deploy and update resources in vSphere.
+{{% /overview-description %}}
 
 ## Example
 

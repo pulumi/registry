@@ -4,7 +4,9 @@ meta_desc: Provides an overview of the ElasticCloud Provider for Pulumi.
 layout: overview
 ---
 
+{{% overview-description %}}
 The ElasticCloud provider for Pulumi can be used to provision any of the resources available in [ElasticCloud](https://www.elastic.co/cloud/).
+{{% /overview-description %}}
 
 ## Example
 

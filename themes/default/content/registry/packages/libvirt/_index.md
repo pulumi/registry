@@ -4,9 +4,7 @@ meta_desc: Provides an overview of the libvirt Provider for Pulumi.
 layout: overview
 ---
 
-{{% overview-description %}}
 A Pulumi provider that lets you provision servers on a libvirt host using Pulumi.
-{{% /overview-description %}}
 
 ## Example
 

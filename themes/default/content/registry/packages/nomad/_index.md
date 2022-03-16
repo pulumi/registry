@@ -4,9 +4,7 @@ meta_desc: Provides an overview of the HashiCorp Nomad Provider for Pulumi.
 layout: overview
 ---
 
-{{% overview-description %}}
 The HashiCorp Nomad provider for Pulumi can be used to provision any of the resources available in [Nomad](https://www.nomadproject.io/).
-{{% /overview-description %}}
 
 ## Example
 

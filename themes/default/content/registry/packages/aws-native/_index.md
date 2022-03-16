@@ -13,13 +13,11 @@ AWS Native is in public preview. AWS Native provides coverage of all resources i
 For new projects, we recommend using AWS Native and [AWS Classic]({{<relref "/registry/packages/aws">}}) side-by-side so you can get the speed and correctness benefits of AWS Native where possible. For existing projects, [AWS Classic]({{<relref "/registry/packages/aws">}}) remains fully supported; at this time, we recommend waiting to migrate existing projects to AWS Native.
 {{% /notes %}}
 
-{{% overview-description %}}
 The AWS Native provider for Pulumi can provision many of the cloud resources available in [AWS](https://aws.amazon.com/). It manages and provisions resources using the [AWS Cloud Control API](https://aws.amazon.com/blogs/aws/announcing-aws-cloud-control-api/), which typically supports new AWS features on the day of launch. Resources available in the Pulumi AWS Native provider are based on the resources defined in the [AWS CloudFormation Registry](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/registry.html).
 
 [Hundreds of AWS resources]({{<relref "/registry/packages/aws-native/api-docs">}}) are available in AWS Native. As AWS Cloud Control API adds resources, we will update AWS Native to include them.
 
 AWS Native must be configured with credentials to deploy and update resources in AWS; see [Installation & Configuration]({{<relref "./installation-configuration">}}) for instructions.
-{{% /overview-description %}}
 
 {{< youtube oKxaZCyu2OQ >}}
 

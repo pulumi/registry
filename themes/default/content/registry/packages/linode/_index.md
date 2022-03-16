@@ -4,10 +4,8 @@ meta_desc: Provides an overview of the Linode SDK for Pulumi.
 layout: overview
 ---
 
-{{% overview-description %}}
 The Linode provider for Pulumi can be used to provision any of the cloud resources available in [Linode](https://www.linode.com).
 The Linode provider must be configured with credentials to deploy and update resources in Linode.
-{{% /overview-description %}}
 
 ## Example
 

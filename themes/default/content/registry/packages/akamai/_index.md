@@ -4,10 +4,8 @@ meta_desc: Provides an overview of the Akamai Provider for Pulumi.
 layout: overview
 ---
 
-{{% overview-description %}}
 The Akamai provider for Pulumi can be used to provision any of the cloud resources available in [Akamai](https://www.akamai.com/).
 The Akamai provider must be configured with credentials to deploy and update resources in Akamai.
-{{% /overview-description %}}
 
 ## Example
 

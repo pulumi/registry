@@ -4,9 +4,7 @@ meta_desc: Provides an overview of the cloud-init Provider for Pulumi.
 layout: overview
 ---
 
-{{% overview-description %}}
 The cloud-init provider for Pulumi can be used to render valid MIME-multipart cloud-init config.
-{{% /overview-description %}}
 
 ## Example
 

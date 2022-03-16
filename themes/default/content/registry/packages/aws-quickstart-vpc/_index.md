@@ -4,9 +4,7 @@ meta_desc: Use Pulumi's Component for creating an AWS QuickStart VPC using infra
 layout: overview
 ---
 
-{{% overview-description %}}
 Easily create an AWS Virtual Private Cloud (VPC) using this Pulumi component based on the AWS QuickStart VPC guide.
-{{% /overview-description %}}
 
 ## Example
 

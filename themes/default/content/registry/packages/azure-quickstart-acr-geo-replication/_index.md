@@ -4,9 +4,7 @@ meta_desc: Use Pulumi's Component for creating Azure ACR Geo Replicated Registri
 layout: overview
 ---
 
-{{% overview-description %}}
 Easily create Azure ACR Registries that are replicated across Azure locations as a package available in all Pulumi languages.
-{{% /overview-description %}}
 
 ## Example
 

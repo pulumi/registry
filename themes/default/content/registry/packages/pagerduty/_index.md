@@ -4,10 +4,8 @@ meta_desc: Provides an overview of the PagerDuty Provider for Pulumi.
 layout: overview
 ---
 
-{{% overview-description %}}
 The PagerDuty provider for Pulumi can be used to provision any of the cloud resources available in [PagerDuty](https://www.pagerduty.com/).
 The PagerDuty provider must be configured with credentials to deploy and update resources in PagerDuty.
-{{% /overview-description %}}
 
 ## Example
 

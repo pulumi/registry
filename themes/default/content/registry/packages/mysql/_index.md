@@ -4,10 +4,8 @@ meta_desc: Provides an overview of the MySQL Provider for Pulumi.
 layout: overview
 ---
 
-{{% overview-description %}}
 The MySQL provider for Pulumi can be used to provision any of the resources available for MySQL.
 The MySQL provider must be configured with credentials to deploy and update resources in MySQL.
-{{% /overview-description %}}
 
 ## Example
 

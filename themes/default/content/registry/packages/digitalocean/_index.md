@@ -4,10 +4,8 @@ meta_desc: Provides an overview of the DigitalOcean Provider for Pulumi.
 layout: overview
 ---
 
-{{% overview-description %}}
 The DigitalOcean provider for Pulumi can be used to provision any of the cloud resources available in [DigitalOcean](https://www.digitalocean.com/).
 The DigitalOcean provider must be configured with credentials to deploy and update resources in a DigitalOcean cloud.
-{{% /overview-description %}}
 
 ## Example
 

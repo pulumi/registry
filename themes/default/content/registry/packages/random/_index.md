@@ -4,9 +4,7 @@ meta_desc: Provides an overview of the Random Provider for Pulumi.
 layout: overview
 ---
 
-{{% overview-description %}}
 The Random provider for Pulumi can be used to help introduce random values when dealing with Pulumi resources.
-{{% /overview-description %}}
 
 ## Example
 

@@ -4,9 +4,7 @@ meta_desc: Use Pulumi's Component for managing CoreDNS installations using infra
 layout: overview
 ---
 
-{{% overview-description %}}
 Easily manage CoreDNS installations as a package available in all Pulumi languages.
-{{% /overview-description %}}
 
 ## Example
 

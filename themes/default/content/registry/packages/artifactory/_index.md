@@ -4,10 +4,8 @@ meta_desc: Provides an overview of the Artifactory Provider for Pulumi.
 layout: overview
 ---
 
-{{% overview-description %}}
 The Artifactory provider for Pulumi can be used to provision any of the cloud resources available in [Artifactory](https://jfrog.com/artifactory/).
 The Artifactory provider must be configured with credentials to deploy and update resources in Artifactory.
-{{% /overview-description %}}
 
 ## Example
 

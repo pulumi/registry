@@ -4,10 +4,8 @@ meta_desc: Provides an overview of the Aiven Provider for Pulumi.
 layout: overview
 ---
 
-{{% overview-description %}}
 The Aiven provider for Pulumi can be used to provision any of the cloud resources available in [Aiven](https://aiven.io/).
 The Aiven provider must be configured with credentials to deploy and update resources in Aiven.
-{{% /overview-description %}}
 
 ## Example
 

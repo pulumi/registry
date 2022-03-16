@@ -4,9 +4,7 @@ meta_desc: Use Pulumi's Component for creating AWS S3 buckets that are replicate
 layout: overview
 ---
 
-{{% overview-description %}}
 Easily create AWS S3 buckets that are replicated across AWS regions as a package available in all Pulumi languages.
-{{% /overview-description %}}
 
 ## Example
 

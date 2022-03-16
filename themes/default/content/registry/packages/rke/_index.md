@@ -4,9 +4,7 @@ meta_desc: Provides an overview of the RKE Provider for Pulumi.
 layout: overview
 ---
 
-{{% overview-description %}}
 The RKE provider for Pulumi can be used to provision Kubernetes clusters using the [Rancher Kubernetes Engine](https://github.com/rancher/rke).
-{{% /overview-description %}}
 
 ## Example
 

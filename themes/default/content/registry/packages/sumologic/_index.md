@@ -4,10 +4,8 @@ meta_desc: Provides an overview of the SumoLogic Provider for Pulumi.
 layout: overview
 ---
 
-{{% overview-description %}}
 The SumoLogic provider for Pulumi can be used to provision any of the cloud resources available in [SumoLogic](https://www.sumologic.com/).
 The SumoLogic provider must be configured with credentials to deploy and update resources in SumoLogic.
-{{% /overview-description %}}
 
 ## Example
 

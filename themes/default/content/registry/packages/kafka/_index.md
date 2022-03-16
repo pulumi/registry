@@ -4,10 +4,8 @@ meta_desc: Provides an overview of the Kafka Provider for Pulumi.
 layout: overview
 ---
 
-{{% overview-description %}}
 The Kafka provider for Pulumi can be used to provision any of the resources available for Kafka.
 The Kafka provider must be configured with credentials to deploy and update resources in Kafka.
-{{% /overview-description %}}
 
 ## Example
 

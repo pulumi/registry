@@ -4,10 +4,8 @@ meta_desc: Provides an overview of the Opsgenie Provider for Pulumi.
 layout: overview
 ---
 
-{{% overview-description %}}
 The Opsgenie provider for Pulumi can be used to provision any of the resources available for Opsgenie.
 The Opsgenie provider must be configured with credentials to deploy and update resources in Opsgenie.
-{{% /overview-description %}}
 
 ## Example
 

@@ -4,9 +4,7 @@ meta_desc: Provides an overview of the Okta Provider for Pulumi.
 layout: overview
 ---
 
-{{% overview-description %}}
 The Okta provider for Pulumi can be used to provision any of the resources available in [Okta](https://www.okta.com/).
-{{% /overview-description %}}
 
 ## Example
 

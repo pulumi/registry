@@ -23,7 +23,7 @@
     {{ end }}
 
     <div class="lg:flex mb-2 max-w-5xl">
-        <h1 class="text-4xl no-anchor">{{ with .GetPage $packageHome }}{{ .Title }}{{ end }}</h1>
+        <h1 data-swiftype-name="package-title" data-swiftype-type="text" class="text-4xl no-anchor">{{ with .GetPage $packageHome }}{{ .Title }}{{ end }}</h1>
 
         {{ with (index $.Site.Data.registry.packages ($packageName)) }}
             <div class="flex-grow justify-end">

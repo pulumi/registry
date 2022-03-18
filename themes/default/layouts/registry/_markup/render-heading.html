@@ -1,0 +1,18 @@
+{{/*
+    The README files we ingest from pulumi/examples are written such that the top-level
+    heading (the H1) is the title of the example itself, which works fine on GitHub, but not
+    so well in the Registry, where these guides are situated within the context of a package
+    (whose name is the H1). Since we want at most one H1 per page, this Hugo
+    Markdown-rendering hook shifts all headings on how-to guide pages by one level, turning H1s
+    into H2s, H2s into H3s, and so on.
+    https://gohugo.io/templates/render-hooks/
+*/}}
+
+{{ $level := .Level }}
+{{ if eq .Page.Layout "how-to-guide" }}
+    {{ $level = add .Level 1 }}
+{{ end }}
+
+<h{{ $level }} id="{{ .Anchor | safeURL }}">
+    {{ .Text | safeHTML }}
+</h{{ $level }}>

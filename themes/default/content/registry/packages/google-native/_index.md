@@ -7,7 +7,7 @@ layout: overview
 {{< notes >}}
 Google Native is in public preview.
 
-[Google Cloud Classic]({{<relref "/registry/packages/gcp">}}) remains fully supported.
+[Google Cloud Classic]({{<relref "/registry/packages/gcp">}}) remains fully supported and recommended for production use.
 {{< /notes >}}
 
 The Google Native provider for Pulumi can provision many of the cloud resources available in [Google Cloud](https://cloud.google.com/).

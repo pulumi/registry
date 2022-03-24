@@ -1,0 +1,14 @@
+category: Utility
+component: false
+description: A Pulumi package for managing Slack workspaces.
+featured: false
+logo_url: https://cdn.bfldr.com/5H442O3W/at/pl546j-7le8zk-6gwiyo/Slack_Mark.svg
+name: slack
+native: false
+package_status: public_preview
+publisher: Pulumi
+repo_url: https://github.com/pulumi/pulumi-slack
+schema_file_path: provider/cmd/pulumi-resource-slack/schema.json
+title: Slack
+updated_on: 1648072720
+version: v0.1.0

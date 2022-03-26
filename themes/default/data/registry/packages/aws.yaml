@@ -9,7 +9,7 @@ native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-aws
-schema_file_path: /provider/cmd/pulumi-resource-aws/schema.json
+schema_file_path: provider/cmd/pulumi-resource-aws/schema.json
 title: AWS Classic
-updated_on: 1646917086
-version: v4.38.1
+updated_on: 1648154071
+version: v5.1.0

@@ -8,7 +8,7 @@ native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-wavefront
-schema_file_path: /provider/cmd/pulumi-resource-wavefront/schema.json
+schema_file_path: provider/cmd/pulumi-resource-wavefront/schema.json
 title: Wavefront
-updated_on: 1637775423
-version: v1.1.0
+updated_on: 1648659923
+version: v1.1.1

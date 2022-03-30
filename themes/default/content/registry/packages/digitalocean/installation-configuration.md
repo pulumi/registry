@@ -42,10 +42,10 @@ Remember to pass `--secret` when setting `token` so that it is properly encrypte
 To create Space Buckets with Pulumi, you will need an [access key for the Spaces API](https://www.digitalocean.com/community/tutorials/how-to-create-a-digitalocean-space-and-api-key#creating-an-access-key). Once you've created a Spaces access key, you can set them in one
 of two ways for Pulumi:
 
-1. Set the environment variable `DIGITALOCEAN_TOKEN`:
+1. Set them as environment variables:
 
     ```bash
-    $ export SPACES_ACCES_KEY_ID=XXXXXXXXXXXXXX
+    $ export SPACES_ACCESS_KEY_ID=XXXXXXXXXXXXXX
     $ export SPACES_SECRET_ACCESS_KEY=XXXXXXXXXXXXXX
     ```
 

@@ -8,7 +8,7 @@ native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-vault
-schema_file_path: /provider/cmd/pulumi-resource-vault/schema.json
+schema_file_path: provider/cmd/pulumi-resource-vault/schema.json
 title: Vault
-updated_on: 1646434758
-version: v5.3.0
+updated_on: 1648739134
+version: v5.4.0

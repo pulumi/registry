@@ -8,7 +8,7 @@ native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-civo
-schema_file_path: /provider/cmd/pulumi-resource-civo/schema.json
+schema_file_path: provider/cmd/pulumi-resource-civo/schema.json
 title: Civo
-updated_on: 1646647734
-version: v2.2.0
+updated_on: 1649361819
+version: v2.2.1

@@ -8,7 +8,7 @@ native: false
 package_status: public_preview
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-sumologic
-schema_file_path: /provider/cmd/pulumi-resource-sumologic/schema.json
+schema_file_path: provider/cmd/pulumi-resource-sumologic/schema.json
 title: Sumo Logic
-updated_on: 1640018682
-version: v0.4.1
+updated_on: 1649361825
+version: v0.6.0

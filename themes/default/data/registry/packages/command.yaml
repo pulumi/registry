@@ -9,7 +9,7 @@ native: true
 package_status: public_preview
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-command
-schema_file_path: /provider/cmd/pulumi-resource-command/schema.json
+schema_file_path: provider/cmd/pulumi-resource-command/schema.json
 title: Command
-updated_on: 1640915341
-version: v0.0.3
+updated_on: 1646714993
+version: v0.1.0

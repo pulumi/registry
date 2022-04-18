@@ -41,7 +41,7 @@
                     </div>
                 {{ end }}
 
-                {{ if not (eq (.publisher) "Pulumi") }}                      
+                {{ if not (eq (.publisher) "Pulumi") }}
                     <div class="flex lg:justify-end mt-2.5">
                         <pulumi-tooltip>
                             <div class="h-10 flex py-2 px-6 bg-gray-300 bg-opacity-70 rounded-xl items-center">
@@ -90,17 +90,21 @@
                         <span class="hidden md:block">API Docs</span>
                     </a>
                 </div>
-                <div class="{{ if (eq $packageSection "how-to-guides") }} border-b-2 border-blue-600 {{ end }} pb-2 px-2 ml-2 md:ml-4 lg:ml-6">
-                    <a class="flex items-center" href="{{ relref . (path.Join .File.Dir "how-to-guides") }}">
-                        <span class="md:hidden">Guides</span>
-                        <span class="hidden md:block">How-to Guides</span>
-                        {{ if gt $guidesCount 0 }}
-                            <span class="hidden md:inline">
-                                {{ partial "count-pill" (dict "count" $guidesCount "selected" (eq $packageSection "how-to-guides")) }}
-                            </span>
-                        {{ end }}
-                    </a>
-                </div>
+
+                {{/* Only show the How-to Guides tab if we have an index page for them. */}}
+                {{ if .GetPage (path.Join .File.Dir "how-to-guides") }}
+                    <div class="{{ if (eq $packageSection "how-to-guides") }} border-b-2 border-blue-600 {{ end }} pb-2 px-2 ml-2 md:ml-4 lg:ml-6">
+                        <a class="flex items-center" href="{{ relref . (path.Join .File.Dir "how-to-guides") }}">
+                            <span class="md:hidden">Guides</span>
+                            <span class="hidden md:block">How-to Guides</span>
+                            {{ if gt $guidesCount 0 }}
+                                <span class="hidden md:inline">
+                                    {{ partial "count-pill" (dict "count" $guidesCount "selected" (eq $packageSection "how-to-guides")) }}
+                                </span>
+                            {{ end }}
+                        </a>
+                    </div>
+                {{ end }}
             </div>
         </nav>
     {{ end }}

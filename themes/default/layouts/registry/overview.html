@@ -2,8 +2,8 @@
     <div class="container mx-auto px-4 pb-8 mt-2">
         {{ partial "registry/package/header.html" . }}
 
-        <div class="lg:flex">
-            <div class="lg:w-8/12">
+        <div class="xxl:flex">
+            <div class="xxl:w-8/12">
                 {{ if not (in .Page.File "_index.md") }}
                     <div class="lg:flex">
                         {{ partial "registry/package/overview/breadcrumb.html" . }}
@@ -15,10 +15,10 @@
                     {{ .Content }}
                 </section>
             </div>
-            <div class="lg:w-1/12"></div>
-            <div class="lg:w-3/12 lg:pl-8">
+            <div class="xxl:w-1/12"></div>
+            <div class="xxl:w-3/12 xxl:pl-8">
                 <div class="sticky-sidebar">
-                    <div class="ml-2 hidden lg:block">
+                    <div class="ml-2 hidden xxl:block">
                         {{ partial "registry/package/right-nav.html" . }}
                     </div>
                 </div>

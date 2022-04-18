@@ -1,6 +1,6 @@
 ---
 title: HCP Setup
-meta_desc: Information on how to install the HCP provider.
+meta_desc: Information on how to install the HashiCorp Cloud Platform Provider for Pulumi.
 layout: installation
 ---
 
@@ -29,6 +29,7 @@ variables to provision resources in HCP:
 $ export HCP_CLIENT_ID=<HCP_CLIENT_ID>
 $ export HCP_CLIENT_SECRET=<HCP_CLIENT_SECRET>
 ```
+
 {{% /choosable %}}
 
 {{% choosable os macos %}}

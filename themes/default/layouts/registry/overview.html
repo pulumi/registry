@@ -3,7 +3,7 @@
         {{ partial "registry/package/header.html" . }}
 
         <div class="lg:flex">
-            <div class="lg:w-8/12">
+            <div class="lg:w-8/12 max-w-3xl">
                 {{ if not (in .Page.File "_index.md") }}
                     <div class="lg:flex">
                         {{ partial "registry/package/overview/breadcrumb.html" . }}

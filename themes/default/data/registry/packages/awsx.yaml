@@ -1,0 +1,15 @@
+category: Cloud
+component: true
+description: Well-Architected Infrastructure as Code for AWS.
+featured: false
+logo_url: "https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg"
+name: awsx
+native: false
+package_status: preview
+publisher: Pulumi
+repo_url: https://github.com/pulumi/pulumi-awsx
+schema_file_path: awsx/schema.json
+title: AWSx (Crosswalk)
+updated_on: 1650564148
+version: v1.0.0-beta.1
+

@@ -8,7 +8,7 @@ native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-aiven
-schema_file_path: /provider/cmd/pulumi-resource-aiven/schema.json
+schema_file_path: provider/cmd/pulumi-resource-aiven/schema.json
 title: Aiven
-updated_on: 1646672898
-version: v4.5.0
+updated_on: 1650638777
+version: v4.5.1

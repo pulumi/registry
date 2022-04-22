@@ -16,7 +16,7 @@ The Databricks provider must be configured with credentials to deploy and update
 ```javascript
 const databricks = require("@pulumi/databricks")
 
-const group = new databricks.Group("ts-group", {
+const group = new databricks.Group("js-group", {
     displayName: "my company group",
 });
 ```

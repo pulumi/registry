@@ -1,0 +1,14 @@
+category: Infrastructure
+component: false
+description: A Pulumi package for creating and managing databricks cloud resources.
+featured: false
+logo_url: https://databricks.com/wp-content/uploads/2021/10/db-nav-logo.svg
+name: databricks
+native: false
+package_status: public_preview
+publisher: Pulumi
+repo_url: https://github.com/pulumi/pulumi-databricks
+schema_file_path: provider/cmd/pulumi-resource-databricks/schema.json
+title: Databricks
+updated_on: 1650469074
+version: v0.4.0

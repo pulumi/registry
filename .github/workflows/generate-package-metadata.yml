@@ -48,7 +48,7 @@ jobs:
         id: version
         run: |
           echo 'PROVIDER_VERSION<<EOF' >> $GITHUB_ENV
-          registrygen pkgversion --repoSlug ${{ matrix.repoSlug }} 
+          registrygen pkgversion --repoSlug ${{ matrix.repoSlug }} \
           >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
       # This will only be populated if the registry version does not match the latest provider version.

@@ -1,6 +1,18 @@
 {
   "include": [
     {
+      "repoSlug": "checkly/pulumi-checkly",
+      "schemaFile": "provider/cmd/pulumi-resource-checkly/schema.json"
+    },
+    {
+      "repoSlug": "EventStore/pulumi-eventstorecloud",
+      "schemaFile": "provider/cmd/pulumi-resource-eventstorecloud/schema.json"
+    },
+    {
+      "repoSlug": "grapl-security/pulumi-hcp",
+      "schemaFile": "provider/cmd/pulumi-resource-hcp/schema.json"
+    },
+    {
       "repoSlug": "jaxxstorm/pulumi-scaleway",
       "schemaFile": "provider/cmd/pulumi-resource-scaleway/schema.json"
     }

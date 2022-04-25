@@ -1,6 +1,9 @@
 name: Check for Community Package Updates
 on:
-  - workflow_dispatch
+  workflow_dispatch:
+  schedule:
+    # Every day at 5:30 and 17:30 UTC.
+    - cron:  '30 5,17 * * *'
 env:
   GITHUB_TOKEN: ${{ secrets.PULUMI_BOT_TOKEN }}
 jobs:
@@ -13,7 +16,6 @@ jobs:
         working-directory: community-packages
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
-
   check-for-package-update:
     needs: generate-packages-list
     runs-on: ubuntu-latest
@@ -28,5 +30,56 @@ jobs:
         run: echo ${{ matrix.repoSlug }}
       - name: SchemaFile
         run: echo ${{ matrix.schemaFile }}
+        # Isolate publisher and provider short names from repo slug.
+      - name: Get publisher
+        uses: actions-ecosystem/action-regex-match@v2
+        id: regex-pub
+        with:
+          text: ${{ matrix.repoSlug }}
+          regex: '^[^\/]*'
+      - name: Get provider short name
+        uses: actions-ecosystem/action-regex-match@v2
+        id: regex-prov
+        with:
+          text: ${{ matrix.repoSlug }}
+          regex: '(\/.*-)(.*?$)'
+      - name: Check out registry repo
+        uses: actions/checkout@v2
       - name: Sleep to prevent hitting secondary rate limits
         run: sleep 1
+      - name: Install Registrygen CLI
+        uses: jaxxstorm/action-install-gh-release@v1.5.0
+        with:
+          repo: pulumi/registrygen
+      - name: Check for a new version
+        id: version
+        run: |
+          echo 'PROVIDER_VERSION<<EOF' >> $GITHUB_ENV
+          registrygen pkgversion --owner ${{ steps.regex-pub.outputs.match }} \
+          --repo "pulumi-${{ steps.regex-prov.outputs.group2 }}" \
+          >> $GITHUB_ENV
+          echo 'EOF' >> $GITHUB_ENV
+      # This will only be populated if the registry version does not match the latest provider version.
+      - name: Display new version
+        if: env.PROVIDER_VERSION
+        run: echo ${{ env.PROVIDER_VERSION}}
+      # We only need to run the following steps if registrygen found a newer version of the community provider.
+      - name: Generate Package Metadata
+        if: env.PROVIDER_VERSION
+        run: |
+          registrygen metadata --repoSlug "${{ matrix.repoSlug }}" --schemaFile ${{ matrix.schemaFile }} \
+          --publisher ${{ steps.regex-pub.outputs.match }} --version ${{ env.PROVIDER_VERSION }}
+      - name: Create registry PR
+        if: env.PROVIDER_VERSION
+        uses: peter-evans/create-pull-request@v3
+        env:
+          PROVIDER_SHORT_NAME: ${{ steps.regex-prov.outputs.group2 }}
+        with:
+          token: ${{ secrets.PULUMI_BOT_TOKEN }}
+          committer: Pulumi Bot <bot@pulumi.com>
+          author: Pulumi Bot <bot@pulumi.com>
+          commit-message: "Publish Package Metadata for ${{ env.PROVIDER_SHORT_NAME }}@${{ env.PROVIDER_VERSION }}"
+          labels: "automation/tfgen-provider-docs,automation/merge"
+          title: "Publish Package Metadata ${{ env.PROVIDER_SHORT_NAME }}@${{ env.PROVIDER_VERSION }}"
+          body: ""
+          branch: "${{ env.PROVIDER_SHORT_NAME }}/${{ github.run_id }}-${{ github.run_number }}"   

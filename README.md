@@ -97,41 +97,15 @@ repository, remembering to remove those files before you commit. For example:
 cp ../docs/content/registry/packages/aws/how-to-guides ./themes/default/content/registry/packages/aws/
 ```
 
-#### Temporarily generating API docs for packages
+#### Generating API docs for packages
 
-The API docs for packages can be generated on-demand using the `resourcedocsgen` tool. The PR build for this repo, for instance,
-generates the API docs for all packages from the latest commit hash of the PR being built. Likewise, as long as your branch
-is pushed up to GH, you can generate API docs using any commit hash from your PR branch locally as well. This is because
-the `resourcedocsgen` will attempt to clone the `registry` repo at the commit hash you specify in a temp location in order
-to read the package metadata files from it.
-
-For example,
+The API docs for packages can be generated on-demand using the [`registrygen` tool](https://github.com/pulumi/registrygen).
 
 ```
-go install github.com/pulumi/docs/tools/resourcedocsgen@master
-
-# Generate docs for a single package using your PR branch name locally.
-resourcedocsgen docs registry "<package name>" \
-    --branch "<your PR branch name>" \
-    --baseDocsOutDir "themes/default/content/registry/packages" \
-    --basePackageTreeJSONOutDir "themes/default/static/registry/packages/navs" \
-    --logtostderr
+go install github.com/pulumi/registrygen@master
 ```
 
-or if you prefer using a specific commit hash use the `--commitSha` flag instead.
-
-Run `resourcedocsgen docs registry --help` for help regarding its use. The README for the [`resourcedocsgen`](https://github.com/pulumi/docs/blob/master/tools/resourcedocsgen/README.md) tool has more info on generating API docs.
-
-Again, just be sure to remove these files before you commit:
-
-```
-# Remove the files we just added.
-rm -rf ./themes/default/content/registry/packages/aws/api-docs/
-rm -f ./themes/default/static/registry/packages/navs/aws.json
-```
-
-or if you copied the `how-to-guides` for a package from `docs`, remove the individual markdown files from the respective `how-to-guides` folder for that
-package.
+Run `registrygen --help` for help regarding its use or [see the `registrygen` README](https://github.com/pulumi/registrygen#readme).
 
 ## Submitting, merging and releasing
 

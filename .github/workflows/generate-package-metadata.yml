@@ -48,7 +48,7 @@ jobs:
       - name: Sleep to prevent hitting secondary rate limits
         run: sleep 1
       - name: Install Registrygen CLI
-        uses: jaxxstorm/action-install-gh-release@v1.2.0
+        uses: jaxxstorm/action-install-gh-release@v1.5.0
         with:
           repo: pulumi/registrygen
       - name: Check for a new version

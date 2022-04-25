@@ -2,8 +2,6 @@
 
 import json
 
-import json
-
 # Opening JSON file
 f = open('package-list.json')
 

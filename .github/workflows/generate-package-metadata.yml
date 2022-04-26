@@ -26,17 +26,6 @@ jobs:
       max-parallel: 1
       matrix: ${{fromJson(needs.generate-packages-list.outputs.matrix)}}
     steps:
-      - name: Provider RepoSlug
-        run: echo ${{ matrix.repoSlug }}
-      - name: SchemaFile
-        run: echo ${{ matrix.schemaFile }}
-        # Isolate publisher and provider short names from repo slug.
-      - name: Get publisher
-        uses: actions-ecosystem/action-regex-match@v2
-        id: regex-pub
-        with:
-          text: ${{ matrix.repoSlug }}
-          regex: '^[^\/]*'
       - name: Get provider short name
         uses: actions-ecosystem/action-regex-match@v2
         id: regex-prov
@@ -55,8 +44,7 @@ jobs:
         id: version
         run: |
           echo 'PROVIDER_VERSION<<EOF' >> $GITHUB_ENV
-          registrygen pkgversion --owner ${{ steps.regex-pub.outputs.match }} \
-          --repo "pulumi-${{ steps.regex-prov.outputs.group2 }}" \
+          registrygen pkgversion --repoSlug ${{ matrix.repoSlug }} \
           >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
       # This will only be populated if the registry version does not match the latest provider version.
@@ -67,8 +55,8 @@ jobs:
       - name: Generate Package Metadata
         if: env.PROVIDER_VERSION
         run: |
-          registrygen metadata --repoSlug "${{ matrix.repoSlug }}" --schemaFile ${{ matrix.schemaFile }} \
-          --publisher ${{ steps.regex-pub.outputs.match }} --version ${{ env.PROVIDER_VERSION }}
+          registrygen metadata --repoSlug ${{ matrix.repoSlug }} --schemaFile ${{ matrix.schemaFile }} \
+          --version ${{ env.PROVIDER_VERSION }}
       - name: Create registry PR
         if: env.PROVIDER_VERSION
         uses: peter-evans/create-pull-request@v3

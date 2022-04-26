@@ -9,6 +9,10 @@
       "schemaFile": "provider/cmd/pulumi-resource-eventstorecloud/schema.json"
     },
     {
+      "repoSlug": "grapl-security/pulumi-buildkite",
+      "schemaFile": "provider/cmd/pulumi-resource-buildkite/schema.json"
+    },
+    {
       "repoSlug": "grapl-security/pulumi-hcp",
       "schemaFile": "provider/cmd/pulumi-resource-hcp/schema.json"
     },

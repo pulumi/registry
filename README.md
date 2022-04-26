@@ -2,7 +2,7 @@
 
 [Pulumi Registry](https://pulumi.com/registry) is the global index of everything you can do with Pulumi.
 
-### Authoring a Pulumi Package
+## Authoring a Pulumi Package
 We’re always eager to expand that index with new [Pulumi Packages](https://www.pulumi.com/docs/guides/pulumi-packages/). Whether you want to author a new native provider, bridge a provider from the Terraform ecosystem, or create a cloud component with best practices and sensible defaults built in, we’d like to work with you to list it on Pulumi Registry.
 
 To get started, use our [guide on authoring a Pulumi Package](https://www.pulumi.com/docs/guides/pulumi-packages/how-to-author/) of your own.

@@ -2,9 +2,12 @@
 
 [Pulumi Registry](https://pulumi.com/registry) is the global index of everything you can do with Pulumi.
 
+## Authoring a Pulumi Package
 We’re always eager to expand that index with new [Pulumi Packages](https://www.pulumi.com/docs/guides/pulumi-packages/). Whether you want to author a new native provider, bridge a provider from the Terraform ecosystem, or create a cloud component with best practices and sensible defaults built in, we’d like to work with you to list it on Pulumi Registry.
 
-[Contact us to start publishing to Pulumi Registry](https://pulumi.com/contact/?form=registry). If you’d like, you can also get a head start by [authoring a Pulumi Package](https://pulumi.com/docs/guides/pulumi-packages/).
+To get started, use our [guide on authoring a Pulumi Package](https://www.pulumi.com/docs/guides/pulumi-packages/how-to-author/) of your own.
+When ready, add your package to the [community packages list](./community-packages/package-list.json) via pull request to this repository.
+For assistance, please reach out on the [Pulumi community slack](https://slack.pulumi.com/) or get in touch with us via this [contact form](https://pulumi.com/contact/?form=registry). 
 
 ## About this repository
 

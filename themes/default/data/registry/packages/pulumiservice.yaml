@@ -1,0 +1,14 @@
+category: Infrastructure
+component: false
+description: A Pulumi package for creating and managing Pulumi Service resources.
+featured: false
+logo_url: ""
+name: pulumiservice
+native: false
+package_status: preview
+publisher: Pulumi
+repo_url: https://github.com/pulumi/pulumi-pulumiservice
+schema_file_path: /provider/cmd/pulumi-resource-pulumi-service/schema.json
+title: Pulumi Service Provider
+updated_on: 1650923236
+version: v0.1.0

@@ -1,0 +1,14 @@
+category: Cloud
+component: false
+description: A Pulumi package for creating and managing Oracle Cloud OCI resources.
+featured: false
+logo_url: ""
+name: oci
+native: false
+package_status: preview
+publisher: Pulumi
+repo_url: https://github.com/pulumi/pulumi-oci
+schema_file_path: /provider/cmd/pulumi-resource-oci/schema.json
+title: Oracle Cloud (OCI)
+updated_on: 1650923236
+version: v0.1.0

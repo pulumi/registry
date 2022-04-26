@@ -26,10 +26,6 @@ jobs:
       max-parallel: 1
       matrix: ${{fromJson(needs.generate-packages-list.outputs.matrix)}}
     steps:
-      - name: Provider RepoSlug
-        run: echo ${{ matrix.repoSlug }}
-      - name: SchemaFile
-        run: echo ${{ matrix.schemaFile }}
       - name: Get provider short name
         uses: actions-ecosystem/action-regex-match@v2
         id: regex-prov

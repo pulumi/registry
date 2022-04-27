@@ -2,9 +2,9 @@ category: Infrastructure
 component: false
 description: A Pulumi package for creating and managing Pulumi Service resources.
 featured: false
-logo_url: ""
+logo_url: "https://user-images.githubusercontent.com/5489125/165352623-b136db08-94e0-45a3-bafe-6732fcea15a7.svg"
 name: pulumiservice
-native: false
+native: true
 package_status: preview
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-pulumiservice

@@ -38,7 +38,7 @@ new checkly.Check("brwoser-check", {
 {{% choosable language typescript %}}
 
 ```typescript
-import * as checkly from "@pulumi/checkly";
+import * as checkly from "@checkly/pulumi";
 
 new checkly.Check( "api-check", {
   activated: true,
@@ -60,3 +60,5 @@ new checkly.Check( "brwoser-check", {
 
 {{% /choosable %}}
 {{< /chooser >}}
+
+> You could find more complete and detailed examples in the [pulumi-checkly repository](https://github.com/checkly/pulumi-checkly/tree/main/examples)

@@ -67,7 +67,7 @@ jobs:
           committer: Pulumi Bot <bot@pulumi.com>
           author: Pulumi Bot <bot@pulumi.com>
           commit-message: "Publish Package Metadata for ${{ env.PROVIDER_SHORT_NAME }}@${{ env.PROVIDER_VERSION }}"
-          labels: ""
+          reviewers: guineveresaenger, jkisk, stack72
           title: "Publish Package Metadata ${{ env.PROVIDER_SHORT_NAME }}@${{ env.PROVIDER_VERSION }}"
           body: ""
           branch: "${{ env.PROVIDER_SHORT_NAME }}/${{ github.run_id }}-${{ github.run_number }}"   

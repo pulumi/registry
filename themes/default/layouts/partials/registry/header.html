@@ -61,77 +61,90 @@
 
 <div class="logo-nav-bg-mask hidden"></div>
 
-<header class="registry-hero">
-    <div class="dot-background-container">
-        <div class="dot-background no-animate"></div>
+<header class="header-container registry-hero">
+    <div class="hide-on-pinned">
+        <div class="dot-background-container">
+            <div class="dot-background no-animate"></div>
+        </div>
+        <div class="dot-overlay"></div>
     </div>
-    <div class="dot-overlay"></div>
-    <div class="registry-hero-title container mx-auto w-full px-4">
-        <div class="flex items-center">
-            <a href="{{ relref . "/registry" }}">
-                <i class="fas fa-archive title-icon"></i>
-            </a>
-            <a href="{{ relref . "/registry" }}">
-                {{/* Only use an h1 on the index page. */}}
-                {{ if eq .Title "Pulumi Registry"}}
+
+<div class="search-header container flex">
+    <div class="header-pinned-container hidden md:flex xl:w-3/12 px-4 lg:px-8 xl:px-5">
+        <div class="header-hero-title pr-3">
+            <div class="flex items-center">
+                <a href="{{ relref . " /registry" }}">
+                    <i class="fas fa-archive title-icon"></i>
+                </a>
+                <a href="{{ relref . " /registry" }}">
+                    {{/* Only use an h1 on the index page. */}}
+                    {{ if eq .Title "Pulumi Registry"}}
                     <h1 class="title-text-content no-anchor">Pulumi Registry</h1>
-                {{ else }}
+                    {{ else }}
                     <span class="title-text-content">Pulumi Registry</span>
-                {{ end }}
-            </a>
-        </div>
-        <div class="flex-1"></div>
-        <script>
-            (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
-                (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
-                e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
-            })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
-
-            _st('install','xxxQB1LC9DE212h8eJmh','2.0.0');
-        </script>
-        <div id="search-container" class="bg-white w-full md:w-1/2 mt-4 md:mt-0">
-            <div id="search-form" class="text-gray-300 focus-within:text-gray-600">
-                <form class="relative flex">
-                    <i class="fas fa-search absolute inset-y-0 flex items-center pl-3" style="color: inherit"></i>
-                    <input
-                            id="search-query"
-                            type="text"
-                            class="st-default-search-input registry text-sm transition"
-                            placeholder="Search..." />
-                    <button type="submit" class="hidden md:block bg-violet-600 font-display font-normal text-white p-2 px-4 rounded-r">Search</button>
-                </form>
-            </div>
-            <div id="search-results" class="relative">
-
+                    {{ end }}
+                </a>
             </div>
         </div>
-        <script>
-            // We want to restrict the results to just the ones from the registry.
-            // Create a MutationObserver and attach it to the #search-results container above.
-            // The `subtree` modifications property will allow our callback to be called
-            // whenever search result nodes (the `<a>` tag elements) will be added to the
-            // container.
-            const observer = new MutationObserver((mutations, observer) => {
-                mutations.forEach(mutation => {
-                    mutation.addedNodes.forEach(n => {
-                        // Remove the result if its URL does not contain `registry`.
-                        // We can make this a bit more restrictive if we need to later.
-                        if (n.classList.contains("st-ui-result") && !n.href.includes("registry")) {
-                            n.remove();
-                        }
-                    });
+        <div class="header-pinned items-center transition-all hidden">
+            <img class="h-6 mr-12" src="/images/logo/logo-on-white.svg" alt="Pulumi logo" />
+            <div class="get-started-pinned-search-container">
+                <a class="get-started-pinned-search-button" data-track="get-started-pinned-search" 
+                href="{{ relref . "/docs/get-started" }}">Get Started</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+            (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+            e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+        })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+        _st('install','xxxQB1LC9DE212h8eJmh','2.0.0');
+    </script>
+    <div id="search-container" class="search-container bg-white mt-4 md:mt-0 flex justify-center lg:ml-6">
+        <div id="search-form" class="search-widget text-gray-600 focus-within:text-gray-700">
+            <form class="relative flex">
+                <i class="fas fa-search absolute inset-y-0 flex items-center pl-3" style="color: inherit"></i>
+                <input
+                        id="search-query"
+                        type="text"
+                        class="st-default-search-input registry text-sm transition"
+                        placeholder="Search..." />
+                <button type="submit" class="hidden md:block bg-violet-600 font-display font-normal text-lg text-white p-1.5 px-4 rounded-r">Search</button>
+            </form>
+        </div>
+        <div id="search-results" class="relative">
+
+        </div>
+    </div>
+    <script>
+        // We want to restrict the results to just the ones from the registry.
+        // Create a MutationObserver and attach it to the #search-results container above.
+        // The `subtree` modifications property will allow our callback to be called
+        // whenever search result nodes (the `<a>` tag elements) will be added to the
+        // container.
+        const observer = new MutationObserver((mutations, observer) => {
+            mutations.forEach(mutation => {
+                mutation.addedNodes.forEach(n => {
+                    // Remove the result if its URL does not contain `registry`.
+                    // We can make this a bit more restrictive if we need to later.
+                    if (n.classList.contains("st-ui-result") && !n.href.includes("registry")) {
+                        n.remove();
+                    }
                 });
             });
+        });
 
-            // Start listening for DOM mutation events for the search results.
-            observer.observe(
-                document.querySelector("#search-container #search-results"),
-                {
-                    attributes: false,
-                    childList: true,
-                    subtree: true,
-                },
-            );
-        </script>
-    </div>
+        // Start listening for DOM mutation events for the search results.
+        observer.observe(
+            document.querySelector("#search-container #search-results"),
+            {
+                attributes: false,
+                childList: true,
+                subtree: true,
+            },
+        );
+    </script>
+</div>
 </header>

@@ -8,7 +8,7 @@ The Random provider for Pulumi can be used to help introduce random values when 
 
 ## Example
 
-{{< chooser language "javascript,typescript,python,go,csharp" >}}
+{{< chooser language "javascript,typescript,python,go,csharp,yaml" >}}
 
 {{% choosable language javascript %}}
 
@@ -74,6 +74,15 @@ class Program
             var username = new RandomPet("my-user-name", new RandomPetArgs{});
         });
 }
+```
+
+{{% /choosable %}}
+{{% choosable language yaml %}}
+
+```yaml
+resources:
+  username:
+    type: random:RandomPet
 ```
 
 {{% /choosable %}}

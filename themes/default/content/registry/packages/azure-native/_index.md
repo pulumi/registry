@@ -12,7 +12,7 @@ Azure Native must be configured with credentials to deploy and update resources 
 
 ## Example
 
-{{< chooser language "typescript,python,csharp,go" >}}
+{{< chooser language "typescript,python,csharp,go,yaml" >}}
 
 {{% choosable language typescript %}}
 
@@ -76,6 +76,16 @@ func main() {
         return nil
     })
 }
+```
+
+{{% /choosable %}}
+
+{{% choosable language yaml %}}
+
+```yaml
+resources:
+  resourceGroup:
+    type: azure-native:resources:ResourceGroup
 ```
 
 {{% /choosable %}}

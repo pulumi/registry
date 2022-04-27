@@ -16,7 +16,7 @@ The Google Native provider must be configured with credentials to deploy and upd
 
 ## Example
 
-{{< chooser language "typescript,python,go,csharp" >}}
+{{< chooser language "typescript,python,go,csharp,yaml" >}}
 
 {{% choosable language typescript %}}
 
@@ -112,6 +112,26 @@ class Program
             });
         });
 }
+```
+
+{{% /choosable %}}
+{{% choosable language yaml %}}
+
+```yaml
+configuration:
+  project:
+    type: String
+variables:
+  bucketName: pulumi-goog-native-bucket-go-01
+resources:
+  my-bucket:
+    type: google-native:storage/v1:Bucket
+    properties:
+      name: ${bucketName}
+      bucket: ${bucketName}
+      project: ${project}
+outputs:
+  bucket: ${my-bucket.selfLink}
 ```
 
 {{% /choosable %}}

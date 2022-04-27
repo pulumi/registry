@@ -18,7 +18,7 @@ Consider trying [Google Native]({{<relref "/registry/packages/google-native">}})
 
 ## Example
 
-{{< chooser language "javascript,typescript,python,go,csharp" >}}
+{{< chooser language "javascript,typescript,python,go,csharp,yaml" >}}
 
 {{% choosable language javascript %}}
 
@@ -82,6 +82,16 @@ class Program
             var bucket = new Gcp.Storage.Bucket("my-bucket");
         });
 }
+```
+
+{{% /choosable %}}
+
+{{% choosable language yaml %}}
+
+```yaml
+resources:
+  my-bucket:
+    type: gcp:storage:Bucket
 ```
 
 {{% /choosable %}}

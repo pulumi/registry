@@ -115,6 +115,7 @@ public class App {
 ```yaml
 resources:
   my-group:
+    type: azureaz:Group
     properties:
       name: my-group
 ```

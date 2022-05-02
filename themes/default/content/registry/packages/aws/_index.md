@@ -18,7 +18,7 @@ Consider trying [AWS Native]({{<relref "/registry/packages/aws-native">}}) if yo
 
 ## Example
 
-{{< chooser language "typescript,java" >}}
+{{< chooser language "typescript,java,yaml" >}}
 
 {{% choosable language typescript %}}
 
@@ -47,6 +47,18 @@ public class App {
 		ctx.export("bucketName", bucket.name());
 	}
 }
+```
+
+{{% /choosable %}}
+
+{{% choosable language java %}}
+
+```yaml
+resources:
+  mybucket:
+    type: aws:s3:Bucket
+outputs:
+  bucketName: ${bucket.name}
 ```
 
 {{% /choosable %}}

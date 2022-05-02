@@ -67,6 +67,7 @@ The [`pulumi/kubernetes`](https://github.com/pulumi/pulumi-kubernetes) SDK is av
   - Import package: `github.com/pulumi/pulumi-kubernetes/sdk/v3/go/kubernetes`
   - [GitHub](https://github.com/pulumi/pulumi-kubernetes/tree/master/sdk/go/kubernetes)
 - .NET: [`Pulumi.Kubernetes`](https://www.nuget.org/packages/Pulumi.Kubernetes)
+- Java: [`pulumi.kubernetes`](https://search.maven.org/search?q=com.pulumi.kubernetes)
 
 #### Extension Packages
 

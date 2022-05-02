@@ -78,4 +78,24 @@ class Program
 
 {{% /choosable %}}
 
+{{% choosable language java %}}
+
+```java
+import com.pulumi.Context;
+import com.pulumi.Pulumi;
+import com.pulumi.random.RandomPet;
+
+public class App {
+    public static void main(String[] args) {
+        Pulumi.run(App::stack);
+    }
+
+    private static void stack(Context ctx) {
+		final var username = new RandomPet("my-user-name");
+	}
+}
+```
+
+{{% /choosable %}}
+
 {{< /chooser >}}

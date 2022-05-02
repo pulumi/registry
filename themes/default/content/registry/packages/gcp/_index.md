@@ -18,7 +18,7 @@ Consider trying [Google Native]({{<relref "/registry/packages/google-native">}})
 
 ## Example
 
-{{< chooser language "javascript,typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "javascript,typescript,python,go,csharp,java" >}}
 
 {{% choosable language javascript %}}
 
@@ -90,7 +90,6 @@ class Program
 
 ```java
 import com.pulumi.Context;
-import com.pulumi.Exports;
 import com.pulumi.Pulumi;
 import com.pulumi.gcp.storage.Bucket;
 
@@ -104,23 +103,6 @@ public class App {
 		ctx.export("bucketName", bucket.name());
 	}
 }
-```
-
-{{% /choosable %}}
-
-{{% choosable language yaml %}}
-
-```yaml
-name: gcp-example
-runtime: yaml
-resources:
-  myBucket:
-    type: gcp:storage:Bucket
-    properties:
-      location: US
-
-outputs:
-  bucketUrl: ${myBucket.url}
 ```
 
 {{% /choosable %}}

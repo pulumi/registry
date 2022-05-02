@@ -12,7 +12,7 @@ Azure Native must be configured with credentials to deploy and update resources 
 
 ## Example
 
-{{< chooser language "typescript,python,csharp,java,go,yaml" >}}
+{{< chooser language "typescript,python,csharp,go,java" >}}
 
 {{% choosable language typescript %}}
 
@@ -57,25 +57,7 @@ class Program
 
 {{% /choosable %}}
 
-{{% choosable language java %}}
 
-```java
-import com.pulumi.Context;
-import com.pulumi.Pulumi;
-import com.pulumi.azurenative.resources.ResourceGroup;
-
-public class App {
-    public static void main(String[] args) {
-        Pulumi.run(App::stack);
-    }
-
-    private static void stack(Context ctx) {
-        var resourceGroup = new ResourceGroup("resourceGroup");
-        ctx.export("resourceGroupName", resourceGroup.name());
-    }
-}
-```
-{{% /choosable %}}
 
 {{% choosable language go %}}
 
@@ -100,19 +82,24 @@ func main() {
 
 {{% /choosable %}}
 
-{{% choosable language yaml %}}
+{{% choosable language java %}}
 
-```yaml
-name: azure-native-example
-runtime: yaml
-description: An example to deploy a resource group to Azure
-resources:
-  resourceGroup:
-    type: azure-native:resources:ResourceGroup
-outputs:
-  resourceGroupName: ${resourceGroup.name}
+```java
+import com.pulumi.Context;
+import com.pulumi.Pulumi;
+import com.pulumi.azurenative.resources.ResourceGroup;
+
+public class App {
+    public static void main(String[] args) {
+        Pulumi.run(App::stack);
+    }
+
+    private static void stack(Context ctx) {
+        var resourceGroup = new ResourceGroup("resourceGroup");
+        ctx.export("resourceGroupName", resourceGroup.name());
+    }
+}
 ```
-
 {{% /choosable %}}
 
 {{< /chooser >}}

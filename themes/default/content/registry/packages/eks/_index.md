@@ -10,7 +10,7 @@ Amazon EKS must be configured with credentials to deploy and update resources in
 
 ## Example
 
-{{< chooser language "javascript,typescript,python,go,csharp" >}}
+{{< chooser language "javascript,typescript,python,go,csharp,java" >}}
 
 {{% choosable language javascript %}}
 
@@ -98,6 +98,27 @@ class Program
             // Export the cluster's kubeconfig.
             Kubeconfig = cluster.Kubeconfig;
         });
+}
+```
+
+{{% /choosable %}}
+
+{{% choosable language java %}}
+
+```java
+import com.pulumi.Context;
+import com.pulumi.Pulumi;
+import com.pulumi.eks.Cluster;
+
+public class App {
+    public static void main(String[] args) {
+        Pulumi.run(App::stack);
+    }
+
+    private static void stack(Context ctx) {
+		final var cluster = new Cluster("eks-cluster");
+		ctx.export("kubeconfig", cluster.kubeconfig());
+	}
 }
 ```
 

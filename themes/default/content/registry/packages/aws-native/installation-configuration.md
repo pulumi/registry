@@ -23,7 +23,6 @@ The AWS Native provider is available as a package in all Pulumi languages:
 * .NET: [`Pulumi.AwsNative`](https://www.nuget.org/packages/Pulumi.AwsNative)
 * Java: [`com.pulumi.awsnative`](https://search.maven.org/search?q=com.pulumi.awsnative)
 
-
 ## Setup
 
 To provision resources with the Pulumi AWS provider, you need to have AWS credentials. You can use the instructions on if you plan to use AWS credentials from a shared credentials file (which the AWS CLI usually manages for you) or from an environment variable. For other credential options, see the [AWS documentation](https://docs.aws.amazon.com/sdk-for-go/v1/developer-guide/configuring-sdk.html).

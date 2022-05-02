@@ -8,7 +8,7 @@ The Docker provider for Pulumi can be used to provision any of the resources ava
 
 ## Example
 
-{{< chooser language "javascript,typescript,python,go,csharp" >}}
+{{< chooser language "javascript,typescript,python,go,csharp,yaml" >}}
 
 {{% choosable language javascript %}}
 
@@ -109,6 +109,21 @@ class Program
             });
         });
 }
+```
+
+{{% /choosable %}}
+{{% choosable language yaml %}}
+
+```yaml
+resources:
+  image:
+    type: docker:RemoteImage
+    properties:
+      name: ubuntu:precise
+  container:
+    type: docker:Container
+    properties:
+      image: ${image.latest}
 ```
 
 {{% /choosable %}}

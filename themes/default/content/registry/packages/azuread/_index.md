@@ -9,7 +9,7 @@ The AzureAD provider must be configured with credentials to deploy and update re
 
 ## Example
 
-{{< chooser language "javascript,typescript,python,go,csharp,java" >}}
+{{< chooser language "javascript,typescript,python,go,csharp,java,yaml" >}}
 
 {{% choosable language javascript %}}
 
@@ -88,8 +88,6 @@ class Program
 ```
 
 {{% /choosable %}}
-
-
 {{% choosable language java %}}
 
 ```java
@@ -109,6 +107,16 @@ public class App {
 			.build());
 	}
 }
+```
+
+{{% /choosable %}}
+{{% choosable language yaml %}}
+
+```yaml
+resources:
+  my-group:
+    properties:
+      name: my-group
 ```
 
 {{% /choosable %}}

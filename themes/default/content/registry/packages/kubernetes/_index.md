@@ -59,7 +59,7 @@ The packages are available in Node.js (Javascript and Typescript), Python, Go, .
 
 ### For Workload Management
 
-The [`pulumi/kubernetes`](https://github.com/pulumi/pulumi-kubernetes) SDK is available to work with, and deploy app workloads to running Kubernetes clusters:
+The [`pulumi/kubernetes`](https://github.com/pulumi/pulumi-kubernetes) provider is available to work with, and deploy app workloads to running Kubernetes clusters:
 
 - JavaScript/TypeScript: [npm](https://www.npmjs.com/package/@pulumi/kubernetes)
 - Python: [PyPI](https://pypi.org/project/pulumi-kubernetes/)
@@ -68,6 +68,7 @@ The [`pulumi/kubernetes`](https://github.com/pulumi/pulumi-kubernetes) SDK is av
   - [GitHub](https://github.com/pulumi/pulumi-kubernetes/tree/master/sdk/go/kubernetes)
 - .NET: [`Pulumi.Kubernetes`](https://www.nuget.org/packages/Pulumi.Kubernetes)
 - Java: [`com.pulumi.kubernetes`](https://search.maven.org/search?q=com.pulumi.kubernetes)
+- [Pulumi YAML](https://github.com/pulumi/pulumi-yaml#pulumiyaml)
 
 #### Extension Packages
 

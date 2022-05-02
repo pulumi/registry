@@ -30,7 +30,7 @@ Check out the examples below to try out AWS Native:
 * [Launch a Simple AWS Step Function State Machine With Lambda Functions]({{<relref "/registry/packages/aws-native/how-to-guides/aws-native-ts-stepfunctions">}})
 * Create an Object Lambda access point that transforms object requests to a bucket:
 
-{{< chooser language "typescript,python,csharp,go,java" >}}
+{{< chooser language "typescript,python,csharp,go,java,yaml" >}}
 
 {{% choosable language typescript %}}
 
@@ -220,6 +220,31 @@ public class App {
         ctx.export("objectLambdaArn", objectLambda.arn());
     }
 }
+```
+
+{{% /choosable %}}
+
+{{% choosable language yaml %}}
+
+```yaml
+resources:
+  myBucket:
+    type: 'aws-native:s3:Bucket'
+  ap:
+    type: 'aws-native:s3:AccessPoint'
+    properties:
+      bucket: '${myBucket}'
+  action:
+    type: 'aws-native:s3objectlambda:AccessPoint'
+    properties:
+      objectLambdaConfiguration:
+        supportingAccessPoint: '${ap.Arn}'
+        transformationConfigurations:
+          - actions:
+              - GetObject
+            contentTransformation:
+              AwsLambda:
+                FunctionArn: '${fn.Arn}'
 ```
 
 {{% /choosable %}}

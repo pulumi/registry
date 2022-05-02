@@ -10,7 +10,7 @@ Amazon EKS must be configured with credentials to deploy and update resources in
 
 ## Example
 
-{{< chooser language "javascript,typescript,python,go,csharp,java" >}}
+{{< chooser language "javascript,typescript,python,go,csharp,java,yaml" >}}
 
 {{% choosable language javascript %}}
 
@@ -120,6 +120,17 @@ public class App {
 		ctx.export("kubeconfig", cluster.kubeconfig());
 	}
 }
+```
+
+{{% /choosable %}}
+{{% choosable language yaml %}}
+
+```yaml
+resources:
+  eks-cluster:
+    type: eks:Cluster
+outputs:
+  kubeconfig: ${cluster.kubeconfig}
 ```
 
 {{% /choosable %}}

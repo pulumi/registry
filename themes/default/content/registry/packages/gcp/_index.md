@@ -18,7 +18,7 @@ Consider trying [Google Native]({{<relref "/registry/packages/google-native">}})
 
 ## Example
 
-{{< chooser language "javascript,typescript,python,go,csharp,java" >}}
+{{< chooser language "javascript,typescript,python,go,csharp,java,yaml" >}}
 
 {{% choosable language javascript %}}
 
@@ -103,6 +103,16 @@ public class App {
 		ctx.export("bucketName", bucket.name());
 	}
 }
+```
+
+{{% /choosable %}}
+
+{{% choosable language yaml %}}
+
+```yaml
+resources:
+  my-bucket:
+    type: gcp:storage:Bucket
 ```
 
 {{% /choosable %}}

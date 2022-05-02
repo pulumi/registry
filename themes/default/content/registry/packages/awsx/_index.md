@@ -8,7 +8,7 @@ The Amazon Web Services (AWS) Crosswalk (AWSx) provider for Pulumi can provision
 
 The AWSx provider must be configured with credentials to deploy and update resources in AWS; see [Installation & Configuration]({{<relref "./installation-configuration">}}) for instructions.
 
-**New to Pulumi and AWS?** [Get started with AWS using our AWSx tutorial]({{<relref "docs/guides/crosswalk/aws/">}}).
+**New to Pulumi and AWS?** [Get started with AWS using our AWSx tutorial]({{<relref "/docs/guides/crosswalk/aws">}}).
 
 ## Example
 

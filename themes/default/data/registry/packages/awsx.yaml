@@ -1,0 +1,14 @@
+category: Cloud
+component: false
+description: Pulumi Amazon Web Services (AWS) AWSX Components.
+featured: false
+logo_url: ""
+name: awsx
+native: true
+package_status: ga
+publisher: Pulumi
+repo_url: https://github.com/pulumi/pulumi-awsx
+schema_file_path: awsx/schema.json
+title: awsx
+updated_on: 1651262488
+version: v1.0.0-beta.1

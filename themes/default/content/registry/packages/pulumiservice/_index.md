@@ -4,7 +4,7 @@ meta_desc: Provides an overview of the Pulumi-Service provider for Pulumi.
 layout: overview
 ---
 
-The Pulumi Service provider for Pulumi can be used to provision resources available in the [Pulumi Service](https://www.scaleway.com/).
+The Pulumi Service provider for Pulumi can be used to provision resources available in the [Pulumi Service](https://www.pulumi.com/docs/intro/pulumi-service/).
 The Pulumi Service provider must be configured with credentials to deploy and update resources in Pulumi Service.
 
 ## Example

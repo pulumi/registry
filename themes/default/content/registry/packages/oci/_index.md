@@ -1,11 +1,11 @@
 ---
-title: Oracle Cloud (OCI)
-meta_desc: Provides an overview of the Oracle Cloud OCI Provider for Pulumi.
+title: Oracle Cloud Infrastructure
+meta_desc: Provides an overview of the Oracle Cloud Infrastructure Provider for Pulumi.
 layout: overview
 ---
 
-The Oracle Cloud OCI provider for Pulumi can be used to provision any of the cloud resources available in [Oracle Cloud](https://www.oracle.com/cloud).
-The Oracle Cloud OCI provider must be configured with credentials to deploy and update resources in OCI.
+The Oracle Cloud Infrastructure (OCI) provider for Pulumi can be used to provision any of the resources available in [OCI](https://www.oracle.com/cloud).
+The OCI provider must be configured with credentials to deploy and update resources in OCI.
 
 ## Example
 
@@ -50,21 +50,21 @@ test_user = oci.identity.User("test-user",
 
 ```go
 import (
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	oci "github.com/pulumi/pulumi-oci/sdk/go/oci"
+    "github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+    oci "github.com/pulumi/pulumi-oci/sdk/go/oci"
 )
 func main() {
-	pulumi.Run(func(ctx *pulumi.Context) error {
-		testUser, err := oci.Identity.NewUser(ctx, "test-user", &oci.Identity.UserArgs{
-			CompartmentID: pulumi.String("<compartment_id>"),
-			Email:         pulumi.String("testuser@pulumi.com"),
-			Description:   pulumi.String("Test User Created by Pulumi"),
-		})
-		if err != nil {
-			return err
-		}
-		return nil
-	})
+    pulumi.Run(func(ctx *pulumi.Context) error {
+        testUser, err := oci.Identity.NewUser(ctx, "test-user", &oci.Identity.UserArgs{
+            CompartmentID: pulumi.String("<compartment_id>"),
+            Email:         pulumi.String("testuser@pulumi.com"),
+            Description:   pulumi.String("Test User Created by Pulumi"),
+        })
+        if err != nil {
+            return err
+        }
+        return nil
+    })
 }
 ```
 

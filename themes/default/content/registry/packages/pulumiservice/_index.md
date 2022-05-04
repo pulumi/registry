@@ -9,7 +9,7 @@ The Pulumi Service provider must be configured with credentials to deploy and up
 
 ## Example
 
-{{< chooser language "typescript,python,go,csharp" />}}
+{{< chooser language "typescript,python,go,csharp" >}}
 {{% choosable language typescript %}}
 
 ```typescript

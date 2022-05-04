@@ -9,7 +9,7 @@ layout: installation
 The Pulumi Service provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/pulumi-service`](https://www.npmjs.com/package/@pulumi/pulumiservice)
-* Python: [`pulumi_service`](https://pypi.org/project/pulumi-service/)
+* Python: [`pulumi_service`](https://pypi.org/project/pulumi-pulumiservice/)
 * Go: [`github.com/pulumi/pulumi-pulumiservice/sdk/go/pulumiservice`](https://pkg.go.dev/github.com/pulumi/pulumi-pulumiservice/sdk/go/pulumiservice)
 * .NET: [`Pulumi.PulumiService`](https://www.nuget.org/packages/Pulumi.PulumiService)
 

@@ -44,14 +44,14 @@ public class App {
 
     private static void stack(Context ctx) {
         final var bucket = new Bucket("my-bucket");
-		ctx.export("bucketName", bucket.name());
-	}
+        ctx.export("bucketName", bucket.name());
+  }
 }
 ```
 
 {{% /choosable %}}
 
-{{% choosable language java %}}
+{{% choosable language yaml %}}
 
 ```yaml
 resources:

@@ -8,7 +8,7 @@ native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-rke
-schema_file_path: /provider/cmd/pulumi-resource-rke/schema.json
+schema_file_path: provider/cmd/pulumi-resource-rke/schema.json
 title: Rancher RKE
-updated_on: 1639757200
-version: v3.1.1
+updated_on: 1651612806
+version: v3.2.0

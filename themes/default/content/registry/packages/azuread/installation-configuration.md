@@ -14,6 +14,7 @@ The AzureAD provider is available as a package in all Pulumi languages:
 * Python: [`pulumi-azuread`](https://pypi.org/project/pulumi-azuread/)
 * Go: [`github.com/pulumi/pulumi-azuread/sdk/v4/go/azuread`](https://github.com/pulumi/pulumi-azuread)
 * .NET: [`Pulumi.AzureAD`](https://www.nuget.org/packages/Pulumi.AzureAD)
+* Java: [`com.pulumi.azuread`](https://search.maven.org/search?q=com.pulumi.azuread)
 
 ## Credentials
 

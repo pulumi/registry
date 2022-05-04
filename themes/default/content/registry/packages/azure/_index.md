@@ -16,6 +16,10 @@ Azure Classic must be configured with credentials to deploy and update resources
 
 ## Example
 
+{{< chooser language "javascript,yaml" >}}
+
+{{% choosable language javascript %}}
+
 ```javascript
 const azure = require("@pulumi/azure")
 
@@ -23,5 +27,18 @@ const resourceGroupName = new azure.core.ResourceGroup("my-group", {
     location: "westus2",
 });
 ```
+
+{{% /choosable %}}
+{{% choosable language yaml %}}
+
+```yaml
+resources:
+  my-group:
+    type: azure:core:ResourceGroup
+    properties:
+      location: westus2
+```
+
+{{% /choosable %}}
 
 Visit the [How-to Guides]({{<relref "./how-to-guides">}}) to find step-by-step guides for specific scenarios like running an app in Azure App Service or setting up a serverless Azure Function.

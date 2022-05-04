@@ -12,6 +12,7 @@ The Google Cloud (GCP) Classic provider is available as a package in all Pulumi 
 * Python: [`pulumi-gcp`](https://pypi.org/project/pulumi-gcp/)
 * Go: [`github.com/pulumi/pulumi-gcp/sdk/v5/go/gcp`](https://github.com/pulumi/pulumi-gcp)
 * .NET: [`Pulumi.Gcp`](https://www.nuget.org/packages/Pulumi.Gcp)
+* Java: [`com.pulumi.gcp`](https://search.maven.org/search?q=com.pulumi.gcp)
 
 ## Configuration
 

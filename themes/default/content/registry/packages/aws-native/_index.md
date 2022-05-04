@@ -30,7 +30,7 @@ Check out the examples below to try out AWS Native:
 * [Launch a Simple AWS Step Function State Machine With Lambda Functions]({{<relref "/registry/packages/aws-native/how-to-guides/aws-native-ts-stepfunctions">}})
 * Create an Object Lambda access point that transforms object requests to a bucket:
 
-{{< chooser language "typescript,python,csharp,go" >}}
+{{< chooser language "typescript,python,csharp,go,java,yaml" >}}
 
 {{% choosable language typescript %}}
 
@@ -159,6 +159,92 @@ func main() {
         return nil
     })
 }
+```
+
+{{% /choosable %}}
+
+{{% choosable language java %}}
+
+```java
+import java.util.Map;
+
+import com.pulumi.Context;
+import com.pulumi.Exports;
+import com.pulumi.Pulumi;
+import com.pulumi.core.Output;
+
+import com.pulumi.awsnative.s3.Bucket;
+import com.pulumi.awsnative.s3.AccessPoint;
+import com.pulumi.awsnative.s3.AccessPointArgs;
+import com.pulumi.awsnative.s3objectlambda.inputs.AccessPointObjectLambdaConfigurationArgs;
+import com.pulumi.awsnative.s3objectlambda.inputs.AccessPointTransformationConfigurationArgs;
+
+
+public class App {
+    public static void main(String[] args) {
+        Pulumi.run(App::stack);
+    }
+
+    private static void stack(Context ctx) {
+
+        final var bucket = new Bucket("source");
+
+        final var accessPoint = new AccessPoint("ap", AccessPointArgs.builder()
+            .bucket(bucket.getId())
+            .build());
+
+        final Output<String> functionArn = /* your function arn */;
+
+        final var contentTransform = functionArn.applyValue(arn ->
+            Map.of("AwsLambda", Map.of("FunctionArn", arn))
+        );
+
+        final var objectLambdaConfig = AccessPointObjectLambdaConfigurationArgs
+            .builder()
+            .supportingAccessPoint(accessPoint.arn())
+            .transformationConfigurations(
+                AccessPointTransformationConfigurationArgs
+                    .builder()
+                    .actions("GetObject")
+                    .contentTransformation(contentTransform)
+                    .build()
+            )
+            .build();
+
+        final var objectLambdaArgs = com.pulumi.awsnative.s3objectlambda.AccessPointArgs
+            .builder()
+            .objectLambdaConfiguration(objectLambdaConfig)
+            .build();
+
+        final var objectLambda = new com.pulumi.awsnative.s3objectlambda.AccessPoint("objectlambda-ap", objectLambdaArgs);
+        ctx.export("objectLambdaArn", objectLambda.arn());
+    }
+}
+```
+
+{{% /choosable %}}
+
+{{% choosable language yaml %}}
+
+```yaml
+resources:
+  myBucket:
+    type: 'aws-native:s3:Bucket'
+  ap:
+    type: 'aws-native:s3:AccessPoint'
+    properties:
+      bucket: '${myBucket}'
+  action:
+    type: 'aws-native:s3objectlambda:AccessPoint'
+    properties:
+      objectLambdaConfiguration:
+        supportingAccessPoint: '${ap.Arn}'
+        transformationConfigurations:
+          - actions:
+              - GetObject
+            contentTransformation:
+              AwsLambda:
+                FunctionArn: '${fn.Arn}'
 ```
 
 {{% /choosable %}}

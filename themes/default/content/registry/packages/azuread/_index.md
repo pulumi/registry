@@ -9,7 +9,7 @@ The AzureAD provider must be configured with credentials to deploy and update re
 
 ## Example
 
-{{< chooser language "javascript,typescript,python,go,csharp" >}}
+{{< chooser language "javascript,typescript,python,go,csharp,java,yaml" >}}
 
 {{% choosable language javascript %}}
 
@@ -85,6 +85,39 @@ class Program
             });
         });
 }
+```
+
+{{% /choosable %}}
+{{% choosable language java %}}
+
+```java
+import com.pulumi.Context;
+import com.pulumi.Pulumi;
+import com.pulumi.azuread.Group;
+import com.pulumi.azuread.GroupArgs;
+
+public class App {
+    public static void main(String[] args) {
+        Pulumi.run(App::stack);
+    }
+
+    private static void stack(Context ctx) {
+		final var group = new Group("my-group", GroupArgs.builder()
+			.name("my-group")
+			.build());
+	}
+}
+```
+
+{{% /choosable %}}
+{{% choosable language yaml %}}
+
+```yaml
+resources:
+  my-group:
+    type: azureaz:Group
+    properties:
+      name: my-group
 ```
 
 {{% /choosable %}}

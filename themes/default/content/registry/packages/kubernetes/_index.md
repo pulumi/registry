@@ -45,7 +45,7 @@ The quickest way to get started with Kubernetes is to follow the [Get Started]({
 
 The following SDKs are available to work with IaaS resources, and managed or self-managed Kubernetes clusters.
 
-The packages are available in Node.js (Javascript and Typescript), Python, Go, and .NET.
+The packages are available in Node.js (Javascript and Typescript), Python, Go, .NET and Java.
 
 - AWS: [`pulumi/aws`](https://github.com/pulumi/aws)
 - Azure: [`pulumi/azure-native`](https://github.com/pulumi/pulumi-azure-native)
@@ -59,7 +59,7 @@ The packages are available in Node.js (Javascript and Typescript), Python, Go, a
 
 ### For Workload Management
 
-The [`pulumi/kubernetes`](https://github.com/pulumi/pulumi-kubernetes) SDK is available to work with, and deploy app workloads to running Kubernetes clusters:
+The [`pulumi/kubernetes`](https://github.com/pulumi/pulumi-kubernetes) provider is available to work with, and deploy app workloads to running Kubernetes clusters:
 
 - JavaScript/TypeScript: [npm](https://www.npmjs.com/package/@pulumi/kubernetes)
 - Python: [PyPI](https://pypi.org/project/pulumi-kubernetes/)
@@ -67,6 +67,8 @@ The [`pulumi/kubernetes`](https://github.com/pulumi/pulumi-kubernetes) SDK is av
   - Import package: `github.com/pulumi/pulumi-kubernetes/sdk/v3/go/kubernetes`
   - [GitHub](https://github.com/pulumi/pulumi-kubernetes/tree/master/sdk/go/kubernetes)
 - .NET: [`Pulumi.Kubernetes`](https://www.nuget.org/packages/Pulumi.Kubernetes)
+- Java: [`com.pulumi.kubernetes`](https://search.maven.org/search?q=com.pulumi.kubernetes)
+- [Pulumi YAML](https://github.com/pulumi/pulumi-yaml#pulumiyaml)
 
 #### Extension Packages
 

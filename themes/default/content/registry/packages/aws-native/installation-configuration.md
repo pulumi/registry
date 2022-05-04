@@ -21,6 +21,7 @@ The AWS Native provider is available as a package in all Pulumi languages:
 * Python: [`pulumi-aws-native`](https://pypi.org/project/pulumi-aws-native/)
 * Go: [`github.com/pulumi/pulumi-aws-native/sdk/go/aws`](https://github.com/pulumi/pulumi-aws-native/tree/master/sdk/go/aws)
 * .NET: [`Pulumi.AwsNative`](https://www.nuget.org/packages/Pulumi.AwsNative)
+* Java: [`com.pulumi.awsnative`](https://search.maven.org/search?q=com.pulumi.awsnative)
 
 ## Setup
 

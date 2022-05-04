@@ -8,7 +8,7 @@ The Random provider for Pulumi can be used to help introduce random values when 
 
 ## Example
 
-{{< chooser language "javascript,typescript,python,go,csharp" >}}
+{{< chooser language "javascript,typescript,python,go,csharp,yaml" >}}
 
 {{% choosable language javascript %}}
 
@@ -73,6 +73,35 @@ class Program
         Deployment.Run(() => {
             var username = new RandomPet("my-user-name", new RandomPetArgs{});
         });
+}
+```
+
+{{% /choosable %}}
+{{% choosable language yaml %}}
+
+```yaml
+resources:
+  username:
+    type: random:RandomPet
+```
+
+{{% /choosable %}}
+
+{{% choosable language java %}}
+
+```java
+import com.pulumi.Context;
+import com.pulumi.Pulumi;
+import com.pulumi.random.RandomPet;
+
+public class App {
+    public static void main(String[] args) {
+        Pulumi.run(App::stack);
+    }
+
+    private static void stack(Context ctx) {
+		final var username = new RandomPet("my-user-name");
+	}
 }
 ```
 

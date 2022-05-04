@@ -21,6 +21,7 @@ The AWS Classic provider is available as a package in all Pulumi languages:
 * Python: [`pulumi-aws`](https://pypi.org/project/pulumi-aws/)
 * Go: [`github.com/pulumi/pulumi-aws/sdk/v4/go/aws`](https://github.com/pulumi/pulumi-aws)
 * .NET: [`Pulumi.Aws`](https://www.nuget.org/packages/Pulumi.Aws)
+* Java: [`com.pulumi.aws`](https://search.maven.org/search?q=com.pulumi.aws)
 
 ## Setup
 

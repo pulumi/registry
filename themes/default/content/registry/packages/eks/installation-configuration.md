@@ -18,6 +18,7 @@ The Amazon EKS provider is available as a package in all Pulumi languages:
 * Python: [`pulumi_eks`](https://pypi.org/project/pulumi-eks//)
 * Go: [`github.com/pulumi/pulumi-eks/sdk/go/eks`](https://github.com/pulumi/pulumi-eks)
 * .NET: [`Pulumi.Eks`](https://www.nuget.org/packages/Pulumi.Eks)
+* Java: [`com.pulumi.eks`](https://search.maven.org/search?q=com.pulumi.eks)
 
 ## Prerequisites
 

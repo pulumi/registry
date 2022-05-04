@@ -1,5 +1,5 @@
 ---
-title: Pulumi-Service
+title: Pulumi Service
 meta_desc: Provides an overview of the Pulumi-Service provider for Pulumi.
 layout: overview
 ---

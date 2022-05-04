@@ -13,5 +13,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-azure
 schema_file_path: provider/cmd/pulumi-resource-azure/schema.json
 title: Azure Classic
-updated_on: 1650923226
-version: v5.3.0
+updated_on: 1651669882
+version: v5.5.0

@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-azuread
 schema_file_path: provider/cmd/pulumi-resource-azuread/schema.json
 title: Azure Active Directory
-updated_on: 1650574050
-version: v5.20.0
+updated_on: 1651660319
+version: v5.22.0

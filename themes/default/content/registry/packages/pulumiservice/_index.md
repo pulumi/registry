@@ -52,7 +52,7 @@ func main() {
 			Active:           pulumi.Bool(true),
 			DisplayName:      pulumi.String("example webhook"),
 			OrganizationName: pulumi.String("example"),
-            PayloadURL:       pulumi.String("https://example.com/webhook"),
+			PayloadURL:       pulumi.String("https://example.com/webhook"),
 		}, nil)
 		if err != nil {
 			return fmt.Errorf("error creating webhook: %v", err)

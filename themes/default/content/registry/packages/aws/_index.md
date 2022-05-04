@@ -111,7 +111,7 @@ resources:
   mybucket:
     type: aws:s3:Bucket
 outputs:
-  bucketName: ${bucket.name}
+  bucketName: ${mybucket.name}
 ```
 
 {{% /choosable %}}

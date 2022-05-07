@@ -13,7 +13,7 @@
         <!-- Only show "Edit this Page" for pages that are not generated. -->
         {{ if not $.Page.Params.no_edit_this_page }}
         <li>
-            <a data-track="edit-page" class="text-gray-600 hover:text-gray-700 text-xs" href="{{ $.Site.Params.contentRepositoryURL }}/edit/{{ $.Site.Params.contentRepositoryBaseBranch }}/{{ getenv "REPO_THEME_PATH" }}content/{{ .Path }}" target="_blank">
+            <a data-track="edit-page" class="text-gray-600 hover:text-gray-700 text-xs" href="{{ $.Site.Params.registryRepositoryURL }}/edit/{{ $.Site.Params.registryRepositoryBaseBranch }}/{{ getenv "REPO_THEME_PATH" }}content/{{ .Path }}" target="_blank">
             <i class="fas fa-edit mr-2" style="width: 14px"></i>Edit this Page
             </a>
         </li>

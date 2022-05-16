@@ -8,7 +8,7 @@ native: false
 package_status: public_preview
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-ec
-schema_file_path: /provider/cmd/pulumi-resource-ec/schema.json
+schema_file_path: provider/cmd/pulumi-resource-ec/schema.json
 title: ec
-updated_on: 1646930770
-version: v0.4.0
+updated_on: 1652714025
+version: v0.4.1

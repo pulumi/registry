@@ -19,6 +19,10 @@
     {
       "repoSlug": "jaxxstorm/pulumi-scaleway",
       "schemaFile": "provider/cmd/pulumi-resource-scaleway/schema.json"
+    },
+    {
+      "repoSlug": "pulumi/pulumi-kubernetes-cert-manager",
+      "schemaFile": "schema.json"
     }
   ]
 }

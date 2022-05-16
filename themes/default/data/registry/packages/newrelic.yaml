@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-newrelic
 schema_file_path: provider/cmd/pulumi-resource-newrelic/schema.json
 title: New Relic
-updated_on: 1650895035
-version: v4.14.0
+updated_on: 1652718642
+version: v4.15.0

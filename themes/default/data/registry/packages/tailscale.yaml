@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-tailscale
 schema_file_path: provider/cmd/pulumi-resource-tailscale/schema.json
 title: tailscale
-updated_on: 1650885119
-version: v0.7.1
+updated_on: 1652714061
+version: v0.8.0

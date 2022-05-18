@@ -25,7 +25,7 @@ const policy = new newrelic.AlertPolicy("my-policy");
 ```typescript
 import * as newrelic from "@pulumi/newrelic";
 
-const policu = new newrelic.AlertPolicy("my-policy");
+const policy = new newrelic.AlertPolicy("my-policy");
 ```
 
 {{% /choosable %}}

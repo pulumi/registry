@@ -85,24 +85,24 @@
                             {{ if (eq (.package.publisher) "Pulumi") }}
                                 <div class="flex items-center pt-1">
                                     <pulumi-tooltip>
-                                        <span class="font-display label pr-2">{{ $packageLabel }}</span>
+                                        <span class="font-display label">{{ $packageLabel }}</span>
+                                        <img class="inline pb-1" src="/icons/check-verified.svg">
                                         <span slot="content">
                                             Package maintained by Pulumi
                                         </span>
                                     </pulumi-tooltip>
-                                    <img src="/icons/check-verified.svg">
                                 </div>
                             {{ end }}
                 
                             {{ if not (eq (.package.publisher) "Pulumi") }}
                                 <div class="flex items-center pt-1">
-                                    <pulumi-tooltip>
-                                        <span class="font-display label pr-2">{{ $packageLabel }}</span>
+                                    <pulumi-tooltip class="flex">
+                                        <span class="font-display label">{{ $packageLabel }}</span>
+                                        <img class="inline pb-1" src="/icons/people.svg">
                                         <span slot="content">
                                             Package contributed by a community member
                                         </span>
                                     </pulumi-tooltip>
-                                    <img src="/icons/people.svg">
                                 </div>
                             {{ end }}
                         </div>

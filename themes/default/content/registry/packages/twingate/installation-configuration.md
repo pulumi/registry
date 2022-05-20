@@ -10,7 +10,7 @@ The Pulumi Twingate provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@jaxxstorm/pulumi-twingate`](https://www.npmjs.com/package/@twingate-labs/pulumi-twingate)
 * Python: [`pulumi_twingate`](https://pypi.org/project/pulumi-twingate/)
-* Go: [`github.com/Twingate-Labs/pulumi-twingate/sdk/go/twingate`](https://pkg.go.dev/github.com/Twingate-Labs/pulumi-twingate/sdk)
+* Go: [`github.com/Twingate-Labs/pulumi-twingate/sdk/go/twingate`](https://github.com/Twingate-Labs/pulumi-twingate/tree/master/sdk/go/twingate)
 * .NET: [`TwingateLabs.Twingate`](https://www.nuget.org/packages/TwingateLabs.Twingate)
 
 ### Provider Binary

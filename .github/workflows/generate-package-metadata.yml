@@ -20,6 +20,7 @@ jobs:
     needs: generate-packages-list
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       # GitHub recommends only issuing 1 API request per second, and never
       # concurrently.  For more information, see:
       # https://docs.github.com/en/rest/guides/best-practices-for-integrators#dealing-with-secondary-rate-limits

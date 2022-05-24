@@ -1,14 +1,14 @@
-category: Infrastructure
-component: true
+category: Cloud
+component: false
 description: ""
 featured: false
 logo_url: ""
 name: kubernetes-cert-manager
-native: false
+native: true
 package_status: public_preview
-publisher: Joe Duffy
+publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-kubernetes-cert-manager
-schema_file_path: /schema.json
-title: cert-manager
-updated_on: 1634553638
-version: v0.0.1
+schema_file_path: schema.json
+title: kubernetes-cert-manager
+updated_on: 1652733569
+version: v0.0.2

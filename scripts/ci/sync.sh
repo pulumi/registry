@@ -88,6 +88,7 @@ set_bucket_for_commit "$(git_sha)" "$destination_bucket" "$(aws_region)"
 pr_comment_api_url="$(cat "$GITHUB_EVENT_PATH" | jq -r ".pull_request._links.comments.href")"
 post_github_pr_comment \
     "Your site preview for commit $(git_sha_short) is ready! :tada:\n\n${s3_website_url}/registry." \
-    $pr_comment_api_url
+    $pr_comment_api_url \
+    "Registry site previews only include API docs for the AWS and Aiven packages by default.  You will not be able to navigate to other docs from the preview link."
 
 echo "Done! The bucket website is now built and available at ${s3_website_url}."

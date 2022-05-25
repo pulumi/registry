@@ -8,7 +8,7 @@ native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-opsgenie
-schema_file_path: /provider/cmd/pulumi-resource-opsgenie/schema.json
+schema_file_path: provider/cmd/pulumi-resource-opsgenie/schema.json
 title: Opsgenie
-updated_on: 1645194509
-version: v1.1.5
+updated_on: 1653412651
+version: v1.1.6

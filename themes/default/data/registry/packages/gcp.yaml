@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-gcp
 schema_file_path: provider/cmd/pulumi-resource-gcp/schema.json
 title: Google Cloud Classic
-updated_on: 1652784225
-version: v6.24.0
+updated_on: 1653519407
+version: v6.25.0

@@ -20,13 +20,25 @@
       "repoSlug": "jaxxstorm/pulumi-scaleway",
       "schemaFile": "provider/cmd/pulumi-resource-scaleway/schema.json"
     },
-		{
+    {
       "repoSlug": "pulumi/pulumi-kubernetes-cert-manager",
       "schemaFile": "schema.json"
     },
     {
+      "repoSlug": "pulumi/pulumi-kubernetes-coredns",
+      "schemaFile": "schema.json"
+    },
+    {
+      "repoSlug": "pulumi/pulumi-kubernetes-ingress-nginx",
+      "schemaFile": "schema.json"
+    },
+    {
+      "repoSlug": "pulumi/pulumi-aws-apigateway",
+      "schemaFile": "schema.yaml"
+    },
+    {
       "repoSlug": "rootlyhq/pulumi-rootly",
       "schemaFile": "provider/cmd/pulumi-resource-rootly/schema.json"
-		}
+    }
   ]
 }

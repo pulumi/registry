@@ -6,9 +6,9 @@ logo_url: ""
 name: kubernetes-cert-manager
 native: false
 package_status: public_preview
-publisher: Joe Duffy
+publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-kubernetes-cert-manager
-schema_file_path: /schema.json
-title: cert-manager
-updated_on: 1634553638
-version: v0.0.1
+schema_file_path: schema.json
+title: Kubernetes Cert Manager
+updated_on: 1653607048
+version: v0.0.3

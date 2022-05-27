@@ -6,9 +6,9 @@ logo_url: ""
 name: kubernetes-coredns
 native: false
 package_status: public_preview
-publisher: Joe Duffy
+publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-kubernetes-coredns
-schema_file_path: /schema.json
+schema_file_path: schema.json
 title: Kubernetes CoreDNS
-updated_on: 1634552725
-version: v0.0.1
+updated_on: 1653607361
+version: v0.0.2

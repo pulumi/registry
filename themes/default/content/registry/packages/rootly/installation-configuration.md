@@ -17,7 +17,7 @@ layout: installation
     npm install @rootly/pulumi
     ```
 
-    or `yarn`:
+   or `yarn`:
 
     ```bash
     yarn add @rootly/pulumi
@@ -26,7 +26,7 @@ layout: installation
 1. Install the provider binary plugin. This is only needed due to an outstanding bug in with Pulumi registry
 
 ```bash
-pulumi plugin install resource rootly v0.0.1 --server https://github.com/rootlyhq/pulumi-rootly/releases/download/v0.0.1
+pulumi plugin install resource rootly v0.0.2 --server https://github.com/rootlyhq/pulumi-rootly/releases/download/v0.0.2
 ```
 
 ## Authentication

@@ -2,7 +2,7 @@ category: Cloud
 component: false
 description: A Pulumi package for creating and managing Rootly cloud resources.
 featured: false
-logo_url: https://assets.rootly.com/assets/logo/rootly-7d4aa42752841c6da862630427150431a13aadee3d9e528b92bd0fded5dbca1e.svg
+logo_url: https://raw.githubusercontent.com/rootlyhq/pulumi-rootly/v0.0.3/rootly.svg
 name: rootly
 native: false
 package_status: public_preview
@@ -10,5 +10,5 @@ publisher: Rootly
 repo_url: https://github.com/rootlyhq/pulumi-rootly
 schema_file_path: provider/cmd/pulumi-resource-rootly/schema.json
 title: Rootly
-updated_on: 1652939042
-version: v0.0.2
+updated_on: 1653967362
+version: v0.0.3

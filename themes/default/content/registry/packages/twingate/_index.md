@@ -5,7 +5,7 @@ layout: overview
 ---
 
 The Twingate provider for Pulumi can be used to provision any of the cloud resources available in [Twingate](https://www.twingate.com/).
-The Twingate provider must be configured with credentials to deploy and update resources in Scaleway.
+The Twingate provider must be configured with credentials to deploy and update resources in Twingate.
 
 ## Example
 

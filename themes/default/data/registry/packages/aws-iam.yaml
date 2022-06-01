@@ -1,0 +1,14 @@
+category: Cloud
+component: true
+description: ""
+featured: false
+logo_url: ""
+name: aws-iam
+native: true
+package_status: public_preview
+publisher: Pulumi
+repo_url: https://github.com/pulumi/pulumi-aws-iam
+schema_file_path: schema.yaml
+title: AWS IAM
+updated_on: 1654121492
+version: v0.0.2

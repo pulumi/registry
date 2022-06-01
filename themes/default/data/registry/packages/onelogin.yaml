@@ -1,6 +1,6 @@
 category: Infrastructure
 component: false
-description: A Pulumi package for creating and managing onelogin cloud resources.
+description: A Pulumi package for creating and managing OneLogin cloud resources.
 featured: false
 logo_url: ""
 name: onelogin
@@ -8,7 +8,7 @@ native: false
 package_status: public_preview
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-onelogin
-schema_file_path: /provider/cmd/pulumi-resource-onelogin/schema.json
+schema_file_path: provider/cmd/pulumi-resource-onelogin/schema.json
 title: onelogin
-updated_on: 1631708853
-version: v0.0.12
+updated_on: 1654092039
+version: v0.3.0

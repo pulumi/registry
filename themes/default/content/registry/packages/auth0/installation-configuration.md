@@ -33,9 +33,9 @@ before it can be used to create resources. Once the credetials are obtained, the
 
     ```bash
     $ pulumi config set auth0:domain XXXXXXXXXXXXXX
-    $ pulumi config set auth0:clientId YYYYYYYYYYYYYY --secret
-    $ pulumi config set auth0:clientSecret ZZZZZZZZZZZZZZ --secret
+    $ pulumi config set auth0:client_id YYYYYYYYYYYYYY --secret
+    $ pulumi config set auth0:client_secret ZZZZZZZZZZZZZZ --secret
     ```
 
-Remember to pass `--secret` when setting `auth0:clientId` and `auth0:clientSecret` so that it is properly encrypted. The complete list of
+Remember to pass `--secret` when setting `auth0:client_id` and `auth0:client_secret` so that it is properly encrypted. The complete list of
 configuration parameters is in the [Auth0 Provider README](https://github.com/pulumi/pulumi-auth0/blob/master/README.md).

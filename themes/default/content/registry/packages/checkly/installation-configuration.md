@@ -23,7 +23,7 @@ or `yarn`:
 yarn add @checkly/pulumi
 ```
 
-2. Install the provider binary plugin. This is only needed due to an outstanding bug in with Pulumi registry
+1. Install the provider binary plugin. This is only needed due to an outstanding bug in with Pulumi registry
 
 ```bash
 pulumi plugin install resource checkly v0.0.1-alpha.5 --server https://github.com/checkly/pulumi-checkly/releases/download/v0.0.1-alpha.5
@@ -38,12 +38,14 @@ The Pulumi Checkly Provider needs to be configured with a Checkly `API Key` and 
 Once you generated the `API Key` there are two ways to communicate your authorization tokens to Pulumi:
 
 1. Set the environment variables `CHECKLY_API_KEY` and `CHECKLY_ACCOUNT_ID`:
+
     ```bash
     $ export CHECKLY_API_KEY=cu_xxx
     $ export CHECKLY_ACCOUNT_ID=xxx
     ```
 
-2. Set them using `pulumi config` command, if you prefer that they be stored alongside your Pulumi stack for easy multi-user access:
+1. Set them using `pulumi config` command, if you prefer that they be stored alongside your Pulumi stack for easy multi-user access:
+
     ```bash
     $ pulumi config set checkly:apiKey cu_xxx --secret
     $ pulumi config set checkly:accountId xxx

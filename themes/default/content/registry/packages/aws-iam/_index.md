@@ -652,6 +652,7 @@ func main() {
 {{% /choosable %}}
 
 {{% choosable language csharp %}}
+
 ```csharp
 using Pulumi;
 using Pulumi.AwsIam;
@@ -922,8 +923,8 @@ class MyStack : Stack
     [Output]
     public Output<User> User { get; set; }
 }
-
 ```
+
 {{% /choosable %}}
 
 {{% choosable language yaml %}}
@@ -1112,10 +1113,8 @@ outputs:
     readOnlyPolicy: ${readOnlyPolicy}
     roleForServiceAccountsEks: ${roleForServiceAccountsEks}
     user: ${user}
-
 ```
 
 {{% /choosable %}}
-
 
 {{< /chooser >}}

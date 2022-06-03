@@ -11,4 +11,4 @@ repo_url: https://github.com/pulumi/pulumi-aws-iam
 schema_file_path: schema.yaml
 title: AWS IAM
 updated_on: 1654121492
-version: v0.0.2
+version: v0.0.3

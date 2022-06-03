@@ -6,11 +6,11 @@ layout: installation
 
 {{< aws-resource-note >}}
 
-To provision an AWS IAM Roles with this component, you need to have AWS credentials. Use the instructions on the AWS Classic Provider's [Installation & Configuration]({{< relref "/registry/packages/aws/installation-configuration" >}}) to get credentials if needed. Your AWS credentials are never sent to Pulumi.com. Pulumi uses the AWS SDK and the credentials in your environment to authenticate requests from your computer to AWS.
+To provision an AWS IAM Roles with this Component, you need to have AWS credentials configured. Use the instructions on the AWS Classic Provider's [Installation & Configuration]({{< relref "/registry/packages/aws/installation-configuration" >}}) to configure your credentials. Your AWS credentials are never sent to Pulumi.com. Pulumi uses the AWS SDK and the credentials in your environment to authenticate requests from your computer to AWS.
 
 ## Installation
 
-The AWS QuickStart Redshift provider is available as a package in all Pulumi languages:
+The AWS IAM Component is available as a package in:
 
 * JavaScript/TypeScript: [`@pulumi/aws-iam`](https://www.npmjs.com/package/@pulumi/aws-iam)
 * Python: [`pulumi-aws-iam`](https://pypi.org/project/pulumi-aws-iam/)

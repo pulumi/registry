@@ -4,9 +4,14 @@ meta_desc: Use Pulumi's Component for creating an AWS IAM resources using infras
 layout: overview
 ---
 
-Easily create AWS IAM roles in all Pulumi languages.
+You can use the Pulumi AWS IAM Component to help you create AWS IAM roles in all supported Pulumi Languages. The code below
+will show you examples of each resources supported in this Component, but please refer to the API Docs for more detailed
+descriptions and information about each resource.
 
-## Example
+This Component was heavily inspired by the [Terraform AWS IAM Module](https://github.com/terraform-aws-modules/terraform-aws-iam/) and
+should provide users with equal functionality.
+
+## Examples
 
 {{< chooser language "typescript,python,go,csharp,yaml" >}}
 
@@ -253,7 +258,7 @@ pulumi.export('assumable_role_with_saml', assumable_role_with_saml)
 # Assumable Roles
 assumable_roles = iam.AssumableRoles(
     'assumable_roles',
-    trusted_role_arns=['arn:aws:iam::307990089504:root','arn:aws:iam::835367859851:user/anton'],
+    trusted_role_arns=['arn:aws:iam::307990089504:root','arn:aws:iam::835367859851:user/pulumipus'],
     admin=iam.AdminRoleArgs(),
     poweruser=iam.PoweruserRoleArgs(
         name='developer',
@@ -477,7 +482,7 @@ func main() {
 
 		// Assumable Roles
 		assumableRoles, err := iam.NewAssumableRoles(ctx, "assumable-roles", &iam.AssumableRolesArgs{
-			TrustedRoleArns: pulumi.ToStringArray([]string{"arn:aws:iam::307990089504:root", "arn:aws:iam::835367859851:user/anton"}),
+			TrustedRoleArns: pulumi.ToStringArray([]string{"arn:aws:iam::307990089504:root", "arn:aws:iam::835367859851:user/pulumipus"}),
 			Admin:           iam.AdminRoleWithMFAArgs{},
 			Poweruser: iam.PoweruserRoleWithMFAArgs{
 				Name: pulumi.String("developer"),
@@ -727,7 +732,7 @@ class MyStack : Stack
         // Assumable Roles
         var assumableRoles = new AssumableRoles("assumable-roles", new AssumableRolesArgs
         {
-            TrustedRoleArns = {"arn:aws:iam::307990089504:root", "arn:aws:iam::835367859851:user/anton"},
+            TrustedRoleArns = {"arn:aws:iam::307990089504:root", "arn:aws:iam::835367859851:user/pulumipus"},
             Admin = new AdminRoleWithMFAArgs(),
             Poweruser = new PoweruserRoleWithMFAArgs
             {
@@ -982,7 +987,7 @@ resources:
         properties:
             trustedRoleArns:
                 - "arn:aws:iam::307990089504:root"
-                - "arn:aws:iam::835367859851:user/anton"
+                - "arn:aws:iam::835367859851:user/pulumipus"
             poweruser:
                 name: "developer"
             readonly:

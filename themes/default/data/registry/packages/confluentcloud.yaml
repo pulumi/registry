@@ -1,0 +1,14 @@
+category: Cloud
+component: false
+description: A Pulumi package for creating and managing Confluent cloud resources.
+featured: false
+logo_url: ""
+name: confluentcloud
+native: false
+package_status: public_preview
+publisher: Pulumi
+repo_url: https://github.com/pulumi/pulumi-confluentcloud
+schema_file_path: provider/cmd/pulumi-resource-confluentcloud/schema.json
+title: Confluent
+updated_on: 1654440958
+version: v0.1.0

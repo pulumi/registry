@@ -25,7 +25,7 @@ const env = new ccloud.ConfluentEnvironment("ts-environment");
 {{% choosable language typescript %}}
 
 ```typescript
-import * as confluent from "@pulumi/confluent";
+import * as ccloud from "@pulumi/confluent";
 
 const env = new ccloud.ConfluentEnvironment("ts-environment");
 ```
@@ -34,7 +34,7 @@ const env = new ccloud.ConfluentEnvironment("ts-environment");
 {{% choosable language python %}}
 
 ```python
-import pulumi_confluent as confluent
+import pulumi_confluent as ccloud
 
 environment = ccloud.ConfluentEnvironment("py-env")
 ```

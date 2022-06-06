@@ -4,7 +4,7 @@ description: ""
 featured: false
 logo_url: ""
 name: aws-iam
-native: true
+native: false
 package_status: public_preview
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-aws-iam

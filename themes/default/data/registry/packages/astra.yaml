@@ -1,0 +1,14 @@
+category: Cloud
+component: false
+description: A Pulumi package for creating and managing astra cloud resources.
+featured: false
+logo_url: ""
+name: astra
+native: false
+package_status: ga
+publisher: pulumiverse
+repo_url: https://github.com/pulumiverse/pulumi-astra
+schema_file_path: provider/cmd/pulumi-resource-astra/schema.json
+title: astra
+updated_on: 1654535423
+version: v1.0.20

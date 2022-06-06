@@ -39,6 +39,10 @@
     {
       "repoSlug": "rootlyhq/pulumi-rootly",
       "schemaFile": "provider/cmd/pulumi-resource-rootly/schema.json"
+    },
+    {
+      "repoSlug": "pulumiverse/pulumi-astra",
+      "schemaFile": "provider/cmd/pulumi-resource-astra/schema.json"
     }
   ]
 }

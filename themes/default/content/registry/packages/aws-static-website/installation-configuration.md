@@ -4,6 +4,8 @@ meta_desc: Information on how to install the AWS Static Website component.
 layout: installation
 ---
 
+{{< aws-resource-note >}}
+
 ## Installation
 
 The Pulumi AWS Static Website component is available as a package in all Pulumi languages:
@@ -26,7 +28,7 @@ npm install @pulumi/aws-static-website
 ### Python
 
 ```
-pip3 install pulumi_aws_static_website
+pip install pulumi-aws-static-website
 ```
 
 ### Go

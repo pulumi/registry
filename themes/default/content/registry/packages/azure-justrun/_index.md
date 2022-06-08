@@ -48,7 +48,9 @@ This component takes the following inputs.
 - storageAccount - The storage account to use. One will be created if not provided.
 - resourceGroup - The resource group to use. One will be created if not provided.
 - namePrefix - The name prefix given to child resources of this component. Should not contain dashes.
+
 ## Outputs
+
 This component provides the following outputs.
 
 - url - the URL to access the website

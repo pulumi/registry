@@ -1,0 +1,14 @@
+category: Cloud
+component: true
+description: A Pulumi Component resource which make it simple to deploy websites to azure.
+featured: false
+logo_url: ""
+name: azure-justrun
+native: false
+package_status: public_preview
+publisher: Pulumi
+repo_url: https://github.com/pulumi/pulumi-azure-justrun
+schema_file_path: schema.json
+title: Azure Just Run
+updated_on: 1654633794
+version: v0.1.14

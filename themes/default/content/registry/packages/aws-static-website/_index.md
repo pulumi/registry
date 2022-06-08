@@ -85,9 +85,9 @@ This component takes the following inputs.
 - index.html - the default document for the site. Defaults to index.html
 - error404 - the default 404 error page
 - certificateARN - the ARN of the ACM certificate to use for serving HTTPS. If one is not provided, a certificate will be created during the provisioning process
-- cacheTTL - TTL inseconds for cached objects
+- cacheTTL - TTL in seconds for cached objects. Defaults to `600` (i.e. 10 minutes) if not specified
 - withLogs - provision a bucket to house access logs
-- priceClass - the price class to use for the CDN. Defaults to `100` if not specified.
+- priceClass - the price class to use for the CDN. Defaults to `100` if not specified
 
 ## Outputs
 

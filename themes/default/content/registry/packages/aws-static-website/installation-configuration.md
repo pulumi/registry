@@ -21,19 +21,19 @@ Install the SDK package corresponding to the language or runtime you are using. 
 
 ### NodeJS
 
-```
+```bash
 npm install @pulumi/aws-static-website
 ```
 
 ### Python
 
-```
+```bash
 pip install pulumi-aws-static-website
 ```
 
 ### Go
 
-```
+```bash
 go get -t github.com/pulumi/pulumi-aws-static-website/sdk/go/aws-static-website
 ```
 

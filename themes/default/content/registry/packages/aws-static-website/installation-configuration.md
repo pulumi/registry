@@ -15,7 +15,7 @@ The Pulumi AWS Static Website component is available as a package in all Pulumi 
 * Go: [`github.com/pulumi/pulumi-aws-static-website/sdk/go/aws-static-website`](https://pkg.go.dev/github.com/pulumi/pulumi-aws-static-website)
 * .NET: [`Pulumi.AwsStaticWebsite`](https://www.nuget.org/packages/Pulumi.AwsStaticWebsite/)
 
-If you are new to Pulumi and do not yet have our Pulumi installed, see our [getting started](https://www.pulumi.com/docs/get-started/) guide to get up and running.
+If you are new to Pulumi, see our [getting started](https://www.pulumi.com/docs/get-started/) guide to get up and running.
 
 Install the SDK package corresponding to the language or runtime you are using. If using YAML or one of our other markup languages, this step can be skipped.
 

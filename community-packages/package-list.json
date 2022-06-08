@@ -43,6 +43,10 @@
     {
       "repoSlug": "pulumiverse/pulumi-astra",
       "schemaFile": "provider/cmd/pulumi-resource-astra/schema.json"
+    },
+    {
+      "repoSlug": "pulumi/pulumi-azure-justrun",
+      "schemaFile": "schema.json"
     }
   ]
 }

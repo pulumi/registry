@@ -4,7 +4,7 @@ meta_desc: Provides an overview of the AWS Static Website component.
 layout: overview
 ---
 
-This component makes it easy to deploy a static website to s3 along with an optional CloudFront distribution using any of the supported Pulumi programming languages including markup languages like YAML and JSON.
+This component makes it easy to deploy a static website to Amazon S3 along with an optional CloudFront distribution using any of the supported Pulumi programming languages, including markup languages like YAML and JSON.
 
 ## Examples
 

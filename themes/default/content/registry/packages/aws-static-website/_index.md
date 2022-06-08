@@ -102,5 +102,5 @@ This component provides the following outputs. Some may not be available dependi
 
 ## Notes:
 
-- If specifying a target domain and provisioning a CloudFront distribution, it is assumed there is a hosted zone configured in route53 for that target domain.
+- If specifying a target domain and provisioning a CloudFront distribution, it is assumed there is a hosted zone configured in Route53 for that target domain.
 - If you already have an ACM certificate provisioned for your domain, then you can simply pass the ARN as one of the input properties. If not we will attempt to provision one for you based on the target domain provided.

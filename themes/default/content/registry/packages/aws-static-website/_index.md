@@ -93,11 +93,11 @@ This component takes the following inputs.
 
 This component provides the following outputs. Some may not be available depending on the given input configuration (e.g. if `withCDN` was not specified there will be no output for `cdnDomainName` and `cdnURL`)
 
-- bucketName - the name of the s3 bucket containing the website's contents
-- bucketWebsiteURL - the website URL for the s3 bucket
+- bucketName - the name of the S3 bucket containing the website's contents
+- bucketWebsiteURL - the website URL for the S3 bucket
 - cdnDomainName - the CDN domain name
 - cdnURL - the CDN's endpoint URL
-- logsBucketName - the name of the s3 bucket containing the access logs
+- logsBucketName - the name of the S3 bucket containing the access logs
 - websiteURL - the URL to access the website
 
 ## Notes:

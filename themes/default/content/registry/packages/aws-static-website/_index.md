@@ -14,11 +14,11 @@ This component makes it easy to deploy a static website to Amazon S3 along with 
 ```typescript
 import * as staticwebsite from "@pulumi/aws-static-website"
 
-const args =  {
-    sitePath: "../website/build",
-} as staticwebsite.WebsiteArgs
+const site = new staticwebsite.Website("website", {
+    sitePath: "../website/build"
+});
 
-const site = new staticwebsite.Website("website", args);
+export const url = site.websiteURL;
 ```
 
 {{% /choosable %}}

@@ -50,7 +50,7 @@
     },
     {
       "repoSlug": "pulumi/pulumi-aws-static-website",
-      "schemaFile": "provider/cmd/pulumi-resource-aws-static-website/schema.json"
+      "schemaFile": "schema.json"
     }
   ]
 }

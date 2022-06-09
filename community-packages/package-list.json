@@ -47,10 +47,6 @@
     {
       "repoSlug": "pulumi/pulumi-azure-justrun",
       "schemaFile": "schema.json"
-    },
-    {
-      "repoSlug": "pulumi/pulumi-aws-static-website",
-      "schemaFile": "provider/cmd/pulumi-resource-aws-static-website/schema.json"
     }
   ]
 }

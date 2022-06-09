@@ -1,6 +1,6 @@
 category: Cloud
 component: true
-description: ""
+description: "A Pulumi component to deploy a static website to AWS"
 featured: false
 logo_url: ""
 name: aws-iam

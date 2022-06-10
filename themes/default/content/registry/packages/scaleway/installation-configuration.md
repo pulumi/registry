@@ -25,7 +25,7 @@ Replace the version string with your desired version.
 
 ## Setup
 
-To provision resources with the Pulumi Scaleway provider, you need to have Scaleway credentials. [Scaleway API keys documentation](https://www.scaleway.com/en/docs/console/my-project/how-to/generate-api-key/)
+To provision resources with the Pulumi Scaleway provider, you need to have Scaleway credentials. Scaleway maintains documentation on how to create API keys [here](https://www.scaleway.com/en/docs/console/my-project/how-to/generate-api-key/)
 
 ### Set environment variables
 
@@ -70,5 +70,4 @@ Use `pulumi config set scaleway:<option>` or pass options to the [constructor of
 | `secret_key`| Required | [Scaleway secret key](https://console.scaleway.com/project/credentials) |
 | `project_id` | Required | The [project ID](https://console.scaleway.com/project/settings) that will be used as default value for all resources. |
 | `region` | Optional | The [project ID](https://console.scaleway.com/project/settings) The [region](https://registry.terraform.io/providers/scaleway/scaleway/latest/guides/regions_and_zones#regions) that will be used as default value for all resources. (fr-par if none specified) |
-
 | `zome` | Optional | The [project ID](https://console.scaleway.com/project/settings) The [zone](https://registry.terraform.io/providers/scaleway/scaleway/latest/guides/regions_and_zones#zones) that will be used as default value for all resources. (fr-par-1 if none specified)

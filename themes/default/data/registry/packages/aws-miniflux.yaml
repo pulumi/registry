@@ -9,6 +9,6 @@ package_status: public_preview
 publisher: Christian Nunciato
 repo_url: "https://github.com/pulumi/pulumi-aws-miniflux"
 schema_file_path: /schema.json
-title: Miniflux
+title: AWS Miniflux
 updated_on: 1634334277
 version: v0.1.0

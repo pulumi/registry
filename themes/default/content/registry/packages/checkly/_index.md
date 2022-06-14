@@ -62,3 +62,4 @@ new checkly.Check( "brwoser-check", {
 {{< /chooser >}}
 
 > You could find more complete and detailed examples in the [pulumi-checkly repository](https://github.com/checkly/pulumi-checkly/tree/main/examples)
+>

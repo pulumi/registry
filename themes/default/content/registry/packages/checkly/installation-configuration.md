@@ -7,27 +7,20 @@ layout: installation
 ## Installation
 
 1. To use this package, please [install the Pulumi CLI first](https://www.pulumi.com/docs/get-started/install/).
-2. This package is only available for JavaScript and TypeScript but support for other languages will be available soon.
+1. This package is only available for JavaScript and TypeScript but support for other languages will be available soon.
 
 ### Node.js (JavaScript/TypeScript)
 
-1. To use from JavaScript or TypeScript in Node.js, install using either `npm`:
+To use from JavaScript or TypeScript in Node.js, install using either `npm` or `yarn`:
 
 ```bash
-npm install @checkly/pulumi
+$ npm install @checkly/pulumi
+$ yarn add @checkly/pulumi
 ```
 
-or `yarn`:
+### Python, Go & .NET
 
-```bash
-yarn add @checkly/pulumi
-```
-
-1. Install the provider binary plugin. This is only needed due to an outstanding bug in with Pulumi registry
-
-```bash
-pulumi plugin install resource checkly v0.0.1-alpha.5 --server https://github.com/checkly/pulumi-checkly/releases/download/v0.0.1-alpha.5
-```
+TBA
 
 ## Authentication
 
@@ -44,7 +37,7 @@ Once you generated the `API Key` there are two ways to communicate your authoriz
     $ export CHECKLY_ACCOUNT_ID=xxx
     ```
 
-1. Set them using `pulumi config` command, if you prefer that they be stored alongside your Pulumi stack for easy multi-user access:
+2. Set them using `pulumi config` command, if you prefer that they be stored alongside your Pulumi stack for easy multi-user access:
 
     ```bash
     $ pulumi config set checkly:apiKey cu_xxx --secret

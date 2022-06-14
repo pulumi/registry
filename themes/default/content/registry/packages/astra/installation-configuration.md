@@ -1,6 +1,6 @@
 ---
 title: Astra Setup
-meta_desc: Information on how to install the Pulumi Astra provider.
+meta_desc: Information on how to install the Astra provider.
 layout: installation
 ---
 
@@ -15,7 +15,7 @@ The Pulumi Astra provider is available as a package in all Pulumi languages:
 
 ## Setup
 
-To provision resources with the Pulumi Astra provider, you need to have Astra token. Astra maintains documentation on how to create API tokens [here](https://docs.datastax.com/en/astra/docs/manage/org/managing-org.html#_manage_application_tokens)
+To provision resources with the Pulumi Astra provider, you need to have Astra token. Astra maintains documentation on how to [create API tokens](https://docs.datastax.com/en/astra/docs/manage/org/managing-org.html#_manage_application_tokens)
 
 ## Configuration Options
 

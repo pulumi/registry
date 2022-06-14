@@ -28,7 +28,7 @@ const db = new astra.Database("example", {
 ```python
 import pulumiverse_astra as astra
 
-db = astra.Database("example", 
+db = astra.Database("example",
     cloud_provider="azure",
     keyspace="default",
     regions=["westus2"],

@@ -7,7 +7,7 @@ layout: installation
 ## Installation
 
 1. To use this package, please [install the Pulumi CLI first](https://www.pulumi.com/docs/get-started/install/).
-2. This package is only available for JavaScript and TypeScript but support for other languages will be available soon.
+1. This package is only available for JavaScript and TypeScript but support for other languages will be available soon.
 
 ### Node.js (JavaScript/TypeScript)
 

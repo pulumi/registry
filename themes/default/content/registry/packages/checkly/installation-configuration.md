@@ -31,7 +31,7 @@ The Pulumi Checkly Provider needs to be configured with a Checkly `API Key` and 
 Once you generated the `API Key` there are two ways to communicate your authorization tokens to Pulumi:
 
 1. Set the environment variables `CHECKLY_API_KEY` and `CHECKLY_ACCOUNT_ID`:
- 
+
     ```bash
     $ export CHECKLY_API_KEY=cu_xxx
     $ export CHECKLY_ACCOUNT_ID=xxx

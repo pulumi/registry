@@ -65,11 +65,14 @@ layout: how-to
     run()`
     })
     ```
+
 1. Setup you Checkly API Key and Account id:
+
     ```bash
     $ pulumi config set checkly:apiKey cu_xxx --secret
     $ pulumi config set checkly:accountId xxx
     ```
+
 1. You are ready to go, run `$ pulumi up` to deploy your stack 🚀
 
 > Check the [examples directory](https://github.com/checkly/pulumi-checkly/tree/main/examples) for more detailed code samples.

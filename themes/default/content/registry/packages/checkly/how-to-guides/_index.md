@@ -8,7 +8,7 @@ layout: how-to
 
 1. Open your terminal and run `$ pulumi new` to create a new Pulumi project, chose the `javascript` template and the target stack.
 1. Install the Checkly Pulumi provider using npm: `$ npm i @checkly/pulumi`.
-1. Create an `index.js` file in the root of your project and paste the following code:
+1. Look for `index.js` file in the root of your project and replace content with the following code:
 
     ```javascript
     const checkly = require("@checkly/pulumi")

@@ -20,7 +20,7 @@ $ yarn add @checkly/pulumi
 
 ### Python, Go & .NET
 
-TBA
+> *TBA*
 
 ## Authentication
 

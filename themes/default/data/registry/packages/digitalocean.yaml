@@ -1,6 +1,6 @@
 category: Cloud
 component: false
-description: A Pulumi package for creating and managing Digital Ocean cloud resources.
+description: A Pulumi package for creating and managing DigitalOcean cloud resources.
 featured: false
 logo_url: ""
 name: digitalocean
@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-digitalocean
 schema_file_path: provider/cmd/pulumi-resource-digitalocean/schema.json
 title: DigitalOcean
-updated_on: 1654012496
-version: v4.13.0
+updated_on: 1655505230
+version: v4.14.0

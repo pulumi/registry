@@ -1,6 +1,6 @@
 ---
 title: Astra Setup
-meta_desc: Information on how to install the Pulumi Astra provider.
+meta_desc: Information on how to install the Astra provider.
 layout: installation
 ---
 

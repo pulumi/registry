@@ -13,7 +13,7 @@ The Astra provider must be configured with credentials to deploy and update reso
 {{% choosable language typescript %}}
 
 ```typescript
-import * as astra from "@pulumiverse/pulumi-astra";
+import * as astra from "@pulumiverse/astra";
 const db = new astra.Database("example", {
     cloudProvider: "azure",
     keyspace: "default",

@@ -1,6 +1,6 @@
 ---
 title: Slack Setup
-meta_desc: Information on how to install the Slack provider.
+meta_desc: Provides an overview on how to configure credentials for the Pulumi Slack Provider.
 layout: installation
 ---
 
@@ -17,11 +17,10 @@ The Pulumi Slack provider is available as a package in all Pulumi languages:
 
 The Slack provider must be configured with a token to manage resources in a Slack Workspace. Documentation about how to create an app and token for your workspace here [here](https://api.slack.com/apps)
 
-
 ## Configuration Options
 
 Use `pulumi config set slack:token --secret` or set as an environment variable: `export SLACK_TOKEN="my-token"`
 
 | Option | Required/Optional | Description |
 |-----|------|----|
-| `token`| Required | [Slack token ](https://api.slack.com/apps)
+| `token`| Required | [Slack token](https://api.slack.com/apps)

@@ -5,10 +5,10 @@ featured: false
 logo_url: https://raw.githubusercontent.com/checkly/pulumi-checkly/main/assets/checkly.svg
 name: checkly
 native: false
-package_status: public_preview
+package_status: ga
 publisher: checkly
 repo_url: https://github.com/checkly/pulumi-checkly
 schema_file_path: provider/cmd/pulumi-resource-checkly/schema.json
 title: checkly
-updated_on: 1655222255
-version: v0.0.3
+updated_on: 1655825347
+version: v1.0.1

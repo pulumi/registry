@@ -18,7 +18,7 @@ The Cloudflare provider is available as a package in all Pulumi languages:
 ### Configuring The Provider
 
 Pulumi relies on the Cloudflare SDK to authenticate requests from your computer to Cloudflare. Your credentials are never sent
-to pulumi.com. Once the credetials are obtained, there are two ways to communicate your configuration parameters to Pulumi:
+to pulumi.com. Once the credentials are obtained, there are two ways to communicate your configuration parameters to Pulumi:
 
 1. Set the environment variable `CLOUDFLARE_API_TOKEN` (or the legacy `CLOUDFLARE_EMAIL` and `CLOUDFLARE_API_KEY`):
 

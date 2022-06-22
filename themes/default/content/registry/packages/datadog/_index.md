@@ -18,7 +18,6 @@ const datadog = require("@pulumi/datadog")
 
 const user = new datadog.User("my-user", {
   email: "new@example.com",
-  handle: "new@example.com",
   name: "New User",
 });
 ```

@@ -68,18 +68,13 @@ func main() {
 {{% choosable language csharp %}}
 
 ```csharp
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Pulumi;
 using Pulumi.ConfluentCloud;
 
-class Program
+await Deployment.RunAsync(() => 
 {
-    static Task Main() =>
-        Deployment.Run(() => {
-            var environment = new CCloud.Environment("csharp-env");
-        });
-}
+  var environment = new CCloud.Environment("csharp-env");
+});
 ```
 
 {{% /choosable %}}

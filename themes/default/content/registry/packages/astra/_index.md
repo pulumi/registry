@@ -75,18 +75,16 @@ func main() {
 using Pulumi;
 using Pulumiverse.Astra;
 
-class AstraDb : Stack
+await Deployment.RunAsync(() => 
 {
-    public AstraDb()
+    var db = new Database("example", new DatabaseArgs
     {
-        var db = new Database("example", new DatabaseArgs{
-            CloudProvider: "azure",
-            Keyspace: "default",
-            Regions: new[] {"westus2"},
-            Name: "example-db"
-        });
-    }
-}
+        CloudProvider = "azure",
+        Keyspace = "default",
+        Regions = new[] {"westus2"},
+        Name = "example-db"
+    });
+});
 ```
 
 {{% /choosable %}}

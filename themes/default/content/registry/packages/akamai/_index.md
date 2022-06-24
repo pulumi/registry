@@ -112,24 +112,20 @@ using Pulumi;
 using Pulumi.Akamai;
 using Properties = Pulumi.Akamai.Properties;
 
-class Program
+await Deployment.RunAsync(() => 
 {
-    static Task Main() =>
-        Deployment.Run(() => {
+    var group = GetGroup.Invoke();
+    var contract = GetContract.Invoke();
 
-            var group = Output.Create(GetGroup.InvokeAsync());
-            var contract = Output.Create(GetContract.InvokeAsync());
-
-            var hostname = new Properties.EdgeHostName("demo", new Properties.EdgeHostNameArgs
-            {
-                Contract = contract.Id,
-                Group = group.Id,
-                Product = "prd_Fresca",
-                EdgeHostName = "test-cs.mycompany.io",
-                Ipv4 = true,
-            });
-        });
-}
+    var hostname = new Properties.EdgeHostName("demo", new Properties.EdgeHostNameArgs
+    {
+        Contract = contract.Id,
+        Group = group.Id,
+        Product = "prd_Fresca",
+        EdgeHostName = "test-cs.mycompany.io",
+        Ipv4 = true,
+    });
+});
 ```
 
 {{% /choosable %}}

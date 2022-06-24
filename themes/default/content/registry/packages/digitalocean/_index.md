@@ -75,22 +75,17 @@ func main() {
 {{% choosable language csharp %}}
 
 ```csharp
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Pulumi;
 using Pulumi.DigitalOcean;
 
-class Program
+await Deployment.RunAsync(() => 
 {
-    static Task Main() =>
-        Deployment.Run(() => {
-            var instance = new DigitalOcean.Domain("test", new DigitalOcean.DomainArgs
-            {
-                Name = "mydomain.com",
-                IpAddress = "192.168.10.10",
-            });
-        });
-}
+  var instance = new DigitalOcean.Domain("test", new DigitalOcean.DomainArgs
+  {
+      Name = "mydomain.com",
+      IpAddress = "192.168.10.10",
+  });
+});
 ```
 
 {{% /choosable %}}

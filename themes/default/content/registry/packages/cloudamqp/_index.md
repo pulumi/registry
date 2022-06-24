@@ -75,22 +75,17 @@ func main() {
 {{% choosable language csharp %}}
 
 ```csharp
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Pulumi;
 using Pulumi.Cloudamqp;
 
-class Program
+await Deployment.RunAsync(() => 
 {
-    static Task Main() =>
-        Deployment.Run(() => {
-            var instance = new Instance("demo-instance", new InstanceArgs
-            {
-                Plan = "lemur",
-                Region = "amazon-web-services::us-west-2",
-            });
-        });
-}
+    var instance = new Instance("demo-instance", new InstanceArgs
+    {
+        Plan = "lemur",
+        Region = "amazon-web-services::us-west-2",
+    });
+});
 ```
 
 {{% /choosable %}}

@@ -71,17 +71,13 @@ func main() {
 {{% choosable language csharp %}}
 
 ```csharp
-using System.Threading.Tasks;
 using Pulumi;
-using Pulumi.Gcp;
+using Gpc = Pulumi.Gcp;
 
-class Program
+await Deployment.RunAsync(() => 
 {
-    static Task Main() =>
-        Deployment.Run(() => {
-            var bucket = new Gcp.Storage.Bucket("my-bucket");
-        });
-}
+    var bucket = new Gcp.Storage.Bucket("my-bucket");
+});
 ```
 
 {{% /choosable %}}

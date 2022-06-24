@@ -92,20 +92,17 @@ using System.Threading.Tasks;
 using Pulumi;
 using Pulumi.Aiven;
 
-class Program
+await Deployment.RunAsync(() => 
 {
-    static Task Main() =>
-        Deployment.Run(() => {
-            var service = new Servicev1("test", new Servicev1Args
-            {
-                Project = "my-project",
-                CloudName = "google-europe-west1",
-                Plan = "startup-4",
-                ServiceName = "my-service",
-                ServiceType = "grafana",
-            });
-        });
-}
+    var service = new Servicev1("test", new Servicev1Args
+    {
+        Project = "my-project",
+        CloudName = "google-europe-west1",
+        Plan = "startup-4",
+        ServiceName = "my-service",
+        ServiceType = "grafana",
+    });
+});
 ```
 
 {{% /choosable %}}

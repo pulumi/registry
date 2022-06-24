@@ -71,21 +71,16 @@ func main() {
 {{% choosable language csharp %}}
 
 ```csharp
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Pulumi;
 using Pulumi.Civo;
 
-class Program
+await Deployment.RunAsync(() => 
 {
-    static Task Main() =>
-        Deployment.Run(() => {
-            var network = new Network("demo", new NetworkArgs
-            {
-                Label = "demo-network",
-            });
-        });
-}
+	var network = new Network("demo", new NetworkArgs
+	{
+		Label = "demo-network"
+	});
+});
 ```
 
 {{% /choosable %}}

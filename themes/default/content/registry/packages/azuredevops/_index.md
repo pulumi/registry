@@ -75,16 +75,13 @@ using System.Threading.Tasks;
 using Pulumi;
 using Pulumi.AzureDevOps.Core;
 
-class Program
+await Deployment.RunAsync(() => 
 {
-    static Task Main() =>
-        Deployment.Run(() => {
-            var project = new Project("test", new ProjectArgs
-            {
-                ProjectName = "my-project",
-            });
-        });
-}
+	var project = new Project("test", new ProjectArgs
+	{
+		ProjectName = "my-project"
+	});
+});
 ```
 
 {{% /choosable %}}

@@ -81,6 +81,7 @@ pulumi.export("url", lb.load_balancer.dns_name)
 {{% choosable language csharp %}}
 
 ```csharp
+using System.Collections.Generic;
 using Pulumi;
 using Pulumi.Awsx.Ecr.Inputs;
 using Pulumi.Awsx.Ecs.Inputs;
@@ -89,40 +90,38 @@ using Ecr = Pulumi.Awsx.Ecr;
 using Ecs = Pulumi.Awsx.Ecs;
 using Lb = Pulumi.Awsx.Lb;
 
-class MyStack : Stack
+await Deployment.RunAsync(() =>
 {
-    public MyStack()
+    var cluster = new Aws.Ecs.Cluster("default-cluster");
+    var lb = new Awsx.Lb.ApplicationLoadBalancer("nginx-lb");
+    var service = new Awsx.Ecs.FargateService("my-service", new Awsx.Ecs.FargateServiceArgs
     {
-        var cluster = new Aws.Ecs.Cluster("default-cluster");
-
-        var lb = new Awsx.Lb.ApplicationLoadBalancer("nginx-lb");
-        var service = new Awsx.Ecs.FargateService("my-service", new Awsx.Ecs.FargateServiceArgs
+        Cluster = cluster.Arn,
+        DesiredCount = 2,
+        TaskDefinitionArgs = new Awsx.Ecs.Inputs.FargateServiceTaskDefinitionArgs
         {
-            Cluster = cluster.Arn,
-            DesiredCount = 2,
-            TaskDefinitionArgs = new Awsx.Ecs.Inputs.FargateServiceTaskDefinitionArgs
+            Container = new Awsx.Ecs.Inputs.TaskDefinitionContainerDefinitionArgs
             {
-                Container = new Awsx.Ecs.Inputs.TaskDefinitionContainerDefinitionArgs
+                Image = "nginx:latest",
+                Cpu = 512,
+                Memory = 128,
+                Essential = true,
+                PortMappings = 
                 {
-                    Image = "nginx:latest",
-                    Cpu = 512,
-                    Memory = 128,
-                    Essential = true,
-                    PortMappings = {new Awsx.Ecs.Inputs.TaskDefinitionPortMappingArgs
+                    new Awsx.Ecs.Inputs.TaskDefinitionPortMappingArgs
                     {
                         TargetGroup = lb.DefaultTargetGroup,
-                    }},
-                }
+                    }
+                },
             }
-        });
+        }
+    });
 
-        this.Url = lb.LoadBalancer.Apply(lb => lb.DnsName);
-    }
-
-    [Output] public Output<string> Url { get; set; }
-}
-
-
+    return new Dictionary<string, object?>
+    {
+        ["url"] = lb.LoadBalancer.Apply(lb => lb.DnsName)
+    };
+});
 ```
 
 {{% /choosable %}}

@@ -40,7 +40,7 @@ resource_group = azure_native.resources.ResourceGroup("resourceGroup")
 using Pulumi;
 using Pulumi.AzureNative.Resources;
 
-await Deployment.RunAsync(() => 
+await Deployment.RunAsync(() =>
 {
     var resourceGroup = new ResourceGroup("resourceGroup");
 });

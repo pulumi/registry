@@ -83,7 +83,7 @@ using System.Threading.Tasks;
 using Pulumi;
 using Pulumi.Datadog;
 
-await Deployment.RunAsync(() => 
+await Deployment.RunAsync(() =>
 {
   var user = new User("my-user", new UserArgs
   {

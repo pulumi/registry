@@ -85,15 +85,15 @@ func main() {
 using Pulumi;
 using Auth0 = Pulumi.Auth0;
 
-await Deployment.RunAsync(() => {
-{       
+await Deployment.RunAsync(() =>
+{ 
     var user = new Auth0.User("test", new Auth0.UserArgs
     {
         Username = "joebloggs",
         Password = "Password1234!",
         Email = "joebloggs@mycompany.com",
         ConnectionName = "Username-Password-Authentication",
-    });       
+    });   
 });
 ```
 

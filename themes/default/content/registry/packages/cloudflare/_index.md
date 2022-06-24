@@ -91,7 +91,7 @@ using System.Threading.Tasks;
 using Pulumi;
 using Pulumi.Cloudflare;
 
-await Deployment.RunAsync(() => 
+await Deployment.RunAsync(() =>
 {
   var record = new Cloudflare.Record("sample-record", new Cloudflare.RecordArgs
   {

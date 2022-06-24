@@ -76,7 +76,7 @@ using System.Threading.Tasks;
 using Pulumi;
 using Pulumi.Alicloud.Vpc;
 
-await Deployment.RunAsync(() => 
+await Deployment.RunAsync(() =>
 {
 	var vpc = new Vpc("demo-instance", new VpcArgs
 	{

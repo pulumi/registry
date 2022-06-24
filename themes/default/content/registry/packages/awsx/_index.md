@@ -106,7 +106,7 @@ await Deployment.RunAsync(() =>
                 Cpu = 512,
                 Memory = 128,
                 Essential = true,
-                PortMappings = 
+                PortMappings =
                 {
                     new Awsx.Ecs.Inputs.TaskDefinitionPortMappingArgs
                     {

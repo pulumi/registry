@@ -92,7 +92,7 @@ using System.Threading.Tasks;
 using Pulumi;
 using Pulumi.Aiven;
 
-await Deployment.RunAsync(() => 
+await Deployment.RunAsync(() =>
 {
     var service = new Servicev1("test", new Servicev1Args
     {

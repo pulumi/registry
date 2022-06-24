@@ -85,7 +85,7 @@ using System.Collections.Generic;
 using Pulumi;
 using Pulumi.Eks;
 
-await Deployment.RunAsync(() => 
+await Deployment.RunAsync(() =>
 {
   // Create an EKS cluster with default settings.
   var cluster = new Cluster("eks-cluster");

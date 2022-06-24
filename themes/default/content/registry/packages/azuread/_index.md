@@ -73,7 +73,7 @@ func main() {
 using Pulumi;
 using Pulumi.AzureAD;
 
-await Deployment.RunAsync(() => 
+await Deployment.RunAsync(() =>
 {
     var group = new Group("my-group", new GroupArgs
     {

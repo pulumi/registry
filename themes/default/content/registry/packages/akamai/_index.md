@@ -112,7 +112,7 @@ using Pulumi;
 using Pulumi.Akamai;
 using Properties = Pulumi.Akamai.Properties;
 
-await Deployment.RunAsync(() => 
+await Deployment.RunAsync(() =>
 {
     var group = GetGroup.Invoke();
     var contract = GetContract.Invoke();

@@ -96,7 +96,7 @@ using Pulumi;
 using Pulumi.Aws.S3;
 using Pulumi.AwsMiniflux;
 
-await Deployment.RunAsync(() => 
+await Deployment.RunAsync(() =>
 {
     var config = new Pulumi.Config();
     var adminPassword = config.RequireSecret("adminPassword");

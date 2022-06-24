@@ -74,7 +74,7 @@ func main() {
 using Pulumi;
 using Pulumi.Civo;
 
-await Deployment.RunAsync(() => 
+await Deployment.RunAsync(() =>
 {
 	var network = new Network("demo", new NetworkArgs
 	{

@@ -63,7 +63,7 @@ using System.Collections.Generic;
 using Pulumi;
 using Pulumi.Command.Local;
 
-await Deployment.RunAsync(() => 
+await Deployment.RunAsync(() =>
 {
     var command = new Command("random", new CommandArgs
     {

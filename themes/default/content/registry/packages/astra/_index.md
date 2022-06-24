@@ -75,7 +75,7 @@ func main() {
 using Pulumi;
 using Pulumiverse.Astra;
 
-await Deployment.RunAsync(() => 
+await Deployment.RunAsync(() =>
 {
     var db = new Database("example", new DatabaseArgs
     {

@@ -74,7 +74,7 @@ func main() {
 using Pulumi;
 using Gpc = Pulumi.Gcp;
 
-await Deployment.RunAsync(() => 
+await Deployment.RunAsync(() =>
 {
     var bucket = new Gcp.Storage.Bucket("my-bucket");
 });

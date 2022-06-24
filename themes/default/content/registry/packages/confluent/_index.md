@@ -71,7 +71,7 @@ func main() {
 using Pulumi;
 using Pulumi.Confluent;
 
-await Deployment.RunAsync(() => 
+await Deployment.RunAsync(() =>
 {
     var environment = new CCloud.ConfluentEnvironment("csharp-env");
 });

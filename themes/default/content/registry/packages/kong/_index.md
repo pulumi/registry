@@ -77,7 +77,7 @@ func main() {
 using Pulumi;
 using Kong = Pulumi.Kong;
 
-await Deployment.RunAsync(() => 
+await Deployment.RunAsync(() =>
 {
   var consumer = new Kong.Consumer("consumer", new Kong.ConsumerArgs
   {

@@ -78,7 +78,7 @@ func main() {
 using Pulumi;
 using Pulumi.DigitalOcean;
 
-await Deployment.RunAsync(() => 
+await Deployment.RunAsync(() =>
 {
   var instance = new DigitalOcean.Domain("test", new DigitalOcean.DomainArgs
   {

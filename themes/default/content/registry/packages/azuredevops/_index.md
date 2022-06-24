@@ -75,7 +75,7 @@ using System.Threading.Tasks;
 using Pulumi;
 using Pulumi.AzureDevOps.Core;
 
-await Deployment.RunAsync(() => 
+await Deployment.RunAsync(() =>
 {
 	var project = new Project("test", new ProjectArgs
 	{

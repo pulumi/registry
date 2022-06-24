@@ -102,7 +102,7 @@ await Deployment.RunAsync(() =>
     var config = new Config("google-native");
     var project = config.Require("project");
     var bucketName = "pulumi-goog-native-bucket-cs-01";
-    
+
     // Create a Google Cloud resource (Storage Bucket)
     var bucket = new Bucket("my-bucket", new BucketArgs
     {

@@ -63,7 +63,7 @@ using System.Collections.Generic;
 using Pulumi;
 using S3 = Pulumi.AwsS3ReplicatedBucket;
 
-await Deployment.RunAsync(() => 
+await Deployment.RunAsync(() =>
 {
     var bucket = new S3.ReplicatedBucket("bucket", new S3.ReplicatedBucketArgs
     {

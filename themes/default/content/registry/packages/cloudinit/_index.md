@@ -96,7 +96,7 @@ func main() {
 using Pulumi;
 using Pulumi.CloudInit;
 
-await Deployment.RunAsync(() => 
+await Deployment.RunAsync(() =>
 {
   var conf = new Pulumi.CloudInit.Config("demo", new Pulumi.CloudInit.ConfigArgs
   {

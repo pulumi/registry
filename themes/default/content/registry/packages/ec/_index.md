@@ -110,9 +110,9 @@ using System.Threading.Tasks;
 using Pulumi;
 using ElasticCloud = Pulumi.ElasticCloud;
 
-await Deployment.RunAsync(() => 
+await Deployment.RunAsync(() =>
 {
-    var latest = Output.Create(ElasticCloud.GetStack.InvokeAsync(new ElasticCloud.GetStackArgs
+    var latest = ElasticCloud.GetStack.Invoke(new ElasticCloud.GetStackInvokeArgs
     {
         Region = "us-east-1",
         VersionRegex = "latest",

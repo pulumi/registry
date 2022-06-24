@@ -78,7 +78,7 @@ func main() {
 using Pulumi;
 using Pulumi.Cloudamqp;
 
-await Deployment.RunAsync(() => 
+await Deployment.RunAsync(() =>
 {
     var instance = new Instance("demo-instance", new InstanceArgs
     {

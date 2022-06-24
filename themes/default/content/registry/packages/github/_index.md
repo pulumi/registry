@@ -78,7 +78,7 @@ func main() {
 using Pulumi;
 using Pulumi.Github;
 
-await Deployment.RunAsync(() => 
+await Deployment.RunAsync(() =>
 {
   var repo = new Repository("test", new RepositoryArgs
   {

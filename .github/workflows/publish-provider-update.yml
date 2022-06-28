@@ -32,13 +32,21 @@ jobs:
       - name: git status
         run: git status && git diff
       - name: Create registry PR
+        id: create-pr
         uses: peter-evans/create-pull-request@v3
         with:
           token: ${{ secrets.PULUMI_BOT_TOKEN }}
           committer: Pulumi Bot <bot@pulumi.com>
           author: Pulumi Bot <bot@pulumi.com>
           commit-message: "Publish Package Metadata for ${{ env.PROVIDER_SHORT_NAME }}@${{ env.PROVIDER_VERSION }}"
-          labels: "automation/tfgen-provider-docs,automation/merge"
           title: "Publish Package Metadata ${{ env.PROVIDER_SHORT_NAME }}@${{ env.PROVIDER_VERSION }}"
           body: ""
           branch: "${{ env.PROVIDER_SHORT_NAME }}/${{ github.run_id }}-${{ github.run_number }}"
+      - if: steps.create-pr.outputs.pull-request-operation == 'created'
+        name: Set Automerge
+        uses: peter-evans/enable-pull-request-automerge@v1
+        with:
+          merge-method: squash
+          pull-request-number: ${{ steps.create-pr.outputs.pull-request-number }}
+          repository: ${{ github.repository }}
+          token: ${{ secrets.PULUMI_BOT_TOKEN }}

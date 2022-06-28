@@ -60,6 +60,7 @@ jobs:
           --version ${{ env.PROVIDER_VERSION }}
       - name: Create registry PR
         if: env.PROVIDER_VERSION
+        id: create-pr
         uses: peter-evans/create-pull-request@v3
         env:
           PROVIDER_SHORT_NAME: ${{ steps.regex-prov.outputs.group2 }}
@@ -72,3 +73,11 @@ jobs:
           title: "Publish Package Metadata ${{ env.PROVIDER_SHORT_NAME }}@${{ env.PROVIDER_VERSION }}"
           body: ""
           branch: "${{ env.PROVIDER_SHORT_NAME }}/${{ github.run_id }}-${{ github.run_number }}"   
+      - if: steps.create-pr.outputs.pull-request-operation == 'created'
+        name: Set Automerge
+        uses: peter-evans/enable-pull-request-automerge@v1
+        with:
+          merge-method: squash
+          pull-request-number: ${{ steps.create-pr.outputs.pull-request-number }}
+          repository: ${{ github.repository }}
+          token: ${{ secrets.PULUMI_BOT_TOKEN }}

@@ -14,8 +14,16 @@ jobs:
       - id: set-matrix
         run: echo "::set-output name=matrix::$(python generate_package_list.py)'"
         working-directory: community-packages
+      - name: List open pull requests
+        uses: jkisk/list-open-pulls@v1.0.1
+        id: list
+        with:
+          token: ${{ secrets.PULUMI_BOT_TOKEN }}
+          owner: pulumi
+          repo: registry
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
+      prs: ${{ steps.list.outputs.titles }}
   check-for-package-update:
     needs: generate-packages-list
     runs-on: ubuntu-latest
@@ -33,15 +41,23 @@ jobs:
         with:
           text: ${{ matrix.repoSlug }}
           regex: '(\/.*-)(.*?$)'
+      - name: Check if there is already an open PR
+        if: contains(needs.generate-packages-list.outputs.prs, steps.regex-prov.outputs.group2 )  
+        id: skip-run
+        run: echo "::set-output name=skip::1"
       - name: Check out registry repo
+        if: steps.skip-run.outputs.skip != 1
         uses: actions/checkout@v2
       - name: Sleep to prevent hitting secondary rate limits
+        if: steps.skip-run.outputs.skip != 1
         run: sleep 1
       - name: Install Registrygen CLI
+        if: steps.skip-run.outputs.skip != 1
         uses: jaxxstorm/action-install-gh-release@v1.5.0
         with:
           repo: pulumi/registrygen
       - name: Check for a new version
+        if: steps.skip-run.outputs.skip != 1
         id: version
         run: |
           echo 'PROVIDER_VERSION<<EOF' >> $GITHUB_ENV

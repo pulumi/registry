@@ -26,7 +26,7 @@ new checkly.Check("api-check", {
   }
 })
 
-new checkly.Check("brwoser-check", {
+new checkly.Check("browser-check", {
   activated: true,
   frequency: 10,
   type: "BROWSER",
@@ -50,7 +50,7 @@ new checkly.Check( "api-check", {
   }
 })
 
-new checkly.Check( "brwoser-check", {
+new checkly.Check( "browser-check", {
   activated: true,
   frequency: 10,
   type: "BROWSER",

@@ -59,21 +59,23 @@ func main() {
 {{% choosable language csharp %}}
 
 ```csharp
+using System.Collections.Generic;
 using Pulumi;
 using S3 = Pulumi.AwsS3ReplicatedBucket;
-class MyStack : Stack
+
+await Deployment.RunAsync(() =>
 {
-    [Output("srcBucket")] Output<string> SrcBucket { get; set; }
-    [Output("dstBucket")] Output<string> DstBucket { get; set; }
-    public MyStack()
+    var bucket = new S3.ReplicatedBucket("bucket", new S3.ReplicatedBucketArgs
     {
-        var bucket = new S3.ReplicatedBucket(ctx, "bucket", new S3.ReplicatedBucketArgs{
-            DestinationRegion = "us-east-1"
-        });
-        this.SrcBucket = bucket.SourceBucket.Arn;
-        this.DstBucket = bucket.DestinationBucket.Arn;
-    }
-}
+        DestinationRegion = "us-east-1"
+    });
+
+    return new Dictionary<string, object?>
+    {
+        ["srcBucket"] = bucket.SourceBucket.Arn,
+        ["dstBucket"] = bucket.DestinationBucket.Arn
+    };
+});
 ```
 
 {{% /choosable %}}

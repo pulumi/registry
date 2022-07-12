@@ -76,16 +76,13 @@ using System.Threading.Tasks;
 using Pulumi;
 using Pulumi.Alicloud.Vpc;
 
-class Program
+await Deployment.RunAsync(() =>
 {
-    static Task Main() =>
-        Deployment.Run(() => {
-            var vpc = new Vpc("demo-instance", new VpcArgs
-            {
-                CidrBlock = "10.0.0.0/16"
-            });
-        });
-}
+	var vpc = new Vpc("demo-instance", new VpcArgs
+	{
+		CidrBlock = "10.0.0.0/16"
+	});
+});
 ```
 
 {{% /choosable %}}

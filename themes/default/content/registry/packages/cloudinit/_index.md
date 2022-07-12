@@ -93,31 +93,26 @@ func main() {
 {{% choosable language csharp %}}
 
 ```csharp
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Pulumi;
 using Pulumi.CloudInit;
 
-class Program
+await Deployment.RunAsync(() =>
 {
-    static Task Main() =>
-        Deployment.Run(() => {
-          var conf = new Pulumi.CloudInit.Config("demo", new Pulumi.CloudInit.ConfigArgs
-          {
-              Gzip = false,
-              Base64Encode = false,
-              Parts =
-              {
-                  new ConfigPartArgs()
-                  {
-                      Content = "baz",
-                      ContentType = "text/x-shellscript",
-                      Filename = "foobar.sh",
-                  }
-              }
-          });
-        });
-}
+  var conf = new Pulumi.CloudInit.Config("demo", new Pulumi.CloudInit.ConfigArgs
+  {
+    Gzip = false,
+    Base64Encode = false,
+    Parts =
+    {
+      new ConfigPartArgs
+      {
+        Content = "baz",
+        ContentType = "text/x-shellscript",
+        Filename = "foobar.sh",
+      }
+    }
+  });
+});
 ```
 
 {{% /choosable %}}

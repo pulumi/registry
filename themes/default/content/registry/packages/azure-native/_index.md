@@ -40,19 +40,10 @@ resource_group = azure_native.resources.ResourceGroup("resourceGroup")
 using Pulumi;
 using Pulumi.AzureNative.Resources;
 
-class MyStack : Stack
+await Deployment.RunAsync(() =>
 {
-    public MyStack()
-    {
-        var resourceGroup = new ResourceGroup("resourceGroup");
-    }
-
-}
-
-class Program
-{
-    static Task<int> Main(string[] args) => Deployment.RunAsync<MyStack>();
-}
+    var resourceGroup = new ResourceGroup("resourceGroup");
+});
 ```
 
 {{% /choosable %}}

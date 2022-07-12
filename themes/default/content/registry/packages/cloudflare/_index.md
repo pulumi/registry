@@ -91,20 +91,17 @@ using System.Threading.Tasks;
 using Pulumi;
 using Pulumi.Cloudflare;
 
-class Program
+await Deployment.RunAsync(() =>
 {
-    static Task Main() =>
-        Deployment.Run(() => {
-            var record = new Cloudflare.Record("sample-record", new Cloudflare.RecordArgs
-            {
-                Name = "my-record",
-                ZoneId = "xxsdfhsfkashadf",
-                Type = "A",
-                Value = "192.168.0.11",
-                Ttl = 3600,
-            });
-        });
-}
+  var record = new Cloudflare.Record("sample-record", new Cloudflare.RecordArgs
+  {
+    Name = "my-record",
+    ZoneId = "xxsdfhsfkashadf",
+    Type = "A",
+    Value = "192.168.0.11",
+    Ttl = 3600,
+  });
+});
 ```
 
 {{% /choosable %}}

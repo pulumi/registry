@@ -82,24 +82,19 @@ func main() {
 {{% choosable language csharp %}}
 
 ```csharp
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Pulumi;
-using Pulumi.Auth0;
+using Auth0 = Pulumi.Auth0;
 
-class Program
+await Deployment.RunAsync(() =>
 {
-    static Task Main() =>
-        Deployment.Run(() => {
-            var user = new User("test", new UserArgs
-            {
-                Username = "joebloggs",
-                Password = "Password1234!",
-                Email = "joebloggs@mycompany.com",
-                ConnectionName = "Username-Password-Authentication",
-            });
-        });
-}
+    var user = new Auth0.User("test", new Auth0.UserArgs
+    {
+        Username = "joebloggs",
+        Password = "Password1234!",
+        Email = "joebloggs@mycompany.com",
+        ConnectionName = "Username-Password-Authentication",
+    });
+});
 ```
 
 {{% /choosable %}}

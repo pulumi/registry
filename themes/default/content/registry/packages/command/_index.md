@@ -59,24 +59,22 @@ export const output = random.stdout;
 {{% choosable language csharp %}}
 
 ```csharp
+using System.Collections.Generic;
 using Pulumi;
 using Pulumi.Command.Local;
 
-class MyStack : Stack
+await Deployment.RunAsync(() =>
 {
-    public MyStack()
+    var command = new Command("random", new CommandArgs
     {
-        var command = new Command("random", new CommandArgs
-        {
-            Create = "openssl rand -hex 16"
-        });
+        Create = "openssl rand -hex 16"
+    });
 
-        this.StdOut = command.Stdout;
-    }
-
-    [Output]
-    public Output<string> StdOut {get;set;}
-}
+    return new Dictionary<string, object?>
+    {
+        ["stdOut"] = command.Stdout
+    };
+});
 ```
 
 {{% /choosable %}}

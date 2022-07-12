@@ -74,22 +74,17 @@ func main() {
 {{% choosable language csharp %}}
 
 ```csharp
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Pulumi;
-using Pulumi.Kong;
+using Kong = Pulumi.Kong;
 
-class Program
+await Deployment.RunAsync(() =>
 {
-    static Task Main() =>
-        Deployment.Run(() => {
-            var consumer = new Kong.Consumer("consumer", new Kong.ConsumerArgs
-            {
-                CustomId = "123",
-                Username = "my-username-1",
-            });
-        });
-}
+  var consumer = new Kong.Consumer("consumer", new Kong.ConsumerArgs
+  {
+      CustomId = "123",
+      Username = "my-username-1",
+  });
+});
 ```
 
 {{% /choosable %}}

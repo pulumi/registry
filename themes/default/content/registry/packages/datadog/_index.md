@@ -83,18 +83,15 @@ using System.Threading.Tasks;
 using Pulumi;
 using Pulumi.Datadog;
 
-class Program
+await Deployment.RunAsync(() =>
 {
-    static Task Main() =>
-        Deployment.Run(() => {
-            var user = new User("my-user", new UserArgs
-            {
-                Name = "New User",
-                Email = "new@example.com",
-                Handle = "new@example.com",
-            });
-        });
-}
+  var user = new User("my-user", new UserArgs
+  {
+      Name = "New User",
+      Email = "new@example.com",
+      Handle = "new@example.com"
+  });
+});
 ```
 
 {{% /choosable %}}

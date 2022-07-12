@@ -81,24 +81,21 @@ func main() {
 {{% choosable language csharp %}}
 
 ```csharp
-using System.Threading.Tasks;
+using System.Collections.Generic;
 using Pulumi;
 using Pulumi.Eks;
 
-class Program
+await Deployment.RunAsync(() =>
 {
-    [Output("kubeconfig")]
-    public Output<object> Kubeconfig { get; set; }
-
-    static Task Main() =>
-        Deployment.Run(() => {
-            // Create an EKS cluster with default settings.
-            var cluster = new Cluster("eks-cluster");
-
-            // Export the cluster's kubeconfig.
-            Kubeconfig = cluster.Kubeconfig;
-        });
-}
+  // Create an EKS cluster with default settings.
+  var cluster = new Cluster("eks-cluster");
+  
+  // Export the cluster's kubeconfig.
+  return new Dictionary<string, object?>
+  {
+    ["kubeconfig"] = cluster.Kubeconfig
+  };
+});
 ```
 
 {{% /choosable %}}

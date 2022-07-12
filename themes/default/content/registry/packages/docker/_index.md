@@ -94,21 +94,18 @@ using System.Threading.Tasks;
 using Pulumi;
 using Pulumi.Docker;
 
-class Program
+await Deployment.RunAsync(() =>
 {
-    static Task Main() =>
-        Deployment.Run(() => {
-            var image = new Docker.RemoteImage("ubuntu", new Docker.RemoteImageArgs
-            {
-                Name = "ubuntu:precise",
-            });
+  var image = new Docker.RemoteImage("ubuntu", new Docker.RemoteImageArgs
+  {
+    Name = "ubuntu:precise",
+  });
 
-            var container = new Docker.Container("ubuntu", new Docker.ContainerArgs
-            {
-                Image = image.Latest,
-            });
-        });
-}
+  var container = new Docker.Container("ubuntu", new Docker.ContainerArgs
+  {
+    Image = image.Latest,
+  });
+});
 ```
 
 {{% /choosable %}}

@@ -78,17 +78,14 @@ using System.Threading.Tasks;
 using Pulumi;
 using Pulumi.Artifactory;
 
-class Program
+await Deployment.RunAsync(() =>
 {
-    static Task Main() =>
-        Deployment.Run(() => {
-            var repo = new LocalRepository("cslumipus", new LocalRepositoryArgs
-            {
-                Key = "cslumipus",
-                PackageType = "npm",
-            });
-        });
-}
+    var repo = new LocalRepository("cslumipus", new LocalRepositoryArgs
+    {
+        Key = "cslumipus",
+        PackageType = "npm",
+    });
+});
 ```
 
 {{% /choosable %}}

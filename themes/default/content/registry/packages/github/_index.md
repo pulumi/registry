@@ -75,22 +75,17 @@ func main() {
 {{% choosable language csharp %}}
 
 ```csharp
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Pulumi;
 using Pulumi.Github;
 
-class Program
+await Deployment.RunAsync(() =>
 {
-    static Task Main() =>
-        Deployment.Run(() => {
-            var repo = new Repository("test", new RepositoryArgs
-            {
-                Description = "Generated from automated test",
-                Private = true,
-            });
-        });
-}
+  var repo = new Repository("test", new RepositoryArgs
+  {
+      Description = "Generated from automated test",
+      Private = true,
+  });
+});
 ```
 
 {{% /choosable %}}

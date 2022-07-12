@@ -110,25 +110,21 @@ using System.Threading.Tasks;
 using Pulumi;
 using ElasticCloud = Pulumi.ElasticCloud;
 
-class Program
+await Deployment.RunAsync(() =>
 {
-    static Task Main() =>
-        Deployment.Run(() => {
-            var latest = Output.Create(ElasticCloud.GetStack.InvokeAsync(new ElasticCloud.GetStackArgs
-            {
-                Region = "us-east-1",
-                VersionRegex = "latest",
-            });
+    var latest = ElasticCloud.GetStack.Invoke(new ElasticCloud.GetStackInvokeArgs
+    {
+        Region = "us-east-1",
+        VersionRegex = "latest",
+    });
 
-            var deployment = ElasticCloud.Deployment("my-deployment", new ElasticCloud.DeploymentArgs
-            {
-                Region = "us-east-1",
-                Version = latest.Version,
-                DeploymentTemplateId = "aws-io-optimized-v2",
-                ElasticSearch = {},
-            });
-        });
-}
+    var deployment = ElasticCloud.Deployment("my-deployment", new ElasticCloud.DeploymentArgs
+    {
+        Region = "us-east-1",
+        Version = latest.Version,
+        DeploymentTemplateId = "aws-io-optimized-v2",
+    });
+});
 ```
 
 {{% /choosable %}}

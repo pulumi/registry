@@ -96,27 +96,25 @@ using Pulumi;
 using Pulumi.Aws.S3;
 using Pulumi.AwsMiniflux;
 
-class MyStack : Stack
+await Deployment.RunAsync(() =>
 {
-    public MyStack()
+    var config = new Pulumi.Config();
+    var adminPassword = config.RequireSecret("adminPassword");
+    var dbPassword = config.RequireSecret("dbPassword");
+
+    // Create a new Miniflux service.
+    var service = new Pulumi.AwsMiniflux.MinifluxService("service", new Pulumi.AwsMiniflux.MinifluxServiceArgs
     {
-        var config = new Pulumi.Config();
-        var adminPassword = config.RequireSecret("adminPassword");
-        var dbPassword = config.RequireSecret("dbPassword");
+        AdminPassword = adminPassword,
+        DbPassword = dbPassword,
+    });
 
-        // Create a new Miniflux service.
-        var service = new Pulumi.AwsMiniflux.MinifluxService("service", new Pulumi.AwsMiniflux.MinifluxServiceArgs{
-            AdminPassword = adminPassword,
-            DbPassword = dbPassword,
-        });
-
-        // Export the URL of the service.
-        this.Endpoint = Output.Format($"http://{service.Endpoint}");
-    }
-
-    [Output]
-    public Output<string> Endpoint { get; set; }
-}
+    // Export the URL of the service.
+    return new Dictionary<string, object?>
+    {
+        ["endpoint"] = Output.Format($"http://{service.Endpoint}")
+    };
+});
 ```
 
 {{% /choosable %}}

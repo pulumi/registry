@@ -70,21 +70,16 @@ func main() {
 {{% choosable language csharp %}}
 
 ```csharp
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Pulumi;
 using Pulumi.AzureAD;
 
-class Program
+await Deployment.RunAsync(() =>
 {
-    static Task Main() =>
-        Deployment.Run(() => {
-            var group = new Group("my-group", new GroupArgs
-            {
-                Name = "my-group",
-            });
-        });
-}
+    var group = new Group("my-group", new GroupArgs
+    {
+        Name = "my-group",
+    });
+});
 ```
 
 {{% /choosable %}}

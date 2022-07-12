@@ -71,14 +71,10 @@ func main() {
 using Pulumi;
 using Aws = Pulumi.Aws;
 
-class MyStack : Stack
+await Deployment.RunAsync(() =>
 {
-    public MyStack()
-    {
-        var bucket = new Aws.S3.Bucket("bucket");
-    }
-}
-
+    var bucket = new Aws.S3.Bucket("bucket");
+});
 ```
 
 {{% /choosable %}}

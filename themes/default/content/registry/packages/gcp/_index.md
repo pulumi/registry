@@ -18,7 +18,10 @@ Consider trying [Google Native]({{<relref "/registry/packages/google-native">}})
 
 ## Example
 
-{{< chooser language "javascript,typescript,python,go,csharp,java,yaml" >}}
+<!---
+javascript removed
+--->
+{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
 
 {{% choosable language javascript %}}
 

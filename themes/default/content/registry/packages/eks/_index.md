@@ -10,7 +10,10 @@ Amazon EKS must be configured with credentials to deploy and update resources in
 
 ## Example
 
-{{< chooser language "javascript,typescript,python,go,csharp,java,yaml" >}}
+<!---
+javascript removed
+--->
+{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
 
 {{% choosable language javascript %}}
 

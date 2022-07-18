@@ -51,6 +51,10 @@
     {
       "repoSlug": "pulumi/pulumi-aws-static-website",
       "schemaFile": "schema.json"
+    },
+    {
+      "repoSlug": "pulumi/pulumi-onboardbase",
+      "schemaFile": "schema.json"
     }
   ]
 }

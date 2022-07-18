@@ -53,7 +53,7 @@
       "schemaFile": "schema.json"
     },
     {
-      "repoSlug": "pulumi/pulumi-onboardbase",
+      "repoSlug": "Onboardbase/pulumi-onboardbase",
       "schemaFile": "schema.json"
     }
   ]

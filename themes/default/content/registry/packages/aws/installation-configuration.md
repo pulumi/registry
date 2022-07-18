@@ -29,6 +29,14 @@ To provision resources with the Pulumi AWS Classic provider, you need to have AW
 
 Your AWS credentials are never sent to pulumi.com. Pulumi uses the AWS SDK and the credentials in your environment to authenticate requests from your computer to AWS.
 
+### Quickstart Authentication Checklist
+
+You'll need to ensure you have done the following:
+
+* Configured your AWS access key
+* Configured your AWS access key ID
+* Set your AWS `region`. Use `pulumi config set aws:region <your-region>`, e.g.`ap-south-1`.
+
 ### Get your credentials
 
 First, make sure you have an IAM user in the [AWS console][iam-user-console] with **Programmatic access** and ensure it has sufficient permissions to deploy and manage your program's resources. If you know the precise resource types you wish to create and delete, we recommend restricting your IAM user's access to just those types.
@@ -57,7 +65,7 @@ After installing the CLI, configure it with your IAM credentials, typically usin
 $ aws configure
 AWS Access Key ID [None]: <YOUR_ACCESS_KEY_ID>
 AWS Secret Access Key [None]: <YOUR_SECRET_ACCESS_KEY>
-Default region name [None]:
+Default region name [None]: <YOUR_AWS_REGION>
 Default output format [None]:
 ```
 

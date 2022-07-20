@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-cloudamqp
 schema_file_path: provider/cmd/pulumi-resource-cloudamqp/schema.json
 title: CloudAMQP
-updated_on: 1655505451
-version: v3.8.0
+updated_on: 1658325097
+version: v3.9.0

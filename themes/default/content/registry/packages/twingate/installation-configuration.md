@@ -63,7 +63,7 @@ $ export TWINGATE_NETWORK=<TWINGATE_NETWORK>
 If you prefer that they be stored alongside your Pulumi stack for easy multi-user access:
 
     ```bash
-    $ pulumi config set twingate:apiKey XXXXXX --secret
+    $ pulumi config set twingate:apiToken XXXXXX --secret
     $ pulumi config set twingate:network YYYYYY
     ```
 

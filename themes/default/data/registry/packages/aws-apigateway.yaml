@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-aws-apigateway
 schema_file_path: schema.yaml
 title: AWS API Gateway
-updated_on: 1657541899
-version: v0.0.10
+updated_on: 1658345802
+version: v0.0.11

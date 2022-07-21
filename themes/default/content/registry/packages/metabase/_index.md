@@ -167,14 +167,17 @@ After some dependency installations from `npm`, your project and stack will be r
 Next you will need to install the Metabase Component so you can use it in your program.
 
 ##### Yarn
+
 ```bash
 $ yarn add @pulumi/metabase
 ```
 
 ##### NPM
+
 ```bash
 $ npm install @pulumi/metabase
 ```
+
 {{% /choosable %}}
 
 {{% choosable language python %}}
@@ -188,6 +191,7 @@ Next you will need to install the Metabase Component so you can use it in your p
 ```bash
 $ pip3 install pulumi_metabase
 ```
+
 {{% /choosable %}}
 
 {{% choosable language go %}}

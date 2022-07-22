@@ -51,6 +51,14 @@
     {
       "repoSlug": "pulumi/pulumi-aws-static-website",
       "schemaFile": "schema.json"
+    },
+    {
+      "repoSlug": "cuemby/pulumi-ct",
+      "schemaFile": "provider/cmd/pulumi-resource-ct/schema.json"
+    },
+    {
+      "repoSlug": "cuemby/pulumi-equinix",
+      "schemaFile": "provider/cmd/pulumi-resource-equinix/schema.json"
     }
   ]
 }

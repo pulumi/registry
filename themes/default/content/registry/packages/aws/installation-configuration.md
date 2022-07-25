@@ -23,29 +23,24 @@ The AWS Classic provider is available as a package in all Pulumi languages:
 * .NET: [`Pulumi.Aws`](https://www.nuget.org/packages/Pulumi.Aws)
 * Java: [`com.pulumi.aws`](https://search.maven.org/search?q=com.pulumi.aws)
 
-## Getting your credentials
+## Credentials
 
 1. [Create an IAM user in the AWS console](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html#id_users_create_console) with Programmatic access and ensure it has sufficient permissions to deploy and manage your Pulumi program’s resources.
 2. [Set up AWS credentials](https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys) for your user.
 
 {{% notes "info" %}}
 If you are using [temporary security credentials](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_temp_use-resources.html), you will also have to supply an `AWS_SESSION_TOKEN` value before you can use Pulumi to create resources on your behalf.
-{{% notes "info" %}}
+{{% /notes }}
 
-{{% notes "info" %}}
 Your AWS credentials are never sent to pulumi.com.
 Pulumi uses the AWS SDK and the credentials in your environment to authenticate requests from your computer to AWS.
-{{% notes "info" %}}
+
 
 ## Configuration
 
 ### Create a shared credentials file using the AWS CLI
 
 1. [Install the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/installing.html)
-
-    ```bash
-    $ brew install awscli
-    ````
 
 2. Configure your [AWS credentials](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html#cli-configure-quickstart-config)
 
@@ -70,7 +65,7 @@ aws_secret_access_key = <YOUR_SECRET_ACCESS_KEY>
 ### Set credentials as environment variables
 
 You can authenticate using environment variables.
-Doing so will [temporarily override the settings in your credentials file.](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html#cli-configure-quickstart-precedence)
+Doing so will [temporarily override the settings in your credentials file](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html#cli-configure-quickstart-precedence).
 
 {{< chooser os "linux,macos,windows" >}}
 {{% choosable os linux %}}

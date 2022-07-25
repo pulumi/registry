@@ -10,5 +10,5 @@ publisher: pulumiverse
 repo_url: https://github.com/pulumiverse/pulumi-astra
 schema_file_path: provider/cmd/pulumi-resource-astra/schema.json
 title: astra
-updated_on: 1658299847
-version: v1.0.27
+updated_on: 1658760520
+version: v1.0.28

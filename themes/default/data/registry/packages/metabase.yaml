@@ -1,0 +1,14 @@
+category: Cloud
+component: true
+description: "A Pulumi component for deploying Metabase."
+featured: false
+logo_url: ""
+name: metabase
+native: false
+package_status: public_preview
+publisher: Pulumi
+repo_url: https://github.com/pulumi/pulumi-metabase
+schema_file_path: schema.yaml
+title: Metabase (AWS)
+updated_on: 1658428938
+version: v0.0.2

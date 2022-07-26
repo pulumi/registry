@@ -112,6 +112,12 @@ Run `registrygen --help` for help regarding its use or [see the `registrygen` RE
 
 ## Submitting, merging and releasing
 
+Before submitting a pull request, run the linter locally:
+
+```bash
+make lint
+```
+
 When you're ready to submit a pull request, make sure you've removed anything that doesn't seem to belong (`go.mod`/`go.sum` changes, content from pulumi/docs, etc.) and submit the PR in the usual way.
 
 If you're doing work in another repository that's associated with the changes in your PR, you can "pin" your PR branch to another module repository branch by pointing Hugo to that branch. To do that, use `hugo mod get` and pass a reference to the target branch:

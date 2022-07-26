@@ -35,7 +35,6 @@ If you are using [temporary security credentials](https://docs.aws.amazon.com/IA
 Your AWS credentials are never sent to pulumi.com.
 Pulumi uses the AWS SDK and the credentials in your environment to authenticate requests from your computer to AWS.
 
-
 ## Configuration
 
 ### Create a shared credentials file using the AWS CLI

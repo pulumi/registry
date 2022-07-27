@@ -36,29 +36,7 @@ Your AWS credentials are never sent to pulumi.com. Pulumi uses the AWS SDK and t
 
 ## Configuration
 
-### Create a shared credentials file using the AWS CLI
-
-1. [Install the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/installing.html)
-
-2. Configure your [AWS credentials](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html#cli-configure-quickstart-config).
-
-    ```bash
-    $ aws configure
-    AWS Access Key ID [None]: <YOUR_ACCESS_KEY_ID>
-    AWS Secret Access Key [None]: <YOUR_SECRET_ACCESS_KEY>
-    Default region name [None]: <YOUR_AWS_REGION>
-    Default output format [None]:
-    ```
-
-Your AWS credentials file is now located in your home directory at `.aws/credentials`.
-
-You can also create the shared credentials file by hand.  For example:
-
-```ini
-[default]
-aws_access_key_id = <YOUR_ACCESS_KEY_ID>
-aws_secret_access_key = <YOUR_SECRET_ACCESS_KEY>
-```
+There are a few different ways you can configure your AWS credentials to work with Pulumi.
 
 ### Set credentials as environment variables
 
@@ -101,6 +79,30 @@ You may alternatively set the AWS region in your Pulumi.yaml:
 
 ```bash
 $ pulumi config set aws:region <your-region> # e.g.`ap-south-1`
+```
+
+### Create a shared credentials file using the AWS CLI
+
+1. [Install the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/installing.html)
+
+2. Configure your [AWS credentials](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html#cli-configure-quickstart-config).
+
+    ```bash
+    $ aws configure
+    AWS Access Key ID [None]: <YOUR_ACCESS_KEY_ID>
+    AWS Secret Access Key [None]: <YOUR_SECRET_ACCESS_KEY>
+    Default region name [None]: <YOUR_AWS_REGION>
+    Default output format [None]:
+    ```
+
+Your AWS credentials file is now located in your home directory at `.aws/credentials`.
+
+You can also create the shared credentials file by hand.  For example:
+
+```ini
+[default]
+aws_access_key_id = <YOUR_ACCESS_KEY_ID>
+aws_secret_access_key = <YOUR_SECRET_ACCESS_KEY>
 ```
 
 ### Set up multiple profiles

@@ -6,7 +6,7 @@ logo_url: ""
 name: confluent
 native: false
 package_status: public_preview
-publisher: Pulumi
+publisher: DEPRECATED
 repo_url: https://github.com/pulumi/pulumi-confluent
 schema_file_path: /provider/cmd/pulumi-resource-confluent/schema.json
 title: Confluent Cloud

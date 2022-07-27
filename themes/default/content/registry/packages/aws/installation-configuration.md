@@ -25,15 +25,14 @@ The AWS Classic provider is available as a package in all Pulumi languages:
 
 ## Credentials
 
-1. [Create an IAM user in the AWS console](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html#id_users_create_console) with Programmatic access and ensure it has sufficient permissions to deploy and manage your Pulumi program’s resources.
+1. [Create an IAM user in the AWS console](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html#id_users_create_console) with programmatic access and ensure it has sufficient permissions to deploy and manage your Pulumi program’s resources.
 2. [Set up AWS credentials](https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys) for your user.
 
 {{% notes "info" %}}
 If you are using [temporary security credentials](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_temp_use-resources.html), you will also have to supply an `AWS_SESSION_TOKEN` value before you can use Pulumi to create resources on your behalf.
-{{% /notes }}
+{{% /notes %}}
 
-Your AWS credentials are never sent to pulumi.com.
-Pulumi uses the AWS SDK and the credentials in your environment to authenticate requests from your computer to AWS.
+Your AWS credentials are never sent to pulumi.com. Pulumi uses the AWS SDK and the credentials in your environment to authenticate requests from your computer to AWS.
 
 ## Configuration
 
@@ -41,7 +40,7 @@ Pulumi uses the AWS SDK and the credentials in your environment to authenticate 
 
 1. [Install the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/installing.html)
 
-2. Configure your [AWS credentials](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html#cli-configure-quickstart-config)
+2. Configure your [AWS credentials](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html#cli-configure-quickstart-config).
 
     ```bash
     $ aws configure

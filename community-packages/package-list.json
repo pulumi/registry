@@ -55,6 +55,10 @@
     {
       "repoSlug": "muhlba91/pulumi-proxmoxve",
       "schemaFile": "provider/cmd/pulumi-resource-proxmoxve/schema.json"
-    }
+    },
+    {
+      "repoSlug": "theogravity/pulumi-fusionauth",
+      "schemaFile": "provider/cmd/pulumi-resource-fusionauth/schema.json"
+    },
   ]
 }

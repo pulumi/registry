@@ -24,7 +24,7 @@ $ export FUSION_AUTH_API_KEY=<API Key for FusionAuth APIs>
 
 You can get / generate the API key by going to the FusionAuth UI:
 
-- `Settings` > `API keys` > add
+1. `Settings` > `API keys` > add
 
 2. Create an instance of the provider
 

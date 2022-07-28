@@ -354,8 +354,6 @@ There are cases where it's important to run some cleanup operation before destro
 ```ts
 import { local } from "@pulumi/command";
 import * as eks from "@pulumi/eks";
-import * as random from "@pulumi/random";
-import { interpolate } from "@pulumi/pulumi";
 
 const cluster = new eks.Cluster("cluster", {});
 

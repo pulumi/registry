@@ -59,6 +59,6 @@
     {
       "repoSlug": "theogravity/pulumi-fusionauth",
       "schemaFile": "provider/cmd/pulumi-resource-fusionauth/schema.json"
-    },
+    }
   ]
 }

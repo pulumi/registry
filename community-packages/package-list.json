@@ -59,6 +59,10 @@
     {
       "repoSlug": "theogravity/pulumi-fusionauth",
       "schemaFile": "provider/cmd/pulumi-resource-fusionauth/schema.json"
+    },
+    {
+      "repoSlug": "upstash/upstash-pulumi-provider",
+      "schemaFile": "provider/cmd/pulumi-resource-upstash/schema.json"
     }
   ]
 }

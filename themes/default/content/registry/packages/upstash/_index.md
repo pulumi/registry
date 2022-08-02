@@ -8,7 +8,6 @@ The Upstash provider for Pulumi can be used to provision any of the cloud resour
 
 The Upstash provider must be configured with credentials to manage resources in Upstash. Necessary credentials - namely management api keys - can be obtained from [Upstash Console](https://console.upstash.com/account/api).
 
-
 ## Example
 
 {{< chooser language "typescript,go" >}}
@@ -55,5 +54,4 @@ func main() {
 ```
 
 {{% /choosable %}}
-
 {{< /chooser >}}

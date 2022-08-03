@@ -138,6 +138,44 @@ You can specify which profile to use with Pulumi through one of the following me
     pulumi config set aws:profile <profilename>
     ```
 
+### Authenticating via EC2 Instance Metadata?
+
+As of pulumi-aws v3.28.1, the default behaviour for the provider [was changed](https://github.com/pulumi/pulumi-aws/blob/master/CHANGELOG_OLD.md#3281-2021-02-10) to disable MetadataApiCheck by default. This means,
+you need to do either of the following
+
+1. When using the default provider:
+```
+pulumi config set aws:skipMetadataApiCheck false
+```
+
+2. When using a named provider
+```typescript
+const myProvider = new aws.Provider("named-provider", {
+  // other config
+  skipMetadataApiCheck: false,
+});
+```
+
+```csharp
+var provider = new Aws.Provider("named-provider", new Aws.ProviderArgs
+{
+  // other config
+  SkipMetadataApiCheck = false,
+});
+```
+
+```go
+provider, err := aws.NewProvider(ctx, "named-provider", &aws.ProviderArgs{
+    // other config
+    SkipMetadataApiCheck: pulumi.Bool(false),
+})
+```
+
+```python
+provider = pulumi_aws.Provider('named-provider', skip_metadata_api_check=False)
+```
+
+
 ## Configuration options
 
 Use `pulumi config set aws:<option>` or pass options to the [constructor of `new aws.Provider`]({{< relref "/registry/packages/aws/api-docs/provider" >}}).

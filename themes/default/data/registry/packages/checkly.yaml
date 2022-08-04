@@ -10,5 +10,5 @@ publisher: checkly
 repo_url: https://github.com/checkly/pulumi-checkly
 schema_file_path: provider/cmd/pulumi-resource-checkly/schema.json
 title: checkly
-updated_on: 1657136256
-version: v1.1.1
+updated_on: 1659557306
+version: v1.1.2

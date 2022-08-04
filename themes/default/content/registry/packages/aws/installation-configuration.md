@@ -144,37 +144,38 @@ As of pulumi-aws v3.28.1, the default behaviour for the provider [was changed](h
 you need to do either of the following
 
 1. When using the default provider:
-```
-pulumi config set aws:skipMetadataApiCheck false
-```
 
-2. When using a named provider
-```typescript
-const myProvider = new aws.Provider("named-provider", {
-  // other config
-  skipMetadataApiCheck: false,
-});
-```
+    ```
+    pulumi config set aws:skipMetadataApiCheck false
+    ```
 
-```csharp
-var provider = new Aws.Provider("named-provider", new Aws.ProviderArgs
-{
-  // other config
-  SkipMetadataApiCheck = false,
-});
-```
+1. When using a named provider
 
-```go
-provider, err := aws.NewProvider(ctx, "named-provider", &aws.ProviderArgs{
-    // other config
-    SkipMetadataApiCheck: pulumi.Bool(false),
-})
-```
+    ```typescript
+    const myProvider = new aws.Provider("named-provider", {
+      // other config
+      skipMetadataApiCheck: false,
+    });
+    ```
 
-```python
-provider = pulumi_aws.Provider('named-provider', skip_metadata_api_check=False)
-```
+    ```csharp
+    var provider = new Aws.Provider("named-provider", new Aws.ProviderArgs
+    {
+      // other config
+      SkipMetadataApiCheck = false,
+    });
+    ```
 
+    ```go
+    provider, err := aws.NewProvider(ctx, "named-provider", &aws.ProviderArgs{
+        // other config
+        SkipMetadataApiCheck: pulumi.Bool(false),
+    })
+    ```
+
+    ```python
+    provider = pulumi_aws.Provider('named-provider', skip_metadata_api_check=False)
+    ```
 
 ## Configuration options
 

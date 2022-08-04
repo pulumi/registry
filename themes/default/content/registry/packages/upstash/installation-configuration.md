@@ -6,14 +6,15 @@ layout: installation
 
 ## Installation
 
-The Pulumi Scaleway provider is available as a package in all Pulumi languages:
+The Pulumi Upstash provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@upstash/pulumi`](https://www.npmjs.com/package/@upstash/pulumi)
 * Go: [`github.com/upstash/upstash-pulumi-provider/sdk/go/upstash`](https://pkg.go.dev/github.com/upstash/upstash-pulumi-provider/sdk)
+* Python: [`upstash_pulumi`](https://pypi.org/project/upstash-pulumi/)
 
 ### Provider Binary
 
-The Upstash provider binary is a third party binary. It can be installed using the `pulumi plugin` command.
+The Upstash provider can be installed using the `pulumi plugin` command.
 
 <!-- Subject to change... -->
 ```bash

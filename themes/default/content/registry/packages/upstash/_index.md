@@ -4,13 +4,13 @@ meta_desc: Provides an overview of the Upstash Provider for Pulumi.
 layout: overview
 ---
 
-The Upstash provider for Pulumi can be used to provision any of the cloud resources available in [Upstash](https://upstash.com).
+The Upstash provider for Pulumi can be used to provision Upstash cloud resources such as [Upstash Redis and Kafka](https://upstash.com).
 
 The Upstash provider must be configured with credentials to manage resources in Upstash. Necessary credentials - namely management api keys - can be obtained from [Upstash Console](https://console.upstash.com/account/api).
 
 ## Example
 
-{{< chooser language "typescript,go" >}}
+{{< chooser language "typescript,go,python" >}}
 {{% choosable language typescript %}}
 
 ```typescript
@@ -28,9 +28,8 @@ const createdDb = new upstash.RedisDatabase("mydb", {
 
 ```go
 import (
-	"fmt"
-	scaleway "github.com/jaxxstorm/pulumi-scaleway/sdk/go/scaleway"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/upstash/upstash-pulumi-provider/sdk/go/upstash"
 )
 
 func main() {
@@ -51,6 +50,20 @@ func main() {
 		return nil
 	})
 }
+```
+
+{{% /choosable %}}
+{{% choosable language python %}}
+
+```python
+import upstash_pulumi as upstash
+created_db = upstash.RedisDatabase(
+    resource_name="myDb",
+    database_name="pulumi-python-db",
+    consistent=False,
+    tls=True,
+    region="eu-west-1"
+)
 ```
 
 {{% /choosable %}}

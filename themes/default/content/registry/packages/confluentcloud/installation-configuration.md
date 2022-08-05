@@ -31,9 +31,9 @@ before it can be used to create resources. Once the credetials are obtained, the
 2. Set them using configuration, if you prefer that they be stored alongside your Pulumi stack for easy multi-user access:
 
     ```bash
-    $ pulumi config set confluentcloud:apiKey XXXXXXXXXXXXXX
-    $ pulumi config set confluentcloud:apiSecret YYYYYYYYYYYYYY --secret
+    $ pulumi config set confluentcloud:cloudApiKey XXXXXXXXXXXXXX
+    $ pulumi config set confluentcloud:clouaApiSecret YYYYYYYYYYYYYY --secret
     ```
 
-Remember to pass `--secret` when setting `confluentcloud:apiKey` and `confluentcloud:apiSecret` so that it is properly encrypted. The complete list of
+Remember to pass `--secret` when setting `confluentcloud:cloudApiKey` and `confluentcloud:cloudApiSecret` so that it is properly encrypted. The complete list of
 configuration parameters is in the [Confluent Cloud provider README](https://github.com/pulumi/pulumi-confluentcloud/blob/master/README.md).

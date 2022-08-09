@@ -37,7 +37,7 @@ pulumi plugin install resource eventstorecloud v0.2.3 \
 The Pulumi provider needs credentials to authenticate requests from your computer to Event Store Cloud. Your credentials are never sent
 to pulumi.com. The provider needs to be configured with Event Store Cloud credentials before it can be used to create resources.
 
-First, you need an [access token](https://console.eventstore.cloud/authentication-tokens) for your user.
+First, you need an [access token](https://developers.eventstore.com/cloud/automation/#obtaining-the-access-token) for your user.
 
 Then, go to the list of organizations you have access to in Event Store Cloud console, choose the organization that you will be provisioning resources for, and look the organization id in the settings.
 

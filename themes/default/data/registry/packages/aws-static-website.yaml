@@ -1,14 +1,14 @@
 category: Cloud
-component: true
+component: false
 description: ""
 featured: false
 logo_url: ""
 name: aws-static-website
-native: false
+native: true
 package_status: public_preview
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-aws-static-website
 schema_file_path: schema.json
-title: AWS Static Website
-updated_on: 1654633794
-version: v0.0.4
+title: aws-static-website
+updated_on: 1654117599
+version: v0.0.2

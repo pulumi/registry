@@ -4,6 +4,11 @@ meta_desc: Well-Architected Infrastructure as Code for AWS. The easiest way to A
 layout: overview
 ---
 
+{{% notes %}}
+This AWSx documentation is generated using the v1.0.0-beta series of AWSx. If you have not upgraded to that version of
+the provider then we suggest you continue to use our [@pulumi/awsx]({{<relref "/docs/reference/pkg/nodejs/pulumi/awsx">}}) NodeJS documentation.
+{{% /notes %}}
+
 The Amazon Web Services (AWS) Crosswalk (AWSx) provider for Pulumi can provision many of the cloud resources available in [AWS](https://aws.amazon.com/). It uses the AWS SDK to manage and provision resources.
 
 The AWSx provider must be configured with credentials to deploy and update resources in AWS; see [Installation & Configuration]({{<relref "./installation-configuration">}}) for instructions.

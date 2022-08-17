@@ -85,4 +85,5 @@ class SlackChannel : Channel
 ```
 
 {{% /choosable %}}
+
 {{< /chooser >}}

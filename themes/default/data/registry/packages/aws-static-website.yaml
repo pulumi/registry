@@ -1,6 +1,6 @@
 category: Cloud
 component: true
-description: ""
+description: A Pulumi component to deploy a static website to AWS
 featured: false
 logo_url: ""
 name: aws-static-website
@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-aws-static-website
 schema_file_path: schema.json
 title: AWS Static Website
-updated_on: 1654633794
-version: v0.0.4
+updated_on: 1660862760
+version: v0.1.1

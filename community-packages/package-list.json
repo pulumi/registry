@@ -67,6 +67,10 @@
     {
       "repoSlug": "upstash/upstash-pulumi-provider",
       "schemaFile": "provider/cmd/pulumi-resource-upstash/schema.json"
+    },
+    {
+      "repoSlug": "pulumi/pulumi-synced-folder",
+      "schemaFile": "schema.json"
     }
   ]
 }

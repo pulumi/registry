@@ -1,6 +1,6 @@
 ---
 title: Synced Folder
-meta_desc: An overview of the Synced Folder component.
+meta_desc: A Pulumi component that synchronizes a local folder to Amazon S3, Azure Blob Storage, or Google Cloud Storage.
 layout: overview
 ---
 
@@ -46,14 +46,14 @@ import pulumi
 from pulumi_aws import s3
 import pulumi_synced_folder
 
-bucket = s3.Bucket("s3-bucket", acl="public-read", 
+bucket = s3.Bucket("s3-bucket", acl="public-read",
     website=s3.BucketWebsiteArgs(
         index_document="index.html",
         error_document="error.html"
     )
 )
 
-folder = pulumi_synced_folder.S3BucketFolder("synced-bucket-folder", 
+folder = pulumi_synced_folder.S3BucketFolder("synced-bucket-folder",
     path="./site",
     bucket_name=bucket.bucket,
     acl="public-read",
@@ -78,7 +78,7 @@ import (
 
 func main() {
 	pulumi.Run(func(ctx *pulumi.Context) error {
-		
+
 		bucket, err := s3.NewBucket(ctx, "s3-bucket", &s3.BucketArgs{
 			Acl: s3.CannedAclPublicRead,
 			Website: s3.BucketWebsiteArgs{
@@ -186,11 +186,11 @@ The component does not yet support switching seamlessly between `managedObjects:
 resources:
 
   # The original bucket and synced-folder resources, using managed file objects.
-  # 
+  #
   # my-first-bucket:
   #   type: aws:s3:Bucket
   #   properties:
-  #     acl: public-read  
+  #     acl: public-read
   #     website:
   #       indexDocument: index.html
   #       errorDocument: error.html
@@ -217,7 +217,7 @@ resources:
       path: ./stuff
       bucketName: ${changed-my-mind-bucket.bucket}
       acl: public-read
-      managedObjects: false 
+      managedObjects: false
 
 outputs:
 

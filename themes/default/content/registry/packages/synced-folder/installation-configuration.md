@@ -1,6 +1,6 @@
 ---
 title: Synced Folder Installation
-meta_desc: Information on how to install the Synced Folder component.
+meta_desc: Instructions for installing and configuring the Synced Folder component.
 layout: installation
 ---
 

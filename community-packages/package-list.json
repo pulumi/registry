@@ -1,6 +1,10 @@
 {
   "include": [
     {
+      "repoSlug": "pulumiverse/pulumi-time",
+      "schemaFile": "provider/cmd/pulumi-resource-time/schema.json"
+    },
+    {
       "repoSlug": "pulumiverse/pulumi-doppler",
       "schemaFile": "provider/cmd/pulumi-resource-doppler/schema.json"
     },

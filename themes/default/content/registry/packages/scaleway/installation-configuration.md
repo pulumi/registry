@@ -8,17 +8,17 @@ layout: installation
 
 The Pulumi Scaleway provider is available as a package in all Pulumi languages:
 
-* JavaScript/TypeScript: [`@jaxxstorm/pulumi-scaleway`](https://www.npmjs.com/package/@jaxxstorm/scaleway)
+* JavaScript/TypeScript: [`@pulumiverse/scaleway`](https://www.npmjs.com/package/@pulumiverse/scaleway)
 * Python: [`pulumi_scaleway`](https://pypi.org/project/pulumi-scaleway/)
-* Go: [`github.com/jaxxstorm/pulumi-scaleway/sdk/go/scaleway`](https://pkg.go.dev/github.com/jaxxstorm/pulumi-scaleway/sdk)
-* .NET: [`Pulumi.Scaleway`](https://www.nuget.org/packages/Pulumi.Scaleway)
+* Go: [`github.com/pulumiverse/scaleway/sdk/go/scaleway`](https://pkg.go.dev/github.com/pulumiverse/scaleway/sdk)
+* .NET: [`Pulumiverse.Scaleway`](https://www.nuget.org/packages/Pulumiverse.Scaleway)
 
 ### Provider Binary
 
 The Scaleway provider binary is a third party binary. It can be installed using the `pulumi plugin` command.
 
 ```bash
-pulumi plugin install resource scaleway v0.1.7 --server https://dl.briggs.work/pulumi/releases/plugins
+pulumi plugin install resource scaleway v0.4.0 --server github://api.github.com/pulumiverse
 ```
 
 Replace the version string with your desired version.

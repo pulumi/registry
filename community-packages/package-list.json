@@ -21,7 +21,7 @@
       "schemaFile": "provider/cmd/pulumi-resource-hcp/schema.json"
     },
     {
-      "repoSlug": "jaxxstorm/pulumi-scaleway",
+      "repoSlug": "pulumiverse/pulumi-scaleway",
       "schemaFile": "provider/cmd/pulumi-resource-scaleway/schema.json"
     },
     {

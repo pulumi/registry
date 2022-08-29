@@ -40,7 +40,7 @@ The default web browser has been opened at https://login.microsoftonline.com/com
 
 Do as instructed to login.  After completed, `az login` will return and you are ready to go.
 
-> **Note:** If you're using Government, China, or German Clouds, you'll need to configure the Azure CLI to work with that cloud.  Do so by running `az cloud set --name <Cloud>`, where `<Cloud>` is one of `AzureUSGovernment`, `AzureChinaCloud`, or `AzureGermanCloud`.
+> **Note:** If you're using the Government or China Cloud, you'll need to configure the Azure CLI to work with that cloud.  Do so by running `az cloud set --name <Cloud>`, where `<Cloud>` is one of `AzureUSGovernment`, `AzureChinaCloud`.
 
 The Azure CLI, and thus Pulumi, will use the Default Subscription by default. You can override the subscription by setting your subscription ID to the `id` output from `az account list`'s output:
 

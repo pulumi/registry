@@ -30,9 +30,9 @@ const bucketName = "pulumi-goog-native-ts-01";
 
 // Create a Google Cloud resource (Storage Bucket)
 const bucket = new storage.Bucket("my-bucket", {
-    name:bucketName,
-    bucket:bucketName,
-    project: project,
+  name: bucketName,
+  bucket: bucketName,
+  project: project,
 });
 
 // Export the bucket self-link
@@ -136,5 +136,3 @@ outputs:
 {{% /choosable %}}
 
 {{< /chooser >}}
-
-Visit the [How-to Guides]({{<relref "./how-to-guides">}}) to find step-by-step guides for specific scenarios like creating a serverless application using Google Cloud Functions or setting up a Google Kubernetes Engine (GKE) cluster.

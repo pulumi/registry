@@ -42,7 +42,7 @@ A web browser has been opened at https://login.microsoftonline.com/organizations
 Do as instructed to log in.  After completed, `az login` will return and you are ready to go.
 
 {{% notes type="info" %}}
-If you're using Government, China, or German Clouds, you'll need to configure the Azure CLI to work with that cloud.  Do so by running `az cloud set --name <Cloud>`, where `<Cloud>` is one of `AzureUSGovernment`, `AzureChinaCloud`, or `AzureGermanCloud`.
+If you're using Government or China Clouds, you'll need to configure the Azure CLI to work with that cloud.  Do so by running `az cloud set --name <Cloud>`, where `<Cloud>` is one of `AzureUSGovernment` or `AzureChinaCloud`.
 {{% /notes %}}
 
 The Azure CLI, and thus Pulumi, will use the Default Subscription by default. You can override the subscription by setting your subscription ID to the `id` output from `az account list`'s output:
@@ -155,7 +155,7 @@ Use `pulumi config set azure:<option>` or pass options to the [constructor of `n
 
 | Option                      | Required/Optional | Description                                                                                                                                                                                                                                                                                            |
 |-----------------------------|-------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `environment`               | Required          | The cloud environment to use. It can also be sourced from the ARM_ENVIRONMENT environment variable. Supported values are: `public` (default), `usgovernment`, `german`, `china`.                                                                                                                       |
+| `environment`               | Required          | The cloud environment to use. It can also be sourced from the ARM_ENVIRONMENT environment variable. Supported values are: `public` (default), `usgovernment`, `china`.                                                                                                                                 |
 | `location`                  | Optional          | The location to use. ResourceGroups will consult this property for a default location, if one was not supplied explicitly.                                                                                                                                                                             |
 | `clientId`                  | Optional          | The client ID to use. It can also be sourced from the `ARM_CLIENT_ID` environment variable.                                                                                                                                                                                                            |
 | `clientSecret`              | Optional          | The client secret to use. It can also be sourced from the `ARM_CLIENT_SECRET` environment variable.                                                                                                                                                                                                    |

@@ -5,7 +5,7 @@ layout: installation
 ---
 
 The Pulumi AzureAD provider uses the AzureAD SDK to manage and provision resources.
-To provision resources with the Pulumi AzureAD provider, you need to have the Azure CLI installed and you need to have Azure credentials.
+To provision resources with the Pulumi AzureAD provider, you need to have Azure credentials.
 These instructions assume you're using the [Azure CLI 2.0](https://github.com/Azure/azure-cli).
 Your Azure credentials are never sent to Pulumi.com.
 Pulumi uses the Azure SDK and the credentials in your environment to authenticate requests from your computer to Azure.

@@ -20,7 +20,7 @@ The Azure Native provider is available as a package in all Pulumi languages:
 
 ## Setup
 
-To provision resources with the Pulumi Azure provider, you need to have an Azure CLI installed and you need to have Azure credentials. These instructions assume you're using the [Azure CLI 2.0](https://github.com/Azure/azure-cli). Your Azure credentials are never sent to Pulumi.com. Pulumi uses the Azure SDK and the credentials in your environment to authenticate requests from your computer to Azure.
+To provision resources with the Pulumi Azure provider, you need to have the [Azure CLI](https://github.com/Azure/azure-cli) version 2.37.0 or newer installed and you need to have Azure credentials. Your Azure credentials are never sent to Pulumi.com. Pulumi uses the Azure SDK and the credentials in your environment to authenticate requests from your computer to Azure.
 
 Pulumi can authenticate to Azure using a Service Principal or the Azure CLI.
 
@@ -40,7 +40,7 @@ The default web browser has been opened at https://login.microsoftonline.com/com
 
 Do as instructed to login.  After completed, `az login` will return and you are ready to go.
 
-> **Note:** If you're using Government, China, or German Clouds, you'll need to configure the Azure CLI to work with that cloud.  Do so by running `az cloud set --name <Cloud>`, where `<Cloud>` is one of `AzureUSGovernment`, `AzureChinaCloud`, or `AzureGermanCloud`.
+> **Note:** If you're using the Government or China Cloud, you'll need to configure the Azure CLI to work with that cloud.  Do so by running `az cloud set --name <Cloud>`, where `<Cloud>` is one of `AzureUSGovernment`, `AzureChinaCloud`.
 
 The Azure CLI, and thus Pulumi, will use the Default Subscription by default. You can override the subscription by setting your subscription ID to the `id` output from `az account list`'s output:
 

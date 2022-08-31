@@ -18,7 +18,7 @@ const github = require("@pulumi/github")
 
 const repo = new github.Repository("demo-repo", {
   description: "Generated from automated test",
-  private: true,
+  visibility: "private",
 });
 ```
 
@@ -30,7 +30,7 @@ import * as github from "@pulumi/github";
 
 const repo = new github.Repository("demo-repo", {
   description: "Generated from automated test",
-  private: true,
+  visibility: "private",
 });
 ```
 
@@ -42,7 +42,7 @@ import pulumi_github as github
 
 repo = github.Repository("demo-repo",
   description="Generated from automated test",
-  private="true",
+  visibility="private",
 )
 ```
 
@@ -58,8 +58,8 @@ import (
 func main() {
 	pulumi.Run(func(ctx *pulumi.Context) error {
 		repository, err := github.NewRepository(ctx, "demo-repo", &github.RepositoryArgs{
-			Description: pulumi.String("Generated from automated test"),
-			Private:     pulumi.Bool(true),
+			Description:    pulumi.String("Generated from automated test"),
+			Visibility:     pulumi.String("private"),
 		})
 		if err != nil {
 			return err
@@ -103,7 +103,7 @@ await Deployment.RunAsync(() =>
   var repo = new Repository("test", new RepositoryArgs
   {
       Description = "Generated from automated test",
-      Private = true,
+      Visibility = "private",
   });
 });
 ```

@@ -153,7 +153,7 @@ $ export ARM_SUBSCRIPTION_ID=<YOUR_ARM_SUBSCRIPTION_ID>
 
 ## Configuration options
 
-Use `pulumi config set azuread:<option>` or pass options to the [constructor of `new azuread.Provider`]({{< relref "/registry/packages/azure/api-docs/provider" >}}).
+Use `pulumi config set azuread:<option>` or pass options to the [constructor of `new azuread.Provider`]({{< relref "/registry/packages/azuread/api-docs/provider" >}}).
 
 | Option                      | Required/Optional | Description                                                                                                                                                                                                                                                                                            |
 |-----------------------------|-------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|

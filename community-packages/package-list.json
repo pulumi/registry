@@ -21,6 +21,10 @@
       "schemaFile": "provider/cmd/pulumi-resource-buildkite/schema.json"
     },
     {
+      "repoSlug": "pulumiverse/pulumi-gandi",
+      "schemaFile": "provider/cmd/pulumi-resource-gandi/schema.json"
+    },
+    {
       "repoSlug": "grapl-security/pulumi-hcp",
       "schemaFile": "provider/cmd/pulumi-resource-hcp/schema.json"
     },

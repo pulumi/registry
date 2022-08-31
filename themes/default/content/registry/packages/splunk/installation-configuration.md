@@ -22,7 +22,7 @@ to pulumi.com.
 The Pulumi Splunk Provider needs to be configured with Splunk credentials
 before it can be used to create resources.
 
-Once the credetials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
+Once the credentials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
 
 1. Set the environment variables for `SPLUNK_URL`, `SPLUNK_USERNAME` and `SPLUNK_PASSWORD`:
 

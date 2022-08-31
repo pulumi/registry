@@ -19,7 +19,7 @@ The Confluent Cloud provider is available as a package in all Pulumi languages:
 
 Pulumi relies on the Confluent Cloud SDK to authenticate requests from your computer to Confluent Cloud. Your credentials are never sent
 to pulumi.com. The Pulumi Confluent Cloud Provider needs to be configured with Confluent Cloud credentials
-before it can be used to create resources. Once the credetials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
+before it can be used to create resources. Once the credentials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
 
 1. Set the environment variables `CONFLUENT_CLOUD_API_KEY` and `CONFLUENT_CLOUD_API_SECRET`:
 

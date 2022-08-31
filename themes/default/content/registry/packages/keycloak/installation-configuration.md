@@ -22,7 +22,7 @@ to pulumi.com.
 The Pulumi Keycloak Provider needs to be configured with Keycloak credentials
 before it can be used to create resources.
 
-Once the credetials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
+Once the credentials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
 
 1. Set the environment variables `KEYCLOAK_URL`, `KEYCLOAK_CLIENT_ID` and `KEYCLOAK_CLIENT_SECRET`:
 

@@ -1,6 +1,0 @@
----
-title: Equinix Metal How-to Guides
-meta_desc: |
-    Tutorials for using infrastructure as code in the Pulumi Equinix Metal package
-layout: how-to
----

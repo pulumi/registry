@@ -72,6 +72,26 @@ func main() {
 ```
 
 {{% /choosable %}}
+{{% choosable language java %}}
+
+```java
+import com.pulumi.Pulumi;
+import com.pulumi.github.Repository;
+import com.pulumi.github.RepositoryArgs;
+
+public class App {
+    public static void main(String[] args) {
+        Pulumi.run(ctx -> {
+            var repository = new Repository("demo-repo", RepositoryArgs.builder()
+                    .description("Generated from automated test")
+                    .visibility("private")
+                    .build());
+        });
+    }
+}
+```
+
+{{% /choosable %}}
 {{% choosable language csharp %}}
 
 ```csharp

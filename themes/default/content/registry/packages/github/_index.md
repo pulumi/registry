@@ -58,8 +58,8 @@ import (
 func main() {
 	pulumi.Run(func(ctx *pulumi.Context) error {
 		repository, err := github.NewRepository(ctx, "demo-repo", &github.RepositoryArgs{
-			Description:    pulumi.String("Generated from automated test"),
-			Visibility:     pulumi.String("private"),
+			Description: pulumi.String("Generated from automated test"),
+			Visibility:  pulumi.String("private"),
 		})
 		if err != nil {
 			return err

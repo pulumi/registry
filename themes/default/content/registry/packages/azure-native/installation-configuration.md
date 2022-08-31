@@ -4,9 +4,9 @@ meta_desc: How to set up credentials to use the Pulumi Azure Native Provider and
 layout: installation
 ---
 
-To provision resources with the Pulumi Azure Native provider, you need to have Azure credentials. 
-These instructions assume you're using the [Azure CLI 2.0](https://github.com/Azure/azure-cli). 
-Your Azure credentials are never sent to Pulumi.com. 
+To provision resources with the Pulumi Azure Native provider, you need to have Azure credentials.
+These instructions assume you're using the [Azure CLI 2.0](https://github.com/Azure/azure-cli).
+Your Azure credentials are never sent to Pulumi.com.
 Pulumi uses the Azure SDK and the credentials in your environment to authenticate requests from your computer to Azure.
 
 {{% notes type="info" %}}

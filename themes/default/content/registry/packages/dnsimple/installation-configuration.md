@@ -21,7 +21,7 @@ Pulumi relies on the DNSimple SDK to authenticate requests from your computer to
 to pulumi.com. The Pulumi DNSimple Provider needs to be configured with DNSimple credentials
 before it can be used to create resources.
 
-Once the credetials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
+Once the credentials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
 
 1. Set the environment variable `DNSIMPLE_TOKEN` and `DNSIMPLE_ACCOUNT`:
 

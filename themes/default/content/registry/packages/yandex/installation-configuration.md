@@ -22,7 +22,7 @@ to pulumi.com.
 The Pulumi Yandex Cloud Provider needs to be configured with Yandex Cloud credentials
 before it can be used to create resources.
 
-Once the credetials are obtained, there are two ways to communicate your configuration to Pulumi:
+Once the credentials are obtained, there are two ways to communicate your configuration to Pulumi:
 
 1. Set the environment variables `YC_TOKEN` or `YC_SERVICE_ACCOUNT_KEY_FILE` and `YC_CLOUD_ID` and `YC_FOLDER_ID`:
 

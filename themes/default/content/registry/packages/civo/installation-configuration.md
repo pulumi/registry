@@ -19,7 +19,7 @@ The Civo provider is available as a package in all Pulumi languages:
 
 Pulumi relies on the Civo SDK to authenticate requests from your computer to Civo. Your credentials are never sent
 to pulumi.com. The Pulumi Civo Provider needs to be configured with Civo credentials
-before it can be used to create resources. Once the credetials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
+before it can be used to create resources. Once the credentials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
 
 1. Set the environment variable `CIVO_TOKEN`:
 

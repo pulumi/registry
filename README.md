@@ -1,4 +1,4 @@
-# Registry
+# Registryasdfsd
 
 [Pulumi Registry](https://pulumi.com/registry) is the global index of everything you can do with Pulumi.
 

@@ -68,7 +68,7 @@ Service Principal is the recommended way to connect Pulumi to Azure in a team or
 
 ### Configuring Authorization Tokens
 
-Once the credetials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
+Once the credentials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
 
 1. Set the environment variables `ARM_CLIENT_ID`, `ARM_CLIENT_SECRET` and `ARM_TENANT_ID` respectively
 

@@ -28,7 +28,7 @@ are the most common setups
 
 ### Venafi Trust Protection Platform
 
-Once the credetials are obtained, there are two ways to communicate your authorization tokens to Pulumi when talking to Venafi TPP:
+Once the credentials are obtained, there are two ways to communicate your authorization tokens to Pulumi when talking to Venafi TPP:
 
 1. Setting the environment variables `VENAFI_URL`, `VENAFI_TOKEN` and `VENAFI_ZONE`:
 
@@ -109,7 +109,7 @@ The `access_token` in the response is the value to use for `venafi:accessToken` 
 
 ### Venafi as a Service
 
-Once the credetials are obtained, there are two ways to communicate your authorization tokens to Pulumi when talking to Venafi TPP:
+Once the credentials are obtained, there are two ways to communicate your authorization tokens to Pulumi when talking to Venafi TPP:
 
 1. Set the environment variables `VENAFI_API`, and `VENAFI_ZONE`:
 

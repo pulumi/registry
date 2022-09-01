@@ -78,7 +78,7 @@
     },
     {
       "repoSlug": "pulumiverse/pulumi-ovh",
-      "schemaFile": "provider/cmd/pulumi-resource/ovh/schema.json"
+      "schemaFile": "provider/cmd/pulumi-resource-ovh/schema.json"
     }
   ]
 }

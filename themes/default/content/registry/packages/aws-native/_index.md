@@ -250,5 +250,3 @@ resources:
 {{% /choosable %}}
 
 {{% /chooser %}}
-
-Visit the [How-to Guides]({{<relref "./how-to-guides">}}) to find more step-by-step guides for specific scenarios like setting up an EKS cluster.

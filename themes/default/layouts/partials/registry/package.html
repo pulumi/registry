@@ -17,12 +17,6 @@
     {{ $packageTypeName = "Component" }}
 {{ end }}
 
-{{ $packageLabel := "Pulumi Official" }}
-
-{{ if not (eq (.package.publisher) "Pulumi") }}
-    {{ $packageLabel = "Community" }}
-{{ end }}
-
 <div class="package my-4 w-full lg:w-1/2 px-4">
     <div class="rounded-xl shadow-lg border border-gray-200 h-full relative">
         <div class="p-8" data-type="{{ $packageType }}" data-category="{{ $packageCategory }}">
@@ -79,34 +73,6 @@
                         <li class="package-tag-type" data-filter-group="type" data-filter-value="{{ $packageType }}">{{ $packageTypeName }}</li>
                         <li class="package-tag-category" data-filter-group="category" data-filter-value="{{ $packageCategory }}">{{ $packageCategoryName }}</li>
                     </ul>
-
-                    <div class="maintainer flex items-center flex-grow justify-end mt-2 absolute bottom-8 h-14">
-                        <div class="text-right">
-                            {{ if (eq (.package.publisher) "Pulumi") }}
-                                <div class="flex items-center pt-1">
-                                    <pulumi-tooltip>
-                                        <span class="font-display label">{{ $packageLabel }}</span>
-                                        <img class="inline pb-1" src="/icons/check-verified.svg">
-                                        <span slot="content">
-                                            Package maintained by Pulumi
-                                        </span>
-                                    </pulumi-tooltip>
-                                </div>
-                            {{ end }}
-                
-                            {{ if not (eq (.package.publisher) "Pulumi") }}
-                                <div class="flex items-center pt-1">
-                                    <pulumi-tooltip class="flex">
-                                        <span class="font-display label">{{ $packageLabel }}</span>
-                                        <img class="inline pb-1" src="/icons/people.svg">
-                                        <span slot="content">
-                                            Package contributed by a community member
-                                        </span>
-                                    </pulumi-tooltip>
-                                </div>
-                            {{ end }}
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

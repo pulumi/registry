@@ -1,6 +1,6 @@
 ---
 title: Google Native
-meta_desc: Learn how to use Pulumi's Google Native Provider to reduce the complexity of managing and provisioning GCP resources.
+meta_desc: Learn how to use Pulumi's Google Native Provider to manage and provision Google Cloud resources.
 layout: overview
 ---
 

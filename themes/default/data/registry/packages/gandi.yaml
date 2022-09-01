@@ -1,0 +1,14 @@
+category: Cloud
+component: false
+description: A Pulumi package for creating and managing gandi cloud resources.
+featured: false
+logo_url: https://raw.githubusercontent.com/pulumiverse/pulumi-gandi/main/logo.svg
+name: gandi
+native: false
+package_status: public_preview
+publisher: Pulumiverse
+repo_url: https://github.com/pulumiverse/pulumi-gandi
+schema_file_path: provider/cmd/pulumi-resource-gandi/schema.json
+title: Gandi
+updated_on: 1661982425
+version: v0.0.10

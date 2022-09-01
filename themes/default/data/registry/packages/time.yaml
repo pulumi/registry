@@ -1,0 +1,14 @@
+category: Utility
+component: false
+description: A Pulumi package for creating and managing Time resources
+featured: false
+logo_url: https://www.svgrepo.com/show/77630/clock.svg
+name: time
+native: false
+package_status: public_preview
+publisher: pulumiverse
+repo_url: https://github.com/pulumiverse/pulumi-time
+schema_file_path: provider/cmd/pulumi-resource-time/schema.json
+title: Pulumi Time provider
+updated_on: 1661765907
+version: v0.0.7

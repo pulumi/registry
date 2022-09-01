@@ -20,7 +20,7 @@ The Okta provider is available as a package in all Pulumi languages:
 Pulumi relies on the Okta SDK to authenticate requests from your computer to Okta. Your credentials are never sent
 to pulumi.com.
 
-Once the credetials are obtained, there are two ways to communicate your configuration tokens to Pulumi:
+Once the credentials are obtained, there are two ways to communicate your configuration tokens to Pulumi:
 
 1. Set the environment variables `OKTA_ORG_NAME`, `OKTA_BASE_URL` and `OKTA_API_TOKEN`:
 

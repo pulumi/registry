@@ -23,7 +23,7 @@ The Pulumi New Relic Provider needs to be configured with New Relic credentials
 before it can be used to create resources.
 
 You can find information in the [New Relic](https://docs.newrelic.com/docs/apis/intro-apis/new-relic-api-keys/) docs
-regarding how to create the specific keys. Once the credetials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
+regarding how to create the specific keys. Once the credentials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
 
 1. Set the environment variables `NEWRELIC_API_KEY`, `NEW_RELIC_API_KEY` and `NEW_RELIC_ADMIN_API_KEY`:
 

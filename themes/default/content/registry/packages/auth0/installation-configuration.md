@@ -19,7 +19,7 @@ The Auth0 provider is available as a package in all Pulumi languages:
 
 Pulumi relies on the Auth0 SDK to authenticate requests from your computer to Auth0. Your credentials are never sent
 to pulumi.com. The Pulumi Auth0 Provider needs to be configured with Auth0 credentials
-before it can be used to create resources. Once the credetials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
+before it can be used to create resources. Once the credentials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
 
 1. Set the environment variables `AUTH0_DOMAIN`, `AUTH0_CLIENT_ID` and `AUTH0_CLIENT_SECRET`:
 

@@ -10,7 +10,7 @@ The Pulumi Time provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumiverse/time`](https://www.npmjs.com/package/@pulumiverse/time)
 * Python: [`pulumiverse_time`](https://pypi.org/project/pulumiverse_time/)
-* Go: [`github.com/pulumiverse/pulumi-time/sdk/go/time`](https://pkg.go.dev/github.com/pulumiverse/pulumi-time/sdk)
+* Go: [`github.com/pulumiverse/pulumi-time/sdk/go/time`](https://github.com/pulumiverse/pulumi-time/sdk/go/time)
 * .NET: [`Pulumiverse.Time`](https://www.nuget.org/packages/Pulumiverse.Time)
 
 ### Provider Binary

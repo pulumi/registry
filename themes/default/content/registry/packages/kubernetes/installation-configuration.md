@@ -44,7 +44,7 @@ following steps.
 1. [Install the Pulumi CLI][install].
 1. Install a package manager for your Pulumi program language runtime, such as [npm] or [Yarn] for [Node.js][nodejs], or PyPI for Python.
 1. Provision a Kubernetes cluster. For a new managed Kubernetes cluster, check out the [guides.]({{< relref "/registry/packages/kubernetes/how-to-guides" >}})
-1. Download [`kubectl`](https://kubernetes.io/docs/tasks/tools/install-kubectl/) and verify the cluster is up and running.
+1. Download [`kubectl`](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 
 ## Setup
 
@@ -58,8 +58,9 @@ If the kubeconfig file is not in either of these locations, Pulumi will **not** 
 fail to authenticate against the cluster. Set one of these locations to a valid kubeconfig file, if you have not done so
 already.
 
-Once the cluster is accessible, setup is complete and you can proceed to the
-desired tutorials.
+You can run `kubectl get pods' or a similar command to verify that the cluster is up and configured correctly.
+
+Once the cluster is accessible, setup is complete and you can follow our [getting started guide]({{< relref "/docs/get-started/kubernetes">}}) or explore some of our [code examples](https://github.com/pulumi/examples#kubernetes).
 
 > Note: Pulumi **never** sends **any** authentication secrets or credentials to the Pulumi service. See the [FAQ]({{< relref "faq#does-the-pulumi-service-see-my-credentials-in-the-kubeconfig-file">}}) for more detail.
 
@@ -79,7 +80,7 @@ $ kubectl config \
 ```
 
 If you have done this and are using the default context file, you will be able to set the
-configuration variable `kubernetes:context` in the Pulumi config system to the given context name:
+configuration variable `kubernetes:context` in the Kubernetes provider to the given context name:
 
 ```shell
 $ pulumi stack init new-kube-stack
@@ -111,7 +112,7 @@ To learn more about `kubectl proxy` check out the [reference docs](https://kuber
 
 ## Configuration
 
-The Kubernetes provider accepts the following configuration settings.  These can be provided to the default Kubernetes provider via `pulumi config set kubernetes:<option>`, or passed to the constructor of `new kubernetes.Provider` to construct a specific instance of the Kubernetes provider.
+The Kubernetes provider accepts the following configuration settings. These can be provided to the default Kubernetes provider via `pulumi config set kubernetes:<option>`, or passed to the constructor of `new kubernetes.Provider` to construct a [specific instance](https://www.pulumi.com/docs/intro/concepts/resources/providers/#explicit-provider-configuration) of the Kubernetes provider.
 
 See the [Provider configuration][provider-args] docs for a complete list of options.
 

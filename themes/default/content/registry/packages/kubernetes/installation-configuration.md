@@ -44,7 +44,7 @@ following steps.
 1. [Install the Pulumi CLI][install].
 1. Install a package manager for your Pulumi program language runtime, such as [npm] or [Yarn] for [Node.js][nodejs], or PyPI for Python.
 1. Provision a Kubernetes cluster. For a new managed Kubernetes cluster, check out the [guides.]({{< relref "/registry/packages/kubernetes/how-to-guides" >}})
-1. Download [`kubectl`](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
+1. Download [`kubectl`](https://kubernetes.io/docs/tasks/tools/install-kubectl/).
 
 ## Setup
 
@@ -58,7 +58,7 @@ If the kubeconfig file is not in either of these locations, Pulumi will **not** 
 fail to authenticate against the cluster. Set one of these locations to a valid kubeconfig file, if you have not done so
 already.
 
-You can run `kubectl get pods' or a similar command to verify that the cluster is up and configured correctly.
+You can run `kubectl get pods` or a similar command to verify that the cluster is up and configured correctly.
 
 Once the cluster is accessible, setup is complete and you can follow our [getting started guide]({{< relref "/docs/get-started/kubernetes">}}) or explore some of our [code examples](https://github.com/pulumi/examples#kubernetes).
 

@@ -58,9 +58,9 @@ If the kubeconfig file is not in either of these locations, Pulumi will **not** 
 fail to authenticate against the cluster. Set one of these locations to a valid kubeconfig file, if you have not done so
 already.
 
-You can run `kubectl get pods` or a similar command to verify that the cluster is up and configured correctly.
+Verify the cluster is configured and up by running `kubectl get pods`.
 
-Once the cluster is accessible, setup is complete and you can follow our [getting started guide]({{< relref "/docs/get-started/kubernetes">}}) or explore some of our [code examples](https://github.com/pulumi/examples#kubernetes).
+Then follow the [getting started guide]({{< relref "/docs/get-started/kubernetes">}}) or explore some [code examples](https://github.com/pulumi/examples#kubernetes).
 
 > Note: Pulumi **never** sends **any** authentication secrets or credentials to the Pulumi service. See the [FAQ]({{< relref "faq#does-the-pulumi-service-see-my-credentials-in-the-kubeconfig-file">}}) for more detail.
 

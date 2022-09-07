@@ -29,6 +29,10 @@ to pulumi.com. Once the credentials are obtained, there are two ways to communic
     $ export CLOUDFLARE_API_KEY=YYYYYY
     ```
 
+{{% notes type="info" %}}
+You can only use one of: `apiToken` _or_ `apiKey`/`email`. We recommend using `apiToken`.
+{{% /notes %}}
+
 2. If you prefer that they be stored alongside your Pulumi stack for easy multi-user access:
 
     ```bash

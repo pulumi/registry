@@ -20,6 +20,10 @@ The Cloudflare provider is available as a package in all Pulumi languages:
 Pulumi relies on the Cloudflare SDK to authenticate requests from your computer to Cloudflare. Your credentials are never sent
 to pulumi.com. Once the credentials are obtained, there are two ways to communicate your configuration parameters to Pulumi:
 
+{{% notes type="info" %}}
+For authentication, you must use only one of: `apiToken` _or_ `apiKey`/`email`. We recommend using `apiToken`.
+{{% /notes %}}
+
 1. Set the environment variable `CLOUDFLARE_API_TOKEN` (or the legacy `CLOUDFLARE_EMAIL` and `CLOUDFLARE_API_KEY`):
 
     ```bash
@@ -28,10 +32,6 @@ to pulumi.com. Once the credentials are obtained, there are two ways to communic
     $ export CLOUDFLARE_EMAIL=XXXXXX
     $ export CLOUDFLARE_API_KEY=YYYYYY
     ```
-
-{{% notes type="info" %}}
-You can only use one of: `apiToken` _or_ `apiKey`/`email`. We recommend using `apiToken`.
-{{% /notes %}}
 
 2. If you prefer that they be stored alongside your Pulumi stack for easy multi-user access:
 

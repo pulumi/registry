@@ -2,13 +2,13 @@ category: Cloud
 component: false
 description: A Pulumi package for creating and managing scaleway cloud resources.
 featured: false
-logo_url: https://raw.githubusercontent.com/pulumiverse/pulumi-scaleway/master/assets/scaleway-svgrepo-com.svg
+logo_url: https://raw.githubusercontent.com/lbrlabs/pulumi-scaleway/master/assets/scaleway-svgrepo-com.svg
 name: scaleway
 native: false
-package_status: public_preview
-publisher: Pulumiverse
-repo_url: https://github.com/pulumiverse/pulumi-scaleway
+package_status: ga
+publisher: lbrlabs
+repo_url: https://github.com/lbrlabs/pulumi-scaleway
 schema_file_path: provider/cmd/pulumi-resource-scaleway/schema.json
 title: Scaleway
-updated_on: 1661526378
-version: v0.4.0
+updated_on: 1662952160
+version: v1.0.0

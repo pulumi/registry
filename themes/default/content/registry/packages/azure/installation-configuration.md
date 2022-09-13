@@ -109,7 +109,7 @@ Remember to pass `--secret` when setting `clientSecret` so that it is properly e
     $ pulumi config set azure:clientId <clientID>
     $ pulumi config set azure:clientSecret <clientSecret> --secret
     $ pulumi config set azure:tenantId <tenantID>
-    $ pulumi config set azure:subscriptionId <subscriptionId>
+    $ pulumi config set azure:subscriptionID <subscriptionId>
     ```
 
 ##### Set configuration using environment variables
@@ -162,6 +162,6 @@ Use `pulumi config set azure:<option>` or pass options to the [constructor of `n
 | `msiEndpoint`               | Optional          | The REST endpoint to retrieve an MSI token from. Pulumi will attempt to discover this automatically but it can be specified manually here. It can also be sourced from the `ARM_MSI_ENDPOINT` environment variable.                                                                                    |
 | `skipCredentialsValidation` | Optional          | Prevents the provider from validating the given credentials. When set to true, `skip_provider_registration` is assumed. It can also be sourced from the `ARM_SKIP_CREDENTIALS_VALIDATION` environment variable; defaults to `false`.                                                                   |
 | `skipProviderRegistration`  | Optional          | Prevents the provider from registering the ARM provider namespaces, this can be used if you don't wish to give the Active Directory Application permission to register resource providers. It can also be sourced from the `ARM_SKIP_PROVIDER_REGISTRATION` environment variable; defaults to `false`. |
-| `subscriptionId`            | Optional          | The subscription ID to use. It can also be sourced from the `ARM_SUBSCRIPTION_ID` environment variable.                                                                                                                                                                                                |
+| `subscriptionID`            | Optional          | The subscription ID to use. It can also be sourced from the `ARM_SUBSCRIPTION_ID` environment variable.                                                                                                                                                                                                |
 | `tenantId`                  | Optional          | The tenant ID to use. It can also be sourced from the `ARM_TENANT_ID` environment variable.                                                                                                                                                                                                            |
 | `useMsi`                    | Optional          | Set to true to authenticate using managed service identity. It can also be sourced from the `ARM_USE_MSI` environment variable.                                                                                                                                                                        |

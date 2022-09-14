@@ -77,8 +77,16 @@
       "schemaFile": "provider/cmd/pulumi-resource-upstash/schema.json"
     },
     {
-      "repoSlug": "pulumiverse/pulumi-ovh",
+      "repoSlug": "lbrlabs/pulumi-ovh",
       "schemaFile": "provider/cmd/pulumi-resource-ovh/schema.json"
+    },
+    {
+      "repoSlug": "lbrlabs/pulumi-grafana",
+      "schemaFile": "provider/cmd/pulumi-resource-grafana/schema.json"
+    },
+    {
+      "repoSlug": "lbrlabs/pulumi-launchdarkly",
+      "schemaFile": "provider/cmd/pulumi-resource-launchdarkly/schema.json"
     }
   ]
 }

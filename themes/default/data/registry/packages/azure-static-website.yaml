@@ -11,4 +11,4 @@ repo_url: https://github.com/pulumi/pulumi-azure-static-website
 schema_file_path: schema.json
 title: Azure Static Website
 updated_on: 1663199908
-version: v0.0.1
+version: v0.0.5

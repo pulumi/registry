@@ -13,7 +13,7 @@ The Pulumi Azure Static Website component is available as a package in all Pulum
 * Go: [`github.com/pulumi/pulumi-azure-static-website/sdk`](https://pkg.go.dev/github.com/pulumi/pulumi-azure-static-website/sdk)
 * .NET: [`Pulumi.AzureStaticWebsite`](https://www.nuget.org/packages/Pulumi.AzureStaticWebsite/)
 
-If you are new to Pulumi and do not yet have our Pulumi installed, see our [getting started](https://www.pulumi.com/docs/get-started/) guide to get up and running.
+If you are new to Pulumi and do not yet have Pulumi installed, see our [getting started](https://www.pulumi.com/docs/get-started/) guide to get up and running.
 
 Install the SDK package corresponding to the language or runtime you are using. If using YAML or one of our other markup languages, this step can be skipped.
 

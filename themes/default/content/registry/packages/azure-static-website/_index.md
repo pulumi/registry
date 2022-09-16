@@ -8,6 +8,10 @@ This component makes it easy to deploy a static website to Azure using any of th
 
 ## Usage
 
+{{< chooser language "typescript,yaml" >}}
+
+{{% choosable language typescript %}}
+
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
 import * as website from "@pulumi/azure-static-website";
@@ -18,6 +22,9 @@ const site = new website.Website("site", {
 
 export const { originURL } = site;
 ```
+
+{{% /choosable %}}
+{{% choosable language yaml %}}
 
 ```yaml
 name: my-website
@@ -33,6 +40,9 @@ resources:
 outputs:
   originURL: ${site.originURL}
 ```
+
+{{% /choosable %}}
+{{< /chooser >}}
 
 ## Input Properties
 

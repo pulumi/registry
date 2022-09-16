@@ -19,20 +19,25 @@ Install the SDK package corresponding to the language or runtime you are using. 
 
 ### NodeJS
 
-```
+```bash
 npm install @pulumi/azure-static-website
 ```
 
 ### Python
 
-```
+```bash
 pip3 install pulumi_azure_static_website
 ```
 
 ### Go
 
-```
+```bash
 go get -t github.com/pulumi/pulumi-azure-static-website/sdk
+```
+
+### .NET
+```bash
+dotnet add package Pulumi.AzureStaticWebsite
 ```
 
 This package can then be consumed just like any other package by importing it into your project (e.g. `import * as website from '@pulumi/azure-static-website'`)

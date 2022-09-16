@@ -87,6 +87,10 @@
     {
       "repoSlug": "lbrlabs/pulumi-launchdarkly",
       "schemaFile": "provider/cmd/pulumi-resource-launchdarkly/schema.json"
+    },
+    {
+      "repoSlug": "pulumi/pulumi-azure-static-website",
+      "schemaFile": "schema.json"
     }
   ]
 }

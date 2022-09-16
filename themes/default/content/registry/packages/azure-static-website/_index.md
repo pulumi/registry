@@ -56,6 +56,6 @@ This component takes the following inputs.
 
 ## Notes:
 
-- If you would like to serve your site from a custom domain, you need to configure a DNS zone in Azure and set the name of the zone using the `dnsZoneName` input property
+- If you would like to serve your site from a custom domain, you need to configure a DNS zone in Azure and set the name of the zone using the `dnsZoneName` input property.
 - If a subdomain is not specified, the contents will be served from the apex. Serving the website over HTTPS is something that will need to be manually configured, as Azure will sign free certs for the subdomains, but not for the root domain.
 - When destroying the site, you will need to manually delete the CNAME record that was provisioned for the domain (either using the console or CLI) in order for `pulumi destroy` to succeed.

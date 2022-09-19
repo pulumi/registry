@@ -8,10 +8,10 @@ layout: installation
 
 The Pulumi Ovh provider is available as a package in all Pulumi languages:
 
-* JavaScript/TypeScript: [`@lbrlabs/time`](https://www.npmjs.com/package/@lbrlabs/ovh)
-* Python: [`lbrlabs_time`](https://pypi.org/project/lbrlabs_ovh/)
+* JavaScript/TypeScript: [`@lbrlabs/time`](https://www.npmjs.com/package/@lbrlabs/pulumi-ovh)
+* Python: [`lbrlabs_time`](https://pypi.org/project/lbrlabs_pulumi_ovh/)
 * Go: [`github.com/lbrlabs/pulumi-time/sdk/go/time`](https://pkg.go.dev/github.com/lbrlabs/pulumi-ovh/sdk)
-* .NET: [`lbrlabs.Time`](https://www.nuget.org/packages/lbrlabs.Ovh)
+* .NET: [`lbrlabs.Time`](https://www.nuget.org/packages/Lbrlabs.PulumiPackage.Ovh)
 
 ### Provider Binary
 

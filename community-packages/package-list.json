@@ -91,6 +91,10 @@
     {
       "repoSlug": "pulumi/pulumi-azure-static-website",
       "schemaFile": "schema.json"
+    },
+     {
+      "repoSlug": "lbrlabs/pulumi-harness",
+      "schemaFile": "provider/cmd/pulumi-resource-harness/schema.json"
     }
   ]
 }

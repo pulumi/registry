@@ -91,6 +91,10 @@
     {
       "repoSlug": "pulumi/pulumi-azure-static-website",
       "schemaFile": "schema.json"
+    },
+    {
+      "repoSlug": "pulumi/pulumi-google-cloud-static-website",
+      "schemaFile": "schema.json"
     }
   ]
 }

@@ -4,11 +4,9 @@ meta_desc: A Pulumi component that synchronizes a local folder to Amazon S3, Azu
 layout: overview
 ---
 
-A Pulumi component that synchronizes the contents of a local folder to Amazon S3, Azure Blob Storage, or Google Cloud Storage.
+A Pulumi component that synchronizes the contents of a local folder to any Amazon S3 bucket, Azure Blob Storage container, or Google Cloud Storage bucket. Use this component to publish content easily to your cloud provider of choice.
 
-## Examples
-
-The following examples show you how to use the component, or something.
+## Usage
 
 ### Sync to Amazon S3
 
@@ -511,7 +509,7 @@ resources:
 
 ### Managed and unmanaged file objects
 
-By default, the Synced Folder component manages your files as individual Pulumi cloud resources (e.g., as `aws:S3:BucketObject`s), but you can opt out of this behavior by setting the component's `managedObjects` property to `false`:
+By default, the Synced Folder component manages your files as individual Pulumi cloud resources (for example, as multiple `aws:S3:BucketObject`s), but you can opt out of this behavior by using the component's `managedObjects` property:
 
 {{< chooser language "typescript,python,go,csharp,yaml" / >}}
 
@@ -591,16 +589,15 @@ folder:
 
 {{% /choosable %}}
 
-When you do this, the component assumes you've installed the appropriate CLI tool &mdash; [`aws`](https://aws.amazon.com/cli/), [`az`](https://docs.microsoft.com/en-us/cli/azure/), or [`gcloud`/`gsutil`](https://cloud.google.com/storage/docs/gsutil), depending on the cloud &mdash; and uses the [Pulumi Command](https://www.pulumi.com/registry/packages/command/) provider to issue commands the CLI tool directly.
+When you do this, the component assumes you've installed the cloud provider's official CLI &mdash; [`aws`](https://aws.amazon.com/cli/), [`az`](https://docs.microsoft.com/en-us/cli/azure/), or [`gcloud`/`gsutil`](https://cloud.google.com/storage/docs/gsutil), depending on the cloud &mdash; and uses the [Pulumi Command](https://www.pulumi.com/registry/packages/command/) provider to issue commands the CLI tool directly:
 
-| Resource | By default |  `managedObjects: false` |
-| -- | -- | -- |
-| `S3BucketFolder` | `aws:s3:BucketObject` | [`aws s3 sync`](https://docs.aws.amazon.com/cli/latest/reference/s3/sync.html) |
-| `AzureBlobFolder` | `azure-native:storage:Blob` | [`az storage blob sync`](https://learn.microsoft.com/en-us/cli/azure/storage/blob?view=azure-cli-latest#az-storage-blob-sync) |
-| `GoogleCloudFolder` | `gcp:storage:BucketObject` | [`gsutil rsync`](https://cloud.google.com/storage/docs/gsutil/commands/rsync) |
+* `S3BucketFolder` uses [`aws s3 sync`](https://docs.aws.amazon.com/cli/latest/reference/s3/sync.html)
+* `AzureBlobFolder` uses [`az storage blob sync`](https://learn.microsoft.com/en-us/cli/azure/storage/blob?view=azure-cli-latest#az-storage-blob-sync)
+* `GoogleCloudFolder` uses [`gsutil rsync`](https://cloud.google.com/storage/docs/gsutil/commands/rsync)
 
+Files are one-way synchronized to the cloud, and any files that exist remotely but not locally are deleted from the cloud-storage container. All files are deleted from the cloud-storage container on `pulumi destroy`.
 
-Files are one-way synchronized to the cloud, and any files that exist remotely but not locally are deleted. All files are deleted from remote storage on `pulumi destroy`. If the folder you're syncing contains thousands of files, you may want to consider using this option.
+If the folder you're syncing contains a large number of files (e.g., many thousands), you may want to consider using this option.
 
 The component does not yet support switching seamlessly between `managedObjects: true` and `managedObjects: false`, however, so if you find after deploying a given folder with managed objects that you'd prefer to use unmanaged objects instead (or vice-versa), we recommend creating a second bucket/storage container and folder and removing the first. You can generally do this within the scope of a single program update. For example:
 

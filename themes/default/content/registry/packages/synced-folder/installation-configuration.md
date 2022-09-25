@@ -6,10 +6,36 @@ layout: installation
 
 ## Installation
 
-The Synced Folder component is available in all Pulumi-supported languages:
+The Synced Folder component is available in the following Pulumi-supported languages:
 
-* JavaScript/TypeScript: [`@pulumi/synced-folder`](https://www.npmjs.com/package/@pulumi/synced-folder)
+* TypeScript/JavaScript: [`@pulumi/synced-folder`](https://www.npmjs.com/package/@pulumi/synced-folder)
 * Python: [`pulumi_synced_folder`](https://pypi.org/project/pulumi-synced-folder/)
 * Go: [`github.com/pulumi/pulumi-synced-folder/sdk/go/synced-folder`](https://github.com/pulumi/pulumi-synced-folder/)
-* .NET: [`Pulumi.SyncedFolder`](https://www.nuget.org/packages/Pulumi.SyncedFolder)
-* YAML
+* C#/.NET: [`Pulumi.SyncedFolder`](https://www.nuget.org/packages/Pulumi.SyncedFolder)
+* Pulumi YAML
+
+### With package managers
+
+#### TypeScript/JavaScript
+
+```bash
+$ npm install @pulumi/synced-folder
+```
+
+#### Python
+
+```bash
+$ pip install pulumi_synced_folder
+```
+
+#### Go
+
+```bash
+$ go get -u github.com/pulumi/pulumi-synced-folder/sdk/go/synced-folder
+```
+
+#### .NET
+
+```bash
+$ dotnet add package Pulumi.SyncedFolder
+```

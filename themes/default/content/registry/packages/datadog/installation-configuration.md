@@ -21,7 +21,7 @@ Pulumi relies on the Datadog SDK to authenticate requests from your computer to 
 to pulumi.com. The Pulumi Datadog Provider needs to be configured with Datadog credentials
 before it can be used to create resources.
 
-Once the credetials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
+Once the credentials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
 
 1. Set the environment variables `DATADOG_API_KEY` and `DATADOG_APP_KEY`:
 

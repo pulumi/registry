@@ -1,0 +1,14 @@
+category: Cloud
+component: true
+description: A Pulumi component to deploy a static website to Google Cloud
+featured: false
+logo_url: ""
+name: google-cloud-static-website
+native: false
+package_status: public_preview
+publisher: Pulumi
+repo_url: https://github.com/pulumi/pulumi-google-cloud-static-website
+schema_file_path: schema.json
+title: Google Cloud Static Website
+updated_on: 1663628042
+version: v0.0.3

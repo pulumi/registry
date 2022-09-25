@@ -23,7 +23,7 @@ serve:
 	./scripts/serve.sh
 
 .PHONY: ci-pull-request
-ci-pull-request: ensure lint test
+ci-pull-request: ensure
 	./scripts/ci/pull-request.sh
 
 .PHONY: ci-pull-request-closed

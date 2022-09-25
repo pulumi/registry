@@ -1,6 +1,10 @@
 {
   "include": [
     {
+      "repoSlug": "pulumiverse/pulumi-time",
+      "schemaFile": "provider/cmd/pulumi-resource-time/schema.json"
+    },
+    {
       "repoSlug": "pulumiverse/pulumi-doppler",
       "schemaFile": "provider/cmd/pulumi-resource-doppler/schema.json"
     },
@@ -17,11 +21,15 @@
       "schemaFile": "provider/cmd/pulumi-resource-buildkite/schema.json"
     },
     {
+      "repoSlug": "pulumiverse/pulumi-gandi",
+      "schemaFile": "provider/cmd/pulumi-resource-gandi/schema.json"
+    },
+    {
       "repoSlug": "grapl-security/pulumi-hcp",
       "schemaFile": "provider/cmd/pulumi-resource-hcp/schema.json"
     },
     {
-      "repoSlug": "jaxxstorm/pulumi-scaleway",
+      "repoSlug": "pulumiverse/pulumi-scaleway",
       "schemaFile": "provider/cmd/pulumi-resource-scaleway/schema.json"
     },
     {
@@ -67,6 +75,26 @@
     {
       "repoSlug": "upstash/upstash-pulumi-provider",
       "schemaFile": "provider/cmd/pulumi-resource-upstash/schema.json"
+    },
+    {
+      "repoSlug": "lbrlabs/pulumi-ovh",
+      "schemaFile": "provider/cmd/pulumi-resource-ovh/schema.json"
+    },
+    {
+      "repoSlug": "lbrlabs/pulumi-grafana",
+      "schemaFile": "provider/cmd/pulumi-resource-grafana/schema.json"
+    },
+    {
+      "repoSlug": "lbrlabs/pulumi-launchdarkly",
+      "schemaFile": "provider/cmd/pulumi-resource-launchdarkly/schema.json"
+    },
+    {
+      "repoSlug": "pulumi/pulumi-azure-static-website",
+      "schemaFile": "schema.json"
+    },
+    {
+      "repoSlug": "pulumi/pulumi-google-cloud-static-website",
+      "schemaFile": "schema.json"
     },
     {
       "repoSlug": "pulumi/pulumi-synced-folder",

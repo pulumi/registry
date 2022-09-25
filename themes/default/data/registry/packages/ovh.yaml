@@ -1,0 +1,14 @@
+category: Cloud
+component: false
+description: A Pulumi package for creating and managing OVH cloud resources.
+featured: false
+logo_url: https://raw.githubusercontent.com/lbrlabs/pulumi-ovh/main/assets/ovh.svg
+name: ovh
+native: false
+package_status: public_preview
+publisher: lbrlabs
+repo_url: https://github.com/lbrlabs/pulumi-ovh
+schema_file_path: provider/cmd/pulumi-resource-ovh/schema.json
+title: OVH
+updated_on: 1663450301
+version: v0.0.4

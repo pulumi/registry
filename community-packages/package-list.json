@@ -99,6 +99,10 @@
     {
       "repoSlug": "pulumi/pulumi-google-cloud-static-website",
       "schemaFile": "schema.json"
+    },
+    {
+      "repoSlug": "pulumi/pulumi-synced-folder",
+      "schemaFile": "schema.json"
     }
   ]
 }

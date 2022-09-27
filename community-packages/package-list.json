@@ -115,6 +115,10 @@
     {
       "repoSlug": "lbrlabs/pulumi-dynatrace",
       "schemaFile": "provider/cmd/pulumi-resource-dynatrace/schema.json"
+    },
+    {
+      "repoSlug": "pulumiverse/pulumi-aquasec",
+      "schemaFile": "provider/cmd/pulumi-resource-aquasec/schema.json"
     }
   ]
 }

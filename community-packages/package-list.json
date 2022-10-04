@@ -103,6 +103,10 @@
     {
       "repoSlug": "pulumi/pulumi-synced-folder",
       "schemaFile": "schema.json"
+    },
+    {
+      "repoSlug": "pulumi/pulumi-tls-self-signed-cert",
+      "schemaFile": "schema.json"
     }
   ]
 }

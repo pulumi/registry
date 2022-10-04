@@ -3,7 +3,7 @@ component: true
 description: A Pulumi component that creates a self-signed certificate.
 featured: false
 logo_url: ""
-name: self-signed-cert
+name: tls-self-signed-cert
 native: false
 package_status: public_preview
 publisher: Pulumi

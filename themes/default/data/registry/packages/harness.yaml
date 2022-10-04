@@ -1,0 +1,14 @@
+category: Cloud
+component: false
+description: A Pulumi package for creating and managing Harness  resources.
+featured: false
+logo_url: ""
+name: harness
+native: false
+package_status: public_preview
+publisher: lbrlabs
+repo_url: https://github.com/lbrlabs/pulumi-harness
+schema_file_path: provider/cmd/pulumi-resource-harness/schema.json
+title: Harness
+updated_on: 1663521912
+version: v0.0.3

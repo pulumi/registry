@@ -5,10 +5,10 @@ featured: false
 logo_url: https://avatars.githubusercontent.com/u/41974756?s=200&v=4
 name: fusionauth
 native: false
-package_status: public_preview
+package_status: ga
 publisher: Theo Gravity
 repo_url: https://github.com/theogravity/pulumi-fusionauth
 schema_file_path: provider/cmd/pulumi-resource-fusionauth/schema.json
 title: FusionAuth
-updated_on: 1659032993
-version: v0.9.7
+updated_on: 1665440962
+version: v1.0.0

@@ -107,6 +107,10 @@
     {
       "repoSlug": "pulumi/pulumi-tls-self-signed-cert",
       "schemaFile": "schema.json"
+    },
+    {
+      "repoSlug": "lbrlabs/pulumi-dynatrace",
+      "schemaFile": "provider/cmd/pulumi-resource-dynatrace/schema.json"
     }
   ]
 }

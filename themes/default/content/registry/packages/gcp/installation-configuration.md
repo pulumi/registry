@@ -20,7 +20,7 @@ To provision resources with the Pulumi Google Cloud Provider, you need to have G
 
 ### Default auth credentials
 
-{{% configure-gcp %}}
+{{% configure-gcp type="gcp" %}}
 
 ### Using a Service Account
 

@@ -17,7 +17,7 @@ The Google Native provider is available as a package in all Pulumi languages:
 
 To provision resources with the Pulumi Google Cloud Provider, you need to have Google credentials.
 
-{{% configure-gcp %}}
+{{% configure-gcp type="google-native" %}}
 
 {{% notes "info" %}}
 If you are using Pulumi in an non-interactive setting (such as a CI/CD system) you will need to [configure and use a service account]({{< relref "service-account" >}}) instead.

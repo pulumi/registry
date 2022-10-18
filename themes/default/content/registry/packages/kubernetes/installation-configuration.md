@@ -70,6 +70,17 @@ The kubeconfig file defines some number of _contexts_. Each context is a name th
 with a _cluster_, _namespace_, and a "_user_" (a local-only name that's associated with a credential
 that allows access to the cluster).
 
+Your Kubernetes implementation may have already written out an appropriate kubeconfig. 
+For example, `minikube start` does this, unless you specified `--keep-context=true`.
+Moreover, multiple sources of kubeconfig are merged and the result may surprise you.
+Therefore, check your current kubeconfig using:
+
+```shell
+$ kubectl \
+    config \
+        view
+```
+
 To create a context, for example, you can run the `kubectl set-context` command as follows:
 
 ```shell
@@ -79,7 +90,9 @@ $ kubectl config \
     --user=my-user
 ```
 
-If you have done this and are using the default context file, you will be able to set the
+Mind that e.g., `minikube` uses the same name for the context and the cluster in it.
+
+If you have completed your kubeconfig configuration, and are using the default kubeconfig file, you will be able to set the
 configuration variable `kubernetes:context` in the Kubernetes provider to the given context name:
 
 ```shell
@@ -87,7 +100,7 @@ $ pulumi stack init new-kube-stack
 $ pulumi config set kubernetes:context my-context
 ```
 
-If you don't want to select a context, you can always make it the default:
+If you don't want to select a context, you can always make it the operating system user-wide default:
 
 ```shell
 $ kubectl config \

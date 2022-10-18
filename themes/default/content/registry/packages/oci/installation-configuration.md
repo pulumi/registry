@@ -35,7 +35,7 @@ export TF_VAR_tenancy_ocid="ocid1.tenancy.oc1..<unique_ID>"
 export TF_VAR_user_ocid="ocid1.user.oc1..<unique_ID>"
 export TF_VAR_fingerprint="<key_fingerprint>"
 export TF_VAR_region="us-ashburn-1"
-export TF_VAR_private_key_file="/path/to/oci_api_key.pem"
+export TF_VAR_private_key_path="/path/to/oci_api_key.pem"
 ```
 
 ### Pulumi Configuration

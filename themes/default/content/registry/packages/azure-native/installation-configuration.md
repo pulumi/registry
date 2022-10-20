@@ -111,6 +111,7 @@ Remember to pass `--secret` when setting `clientSecret` so that it is properly e
     $ pulumi config set azure-native:clientSecret <clientSecret> --secret
     $ pulumi config set azure-native:tenantId <tenantID>
     $ pulumi config set azure-native:subscriptionId <subscriptionId>
+    # optional default location, otherwise set in code
     $ pulumi config set azure-native:location <locationName>
     ```
 

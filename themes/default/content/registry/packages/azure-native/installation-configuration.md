@@ -111,6 +111,8 @@ Remember to pass `--secret` when setting `clientSecret` so that it is properly e
     $ pulumi config set azure-native:clientSecret <clientSecret> --secret
     $ pulumi config set azure-native:tenantId <tenantID>
     $ pulumi config set azure-native:subscriptionId <subscriptionId>
+    # optional default location, otherwise set in code
+    $ pulumi config set azure-native:location <locationName>
     ```
 
 ##### Set configuration using environment variables
@@ -123,6 +125,7 @@ $ export ARM_CLIENT_ID=<YOUR_ARM_CLIENT_ID>
 $ export ARM_CLIENT_SECRET=<YOUR_ARM_CLIENT_SECRET>
 $ export ARM_TENANT_ID=<YOUR_ARM_TENANT_ID>
 $ export ARM_SUBSCRIPTION_ID=<YOUR_ARM_SUBSCRIPTION_ID>
+$ export ARM_LOCATION_NAME=<YOUR_ARM_LOCATION_NAME>
 ```
 
 {{% /choosable %}}
@@ -134,6 +137,7 @@ $ export ARM_CLIENT_ID=<YOUR_ARM_CLIENT_ID>
 $ export ARM_CLIENT_SECRET=<YOUR_ARM_CLIENT_SECRET>
 $ export ARM_TENANT_ID=<YOUR_ARM_TENANT_ID>
 $ export ARM_SUBSCRIPTION_ID=<YOUR_ARM_SUBSCRIPTION_ID>
+$ export ARM_LOCATION_NAME=<YOUR_ARM_LOCATION_NAME>
 ```
 
 {{% /choosable %}}
@@ -145,6 +149,7 @@ $ export ARM_SUBSCRIPTION_ID=<YOUR_ARM_SUBSCRIPTION_ID>
 > $env:ARM_CLIENT_SECRET = "<YOUR_ARM_CLIENT_SECRET>"
 > $env:ARM_TENANT_ID = "<YOUR_ARM_TENANT_ID>"
 > $env:ARM_SUBSCRIPTION_ID = "<YOUR_ARM_SUBSCRIPTION_ID>"
+> $env:ARM_LOCATION_NAME = "<YOUR_ARM_LOCATION_NAME>"
 ```
 
 {{% /choosable %}}
@@ -157,7 +162,8 @@ Use `pulumi config set azure-native:<option>` or pass options to the [constructo
 | Option                      | Required/Optional | Description                                                                                                                                                                                                                                                                                            |
 |-----------------------------|-------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `environment`               | Required          | The cloud environment to use. It can also be sourced from the ARM_ENVIRONMENT environment variable. Supported values are: `public` (default), `usgovernment`, `china`.                                                                                                                                 |
-| `location`                  | Optional          | The location to use. ResourceGroups will consult this property for a default location, if one was not supplied explicitly.                                                                                                                                                                             |
+| `location`                  | Optional          | The location to use. ResourceGroups will consult this property for a default location, if one was not supplied explicitly when defining the resource. It can also be sourced from the ARM_LOCATION_NAME environment variable.                                      
+|
 | `clientId`                  | Optional          | The client ID to use. It can also be sourced from the `ARM_CLIENT_ID` environment variable.                                                                                                                                                                                                            |
 | `clientSecret`              | Optional          | The client secret to use. It can also be sourced from the `ARM_CLIENT_SECRET` environment variable.                                                                                                                                                                                                    |
 | `msiEndpoint`               | Optional          | The REST endpoint to retrieve an MSI token from. Pulumi will attempt to discover this automatically but it can be specified manually here. It can also be sourced from the `ARM_MSI_ENDPOINT` environment variable.                                                                                    |

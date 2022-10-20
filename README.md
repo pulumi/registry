@@ -32,6 +32,7 @@ Once the community member has submitted the PR to add the provider to the regist
    * `themes/default/content/registry/packages/exoscale/_index.md`, as described above.
    
    Optionally, the PR may include additional content files like How-To Guides if they are present in the upstream repo.
+
 1. Merge the PR if it looks ok.
 1. In pulumi/docs, a [scheduled task](https://github.com/pulumi/docs/actions/workflows/update-theme.yml) runs hourly and will pick up any changes in this repo, generate files from the provider schema and `data/registry/${PROVIDER}.yaml`, and publish to pulumi.com.
 

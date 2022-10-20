@@ -119,6 +119,10 @@
     {
       "repoSlug": "pulumiverse/pulumi-aquasec",
       "schemaFile": "provider/cmd/pulumi-resource-aquasec/schema.json"
+    },
+    {
+      "repoSlug": "pulumiverse/pulumi-exoscale",
+      "schemaFile": "provider/cmd/pulumi-resource-exoscale/schema.json"
     }
   ]
 }

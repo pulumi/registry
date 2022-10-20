@@ -14,8 +14,8 @@ To get started, use our [guide on authoring a Pulumi Package](https://www.pulumi
 To publish a community-maintained package on the Pulumi Registry as a community member:
 
 1. Ensure your provider repo has the following files:
-  * `docs/_index.md`, which should contain a summary of the provider's purpose (required) along with a code sample (preferred). This file will render as the index page for your provider ([example](https://www.pulumi.com/registry/packages/aiven/)).
-  * `docs/installation-configuration.md`, which should contain links to SDK packages in each language along with instructions for configuring the provider (e.g., required credentials and/or environment variables). This file will render as the Installation & Configuration page for your provider ([example](https://www.pulumi.com/registry/packages/aiven/installation-configuration/)).
+    * `docs/_index.md`, which should contain a summary of the provider's purpose (required) along with a code sample (preferred). This file will render as the index page for your provider ([example](https://www.pulumi.com/registry/packages/aiven/)).
+    * `docs/installation-configuration.md`, which should contain links to SDK packages in each language along with instructions for configuring the provider (e.g., required credentials and/or environment variables). This file will render as the Installation & Configuration page for your provider ([example](https://www.pulumi.com/registry/packages/aiven/installation-configuration/)).
 1. Create a release of your provider in GitHub.
 1. Add your package to the [community packages list](./community-packages/package-list.json) via pull request to this repository.
 

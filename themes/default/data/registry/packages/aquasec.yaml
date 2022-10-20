@@ -1,0 +1,14 @@
+category: Utility
+component: false
+description: A Pulumi package for creating and managing Aquasec cloud resources.
+featured: false
+logo_url: https://avatars3.githubusercontent.com/aquasecurity
+name: aquasec
+native: false
+package_status: public_preview
+publisher: Pulumiverse
+repo_url: https://github.com/pulumiverse/pulumi-aquasec
+schema_file_path: provider/cmd/pulumi-resource-aquasec/schema.json
+title: Aquasec
+updated_on: 1665414743
+version: v0.2.0

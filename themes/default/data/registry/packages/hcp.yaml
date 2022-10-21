@@ -10,5 +10,5 @@ publisher: Grapl Security
 repo_url: https://github.com/grapl-security/pulumi-hcp
 schema_file_path: provider/cmd/pulumi-resource-hcp/schema.json
 title: HashiCorp Cloud Platform (HCP)
-updated_on: 1658763517
-version: v0.1.11
+updated_on: 1664380333
+version: v0.1.12

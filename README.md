@@ -27,9 +27,9 @@ Once the community member has submitted the PR to add the provider to the regist
 
 1. Review the PR. Ensure that the PR has been rebased if necessary before merging. If ok, merge.
 1. Once the PR is merged, a [scheduled task](https://github.com/pulumi/registry/actions/workflows/generate-package-metadata.yml) will pick up the changes and create a PR to add the package metadata to the registry. A correct metadata PR ([example](https://github.com/pulumi/registry/pull/1606/files)) will include the following files, at a minimum:
-   * `data/registry/${PROVIDER}.yaml` which includes structured metadata about the provider.
-   * `themes/default/content/registry/packages/${PROVIDER}/installation-configuration.md`, as described above.
-   * `themes/default/content/registry/packages/exoscale/_index.md`, as described above.
+   * `data/registry/${PROVIDER}.yaml` which includes structured metadata about the provider. This file is always included with every PR that gets generated for a new release.
+   * `themes/default/content/registry/packages/${PROVIDER}/installation-configuration.md`, as described above. This file *must* be included in the first release, but will only be included in subsequent PRs if the content has changed.
+   * `themes/default/content/registry/packages/exoscale/_index.md`, as described above. This file *must* be included in the first release, but will only be included in subsequent PRs if the content has changed.
    
    Optionally, the PR may include additional content files like How-To Guides if they are present in the upstream repo.
 

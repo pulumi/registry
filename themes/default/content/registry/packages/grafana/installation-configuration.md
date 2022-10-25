@@ -25,7 +25,7 @@ Replace the version string with your desired version.
 
 ## Setup
 
-To provision resources with the Pulumi Grafana provider, you need to have Grafana credentials. Grafana maintains documentation on how to create API keys [here](https://www.scaleway.com/en/docs/console/my-project/how-to/generate-api-key/)
+To provision resources with the Pulumi Grafana provider, you need to have Grafana credentials. Grafana maintains documentation on how to create API keys [here](https://grafana.com/docs/grafana/latest/administration/api-keys/)
 
 ### Set environment variables
 

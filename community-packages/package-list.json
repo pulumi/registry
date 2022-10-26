@@ -123,6 +123,10 @@
     {
       "repoSlug": "pulumiverse/pulumi-exoscale",
       "schemaFile": "provider/cmd/pulumi-resource-exoscale/schema.json"
+    },
+    {
+      "repoSlug": "tencentcloudstack/pulumi-tencentcloud",
+      "schemaFile": "provider/cmd/pulumi-resource-tencentcloud/schema.json"
     }
   ]
 }

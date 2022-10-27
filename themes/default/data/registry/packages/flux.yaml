@@ -5,10 +5,10 @@ featured: false
 logo_url: ""
 name: flux
 native: false
-package_status: ga
+package_status: public_preview
 publisher: oun
 repo_url: https://github.com/oun/pulumi-flux
 schema_file_path: provider/cmd/pulumi-resource-flux/schema.json
 title: flux
-updated_on: 1664097890
-version: v1.0.0
+updated_on: 1666888379
+version: v0.20.0

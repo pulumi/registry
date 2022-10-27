@@ -123,6 +123,10 @@
     {
       "repoSlug": "pulumiverse/pulumi-exoscale",
       "schemaFile": "provider/cmd/pulumi-resource-exoscale/schema.json"
+    },
+    {
+      "repoSlug": "pulumiverse/pulumi-sentry",
+      "schemaFile": "provider/cmd/pulumi-resource-sentry/schema.json"
     }
   ]
 }

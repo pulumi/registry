@@ -131,6 +131,10 @@
     {
       "repoSlug": "pulumiverse/pulumi-heroku",
       "schemaFile": "provider/cmd/pulumi-resource-heroku/schema.json"
+    },
+    {
+      "repoSlug": "pulumi/pulumi-str",
+      "schemaFile": "sdk/schema.json"
     }
   ]
 }

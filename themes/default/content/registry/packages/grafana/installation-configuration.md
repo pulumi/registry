@@ -11,7 +11,7 @@ The Pulumi Grafana provider is available as a package in all Pulumi languages:
 * JavaScript/TypeScript: [`@lbrlabs/pulumi-grafana`](https://www.npmjs.com/package/@lbrlabs/pulumi-grafana)
 * Python: [`lbrlabs_pulumi_grafana`](https://pypi.org/project/lbrlabs-pulumi-grafana/)
 * Go: [`github.com/lbrlabs/pulumi-grafana/sdk/go/grafana`](https://pkg.go.dev/github.com/lbrlabs/pulumi-grafana/sdk)
-* .NET: [`Lbrlabs.PulumiPackage.Scaleway`](https://www.nuget.org/packages/Lbrlabs.PulumiPackage.Grafana)
+* .NET: [`Lbrlabs.PulumiPackage.Grafana`](https://www.nuget.org/packages/Lbrlabs.PulumiPackage.Grafana)
 
 ### Provider Binary
 
@@ -25,7 +25,7 @@ Replace the version string with your desired version.
 
 ## Setup
 
-To provision resources with the Pulumi Grafana provider, you need to have Grafana credentials. Grafana maintains documentation on how to create API keys [here](https://www.scaleway.com/en/docs/console/my-project/how-to/generate-api-key/)
+To provision resources with the Pulumi Grafana provider, you need to have Grafana credentials. 
 
 ### Set environment variables
 

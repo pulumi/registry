@@ -10,5 +10,5 @@ publisher: lbrlabs
 repo_url: https://github.com/lbrlabs/pulumi-grafana
 schema_file_path: provider/cmd/pulumi-resource-grafana/schema.json
 title: Grafana
-updated_on: 1665630694
-version: v0.0.4
+updated_on: 1666972765
+version: v0.0.5

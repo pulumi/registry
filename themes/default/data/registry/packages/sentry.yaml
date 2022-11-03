@@ -2,7 +2,7 @@ category: Cloud
 component: false
 description: A Pulumi package for creating and managing Sentry resources.
 featured: false
-logo_url: https://raw.githubusercontent.com/pulumiverse/.github/main/assets/mascot.png
+logo_url: https://raw.githubusercontent.com/pulumiverse/pulumi-sentry/main/sentry.svg
 name: sentry
 native: false
 package_status: public_preview
@@ -10,5 +10,5 @@ publisher: Pulumiverse
 repo_url: https://github.com/pulumiverse/pulumi-sentry
 schema_file_path: provider/cmd/pulumi-resource-sentry/schema.json
 title: Sentry
-updated_on: 1667215284
-version: v0.0.6
+updated_on: 1667463006
+version: v0.0.7

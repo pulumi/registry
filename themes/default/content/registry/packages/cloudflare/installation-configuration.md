@@ -36,7 +36,7 @@ For authentication, you must use only one of: `apiToken` _or_ `apiKey`/`email`. 
 2. If you prefer that they be stored alongside your Pulumi stack for easy multi-user access:
 
     ```bash
-    $ pulumi config set cloudflare:apiToken
+    $ pulumi config set cloudflare:apiToken --secret
     # Legacy
     $ pulumi config set cloudflare:email XXXXXX
     $ pulumi config set cloudflare:apiKey YYYYYY --secret

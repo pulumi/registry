@@ -29,18 +29,23 @@ export const endpoint = cluster.endpoint
 {{% choosable language python %}}
 
 ```python
+import pulumi
 import pulumiverse_exoscale as exoscale
 
 cluster = exoscale.SKSCluster("cluster",
-    zone="ch-gva-2",
-    name="my-sks-cluster",
-)
+                              zone="ch-gva-2",
+                              name="my-sks-cluster",
+                              )
+
+pulumi.export("endpoint", cluster.endpoint)
 ```
 
 {{% /choosable %}}
 {{% choosable language go %}}
 
 ```go
+package main
+
 import (
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 	"github.com/pulumiverse/pulumi-exoscale/sdk/go/exoscale"
@@ -48,9 +53,9 @@ import (
 
 func main() {
 	pulumi.Run(func(ctx *pulumi.Context) error {
-		cluster, err := exoscale.NewSKSCluster(ctx, "cluster", &exoscale.SKSClusterArgs{
-            Zone:   pulumi.String("ch-gva-2""),
-			Name:   pulumi.String("my-sks-cluster"),
+		cluster, err := exoscale.NewSKSCluster(ctx, "sks-cluster", &exoscale.SKSClusterArgs{
+			Name: pulumi.String("my-sks-cluster"),
+			Zone: pulumi.String("ch-gva-2"),
 		})
 		if err != nil {
 			return err

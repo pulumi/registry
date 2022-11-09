@@ -135,6 +135,10 @@
     {
       "repoSlug": "pulumi/pulumi-str",
       "schemaFile": "sdk/schema.json"
+    },
+    {
+      "repoSlug": "pulumiverse/pulumi-unifi",
+      "schemaFile": "provider/cmd/pulumi-resource-unifi/schema.json"
     }
   ]
 }

@@ -29,7 +29,7 @@
       "schemaFile": "provider/cmd/pulumi-resource-hcp/schema.json"
     },
     {
-      "repoSlug": "pulumiverse/pulumi-scaleway",
+      "repoSlug": "lbrlabs/pulumi-scaleway",
       "schemaFile": "provider/cmd/pulumi-resource-scaleway/schema.json"
     },
     {

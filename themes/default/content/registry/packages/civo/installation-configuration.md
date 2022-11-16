@@ -12,7 +12,7 @@ The Civo provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/civo`](https://www.npmjs.com/package/@pulumi/civo)
 * Python: [`pulumi-civo`](https://pypi.org/project/pulumi-civo/)
-* Go: [`github.com/pulumi/pulumi-civo/sdk/go/civo`](https://github.com/pulumi/pulumi-civo)
+* Go: [`github.com/pulumi/pulumi-civo/sdk/v2/go/civo`](https://github.com/pulumi/pulumi-civo)
 * .NET: [`Pulumi.Civo`](https://www.nuget.org/packages/Pulumi.Civo)
 
 ## Configuring Credentials

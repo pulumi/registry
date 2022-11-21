@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-awsx
 schema_file_path: awsx/schema.json
 title: awsx
-updated_on: 1653475191
-version: v1.0.0-beta.7
+updated_on: 1669050558
+version: v1.0.0-beta.11

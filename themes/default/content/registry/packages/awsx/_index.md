@@ -1,5 +1,5 @@
 ---
-title: AWSx
+title: AWSx (Pulumi Crosswalk for AWS)
 meta_desc: Well-Architected Infrastructure as Code for AWS. The easiest way to AWS — from development to production.
 layout: overview
 ---

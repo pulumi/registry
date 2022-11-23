@@ -33,8 +33,8 @@ Once the credentials are obtained, there are two ways to communicate your author
 2. Set them using configuration, if you prefer that they be stored alongside your Pulumi stack for easy multi-user access:
 
     ```bash
-    $ pulumi config set alicloud:accessKey XXXXXXXXXXXXXX --secret
-    $ pulumi config set alicloud:secretKey YYYYYYYYYYYYYY --secret
+    $ pulumi config set alicloud:access_key XXXXXXXXXXXXXX --secret
+    $ pulumi config set alicloud:secret_key YYYYYYYYYYYYYY --secret
     ```
 
 Remember to pass `--secret` when setting `alicloud:secretKey` and `alicloud:accessKe` so that they are properly encrypted.

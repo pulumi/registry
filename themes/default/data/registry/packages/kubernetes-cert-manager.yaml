@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-kubernetes-cert-manager
 schema_file_path: schema.json
 title: Kubernetes Cert Manager
-updated_on: 1653607048
-version: v0.0.3
+updated_on: 1669247136
+version: v0.0.5

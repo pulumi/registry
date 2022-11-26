@@ -2,13 +2,13 @@ category: Cloud
 component: true
 description: ""
 featured: false
-logo_url: https://raw.githubusercontent.com/pulumi/pulumi-aws-apigateway/main/assets/logo.svg
+logo_url: https://raw.githubusercontent.com/pulumi/pulumi-aws-apigateway/main/assets/logo.png
 name: aws-apigateway
 native: false
-package_status: public_preview
+package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-aws-apigateway
 schema_file_path: schema.yaml
 title: AWS API Gateway
-updated_on: 1658345802
-version: v0.0.11
+updated_on: 1669119716
+version: v1.0.0

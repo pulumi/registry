@@ -17,37 +17,20 @@ The AWSx provider must be configured with credentials to deploy and update resou
 
 ## Example
 
-{{< chooser language "typescript,python" >}}
+{{< chooser language "typescript,python,csharp,java,yaml" >}}
 
 {{% choosable language typescript %}}
 
 ```typescript
-import * as aws from "@pulumi/aws";
 import * as awsx from "@pulumi/awsx";
 
-const cluster = new aws.ecs.Cluster("default-cluster");
+// Allocate a new VPC with the default settings:
+const vpc = new awsx.ec2.Vpc("custom");
 
-const lb = new awsx.lb.ApplicationLoadBalancer("nginx-lb");
-
-const service = new awsx.ecs.FargateService("my-service", {
-    cluster: cluster.arn,
-    desiredCount: 2,
-    taskDefinitionArgs: {
-        container: {
-            image: "nginx:latest",
-            cpu: 512,
-            memory: 128,
-            essential: true,
-            portMappings: [
-                {
-                    containerPort: 80,
-                    targetGroup: lb.defaultTargetGroup,
-                },
-            ],
-        },
-    },
-});
-export const url = lb.loadBalancer.dnsName;
+// Export a few resulting fields to make them easy to use:
+export const vpcId = vpc.vpcId;
+export const privateSubnetIds = vpc.privateSubnetIds;
+export const publicSubnetIds = vpc.publicSubnetIds;
 ```
 
 {{% /choosable %}}
@@ -56,29 +39,13 @@ export const url = lb.loadBalancer.dnsName;
 
 ```python
 import pulumi
-import pulumi_aws as aws
 import pulumi_awsx as awsx
 
-cluster = aws.ecs.Cluster("default-cluster")
+vpc = awsx.ec2.Vpc("custom")
 
-lb = awsx.lb.ApplicationLoadBalancer("nginx-lb")
-
-service = awsx.ecs.FargateService("my-service",
-                                  cluster=cluster.arn,
-                                  desired_count=2,
-                                  task_definition_args=awsx.ecs.FargateServiceTaskDefinitionArgs(
-                                      container=awsx.ecs.TaskDefinitionContainerDefinitionArgs(
-                                          image="nginx:latest",
-                                          cpu=512,
-                                          memory=128,
-                                          essential=True,
-                                          port_mappings=[awsx.ecs.TaskDefinitionPortMappingArgs(
-                                              target_group=lb.default_target_group
-                                          )],
-                                      )
-                                  )
-                                  )
-pulumi.export("url", lb.load_balancer.dns_name)
+pulumi.export("vpcId", vpc.vpc_id)
+pulumi.export("publicSubnetIds", vpc.public_subnet_ids)
+pulumi.export("privateSubnetIds", vpc.private_subnet_ids)
 ```
 
 {{% /choosable %}}
@@ -86,47 +53,70 @@ pulumi.export("url", lb.load_balancer.dns_name)
 {{% choosable language csharp %}}
 
 ```csharp
-using System.Collections.Generic;
 using Pulumi;
-using Pulumi.Awsx.Ecr.Inputs;
-using Pulumi.Awsx.Ecs.Inputs;
-using Aws = Pulumi.Aws;
-using Ecr = Pulumi.Awsx.Ecr;
-using Ecs = Pulumi.Awsx.Ecs;
-using Lb = Pulumi.Awsx.Lb;
+using Ec2 = Pulumi.Awsx.Ec2;
 
-await Deployment.RunAsync(() =>
+class MyStack : Stack
 {
-    var cluster = new Aws.Ecs.Cluster("default-cluster");
-    var lb = new Awsx.Lb.ApplicationLoadBalancer("nginx-lb");
-    var service = new Awsx.Ecs.FargateService("my-service", new Awsx.Ecs.FargateServiceArgs
+    public MyStack()
     {
-        Cluster = cluster.Arn,
-        DesiredCount = 2,
-        TaskDefinitionArgs = new Awsx.Ecs.Inputs.FargateServiceTaskDefinitionArgs
-        {
-            Container = new Awsx.Ecs.Inputs.TaskDefinitionContainerDefinitionArgs
-            {
-                Image = "nginx:latest",
-                Cpu = 512,
-                Memory = 128,
-                Essential = true,
-                PortMappings =
-                {
-                    new Awsx.Ecs.Inputs.TaskDefinitionPortMappingArgs
-                    {
-                        TargetGroup = lb.DefaultTargetGroup,
-                    }
-                },
-            }
-        }
-    });
+        var vpc = new Ec2.Vpc("custom");
 
-    return new Dictionary<string, object?>
-    {
-        ["url"] = lb.LoadBalancer.Apply(lb => lb.DnsName)
-    };
-});
+        this.VpcId = vpc.VpcId;
+    }
+
+
+    [Output] public Output<string> VpcId { get; set; }
+}
+
+class Program
+{
+    static Task<int> Main(string[] args) => Deployment.RunAsync<MyStack>();
+}
+```
+
+{{% /choosable %}}
+
+{{% choosable language java %}}
+
+```java
+package myproject;
+
+import com.pulumi.Pulumi;
+import com.pulumi.awsx.ec2.Vpc;
+
+public class App {
+    public static void main(String[] args) {
+        Pulumi.run(ctx -> {
+            var vpc = new Vpc("custom");
+
+            ctx.export("vpcId", vpc.vpcId());
+            ctx.export("privateSubnetIds", vpc.privateSubnetIds());
+            ctx.export("publicSubnetIds", vpc.publicSubnetIds());
+        });
+    }
+}
+```
+
+{{% /choosable %}}
+
+{{% choosable language yaml %}}
+
+```yaml
+name: awsx-networking-yaml
+runtime: yaml
+description: A minimal AWS Pulumi YAML program
+
+resources:
+  # Allocate a new VPC with the default settings:
+  vpc:
+    type: awsx:ec2:Vpc
+
+outputs:
+  vpcId: ${vpc.VpcId}
+  privateSubnetIds: ${vpc.privateSubnetIds}
+  publicSubnetIds: ${vpc.publicSubnetIds}
+
 ```
 
 {{% /choosable %}}

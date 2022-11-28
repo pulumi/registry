@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-cloudflare
 schema_file_path: provider/cmd/pulumi-resource-cloudflare/schema.json
 title: Cloudflare
-updated_on: 1663874578
-version: v4.12.1
+updated_on: 1669660297
+version: v4.13.0

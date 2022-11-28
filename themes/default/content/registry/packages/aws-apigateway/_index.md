@@ -6,7 +6,7 @@ layout: overview
 
 Easily create AWS API Gateway REST APIs using Pulumi. This component exposes the [Crosswalk for AWS](../../../docs/guides/crosswalk/aws/) functionality documented in the [Pulumi AWS API Gateway guide](../../../docs/guides/crosswalk/aws/api-gateway/) as a package available in all Pulumi languages.
 
-Example:
+## Example:
 
 {{< chooser language "typescript,python,csharp,go" >}}
 

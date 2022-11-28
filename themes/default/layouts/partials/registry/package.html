@@ -19,7 +19,7 @@
 
 <div class="package my-4 w-full lg:w-1/2 px-4">
     <div class="rounded-xl shadow-lg border border-gray-200 h-full relative">
-        <div class="p-8" data-type="{{ $packageType }}" data-category="{{ $packageCategory }}">
+        <div class="p-8" data-type="{{ $packageType }}" data-category="{{ $packageCategory }}" data-title="{{ .package.title }}">
             <div class="flex flex-wrap">
                 <div class="flex w-full items-center justify-between mb-4">
                     <a href="{{ $href }}" class="md:w-1/2">

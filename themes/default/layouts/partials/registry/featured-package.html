@@ -1,22 +1,17 @@
 {{ $packageName := .package.name }}
 {{ $href := printf "/registry/packages/%s/" $packageName }}
 
-<div class="my-4 w-full md:w-1/2 lg:w-1/4 px-4">
-    <div class="rounded-xl shadow-lg border border-gray-200 h-full">
-        <div class="p-8 h-full">
+<div class="my-4 w-full md:w-1/2 xl:w-1/4 px-4 featured-package">
+    <a href="{{ $href }}" title="{{ .package.title }}">
+    <div class="rounded-xl shadow-sm border-2 border-violet-200 h-full">
+        <div class="p-8 h-full bg-violet-300 bg-opacity-5">
             <div class="flex flex-col items-center h-full">
-                <a href="{{ $href }}" class="flex-none inline-block ">
                     {{ partial "registry/package/icon.html" .package }}
-                </a>
-                <h3 class="flex-none mt-6 mb-4 text-gray-900 text-center no-anchor">
-                    <a href="{{ $href }}" title="{{ .package.title }}" class="hover:text-blue-600 hover:underline">
+                <h3 class="flex-none mt-6 mb-4 text-gray-900 text-center no-anchor font-medium title">
                         {{ .package.title }}
-                    </a>
                 </h3>
                 <div class="flex-grow flex flex-col items-center justify-end">
-                    <a href="{{ $href }}" class="hidden md:block whitespace-nowrap mb-4 text-base text-blue-600 font-semibold hover:underline">
-                        View package
-                    </a>
+
                     <div class="text-sm font-display text-gray-800 leading-relaxed">
                         <span title="Published on {{ time .package.updated_on | time.Format "Monday, Jan 2, 2006" }}">
                             {{ .package.version }}
@@ -26,4 +21,5 @@
             </div>
         </div>
     </div>
+    </a>
 </div>

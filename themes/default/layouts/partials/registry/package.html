@@ -17,25 +17,20 @@
     {{ $packageTypeName = "Component" }}
 {{ end }}
 
-<div class="package my-4 w-full lg:w-1/2 px-4">
-    <div class="rounded-xl shadow-lg border border-gray-200 h-full relative">
-        <div class="p-8" data-type="{{ $packageType }}" data-category="{{ $packageCategory }}">
+
+<div class="package my-1.5 w-full md:w-1/2 lg:w-1/3 px-3">
+    <a href="{{ $href }}" title="{{ .package.title }}">
+    <div class="rounded-xl shadow-md border border-gray-300 h-full relative">
+        <div class="p-6" data-type="{{ $packageType }}" data-category="{{ $packageCategory }}">
             <div class="flex flex-wrap">
                 <div class="flex w-full items-center justify-between mb-4">
-                    <a href="{{ $href }}" class="md:w-1/2">
                         {{ partial "registry/package/icon.html" .package }}
-                    </a>
-                    <a href="{{ $href }}" class="hidden md:block whitespace-nowrap ml-4 text-base text-blue-600 font-semibold hover:underline">
-                        View package
-                    </a>
                 </div>
                 <div class="w-full">
-                    <h3 class="text-gray-900 no-anchor">
-                        <a href="{{ $href }}" title="{{ .package.title }}" class="hover:text-blue-600 hover:underline">
+                    <h3 class="text-gray-900 no-anchor text-lg font-bold font-body title">
                             {{ .package.title }}
-                        </a>
                     </h3>
-                    <div class="text-sm font-display text-gray-800 leading-relaxed mb-2">
+                    <div class="text-xs text-gray-800 leading-relaxed">
                         {{ .package.version }} published on
                         <time>{{ time .package.updated_on | time.Format "Monday, Jan 2, 2006" }}</time>
                         by {{ .package.publisher }}
@@ -64,17 +59,9 @@
                             </pulumi-accordion>
                         {{ end }}
                     {{ end }}
-
-                    <!-- Fixed-height spacer accounts for the minimum space required by the tags. -->
-                    <div class="spacer h-14"></div>
-
-                    <!-- Tags are anchored to the bottom of the card. -->
-                    <ul class="package-tags mt-2 absolute bottom-8">
-                        <li class="package-tag-type" data-filter-group="type" data-filter-value="{{ $packageType }}">{{ $packageTypeName }}</li>
-                        <li class="package-tag-category" data-filter-group="category" data-filter-value="{{ $packageCategory }}">{{ $packageCategoryName }}</li>
-                    </ul>
                 </div>
             </div>
         </div>
     </div>
+    </a>
 </div>

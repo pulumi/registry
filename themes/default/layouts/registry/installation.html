@@ -1,21 +1,26 @@
 {{ define "main" }}
-    <div class="container mx-auto px-4 pb-8 mt-2">
+    {{ $directories := (split .Page.File "/")}}
+    {{ $packageName := index $directories 2 }}
+    {{ $packageHome := path.Join "registry/packages" $packageName }}
+<div class="flex flex-row container mx-auto px-4 pb-8 mt-4">
+    <div class="flex-col">
         {{ partial "registry/package/header.html" . }}
-
         <div class="lg:flex">
-            <div class="lg:w-8/12 max-w-3xl">
+            <div class="lg:w-12/12 max-w-3xl">
+                <h1 class="text-3xl mt-5">{{ with .GetPage $packageHome }}{{ .Title }}{{ end }}: Installation & Configuration</h1>
                 <section data-swiftype-index="true">
                     {{ .Content }}
                 </section>
             </div>
-            <div class="lg:w-1/12"></div>
-            <div class="lg:w-3/12 lg:pl-8">
-                <div class="sticky-sidebar">
-                    <div class="ml-2 hidden lg:block">
-                        {{ partial "registry/package/right-nav.html" . }}
-                    </div>
-                </div>
+        </div>
+    </div>
+    <div class="lg:w-1/12"></div>
+    <div class="lg:w-3/12 lg:pl-8 min-w-max">
+        <div class="sticky-sidebar">
+            <div class="ml-2 hidden lg:block">
+                {{ partial "registry/package/right-nav.html" . }}
             </div>
         </div>
     </div>
+</div>
 {{ end }}

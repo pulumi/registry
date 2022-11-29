@@ -5,7 +5,7 @@ go 1.16
 require (
 	github.com/pulumi/pulumi-hugo/themes/default v0.0.0-20221128161026-ee48da6ef50f // indirect
 	github.com/pulumi/registry/themes/default v0.0.0-20211011171710-45eb4e243ab7 // indirect
-	github.com/pulumi/theme v0.0.0-20221129220502-3cee4a9ec663
+	github.com/pulumi/theme v0.0.0-20221129233925-7ae0bb10123a
 )
 
 // The override is needed because this repo is currently private and module at themes/default

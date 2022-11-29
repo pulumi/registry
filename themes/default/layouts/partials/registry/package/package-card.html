@@ -1,0 +1,122 @@
+{{ $directories := (split .Page.File "/")}}
+{{ $packageName := index $directories 2 }}
+{{ $packageHome := path.Join "registry/packages" $packageName }}
+{{ $size := .Scratch.Get "size" }}
+{{ $mode := .Scratch.Get "mode" }}
+{{ if eq "compact" $size }}
+    <div id="package-card-compact-{{$mode}}" class="p-4 border rounded shadow-sm h-30 bg-gray-100 min-w-80  bg-white md:w-80 w-full package-card-compact">
+        <div class="card-collapsed flex items-center cursor-pointer">
+            <div class="flex max-w-sm">
+                {{ with (index $.Site.Data.registry.packages ($packageName)) }}
+                <div class="flex">
+                    {{ partial "registry/package/icon.html" . }}
+                </div>
+                {{ end }}
+            </div>
+            
+            {{ with (index $.Site.Data.registry.packages ($packageName)) }}
+            <div class="flex-grow text-left font-display text-xs mx-5 whitespace-nowrap">
+                last published {{ ((time .updated_on).Format "Jan 2") }}
+            </div>
+    
+            <div>
+                <i id="package-card-caret-{{$mode}}" class="fas fa-chevron-circle-down text-gray-300"></i>
+            </div>
+    
+            <div class="flex items-center hidden">
+                <i class="fab fa-github text-lg"></i>
+                <span class="text-blue-600 flex flex-wrap items-center">
+                    <a class="text-blue-600 underline font-display ml-2 mr-1.5" href="{{ .repo_url }}" target="_blank" rel="noopener noreferrer">{{ replaceRE `^.*.com/` "" .repo_url }}</a>
+                    <i class="fas fa-external-link-alt text-sm"></i>
+                </span>
+            </div>
+            {{ end }}
+        </div>
+        <div id="package-card-expanded-{{$mode}}" class="hidden">
+            {{ with (index $.Site.Data.registry.packages ($packageName)) }}
+                {{ if (eq $packageName "aws") }}
+                <div class="text-xs mt-4">
+                    <i class="fas fa-info-circle text-blue-700 mr-1 my-1"></i>
+                    <span>
+                        We recommend using the <a class="text-blue-600 underline" href="/registry/packages/aws-native/">AWS Native Provider</a> to provision AWS infrastructure
+                    </span>
+                </div>
+                {{ else if (eq $packageName "azure") }}
+                <div class="text-xs mt-4">
+                    <i class="fas fa-info-circle text-blue-700 mr-1 my-1"></i>
+                    <span>
+                        We recommend using the <a class="text-blue-600 underline" href="/registry/packages/azure-native/">Azure Native Provider</a> to provision Azure infrastructure
+                    </span>
+                </div>
+                {{ else if (eq $packageName "gcp") }}
+                <div class="text-xs mt-4">
+                    <i class="fas fa-info-circle text-blue-700 mr-1 my-1"></i>
+                    <span>
+                        We recommend using the <a class="text-blue-600 underline" href="/registry/packages/gcp-native/">Google Cloud Native Provider</a> to provision Google Cloud infrastructure
+                    </span>
+                </div>
+                {{ end }}
+                <div class="lg:flex mb-4 font-display text-xs mt-4">
+                    {{ .version }} published on {{ ((time .updated_on).Format "Monday, Jan 2, 2006") }} by {{ .publisher }}
+                </div>
+    
+                <div class="flex items-center">
+                    <i class="fab fa-github text-lg"></i>
+                    <span class="text-blue-600 flex flex-wrap items-center">
+                        <a class="text-blue-600 underline font-display ml-2 mr-1.5" href="{{ .repo_url }}" target="_blank" rel="noopener noreferrer">{{ replaceRE `^.*.com/` "" .repo_url }}</a>
+                        <i class="fas fa-external-link-alt text-sm"></i>
+                    </span>
+                </div>
+            {{ end }}
+        </div>
+    </div>
+{{ else }}
+    <div class="package-card">
+        <div class="lg:flex max-w-sm max-h-4">
+            {{ with (index $.Site.Data.registry.packages ($packageName)) }}
+            <div class="lg:flex max-h-4">
+                {{ partial "registry/package/icon.html" . }}
+            </div>
+            {{ end }}
+        </div>
+        
+
+        {{ with (index $.Site.Data.registry.packages ($packageName)) }}
+            {{ if (eq $packageName "aws") }}
+            <div class="text-xs mt-4">
+                <i class="fas fa-info-circle text-blue-700 mr-1 my-1"></i>
+                <span>
+                    We recommend using the <a class="text-blue-600 underline" href="/registry/packages/aws-native/">AWS Native Provider</a> to provision AWS infrastructure
+                </span>
+            </div>
+            {{ else if (eq $packageName "azure") }}
+            <div class="text-xs mt-4">
+                <i class="fas fa-info-circle text-blue-700 mr-1 my-1"></i>
+                <span>
+                    We recommend using the <a class="text-blue-600 underline" href="/registry/packages/azure-native/">Azure Native Provider</a> to provision Azure infrastructure
+                </span>
+            </div>
+            {{ else if (eq $packageName "gcp") }}
+            <div class="text-xs mt-4">
+                <i class="fas fa-info-circle text-blue-700 mr-1 my-1"></i>
+                <span>
+                    We recommend using the
+                    <a class="text-blue-600 underline" href="/registry/packages/google-native/">Google Cloud Native Provider</a>
+                    to provision Google Cloud infrastructure
+                </span>
+            </div>
+            {{ end }}
+            <div class="lg:flex mt-4 mb-4 font-display text-xs">
+                {{ .version }} published on {{ ((time .updated_on).Format "Monday, Jan 2, 2006") }} by {{ .publisher }}
+            </div>
+
+            <div class="flex items-center">
+                <i class="fab fa-github text-lg"></i>
+                <span class="text-blue-600 flex flex-wrap items-center">
+                    <a class="text-blue-600 underline font-display ml-2 mr-1.5" href="{{ .repo_url }}" target="_blank" rel="noopener noreferrer">{{ replaceRE `^.*.com/` "" .repo_url }}</a>
+                    <i class="fas fa-external-link-alt text-sm"></i>
+                </span>
+            </div>
+        {{ end }}
+    </div>
+{{ end }}

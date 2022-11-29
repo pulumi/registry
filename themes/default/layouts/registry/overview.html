@@ -8,8 +8,8 @@
                     <div class="lg:flex">
                         {{ partial "registry/package/overview/breadcrumb.html" . }}
                     </div>
-                    <h1 class="text-3xl mt-5">{{ .Params.title }}</h1>
                 {{ end }}
+                <h1 class="text-3xl mt-5">{{ .Params.title }}</h1>
 
                 <section data-swiftype-index="true">
                     {{ .Content }}

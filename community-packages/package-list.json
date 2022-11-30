@@ -1,6 +1,10 @@
 {
   "include": [
     {
+      "repoSlug": "koyeb/pulumi-koyeb",
+      "schemaFile": "provider/cmd/pulumi-resource-koyeb/schema.json"
+    },
+    {
       "repoSlug": "pulumiverse/pulumi-time",
       "schemaFile": "provider/cmd/pulumi-resource-time/schema.json"
     },

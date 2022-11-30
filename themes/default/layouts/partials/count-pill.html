@@ -1,3 +1,4 @@
-{{ $textColor := cond .selected "text-white" "text-violet-600" }}
+{{ $textColor := cond .selected "text-blue-600" "text-gray-600" }}
+{{ $borderColor := cond .selected "border-blue-600" "border-gray-600" }}
 {{ $backgroundColor := cond .selected "bg-violet-600" "" }}
-<span class="px-2 ml-2 rounded-full text-sm border border-violet-600 {{ $textColor }} {{ $backgroundColor }}">{{ .count }}</span>
+<span class="px-2 ml-2 rounded-full text-sm border bg-transparent font-normal {{ $textColor }} {{ $borderColor }}">{{ .count }}</span>

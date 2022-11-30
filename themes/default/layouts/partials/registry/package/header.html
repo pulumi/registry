@@ -10,11 +10,16 @@
     {{ with .GetPage $tutorialsPath }}{{ $guidesCount = len .Pages }}{{ end }}
 {{ end }}
 <div class="flex items-start">
-    
-    <div class="{{ if (eq $packageSection "api-docs") }} w-9/12 {{ else }} w-7/12 {{ end }} ">
-        <div class="mb-8 text-blue-600 font-display">
-            <span>&larr;</span>
-            <a href="{{ relref . "/registry" }}" class="hover:underline">All packages</a>
+    <div class="{{ if (eq $packageSection "api-docs") }} lg:w-9/12 {{ else }} lg:w-7/12 {{ end }} ">
+        <div class="flex">
+            <div class="flex-grow mb-8 text-blue-600 font-display">
+                <span>&larr;</span>
+                <a href="{{ relref . "/registry" }}" class="hover:underline">All packages</a>
+            </div>
+            <div class="lg:hidden block">
+                {{ .Scratch.Set "size" "compact" }}
+                {{ partial "registry/package/package-card.html" . }}
+            </div>
         </div>
 
         <!-- {{ with (index $.Site.Data.registry.packages ($packageName)) }}
@@ -78,7 +83,8 @@
                 </nav>
                 {{ end }}
     </div>
-    <div class="w-3/12 mt-2 pl-12">
+    <div class="w-3/12 mt-2 pl-12 hidden lg:block">
+        {{ .Scratch.Set "size" "lg" }}
         {{ partial "registry/package/package-card.html" . }}
     </div>
 </div>

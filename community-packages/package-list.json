@@ -147,6 +147,10 @@
     {
       "repoSlug": "kuraudo-io/pulumi-symbiosis",
       "schemaFile": "provider/cmd/pulumi-resource-symbiosis/schema.json"
+    },
+    {
+      "repoSlug": "astipkovits/pulumi-aviatrix",
+      "schemaFile": "provider/cmd/pulumi-resource-aviatrix/schema.json"
     }
   ]
 }

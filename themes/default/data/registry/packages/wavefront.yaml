@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-wavefront
 schema_file_path: provider/cmd/pulumi-resource-wavefront/schema.json
 title: Wavefront
-updated_on: 1648659923
-version: v1.1.1
+updated_on: 1669657115
+version: v1.2.0

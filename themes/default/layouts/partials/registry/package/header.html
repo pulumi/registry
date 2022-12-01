@@ -11,9 +11,8 @@
 {{ end }}
 
 <div class="container">
-    <div class="mb-8 text-blue-600 font-display">
-        <span>&larr;</span>
-        <a href="{{ relref . "/registry" }}" class="hover:underline">All packages</a>
+    <div class="lg:flex mb-6">
+        {{ partial "registry/package/how-to-guides/breadcrumb.html" . }}
     </div>
 
     {{ with (index $.Site.Data.registry.packages ($packageName)) }}

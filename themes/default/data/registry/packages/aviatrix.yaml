@@ -1,0 +1,14 @@
+category: Cloud
+component: false
+description: A Pulumi package for creating and managing Aviatrix cloud resources.
+featured: false
+logo_url: https://raw.githubusercontent.com/astipkovits/pulumi-aviatrix/main/aviatrix_logo.svg
+name: aviatrix
+native: false
+package_status: public_preview
+publisher: Aviatrix
+repo_url: https://github.com/astipkovits/pulumi-aviatrix
+schema_file_path: provider/cmd/pulumi-resource-aviatrix/schema.json
+title: Aviatrix
+updated_on: 1669751336
+version: v0.0.9

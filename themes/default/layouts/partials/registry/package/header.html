@@ -42,19 +42,19 @@
 
     {{ with .GetPage (path.Join "registry/packages" $packageName) }}
         <nav>
-            <div class="flex mb-8 font-display font-medium text-base text-gray-600">
+            <div class="flex mb-8 font-display font-medium text-base text-gray-800">
                 <div class="pb-3 border-b border-gray-300 flex">
-                <div class="{{ if or (eq $packageSection "_index") (eq $packageSection "version-guide") }} text-blue-600 bg-blue-100 font-bold rounded {{ end }} py-1.5 px-4 mr-2 md:mr-4 lg:mr-6">
+                <div class="{{ if or (eq $packageSection "_index") (eq $packageSection "version-guide") }} text-blue-600 bg-blue-100 rounded {{ end }} py-1.5 px-4 mr-2 md:mr-4 lg:mr-6 hover:text-blue-600">
                     <a class="flex items-center" href="{{ relref . .File.Dir }}"><i class="fas fa-file-alt pr-2.5 hidden sm:block"></i>Overview</a>
                 </div>
-                <div class="{{ if (eq $packageSection "installation-configuration") }} text-blue-600 bg-blue-100 font-bold rounded {{ end }} py-1.5 px-4  mx-2 md:mx-4 lg:mx-6">
+                <div class="{{ if (eq $packageSection "installation-configuration") }} text-blue-600 bg-blue-100 rounded {{ end }} py-1.5 px-4  mx-2 md:mx-4 lg:mx-6 hover:text-blue-600">
                     <a class="flex items-center" href="{{ relref . (path.Join .File.Dir "installation-configuration") }}">
                         <i class="fas fa-cog pr-2.5 hidden sm:block"></i>
                         <span class="lg:hidden">Install</span>
                         <span class="hidden lg:block">Installation &amp; Configuration</span>
                     </a>
                 </div>
-                <div class="{{ if (eq $packageSection "api-docs") }} text-blue-600 bg-blue-100 font-bold rounded {{ end }} py-1.5 px-4  mx-2 md:mx-4 lg:mx-6">
+                <div class="{{ if (eq $packageSection "api-docs") }} text-blue-600 bg-blue-100 rounded {{ end }} py-1.5 px-4  mx-2 md:mx-4 lg:mx-6 hover:text-blue-600">
                     <a class="flex items-center" href="{{ relref . (path.Join .File.Dir "api-docs") }}">
                         <i class="fas fa-book pr-2.5 hidden sm:block"></i>
                         <span class="lg:hidden">API</span>
@@ -64,14 +64,14 @@
 
                 {{/* Only show the How-to Guides tab if we have an index page for them. */}}
                 {{ if .GetPage (path.Join .File.Dir "how-to-guides") }}
-                    <div class="{{ if (eq $packageSection "how-to-guides") }} text-blue-600 bg-blue-100 font-bold rounded {{ end }} flex align-center py-1.5 px-4 ml-2 md:ml-4 lg:ml-6">
-                        <a class="flex items-center" href="{{ relref . (path.Join .File.Dir "how-to-guides") }}">
+                    <div class="{{ if (eq $packageSection "how-to-guides") }} text-blue-600 bg-blue-100 rounded {{ end }} flex align-center py-1.5 px-4 ml-2 md:ml-4 lg:ml-6 hover:text-blue-600">
+                        <a class="{{ if (eq $packageSection "how-to-guides") }} border-blue-600 {{ end }} flex items-center border-gray-800 hover:border-blue-600" href="{{ relref . (path.Join .File.Dir "how-to-guides") }}">
                             <i class="fas fa-question-circle pr-2.5 hidden sm:block"></i>
                             <span class="lg:hidden">Guides</span>
                             <span class="hidden lg:block">How-to Guides</span>
                             {{ if gt $guidesCount 0 }}
-                                <span class="hidden md:inline">
-                                    {{ partial "count-pill" (dict "count" $guidesCount "selected" (eq $packageSection "how-to-guides")) }}
+                                <span class="hidden md:inline" style="border-color: inherit">
+                                    <span class="px-2 ml-2 rounded-full text-sm border bg-transparent font-normal" style="border-color: inherit">{{ $guidesCount }}</span>
                                 </span>
                             {{ end }}
                         </a>

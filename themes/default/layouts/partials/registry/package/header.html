@@ -12,7 +12,7 @@
 
 <div class="container">
     <div class="lg:flex mb-6">
-        {{ partial "registry/package/how-to-guides/breadcrumb.html" . }}
+        {{ partial "registry/package/breadcrumb.html" . }}
     </div>
 
     {{ with (index $.Site.Data.registry.packages ($packageName)) }}

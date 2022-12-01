@@ -3,7 +3,7 @@
 {{ $packageHome := path.Join "registry/packages" $packageName }}
 {{ $size := .Scratch.Get "size" }}
 {{ if eq "compact" $size }}
-    <div class="flex items-center p-4 border rounded-xl shadow-sm h-14">
+    <div class="flex items-center p-4 border rounded-xl shadow-sm h-14 bg-gray-100 min-w-80">
         <div class="flex max-w-sm">
             {{ with (index $.Site.Data.registry.packages ($packageName)) }}
             <div class="flex">
@@ -14,12 +14,12 @@
         
 
         {{ with (index $.Site.Data.registry.packages ($packageName)) }}
-        <div class="flex-grow text-center font-display text-xs">
-            last published {{ ((time .updated_on).Format "Jan 2") }} by {{ .publisher }}
+        <div class="flex-grow text-center font-display text-xs mx-5">
+            last published {{ ((time .updated_on).Format "Jan 2") }}
         </div>
 
         <div>
-            <i class="fas fa-caret-down"></i>
+            <i class="fas fa-chevron-circle-down text-gray-300"></i>
         </div>
 
         <div class="flex items-center hidden">

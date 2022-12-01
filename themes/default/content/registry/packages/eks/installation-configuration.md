@@ -1,5 +1,5 @@
 ---
-title: Pulumi Amazon EKS Setup
+title: Pulumi Amazon EKS Installation & Configuration
 meta_desc: Information on how to set up credentials to use the Amazon EKS component.
 layout: installation
 ---

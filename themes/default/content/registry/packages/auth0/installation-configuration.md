@@ -1,5 +1,5 @@
 ---
-title: Auth0 Setup
+title: Auth0 Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi Auth0 Provider.
 layout: installation
 ---

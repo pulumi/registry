@@ -1,5 +1,5 @@
 ---
-title: Grafana Setup
+title: Grafana Installation & Configuration
 meta_desc: Information on how to install the Grafana provider.
 layout: installation
 ---
@@ -23,7 +23,7 @@ pulumi plugin install resource grafana <version>
 
 Replace the version string with your desired version.
 
-## Setup
+## Installation & Configuration
 
 To provision resources with the Pulumi Grafana provider, you need to have Grafana credentials. 
 

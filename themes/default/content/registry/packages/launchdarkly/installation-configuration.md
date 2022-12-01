@@ -1,5 +1,5 @@
 ---
-title: Launch Darkly Setup
+title: Launch Darkly Installation & Configuration
 meta_desc: Information on how to install the Launch Darkly provider.
 layout: installation
 ---
@@ -23,7 +23,7 @@ pulumi plugin install resource launchdarkly <version>
 
 Replace the version string with your desired version.
 
-## Setup
+## Installation & Configuration
 
 To provision resources with the Pulumi Launch Darkly provider, you need to have Launch Darkly credentials. Launch Darkly maintains documentation on how to create API keys [here](https://docs.launchdarkly.com/home/account-security/api-access-tokens)
 

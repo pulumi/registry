@@ -1,5 +1,5 @@
 ---
-title: Packet Setup
+title: Packet Installation & Configuration
 meta_desc: Provides an overview of how to setup the Packet SDK to manage and provision resources.
 layout: installation
 ---

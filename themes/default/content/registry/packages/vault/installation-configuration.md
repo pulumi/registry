@@ -1,5 +1,5 @@
 ---
-title: HashiCorp Vault Setup
+title: HashiCorp Vault Installation & Configuration
 meta_desc: Provides an overview on how to configure the Pulumi Vault Provider.
 layout: installation
 ---

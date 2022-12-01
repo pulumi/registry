@@ -1,5 +1,5 @@
 ---
-title: Oracle Cloud Infrastructure Setup
+title: Oracle Cloud Infrastructure Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Oracle Cloud Infrastructure Provider for Pulumi.
 layout: installation
 ---

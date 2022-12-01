@@ -1,5 +1,5 @@
 ---
-title: HashiCorp Nomad Setup
+title: HashiCorp Nomad Installation & Configuration
 meta_desc: Provides an overview on how to configure the Pulumi Nomad Provider.
 layout: installation
 ---

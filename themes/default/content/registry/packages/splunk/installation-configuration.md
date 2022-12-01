@@ -1,5 +1,5 @@
 ---
-title: Splunk Setup
+title: Splunk Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi Splunk Provider.
 layout: installation
 ---

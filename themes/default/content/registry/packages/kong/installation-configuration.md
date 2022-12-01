@@ -1,5 +1,5 @@
 ---
-title: Kong Setup
+title: Kong Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi Kong Provider.
 layout: installation
 ---

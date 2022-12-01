@@ -1,5 +1,5 @@
 ---
-title: Linode SDK Setup
+title: Linode SDK Installation & Configuration
 meta_desc: Provides an overview on how to setup the Linode SDK for Pulumi.
 layout: installation
 ---

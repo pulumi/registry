@@ -1,5 +1,5 @@
 ---
-title: GitHub Setup
+title: GitHub Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi GitHub Provider.
 layout: installation
 ---

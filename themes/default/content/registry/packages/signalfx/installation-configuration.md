@@ -1,5 +1,5 @@
 ---
-title: SignalFx Setup
+title: SignalFx Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi SignalFx Provider.
 layout: installation
 ---

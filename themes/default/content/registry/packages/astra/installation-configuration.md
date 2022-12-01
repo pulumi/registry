@@ -1,5 +1,5 @@
 ---
-title: Astra Setup
+title: Astra Installation & Configuration
 meta_desc: Information on how to install the DataStax Astra provider.
 layout: installation
 ---
@@ -13,7 +13,7 @@ The Pulumi Astra provider is available as a package in all Pulumi languages:
 * Go: [`github.com/pulumiverse/pulumi-astra/sdk/go/astra`](https://pkg.go.dev/github.com/pulumiverse/pulumi-astra/sdk)
 * .NET: [`Pulumiverse.Astra`](https://www.nuget.org/packages/Pulumiverse.Astra)
 
-## Setup
+## Installation & Configuration
 
 To provision resources with the Pulumi Astra provider, you need to have Astra token. Astra maintains documentation on how to [create API tokens](https://docs.datastax.com/en/astra/docs/manage/org/managing-org.html#_manage_application_tokens)
 

@@ -1,5 +1,5 @@
 ---
-title: Yandex Cloud Setup
+title: Yandex Cloud Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi Yandex Cloud Provider.
 layout: installation
 ---

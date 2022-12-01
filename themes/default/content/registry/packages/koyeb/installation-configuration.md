@@ -1,5 +1,5 @@
 ---
-title: Koyeb Setup
+title: Koyeb Installation & Configuration
 meta_desc: Information on how to install the Koyeb provider.
 layout: installation
 ---
@@ -12,7 +12,7 @@ The Pulumi Koyeb provider is available as a package in all Pulumi languages:
 * Go: [`github.com/koyeb/pulumi-koyeb/sdk/go/koyeb`](https://pkg.go.dev/github.com/koyeb/pulumi-koyeb/sdk)
 * Python: [`pulumi_koyeb`](https://pypi.org/project/pulumi-koyeb/)
 
-## Setup
+## Installation & Configuration
 
 To provision resources with the Pulumi Koyeb provider, you need a Koyeb API access token to allow Pulumi to authenticate to Koyeb. Koyeb API access token credentials can be obtained from the [Koyeb Control Panel](https://app.koyeb.com/account/api).
 

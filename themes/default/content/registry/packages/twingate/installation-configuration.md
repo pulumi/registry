@@ -1,5 +1,5 @@
 ---
-title: Twingate Setup
+title: Twingate Installation & Configuration
 meta_desc: Information on how to install the Twingate provider.
 layout: installation
 ---
@@ -23,7 +23,7 @@ pulumi plugin install resource twingate v0.0.31 --server https://github.com/Twin
 
 Replace the version string with your desired version.
 
-## Setup
+## Installation & Configuration
 
 To provision resources with the Pulumi Twingate provider, you need to have Twingate credentials.
 

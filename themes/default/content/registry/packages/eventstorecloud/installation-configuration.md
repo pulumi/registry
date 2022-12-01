@@ -1,5 +1,5 @@
 ---
-title: Event Store Cloud Setup
+title: Event Store Cloud Installation & Configuration
 meta_desc: How to set up credentials to use the Event Store cloud provider for Pulumi.
 layout: installation
 ---
@@ -12,7 +12,7 @@ The Event Store Cloud (ESC) provider is available as a package in all Pulumi lan
 * Go: [`github.com/EventStore/pulumi-eventstorecloud/sdk/go/eventstorecloud`](https://github.com/EventStore/pulumi-eventstorecloud)
 * .NET: [`Pulumi.EventStoreCloud`](https://www.nuget.org/packages/Pulumi.EventStoreCloud)
 
-## Setup
+## Installation & Configuration
 
 ### Download the provider
 

@@ -1,5 +1,5 @@
 ---
-title: Kubernetes Setup
+title: Kubernetes Installation & Configuration
 meta_desc: Provides an overview on how to setup the Kubernetes Provider for Pulumi.
 layout: installation
 ---
@@ -46,7 +46,7 @@ following steps.
 1. Provision a Kubernetes cluster. For a new managed Kubernetes cluster, check out the [guides.]({{< relref "/registry/packages/kubernetes/how-to-guides" >}})
 1. Download [`kubectl`](https://kubernetes.io/docs/tasks/tools/install-kubectl/).
 
-## Setup
+## Installation & Configuration
 
 By default, Pulumi will look for a kubeconfig file in the following locations,
 just like `kubectl`:

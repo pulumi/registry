@@ -1,5 +1,5 @@
 ---
-title: TLS Setup
+title: TLS Installation & Configuration
 meta_desc: Provides an overview on how to setup the TLS Provider for Pulumi.
 layout: installation
 ---

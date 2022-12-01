@@ -1,5 +1,5 @@
 ---
-title: OpenStack Setup
+title: OpenStack Installation & Configuration
 meta_desc: Provides an overview on how to set up the Pulumi OpenStack Provider with proper credentials.
 layout: installation
 ---

@@ -1,5 +1,5 @@
 ---
-title: Slack Setup
+title: Slack Installation & Configuration
 meta_desc: Installation and configuration for the Pulumi Slack provider.
 layout: installation
 ---
@@ -13,7 +13,7 @@ The Pulumi Slack provider is available as a package in all Pulumi languages:
 * Go: [`github.com/pulumi/pulumi-slack/sdk/go/slack`](https://github.com/pulumi/pulumi-slack/tree/main/sdk/go/slack)
 * .NET: [`Pulumi.Slack`](https://www.nuget.org/packages/Pulumi.Slack)
 
-## Setup
+## Installation & Configuration
 
 The Slack provider must be configured with a token to manage resources in a Slack Workspace. Documentation about how to create an app and token for your workspace here [here](https://api.slack.com/apps)
 

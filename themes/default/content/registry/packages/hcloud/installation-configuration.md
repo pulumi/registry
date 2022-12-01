@@ -1,5 +1,5 @@
 ---
-title: Hetzner Cloud Setup
+title: Hetzner Cloud Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi Hetzner Cloud Provider.
 layout: installation
 ---

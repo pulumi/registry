@@ -1,5 +1,5 @@
 ---
-title: DNSimple Setup
+title: DNSimple Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi DNSimple Provider.
 layout: installation
 ---

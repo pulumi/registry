@@ -1,5 +1,5 @@
 ---
-title: Gandi Setup
+title: Gandi Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi Gandi Provider.
 layout: installation
 ---

@@ -1,5 +1,5 @@
 ---
-title: Cloudinit Setup
+title: Cloudinit Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi cloud-init Provider.
 layout: installation
 ---

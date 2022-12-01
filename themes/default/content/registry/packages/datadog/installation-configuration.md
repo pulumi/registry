@@ -1,5 +1,5 @@
 ---
-title: Datadog Setup
+title: Datadog Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi Datadog Provider.
 layout: installation
 ---

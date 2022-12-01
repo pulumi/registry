@@ -1,5 +1,5 @@
 ---
-title: Pulumi Service Provider Setup
+title: Pulumi Service Provider Installation & Configuration
 meta_desc: Information on how to install the Pulumi Service provider.
 layout: installation
 ---
@@ -13,7 +13,7 @@ The Pulumi Service provider is available as a package in all Pulumi languages:
 * Go: [`github.com/pulumi/pulumi-pulumiservice/sdk/go/pulumiservice`](https://pkg.go.dev/github.com/pulumi/pulumi-pulumiservice/sdk/go/pulumiservice)
 * .NET: [`Pulumi.PulumiService`](https://www.nuget.org/packages/Pulumi.PulumiService)
 
-## Setup
+## Installation & Configuration
 
 To provision resources with the Pulumi Service provider, you need to have Pulumi Service credentials. Pulumi Service maintains documentation on how to create access tokens [here](https://www.pulumi.com/docs/intro/pulumi-service/accounts/#access-tokens).
 {{% notes "info" %}}

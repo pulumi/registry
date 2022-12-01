@@ -1,5 +1,5 @@
 ---
-title: Fastly Setup
+title: Fastly Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi Fastly Provider.
 layout: installation
 ---

@@ -1,5 +1,5 @@
 ---
-title: Harness Setup
+title: Harness Installation & Configuration
 meta_desc: Information on how to install the Harness provider.
 layout: installation
 ---
@@ -23,7 +23,7 @@ pulumi plugin install resource harness <version>
 
 Replace the version string with your desired version.
 
-## Setup
+## Installation & Configuration
 
 To provision resources with the Pulumi Harness provider, you need to have Harness credentials. Harness maintains documentation on how to create API keys [here](https://docs.harness.io/article/smloyragsm-api-keys)
 

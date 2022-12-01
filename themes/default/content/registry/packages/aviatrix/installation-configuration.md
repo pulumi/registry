@@ -1,5 +1,5 @@
 ---
-title: Aviatrix Provider Setup
+title: Aviatrix Provider Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi Aviatrix Provider.
 layout: installation
 ---

@@ -1,5 +1,5 @@
 ---
-title: Scaleway Setup
+title: Scaleway Installation & Configuration
 meta_desc: Information on how to install the Scaleway provider.
 layout: installation
 ---
@@ -23,7 +23,7 @@ pulumi plugin install resource scaleway v0.1.7
 
 Replace the version string with your desired version.
 
-## Setup
+## Installation & Configuration
 
 To provision resources with the Pulumi Scaleway provider, you need to have Scaleway credentials. Scaleway maintains documentation on how to create API keys [here](https://www.scaleway.com/en/docs/console/my-project/how-to/generate-api-key/)
 

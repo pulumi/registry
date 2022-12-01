@@ -1,5 +1,5 @@
 ---
-title: Dynatrace Setup
+title: Dynatrace Installation & Configuration
 meta_desc: Information on how to install the Dynatrace provider.
 layout: installation
 ---
@@ -23,7 +23,7 @@ pulumi plugin install resource dynatrace <version>
 
 Replace the version string with your desired version.
 
-## Setup
+## Installation & Configuration
 
 To provision resources with the Pulumi Dynatrace provider, you need to have Dynatrace credentials. 
 

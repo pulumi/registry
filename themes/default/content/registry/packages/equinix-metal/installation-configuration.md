@@ -1,5 +1,5 @@
 ---
-title: Equinix Metal Setup
+title: Equinix Metal Installation & Configuration
 meta_desc: Provides an overview of how to setup the Equinix Metal SDK to manage and provision resources.
 layout: installation
 ---

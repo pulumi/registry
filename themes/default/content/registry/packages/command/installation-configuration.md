@@ -1,5 +1,5 @@
 ---
-title: Command (preview) Setup
+title: Command (preview) Installation & Configuration
 meta_desc: Information on how to install the Pulumi Command provider.
 layout: installation
 ---

@@ -1,5 +1,5 @@
 ---
-title: Wavefront Setup
+title: Wavefront Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi Wavefront Provider.
 layout: installation
 ---

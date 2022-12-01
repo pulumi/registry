@@ -1,5 +1,5 @@
 ---
-title: RabbitMQ Setup
+title: RabbitMQ Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi RabbitMQ Provider.
 layout: installation
 ---

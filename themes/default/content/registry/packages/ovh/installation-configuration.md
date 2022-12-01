@@ -1,5 +1,5 @@
 ---
-title: Ovh Setup
+title: Ovh Installation & Configuration
 meta_desc: Information on how to install the Pulumi Ovh provider.
 layout: installation
 ---

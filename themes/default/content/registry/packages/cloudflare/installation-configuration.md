@@ -1,5 +1,5 @@
 ---
-title: Cloudflare Setup
+title: Cloudflare Installation & Configuration
 meta_desc: Provides an overview on how to configure the Pulumi Cloudflare Provider.
 layout: installation
 ---

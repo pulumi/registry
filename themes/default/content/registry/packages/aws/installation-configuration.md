@@ -1,5 +1,5 @@
 ---
-title: AWS Classic Setup
+title: AWS Classic Installation & Configuration
 meta_desc: How to set up credentials to use the Pulumi AWS Classic Provider and choose configuration options to tailor the provider to suit your use case.
 layout: installation
 ---

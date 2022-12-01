@@ -1,5 +1,5 @@
 ---
-title: New Relic Setup
+title: New Relic Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi New Relic Provider.
 layout: installation
 ---

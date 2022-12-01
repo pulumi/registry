@@ -1,5 +1,5 @@
 ---
-title: Setup Service Account
+title: Installation & Configuration Service Account
 meta_desc: Provides an overview of how set up a Google Cloud Platform Service Account
            with Pulumi.
 ---

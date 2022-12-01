@@ -1,5 +1,5 @@
 ---
-title: GitLab Setup
+title: GitLab Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi GitLab Provider.
 layout: installation
 ---

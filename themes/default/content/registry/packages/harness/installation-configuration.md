@@ -1,5 +1,5 @@
 ---
-title: Harness Setup
+title: Harness Installation & Configuration
 meta_desc: Information on how to install the Harness provider.
 layout: installation
 ---

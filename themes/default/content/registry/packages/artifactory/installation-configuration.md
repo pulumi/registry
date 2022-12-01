@@ -1,5 +1,5 @@
 ---
-title: Artifactory Setup
+title: Artifactory Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi Artifactory Provider.
 layout: installation
 ---

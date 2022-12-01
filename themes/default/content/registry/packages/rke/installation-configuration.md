@@ -1,5 +1,5 @@
 ---
-title: RKE Setup
+title: RKE Installation & Configuration
 meta_desc: Provides an overview on how to setup the RKE Provider for Pulumi.
 layout: installation
 ---

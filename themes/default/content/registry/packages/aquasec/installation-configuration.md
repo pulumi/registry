@@ -1,5 +1,5 @@
 ---
-title: Aquasec Setup
+title: Aquasec Installation & Configuration
 meta_desc: Information on how to install the Aquasec provider.
 layout: installation
 ---

@@ -1,5 +1,5 @@
 ---
-title: Venafi Setup
+title: Venafi Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi Venafi Provider.
 layout: installation
 ---

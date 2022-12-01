@@ -1,5 +1,5 @@
 ---
-title: HashiCorp Consul Setup
+title: HashiCorp Consul Installation & Configuration
 meta_desc: Provides an overview on how to configure the Pulumi Consul Provider.
 layout: installation
 ---

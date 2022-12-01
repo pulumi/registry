@@ -1,5 +1,5 @@
 ---
-title: AWSx Setup
+title: AWSx Installation & Configuration
 meta_desc: How to set up credentials to use the Pulumi AWSx Component library and choose configuration options to tailor the provider to suit your use case.
 layout: installation
 ---

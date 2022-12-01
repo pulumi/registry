@@ -1,5 +1,5 @@
 ---
-title: MongoDB Atlas Setup
+title: MongoDB Atlas Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi MongoDB Atlas Provider.
 layout: installation
 ---

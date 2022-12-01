@@ -1,5 +1,5 @@
 ---
-title: F5 BIG-IP Setup
+title: F5 BIG-IP Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi F5 BIG-IP Provider.
 layout: installation
 ---

@@ -1,5 +1,5 @@
 ---
-title: Dynatrace Setup
+title: Dynatrace Installation & Configuration
 meta_desc: Information on how to install the Dynatrace provider.
 layout: installation
 ---

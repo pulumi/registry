@@ -1,5 +1,5 @@
 ---
-title: ElasticCloud Setup
+title: ElasticCloud Installation & Configuration
 meta_desc: Provides an overview on how to configure the Pulumi ElasticCloud Provider.
 layout: installation
 ---

@@ -1,5 +1,5 @@
 ---
-title: Slack Setup
+title: Slack Installation & Configuration
 meta_desc: Installation and configuration for the Pulumi Slack provider.
 layout: installation
 ---

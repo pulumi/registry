@@ -1,5 +1,5 @@
 ---
-title: Launch Darkly Setup
+title: Launch Darkly Installation & Configuration
 meta_desc: Information on how to install the Launch Darkly provider.
 layout: installation
 ---

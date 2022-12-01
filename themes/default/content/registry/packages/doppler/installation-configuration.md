@@ -1,5 +1,5 @@
 ---
-title: Doppler Setup
+title: Doppler Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi Doppler Provider.
 layout: installation
 ---

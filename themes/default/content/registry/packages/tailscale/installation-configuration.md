@@ -1,5 +1,5 @@
 ---
-title: Tailscale Setup
+title: Tailscale Installation & Configuration
 meta_desc: Provides an overview on how to configure the Pulumi Tailscale Provider.
 layout: installation
 ---

@@ -1,5 +1,5 @@
 ---
-title: Rancher2 Setup
+title: Rancher2 Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi Rancher2 Provider.
 layout: installation
 ---

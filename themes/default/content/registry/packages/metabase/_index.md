@@ -92,7 +92,7 @@ $ export AWS_SECRET_ACCESS_KEY=<YOUR_SECRET_ACCESS_KEY>
 {{% /choosable %}}
 {{< /chooser >}}
 
-For additional information on setting and using AWS credentials, see [AWS Setup]({{< relref "/registry/packages/aws/installation-configuration" >}}).
+For additional information on setting and using AWS credentials, see [AWS Installation & Configuration]({{< relref "/registry/packages/aws/installation-configuration" >}}).
 
 Next, you'll create a new Pulumi project.
 

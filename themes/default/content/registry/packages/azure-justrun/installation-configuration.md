@@ -1,5 +1,5 @@
 ---
-title: Azure Justrun Setup
+title: Azure Justrun Installation & Configuration
 meta_desc: Information on how to install and use the Pulumi Azure Justrun package.
 layout: installation
 ---

@@ -1,5 +1,5 @@
 ---
-title: Kubernetes Setup
+title: Kubernetes Installation & Configuration
 meta_desc: Provides an overview on how to setup the Kubernetes Provider for Pulumi.
 layout: installation
 ---

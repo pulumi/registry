@@ -1,5 +1,5 @@
 ---
-title: NS1 Setup
+title: NS1 Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi NS1 Provider.
 layout: installation
 ---

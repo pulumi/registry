@@ -1,5 +1,5 @@
 ---
-title: Alibaba Cloud Setup
+title: Alibaba Cloud Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi Alibaba Cloud Provider.
 layout: installation
 ---

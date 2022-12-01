@@ -1,5 +1,5 @@
 ---
-title: Grafana Setup
+title: Grafana Installation & Configuration
 meta_desc: Information on how to install the Grafana provider.
 layout: installation
 ---

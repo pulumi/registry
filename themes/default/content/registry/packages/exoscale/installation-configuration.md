@@ -1,5 +1,5 @@
 ---
-title: Exoscale Setup
+title: Exoscale Installation & Configuration
 meta_desc: Information on how to install the Exoscale provider.
 layout: installation
 ---

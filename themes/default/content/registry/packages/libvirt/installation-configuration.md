@@ -1,5 +1,5 @@
 ---
-title: Libvirt Setup
+title: Libvirt Installation & Configuration
 meta_desc: Provides an overview on how to setup the libvert Provider for Pulumi.
 layout: installation
 ---

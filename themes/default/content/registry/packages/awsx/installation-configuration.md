@@ -22,7 +22,7 @@ The AWSx provider is available as a package in all Pulumi languages:
 * Go: [`github.com/pulumi/pulumi-awsx/sdk/go/awsx`](https://github.com/pulumi/pulumi-awsx)
 * .NET: [`Pulumi.Awsx`](https://www.nuget.org/packages/Pulumi.Awsx)
 
-## Installation & Configuration
+## Setup
 
 To provision resources with the Pulumi AWSx provider, you need to have AWS credentials. You can use the instructions on if you plan to use AWS credentials from a shared credentials file (which the AWS CLI usually manages for you) or from an environment variable. For other credential options, see the [AWS documentation](https://docs.aws.amazon.com/sdk-for-go/v1/developer-guide/configuring-sdk.html).
 

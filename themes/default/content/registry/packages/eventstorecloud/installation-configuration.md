@@ -12,7 +12,7 @@ The Event Store Cloud (ESC) provider is available as a package in all Pulumi lan
 * Go: [`github.com/EventStore/pulumi-eventstorecloud/sdk/go/eventstorecloud`](https://github.com/EventStore/pulumi-eventstorecloud)
 * .NET: [`Pulumi.EventStoreCloud`](https://www.nuget.org/packages/Pulumi.EventStoreCloud)
 
-## Installation & Configuration
+## Setup
 
 ### Download the provider
 

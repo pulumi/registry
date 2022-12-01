@@ -13,7 +13,7 @@ The Pulumiverse Unifi provider is available as a package in all Pulumi languages
 * Go: [`github.com/pulumiverse/pulumi-unifi/sdk/go/unifi`](https://pkg.go.dev/github.com/pulumiverse/pulumi-unifi/sdk)
 * .NET: [`Pulumiverse.Unifi`](https://www.nuget.org/packages/Pulumiverse.Unifi)
 
-## Installation & Configuration
+## Setup
 
 To provision resources with the Pulumi Unifi provider, you need to have correct endpoint configuration towards your Unifi controller.
 

@@ -12,7 +12,7 @@ The Pulumi Buildkite provider is available as a package in the following Pulumi 
 * Python: [`pulumi_buildkite`](https://pypi.org/project/pulumi-buildkite/)
 * Go: [`github.com/graphl-security/pulumi-buildkite/sdk`](https://pkg.go.dev/github.com/grapl-security/pulumi-buildkite/sdk)
 
-## Installation & Configuration
+## Setup
 
 To provision resources with the Pulumi Buildkite provider, you need to have
 Buildkite credentials.

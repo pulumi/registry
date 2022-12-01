@@ -13,7 +13,7 @@ The Pulumi Sentry provider is available as a package in all Pulumi languages:
 * Go: [`github.com/pulumiverse/pulumi-sentry/sdk/go/sentry`](https://pkg.go.dev/github.com/pulumiverse/pulumi-sentry/sdk)
 * .NET: [`Pulumiverse.Sentry`](https://www.nuget.org/packages/Pulumiverse.Sentry)
 
-## Installation & Configuration
+## Setup
 
 To provision resources with the Pulumi Sentry provider, you need to have a Sentry Auth token. 
 Sentry maintains documentation on how to [create auth tokens](https://docs.sentry.io/api/auth/#auth-tokens).

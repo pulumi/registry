@@ -13,7 +13,7 @@ The Pulumi Aquasec provider is available as a package in all Pulumi languages:
 * Go: [`github.com/pulumiverse/pulumi-aquasec/sdk/go/aquasec`](https://pkg.go.dev/github.com/pulumiverse/pulumi-aquasec/sdk)
 * .NET: [`Pulumiverse.Aquasec`](https://www.nuget.org/packages/Pulumiverse.Aquasec)
 
-## Installation & Configuration
+## Setup
 
 To provision resources with the Pulumi Aquasec provider, you need to provide the `username`, `password` and `aqua_url`. 
 

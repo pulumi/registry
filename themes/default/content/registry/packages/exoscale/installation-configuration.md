@@ -13,7 +13,7 @@ The Pulumi Exoscale provider is available as a package in all Pulumi languages:
 * Go: [`github.com/pulumiverse/pulumi-exoscale/sdk/go/exoscale`](https://pkg.go.dev/github.com/pulumiverse/pulumi-exoscale/sdk)
 * .NET: [`Pulumiverse.Exoscale`](https://www.nuget.org/packages/Pulumiverse.Exoscale)
 
-## Installation & Configuration
+## Setup
 
 To provision resources with the Pulumi Exoscale provider, you need to provide the `key` and `secret` (optional `timeout`). 
 

@@ -13,7 +13,7 @@ The Kuraudo.io Symbiosis provider is available as a package in all Pulumi langua
 * Go: [`github.com/kuraudo-io/pulumi-symbiosis/sdk/go/unifi`](https://pkg.go.dev/github.com/kuraudo-io/pulumi-symbiosis/sdk/go/symbiosis)
 * .NET: [`Kuraudo.Symbiosis`](https://www.nuget.org/packages/Kuraudo.Symbiosis)
 
-## Installation & Configuration
+## Setup
 
 To provision resources with the Pulumi Symbiosis provider, you need to have an API key from Symbiosis. You can generate this in the [api keys](https://app.symbiosis.host/api-keys) tab in the Symbiosis console.
 

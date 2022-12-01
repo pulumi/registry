@@ -23,7 +23,7 @@ pulumi plugin install resource launchdarkly <version>
 
 Replace the version string with your desired version.
 
-## Installation & Configuration
+## Setup
 
 To provision resources with the Pulumi Launch Darkly provider, you need to have Launch Darkly credentials. Launch Darkly maintains documentation on how to create API keys [here](https://docs.launchdarkly.com/home/account-security/api-access-tokens)
 

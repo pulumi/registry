@@ -23,7 +23,7 @@ pulumi plugin install resource grafana <version>
 
 Replace the version string with your desired version.
 
-## Installation & Configuration
+## Setup
 
 To provision resources with the Pulumi Grafana provider, you need to have Grafana credentials. 
 

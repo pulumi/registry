@@ -20,7 +20,7 @@ The Upstash provider can be installed using the `pulumi plugin` command.
 pulumi plugin install resource upstash --server https://github.com/upstash/upstash-pulumi-provider/releases/download/v0.0.20
 ```
 
-## Installation & Configuration
+## Setup
 
 To provision resources with the Pulumi Upstash provider, you need to have Upstash credentials. Upstash maintains documentation on how to create API keys [here](https://docs.upstash.com/redis/account/developerapi).
 

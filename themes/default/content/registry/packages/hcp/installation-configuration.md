@@ -12,7 +12,7 @@ The Pulumi HCP provider is available as a package in the following Pulumi langua
 * Python: [`pulumi_hcp`](https://pypi.org/project/pulumi-hcp/)
 * Go: [`github.com/graphl-security/pulumi-hcp/sdk`](https://pkg.go.dev/github.com/grapl-security/pulumi-hcp/sdk)
 
-## Installation & Configuration
+## Setup
 
 To provision resources with the Pulumi HCP provider, you need to have
 HCP credentials.

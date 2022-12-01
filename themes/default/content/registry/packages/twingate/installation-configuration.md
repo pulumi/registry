@@ -23,7 +23,7 @@ pulumi plugin install resource twingate v0.0.31 --server https://github.com/Twin
 
 Replace the version string with your desired version.
 
-## Installation & Configuration
+## Setup
 
 To provision resources with the Pulumi Twingate provider, you need to have Twingate credentials.
 

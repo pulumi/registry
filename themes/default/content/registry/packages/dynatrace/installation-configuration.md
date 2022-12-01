@@ -23,7 +23,7 @@ pulumi plugin install resource dynatrace <version>
 
 Replace the version string with your desired version.
 
-## Installation & Configuration
+## Setup
 
 To provision resources with the Pulumi Dynatrace provider, you need to have Dynatrace credentials. 
 

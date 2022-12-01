@@ -12,7 +12,6 @@
             {{ end }}
         </div>
         
-
         {{ with (index $.Site.Data.registry.packages ($packageName)) }}
         <div class="flex-grow text-center font-display text-xs mx-5">
             last published {{ ((time .updated_on).Format "Jan 2") }}

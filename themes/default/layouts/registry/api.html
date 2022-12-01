@@ -1,10 +1,10 @@
 
 {{ define "main" }}
-    <div class="container mx-auto px-4 pb-8 mt-2">
+<div class="container flex flex-row">
+    <div class="flex-col mx-auto px-4 pb-8 mt-2">
         {{ partial "registry/package/header.html" . }}
-
         <div class="lg:flex">
-            <div class="w-full lg:w-9/12 xxl:w-6/12">
+            <div class="lg:w-9/12 xxl:w-6/12">
                 {{ if not (in .Page.File "api-docs/_index.md") }}
                     <div class="lg:flex mb-6">
                         {{ partial "registry/package/how-to-guides/breadcrumb.html" . }}
@@ -22,15 +22,6 @@
                     {{ .Content }}
                 </section>
             </div>
-
-            <div class="xxl:w-3/12 xxl:pl-8">
-                <div class="sticky-sidebar">
-                    <div class="ml-2 hidden xxl:block">
-                        {{ partial "registry/package/right-nav.html" . }}
-                    </div>
-                </div>
-            </div>
-
             <div class="w-3/12 pr-8 mb-2 pt-8 lg:order-first lg:pt-0 lg:mt-0">
                 <div class="sticky-sidebar left-nav">
                     <div class="hidden lg:block mb-6">
@@ -43,4 +34,12 @@
             </div>
         </div>
     </div>
+    <div class="lg:w-3/12 lg:pl-8">
+        <div class="sticky-sidebar">
+            <div class="ml-2 hidden lg:block">
+                {{ partial "registry/package/right-nav.html" . }}
+            </div>
+        </div>
+    </div>
+</div>
 {{ end }}

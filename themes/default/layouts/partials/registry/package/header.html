@@ -10,7 +10,7 @@
     {{ with .GetPage $tutorialsPath }}{{ $guidesCount = len .Pages }}{{ end }}
 {{ end }}
 <div class="flex items-start">
-    <div class="{{ if (eq $packageSection "api-docs") }} lg:w-9/12 {{ else }} lg:w-7/12 {{ end }}">
+    <div class="lg:w-12/12">
         <div class="flex items-center mb-4">
             <div class="flex-grow text-blue-600 font-display">
                 <span>&larr;</span>
@@ -82,10 +82,6 @@
                     </div>
                 </nav>
                 {{ end }}
-    </div>
-    <div class="w-3/12 mt-2 pl-12 hidden lg:block">
-        {{ .Scratch.Set "size" "lg" }}
-        {{ partial "registry/package/package-card.html" . }}
     </div>
 </div>
     

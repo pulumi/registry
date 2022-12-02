@@ -18,7 +18,7 @@
         </div>
 
         <div>
-            <i class="fas fa-chevron-circle-down text-gray-300"></i>
+            <i class="fas fa-chevron-circle-up text-gray-300"></i>
         </div>
 
         <div class="flex items-center hidden">
@@ -31,7 +31,7 @@
         {{ end }}
     </div>
 {{ else }}
-    <div class="p-4 border rounded-xl mb-8 shadow-sm">
+    <div class="p-4 border rounded-xl mb-8 shadow-sm min-w-max">
         <div class="lg:flex mb-4 max-w-sm max-h-4">
             {{ with (index $.Site.Data.registry.packages ($packageName)) }}
             <div class="lg:flex max-h-4">

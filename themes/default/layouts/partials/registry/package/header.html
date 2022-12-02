@@ -47,7 +47,7 @@
         {{ end }} -->
         
             {{ with .GetPage (path.Join "registry/packages" $packageName) }}
-                <nav>
+                <nav class="min-w-max">
                     <div class="flex mb-8 font-display text-base md:text-lg">
                         <div class="{{ if or (eq $packageSection "_index") (eq $packageSection "version-guide") }} border-b-2 border-blue-600 {{ end }} pb-2 px-2 mr-2 md:mr-4 lg:mr-6">
                             <a class="flex items-center" href="{{ relref . .File.Dir }}">Overview</a>

@@ -151,6 +151,14 @@
     {
       "repoSlug": "astipkovits/pulumi-aviatrix",
       "schemaFile": "provider/cmd/pulumi-resource-aviatrix/schema.json"
+    },
+    {
+      "repoSlug": "cuemby/pulumi-ct",
+      "schemaFile": "provider/cmd/pulumi-resource-ct/schema.json"
+    },
+    {
+      "repoSlug": "cuemby/pulumi-equinix",
+      "schemaFile": "provider/cmd/pulumi-resource-equinix/schema.json"
     }
   ]
 }

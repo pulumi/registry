@@ -1,5 +1,5 @@
 ---
-title: Metabase
+title: Metabase (AWS)
 meta_desc: Use Pulumi's Metabase Component to quickly provision and get started with Metabase.
 layout: overview
 ---

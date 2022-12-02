@@ -1,6 +1,6 @@
 ---
-title: AzureAD
-meta_desc: Provides an overview of the Azure Active Directoy Provider for Pulumi.
+title: Azure Active Directory (Azure AD)
+meta_desc: Provides an overview of the Azure Active Directory (Azure AD) Provider for Pulumi.
 layout: overview
 ---
 

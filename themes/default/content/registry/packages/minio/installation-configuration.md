@@ -1,14 +1,14 @@
 ---
-title: Minio Installation & Configuration
-meta_desc: Provides an overview on how to configure credentials for the Pulumi Minio Provider.
+title: MinIO Installation & Configuration
+meta_desc: Provides an overview on how to configure credentials for the Pulumi MinIO Provider.
 layout: installation
 ---
 
-The Pulumi Minio provider uses the Minio SDK to manage and provision resources.
+The Pulumi MinIO provider uses the MinIO SDK to manage and provision resources.
 
 ## Installation
 
-The Minio provider is available as a package in all Pulumi languages:
+The MinIO provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/minio`](https://www.npmjs.com/package/@pulumi/minio)
 * Python: [`pulumi-minio`](https://pypi.org/project/pulumi-minio/)
@@ -17,9 +17,9 @@ The Minio provider is available as a package in all Pulumi languages:
 
 ## Configuring Credentials
 
-Pulumi relies on the Minio SDK to authenticate requests from your computer to Minio. Your credentials are never sent
+Pulumi relies on the MinIO SDK to authenticate requests from your computer to MinIO. Your credentials are never sent
 to pulumi.com.
-The Pulumi Minio Provider needs to be configured with Minio credentials
+The Pulumi MinIO Provider needs to be configured with MinIO credentials
 before it can be used to create resources.
 
 Once the credentials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
@@ -41,4 +41,4 @@ Once the credentials are obtained, there are two ways to communicate your author
     ```
 
 Remember to pass `--secret` when setting `minio:minioAccessKey` and `minio:minioSecretKey` so that they are properly encrypted. The complete list of
-configuration parameters is in the [Minio provider README](https://github.com/pulumi/pulumi-minio/blob/master/README.md).
+configuration parameters is in the [MinIO provider README](https://github.com/pulumi/pulumi-minio/blob/master/README.md).

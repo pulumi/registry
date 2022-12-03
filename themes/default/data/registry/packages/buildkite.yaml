@@ -10,5 +10,5 @@ publisher: Grapl Security
 repo_url: https://github.com/grapl-security/pulumi-buildkite
 schema_file_path: provider/cmd/pulumi-resource-buildkite/schema.json
 title: Buildkite
-updated_on: 1669997779
-version: v0.2.4
+updated_on: 1670000687
+version: v0.2.5

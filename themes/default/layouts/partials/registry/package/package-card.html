@@ -3,32 +3,49 @@
 {{ $packageHome := path.Join "registry/packages" $packageName }}
 {{ $size := .Scratch.Get "size" }}
 {{ if eq "compact" $size }}
-    <div class="flex items-center p-4 border rounded-xl shadow-sm h-14 bg-gray-100 min-w-80">
-        <div class="flex max-w-sm">
+    <div class="p-4 border rounded-xl shadow-sm h-30 bg-gray-100 min-w-80">
+        <div class="flex items-center ">
+            <div class="flex max-w-sm">
+                {{ with (index $.Site.Data.registry.packages ($packageName)) }}
+                <div class="flex">
+                    {{ partial "registry/package/icon.html" . }}
+                </div>
+                {{ end }}
+            </div>
+            
             {{ with (index $.Site.Data.registry.packages ($packageName)) }}
-            <div class="flex">
-                {{ partial "registry/package/icon.html" . }}
+            <div class="flex-grow text-center font-display text-xs mx-5">
+                last published {{ ((time .updated_on).Format "Jan 2") }}
+            </div>
+    
+            <div>
+                <i class="fas fa-chevron-circle-up text-gray-300"></i>
+            </div>
+    
+            <div class="flex items-center hidden">
+                <i class="fab fa-github text-lg"></i>
+                <span class="text-blue-600 flex flex-wrap items-center">
+                    <a class="text-blue-600 underline font-display ml-2 mr-1.5" href="{{ .repo_url }}" target="_blank" rel="noopener noreferrer">{{ replaceRE `^.*.com/` "" .repo_url }}</a>
+                    <i class="fas fa-external-link-alt text-sm"></i>
+                </span>
             </div>
             {{ end }}
         </div>
-        
-        {{ with (index $.Site.Data.registry.packages ($packageName)) }}
-        <div class="flex-grow text-center font-display text-xs mx-5">
-            last published {{ ((time .updated_on).Format "Jan 2") }}
+        <div class="hidden">
+            {{ with (index $.Site.Data.registry.packages ($packageName)) }}
+                <div class="lg:flex mb-4 font-display text-xs mt-4">
+                    {{ .version }} published on {{ ((time .updated_on).Format "Monday, Jan 2, 2006") }} by {{ .publisher }}
+                </div>
+    
+                <div class="flex items-center">
+                    <i class="fab fa-github text-lg"></i>
+                    <span class="text-blue-600 flex flex-wrap items-center">
+                        <a class="text-blue-600 underline font-display ml-2 mr-1.5" href="{{ .repo_url }}" target="_blank" rel="noopener noreferrer">{{ replaceRE `^.*.com/` "" .repo_url }}</a>
+                        <i class="fas fa-external-link-alt text-sm"></i>
+                    </span>
+                </div>
+            {{ end }}
         </div>
-
-        <div>
-            <i class="fas fa-chevron-circle-up text-gray-300"></i>
-        </div>
-
-        <div class="flex items-center hidden">
-            <i class="fab fa-github text-lg"></i>
-            <span class="text-blue-600 flex flex-wrap items-center">
-                <a class="text-blue-600 underline font-display ml-2 mr-1.5" href="{{ .repo_url }}" target="_blank" rel="noopener noreferrer">{{ replaceRE `^.*.com/` "" .repo_url }}</a>
-                <i class="fas fa-external-link-alt text-sm"></i>
-            </span>
-        </div>
-        {{ end }}
     </div>
 {{ else }}
     <div class="p-4 border rounded-xl mb-8 shadow-sm min-w-max">

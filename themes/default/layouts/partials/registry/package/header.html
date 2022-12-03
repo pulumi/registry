@@ -11,14 +11,14 @@
 {{ end }}
 
 <div class="flex items-start">
-    <div class="lg:w-12/12">
-        <div class="flex items-center mb-4">
+    <div class="lg:w-12/12 flex-grow">
+        <div class="flex items-center mb-4" style="flex-basis: 100%">
             <div class="flex-grow text-blue-600 font-display">
                 <span>&larr;</span>
                 <a href="{{ relref . "/registry" }}" class="hover:underline">All packages</a>
             </div>
 
-            <div class="lg:hidden block">
+            <div class="{{ if (eq $packageSection "api-docs") }} xxl:hidden block {{ else }} lg:hidden block {{ end }}">
                 {{ .Scratch.Set "size" "compact" }}
                 {{ partial "registry/package/package-card.html" . }}
             </div>

@@ -4,7 +4,7 @@ meta_desc: Provides an overview of the Sumo Logic Provider for Pulumi.
 layout: overview
 ---
 
-The   provider for Pulumi can be used to provision any of the cloud resources available in [Sumo Logic](https://www.sumologic.com/).
+The  provider for Pulumi can be used to provision any of the cloud resources available in [Sumo Logic](https://www.sumologic.com/).
 The Sumo Logic provider must be configured with credentials to deploy and update resources in Sumo Logic.
 
 ## Example

@@ -23,29 +23,6 @@
                 {{ partial "registry/package/package-card.html" . }}
             </div>
         </div>
-        {{ with (index $.Site.Data.registry.packages ($packageName)) }}
-            <div class="lg:flex mb-8">
-                {{ partial "registry/package/icon.html" . }}
-            </div>
-        {{ end }}
-
-        <div class="lg:flex mb-2 max-w-5xl">
-            <h1 data-swiftype-name="package-title" data-swiftype-type="text" class="text-4xl no-anchor">{{ with .GetPage $packageHome }}{{ .Title }}{{ end }}</h1>
-        </div>
-
-        {{ with (index $.Site.Data.registry.packages ($packageName)) }}
-            <div class="lg:flex mb-4 font-display">
-                {{ .version }} published on {{ ((time .updated_on).Format "Monday, Jan 2, 2006") }} by {{ .publisher }}
-            </div>
-
-            <div class="flex items-center mb-8">
-                <i class="fab fa-github text-lg"></i>
-                <span class="text-blue-600 flex flex-wrap items-center">
-                    <a class="text-blue-600 underline font-display ml-2 mr-1.5" href="{{ .repo_url }}" target="_blank" rel="noopener noreferrer">Source code</a>
-                    <i class="fas fa-external-link-alt text-sm"></i>
-                </span>
-            </div>
-        {{ end }}
 
         {{ with .GetPage (path.Join "registry/packages" $packageName) }}
             <nav>

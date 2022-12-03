@@ -1,6 +1,6 @@
 category: Cloud
 component: false
-description: A Pulumi package for creating and managing flux cloud resources.
+description: A Pulumi package for creating and managing Flux cloud resources.
 featured: false
 logo_url: https://raw.githubusercontent.com/oun/pulumi-flux/main/flux.svg
 name: flux
@@ -9,6 +9,6 @@ package_status: public_preview
 publisher: oun
 repo_url: https://github.com/oun/pulumi-flux
 schema_file_path: provider/cmd/pulumi-resource-flux/schema.json
-title: flux
-updated_on: 1669454257
-version: v0.21.0
+title: Flux
+updated_on: 1670061749
+version: v0.21.1

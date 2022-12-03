@@ -1,5 +1,5 @@
 ---
-title: Checkly Installation & Configuration
+title: Checkly Setup
 meta_desc: Provides an overview on how to configure credentials for the Pulumi Checkly Provider.
 layout: installation
 ---

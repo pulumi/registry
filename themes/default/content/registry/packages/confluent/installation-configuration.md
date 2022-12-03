@@ -1,8 +1,13 @@
 ---
-title: Confluent Cloud Setup
+title: Confluent Cloud Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi Confluent Cloud Provider.
 layout: installation
 ---
+
+{{% notes type="info" %}}
+This provider has been deprecated as of July 2022. It is recommended to use the [Official Confluent Provider]({{<relref "/registry/packages/confluentcloud">}}) as a replacement.
+Unfortunately, there is no upgrade path from this provider to the Official Confluent provider, but you can take advantage of the [Pulumi Import]({{<relref "/docs/guides/adopting/import">}}) to help achieve the migration.
+{{% /notes %}}
 
 The Pulumi Confluent Cloud provider uses the Confluent Cloud SDK to manage and provision resources.
 
@@ -19,7 +24,7 @@ The Confluent Cloud provider is available as a package in all Pulumi languages:
 
 Pulumi relies on the Confluent Cloud SDK to authenticate requests from your computer to Confluent Cloud. Your credentials are never sent
 to pulumi.com. The Pulumi Confluent Cloud Provider needs to be configured with Confluent Cloud credentials
-before it can be used to create resources. Once the credetials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
+before it can be used to create resources. Once the credentials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
 
 1. Set the environment variables `CONFLUENT_CLOUD_USERNAME` and `CONFLUENT_CLOUD_PASSWORD`:
 

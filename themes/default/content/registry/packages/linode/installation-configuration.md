@@ -1,5 +1,5 @@
 ---
-title: Linode SDK Setup
+title: Linode SDK Installation & Configuration
 meta_desc: Provides an overview on how to setup the Linode SDK for Pulumi.
 layout: installation
 ---
@@ -22,7 +22,7 @@ to pulumi.com.
 The Pulumi Linode Provider needs to be configured with Linode credentials
 before it can be used to create resources.
 
-Once the credetials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
+Once the credentials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
 
 1. Set the environment variable `LINODE_TOKEN`:
 

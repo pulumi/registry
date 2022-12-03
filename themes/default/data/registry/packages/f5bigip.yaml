@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-f5bigip
 schema_file_path: provider/cmd/pulumi-resource-f5bigip/schema.json
 title: f5 BIG-IP
-updated_on: 1654012504
-version: v3.8.0
+updated_on: 1661535806
+version: v3.9.0

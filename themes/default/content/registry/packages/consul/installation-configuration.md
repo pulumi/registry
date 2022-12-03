@@ -1,5 +1,5 @@
 ---
-title: HashiCorp Consul Setup
+title: HashiCorp Consul Installation & Configuration
 meta_desc: Provides an overview on how to configure the Pulumi Consul Provider.
 layout: installation
 ---
@@ -18,7 +18,7 @@ The HashiCorp Consul provider is available as a package in all Pulumi languages:
 ## Configuring The Provider
 
 Pulumi relies on the Consul SDK to authenticate requests from your computer to HashiCorp Consul. Your credentials are never sent
-to pulumi.com. Once the credetials are obtained, there are two ways to communicate your configuration parameters to Pulumi:
+to pulumi.com. Once the credentials are obtained, there are two ways to communicate your configuration parameters to Pulumi:
 
 1. Set the environment variable `CONSUL_HTTP_ADDR`:
 

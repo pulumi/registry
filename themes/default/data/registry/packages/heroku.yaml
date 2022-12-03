@@ -1,0 +1,14 @@
+category: Cloud
+component: false
+description: A Pulumi package for creating and managing heroku cloud resources.
+featured: false
+logo_url: ""
+name: heroku
+native: false
+package_status: ga
+publisher: pulumiverse - Marcel Arns
+repo_url: https://github.com/pulumiverse/pulumi-heroku
+schema_file_path: provider/cmd/pulumi-resource-heroku/schema.json
+title: heroku
+updated_on: 1669017001
+version: v1.0.1

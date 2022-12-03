@@ -1,5 +1,5 @@
 ---
-title: Opsgenie Setup
+title: Opsgenie Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi Opsgenie Provider.
 layout: installation
 ---

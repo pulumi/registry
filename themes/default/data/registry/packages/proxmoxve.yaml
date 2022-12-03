@@ -1,0 +1,15 @@
+category: Cloud
+component: false
+description: A Pulumi package for creating and managing Proxmox Virtual Environment
+  cloud resources.
+featured: false
+logo_url: ""
+name: proxmoxve
+native: false
+package_status: ga
+publisher: Daniel Muehlbachler-Pietrzykowski
+repo_url: https://github.com/muhlba91/pulumi-proxmoxve
+schema_file_path: provider/cmd/pulumi-resource-proxmoxve/schema.json
+title: Proxmox Virtual Environment (Proxmox VE)
+updated_on: 1670002599
+version: v2.1.0

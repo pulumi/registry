@@ -1,5 +1,5 @@
 ---
-title: NS1 Setup
+title: NS1 Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi NS1 Provider.
 layout: installation
 ---
@@ -22,7 +22,7 @@ to pulumi.com.
 The Pulumi NS1 Provider needs to be configured with NS1 credentials
 before it can be used to create resources.
 
-Once the credetials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
+Once the credentials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
 
 1. Set the environment variable `NS1_APIKEY`:
 

@@ -1,5 +1,5 @@
 ---
-title: SignalFx Setup
+title: SignalFx Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi SignalFx Provider.
 layout: installation
 ---
@@ -22,7 +22,7 @@ to pulumi.com.
 The Pulumi SignalFx Provider needs to be configured with SignalFx credentials
 before it can be used to create resources.
 
-Once the credetials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
+Once the credentials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
 
 1. Set the environment variables `SFX_AUTH_TOKEN`:
 

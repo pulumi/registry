@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-vault
 schema_file_path: provider/cmd/pulumi-resource-vault/schema.json
 title: Vault
-updated_on: 1654013500
-version: v5.5.0
+updated_on: 1665702815
+version: v5.7.0

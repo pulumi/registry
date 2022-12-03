@@ -1,5 +1,5 @@
 ---
-title: Cloudflare Setup
+title: Cloudflare Installation & Configuration
 meta_desc: Provides an overview on how to configure the Pulumi Cloudflare Provider.
 layout: installation
 ---
@@ -20,6 +20,10 @@ The Cloudflare provider is available as a package in all Pulumi languages:
 Pulumi relies on the Cloudflare SDK to authenticate requests from your computer to Cloudflare. Your credentials are never sent
 to pulumi.com. Once the credentials are obtained, there are two ways to communicate your configuration parameters to Pulumi:
 
+{{% notes type="info" %}}
+For authentication, you must use only one of: `apiToken` _or_ `apiKey`/`email`. We recommend using `apiToken`.
+{{% /notes %}}
+
 1. Set the environment variable `CLOUDFLARE_API_TOKEN` (or the legacy `CLOUDFLARE_EMAIL` and `CLOUDFLARE_API_KEY`):
 
     ```bash
@@ -32,7 +36,7 @@ to pulumi.com. Once the credentials are obtained, there are two ways to communic
 2. If you prefer that they be stored alongside your Pulumi stack for easy multi-user access:
 
     ```bash
-    $ pulumi config set cloudflare:apiToken
+    $ pulumi config set cloudflare:apiToken --secret
     # Legacy
     $ pulumi config set cloudflare:email XXXXXX
     $ pulumi config set cloudflare:apiKey YYYYYY --secret

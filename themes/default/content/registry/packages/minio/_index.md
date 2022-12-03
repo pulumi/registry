@@ -1,11 +1,11 @@
 ---
-title: Minio
-meta_desc: Provides an overview of the Minio Provider for Pulumi.
+title: MinIO
+meta_desc: Provides an overview of the MinIO Provider for Pulumi.
 layout: overview
 ---
 
-The Minio provider for Pulumi can be used to provision any of the cloud resources available in [Minio](https://min.io/).
-The Minio provider must be configured with credentials to deploy and update resources in Minio.
+The MinIO provider for Pulumi can be used to provision any of the cloud resources available in [MinIO](https://min.io/).
+The MinIO provider must be configured with credentials to deploy and update resources in MinIO.
 
 ## Example
 

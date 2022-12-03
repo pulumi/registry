@@ -1,5 +1,5 @@
 ---
-title: Snowflake Setup
+title: Snowflake Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi Snowflake Provider.
 layout: installation
 ---
@@ -32,7 +32,7 @@ to pulumi.com.
 The Pulumi Snowflake Provider needs to be configured with Snowflake credentials
 before it can be used to create resources.
 
-Once the credetials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
+Once the credentials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
 
 1. Set the environment variables `SNOWFLAKE_ACCOUNT`, `SNOWFLAKE_REGION` and `SNOWFLAKE_USERNAME` with the correct combination of authentication variables:
 

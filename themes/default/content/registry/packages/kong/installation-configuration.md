@@ -1,5 +1,5 @@
 ---
-title: Kong Setup
+title: Kong Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi Kong Provider.
 layout: installation
 ---
@@ -22,7 +22,7 @@ to pulumi.com.
 The Pulumi Kong Provider needs to be configured with Kong credentials
 before it can be used to create resources.
 
-Once the credetials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
+Once the credentials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
 
 1. Set the environment variable `KONG_ADMIN_ADDR`, `KONG_ADMIN_USERNAME` and `KONG_ADMIN_PASSWORD`:
 

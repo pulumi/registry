@@ -1,5 +1,5 @@
 ---
-title: F5 BIG-IP Setup
+title: F5 BIG-IP Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi F5 BIG-IP Provider.
 layout: installation
 ---
@@ -21,7 +21,7 @@ Pulumi relies on the F5 BIG-IP SDK to authenticate requests from your computer t
 to pulumi.com. The Pulumi F5 BIG-IP Provider needs to be configured with F5 BIG-IP credentials
 before it can be used to create resources.
 
-Once the credetials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
+Once the credentials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
 
 1. Set the environment variable `BIGIP_HOST`, `BIGIP_USER` and `BIGIP_PASSWORD`:
 

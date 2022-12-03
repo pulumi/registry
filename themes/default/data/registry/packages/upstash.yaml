@@ -1,0 +1,14 @@
+category: Cloud
+component: false
+description: A Pulumi package for creating and managing upstash cloud resources.
+featured: false
+logo_url: https://upstash.com/static/logo/logo-light.svg
+name: upstash
+native: false
+package_status: public_preview
+publisher: Upstash
+repo_url: https://github.com/upstash/upstash-pulumi-provider
+schema_file_path: provider/cmd/pulumi-resource-upstash/schema.json
+title: Upstash
+updated_on: 1659592796
+version: v0.0.21

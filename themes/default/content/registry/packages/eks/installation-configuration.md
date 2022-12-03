@@ -1,5 +1,5 @@
 ---
-title: Pulumi Amazon EKS Setup
+title: Pulumi Amazon EKS Installation & Configuration
 meta_desc: Information on how to set up credentials to use the Amazon EKS component.
 layout: installation
 ---
@@ -15,7 +15,7 @@ Your AWS credentials are never sent to pulumi.com. Pulumi uses the AWS SDK and t
 The Amazon EKS provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/eks`](https://www.npmjs.com/package/@pulumi/eks)
-* Python: [`pulumi_eks`](https://pypi.org/project/pulumi-eks//)
+* Python: [`pulumi_eks`](https://pypi.org/project/pulumi-eks/)
 * Go: [`github.com/pulumi/pulumi-eks/sdk/go/eks`](https://github.com/pulumi/pulumi-eks)
 * .NET: [`Pulumi.Eks`](https://www.nuget.org/packages/Pulumi.Eks)
 * Java: [`com.pulumi.eks`](https://search.maven.org/search?q=com.pulumi.eks)

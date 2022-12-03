@@ -1,0 +1,14 @@
+category: Cloud
+component: false
+description: A Pulumi package for creating and managing exoscale cloud resources.
+featured: false
+logo_url: ""
+name: exoscale
+native: false
+package_status: public_preview
+publisher: Pulumiverse
+repo_url: https://github.com/pulumiverse/pulumi-exoscale
+schema_file_path: provider/cmd/pulumi-resource-exoscale/schema.json
+title: Exoscale
+updated_on: 1669571139
+version: v0.42.0

@@ -1,5 +1,5 @@
 ---
-title: Confluent Cloud Setup
+title: Confluent Cloud Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi Confluent Cloud Provider.
 layout: installation
 ---
@@ -19,7 +19,7 @@ The Confluent Cloud provider is available as a package in all Pulumi languages:
 
 Pulumi relies on the Confluent Cloud SDK to authenticate requests from your computer to Confluent Cloud. Your credentials are never sent
 to pulumi.com. The Pulumi Confluent Cloud Provider needs to be configured with Confluent Cloud credentials
-before it can be used to create resources. Once the credetials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
+before it can be used to create resources. Once the credentials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
 
 1. Set the environment variables `CONFLUENT_CLOUD_API_KEY` and `CONFLUENT_CLOUD_API_SECRET`:
 
@@ -31,9 +31,9 @@ before it can be used to create resources. Once the credetials are obtained, the
 2. Set them using configuration, if you prefer that they be stored alongside your Pulumi stack for easy multi-user access:
 
     ```bash
-    $ pulumi config set confluentcloud:apiKey XXXXXXXXXXXXXX
-    $ pulumi config set confluentcloud:apiSecret YYYYYYYYYYYYYY --secret
+    $ pulumi config set confluentcloud:cloudApiKey XXXXXXXXXXXXXX
+    $ pulumi config set confluentcloud:clouaApiSecret YYYYYYYYYYYYYY --secret
     ```
 
-Remember to pass `--secret` when setting `confluentcloud:apiKey` and `confluentcloud:apiSecret` so that it is properly encrypted. The complete list of
+Remember to pass `--secret` when setting `confluentcloud:cloudApiKey` and `confluentcloud:cloudApiSecret` so that it is properly encrypted. The complete list of
 configuration parameters is in the [Confluent Cloud provider README](https://github.com/pulumi/pulumi-confluentcloud/blob/master/README.md).

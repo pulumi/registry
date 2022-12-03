@@ -1,11 +1,12 @@
 ---
-title: Kubernetes Setup
+title: Kubernetes Installation & Configuration
 meta_desc: Provides an overview on how to setup the Kubernetes Provider for Pulumi.
 layout: installation
 ---
 
 <!-- markdownlint-disable url -->
 [pulumi-kubernetes-provider]: {{< relref "./" >}}
+[server-side-apply]: {{< relref "./installation-configuration/#server-side-apply" >}}
 [client-go]: https://github.com/kubernetes/client-go
 [gke-tutorial]: {{< relref "/registry/packages/kubernetes/how-to-guides/gke" >}}
 [eks-tutorial]: {{< relref "/registry/packages/kubernetes/how-to-guides/eks" >}}
@@ -43,7 +44,7 @@ following steps.
 1. [Install the Pulumi CLI][install].
 1. Install a package manager for your Pulumi program language runtime, such as [npm] or [Yarn] for [Node.js][nodejs], or PyPI for Python.
 1. Provision a Kubernetes cluster. For a new managed Kubernetes cluster, check out the [guides.]({{< relref "/registry/packages/kubernetes/how-to-guides" >}})
-1. Download [`kubectl`](https://kubernetes.io/docs/tasks/tools/install-kubectl/) and verify the cluster is up and running.
+1. Download [`kubectl`](https://kubernetes.io/docs/tasks/tools/install-kubectl/).
 
 ## Setup
 
@@ -57,8 +58,9 @@ If the kubeconfig file is not in either of these locations, Pulumi will **not** 
 fail to authenticate against the cluster. Set one of these locations to a valid kubeconfig file, if you have not done so
 already.
 
-Once the cluster is accessible, setup is complete and you can proceed to the
-desired tutorials.
+Verify the cluster is configured and up by running `kubectl get pods`.
+
+Then follow the [getting started guide]({{< relref "/docs/get-started/kubernetes">}}) or explore some [code examples](https://github.com/pulumi/examples#kubernetes).
 
 > Note: Pulumi **never** sends **any** authentication secrets or credentials to the Pulumi service. See the [FAQ]({{< relref "faq#does-the-pulumi-service-see-my-credentials-in-the-kubeconfig-file">}}) for more detail.
 
@@ -67,6 +69,17 @@ desired tutorials.
 The kubeconfig file defines some number of _contexts_. Each context is a name that is associated
 with a _cluster_, _namespace_, and a "_user_" (a local-only name that's associated with a credential
 that allows access to the cluster).
+
+Your Kubernetes implementation may have already written out an appropriate kubeconfig. 
+For example, `minikube start` does this, unless you specified `--keep-context=true`.
+Moreover, multiple sources of kubeconfig are merged and the result may surprise you.
+Therefore, check your current kubeconfig using:
+
+```shell
+$ kubectl \
+    config \
+        view
+```
 
 To create a context, for example, you can run the `kubectl set-context` command as follows:
 
@@ -77,15 +90,17 @@ $ kubectl config \
     --user=my-user
 ```
 
-If you have done this and are using the default context file, you will be able to set the
-configuration variable `kubernetes:context` in the Pulumi config system to the given context name:
+Mind that e.g., `minikube` uses the same name for the context and the cluster in it.
+
+If you have completed your kubeconfig configuration, and are using the default kubeconfig file, you will be able to set the
+configuration variable `kubernetes:context` in the Kubernetes provider to the given context name:
 
 ```shell
 $ pulumi stack init new-kube-stack
 $ pulumi config set kubernetes:context my-context
 ```
 
-If you don't want to select a context, you can always make it the default:
+If you don't want to select a context, you can always make it the operating system user-wide default:
 
 ```shell
 $ kubectl config \
@@ -110,25 +125,32 @@ To learn more about `kubectl proxy` check out the [reference docs](https://kuber
 
 ## Configuration
 
-The Kubernetes provider accepts the following configuration settings.  These can be provided to the default Kubernetes provider via `pulumi config set kubernetes:<option>`, or passed to the constructor of `new kubernetes.Provider` to construct a specific instance of the Kubernetes provider.
+The Kubernetes provider accepts the following configuration settings. These can be provided to the default Kubernetes provider via `pulumi config set kubernetes:<option>`, or passed to the constructor of `new kubernetes.Provider` to construct a [specific instance](https://www.pulumi.com/docs/intro/concepts/resources/providers/#explicit-provider-configuration) of the Kubernetes provider.
 
-| Option                        | Required/Optional | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-|-------------------------------|-------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `cluster`                     | Optional          | If present, the name of the kubeconfig cluster to use.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| `context`                     | Optional          | If present, the name of the kubeconfig context to use.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| `enableDryRun`                | Optional          | BETA FEATURE - If present and set to true, enable server-side diff calculations. This feature is in developer preview, and is disabled by default. This config can be specified in the following ways, using this precedence: (1) this `enableDryRun` parameter or (2) the `PULUMI_K8S_ENABLE_DRY_RUN` environment variable.                                                                                                                                                                                                                                                                                                                                                |
-| `kubeconfig`                  | Optional          | The contents of a kubeconfig file. If this is set, this config will be used instead of `$KUBECONFIG`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
-| `namespace`                   | Optional          | If present, the default namespace to use. This flag is ignored for cluster-scoped resources.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
-| `renderYamlToDirectory`       | Optional          | BETA FEATURE - If present, render resource manifests to this directory. In this mode, resources will not be created on a Kubernetes cluster, but the rendered manifests will be kept in sync with changes to the Pulumi program. This feature is in developer preview, and is disabled by default. Note that some computed Outputs such as status fields will not be populated since the resources are not created on a Kubernetes cluster. These Output values will remain undefined, and may result in an error if they are referenced by other resources. Also note that any secret values used in these resources will be rendered in plain text to the resulting YAML. |
-| `suppressDeprecationWarnings` | Optional          | If present and set to true, suppress `apiVersion` deprecation warnings from the CLI. This config can be specified in the following ways, using this precedence: (1) this `suppressDeprecationWarnings` parameter or (2) the `PULUMI_K8S_SUPPRESS_DEPRECATION_WARNINGS` environment variable.                                                                                                                                                                                                                                                                                                                                                                                |
+See the [Provider configuration][provider-args] docs for a complete list of options.
+
+## Server-Side Apply
+
+[Server-Side Apply](https://kubernetes.io/docs/reference/using-api/server-side-apply/) (SSA) is a resource management strategy that was introduced in Kubernetes `v1.18`. Clients using SSA can safely share the management of Kubernetes resources by making the API Server responsible for computing diffs and resolving conflicts.
+
+The [v3.20.0 release](https://github.com/pulumi/pulumi-kubernetes/releases/tag/v3.20.0) of the Pulumi Kubernetes provider added support for managing resources using SSA. This feature is currently opt-in using the `enableServerSideApply` [Provider option][provider-args], but will become the default in the next major release. Using SSA provides the following benefits:
+
+1. Kubernetes resources may be safely managed by more than one controller.
+2. It is now possible to "Upsert" resources; create the resource if it does not exist, or apply the configuration to an existing resource.
+3. It is now possible to patch resources with the Patch resource types in the SDK. Each resource type in the SDK has a corresponding Patch resource.
+4. The `last-applied-configuration` annotation is no longer used.
 
 ## Annotations
 
 A few Pulumi-specific annotations can be applied to Kubernetes resources managed by Pulumi to control aspects of how Pulumi deploys and manages the Kubernetes resource:
 
+- `pulumi.com/patchFieldManager`: Server-Side Apply option: Specify the `FieldManager` name to use for the Server-Side Apply operation.
+- `pulumi.com/patchForce`: Server-Side Apply option: Force override any conflicts for the specified resource.
+- `pulumi.com/replaceUnready`: If the resource failed to become ready in the previous Pulumi update, replace the resource rather than continuing to wait for it to become ready. Only `batch/v1/Job` currently supports this annotation.
 - `pulumi.com/skipAwait`: Disables Pulumi's default await logic that waits for a Kubernetes resource to become "ready" before marking the resource as having created or updated succesfully.
 - `pulumi.com/timeoutSeconds`: Specifies the number of seconds that the Pulumi Kubernetes provider will wait for the resource to become "ready".
 
 In addition, the Pulumi provider may write the following annotations onto resources it manages:
 
+- `app.kubernetes.io/managed-by`: Indicates the controller managing a Kubernetes resource. This annotation is not set when using the Server-Side Apply mode.
 - `pulumi.com/autonamed`: Indicates that the Pulumi Kubernetes provider decided to autoname the resource (instead of using an explicitly provided `metadata.name`).

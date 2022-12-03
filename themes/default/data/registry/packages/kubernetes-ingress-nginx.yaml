@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-kubernetes-ingress-nginx
 schema_file_path: schema.json
 title: NGINX Ingress Controller
-updated_on: 1655503835
-version: v0.0.6
+updated_on: 1669840760
+version: v0.0.10

@@ -1,5 +1,5 @@
 ---
-title: cert-manager
+title: Kubernetes Cert Manager
 meta_desc: Use Pulumi's Component for cert-manager offers a Pulumi-friendly and strongly-typed way to manage cert-manager installations using infrastructure as code.
 layout: overview
 ---

@@ -3,11 +3,40 @@
 [Pulumi Registry](https://pulumi.com/registry) is the global index of everything you can do with Pulumi.
 
 ## Authoring a Pulumi Package
-We’re always eager to expand that index with new [Pulumi Packages](https://www.pulumi.com/docs/guides/pulumi-packages/). Whether you want to author a new native provider, bridge a provider from the Terraform ecosystem, or create a cloud component with best practices and sensible defaults built in, we’d like to work with you to list it on Pulumi Registry.
 
+We’re always eager to expand that index with new [Pulumi Packages](https://www.pulumi.com/docs/guides/pulumi-packages/). Whether you want to author a new native provider, bridge a provider from the Terraform ecosystem, or create a cloud component with best practices and sensible defaults built in, we’d like to work with you to list it on Pulumi Registry.
 To get started, use our [guide on authoring a Pulumi Package](https://www.pulumi.com/docs/guides/pulumi-packages/how-to-author/) of your own.
-When ready, add your package to the [community packages list](./community-packages/package-list.json) via pull request to this repository.
+
+### Publishing a Community Package on the Registry
+
+#### Community Steps
+
+To publish a community-maintained package on the Pulumi Registry as a community member:
+
+1. Ensure your provider repo has the following files:
+    * `docs/_index.md`, which should contain a summary of the provider's purpose (required) along with a code sample (preferred). This file will render as the index page for your provider ([example](https://www.pulumi.com/registry/packages/aiven/)).
+    * `docs/installation-configuration.md`, which should contain links to SDK packages in each language along with instructions for configuring the provider (e.g., required credentials and/or environment variables). This file will render as the Installation & Configuration page for your provider ([example](https://www.pulumi.com/registry/packages/aiven/installation-configuration/)).
+1. Create a release of your provider in GitHub.
+1. Add your package to the [community packages list](./community-packages/package-list.json) via pull request to this repository.
+
 For assistance, please reach out on the [Pulumi community slack](https://slack.pulumi.com/) or get in touch with us via this [contact form](https://pulumi.com/contact/?form=registry). 
+
+#### Pulumi Steps
+
+Once the community member has submitted the PR to add the provider to the registry, a Pulumi staff member should perform the following steps:
+
+1. Review the PR. Ensure that the PR has been rebased if necessary before merging. If ok, merge.
+1. Once the PR is merged, a [scheduled task](https://github.com/pulumi/registry/actions/workflows/generate-package-metadata.yml) will pick up the changes and create a PR to add the package metadata to the registry. A correct metadata PR ([example](https://github.com/pulumi/registry/pull/1606/files)) will include the following files, at a minimum:
+   * `data/registry/${PROVIDER}.yaml` which includes structured metadata about the provider. This file is always included with every PR that gets generated for a new release.
+   * `themes/default/content/registry/packages/${PROVIDER}/installation-configuration.md`, as described above. This file *must* be included in the first release, but will only be included in subsequent PRs if the content has changed.
+   * `themes/default/content/registry/packages/exoscale/_index.md`, as described above. This file *must* be included in the first release, but will only be included in subsequent PRs if the content has changed.
+   
+   Optionally, the PR may include additional content files like How-To Guides if they are present in the upstream repo.
+
+1. Merge the PR if it looks ok.
+1. In pulumi/docs, a [scheduled task](https://github.com/pulumi/docs/actions/workflows/update-theme.yml) runs hourly and will pick up any changes in this repo, generate files from the provider schema and `data/registry/${PROVIDER}.yaml`, and publish to pulumi.com.
+
+  This scheduled task currently lacks adequate monitoring, and **should be watched to ensure that it runs correctly to completion**. (If it fails, it will block all updates to pulumi.com, including marketing and manually maintained docs pages.) 
 
 ## About this repository
 
@@ -111,6 +140,12 @@ go install github.com/pulumi/registrygen@master
 Run `registrygen --help` for help regarding its use or [see the `registrygen` README](https://github.com/pulumi/registrygen#readme).
 
 ## Submitting, merging and releasing
+
+Before submitting a pull request, run the linter locally:
+
+```bash
+make lint
+```
 
 When you're ready to submit a pull request, make sure you've removed anything that doesn't seem to belong (`go.mod`/`go.sum` changes, content from pulumi/docs, etc.) and submit the PR in the usual way.
 

@@ -4,10 +4,13 @@ meta_desc: Provides an overview of the Confluent Cloud Provider for Pulumi.
 layout: overview
 ---
 
+{{% notes type="info" %}}
+This provider has been deprecated as of July 2022. It is recommended to use the [Official Confluent Provider]({{<relref "/registry/packages/confluentcloud">}}) as a replacement.
+Unfortunately, there is no upgrade path from this provider to the Official Confluent provider, but you can take advantage of the [Pulumi Import]({{<relref "/docs/guides/adopting/import">}}) to help achieve the migration.
+{{% /notes %}}
+
 The Confluent Cloud provider for Pulumi can be used to provision any of the cloud resources available in [Confluent Cloud](https://confluent.cloud/).
 The Confluent Cloud provider must be configured with credentials to deploy and update resources in Confluent Cloud.
-
-PLEASE NOTE: This provider is built on top of an unofficial Terraform Provider.
 
 ## Example
 

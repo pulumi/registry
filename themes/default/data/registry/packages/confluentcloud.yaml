@@ -5,10 +5,10 @@ featured: false
 logo_url: ""
 name: confluentcloud
 native: false
-package_status: public_preview
+package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-confluentcloud
 schema_file_path: provider/cmd/pulumi-resource-confluentcloud/schema.json
 title: Confluent
-updated_on: 1654440958
-version: v0.1.0
+updated_on: 1669246534
+version: v1.6.0

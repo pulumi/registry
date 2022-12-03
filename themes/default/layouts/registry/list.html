@@ -10,7 +10,7 @@
     {{ end }}
 
     <div class="packages container mx-auto pb-16 z-0">
-        <section class="featured-packages my-8">
+        <section class="featured-packages mt-8">
             <h2 class="px-4 inline-flex items-center">
                 Featured Packages
             </h2>
@@ -21,40 +21,43 @@
             </div>
         </section>
 
-        <section class="all-packages my-8">
-            <div class="mt-12 mb-2 px-4 relative z-10">
+        <section class="all-packages mt-8">
+            <div class="mb-2 px-4 relative z-10">
                 <h4 class="text-lg">Filters</h4>
                 <div class="flex flex-col md:flex-row md:items-start">
-                    <pulumi-filter-select class="mb-2">
+                    <div class="flex flex-col">
+                        <pulumi-filter-select class="mb-2">
 
-                        <!-- Package-type options -->
-                        <pulumi-filter-select-option-group name="type">
-                            <div class="toggle" slot="toggle">Type</div>
-                            <div class="options">
-                                <pulumi-filter-select-option value="native-provider" label="Native Provider">Native Provider</pulumi-filter-select-option>
-                                <pulumi-filter-select-option value="provider" label="Provider">Provider</pulumi-filter-select-option>
-                                <pulumi-filter-select-option value="component" label="Component">Component</pulumi-filter-select-option>
-                            </div>
-                        </pulumi-filter-select-option-group>
+                            <!-- Package-type options -->
+                            <pulumi-filter-select-option-group name="type" class="w-1/2">
+                                <div class="toggle" slot="toggle">Type</div>
+                                <div class="options">
+                                    <pulumi-filter-select-option value="native-provider" label="Native Provider">Native Provider</pulumi-filter-select-option>
+                                    <pulumi-filter-select-option value="provider" label="Provider">Provider</pulumi-filter-select-option>
+                                    <pulumi-filter-select-option value="component" label="Component">Component</pulumi-filter-select-option>
+                                </div>
+                            </pulumi-filter-select-option-group>
 
-                        <!-- Use-case options -->
-                        <pulumi-filter-select-option-group name="category" class="mx-1 md:mx-4">
-                            <div class="toggle" slot="toggle">Use Case</div>
-                            <div class="options">
-                                <pulumi-filter-select-option value="cloud" label="Cloud">Cloud</pulumi-filter-select-option>
-                                <pulumi-filter-select-option value="database" label="Database">Database</pulumi-filter-select-option>
-                                <pulumi-filter-select-option value="infrastructure" label="Infrastructure">Infrastructure</pulumi-filter-select-option>
-                                <pulumi-filter-select-option value="monitoring" label="Monitoring">Monitoring</pulumi-filter-select-option>
-                                <pulumi-filter-select-option value="network" label="Network">Network</pulumi-filter-select-option>
-                                <pulumi-filter-select-option value="utility" label="Utility">Utility</pulumi-filter-select-option>
-                                <pulumi-filter-select-option value="version control system" label="Version Control">Version Control</pulumi-filter-select-option>
-                            </div>
-                        </pulumi-filter-select-option-group>
+                            <!-- Use-case options -->
+                            <pulumi-filter-select-option-group name="category" class="mx-1 md:mx-4 w-1/2">
+                                <div class="toggle" slot="toggle">Use Case</div>
+                                <div class="options">
+                                    <pulumi-filter-select-option value="cloud" label="Cloud">Cloud</pulumi-filter-select-option>
+                                    <pulumi-filter-select-option value="database" label="Database">Database</pulumi-filter-select-option>
+                                    <pulumi-filter-select-option value="infrastructure" label="Infrastructure">Infrastructure</pulumi-filter-select-option>
+                                    <pulumi-filter-select-option value="monitoring" label="Monitoring">Monitoring</pulumi-filter-select-option>
+                                    <pulumi-filter-select-option value="network" label="Network">Network</pulumi-filter-select-option>
+                                    <pulumi-filter-select-option value="utility" label="Utility">Utility</pulumi-filter-select-option>
+                                    <pulumi-filter-select-option value="version control system" label="Version Control">Version Control</pulumi-filter-select-option>
+                                </div>
+                            </pulumi-filter-select-option-group>
 
-                    </pulumi-filter-select>
+                        </pulumi-filter-select>
+                        <!-- The list of active filters. -->
+                        <ul class="package-tags active-tags"></ul>
+                    </div>
 
-                    <!-- The list of active filters. -->
-                    <ul class="package-tags active-tags"></ul>
+                    <pulumi-registry-list-search class="w-full"></pulumi-registry-list-search>
 
                     <!-- The template used for displaying active filters. -->
                     <template id="active-tag-template">

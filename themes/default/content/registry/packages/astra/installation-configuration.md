@@ -1,5 +1,5 @@
 ---
-title: Astra Setup
+title: Astra Installation & Configuration
 meta_desc: Information on how to install the DataStax Astra provider.
 layout: installation
 ---

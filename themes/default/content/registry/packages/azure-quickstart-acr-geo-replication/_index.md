@@ -1,6 +1,6 @@
 ---
-title: Azure Quickstart ACR Geo Replicated
-meta_desc: Use Pulumi's Component for creating Azure ACR Geo Replicated Registries using infrastructure as code.
+title: Azure Quickstart ACR Geo Replication
+meta_desc: Use Pulumi's Component for creating Azure Quickstart ACR Geo Replication using infrastructure as code.
 layout: overview
 ---
 

@@ -17,11 +17,6 @@
                 <span>&larr;</span>
                 <a href="{{ relref . "/registry" }}" class="hover:underline">All packages</a>
             </div>
-
-            <div class="{{ if (eq $packageSection "api-docs") }} xxl:hidden block {{ else }} lg:hidden block {{ end }}">
-                {{ .Scratch.Set "size" "compact" }}
-                {{ partial "registry/package/package-card.html" . }}
-            </div>
         </div>
 
         {{ with .GetPage (path.Join "registry/packages" $packageName) }}
@@ -65,6 +60,10 @@
                 </div>
             </nav>
         {{ end }}
+    </div>
+    <div class="{{ if (eq $packageSection "api-docs") }} xxl:hidden block {{ else }} lg:hidden block {{ end }}">
+        {{ .Scratch.Set "size" "compact" }}
+        {{ partial "registry/package/package-card.html" . }}
     </div>
 </div>
     

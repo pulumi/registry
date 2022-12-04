@@ -3,8 +3,8 @@
 {{ $packageHome := path.Join "registry/packages" $packageName }}
 {{ $size := .Scratch.Get "size" }}
 {{ if eq "compact" $size }}
-    <div class="p-4 border rounded-xl shadow-sm h-30 bg-gray-100 min-w-80">
-        <div class="flex items-center ">
+    <div id="package-card-compact" class="p-4 border rounded-xl shadow-sm h-30 bg-gray-100 min-w-80 cursor-pointer">
+        <div class="card-collapsed flex items-center ">
             <div class="flex max-w-sm">
                 {{ with (index $.Site.Data.registry.packages ($packageName)) }}
                 <div class="flex">
@@ -31,7 +31,7 @@
             </div>
             {{ end }}
         </div>
-        <div class="hidden">
+        <div id="package-card-expanded" class="hidden">
             {{ with (index $.Site.Data.registry.packages ($packageName)) }}
                 <div class="lg:flex mb-4 font-display text-xs mt-4">
                     {{ .version }} published on {{ ((time .updated_on).Format "Monday, Jan 2, 2006") }} by {{ .publisher }}

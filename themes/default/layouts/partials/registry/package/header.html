@@ -22,7 +22,7 @@
                 <a href="{{ relref . "/registry" }}" class="hover:underline">All packages</a>
             </div>
             {{ if in $permalink "api-docs" }}
-                <div class="block xxl:hidden">
+                <div class="block xl:hidden">
                 {{ partial "registry/package/package-card.html" . }}
                 </div>
             {{ else }}
@@ -32,8 +32,9 @@
             {{ end }}
         </div>
 
+        <div class="flex justify-between">
         {{ with .GetPage (path.Join "registry/packages" $packageName) }}
-            <nav>
+            <nav class="flex items-center">
                 <div class="flex mb-8 font-display font-medium text-base text-gray-800">
                     <div class="pb-3 border-b border-gray-300 flex">
                     <div class="{{ if or (eq $packageSection "_index") (eq $packageSection "version-guide") }} text-blue-600 bg-blue-100 rounded {{ end }} py-1.5 px-4 mr-2 md:mr-4 lg:mr-6 min-w-max hover:text-blue-600">
@@ -72,7 +73,13 @@
                 </div>
                 </div>
             </nav>
+            {{ if in $permalink "api-docs" }}
+                <div class="hidden xl:block xxl:hidden">
+                    {{ partial "registry/package/package-card.html" . }}
+                </div>
+            {{end}}
         {{ end }}
+        </div>
     </div>
 </div>
     

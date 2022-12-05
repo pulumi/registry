@@ -9,6 +9,6 @@ package_status: ga
 publisher: pulumiverse - Marcel Arns
 repo_url: https://github.com/pulumiverse/pulumi-heroku
 schema_file_path: provider/cmd/pulumi-resource-heroku/schema.json
-title: heroku
-updated_on: 1669017001
-version: v1.0.1
+title: Heroku
+updated_on: 1670228382
+version: v1.0.2

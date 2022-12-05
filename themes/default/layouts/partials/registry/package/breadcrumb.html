@@ -17,6 +17,8 @@
             is a repeat of the package name. -->
             {{ if eq $lastUrlSlug "api-docs" }}
                 API Docs
+            {{ else if eq $lastUrlSlug "installation-configuration" }}
+                Installation & Configuration
             {{ else }}
                 {{ .p1.Title }}
             {{ end }}

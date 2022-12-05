@@ -3,5 +3,5 @@
     {{/* It is ok to load the logo_url directly without sanitizing it since we will validate packages before we add them to the registry. */}}
     {{ $url = .logo_url }}
 {{ end }}
-<img onerror="this.classList.add('hidden'); this.parentElement.querySelector('.pkg-fallback-icon').classList.remove('hidden')" class="h-6" src="{{ $url }}">
-<i class="fa fa-archive pkg-fallback-icon text-gray-500 hidden" style="font-size: 2.5rem"></i>
+<img onerror="this.classList.add('hidden'); this.parentElement.querySelector('.pkg-fallback-icon').classList.remove('hidden')" class="h-6" src="{{ $url }}" alt="{{ .name }} logo">
+<i class="fa fa-archive pkg-fallback-icon text-gray-500 hidden" style="font-size: 1.5rem"></i>

@@ -14,7 +14,7 @@ The Unifi provider must be configured with credentials to deploy and update reso
 
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
-import * as unifi from "@pulumi/unifi";
+import * as unifi from "@pulumiverse/unifi";
 
 const mysite = new unifi.Site("mysite", {
     description: "mysite",

@@ -5,11 +5,6 @@
 
         <div class="lg:flex">
             <div class="w-full lg:w-9/12 xxl:w-6/12">
-                {{ if not (in .Page.File "api-docs/_index.md") }}
-                    <div class="lg:flex mb-6">
-                        {{ partial "registry/package/how-to-guides/breadcrumb.html" . }}
-                    </div>
-                {{ end }}
                 <!--Don't show the title in the top-most index page.-->
                 {{ if not (in .Page.File "api-docs/_index.md") }}
                     {{ if and (.Params.h1) (not .Params.notitle) }}

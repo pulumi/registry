@@ -5,6 +5,8 @@
 {{ $packageHome := path.Join "registry/packages" $packageName }}
 {{ $tutorialsPath := printf "%v" (delimit (slice "/registry/packages/" $packageName "/how-to-guides/") "") }}
 
+{{ $permalink := .Page.RelPermalink }}
+
 {{ $guidesCount := 0 }}
 {{ if fileExists $tutorialsPath }}
     {{ with .GetPage $tutorialsPath }}{{ $guidesCount = len .Pages }}{{ end }}
@@ -12,11 +14,22 @@
 
 <div class="flex items-start">
     <div class="lg:w-12/12 flex-grow">
-        <div class="flex items-center mb-4" style="flex-basis: 100%">
-            <div class="flex-grow text-blue-600 font-display">
+        <!-- Because API Docs does not have a right nav, layout is different for those pages only,
+        specifically breakpoints that affect the header's display and position. -->
+        <div class="flex mb-4 flex-col md:flex-row md:justify-between">
+            <div class="text-blue-600 font-display h-fit" style="height: fit-content">
                 <span>&larr;</span>
                 <a href="{{ relref . "/registry" }}" class="hover:underline">All packages</a>
             </div>
+            {{ if in $permalink "api-docs" }}
+                <div class="block xxl:hidden">
+                {{ partial "registry/package/package-card.html" . }}
+                </div>
+            {{ else }}
+                <div class="block lg:hidden">
+                {{ partial "registry/package/package-card.html" . }}
+                </div>
+            {{ end }}
         </div>
 
         {{ with .GetPage (path.Join "registry/packages" $packageName) }}
@@ -60,10 +73,6 @@
                 </div>
             </nav>
         {{ end }}
-    </div>
-    <div class="{{ if (eq $packageSection "api-docs") }} xxl:hidden block {{ else }} lg:hidden block {{ end }}">
-        {{ .Scratch.Set "size" "compact" }}
-        {{ partial "registry/package/package-card.html" . }}
     </div>
 </div>
     

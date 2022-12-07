@@ -4,7 +4,7 @@
 </div>
 {{ with .File }}
     {{ if not $.Page.Params.no_on_this_page }}
-        <div class="on-this-page">
+        <div class="on-this-page pl-3">
             <h4 class="no-anchor">
                 <a href="#">Contents</a>
             </h4>
@@ -13,7 +13,7 @@
             </ul>
         </div>
     {{ end }}
-    <ul class="p-0 list-none">
+    <ul class="p-0 list-none pl-3">
         <!-- Only show "Edit this Page" for pages that are not generated. -->
         {{ if not $.Page.Params.no_edit_this_page }}
         <li>

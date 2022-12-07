@@ -4,7 +4,7 @@
 {{ $size := .Scratch.Get "size" }}
 {{ $mode := .Scratch.Get "mode" }}
 {{ if eq "compact" $size }}
-    <div id="package-card-compact-{{$mode}}" class="p-4 border rounded shadow-sm h-30 bg-gray-100 min-w-80  bg-white md:w-80 w-full package-card-compact">
+    <div id="package-card-compact-{{$mode}}" class="p-4 border rounded shadow-sm h-30 bg-gray-100 min-w-80 bg-white xl:right-10 md:w-80 w-full package-card-compact">
         <div class="card-collapsed flex items-center cursor-pointer">
             <div class="flex max-w-sm">
                 {{ with (index $.Site.Data.registry.packages ($packageName)) }}

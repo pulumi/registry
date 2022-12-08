@@ -1,10 +1,10 @@
 
 {{ define "main" }}
 <div class="container flex flex-row mx-auto px-4 pb-8 mt-4">
-    <div class="flex-col">
+    <div class="flex-col min-w-0">
         {{ partial "registry/package/header.html" . }}
         <div class="lg:flex">
-            <div class="w-full lg:w-9/12 xxl:w-6/12">
+            <div class="lg:w-9/12 xxl:w-12/12">
                 <!--Don't show the title in the top-most index page.-->
                 {{ if not (in .Page.File "api-docs/_index.md") }}
                     {{ if and (.Params.h1) (not .Params.notitle) }}

@@ -24,29 +24,9 @@
             {{ end }}
         </div>
         <div class="hidden package-card-expand">
+            {{ .Scratch.Set "package" $packageName }}
+            {{ partial "registry/package/package-alert.html" . }}
             {{ with (index $.Site.Data.registry.packages ($packageName)) }}
-                {{ if (eq $packageName "aws") }}
-                <div class="text-xs mt-4">
-                    <i class="fas fa-info-circle text-blue-600 text-sm mr-1 my-1"></i>
-                    <span>
-                        We recommend using the <a class="text-blue-600 underline" href="/registry/packages/aws-native/">AWS Native Provider</a> to provision AWS infrastructure
-                    </span>
-                </div>
-                {{ else if (eq $packageName "azure") }}
-                <div class="text-xs mt-4">
-                    <i class="fas fa-info-circle text-blue-600 mr-1 my-1"></i>
-                    <span>
-                        We recommend using the <a class="text-blue-600 underline" href="/registry/packages/azure-native/">Azure Native Provider</a> to provision Azure infrastructure
-                    </span>
-                </div>
-                {{ else if (eq $packageName "gcp") }}
-                <div class="text-xs mt-4">
-                    <i class="fas fa-info-circle text-blue-600 mr-1 my-1"></i>
-                    <span>
-                        We recommend using the <a class="text-blue-600 underline" href="/registry/packages/google-native/">Google Cloud Native Provider</a> to provision Google Cloud infrastructure
-                    </span>
-                </div>
-                {{ end }}
                 <div class="lg:flex mb-4 text-xs mt-4">
                     {{ .version }} published on {{ ((time .updated_on).Format "Monday, Jan 2, 2006") }} by {{ .publisher }}
                 </div>
@@ -62,7 +42,7 @@
         </div>
     </div>
 {{ else }}
-    <div class="p-4 border rounded mb-8 package-card">
+    <div class="p-4 mb-8 border rounded package-card">
         <div class="lg:flex max-w-sm max-h-4">
             {{ with (index $.Site.Data.registry.packages ($packageName)) }}
             <div class="lg:flex max-h-4">
@@ -70,34 +50,10 @@
             </div>
             {{ end }}
         </div>
-        
-
+        {{ .Scratch.Set "package" $packageName }}
+        {{ partial "registry/package/package-alert.html" . }}
         {{ with (index $.Site.Data.registry.packages ($packageName)) }}
-            {{ if (eq $packageName "aws") }}
-            <div class="text-xs mt-4">
-                <i class="fas fa-info-circle text-blue-600 mr-1 my-1 text-sm"></i>
-                <span>
-                    We recommend using the <a class="text-blue-600 underline" href="/registry/packages/aws-native/">AWS Native Provider</a> to provision AWS infrastructure
-                </span>
-            </div>
-            {{ else if (eq $packageName "azure") }}
-            <div class="text-xs mt-4">
-                <i class="fas fa-info-circle text-blue-600 mr-1 my-1"></i>
-                <span>
-                    We recommend using the <a class="text-blue-600 underline" href="/registry/packages/azure-native/">Azure Native Provider</a> to provision Azure infrastructure
-                </span>
-            </div>
-            {{ else if (eq $packageName "gcp") }}
-            <div class="text-xs mt-4">
-                <i class="fas fa-info-circle text-blue-600 mr-1 my-1"></i>
-                <span>
-                    We recommend using the
-                    <a class="text-blue-600 underline" href="/registry/packages/google-native/">Google Cloud Native Provider</a>
-                    to provision Google Cloud infrastructure
-                </span>
-            </div>
-            {{ end }}
-            <div class="lg:flex mt-4 mb-4 text-xs">
+            <div class="mt-4 mb-4 lg:flex text-xs">
                 {{ .version }} published on {{ ((time .updated_on).Format "Monday, Jan 2, 2006") }} by {{ .publisher }}
             </div>
 

@@ -1,0 +1,23 @@
+{{ $package := .Scratch.Get "package" }}
+{{ if (eq $package "aws") }}
+<div class="text-xs mt-4">
+    <i class="fas fa-info-circle text-blue-600 text-sm mr-1 my-1"></i>
+    <span>
+        We recommend using the <a class="text-blue-600 underline" href="/registry/packages/aws-native/">AWS Native Provider</a> to provision AWS infrastructure
+    </span>
+</div>
+{{ else if (eq $package "azure") }}
+<div class="text-xs mt-4">
+    <i class="fas fa-info-circle text-blue-600 mr-1 my-1"></i>
+    <span>
+        We recommend using the <a class="text-blue-600 underline" href="/registry/packages/azure-native/">Azure Native Provider</a> to provision Azure infrastructure
+    </span>
+</div>
+{{ else if (eq $package "gcp") }}
+<div class="text-xs mt-4">
+    <i class="fas fa-info-circle text-blue-600 mr-1 my-1"></i>
+    <span>
+        We recommend using the <a class="text-blue-600 underline" href="/registry/packages/google-native/">Google Cloud Native Provider</a> to provision Google Cloud infrastructure
+    </span>
+</div>
+{{ end }}

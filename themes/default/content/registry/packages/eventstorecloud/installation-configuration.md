@@ -1,6 +1,6 @@
 ---
 title: Event Store Cloud Installation & Configuration
-meta_desc: How to set up credentials to use the Event Store cloud provider for Pulumi.
+meta_desc: How to set up credentials to use the Event Store Cloud provider for Pulumi.
 layout: installation
 ---
 

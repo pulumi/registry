@@ -2,9 +2,8 @@
 {{ $packageName := index $directories 2 }}
 {{ $packageHome := path.Join "registry/packages" $packageName }}
 {{ $size := .Scratch.Get "size" }}
-{{ $mode := .Scratch.Get "mode" }}
 {{ if eq "compact" $size }}
-    <div id="package-card-compact-{{$mode}}" class="p-4 border rounded shadow-sm h-30 bg-gray-100 min-w-80 bg-white xl:right-10 md:w-80 w-full package-card-compact">
+    <div class="p-4 border rounded shadow-sm h-30 bg-gray-100 min-w-80 bg-white xl:right-10 md:w-80 w-full package-card-compact">
         <div class="card-collapsed flex items-center cursor-pointer">
             <div class="flex max-w-sm">
                 {{ with (index $.Site.Data.registry.packages ($packageName)) }}
@@ -19,12 +18,12 @@
                 {{ .version }}, {{ ((time .updated_on).Format "Jan 2 06") }}
             </div>
     
-            <div class="caret">
-                <i id="package-card-caret-{{$mode}}" class="fas fa-chevron-circle-down"></i>
+            <div class="caret-container">
+                <i class="package-card-caret fas fa-chevron-circle-down"></i>
             </div>
             {{ end }}
         </div>
-        <div id="package-card-expanded-{{$mode}}" class="hidden">
+        <div class="hidden package-card-expand">
             {{ with (index $.Site.Data.registry.packages ($packageName)) }}
                 {{ if (eq $packageName "aws") }}
                 <div class="text-xs mt-4">
@@ -44,7 +43,7 @@
                 <div class="text-xs mt-4">
                     <i class="fas fa-info-circle text-blue-600 mr-1 my-1"></i>
                     <span>
-                        We recommend using the <a class="text-blue-600 underline" href="/registry/packages/gcp-native/">Google Cloud Native Provider</a> to provision Google Cloud infrastructure
+                        We recommend using the <a class="text-blue-600 underline" href="/registry/packages/google-native/">Google Cloud Native Provider</a> to provision Google Cloud infrastructure
                     </span>
                 </div>
                 {{ end }}
@@ -63,7 +62,7 @@
         </div>
     </div>
 {{ else }}
-    <div class="package-card">
+    <div class="p-4 border rounded mb-8 package-card">
         <div class="lg:flex max-w-sm max-h-4">
             {{ with (index $.Site.Data.registry.packages ($packageName)) }}
             <div class="lg:flex max-h-4">

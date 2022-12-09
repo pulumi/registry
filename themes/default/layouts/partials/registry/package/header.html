@@ -17,21 +17,13 @@
         <!-- Because API Docs does not have a right nav, layout is different for those pages only,
         specifically breakpoints that affect the header's display and position. -->
         <div class="flex md:items-center items-start lg:mb-8 mb-4 flex-col md:flex-row md:justify-between">
-            <div class="flex items-center h-fit pr-2" style="height: fit-content">
+            <div class="flex items-center pr-2" style="height: fit-content">
                 {{ partial "registry/package/breadcrumb.html" . }}
             </div>
-            {{ if in $permalink "api-docs" }}
-                <div class="block xl:hidden mt-0 md:w-80 w-full">
-                    {{ .Scratch.Set "size" "compact" }}
-                    {{ .Scratch.Set "mode" "api-docs" }}
-                    {{ partial "registry/package/package-card.html" . }}
-                </div>
-            {{ else }}
-                <div class="block xl:hidden mt-0 md:w-80 w-full">
-                    {{ .Scratch.Set "size" "compact" }}
-                    {{ partial "registry/package/package-card.html" . }}
-                </div>
-            {{ end }}
+            <div class="block xl:hidden mt-0 md:w-80 w-full">
+                {{ .Scratch.Set "size" "compact" }}
+                {{ partial "registry/package/package-card.html" . }}
+            </div>
         </div>
 
         <div class="flex justify-between">
@@ -81,7 +73,6 @@
     {{ if in $permalink "api-docs" }}
         <div class="hidden xl:block xxl:hidden md:mt-0 mt-4 md:w-80 w-full">
             {{ .Scratch.Set "size" "compact" }}
-            {{ .Scratch.Set "mode" "api-docs-header" }}
             {{ partial "registry/package/package-card.html" . }}
         </div>
     {{end}}

@@ -1,6 +1,6 @@
 ---
-title: Confluent Cloud Installation & Configuration
-meta_desc: Provides an overview on how to configure credentials for the Pulumi Confluent Cloud Provider.
+title: Confluent Installation & Configuration
+meta_desc: Provides an overview on how to configure credentials for the Pulumi Confluent Provider.
 layout: installation
 ---
 

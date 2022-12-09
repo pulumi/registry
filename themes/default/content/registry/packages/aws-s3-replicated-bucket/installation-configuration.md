@@ -1,5 +1,5 @@
 ---
-title: AWS S3 Replicated Bucket
+title: AWS S3 Replicated Bucket Installation & Configuration
 meta_desc: Information on how to set up credentials to use the AWS S3 Replicated Bucket component.
 layout: installation
 ---

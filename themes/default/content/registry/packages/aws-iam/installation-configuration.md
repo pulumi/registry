@@ -1,5 +1,5 @@
 ---
-title: AWS IAM
+title: AWS IAM Installation & Configuration
 meta_desc: Information on how to set up credentials to use the Pulumi AWS IAM component.
 layout: installation
 ---

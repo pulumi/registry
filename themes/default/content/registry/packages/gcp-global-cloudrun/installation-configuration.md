@@ -1,5 +1,5 @@
 ---
-title: GCP Global CloudRun
+title: GCP Global CloudRun Installation & Configuration
 meta_desc: Information on how to set up credentials to use the AWS API Gateway component.
 layout: installation
 ---

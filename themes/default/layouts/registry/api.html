@@ -12,6 +12,8 @@
                     {{ else if and (ne .Title "") (not .Params.notitle) }}
                         <h1 class="-mt-2 mb-8">{{ .Params.title_tag }}</h1>
                     {{ end }}
+                {{ else if (in .Page.File "api-docs/_index.md")}}
+                    <h1>{{ .Params.title }}: API Docs</h1>
                 {{ end }}
                 <section data-swiftype-index="true" class="lg:-mt-2">
                     {{ .Content }}

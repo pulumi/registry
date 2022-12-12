@@ -1,31 +1,22 @@
 
 {{ define "main" }}
-    <div class="container mx-auto px-4 pb-8 mt-2">
+<div class="container flex flex-row mx-auto px-4 pb-8 mt-4">
+    <div class="flex-col min-w-0">
         {{ partial "registry/package/header.html" . }}
-
         <div class="lg:flex">
-            <div class="w-full lg:w-9/12 xxl:w-6/12">
+            <div class="lg:w-9/12 xxl:w-12/12">
                 <!--Don't show the title in the top-most index page.-->
                 {{ if not (in .Page.File "api-docs/_index.md") }}
                     {{ if and (.Params.h1) (not .Params.notitle) }}
                         <h1 class="-mt-2 mb-8">{{ .Params.h1 }}</h1>
                     {{ else if and (ne .Title "") (not .Params.notitle) }}
-                        <h1 class="-mt-2 mb-8">{{ .Title }}</h1>
+                        <h1 class="-mt-2 mb-8">{{ .Params.title_tag }}</h1>
                     {{ end }}
                 {{ end }}
                 <section data-swiftype-index="true" class="lg:-mt-2">
                     {{ .Content }}
                 </section>
             </div>
-
-            <div class="xxl:w-3/12 xxl:pl-8">
-                <div class="sticky-sidebar">
-                    <div class="ml-2 hidden xxl:block">
-                        {{ partial "registry/package/right-nav.html" . }}
-                    </div>
-                </div>
-            </div>
-
             <div class="w-3/12 pr-8 mb-2 pt-8 lg:order-first lg:pt-0 lg:mt-0">
                 <div class="sticky-sidebar left-nav">
                     <div class="hidden lg:block mb-6">
@@ -38,4 +29,12 @@
             </div>
         </div>
     </div>
+    <div class="lg:w-3/12 lg:pl-8 min-w-max hidden xxl:block">
+        <div class="sticky-sidebar">
+            <div class="ml-2">
+                {{ partial "registry/package/right-nav.html" . }}
+            </div>
+        </div>
+    </div>
+</div>
 {{ end }}

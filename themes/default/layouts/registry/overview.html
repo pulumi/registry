@@ -1,25 +1,26 @@
 {{ define "main" }}
-    <div class="container mx-auto px-4 pb-8 mt-2">
+<div class="flex flex-row container mx-auto px-4 pb-8 mt-4">
+    <div class="flex-row">
         {{ partial "registry/package/header.html" . }}
-
         <div class="lg:flex">
-            <div class="lg:w-8/12 max-w-3xl">
+            <div class="lg:w-12/12 max-w-3xl">
                 {{ if not (in .Page.File "_index.md") }}
-                    <h1 class="text-3xl mt-5">{{ .Params.title }}</h1>
                 {{ end }}
+                <h1 class="text-3xl mt-5">{{ .Params.title }}</h1>
 
                 <section data-swiftype-index="true">
                     {{ .Content }}
                 </section>
             </div>
-            <div class="lg:w-1/12"></div>
-            <div class="lg:w-3/12 lg:pl-8">
-                <div class="sticky-sidebar">
-                    <div class="ml-2 hidden lg:block">
-                        {{ partial "registry/package/right-nav.html" . }}
-                    </div>
-                </div>
+        </div>
+    </div>
+    <div class="lg:w-1/12"></div>
+    <div class="lg:w-3/12 lg:pl-8 min-w-max">
+        <div class="sticky-sidebar">
+            <div class="ml-2 hidden xl:block">
+                {{ partial "registry/package/right-nav.html" . }}
             </div>
         </div>
     </div>
+</div>
 {{ end }}

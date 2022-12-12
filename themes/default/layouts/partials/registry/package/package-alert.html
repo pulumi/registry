@@ -1,0 +1,37 @@
+{{ $package := .Scratch.Get "package" }}
+{{ if (eq $package "aws") }}
+<div class="text-xs mt-4">
+    <i class="fas fa-info-circle text-blue-600 text-sm mr-1 my-1"></i>
+    <span>
+         Try the new Preview <a class="text-blue-600 underline" href="/registry/packages/aws-native/">AWS Native</a> if you need AWS resources not available in the classic version.
+    </span>
+</div>
+{{ else if (eq $package "aws-native") }}
+<div class="text-xs mt-4">
+    <i class="fas fa-info-circle text-blue-600 mr-1 my-1"></i>
+    <span>
+        AWS Native is in public preview. <a class="text-blue-600 underline" href="/registry/packages/aws/">AWS Classic</a> remains fully supported.
+    </span>
+</div>
+{{ else if (eq $package "azure") }}
+<div class="text-xs mt-4">
+    <i class="fas fa-info-circle text-blue-600 mr-1 my-1"></i>
+    <span>
+        We recommend using <a class="text-blue-600 underline" href="/registry/packages/azure-native/">Azure Native</a>.
+    </span>
+</div>
+{{ else if (eq $package "gcp") }}
+<div class="text-xs mt-4">
+    <i class="fas fa-info-circle text-blue-600 mr-1 my-1"></i>
+    <span>
+        Try the new Preview <a class="text-blue-600 underline" href="/registry/packages/google-native/">Google Cloud Native</a> if you need Google Cloud resources not available in the classic version.
+    </span>
+</div>
+{{ else if (eq $package "google-native") }}
+<div class="text-xs mt-4">
+    <i class="fas fa-info-circle text-blue-600 mr-1 my-1"></i>
+    <span>
+        Google Cloud Native is in public preview. <a class="text-blue-600 underline" href="/registry/packages/gcp/">Google Cloud Classic</a> remains fully supported.
+    </span>
+</div>
+{{ end }}

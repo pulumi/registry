@@ -1,21 +1,21 @@
 {{ define "main" }}
-    <div class="container mx-auto px-4 pb-8 mt-2">
-        {{ partial "registry/package/header.html" . }}
-
-        <div class="lg:flex">
-            <div class="lg:w-9/12 max-w-3xl">
-                {{ if not (in .Page.File "how-to-guides/_index.md") }}
-                    <h2 class="text-3xl mt-5">{{ cond (isset .Params "h1") .Params.h1 .Params.title }}</h2>
-                {{ end }}
-
-                {{ .Content }}
+    <div class="flex flex-row container mx-auto px-4 pb-8 mt-2">
+        <div class="min-w-0">
+            {{ partial "registry/package/header.html" . }}
+            <div class="lg:flex">
+                <div class="lg:w-9/12 max-w-3xl">
+                    {{ if not (in .Page.File "how-to-guides/_index.md") }}
+                        <h1 class="text-3xl mt-5">{{ cond (isset .Params "h1") .Params.h1 .Params.title }}</h1>
+                    {{ end }}
+    
+                    {{ .Content }}
+                </div>
             </div>
-
-            <div class="lg:w-3/12 lg:pl-8">
-                <div class="sticky-sidebar">
-                    <div class="ml-2 hidden lg:block">
-                        {{ partial "registry/package/right-nav.html" . }}
-                    </div>
+        </div>
+        <div class="xl:w-3/12 xl:pl-8 min-w-max">
+            <div class="sticky-sidebar">
+                <div class="ml-2 hidden xl:block">
+                    {{ partial "registry/package/right-nav.html" . }}
                 </div>
             </div>
         </div>

@@ -3,7 +3,7 @@ component: true
 description: A Pulumi component that synchronizes a local folder to Amazon S3, Azure
   Blob Storage, or Google Cloud Storage.
 featured: false
-logo_url: https://raw.githubusercontent.com/pulumi/pulumi-synced-folder/master/assets/synced-folder.svg
+logo_url: ""
 name: synced-folder
 native: false
 package_status: public_preview
@@ -11,5 +11,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-synced-folder
 schema_file_path: schema.json
 title: Synced Folder
-updated_on: 1661544838
-version: v0.0.8
+updated_on: 1670978998
+version: v0.0.9

@@ -1,5 +1,4 @@
 {{ define "main" }}
-{{ $lastUrlSlug := index (last 1 (split (delimit (split $.Page.File "/") "," "") ",")) 0 }}
     <div class="flex flex-row container mx-auto px-4 pb-8 mt-2">
         <div class="min-w-0">
             {{ partial "registry/package/header.html" . }}

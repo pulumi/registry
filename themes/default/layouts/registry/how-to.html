@@ -8,7 +8,7 @@
 
         <div class="lg:flex">
             <div class="lg:w-12/12 max-w-3xl">
-                <h1 class="text-3xl mt-5">{{ with .GetPage $packageHome }}{{ .Title }}{{ end }}: How-to-Guides</h1>
+                <h1>{{ with .GetPage $packageHome }}{{ .Title }}{{ end }}: How-to-Guides</h1>
                 {{ if (eq (len .Pages) 0) }}
                     There are no guides yet for this package.
                 {{ else }}

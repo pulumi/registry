@@ -8,12 +8,12 @@
 
         <div class="lg:flex">
             <div class="lg:w-12/12 max-w-3xl">
-                <h1 class="text-3xl mt-5">{{ with .GetPage $packageHome }}{{ .Title }}{{ end }}: How-to-Guides</h1>
+                <h1>{{ with .GetPage $packageHome }}{{ .Title }}{{ end }}: How-to-Guides</h1>
                 {{ if (eq (len .Pages) 0) }}
                     There are no guides yet for this package.
                 {{ else }}
                     {{ if not (eq (len (where .Pages "Params.language" "==" nil)) 0) }}
-                        <h3>Featured Guides</h3>
+                        <h2>Featured Guides</h2>
 
                         {{ range where .Pages "Params.language" "==" nil }}
                             <div class="pb-4">
@@ -21,7 +21,7 @@
                             </div>
                         {{ end }}
 
-                        <h3>How-to Guides by Language</h3>
+                        <h2>How-to Guides by Language</h2>
                     {{ end }}
 
                     <div><pulumi-chooser type="language" options="typescript,javascript,python,go,csharp"></pulumi-chooser></div>

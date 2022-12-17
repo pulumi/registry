@@ -5,7 +5,7 @@
             <div class="lg:flex">
                 <div class="lg:w-9/12 max-w-3xl">
                     {{ if not (in .Page.File "how-to-guides/_index.md") }}
-                        <h1>{{ cond (isset .Params "h1") .Params.h1 .Params.title }}</h1>
+                        <h1>{{ .Params.title }}</h1>
                     {{ end }}
     
                     {{ .Content }}

@@ -10,5 +10,5 @@ publisher: lbrlabs
 repo_url: https://github.com/lbrlabs/pulumi-scaleway
 schema_file_path: provider/cmd/pulumi-resource-scaleway/schema.json
 title: Scaleway
-updated_on: 1670265109
-version: v1.5.0
+updated_on: 1671301939
+version: v1.6.0

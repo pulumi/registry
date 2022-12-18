@@ -1,5 +1,5 @@
 ---
-title: Grafana
+title: Grafana Cloud
 meta_desc: Provides an overview of the Grafana Provider for Pulumi.
 layout: overview
 ---

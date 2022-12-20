@@ -2,18 +2,27 @@
     {{ .Scratch.Set "size" "lg" }}
     {{ partial "registry/package/package-card.html" . }}
 </div>
+{{ $path := (split .Page.Params.title_tag ".")}}
 {{ with .File }}
     {{ if not $.Page.Params.no_on_this_page }}
-        <div class="on-this-page pl-3">
+        <div class="on-this-page pl-3 flex-1 overflow-y-auto">
             <h4 class="no-anchor">
-                <a href="#">Contents</a>
+                <a href="#" class="contents-heading">Contents</a>
             </h4>
             <ul class="text-sm">
                 {{/* This will be populated dynamically with all H2s and H3s on the page; see assets/js/main.js */}}
             </ul>
+            {{- if eq (len $path) 3 -}}
+                {{ $packageName := index $path 0 }}
+                {{ $moduleName := index $path 1 }}
+                {{ $resourceName := index $path 2 }}
+                <div class="mt-6">
+                    <pulumi-resource-links package-name={{ $packageName }} module-name={{ $moduleName }} resource-name={{ $resourceName }}></pulumi-resource-links>
+                </div>
+            {{ end }}
         </div>
     {{ end }}
-    <ul class="p-0 list-none pl-3">
+    <ul class="p-0 pl-3 list-none">
         <!-- Only show "Edit this Page" for pages that are not generated. -->
         {{ if not $.Page.Params.no_edit_this_page }}
         <li>
@@ -30,3 +39,4 @@
     </ul>
 {{ end }}
 <pulumi-top-button></pulumi-top-button>
+

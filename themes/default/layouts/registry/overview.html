@@ -6,7 +6,7 @@
             <div class="lg:w-12/12 max-w-3xl">
                 {{ if not (in .Page.File "_index.md") }}
                 {{ end }}
-                <h1 class="text-3xl mt-5">{{ .Params.title }}</h1>
+                <h1>{{ .Params.title }}</h1>
 
                 <section data-swiftype-index="true">
                     {{ .Content }}

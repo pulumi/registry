@@ -1,0 +1,14 @@
+category: Utility
+component: false
+description: A Pulumi native provider for making API calls
+featured: false
+logo_url: ""
+name: purrl
+native: true
+package_status: public_preview
+publisher: Pulumiverse
+repo_url: https://github.com/pulumiverse/pulumi-purrl
+schema_file_path: provider/cmd/pulumi-resource-purrl/schema.json
+title: purrl
+updated_on: 1671555699
+version: v0.2.8

@@ -15,7 +15,7 @@
             
             {{ with (index $.Site.Data.registry.packages ($packageName)) }}
             <div class="flex-grow text-left mx-5 whitespace-nowrap package-header">
-                {{ .version }}, {{ ((time .updated_on).Format "Jan 2 06") }}
+                {{ .title }} {{ .version }}, {{ ((time .updated_on).Format "Jan 2 06") }}
             </div>
     
             <div class="caret-container">
@@ -28,7 +28,7 @@
             {{ partial "registry/package/package-alert.html" . }}
             {{ with (index $.Site.Data.registry.packages ($packageName)) }}
                 <div class="lg:flex mb-4 text-xs mt-4">
-                    {{ .version }} published on {{ ((time .updated_on).Format "Monday, Jan 2, 2006") }} by {{ .publisher }}
+                    {{ .title }} {{ .version }} published on {{ ((time .updated_on).Format "Monday, Jan 2, 2006") }} by {{ .publisher }}
                 </div>
     
                 <div class="flex items-center">
@@ -54,7 +54,7 @@
         {{ partial "registry/package/package-alert.html" . }}
         {{ with (index $.Site.Data.registry.packages ($packageName)) }}
             <div class="mt-4 mb-4 lg:flex text-xs">
-                {{ .version }} published on {{ ((time .updated_on).Format "Monday, Jan 2, 2006") }} by {{ .publisher }}
+                {{ .title }} {{ .version }} published on {{ ((time .updated_on).Format "Monday, Jan 2, 2006") }} by {{ .publisher }}
             </div>
 
             <div class="flex items-center">

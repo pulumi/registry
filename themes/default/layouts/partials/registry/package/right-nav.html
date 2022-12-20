@@ -5,7 +5,7 @@
 {{ $path := (split .Page.Params.title_tag ".")}}
 {{ with .File }}
     {{ if not $.Page.Params.no_on_this_page }}
-        <div class="on-this-page pl-3">
+        <div class="on-this-page pl-3 flex-1 overflow-y-auto">
             <h4 class="no-anchor">
                 <a href="#">Contents</a>
             </h4>

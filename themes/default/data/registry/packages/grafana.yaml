@@ -2,7 +2,7 @@ category: Cloud
 component: false
 description: A Pulumi package for creating and managing grafana.
 featured: false
-logo_url: https://raw.githubusercontent.com/lbrlabs/pulumi-grafana/master/assets/121px-Grafana_logo.svg.png
+logo_url: ""
 name: grafana
 native: false
 package_status: public_preview

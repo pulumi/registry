@@ -155,6 +155,10 @@
     {
       "repoSlug": "pulumiverse/pulumi-purrl",
       "schemaFile": "provider/cmd/pulumi-resource-purrl/schema.json"
+    },
+    {
+      "repoSlug": "pulumiverse/pulumi-harbor",
+      "schemaFile": "provider/cmd/pulumi-resource-harbor/schema.json"
     }
   ]
 }

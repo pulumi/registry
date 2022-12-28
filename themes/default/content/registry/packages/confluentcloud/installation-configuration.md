@@ -32,7 +32,7 @@ before it can be used to create resources. Once the credentials are obtained, th
 
     ```bash
     $ pulumi config set confluentcloud:cloudApiKey XXXXXXXXXXXXXX
-    $ pulumi config set confluentcloud:clouaApiSecret YYYYYYYYYYYYYY --secret
+    $ pulumi config set confluentcloud:cloudApiSecret YYYYYYYYYYYYYY --secret
     ```
 
 Remember to pass `--secret` when setting `confluentcloud:cloudApiKey` and `confluentcloud:cloudApiSecret` so that it is properly encrypted. The complete list of

@@ -1,0 +1,14 @@
+category: Utility
+component: false
+description: A Pulumi package for creating and managing Harbor resources.
+featured: false
+logo_url: ""
+name: harbor
+native: false
+package_status: ga
+publisher: Pulumiverse
+repo_url: https://github.com/pulumiverse/pulumi-harbor
+schema_file_path: provider/cmd/pulumi-resource-harbor/schema.json
+title: Harbor
+updated_on: 1672084949
+version: v3.8.0

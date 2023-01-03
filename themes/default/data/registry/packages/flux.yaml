@@ -10,5 +10,5 @@ publisher: oun
 repo_url: https://github.com/oun/pulumi-flux
 schema_file_path: provider/cmd/pulumi-resource-flux/schema.json
 title: Flux
-updated_on: 1670061749
-version: v0.21.1
+updated_on: 1672717326
+version: v0.22.2

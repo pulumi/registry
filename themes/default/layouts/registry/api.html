@@ -4,7 +4,7 @@
     <div class="flex-col min-w-0">
         {{ partial "registry/package/header.html" . }}
         <div class="lg:flex">
-            <div class="lg:w-9/12 xxl:w-8/12">
+            <div class="xxl:w-8/12">
                 <!--Don't show the title in the top-most index page.-->
                 {{ if not (in .Page.File "api-docs/_index.md") }}
                     {{ if and (.Params.h1) (not .Params.notitle) }}

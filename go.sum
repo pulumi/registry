@@ -2,3 +2,7 @@ github.com/pulumi/pulumi-hugo/themes/default v0.0.0-20230104222920-e0210b0d2a5e 
 github.com/pulumi/pulumi-hugo/themes/default v0.0.0-20230104222920-e0210b0d2a5e/go.mod h1:081/gGTOxNFBjrLQ3QvsyP34iiWgmmKDtoi5falfsuo=
 github.com/pulumi/theme v0.0.0-20221221163842-befe5eab7cde h1:OQ1pNBkMLUvFiW5QH50xh7R/4iNy4xB2PR8znDX6wXg=
 github.com/pulumi/theme v0.0.0-20221221163842-befe5eab7cde/go.mod h1:Ksr+ztEgwxDLYFRalb0SYu4WcGROgnF35iILealOMno=
+github.com/pulumi/theme v0.0.0-20230104204257-95448bbdbdb3 h1:iEOHyMs0C6JcYod6YJiAiQjJKYhhhjLjjm8lIYcH3do=
+github.com/pulumi/theme v0.0.0-20230104204257-95448bbdbdb3/go.mod h1:Ksr+ztEgwxDLYFRalb0SYu4WcGROgnF35iILealOMno=
+github.com/pulumi/theme v0.0.0-20230104213008-b1d296f46586 h1:AJgh5rPOR7YNZdHGF2moBqW2zNEfFahMg5TYeFkW4lQ=
+github.com/pulumi/theme v0.0.0-20230104213008-b1d296f46586/go.mod h1:Ksr+ztEgwxDLYFRalb0SYu4WcGROgnF35iILealOMno=

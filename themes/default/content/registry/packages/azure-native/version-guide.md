@@ -75,7 +75,7 @@ keyvault.NewVault(/*...*/)
 
 {{% choosable language java %}}
 
-Currently no support for versions in Java.
+Java is not supported.
 
 {{% /choosable %}}
 

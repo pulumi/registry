@@ -87,18 +87,6 @@ For example, a common Service Principal as displayed by the Azure CLI looks some
 }
 ```
 
-You also need to obtain a Subscription ID. To retrieve your current Subscription ID, you can use:
-
-```bash
-$ az account show --query id -o tsv
-```
-
-To list all available subscriptions, you can use:
-
-```bash
-$ az account list --query '[].{subscriptionName:name,subscriptionId:id}' -o tsv
-```
-
 #### Make tokens available to Pulumi
 
 Once you have the Service Principal's authorization tokens, choose one of the ways below to make them available to Pulumi:
@@ -111,7 +99,6 @@ Remember to pass `--secret` when setting `clientSecret` so that it is properly e
     $ pulumi config set azuread:clientId <clientID>
     $ pulumi config set azuread:clientSecret <clientSecret> --secret
     $ pulumi config set azuread:tenantId <tenantID>
-    $ pulumi config set azuread:subscriptionId <subscriptionId>
     ```
 
 ##### Set configuration using environment variables
@@ -123,7 +110,6 @@ Remember to pass `--secret` when setting `clientSecret` so that it is properly e
 $ export ARM_CLIENT_ID=<YOUR_ARM_CLIENT_ID>
 $ export ARM_CLIENT_SECRET=<YOUR_ARM_CLIENT_SECRET>
 $ export ARM_TENANT_ID=<YOUR_ARM_TENANT_ID>
-$ export ARM_SUBSCRIPTION_ID=<YOUR_ARM_SUBSCRIPTION_ID>
 ```
 
 {{% /choosable %}}
@@ -134,7 +120,6 @@ $ export ARM_SUBSCRIPTION_ID=<YOUR_ARM_SUBSCRIPTION_ID>
 $ export ARM_CLIENT_ID=<YOUR_ARM_CLIENT_ID>
 $ export ARM_CLIENT_SECRET=<YOUR_ARM_CLIENT_SECRET>
 $ export ARM_TENANT_ID=<YOUR_ARM_TENANT_ID>
-$ export ARM_SUBSCRIPTION_ID=<YOUR_ARM_SUBSCRIPTION_ID>
 ```
 
 {{% /choosable %}}
@@ -145,7 +130,6 @@ $ export ARM_SUBSCRIPTION_ID=<YOUR_ARM_SUBSCRIPTION_ID>
 > $env:ARM_CLIENT_ID = "<YOUR_ARM_CLIENT_ID>"
 > $env:ARM_CLIENT_SECRET = "<YOUR_ARM_CLIENT_SECRET>"
 > $env:ARM_TENANT_ID = "<YOUR_ARM_TENANT_ID>"
-> $env:ARM_SUBSCRIPTION_ID = "<YOUR_ARM_SUBSCRIPTION_ID>"
 ```
 
 {{% /choosable %}}
@@ -164,6 +148,5 @@ Use `pulumi config set azuread:<option>` or pass options to the [constructor of 
 | `msiEndpoint`               | Optional          | The REST endpoint to retrieve an MSI token from. Pulumi will attempt to discover this automatically but it can be specified manually here. It can also be sourced from the `ARM_MSI_ENDPOINT` environment variable.                                                                                    |
 | `skipCredentialsValidation` | Optional          | Prevents the provider from validating the given credentials. When set to true, `skip_provider_registration` is assumed. It can also be sourced from the `ARM_SKIP_CREDENTIALS_VALIDATION` environment variable; defaults to `false`.                                                                   |
 | `skipProviderRegistration`  | Optional          | Prevents the provider from registering the ARM provider namespaces, this can be used if you don't wish to give the Active Directory Application permission to register resource providers. It can also be sourced from the `ARM_SKIP_PROVIDER_REGISTRATION` environment variable; defaults to `false`. |
-| `subscriptionId`            | Optional          | The subscription ID to use. It can also be sourced from the `ARM_SUBSCRIPTION_ID` environment variable.                                                                                                                                                                                                |
 | `tenantId`                  | Optional          | The tenant ID to use. It can also be sourced from the `ARM_TENANT_ID` environment variable.                                                                                                                                                                                                            |
 | `useMsi`                    | Optional          | Set to true to authenticate using managed service identity. It can also be sourced from the `ARM_USE_MSI` environment variable.                                                                                                                                                                        |

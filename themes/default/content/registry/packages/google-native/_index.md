@@ -1,18 +1,18 @@
 ---
-title: Google Native
-meta_desc: Learn how to use Pulumi's Google Native Provider to manage and provision Google Cloud resources.
+title: Google Cloud Native
+meta_desc: Learn how to use Pulumi's Google Cloud Native Provider to manage and provision Google Cloud resources.
 layout: overview
 ---
 
 {{< notes >}}
-Google Native is in public preview.
+Google Cloud Native is in public preview.
 
 [Google Cloud Classic]({{<relref "/registry/packages/gcp">}}) remains fully supported and recommended for production use.
 {{< /notes >}}
 
-The Google Native provider for Pulumi can provision many of the cloud resources available in [Google Cloud](https://cloud.google.com/).
+The Google Cloud Native provider for Pulumi can provision many of the cloud resources available in [Google Cloud](https://cloud.google.com/).
 
-The Google Native provider must be configured with credentials to deploy and update resources in Google Cloud; see [Installation & Configuration]({{<relref "./installation-configuration">}}) for instructions.
+The Google Cloud Native provider must be configured with credentials to deploy and update resources in Google Cloud; see [Installation & Configuration]({{<relref "./installation-configuration">}}) for instructions.
 
 ## Example
 

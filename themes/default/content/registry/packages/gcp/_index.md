@@ -10,11 +10,6 @@ The GCP provider must be configured with credentials to deploy and update resour
 
 **New to Pulumi and Google Cloud?** [Get started with Google Cloud using our tutorial]({{<relref "/docs/get-started/gcp">}})
 
-{{% notes %}}
-Pulumi has a new Google Cloud provider: the [Pulumi Google Native Provider]({{<relref "/registry/packages/google-native">}}). Google Native gives you same-day access to all new Google Cloud resources.
-
-Consider trying [Google Native]({{<relref "/registry/packages/google-native">}}) if you need Google Cloud resources that aren't available in this provider.
-{{% /notes %}}
 
 ## Example
 

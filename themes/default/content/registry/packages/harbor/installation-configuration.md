@@ -34,7 +34,7 @@ yarn add @pulumiverse/harbor
 ### Python
 
 To use from Python, install using `pip`:
-``
+
 ```bash
 pip install pulumiverse-harbor
 ```

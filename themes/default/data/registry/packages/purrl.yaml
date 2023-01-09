@@ -10,5 +10,5 @@ publisher: Pulumiverse
 repo_url: https://github.com/pulumiverse/pulumi-purrl
 schema_file_path: provider/cmd/pulumi-resource-purrl/schema.json
 title: purrl
-updated_on: 1671555699
-version: v0.2.8
+updated_on: 1673185371
+version: v0.2.9

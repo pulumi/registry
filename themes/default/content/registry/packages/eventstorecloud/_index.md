@@ -25,5 +25,3 @@ const network = new esc.Network("sample-network", {
     cidrBlock: "172.21.0.0/16"
 });
 ```
-
-[//]: # (Visit the [How-to Guides]&#40;{{<relref "./how-to-guides">}}&#41; to find step-by-step guides for examples of using the Event Store Cloud provider in different cloud environments.)

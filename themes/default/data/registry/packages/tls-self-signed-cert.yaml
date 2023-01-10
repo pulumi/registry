@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-tls-self-signed-cert
 schema_file_path: schema.json
 title: Self Signed Certificate
-updated_on: 1669941931
-version: v0.1.2
+updated_on: 1673297019
+version: v0.1.3

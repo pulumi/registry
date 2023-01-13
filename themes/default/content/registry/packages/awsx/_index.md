@@ -5,7 +5,7 @@ layout: overview
 ---
 
 {{% notes %}}
-This AWSx documentation is generated using the v1.0.0-beta series of AWSx. If you have not upgraded to that version of
+This AWSx documentation is generated using the v1.0.0 series of AWSx. If you have not upgraded to that version of
 the provider then we suggest you continue to use our [@pulumi/awsx]({{<relref "/docs/reference/pkg/nodejs/pulumi/awsx">}}) NodeJS documentation.
 {{% /notes %}}
 

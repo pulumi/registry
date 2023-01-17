@@ -1,12 +1,12 @@
 ---
-title: Google Native Installation & Configuration
-meta_desc: How to set up credentials to use the Pulumi Google Native Provider and choose configuration options to tailor the provider to suit your use case.
+title: Google Cloud Native Installation & Configuration
+meta_desc: How to set up credentials to use the Pulumi Google Cloud Native Provider and choose configuration options to tailor the provider to suit your use case.
 layout: installation
 ---
 
 ## Installation
 
-The Google Native provider is available as a package in all Pulumi languages:
+The Google Cloud Native provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/google-native`](https://www.npmjs.com/package/@pulumi/google-native)
 * Python: [`pulumi-google-native`](https://pypi.org/project/pulumi-google-native/)

@@ -4,11 +4,11 @@ meta_desc: Learn how to use Pulumi's Google Cloud Native Provider to manage and 
 layout: overview
 ---
 
-{{% notes type="warning" %}}
+{{< notes >}}
 Google Cloud Native is in public preview. Breaking changes may be introduced in minor version releases.
 
 [Google Cloud Classic]({{<relref "/registry/packages/gcp">}}) remains fully supported and recommended for production use.
-{{% /notes %}}
+{{< /notes >}}
 
 The Google Cloud Native provider for Pulumi can provision many of the cloud resources available in [Google Cloud](https://cloud.google.com/).
 

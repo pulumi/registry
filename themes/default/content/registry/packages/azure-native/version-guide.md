@@ -31,7 +31,7 @@ Every Azure API endpoint defines a set of API versions that it accepts. API vers
 
 The native Azure provider maps every published API version of every Azure resource provider and represents it 1:1 as a separate module. For example, the `Vault` resource of the `KeyVault` resource provider of version `2019-09-01` is published as the Pulumi resource `azure-native:keyvault/v20190901:Vault`. You can import this resource with the following statement:
 
-{{< chooser language "typescript,python,csharp,go" >}}
+{{< chooser language "typescript,python,csharp,go,java,yaml" >}}
 
 {{% choosable language typescript %}}
 
@@ -69,6 +69,25 @@ import (
 // ...
 keyvault.NewVault(/*...*/)
 // ...
+```
+
+{{% /choosable %}}
+
+{{% choosable language java %}}
+
+Java is not supported.
+
+{{% /choosable %}}
+
+
+{{% choosable language yaml %}}
+
+```yaml
+resources:
+  my-cluster:
+   type: "azure-native:containerservice/v20220301:ManagedCluster"
+   properties:
+     # ...
 ```
 
 {{% /choosable %}}

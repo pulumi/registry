@@ -135,8 +135,8 @@ As an optional step, if you have multiple AWS profiles set up, you can specify a
 
 ## Configuration options
 
-{{% notes type="warning" %}}
-Right now, some configuration options aren't supported in AWS Native. In the coming months, AWS Native will provide the same set of configuration options as [AWS Classic]({{< relref "/registry/packages/aws" >}}). You can check on the status of a configuration option you need by visiting our backlog of [Github issues](https://github.com/pulumi/pulumi-aws-native/issues?q=is%3Aissue+is%3Aopen+label%3Aprovider-config); feel free to add your vote to an issue by adding a 👍 reaction.
+{{% notes type="info" %}}
+Some configuration options are not currently supported in AWS Native. You can check on the status of a configuration option you need by visiting our backlog of [Github issues](https://github.com/pulumi/pulumi-aws-native/issues?q=is%3Aissue+is%3Aopen+label%3Aprovider-config); feel free to add your vote to an issue by adding a 👍 reaction.
 {{% /notes %}}
 
 Use `pulumi config set aws-native:<option>` or pass options to the [constructor of `new aws-native.Provider`]({{< relref "/registry/packages/aws-native/api-docs/provider" >}}).

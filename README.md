@@ -19,7 +19,7 @@ To publish a community-maintained package on the Pulumi Registry as a community 
 1. Create a release of your provider in GitHub.
 1. Add your package to the [community packages list](./community-packages/package-list.json) via pull request to this repository.
 
-For assistance, please reach out on the [Pulumi community slack](https://slack.pulumi.com/) or get in touch with us via this [contact form](https://pulumi.com/contact/?form=registry). 
+For assistance, please reach out on the [Pulumi community slack](https://slack.pulumi.com/) or get in touch with us via this [contact form](https://pulumi.com/contact/?form=registry).
 
 #### Pulumi Steps
 
@@ -30,13 +30,13 @@ Once the community member has submitted the PR to add the provider to the regist
    * `data/registry/${PROVIDER}.yaml` which includes structured metadata about the provider. This file is always included with every PR that gets generated for a new release.
    * `themes/default/content/registry/packages/${PROVIDER}/installation-configuration.md`, as described above. This file *must* be included in the first release, but will only be included in subsequent PRs if the content has changed.
    * `themes/default/content/registry/packages/exoscale/_index.md`, as described above. This file *must* be included in the first release, but will only be included in subsequent PRs if the content has changed.
-   
+
    Optionally, the PR may include additional content files like How-To Guides if they are present in the upstream repo.
 
 1. Merge the PR if it looks ok.
 1. In pulumi/docs, a [scheduled task](https://github.com/pulumi/docs/actions/workflows/update-theme.yml) runs hourly and will pick up any changes in this repo, generate files from the provider schema and `data/registry/${PROVIDER}.yaml`, and publish to pulumi.com.
 
-  This scheduled task currently lacks adequate monitoring, and **should be watched to ensure that it runs correctly to completion**. (If it fails, it will block all updates to pulumi.com, including marketing and manually maintained docs pages.) 
+  This scheduled task currently lacks adequate monitoring, and **should be watched to ensure that it runs correctly to completion**. (If it fails, it will block all updates to pulumi.com, including marketing and manually maintained docs pages.)
 
 ## About this repository
 
@@ -44,7 +44,7 @@ This repository is a [Hugo module](https://gohugo.io/hugo-modules/) that doubles
 
 * Package-level how-to guides. These files are still built and checked into the [pulumi/docs](https://github.com/pulumi/docs) repository. (We're [working on bringing them into this repository](https://github.com/pulumi/registry/issues/237), though.)
 
-* JavaScript, CSS, and web components. We build the JavaScript and CSS bundles that power the Pulumi website (and therefore the Registry) in the [pulumi/theme](https://github.com/pulumi/theme) repository.
+* JavaScript, CSS, and web components. We build the JavaScript and CSS bundles that power the Pulumi website (and therefore the Registry) in the [pulumi/pulumi-hugo](https://github.com/pulumi/pulumi-hugo) repository.
 
 * Layouts and content for pulumi.com marketing pages, CLI docs, the blog, etc., all of which are managed in the [pulumi/pulumi-hugo](https://github.com/pulumi/pulumi-hugo) repository.
 
@@ -81,14 +81,13 @@ make serve
 
 When you do this, Hugo will load the latest versions of:
 
-* The [pulumi/pulumi-hugo](https://github.com/pulumi/pulumi-hugo) module, which contains our marketing pages, some docs content, the blog, etc.
-* The [pulumi/theme](https://github.com/pulumi/theme) module, which contains our CSS and JavaScript bundles (web components, styles, etc.).
+* The [pulumi/pulumi-hugo](https://github.com/pulumi/pulumi-hugo) module, which contains our marketing pages, some docs content, the blog, and our CSS and JavaScript bundles (web components, styles, etc.).
 
 ... and then start a development server at http://localhost:1313. Any changes you make to the content, layouts, or other [Hugo component folders](https://gohugo.io/getting-started/directory-structure/) should be reloaded automatically.
 
 ### Developing alongside another Hugo module
 
-If you want to develop another module alongside this one -- e.g., add a new web component to use in the Registry, or to make changes to Registry-specific CSS -- you can point your development server to a local clone of [pulumi/theme](https://github.com/pulumi/theme). To do that, first clone the repository, then add a `replace` line to the `go.mod` file at the root of _this_ repository to override the existing reference to `pulumi/theme` temporarily. For instance:
+If you want to develop another module alongside this one -- e.g., add a new web component to use in the Registry, or to make changes to Registry-specific CSS -- you can point your development server to a local clone of [pulumi/pulumi-hugo](https://github.com/pulumi/pulumi-hugo). To do that, first clone the repository, then add a `replace` line to the `go.mod` file at the root of _this_ repository to override the existing reference to `pulumi/pulumi-hugo` temporarily. For instance:
 
 ```
 module github.com/pulumi/pulumi-hugo
@@ -96,14 +95,14 @@ module github.com/pulumi/pulumi-hugo
 go 1.16
 
 require (
-	github.com/pulumi/theme v0.0.0-20211015193555-271ef1f67093 // indirect
+	github.com/pulumi/pulumi-hugo v0.0.0-20211015193555-271ef1f67093 // indirect
 )
 
-// Add this line to tell Hugo to use your local clone of pulumi/theme.
-replace github.com/pulumi/theme => ../theme
+// Add this line to tell Hugo to use your local clone of pulumi/pulumi-hugo.
+replace github.com/pulumi/pulumi-hugo => ../pulumi-hugo
 ```
 
-**Tip:** If you run `make serve` from the root of pulumi/theme (in another terminal tab) while also running `make serve` in this one, the changes you make to the CSS and JavaScript source files in pulumi/theme will be recompiled and reloaded in the browser automatically.
+**Tip:** If you run `make serve-assets` from the root of pulumi/pulumi-hugo (in another terminal tab) while also running `make serve` in this one, the changes you make to the CSS and JavaScript source files in pulumi/pulumi-hugo will be recompiled and reloaded in the browser automatically.
 
 Be sure to remove the `replace` line before you commit.
 
@@ -152,7 +151,7 @@ When you're ready to submit a pull request, make sure you've removed anything th
 If you're doing work in another repository that's associated with the changes in your PR, you can "pin" your PR branch to another module repository branch by pointing Hugo to that branch. To do that, use `hugo mod get` and pass a reference to the target branch:
 
 ```
-hugo mod get github.com/pulumi/theme@my-special-branch
+hugo mod get github.com/pulumi/pulumi-hugo@my-special-branch
 ```
 
 This will modify `go.mod` and `go.sum` accordingly and result in a PR preview that incorporates your changes from the other branch. Just be sure to remove these changes before you're ready to merge.

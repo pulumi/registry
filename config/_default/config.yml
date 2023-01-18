@@ -15,14 +15,6 @@ module:
           target: layouts
         - source: data
           target: data
-    - path: github.com/pulumi/theme
-      mounts:
-        - source: assets
-          target: assets
-        - source: static
-          target: static
-        - source: layouts
-          target: layouts
     - path: github.com/pulumi/pulumi-hugo/themes/default
       mounts:
         - source: content

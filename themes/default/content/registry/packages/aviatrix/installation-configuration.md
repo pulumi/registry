@@ -1,5 +1,5 @@
 ---
-title: Aviatrix Provider Installation & Configuration
+title: Aviatrix Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi Aviatrix Provider.
 layout: installation
 ---
@@ -32,7 +32,7 @@ Optional:
 
 ## Controller compatibility
 
-This package has feature parity with the Aviatrix Terraform porvider version 2.24.1. For controller version compatibility please visit the [compatibility page](https://registry.terraform.io/providers/AviatrixSystems/aviatrix/latest/docs/guides/release-compatibility).
+This package has feature parity with the Aviatrix Terraform provider version 2.24.1. For controller version compatibility please visit the [compatibility page](https://registry.terraform.io/providers/AviatrixSystems/aviatrix/latest/docs/guides/release-compatibility).
 
 ## Reference
 

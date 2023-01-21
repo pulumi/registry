@@ -10,5 +10,5 @@ publisher: Aviatrix
 repo_url: https://github.com/astipkovits/pulumi-aviatrix
 schema_file_path: provider/cmd/pulumi-resource-aviatrix/schema.json
 title: Aviatrix
-updated_on: 1669751336
-version: v0.0.9
+updated_on: 1674298067
+version: v0.0.10

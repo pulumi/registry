@@ -159,6 +159,10 @@
     {
       "repoSlug": "pulumiverse/pulumi-harbor",
       "schemaFile": "provider/cmd/pulumi-resource-harbor/schema.json"
+    },
+    {
+      "repoSlug": "dirien/pulumi-vultr",
+      "schemaFile": "provider/cmd/pulumi-resource-vultr/schema.json"
     }
   ]
 }

@@ -1,5 +1,5 @@
 ---
-title: Upstash Installation & Configuration
+title: Upstash Setup
 meta_desc: Information on how to install the Upstash provider.
 layout: installation
 ---

@@ -163,6 +163,10 @@
     {
       "repoSlug": "dirien/pulumi-vultr",
       "schemaFile": "provider/cmd/pulumi-resource-vultr/schema.json"
+    },
+    {
+      "repoSlug": "zscaler/pulumi-zpa",
+      "schemaFile": "provider/cmd/pulumi-resource-zpa/schema.json"
     }
   ]
 }

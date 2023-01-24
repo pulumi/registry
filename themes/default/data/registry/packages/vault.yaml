@@ -1,6 +1,6 @@
 category: Infrastructure
 component: false
-description: A Pulumi package for creating and managing vault cloud resources.
+description: A Pulumi package for creating and managing HashiCorp Vault cloud resources.
 featured: false
 logo_url: ""
 name: vault
@@ -9,6 +9,6 @@ package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-vault
 schema_file_path: provider/cmd/pulumi-resource-vault/schema.json
-title: Vault
-updated_on: 1670440469
-version: v5.7.2
+title: HashiCorp Vault
+updated_on: 1674522812
+version: v5.8.0

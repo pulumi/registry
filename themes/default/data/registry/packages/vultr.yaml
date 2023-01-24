@@ -10,5 +10,5 @@ publisher: dirien
 repo_url: https://github.com/dirien/pulumi-vultr
 schema_file_path: provider/cmd/pulumi-resource-vultr/schema.json
 title: Vultr
-updated_on: -62135596800
+updated_on: 1672145483
 version: v2.12.0

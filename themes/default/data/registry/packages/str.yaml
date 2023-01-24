@@ -1,0 +1,14 @@
+category: Cloud
+component: false
+description: Basic string manipulation functions
+featured: false
+logo_url: ""
+name: str
+native: true
+package_status: ga
+publisher: Pulumi
+repo_url: https://github.com/pulumi/pulumi-str
+schema_file_path: sdk/schema.json
+title: String
+updated_on: 1666915964
+version: v1.0.0

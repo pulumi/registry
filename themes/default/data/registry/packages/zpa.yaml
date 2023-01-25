@@ -1,0 +1,14 @@
+category: Cloud
+component: false
+description: A Pulumi package for creating and managing zpa cloud resources.
+featured: false
+logo_url: https://www.zscaler.com/themes/custom/zscaler/logo.svg
+name: zpa
+native: false
+package_status: public_preview
+publisher: Zscaler
+repo_url: https://github.com/zscaler/pulumi-zpa
+schema_file_path: provider/cmd/pulumi-resource-zpa/schema.json
+title: Zscaler Private Access
+updated_on: 1674588084
+version: v0.0.1

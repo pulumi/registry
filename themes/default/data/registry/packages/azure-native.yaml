@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-azure-native
 schema_file_path: provider/cmd/pulumi-resource-azure-native/schema.json
 title: Azure Native
-updated_on: 1673290471
-version: v1.91.0
+updated_on: 1674655290
+version: v1.93.0

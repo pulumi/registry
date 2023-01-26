@@ -11,5 +11,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-aws-native
 schema_file_path: provider/cmd/pulumi-resource-aws-native/schema.json
 title: AWS Native
-updated_on: 1674241609
-version: v0.48.0
+updated_on: 1674742543
+version: v0.49.0

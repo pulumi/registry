@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-random
 schema_file_path: provider/cmd/pulumi-resource-random/schema.json
 title: random
-updated_on: 1660861615
-version: v4.8.2
+updated_on: 1674773801
+version: v4.9.0

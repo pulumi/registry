@@ -240,8 +240,6 @@ const opts = {
     config: {
         // Allow inline HTML.
         MD033: false,
-        // Do not enforce line length.
-        MD013: false,
         // Don't force language specification on code blocks.
         MD040: false,
         // Allow hard tabs.
@@ -262,8 +260,6 @@ const opts = {
         MD023: false,
         // Allow blank lines in blockquotes.
         MD028: false,
-        // Allow indentation in unordered lists.
-        MD007: false,
     },
     customRules: [
         {

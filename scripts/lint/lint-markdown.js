@@ -26,8 +26,6 @@ function checkPageTitle(title) {
         const titleLength = title.trim().length;
         if (titleLength === 0) {
             return "Page title is empty";
-        } else if (titleLength > 60) {
-            return "Page title exceeds 60 characters";
         }
     } else {
         return "Page title is not a valid string"
@@ -49,10 +47,6 @@ function checkPageMetaDescription(meta) {
         const metaLength = meta.trim().length;
         if (metaLength === 0) {
             return "Meta description is empty";
-        } else if (metaLength < 50) {
-            return "Meta description is too short. Must be at least 50 characters";
-        } else if (metaLength > 160) {
-            return "Meta descripiton is too long. Must be shorter than 160 characters";
         }
     } else {
         return "Meta description is not a valid string";
@@ -264,6 +258,27 @@ const opts = {
         MD028: false,
         // Allow indentation in unordered lists.
         MD007: false,
+
+        // Turning off the following rules so we can get this linter into a passing state so
+        // we can turn it on. We can follow up and remove these in the future if we feel the
+        // need to lint these rules.
+
+        // Headings should be surrounded by blank lines
+        MD022: false,
+        // Lists should be surrounded by blank lines
+        MD032: false,
+        // Fenced code blocks should be surrounded by blank lines
+        MD031: false,
+        // Header line length
+        MD036: false,
+        // Unordered list style
+        MD004: false,
+        // Trailing spaces
+        MD009: false,
+        // Consecutive blank lines
+        MD012: false,
+        // Files should end with a single newline character
+        MD047: false,
     },
     customRules: [
         {

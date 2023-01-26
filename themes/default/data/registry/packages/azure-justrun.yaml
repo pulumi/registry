@@ -9,6 +9,6 @@ package_status: public_preview
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-azure-justrun
 schema_file_path: schema.json
-title: azure-justrun
+title: Azure Justrun
 updated_on: 1659441926
 version: v0.2.3

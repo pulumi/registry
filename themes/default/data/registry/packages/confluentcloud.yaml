@@ -9,6 +9,6 @@ package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-confluentcloud
 schema_file_path: provider/cmd/pulumi-resource-confluentcloud/schema.json
-title: Confluent
+title: Confluent Cloud
 updated_on: 1670269955
 version: v1.7.0

@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-mailgun
 schema_file_path: provider/cmd/pulumi-resource-mailgun/schema.json
 title: Mailgun
-updated_on: 1654013493
-version: v3.4.0
+updated_on: 1674848242
+version: v3.4.1

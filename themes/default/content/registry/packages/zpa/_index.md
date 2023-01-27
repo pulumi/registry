@@ -1,11 +1,11 @@
 ---
-title: ZPA
+title: Zscaler Private Access (ZPA)
 meta_desc: Provides an overview of the ZPA Provider for Pulumi.
 layout: overview
 ---
 
-The ZPA provider for Pulumi can be used to provision any of the cloud resources available in [Zscaler Private Access](https://help.zscaler.com/zpa).
-The ZPA provider must be configured with credentials to deploy and update resources in the ZPA Cloud.
+The Zscaler Private Access (ZPA) provider for Pulumi can be used to provision any of the cloud resources available in [Zscaler Private Access](https://help.zscaler.com/zpa).
+The Zscaler Private Access (ZPA) provider must be configured with credentials to deploy and update resources in the ZPA Cloud.
 
 ## Example
 

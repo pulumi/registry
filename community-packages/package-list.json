@@ -167,6 +167,10 @@
     {
       "repoSlug": "zscaler/pulumi-zpa",
       "schemaFile": "provider/cmd/pulumi-resource-zpa/schema.json"
+    },
+    {
+      "repoSlug": "zscaler/pulumi-zia",
+      "schemaFile": "provider/cmd/pulumi-resource-zia/schema.json"
     }
   ]
 }

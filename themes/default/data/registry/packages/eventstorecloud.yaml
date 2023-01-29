@@ -10,5 +10,5 @@ publisher: EventStore
 repo_url: https://github.com/EventStore/pulumi-eventstorecloud
 schema_file_path: provider/cmd/pulumi-resource-eventstorecloud/schema.json
 title: Event Store Cloud
-updated_on: 1670581342
-version: v0.2.7
+updated_on: 1674932224
+version: v0.2.8

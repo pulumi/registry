@@ -10,5 +10,5 @@ publisher: Zscaler
 repo_url: https://github.com/zscaler/pulumi-zia
 schema_file_path: provider/cmd/pulumi-resource-zia/schema.json
 title: Zscaler Internet Access
-updated_on: 1674958516
-version: v0.0.2
+updated_on: 1675097191
+version: v0.0.3

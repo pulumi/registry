@@ -297,14 +297,34 @@ const opts = {
                                 lineNumber: inline.lineNumber,
                             });
                         }
-                    });
+                    })
             },
         },
     ],
 };
 
+function fixRelRef(files) {
+    const needFix = Object.keys(files).filter( f => {
+        // if the array is empty the files contain no errors, so we can skip.
+        return files[f].length > 0
+    })
+
+    // update files that need fixing
+    needFix.forEach(f => {
+        const fileData = fs.readFileSync(f ,{encoding:'utf8', flag:'r'});
+        const pattern = /{{<.*relref "(.+)".*>}}/g;
+        const fixedData = fileData.replace(pattern, (match, capture) => {
+            return capture;
+        });
+
+        fs.writeFileSync(f, fixedData);
+    })
+}
+
 // Lint the markdown files.
 const result = markdownlint.sync(opts);
+
+fixRelRef(result);
 
 // Group the lint errors by file.
 const errors = groupLintErrorOutput(result);

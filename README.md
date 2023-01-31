@@ -106,16 +106,6 @@ replace github.com/pulumi/pulumi-hugo => ../pulumi-hugo
 
 Be sure to remove the `replace` line before you commit.
 
-### Linking to pages that don't exist in this repository
-
-If you want to link to a page that exists on https://pulumi.com but not in this repository, you can still use a [Hugo `relref`](https://gohugo.io/content-management/shortcodes/#ref-and-relref) in the usual way -- you'll just need to make sure the path you're linking to does exist (or will exist by the time you merge your change). For example, to add a link pointing to the [Pulumi CLI documentation](https://www.pulumi.com/docs/reference/cli/) (which does not exist in this repository), you'd use:
-
-```
-{{< relref /docs/reference/cli >}}
-```
-
-... and just be aware while the link won't work for you locally, it will work once your change is merged and picked up by our website automation (see [Merging and releasing](#merging-and-releasing)] below for details). This works because we've suppressed Hugo's built-in `relref` validation locally to keep the module-development workflow as lightweight as possible.
-
 ### Temporarily pulling in content from pulumi/docs
 
 If the change you're working on requires content from pulumi/docs -- e.g., the aforementioned how-to guides -- you may

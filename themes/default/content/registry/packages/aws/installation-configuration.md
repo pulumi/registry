@@ -4,13 +4,6 @@ meta_desc: How to set up credentials to use the Pulumi AWS Classic Provider and 
 layout: installation
 ---
 
-<!-- markdownlint-disable url -->
-[Pulumi AWS provider]: {{< relref "./" >}}
-[iam-user-console]: https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html#id_users_create_console
-[iam-manage-keys]: https://docs.aws.amazon.com/general/latest/gr/managing-aws-access-keys.html
-[configure-aws-cli]: https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html
-<!-- markdownlint-enable url -->
-
 {{< aws-resource-note >}}
 
 ## Installation
@@ -179,14 +172,14 @@ you need to do either of the following
 
 ## Configuration options
 
-Use `pulumi config set aws:<option>` or pass options to the [constructor of `new aws.Provider`]({{< relref "/registry/packages/aws/api-docs/provider" >}}).
+Use `pulumi config set aws:<option>` or pass options to the [constructor of `new aws.Provider`](../api-docs/provider).
 
 | Option                      | Required/Optional | Description                                                                                                                                                                                                                                                                                                                                                                                                        |
 |-----------------------------|-------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `region`                    | Required          | The region where AWS operations will take place. Examples are `us-east-1`, `us-west-2`, etc.                                                                                                                                                                                                                                                                                                                       |
 | `allowedAccountIds`         | Optional          | List of allowed AWS account IDs to prevent you from mistakenly using an incorrect one (and potentially end up destroying a live environment). Conflicts with `forbiddenAccountIds`.                                                                                                                                                                                                                                |
 | `accessKey`                 | Optional          | The access key for API operations. You can retrieve this from the ‘Security & Credentials’ section of the AWS console.                                                                                                                                                                                                                                                                                             |
-| `assumeRole`                | Optional          | A JSON object representing an IAM role to assume.  To set these nested properties, see docs on  [structured configuration]({{< relref "/docs/intro/concepts/config#structured-configuration">}}), for example `pulumi config set --path aws:assumeRole.roleArn arn:aws:iam::058111598222:role/OrganizationAccountAccessRole`. The object contains the properties marked with a ↳ below:                            |
+| `assumeRole`                | Optional          | A JSON object representing an IAM role to assume.  To set these nested properties, see docs on  [structured configuration](/docs/intro/concepts/config#structured-configuration), for example `pulumi config set --path aws:assumeRole.roleArn arn:aws:iam::058111598222:role/OrganizationAccountAccessRole`. The object contains the properties marked with a ↳ below:                            |
 | ↳ `durationSeconds`         | Optional          | Number of seconds to restrict the assume role session duration.                                                                                                                                                                                                                                                                                                                                                    |
 | ↳ `externalId`              | Optional          | External identifier to use when assuming the role.                                                                                                                                                                                                                                                                                                                                                                 |
 | ↳ `policy`                  | Optional          | IAM Policy JSON describing further restricting permissions for the IAM Role being assumed.                                                                                                                                                                                                                                                                                                                         |

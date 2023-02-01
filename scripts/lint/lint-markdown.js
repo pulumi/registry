@@ -309,11 +309,11 @@ function fixRelRef(files) {
         // if the array is empty the files contain no errors, so we can skip.
         return files[f].length > 0
     })
-    
+
     // update files that need fixing
     needFix.forEach(f => {
         const fileData = fs.readFileSync(f ,{encoding:'utf8', flag:'r'});
-        const pattern = /{{<.*relref "(.+)".*>}}/g;
+        const pattern = /{{<\s*relref "([^"]+)"\s*>}}/g;
         const fixedData = fileData.replace(pattern, (match, capture) => {
             return capture;
         });
@@ -329,10 +329,14 @@ function shouldFix() {
 }
 
 // Lint the markdown files.
-const result = markdownlint.sync(opts);
+let result = markdownlint.sync(opts);
 
 if (shouldFix()) {
     fixRelRef(result);
+
+    // re-run after fixes to re-lint after fixes
+    // have been applied.
+    result = markdownlint.sync(opts);
 }
 
 // Group the lint errors by file.

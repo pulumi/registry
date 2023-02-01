@@ -10,5 +10,5 @@ publisher: Zscaler
 repo_url: https://github.com/zscaler/pulumi-zpa
 schema_file_path: provider/cmd/pulumi-resource-zpa/schema.json
 title: Zscaler Private Access
-updated_on: 1675035248
-version: v0.0.3
+updated_on: 1675094494
+version: v0.0.4

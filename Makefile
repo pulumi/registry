@@ -10,6 +10,10 @@ ensure:
 lint:
 	./scripts/lint.sh
 
+.PHONY: lint-fix
+lint-fix:
+	./scripts/lint.sh --fix
+
 .PHONY: test
 test:
 	./scripts/test.sh

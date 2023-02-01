@@ -157,7 +157,7 @@ $ export ARM_LOCATION_NAME=<YOUR_ARM_LOCATION_NAME>
 
 ## Configuration options
 
-Use `pulumi config set azure-native:<option>` or pass options to the [constructor of `new azure-native.Provider`]({{< relref "/registry/packages/azure-native/api-docs/provider" >}}).
+Use `pulumi config set azure-native:<option>` or pass options to the [constructor of `new azure-native.Provider`](/registry/packages/azure-native/api-docs/provider).
 
 | Option                      | Required/Optional | Description                                                                                                                                                                                                                                                                                            |
 |-----------------------------|-------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|

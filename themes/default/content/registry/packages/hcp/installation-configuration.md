@@ -53,7 +53,7 @@ $ export HCP_CLIENT_SECRET=<HCP_CLIENT_SECRET>
 
 ## Configuration Options
 
-Use `pulumi config set hcp:<option>` or pass options to the [constructor of `new hcp.Provider`]({{< relref "/registry/packages/hcp/api-docs/provider" >}}).
+Use `pulumi config set hcp:<option>` or pass options to the [constructor of `new hcp.Provider`](/registry/packages/hcp/api-docs/provider).
 
 | Option          | Required/Optional | Description                                                                                                       |
 |-----------------|-------------------|-------------------------------------------------------------------------------------------------------------------|

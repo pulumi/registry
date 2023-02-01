@@ -65,5 +65,5 @@ $ export HARNESS_PLATFORM_API_KEY=<HARNESS_PLATFORM_API_KEY>
 
 ## Configuration Options
 
-Use `pulumi config set harness:<option>` or pass options to the [constructor of `new harness.Provider`]({{< relref "/registry/packages/harness/api-docs/provider" >}}).
+Use `pulumi config set harness:<option>` or pass options to the [constructor of `new harness.Provider`](/registry/packages/harness/api-docs/provider).
 

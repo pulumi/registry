@@ -53,7 +53,7 @@ $ export BUILDKITE_ORGANIZATION=<BUILDKITE_ORGANIZATION>
 
 ## Configuration Options
 
-Use `pulumi config set buildkite:<option>` or pass options to the [constructor of `new buildkite.Provider`]({{< relref "/registry/packages/buildkite/api-docs/provider" >}}).
+Use `pulumi config set buildkite:<option>` or pass options to the [constructor of `new buildkite.Provider`](/registry/packages/buildkite/api-docs/provider).
 
 | Option          | Required/Optional | Description                                                                                                       |
 |-----------------|-------------------|-------------------------------------------------------------------------------------------------------------------|

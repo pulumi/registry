@@ -6,14 +6,14 @@ layout: overview
 
 {{% notes %}}
 This AWSx documentation is generated using the v1.0.0 series of AWSx. If you have not upgraded to that version of
-the provider then we suggest you continue to use our [@pulumi/awsx]({{<relref "/docs/reference/pkg/nodejs/pulumi/awsx">}}) NodeJS documentation.
+the provider then we suggest you continue to use our [@pulumi/awsx](/docs/reference/pkg/nodejs/pulumi/awsx) NodeJS documentation.
 {{% /notes %}}
 
 The Amazon Web Services (AWS) [Crosswalk](../../../docs/guides/crosswalk/aws/) (AWSx) library uses automatic well-architected best practices to make common infrastructure-as-code tasks in [AWS](https://aws.amazon.com/) easier and more secure. It uses the AWS SDK to manage and provision resources.
 
-The AWSx provider must be configured with credentials to deploy and update resources in AWS; see [Installation & Configuration]({{<relref "./installation-configuration">}}) for instructions.
+The AWSx provider must be configured with credentials to deploy and update resources in AWS; see [Installation & Configuration](./installation-configuration) for instructions.
 
-**New to Pulumi and AWS?** [Get started with AWS using our AWSx tutorial]({{<relref "/docs/guides/crosswalk/aws">}}).
+**New to Pulumi and AWS?** [Get started with AWS using our AWSx tutorial](/docs/guides/crosswalk/aws).
 
 ## Example
 

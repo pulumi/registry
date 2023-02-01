@@ -5,8 +5,8 @@ layout: installation
 ---
 
 {{% notes type="info" %}}
-This provider has been deprecated as of July 2022. It is recommended to use the [Official Confluent Provider]({{<relref "/registry/packages/confluentcloud">}}) as a replacement.
-Unfortunately, there is no upgrade path from this provider to the Official Confluent provider, but you can take advantage of the [Pulumi Import]({{<relref "/docs/guides/adopting/import">}}) to help achieve the migration.
+This provider has been deprecated as of July 2022. It is recommended to use the [Official Confluent Provider](/registry/packages/confluentcloud) as a replacement.
+Unfortunately, there is no upgrade path from this provider to the Official Confluent provider, but you can take advantage of the [Pulumi Import](/docs/guides/adopting/import) to help achieve the migration.
 {{% /notes %}}
 
 The Pulumi Confluent Cloud provider uses the Confluent Cloud SDK to manage and provision resources.

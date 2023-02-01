@@ -5,17 +5,17 @@ layout: installation
 ---
 
 <!-- markdownlint-disable url -->
-[pulumi-kubernetes-provider]: {{< relref "./" >}}
-[server-side-apply]: {{< relref "./installation-configuration/#server-side-apply" >}}
+[pulumi-kubernetes-provider]: ./
+[server-side-apply]: ./installation-configuration/#server-side-apply
 [client-go]: https://github.com/kubernetes/client-go
-[gke-tutorial]: {{< relref "/registry/packages/kubernetes/how-to-guides/gke" >}}
-[eks-tutorial]: {{< relref "/registry/packages/kubernetes/how-to-guides/eks" >}}
-[aks-tutorial]: {{< relref "/registry/packages/kubernetes/how-to-guides/aks" >}}
+[gke-tutorial]: /registry/packages/kubernetes/how-to-guides/gke
+[eks-tutorial]: /registry/packages/kubernetes/how-to-guides/eks
+[aks-tutorial]: /registry/packages/kubernetes/how-to-guides/aks
 [Heptio AWS quickstart]: https://aws.amazon.com/quickstart/architecture/heptio-kubernetes/
-[provider-args]: {{< relref "/registry/packages/kubernetes/api-docs/provider" >}}
-[provider-kubeconfig]: {{< relref "/registry/packages/kubernetes/api-docs/provider#inputs" >}}
+[provider-args]: /registry/packages/kubernetes/api-docs/provider
+[provider-kubeconfig]: /registry/packages/kubernetes/api-docs/provider#inputs
 [kubeconfig]: https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/
-[install]: {{< relref "/docs/get-started/install" >}}
+[install]: /docs/get-started/install
 [nodejs]: https://nodejs.org/en/
 [npm]: https://www.npmjs.com/get-npm
 [yarn]: https://yarnpkg.com/en/docs/install
@@ -43,7 +43,7 @@ following steps.
 
 1. [Install the Pulumi CLI][install].
 1. Install a package manager for your Pulumi program language runtime, such as [npm] or [Yarn] for [Node.js][nodejs], or PyPI for Python.
-1. Provision a Kubernetes cluster. For a new managed Kubernetes cluster, check out the [guides.]({{< relref "/registry/packages/kubernetes/how-to-guides" >}})
+1. Provision a Kubernetes cluster. For a new managed Kubernetes cluster, check out the [guides.](/registry/packages/kubernetes/how-to-guides)
 1. Download [`kubectl`](https://kubernetes.io/docs/tasks/tools/install-kubectl/).
 
 ## Setup
@@ -60,9 +60,9 @@ already.
 
 Verify the cluster is configured and up by running `kubectl get pods`.
 
-Then follow the [getting started guide]({{< relref "/docs/get-started/kubernetes">}}) or explore some [code examples](https://github.com/pulumi/examples#kubernetes).
+Then follow the [getting started guide](/docs/get-started/kubernetes) or explore some [code examples](https://github.com/pulumi/examples#kubernetes).
 
-> Note: Pulumi **never** sends **any** authentication secrets or credentials to the Pulumi service. See the [FAQ]({{< relref "faq#does-the-pulumi-service-see-my-credentials-in-the-kubeconfig-file">}}) for more detail.
+> Note: Pulumi **never** sends **any** authentication secrets or credentials to the Pulumi service. See the [FAQ](faq#does-the-pulumi-service-see-my-credentials-in-the-kubeconfig-file) for more detail.
 
 ### Contexts
 

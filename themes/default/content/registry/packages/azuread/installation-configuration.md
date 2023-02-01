@@ -137,7 +137,7 @@ $ export ARM_TENANT_ID=<YOUR_ARM_TENANT_ID>
 
 ## Configuration options
 
-Use `pulumi config set azuread:<option>` or pass options to the [constructor of `new azuread.Provider`]({{< relref "/registry/packages/azuread/api-docs/provider" >}}).
+Use `pulumi config set azuread:<option>` or pass options to the [constructor of `new azuread.Provider`](/registry/packages/azuread/api-docs/provider).
 
 | Option                      | Required/Optional | Description                                                                                                                                                                                                                                                                                            |
 |-----------------------------|-------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|

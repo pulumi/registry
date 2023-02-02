@@ -6,9 +6,9 @@ logo_url: ""
 name: symbiosis
 native: false
 package_status: ga
-publisher: Kuraudo.io
-repo_url: https://github.com/kuraudo-io/pulumi-symbiosis
+publisher: Symbiosis
+repo_url: https://github.com/symbiosis-cloud/pulumi-symbiosis
 schema_file_path: provider/cmd/pulumi-resource-symbiosis/schema.json
 title: Symbiosis
-updated_on: 1670001087
-version: v1.0.1
+updated_on: 1675347209
+version: v1.0.2

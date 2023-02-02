@@ -13,7 +13,7 @@ The AWS provider must be configured with credentials to deploy and update resour
 {{% notes %}}
 Pulumi has a new AWS provider: the [Pulumi AWS Native Provider](/registry/packages/aws-native). AWS Native gives you same-day access to all new AWS resources and includes coverage of all resources in the [AWS Cloud Control API](https://aws.amazon.com/blogs/aws/announcing-aws-cloud-control-api/).
 
-Consider trying [AWS Native](/registry/packages/aws-native") if you need AWS resources that aren't available in this provider.
+Consider trying [AWS Native](/registry/packages/aws-native) if you need AWS resources that aren't available in this provider.
 {{% /notes %}}
 
 ## Example

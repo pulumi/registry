@@ -149,3 +149,4 @@ This will modify `go.mod` and `go.sum` accordingly and result in a PR preview th
 If you would like to generate API docs for packages beyond AWS and Aiven (the docs available in PR previews by default), add the package name you would like docs for [in this file](https://github.com/pulumi/registry/blob/master/scripts/ci/build.sh#L5). Be sure to remove these changes before merging.
 
 Once your PR is approved and merged into the default branch of this repository, an automated process that runs on [pulumi/docs](https://github.com/pulumi/docs) will detect your changes and produce a PR and integration build containing content from all other Hugo modules. Once that PR build completes and is approved and merged into pulumi/docs, your changes will be deployed to https://pulumi.com.
+

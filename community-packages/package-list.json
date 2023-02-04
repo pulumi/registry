@@ -171,6 +171,10 @@
     {
       "repoSlug": "zscaler/pulumi-zia",
       "schemaFile": "provider/cmd/pulumi-resource-zia/schema.json"
+    },
+    {
+      "repoSlug": "pulumiverse/pulumi-statuscake",
+      "schemaFile": "provider/cmd/pulumi-resource-statuscake/schema.json"
     }
   ]
 }

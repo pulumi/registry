@@ -145,7 +145,7 @@
       "schemaFile": "provider/cmd/pulumi-resource-unifi/schema.json"
     },
     {
-      "repoSlug": "kuraudo-io/pulumi-symbiosis",
+      "repoSlug": "symbiosis-cloud/pulumi-symbiosis",
       "schemaFile": "provider/cmd/pulumi-resource-symbiosis/schema.json"
     },
     {

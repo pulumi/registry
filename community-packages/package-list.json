@@ -175,6 +175,10 @@
     {
       "repoSlug": "pulumiverse/pulumi-statuscake",
       "schemaFile": "provider/cmd/pulumi-resource-statuscake/schema.json"
+    },
+    {
+      "repoSlug": "nuage/pulumi-nuage",
+      "schemaFile": "provider/cmd/pulumi-resource-nuage/schema.json"
     }
   ]
 }

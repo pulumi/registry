@@ -4,7 +4,7 @@ meta_desc: Provides an overview on how to configure the Pulumi Nomad Provider.
 layout: installation
 ---
 
-The [Pulumi Nomad provider]({{< relref "./" >}}) uses the Nomad SDK to manage resources.
+The [Pulumi Nomad provider](./) uses the Nomad SDK to manage resources.
 
 ## Installation
 

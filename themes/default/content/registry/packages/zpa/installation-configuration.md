@@ -65,7 +65,7 @@ $ export ZPA_CUSTOMER_ID=<ZPA_CUSTOMER_ID>
 
 ## Configuration Options
 
-Use `pulumi config set zpa:<option>` or pass options to the [constructor of `new zpa.Provider`]({{< relref "/registry/packages/zpa/api-docs/provider" >}}).
+Use `pulumi config set zpa:<option>` or pass options to the [constructor of `new zpa.Provider`](/registry/packages/zpa/api-docs/provider).
 
 | Option | Required/Optional | Description |
 |-----|------|----|

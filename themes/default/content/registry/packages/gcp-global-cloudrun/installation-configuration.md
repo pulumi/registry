@@ -17,6 +17,6 @@ The GCP Global CloudRun provider is available as a package in all Pulumi languag
 
 {{% configure-gcp %}}
 
-To provision a GCP Global CloudRun Application with this component, you need to have Google Cloud credentials. Use the instructions on the Google Classic Provider's [Installation & Configuration]({{< relref "/registry/packages/gcp/installation-configuration" >}}) to get credentials if needed.
+To provision a GCP Global CloudRun Application with this component, you need to have Google Cloud credentials. Use the instructions on the Google Classic Provider's [Installation & Configuration](/registry/packages/gcp/installation-configuration) to get credentials if needed.
 
 Your AWS credentials are never sent to pulumi.com. Pulumi uses the GCP SDK and the credentials in your environment to authenticate requests from your computer to Global Cloud.

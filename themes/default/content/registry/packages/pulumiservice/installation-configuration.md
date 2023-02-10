@@ -58,7 +58,7 @@ $ export PULUMI_BACKEND_URL=<PULUMI_BACKEND_URL>
 
 ## Configuration Options
 
-Use `pulumi config set pulumiservice:<option>` or pass options to the [constructor of `new pulumiservice.Provider`]({{< relref "/registry/packages/pulumiservice/api-docs/provider" >}}).
+Use `pulumi config set pulumiservice:<option>` or pass options to the [constructor of `new pulumiservice.Provider`](/registry/packages/pulumiservice/api-docs/provider).
 
 | Option | Required/Optional | Description |
 |-----|------|----|

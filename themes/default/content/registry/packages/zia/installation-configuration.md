@@ -68,7 +68,7 @@ $ export ZIA_CLOUD=<ZIA_CLOUD>
 
 ## Configuration Options
 
-Use `pulumi config set zia:<option>` or pass options to the [constructor of `new zia.Provider`]({{< relref "/registry/packages/zia/api-docs/provider" >}}).
+Use `pulumi config set zia:<option>` or pass options to the [constructor of `new zia.Provider`](/registry/packages/zia/api-docs/provider).
 
 | Option | Required/Optional | Description |
 |-----|------|----|

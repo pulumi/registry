@@ -8,7 +8,7 @@ layout: overview
 [Kubernetes][k8s] is an open source project for running and managing containerized applications
 on a cluster of machines.
 
-[Pulumi]({{< relref "/docs/get-started" >}}) is an infrastructure-as-code tool that exposes the Kubernetes resource API as an
+[Pulumi](/docs/get-started) is an infrastructure-as-code tool that exposes the Kubernetes resource API as an
 SDK, alongside other SDKs which span common cloud native utilities, cloud
 provider IaaS offerings, and their catalog of services - managed Kubernetes included.
 
@@ -37,7 +37,7 @@ The Kubernetes provider for Pulumi can be used to provision any resources availa
 
 ### Getting Started
 
-The quickest way to get started with Kubernetes is to follow the [Get Started]({{< relref "/docs/get-started/kubernetes" >}}) guide.
+The quickest way to get started with Kubernetes is to follow the [Get Started](/docs/get-started/kubernetes) guide.
 
 ## Additional Pulumi Packages for Kubernetes Users
 
@@ -78,7 +78,7 @@ The [`pulumi/kubernetes`](https://github.com/pulumi/pulumi-kubernetes) provider 
 
 ## Crosswalk for Kubernetes
 
-<a href="{{< relref "./" >}}">
+<a href="./">
     <img src="/images/docs/reference/crosswalk/kubernetes/crosswalk-for-k8s.svg" align="right" width="280" style="margin: 0 0 32px 16px;">
 </a>
 
@@ -88,13 +88,13 @@ best-practices for managing Kubernetes, and its infrastructure in production.
 [Get started][crosswalk-control-plane] by deploying stacks of infrastructure architected to enable teams
 to run and manage Kubernetes in production.
 
-[crosswalk-control-plane]: {{< relref "/docs/guides/crosswalk/kubernetes/control-plane" >}}
-[crosswalk-k8s]: {{< relref "/docs/guides/crosswalk/kubernetes" >}}
-[prod-arch-for-teams]: {{< relref "/docs/guides/crosswalk/kubernetes" >}}
+[crosswalk-control-plane]: /docs/guides/crosswalk/kubernetes/control-plane
+[crosswalk-k8s]: /docs/guides/crosswalk/kubernetes
+[prod-arch-for-teams]: /docs/guides/crosswalk/kubernetes
 
 ## Pulumi Kubernetes Operator
 
-<a href="{{< relref "./" >}}">
+<a href="./">
     <img src="/logos/tech/ci-cd/kubernetes.png" align="right" width="150" style="margin: 0 0 32px 16px;">
 </a>
 
@@ -110,6 +110,6 @@ out CI/CD and automation systems into your clusters, creating native support to 
 
 [k8s-operator]: https://github.com/pulumi/pulumi-kubernetes-operator
 [k8s-ext-pattern]: https://kubernetes.io/docs/concepts/extend-kubernetes/operator/
-[stack]: {{< relref "/docs/intro/concepts/stack" >}}
-[k8s-operator-cicd]: {{< relref "/docs/guides/continuous-delivery/pulumi-kubernetes-operator" >}}
-[pulumi-cd]: {{< relref "/docs/guides/continuous-delivery" >}}
+[stack]: /docs/intro/concepts/stack
+[k8s-operator-cicd]: /docs/guides/continuous-delivery/pulumi-kubernetes-operator
+[pulumi-cd]: /docs/guides/continuous-delivery

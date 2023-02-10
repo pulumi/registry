@@ -1,3 +1,3 @@
 #!/bin/bash
 
-node ./scripts/lint/lint-markdown.js
+node ./scripts/lint/lint-markdown.js $1

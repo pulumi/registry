@@ -92,7 +92,7 @@ $ export AWS_SECRET_ACCESS_KEY=<YOUR_SECRET_ACCESS_KEY>
 {{% /choosable %}}
 {{< /chooser >}}
 
-For additional information on setting and using AWS credentials, see [AWS Installation & Configuration]({{< relref "/registry/packages/aws/installation-configuration" >}}).
+For additional information on setting and using AWS credentials, see [AWS Installation & Configuration](/registry/packages/aws/installation-configuration).
 
 Next, you'll create a new Pulumi project.
 
@@ -144,7 +144,7 @@ $ pulumi new aws-yaml
 
 {{% /choosable %}}
 
-The [`pulumi new`]({{< relref "/docs/reference/cli/pulumi_new" >}}) command creates a new Pulumi project with some basic scaffolding based on the cloud and language specified.
+The [`pulumi new`](/docs/reference/cli/pulumi_new) command creates a new Pulumi project with some basic scaffolding based on the cloud and language specified.
 
 {{< cli-note >}}
 
@@ -156,7 +156,7 @@ Next, you will be asked for the name of a stack. Hit `ENTER` to accept the defau
 
 Finally, you will be prompted for some configuration values for the stack. For AWS projects, you will be prompted for the AWS region. You can accept the default value or choose another value like `us-west-2`.
 
-> What are [projects]({{< relref "/docs/intro/concepts/project" >}}) and [stacks]({{< relref "/docs/intro/concepts/stack" >}})? Pulumi projects and stacks let you organize Pulumi code. Consider a Pulumi _project_ to be analogous to a GitHub repo---a single place for code---and a _stack_ to be an instance of that code with a separate configuration. For instance, _Project Foo_ may have multiple stacks for different development environments (Dev, Test, or Prod), or perhaps for different cloud configurations (geographic region for example). See [Organizing Projects and Stacks]({{< relref "/docs/guides/organizing-projects-stacks" >}}) for some best practices on organizing your Pulumi projects and stacks.
+> What are [projects](/docs/intro/concepts/project) and [stacks](/docs/intro/concepts/stack)? Pulumi projects and stacks let you organize Pulumi code. Consider a Pulumi _project_ to be analogous to a GitHub repo---a single place for code---and a _stack_ to be an instance of that code with a separate configuration. For instance, _Project Foo_ may have multiple stacks for different development environments (Dev, Test, or Prod), or perhaps for different cloud configurations (geographic region for example). See [Organizing Projects and Stacks](/docs/guides/organizing-projects-stacks) for some best practices on organizing your Pulumi projects and stacks.
 
 {{% choosable language "typescript" %}}
 

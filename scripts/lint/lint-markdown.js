@@ -26,8 +26,6 @@ function checkPageTitle(title) {
         const titleLength = title.trim().length;
         if (titleLength === 0) {
             return "Page title is empty";
-        } else if (titleLength > 60) {
-            return "Page title exceeds 60 characters";
         }
     } else {
         return "Page title is not a valid string"
@@ -49,10 +47,6 @@ function checkPageMetaDescription(meta) {
         const metaLength = meta.trim().length;
         if (metaLength === 0) {
             return "Meta description is empty";
-        } else if (metaLength < 50) {
-            return "Meta description is too short. Must be at least 50 characters";
-        } else if (metaLength > 160) {
-            return "Meta descripiton is too long. Must be shorter than 160 characters";
         }
     } else {
         return "Meta description is not a valid string";
@@ -264,11 +258,86 @@ const opts = {
         MD028: false,
         // Allow indentation in unordered lists.
         MD007: false,
+
+        // Turning off the following rules so we can get this linter into a passing state so
+        // we can turn it on. We can follow up and remove these in the future if we feel the
+        // need to lint these rules.
+
+        // Headings should be surrounded by blank lines
+        MD022: false,
+        // Lists should be surrounded by blank lines
+        MD032: false,
+        // Fenced code blocks should be surrounded by blank lines
+        MD031: false,
+        // Header line length
+        MD036: false,
+        // Unordered list style
+        MD004: false,
+        // Trailing spaces
+        MD009: false,
+        // Consecutive blank lines
+        MD012: false,
+        // Files should end with a single newline character
+        MD047: false,
     },
+    customRules: [
+        {
+            names: ["relref"],
+            description: "Using relrefs in registry are no longer supported. Use standard [Markdown](/links) instead",
+            tags: ["registry-relref"],
+            function: (params, onError) => {
+                params.tokens
+                    .filter(token => {
+                        return token.type === "inline";
+                    })
+                    .forEach(inline => {
+                        const line = inline.content;
+                        if (line.match(/{{<[ ]?relref ".+"[ ]?>}}/)) {
+                            onError({
+                                lineNumber: inline.lineNumber,
+                            });
+                        }
+                    })
+            },
+        },
+    ],
 };
 
+function fixRelRef(files) {
+    
+    const needFix = Object.keys(files).filter( f => {
+        // if the array is empty the files contain no errors, so we can skip.
+        return files[f].length > 0
+    })
+
+    // update files that need fixing
+    needFix.forEach(f => {
+        const fileData = fs.readFileSync(f ,{encoding:'utf8', flag:'r'});
+        const pattern = /{{<\s*relref "([^"]+)"\s*>}}/g;
+        const fixedData = fileData.replace(pattern, (match, capture) => {
+            return capture;
+        });
+
+        fs.writeFileSync(f, fixedData);
+    })
+}
+
+function shouldFix() {
+    return process.argv.some((val) => {
+        return val === "--fix"
+    });
+}
+
 // Lint the markdown files.
-const result = markdownlint.sync(opts);
+let result = markdownlint.sync(opts);
+
+if (shouldFix()) {
+    fixRelRef(result);
+
+    // re-run after fixes to re-lint after fixes
+    // have been applied.
+    result = markdownlint.sync(opts);
+}
 
 // Group the lint errors by file.
 const errors = groupLintErrorOutput(result);

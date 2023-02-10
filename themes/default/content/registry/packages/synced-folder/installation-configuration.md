@@ -49,9 +49,9 @@ Because each of these components is backed by a different cloud, they're each co
 
 ### Configuring cloud-provider settings
 
-By default, the component inherits the cloud-provider settings of the project it belongs to, so if your project is configured to use the `us-east-1` region of AWS, for example, any `S3BucketFolder`s you declare will use that same region as well. You can adjust this behavior, however, on a case-by-case basis by [customizing the component's resource provider]({{< relref "/docs/intro/concepts/resources/components#inheriting-resource-providers" >}}).
+By default, the component inherits the cloud-provider settings of the project it belongs to, so if your project is configured to use the `us-east-1` region of AWS, for example, any `S3BucketFolder`s you declare will use that same region as well. You can adjust this behavior, however, on a case-by-case basis by [customizing the component's resource provider](/docs/intro/concepts/resources/components#inheriting-resource-providers).
 
-For help configuring your cloud-provider credentials, see the Installation &amp; Configuration pages of the [AWS]({{< relref "/registry/packages/aws/installation-configuration" >}}), [Azure Native]({{< relref "/registry/packages/azure-native/installation-configuration" >}}), and [Google Cloud]({{< relref "/registry/packages/gcp/installation-configuration" >}}) provider packages.
+For help configuring your cloud-provider credentials, see the Installation &amp; Configuration pages of the [AWS](/registry/packages/aws/installation-configuration), [Azure Native](/registry/packages/azure-native/installation-configuration), and [Google Cloud](/registry/packages/gcp/installation-configuration) provider packages.
 
 
 

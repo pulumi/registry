@@ -5,14 +5,14 @@ layout: overview
 ---
 
 {{% notes %}}
-We recommend using the [Azure Native provider]({{< relref "/registry/packages/azure-native" >}}) to provision Azure infrastructure. Azure Native provides complete coverage of Azure resources and same-day access to new resources and resource updates because it’s built and automatically from the Azure Resource Manager API.
+We recommend using the [Azure Native provider](/registry/packages/azure-native) to provision Azure infrastructure. Azure Native provides complete coverage of Azure resources and same-day access to new resources and resource updates because it’s built and automatically from the Azure Resource Manager API.
 
 Azure Classic is based on the Terraform AzureRM provider. It has fewer resources and resource options and receives new Azure features more slowly than Azure Native. However, Azure Classic remains fully supported for existing usage.
 {{% /notes %}}
 
 The Azure Classic provider for Pulumi can be used to provision many of the cloud resources available in [Azure](https://azure.microsoft.com/en-us/). It manages and provisions resources using the [Azure Resource Manager (ARM) APIs](https://docs.microsoft.com/en-us/rest/api/resources/).
 
-Azure Classic must be configured with credentials to deploy and update resources in Azure; see [Installation & Configuration]({{<relref "./installation-configuration">}}) for instructions.
+Azure Classic must be configured with credentials to deploy and update resources in Azure; see [Installation & Configuration](./installation-configuration) for instructions.
 
 ## Example
 
@@ -44,4 +44,4 @@ resources:
 
 {{% /chooser %}}
 
-Visit the [How-to Guides]({{<relref "./how-to-guides">}}) to find step-by-step guides for specific scenarios like running an app in Azure App Service or setting up a serverless Azure Function.
+Visit the [How-to Guides](./how-to-guides) to find step-by-step guides for specific scenarios like running an app in Azure App Service or setting up a serverless Azure Function.

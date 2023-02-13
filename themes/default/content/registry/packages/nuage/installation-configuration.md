@@ -6,33 +6,6 @@ layout: installation
 
 ## Installation
 
-To use this resource, you need to install Pulumi plugin first (independent from the development language).
-
-1. Download the latest release from <https://github.com/nuage-studio/pulumi-nuage/releases/>
-2. Install the .tar.gz package using Pulumi
-
-```bash
-pulumi plugin install resource nuage 0.0.1 --file pulumi-resource-nuage-v0.0.1-darwin-amd64.tar.gz
-```
-
-You may also automate this process via Taskfile. Here is an example:
-
-```yaml
-version: "3"
-
-tasks:
-  pulumi_install:
-    desc: Downloads binary
-    vars:
-      VERSION: 0.0.1
-      FILE_NAME: "pulumi-resource-nuage-v0.0.1-darwin-amd64.tar.gz"
-    cmds:
-      - curl -L -o {{.FILE_NAME}} https://github.com/nuage-studio/pulumi-nuage/releases/download/{{.VERSION}}/{{.FILE_NAME}}
-      - pulumi plugin install resource nuage {{.VERSION}} --file {{.FILE_NAME}}
-      - rm {{.FILE_NAME}}
-```
-
-## Setup
 
 To provision resources with the Pulumi Nuage provider,  you can set up the sdk of the language you prefer.
 
@@ -41,7 +14,9 @@ To provision resources with the Pulumi Nuage provider,  you can set up the sdk o
 * Go: [`nuage`](https://github.com/nuage-studio/pulumi-nuage/tree/master/sdk/go/nuage)
 * .NET: [`Pulumi.Nuage`](https://github.com/nuage-studio/pulumi-nuage/tree/master/sdk/dotnet)
 
+## Credentials
 
+Pulumi Nuage components contains AWS Components from `pulumi-aws`and you can refer to corresponding docs for setting AWS credentials.  [correspnding docs](https://www.pulumi.com/registry/packages/aws/installation-configuration/)
 
 ## Setup Instructions for Python SDK
 

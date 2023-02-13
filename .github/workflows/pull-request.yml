@@ -30,6 +30,11 @@ jobs:
       - name: Check out branch
         uses: actions/checkout@v2
 
+      - name: Lint
+        run: |
+          yarn install
+          make lint
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:

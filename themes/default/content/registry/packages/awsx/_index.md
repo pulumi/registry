@@ -17,7 +17,7 @@ The AWSx provider must be configured with credentials to deploy and update resou
 
 ## Example
 
-{{< chooser language "typescript,python,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
 
 {{% choosable language typescript %}}
 
@@ -46,6 +46,32 @@ vpc = awsx.ec2.Vpc("custom")
 pulumi.export("vpcId", vpc.vpc_id)
 pulumi.export("publicSubnetIds", vpc.public_subnet_ids)
 pulumi.export("privateSubnetIds", vpc.private_subnet_ids)
+```
+
+{{% /choosable %}}
+
+{{% choosable language go %}}
+
+```go
+package main
+
+import (
+	"github.com/pulumi/pulumi-awsx/sdk/go/awsx/ec2"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		vpc, err := ec2.NewVpc(ctx, "my-vpc", nil)
+		if err != nil {
+			return err
+		}
+		ctx.Export("vpcId", vpc.VpcId)
+		ctx.Export("privateSubnetIds", vpc.PrivateSubnetIds)
+		ctx.Export("publicSubnetIds", vpc.PublicSubnetIds)
+		return nil
+	})
+}
 ```
 
 {{% /choosable %}}

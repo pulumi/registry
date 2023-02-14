@@ -5,10 +5,10 @@ featured: false
 logo_url: ""
 name: nuage
 native: true
-package_status: ga
+package_status: public_preview
 publisher: Nuage-Studio
 repo_url: https://github.com/nuage-studio/pulumi-nuage
 schema_file_path: schema.json
 title: nuage
-updated_on: 1676279098
-version: 0.0.4
+updated_on: 1676392929
+version: v0.0.5

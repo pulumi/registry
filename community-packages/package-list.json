@@ -77,7 +77,7 @@
       "schemaFile": "provider/cmd/pulumi-resource-fusionauth/schema.json"
     },
     {
-      "repoSlug": "upstash/upstash-pulumi-provider",
+      "repoSlug": "upstash/pulumi-upstash",
       "schemaFile": "provider/cmd/pulumi-resource-upstash/schema.json"
     },
     {

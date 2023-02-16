@@ -59,7 +59,7 @@ $ export UPSTASH_API_KEY=<UPSTASH_API_KEY>
 
 ## Configuration Options
 
-Use `pulumi config set upstash:<option>` or pass options to the [constructor of `new upstash.Provider`](/registry/packages/upstash/api-docs/provider).
+Use `pulumi config set upstash:<option>` or pass options to the [constructor of `new upstash.Provider`]({{< relref "/registry/packages/upstash/api-docs/provider" >}}).
 
 | Option | Required/Optional | Description |
 |-----|------|----|

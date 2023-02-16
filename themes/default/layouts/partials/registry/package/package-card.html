@@ -34,8 +34,10 @@
                 <div class="flex items-center">
                     <i class="fab fa-github text-base"></i>
                     <span class="text-blue-600 flex flex-wrap items-center">
-                        <a class="text-xs text-blue-600 underline ml-2 mr-1.5" href="{{ .repo_url }}" target="_blank" rel="noopener noreferrer">{{ replaceRE `^.*.com/` "" .repo_url }}</a>
-                        <i class="fas fa-external-link-alt text-xs"></i>
+                        <a class="text-xs  ml-2 mr-1.5" href="{{ .repo_url }}" target="_blank" rel="noopener noreferrer">
+                            <span class="text-blue-600 underline">{{ replaceRE `^.*.com/` "" .repo_url }}</span>
+                            &nbsp;<i class="fas fa-external-link-alt text-xs"></i>
+                        </a>
                     </span>
                 </div>
             {{ end }}

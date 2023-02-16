@@ -30,10 +30,15 @@ jobs:
       - name: Check out branch
         uses: actions/checkout@v2
 
-      - name: Lint
+      - name: Lint and Fix
         run: |
           yarn install
-          make lint
+          make lint-fix
+
+      - name: Commit Fix
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "**auto-fix relref lint errors**"
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1

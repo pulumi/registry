@@ -30,12 +30,7 @@ jobs:
       - name: Check out branch
         uses: actions/checkout@v2
 
-      - name: Lint
-        run: |
-          yarn install
-          make lint
-    
-      - name: Lint Fix
+      - name: Lint and Fix
         run: |
           make lint-fix
 

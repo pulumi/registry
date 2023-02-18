@@ -11,5 +11,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-command
 schema_file_path: provider/cmd/pulumi-resource-command/schema.json
 title: Command
-updated_on: 1669081206
-version: v0.7.0
+updated_on: 1676680308
+version: v0.7.1

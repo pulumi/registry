@@ -62,4 +62,4 @@ $ export LAUNCHDARKLY_OAUTH_TOKEN=<LAUNCHDARKLY_OAUTH_TOKEN>
 
 ## Configuration Options
 
-Use `pulumi config set launchdarkly:<option>` or pass options to the [constructor of `new launchdarkly.Provider`](/registry/packages/launchdarkly/api-docs/provider).
+Use `pulumi config set launchdarkly:<option>` or pass options to the [constructor of `new launchdarkly.Provider`]({{< relref "/registry/packages/launchdarkly/api-docs/provider" >}}).

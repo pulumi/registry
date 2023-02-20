@@ -62,7 +62,7 @@ $ export SCW_SECRET_KEY=<SCW_SECRET_KEY>
 
 ## Configuration Options
 
-Use `pulumi config set scaleway:<option>` or pass options to the [constructor of `new scaleway.Provider`]({{< relref "/registry/packages/scaleway/api-docs/provider" >}}).
+Use `pulumi config set scaleway:<option>` or pass options to the [constructor of `new scaleway.Provider`](/registry/packages/scaleway/api-docs/provider).
 
 | Option | Required/Optional | Description |
 |-----|------|----|

@@ -10,5 +10,5 @@ publisher: Pulumiverse
 repo_url: https://github.com/pulumiverse/pulumi-statuscake
 schema_file_path: provider/cmd/pulumi-resource-statuscake/schema.json
 title: Statuscake
-updated_on: 1671796895
-version: v1.0.0
+updated_on: 1676631201
+version: v1.0.1

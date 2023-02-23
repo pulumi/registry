@@ -1,0 +1,14 @@
+category: Cloud
+component: true
+description: A Pulumi package for creating well-architected solutions on AWS.
+featured: false
+logo_url: https://raw.githubusercontent.com/cloud-toolkit/website/main/src/assets/icons/logo.svg
+name: cloud-toolkit-aws
+native: false
+package_status: public_preview
+publisher: AstroKube
+repo_url: https://github.com/cloud-toolkit/cloud-toolkit-aws
+schema_file_path: schema.yaml
+title: Cloud Toolkit AWS
+updated_on: 1676442142
+version: v0.7.0

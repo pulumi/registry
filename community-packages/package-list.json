@@ -187,6 +187,10 @@
     {
       "repoSlug": "dirien/pulumi-azapi",
       "schemaFile": "provider/cmd/pulumi-resource-azapi/schema.json"
+    },
+    {
+      "repoSlug": "cloud-toolkit/cloud-toolkit-aws",
+      "schemaFile": "schema.yaml"
     }
   ]
 }

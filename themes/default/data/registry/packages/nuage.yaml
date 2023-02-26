@@ -10,5 +10,5 @@ publisher: Nuage-Studio
 repo_url: https://github.com/nuage-studio/pulumi-nuage
 schema_file_path: schema.json
 title: nuage
-updated_on: 1676392929
-version: v0.0.5
+updated_on: 1677148707
+version: v0.0.8

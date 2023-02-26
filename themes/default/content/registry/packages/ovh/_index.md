@@ -1,6 +1,6 @@
 ---
-title: Ovh
-meta_desc: Provides an overview of the Ovh Provider for Pulumi.
+title: OVHcloud
+meta_desc: Provides an overview of the OVHcloud Provider for Pulumi.
 layout: overview
 ---
 

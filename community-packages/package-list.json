@@ -179,6 +179,10 @@
     {
       "repoSlug": "nuage-studio/pulumi-nuage",
       "schemaFile": "schema.json"
+    },
+    {
+      "repoSlug": "twingate-labs/pulumi-twingate",
+      "schemaFile": "provider/cmd/pulumi-resource-twingate/schema.json"
     }
   ]
 }

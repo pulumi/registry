@@ -25,6 +25,7 @@ jobs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
       prs: ${{ steps.list.outputs.titles }}
   check-for-package-update:
+    name: ${{ matrix.repoSlug }}
     needs: generate-packages-list
     runs-on: ubuntu-latest
     strategy:

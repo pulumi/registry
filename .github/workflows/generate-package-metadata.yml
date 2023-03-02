@@ -36,14 +36,8 @@ jobs:
       max-parallel: 1
       matrix: ${{fromJson(needs.generate-packages-list.outputs.matrix)}}
     steps:
-      - name: Get provider short name
-        uses: actions-ecosystem/action-regex-match@v2
-        id: regex-prov
-        with:
-          text: ${{ matrix.repoSlug }}
-          regex: '(\/.*-)(.*?$)'
       - name: Check if there is already an open PR
-        if: contains(needs.generate-packages-list.outputs.prs, steps.regex-prov.outputs.group2 )  
+        if: contains(needs.generate-packages-list.outputs.prs, matrix.shortName)
         id: skip-run
         run: echo "::set-output name=skip::1"
       - name: Check out registry repo
@@ -79,7 +73,7 @@ jobs:
         if: env.PROVIDER_VERSION
         uses: peter-evans/create-pull-request@v3
         env:
-          PROVIDER_SHORT_NAME: ${{ steps.regex-prov.outputs.group2 }}
+          PROVIDER_SHORT_NAME: ${{ matrix.shortName }}
         with:
           token: ${{ secrets.PULUMI_BOT_TOKEN }}
           committer: Pulumi Bot <bot@pulumi.com>

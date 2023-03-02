@@ -2,195 +2,243 @@
   "include": [
     {
       "repoSlug": "koyeb/pulumi-koyeb",
-      "schemaFile": "provider/cmd/pulumi-resource-koyeb/schema.json"
+      "schemaFile": "provider/cmd/pulumi-resource-koyeb/schema.json",
+      "shortName": "koyeb"
     },
     {
       "repoSlug": "pulumiverse/pulumi-time",
-      "schemaFile": "provider/cmd/pulumi-resource-time/schema.json"
+      "schemaFile": "provider/cmd/pulumi-resource-time/schema.json",
+      "shortName": "time"
     },
     {
       "repoSlug": "pulumiverse/pulumi-doppler",
-      "schemaFile": "provider/cmd/pulumi-resource-doppler/schema.json"
+      "schemaFile": "provider/cmd/pulumi-resource-doppler/schema.json",
+      "shortName": "doppler"
     },
     {
       "repoSlug": "checkly/pulumi-checkly",
-      "schemaFile": "provider/cmd/pulumi-resource-checkly/schema.json"
+      "schemaFile": "provider/cmd/pulumi-resource-checkly/schema.json",
+      "shortName": "checkly"
     },
     {
       "repoSlug": "EventStore/pulumi-eventstorecloud",
-      "schemaFile": "provider/cmd/pulumi-resource-eventstorecloud/schema.json"
+      "schemaFile": "provider/cmd/pulumi-resource-eventstorecloud/schema.json",
+      "shortName": "eventstorecloud"
     },
     {
       "repoSlug": "grapl-security/pulumi-buildkite",
-      "schemaFile": "provider/cmd/pulumi-resource-buildkite/schema.json"
+      "schemaFile": "provider/cmd/pulumi-resource-buildkite/schema.json",
+      "shortName": "buildkite"
     },
     {
       "repoSlug": "pulumiverse/pulumi-gandi",
-      "schemaFile": "provider/cmd/pulumi-resource-gandi/schema.json"
+      "schemaFile": "provider/cmd/pulumi-resource-gandi/schema.json",
+      "shortName": "gandi"
     },
     {
       "repoSlug": "grapl-security/pulumi-hcp",
-      "schemaFile": "provider/cmd/pulumi-resource-hcp/schema.json"
+      "schemaFile": "provider/cmd/pulumi-resource-hcp/schema.json",
+      "shortName": "hcp"
     },
     {
       "repoSlug": "lbrlabs/pulumi-scaleway",
-      "schemaFile": "provider/cmd/pulumi-resource-scaleway/schema.json"
+      "schemaFile": "provider/cmd/pulumi-resource-scaleway/schema.json",
+      "shortName": "scaleway"
     },
     {
       "repoSlug": "pulumi/pulumi-kubernetes-cert-manager",
-      "schemaFile": "schema.json"
+      "schemaFile": "schema.json",
+      "shortName": "kubernetes-cert-manager"
     },
     {
       "repoSlug": "pulumi/pulumi-kubernetes-coredns",
-      "schemaFile": "schema.json"
+      "schemaFile": "schema.json",
+      "shortName": "kubernetes-coredns"
     },
     {
       "repoSlug": "pulumi/pulumi-kubernetes-ingress-nginx",
-      "schemaFile": "schema.json"
+      "schemaFile": "schema.json",
+      "shortName": "kubernetes-ingress-nginx"
     },
     {
       "repoSlug": "pulumi/pulumi-aws-apigateway",
-      "schemaFile": "schema.yaml"
+      "schemaFile": "schema.yaml",
+      "shortName": "aws-apigateway"
     },
     {
       "repoSlug": "rootlyhq/pulumi-rootly",
-      "schemaFile": "provider/cmd/pulumi-resource-rootly/schema.json"
+      "schemaFile": "provider/cmd/pulumi-resource-rootly/schema.json",
+      "shortName": "rootly"
     },
     {
       "repoSlug": "pulumiverse/pulumi-astra",
-      "schemaFile": "provider/cmd/pulumi-resource-astra/schema.json"
+      "schemaFile": "provider/cmd/pulumi-resource-astra/schema.json",
+      "shortName": "astra"
     },
     {
       "repoSlug": "pulumi/pulumi-azure-justrun",
-      "schemaFile": "schema.json"
+      "schemaFile": "schema.json",
+      "shortName": "azure-justrun"
     },
     {
       "repoSlug": "pulumi/pulumi-aws-static-website",
-      "schemaFile": "schema.json"
+      "schemaFile": "schema.json",
+      "shortName": "aws-static-website"
     },
     {
       "repoSlug": "muhlba91/pulumi-proxmoxve",
-      "schemaFile": "provider/cmd/pulumi-resource-proxmoxve/schema.json"
+      "schemaFile": "provider/cmd/pulumi-resource-proxmoxve/schema.json",
+      "shortName": "proxmoxve"
     },
     {
       "repoSlug": "theogravity/pulumi-fusionauth",
-      "schemaFile": "provider/cmd/pulumi-resource-fusionauth/schema.json"
+      "schemaFile": "provider/cmd/pulumi-resource-fusionauth/schema.json",
+      "shortName": "fusionauth"
     },
     {
       "repoSlug": "upstash/pulumi-upstash",
-      "schemaFile": "provider/cmd/pulumi-resource-upstash/schema.json"
+      "schemaFile": "provider/cmd/pulumi-resource-upstash/schema.json",
+      "shortName": "upstash"
     },
     {
       "repoSlug": "lbrlabs/pulumi-ovh",
-      "schemaFile": "provider/cmd/pulumi-resource-ovh/schema.json"
+      "schemaFile": "provider/cmd/pulumi-resource-ovh/schema.json",
+      "shortName": "ovh"
     },
     {
       "repoSlug": "lbrlabs/pulumi-grafana",
-      "schemaFile": "provider/cmd/pulumi-resource-grafana/schema.json"
+      "schemaFile": "provider/cmd/pulumi-resource-grafana/schema.json",
+      "shortName": "grafana"
     },
     {
       "repoSlug": "lbrlabs/pulumi-launchdarkly",
-      "schemaFile": "provider/cmd/pulumi-resource-launchdarkly/schema.json"
+      "schemaFile": "provider/cmd/pulumi-resource-launchdarkly/schema.json",
+      "shortName": "launchdarkly"
     },
     {
       "repoSlug": "pulumi/pulumi-azure-static-website",
-      "schemaFile": "schema.json"
+      "schemaFile": "schema.json",
+      "shortName": "azure-static-website"
     },
     {
       "repoSlug": "lbrlabs/pulumi-harness",
-      "schemaFile": "provider/cmd/pulumi-resource-harness/schema.json"
+      "schemaFile": "provider/cmd/pulumi-resource-harness/schema.json",
+      "shortName": "harness"
     },
     {
       "repoSlug": "pulumi/pulumi-google-cloud-static-website",
-      "schemaFile": "schema.json"
+      "schemaFile": "schema.json",
+      "shortName": "google-cloud-static-website"
     },
     {
       "repoSlug": "pulumi/pulumi-synced-folder",
-      "schemaFile": "schema.json"
+      "schemaFile": "schema.json",
+      "shortName": "synced-folder"
     },
     {
       "repoSlug": "pulumi/pulumi-tls-self-signed-cert",
-      "schemaFile": "schema.json"
+      "schemaFile": "schema.json",
+      "shortName": "tls-self-signed-cert"
     },
     {
       "repoSlug": "oun/pulumi-flux",
-      "schemaFile": "provider/cmd/pulumi-resource-flux/schema.json"
+      "schemaFile": "provider/cmd/pulumi-resource-flux/schema.json",
+      "shortName": "flux"
     },
     {
       "repoSlug": "lbrlabs/pulumi-dynatrace",
-      "schemaFile": "provider/cmd/pulumi-resource-dynatrace/schema.json"
+      "schemaFile": "provider/cmd/pulumi-resource-dynatrace/schema.json",
+      "shortName": "dynatrace"
     },
     {
       "repoSlug": "pulumiverse/pulumi-aquasec",
-      "schemaFile": "provider/cmd/pulumi-resource-aquasec/schema.json"
+      "schemaFile": "provider/cmd/pulumi-resource-aquasec/schema.json",
+      "shortName": "aquasec"
     },
     {
       "repoSlug": "pulumiverse/pulumi-exoscale",
-      "schemaFile": "provider/cmd/pulumi-resource-exoscale/schema.json"
+      "schemaFile": "provider/cmd/pulumi-resource-exoscale/schema.json",
+      "shortName": "exoscale"
     },
     {
       "repoSlug": "pulumiverse/pulumi-sentry",
-      "schemaFile": "provider/cmd/pulumi-resource-sentry/schema.json"
+      "schemaFile": "provider/cmd/pulumi-resource-sentry/schema.json",
+      "shortName": "sentry"
     },
     {
       "repoSlug": "pulumiverse/pulumi-heroku",
-      "schemaFile": "provider/cmd/pulumi-resource-heroku/schema.json"
+      "schemaFile": "provider/cmd/pulumi-resource-heroku/schema.json",
+      "shortName": "heroku"
     },
     {
       "repoSlug": "pulumi/pulumi-str",
-      "schemaFile": "sdk/schema.json"
+      "schemaFile": "sdk/schema.json",
+      "shortName": "str"
     },
     {
       "repoSlug": "pulumiverse/pulumi-unifi",
-      "schemaFile": "provider/cmd/pulumi-resource-unifi/schema.json"
+      "schemaFile": "provider/cmd/pulumi-resource-unifi/schema.json",
+      "shortName": "unifi"
     },
     {
       "repoSlug": "symbiosis-cloud/pulumi-symbiosis",
-      "schemaFile": "provider/cmd/pulumi-resource-symbiosis/schema.json"
+      "schemaFile": "provider/cmd/pulumi-resource-symbiosis/schema.json",
+      "shortName": "symbiosis"
     },
     {
       "repoSlug": "astipkovits/pulumi-aviatrix",
-      "schemaFile": "provider/cmd/pulumi-resource-aviatrix/schema.json"
+      "schemaFile": "provider/cmd/pulumi-resource-aviatrix/schema.json",
+      "shortName": "aviatrix"
     },
     {
       "repoSlug": "pulumiverse/pulumi-purrl",
-      "schemaFile": "provider/cmd/pulumi-resource-purrl/schema.json"
+      "schemaFile": "provider/cmd/pulumi-resource-purrl/schema.json",
+      "shortName": "purrl"
     },
     {
       "repoSlug": "pulumiverse/pulumi-harbor",
-      "schemaFile": "provider/cmd/pulumi-resource-harbor/schema.json"
+      "schemaFile": "provider/cmd/pulumi-resource-harbor/schema.json",
+      "shortName": "harbor"
     },
     {
       "repoSlug": "dirien/pulumi-vultr",
-      "schemaFile": "provider/cmd/pulumi-resource-vultr/schema.json"
+      "schemaFile": "provider/cmd/pulumi-resource-vultr/schema.json",
+      "shortName": "vultr"
     },
     {
       "repoSlug": "zscaler/pulumi-zpa",
-      "schemaFile": "provider/cmd/pulumi-resource-zpa/schema.json"
+      "schemaFile": "provider/cmd/pulumi-resource-zpa/schema.json",
+      "shortName": "zpa"
     },
     {
       "repoSlug": "zscaler/pulumi-zia",
-      "schemaFile": "provider/cmd/pulumi-resource-zia/schema.json"
+      "schemaFile": "provider/cmd/pulumi-resource-zia/schema.json",
+      "shortName": "zia"
     },
     {
       "repoSlug": "pulumiverse/pulumi-statuscake",
-      "schemaFile": "provider/cmd/pulumi-resource-statuscake/schema.json"
+      "schemaFile": "provider/cmd/pulumi-resource-statuscake/schema.json",
+      "shortName": "statuscake"
     },
     {
       "repoSlug": "nuage-studio/pulumi-nuage",
-      "schemaFile": "schema.json"
+      "schemaFile": "schema.json",
+      "shortName": "nuage"
     },
     {
       "repoSlug": "twingate-labs/pulumi-twingate",
-      "schemaFile": "provider/cmd/pulumi-resource-twingate/schema.json"
+      "schemaFile": "provider/cmd/pulumi-resource-twingate/schema.json",
+      "shortName": "twingate"
     },
     {
       "repoSlug": "dirien/pulumi-azapi",
-      "schemaFile": "provider/cmd/pulumi-resource-azapi/schema.json"
+      "schemaFile": "provider/cmd/pulumi-resource-azapi/schema.json",
+      "shortName": "azapi"
     },
     {
       "repoSlug": "cloud-toolkit/cloud-toolkit-aws",
-      "schemaFile": "schema.yaml"
+      "schemaFile": "schema.yaml",
+      "shortName": "cloud-toolkit-aws"
     }
   ]
 }

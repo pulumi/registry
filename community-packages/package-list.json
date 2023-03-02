@@ -183,6 +183,10 @@
     {
       "repoSlug": "twingate-labs/pulumi-twingate",
       "schemaFile": "provider/cmd/pulumi-resource-twingate/schema.json"
-    }
+    },
+    {
+      "repoSlug": "dirien/pulumi-azapi",
+      "schemaFile": "provider/cmd/pulumi-resource-azapi/schema.json"
+    },
   ]
 }

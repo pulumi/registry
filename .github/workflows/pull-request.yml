@@ -30,6 +30,11 @@ jobs:
       - name: Check out branch
         uses: actions/checkout@v2
 
+      - name: Validate JSON file syntax
+        uses: limitusus/json-syntax-check@v1
+        with:
+          pattern: "community-packages/package-list.json"
+
       - name: Lint and Fix
         run: |
           yarn install

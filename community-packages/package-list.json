@@ -187,6 +187,6 @@
     {
       "repoSlug": "dirien/pulumi-azapi",
       "schemaFile": "provider/cmd/pulumi-resource-azapi/schema.json"
-    },
+    }
   ]
 }

@@ -71,29 +71,3 @@ twingate_resource = tg.TwingateResource("test_resource",
 ```
 
 {{% /choosable %}}
-
-{{% choosable language csharp %}}
-
-```csharp
-using Pulumi;
-using Twingate = TwingateLabs.Twingate;
-
-class TwingateStack : Stack
-{
-    var remoteNetwork = new TwingateRemoteNetwork("example", new TwingateRemoteNetworkArgs{});
-
-    var twingateResource = new TwingateResource("example", new InstanceServerArgs{
-        Name = "Pulumi Website",
-        Address = "www.pulumi.com",
-        RemoteNetworkId = remoteNetwork.Id,
-        GroupIds =
-        {
-            "R3JvdXA6MzA2MDk=",
-        },
-    });
-}
-```
-
-{{% /choosable %}}
-
-{{< /chooser >}}

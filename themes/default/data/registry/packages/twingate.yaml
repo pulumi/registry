@@ -10,5 +10,5 @@ publisher: Twingate
 repo_url: https://github.com/Twingate-Labs/pulumi-twingate
 schema_file_path: provider/cmd/pulumi-resource-twingate/schema.json
 title: Twingate
-updated_on: 1677590681
-version: v0.0.36
+updated_on: 1678135744
+version: v0.0.42

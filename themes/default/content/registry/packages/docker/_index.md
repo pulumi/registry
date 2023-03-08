@@ -4,7 +4,7 @@ meta_desc: Provides an overview of the Docker Provider for Pulumi.
 layout: overview
 ---
 
-The Docker provider for Pulumi can be used to provision any of the resources available in [Docker](https://www.docker.com/).
+The Pulumi Docker Provider can be used to provision and interact with any of the resources available in [Docker](https://www.docker.com/) including containers, images, networks, volumes and more.
 
 ## Example
 

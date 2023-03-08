@@ -62,7 +62,7 @@ Verify the cluster is configured and up by running `kubectl get pods`.
 
 Then follow the [getting started guide](/docs/get-started/kubernetes) or explore some [code examples](https://github.com/pulumi/examples#kubernetes).
 
-Note: Pulumi **never** sends **any** authentication secrets or credentials to the Pulumi service.
+Note: Pulumi **never** sends **any** authentication [secrets](/docs/intro/concepts/secrets/) or credentials to the Pulumi service.
 
 ### Contexts
 

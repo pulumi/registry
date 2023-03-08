@@ -118,7 +118,7 @@ If you have Azure Resource Manager (ARM) templates that you'd like to migrate to
 
 ## Manage incompatible resources using the Azure SDK
 
-Some Azure resources aren't included in Azure Native because they're not compatible with the [Pulumi resource model](docs/intro/concepts/how-pulumi-works). If you need to manage these kinds of resources, you can use convenience helpers provided by Azure Native to set up an Azure SDK client and credentials in your preferred language. Use these how-to guides to get started:
+Some Azure resources aren't included in Azure Native because they're not compatible with the [Pulumi resource model](/docs/intro/concepts/how-pulumi-works). If you need to manage these kinds of resources, you can use convenience helpers provided by Azure Native to set up an Azure SDK client and credentials in your preferred language. Use these how-to guides to get started:
 
 * [Typescript](/registry/packages/azure-native/how-to-guides/azure-ts-call-azure-sdk)
 * [Go](/registry/packages/azure-native/how-to-guides/azure-go-call-azure-sdk)

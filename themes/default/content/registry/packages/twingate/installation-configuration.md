@@ -15,10 +15,10 @@ The Pulumi Twingate provider is available as a package in all Pulumi languages:
 
 ### Provider Binary
 
-The Twingate provider binary is a third party binary. It can be installed using the `pulumi plugin` command.
+The Twingate provider binary is a third party binary, this should be installed automatically by package managers (e.g. Python Pip). It can be manually installed using the `pulumi plugin` command.
 
 ```bash
-pulumi plugin install resource twingate v0.0.39 --server https://github.com/Twingate-Labs/pulumi-twingate/releases/download/v0.0.39/
+pulumi plugin install resource twingate --server github://api.github.com/twingate-labs
 ```
 
 Replace the version string with your desired version.

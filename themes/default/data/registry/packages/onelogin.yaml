@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-onelogin
 schema_file_path: provider/cmd/pulumi-resource-onelogin/schema.json
 title: onelogin
-updated_on: 1675882960
-version: v0.4.0
+updated_on: 1678837861
+version: v0.5.0

@@ -10,5 +10,5 @@ publisher: Symbiosis
 repo_url: https://github.com/symbiosis-cloud/pulumi-symbiosis
 schema_file_path: provider/cmd/pulumi-resource-symbiosis/schema.json
 title: Symbiosis
-updated_on: 1675349682
-version: v1.0.3
+updated_on: 1678969203
+version: v1.0.4

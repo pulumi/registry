@@ -14,7 +14,7 @@ The Symbiosis provider must be configured with credentials to deploy and update 
 
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
-import * as symbiosis from "@symbiosis/symbiosis-pulumi";
+import * as symbiosis from "@symbiosis-cloud/symbiosis-pulumi";
 
 const mysite = new symbiosis.Cluster("example", {
     region: "germany-1"
@@ -37,7 +37,7 @@ db = symbiosis.Cluster("example",
 
 ```go
 import (
-	"github.com/symbiosis/pulumi-symbiosis/sdk/go/symbiosis"
+	"github.com/symbiosis-cloud/pulumi-symbiosis/sdk/go/symbiosis"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -59,7 +59,7 @@ func main() {
 
 ```csharp
 using Pulumi;
-using Symbiosis.Symbiosis;
+using Symbiosis.Pulumi.Symbiosis;
 
 class ExampleCluster : Stack
 {

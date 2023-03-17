@@ -6,12 +6,12 @@ layout: installation
 
 ## Installation
 
-The Kuraudo.io Symbiosis provider is available as a package in all Pulumi languages:
+The Symbiosis provider is available as a package in all Pulumi languages:
 
-* JavaScript/TypeScript: [`@kuraudo-io/symbiosis`](https://www.npmjs.com/package/@kuraudo-io/symbiosis)
-* Python: [`kuraudo_symbiosis`](https://pypi.org/project/kuraudo-symbiosis/)
-* Go: [`github.com/kuraudo-io/pulumi-symbiosis/sdk/go/unifi`](https://pkg.go.dev/github.com/kuraudo-io/pulumi-symbiosis/sdk/go/symbiosis)
-* .NET: [`Kuraudo.Symbiosis`](https://www.nuget.org/packages/Kuraudo.Symbiosis)
+* JavaScript/TypeScript: [`@symbiosis-cloud/symbiosis-pulumi`](https://www.npmjs.com/package/@symbiosis-cloud/symbiosis-pulumi)
+* Python: [`symbiosis-pulumi`](https://pypi.org/project/symbiosis-pulumi/)
+* Go: [`github.com/symbiosis-cloud/pulumi-symbiosis/sdk/go/symbiosis`](https://pkg.go.dev/github.com/symbiosis-cloud/pulumi-symbiosis/sdk/go/symbiosis)
+* .NET: [`Symbiosis.Pulumi.Symbiosis`](https://www.nuget.org/packages/Symbiosis.Pulumi.Symbiosis)
 
 ## Setup
 

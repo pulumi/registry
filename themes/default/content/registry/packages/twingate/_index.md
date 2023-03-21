@@ -71,3 +71,4 @@ twingate_resource = tg.TwingateResource("test_resource",
 ```
 
 {{% /choosable %}}
+{{< /chooser >}}

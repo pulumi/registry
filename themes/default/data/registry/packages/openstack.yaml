@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-openstack
 schema_file_path: provider/cmd/pulumi-resource-openstack/schema.json
 title: OpenStack
-updated_on: 1678126771
-version: v3.11.0
+updated_on: 1679405069
+version: v3.12.0

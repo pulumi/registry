@@ -8,7 +8,7 @@ native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-rabbitmq
-schema_file_path: /provider/cmd/pulumi-resource-rabbitmq/schema.json
+schema_file_path: provider/cmd/pulumi-resource-rabbitmq/schema.json
 title: RabbitMQ
-updated_on: 1636663572
-version: v3.2.0
+updated_on: 1679505228
+version: v3.3.0

@@ -33,3 +33,11 @@ Once the credentials are obtained, there are two ways to communicate your config
     ```bash
     $ pulumi config set docker:host tcp://127.0.0.1:2376/
     ```
+
+Alternative for Windows users:
+    
+    Use the following PowerShell command to add reference the pipe used by Docker Engine on your machine. 
+
+    ```powershell
+    pulumi config set docker:host "npipe:////.//pipe//docker_engine"
+    ```

@@ -39,5 +39,7 @@ const clientDataSigningKey = new FusionAuthKey(
 export const appClientDataJwtKeyId = clientDataSigningKey.id;
 ```
 
+
 {{% /choosable %}}
+
 {{< /chooser >}}

@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-docker
 schema_file_path: provider/cmd/pulumi-resource-docker/schema.json
 title: Docker
-updated_on: 1679592221
-version: v4.1.0
+updated_on: 1680208883
+version: v4.1.1

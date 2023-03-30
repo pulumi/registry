@@ -8,21 +8,8 @@ The Pulumi Docker Provider can be used to provision and interact with any of the
 
 ## Example
 
-{{< chooser language "javascript,typescript,python,go,csharp,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
 
-{{% choosable language javascript %}}
-
-```javascript
-const docker = require("@pulumi/docker")
-
-const image = new docker.RemoteImage("ubuntu", {
-  name: "ubuntu:precise"
-});
-
-const container = new docker.Container("ubuntu", {
-  image: image.latest,
-});
-```
 
 {{% /choosable %}}
 {{% choosable language typescript %}}
@@ -106,6 +93,29 @@ await Deployment.RunAsync(() =>
     Image = image.Latest,
   });
 });
+```
+
+{{% /choosable %}}
+{{% choosable language java %}}
+
+```java
+// TODO: enter Java example here
+//import com.pulumi.Context;
+//import com.pulumi.Pulumi;
+//import com.pulumi.azuread.Group;
+//import com.pulumi.azuread.GroupArgs;
+//
+//public class App {
+//    public static void main(String[] args) {
+//        Pulumi.run(App::stack);
+//    }
+//
+//    private static void stack(Context ctx) {
+//		final var group = new Group("my-group", GroupArgs.builder()
+//			.name("my-group")
+//			.build());
+//	}
+//}
 ```
 
 {{% /choosable %}}

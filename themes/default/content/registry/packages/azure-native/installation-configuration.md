@@ -18,16 +18,16 @@ The Azure Native provider is available as a package in all Pulumi languages:
 * .NET: [`Pulumi.AzureNative`](https://www.nuget.org/packages/Pulumi.AzureNative)
 * Java: [`com.pulumi.azurenative`](https://search.maven.org/search?q=com.pulumi.azure-native)
 
-## Authentication methods
+## Authentication Methods
 
 Pulumi can authenticate to Azure via several methods:
 - Azure CLI
-- Service Principal with client secret or certificate
+- Service Principal with a client secret or certificate
 - OpenID Connect (OIDC)
 - Managed Service Identity (MSI)
 
 If you're running the Pulumi CLI locally, in a developer scenario, we recommend using the Azure CLI.  For team
-environments, particularly in CI, one of the other options is recommended.
+environments, particularly in CI, one of the other options is strongly recommended.
 
 {{% notes type="info" %}}
 Authenticating using the CLI will not work for Service Principal logins (e.g.,
@@ -36,7 +36,7 @@ Authenticating using the CLI will not work for Service Principal logins (e.g.,
 
 ### Authenticate using the CLI
 
-The CLI instructions assume you're using the [Azure CLI 2.0](https://github.com/Azure/azure-cli) (`az`).
+The CLI instructions assume you're using the [Azure CLI](https://github.com/Azure/azure-cli) (`az`).
 
 Log in to the Azure CLI and Pulumi will automatically use your credentials:
 
@@ -63,14 +63,14 @@ Pick out the `<id>` from the list and run:
 $ az account set --subscription=<id>
 ```
 
-### Authenticate using OpenID Connect (OIDC)
+### Authenticate with OpenID Connect (OIDC)
 
-OIDC allows you to establish a trust relationship between Azure and another identity provider such as GitHub. Then,
-your program can exchange a token issued by the identity provider for an Azure token. For instance, using GitHub,
-your Pulumi program running in GitHub Actions CI will be able to exchange its GitHub token for access to Azure, without
-storing any secrets in GitHub.
+OIDC allows you to establish a trust relationship between Azure and another identity provider such as GitHub. Once
+established, your program can exchange a token issued by the identity provider (in this case, GitHub) for an Azure
+token. Your Pulumi program running in, for instance, GitHub Actions CI, can then access Azure, without storing any
+secrets in GitHub.
 
-#### OIDC cloud configuration
+#### OIDC Azure Configuration
 
 To configure the trust relationship in Azure, please refer to
 [this guide](https://learn.microsoft.com/en-us/azure/active-directory/workload-identities/workload-identity-federation-create-trust?pivots=identity-wif-apps-methods-azp#github-actions).
@@ -80,19 +80,19 @@ Additionally, you may find the
 [GitHub OIDC documentation](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect)
 helpful.
 
-#### OIDC Pulumi provider configuration
+#### OIDC Pulumi Provider Configuration
 
 To use OIDC, set the configuration `useOidc` or the environment variable `ARM_USE_OIDC` to "true".
 
-Next, we need to supply the provider with an id token and a URL to exchange it at. In GitHub, we don't need to configure
+Next, supply the provider with an ID token and a URL to use for exchange. In GitHub, we don't need to configure
 this since GitHub sets the relevant environment variables `ACTIONS_ID_TOKEN_REQUEST_TOKEN` and
 `ACTIONS_ID_TOKEN_REQUEST_URL` by default and the provider reads them. In other scenarios, set the Pulumi configuration
 `oidcRequestToken` or environment variable `ARM_OIDC_REQUEST_TOKEN` for the token, and configuration `oidcRequestUrl`
 or environment variable `ARM_OIDC_REQUEST_URL` for the URL.
 
-Finally, configure the client and tenant ids of your Azure Active Directory application. Refer to the
+Finally, configure the client and tenant IDs of your Azure Active Directory application. Refer to the
 [above Azure documentation](https://learn.microsoft.com/en-us/azure/active-directory/workload-identities/workload-identity-federation-create-trust?pivots=identity-wif-apps-methods-azp)
-on how to retrieve the ids, and set them via Pulumi config as `clientId` and `tenantId` or via environment variables as
+on how to retrieve the IDs, and set them via Pulumi config as `clientId` and `tenantId` or via environment variables as
 `ARM_CLIENT_ID` and `ARM_TENANT_ID`.
 
 {{% notes type="info" %}}
@@ -104,8 +104,8 @@ they match your setup, e.g., the type "branch" and the correct branch name if CI
 ### Authenticate using a Service Principal
 
 A Service Principal is an application in Azure Active Directory with a client ID and a tenant ID, exactly like the one
-used in the OIDC scenario. In this scenario, instead of a pre-configured trust relationship, we use a client secret to
-authenticate to Azure. 
+used in the OIDC scenario. In this scenario, instead of a pre-configured trust relationship, a client secret is used to
+authenticate with Azure. 
 
 #### Create your Service Principal and get your tokens
 

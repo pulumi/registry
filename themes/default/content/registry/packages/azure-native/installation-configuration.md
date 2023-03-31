@@ -21,10 +21,10 @@ The Azure Native provider is available as a package in all Pulumi languages:
 ## Authentication methods
 
 Pulumi can authenticate to Azure via several methods:
-  - Azure CLI
-  - Service Principal and client secret or certificate
-  - OpenID Connect (OIDC)
-  - Managed Service Identity (MSI)
+- Azure CLI
+- Service Principal with client secret or certificate
+- OpenID Connect (OIDC)
+- Managed Service Identity (MSI)
 
 If you're running the Pulumi CLI locally, in a developer scenario, we recommend using the Azure CLI.  For team
 environments, particularly in CI, one of the other options is recommended.

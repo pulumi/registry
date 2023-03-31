@@ -4,11 +4,7 @@ meta_desc: How to set up credentials to use the Pulumi Azure Classic Provider an
 layout: installation
 ---
 
-To provision resources with the Pulumi Azure provider, you need to have an Azure CLI installed and you need to have Azure credentials. These instructions assume you're using the [Azure CLI 2.0](https://github.com/Azure/azure-cli). Your Azure credentials are never sent to Pulumi.com. Pulumi uses the Azure SDK and the credentials in your environment to authenticate requests from your computer to Azure.
-
-{{% notes type="info" %}}
-Pulumi Azure also works with the legacy [Azure xPlat CLI](https://github.com/Azure/azure-xplat-cli) but we recommend using the CLI 2.0 for the best experience.
-{{% /notes %}}
+To provision resources with the Pulumi Azure provider, you need to have an Azure CLI installed and you need to have Azure credentials. These instructions assume you're using the [Azure CLI ](https://github.com/Azure/azure-cli). Your Azure credentials are never sent to Pulumi.com. Pulumi uses the Azure SDK and the credentials in your environment to authenticate requests from your computer to Azure.
 
 ## Installation
 
@@ -18,6 +14,7 @@ The Azure Classic provider is available as a package in all Pulumi languages:
 * Python: [`pulumi-azure`](https://pypi.org/project/pulumi-azure/)
 * Go: [`github.com/pulumi/pulumi-azure/sdk/v4/go/azure`](https://github.com/pulumi/pulumi-azure)
 * .NET: [`Pulumi.Azure`](https://www.nuget.org/packages/Pulumi.Azure)
+* Java: [`com.pulumi.azure`](https://search.maven.org/search?q=com.pulumi.azure)
 
 ## Credentials
 

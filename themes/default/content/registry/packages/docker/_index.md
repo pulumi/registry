@@ -10,8 +10,6 @@ The Pulumi Docker Provider can be used to provision and interact with any of the
 
 {{< chooser language "typescript,python,go,csharp,java,yaml" >}}
 
-
-{{% /choosable %}}
 {{% choosable language typescript %}}
 
 ```typescript

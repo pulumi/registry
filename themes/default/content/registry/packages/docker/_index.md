@@ -99,23 +99,29 @@ await Deployment.RunAsync(() =>
 {{% choosable language java %}}
 
 ```java
-// TODO: enter Java example here
-//import com.pulumi.Context;
-//import com.pulumi.Pulumi;
-//import com.pulumi.azuread.Group;
-//import com.pulumi.azuread.GroupArgs;
-//
-//public class App {
-//    public static void main(String[] args) {
-//        Pulumi.run(App::stack);
-//    }
-//
-//    private static void stack(Context ctx) {
-//		final var group = new Group("my-group", GroupArgs.builder()
-//			.name("my-group")
-//			.build());
-//	}
-//}
+import com.pulumi.Context;
+import com.pulumi.Pulumi;
+import com.pulumi.docker.RemoteImage;
+import com.pulumi.docker.RemoteImageArgs;
+import com.pulumi.docker.Container;
+import com.pulumi.docker.ContainerArgs;
+
+public class App {
+    public static void main(String[] args) {
+        Pulumi.run(App::stack);
+    }
+
+    public static void stack(Context ctx) {
+        var ubuntuRemoteImage = new RemoteImage("ubuntuRemoteImage", RemoteImageArgs.builder()
+                .name("ubuntu:precise")
+                .build());
+
+        var ubuntuContainer = new Container("ubuntuContainer", ContainerArgs.builder()
+                .image(ubuntuRemoteImage.imageId())
+                .build());
+
+    }
+}
 ```
 
 {{% /choosable %}}

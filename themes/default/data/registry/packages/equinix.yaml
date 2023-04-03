@@ -1,0 +1,14 @@
+category: Cloud
+component: false
+description: A Pulumi package for creating and managing equinix cloud resources.
+featured: false
+logo_url: https://raw.githubusercontent.com/equinix/pulumi-equinix/main/assets/logo.png
+name: equinix
+native: false
+package_status: public_preview
+publisher: Equinix
+repo_url: https://github.com/equinix/pulumi-equinix
+schema_file_path: provider/cmd/pulumi-resource-equinix/schema.json
+title: Equinix
+updated_on: 1680290299
+version: v0.1.1

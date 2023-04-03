@@ -82,7 +82,8 @@ helpful.
 
 #### OIDC Pulumi Provider Configuration
 
-To use OIDC, set the configuration `useOidc` or the environment variable `ARM_USE_OIDC` to "true".
+To use OIDC, either set the Pulumi configuration `useOidc` via `pulumi config set azure-native:useOidc true` or set the
+environment variable `ARM_USE_OIDC` to "true".
 
 Next, supply the provider with an ID token and a URL to use for exchange. In GitHub, we don't need to configure
 this since GitHub sets the relevant environment variables `ACTIONS_ID_TOKEN_REQUEST_TOKEN` and

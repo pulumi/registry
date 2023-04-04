@@ -48,7 +48,7 @@ advantages:
     solutions.
 - **And more!**
 
-Check out [Pulumi: A Better Way to Kubernetes][/blog/pulumi-a-better-way-to-kubernetes/] for details!
+Check out [Pulumi: A Better Way to Kubernetes](/blog/pulumi-a-better-way-to-kubernetes/) for details!
 
 <!-- markdownlint-disable url -->
 [upstream]: https://kubernetes.io/docs/reference/

@@ -10,6 +10,7 @@ set -o errexit -o pipefail
 
 echo "Finding deletable $1 buckets..."
 
+
 buckets_to_remove="$(./scripts/ci/list-buckets.sh "$1" --only-deletables)"
 
 if [ -z "$buckets_to_remove" ]; then

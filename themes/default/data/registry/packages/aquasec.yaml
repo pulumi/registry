@@ -10,5 +10,5 @@ publisher: Pulumiverse
 repo_url: https://github.com/pulumiverse/pulumi-aquasec
 schema_file_path: provider/cmd/pulumi-resource-aquasec/schema.json
 title: Aquasec
-updated_on: 1677434885
-version: v0.8.22
+updated_on: 1680625023
+version: v0.8.24

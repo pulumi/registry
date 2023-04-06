@@ -88,13 +88,13 @@ environment variable `ARM_USE_OIDC` to "true".
 Next, supply the provider with an ID token and a URL to use for exchange. In GitHub, we don't need to configure
 this since GitHub sets the relevant environment variables `ACTIONS_ID_TOKEN_REQUEST_TOKEN` and
 `ACTIONS_ID_TOKEN_REQUEST_URL` by default and the provider reads them. In other scenarios, set the Pulumi configuration
-`oidcRequestToken` or environment variable `ARM_OIDC_REQUEST_TOKEN` for the token, and configuration `oidcRequestUrl`
-or environment variable `ARM_OIDC_REQUEST_URL` for the URL.
+`azure-native:oidcRequestToken` or environment variable `ARM_OIDC_REQUEST_TOKEN` for the token, and configuration
+`azure-native:oidcRequestUrl` or environment variable `ARM_OIDC_REQUEST_URL` for the URL.
 
 Finally, configure the client and tenant IDs of your Azure Active Directory application. Refer to the
 [above Azure documentation](https://learn.microsoft.com/en-us/azure/active-directory/workload-identities/workload-identity-federation-create-trust?pivots=identity-wif-apps-methods-azp)
-on how to retrieve the IDs, and set them via Pulumi config as `clientId` and `tenantId` or via environment variables as
-`ARM_CLIENT_ID` and `ARM_TENANT_ID`.
+on how to retrieve the IDs, and set them via Pulumi config as `azure-native:clientId` and `azure-native:tenantId` or
+via environment variables as `ARM_CLIENT_ID` and `ARM_TENANT_ID`.
 
 {{% notes type="info" %}}
 If you get the error "_AADSTS70021: No matching federated identity record found for presented assertion_", this points
@@ -234,3 +234,4 @@ Use `pulumi config set azure-native:<option>` or pass options to the [constructo
 | `subscriptionId`            | Optional          | The subscription ID to use. It can also be sourced from the `ARM_SUBSCRIPTION_ID` environment variable. |
 | `tenantId`                  | Optional          | The tenant ID to use for OIDC or Service Principal authentication. It can also be sourced from the `ARM_TENANT_ID` environment variable. |
 | `useMsi`                    | Optional          | Set to true to authenticate using managed service identity. It can also be sourced from the `ARM_USE_MSI` environment variable. |
+| `useOidc`                   | Optional          | Set to true to authenticate using OIDC. It can also be sourced from the `ARM_USE_OIDC` environment variable. |

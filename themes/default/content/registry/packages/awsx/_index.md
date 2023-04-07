@@ -139,7 +139,7 @@ resources:
     type: awsx:ec2:Vpc
 
 outputs:
-  vpcId: ${vpc.VpcId}
+  vpcId: ${vpc.vpcId}
   privateSubnetIds: ${vpc.privateSubnetIds}
   publicSubnetIds: ${vpc.publicSubnetIds}
 

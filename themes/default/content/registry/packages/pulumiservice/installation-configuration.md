@@ -15,7 +15,7 @@ The Pulumi Service provider is available as a package in all Pulumi languages:
 
 ## Setup
 
-To provision resources with the Pulumi Service provider, you need to have Pulumi Service credentials. Pulumi Service maintains documentation on how to create access tokens [here](https://www.pulumi.com/docs/intro/pulumi-service/accounts/#access-tokens).
+To provision resources with the Pulumi Service provider, you need to have Pulumi Service credentials. Pulumi Service maintains documentation on how to create access tokens [here](https://www.pulumi.com/docs/intro/pulumi-cloud/accounts/#access-tokens).
 {{% notes "info" %}}
 While you can use this provider to provision access tokens, you'll still need to have an access token available to generate an access token with the provider.
 {{% /notes %}}
@@ -62,5 +62,5 @@ Use `pulumi config set pulumiservice:<option>` or pass options to the [construct
 
 | Option | Required/Optional | Description |
 |-----|------|----|
-| `accessToken`| Required | [Pulumi Service Access Tokens](https://www.pulumi.com/docs/intro/pulumi-service/accounts/#access-tokens) |
+| `accessToken`| Required | [Pulumi Service Access Tokens](https://www.pulumi.com/docs/intro/pulumi-cloud/accounts/#access-tokens) |
 | `apiUrl`| Optional | Allows overriding default [Pulumi Service API URL](https://www.pulumi.com/docs/reference/service-rest-api) for [self hosted customers](https://www.pulumi.com/docs/guides/self-hosted/).

@@ -125,7 +125,7 @@ const wordpress = new k8s.helm.v3.Chart("wpdev", {
 
 See the [pulumi/examples][examples] repo for more details.
 
-## Does the Pulumi Service see my credentials in the kubeconfig file?
+## Does the Pulumi Cloud see my credentials in the kubeconfig file?
 
 No. Only the `pulumi` CLI tool running locally in the user's client can read the kubeconfig file or execute
 resource operations on the cluster.
@@ -136,12 +136,12 @@ same resources concurrently, and stores the state history of your deployments.
 If you ask Pulumi to boot up a cluster (_e.g._, as our [EKS example][eks] shows), then it is
 possible to retrieve a kubeconfig file _for that cluster only_. In this case, the kubeconfig file is
 stored as part of the state history of rollouts -- but they are considered opaque state by the
-Pulumi service. The service **never** uses these values for any reason whatsoever.
+Pulumi Cloud. The service **never** uses these values for any reason whatsoever.
 
 Additionally, the contents of the kubeconfig files are not sensitive for managed clusters
 on the major cloud providers, as they defer authentication to their local CLIs.
 
-## Does the Pulumi Service see my cloud provider credentials?
+## Does the Pulumi Cloud see my cloud provider credentials?
 
 No. The `pulumi` CLI tool runs locally in the user's client. This allows
 Pulumi to transparently rely on the underlying cloud provider's CLI and authentication

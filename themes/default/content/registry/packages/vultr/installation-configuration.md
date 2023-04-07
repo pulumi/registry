@@ -23,6 +23,6 @@ Use `pulumi config set vultr:<option>`.
 
 The following configuration points are available for the `vultr` provider:
 
-- `vultr:apiKey` (environment: `VULTR_API_KEY`) -  This is the Vultr API key. It can be found in the [Vultr API section](https://my.vultr.com/settings/#settingsapi).
+- `vultr:apiKey` (environment: `VULTR_API_KEY`) -  This is the Vultr API key. It can be found in the Vultr API section.
 - `vultr:rateLimit` - Vultr limits API calls to 30 calls per second. This field lets you configure how the rate limit using milliseconds. The default value if this field is omitted is 500 milliseconds per call.
 - `vultr:retryLimit` - This field lets you configure how many retries should be attempted on a failed call. The default value if this field is omitted is 3 retries.

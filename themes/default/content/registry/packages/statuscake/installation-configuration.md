@@ -10,7 +10,6 @@ The Pulumi Statuscake provider is available as a package in all Pulumi languages
 
 - JavaScript/TypeScript: [`@pulumiserve/statuscake`](https://www.npmjs.com/package/@pulumiverse/statuscake)
 - Python: [`pulumiverse_statuscake`](https://pypi.org/project/pulumiverse-statuscake/)
-- Go: [`github.com/pulumiverse/pulumi-statuscake/sdk/go/statuscake`](https://pkg.go.dev/github.com/pulumiverse/pulumi-statuscake/sdk)
 - .NET: [`Pulumiverse.Statuscake`](https://www.nuget.org/packages/Pulumiverse.Statuscake)
 
 ## Setup

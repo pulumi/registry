@@ -10,7 +10,6 @@ The Pulumi `Harbor` provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumiverse/harbor`](https://www.npmjs.com/package/@pulumiverse/harbor)
 * Python: [`pulumiverse-harbor`](https://pypi.org/project/pulumiverse-harbor/)
-* Go: [`github.com/pulumiverse/pulumi-harbor/sdk/v3`](https://pkg.go.dev/github.com/pulumiverse/pulumi-harbor/sdk/v3)
 * .NET: [`Pulumiverse.Harbor`](https://www.nuget.org/packages/Pulumiverse.Harbor)
 
 ## Installing

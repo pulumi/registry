@@ -31,7 +31,7 @@ $ pip install pulumiverse_doppler
 
 The Pulumi Doppler Provider needs to be configured with a Doppler `API Key` and `Account ID` before it can be used to create resources.
 
-> If you don't have an `API Key`, you can create one [here](https://app.dopplerhq.com/settings/user/api-keys).
+> If you don't have an `API Key`, you can create one in the [Doppler Service](https://docs.doppler.com/docs/service-tokens).
 
 Once you generated the `API Key` there are two ways to communicate your authorization tokens to Pulumi:
 

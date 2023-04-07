@@ -12,7 +12,6 @@ To provision resources with the Pulumi Nuage provider,  you can set up the sdk o
 * JavaScript/TypeScript: [`@pulumi/nuage`](https://github.com/nuage-studio/pulumi-nuage/tree/master/sdk/nodejs)
 * Python: [`pulumi_nuage`](https://github.com/nuage-studio/pulumi-nuage/tree/master/sdk/python)
 * Go: [`nuage`](https://github.com/nuage-studio/pulumi-nuage/tree/master/sdk/go/nuage)
-* .NET: [`Pulumi.Nuage`](https://github.com/nuage-studio/pulumi-nuage/tree/master/sdk/dotnet)
 
 ## Credentials
 

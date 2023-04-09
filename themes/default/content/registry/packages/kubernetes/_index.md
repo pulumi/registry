@@ -90,7 +90,6 @@ to run and manage Kubernetes in production.
 
 [crosswalk-control-plane]: /docs/guides/crosswalk/kubernetes/control-plane
 [crosswalk-k8s]: /docs/guides/crosswalk/kubernetes
-[prod-arch-for-teams]: /docs/guides/crosswalk/kubernetes
 
 ## Pulumi Kubernetes Operator
 

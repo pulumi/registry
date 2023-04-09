@@ -238,10 +238,5 @@ You also learned how to work with the Pulumi CLI. To recap:
 [aws.s3.BucketPolicy]: /registry/packages/aws/api-docs/s3/bucketpolicy/
 [aws.s3.Bucket.website]: /registry/packages/aws/api-docs/s3/bucket/#state_website_nodejs
 [pulumi.Output]: /docs/reference/pkg/nodejs/pulumi/pulumi/#Output
-[pulumi.Output.apply]: /docs/reference/pkg/nodejs/pulumi/pulumi/#Output
-[pulumi.Input]: /docs/reference/pkg/nodejs/pulumi/pulumi/#Input
-[pulumi.ComponentResource]: /docs/reference/pkg/nodejs/pulumi/pulumi/#ComponentResource
-[Component]: /docs/intro/concepts/programming-model/#components
-[Pulumi Cloud]: /docs/tutorials/cloudfx/
 [in Python]: https://github.com/pulumi/examples/tree/master/aws-py-s3-folder
 <!-- markdownlint-enable url -->

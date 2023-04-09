@@ -22,7 +22,6 @@ For example, in the gif below, we can see how updating one resource (in this cas
 - [Using Pulumi's notion of "stack outputs"](#using-pulumis-notion-of-stack-outputs)
 - [Using Pulumi's diff facilities to understand how a change affects an application](#using-pulumis-diff-facilities-to-understand-how-a-change-affects-an-application)
 - [Updating an application](#updating-an-application)
-- [Deleting resources safely](#deleting-resources-safely)
 
 ![configmapRollout](/images/docs/quickstart/kubernetes/cm-rollout.gif "ConfigMap-induced Rollout")
 

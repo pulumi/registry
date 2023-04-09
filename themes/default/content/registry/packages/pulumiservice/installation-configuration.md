@@ -62,5 +62,5 @@ Use `pulumi config set pulumiservice:<option>` or pass options to the [construct
 
 | Option | Required/Optional | Description |
 |-----|------|----|
-| `accessToken`| Required | [Pulumi Service Access Tokens](https://www.pulumi.com/docs/intro/pulumi-cloud/accounts/#access-tokens) |
+| `accessToken`| Required | [Pulumi Cloud Access Tokens](https://www.pulumi.com/docs/intro/pulumi-cloud/accounts/#access-tokens) |
 | `apiUrl`| Optional | Allows overriding default [Pulumi Service API URL](https://www.pulumi.com/docs/reference/service-rest-api) for [self hosted customers](https://www.pulumi.com/docs/guides/self-hosted/).

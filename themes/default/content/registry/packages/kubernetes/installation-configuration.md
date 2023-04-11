@@ -62,7 +62,7 @@ Verify the cluster is configured and up by running `kubectl get pods`.
 
 Then follow the [getting started guide](/docs/get-started/kubernetes) or explore some [code examples](https://github.com/pulumi/examples#kubernetes).
 
-Note: Pulumi **never** sends **any** authentication [secrets](/docs/intro/concepts/secrets/) or credentials to the Pulumi service.
+Note: Pulumi **never** sends **any** authentication [secrets](/docs/intro/concepts/secrets/) or credentials to the Pulumi Cloud.
 
 ### Contexts
 
@@ -118,7 +118,7 @@ to the constructor of a `new kubernetes.Provider` to construct a specific instan
 
 ### kubectl proxy
 
-Each Kubernetes resource managed by Pulumi will have a link in the [Pulumi Service](https://app.pulumi.com")
+Each Kubernetes resource managed by Pulumi will have a link in the [Pulumi Cloud](https://app.pulumi.com")
 to view the resource in the cluster. These links are local, and require the client run `kubectl proxy` beforehand to access the resource.
 
 To learn more about `kubectl proxy` check out the [reference docs](https://kubernetes.io/docs/concepts/cluster-administration/proxies/).

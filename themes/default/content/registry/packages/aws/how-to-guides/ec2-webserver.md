@@ -196,8 +196,8 @@ return await Deployment.RunAsync(() =>
         Ingress = new SecurityGroupIngressArgs
         {
             Protocol = "tcp",
-            FromPort = 80,
-            ToPort = 80,
+            FromPort = 22,
+            ToPort = 22,
             CidrBlocks = { "0.0.0.0/0" }
         },
     });
@@ -424,7 +424,7 @@ var group = new Aws.Ec2.SecurityGroup("webserver-secgrp", new Aws.Ec2.SecurityGr
         {
             Protocol = "tcp",
             FromPort = 80,
-            ToPort = 90,
+            ToPort = 80,
             CidrBlocks = { "0.0.0.0/0" },
         },
         // ^-- ADD THIS item

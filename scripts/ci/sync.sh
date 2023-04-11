@@ -67,7 +67,7 @@ aws s3 cp "$build_dir/latest-version" "${destination_bucket_uri}/latest-version"
 #
 # Why use a local file and not `pulumi config`, or some other persistence store? Because
 # we need ensure that every CI job deploys only what it was responsible for building.
-# Coupled with the locking we get from the Pulumi Cloud, using a local file is a safe
+# Coupled with the locking we get from the Pulumi Cloud backend, using a local file is a safe
 # way to ensure we're deploying what we just finished building and testing.
 echo "Writing result metadata."
 metadata='{

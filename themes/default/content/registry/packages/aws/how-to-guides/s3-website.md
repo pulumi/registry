@@ -111,7 +111,7 @@ Current stack outputs (1):
     bucketName                                     s3-website-bucket-8533d8b
 ```
 
-To see that the S3 bucket objects exist, you can either use the AWS Console (which is accessible from the Pulumi Cloud) or the AWS CLI:
+To see that the S3 bucket objects exist, you can either use the AWS Console (which is accessible from the Pulumi Cloud console) or the AWS CLI:
 
 ```bash
 $ aws s3 ls $(pulumi stack output bucketName)

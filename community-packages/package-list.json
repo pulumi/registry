@@ -191,6 +191,10 @@
     {
       "repoSlug": "equinix/pulumi-equinix",
       "schemaFile": "provider/cmd/pulumi-resource-equinix/schema.json"
+    },
+    {
+      "repoSlug": "pierskarsenbarg/pulumi-sdm",
+      "schemaFile": "provider/cmd/pulumi-resource-sdm/schema.json"
     }
   ]
 }

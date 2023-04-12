@@ -69,7 +69,7 @@ $ pulumi new aws-csharp --name myproject
 
 {{% /choosable %}}
 
-### Step 2: Create an EC2 instance with SSH access
+### Step 2: Create an EC2 instance with HTTP access
 
 Open {{< langfile >}} and replace the contents with the following:
 
@@ -196,8 +196,8 @@ return await Deployment.RunAsync(() =>
         Ingress = new SecurityGroupIngressArgs
         {
             Protocol = "tcp",
-            FromPort = 80,
-            ToPort = 80,
+            FromPort = 22,
+            ToPort = 22,
             CidrBlocks = { "0.0.0.0/0" }
         },
     });
@@ -233,7 +233,7 @@ This example uses the [`ec2` module of the `aws` package](/registry/packages/aws
 
 | AWS Resource | Description | Resource |
 |--------------|-------------|----------|
-| Security Group | Created for allowing incoming SSH access | [aws.ec2.SecurityGroup][Security Group] |
+| Security Group | Created for allowing incoming HTTP access | [aws.ec2.SecurityGroup][Security Group] |
 | EC2 Instance | Created in that security group using the appropriate Amazon Machine Image (AMI) for the region where you deploy the program | [aws.ec2.Instance][EC2 Instance] |
 
 ### Step 3: Preview and deploy your resources
@@ -424,7 +424,7 @@ var group = new Aws.Ec2.SecurityGroup("webserver-secgrp", new Aws.Ec2.SecurityGr
         {
             Protocol = "tcp",
             FromPort = 80,
-            ToPort = 90,
+            ToPort = 80,
             CidrBlocks = { "0.0.0.0/0" },
         },
         // ^-- ADD THIS item

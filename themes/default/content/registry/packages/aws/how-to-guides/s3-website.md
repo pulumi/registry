@@ -37,33 +37,6 @@ const path = require("path");
 // Create an S3 bucket
 let siteBucket = new aws.s3.Bucket("s3-website-bucket");
 
-const addFolderContents = (siteDir) => {
-  // For each file in the directory, create an S3 object stored in `siteBucket`
-  for (let item of fs.readdirSync(siteDir)) {
-    let filePath = path.join(siteDir, item);
-    let object = new aws.s3.BucketObject(item, {
-      bucket: siteBucket,
-      source: new pulumi.asset.FileAsset(filePath),     // use FileAsset to point to a file
-      contentType: mime.getType(filePath) || undefined, // set the MIME type of the file
-    });
-  }
-}
-
-addFolderContents("www"); // base directory for content files
-
-exports.bucketName = siteBucket.bucket; // create a stack export for bucket name
-```
-
-Notice how we are using the [@pulumi/aws] npm package to create an Amazon S3 bucket with [aws.s3.Bucket]. This uses the s3 module and the Bucket resource for the package. For each file in `www`, an [aws.s3.BucketObject] gets created, using the helper [pulumi.asset.FileAsset] to reference a local file.
-
-In order to serve the files to a browser, the content type for each S3 object must be set. For this, the [NPM `mime` package](https://www.npmjs.com/package/mime) is used. Just like a regular Node program, Pulumi programs can use any Node.js package.
-
-#### Optional: Include subfolders in your site
-
-If you want to include subfolders within your site directory and s3 bucket you'll need to replace the existing `addFolderContents` function with this:
-
-```javascript
-...
 const addFolderContents = (siteDir, prefix) => {
   for (let item of fs.readdirSync(siteDir)) {
     let filePath = path.join(siteDir, item);
@@ -86,10 +59,15 @@ const addFolderContents = (siteDir, prefix) => {
     });
   }
 }
-...
+
+addFolderContents("www"); // base directory for content files
+
+exports.bucketName = siteBucket.bucket; // create a stack export for bucket name
 ```
 
-This will allow you to include subfolders in your site folder such as `www/css/styles.css` or `www/img/logo.png`.
+Notice how we are using the [@pulumi/aws] npm package to create an Amazon S3 bucket with [aws.s3.Bucket]. This uses the s3 module and the Bucket resource for the package. For each file in `www`, an [aws.s3.BucketObject] gets created, using the helper [pulumi.asset.FileAsset] to reference a local file.
+
+In order to serve the files to a browser, the content type for each S3 object must be set. For this, the [NPM `mime` package](https://www.npmjs.com/package/mime) is used. Just like a regular Node program, Pulumi programs can use any Node.js package.
 
 ### Step 3: Create your website files
 

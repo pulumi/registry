@@ -6,12 +6,7 @@ layout: installation
 
 <!-- markdownlint-disable url -->
 [pulumi-kubernetes-provider]: ./
-[server-side-apply]: ./installation-configuration/#server-side-apply
 [client-go]: https://github.com/kubernetes/client-go
-[gke-tutorial]: /registry/packages/kubernetes/how-to-guides/gke
-[eks-tutorial]: /registry/packages/kubernetes/how-to-guides/eks
-[aks-tutorial]: /registry/packages/kubernetes/how-to-guides/aks
-[Heptio AWS quickstart]: https://aws.amazon.com/quickstart/architecture/heptio-kubernetes/
 [provider-args]: /registry/packages/kubernetes/api-docs/provider
 [provider-kubeconfig]: /registry/packages/kubernetes/api-docs/provider#inputs
 [kubeconfig]: https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/

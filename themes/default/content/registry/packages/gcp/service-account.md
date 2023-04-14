@@ -5,7 +5,6 @@ meta_desc: Provides an overview of how set up a Google Cloud Platform Service Ac
 ---
 
 [Google Cloud Platform Credentials]: https://console.cloud.google.com/apis/credentials
-[Google service account private key]: https://cloud.google.com/iam/docs/creating-managing-service-account-keys
 
 Using a Google service account allows you to use Pulumi in a non-interactive setting (for example CI/CD systems, where a person can not complete the normal `gcloud auth application-default login` flow). A service account can also be used when developing locally to ensure a specific set of scoped credentials not tied to a user account are used. This can be useful even when developing locally to give you more control over the account role used for deployment.
 

@@ -4,6 +4,12 @@ meta_desc: Set up credentials to use the Pulumi AWS Native Provider and choose c
 layout: installation
 ---
 
+<!-- markdownlint-disable url -->
+[iam-user-console]: https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html#id_users_create_console
+[iam-manage-keys]: https://docs.aws.amazon.com/general/latest/gr/managing-aws-access-keys.html
+[configure-aws-cli]: https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html
+<!-- markdownlint-enable url -->
+
 {{< aws-resource-note >}}
 
 ## Installation

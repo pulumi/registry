@@ -247,7 +247,7 @@ instead, specifically targets the `2xlarge` node group given its heftier specs.
 Both scheduling choices were made with the intent of segmenting our workloads
 by use-case, and performance requirements we've identified.
 
-In our [inital update][initial-update] we selected that our EKS
+In our initial update we selected that our EKS
 control plane run on `v1.13.7` of Kubernetes, that the Standard node group
 use `v1.13.7` of the [EKS-optimized][eks-amis] worker AMIs, and that the
 `2xlarge` node group use `v1.12.7` workers.
@@ -481,11 +481,9 @@ clusters, or deploy workloads to a cluster, check out the rest of the
 [k8s-hooks]: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks
 [k8s-graceful-shutdown]: https://pracucci.com/graceful-shutdown-of-kubernetes-pods.html
 [k8s-jenkins]: https://kubernetes.io/blog/2018/04/30/zero-downtime-deployment-kubernetes-jenkins
-[eks-amis]: https://docs.aws.amazon.com/eks/latest/userguide/eks-optimized-ami.html
 [version-skew]: https://kubernetes.io/docs/setup/release/version-skew-policy/#supported-version-skew
 [pulumi-urn]: /docs/intro/concepts/programming-model/#urns
 [pulumi-auto-naming]: /docs/intro/concepts/programming-model/#autonaming
 [sigterm]: https://www.gnu.org/software/libc/manual/html_node/Termination-Signals.html
-[initial-update]: #create-an-eks-cluster-deploy-workloads
 [hey-load-testing]: https://github.com/rakyll/hey
 <!-- markdownlint-enable url -->

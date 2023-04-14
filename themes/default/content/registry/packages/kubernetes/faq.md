@@ -69,7 +69,7 @@ The differences between the two are:
 
 ## How does Pulumi compare to Helm?
 
-Helm v2 allows users to easily install pre-packaged application *charts* into a Kubernetes
+Helm v2 allows users to easily install pre-packaged application _charts_ into a Kubernetes
 cluster. Charts are parameterized by some number of values, which users can fill in to customize
 their application.
 

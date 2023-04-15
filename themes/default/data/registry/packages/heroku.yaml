@@ -10,5 +10,5 @@ publisher: pulumiverse - Marcel Arns
 repo_url: https://github.com/pulumiverse/pulumi-heroku
 schema_file_path: provider/cmd/pulumi-resource-heroku/schema.json
 title: Heroku
-updated_on: 1670228382
-version: v1.0.2
+updated_on: 1681451388
+version: v1.0.3

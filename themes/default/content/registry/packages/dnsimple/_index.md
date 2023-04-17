@@ -9,22 +9,8 @@ The DNSimple provider must be configured with credentials to deploy and update r
 
 ## Example
 
-{{< chooser language "javascript,typescript,python,go,csharp" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
 
-{{% choosable language javascript %}}
-
-```javascript
-const dnsimple = require("@pulumi/dnsimple")
-
-const record = new dnsimple.Record("test", {
-  name: "test",
-  domain: "mydomain.dev",
-  type: dnsimple.RecordTypes.CNAME,
-  value: "api.devflix.watch.herokudns.com"
-});
-```
-
-{{% /choosable %}}
 {{% choosable language typescript %}}
 
 ```typescript
@@ -101,6 +87,48 @@ class Program
             });
         });
 }
+```
+
+{{% /choosable %}}
+
+{{% choosable language java %}}
+
+```java
+import com.pulumi.Context;
+import com.pulumi.Pulumi;
+import com.pulumi.core.Output;
+import com.pulumi.dnsimple.Record;
+import com.pulumi.dnsimple.RecordArgs;
+
+public class App {
+    public static void main(String[] args) {
+        Pulumi.run(App::stack);
+    }
+
+    public static void stack(Context ctx) {
+        var record = new Record("record", RecordArgs.builder()
+                .name("test")
+                .domain("mydomain.dev")
+                .type("CNAME")
+                .value("api.devflix.watch.herokudns.com")
+                .build());
+
+    }
+}
+```
+
+{{% /choosable %}}
+{{% choosable language yaml %}}
+
+```yaml
+resources:
+  record:
+    type: dnsimple:Record
+    properties:
+      name: test
+      domain: mydomain.dev
+      type: CNAME
+      value: api.devflix.watch.herokudns.com
 ```
 
 {{% /choosable %}}

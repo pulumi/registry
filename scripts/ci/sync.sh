@@ -39,7 +39,7 @@ destination_bucket_uri="s3://${destination_bucket}"
 # which case we should simply proceed (to repopulate it), or the bucket was somehow
 # created in another account, in which case subsequent operations on the bucket will also
 # fail, causing this script to exit nonzero. In either case, it's okay to continue.
-aws s3 mb $destination_bucket_uri --region "$(aws_region)" || true
+aws s3api create-bucket --bucket $destination_bucket --acl public-read --acl bucket-owner-full-control --region "$(aws_region)" || true
 aws s3api put-bucket-tagging --bucket $destination_bucket --tagging "TagSet=[{$(aws_owner_tag)}]" --region "$(aws_region)"
 
 # Make the bucket an S3 website.

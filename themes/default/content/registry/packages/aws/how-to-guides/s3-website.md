@@ -31,21 +31,36 @@ Open up `index.js` using your preferred text editor and add the following code. 
 const aws = require("@pulumi/aws");
 const pulumi = require("@pulumi/pulumi");
 const mime = require("mime");
+const fs = require("fs");
+const path = require("path");
 
 // Create an S3 bucket
 let siteBucket = new aws.s3.Bucket("s3-website-bucket");
 
-let siteDir = "www"; // directory for content files
+const addFolderContents = (siteDir, prefix) => {
+  for (let item of fs.readdirSync(siteDir)) {
+    let filePath = path.join(siteDir, item);
+    let isDir = fs.lstatSync(filePath).isDirectory();
 
-// For each file in the directory, create an S3 object stored in `siteBucket`
-for (let item of require("fs").readdirSync(siteDir)) {
-    let filePath = require("path").join(siteDir, item);
-    let object = new aws.s3.BucketObject(item, {
-      bucket: siteBucket,
+    // This handles adding subfolders and their content
+    if (isDir) {
+      const newPrefix = prefix ? path.join(prefix, item) : item;
+      addFolderContents(filePath, newPrefix);
+      continue;
+    }
+
+    let itemPath = prefix ? path.join(prefix, item) : item;
+    itemPath = itemPath.replace(/\\/g,'/');             // convert Windows paths to something S3 will recognize
+
+    let object = new aws.s3.BucketObject(itemPath, {
+      bucket: bucket,
       source: new pulumi.asset.FileAsset(filePath),     // use FileAsset to point to a file
       contentType: mime.getType(filePath) || undefined, // set the MIME type of the file
     });
+  }
 }
+
+addFolderContents("www"); // base directory for content files
 
 exports.bucketName = siteBucket.bucket; // create a stack export for bucket name
 ```

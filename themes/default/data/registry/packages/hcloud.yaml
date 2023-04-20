@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-hcloud
 schema_file_path: provider/cmd/pulumi-resource-hcloud/schema.json
 title: Hetzner Cloud
-updated_on: 1681407771
-version: v1.11.0
+updated_on: 1682017832
+version: v1.11.1

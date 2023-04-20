@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-aws-static-website
 schema_file_path: schema.json
 title: AWS Static Website
-updated_on: 1674768316
-version: v0.3.0
+updated_on: 1681948411
+version: v0.4.0

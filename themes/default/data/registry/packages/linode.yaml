@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-linode
 schema_file_path: provider/cmd/pulumi-resource-linode/schema.json
 title: Linode
-updated_on: 1676395094
-version: v3.12.0
+updated_on: 1682459919
+version: v4.0.0

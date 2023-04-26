@@ -8,12 +8,10 @@ The Equinix provider for Pulumi can be used to provision [Equinix](https://deplo
 
 The Equinix provider must be configured with credentials to create and update resources in Equinix.
 
-> Note: This provider supercedes the [Pulumi Equinix Metal provider](https://www.pulumi.com/registry/packages/equinix-metal/).
-
 ## Example
 
-<!-- {{< chooser language "typescript,python,go,csharp,java,yaml" >}} -->
 {{< chooser language "typescript,python,go,yaml" >}}
+
 {{% choosable language typescript %}}
 
 ```typescript
@@ -32,8 +30,8 @@ const web = new equinix.metal.Device("web", {
 });
 export const webPublicIp = pulumi.interpolate`http://${web.accessPublicIpv4}`;
 ```
-
 {{% /choosable %}}
+
 {{% choosable language python %}}
 
 ```python
@@ -51,10 +49,9 @@ web = equinix.metal.Device("web",
     project_id=project_id)
 pulumi.export("webPublicIp", web.access_public_ipv4.apply(lambda access_public_ipv4: f"http://{access_public_ipv4}"))
 ```
-
 {{% /choosable %}}
-{{% choosable language go %}}
 
+{{% choosable language go %}}
 ```go
 package main
 
@@ -88,10 +85,9 @@ func main() {
 	})
 }
 ```
-
 {{% /choosable %}}
-{{% choosable language csharp %}}
 
+{{% choosable language csharp %}}
 ```csharp
 using System.Collections.Generic;
 using Pulumi;
@@ -117,10 +113,9 @@ return await Deployment.RunAsync(() =>
     };
 });
 ```
-
 {{% /choosable %}}
-{{% choosable language java %}}
 
+{{% choosable language java %}}
 ```java
 package generated_program;
 
@@ -157,10 +152,9 @@ public class App {
     }
 }
 ```
-
 {{% /choosable %}}
-{{% choosable language yaml %}}
 
+{{% choosable language yaml %}}
 ```yaml
 name: equinix-metal-device
 runtime: yaml
@@ -181,7 +175,6 @@ resources:
 outputs:
   webPublicIp: http://${web.accessPublicIpv4}
 ```
-
 {{% /choosable %}}
 
 {{< /chooser >}}

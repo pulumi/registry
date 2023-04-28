@@ -7,6 +7,8 @@ source ./scripts/ci/common.sh
 # URL to the Pulumi conversion service.
 export PULUMI_CONVERT_URL="${PULUMI_CONVERT_URL:-$(pulumi stack output --stack pulumi/tf2pulumi-service/production url)}"
 
+export PULUMI_AI_WS_URL=${PULUMI_AI_WS_URL:-$(pulumi stack output --stack pulumi/pulumigpt-api/corp websocketUri)}
+
 go install github.com/pulumi/docs/tools/resourcedocsgen@master
 
 PKGS=(

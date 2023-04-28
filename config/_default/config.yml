@@ -37,6 +37,7 @@ security:
       - REPO_THEME_PATH
       - PULUMI_CONVERT_URL
       - GITHUB_TOKEN
+      - PULUMI_AI_WS_URL
 
 disableKinds:
   - category

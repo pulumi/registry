@@ -1,6 +1,7 @@
 
 {{ define "main" }}
 
+{{ $title_tag := .Params.title_tag }}
 <div class="container flex flex-row mx-auto px-4 pb-8 mt-4">
     <div class="flex-col min-w-0">
         {{ partial "registry/package/header.html" . }}

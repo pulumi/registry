@@ -1,0 +1,39 @@
+<style>
+    div.pulumi-ai {
+        border-radius: 2px;
+        border-width: 2px;
+        border-color: #a6adec;
+        width: fit-content;
+        border-left-width: 12px;
+        border-top-left-radius: 0px;
+        border-bottom-left-radius: 0px;
+        margin-top: 12px;
+        margin-bottom: 24px;
+    }
+
+    div.pulumi-ai:hover {
+        border-color: #828ce4;
+        cursor: pointer;
+    }
+
+    div.pulumi-ai p {
+        margin: 16px;
+        margin-right: 14px;
+        margin-top: 4px;
+        margin-bottom: 4px;
+    }
+
+    div.pulumi-ai p i {
+        margin-left: 16px;
+        font-size: 14px;
+        position:relative;
+        top:-1px;
+    }
+</style>
+
+{{ $title_tag := .Scratch.Get "title_tag" }}
+<a target="_blank" href="https://www.pulumi.com/ai/?prompt=Create%20an%20{{ $title_tag }}%20resource">
+    <div class="pulumi-ai">
+        <p>Explore with <strong>Pulumi AI</strong><i class="fas fa-robot"></i></p>
+    </div>
+</a>

@@ -70,14 +70,10 @@
 
 <header class="header-container registry-hero">
     <div class="hide-on-pinned">
-        <div class="dot-background-container">
-            <div class="dot-background no-animate"></div>
-        </div>
-        <div class="dot-overlay"></div>
     </div>
 
 <div class="search-header container flex">
-    {{ .Scratch.Set "mode" "docs" }}
+    {{ .Scratch.Set "mode" "registry" }}
     {{ partial "docs/search.html" . }}
     <!-- <div class="header-pinned-container hidden md:flex xl:w-3/12 px-4 lg:px-8 xl:px-5">
         <div class="header-hero-title pr-3">

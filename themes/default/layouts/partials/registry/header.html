@@ -77,7 +77,9 @@
     </div>
 
 <div class="search-header container flex">
-    <div class="header-pinned-container hidden md:flex xl:w-3/12 px-4 lg:px-8 xl:px-5">
+    {{ .Scratch.Set "mode" "docs" }}
+    {{ partial "docs/search.html" . }}
+    <!-- <div class="header-pinned-container hidden md:flex xl:w-3/12 px-4 lg:px-8 xl:px-5">
         <div class="header-hero-title pr-3">
             <div class="flex items-center">
                 <a href="{{ relref . " /registry" }}">
@@ -100,7 +102,7 @@
                 href="{{ relref . "/docs/get-started" }}">Get Started</a>
             </div>
         </div>
-    </div>
+    </div> -->
     <script>
         (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
             (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
@@ -109,7 +111,7 @@
 
         _st('install','xxxQB1LC9DE212h8eJmh','2.0.0');
     </script>
-    <div id="search-container" class="search-container bg-white mt-4 md:mt-0 flex justify-center lg:ml-6">
+    <!-- <div id="search-container" class="search-container bg-white mt-4 md:mt-0 flex justify-center lg:ml-6">
         <div id="search-form" class="search-widget text-gray-600 focus-within:text-gray-700">
             <form class="relative flex">
                 <i class="fas fa-search absolute inset-y-0 flex items-center pl-3" style="color: inherit"></i>
@@ -122,7 +124,7 @@
             </form>
             <div id="search-results" class="relative"></div>
         </div>
-    </div>
+    </div> -->
     <script>
         // We want to restrict the results to just the ones from the registry.
         // Create a MutationObserver and attach it to the #search-results container above.

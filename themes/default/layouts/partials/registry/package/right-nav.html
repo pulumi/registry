@@ -5,7 +5,7 @@
 {{ $path := (split .Page.Params.title_tag ".")}}
 {{ with .File }}
     {{ if not $.Page.Params.no_on_this_page }}
-        <div class="on-this-page pl-3 flex-1 overflow-y-auto">
+        <div class="on-this-page pl-3 flex-1 overflow-y-auto border-b-2">
             <h4 class="no-anchor">
                 <a href="#" class="contents-heading">Contents</a>
             </h4>
@@ -21,7 +21,17 @@
                 </div>
             {{ end }}
         </div>
+        <div class="pl-3 flex-1 overflow-y-auto border-b-2 pb-3 pt-2">
+            <h4 class="no-anchor mt-2 font-semibold font-body text-sm" style="color: #484848;">
+                <a href="#" class="contents-heading">Pulumi AI</a>
+            </h4>
+            <section class="text-sm">
+                <p class="m-2">Need help using this package?</p>
+                <p class="m-2">Try out <i class="fas fa-robot mr-1 text-xs relative text-gray-800" style="top: -1px;"></i><a target="_blank" href="/ai/">Pulumi AI</a>!</p>
+            </section>
+        </div>
     {{ end }}
+
     <ul class="p-0 pl-3 list-none">
         <!-- Only show "Edit this Page" for pages that are not generated. -->
         {{ if not $.Page.Params.no_edit_this_page }}

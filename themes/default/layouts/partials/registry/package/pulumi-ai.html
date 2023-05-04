@@ -1,3 +1,41 @@
+<style>
+    a.pulumi-ai-badge {
+        display: inline-block;
+    }
+
+    a.pulumi-ai-badge div {
+        width: fit-content;
+        margin-top: 4px;
+        margin-bottom: 24px;
+        border-color: #a6adec;
+        border-width: 2px;
+        border-left-width: 12px;
+        border-radius: 6px;
+        border-top-left-radius: 0px;
+        border-bottom-left-radius: 0px;
+    }
+
+    a.pulumi-ai-badge div:hover {
+        border-color: #828ce4;
+        cursor: pointer;
+    }
+
+    a.pulumi-ai-badge div p {
+        margin: 4px 14px 4px 16px;
+        font-size: 14px;
+    }
+
+    a.pulumi-ai-badge div p i {
+        margin-left: 12px;
+        font-size: 14px;
+        position:relative;
+        top:-1px;
+        color: transparent;
+        -webkit-text-stroke-width: 1.5px;
+        -webkit-text-stroke-color: #2f3032;
+    }
+</style>
+
 {{ $title_tag := .Scratch.Get "title_tag" }}
 <a class="pulumi-ai-badge" target="_blank" href="https://www.pulumi.com/ai/?prompt=Create%20an%20{{ $title_tag }}%20resource">
     <div>

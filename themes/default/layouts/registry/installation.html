@@ -2,7 +2,7 @@
     {{ $directories := (split .Page.File "/")}}
     {{ $packageName := index $directories 2 }}
     {{ $packageHome := path.Join "registry/packages" $packageName }}
-<div class="flex flex-row container mx-auto px-4 pb-8 mt-4">
+<div class="flex flex-row container mx-auto px-4 pb-8 mt-16 md:mt-4">
     <div class="min-w-0">
         {{ partial "registry/package/header.html" . }}
         <div class="lg:flex">

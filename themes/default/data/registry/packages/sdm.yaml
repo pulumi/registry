@@ -2,7 +2,7 @@ category: Cloud
 component: false
 description: A Pulumi package for creating and managing StrongDM cloud resources.
 featured: false
-logo_url: ""
+logo_url: https://raw.githubusercontent.com/pierskarsenbarg/pulumi-sdm/main/docs/strongdm-logo.svg
 name: sdm
 native: false
 package_status: ga
@@ -10,5 +10,5 @@ publisher: Piers Karsenbarg
 repo_url: https://github.com/pierskarsenbarg/pulumi-sdm
 schema_file_path: provider/cmd/pulumi-resource-sdm/schema.json
 title: StrongDM
-updated_on: 1681303798
-version: v1.0.1
+updated_on: 1683798293
+version: v1.1.1

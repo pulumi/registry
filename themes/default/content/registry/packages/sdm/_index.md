@@ -5,7 +5,7 @@ layout: overview
 ---
 
 The StrongDM provider for Pulumi can be used to provision any of the cloud resources available in [StrongDM](https://www.strongdm.com/).
-The StrongDM provider must be configured with credentials to deploy and update resources in Aiven.
+The StrongDM provider must be configured with credentials to deploy and update resources in StrongDM.
 
 ## Example
 

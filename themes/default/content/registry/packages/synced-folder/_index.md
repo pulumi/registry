@@ -336,6 +336,7 @@ resources:
 ```
 
 {{% /choosable %}}
+
 ### Sync to Google Cloud Storage
 
 {{< chooser language "typescript,python,go,csharp,yaml" / >}}
@@ -441,7 +442,7 @@ func main() {
 
 {{% /choosable %}}
 
-{{% choosable %}}
+{{% choosable language csharp %}}
 
 ```csharp
 using Pulumi;

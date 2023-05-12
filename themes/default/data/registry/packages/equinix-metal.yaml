@@ -6,7 +6,7 @@ logo_url: ""
 name: equinix-metal
 native: false
 package_status: ga
-publisher: Pulumi
+publisher: DEPRECATED
 repo_url: https://github.com/pulumi/pulumi-equinix-metal
 schema_file_path: /provider/cmd/pulumi-resource-equinix-metal/schema.json
 title: Equinix Metal

@@ -1,5 +1,5 @@
 ---
-title: Equinix Metal
+title: Equinix Metal (Deprecated)
 meta_desc: Provides an overview of the Equinix Metal provider for Pulumi.
 layout: overview
 ---

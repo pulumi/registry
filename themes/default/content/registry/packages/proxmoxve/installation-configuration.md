@@ -10,7 +10,7 @@ The Proxmox Virtual Environment (Proxmox VE) provider is available as a package 
 
 * JavaScript/TypeScript: [`@muhlba91/pulumi-proxmoxve`](https://www.npmjs.com/package/@muhlba91/pulumi-proxmoxve)
 * Python: [`pulumi-proxmoxve`](https://pypi.org/project/pulumi-proxmoxve/)
-* Go: [`github.com/muhlba91/pulumi-proxmoxve/tree/main/sdk/go/proxmoxve)`](https://github.com/muhlba91/pulumi-proxmoxve)
+* Go: [`github.com/muhlba91/pulumi-proxmoxve/sdk/tree/main/go/proxmoxve`](https://github.com/muhlba91/pulumi-proxmoxve)
 * .NET: [`Pulumi.ProxmoxVE`](https://www.nuget.org/packages/Pulumi.ProxmoxVE)
 
 ## Configuring Credentials
@@ -24,22 +24,20 @@ In fact, we need to set the credentials using the following work-around:
 1. Set the environment variables `PROXMOX_VE_ENDPOINT`, `PROXMOX_VE_PASSWORD`, `PROXMOX_VE_USERNAME`, and `PROXMOX_VE_INSECURE`:
 
     ```bash
-    $ export PROXMOX_VE_ENDPOINT=XXXXXXXXXXXX
-    $ export PROXMOX_VE_PASSWORD=YYYYYYYYYYYY
-    $ export PROXMOX_VE_USERNAME=ZZZZZZZZZZZZ
-    $ export PROXMOX_VE_INSECURE=AAAAAAAAAAAA
+    export PROXMOX_VE_ENDPOINT=XXXXXXXXXXXX
+    export PROXMOX_VE_PASSWORD=YYYYYYYYYYYY
+    export PROXMOX_VE_USERNAME=ZZZZZZZZZZZZ
+    export PROXMOX_VE_INSECURE=AAAAAAAAAAAA
     ```
 
 2. Configure the provider, e.g. in Typescript:
 
    ```typescript
    const provider = new proxmox.Provider('proxmoxve', {
-        virtualEnvironment: {
-        endpoint: process.env.PROXMOX_VE_ENDPOINT,
-        insecure: process.env.PROXMOX_VE_INSECURE,
-        username: process.env.PROXMOX_VE_USERNAME,
-        password: process.env.PROXMOX_VE_PASSWORD
-        }
+     endpoint: process.env.PROXMOX_VE_ENDPOINT,
+     insecure: process.env.PROXMOX_VE_INSECURE,
+     username: process.env.PROXMOX_VE_USERNAME,
+     password: process.env.PROXMOX_VE_PASSWORD
    });
    ```
 
@@ -49,7 +47,7 @@ In fact, we need to set the credentials using the following work-around:
    const server = new proxmox.vm.VirtualMachine('vm',
       ...,
       {
-           provider: provider,
+        provider: provider,
       }
    );
    ```

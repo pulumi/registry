@@ -195,6 +195,10 @@
     {
       "repoSlug": "pierskarsenbarg/pulumi-sdm",
       "schemaFile": "provider/cmd/pulumi-resource-sdm/schema.json"
+    },
+    {
+      "repoSlug": "port-labs/pulumi",
+      "schemaFile": "provider/cmd/pulumi-resource-port/schema.json"
     }
   ]
 }

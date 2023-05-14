@@ -8,4 +8,5 @@ aliases:
     - /registry/packages
     - /docs/tutorials
     - /docs/reference/tutorials/
+    - /docs/clouds/pkg/
 ---

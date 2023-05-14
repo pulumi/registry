@@ -13,7 +13,7 @@ Existing users of the [`Helm V3 Chart`](/registry/packages/kubernetes/api-docs/h
 
 ## Helm Chart Resource
 
-The [`Helm V3 Chart`](/registry/packages/kubernetes/api-docs/helm/v3/chart) resource renders the templates from your chart and then manage them directly with the Pulumi Kubernetes provider. `Chart` is implemented as a [`Component Resource`](/docs/intro/concepts/resources/components) which provide a number of benefits for Pulumi users:
+The [`Helm V3 Chart`](/registry/packages/kubernetes/api-docs/helm/v3/chart) resource renders the templates from your chart and then manage them directly with the Pulumi Kubernetes provider. `Chart` is implemented as a [`Component Resource`](/docs/concepts/resources/components) which provide a number of benefits for Pulumi users:
 
 ### Benefits
 

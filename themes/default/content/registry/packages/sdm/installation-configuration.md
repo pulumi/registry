@@ -27,5 +27,5 @@ Use `pulumi config set sdm:<option> --secret`.
 | `apiSecretKey` | Required          | This is the password that should be used to make the connection (environment: `SDM_API_SECRET_KEY`). |
 
 {{% notes type="warning" %}}
-You should use the `--secret` flag to encrypt the config values using your secret provider. For more information on this, view the [Pulumi Configuration Secrets](https://www.pulumi.com/docs/intro/concepts/secrets/#secrets) section in the Pulumi docs.
+You should use the `--secret` flag to encrypt the config values using your secret provider. For more information on this, view the [Pulumi Configuration Secrets](https://www.pulumi.com/docs/concepts/secrets/#secrets) section in the Pulumi docs.
 {{% /notes %}}

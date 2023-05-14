@@ -288,7 +288,7 @@ To see the full details of the deployment and the resources that are now part of
 
 #### **Pulumi CLI**
 
-To view the provisioned resources on the command line, run [`pulumi stack`](/docs/reference/cli/pulumi_stack). You'll also see two [stack outputs](/docs/intro/concepts/stack#outputs) corresponding to the IP and the fully qualified domain name (FQDN) of the EC2 instance we've created.
+To view the provisioned resources on the command line, run [`pulumi stack`](/docs/reference/cli/pulumi_stack). You'll also see two [stack outputs](/docs/concepts/stack#outputs) corresponding to the IP and the fully qualified domain name (FQDN) of the EC2 instance we've created.
 
 ```
 Current stack is webserver-dev:

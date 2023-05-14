@@ -10,7 +10,7 @@ layout: installation
 [provider-args]: /registry/packages/kubernetes/api-docs/provider
 [provider-kubeconfig]: /registry/packages/kubernetes/api-docs/provider#inputs
 [kubeconfig]: https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/
-[install]: /docs/get-started/install
+[install]: /docs/install/
 [nodejs]: https://nodejs.org/en/
 [npm]: https://www.npmjs.com/get-npm
 [yarn]: https://yarnpkg.com/en/docs/install
@@ -57,7 +57,7 @@ Verify the cluster is configured and up by running `kubectl get pods`.
 
 Then follow the [getting started guide](/docs/get-started/kubernetes) or explore some [code examples](https://github.com/pulumi/examples#kubernetes).
 
-Note: Pulumi **never** sends **any** authentication [secrets](/docs/intro/concepts/secrets/) or credentials to the Pulumi Cloud.
+Note: Pulumi **never** sends **any** authentication [secrets](/docs/concepts/secrets/) or credentials to the Pulumi Cloud.
 
 ### Contexts
 
@@ -120,7 +120,7 @@ To learn more about `kubectl proxy` check out the [reference docs](https://kuber
 
 ## Configuration
 
-The Kubernetes provider accepts the following configuration settings. These can be provided to the default Kubernetes provider via `pulumi config set kubernetes:<option>`, or passed to the constructor of `new kubernetes.Provider` to construct a [specific instance](https://www.pulumi.com/docs/intro/concepts/resources/providers/#explicit-provider-configuration) of the Kubernetes provider.
+The Kubernetes provider accepts the following configuration settings. These can be provided to the default Kubernetes provider via `pulumi config set kubernetes:<option>`, or passed to the constructor of `new kubernetes.Provider` to construct a [specific instance](https://www.pulumi.com/docs/concepts/resources/providers/#explicit-provider-configuration) of the Kubernetes provider.
 
 See the [Provider configuration][provider-args] docs for a complete list of options.
 

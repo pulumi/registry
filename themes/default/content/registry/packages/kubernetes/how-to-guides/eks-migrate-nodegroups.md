@@ -462,12 +462,12 @@ clusters, or deploy workloads to a cluster, check out the rest of the
 
 <!-- markdownlint-disable url -->
 [example-gh]: https://github.com/pulumi/examples/tree/master/aws-ts-eks-migrate-nodegroups
-[stack]: /docs/intro/concepts/stack/
+[stack]: /docs/concepts/stack/
 [eks-amis]: https://docs.aws.amazon.com/eks/latest/userguide/eks-optimized-ami.html
 [ingress-nginx]: https://github.com/kubernetes/ingress-nginx
 [echoserver]: https://github.com/kubernetes-retired/contrib/blob/master/ingress/echoheaders/echo-app.yaml
-[stack-outputs]: /docs/intro/concepts/programming-model/#stack-outputs
-[pulumi-config]: /docs/intro/concepts/config/
+[stack-outputs]: /docs/concepts/programming-model/#stack-outputs
+[pulumi-config]: /docs/concepts/config/
 [external-dns]: https://github.com/kubernetes-incubator/external-dns
 [pod-lifecycle]: https://kubernetes.io/docs/concepts/workloads/pods/pod/#termination-of-pods
 [k8s-run-stateless]: https://kubernetes.io/docs/tasks/run-application/run-stateless-application-deployment
@@ -482,8 +482,8 @@ clusters, or deploy workloads to a cluster, check out the rest of the
 [k8s-graceful-shutdown]: https://pracucci.com/graceful-shutdown-of-kubernetes-pods.html
 [k8s-jenkins]: https://kubernetes.io/blog/2018/04/30/zero-downtime-deployment-kubernetes-jenkins
 [version-skew]: https://kubernetes.io/docs/setup/release/version-skew-policy/#supported-version-skew
-[pulumi-urn]: /docs/intro/concepts/programming-model/#urns
-[pulumi-auto-naming]: /docs/intro/concepts/programming-model/#autonaming
+[pulumi-urn]: /docs/concepts/programming-model/#urns
+[pulumi-auto-naming]: /docs/concepts/programming-model/#autonaming
 [sigterm]: https://www.gnu.org/software/libc/manual/html_node/Termination-Signals.html
 [hey-load-testing]: https://github.com/rakyll/hey
 <!-- markdownlint-enable url -->

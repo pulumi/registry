@@ -109,6 +109,6 @@ out CI/CD and automation systems into your clusters, creating native support to 
 
 [k8s-operator]: https://github.com/pulumi/pulumi-kubernetes-operator
 [k8s-ext-pattern]: https://kubernetes.io/docs/concepts/extend-kubernetes/operator/
-[stack]: /docs/intro/concepts/stack
+[stack]: /docs/concepts/stack
 [k8s-operator-cicd]: /docs/guides/continuous-delivery/pulumi-kubernetes-operator
 [pulumi-cd]: /docs/guides/continuous-delivery

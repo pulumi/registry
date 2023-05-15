@@ -126,7 +126,7 @@ can see `canary-example-app` and `canary-staging-app` created.
    before it terminates.
 
 <!-- markdownlint-disable MD034 -->
-[install]: /docs/get-started/install/
+[install]: /docs/install/
 [configuration]: /registry/packages/kubernetes/installation-configuration/
 [p8s]: https://prometheus.io/
 [helm]: https://www.helm.sh/

@@ -31,7 +31,7 @@ its full code is [available on GitHub](https://github.com/pulumi/examples/tree/m
 You need to have the Pulumi CLI and a working Kubernetes cluster.
 [Minikube](https://kubernetes.io/docs/getting-started-guides/minikube) is an easy way to get started.
 
-1. [Install Pulumi](/docs/get-started/install/)
+1. [Install Pulumi](/docs/install/)
 2. [Connect Pulumi to a Kubernetes Cluster](/registry/packages/kubernetes/installation-configuration/)
 
 ## Creating and Running the Application

@@ -22,7 +22,7 @@ In this tutorial, you'll use Python to deploy an instance of Azure Kubernetes Se
     ```
 
     * Enter in a Pulumi project name and description.
-    * Enter in a name for the [Pulumi stack](/docs/intro/concepts/stack/), which is an instance of our Pulumi program, and is used to distinguish amongst different development phases and environments of your work streams.
+    * Enter in a name for the [Pulumi stack](/docs/concepts/stack/), which is an instance of our Pulumi program, and is used to distinguish amongst different development phases and environments of your work streams.
     * Enter in the Azure environment to use.
     * Follow the instructions presented to change directories to the newly created Pulumi project and install the dependencies.
 
@@ -180,7 +180,7 @@ In this tutorial, you'll use Python to deploy an instance of Azure Kubernetes Se
 
     This example uses the [@pulumi_azure_native](/registry/packages/azure-native) package to create and manage several Azure resources including a [ManagedCluster](/registry/packages/azure-native/api-docs/containerservice/managedcluster/) resource, which defines your Kubernetes cluster, and a [VirtualNetwork](/registry/packages/azure-native/api-docs/network/virtualnetwork/) resource that contains AKS worker nodes.
 
-    In addition, this example uses implicit and explicit dependencies. For example, resource outputs can be used as inputs to imply dependency between resources, but resources like the subnet RoleAssignment are explicitly declared as dependencies using [ResourceOptions](/docs/intro/concepts/resources#options) and passed to the resource as additional arguments.
+    In addition, this example uses implicit and explicit dependencies. For example, resource outputs can be used as inputs to imply dependency between resources, but resources like the subnet RoleAssignment are explicitly declared as dependencies using [ResourceOptions](/docs/concepts/resources#options) and passed to the resource as additional arguments.
 
 1. To preview and deploy changes, run `pulumi up` and select "yes."
 

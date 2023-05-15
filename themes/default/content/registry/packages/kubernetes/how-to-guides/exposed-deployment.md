@@ -23,7 +23,7 @@ address, in this example we are also able to use `curl` to reach the `nginx` ser
 Start by downloading the [example code](https://github.com/pulumi/examples/blob/master/kubernetes-ts-exposed-deployment/README.md).
 
 If you haven't already, follow the steps in [Pulumi Installation and
-Setup](/docs/get-started/install) and [Configuring Pulumi
+Setup](/docs/install/) and [Configuring Pulumi
 Kubernetes](/registry/packages/kubernetes/installation-configuration) to get setup with
 Pulumi and Kubernetes.
 

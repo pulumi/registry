@@ -17,7 +17,7 @@ There are many scenarios where the Command package can be useful:
 Some users may have experience with Terraform "provisioners", and the Command package offers support for similar scenarios.  However, the Command package is provided as independent resources which can be combined with other resources in many interesting ways. This has many strengths, but also some differences, such as the fact that a Command resource failing does not cause a resource it is operating on to fail.
 
 You can use the Command package from a Pulumi program written in any Pulumi language: C#, Go, JavaScript/TypeScript, and Python.
-You'll need to [install and configure the Pulumi CLI](https://pulumi.com/docs/get-started/install) if you haven't already.
+You'll need to [install and configure the Pulumi CLI](https://pulumi.com/docs/install/) if you haven't already.
 
 > **NOTE**: The Command package is in preview.  The API design may change ahead of general availability based on [user feedback](https://github.com/pulumi/pulumi-command/issues).
 

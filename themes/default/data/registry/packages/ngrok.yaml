@@ -10,5 +10,5 @@ publisher: Piers Karsenbarg
 repo_url: https://github.com/pierskarsenbarg/pulumi-ngrok
 schema_file_path: provider/cmd/pulumi-resource-ngrok/schema.json
 title: ngrok
-updated_on: 1684142849
-version: v0.0.19
+updated_on: 1684172242
+version: v0.0.20

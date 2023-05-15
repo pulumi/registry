@@ -10,7 +10,7 @@ The Pulumi ngrok provider is available as a package from the following repositor
 
 * JavaScript/TypeScript: [`@pierskarsenbarg/ngrok`](https://www.npmjs.com/package/@pierskarsenbarg/ngrok)
 * Python: [`pierskarsenbarg-pulumi-ngrok`](https://pypi.org/project/pierskarsenbarg-pulumi-ngrok/)
-* Go: [`github.com/pierskarsenbarg/pulumi-ngrok/sdk/go/ngrok`](https://pkg.go.dev/github.com/pierskarsenbarg/pulumi-ngrok/sdk)
+* Go: [`github.com/pierskarsenbarg/pulumi-ngrok/sdk/go/ngrok`](https://github.com/pierskarsenbarg/pulumi-ngrok)
 * .NET: [`PiersKarsenbarg.Ngrok`](https://www.nuget.org/packages/PiersKarsenbarg.Ngrok)
 
 ## Setup

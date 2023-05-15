@@ -2,7 +2,7 @@ category: Cloud
 component: false
 description: A Pulumi package for creating and managing ngrok cloud resources.
 featured: false
-logo_url: ""
+logo_url: https://raw.githubusercontent.com/pierskarsenbarg/pulumi-ngrok/main/docs/ngrok-black.svg
 name: ngrok
 native: false
 package_status: public_preview
@@ -10,5 +10,5 @@ publisher: Piers Karsenbarg
 repo_url: https://github.com/pierskarsenbarg/pulumi-ngrok
 schema_file_path: provider/cmd/pulumi-resource-ngrok/schema.json
 title: ngrok
-updated_on: 1683899029
-version: v0.0.17
+updated_on: 1684142849
+version: v0.0.19

@@ -5,11 +5,12 @@
 {{ $path := (split .Page.Params.title_tag ".")}}
 {{ with .File }}
     {{ if not $.Page.Params.no_on_this_page }}
-        <div class="on-this-page pl-3 flex-1 overflow-y-auto">
-            <h4 class="no-anchor">
-                <a href="#" class="contents-heading">Contents</a>
-            </h4>
-            <ul class="text-sm">
+        <div class="on-this-page table-of-contents">
+            <div class="heading">
+                <div class="icon icon-12-12 icon-on-this-page"></div>
+                <h2>On this page</h2>
+            </div>
+            <ul>
                 {{/* This will be populated dynamically with all H2s and H3s on the page; see assets/js/main.js */}}
             </ul>
             {{- if eq (len $path) 3 -}}

@@ -199,6 +199,10 @@
     {
       "repoSlug": "pierskarsenbarg/pulumi-ngrok",
       "schemaFile": "provider/cmd/pulumi-resource-ngrok/schema.json"
+    },
+    {
+      "repoSlug": "RedisLabs/pulumi-rediscloud",
+      "schemaFile": "provider/cmd/pulumi-resource-rediscloud/schema.json"
     }
   ]
 }

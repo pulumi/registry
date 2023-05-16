@@ -14,7 +14,7 @@ In this tutorial, we'll show you how to write a Pulumi program that creates a se
 
 ### Step 1: Create a new project from a template
 
-Create a project directory, `ahoy-pulumi`, and change into it. Run [`pulumi new hello-aws-javascript --name myproject`](/docs/reference/cli/pulumi_new) to create a new project using the AWS template for JavaScript. Replace `myproject` with your desired project name.
+Create a project directory, `ahoy-pulumi`, and change into it. Run [`pulumi new hello-aws-javascript --name myproject`](/docs/cli/commands/pulumi_new/) to create a new project using the AWS template for JavaScript. Replace `myproject` with your desired project name.
 
 ```bash
 $ mkdir ahoy-pulumi && cd ahoy-pulumi
@@ -80,7 +80,7 @@ This example uses the [`@pulumi/awsx`](/docs/reference/pkg/nodejs/pulumi/awsx) p
 
 ### Step 4: Preview and deploy your resources
 
-To preview your Pulumi program, run [`pulumi up`](/docs/reference/cli/pulumi_up). The command shows a preview of the resources that will be created and prompts you to proceed with the deployment.
+To preview your Pulumi program, run [`pulumi up`](/docs/cli/commands/pulumi_up/). The command shows a preview of the resources that will be created and prompts you to proceed with the deployment.
 
 ```bash
 $ pulumi up

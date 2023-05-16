@@ -32,7 +32,7 @@ In this tutorial, we will show you how to deploy a simple webserver using an Ama
 
 ### Step 1: Create a new project from a template
 
-Create a project directory, `webserver`, and change into it. Run [`pulumi new aws-<language> --name myproject`](/docs/reference/cli/pulumi_new) to create a new project using the AWS template for your chosen language. Replace `myproject` with your desired project name.
+Create a project directory, `webserver`, and change into it. Run [`pulumi new aws-<language> --name myproject`](/docs/cli/commands/pulumi_new/) to create a new project using the AWS template for your chosen language. Replace `myproject` with your desired project name.
 
 {{< chooser language "javascript,typescript,python,csharp" / >}}
 
@@ -238,7 +238,7 @@ This example uses the [`ec2` module of the `aws` package](/registry/packages/aws
 
 ### Step 3: Preview and deploy your resources
 
-To preview your Pulumi program, run [`pulumi up`](/docs/reference/cli/pulumi_up). The command shows a preview of the resources that will be created and prompts you to proceed with the deployment.  Note that the stack itself is counted as a resource, though it does not correspond to a physical cloud resource.
+To preview your Pulumi program, run [`pulumi up`](/docs/cli/commands/pulumi_up/). The command shows a preview of the resources that will be created and prompts you to proceed with the deployment.  Note that the stack itself is counted as a resource, though it does not correspond to a physical cloud resource.
 
 ```bash
 Previewing update (webserver-dev):
@@ -288,7 +288,7 @@ To see the full details of the deployment and the resources that are now part of
 
 #### **Pulumi CLI**
 
-To view the provisioned resources on the command line, run [`pulumi stack`](/docs/reference/cli/pulumi_stack). You'll also see two [stack outputs](/docs/concepts/stack#outputs) corresponding to the IP and the fully qualified domain name (FQDN) of the EC2 instance we've created.
+To view the provisioned resources on the command line, run [`pulumi stack`](/docs/cli/commands/pulumi_stack/). You'll also see two [stack outputs](/docs/concepts/stack#outputs) corresponding to the IP and the fully qualified domain name (FQDN) of the EC2 instance we've created.
 
 ```
 Current stack is webserver-dev:

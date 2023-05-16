@@ -20,7 +20,7 @@ In this tutorial, we'll build and publish a Docker container to a private Elasti
 
 ### Step 1: Create a new project from a template
 
-Create a project directory, `hello-fargate`, and change into it. Run [`pulumi new aws-typescript --name myproject`](/docs/reference/cli/pulumi_new) to create a new project using the AWS template for TypeScript. Replace `myproject` with your desired project name.
+Create a project directory, `hello-fargate`, and change into it. Run [`pulumi new aws-typescript --name myproject`](/docs/cli/commands/pulumi_new/) to create a new project using the AWS template for TypeScript. Replace `myproject` with your desired project name.
 
 Run `pulumi new` to create a new project:
 
@@ -113,7 +113,7 @@ $ pulumi config set aws:region us-east-1
 
 ### Step 7: Preview and deploy your resources
 
-To preview your Pulumi program, run [`pulumi up`](/docs/reference/cli/pulumi_up). The command shows a preview of the resources that will be created and prompts you to proceed with the deployment.  Note that the stack itself is counted as a resource, though it does not correspond to a physical cloud resource.
+To preview your Pulumi program, run [`pulumi up`](/docs/cli/commands/pulumi_up/). The command shows a preview of the resources that will be created and prompts you to proceed with the deployment.  Note that the stack itself is counted as a resource, though it does not correspond to a physical cloud resource.
 
 ```bash
 $ pulumi up
@@ -160,7 +160,7 @@ $ curl $(pulumi stack output frontendURL)
 
 ### Step 9: View container logs (Optional)
 
-To view the runtime logs from the container, use the [`pulumi logs`](/docs/reference/cli/pulumi_logs) command. To get a log stream, use `pulumi logs --follow`.
+To view the runtime logs from the container, use the [`pulumi logs`](/docs/cli/commands/pulumi_logs/) command. To get a log stream, use `pulumi logs --follow`.
 
 ```bash
 $ pulumi logs --follow

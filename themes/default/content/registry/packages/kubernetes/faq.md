@@ -160,7 +160,7 @@ else (_e.g._, in a local file, or in object storage). See documentation for [`pu
 <!-- markdownlint-disable url -->
 [kubeconfig]: https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/
 [client-go]: https://github.com/kubernetes/client-go
-[login]: /docs/reference/cli/pulumi_login
+[login]: /docs/cli/commands/pulumi_login/
 [eks]: https://github.com/pulumi/examples/tree/master/aws-ts-eks
 [api-reference]: https://kubernetes.io/docs/reference/
 [openapi]: https://github.com/kubernetes/kubernetes/tree/master/api/openapi-spec

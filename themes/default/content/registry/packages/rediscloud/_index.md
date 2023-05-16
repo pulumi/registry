@@ -8,7 +8,7 @@ The [Redis Cloud](https://redis.com) Resource Provider lets you manage Redis Clo
 
 ## Example
 
-{{< chooser language "typescript,python,go" >}}
+{{< chooser language "typescript,python,go,yaml" >}}
 {{% choosable language typescript %}}
 
 ```typescript
@@ -178,6 +178,61 @@ func main() {
 		return nil
 	})
 }
+```
+
+{{% /choosable %}}
+
+{{% choosable language yaml %}}
+
+```yaml
+name: rediscloud-yaml
+runtime: yaml
+description: A minimal Pulumi YAML program
+variables:
+  cardId:
+    fn::invoke:
+      function: rediscloud:getPaymentMethod
+      arguments:
+        cardType: Visa
+        lastFourNumbers: "1234"
+      return: id
+outputs: {}
+resources:
+  subscription:
+    type: rediscloud:Subscription
+    properties:
+      paymentMethod: credit-card
+      paymentMethodId: ${cardId}
+      cloudProvider:
+        regions:
+          - region: us-east-1
+            multipleAvailabilityZones: true
+            networkingDeploymentCidr: "10.0.0.0/24"
+            preferredAvailabilityZones:
+              - "use1-az1"
+              - "use1-az2"
+              - "use1-az5"
+      creationPlan:
+        memoryLimitInGb: 10
+        quantity: 1
+        replication: true
+        supportOssClusterApi: false
+        throughputMeasurementBy: operations-per-second
+        throughputMeasurementValue: 20000
+        modules:
+          - RedisJSON
+  database:
+    type: rediscloud:SubscriptionDatabase
+    properties:
+      subscriptionId: ${subscription.id}
+      protocol: redis
+      memoryLimitInGb: 10
+      dataPersistence: aof-every-1-second
+      throughputMeasurementBy: "operations-per-second"
+      throughputMeasurementValue: 20000
+      replication: true
+      modules:
+        - name: RedisJSON
 ```
 
 {{% /choosable %}}

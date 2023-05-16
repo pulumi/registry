@@ -16,7 +16,7 @@ In this tutorial, we'll show you how to provision raw resources in AWS using the
 
 ### Step 1: Create a new project from a template
 
-Create a project directory, `s3website`, and change into it. Run [`pulumi new javascript --name myproject`](/docs/reference/cli/pulumi_new) to create a new project using the JavaScript template. Replace `myproject` with your desired project name.
+Create a project directory, `s3website`, and change into it. Run [`pulumi new javascript --name myproject`](/docs/cli/commands/pulumi_new/) to create a new project using the JavaScript template. Replace `myproject` with your desired project name.
 
 ```bash
 $ mkdir s3website && cd s3website
@@ -107,7 +107,7 @@ Notice how a new file, `Pulumi.website-testing.yaml`, got created in the root di
 
 ### Step 6: Preview and deploy your resources
 
-To preview your Pulumi program, run [`pulumi up`](/docs/reference/cli/pulumi_up). The command shows a preview of the resources that will be created and prompts you to proceed with the deployment. Select `yes` to create a stack component, a Bucket and two S3 Objects (one for each file in the `www` folder).
+To preview your Pulumi program, run [`pulumi up`](/docs/cli/commands/pulumi_up/). The command shows a preview of the resources that will be created and prompts you to proceed with the deployment. Select `yes` to create a stack component, a Bucket and two S3 Objects (one for each file in the `www` folder).
 
 ### Step 7: View your stack resources
 

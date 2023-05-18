@@ -13,6 +13,8 @@
             {{ end }}
         </main>
 
-        {{ partial "footer.html" . }}
+        {{ define "footer" }}
+            {{ partial "docs/footer.html" . }}
+        {{ end }}
     </body>
 </html>

@@ -6,7 +6,7 @@ meta_desc: The Pulumi Registry hosts Providers that give direct access to all of
 no_on_this_page: true
 menu:
   clouds:
-    name: Overview
+    name: All clouds
     weight: 5
 aliases:
     - /registry/packages

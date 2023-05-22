@@ -15,12 +15,10 @@ jobs:
         run: echo "::set-output name=matrix::$(python generate_package_list.py)'"
         working-directory: community-packages
       - name: List open pull requests
-        uses: jkisk/list-open-pulls@v1.0.1
         id: list
-        with:
-          token: ${{ secrets.PULUMI_BOT_TOKEN }}
-          owner: pulumi
-          repo: registry
+        run: source ./scripts/common.sh && echo "titles=$(list_pull_requests)" >> $GITHUB_OUTPUT 
+        env:
+          GITHUB_TOKEN: ${{ secrets.PULUMI_BOT_TOKEN }}
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
       prs: ${{ steps.list.outputs.titles }}

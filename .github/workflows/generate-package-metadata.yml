@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - id: set-matrix
-        run: echo "matrix=$(python generate_package_list.py)'" >> $GITHUB_OUTPUT
+        run: echo "matrix=$(python generate_package_list.py)" >> $GITHUB_OUTPUT
         working-directory: community-packages
       - name: List open pull requests
         uses: jkisk/list-open-pulls@v1.0.1

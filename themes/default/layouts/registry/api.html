@@ -21,7 +21,7 @@
                 {{ else if (in .Page.File "api-docs/_index.md")}}
                     <h1>{{ .Params.title }}: API Docs</h1>
                 {{ end }}
-                <section data-swiftype-index="true" class="lg:-mt-2">
+                <section class="docs-content" data-swiftype-index="true" class="lg:-mt-2">
                     {{ .Content }}
                 </section>
             </div>

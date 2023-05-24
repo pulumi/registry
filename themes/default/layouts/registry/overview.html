@@ -4,11 +4,9 @@
         {{ partial "registry/package/header.html" . }}
         <div class="lg:flex">
             <div class="lg:w-12/12 max-w-3xl">
-                {{ if not (in .Page.File "_index.md") }}
-                {{ end }}
                 <h1>{{ .Params.title }}</h1>
 
-                <section data-swiftype-index="true">
+                <section class="docs-content" data-swiftype-index="true">
                     {{ .Content }}
                 </section>
             </div>

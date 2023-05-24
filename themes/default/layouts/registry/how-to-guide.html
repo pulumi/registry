@@ -5,7 +5,10 @@
             <div class="lg:flex">
                 <div class="lg:w-9/12 max-w-3xl">
                     {{ if not (in .Page.File "how-to-guides/_index.md") }}
-                        <h1>{{ .Params.title }}</h1>
+                        <div class="special-h1">
+                            <h1>{{ .Params.title }}</h1>
+                            <div class="h1-gradient"></div>
+                        </div>
                     {{ end }}
     
                     {{ .Content }}

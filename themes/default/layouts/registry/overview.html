@@ -4,8 +4,10 @@
         {{ partial "registry/package/header.html" . }}
         <div class="lg:flex">
             <div class="lg:w-12/12 max-w-3xl">
-                <h1>{{ .Params.title }}</h1>
-
+                <div class="special-h1">
+                    <h1>{{ .Params.title }}</h1>
+                    <div class="h1-gradient"></div>
+                </div>
                 <section class="docs-content" data-swiftype-index="true">
                     {{ .Content }}
                 </section>

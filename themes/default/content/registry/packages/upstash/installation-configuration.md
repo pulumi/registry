@@ -17,7 +17,7 @@ The Pulumi Upstash provider is available as a package in all Pulumi languages:
 The Upstash provider can be installed using the `pulumi plugin` command.
 
 ```bash
-pulumi plugin install resource upstash --server https://github.com/upstash/pulumi-upstash/releases/download/v0.0.20
+pulumi plugin install resource upstash --server https://github.com/upstash/pulumi-upstash/releases/download/v0.2.0
 ```
 
 ## Setup

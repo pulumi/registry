@@ -1,11 +1,11 @@
 ---
-title: Astra
-meta_desc: Provides an overview of the Datastax Astra Provider for Pulumi.
+title: Astra DB
+meta_desc: Provides an overview of the Astra DB Provider for Pulumi.
 layout: overview
 ---
 
-The Astra provider for Pulumi can be used to provision any of the cloud resources available in [Datastax Astra](https://www.datastax.com/products/datastax-astra).
-The Astra provider must be configured with credentials to deploy and update resources in Astra.
+The Astra DB provider for Pulumi can be used to provision any of the cloud resources available in [Astra DB](https://www.datastax.com/products/datastax-astra).
+The Astra DB provider must be configured with credentials to deploy and update resources in Astra DB.
 
 ## Example
 

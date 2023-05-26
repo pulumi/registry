@@ -35,11 +35,16 @@ jobs:
       matrix: ${{fromJson(needs.generate-packages-list.outputs.matrix)}}
     steps:
       - name: Get provider short name
-        uses: actions-ecosystem/action-regex-match@v2.0.2
         id: regex-prov
-        with:
-          text: ${{ matrix.repoSlug }}
-          regex: '(\/.*-)(.*?$)'
+        run: |
+          if [[ $REPO_SLUG =~ (\/.*-)(.*?$) ]]; then
+            echo "group2=${BASH_REMATCH[2]}" >> $GITHUB_OUTPUT
+          else
+            echo "Regex pattern match error."
+            exit 1
+          fi
+        env:
+          REPO_SLUG: ${{ matrix.repoSlug }}
       - name: Check if there is already an open PR
         if: contains(needs.generate-packages-list.outputs.prs, steps.regex-prov.outputs.group2 )  
         id: skip-run

@@ -35,7 +35,7 @@ jobs:
       matrix: ${{fromJson(needs.generate-packages-list.outputs.matrix)}}
     steps:
       - name: Get provider short name
-        uses: actions-ecosystem/action-regex-match@v2
+        uses: actions-ecosystem/action-regex-match@v2.0.2
         id: regex-prov
         with:
           text: ${{ matrix.repoSlug }}

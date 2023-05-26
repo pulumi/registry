@@ -33,7 +33,7 @@ jobs:
         run: git status && git diff
       - name: Create registry PR
         id: create-pr
-        uses: peter-evans/create-pull-request@v3
+        uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.PULUMI_BOT_TOKEN }}
           committer: Pulumi Bot <bot@pulumi.com>

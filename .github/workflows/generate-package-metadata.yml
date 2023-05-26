@@ -75,7 +75,7 @@ jobs:
           --version ${{ env.PROVIDER_VERSION }}
       - name: Create registry PR
         if: env.PROVIDER_VERSION
-        uses: peter-evans/create-pull-request@v3
+        uses: peter-evans/create-pull-request@v5
         env:
           PROVIDER_SHORT_NAME: ${{ steps.regex-prov.outputs.group2 }}
         with:

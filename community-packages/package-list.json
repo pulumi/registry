@@ -203,6 +203,10 @@
     {
       "repoSlug": "RedisLabs/pulumi-rediscloud",
       "schemaFile": "provider/cmd/pulumi-resource-rediscloud/schema.json"
+    },
+    {
+      "repoSlug": "impart-security/pulumi-impart",
+      "schemaFile": "provider/cmd/pulumi-resource-impart/schema.json"
     }
   ]
 }

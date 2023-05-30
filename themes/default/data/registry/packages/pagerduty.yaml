@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-pagerduty
 schema_file_path: provider/cmd/pulumi-resource-pagerduty/schema.json
 title: PagerDuty
-updated_on: 1684196339
-version: v3.10.1
+updated_on: 1685408746
+version: v3.10.2

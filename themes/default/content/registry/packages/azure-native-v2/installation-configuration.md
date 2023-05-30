@@ -1,5 +1,5 @@
 ---
-title: Azure Native v2 Installation & Configuration
+title: Azure Native (v2 Preview) Installation & Configuration
 meta_desc: How to set up credentials to use the Pulumi Azure Native Provider and choose configuration options to tailor the provider to suit your use case.
 layout: installation
 ---

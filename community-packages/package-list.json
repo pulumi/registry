@@ -203,6 +203,10 @@
     {
       "repoSlug": "RedisLabs/pulumi-rediscloud",
       "schemaFile": "provider/cmd/pulumi-resource-rediscloud/schema.json"
+    },
+    {
+      "repoSlug": "Authress/pulumi-authress",
+      "schemaFile": "provider/cmd/pulumi-resource-authress/schema.json"
     }
   ]
 }

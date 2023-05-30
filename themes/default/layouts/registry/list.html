@@ -81,9 +81,11 @@
             <div class="flex flex-wrap">
                 {{/* Capture the current (i.e., Page) context so it can be passed into the partial, allowing the partial to build proper relrefs. */}}
                 {{ $page := . }}
-
                 {{ range (sort $allPackages "title") }}
-                    {{ partial "registry/package" (dict "package" . "page" $page) }}
+                <!-- temporarily hide "azure-native-v2" package from list -->
+                {{ if (ne .name "azure-native-v2") }}
+                        {{ partial "registry/package" (dict "package" . "page" $page) }}
+                    {{ end }}
                 {{ end }}
                 <div class="no-results px-4">
                     <p>

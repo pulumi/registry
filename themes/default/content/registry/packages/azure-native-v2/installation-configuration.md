@@ -12,11 +12,11 @@ Pulumi uses the Azure SDK and the credentials in your environment to authenticat
 
 The Azure Native provider is available as a package in all Pulumi languages:
 
-* JavaScript/TypeScript: [`@pulumi/azure-native`](https://www.npmjs.com/package/@pulumi/azure-native)
-* Python: [`pulumi-azure-native`](https://pypi.org/project/pulumi-azure-native/)
-* Go: [`github.com/pulumi/pulumi-azure-native/sdk/go/azure`](https://github.com/pulumi/pulumi-azure-native)
-* .NET: [`Pulumi.AzureNative`](https://www.nuget.org/packages/Pulumi.AzureNative)
-* Java: [`com.pulumi.azurenative`](https://search.maven.org/search?q=com.pulumi.azure-native)
+* JavaScript/TypeScript: [`@pulumi/azure-native`](https://www.npmjs.com/package/@pulumi/azure-native/v/2.0.0-alpha.1)
+* Python: [`pulumi-azure-native`](https://pypi.org/project/pulumi-azure-native/2.0.0a1/)
+* Go: [`github.com/pulumi/pulumi-azure-native/sdk/go/azure`](https://github.com/pulumi/pulumi-azure-native/releases/tag/v2.0.0-alpha.1)
+* .NET: [`Pulumi.AzureNative`](https://www.nuget.org/packages/Pulumi.AzureNative/2.0.0-alpha.1)
+* Java: `com.pulumi.azurenative` [Pre-release unavailable]
 
 ## Authentication Methods
 

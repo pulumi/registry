@@ -81,6 +81,7 @@
             <div class="flex flex-wrap">
                 {{/* Capture the current (i.e., Page) context so it can be passed into the partial, allowing the partial to build proper relrefs. */}}
                 {{ $page := . }}
+
                 {{ range (sort $allPackages "title") }}
                     {{ partial "registry/package" (dict "package" . "page" $page) }}
                 {{ end }}

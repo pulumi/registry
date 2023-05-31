@@ -20,7 +20,7 @@
                         {{ end }}
                     {{ end }}
                 {{ else if (in .Page.File "api-docs/_index.md")}}
-                    <!-- hack to get custom azure-native-v2 title for now. -->
+                    <!-- HACK: to get custom azure-native-v2 title for now. -->
                     {{ if (in .Page.File "azure-native-v2") }}
                     <h1>Azure Native (v2 Preview): API Docs</h1>
                     {{ else }}

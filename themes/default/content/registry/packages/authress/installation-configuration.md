@@ -19,7 +19,9 @@ To provision resources with the Pulumi Authress provider, you need to provide th
 
 Pulumi relies on the Authress SDK to authenticate requests from your computer to Authress. Your credentials are never sent to pulumi.com. The Pulumi Authress Provider needs to be configured with Authress credentials before it can be used to create resources. Once the credentials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
 
-1. CI / CD. Automatically inject in the credentials from your CI/CD platform such as GitHub or GitLab. See [setting up GitHub/GitLab CI/CD credentials for Pulumi](https://authress.io/knowledge-base/docs/category/cicd).
+1. CI / CD. Automatically inject in the credentials from your CI/CD platform such as GitHub or GitLab.
+
+See [setting up GitHub/GitLab CI/CD credentials for Pulumi](https://authress.io/knowledge-base/docs/category/cicd).
 
 2. Directly specify the credentials using the `pulumi config set`
 

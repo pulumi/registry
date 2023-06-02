@@ -1,11 +1,10 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en-US" prefix="og: http://ogp.me/ns#">
     {{ partial "head.html" . }}
-
     <body class="section-{{ .Section }}">
         <pulumi-root></pulumi-root>
         {{ partial "docs-top-nav" . }}
-        <div class="header-container registry-hero">
+        <div class="header-container docs-hero">
             <span class="hide-on-pinned"> </span>
             <script>
                 (function (w, d, t, u, n, s, e) {
@@ -27,9 +26,7 @@
             {{ .Scratch.Set "mode" "registry" }}
             {{ partial "docs/search.html" . }}
         </div>
-
-        {{ block "hero" . }}
-        {{ end }}
+        
         <main>
             {{ block "main" . }}
             {{ end }}
@@ -43,3 +40,4 @@
         {{ end }}
     </body>
 </html>
+

@@ -1,7 +1,7 @@
 ---
 title: RedisCloud
 meta_desc: Provides an overview of the RedisCloud Provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 The [Redis Cloud](https://redis.com) Resource Provider lets you manage Redis Cloud resources. The provider is used to interact with the resources supported by Redis Enterprise Cloud. Please note that the provider is available only for Flexible or Annual subscriptions. It is not supported for Fixed or Free subscriptions.

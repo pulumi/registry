@@ -1,7 +1,7 @@
 ---
 title: String
 meta_desc: The Pulumi String provider provides a set of simple string functions accessible from all languages (including Pulumi YAML).
-layout: overview
+layout: package
 ---
 
 The Pulumi String provider contains a set of string manipulation functions that are

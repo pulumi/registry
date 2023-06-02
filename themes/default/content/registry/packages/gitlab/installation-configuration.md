@@ -1,7 +1,7 @@
 ---
 title: GitLab Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi GitLab Provider.
-layout: installation
+layout: package
 ---
 
 The Pulumi GitLab provider uses the GitLab SDK to manage and provision resources.

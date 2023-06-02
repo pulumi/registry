@@ -1,7 +1,7 @@
 ---
 title: Upstash
 meta_desc: Provides an overview of the Upstash Provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 The Upstash provider for Pulumi can be used to provision Upstash cloud resources such as [Upstash Redis and Kafka](https://upstash.com).

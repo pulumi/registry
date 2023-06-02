@@ -1,7 +1,7 @@
 ---
 title: Venafi
 meta_desc: Provides an overview of the Venafi Provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 The Venafi provider for Pulumi can be used to provision cloud resources available in [Venafi](https://www.venafi.com/).

@@ -1,7 +1,7 @@
 ---
 title: Spotinst Installation & Configuration
 meta_desc: Provides an overview on how to configure the Pulumi Spotinst Provider.
-layout: installation
+layout: package
 ---
 
 The Pulumi Spotinst provider uses the Spotinst SDK to manage resources.

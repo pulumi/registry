@@ -1,7 +1,7 @@
 ---
 title: Splunk
 meta_desc: Provides an overview of the Splunk Provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 The Splunk provider for Pulumi can be used to provision any of the cloud resources available in [Splunk](https://www.splunk.com/).

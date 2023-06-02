@@ -1,7 +1,7 @@
 ---
 title: PostgreSQL
 meta_desc: Provides an overview of the PostgreSQL Provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 The PostgreSQL provider for Pulumi can be used to provision any of the resources available for PostgreSQL.

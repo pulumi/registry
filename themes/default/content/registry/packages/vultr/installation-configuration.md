@@ -1,7 +1,7 @@
 ---
 title: Vultr Installation & Configuration
 meta_desc: Information on how to install the Vultr provider.
-layout: installation
+layout: package
 ---
 
 ## Installation

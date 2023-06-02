@@ -1,7 +1,7 @@
 ---
 title: Fastly Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi Fastly Provider.
-layout: installation
+layout: package
 ---
 
 The Pulumi Fastly provider uses the Fastly SDK to manage and provision resources.

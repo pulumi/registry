@@ -1,7 +1,7 @@
 ---
 title: Symbiosis Installation & Configuration
 meta_desc: Information on how to install the Symbiosis provider.
-layout: installation
+layout: package
 ---
 
 ## Installation

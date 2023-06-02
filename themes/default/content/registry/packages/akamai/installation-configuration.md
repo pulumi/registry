@@ -1,7 +1,7 @@
 ---
 title: Akamai Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi Akamai Provider.
-layout: installation
+layout: package
 ---
 
 The Pulumi Akamai provider uses the Akamai SDK to manage and provision resources.

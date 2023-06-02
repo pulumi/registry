@@ -1,7 +1,7 @@
 ---
 title: FusionAuth
 meta_desc: Provides configuration management for FusionAuth Provider
-layout: overview
+layout: package
 ---
 
 FusionAuth for Pulumi can be used to configure FusionAuth instances.

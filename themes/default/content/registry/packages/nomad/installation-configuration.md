@@ -1,7 +1,7 @@
 ---
 title: HashiCorp Nomad Installation & Configuration
 meta_desc: Provides an overview on how to configure the Pulumi Nomad Provider.
-layout: installation
+layout: package
 ---
 
 The [Pulumi Nomad provider](./) uses the Nomad SDK to manage resources.

@@ -1,7 +1,7 @@
 ---
 title: Keycloak
 meta_desc: Provides an overview of the Keycloak Provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 The Keycloak provider for Pulumi can be used to provision any of the cloud resources available via [Keycloak](https://rancher.com/).

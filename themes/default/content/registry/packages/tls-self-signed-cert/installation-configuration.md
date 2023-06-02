@@ -1,7 +1,7 @@
 ---
 title: Self Signed Certificate Installation
 meta_desc: Information on how to set up and install Pulumi's Self Signed Certificate Package.
-layout: installation
+layout: package
 ---
 
 ## Installation

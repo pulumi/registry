@@ -1,7 +1,7 @@
 ---
 title: onelogin
 meta_desc: Provides an overview of the onelogin Provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 The onelogin provider for Pulumi can be used to provision any of the cloud resources available in [onelogin](https://www.onelogin.com/).

@@ -1,7 +1,7 @@
 ---
 title: HashiCorp Consul
 meta_desc: Provides an overview of the HashiCorp Consul Provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 The HashiCorp Consul provider for Pulumi can be used to provision any of the resources available in [Consul](https://www.consul.io/).

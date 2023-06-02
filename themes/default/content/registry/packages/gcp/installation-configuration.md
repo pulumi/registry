@@ -1,7 +1,7 @@
 ---
 title: Google Cloud (GCP) Classic Installation & Configuration
 meta_desc: How to set up credentials to use the Pulumi GCP Provider and choose configuration options to tailor the provider to suit your use case.
-layout: installation
+layout: package
 ---
 
 ## Installation

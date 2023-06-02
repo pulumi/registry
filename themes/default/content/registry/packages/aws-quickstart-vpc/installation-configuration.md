@@ -1,7 +1,7 @@
 ---
 title: AWS QuickStart VPC Installation & Configuration
 meta_desc: Information on how to set up credentials to use the AWS QuickStart VPC component.
-layout: installation
+layout: package
 ---
 
 {{< aws-resource-note >}}

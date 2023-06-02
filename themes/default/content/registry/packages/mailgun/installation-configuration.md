@@ -1,7 +1,7 @@
 ---
 title: Mailgun Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi Mailgun Provider.
-layout: installation
+layout: package
 ---
 
 The Pulumi Mailgun provider uses the Mailgun SDK to manage and provision resources.

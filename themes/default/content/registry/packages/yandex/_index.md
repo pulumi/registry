@@ -1,7 +1,7 @@
 ---
 title: Yandex
 meta_desc: Provides an overview of the Yandex Cloud Provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 The Yandex Cloud provider for Pulumi can be used to provision cloud resources available in [Yandex Cloud](https://cloud.yandex.com/).

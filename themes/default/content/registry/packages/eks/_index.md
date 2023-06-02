@@ -1,7 +1,7 @@
 ---
 title: Amazon EKS
 meta_desc: Learn how you can use Pulumi's Amazon EKS component to set up an AWS Elastic Kubernetes Service cluster in just a few lines of code.
-layout: overview
+layout: package
 ---
 
 Amazon EKS is a Pulumi Component that creates and manages the resources necessary to run an [EKS Kubernetes cluster](https://aws.amazon.com/eks/) in AWS. Use this component to quickly set up an EKS cluster in just a few lines of code. This component exposes the [Crosswalk for AWS](../../../docs/guides/crosswalk/aws/) functionality documented in the [Pulumi Amazon EKS guide](../../../docs/guides/crosswalk/aws/eks/).

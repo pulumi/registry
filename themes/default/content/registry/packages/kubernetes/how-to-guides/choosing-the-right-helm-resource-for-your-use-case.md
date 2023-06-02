@@ -2,7 +2,7 @@
 title: "Choosing the Right Helm Resource For Your Use Case"
 meta_desc: Learn which Helm Resource is right for your use case
 aliases: ["/docs/reference/tutorials/kubernetes/chart-vs-release/"]
-layout: how-to-guide
+layout: package
 ---
 
 The Kubernetes provider and SDK has supported a means to deploy [Helm Charts](https://helm.sh/) since [2018](/blog/using-helm-and-pulumi-to-define-cloud-native-infrastructure-as-code/) through the [`Helm V3 Chart`](/registry/packages/kubernetes/api-docs/helm/v3/chart) resource. This resource simulated Helm installation by retrieving the templates for underlying resources from the chart and installing them on the target Kubernetes environment directly.

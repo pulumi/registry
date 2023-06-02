@@ -1,7 +1,7 @@
 ---
 title: Launch Darkly
 meta_desc: Provides an overview of the Launch Darkly Provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 The Launch Darkly provider for Pulumi can be used to provision any of the cloud resources available in [Launch Darkly](https://launchdarkly.com/).

@@ -1,7 +1,7 @@
 ---
 title: Aiven
 meta_desc: Provides an overview of the Aiven Provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 The Aiven provider for Pulumi can be used to provision any of the cloud resources available in [Aiven](https://aiven.io/).

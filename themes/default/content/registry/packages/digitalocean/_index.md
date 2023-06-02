@@ -1,7 +1,7 @@
 ---
 title: DigitalOcean
 meta_desc: Provides an overview of the DigitalOcean Provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 The DigitalOcean provider for Pulumi can be used to provision any of the cloud resources available in [DigitalOcean](https://www.digitalocean.com/).

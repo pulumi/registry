@@ -1,7 +1,7 @@
 ---
 title: Vultr
 meta_desc: Provides an overview of the Vultr Provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 The Vultr Resource Provider lets you manage [Vultr](https://www.vultr.com/) resources.

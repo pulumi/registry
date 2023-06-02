@@ -1,7 +1,7 @@
 ---
 title: AzureAD Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi AzureAD Provider.
-layout: installation
+layout: package
 ---
 
 The Pulumi AzureAD provider uses the AzureAD SDK to manage and provision resources.

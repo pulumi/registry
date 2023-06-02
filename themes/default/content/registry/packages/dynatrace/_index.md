@@ -1,7 +1,7 @@
 ---
 title: Dynatrace
 meta_desc: Provides an overview of the Dynatrace Provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 The Dynatrace provider for Pulumi can be used to provision any of the cloud resources available in [Pulumi](https://www.dynatrace.com/).

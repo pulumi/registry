@@ -1,7 +1,7 @@
 ---
 title: Linode SDK Installation & Configuration
 meta_desc: Provides an overview on how to setup the Linode SDK for Pulumi.
-layout: installation
+layout: package
 ---
 
 The Pulumi Linode provider uses the Linode SDK to manage and provision resources.

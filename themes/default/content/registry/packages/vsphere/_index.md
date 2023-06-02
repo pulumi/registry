@@ -1,7 +1,7 @@
 ---
 title: vSphere
 meta_desc: Provides an overview of the vSphere provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 The vSphere provider for Pulumi can be used to provision any of the cloud resources available in [vSphere](https://www.vmware.com/products/vsphere.html).

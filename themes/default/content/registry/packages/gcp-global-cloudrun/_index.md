@@ -1,7 +1,7 @@
 ---
 title: GCP Global CloudRun
 meta_desc: Easily create a globally load balanced CloudRun application in Google Cloud.
-layout: overview
+layout: package
 ---
 
 Easily create a globally load-balanced Google Cloud Run application using this component, which is available in all Pulumi languages.

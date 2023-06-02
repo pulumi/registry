@@ -1,7 +1,7 @@
 ---
 title: Twingate Installation & Configuration
 meta_desc: Information on how to install the Twingate provider.
-layout: installation
+layout: package
 ---
 
 ## Installation

@@ -1,7 +1,7 @@
 ---
 title: Cloudflare
 meta_desc: Provides an overview of the Cloudflare Provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 The Cloudflare provider for Pulumi can be used to provision any of the resources available in [Cloudflare](https://www.cloudflare.com/).

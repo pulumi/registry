@@ -1,7 +1,7 @@
 ---
 title: Aviatrix
 meta_desc: Provides an overview of the Aviatrix Provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 The Aviatrix Resource Provider lets you manage [Aviatrix](https://aviatrix.com) resources.

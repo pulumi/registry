@@ -1,7 +1,7 @@
 ---
 title: StrongDM
 meta_desc: Provides an overview of the StrongDM Provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 The StrongDM provider for Pulumi can be used to provision any of the cloud resources available in [StrongDM](https://www.strongdm.com/).

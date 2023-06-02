@@ -1,7 +1,7 @@
 ---
 title: Equinix
 meta_desc: Provides an overview of the Equinix Provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 The Equinix provider for Pulumi can be used to provision [Equinix](https://deploy.Equinix.com) resources (Metal, Fabric, and Network Edge).

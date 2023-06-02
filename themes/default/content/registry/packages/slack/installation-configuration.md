@@ -1,7 +1,7 @@
 ---
 title: Slack Setup
 meta_desc: Installation and configuration for the Pulumi Slack provider.
-layout: installation
+layout: package
 ---
 
 ## Installation

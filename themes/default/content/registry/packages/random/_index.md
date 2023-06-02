@@ -1,7 +1,7 @@
 ---
 title: Random
 meta_desc: Provides an overview of the Random Provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 The Random provider for Pulumi can be used to help introduce random values when dealing with Pulumi resources.

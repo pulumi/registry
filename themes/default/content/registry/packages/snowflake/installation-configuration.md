@@ -1,7 +1,7 @@
 ---
 title: Snowflake Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi Snowflake Provider.
-layout: installation
+layout: package
 ---
 
 The Pulumi Snowflake provider uses the Snowflake SDK to manage and provision resources.

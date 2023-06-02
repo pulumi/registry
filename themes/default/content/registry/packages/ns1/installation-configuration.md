@@ -1,7 +1,7 @@
 ---
 title: NS1 Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi NS1 Provider.
-layout: installation
+layout: package
 ---
 
 The Pulumi NS1 provider uses the NS1 SDK to manage and provision resources.

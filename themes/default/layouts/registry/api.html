@@ -1,53 +1,110 @@
-
 {{ define "main" }}
+    {{ $directories := (split .Page.File "/")}}
+    {{ $packageName := index $directories 2 }}
+    {{ $packageHome := path.Join "registry/packages" $packageName }}
+    {{ $title_tag := .Params.title_tag }}
 
-{{ $title_tag := .Params.title_tag }}
-<div class="container flex flex-row mx-auto px-4 pb-8 mt-16 md:mt-4">
-    <div class="flex-col min-w-0">
-        {{ partial "registry/package/header.html" . }}
-        <div class="lg:flex">
-            <div class="xxl:w-8/12">
-                <!--Don't show the title in the top-most index page.-->
-                {{ if not (in .Page.File "api-docs/_index.md") }}
-                    {{ if and (.Params.h1) (not .Params.notitle) }}
-                        <h1>{{ .Params.h1 }}</h1>
-                    {{ else if and (ne .Title "") (not .Params.notitle) }}
-                            <!-- HACK: azure-native-v2 resources should still belong to azure-native -->
-                            <h1 class="break-words">{{ replace $title_tag "azure-native-v2" "azure-native" }}</h1>
-                        {{ if not (strings.Contains .Params.meta_desc "module") }}
-                            {{ .Scratch.Set "title_tag" $title_tag }}
-                            {{ partial "registry/package/pulumi-ai.html" . }}
+    <div class="docs-list-main">
+        <div class="docs-main-content-wrapper">
+            <div class="docs-main-content">
+                {{ partial "docs/breadcrumb.html" . }}
+
+                {{ partial "registry/package/header.html" . }}
+
+                <div class="special-h1">
+                    {{ if strings.Contains .Permalink "installation-configuration" }}
+                        <h1>{{ with .GetPage $packageHome }}{{ .Title }}{{ end }}: Installation & Configuration</h1>
+                    {{ else if strings.HasSuffix .Permalink "how-to-guides/" }}
+                        <h1>{{ with .GetPage $packageHome }}{{ .Title }}{{ end }}: How-to-Guides</h1>
+                    {{ else if strings.Contains .Permalink "api-docs" }}
+                        <!--Don't show the title in the top-most index page.-->
+                        {{ if not (in .Page.File "api-docs/_index.md") }}
+                            {{ if and (.Params.h1) (not .Params.notitle) }}
+                                <h1>{{ .Params.h1 }}</h1>
+                            {{ else if and (ne .Title "") (not .Params.notitle) }}
+                                <!-- HACK: azure-native-v2 resources should still belong to azure-native -->
+                                <h1 class="break-words">{{ replace $title_tag "azure-native-v2" "azure-native" }}</h1>
+                                {{ if not (strings.Contains .Params.meta_desc "module") }}
+                                    {{ .Scratch.Set "title_tag" $title_tag }}
+                                    {{ partial "registry/package/pulumi-ai.html" . }}
+                                {{ end }}
+                            {{ end }}
+                        {{ else if (in .Page.File "api-docs/_index.md")}}
+                            <!-- HACK: to get custom azure-native-v2 title for now. -->
+                            {{ if (in .Page.File "azure-native-v2") }}
+                                <h1>Azure Native (v2 Preview): API Docs</h1>
+                            {{ else }}
+                                <h1>{{ .Params.title }}: API Docs</h1>
+                            {{ end }}
+                        {{ end }}
+                    {{ else }}
+                        {{ if and (.Params.h1) (not .Params.notitle) }}
+                            <h1>{{ .Params.h1 }}</h1>
+                        {{ else if and (ne .Title "") (not .Params.notitle) (not (in .Page.File "how-to-guides/_index.md")) }}
+                            <h1>{{ .Title }}</h1>
                         {{ end }}
                     {{ end }}
-                {{ else if (in .Page.File "api-docs/_index.md")}}
-                    <!-- HACK: to get custom azure-native-v2 title for now. -->
-                    {{ if (in .Page.File "azure-native-v2") }}
-                    <h1>Azure Native (v2 Preview): API Docs</h1>
-                    {{ else }}
-                    <h1>{{ .Params.title }}: API Docs</h1>
-                    {{ end }}
+                    <div class="h1-gradient"></div>
+                </div>
+
+                <div class="docs-table-of-contents docs-toc-mobile">
+                    {{ partial "docs/table-of-contents.html" . }}
+                </div>
+
+                {{ if .Params.cloud_overview }}
+                    {{ partial "docs/cloud-overview.html" . }}
                 {{ end }}
-                <section class="docs-content" data-swiftype-index="true" class="lg:-mt-2">
-                    {{ .Content }}
+
+                <section class="docs-content" data-swiftype-index="true">
+                    {{ if strings.HasSuffix .Permalink "how-to-guides/" }}
+                        {{ if (eq (len .Pages) 0) }}
+                            There are no guides yet for this package.
+                        {{ else }}
+                            {{ if not (eq (len (where .Pages "Params.language" "==" nil)) 0) }}
+                                <h2>Featured Guides</h2>
+
+                                {{ range where .Pages "Params.language" "==" nil }}
+                                    <div class="pb-4">
+                                        <a class="text-blue-600 underline" href="{{ relref . .Path }}">{{ .Title }}</a>
+                                    </div>
+                                {{ end }}
+
+                                <h2>How-to Guides by Language</h2>
+                            {{ end }}
+
+                            <div><pulumi-chooser type="language" options="typescript,javascript,python,go,csharp"></pulumi-chooser></div>
+
+                            <pulumi-choosable type="language" value="typescript">
+                            {{ partial "registry/packages/how-to-language-index" (dict "package" . "language" "ts") }}
+                            </pulumi-choosable>
+
+                            <pulumi-choosable type="language" value="javascript">
+                            {{ partial "registry/packages/how-to-language-index" (dict "package" . "language" "js") }}
+                            </pulumi-choosable>
+
+                            <pulumi-choosable type="language" value="python">
+                            {{ partial "registry/packages/how-to-language-index" (dict "package" . "language" "py") }}
+                            </pulumi-choosable>
+
+                            <pulumi-choosable type="language" value="go">
+                            {{ partial "registry/packages/how-to-language-index" (dict "package" . "language" "go") }}
+                            </pulumi-choosable>
+
+                            <pulumi-choosable type="language" value="csharp">
+                            {{ partial "registry/packages/how-to-language-index" (dict "package" . "language" "cs") }}
+                            </pulumi-choosable>
+                        {{ end }}
+                    {{ else }}
+                        {{ .Content }}
+                    {{ end }}
                 </section>
             </div>
-            <div class="flex-shrink-0 pr-8 mb-2 pt-8 lg:order-first lg:pt-0 lg:mt-0">
-                <div class="sticky-sidebar left-nav">
-                    <div class="hidden lg:block mb-6">
-                        {{ partial "registry/left-nav.html" . }}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="lg:3/12 lg:pl-8 hidden xxl:block" style="max-width: 410px">
-        <div class="sticky-sidebar h-full">
-            <div class="flex flex-col ml-2 h-full overflow-hidden">
+
+            <div class="docs-table-of-contents docs-toc-desktop">
                 {{ partial "registry/package/right-nav.html" . }}
             </div>
         </div>
     </div>
-</div>
 {{ end }}
 
 {{ define "footer" }}

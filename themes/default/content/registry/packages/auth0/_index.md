@@ -1,7 +1,7 @@
 ---
 title: Auth0
 meta_desc: Provides an overview of the Auth0 Provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 The Auth0 provider for Pulumi can be used to provision any of the cloud resources available in [Auth0](https://auth0.com/).

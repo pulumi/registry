@@ -1,7 +1,7 @@
 ---
 title: Synced Folder
 meta_desc: A Pulumi component that synchronizes a local folder to Amazon S3, Azure Blob Storage, or Google Cloud Storage.
-layout: overview
+layout: package
 ---
 
 A Pulumi component that synchronizes the contents of a local folder to any Amazon S3 bucket, Azure Blob Storage container, or Google Cloud Storage bucket. Use this component to publish content easily to your cloud provider of choice.

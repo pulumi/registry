@@ -1,7 +1,7 @@
 ---
 title: Azure Justrun
 meta_desc: Provides an overview of the Azure Justrun component.
-layout: overview
+layout: package
 ---
 
 This component makes it easy to deploy a simple web app to Azure using any of the supported Pulumi programming languages including markup languages like YAML and JSON.

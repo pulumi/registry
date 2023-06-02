@@ -1,7 +1,7 @@
 ---
 title: Pulumi AWS API Gateway Installation & Configuration
 meta_desc: Information on how to set up credentials to use the AWS API Gateway component.
-layout: installation
+layout: package
 ---
 
 {{< aws-resource-note >}}

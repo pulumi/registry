@@ -1,7 +1,7 @@
 ---
 title: Mailgun
 meta_desc: Provides an overview of the Mailgun Provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 The Mailgun provider for Pulumi can be used to provision any of the cloud resources available in [Mailgun](https://www.mailgun.com/).

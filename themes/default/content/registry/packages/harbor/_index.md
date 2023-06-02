@@ -1,7 +1,7 @@
 ---
 title: Harbor
 meta_desc: Provides an overview of the Harbor Provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 The `Harbor` provider for Pulumi can be used to provision any of the resources available with `Harbor`.

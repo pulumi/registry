@@ -1,7 +1,7 @@
 ---
 title: Flux
 meta_desc: Provides an overview of the Flux provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 The Pulumi Flux provider lets you manage [Flux](https://fluxcd.io/) resources.

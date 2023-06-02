@@ -1,7 +1,7 @@
 ---
 title: Event Store Cloud
 meta_desc: Learn how you can use Event Store Cloud Provider for Pulumi to provision and manage Event Store Cloud resources.
-layout: overview
+layout: package
 ---
 
 The Event Store Cloud (ESC) provider for Pulumi can provision many of the cloud resources available in [ESC](https://eventstore.com/cloud/). It uses the ESC API to manage and provision resources.

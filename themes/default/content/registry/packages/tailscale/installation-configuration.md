@@ -1,7 +1,7 @@
 ---
 title: Tailscale Installation & Configuration
 meta_desc: Provides an overview on how to configure the Pulumi Tailscale Provider.
-layout: installation
+layout: package
 ---
 
 The Pulumi Tailscale provider uses the Tailscale SDK to manage resources.

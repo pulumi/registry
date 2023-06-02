@@ -1,7 +1,7 @@
 ---
 title: Sumo Logic Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi Sumo Logic Provider.
-layout: installation
+layout: package
 ---
 
 The Pulumi Sumo Logic provider uses the Sumo Logic SDK to manage and provision resources.

@@ -1,7 +1,7 @@
 ---
 title: Kafka
 meta_desc: Provides an overview of the Kafka Provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 The Kafka provider for Pulumi can be used to provision any of the resources available for Kafka.

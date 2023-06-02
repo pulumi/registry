@@ -1,7 +1,7 @@
 ---
 title: New Relic
 meta_desc: Provides an overview of the New Relic Provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 The New Relic provider for Pulumi can be used to provision any of the cloud resources available in [New Relic](https://newrelic.com/).

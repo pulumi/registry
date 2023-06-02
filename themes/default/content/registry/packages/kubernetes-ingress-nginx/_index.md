@@ -1,7 +1,7 @@
 ---
 title: NGINX Ingress Controller 
 meta_desc: Use Pulumi's Component for managing NGINX Ingress Controller installations using infrastructure as code.
-layout: overview
+layout: package
 ---
 
 Easily manage NGINX Ingress Controller installations as a package available in all Pulumi languages.

@@ -1,7 +1,7 @@
 ---
 title: Civo
 meta_desc: Provides an overview of the Civo Provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 The Civo provider for Pulumi can be used to provision any of the cloud resources available in [Civo](https://www.civo.com/).

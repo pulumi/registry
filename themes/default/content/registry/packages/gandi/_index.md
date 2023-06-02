@@ -1,7 +1,7 @@
 ---
 title: Gandi
 meta_desc: Provides an overview of the Gandi Provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 The Gandi provider for Pulumi can be used to provision any of the resources available in [Gandi](https://gandi.net/).

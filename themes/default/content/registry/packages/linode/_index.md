@@ -1,7 +1,7 @@
 ---
 title: Linode
 meta_desc: Provides an overview of the Linode SDK for Pulumi.
-layout: overview
+layout: package
 ---
 
 The Linode provider for Pulumi can be used to provision any of the cloud resources available in [Linode](https://www.linode.com).

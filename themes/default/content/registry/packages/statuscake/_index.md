@@ -1,7 +1,7 @@
 ---
 title: Statuscake
 meta_desc: Provides an overview of the Statuscake Provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 The Statuscake provider for Pulumi can be used to provision resources in [Statuscake](https://www.statuscake.com).

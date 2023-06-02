@@ -1,7 +1,7 @@
 ---
 title: AzureDevOps Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi AzureDevOps Provider.
-layout: installation
+layout: package
 ---
 
 The Pulumi AzureDevOps provider uses the AzureDevOps SDK to manage and provision resources.

@@ -1,7 +1,7 @@
 ---
 title: Sumo Logic
 meta_desc: Provides an overview of the Sumo Logic Provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 The  provider for Pulumi can be used to provision any of the cloud resources available in [Sumo Logic](https://www.sumologic.com/).

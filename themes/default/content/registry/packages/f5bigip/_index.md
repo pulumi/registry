@@ -1,7 +1,7 @@
 ---
 title: F5 BIG-IP
 meta_desc: Provides an overview of the F5 BIG-IP Provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 The F5 BIG-IP provider for Pulumi can be used to provision any of the resources available with [F5 BIG-IP](https://www.f5.com/products/big-ip-services).

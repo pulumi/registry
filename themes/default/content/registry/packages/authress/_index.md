@@ -1,7 +1,7 @@
 ---
 title: Authress
 meta_desc: Provides an overview of the Authress Provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 The Authress provider for Pulumi can be used to provision any of the cloud resources available in [Authress](https://authress.io/).

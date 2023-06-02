@@ -1,7 +1,7 @@
 ---
 title: Miniflux
 meta_desc: Easily create a Miniflux installation on AWS using Pulumi.
-layout: overview
+layout: package
 ---
 
 Easily create an installation of Miniflux, the open-source RSS server, on AWS with Pulumi.

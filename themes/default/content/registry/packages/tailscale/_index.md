@@ -1,7 +1,7 @@
 ---
 title: Tailscale
 meta_desc: Provides an overview of the Tailscale Provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 The Tailscale provider for Pulumi can be used to provision any of the resources available in [Tailscale](https://tailscale.com/).

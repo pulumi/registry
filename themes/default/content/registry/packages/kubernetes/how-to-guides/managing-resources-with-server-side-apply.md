@@ -1,7 +1,7 @@
 ---
 title: "Managing Resources with Server-Side Apply"
 meta_desc: Learn how to manage Kubernetes resources with Server-Side Apply
-layout: how-to-guide
+layout: package
 ---
 
 [Server-Side Apply](https://kubernetes.io/docs/reference/using-api/server-side-apply/) (SSA) is a resource management strategy that was introduced in Kubernetes `v1.18`. Clients using SSA can safely share the management of Kubernetes resources by making the API Server responsible for computing diffs and resolving conflicts.

@@ -1,7 +1,7 @@
 ---
 title: Google Cloud (GCP) Classic
 meta_desc: Learn how to use Pulumi's GCP Provider to reduce the complexity of managing and provisioning GCP resources.
-layout: overview
+layout: package
 ---
 
 The Google Cloud Platform (GCP) provider for Pulumi can provision many of the cloud resources available in [Google Cloud](https://cloud.google.com/).

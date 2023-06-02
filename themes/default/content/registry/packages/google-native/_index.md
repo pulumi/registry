@@ -1,7 +1,7 @@
 ---
 title: Google Cloud Native
 meta_desc: Learn how to use Pulumi's Google Cloud Native Provider to manage and provision Google Cloud resources.
-layout: overview
+layout: package
 ---
 
 {{< notes >}}

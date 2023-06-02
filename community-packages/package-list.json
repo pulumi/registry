@@ -207,6 +207,10 @@
     {
       "repoSlug": "Authress/pulumi-authress",
       "schemaFile": "provider/cmd/pulumi-resource-authress/schema.json"
+    },
+    {
+      "repoSlug": "impart-security/pulumi-impart",
+      "schemaFile": "provider/cmd/pulumi-resource-impart/schema.json"
     }
   ]
 }

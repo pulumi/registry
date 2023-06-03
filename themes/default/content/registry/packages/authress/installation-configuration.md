@@ -9,9 +9,6 @@ layout: installation
 The Pulumi Authress provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/authress`](https://www.npmjs.com/package/@pulumi/authress)
-* Python: [`pulumi_authress`](https://pypi.org/project/pulumi-authress/)
-* Go: [`github.com/authress/pulumi-authress/sdk/go/authress`](https://pkg.go.dev/github.com/authress/pulumi-authress/sdk)
-* .NET: [`Pulumi.Authress`](https://www.nuget.org/packages/Pulumi.Authress)
 
 ## Configuration Options
 

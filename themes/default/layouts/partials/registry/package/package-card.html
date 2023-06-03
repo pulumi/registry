@@ -44,33 +44,6 @@
         </div>
     </div>
 {{ else }}
-    <div class="p-4 mb-8 border rounded package-card">
-        <div class="lg:flex max-w-sm max-h-4">
-            {{ with (index $.Site.Data.registry.packages ($packageName)) }}
-            <div class="lg:flex max-h-4">
-                {{ partial "registry/package/icon.html" . }}
-            </div>
-            {{ end }}
-        </div>
-        {{ .Scratch.Set "package" $packageName }}
-        {{ partial "registry/package/package-alert.html" . }}
-        {{ with (index $.Site.Data.registry.packages ($packageName)) }}
-            <div class="mt-4 mb-4 lg:flex text-xs">
-                {{ .title }} {{ .version }} published on {{ ((time .updated_on).Format "Monday, Jan 2, 2006") }} by {{ .publisher }}
-            </div>
-
-            <div class="flex items-center">
-                <i class="fab fa-github text-base"></i>
-                <span class="text-blue-600 flex flex-wrap items-center">
-                    <a class="text-xs  ml-2 mr-1.5" href="{{ .repo_url }}" target="_blank" rel="noopener noreferrer">
-                        <span class="text-blue-600 underline">{{ replaceRE `^.*.com/` "" .repo_url }}</span>
-                        &nbsp;<i class="fas fa-external-link-alt text-xs"></i>
-                    </a>
-                </span>
-            </div>
-        {{ end }}
-    </div>
-
     <div class="package-card">
         {{ with (index $.Site.Data.registry.packages ($packageName)) }}
             <div class="package-logo">
@@ -83,15 +56,16 @@
         {{ partial "registry/package/package-alert.html" . }}
         
         {{ with (index $.Site.Data.registry.packages ($packageName)) }}
-        <div class="version-info">
-            {{ .title }} {{ .version }} published on {{ ((time .updated_on).Format "Monday, Jan 2, 2006") }} by {{ .publisher }}
-        </div>
-        <div class="package-link">
-            <i class="fab fa-github"></i>
-            <a href="{{ .repo_url }}" target="_blank" rel="noopener noreferrer">
-                <span>{{ replaceRE `^.*.com/` "" .repo_url }}</span>
-                <i class="fas fa-external-link-alt"></i>
-            </a>
-        </div>
+            <div class="version-info">
+                {{ .title }} {{ .version }} published on {{ ((time .updated_on).Format "Monday, Jan 2, 2006") }} by {{ .publisher }}
+            </div>
+            <div class="package-link">
+                <i class="fab fa-github"></i>
+                <a href="{{ .repo_url }}" target="_blank" rel="noopener noreferrer">
+                    <span>{{ replaceRE `^.*.com/` "" .repo_url }}</span>
+                    <i class="fas fa-external-link-alt"></i>
+                </a>
+            </div>
+        {{ end }}
     </div>
 {{ end }}

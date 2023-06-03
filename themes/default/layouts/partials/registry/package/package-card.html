@@ -1,4 +1,4 @@
-{{ $directories := (split $.Page.File "/")}}
+{{ $directories := (split .Page.File "/")}}
 {{ $packageName := index $directories 2 }}
 {{ $packageHome := path.Join "registry/packages" $packageName }}
 {{ $size := .Scratch.Get "size" }}

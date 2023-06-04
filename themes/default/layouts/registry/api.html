@@ -5,6 +5,17 @@
     {{ $title_tag := .Params.title_tag }}
 
     <div class="docs-list-main">
+        <div class="docs-main-nav-toggle-wrapper">
+            <div class="docs-main-nav-wrapper">
+                <div id="docs-main-nav" class="docs-main-nav">
+                    {{ partial "registry/package-nav.html" . }}
+                </div>
+            </div>
+            <div class="docs-nav-toggle">
+                <div class="docs-nav-toggle-icon icon icon-24-24"></div>
+            </div>
+        </div>
+
         <div class="docs-main-content-wrapper">
             <div class="docs-main-content">
                 {{ partial "docs/breadcrumb.html" . }}
@@ -22,8 +33,6 @@
                     </div>
                     <i class="fas fa-chevron-circle-down"></i>
                 </div>
-
-                {{ partial "registry/package/header.html" . }}
 
                 <div class="special-h1">
                     {{ if strings.Contains .Permalink "installation-configuration" }}
@@ -111,13 +120,6 @@
                     {{ else }}
                         {{ .Content }}
                     {{ end }}
-                    <div class="flex-shrink-0 pr-8 mb-2 pt-8 lg:order-first lg:pt-0 lg:mt-0">
-                        <div class="sticky-sidebar left-nav">
-                            <div class="hidden lg:block mb-6">
-                                {{ partial "registry/left-nav.html" . }}
-                            </div>
-                        </div>
-                    </div>
                 </section>
             </div>
 

@@ -8,14 +8,14 @@
         <div class="docs-main-nav-toggle-wrapper">
             <div class="docs-main-nav-wrapper">
                 <div id="docs-main-nav" class="docs-main-nav">
-                    {{ partial "docs/main-nav.html" . }}
+                    {{ partial "registry/package-nav.html" . }}
                 </div>
             </div>
             <div class="docs-nav-toggle">
                 <div class="docs-nav-toggle-icon icon icon-24-24"></div>
             </div>
         </div>
-        
+
         <div class="docs-main-content-wrapper">
             <div class="docs-main-content">
                 {{ partial "docs/breadcrumb.html" . }}
@@ -33,8 +33,6 @@
                     </div>
                     <i class="fas fa-chevron-circle-down"></i>
                 </div>
-
-                {{ partial "registry/package/header.html" . }}
 
                 <div class="special-h1">
                     {{ if strings.Contains .Permalink "installation-configuration" }}

@@ -1,0 +1,28 @@
+{{ $packageUrl := path.Join "/registry/packages" (index (split .Page.File "/") 2) }}
+{{ $installPath := path.Join $packageUrl "installation-configuration" }}
+{{ $howToPath := path.Join $packageUrl "how-to-guides" }}
+
+<nav class="main-nav">
+    <a href="/registry">All packages</a>
+    <ul>
+        <li class="sidenav-topic">
+            <a href="{{ $packageUrl }}">Overview</a>
+        </li>
+        <li class="sidenav-topic">
+            <a href="{{ $installPath }}">Install & config</a>
+        </li>
+            {{ if .GetPage $howToPath }}
+                {{ $guidesCount := 0 }}
+                {{ with .GetPage $howToPath }}
+                    {{ $guidesCount = len .Pages }}
+                {{ end }}
+
+                <a href="{{ $howToPath }}">
+                    How-to guides
+                    <span>{{ $guidesCount }}</span>
+                </a>
+            {{ end }}
+        <h2 class="no-anchor">API docs</h2>
+        {{ partial "registry/left-nav.html" . }}
+    </ul>
+</nav>

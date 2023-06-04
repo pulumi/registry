@@ -3,7 +3,17 @@
         <div class="docs-main-nav-toggle-wrapper">
             <div class="docs-main-nav-wrapper">
                 <div id="docs-main-nav" class="docs-main-nav">
-                    {{ partial "registry/list-nav.html" . }}
+                    <nav class="main-nav">
+                        <h2 class="no-anchor">A - Z packages</h2>
+                        <ul>
+                            {{ range (sort $.Site.Data.registry.packages "title") }}
+                                <li class="sidenav-topic">
+                                    {{ $href := printf "/registry/packages/%s/" .name }} 
+                                    <a href="{{ $href }}">{{ .title }}</a>
+                                </li>
+                            {{ end }}
+                        </ul>
+                    </nav>
                 </div>
             </div>
             <div class="docs-nav-toggle">

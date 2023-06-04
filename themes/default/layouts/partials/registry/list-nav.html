@@ -1,0 +1,11 @@
+<nav class="main-nav">
+    <h2>A - Z packages</h2>
+    <ul>
+        {{ range (sort $.Site.Data.registry.packages "title") }}
+            <li class="sidenav-topic">
+                {{ $href := printf "/registry/packages/%s/" .name }} 
+                <a href="{{ $href }}">{{ .title }}</a>
+            </li>
+        {{ end }}
+    </ul>
+</nav>

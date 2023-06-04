@@ -1,5 +1,16 @@
 {{ define "main" }}
     <div class="docs-list-main">
+        <div class="docs-main-nav-toggle-wrapper">
+            <div class="docs-main-nav-wrapper">
+                <div id="docs-main-nav" class="docs-main-nav">
+                    {{ partial "registry/list-nav.html" . }}
+                </div>
+            </div>
+            <div class="docs-nav-toggle">
+                <div class="docs-nav-toggle-icon icon icon-24-24"></div>
+            </div>
+        </div>
+
         <div class="docs-main-content-wrapper">
             <div class="docs-main-content registry-package-list">
                 {{ partial "registry/package-list.html" . }}

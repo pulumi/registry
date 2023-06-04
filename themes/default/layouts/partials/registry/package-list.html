@@ -13,7 +13,7 @@
         <h2>
             Featured Packages
         </h2>
-        <div class="packages">
+        <div class="featured-packages-content">
             {{ range $featuredPackages }}
                 {{ partial "registry/featured-package" (dict "package" .) }}
             {{ end }}

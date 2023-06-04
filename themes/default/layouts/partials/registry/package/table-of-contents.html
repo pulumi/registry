@@ -2,7 +2,7 @@
     {{ if not $.Page.Params.no_on_this_page }}
         <div class="table-of-contents">
             {{ if strings.Contains $.Page.Permalink "registry/packages" }}
-                {{ partial "registry/package/package-card.html" }}
+                {{ partial "registry/package/package-card.html" . }}
             {{ end }}
             <div id="accordion-table-of-contents" class="accordion">
                 <div>

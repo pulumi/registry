@@ -8,12 +8,12 @@
     {{ end }}
 {{ end }}
 
-<div class="packages container mx-auto pb-16 z-0">
+<div class="packages">
     <section class="featured-packages">
-        <h2 class="px-4 inline-flex items-center">
+        <h2>
             Featured Packages
         </h2>
-        <div class="flex flex-wrap">
+        <div class="packages">
             {{ range $featuredPackages }}
                 {{ partial "registry/featured-package" (dict "package" .) }}
             {{ end }}

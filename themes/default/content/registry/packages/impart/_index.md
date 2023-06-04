@@ -123,8 +123,7 @@ func getFileHash(filePath string) (string, error) {
 	if _, err := io.Copy(hash, file); err != nil {
 		return "", err
 	}
-	sum := fmt.Sprintf("%x", hash.Sum(nil))
-	return sum, nil
+	return string(hash.Sum(nil)), nil
 }
 ```
 

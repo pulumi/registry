@@ -73,6 +73,10 @@
       "schemaFile": "provider/cmd/pulumi-resource-proxmoxve/schema.json"
     },
     {
+      "repoSlug": "muhlba91/pulumi-buildkite",
+      "schemaFile": "provider/cmd/pulumi-resource-buildkite/schema.json"
+    },
+    {
       "repoSlug": "theogravity/pulumi-fusionauth",
       "schemaFile": "provider/cmd/pulumi-resource-fusionauth/schema.json"
     },

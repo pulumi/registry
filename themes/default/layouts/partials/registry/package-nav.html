@@ -10,8 +10,6 @@
         <li class="sidenav-topic {{ $sidenav_selected }}">
             <a href="{{ $packageUrl }}">Overview</a>
         </li>
-        {{ $installPath }}
-        {{ .Page.RelPermalink }}
         {{ $sidenav_selected = cond (eq .Page.RelPermalink $installPath) "active" "" }}
         <li class="sidenav-topic {{ $sidenav_selected }}">
             <a href="{{ $installPath }}">Install & config</a>

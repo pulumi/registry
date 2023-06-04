@@ -1,16 +1,23 @@
-{{ $packageUrl := path.Join "/registry/packages" (index (split .Page.File "/") 2) }}
-{{ $installPath := path.Join $packageUrl "installation-configuration" }}
-{{ $howToPath := path.Join $packageUrl "how-to-guides" }}
+{{ $packageUrl := printf "%s/" (path.Join "/registry/packages" (index (split .Page.File "/") 2)) }}
+{{ $installPath := printf "%s/" (path.Join $packageUrl "installation-configuration") }}
+{{ $howToPath := printf "%s/" (path.Join $packageUrl "how-to-guides/") }}
 
 <nav class="main-nav">
     <a href="/registry">All packages</a>
     <ul>
-        <li class="sidenav-topic">
+        {{ $sidenav_selected := "" }}
+        {{ $sidenav_selected = cond (eq .Page.RelPermalink $packageUrl) "active" "" }}
+        <li class="sidenav-topic {{ $sidenav_selected }}">
             <a href="{{ $packageUrl }}">Overview</a>
         </li>
-        <li class="sidenav-topic">
+        {{ $installPath }}
+        {{ .Page.RelPermalink }}
+        {{ $sidenav_selected = cond (eq .Page.RelPermalink $installPath) "active" "" }}
+        <li class="sidenav-topic {{ $sidenav_selected }}">
             <a href="{{ $installPath }}">Install & config</a>
         </li>
+        {{ $sidenav_selected = cond (eq .Page.RelPermalink $howToPath) "active" "" }}
+        <li class="sidenav-topic {{ $sidenav_selected }}">
             {{ if .GetPage $howToPath }}
                 {{ $guidesCount := 0 }}
                 {{ with .GetPage $howToPath }}
@@ -22,6 +29,7 @@
                     <span>{{ $guidesCount }}</span>
                 </a>
             {{ end }}
+        </li>
         <h2 class="no-anchor">API docs</h2>
         {{ partial "registry/left-nav.html" . }}
     </ul>

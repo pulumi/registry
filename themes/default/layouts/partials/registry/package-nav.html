@@ -3,7 +3,7 @@
 {{ $howToPath := printf "%s/" (path.Join $packageUrl "how-to-guides/") }}
 
 <nav class="main-nav">
-    <a href="/registry">All packages</a>
+    <a class="all-packages" href="/registry">All packages</a>
     <ul>
         {{ $sidenav_selected := "" }}
         {{ $sidenav_selected = cond (eq .Page.RelPermalink $packageUrl) "active" "" }}
@@ -28,7 +28,7 @@
                 </a>
             {{ end }}
         </li>
-        <h2 class="no-anchor">API docs</h2>
+        <h2 class="no-anchor api-docs-heading">API docs</h2>
         {{ partial "registry/left-nav.html" . }}
     </ul>
 </nav>

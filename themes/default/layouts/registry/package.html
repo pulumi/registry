@@ -9,6 +9,61 @@
             <div class="docs-main-content">
                 {{ partial "docs/breadcrumb.html" . }}
 
+                <div class="package-card-top-of-page">
+                    <div class="img-name-version">
+                        {{ with (index $.Site.Data.registry.packages ($packageName)) }}
+                            <div>
+                                {{ partial "registry/package/icon.html" . }}
+                            </div>
+                        {{ end }}
+                        {{ with (index $.Site.Data.registry.packages ($packageName)) }}
+                            <p>{{ .title }} {{ .version }}, {{ ((time .updated_on).Format "Jan 2 06") }}</p>
+                        {{ end }}
+                    </div>
+                    <i class="fas fa-chevron-circle-down"></i>
+                </div>
+
+                <div class="p-4 border rounded shadow-sm h-30 bg-gray-100 min-w-80 bg-white xl:right-10 md:w-80 w-full package-card-compact">
+                    <div class="card-collapsed flex items-center cursor-pointer">
+                        <div class="flex max-w-sm">
+                            {{ with (index $.Site.Data.registry.packages ($packageName)) }}
+                            <div class="flex">
+                                {{ partial "registry/package/icon.html" . }}
+                            </div>
+                            {{ end }}
+                        </div>
+                        
+                        {{ with (index $.Site.Data.registry.packages ($packageName)) }}
+                        <div class="flex-grow text-left mx-5 whitespace-nowrap package-header">
+                            {{ .title }} {{ .version }}, {{ ((time .updated_on).Format "Jan 2 06") }}
+                        </div>
+                
+                        <div class="caret-container">
+                            <i class="package-card-caret fas fa-chevron-circle-down"></i>
+                        </div>
+                        {{ end }}
+                    </div>
+                    <div class="hidden package-card-expand">
+                        {{ .Scratch.Set "package" $packageName }}
+                        {{ partial "registry/package/package-alert.html" . }}
+                        {{ with (index $.Site.Data.registry.packages ($packageName)) }}
+                            <div class="lg:flex mb-4 text-xs mt-4">
+                                {{ .title }} {{ .version }} published on {{ ((time .updated_on).Format "Monday, Jan 2, 2006") }} by {{ .publisher }}
+                            </div>
+                
+                            <div class="flex items-center">
+                                <i class="fab fa-github text-base"></i>
+                                <span class="text-blue-600 flex flex-wrap items-center">
+                                    <a class="text-xs  ml-2 mr-1.5" href="{{ .repo_url }}" target="_blank" rel="noopener noreferrer">
+                                        <span class="text-blue-600 underline">{{ replaceRE `^.*.com/` "" .repo_url }}</span>
+                                        &nbsp;<i class="fas fa-external-link-alt text-xs"></i>
+                                    </a>
+                                </span>
+                            </div>
+                        {{ end }}
+                    </div>
+                </div>
+
                 {{ partial "registry/package/header.html" . }}
 
                 <div class="special-h1">

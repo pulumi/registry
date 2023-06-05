@@ -67,7 +67,9 @@
                             <h1>{{ .Title }}</h1>
                         {{ end }}
                     {{ end }}
-                    <div class="h1-gradient"></div>
+                    {{ if not (strings.Contains .Permalink "api-docs") }}
+                        <div class="h1-gradient"></div>
+                    {{ end }}
                 </div>
 
                 <div class="docs-table-of-contents docs-toc-mobile">

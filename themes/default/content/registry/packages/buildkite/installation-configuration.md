@@ -1,57 +1,26 @@
 ---
-title: Buildkite Setup
+title: Buildkite Installation & Configuration
 meta_desc: Information on how to install the Buildkite provider.
 layout: installation
 ---
 
 ## Installation
 
-The Pulumi Buildkite provider is available as a package in the following Pulumi languages:
+The Buildkite provider is available as a package in all Pulumi languages:
 
-* JavaScript/TypeScript: [`@grapl/pulumi-buildkite`](https://www.npmjs.com/package/@grapl/pulumi-buildkite)
-* Python: [`pulumi_buildkite`](https://pypi.org/project/pulumi-buildkite/)
-* Go: [`github.com/graphl-security/pulumi-buildkite/sdk`](https://pkg.go.dev/github.com/grapl-security/pulumi-buildkite/sdk)
+* JavaScript/TypeScript: [`@pulumiverse/pulumi-buildkite`](https://www.npmjs.com/package/@pulumiverse/pulumi-buildkite)
+* Python: [`pulumiverse-buildkite`](https://pypi.org/project/pulumiverse-buildkite/)
+* Go: [`github.com/pulumiverse/pulumi-buildkite/sdk/vX/go/buildkite`](https://github.com/pulumiverse/pulumi-buildkite)
+* .NET: [`Pulumiverse.Buildkite`](https://www.nuget.org/packages/Pulumiverse.Buildkite)
 
 ## Setup
 
-To provision resources with the Pulumi Buildkite provider, you need to have
-Buildkite credentials.
-
-### Set environment variables
-
-Once you have provisioned these credentials, you can set environment
-variables to provision resources in BUILDKITE:
-
-{{< chooser os "linux,macos,windows" >}}
-{{% choosable os linux %}}
-
-```bash
-$ export BUILDKITE_API_TOKEN=<BUILDKITE_API_TOKEN>
-$ export BUILDKITE_ORGANIZATION=<BUILDKITE_ORGANIZATION>
-```
-
-{{% /choosable %}}
-
-{{% choosable os macos %}}
-
-```bash
-$ export BUILDKITE_API_TOKEN=<BUILDKITE_API_TOKEN>
-$ export BUILDKITE_ORGANIZATION=<BUILDKITE_ORGANIZATION>
-```
-
-{{% /choosable %}}
-
-{{% choosable os windows %}}
-
-```powershell
-> $env:BUILDKITE_API_TOKEN = "<BUILDKITE_API_TOKEN>"
-> $env:BUILDKITE_ORGANIZATION = "<BUILDKITE_ORGANIZATION>"
-```
-
-{{% /choosable %}}
-{{< /chooser >}}
+To provision resources with the Pulumi Buildkite provider, you need to have Buildkite credentials.
 
 ## Configuration Options
+
+Pulumi relies on the Buildkite API to authenticate requests from your computer to Buildkite. Your credentials are never sent to pulumi.com.
+The Pulumi Buildkite Provider needs to be configured with a Buildkite token before it can be used to create resources.
 
 Use `pulumi config set buildkite:<option>` or pass options to the [constructor of `new buildkite.Provider`](/registry/packages/buildkite/api-docs/provider).
 
@@ -59,3 +28,5 @@ Use `pulumi config set buildkite:<option>` or pass options to the [constructor o
 |-----------------|-------------------|-------------------------------------------------------------------------------------------------------------------|
 | `api_token`     | Required          | A Buildkite API Access Token. Can be configured from the environment variable `BUILDKITE_API_TOKEN`. Must have GraphQL access, as well as the `write_pipelines` and `read_pipelines` scopes. |
 | `organization`  | Required          | The Buildkite organization slug. Can be configured from the environment variable `BUILDKITE_ORGANIZATION`. |
+| `graphql_url`  | Optional          | The Buildkite GraphQL URL. Can be configured from the environment variable `BUILDKITE_GRAPHQL_URL`. |
+| `rest_url`  | Optional          | The Buildkite REST URL. Can be configured from the environment variable `BUILDKITE_REST_URL`. |

@@ -1,14 +1,14 @@
-category: Infrastructure
+category: Cloud
 component: false
-description: A Pulumi package for creating and managing Buildkite CI/CD platform resources.
+description: A Pulumi package for creating and managing Buildkite resources.
 featured: false
-logo_url: https://raw.githubusercontent.com/grapl-security/pulumi-buildkite/main/assets/buildkite-logo.svg
+logo_url: https://raw.githubusercontent.com/pulumiverse/pulumi-buildkite/main/assets/buildkite-logo.png
 name: buildkite
 native: false
-package_status: public_preview
-publisher: Grapl Security
-repo_url: https://github.com/grapl-security/pulumi-buildkite
+package_status: ga
+publisher: Pulumiverse
+repo_url: https://github.com/pulumiverse/pulumi-buildkite
 schema_file_path: provider/cmd/pulumi-resource-buildkite/schema.json
 title: Buildkite
-updated_on: 1670000687
-version: v0.2.5
+updated_on: 1685955122
+version: v2.0.0

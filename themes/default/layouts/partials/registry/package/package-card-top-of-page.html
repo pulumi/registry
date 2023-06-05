@@ -5,27 +5,38 @@
 <div id="accordion-package-card" class="accordion">
     <div>
         <input type="checkbox" id="accordion-checkbox-templates" />
-        <div class="package-card-top-of-page">
-            <div class="img-name-version">
-                {{ with (index $.Site.Data.registry.packages ($packageName)) }}
-                    <div>
-                        {{ partial "registry/package/icon.html" . }}
-                    </div>
-                {{ end }}
-                {{ with (index $.Site.Data.registry.packages ($packageName)) }}
-                    <p>{{ .title }} {{ .version }}, {{ ((time .updated_on).Format "Jan 2 06") }}</p>
-                {{ end }}
-            </div>
-            <i class="fas fa-chevron-circle-down"></i>
-        </div>
         <div class="accordion-content flex">
             {{ partial "registry/package/package-card.html" . }}
         </div>
         <label for="accordion-checkbox-package-card" class="show">
-            <div class="icon icon-16-16 keyboard-arrow-down-gray"></div>
+            <div class="package-card-top-of-page">
+                <div class="img-name-version">
+                    {{ with (index $.Site.Data.registry.packages ($packageName)) }}
+                        <div>
+                            {{ partial "registry/package/icon.html" . }}
+                        </div>
+                    {{ end }}
+                    {{ with (index $.Site.Data.registry.packages ($packageName)) }}
+                        <p>{{ .title }} {{ .version }}, {{ ((time .updated_on).Format "Jan 2 06") }}</p>
+                    {{ end }}
+                </div>
+                <div class="icon icon-16-16 keyboard-arrow-down-gray"></div>
+            </div>
         </label>
         <label for="accordion-checkbox-package-card" class="hide">
-            <div class="icon icon-16-16 keyboard-arrow-up-gray"></div>
+            <div class="package-card-top-of-page">
+                <div class="img-name-version">
+                    {{ with (index $.Site.Data.registry.packages ($packageName)) }}
+                        <div>
+                            {{ partial "registry/package/icon.html" . }}
+                        </div>
+                    {{ end }}
+                    {{ with (index $.Site.Data.registry.packages ($packageName)) }}
+                        <p>{{ .title }} {{ .version }}, {{ ((time .updated_on).Format "Jan 2 06") }}</p>
+                    {{ end }}
+                </div>
+                <div class="icon icon-16-16 keyboard-arrow-up-gray"></div>
+            </div>
         </label>
     </div>
 </div>

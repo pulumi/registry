@@ -20,19 +20,7 @@
             <div class="docs-main-content">
                 {{ partial "docs/breadcrumb.html" . }}
 
-                <div class="package-card-top-of-page">
-                    <div class="img-name-version">
-                        {{ with (index $.Site.Data.registry.packages ($packageName)) }}
-                            <div>
-                                {{ partial "registry/package/icon.html" . }}
-                            </div>
-                        {{ end }}
-                        {{ with (index $.Site.Data.registry.packages ($packageName)) }}
-                            <p>{{ .title }} {{ .version }}, {{ ((time .updated_on).Format "Jan 2 06") }}</p>
-                        {{ end }}
-                    </div>
-                    <i class="fas fa-chevron-circle-down"></i>
-                </div>
+                {{ partial "registry/package/package-card-top-of-page.html" . }}
 
                 <div class="special-h1">
                     {{ if strings.Contains .Permalink "installation-configuration" }}

@@ -1,6 +1,5 @@
 {{ $directories := (split .Page.File "/")}}
 {{ $packageName := index $directories 2 }}
-{{ $packageHome := path.Join "registry/packages" $packageName }}
 
 <div class="package-card">
     {{ with (index $.Site.Data.registry.packages ($packageName)) }}

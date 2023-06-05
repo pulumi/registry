@@ -4,10 +4,7 @@
 
 <div id="accordion-package-card" class="accordion">
     <div>
-        <input type="checkbox" id="accordion-checkbox-templates" />
-        <div class="accordion-content flex">
-            {{ partial "registry/package/package-card.html" . }}
-        </div>
+        <input type="checkbox" id="accordion-checkbox-package-card" />
         <label for="accordion-checkbox-package-card" class="show">
             <div class="package-card-top-of-page">
                 <div class="img-name-version">
@@ -23,7 +20,7 @@
                 <div class="icon icon-16-16 keyboard-arrow-down-gray"></div>
             </div>
         </label>
-        <label for="accordion-checkbox-package-card" class="hide">
+        <label for="accordion-checkbox-table-of-contents" class="hide">
             <div class="package-card-top-of-page">
                 <div class="img-name-version">
                     {{ with (index $.Site.Data.registry.packages ($packageName)) }}
@@ -38,5 +35,10 @@
                 <div class="icon icon-16-16 keyboard-arrow-up-gray"></div>
             </div>
         </label>
+        <div class="accordion-content flex">
+            <div class="content">
+                {{ partial "registry/package/package-card.html" . }}
+            </div>
+        </div>
     </div>
 </div>

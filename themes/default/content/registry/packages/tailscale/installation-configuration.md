@@ -26,6 +26,12 @@ to pulumi.com. Once the credentials are obtained, there are two ways to communic
     $ export TAILSCALE_API_KEY=XXXXXX
     $ export TAILSCALE_TAILNET=YYYYYY
     ```
+   With Oauth Client (conflicts with `TAILSCALE_API_KEY`):
+    ```bash
+    $ export OAUTH_CLIENT_SECRET=XXXXXX
+    $ export OAUTH_CLIENT_ID=XXXXXX
+    ```
+ 
 
 2. If you prefer that they be stored alongside your Pulumi stack for easy multi-user access:
 
@@ -33,6 +39,12 @@ to pulumi.com. Once the credentials are obtained, there are two ways to communic
     $ pulumi config set tailscale:apiKey XXXXXX --secret
     $ pulumi config set tailscale:tailnet YYYYYY
     ```
+    With Oauth Client (conflicts with `TAILSCALE_API_KEY`):
+    ```bash
+    $ pulumi config set tailscale:oauthClientSecret: XXXXXX --secret
+    $ pulumi config set tailscale:oauthClientId: XXXXXX --secret
+    ```
+
 
  The complete list of
 configuration parameters is in the [Tailscale provider README](https://github.com/pulumi/pulumi-tailscale/blob/master/README.md).

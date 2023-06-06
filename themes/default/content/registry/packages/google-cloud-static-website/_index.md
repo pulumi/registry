@@ -1,7 +1,7 @@
 ---
 title: Google Cloud Static Website
 meta_desc: Provides an overview of the Google Cloud Static Website component.
-layout: overview
+layout: package
 ---
 
 This component makes it easy to deploy a static website to Google Cloud using any of the supported Pulumi programming languages.

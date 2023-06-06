@@ -1,7 +1,7 @@
 ---
 title: Auth0 Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi Auth0 Provider.
-layout: installation
+layout: package
 ---
 
 The Pulumi Auth0 provider uses the Auth0 SDK to manage and provision resources.

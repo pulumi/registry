@@ -1,7 +1,7 @@
 ---
 title: Datadog
 meta_desc: Provides an overview of the Datadog Provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 The Datadog provider for Pulumi can be used to provision any of the cloud resources available in [Datadog](https://datadoghq.com/).

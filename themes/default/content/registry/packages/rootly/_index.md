@@ -1,7 +1,7 @@
 ---
 title: Rootly
 meta_desc: Provides an overview of the Rootly Provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 The Rootly provider for Pulumi can be used to provision resources available in [Rootly](https://rootly.com/).

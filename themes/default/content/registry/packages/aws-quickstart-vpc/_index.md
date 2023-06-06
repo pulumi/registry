@@ -1,7 +1,7 @@
 ---
 title: AWS QuickStart VPC
 meta_desc: Use Pulumi's Component for creating an AWS QuickStart VPC using infrastructure as code.
-layout: overview
+layout: package
 ---
 
 Easily create an AWS Virtual Private Cloud (VPC) using this Pulumi component based on the AWS QuickStart VPC guide.

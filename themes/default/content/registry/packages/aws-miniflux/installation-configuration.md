@@ -1,7 +1,7 @@
 ---
 title: Miniflux Installation & Configuration
 meta_desc: Information on how to set up AWS credentials to use the Miniflux component.
-layout: installation
+layout: package
 ---
 
 {{< aws-resource-note >}}

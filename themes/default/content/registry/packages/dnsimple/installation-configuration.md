@@ -1,7 +1,7 @@
 ---
 title: DNSimple Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi DNSimple Provider.
-layout: installation
+layout: package
 ---
 
 The Pulumi DNSimple provider uses the DNSimple SDK to manage and provision resources.

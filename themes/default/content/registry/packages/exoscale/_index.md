@@ -1,7 +1,7 @@
 ---
 title: Exoscale
 meta_desc: Provides an overview of the Exoscale Provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 The Exoscale provider for Pulumi can be used to provision any of the cloud resources available in [Exoscale](https://www.exoscale.com/).

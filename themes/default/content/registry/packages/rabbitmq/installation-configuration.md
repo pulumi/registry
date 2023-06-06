@@ -1,7 +1,7 @@
 ---
 title: RabbitMQ Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi RabbitMQ Provider.
-layout: installation
+layout: package
 ---
 
 The Pulumi RabbitMQ provider uses the RabbitMQ SDK to manage and provision resources.

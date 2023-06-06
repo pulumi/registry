@@ -1,7 +1,7 @@
 ---
 title: SignalFx Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi SignalFx Provider.
-layout: installation
+layout: package
 ---
 
 The Pulumi SignalFx provider uses the SignalFx SDK to manage and provision resources.

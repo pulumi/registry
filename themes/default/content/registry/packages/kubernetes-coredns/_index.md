@@ -1,7 +1,7 @@
 ---
 title: Kubernetes CoreDNS
 meta_desc: Use Pulumi's Component for managing CoreDNS installations using infrastructure as code.
-layout: overview
+layout: package
 ---
 
 Easily manage CoreDNS installations as a package available in all Pulumi languages.

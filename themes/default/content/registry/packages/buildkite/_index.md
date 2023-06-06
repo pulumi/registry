@@ -1,7 +1,7 @@
 ---
 title: Buildkite
 meta_desc: Provides an overview of the Buildkite Provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 The Buildkite provider for Pulumi can be used to provision resources for [Buildkite](http://buildkite.com).

@@ -3,7 +3,7 @@ title: Guestbook App with Redis and Nginx
 meta_desc: How to create a guestbook application with Redis and Nginx powered by Docker and
            deployed with Kubernetes.
 aliases: ["/docs/reference/tutorials/kubernetes/tutorial-guestbook/"]
-layout: how-to-guide
+layout: package
 ---
 
 {{< github-buttons "kubernetes-ts-guestbook" "kubernetes-py-guestbook" "kubernetes-go-guestbook" "kubernetes-cs-guestbook" >}}

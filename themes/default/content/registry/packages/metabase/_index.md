@@ -1,7 +1,7 @@
 ---
 title: Metabase (AWS)
 meta_desc: Use Pulumi's Metabase Component to quickly provision and get started with Metabase.
-layout: overview
+layout: package
 ---
 
 You can use the Pulumi Metabase Component to help you get started quickly running Metabase in the cloud.

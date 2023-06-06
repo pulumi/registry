@@ -1,7 +1,7 @@
 ---
 title: Metabase Installation
 meta_desc: Information on how to set up credentials to use the Pulumi Metabase component.
-layout: installation
+layout: package
 ---
 
 {{< aws-resource-note >}}

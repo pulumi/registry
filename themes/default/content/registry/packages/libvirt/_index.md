@@ -1,7 +1,7 @@
 ---
 title: libvirt
 meta_desc: Provides an overview of the libvirt Provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 A Pulumi provider that lets you provision servers on a libvirt host using Pulumi.

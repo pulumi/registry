@@ -1,7 +1,7 @@
 ---
 title: Packet
 meta_desc: Provides an overview of the Packet provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 {{% notes type="info" %}}

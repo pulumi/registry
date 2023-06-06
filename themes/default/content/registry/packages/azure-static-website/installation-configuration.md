@@ -1,7 +1,7 @@
 ---
 title: Azure Static Website Installation
 meta_desc: Information on how to install the Azure Static Website component.
-layout: installation
+layout: package
 ---
 
 ## Installation

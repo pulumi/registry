@@ -1,7 +1,7 @@
 ---
 title: Self Signed Certificate
 meta_desc: Use Pulumi's Self Signed Certificate Package to quickly create a self signed certificate.
-layout: overview
+layout: package
 ---
 
 Pulumi's Self Signed Certificate Package makes it simple for you to quickly create a self signed

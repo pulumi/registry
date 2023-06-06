@@ -1,0 +1,63 @@
+
+{{ $directories := (split .Page.File "/")}}
+{{ $packageName := index $directories 2 }}
+
+<div id="accordion-package-card" class="accordion">
+    <div>
+        <input type="checkbox" id="accordion-checkbox-package-card" />
+        <label for="accordion-checkbox-package-card" class="show">
+            <div class="package-card-top-of-page">
+                <div class="img-name-version">
+                    {{ with (index $.Site.Data.registry.packages ($packageName)) }}
+                        <div>
+                            {{ partial "registry/package/icon.html" . }}
+                        </div>
+                    {{ end }}
+                    {{ with (index $.Site.Data.registry.packages ($packageName)) }}
+                        <p>{{ .title }} {{ .version }}, {{ ((time .updated_on).Format "Jan 2 06") }}</p>
+                    {{ end }}
+                </div>
+                <div class="icon icon-16-16 keyboard-arrow-down-gray"></div>
+            </div>
+        </label>
+        <label for="accordion-checkbox-package-card" class="hide">
+            <div class="package-card-top-of-page">
+                <div class="img-name-version">
+                    {{ with (index $.Site.Data.registry.packages ($packageName)) }}
+                        <div>
+                            {{ partial "registry/package/icon.html" . }}
+                        </div>
+                    {{ end }}
+                    {{ with (index $.Site.Data.registry.packages ($packageName)) }}
+                        <p>{{ .title }} {{ .version }}, {{ ((time .updated_on).Format "Jan 2 06") }}</p>
+                    {{ end }}
+                </div>
+                <div class="icon icon-16-16 keyboard-arrow-up-gray"></div>
+            </div>
+        </label>
+        <div class="accordion-content flex">
+            <div class="content">
+                {{ $directories := (split .Page.File "/")}}
+                {{ $packageName := index $directories 2 }}
+
+                <div class="package-card">
+                    {{ .Scratch.Set "package" $packageName }}
+                    {{ partial "registry/package/package-alert.html" . }}
+                    
+                    {{ with (index $.Site.Data.registry.packages ($packageName)) }}
+                        <div class="version-info">
+                            {{ .title }} {{ .version }} published on {{ ((time .updated_on).Format "Monday, Jan 2, 2006") }} by {{ .publisher }}
+                        </div>
+                        <div class="package-link">
+                            <i class="fab fa-github"></i>
+                            <a href="{{ .repo_url }}" target="_blank" rel="noopener noreferrer">
+                                <span>{{ replaceRE `^.*.com/` "" .repo_url }}</span>
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        </div>
+                    {{ end }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

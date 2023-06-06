@@ -1,7 +1,7 @@
 ---
 title: Alibaba Cloud
 meta_desc: Provides an overview of the Alibaba Cloud Provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 The Alibaba Cloud provider for Pulumi can be used to provision any of the cloud resources available in [Alibaba Cloud](https://www.alibabacloud.com/).

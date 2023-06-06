@@ -1,7 +1,7 @@
 ---
 title: Azure Static Website
 meta_desc: Provides an overview of the Azure Static Website component.
-layout: overview
+layout: package
 ---
 
 This component makes it easy to deploy a static website to Azure using any of the supported Pulumi programming languages.

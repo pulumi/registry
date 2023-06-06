@@ -1,7 +1,7 @@
 ---
 title: MongoDB Atlas
 meta_desc: Provides an overview of the MongoDB Atlas Provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 The MongoDB Atlas provider for Pulumi can be used to provision any of the resources available for MongoDB Atlas.

@@ -1,7 +1,7 @@
 ---
 title: Wavefront
 meta_desc: Provides an overview of the Wavefront Provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 The Wavefront provider for Pulumi can be used to provision any of the cloud resources available in [Wavefront](https://www.wavefront.com/).

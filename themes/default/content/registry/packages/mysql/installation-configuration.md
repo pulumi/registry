@@ -1,7 +1,7 @@
 ---
 title: MySQL Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi MySQL Provider.
-layout: installation
+layout: package
 ---
 
 The Pulumi MySQL provider uses the MySQL SDK to manage and provision resources.

@@ -1,7 +1,7 @@
 ---
 title: Kubernetes Cert Manager
 meta_desc: Use Pulumi's Component for cert-manager offers a Pulumi-friendly and strongly-typed way to manage cert-manager installations using infrastructure as code.
-layout: overview
+layout: package
 ---
 
 cert-manager is a Kubernetes add-on to automate the management and issuance of TLS certificates from various issuing sources.

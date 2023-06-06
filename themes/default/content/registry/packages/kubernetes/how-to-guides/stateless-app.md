@@ -3,7 +3,7 @@ title: Kubernetes Stateless App Deployment
 meta_desc: Learn how to deploy an automatically scaled out container running inside a Kubernetes
            cluster.
 aliases: ["/docs/reference/tutorials/kubernetes/tutorial-stateless-app/"]
-layout: how-to-guide
+layout: package
 ---
 
 In this tutorial, we'll run an application using a [Kubernetes

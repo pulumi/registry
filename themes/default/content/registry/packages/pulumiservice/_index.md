@@ -1,7 +1,7 @@
 ---
 title: Pulumi Cloud (Pulumi Service provider)
 meta_desc: Provides an overview of the Pulumi Service provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 The Pulumi Service provider for Pulumi can be used to provision resources available in [Pulumi Cloud](https://app.pulumi.com/).

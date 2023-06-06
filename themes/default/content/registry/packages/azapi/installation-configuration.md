@@ -1,7 +1,7 @@
 ---
 title: AzAPI Setup
 meta_desc: Information on how to install the AzAPI provider.
-layout: installation
+layout: package
 ---
 
 ## Installation

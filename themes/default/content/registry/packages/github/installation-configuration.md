@@ -1,7 +1,7 @@
 ---
 title: GitHub Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi GitHub Provider.
-layout: installation
+layout: package
 ---
 
 The Pulumi GitHub provider uses the GitHub SDK to manage and provision resources.

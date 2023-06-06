@@ -1,7 +1,7 @@
 ---
 title: Zscaler Internet Access (ZIA)
 meta_desc: Provides an overview of the ZIA Provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 The Zscaler Internet Access (ZIA) provider for Pulumi can be used to provision any of the cloud resources available in [Zscaler Internet Access](https://help.zscaler.com/zia).

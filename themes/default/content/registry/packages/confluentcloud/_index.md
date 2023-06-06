@@ -1,7 +1,7 @@
 ---
 title: Confluent Cloud
 meta_desc: Provides an overview of the Confluent Cloud Provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 The Confluent Cloud provider for Pulumi can be used to provision any of the cloud resources available in [Confluent Cloud](https://confluent.cloud/).

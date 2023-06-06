@@ -1,0 +1,39 @@
+{{ $packageUrl := printf "%s/" (path.Join "/registry/packages" (index (split .Page.File "/") 2)) }}
+{{ $installPath := printf "%s/" (path.Join $packageUrl "installation-configuration") }}
+{{ $howToPath := printf "%s/" (path.Join $packageUrl "how-to-guides/") }}
+
+<nav class="main-nav">
+    <div class="all-packages-icon-link">
+        <a class="all-packages" href="/registry">
+            <div class="icon icon-14-14 arrow-back-gray-14-14"></div>
+            All packages
+        </a>
+    </div>
+    <ul>
+        {{ $sidenav_selected := "" }}
+        {{ $sidenav_selected = cond (eq .Page.RelPermalink $packageUrl) "active" "" }}
+        <li class="sidenav-topic {{ $sidenav_selected }}">
+            <a href="{{ $packageUrl }}">Overview</a>
+        </li>
+        {{ $sidenav_selected = cond (eq .Page.RelPermalink $installPath) "active" "" }}
+        <li class="sidenav-topic {{ $sidenav_selected }}">
+            <a href="{{ $installPath }}">Install & config</a>
+        </li>
+        {{ $sidenav_selected = cond (eq .Page.RelPermalink $howToPath) "active" "" }}
+        <li class="sidenav-topic {{ $sidenav_selected }}">
+            {{ if .GetPage $howToPath }}
+                {{ $guidesCount := 0 }}
+                {{ with .GetPage $howToPath }}
+                    {{ $guidesCount = len .Pages }}
+                {{ end }}
+
+                <a href="{{ $howToPath }}">
+                    How-to guides
+                    <span class="count-badge">{{ $guidesCount }}</span>
+                </a>
+            {{ end }}
+        </li>
+        <h2 class="no-anchor api-docs-heading">API docs</h2>
+        {{ partial "registry/left-nav.html" . }}
+    </ul>
+</nav>

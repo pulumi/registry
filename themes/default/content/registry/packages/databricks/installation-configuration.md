@@ -1,7 +1,7 @@
 ---
 title: Databricks Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi Databricks Provider.
-layout: installation
+layout: package
 ---
 
 The Pulumi Databricks provider uses the Databricks SDK to manage and provision resources.

@@ -1,7 +1,7 @@
 ---
 title: Artifactory Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi Artifactory Provider.
-layout: installation
+layout: package
 ---
 
 The Pulumi Artifactory provider uses the Artifactory SDK to manage and provision resources.

@@ -1,7 +1,7 @@
 ---
 title: onelogin Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi onelogin Provider.
-layout: installation
+layout: package
 ---
 
 ## Installation

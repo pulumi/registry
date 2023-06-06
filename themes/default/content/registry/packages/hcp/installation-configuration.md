@@ -1,7 +1,7 @@
 ---
 title: HCP Setup
 meta_desc: Information on how to install the HashiCorp Cloud Platform Provider for Pulumi.
-layout: installation
+layout: package
 ---
 
 ## Installation

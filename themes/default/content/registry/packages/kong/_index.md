@@ -1,7 +1,7 @@
 ---
 title: Kong
 meta_desc: Provides an overview of the Kong Provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 The Kong provider for Pulumi can be used to provision any of the cloud resources available in [Kong](https://konghq.com/kong).

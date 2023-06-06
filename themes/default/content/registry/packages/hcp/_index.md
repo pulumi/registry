@@ -1,7 +1,7 @@
 ---
 title: HCP
 meta_desc: Provides an overview of the HashiCorp Cloud Platform Provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 The HashiCorp Cloud Platform provider (HCP) for Pulumi can be used to

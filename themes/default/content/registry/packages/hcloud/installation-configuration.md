@@ -1,7 +1,7 @@
 ---
 title: Hetzner Cloud Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi Hetzner Cloud Provider.
-layout: installation
+layout: package
 ---
 
 The Pulumi Hetzner Cloud provider uses the Hetzner Cloud SDK to manage and provision resources.

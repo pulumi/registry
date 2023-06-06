@@ -1,7 +1,7 @@
 ---
 title: Grafana Cloud
 meta_desc: Provides an overview of the Grafana Provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 The Grafana provider for Pulumi can be used to provision any of the cloud resources available in [Grafana Cloud](https://grafana.com/products/cloud/) or a self hosted Grafana instance

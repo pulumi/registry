@@ -2,7 +2,7 @@
 title: Random Installation & Configuration
 meta_desc: |
     Installation & Configuration for infrastructure as code in the Pulumi Random package
-layout: installation
+layout: package
 ---
 
 ## Installation

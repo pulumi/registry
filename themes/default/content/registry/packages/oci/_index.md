@@ -1,7 +1,7 @@
 ---
 title: Oracle Cloud Infrastructure
 meta_desc: Provides an overview of the Oracle Cloud Infrastructure Provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 The Oracle Cloud Infrastructure (OCI) provider for Pulumi can be used to provision any of the resources available in [OCI](https://www.oracle.com/cloud).

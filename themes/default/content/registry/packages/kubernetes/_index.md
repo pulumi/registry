@@ -2,7 +2,7 @@
 title: Kubernetes
 meta_desc: Provides an overview of how Pulumi works with Kubernetes.
 
-layout: overview
+layout: package
 ---
 
 [Kubernetes][k8s] is an open source project for running and managing containerized applications

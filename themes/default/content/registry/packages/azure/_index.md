@@ -1,7 +1,7 @@
 ---
 title: Azure Classic
 meta_desc: Learn how to use Pulumi's Azure Classic Provider to reduce the complexity of managing and provisioning Azure resources with Azure Resource Manager (ARM) APIs.
-layout: overview
+layout: package
 ---
 
 {{% notes %}}

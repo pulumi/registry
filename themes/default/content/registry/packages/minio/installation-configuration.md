@@ -1,7 +1,7 @@
 ---
 title: MinIO Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi MinIO Provider.
-layout: installation
+layout: package
 ---
 
 The Pulumi MinIO provider uses the MinIO SDK to manage and provision resources.

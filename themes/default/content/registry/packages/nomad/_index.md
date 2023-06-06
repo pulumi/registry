@@ -1,7 +1,7 @@
 ---
 title: HashiCorp Nomad
 meta_desc: Provides an overview of the HashiCorp Nomad Provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 The HashiCorp Nomad provider for Pulumi can be used to provision any of the resources available in [Nomad](https://www.nomadproject.io/).

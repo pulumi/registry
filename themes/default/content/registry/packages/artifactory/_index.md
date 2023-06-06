@@ -1,7 +1,7 @@
 ---
 title: Artifactory
 meta_desc: Provides an overview of the Artifactory Provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 The Artifactory provider for Pulumi can be used to provision any of the cloud resources available in [Artifactory](https://jfrog.com/artifactory/).

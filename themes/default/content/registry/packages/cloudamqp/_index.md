@@ -1,7 +1,7 @@
 ---
 title: CloudAMQP
 meta_desc: Provides an overview of the CloudAMQP Provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 The CloudAMQP provider for Pulumi can be used to provision any of the cloud resources available in [CloudAMQP](https://www.cloudamqp.com/).

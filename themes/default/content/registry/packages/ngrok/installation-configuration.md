@@ -1,7 +1,7 @@
 ---
 title: ngrok Installation & Configuration
 meta_desc: Information on how to install the ngrok provider.
-layout: installation
+layout: package
 ---
 
 ## Installation

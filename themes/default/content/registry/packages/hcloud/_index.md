@@ -1,7 +1,7 @@
 ---
 title: Hetzner Cloud
 meta_desc: Provides an overview of the Hetzner Cloud Provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 The Hetzner Cloud provider for Pulumi can be used to provision any of the cloud resources available in [Hetzner Cloud](https://www.hetzner.com/cloud).

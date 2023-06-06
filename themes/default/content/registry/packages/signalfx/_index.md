@@ -1,7 +1,7 @@
 ---
 title: SignalFx
 meta_desc: Provides an overview of the SignalFx Provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 The SignalFx provider for Pulumi can be used to provision any of the cloud resources available in [SignalFx](https://www.splunk.com/en_us/products/observability.html).

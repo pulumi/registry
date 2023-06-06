@@ -1,7 +1,7 @@
 ---
 title: Azure Quickstart ACR Geo Replication
 meta_desc: Use Pulumi's Component for creating Azure Quickstart ACR Geo Replication using infrastructure as code.
-layout: overview
+layout: package
 ---
 
 Easily create Azure ACR Registries that are replicated across Azure locations as a package available in all Pulumi languages.

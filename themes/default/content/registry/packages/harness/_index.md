@@ -1,7 +1,7 @@
 ---
 title: Harness
 meta_desc: Provides an overview of the Harness Provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 The Harness provider for Pulumi can be used to provision any of the cloud resources available in [Scaleway](https://www.harness.io/).

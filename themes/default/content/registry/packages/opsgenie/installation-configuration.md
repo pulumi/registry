@@ -1,7 +1,7 @@
 ---
 title: Opsgenie Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi Opsgenie Provider.
-layout: installation
+layout: package
 ---
 
 The Pulumi Opsgenie provider uses the Opsgenie SDK to manage and provision resources.

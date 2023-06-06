@@ -1,7 +1,7 @@
 ---
 title: Koyeb Installation & Configuration
 meta_desc: Information on how to install the Koyeb provider.
-layout: installation
+layout: package
 ---
 
 ## Installation

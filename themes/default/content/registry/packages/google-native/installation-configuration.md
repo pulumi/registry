@@ -1,7 +1,7 @@
 ---
 title: Google Cloud Native Installation & Configuration
 meta_desc: How to set up credentials to use the Pulumi Google Cloud Native Provider and choose configuration options to tailor the provider to suit your use case.
-layout: installation
+layout: package
 ---
 
 ## Installation

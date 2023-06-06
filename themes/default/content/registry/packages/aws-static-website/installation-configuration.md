@@ -1,7 +1,7 @@
 ---
 title: AWS Static Website Installation
 meta_desc: Information on how to install the AWS Static Website component.
-layout: installation
+layout: package
 ---
 
 ## Installation

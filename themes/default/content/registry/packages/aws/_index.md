@@ -1,7 +1,7 @@
 ---
 title: AWS Classic
 meta_desc: Learn how you can use Pulumi's AWS Classic Provider to reduce the complexity of provisioning and managing resources on AWS.
-layout: overview
+layout: package
 ---
 
 The Amazon Web Services (AWS) provider for Pulumi can provision many of the cloud resources available in [AWS](https://aws.amazon.com/). It uses the AWS SDK to manage and provision resources.

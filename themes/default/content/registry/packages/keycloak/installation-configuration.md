@@ -1,7 +1,7 @@
 ---
 title: Keycloak Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi Keycloak Provider.
-layout: installation
+layout: package
 ---
 
 The Pulumi Keycloak provider uses the Keycloak SDK to manage and provision resources.

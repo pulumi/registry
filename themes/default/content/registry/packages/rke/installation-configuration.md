@@ -1,7 +1,7 @@
 ---
 title: Rancher Kubernetes Engine (RKE) Installation & Configuration
 meta_desc: Provides an overview on how to setup the Rancher Kubernetes Engine (RKE) Provider for Pulumi.
-layout: installation
+layout: package
 ---
 
 ## Installation

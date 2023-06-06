@@ -1,7 +1,7 @@
 ---
 title: MySQL
 meta_desc: Provides an overview of the MySQL Provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 The MySQL provider for Pulumi can be used to provision any of the resources available for MySQL.

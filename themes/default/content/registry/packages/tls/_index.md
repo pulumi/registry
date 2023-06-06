@@ -1,7 +1,7 @@
 ---
 title: TLS
 meta_desc: Provides an overview of the TLS Provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 The TLS provider for Pulumi can be used to help to create TLS keys and certitifcate for use with Pulumi resources.

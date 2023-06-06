@@ -1,7 +1,7 @@
 ---
 title: AWS Native Installation & Configuration
 meta_desc: Set up credentials to use the Pulumi AWS Native Provider and choose configuration options to customize how the provider works.
-layout: installation
+layout: package
 ---
 
 <!-- markdownlint-disable url -->

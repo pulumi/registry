@@ -1,51 +1,94 @@
 {{ $package := .Scratch.Get "package" }}
+
 {{ if (eq $package "aws") }}
-<div class="text-xs mt-4">
-    <i class="fas fa-info-circle text-blue-600 text-sm mr-1 my-1"></i>
-    <span>
-         Try the new Preview <a class="text-blue-600 underline" href="/registry/packages/aws-native/">AWS Native</a> if you need AWS resources not available in the classic version.
-    </span>
-</div>
+    <div class="note note-info">
+        <div class="icon-and-line">
+            <i class="fas fa-info-circle"></i>
+            <div class="line"></div>
+        </div>
+        <div>
+            <p>
+                Try
+                <a href="/registry/packages/aws-native/">AWS Native preview</a>
+                for resources not in the classic version.
+            </p>
+        </div>
+    </div>
 {{ else if (eq $package "aws-native") }}
-<div class="text-xs mt-4">
-    <i class="fas fa-info-circle text-blue-600 mr-1 my-1"></i>
-    <span>
-        AWS Native is in public preview. <a class="text-blue-600 underline" href="/registry/packages/aws/">AWS Classic</a> remains fully supported.
-    </span>
-</div>
+    <div class="note note-info">
+        <div class="icon-and-line">
+            <i class="fas fa-info-circle"></i>
+            <div class="line"></div>
+        </div>
+        <div>
+            <p>
+                AWS Native is in preview. 
+                <a href="/registry/packages/aws/">AWS Classic</a> is fully supported.
+            </p>
+        </div>
+    </div>
 {{ else if (eq $package "azure") }}
-<div class="text-xs mt-4">
-    <i class="fas fa-info-circle text-blue-600 mr-1 my-1"></i>
-    <span>
-        We recommend using <a class="text-blue-600 underline" href="/registry/packages/azure-native/">Azure Native</a>.
-    </span>
-</div>
+    <div class="note note-info">
+        <div class="icon-and-line">
+            <i class="fas fa-info-circle"></i>
+            <div class="line"></div>
+        </div>
+        <div>
+            <p>
+                We recommend using <a href="/registry/packages/azure-native/">Azure Native</a>.
+            </p>
+        </div>
+    </div>
 {{ else if (eq $package "google-native") }}
-<div class="text-xs mt-4">
-    <i class="fas fa-info-circle text-blue-600 mr-1 my-1"></i>
-    <span>
-        Google Cloud Native is in public preview. <a class="text-blue-600 underline" href="/registry/packages/gcp/">Google Cloud Classic</a> remains fully supported.
-    </span>
-</div>
+    <div class="note note-info">
+        <div class="icon-and-line">
+            <i class="fas fa-info-circle"></i>
+            <div class="line"></div>
+        </div>
+        <div>
+            <p>
+                Google Cloud Native is in preview. 
+                <a href="/registry/packages/gcp/">Google Cloud Classic</a> is fully supported.
+            </p>
+        </div>
+    </div>
 {{ else if (eq $package "confluent") }}
-<div class="text-xs mt-4">
-    <i class="fas fa-info-circle text-blue-600 mr-1 my-1"></i>
-    <span>
-        This package is deprecated. We recommend using the <a class="text-blue-600 underline" href="/registry/packages/confluentcloud/">new Confluent Cloud package</a>.
-    </span>
-</div>
+    <div class="note note-warning">
+        <div class="icon-and-line">
+            <i class="fas fa-exclamation-triangle"></i>
+            <div class="line"></div>
+        </div>
+        <div>
+            <p>
+                This package is deprecated. We recommend using the 
+                <a href="/registry/packages/confluentcloud/">new Confluent Cloud package</a>.
+            </p>
+        </div>
+    </div>
 {{ else if (eq $package "equinix-metal") }}
-<div class="text-xs mt-4">
-    <i class="fas fa-info-circle text-blue-600 mr-1 my-1"></i>
-    <span>
-        This package is deprecated. We recommend using the <a class="text-blue-600 underline" href="/registry/packages/equinix/">new Equinix package</a>.
-    </span>
-</div>
+    <div class="note note-warning">
+        <div class="icon-and-line">
+            <i class="fas fa-exclamation-triangle"></i>
+            <div class="line"></div>
+        </div>
+        <div>
+            <p>
+                This package is deprecated. 
+                We recommend using the <a href="/registry/packages/equinix/">new Equinix package</a>.
+            </p>
+        </div>
+    </div>
 {{ else if (eq $package "azure-native-v2") }}
-<div class="text-xs mt-4 note note-warning">
-    <i class="fas fa-info-circle text-blue-600 mr-1 my-1"></i>
-    <span>
-        Azure Native v2 is in preview. Use <a class="text-blue-600 underline" href="/registry/packages/azure-native/">Azure Native GA</a> for a fully supported version.
-    </span>
-</div>
+    <div class="note note-warning">
+        <div class="icon-and-line">
+            <i class="fas fa-exclamation-triangle"></i>
+            <div class="line"></div>
+        </div>
+        <div>
+            <p>
+                Azure Native v2 is in preview. Use 
+                <a href="/registry/packages/azure-native/">Azure Native GA</a> for a fully supported version.
+            </p>
+        </div>
+    </div>
 {{ end }}

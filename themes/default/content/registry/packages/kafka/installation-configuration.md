@@ -1,7 +1,7 @@
 ---
 title: Kafka Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi Kafka Provider.
-layout: installation
+layout: package
 ---
 
 The Pulumi Kafka provider uses the Kafka SDK to manage and provision resources.

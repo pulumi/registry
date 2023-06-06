@@ -1,7 +1,7 @@
 ---
 title: Opsgenie
 meta_desc: Provides an overview of the Opsgenie Provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 The Opsgenie provider for Pulumi can be used to provision any of the resources available for Opsgenie.

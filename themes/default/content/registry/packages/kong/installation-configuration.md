@@ -1,7 +1,7 @@
 ---
 title: Kong Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi Kong Provider.
-layout: installation
+layout: package
 ---
 
 The Pulumi Kong provider uses the Kong SDK to manage and provision resources.

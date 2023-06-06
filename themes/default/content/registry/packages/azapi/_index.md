@@ -1,7 +1,7 @@
 ---
 title: AzAPI
 meta_desc: Provides an overview of the AzAPI Provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 The AzAPI Resource Provider lets you manage [AzAPI](https://learn.microsoft.com/en-us/azure/developer/terraform/overview-azapi-provider) resources.

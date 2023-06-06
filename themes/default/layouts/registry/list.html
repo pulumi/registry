@@ -1,99 +1,51 @@
 {{ define "main" }}
-    {{ $allGetStarted := $.Site.Data.registry.getstarted }}
-    {{ $allPackages := $.Site.Data.registry.packages }}
-
-    {{ $featuredPackages := slice }}
-    {{ range $allPackages }}
-        {{ if .featured }}
-            {{ $featuredPackages = $featuredPackages | append . }}
-        {{ end }}
-    {{ end }}
-
-    <div class="packages container mx-auto pb-16 z-0">
-        <section class="featured-packages mt-16 md:mt-8">
-            <h2 class="px-4 inline-flex items-center">
-                Featured Packages
-            </h2>
-            <div class="flex flex-wrap">
-                {{ range $featuredPackages }}
-                    {{ partial "registry/featured-package" (dict "package" .) }}
-                {{ end }}
-            </div>
-        </section>
-
-        <section class="all-packages mt-8">
-            <div class="mb-2 px-4 relative z-10">
-                <h4 class="text-lg">Filters</h4>
-                <div class="flex flex-col md:flex-row md:items-start">
-                    <div class="flex flex-col" style="min-height: 95px">
-                        <pulumi-filter-select class="mb-2">
-
-                            <!-- Package-type options -->
-                            <pulumi-filter-select-option-group name="type" class="w-1/2">
-                                <div class="toggle" slot="toggle">Type</div>
-                                <div class="options">
-                                    <pulumi-filter-select-option value="native-provider" label="Native Provider">Native Provider</pulumi-filter-select-option>
-                                    <pulumi-filter-select-option value="provider" label="Provider">Provider</pulumi-filter-select-option>
-                                    <pulumi-filter-select-option value="component" label="Component">Component</pulumi-filter-select-option>
-                                </div>
-                            </pulumi-filter-select-option-group>
-
-                            <!-- Use-case options -->
-                            <pulumi-filter-select-option-group name="category" class="mx-1 md:mx-4 w-1/2">
-                                <div class="toggle" slot="toggle">Use Case</div>
-                                <div class="options">
-                                    <pulumi-filter-select-option value="cloud" label="Cloud">Cloud</pulumi-filter-select-option>
-                                    <pulumi-filter-select-option value="database" label="Database">Database</pulumi-filter-select-option>
-                                    <pulumi-filter-select-option value="infrastructure" label="Infrastructure">Infrastructure</pulumi-filter-select-option>
-                                    <pulumi-filter-select-option value="monitoring" label="Monitoring">Monitoring</pulumi-filter-select-option>
-                                    <pulumi-filter-select-option value="network" label="Network">Network</pulumi-filter-select-option>
-                                    <pulumi-filter-select-option value="utility" label="Utility">Utility</pulumi-filter-select-option>
-                                    <pulumi-filter-select-option value="version control system" label="Version Control">Version Control</pulumi-filter-select-option>
-                                </div>
-                            </pulumi-filter-select-option-group>
-
-                        </pulumi-filter-select>
-                        <!-- The list of active filters. -->
-                        <ul class="package-tags active-tags"></ul>
-                    </div>
-
-                    <pulumi-registry-list-search class="w-full"></pulumi-registry-list-search>
-
-                    <!-- The template used for displaying active filters. -->
-                    <template id="active-tag-template">
-                        <li>
-                            <span></span>
-                            <button class="ml-2 text-base hover:text-gray-900" title="Clear filter">&times;</button>
-                        </li>
-                    </template>
+    <div class="docs-list-main">
+        <div class="docs-main-nav-toggle-wrapper">
+            <div class="docs-main-nav-wrapper">
+                <div id="docs-main-nav" class="docs-main-nav">
+                    <nav class="main-nav">
+                        <div class="featured-packages">
+                            {{ $featuredPackages := slice }}
+                            {{ range $.Site.Data.registry.packages }}
+                                {{ if .featured }}
+                                    {{ $featuredPackages = $featuredPackages | append . }}
+                                {{ end }}
+                            {{ end }}
+                            <h2 class="no-anchor featured-packages-heading">Featured packages</h2>
+                            <ul>
+                                {{ range $featuredPackages }}
+                                    <li class="sidenav-topic">
+                                        {{ $href := printf "/registry/packages/%s/" .name }} 
+                                        <a href="{{ $href }}">{{ .title }}</a>
+                                    </li>
+                                {{ end }}
+                            </ul>
+                        </div>
+                        <div class="az-packages">
+                            <h2 class="no-anchor az-packages-heading">A - Z packages</h2>
+                            <ul>
+                                {{ range (sort $.Site.Data.registry.packages "title") }}
+                                    <li class="sidenav-topic">
+                                        {{ $href := printf "/registry/packages/%s/" .name }} 
+                                        <a href="{{ $href }}">{{ .title }}</a>
+                                    </li>
+                                {{ end }}
+                            </ul>
+                        </div>
+                    </nav>
                 </div>
             </div>
-
-            <h2 class="px-4 inline-flex items-center mt-8 md:mt-0">
-                A &ndash; Z Packages
-                <span class="all-count ml-4 py-0.5 px-3 rounded-full bg-violet-600 text-white text-lg">
-                    {{ len $allPackages }}
-                </span>
-            </h2>
-            <p class="px-4 mt-0">
-                <a href="{{ relref . "/docs/using-pulumi/pulumi-packages/contribute-to-pulumi-registry" }}" class="font-display underline text-lg">Contribute your own packages</a>
-            </p>
-            <div class="flex flex-wrap">
-                {{/* Capture the current (i.e., Page) context so it can be passed into the partial, allowing the partial to build proper relrefs. */}}
-                {{ $page := . }}
-
-                {{ range (sort $allPackages "title") }}
-                    {{ partial "registry/package" (dict "package" . "page" $page) }}
-                {{ end }}
-                <div class="no-results px-4">
-                    <p>
-                        Looks like we don't have any packages that match your filters.
-                        Adjust or clear the filters and try again.
-                    </p>
-                    <button class="reset btn btn-lg">Clear all filters</button>
-                </div>
+            <div class="docs-nav-toggle">
+                <div class="docs-nav-toggle-icon icon icon-24-24"></div>
             </div>
-        </section>
+        </div>
+
+        <div class="docs-main-content-wrapper">
+            <div class="docs-main-content registry-package-list">
+                {{ partial "registry/breadcrumb.html" . }}
+                {{ partial "registry/package-list.html" . }}
+            </div>
+        </div>
     </div>
 {{ end }}
 

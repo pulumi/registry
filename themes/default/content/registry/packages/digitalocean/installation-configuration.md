@@ -1,7 +1,7 @@
 ---
 title: DigitalOcean Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi DigitalOcean Provider.
-layout: installation
+layout: package
 ---
 
 The Pulumi DigitalOcean provider uses the DigitalOcean SDK to manage and provision resources.

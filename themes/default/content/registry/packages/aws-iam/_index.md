@@ -1,7 +1,7 @@
 ---
 title: AWS IAM
 meta_desc: Use Pulumi's Component for creating an AWS IAM resources using infrastructure as code.
-layout: overview
+layout: package
 ---
 
 You can use the Pulumi AWS IAM Component to help you create AWS IAM roles in all supported Pulumi Languages. The code below

@@ -1,6 +1,8 @@
 <!-- Based on https://gohugo.io/content-management/sections/#example-breadcrumb-navigation -->
 
-{{ template "breadcrumbnav" (dict "p1" . "p2" .) }}
+<ol class="docs-breadcrumb">
+    {{ template "breadcrumbnav" (dict "p1" . "p2" .) }}
+</ol>
 
 {{ define "breadcrumbnav" }}
     <!-- Don't include the website home page in the breadcrumb. -->

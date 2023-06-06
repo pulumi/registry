@@ -1,13 +1,13 @@
 <!-- Based on https://gohugo.io/content-management/sections/#example-breadcrumb-navigation -->
 
 <ol class="docs-breadcrumb">
-    {{ template "breadcrumbnav" (dict "p1" . "p2" .) }}
+    {{ template "registrybreadcrumbnav" (dict "p1" . "p2" .) }}
 </ol>
 
-{{ define "breadcrumbnav" }}
+{{ define "registrybreadcrumbnav" }}
     <!-- Don't include the website home page in the breadcrumb. -->
     {{ if and .p1.Parent (ne .p1.Parent .p1.Site.Home) }}
-        {{ template "breadcrumbnav" (dict "p1" .p1.Parent "p2" .p2) }}
+        {{ template "registrybreadcrumbnav" (dict "p1" .p1.Parent "p2" .p2) }}
     {{ end }}
     {{ if not (isset .p1.Params "redirect_to") }}
         {{ $lastUrlSlug := index (last 1 (split (delimit (split .p1.RelPermalink "/") "," "") ",")) 0 }}

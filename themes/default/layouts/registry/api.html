@@ -22,11 +22,7 @@
 
                 {{ partial "registry/package/package-card-top-of-page.html" . }}
                 
-                {{ if strings.Contains .Permalink "installation-configuration" }}
-                    <h1>{{ with .GetPage $packageHome }}{{ .Title }}{{ end }}: Installation & Configuration</h1>
-                {{ else if strings.HasSuffix .Permalink "how-to-guides/" }}
-                    <h1>{{ with .GetPage $packageHome }}{{ .Title }}{{ end }}: How-to-Guides</h1>
-                {{ else if strings.Contains .Permalink "api-docs" }}
+                {{ if strings.Contains .Permalink "api-docs" }}
                     <!--Don't show the title in the top-most index page.-->
                     {{ if not (in .Page.File "api-docs/_index.md") }}
                         {{ if and (.Params.h1) (not .Params.notitle) }}

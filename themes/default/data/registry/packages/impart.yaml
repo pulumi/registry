@@ -9,6 +9,6 @@ package_status: public_preview
 publisher: Impart Security
 repo_url: https://github.com/impart-security/pulumi-impart
 schema_file_path: provider/cmd/pulumi-resource-impart/schema.json
-title: Impart
-updated_on: 1685834716
-version: v0.1.4
+title: Impart Security
+updated_on: 1686004813
+version: v0.1.5

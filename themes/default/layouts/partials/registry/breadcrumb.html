@@ -1,0 +1,26 @@
+<!-- Based on https://gohugo.io/content-management/sections/#example-breadcrumb-navigation -->
+
+{{ template "breadcrumbnav" (dict "p1" . "p2" .) }}
+
+{{ define "breadcrumbnav" }}
+    <!-- Don't include the website home page in the breadcrumb. -->
+    {{ if and .p1.Parent (ne .p1.Parent .p1.Site.Home) }}
+        {{ template "breadcrumbnav" (dict "p1" .p1.Parent "p2" .p2) }}
+    {{ end }}
+    {{ if not (isset .p1.Params "redirect_to") }}
+        {{ $lastUrlSlug := index (last 1 (split (delimit (split .p1.RelPermalink "/") "," "") ",")) 0 }}
+        <li {{ if eq .p1 .p2 }}class="active"{{ end }}>
+            <a data-track="breadcrumb" href="{{ .p1.RelPermalink }}">
+                {{ if eq $lastUrlSlug "api-docs" }}
+                    API Docs
+                {{ else if eq $lastUrlSlug "installation-configuration" }}
+                    Installation & Configuration
+                {{ else if eq $lastUrlSlug "how-to-guides" }}
+                    How-to Guides
+                {{ else }}
+                    {{ .p1.LinkTitle }}
+                {{ end }}
+            </a>
+        </li>
+    {{ end }}
+{{ end }}

@@ -20,19 +20,21 @@
             <a href="{{ $installPath }}">Install & config</a>
         </li>
         {{ $sidenav_selected = cond (eq .Page.RelPermalink $howToPath) "active" "" }}
-        <li class="sidenav-topic {{ $sidenav_selected }}">
-            {{ if .GetPage $howToPath }}
-                {{ $guidesCount := 0 }}
-                {{ with .GetPage $howToPath }}
-                    {{ $guidesCount = len .Pages }}
-                {{ end }}
+        {{ if .GetPage $howToPath }}
+            <li class="sidenav-topic {{ $sidenav_selected }}">
+                    {{ $guidesCount := 0 }}
+                    {{ with .GetPage $howToPath }}
+                        {{ $guidesCount = len .Pages }}
+                    {{ end }}
 
-                <a href="{{ $howToPath }}">
-                    How-to guides
-                    <span class="count-badge">{{ $guidesCount }}</span>
-                </a>
-            {{ end }}
-        </li>
+                    <a href="{{ $howToPath }}">
+                        How-to guides
+                        {{ if ge $guidesCount 1 }}
+                            <span class="count-badge">{{ $guidesCount }}</span>
+                        {{ end }}
+                    </a>
+            </li>
+        {{ end }}
         <h2 class="no-anchor api-docs-heading">API docs</h2>
         {{ partial "registry/left-nav.html" . }}
     </ul>

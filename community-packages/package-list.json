@@ -211,6 +211,10 @@
     {
       "repoSlug": "impart-security/pulumi-impart",
       "schemaFile": "provider/cmd/pulumi-resource-impart/schema.json"
+    },
+    {
+      "repoSlug": "pulumiverse/pulumi-zitadel",
+      "schemaFile": "provider/cmd/pulumi-resource-zitadel/schema.json"
     }
   ]
 }

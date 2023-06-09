@@ -1,0 +1,14 @@
+category: Database
+component: false
+description: A Pulumi Provider for Microsoft SQL Server and Azure SQL
+featured: false
+logo_url: https://raw.githubusercontent.com/pulumiverse/pulumi-mssql/main/docs/mssql.png
+name: mssql
+native: false
+package_status: public_preview
+publisher: pulumiverse
+repo_url: https://github.com/pulumiverse/pulumi-mssql
+schema_file_path: provider/cmd/pulumi-resource-mssql/schema.json
+title: Microsoft SQL Server
+updated_on: 1686150619
+version: v0.0.6

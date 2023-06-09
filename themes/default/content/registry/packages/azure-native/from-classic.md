@@ -1,6 +1,7 @@
 ---
 title: Migration from classic Azure to Azure-Native
 meta_desc: How to migrate from the classic Azure provider to the native Azure provider.
+layout: package
 ---
 
 Pulumi currently has two providers to manage resources in Microsoft Azure: [classic Pulumi Azure](/registry/packages/azure) and [native Pulumi Azure](./). This guide explains the differences between the two providers, our recommendations about using them, and a migration guide from the classic Azure provider to the native Azure provider.

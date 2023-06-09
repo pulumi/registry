@@ -215,6 +215,10 @@
     {
       "repoSlug": "pulumiverse/pulumi-zitadel",
       "schemaFile": "provider/cmd/pulumi-resource-zitadel/schema.json"
+    },
+    {
+      "repoSlug": "pulumiverse/pulumi-mssql",
+      "schemaFile": "provider/cmd/pulumi-resource-mssql/schema.json"
     }
   ]
 }

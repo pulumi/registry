@@ -1,5 +1,5 @@
 ---
-title: Azure-Native Version Guide
+title: Azure-Native version guide
 meta_desc: How Azure API versions are represented in the native Azure provider for Pulumi.
 layout: package
 ---

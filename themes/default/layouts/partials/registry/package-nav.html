@@ -1,8 +1,8 @@
 {{ $packageUrl := printf "%s/" (path.Join "/registry/packages" (index (split .Page.File "/") 2)) }}
 {{ $installPath := printf "%s/" (path.Join $packageUrl "installation-configuration") }}
 {{ $howToPath := printf "%s/" (path.Join $packageUrl "how-to-guides/") }}
-{{ $versionGuidePath := printf "%s/" (path.Join $packageUrl "version-guide/") }}
-{{ $migratePath := printf "%s/" (path.Join $packageUrl "from-classic/") }}
+{{ $versionGuidePath := printf "%s/" (path.Join $packageUrl "version-guide") }}
+{{ $migratePath := printf "%s/" (path.Join $packageUrl "from-classic") }}
 
 <nav class="main-nav">
     <div class="all-packages-icon-link">
@@ -46,7 +46,7 @@
         {{ $sidenav_selected = cond (eq .Page.RelPermalink $migratePath) "active" "" }}
         {{ if .GetPage $migratePath }}
             <li class="sidenav-topic {{ $sidenav_selected }}">
-                <a href="{{ $versionGuidePath }}">Migrate from Classic</a>
+                <a href="{{ $migratePath }}">Migrate from classic</a>
             </li>
         {{ end }}
         <h2 class="no-anchor api-docs-heading">API docs</h2>

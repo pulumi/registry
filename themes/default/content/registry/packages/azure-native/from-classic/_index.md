@@ -1,5 +1,5 @@
 ---
-title: Migration from classic Azure to Azure-Native
+title: Migrate from classic Azure to Azure-Native
 meta_desc: How to migrate from the classic Azure provider to the native Azure provider.
 layout: package
 ---

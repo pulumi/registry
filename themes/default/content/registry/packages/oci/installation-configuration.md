@@ -57,13 +57,13 @@ Remember to pass `--secret` when setting `oci:secretKey` so that it is properly 
 
 The following configuration options are available for the `oci` provider:
 
-| Option                   | Environment variable          | Description                                                                                                                 |
-| ------------------------ | ----------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| `oci:tenancyOcid`        | `TF_VAR_tenancy_ocid`         | OCID of your tenancy.                                                                                                       |
-| `oci:userOcid`           | `TF_VAR_user_ocid`            | OCID of the user calling the API.                                                                                           |
-| `oci:privateKey`         | `TF_VAR_private_key`          | The contents of the private key file. Required if `privateKeyPath` is not defined and takes precedence if both are defined. |
-| `oci:privateKeyPath`     | `TF_VAR_private_key_path`     | The path (including filename) of the private key stored on your computer. Required if `privateKey` is not defined.          |
-| `oci:privateKeyPassword` | `TF_VAR_private_key_password` | Passphrase used for the key, if it is encrypted.                                                                            |
-| `oci:fingerprint`        | `TF_VAR_fingerprint`          | Fingerprint for the key pair being used.                                                                                    |
-| `oci:region`             | `TF_VAR_region`               | An OCI region.                                                                                                              |
-| `oci:configFileProfile`  | `TF_VAR_config_file_profile`  | The custom profile to use instead of the `DEFAULT` profile in `.oci/config`.             |
+| Option | Environment variable | Description |
+| - | - | - |
+| `oci:tenancyOcid` | `TF_VAR_tenancy_ocid` | OCID of your tenancy. |
+| `oci:userOcid` | `TF_VAR_user_ocid` | OCID of the user calling the API. 
+| `oci:privateKey | `TF_VAR_private_key` | The contents of the private key file. Required if `privateKeyPath` is not defined and takes precedence if both are defined. |
+| `oci:privateKeyPath` | `TF_VAR_private_key_path` | The path (including filename) of the private key stored on your computer. Required if `privateKey` is not defined. |
+| `oci:privateKeyPassword` | `TF_VAR_private_key_password` | Passphrase used for the key, if it is encrypted. |
+| `oci:fingerprint` | `TF_VAR_fingerprint` | Fingerprint for the key pair being used. |
+| `oci:region` | `TF_VAR_region` | An OCI region. |
+| `oci:configFileProfile`  | `TF_VAR_config_file_profile`  | The custom profile to use instead of the `DEFAULT` profile in `.oci/config`. |

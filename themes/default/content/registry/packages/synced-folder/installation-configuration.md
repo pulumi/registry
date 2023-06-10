@@ -60,7 +60,7 @@ For help configuring your cloud-provider credentials, see the Installation &amp;
 The following input properties are common to all three Synced Folder components:
 
 | Property | Type | Description |
-| -------- | ---- | ----------- |
+| - | - | - |
 | `path` | `string` | The path (relative or fully-qualified) to the folder containing the files to be synced. Required. |
 | `managedObjects` | `boolean` | Whether to have Pulumi manage files as individual cloud resources. Defaults to `true`. See below for details. |
 
@@ -69,14 +69,14 @@ The sections below list component-specific input properties.
 #### S3BucketFolder properties
 
 | Property | Type | Description |
-| -------- | ---- | ----------- |
+| - | - | - |
 | `bucketName` | `string` | The name of the S3 bucket to sync to (e.g., `my-bucket` in `s3://my-bucket`). Required. |
 | `acl` | `string` | The AWS [Canned ACL](https://docs.aws.amazon.com/AmazonS3/latest/userguide/acl-overview.html#canned-acl) to apply to each file (e.g., `public-read`). Required. |
 
 #### AzureBlobFolder properties
 
 | Property | Type | Description |
-| -------- | ---- | ----------- |
+| - | - | - |
 | `containerName` | `string` | The name of the Azure storage container to sync to. Required. |
 | `storageAccountName` | `string` | The name of the Azure storage account that the container belongs to. Required. |
 | `resourceGroupName` | `string` | The name of the Azure resource group that the storage account belongs to. Required. |
@@ -84,5 +84,5 @@ The sections below list component-specific input properties.
 #### GoogleCloudFolder properties
 
 | Property | Type | Description |
-| -------- | ---- | ----------- |
+| - | - | - |
 | `bucketName` | `string` | The name of the Google Cloud Storage bucket to sync to (e.g., `my-bucket` in `gs://my-bucket`). Required. |

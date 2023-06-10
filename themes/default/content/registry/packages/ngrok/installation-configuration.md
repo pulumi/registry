@@ -23,10 +23,10 @@ Optionally you can specify the API URL to talk with ngrok. The default is `https
 
 Use `pulumi config set ngrok:<option> --secret`.
 
-| Option     | Required/Optional | Description                                                                                     |
-|------------|-------------------|-------------------------------------------------------------------------------------------------|
-| `apiKey` | Required          | This is the ngrok API key (environment: `NGROK_API_KEY`).      |
-| `apiBaseUrl` | Optional          | The API URL used to talk with ngrok. The default is `https://api.ngrok.com.` (environment: `NGROK_API_BASE_URL`). |
+| Option | Required/Optional | Description |
+| - | - | - |
+| `apiKey` | Required | This is the ngrok API key (environment: `NGROK_API_KEY`). |
+| `apiBaseUrl` | Optional | The API URL used to talk with ngrok. The default is `https://api.ngrok.com.` (environment: `NGROK_API_BASE_URL`). |
 
 {{% notes type="warning" %}}
 You should use the `--secret` flag to encrypt the config values using your secret provider. For more information on this, view the [encrypted secrets in configuration data](/docs/concepts/secrets/#secrets) section in the Pulumi docs.

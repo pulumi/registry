@@ -64,9 +64,9 @@ Once the credentials are obtained, there are two ways to communicate your author
 Required options can be omitted if you configure them using environment variables.
 {{% /notes %}}
 
-| Option           | Required/Optional | Description                                                                                             |
-|------------------|-------------------|---------------------------------------------------------------------------------------------------------|
-| `token`          | Required          | Access token. You can retrieve this from the ‘Access Tokens’ section of the Event Store Cloud console.  |
-| `organizationId` | Required          | The organization id. You can find it in the organization settings page if the ESC console.              |
-| `url`            | Optional          | The URL of the Event Store Cloud API. This defaults to the public cloud instance of Event Store Cloud.  |
-| `tokenStore`     | Optional          | The location on the local filesystem of the token cache. This is shared with the Event Store Cloud CLI. |
+| Option | Required/Optional | Description |
+| - | - | - |
+| `token` | Required | Access token. You can retrieve this from the ‘Access Tokens’ section of the Event Store Cloud console.  |
+| `organizationId` | Required | The organization id. You can find it in the organization settings page if the ESC console.              |
+| `url`  Optional | The URL of the Event Store Cloud API. This defaults to the public cloud instance of Event Store Cloud.  |
+| `tokenStore` | Optional | The location on the local filesystem of the token cache. This is shared with the Event Store Cloud CLI. |

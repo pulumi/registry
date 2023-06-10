@@ -23,9 +23,9 @@ Pulumi relies on the Authress SDK to authenticate requests from your computer to
 
 Use `pulumi config set authress:<option>`.
 
-| Option    | Required | Description                                                       |
-|-----------|-------------------|-------------------------------------------------------------------|
-| `customDomain`     | Required          | Authress Custom Domain. [Configure a custom domain for your Authress account](https://authress.io/app/#/settings?focus=domain)         |
-| `accessKey`        | Required (Automatically Injected)          | Authress API access key, automatically injected in via your [CI/CD Provider](https://authress.io/knowledge-base/docs/category/cicd).|
+| Option | Required | Description |
+| - | - | - |
+| `customDomain` | Required | Authress Custom Domain. [Configure a custom domain for your Authress account](https://authress.io/app/#/settings?focus=domain) |
+| `accessKey` | Required (Automatically Injected) | Authress API access key, automatically injected in via your [CI/CD Provider](https://authress.io/knowledge-base/docs/category/cicd). |
 
 When using on your local machine, set the accessKey using `pulumi config set --secret authress:accessKey ACCESS_KEY`. `--secret` is required to keep these credentials a secret. To get an access key Create an [Authress Service Client](https://authress.io/app/#/settings?focus=clients).

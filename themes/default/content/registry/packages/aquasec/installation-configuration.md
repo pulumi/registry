@@ -21,8 +21,8 @@ To provision resources with the Pulumi Aquasec provider, you need to provide the
 
 Use `pulumi config set aquasec:<option>`.
 
-| Option     | Required/Optional | Description                                                                                     |
-|------------|-------------------|-------------------------------------------------------------------------------------------------|
-| `username` | Required          | This is the user id that should be used to make the connection (environment: `AQUA_USER`).      |
-| `password` | Required          | This is the password that should be used to make the connection (environment: `AQUA_PASSWORD`). |
-| `aqua_url` | Required          | This is the base URL of your Aqua instance (environment: `AQUA_URL`).                           |
+| Option | Required? | Description |
+| - | - | - |
+| `username` | Required | This is the user id that should be used to make the connection (environment: `AQUA_USER`). |
+| `password` | Required | This is the password that should be used to make the connection (environment: `AQUA_PASSWORD`). |
+| `aqua_url` | Required | This is the base URL of your Aqua instance (environment: `AQUA_URL`). |

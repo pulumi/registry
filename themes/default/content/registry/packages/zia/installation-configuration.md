@@ -70,8 +70,8 @@ $ export ZIA_CLOUD=<ZIA_CLOUD>
 
 Use `pulumi config set zia:<option>` or pass options to the [constructor of `new zia.Provider`](/registry/packages/zia/api-docs/provider).
 
-| Option | Required/Optional | Description |
-|-----|------|----|
+| Option | Required? | Description |
+| - | - | - |
 | `username`| Required | [ZIA API Username](https://help.zscaler.com/zia/getting-started-zia-api) |
 | `password`| Required | [ZIA API Password](https://help.zscaler.com/zia/getting-started-zia-api) |
 | `api_key` | Required | [ZIA API Key](https://help.zscaler.com/zia/getting-started-zia-api) |

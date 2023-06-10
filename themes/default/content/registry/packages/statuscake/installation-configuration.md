@@ -21,6 +21,6 @@ Statuscake maintains documentation on how to [create API tokens](https://www.sta
 
 Use `pulumi config set statuscake:<option>`.
 
-| Option     | Required/Optional | Description          |
-| ---------- | ----------------- | -------------------- |
-| `apiToken` | Required          | Statuscake API token |
+| Option | Required? | Description |
+| - | - | - |
+| `apiToken` | Required | Statuscake API token |

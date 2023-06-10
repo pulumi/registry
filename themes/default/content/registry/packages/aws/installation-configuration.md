@@ -174,7 +174,7 @@ you need to do either of the following
 
 Use `pulumi config set aws:<option>` or pass options to the [constructor of `new aws.Provider`](../api-docs/provider).
 
-| Option | Required/Optional | Description |
+| Option | Required? | Description |
 | - | - | - |
 | `region` | Required | The region where AWS operations will take place. Examples are `us-east-1`, `us-west-2`, etc. |
 | `allowedAccountIds` | Optional | List of allowed AWS account IDs to prevent you from mistakenly using an incorrect one (and potentially end up destroying a live environment). Conflicts with `forbiddenAccountIds`. |

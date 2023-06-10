@@ -53,7 +53,7 @@ For example:
 
 Use `pulumi config set gcp:<option>` or pass options to the [constructor of `new gcp.Provider`](/registry/packages/gcp/api-docs/provider).
 
-| Option | Required/Optional |Description |
+| Option | Required? |Description |
 | - | - | - |
 | `project` | Required | The ID of the project to apply any resources to. This can also be specified using any of the following environment variables (listed in order of precedence): `GOOGLE_PROJECT`, `GOOGLE_CLOUD_PROJECT`, `GCLOUD_PROJECT`, `CLOUDSDK_CORE_PROJECT`. |
 | `region` | Optional | The region to operate under, if not specified by a given resource. This can also be specified using any of the following environment variables (listed in order of precedence): `GOOGLE_REGION`, `GCLOUD_REGION`, `CLOUDSDK_COMPUTE_REGION`. |

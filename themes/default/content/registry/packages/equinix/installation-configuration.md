@@ -79,7 +79,7 @@ $ export EQUINIX_API_CLIENTSECRET=<EQUINIX_API_CLIENTSECRET>
 
 Use `pulumi config set equinix:<option>` or pass options to the [constructor of `new equinix.Provider`](/registry/packages/equinix/api-docs/provider).
 
-| Option | Required/Optional | Description |
+| Option | Required? | Description |
 |-----|------|----|
 | `authToken`| Optional | The Equinix Metal API auth key for API operations. |
 | `clientId`| Optional | API Consumer Key available under My Apps section in Equinix developer portal. |

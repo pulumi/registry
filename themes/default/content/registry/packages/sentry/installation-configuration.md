@@ -22,7 +22,7 @@ Sentry maintains documentation on how to [create auth tokens](https://docs.sentr
 
 Use `pulumi config set sentry:<option>`.
 
-| Option | Required/Optional | Description |
+| Option | Required? | Description |
 |-----|------|----|
 | `token`| Required | Sentry access token |
 | `base_url`| Optional | Sentry base URL when self-hosting Sentry |

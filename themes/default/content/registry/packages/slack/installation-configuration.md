@@ -21,6 +21,6 @@ The Slack provider must be configured with a token to manage resources in a Slac
 
 Use `pulumi config set slack:token --secret` or set as an environment variable: `export SLACK_TOKEN="my-token"`
 
-| Option | Required/Optional | Description |
+| Option | Required? | Description |
 |-----|------|----|
 | `token`| Required | [Slack token](https://api.slack.com/apps)

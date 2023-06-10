@@ -67,7 +67,7 @@ $ export ZPA_CUSTOMER_ID=<ZPA_CUSTOMER_ID>
 
 Use `pulumi config set zpa:<option>` or pass options to the [constructor of `new zpa.Provider`](/registry/packages/zpa/api-docs/provider).
 
-| Option | Required/Optional | Description |
+| Option | Required? | Description |
 | - | - | - |
 | `zpa_client_id`| Required | [ZPA Client ID](https://help.zscaler.com/zpa/about-api-keys) |
 | `zpa_client_secret`| Required | [ZPA Client Secret](https://help.zscaler.com/zpa/about-api-keys) |

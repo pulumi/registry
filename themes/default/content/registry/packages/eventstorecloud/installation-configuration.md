@@ -64,7 +64,7 @@ Once the credentials are obtained, there are two ways to communicate your author
 Required options can be omitted if you configure them using environment variables.
 {{% /notes %}}
 
-| Option | Required/Optional | Description |
+| Option | Required? | Description |
 | - | - | - |
 | `token` | Required | Access token. You can retrieve this from the ‘Access Tokens’ section of the Event Store Cloud console.  |
 | `organizationId` | Required | The organization id. You can find it in the organization settings page if the ESC console.              |

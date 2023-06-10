@@ -21,6 +21,6 @@ To provision resources with the Pulumi Astra DB provider, you need to have an As
 
 Use `pulumi config set astra:<option>`.
 
-| Option | Required/Optional | Description |
+| Option | Required? | Description |
 |-----|------|----|
 | `token`| Required | Astra access token |

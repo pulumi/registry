@@ -60,7 +60,7 @@ $ export PULUMI_BACKEND_URL=<PULUMI_BACKEND_URL>
 
 Use `pulumi config set pulumiservice:<option>` or pass options to the [constructor of `new pulumiservice.Provider`](/registry/packages/pulumiservice/api-docs/provider).
 
-| Option | Required/Optional | Description |
+| Option | Required? | Description |
 |-----|------|----|
 | `accessToken`| Required | [Pulumi Cloud Access Tokens](/docs/pulumi-cloud/accounts/#personal-access-tokens) |
 | `apiUrl`| Optional | Allows overriding default [Pulumi Cloud API URL](/docs/pulumi-cloud/cloud-rest-api/) for [self hosted customers](/docs/pulumi-cloud/self-hosted/).

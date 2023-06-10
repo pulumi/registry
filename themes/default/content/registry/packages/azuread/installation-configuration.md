@@ -139,7 +139,7 @@ $ export ARM_TENANT_ID=<YOUR_ARM_TENANT_ID>
 
 Use `pulumi config set azuread:<option>` or pass options to the [constructor of `new azuread.Provider`](/registry/packages/azuread/api-docs/provider).
 
-| Option | Required/Optional | Description |
+| Option | Required? | Description |
 | - | - | - |
 | `environment` | Required | The cloud environment to use. It can also be sourced from the ARM_ENVIRONMENT environment variable. Supported values are: `public` (default), `usgovernment`, `china`. |
 | `location` | Optional | The location to use. ResourceGroups will consult this property for a default location, if one was not supplied explicitly. |

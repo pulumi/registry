@@ -21,7 +21,7 @@ To provision resources with the Pulumi StrongDM provider, you need to provide th
 
 Use `pulumi config set sdm:<option> --secret`.
 
-| Option | Required/Optional | Description |
+| Option | Required? | Description |
 | - | - | - |
 | `apiAccessKey` | Required | This is the user id that should be used to make the connection (environment: `SDM_API_ACCESS_KEY`).      |
 | `apiSecretKey` | Required          | This is the password that should be used to make the connection (environment: `SDM_API_SECRET_KEY`). |

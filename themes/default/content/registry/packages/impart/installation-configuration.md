@@ -20,7 +20,7 @@ To provision resources with the Pulumi Impart provider, you need to provide the 
 
 Use `pulumi config set impart:<option> --secret`.
 
-| Option | Required/Optional | Description |
+| Option | Required? | Description |
 | - | - | - |
 | `token` | Required | This is the Impart API access token (environment: `IMPART_TOKEN`). |
 | `endpoint` | Optional | The API URL used for Impart service. The default is `https://api.impartsecurity.net.` (environment: `IMPART_ENDPOINT`). |

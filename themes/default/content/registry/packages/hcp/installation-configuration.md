@@ -55,7 +55,7 @@ $ export HCP_CLIENT_SECRET=<HCP_CLIENT_SECRET>
 
 Use `pulumi config set hcp:<option>` or pass options to the [constructor of `new hcp.Provider`](/registry/packages/hcp/api-docs/provider).
 
-| Option | Required/Optional | Description |
+| Option | Required? | Description |
 | - | - | - |
 | `client_id` | Required | The OAuth2 Client ID for API operations. Can be configured from the environment variable `HCP_CLIENT_ID` |
 | `client_secret` | Required | The OAuth2 Client Secret for API operations. Can be configured from the environment variable `HCP_CLIENT_SECRET`. |

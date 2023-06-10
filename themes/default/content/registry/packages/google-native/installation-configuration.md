@@ -27,7 +27,7 @@ If you are using Pulumi in an non-interactive setting (such as a CI/CD system) y
 
 Use `pulumi config set google-native:<option>` or pass options to the [constructor of `new Provider`](/registry/packages/google-native/api-docs/provider).
 
-| Option  Required/Optional | Description |
+| Option  Required? | Description |
 | - | - | - |
 | `project` | Optional | The default project for new resources, if one is not specified when creating a resource. This can also be specified using any of the following environment variables (listed in order of precedence): `GOOGLE_PROJECT`, `GOOGLE_CLOUD_PROJECT`, `GCLOUD_PROJECT`, `CLOUDSDK_CORE_PROJECT`. |
 | `region` | Optional | The region to operate under, if not specified by a given resource. This can also be specified using any of the following environment variables (listed in order of precedence): `GOOGLE_REGION`, `GCLOUD_REGION`, `CLOUDSDK_COMPUTE_REGION`. |

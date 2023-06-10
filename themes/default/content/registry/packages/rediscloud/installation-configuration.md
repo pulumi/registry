@@ -63,7 +63,7 @@ $ export REDISCLOUD_SECRET_KEY=<REDISCLOUD_SECRET_KEY>
 
 Use `pulumi config set rediscloud:<option>` or pass options to the [constructor of `new rediscloud.Provider`](/registry/packages/rediscloud/api-docs/provider).
 
-| Option | Environment Variables | Required/Optional | Description |
+| Option | Environment Variables | Required? | Description |
 | - | - | - | - |
 | `apiKey`    | `REDISCLOUD_ACCESS_KEY` | Required | Redis Cloud access |
 | `secretKey` | `REDISCLOUD_SECRET_KEY` | Required  | Redis Cloud secret key |

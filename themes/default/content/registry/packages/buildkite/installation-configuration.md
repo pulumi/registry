@@ -24,7 +24,7 @@ The Pulumi Buildkite Provider needs to be configured with a Buildkite token befo
 
 Use `pulumi config set buildkite:<option>` or pass options to the [constructor of `new buildkite.Provider`](/registry/packages/buildkite/api-docs/provider).
 
-| Option | Required/Optional | Description |
+| Option | Required? | Description |
 | - | - | - |
 | `api_token`  Required  A Buildkite API Access Token. Can be configured from the environment variable `BUILDKITE_API_TOKEN`. Must have GraphQL access, as well as the `write_pipelines` and `read_pipelines` scopes. |
 | `organization` | Required | The Buildkite organization slug. Can be configured from the environment variable `BUILDKITE_ORGANIZATION`. |

@@ -21,7 +21,7 @@ To provision resources with the Pulumi Exoscale provider, you need to provide th
 
 Use `pulumi config set exoscale:<option>`.
 
-| Option | Required/Optional | Description |
+| Option | Required? | Description |
 | - | - | - |
 | `key` | Required | Exoscale account API key (environment: `EXOSCALE_API_KEY`). |
 | `secret` | Required | Exoscale account API secret (environment: `EXOSCALE_API_SECRET`). |

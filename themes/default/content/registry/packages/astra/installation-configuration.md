@@ -1,7 +1,7 @@
 ---
 title: Astra DB Installation & Configuration
 meta_desc: Information on how to install the Astra DB provider.
-layout: installation
+layout: package
 ---
 
 ## Installation

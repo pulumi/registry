@@ -8,7 +8,7 @@ layout: package
 
 The Pulumi Astra DB provider is available as a package in all Pulumi languages:
 
-* JavaScript/TypeScript: [`@pulumiserve/pulumi-astra`](https://www.npmjs.com/package/@pulumiverse/astra)
+* JavaScript/TypeScript: [`@pulumiverse/astra`](https://www.npmjs.com/package/@pulumiverse/astra)
 * Python: [`pulumiverse_astra`](https://pypi.org/project/pulumiverse-astra/)
 * Go: [`github.com/pulumiverse/pulumi-astra/sdk/go/astra`](https://pkg.go.dev/github.com/pulumiverse/pulumi-astra/sdk)
 * .NET: [`Pulumiverse.Astra`](https://www.nuget.org/packages/Pulumiverse.Astra)

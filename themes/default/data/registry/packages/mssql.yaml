@@ -2,7 +2,7 @@ category: Database
 component: false
 description: A Pulumi Provider for Microsoft SQL Server and Azure SQL
 featured: false
-logo_url: https://raw.githubusercontent.com/pulumiverse/pulumi-mssql/main/docs/mssql.png
+logo_url: ""
 name: mssql
 native: false
 package_status: public_preview

@@ -219,6 +219,10 @@
     {
       "repoSlug": "pulumiverse/pulumi-mssql",
       "schemaFile": "provider/cmd/pulumi-resource-mssql/schema.json"
+    },
+    {
+      "repoSlug": "lbrlabs/pulumi-vantage",
+      "schemaFile": "provider/cmd/pulumi-resource-vantage/schema.json"
     }
   ]
 }

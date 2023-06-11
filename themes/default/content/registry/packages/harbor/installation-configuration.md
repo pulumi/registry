@@ -1,7 +1,7 @@
 ---
 title: Harbor Installation & Configuration
 meta_desc: Information on how to install the Harbor provider.
-layout: package
+layout: installation
 ---
 
 ## Installation

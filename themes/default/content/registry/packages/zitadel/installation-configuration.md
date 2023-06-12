@@ -1,7 +1,7 @@
 ---
 title: Zitadel Installation & Configuration
 meta_desc: Information on how to install the Zitadel provider.
-layout: installation
+layout: package
 ---
 
 ## Installation
@@ -21,8 +21,8 @@ To provision resources with the Pulumi Zitadel provider, you need to have a Zita
 
 Use `pulumi config set zitadel:<option>`.
 
-| Option | Required/Optional | Description |
-|-----|------|----|
+| Option | Required? | Description |
+| - | - | - |
 | `domain`| Required | Domain used to connect to the Zitadel instance |
 | `insecure`| Optional | Use insecure connection |
 | `jwtProfileFile`| Optional |  Path to the file containing credentials to connect to Zitadel. Either `jwtProfileFile` or `jwtProfileJson` is required |

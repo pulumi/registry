@@ -71,13 +71,13 @@ The primary reason for these removals is to limit the growth rate of the SDKs. M
 
 ### Title-Casing Resource Names
 
-All resource names are now title-cased. Some ~40 that started with a lower-case letter in v1 were renamed, which is a breaking change for some existing user programs.
+All resource names are now consistently in title-case, starting with an upper-case letter. About 40 resources that started with a lower-case letter in v1 were renamed. This change is mostly internal, but some function names changed in the process.
 
-The previous names are aliased to the new names so upgrading to the new resource names should result in no changes to existing stacks.
+This is a breaking change in user programs using these functions. Fixing it is as simple as updating the function names. For instance, in the TypeScript SDK, `azure-native.aadiam.getazureADMetric` changed to `azure-native.aadiam.getAzureADMetric`.
 
-The complete list of renamed resources is in this PR: https://github.com/pulumi/pulumi-azure-native/pull/2366
+The old lower-case resource names are aliased so all Pulumi state is backwards-compatible. Upgrading to the new names will not result in changes to existing stacks.
 
-Note that for Go and Java there’s no change as these languages require types to begin with an upper-case letter anyway.
+The complete list of affected resources is [in the PR](https://github.com/pulumi/pulumi-azure-native/pull/2366).
 
 ### MySQL and PostgreSQL Server and Flexible Server
 

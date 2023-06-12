@@ -25,7 +25,7 @@ Use `pulumi config set zitadel:<option>`.
 | - | - | - |
 | `domain`| Required | Domain used to connect to the Zitadel instance |
 | `insecure`| Optional | Use insecure connection |
-| `jwtProfileFile`| Optional |  Path to the file containing credentials to connect to Zitadel. Either `jwtProfileFile` or `jwtProfileJson` is required |
+| `jwtProfileFile`| Optional | Path to the file containing credentials to connect to Zitadel. Either `jwtProfileFile` or `jwtProfileJson` is required |
 | `jwtProfileJson`| Optional | JSON value of credentials to connect to Zitadel. Either `jwtProfileFile` or `jwtProfileJson` is required |
 | `port`| Optional |  Used port if not the default ports 80 or 443 are configured |
 | `jwtProfileJson`| Optional | Domain used to connect to the Zitadel instance |

@@ -1,7 +1,7 @@
 ---
 title: Vantage
 meta_desc: Provides an overview of the Vantage Provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 The Vantage provider for Pulumi can be used to provision any of the cloud resources available in [Vantage](https://vantage.sh).

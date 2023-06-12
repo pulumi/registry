@@ -64,20 +64,20 @@ Remove Deprecated Explicit Versions
 
 ### Removed Deprecated Versions
 
-Since v1.62.0, deprecation notices have been introduced on specific older versions of Azure’s REST API. At the point of releasing version 2 [TODO: replace with date] of the provider any deprecated versions will be removed. We recommend migrating any affected resources to a newer version of Azure’s REST API.
+Since v1.103.0, deprecation notices have been introduced on specific older versions of Azure’s REST API. With the release of Azure Native 2.0, resources marked as deprecated in 1.x will not be available in 2.0 and later. We recommend migrating any affected resources to a newer version of Azure’s REST API.
 
-The reason for these removals is to limit the growth rate of the SDKs. Most languages have limits on the size of an SDK; and we’ve reached a few already which have required some work to mitigate. We will continue to look at long term solutions to address these limitations but this is necessary work to ensure the stability of the provider.
+The primary reason for these removals is to limit the growth rate of the SDKs. Most languages have limits on the size of an SDK; and we’ve reached a few already which have required some work to mitigate. We will continue to look at long term solutions to address these limitations but this is necessary work to ensure the stability of the provider. Additionally, we've included compatible versions of these resources which will be present in 2.0 in the above deprecation warnings. This should provide a painless upgrade process to 1.103 or later, and similarly for 2.0.
 
 
 ### Title-Casing Resource Names
 
-All resource names are now in title-case. Some ~40 that started with a lower-case letter in v1 were renamed, which is a breaking change in user programs.
+All resource names are now title-cased. Some ~40 that started with a lower-case letter in v1 were renamed, which is a breaking change for some existing user programs.
 
-The old names are aliased so all Pulumi state should be backwards-compatible.
+The previous names are aliased to the new names so upgrading to the new resource names should result in no changes to existing stacks.
 
-The complete list is in the PR: https://github.com/pulumi/pulumi-azure-native/pull/2366
+The complete list of renamed resources is in this PR: https://github.com/pulumi/pulumi-azure-native/pull/2366
 
-Note that for Go and Java there’s no change because these languages require types to start with an upper-case letter anyway.
+Note that for Go and Java there’s no change as these languages require types to begin with an upper-case letter anyway.
 
 ### MySQL and PostgreSQL Server and Flexible Server
 

@@ -1,7 +1,7 @@
 ---
 title: Zitadel
 meta_desc: Provides an overview of the Zitadel Provider for Pulumi.
-layout: package
+layout: overview
 ---
 
 The Zitadel provider for Pulumi can be used to provision any of the cloud resources available in [Zitadel](https://zitadel.com/).

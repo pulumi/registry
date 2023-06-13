@@ -31,14 +31,14 @@ Below are examples of changing an import to use a specific version in each langu
 
 {{% /choosable %}}
 
-```C#
+```csharp
 - using EventGrid = Pulumi.AzureNative.EventGrid;
 + using EventGrid20200601 = Pulumi.AzureNative.EventGrid.V20200601;
 ```
 
 {{% choosable language python %}}
 
-```Python
+```python
 - from pulumi_azure_native import eventgrid
 + from pulumi_azure_native.eventgrid import v20200601 as eventgrid20200601
 ```

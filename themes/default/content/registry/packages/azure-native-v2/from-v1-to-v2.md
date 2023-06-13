@@ -65,6 +65,8 @@ In your Pulumi program, upgrade the package to point to the latest version of th
 
 {{% /choosable %}}
 
+{{% /chooser %}}
+
 
 
 ### Upgrade Imports

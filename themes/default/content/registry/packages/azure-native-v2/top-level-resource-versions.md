@@ -1,4 +1,9 @@
-# Top-Level Resource Versions
+---
+title: Top-level resource versions.
+meta_desc: Table to help migrate between top-level resources for Azure Native v1 and v2
+---
+
+## Top-Level Resource Versions
 
 |Service|Resource|REST version in v1| REST version in v2|
 |---|---|---|---|

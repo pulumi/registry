@@ -81,14 +81,19 @@ The complete list of affected resources is [in the PR](https://github.com/pulumi
 
 ### MySQL and PostgreSQL Server and Flexible Server
 
-Both “Azure Database for MySQL/PostgreSQL” are available in a “Single Server” and a “Flexible Server” variant. The Single Server variant is on the retirement path (mysql, postgres). The mysql ones already cannot be created in the Azure portal anymore, although the API will continue to work until September 2024. All new servers are encouraged to be of the flexible kind.
+Both [Azure Database for MySQL](https://azure.microsoft.com/en-us/products/mysql) and [Azure Database for PostgreSQL](https://azure.microsoft.com/en-us/products/postgresql) are available in a “Single Server” and a “Flexible Server” variant. The Single Server variants are on the retirement path ([MySQL](https://learn.microsoft.com/en-us/azure/mysql/single-server/whats-happening-to-mysql-single-server), [PostgreSQL](https://learn.microsoft.com/en-us/azure/postgresql/single-server/whats-happening-to-postgresql-single-server)). The MySQL single servers already cannot be created in the Azure portal anymore, although the API will continue to work until September 2024. All new servers are encouraged to be of the flexible kind.
 
-The following resources that share the same name but a different path between single and flexible variants:
-- Configuration
-- Database
-- FirewallRule
-- Server
-- PrivateEndpointConnection
+The Azure specification introduced the new Flexible Server variants in a way that shares some names with the existing Single Server variants, leading to conflicts for these resources:
+- `Configuration`
+- `Database`
+- `FirewallRule`
+- `Server`
+- `PrivateEndpointConnection`
+
+Given that the Single Server variants are being retired, we decided to use these conflicting resource names for the new Flexible Server. Single Server will not be available in the default API version at all, but will remain available via explicitly importing older API versions.
+
+For existing Pulumi programs using v1 of the Azure Native provider, this can mean that upgrading to v2 will result in a change of resource type for the above resources. For instance, `azure-native.dbformysql.Server` would previously have referred to a Single Server but will now refer to a Flexible Server, which is a different resource type. This will result in a replacement of the resource during the next `pulumi up`. However, the properties of flexible servers are sufficiently different that, in a typed language, the program will not compile.
+
 
 ### Simpler User Assigned Identities Inputs
 “User assigned identity” inputs are now represented as a simple list of strings in each language.

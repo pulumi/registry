@@ -10,5 +10,5 @@ publisher: Pulumiverse
 repo_url: https://github.com/pulumiverse/pulumi-exoscale
 schema_file_path: provider/cmd/pulumi-resource-exoscale/schema.json
 title: Exoscale
-updated_on: 1684529364
-version: v0.48.0
+updated_on: 1686559437
+version: v0.49.0

@@ -1,10 +1,14 @@
 ---
-title: Migration from Azure Native v1 to v2
-meta_desc: How to migrate from v1 to v2 of the Pulumi Azure Native Provider.
+title: Upgrade from Azure Native v1 to v2
+meta_desc: How to upgrade from v1 to v2 of the Pulumi Azure Native Provider.
 ---
 {{% notes type="info" %}}
 The Pulumi Azure Native Provider 2.0 is currently available in beta.
 {{% /notes %}}
+
+## About
+
+The Pulumi Azure Native Provider v2 is now available in beta. You can start taking advantages of the smaller, streamlined SDKs while right away. To upgrade to v2, there are a few changes you may need to make depending on your Pulumi programs.
 
 ## Upgrade Steps
 
@@ -25,6 +29,7 @@ In your Pulumi program, upgrade the package to point to the latest version of th
 {{< chooser language "typescript,python,csharp,go" >}}
 
 {{% choosable language typescript %}}
+
 ```
 -"@pulumi/azure-native": "^1.0.0",
 - "resolved": "https://registry.npmjs.org/@pulumi/azure-native/-/azure-native-1.102.0.tgz",

@@ -68,8 +68,6 @@ In your Pulumi program, upgrade the package to point to the latest version of th
 
 {{% /chooser %}}
 
-
-
 ### Upgrade Imports
 
 Review your program for warnings on missing imports or deprecated resources. If your program contains any deprecated explicit versions, you will need to update these to the a newer version. The suggested version is shown in the deprecation message. 

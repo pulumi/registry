@@ -1,6 +1,7 @@
 ---
 title: Upgrade from Azure Native v1 to v2
 meta_desc: How to upgrade from v1 to v2 of the Pulumi Azure Native Provider.
+layout: package
 ---
 {{% notes type="info" %}}
 The Pulumi Azure Native Provider 2.0 is currently available in beta.

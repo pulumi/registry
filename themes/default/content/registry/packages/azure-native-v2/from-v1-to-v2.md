@@ -208,3 +208,7 @@ In v2, the following resources are now associated with the `Flexible Server` var
 - `PrivateEndpointConnection`
 
 Existing v1 programs upgrading to v2 using the default version will result in a change of resource type. For instance, `azure-native.dbformysql.Server` would previously have referred to a `Single Server` but will now refer to a `Flexible Server` and will result in a replacement of the resource during the next `pulumi up`. However, the properties of flexible servers are sufficiently different that, in a typed language, the program will not compile. If you would like to continue using the previous Azure API version, you may do so by using the previous explicit version.
+
+### Contributing
+
+If you experience any unexpected issues during your migration or would like to contribute, please visit our [respository](https://github.com/pulumi/pulumi-azure-native) to [https://github.com/pulumi/pulumi-azure-native/issues] or submit a pull request.

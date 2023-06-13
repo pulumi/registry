@@ -39,6 +39,7 @@ security:
       - GITHUB_TOKEN
       - PULUMI_AI_WS_URL
       - ALGOLIA_APP_ID
+      - ALGOLIA_APP_SEARCH_KEY
 
 disableKinds:
   - category

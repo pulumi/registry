@@ -31,10 +31,14 @@ Below are examples of changing an import to use a specific version in each langu
 
 {{% /choosable %}}
 
+{{% choosable language csharp %}}
+
 ```csharp
 - using EventGrid = Pulumi.AzureNative.EventGrid;
 + using EventGrid20200601 = Pulumi.AzureNative.EventGrid.V20200601;
 ```
+
+{{% /choosable %}}
 
 {{% choosable language python %}}
 
@@ -51,6 +55,7 @@ Below are examples of changing an import to use a specific version in each langu
 - import eventgrid "github.com/pulumi/pulumi-azure-native-sdk/eventgrid/v2"
 + import eventgrid20200601 "github.com/pulumi/pulumi-azure-native-sdk/eventgrid/v2/v20200601”
 ```
+
 {{% /choosable %}}
 
 {{% choosable language yaml %}}
@@ -60,7 +65,9 @@ Below are examples of changing an import to use a specific version in each langu
 + type: azure-native:eventgrid/v20200601:Topic
 Remove Deprecated Explicit Versions
 ```
+
 {{% /choosable %}}
+{{< /chooser >}}
 
 ### Removed Deprecated Versions
 

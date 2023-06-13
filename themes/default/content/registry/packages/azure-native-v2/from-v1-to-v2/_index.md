@@ -21,10 +21,10 @@ We recommend upgrading to the [latest version](https://github.com/pulumi/pulumi-
 
 In your Pulumi program, upgrade the package to point to the latest version of the v2 beta.
 
-* JavaScript/TypeScript: [`@pulumi/azure-native`](https://www.npmjs.com/package/@pulumi/azure-native/v/2.0.0-alpha.2)
-* Python: [`pulumi-azure-native`](https://pypi.org/project/pulumi-azure-native/2.0.0a2/)
-* Go: [`github.com/pulumi/pulumi-azure-native/sdk/go/azure`](https://github.com/pulumi/pulumi-azure-native/releases/tag/v2.0.0-beta.12)
-* .NET: [`Pulumi.AzureNative`](https://www.nuget.org/packages/Pulumi.AzureNative/2.0.0-alpha.2)
+* JavaScript/TypeScript: [`@pulumi/azure-native`](https://www.npmjs.com/package/@pulumi/azure-native/v/2.0.0-beta.1)
+* Python: [`pulumi-azure-native`](https://pypi.org/project/pulumi-azure-native/2.0.0b1/)
+* Go: [`github.com/pulumi/pulumi-azure-native/sdk/go/azure`](https://github.com/pulumi/pulumi-azure-native/releases/tag/v2.0.0-beta.1)
+* .NET: [`Pulumi.AzureNative`](https://www.nuget.org/packages/Pulumi.AzureNative/2.0.0-beta.1)
 * Java: `com.pulumi.azurenative` [Beta unavailable]
 
 {{< chooser language "typescript,python,csharp,go" >}}

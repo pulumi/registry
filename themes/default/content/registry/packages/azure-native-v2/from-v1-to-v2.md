@@ -10,7 +10,7 @@ Azure Native v2 is currently in preview status. This guide
 ### Upgraded Default Versions
 This release upgrades all resources to use the latest available versions of Azure services. This gives access to all the latest features. This includes some breaking changes in the properties of some resources from the previous version.
 
-A full list of default version changes can be found …
+A full list of default version changes can be found in the [top-level resource versions](top-level-resource-versions).
 
 Where there are breaking changes these may appear as either a compilation error in a program or by showing as requiring replacement during preview due to the structure of the resources changing.
 

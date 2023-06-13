@@ -15,7 +15,8 @@ A full list of default version changes can be found in the [top-level resource v
 Where there are breaking changes these may appear as either a compilation error in a program or by showing as requiring replacement during preview due to the structure of the resources changing.
 
 To continue using the previous version of a resource:
-1. Check the documentation which lists the previous version for each resource. For example: `"API Version: 2022-09-01. Previous API Version: 2019-05-01.`
+
+1. Check the documentation which lists the previous version for each resource. For example: `Azure REST API Version: 2022-05-01. Prior API version in Azure Native 1.x: 2020-07-17-preview`
 2. Import the previous version of the resource. These are available in the version-specific sub-folders of the SDK.
 
 Below are examples of changing an import to use a specific version in each language.

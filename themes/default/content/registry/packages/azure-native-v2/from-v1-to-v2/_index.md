@@ -102,11 +102,11 @@ After updating all imports to reflect v2 included Azure API versions, run `pulum
 
 You may see pending changes when using the default version as the shape of the resource may have changed. You can choose to accept the changes, update your program to modify the resource parameters to mitigate changes, or continue using the previous default version from v1.
 
-A full list of default version changes can be found in the [top-level resource versions](top-level-resource-versions).
+A full list of default version changes can be found in the [top-level resource versions](./top-level-resource-versions).
 
 To continue using the previous Azure API version of a resource:
 
-1. Check the documentation in your IDE or our [registry API docs](./_index.md) which identifies the previous version for each resource. For example: `Azure REST API Version: 2022-05-01. Prior API version in Azure Native 1.x: 2020-07-17-preview`
+1. Check the documentation in your IDE or our [registry API docs](../_index.md) which identifies the previous version for each resource. For example: `Azure REST API Version: 2022-05-01. Prior API version in Azure Native 1.x: 2020-07-17-preview`
 2. Import the previous version of the resource. These are available in the version-specific sub-folders of the SDK.
 
 Below are examples of changing an import to use a specific version in each language.
@@ -157,7 +157,7 @@ Below are examples of changing an import to use a specific version in each langu
 
 #### User Assigned Identity Inputs
 
-“User assigned identity” inputs are now represented as a simple list of strings in each language instead of a map type. Where you are referencing user assigned identity inputs, you will need to update the syntax to resolve the error.
+`User assigned identity` inputs are now represented as a simple list of strings in each language instead of a map type. Where you are referencing user assigned identity inputs, you will need to update the syntax to resolve the error.
 
 ```typescript
 import * as resources from "@pulumi/azure-native/resources";
@@ -195,9 +195,7 @@ user_assigned_identity.id.apply(lambda id: {id: {}})
 
 #### Title Case Changes
 
-All resource names are now consistently in title case, starting with an uppercase letter. The previous lowercase resource names are aliased so all Pulumi state is backwards-compatible.
-
-This is a breaking change in user programs using these functions. Resolving the name discrepancy is as simple as updating the function names. For instance, in the TypeScript SDK, `azure-native.aadiam.getazureADMetric` changed to `azure-native.aadiam.getAzureADMetric`.
+All resource names are now consistently in title case, starting with an uppercase letter. The previous lowercase resource names are aliased so all Pulumi state is backwards-compatible. While functions are not aliased, resolving the name discrepancy is as simple as updating the function names. For instance, in the TypeScript SDK, `azure-native.aadiam.getazureADMetric` changed to `azure-native.aadiam.getAzureADMetric`.
 
 The complete list of affected resources and functions is [in this PR](https://github.com/pulumi/pulumi-azure-native/pull/2366).
 

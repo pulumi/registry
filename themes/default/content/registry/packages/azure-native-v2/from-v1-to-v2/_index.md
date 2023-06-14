@@ -70,7 +70,7 @@ In your Pulumi program, upgrade the package to point to the latest version of th
 
 ### Upgrade Imports
 
-Review your program for warnings on missing imports or deprecated resources. If your program contains any deprecated explicit versions, you will need to update these to the a newer version. The suggested version is shown in the deprecation message. 
+Review your program for warnings on missing imports or deprecated resources. If your program contains any deprecated explicit versions, you will need to update these to a newer version. The suggested version is shown in the deprecation message.
 
 ![azure-deprecation-cli](./azure-deprecation-cli.png)
 
@@ -96,11 +96,11 @@ Error: Cannot find module '@pulumi/azure-native/resources/v20210501'
 
 ### Review Pulumi Diff
 
-After updating all imports to reflect v2 included Azure API versions, run `pulumi up` and review the output.
+After updating all imports to reflect v2 included Azure API versions, run `pulumi preview` and review the output.
 
 #### Pending Changes on Default Versions
 
-You may see pending changes when using the default version as the shape of the resource may have changed. You can choose to accept the changes, update your program to modify the resource parameters to mitigate changes, or continue using the previous default version from v1.
+You may see pending changes when using the default version as the shape of the resource may have changed. You can choose to accept the changes, update your program to modify the resource properties to mitigate changes, or continue using the previous default version from v1.
 
 A full list of default version changes can be found in the [top-level resource versions](./top-level-resource-versions).
 
@@ -109,7 +109,7 @@ To continue using the previous Azure API version of a resource:
 1. Check the documentation in your IDE or our [registry API docs](https://www.pulumi.com/registry/packages/azure-native-v2/) which identifies the previous version for each resource. For example: `Azure REST API Version: 2022-05-01. Prior API version in Azure Native 1.x: 2020-07-17-preview`
 2. Import the previous version of the resource. These are available in the version-specific sub-folders of the SDK.
 
-Below are examples of changing an import to use a specific version in each language.
+Below are examples of changing an import to use an explicit version in each language.
 
 {{< chooser language "typescript,python,csharp,go,yaml" >}}
 
@@ -157,7 +157,7 @@ Below are examples of changing an import to use a specific version in each langu
 
 #### User Assigned Identity Inputs
 
-`User assigned identity` inputs are now represented as a simple list of strings in each language instead of a map type. Where you are referencing user assigned identity inputs, you will need to update the syntax to resolve the error.
+`User assigned identity` inputs are now represented as a simple string array in each language instead of a map type. Where you are referencing user assigned identity inputs, you will need to update the syntax to resolve the error.
 
 ```typescript
 import * as resources from "@pulumi/azure-native/resources";
@@ -202,9 +202,9 @@ The complete list of affected resources and functions is [in this PR](https://gi
 
 #### MySQL and PostgreSQL Server and Flexible Server
 
-Both [Azure Database for MySQL](https://azure.microsoft.com/en-us/products/mysql) and [Azure Database for PostgreSQL](https://azure.microsoft.com/en-us/products/postgresql) are available in a `Single Server` and a `Flexible Server` variant. The `Single Server` variants are on the retirement path ([MySQL](https://learn.microsoft.com/en-us/azure/mysql/single-server/whats-happening-to-mysql-single-server), [PostgreSQL](https://learn.microsoft.com/en-us/azure/postgresql/single-server/whats-happening-to-postgresql-single-server)). Azure recommends that all new servers are created as the `Flexible Server` variant.
+Both [Azure Database for MySQL](https://azure.microsoft.com/en-us/products/mysql) and [Azure Database for PostgreSQL](https://azure.microsoft.com/en-us/products/postgresql) are available in a `Single Server` and a `Flexible Server` variant. The `Single Server` variants are on the retirement path ([MySQL](https://learn.microsoft.com/en-us/azure/mysql/single-server/whats-happening-to-mysql-single-server), [PostgreSQL](https://learn.microsoft.com/en-us/azure/postgresql/single-server/whats-happening-to-postgresql-single-server)). Azure recommends that all new servers are created as a `Flexible Server` variant.
 
-In v2, the following resources are now associated with the `Flexible Server` variant instead of `Single Server` as they were in v1:
+In v2, the following resources are now associated with a `Flexible Server` variant instead of `Single Server` as they were in v1:
 - `Configuration`
 - `Database`
 - `FirewallRule`
@@ -215,4 +215,4 @@ Existing v1 programs upgrading to v2 using the default version will result in a 
 
 ### Contributing
 
-If you experience any unexpected issues during your migration or would like to contribute, please visit our [respository](https://github.com/pulumi/pulumi-azure-native) to [https://github.com/pulumi/pulumi-azure-native/issues] or submit a pull request.
+If you experience any unexpected issues during your migration or would like to contribute to our codebase, please visit our [respository](https://github.com/pulumi/pulumi-azure-native) to [https://github.com/pulumi/pulumi-azure-native/issues] or submit a pull request.

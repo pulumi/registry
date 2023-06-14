@@ -1,5 +1,5 @@
 ---
-title: Azure-Native version guide
+title: Azure Native version guide
 meta_desc: How Azure API versions are represented in the native Azure provider for Pulumi.
 layout: package
 ---
@@ -13,9 +13,9 @@ This guide describes how we combine both versioning approaches to achieve the fo
 - Provide stable SDKs without unexpected breaking changes.
 - Enable user experience similar to other Pulumi providers.
 
-## Azure-Native Semantic Versioning
+## Azure Native Semantic Versioning
 
-Releases of the Azure-Native SDKs follow the semantic versioning convention, where each version is identified with three numbers: `major.minor.patch` (for example, `1.2.1`).
+Releases of the Azure Native SDKs follow the semantic versioning convention, where each version is identified with three numbers: `major.minor.patch` (for example, `1.2.1`).
 
 - Patch versions contain bug fixes only.
 - Minor versions may ship fixes and new functionality that doesn't break existing code: new resources, functions, properties.
@@ -96,11 +96,11 @@ resources:
 
 As soon as Microsoft publishes a new API version, the corresponding module is created in the native Azure provider for Pulumi and will be published in the next minor release.
 
-Older API versions remain in the provider indefinitely; therefore, you can pin all your resources to specific API versions. You can keep using them for as long as those versions are supported by Azure, even across major versions of the Pulumi Azure-Native provider.
+Older API versions remain in the provider indefinitely; therefore, you can pin all your resources to specific API versions. You can keep using them for as long as those versions are supported by Azure and are within the same major version of the Pulumi Azure Native provider.
 
 ## Top-Level Modules
 
-In addition to all versioned modules described above, the Pulumi Azure-Native provider publishes a default version of every resource in top-level modules. For example, the `Vault` resource of the `KeyVault` resource provider is published as the Pulumi resource `azure-native:keyvault:Vault`. You can import this resource with the following statement:
+In addition to all versioned modules described above, the Pulumi Azure Native provider publishes a default version of every resource in top-level modules. For example, the `Vault` resource of the `KeyVault` resource provider is published as the Pulumi resource `azure-native:keyvault:Vault`. You can import this resource with the following statement:
 
 {{< chooser language "typescript,python,csharp,go" >}}
 

@@ -215,4 +215,4 @@ Existing v1 programs upgrading to v2 using the default version will result in a 
 
 ### Contributing
 
-If you experience any unexpected issues during your migration or would like to contribute to our codebase, please visit our [respository](https://github.com/pulumi/pulumi-azure-native) to [https://github.com/pulumi/pulumi-azure-native/issues] or submit a pull request.
+If you experience any unexpected issues during your migration or would like to contribute to our codebase, please visit our [respository](https://github.com/pulumi/pulumi-azure-native) to open an [issue](https://github.com/pulumi/pulumi-azure-native/issues) or submit a pull request.

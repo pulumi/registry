@@ -4,6 +4,7 @@
 {{ $versionGuidePath := printf "%s/" (path.Join $packageUrl "version-guide") }}
 {{ $migratePath := printf "%s/" (path.Join $packageUrl "from-classic") }}
 {{ $upgradeV2Path := printf "%s/" (path.Join $packageUrl "from-v1-to-v2") }}
+{{ $apiDocsPath := printf "%s/" (path.Join $packageUrl "api-docs") }}
 
 <nav class="main-nav">
     <div class="all-packages-icon-link">
@@ -56,7 +57,12 @@
                 <a href="{{ $upgradeV2Path }}">Upgrade to v2</a>
             </li>
         {{ end }}
-        <h2 class="no-anchor api-docs-heading">API docs</h2>
+        {{ $sidenav_selected = cond (eq .Page.RelPermalink $apiDocsPath) "active" "" }}
+        {{ if .GetPage $apiDocsPath }}
+            <li class="sidenav-topic {{ $sidenav_selected }}">
+                <a href="{{ $apiDocsPath }}">API Docs</a>
+            </li>
+        {{ end }}
         {{ partial "registry/left-nav.html" . }}
     </ul>
 </nav>

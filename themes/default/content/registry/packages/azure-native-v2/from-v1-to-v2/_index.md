@@ -1,10 +1,10 @@
 ---
-title: Upgrade from Azure Native v1 to v2
+title: Upgrade Guide for Azure Native v1 to v2
 meta_desc: How to upgrade from v1 to v2 of the Pulumi Azure Native Provider.
 layout: package
 ---
 {{% notes type="info" %}}
-The Pulumi Azure Native Provider 2.0 is currently available in beta.
+The Pulumi Azure Native Provider v2 is currently available in beta.
 {{% /notes %}}
 
 ## About
@@ -106,7 +106,7 @@ A full list of default version changes can be found in the [top-level resource v
 
 To continue using the previous Azure API version of a resource:
 
-1. Check the documentation in your IDE or our [registry API docs](../_index.md) which identifies the previous version for each resource. For example: `Azure REST API Version: 2022-05-01. Prior API version in Azure Native 1.x: 2020-07-17-preview`
+1. Check the documentation in your IDE or our [registry API docs](https://www.pulumi.com/registry/packages/azure-native-v2/) which identifies the previous version for each resource. For example: `Azure REST API Version: 2022-05-01. Prior API version in Azure Native 1.x: 2020-07-17-preview`
 2. Import the previous version of the resource. These are available in the version-specific sub-folders of the SDK.
 
 Below are examples of changing an import to use a specific version in each language.

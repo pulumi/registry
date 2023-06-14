@@ -125,7 +125,7 @@ Below are examples of changing an import to use an explicit version in each lang
 
 ```python
 - from pulumi_azure_native import eventgrid
-+ from pulumi_azure_native.eventgrid import v20200601 as eventgrid20200601
++ from pulumi_azure_native.eventgrid import v20200601 as eventgrid
 ```
 
 {{% /choosable %}}
@@ -133,7 +133,7 @@ Below are examples of changing an import to use an explicit version in each lang
 
 ```csharp
 - using EventGrid = Pulumi.AzureNative.EventGrid;
-+ using EventGrid20200601 = Pulumi.AzureNative.EventGrid.V20200601;
++ using EventGrid = Pulumi.AzureNative.EventGrid.V20200601;
 ```
 
 {{% /choosable %}}
@@ -141,7 +141,7 @@ Below are examples of changing an import to use an explicit version in each lang
 
 ```go
 - import eventgrid "github.com/pulumi/pulumi-azure-native-sdk/eventgrid/v2"
-+ import eventgrid20200601 "github.com/pulumi/pulumi-azure-native-sdk/eventgrid/v2/v20200601”
++ import eventgrid "github.com/pulumi/pulumi-azure-native-sdk/eventgrid/v2/v20200601”
 ```
 
 {{% /choosable %}}
@@ -231,10 +231,10 @@ Existing v1 programs upgrading to v2 using the default version will result in a 
 
 ```python
 - from pulumi_azure_native import dbformysql
-+ from pulumi_azure_native.dbformysql import v20171201 as dbformysql20171201
++ from pulumi_azure_native.dbformysql import v20171201 as dbformysql
 
 - from pulumi_azure_native import dbforpostgresql
-+ from pulumi_azure_native.dbforpostgresql import v20171201 as dbforpostgresql20171201
++ from pulumi_azure_native.dbforpostgresql import v20171201 as dbforpostgresql
 ```
 
 {{% /choosable %}}
@@ -242,7 +242,10 @@ Existing v1 programs upgrading to v2 using the default version will result in a 
 
 ```csharp
 - using MySQLDB = Pulumi.AzureNative.DBforMySQL;
-+ using MySQLDB20171201 = Pulumi.AzureNative.DBforMySQL.V20171201;
++ using MySQLDB = Pulumi.AzureNative.DBforMySQL.V20171201;
+
+- using PostgreSQLDB = Pulumi.AzureNative.DBforPostgreSQL;
++ using PostgreSQLDB = Pulumi.AzureNative.DBforPostgreSQL.V20171201;
 ```
 
 {{% /choosable %}}
@@ -250,10 +253,10 @@ Existing v1 programs upgrading to v2 using the default version will result in a 
 
 ```go
 - import mysqldb "github.com/pulumi/pulumi-azure-native-sdk/dbformysql"
-+ import mysql20171201 "github.com/pulumi/pulumi-azure-native-sdk/dbformysql/v2/v20200601"
++ import mysqldb "github.com/pulumi/pulumi-azure-native-sdk/dbformysql/v2/v20200601"
 
 - import postgresqldb "github.com/pulumi/pulumi-azure-native-sdk/dbforpostgresql"
-+ import postgresqldb20171201 "github.com/pulumi/pulumi-azure-native-sdk/dbforpostgresql/v2/20171201"
++ import postgresqldb "github.com/pulumi/pulumi-azure-native-sdk/dbforpostgresql/v2/20171201"
 ```
 
 {{% /choosable %}}

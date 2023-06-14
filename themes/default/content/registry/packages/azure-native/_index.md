@@ -112,6 +112,7 @@ Visit the [How-to Guides](./how-to-guides) to find step-by-step guides for speci
 
 If you're already using the [Pulumi Azure Classic Provider](/registry/packages/azure) and would like to migrate to Azure Native, use the [migration guide](./from-classic).
 
+
 ### From Azure Resource Manager (ARM) templates
 
 If you have Azure Resource Manager (ARM) templates that you'd like to migrate to Pulumi, use the [Migrate From Azure Resource Manager guide](/docs/guides/adopting/from_azure).

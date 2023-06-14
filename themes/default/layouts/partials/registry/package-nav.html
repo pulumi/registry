@@ -3,6 +3,7 @@
 {{ $howToPath := printf "%s/" (path.Join $packageUrl "how-to-guides/") }}
 {{ $versionGuidePath := printf "%s/" (path.Join $packageUrl "version-guide") }}
 {{ $migratePath := printf "%s/" (path.Join $packageUrl "from-classic") }}
+{{ $upgradeV2Path := printf "%s/" (path.Join $packageUrl "from-v1-to-v2") }}
 {{ $apiDocsPath := printf "%s/" (path.Join $packageUrl "api-docs") }}
 
 <nav class="main-nav">
@@ -48,6 +49,12 @@
         {{ if .GetPage $migratePath }}
             <li class="sidenav-topic {{ $sidenav_selected }}">
                 <a href="{{ $migratePath }}">Migrate from classic</a>
+            </li>
+        {{ end }}
+        {{ $sidenav_selected = cond (eq .Page.RelPermalink $upgradeV2Path) "active" "" }}
+        {{ if .GetPage $upgradeV2Path }}
+            <li class="sidenav-topic {{ $sidenav_selected }}">
+                <a href="{{ $upgradeV2Path }}">Upgrade to v2</a>
             </li>
         {{ end }}
         {{ $sidenav_selected = cond (eq .Page.RelPermalink $apiDocsPath) "active" "" }}

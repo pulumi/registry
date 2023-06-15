@@ -66,7 +66,7 @@
                     {{ partial "docs/cloud-overview.html" . }}
                 {{ end }}
 
-                <section class="docs-content" data-swiftype-index="true">
+                <section class="docs-content">
                     {{ if strings.HasSuffix .Permalink "how-to-guides/" }}
                         {{ if (eq (len .Pages) 0) }}
                             There are no guides yet for this package.

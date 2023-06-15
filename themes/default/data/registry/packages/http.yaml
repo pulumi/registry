@@ -1,0 +1,14 @@
+category: Cloud
+component: false
+description: A Pulumi package for creating and managing HTTP cloud resources.
+featured: false
+logo_url: ""
+name: http
+native: false
+package_status: public_preview
+publisher: Pulumi
+repo_url: https://github.com/pulumi/pulumi-http
+schema_file_path: provider/cmd/pulumi-resource-http/schema.json
+title: HTTP
+updated_on: 1686855080
+version: v0.0.1

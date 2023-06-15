@@ -10,5 +10,5 @@ publisher: Authress
 repo_url: https://github.com/Authress/pulumi-authress
 schema_file_path: provider/cmd/pulumi-resource-authress/schema.json
 title: Authress
-updated_on: 1685606215
-version: v1.1.43
+updated_on: 1686786337
+version: v1.1.45

@@ -1,0 +1,14 @@
+category: Cloud
+component: false
+description: A Pulumi package for creating and managing Archive cloud resources.
+featured: false
+logo_url: ""
+name: archive
+native: false
+package_status: public_preview
+publisher: Pulumi
+repo_url: https://github.com/pulumi/pulumi-archive
+schema_file_path: provider/cmd/pulumi-resource-archive/schema.json
+title: Archive
+updated_on: 1686860467
+version: v0.0.1

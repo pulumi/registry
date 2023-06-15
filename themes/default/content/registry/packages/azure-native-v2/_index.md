@@ -108,28 +108,28 @@ resources:
 
 ### From Azure Classic
 
-If you're already using the [Pulumi Azure Classic Provider](/registry/packages/azure) and would like to migrate to Azure Native, use the [migration guide](../azure-native/from-classic.md).
+If you're already using the [Pulumi Azure Classic Provider](/registry/packages/azure/) and would like to migrate to Azure Native, use the [migration guide](../azure-native/from-classic/).
 
 
 ### From v1 to v2
 
-To migrate from v1 to v2 of the Pulumi Azure Native Provider, use the [version upgrade guide](./from-v1-to-v2).
+To migrate from v1 to v2 of the Pulumi Azure Native Provider, use the [version upgrade guide](./from-v1-to-v2/).
 
 ### From Azure Resource Manager (ARM) templates
 
-If you have Azure Resource Manager (ARM) templates that you'd like to migrate to Pulumi, use the [Migrate From Azure Resource Manager guide](/docs/guides/adopting/from_azure).
+If you have Azure Resource Manager (ARM) templates that you'd like to migrate to Pulumi, use the [Migrate From Azure Resource Manager guide](/docs/guides/adopting/from_azure/).
 
 ## Manage incompatible resources using the Azure SDK
 
-Some Azure resources aren't included in Azure Native because they're not compatible with the [Pulumi resource model](/docs/concepts/how-pulumi-works). If you need to manage these kinds of resources, you can use convenience helpers provided by Azure Native to set up an Azure SDK client and credentials in your preferred language. Use these how-to guides to get started:
+Some Azure resources aren't included in Azure Native because they're not compatible with the [Pulumi resource model](/docs/concepts/how-pulumi-works/). If you need to manage these kinds of resources, you can use convenience helpers provided by Azure Native to set up an Azure SDK client and credentials in your preferred language. Use these how-to guides to get started:
 
-* [Typescript](/registry/packages/azure-native/how-to-guides/azure-ts-call-azure-sdk)
-* [Go](/registry/packages/azure-native/how-to-guides/azure-go-call-azure-sdk)
-* [C#](/registry/packages/azure-native/how-to-guides/azure-cs-call-azure-api)
-* [Python](/registry/packages/azure-native/how-to-guides/azure-py-call-azure-sdk)
+* [Typescript](/registry/packages/azure-native/how-to-guides/azure-ts-call-azure-sdk/)
+* [Go](/registry/packages/azure-native/how-to-guides/azure-go-call-azure-sdk/)
+* [C#](/registry/packages/azure-native/how-to-guides/azure-cs-call-azure-api/)
+* [Python](/registry/packages/azure-native/how-to-guides/azure-py-call-azure-sdk/)
 
 ## How resources are versioned
 
 Azure Native provides access to all API versions of each Azure resource so that you can access the entire Azure API surface and pin to the version you prefer.
 
-Read the [version guide](../azure-native/version-guide) to learn more about how you can manage the Azure API versions you're using, including both module-per-version and top-level-resources approaches.
+Read the [version guide](../azure-native/version-guide/) to learn more about how you can manage the Azure API versions you're using, including both module-per-version and top-level-resources approaches.

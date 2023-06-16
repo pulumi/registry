@@ -39,6 +39,7 @@ jobs:
         run: |
           yarn install
           make lint-fix
+          ./scripts/ci/validate-packages.sh
 
       - name: Commit Fix
         uses: stefanzweifel/git-auto-commit-action@v4

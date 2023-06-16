@@ -1,7 +1,7 @@
 ---
 title: impart
 meta_desc: Provides an overview of the Impart Provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 The Impart Resource Provider lets you manage Impart resources.

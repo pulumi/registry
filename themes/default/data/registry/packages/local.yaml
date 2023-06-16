@@ -1,0 +1,14 @@
+category: Cloud
+component: false
+description: A Pulumi package for creating and managing Local cloud resources.
+featured: false
+logo_url: ""
+name: local
+native: false
+package_status: public_preview
+publisher: Pulumi
+repo_url: https://github.com/pulumi/pulumi-local
+schema_file_path: provider/cmd/pulumi-resource-local/schema.json
+title: Local
+updated_on: 1686871136
+version: v0.0.1

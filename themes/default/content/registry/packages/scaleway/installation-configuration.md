@@ -1,7 +1,7 @@
 ---
 title: Scaleway Installation & Configuration
 meta_desc: Information on how to install the Scaleway provider.
-layout: package
+layout: installation
 ---
 
 ## Installation
@@ -62,9 +62,9 @@ $ export SCW_SECRET_KEY=<SCW_SECRET_KEY>
 
 ## Configuration Options
 
-Use `pulumi config set scaleway:<option>` or pass options to the [constructor of `new scaleway.Provider`](/registry/packages/scaleway/api-docs/provider).
+Use `pulumi config set scaleway:<option>` or pass options to the [constructor of `new scaleway.Provider`]({{< relref "/registry/packages/scaleway/api-docs/provider" >}}).
 
-| Option | Environment Variables | Required? | Description |
+| Option | Environment Variables | Required/Optional | Description |
 |-----|------|------|----|
 | `access_key`| `SCW_ACCESS_KEY` | Required | [Scaleway access key](https://console.scaleway.com/project/credentials) |
 | `secret_key`| `SCW_SECRET_KEY` | Required | [Scaleway secret key](https://console.scaleway.com/project/credentials) |

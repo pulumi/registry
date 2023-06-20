@@ -15,7 +15,7 @@ The Pulumi Scaleway provider is available as a package in all Pulumi languages:
 
 ### Provider Binary
 
-The Scaleway provider binary is a third party binary. It can be installed using the `pulumi plugin` command.
+The Scaleway provider binary is a third party binary. It can be installed using the `pulumi plugin` command, in case it is not downloaded automatically.
 
 ```bash
 pulumi plugin install resource scaleway <version> --server github://api.github.com/lbrlabs
@@ -64,7 +64,7 @@ $ export SCW_SECRET_KEY=<SCW_SECRET_KEY>
 
 Use `pulumi config set scaleway:<option>` or pass options to the [constructor of `new scaleway.Provider`](/registry/packages/scaleway/api-docs/provider).
 
-| Option | Environment Variables | Required? | Description |
+| Option | Environment Variables | Required/Optional | Description |
 |-----|------|------|----|
 | `access_key`| `SCW_ACCESS_KEY` | Required | [Scaleway access key](https://console.scaleway.com/project/credentials) |
 | `secret_key`| `SCW_SECRET_KEY` | Required | [Scaleway secret key](https://console.scaleway.com/project/credentials) |

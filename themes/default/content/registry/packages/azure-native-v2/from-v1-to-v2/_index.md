@@ -15,7 +15,7 @@ The Pulumi Azure Native Provider v2 is now available in beta. You can start taki
 
 ### Prerequisites
 
-We recommend upgrading to the [latest version](https://github.com/pulumi/pulumi-azure-native/releases/tag/v1.103.0) of the v1 provider as a prequisiste to the v2 upgrade. This will enable you to resolve any pre-existing deprecated versions or resource structure changes.
+We recommend upgrading to the [latest version](https://github.com/pulumi/pulumi-azure-native/releases/tag/v1.103.0) of the v1 provider as a prerequisite to the v2 upgrade. This will enable you to resolve any pre-existing deprecated versions or resource structure changes.
 
 Review your program for warnings on missing imports or deprecated resources. If your program contains any deprecated explicit versions, you will need to update these to a newer version. The suggested version is shown in the deprecation message.
 

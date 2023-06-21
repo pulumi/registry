@@ -14,6 +14,15 @@ ls -l "themes/default/data/registry/packages" | tail -n +2 | awk '{print $9}' | 
         echo "ERROR: no content files found for package, $pkg"
         exit 1
     fi
+
+    # check to see that package _index.md file exists and is using the correct layout.
+    layout=$(cat "themes/default/content/registry/packages/$pkg/_index.md" | yq -f eval '.layout')
+    if [[ "$layout" != "package" ]]; then
+        echo "ERROR: invalid layout, '$layout' found for package, $pkg. Must use the 'package' layout."
+        exit 1
+    fi
 done; 
+
+echo "packages validated successfully!!"
 
 

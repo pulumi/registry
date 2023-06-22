@@ -13,5 +13,6 @@ fi
 
 aws sts get-caller-identity
 
+./scripts/ci/validate-packages.sh
 ./scripts/ci/build.sh
 ./scripts/ci/sync.sh

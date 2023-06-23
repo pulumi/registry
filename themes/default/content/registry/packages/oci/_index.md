@@ -11,7 +11,7 @@ The OCI provider must be configured with credentials to deploy and update resour
 
 {{< chooser language "typescript,python,go,csharp,java,yaml" >}}
 
-{{% choosable language javascript %}}
+{{% choosable language typescript %}}
 
 ```typescript
 import * as oci from "@pulumi/oci";

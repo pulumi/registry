@@ -9,7 +9,7 @@ The OCI provider must be configured with credentials to deploy and update resour
 
 ## Example
 
-{{< chooser language "typescript,python,go,csharp,java" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
 
 {{% choosable language javascript %}}
 

@@ -230,7 +230,7 @@
     },
     {
       "repoSlug": "lbrlabs/pulumi-lbrlabs-eks",
-      "schemaFile": "provider/cmd/pulumi-resource-lbrlabs-eks/schema.json"
+      "schemaFile": "schema.yaml"
     }
   ]
 }

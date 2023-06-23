@@ -1,0 +1,14 @@
+category: Network
+component: false
+description: A Pulumi package for creating and managing the Matchbox iPXE server.
+featured: false
+logo_url: ""
+name: matchbox
+native: false
+package_status: public_preview
+publisher: Pulumiverse
+repo_url: https://github.com/pulumiverse/pulumi-matchbox
+schema_file_path: provider/cmd/pulumi-resource-matchbox/schema.json
+title: Matchbox
+updated_on: 1687439378
+version: v0.1.6

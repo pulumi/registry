@@ -6,7 +6,7 @@ layout: package
 
 ## Installation
 
-1. To use this package, please [install the Pulumi CLI first](https://www.pulumi.com/docs/install/).
+1. To use this package, please [install the Pulumi CLI first](https://www.pulumi.com/docs/get-started/install/).
 1. This package is only available for Python currently, but support for other languages might be available later.
 
 ### Python

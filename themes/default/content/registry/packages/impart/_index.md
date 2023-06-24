@@ -1,5 +1,5 @@
 ---
-title: impart
+title: Impart Security
 meta_desc: Provides an overview of the Impart Provider for Pulumi.
 layout: package
 ---
@@ -130,4 +130,3 @@ func getFileHash(filePath string) (string, error) {
 {{% /choosable %}}
 
 {{< /chooser >}}
-

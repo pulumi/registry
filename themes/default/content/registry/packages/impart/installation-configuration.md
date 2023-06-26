@@ -28,4 +28,3 @@ Use `pulumi config set impart:<option> --secret`.
 {{% notes type="warning" %}}
 You should use the `--secret` flag to encrypt the config values using your secret provider. For more information on this, view the [Pulumi Configuration Secrets](https://www.pulumi.com/docs/concepts/secrets/#secrets) section in the Pulumi docs.
 {{% /notes %}}
-

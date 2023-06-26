@@ -8,10 +8,12 @@ layout: package
 
 The Buildkite provider is available as a package in all Pulumi languages:
 
+<!-- x-release-please-start-major -->
 * JavaScript/TypeScript: [`@pulumiverse/pulumi-buildkite`](https://www.npmjs.com/package/@pulumiverse/pulumi-buildkite)
 * Python: [`pulumiverse-buildkite`](https://pypi.org/project/pulumiverse-buildkite/)
 * Go: [`github.com/pulumiverse/pulumi-buildkite/sdk/v2/go/buildkite`](https://github.com/pulumiverse/pulumi-buildkite)
 * .NET: [`Pulumiverse.Buildkite`](https://www.nuget.org/packages/Pulumiverse.Buildkite)
+<!-- x-release-please-end -->
 
 ## Setup
 
@@ -24,9 +26,9 @@ The Pulumi Buildkite Provider needs to be configured with a Buildkite token befo
 
 Use `pulumi config set buildkite:<option>` or pass options to the [constructor of `new buildkite.Provider`](/registry/packages/buildkite/api-docs/provider).
 
-| Option | Required? | Description |
-| - | - | - |
-| `api_token`  Required  A Buildkite API Access Token. Can be configured from the environment variable `BUILDKITE_API_TOKEN`. Must have GraphQL access, as well as the `write_pipelines` and `read_pipelines` scopes. |
-| `organization` | Required | The Buildkite organization slug. Can be configured from the environment variable `BUILDKITE_ORGANIZATION`. |
-| `graphql_url` | Optional | The Buildkite GraphQL URL. Can be configured from the environment variable `BUILDKITE_GRAPHQL_URL`. |
-| `rest_url` | Optional | The Buildkite REST URL. Can be configured from the environment variable `BUILDKITE_REST_URL`. |
+| Option          | Required/Optional | Description                                                                                                       |
+|-----------------|-------------------|-------------------------------------------------------------------------------------------------------------------|
+| `api_token`     | Required          | A Buildkite API Access Token. Can be configured from the environment variable `BUILDKITE_API_TOKEN`. Must have GraphQL access, as well as the `write_pipelines` and `read_pipelines` scopes. |
+| `organization`  | Required          | The Buildkite organization slug. Can be configured from the environment variable `BUILDKITE_ORGANIZATION`. |
+| `graphql_url`  | Optional          | The Buildkite GraphQL URL. Can be configured from the environment variable `BUILDKITE_GRAPHQL_URL`. |
+| `rest_url`  | Optional          | The Buildkite REST URL. Can be configured from the environment variable `BUILDKITE_REST_URL`. |

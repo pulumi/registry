@@ -268,7 +268,7 @@ We can do this by configuring a Pulumi provider for our newly created cluster, a
     also output incremental status updates, as the Kubernetes changes progress.
 
 	> **Note:** Pulumi auto-generates a suffix for all objects.
-    > See the [Pulumi Programming Model](/docs/concepts/programming-model#autonaming) for more info.
+    > See the [Pulumi Programming Model](/docs/concepts/resources/names/#autonaming) for more info.
     >
     > ```
     > ...

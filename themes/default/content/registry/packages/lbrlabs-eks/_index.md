@@ -391,6 +391,7 @@ resources:
       systemNodeSubnetIds: ${vpc.privateSubnetIds}
       systemNodeInstanceTypes: [ "t3.large" ]
       systemNodeDesiredCount: 4
+      <!-- markdownlint-disable-next-line -->
       letsEncryptEmail: "mail@lbrlabs.com"
   workloadNodes:
     type: lbrlabs-eks:index:AttachedNodeGroup
@@ -410,10 +411,12 @@ resources:
     properties:
       chart: wordpress
       repositoryOpts:
+        <!-- markdownlint-disable-next-line -->
         repo: https://charts.bitnami.com/bitnami
       values:
         wordpressUsername: lbrlabs
         wordpressPassword: correct-horse-battery-stable
+        <!-- markdownlint-disable-next-line -->
         wordpressEmail: mail@lbrlabs.com
         ingress:
           enabled: true

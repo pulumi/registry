@@ -1,7 +1,7 @@
 ---
 title: LBr Labs EKS
 meta_desc: Information on how to install the LBr Labs EKS component.
-layout: installation
+layout: package
 ---
 
 ## Installation

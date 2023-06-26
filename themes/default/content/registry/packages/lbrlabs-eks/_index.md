@@ -4,6 +4,8 @@ meta_desc: Provides an overview of the batteries include EKS provider for Pulumi
 layout: package
 ---
 
+<!-- markdownlint-disable MD034 -->
+
 The LBr Labs EKS component for Pulumi can be used to provision a batteries include EKS cluster.
 
 It provides resources to create a functioning EKS cluster with several Kubernetes addons and operators which will allow you to be quickly successful with Amazon EKS such as:
@@ -391,7 +393,6 @@ resources:
       systemNodeSubnetIds: ${vpc.privateSubnetIds}
       systemNodeInstanceTypes: [ "t3.large" ]
       systemNodeDesiredCount: 4
-      <!-- markdownlint-disable-next-line -->
       letsEncryptEmail: "mail@lbrlabs.com"
   workloadNodes:
     type: lbrlabs-eks:index:AttachedNodeGroup
@@ -411,12 +412,10 @@ resources:
     properties:
       chart: wordpress
       repositoryOpts:
-        <!-- markdownlint-disable-next-line -->
         repo: https://charts.bitnami.com/bitnami
       values:
         wordpressUsername: lbrlabs
         wordpressPassword: correct-horse-battery-stable
-        <!-- markdownlint-disable-next-line -->
         wordpressEmail: mail@lbrlabs.com
         ingress:
           enabled: true

@@ -258,6 +258,8 @@ const opts = {
         MD028: false,
         // Allow indentation in unordered lists.
         MD007: false,
+        // Allow bareURLs.
+        MD034: false,
 
         // Turning off the following rules so we can get this linter into a passing state so
         // we can turn it on. We can follow up and remove these in the future if we feel the

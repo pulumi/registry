@@ -10,8 +10,8 @@ The Pulumi LBr Labs EKS provider is available as a package in all Pulumi languag
 
 * JavaScript/TypeScript: [`@lbrlabs/pulumi-eks`](https://www.npmjs.com/package/@lbrlabs/pulumi-eks)
 * Python: [`lbrlabs_pulumi_eks`](https://pypi.org/project/lbrlabs-pulumi-eks/)
-* Go: [`github.com/lbrlabs/pulumi-eks/sdk/go/`](https://pkg.go.dev/github.com/lbrlabs/pulumi-eks/sdk)
-* .NET: [`Lbrlabs.PulumiPackage.eks`](https://www.nuget.org/packages/Lbrlabs.PulumiPackage.Eks)
+* Go: [`github.com/lbrlabs/pulumi-eks/sdk/go/`](https://pkg.go.dev/github.com/lbrlabs/pulumi-lbrlabs/eks/sdk)
+* .NET: [`Lbrlabs.PulumiPackage.eks`](https://www.nuget.org/packages/Lbrlabs.PulumiPackage.LbrlabsEks)
 
 ### Provider Binary
 

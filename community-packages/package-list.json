@@ -165,14 +165,6 @@
       "schemaFile": "provider/cmd/pulumi-resource-vultr/schema.json"
     },
     {
-      "repoSlug": "zscaler/pulumi-zpa",
-      "schemaFile": "provider/cmd/pulumi-resource-zpa/schema.json"
-    },
-    {
-      "repoSlug": "zscaler/pulumi-zia",
-      "schemaFile": "provider/cmd/pulumi-resource-zia/schema.json"
-    },
-    {
       "repoSlug": "pulumiverse/pulumi-statuscake",
       "schemaFile": "provider/cmd/pulumi-resource-statuscake/schema.json"
     },

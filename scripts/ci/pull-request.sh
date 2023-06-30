@@ -13,6 +13,8 @@ fi
 
 aws sts get-caller-identity
 
-./scripts/ci/validate-packages.sh
+# Commented temporarily to allow package authors to adopt the new layout naming.
+# https://github.com/pulumi/registry/pull/2797
+# ./scripts/ci/validate-packages.sh
 ./scripts/ci/build.sh
 ./scripts/ci/sync.sh

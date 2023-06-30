@@ -223,6 +223,10 @@
     {
       "repoSlug": "lbrlabs/pulumi-lbrlabs-eks",
       "schemaFile": "schema.yaml"
+    },
+    {
+      "repoSlug": "lbrlabs/pulumi-cockroach",
+      "schemaFile": "provider/cmd/pulumi-resource-cockroach/schema.json"
     }
   ]
 }

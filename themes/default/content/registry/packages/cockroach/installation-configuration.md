@@ -59,4 +59,4 @@ $ export COCKROACH_API_KEY=<COCKROACH_API_KEY>
 
 ## Configuration Options
 
-Use `pulumi config set cockroach:<option>` or pass options to the [constructor of `new cockroach.Provider`]({{< relref "/registry/packages/cockroach/api-docs/provider" >}}).
+Use `pulumi config set cockroach:<option>` or pass options to the [constructor of `new cockroach.Provider`](/registry/packages/cockroach/api-docs/provider).

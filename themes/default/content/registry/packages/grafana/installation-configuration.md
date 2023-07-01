@@ -62,4 +62,4 @@ $ export GRAFANA_AUTH=<GRAFANA_AUTH>
 
 ## Configuration Options
 
-Use `pulumi config set grafana:<option>` or pass options to the [constructor of `new grafana.Provider`]({{< relref "/registry/packages/grafana/api-docs/provider" >}}).
+Use `pulumi config set grafana:<option>` or pass options to the [constructor of `new grafana.Provider`](/registry/packages/grafana/api-docs/provider).

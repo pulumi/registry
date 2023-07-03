@@ -15,7 +15,7 @@ The Pulumi Scaleway provider is available as a package in all Pulumi languages:
 
 ### Provider Binary
 
-The Scaleway provider binary is a third party binary. It can be installed using the `pulumi plugin` command, in case it is not downloaded automatically.
+The Scaleway provider binary is a third party binary. It can be installed using the `pulumi plugin` command.
 
 ```bash
 pulumi plugin install resource scaleway <version> --server github://api.github.com/lbrlabs

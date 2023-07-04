@@ -15,21 +15,19 @@ ls -l "themes/default/data/registry/packages" | tail -n +2 | awk '{print $9}' | 
         exit 1
     fi
 
-    # check to see that package _index.md file exists and is using the correct layout.
-    overview_layout=$(cat "themes/default/content/registry/packages/$pkg/_index.md" | yq -f eval '.layout')
-    if [[ "$overview_layout" != "package" ]]; then
-        echo "ERROR: invalid layout, '$overview_layout' found for package, $pkg. Must use the 'package' layout."
+    # check to see that package _index.md file exists.
+    overview_path="themes/default/content/registry/packages/$pkg/_index.md"
+    if [ ! -f $overview_path ]; then
+        echo "ERROR: '$overview_path' does not exist."
         exit 1
     fi
 
-    # check to see that package  install and configuration file exists and is using the correct layout.
-    install_layout=$(cat "themes/default/content/registry/packages/$pkg/installation-configuration.md" | yq -f eval '.layout')
-    if [[ "$install_layout" != "package" ]]; then
-        echo "ERROR: invalid layout, '$install_layout' found for package, $pkg. Must use the 'package' layout."
+    install_path="themes/default/content/registry/packages/$pkg/installation-configuration.md"
+    if [ ! -f $install_path ]; then
+        echo "ERROR: '$install_path' does not exist."
         exit 1
     fi
-done; 
+
+done;
 
 echo "packages validated successfully!!"
-
-

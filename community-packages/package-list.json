@@ -227,6 +227,10 @@
     {
       "repoSlug": "lbrlabs/pulumi-cockroach",
       "schemaFile": "provider/cmd/pulumi-resource-cockroach/schema.json"
+    },
+    {
+      "repoSlug": "port-labs/pulumi-port",
+      "schemaFile": "provider/cmd/pulumi-resource-port/schema.json"
     }
   ]
 }

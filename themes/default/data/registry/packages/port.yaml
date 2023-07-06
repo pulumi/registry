@@ -1,0 +1,14 @@
+category: Utility
+component: false
+description: A Pulumi package for creating and managing Port resources.
+featured: false
+logo_url: ""
+name: port
+native: false
+package_status: public_preview
+publisher: port-labs
+repo_url: https://github.com/port-labs/pulumi-port
+schema_file_path: provider/cmd/pulumi-resource-port/schema.json
+title: Port
+updated_on: 1688567934
+version: v0.10.4

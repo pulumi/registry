@@ -15,7 +15,7 @@ The Pulumi Azure Native Provider v2 is now available in beta. You can start taki
 
 ### Prerequisites
 
-We recommend upgrading to the [latest version](https://github.com/pulumi/pulumi-azure-native/releases/tag/v1.103.0) of the v1 provider as a prerequisite to the v2 upgrade. This will enable you to resolve any pre-existing deprecated versions or resource structure changes.
+We recommend upgrading to the [latest version](https://github.com/pulumi/pulumi-azure-native/releases/tag/v1.104.0) of the v1 provider as a prerequisite to the v2 upgrade. This will enable you to resolve any pre-existing deprecated versions or resource structure changes.
 
 Review your program for warnings on missing imports or deprecated resources. If your program contains any deprecated explicit versions, you will need to update these to a newer version. The suggested version is shown in the deprecation message.
 
@@ -39,35 +39,35 @@ In your Pulumi program, upgrade the package to point to the latest version of th
 
 ```
 -"@pulumi/azure-native": "^1.0.0",
-- "resolved": "https://registry.npmjs.org/@pulumi/azure-native/-/azure-native-1.102.0.tgz",
-- "resolved": "https://registry.npmjs.org/@pulumi/azure-native/-/azure-native-1.102.0.tgz",
-+ @pulumi/azure-native": "v2.0.0-beta.1",
-+ "resolved": "https://registry.npmjs.org/@pulumi/azure-native/-/azure-native-2.0.0-beta.1.tgz",
-+ "resolved": "https://registry.npmjs.org/@pulumi/azure-native/-/azure-native-2.0.0-beta.1.tgz",
+- "resolved": "https://registry.npmjs.org/@pulumi/azure-native/-/azure-native-1.104.0.tgz",
+- "resolved": "https://registry.npmjs.org/@pulumi/azure-native/-/azure-native-1.104.0.tgz",
++ @pulumi/azure-native": "v2.0.0",
++ "resolved": "https://registry.npmjs.org/@pulumi/azure-native/-/azure-native-2.0.0.tgz",
++ "resolved": "https://registry.npmjs.org/@pulumi/azure-native/-/azure-native-2.0.0.tgz",
 ```
 
 {{% /choosable %}}
 {{% choosable language python %}}
 
 ```python
-- pulumi_azure_native==v1.103.0
-+ pulumi_azure_native==v2.0.0-beta.1
+- pulumi_azure_native==v1.104.0
++ pulumi_azure_native==v2.0.0
 ```
 
 {{% /choosable %}}
 {{% choosable language csharp %}}
 
 ```csharp
-- <PackageReference Include="Pulumi.AzureNative" Version="1.103.0"
-+ <PackageReference Include="Pulumi.AzureNative" Version="2.0.0-beta.1"
+- <PackageReference Include="Pulumi.AzureNative" Version="1.104.0"
++ <PackageReference Include="Pulumi.AzureNative" Version="2.0.0"
 ```
 
 {{% /choosable %}}
 {{% choosable language go %}}
 
 ```go
-- github.com/pulumi/pulumi-azure-native-sdk/storage v1.103.0
-+ github.com/pulumi/pulumi-azure-native-sdk/v2/storage v2.0.0-beta.1
+- github.com/pulumi/pulumi-azure-native-sdk/storage v1.104.0
++ github.com/pulumi/pulumi-azure-native-sdk/v2/storage v2.0.0
 ```
 
 {{% /choosable %}}
@@ -80,10 +80,10 @@ Go programs will need all imports updated to include `v2` in the path.
 
 ```go
 import (
--	"github.com/pulumi/pulumi-azure-native-sdk/resources"
--	"github.com/pulumi/pulumi-azure-native-sdk/storage"
-+	"github.com/pulumi/pulumi-azure-native-sdk/v2/resources"
-+	"github.com/pulumi/pulumi-azure-native-sdk/v2/storage"
+- "github.com/pulumi/pulumi-azure-native-sdk/resources"
+- "github.com/pulumi/pulumi-azure-native-sdk/storage"
++ "github.com/pulumi/pulumi-azure-native-sdk/v2/resources"
++ "github.com/pulumi/pulumi-azure-native-sdk/v2/storage"
 )
 ```
 
@@ -199,18 +199,17 @@ All resource names are now consistently in title case, starting with an uppercas
 
 The complete list of affected resources and functions is [in this PR](https://github.com/pulumi/pulumi-azure-native/pull/2366).
 
-
 #### MySQL and PostgreSQL Server and Flexible Server
 
 Both [Azure Database for MySQL](https://azure.microsoft.com/en-us/products/mysql) and [Azure Database for PostgreSQL](https://azure.microsoft.com/en-us/products/postgresql) are available in a `Single Server` and a `Flexible Server` variant. The `Single Server` variants are on the retirement path ([MySQL](https://learn.microsoft.com/en-us/azure/mysql/single-server/whats-happening-to-mysql-single-server), [PostgreSQL](https://learn.microsoft.com/en-us/azure/postgresql/single-server/whats-happening-to-postgresql-single-server)). Azure recommends that all new servers are created as a `Flexible Server` variant.
 
 In v2, the following resources are now associated with a `Flexible Server` variant instead of `Single Server` as they were in v1:
 
-- `Configuration`
-- `Database`
-- `FirewallRule`
-- `Server`
-- `PrivateEndpointConnection`
+* `Configuration`
+* `Database`
+* `FirewallRule`
+* `Server`
+* `PrivateEndpointConnection`
 
 Existing v1 programs upgrading to v2 using the default version will result in a change of resource type. For instance, `azure-native.dbformysql.Server` would previously have referred to a `Single Server` but will now refer to a `Flexible Server` and will result in a replacement of the resource during the next `pulumi up`. However, the properties of flexible servers are sufficiently different that, in a typed language, the program will not compile. If you would like to continue using the previous Azure API version, you may do so by using the previous explicit version `2017-12-01`.
 

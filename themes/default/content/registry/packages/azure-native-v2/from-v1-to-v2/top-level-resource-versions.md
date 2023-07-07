@@ -5,7 +5,7 @@ meta_desc: Table to help migrate between top-level resources for Azure Native v1
 
 ## Top-Level Resource Versions
 
-|Service|Resource|REST version in v1| REST version in v2|
+|Service|Resource|REST version in v1|REST version in v2|
 |---|---|---|---|
 |Aad|DomainService|2021-03-01|2022-12-01|
 |Aad|OuContainer|2021-03-01|2022-12-01|
@@ -16,12 +16,14 @@ meta_desc: Table to help migrate between top-level resources for Azure Native v1
 |Addons|listSupportPlanTypeInfo|2018-03-01|2018-03-01|
 |Addons|SupportPlanType|2018-03-01|2018-03-01|
 |Advisor|Suppression|2020-01-01|2023-01-01|
-|AgFoodPlatform|Extension|2020-05-12-preview|2021-09-01-preview|
+|AgFoodPlatform|DataConnector|not present|2023-06-01-preview|
+|AgFoodPlatform|DataManagerForAgricultureResource|not present|2023-06-01-preview|
+|AgFoodPlatform|Extension|2020-05-12-preview|2023-06-01-preview|
 |AgFoodPlatform|FarmBeatsModel|2020-05-12-preview|2021-09-01-preview|
-|AgFoodPlatform|PrivateEndpointConnection|not present|2021-09-01-preview|
-|AgFoodPlatform|Solution|not present|2021-09-01-preview|
+|AgFoodPlatform|PrivateEndpointConnection|not present|2023-06-01-preview|
+|AgFoodPlatform|Solution|not present|2023-06-01-preview|
 |AlertsManagement|ActionRuleByName|2019-05-05-preview|2019-05-05-preview|
-|AlertsManagement|AlertProcessingRuleByName|not present|2021-08-08|
+|AlertsManagement|AlertProcessingRuleByName|not present|2023-05-01-preview|
 |AlertsManagement|PrometheusRuleGroup|not present|2023-03-01|
 |AlertsManagement|SmartDetectorAlertRule|2019-06-01|2021-04-01|
 |AnalysisServices|listServerGatewayStatus|2017-08-01|2017-08-01|
@@ -72,7 +74,9 @@ meta_desc: Table to help migrate between top-level resources for Azure Native v1
 |ApiManagement|IdentityProvider|2020-12-01|2022-08-01|
 |ApiManagement|listAuthorizationServerSecrets|2020-12-01|2022-08-01|
 |ApiManagement|listDelegationSettingSecrets|2020-12-01|2021-08-01|
+|ApiManagement|listGatewayDebugCredentials|not present|2023-03-01-preview|
 |ApiManagement|listGatewayKeys|2020-12-01|2022-08-01|
+|ApiManagement|listGatewayTrace|not present|2023-03-01-preview|
 |ApiManagement|listIdentityProviderSecrets|2020-12-01|2022-08-01|
 |ApiManagement|listNamedValue|2020-12-01|2022-08-01|
 |ApiManagement|listOpenIdConnectProviderSecrets|2020-12-01|2022-08-01|
@@ -161,42 +165,42 @@ meta_desc: Table to help migrate between top-level resources for Azure Native v1
 |AppConfiguration|listConfigurationStoreKeyValue|2020-06-01|Renamed to listConfigurationStoreKeys|
 |AppConfiguration|PrivateEndpointConnection|2020-06-01|2023-03-01|
 |AppConfiguration|Replica|not present|2023-03-01|
-|AppPlatform|ApiPortal|2022-01-01-preview|2022-12-01|
-|AppPlatform|ApiPortalCustomDomain|2022-01-01-preview|2022-12-01|
+|AppPlatform|ApiPortal|2022-01-01-preview|2023-05-01-preview|
+|AppPlatform|ApiPortalCustomDomain|2022-01-01-preview|2023-05-01-preview|
 |AppPlatform|Apm|not present|2023-05-01-preview|
-|AppPlatform|App|2020-07-01|2022-12-01|
+|AppPlatform|App|2020-07-01|2023-05-01-preview|
 |AppPlatform|ApplicationAccelerator|not present|2023-05-01-preview|
 |AppPlatform|ApplicationLiveView|not present|2023-05-01-preview|
-|AppPlatform|Binding|2020-07-01|2022-12-01|
-|AppPlatform|BuildpackBinding|2022-01-01-preview|2022-12-01|
-|AppPlatform|BuildServiceAgentPool|2022-01-01-preview|2022-12-01|
+|AppPlatform|Binding|2020-07-01|2023-05-01-preview|
+|AppPlatform|BuildpackBinding|2022-01-01-preview|2023-05-01-preview|
+|AppPlatform|BuildServiceAgentPool|2022-01-01-preview|2023-05-01-preview|
 |AppPlatform|BuildServiceBuild|not present|2023-05-01-preview|
-|AppPlatform|BuildServiceBuilder|2022-01-01-preview|2022-12-01|
-|AppPlatform|Certificate|2020-07-01|2022-12-01|
-|AppPlatform|ConfigServer|2020-07-01|2022-12-01|
-|AppPlatform|ConfigurationService|2022-01-01-preview|2022-12-01|
+|AppPlatform|BuildServiceBuilder|2022-01-01-preview|2023-05-01-preview|
+|AppPlatform|Certificate|2020-07-01|2023-05-01-preview|
+|AppPlatform|ConfigServer|2020-07-01|2023-05-01-preview|
+|AppPlatform|ConfigurationService|2022-01-01-preview|2023-05-01-preview|
 |AppPlatform|ContainerRegistry|not present|2023-05-01-preview|
-|AppPlatform|CustomDomain|2020-07-01|2022-12-01|
+|AppPlatform|CustomDomain|2020-07-01|2023-05-01-preview|
 |AppPlatform|CustomizedAccelerator|not present|2023-05-01-preview|
-|AppPlatform|Deployment|2020-07-01|2022-12-01|
+|AppPlatform|Deployment|2020-07-01|2023-05-01-preview|
 |AppPlatform|DevToolPortal|not present|2023-05-01-preview|
-|AppPlatform|Gateway|2022-01-01-preview|2022-12-01|
-|AppPlatform|GatewayCustomDomain|2022-01-01-preview|2022-12-01|
-|AppPlatform|GatewayRouteConfig|2022-01-01-preview|2022-12-01|
-|AppPlatform|getAppResourceUploadUrl|2020-07-01|2022-12-01|
-|AppPlatform|getBuildServiceBuildResultLog|2022-01-01-preview|2022-12-01|
-|AppPlatform|getBuildServiceResourceUploadUrl|2022-01-01-preview|2022-12-01|
-|AppPlatform|getDeploymentLogFileUrl|2020-07-01|2022-12-01|
-|AppPlatform|getDeploymentRemoteDebuggingConfig|not present|2022-12-01|
+|AppPlatform|Gateway|2022-01-01-preview|2023-05-01-preview|
+|AppPlatform|GatewayCustomDomain|2022-01-01-preview|2023-05-01-preview|
+|AppPlatform|GatewayRouteConfig|2022-01-01-preview|2023-05-01-preview|
+|AppPlatform|getAppResourceUploadUrl|2020-07-01|2023-05-01-preview|
+|AppPlatform|getBuildServiceBuildResultLog|2022-01-01-preview|2023-05-01-preview|
+|AppPlatform|getBuildServiceResourceUploadUrl|2022-01-01-preview|2023-05-01-preview|
+|AppPlatform|getDeploymentLogFileUrl|2020-07-01|2023-05-01-preview|
+|AppPlatform|getDeploymentRemoteDebuggingConfig|not present|2023-05-01-preview|
 |AppPlatform|listApmSecretKeys|not present|2023-05-01-preview|
-|AppPlatform|listBuildServiceBuilderDeployments|not present|2022-12-01|
+|AppPlatform|listBuildServiceBuilderDeployments|not present|2023-05-01-preview|
 |AppPlatform|listGatewayEnvSecrets|not present|2023-05-01-preview|
 |AppPlatform|listServiceGloballyEnabledApms|not present|2023-05-01-preview|
-|AppPlatform|listServiceTestKeys|2020-07-01|2022-12-01|
-|AppPlatform|MonitoringSetting|2020-07-01|2022-12-01|
-|AppPlatform|Service|2020-07-01|2022-12-01|
-|AppPlatform|ServiceRegistry|2022-01-01-preview|2022-12-01|
-|AppPlatform|Storage|2021-09-01-preview|2022-12-01|
+|AppPlatform|listServiceTestKeys|2020-07-01|2023-05-01-preview|
+|AppPlatform|MonitoringSetting|2020-07-01|2023-05-01-preview|
+|AppPlatform|Service|2020-07-01|2023-05-01-preview|
+|AppPlatform|ServiceRegistry|2022-01-01-preview|2023-05-01-preview|
+|AppPlatform|Storage|2021-09-01-preview|2023-05-01-preview|
 |Attestation|AttestationProvider|2020-10-01|2021-06-01|
 |Attestation|PrivateEndpointConnection|2020-10-01|2021-06-01|
 |Authorization|AccessReviewHistoryDefinitionById|2021-11-16-preview|2021-12-01-preview|
@@ -214,7 +218,7 @@ meta_desc: Table to help migrate between top-level resources for Azure Native v1
 |Authorization|PrivateLinkAssociation|2020-05-01|2020-05-01|
 |Authorization|ResourceManagementPrivateLink|2020-05-01|2020-05-01|
 |Authorization|RoleAssignment|2020-10-01-preview|2022-04-01|
-|Authorization|RoleDefinition|2018-01-01-preview|2022-04-01|
+|Authorization|RoleDefinition|2018-01-01-preview|2022-05-01-preview|
 |Authorization|RoleManagementPolicyAssignment|2020-10-01|2020-10-01|
 |Authorization|ScopeAccessReviewHistoryDefinitionById|2021-12-01-preview|2021-12-01-preview|
 |Authorization|ScopeAccessReviewScheduleDefinitionById|2021-12-01-preview|2021-12-01-preview|
@@ -305,23 +309,26 @@ meta_desc: Table to help migrate between top-level resources for Azure Native v1
 |AzureStackHCI|ArcSetting|2021-01-01-preview|2023-03-01|
 |AzureStackHCI|Cluster|2020-10-01|2023-03-01|
 |AzureStackHCI|Extension|2021-01-01-preview|2023-03-01|
-|AzureStackHCI|galleryimageRetrieve|not present|2021-09-01-preview|
-|AzureStackHCI|marketplacegalleryimage|not present|2021-09-01-preview|
-|AzureStackHCI|networkinterfaceRetrieve|not present|2021-09-01-preview|
-|AzureStackHCI|storagecontainerRetrieve|not present|2021-09-01-preview|
+|AzureStackHCI|GalleryImage|not present|2022-12-15-preview|
+|AzureStackHCI|GuestAgent|not present|2022-12-15-preview|
+|AzureStackHCI|HybridIdentityMetadatum|not present|2022-12-15-preview|
+|AzureStackHCI|MachineExtension|not present|2022-12-15-preview|
+|AzureStackHCI|MarketplaceGalleryImage|not present|2022-12-15-preview|
+|AzureStackHCI|NetworkInterface|not present|2022-12-15-preview|
+|AzureStackHCI|StorageContainer|not present|2022-12-15-preview|
 |AzureStackHCI|Update|not present|2023-03-01|
 |AzureStackHCI|UpdateRun|not present|2023-03-01|
 |AzureStackHCI|UpdateSummary|not present|2023-03-01|
-|AzureStackHCI|virtualharddiskRetrieve|not present|2021-09-01-preview|
-|AzureStackHCI|virtualmachineRetrieve|not present|2021-09-01-preview|
-|AzureStackHCI|virtualnetworkRetrieve|not present|2021-09-01-preview|
+|AzureStackHCI|VirtualHardDisk|not present|2022-12-15-preview|
+|AzureStackHCI|VirtualMachine|not present|2022-12-15-preview|
+|AzureStackHCI|VirtualNetwork|not present|2022-12-15-preview|
 |BareMetalInfrastructure|AzureBareMetalStorageInstance|not present|2023-04-06|
-|Batch|Application|2021-01-01|2022-10-01|
-|Batch|ApplicationPackage|2021-01-01|2022-10-01|
-|Batch|BatchAccount|2021-01-01|2022-10-01|
+|Batch|Application|2021-01-01|2023-05-01|
+|Batch|ApplicationPackage|2021-01-01|2023-05-01|
+|Batch|BatchAccount|2021-01-01|2023-05-01|
 |Batch|Certificate|2021-01-01|Deprecated and removed by Azure|
-|Batch|listBatchAccountKeys|2021-01-01|2022-10-01|
-|Batch|Pool|2021-01-01|2022-10-01|
+|Batch|listBatchAccountKeys|2021-01-01|2023-05-01|
+|Batch|Pool|2021-01-01|2023-05-01|
 |Billing|BillingRoleAssignmentByBillingAccount|2019-10-01-preview|2019-10-01-preview|
 |Billing|BillingRoleAssignmentByDepartment|2019-10-01-preview|2019-10-01-preview|
 |Billing|BillingRoleAssignmentByEnrollmentAccount|2019-10-01-preview|2019-10-01-preview|
@@ -375,9 +382,9 @@ meta_desc: Table to help migrate between top-level resources for Azure Native v1
 |CertificateRegistration|AppServiceCertificateOrder|2020-10-01|2022-09-01|
 |CertificateRegistration|AppServiceCertificateOrderCertificate|2020-10-01|2022-09-01|
 |ChangeAnalysis|ConfigurationProfile|2020-04-01-preview|2020-04-01-preview|
-|Chaos|Capability|2021-09-15-preview|2022-10-01-preview|
-|Chaos|Experiment|2021-09-15-preview|2022-10-01-preview|
-|Chaos|Target|2021-09-15-preview|2022-10-01-preview|
+|Chaos|Capability|2021-09-15-preview|2023-04-15-preview|
+|Chaos|Experiment|2021-09-15-preview|2023-04-15-preview|
+|Chaos|Target|2021-09-15-preview|2023-04-15-preview|
 |CognitiveServices|Account|2017-04-18|2023-05-01|
 |CognitiveServices|CommitmentPlan|2021-10-01|2023-05-01|
 |CognitiveServices|CommitmentPlanAssociation|not present|2023-05-01|
@@ -437,7 +444,7 @@ meta_desc: Table to help migrate between top-level resources for Azure Native v1
 |ConnectedVMwarevSphere|VirtualMachine|2020-10-01-preview|2022-07-15-preview|
 |ConnectedVMwarevSphere|VirtualMachineTemplate|2020-10-01-preview|2022-07-15-preview|
 |ConnectedVMwarevSphere|VirtualNetwork|2020-10-01-preview|2022-07-15-preview|
-|Consumption|Budget|2019-10-01|2023-03-01|
+|Consumption|Budget|2019-10-01|2023-05-01|
 |ContainerInstance|ContainerGroup|2021-03-01|2023-05-01|
 |ContainerRegistry|AgentPool|2019-06-01-preview|2019-06-01-preview|
 |ContainerRegistry|BuildStep|not present|2018-02-01-preview|
@@ -478,11 +485,11 @@ meta_desc: Table to help migrate between top-level resources for Azure Native v1
 |ContainerService|listManagedClusterUserCredentials|2021-03-01|2023-04-01|
 |ContainerService|MaintenanceConfiguration|2021-03-01|2023-04-01|
 |ContainerService|ManagedCluster|2021-03-01|2023-04-01|
-|ContainerService|ManagedClusterSnapshot|2022-02-02-preview|2023-04-02-preview|
+|ContainerService|ManagedClusterSnapshot|2022-02-02-preview|2023-05-02-preview|
 |ContainerService|OpenShiftManagedCluster|2019-04-30|2019-10-27-preview|
 |ContainerService|PrivateEndpointConnection|2021-03-01|2023-04-01|
 |ContainerService|Snapshot|2021-08-01|2023-04-01|
-|ContainerService|TrustedAccessRoleBinding|2022-04-02-preview|2023-04-02-preview|
+|ContainerService|TrustedAccessRoleBinding|2022-04-02-preview|2023-05-02-preview|
 |ContainerService|UpdateRun|not present|2023-03-15-preview|
 |ContainerStorage|Pool|2023-03-01-preview|2023-03-01-preview|
 |ContainerStorage|Volume|2023-03-01-preview|2023-03-01-preview|
@@ -622,9 +629,9 @@ meta_desc: Table to help migrate between top-level resources for Azure Native v1
 |DBforMySQL|getGetPrivateDnsZoneSuffixExecute|2021-05-01-preview|2022-01-01|
 |DBforMySQL|PrivateEndpointConnection|2018-06-01|2022-09-30-preview|
 |DBforMySQL|Server|2017-12-01|2022-01-01|
-|DBforMySQL|ServerAdministrator|2017-12-01|2017-12-01-preview|
+|DBforMySQL|ServerAdministrator|2017-12-01|[This was used for Single Server only which has been replaced with Flexible Server](https://learn.microsoft.com/en-us/azure/mysql/single-server/whats-happening-to-mysql-single-server)|
 |DBforMySQL|ServerKey|2020-01-01|2020-07-01-preview|
-|DBforMySQL|VirtualNetworkRule|2017-12-01|2017-12-01-preview|
+|DBforMySQL|VirtualNetworkRule|2017-12-01|[This was used for Single Server only which has been replaced with Flexible Server](https://learn.microsoft.com/en-us/azure/mysql/single-server/whats-happening-to-mysql-single-server)|
 |DBforPostgreSQL|Administrator|not present|2022-12-01|
 |DBforPostgreSQL|Cluster|not present|2022-11-08|
 |DBforPostgreSQL|Configuration|2017-12-01|2022-12-01|
@@ -635,10 +642,10 @@ meta_desc: Table to help migrate between top-level resources for Azure Native v1
 |DBforPostgreSQL|PrivateEndpointConnection|2018-06-01|2022-11-08|
 |DBforPostgreSQL|Role|not present|2022-11-08|
 |DBforPostgreSQL|Server|2017-12-01|2022-12-01|
-|DBforPostgreSQL|ServerAdministrator|2017-12-01|2017-12-01-preview|
-|DBforPostgreSQL|ServerKey|2020-01-01|Removed as part of [Single Server retirement](https:||learn.microsoft.com|en-us|azure|postgresql|single-server|whats-happening-to-postgresql-single-server)|
-|DBforPostgreSQL|ServerSecurityAlertPolicy|2017-12-01|2017-12-01-preview|
-|DBforPostgreSQL|VirtualNetworkRule|2017-12-01|2017-12-01-preview|
+|DBforPostgreSQL|ServerAdministrator|2017-12-01|[This was used for Single Server only which has been replaced with Flexible Server](https://learn.microsoft.com/en-us/azure/postgresql/single-server/whats-happening-to-postgresql-single-server)|
+|DBforPostgreSQL|ServerKey|2020-01-01|[This was used for Single Server only which has been replaced with Flexible Server](https://learn.microsoft.com/en-us/azure/postgresql/single-server/whats-happening-to-postgresql-single-server)|
+|DBforPostgreSQL|ServerSecurityAlertPolicy|2017-12-01|[This was used for Single Server only which has been replaced with Flexible Server](https://learn.microsoft.com/en-us/azure/postgresql/single-server/whats-happening-to-postgresql-single-server)|
+|DBforPostgreSQL|VirtualNetworkRule|2017-12-01|[This was used for Single Server only which has been replaced with Flexible Server](https://learn.microsoft.com/en-us/azure/postgresql/single-server/whats-happening-to-postgresql-single-server)|
 |DelegatedNetwork|ControllerDetails|2021-03-15|2021-03-15|
 |DelegatedNetwork|DelegatedSubnetServiceDetails|2021-03-15|2021-03-15|
 |DelegatedNetwork|OrchestratorInstanceServiceDetails|2021-03-15|2021-03-15|
@@ -670,21 +677,21 @@ meta_desc: Table to help migrate between top-level resources for Azure Native v1
 |DevCenter|Schedule|2022-09-01-preview|2023-04-01|
 |DevHub|getGitHubOAuth|2022-04-01-preview|2022-10-11-preview|
 |DevHub|Workflow|2022-04-01-preview|2022-10-11-preview|
-|Devices|Certificate|2020-08-31|2021-07-02|
+|Devices|Certificate|2020-08-31|2022-11-15-preview|
 |Devices|DpsCertificate|2020-03-01|2022-12-12|
 |Devices|IotDpsResource|2020-03-01|2022-12-12|
 |Devices|IotDpsResourcePrivateEndpointConnection|2020-03-01|2022-12-12|
-|Devices|IotHubResource|2020-08-31|2021-07-02|
-|Devices|IotHubResourceEventHubConsumerGroup|2020-08-31|2021-07-02|
+|Devices|IotHubResource|2020-08-31|2022-11-15-preview|
+|Devices|IotHubResourceEventHubConsumerGroup|2020-08-31|2022-11-15-preview|
 |Devices|listIotDpsResourceKeys|2020-03-01|2022-12-12|
 |Devices|listIotDpsResourceKeysForKeyName|2020-03-01|2022-12-12|
-|Devices|listIotHubResourceKeys|2020-08-31|2021-07-02|
-|Devices|listIotHubResourceKeysForKeyName|2020-08-31|2021-07-02|
-|Devices|PrivateEndpointConnection|2020-08-31|2021-07-02|
-|DeviceUpdate|Account|2020-03-01-preview|2022-10-01|
-|DeviceUpdate|Instance|2020-03-01-preview|2022-10-01|
-|DeviceUpdate|PrivateEndpointConnection|2020-03-01-preview|2022-10-01|
-|DeviceUpdate|PrivateEndpointConnectionProxy|2020-03-01-preview|2022-10-01|
+|Devices|listIotHubResourceKeys|2020-08-31|2022-11-15-preview|
+|Devices|listIotHubResourceKeysForKeyName|2020-08-31|2022-11-15-preview|
+|Devices|PrivateEndpointConnection|2020-08-31|2022-11-15-preview|
+|DeviceUpdate|Account|2020-03-01-preview|2023-07-01|
+|DeviceUpdate|Instance|2020-03-01-preview|2023-07-01|
+|DeviceUpdate|PrivateEndpointConnection|2020-03-01-preview|2023-07-01|
+|DeviceUpdate|PrivateEndpointConnectionProxy|2020-03-01-preview|2023-07-01|
 |DevSpaces|Controller|2019-04-01|2019-04-01|
 |DevSpaces|listControllerConnectionDetails|2019-04-01|2019-04-01|
 |DevTestLab|ArtifactSource|2018-09-15|2018-09-15|
@@ -762,6 +769,7 @@ meta_desc: Table to help migrate between top-level resources for Azure Native v1
 |Education|Lab|2021-12-01-preview|2021-12-01-preview|
 |Education|Student|2021-12-01-preview|2021-12-01-preview|
 |Elastic|getOrganizationApiKey|not present|2023-06-01|
+|Elastic|getOrganizationElasticToAzureSubscriptionMapping|not present|2023-06-15-preview|
 |Elastic|listAllTrafficFilter|not present|2023-06-01|
 |Elastic|listDeploymentInfo|2020-07-01|2023-06-01|
 |Elastic|listlistAssociatedTrafficFilter|not present|2023-06-01|
@@ -823,21 +831,21 @@ meta_desc: Table to help migrate between top-level resources for Azure Native v1
 |EventGrid|TopicEventSubscription|2021-10-15-preview|2022-06-15|
 |EventGrid|TopicSpace|not present|2023-06-01-preview|
 |EventHub|ApplicationGroup|2022-01-01-preview|2022-10-01-preview|
-|EventHub|Cluster|2018-01-01-preview|2021-11-01|
-|EventHub|ConsumerGroup|2017-04-01|2021-11-01|
-|EventHub|DisasterRecoveryConfig|2017-04-01|2021-11-01|
-|EventHub|EventHub|2017-04-01|2021-11-01|
-|EventHub|EventHubAuthorizationRule|2017-04-01|2021-11-01|
-|EventHub|listDisasterRecoveryConfigKeys|2017-04-01|2021-11-01|
-|EventHub|listEventHubKeys|2017-04-01|2021-11-01|
-|EventHub|listNamespaceKeys|2017-04-01|2021-11-01|
-|EventHub|Namespace|2017-04-01|2021-11-01|
-|EventHub|NamespaceAuthorizationRule|2017-04-01|2021-11-01|
+|EventHub|Cluster|2018-01-01-preview|2022-10-01-preview|
+|EventHub|ConsumerGroup|2017-04-01|2022-10-01-preview|
+|EventHub|DisasterRecoveryConfig|2017-04-01|2022-10-01-preview|
+|EventHub|EventHub|2017-04-01|2022-10-01-preview|
+|EventHub|EventHubAuthorizationRule|2017-04-01|2022-10-01-preview|
+|EventHub|listDisasterRecoveryConfigKeys|2017-04-01|2022-10-01-preview|
+|EventHub|listEventHubKeys|2017-04-01|2022-10-01-preview|
+|EventHub|listNamespaceKeys|2017-04-01|2022-10-01-preview|
+|EventHub|Namespace|2017-04-01|2022-10-01-preview|
+|EventHub|NamespaceAuthorizationRule|2017-04-01|2022-10-01-preview|
 |EventHub|NamespaceIpFilterRule|2018-01-01-preview|2018-01-01-preview|
-|EventHub|NamespaceNetworkRuleSet|2017-04-01|2021-11-01|
+|EventHub|NamespaceNetworkRuleSet|2017-04-01|2022-10-01-preview|
 |EventHub|NamespaceVirtualNetworkRule|2018-01-01-preview|2018-01-01-preview|
-|EventHub|PrivateEndpointConnection|2018-01-01-preview|2021-11-01|
-|EventHub|SchemaRegistry|2022-01-01-preview|2021-11-01|
+|EventHub|PrivateEndpointConnection|2018-01-01-preview|2022-10-01-preview|
+|EventHub|SchemaRegistry|2022-01-01-preview|2022-10-01-preview|
 |ExtendedLocation|CustomLocation|2021-03-15-preview|2021-08-15|
 |ExtendedLocation|ResourceSyncRule|2021-08-31-preview|2021-08-31-preview|
 |Features|SubscriptionFeatureRegistration|2021-07-01|2021-07-01|
@@ -852,6 +860,8 @@ meta_desc: Table to help migrate between top-level resources for Azure Native v1
 |HanaOnAzure|HanaInstance|2017-11-03-preview|This was replaced by ProviderInstance|
 |HanaOnAzure|ProviderInstance|2020-02-07-preview|2020-02-07-preview|
 |HanaOnAzure|SapMonitor|2020-02-07-preview|2020-02-07-preview|
+|HardwareSecurityModules|CloudHsmCluster|not present|2022-08-31-preview|
+|HardwareSecurityModules|CloudHsmClusterPrivateEndpointConnection|not present|2022-08-31-preview|
 |HardwareSecurityModules|DedicatedHsm|2018-10-31-preview|2021-11-30|
 |HDInsight|Application|2018-06-01-preview|2021-06-01|
 |HDInsight|Cluster|2018-06-01-preview|2021-06-01|
@@ -861,8 +871,8 @@ meta_desc: Table to help migrate between top-level resources for Azure Native v1
 |HDInsight|getClusterGatewaySettings|2018-06-01-preview|2021-06-01|
 |HDInsight|listVirtualMachineHosts|2018-06-01-preview|2021-06-01|
 |HDInsight|PrivateEndpointConnection|2021-06-01|2021-06-01|
-|HealthBot|Bot|2020-12-08|2022-08-08|
-|HealthBot|listBotSecrets|not present|2022-08-08|
+|HealthBot|Bot|2020-12-08|2023-05-01|
+|HealthBot|listBotSecrets|not present|2023-05-01|
 |HealthcareApis|AnalyticsConnector|not present|2022-10-01-preview|
 |HealthcareApis|DicomService|2022-05-15|2023-02-28|
 |HealthcareApis|FhirService|2022-05-15|2023-02-28|
@@ -893,17 +903,17 @@ meta_desc: Table to help migrate between top-level resources for Azure Native v1
 |HybridData|DataManager|2019-06-01|2019-06-01|
 |HybridData|DataStore|2019-06-01|2019-06-01|
 |HybridData|JobDefinition|2019-06-01|2019-06-01|
-|HybridNetwork|Device|2020-01-01-preview|2021-05-01|
-|HybridNetwork|listDeviceRegistrationKey|2020-01-01-preview|2021-05-01|
+|HybridNetwork|Device|2020-01-01-preview|2022-01-01-preview|
+|HybridNetwork|listDeviceRegistrationKey|2020-01-01-preview|2022-01-01-preview|
 |HybridNetwork|listVendorSkusCredential|2022-01-01-preview|2022-01-01-preview|
-|HybridNetwork|NetworkFunction|2020-01-01-preview|2021-05-01|
-|HybridNetwork|Vendor|2020-01-01-preview|2021-05-01|
-|HybridNetwork|VendorSkuPreview|2020-01-01-preview|2021-05-01|
-|HybridNetwork|VendorSkus|2020-01-01-preview|2021-05-01|
+|HybridNetwork|NetworkFunction|2020-01-01-preview|2022-01-01-preview|
+|HybridNetwork|Vendor|2020-01-01-preview|2022-01-01-preview|
+|HybridNetwork|VendorSkuPreview|2020-01-01-preview|2022-01-01-preview|
+|HybridNetwork|VendorSkus|2020-01-01-preview|2022-01-01-preview|
 |ImportExport|Job|2020-08-01|2021-01-01|
 |ImportExport|listBitLockerKey|2020-08-01|2021-01-01|
 |Insights|ActionGroup|2019-06-01|2023-01-01|
-|Insights|ActivityLogAlert|2020-10-01|2020-10-01|
+|Insights|ActivityLogAlert|2020-10-01|2023-01-01-preview|
 |Insights|AlertRule|2016-03-01|2016-03-01|
 |Insights|AnalyticsItem|2015-05-01|2015-05-01|
 |Insights|AutoscaleSetting|2015-04-01|2022-10-01|
@@ -930,8 +940,8 @@ meta_desc: Table to help migrate between top-level resources for Azure Native v1
 |Insights|PrivateEndpointConnection|2019-10-17-preview|2021-07-01-preview|
 |Insights|PrivateLinkScope|2019-10-17-preview|2021-07-01-preview|
 |Insights|PrivateLinkScopedResource|2019-10-17-preview|2021-07-01-preview|
-|Insights|ProactiveDetectionConfiguration|2015-05-01|2015-05-01|
-|Insights|ScheduledQueryRule|2018-04-16|2022-06-15|
+|Insights|ProactiveDetectionConfiguration|2015-05-01|2018-05-01-preview|
+|Insights|ScheduledQueryRule|2018-04-16|2023-03-15-preview|
 |Insights|SubscriptionDiagnosticSetting|2017-05-01-preview|2021-05-01-preview|
 |Insights|TenantActionGroup|not present|2023-05-01-preview|
 |Insights|WebTest|2015-05-01|2022-06-15|
@@ -954,8 +964,8 @@ meta_desc: Table to help migrate between top-level resources for Azure Native v1
 |KeyVault|PrivateEndpointConnection|2019-09-01|2023-02-01|
 |KeyVault|Secret|2019-09-01|2023-02-01|
 |KeyVault|Vault|2019-09-01|2023-02-01|
-|Kubernetes|ConnectedCluster|2021-03-01|2021-10-01|
-|Kubernetes|listConnectedClusterUserCredential|2022-05-01-preview|2021-10-01|
+|Kubernetes|ConnectedCluster|2021-03-01|2022-05-01-preview|
+|Kubernetes|listConnectedClusterUserCredential|2022-05-01-preview|2022-05-01-preview|
 |Kubernetes|listConnectedClusterUserCredentials|2021-04-01-preview|2021-04-01-preview|
 |KubernetesConfiguration|Extension|2020-07-01-preview|2023-05-01|
 |KubernetesConfiguration|FluxConfiguration|2021-11-01-preview|2023-05-01|
@@ -1087,6 +1097,7 @@ meta_desc: Table to help migrate between top-level resources for Azure Native v1
 |MachineLearningServices|listNotebookKeys|2021-01-01|Renamed to listWorkspaceNotebookKeys|
 |MachineLearningServices|listOnlineEndpointKeys|2021-03-01-preview|2023-04-01|
 |MachineLearningServices|listStorageAccountKeys|2021-01-01|Renamed to listWorkspaceStorageAccountKeys|
+|MachineLearningServices|listWorkspaceConnectionSecrets|not present|2023-06-01-preview|
 |MachineLearningServices|listWorkspaceKeys|2021-01-01|2023-04-01|
 |MachineLearningServices|listWorkspaceNotebookAccessToken|2021-01-01|2023-04-01|
 |MachineLearningServices|listWorkspaceNotebookKeys|not present|2023-04-01|
@@ -1133,8 +1144,11 @@ meta_desc: Table to help migrate between top-level resources for Azure Native v1
 |ManagedNetworkFabric|getNetworkDeviceStatus|2023-02-01-preview|2023-02-01-preview|
 |ManagedNetworkFabric|getNetworkInterfaceStatus|2023-02-01-preview|2023-02-01-preview|
 |ManagedNetworkFabric|InternalNetwork|2023-02-01-preview|2023-02-01-preview|
-|ManagedNetworkFabric|IpCommunityList|2023-02-01-preview|2023-02-01-preview|
-|ManagedNetworkFabric|IpPrefixList|2023-02-01-preview|2023-02-01-preview|
+|ManagedNetworkFabric|IpCommunity|not present|2023-02-01-preview|
+|ManagedNetworkFabric|IpCommunityList|2023-02-01-preview|Renamed to IpCommunity|
+|ManagedNetworkFabric|IpExtendedCommunity|not present|2023-02-01-preview|
+|ManagedNetworkFabric|IpPrefix|not present|2023-02-01-preview|
+|ManagedNetworkFabric|IpPrefixList|2023-02-01-preview|Renamed to IpPrefix|
 |ManagedNetworkFabric|L2IsolationDomain|2023-02-01-preview|2023-02-01-preview|
 |ManagedNetworkFabric|L3IsolationDomain|2023-02-01-preview|2023-02-01-preview|
 |ManagedNetworkFabric|NetworkDevice|2023-02-01-preview|2023-02-01-preview|
@@ -1216,90 +1230,93 @@ meta_desc: Table to help migrate between top-level resources for Azure Native v1
 |MixedReality|ObjectAnchorsAccount|2021-03-01-preview|2021-03-01-preview|
 |MixedReality|RemoteRenderingAccount|2021-01-01|2021-01-01|
 |MixedReality|SpatialAnchorsAccount|2021-01-01|2021-01-01|
-|MobileNetwork|AttachedDataNetwork|2022-04-01-preview|2022-11-01|
-|MobileNetwork|DataNetwork|2022-04-01-preview|2022-11-01|
+|MobileNetwork|AttachedDataNetwork|2022-04-01-preview|2023-06-01|
+|MobileNetwork|DataNetwork|2022-04-01-preview|2023-06-01|
+|MobileNetwork|DiagnosticsPackage|not present|2023-06-01|
 |MobileNetwork|listMobileNetworkSimIds|2022-04-01-preview|2022-04-01-preview|
-|MobileNetwork|MobileNetwork|2022-04-01-preview|2022-11-01|
-|MobileNetwork|PacketCoreControlPlane|2022-04-01-preview|2022-11-01|
-|MobileNetwork|PacketCoreDataPlane|2022-04-01-preview|2022-11-01|
-|MobileNetwork|Service|2022-04-01-preview|2022-11-01|
-|MobileNetwork|Sim|2022-04-01-preview|2022-11-01|
-|MobileNetwork|SimGroup|2022-04-01-preview|2022-11-01|
-|MobileNetwork|SimPolicy|2022-04-01-preview|2022-11-01|
-|MobileNetwork|Site|2022-04-01-preview|2022-11-01|
-|MobileNetwork|Slice|2022-04-01-preview|2022-11-01|
+|MobileNetwork|MobileNetwork|2022-04-01-preview|2023-06-01|
+|MobileNetwork|PacketCapture|not present|2023-06-01|
+|MobileNetwork|PacketCoreControlPlane|2022-04-01-preview|2023-06-01|
+|MobileNetwork|PacketCoreDataPlane|2022-04-01-preview|2023-06-01|
+|MobileNetwork|Service|2022-04-01-preview|2023-06-01|
+|MobileNetwork|Sim|2022-04-01-preview|2023-06-01|
+|MobileNetwork|SimGroup|2022-04-01-preview|2023-06-01|
+|MobileNetwork|SimPolicy|2022-04-01-preview|2023-06-01|
+|MobileNetwork|Site|2022-04-01-preview|2023-06-01|
+|MobileNetwork|Slice|2022-04-01-preview|2023-06-01|
 |Monitor|AzureMonitorWorkspace|2021-06-03-preview|2023-04-03|
-|NetApp|Account|2020-12-01|2022-09-01|
-|NetApp|Backup|2020-12-01|2022-09-01|
-|NetApp|BackupPolicy|2020-12-01|2022-09-01|
-|NetApp|getSubvolumeMetadata|2021-10-01|2022-09-01|
-|NetApp|listVolumeReplications|2022-01-01|2022-09-01|
-|NetApp|Pool|2020-12-01|2022-09-01|
-|NetApp|Snapshot|2020-12-01|2022-09-01|
-|NetApp|SnapshotPolicy|2020-12-01|2022-09-01|
-|NetApp|Subvolume|2021-10-01|2022-09-01|
-|NetApp|Volume|2020-12-01|2022-09-01|
-|NetApp|VolumeGroup|2021-10-01|2022-09-01|
-|NetApp|VolumeQuotaRule|2022-01-01|2022-09-01|
-|Network|AdminRule|2021-02-01-preview|2022-11-01|
-|Network|AdminRuleCollection|2021-02-01-preview|2022-11-01|
-|Network|ApplicationGateway|2020-11-01|2022-11-01|
-|Network|ApplicationGatewayPrivateEndpointConnection|2020-11-01|2022-11-01|
-|Network|ApplicationSecurityGroup|2020-11-01|2022-11-01|
-|Network|AzureFirewall|2020-11-01|2022-11-01|
-|Network|BastionHost|2020-11-01|2022-11-01|
-|Network|ConfigurationPolicyGroup|2022-01-01|2022-11-01|
-|Network|ConnectionMonitor|2020-11-01|2022-11-01|
-|Network|ConnectivityConfiguration|2021-02-01-preview|2022-11-01|
-|Network|CustomIPPrefix|2020-11-01|2022-11-01|
-|Network|DdosCustomPolicy|2020-11-01|2022-11-01|
-|Network|DdosProtectionPlan|2020-11-01|2022-11-01|
+|NetApp|Account|2020-12-01|2022-11-01|
+|NetApp|Backup|2020-12-01|2022-11-01|
+|NetApp|BackupPolicy|2020-12-01|2022-11-01|
+|NetApp|getSubvolumeMetadata|2021-10-01|2022-11-01|
+|NetApp|getVolumeGroupIdForLdapUser|not present|2022-11-01|
+|NetApp|listVolumeReplications|2022-01-01|2022-11-01|
+|NetApp|Pool|2020-12-01|2022-11-01|
+|NetApp|Snapshot|2020-12-01|2022-11-01|
+|NetApp|SnapshotPolicy|2020-12-01|2022-11-01|
+|NetApp|Subvolume|2021-10-01|2022-11-01|
+|NetApp|Volume|2020-12-01|2022-11-01|
+|NetApp|VolumeGroup|2021-10-01|2022-11-01|
+|NetApp|VolumeQuotaRule|2022-01-01|2022-11-01|
+|Network|AdminRule|2021-02-01-preview|2023-02-01|
+|Network|AdminRuleCollection|2021-02-01-preview|2023-02-01|
+|Network|ApplicationGateway|2020-11-01|2023-02-01|
+|Network|ApplicationGatewayPrivateEndpointConnection|2020-11-01|2023-02-01|
+|Network|ApplicationSecurityGroup|2020-11-01|2023-02-01|
+|Network|AzureFirewall|2020-11-01|2023-02-01|
+|Network|BastionHost|2020-11-01|2023-02-01|
+|Network|ConfigurationPolicyGroup|2022-01-01|2023-02-01|
+|Network|ConnectionMonitor|2020-11-01|2023-02-01|
+|Network|ConnectivityConfiguration|2021-02-01-preview|2023-02-01|
+|Network|CustomIPPrefix|2020-11-01|2023-02-01|
+|Network|DdosCustomPolicy|2020-11-01|2023-02-01|
+|Network|DdosProtectionPlan|2020-11-01|2023-02-01|
 |Network|DnsForwardingRuleset|2020-04-01-preview|2022-07-01|
 |Network|DnsResolver|2020-04-01-preview|2022-07-01|
 |Network|DnssecConfig|not present|2023-07-01-preview|
-|Network|DscpConfiguration|2020-11-01|2022-11-01|
+|Network|DscpConfiguration|2020-11-01|2023-02-01|
 |Network|Endpoint|2018-08-01|2022-04-01|
 |Network|Experiment|2019-11-01|2019-11-01|
-|Network|ExpressRouteCircuit|2020-11-01|2022-11-01|
-|Network|ExpressRouteCircuitAuthorization|2020-11-01|2022-11-01|
-|Network|ExpressRouteCircuitConnection|2020-11-01|2022-11-01|
-|Network|ExpressRouteCircuitPeering|2020-11-01|2022-11-01|
-|Network|ExpressRouteConnection|2020-11-01|2022-11-01|
-|Network|ExpressRouteCrossConnectionPeering|2020-11-01|2022-11-01|
-|Network|ExpressRouteGateway|2020-11-01|2022-11-01|
-|Network|ExpressRoutePort|2020-11-01|2022-11-01|
-|Network|ExpressRoutePortAuthorization|2022-01-01|2022-11-01|
-|Network|FirewallPolicy|2020-11-01|2022-11-01|
-|Network|FirewallPolicyRuleCollectionGroup|2020-11-01|2022-11-01|
+|Network|ExpressRouteCircuit|2020-11-01|2023-02-01|
+|Network|ExpressRouteCircuitAuthorization|2020-11-01|2023-02-01|
+|Network|ExpressRouteCircuitConnection|2020-11-01|2023-02-01|
+|Network|ExpressRouteCircuitPeering|2020-11-01|2023-02-01|
+|Network|ExpressRouteConnection|2020-11-01|2023-02-01|
+|Network|ExpressRouteCrossConnectionPeering|2020-11-01|2023-02-01|
+|Network|ExpressRouteGateway|2020-11-01|2023-02-01|
+|Network|ExpressRoutePort|2020-11-01|2023-02-01|
+|Network|ExpressRoutePortAuthorization|2022-01-01|2023-02-01|
+|Network|FirewallPolicy|2020-11-01|2023-02-01|
+|Network|FirewallPolicyRuleCollectionGroup|2020-11-01|2023-02-01|
 |Network|FirewallPolicyRuleGroup|2020-04-01|2020-04-01|
-|Network|FlowLog|2020-11-01|2022-11-01|
+|Network|FlowLog|2020-11-01|2023-02-01|
 |Network|ForwardingRule|2020-04-01-preview|2022-07-01|
 |Network|FrontDoor|2020-05-01|2021-06-01|
-|Network|getActiveSessions|2020-11-01|2022-11-01|
-|Network|getApplicationGatewayBackendHealthOnDemand|2020-11-01|2022-11-01|
-|Network|getBastionShareableLink|2020-11-01|2022-11-01|
-|Network|getDnsResourceReferenceByTarResources|2018-05-01|2018-05-01|
-|Network|getP2sVpnGatewayP2sVpnConnectionHealth|2020-11-01|2022-11-01|
-|Network|getP2sVpnGatewayP2sVpnConnectionHealthDetailed|2020-11-01|2022-11-01|
-|Network|getVirtualNetworkGatewayAdvertisedRoutes|2020-11-01|2022-11-01|
-|Network|getVirtualNetworkGatewayBgpPeerStatus|2020-11-01|2022-11-01|
-|Network|getVirtualNetworkGatewayConnectionIkeSas|2022-01-01|2022-11-01|
-|Network|getVirtualNetworkGatewayLearnedRoutes|2020-11-01|2022-11-01|
-|Network|getVirtualNetworkGatewayVpnclientConnectionHealth|2020-11-01|2022-11-01|
-|Network|getVirtualNetworkGatewayVpnclientIpsecParameters|2020-11-01|2022-11-01|
-|Network|getVirtualNetworkGatewayVpnProfilePackageUrl|2022-01-01|2022-11-01|
-|Network|getVpnLinkConnectionIkeSas|2022-01-01|2022-11-01|
-|Network|HubRouteTable|2020-11-01|2022-11-01|
-|Network|HubVirtualNetworkConnection|2020-11-01|2022-11-01|
+|Network|getActiveSessions|2020-11-01|2023-02-01|
+|Network|getApplicationGatewayBackendHealthOnDemand|2020-11-01|2023-02-01|
+|Network|getBastionShareableLink|2020-11-01|2023-02-01|
+|Network|getDnsResourceReferenceByTarResources|2018-05-01|2023-07-01-preview|
+|Network|getP2sVpnGatewayP2sVpnConnectionHealth|2020-11-01|2023-02-01|
+|Network|getP2sVpnGatewayP2sVpnConnectionHealthDetailed|2020-11-01|2023-02-01|
+|Network|getVirtualNetworkGatewayAdvertisedRoutes|2020-11-01|2023-02-01|
+|Network|getVirtualNetworkGatewayBgpPeerStatus|2020-11-01|2023-02-01|
+|Network|getVirtualNetworkGatewayConnectionIkeSas|2022-01-01|2023-02-01|
+|Network|getVirtualNetworkGatewayLearnedRoutes|2020-11-01|2023-02-01|
+|Network|getVirtualNetworkGatewayVpnclientConnectionHealth|2020-11-01|2023-02-01|
+|Network|getVirtualNetworkGatewayVpnclientIpsecParameters|2020-11-01|2023-02-01|
+|Network|getVirtualNetworkGatewayVpnProfilePackageUrl|2022-01-01|2023-02-01|
+|Network|getVpnLinkConnectionIkeSas|2022-01-01|2023-02-01|
+|Network|HubRouteTable|2020-11-01|2023-02-01|
+|Network|HubVirtualNetworkConnection|2020-11-01|2023-02-01|
 |Network|InboundEndpoint|2020-04-01-preview|2022-07-01|
-|Network|InboundNatRule|2020-11-01|2022-11-01|
+|Network|InboundNatRule|2020-11-01|2023-02-01|
 |Network|InterfaceEndpoint|not present|2019-02-01|
-|Network|IpAllocation|2020-11-01|2022-11-01|
-|Network|IpGroup|2020-11-01|2022-11-01|
+|Network|IpAllocation|2020-11-01|2023-02-01|
+|Network|IpGroup|2020-11-01|2023-02-01|
 |Network|listActiveConnectivityConfiguration|2021-02-01-preview|2021-02-01-preview|
-|Network|listActiveConnectivityConfigurations|not present|2022-11-01|
+|Network|listActiveConnectivityConfigurations|not present|2023-02-01|
 |Network|listActiveSecurityAdminRule|2021-02-01-preview|2021-02-01-preview|
-|Network|listActiveSecurityAdminRules|not present|2022-11-01|
+|Network|listActiveSecurityAdminRules|not present|2023-02-01|
 |Network|listActiveSecurityUserRule|2021-02-01-preview|2021-02-01-preview|
 |Network|listActiveSecurityUserRules|not present|2022-04-01-preview|
 |Network|listDnsForwardingRulesetByVirtualNetwork|2020-04-01-preview|2022-07-01|
@@ -1307,118 +1324,122 @@ meta_desc: Table to help migrate between top-level resources for Azure Native v1
 |Network|listEffectiveConnectivityConfiguration|2021-02-01-preview|2021-02-01-preview|
 |Network|listEffectiveVirtualNetworkByNetworkGroup|2021-02-01-preview|2021-02-01-preview|
 |Network|listEffectiveVirtualNetworkByNetworkManager|2021-02-01-preview|2022-04-01-preview|
-|Network|listFirewallPolicyIdpsSignature|2022-01-01|2022-11-01|
-|Network|listFirewallPolicyIdpsSignaturesFilterValue|2022-01-01|2022-11-01|
+|Network|listFirewallPolicyIdpsSignature|2022-01-01|2023-02-01|
+|Network|listFirewallPolicyIdpsSignaturesFilterValue|2022-01-01|2023-02-01|
 |Network|listListEffectiveVirtualNetworkByNetworkGroup|not present|2022-04-01-preview|
-|Network|listNetworkManagerDeploymentStatus|2021-02-01-preview|2022-11-01|
-|Network|listNetworkManagerEffectiveConnectivityConfigurations|not present|2022-11-01|
+|Network|listNetworkManagerDeploymentStatus|2021-02-01-preview|2023-02-01|
+|Network|listNetworkManagerEffectiveConnectivityConfigurations|not present|2023-02-01|
 |Network|listNetworkManagerEffectiveSecurityAdminRule|2021-02-01-preview|2021-02-01-preview|
-|Network|listNetworkManagerEffectiveSecurityAdminRules|not present|2022-11-01|
-|Network|LoadBalancer|2020-11-01|2022-11-01|
-|Network|LoadBalancerBackendAddressPool|2020-11-01|2022-11-01|
-|Network|LocalNetworkGateway|2020-11-01|2022-11-01|
-|Network|ManagementGroupNetworkManagerConnection|2021-05-01-preview|2022-11-01|
-|Network|NatGateway|2020-11-01|2022-11-01|
-|Network|NatRule|2020-11-01|2022-11-01|
+|Network|listNetworkManagerEffectiveSecurityAdminRules|not present|2023-02-01|
+|Network|LoadBalancer|2020-11-01|2023-02-01|
+|Network|LoadBalancerBackendAddressPool|2020-11-01|2023-02-01|
+|Network|LocalNetworkGateway|2020-11-01|2023-02-01|
+|Network|ManagementGroupNetworkManagerConnection|2021-05-01-preview|2023-02-01|
+|Network|NatGateway|2020-11-01|2023-02-01|
+|Network|NatRule|2020-11-01|2023-02-01|
 |Network|NetworkExperimentProfile|2019-11-01|2019-11-01|
-|Network|NetworkGroup|2021-02-01-preview|2022-11-01|
-|Network|NetworkInterface|2020-11-01|2022-11-01|
-|Network|NetworkInterfaceTapConfiguration|2020-11-01|2022-11-01|
-|Network|NetworkManager|2021-02-01-preview|2022-11-01|
-|Network|NetworkProfile|2020-11-01|2022-11-01|
-|Network|NetworkSecurityGroup|2020-11-01|2022-11-01|
+|Network|NetworkGroup|2021-02-01-preview|2023-02-01|
+|Network|NetworkInterface|2020-11-01|2023-02-01|
+|Network|NetworkInterfaceTapConfiguration|2020-11-01|2023-02-01|
+|Network|NetworkManager|2021-02-01-preview|2023-02-01|
+|Network|NetworkProfile|2020-11-01|2023-02-01|
+|Network|NetworkSecurityGroup|2020-11-01|2023-02-01|
 |Network|NetworkSecurityPerimeter|2021-02-01-preview|2021-03-01-preview|
-|Network|NetworkVirtualAppliance|2020-11-01|2022-11-01|
-|Network|NetworkVirtualApplianceConnection|not present|2022-11-01|
-|Network|NetworkWatcher|2020-11-01|2022-11-01|
+|Network|NetworkVirtualAppliance|2020-11-01|2023-02-01|
+|Network|NetworkVirtualApplianceConnection|not present|2023-02-01|
+|Network|NetworkWatcher|2020-11-01|2023-02-01|
 |Network|NspAccessRule|2021-02-01-preview|2021-02-01-preview|
 |Network|NspAssociation|2021-02-01-preview|2021-02-01-preview|
 |Network|NspAssociationsProxy|2021-02-01-preview|No longer present|
 |Network|NspLink|not present|2021-02-01-preview|
 |Network|NspProfile|2021-02-01-preview|2021-02-01-preview|
 |Network|OutboundEndpoint|2020-04-01-preview|2022-07-01|
-|Network|P2sVpnGateway|2020-11-01|2022-11-01|
+|Network|P2sVpnGateway|2020-11-01|2023-02-01|
 |Network|P2sVpnServerConfiguration|2019-07-01|2019-07-01|
-|Network|PacketCapture|2020-11-01|2022-11-01|
+|Network|PacketCapture|2020-11-01|2023-02-01|
 |Network|Policy|2020-11-01|2022-05-01|
-|Network|PrivateDnsZoneGroup|2020-11-01|2022-11-01|
-|Network|PrivateEndpoint|2020-11-01|2022-11-01|
-|Network|PrivateLinkService|2020-11-01|2022-11-01|
-|Network|PrivateLinkServicePrivateEndpointConnection|2020-11-01|2022-11-01|
+|Network|PrivateDnsZoneGroup|2020-11-01|2023-02-01|
+|Network|PrivateEndpoint|2020-11-01|2023-02-01|
+|Network|PrivateLinkService|2020-11-01|2023-02-01|
+|Network|PrivateLinkServicePrivateEndpointConnection|2020-11-01|2023-02-01|
 |Network|PrivateRecordSet|2020-06-01|2020-06-01|
 |Network|PrivateResolverVirtualNetworkLink|not present|2022-07-01|
 |Network|PrivateZone|2020-06-01|2020-06-01|
 |Network|Profile|2018-08-01|2022-04-01|
-|Network|PublicIPAddress|2020-11-01|2022-11-01|
-|Network|PublicIPPrefix|2020-11-01|2022-11-01|
-|Network|RecordSet|2018-05-01|2018-05-01|
-|Network|Route|2020-11-01|2022-11-01|
-|Network|RouteFilter|2020-11-01|2022-11-01|
-|Network|RouteFilterRule|2020-11-01|2022-11-01|
-|Network|RouteMap|not present|2022-11-01|
-|Network|RouteTable|2020-11-01|2022-11-01|
-|Network|RoutingIntent|2022-01-01|2022-11-01|
+|Network|PublicIPAddress|2020-11-01|2023-02-01|
+|Network|PublicIPPrefix|2020-11-01|2023-02-01|
+|Network|RecordSet|2018-05-01|2023-07-01-preview|
+|Network|Route|2020-11-01|2023-02-01|
+|Network|RouteFilter|2020-11-01|2023-02-01|
+|Network|RouteFilterRule|2020-11-01|2023-02-01|
+|Network|RouteMap|not present|2023-02-01|
+|Network|RouteTable|2020-11-01|2023-02-01|
+|Network|RoutingIntent|2022-01-01|2023-02-01|
 |Network|RulesEngine|2020-05-01|2021-06-01|
-|Network|ScopeConnection|2022-02-01-preview|2022-11-01|
-|Network|SecurityAdminConfiguration|2021-02-01-preview|2022-11-01|
-|Network|SecurityPartnerProvider|2020-11-01|2022-11-01|
-|Network|SecurityRule|2020-11-01|2022-11-01|
+|Network|ScopeConnection|2022-02-01-preview|2023-02-01|
+|Network|SecurityAdminConfiguration|2021-02-01-preview|2023-02-01|
+|Network|SecurityPartnerProvider|2020-11-01|2023-02-01|
+|Network|SecurityRule|2020-11-01|2023-02-01|
 |Network|SecurityUserConfiguration|2021-02-01-preview|2022-04-01-preview|
-|Network|ServiceEndpointPolicy|2020-11-01|2022-11-01|
-|Network|ServiceEndpointPolicyDefinition|2020-11-01|2022-11-01|
-|Network|StaticMember|2022-02-01-preview|2022-11-01|
-|Network|Subnet|2020-11-01|2022-11-01|
-|Network|SubscriptionNetworkManagerConnection|2022-02-01-preview|2022-11-01|
+|Network|ServiceEndpointPolicy|2020-11-01|2023-02-01|
+|Network|ServiceEndpointPolicyDefinition|2020-11-01|2023-02-01|
+|Network|StaticMember|2022-02-01-preview|2023-02-01|
+|Network|Subnet|2020-11-01|2023-02-01|
+|Network|SubscriptionNetworkManagerConnection|2022-02-01-preview|2023-02-01|
 |Network|TrafficManagerUserMetricsKey|2018-08-01|2022-04-01|
 |Network|UserRule|2021-02-01-preview|2022-04-01-preview|
 |Network|UserRuleCollection|2021-02-01-preview|2022-04-01-preview|
-|Network|VirtualApplianceSite|2020-11-01|2022-11-01|
-|Network|VirtualHub|2020-11-01|2022-11-01|
-|Network|VirtualHubBgpConnection|2020-11-01|2022-11-01|
-|Network|VirtualHubIpConfiguration|2020-11-01|2022-11-01|
-|Network|VirtualHubRouteTableV2|2020-11-01|2022-11-01|
-|Network|VirtualNetwork|2020-11-01|2022-11-01|
-|Network|VirtualNetworkGateway|2020-11-01|2022-11-01|
-|Network|VirtualNetworkGatewayConnection|2020-11-01|2022-11-01|
-|Network|VirtualNetworkGatewayNatRule|2021-03-01|2022-11-01|
+|Network|VirtualApplianceSite|2020-11-01|2023-02-01|
+|Network|VirtualHub|2020-11-01|2023-02-01|
+|Network|VirtualHubBgpConnection|2020-11-01|2023-02-01|
+|Network|VirtualHubIpConfiguration|2020-11-01|2023-02-01|
+|Network|VirtualHubRouteTableV2|2020-11-01|2023-02-01|
+|Network|VirtualNetwork|2020-11-01|2023-02-01|
+|Network|VirtualNetworkGateway|2020-11-01|2023-02-01|
+|Network|VirtualNetworkGatewayConnection|2020-11-01|2023-02-01|
+|Network|VirtualNetworkGatewayNatRule|2021-03-01|2023-02-01|
 |Network|VirtualNetworkLink|2020-06-01|2020-06-01|
-|Network|VirtualNetworkPeering|2020-11-01|2022-11-01|
-|Network|VirtualNetworkTap|2020-11-01|2022-11-01|
-|Network|VirtualRouter|2022-01-01|2022-11-01|
-|Network|VirtualRouterPeering|2022-01-01|2022-11-01|
-|Network|VirtualWan|2020-11-01|2022-11-01|
-|Network|VpnConnection|2020-11-01|2022-11-01|
-|Network|VpnGateway|2020-11-01|2022-11-01|
-|Network|VpnServerConfiguration|2020-11-01|2022-11-01|
-|Network|VpnSite|2020-11-01|2022-11-01|
-|Network|WebApplicationFirewallPolicy|2020-11-01|2022-11-01|
-|Network|Zone|2018-05-01|2018-05-01|
-|NetworkCloud|BareMetalMachine|2022-12-12-preview|2022-12-12-preview|
-|NetworkCloud|BareMetalMachineKeySet|2022-12-12-preview|2022-12-12-preview|
-|NetworkCloud|BmcKeySet|2022-12-12-preview|2022-12-12-preview|
-|NetworkCloud|CloudServicesNetwork|2022-12-12-preview|2022-12-12-preview|
-|NetworkCloud|Cluster|2022-12-12-preview|2022-12-12-preview|
-|NetworkCloud|ClusterManager|2022-12-12-preview|2022-12-12-preview|
-|NetworkCloud|Console|2022-12-12-preview|2022-12-12-preview|
+|Network|VirtualNetworkPeering|2020-11-01|2023-02-01|
+|Network|VirtualNetworkTap|2020-11-01|2023-02-01|
+|Network|VirtualRouter|2022-01-01|2023-02-01|
+|Network|VirtualRouterPeering|2022-01-01|2023-02-01|
+|Network|VirtualWan|2020-11-01|2023-02-01|
+|Network|VpnConnection|2020-11-01|2023-02-01|
+|Network|VpnGateway|2020-11-01|2023-02-01|
+|Network|VpnServerConfiguration|2020-11-01|2023-02-01|
+|Network|VpnSite|2020-11-01|2023-02-01|
+|Network|WebApplicationFirewallPolicy|2020-11-01|2023-02-01|
+|Network|Zone|2018-05-01|2023-07-01-preview|
+|NetworkCloud|AgentPool|not present|2023-05-01-preview|
+|NetworkCloud|BareMetalMachine|2022-12-12-preview|2023-05-01-preview|
+|NetworkCloud|BareMetalMachineKeySet|2022-12-12-preview|2023-05-01-preview|
+|NetworkCloud|BmcKeySet|2022-12-12-preview|2023-05-01-preview|
+|NetworkCloud|CloudServicesNetwork|2022-12-12-preview|2023-05-01-preview|
+|NetworkCloud|Cluster|2022-12-12-preview|2023-05-01-preview|
+|NetworkCloud|ClusterManager|2022-12-12-preview|2023-05-01-preview|
+|NetworkCloud|Console|2022-12-12-preview|2023-05-01-preview|
 |NetworkCloud|DefaultCniNetwork|2022-12-12-preview|2022-12-12-preview|
 |NetworkCloud|HybridAksCluster|2022-12-12-preview|2022-12-12-preview|
-|NetworkCloud|L2Network|2022-12-12-preview|2022-12-12-preview|
-|NetworkCloud|L3Network|2022-12-12-preview|2022-12-12-preview|
-|NetworkCloud|MetricsConfiguration|2022-12-12-preview|2022-12-12-preview|
-|NetworkCloud|Rack|2022-12-12-preview|2022-12-12-preview|
-|NetworkCloud|StorageAppliance|2022-12-12-preview|2022-12-12-preview|
-|NetworkCloud|TrunkedNetwork|2022-12-12-preview|2022-12-12-preview|
-|NetworkCloud|VirtualMachine|2022-12-12-preview|2022-12-12-preview|
-|NetworkCloud|Volume|2022-12-12-preview|2022-12-12-preview|
+|NetworkCloud|KubernetesCluster|not present|2023-05-01-preview|
+|NetworkCloud|L2Network|2022-12-12-preview|2023-05-01-preview|
+|NetworkCloud|L3Network|2022-12-12-preview|2023-05-01-preview|
+|NetworkCloud|MetricsConfiguration|2022-12-12-preview|2023-05-01-preview|
+|NetworkCloud|Rack|2022-12-12-preview|2023-05-01-preview|
+|NetworkCloud|StorageAppliance|2022-12-12-preview|2023-05-01-preview|
+|NetworkCloud|TrunkedNetwork|2022-12-12-preview|2023-05-01-preview|
+|NetworkCloud|VirtualMachine|2022-12-12-preview|2023-05-01-preview|
+|NetworkCloud|Volume|2022-12-12-preview|2023-05-01-preview|
 |NetworkFunction|AzureTrafficCollector|2022-05-01|2022-11-01|
 |NetworkFunction|CollectorPolicy|2022-05-01|2022-11-01|
-|NotificationHubs|getNotificationHubPnsCredentials|2017-04-01|2017-04-01|
-|NotificationHubs|listNamespaceKeys|2017-04-01|2017-04-01|
-|NotificationHubs|listNotificationHubKeys|2017-04-01|2017-04-01|
-|NotificationHubs|Namespace|2017-04-01|2017-04-01|
-|NotificationHubs|NamespaceAuthorizationRule|2017-04-01|2017-04-01|
-|NotificationHubs|NotificationHub|2017-04-01|2017-04-01|
-|NotificationHubs|NotificationHubAuthorizationRule|2017-04-01|2017-04-01|
+|NotificationHubs|getNamespacePnsCredentials|not present|2023-01-01-preview|
+|NotificationHubs|getNotificationHubPnsCredentials|2017-04-01|2023-01-01-preview|
+|NotificationHubs|listNamespaceKeys|2017-04-01|2023-01-01-preview|
+|NotificationHubs|listNotificationHubKeys|2017-04-01|2023-01-01-preview|
+|NotificationHubs|Namespace|2017-04-01|2023-01-01-preview|
+|NotificationHubs|NamespaceAuthorizationRule|2017-04-01|2023-01-01-preview|
+|NotificationHubs|NotificationHub|2017-04-01|2023-01-01-preview|
+|NotificationHubs|NotificationHubAuthorizationRule|2017-04-01|2023-01-01-preview|
+|NotificationHubs|PrivateEndpointConnection|not present|2023-01-01-preview|
 |OffAzure|HyperVSite|2020-01-01|2020-07-07|
 |OffAzure|MasterSite|2020-07-07|2020-07-07|
 |OffAzure|PrivateEndpointConnection|2020-07-07|2020-07-07|
@@ -1482,28 +1503,31 @@ meta_desc: Table to help migrate between top-level resources for Azure Native v1
 |PowerPlatform|EnterprisePolicy|2020-10-30-preview|2020-10-30-preview|
 |PowerPlatform|PrivateEndpointConnection|2020-10-30-preview|2020-10-30-preview|
 |ProfessionalService|ProfessionalServiceSubscriptionLevel|2023-07-01-preview|2023-07-01-preview|
-|ProviderHub|DefaultRollout|2020-11-20|2020-11-20|
-|ProviderHub|NotificationRegistration|2020-11-20|2020-11-20|
-|ProviderHub|OperationByProviderRegistration|2020-11-20|2020-11-20|
-|ProviderHub|ProviderRegistration|2020-11-20|2020-11-20|
-|ProviderHub|ResourceTypeRegistration|2020-11-20|2020-11-20|
-|ProviderHub|Skus|2020-11-20|2020-11-20|
-|ProviderHub|SkusNestedResourceTypeFirst|2020-11-20|2020-11-20|
-|ProviderHub|SkusNestedResourceTypeSecond|2020-11-20|2020-11-20|
-|ProviderHub|SkusNestedResourceTypeThird|2020-11-20|2020-11-20|
-|Purview|Account|2020-12-01-preview|2021-07-01|
-|Purview|listAccountKeys|2020-12-01-preview|2021-07-01|
-|Purview|PrivateEndpointConnection|2020-12-01-preview|2021-07-01|
+|ProviderHub|DefaultRollout|2020-11-20|2021-09-01-preview|
+|ProviderHub|NotificationRegistration|2020-11-20|2021-09-01-preview|
+|ProviderHub|OperationByProviderRegistration|2020-11-20|2021-09-01-preview|
+|ProviderHub|ProviderRegistration|2020-11-20|2021-09-01-preview|
+|ProviderHub|ResourceTypeRegistration|2020-11-20|2021-09-01-preview|
+|ProviderHub|Skus|2020-11-20|2021-09-01-preview|
+|ProviderHub|SkusNestedResourceTypeFirst|2020-11-20|2021-09-01-preview|
+|ProviderHub|SkusNestedResourceTypeSecond|2020-11-20|2021-09-01-preview|
+|ProviderHub|SkusNestedResourceTypeThird|2020-11-20|2021-09-01-preview|
+|Purview|Account|2020-12-01-preview|2021-12-01|
+|Purview|KafkaConfiguration|not present|2021-12-01|
+|Purview|listAccountKeys|2020-12-01-preview|2021-12-01|
+|Purview|listFeatureAccount|not present|2021-12-01|
+|Purview|listFeatureSubscription|not present|2021-12-01|
+|Purview|PrivateEndpointConnection|2020-12-01-preview|2021-12-01|
 |Quantum|Workspace|2019-11-04-preview|2022-01-10-preview|
 |RecommendationsService|Account|2022-02-01|2022-02-01|
 |RecommendationsService|Modeling|2022-02-01|2022-02-01|
 |RecommendationsService|ServiceEndpoint|2022-02-01|2022-02-01|
 |RecoveryServices|getRecoveryPointAccessToken|2018-12-20|2023-01-15|
-|RecoveryServices|PrivateEndpointConnection|2021-02-01|2023-02-01|
-|RecoveryServices|ProtectedItem|2021-02-01|2023-02-01|
-|RecoveryServices|ProtectionContainer|2021-02-01|2023-02-01|
-|RecoveryServices|ProtectionIntent|2021-02-01|2023-02-01|
-|RecoveryServices|ProtectionPolicy|2021-02-01|2023-02-01|
+|RecoveryServices|PrivateEndpointConnection|2021-02-01|2023-04-01|
+|RecoveryServices|ProtectedItem|2021-02-01|2023-04-01|
+|RecoveryServices|ProtectionContainer|2021-02-01|2023-04-01|
+|RecoveryServices|ProtectionIntent|2021-02-01|2023-04-01|
+|RecoveryServices|ProtectionPolicy|2021-02-01|2023-04-01|
 |RecoveryServices|ReplicationFabric|2018-07-10|2023-04-01|
 |RecoveryServices|ReplicationMigrationItem|2018-07-10|2023-04-01|
 |RecoveryServices|ReplicationNetworkMapping|2018-07-10|2023-04-01|
@@ -1514,7 +1538,7 @@ meta_desc: Table to help migrate between top-level resources for Azure Native v1
 |RecoveryServices|ReplicationRecoveryServicesProvider|2018-07-10|2023-04-01|
 |RecoveryServices|ReplicationStorageClassificationMapping|2018-07-10|2023-04-01|
 |RecoveryServices|ReplicationvCenter|2018-07-10|2023-04-01|
-|RecoveryServices|ResourceGuardProxy|2021-02-01-preview|2023-02-01|
+|RecoveryServices|ResourceGuardProxy|2021-02-01-preview|2023-04-01|
 |RecoveryServices|Vault|2021-01-01|2023-04-01|
 |RedHatOpenShift|listOpenShiftClusterAdminCredentials|2021-09-01-preview|2022-09-04|
 |RedHatOpenShift|listOpenShiftClusterCredentials|2020-04-30|2022-09-04|
@@ -1538,8 +1562,8 @@ meta_desc: Table to help migrate between top-level resources for Azure Native v1
 |ResourceConnector|listApplianceClusterUserCredential|2021-10-31-preview|2022-10-27|
 |ResourceConnector|listApplianceKeys|not present|2022-10-27|
 |ResourceGraph|GraphQuery|2018-09-01-preview|2020-04-01-preview|
-|ResourceHealth|listSecurityAdvisoryImpactedResourceBySubscriptionIdAndEventId|2022-10-01-preview|2022-10-01-preview|
-|ResourceHealth|listSecurityAdvisoryImpactedResourceByTenantIdAndEventId|2022-10-01-preview|2022-10-01-preview|
+|ResourceHealth|listSecurityAdvisoryImpactedResourceBySubscriptionIdAndEventId|2022-10-01-preview|2022-10-01|
+|ResourceHealth|listSecurityAdvisoryImpactedResourceByTenantIdAndEventId|2022-10-01-preview|2022-10-01|
 |Resources|Deployment|2021-01-01|2022-09-01|
 |Resources|DeploymentAtManagementGroupScope|2021-01-01|2022-09-01|
 |Resources|DeploymentAtScope|2021-01-01|2022-09-01|
@@ -1559,16 +1583,16 @@ meta_desc: Table to help migrate between top-level resources for Azure Native v1
 |SaaS|SaasSubscriptionLevel|2018-03-01-beta|2018-03-01-beta|
 |Scheduler|Job|2016-03-01|2016-03-01|
 |Scheduler|JobCollection|2016-03-01|2016-03-01|
-|ScVmm|AvailabilitySet|2020-06-05-preview|2020-06-05-preview|
-|ScVmm|Cloud|2020-06-05-preview|2020-06-05-preview|
+|ScVmm|AvailabilitySet|2020-06-05-preview|2022-05-21-preview|
+|ScVmm|Cloud|2020-06-05-preview|2022-05-21-preview|
 |ScVmm|GuestAgent|not present|2022-05-21-preview|
 |ScVmm|HybridIdentityMetadata|not present|2022-05-21-preview|
-|ScVmm|InventoryItem|2020-06-05-preview|2020-06-05-preview|
+|ScVmm|InventoryItem|2020-06-05-preview|2022-05-21-preview|
 |ScVmm|MachineExtension|not present|2022-05-21-preview|
-|ScVmm|VirtualMachine|2020-06-05-preview|2020-06-05-preview|
-|ScVmm|VirtualMachineTemplate|2020-06-05-preview|2020-06-05-preview|
-|ScVmm|VirtualNetwork|2020-06-05-preview|2020-06-05-preview|
-|ScVmm|VmmServer|2020-06-05-preview|2020-06-05-preview|
+|ScVmm|VirtualMachine|2020-06-05-preview|2022-05-21-preview|
+|ScVmm|VirtualMachineTemplate|2020-06-05-preview|2022-05-21-preview|
+|ScVmm|VirtualNetwork|2020-06-05-preview|2022-05-21-preview|
+|ScVmm|VmmServer|2020-06-05-preview|2022-05-21-preview|
 |Search|listAdminKey|2020-08-01|2022-09-01|
 |Search|listQueryKeyBySearchService|2020-08-01|2022-09-01|
 |Search|PrivateEndpointConnection|2020-08-01|2022-09-01|
@@ -1600,6 +1624,7 @@ meta_desc: Table to help migrate between top-level resources for Azure Native v1
 |Security|SecurityContact|2020-01-01-preview|2020-01-01-preview|
 |Security|SecurityOperator|not present|2023-01-01-preview|
 |Security|ServerVulnerabilityAssessment|2020-01-01|2020-01-01|
+|Security|ServerVulnerabilityAssessmentsSetting|not present|2023-05-01|
 |Security|SqlVulnerabilityAssessmentBaselineRule|2020-07-01-preview|2023-02-01-preview|
 |Security|Standard|2021-08-01-preview|2021-08-01-preview|
 |Security|WorkspaceSetting|2017-08-01-preview|2017-08-01-preview|
@@ -1621,62 +1646,66 @@ meta_desc: Table to help migrate between top-level resources for Azure Native v1
 |SecurityInsights|AlertRule|2020-01-01|2023-02-01|
 |SecurityInsights|AutomationRule|2019-01-01-preview|2023-02-01|
 |SecurityInsights|Bookmark|2020-01-01|2023-02-01|
-|SecurityInsights|BookmarkRelation|2019-01-01-preview|2023-05-01-preview|
-|SecurityInsights|ContentPackage|not present|2023-05-01-preview|
-|SecurityInsights|ContentTemplate|not present|2023-05-01-preview|
+|SecurityInsights|BookmarkRelation|2019-01-01-preview|2023-06-01-preview|
+|SecurityInsights|ContentPackage|not present|2023-06-01-preview|
+|SecurityInsights|ContentTemplate|not present|2023-06-01-preview|
 |SecurityInsights|DataConnector|2020-01-01|2023-02-01|
-|SecurityInsights|EntityQuery|2021-03-01-preview|2023-05-01-preview|
-|SecurityInsights|FileImport|not present|2023-05-01-preview|
-|SecurityInsights|getEntitiesGetTimeline|2019-01-01-preview|2023-05-01-preview|
-|SecurityInsights|getEntityInsights|2019-01-01-preview|2023-05-01-preview|
-|SecurityInsights|Hunt|not present|2023-05-01-preview|
-|SecurityInsights|HuntComment|not present|2023-05-01-preview|
-|SecurityInsights|HuntRelation|not present|2023-05-01-preview|
+|SecurityInsights|EntityQuery|2021-03-01-preview|2023-06-01-preview|
+|SecurityInsights|FileImport|not present|2023-06-01-preview|
+|SecurityInsights|getEntitiesGetTimeline|2019-01-01-preview|2023-06-01-preview|
+|SecurityInsights|getEntityInsights|2019-01-01-preview|2023-06-01-preview|
+|SecurityInsights|Hunt|not present|2023-06-01-preview|
+|SecurityInsights|HuntComment|not present|2023-06-01-preview|
+|SecurityInsights|HuntRelation|not present|2023-06-01-preview|
 |SecurityInsights|Incident|2020-01-01|2023-02-01|
 |SecurityInsights|IncidentComment|2021-03-01-preview|2023-02-01|
 |SecurityInsights|IncidentRelation|2021-03-01-preview|2023-02-01|
-|SecurityInsights|IncidentTask|not present|2023-05-01-preview|
-|SecurityInsights|listSourceControlRepositories|2021-03-01-preview|2023-05-01-preview|
+|SecurityInsights|IncidentTask|not present|2023-06-01-preview|
+|SecurityInsights|listSourceControlRepositories|2021-03-01-preview|2023-06-01-preview|
 |SecurityInsights|Metadata|2021-03-01-preview|2023-02-01|
-|SecurityInsights|ProductSetting|2021-03-01-preview|2023-05-01-preview|
+|SecurityInsights|ProductSetting|2021-03-01-preview|2023-06-01-preview|
 |SecurityInsights|SecurityMLAnalyticsSetting|2022-05-01-preview|2023-02-01|
 |SecurityInsights|SentinelOnboardingState|2021-03-01-preview|2023-02-01|
 |SecurityInsights|SourceControl|2021-03-01-preview|2023-05-01-preview|
 |SecurityInsights|ThreatIntelligenceIndicator|2019-01-01-preview|2023-02-01|
 |SecurityInsights|Watchlist|2021-03-01-preview|2023-02-01|
 |SecurityInsights|WatchlistItem|2021-03-01-preview|2023-02-01|
-|SecurityInsights|WorkspaceManagerAssignment|not present|2023-05-01-preview|
-|SecurityInsights|WorkspaceManagerConfiguration|not present|2023-05-01-preview|
-|SecurityInsights|WorkspaceManagerGroup|not present|2023-05-01-preview|
-|SecurityInsights|WorkspaceManagerMember|not present|2023-05-01-preview|
+|SecurityInsights|WorkspaceManagerAssignment|not present|2023-06-01-preview|
+|SecurityInsights|WorkspaceManagerConfiguration|not present|2023-06-01-preview|
+|SecurityInsights|WorkspaceManagerGroup|not present|2023-06-01-preview|
+|SecurityInsights|WorkspaceManagerMember|not present|2023-06-01-preview|
 |SerialConsole|SerialPort|2018-05-01|2018-05-01|
-|ServiceBus|DisasterRecoveryConfig|2017-04-01|2021-11-01|
-|ServiceBus|listDisasterRecoveryConfigKeys|2017-04-01|2021-11-01|
-|ServiceBus|listNamespaceKeys|2017-04-01|2021-11-01|
-|ServiceBus|listQueueKeys|2017-04-01|2021-11-01|
-|ServiceBus|listTopicKeys|2017-04-01|2021-11-01|
-|ServiceBus|MigrationConfig|2017-04-01|2021-11-01|
-|ServiceBus|Namespace|2017-04-01|2021-11-01|
-|ServiceBus|NamespaceAuthorizationRule|2017-04-01|2021-11-01|
+|ServiceBus|DisasterRecoveryConfig|2017-04-01|2022-01-01-preview|
+|ServiceBus|listDisasterRecoveryConfigKeys|2017-04-01|2022-01-01-preview|
+|ServiceBus|listNamespaceKeys|2017-04-01|2022-01-01-preview|
+|ServiceBus|listQueueKeys|2017-04-01|2022-01-01-preview|
+|ServiceBus|listTopicKeys|2017-04-01|2022-01-01-preview|
+|ServiceBus|MigrationConfig|2017-04-01|2022-01-01-preview|
+|ServiceBus|Namespace|2017-04-01|2022-01-01-preview|
+|ServiceBus|NamespaceAuthorizationRule|2017-04-01|2022-01-01-preview|
 |ServiceBus|NamespaceIpFilterRule|2018-01-01-preview|2018-01-01-preview|
-|ServiceBus|NamespaceNetworkRuleSet|2017-04-01|2021-11-01|
+|ServiceBus|NamespaceNetworkRuleSet|2017-04-01|2022-01-01-preview|
 |ServiceBus|NamespaceVirtualNetworkRule|2018-01-01-preview|2018-01-01-preview|
-|ServiceBus|PrivateEndpointConnection|2018-01-01-preview|2021-11-01|
-|ServiceBus|Queue|2017-04-01|2021-11-01|
-|ServiceBus|QueueAuthorizationRule|2017-04-01|2021-11-01|
-|ServiceBus|Rule|2017-04-01|2021-11-01|
-|ServiceBus|Subscription|2017-04-01|2021-11-01|
-|ServiceBus|Topic|2017-04-01|2021-11-01|
-|ServiceBus|TopicAuthorizationRule|2017-04-01|2021-11-01|
-|ServiceFabric|Application|2020-03-01|2023-03-01-preview|
-|ServiceFabric|ApplicationType|2020-03-01|2023-03-01-preview|
-|ServiceFabric|ApplicationTypeVersion|2020-03-01|2023-03-01-preview|
+|ServiceBus|PrivateEndpointConnection|2018-01-01-preview|2022-01-01-preview|
+|ServiceBus|Queue|2017-04-01|2022-01-01-preview|
+|ServiceBus|QueueAuthorizationRule|2017-04-01|2022-01-01-preview|
+|ServiceBus|Rule|2017-04-01|2022-01-01-preview|
+|ServiceBus|Subscription|2017-04-01|2022-01-01-preview|
+|ServiceBus|Topic|2017-04-01|2022-01-01-preview|
+|ServiceBus|TopicAuthorizationRule|2017-04-01|2022-01-01-preview|
+|ServiceFabric|Application|2020-03-01|This was deprecated [along with the non-managed cluster](https://learn.microsoft.com/en-us/azure/service-fabric/faq-managed-cluster)|
+|ServiceFabric|ApplicationType|2020-03-01|This was deprecated [along with the non-managed cluster](https://learn.microsoft.com/en-us/azure/service-fabric/faq-managed-cluster)|
+|ServiceFabric|ApplicationTypeVersion|2020-03-01|This was deprecated [along with the non-managed cluster](https://learn.microsoft.com/en-us/azure/service-fabric/faq-managed-cluster)|
 |ServiceFabric|Cluster|2020-03-01|Replaced with the more recent ManagedCluster. This is still available via the version-specific module `v20210601`|
 |ServiceFabric|getmanagedAzResiliencyStatus|2022-02-01-preview|2023-03-01-preview|
-|ServiceFabric|listListUpgradableVersionPost|2020-12-01-preview|2020-12-01-preview|
+|ServiceFabric|listListUpgradableVersionPost|2020-12-01-preview|This was deprecated [along with the non-managed cluster](https://learn.microsoft.com/en-us/azure/service-fabric/faq-managed-cluster)|
 |ServiceFabric|ManagedCluster|2020-01-01-preview|2023-03-01-preview|
+|ServiceFabric|ManagedClusterApplication|not present|2023-03-01-preview|
+|ServiceFabric|ManagedClusterApplicationType|not present|2023-03-01-preview|
+|ServiceFabric|ManagedClusterApplicationTypeVersion|not present|2023-03-01-preview|
+|ServiceFabric|ManagedClusterService|not present|2023-03-01-preview|
 |ServiceFabric|NodeType|2020-01-01-preview|2023-03-01-preview|
-|ServiceFabric|Service|2020-03-01|2023-03-01-preview|
+|ServiceFabric|Service|2020-03-01|This was deprecated [along with the non-managed cluster](https://learn.microsoft.com/en-us/azure/service-fabric/faq-managed-cluster)|
 |ServiceFabricMesh|Application|2018-09-01-preview|2018-09-01-preview|
 |ServiceFabricMesh|Gateway|2018-09-01-preview|2018-09-01-preview|
 |ServiceFabricMesh|listSecretValue|2018-09-01-preview|2018-09-01-preview|
@@ -1686,9 +1715,9 @@ meta_desc: Table to help migrate between top-level resources for Azure Native v1
 |ServiceFabricMesh|Volume|2018-09-01-preview|2018-09-01-preview|
 |ServiceLinker|Connector|not present|2022-11-01-preview|
 |ServiceLinker|ConnectorDryrun|not present|2022-11-01-preview|
-|ServiceLinker|Linker|2021-11-01-preview|2022-05-01|
+|ServiceLinker|Linker|2021-11-01-preview|2022-11-01-preview|
 |ServiceLinker|LinkerDryrun|not present|2022-11-01-preview|
-|ServiceLinker|listLinkerConfigurations|2021-11-01-preview|2022-05-01|
+|ServiceLinker|listLinkerConfigurations|2021-11-01-preview|2022-11-01-preview|
 |ServiceNetworking|AssociationsInterface|2022-10-01-preview|2023-05-01-preview|
 |ServiceNetworking|FrontendsInterface|2022-10-01-preview|2023-05-01-preview|
 |ServiceNetworking|TrafficControllerInterface|2022-10-01-preview|2023-05-01-preview|
@@ -1712,6 +1741,7 @@ meta_desc: Table to help migrate between top-level resources for Azure Native v1
 |Sql|DatabaseBlobAuditingPolicy|2020-11-01-preview|2021-11-01|
 |Sql|DatabaseSecurityAlertPolicy|2020-11-01-preview|2021-11-01|
 |Sql|DatabaseSqlVulnerabilityAssessmentRuleBaseline|not present|2022-11-01-preview|
+|Sql|DatabaseThreatDetectionPolicy|not present|2014-04-01|
 |Sql|DatabaseVulnerabilityAssessment|2020-11-01-preview|2021-11-01|
 |Sql|DatabaseVulnerabilityAssessmentRuleBaseline|2020-11-01-preview|2021-11-01|
 |Sql|DataMaskingPolicy|2014-04-01|2021-11-01|
@@ -1917,7 +1947,7 @@ meta_desc: Table to help migrate between top-level resources for Azure Native v1
 |Web|listAppServicePlanHybridConnectionKeys|2020-12-01|2022-09-01|
 |Web|listConnectionConsentLinks|2016-06-01|2016-06-01|
 |Web|listConnectionKeys|2015-08-01-preview|2015-08-01-preview|
-|Web|listContainerAppSecrets|2021-03-01|2022-09-01|
+|Web|listContainerAppSecrets|2021-03-01|This moved into the ContainerApp service|
 |Web|listCustomApiWsdlInterfaces|2016-06-01|2016-06-01|
 |Web|listSiteIdentifiersAssignedToHostName|2020-12-01|2022-09-01|
 |Web|listStaticSiteAppSettings|2020-12-01|2022-09-01|
@@ -1991,6 +2021,7 @@ meta_desc: Table to help migrate between top-level resources for Azure Native v1
 |Web|WebAppDiagnosticLogsConfiguration|2020-12-01|2022-09-01|
 |Web|WebAppDomainOwnershipIdentifier|2020-12-01|2022-09-01|
 |Web|WebAppDomainOwnershipIdentifierSlot|2020-12-01|2022-09-01|
+|Web|WebAppFtpAllowed|not present|2022-09-01|
 |Web|WebAppFunction|2020-12-01|2022-09-01|
 |Web|WebAppHostNameBinding|2020-12-01|2022-09-01|
 |Web|WebAppHostNameBindingSlot|2020-12-01|2022-09-01|
@@ -2007,6 +2038,7 @@ meta_desc: Table to help migrate between top-level resources for Azure Native v1
 |Web|WebAppPublicCertificateSlot|2020-12-01|2022-09-01|
 |Web|WebAppRelayServiceConnection|2020-12-01|2022-09-01|
 |Web|WebAppRelayServiceConnectionSlot|2020-12-01|2022-09-01|
+|Web|WebAppScmAllowed|not present|2022-09-01|
 |Web|WebAppSiteExtension|2020-12-01|2022-09-01|
 |Web|WebAppSiteExtensionSlot|2020-12-01|2022-09-01|
 |Web|WebAppSitePushSettings|2020-12-01|2022-09-01|
@@ -2034,11 +2066,11 @@ meta_desc: Table to help migrate between top-level resources for Azure Native v1
 |Workloads|getSAPSizingRecommendations|2021-12-01-preview|2023-04-01|
 |Workloads|getSAPSupportedSku|2021-12-01-preview|2023-04-01|
 |Workloads|monitor|2021-12-01-preview|2023-04-01|
-|Workloads|PhpWorkload|2021-12-01-preview|2021-12-01-preview|
+|Workloads|PhpWorkload|2021-12-01-preview|Deprecated by Azure|
 |Workloads|ProviderInstance|2021-12-01-preview|2023-04-01|
 |Workloads|SAPApplicationServerInstance|2021-12-01-preview|2023-04-01|
 |Workloads|SAPCentralInstance|2021-12-01-preview|2023-04-01|
 |Workloads|SAPDatabaseInstance|2021-12-01-preview|2023-04-01|
 |Workloads|SapLandscapeMonitor|not present|2023-04-01|
 |Workloads|SAPVirtualInstance|2021-12-01-preview|2023-04-01|
-|Workloads|WordpressInstance|2021-12-01-preview|2021-12-01-preview|
+|Workloads|WordpressInstance|2021-12-01-preview|Deprecated by Azure|

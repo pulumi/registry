@@ -19,7 +19,7 @@ meta_desc: Table to help migrate between top-level resources for Azure Native v1
 |AgFoodPlatform|DataConnector|not present|2023-06-01-preview|
 |AgFoodPlatform|DataManagerForAgricultureResource|not present|2023-06-01-preview|
 |AgFoodPlatform|Extension|2020-05-12-preview|2023-06-01-preview|
-|AgFoodPlatform|FarmBeatsModel|2020-05-12-preview|2021-09-01-preview|
+|AgFoodPlatform|FarmBeatsModel|2020-05-12-preview|Removed from default due to deprecation|
 |AgFoodPlatform|PrivateEndpointConnection|not present|2023-06-01-preview|
 |AgFoodPlatform|Solution|not present|2023-06-01-preview|
 |AlertsManagement|ActionRuleByName|2019-05-05-preview|2019-05-05-preview|
@@ -537,7 +537,6 @@ meta_desc: Table to help migrate between top-level resources for Azure Native v1
 |DataBoxEdge|Container|2020-12-01|2022-03-01|
 |DataBoxEdge|Device|2020-12-01|2022-03-01|
 |DataBoxEdge|getDeviceExtendedInformation|2020-12-01|2022-03-01|
-|DataBoxEdge|getMarketplaceImageSasTokenSASToken|not present|2023-01-01-preview|
 |DataBoxEdge|listOrderDCAccessCode|2020-12-01|2022-03-01|
 |DataBoxEdge|MonitoringConfig|2020-12-01|2022-03-01|
 |DataBoxEdge|Order|2020-12-01|2022-03-01|
@@ -630,7 +629,7 @@ meta_desc: Table to help migrate between top-level resources for Azure Native v1
 |DBforMySQL|PrivateEndpointConnection|2018-06-01|2022-09-30-preview|
 |DBforMySQL|Server|2017-12-01|2022-01-01|
 |DBforMySQL|ServerAdministrator|2017-12-01|[This was used for Single Server only which has been replaced with Flexible Server](https://learn.microsoft.com/en-us/azure/mysql/single-server/whats-happening-to-mysql-single-server)|
-|DBforMySQL|ServerKey|2020-01-01|2020-07-01-preview|
+|DBforMySQL|ServerKey|2020-01-01|[This was used for Single Server only which has been replaced with Flexible Server](https://learn.microsoft.com/en-us/azure/mysql/single-server/whats-happening-to-mysql-single-server)|
 |DBforMySQL|VirtualNetworkRule|2017-12-01|[This was used for Single Server only which has been replaced with Flexible Server](https://learn.microsoft.com/en-us/azure/mysql/single-server/whats-happening-to-mysql-single-server)|
 |DBforPostgreSQL|Administrator|not present|2022-12-01|
 |DBforPostgreSQL|Cluster|not present|2022-11-08|
@@ -794,7 +793,7 @@ meta_desc: Table to help migrate between top-level resources for Azure Native v1
 |EventGrid|DomainEventSubscription|2021-10-15-preview|2022-06-15|
 |EventGrid|DomainTopic|2020-06-01|2022-06-15|
 |EventGrid|DomainTopicEventSubscription|2021-10-15-preview|2022-06-15|
-|EventGrid|EventChannel|2021-06-01-preview|2021-10-15-preview|
+|EventGrid|EventChannel|2021-06-01-preview|Removed from defaults due to deprecation|
 |EventGrid|EventSubscription|2020-06-01|2022-06-15|
 |EventGrid|getChannelFullUrl|2021-10-15-preview|2022-06-15|
 |EventGrid|getDomainEventSubscriptionDeliveryAttributes|2021-10-15-preview|2022-06-15|

@@ -82,8 +82,8 @@ Go programs will need all imports updated to include `v2` in the path.
 import (
 - "github.com/pulumi/pulumi-azure-native-sdk/resources"
 - "github.com/pulumi/pulumi-azure-native-sdk/storage"
-+ "github.com/pulumi/pulumi-azure-native-sdk/v2/resources"
-+ "github.com/pulumi/pulumi-azure-native-sdk/v2/storage"
++ "github.com/pulumi/pulumi-azure-native-sdk/resources/v2"
++ "github.com/pulumi/pulumi-azure-native-sdk/storage/v2"
 )
 ```
 

@@ -3,13 +3,10 @@ title: Upgrade Guide for Azure Native v1 to v2
 meta_desc: How to upgrade from v1 to v2 of the Pulumi Azure Native Provider.
 layout: package
 ---
-{{% notes type="info" %}}
-The Pulumi Azure Native Provider v2 is currently available in beta.
-{{% /notes %}}
 
 ## About
 
-The Pulumi Azure Native Provider v2 is now available in beta. You can start taking advantages of the smaller, streamlined SDKs right away while also incorporating other enhancements including simplified user assigned identity handling, refreshed default versions, and consistent title casing. To upgrade to v2, there are a few changes you may need to make depending on your Pulumi programs.
+The Pulumi Azure Native Provider v2 is now available. You can start taking advantages of the smaller, streamlined SDKs right away while also incorporating other enhancements including simplified user assigned identity handling, refreshed default versions, and consistent title casing. To upgrade to v2, there are a few changes you may need to make depending on your Pulumi programs.
 
 ## Upgrade Steps
 
@@ -25,13 +22,13 @@ Review your program for warnings on missing imports or deprecated resources. If 
 
 ### Upgrade Dependencies
 
-In your Pulumi program, upgrade the package to point to the latest version of the v2 beta.
+In your Pulumi program, upgrade the package to point to the latest v2.x version.
 
-* JavaScript/TypeScript: [`@pulumi/azure-native`](https://www.npmjs.com/package/@pulumi/azure-native/v/2.0.0-beta.1)
-* Python: [`pulumi-azure-native`](https://pypi.org/project/pulumi-azure-native/2.0.0b1/)
-* Go: [`github.com/pulumi/pulumi-azure-native/sdk/go/azure`](https://github.com/pulumi/pulumi-azure-native/releases/tag/v2.0.0-beta.1)
-* .NET: [`Pulumi.AzureNative`](https://www.nuget.org/packages/Pulumi.AzureNative/2.0.0-beta.1)
-* Java: `com.pulumi.azurenative` [Beta unavailable]
+* JavaScript/TypeScript: [`@pulumi/azure-native`](https://www.npmjs.com/package/@pulumi/azure-native/v/2.0.0)
+* Python: [`pulumi-azure-native`](https://pypi.org/project/pulumi-azure-native/2.0.0/)
+* Go: [`github.com/pulumi/pulumi-azure-native/sdk/go/azure`](https://github.com/pulumi/pulumi-azure-native/releases/tag/v2.0.0)
+* .NET: [`Pulumi.AzureNative`](https://www.nuget.org/packages/Pulumi.AzureNative/2.0.0)
+* Java: [`com.pulumi.azurenative`](https://central.sonatype.com/artifact/com.pulumi/azure-native/2.0.0)
 
 {{< chooser language "typescript,python,csharp,go" >}}
 

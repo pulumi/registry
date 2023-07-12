@@ -10,7 +10,7 @@ The Pulumi Cockroach provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@lbrlabs/pulumi-cockroach`](https://www.npmjs.com/package/@lbrlabs/pulumi-cockroach)
 * Python: [`lbrlabs_pulumi_cockroach`](https://pypi.org/project/lbrlabs-pulumi-cockroach/)
-* Go: [`github.com/lbrlabs/pulumi-cockroach/sdk/go/cockroach`](https://pkg.go.dev/github.com/lbrlabs/pulumi-cockroach/sdk)
+* Go: [`github.com/lbrlabs/pulumi-cockroach/sdk/go/cockroach`](https://github.com/lbrlabs/pulumi-cockroach)
 * .NET: [`Lbrlabs.PulumiPackage.Cockroach`](https://www.nuget.org/packages/Lbrlabs.PulumiPackage.Cockroach)
 
 ### Provider Binary
@@ -25,7 +25,7 @@ Replace the version string with your desired version.
 
 ## Setup
 
-To provision resources with the Pulumi Cockroach provider, you need to have Cockroach credentials.
+To provision resources with the Pulumi Cockroach provider, you need to have Cockroach credentials. 
 
 ### Set environment variables
 

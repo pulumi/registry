@@ -1,6 +1,7 @@
 category: Cloud
 component: false
-description: A Pulumi package for creating and managing CockroachDB cloud resources.
+description: A Pulumi package to create and managed cockroach db resources in Pulumi
+  programs.
 featured: false
 logo_url: https://raw.githubusercontent.com/lbrlabs/pulumi-cockroach/main/assets/logo.png
 name: cockroach
@@ -10,5 +11,5 @@ publisher: lbrlabs
 repo_url: https://github.com/lbrlabs/pulumi-cockroach
 schema_file_path: provider/cmd/pulumi-resource-cockroach/schema.json
 title: CockroachDB
-updated_on: 1688151673
-version: v0.0.2
+updated_on: 1689177795
+version: v0.0.3

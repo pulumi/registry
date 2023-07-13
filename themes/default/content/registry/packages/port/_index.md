@@ -22,12 +22,11 @@ const entity = new port.Entity("entity", {
     identifier: "monolith",
     title: "monolith",
     blueprint: "microservice",
-    properties: [
-        {
-            name: "language",
-            value: "Node",
+    properties: {
+        stringProps: {
+            "language": "typescript",
         }
-    ]
+    }
 });
 
 exports.title = entity.title;
@@ -43,26 +42,24 @@ import * as port from "@port-labs/port";
 export const blueprint = new port.Blueprint("microservice", {
     identifier: "microservice",
     title: "Microservice",
-    properties: [
-        {
-            identifier: "language",
-            title: "Language",
-            type: "string",
-            required: false,
+    properties: {
+        stringProps: {
+            "language": {
+                default: "Go",
+            }
         }
-    ]
+    }
 });
 
 export const entity = new port.Entity("monolith", {
     identifier: "monolith",
     title: "monolith",
     blueprint: blueprint.identifier,
-    properties: [
-        {
-            name: "language",
-            value: "Node",
+    properties: {
+        stringProps: {
+            "language": "Node",
         }
-    ]
+    }
 });
 ```
 
@@ -77,7 +74,7 @@ import pulumi
 from port_pulumi import Entity
 
 entity = Entity("port_pulumi", title="monolith", blueprint="microservice",
-                properties=[{"name": "language", "value": "Python"}])
+                properties={string_props={"language": "node"}})
 ```
 
 {{% /choosable %}}
@@ -87,7 +84,7 @@ entity = Entity("port_pulumi", title="monolith", blueprint="microservice",
 package main
 
 import (
-	"github.com/port-labs/pulumi-port/go/port"
+	"github.com/port-labs/pulumi-port/sdk/go/port"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -96,10 +93,9 @@ func main() {
 		entity, err := port.NewEntity(ctx, "entity", &port.EntityArgs{
 			Title:     pulumi.String("monolith"),
 			Blueprint: pulumi.String("microservice"),
-			Properties: port.EntityPropertyArray{
-				&port.EntityPropertyArgs{
-					Name:  pulumi.String("language"),
-					Value: pulumi.String("GO"),
+			Properties: port.EntityPropertiesArgs{
+				StringProps: pulumi.StringMap{
+					"language": pulumi.String("Go"),
 				},
 			},
 		})
@@ -110,7 +106,6 @@ func main() {
 		return nil
 	})
 }
-
 ```
 
 {{% /choosable %}}

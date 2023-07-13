@@ -10,7 +10,7 @@ The Pulumi Matchbox provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumiverse/matchbox`](https://www.npmjs.com/package/@pulumiverse/matchbox)
 * Python: [`pulumiverse_matchbox`](https://pypi.org/project/pulumiverse-matchbox/)
-* Go: [`github.com/pulumiverse/pulumi-matchbox/sdk/go/matchbox`](https://pkg.go.dev/github.com/pulumiverse/pulumi-matchbox/sdk)
+* Go: [`github.com/pulumiverse/pulumi-matchbox/sdk/go/matchbox`](https://pkg.go.dev/github.com/pulumiverse/pulumi-matchbox/sdk/go/matchbox)
 * .NET: [`Pulumiverse.Matchbox`](https://www.nuget.org/packages/Pulumiverse.Matchbox)
 
 ## Setup

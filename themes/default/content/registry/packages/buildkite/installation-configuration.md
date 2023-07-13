@@ -9,9 +9,9 @@ layout: package
 The Buildkite provider is available as a package in all Pulumi languages:
 
 <!-- x-release-please-start-major -->
-* JavaScript/TypeScript: [`@pulumiverse/pulumi-buildkite`](https://www.npmjs.com/package/@pulumiverse/pulumi-buildkite)
+* JavaScript/TypeScript: [`@pulumiverse/buildkite`](https://www.npmjs.com/package/@pulumiverse/buildkite)
 * Python: [`pulumiverse-buildkite`](https://pypi.org/project/pulumiverse-buildkite/)
-* Go: [`github.com/pulumiverse/pulumi-buildkite/sdk/v2/go/buildkite`](https://github.com/pulumiverse/pulumi-buildkite)
+* Go: [`https://pkg.go.dev/github.com/pulumiverse/pulumi-buildkite/sdk/v2/go/buildkite`](https://pkg.go.dev/github.com/pulumiverse/pulumi-buildkite/sdk/v2/go/buildkite)
 * .NET: [`Pulumiverse.Buildkite`](https://www.nuget.org/packages/Pulumiverse.Buildkite)
 <!-- x-release-please-end -->
 
@@ -24,7 +24,7 @@ To provision resources with the Pulumi Buildkite provider, you need to have Buil
 Pulumi relies on the Buildkite API to authenticate requests from your computer to Buildkite. Your credentials are never sent to pulumi.com.
 The Pulumi Buildkite Provider needs to be configured with a Buildkite token before it can be used to create resources.
 
-Use `pulumi config set buildkite:<option>` or pass options to the [constructor of `new buildkite.Provider`](/registry/packages/buildkite/api-docs/provider).
+Use `pulumi config set buildkite:<option>` or pass options to the [constructor of `new buildkite.Provider`]({{< relref "/registry/packages/buildkite/api-docs/provider" >}}).
 
 | Option          | Required/Optional | Description                                                                                                       |
 |-----------------|-------------------|-------------------------------------------------------------------------------------------------------------------|

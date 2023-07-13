@@ -24,7 +24,7 @@ To provision resources with the Pulumi Buildkite provider, you need to have Buil
 Pulumi relies on the Buildkite API to authenticate requests from your computer to Buildkite. Your credentials are never sent to pulumi.com.
 The Pulumi Buildkite Provider needs to be configured with a Buildkite token before it can be used to create resources.
 
-Use `pulumi config set buildkite:<option>` or pass options to the [constructor of `new buildkite.Provider`]({{< relref "/registry/packages/buildkite/api-docs/provider" >}}).
+Use `pulumi config set buildkite:<option>` or pass options to the [constructor of `new buildkite.Provider`](/registry/packages/buildkite/api-docs/provider).
 
 | Option          | Required/Optional | Description                                                                                                       |
 |-----------------|-------------------|-------------------------------------------------------------------------------------------------------------------|

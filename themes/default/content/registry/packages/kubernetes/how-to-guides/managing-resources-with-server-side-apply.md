@@ -28,8 +28,6 @@ SSA is enabled by default in pulumi-kubernetes v4, but the `enableServerSideAppl
 2. Set the stack config using an environment variable: `PULUMI_K8S_ENABLE_SERVER_SIDE_APPLY=true`
 3. Set the `enableServerSideApply option` on a first-class Provider as shown in the following example
 
-Users may opt-in to the previous default behavior using Client-side Apply mode by setting this option to "false". 
-
 {{< chooser language "typescript,python,go,csharp,java,yaml" >}}
 
 {{% choosable language typescript %}}
@@ -142,6 +140,10 @@ resources:
 {{% /choosable %}}
 
 {{< /chooser >}}
+
+{{% notes type="info" %}}
+Users may opt into the previous default Client-side Apply (CSA) mode by setting the `enableServerSideApply` provider configuration to "false".
+{{% /notes %}}
 
 ## Upsert a Resource
 

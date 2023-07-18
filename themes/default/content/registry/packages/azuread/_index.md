@@ -113,7 +113,7 @@ public class App {
 ```yaml
 resources:
   my-group:
-    type: azureaz:Group
+    type: azuread:Group
     properties:
       name: my-group
 ```

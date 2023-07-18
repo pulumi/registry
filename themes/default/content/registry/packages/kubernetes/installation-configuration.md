@@ -9,6 +9,7 @@ layout: package
 [client-go]: https://github.com/kubernetes/client-go
 [provider-args]: /registry/packages/kubernetes/api-docs/provider
 [provider-kubeconfig]: /registry/packages/kubernetes/api-docs/provider#inputs
+[ssa-guide]: /registry/packages/kubernetes/how-to-guides/managing-resources-with-server-side-apply
 [kubeconfig]: https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/
 [install]: /docs/install/
 [nodejs]: https://nodejs.org/en/
@@ -126,14 +127,16 @@ See the [Provider configuration][provider-args] docs for a complete list of opti
 
 ## Server-Side Apply
 
-[Server-Side Apply](https://kubernetes.io/docs/reference/using-api/server-side-apply/) (SSA) is a resource management strategy that was introduced in Kubernetes `v1.18`. Clients using SSA can safely share the management of Kubernetes resources by making the API Server responsible for computing diffs and resolving conflicts.
+[Server-Side Apply](https://kubernetes.io/docs/reference/using-api/server-side-apply/) (SSA) is a resource management strategy that was introduced in Kubernetes `v1.13`. Clients using SSA can safely share the management of Kubernetes resources by making the API Server responsible for computing diffs and resolving conflicts.
 
-The [v3.20.0 release](https://github.com/pulumi/pulumi-kubernetes/releases/tag/v3.20.0) of the Pulumi Kubernetes provider added support for managing resources using SSA. This feature is currently opt-in using the `enableServerSideApply` [Provider option][provider-args], but will become the default in the next major release. Using SSA provides the following benefits:
+The [v4.0.0 release](https://github.com/pulumi/pulumi-kubernetes/releases/tag/v4.0.0) of the Pulumi Kubernetes provider added support for managing resources using SSA by default. Using SSA provides the following benefits:
 
 1. Kubernetes resources may be safely managed by more than one controller.
 2. It is now possible to "Upsert" resources; create the resource if it does not exist, or apply the configuration to an existing resource.
 3. It is now possible to patch resources with the Patch resource types in the SDK. Each resource type in the SDK has a corresponding Patch resource.
 4. The `last-applied-configuration` annotation is no longer used.
+
+See the [SSA how-to guide][ssa-guide] for more information about using SSA.
 
 ## Annotations
 

@@ -4,9 +4,9 @@ meta_desc: Learn how to manage Kubernetes resources with Server-Side Apply
 layout: package
 ---
 
-[Server-Side Apply](https://kubernetes.io/docs/reference/using-api/server-side-apply/) (SSA) is a resource management strategy that was introduced in Kubernetes `v1.18`. Clients using SSA can safely share the management of Kubernetes resources by making the API Server responsible for computing diffs and resolving conflicts.
+[Server-Side Apply](https://kubernetes.io/docs/reference/using-api/server-side-apply/) (SSA) is a resource management strategy that was introduced in Kubernetes `v1.13`. Clients using SSA can safely share the management of Kubernetes resources by making the API Server responsible for computing diffs and resolving conflicts.
 
-The [v3.20.0 release](https://github.com/pulumi/pulumi-kubernetes/releases/tag/v3.20.0) of the Pulumi Kubernetes provider added support for managing resources using SSA. This feature is currently opt-in using the `enableServerSideApply` [Provider option](/registry/packages/kubernetes/api-docs/provider/), but will become the default in the next major release. Using SSA provides the following benefits:
+The [v4.0.0 release](https://github.com/pulumi/pulumi-kubernetes/releases/tag/v4.0.0) of the Pulumi Kubernetes provider enables SSA by default. Using SSA provides the following benefits:
 
 1. Kubernetes resources may be safely managed by more than one controller.
 2. It is now possible to "Upsert" resources; create the resource if it does not exist, or apply the configuration to an existing resource.
@@ -17,21 +17,18 @@ This guide will show you how to enable SSA support and use these features to man
 
 ## Prerequisites
 
-Server-Side Apply support requires `patch` permission on the Kubernetes cluster for all operations, including previews.
-Previews use the `dry-run` mode of the `patch` operation to compute a preview diff, and *will not* modify the
-state of your cluster. The following upstream documentation links have more information about the Kubernetes dry run
-feature:
-
-* [Kubernetes dry-run](https://kubernetes.io/docs/reference/using-api/api-concepts/#dry-run)
-* [dry-run authorization requirements](https://kubernetes.io/docs/reference/using-api/api-concepts/#dry-run-authorization)
+Server-Side Apply support requires `patch` permission on the Kubernetes cluster for update operations.
+Previews are computed using input diffs, so they may be performed with restricted permissions.
 
 ## Enable Server-Side Apply
 
-Use the `enableServerSideApply` [Provider option](/registry/packages/kubernetes/api-docs/provider/) option to enable Server-Side Apply for the Provider. This option can be set in the following ways:
+SSA is enabled by default in pulumi-kubernetes v4, but the `enableServerSideApply` [Provider option](/registry/packages/kubernetes/api-docs/provider/) may be set explicitly in the following ways:
 
 1. Set the stack config explicitly with `pulumi config set kubernetes:enableServerSideApply true`
 2. Set the stack config using an environment variable: `PULUMI_K8S_ENABLE_SERVER_SIDE_APPLY=true`
 3. Set the `enableServerSideApply option` on a first-class Provider as shown in the following example
+
+Users may opt-in to the previous default behavior using Client-side Apply mode by setting this option to "false". 
 
 {{< chooser language "typescript,python,go,csharp,java,yaml" >}}
 

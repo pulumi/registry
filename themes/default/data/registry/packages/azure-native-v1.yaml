@@ -3,7 +3,7 @@ component: false
 description: A native Pulumi package for creating and managing Azure resources.
 featured: false
 logo_url: https://www.pulumi.com/logos/pkg/azure-native.svg
-name: azure-native-v2
+name: azure-native-v1
 native: true
 package_status: ga
 publisher: Pulumi

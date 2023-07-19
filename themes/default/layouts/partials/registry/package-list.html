@@ -82,9 +82,7 @@
             {{ $page := . }}
 
             {{ range (sort $allPackages "title") }}
-                {{ if ne .name "azure-native-v2" }}
-                    {{ partial "registry/package" (dict "package" . "page" $page) }}
-                {{ end }}
+                {{ partial "registry/package" (dict "package" . "page" $page) }}
             {{ end }}
             <div class="no-results px-4">
                 <p>

@@ -6,7 +6,7 @@ layout: package
 
 [Server-Side Apply](https://kubernetes.io/docs/reference/using-api/server-side-apply/) (SSA) is a resource management strategy that was introduced in Kubernetes `v1.13`. Clients using SSA can safely share the management of Kubernetes resources by making the API Server responsible for computing diffs and resolving conflicts.
 
-The [v4.0.0 release](https://github.com/pulumi/pulumi-kubernetes/releases/tag/v4.0.0) of the Pulumi Kubernetes provider enables SSA by default. Using SSA provides the following benefits:
+The [v4 release](https://github.com/pulumi/pulumi-kubernetes/releases/tag/v4.0.1) of the Pulumi Kubernetes provider enables SSA by default. Using SSA provides the following benefits:
 
 1. Kubernetes resources may be safely managed by more than one controller.
 2. It is now possible to "Upsert" resources; create the resource if it does not exist, or apply the configuration to an existing resource.

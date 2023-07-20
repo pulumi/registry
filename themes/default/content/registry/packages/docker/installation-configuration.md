@@ -12,7 +12,7 @@ The Docker provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/docker`](https://www.npmjs.com/package/@pulumi/docker)
 * Python: [`pulumi-docker`](https://pypi.org/project/pulumi-docker/)
-* Go: [`github.com/pulumi/pulumi-docker/sdk/v3/go/docker`](https://github.com/pulumi/pulumi-docker)
+* Go: [`github.com/pulumi/pulumi-docker/sdk/v4/go/docker`](https://github.com/pulumi/pulumi-docker)
 * .NET: [`Pulumi.Docker`](https://www.nuget.org/packages/Pulumi.Docker)
 
 ## Configuring The Provider

@@ -103,7 +103,7 @@ A full list of default version changes can be found in the [top-level resource v
 
 To continue using the previous Azure API version of a resource:
 
-1. Check the documentation in your IDE or our [registry API docs](https://www.pulumi.com/registry/packages/azure-native-v2/) which identifies the previous version for each resource. For example: `Azure REST API Version: 2022-06-15. Prior API version in Azure Native 1.x: 2020-06-01`
+1. Check the documentation in your IDE or our [registry API docs](https://www.pulumi.com/registry/packages/azure-native/) which identifies the previous version for each resource. For example: `Azure REST API Version: 2022-06-15. Prior API version in Azure Native 1.x: 2020-06-01`
 2. Import the previous version of the resource. These are available in the version-specific sub-folders of the SDK.
 
 Below are examples of changing an import to use an explicit version in each language.

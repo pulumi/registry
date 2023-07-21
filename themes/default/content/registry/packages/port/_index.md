@@ -71,10 +71,11 @@ export const entity = new port.Entity("monolith", {
 """A Python Pulumi program"""
 
 import pulumi
-from port_pulumi import Entity
+from port_pulumi import Entity,EntityPropertiesArgs
 
 entity = Entity("port_pulumi", title="monolith", blueprint="microservice",
-                properties={string_props={"language": "node"}})
+                properties=EntityPropertiesArgs(string_props={"language": "python"}),
+                )
 ```
 
 {{% /choosable %}}

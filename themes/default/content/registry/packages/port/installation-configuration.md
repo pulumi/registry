@@ -16,7 +16,7 @@ The Pulumi Port provider is available as a package in all Pulumi languages:
 
 The following configuration points are available for the `port` provider:
 
-- `port:clientId` - This is the Port client ID.
-- `port:secret` - This is the Port secret.
-- `port:baseUrl` (optional) - This is the Port base URL.
+- `port:clientId` - This is the Port client ID. (environment: PORT_CLIENT_ID)
+- `port:secret` - This is the Port secret. (environment: PORT_CLIENT_SECRET)
+- `port:baseUrl` (optional) - This is the Port base URL. (environment: PORT_BASE_URL)
 - `port:token` - (optional) This is the Port token.

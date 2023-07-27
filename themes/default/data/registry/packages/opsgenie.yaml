@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-opsgenie
 schema_file_path: provider/cmd/pulumi-resource-opsgenie/schema.json
 title: Opsgenie
-updated_on: 1689370468
-version: v1.2.8
+updated_on: 1690445476
+version: v1.2.9

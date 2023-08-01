@@ -325,19 +325,24 @@ type definition into their own program.
 
 {{< /chooser >}}
 
-## Property Name Change
+## `organizations/getOrganizationalUnits` Property Name Changed from `childrens` to `children`
 
-<!-- TODO: Add reason -->
-
-The name of property `aws:organizations/getOrganizationalUnits:getOrganizationalUnits` has changed from `childrens` to `children` and the name of the associated type from `children` to `child`.  See https://github.com/pulumi/pulumi-aws/pull/2634 for details.
+The name of property `aws:organizations/getOrganizationalUnits:getOrganizationalUnits` has
+changed from `childrens` to `children` and the name of the associated type from `children`
+to `child`. The name change is because `children` is itself already plural and it's
+natural singular is `child`. See https://github.com/pulumi/pulumi-aws/pull/2634 for
+details.
 
 {{< chooser language "typescript,python,go,csharp,java,yaml" >}}
 
 {{% chooseable language typescript }}
 
 ```diff
--
-+
+ const units = aws.organizations.getOrganizationalUnitsOutput({
+     parentId: "SomeId",
+ });
+-export const children = units.apply(units => units.childrens);
++export const children = units.apply(units => units.children);
 ```
 
 {{% /chooseable %}}
@@ -345,8 +350,9 @@ The name of property `aws:organizations/getOrganizationalUnits:getOrganizational
 {{% choosable language python %}}
 
 ```diff
--
-+
+ units = aws.organizations.get_organizational_units_output(parent_id="SomeId")
+-pulumi.export("children", units.childrens)
++pulumi.export("children", units.children)
 ```
 
 {{% /choosable %}}
@@ -354,8 +360,11 @@ The name of property `aws:organizations/getOrganizationalUnits:getOrganizational
 {{% choosable language go %}}
 
 ```diff
--
-+
+ units := originizations.GetOrganizationalUnitsOutput(&originizations.GetOrganizationalUnitsOutputArgs{
+     ParentId: pulumi.String("SomeId"),
+ })
+-pulumi.Export("children", units.Childrens)
++pulumi.Export("children", units.Children)
 ```
 
 {{% /choosable %}}
@@ -363,8 +372,16 @@ The name of property `aws:organizations/getOrganizationalUnits:getOrganizational
 {{% choosable language csharp %}}
 
 ```diff
--
-+
+ var units = Aws.Organizations.GetOrganizationalUnits.Invoke(new()
+ {
+     ParentId = "SomeId",
+ });
+
+ return new Dictionary<string, object?>
+ {
+-    ["children"] = units.Apply(getOrganizationalUnitsResult => getOrganizationalUnitsResult.Childrens),
++    ["children"] = units.Apply(getOrganizationalUnitsResult => getOrganizationalUnitsResult.Children),
+ }
 ```
 
 {{% /choosable %}}
@@ -372,8 +389,11 @@ The name of property `aws:organizations/getOrganizationalUnits:getOrganizational
 {{% choosable language java %}}
 
 ```diff
--
-+
+ OrganizationsFunctions.getOrganizationalUnits(GetOrganizationalUnitsArgs.builder()
+             .parentId("SomeId")
+             .build())
+-            .Childrens()
++            .Children()
 ```
 
 {{% /choosable %}}
@@ -381,8 +401,13 @@ The name of property `aws:organizations/getOrganizationalUnits:getOrganizational
 {{% choosable language yaml %}}
 
 ```diff
--
-+
+ variables:
+   units:
+     fn::aws:organizations:getOrganizationalUnits:
+       parentId: "SomeId"
+ outputs:
+-    children: ${units.childrens}
++    children: ${units.children}
 ```
 
 {{% /choosable %}}

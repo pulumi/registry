@@ -417,15 +417,11 @@ details.
 
 ## Function signature change
 
-<!-- TODO: Add reason -->
-
 For three functions, the signature has changed to accommodate a new argument. The new argument is optional, so passing an empty argument block is sufficient. Any reference to these three functions will need to be updated. The three impacted functions are:
 
 - `aws:index/getBillingServiceAccount:getBillingServiceAccount`
 - `aws:index/getCallerIdentity:getCallerIdentity`
 - `aws:index/getPartition:getPartition`
-
-<!-- TODO: Add code in all languages -->
 
 ```diff
 -`(pulumi.InvokeOptions) -> T`
@@ -438,8 +434,14 @@ For three functions, the signature has changed to accommodate a new argument. Th
 {{% chooseable language typescript }}
 
 ```diff
--
-+
+-const result = getBillingServiceAccount(invokeOptions);
++const result = getBillingServiceAccount({ id }, invokeOptions);
+
+-const result = getCallerIdentity(invokeOptions);
++const result = getCallerIdentity({ id }, invokeOptions);
+
++const result = getPartition(invokeOptions);
++const result = getPartition({ id }, invokeOptions);
 ```
 
 {{% /chooseable %}}
@@ -447,8 +449,14 @@ For three functions, the signature has changed to accommodate a new argument. Th
 {{% choosable language python %}}
 
 ```diff
--
-+
+-result = get_billing_service_account(opts)
++result = get_billing_service_account(id, opts)
+
+-result = get_caller_identity(opts)
++result = get_caller_identity(id, opts)
+
++result = get_partition(opts)
++result = get_partition(id, invokeOptions)
 ```
 
 {{% /choosable %}}
@@ -456,8 +464,20 @@ For three functions, the signature has changed to accommodate a new argument. Th
 {{% choosable language go %}}
 
 ```diff
--
-+
+-result, err := aws.GetBillingServiceAccount(ctx, opts)
++result, err := aws.GetBillingServiceAccount(ctx, &aws.GetBillingServiceAccountArgs{
++    Id: id,
++}, opts)
+
+-result, err := aws.GetCallerIdentity(ctx, opts)
++result, err := aws.GetCallerIdentity(ctx, &aws.GetCallerIdentityArgs{
++    Id: id,
++}, opts)
+
+-result, err := aws.GetPartition(ctx, opts)
++result, err := aws.GetPartition(ctx, &aws.GetPartitionArgs{
++    Id: id,
++}, opts)
 ```
 
 {{% /choosable %}}
@@ -465,8 +485,14 @@ For three functions, the signature has changed to accommodate a new argument. Th
 {{% choosable language csharp %}}
 
 ```diff
--
-+
+-var result = Aws.GetBillingServiceAccount.Invoke(opts);
++var result = Aws.GetBillingServiceAccount.Invoke(args, opts);
+
+-var result = Aws.GetCallerIdentity.Invoke(opts);
++var result = Aws.GetCallerIdentity.Invoke(args, opts);
+
+-var result = Aws.GetPartition.Invoke(opts);
++var result = Aws.GetPartition.Invoke(args, opts);
 ```
 
 {{% /choosable %}}
@@ -474,18 +500,21 @@ For three functions, the signature has changed to accommodate a new argument. Th
 {{% choosable language java %}}
 
 ```diff
--
-+
+-final var result AwsFunctions.getBillingServiceAccount(opts);
++final var result AwsFunctions.getBillingServiceAccount(args, opts);
+
+-final var result AwsFunctions.getCallerIdentity(opts);
++final var result AwsFunctions.getCallerIdentity(args, opts);
+
+-final var result AwsFunctions.getPartition(opts);
++final var result AwsFunctions.getPartition(args, opts);
 ```
 
 {{% /choosable %}}
 
 {{% choosable language yaml %}}
 
-```diff
--
-+
-```
+You may continue to use your existing code in Pulumi YAML.
 
 {{% /choosable %}}
 

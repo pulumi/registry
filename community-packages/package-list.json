@@ -227,6 +227,10 @@
     {
       "repoSlug": "port-labs/pulumi-port",
       "schemaFile": "provider/cmd/pulumi-resource-port/schema.json"
+    },
+    {
+      "repoSlug": "prodvana/pulumi-prodvana",
+      "schemaFile": "provider/cmd/pulumi-resource-prodvana/schema.json"
     }
   ]
 }

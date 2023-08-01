@@ -152,25 +152,48 @@ The resources and functions listed below were renamed in a previous version. Wit
 - aws:index/getElasticIp:getElasticIp -> [aws:ec2/getElasticIp:getElasticIp](https://www.pulumi.com/registry/packages/aws/api-docs/ec2/getelasticip/)
 - aws:index/getPrefixList:getPrefixList -> [aws:ec2/getPrefixList:getPrefixList](https://www.pulumi.com/registry/packages/aws/api-docs/ec2/getprefixlist/)
 
-## Property Removal
-
-<!-- TODO: Add code example -->
+## [Typescript] `aws.sdk` Property Removal
 
 The [aws.sdk](https://github.com/pulumi/pulumi-aws/pull/2584)
 property has been removed as it has already been deprecated upstream. The underlying functionality is still accessible by directly importing the AWS Typescript sdk. See https://github.com/pulumi/pulumi-aws/pull/2584 for more details.
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+```patch
+- import * as aws from "@pulumi/aws";
++ import { Bucket } from "@pulumi/aws/s3";
++ import * as s3 from "@aws-sdk/client-s3";
 
-{{% chooseable language typescript }}
+-const bucket = new aws.s3.Bucket("my-bucket");
++const bucket = new aws.s3.Bucket("my-bucket");
 
-```diff
--
-+
+ bucket.onObjectCreated("bucket-callback", async (event) => {
+-    const s3Client = new aws.s3.S3Client({});
++    const awssdk = await import("aws-sdk");
++    const s3 = new awssdk.S3();
++    const s3Client = new s3.S3Client({});
+     const recordFile = "lastPutFile.json";
+
+     const records = event.Records || [];
+     for (const record of records) {
+         const key = record.s3.object.key;
+         if (key !== recordFile) {
+             // Construct an event arguments object.
+             const args = {
+                 key: record.s3.object.key,
+                 size: record.s3.object.size,
+                 eventTime: record.eventTime,
+             };
+
+-            const res = await s3.putObject({
++            const res = await s3Client.send(new s3.PutObjectCommand({
+                 Bucket: bucket.id.get(),
+                 Key: recordFile,
+                 Body: JSON.stringify(args),
+-            }).promise();
++            }));
+         }
+     }
+ });
 ```
-
-{{% /chooseable %}}
-
-{{< /chooser >}}
 
 ## WafV2
 

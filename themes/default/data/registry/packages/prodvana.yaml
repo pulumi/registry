@@ -1,0 +1,14 @@
+category: Cloud
+component: false
+description: A Pulumi package for creating and managing Prodvana cloud resources.
+featured: false
+logo_url: https://raw.githubusercontent.com/prodvana/pulumi-prodvana/main/docs/prodvana-icon.svg
+name: prodvana
+native: false
+package_status: public_preview
+publisher: Prodvana
+repo_url: https://github.com/prodvana/pulumi-prodvana
+schema_file_path: provider/cmd/pulumi-resource-prodvana/schema.json
+title: Prodvana
+updated_on: 1690907754
+version: v0.1.12

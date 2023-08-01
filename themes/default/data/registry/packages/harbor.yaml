@@ -10,5 +10,5 @@ publisher: Pulumiverse
 repo_url: https://github.com/pulumiverse/pulumi-harbor
 schema_file_path: provider/cmd/pulumi-resource-harbor/schema.json
 title: Harbor
-updated_on: 1689679886
-version: v3.9.4
+updated_on: 1690875119
+version: v3.10.0

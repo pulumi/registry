@@ -1,0 +1,3 @@
+name: registry
+runtime: nodejs
+description: Pulumi program to manage registry infrastructure.

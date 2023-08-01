@@ -38,3 +38,7 @@ ci-pull-request-closed:
 ci-scheduled:
 	./scripts/ci/scheduled.sh
 
+.PHONY: ci_push
+ci_push::
+	$(MAKE) ensure
+	./scripts/ci/push.sh

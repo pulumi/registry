@@ -35,3 +35,5 @@ fi
 
 echo "Installing Node.js modules..."
 yarn install
+yarn --cwd infrastructure install
+

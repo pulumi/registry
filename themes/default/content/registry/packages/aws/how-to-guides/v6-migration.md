@@ -16,6 +16,7 @@ The upstream target has been changed from [v4.67.0](https://github.com/pulumi/pu
 - [v5.7.0](https://github.com/hashicorp/terraform-provider-aws/releases/tag/v5.7.0)
 - [v5.8.0](https://github.com/hashicorp/terraform-provider-aws/releases/tag/v5.8.0)
 - [v5.9.0](https://github.com/hashicorp/terraform-provider-aws/releases/tag/v5.9.0)
+- [v5.10.0](https://github.com/hashicorp/terraform-provider-aws/releases/tag/v5.10.0)
 
 ## Deprecated resources and functions
 
@@ -152,7 +153,7 @@ The resources and functions listed below were renamed in a previous version. Wit
 - aws:index/getElasticIp:getElasticIp -> [aws:ec2/getElasticIp:getElasticIp](https://www.pulumi.com/registry/packages/aws/api-docs/ec2/getelasticip/)
 - aws:index/getPrefixList:getPrefixList -> [aws:ec2/getPrefixList:getPrefixList](https://www.pulumi.com/registry/packages/aws/api-docs/ec2/getprefixlist/)
 
-## [Typescript] `aws.sdk` Property Removal
+## [Typescript] `aws.sdk` Property removed
 
 The [aws.sdk](https://github.com/pulumi/pulumi-aws/pull/2584)
 property has been removed as it has already been deprecated upstream. The underlying functionality is still accessible by directly importing the AWS Typescript sdk. See https://github.com/pulumi/pulumi-aws/pull/2584 for more details.
@@ -195,7 +196,7 @@ property has been removed as it has already been deprecated upstream. The underl
  });
 ```
 
-## WafV2
+## WafV2 is now defined recursively
 
 <!-- TODO: Add code examples in all languages -->
 
@@ -260,7 +261,7 @@ Any references to `RuleGroupRuleStatement` or `WebAclRuleStatement` properties o
 
 {{< /chooser >}}
 
-## Unused Quicksight Types
+## Unused Quicksight types have been removed
 
 <!-- TODO: Add reason, link to PR/issue and code examples in all languages -->
 
@@ -325,7 +326,7 @@ type definition into their own program.
 
 {{< /chooser >}}
 
-## `organizations/getOrganizationalUnits` Property Name Changed from `childrens` to `children`
+## `organizations/getOrganizationalUnits` Property name changed from `childrens` to `children`
 
 The name of property `aws:organizations/getOrganizationalUnits:getOrganizationalUnits` has
 changed from `childrens` to `children` and the name of the associated type from `children`
@@ -414,7 +415,7 @@ details.
 
 {{< /chooser >}}
 
-## Function Signature Change
+## Function signature change
 
 <!-- TODO: Add reason -->
 

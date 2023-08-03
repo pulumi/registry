@@ -11,5 +11,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-synced-folder
 schema_file_path: schema.json
 title: Synced Folder
-updated_on: 1676574364
-version: v0.10.2
+updated_on: 1690990734
+version: v0.11.0

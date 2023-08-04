@@ -198,8 +198,6 @@ property has been removed as it has already been deprecated upstream. The underl
 
 ## WafV2 is now defined recursively
 
-<!-- TODO: Add code examples in all languages -->
-
 The `wafv2` module has been refactored to properly define recursive types resulting in a significant decrease in SDK size.
 Any references to `RuleGroupRuleStatement` or `WebAclRuleStatement` properties on a wafv2 resource, will need to be updated to use the new recursive types in the `wafv2` module.
 
@@ -208,8 +206,8 @@ Any references to `RuleGroupRuleStatement` or `WebAclRuleStatement` properties o
 {{% chooseable language typescript }}
 
 ```diff
--
-+
+-aws.wafv2.inputs.RuleGroupRuleStatementAndStatementStatementGeoMatchStatement
++aws.wafv2.inputs.RuleGroupRuleStatement
 ```
 
 {{% /chooseable %}}
@@ -217,8 +215,8 @@ Any references to `RuleGroupRuleStatement` or `WebAclRuleStatement` properties o
 {{% choosable language python %}}
 
 ```diff
--
-+
+-pulumi_aws.wafv2.RuleGroupRuleStatementAndStatementStatementGeoMatchStatementArgs
++pulumi_aws.wafv2.RuleGroupRuleStatementArgs
 ```
 
 {{% /choosable %}}
@@ -226,8 +224,8 @@ Any references to `RuleGroupRuleStatement` or `WebAclRuleStatement` properties o
 {{% choosable language go %}}
 
 ```diff
--
-+
+-wafv2.RuleGroupRuleStatementAndStatementStatementGeoMatchStatementArgs
++wafv2.RuleGroupRuleStatementArgs
 ```
 
 {{% /choosable %}}
@@ -235,8 +233,8 @@ Any references to `RuleGroupRuleStatement` or `WebAclRuleStatement` properties o
 {{% choosable language csharp %}}
 
 ```diff
--
-+
+-Pulumi.Aws.WafV2.Inputs.RuleGroupRuleStatementAndStatementStatementGeoMatchStatementArgs
++Pulumi.Aws.WafV2.Inputs.RuleGroupRuleStatementArgs
 ```
 
 {{% /choosable %}}
@@ -244,18 +242,15 @@ Any references to `RuleGroupRuleStatement` or `WebAclRuleStatement` properties o
 {{% choosable language java %}}
 
 ```diff
--
-+
+-com.pulumi.aws.wafv2.inputs.RuleGroupRuleStatementAndStatementStatementGeoMatchStatementArgs
++com.pulumi.aws.wafv2.inputs.RuleGroupRuleStatementArgs
 ```
 
 {{% /choosable %}}
 
 {{% choosable language yaml %}}
 
-```diff
--
-+
-```
+No changes are necessary.
 
 {{% /choosable %}}
 

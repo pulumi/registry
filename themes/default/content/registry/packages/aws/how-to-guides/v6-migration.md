@@ -263,18 +263,26 @@ Any references to `RuleGroupRuleStatement` or `WebAclRuleStatement` properties o
 
 ## Unused Quicksight types have been removed
 
-<!-- TODO: Add reason, link to PR/issue and code examples in all languages -->
+Unused types from the `quicksight` module have been
+[removed](https://github.com/pulumi/pulumi-aws/pull/2609/commits/7a72e505fc7b5729f2ea1ec231e52fa614332744).
+Specifically, types that begin with `AnalysisDefinition`, `DashboardDefinition` or
+`TemplateDefinition`. Since these were purely type definitions, you can replicate them by
+copying them out of the v5 SDK. We have not removed any types used by quicksight resources
+or functions.
 
-Unused types from the `quicksight` module have been [removed](https://github.com/pulumi/pulumi-aws/pull/2609/commits/7a72e505fc7b5729f2ea1ec231e52fa614332744). Consumers of removed types can continue to reference the v5 types or move the
-type definition into their own program.
+We *do not* expect that you are using these types, since they are not hooked up to any resource.
 
 {{< chooser language "typescript,python,go,csharp,java,yaml" >}}
 
 {{% chooseable language typescript }}
 
 ```diff
--
-+
+-function newDataSetReference(): aws.inputs.quicksight.TemplateSourceEntitySourceAnalysisDataSetReference { ... }
++interface TemplateSourceEntitySourceAnalysisDataSetReference {
++    dataSetArn: pulumi.Input<string>,
++    dataSetPlaceholder: pulumi.Input<string>,
++}
++function newDataSetReference(): TemplateSourceEntitySourceAnalysisDataSetReference { ... }
 ```
 
 {{% /chooseable %}}
@@ -282,8 +290,44 @@ type definition into their own program.
 {{% choosable language python %}}
 
 ```diff
--
+-args = aws.quicksight.TemplateSourceEntitySourceAnalysisDataSetReferenceArgs(data_set_arn, data_set_placeholder)
++@pulumi.input_type
++class TemplateSourceEntitySourceAnalysisDataSetReferenceArgs:
++    def __init__(__self__, *,
++                 data_set_arn: pulumi.Input[str],
++                 data_set_placeholder: pulumi.Input[str]):
++        """
++        :param pulumi.Input[str] data_set_arn: Dataset Amazon Resource Name (ARN).
++        :param pulumi.Input[str] data_set_placeholder: Dataset placeholder.
++        """
++        pulumi.set(__self__, "data_set_arn", data_set_arn)
++        pulumi.set(__self__, "data_set_placeholder", data_set_placeholder)
 +
++    @property
++    @pulumi.getter(name="dataSetArn")
++    def data_set_arn(self) -> pulumi.Input[str]:
++        """
++        Dataset Amazon Resource Name (ARN).
++        """
++        return pulumi.get(self, "data_set_arn")
++
++    @data_set_arn.setter
++    def data_set_arn(self, value: pulumi.Input[str]):
++        pulumi.set(self, "data_set_arn", value)
++
++    @property
++    @pulumi.getter(name="dataSetPlaceholder")
++    def data_set_placeholder(self) -> pulumi.Input[str]:
++        """
++        Dataset placeholder.
++        """
++        return pulumi.get(self, "data_set_placeholder")
++
++    @data_set_placeholder.setter
++    def data_set_placeholder(self, value: pulumi.Input[str]):
++        pulumi.set(self, "data_set_placeholder", value)
++
++args = TemplateSourceEntitySourceAnalysisDataSetReferenceArgs(data_set_arn, data_set_placeholder)
 ```
 
 {{% /choosable %}}
@@ -291,8 +335,15 @@ type definition into their own program.
 {{% choosable language go %}}
 
 ```diff
--
+-var args quicksight.TemplateSourceEntitySourceAnalysisDataSetReferenceArgs
++type TemplateSourceEntitySourceAnalysisDataSetReferenceArgs struct {
++	// Dataset Amazon Resource Name (ARN).
++	DataSetArn pulumi.StringInput `pulumi:"dataSetArn"`
++	// Dataset placeholder.
++	DataSetPlaceholder pulumi.StringInput `pulumi:"dataSetPlaceholder"`
++}
 +
++var args TemplateSourceEntitySourceAnalysisDataSetReferenceArgs
 ```
 
 {{% /choosable %}}
@@ -300,8 +351,27 @@ type definition into their own program.
 {{% choosable language csharp %}}
 
 ```diff
--
+-var args Pulumi.Aws.Quicksight.Inputs.TemplateSourceEntitySourceAnalysisDataSetReferenceArgs;
++public sealed class TemplateSourceEntitySourceAnalysisDataSetReferenceArgs : global::Pulumi.ResourceArgs
++{
++    /// <summary>
++    /// Dataset Amazon Resource Name (ARN).
++    /// </summary>
++    [Input("dataSetArn", required: true)]
++    public Input<string> DataSetArn { get; set; } = null!;
 +
++    /// <summary>
++    /// Dataset placeholder.
++    /// </summary>
++    [Input("dataSetPlaceholder", required: true)]
++    public Input<string> DataSetPlaceholder { get; set; } = null!;
++
++    public TemplateSourceEntitySourceAnalysisDataSetReferenceArgs()
++    {
++    }
++    public static new TemplateSourceEntitySourceAnalysisDataSetReferenceArgs Empty => new +TemplateSourceEntitySourceAnalysisDataSetReferenceArgs();
++}
++var args TemplateSourceEntitySourceAnalysisDataSetReferenceArgs;
 ```
 
 {{% /choosable %}}
@@ -309,18 +379,19 @@ type definition into their own program.
 {{% choosable language java %}}
 
 ```diff
--
-+
+-private com.pulumi.aws.quicksight.inputs.TemplateSourceEntitySourceAnalysisDataSetReferenceArgs;
++/*
++ * Copy in this file:
++ * https://github.com/pulumi/pulumi-aws/blob/v5.42.0/sdk/java/src/main/java/com/pulumi/aws/quicksight/inputs/TemplateSourceEntitySourceAnalysisDataSetReferenceArgs.java 
++ */
++ private TemplateSourceEntitySourceAnalysisDataSetReferenceArgs;
 ```
 
 {{% /choosable %}}
 
 {{% choosable language yaml %}}
 
-```diff
--
-+
-```
+Pulumi YAML is structurally typed, so you don't need to make any changes.
 
 {{% /choosable %}}
 

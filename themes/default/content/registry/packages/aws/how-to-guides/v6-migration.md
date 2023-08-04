@@ -2,7 +2,7 @@
 
 ## Upstream Changes
 
-The upstream target has been changed from [v4.67.0](https://github.com/pulumi/pulumi-aws/pull/2521) to targeting v5.9.0. That means that the upstream [migration guide](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/guides/version-5-upgrade) as well as the following `CHANGELOG`s are relevant:
+The upstream target has been changed from [v4.67.0](https://github.com/pulumi/pulumi-aws/pull/2521) to targeting v5.11.0. That means that the upstream [migration guide](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/guides/version-5-upgrade) as well as the following `CHANGELOG`s are relevant:
 - [v5.0.0](https://github.com/hashicorp/terraform-provider-aws/releases/tag/v5.0.0)
 - [v5.0.1](https://github.com/hashicorp/terraform-provider-aws/releases/tag/v5.0.1)
 - [v5.1.0](https://github.com/hashicorp/terraform-provider-aws/releases/tag/v5.1.0)
@@ -17,6 +17,7 @@ The upstream target has been changed from [v4.67.0](https://github.com/pulumi/pu
 - [v5.8.0](https://github.com/hashicorp/terraform-provider-aws/releases/tag/v5.8.0)
 - [v5.9.0](https://github.com/hashicorp/terraform-provider-aws/releases/tag/v5.9.0)
 - [v5.10.0](https://github.com/hashicorp/terraform-provider-aws/releases/tag/v5.10.0)
+- [v5.11.0](https://github.com/hashicorp/terraform-provider-aws/releases/tag/v5.11.0)
 
 ## Deprecated resources and functions
 
@@ -260,12 +261,10 @@ No changes are necessary.
 
 Unused types from the `quicksight` module have been
 [removed](https://github.com/pulumi/pulumi-aws/pull/2609/commits/7a72e505fc7b5729f2ea1ec231e52fa614332744).
-Specifically, types that begin with `AnalysisDefinition`, `DashboardDefinition` or
+Specifically, types that begin with `AnalysisDefinition`, `DashboardDefinition`, or
 `TemplateDefinition`. Since these were purely type definitions, you can replicate them by
 copying them out of the v5 SDK. We have not removed any types used by quicksight resources
 or functions.
-
-We *do not* expect that you are using these types, since they are not hooked up to any resource.
 
 {{< chooser language "typescript,python,go,csharp,java,yaml" >}}
 

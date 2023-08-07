@@ -1,7 +1,7 @@
 ---
-title: "v6 Migration Guide"
-h1: "Migrating from v5 to v6"
-meta_desc: Practitioner level instructions for migrating from pulumi-aws v5 to v6.
+title: "6.0 Migration Guide"
+h1: "Migrating from 5.x to 6.x"
+meta_desc: Practitioner level instructions for migrating from pulumi-aws 5.x to 6.x.
 layout: package
 ---
 

@@ -160,12 +160,10 @@ The [aws.sdk](https://github.com/pulumi/pulumi-aws/pull/2584)
 property has been removed as it has already been deprecated upstream. The underlying functionality is still accessible by directly importing the AWS Typescript sdk. See https://github.com/pulumi/pulumi-aws/pull/2584 for more details.
 
 ```patch
-- import * as aws from "@pulumi/aws";
-+ import { Bucket } from "@pulumi/aws/s3";
+import * as aws from "@pulumi/aws";
 + import * as s3 from "@aws-sdk/client-s3";
 
--const bucket = new aws.s3.Bucket("my-bucket");
-+const bucket = new aws.s3.Bucket("my-bucket");
+const bucket = new aws.s3.Bucket("my-bucket");
 
  bucket.onObjectCreated("bucket-callback", async (event) => {
 -    const s3Client = new aws.s3.S3Client({});

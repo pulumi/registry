@@ -1,4 +1,9 @@
-# Migrating from v5 to v6
+---
+title: "v6 Migration Guide"
+h1: "Migrating from v5 to v6"
+meta_desc: Practitioner level instructions for migrating from pulumi-aws v5 to v6.
+layout: package
+---
 
 ## Upstream Changes
 
@@ -25,7 +30,7 @@ The resources and functions listed below were renamed in a previous version. Wit
 
 {{< chooser language "typescript,python,go,csharp,java,yaml" >}}
 
-{{% chooseable language typescript }}
+{{% choosable language typescript %}}
 
 ```diff
 - const test = new aws.applicationloadbalancing.TargetGroup("test", {
@@ -36,7 +41,7 @@ The resources and functions listed below were renamed in a previous version. Wit
 });
 ```
 
-{{% /chooseable %}}
+{{% /choosable %}}
 
 {{% choosable language python %}}
 
@@ -202,14 +207,14 @@ Any references to `RuleGroupRuleStatement` or `WebAclRuleStatement` properties o
 
 {{< chooser language "typescript,python,go,csharp,java,yaml" >}}
 
-{{% chooseable language typescript }}
+{{% choosable language typescript %}}
 
 ```diff
 -aws.wafv2.inputs.RuleGroupRuleStatementAndStatementStatementGeoMatchStatement
 +aws.wafv2.inputs.RuleGroupRuleStatement
 ```
 
-{{% /chooseable %}}
+{{% /choosable %}}
 
 {{% choosable language python %}}
 
@@ -266,7 +271,7 @@ or functions.
 
 {{< chooser language "typescript,python,go,csharp,java,yaml" >}}
 
-{{% chooseable language typescript }}
+{{% choosable language typescript %}}
 
 ```diff
 -function newDataSetReference(): aws.inputs.quicksight.TemplateSourceEntitySourceAnalysisDataSetReference { ... }
@@ -277,7 +282,7 @@ or functions.
 +function newDataSetReference(): TemplateSourceEntitySourceAnalysisDataSetReference { ... }
 ```
 
-{{% /chooseable %}}
+{{% /choosable %}}
 
 {{% choosable language python %}}
 
@@ -399,7 +404,7 @@ details.
 
 {{< chooser language "typescript,python,go,csharp,java,yaml" >}}
 
-{{% chooseable language typescript }}
+{{% choosable language typescript %}}
 
 ```diff
  const units = aws.organizations.getOrganizationalUnitsOutput({
@@ -409,7 +414,7 @@ details.
 +export const children = units.apply(units => units.children);
 ```
 
-{{% /chooseable %}}
+{{% /choosable %}}
 
 {{% choosable language python %}}
 
@@ -494,7 +499,7 @@ For three functions, the signature has changed to accommodate a new argument. Th
 
 {{< chooser language "typescript,python,go,csharp,java,yaml" >}}
 
-{{% chooseable language typescript }}
+{{% choosable language typescript %}}
 
 ```diff
 -const result = getBillingServiceAccount(invokeOptions);
@@ -507,7 +512,7 @@ For three functions, the signature has changed to accommodate a new argument. Th
 +const result = getPartition({ id }, invokeOptions);
 ```
 
-{{% /chooseable %}}
+{{% /choosable %}}
 
 {{% choosable language python %}}
 

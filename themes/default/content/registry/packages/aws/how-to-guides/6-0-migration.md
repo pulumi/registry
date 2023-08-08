@@ -159,22 +159,20 @@ The resources and functions listed below were renamed in a previous version. Wit
 - aws:index/getElasticIp:getElasticIp -> [aws:ec2/getElasticIp:getElasticIp](https://www.pulumi.com/registry/packages/aws/api-docs/ec2/getelasticip/)
 - aws:index/getPrefixList:getPrefixList -> [aws:ec2/getPrefixList:getPrefixList](https://www.pulumi.com/registry/packages/aws/api-docs/ec2/getprefixlist/)
 
-## [Typescript] `aws.sdk` Property removed
+## Remove the deprecated AWS SDK v2 `aws.sdk` property (TypeScript only)
 
 The [aws.sdk](https://github.com/pulumi/pulumi-aws/pull/2584)
-property has been removed as it has already been deprecated upstream. The underlying functionality is still accessible by directly importing the AWS Typescript sdk. See https://github.com/pulumi/pulumi-aws/pull/2584 for more details.
+property previously provided a direct way to access the AWS SDK v2 from runtime code.  The AWS SDK v2 has been dprecated by AWS, and as a result this prroperty is being removed. The AWS SDK v3 is available to import and use directly via the various `@aws-sdk/client-*` libraries. See https://github.com/pulumi/pulumi-aws/pull/2584 for more details.
 
 ```patch
 import * as aws from "@pulumi/aws";
-+ import * as s3 from "@aws-sdk/client-s3";
++ import * as s3sdk from "@aws-sdk/client-s3";
 
 const bucket = new aws.s3.Bucket("my-bucket");
 
  bucket.onObjectCreated("bucket-callback", async (event) => {
--    const s3Client = new aws.s3.S3Client({});
-+    const awssdk = await import("aws-sdk");
-+    const s3 = new awssdk.S3();
-+    const s3Client = new s3.S3Client({});
+-    const s3 = new aws.sdk.S3({});
++    const s3 = new s3sdk.S3({});
      const recordFile = "lastPutFile.json";
 
      const records = event.Records || [];
@@ -188,8 +186,7 @@ const bucket = new aws.s3.Bucket("my-bucket");
                  eventTime: record.eventTime,
              };
 
--            const res = await s3.putObject({
-+            const res = await s3Client.send(new s3.PutObjectCommand({
+             const res = await s3.putObject({
                  Bucket: bucket.id.get(),
                  Key: recordFile,
                  Body: JSON.stringify(args),
@@ -394,7 +391,7 @@ Pulumi YAML is structurally typed, so you don't need to make any changes.
 
 {{< /chooser >}}
 
-## `organizations/getOrganizationalUnits` Property name changed from `childrens` to `children`
+## Property name of `organizations/getOrganizationalUnits` resource changed from `childrens` to `children`
 
 The name of property `aws:organizations/getOrganizationalUnits:getOrganizationalUnits` has
 changed from `childrens` to `children` and the name of the associated type from `children`

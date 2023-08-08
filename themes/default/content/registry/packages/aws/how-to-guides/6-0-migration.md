@@ -260,7 +260,7 @@ No changes are necessary.
 ## Unused Quicksight types have been removed
 
 Unused types from the `quicksight` module have been
-[removed](https://github.com/pulumi/pulumi-aws/pull/2609/commits/7a72e505fc7b5729f2ea1ec231e52fa614332744).
+[removed](https://github.com/pulumi/pulumi-aws/pull/2609/commits/15f9e5eb3e2be831ed5318dd4a4e1c5faadd7bf6).
 Specifically, types that begin with `AnalysisDefinition`, `DashboardDefinition`, or
 `TemplateDefinition`. Since these were purely type definitions, you can replicate them by
 copying them out of the v5 SDK. We have not removed any types used by quicksight resources

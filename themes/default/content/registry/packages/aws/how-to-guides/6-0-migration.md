@@ -162,7 +162,7 @@ The resources and functions listed below were renamed in a previous version. Wit
 ## Remove the deprecated AWS SDK v2 `aws.sdk` property (TypeScript only)
 
 The [aws.sdk](https://github.com/pulumi/pulumi-aws/pull/2584)
-property previously provided a direct way to access the AWS SDK v2 from runtime code.  The AWS SDK v2 has been dprecated by AWS, and as a result this prroperty is being removed. The AWS SDK v3 is available to import and use directly via the various `@aws-sdk/client-*` libraries. See https://github.com/pulumi/pulumi-aws/pull/2584 for more details.
+property previously provided a direct way to access the AWS SDK v2 from runtime code.  The AWS SDK v2 has been deprecated by AWS, and as a result this property is being removed. The AWS SDK v3 is available to import and use directly via the various `@aws-sdk/client-*` libraries. See https://github.com/pulumi/pulumi-aws/pull/2584 for more details.
 
 ```patch
 import * as aws from "@pulumi/aws";

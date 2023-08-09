@@ -231,6 +231,10 @@
     {
       "repoSlug": "prodvana/pulumi-prodvana",
       "schemaFile": "provider/cmd/pulumi-resource-prodvana/schema.json"
+    },
+    {
+      "repoSlug": "pulumiverse/pulumi-vercel",
+      "schemaFile": "provider/cmd/pulumi-resource-vercel/schema.json"
     }
   ]
 }

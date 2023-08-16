@@ -10,5 +10,5 @@ publisher: dirien
 repo_url: https://github.com/dirien/pulumi-azapi
 schema_file_path: provider/cmd/pulumi-resource-azapi/schema.json
 title: AzAPI
-updated_on: 1690874016
-version: v1.8.0
+updated_on: 1691995080
+version: v1.8.1

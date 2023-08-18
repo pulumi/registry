@@ -6,7 +6,7 @@ layout: overview
 
 The Event Store Cloud (ESC) provider for Pulumi can provision many of the cloud resources available in [ESC](https://eventstore.com/cloud/). It uses the ESC API to manage and provision resources.
 
-The ESC provider must be configured with credentials to deploy and update resources; see [Installation & Configuration]({{<relref "./installation-configuration">}}) for instructions.
+The ESC provider must be configured with credentials to deploy and update resources; see [Installation & Configuration](./installation-configuration) for instructions.
 
 ## Example
 

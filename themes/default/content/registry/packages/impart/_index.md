@@ -130,3 +130,4 @@ func getFileHash(filePath string) (string, error) {
 {{% /choosable %}}
 
 {{< /chooser >}}
+

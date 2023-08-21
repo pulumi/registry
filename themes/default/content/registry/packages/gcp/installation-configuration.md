@@ -37,7 +37,7 @@ You can set any configuration option in your Pulumi.yaml, for example:
 ```bash
 $ pulumi config set gcp:project <your-gcp-project-id> # e.g. shinycorp-prod
 $ pulumi config set gcp:region <your-region> # e.g us-west1
-$ pulumi config set gcp:region <your-region> # e.g us-west1-a
+$ pulumi config set gcp:zone <your-zone> # e.g us-west1-a
 ```
 
 ### Set configuration via environment variables

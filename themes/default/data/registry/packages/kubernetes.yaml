@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-kubernetes
 schema_file_path: provider/cmd/pulumi-resource-kubernetes/schema.json
 title: Kubernetes
-updated_on: 1692147318
-version: v4.1.0
+updated_on: 1692827106
+version: v4.1.1

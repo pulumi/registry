@@ -235,6 +235,10 @@
     {
       "repoSlug": "pulumiverse/pulumi-vercel",
       "schemaFile": "provider/cmd/pulumi-resource-vercel/schema.json"
+    },
+    {
+      "repoSlug": "netascode/pulumi-aci",
+      "schemaFile": "provider/cmd/pulumi-resource-aci/schema.json"
     }
   ]
 }

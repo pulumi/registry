@@ -235,6 +235,10 @@
     {
       "repoSlug": "pulumiverse/pulumi-vercel",
       "schemaFile": "provider/cmd/pulumi-resource-vercel/schema.json"
+    },
+    {
+      "repoSlug": "volcengine/pulumi-volcengine",
+      "schemaFile": "provider/cmd/pulumi-resource-volcengine/schema.json"
     }
   ]
 }

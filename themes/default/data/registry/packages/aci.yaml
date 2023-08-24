@@ -1,0 +1,15 @@
+category: Cloud
+component: false
+description: The Pulumi ACI provider provides resources to interact with a Cisco ACI
+  fabric.
+featured: false
+logo_url: https://raw.githubusercontent.com/netascode/pulumi-aci/master/assets/logo.png
+name: aci
+native: true
+package_status: public_preview
+publisher: Cisco
+repo_url: https://github.com/netascode/pulumi-aci
+schema_file_path: provider/cmd/pulumi-resource-aci/schema.json
+title: ACI
+updated_on: 1692780292
+version: v0.0.4

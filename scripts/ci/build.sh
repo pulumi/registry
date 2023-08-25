@@ -4,7 +4,7 @@ set -o errexit -o pipefail
 
 source ./scripts/ci/common.sh
 
-# URLs to Pulumi utility services.
+# URL to the Pulumi conversion service.
 export PULUMI_CONVERT_URL="${PULUMI_CONVERT_URL:-$(pulumi stack output --stack pulumi/tf2pulumi-service/production url)}"
 export PULUMI_AI_WS_URL=${PULUMI_AI_WS_URL:-$(pulumi stack output --stack pulumi/pulumigpt-api/corp websocketUri)}
 
@@ -26,36 +26,41 @@ pushd tools/resourcedocsgen
 go build -o "${GOPATH}/bin/resourcedocsgen" .
 popd
 
+case ${1} in
+    preview)
+        PKGS=(
+            "aiven"
+            "aws"
+        )
 
-if [ "$1" == "preview" ]; then
-    PKGS=(
-        "aiven"
-        "aws"
-    )
+        echo "Generating API docs for ${PKGS[*]}..."
+        echo ""
 
-    echo "Generating API docs for ${PKGS[*]}..."
-    echo ""
-
-    for PKG in "${PKGS[@]}" ; do \
-        resourcedocsgen docs registry "${PKG}" \
-            --commitSha "$(git_sha_short)" \
-            --baseDocsOutDir "themes/default/content/registry/packages" \
-            --basePackageTreeJSONOutDir "themes/default/static/registry/packages/navs" \
-            --logtostderr
-    done
-    printf "Running Hugo...\n\n"
-    export HUGO_BASEURL="http://$(origin_bucket_prefix)-$(build_identifier).s3-website.$(aws_region).amazonaws.com"
-    GOGC=3 hugo --minify --buildFuture --templateMetrics -e "preview"
-else
-    REGISTRY_COMMIT="$(go mod graph | grep pulumi/registry/themes/default | sed 's/.*-//')"
-    resourcedocsgen docs registry --commitSha "${REGISTRY_COMMIT}" --logtostderr
-    
-    printf "Running Hugo...\n\n"
-    GOGC=3 hugo --minify --buildFuture --templateMetrics -e production
-fi
+        for PKG in "${PKGS[@]}" ; do \
+            resourcedocsgen docs registry "${PKG}" \
+                --commitSha "$(git_sha_short)" \
+                --baseDocsOutDir "themes/default/content/registry/packages" \
+                --basePackageTreeJSONOutDir "themes/default/static/registry/packages/navs" \
+                --logtostderr
+        done
+        printf "Running Hugo...\n\n"
+        export HUGO_BASEURL="http://$(origin_bucket_prefix)-$(build_identifier).s3-website.$(aws_region).amazonaws.com"
+        GOGC=3 hugo --minify --buildFuture --templateMetrics -e preview
+        ;;
+    update)
+        REGISTRY_COMMIT="$(go mod graph | grep pulumi/registry/themes/default | sed 's/.*-//')"
+        resourcedocsgen docs registry --commitSha "${REGISTRY_COMMIT}" --logtostderr
+        
+        printf "Running Hugo...\n\n"
+        GOGC=3 hugo --minify --buildFuture --templateMetrics -e production
+        ;;
+    *)
+        echo "Unknown mode, '${1}' must be one of 'preview' or 'update'"
+        exit 1
+        ;;
+esac
 
 # Purge unused CSS.
 yarn run minify-css
 
 printf "Done!\n\n"
-

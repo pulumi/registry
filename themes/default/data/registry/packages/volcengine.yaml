@@ -1,0 +1,14 @@
+category: Cloud
+component: false
+description: A Pulumi package for creating and managing volcengine cloud resources.
+featured: false
+logo_url: https://avatars.githubusercontent.com/u/67365215
+name: volcengine
+native: false
+package_status: public_preview
+publisher: Volcengine
+repo_url: https://github.com/volcengine/pulumi-volcengine
+schema_file_path: provider/cmd/pulumi-resource-volcengine/schema.json
+title: Volcengine
+updated_on: 1692697417
+version: v0.0.16

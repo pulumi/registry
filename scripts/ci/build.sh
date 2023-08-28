@@ -12,8 +12,9 @@ export PULUMI_AI_WS_URL=${PULUMI_AI_WS_URL:-$(pulumi stack output --stack pulumi
 go install github.com/pulumi/docs/tools/resourcedocsgen@master
 
 PKGS=(
-    "aiven"
-    "aws"
+#    "aiven"
+#    "aws"
+    "azure-native"
 )
 
 echo "Generating API docs for ${PKGS[*]}..."

@@ -6,7 +6,7 @@ layout: installation
 
 ## Installation
 
-The Pulumiverse ACI provider is available as a package in all Pulumi languages:
+The Cisco ACI provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@netascode/aci`](https://www.npmjs.com/package/@netascode/aci)
 * Python: [`pulumi_aci`](https://pypi.org/project/pulumi-aci/)

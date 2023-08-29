@@ -9,7 +9,7 @@ export PULUMI_CONVERT_URL="${PULUMI_CONVERT_URL:-$(pulumi stack output --stack p
 
 export PULUMI_AI_WS_URL=${PULUMI_AI_WS_URL:-$(pulumi stack output --stack pulumi/pulumigpt-api/corp websocketUri)}
 
-go install github.com/pulumi/docs/tools/resourcedocsgen@master
+go install github.com/pulumi/docs/tools/resourcedocsgen@tkappler
 
 PKGS=(
 #    "aiven"

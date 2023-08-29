@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-github
 schema_file_path: provider/cmd/pulumi-resource-github/schema.json
 title: GitHub
-updated_on: 1692028814
-version: v5.16.0
+updated_on: 1693323878
+version: v5.17.0

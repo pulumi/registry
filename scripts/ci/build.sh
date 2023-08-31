@@ -21,7 +21,6 @@ export REL_CSS_BUNDLE="/css/styles.${ASSET_BUNDLE_ID}.css"
 export REL_JS_BUNDLE="/js/bundle.min.${ASSET_BUNDLE_ID}.js"
 export REPO_THEME_PATH="themes/default/"
 
-printf "Generating API docs from registry commit %s...\n\n" "${REGISTRY_COMMIT}"
 pushd tools/resourcedocsgen
 go build -o "${GOPATH}/bin/resourcedocsgen" .
 popd
@@ -49,7 +48,11 @@ case ${1} in
         ;;
     update)
         REGISTRY_COMMIT="$(go mod graph | grep pulumi/registry/themes/default | sed 's/.*-//')"
-        resourcedocsgen docs registry --commitSha "${REGISTRY_COMMIT}" --logtostderr
+        printf "Generating API docs from registry commit %s...\n\n" "${REGISTRY_COMMIT}"
+        resourcedocsgen docs registry --commitSha "${REGISTRY_COMMIT}" \
+            --baseDocsOutDir "themes/default/content/registry/packages" \
+            --basePackageTreeJSONOutDir "themes/default/static/registry/packages/navs" \
+            --logtostderr
         
         printf "Running Hugo...\n\n"
         GOGC=3 hugo --minify --buildFuture --templateMetrics -e production

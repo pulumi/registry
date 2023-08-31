@@ -11,5 +11,5 @@ publisher: Cisco
 repo_url: https://github.com/netascode/pulumi-aci
 schema_file_path: provider/cmd/pulumi-resource-aci/schema.json
 title: ACI
-updated_on: 1693329883
-version: v0.0.5
+updated_on: 1693488008
+version: v0.0.6

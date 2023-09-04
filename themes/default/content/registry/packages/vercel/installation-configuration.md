@@ -10,7 +10,7 @@ The Pulumi `Vercel` provider is available as a package in all Pulumi languages:
 
 - JavaScript/TypeScript: [`@pulumiverse/vercel`](https://www.npmjs.com/package/@pulumiverse/vercel)
 - Python: [`pulumiverse-vercel`](https://pypi.org/project/pulumiverse-vercel/)
-- Go: [`github.com/pulumiverse/pulumi-vercel/sdk/v3`](https://pkg.go.dev/github.com/pulumiverse/pulumi-vercel/sdk/v3)
+- Go: [`github.com/pulumiverse/pulumi-vercel/sdk`](https://pkg.go.dev/github.com/pulumiverse/pulumi-vercel/sdk)
 - .NET: [`Pulumiverse.vercel`](https://www.nuget.org/packages/Pulumiverse.vercel)
 
 ## Installing

@@ -54,44 +54,71 @@ COPY index.html /usr/share/nginx/html
 </html>
 ```
 
-### Step 3: Create the load balancer
+### Step 3: Create the ECS cluster
 
 Replace the contents of `index.ts` with the following:
 
 ```typescript
-import * as pulumi from "@pulumi/pulumi";
+import * as aws from "@pulumi/aws";
 import * as awsx from "@pulumi/awsx";
+import * as pulumi from "@pulumi/pulumi";
 
-// Create a load balancer to listen for requests and route them to the container.
-const listener = new awsx.elasticloadbalancingv2.NetworkListener("nginx", { port: 80 });
+// An ECS cluster to deploy into.
+const cluster = new aws.ecs.Cluster("cluster", {});
 ```
 
-### Step 4: Define the service and publish the Docker image
+### Step 4: Create the load balancer
 
 Add the following lines to `index.ts`:
 
 ```typescript
-// Define the service, building and publishing our "./app/Dockerfile", and using the load balancer.
-const service = new awsx.ecs.FargateService("nginx", {
-    desiredCount: 2,
+// Create a load balancer to listen for requests and route them to the container.
+const loadbalancer = new awsx.lb.ApplicationLoadBalancer("loadbalancer", {});
+```
+
+### Step 5: Define the service and publish the Docker image
+
+Add the following lines to `index.ts`:
+
+```typescript
+
+// Create the ECR repository to store our container image
+const repo = new awsx.ecr.Repository("repo", {
+    forceDelete: true,
+});
+
+// Build and publish our application's container image from ./app to the ECR repository.
+const image = new awsx.ecr.Image("image", {
+    repositoryUrl: repo.url,
+    path: "./app",
+});
+
+// Define the service and configure it to use our image and load balancer.
+const service = new awsx.ecs.FargateService("service", {
+    cluster: cluster.arn,
+    assignPublicIp: true,
     taskDefinitionArgs: {
-        containers: {
-            nginx: {
-                image: awsx.ecs.Image.fromPath("nginx", "./app"),
-                memory: 512,
-                portMappings: [listener],
-            },
+        container: {
+            name: "awsx-ecs",
+            image: image.imageUri,
+            cpu: 128,
+            memory: 512,
+            essential: true,
+            portMappings: [{
+                containerPort: 80,
+                targetGroup: loadbalancer.defaultTargetGroup,
+            }],
         },
     },
 });
 
 // Export the URL so we can easily access it.
-export const frontendURL = pulumi.interpolate `http://${listener.endpoint.hostname}/`;
+export const frontendURL = pulumi.interpolate `http://${loadbalancer.loadBalancer.dnsName}`;
 ```
 
 You just created an automatic cluster in the default AWS VPC to run a Fargate service.
 
-### Step 5: Verify your app structure
+### Step 6: Verify your app structure
 
 In addition to the `node_modules` directory and related npm package files, ensure you have the following directory structure:
 
@@ -103,7 +130,7 @@ app/
   index.html
 ```
 
-### Step 6: Set your AWS region
+### Step 7: Set your AWS region
 
 Configure the AWS region you would like to use:
 
@@ -111,7 +138,7 @@ Configure the AWS region you would like to use:
 $ pulumi config set aws:region us-east-1
 ```
 
-### Step 7: Preview and deploy your resources
+### Step 8: Preview and deploy your resources
 
 To preview your Pulumi program, run [`pulumi up`](/docs/cli/commands/pulumi_up/). The command shows a preview of the resources that will be created and prompts you to proceed with the deployment.  Note that the stack itself is counted as a resource, though it does not correspond to a physical cloud resource.
 
@@ -141,7 +168,7 @@ The deployment takes a few minutes. With your `pulumi up` invocation, Pulumi aut
 - Build the Docker image
 - Push the resulting image to the repository
 
-### Step 8: Test the resulting load balancer URL
+### Step 9: Test the resulting load balancer URL
 
 Now that you've deployed your app, confirm that the service is working via `curl`.
 
@@ -158,7 +185,7 @@ $ curl $(pulumi stack output frontendURL)
 </html>
 ```
 
-### Step 9: View container logs (Optional)
+### Step 10: View container logs (Optional)
 
 To view the runtime logs from the container, use the [`pulumi logs`](/docs/cli/commands/pulumi_logs/) command. To get a log stream, use `pulumi logs --follow`.
 

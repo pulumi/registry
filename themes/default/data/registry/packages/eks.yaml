@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-eks
 schema_file_path: provider/cmd/pulumi-resource-eks/schema.json
 title: Amazon EKS
-updated_on: 1692712444
-version: v1.0.3
+updated_on: 1693888335
+version: v2.0.0-alpha.1

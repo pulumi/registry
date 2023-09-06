@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: *
+# We disallow all here for every environment to prevent the registry CDN from being
+# indexed at the root. The `/registry` shares the same top level as he rest of the site 
+# and thereby the same robots.txt which already resides in the pulumi-hugo repo where
+# we make allowances based on the environment.

@@ -33,10 +33,6 @@ jobs:
       - name: Check out branch
         uses: actions/checkout@v2
 
-      - name: Configure Git
-        run: |
-          git config --global url."https://${{ secrets.PULUMI_BOT_TOKEN }}:x-oauth-basic@github.com/pulumi/registry".insteadOf "https://github.com/pulumi/registry"
-          
       - name: Validate JSON file syntax
         uses: limitusus/json-syntax-check@v2
         with:

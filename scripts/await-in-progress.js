@@ -45,8 +45,10 @@ async function waitForInProgressRuns() {
 
     if (recent.length > 0) {
         const [ mostRecent ] = recent;
-        console.log(`Waiting for ${mostRecent.html_url} to complete before continuing.`);
-        await Promise.resolve(setTimeout(waitForInProgressRuns, 60000)); // One minute.
+        // console.log(`Waiting for ${mostRecent.html_url} to complete before continuing.`);
+        // await Promise.resolve(setTimeout(waitForInProgressRuns, 60000)); // One minute.
+        console.log("Temporarily exiting in test environemnt, until we find a way to batch.")
+        process.exit(0);
     } else {
         console.log("Continuing.");
     }

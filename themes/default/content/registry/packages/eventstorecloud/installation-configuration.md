@@ -1,7 +1,7 @@
 ---
 title: Event Store Cloud Installation & Configuration
 meta_desc: How to set up credentials to use the Event Store Cloud provider for Pulumi.
-layout: installation
+layout: package
 ---
 
 ## Installation
@@ -21,15 +21,7 @@ For projects that use .NET and Go Pulumi SDK you have to install the provider be
 Use the following command to add the plugin to your environment:
 
 ```
-pulumi plugin install resource eventstorecloud [version] \
-  --server https://github.com/EventStore/pulumi-eventstorecloud/releases/download/[version]
-```
-
-Example:
-
-```
-pulumi plugin install resource eventstorecloud v0.2.3 \
-  --server https://github.com/EventStore/pulumi-eventstorecloud/releases/download/v0.2.3
+pulumi plugin install resource eventstorecloud --server github://api.github.com/EventStore
 ```
 
 ### Configure the provider

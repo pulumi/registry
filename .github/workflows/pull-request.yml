@@ -9,7 +9,10 @@ jobs:
     # PRs with the automation/tfgen-provider-docs label contain only metadata file changes and don't need a PR build.
     if: github.event.pull_request.head.repo.full_name == github.repository && contains(github.event.pull_request.labels.*.name, 'automation/tfgen-provider-docs') != true
     name: Build and deploy preview
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04-8core
+    environment: testing
+    env:
+      GOPATH: ${{ github.workspace }}/go
     steps:
       - name: Install Node
         uses: actions/setup-node@v1
@@ -35,12 +38,20 @@ jobs:
         with:
           pattern: "community-packages/package-list.json"
 
+      - name: Lint
+        if: github.event.pull_request.user.login != 'pulumi-bot'
+        run: |
+          yarn install
+          make lint
+
       - name: Lint and Fix
+        if: github.event.pull_request.user.login == 'pulumi-bot'
         run: |
           yarn install
           make lint-fix
 
       - name: Commit Fix
+        if: github.event.pull_request.user.login == 'pulumi-bot'
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: "**auto-fix relref lint errors**"
@@ -59,6 +70,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+          PULUMI_STACK_NAME: ${{ vars.PULUMI_STACK_NAME }}
   notify:
     if: (github.event.pull_request.user.login == 'pulumi-bot') && failure()
     name: Send slack notification

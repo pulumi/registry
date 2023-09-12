@@ -25,6 +25,8 @@ pushd tools/resourcedocsgen
 go build -o "${GOPATH}/bin/resourcedocsgen" .
 popd
 
+REGISTRY_COMMIT="$(git_sha_short)"
+
 case ${1} in
     preview)
         PKGS=(
@@ -37,7 +39,7 @@ case ${1} in
 
         for PKG in "${PKGS[@]}" ; do \
             resourcedocsgen docs registry "${PKG}" \
-                --commitSha "$(git_sha_short)" \
+                --commitSha "${REGISTRY_COMMIT}" \
                 --baseDocsOutDir "themes/default/content/registry/packages" \
                 --basePackageTreeJSONOutDir "themes/default/static/registry/packages/navs" \
                 --logtostderr
@@ -47,7 +49,6 @@ case ${1} in
         GOGC=3 hugo --minify --buildFuture --templateMetrics -e preview
         ;;
     update)
-        REGISTRY_COMMIT="$(go mod graph | grep pulumi/registry/themes/default | sed 's/.*-//')"
         printf "Generating API docs from registry commit %s...\n\n" "${REGISTRY_COMMIT}"
         resourcedocsgen docs registry --commitSha "${REGISTRY_COMMIT}" \
             --baseDocsOutDir "themes/default/content/registry/packages" \

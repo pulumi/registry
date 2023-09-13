@@ -243,6 +243,10 @@
     {
       "repoSlug": "netascode/pulumi-aci",
       "schemaFile": "provider/cmd/pulumi-resource-aci/schema.json"
+    },
+    {
+      "repoSlug": "pulumiverse/pulumi-esxi-native",
+      "schemaFile": "provider/cmd/pulumi-resource-esxi-native/schema.json"
     }
   ]
 }

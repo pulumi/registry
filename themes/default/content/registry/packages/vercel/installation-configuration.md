@@ -59,4 +59,4 @@ dotnet add package Pulumiverse.vercel
 
 The following configuration points are available for the `vercel` provider:
 
-- `vercel:apiKey` (environment: `VERCEL_API_KEY`) - the API key for `vercel`
+- `vercel:apiToken` (environment: `VERCEL_API_TOKEN`) - the API key for `vercel`

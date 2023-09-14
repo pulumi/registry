@@ -1,0 +1,4 @@
+config:
+  aws:region: us-west-2
+  registry:websiteLogsBucketName: pulumi-regisry-production-logs
+  registry:pathToOriginBucketMetadata: ../origin-bucket-metadata.json

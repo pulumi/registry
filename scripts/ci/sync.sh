@@ -71,7 +71,7 @@ echo "Running browser tests on $s3_website_url..."
 if [[ "$1" == "update" ]]; then
     # We host the bundle files in a separate bucket that `/css` and `js` routes to to enable managing the bundles
     # generated from both the docs and hugo repos.
-    bundleBucket=$(pulumi stack output --stack "pulumi/www.pulumi.com/www-testing" bundlesS3BucketName)
+    bundleBucket=$(pulumi stack output --stack "${PULUMI_DOCS_STACK_NAME}" bundlesS3BucketName)
     # Upload the CSS/JS bundle files to the bundles bucket.
     echo "Syncing CSS files to the bundles bucket"
     aws s3 cp "${build_dir}/css/" "s3://${bundleBucket}/css/" --acl public-read  --content-type "text/css" --region "$(aws_region)" --recursive

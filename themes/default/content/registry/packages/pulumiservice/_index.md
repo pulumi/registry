@@ -28,8 +28,8 @@ const webhook = new pulumiservice.Webhook("example-webhook", {
 
 ```python
 import pulumi
-import pulumi_service
-webhook = pulumi_service.Webhook("example-webhook",
+import pulumi_pulumiservice
+webhook = pulumi_pulumiservice.Webhook("example-webhook",
     active: True,
     display_name: "webhook example",
     organization_name: "example",

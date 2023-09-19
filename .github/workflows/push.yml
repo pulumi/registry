@@ -1,12 +1,18 @@
-name: Build
+name: Build and deploy
 on:
   push:
     branches:
       - master
+permissions:
+      id-token: write   # This is required for requesting the JWT
+      contents: read    # This is required for actions/checkout
 jobs:
   build:
     name: Build
-    runs-on: ubuntu-latest
+    env:
+      GOPATH: ${{ github.workspace }}/go
+    runs-on: ubuntu-22.04-8core
+    environment: production
     steps:
       - name: Install Node
         uses: actions/setup-node@v1
@@ -29,6 +35,17 @@ jobs:
         with:
           token: ${{ secrets.PULUMI_BOT_TOKEN }}
 
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: arn:aws:iam::571684982431:role/ContinuousDelivery
+          role-session-name: docs-deploy
+          role-duration-seconds: 7200
+          aws-region: us-west-2
+
+      - name: Install Pulumi CLI
+        uses: pulumi/actions@v4
+
       - name: Fetch the latest sibling modules
         run: |
           hugo mod get github.com/pulumi/pulumi-hugo/themes/default
@@ -42,6 +59,24 @@ jobs:
           commit_user_email: bot@pulumi.com
           commit_message: Update go.mod
 
+      - name: Build and deploy
+        run: make ci_push
+        env:
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ALGOLIA_APP_ID: ${{ vars.ALGOLIA_APP_ID }}
+          ALGOLIA_APP_SEARCH_KEY: ${{ vars.ALGOLIA_APP_SEARCH_KEY }}
+          ALGOLIA_APP_ADMIN_KEY: ${{  secrets.ALGOLIA_APP_ADMIN_KEY }}
+          PULUMI_STACK_NAME: ${{ vars.PULUMI_STACK_NAME }}
+          PULUMI_DOCS_STACK_NAME: ${{ vars.PULUMI_DOCS_STACK_NAME }}
+          NODE_OPTIONS: "--max_old_space_size=8192"
+
+      - name: Archive bucket metadata
+        uses: actions/upload-artifact@v2
+        with:
+          name: origin-bucket-metadata
+          path: origin-bucket-metadata.json
+
   notify:
     if: failure()
     name: Send slack notification
@@ -53,7 +88,7 @@ jobs:
         env:
           SLACK_CHANNEL: docs-ops
           SLACK_COLOR: "#F54242"
-          SLACK_MESSAGE: "build failure in pulumi/registry repo :meow_sad:"
+          SLACK_MESSAGE: "build and deploy failure in pulumi/registry repo :meow_sad:"
           SLACK_USERNAME: registrybot
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
           SLACK_ICON: https://www.pulumi.com/logos/brand/avatar-on-white.png

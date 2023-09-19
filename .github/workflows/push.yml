@@ -69,6 +69,7 @@ jobs:
           ALGOLIA_APP_ADMIN_KEY: ${{  secrets.ALGOLIA_APP_ADMIN_KEY }}
           PULUMI_STACK_NAME: ${{ vars.PULUMI_STACK_NAME }}
           PULUMI_DOCS_STACK_NAME: ${{ vars.PULUMI_DOCS_STACK_NAME }}
+          DEPLOYMENT_ENVIRONMENT: ${{ vars.DEPLOYMENT_ENVIRONMENT }}
           NODE_OPTIONS: "--max_old_space_size=8192"
 
       - name: Archive bucket metadata

@@ -123,7 +123,8 @@ set_bucket_for_commit() {
         --value "$2" \
         --type String \
         --region $3 \
-        --tags "$(aws_owner_tag)"
+        --tags "$(aws_owner_tag)" \
+        --overwrite
 }
 
 # Remove the parameter key associated with a specific commit.

@@ -1,0 +1,14 @@
+category: Utility
+component: false
+description: A Pulumi package for creating and managing Cisco IOS XE Devices.
+featured: false
+logo_url: ""
+name: iosxe
+native: false
+package_status: public_preview
+publisher: lbrlabs
+repo_url: https://github.com/lbrlabs/pulumi-iosxe
+schema_file_path: provider/cmd/pulumi-resource-iosxe/schema.json
+title: Cisco IOS XE
+updated_on: 1695346589
+version: v0.0.1

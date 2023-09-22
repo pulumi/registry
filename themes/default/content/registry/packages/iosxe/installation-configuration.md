@@ -65,4 +65,4 @@ $ export IOSXE_USERNAME=<USERNAME>
 
 ## Configuration Options
 
-Use `pulumi config set iosxe:<option>` or pass options to the [constructor of `new iosxe.Provider`]({{< relref "/registry/packages/iosxe/api-docs/provider" >}}).
+Use `pulumi config set iosxe:<option>` or pass options to the [constructor of `new iosxe.Provider`](/registry/packages/iosxe/api-docs/provider).

@@ -247,6 +247,14 @@
     {
       "repoSlug": "pulumiverse/pulumi-esxi-native",
       "schemaFile": "provider/cmd/pulumi-resource-esxi-native/schema.json"
+    },
+    {
+      "repoSlug": "lbrlabs/pulumi-iosxe",
+      "schemaFile": "provider/cmd/pulumi-resource-iosxe/schema.json"
+    },
+    {
+      "repoSlug": "lbrlabs/pulumi-nxos",
+      "schemaFile": "provider/cmd/pulumi-resource-nxos/schema.json"
     }
   ]
 }

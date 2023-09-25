@@ -107,7 +107,9 @@ console.log(" ↳ Done. ✨\n");
 
 //     try {
 //         console.log(` ↳ Replacing all records in the '${ config.indexName }' index...`);
-//         const result = await algoliaIndex.replaceAllObjects(objects, { safe: true });
+//         const result = await algoliaIndex.partialUpdateObjects(objects, {
+//                 createIfNotExists: true,
+//             });
 //         console.log(`   ↳ ${result.objectIDs.length} records updated.`);
 
 //         console.log(` ↳ Updating index settings...`)

@@ -5,20 +5,21 @@ const page = require("./page");
 module.exports = {
 
     // Fetch a set of objects representing all Registry resources.
-    getObjects(pathToRegistryJSON, hugoPageItems) {
+    getObjects(pathToRegistryJSON, registryPackages) {
         const registryPackageNames = fs.readdirSync(pathToRegistryJSON);
         const registryItems = [];
-
         registryPackageNames
             .map(providerJSON => {
                 const providerName = providerJSON.replace(".json", "");
                 const providerResults = [];
 
                 // API docs JSON doesn't contain proper provider/package names, so we obtain those
-                // from the Hugo-generated set.
-                const providerTitle = hugoPageItems.find(o => {
-                    return o.href === `/registry/packages/${providerName}/`;
-                }).title;
+                // from the package metadata files under `themes/default/data/registry/packages`.
+                let provider = registryPackages.find(p => {
+                    return p.name === providerName;
+                })
+
+                const providerTitle = provider && provider.title;
 
                 // Read the API docs JSON file.
                 const providerItems = JSON.parse(

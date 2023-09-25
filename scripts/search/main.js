@@ -58,7 +58,7 @@ const config = {
     appID: process.env.ALGOLIA_APP_ID,
     searchAPIKey: process.env.ALGOLIA_APP_SEARCH_KEY,
     adminAPIKey: process.env.ALGOLIA_APP_ADMIN_KEY,
-    indexName: process.argv[2],
+    indexName: "testing",
 };
 
 // if (!config.appID || !config.searchAPIKey || !config.adminAPIKey || !config.indexName) {
@@ -102,30 +102,30 @@ console.log(" ↳ Done. ✨\n");
 
 // Update the Algolia index, including all page objects and index settings (like searchable
 // attributes, custom ranking, synonyms, etc.).
-// async function updateIndex(objects) {
-//     console.log("Updating search index...");
+async function updateIndex(objects) {
+    console.log("Updating search index...");
 
-//     try {
-//         console.log(` ↳ Replacing all records in the '${ config.indexName }' index...`);
-//         const result = await algoliaIndex.partialUpdateObjects(objects, {
-//                 createIfNotExists: true,
-//             });
-//         console.log(`   ↳ ${result.objectIDs.length} records updated.`);
+    try {
+        console.log(` ↳ Replacing all records in the '${ config.indexName }' index...`);
+        const result = await algoliaIndex.partialUpdateObjects(objects, {
+                createIfNotExists: true,
+            });
+        console.log(`   ↳ ${result.objectIDs.length} records updated.`);
 
-//         console.log(` ↳ Updating index settings...`)
-//         await algoliaIndex.setSettings(indexSettings);
+        console.log(` ↳ Updating index settings...`)
+        await algoliaIndex.setSettings(indexSettings);
 
-//         console.log(" ↳ Updating synonyms...")
-//         await algoliaIndex.saveSynonyms(indexSynonyms, { replaceExistingSynonyms: true });
+        console.log(" ↳ Updating synonyms...")
+        await algoliaIndex.saveSynonyms(indexSynonyms, { replaceExistingSynonyms: true });
 
-//         console.log(" ↳ Updating rules...")
-//         await algoliaIndex.replaceAllRules(indexRules);
+        console.log(" ↳ Updating rules...")
+        await algoliaIndex.replaceAllRules(indexRules);
 
-//         console.log(" ↳ Done. ✨\n");
-//     }
-//     catch (error) {
-//         console.error(error);
-//     }
-// }
+        console.log(" ↳ Done. ✨\n");
+    }
+    catch (error) {
+        console.error(error);
+    }
+}
 
-// updateIndex(allObjects);
+updateIndex(allObjects);

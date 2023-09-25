@@ -255,6 +255,10 @@
     {
       "repoSlug": "lbrlabs/pulumi-nxos",
       "schemaFile": "provider/cmd/pulumi-resource-nxos/schema.json"
+    },
+    {
+      "repoSlug": "pulumiverse/pulumi-acme",
+      "schemaFile": "provider/cmd/pulumi-resource-acme/schema.json"
     }
   ]
 }

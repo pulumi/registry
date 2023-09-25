@@ -58,7 +58,7 @@ const config = {
     appID: process.env.ALGOLIA_APP_ID,
     searchAPIKey: process.env.ALGOLIA_APP_SEARCH_KEY,
     adminAPIKey: process.env.ALGOLIA_APP_ADMIN_KEY,
-    indexName: "testing",
+    indexName: "testing-registry",
 };
 
 // if (!config.appID || !config.searchAPIKey || !config.adminAPIKey || !config.indexName) {

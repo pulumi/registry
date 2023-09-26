@@ -1,0 +1,14 @@
+category: Cloud
+component: false
+description: A Pulumi package for creating and managing ACME cloud resources.
+featured: false
+logo_url: ""
+name: acme
+native: false
+package_status: public_preview
+publisher: Pulumiverse
+repo_url: https://github.com/pulumiverse/pulumi-acme
+schema_file_path: provider/cmd/pulumi-resource-acme/schema.json
+title: ACME
+updated_on: 1695665900
+version: v0.0.1

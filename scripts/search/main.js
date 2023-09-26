@@ -61,9 +61,9 @@ const config = {
     indexName: "testing-registry",
 };
 
-// if (!config.appID || !config.searchAPIKey || !config.adminAPIKey || !config.indexName) {
-//     throw new Error(`Missing one or more required configuration values. (Provided keys: [${Object.keys(config)}])`);
-// }
+if (!config.appID || !config.searchAPIKey || !config.adminAPIKey || !config.indexName) {
+    throw new Error(`Missing one or more required configuration values. (Provided keys: [${Object.keys(config)}])`);
+}
 
 // Initialize the Algolia search client.
 const client = algoliasearch(config.appID, config.adminAPIKey);
@@ -96,36 +96,36 @@ const indexRules = settings.getRules();
 
 // Write the results, just so we have them.
 console.log(" ↳ Writing results...");
-fs.writeFileSync("./public/search-index.json", JSON.stringify(allObjects, null, 4));
-fs.writeFileSync("./public/search-index-settings.json", JSON.stringify({ indexSettings, indexSynonyms, indexRules }, null, 4));
+fs.writeFileSync("./search-index.json", JSON.stringify(allObjects, null, 4));
+fs.writeFileSync("./search-index-settings.json", JSON.stringify({ indexSettings, indexSynonyms, indexRules }, null, 4));
 console.log(" ↳ Done. ✨\n");
 
 // Update the Algolia index, including all page objects and index settings (like searchable
 // attributes, custom ranking, synonyms, etc.).
-async function updateIndex(objects) {
-    console.log("Updating search index...");
+// async function updateIndex(objects) {
+//     console.log("Updating search index...");
 
-    try {
-        console.log(` ↳ Replacing all records in the '${ config.indexName }' index...`);
-        const result = await algoliaIndex.partialUpdateObjects(objects, {
-                createIfNotExists: true,
-            });
-        console.log(`   ↳ ${result.objectIDs.length} records updated.`);
+//     try {
+//         console.log(` ↳ Replacing all records in the '${ config.indexName }' index...`);
+//         const result = await algoliaIndex.partialUpdateObjects(objects, {
+//                 createIfNotExists: true,
+//             });
+//         console.log(`   ↳ ${result.objectIDs.length} records updated.`);
 
-        console.log(` ↳ Updating index settings...`)
-        await algoliaIndex.setSettings(indexSettings);
+//         console.log(` ↳ Updating index settings...`)
+//         await algoliaIndex.setSettings(indexSettings);
 
-        console.log(" ↳ Updating synonyms...")
-        await algoliaIndex.saveSynonyms(indexSynonyms, { replaceExistingSynonyms: true });
+//         console.log(" ↳ Updating synonyms...")
+//         await algoliaIndex.saveSynonyms(indexSynonyms, { replaceExistingSynonyms: true });
 
-        console.log(" ↳ Updating rules...")
-        await algoliaIndex.replaceAllRules(indexRules);
+//         console.log(" ↳ Updating rules...")
+//         await algoliaIndex.replaceAllRules(indexRules);
 
-        console.log(" ↳ Done. ✨\n");
-    }
-    catch (error) {
-        console.error(error);
-    }
-}
+//         console.log(" ↳ Done. ✨\n");
+//     }
+//     catch (error) {
+//         console.error(error);
+//     }
+// }
 
-updateIndex(allObjects);
+// updateIndex(allObjects);

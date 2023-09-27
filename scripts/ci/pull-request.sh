@@ -2,8 +2,6 @@
 
 set -o errexit -o pipefail
 
-./scripts/ci/login.sh
-
 # See if we have the requisite credentials. If not, we might be in a fork. In that case,
 # run a PR build, but skip all the deployment stuff.
 if [ -z "${AWS_ACCESS_KEY_ID:-}" ] || [ -z "${AWS_SECRET_ACCESS_KEY:-}" ] || [ -z "${PULUMI_ACCESS_TOKEN:-}" ]; then
@@ -18,4 +16,3 @@ aws sts get-caller-identity
 ./scripts/ci/validate-packages.sh
 ./scripts/ci/build.sh preview
 ./scripts/ci/sync.sh preview
-./scripts/update-search-index.sh "testing-registry"

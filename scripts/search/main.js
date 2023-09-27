@@ -1,7 +1,5 @@
 const fs = require("fs");
 const registry = require("./registry");
-const settings = require("./settings");
-const algoliasearch = require("algoliasearch");
 const path = require('path');
 const yaml = require('js-yaml');
 
@@ -51,23 +49,6 @@ function parseYamlFilesInDirectory(directoryPath) {
 }
 
 const registryPackages = parseYamlFilesInDirectory(directoryPath);
-console.log(registryPackages);
-
-// Configuration values required for updating the Algolia index.
-const config = {
-    appID: process.env.ALGOLIA_APP_ID,
-    searchAPIKey: process.env.ALGOLIA_APP_SEARCH_KEY,
-    adminAPIKey: process.env.ALGOLIA_APP_ADMIN_KEY,
-    indexName: "testing-registry",
-};
-
-if (!config.appID || !config.searchAPIKey || !config.adminAPIKey || !config.indexName) {
-    throw new Error(`Missing one or more required configuration values. (Provided keys: [${Object.keys(config)}])`);
-}
-
-// Initialize the Algolia search client.
-const client = algoliasearch(config.appID, config.adminAPIKey);
-const algoliaIndex = client.initIndex(config.indexName);
 
 // Generate a list of all Registry items -- modules, resources, functions, etc.
 console.log(" ↳ Building Registry resource objects...");
@@ -83,49 +64,7 @@ let allObjects = [
 // https://github.com/pulumi/registry/issues/2879
 allObjects = allObjects.filter(o => !o.href.includes("azure-native-v1"));
 
-// Gather up index settings, synonyms, and rules.
-const indexSettings = {
-    searchableAttributes: settings.getSearchableAttributes(),
-    attributesForFaceting: settings.getAttributesForFaceting(),
-    attributesToHighlight: settings.getAttributesToHighlight(),
-    customRanking: settings.getCustomRanking(),
-    ignorePlurals: true,
-};
-const indexSynonyms = settings.getSynonyms();
-const indexRules = settings.getRules();
-
 // Write the results, just so we have them.
 console.log(" ↳ Writing results...");
 fs.writeFileSync("./search-index.json", JSON.stringify(allObjects, null, 4));
-fs.writeFileSync("./search-index-settings.json", JSON.stringify({ indexSettings, indexSynonyms, indexRules }, null, 4));
 console.log(" ↳ Done. ✨\n");
-
-// Update the Algolia index, including all page objects and index settings (like searchable
-// attributes, custom ranking, synonyms, etc.).
-// async function updateIndex(objects) {
-//     console.log("Updating search index...");
-
-//     try {
-//         console.log(` ↳ Replacing all records in the '${ config.indexName }' index...`);
-//         const result = await algoliaIndex.partialUpdateObjects(objects, {
-//                 createIfNotExists: true,
-//             });
-//         console.log(`   ↳ ${result.objectIDs.length} records updated.`);
-
-//         console.log(` ↳ Updating index settings...`)
-//         await algoliaIndex.setSettings(indexSettings);
-
-//         console.log(" ↳ Updating synonyms...")
-//         await algoliaIndex.saveSynonyms(indexSynonyms, { replaceExistingSynonyms: true });
-
-//         console.log(" ↳ Updating rules...")
-//         await algoliaIndex.replaceAllRules(indexRules);
-
-//         console.log(" ↳ Done. ✨\n");
-//     }
-//     catch (error) {
-//         console.error(error);
-//     }
-// }
-
-// updateIndex(allObjects);

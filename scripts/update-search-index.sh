@@ -9,7 +9,7 @@ source ./scripts/ci/common.sh
 # to a file named 'search-index.json'.
 node ./scripts/search/main.js "$1"
 
-registry_bucket=$(pulumi stack output --stack "${PULUMI_STACK_NAME}" originBucketName)
+registry_bucket="$(cat "$(origin_bucket_metadata_filepath)" | jq -r ".bucket")"
 
 # Upload the `search-index.json` file to S3 where it can be accessed by the update search index cron.
 aws s3 cp "search-index.json" "s3://${registry_bucket}/registry/search-index.json" --acl public-read --region "$(aws_region)"

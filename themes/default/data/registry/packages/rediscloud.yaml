@@ -10,5 +10,5 @@ publisher: RedisLabs
 repo_url: https://github.com/RedisLabs/pulumi-rediscloud
 schema_file_path: provider/cmd/pulumi-resource-rediscloud/schema.json
 title: Redis Cloud
-updated_on: 1684177178
-version: v1.2.6
+updated_on: 1695988187
+version: v1.3.1

@@ -65,4 +65,4 @@ $ export NXOS_USERNAME=<USERNAME>
 
 ## Configuration Options
 
-Use `pulumi config set nxos:<option>` or pass options to the [constructor of `new nxos.Provider`]({{< relref "/registry/packages/nxos/api-docs/provider" >}}).
+Use `pulumi config set nxos:<option>` or pass options to the [constructor of `new nxos.Provider`](/registry/packages/nxos/api-docs/provider).

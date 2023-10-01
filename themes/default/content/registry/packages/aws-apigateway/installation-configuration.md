@@ -14,7 +14,7 @@ Your AWS credentials are never sent to pulumi.com. Pulumi uses the AWS SDK and t
 
 The AWS API Gateway provider is available as a package in all Pulumi languages:
 
-* JavaScript/TypeScript: [`@pulumi/aws-apigateway`](https://www.npmjs.com/package/@pulumi/aws)
+* JavaScript/TypeScript: [`@pulumi/aws-apigateway`](https://www.npmjs.com/package/@pulumi/aws-apigateway)
 * Python: [`pulumi-aws-apigateway`](https://pypi.org/project/pulumi-aws-apigateway/)
 * Go: [`github.com/pulumi/pulumi-aws-apigateway/sdk/go/apigateway`](https://github.com/pulumi/pulumi-aws-apigateway)
 * .NET: [`Pulumi.AwsApiGateway`](https://www.nuget.org/packages/Pulumi.AwsApiGateway)

@@ -97,7 +97,7 @@ After updating all imports to reflect v2 included Azure API versions, run `pulum
 
 #### Pending Changes on Default Versions
 
-You may see pending changes when using the default version as the shape of the resource may have changed. You can choose to accept the changes, update your program to modify the resource properties to mitigate changes, or continue using the previous default version from v1.
+You may see pending changes when using the default version as the shape of the resource may have changed. You can choose to accept the changes, update your program to modify the resource properties to mitigate changes, or choose an explicit version which is compatible with the older version of the resource.
 
 A full list of default version changes can be found in the [top-level resource versions](./top-level-resource-versions).
 

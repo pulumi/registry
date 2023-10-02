@@ -2,60 +2,36 @@ const fs = require("fs");
 const registry = require("./registry");
 const path = require('path');
 const yaml = require('js-yaml');
+const page = require("./page");
 
 // As part of the Registry build, we also generate a collection of JSON files that we use to power
 // the API docs navigation. We use this file here as well to add resource listings, etc., to the
 // index to make them more findable by their type names and the like.
 const pathToRegistryPackagesJSON = "./public/registry/packages/navs";
 
-const directoryPath = 'themes/default/data/registry/packages'; // Update with your directory path
+// As part of the Hugo build, we generate a JSON file at /index.json containing a record for every
+// page of the website. We use this file to generate primary search records for Algolia.
+const pathToFullSiteJSON = "./public/index.json";
+const hugoPageItems = JSON.parse(fs.readFileSync(pathToFullSiteJSON, "utf-8").toString());
 
-function listFilesInDirectory(directoryPath) {
-  try {
-    const files = fs.readdirSync(directoryPath);
+// Generate a list of primary page objects. This list contains one record for every page of the site.
+console.log("\nBuilding search index...");
+console.log(" ↳ Building primary page objects...");
+const primaryPageObjects = page.getPrimaryObjects(hugoPageItems);
 
-    return files
-      .filter((filename) => filename.endsWith('.yaml') || filename.endsWith('.yml'))
-      .map((filename) => path.join(directoryPath, filename));
-  } catch (error) {
-    console.error(`Error reading directory: ${error}`);
-    return [];
-  }
-}
-
-function parseYamlFile(filePath) {
-  try {
-    const fileContent = fs.readFileSync(filePath, 'utf-8');
-    const yamlObject = yaml.load(fileContent);
-    return yamlObject;
-  } catch (error) {
-    console.error(`Error parsing YAML file ${filePath}: ${error}`);
-    return null;
-  }
-}
-
-function parseYamlFilesInDirectory(directoryPath) {
-  const yamlFiles = listFilesInDirectory(directoryPath);
-  const parsedObjects = [];
-
-  for (const filePath of yamlFiles) {
-    const parsedObject = parseYamlFile(filePath);
-    if (parsedObject) {
-      parsedObjects.push(parsedObject);
-    }
-  }
-
-  return parsedObjects;
-}
-
-const registryPackages = parseYamlFilesInDirectory(directoryPath);
 
 // Generate a list of all Registry items -- modules, resources, functions, etc.
 console.log(" ↳ Building Registry resource objects...");
-const registryObjects = registry.getObjects(pathToRegistryPackagesJSON, registryPackages);
+const registryObjects = registry.getObjects(pathToRegistryPackagesJSON, hugoPageItems);
+
+// Filter out only non-registry objects from primaryPageObjects and de-dupe registryObjects.
+const filteredPageObjects = primaryPageObjects
+  .filter(o => o.href.startsWith("/registry"))
+  .filter(o => registryObjects.find(ro => ro.href === o.href) === undefined);
 
 // Stitch these lists together into one tidy bundle.
 let allObjects = [
+    ...filteredPageObjects,
     ...registryObjects,
 ];
 

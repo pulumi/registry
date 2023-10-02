@@ -74,6 +74,7 @@ outputFormats:
 outputs:
   home:
     - HTML
+    - JSON
   section:
     - HTML
 

@@ -32,7 +32,7 @@ const filteredPageObjects = primaryPageObjects
 // Stitch these lists together into one tidy bundle.
 let allObjects = [
     ...filteredPageObjects,
-    // ...registryObjects,
+    ...registryObjects,
 ];
 
 // Temporary hack: Remove any references to `azure-native-v1`. This line can be

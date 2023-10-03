@@ -11,8 +11,8 @@ module.exports = function (env, { mode }) {
             marketing: "./src/ts/marketing.ts",
         },
         output: {
-            filename: "[name].js",
-            chunkFilename: "chunk-[id].js",
+            filename: "[name]-registry.js",
+            chunkFilename: "chunk-[id]-registry.js",
             path: `${process.cwd()}/../assets/js`,
         },
         resolve: {
@@ -62,7 +62,7 @@ module.exports = function (env, { mode }) {
         },
         plugins: [
             new MiniCssExtractPlugin({
-                filename: "../css/[name].css",
+                filename: "../css/[name]-registry.css",
             }),
             new webpack.optimize.LimitChunkCountPlugin({
                 maxChunks: 1,

@@ -4,6 +4,8 @@ const postcss = require("postcss");
 const purgecss = require("@fullhuman/postcss-purgecss");
 const cssnano = require("cssnano");
 
+const registryBundleSlug = "-registry"
+
 function minifyCSS(filePath) {
     const bundlePath = glob.sync(filePath)[0];
 
@@ -19,7 +21,7 @@ function minifyCSS(filePath) {
         // PurgeCSS removes unused CSS by analyzing the files of the built website.
         // https://purgecss.com/
         purgecss({
-            content: [ "public/**/*.html", "public/js/bundle.*.js" ],
+            content: [ "public/**/*.html", `public/js/bundle${registryBundleSlug}.*.js` ],
             // PurgeCSS looks through all the built files but, making an exception here
             // to skip the files in the azure-native-v2 package because it is causing
             // out of memory errors with all the new files added from the package. This
@@ -82,8 +84,8 @@ function minifyCSS(filePath) {
     });
 }
 
-minifyCSS("public/css/bundle-registry.*.css").then(() => {
-    minifyCSS("public/css/marketing-registry.*.css").then(() => {
+minifyCSS(`public/css/bundle${registryBundleSlug}.*.css`).then(() => {
+    minifyCSS(`public/css/marketing${registryBundleSlug}.*.css`).then(() => {
         console.log("CSS bundles minified successfully!");
     });
 });

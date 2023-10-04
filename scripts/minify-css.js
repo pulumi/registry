@@ -82,8 +82,8 @@ function minifyCSS(filePath) {
     });
 }
 
-minifyCSS("public/css/bundle.*.css").then(() => {
-    minifyCSS("public/css/marketing.*.css").then(() => {
+minifyCSS("public/css/bundle-registry.*.css").then(() => {
+    minifyCSS("public/css/marketing-registry.*.css").then(() => {
         console.log("CSS bundles minified successfully!");
     });
 });

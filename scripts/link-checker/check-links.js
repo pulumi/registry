@@ -188,11 +188,7 @@ async function onComplete(brokenLinks) {
 */
 function getDefaultExcludedKeywords() {
     return [
-        "example.com",
-        "/docs/reference/pkg",
         "/registry/packages/*/api-docs",
-        "/logos/pkg",
-        "/docs/get-started/install/versions",
         "https://api.pulumi.com/",
         "https://github.com/pulls?",
         "https://github.com/pulumi/docs/edit/master",

@@ -20,6 +20,7 @@ test:
 
 .PHONY: build
 build:
+	$(MAKE) build-assets
 	./scripts/build.sh
 
 .PHONY: serve

@@ -55,3 +55,8 @@ serve-all:
 .PHONY: build-assets
 build-assets:
 	yarn --cwd ./themes/default/theme run build
+
+.PHONY: check_links
+check_links:
+	$(MAKE) ensure
+	./scripts/link-checker/check-links.sh "https://www.pulumi.com/registry"

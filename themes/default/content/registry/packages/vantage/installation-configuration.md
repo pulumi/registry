@@ -62,4 +62,4 @@ $ export VANTAGE_API_HOST="https://api.vantage.sh"
 
 ## Configuration Options
 
-Use `pulumi config set vantage:<option>` or pass options to the [constructor of `new vantage.Provider`]({{< relref "/registry/packages/vantage/api-docs/provider" >}}).
+Use `pulumi config set vantage:<option>` or pass options to the [constructor of `new vantage.Provider`](/registry/packages/vantage/api-docs/provider).

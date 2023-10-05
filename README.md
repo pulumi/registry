@@ -42,9 +42,7 @@ Once the community member has submitted the PR to add the provider to the regist
 
 This repository is a [Hugo module](https://gohugo.io/hugo-modules/) that doubles as a development server to make it easier to work on the pages that make up Pulumi Registry. It contains most of the Hugo `content` and `layouts` files comprising what you see at https://pulumi.com/registry -- but not everything. A few things you won't find in this repository include:
 
-* Package-level how-to guides. These files are still built and checked into the [pulumi/docs](https://github.com/pulumi/docs) repository. (We're [working on bringing them into this repository](https://github.com/pulumi/registry/issues/237), though.)
-
-* JavaScript, CSS, and web components. We build the JavaScript and CSS bundles that power the Pulumi website (and therefore the Registry) in the [pulumi/pulumi-hugo](https://github.com/pulumi/pulumi-hugo) repository.
+* JavaScript, CSS, and web component - We build the JavaScript and CSS bundles that power the Pulumi Registry here, under the `themes/default/theme` directory. If you are making styling changes along-side content changes, use `make serve-all` to enable hot reloading of both the pages and CSS/JS assets.
 
 * Layouts and content for pulumi.com marketing pages, CLI docs, the blog, etc., all of which are managed in the [pulumi/pulumi-hugo](https://github.com/pulumi/pulumi-hugo) repository.
 

@@ -1,11 +1,11 @@
 ---
-title: Cisco IOS XE Resource Provider
-meta_desc: Provides an overview of the Cisco IOS XE Provider for Pulumi.
+title: Cisco NX OS Resource Provider
+meta_desc: Provides an overview of the Cisco NX OS Provider for Pulumi.
 layout: package
 ---
 
-The Cisco IOS XE provider for Pulumi can be used to provision any of the cloud resources available on Cisco IOS XE.
-The provider must be configured with credentials to deploy and update resources on a Cisco IOS XE Device.
+The Cisco NX OS provider for Pulumi can be used to provision any of the cloud resources available on Cisco NX OS.
+The provider must be configured with credentials to deploy and update resources on a Cisco NX OS Device.
 
 ## Example
 

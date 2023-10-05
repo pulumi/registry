@@ -1,6 +1,6 @@
 category: Utility
 component: false
-description: A Pulumi package for creating and managing Cisco IOS XE Devices.
+description: A Pulumi package for creating and managing Cisco nxos XE Devices.
 featured: false
 logo_url: ""
 name: nxos
@@ -10,5 +10,5 @@ publisher: lbrlabs
 repo_url: https://github.com/lbrlabs/pulumi-nxos
 schema_file_path: provider/cmd/pulumi-resource-nxos/schema.json
 title: Cisco NX-OS
-updated_on: 1695346854
-version: v0.0.1
+updated_on: 1696011039
+version: v0.0.2

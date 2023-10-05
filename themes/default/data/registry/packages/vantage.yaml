@@ -10,5 +10,5 @@ publisher: lbrlabs
 repo_url: https://github.com/lbrlabs/pulumi-vantage
 schema_file_path: provider/cmd/pulumi-resource-vantage/schema.json
 title: Vantage
-updated_on: 1686267286
-version: v0.0.1
+updated_on: 1696453179
+version: v0.0.2

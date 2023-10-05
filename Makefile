@@ -20,6 +20,7 @@ test:
 
 .PHONY: build
 build:
+	$(MAKE) build-assets
 	./scripts/build.sh
 
 .PHONY: serve
@@ -42,3 +43,15 @@ ci-scheduled:
 ci_push::
 	$(MAKE) ensure
 	./scripts/ci/push.sh
+
+.PHONY: serve-assets
+serve-assets:
+	yarn --cwd ./themes/default/theme run start
+
+.PHONY: serve-all
+serve-all:
+	./node_modules/.bin/concurrently --kill-others -r "./scripts/serve.sh" "yarn --cwd ./themes/default/theme run start"
+
+.PHONY: build-assets
+build-assets:
+	yarn --cwd ./themes/default/theme run build

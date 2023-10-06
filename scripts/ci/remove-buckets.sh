@@ -10,6 +10,10 @@ set -o errexit -o pipefail
 
 echo "Finding deletable $1 buckets..."
 
+source ./scripts/ci/common.sh
+
+echo "origin bucket prefix: $(origin_bucket_prefix)"
+
 buckets_to_remove="$(./scripts/ci/list-buckets.sh "$1" --only-deletables)"
 
 if [ -z "$buckets_to_remove" ]; then
@@ -22,10 +26,10 @@ echo "Buckets to remove:"
 echo "$buckets_to_remove"
 echo
 
-for bucket in $buckets_to_remove; do
-    echo "Removing ${bucket}..."
-    aws s3 rb "s3://${bucket}" --force
-    echo
-done
+# for bucket in $buckets_to_remove; do
+#     echo "Removing ${bucket}..."
+#     aws s3 rb "s3://${bucket}" --force
+#     echo
+# done
 
 echo "Done!"

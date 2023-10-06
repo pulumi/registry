@@ -100,7 +100,7 @@ metadata='{
 printf "$metadata" "$(current_time_in_ms)" "$(git_sha)" "$destination_bucket" "$s3_website_url" > "$metadata_file"
 
 # Copy the file to the destination bucket, for future reference.
-aws s3 cp "$metadata_file" "${destination_bucket_uri}/metadata.json" --region "$(aws_region)" --acl public-read
+aws s3 cp "$metadata_file" "${destination_bucket_uri}/registry/metadata.json" --region "$(aws_region)" --acl public-read
 
 # Persist an association between the current commit and the bucket we just deployed to.
 set_bucket_for_commit "$(git_sha)" "$destination_bucket" "$(aws_region)"

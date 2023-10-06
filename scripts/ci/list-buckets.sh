@@ -50,7 +50,7 @@ if [ "$bucket_count" == "0" ]; then
 fi
 
 # Query for the bucket currently serving pulumi.com.
-currently_deployed_bucket="$(curl -s https://www.pulumi.com/metadata.json | jq -r '.bucket' || echo '')"
+currently_deployed_bucket="$(curl -s https://d38rxzxg8olg50.cloudfront.net/metadata.json | jq -r '.bucket' || echo '')"
 
 maybe_echo "Found ${bucket_count} recent buckets matching the prefix $(origin_bucket_prefix)-${bucket_prefix}:"
 
@@ -68,7 +68,13 @@ website_bucket_identified=false
 # The array of deletable buckets, if any.
 deletables=()
 
+count=0
+
 for bucket in $buckets; do
+    ((count++))
+    if [ "$count" -eq "50" ]; then
+        exit 0
+    fi
     maybe_echo
     maybe_echo "Fetching metadata for ${bucket}..."
     metadata="$(aws s3 cp "s3://${bucket}/metadata.json" 2>/dev/null - || echo '')"

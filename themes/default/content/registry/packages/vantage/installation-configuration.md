@@ -1,7 +1,7 @@
 ---
 title: Vantage Installation & Configuration
 meta_desc: Information on how to install the Vantage provider.
-layout: package
+layout: installation
 ---
 
 ## Installation

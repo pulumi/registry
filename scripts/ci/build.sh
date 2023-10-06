@@ -29,36 +29,20 @@ go build -o "${GOPATH}/bin/resourcedocsgen" .
 popd
 
 REGISTRY_COMMIT="$(git_sha_short)"
+printf "Generating API docs from registry commit %s...\n\n" "${REGISTRY_COMMIT}"
+resourcedocsgen docs registry --commitSha "${REGISTRY_COMMIT}" \
+    --baseDocsOutDir "themes/default/content/registry/packages" \
+    --basePackageTreeJSONOutDir "themes/default/static/registry/packages/navs" \
+    --logtostderr
+
+printf "Running Hugo...\n\n"
 
 case ${1} in
     preview)
-        PKGS=(
-            "aiven"
-            "aws"
-        )
-
-        echo "Generating API docs for ${PKGS[*]}..."
-        echo ""
-
-        for PKG in "${PKGS[@]}" ; do \
-            resourcedocsgen docs registry "${PKG}" \
-                --commitSha "${REGISTRY_COMMIT}" \
-                --baseDocsOutDir "themes/default/content/registry/packages" \
-                --basePackageTreeJSONOutDir "themes/default/static/registry/packages/navs" \
-                --logtostderr
-        done
-        printf "Running Hugo...\n\n"
         export HUGO_BASEURL="http://$(origin_bucket_prefix)-$(build_identifier).s3-website.$(aws_region).amazonaws.com"
         GOGC=3 hugo --minify --buildFuture --templateMetrics -e preview
         ;;
     update)
-        printf "Generating API docs from registry commit %s...\n\n" "${REGISTRY_COMMIT}"
-        resourcedocsgen docs registry --commitSha "${REGISTRY_COMMIT}" \
-            --baseDocsOutDir "themes/default/content/registry/packages" \
-            --basePackageTreeJSONOutDir "themes/default/static/registry/packages/navs" \
-            --logtostderr
-        
-        printf "Running Hugo...\n\n"
         GOGC=3 hugo --minify --buildFuture --templateMetrics -e production
         ;;
     *)

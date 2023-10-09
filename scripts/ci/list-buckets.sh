@@ -89,7 +89,7 @@ for bucket in $buckets; do
             maybe_echo "*"
             maybe_echo "*"
             maybe_echo "* ☝️  Head's up!"
-            maybe_echo "*    This bucket (${bucket_name}) is currently serving pulumi.com."
+            maybe_echo "*    This bucket (${bucket_name}) is currently serving pulumi.com/registry."
             maybe_echo "*    https://www.pulumi.com/registry/metadata.json"
             maybe_echo "*"
             maybe_echo "*"

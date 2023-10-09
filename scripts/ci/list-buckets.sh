@@ -68,17 +68,10 @@ website_bucket_identified=false
 # The array of deletable buckets, if any.
 deletables=()
 
-count=0
-
 for bucket in $buckets; do
-    ((count++))
-    if [ "$count" -eq "50" ]; then
-        exit 0
-    fi
     maybe_echo
     maybe_echo "Fetching metadata for ${bucket}..."
     metadata="$(aws s3 cp "s3://${bucket}/metadata.json" 2>/dev/null - || echo '')"
-
     if [ ! -z "$metadata" ]; then
         bucket_url="$(echo $metadata | jq -r '.url')"
         bucket_name="$(echo $metadata | jq -r '.bucket')"

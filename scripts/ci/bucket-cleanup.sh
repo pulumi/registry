@@ -10,9 +10,5 @@ if [ -z "${AWS_ACCESS_KEY_ID:-}" ] || [ -z "${AWS_SECRET_ACCESS_KEY:-}" ]; then
     exit
 fi
 
-# source ./scripts/ci-login.sh
-
-echo "HELLO"
-
 ./scripts/ci/remove-buckets.sh push
 ./scripts/ci/remove-buckets.sh pr

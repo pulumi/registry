@@ -1,268 +1,268 @@
 {
-	"include": [
-		{
-			"repoSlug": "koyeb/pulumi-koyeb",
-			"schemaFile": "provider/cmd/pulumi-resource-koyeb/schema.json"
-		},
-		{
-			"repoSlug": "pulumiverse/pulumi-time",
-			"schemaFile": "provider/cmd/pulumi-resource-time/schema.json"
-		},
-		{
-			"repoSlug": "pulumiverse/pulumi-doppler",
-			"schemaFile": "provider/cmd/pulumi-resource-doppler/schema.json"
-		},
-		{
-			"repoSlug": "checkly/pulumi-checkly",
-			"schemaFile": "provider/cmd/pulumi-resource-checkly/schema.json"
-		},
-		{
-			"repoSlug": "EventStore/pulumi-eventstorecloud",
-			"schemaFile": "provider/cmd/pulumi-resource-eventstorecloud/schema.json"
-		},
-		{
-			"repoSlug": "pulumiverse/pulumi-buildkite",
-			"schemaFile": "provider/cmd/pulumi-resource-buildkite/schema.json"
-		},
-		{
-			"repoSlug": "pulumiverse/pulumi-gandi",
-			"schemaFile": "provider/cmd/pulumi-resource-gandi/schema.json"
-		},
-		{
-			"repoSlug": "pulumiverse/pulumi-hcp",
-			"schemaFile": "provider/cmd/pulumi-resource-hcp/schema.json"
-		},
-		{
-			"repoSlug": "lbrlabs/pulumi-scaleway",
-			"schemaFile": "provider/cmd/pulumi-resource-scaleway/schema.json"
-		},
-		{
-			"repoSlug": "pulumi/pulumi-kubernetes-cert-manager",
-			"schemaFile": "schema.json"
-		},
-		{
-			"repoSlug": "pulumi/pulumi-kubernetes-coredns",
-			"schemaFile": "schema.json"
-		},
-		{
-			"repoSlug": "pulumi/pulumi-kubernetes-ingress-nginx",
-			"schemaFile": "schema.json"
-		},
-		{
-			"repoSlug": "pulumi/pulumi-aws-apigateway",
-			"schemaFile": "schema.yaml"
-		},
-		{
-			"repoSlug": "rootlyhq/pulumi-rootly",
-			"schemaFile": "provider/cmd/pulumi-resource-rootly/schema.json"
-		},
-		{
-			"repoSlug": "pulumiverse/pulumi-astra",
-			"schemaFile": "provider/cmd/pulumi-resource-astra/schema.json"
-		},
-		{
-			"repoSlug": "pulumi/pulumi-azure-justrun",
-			"schemaFile": "schema.json"
-		},
-		{
-			"repoSlug": "pulumi/pulumi-aws-static-website",
-			"schemaFile": "schema.json"
-		},
-		{
-			"repoSlug": "muhlba91/pulumi-proxmoxve",
-			"schemaFile": "provider/cmd/pulumi-resource-proxmoxve/schema.json"
-		},
-		{
-			"repoSlug": "theogravity/pulumi-fusionauth",
-			"schemaFile": "provider/cmd/pulumi-resource-fusionauth/schema.json"
-		},
-		{
-			"repoSlug": "upstash/pulumi-upstash",
-			"schemaFile": "provider/cmd/pulumi-resource-upstash/schema.json"
-		},
-		{
-			"repoSlug": "ovh/pulumi-ovh",
-			"schemaFile": "provider/cmd/pulumi-resource-ovh/schema.json"
-		},
-		{
-			"repoSlug": "lbrlabs/pulumi-grafana",
-			"schemaFile": "provider/cmd/pulumi-resource-grafana/schema.json"
-		},
-		{
-			"repoSlug": "lbrlabs/pulumi-launchdarkly",
-			"schemaFile": "provider/cmd/pulumi-resource-launchdarkly/schema.json"
-		},
-		{
-			"repoSlug": "pulumi/pulumi-azure-static-website",
-			"schemaFile": "schema.json"
-		},
-		{
-			"repoSlug": "lbrlabs/pulumi-harness",
-			"schemaFile": "provider/cmd/pulumi-resource-harness/schema.json"
-		},
-		{
-			"repoSlug": "pulumi/pulumi-google-cloud-static-website",
-			"schemaFile": "schema.json"
-		},
-		{
-			"repoSlug": "pulumi/pulumi-synced-folder",
-			"schemaFile": "schema.json"
-		},
-		{
-			"repoSlug": "pulumi/pulumi-tls-self-signed-cert",
-			"schemaFile": "schema.json"
-		},
-		{
-			"repoSlug": "oun/pulumi-flux",
-			"schemaFile": "provider/cmd/pulumi-resource-flux/schema.json"
-		},
-		{
-			"repoSlug": "lbrlabs/pulumi-dynatrace",
-			"schemaFile": "provider/cmd/pulumi-resource-dynatrace/schema.json"
-		},
-		{
-			"repoSlug": "pulumiverse/pulumi-aquasec",
-			"schemaFile": "provider/cmd/pulumi-resource-aquasec/schema.json"
-		},
-		{
-			"repoSlug": "pulumiverse/pulumi-exoscale",
-			"schemaFile": "provider/cmd/pulumi-resource-exoscale/schema.json"
-		},
-		{
-			"repoSlug": "pulumiverse/pulumi-sentry",
-			"schemaFile": "provider/cmd/pulumi-resource-sentry/schema.json"
-		},
-		{
-			"repoSlug": "pulumiverse/pulumi-heroku",
-			"schemaFile": "provider/cmd/pulumi-resource-heroku/schema.json"
-		},
-		{
-			"repoSlug": "pulumi/pulumi-str",
-			"schemaFile": "sdk/schema.json"
-		},
-		{
-			"repoSlug": "pulumiverse/pulumi-unifi",
-			"schemaFile": "provider/cmd/pulumi-resource-unifi/schema.json"
-		},
-		{
-			"repoSlug": "symbiosis-cloud/pulumi-symbiosis",
-			"schemaFile": "provider/cmd/pulumi-resource-symbiosis/schema.json"
-		},
-		{
-			"repoSlug": "astipkovits/pulumi-aviatrix",
-			"schemaFile": "provider/cmd/pulumi-resource-aviatrix/schema.json"
-		},
-		{
-			"repoSlug": "pulumiverse/pulumi-purrl",
-			"schemaFile": "provider/cmd/pulumi-resource-purrl/schema.json"
-		},
-		{
-			"repoSlug": "pulumiverse/pulumi-harbor",
-			"schemaFile": "provider/cmd/pulumi-resource-harbor/schema.json"
-		},
-		{
-			"repoSlug": "dirien/pulumi-vultr",
-			"schemaFile": "provider/cmd/pulumi-resource-vultr/schema.json"
-		},
-		{
-			"repoSlug": "pulumiverse/pulumi-statuscake",
-			"schemaFile": "provider/cmd/pulumi-resource-statuscake/schema.json"
-		},
-		{
-			"repoSlug": "nuage-studio/pulumi-nuage",
-			"schemaFile": "schema.json"
-		},
-		{
-			"repoSlug": "twingate-labs/pulumi-twingate",
-			"schemaFile": "provider/cmd/pulumi-resource-twingate/schema.json"
-		},
-		{
-			"repoSlug": "dirien/pulumi-azapi",
-			"schemaFile": "provider/cmd/pulumi-resource-azapi/schema.json"
-		},
-		{
-			"repoSlug": "equinix/pulumi-equinix",
-			"schemaFile": "provider/cmd/pulumi-resource-equinix/schema.json"
-		},
-		{
-			"repoSlug": "pierskarsenbarg/pulumi-sdm",
-			"schemaFile": "provider/cmd/pulumi-resource-sdm/schema.json"
-		},
-		{
-			"repoSlug": "pierskarsenbarg/pulumi-ngrok",
-			"schemaFile": "provider/cmd/pulumi-resource-ngrok/schema.json"
-		},
-		{
-			"repoSlug": "RedisLabs/pulumi-rediscloud",
-			"schemaFile": "provider/cmd/pulumi-resource-rediscloud/schema.json"
-		},
-		{
-			"repoSlug": "impart-security/pulumi-impart",
-			"schemaFile": "provider/cmd/pulumi-resource-impart/schema.json"
-		},
-		{
-			"repoSlug": "pulumiverse/pulumi-zitadel",
-			"schemaFile": "provider/cmd/pulumi-resource-zitadel/schema.json"
-		},
-		{
-			"repoSlug": "pulumiverse/pulumi-mssql",
-			"schemaFile": "provider/cmd/pulumi-resource-mssql/schema.json"
-		},
-		{
-			"repoSlug": "lbrlabs/pulumi-vantage",
-			"schemaFile": "provider/cmd/pulumi-resource-vantage/schema.json"
-		},
-		{
-			"repoSlug": "pulumiverse/pulumi-matchbox",
-			"schemaFile": "provider/cmd/pulumi-resource-matchbox/schema.json"
-		},
-		{
-			"repoSlug": "lbrlabs/pulumi-lbrlabs-eks",
-			"schemaFile": "schema.yaml"
-		},
-		{
-			"repoSlug": "lbrlabs/pulumi-cockroach",
-			"schemaFile": "provider/cmd/pulumi-resource-cockroach/schema.json"
-		},
-		{
-			"repoSlug": "port-labs/pulumi-port",
-			"schemaFile": "provider/cmd/pulumi-resource-port/schema.json"
-		},
-		{
-			"repoSlug": "prodvana/pulumi-prodvana",
-			"schemaFile": "provider/cmd/pulumi-resource-prodvana/schema.json"
-		},
-		{
-			"repoSlug": "pulumiverse/pulumi-vercel",
-			"schemaFile": "provider/cmd/pulumi-resource-vercel/schema.json"
-		},
-		{
-			"repoSlug": "volcengine/pulumi-volcengine",
-			"schemaFile": "provider/cmd/pulumi-resource-volcengine/schema.json"
-		},
-		{
-			"repoSlug": "netascode/pulumi-aci",
-			"schemaFile": "provider/cmd/pulumi-resource-aci/schema.json"
-		},
-		{
-			"repoSlug": "pulumiverse/pulumi-esxi-native",
-			"schemaFile": "provider/cmd/pulumi-resource-esxi-native/schema.json"
-		},
-		{
-			"repoSlug": "lbrlabs/pulumi-iosxe",
-			"schemaFile": "provider/cmd/pulumi-resource-iosxe/schema.json"
-		},
-		{
-			"repoSlug": "lbrlabs/pulumi-nxos",
-			"schemaFile": "provider/cmd/pulumi-resource-nxos/schema.json"
-		},
-		{
-			"repoSlug": "pulumiverse/pulumi-acme",
-			"schemaFile": "provider/cmd/pulumi-resource-acme/schema.json"
-		},
+  "include": [
+    {
+      "repoSlug": "koyeb/pulumi-koyeb",
+      "schemaFile": "provider/cmd/pulumi-resource-koyeb/schema.json"
+    },
+    {
+      "repoSlug": "pulumiverse/pulumi-time",
+      "schemaFile": "provider/cmd/pulumi-resource-time/schema.json"
+    },
+    {
+      "repoSlug": "pulumiverse/pulumi-doppler",
+      "schemaFile": "provider/cmd/pulumi-resource-doppler/schema.json"
+    },
+    {
+      "repoSlug": "checkly/pulumi-checkly",
+      "schemaFile": "provider/cmd/pulumi-resource-checkly/schema.json"
+    },
+    {
+      "repoSlug": "EventStore/pulumi-eventstorecloud",
+      "schemaFile": "provider/cmd/pulumi-resource-eventstorecloud/schema.json"
+    },
+    {
+      "repoSlug": "pulumiverse/pulumi-buildkite",
+      "schemaFile": "provider/cmd/pulumi-resource-buildkite/schema.json"
+    },
+    {
+      "repoSlug": "pulumiverse/pulumi-gandi",
+      "schemaFile": "provider/cmd/pulumi-resource-gandi/schema.json"
+    },
+    {
+      "repoSlug": "pulumiverse/pulumi-hcp",
+      "schemaFile": "provider/cmd/pulumi-resource-hcp/schema.json"
+    },
+    {
+      "repoSlug": "lbrlabs/pulumi-scaleway",
+      "schemaFile": "provider/cmd/pulumi-resource-scaleway/schema.json"
+    },
+    {
+      "repoSlug": "pulumi/pulumi-kubernetes-cert-manager",
+      "schemaFile": "schema.json"
+    },
+    {
+      "repoSlug": "pulumi/pulumi-kubernetes-coredns",
+      "schemaFile": "schema.json"
+    },
+    {
+      "repoSlug": "pulumi/pulumi-kubernetes-ingress-nginx",
+      "schemaFile": "schema.json"
+    },
+    {
+      "repoSlug": "pulumi/pulumi-aws-apigateway",
+      "schemaFile": "schema.yaml"
+    },
+    {
+      "repoSlug": "rootlyhq/pulumi-rootly",
+      "schemaFile": "provider/cmd/pulumi-resource-rootly/schema.json"
+    },
+    {
+      "repoSlug": "pulumiverse/pulumi-astra",
+      "schemaFile": "provider/cmd/pulumi-resource-astra/schema.json"
+    },
+    {
+      "repoSlug": "pulumi/pulumi-azure-justrun",
+      "schemaFile": "schema.json"
+    },
+    {
+      "repoSlug": "pulumi/pulumi-aws-static-website",
+      "schemaFile": "schema.json"
+    },
+    {
+      "repoSlug": "muhlba91/pulumi-proxmoxve",
+      "schemaFile": "provider/cmd/pulumi-resource-proxmoxve/schema.json"
+    },
+    {
+      "repoSlug": "theogravity/pulumi-fusionauth",
+      "schemaFile": "provider/cmd/pulumi-resource-fusionauth/schema.json"
+    },
+    {
+      "repoSlug": "upstash/pulumi-upstash",
+      "schemaFile": "provider/cmd/pulumi-resource-upstash/schema.json"
+    },
+    {
+      "repoSlug": "ovh/pulumi-ovh",
+      "schemaFile": "provider/cmd/pulumi-resource-ovh/schema.json"
+    },
+    {
+      "repoSlug": "lbrlabs/pulumi-grafana",
+      "schemaFile": "provider/cmd/pulumi-resource-grafana/schema.json"
+    },
+    {
+      "repoSlug": "lbrlabs/pulumi-launchdarkly",
+      "schemaFile": "provider/cmd/pulumi-resource-launchdarkly/schema.json"
+    },
+    {
+      "repoSlug": "pulumi/pulumi-azure-static-website",
+      "schemaFile": "schema.json"
+    },
+    {
+      "repoSlug": "lbrlabs/pulumi-harness",
+      "schemaFile": "provider/cmd/pulumi-resource-harness/schema.json"
+    },
+    {
+      "repoSlug": "pulumi/pulumi-google-cloud-static-website",
+      "schemaFile": "schema.json"
+    },
+    {
+      "repoSlug": "pulumi/pulumi-synced-folder",
+      "schemaFile": "schema.json"
+    },
+    {
+      "repoSlug": "pulumi/pulumi-tls-self-signed-cert",
+      "schemaFile": "schema.json"
+    },
+    {
+      "repoSlug": "oun/pulumi-flux",
+      "schemaFile": "provider/cmd/pulumi-resource-flux/schema.json"
+    },
+    {
+      "repoSlug": "lbrlabs/pulumi-dynatrace",
+      "schemaFile": "provider/cmd/pulumi-resource-dynatrace/schema.json"
+    },
+    {
+      "repoSlug": "pulumiverse/pulumi-aquasec",
+      "schemaFile": "provider/cmd/pulumi-resource-aquasec/schema.json"
+    },
+    {
+      "repoSlug": "pulumiverse/pulumi-exoscale",
+      "schemaFile": "provider/cmd/pulumi-resource-exoscale/schema.json"
+    },
+    {
+      "repoSlug": "pulumiverse/pulumi-sentry",
+      "schemaFile": "provider/cmd/pulumi-resource-sentry/schema.json"
+    },
+    {
+      "repoSlug": "pulumiverse/pulumi-heroku",
+      "schemaFile": "provider/cmd/pulumi-resource-heroku/schema.json"
+    },
+    {
+      "repoSlug": "pulumi/pulumi-str",
+      "schemaFile": "sdk/schema.json"
+    },
+    {
+      "repoSlug": "pulumiverse/pulumi-unifi",
+      "schemaFile": "provider/cmd/pulumi-resource-unifi/schema.json"
+    },
+    {
+      "repoSlug": "symbiosis-cloud/pulumi-symbiosis",
+      "schemaFile": "provider/cmd/pulumi-resource-symbiosis/schema.json"
+    },
+    {
+      "repoSlug": "astipkovits/pulumi-aviatrix",
+      "schemaFile": "provider/cmd/pulumi-resource-aviatrix/schema.json"
+    },
+    {
+      "repoSlug": "pulumiverse/pulumi-purrl",
+      "schemaFile": "provider/cmd/pulumi-resource-purrl/schema.json"
+    },
+    {
+      "repoSlug": "pulumiverse/pulumi-harbor",
+      "schemaFile": "provider/cmd/pulumi-resource-harbor/schema.json"
+    },
+    {
+      "repoSlug": "dirien/pulumi-vultr",
+      "schemaFile": "provider/cmd/pulumi-resource-vultr/schema.json"
+    },
+    {
+      "repoSlug": "pulumiverse/pulumi-statuscake",
+      "schemaFile": "provider/cmd/pulumi-resource-statuscake/schema.json"
+    },
+    {
+      "repoSlug": "nuage-studio/pulumi-nuage",
+      "schemaFile": "schema.json"
+    },
+    {
+      "repoSlug": "twingate-labs/pulumi-twingate",
+      "schemaFile": "provider/cmd/pulumi-resource-twingate/schema.json"
+    },
+    {
+      "repoSlug": "dirien/pulumi-azapi",
+      "schemaFile": "provider/cmd/pulumi-resource-azapi/schema.json"
+    },
+    {
+      "repoSlug": "equinix/pulumi-equinix",
+      "schemaFile": "provider/cmd/pulumi-resource-equinix/schema.json"
+    },
+    {
+      "repoSlug": "pierskarsenbarg/pulumi-sdm",
+      "schemaFile": "provider/cmd/pulumi-resource-sdm/schema.json"
+    },
+    {
+      "repoSlug": "pierskarsenbarg/pulumi-ngrok",
+      "schemaFile": "provider/cmd/pulumi-resource-ngrok/schema.json"
+    },
+    {
+      "repoSlug": "RedisLabs/pulumi-rediscloud",
+      "schemaFile": "provider/cmd/pulumi-resource-rediscloud/schema.json"
+    },
+    {
+      "repoSlug": "impart-security/pulumi-impart",
+      "schemaFile": "provider/cmd/pulumi-resource-impart/schema.json"
+    },
+    {
+      "repoSlug": "pulumiverse/pulumi-zitadel",
+      "schemaFile": "provider/cmd/pulumi-resource-zitadel/schema.json"
+    },
+    {
+      "repoSlug": "pulumiverse/pulumi-mssql",
+      "schemaFile": "provider/cmd/pulumi-resource-mssql/schema.json"
+    },
+    {
+      "repoSlug": "lbrlabs/pulumi-vantage",
+      "schemaFile": "provider/cmd/pulumi-resource-vantage/schema.json"
+    },
+    {
+      "repoSlug": "pulumiverse/pulumi-matchbox",
+      "schemaFile": "provider/cmd/pulumi-resource-matchbox/schema.json"
+    },
+    {
+      "repoSlug": "lbrlabs/pulumi-lbrlabs-eks",
+      "schemaFile": "schema.yaml"
+    },
+    {
+      "repoSlug": "lbrlabs/pulumi-cockroach",
+      "schemaFile": "provider/cmd/pulumi-resource-cockroach/schema.json"
+    },
+    {
+      "repoSlug": "port-labs/pulumi-port",
+      "schemaFile": "provider/cmd/pulumi-resource-port/schema.json"
+    },
+    {
+      "repoSlug": "prodvana/pulumi-prodvana",
+      "schemaFile": "provider/cmd/pulumi-resource-prodvana/schema.json"
+    },
+    {
+      "repoSlug": "pulumiverse/pulumi-vercel",
+      "schemaFile": "provider/cmd/pulumi-resource-vercel/schema.json"
+    },
+    {
+      "repoSlug": "volcengine/pulumi-volcengine",
+      "schemaFile": "provider/cmd/pulumi-resource-volcengine/schema.json"
+    },
+    {
+      "repoSlug": "netascode/pulumi-aci",
+      "schemaFile": "provider/cmd/pulumi-resource-aci/schema.json"
+    },
+    {
+      "repoSlug": "pulumiverse/pulumi-esxi-native",
+      "schemaFile": "provider/cmd/pulumi-resource-esxi-native/schema.json"
+    },
+    {
+      "repoSlug": "lbrlabs/pulumi-iosxe",
+      "schemaFile": "provider/cmd/pulumi-resource-iosxe/schema.json"
+    },
+    {
+      "repoSlug": "lbrlabs/pulumi-nxos",
+      "schemaFile": "provider/cmd/pulumi-resource-nxos/schema.json"
+    },
+    {
+      "repoSlug": "pulumiverse/pulumi-acme",
+      "schemaFile": "provider/cmd/pulumi-resource-acme/schema.json"
+    },
 		{
 			"repoSlug": "threefoldtech/pulumi-provider-grid",
 			"schemaFile": "provider/cmd/pulumi-resource-grid/schema.json"
 		}
-	]
+  ]
 }

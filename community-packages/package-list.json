@@ -262,7 +262,7 @@
     },
     {
       "repoSlug": "threefoldtech/pulumi-threefold",
-      "schemaFile": "provider/cmd/pulumi-resource-grid/schema.json"
+      "schemaFile": "provider/cmd/pulumi-resource-threefold/schema.json"
     }
   ]
 }

@@ -261,7 +261,7 @@
       "schemaFile": "provider/cmd/pulumi-resource-acme/schema.json"
     },
     {
-      "repoSlug": "threefoldtech/pulumi-provider-grid",
+      "repoSlug": "threefoldtech/pulumi-threefold",
       "schemaFile": "provider/cmd/pulumi-resource-grid/schema.json"
     }
   ]

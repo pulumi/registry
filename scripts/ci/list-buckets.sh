@@ -50,7 +50,7 @@ if [ "$bucket_count" == "0" ]; then
 fi
 
 # Query for the bucket currently serving pulumi.com.
-currently_deployed_bucket="$(curl -s https://www.pulumi.com/metadata.json | jq -r '.bucket' || echo '')"
+currently_deployed_bucket="$(curl -s https://www.pulumi-test.io/registry/metadata.json | jq -r '.bucket' || echo '')"
 
 maybe_echo "Found ${bucket_count} recent buckets matching the prefix $(origin_bucket_prefix)-${bucket_prefix}:"
 
@@ -72,7 +72,6 @@ for bucket in $buckets; do
     maybe_echo
     maybe_echo "Fetching metadata for ${bucket}..."
     metadata="$(aws s3 cp "s3://${bucket}/metadata.json" 2>/dev/null - || echo '')"
-
     if [ ! -z "$metadata" ]; then
         bucket_url="$(echo $metadata | jq -r '.url')"
         bucket_name="$(echo $metadata | jq -r '.bucket')"
@@ -90,8 +89,8 @@ for bucket in $buckets; do
             maybe_echo "*"
             maybe_echo "*"
             maybe_echo "* ☝️  Head's up!"
-            maybe_echo "*    This bucket (${bucket_name}) is currently serving pulumi.com."
-            maybe_echo "*    https://www.pulumi.com/metadata.json"
+            maybe_echo "*    This bucket (${bucket_name}) is currently serving pulumi.com/registry."
+            maybe_echo "*    https://www.pulumi.com/registry/metadata.json"
             maybe_echo "*"
             maybe_echo "*"
 

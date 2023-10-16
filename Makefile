@@ -56,6 +56,10 @@ serve-all:
 build-assets:
 	yarn --cwd ./themes/default/theme run build
 
+.PHONY: ci_bucket_cleanup
+ci_bucket_cleanup:
+	./scripts/ci/bucket-cleanup.sh
+
 .PHONY: check_links
 check_links:
 	$(MAKE) ensure

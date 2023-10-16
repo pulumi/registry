@@ -92,6 +92,10 @@ body.section-registry {
             line-height: 1.6;
         }
 
+        dl > dd > p{
+            overflow-wrap: break-word;
+        }
+
         table {
             margin-bottom: 16px;
         }

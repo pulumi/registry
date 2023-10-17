@@ -1,0 +1,15 @@
+category: Infrastructure
+component: false
+description: The Threefold Grid Resource Provider for the [threefold grid](https://threefold.io)
+  lets you manage your infrastructure using pulumi.
+featured: false
+logo_url: www.threefold.io/images/black_threefold.png
+name: Threefold
+native: true
+package_status: public_preview
+publisher: Threefold
+repo_url: https://github.com/threefoldtech/pulumi-threefold
+schema_file_path: provider/cmd/pulumi-resource-threefold/schema.json
+title: Threefold
+updated_on: 1697110866
+version: v0.1.0

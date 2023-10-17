@@ -259,6 +259,10 @@
     {
       "repoSlug": "pulumiverse/pulumi-acme",
       "schemaFile": "provider/cmd/pulumi-resource-acme/schema.json"
+    },
+    {
+      "repoSlug": "threefoldtech/pulumi-threefold",
+      "schemaFile": "provider/cmd/pulumi-resource-threefold/schema.json"
     }
   ]
 }

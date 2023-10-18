@@ -11,5 +11,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-aws
 schema_file_path: provider/cmd/pulumi-resource-aws/schema.json
 title: AWS Classic
-updated_on: 1696970606
-version: v6.5.0
+updated_on: 1697624191
+version: v6.6.0

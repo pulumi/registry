@@ -48,10 +48,16 @@ func genResourceDocsForPackageFromRegistryMetadata(metadata pkg.PackageMeta, doc
 	// Make sure the schema file path does not have a leading slash.
 	// We'll add in the URL format below. It's easier to read that way.
 	schemaFilePath = strings.TrimPrefix(schemaFilePath, "/")
-
 	glog.Infoln("Reading remote schema file from VCS")
-	// TODO: Support raw URLs for other VCS too.
-	schemaFileURL := "https://tkappler-aznative-schematest.s3.us-east-2.amazonaws.com/schema.json"
+
+	var schemaFileURL string
+
+	if metadata.Name == "azure-native" {
+		schemaFileURL = "https://tkappler-aznative-schematest.s3.us-east-2.amazonaws.com/schema.json"
+	} else {
+		repoSlug, _ := getRepoSlug(metadata.RepoURL)
+		schemaFileURL = fmt.Sprintf("https://raw.githubusercontent.com/%s/%s/%s", repoSlug, metadata.Version, schemaFilePath)
+	}
 	resp, err := http.Get(schemaFileURL)
 	if err != nil {
 		return errors.Wrapf(err, "reading schema file from VCS %s", schemaFileURL)

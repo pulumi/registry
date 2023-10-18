@@ -29,14 +29,14 @@ Occasionally, Microsoft ships breaking changes. For example, they may rename a m
 
 Every Azure API endpoint defines a set of API versions that it accepts. API versions are based on a date, for instance, `2020-03-01` or `2019-05-15-preview`. Breaking changes may occur between API versions. API versions are defined per Azure resource provider and are published frequently (almost every week).
 
-The native Azure provider maps every published API version of every Azure resource provider and represents it 1:1 as a separate module. For example, the `Vault` resource of the `KeyVault` resource provider of version `2019-09-01` is published as the Pulumi resource `azure-native:keyvault/v20190901:Vault`. You can import this resource with the following statement:
+The native Azure provider maps every published API version of every Azure resource provider and represents it 1:1 as a separate module. For example, the `Vault` resource of the `KeyVault` resource provider of version `2023-02-01` is published as the Pulumi resource `azure-native:keyvault/v20230201:Vault`. You can import this resource with the following statement:
 
 {{< chooser language "typescript,python,csharp,go,java,yaml" >}}
 
 {{% choosable language typescript %}}
 
 ```typescript
-import Vault from "@pulumi/azure-native/keyvault/v20190901";
+import Vault from "@pulumi/azure-native/keyvault/v20230201";
 ```
 
 {{% /choosable %}}
@@ -44,7 +44,7 @@ import Vault from "@pulumi/azure-native/keyvault/v20190901";
 {{% choosable language python %}}
 
 ```python
-from pulumi_azure_native.keyvault.v20190901 import Vault
+from pulumi_azure_native.keyvault.v20230201 import Vault
 ```
 
 {{% /choosable %}}
@@ -52,7 +52,7 @@ from pulumi_azure_native.keyvault.v20190901 import Vault
 {{% choosable language csharp %}}
 
 ```csharp
-using Pulumi.AzureNative.KeyVault.V20190901;
+using Pulumi.AzureNative.KeyVault.V20230201;
 
 new Vault(/*...*/);
 ```
@@ -63,7 +63,7 @@ new Vault(/*...*/);
 
 ```go
 import (
-    keyvault "github.com/pulumi/pulumi-azure-native/sdk/go/azure/keyvault/v20190901"
+    keyvault "github.com/pulumi/pulumi-azure-native-sdk/keyvault/v2/v20230201"
 )
 
 // ...
@@ -134,7 +134,7 @@ new Vault(/*...*/);
 
 ```go
 import (
-    "github.com/pulumi/pulumi-azure-native/sdk/go/azure/keyvault"
+    "github.com/pulumi/pulumi-azure-native-sdk/keyvault/v2"
 )
 
 // ...

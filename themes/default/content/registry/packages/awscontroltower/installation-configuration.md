@@ -50,4 +50,4 @@ $ export AWS_SECRET_ACCESS_KEY=<AWS_SECRET_ACCESS_KEY>
 
 ## Configuration Options
 
-Use `pulumi config set awscontroltower:<option>` or pass options to the [constructor of `new awscontroltower.Provider`]({{< relref "/registry/packages/awscontroltower/api-docs/provider" >}}).
+Use `pulumi config set awscontroltower:<option>` or pass options to the [constructor of `new awscontroltower.Provider`](/registry/packages/awscontroltower/api-docs/provider).

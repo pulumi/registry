@@ -1,0 +1,14 @@
+category: Cloud
+component: false
+description: A Pulumi package for creating and managing control tower accounts.
+featured: false
+logo_url: ""
+name: awscontroltower
+native: false
+package_status: public_preview
+publisher: lbrlabs
+repo_url: https://github.com/lbrlabs/pulumi-awscontroltower
+schema_file_path: provider/cmd/pulumi-resource-awscontroltower/schema.json
+title: AWS Control Tower
+updated_on: 1697818067
+version: v0.0.2

@@ -27,8 +27,7 @@ Replace the version string with your desired version.
 
 The AWS control tower uses the AWS SDK to connect to AWS. Many of the authentication options you're familiar with using [Pulumi AWS)(https://www.pulumi.com/registry/packages/aws/) apply here.
 
-{{% /choosable %}}
-
+{{< chooser os "macos,windows" >}}
 {{% choosable os macos %}}
 
 ```bash

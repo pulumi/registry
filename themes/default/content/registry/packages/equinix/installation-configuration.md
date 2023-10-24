@@ -77,7 +77,7 @@ $ export EQUINIX_API_CLIENTSECRET=<EQUINIX_API_CLIENTSECRET>
 
 ## Configuration Options
 
-Use `pulumi config set equinix:<option>` or pass options to the [constructor of `new equinix.Provider`]({{< relref "/registry/packages/equinix/api-docs/provider" >}}).
+Use `pulumi config set equinix:<option>` or pass options to the [constructor of `new equinix.Provider`](/registry/packages/equinix/api-docs/provider).
 
 | Option | Required/Optional | Description |
 |-----|------|----|

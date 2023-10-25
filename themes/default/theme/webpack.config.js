@@ -13,7 +13,7 @@ module.exports = function (env, { mode }) {
         output: {
             filename: "[name]-registry.js",
             chunkFilename: "chunk-[id]-registry.js",
-            path: `${process.cwd()}/../assets/js`,
+            path: `${process.cwd()}/../assets/registry/js`,
         },
         resolve: {
             extensions: [".ts", ".js"],

@@ -19,7 +19,7 @@ The Pulumi Equinix provider is available as a package in all Pulumi languages:
 The Equinix provider binary is a third party binary. It can be installed using the `pulumi plugin` command.
 
 ```bash
-pulumi plugin install resource equinix v0.1.0
+pulumi plugin install resource equinix --server github://api.github.com/equinix
 ```
 
 Replace the version string with your desired version.
@@ -79,7 +79,7 @@ $ export EQUINIX_API_CLIENTSECRET=<EQUINIX_API_CLIENTSECRET>
 
 Use `pulumi config set equinix:<option>` or pass options to the [constructor of `new equinix.Provider`](/registry/packages/equinix/api-docs/provider).
 
-| Option | Required? | Description |
+| Option | Required/Optional | Description |
 |-----|------|----|
 | `authToken`| Optional | The Equinix Metal API auth key for API operations. |
 | `clientId`| Optional | API Consumer Key available under My Apps section in Equinix developer portal. |

@@ -1,8 +1,5 @@
 name: Build and deploy - test environment
 on:
-  pull_request:
-    branches:
-      - master
   push:
     branches:
       - master

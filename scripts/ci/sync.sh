@@ -63,22 +63,9 @@ echo "$s3_website_url"
 aws s3 cp "$build_dir/latest-version" "${destination_bucket_uri}/latest-version" \
     --content-type "text/plain" --acl public-read --region "$(aws_region)" --metadata-directive REPLACE
 
-
 # Smoke test the deployed website.
 echo "Running browser tests on $s3_website_url..."
 ./scripts/run-browser-tests.sh "$s3_website_url"
-
-if [[ "$1" == "update" ]]; then
-    # We host the bundle files in a separate bucket that `/css` and `js` routes to to enable managing the bundles
-    # generated from both the docs and hugo repos.
-    bundleBucket=$(pulumi stack output --stack "${PULUMI_DOCS_STACK_NAME}" bundlesS3BucketName)
-    # Upload the CSS/JS bundle files to the bundles bucket.
-    echo "Syncing CSS files to the bundles bucket"
-    aws s3 cp "${build_dir}/css/" "s3://${bundleBucket}/css/" --acl public-read  --content-type "text/css" --region "$(aws_region)" --recursive
-
-    echo "Syncing JS files to the bundles bucket"
-    aws s3 cp "${build_dir}/js/" "s3://${bundleBucket}/js/" --acl public-read  --content-type "text/javascript" --region "$(aws_region)" --recursive
-fi
 
 # At this point, we have a bucket that's suitable for deployment. As a result of this run,
 # we leave a file in the project root indicating the name of the bucket that was generated

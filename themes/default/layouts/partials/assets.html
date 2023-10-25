@@ -9,7 +9,7 @@
   crossorigin="anonymous"
   referrerpolicy="no-referrer"></script>
 
-{{ $js := resources.Get "js/bundle-registry.js" | fingerprint }}
+{{ $js := resources.Get "registry/js/bundle-registry.js" | fingerprint }}
 <script src="{{ $js.RelPermalink }}" defer></script>
 
 <!--
@@ -19,9 +19,9 @@
 {{ $nonMarketingSections := slice "docs" "registry" "blog" "learn" "templates" "ai" "authors" "tags" "legal" }}
 {{ if in $nonMarketingSections .Section }}
 {{ else }}
-    {{ $marketingCss := resources.Get "css/marketing-registry.css" | fingerprint }}
+    {{ $marketingCss := resources.Get "registry/css/marketing-registry.css" | fingerprint }}
     <link rel="stylesheet" href="{{ $marketingCss.RelPermalink }}"></link>
 {{ end }}
 
-{{ $css := resources.Get "css/bundle-registry.css" | fingerprint }}
+{{ $css := resources.Get "registry/css/bundle-registry.css" | fingerprint }}
 <link rel="stylesheet" href="{{ $css.RelPermalink }}"></link>

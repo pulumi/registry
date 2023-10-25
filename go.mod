@@ -3,7 +3,7 @@ module github.com/pulumi/registry
 go 1.16
 
 require (
-	github.com/pulumi/pulumi-hugo/themes/default v0.0.0-20231024205902-7da3d4c64dc6 // indirect
+	github.com/pulumi/pulumi-hugo/themes/default v0.0.0-20231025134950-88188f4a8691 // indirect
 	github.com/pulumi/registry/themes/default v0.0.0-20221220231854-958c0296acf4 // indirect
 )
 

@@ -41,8 +41,8 @@ to pulumi.com. Once the credentials are obtained, there are two ways to communic
     ```
     With Oauth Client (conflicts with `TAILSCALE_API_KEY`):
     ```bash
-    $ pulumi config set tailscale:oauthClientSecret: XXXXXX --secret
-    $ pulumi config set tailscale:oauthClientId: XXXXXX --secret
+    $ pulumi config set tailscale:oauthClientSecret XXXXXX --secret
+    $ pulumi config set tailscale:oauthClientId XXXXXX --secret
     ```
 
 

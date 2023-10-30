@@ -5,7 +5,7 @@ layout: package
 ---
 
 {{< notes >}}
-Google Cloud Native is in public preview. Breaking changes may be introduced in minor version releases.
+Google Cloud Native is available in developer preview. While upstream changes continue to be delivered, active development is paused. Breaking changes may be introduced in minor version releases.
 
 [Google Cloud Classic](/registry/packages/gcp) remains fully supported and recommended for production use.
 {{< /notes >}}

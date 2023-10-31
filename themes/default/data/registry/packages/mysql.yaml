@@ -8,7 +8,7 @@ native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-mysql
-schema_file_path: /provider/cmd/pulumi-resource-mysql/schema.json
+schema_file_path: provider/cmd/pulumi-resource-mysql/schema.json
 title: MySQL
-updated_on: 1636661748
-version: v3.1.0
+updated_on: 1698476761
+version: v3.2.0

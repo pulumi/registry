@@ -8,7 +8,7 @@ The Threefold Resource Provider for the [threefold grid](https://threefold.io) l
 
 ## Example
 
-{{< chooser language "go,yml" >}}
+{{< chooser language "go,yaml" >}}
 
 {{% choosable language go %}}
 

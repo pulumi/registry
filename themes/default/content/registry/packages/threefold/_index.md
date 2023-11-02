@@ -53,9 +53,9 @@ func main() {
 
 {{% /choosable %}}
 
-{{% choosable language yml %}}
+{{% choosable language yaml %}}
 
-```yml
+```yaml
 name: pulumi-threefold
 runtime: yaml
 

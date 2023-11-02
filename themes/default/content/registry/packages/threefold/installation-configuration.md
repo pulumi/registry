@@ -6,9 +6,9 @@ layout: package
 
 ## Installation
 
-The Pulumi Threefold provider is available as a package in all Pulumi languages:
+The Pulumi Threefold provider is available as a package in those Pulumi languages:
 
-* Go: [`github.com/threefold/pulumi-threefold/sdk`](https://pkg.go.dev/github.com/threefold/pulumi-threefold/sdk)
+* Go: [`github.com/threefoldtech/pulumi-threefold/sdk`](https://pkg.go.dev/github.com/threefoldtech/pulumi-threefold/sdk)
 
 ## Setup
 

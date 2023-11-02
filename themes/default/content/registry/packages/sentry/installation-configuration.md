@@ -25,4 +25,4 @@ Use `pulumi config set sentry:<option>`.
 | Option | Required? | Description |
 |-----|------|----|
 | `token`| Required | Sentry access token |
-| `base_url`| Optional | Sentry base URL when self-hosting Sentry |
+| `base_url`| Optional | Sentry base URL when self-hosting Sentry, the URL format must be in the format https://[hostname]/api/ |

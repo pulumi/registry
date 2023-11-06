@@ -57,58 +57,15 @@ gcp:serviceAccount:getIamPolicy -> [gcp:serviceaccount:getIamPolicy](https://www
 
 ## Labels Rework
 
-Upstream changes for provider, resource, and data source labels are included in this release. You can find more information about this change in the [upstream documentation](https://registry.terraform.io/providers/hashicorp/google/latest/docs/guides/version_5_upgrade#provider-level-labels-rework)
+Upstream changes for provider, resource, and data source labels are included in this release. Global Google Cloud Platform labels configured on the provider are supported through the new `defaultLabels` field. Default labels will be applied to all resources with a `labels` field.
+Resources that previously contained a single `labels`  field will now contain three fields:
 
-<!-- TODO -->
+- The `labels`  field is now non-authoritative and only manages the label keys defined in your configuration for the resource.
+- The output-only `pulumiLabels` field merges the labels defined in the resource's labels field and the global `defaultLabels`. If the same label key exists on both the resource level and provider level, the value on the resource will override the provider-level default.
+- The output-only `effectiveLabels` will list all the labels present on the resource in GCP, including labels configured through Pulumi.
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+Note: `defaultLabels` do not support Secrets at this time. Any `defaultLabels` values marked as `Secret` will be written to the state file in plaintext.
 
-{{% chooseable language typescript %}}
+Due to the two new output fields, a resource that has a `labels` field may show a diff when upgrading from pulumi-gcp v6 to v7. This diff reflects adding the new resource Output fields and is safe to do.
 
-```typescript
-
-```
-
-{{% /choosable %}}
-
-{{% chooseable language python %}}
-
-```python
-
-```
-
-{{% /choosable %}}
-
-{{% choosable language go %}}
-
-```go
-
-```
-
-{{% /choosable %}}
-
-{{% chooseable language chsarp %}}
-
-```csharp
-
-```
-
-{{% /choosable %}}
-
-{{% choosable language java %}}
-
-```java
-
-```
-
-{{% /choosable %}}
-
-{{% choosable language yaml %}}
-
-```yaml
-
-```
-
-{{% /choosable %}}
-
-{{< /chooser >}}
+You can find more information about this change in the [upstream documentation](https://registry.terraform.io/providers/hashicorp/google/latest/docs/guides/version_5_upgrade#provider-level-labels-rework).

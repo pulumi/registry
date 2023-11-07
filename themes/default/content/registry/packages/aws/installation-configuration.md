@@ -237,7 +237,7 @@ values:
 
 ### [Optional] Move Pulumi config to your ESC environment
 
-It was mentioned earlier in this guide that you can also set your AWS region as a Pulumi configuration value in your project's stack settings file (`Pulumi.<stack-name>.yaml`). In addition to this, there may be other values that you have defined in this file, and these values can also be centralized using Pulumi ESC. To expose these values to Pulumi IaC, you will need to add a second-level key called `pulumiConfig` and nest any desired values underneath it as shown below:
+It was mentioned earlier in this guide that you can also set your AWS region as a Pulumi configuration value in your project's stack settings file (`Pulumi.<stack-name>.yaml`). In addition to this, there may be other values that you have defined in this file, and these values can also be centralized using Pulumi ESC. To [expose these values to Pulumi IaC](https://www.pulumi.com/docs/pulumi-cloud/esc/environments/#projecting-pulumi-config), you will need to add a second-level key called `pulumiConfig` and nest any desired values underneath it as shown below:
 
 ```yaml
 values:
@@ -256,16 +256,18 @@ values:
     aws:region: <YOUR_AWS_REGION> # e.g.`ap-south-1`
 ```
 
-You can learn more about configuration in Pulumi by referring to the [relevant documentation](https://www.pulumi.com/docs/concepts/config/).
+Note that the configuration values under `pulumiConfig` can also be referenced directly from within your Pulumi program code. This is done using the same method to reference values from your project's stack settings file. You can see examples of how to do this in the [Accessing Configuration from Code](https://www.pulumi.com/docs/concepts/config/#code) section of the Pulumi documentation.
 
 ### Import your environment
 
-The last step is to update your project's stack settings file (`Pulumi.<stack-name>.yaml`) to import your ESC environment as shown below. Make sure to replace `<your-environment-name>` with the name of the ESC environment you created in the previous steps.
+The last step is to update your project's stack settings file (`Pulumi.<stack-name>.yaml`) to import your ESC environment as shown below:
 
 ```yaml
 environment:
   - <your-environment-name>
 ```
+
+Make sure to replace `<your-environment-name>` with the name of the ESC environment you created in the previous steps.
 
 You can test that your configuration is working by running the `pulumi up` command. This will deploy your AWS resources using the dynamically generated credentials in your environment file.
 

@@ -271,6 +271,10 @@
     {
       "repoSlug": "pulumiverse/pulumi-talos",
       "schemaFile": "provider/cmd/pulumi-resource-talos/schema.json"
+    },
+    {
+      "repoSlug": "pierskarsenbarg/pulumi-nutanix",
+      "schemaFile": "provider/cmd/pulumi-resource-nutanix/schema.json"
     }
   ]
 }

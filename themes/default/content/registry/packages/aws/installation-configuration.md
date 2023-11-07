@@ -68,7 +68,7 @@ $ export AWS_REGION=<YOUR_AWS_REGION> # e.g.`ap-south-1`
 {{% /choosable %}}
 {{< /chooser >}}
 
-You may alternatively set the AWS region in your Pulumi.yaml:
+You may alternatively set the AWS region in your `Pulumi.<stack-name>.yaml` file:
 
 ```bash
 $ pulumi config set aws:region <your-region> # e.g.`ap-south-1`
@@ -208,3 +208,69 @@ Use `pulumi config set aws:<option>` or pass options to the [constructor of `new
 | `skipRegionValidation` | Optional | Skip static validation of region name. Used by users of alternative AWS-like APIs or users w/ access to regions that are not public (yet). |
 | `skipRequestingAccountId` | Optional | Skip requesting the account ID. Used for AWS API implementations that do not have IAM/STS API and/or metadata API. |
 | `token` | Optional | Use this to set an MFA token. It can also be sourced from the `AWS_SESSION_TOKEN` environment variable. |
+
+## Centralize your configuration
+
+While you can create your AWS configurations locally, you also have the option to centralize your configurations using [Pulumi ESC (Environments, Secrets, and Configuration)](https://www.pulumi.com/docs/pulumi-cloud/esc/). Using this service will enable you to do things like run AWS CLI commands or run the `pulumi up` command with dynamically generated credentials, removing the need to configure and manage your credentials locally.
+
+To do this, you will need to complete the following steps:
+
+### Configure OIDC between Pulumi and AWS
+
+Refer to the [Configuring OpenID Connect for AWS Guide](https://www.pulumi.com/docs/pulumi-cloud/oidc/aws/) for the step-by-step process on how to do this.
+
+You can alternatively define your AWS region as an environment variable in your environment file:
+
+```yaml
+values:
+  aws:
+    login:
+      fn::open::aws-login:
+        oidc:
+          duration: 1h
+          roleArn: <your-oidc-iam-role-arn>
+          sessionName: pulumi-environments-session
+  environmentVariables:
+    AWS_ACCESS_KEY_ID: ${aws.login.accessKeyId}
+    AWS_SECRET_ACCESS_KEY: ${aws.login.secretAccessKey}
+    AWS_SESSION_TOKEN: ${aws.login.sessionToken}
+    AWS_REGION: <YOUR_AWS_REGION> # e.g.`ap-south-1`
+```
+
+### [Optional] Move Pulumi config to your ESC environment
+
+It was mentioned earlier in this guide that you can also set your AWS region as a [Pulumi configuration](https://www.pulumi.com/docs/concepts/config/) value in your project's stack settings file (`Pulumi.<stack-name>.yaml`). In addition to this, there may be other values that you have defined in this file, and these values can also be centralized using Pulumi ESC. To expose these values to Pulumi IaC, you will need to add a second-level key called `pulumiConfig` and nested any desired values underneath it as shown below.
+
+```yaml
+values:
+  aws:
+    login:
+      fn::open::aws-login:
+        oidc:
+          duration: 1h
+          roleArn: <your-oidc-iam-role-arn>
+          sessionName: pulumi-environments-session
+  environmentVariables:
+    AWS_ACCESS_KEY_ID: ${aws.login.accessKeyId}
+    AWS_SECRET_ACCESS_KEY: ${aws.login.secretAccessKey}
+    AWS_SESSION_TOKEN: ${aws.login.sessionToken}
+  pulumiConfig: # exposes Pulumi config values to the Pulumi CLI
+    aws:region: <YOUR_AWS_REGION> # e.g.`ap-south-1`
+```
+
+### Import your environment
+
+The last step is to update your project's stack settings file (`Pulumi.<stack-name>.yaml`) to import your ESC environment as shown below. Make sure to replace `<your-environment-name>` with the name of the ESC environment you created in the previous steps.
+
+```yaml
+environment:
+  - <your-environment-name>
+```
+
+You can test that your configuration is working by running the `pulumi up` command.
+
+{{< notes type="info" >}}
+Make sure that your local environment does not have AWS credentials configured before running this command. You can check by running something like the `aws s3 ls` command which should return the following:
+
+'Unable to locate credentials. You can configure credentials by running "aws configure".'
+{{< /notes >}}

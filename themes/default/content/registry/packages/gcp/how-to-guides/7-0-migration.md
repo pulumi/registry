@@ -46,19 +46,19 @@ To improve resource naming uniformity, we renamed the serviceAccount module to s
 
 ### Resources
 
-gcp:serviceAccount:Account -> [gcp:serviceaccount:Account](https://www.pulumi.com/registry/packages/gcp/api-docs/serviceaccount/account/)
-gcp:serviceAccount:IAMBinding -> [gcp:serviceaccount:IAMBinding](https://www.pulumi.com/registry/packages/gcp/api-docs/serviceaccount/iambinding/)
-gcp:serviceAccount:IAMPolicy -> [gcp:serviceaccount:IAMPolicy](https://www.pulumi.com/registry/packages/gcp/api-docs/serviceaccount/iampolicy/)
-gcp:serviceAccount:Key -> [gcp:serviceaccount:Key](https://www.pulumi.com/registry/packages/gcp/api-docs/serviceaccount/key/)
+- gcp:serviceAccount:Account -> [gcp:serviceaccount:Account](https://www.pulumi.com/registry/packages/gcp/api-docs/serviceaccount/account/)
+- gcp:serviceAccount:IAMBinding -> [gcp:serviceaccount:IAMBinding](https://www.pulumi.com/registry/packages/gcp/api-docs/serviceaccount/iambinding/)
+- gcp:serviceAccount:IAMPolicy -> [gcp:serviceaccount:IAMPolicy](https://www.pulumi.com/registry/packages/gcp/api-docs/serviceaccount/iampolicy/)
+- gcp:serviceAccount:Key -> [gcp:serviceaccount:Key](https://www.pulumi.com/registry/packages/gcp/api-docs/serviceaccount/key/)
 
 ### Functions
 
-gcp:serviceAccount:getAccount -> [gcp:serviceaccount:getAccount](https://www.pulumi.com/registry/packages/gcp/api-docs/serviceaccount/getaccount/)
-gcp:serviceAccount:getAccountAccessToken -> [gcp:serviceaccount:getAccountAccessToken](https://www.pulumi.com/registry/packages/gcp/api-docs/serviceaccount/getaccountaccesstoken/)
-gcp:serviceAccount:getAccountIdToken -> [gcp:serviceaccount:getAccountIdToken](https://www.pulumi.com/registry/packages/gcp/api-docs/serviceaccount/getaccountidtoken/)
-gcp:serviceAccount:getAccountJwt -> [gcp:serviceaccount:getAccountJwt](https://www.pulumi.com/registry/packages/gcp/api-docs/serviceaccount/getaccountjwt/)
-gcp:serviceAccount:getAccountKey -> [gcp:serviceaccount:getAccountKey](https://www.pulumi.com/registry/packages/gcp/api-docs/serviceaccount/getaccountkey/)
-gcp:serviceAccount:getIamPolicy -> [gcp:serviceaccount:getIamPolicy](https://www.pulumi.com/registry/packages/gcp/api-docs/serviceaccount/getiampolicy/)
+- gcp:serviceAccount:getAccount -> [gcp:serviceaccount:getAccount](https://www.pulumi.com/registry/packages/gcp/api-docs/serviceaccount/getaccount/)
+- gcp:serviceAccount:getAccountAccessToken -> [gcp:serviceaccount:getAccountAccessToken](https://www.pulumi.com/registry/packages/gcp/api-docs/serviceaccount/getaccountaccesstoken/)
+- gcp:serviceAccount:getAccountIdToken -> [gcp:serviceaccount:getAccountIdToken](https://www.pulumi.com/registry/packages/gcp/api-docs/serviceaccount/getaccountidtoken/)
+- gcp:serviceAccount:getAccountJwt -> [gcp:serviceaccount:getAccountJwt](https://www.pulumi.com/registry/packages/gcp/api-docs/serviceaccount/getaccountjwt/)
+- gcp:serviceAccount:getAccountKey -> [gcp:serviceaccount:getAccountKey](https://www.pulumi.com/registry/packages/gcp/api-docs/serviceaccount/getaccountkey/)
+- gcp:serviceAccount:getIamPolicy -> [gcp:serviceaccount:getIamPolicy](https://www.pulumi.com/registry/packages/gcp/api-docs/serviceaccount/getiampolicy/)
 
 ## Labels Rework
 

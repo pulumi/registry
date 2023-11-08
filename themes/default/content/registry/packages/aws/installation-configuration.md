@@ -217,7 +217,7 @@ To do this, you will need to complete the following steps:
 
 ### Configure OIDC between Pulumi and AWS
 
-Refer to the [Configuring OpenID Connect for AWS Guide](https://www.pulumi.com/docs/pulumi-cloud/oidc/aws/) for the step-by-step process on how to do this. Note that when adding your configuration to your environment file, you can also define your AWS region in the `environmentVariables` section:
+Refer to the [Configuring OpenID Connect for AWS Guide](/docs/pulumi-cloud/oidc/aws/) for the step-by-step process on how to do this. Note that when adding your configuration to your environment file, you can also define your AWS region in the `environmentVariables` section:
 
 ```yaml
 values:
@@ -237,7 +237,7 @@ values:
 
 ### [Optional] Move Pulumi config to your ESC environment
 
-It was mentioned earlier in this guide that you can also set your AWS region as a Pulumi configuration value in your project's stack settings file (`Pulumi.<stack-name>.yaml`). In addition to this, there may be other values that you have defined in this file, and these values can also be centralized using Pulumi ESC. To [expose these values to Pulumi IaC](https://www.pulumi.com/docs/pulumi-cloud/esc/environments/#projecting-pulumi-config), you will need to add a second-level key called `pulumiConfig` and nest any desired values underneath it as shown below:
+It was mentioned earlier in this guide that you can also set your AWS region as a Pulumi configuration value in your project's stack settings file (`Pulumi.<stack-name>.yaml`). In addition to this, there may be other values that you have defined in this file, and these values can also be centralized using Pulumi ESC. To [expose these values to Pulumi IaC](/docs/pulumi-cloud/esc/environments/#projecting-pulumi-config), you will need to add a second-level key called `pulumiConfig` and nest any desired values underneath it as shown below:
 
 ```yaml
 values:
@@ -256,7 +256,7 @@ values:
     aws:region: <YOUR_AWS_REGION> # e.g.`ap-south-1`
 ```
 
-Note that the configuration values under `pulumiConfig` can also be referenced directly from within your Pulumi program code. This is done using the same method to reference values from your project's stack settings file. You can see examples of how to do this in the [Accessing Configuration from Code](https://www.pulumi.com/docs/concepts/config/#code) section of the Pulumi documentation.
+Note that the configuration values under `pulumiConfig` can also be referenced directly from within your Pulumi program code. This is done using the same method to reference values from your project's stack settings file. You can see examples of how to do this in the [Accessing Configuration from Code](/docs/concepts/config/#code) section of the Pulumi documentation.
 
 ### Import your environment
 

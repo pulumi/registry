@@ -211,7 +211,7 @@ Use `pulumi config set aws:<option>` or pass options to the [constructor of `new
 
 ## Centralize your configuration
 
-While you can create your AWS configurations locally, you also have the option to centralize your configurations using [Pulumi ESC (Environments, Secrets, and Configuration)](https://www.pulumi.com/docs/pulumi-cloud/esc/). Using this service will enable you to do things like run AWS CLI commands or run the `pulumi up` command with dynamically generated credentials, removing the need to configure and manage your credentials locally.
+In addition to configuring the AWS provider locally, you also have the option to centralize your configurations using [Pulumi ESC (Environments, Secrets, and Configuration)](/docs/pulumi-cloud/esc/). Using this service will enable you to run AWS or Pulumi CLI commands with dynamically generated credentials, removing the need to configure and manage your credentials locally.
 
 To do this, you will need to complete the following steps:
 

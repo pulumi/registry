@@ -277,4 +277,4 @@ Make sure that your local environment does not have AWS credentials configured b
 'Unable to locate credentials. You can configure credentials by running "aws configure".'
 {{< /notes >}}
 
-To learn more about projecting environment variables in Pulumi ESC, refer to the [relevant documentation](https://www.pulumi.com/docs/pulumi-cloud/esc/environments/#projecting-environment-variables).
+To learn more about projecting environment variables in Pulumi ESC, refer to the [relevant Pulumi ESC documentation](/docs/pulumi-cloud/esc/environments/#projecting-environment-variables).

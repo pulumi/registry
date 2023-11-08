@@ -1,4 +1,9 @@
-# 6.x to 7.x Migration Guide
+---
+title: "GCP 7.0 Migration Guide"
+h1: "Migrating from GCP 6.x to 7.x"
+meta_desc: Practitioner level instructions for migrating from pulumi-gcp 6.x to 7.x.
+layout: package
+---
 
 ## Upstream Changes
 

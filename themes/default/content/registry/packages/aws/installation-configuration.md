@@ -240,6 +240,7 @@ values:
     aws:roleArn: 'arn:aws:iam::058111598222:role/OrganizationAccountAccessRole'
     aws:dynamodbEndpoint: 'dynamodb.us-east-2.amazonaws.com'
 ```
+
 {{< notes type="info" >}}
 The configuration values under `pulumiConfig` can also be referenced directly from within your Pulumi program code. This is done using the same method to reference values from your project's stack settings file. You can see examples of how to do this in the [Accessing Configuration from Code](/docs/concepts/config/#code) section of the Pulumi documentation.
 {{< /notes >}}

@@ -132,6 +132,102 @@ As an optional step, if you have multiple AWS profiles set up, you can specify a
 * Set `AWS_PROFILE` as an environment variable
 * After creating your project, run `pulumi config set aws-native:profile <profilename>`
 
+### Dynamically generate credentials
+
+In addition to configuring the AWS provider locally, you also have the option to centralize your configurations using [Pulumi ESC (Environments, Secrets, and Configuration)](/docs/pulumi-cloud/esc/). Using this service will enable you to run AWS or Pulumi CLI commands with dynamically generated credentials, removing the need to configure and manage your credentials locally.
+
+To do this, you will need to complete the following steps:
+
+#### Configure OIDC between Pulumi and AWS
+
+Refer to the [Configuring OpenID Connect for AWS Guide](/docs/pulumi-cloud/oidc/aws/) for the step-by-step process on how to do this. Note that when adding your configuration to your environment file, you can also define your AWS region in the `environmentVariables` section:
+
+```yaml
+values:
+  aws:
+    login:
+      fn::open::aws-login:
+        oidc:
+          duration: 1h
+          roleArn: <your-oidc-iam-role-arn>
+          sessionName: pulumi-environments-session
+  environmentVariables:
+    AWS_ACCESS_KEY_ID: ${aws.login.accessKeyId}
+    AWS_SECRET_ACCESS_KEY: ${aws.login.secretAccessKey}
+    AWS_SESSION_TOKEN: ${aws.login.sessionToken}
+    AWS_REGION: <YOUR_AWS_REGION> # e.g.`ap-south-1`
+```
+
+#### [Optional] Move Pulumi config to your ESC environment
+
+It was mentioned earlier in this guide that you can also set your AWS region as a Pulumi configuration value in your project's stack settings file (`Pulumi.<stack-name>.yaml`). In addition to this, there may be other values that you have defined in this file, and these values can also be centralized using Pulumi ESC. To [expose these values to Pulumi IaC](/docs/pulumi-cloud/esc/environments/#projecting-pulumi-config), you will need to add a second-level key called `pulumiConfig` and nest any desired values underneath it as shown below:
+
+```yaml
+values:
+  aws:
+    login:
+      fn::open::aws-login:
+        oidc:
+          duration: 1h
+          roleArn: <your-oidc-iam-role-arn>
+          sessionName: pulumi-environments-session
+  environmentVariables:
+    AWS_ACCESS_KEY_ID: ${aws.login.accessKeyId}
+    AWS_SECRET_ACCESS_KEY: ${aws.login.secretAccessKey}
+    AWS_SESSION_TOKEN: ${aws.login.sessionToken}
+    AWS_REGION: <YOUR_AWS_REGION>
+  pulumiConfig: # exposes Pulumi config values to the Pulumi CLI
+    project:environment: 'dev'
+    aws:roleArn: 'arn:aws:iam::058111598222:role/OrganizationAccountAccessRole'
+    aws:dynamodbEndpoint: 'dynamodb.us-east-2.amazonaws.com'
+```
+
+If your workflow does not require the exposure of environment variables, you can also define those variables under the `pulumiConfig` block so that they are scoped only to your `pulumi` run.
+
+```yaml
+values:
+  aws:
+    login:
+      fn::open::aws-login:
+        oidc:
+          duration: 1h
+          roleArn: <your-oidc-iam-role-arn>
+          sessionName: pulumi-environments-session
+  pulumiConfig: 
+    aws:region: <YOUR_AWS_REGION>
+    aws:accessKey: ${aws.login.accessKeyId}
+    aws:secretKey: ${aws.login.secretAccessKey}
+    aws:token: ${aws.login.sessionToken}
+    project:environment: 'dev'
+    aws:roleArn: 'arn:aws:iam::058111598222:role/OrganizationAccountAccessRole'
+    aws:dynamodbEndpoint: 'dynamodb.us-east-2.amazonaws.com'
+```
+
+{{< notes type="info" >}}
+The configuration values under `pulumiConfig` can also be referenced directly from within your Pulumi program code. This is done using the same method to reference values from your project's stack settings file. You can see examples of how to do this in the [Accessing Configuration from Code](/docs/concepts/config/#code) section of the Pulumi documentation.
+{{< /notes >}}
+
+#### Import your environment
+
+The last step is to update your project's stack settings file (`Pulumi.<stack-name>.yaml`) to import your ESC environment as shown below:
+
+```yaml
+environment:
+  - <your-environment-name>
+```
+
+Make sure to replace `<your-environment-name>` with the name of the ESC environment you created in the previous steps.
+
+You can test that your configuration is working by running the `pulumi preview` command. This will validate that your AWS resources can be deployed using the dynamically generated credentials in your environment file.
+
+{{< notes type="info" >}}
+Make sure that your local environment does not have AWS credentials configured before running this command. You can check by running something like the `aws s3 ls` command which should return the following:
+
+'Unable to locate credentials. You can configure credentials by running "aws configure".'
+{{< /notes >}}
+
+To learn more about projecting environment variables in Pulumi ESC, refer to the [relevant Pulumi ESC documentation](/docs/pulumi-cloud/esc/environments/#projecting-environment-variables).
+
 ## Configuration options
 
 {{% notes type="info" %}}

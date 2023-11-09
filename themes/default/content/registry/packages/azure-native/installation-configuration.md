@@ -151,14 +151,14 @@ values:
         subscriptionId: <your-subscription-id>
         oidc: true
   pulumiConfig:
-    azure:useOidc: 'true'
-    azure:environment: <your-environment>
-    azure:clientId: ${azure.login.clientId}
-    azure:tenantId: ${azure.login.tenantId}
-    azure:subscriptionId: ${azure.login.subscriptionId}
-    azure:oidcRequestToken: ${azure.login.oidc.token}
-    azure:oidcToken: ${azure.login.oidc.token}
-    azure:oidcRequestUrl: https://api.pulumi.com/oidc
+    azure-native:useOidc: 'true'
+    azure-native:environment: <your-environment>
+    azure-native:clientId: ${azure.login.clientId}
+    azure-native:tenantId: ${azure.login.tenantId}
+    azure-native:subscriptionId: ${azure.login.subscriptionId}
+    azure-native:oidcRequestToken: ${azure.login.oidc.token}
+    azure-native:oidcToken: ${azure.login.oidc.token}
+    azure-native:oidcRequestUrl: https://api.pulumi.com/oidc
 ```
 
 This will ensure that those values are scoped only to your `pulumi` run.

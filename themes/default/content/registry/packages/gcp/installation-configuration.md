@@ -104,7 +104,7 @@ values:
 Your GCP access token must always be defined under the `pulumiConfig` section. The deployment will fail if it is defined as an environment variable in the `environmentVariables` section.
 {{< /notes >}}
 
-To [expose these values to Pulumi IaC](/docs/pulumi-cloud/esc/environments/#projecting-pulumi-config), you will need to add any desired values underneath the `pulumiConfig` key. Further, if your workflow does not require the exposure of environment variables, you can also define those variables under the `pulumiConfig` block as shown below:
+To [expose these values to Pulumi IaC](/docs/pulumi-cloud/esc/environments/#using-environments-with-pulumi-iac), you will need to add any desired values underneath the `pulumiConfig` key. Further, if your workflow does not require the exposure of environment variables, you can also define those variables under the `pulumiConfig` block as shown below:
 
 ```yaml
 values:

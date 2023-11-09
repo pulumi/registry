@@ -134,7 +134,7 @@ As an optional step, if you have multiple AWS profiles set up, you can specify a
 
 ### Dynamically generate credentials
 
-In addition to configuring the AWS provider locally, you also have the option to centralize your configurations using [Pulumi ESC (Environments, Secrets, and Configuration)](/docs/pulumi-cloud/esc/). Using this service will enable you to run AWS or Pulumi CLI commands with dynamically generated credentials, removing the need to configure and manage your credentials locally.
+In addition to configuring the AWS Native provider locally, you also have the option to centralize your configurations using [Pulumi ESC (Environments, Secrets, and Configuration)](/docs/pulumi-cloud/esc/). Using this service will enable you to run AWS or Pulumi CLI commands with dynamically generated credentials, removing the need to configure and manage your credentials locally.
 
 To do this, you will need to complete the following steps:
 
@@ -160,7 +160,7 @@ values:
 
 #### [Optional] Move Pulumi config to your ESC environment
 
-It was mentioned earlier in this guide that you can also set your AWS region as a Pulumi configuration value in your project's stack settings file (`Pulumi.<stack-name>.yaml`). In addition to this, there may be other values that you have defined in this file, and these values can also be centralized using Pulumi ESC. To [expose these values to Pulumi IaC](/docs/pulumi-cloud/esc/environments/#projecting-pulumi-config), you will need to add a second-level key called `pulumiConfig` and nest any desired values underneath it as shown below:
+It was mentioned earlier in this guide that you can also set your AWS region as a Pulumi configuration value in your project's stack settings file (`Pulumi.<stack-name>.yaml`). In addition to this, there may be other values that you have defined in this file, and these values can also be centralized using Pulumi ESC. To [expose these values to Pulumi IaC](/docs/pulumi-cloud/esc/environments/#using-environments-with-pulumi-iac), you will need to add a second-level key called `pulumiConfig` and nest any desired values underneath it as shown below:
 
 ```yaml
 values:

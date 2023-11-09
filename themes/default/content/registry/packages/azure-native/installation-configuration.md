@@ -104,7 +104,7 @@ they match your setup, e.g., the type "branch" and the correct branch name if CI
 
 #### OIDC Dynamic Credentials with Pulumi ESC
 
-In addition to configuring the Azure provider locally, you also have the option to centralize your configurations using [Pulumi ESC (Environments, Secrets, and Configuration)](/docs/pulumi-cloud/esc/). Using this service will enable you to run Pulumi CLI commands with dynamically generated credentials, removing the need to configure and manage your credentials locally.
+In addition to configuring the Azure Native provider locally, you also have the option to centralize your configurations using [Pulumi ESC (Environments, Secrets, and Configuration)](/docs/pulumi-cloud/esc/). Using this service will enable you to run Pulumi CLI commands with dynamically generated credentials, removing the need to configure and manage your credentials locally.
 
 To do this, you will need to complete the following steps:
 
@@ -139,7 +139,7 @@ values:
 To learn more about projecting environment variables in Pulumi ESC, refer to the [relevant Pulumi ESC documentation](/docs/pulumi-cloud/esc/environments/#projecting-environment-variables).
 {{< /notes >}}
 
-To [expose configuration values to Pulumi IaC](/docs/pulumi-cloud/esc/environments/#projecting-pulumi-config), you will need to add a second-level key named `pulumiConfig` and define your desired values underneath it. Further, if your workflow does not require the exposure of environment variables, you can also define those variables under the `pulumiConfig` block as shown below:
+To [expose configuration values to Pulumi IaC](/docs/pulumi-cloud/esc/environments/#using-environments-with-pulumi-iac), you will need to add a second-level key named `pulumiConfig` and define your desired values underneath it. Further, if your workflow does not require the exposure of environment variables, you can also define those variables under the `pulumiConfig` block as shown below:
 
 ```yaml
 values:

@@ -154,6 +154,7 @@ values:
         oidc: true
   pulumiConfig:
     azure:useOidc: 'true'
+    azure:location: WestUS2
     azure:environment: <your-environment>
     azure:clientId: ${azure.login.clientId}
     azure:tenantId: ${azure.login.tenantId}

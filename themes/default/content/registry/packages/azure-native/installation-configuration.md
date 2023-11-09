@@ -152,6 +152,7 @@ values:
         oidc: true
   pulumiConfig:
     azure-native:useOidc: 'true'
+    azure:useOidc: 'true'
     azure-native:environment: <your-environment>
     azure-native:clientId: ${azure.login.clientId}
     azure-native:tenantId: ${azure.login.tenantId}
@@ -309,6 +310,7 @@ Use `pulumi config set azure-native:<option>` or pass options to the [constructo
 | `clientId` | Optional | The client ID to use for OIDC or Service Principal authentication. It can also be sourced from the `ARM_CLIENT_ID` environment variable. |
 | `clientSecret` | Optional | The client secret to use for Service Principal authentication. It can also be sourced from the `ARM_CLIENT_SECRET` environment variable. |
 | `msiEndpoint` | Optional | The REST endpoint to retrieve an MSI token from. Pulumi will attempt to discover this automatically but it can be specified manually here. It can also be sourced from the `ARM_MSI_ENDPOINT` environment variable. |
+| `oidcToken` | Optional | The token to exchange for OIDC authentication. It can also be sourced from the `ARM_OIDC_TOKEN` environment variable. |
 | `oidcRequestToken` | Optional | The token to exchange for OIDC authentication. It can also be sourced from the `ARM_OIDC_REQUEST_TOKEN` environment variable. |
 | `oidcRequestUrl` | Optional | The token exchange URL for OIDC authentication. It can also be sourced from the `ARM_OIDC_REQUEST_URL` environment variable. |
 | `skipCredentialsValidation` | Optional | Prevents the provider from validating the given credentials. When set to true, `skip_provider_registration` is assumed. It can also be sourced from the `ARM_SKIP_CREDENTIALS_VALIDATION` environment variable; defaults to `false`. |

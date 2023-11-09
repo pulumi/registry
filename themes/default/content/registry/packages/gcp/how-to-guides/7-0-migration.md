@@ -69,7 +69,7 @@ Resources that previously contained a single `labels`  field will now contain th
 - The output-only `pulumiLabels` field merges the labels defined in the resource's labels field and the global `defaultLabels`. If the same label key exists on both the resource level and provider level, the value on the resource will override the provider-level default.
 - The output-only `effectiveLabels` will list all the labels present on the resource in GCP, including labels configured through Pulumi.
 
-Note: `defaultLabels` do not support Secrets at this time. Any `defaultLabels` values marked as `Secret` will be written to the state file in plaintext.
+Note: Both `pulumiLabels` and `effectiveLabels` fields are set to `Secret` to avoid leaking any `labels` or `defaultLabels` marked as `Secret` by the user. 
 
 Due to the two new output fields, a resource that has a `labels` field may show a diff when upgrading from pulumi-gcp v6 to v7. This diff reflects adding the new resource Output fields and is safe to do.
 

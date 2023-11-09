@@ -47,7 +47,7 @@ environment:
 
 Make sure to replace `<your-environment-name>` with the name of the ESC environment you created in the previous steps.
 
-You can test that your configuration is working by running the `pulumi preview` command. This will validate that your AWS resources can be deployed using the dynamically generated credentials in your environment file.
+You can test that your configuration is working by running the `pulumi preview` command. This will validate that your GCP resources can be deployed using the dynamically generated credentials in your environment file.
 
 {{< notes type="info" >}}
 Make sure that your local environment does not have GCP credentials configured before running this command. You can logout by running the `gcloud auth revoke` command.

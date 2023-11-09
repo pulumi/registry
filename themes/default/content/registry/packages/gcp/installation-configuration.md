@@ -26,6 +26,35 @@ To provision resources with the Pulumi Google Cloud Provider, you need to have G
 
 If you are using Pulumi in a non-interactive setting (such as a CI/CD system) you will need to [configure and use a service account](/registry/packages/gcp/service-account) instead.
 
+### Dynamically generate credentials
+
+In addition to configuring the GCP provider locally, you also have the option to centralize your configurations using [Pulumi ESC (Environments, Secrets, and Configuration)](/docs/pulumi-cloud/esc/). Using this service will enable you to run Pulumi CLI commands with dynamically generated credentials, removing the need to configure and manage your credentials locally.
+
+To do this, you will need to complete the following steps:
+
+#### Configure OIDC between Pulumi and GCP
+
+Refer to the [Configuring OpenID Connect for GCP Guide](/docs/pulumi-cloud/oidc/gcp/) for the step-by-step process on how to do this.
+
+#### Import your environment
+
+The last step is to update your project's stack settings file (`Pulumi.<stack-name>.yaml`) to import your ESC environment as shown below:
+
+```yaml
+environment:
+  - <your-environment-name>
+```
+
+Make sure to replace `<your-environment-name>` with the name of the ESC environment you created in the previous steps.
+
+You can test that your configuration is working by running the `pulumi preview` command. This will validate that your GCP resources can be deployed using the dynamically generated credentials in your environment file.
+
+{{< notes type="info" >}}
+Make sure that your local environment does not have GCP credentials configured before running this command. You can logout by running the `gcloud auth revoke` command.
+{{< /notes >}}
+
+To learn more about projecting environment variables in Pulumi ESC, refer to the [relevant Pulumi ESC documentation](/docs/pulumi-cloud/esc/environments/#projecting-environment-variables).
+
 ## Configuration
 
 There are a few different ways you can configure GCP credentials to work with Pulumi.
@@ -48,6 +77,58 @@ For example:
 * `GOOGLE_PROJECT` - The default project for new resources, if one is not specified when creating a resource
 * `GOOGLE_REGION` - The default region for new resources, if one is not specified when creating a resource
 * `GOOGLE_ZONE` - The default zone for new resources, if one is not specified when creating a resource.
+
+### Set configuration using Pulumi ESC
+
+You can create centralized configuration using Pulumi ESC. Once you have [configured this service](#dynamically-generate-credentials) for use with GCP, you can define and expose environment variables as shown below:
+
+```yaml
+values:
+  gcp:
+    login:
+      fn::open::gcp-login:
+        project: <your-project-id>
+        oidc:
+          workloadPoolId: <your-pool-id>
+          providerId: <your-provider-id>
+          serviceAccount: <your-service-account>
+  pulumiConfig:
+    gcp:accessToken: ${gcp.login.accessToken}
+  environmentVariables:
+    GOOGLE_PROJECT: ${gcp.login.project}
+    GOOGLE_REGION: <your-region>
+    GOOGLE_ZONE: <your-zone>
+```
+
+{{< notes type="warning" >}}
+Your GCP access token must always be defined under the `pulumiConfig` section. The deployment will fail if it is defined as an environment variable in the `environmentVariables` section.
+{{< /notes >}}
+
+To [expose these values to Pulumi IaC](/docs/pulumi-cloud/esc/environments/#using-environments-with-pulumi-iac), you will need to add any desired values underneath the `pulumiConfig` key. Further, if your workflow does not require the exposure of environment variables, you can also define those variables under the `pulumiConfig` block as shown below:
+
+```yaml
+values:
+  gcp:
+    login:
+      fn::open::gcp-login:
+        project: <your-project-id>
+        oidc:
+          workloadPoolId: <your-pool-id>
+          providerId: <your-provider-id>
+          serviceAccount: <your-service-account>
+  pulumiConfig:
+    project:environment: 'dev'
+    gcp:accessToken: ${gcp.login.accessToken}
+    gcp:project: ${gcp.login.project}
+    gcp:region: <your-region>
+    gcp:zone: <your-zone>
+```
+
+This will ensure that those values are scoped only to your `pulumi` run.
+
+{{< notes type="info" >}}
+The configuration values under `pulumiConfig` can also be referenced directly from within your Pulumi program code. This is done using the same method to reference values from your project's stack settings file. You can see examples of how to do this in the [Accessing Configuration from Code](/docs/concepts/config/#code) section of the Pulumi documentation.
+{{< /notes >}}
 
 ## Configuration reference
 

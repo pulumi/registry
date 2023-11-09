@@ -102,6 +102,89 @@ to a configuration issue with the _entity type_ and _environment name_ described
 they match your setup, e.g., the type "branch" and the correct branch name if CI runs against a fixed branch.
 {{% /notes %}}
 
+#### OIDC Dynamic Credentials with Pulumi ESC
+
+In addition to configuring the Azure Native provider locally, you also have the option to centralize your configurations using [Pulumi ESC (Environments, Secrets, and Configuration)](/docs/pulumi-cloud/esc/). Using this service will enable you to run Pulumi CLI commands with dynamically generated credentials, removing the need to configure and manage your credentials locally.
+
+To do this, you will need to complete the following steps:
+
+##### Configure OIDC between Pulumi and Azure
+
+Refer to the [Configuring OpenID Connect for Azure Guide](/docs/pulumi-cloud/oidc/azure/) for the step-by-step process on how to do this.
+
+##### [Optional] Move Pulumi config to your ESC environment
+
+With Pulumi ESC, you can define and expose environment variables as shown below:
+
+```yaml
+values:
+  azure:
+    login:
+      fn::open::azure-login:
+        clientId: <your-client-id>
+        tenantId: <your-tenant-id>
+        subscriptionId: <your-subscription-id>
+        oidc: true
+  environmentVariables:
+    ARM_USE_OIDC: 'true'
+    ARM_CLIENT_ID: ${azure.login.clientId}
+    ARM_TENANT_ID: ${azure.login.tenantId}
+    ARM_OIDC_REQUEST_TOKEN: ${azure.login.oidc.token}
+    ARM_OIDC_TOKEN: ${azure.login.oidc.token}
+    ARM_SUBSCRIPTION_ID: ${azure.login.subscriptionId}
+    ARM_OIDC_REQUEST_URL: https://api.pulumi.com/oidc
+```
+
+{{< notes type="info" >}}
+To learn more about projecting environment variables in Pulumi ESC, refer to the [relevant Pulumi ESC documentation](/docs/pulumi-cloud/esc/environments/#projecting-environment-variables).
+{{< /notes >}}
+
+To [expose configuration values to Pulumi IaC](/docs/pulumi-cloud/esc/environments/#using-environments-with-pulumi-iac), you will need to add a second-level key named `pulumiConfig` and define your desired values underneath it. Further, if your workflow does not require the exposure of environment variables, you can also define those variables under the `pulumiConfig` block as shown below:
+
+```yaml
+values:
+  azure:
+    login:
+      fn::open::azure-login:
+        clientId: <your-client-id>
+        tenantId: <your-tenant-id>
+        subscriptionId: <your-subscription-id>
+        oidc: true
+  pulumiConfig:
+    azure-native:useOidc: 'true'
+    azure:useOidc: 'true'
+    azure-native:environment: <your-environment>
+    azure-native:clientId: ${azure.login.clientId}
+    azure-native:tenantId: ${azure.login.tenantId}
+    azure-native:subscriptionId: ${azure.login.subscriptionId}
+    azure-native:oidcRequestToken: ${azure.login.oidc.token}
+    azure-native:oidcToken: ${azure.login.oidc.token}
+    azure-native:oidcRequestUrl: https://api.pulumi.com/oidc
+```
+
+This will ensure that those values are scoped only to your `pulumi` run.
+
+{{< notes type="info" >}}
+The configuration values under `pulumiConfig` can also be referenced directly from within your Pulumi program code. This is done using the same method to reference values from your project's stack settings file. You can see examples of how to do this in the [Accessing Configuration from Code](/docs/concepts/config/#code) section of the Pulumi documentation.
+{{< /notes >}}
+
+##### Import your environment
+
+The last step is to update your project's stack settings file (`Pulumi.<stack-name>.yaml`) to import your ESC environment as shown below:
+
+```yaml
+environment:
+  - <your-environment-name>
+```
+
+Make sure to replace `<your-environment-name>` with the name of the ESC environment you created in the previous steps.
+
+You can test that your configuration is working by running the `pulumi preview` command. This will validate that your Azure resources can be deployed using the dynamically generated credentials in your environment file.
+
+{{< notes type="info" >}}
+Make sure that your local environment does not have Azure credentials configured before running this command. You can logout by running the `az logout` command.
+{{< /notes >}}
+
 ### Authenticate using a Service Principal
 
 A Service Principal is an application in Azure Active Directory with a client ID and a tenant ID, exactly like the one
@@ -227,6 +310,7 @@ Use `pulumi config set azure-native:<option>` or pass options to the [constructo
 | `clientId` | Optional | The client ID to use for OIDC or Service Principal authentication. It can also be sourced from the `ARM_CLIENT_ID` environment variable. |
 | `clientSecret` | Optional | The client secret to use for Service Principal authentication. It can also be sourced from the `ARM_CLIENT_SECRET` environment variable. |
 | `msiEndpoint` | Optional | The REST endpoint to retrieve an MSI token from. Pulumi will attempt to discover this automatically but it can be specified manually here. It can also be sourced from the `ARM_MSI_ENDPOINT` environment variable. |
+| `oidcToken` | Optional | The token to exchange for OIDC authentication. It can also be sourced from the `ARM_OIDC_TOKEN` environment variable. |
 | `oidcRequestToken` | Optional | The token to exchange for OIDC authentication. It can also be sourced from the `ARM_OIDC_REQUEST_TOKEN` environment variable. |
 | `oidcRequestUrl` | Optional | The token exchange URL for OIDC authentication. It can also be sourced from the `ARM_OIDC_REQUEST_URL` environment variable. |
 | `skipCredentialsValidation` | Optional | Prevents the provider from validating the given credentials. When set to true, `skip_provider_registration` is assumed. It can also be sourced from the `ARM_SKIP_CREDENTIALS_VALIDATION` environment variable; defaults to `false`. |

@@ -13,47 +13,37 @@ The Google Cloud Native provider is available as a package in all Pulumi languag
 * Go: [`github.com/pulumi/pulumi-google-native/sdk/go/google`](https://github.com/pulumi/pulumi-google-native)
 * .NET: [`Pulumi.GoogleNative`](https://www.nuget.org/packages/Pulumi.GoogleNative)
 
+## Authentication Methods
+
+To provision resources with the Pulumi Google Cloud Native Provider, you need to have Google credentials.
+
+Pulumi can authenticate to Google Cloud via several methods:
+
+- Google Cloud CLI
+- OpenID Connect (OIDC)
+- Service account
+
 ## Configuration
 
-To provision resources with the Pulumi Google Cloud Provider, you need to have Google credentials.
+There are a few different ways you can configure your Google Cloud credentials to work with Pulumi.
+
+### Authenticate using the CLI
 
 {{% configure-gcp type="google-native" %}}
 
-{{% notes "info" %}}
-If you are using Pulumi in an non-interactive setting (such as a CI/CD system) you will need to [configure and use a service account](/registry/packages/gcp/service-account) instead.
-{{% /notes %}}
+### Authenticate using a service account
 
-### Configuration Options
+If you are using Pulumi in an non-interactive setting (such as a CI/CD system) you will need to [configure and use a service account](/registry/packages/google-native/api-docs/iam/v1/serviceaccount/) instead.
 
-Use `pulumi config set google-native:<option>` or pass options to the [constructor of `new Provider`](/registry/packages/google-native/api-docs/provider).
+### Authenticate with dynamically generated credentials
 
-| Option  Required? | Description |
-| - | - | - |
-| `project` | Optional | The default project for new resources, if one is not specified when creating a resource. This can also be specified using any of the following environment variables (listed in order of precedence): `GOOGLE_PROJECT`, `GOOGLE_CLOUD_PROJECT`, `GCLOUD_PROJECT`, `CLOUDSDK_CORE_PROJECT`. |
-| `region` | Optional | The region to operate under, if not specified by a given resource. This can also be specified using any of the following environment variables (listed in order of precedence): `GOOGLE_REGION`, `GCLOUD_REGION`, `CLOUDSDK_COMPUTE_REGION`. |
-| `zone` | Optional | The zone to operate under, if not specified by a given resource.  This can also be specified using any of the following environment variables (listed in order of precedence): `GOOGLE_ZONE`, `GCLOUD_ZONE`, `CLOUDSDK_COMPUTE_ZONE`. |
-
-### Use environment variables
-
-We recommend using `pulumi config` for the options above, but you can also set many of the options above as environment variables instead.
-
-* `GOOGLE_PROJECT` - The default project for new resources, if one is not specified when creating a resource
-* `GOOGLE_REGION` - The default region for new resources, if one is not specified when creating a resource
-* `GOOGLE_ZONE` - The default zone for new resources, if one is not specified when creating a resource.
-
-### Dynamically generate credentials
-
-In addition to configuring the Google Native provider locally, you also have the option to centralize your configurations using [Pulumi ESC (Environments, Secrets, and Configuration)](/docs/pulumi-cloud/esc/). Using this service will enable you to run Pulumi CLI commands with dynamically generated credentials, removing the need to configure and manage your credentials locally.
+In addition to configuring the Google Cloud Native provider locally, you also have the option to centralize your configurations using [Pulumi ESC (Environments, Secrets, and Configuration)](/docs/pulumi-cloud/esc/). Using this service will enable you to run Pulumi CLI commands with dynamically generated credentials, removing the need to configure and manage your credentials locally.
 
 To do this, you will need to complete the following steps:
 
 #### Configure OIDC between Pulumi and GCP
 
-Refer to the [Configuring OpenID Connect for GCP Guide](/docs/pulumi-cloud/oidc/gcp/) for the step-by-step process on how to do this.
-
-### [Optional] Move Pulumi config to your ESC environment
-
-You can centralize your Pulumi configuration using Pulumi ESC. You can define and expose environment variables as shown below:
+Refer to the [Configuring OpenID Connect for GCP Guide](/docs/pulumi-cloud/oidc/gcp/) for the step-by-step process on how to do this. Once you have completed these steps, you can define and expose environment variables as shown below:
 
 ```yaml
 values:
@@ -77,7 +67,7 @@ values:
 Your GCP access token must always be defined under the `pulumiConfig` section. The deployment will fail if it is defined as an environment variable in the `environmentVariables` section.
 {{< /notes >}}
 
-To [expose configuration values to Pulumi IaC](/docs/pulumi-cloud/esc/environments/#using-environments-with-pulumi-iac), you will need to add any desired values underneath the `pulumiConfig` key. Further, if your workflow does not require the exposure of environment variables, you can also define those variables under the `pulumiConfig` block as shown below:
+To [expose these values to Pulumi IaC](/docs/pulumi-cloud/esc/environments/#using-environments-with-pulumi-iac), you will need to add any desired values underneath the `pulumiConfig` key. Further, if your workflow does not require the exposure of environment variables, you can also define those variables under the `pulumiConfig` block as shown below:
 
 ```yaml
 values:
@@ -121,3 +111,13 @@ Make sure that your local environment does not have GCP credentials configured b
 {{< /notes >}}
 
 To learn more about projecting environment variables in Pulumi ESC, refer to the [relevant Pulumi ESC documentation](/docs/pulumi-cloud/esc/environments/#projecting-environment-variables).
+
+### Configuration options
+
+Use `pulumi config set google-native:<option>` or pass options to the [constructor of `new Provider`](/registry/packages/google-native/api-docs/provider).
+
+| Option  Required? | Description |
+| - | - | - |
+| `project` | Optional | The default project for new resources, if one is not specified when creating a resource. This can also be specified using any of the following environment variables (listed in order of precedence): `GOOGLE_PROJECT`, `GOOGLE_CLOUD_PROJECT`, `GCLOUD_PROJECT`, `CLOUDSDK_CORE_PROJECT`. |
+| `region` | Optional | The region to operate under, if not specified by a given resource. This can also be specified using any of the following environment variables (listed in order of precedence): `GOOGLE_REGION`, `GCLOUD_REGION`, `CLOUDSDK_COMPUTE_REGION`. |
+| `zone` | Optional | The zone to operate under, if not specified by a given resource.  This can also be specified using any of the following environment variables (listed in order of precedence): `GOOGLE_ZONE`, `GCLOUD_ZONE`, `CLOUDSDK_COMPUTE_ZONE`. |

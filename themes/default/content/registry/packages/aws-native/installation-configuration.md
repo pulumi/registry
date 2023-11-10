@@ -33,6 +33,10 @@ Your AWS credentials are never sent to pulumi.com. Pulumi uses the AWS SDK and t
 
 There are a few different ways you can configure your AWS credentials to work with Pulumi.
 
+{{% notes "info" %}}
+Authenticating via EC2 instance metadata is not currently supported for the AWS Native provider.
+{{% /notes %}}
+
 ### Set credentials as environment variables
 
 We recommend using a shared credentials file for most development. However, if you need to [temporarily override your credentials file](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html#cli-configure-quickstart-precedence), you can use environment variables. You can do this to quickly switch to a different access key or to configure AWS access from within an environment that might not have an AWS CLI, such as a continuous integration/continuous delivery (CI/CD) system.

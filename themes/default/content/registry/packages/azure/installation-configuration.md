@@ -23,12 +23,12 @@ The Azure Classic provider is available as a package in all Pulumi languages:
 
 Pulumi can authenticate to Azure via several methods:
 - Azure CLI
-- Service Principal with a client secret or certificate
 - OpenID Connect (OIDC)
+- Service Principal with a client secret or certificate
 - Managed Service Identity (MSI)
 
 If you're running the Pulumi CLI locally, in a developer scenario, we recommend using the Azure CLI.  For team
-environments, particularly in CI, one of the other options is strongly recommended.
+environments, particularly in Continuous Integration, one of the other options is strongly recommended.
 
 {{% notes type="info" %}}
 Authenticating using the CLI will not work for Service Principal logins (e.g.,

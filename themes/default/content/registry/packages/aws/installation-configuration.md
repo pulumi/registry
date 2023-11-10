@@ -33,8 +33,9 @@ There are a few different ways you can configure your AWS credentials to work wi
 
 ### Set credentials as environment variables
 
-You can authenticate using environment variables.
-Doing so will [temporarily override the settings in your credentials file](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html#cli-configure-quickstart-precedence).
+We recommend using a shared credentials file for most development. However, if you need to [temporarily override your credentials file](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html#cli-configure-quickstart-precedence), you can use environment variables. You can do this to quickly switch to a different access key or to configure AWS access from within an environment that might not have an AWS CLI, such as a continuous integration/continuous delivery (CI/CD) system.
+
+To authenticate using environment variables, set them in your terminal:
 
 {{< chooser os "linux,macos,windows" >}}
 {{% choosable os linux %}}
@@ -74,21 +75,28 @@ You may alternatively set the AWS region in your `Pulumi.<stack-name>.yaml` file
 $ pulumi config set aws:region <your-region> # e.g.`ap-south-1`
 ```
 
-### Create a shared credentials file using the AWS CLI
+### Create a shared credentials file
 
-1. [Install the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/installing.html)
+A credentials file is a plaintext file on your machine that contains your access keys. The file must be named `credentials` and is located underneath `.aws/` directory in your home directory.  We recommend this approach because it supports Amazon's recommended approach for securely managing multiple roles.
 
-2. Configure your [AWS credentials](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html#cli-configure-quickstart-config).
+#### Option 1: Use the CLI
 
-    ```bash
-    $ aws configure
-    AWS Access Key ID [None]: <YOUR_ACCESS_KEY_ID>
-    AWS Secret Access Key [None]: <YOUR_SECRET_ACCESS_KEY>
-    Default region name [None]: <YOUR_AWS_REGION>
-    Default output format [None]:
-    ```
+To create this file using the CLI, [install the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/installing.html). If you're using
+[Homebrew](https://brew.sh/) on macOS, you can use the community-managed [awscli](http://formulae.brew.sh/formula/awscli) via `brew install awscli`.
 
-Your AWS credentials file is now located in your home directory at `.aws/credentials`.
+After installing the CLI, configure it with your IAM credentials, typically using the `aws configure` command. For other configuration options, see the AWS article [Configuring the AWS CLI][configure-aws-cli].
+
+```bash
+$ aws configure
+AWS Access Key ID [None]: <YOUR_ACCESS_KEY_ID>
+AWS Secret Access Key [None]: <YOUR_SECRET_ACCESS_KEY>
+Default region name [None]:
+Default output format [None]:
+```
+
+Now you've created the `~/.aws/credentials` file and populated it with the expected settings.
+
+#### Option 2: Create by hand
 
 You can also create the shared credentials file by hand.  For example:
 
@@ -98,9 +106,28 @@ aws_access_key_id = <YOUR_ACCESS_KEY_ID>
 aws_secret_access_key = <YOUR_SECRET_ACCESS_KEY>
 ```
 
+If you want to specify multiple profiles, those are listed in different sections:
+
+```ini
+[default]
+aws_access_key_id = <YOUR_DEFAULT_ACCESS_KEY_ID>
+aws_secret_access_key = <YOUR_DEFAULT_SECRET_ACCESS_KEY>
+
+[test-account]
+aws_access_key_id = <YOUR_TEST_ACCESS_KEY_ID>
+aws_secret_access_key = <YOUR_TEST_SECRET_ACCESS_KEY>
+
+[prod-account]
+aws_access_key_id = <YOUR_PROD_ACCESS_KEY_ID>
+aws_secret_access_key = <YOUR_PROD_SECRET_ACCESS_KEY>
+```
+
+In this case, you will need to set the `AWS_PROFILE` environment variable to the name of the profile to use.
+
 ### Set up multiple profiles
 
-As an optional step, you can [set up multiple profiles](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html#cli-configure-quickstart-profiles)
+As an optional step, you can [set up multiple profiles](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html#cli-configure-quickstart-profiles).
+
 Here’s what that looks like in your ~/.aws/credentials file:
 
 ```ini

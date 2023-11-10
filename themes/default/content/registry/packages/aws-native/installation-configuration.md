@@ -22,24 +22,63 @@ The AWS Native provider is available as a package in all Pulumi languages:
 * .NET: [`Pulumi.AwsNative`](https://www.nuget.org/packages/Pulumi.AwsNative)
 * Java: [`com.pulumi.awsnative`](https://search.maven.org/search?q=com.pulumi.aws-native)
 
-## Setup
+## Credentials
 
-To provision resources with the Pulumi AWS provider, you need to have AWS credentials. You can use the instructions on if you plan to use AWS credentials from a shared credentials file (which the AWS CLI usually manages for you) or from an environment variable. For other credential options, see the [AWS documentation](https://docs.aws.amazon.com/sdk-for-go/v1/developer-guide/configuring-sdk.html).
+To provision resources with the Pulumi AWS provider, you need to have AWS credentials. To do so:
 
-Your AWS credentials are never sent to pulumi.com. Pulumi uses the AWS SDK and the credentials in your environment to authenticate requests from your computer to AWS.
-
-### Get your credentials
-
-First, make sure you have an IAM user in [the AWS console][iam-user-console] with **Programmatic access** and ensure it has sufficient permissions to deploy and manage your program's resources. If you know the precise resource types you wish to create and delete, we recommend restrciting your IAM user's access to just those types.
-
-You'll also need [an access key][iam-manage-keys] for your user. There are two parts to each key, which you'll see in the IAM console after you create it:
-
-* `<YOUR_ACCESS_KEY_ID>`: your access key's ID
-* `<YOUR_SECRET_ACCESS_KEY>`: your access key's secret
+1. [Create an IAM user in the AWS console](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html#id_users_create_console) with programmatic access and ensure it has sufficient permissions to deploy and manage your Pulumi program’s resources.
+2. [Set up AWS credentials](https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys) for your user.
 
 {{% notes "info" %}}
 If you are using [temporary security credentials](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_temp_use-resources.html), you will also have to supply an `AWS_SESSION_TOKEN` value before you can use Pulumi to create resources on your behalf.
 {{% /notes %}}
+
+Your AWS credentials are never sent to pulumi.com. Pulumi uses the AWS SDK and the credentials in your environment to authenticate requests from your computer to AWS.
+
+## Configuration
+
+There are a few different ways you can configure your AWS credentials to work with Pulumi.
+
+### Set credentials as environment variables
+
+We recommend using a shared credentials file for most development. However, if you need to [temporarily override your credentials file](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html#cli-configure-quickstart-precedence), you can use environment variables. You can do this to quickly switch to a different access key or to configure AWS access from within an environment that might not have an AWS CLI, such as a continuous integration/continuous delivery (CI/CD) system.
+
+To authenticate using environment variables, set them in your terminal:
+
+{{< chooser os "linux,macos,windows" >}}
+{{% choosable os linux %}}
+
+```bash
+$ export AWS_ACCESS_KEY_ID=<YOUR_ACCESS_KEY_ID>
+$ export AWS_SECRET_ACCESS_KEY=<YOUR_SECRET_ACCESS_KEY>
+```
+
+{{% /choosable %}}
+
+{{% choosable os macos %}}
+
+```bash
+$ export AWS_ACCESS_KEY_ID=<YOUR_ACCESS_KEY_ID>
+$ export AWS_SECRET_ACCESS_KEY=<YOUR_SECRET_ACCESS_KEY>
+```
+
+{{% /choosable %}}
+
+{{% choosable os windows %}}
+
+```powershell
+> $env:AWS_ACCESS_KEY_ID = "<YOUR_ACCESS_KEY_ID>"
+> $env:AWS_SECRET_ACCESS_KEY = "<YOUR_SECRET_ACCESS_KEY>"
+```
+
+{{% /choosable %}}
+{{< /chooser >}}
+
+You may alternatively set the AWS region in your `Pulumi.<stack-name>.yaml` file:
+
+```bash
+$ pulumi config set aws:region <your-region> # e.g.`ap-south-1`
+```
 
 ### Create a shared credentials file
 
@@ -90,47 +129,39 @@ aws_secret_access_key = <YOUR_PROD_SECRET_ACCESS_KEY>
 
 In this case, you will need to set the `AWS_PROFILE` environment variable to the name of the profile to use.
 
-### Set environment variables
-
-We recommend using a shared credentials file for most development. However, if you need to temporarily override your credentials file, you can use environment variables. You can do this to quickly switch to a different access key or to configure AWS access from within an environment that might not have an AWS CLI, such as a continuous integration/continuous delivery (CI/CD) system.
-
-To authenticate using environment variable, set them in your terminal:
-
-{{< chooser os "linux,macos,windows" >}}
-{{% choosable os linux %}}
-
-```bash
-$ export AWS_ACCESS_KEY_ID=<YOUR_ACCESS_KEY_ID>
-$ export AWS_SECRET_ACCESS_KEY=<YOUR_SECRET_ACCESS_KEY>
-```
-
-{{% /choosable %}}
-
-{{% choosable os macos %}}
-
-```bash
-$ export AWS_ACCESS_KEY_ID=<YOUR_ACCESS_KEY_ID>
-$ export AWS_SECRET_ACCESS_KEY=<YOUR_SECRET_ACCESS_KEY>
-```
-
-{{% /choosable %}}
-
-{{% choosable os windows %}}
-
-```powershell
-> $env:AWS_ACCESS_KEY_ID = "<YOUR_ACCESS_KEY_ID>"
-> $env:AWS_SECRET_ACCESS_KEY = "<YOUR_SECRET_ACCESS_KEY>"
-```
-
-{{% /choosable %}}
-{{< /chooser >}}
-
 ### Set up multiple profiles
 
-As an optional step, if you have multiple AWS profiles set up, you can specify a different profile to use with Pulumi through one of the following methods:
+As an optional step, you can [set up multiple profiles](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html#cli-configure-quickstart-profiles).
 
-* Set `AWS_PROFILE` as an environment variable
-* After creating your project, run `pulumi config set aws-native:profile <profilename>`
+Here’s what that looks like in your ~/.aws/credentials file:
+
+```ini
+[default]
+aws_access_key_id = <YOUR_DEFAULT_ACCESS_KEY_ID>
+aws_secret_access_key = <YOUR_DEFAULT_SECRET_ACCESS_KEY>
+
+[test-account]
+aws_access_key_id = <YOUR_TEST_ACCESS_KEY_ID>
+aws_secret_access_key = <YOUR_TEST_SECRET_ACCESS_KEY>
+
+[prod-account]
+aws_access_key_id = <YOUR_PROD_ACCESS_KEY_ID>
+aws_secret_access_key = <YOUR_PROD_SECRET_ACCESS_KEY>
+```
+
+You can specify which profile to use with Pulumi through one of the following methods:
+
+* Set AWS_PROFILE as an environment variable
+
+    ```bash
+    $ export AWS_PROFILE=<YOUR_PROFILE_NAME>
+    ```
+
+* Set `aws:profile` in your Pulumi.yaml
+
+    ```bash
+    pulumi config set aws:profile <profilename>
+    ```
 
 ### Dynamically generate credentials
 

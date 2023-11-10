@@ -18,7 +18,7 @@ The AWS Native provider is available as a package in all Pulumi languages:
 
 ## Credentials
 
-To provision resources with the Pulumi AWS provider, you need to have AWS credentials. To do so:
+To provision resources with the Pulumi AWS Native provider, you need to have AWS credentials. To do so:
 
 1. [Create an IAM user in the AWS console](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html#id_users_create_console) with programmatic access and ensure it has sufficient permissions to deploy and manage your Pulumi program’s resources.
 2. [Set up AWS credentials](https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys) for your user.

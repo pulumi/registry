@@ -267,6 +267,10 @@
     {
       "repoSlug": "lbrlabs/pulumi-awscontroltower",
       "schemaFile": "provider/cmd/pulumi-resource-awscontroltower/schema.json"
+    },
+    {
+      "repoSlug": "pulumiverse/pulumi-talos",
+      "schemaFile": "provider/cmd/pulumi-resource-talos/schema.json"
     }
   ]
 }

@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-artifactory
 schema_file_path: provider/cmd/pulumi-resource-artifactory/schema.json
 title: artifactory
-updated_on: 1699404861
-version: v5.4.2
+updated_on: -62135596800
+version: v5.5.0

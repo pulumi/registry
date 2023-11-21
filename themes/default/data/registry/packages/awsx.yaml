@@ -8,7 +8,7 @@ native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-awsx
-schema_file_path: awsx/schema.json
+schema_file_path: schema.json
 title: AWSx (Pulumi Crosswalk for AWS)
-updated_on: 1698932978
-version: v2.1.1
+updated_on: 1700555147
+version: v2.2.0

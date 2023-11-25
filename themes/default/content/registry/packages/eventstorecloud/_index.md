@@ -4,20 +4,20 @@ meta_desc: Learn how you can use Event Store Cloud Provider for Pulumi to provis
 layout: package
 ---
 
-The Event Store Cloud provider for Pulumi can provision many of the cloud resources available in [Event Store Cloud](https://eventstore.com/cloud/). It uses the Event Store Cloud API to manage and provision resources.
+The Event Store Cloud (ESC) provider for Pulumi can provision many of the cloud resources available in [ESC](https://eventstore.com/cloud/). It uses the ESC API to manage and provision resources.
 
-The Event Store Cloud provider must be configured with credentials to deploy and update resources; see [Installation & Configuration](./installation-configuration) for instructions.
+The ESC provider must be configured with credentials to deploy and update resources; see [Installation & Configuration]({{<relref "./installation-configuration">}}) for instructions.
 
 ## Example
 
 ```typescript
-import * as eventstore from "@eventstore/pulumi-eventstorecloud";
+import * as esc from "@eventstore/pulumi-eventstorecloud";
 
-const project = new eventstore.Project("sample-project", {
+const project = new esc.Project("sample-project", {
     name: "Improved Chicken Window"
 });
 
-const network = new eventstore.Network("sample-network", {
+const network = new esc.Network("sample-network", {
     name: "Chicken Window Net",
     projectId: project.id,
     resourceProvider: "aws",

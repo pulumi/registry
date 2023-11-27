@@ -60,3 +60,4 @@ dotnet add package Pulumiverse.vercel
 The following configuration points are available for the `vercel` provider:
 
 - `vercel:apiToken` (environment: `VERCEL_API_TOKEN`) - the API key for `vercel`
+- `vercel:team` - The default Vercel Team to use when creating resources. This can be provided as either a team slug, or team ID. The slug and ID are both available from the Team Settings page in the Vercel dashboard.

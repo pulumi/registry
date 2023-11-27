@@ -6,7 +6,6 @@ layout: package
 
 The Pulumi AzureAD provider uses the AzureAD SDK to manage and provision resources.
 To provision resources with the Pulumi AzureAD provider, you need to have Azure credentials.
-These instructions assume you're using the [Azure CLI 2.0](https://github.com/Azure/azure-cli).
 Your Azure credentials are never sent to Pulumi.com.
 Pulumi uses the Azure SDK and the credentials in your environment to authenticate requests from your computer to Azure.
 
@@ -22,15 +21,20 @@ The AzureAD provider is available as a package in all Pulumi languages:
 
 ## Credentials
 
-Pulumi can authenticate to Azure via the Azure CLI or using a Service Principal.
+Pulumi can authenticate to Azure via several methods:
+- Azure CLI
+- OpenID Connect (OIDC)
+- Service Principal with a client secret or certificate
+- Managed Service Identity (MSI)
 
 If you're running the Pulumi CLI locally, in a developer scenario, we recommend using the Azure CLI.  For team
-environments, particularly in CI, a Service Principal is recommended.
+environments, particularly in Continuous Integration, one of the other options is strongly recommended.
 
 {{% notes type="info" %}}
 Authenticating using the CLI will not work for Service Principal logins (e.g.,
 `az login --service-principal`).  For such cases, authenticate using the Service Principal method instead.
 {{% /notes %}}
+
 
 ### Authenticate using the CLI
 
@@ -59,9 +63,57 @@ Pick out the `<id>` from the list and run:
 $ az account set --subscription=<id>
 ```
 
-#### Authenticate using a Service Principal
 
-A Service Principal is an application in Azure Active Directory with three authorization tokens: a client ID, a client secret, and a tenant ID. Using a Service Principal is the recommended way to connect Pulumi to Azure in a team or CI setting.
+### Authenticate with OpenID Connect (OIDC)
+
+OIDC allows you to establish a trust relationship between Azure and another identity provider such as GitHub or Azure DevOps. Once
+established, your program can exchange an ID token issued by the identity provider for an Azure token. Your Pulumi program running in
+the identity provider's service, for instance, GitHub Actions CI or Azure DevOps Pipelines, can then access Azure, without storing any
+secrets in GitHub.
+
+#### OIDC Azure Configuration
+
+To configure the trust relationship in Azure, please refer to
+[this guide](https://learn.microsoft.com/en-us/azure/active-directory/workload-identities/workload-identity-federation-create-trust?pivots=identity-wif-apps-methods-azp#github-actions).
+This needs to be set up only once.
+
+#### OIDC Pulumi Provider Configuration
+
+To use OIDC, either set the Pulumi configuration `useOidc` via `pulumi config set azuread:useOidc true` or set the
+environment variable `ARM_USE_OIDC` to "true".
+
+Next, supply the provider with the ID token to exchange for an Azure token. There are three ways to do this depending on
+the service your program will run on.
+
+- In GitHub, we don't need to configure anything since
+[GitHub sets the relevant environment variables](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect)
+`ACTIONS_ID_TOKEN_REQUEST_TOKEN` and `ACTIONS_ID_TOKEN_REQUEST_URL` by default and the provider reads them automatically. 
+
+- Other identity providers offer a way to access the ID token. For instance, in GitLab CI/CD jobs, the ID token is available
+via the environment variable `GITLAB_OIDC_TOKEN`. Configure the Pulumi provider to use this token by setting the Pulumi
+configuration `azuread:oidcToken` or the environment variable `ARM_OIDC_TOKEN`.
+
+- In case your provider does not offer an ID token directly but instead a way to exchange a local bearer token for an ID
+token, you can configure this as well via the pair of `azuread:oidcRequestToken` or environment variable
+`ARM_OIDC_REQUEST_TOKEN` and `azuread:oidcRequestUrl` or environment variable `ARM_OIDC_REQUEST_URL`
+
+Finally, configure the client and tenant IDs of your Azure Active Directory application. Refer to the
+[above Azure documentation](https://learn.microsoft.com/en-us/azure/active-directory/workload-identities/workload-identity-federation-create-trust?pivots=identity-wif-apps-methods-azp)
+on how to retrieve the IDs, and set them via Pulumi config as `azuread:clientId` and `azuread:tenantId` or via environment
+variables as `ARM_CLIENT_ID` and `ARM_TENANT_ID`.
+
+{{% notes type="info" %}}
+If you get the error "_AADSTS70021: No matching federated identity record found for presented assertion_", this points
+to a configuration issue with the _entity type_ and _environment name_ described in the Azure documentation. Make sure
+they match your setup, e.g., the type "branch" and the correct branch name if CI runs against a fixed branch.
+{{% /notes %}}
+
+
+### Authenticate using a Service Principal
+
+A Service Principal is an application in Azure Active Directory with a client ID and a tenant ID, exactly like the one
+used in the OIDC scenario. In this scenario, instead of a pre-configured trust relationship, a client secret is used to
+authenticate with Azure.
 
 #### Create your Service Principal and get your tokens
 
@@ -146,7 +198,11 @@ Use `pulumi config set azuread:<option>` or pass options to the [constructor of 
 | `clientId` | Optional | The client ID to use. It can also be sourced from the `ARM_CLIENT_ID` environment variable. |
 | `clientSecret` | Optional | The client secret to use. It can also be sourced from the `ARM_CLIENT_SECRET` environment variable. |
 | `msiEndpoint` | Optional | The REST endpoint to retrieve an MSI token from. Pulumi will attempt to discover this automatically but it can be specified manually here. It can also be sourced from the `ARM_MSI_ENDPOINT` environment variable. |
+| `oidcRequestToken` | Optional | The bearer token to exchange for an OIDC ID token. It can also be sourced from the `ARM_OIDC_REQUEST_TOKEN` environment variable. Requires `oidcRequestUrl` and should not be combined with `oidcToken`. |
+| `oidcRequestUrl` | Optional | The bearer token exchange URL for OIDC authentication. It can also be sourced from the `ARM_OIDC_REQUEST_URL` environment variable. Requires `oidcRequestToken` and should not be combined with `oidcToken`. |
+| `oidcToken` | Optional | The ID token for OIDC authentication. It can also be sourced from the `ARM_OIDC_TOKEN` environment variable. |
 | `skipCredentialsValidation` | Optional | Prevents the provider from validating the given credentials. When set to true, `skip_provider_registration` is assumed. It can also be sourced from the `ARM_SKIP_CREDENTIALS_VALIDATION` environment variable; defaults to `false`. 
 | `skipProviderRegistration` | Optional | Prevents the provider from registering the ARM provider namespaces, this can be used if you don't wish to give the Active Directory Application permission to register resource providers. It can also be sourced from the `ARM_SKIP_PROVIDER_REGISTRATION` environment variable; defaults to `false`. |
 | `tenantId` | Optional | The tenant ID to use. It can also be sourced from the `ARM_TENANT_ID` environment variable. |
 | `useMsi` | Optional | Set to true to authenticate using managed service identity. It can also be sourced from the `ARM_USE_MSI` environment variable.  |
+| `useOidc` | Optional | Set to true to authenticate using OIDC. It can also be sourced from the `ARM_USE_OIDC` environment variable. |

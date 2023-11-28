@@ -14,6 +14,7 @@ The HashiCorp Nomad provider is available as a package in all Pulumi languages:
 * Python: [`pulumi-nomad`](https://pypi.org/project/pulumi-nomad/)
 * Go: [`github.com/pulumi/pulumi-nomad/sdk/go/nomad`](https://github.com/pulumi/pulumi-nomad)
 * .NET: [`Pulumi.Nomad`](https://www.nuget.org/packages/Pulumi.Nomad)
+* Java: [`com.pulumi/nomad`](https://central.sonatype.com/artifact/com.pulumi/nomad)
 
 ## Configuring The Provider
 

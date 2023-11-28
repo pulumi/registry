@@ -14,6 +14,7 @@ The MongoDB Atlas provider is available as a package in all Pulumi languages:
 * Python: [`pulumi-mongodbatlas`](https://pypi.org/project/pulumi-mongodbatlas/)
 * Go: [`github.com/pulumi/pulumi-mongodbatlas/sdk/v3/go/mongodbatlas`](https://github.com/pulumi/pulumi-mongodbatlas)
 * .NET: [`Pulumi.Mongodbatlas`](https://www.nuget.org/packages/Pulumi.Mongodbatlas)
+* Java: [`com.pulumi/mongodbatlas`](https://central.sonatype.com/artifact/com.pulumi/mongodbatlas)
 
 ## Configuring Credentials
 

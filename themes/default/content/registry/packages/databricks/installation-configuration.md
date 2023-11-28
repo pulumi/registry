@@ -14,6 +14,7 @@ The Databricks provider is available as a package in all Pulumi languages:
 * Python: [`pulumi-databricks`](https://pypi.org/project/pulumi-databricks/)
 * Go: [`github.com/pulumi/pulumi-databricks/sdk/go/databricks`](https://github.com/pulumi/pulumi-databricks)
 * .NET: [`Pulumi.Databricks`](https://www.nuget.org/packages/Pulumi.Databricks)
+* Java: [`com.pulumi/databricks`](https://central.sonatype.com/artifact/com.pulumi/databricks)
 
 ## Configuring Credentials
 

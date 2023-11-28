@@ -14,6 +14,7 @@ The New Relic provider is available as a package in all Pulumi languages:
 * Python: [`pulumi-newrelic`](https://pypi.org/project/pulumi-newrelic/)
 * Go: [`github.com/pulumi/pulumi-newrelic/sdk/v4/go/newrelic`](https://github.com/pulumi/pulumi-newrelic)
 * .NET: [`Pulumi.Newrelic`](https://www.nuget.org/packages/Pulumi.Newrelic)
+* Java: [`com.pulumi/newrelic`](https://central.sonatype.com/artifact/com.pulumi/newrelic)
 
 ## Configuring Credentials
 

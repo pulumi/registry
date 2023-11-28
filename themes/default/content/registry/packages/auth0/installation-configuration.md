@@ -14,6 +14,7 @@ The Auth0 provider is available as a package in all Pulumi languages:
 * Python: [`pulumi-auth0`](https://pypi.org/project/pulumi-auth0/)
 * Go: [`github.com/pulumi/pulumi-auth0/sdk/v2/go/auth0`](https://github.com/pulumi/pulumi-auth0)
 * .NET: [`Pulumi.Auth0`](https://www.nuget.org/packages/Pulumi.Auth0)
+* Java: [`com.pulumi/auth0`](https://central.sonatype.com/artifact/com.pulumi/auth0)
 
 ## Configuring Credentials
 

@@ -15,6 +15,7 @@ The vSphere provider is available as a package in all Pulumi languages:
 * Python: [`pulumi-vsphere`](https://pypi.org/project/pulumi-vsphere/)
 * Go: [`github.com/pulumi/pulumi-vsphere/sdk/v3/go/vsphere`](https://github.com/pulumi/pulumi-vsphere)
 * .NET: [`Pulumi.Vsphere`](https://www.nuget.org/packages/Pulumi.Vsphere)
+* Java: [`com.pulumi/vsphere`](https://central.sonatype.com/artifact/com.pulumi/vsphere)
 
 ## Configuring Credentials
 

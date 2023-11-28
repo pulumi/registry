@@ -40,3 +40,4 @@ The Libvirt provider is available as a package in all Pulumi languages:
 * Python: [`pulumi-libvirt`](https://pypi.org/project/pulumi-libvirt/)
 * Go: [`github.com/pulumi/pulumi-libvirt/sdk/go/libvirt`](https://github.com/pulumi/pulumi-libvirt)
 * .NET: [`Pulumi.Libvirt`](https://www.nuget.org/packages/Pulumi.Libvirt)
+* Java: [`com.pulumi/libvirt`](https://central.sonatype.com/artifact/com.pulumi/libvirt)

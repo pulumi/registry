@@ -14,6 +14,7 @@ The CloudAMQP provider is available as a package in all Pulumi languages:
 * Python: [`pulumi-cloudamqp`](https://pypi.org/project/pulumi-cloudamqp/)
 * Go: [`github.com/pulumi/pulumi-cloudamqp/sdk/v3/go/cloudamqp`](https://github.com/pulumi/pulumi-cloudamqp)
 * .NET: [`Pulumi.Cloudamqp`](https://www.nuget.org/packages/Pulumi.Cloudamqp)
+* Java: [`com.pulumi/cloudamqp`](https://central.sonatype.com/artifact/com.pulumi/cloudamqp)
 
 ## Configuring Credentials
 

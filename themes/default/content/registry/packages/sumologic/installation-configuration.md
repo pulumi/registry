@@ -14,6 +14,7 @@ The Sumo Logic provider is available as a package in all Pulumi languages:
 * Python: [`pulumi-sumologic`](https://pypi.org/project/pulumi-sumologic/)
 * Go: [`github.com/pulumi/pulumi-sumologic/sdk/go/sumologic`](https://github.com/pulumi/pulumi-sumologic)
 * .NET: [`Pulumi.SumoLogic`](https://www.nuget.org/packages/Pulumi.SumoLogic)
+* Java: [`com.pulumi/sumologic`](https://central.sonatype.com/artifact/com.pulumi/sumologic)
 
 ## Configuring Credentials
 

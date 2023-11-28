@@ -14,6 +14,7 @@ The Tailscale provider is available as a package in all Pulumi languages:
 * Python: [`pulumi-tailscale`](https://pypi.org/project/pulumi-tailscale/)
 * Go: [`github.com/pulumi/pulumi-tailscale/sdk/go/tailscale`](https://github.com/pulumi/pulumi-tailscale)
 * .NET: [`Pulumi.Tailscale`](https://www.nuget.org/packages/Pulumi.Tailscale)
+* Java: [`com.pulumi/tailscale`](https://central.sonatype.com/artifact/com.pulumi/tailscale)
 
 ### Configuring The Provider
 

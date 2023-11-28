@@ -14,6 +14,7 @@ The Spotinst provider is available as a package in all Pulumi languages:
 * Python: [`pulumi-spotinst`](https://pypi.org/project/pulumi-spotinst/)
 * Go: [`github.com/pulumi/pulumi-spotinst/sdk/v3/go/spotinst`](https://github.com/pulumi/pulumi-spotinst)
 * .NET: [`Pulumi.Spotinst`](https://www.nuget.org/packages/Pulumi.Spotinst)
+* Java: [`com.pulumi/spotinst`](https://central.sonatype.com/artifact/com.pulumi/spotinst)
 
 ## Configuration
 

@@ -14,6 +14,7 @@ The OCI provider is available as a package in all Pulumi languages:
 * Python: [`pulumi-oci`](https://pypi.org/project/pulumi-oci/)
 * Go: [`github.com/pulumi/pulumi-oci/sdk/go/oci`](https://github.com/pulumi/pulumi-oci)
 * .NET: [`Pulumi.Oci`](https://www.nuget.org/packages/Pulumi.Oci)
+* Java: [`com.pulumi/oci`](https://central.sonatype.com/artifact/com.pulumi/oci)
 
 ## Configuring Credentials
 

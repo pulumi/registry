@@ -14,6 +14,7 @@ The Equinix Metal provider is available as a package in all Pulumi languages:
 * Python: [`pulumi-equinix-metal`](https://pypi.org/project/pulumi-equinix-metal/)
 * Go: [`github.com/pulumi/pulumi-equinix-metal/sdk/v2/go/equinix`](https://github.com/pulumi/pulumi-equinix-metal)
 * .NET: [`Pulumi.EquinixMetal`](https://www.nuget.org/packages/Pulumi.EquinixMetal)
+* Java: [`com.pulumi/equinix-metal`](https://central.sonatype.com/artifact/com.pulumi/equinix-metal)
 
 ## Configuring Credentials
 

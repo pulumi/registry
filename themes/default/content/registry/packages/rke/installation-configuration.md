@@ -12,3 +12,4 @@ The Rancher Kubernetes Engine (RKE) provider is available as a package in all Pu
 * Python: [`pulumi-rke`](https://pypi.org/project/pulumi-rke/)
 * Go: [`github.com/pulumi/pulumi-rke/sdk/go/rke`](https://github.com/pulumi/pulumi-rke)
 * .NET: [`Pulumi.Rke`](https://www.nuget.org/packages/Pulumi.Rke)
+* Java: [`com.pulumi/rke`](https://central.sonatype.com/artifact/com.pulumi/rke)

@@ -12,3 +12,4 @@ The Cloudinit provider is available as a package in all Pulumi languages:
 * Python: [`pulumi-cloudinit`](https://pypi.org/project/pulumi-cloudinit/)
 * Go: [`github.com/pulumi/pulumi-cloudinit/sdk/go/cloudinit`](https://github.com/pulumi/pulumi-cloudinit)
 * .NET: [`Pulumi.CloudInit`](https://www.nuget.org/packages/Pulumi.CloudInit)
+* Java: [`com.pulumi/cloudinit`](https://central.sonatype.com/artifact/com.pulumi/cloudinit)

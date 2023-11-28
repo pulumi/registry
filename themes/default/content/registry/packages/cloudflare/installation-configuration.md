@@ -14,6 +14,7 @@ The Cloudflare provider is available as a package in all Pulumi languages:
 * Python: [`pulumi-cloudflare`](https://pypi.org/project/pulumi-cloudflare/)
 * Go: [`github.com/pulumi/pulumi-cloudflare/sdk/v3/go/cloudflare`](https://github.com/pulumi/pulumi-cloudflare)
 * .NET: [`Pulumi.Cloudflare`](https://www.nuget.org/packages/Pulumi.Cloudflare)
+* Java: [`com.pulumi/cloudflare`](https://central.sonatype.com/artifact/com.pulumi/cloudflare)
 
 ### Configuring The Provider
 

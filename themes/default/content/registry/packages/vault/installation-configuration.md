@@ -14,6 +14,7 @@ The HashiCorp Vault provider is available as a package in all Pulumi languages:
 * Python: [`pulumi-vault`](https://pypi.org/project/pulumi-vault/)
 * Go: [`github.com/pulumi/pulumi-vault/sdk/v4/go/vault`](https://github.com/pulumi/pulumi-vault)
 * .NET: [`Pulumi.Vault`](https://www.nuget.org/packages/Pulumi.Vault)
+* Java: [`com.pulumi/vault`](https://central.sonatype.com/artifact/com.pulumi/vault)
 
 ## Configuration
 

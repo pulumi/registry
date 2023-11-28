@@ -14,6 +14,7 @@ The Opsgenie provider is available as a package in all Pulumi languages:
 * Python: [`pulumi-opsgenie`](https://pypi.org/project/pulumi-opsgenie/)
 * Go: [`github.com/pulumi/pulumi-opsgenie/sdk/go/opsgenie`](https://github.com/pulumi/pulumi-opsgenie)
 * .NET: [`Pulumi.Opsgenie`](https://www.nuget.org/packages/Pulumi.Opsgenie)
+* Java: [`com.pulumi/opsgenie`](https://central.sonatype.com/artifact/com.pulumi/opsgenie)
 
 ## Configuring Credentials
 

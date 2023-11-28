@@ -14,6 +14,7 @@ The Aiven provider is available as a package in all Pulumi languages:
 * Python: [`pulumi-aiven`](https://pypi.org/project/pulumi-aiven/)
 * Go: [`github.com/pulumi/pulumi-aiven/sdk/v4/go/aiven`](https://github.com/pulumi/pulumi-aiven)
 * .NET: [`Pulumi.Aiven`](https://www.nuget.org/packages/Pulumi.Aiven)
+* Java: [`com.pulumi/aiven`](https://central.sonatype.com/artifact/com.pulumi/aiven)
 
 ## Configuring Credentials
 

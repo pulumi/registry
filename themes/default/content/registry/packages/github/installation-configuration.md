@@ -14,6 +14,7 @@ The GitHub provider is available as a package in all Pulumi languages:
 * Python: [`pulumi-github`](https://pypi.org/project/pulumi-github/)
 * Go: [`github.com/pulumi/pulumi-github/sdk/v4/go/github`](https://github.com/pulumi/pulumi-github)
 * .NET: [`Pulumi.Github`](https://www.nuget.org/packages/Pulumi.Github)
+* Java: [`com.pulumi/github`](https://central.sonatype.com/artifact/com.pulumi/github)
 
 ## Configuring Credentials
 

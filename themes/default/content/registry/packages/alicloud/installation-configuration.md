@@ -14,6 +14,7 @@ The Alibaba Cloud provider is available as a package in all Pulumi languages:
 * Python: [`pulumi-alicloud`](https://pypi.org/project/pulumi-alicloud/)
 * Go: [`github.com/pulumi/pulumi-alicloud/sdk/v3/go/alicloud`](https://github.com/pulumi/pulumi-alicloud)
 * .NET: [`Pulumi.Alicloud`](https://www.nuget.org/packages/Pulumi.Alicloud)
+* Java: [`com.pulumi/alicloud`](https://central.sonatype.com/artifact/com.pulumi/alicloud)
 
 ## Configuring Credentials
 

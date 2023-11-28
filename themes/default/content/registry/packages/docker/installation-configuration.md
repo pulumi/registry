@@ -14,6 +14,7 @@ The Docker provider is available as a package in all Pulumi languages:
 * Python: [`pulumi-docker`](https://pypi.org/project/pulumi-docker/)
 * Go: [`github.com/pulumi/pulumi-docker/sdk/v4/go/docker`](https://github.com/pulumi/pulumi-docker)
 * .NET: [`Pulumi.Docker`](https://www.nuget.org/packages/Pulumi.Docker)
+* Java: [`com.pulumi/docker`](https://central.sonatype.com/artifact/com.pulumi/docker)
 
 ## Configuring The Provider
 

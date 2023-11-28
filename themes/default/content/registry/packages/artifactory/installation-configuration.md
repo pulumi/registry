@@ -14,6 +14,7 @@ The Artifactory provider is available as a package in all Pulumi languages:
 * Python: [`pulumi-artifactory`](https://pypi.org/project/pulumi-artifactory/)
 * Go: [`github.com/pulumi/pulumi-artifactory/sdk/go/artifactory`](https://github.com/pulumi/pulumi-artifactory)
 * .NET: [`Pulumi.Artifactory`](https://www.nuget.org/packages/Pulumi.Artifactory)
+* Java: [`com.pulumi/artifactory`](https://central.sonatype.com/artifact/com.pulumi/artifactory)
 
 ## Configuring Credentials
 

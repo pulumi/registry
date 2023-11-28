@@ -14,6 +14,7 @@ The Kong provider is available as a package in all Pulumi languages:
 * Python: [`pulumi-kong`](https://pypi.org/project/pulumi-kong/)
 * Go: [`github.com/pulumi/pulumi-kong/sdk/v4/go/kong`](https://github.com/pulumi/pulumi-kong)
 * .NET: [`Pulumi.Kong`](https://www.nuget.org/packages/Pulumi.Kong)
+* Java: [`com.pulumi/kong`](https://central.sonatype.com/artifact/com.pulumi/kong)
 
 ## Configuring Credentials
 

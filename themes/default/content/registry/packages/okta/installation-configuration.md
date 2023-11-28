@@ -14,6 +14,7 @@ The Okta provider is available as a package in all Pulumi languages:
 * Python: [`pulumi-okta`](https://pypi.org/project/pulumi-okta/)
 * Go: [`github.com/pulumi/pulumi-okta/sdk/v3/go/okta`](https://github.com/pulumi/pulumi-okta)
 * .NET: [`Pulumi.Okta`](https://www.nuget.org/packages/Pulumi.Okta)
+* Java: [`com.pulumi/okta`](https://central.sonatype.com/artifact/com.pulumi/okta)
 
 ## Configuring The Provider
 

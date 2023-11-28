@@ -14,6 +14,7 @@ The Kafka Cloud provider is available as a package in all Pulumi languages:
 * Python: [`pulumi-kafka`](https://pypi.org/project/pulumi-kafka/)
 * Go: [`github.com/pulumi/pulumi-kafka/sdk/v3/go/kafka`](https://github.com/pulumi/pulumi-kafka)
 * .NET: [`Pulumi.Kafka`](https://www.nuget.org/packages/Pulumi.Kafka)
+* Java: [`com.pulumi/kafka`](https://central.sonatype.com/artifact/com.pulumi/kafka)
 
 ## Configuring Credentials
 

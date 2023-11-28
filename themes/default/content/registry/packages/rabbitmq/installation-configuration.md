@@ -14,6 +14,7 @@ The RabbitMQ provider is available as a package in all Pulumi languages:
 * Python: [`pulumi-rabbitmq`](https://pypi.org/project/pulumi-rabbitmq/)
 * Go: [`github.com/pulumi/pulumi-rabbitmq/sdk/v3/go/rabbitmq`](https://github.com/pulumi/pulumi-rabbitmq)
 * .NET: [`Pulumi.Rabbitmq`](https://www.nuget.org/packages/Pulumi.Rabbitmq)
+* Java: [`com.pulumi/rabbitmq`](https://central.sonatype.com/artifact/com.pulumi/rabbitmq)
 
 ## Configuring Credentials
 

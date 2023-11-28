@@ -14,6 +14,7 @@ The Wavefront provider is available as a package in all Pulumi languages:
 * Python: [`pulumi-wavefront`](https://pypi.org/project/pulumi-wavefront/)
 * Go: [`github.com/pulumi/pulumi-wavefront/sdk/go/wavefront`](https://github.com/pulumi/pulumi-wavefront)
 * .NET: [`Pulumi.Wavefront`](https://www.nuget.org/packages/Pulumi.Wavefront)
+* Java: [`com.pulumi/wavefront`](https://central.sonatype.com/artifact/com.pulumi/wavefront)
 
 ## Configuring Credentials
 

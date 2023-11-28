@@ -14,6 +14,7 @@ The NS1 provider is available as a package in all Pulumi languages:
 * Python: [`pulumi-ns1`](https://pypi.org/project/pulumi-ns1/)
 * Go: [`github.com/pulumi/pulumi-ns1/sdk/v2/go/ns1`](https://github.com/pulumi/pulumi-ns1)
 * .NET: [`Pulumi.NS1`](https://www.nuget.org/packages/Pulumi.Ns1)
+* Java: [`com.pulumi/ns1`](https://central.sonatype.com/artifact/com.pulumi/ns1)
 
 ## Configuring Credentials
 

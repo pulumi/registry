@@ -14,6 +14,7 @@ The Akamai provider is available as a package in all Pulumi languages:
 * Python: [`pulumi-akamai`](https://pypi.org/project/pulumi-akamai/)
 * Go: [`github.com/pulumi/pulumi-akamai/sdk/v2/go/akamai`](https://github.com/pulumi/pulumi-akamai)
 * .NET: [`Pulumi.Akamai`](https://www.nuget.org/packages/Pulumi.Akamai)
+* Java: [`com.pulumi/akamai`](https://central.sonatype.com/artifact/com.pulumi/akamai)
 
 ## Configuring Credentials
 

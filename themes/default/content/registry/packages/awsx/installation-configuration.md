@@ -20,6 +20,7 @@ The AWSx provider is available as a package in all Pulumi languages:
 * Python: [`pulumi-awsx`](https://pypi.org/project/pulumi-awsx/)
 * Go: [`github.com/pulumi/pulumi-awsx/sdk/v2/go/awsx`](https://pkg.go.dev/github.com/pulumi/pulumi-awsx/sdk/v2)
 * .NET: [`Pulumi.Awsx`](https://www.nuget.org/packages/Pulumi.Awsx)
+* Java: [`com.pulumi/awsx`](https://central.sonatype.com/artifact/com.pulumi/awsx)
 
 ## Setup
 

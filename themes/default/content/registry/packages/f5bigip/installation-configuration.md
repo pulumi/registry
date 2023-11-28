@@ -14,6 +14,7 @@ The F5 BIG-IP provider is available as a package in all Pulumi languages:
 * Python: [`pulumi-f5bigip`](https://pypi.org/project/pulumi-f5bigip/)
 * Go: [`github.com/pulumi/pulumi-f5bigip/sdk/v3/go/f5bigip`](https://github.com/pulumi/pulumi-f5bigip)
 * .NET: [`Pulumi.F5bigip`](https://www.nuget.org/packages/Pulumi.F5bigip)
+* Java: [`com.pulumi/f5bigip`](https://central.sonatype.com/artifact/com.pulumi/f5bigip)
 
 ## Configuring Credentials
 

@@ -197,7 +197,7 @@ you need to do either of the following
     provider = pulumi_aws.Provider('named-provider', skip_metadata_api_check=False)
     ```
 
-### Dynamically generate credentials
+### Dynamically generate credentials via Pulumi ESC
 
 In addition to configuring the AWS provider locally, you also have the option to centralize your configurations using [Pulumi ESC (Environments, Secrets, and Configuration)](/docs/pulumi-cloud/esc/). Using this service will enable you to run AWS or Pulumi CLI commands with dynamically generated credentials, removing the need to configure and manage your credentials locally.
 
@@ -293,6 +293,17 @@ Make sure that your local environment does not have AWS credentials configured b
 
 To learn more about projecting environment variables in Pulumi ESC, refer to the [relevant Pulumi ESC documentation](/docs/pulumi-cloud/esc/environments/#projecting-environment-variables).
 
+
+### Authenticate with WebIdentity and OpenID Connect (OIDC)
+
+In this approach, you configure an AWS role to assume and a source for a web identity token, which is an OIDC ID token. The token is used to authenticate with AWS STS (Security Token Service) and obtain temporary credentials. The temporary credentials are then used to authenticate with AWS. Please refer to the AWS docs [Assume role with web identity](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-role.html#cli-configure-role-oidc) for more details.
+
+This mode of authentication allows you to run Pulumi on a service that supports OIDC like GitHub, GitLab, or Azure DevOps, and access AWS resources without storing credentials.
+Refer to the particular service's documentation for how to configure the OIDC trust relationship, which is a one-time setup.
+
+For this provider, configure the `assumeRoleWithWebIdentity` object documented below, where you need at least `roleArn` for the role to assume and one of `webIdentityToken` or `webIdentityTokenFile` for the ID token.
+
+
 ## Configuration options
 
 Use `pulumi config set aws:<option>` or pass options to the [constructor of `new aws.Provider`](../api-docs/provider).
@@ -311,6 +322,14 @@ Use `pulumi config set aws:<option>` or pass options to the [constructor of `new
 | ↳ `sessionName` | Optional | Session name to use when assuming the role. |
 | ↳ `tags` | Optional | Map of assume role session tags. |
 | ↳ `transitiveTagKeys` | Optional | Set of assume role session tag keys to pass to any subsequent sessions. |
+| `assumeRoleWithWebIdentity` | Optional | A JSON object representing an IAM role to assume using web identity/OIDC.  To set these nested properties, see docs on [structured configuration](/docs/concepts/config#structured-configuration), for example `pulumi config set --path aws:assumeRole.roleArn arn:aws:iam::058111598222:role/OrganizationAccountAccessRole`. The object contains the properties marked with a ↳ below: |
+| ↳ `durationSeconds` | Optional |  Number of seconds to restrict the assume role session duration. |
+| ↳ `policy` | Optional | IAM Policy JSON describing further restricting permissions for the IAM Role being assumed. |
+| ↳ `policyArns` | Optional | Set of Amazon Resource Names (ARNs) of IAM Policies describing further restricting permissions for the IAM Role being assumed. |
+| ↳ `roleArn` | Optional | Amazon Resource Name (ARN) of the IAM Role to assume. |
+| ↳ `sessionName` | Optional | Session name to use when assuming the role. |
+| ↳ `webIdentityToken` | Optional | Web Identity (OIDC ID) token value. |
+| ↳ `webIdentityTokenFile` | Optional | File containing the Web Identity (OIDC ID) token. |
 | `dynamodbEndpoint` | Optional | Use this to override the default endpoint URL constructed from the `region`. It’s typically used to connect to dynamodb-local. |
 | `forbiddenAccountIds` | Optional | List of forbidden AWS account IDs to prevent you from mistakenly using the wrong one (and potentially end up destroying a live environment). Conflicts with `allowedAccountIds`. |
 | `defaultTags` | Optional | A JSON block with resource tag settings to apply across all resources handled by this provider. Additional tags can be added/overridden at a per resource level. The object contains the properties marked with a ↳ below: |

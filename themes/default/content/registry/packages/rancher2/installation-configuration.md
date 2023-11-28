@@ -14,6 +14,7 @@ The Rancher2 provider is available as a package in all Pulumi languages:
 * Python: [`pulumi-rancher2`](https://pypi.org/project/pulumi-rancher2/)
 * Go: [`github.com/pulumi/pulumi-rancher2/sdk/v3/go/rancher2`](https://github.com/pulumi/pulumi-rancher2)
 * .NET: [`Pulumi.Rancher2`](https://www.nuget.org/packages/Pulumi.Rancher2)
+* Java: [`com.pulumi/rancher2`](https://central.sonatype.com/artifact/com.pulumi/rancher2)
 
 ## Configuring Credentials
 

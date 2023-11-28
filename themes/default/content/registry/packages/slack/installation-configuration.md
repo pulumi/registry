@@ -12,6 +12,7 @@ The Pulumi Slack provider is available as a package in all Pulumi languages:
 * Python: [`pulumi_slack`](https://pypi.org/project/pulumi-slack/)
 * Go: [`github.com/pulumi/pulumi-slack/sdk/go/slack`](https://github.com/pulumi/pulumi-slack/tree/main/sdk/go/slack)
 * .NET: [`Pulumi.Slack`](https://www.nuget.org/packages/Pulumi.Slack)
+* Java: [`com.pulumi/slack`](https://central.sonatype.com/artifact/com.pulumi/slack)
 
 ## Setup
 

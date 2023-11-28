@@ -14,6 +14,7 @@ The Linode provider is available as a package in all Pulumi languages:
 * Python: [`pulumi-linode`](https://pypi.org/project/pulumi-linode/)
 * Go: [`github.com/pulumi/pulumi-linode/sdk/v3/go/linode`](https://github.com/pulumi/pulumi-linode)
 * .NET: [`Pulumi.Linode`](https://www.nuget.org/packages/Pulumi.Linode)
+* Java: [`com.pulumi/linode`](https://central.sonatype.com/artifact/com.pulumi/linode)
 
 ## Configuring Credentials
 

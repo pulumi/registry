@@ -14,6 +14,7 @@ The Venafi provider is available as a package in all Pulumi languages:
 * Python: [`pulumi-venafi`](https://pypi.org/project/pulumi-venafi/)
 * Go: [`github.com/pulumi/pulumi-venafi/sdk/go/venafi`](https://github.com/pulumi/pulumi-venafi)
 * .NET: [`Pulumi.Venafi`](https://www.nuget.org/packages/Pulumi.Venafi)
+* Java: [`com.pulumi/venafi`](https://central.sonatype.com/artifact/com.pulumi/venafi)
 
 ## Configuring Credentials
 

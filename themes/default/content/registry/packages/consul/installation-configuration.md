@@ -14,6 +14,7 @@ The HashiCorp Consul provider is available as a package in all Pulumi languages:
 * Python: [`pulumi-consul`](https://pypi.org/project/pulumi-consul/)
 * Go: [`github.com/pulumi/pulumi-consul/sdk/v3/go/consul`](https://github.com/pulumi/pulumi-consul)
 * .NET: [`Pulumi.Consul`](https://www.nuget.org/packages/Pulumi.Consul)
+* Java: [`com.pulumi/consul`](https://central.sonatype.com/artifact/com.pulumi/consul)
 
 ## Configuring The Provider
 

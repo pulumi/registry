@@ -24,3 +24,4 @@ The OpenStack provider is available as a package in all Pulumi languages:
 * Python: [`pulumi-openstack`](https://pypi.org/project/pulumi-openstack/)
 * Go: [`github.com/pulumi/pulumi-openstack/sdk/v3/go/openstack`](https://github.com/pulumi/pulumi-openstack)
 * .NET: [`Pulumi.Openstack`](https://www.nuget.org/packages/Pulumi.Openstack)
+* Java: [`com.pulumi/openstack`](https://central.sonatype.com/artifact/com.pulumi/openstack)

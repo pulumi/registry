@@ -19,6 +19,7 @@ The Confluent Cloud provider is available as a package in all Pulumi languages:
 * Python: [`pulumi-confluent`](https://pypi.org/project/pulumi-confluent/)
 * Go: [`github.com/pulumi/pulumi-confluent/sdk/go/confluent`](https://github.com/pulumi/pulumi-confluent)
 * .NET: [`Pulumi.Confluent`](https://www.nuget.org/packages/Pulumi.Confluent)
+* Java: [`com.pulumi/confluent`](https://central.sonatype.com/artifact/com.pulumi/confluent)
 
 ## Configuring Credentials
 

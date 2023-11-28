@@ -18,3 +18,4 @@ The AWS API Gateway provider is available as a package in all Pulumi languages:
 * Python: [`pulumi-aws-apigateway`](https://pypi.org/project/pulumi-aws-apigateway/)
 * Go: [`github.com/pulumi/pulumi-aws-apigateway/sdk/go/apigateway`](https://github.com/pulumi/pulumi-aws-apigateway)
 * .NET: [`Pulumi.AwsApiGateway`](https://www.nuget.org/packages/Pulumi.AwsApiGateway)
+* Java: [`com.pulumi/aws-apigateway`](https://central.sonatype.com/artifact/com.pulumi/aws-apigateway)

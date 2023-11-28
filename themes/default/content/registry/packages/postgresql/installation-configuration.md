@@ -14,6 +14,7 @@ The PostgreSQL provider is available as a package in all Pulumi languages:
 * Python: [`pulumi-postgresql`](https://pypi.org/project/pulumi-postgresql/)
 * Go: [`github.com/pulumi/pulumi-postgresql/sdk/v3/go/postgresql`](https://github.com/pulumi/pulumi-postgresql)
 * .NET: [`Pulumi.Postgresql`](https://www.nuget.org/packages/Pulumi.Postgresql)
+* Java: [`com.pulumi/postgresql`](https://central.sonatype.com/artifact/com.pulumi/postgresql)
 
 ## Configuring Credentials
 

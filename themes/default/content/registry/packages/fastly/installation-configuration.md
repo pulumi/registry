@@ -14,6 +14,7 @@ The Fastly provider is available as a package in all Pulumi languages:
 * Python: [`pulumi-fastly`](https://pypi.org/project/pulumi-fastly/)
 * Go: [`github.com/pulumi/pulumi-fastly/sdk/v3/go/fastly`](https://github.com/pulumi/pulumi-fastly)
 * .NET: [`Pulumi.Fastly`](https://www.nuget.org/packages/Pulumi.Fastly)
+* Java: [`com.pulumi/fastly`](https://central.sonatype.com/artifact/com.pulumi/fastly)
 
 ## Configuring Credentials
 

@@ -14,6 +14,7 @@ The MinIO provider is available as a package in all Pulumi languages:
 * Python: [`pulumi-minio`](https://pypi.org/project/pulumi-minio/)
 * Go: [`github.com/pulumi/pulumi-minio/sdk/go/minio`](https://github.com/pulumi/pulumi-minio)
 * .NET: [`Pulumi.Minio`](https://www.nuget.org/packages/Pulumi.Minio)
+* Java: [`com.pulumi/minio`](https://central.sonatype.com/artifact/com.pulumi/minio)
 
 ## Configuring Credentials
 

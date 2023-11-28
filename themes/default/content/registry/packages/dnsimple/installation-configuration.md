@@ -14,6 +14,7 @@ The DNSimple provider is available as a package in all Pulumi languages:
 * Python: [`pulumi-dnsimple`](https://pypi.org/project/pulumi-dnsimple/)
 * Go: [`github.com/pulumi/pulumi-dnsimple/sdk/v3/go/dnsimple`](https://github.com/pulumi/pulumi-dnsimple)
 * .NET: [`Pulumi.Dnsimple`](https://www.nuget.org/packages/Pulumi.Dnsimple)
+* Java: [`com.pulumi/dnsimple`](https://central.sonatype.com/artifact/com.pulumi/dnsimple)
 
 ## Configuring Credentials
 

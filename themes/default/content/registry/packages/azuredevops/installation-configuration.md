@@ -14,6 +14,7 @@ The AzureDevOps provider is available as a package in all Pulumi languages:
 * Python: [`pulumi-azuredevops`](https://pypi.org/project/pulumi-azuredevops/)
 * Go: [`github.com/pulumi/pulumi-azuredevops/sdk/v2/go/azuredevops`](https://github.com/pulumi/pulumi-azuredevops)
 * .NET: [`Pulumi.AzureDevOps`](https://www.nuget.org/packages/Pulumi.AzureDevOps)
+* Java: [`com.pulumi/azuredevops`](https://central.sonatype.com/artifact/com.pulumi/azuredevops)
 
 ## Configuring Credentials
 

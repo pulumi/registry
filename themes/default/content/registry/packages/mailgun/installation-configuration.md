@@ -14,6 +14,7 @@ The Mailgun provider is available as a package in all Pulumi languages:
 * Python: [`pulumi-mailgun`](https://pypi.org/project/pulumi-mailgun/)
 * Go: [`github.com/pulumi/pulumi-mailgun/sdk/v3/go/mailgun`](https://github.com/pulumi/pulumi-mailgun)
 * .NET: [`Pulumi.Mailgun`](https://www.nuget.org/packages/Pulumi.Mailgun)
+* Java: [`com.pulumi/mailgun`](https://central.sonatype.com/artifact/com.pulumi/mailgun)
 
 ## Configuring Credentials
 

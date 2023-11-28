@@ -31,6 +31,7 @@ The Kubernetes provider is available as a package in all Pulumi languages:
 - Python: [`pulumi-kubernetes`](https://pypi.org/project/pulumi-kubernetes/)
 - Go: [`github.com/pulumi/pulumi-kubernetes/sdk/go/kubernetes`](https://github.com/pulumi/pulumi-kubernetes)
 - .NET: [`Pulumi.Kubernetes`](https://www.nuget.org/packages/Pulumi.Kubernetes)
+- Java: [`com.pulumi/kubernetes`](https://central.sonatype.com/artifact/com.pulumi/kubernetes)
 
 ## Pre-Requisites
 

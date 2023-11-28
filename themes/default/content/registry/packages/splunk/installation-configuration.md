@@ -14,6 +14,7 @@ The Splunk provider is available as a package in all Pulumi languages:
 * Python: [`pulumi-splunk`](https://pypi.org/project/pulumi-splunk/)
 * Go: [`github.com/pulumi/pulumi-splunk/sdk/go/splunk`](https://github.com/pulumi/pulumi-splunk)
 * .NET: [`Pulumi.Splunk`](https://www.nuget.org/packages/Pulumi.Splunk)
+* Java: [`com.pulumi/splunk`](https://central.sonatype.com/artifact/com.pulumi/splunk)
 
 ## Configuring Credentials
 

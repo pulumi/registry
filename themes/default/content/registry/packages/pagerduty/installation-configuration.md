@@ -14,6 +14,7 @@ The PagerDuty provider is available as a package in all Pulumi languages:
 * Python: [`pulumi-pagerduty`](https://pypi.org/project/pulumi-pagerduty/)
 * Go: [`github.com/pulumi/pulumi-pagerduty/sdk/v2/go/pagerduty`](https://github.com/pulumi/pulumi-pagerduty)
 * .NET: [`Pulumi.Pagerduty`](https://www.nuget.org/packages/Pulumi.Pagerduty)
+* Java: [`com.pulumi/pagerduty`](https://central.sonatype.com/artifact/com.pulumi/pagerduty)
 
 ## Configuring Credentials
 

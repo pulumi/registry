@@ -14,6 +14,7 @@ The MySQL Atlas provider is available as a package in all Pulumi languages:
 * Python: [`pulumi-mysql`](https://pypi.org/project/pulumi-mysql/)
 * Go: [`github.com/pulumi/pulumi-mysql/sdk/v3/go/mysql`](https://github.com/pulumi/pulumi-mysql)
 * .NET: [`Pulumi.Mysql`](https://www.nuget.org/packages/Pulumi.Mysql)
+* Java: [`com.pulumi/mysql`](https://central.sonatype.com/artifact/com.pulumi/mysql)
 
 ## Configuring Credentials
 

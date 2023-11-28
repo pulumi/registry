@@ -14,6 +14,7 @@ The Hetzner Cloud provider is available as a package in all Pulumi languages:
 * Python: [`pulumi-hcloud`](https://pypi.org/project/pulumi-hcloud/)
 * Go: [`github.com/pulumi/pulumi-hcloud/sdk/go/hcloud`](https://github.com/pulumi/pulumi-hcloud)
 * .NET: [`Pulumi.HCloud`](https://www.nuget.org/packages/Pulumi.HCloud)
+* Java: [`com.pulumi/hcloud`](https://central.sonatype.com/artifact/com.pulumi/hcloud)
 
 ## Configuring Credentials
 

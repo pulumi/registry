@@ -14,6 +14,7 @@ The SignalFx provider is available as a package in all Pulumi languages:
 * Python: [`pulumi-signalfx`](https://pypi.org/project/pulumi-signalfx/)
 * Go: [`github.com/pulumi/pulumi-signalfx/sdk/v5/go/signalfx`](https://github.com/pulumi/pulumi-signalfx)
 * .NET: [`Pulumi.Signalfx`](https://www.nuget.org/packages/Pulumi.Signalfx)
+* Java: [`com.pulumi/signalfx`](https://central.sonatype.com/artifact/com.pulumi/signalfx)
 
 ## Configuring Credentials
 

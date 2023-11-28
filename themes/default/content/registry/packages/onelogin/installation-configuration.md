@@ -12,6 +12,7 @@ The OneLogin provider is available as a package in all Pulumi languages:
 * Python: [`pulumi-onelogin`](https://pypi.org/project/pulumi-onelogin/)
 * Go: [`github.com/pulumi/pulumi-onelogin/sdk/go/onelogin`](https://github.com/pulumi/pulumi-onelogin)
 * .NET: [`Pulumi.Onelogin`](https://www.nuget.org/packages/Pulumi.Onelogin)
+* Java: [`com.pulumi/onelogin`](https://central.sonatype.com/artifact/com.pulumi/onelogin)
 
 ## Configuring Credentials
 

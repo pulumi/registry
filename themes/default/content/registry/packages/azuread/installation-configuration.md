@@ -93,9 +93,10 @@ the service your program will run on.
 via the environment variable `GITLAB_OIDC_TOKEN`. Configure the Pulumi provider to use this token by setting the Pulumi
 configuration `azuread:oidcToken` or the environment variable `ARM_OIDC_TOKEN`.
 
-- In case your provider does not offer an ID token directly but instead a way to exchange a local bearer token for an ID
-token, you can configure this as well via the pair of `azuread:oidcRequestToken` or environment variable
-`ARM_OIDC_REQUEST_TOKEN` and `azuread:oidcRequestUrl` or environment variable `ARM_OIDC_REQUEST_URL`
+- If your identity provider does not offer an ID token directly but it does offer a way to exchange a local bearer token for an ID
+token, you can configure the retrieval of the ID token by setting one of the following pairs:
+  - both the `azuread:oidcRequestToken` and `azuread:oidcRequestUrl` Pulumi configuration values, **or**
+  - both the `ARM_OIDC_REQUEST_TOKEN` and `ARM_OIDC_REQUEST_TOKEN` environment variables.
 
 Finally, configure the client and tenant IDs of your Azure Active Directory application. Refer to the
 [above Azure documentation](https://learn.microsoft.com/en-us/azure/active-directory/workload-identities/workload-identity-federation-create-trust?pivots=identity-wif-apps-methods-azp)

@@ -302,20 +302,25 @@ configuration or the `ARM_MSI_ENDPOINT` environment variable.
 
 Use `pulumi config set azure-native:<option>` or pass options to the [constructor of `new azure-native.Provider`](/registry/packages/azure-native/api-docs/provider).
 
-| Option | Required?  | Description |
-| - | - | - |
-| `environment` | Required | The cloud environment to use. It can also be sourced from the ARM_ENVIRONMENT environment variable. Supported values are: `public` (default), `usgovernment`, `china`. |
-| `location` | Optional | The location to use. ResourceGroups will consult this property for a default location, if one was not supplied explicitly when defining the resource. It can also be sourced from the ARM_LOCATION_NAME environment variable. |
-| `clientCertificatePath` | Optional | The path to a certificate to use as client secret for Service Principal authentication. It can also be sourced from the `ARM_CLIENT_CERTIFICATE_PATH` environment variable. |
-| `clientId` | Optional | The client ID to use for OIDC or Service Principal authentication. It can also be sourced from the `ARM_CLIENT_ID` environment variable. |
-| `clientSecret` | Optional | The client secret to use for Service Principal authentication. It can also be sourced from the `ARM_CLIENT_SECRET` environment variable. |
-| `msiEndpoint` | Optional | The REST endpoint to retrieve an MSI token from. Pulumi will attempt to discover this automatically but it can be specified manually here. It can also be sourced from the `ARM_MSI_ENDPOINT` environment variable. |
-| `oidcToken` | Optional | The token to exchange for OIDC authentication. It can also be sourced from the `ARM_OIDC_TOKEN` environment variable. |
-| `oidcRequestToken` | Optional | The token to exchange for OIDC authentication. It can also be sourced from the `ARM_OIDC_REQUEST_TOKEN` environment variable. |
-| `oidcRequestUrl` | Optional | The token exchange URL for OIDC authentication. It can also be sourced from the `ARM_OIDC_REQUEST_URL` environment variable. |
-| `skipCredentialsValidation` | Optional | Prevents the provider from validating the given credentials. When set to true, `skip_provider_registration` is assumed. It can also be sourced from the `ARM_SKIP_CREDENTIALS_VALIDATION` environment variable; defaults to `false`. |
-| `skipProviderRegistration` | Optional | Prevents the provider from registering the ARM provider namespaces, this can be used if you don't wish to give the Active Directory Application permission to register resource providers. It can also be sourced from the `ARM_SKIP_PROVIDER_REGISTRATION` environment variable; defaults to `false`. |
-| `subscriptionId` | Optional | The subscription ID to use. It can also be sourced from the `ARM_SUBSCRIPTION_ID` environment variable. |
-| `tenantId` | Optional | The tenant ID to use for OIDC or Service Principal authentication. It can also be sourced from the `ARM_TENANT_ID` environment variable. |
-| `useMsi` | Optional | Set to true to authenticate using managed service identity. It can also be sourced from the `ARM_USE_MSI` environment variable. |
-| `useOidc` | Optional | Set to true to authenticate using OIDC. It can also be sourced from the `ARM_USE_OIDC` environment variable. |
+All configuration parameters are optional.
+
+| Option | Description |
+| - | - |
+| `auxiliaryTenantIds` | Any additional Tenant IDs which should be used for authentication. It can also be sourced from the `ARM_AUXILIARY_TENANT_IDS` environment variable. |
+| `clientCertificatePassword` | The password associated with the Client Certificate. For use when authenticating as a Service Principal using a Client Certificate. It can also be sourced from the `ARM_CLIENT_CERTIFICATE_PASSWORD` environment variable. |
+| `clientCertificatePath` | The path to a certificate to use as client secret for Service Principal authentication. It can also be sourced from the `ARM_CLIENT_CERTIFICATE_PATH` environment variable. |
+| `clientId` | The client ID to use for OIDC or Service Principal authentication. It can also be sourced from the `ARM_CLIENT_ID` environment variable. |
+| `clientSecret` | The client secret to use for Service Principal authentication. It can also be sourced from the `ARM_CLIENT_SECRET` environment variable. |
+| `disablePulumiPartnerId` | This will disable the Pulumi Partner ID which is used if a custom `partnerId` isn't specified. It can also be sourced from the `ARM_DISABLE_PULUMI_PARTNER_ID` environment variable. |
+| `environment` | The cloud environment to use. It can also be sourced from the ARM_ENVIRONMENT environment variable. Supported values are: `public` (default), `usgovernment`, `china`. |
+| `location` | The location to use. ResourceGroups will consult this property for a default location, if one was not supplied explicitly when defining the resource. |
+| `metadataHost` | The REST endpoint to retrieve an MSI token from. Pulumi will attempt to discover this automatically but it can be specified manually here. It can also be sourced from the `ARM_METADATA_HOSTNAME` environment variable. |
+| `msiEndpoint` | The REST endpoint to retrieve an MSI token from. Pulumi will attempt to discover this automatically but it can be specified manually here. It can also be sourced from the `ARM_MSI_ENDPOINT` environment variable. |
+| `oidcRequestToken` | The token to exchange for OIDC authentication. It can also be sourced from the `ARM_OIDC_REQUEST_TOKEN` environment variable. |
+| `oidcRequestUrl` | The token exchange URL for OIDC authentication. It can also be sourced from the `ARM_OIDC_REQUEST_URL` environment variable. |
+| `oidcToken` | The token to exchange for OIDC authentication. It can also be sourced from the `ARM_OIDC_TOKEN` environment variable. |
+| `partnerId` | A GUID/UUID that is registered with Microsoft to facilitate partner resource usage attribution. It can also be sourced from the `ARM_PARTNER_ID` environment variable. |
+| `subscriptionId` | The subscription ID to use. It can also be sourced from the `ARM_SUBSCRIPTION_ID` environment variable. |
+| `tenantId` | The tenant ID to use for OIDC or Service Principal authentication. It can also be sourced from the `ARM_TENANT_ID` environment variable. |
+| `useMsi` | Set to true to authenticate using managed service identity. It can also be sourced from the `ARM_USE_MSI` environment variable. |
+| `useOidc` | Set to true to authenticate using OIDC. It can also be sourced from the `ARM_USE_OIDC` environment variable. |

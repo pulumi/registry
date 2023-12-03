@@ -1,11 +1,11 @@
 ---
-title: "Provisioning an OIDC Provider in Azure for Pulumi Cloud | Python"
+title: "Provisioning an OIDC Provider in Azure for Pulumi Cloud | TypeScript"
 h1: "Provisioning an OIDC Provider in Azure for Pulumi Cloud"
 linktitle: "Provisioning an OIDC Provider in Azure for Pulumi Cloud"
-meta_desc: "Provisioning an OIDC Provider in Azure for Pulumi Cloud How-to Guide using Python"
+meta_desc: "Provisioning an OIDC Provider in Azure for Pulumi Cloud How-to Guide using TypeScript"
 no_edit_this_page: true
 cloud: azure
-language: py
+language: ts
 layout: package
 ---
 
@@ -13,7 +13,7 @@ layout: package
 <!-- To change it, please see https://github.com/pulumi/docs/tree/master/tools/mktutorial. -->
 
 <p class="mb-4 flex">
-    <a class="flex flex-wrap items-center rounded-md font-display text-lg text-white bg-blue-600 border-2 border-blue-600 px-2 mr-2 whitespace-no-wrap hover:text-white" style="height: 45px;" href="https://github.com/pulumi/examples/tree/master/azure-py-oidc-provider-pulumi-cloud" target="_blank">
+    <a class="flex flex-wrap items-center rounded-md font-display text-lg text-white bg-blue-600 border-2 border-blue-600 px-2 mr-2 whitespace-no-wrap hover:text-white" style="height: 45px;" href="https://github.com/pulumi/examples/tree/master/azure-ts-oidc-provider-pulumi-cloud" target="_blank">
         <span><i class="fab fa-github pr-2"></i> View Code</span>
     </a>
 </p>
@@ -35,7 +35,7 @@ Clone [the examples repo](https://github.com/pulumi/examples) and navigate to th
 
 ```bash
 git clone https://github.com/pulumi/examples.git
-cd examples/azure-py-oidc-provider-pulumi-cloud
+cd examples/azure-ts-oidc-provider-pulumi-cloud
 ```
 
 Next, to deploy the application and its infrastructure, follow these steps:
@@ -56,8 +56,7 @@ Next, to deploy the application and its infrastructure, follow these steps:
 1. Install requirements.
 
     ```bash
-    python3 -m venv venv
-    venv/bin/pip install -r requirements.txt
+    npm install
     ```
 
 1. Run `pulumi up -y`. Once the program completes, it will output a YAML template for you to use in the next step. 
@@ -106,4 +105,3 @@ Once you are done, you can destroy all of the resources as well as the stack:
 $ pulumi destroy
 $ pulumi stack rm
 ```
-

@@ -296,12 +296,14 @@ To learn more about projecting environment variables in Pulumi ESC, refer to the
 
 ### Authenticate with WebIdentity and OpenID Connect (OIDC)
 
-In this approach, you configure an AWS role to assume and a source for a web identity token, which is an OIDC ID token. The token is used to authenticate with AWS STS (Security Token Service) and obtain temporary credentials. The temporary credentials are then used to authenticate with AWS. Please refer to the AWS docs [Assume role with web identity](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-role.html#cli-configure-role-oidc) for more details.
+In this approach, you configure an AWS role to assume and a source for a web identity token, which is an OIDC ID token. The token is used to authenticate with AWS STS (Security Token Service) and obtain temporary credentials. The temporary credentials are then used to authenticate with AWS. Please refer to the AWS docs [About web identity federation](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_oidc.html) and [Assume role with web identity](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-role.html#cli-configure-role-oidc) for more details.
 
 This mode of authentication allows you to run Pulumi on a service that supports OIDC like GitHub, GitLab, or Azure DevOps, and access AWS resources without storing credentials.
 Refer to the particular service's documentation for how to configure the OIDC trust relationship, which is a one-time setup.
 
-For this provider, configure the `assumeRoleWithWebIdentity` object documented below, where you need at least `roleArn` for the role to assume and one of `webIdentityToken` or `webIdentityTokenFile` for the ID token.
+For this provider, you will need to configure the `assumeRoleWithWebIdentity` object documented in the [Configuration options](#configuration-options) section of this page. At a minimum, you will need to define the following values: 
+- `roleArn`: The ARN of the IAM role to be assumed
+- `webIdentityToken` **or** `webIdentityTokenFile`: The value of the ID token or the name of the file containing the value.
 
 
 ## Configuration options

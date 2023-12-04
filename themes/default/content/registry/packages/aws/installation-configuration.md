@@ -296,14 +296,28 @@ To learn more about projecting environment variables in Pulumi ESC, refer to the
 
 ### Authenticate with WebIdentity and OpenID Connect (OIDC)
 
-In this approach, you configure an AWS role to assume and a source for a web identity token, which is an OIDC ID token. The token is used to authenticate with AWS STS (Security Token Service) and obtain temporary credentials. The temporary credentials are then used to authenticate with AWS. Please refer to the AWS docs [About web identity federation](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_oidc.html) and [Assume role with web identity](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-role.html#cli-configure-role-oidc) for more details.
+In this approach, you configure an AWS role to assume and a source for a web identity token, which is an OIDC ID token. The token is used to authenticate with AWS and obtain temporary credentials. The temporary credentials are then used to access AWS resources. This mode of authentication allows you to run Pulumi on a service that supports OIDC like GitHub, GitLab, or Azure DevOps, and access AWS without storing credentials.
 
-This mode of authentication allows you to run Pulumi on a service that supports OIDC like GitHub, GitLab, or Azure DevOps, and access AWS resources without storing credentials.
-Refer to the particular service's documentation for how to configure the OIDC trust relationship, which is a one-time setup.
+Please refer to the AWS docs [About web identity federation](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_oidc.html) and [Assume role with web identity](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-role.html#cli-configure-role-oidc) for more details. Also, refer to the particular service's documentation for how to configure the OIDC trust relationship, which is a one-time setup.
 
-For this provider, you will need to configure the `assumeRoleWithWebIdentity` object documented in the [Configuration options](#configuration-options) section of this page. At a minimum, you will need to define the following values: 
-- `roleArn`: The ARN of the IAM role to be assumed
-- `webIdentityToken` **or** `webIdentityTokenFile`: The value of the ID token or the name of the file containing the value.
+If your Pulumi program runs on GitHub, you don't need to configure the identity token in most cases. Amazon have published [GitHub workflows action `configure-aws-credentials`](https://github.com/aws-actions/configure-aws-credentials/tree/v4/#OIDC) which handles the token. You only configure the role to assume in your GitHub workflow definition:
+```yaml
+  uses: aws-actions/configure-aws-credentials@v4
+  with:
+    aws-region: ${{ env.AWS_REGION }}
+    role-session-name: <NAME>
+    role-to-assume: arn:aws:iam::<ACCOUNT_ID>:role/<ROLE_NAME>
+```
+
+In other cases, you will need to configure the `assumeRoleWithWebIdentity` object documented in the [Configuration options](#configuration-options) section of this page. At a minimum, you will need to define the role to assume and the source of the token. In Pulumi config it should look this:
+```yaml
+config:
+  aws:assumeRoleWithWebIdentity:
+    roleArn: arn:aws:iam::<ACCOUNT_ID>:role/<ROLE_NAME>
+    # Define either webIdentityToken or webIdentityTokenFile
+    webIdentityToken: <your-web-identity-token>
+    webIdentityTokenFile: webidentitytokenfile.txt
+```
 
 
 ## Configuration options

@@ -95,7 +95,7 @@ configuration `azure-native:oidcToken` or the environment variable `ARM_OIDC_TOK
 - If your identity provider does not offer an ID token directly but it does offer a way to exchange a local bearer token for an ID
 token, you can configure the retrieval of the ID token by setting one of the following pairs:
   - both the `azure-native:oidcRequestToken` and `azure-native:oidcRequestUrl` Pulumi configuration values, **or**
-  - both the `ARM_OIDC_REQUEST_TOKEN` and `ARM_OIDC_REQUEST_TOKEN` environment variables.
+  - both the `ARM_OIDC_REQUEST_TOKEN` and `ARM_OIDC_REQUEST_URL` environment variables.
 
 Finally, configure the client and tenant IDs of your Azure Active Directory application. Refer to the
 [above Azure documentation](https://learn.microsoft.com/en-us/azure/active-directory/workload-identities/workload-identity-federation-create-trust?pivots=identity-wif-apps-methods-azp)

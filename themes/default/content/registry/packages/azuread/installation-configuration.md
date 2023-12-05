@@ -85,7 +85,7 @@ environment variable `ARM_USE_OIDC` to "true".
 Next, supply the provider with the ID token to exchange for an Azure token. There are three ways to do this depending on
 the service your program will run on.
 
-- In GitHub, we don't need to configure anything since
+- In GitHub, you don't need to configure anything since
 [GitHub sets the relevant environment variables](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect)
 `ACTIONS_ID_TOKEN_REQUEST_TOKEN` and `ACTIONS_ID_TOKEN_REQUEST_URL` by default and the provider reads them automatically. 
 

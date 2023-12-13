@@ -1,0 +1,14 @@
+category: Cloud
+component: false
+description: A Pulumi package for creating and managing qovery cloud resources.
+featured: false
+logo_url: ""
+name: qovery
+native: false
+package_status: public_preview
+publisher: dirien
+repo_url: https://github.com/dirien/pulumi-qovery
+schema_file_path: provider/cmd/pulumi-resource-qovery/schema.json
+title: Qovery
+updated_on: 1702289662
+version: v0.26.3

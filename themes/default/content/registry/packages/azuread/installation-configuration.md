@@ -82,21 +82,21 @@ This needs to be set up only once.
 To use OIDC, either set the Pulumi configuration `useOidc` via `pulumi config set azuread:useOidc true` or set the
 environment variable `ARM_USE_OIDC` to "true".
 
-Next, supply the provider with the ID token to exchange for an Azure token. There are three ways to do this depending on
-the service your program will run on.
-
-- In GitHub, you don't need to configure anything since
-[GitHub sets the relevant environment variables](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect)
-`ACTIONS_ID_TOKEN_REQUEST_TOKEN` and `ACTIONS_ID_TOKEN_REQUEST_URL` by default and the provider reads them automatically. 
-
+Next, supply the Pulumi provider with the ID token to exchange for an Azure token. This step depends on the service
+(identity provider) your program will run on.
+- On GitHub, you don't need to configure anything since
+[GitHub sets the relevant environment variables](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect) by default and the Pulumi provider reads them automatically.
 - Other identity providers offer a way to access the ID token. For instance, in GitLab CI/CD jobs, the ID token is available
-via the environment variable `GITLAB_OIDC_TOKEN`. Configure the Pulumi provider to use this token by setting the Pulumi
-configuration `azuread:oidcToken` or the environment variable `ARM_OIDC_TOKEN`.
+via the environment variable `GITLAB_OIDC_TOKEN`. Configure the Pulumi provider to use the ID token by assigning it to
+the Pulumi configuration `azuread:oidcToken` or the environment variable `ARM_OIDC_TOKEN`.
 
-- If your identity provider does not offer an ID token directly but it does offer a way to exchange a local bearer token for an ID
-token, you can configure the retrieval of the ID token by setting one of the following pairs:
+{{% notes type="info" %}}
+If your identity provider does not offer an ID token directly but it does offer a way to exchange a local bearer token
+for an ID token, you can configure this exchange as well. This is a rare case that you won't need unless the identity
+provider's documentation explicitly requests it. In that case, set one of the following pairs:
   - both the `azuread:oidcRequestToken` and `azuread:oidcRequestUrl` Pulumi configuration values, **or**
-  - both the `ARM_OIDC_REQUEST_TOKEN` and `ARM_OIDC_REQUEST_TOKEN` environment variables.
+  - both the `ARM_OIDC_REQUEST_TOKEN` and `ARM_OIDC_REQUEST_URL` environment variables.
+{{% /notes %}}
 
 Finally, configure the client and tenant IDs of your Azure Active Directory application. Refer to the
 [above Azure documentation](https://learn.microsoft.com/en-us/azure/active-directory/workload-identities/workload-identity-federation-create-trust?pivots=identity-wif-apps-methods-azp)

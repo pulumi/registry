@@ -67,20 +67,12 @@ $ az account set --subscription=<id>
 
 ### Authenticate with OpenID Connect (OIDC)
 
-OIDC allows you to establish a trust relationship between Azure and another identity provider such as GitHub. Once
-established, your program can exchange a token issued by the identity provider (in this case, GitHub) for an Azure
-token. Your Pulumi program running in, for instance, GitHub Actions CI, can then access Azure, without storing any
+OIDC allows you to establish a trust relationship between Azure and another identity provider such as GitHub or Azure DevOps. Once
+established, your program can exchange an ID token issued by the identity provider for an Azure token. Your Pulumi program running in
+the identity provider's service, for instance, GitHub Actions CI or Azure DevOps Pipelines, can then access Azure, without storing any
 secrets in GitHub.
 
 #### OIDC Azure Configuration
-
-To configure the trust relationship in Azure, please refer to
-[this guide](https://learn.microsoft.com/en-us/azure/active-directory/workload-identities/workload-identity-federation-create-trust?pivots=identity-wif-apps-methods-azp#github-actions).
-This needs to be set up only once.
-
-Additionally, you may find the
-[GitHub OIDC documentation](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect)
-helpful.
 
 To configure the trust relationship in Azure, please refer to
 [this guide](https://learn.microsoft.com/en-us/azure/active-directory/workload-identities/workload-identity-federation-create-trust?pivots=identity-wif-apps-methods-azp#github-actions).
@@ -94,7 +86,7 @@ environment variable `ARM_USE_OIDC` to "true".
 Next, supply the Pulumi provider with the ID token to exchange for an Azure token. This step depends on the service
 (identity provider) your program will run on.
 - On GitHub, you don't need to configure anything since
-[GitHub sets the relevant environment variables](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect) by default and the Pulumi provider reads them automatically. 
+[GitHub sets the relevant environment variables](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect) by default and the Pulumi provider reads them automatically.
 - Other identity providers offer a way to access the ID token. For instance, in GitLab CI/CD jobs, the ID token is available
 via the environment variable `GITLAB_OIDC_TOKEN`. Configure the Pulumi provider to use the ID token by assigning it to
 the Pulumi configuration `azure:oidcToken` or the environment variable `ARM_OIDC_TOKEN`.

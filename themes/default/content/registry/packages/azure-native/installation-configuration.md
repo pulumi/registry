@@ -18,12 +18,13 @@ The Azure Native provider is available as a package in all Pulumi languages:
 * .NET: [`Pulumi.AzureNative`](https://www.nuget.org/packages/Pulumi.AzureNative)
 * Java: [`com.pulumi.azurenative`](https://search.maven.org/search?q=com.pulumi.azure-native)
 
+
 ## Authentication Methods
 
 Pulumi can authenticate to Azure via several methods:
 - Azure CLI
-- Service Principal with a client secret or certificate
 - OpenID Connect (OIDC)
+- Service Principal with a client secret or certificate
 - Managed Service Identity (MSI)
 
 If you're running the Pulumi CLI locally, in a developer scenario, we recommend using the Azure CLI.  For team
@@ -33,6 +34,7 @@ environments, particularly in Continuous Integration, one of the other options i
 Authenticating using the CLI will not work for Service Principal logins (e.g.,
 `az login --service-principal`).  For such cases, authenticate using the Service Principal method instead.
 {{% /notes %}}
+
 
 ### Authenticate using the CLI
 
@@ -81,21 +83,21 @@ This needs to be set up only once.
 To use OIDC, either set the Pulumi configuration `useOidc` via `pulumi config set azure-native:useOidc true` or set the
 environment variable `ARM_USE_OIDC` to "true".
 
-Next, supply the provider with the ID token to exchange for an Azure token. There are three ways to do this depending on
-the service your program will run on.
-
-- In GitHub, you don't need to configure anything since
-[GitHub sets the relevant environment variables](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect)
-`ACTIONS_ID_TOKEN_REQUEST_TOKEN` and `ACTIONS_ID_TOKEN_REQUEST_URL` by default and the provider reads them automatically. 
-
+Next, supply the Pulumi provider with the ID token to exchange for an Azure token. This step depends on the service
+(identity provider) your program will run on.
+- On GitHub, you don't need to configure anything since
+[GitHub sets the relevant environment variables](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect) by default and the Pulumi provider reads them automatically.
 - Other identity providers offer a way to access the ID token. For instance, in GitLab CI/CD jobs, the ID token is available
-via the environment variable `GITLAB_OIDC_TOKEN`. Configure the Pulumi provider to use this token by setting the Pulumi
-configuration `azure-native:oidcToken` or the environment variable `ARM_OIDC_TOKEN`.
+via the environment variable `GITLAB_OIDC_TOKEN`. Configure the Pulumi provider to use the ID token by assigning it to
+the Pulumi configuration `azure-native:oidcToken` or the environment variable `ARM_OIDC_TOKEN`.
 
-- If your identity provider does not offer an ID token directly but it does offer a way to exchange a local bearer token for an ID
-token, you can configure the retrieval of the ID token by setting one of the following pairs:
+{{% notes type="info" %}}
+If your identity provider does not offer an ID token directly but it does offer a way to exchange a local bearer token
+for an ID token, you can configure this exchange as well. This is a rare case that you won't need unless the identity
+provider's documentation explicitly requests it. In that case, set one of the following pairs:
   - both the `azure-native:oidcRequestToken` and `azure-native:oidcRequestUrl` Pulumi configuration values, **or**
   - both the `ARM_OIDC_REQUEST_TOKEN` and `ARM_OIDC_REQUEST_URL` environment variables.
+{{% /notes %}}
 
 Finally, configure the client and tenant IDs of your Azure Active Directory application. Refer to the
 [above Azure documentation](https://learn.microsoft.com/en-us/azure/active-directory/workload-identities/workload-identity-federation-create-trust?pivots=identity-wif-apps-methods-azp)

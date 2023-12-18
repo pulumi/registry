@@ -20,6 +20,6 @@ Use `pulumi config set threefold:<option>`.
 
 The following configuration points are available for the `threefold` provider:
 
-* `threefold:mnemonic` (environment: `MNEMONIC`) -  This is the grid mnemonic. You can create a new account if you don't have [mnemonics](https://threefoldtech.github.io/info_grid/dashboard/portal/dashboard_portal_polkadot_create_account.html).
+* `threefold:mnemonic` (environment: `MNEMONIC`) -  This is the grid mnemonic. You can create a new account if you don't have [mnemonic](https://manual.grid.tf/getstarted/TF_Dashboard/TF_Dashboard.html#create-polkadot-extension-account).
 
 * `threefold:network` (environment: `NETWORK`) - specify which grid network (dev/qa/mainnet/testnet) to deploy on (default is dev).

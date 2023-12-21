@@ -4,7 +4,7 @@ meta_desc: Provides an overview of the threefold grid Provider for Pulumi.
 layout: package
 ---
 
-The Threefold Resource Provider for the [threefold grid](https://threefold.io) lets you manage your infrastructure using pulumi.
+The Threefold Resource Provider for the [threefold grid](https://threefold.io) lets you manage your infrastructure using Pulumi.
 
 ## Example
 
@@ -16,38 +16,38 @@ The Threefold Resource Provider for the [threefold grid](https://threefold.io) l
 package main
 
 import (
- "os"
+    "os"
 
- "github.com/pulumi/pulumi/sdk/v3/go/pulumi"
- "github.com/threefoldtech/pulumi-threefold/sdk/go/threefold"
- "github.com/threefoldtech/pulumi-threefold/sdk/go/threefold/provider"
+    "github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+    "github.com/threefoldtech/pulumi-threefold/sdk/go/threefold"
+    "github.com/threefoldtech/pulumi-threefold/sdk/go/threefold/provider"
 )
 
 func main() {
- pulumi.Run(func(ctx *pulumi.Context) error {
-  mnemonic := os.Getenv("MNEMONIC")
+    pulumi.Run(func(ctx *pulumi.Context) error {
+        mnemonic := os.Getenv("MNEMONIC")
 
-  _, err := threefold.NewProvider(ctx, "grid provider", &threefold.ProviderArgs{
-   Mnemonic: pulumi.String(mnemonic),
-  })
+        _, err := threefold.NewProvider(ctx, "grid provider", &threefold.ProviderArgs{
+            Mnemonic: pulumi.String(mnemonic),
+        })
 
-  if err != nil {
-   return err
-  }
+        if err != nil {
+            return err
+        }
 
-  _, err = provider.NewNetwork(ctx, "grid network", &provider.NetworkArgs{
-   Description: pulumi.String("example network"),
-   Ip_range:    pulumi.String("10.1.0.0/16"),
-   Name:        pulumi.String("example"),
-   Nodes:       pulumi.Array{pulumi.Int(14)},
-  })
+        _, err = provider.NewNetwork(ctx, "grid network", &provider.NetworkArgs{
+        Description: pulumi.String("example network"),
+            Ip_range:    pulumi.String("10.1.0.0/16"),
+            Name:        pulumi.String("example"),
+            Nodes:       pulumi.Array{pulumi.Int(14)},
+        })
 
-  if err != nil {
-   return err
-  }
+        if err != nil {
+            return err
+        }
 
-  return nil
- })
+        return nil
+    })
 }
 ```
 
@@ -55,7 +55,7 @@ func main() {
 
 {{% choosable language yaml %}}
 
-```yaml
+```yml
 name: pulumi-threefold
 runtime: yaml
 

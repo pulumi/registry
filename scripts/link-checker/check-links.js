@@ -250,12 +250,12 @@ function getDefaultExcludedKeywords() {
         "http://optout.networkadvertising.org/?c=1",
         "https://thenewstack.io/",
         "https://rootly.com/",
-        "https://www.vultr.com/",
+        "https://*.vultr.com/",
+        "https://vultr.com/",
         "https://shell.azure.com/",
         "https://portal.azure.com/",
         "https://www.noaa.gov/information-technology/open-data-dissemination",
         "https://www.inc.com/inc5000/2023",
-        "https://www.noaa.gov/information-technology/open-data-dissemination",
     ];
 }
 

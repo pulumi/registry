@@ -82,7 +82,7 @@ const aws = require("@pulumi/aws");
 const pulumi = require("@pulumi/pulumi");
 
 let size = "t2.micro";     // t2.micro is available in the AWS free tier
-let ami = aws.getAmiOutput({
+let ami = aws.ec2.getAmiOutput({
     filters: [{
       name: "name",
       values: ["amzn-ami-hvm-*"],
@@ -115,7 +115,7 @@ import * as aws from "@pulumi/aws";
 import * as pulumi from "@pulumi/pulumi";
 
 const size = "t2.micro";     // t2.micro is available in the AWS free tier
-const ami = aws.getAmiOutput({
+const ami = aws.ec2.getAmiOutput({
     filters: [{
         name: "name",
         values: ["amzn-ami-hvm-*"],

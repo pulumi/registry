@@ -185,10 +185,12 @@ async function onComplete(brokenLinks) {
       although valid and publicly available, is reported as a broken link.
     - A number of synthetic illustrative links come from our examples/tutorials.
     - GitLab 503s for requests for protected pages that don't contain certain cookies.
+    -
 */
 function getDefaultExcludedKeywords() {
     return [
         "/registry/packages/*/api-docs",
+        "https://www.pulumi.com/logos/pkg/*",
         "https://api.pulumi.com/",
         "https://github.com/pulls?",
         "https://github.com/pulumi/docs/edit/master",
@@ -253,6 +255,7 @@ function getDefaultExcludedKeywords() {
         "https://portal.azure.com/",
         "https://www.noaa.gov/information-technology/open-data-dissemination",
         "https://www.inc.com/inc5000/2023",
+        "https://www.noaa.gov/information-technology/open-data-dissemination",
     ];
 }
 

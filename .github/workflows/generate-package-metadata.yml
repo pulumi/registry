@@ -46,7 +46,7 @@ jobs:
         env:
           REPO_SLUG: ${{ matrix.repoSlug }}
       - name: Check if there is already an open PR
-        if: contains(needs.generate-packages-list.outputs.prs, "Publish Package Metadata ${{steps.regex-prov.outputs.group2}}" )  
+        if: contains(needs.generate-packages-list.outputs.prs, steps.regex-prov.outputs.group2 )  
         id: skip-run
         run: echo "skip=1" >> $GITHUB_OUTPUT
       - name: Check out registry repo

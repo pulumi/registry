@@ -10,7 +10,7 @@ The `OVH` provider must be configured with credentials to deploy and update reso
 ## Information
 
 Note that the [lbrlabs Pulumi OVH provider](https://github.com/lbrlabs/pulumi-ovh) is replaced by this official one. See the
-[Migration Guide](./how-to-guides/migration-from-lbrlabs-package.md) for more information.
+[Migration Guide](https://github.com/ovh/pulumi-ovh/blob/main/docs/how-to-guides/migration-from-lbrlabs-package.md) for more information.
 
 ## Example
 

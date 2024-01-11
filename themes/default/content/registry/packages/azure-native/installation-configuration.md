@@ -137,10 +137,8 @@ values:
     ARM_USE_OIDC: 'true'
     ARM_CLIENT_ID: ${azure.login.clientId}
     ARM_TENANT_ID: ${azure.login.tenantId}
-    ARM_OIDC_REQUEST_TOKEN: ${azure.login.oidc.token}
     ARM_OIDC_TOKEN: ${azure.login.oidc.token}
     ARM_SUBSCRIPTION_ID: ${azure.login.subscriptionId}
-    ARM_OIDC_REQUEST_URL: https://api.pulumi.com/oidc
 ```
 
 {{< notes type="info" >}}
@@ -165,9 +163,7 @@ values:
     azure-native:clientId: ${azure.login.clientId}
     azure-native:tenantId: ${azure.login.tenantId}
     azure-native:subscriptionId: ${azure.login.subscriptionId}
-    azure-native:oidcRequestToken: ${azure.login.oidc.token}
     azure-native:oidcToken: ${azure.login.oidc.token}
-    azure-native:oidcRequestUrl: https://api.pulumi.com/oidc
 ```
 
 This will ensure that those values are scoped only to your `pulumi` run.

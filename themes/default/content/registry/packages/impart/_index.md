@@ -57,8 +57,8 @@ const spec = new impart.Spec("spec", {
   sourceHash: hashSum.update(specSource).digest("hex"),
 });
 
-const binding = new impart.Binding("binding", {
-  name: "example_binding",
+const binding = new impart.Binding("apiBinding", {
+  name: "api_binding_example",
   port: 8080,
   hostname: "example.com",
   basePath: "/",
@@ -99,8 +99,8 @@ func main() {
 			return err
 		}
 
-		_, err = impart.NewBinding(ctx, "example", &impart.BindingArgs{
-			Name:     pulumi.String("binding_example"),
+		_, err = impart.NewApiBinding(ctx, "example", &impart.BindingArgs{
+			Name:     pulumi.String("api_binding_example"),
 			Port:     pulumi.Int(443),
 			SpecId:   spec.ID().ToStringOutput(),
 			Hostname: pulumi.String("example.com"),

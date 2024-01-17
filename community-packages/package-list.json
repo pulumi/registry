@@ -277,6 +277,10 @@
       "schemaFile": "provider/cmd/pulumi-resource-qovery/schema.json"
     },
     {
+      "repoSlug": "littlejo/pulumi-cilium",
+      "schemaFile": "provider/cmd/pulumi-resource-cilium/schema.json"
+    },
+    {
       "repoSlug": "pinecone-io/pulumi-pinecone",
       "schemaFile": "provider/cmd/pulumi-resource-pinecone/schema.json"
     }

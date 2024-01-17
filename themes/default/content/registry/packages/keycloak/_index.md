@@ -4,7 +4,7 @@ meta_desc: Provides an overview of the Keycloak Provider for Pulumi.
 layout: package
 ---
 
-The Keycloak provider for Pulumi can be used to provision any of the cloud resources available via [Keycloak](https://rancher.com/).
+The Keycloak provider for Pulumi can be used to provision any of the cloud resources available via [Keycloak](https://www.keycloak.org/).
 The Keycloak provider must be configured with credentials to deploy and update resources for Rancher.
 
 ## Example

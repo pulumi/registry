@@ -15,9 +15,15 @@ The Pulumi Cilium provider is available as a package in all Pulumi languages:
 
 The following configuration settings are available for the Cilium provider:
 
-* `cilium:configPath`
-* `cilium:context`
-* `cilium:namespace`
+* `cilium:configPath`: The path of your kubeconfig (Default: `~/kube/config`)
+* `cilium:context`: The context in your kubeconfig (Default context)
+* `cilium:namespace`: The namespace of cilium (Default: `kube-system`)
+
+You can setup like that:
+
+```bash
+pulumi config set cilium:configPath kubeconfig
+```
 
 ### Provider Binary
 

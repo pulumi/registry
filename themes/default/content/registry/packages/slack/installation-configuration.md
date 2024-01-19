@@ -1,7 +1,7 @@
 ---
 title: Slack Setup
 meta_desc: Installation and configuration for the Pulumi Slack provider.
-layout: package
+layout: installation
 ---
 
 ## Installation
@@ -12,7 +12,6 @@ The Pulumi Slack provider is available as a package in all Pulumi languages:
 * Python: [`pulumi_slack`](https://pypi.org/project/pulumi-slack/)
 * Go: [`github.com/pulumi/pulumi-slack/sdk/go/slack`](https://github.com/pulumi/pulumi-slack/tree/main/sdk/go/slack)
 * .NET: [`Pulumi.Slack`](https://www.nuget.org/packages/Pulumi.Slack)
-* Java: [`com.pulumi/slack`](https://central.sonatype.com/artifact/com.pulumi/slack)
 
 ## Setup
 
@@ -22,6 +21,6 @@ The Slack provider must be configured with a token to manage resources in a Slac
 
 Use `pulumi config set slack:token --secret` or set as an environment variable: `export SLACK_TOKEN="my-token"`
 
-| Option | Required? | Description |
+| Option | Required/Optional | Description |
 |-----|------|----|
 | `token`| Required | [Slack token](https://api.slack.com/apps)

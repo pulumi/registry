@@ -1,7 +1,7 @@
 ---
 title: Slack
 meta_desc: Provides an overview of the Slack Provider for Pulumi.
-layout: package
+layout: overview
 ---
 
 The Slack provider for Pulumi can be used to provision resources available in [Slack](https://www.slack.com/).

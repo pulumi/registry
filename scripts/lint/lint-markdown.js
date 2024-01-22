@@ -282,64 +282,11 @@ const opts = {
         // Files should end with a single newline character
         MD047: false,
     },
-    customRules: [
-        {
-            names: ["relref"],
-            description: "Using relrefs in registry are no longer supported. Use standard [Markdown](/links) instead",
-            tags: ["registry-relref"],
-            function: (params, onError) => {
-                params.tokens
-                    .filter(token => {
-                        return token.type === "inline";
-                    })
-                    .forEach(inline => {
-                        const line = inline.content;
-                        if (line.match(/{{<[ ]?relref ".+"[ ]?>}}/)) {
-                            onError({
-                                lineNumber: inline.lineNumber,
-                            });
-                        }
-                    })
-            },
-        },
-    ],
+    customRules: [],
 };
-
-function fixRelRef(files) {
-    
-    const needFix = Object.keys(files).filter( f => {
-        // if the array is empty the files contain no errors, so we can skip.
-        return files[f].length > 0
-    })
-
-    // update files that need fixing
-    needFix.forEach(f => {
-        const fileData = fs.readFileSync(f ,{encoding:'utf8', flag:'r'});
-        const pattern = /{{<\s*relref "([^"]+)"\s*>}}/g;
-        const fixedData = fileData.replace(pattern, (match, capture) => {
-            return capture;
-        });
-
-        fs.writeFileSync(f, fixedData);
-    })
-}
-
-function shouldFix() {
-    return process.argv.some((val) => {
-        return val === "--fix"
-    });
-}
 
 // Lint the markdown files.
 let result = markdownlint.sync(opts);
-
-if (shouldFix()) {
-    fixRelRef(result);
-
-    // re-run after fixes to re-lint after fixes
-    // have been applied.
-    result = markdownlint.sync(opts);
-}
 
 // Group the lint errors by file.
 const errors = groupLintErrorOutput(result);

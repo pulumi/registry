@@ -48,7 +48,7 @@ jobs:
         if: github.event.pull_request.user.login == 'pulumi-bot'
         run: |
           yarn install
-          make lint-fix
+          make lint
 
       - name: Commit Fix
         if: github.event.pull_request.user.login == 'pulumi-bot'

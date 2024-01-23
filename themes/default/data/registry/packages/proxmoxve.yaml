@@ -11,5 +11,5 @@ publisher: Daniel Muehlbachler-Pietrzykowski
 repo_url: https://github.com/muhlba91/pulumi-proxmoxve
 schema_file_path: provider/cmd/pulumi-resource-proxmoxve/schema.json
 title: Proxmox Virtual Environment (Proxmox VE)
-updated_on: 1704791267
-version: v5.21.0
+updated_on: 1705911705
+version: v5.22.0

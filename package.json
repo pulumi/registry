@@ -4,7 +4,7 @@
     "private": true,
     "repository": "git@github.com:pulumi/registry",
     "author": "Christian Nunciato <c@nunciato.org>",
-    "license": "MIT",
+    "license": "Apache-2.0",
     "dependencies": {
         "@fullhuman/postcss-purgecss": "^4.0.3",
         "@slack/web-api": "^5.12.0",

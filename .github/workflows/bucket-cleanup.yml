@@ -35,7 +35,7 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::388588623842:role/ContinuousDelivery
           role-session-name: docs-cleanup
-          role-duration-seconds: 14400
+          role-duration-seconds: 7200
           aws-region: us-west-2
 
       - name: Run make ci_bucket_cleanup

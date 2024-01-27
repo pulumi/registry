@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-spotinst
 schema_file_path: provider/cmd/pulumi-resource-spotinst/schema.json
 title: Spotinst
-updated_on: 1705600563
-version: v3.66.0
+updated_on: 1706306934
+version: v3.67.0

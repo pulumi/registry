@@ -270,7 +270,8 @@ values:
     AWS_REGION: <YOUR_AWS_REGION>
   pulumiConfig: # exposes Pulumi config values to the Pulumi CLI
     project:environment: 'dev'
-    aws:roleArn: 'arn:aws:iam::058111598222:role/OrganizationAccountAccessRole'
+    aws:assumeRole:
+      roleArn: 'arn:aws:iam::058111598222:role/OrganizationAccountAccessRole'
     aws:dynamodbEndpoint: 'dynamodb.us-east-2.amazonaws.com'
 ```
 
@@ -285,13 +286,14 @@ values:
           duration: 1h
           roleArn: <your-oidc-iam-role-arn>
           sessionName: pulumi-environments-session
-  pulumiConfig: 
+  pulumiConfig:
     aws:region: <YOUR_AWS_REGION>
     aws:accessKey: ${aws.login.accessKeyId}
     aws:secretKey: ${aws.login.secretAccessKey}
     aws:token: ${aws.login.sessionToken}
     project:environment: 'dev'
-    aws:roleArn: 'arn:aws:iam::058111598222:role/OrganizationAccountAccessRole'
+    aws:assumeRole:
+      roleArn: 'arn:aws:iam::058111598222:role/OrganizationAccountAccessRole'
     aws:dynamodbEndpoint: 'dynamodb.us-east-2.amazonaws.com'
 ```
 

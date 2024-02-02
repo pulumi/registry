@@ -53,7 +53,7 @@ func genResourceDocsForPackageFromRegistryMetadata(metadata pkg.PackageMeta, doc
 
 	glog.Infoln("Reading remote schema file from VCS")
 	// TODO: Support raw URLs for other VCS too.
-	schemaFileURL := "https://github.com/pulumi/pulumi-gcp/blob/test-import-newlines/provider/cmd/pulumi-resource-gcp/schema.json"
+	schemaFileURL := "https://raw.githubusercontent.com/pulumi/pulumi-gcp/test-import-newlines/provider/cmd/pulumi-resource-gcp/schema.json"
 	resp, err := http.Get(schemaFileURL)
 	if err != nil {
 		return errors.Wrapf(err, "reading schema file from VCS %s", schemaFileURL)

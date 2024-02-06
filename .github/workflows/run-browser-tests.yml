@@ -1,0 +1,22 @@
+name: "Scheduled jobs: Run browser tests"
+on:
+  schedule:
+    # Run every day at 2:00PM UTC.
+    - cron:  "0 14 * * *"
+  workflow_dispatch:
+jobs:
+  all:
+    env:
+      GOPATH: ${{ github.workspace }}/go
+    name: Run browser tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '18.x'
+
+      - name: Run browser tests
+        run: make run-browser-tests

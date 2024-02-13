@@ -31,6 +31,8 @@ dl {
         dt {
             @apply px-4 font-semibold text-gray-700 rounded-none border-gray-400;
 
+            overflow-wrap: break-word;
+
             @screen lg {
                 @apply rounded-l;
             }

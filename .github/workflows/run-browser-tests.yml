@@ -18,5 +18,11 @@ jobs:
         with:
           node-version: '18.x'
 
+      - name: Install Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: '0.111.0'
+          extended: true
+
       - name: Run browser tests
         run: make run-browser-tests

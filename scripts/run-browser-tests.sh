@@ -1,12 +1,19 @@
 #!/bin/bash
 
-MAX_RETRIES=3
-RETRY_COUNT=0
+
+CYPRESS_BASE_URL="${1:-https://www.pulumi.com}"
+SPEC_FILE="${2:-site-spec.js}"
+MAX_RETRIES="${3:-3}"
 
 # Retry on errors up to `MAX_RETRIES` with a 10 second sleep in between.
+RETRY_COUNT=0
 run_tests() {
     while true; do
-        CYPRESS_BASE_URL="$1" yarn run cypress run --headless
+        CYPRESS_BASE_URL="$CYPRESS_BASE_URL" yarn run cypress run --headless --spec "cypress/integration/${SPEC_FILE}"
+
+        # Alternatively, to run Cypress in a browser (which makes debugging much easier), you can run `cypress open`.
+        # CYPRESS_BASE_URL="$CYPRESS_BASE_URL" yarn run cypress open
+
         exit_code=$?
         if [ $exit_code -ne 0 ]; then
             RETRY_COUNT=$((RETRY_COUNT+1))

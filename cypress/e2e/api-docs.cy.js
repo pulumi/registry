@@ -1,6 +1,11 @@
 describe("Registry", () => {
 
-    describe("API docs", () => {
+    // By default, every Cypress test runs in "isolation", which is essentially like opening each call to `it()` in entirely
+    // new incognito browser tab. In general this is a good thing, but it comes with a big performance cost, so for tests like these
+    // that don't rely on clean state, it's much faster to turn isolation off, and just reuse the existing browser context between
+    // page visits. (Pages are still requested individually, but things like cookies and localStorage are persisted across requests,)
+    // More on how this all works at https://docs.cypress.io/guides/core-concepts/test-isolation.
+    describe("API docs", { testIsolation: false }, () => {
 
         const resources = [
             [ "aws.lambda.Function", "lambda/function" ],

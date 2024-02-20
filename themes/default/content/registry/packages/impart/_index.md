@@ -28,11 +28,18 @@ const spec = new impart.Spec("spec", {
   sourceHash: hashSum.update(specSource).digest("hex"),
 });
 
-const binding = new impart.Binding("binding", {
-  name: "example_binding",
+const apiBinding = new impart.ApiBinding("api_binding", {
+  name: "api_binding_example",
   port: 8080,
   hostname: "example.com",
   basePath: "/",
+  specId: spec.id,
+});
+
+const logBinding = new impart.LogBinding("log_binding", {
+  name: "log_binding_example",
+  patternType: "grok",
+  pattern: `%{HTTPDATE:timestamp} "(?:%{WORD:http_method}|-) (?:%{GREEDYDATA:request}|-) (?:HTTP/%{NUMBER:httpversion}|-( )?)" (?:%{NUMBER:response_code}|-)`,
   specId: spec.id,
 });
 ```
@@ -57,11 +64,18 @@ const spec = new impart.Spec("spec", {
   sourceHash: hashSum.update(specSource).digest("hex"),
 });
 
-const binding = new impart.Binding("apiBinding", {
+const apiBinding = new impart.ApiBinding("api_binding", {
   name: "api_binding_example",
   port: 8080,
   hostname: "example.com",
   basePath: "/",
+  specId: spec.id,
+});
+
+const logBinding = new impart.LogBinding("log_binding", {
+  name: "log_binding_example",
+  patternType: "grok",
+  pattern: `%{HTTPDATE:timestamp} "(?:%{WORD:http_method}|-) (?:%{GREEDYDATA:request}|-) (?:HTTP/%{NUMBER:httpversion}|-( )?)" (?:%{NUMBER:response_code}|-)`,
   specId: spec.id,
 });
 ```
@@ -99,7 +113,7 @@ func main() {
 			return err
 		}
 
-		_, err = impart.NewApiBinding(ctx, "example", &impart.BindingArgs{
+		_, err = impart.NewApiBinding(ctx, "example", &impart.ApiBindingArgs{
 			Name:     pulumi.String("api_binding_example"),
 			Port:     pulumi.Int(443),
 			SpecId:   spec.ID().ToStringOutput(),
@@ -109,6 +123,17 @@ func main() {
 		if err != nil {
 			return err
 		}
+
+		_, err = impart.NewLogBinding(ctx, "example", &impart.LogBindingArgs{
+			Name:        pulumi.String("log_binding_example"),
+			SpecId:      spec.ID().ToStringOutput(),
+			PatternType: pulumi.String("grok"),
+			Pattern:     pulumi.String(`%{HTTPDATE:timestamp} "(?:%{WORD:http_method}|-) (?:%{GREEDYDATA:request}|-) (?:HTTP/%{NUMBER:httpversion}|-( )?)" (?:%{NUMBER:response_code}|-)`),
+		})
+		if err != nil {
+			return err
+		}
+
 		return nil
 	})
 }

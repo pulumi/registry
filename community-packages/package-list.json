@@ -283,6 +283,10 @@
     {
       "repoSlug": "pinecone-io/pulumi-pinecone",
       "schemaFile": "provider/cmd/pulumi-resource-pinecone/schema.json"
+    },
+    {
+      "repoSlug": "pulumiverse/pulumi-cpln",
+      "schemaFile": "provider/cmd/pulumi-resource-cpln/schema.json"
     }
   ]
 }

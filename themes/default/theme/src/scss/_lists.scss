@@ -39,7 +39,10 @@ dl {
         }
 
         dd {
-            @apply bg-white rounded-none;
+            @apply bg-white rounded-none text-base font-normal leading-6;
+
+            font-family: "Inter";
+            color: #131314;
 
             p {
                 @apply my-0;

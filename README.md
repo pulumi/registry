@@ -63,15 +63,22 @@ We build the Pulumi website statically with Hugo, manage our Node.js dependencie
 
 ### Installing dependencies
 
-First, run `make ensure` to check for the appropriate tools, versions, and install any dependencies. The script will let you know if you're missing anything important.
+The prerequisites listed above need to be installed on your machine in order to serve the site.
+  1. Run `make ensure` to check for the appropriate tools, versions, and install any dependencies. The script will let you know if you're missing anything important.
+  
+  ```
+    make ensure
+  ```
 
-```
-make ensure
-```
+  1. Once that succeeds, run `make build_assets` to build assets the site depends on. This needs to be done before the first time you serve this repo, so they exist on your local machine.
+
+  ```
+    make build_assets
+  ```
 
 ### Running Hugo locally
 
-Once you've run `make ensure` successfully, you're ready to run the development server:
+Once you've run the above successfully, you're ready to run the development server:
 
 ```
 make serve

@@ -55,6 +55,16 @@ To use from .NET, install using `dotnet add package`:
 dotnet add package Pulumiverse.vercel
 ```
 
+### Provider Binary
+
+The Vercel provider binary is a third party binary. It can be installed using the `pulumi plugin` command.
+
+```bash
+pulumi plugin install resource vercel <version> --server github://api.github.com/pulumiverse
+```
+
+Replace the version string with your desired version, or omit it to install the latest version.
+
 ## Configuration
 
 The following configuration points are available for the `vercel` provider:

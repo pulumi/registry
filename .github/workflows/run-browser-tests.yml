@@ -13,6 +13,14 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: arn:aws:iam::571684982431:role/ContinuousDelivery
+          role-session-name: docs-deploy
+          role-duration-seconds: 7200
+          aws-region: us-west-2
+          
       - name: Install Node
         uses: actions/setup-node@v1
         with:

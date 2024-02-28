@@ -4,6 +4,9 @@ on:
     # Run every day at 2:00PM UTC.
     - cron:  "0 14 * * *"
   workflow_dispatch:
+permissions:
+      id-token: write   # This is required for requesting the JWT
+      contents: read    # This is required for actions/checkout
 jobs:
   all:
     env:
@@ -20,7 +23,7 @@ jobs:
           role-session-name: docs-deploy
           role-duration-seconds: 7200
           aws-region: us-west-2
-          
+
       - name: Install Node
         uses: actions/setup-node@v1
         with:

@@ -17,21 +17,28 @@ if (!(args[0] && args[1])) {
     process.exit(1)
 }
 
-console.log("Argument 1:", baseUrl);
-console.log("Argument 2:", spec);
-
 cp.exec(`CYPRESS_BASE_URL="${baseUrl}" yarn run cypress run --headless --reporter json --spec "./cypress/e2e/${spec}"`, processResults)
 
-function processResults(error, stdout, stderr) {
-    const out = stdout;
-    const startIndex = out.indexOf("{");
-    const endIndex = out.lastIndexOf("}");
-    const jsonString = out.substring(startIndex, endIndex + 1);
+async function processResults(error, stdout, stderr) {
+    // log full run output to runner console.
+    console.log(stdout);
+    const startIndex = stdout.indexOf("{");
+    const endIndex = stdout.lastIndexOf("}");
+    const jsonString = stdout.substring(startIndex, endIndex + 1);
     const results = JSON.parse(jsonString);
-    console.log(JSON.stringify(results, null, 2));
     const transformed = transformResults(results)
+    // Log JSON structure to the console.
     console.log(transformed);
-    pushS3(transformed);
+    await pushS3(transformed);
+
+    // The cli command error is trapped here since it is a sub process of this script.
+    // Checking if error here will enable us to mark this as a failed run by exiting
+    // unsuccessfully. Otherwise the run will always pass successfully regardless of
+    // the result of the cypress tests.
+    if (error) {
+        console.error("errors:", stderr);
+        process.exit(1)
+    }
 }
 
 function transformResults(results) {
@@ -76,7 +83,6 @@ function getRunUrl() {
     const repo = process.env.GITHUB_REPOSITORY;
     const runId = process.env.GITHUB_RUN_ID;
     const runAttempt = process.env.GITHUB_RUN_ATTEMPT;
-    // const workflow = process.env.GITHUB_WORKFLOW
 
     return serverUrl + "/" + repo + "/actions/runs/" + runId + "/attempts/" + runAttempt;
 }
@@ -93,21 +99,20 @@ function expandDate(dateString) {
 }
 
 // upload to S3 with yyyy/mm/dd prefix.
-function pushS3(obj) {
-    console.log("pushing to S3")
-    const s3 = new AWS.S3();
-
+async function pushS3(obj) {
+    const bucketName = 'pulumi-testing-e2e-test-results';
+    
     const jsonData = JSON.stringify(obj);
-
     // extract yyyy, mm, dd from date.
     const {year, month, day} = expandDate(obj.start);
-
+    
     // Write JSON to file
     const filename = 'results.json';
     fs.writeFileSync(filename, jsonData);
-
+    
     // Upload JSON file to S3 bucket
-    const bucketName = 'pulumi-testing-e2e-test-results';
+    console.log("pushing to S3")
+    const s3 = new AWS.S3();
     const key = `${year}/${month}/${day}/results.json`; 
 
     const uploadParams = {
@@ -116,12 +121,6 @@ function pushS3(obj) {
         Body: fs.createReadStream(filename)
     };
 
-    s3.upload(uploadParams, (err, data) => {
-        if (err) {
-            console.error("Error uploading file to s3:", err);
-        } else {
-            console.log("File uploaded successfully:", data.Location);
-        }
-    });
+    return s3.upload(uploadParams).promise();
 }
 

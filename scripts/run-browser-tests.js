@@ -19,6 +19,8 @@ cp.exec(`CYPRESS_BASE_URL="${baseUrl}" yarn run cypress run --headless --reporte
 async function processResults(error, stdout, stderr) {
     // log full run output to runner console.
     console.log(stdout);
+
+    // EXTREME HACK: Extracts JSON out of console output.
     const startIndex = stdout.indexOf("{");
     const endIndex = stdout.lastIndexOf("}");
     const jsonString = stdout.substring(startIndex, endIndex + 1);

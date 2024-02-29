@@ -1,7 +1,4 @@
-// e2e-run-tests.js
-const cypress = require('cypress')
 const cp = require('child_process');
-const { WebClient, LogLevel } = require('@slack/web-api');
 const fs = require('fs');
 const AWS = require('aws-sdk');
 

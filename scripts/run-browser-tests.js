@@ -56,7 +56,7 @@ function transformResults(results) {
     result["failedPages"] = Object.keys(pageMap).map(key => ({
         page: key,
         failures: pageMap[key],
-        tests: result.tests/1
+        tests: result.tests/50,
     }));
 
     result["failedPageCount"] = Object.keys(pageMap).length;

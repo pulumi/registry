@@ -14,7 +14,7 @@ if (!(args[0] && args[1])) {
     process.exit(1)
 }
 
-cp.exec(`CYPRESS_BASE_URL="${baseUrl}" yarn run cypress run --headless --reporter json --spec "./cypress/e2e/${spec}"`, processResults)
+cp.exec(`CYPRESS_BASE_URL="${baseUrl}" yarn run cypress run --headless --reporter cypress-multi-reporters --spec "./cypress/e2e/${spec}"`, processResults)
 
 async function processResults(error, stdout, stderr) {
     // log full run output to runner console.

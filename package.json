@@ -27,5 +27,8 @@
     },
     "scripts": {
         "minify-css": "node scripts/minify-css.js"
+    },
+    "devDependencies": {
+        "cypress-multi-reporters": "^1.6.4"
     }
 }

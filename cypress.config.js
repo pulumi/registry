@@ -6,5 +6,9 @@ module.exports = defineConfig({
             return require('./cypress/plugins/index.js')(on, config)
         },
         baseUrl: 'http://localhost:1313',
+        reporter: 'cypress-multi-reporters',
+        reporterOptions: {
+            configFile: 'reporter-config.json',
+        },
     },
 })

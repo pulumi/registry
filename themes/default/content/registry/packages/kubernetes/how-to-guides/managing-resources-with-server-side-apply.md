@@ -149,7 +149,7 @@ Users may opt into the previous default Client-side Apply (CSA) mode by setting 
 
 With Server-Side Apply mode enabled, you can "upsert" a resource; that is, update a resource if it already exists, or create it if it does not yet exist.
 
-If the resource already exists, that default behavior is for any conflicting values to be resolved with the value from the patch being applied (that is, the new version of the resource). If you would prefer to resolve conflicts using the value of the existing resource, add the `pulumi.com/patchForce` annotation:
+If the resource already exists, the default behavior is for any conflicting values to be resolved with the value from the patch being applied (that is, the new version of the resource). If you would prefer to resolve conflicts using the value of the existing resource, add the `pulumi.com/patchForce` annotation:
 
 {{< chooser language "typescript,python,go,csharp,java,yaml" >}}
 

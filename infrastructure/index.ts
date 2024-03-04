@@ -123,8 +123,6 @@ const e2eTestsBucketPolicy = new aws.s3.BucketPolicy("e2e-tests-bucket-policy", 
     }))
 });
 
-
-
 // websiteLogsBucket stores the request logs for incoming requests.
 const websiteLogsBucket = new aws.s3.Bucket(
     "website-logs-bucket",

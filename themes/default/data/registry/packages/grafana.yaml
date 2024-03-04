@@ -6,9 +6,9 @@ logo_url: https://raw.githubusercontent.com/pulumiverse/pulumi-grafana/main/asse
 name: grafana
 native: false
 package_status: public_preview
-publisher: Pulumiverse
+publisher: pulumiverse
 repo_url: https://github.com/pulumiverse/pulumi-grafana
 schema_file_path: provider/cmd/pulumi-resource-grafana/schema.json
 title: Grafana
-updated_on: 1698617601
-version: v0.2.0
+updated_on: 1709583735
+version: v0.2.1

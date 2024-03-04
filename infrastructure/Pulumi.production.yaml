@@ -1,5 +1,5 @@
 config:
   aws:region: us-west-2
   registry:websiteLogsBucketName: pulumi-regisry-production-logs
-  registry:e2eTestsBucketName: pulumi-api-docs-e2e-test-results-prodution
   registry:pathToOriginBucketMetadata: ../origin-bucket-metadata.json
+  registry:e2eTestsBucketName: pulumi-api-docs-e2e-test-results-prodution

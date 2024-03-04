@@ -33,10 +33,6 @@
       "schemaFile": "provider/cmd/pulumi-resource-hcp/schema.json"
     },
     {
-      "repoSlug": "lbrlabs/pulumi-scaleway",
-      "schemaFile": "provider/cmd/pulumi-resource-scaleway/schema.json"
-    },
-    {
       "repoSlug": "pulumi/pulumi-kubernetes-cert-manager",
       "schemaFile": "schema.json"
     },
@@ -85,20 +81,8 @@
       "schemaFile": "provider/cmd/pulumi-resource-ovh/schema.json"
     },
     {
-      "repoSlug": "lbrlabs/pulumi-grafana",
-      "schemaFile": "provider/cmd/pulumi-resource-grafana/schema.json"
-    },
-    {
-      "repoSlug": "lbrlabs/pulumi-launchdarkly",
-      "schemaFile": "provider/cmd/pulumi-resource-launchdarkly/schema.json"
-    },
-    {
       "repoSlug": "pulumi/pulumi-azure-static-website",
       "schemaFile": "schema.json"
-    },
-    {
-      "repoSlug": "lbrlabs/pulumi-harness",
-      "schemaFile": "provider/cmd/pulumi-resource-harness/schema.json"
     },
     {
       "repoSlug": "pulumi/pulumi-google-cloud-static-website",
@@ -116,10 +100,7 @@
       "repoSlug": "oun/pulumi-flux",
       "schemaFile": "provider/cmd/pulumi-resource-flux/schema.json"
     },
-    {
-      "repoSlug": "lbrlabs/pulumi-dynatrace",
-      "schemaFile": "provider/cmd/pulumi-resource-dynatrace/schema.json"
-    },
+
     {
       "repoSlug": "pulumiverse/pulumi-aquasec",
       "schemaFile": "provider/cmd/pulumi-resource-aquasec/schema.json"
@@ -209,20 +190,12 @@
       "schemaFile": "provider/cmd/pulumi-resource-mssql/schema.json"
     },
     {
-      "repoSlug": "lbrlabs/pulumi-vantage",
-      "schemaFile": "provider/cmd/pulumi-resource-vantage/schema.json"
-    },
-    {
       "repoSlug": "pulumiverse/pulumi-matchbox",
       "schemaFile": "provider/cmd/pulumi-resource-matchbox/schema.json"
     },
     {
       "repoSlug": "lbrlabs/pulumi-lbrlabs-eks",
       "schemaFile": "schema.yaml"
-    },
-    {
-      "repoSlug": "lbrlabs/pulumi-cockroach",
-      "schemaFile": "provider/cmd/pulumi-resource-cockroach/schema.json"
     },
     {
       "repoSlug": "port-labs/pulumi-port",
@@ -249,24 +222,12 @@
       "schemaFile": "provider/cmd/pulumi-resource-esxi-native/schema.json"
     },
     {
-      "repoSlug": "lbrlabs/pulumi-iosxe",
-      "schemaFile": "provider/cmd/pulumi-resource-iosxe/schema.json"
-    },
-    {
-      "repoSlug": "lbrlabs/pulumi-nxos",
-      "schemaFile": "provider/cmd/pulumi-resource-nxos/schema.json"
-    },
-    {
       "repoSlug": "pulumiverse/pulumi-acme",
       "schemaFile": "provider/cmd/pulumi-resource-acme/schema.json"
     },
     {
       "repoSlug": "threefoldtech/pulumi-threefold",
       "schemaFile": "provider/cmd/pulumi-resource-threefold/schema.json"
-    },
-    {
-      "repoSlug": "lbrlabs/pulumi-awscontroltower",
-      "schemaFile": "provider/cmd/pulumi-resource-awscontroltower/schema.json"
     },
     {
       "repoSlug": "pulumiverse/pulumi-talos",

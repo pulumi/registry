@@ -238,7 +238,7 @@ The Provider resource accepts the following [input](/docs/intro/concepts/inputs-
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
     </dt>
-    <dd>PEM-encoded content of Docker host CA certificate</dd><dt class="property-optional"
+    <dd>PEM-encoded content of Docker host CA certificate.</dd><dt class="property-optional"
             title="Optional">
         <span id="certmaterial_csharp">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#certmaterial_csharp" style="color: inherit; text-decoration: inherit;">Cert<wbr>Material</a>
@@ -246,7 +246,7 @@ The Provider resource accepts the following [input](/docs/intro/concepts/inputs-
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
     </dt>
-    <dd>PEM-encoded content of Docker client certificate</dd><dt class="property-optional"
+    <dd>PEM-encoded content of Docker client certificate.</dd><dt class="property-optional"
             title="Optional">
         <span id="certpath_csharp">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#certpath_csharp" style="color: inherit; text-decoration: inherit;">Cert<wbr>Path</a>
@@ -254,7 +254,8 @@ The Provider resource accepts the following [input](/docs/intro/concepts/inputs-
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
     </dt>
-    <dd>Path to directory with Docker TLS config</dd><dt class="property-optional"
+    <dd>Path to a directory with Docker TLS config. This directory is expected to contain <code>ca.pem</code>, <code>cert.pem</code>, and <code>key.pem</code>
+files.</dd><dt class="property-optional"
             title="Optional">
         <span id="host_csharp">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#host_csharp" style="color: inherit; text-decoration: inherit;">Host</a>
@@ -262,7 +263,7 @@ The Provider resource accepts the following [input](/docs/intro/concepts/inputs-
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
     </dt>
-    <dd>The Docker daemon address
+    <dd>The Docker daemon's address.
 It can also be sourced from the following environment variable: <code>DOCKER_HOST</code></dd><dt class="property-optional"
             title="Optional">
         <span id="keymaterial_csharp">
@@ -271,7 +272,7 @@ It can also be sourced from the following environment variable: <code>DOCKER_HOS
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
     </dt>
-    <dd>PEM-encoded content of Docker client private key</dd><dt class="property-optional"
+    <dd>PEM-encoded content of Docker client private key.</dd><dt class="property-optional"
             title="Optional">
         <span id="registryauth_csharp">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#registryauth_csharp" style="color: inherit; text-decoration: inherit;">Registry<wbr>Auth</a>
@@ -287,7 +288,8 @@ It can also be sourced from the following environment variable: <code>DOCKER_HOS
         <span class="property-indicator"></span>
         <span class="property-type">List&lt;string&gt;</span>
     </dt>
-    <dd>Additional SSH option flags to be appended when using <code>ssh://</code> protocol</dd></dl>
+    <dd>Additional SSH option flags to be appended when using <code>ssh://</code> protocol. The <code>ssh://</code> protocol is not supported for
+<code>buildx.Image</code> resources. Instead, use a <a href="https://docs.docker.com/build/drivers/remote/">remote</a> driver.</dd></dl>
 </pulumi-choosable>
 </div>
 
@@ -301,7 +303,7 @@ It can also be sourced from the following environment variable: <code>DOCKER_HOS
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
     </dt>
-    <dd>PEM-encoded content of Docker host CA certificate</dd><dt class="property-optional"
+    <dd>PEM-encoded content of Docker host CA certificate.</dd><dt class="property-optional"
             title="Optional">
         <span id="certmaterial_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#certmaterial_go" style="color: inherit; text-decoration: inherit;">Cert<wbr>Material</a>
@@ -309,7 +311,7 @@ It can also be sourced from the following environment variable: <code>DOCKER_HOS
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
     </dt>
-    <dd>PEM-encoded content of Docker client certificate</dd><dt class="property-optional"
+    <dd>PEM-encoded content of Docker client certificate.</dd><dt class="property-optional"
             title="Optional">
         <span id="certpath_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#certpath_go" style="color: inherit; text-decoration: inherit;">Cert<wbr>Path</a>
@@ -317,7 +319,8 @@ It can also be sourced from the following environment variable: <code>DOCKER_HOS
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
     </dt>
-    <dd>Path to directory with Docker TLS config</dd><dt class="property-optional"
+    <dd>Path to a directory with Docker TLS config. This directory is expected to contain <code>ca.pem</code>, <code>cert.pem</code>, and <code>key.pem</code>
+files.</dd><dt class="property-optional"
             title="Optional">
         <span id="host_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#host_go" style="color: inherit; text-decoration: inherit;">Host</a>
@@ -325,7 +328,7 @@ It can also be sourced from the following environment variable: <code>DOCKER_HOS
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
     </dt>
-    <dd>The Docker daemon address
+    <dd>The Docker daemon's address.
 It can also be sourced from the following environment variable: <code>DOCKER_HOST</code></dd><dt class="property-optional"
             title="Optional">
         <span id="keymaterial_go">
@@ -334,7 +337,7 @@ It can also be sourced from the following environment variable: <code>DOCKER_HOS
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
     </dt>
-    <dd>PEM-encoded content of Docker client private key</dd><dt class="property-optional"
+    <dd>PEM-encoded content of Docker client private key.</dd><dt class="property-optional"
             title="Optional">
         <span id="registryauth_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#registryauth_go" style="color: inherit; text-decoration: inherit;">Registry<wbr>Auth</a>
@@ -350,7 +353,8 @@ It can also be sourced from the following environment variable: <code>DOCKER_HOS
         <span class="property-indicator"></span>
         <span class="property-type">[]string</span>
     </dt>
-    <dd>Additional SSH option flags to be appended when using <code>ssh://</code> protocol</dd></dl>
+    <dd>Additional SSH option flags to be appended when using <code>ssh://</code> protocol. The <code>ssh://</code> protocol is not supported for
+<code>buildx.Image</code> resources. Instead, use a <a href="https://docs.docker.com/build/drivers/remote/">remote</a> driver.</dd></dl>
 </pulumi-choosable>
 </div>
 
@@ -364,7 +368,7 @@ It can also be sourced from the following environment variable: <code>DOCKER_HOS
         <span class="property-indicator"></span>
         <span class="property-type">String</span>
     </dt>
-    <dd>PEM-encoded content of Docker host CA certificate</dd><dt class="property-optional"
+    <dd>PEM-encoded content of Docker host CA certificate.</dd><dt class="property-optional"
             title="Optional">
         <span id="certmaterial_java">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#certmaterial_java" style="color: inherit; text-decoration: inherit;">cert<wbr>Material</a>
@@ -372,7 +376,7 @@ It can also be sourced from the following environment variable: <code>DOCKER_HOS
         <span class="property-indicator"></span>
         <span class="property-type">String</span>
     </dt>
-    <dd>PEM-encoded content of Docker client certificate</dd><dt class="property-optional"
+    <dd>PEM-encoded content of Docker client certificate.</dd><dt class="property-optional"
             title="Optional">
         <span id="certpath_java">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#certpath_java" style="color: inherit; text-decoration: inherit;">cert<wbr>Path</a>
@@ -380,7 +384,8 @@ It can also be sourced from the following environment variable: <code>DOCKER_HOS
         <span class="property-indicator"></span>
         <span class="property-type">String</span>
     </dt>
-    <dd>Path to directory with Docker TLS config</dd><dt class="property-optional"
+    <dd>Path to a directory with Docker TLS config. This directory is expected to contain <code>ca.pem</code>, <code>cert.pem</code>, and <code>key.pem</code>
+files.</dd><dt class="property-optional"
             title="Optional">
         <span id="host_java">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#host_java" style="color: inherit; text-decoration: inherit;">host</a>
@@ -388,7 +393,7 @@ It can also be sourced from the following environment variable: <code>DOCKER_HOS
         <span class="property-indicator"></span>
         <span class="property-type">String</span>
     </dt>
-    <dd>The Docker daemon address
+    <dd>The Docker daemon's address.
 It can also be sourced from the following environment variable: <code>DOCKER_HOST</code></dd><dt class="property-optional"
             title="Optional">
         <span id="keymaterial_java">
@@ -397,7 +402,7 @@ It can also be sourced from the following environment variable: <code>DOCKER_HOS
         <span class="property-indicator"></span>
         <span class="property-type">String</span>
     </dt>
-    <dd>PEM-encoded content of Docker client private key</dd><dt class="property-optional"
+    <dd>PEM-encoded content of Docker client private key.</dd><dt class="property-optional"
             title="Optional">
         <span id="registryauth_java">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#registryauth_java" style="color: inherit; text-decoration: inherit;">registry<wbr>Auth</a>
@@ -413,7 +418,8 @@ It can also be sourced from the following environment variable: <code>DOCKER_HOS
         <span class="property-indicator"></span>
         <span class="property-type">List&lt;String&gt;</span>
     </dt>
-    <dd>Additional SSH option flags to be appended when using <code>ssh://</code> protocol</dd></dl>
+    <dd>Additional SSH option flags to be appended when using <code>ssh://</code> protocol. The <code>ssh://</code> protocol is not supported for
+<code>buildx.Image</code> resources. Instead, use a <a href="https://docs.docker.com/build/drivers/remote/">remote</a> driver.</dd></dl>
 </pulumi-choosable>
 </div>
 
@@ -427,7 +433,7 @@ It can also be sourced from the following environment variable: <code>DOCKER_HOS
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
     </dt>
-    <dd>PEM-encoded content of Docker host CA certificate</dd><dt class="property-optional"
+    <dd>PEM-encoded content of Docker host CA certificate.</dd><dt class="property-optional"
             title="Optional">
         <span id="certmaterial_nodejs">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#certmaterial_nodejs" style="color: inherit; text-decoration: inherit;">cert<wbr>Material</a>
@@ -435,7 +441,7 @@ It can also be sourced from the following environment variable: <code>DOCKER_HOS
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
     </dt>
-    <dd>PEM-encoded content of Docker client certificate</dd><dt class="property-optional"
+    <dd>PEM-encoded content of Docker client certificate.</dd><dt class="property-optional"
             title="Optional">
         <span id="certpath_nodejs">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#certpath_nodejs" style="color: inherit; text-decoration: inherit;">cert<wbr>Path</a>
@@ -443,7 +449,8 @@ It can also be sourced from the following environment variable: <code>DOCKER_HOS
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
     </dt>
-    <dd>Path to directory with Docker TLS config</dd><dt class="property-optional"
+    <dd>Path to a directory with Docker TLS config. This directory is expected to contain <code>ca.pem</code>, <code>cert.pem</code>, and <code>key.pem</code>
+files.</dd><dt class="property-optional"
             title="Optional">
         <span id="host_nodejs">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#host_nodejs" style="color: inherit; text-decoration: inherit;">host</a>
@@ -451,7 +458,7 @@ It can also be sourced from the following environment variable: <code>DOCKER_HOS
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
     </dt>
-    <dd>The Docker daemon address
+    <dd>The Docker daemon's address.
 It can also be sourced from the following environment variable: <code>DOCKER_HOST</code></dd><dt class="property-optional"
             title="Optional">
         <span id="keymaterial_nodejs">
@@ -460,7 +467,7 @@ It can also be sourced from the following environment variable: <code>DOCKER_HOS
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
     </dt>
-    <dd>PEM-encoded content of Docker client private key</dd><dt class="property-optional"
+    <dd>PEM-encoded content of Docker client private key.</dd><dt class="property-optional"
             title="Optional">
         <span id="registryauth_nodejs">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#registryauth_nodejs" style="color: inherit; text-decoration: inherit;">registry<wbr>Auth</a>
@@ -476,7 +483,8 @@ It can also be sourced from the following environment variable: <code>DOCKER_HOS
         <span class="property-indicator"></span>
         <span class="property-type">string[]</span>
     </dt>
-    <dd>Additional SSH option flags to be appended when using <code>ssh://</code> protocol</dd></dl>
+    <dd>Additional SSH option flags to be appended when using <code>ssh://</code> protocol. The <code>ssh://</code> protocol is not supported for
+<code>buildx.Image</code> resources. Instead, use a <a href="https://docs.docker.com/build/drivers/remote/">remote</a> driver.</dd></dl>
 </pulumi-choosable>
 </div>
 
@@ -490,7 +498,7 @@ It can also be sourced from the following environment variable: <code>DOCKER_HOS
         <span class="property-indicator"></span>
         <span class="property-type">str</span>
     </dt>
-    <dd>PEM-encoded content of Docker host CA certificate</dd><dt class="property-optional"
+    <dd>PEM-encoded content of Docker host CA certificate.</dd><dt class="property-optional"
             title="Optional">
         <span id="cert_material_python">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#cert_material_python" style="color: inherit; text-decoration: inherit;">cert_<wbr>material</a>
@@ -498,7 +506,7 @@ It can also be sourced from the following environment variable: <code>DOCKER_HOS
         <span class="property-indicator"></span>
         <span class="property-type">str</span>
     </dt>
-    <dd>PEM-encoded content of Docker client certificate</dd><dt class="property-optional"
+    <dd>PEM-encoded content of Docker client certificate.</dd><dt class="property-optional"
             title="Optional">
         <span id="cert_path_python">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#cert_path_python" style="color: inherit; text-decoration: inherit;">cert_<wbr>path</a>
@@ -506,7 +514,8 @@ It can also be sourced from the following environment variable: <code>DOCKER_HOS
         <span class="property-indicator"></span>
         <span class="property-type">str</span>
     </dt>
-    <dd>Path to directory with Docker TLS config</dd><dt class="property-optional"
+    <dd>Path to a directory with Docker TLS config. This directory is expected to contain <code>ca.pem</code>, <code>cert.pem</code>, and <code>key.pem</code>
+files.</dd><dt class="property-optional"
             title="Optional">
         <span id="host_python">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#host_python" style="color: inherit; text-decoration: inherit;">host</a>
@@ -514,7 +523,7 @@ It can also be sourced from the following environment variable: <code>DOCKER_HOS
         <span class="property-indicator"></span>
         <span class="property-type">str</span>
     </dt>
-    <dd>The Docker daemon address
+    <dd>The Docker daemon's address.
 It can also be sourced from the following environment variable: <code>DOCKER_HOST</code></dd><dt class="property-optional"
             title="Optional">
         <span id="key_material_python">
@@ -523,7 +532,7 @@ It can also be sourced from the following environment variable: <code>DOCKER_HOS
         <span class="property-indicator"></span>
         <span class="property-type">str</span>
     </dt>
-    <dd>PEM-encoded content of Docker client private key</dd><dt class="property-optional"
+    <dd>PEM-encoded content of Docker client private key.</dd><dt class="property-optional"
             title="Optional">
         <span id="registry_auth_python">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#registry_auth_python" style="color: inherit; text-decoration: inherit;">registry_<wbr>auth</a>
@@ -539,7 +548,8 @@ It can also be sourced from the following environment variable: <code>DOCKER_HOS
         <span class="property-indicator"></span>
         <span class="property-type">Sequence[str]</span>
     </dt>
-    <dd>Additional SSH option flags to be appended when using <code>ssh://</code> protocol</dd></dl>
+    <dd>Additional SSH option flags to be appended when using <code>ssh://</code> protocol. The <code>ssh://</code> protocol is not supported for
+<code>buildx.Image</code> resources. Instead, use a <a href="https://docs.docker.com/build/drivers/remote/">remote</a> driver.</dd></dl>
 </pulumi-choosable>
 </div>
 
@@ -553,7 +563,7 @@ It can also be sourced from the following environment variable: <code>DOCKER_HOS
         <span class="property-indicator"></span>
         <span class="property-type">String</span>
     </dt>
-    <dd>PEM-encoded content of Docker host CA certificate</dd><dt class="property-optional"
+    <dd>PEM-encoded content of Docker host CA certificate.</dd><dt class="property-optional"
             title="Optional">
         <span id="certmaterial_yaml">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#certmaterial_yaml" style="color: inherit; text-decoration: inherit;">cert<wbr>Material</a>
@@ -561,7 +571,7 @@ It can also be sourced from the following environment variable: <code>DOCKER_HOS
         <span class="property-indicator"></span>
         <span class="property-type">String</span>
     </dt>
-    <dd>PEM-encoded content of Docker client certificate</dd><dt class="property-optional"
+    <dd>PEM-encoded content of Docker client certificate.</dd><dt class="property-optional"
             title="Optional">
         <span id="certpath_yaml">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#certpath_yaml" style="color: inherit; text-decoration: inherit;">cert<wbr>Path</a>
@@ -569,7 +579,8 @@ It can also be sourced from the following environment variable: <code>DOCKER_HOS
         <span class="property-indicator"></span>
         <span class="property-type">String</span>
     </dt>
-    <dd>Path to directory with Docker TLS config</dd><dt class="property-optional"
+    <dd>Path to a directory with Docker TLS config. This directory is expected to contain <code>ca.pem</code>, <code>cert.pem</code>, and <code>key.pem</code>
+files.</dd><dt class="property-optional"
             title="Optional">
         <span id="host_yaml">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#host_yaml" style="color: inherit; text-decoration: inherit;">host</a>
@@ -577,7 +588,7 @@ It can also be sourced from the following environment variable: <code>DOCKER_HOS
         <span class="property-indicator"></span>
         <span class="property-type">String</span>
     </dt>
-    <dd>The Docker daemon address
+    <dd>The Docker daemon's address.
 It can also be sourced from the following environment variable: <code>DOCKER_HOST</code></dd><dt class="property-optional"
             title="Optional">
         <span id="keymaterial_yaml">
@@ -586,7 +597,7 @@ It can also be sourced from the following environment variable: <code>DOCKER_HOS
         <span class="property-indicator"></span>
         <span class="property-type">String</span>
     </dt>
-    <dd>PEM-encoded content of Docker client private key</dd><dt class="property-optional"
+    <dd>PEM-encoded content of Docker client private key.</dd><dt class="property-optional"
             title="Optional">
         <span id="registryauth_yaml">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#registryauth_yaml" style="color: inherit; text-decoration: inherit;">registry<wbr>Auth</a>
@@ -602,7 +613,8 @@ It can also be sourced from the following environment variable: <code>DOCKER_HOS
         <span class="property-indicator"></span>
         <span class="property-type">List&lt;String&gt;</span>
     </dt>
-    <dd>Additional SSH option flags to be appended when using <code>ssh://</code> protocol</dd></dl>
+    <dd>Additional SSH option flags to be appended when using <code>ssh://</code> protocol. The <code>ssh://</code> protocol is not supported for
+<code>buildx.Image</code> resources. Instead, use a <a href="https://docs.docker.com/build/drivers/remote/">remote</a> driver.</dd></dl>
 </pulumi-choosable>
 </div>
 
@@ -721,7 +733,7 @@ Provider<wbr>Registry<wbr>Auth<pulumi-choosable type="language" values="python,g
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
     </dt>
-    <dd>Address of the registry</dd><dt class="property-optional"
+    <dd>Address of the registry.</dd><dt class="property-optional"
             title="Optional">
         <span id="authdisabled_csharp">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#authdisabled_csharp" style="color: inherit; text-decoration: inherit;">Auth<wbr>Disabled</a>
@@ -775,7 +787,7 @@ Provider<wbr>Registry<wbr>Auth<pulumi-choosable type="language" values="python,g
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
     </dt>
-    <dd>Address of the registry</dd><dt class="property-optional"
+    <dd>Address of the registry.</dd><dt class="property-optional"
             title="Optional">
         <span id="authdisabled_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#authdisabled_go" style="color: inherit; text-decoration: inherit;">Auth<wbr>Disabled</a>
@@ -829,7 +841,7 @@ Provider<wbr>Registry<wbr>Auth<pulumi-choosable type="language" values="python,g
         <span class="property-indicator"></span>
         <span class="property-type">String</span>
     </dt>
-    <dd>Address of the registry</dd><dt class="property-optional"
+    <dd>Address of the registry.</dd><dt class="property-optional"
             title="Optional">
         <span id="authdisabled_java">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#authdisabled_java" style="color: inherit; text-decoration: inherit;">auth<wbr>Disabled</a>
@@ -883,7 +895,7 @@ Provider<wbr>Registry<wbr>Auth<pulumi-choosable type="language" values="python,g
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
     </dt>
-    <dd>Address of the registry</dd><dt class="property-optional"
+    <dd>Address of the registry.</dd><dt class="property-optional"
             title="Optional">
         <span id="authdisabled_nodejs">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#authdisabled_nodejs" style="color: inherit; text-decoration: inherit;">auth<wbr>Disabled</a>
@@ -937,7 +949,7 @@ Provider<wbr>Registry<wbr>Auth<pulumi-choosable type="language" values="python,g
         <span class="property-indicator"></span>
         <span class="property-type">str</span>
     </dt>
-    <dd>Address of the registry</dd><dt class="property-optional"
+    <dd>Address of the registry.</dd><dt class="property-optional"
             title="Optional">
         <span id="auth_disabled_python">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#auth_disabled_python" style="color: inherit; text-decoration: inherit;">auth_<wbr>disabled</a>
@@ -991,7 +1003,7 @@ Provider<wbr>Registry<wbr>Auth<pulumi-choosable type="language" values="python,g
         <span class="property-indicator"></span>
         <span class="property-type">String</span>
     </dt>
-    <dd>Address of the registry</dd><dt class="property-optional"
+    <dd>Address of the registry.</dd><dt class="property-optional"
             title="Optional">
         <span id="authdisabled_yaml">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#authdisabled_yaml" style="color: inherit; text-decoration: inherit;">auth<wbr>Disabled</a>

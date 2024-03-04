@@ -15,12 +15,102 @@ no_edit_this_page: true
 A Docker image built using buildx -- Docker's interface to the improved
 BuildKit backend.
 
+## Stability
+
 **This resource is experimental and subject to change.**
 
 API types are unstable. Subsequent releases _may_ require manual edits
 to your state file(s) in order to adopt API changes.
 
+`retainOnDelete: true` is recommended with this resource until it is
+stable. This enables future API changes to be adopted more easily by renaming
+resources.
+
 Only use this resource if you understand and accept the risks.
+
+## Migrating v3 and v4 Image resources
+
+The `buildx.Image` resource provides a superset of functionality over the `Image` resources available in versions 3 and 4 of the Pulumi Docker provider.
+Existing `Image` resources can be converted to `build.Image` resources with minor modifications.
+
+### Behavioral differences
+
+There are several key behavioral differences to keep in mind when transitioning images to the new `buildx.Image` resource.
+
+#### Previews
+
+Version `3.x` of the Pulumi Docker provider always builds images during preview operations.
+This is helpful as a safeguard to prevent "broken" images from merging, but users found the behavior unnecessarily redundant when running previews and updates locally.
+
+Version `4.x` changed build-on-preview behavior to be opt-in.
+By default, `v4.x` `Image` resources do _not_ build during previews, but this behavior can be toggled with the `buildOnPreview` option.
+Some users felt this made previews in CI less helpful because they no longer detected bad images by default.
+
+The default behavior of the `buildx.Image` resource has been changed to strike a better balance between CI use cases and manual updates.
+By default, Pulumi will now only build `buildx.Image` resources during previews when it detects a CI environment like GitHub Actions.
+Previews run in non-CI environments will not build images.
+This behavior is still configurable with `buildOnPreview`.
+
+#### Push behavior
+
+Versions `3.x` and `4.x` of the Pulumi Docker provider attempt to push images to remote registries by default.
+They expose a `skipPush: true` option to disable pushing.
+
+The `buildx.Image` resource matches the Docker CLI's behavior and does not push images anywhere by default.
+
+To push images to a registry you can include `push: true` (equivalent to Docker's `--push` flag) or configure an `export` of type `registry` (equivalent to Docker's `--output type=registry`).
+Like Docker, if an image is configured without exports you will see a warning with instructions for how to enable pushing, but the build will still proceed normally.
+
+#### Secrets
+
+Version `3.x` of the Pulumi Docker provider supports secrets by way of the `extraOptions` field.
+
+Version `4.x` of the Pulumi Docker provider does not support secrets.
+
+The `buildx.Image` resource supports secrets but does not require those secrets to exist on-disk or in environment variables.
+Instead, they should be passed directly as values.
+(Please be sure to familiarize yourself with Pulumi's [native secret handling](https://www.pulumi.com/docs/concepts/secrets/).)
+Pulumi also provides [ESC](https://www.pulumi.com/product/esc/) to make it easier to share secrets across stacks and environments.
+
+#### Caching
+
+Version `3.x` of the Pulumi Docker provider exposes `cacheFrom: bool | { stages: [...] }`.
+It builds targets individually and pushes them to separate images for caching.
+
+Version `4.x` exposes a similar parameter `cacheFrom: { images: [...] }` which pushes and pulls inline caches.
+
+Both versions 3 and 4 require specific environment variables to be set and deviate from Docker's native caching behavior.
+This can result in inefficient builds due to unnecessary image pulls, repeated file transfers, etc.
+
+The `buildx.Image` resource delegates all caching behavior to Docker.
+`cacheFrom` and `cacheTo` options (equivalent to Docker's `--cache-to` and `--cache-from`) are exposed and provide additional cache targets, such as local disk, S3 storage, etc.
+
+#### Outputs
+
+TODO:
+
+#### Tag deletion and refreshes
+
+Versions 3 and 4 of Pulumi Docker provider do not delete tags when the `Image` resource is deleted, nor do they confirm expected tags exist during `refresh` operations.
+
+The `buidx.Image` will query your registries during `refresh` to ensure the expected tags exist.
+If any are missing a subsequent `update` will push them.
+
+When a `buildx.Image` is deleted, it will _attempt_ to also delete any pushed tags.
+Deletion of remote tags is not guaranteed, because not all registries currently support this operation (`docker.io` in particular).
+
+Use the [`retainOnDelete: true`](https://www.pulumi.com/docs/concepts/options/retainondelete/) option if you do not want tags deleted.
+
+### Example migration
+
+Examples of "fully-featured" `v3` and `v4` `Image` resources are shown below, along with an example `buildx.Image` resource showing how they would look after migration.
+
+The `v3` resource leverages `buildx` via a `DOCKER_BUILDKIT` environment variable and CLI flags passed in with `extraOption`.
+After migration, the environment variable is no longer needed and CLI flags are now properties on the `buildx.Image`.
+In almost all cases, properties of `buildx.Image` are named after the Docker CLI flag they correspond to.
+
+The `v4` resource is less functional than its `v3` counterpart because it lacks the flexibility of `extraOptions`.
+It it is shown with parameters similar to the `v3` example for completeness.
 
 
 <div><pulumi-examples>
@@ -28,6 +118,565 @@ Only use this resource if you understand and accept the risks.
 ## Example Usage
 
 <div><pulumi-chooser type="language" options="typescript,python,go,csharp,java,yaml"></pulumi-chooser></div>
+
+
+### v3/v4 migration
+
+
+<div>
+<pulumi-choosable type="language" values="csharp">
+
+Coming soon!
+
+</pulumi-choosable>
+</div>
+
+
+<div>
+<pulumi-choosable type="language" values="go">
+
+Coming soon!
+
+</pulumi-choosable>
+</div>
+
+
+<div>
+<pulumi-choosable type="language" values="java">
+
+Coming soon!
+
+</pulumi-choosable>
+</div>
+
+
+<div>
+<pulumi-choosable type="language" values="python">
+
+Coming soon!
+
+</pulumi-choosable>
+</div>
+
+
+<div>
+<pulumi-choosable type="language" values="typescript">
+
+
+```typescript
+
+// v3 Image
+const v3 = new docker.Image("v3-image", {
+  imageName: "myregistry.com/user/repo:latest",
+  localImageName: "local-tag",
+  skipPush: false,
+  build: {
+    dockerfile: "./Dockerfile",
+    context: "../app",
+    target: "mytarget",
+    args: {
+      MY_BUILD_ARG: "foo",
+    },
+    env: {
+      DOCKER_BUILDKIT: "1",
+    },
+    extraOptions: [
+      "--cache-from",
+      "type=registry,myregistry.com/user/repo:cache",
+      "--cache-to",
+      "type=registry,myregistry.com/user/repo:cache",
+      "--add-host",
+      "metadata.google.internal:169.254.169.254",
+      "--secret",
+      "id=mysecret,src=/local/secret",
+      "--ssh",
+      "default=/home/runner/.ssh/id_ed25519",
+      "--network",
+      "host",
+      "--platform",
+      "linux/amd64",
+    ],
+  },
+  registry: {
+    server: "myregistry.com",
+    username: "username",
+    password: pulumi.secret("password"),
+  },
+});
+
+// v3 Image after migrating to buildx.Image
+const v3Migrated = new docker.buildx.Image("v3-to-buildx", {
+    tags: ["myregistry.com/user/repo:latest", "local-tag"],
+    push: true,
+    dockerfile: {
+        location: "./Dockerfile",
+    },
+    context: {
+        location: "../app",
+    },
+    targets: ["mytarget"],
+    buildArgs: {
+        MY_BUILD_ARG: "foo",
+    },
+    cacheFrom: [{ registry: { ref: "myregistry.com/user/repo:cache" } }],
+    cacheTo: [{ registry: { ref: "myregistry.com/user/repo:cache" } }],
+    secrets: {
+        mysecret: "value",
+    },
+    addHosts: ["metadata.google.internal:169.254.169.254"],
+    ssh: {
+        default: ["/home/runner/.ssh/id_ed25519"],
+    },
+    network: "host",
+    platforms: ["linux/amd64"],
+    registries: [{
+        address: "myregistry.com",
+        username: "username",
+        password: pulumi.secret("password"),
+    }],
+});
+
+
+// v4 Image
+const v4 = new docker.Image("v4-image", {
+    imageName: "myregistry.com/user/repo:latest",
+    skipPush: false,
+    build: {
+        dockerfile: "./Dockerfile",
+        context: "../app",
+        target: "mytarget",
+        args: {
+            MY_BUILD_ARG: "foo",
+        },
+        cacheFrom: {
+            images: ["myregistry.com/user/repo:cache"],
+        },
+        addHosts: ["metadata.google.internal:169.254.169.254"],
+        network: "host",
+        platform: "linux/amd64",
+    },
+    buildOnPreview: true,
+    registry: {
+        server: "myregistry.com",
+        username: "username",
+        password: pulumi.secret("password"),
+    },
+});
+
+// v4 Image after migrating to buildx.Image
+const v4Migrated = new docker.buildx.Image("v4-to-buildx", {
+    tags: ["myregistry.com/user/repo:latest"],
+    push: true,
+    dockerfile: {
+        location: "./Dockerfile",
+    },
+    context: {
+        location: "../app",
+    },
+    targets: ["mytarget"],
+    buildArgs: {
+        MY_BUILD_ARG: "foo",
+    },
+    cacheFrom: [{ registry: { ref: "myregistry.com/user/repo:cache" } }],
+    cacheTo: [{ registry: { ref: "myregistry.com/user/repo:cache" } }],
+    addHosts: ["metadata.google.internal:169.254.169.254"],
+    network: "host",
+    platforms: ["linux/amd64"],
+    registries: [{
+        address: "myregistry.com",
+        username: "username",
+        password: pulumi.secret("password"),
+    }],
+});
+
+```
+
+
+</pulumi-choosable>
+</div>
+
+
+<div>
+<pulumi-choosable type="language" values="yaml">
+
+Coming soon!
+
+</pulumi-choosable>
+</div>
+
+
+
+
+### Push to AWS ECR with caching
+
+
+<div>
+<pulumi-choosable type="language" values="csharp">
+
+```csharp
+using System.Collections.Generic;
+using System.Linq;
+using Pulumi;
+using Aws = Pulumi.Aws;
+using Docker = Pulumi.Docker;
+
+return await Deployment.RunAsync(() => 
+{
+    var ecrRepository = new Aws.Ecr.Repository("ecr-repository");
+
+    var authToken = Aws.Ecr.GetAuthorizationToken.Invoke(new()
+    {
+        RegistryId = ecrRepository.RegistryId,
+    });
+
+    var myImage = new Docker.Buildx.Image("my-image", new()
+    {
+        CacheFrom = new[]
+        {
+            new Docker.Buildx.Inputs.CacheFromEntryArgs
+            {
+                Registry = new Docker.Buildx.Inputs.CacheFromRegistryArgs
+                {
+                    Ref = ecrRepository.RepositoryUrl.Apply(repositoryUrl => $"{repositoryUrl}:cache"),
+                },
+            },
+        },
+        CacheTo = new[]
+        {
+            new Docker.Buildx.Inputs.CacheToEntryArgs
+            {
+                Registry = new Docker.Buildx.Inputs.CacheToRegistryArgs
+                {
+                    ImageManifest = true,
+                    OciMediaTypes = true,
+                    Ref = ecrRepository.RepositoryUrl.Apply(repositoryUrl => $"{repositoryUrl}:cache"),
+                },
+            },
+        },
+        Context = new Docker.Buildx.Inputs.BuildContextArgs
+        {
+            Location = "./app",
+        },
+        Dockerfile = new Docker.Buildx.Inputs.DockerfileArgs
+        {
+            Location = "./Dockerfile",
+        },
+        Push = true,
+        Registries = new[]
+        {
+            new Docker.Buildx.Inputs.RegistryAuthArgs
+            {
+                Address = ecrRepository.RepositoryUrl,
+                Password = authToken.Apply(getAuthorizationTokenResult => getAuthorizationTokenResult.Password),
+                Username = authToken.Apply(getAuthorizationTokenResult => getAuthorizationTokenResult.UserName),
+            },
+        },
+        Tags = new[]
+        {
+            ecrRepository.RepositoryUrl.Apply(repositoryUrl => $"{repositoryUrl}:latest"),
+        },
+    });
+
+});
+
+```
+
+
+</pulumi-choosable>
+</div>
+
+
+<div>
+<pulumi-choosable type="language" values="go">
+
+```go
+package main
+
+import (
+	"fmt"
+
+	"github.com/pulumi/pulumi-aws/sdk/v6/go/aws/ecr"
+	"github.com/pulumi/pulumi-docker/sdk/v4/go/docker/buildx"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		ecrRepository, err := ecr.NewRepository(ctx, "ecr-repository", nil)
+		if err != nil {
+			return err
+		}
+		authToken := ecr.GetAuthorizationTokenOutput(ctx, ecr.GetAuthorizationTokenOutputArgs{
+			RegistryId: ecrRepository.RegistryId,
+		}, nil)
+		_, err = buildx.NewImage(ctx, "my-image", &buildx.ImageArgs{
+			CacheFrom: buildx.CacheFromEntryArray{
+				&buildx.CacheFromEntryArgs{
+					Registry: &buildx.CacheFromRegistryArgs{
+						Ref: ecrRepository.RepositoryUrl.ApplyT(func(repositoryUrl string) (string, error) {
+							return fmt.Sprintf("%v:cache", repositoryUrl), nil
+						}).(pulumi.StringOutput),
+					},
+				},
+			},
+			CacheTo: buildx.CacheToEntryArray{
+				&buildx.CacheToEntryArgs{
+					Registry: &buildx.CacheToRegistryArgs{
+						ImageManifest: pulumi.Bool(true),
+						OciMediaTypes: pulumi.Bool(true),
+						Ref: ecrRepository.RepositoryUrl.ApplyT(func(repositoryUrl string) (string, error) {
+							return fmt.Sprintf("%v:cache", repositoryUrl), nil
+						}).(pulumi.StringOutput),
+					},
+				},
+			},
+			Context: &buildx.BuildContextArgs{
+				Location: pulumi.String("./app"),
+			},
+			Dockerfile: &buildx.DockerfileArgs{
+				Location: pulumi.String("./Dockerfile"),
+			},
+			Push: pulumi.Bool(true),
+			Registries: buildx.RegistryAuthArray{
+				&buildx.RegistryAuthArgs{
+					Address: ecrRepository.RepositoryUrl,
+					Password: authToken.ApplyT(func(authToken ecr.GetAuthorizationTokenResult) (*string, error) {
+						return &authToken.Password, nil
+					}).(pulumi.StringPtrOutput),
+					Username: authToken.ApplyT(func(authToken ecr.GetAuthorizationTokenResult) (*string, error) {
+						return &authToken.UserName, nil
+					}).(pulumi.StringPtrOutput),
+				},
+			},
+			Tags: pulumi.StringArray{
+				ecrRepository.RepositoryUrl.ApplyT(func(repositoryUrl string) (string, error) {
+					return fmt.Sprintf("%v:latest", repositoryUrl), nil
+				}).(pulumi.StringOutput),
+			},
+		})
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+}
+```
+
+
+</pulumi-choosable>
+</div>
+
+
+<div>
+<pulumi-choosable type="language" values="java">
+
+```java
+package generated_program;
+
+import com.pulumi.Context;
+import com.pulumi.Pulumi;
+import com.pulumi.core.Output;
+import com.pulumi.aws.ecr.Repository;
+import com.pulumi.aws.ecr.EcrFunctions;
+import com.pulumi.aws.ecr.inputs.GetAuthorizationTokenArgs;
+import com.pulumi.docker.buildx.Image;
+import com.pulumi.docker.buildx.ImageArgs;
+import com.pulumi.docker.buildx.inputs.CacheFromEntryArgs;
+import com.pulumi.docker.buildx.inputs.CacheFromRegistryArgs;
+import com.pulumi.docker.buildx.inputs.CacheToEntryArgs;
+import com.pulumi.docker.buildx.inputs.CacheToRegistryArgs;
+import com.pulumi.docker.buildx.inputs.BuildContextArgs;
+import com.pulumi.docker.buildx.inputs.DockerfileArgs;
+import com.pulumi.docker.buildx.inputs.RegistryAuthArgs;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+public class App {
+    public static void main(String[] args) {
+        Pulumi.run(App::stack);
+    }
+
+    public static void stack(Context ctx) {
+        var ecrRepository = new Repository("ecrRepository");
+
+        final var authToken = EcrFunctions.getAuthorizationToken(GetAuthorizationTokenArgs.builder()
+            .registryId(ecrRepository.registryId())
+            .build());
+
+        var myImage = new Image("myImage", ImageArgs.builder()        
+            .cacheFrom(CacheFromEntryArgs.builder()
+                .registry(CacheFromRegistryArgs.builder()
+                    .ref(ecrRepository.repositoryUrl().applyValue(repositoryUrl -> String.format("%s:cache", repositoryUrl)))
+                    .build())
+                .build())
+            .cacheTo(CacheToEntryArgs.builder()
+                .registry(CacheToRegistryArgs.builder()
+                    .imageManifest(true)
+                    .ociMediaTypes(true)
+                    .ref(ecrRepository.repositoryUrl().applyValue(repositoryUrl -> String.format("%s:cache", repositoryUrl)))
+                    .build())
+                .build())
+            .context(BuildContextArgs.builder()
+                .location("./app")
+                .build())
+            .dockerfile(DockerfileArgs.builder()
+                .location("./Dockerfile")
+                .build())
+            .push(true)
+            .registries(RegistryAuthArgs.builder()
+                .address(ecrRepository.repositoryUrl())
+                .password(authToken.applyValue(getAuthorizationTokenResult -> getAuthorizationTokenResult).applyValue(authToken -> authToken.applyValue(getAuthorizationTokenResult -> getAuthorizationTokenResult.password())))
+                .username(authToken.applyValue(getAuthorizationTokenResult -> getAuthorizationTokenResult).applyValue(authToken -> authToken.applyValue(getAuthorizationTokenResult -> getAuthorizationTokenResult.userName())))
+                .build())
+            .tags(ecrRepository.repositoryUrl().applyValue(repositoryUrl -> String.format("%s:latest", repositoryUrl)))
+            .build());
+
+    }
+}
+```
+
+
+</pulumi-choosable>
+</div>
+
+
+<div>
+<pulumi-choosable type="language" values="python">
+
+```python
+import pulumi
+import pulumi_aws as aws
+import pulumi_docker as docker
+
+ecr_repository = aws.ecr.Repository("ecr-repository")
+auth_token = aws.ecr.get_authorization_token_output(registry_id=ecr_repository.registry_id)
+my_image = docker.buildx.Image("my-image",
+    cache_from=[docker.buildx.CacheFromEntryArgs(
+        registry=docker.buildx.CacheFromRegistryArgs(
+            ref=ecr_repository.repository_url.apply(lambda repository_url: f"{repository_url}:cache"),
+        ),
+    )],
+    cache_to=[docker.buildx.CacheToEntryArgs(
+        registry=docker.buildx.CacheToRegistryArgs(
+            image_manifest=True,
+            oci_media_types=True,
+            ref=ecr_repository.repository_url.apply(lambda repository_url: f"{repository_url}:cache"),
+        ),
+    )],
+    context=docker.buildx.BuildContextArgs(
+        location="./app",
+    ),
+    dockerfile=docker.buildx.DockerfileArgs(
+        location="./Dockerfile",
+    ),
+    push=True,
+    registries=[docker.buildx.RegistryAuthArgs(
+        address=ecr_repository.repository_url,
+        password=auth_token.password,
+        username=auth_token.user_name,
+    )],
+    tags=[ecr_repository.repository_url.apply(lambda repository_url: f"{repository_url}:latest")])
+```
+
+
+</pulumi-choosable>
+</div>
+
+
+<div>
+<pulumi-choosable type="language" values="typescript">
+
+
+```typescript
+import * as pulumi from "@pulumi/pulumi";
+import * as aws from "@pulumi/aws";
+import * as docker from "@pulumi/docker";
+
+const ecrRepository = new aws.ecr.Repository("ecr-repository", {});
+const authToken = aws.ecr.getAuthorizationTokenOutput({
+    registryId: ecrRepository.registryId,
+});
+const myImage = new docker.buildx.Image("my-image", {
+    cacheFrom: [{
+        registry: {
+            ref: pulumi.interpolate`${ecrRepository.repositoryUrl}:cache`,
+        },
+    }],
+    cacheTo: [{
+        registry: {
+            imageManifest: true,
+            ociMediaTypes: true,
+            ref: pulumi.interpolate`${ecrRepository.repositoryUrl}:cache`,
+        },
+    }],
+    context: {
+        location: "./app",
+    },
+    dockerfile: {
+        location: "./Dockerfile",
+    },
+    push: true,
+    registries: [{
+        address: ecrRepository.repositoryUrl,
+        password: authToken.apply(authToken => authToken.password),
+        username: authToken.apply(authToken => authToken.userName),
+    }],
+    tags: [pulumi.interpolate`${ecrRepository.repositoryUrl}:latest`],
+});
+```
+
+
+</pulumi-choosable>
+</div>
+
+
+<div>
+<pulumi-choosable type="language" values="yaml">
+
+```yaml
+description: Push to AWS ECR with caching
+name: ecr
+resources:
+    ecr-repository:
+        type: aws:ecr:Repository
+    my-image:
+        properties:
+            cacheFrom:
+                - registry:
+                    ref: ${ecr-repository.repositoryUrl}:cache
+            cacheTo:
+                - registry:
+                    imageManifest: true
+                    ociMediaTypes: true
+                    ref: ${ecr-repository.repositoryUrl}:cache
+            context:
+                location: ./app
+            dockerfile:
+                location: ./Dockerfile
+            push: true
+            registries:
+                - address: ${ecr-repository.repositoryUrl}
+                  password: ${auth-token.password}
+                  username: ${auth-token.userName}
+            tags:
+                - ${ecr-repository.repositoryUrl}:latest
+        type: docker:buildx/image:Image
+runtime: yaml
+variables:
+    auth-token:
+        fn::aws:ecr:getAuthorizationToken:
+            registryId: ${ecr-repository.registryId}
+```
+
+
+</pulumi-choosable>
+</div>
+
+
 
 
 ### Multi-platform image
@@ -49,10 +698,6 @@ return await Deployment.RunAsync(() =>
         Context = new Docker.Buildx.Inputs.BuildContextArgs
         {
             Location = "app",
-        },
-        Dockerfile = new Docker.Buildx.Inputs.DockerfileArgs
-        {
-            Location = "app/Dockerfile",
         },
         Platforms = new[]
         {
@@ -87,9 +732,6 @@ func main() {
 			Context: &buildx.BuildContextArgs{
 				Location: pulumi.String("app"),
 			},
-			Dockerfile: &buildx.DockerfileArgs{
-				Location: pulumi.String("app/Dockerfile"),
-			},
 			Platforms: buildx.PlatformArray{
 				buildx.Platform_Plan9_amd64,
 				buildx.Platform_Plan9_386,
@@ -120,7 +762,6 @@ import com.pulumi.core.Output;
 import com.pulumi.docker.buildx.Image;
 import com.pulumi.docker.buildx.ImageArgs;
 import com.pulumi.docker.buildx.inputs.BuildContextArgs;
-import com.pulumi.docker.buildx.inputs.DockerfileArgs;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
@@ -137,9 +778,6 @@ public class App {
         var image = new Image("image", ImageArgs.builder()        
             .context(BuildContextArgs.builder()
                 .location("app")
-                .build())
-            .dockerfile(DockerfileArgs.builder()
-                .location("app/Dockerfile")
                 .build())
             .platforms(            
                 "plan9/amd64",
@@ -166,9 +804,6 @@ image = docker.buildx.Image("image",
     context=docker.buildx.BuildContextArgs(
         location="app",
     ),
-    dockerfile=docker.buildx.DockerfileArgs(
-        location="app/Dockerfile",
-    ),
     platforms=[
         docker.buildx/image.Platform.PLAN9_AMD64,
         docker.buildx/image.Platform.PLAN9_386,
@@ -191,9 +826,6 @@ import * as docker from "@pulumi/docker";
 const image = new docker.buildx.Image("image", {
     context: {
         location: "app",
-    },
-    dockerfile: {
-        location: "app/Dockerfile",
     },
     platforms: [
         docker.buildx.image.Platform.Plan9_amd64,
@@ -218,8 +850,6 @@ resources:
         properties:
             context:
                 location: app
-            dockerfile:
-                location: app/Dockerfile
             platforms:
                 - plan9/amd64
                 - plan9/386
@@ -254,20 +884,7 @@ return await Deployment.RunAsync(() =>
         {
             Location = "app",
         },
-        Dockerfile = new Docker.Buildx.Inputs.DockerfileArgs
-        {
-            Location = "app/Dockerfile",
-        },
-        Exports = new[]
-        {
-            new Docker.Buildx.Inputs.ExportEntryArgs
-            {
-                Registry = new Docker.Buildx.Inputs.ExportRegistryArgs
-                {
-                    OciMediaTypes = true,
-                },
-            },
-        },
+        Push = true,
         Registries = new[]
         {
             new Docker.Buildx.Inputs.RegistryAuthArgs
@@ -276,6 +893,10 @@ return await Deployment.RunAsync(() =>
                 Password = dockerHubPassword,
                 Username = "pulumibot",
             },
+        },
+        Tags = new[]
+        {
+            "docker.io/pulumi/pulumi:3.107.0",
         },
     });
 
@@ -305,22 +926,16 @@ func main() {
 			Context: &buildx.BuildContextArgs{
 				Location: pulumi.String("app"),
 			},
-			Dockerfile: &buildx.DockerfileArgs{
-				Location: pulumi.String("app/Dockerfile"),
-			},
-			Exports: buildx.ExportEntryArray{
-				&buildx.ExportEntryArgs{
-					Registry: &buildx.ExportRegistryArgs{
-						OciMediaTypes: pulumi.Bool(true),
-					},
-				},
-			},
+			Push: pulumi.Bool(true),
 			Registries: buildx.RegistryAuthArray{
 				&buildx.RegistryAuthArgs{
 					Address:  pulumi.String("docker.io"),
 					Password: pulumi.Any(dockerHubPassword),
 					Username: pulumi.String("pulumibot"),
 				},
+			},
+			Tags: pulumi.StringArray{
+				pulumi.String("docker.io/pulumi/pulumi:3.107.0"),
 			},
 		})
 		if err != nil {
@@ -348,9 +963,6 @@ import com.pulumi.core.Output;
 import com.pulumi.docker.buildx.Image;
 import com.pulumi.docker.buildx.ImageArgs;
 import com.pulumi.docker.buildx.inputs.BuildContextArgs;
-import com.pulumi.docker.buildx.inputs.DockerfileArgs;
-import com.pulumi.docker.buildx.inputs.ExportEntryArgs;
-import com.pulumi.docker.buildx.inputs.ExportRegistryArgs;
 import com.pulumi.docker.buildx.inputs.RegistryAuthArgs;
 import java.util.List;
 import java.util.ArrayList;
@@ -369,19 +981,13 @@ public class App {
             .context(BuildContextArgs.builder()
                 .location("app")
                 .build())
-            .dockerfile(DockerfileArgs.builder()
-                .location("app/Dockerfile")
-                .build())
-            .exports(ExportEntryArgs.builder()
-                .registry(ExportRegistryArgs.builder()
-                    .ociMediaTypes(true)
-                    .build())
-                .build())
+            .push(true)
             .registries(RegistryAuthArgs.builder()
                 .address("docker.io")
                 .password(dockerHubPassword)
                 .username("pulumibot")
                 .build())
+            .tags("docker.io/pulumi/pulumi:3.107.0")
             .build());
 
     }
@@ -404,19 +1010,13 @@ image = docker.buildx.Image("image",
     context=docker.buildx.BuildContextArgs(
         location="app",
     ),
-    dockerfile=docker.buildx.DockerfileArgs(
-        location="app/Dockerfile",
-    ),
-    exports=[docker.buildx.ExportEntryArgs(
-        registry=docker.buildx.ExportRegistryArgs(
-            oci_media_types=True,
-        ),
-    )],
+    push=True,
     registries=[docker.buildx.RegistryAuthArgs(
         address="docker.io",
         password=docker_hub_password,
         username="pulumibot",
-    )])
+    )],
+    tags=["docker.io/pulumi/pulumi:3.107.0"])
 ```
 
 
@@ -436,19 +1036,13 @@ const image = new docker.buildx.Image("image", {
     context: {
         location: "app",
     },
-    dockerfile: {
-        location: "app/Dockerfile",
-    },
-    exports: [{
-        registry: {
-            ociMediaTypes: true,
-        },
-    }],
+    push: true,
     registries: [{
         address: "docker.io",
         password: dockerHubPassword,
         username: "pulumibot",
     }],
+    tags: ["docker.io/pulumi/pulumi:3.107.0"],
 });
 ```
 
@@ -468,15 +1062,13 @@ resources:
         properties:
             context:
                 location: app
-            dockerfile:
-                location: app/Dockerfile
-            exports:
-                - registry:
-                    ociMediaTypes: true
+            push: true
             registries:
                 - address: docker.io
                   password: ${dockerHubPassword}
                   username: pulumibot
+            tags:
+                - docker.io/pulumi/pulumi:3.107.0
         type: docker:buildx/image:Image
 runtime: yaml
 ```
@@ -529,10 +1121,6 @@ return await Deployment.RunAsync(() =>
         {
             Location = "app",
         },
-        Dockerfile = new Docker.Buildx.Inputs.DockerfileArgs
-        {
-            Location = "app/Dockerfile",
-        },
     });
 
 });
@@ -576,9 +1164,6 @@ func main() {
 			Context: &buildx.BuildContextArgs{
 				Location: pulumi.String("app"),
 			},
-			Dockerfile: &buildx.DockerfileArgs{
-				Location: pulumi.String("app/Dockerfile"),
-			},
 		})
 		if err != nil {
 			return err
@@ -609,7 +1194,6 @@ import com.pulumi.docker.buildx.inputs.CacheFromLocalArgs;
 import com.pulumi.docker.buildx.inputs.CacheToEntryArgs;
 import com.pulumi.docker.buildx.inputs.CacheToLocalArgs;
 import com.pulumi.docker.buildx.inputs.BuildContextArgs;
-import com.pulumi.docker.buildx.inputs.DockerfileArgs;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
@@ -637,9 +1221,6 @@ public class App {
                 .build())
             .context(BuildContextArgs.builder()
                 .location("app")
-                .build())
-            .dockerfile(DockerfileArgs.builder()
-                .location("app/Dockerfile")
                 .build())
             .build());
 
@@ -673,9 +1254,6 @@ image = docker.buildx.Image("image",
     )],
     context=docker.buildx.BuildContextArgs(
         location="app",
-    ),
-    dockerfile=docker.buildx.DockerfileArgs(
-        location="app/Dockerfile",
     ))
 ```
 
@@ -707,9 +1285,6 @@ const image = new docker.buildx.Image("image", {
     context: {
         location: "app",
     },
-    dockerfile: {
-        location: "app/Dockerfile",
-    },
 });
 ```
 
@@ -736,8 +1311,6 @@ resources:
                     mode: max
             context:
                 location: app
-            dockerfile:
-                location: app/Dockerfile
         type: docker:buildx/image:Image
 runtime: yaml
 ```
@@ -773,10 +1346,6 @@ return await Deployment.RunAsync(() =>
         {
             Location = "app",
         },
-        Dockerfile = new Docker.Buildx.Inputs.DockerfileArgs
-        {
-            Location = "app/Dockerfile",
-        },
     });
 
 });
@@ -808,9 +1377,6 @@ func main() {
 			Context: &buildx.BuildContextArgs{
 				Location: pulumi.String("app"),
 			},
-			Dockerfile: &buildx.DockerfileArgs{
-				Location: pulumi.String("app/Dockerfile"),
-			},
 		})
 		if err != nil {
 			return err
@@ -837,7 +1403,6 @@ import com.pulumi.core.Output;
 import com.pulumi.docker.buildx.Image;
 import com.pulumi.docker.buildx.ImageArgs;
 import com.pulumi.docker.buildx.inputs.BuildContextArgs;
-import com.pulumi.docker.buildx.inputs.DockerfileArgs;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
@@ -855,9 +1420,6 @@ public class App {
             .buildArgs(Map.of("SET_ME_TO_TRUE", "true"))
             .context(BuildContextArgs.builder()
                 .location("app")
-                .build())
-            .dockerfile(DockerfileArgs.builder()
-                .location("app/Dockerfile")
                 .build())
             .build());
 
@@ -883,9 +1445,6 @@ image = docker.buildx.Image("image",
     },
     context=docker.buildx.BuildContextArgs(
         location="app",
-    ),
-    dockerfile=docker.buildx.DockerfileArgs(
-        location="app/Dockerfile",
     ))
 ```
 
@@ -909,9 +1468,6 @@ const image = new docker.buildx.Image("image", {
     context: {
         location: "app",
     },
-    dockerfile: {
-        location: "app/Dockerfile",
-    },
 });
 ```
 
@@ -933,8 +1489,6 @@ resources:
                 SET_ME_TO_TRUE: "true"
             context:
                 location: app
-            dockerfile:
-                location: app/Dockerfile
         type: docker:buildx/image:Image
 runtime: yaml
 ```
@@ -965,10 +1519,6 @@ return await Deployment.RunAsync(() =>
         Context = new Docker.Buildx.Inputs.BuildContextArgs
         {
             Location = "app",
-        },
-        Dockerfile = new Docker.Buildx.Inputs.DockerfileArgs
-        {
-            Location = "app/Dockerfile",
         },
         Targets = new[]
         {
@@ -1003,9 +1553,6 @@ func main() {
 			Context: &buildx.BuildContextArgs{
 				Location: pulumi.String("app"),
 			},
-			Dockerfile: &buildx.DockerfileArgs{
-				Location: pulumi.String("app/Dockerfile"),
-			},
 			Targets: pulumi.StringArray{
 				pulumi.String("build-me"),
 				pulumi.String("also-build-me"),
@@ -1036,7 +1583,6 @@ import com.pulumi.core.Output;
 import com.pulumi.docker.buildx.Image;
 import com.pulumi.docker.buildx.ImageArgs;
 import com.pulumi.docker.buildx.inputs.BuildContextArgs;
-import com.pulumi.docker.buildx.inputs.DockerfileArgs;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
@@ -1053,9 +1599,6 @@ public class App {
         var image = new Image("image", ImageArgs.builder()        
             .context(BuildContextArgs.builder()
                 .location("app")
-                .build())
-            .dockerfile(DockerfileArgs.builder()
-                .location("app/Dockerfile")
                 .build())
             .targets(            
                 "build-me",
@@ -1082,9 +1625,6 @@ image = docker.buildx.Image("image",
     context=docker.buildx.BuildContextArgs(
         location="app",
     ),
-    dockerfile=docker.buildx.DockerfileArgs(
-        location="app/Dockerfile",
-    ),
     targets=[
         "build-me",
         "also-build-me",
@@ -1107,9 +1647,6 @@ import * as docker from "@pulumi/docker";
 const image = new docker.buildx.Image("image", {
     context: {
         location: "app",
-    },
-    dockerfile: {
-        location: "app/Dockerfile",
     },
     targets: [
         "build-me",
@@ -1134,8 +1671,6 @@ resources:
         properties:
             context:
                 location: app
-            dockerfile:
-                location: app/Dockerfile
             targets:
                 - build-me
                 - also-build-me
@@ -1177,10 +1712,6 @@ return await Deployment.RunAsync(() =>
                 } },
             },
         },
-        Dockerfile = new Docker.Buildx.Inputs.DockerfileArgs
-        {
-            Location = "app/Dockerfile",
-        },
     });
 
 });
@@ -1214,9 +1745,6 @@ func main() {
 					},
 				},
 			},
-			Dockerfile: &buildx.DockerfileArgs{
-				Location: pulumi.String("app/Dockerfile"),
-			},
 		})
 		if err != nil {
 			return err
@@ -1243,7 +1771,6 @@ import com.pulumi.core.Output;
 import com.pulumi.docker.buildx.Image;
 import com.pulumi.docker.buildx.ImageArgs;
 import com.pulumi.docker.buildx.inputs.BuildContextArgs;
-import com.pulumi.docker.buildx.inputs.DockerfileArgs;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
@@ -1261,9 +1788,6 @@ public class App {
             .context(BuildContextArgs.builder()
                 .location("app")
                 .named(Map.of("golang:latest", Map.of("location", "docker-image://golang@sha256:b8e62cf593cdaff36efd90aa3a37de268e6781a2e68c6610940c48f7cdf36984")))
-                .build())
-            .dockerfile(DockerfileArgs.builder()
-                .location("app/Dockerfile")
                 .build())
             .build());
 
@@ -1283,18 +1807,14 @@ public class App {
 import pulumi
 import pulumi_docker as docker
 
-image = docker.buildx.Image("image",
-    context=docker.buildx.BuildContextArgs(
-        location="app",
-        named={
-            "golang:latest": docker.buildx.ContextArgs(
-                location="docker-image://golang@sha256:b8e62cf593cdaff36efd90aa3a37de268e6781a2e68c6610940c48f7cdf36984",
-            ),
-        },
-    ),
-    dockerfile=docker.buildx.DockerfileArgs(
-        location="app/Dockerfile",
-    ))
+image = docker.buildx.Image("image", context=docker.buildx.BuildContextArgs(
+    location="app",
+    named={
+        "golang:latest": docker.buildx.ContextArgs(
+            location="docker-image://golang@sha256:b8e62cf593cdaff36efd90aa3a37de268e6781a2e68c6610940c48f7cdf36984",
+        ),
+    },
+))
 ```
 
 
@@ -1310,19 +1830,14 @@ image = docker.buildx.Image("image",
 import * as pulumi from "@pulumi/pulumi";
 import * as docker from "@pulumi/docker";
 
-const image = new docker.buildx.Image("image", {
-    context: {
-        location: "app",
-        named: {
-            "golang:latest": {
-                location: "docker-image://golang@sha256:b8e62cf593cdaff36efd90aa3a37de268e6781a2e68c6610940c48f7cdf36984",
-            },
+const image = new docker.buildx.Image("image", {context: {
+    location: "app",
+    named: {
+        "golang:latest": {
+            location: "docker-image://golang@sha256:b8e62cf593cdaff36efd90aa3a37de268e6781a2e68c6610940c48f7cdf36984",
         },
     },
-    dockerfile: {
-        location: "app/Dockerfile",
-    },
-});
+}});
 ```
 
 
@@ -1344,8 +1859,6 @@ resources:
                 named:
                     golang:latest:
                         location: docker-image://golang@sha256:b8e62cf593cdaff36efd90aa3a37de268e6781a2e68c6610940c48f7cdf36984
-            dockerfile:
-                location: app/Dockerfile
         type: docker:buildx/image:Image
 runtime: yaml
 ```
@@ -1909,10 +2422,6 @@ return await Deployment.RunAsync(() =>
         {
             Location = "app",
         },
-        Dockerfile = new Docker.Buildx.Inputs.DockerfileArgs
-        {
-            Location = "app/Dockerfile",
-        },
         Exports = new[]
         {
             new Docker.Buildx.Inputs.ExportEntryArgs
@@ -1951,9 +2460,6 @@ func main() {
 			Context: &buildx.BuildContextArgs{
 				Location: pulumi.String("app"),
 			},
-			Dockerfile: &buildx.DockerfileArgs{
-				Location: pulumi.String("app/Dockerfile"),
-			},
 			Exports: buildx.ExportEntryArray{
 				&buildx.ExportEntryArgs{
 					Docker: &buildx.ExportDockerArgs{
@@ -1987,7 +2493,6 @@ import com.pulumi.core.Output;
 import com.pulumi.docker.buildx.Image;
 import com.pulumi.docker.buildx.ImageArgs;
 import com.pulumi.docker.buildx.inputs.BuildContextArgs;
-import com.pulumi.docker.buildx.inputs.DockerfileArgs;
 import com.pulumi.docker.buildx.inputs.ExportEntryArgs;
 import com.pulumi.docker.buildx.inputs.ExportDockerArgs;
 import java.util.List;
@@ -2006,9 +2511,6 @@ public class App {
         var image = new Image("image", ImageArgs.builder()        
             .context(BuildContextArgs.builder()
                 .location("app")
-                .build())
-            .dockerfile(DockerfileArgs.builder()
-                .location("app/Dockerfile")
                 .build())
             .exports(ExportEntryArgs.builder()
                 .docker(ExportDockerArgs.builder()
@@ -2037,9 +2539,6 @@ image = docker.buildx.Image("image",
     context=docker.buildx.BuildContextArgs(
         location="app",
     ),
-    dockerfile=docker.buildx.DockerfileArgs(
-        location="app/Dockerfile",
-    ),
     exports=[docker.buildx.ExportEntryArgs(
         docker=docker.buildx.ExportDockerArgs(
             tar=True,
@@ -2063,9 +2562,6 @@ import * as docker from "@pulumi/docker";
 const image = new docker.buildx.Image("image", {
     context: {
         location: "app",
-    },
-    dockerfile: {
-        location: "app/Dockerfile",
     },
     exports: [{
         docker: {
@@ -2091,8 +2587,6 @@ resources:
         properties:
             context:
                 location: app
-            dockerfile:
-                location: app/Dockerfile
             exports:
                 - docker:
                     tar: true
@@ -2343,6 +2837,18 @@ The Image resource accepts the following [input](/docs/intro/concepts/inputs-out
 <pulumi-choosable type="language" values="csharp">
 <dl class="resources-properties"><dt class="property-optional"
             title="Optional">
+        <span id="addhosts_csharp">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#addhosts_csharp" style="color: inherit; text-decoration: inherit;">Add<wbr>Hosts</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">List&lt;string&gt;</span>
+    </dt>
+    <dd><p>Custom <code>host:ip</code> mappings to use during the build.</p>
+<p>An IP address of <code>host-gateway</code> will expose the host's IP (e.g.
+<code>host.docker.internal:host-gateway</code>).</p>
+<p>Equivalent to Docker's <code>--add-host</code> flag.</p>
+</dd><dt class="property-optional"
+            title="Optional">
         <span id="buildargs_csharp">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#buildargs_csharp" style="color: inherit; text-decoration: inherit;">Build<wbr>Args</a>
 </span>
@@ -2354,6 +2860,7 @@ The Image resource accepts the following [input](/docs/intro/concepts/inputs-out
 instructions.</p>
 <p>Build arguments are persisted in the image, so you should use <code>secrets</code>
 if these arguments are sensitive.</p>
+<p>Equivalent to Docker's <code>--build-arg</code> flag.</p>
 </dd><dt class="property-optional"
             title="Optional">
         <span id="buildonpreview_csharp">
@@ -2362,8 +2869,18 @@ if these arguments are sensitive.</p>
         <span class="property-indicator"></span>
         <span class="property-type">bool</span>
     </dt>
-    <dd>When <code>true</code>, attempt to build the image during previews. The image will
-not be pushed to registries, however caches will still populated.</dd><dt class="property-optional"
+    <dd><p>By default, preview behavior depends on the execution environment. If
+Pulumi detects the operation is running on a CI system (GitHub Actions,
+Travis CI, Azure Pipelines, etc.) then it will build images during
+previews as a safeguard. Otherwise, if not running on CI, previews will
+not build images.</p>
+<p>Setting this to <code>false</code> forces previews to never perform builds, and
+setting it to <code>true</code> will always build the image during previews.</p>
+<p>Images built during previews are never exported to registries, however
+cache manifests are still exported.</p>
+<p>On-disk Dockerfiles are always validated for syntactic correctness
+regardless of this setting.</p>
+</dd><dt class="property-optional"
             title="Optional">
         <span id="builder_csharp">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#builder_csharp" style="color: inherit; text-decoration: inherit;">Builder</a>
@@ -2379,7 +2896,9 @@ not be pushed to registries, however caches will still populated.</dd><dt class=
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#cachefromentry">List&lt;Cache<wbr>From<wbr>Entry&gt;</a></span>
     </dt>
-    <dd>External cache configuration.</dd><dt class="property-optional"
+    <dd><p>Cache export configuration.</p>
+<p>Equivalent to Docker's <code>--cache-from</code> flag.</p>
+</dd><dt class="property-optional"
             title="Optional">
         <span id="cacheto_csharp">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#cacheto_csharp" style="color: inherit; text-decoration: inherit;">Cache<wbr>To</a>
@@ -2387,7 +2906,9 @@ not be pushed to registries, however caches will still populated.</dd><dt class=
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#cachetoentry">List&lt;Cache<wbr>To<wbr>Entry&gt;</a></span>
     </dt>
-    <dd>Cache export configuration.</dd><dt class="property-optional"
+    <dd><p>Cache import configuration.</p>
+<p>Equivalent to Docker's <code>--cache-to</code> flag.</p>
+</dd><dt class="property-optional"
             title="Optional">
         <span id="context_csharp">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#context_csharp" style="color: inherit; text-decoration: inherit;">Context</a>
@@ -2395,7 +2916,9 @@ not be pushed to registries, however caches will still populated.</dd><dt class=
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#buildcontext">Build<wbr>Context</a></span>
     </dt>
-    <dd>Build context settings.</dd><dt class="property-optional"
+    <dd><p>Build context settings.</p>
+<p>Equivalent to Docker's <code>PATH | URL | -</code> positional argument.</p>
+</dd><dt class="property-optional"
             title="Optional">
         <span id="dockerfile_csharp">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#dockerfile_csharp" style="color: inherit; text-decoration: inherit;">Dockerfile</a>
@@ -2403,7 +2926,9 @@ not be pushed to registries, however caches will still populated.</dd><dt class=
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#dockerfile">Dockerfile</a></span>
     </dt>
-    <dd>Dockerfile settings.</dd><dt class="property-optional"
+    <dd><p>Dockerfile settings.</p>
+<p>Equivalent to Docker's <code>--file</code> flag.</p>
+</dd><dt class="property-optional"
             title="Optional">
         <span id="exports_csharp">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#exports_csharp" style="color: inherit; text-decoration: inherit;">Exports</a>
@@ -2414,6 +2939,7 @@ not be pushed to registries, however caches will still populated.</dd><dt class=
     <dd><p>Controls where images are persisted after building.</p>
 <p>Images are only stored in the local cache unless <code>exports</code> are
 explicitly configured.</p>
+<p>Equivalent to Docker's <code>--output</code> flag.</p>
 </dd><dt class="property-optional"
             title="Optional">
         <span id="labels_csharp">
@@ -2422,7 +2948,41 @@ explicitly configured.</p>
         <span class="property-indicator"></span>
         <span class="property-type">Dictionary&lt;string, string&gt;</span>
     </dt>
-    <dd>Attach arbitrary key/value metadata to the image.</dd><dt class="property-optional"
+    <dd><p>Attach arbitrary key/value metadata to the image.</p>
+<p>Equivalent to Docker's <code>--label</code> flag.</p>
+</dd><dt class="property-optional"
+            title="Optional">
+        <span id="load_csharp">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#load_csharp" style="color: inherit; text-decoration: inherit;">Load</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">bool</span>
+    </dt>
+    <dd><p>When <code>true</code> the build will automatically include a <code>docker</code> export.</p>
+<p>Defaults to <code>false</code>.</p>
+<p>Equivalent to Docker's <code>--load</code> flag.</p>
+</dd><dt class="property-optional"
+            title="Optional">
+        <span id="network_csharp">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#network_csharp" style="color: inherit; text-decoration: inherit;">Network</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#networkmode">Pulumi.<wbr>Docker.<wbr>Buildx.<wbr>Network<wbr>Mode</a></span>
+    </dt>
+    <dd><p>Set the network mode for <code>RUN</code> instructions. Defaults to <code>default</code>.</p>
+<p>For custom networks, configure your builder with <code>--driver-opt network=...</code>.</p>
+<p>Equivalent to Docker's <code>--network</code> flag.</p>
+</dd><dt class="property-optional"
+            title="Optional">
+        <span id="nocache_csharp">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#nocache_csharp" style="color: inherit; text-decoration: inherit;">No<wbr>Cache</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">bool</span>
+    </dt>
+    <dd><p>Do not import cache manifests when building the image.</p>
+<p>Equivalent to Docker's <code>--no-cache</code> flag.</p>
+</dd><dt class="property-optional"
             title="Optional">
         <span id="platforms_csharp">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#platforms_csharp" style="color: inherit; text-decoration: inherit;">Platforms</a>
@@ -2430,7 +2990,9 @@ explicitly configured.</p>
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#platform">List&lt;Pulumi.<wbr>Docker.<wbr>Buildx.<wbr>Platform&gt;</a></span>
     </dt>
-    <dd>Set target platform(s) for the build. Defaults to the host's platform</dd><dt class="property-optional"
+    <dd><p>Set target platform(s) for the build. Defaults to the host's platform.</p>
+<p>Equivalent to Docker's <code>--target</code> flag.</p>
+</dd><dt class="property-optional"
             title="Optional">
         <span id="pull_csharp">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#pull_csharp" style="color: inherit; text-decoration: inherit;">Pull</a>
@@ -2438,7 +3000,20 @@ explicitly configured.</p>
         <span class="property-indicator"></span>
         <span class="property-type">bool</span>
     </dt>
-    <dd>Always pull referenced images.</dd><dt class="property-optional"
+    <dd><p>Always pull referenced images.</p>
+<p>Equivalent to Docker's <code>--pull</code> flag.</p>
+</dd><dt class="property-optional"
+            title="Optional">
+        <span id="push_csharp">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#push_csharp" style="color: inherit; text-decoration: inherit;">Push</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">bool</span>
+    </dt>
+    <dd><p>When <code>true</code> the build will automatically include a <code>registry</code> export.</p>
+<p>Defaults to <code>false</code>.</p>
+<p>Equivalent to Docker's <code>--push</code> flag.</p>
+</dd><dt class="property-optional"
             title="Optional">
         <span id="registries_csharp">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#registries_csharp" style="color: inherit; text-decoration: inherit;">Registries</a>
@@ -2446,8 +3021,12 @@ explicitly configured.</p>
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#registryauth">List&lt;Registry<wbr>Auth&gt;</a></span>
     </dt>
-    <dd>Registry credentials. Required if reading or exporting to private
-repositories.</dd><dt class="property-optional"
+    <dd><p>Registry credentials. Required if reading or exporting to private
+repositories.</p>
+<p>Credentials are kept in-memory and do not pollute pre-existing
+credentials on the host.</p>
+<p>Similar to <code>docker login</code>.</p>
+</dd><dt class="property-optional"
             title="Optional">
         <span id="secrets_csharp">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#secrets_csharp" style="color: inherit; text-decoration: inherit;">Secrets</a>
@@ -2460,6 +3039,17 @@ repositories.</dd><dt class="property-optional"
 exist on-disk or in environment variables.</p>
 <p>Build arguments and environment variables are persistent in the final
 image, so you should use this for sensitive values.</p>
+<p>Similar to Docker's <code>--secret</code> flag.</p>
+</dd><dt class="property-optional"
+            title="Optional">
+        <span id="ssh_csharp">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#ssh_csharp" style="color: inherit; text-decoration: inherit;">Ssh</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#ssh">List&lt;SSH&gt;</a></span>
+    </dt>
+    <dd><p>SSH agent socket or keys to expose to the build.</p>
+<p>Equivalent to Docker's <code>--ssh</code> flag.</p>
 </dd><dt class="property-optional"
             title="Optional">
         <span id="tags_csharp">
@@ -2471,6 +3061,7 @@ image, so you should use this for sensitive values.</p>
     <dd><p>Name and optionally a tag (format: <code>name:tag</code>).</p>
 <p>If exporting to a registry, the name should include the fully qualified
 registry address (e.g. <code>docker.io/pulumi/pulumi:latest</code>).</p>
+<p>Equivalent to Docker's <code>--tag</code> flag.</p>
 </dd><dt class="property-optional"
             title="Optional">
         <span id="targets_csharp">
@@ -2481,6 +3072,7 @@ registry address (e.g. <code>docker.io/pulumi/pulumi:latest</code>).</p>
     </dt>
     <dd><p>Set the target build stage(s) to build.</p>
 <p>If not specified all targets will be built by default.</p>
+<p>Equivalent to Docker's <code>--target</code> flag.</p>
 </dd></dl>
 </pulumi-choosable>
 </div>
@@ -2488,6 +3080,18 @@ registry address (e.g. <code>docker.io/pulumi/pulumi:latest</code>).</p>
 <div>
 <pulumi-choosable type="language" values="go">
 <dl class="resources-properties"><dt class="property-optional"
+            title="Optional">
+        <span id="addhosts_go">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#addhosts_go" style="color: inherit; text-decoration: inherit;">Add<wbr>Hosts</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">[]string</span>
+    </dt>
+    <dd><p>Custom <code>host:ip</code> mappings to use during the build.</p>
+<p>An IP address of <code>host-gateway</code> will expose the host's IP (e.g.
+<code>host.docker.internal:host-gateway</code>).</p>
+<p>Equivalent to Docker's <code>--add-host</code> flag.</p>
+</dd><dt class="property-optional"
             title="Optional">
         <span id="buildargs_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#buildargs_go" style="color: inherit; text-decoration: inherit;">Build<wbr>Args</a>
@@ -2500,6 +3104,7 @@ registry address (e.g. <code>docker.io/pulumi/pulumi:latest</code>).</p>
 instructions.</p>
 <p>Build arguments are persisted in the image, so you should use <code>secrets</code>
 if these arguments are sensitive.</p>
+<p>Equivalent to Docker's <code>--build-arg</code> flag.</p>
 </dd><dt class="property-optional"
             title="Optional">
         <span id="buildonpreview_go">
@@ -2508,8 +3113,18 @@ if these arguments are sensitive.</p>
         <span class="property-indicator"></span>
         <span class="property-type">bool</span>
     </dt>
-    <dd>When <code>true</code>, attempt to build the image during previews. The image will
-not be pushed to registries, however caches will still populated.</dd><dt class="property-optional"
+    <dd><p>By default, preview behavior depends on the execution environment. If
+Pulumi detects the operation is running on a CI system (GitHub Actions,
+Travis CI, Azure Pipelines, etc.) then it will build images during
+previews as a safeguard. Otherwise, if not running on CI, previews will
+not build images.</p>
+<p>Setting this to <code>false</code> forces previews to never perform builds, and
+setting it to <code>true</code> will always build the image during previews.</p>
+<p>Images built during previews are never exported to registries, however
+cache manifests are still exported.</p>
+<p>On-disk Dockerfiles are always validated for syntactic correctness
+regardless of this setting.</p>
+</dd><dt class="property-optional"
             title="Optional">
         <span id="builder_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#builder_go" style="color: inherit; text-decoration: inherit;">Builder</a>
@@ -2525,7 +3140,9 @@ not be pushed to registries, however caches will still populated.</dd><dt class=
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#cachefromentry">[]Cache<wbr>From<wbr>Entry<wbr>Args</a></span>
     </dt>
-    <dd>External cache configuration.</dd><dt class="property-optional"
+    <dd><p>Cache export configuration.</p>
+<p>Equivalent to Docker's <code>--cache-from</code> flag.</p>
+</dd><dt class="property-optional"
             title="Optional">
         <span id="cacheto_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#cacheto_go" style="color: inherit; text-decoration: inherit;">Cache<wbr>To</a>
@@ -2533,7 +3150,9 @@ not be pushed to registries, however caches will still populated.</dd><dt class=
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#cachetoentry">[]Cache<wbr>To<wbr>Entry<wbr>Args</a></span>
     </dt>
-    <dd>Cache export configuration.</dd><dt class="property-optional"
+    <dd><p>Cache import configuration.</p>
+<p>Equivalent to Docker's <code>--cache-to</code> flag.</p>
+</dd><dt class="property-optional"
             title="Optional">
         <span id="context_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#context_go" style="color: inherit; text-decoration: inherit;">Context</a>
@@ -2541,7 +3160,9 @@ not be pushed to registries, however caches will still populated.</dd><dt class=
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#buildcontext">Build<wbr>Context<wbr>Args</a></span>
     </dt>
-    <dd>Build context settings.</dd><dt class="property-optional"
+    <dd><p>Build context settings.</p>
+<p>Equivalent to Docker's <code>PATH | URL | -</code> positional argument.</p>
+</dd><dt class="property-optional"
             title="Optional">
         <span id="dockerfile_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#dockerfile_go" style="color: inherit; text-decoration: inherit;">Dockerfile</a>
@@ -2549,7 +3170,9 @@ not be pushed to registries, however caches will still populated.</dd><dt class=
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#dockerfile">Dockerfile<wbr>Args</a></span>
     </dt>
-    <dd>Dockerfile settings.</dd><dt class="property-optional"
+    <dd><p>Dockerfile settings.</p>
+<p>Equivalent to Docker's <code>--file</code> flag.</p>
+</dd><dt class="property-optional"
             title="Optional">
         <span id="exports_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#exports_go" style="color: inherit; text-decoration: inherit;">Exports</a>
@@ -2560,6 +3183,7 @@ not be pushed to registries, however caches will still populated.</dd><dt class=
     <dd><p>Controls where images are persisted after building.</p>
 <p>Images are only stored in the local cache unless <code>exports</code> are
 explicitly configured.</p>
+<p>Equivalent to Docker's <code>--output</code> flag.</p>
 </dd><dt class="property-optional"
             title="Optional">
         <span id="labels_go">
@@ -2568,7 +3192,41 @@ explicitly configured.</p>
         <span class="property-indicator"></span>
         <span class="property-type">map[string]string</span>
     </dt>
-    <dd>Attach arbitrary key/value metadata to the image.</dd><dt class="property-optional"
+    <dd><p>Attach arbitrary key/value metadata to the image.</p>
+<p>Equivalent to Docker's <code>--label</code> flag.</p>
+</dd><dt class="property-optional"
+            title="Optional">
+        <span id="load_go">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#load_go" style="color: inherit; text-decoration: inherit;">Load</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">bool</span>
+    </dt>
+    <dd><p>When <code>true</code> the build will automatically include a <code>docker</code> export.</p>
+<p>Defaults to <code>false</code>.</p>
+<p>Equivalent to Docker's <code>--load</code> flag.</p>
+</dd><dt class="property-optional"
+            title="Optional">
+        <span id="network_go">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#network_go" style="color: inherit; text-decoration: inherit;">Network</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#networkmode">Network<wbr>Mode</a></span>
+    </dt>
+    <dd><p>Set the network mode for <code>RUN</code> instructions. Defaults to <code>default</code>.</p>
+<p>For custom networks, configure your builder with <code>--driver-opt network=...</code>.</p>
+<p>Equivalent to Docker's <code>--network</code> flag.</p>
+</dd><dt class="property-optional"
+            title="Optional">
+        <span id="nocache_go">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#nocache_go" style="color: inherit; text-decoration: inherit;">No<wbr>Cache</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">bool</span>
+    </dt>
+    <dd><p>Do not import cache manifests when building the image.</p>
+<p>Equivalent to Docker's <code>--no-cache</code> flag.</p>
+</dd><dt class="property-optional"
             title="Optional">
         <span id="platforms_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#platforms_go" style="color: inherit; text-decoration: inherit;">Platforms</a>
@@ -2576,7 +3234,9 @@ explicitly configured.</p>
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#platform">[]Platform</a></span>
     </dt>
-    <dd>Set target platform(s) for the build. Defaults to the host's platform</dd><dt class="property-optional"
+    <dd><p>Set target platform(s) for the build. Defaults to the host's platform.</p>
+<p>Equivalent to Docker's <code>--target</code> flag.</p>
+</dd><dt class="property-optional"
             title="Optional">
         <span id="pull_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#pull_go" style="color: inherit; text-decoration: inherit;">Pull</a>
@@ -2584,7 +3244,20 @@ explicitly configured.</p>
         <span class="property-indicator"></span>
         <span class="property-type">bool</span>
     </dt>
-    <dd>Always pull referenced images.</dd><dt class="property-optional"
+    <dd><p>Always pull referenced images.</p>
+<p>Equivalent to Docker's <code>--pull</code> flag.</p>
+</dd><dt class="property-optional"
+            title="Optional">
+        <span id="push_go">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#push_go" style="color: inherit; text-decoration: inherit;">Push</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">bool</span>
+    </dt>
+    <dd><p>When <code>true</code> the build will automatically include a <code>registry</code> export.</p>
+<p>Defaults to <code>false</code>.</p>
+<p>Equivalent to Docker's <code>--push</code> flag.</p>
+</dd><dt class="property-optional"
             title="Optional">
         <span id="registries_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#registries_go" style="color: inherit; text-decoration: inherit;">Registries</a>
@@ -2592,8 +3265,12 @@ explicitly configured.</p>
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#registryauth">[]Registry<wbr>Auth<wbr>Args</a></span>
     </dt>
-    <dd>Registry credentials. Required if reading or exporting to private
-repositories.</dd><dt class="property-optional"
+    <dd><p>Registry credentials. Required if reading or exporting to private
+repositories.</p>
+<p>Credentials are kept in-memory and do not pollute pre-existing
+credentials on the host.</p>
+<p>Similar to <code>docker login</code>.</p>
+</dd><dt class="property-optional"
             title="Optional">
         <span id="secrets_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#secrets_go" style="color: inherit; text-decoration: inherit;">Secrets</a>
@@ -2606,6 +3283,17 @@ repositories.</dd><dt class="property-optional"
 exist on-disk or in environment variables.</p>
 <p>Build arguments and environment variables are persistent in the final
 image, so you should use this for sensitive values.</p>
+<p>Similar to Docker's <code>--secret</code> flag.</p>
+</dd><dt class="property-optional"
+            title="Optional">
+        <span id="ssh_go">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#ssh_go" style="color: inherit; text-decoration: inherit;">Ssh</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#ssh">[]SSHArgs</a></span>
+    </dt>
+    <dd><p>SSH agent socket or keys to expose to the build.</p>
+<p>Equivalent to Docker's <code>--ssh</code> flag.</p>
 </dd><dt class="property-optional"
             title="Optional">
         <span id="tags_go">
@@ -2617,6 +3305,7 @@ image, so you should use this for sensitive values.</p>
     <dd><p>Name and optionally a tag (format: <code>name:tag</code>).</p>
 <p>If exporting to a registry, the name should include the fully qualified
 registry address (e.g. <code>docker.io/pulumi/pulumi:latest</code>).</p>
+<p>Equivalent to Docker's <code>--tag</code> flag.</p>
 </dd><dt class="property-optional"
             title="Optional">
         <span id="targets_go">
@@ -2627,6 +3316,7 @@ registry address (e.g. <code>docker.io/pulumi/pulumi:latest</code>).</p>
     </dt>
     <dd><p>Set the target build stage(s) to build.</p>
 <p>If not specified all targets will be built by default.</p>
+<p>Equivalent to Docker's <code>--target</code> flag.</p>
 </dd></dl>
 </pulumi-choosable>
 </div>
@@ -2634,6 +3324,18 @@ registry address (e.g. <code>docker.io/pulumi/pulumi:latest</code>).</p>
 <div>
 <pulumi-choosable type="language" values="java">
 <dl class="resources-properties"><dt class="property-optional"
+            title="Optional">
+        <span id="addhosts_java">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#addhosts_java" style="color: inherit; text-decoration: inherit;">add<wbr>Hosts</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">List&lt;String&gt;</span>
+    </dt>
+    <dd><p>Custom <code>host:ip</code> mappings to use during the build.</p>
+<p>An IP address of <code>host-gateway</code> will expose the host's IP (e.g.
+<code>host.docker.internal:host-gateway</code>).</p>
+<p>Equivalent to Docker's <code>--add-host</code> flag.</p>
+</dd><dt class="property-optional"
             title="Optional">
         <span id="buildargs_java">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#buildargs_java" style="color: inherit; text-decoration: inherit;">build<wbr>Args</a>
@@ -2646,6 +3348,7 @@ registry address (e.g. <code>docker.io/pulumi/pulumi:latest</code>).</p>
 instructions.</p>
 <p>Build arguments are persisted in the image, so you should use <code>secrets</code>
 if these arguments are sensitive.</p>
+<p>Equivalent to Docker's <code>--build-arg</code> flag.</p>
 </dd><dt class="property-optional"
             title="Optional">
         <span id="buildonpreview_java">
@@ -2654,8 +3357,18 @@ if these arguments are sensitive.</p>
         <span class="property-indicator"></span>
         <span class="property-type">Boolean</span>
     </dt>
-    <dd>When <code>true</code>, attempt to build the image during previews. The image will
-not be pushed to registries, however caches will still populated.</dd><dt class="property-optional"
+    <dd><p>By default, preview behavior depends on the execution environment. If
+Pulumi detects the operation is running on a CI system (GitHub Actions,
+Travis CI, Azure Pipelines, etc.) then it will build images during
+previews as a safeguard. Otherwise, if not running on CI, previews will
+not build images.</p>
+<p>Setting this to <code>false</code> forces previews to never perform builds, and
+setting it to <code>true</code> will always build the image during previews.</p>
+<p>Images built during previews are never exported to registries, however
+cache manifests are still exported.</p>
+<p>On-disk Dockerfiles are always validated for syntactic correctness
+regardless of this setting.</p>
+</dd><dt class="property-optional"
             title="Optional">
         <span id="builder__java">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#builder__java" style="color: inherit; text-decoration: inherit;">builder_</a>
@@ -2671,7 +3384,9 @@ not be pushed to registries, however caches will still populated.</dd><dt class=
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#cachefromentry">List&lt;Cache<wbr>From<wbr>Entry&gt;</a></span>
     </dt>
-    <dd>External cache configuration.</dd><dt class="property-optional"
+    <dd><p>Cache export configuration.</p>
+<p>Equivalent to Docker's <code>--cache-from</code> flag.</p>
+</dd><dt class="property-optional"
             title="Optional">
         <span id="cacheto_java">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#cacheto_java" style="color: inherit; text-decoration: inherit;">cache<wbr>To</a>
@@ -2679,7 +3394,9 @@ not be pushed to registries, however caches will still populated.</dd><dt class=
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#cachetoentry">List&lt;Cache<wbr>To<wbr>Entry&gt;</a></span>
     </dt>
-    <dd>Cache export configuration.</dd><dt class="property-optional"
+    <dd><p>Cache import configuration.</p>
+<p>Equivalent to Docker's <code>--cache-to</code> flag.</p>
+</dd><dt class="property-optional"
             title="Optional">
         <span id="context_java">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#context_java" style="color: inherit; text-decoration: inherit;">context</a>
@@ -2687,7 +3404,9 @@ not be pushed to registries, however caches will still populated.</dd><dt class=
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#buildcontext">Build<wbr>Context</a></span>
     </dt>
-    <dd>Build context settings.</dd><dt class="property-optional"
+    <dd><p>Build context settings.</p>
+<p>Equivalent to Docker's <code>PATH | URL | -</code> positional argument.</p>
+</dd><dt class="property-optional"
             title="Optional">
         <span id="dockerfile_java">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#dockerfile_java" style="color: inherit; text-decoration: inherit;">dockerfile</a>
@@ -2695,7 +3414,9 @@ not be pushed to registries, however caches will still populated.</dd><dt class=
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#dockerfile">Dockerfile</a></span>
     </dt>
-    <dd>Dockerfile settings.</dd><dt class="property-optional"
+    <dd><p>Dockerfile settings.</p>
+<p>Equivalent to Docker's <code>--file</code> flag.</p>
+</dd><dt class="property-optional"
             title="Optional">
         <span id="exports_java">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#exports_java" style="color: inherit; text-decoration: inherit;">exports</a>
@@ -2706,6 +3427,7 @@ not be pushed to registries, however caches will still populated.</dd><dt class=
     <dd><p>Controls where images are persisted after building.</p>
 <p>Images are only stored in the local cache unless <code>exports</code> are
 explicitly configured.</p>
+<p>Equivalent to Docker's <code>--output</code> flag.</p>
 </dd><dt class="property-optional"
             title="Optional">
         <span id="labels_java">
@@ -2714,7 +3436,41 @@ explicitly configured.</p>
         <span class="property-indicator"></span>
         <span class="property-type">Map&lt;String,String&gt;</span>
     </dt>
-    <dd>Attach arbitrary key/value metadata to the image.</dd><dt class="property-optional"
+    <dd><p>Attach arbitrary key/value metadata to the image.</p>
+<p>Equivalent to Docker's <code>--label</code> flag.</p>
+</dd><dt class="property-optional"
+            title="Optional">
+        <span id="load_java">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#load_java" style="color: inherit; text-decoration: inherit;">load</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">Boolean</span>
+    </dt>
+    <dd><p>When <code>true</code> the build will automatically include a <code>docker</code> export.</p>
+<p>Defaults to <code>false</code>.</p>
+<p>Equivalent to Docker's <code>--load</code> flag.</p>
+</dd><dt class="property-optional"
+            title="Optional">
+        <span id="network_java">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#network_java" style="color: inherit; text-decoration: inherit;">network</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#networkmode">Network<wbr>Mode</a></span>
+    </dt>
+    <dd><p>Set the network mode for <code>RUN</code> instructions. Defaults to <code>default</code>.</p>
+<p>For custom networks, configure your builder with <code>--driver-opt network=...</code>.</p>
+<p>Equivalent to Docker's <code>--network</code> flag.</p>
+</dd><dt class="property-optional"
+            title="Optional">
+        <span id="nocache_java">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#nocache_java" style="color: inherit; text-decoration: inherit;">no<wbr>Cache</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">Boolean</span>
+    </dt>
+    <dd><p>Do not import cache manifests when building the image.</p>
+<p>Equivalent to Docker's <code>--no-cache</code> flag.</p>
+</dd><dt class="property-optional"
             title="Optional">
         <span id="platforms_java">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#platforms_java" style="color: inherit; text-decoration: inherit;">platforms</a>
@@ -2722,7 +3478,9 @@ explicitly configured.</p>
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#platform">List&lt;Platform&gt;</a></span>
     </dt>
-    <dd>Set target platform(s) for the build. Defaults to the host's platform</dd><dt class="property-optional"
+    <dd><p>Set target platform(s) for the build. Defaults to the host's platform.</p>
+<p>Equivalent to Docker's <code>--target</code> flag.</p>
+</dd><dt class="property-optional"
             title="Optional">
         <span id="pull_java">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#pull_java" style="color: inherit; text-decoration: inherit;">pull</a>
@@ -2730,7 +3488,20 @@ explicitly configured.</p>
         <span class="property-indicator"></span>
         <span class="property-type">Boolean</span>
     </dt>
-    <dd>Always pull referenced images.</dd><dt class="property-optional"
+    <dd><p>Always pull referenced images.</p>
+<p>Equivalent to Docker's <code>--pull</code> flag.</p>
+</dd><dt class="property-optional"
+            title="Optional">
+        <span id="push_java">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#push_java" style="color: inherit; text-decoration: inherit;">push</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">Boolean</span>
+    </dt>
+    <dd><p>When <code>true</code> the build will automatically include a <code>registry</code> export.</p>
+<p>Defaults to <code>false</code>.</p>
+<p>Equivalent to Docker's <code>--push</code> flag.</p>
+</dd><dt class="property-optional"
             title="Optional">
         <span id="registries_java">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#registries_java" style="color: inherit; text-decoration: inherit;">registries</a>
@@ -2738,8 +3509,12 @@ explicitly configured.</p>
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#registryauth">List&lt;Registry<wbr>Auth&gt;</a></span>
     </dt>
-    <dd>Registry credentials. Required if reading or exporting to private
-repositories.</dd><dt class="property-optional"
+    <dd><p>Registry credentials. Required if reading or exporting to private
+repositories.</p>
+<p>Credentials are kept in-memory and do not pollute pre-existing
+credentials on the host.</p>
+<p>Similar to <code>docker login</code>.</p>
+</dd><dt class="property-optional"
             title="Optional">
         <span id="secrets_java">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#secrets_java" style="color: inherit; text-decoration: inherit;">secrets</a>
@@ -2752,6 +3527,17 @@ repositories.</dd><dt class="property-optional"
 exist on-disk or in environment variables.</p>
 <p>Build arguments and environment variables are persistent in the final
 image, so you should use this for sensitive values.</p>
+<p>Similar to Docker's <code>--secret</code> flag.</p>
+</dd><dt class="property-optional"
+            title="Optional">
+        <span id="ssh_java">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#ssh_java" style="color: inherit; text-decoration: inherit;">ssh</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#ssh">List&lt;SSH&gt;</a></span>
+    </dt>
+    <dd><p>SSH agent socket or keys to expose to the build.</p>
+<p>Equivalent to Docker's <code>--ssh</code> flag.</p>
 </dd><dt class="property-optional"
             title="Optional">
         <span id="tags_java">
@@ -2763,6 +3549,7 @@ image, so you should use this for sensitive values.</p>
     <dd><p>Name and optionally a tag (format: <code>name:tag</code>).</p>
 <p>If exporting to a registry, the name should include the fully qualified
 registry address (e.g. <code>docker.io/pulumi/pulumi:latest</code>).</p>
+<p>Equivalent to Docker's <code>--tag</code> flag.</p>
 </dd><dt class="property-optional"
             title="Optional">
         <span id="targets_java">
@@ -2773,6 +3560,7 @@ registry address (e.g. <code>docker.io/pulumi/pulumi:latest</code>).</p>
     </dt>
     <dd><p>Set the target build stage(s) to build.</p>
 <p>If not specified all targets will be built by default.</p>
+<p>Equivalent to Docker's <code>--target</code> flag.</p>
 </dd></dl>
 </pulumi-choosable>
 </div>
@@ -2780,6 +3568,18 @@ registry address (e.g. <code>docker.io/pulumi/pulumi:latest</code>).</p>
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
 <dl class="resources-properties"><dt class="property-optional"
+            title="Optional">
+        <span id="addhosts_nodejs">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#addhosts_nodejs" style="color: inherit; text-decoration: inherit;">add<wbr>Hosts</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string[]</span>
+    </dt>
+    <dd><p>Custom <code>host:ip</code> mappings to use during the build.</p>
+<p>An IP address of <code>host-gateway</code> will expose the host's IP (e.g.
+<code>host.docker.internal:host-gateway</code>).</p>
+<p>Equivalent to Docker's <code>--add-host</code> flag.</p>
+</dd><dt class="property-optional"
             title="Optional">
         <span id="buildargs_nodejs">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#buildargs_nodejs" style="color: inherit; text-decoration: inherit;">build<wbr>Args</a>
@@ -2792,6 +3592,7 @@ registry address (e.g. <code>docker.io/pulumi/pulumi:latest</code>).</p>
 instructions.</p>
 <p>Build arguments are persisted in the image, so you should use <code>secrets</code>
 if these arguments are sensitive.</p>
+<p>Equivalent to Docker's <code>--build-arg</code> flag.</p>
 </dd><dt class="property-optional"
             title="Optional">
         <span id="buildonpreview_nodejs">
@@ -2800,8 +3601,18 @@ if these arguments are sensitive.</p>
         <span class="property-indicator"></span>
         <span class="property-type">boolean</span>
     </dt>
-    <dd>When <code>true</code>, attempt to build the image during previews. The image will
-not be pushed to registries, however caches will still populated.</dd><dt class="property-optional"
+    <dd><p>By default, preview behavior depends on the execution environment. If
+Pulumi detects the operation is running on a CI system (GitHub Actions,
+Travis CI, Azure Pipelines, etc.) then it will build images during
+previews as a safeguard. Otherwise, if not running on CI, previews will
+not build images.</p>
+<p>Setting this to <code>false</code> forces previews to never perform builds, and
+setting it to <code>true</code> will always build the image during previews.</p>
+<p>Images built during previews are never exported to registries, however
+cache manifests are still exported.</p>
+<p>On-disk Dockerfiles are always validated for syntactic correctness
+regardless of this setting.</p>
+</dd><dt class="property-optional"
             title="Optional">
         <span id="builder_nodejs">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#builder_nodejs" style="color: inherit; text-decoration: inherit;">builder</a>
@@ -2817,7 +3628,9 @@ not be pushed to registries, however caches will still populated.</dd><dt class=
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#cachefromentry">Cache<wbr>From<wbr>Entry[]</a></span>
     </dt>
-    <dd>External cache configuration.</dd><dt class="property-optional"
+    <dd><p>Cache export configuration.</p>
+<p>Equivalent to Docker's <code>--cache-from</code> flag.</p>
+</dd><dt class="property-optional"
             title="Optional">
         <span id="cacheto_nodejs">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#cacheto_nodejs" style="color: inherit; text-decoration: inherit;">cache<wbr>To</a>
@@ -2825,7 +3638,9 @@ not be pushed to registries, however caches will still populated.</dd><dt class=
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#cachetoentry">Cache<wbr>To<wbr>Entry[]</a></span>
     </dt>
-    <dd>Cache export configuration.</dd><dt class="property-optional"
+    <dd><p>Cache import configuration.</p>
+<p>Equivalent to Docker's <code>--cache-to</code> flag.</p>
+</dd><dt class="property-optional"
             title="Optional">
         <span id="context_nodejs">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#context_nodejs" style="color: inherit; text-decoration: inherit;">context</a>
@@ -2833,7 +3648,9 @@ not be pushed to registries, however caches will still populated.</dd><dt class=
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#buildcontext">Build<wbr>Context</a></span>
     </dt>
-    <dd>Build context settings.</dd><dt class="property-optional"
+    <dd><p>Build context settings.</p>
+<p>Equivalent to Docker's <code>PATH | URL | -</code> positional argument.</p>
+</dd><dt class="property-optional"
             title="Optional">
         <span id="dockerfile_nodejs">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#dockerfile_nodejs" style="color: inherit; text-decoration: inherit;">dockerfile</a>
@@ -2841,7 +3658,9 @@ not be pushed to registries, however caches will still populated.</dd><dt class=
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#dockerfile">Dockerfile</a></span>
     </dt>
-    <dd>Dockerfile settings.</dd><dt class="property-optional"
+    <dd><p>Dockerfile settings.</p>
+<p>Equivalent to Docker's <code>--file</code> flag.</p>
+</dd><dt class="property-optional"
             title="Optional">
         <span id="exports_nodejs">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#exports_nodejs" style="color: inherit; text-decoration: inherit;">exports</a>
@@ -2852,6 +3671,7 @@ not be pushed to registries, however caches will still populated.</dd><dt class=
     <dd><p>Controls where images are persisted after building.</p>
 <p>Images are only stored in the local cache unless <code>exports</code> are
 explicitly configured.</p>
+<p>Equivalent to Docker's <code>--output</code> flag.</p>
 </dd><dt class="property-optional"
             title="Optional">
         <span id="labels_nodejs">
@@ -2860,7 +3680,41 @@ explicitly configured.</p>
         <span class="property-indicator"></span>
         <span class="property-type">{[key: string]: string}</span>
     </dt>
-    <dd>Attach arbitrary key/value metadata to the image.</dd><dt class="property-optional"
+    <dd><p>Attach arbitrary key/value metadata to the image.</p>
+<p>Equivalent to Docker's <code>--label</code> flag.</p>
+</dd><dt class="property-optional"
+            title="Optional">
+        <span id="load_nodejs">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#load_nodejs" style="color: inherit; text-decoration: inherit;">load</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">boolean</span>
+    </dt>
+    <dd><p>When <code>true</code> the build will automatically include a <code>docker</code> export.</p>
+<p>Defaults to <code>false</code>.</p>
+<p>Equivalent to Docker's <code>--load</code> flag.</p>
+</dd><dt class="property-optional"
+            title="Optional">
+        <span id="network_nodejs">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#network_nodejs" style="color: inherit; text-decoration: inherit;">network</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#networkmode">Network<wbr>Mode</a></span>
+    </dt>
+    <dd><p>Set the network mode for <code>RUN</code> instructions. Defaults to <code>default</code>.</p>
+<p>For custom networks, configure your builder with <code>--driver-opt network=...</code>.</p>
+<p>Equivalent to Docker's <code>--network</code> flag.</p>
+</dd><dt class="property-optional"
+            title="Optional">
+        <span id="nocache_nodejs">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#nocache_nodejs" style="color: inherit; text-decoration: inherit;">no<wbr>Cache</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">boolean</span>
+    </dt>
+    <dd><p>Do not import cache manifests when building the image.</p>
+<p>Equivalent to Docker's <code>--no-cache</code> flag.</p>
+</dd><dt class="property-optional"
             title="Optional">
         <span id="platforms_nodejs">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#platforms_nodejs" style="color: inherit; text-decoration: inherit;">platforms</a>
@@ -2868,7 +3722,9 @@ explicitly configured.</p>
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#platform">Platform[]</a></span>
     </dt>
-    <dd>Set target platform(s) for the build. Defaults to the host's platform</dd><dt class="property-optional"
+    <dd><p>Set target platform(s) for the build. Defaults to the host's platform.</p>
+<p>Equivalent to Docker's <code>--target</code> flag.</p>
+</dd><dt class="property-optional"
             title="Optional">
         <span id="pull_nodejs">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#pull_nodejs" style="color: inherit; text-decoration: inherit;">pull</a>
@@ -2876,7 +3732,20 @@ explicitly configured.</p>
         <span class="property-indicator"></span>
         <span class="property-type">boolean</span>
     </dt>
-    <dd>Always pull referenced images.</dd><dt class="property-optional"
+    <dd><p>Always pull referenced images.</p>
+<p>Equivalent to Docker's <code>--pull</code> flag.</p>
+</dd><dt class="property-optional"
+            title="Optional">
+        <span id="push_nodejs">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#push_nodejs" style="color: inherit; text-decoration: inherit;">push</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">boolean</span>
+    </dt>
+    <dd><p>When <code>true</code> the build will automatically include a <code>registry</code> export.</p>
+<p>Defaults to <code>false</code>.</p>
+<p>Equivalent to Docker's <code>--push</code> flag.</p>
+</dd><dt class="property-optional"
             title="Optional">
         <span id="registries_nodejs">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#registries_nodejs" style="color: inherit; text-decoration: inherit;">registries</a>
@@ -2884,8 +3753,12 @@ explicitly configured.</p>
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#registryauth">Registry<wbr>Auth[]</a></span>
     </dt>
-    <dd>Registry credentials. Required if reading or exporting to private
-repositories.</dd><dt class="property-optional"
+    <dd><p>Registry credentials. Required if reading or exporting to private
+repositories.</p>
+<p>Credentials are kept in-memory and do not pollute pre-existing
+credentials on the host.</p>
+<p>Similar to <code>docker login</code>.</p>
+</dd><dt class="property-optional"
             title="Optional">
         <span id="secrets_nodejs">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#secrets_nodejs" style="color: inherit; text-decoration: inherit;">secrets</a>
@@ -2898,6 +3771,17 @@ repositories.</dd><dt class="property-optional"
 exist on-disk or in environment variables.</p>
 <p>Build arguments and environment variables are persistent in the final
 image, so you should use this for sensitive values.</p>
+<p>Similar to Docker's <code>--secret</code> flag.</p>
+</dd><dt class="property-optional"
+            title="Optional">
+        <span id="ssh_nodejs">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#ssh_nodejs" style="color: inherit; text-decoration: inherit;">ssh</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#ssh">SSH[]</a></span>
+    </dt>
+    <dd><p>SSH agent socket or keys to expose to the build.</p>
+<p>Equivalent to Docker's <code>--ssh</code> flag.</p>
 </dd><dt class="property-optional"
             title="Optional">
         <span id="tags_nodejs">
@@ -2909,6 +3793,7 @@ image, so you should use this for sensitive values.</p>
     <dd><p>Name and optionally a tag (format: <code>name:tag</code>).</p>
 <p>If exporting to a registry, the name should include the fully qualified
 registry address (e.g. <code>docker.io/pulumi/pulumi:latest</code>).</p>
+<p>Equivalent to Docker's <code>--tag</code> flag.</p>
 </dd><dt class="property-optional"
             title="Optional">
         <span id="targets_nodejs">
@@ -2919,6 +3804,7 @@ registry address (e.g. <code>docker.io/pulumi/pulumi:latest</code>).</p>
     </dt>
     <dd><p>Set the target build stage(s) to build.</p>
 <p>If not specified all targets will be built by default.</p>
+<p>Equivalent to Docker's <code>--target</code> flag.</p>
 </dd></dl>
 </pulumi-choosable>
 </div>
@@ -2926,6 +3812,18 @@ registry address (e.g. <code>docker.io/pulumi/pulumi:latest</code>).</p>
 <div>
 <pulumi-choosable type="language" values="python">
 <dl class="resources-properties"><dt class="property-optional"
+            title="Optional">
+        <span id="add_hosts_python">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#add_hosts_python" style="color: inherit; text-decoration: inherit;">add_<wbr>hosts</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">Sequence[str]</span>
+    </dt>
+    <dd><p>Custom <code>host:ip</code> mappings to use during the build.</p>
+<p>An IP address of <code>host-gateway</code> will expose the host's IP (e.g.
+<code>host.docker.internal:host-gateway</code>).</p>
+<p>Equivalent to Docker's <code>--add-host</code> flag.</p>
+</dd><dt class="property-optional"
             title="Optional">
         <span id="build_args_python">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#build_args_python" style="color: inherit; text-decoration: inherit;">build_<wbr>args</a>
@@ -2938,6 +3836,7 @@ registry address (e.g. <code>docker.io/pulumi/pulumi:latest</code>).</p>
 instructions.</p>
 <p>Build arguments are persisted in the image, so you should use <code>secrets</code>
 if these arguments are sensitive.</p>
+<p>Equivalent to Docker's <code>--build-arg</code> flag.</p>
 </dd><dt class="property-optional"
             title="Optional">
         <span id="build_on_preview_python">
@@ -2946,8 +3845,18 @@ if these arguments are sensitive.</p>
         <span class="property-indicator"></span>
         <span class="property-type">bool</span>
     </dt>
-    <dd>When <code>true</code>, attempt to build the image during previews. The image will
-not be pushed to registries, however caches will still populated.</dd><dt class="property-optional"
+    <dd><p>By default, preview behavior depends on the execution environment. If
+Pulumi detects the operation is running on a CI system (GitHub Actions,
+Travis CI, Azure Pipelines, etc.) then it will build images during
+previews as a safeguard. Otherwise, if not running on CI, previews will
+not build images.</p>
+<p>Setting this to <code>false</code> forces previews to never perform builds, and
+setting it to <code>true</code> will always build the image during previews.</p>
+<p>Images built during previews are never exported to registries, however
+cache manifests are still exported.</p>
+<p>On-disk Dockerfiles are always validated for syntactic correctness
+regardless of this setting.</p>
+</dd><dt class="property-optional"
             title="Optional">
         <span id="builder_python">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#builder_python" style="color: inherit; text-decoration: inherit;">builder</a>
@@ -2963,7 +3872,9 @@ not be pushed to registries, however caches will still populated.</dd><dt class=
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#cachefromentry">Sequence[Cache<wbr>From<wbr>Entry<wbr>Args]</a></span>
     </dt>
-    <dd>External cache configuration.</dd><dt class="property-optional"
+    <dd><p>Cache export configuration.</p>
+<p>Equivalent to Docker's <code>--cache-from</code> flag.</p>
+</dd><dt class="property-optional"
             title="Optional">
         <span id="cache_to_python">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#cache_to_python" style="color: inherit; text-decoration: inherit;">cache_<wbr>to</a>
@@ -2971,7 +3882,9 @@ not be pushed to registries, however caches will still populated.</dd><dt class=
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#cachetoentry">Sequence[Cache<wbr>To<wbr>Entry<wbr>Args]</a></span>
     </dt>
-    <dd>Cache export configuration.</dd><dt class="property-optional"
+    <dd><p>Cache import configuration.</p>
+<p>Equivalent to Docker's <code>--cache-to</code> flag.</p>
+</dd><dt class="property-optional"
             title="Optional">
         <span id="context_python">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#context_python" style="color: inherit; text-decoration: inherit;">context</a>
@@ -2979,7 +3892,9 @@ not be pushed to registries, however caches will still populated.</dd><dt class=
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#buildcontext">Build<wbr>Context<wbr>Args</a></span>
     </dt>
-    <dd>Build context settings.</dd><dt class="property-optional"
+    <dd><p>Build context settings.</p>
+<p>Equivalent to Docker's <code>PATH | URL | -</code> positional argument.</p>
+</dd><dt class="property-optional"
             title="Optional">
         <span id="dockerfile_python">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#dockerfile_python" style="color: inherit; text-decoration: inherit;">dockerfile</a>
@@ -2987,7 +3902,9 @@ not be pushed to registries, however caches will still populated.</dd><dt class=
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#dockerfile">Dockerfile<wbr>Args</a></span>
     </dt>
-    <dd>Dockerfile settings.</dd><dt class="property-optional"
+    <dd><p>Dockerfile settings.</p>
+<p>Equivalent to Docker's <code>--file</code> flag.</p>
+</dd><dt class="property-optional"
             title="Optional">
         <span id="exports_python">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#exports_python" style="color: inherit; text-decoration: inherit;">exports</a>
@@ -2998,6 +3915,7 @@ not be pushed to registries, however caches will still populated.</dd><dt class=
     <dd><p>Controls where images are persisted after building.</p>
 <p>Images are only stored in the local cache unless <code>exports</code> are
 explicitly configured.</p>
+<p>Equivalent to Docker's <code>--output</code> flag.</p>
 </dd><dt class="property-optional"
             title="Optional">
         <span id="labels_python">
@@ -3006,7 +3924,41 @@ explicitly configured.</p>
         <span class="property-indicator"></span>
         <span class="property-type">Mapping[str, str]</span>
     </dt>
-    <dd>Attach arbitrary key/value metadata to the image.</dd><dt class="property-optional"
+    <dd><p>Attach arbitrary key/value metadata to the image.</p>
+<p>Equivalent to Docker's <code>--label</code> flag.</p>
+</dd><dt class="property-optional"
+            title="Optional">
+        <span id="load_python">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#load_python" style="color: inherit; text-decoration: inherit;">load</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">bool</span>
+    </dt>
+    <dd><p>When <code>true</code> the build will automatically include a <code>docker</code> export.</p>
+<p>Defaults to <code>false</code>.</p>
+<p>Equivalent to Docker's <code>--load</code> flag.</p>
+</dd><dt class="property-optional"
+            title="Optional">
+        <span id="network_python">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#network_python" style="color: inherit; text-decoration: inherit;">network</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#networkmode">Network<wbr>Mode</a></span>
+    </dt>
+    <dd><p>Set the network mode for <code>RUN</code> instructions. Defaults to <code>default</code>.</p>
+<p>For custom networks, configure your builder with <code>--driver-opt network=...</code>.</p>
+<p>Equivalent to Docker's <code>--network</code> flag.</p>
+</dd><dt class="property-optional"
+            title="Optional">
+        <span id="no_cache_python">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#no_cache_python" style="color: inherit; text-decoration: inherit;">no_<wbr>cache</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">bool</span>
+    </dt>
+    <dd><p>Do not import cache manifests when building the image.</p>
+<p>Equivalent to Docker's <code>--no-cache</code> flag.</p>
+</dd><dt class="property-optional"
             title="Optional">
         <span id="platforms_python">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#platforms_python" style="color: inherit; text-decoration: inherit;">platforms</a>
@@ -3014,7 +3966,9 @@ explicitly configured.</p>
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#platform">Sequence[Platform]</a></span>
     </dt>
-    <dd>Set target platform(s) for the build. Defaults to the host's platform</dd><dt class="property-optional"
+    <dd><p>Set target platform(s) for the build. Defaults to the host's platform.</p>
+<p>Equivalent to Docker's <code>--target</code> flag.</p>
+</dd><dt class="property-optional"
             title="Optional">
         <span id="pull_python">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#pull_python" style="color: inherit; text-decoration: inherit;">pull</a>
@@ -3022,7 +3976,20 @@ explicitly configured.</p>
         <span class="property-indicator"></span>
         <span class="property-type">bool</span>
     </dt>
-    <dd>Always pull referenced images.</dd><dt class="property-optional"
+    <dd><p>Always pull referenced images.</p>
+<p>Equivalent to Docker's <code>--pull</code> flag.</p>
+</dd><dt class="property-optional"
+            title="Optional">
+        <span id="push_python">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#push_python" style="color: inherit; text-decoration: inherit;">push</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">bool</span>
+    </dt>
+    <dd><p>When <code>true</code> the build will automatically include a <code>registry</code> export.</p>
+<p>Defaults to <code>false</code>.</p>
+<p>Equivalent to Docker's <code>--push</code> flag.</p>
+</dd><dt class="property-optional"
             title="Optional">
         <span id="registries_python">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#registries_python" style="color: inherit; text-decoration: inherit;">registries</a>
@@ -3030,8 +3997,12 @@ explicitly configured.</p>
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#registryauth">Sequence[Registry<wbr>Auth<wbr>Args]</a></span>
     </dt>
-    <dd>Registry credentials. Required if reading or exporting to private
-repositories.</dd><dt class="property-optional"
+    <dd><p>Registry credentials. Required if reading or exporting to private
+repositories.</p>
+<p>Credentials are kept in-memory and do not pollute pre-existing
+credentials on the host.</p>
+<p>Similar to <code>docker login</code>.</p>
+</dd><dt class="property-optional"
             title="Optional">
         <span id="secrets_python">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#secrets_python" style="color: inherit; text-decoration: inherit;">secrets</a>
@@ -3044,6 +4015,17 @@ repositories.</dd><dt class="property-optional"
 exist on-disk or in environment variables.</p>
 <p>Build arguments and environment variables are persistent in the final
 image, so you should use this for sensitive values.</p>
+<p>Similar to Docker's <code>--secret</code> flag.</p>
+</dd><dt class="property-optional"
+            title="Optional">
+        <span id="ssh_python">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#ssh_python" style="color: inherit; text-decoration: inherit;">ssh</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#ssh">Sequence[SSHArgs]</a></span>
+    </dt>
+    <dd><p>SSH agent socket or keys to expose to the build.</p>
+<p>Equivalent to Docker's <code>--ssh</code> flag.</p>
 </dd><dt class="property-optional"
             title="Optional">
         <span id="tags_python">
@@ -3055,6 +4037,7 @@ image, so you should use this for sensitive values.</p>
     <dd><p>Name and optionally a tag (format: <code>name:tag</code>).</p>
 <p>If exporting to a registry, the name should include the fully qualified
 registry address (e.g. <code>docker.io/pulumi/pulumi:latest</code>).</p>
+<p>Equivalent to Docker's <code>--tag</code> flag.</p>
 </dd><dt class="property-optional"
             title="Optional">
         <span id="targets_python">
@@ -3065,6 +4048,7 @@ registry address (e.g. <code>docker.io/pulumi/pulumi:latest</code>).</p>
     </dt>
     <dd><p>Set the target build stage(s) to build.</p>
 <p>If not specified all targets will be built by default.</p>
+<p>Equivalent to Docker's <code>--target</code> flag.</p>
 </dd></dl>
 </pulumi-choosable>
 </div>
@@ -3072,6 +4056,18 @@ registry address (e.g. <code>docker.io/pulumi/pulumi:latest</code>).</p>
 <div>
 <pulumi-choosable type="language" values="yaml">
 <dl class="resources-properties"><dt class="property-optional"
+            title="Optional">
+        <span id="addhosts_yaml">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#addhosts_yaml" style="color: inherit; text-decoration: inherit;">add<wbr>Hosts</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">List&lt;String&gt;</span>
+    </dt>
+    <dd><p>Custom <code>host:ip</code> mappings to use during the build.</p>
+<p>An IP address of <code>host-gateway</code> will expose the host's IP (e.g.
+<code>host.docker.internal:host-gateway</code>).</p>
+<p>Equivalent to Docker's <code>--add-host</code> flag.</p>
+</dd><dt class="property-optional"
             title="Optional">
         <span id="buildargs_yaml">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#buildargs_yaml" style="color: inherit; text-decoration: inherit;">build<wbr>Args</a>
@@ -3084,6 +4080,7 @@ registry address (e.g. <code>docker.io/pulumi/pulumi:latest</code>).</p>
 instructions.</p>
 <p>Build arguments are persisted in the image, so you should use <code>secrets</code>
 if these arguments are sensitive.</p>
+<p>Equivalent to Docker's <code>--build-arg</code> flag.</p>
 </dd><dt class="property-optional"
             title="Optional">
         <span id="buildonpreview_yaml">
@@ -3092,8 +4089,18 @@ if these arguments are sensitive.</p>
         <span class="property-indicator"></span>
         <span class="property-type">Boolean</span>
     </dt>
-    <dd>When <code>true</code>, attempt to build the image during previews. The image will
-not be pushed to registries, however caches will still populated.</dd><dt class="property-optional"
+    <dd><p>By default, preview behavior depends on the execution environment. If
+Pulumi detects the operation is running on a CI system (GitHub Actions,
+Travis CI, Azure Pipelines, etc.) then it will build images during
+previews as a safeguard. Otherwise, if not running on CI, previews will
+not build images.</p>
+<p>Setting this to <code>false</code> forces previews to never perform builds, and
+setting it to <code>true</code> will always build the image during previews.</p>
+<p>Images built during previews are never exported to registries, however
+cache manifests are still exported.</p>
+<p>On-disk Dockerfiles are always validated for syntactic correctness
+regardless of this setting.</p>
+</dd><dt class="property-optional"
             title="Optional">
         <span id="builder_yaml">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#builder_yaml" style="color: inherit; text-decoration: inherit;">builder</a>
@@ -3109,7 +4116,9 @@ not be pushed to registries, however caches will still populated.</dd><dt class=
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#cachefromentry">List&lt;Property Map&gt;</a></span>
     </dt>
-    <dd>External cache configuration.</dd><dt class="property-optional"
+    <dd><p>Cache export configuration.</p>
+<p>Equivalent to Docker's <code>--cache-from</code> flag.</p>
+</dd><dt class="property-optional"
             title="Optional">
         <span id="cacheto_yaml">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#cacheto_yaml" style="color: inherit; text-decoration: inherit;">cache<wbr>To</a>
@@ -3117,7 +4126,9 @@ not be pushed to registries, however caches will still populated.</dd><dt class=
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#cachetoentry">List&lt;Property Map&gt;</a></span>
     </dt>
-    <dd>Cache export configuration.</dd><dt class="property-optional"
+    <dd><p>Cache import configuration.</p>
+<p>Equivalent to Docker's <code>--cache-to</code> flag.</p>
+</dd><dt class="property-optional"
             title="Optional">
         <span id="context_yaml">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#context_yaml" style="color: inherit; text-decoration: inherit;">context</a>
@@ -3125,7 +4136,9 @@ not be pushed to registries, however caches will still populated.</dd><dt class=
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#buildcontext">Property Map</a></span>
     </dt>
-    <dd>Build context settings.</dd><dt class="property-optional"
+    <dd><p>Build context settings.</p>
+<p>Equivalent to Docker's <code>PATH | URL | -</code> positional argument.</p>
+</dd><dt class="property-optional"
             title="Optional">
         <span id="dockerfile_yaml">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#dockerfile_yaml" style="color: inherit; text-decoration: inherit;">dockerfile</a>
@@ -3133,7 +4146,9 @@ not be pushed to registries, however caches will still populated.</dd><dt class=
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#dockerfile">Property Map</a></span>
     </dt>
-    <dd>Dockerfile settings.</dd><dt class="property-optional"
+    <dd><p>Dockerfile settings.</p>
+<p>Equivalent to Docker's <code>--file</code> flag.</p>
+</dd><dt class="property-optional"
             title="Optional">
         <span id="exports_yaml">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#exports_yaml" style="color: inherit; text-decoration: inherit;">exports</a>
@@ -3144,6 +4159,7 @@ not be pushed to registries, however caches will still populated.</dd><dt class=
     <dd><p>Controls where images are persisted after building.</p>
 <p>Images are only stored in the local cache unless <code>exports</code> are
 explicitly configured.</p>
+<p>Equivalent to Docker's <code>--output</code> flag.</p>
 </dd><dt class="property-optional"
             title="Optional">
         <span id="labels_yaml">
@@ -3152,7 +4168,41 @@ explicitly configured.</p>
         <span class="property-indicator"></span>
         <span class="property-type">Map&lt;String&gt;</span>
     </dt>
-    <dd>Attach arbitrary key/value metadata to the image.</dd><dt class="property-optional"
+    <dd><p>Attach arbitrary key/value metadata to the image.</p>
+<p>Equivalent to Docker's <code>--label</code> flag.</p>
+</dd><dt class="property-optional"
+            title="Optional">
+        <span id="load_yaml">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#load_yaml" style="color: inherit; text-decoration: inherit;">load</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">Boolean</span>
+    </dt>
+    <dd><p>When <code>true</code> the build will automatically include a <code>docker</code> export.</p>
+<p>Defaults to <code>false</code>.</p>
+<p>Equivalent to Docker's <code>--load</code> flag.</p>
+</dd><dt class="property-optional"
+            title="Optional">
+        <span id="network_yaml">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#network_yaml" style="color: inherit; text-decoration: inherit;">network</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#networkmode">&#34;default&#34; | &#34;host&#34; | &#34;none&#34;</a></span>
+    </dt>
+    <dd><p>Set the network mode for <code>RUN</code> instructions. Defaults to <code>default</code>.</p>
+<p>For custom networks, configure your builder with <code>--driver-opt network=...</code>.</p>
+<p>Equivalent to Docker's <code>--network</code> flag.</p>
+</dd><dt class="property-optional"
+            title="Optional">
+        <span id="nocache_yaml">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#nocache_yaml" style="color: inherit; text-decoration: inherit;">no<wbr>Cache</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">Boolean</span>
+    </dt>
+    <dd><p>Do not import cache manifests when building the image.</p>
+<p>Equivalent to Docker's <code>--no-cache</code> flag.</p>
+</dd><dt class="property-optional"
             title="Optional">
         <span id="platforms_yaml">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#platforms_yaml" style="color: inherit; text-decoration: inherit;">platforms</a>
@@ -3160,7 +4210,9 @@ explicitly configured.</p>
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#platform">List&lt;&#34;darwin/386&#34; | &#34;darwin/amd64&#34; | &#34;darwin/arm&#34; | &#34;darwin/arm64&#34; | &#34;dragonfly/amd64&#34; | &#34;freebsd/386&#34; | &#34;freebsd/amd64&#34; | &#34;freebsd/arm&#34; | &#34;linux/386&#34; | &#34;linux/amd64&#34; | &#34;linux/arm&#34; | &#34;linux/arm64&#34; | &#34;linux/mips64&#34; | &#34;linux/mips64le&#34; | &#34;linux/ppc64le&#34; | &#34;linux/riscv64&#34; | &#34;linux/s390x&#34; | &#34;netbsd/386&#34; | &#34;netbsd/amd64&#34; | &#34;netbsd/arm&#34; | &#34;openbsd/386&#34; | &#34;openbsd/amd64&#34; | &#34;openbsd/arm&#34; | &#34;plan9/386&#34; | &#34;plan9/amd64&#34; | &#34;solaris/amd64&#34; | &#34;windows/386&#34; | &#34;windows/amd64&#34;&gt;</a></span>
     </dt>
-    <dd>Set target platform(s) for the build. Defaults to the host's platform</dd><dt class="property-optional"
+    <dd><p>Set target platform(s) for the build. Defaults to the host's platform.</p>
+<p>Equivalent to Docker's <code>--target</code> flag.</p>
+</dd><dt class="property-optional"
             title="Optional">
         <span id="pull_yaml">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#pull_yaml" style="color: inherit; text-decoration: inherit;">pull</a>
@@ -3168,7 +4220,20 @@ explicitly configured.</p>
         <span class="property-indicator"></span>
         <span class="property-type">Boolean</span>
     </dt>
-    <dd>Always pull referenced images.</dd><dt class="property-optional"
+    <dd><p>Always pull referenced images.</p>
+<p>Equivalent to Docker's <code>--pull</code> flag.</p>
+</dd><dt class="property-optional"
+            title="Optional">
+        <span id="push_yaml">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#push_yaml" style="color: inherit; text-decoration: inherit;">push</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">Boolean</span>
+    </dt>
+    <dd><p>When <code>true</code> the build will automatically include a <code>registry</code> export.</p>
+<p>Defaults to <code>false</code>.</p>
+<p>Equivalent to Docker's <code>--push</code> flag.</p>
+</dd><dt class="property-optional"
             title="Optional">
         <span id="registries_yaml">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#registries_yaml" style="color: inherit; text-decoration: inherit;">registries</a>
@@ -3176,8 +4241,12 @@ explicitly configured.</p>
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#registryauth">List&lt;Property Map&gt;</a></span>
     </dt>
-    <dd>Registry credentials. Required if reading or exporting to private
-repositories.</dd><dt class="property-optional"
+    <dd><p>Registry credentials. Required if reading or exporting to private
+repositories.</p>
+<p>Credentials are kept in-memory and do not pollute pre-existing
+credentials on the host.</p>
+<p>Similar to <code>docker login</code>.</p>
+</dd><dt class="property-optional"
             title="Optional">
         <span id="secrets_yaml">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#secrets_yaml" style="color: inherit; text-decoration: inherit;">secrets</a>
@@ -3190,6 +4259,17 @@ repositories.</dd><dt class="property-optional"
 exist on-disk or in environment variables.</p>
 <p>Build arguments and environment variables are persistent in the final
 image, so you should use this for sensitive values.</p>
+<p>Similar to Docker's <code>--secret</code> flag.</p>
+</dd><dt class="property-optional"
+            title="Optional">
+        <span id="ssh_yaml">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#ssh_yaml" style="color: inherit; text-decoration: inherit;">ssh</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#ssh">List&lt;Property Map&gt;</a></span>
+    </dt>
+    <dd><p>SSH agent socket or keys to expose to the build.</p>
+<p>Equivalent to Docker's <code>--ssh</code> flag.</p>
 </dd><dt class="property-optional"
             title="Optional">
         <span id="tags_yaml">
@@ -3201,6 +4281,7 @@ image, so you should use this for sensitive values.</p>
     <dd><p>Name and optionally a tag (format: <code>name:tag</code>).</p>
 <p>If exporting to a registry, the name should include the fully qualified
 registry address (e.g. <code>docker.io/pulumi/pulumi:latest</code>).</p>
+<p>Equivalent to Docker's <code>--tag</code> flag.</p>
 </dd><dt class="property-optional"
             title="Optional">
         <span id="targets_yaml">
@@ -3211,6 +4292,7 @@ registry address (e.g. <code>docker.io/pulumi/pulumi:latest</code>).</p>
     </dt>
     <dd><p>Set the target build stage(s) to build.</p>
 <p>If not specified all targets will be built by default.</p>
+<p>Equivalent to Docker's <code>--target</code> flag.</p>
 </dd></dl>
 </pulumi-choosable>
 </div>
@@ -3225,14 +4307,6 @@ All [input](#inputs) properties are implicitly available as output properties. A
 <div>
 <pulumi-choosable type="language" values="csharp">
 <dl class="resources-properties"><dt class="property-"
-            title="">
-        <span id="id_csharp">
-<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_csharp" style="color: inherit; text-decoration: inherit;">Id</a>
-</span>
-        <span class="property-indicator"></span>
-        <span class="property-type">string</span>
-    </dt>
-    <dd>The provider-assigned unique ID for this managed resource.</dd><dt class="property-"
             title="">
         <span id="contexthash_csharp">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#contexthash_csharp" style="color: inherit; text-decoration: inherit;">Context<wbr>Hash</a>
@@ -3250,21 +4324,36 @@ All [input](#inputs) properties are implicitly available as output properties. A
         <span class="property-indicator"></span>
         <span class="property-type">Dictionary&lt;string, Immutable<wbr>Array&lt;string&gt;&gt;</span>
     </dt>
-    <dd>A mapping of platform type to refs which were pushed to registries.</dd></dl>
+    <dd>A mapping of target names to the SHA256 digest of their build.</dd><dt class="property-"
+            title="">
+        <span id="id_csharp">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_csharp" style="color: inherit; text-decoration: inherit;">Id</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>The provider-assigned unique ID for this managed resource.</dd><dt class="property-"
+            title="">
+        <span id="ref_csharp">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#ref_csharp" style="color: inherit; text-decoration: inherit;">Ref</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd><p>If the build pushed to any registries then this will contain a single
+fully-qualified tag, including the build's digest.</p>
+<p>This is only for convenience and may not be appropriate for situations
+where multiple tags or registries are involved. In those cases this
+output is not guaranteed to be stable.</p>
+<p>For more control over tags consumed by downstream resources you should
+use the <code>Digests</code> output.</p>
+</dd></dl>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="go">
 <dl class="resources-properties"><dt class="property-"
-            title="">
-        <span id="id_go">
-<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_go" style="color: inherit; text-decoration: inherit;">Id</a>
-</span>
-        <span class="property-indicator"></span>
-        <span class="property-type">string</span>
-    </dt>
-    <dd>The provider-assigned unique ID for this managed resource.</dd><dt class="property-"
             title="">
         <span id="contexthash_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#contexthash_go" style="color: inherit; text-decoration: inherit;">Context<wbr>Hash</a>
@@ -3282,21 +4371,36 @@ All [input](#inputs) properties are implicitly available as output properties. A
         <span class="property-indicator"></span>
         <span class="property-type">map[string][]string</span>
     </dt>
-    <dd>A mapping of platform type to refs which were pushed to registries.</dd></dl>
+    <dd>A mapping of target names to the SHA256 digest of their build.</dd><dt class="property-"
+            title="">
+        <span id="id_go">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_go" style="color: inherit; text-decoration: inherit;">Id</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>The provider-assigned unique ID for this managed resource.</dd><dt class="property-"
+            title="">
+        <span id="ref_go">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#ref_go" style="color: inherit; text-decoration: inherit;">Ref</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd><p>If the build pushed to any registries then this will contain a single
+fully-qualified tag, including the build's digest.</p>
+<p>This is only for convenience and may not be appropriate for situations
+where multiple tags or registries are involved. In those cases this
+output is not guaranteed to be stable.</p>
+<p>For more control over tags consumed by downstream resources you should
+use the <code>Digests</code> output.</p>
+</dd></dl>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="java">
 <dl class="resources-properties"><dt class="property-"
-            title="">
-        <span id="id_java">
-<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_java" style="color: inherit; text-decoration: inherit;">id</a>
-</span>
-        <span class="property-indicator"></span>
-        <span class="property-type">String</span>
-    </dt>
-    <dd>The provider-assigned unique ID for this managed resource.</dd><dt class="property-"
             title="">
         <span id="contexthash_java">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#contexthash_java" style="color: inherit; text-decoration: inherit;">context<wbr>Hash</a>
@@ -3314,21 +4418,36 @@ All [input](#inputs) properties are implicitly available as output properties. A
         <span class="property-indicator"></span>
         <span class="property-type">Map&lt;String,List&lt;String&gt;&gt;</span>
     </dt>
-    <dd>A mapping of platform type to refs which were pushed to registries.</dd></dl>
+    <dd>A mapping of target names to the SHA256 digest of their build.</dd><dt class="property-"
+            title="">
+        <span id="id_java">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_java" style="color: inherit; text-decoration: inherit;">id</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">String</span>
+    </dt>
+    <dd>The provider-assigned unique ID for this managed resource.</dd><dt class="property-"
+            title="">
+        <span id="ref_java">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#ref_java" style="color: inherit; text-decoration: inherit;">ref</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">String</span>
+    </dt>
+    <dd><p>If the build pushed to any registries then this will contain a single
+fully-qualified tag, including the build's digest.</p>
+<p>This is only for convenience and may not be appropriate for situations
+where multiple tags or registries are involved. In those cases this
+output is not guaranteed to be stable.</p>
+<p>For more control over tags consumed by downstream resources you should
+use the <code>Digests</code> output.</p>
+</dd></dl>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
 <dl class="resources-properties"><dt class="property-"
-            title="">
-        <span id="id_nodejs">
-<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_nodejs" style="color: inherit; text-decoration: inherit;">id</a>
-</span>
-        <span class="property-indicator"></span>
-        <span class="property-type">string</span>
-    </dt>
-    <dd>The provider-assigned unique ID for this managed resource.</dd><dt class="property-"
             title="">
         <span id="contexthash_nodejs">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#contexthash_nodejs" style="color: inherit; text-decoration: inherit;">context<wbr>Hash</a>
@@ -3346,21 +4465,36 @@ All [input](#inputs) properties are implicitly available as output properties. A
         <span class="property-indicator"></span>
         <span class="property-type">{[key: string]: string[]}</span>
     </dt>
-    <dd>A mapping of platform type to refs which were pushed to registries.</dd></dl>
+    <dd>A mapping of target names to the SHA256 digest of their build.</dd><dt class="property-"
+            title="">
+        <span id="id_nodejs">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_nodejs" style="color: inherit; text-decoration: inherit;">id</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>The provider-assigned unique ID for this managed resource.</dd><dt class="property-"
+            title="">
+        <span id="ref_nodejs">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#ref_nodejs" style="color: inherit; text-decoration: inherit;">ref</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd><p>If the build pushed to any registries then this will contain a single
+fully-qualified tag, including the build's digest.</p>
+<p>This is only for convenience and may not be appropriate for situations
+where multiple tags or registries are involved. In those cases this
+output is not guaranteed to be stable.</p>
+<p>For more control over tags consumed by downstream resources you should
+use the <code>Digests</code> output.</p>
+</dd></dl>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="python">
 <dl class="resources-properties"><dt class="property-"
-            title="">
-        <span id="id_python">
-<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_python" style="color: inherit; text-decoration: inherit;">id</a>
-</span>
-        <span class="property-indicator"></span>
-        <span class="property-type">str</span>
-    </dt>
-    <dd>The provider-assigned unique ID for this managed resource.</dd><dt class="property-"
             title="">
         <span id="context_hash_python">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#context_hash_python" style="color: inherit; text-decoration: inherit;">context_<wbr>hash</a>
@@ -3378,21 +4512,36 @@ All [input](#inputs) properties are implicitly available as output properties. A
         <span class="property-indicator"></span>
         <span class="property-type">Mapping[str, Sequence[str]]</span>
     </dt>
-    <dd>A mapping of platform type to refs which were pushed to registries.</dd></dl>
+    <dd>A mapping of target names to the SHA256 digest of their build.</dd><dt class="property-"
+            title="">
+        <span id="id_python">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_python" style="color: inherit; text-decoration: inherit;">id</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">str</span>
+    </dt>
+    <dd>The provider-assigned unique ID for this managed resource.</dd><dt class="property-"
+            title="">
+        <span id="ref_python">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#ref_python" style="color: inherit; text-decoration: inherit;">ref</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">str</span>
+    </dt>
+    <dd><p>If the build pushed to any registries then this will contain a single
+fully-qualified tag, including the build's digest.</p>
+<p>This is only for convenience and may not be appropriate for situations
+where multiple tags or registries are involved. In those cases this
+output is not guaranteed to be stable.</p>
+<p>For more control over tags consumed by downstream resources you should
+use the <code>Digests</code> output.</p>
+</dd></dl>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="yaml">
 <dl class="resources-properties"><dt class="property-"
-            title="">
-        <span id="id_yaml">
-<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_yaml" style="color: inherit; text-decoration: inherit;">id</a>
-</span>
-        <span class="property-indicator"></span>
-        <span class="property-type">String</span>
-    </dt>
-    <dd>The provider-assigned unique ID for this managed resource.</dd><dt class="property-"
             title="">
         <span id="contexthash_yaml">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#contexthash_yaml" style="color: inherit; text-decoration: inherit;">context<wbr>Hash</a>
@@ -3410,7 +4559,30 @@ All [input](#inputs) properties are implicitly available as output properties. A
         <span class="property-indicator"></span>
         <span class="property-type">Map&lt;List&lt;String&gt;&gt;</span>
     </dt>
-    <dd>A mapping of platform type to refs which were pushed to registries.</dd></dl>
+    <dd>A mapping of target names to the SHA256 digest of their build.</dd><dt class="property-"
+            title="">
+        <span id="id_yaml">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_yaml" style="color: inherit; text-decoration: inherit;">id</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">String</span>
+    </dt>
+    <dd>The provider-assigned unique ID for this managed resource.</dd><dt class="property-"
+            title="">
+        <span id="ref_yaml">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#ref_yaml" style="color: inherit; text-decoration: inherit;">ref</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">String</span>
+    </dt>
+    <dd><p>If the build pushed to any registries then this will contain a single
+fully-qualified tag, including the build's digest.</p>
+<p>This is only for convenience and may not be appropriate for situations
+where multiple tags or registries are involved. In those cases this
+output is not guaranteed to be stable.</p>
+<p>For more control over tags consumed by downstream resources you should
+use the <code>Digests</code> output.</p>
+</dd></dl>
 </pulumi-choosable>
 </div>
 
@@ -3655,6 +4827,7 @@ Builder<wbr>Config<pulumi-choosable type="language" values="python,go" class="in
     <dd><p>Name of an existing buildx builder to use.</p>
 <p>Only <code>docker-container</code>, <code>kubernetes</code>, or <code>remote</code> drivers are
 supported. The legacy <code>docker</code> driver is not supported.</p>
+<p>Equivalent to Docker's <code>--builder</code> flag.</p>
 </dd></dl>
 </pulumi-choosable>
 </div>
@@ -3672,6 +4845,7 @@ supported. The legacy <code>docker</code> driver is not supported.</p>
     <dd><p>Name of an existing buildx builder to use.</p>
 <p>Only <code>docker-container</code>, <code>kubernetes</code>, or <code>remote</code> drivers are
 supported. The legacy <code>docker</code> driver is not supported.</p>
+<p>Equivalent to Docker's <code>--builder</code> flag.</p>
 </dd></dl>
 </pulumi-choosable>
 </div>
@@ -3689,6 +4863,7 @@ supported. The legacy <code>docker</code> driver is not supported.</p>
     <dd><p>Name of an existing buildx builder to use.</p>
 <p>Only <code>docker-container</code>, <code>kubernetes</code>, or <code>remote</code> drivers are
 supported. The legacy <code>docker</code> driver is not supported.</p>
+<p>Equivalent to Docker's <code>--builder</code> flag.</p>
 </dd></dl>
 </pulumi-choosable>
 </div>
@@ -3706,6 +4881,7 @@ supported. The legacy <code>docker</code> driver is not supported.</p>
     <dd><p>Name of an existing buildx builder to use.</p>
 <p>Only <code>docker-container</code>, <code>kubernetes</code>, or <code>remote</code> drivers are
 supported. The legacy <code>docker</code> driver is not supported.</p>
+<p>Equivalent to Docker's <code>--builder</code> flag.</p>
 </dd></dl>
 </pulumi-choosable>
 </div>
@@ -3723,6 +4899,7 @@ supported. The legacy <code>docker</code> driver is not supported.</p>
     <dd><p>Name of an existing buildx builder to use.</p>
 <p>Only <code>docker-container</code>, <code>kubernetes</code>, or <code>remote</code> drivers are
 supported. The legacy <code>docker</code> driver is not supported.</p>
+<p>Equivalent to Docker's <code>--builder</code> flag.</p>
 </dd></dl>
 </pulumi-choosable>
 </div>
@@ -3740,6 +4917,7 @@ supported. The legacy <code>docker</code> driver is not supported.</p>
     <dd><p>Name of an existing buildx builder to use.</p>
 <p>Only <code>docker-container</code>, <code>kubernetes</code>, or <code>remote</code> drivers are
 supported. The legacy <code>docker</code> driver is not supported.</p>
+<p>Equivalent to Docker's <code>--builder</code> flag.</p>
 </dd></dl>
 </pulumi-choosable>
 </div>
@@ -3944,6 +5122,14 @@ Cache<wbr>From<wbr>Entry<pulumi-choosable type="language" values="python,go" cla
     </dt>
     <dd>Upload build caches to Azure's blob storage service.</dd><dt class="property-optional"
             title="Optional">
+        <span id="disabled_csharp">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#disabled_csharp" style="color: inherit; text-decoration: inherit;">Disabled</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">bool</span>
+    </dt>
+    <dd>When <code>true</code> this entry will be excluded. Defaults to <code>false</code>.</dd><dt class="property-optional"
+            title="Optional">
         <span id="gha_csharp">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#gha_csharp" style="color: inherit; text-decoration: inherit;">Gha</a>
 </span>
@@ -3954,16 +5140,6 @@ Cache<wbr>From<wbr>Entry<pulumi-choosable type="language" values="python,go" cla
 <p>An action like <code>crazy-max/ghaction-github-runtime</code> is recommended to
 expose appropriate credentials to your GitHub workflow.</p>
 </dd><dt class="property-optional"
-            title="Optional">
-        <span id="inline_csharp">
-<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#inline_csharp" style="color: inherit; text-decoration: inherit;">Inline</a>
-</span>
-        <span class="property-indicator"></span>
-        <span class="property-type"><a href="#cacheinline">Cache<wbr>Inline</a></span>
-    </dt>
-    <dd>The inline cache storage backend is the simplest implementation to get
-started with, but it does not handle multi-stage builds. Consider the
-registry cache backend instead.</dd><dt class="property-optional"
             title="Optional">
         <span id="local_csharp">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#local_csharp" style="color: inherit; text-decoration: inherit;">Local</a>
@@ -4013,6 +5189,14 @@ MinIO.</dd></dl>
     </dt>
     <dd>Upload build caches to Azure's blob storage service.</dd><dt class="property-optional"
             title="Optional">
+        <span id="disabled_go">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#disabled_go" style="color: inherit; text-decoration: inherit;">Disabled</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">bool</span>
+    </dt>
+    <dd>When <code>true</code> this entry will be excluded. Defaults to <code>false</code>.</dd><dt class="property-optional"
+            title="Optional">
         <span id="gha_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#gha_go" style="color: inherit; text-decoration: inherit;">Gha</a>
 </span>
@@ -4023,16 +5207,6 @@ MinIO.</dd></dl>
 <p>An action like <code>crazy-max/ghaction-github-runtime</code> is recommended to
 expose appropriate credentials to your GitHub workflow.</p>
 </dd><dt class="property-optional"
-            title="Optional">
-        <span id="inline_go">
-<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#inline_go" style="color: inherit; text-decoration: inherit;">Inline</a>
-</span>
-        <span class="property-indicator"></span>
-        <span class="property-type"><a href="#cacheinline">Cache<wbr>Inline</a></span>
-    </dt>
-    <dd>The inline cache storage backend is the simplest implementation to get
-started with, but it does not handle multi-stage builds. Consider the
-registry cache backend instead.</dd><dt class="property-optional"
             title="Optional">
         <span id="local_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#local_go" style="color: inherit; text-decoration: inherit;">Local</a>
@@ -4082,6 +5256,14 @@ MinIO.</dd></dl>
     </dt>
     <dd>Upload build caches to Azure's blob storage service.</dd><dt class="property-optional"
             title="Optional">
+        <span id="disabled_java">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#disabled_java" style="color: inherit; text-decoration: inherit;">disabled</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">Boolean</span>
+    </dt>
+    <dd>When <code>true</code> this entry will be excluded. Defaults to <code>false</code>.</dd><dt class="property-optional"
+            title="Optional">
         <span id="gha_java">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#gha_java" style="color: inherit; text-decoration: inherit;">gha</a>
 </span>
@@ -4092,16 +5274,6 @@ MinIO.</dd></dl>
 <p>An action like <code>crazy-max/ghaction-github-runtime</code> is recommended to
 expose appropriate credentials to your GitHub workflow.</p>
 </dd><dt class="property-optional"
-            title="Optional">
-        <span id="inline_java">
-<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#inline_java" style="color: inherit; text-decoration: inherit;">inline</a>
-</span>
-        <span class="property-indicator"></span>
-        <span class="property-type"><a href="#cacheinline">Cache<wbr>Inline</a></span>
-    </dt>
-    <dd>The inline cache storage backend is the simplest implementation to get
-started with, but it does not handle multi-stage builds. Consider the
-registry cache backend instead.</dd><dt class="property-optional"
             title="Optional">
         <span id="local_java">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#local_java" style="color: inherit; text-decoration: inherit;">local</a>
@@ -4151,6 +5323,14 @@ MinIO.</dd></dl>
     </dt>
     <dd>Upload build caches to Azure's blob storage service.</dd><dt class="property-optional"
             title="Optional">
+        <span id="disabled_nodejs">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#disabled_nodejs" style="color: inherit; text-decoration: inherit;">disabled</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">boolean</span>
+    </dt>
+    <dd>When <code>true</code> this entry will be excluded. Defaults to <code>false</code>.</dd><dt class="property-optional"
+            title="Optional">
         <span id="gha_nodejs">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#gha_nodejs" style="color: inherit; text-decoration: inherit;">gha</a>
 </span>
@@ -4161,16 +5341,6 @@ MinIO.</dd></dl>
 <p>An action like <code>crazy-max/ghaction-github-runtime</code> is recommended to
 expose appropriate credentials to your GitHub workflow.</p>
 </dd><dt class="property-optional"
-            title="Optional">
-        <span id="inline_nodejs">
-<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#inline_nodejs" style="color: inherit; text-decoration: inherit;">inline</a>
-</span>
-        <span class="property-indicator"></span>
-        <span class="property-type"><a href="#cacheinline">Cache<wbr>Inline</a></span>
-    </dt>
-    <dd>The inline cache storage backend is the simplest implementation to get
-started with, but it does not handle multi-stage builds. Consider the
-registry cache backend instead.</dd><dt class="property-optional"
             title="Optional">
         <span id="local_nodejs">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#local_nodejs" style="color: inherit; text-decoration: inherit;">local</a>
@@ -4220,6 +5390,14 @@ MinIO.</dd></dl>
     </dt>
     <dd>Upload build caches to Azure's blob storage service.</dd><dt class="property-optional"
             title="Optional">
+        <span id="disabled_python">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#disabled_python" style="color: inherit; text-decoration: inherit;">disabled</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">bool</span>
+    </dt>
+    <dd>When <code>true</code> this entry will be excluded. Defaults to <code>false</code>.</dd><dt class="property-optional"
+            title="Optional">
         <span id="gha_python">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#gha_python" style="color: inherit; text-decoration: inherit;">gha</a>
 </span>
@@ -4230,16 +5408,6 @@ MinIO.</dd></dl>
 <p>An action like <code>crazy-max/ghaction-github-runtime</code> is recommended to
 expose appropriate credentials to your GitHub workflow.</p>
 </dd><dt class="property-optional"
-            title="Optional">
-        <span id="inline_python">
-<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#inline_python" style="color: inherit; text-decoration: inherit;">inline</a>
-</span>
-        <span class="property-indicator"></span>
-        <span class="property-type"><a href="#cacheinline">Cache<wbr>Inline</a></span>
-    </dt>
-    <dd>The inline cache storage backend is the simplest implementation to get
-started with, but it does not handle multi-stage builds. Consider the
-registry cache backend instead.</dd><dt class="property-optional"
             title="Optional">
         <span id="local_python">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#local_python" style="color: inherit; text-decoration: inherit;">local</a>
@@ -4289,6 +5457,14 @@ MinIO.</dd></dl>
     </dt>
     <dd>Upload build caches to Azure's blob storage service.</dd><dt class="property-optional"
             title="Optional">
+        <span id="disabled_yaml">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#disabled_yaml" style="color: inherit; text-decoration: inherit;">disabled</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">Boolean</span>
+    </dt>
+    <dd>When <code>true</code> this entry will be excluded. Defaults to <code>false</code>.</dd><dt class="property-optional"
+            title="Optional">
         <span id="gha_yaml">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#gha_yaml" style="color: inherit; text-decoration: inherit;">gha</a>
 </span>
@@ -4299,16 +5475,6 @@ MinIO.</dd></dl>
 <p>An action like <code>crazy-max/ghaction-github-runtime</code> is recommended to
 expose appropriate credentials to your GitHub workflow.</p>
 </dd><dt class="property-optional"
-            title="Optional">
-        <span id="inline_yaml">
-<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#inline_yaml" style="color: inherit; text-decoration: inherit;">inline</a>
-</span>
-        <span class="property-indicator"></span>
-        <span class="property-type"><a href="#cacheinline">Property Map</a></span>
-    </dt>
-    <dd>The inline cache storage backend is the simplest implementation to get
-started with, but it does not handle multi-stage builds. Consider the
-registry cache backend instead.</dd><dt class="property-optional"
             title="Optional">
         <span id="local_yaml">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#local_yaml" style="color: inherit; text-decoration: inherit;">local</a>
@@ -5694,6 +6860,14 @@ Cache<wbr>To<wbr>Entry<pulumi-choosable type="language" values="python,go" class
     </dt>
     <dd>Push cache to Azure's blob storage service.</dd><dt class="property-optional"
             title="Optional">
+        <span id="disabled_csharp">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#disabled_csharp" style="color: inherit; text-decoration: inherit;">Disabled</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">bool</span>
+    </dt>
+    <dd>When <code>true</code> this entry will be excluded. Defaults to <code>false</code>.</dd><dt class="property-optional"
+            title="Optional">
         <span id="gha_csharp">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#gha_csharp" style="color: inherit; text-decoration: inherit;">Gha</a>
 </span>
@@ -5709,7 +6883,7 @@ expose appropriate credentials to your GitHub workflow.</p>
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#inline_csharp" style="color: inherit; text-decoration: inherit;">Inline</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type"><a href="#cacheinline">Cache<wbr>Inline</a></span>
+        <span class="property-type"><a href="#cachetoinline">Cache<wbr>To<wbr>Inline</a></span>
     </dt>
     <dd>The inline cache storage backend is the simplest implementation to get
 started with, but it does not handle multi-stage builds. Consider the
@@ -5763,6 +6937,14 @@ driver.</dd><dt class="property-optional"
     </dt>
     <dd>Push cache to Azure's blob storage service.</dd><dt class="property-optional"
             title="Optional">
+        <span id="disabled_go">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#disabled_go" style="color: inherit; text-decoration: inherit;">Disabled</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">bool</span>
+    </dt>
+    <dd>When <code>true</code> this entry will be excluded. Defaults to <code>false</code>.</dd><dt class="property-optional"
+            title="Optional">
         <span id="gha_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#gha_go" style="color: inherit; text-decoration: inherit;">Gha</a>
 </span>
@@ -5778,7 +6960,7 @@ expose appropriate credentials to your GitHub workflow.</p>
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#inline_go" style="color: inherit; text-decoration: inherit;">Inline</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type"><a href="#cacheinline">Cache<wbr>Inline</a></span>
+        <span class="property-type"><a href="#cachetoinline">Cache<wbr>To<wbr>Inline</a></span>
     </dt>
     <dd>The inline cache storage backend is the simplest implementation to get
 started with, but it does not handle multi-stage builds. Consider the
@@ -5832,6 +7014,14 @@ driver.</dd><dt class="property-optional"
     </dt>
     <dd>Push cache to Azure's blob storage service.</dd><dt class="property-optional"
             title="Optional">
+        <span id="disabled_java">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#disabled_java" style="color: inherit; text-decoration: inherit;">disabled</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">Boolean</span>
+    </dt>
+    <dd>When <code>true</code> this entry will be excluded. Defaults to <code>false</code>.</dd><dt class="property-optional"
+            title="Optional">
         <span id="gha_java">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#gha_java" style="color: inherit; text-decoration: inherit;">gha</a>
 </span>
@@ -5847,7 +7037,7 @@ expose appropriate credentials to your GitHub workflow.</p>
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#inline_java" style="color: inherit; text-decoration: inherit;">inline</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type"><a href="#cacheinline">Cache<wbr>Inline</a></span>
+        <span class="property-type"><a href="#cachetoinline">Cache<wbr>To<wbr>Inline</a></span>
     </dt>
     <dd>The inline cache storage backend is the simplest implementation to get
 started with, but it does not handle multi-stage builds. Consider the
@@ -5901,6 +7091,14 @@ driver.</dd><dt class="property-optional"
     </dt>
     <dd>Push cache to Azure's blob storage service.</dd><dt class="property-optional"
             title="Optional">
+        <span id="disabled_nodejs">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#disabled_nodejs" style="color: inherit; text-decoration: inherit;">disabled</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">boolean</span>
+    </dt>
+    <dd>When <code>true</code> this entry will be excluded. Defaults to <code>false</code>.</dd><dt class="property-optional"
+            title="Optional">
         <span id="gha_nodejs">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#gha_nodejs" style="color: inherit; text-decoration: inherit;">gha</a>
 </span>
@@ -5916,7 +7114,7 @@ expose appropriate credentials to your GitHub workflow.</p>
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#inline_nodejs" style="color: inherit; text-decoration: inherit;">inline</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type"><a href="#cacheinline">Cache<wbr>Inline</a></span>
+        <span class="property-type"><a href="#cachetoinline">Cache<wbr>To<wbr>Inline</a></span>
     </dt>
     <dd>The inline cache storage backend is the simplest implementation to get
 started with, but it does not handle multi-stage builds. Consider the
@@ -5970,6 +7168,14 @@ driver.</dd><dt class="property-optional"
     </dt>
     <dd>Push cache to Azure's blob storage service.</dd><dt class="property-optional"
             title="Optional">
+        <span id="disabled_python">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#disabled_python" style="color: inherit; text-decoration: inherit;">disabled</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">bool</span>
+    </dt>
+    <dd>When <code>true</code> this entry will be excluded. Defaults to <code>false</code>.</dd><dt class="property-optional"
+            title="Optional">
         <span id="gha_python">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#gha_python" style="color: inherit; text-decoration: inherit;">gha</a>
 </span>
@@ -5985,7 +7191,7 @@ expose appropriate credentials to your GitHub workflow.</p>
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#inline_python" style="color: inherit; text-decoration: inherit;">inline</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type"><a href="#cacheinline">Cache<wbr>Inline</a></span>
+        <span class="property-type"><a href="#cachetoinline">Cache<wbr>To<wbr>Inline</a></span>
     </dt>
     <dd>The inline cache storage backend is the simplest implementation to get
 started with, but it does not handle multi-stage builds. Consider the
@@ -6039,6 +7245,14 @@ driver.</dd><dt class="property-optional"
     </dt>
     <dd>Push cache to Azure's blob storage service.</dd><dt class="property-optional"
             title="Optional">
+        <span id="disabled_yaml">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#disabled_yaml" style="color: inherit; text-decoration: inherit;">disabled</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">Boolean</span>
+    </dt>
+    <dd>When <code>true</code> this entry will be excluded. Defaults to <code>false</code>.</dd><dt class="property-optional"
+            title="Optional">
         <span id="gha_yaml">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#gha_yaml" style="color: inherit; text-decoration: inherit;">gha</a>
 </span>
@@ -6054,7 +7268,7 @@ expose appropriate credentials to your GitHub workflow.</p>
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#inline_yaml" style="color: inherit; text-decoration: inherit;">inline</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type"><a href="#cacheinline">Property Map</a></span>
+        <span class="property-type"><a href="#cachetoinline">Property Map</a></span>
     </dt>
     <dd>The inline cache storage backend is the simplest implementation to get
 started with, but it does not handle multi-stage builds. Consider the
@@ -6849,7 +8063,7 @@ manifest list (requires OCI media types).</p>
         <span class="property-indicator"></span>
         <span class="property-type">bool</span>
     </dt>
-    <dd>Whether to use OCI mediatypes in exported manifests. Defaults to
+    <dd>Whether to use OCI media types in exported manifests. Defaults to
 <code>true</code>.</dd></dl>
 </pulumi-choosable>
 </div>
@@ -6923,7 +8137,7 @@ manifest list (requires OCI media types).</p>
         <span class="property-indicator"></span>
         <span class="property-type">bool</span>
     </dt>
-    <dd>Whether to use OCI mediatypes in exported manifests. Defaults to
+    <dd>Whether to use OCI media types in exported manifests. Defaults to
 <code>true</code>.</dd></dl>
 </pulumi-choosable>
 </div>
@@ -6997,7 +8211,7 @@ manifest list (requires OCI media types).</p>
         <span class="property-indicator"></span>
         <span class="property-type">Boolean</span>
     </dt>
-    <dd>Whether to use OCI mediatypes in exported manifests. Defaults to
+    <dd>Whether to use OCI media types in exported manifests. Defaults to
 <code>true</code>.</dd></dl>
 </pulumi-choosable>
 </div>
@@ -7071,7 +8285,7 @@ manifest list (requires OCI media types).</p>
         <span class="property-indicator"></span>
         <span class="property-type">boolean</span>
     </dt>
-    <dd>Whether to use OCI mediatypes in exported manifests. Defaults to
+    <dd>Whether to use OCI media types in exported manifests. Defaults to
 <code>true</code>.</dd></dl>
 </pulumi-choosable>
 </div>
@@ -7145,7 +8359,7 @@ manifest list (requires OCI media types).</p>
         <span class="property-indicator"></span>
         <span class="property-type">bool</span>
     </dt>
-    <dd>Whether to use OCI mediatypes in exported manifests. Defaults to
+    <dd>Whether to use OCI media types in exported manifests. Defaults to
 <code>true</code>.</dd></dl>
 </pulumi-choosable>
 </div>
@@ -7219,7 +8433,7 @@ manifest list (requires OCI media types).</p>
         <span class="property-indicator"></span>
         <span class="property-type">Boolean</span>
     </dt>
-    <dd>Whether to use OCI mediatypes in exported manifests. Defaults to
+    <dd>Whether to use OCI media types in exported manifests. Defaults to
 <code>true</code>.</dd></dl>
 </pulumi-choosable>
 </div>
@@ -8055,6 +9269,7 @@ Dockerfile<pulumi-choosable type="language" values="python,go" class="inline">, 
         <span class="property-type">string</span>
     </dt>
     <dd><p>Raw Dockerfile contents.</p>
+<p>Equivalent to invoking Docker with <code>-f -</code>.</p>
 <p>Conflicts with <code>location</code>.</p>
 </dd><dt class="property-optional"
             title="Optional">
@@ -8082,6 +9297,7 @@ Dockerfile<pulumi-choosable type="language" values="python,go" class="inline">, 
         <span class="property-type">string</span>
     </dt>
     <dd><p>Raw Dockerfile contents.</p>
+<p>Equivalent to invoking Docker with <code>-f -</code>.</p>
 <p>Conflicts with <code>location</code>.</p>
 </dd><dt class="property-optional"
             title="Optional">
@@ -8109,6 +9325,7 @@ Dockerfile<pulumi-choosable type="language" values="python,go" class="inline">, 
         <span class="property-type">String</span>
     </dt>
     <dd><p>Raw Dockerfile contents.</p>
+<p>Equivalent to invoking Docker with <code>-f -</code>.</p>
 <p>Conflicts with <code>location</code>.</p>
 </dd><dt class="property-optional"
             title="Optional">
@@ -8136,6 +9353,7 @@ Dockerfile<pulumi-choosable type="language" values="python,go" class="inline">, 
         <span class="property-type">string</span>
     </dt>
     <dd><p>Raw Dockerfile contents.</p>
+<p>Equivalent to invoking Docker with <code>-f -</code>.</p>
 <p>Conflicts with <code>location</code>.</p>
 </dd><dt class="property-optional"
             title="Optional">
@@ -8163,6 +9381,7 @@ Dockerfile<pulumi-choosable type="language" values="python,go" class="inline">, 
         <span class="property-type">str</span>
     </dt>
     <dd><p>Raw Dockerfile contents.</p>
+<p>Equivalent to invoking Docker with <code>-f -</code>.</p>
 <p>Conflicts with <code>location</code>.</p>
 </dd><dt class="property-optional"
             title="Optional">
@@ -8190,6 +9409,7 @@ Dockerfile<pulumi-choosable type="language" values="python,go" class="inline">, 
         <span class="property-type">String</span>
     </dt>
     <dd><p>Raw Dockerfile contents.</p>
+<p>Equivalent to invoking Docker with <code>-f -</code>.</p>
 <p>Conflicts with <code>location</code>.</p>
 </dd><dt class="property-optional"
             title="Optional">
@@ -8638,6 +9858,14 @@ Export<wbr>Entry<pulumi-choosable type="language" values="python,go" class="inli
 <pulumi-choosable type="language" values="csharp">
 <dl class="resources-properties"><dt class="property-optional"
             title="Optional">
+        <span id="disabled_csharp">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#disabled_csharp" style="color: inherit; text-decoration: inherit;">Disabled</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">bool</span>
+    </dt>
+    <dd>When <code>true</code> this entry will be excluded. Defaults to <code>false</code>.</dd><dt class="property-optional"
+            title="Optional">
         <span id="docker_csharp">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#docker_csharp" style="color: inherit; text-decoration: inherit;">Docker</a>
 </span>
@@ -8661,15 +9889,6 @@ Export<wbr>Entry<pulumi-choosable type="language" values="python,go" class="inli
         <span class="property-type"><a href="#exportlocal">Export<wbr>Local</a></span>
     </dt>
     <dd>Export to a local directory as files and directories.</dd><dt class="property-optional"
-            title="Optional">
-        <span id="manifests_csharp">
-<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#manifests_csharp" style="color: inherit; text-decoration: inherit;">Manifests</a>
-</span>
-        <span class="property-indicator"></span>
-        <span class="property-type"><a href="#manifest">List&lt;Manifest&gt;</a></span>
-    </dt>
-    <dd>An output property populated for exporters that pushed image
-manifest(s) to a registry.</dd><dt class="property-optional"
             title="Optional">
         <span id="oci_csharp">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#oci_csharp" style="color: inherit; text-decoration: inherit;">Oci</a>
@@ -8710,6 +9929,14 @@ manifest(s) to a registry.</dd><dt class="property-optional"
 <pulumi-choosable type="language" values="go">
 <dl class="resources-properties"><dt class="property-optional"
             title="Optional">
+        <span id="disabled_go">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#disabled_go" style="color: inherit; text-decoration: inherit;">Disabled</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">bool</span>
+    </dt>
+    <dd>When <code>true</code> this entry will be excluded. Defaults to <code>false</code>.</dd><dt class="property-optional"
+            title="Optional">
         <span id="docker_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#docker_go" style="color: inherit; text-decoration: inherit;">Docker</a>
 </span>
@@ -8733,15 +9960,6 @@ manifest(s) to a registry.</dd><dt class="property-optional"
         <span class="property-type"><a href="#exportlocal">Export<wbr>Local</a></span>
     </dt>
     <dd>Export to a local directory as files and directories.</dd><dt class="property-optional"
-            title="Optional">
-        <span id="manifests_go">
-<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#manifests_go" style="color: inherit; text-decoration: inherit;">Manifests</a>
-</span>
-        <span class="property-indicator"></span>
-        <span class="property-type"><a href="#manifest">[]Manifest</a></span>
-    </dt>
-    <dd>An output property populated for exporters that pushed image
-manifest(s) to a registry.</dd><dt class="property-optional"
             title="Optional">
         <span id="oci_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#oci_go" style="color: inherit; text-decoration: inherit;">Oci</a>
@@ -8782,6 +10000,14 @@ manifest(s) to a registry.</dd><dt class="property-optional"
 <pulumi-choosable type="language" values="java">
 <dl class="resources-properties"><dt class="property-optional"
             title="Optional">
+        <span id="disabled_java">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#disabled_java" style="color: inherit; text-decoration: inherit;">disabled</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">Boolean</span>
+    </dt>
+    <dd>When <code>true</code> this entry will be excluded. Defaults to <code>false</code>.</dd><dt class="property-optional"
+            title="Optional">
         <span id="docker_java">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#docker_java" style="color: inherit; text-decoration: inherit;">docker</a>
 </span>
@@ -8805,15 +10031,6 @@ manifest(s) to a registry.</dd><dt class="property-optional"
         <span class="property-type"><a href="#exportlocal">Export<wbr>Local</a></span>
     </dt>
     <dd>Export to a local directory as files and directories.</dd><dt class="property-optional"
-            title="Optional">
-        <span id="manifests_java">
-<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#manifests_java" style="color: inherit; text-decoration: inherit;">manifests</a>
-</span>
-        <span class="property-indicator"></span>
-        <span class="property-type"><a href="#manifest">List&lt;Manifest&gt;</a></span>
-    </dt>
-    <dd>An output property populated for exporters that pushed image
-manifest(s) to a registry.</dd><dt class="property-optional"
             title="Optional">
         <span id="oci_java">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#oci_java" style="color: inherit; text-decoration: inherit;">oci</a>
@@ -8854,6 +10071,14 @@ manifest(s) to a registry.</dd><dt class="property-optional"
 <pulumi-choosable type="language" values="javascript,typescript">
 <dl class="resources-properties"><dt class="property-optional"
             title="Optional">
+        <span id="disabled_nodejs">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#disabled_nodejs" style="color: inherit; text-decoration: inherit;">disabled</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">boolean</span>
+    </dt>
+    <dd>When <code>true</code> this entry will be excluded. Defaults to <code>false</code>.</dd><dt class="property-optional"
+            title="Optional">
         <span id="docker_nodejs">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#docker_nodejs" style="color: inherit; text-decoration: inherit;">docker</a>
 </span>
@@ -8877,15 +10102,6 @@ manifest(s) to a registry.</dd><dt class="property-optional"
         <span class="property-type"><a href="#exportlocal">Export<wbr>Local</a></span>
     </dt>
     <dd>Export to a local directory as files and directories.</dd><dt class="property-optional"
-            title="Optional">
-        <span id="manifests_nodejs">
-<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#manifests_nodejs" style="color: inherit; text-decoration: inherit;">manifests</a>
-</span>
-        <span class="property-indicator"></span>
-        <span class="property-type"><a href="#manifest">Manifest[]</a></span>
-    </dt>
-    <dd>An output property populated for exporters that pushed image
-manifest(s) to a registry.</dd><dt class="property-optional"
             title="Optional">
         <span id="oci_nodejs">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#oci_nodejs" style="color: inherit; text-decoration: inherit;">oci</a>
@@ -8926,6 +10142,14 @@ manifest(s) to a registry.</dd><dt class="property-optional"
 <pulumi-choosable type="language" values="python">
 <dl class="resources-properties"><dt class="property-optional"
             title="Optional">
+        <span id="disabled_python">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#disabled_python" style="color: inherit; text-decoration: inherit;">disabled</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">bool</span>
+    </dt>
+    <dd>When <code>true</code> this entry will be excluded. Defaults to <code>false</code>.</dd><dt class="property-optional"
+            title="Optional">
         <span id="docker_python">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#docker_python" style="color: inherit; text-decoration: inherit;">docker</a>
 </span>
@@ -8949,15 +10173,6 @@ manifest(s) to a registry.</dd><dt class="property-optional"
         <span class="property-type"><a href="#exportlocal">Export<wbr>Local</a></span>
     </dt>
     <dd>Export to a local directory as files and directories.</dd><dt class="property-optional"
-            title="Optional">
-        <span id="manifests_python">
-<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#manifests_python" style="color: inherit; text-decoration: inherit;">manifests</a>
-</span>
-        <span class="property-indicator"></span>
-        <span class="property-type"><a href="#manifest">Sequence[Manifest]</a></span>
-    </dt>
-    <dd>An output property populated for exporters that pushed image
-manifest(s) to a registry.</dd><dt class="property-optional"
             title="Optional">
         <span id="oci_python">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#oci_python" style="color: inherit; text-decoration: inherit;">oci</a>
@@ -8998,6 +10213,14 @@ manifest(s) to a registry.</dd><dt class="property-optional"
 <pulumi-choosable type="language" values="yaml">
 <dl class="resources-properties"><dt class="property-optional"
             title="Optional">
+        <span id="disabled_yaml">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#disabled_yaml" style="color: inherit; text-decoration: inherit;">disabled</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">Boolean</span>
+    </dt>
+    <dd>When <code>true</code> this entry will be excluded. Defaults to <code>false</code>.</dd><dt class="property-optional"
+            title="Optional">
         <span id="docker_yaml">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#docker_yaml" style="color: inherit; text-decoration: inherit;">docker</a>
 </span>
@@ -9021,15 +10244,6 @@ manifest(s) to a registry.</dd><dt class="property-optional"
         <span class="property-type"><a href="#exportlocal">Property Map</a></span>
     </dt>
     <dd>Export to a local directory as files and directories.</dd><dt class="property-optional"
-            title="Optional">
-        <span id="manifests_yaml">
-<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#manifests_yaml" style="color: inherit; text-decoration: inherit;">manifests</a>
-</span>
-        <span class="property-indicator"></span>
-        <span class="property-type"><a href="#manifest">List&lt;Property Map&gt;</a></span>
-    </dt>
-    <dd>An output property populated for exporters that pushed image
-manifest(s) to a registry.</dd><dt class="property-optional"
             title="Optional">
         <span id="oci_yaml">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#oci_yaml" style="color: inherit; text-decoration: inherit;">oci</a>
@@ -11066,371 +12280,61 @@ Export<wbr>Tar<pulumi-choosable type="language" values="python,go" class="inline
 </pulumi-choosable>
 </div>
 
-<h4 id="manifest">
-Manifest<pulumi-choosable type="language" values="python,go" class="inline">, Manifest<wbr>Args</pulumi-choosable>
+<h4 id="networkmode">
+Network<wbr>Mode<pulumi-choosable type="language" values="python,go" class="inline">, Network<wbr>Mode<wbr>Args</pulumi-choosable>
 </h4>
 
 <div>
 <pulumi-choosable type="language" values="csharp">
-<dl class="resources-properties"><dt class="property-required"
-            title="Required">
-        <span id="digest_csharp">
-<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#digest_csharp" style="color: inherit; text-decoration: inherit;">Digest</a>
-</span>
-        <span class="property-indicator"></span>
-        <span class="property-type">string</span>
-    </dt>
-    <dd>The SHA256 digest of the manifest.</dd><dt class="property-required"
-            title="Required">
-        <span id="platform_csharp">
-<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#platform_csharp" style="color: inherit; text-decoration: inherit;">Platform</a>
-</span>
-        <span class="property-indicator"></span>
-        <span class="property-type"><a href="#manifestplatform">Manifest<wbr>Platform</a></span>
-    </dt>
-    <dd>The manifest's platform.</dd><dt class="property-required"
-            title="Required">
-        <span id="ref_csharp">
-<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#ref_csharp" style="color: inherit; text-decoration: inherit;">Ref</a>
-</span>
-        <span class="property-indicator"></span>
-        <span class="property-type">string</span>
-    </dt>
-    <dd>The manifest's canonical ref.</dd><dt class="property-required"
-            title="Required">
-        <span id="size_csharp">
-<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#size_csharp" style="color: inherit; text-decoration: inherit;">Size</a>
-</span>
-        <span class="property-indicator"></span>
-        <span class="property-type">int</span>
-    </dt>
-    <dd>The size of the manifest in bytes.</dd></dl>
+<dl class="tabular"><dt>@Default</dt>
+    <dd>defaultThe default sandbox network mode.</dd><dt>Host</dt>
+    <dd>hostHost network mode.</dd><dt>None</dt>
+    <dd>noneDisable network access.</dd></dl>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="go">
-<dl class="resources-properties"><dt class="property-required"
-            title="Required">
-        <span id="digest_go">
-<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#digest_go" style="color: inherit; text-decoration: inherit;">Digest</a>
-</span>
-        <span class="property-indicator"></span>
-        <span class="property-type">string</span>
-    </dt>
-    <dd>The SHA256 digest of the manifest.</dd><dt class="property-required"
-            title="Required">
-        <span id="platform_go">
-<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#platform_go" style="color: inherit; text-decoration: inherit;">Platform</a>
-</span>
-        <span class="property-indicator"></span>
-        <span class="property-type"><a href="#manifestplatform">Manifest<wbr>Platform</a></span>
-    </dt>
-    <dd>The manifest's platform.</dd><dt class="property-required"
-            title="Required">
-        <span id="ref_go">
-<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#ref_go" style="color: inherit; text-decoration: inherit;">Ref</a>
-</span>
-        <span class="property-indicator"></span>
-        <span class="property-type">string</span>
-    </dt>
-    <dd>The manifest's canonical ref.</dd><dt class="property-required"
-            title="Required">
-        <span id="size_go">
-<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#size_go" style="color: inherit; text-decoration: inherit;">Size</a>
-</span>
-        <span class="property-indicator"></span>
-        <span class="property-type">int</span>
-    </dt>
-    <dd>The size of the manifest in bytes.</dd></dl>
+<dl class="tabular"><dt>Network<wbr>Mode<wbr>Default</dt>
+    <dd>defaultThe default sandbox network mode.</dd><dt>Network<wbr>Mode<wbr>Host</dt>
+    <dd>hostHost network mode.</dd><dt>Network<wbr>Mode<wbr>None</dt>
+    <dd>noneDisable network access.</dd></dl>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="java">
-<dl class="resources-properties"><dt class="property-required"
-            title="Required">
-        <span id="digest_java">
-<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#digest_java" style="color: inherit; text-decoration: inherit;">digest</a>
-</span>
-        <span class="property-indicator"></span>
-        <span class="property-type">String</span>
-    </dt>
-    <dd>The SHA256 digest of the manifest.</dd><dt class="property-required"
-            title="Required">
-        <span id="platform_java">
-<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#platform_java" style="color: inherit; text-decoration: inherit;">platform</a>
-</span>
-        <span class="property-indicator"></span>
-        <span class="property-type"><a href="#manifestplatform">Manifest<wbr>Platform</a></span>
-    </dt>
-    <dd>The manifest's platform.</dd><dt class="property-required"
-            title="Required">
-        <span id="ref_java">
-<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#ref_java" style="color: inherit; text-decoration: inherit;">ref</a>
-</span>
-        <span class="property-indicator"></span>
-        <span class="property-type">String</span>
-    </dt>
-    <dd>The manifest's canonical ref.</dd><dt class="property-required"
-            title="Required">
-        <span id="size_java">
-<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#size_java" style="color: inherit; text-decoration: inherit;">size</a>
-</span>
-        <span class="property-indicator"></span>
-        <span class="property-type">Integer</span>
-    </dt>
-    <dd>The size of the manifest in bytes.</dd></dl>
+<dl class="tabular"><dt>Default_</dt>
+    <dd>defaultThe default sandbox network mode.</dd><dt>Host</dt>
+    <dd>hostHost network mode.</dd><dt>None</dt>
+    <dd>noneDisable network access.</dd></dl>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
-<dl class="resources-properties"><dt class="property-required"
-            title="Required">
-        <span id="digest_nodejs">
-<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#digest_nodejs" style="color: inherit; text-decoration: inherit;">digest</a>
-</span>
-        <span class="property-indicator"></span>
-        <span class="property-type">string</span>
-    </dt>
-    <dd>The SHA256 digest of the manifest.</dd><dt class="property-required"
-            title="Required">
-        <span id="platform_nodejs">
-<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#platform_nodejs" style="color: inherit; text-decoration: inherit;">platform</a>
-</span>
-        <span class="property-indicator"></span>
-        <span class="property-type"><a href="#manifestplatform">Manifest<wbr>Platform</a></span>
-    </dt>
-    <dd>The manifest's platform.</dd><dt class="property-required"
-            title="Required">
-        <span id="ref_nodejs">
-<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#ref_nodejs" style="color: inherit; text-decoration: inherit;">ref</a>
-</span>
-        <span class="property-indicator"></span>
-        <span class="property-type">string</span>
-    </dt>
-    <dd>The manifest's canonical ref.</dd><dt class="property-required"
-            title="Required">
-        <span id="size_nodejs">
-<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#size_nodejs" style="color: inherit; text-decoration: inherit;">size</a>
-</span>
-        <span class="property-indicator"></span>
-        <span class="property-type">number</span>
-    </dt>
-    <dd>The size of the manifest in bytes.</dd></dl>
+<dl class="tabular"><dt>Default</dt>
+    <dd>defaultThe default sandbox network mode.</dd><dt>Host</dt>
+    <dd>hostHost network mode.</dd><dt>None</dt>
+    <dd>noneDisable network access.</dd></dl>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="python">
-<dl class="resources-properties"><dt class="property-required"
-            title="Required">
-        <span id="digest_python">
-<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#digest_python" style="color: inherit; text-decoration: inherit;">digest</a>
-</span>
-        <span class="property-indicator"></span>
-        <span class="property-type">str</span>
-    </dt>
-    <dd>The SHA256 digest of the manifest.</dd><dt class="property-required"
-            title="Required">
-        <span id="platform_python">
-<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#platform_python" style="color: inherit; text-decoration: inherit;">platform</a>
-</span>
-        <span class="property-indicator"></span>
-        <span class="property-type"><a href="#manifestplatform">Manifest<wbr>Platform</a></span>
-    </dt>
-    <dd>The manifest's platform.</dd><dt class="property-required"
-            title="Required">
-        <span id="ref_python">
-<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#ref_python" style="color: inherit; text-decoration: inherit;">ref</a>
-</span>
-        <span class="property-indicator"></span>
-        <span class="property-type">str</span>
-    </dt>
-    <dd>The manifest's canonical ref.</dd><dt class="property-required"
-            title="Required">
-        <span id="size_python">
-<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#size_python" style="color: inherit; text-decoration: inherit;">size</a>
-</span>
-        <span class="property-indicator"></span>
-        <span class="property-type">int</span>
-    </dt>
-    <dd>The size of the manifest in bytes.</dd></dl>
+<dl class="tabular"><dt>DEFAULT</dt>
+    <dd>defaultThe default sandbox network mode.</dd><dt>HOST</dt>
+    <dd>hostHost network mode.</dd><dt>NONE</dt>
+    <dd>noneDisable network access.</dd></dl>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="yaml">
-<dl class="resources-properties"><dt class="property-required"
-            title="Required">
-        <span id="digest_yaml">
-<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#digest_yaml" style="color: inherit; text-decoration: inherit;">digest</a>
-</span>
-        <span class="property-indicator"></span>
-        <span class="property-type">String</span>
-    </dt>
-    <dd>The SHA256 digest of the manifest.</dd><dt class="property-required"
-            title="Required">
-        <span id="platform_yaml">
-<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#platform_yaml" style="color: inherit; text-decoration: inherit;">platform</a>
-</span>
-        <span class="property-indicator"></span>
-        <span class="property-type"><a href="#manifestplatform">Property Map</a></span>
-    </dt>
-    <dd>The manifest's platform.</dd><dt class="property-required"
-            title="Required">
-        <span id="ref_yaml">
-<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#ref_yaml" style="color: inherit; text-decoration: inherit;">ref</a>
-</span>
-        <span class="property-indicator"></span>
-        <span class="property-type">String</span>
-    </dt>
-    <dd>The manifest's canonical ref.</dd><dt class="property-required"
-            title="Required">
-        <span id="size_yaml">
-<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#size_yaml" style="color: inherit; text-decoration: inherit;">size</a>
-</span>
-        <span class="property-indicator"></span>
-        <span class="property-type">Number</span>
-    </dt>
-    <dd>The size of the manifest in bytes.</dd></dl>
-</pulumi-choosable>
-</div>
-
-<h4 id="manifestplatform">
-Manifest<wbr>Platform<pulumi-choosable type="language" values="python,go" class="inline">, Manifest<wbr>Platform<wbr>Args</pulumi-choosable>
-</h4>
-
-<div>
-<pulumi-choosable type="language" values="csharp">
-<dl class="resources-properties"><dt class="property-required"
-            title="Required">
-        <span id="architecture_csharp">
-<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#architecture_csharp" style="color: inherit; text-decoration: inherit;">Architecture</a>
-</span>
-        <span class="property-indicator"></span>
-        <span class="property-type">string</span>
-    </dt>
-    <dd>The manifest's architecture.</dd><dt class="property-required"
-            title="Required">
-        <span id="os_csharp">
-<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#os_csharp" style="color: inherit; text-decoration: inherit;">Os</a>
-</span>
-        <span class="property-indicator"></span>
-        <span class="property-type">string</span>
-    </dt>
-    <dd>The manifest's operating systen.</dd></dl>
-</pulumi-choosable>
-</div>
-
-<div>
-<pulumi-choosable type="language" values="go">
-<dl class="resources-properties"><dt class="property-required"
-            title="Required">
-        <span id="architecture_go">
-<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#architecture_go" style="color: inherit; text-decoration: inherit;">Architecture</a>
-</span>
-        <span class="property-indicator"></span>
-        <span class="property-type">string</span>
-    </dt>
-    <dd>The manifest's architecture.</dd><dt class="property-required"
-            title="Required">
-        <span id="os_go">
-<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#os_go" style="color: inherit; text-decoration: inherit;">Os</a>
-</span>
-        <span class="property-indicator"></span>
-        <span class="property-type">string</span>
-    </dt>
-    <dd>The manifest's operating systen.</dd></dl>
-</pulumi-choosable>
-</div>
-
-<div>
-<pulumi-choosable type="language" values="java">
-<dl class="resources-properties"><dt class="property-required"
-            title="Required">
-        <span id="architecture_java">
-<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#architecture_java" style="color: inherit; text-decoration: inherit;">architecture</a>
-</span>
-        <span class="property-indicator"></span>
-        <span class="property-type">String</span>
-    </dt>
-    <dd>The manifest's architecture.</dd><dt class="property-required"
-            title="Required">
-        <span id="os_java">
-<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#os_java" style="color: inherit; text-decoration: inherit;">os</a>
-</span>
-        <span class="property-indicator"></span>
-        <span class="property-type">String</span>
-    </dt>
-    <dd>The manifest's operating systen.</dd></dl>
-</pulumi-choosable>
-</div>
-
-<div>
-<pulumi-choosable type="language" values="javascript,typescript">
-<dl class="resources-properties"><dt class="property-required"
-            title="Required">
-        <span id="architecture_nodejs">
-<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#architecture_nodejs" style="color: inherit; text-decoration: inherit;">architecture</a>
-</span>
-        <span class="property-indicator"></span>
-        <span class="property-type">string</span>
-    </dt>
-    <dd>The manifest's architecture.</dd><dt class="property-required"
-            title="Required">
-        <span id="os_nodejs">
-<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#os_nodejs" style="color: inherit; text-decoration: inherit;">os</a>
-</span>
-        <span class="property-indicator"></span>
-        <span class="property-type">string</span>
-    </dt>
-    <dd>The manifest's operating systen.</dd></dl>
-</pulumi-choosable>
-</div>
-
-<div>
-<pulumi-choosable type="language" values="python">
-<dl class="resources-properties"><dt class="property-required"
-            title="Required">
-        <span id="architecture_python">
-<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#architecture_python" style="color: inherit; text-decoration: inherit;">architecture</a>
-</span>
-        <span class="property-indicator"></span>
-        <span class="property-type">str</span>
-    </dt>
-    <dd>The manifest's architecture.</dd><dt class="property-required"
-            title="Required">
-        <span id="os_python">
-<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#os_python" style="color: inherit; text-decoration: inherit;">os</a>
-</span>
-        <span class="property-indicator"></span>
-        <span class="property-type">str</span>
-    </dt>
-    <dd>The manifest's operating systen.</dd></dl>
-</pulumi-choosable>
-</div>
-
-<div>
-<pulumi-choosable type="language" values="yaml">
-<dl class="resources-properties"><dt class="property-required"
-            title="Required">
-        <span id="architecture_yaml">
-<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#architecture_yaml" style="color: inherit; text-decoration: inherit;">architecture</a>
-</span>
-        <span class="property-indicator"></span>
-        <span class="property-type">String</span>
-    </dt>
-    <dd>The manifest's architecture.</dd><dt class="property-required"
-            title="Required">
-        <span id="os_yaml">
-<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#os_yaml" style="color: inherit; text-decoration: inherit;">os</a>
-</span>
-        <span class="property-indicator"></span>
-        <span class="property-type">String</span>
-    </dt>
-    <dd>The manifest's operating systen.</dd></dl>
+<dl class="tabular"><dt>"default"</dt>
+    <dd>defaultThe default sandbox network mode.</dd><dt>"host"</dt>
+    <dd>hostHost network mode.</dd><dt>"none"</dt>
+    <dd>noneDisable network access.</dd></dl>
 </pulumi-choosable>
 </div>
 
@@ -11823,6 +12727,196 @@ Registry<wbr>Auth<pulumi-choosable type="language" values="python,go" class="inl
         <span class="property-type">String</span>
     </dt>
     <dd>Username for the registry.</dd></dl>
+</pulumi-choosable>
+</div>
+
+<h4 id="ssh">
+SSH<pulumi-choosable type="language" values="python,go" class="inline">, SSH<wbr>Args</pulumi-choosable>
+</h4>
+
+<div>
+<pulumi-choosable type="language" values="csharp">
+<dl class="resources-properties"><dt class="property-required"
+            title="Required">
+        <span id="id_csharp">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_csharp" style="color: inherit; text-decoration: inherit;">Id</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd><p>Useful for distinguishing different servers that are part of the same
+build.</p>
+<p>A value of <code>default</code> is appropriate if only dealing with a single host.</p>
+</dd><dt class="property-optional"
+            title="Optional">
+        <span id="paths_csharp">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#paths_csharp" style="color: inherit; text-decoration: inherit;">Paths</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">List&lt;string&gt;</span>
+    </dt>
+    <dd><p>SSH agent socket or private keys to expose to the build under the given
+identifier.</p>
+<p>Defaults to <code>[$SSH_AUTH_SOCK]</code>.</p>
+<p>Note that your keys are <strong>not</strong> automatically added when using an
+agent. Run <code>ssh-add -l</code> locally to confirm which public keys are
+visible to the agent; these will be exposed to your build.</p>
+</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="go">
+<dl class="resources-properties"><dt class="property-required"
+            title="Required">
+        <span id="id_go">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_go" style="color: inherit; text-decoration: inherit;">Id</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd><p>Useful for distinguishing different servers that are part of the same
+build.</p>
+<p>A value of <code>default</code> is appropriate if only dealing with a single host.</p>
+</dd><dt class="property-optional"
+            title="Optional">
+        <span id="paths_go">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#paths_go" style="color: inherit; text-decoration: inherit;">Paths</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">[]string</span>
+    </dt>
+    <dd><p>SSH agent socket or private keys to expose to the build under the given
+identifier.</p>
+<p>Defaults to <code>[$SSH_AUTH_SOCK]</code>.</p>
+<p>Note that your keys are <strong>not</strong> automatically added when using an
+agent. Run <code>ssh-add -l</code> locally to confirm which public keys are
+visible to the agent; these will be exposed to your build.</p>
+</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="java">
+<dl class="resources-properties"><dt class="property-required"
+            title="Required">
+        <span id="id_java">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_java" style="color: inherit; text-decoration: inherit;">id</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">String</span>
+    </dt>
+    <dd><p>Useful for distinguishing different servers that are part of the same
+build.</p>
+<p>A value of <code>default</code> is appropriate if only dealing with a single host.</p>
+</dd><dt class="property-optional"
+            title="Optional">
+        <span id="paths_java">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#paths_java" style="color: inherit; text-decoration: inherit;">paths</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">List&lt;String&gt;</span>
+    </dt>
+    <dd><p>SSH agent socket or private keys to expose to the build under the given
+identifier.</p>
+<p>Defaults to <code>[$SSH_AUTH_SOCK]</code>.</p>
+<p>Note that your keys are <strong>not</strong> automatically added when using an
+agent. Run <code>ssh-add -l</code> locally to confirm which public keys are
+visible to the agent; these will be exposed to your build.</p>
+</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="javascript,typescript">
+<dl class="resources-properties"><dt class="property-required"
+            title="Required">
+        <span id="id_nodejs">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_nodejs" style="color: inherit; text-decoration: inherit;">id</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd><p>Useful for distinguishing different servers that are part of the same
+build.</p>
+<p>A value of <code>default</code> is appropriate if only dealing with a single host.</p>
+</dd><dt class="property-optional"
+            title="Optional">
+        <span id="paths_nodejs">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#paths_nodejs" style="color: inherit; text-decoration: inherit;">paths</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string[]</span>
+    </dt>
+    <dd><p>SSH agent socket or private keys to expose to the build under the given
+identifier.</p>
+<p>Defaults to <code>[$SSH_AUTH_SOCK]</code>.</p>
+<p>Note that your keys are <strong>not</strong> automatically added when using an
+agent. Run <code>ssh-add -l</code> locally to confirm which public keys are
+visible to the agent; these will be exposed to your build.</p>
+</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="python">
+<dl class="resources-properties"><dt class="property-required"
+            title="Required">
+        <span id="id_python">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_python" style="color: inherit; text-decoration: inherit;">id</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">str</span>
+    </dt>
+    <dd><p>Useful for distinguishing different servers that are part of the same
+build.</p>
+<p>A value of <code>default</code> is appropriate if only dealing with a single host.</p>
+</dd><dt class="property-optional"
+            title="Optional">
+        <span id="paths_python">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#paths_python" style="color: inherit; text-decoration: inherit;">paths</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">Sequence[str]</span>
+    </dt>
+    <dd><p>SSH agent socket or private keys to expose to the build under the given
+identifier.</p>
+<p>Defaults to <code>[$SSH_AUTH_SOCK]</code>.</p>
+<p>Note that your keys are <strong>not</strong> automatically added when using an
+agent. Run <code>ssh-add -l</code> locally to confirm which public keys are
+visible to the agent; these will be exposed to your build.</p>
+</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="yaml">
+<dl class="resources-properties"><dt class="property-required"
+            title="Required">
+        <span id="id_yaml">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_yaml" style="color: inherit; text-decoration: inherit;">id</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">String</span>
+    </dt>
+    <dd><p>Useful for distinguishing different servers that are part of the same
+build.</p>
+<p>A value of <code>default</code> is appropriate if only dealing with a single host.</p>
+</dd><dt class="property-optional"
+            title="Optional">
+        <span id="paths_yaml">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#paths_yaml" style="color: inherit; text-decoration: inherit;">paths</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">List&lt;String&gt;</span>
+    </dt>
+    <dd><p>SSH agent socket or private keys to expose to the build under the given
+identifier.</p>
+<p>Defaults to <code>[$SSH_AUTH_SOCK]</code>.</p>
+<p>Note that your keys are <strong>not</strong> automatically added when using an
+agent. Run <code>ssh-add -l</code> locally to confirm which public keys are
+visible to the agent; these will be exposed to your build.</p>
+</dd></dl>
 </pulumi-choosable>
 </div>
 

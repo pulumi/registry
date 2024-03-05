@@ -8,20 +8,36 @@ layout: package
 
 The Pulumi Cockroach provider is available as a package in all Pulumi languages:
 
-* JavaScript/TypeScript: [`@lbrlabs/pulumi-cockroach`](https://www.npmjs.com/package/@lbrlabs/pulumi-cockroach)
-* Python: [`lbrlabs_pulumi_cockroach`](https://pypi.org/project/lbrlabs-pulumi-cockroach/)
-* Go: [`github.com/lbrlabs/pulumi-cockroach/sdk/go/cockroach`](https://github.com/lbrlabs/pulumi-cockroach)
-* .NET: [`Lbrlabs.PulumiPackage.Cockroach`](https://www.nuget.org/packages/Lbrlabs.PulumiPackage.Cockroach)
+* JavaScript/TypeScript: [`@pulumiverse/cockroach`](https://www.npmjs.com/package/@pulumiverse/cockroach)
+* Python: [`pulumiverse_cockroach`](https://pypi.org/project/pulumiverse-cockroach/)
+* Go: [`github.com/pulumiverse/pulumi-cockroach/sdk/go/cockroach`](https://github.com/pulumiverse/pulumi-cockroach)
+* .NET: [`Pulumiverse.Cockroach`](https://www.nuget.org/packages/Pulumiverse.Cockroach)
 
 ### Provider Binary
 
 The Cockroach provider binary is a third party binary. It can be installed using the `pulumi plugin` command.
 
 ```bash
-pulumi plugin install resource cockroach <version> --server github://api.github.com/lbrlabs
+pulumi plugin install resource cockroach <version> --server github://api.github.com/pulumiverse
 ```
 
 Replace the version string with your desired version.
+
+### Migrating from the LbrLabs package
+
+The maintenance of this provider has been transferred from LbrLabs to Pulumiverse.
+LbrLabs published up to v0.2.0, where Pulumiverse picks up with an initial v0.2.1
+containing the renamed packages.
+
+If you were using the LbrLabs edition, please update your dependencies to the
+Pulumiverse edition:
+
+| Programming Language | LbrLabs name | Pulumiverse name |
+| -- | -- | -- |
+| JavaScript/TypeScript | `@lbrlabs/pulumi-cockroach` | `@pulumiverse/cockroach` |
+| Python | `lbrlabs_pulumi_cockroach` | `pulumiverse_cockroach` |
+| Go | `github.com/lbrlabs/pulumi-cockroach/sdk/go/cockroach` | `github.com/pulumiverse/pulumi-cockroach/sdk/go/cockroach` |
+| .NET | `Lbrlabs.PulumiPackage.Cockroach` | `Pulumiverse.Cockroach` |
 
 ## Setup
 

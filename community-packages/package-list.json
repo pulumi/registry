@@ -221,7 +221,7 @@
       "schemaFile": "schema.yaml"
     },
     {
-      "repoSlug": "lbrlabs/pulumi-cockroach",
+      "repoSlug": "pulumiverse/pulumi-cockroach",
       "schemaFile": "provider/cmd/pulumi-resource-cockroach/schema.json"
     },
     {

@@ -99,7 +99,7 @@ function expandDate(dateString) {
 
 // upload to S3 with yyyy/mm/dd prefix.
 async function pushS3(obj) {
-    const bucketName = 'pulumi-testing-e2e-test-results';
+    const bucketName = 'pulumi-api-docs-e2e-test-results-prodution';
     
     const jsonData = JSON.stringify(obj);
     // extract yyyy, mm, dd from date.

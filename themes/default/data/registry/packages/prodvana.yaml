@@ -10,5 +10,5 @@ publisher: Prodvana
 repo_url: https://github.com/prodvana/pulumi-prodvana
 schema_file_path: provider/cmd/pulumi-resource-prodvana/schema.json
 title: Prodvana
-updated_on: 1709741021
-version: v0.1.18
+updated_on: 1709827931
+version: v0.1.19

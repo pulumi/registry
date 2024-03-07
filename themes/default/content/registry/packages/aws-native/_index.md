@@ -1,6 +1,6 @@
 ---
-title: AWS Native
-meta_desc: Learn how you can use Pulumi's AWS Native Provider to reduce the complexity of provisioning and managing resources on AWS.
+title: AWS Native Cloud Control
+meta_desc: Learn how you can use Pulumi's AWS Native Cloud Control Provider to reduce the complexity of provisioning and managing resources on AWS.
 layout: package
 aliases:
     - "/docs/reference/clouds/aws-native/"
@@ -8,22 +8,22 @@ aliases:
 ---
 
 {{% notes type="info" %}}
-AWS Native is in public preview. AWS Native provides coverage of all resources in the [AWS Cloud Control API](https://aws.amazon.com/blogs/aws/announcing-aws-cloud-control-api/), including same-day access to all new AWS resources. However, some AWS resources are not yet available in AWS Native.
+AWS Native Cloud Control is now Generally Available. AWS Native Cloud Control provides coverage of all resources in the [AWS Cloud Control API](https://aws.amazon.com/blogs/aws/announcing-aws-cloud-control-api/), including same-day access to all new AWS resources. However, some AWS resources are not yet available in AWS Cloud Control.
 
-For new projects, we recommend using AWS Native and [AWS Classic](/registry/packages/aws) side-by-side so you can get the speed and correctness benefits of AWS Native where possible. For existing projects, [AWS Classic](/registry/packages/aws) remains fully supported; at this time, we recommend waiting to migrate existing projects to AWS Native.
+For new projects, we recommend using AWS Native and [AWS Classic](/registry/packages/aws) side-by-side so you can get the speed and correctness benefits of AWS Native where possible. For existing projects, [AWS Classic](/registry/packages/aws) remains fully supported; we recommend waiting to fully migrate existing projects to AWS Native Cloud Control.
 {{% /notes %}}
 
-The AWS Native provider for Pulumi can provision many of the cloud resources available in [AWS](https://aws.amazon.com/). It manages and provisions resources using the [AWS Cloud Control API](https://aws.amazon.com/blogs/aws/announcing-aws-cloud-control-api/), which typically supports new AWS features on the day of launch. Resources available in the Pulumi AWS Native provider are based on the resources defined in the [AWS CloudFormation Registry](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/registry.html).
+The AWS Native Cloud Control provider for Pulumi can provision many of the cloud resources available in [AWS](https://aws.amazon.com/). It manages and provisions resources using the [AWS Cloud Control API](https://aws.amazon.com/blogs/aws/announcing-aws-cloud-control-api/), which typically supports new AWS features on the day of launch. Resources available in the Pulumi AWS Native Cloud Control provider are based on the resources defined in the [AWS CloudFormation Registry](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/registry.html).
 
-[Hundreds of AWS resources](/registry/packages/aws-native/api-docs) are available in AWS Native. As AWS Cloud Control API adds resources, we will update AWS Native to include them.
+[Hundreds of AWS resources](/registry/packages/aws-native/api-docs) are available in AWS Native Cloud Control. As AWS Cloud Control API adds resources, we will update AWS Native Cloud Control to include them.
 
-AWS Native must be configured with credentials to deploy and update resources in AWS; see [Installation & Configuration](./installation-configuration) for instructions.
+AWS Native Cloud Control must be configured with credentials to deploy and update resources in AWS; see [Installation & Configuration](./installation-configuration) for instructions.
 
 {{< youtube oKxaZCyu2OQ >}}
 
 ## Examples
 
-Check out the examples below to try out AWS Native:
+Check out the examples below to try out AWS Native Cloud Control:
 
 * [Create an ECS Cluster on AWS](/registry/packages/aws-native/how-to-guides/aws-native-ts-ecs)
 * [Host a Static Website on Amazon S3](/registry/packages/aws-native/how-to-guides/aws-native-ts-s3-folder)

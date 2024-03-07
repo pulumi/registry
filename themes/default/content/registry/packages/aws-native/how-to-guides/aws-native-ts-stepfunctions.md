@@ -1,8 +1,8 @@
 ---
-title: "AWS Step Functions with the AWS Native Provider | TypeScript"
-h1: "AWS Step Functions with the AWS Native Provider"
-linktitle: "AWS Step Functions with the AWS Native Provider"
-meta_desc: "AWS Step Functions with the AWS Native Provider How-to Guide using TypeScript"
+title: "AWS Step Functions with the AWS Native Cloud Control Provider | TypeScript"
+h1: "AWS Step Functions with the AWS Native Cloud Control Provider"
+linktitle: "AWS Step Functions with the AWS Native Cloud Control Provider"
+meta_desc: "AWS Step Functions with the AWS Native Cloud Control Provider How-to Guide using TypeScript"
 no_edit_this_page: true
 cloud: aws-native
 language: ts
@@ -21,8 +21,7 @@ layout: package
     </a>
 </p>
 
-
-A basic example that demonstrates using AWS Step Functions with a Lambda function using the AWS Native provider.
+A basic example that demonstrates using AWS Step Functions with a Lambda function using the AWS Native Cloud Control provider.
 
 Note: Some resources are not yet supported by the Native AWS provider, so we are using both the Native
 and Classic provider in this example. The resources will be updated to use native resources as they are
@@ -46,20 +45,22 @@ with `***`.
 1. Create a new stack:
 
     ```bash
-    $ pulumi stack init dev
+    pulumi stack init dev
     ```
 
 1. Set the AWS region:
 
     Either using an environment variable
+
     ```bash
-    $ export AWS_REGION=us-west-2
+    export AWS_REGION=us-west-2
     ```
 
     Or with the stack config
+
     ```bash
-    $ pulumi config set aws:region us-west-2
-    $ pulumi config set aws-native:region us-west-2
+    pulumi config set aws:region us-west-2
+    pulumi config set aws-native:region us-west-2
     ```
 
 1. Restore NPM modules via `npm install` or `yarn install`.
@@ -104,11 +105,10 @@ with `***`.
     stateMachineArn  arn:aws:states:us-west-2:***:stateMachine:***
     ```
 
-1. Start execution using the AWS CLI (or from the console at https://console.aws.amazon.com/states)
+1. Start execution using the AWS CLI (or from the console at <https://console.aws.amazon.com/states>)
 
     ```bash
-    $ aws stepfunctions start-sync-execution --state-machine-arn $(pulumi stack output stateMachineArn)
+    aws stepfunctions start-sync-execution --state-machine-arn $(pulumi stack output stateMachineArn)
     ```
 
-1.  To clean up resources, run `pulumi destroy` and answer the confirmation question at the prompt.
-
+1. To clean up resources, run `pulumi destroy` and answer the confirmation question at the prompt.

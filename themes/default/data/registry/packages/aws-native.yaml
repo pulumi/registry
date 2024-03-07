@@ -1,7 +1,7 @@
 category: Cloud
 component: false
 description: A native Pulumi package for creating and managing Amazon Web Services
-  (AWS) resources.
+  (AWS) resources via Cloud Control.
 featured: false
 logo_url: ""
 name: aws-native
@@ -10,6 +10,6 @@ package_status: public_preview
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-aws-native
 schema_file_path: provider/cmd/pulumi-resource-aws-native/schema.json
-title: AWS Native
+title: AWS Native Cloud Control
 updated_on: 1709198889
 version: v0.98.0

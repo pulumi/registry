@@ -10,5 +10,5 @@ publisher: pulumiverse
 repo_url: https://github.com/pulumiverse/pulumi-grafana
 schema_file_path: provider/cmd/pulumi-resource-grafana/schema.json
 title: Grafana
-updated_on: 1709583735
-version: v0.2.1
+updated_on: 1710103057
+version: v0.3.0

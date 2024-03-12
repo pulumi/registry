@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-rancher2
 schema_file_path: provider/cmd/pulumi-resource-rancher2/schema.json
 title: Rancher 2
-updated_on: 1707933817
-version: v6.0.0
+updated_on: 1710243373
+version: v6.1.0

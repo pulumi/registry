@@ -7,7 +7,7 @@
 If this pull request adds a new package:
 
 - [ ] The package's schema URL is correct.
-- [ ] The package metadata file, if present, contains: 
+- [ ] The package metadata file, if present, contains:
   - [ ] a supported category (one of `Cloud`, `Infrastructure`, `Network`, `Database`, `Monitoring`, or `Utility`).
   - [ ] a description that explains what the package does.
   - [ ] a valid logo URL that points to a PNG whose dimensions conform to the others in this repo (e.g., 100x100).
@@ -21,5 +21,5 @@ If this pull request adds a new package:
   - [ ] a copyable command for installing the resource plugin if necessary.
   - [ ] an example of configuring the provider with `pulumi config set`.
   - [ ] an example of configuring the provider with environment variables.
-- [ ] Someone from the @pulumi/ai team has reviewed the PR.
-- [ ] Someone from the @pulumi/docs team has reviewed all documentation.
+- [ ] A CODEOWNER has reviewed the PR.
+- [ ] A member of the @pulumi/docs team has reviewed all documentation.

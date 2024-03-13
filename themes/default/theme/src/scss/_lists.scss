@@ -31,13 +31,18 @@ dl {
         dt {
             @apply px-4 font-semibold text-gray-700 rounded-none border-gray-400;
 
+            overflow-wrap: break-word;
+
             @screen lg {
                 @apply rounded-l;
             }
         }
 
         dd {
-            @apply bg-white rounded-none;
+            @apply bg-white rounded-none text-base font-normal leading-6 break-words;
+
+            font-family: "Inter";
+            color: map-get($gray, 950);
 
             p {
                 @apply my-0;

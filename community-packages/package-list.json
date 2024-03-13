@@ -33,7 +33,7 @@
       "schemaFile": "provider/cmd/pulumi-resource-hcp/schema.json"
     },
     {
-      "repoSlug": "lbrlabs/pulumi-scaleway",
+      "repoSlug": "pulumiverse/pulumi-scaleway",
       "schemaFile": "provider/cmd/pulumi-resource-scaleway/schema.json"
     },
     {
@@ -85,7 +85,7 @@
       "schemaFile": "provider/cmd/pulumi-resource-ovh/schema.json"
     },
     {
-      "repoSlug": "lbrlabs/pulumi-grafana",
+      "repoSlug": "pulumiverse/pulumi-grafana",
       "schemaFile": "provider/cmd/pulumi-resource-grafana/schema.json"
     },
     {
@@ -221,7 +221,7 @@
       "schemaFile": "schema.yaml"
     },
     {
-      "repoSlug": "lbrlabs/pulumi-cockroach",
+      "repoSlug": "pulumiverse/pulumi-cockroach",
       "schemaFile": "provider/cmd/pulumi-resource-cockroach/schema.json"
     },
     {

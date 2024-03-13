@@ -1,4 +1,6 @@
 describe("www.pulumi.com", () => {
+
+    // This should probably be testing the Registry home page and not the home-home page.
     describe("home page", () => {
         beforeEach(() => {
             cy.visit("/");

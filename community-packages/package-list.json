@@ -283,6 +283,10 @@
     {
       "repoSlug": "pinecone-io/pulumi-pinecone",
       "schemaFile": "provider/cmd/pulumi-resource-pinecone/schema.json"
+    },
+    {
+      "repoSlug": "lbrlabs/pulumi-tailscale-bastion",
+      "schemaFile": "schema.yaml"
     }
   ]
 }

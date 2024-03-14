@@ -283,6 +283,10 @@
     {
       "repoSlug": "pinecone-io/pulumi-pinecone",
       "schemaFile": "provider/cmd/pulumi-resource-pinecone/schema.json"
+    },
+    {
+      "repoSlug": "komminarlabs/pulumi-influxdb",
+      "schemaFile": "provider/cmd/pulumi-resource-influxdb/schema.json"
     }
   ]
 }

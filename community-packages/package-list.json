@@ -287,6 +287,10 @@
     {
       "repoSlug": "komminarlabs/pulumi-influxdb",
       "schemaFile": "provider/cmd/pulumi-resource-influxdb/schema.json"
+    },
+    {
+      "repoSlug": "pulumiverse/pulumi-cpln",
+      "schemaFile": "provider/cmd/pulumi-resource-cpln/schema.json"
     }
   ]
 }

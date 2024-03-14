@@ -10,5 +10,5 @@ publisher: Pulumiverse
 repo_url: https://github.com/pulumiverse/pulumi-vercel
 schema_file_path: provider/cmd/pulumi-resource-vercel/schema.json
 title: Vercel
-updated_on: 1707485244
-version: v1.1.0
+updated_on: 1710332172
+version: v1.3.0

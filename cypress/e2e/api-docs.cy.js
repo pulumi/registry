@@ -14,16 +14,16 @@ describe("Registry", () => {
             [ "aws.ec2.Instance", "ec2/instance" ],
             [ "aws.rds.Instance", "rds/instance" ],
             [ "aws.ec2.SecurityGroup", "ec2/securitygroup" ],
-            [ "kubernetes.helm.sh.v3.Chart", "helm/v3/chart" ],
+            [ "kubernetes.helm.sh.v3.Chart", "helm/v3/chart", "kubernetes.helm.sh/v3.Chart" ],
             [ "aws.ec2.Vpc", "ec2/vpc" ],
-            [ "kubernetes.helm.sh.v3.Release", "helm/v3/release" ],
+            [ "kubernetes.helm.sh.v3.Release", "helm/v3/release", "kubernetes.helm.sh/v3.Release" ],
             [ "aws.alb.LoadBalancer", "alb/loadbalancer", ],
             [ "aws.cloudfront.Distribution", "cloudfront/distribution" ],
             [ "aws.ecs.TaskDefinition", "ecs/taskdefinition" ],
             [ "aws.route53.Record", "route53/record" ],
             [ "aws.ec2.LaunchTemplate", "ec2/launchtemplate" ],
             [ "gcp.storage.Bucket", "storage/bucket" ],
-            [ "kubernetes.apps.v1.Deployment ", "apps/v1/deployment" ],
+            [ "kubernetes.apps.v1.Deployment ", "apps/v1/deployment", "kubernetes.apps/v1.Deployment" ],
             [ "aws.rds.Cluster", "rds/cluster" ],
             [ "aws.iam.Policy", "iam/policy" ],
             [ "aws.eks.Cluster", "eks/cluster" ],
@@ -31,9 +31,9 @@ describe("Registry", () => {
             [ "gcp.serviceaccount.Account", "serviceaccount/account" ],
             [ "aws.secretsmanager.Secret", "secretsmanager/secret" ],
             [ "aws.ec2.Subnet", "ec2/subnet" ],
-            [ "kubernetes.networking.k8s.io.v1.Ingress", "networking/v1/ingress" ],
+            [ "kubernetes.networking.k8s.io.v1.Ingress", "networking/v1/ingress", "kubernetes.networking.k8s.io/v1.Ingress" ],
             [ "aws.dynamodb.Table", "dynamodb/table" ],
-            [ "kubernetes.autoscaling.v2beta2.HorizontalPodAutoscaler", "autoscaling/v2beta2/horizontalpodautoscaler" ],
+            [ "kubernetes.autoscaling.v2beta2.HorizontalPodAutoscaler", "autoscaling/v2beta2/horizontalpodautoscaler", "kubernetes.autoscaling/v2beta2.HorizontalPodAutoscaler" ],
             [ "aws.ecs.Service", "ecs/service" ],
             [ "aws.acm.Certificate", "acm/certificate" ],
             [ "aws.apigateway.RestApi", "apigateway/restapi" ],
@@ -45,7 +45,7 @@ describe("Registry", () => {
             [ "azure-native.web.WebApp ", "web/webapp" ],
             [ "aws.lb.TargetGroup", "lb/targetgroup" ],
             [ "awsx.ec2.Vpc", "ec2/vpc" ],
-            [ "kubernetes.core.v1.Secret", "core/v1/secret" ],
+            [ "kubernetes.core.v1.Secret", "core/v1/secret", "kubernetes.core/v1.Secret" ],
             [ "aws.sqs.Queue", "sqs/queue" ],
             [ "gcp.compute.Instance", "compute/instance" ],
             [ "awsx.ecs.FargateService", "ecs/fargateservice" ],
@@ -61,13 +61,14 @@ describe("Registry", () => {
         ];
 
         resources.forEach(resource => {
-            const [ token, path ] = resource;
+            const [ token, path, alternateTitle ] = resource;
             const title = token;
             const provider = token.split(".").slice(0)[0];
             const resourceName = token.split(".").slice(-1)[0];
 
             const page = {
                 title,
+                alternateTitle,
                 provider,
                 resourceName,
                 path: `/registry/packages/${provider}/api-docs/${path}/`,
@@ -85,12 +86,13 @@ describe("Registry", () => {
 
                 describe("main content", () => {
                     const container = "main div.docs-main-content";
+                    const expectedTitle = (page.alternateTitle || page.title).trim();
 
                     it("has the correct H1", () => {
                         cy.get(container)
                             .find("h1")
                             .should("be.visible")
-                            .should("have.text", page.title);
+                            .should("have.text", expectedTitle.trim());
                     });
 
                     describe("description", () => {
@@ -104,17 +106,37 @@ describe("Registry", () => {
                         });
                     });
 
-                    it("renders subsections in the correct order", () => {
+                    it("renders the correct set of subsections, in the correct order", () => {
                         cy.get(container).find("section.docs-content h2").as("sections");
 
-                        cy.get("@sections").should("have.length.of", 7);
-                        cy.get("@sections").eq(0).should("have.text", "Example Usage");
-                        cy.get("@sections").eq(1).should("have.text", `Create ${page.resourceName} Resource`);
-                        cy.get("@sections").eq(2).should("have.text", `${page.resourceName} Resource Properties`);
-                        cy.get("@sections").eq(3).should("have.text", `Look up Existing ${page.resourceName} Resource`);
-                        cy.get("@sections").eq(4).should("have.text", "Supporting Types");
-                        cy.get("@sections").eq(5).should("have.text", "Import");
-                        cy.get("@sections").eq(6).should("have.text", "Package Details");
+                        // possibleHeadings is the set of H2 headings that can appear on an API docs page.
+                        // Some pages won't contain *all* of these headings, but the headings that do appear
+                        // should always be presented in the following order.
+                        //
+                        // Note that this test intentionally fails on pages that contain unexpected H2 headings,
+                        // such as those that are occasionally baked into upstream provider docs.
+                        const possibleHeadings = [
+                            "Example Usage",
+                            `Create ${page.resourceName} Resource`,
+                            `${page.resourceName} Resource Properties`,
+                            `Look up Existing ${page.resourceName} Resource`,
+                            "Supporting Types",
+                            "Import",
+                            "Package Details",
+                        ];
+
+                        cy.get("@sections").then(headings => {
+
+                            const actualHeadings = headings
+                                .map((_, heading) => heading.textContent)
+                                .get();
+
+                            const expectedHeadings = possibleHeadings
+                                .filter(heading => actualHeadings.includes(heading));
+
+                            // JSON.stringify() gives us an easy way to compare the two lists.
+                            expect(JSON.stringify(actualHeadings)).to.equal(JSON.stringify(expectedHeadings));
+                        });
                     });
 
                     describe("Examples section", () => {

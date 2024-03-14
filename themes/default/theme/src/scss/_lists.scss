@@ -39,7 +39,10 @@ dl {
         }
 
         dd {
-            @apply bg-white rounded-none;
+            @apply bg-white rounded-none text-base font-normal leading-6 break-words;
+
+            font-family: "Inter";
+            color: map-get($gray, 950);
 
             p {
                 @apply my-0;

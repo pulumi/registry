@@ -1,8 +1,8 @@
 ---
-title: "Host a Static Website on Amazon S3 with the AWS Native Provider | Java"
-h1: "Host a Static Website on Amazon S3 with the AWS Native Provider"
-linktitle: "Host a Static Website on Amazon S3 with the AWS Native Provider"
-meta_desc: "Host a Static Website on Amazon S3 with the AWS Native Provider How-to Guide using Java"
+title: "Host a Static Website on Amazon S3 with the AWS Native Cloud Control Provider | Java"
+h1: "Host a Static Website on Amazon S3 with the AWS Native Cloud Control Provider"
+linktitle: "Host a Static Website on Amazon S3 with the AWS Native Cloud Control Provider"
+meta_desc: "Host a Static Website on Amazon S3 with the AWS Native Cloud Control Provider How-to Guide using Java"
 no_edit_this_page: true
 cloud: aws-native
 language: java
@@ -21,7 +21,6 @@ layout: package
     </a>
 </p>
 
-
 A static website that uses [S3's website support](https://docs.aws.amazon.com/AmazonS3/latest/dev/WebsiteHosting.html).
 For a detailed walkthrough of this example, see the tutorial [Static Website on AWS S3](https://www.pulumi.com/docs/tutorials/aws/s3-website/).
 
@@ -34,20 +33,22 @@ available in AWS's Cloud Control API.
 Note: some values in this example will be different from run to run.  These values are indicated
 with `***`.
 
-1.  Set the AWS region:
+1. Set the AWS region:
 
     Either using an environment variable
+
     ```bash
-    $ export AWS_REGION=us-west-2
-    ```
-    
-    Or with the stack config
-    ```bash
-    $ pulumi config set aws:region us-west-2
-    $ pulumi config set aws-native:region us-west-2
+    export AWS_REGION=us-west-2
     ```
 
-1.  Run `pulumi up` to preview and deploy changes.  After the preview is shown you will be
+    Or with the stack config
+
+    ```bash
+    pulumi config set aws:region us-west-2
+    pulumi config set aws-native:region us-west-2
+    ```
+
+1. Run `pulumi up` to preview and deploy changes.  After the preview is shown you will be
     prompted if you want to continue or not.
 
     ```bash
@@ -104,7 +105,7 @@ with `***`.
     Duration: 1m6s
     ```
 
-1.  To see the resources that were created, run `pulumi stack output`:
+1. To see the resources that were created, run `pulumi stack output`:
 
     ```bash
     $ pulumi stack output
@@ -115,7 +116,7 @@ with `***`.
         websiteUrl  http://s3-website-bucket-***.s3-website-us-west-2.amazonaws.com
     ```
 
-1.  To see that the S3 objects exist, you can either use the AWS Console or the AWS CLI:
+1. To see that the S3 objects exist, you can either use the AWS Console or the AWS CLI:
 
     ```bash
     $ aws s3 ls $(pulumi stack output bucketName)
@@ -123,7 +124,7 @@ with `***`.
     2022-02-17 14:11:54        198 index.html
     ```
 
-1.  Open the site URL in a browser to see both the rendered HTML and the favicon:
+1. Open the site URL in a browser to see both the rendered HTML and the favicon:
 
     ```bash
     $ pulumi stack output websiteUrl
@@ -132,5 +133,4 @@ with `***`.
 
     ![Hello S3 example](https://user-images.githubusercontent.com/274700/116912066-9384e300-abfc-11eb-8130-dbcff512a9de.png)
 
-1.  To clean up resources, run `pulumi destroy` and answer the confirmation question at the prompt.
-
+1. To clean up resources, run `pulumi destroy` and answer the confirmation question at the prompt.

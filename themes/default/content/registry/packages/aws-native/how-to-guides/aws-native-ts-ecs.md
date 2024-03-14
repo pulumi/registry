@@ -1,8 +1,8 @@
 ---
-title: "Create an ECS cluster on AWS with the AWS Native Provider | TypeScript"
-h1: "Create an ECS cluster on AWS with the AWS Native Provider"
-linktitle: "Create an ECS cluster on AWS with the AWS Native Provider"
-meta_desc: "Create an ECS cluster on AWS with the AWS Native Provider How-to Guide using TypeScript"
+title: "Create an ECS cluster on AWS with the AWS Native Cloud Control Provider | TypeScript"
+h1: "Create an ECS cluster on AWS with the AWS Native Cloud Control Provider"
+linktitle: "Create an ECS cluster on AWS with the AWS Native Cloud Control Provider"
+meta_desc: "Create an ECS cluster on AWS with the AWS Native Cloud Control Provider How-to Guide using TypeScript"
 no_edit_this_page: true
 cloud: aws-native
 language: ts
@@ -21,7 +21,6 @@ layout: package
     </a>
 </p>
 
-
 Create an ECS cluster, and deploy a task and service.
 
 Note: Some resources are not yet supported by the Native AWS provider, so we are using both the Native
@@ -33,28 +32,30 @@ available in AWS's Cloud Control API.
 Note: some values in this example will be different from run to run.  These values are indicated
 with `***`.
 
-1.  Create a new stack:
+1. Create a new stack:
 
     ```bash
-    $ pulumi stack init dev
+    pulumi stack init dev
     ```
 
-1.  Set the AWS region:
+1. Set the AWS region:
 
     Either using an environment variable
+
     ```bash
-    $ export AWS_REGION=us-west-2
+    export AWS_REGION=us-west-2
     ```
-    
+
     Or with the stack config
+
     ```bash
-    $ pulumi config set aws:region us-west-2
-    $ pulumi config set aws-native:region us-west-2
+    pulumi config set aws:region us-west-2
+    pulumi config set aws-native:region us-west-2
     ```
 
-1.  Restore NPM modules via `npm install` or `yarn install`.
+1. Restore NPM modules via `npm install` or `yarn install`.
 
-1.  Run `pulumi up` to preview and deploy changes.  After the preview is shown you will be
+1. Run `pulumi up` to preview and deploy changes.  After the preview is shown you will be
     prompted if you want to continue or not.
 
     ```bash
@@ -87,7 +88,7 @@ with `***`.
     Duration: ***
     ```
 
-1.  To see the resources that were created, run `pulumi stack output`:
+1. To see the resources that were created, run `pulumi stack output`:
 
     ```bash
     $ pulumi stack output
@@ -96,7 +97,7 @@ with `***`.
     url     app-lb-***.us-west-2.elb.amazonaws.com
     ```
 
-1.  Use curl to confirm that NGINX was deployed successfully:
+1. Use curl to confirm that NGINX was deployed successfully:
 
     ```bash
     $ curl $(pulumi stack output url)
@@ -125,5 +126,4 @@ with `***`.
     </html>
     ```
 
-1.  To clean up resources, run `pulumi destroy` and answer the confirmation question at the prompt.
-
+1. To clean up resources, run `pulumi destroy` and answer the confirmation question at the prompt.

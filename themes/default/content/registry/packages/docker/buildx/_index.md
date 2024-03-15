@@ -14,6 +14,7 @@ Explore the resources and functions of the docker.buildx module.
 <h2 id="resources">Resources</h2>
 <ul class="api">
     <li><a href="image/" title="Image">Image</a></li>
+    <li><a href="--index/" title="Index">Index</a></li>
 </ul>
 
 <h2 id="package-details">Package Details</h2>

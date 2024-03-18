@@ -37,3 +37,5 @@ jobs:
 
       - name: Run browser tests
         run: make run-browser-tests
+        env:
+          NODE_OPTIONS: "--max_old_space_size=8192"

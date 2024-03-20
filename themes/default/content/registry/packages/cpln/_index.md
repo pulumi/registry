@@ -14,43 +14,51 @@ The Control Plane (cpln) Pulumi provider enables the scaffolding of any Control 
 ```typescript
 import * as cpln from "@pulumiverse/cpln";
 
-const location = new cpln.Location("example", {
-    name: "aws-us-west-2"
+const group = new cpln.Group("example", {
+    description: "example"
 });
+
+export const groupId = group.id;
 ```
 
 {{% /choosable %}}
 {{% choosable language python %}}
 
 ```python
+import pulumi
 import pulumiverse_cpln as cpln
 
-db = cpln.Location("example",
-    name="aws-us-west-2"
+group = cpln.Group("example",
+    description="example"
 )
+
+pulumi.export("group.id", group.id)
 ```
 
 {{% /choosable %}}
 {{% choosable language go %}}
 
 ```go
+package main
+
 import (
 	"fmt"
-	cpln "github.com/pulumiverse/pulumi-cpln/sdk/go/cpln"
+
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	cpln "github.com/pulumiverse/pulumi-cpln/sdk/go/cpln"
 )
 
 func main() {
 	pulumi.Run(func(ctx *pulumi.Context) error {
 
-		location, err := cpln.NewLocation(ctx, "example", &cpln.LocationArgs{
-			Name: pulumi.String("aws-us-west-2"),
+		group, err := cpln.NewGroup(ctx, "example", &cpln.GroupArgs{
+			Description: pulumi.String("example"),
 		})
 		if err != nil {
-			return fmt.Errorf("error creating location: %v", err)
+			return fmt.Errorf("error creating a group: %v", err)
 		}
 
-		ctx.Export("location.enabled", location.enabled)
+		ctx.Export("group.id", group.ID())
 
 		return nil
 	})
@@ -61,18 +69,21 @@ func main() {
 {{% choosable language csharp %}}
 
 ```csharp
+using System.Collections.Generic;
 using Pulumi;
-using Pulumiverse.cpln;
+using Pulumiverse.Cpln;
 
-class cpln : Stack
+return await Deployment.RunAsync(() =>
 {
-    public cpln()
+    var group = new Group("example", new GroupArgs{
+        Description = "example"
+    });
+
+    return new Dictionary<string, object?>
     {
-        var location = new Location("example", new LocationArgs{
-            Name: "example"
-        });
-    }
-}
+        ["group.id"] = group.Id
+    };
+});
 ```
 
 {{% /choosable %}}

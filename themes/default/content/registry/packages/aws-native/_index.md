@@ -250,3 +250,144 @@ resources:
 {{% /choosable %}}
 
 {{% /chooser %}}
+
+## Third Party Resources
+
+The SDK for the AWS Native Cloud Control provider only includes resources for which Amazon have published the corresponding CloudFormation specifications. AWS also supports [CloudFormation extensions via the CloudFormation registry](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/registry.html) which can also be accessed via Cloud Control.
+
+If you want to manage resources using Pulumi's AWS Native Cloud Control Provider which aren't in the SDK, you can use the [ExtensionResource](https://www.pulumi.com/registry/packages/aws-native/api-docs/extensionresource/) resource within root of the SDK. The input properties and output properties are untyped allowing passing in any arbitrary values which will be passed to the Cloud Control API and tracked with Pulumi's managed state model.
+
+Here's a very simple demonstration of using the ExtensionResource to create an S3 bucket:
+
+{{< chooser language "typescript,python,go,csharp,java,yaml" / >}}
+
+{{% choosable language "javascript,typescript" %}}
+
+```typescript
+import * as pulumi from "@pulumi/pulumi";
+import * as aws_native from "@pulumi/aws-native";
+
+const myBucket = new aws_native.ExtensionResource("myBucket", {
+    type: "AWS::S3::Bucket",
+    properties: {
+        BucketName: "my-bucket",
+    },
+});
+```
+
+{{% /choosable %}}
+
+{{% choosable language python %}}
+
+```python
+import pulumi
+import pulumi_aws_native as aws_native
+
+my_bucket = aws_native.ExtensionResource("myBucket",
+    type="AWS::S3::Bucket",
+    properties={
+        "BucketName": "my-bucket",
+    })
+```
+
+{{% /choosable %}}
+
+{{% choosable language go %}}
+
+```go
+package main
+
+import (
+    awsnative "github.com/pulumi/pulumi-aws-native/sdk/go/aws"
+    "github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+    pulumi.Run(func(ctx *pulumi.Context) error {
+        _, err := awsnative.NewExtensionResource(ctx, "myBucket", &awsnative.ExtensionResourceArgs{
+            Type: pulumi.String("AWS::S3::Bucket"),
+            Properties: pulumi.Map{
+                "BucketName": pulumi.Any("my-bucket"),
+            },
+        })
+        if err != nil {
+            return err
+        }
+        return nil
+    })
+}
+```
+
+{{% /choosable %}}
+
+{{% choosable language csharp %}}
+
+```csharp
+using System.Collections.Generic;
+using System.Linq;
+using Pulumi;
+using AwsNative = Pulumi.AwsNative;
+
+return await Deployment.RunAsync(() =>
+{
+    var myBucket = new AwsNative.ExtensionResource("myBucket", new()
+    {
+        Type = "AWS::S3::Bucket",
+        Properties = 
+        {
+            { "BucketName", "my-bucket" },
+        },
+    });
+
+});
+```
+
+{{% /choosable %}}
+
+{{% choosable language java %}}
+
+```java
+package generated_program;
+
+import com.pulumi.Context;
+import com.pulumi.Pulumi;
+import com.pulumi.core.Output;
+import com.pulumi.awsnative.ExtensionResource;
+import com.pulumi.awsnative.ExtensionResourceArgs;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+public class App {
+    public static void main(String[] args) {
+        Pulumi.run(App::stack);
+    }
+
+    public static void stack(Context ctx) {
+        var myBucket = new ExtensionResource("myBucket", ExtensionResourceArgs.builder()
+            .type("AWS::S3::Bucket")
+            .properties(Map.of("BucketName", "my-bucket"))
+            .build());
+
+    }
+}
+```
+
+{{% /choosable %}}
+
+{{% choosable language yaml %}}
+
+```yaml
+resources:
+  myBucket:
+    type: 'aws-native:index:ExtensionResource'
+    properties:
+      type: 'AWS::S3::Bucket'
+      properties:
+        BucketName: my-bucket
+```
+
+{{% /choosable %}}

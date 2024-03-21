@@ -25,6 +25,9 @@ export REL_JS_BUNDLE="/js/bundle.min.${ASSET_BUNDLE_ID}.js"
 export REPO_THEME_PATH="themes/default/"
 
 pushd tools/resourcedocsgen
+git clone git@github.com:pulumi/pulumi.git
+go mod edit -replace github.com/pulumi/pulumi/pkg/v3=pulumi/pulumi/pkg
+go mod edit -replace github.com/pulumi/pulumi/sdk/v3=pulumi/pulumi/sdk
 go build -o "${GOPATH}/bin/resourcedocsgen" .
 popd
 

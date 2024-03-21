@@ -7,10 +7,14 @@ require (
 	github.com/golang/glog v1.1.2
 	github.com/hashicorp/hcl/v2 v2.17.0
 	github.com/pkg/errors v0.9.1
-	github.com/pulumi/pulumi/pkg/v3 v3.108.0
-	github.com/pulumi/pulumi/sdk/v3 v3.108.0
+	github.com/pulumi/pulumi/pkg/v3 v3.109.0
+	github.com/pulumi/pulumi/sdk/v3 v3.109.0
 	github.com/spf13/cobra v1.7.0
 )
+
+replace github.com/pulumi/pulumi/pkg/v3 => /Users/sean/pulumi/pulumi/pkg
+
+replace github.com/pulumi/pulumi/sdk/v3 => /Users/sean/pulumi/pulumi/sdk
 
 require (
 	cloud.google.com/go v0.110.10 // indirect
@@ -130,7 +134,7 @@ require (
 	github.com/pulumi/appdash v0.0.0-20231130102222-75f619a67231 // indirect
 	github.com/pulumi/esc v0.6.2 // indirect
 	github.com/pulumi/pulumi-java/pkg v0.9.9 // indirect
-	github.com/pulumi/pulumi-yaml v1.5.0 // indirect
+	github.com/pulumi/pulumi-yaml v1.6.0 // indirect
 	github.com/rivo/uniseg v0.4.4 // indirect
 	github.com/rogpeppe/go-internal v1.11.0 // indirect
 	github.com/ryanuber/go-glob v1.0.0 // indirect

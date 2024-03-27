@@ -37,8 +37,8 @@ Once the credentials are obtained, there are two ways to communicate your config
 
 Alternative for Windows users:
     
-    Use the following PowerShell command to add reference the pipe used by Docker Engine on your machine. 
+Use the following PowerShell command to add reference the pipe used by Docker Engine on your machine. 
 
-    ```powershell
-    pulumi config set docker:host "npipe:////.//pipe//docker_engine"
-    ```
+```powershell
+pulumi config set docker:host "npipe:////.//pipe//docker_engine"
+```

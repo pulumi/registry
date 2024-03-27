@@ -49,11 +49,11 @@ func genResourceDocsForPackageFromRegistryMetadata(metadata pkg.PackageMeta, doc
 	// We'll add in the URL format below. It's easier to read that way.
 	schemaFilePath = strings.TrimPrefix(schemaFilePath, "/")
 
-	repoSlug, err := getRepoSlug(metadata.RepoURL)
+	//repoSlug, err := getRepoSlug(metadata.RepoURL)
 
 	glog.Infoln("Reading remote schema file from VCS")
 	// TODO: Support raw URLs for other VCS too.
-	schemaFileURL := fmt.Sprintf("https://raw.githubusercontent.com/%s/%s/%s", repoSlug, metadata.Version, schemaFilePath)
+	schemaFileURL := fmt.Sprintf("https://raw.githubusercontent.com/pulumi/pulumi-aws/guin/fix-misaligned-attribute-content/provider/cmd/pulumi-resource-aws/schema.json")
 	resp, err := http.Get(schemaFileURL)
 	if err != nil {
 		return errors.Wrapf(err, "reading schema file from VCS %s", schemaFileURL)

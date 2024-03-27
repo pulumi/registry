@@ -1,6 +1,10 @@
 {
   "include": [
     {
+      "repoSlug": "a-schot/pulumi-dbtcloud",
+      "schemaFile": "provider/cmd/pulumi-resource-dbtcloud/schema.json"
+    },
+    {
       "repoSlug": "koyeb/pulumi-koyeb",
       "schemaFile": "provider/cmd/pulumi-resource-koyeb/schema.json"
     },

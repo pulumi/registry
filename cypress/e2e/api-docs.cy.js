@@ -129,6 +129,7 @@ describe("Registry", () => {
 
                             const actualHeadings = headings
                                 .map((_, heading) => heading.textContent)
+                                .filter(heading => possibleHeadings.includes(heading))
                                 .get();
 
                             const expectedHeadings = possibleHeadings

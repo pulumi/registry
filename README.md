@@ -73,7 +73,7 @@ The prerequisites listed above need to be installed on your machine in order to 
   1. Once that succeeds, run `make build_assets` to build assets the site depends on. This needs to be done before the first time you serve this repo, so they exist on your local machine.
 
   ```
-    make build_assets
+    make build-assets
   ```
 
 ### Running Hugo locally

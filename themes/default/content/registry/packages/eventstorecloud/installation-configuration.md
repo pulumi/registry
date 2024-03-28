@@ -6,7 +6,7 @@ layout: package
 
 ## Installation
 
-The Event Store Cloud provider is available as a package in all Pulumi languages:
+The Event Store Cloud (ESC) provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@eventstore/pulumi-eventstorecloud`](https://www.npmjs.com/package/@eventstore/pulumi-eventstorecloud)
 * Go: [`github.com/EventStore/pulumi-eventstorecloud/sdk/go/eventstorecloud`](https://github.com/EventStore/pulumi-eventstorecloud)
@@ -59,6 +59,6 @@ Required options can be omitted if you configure them using environment variable
 | Option           | Required/Optional | Description                                                                                             |
 |------------------|-------------------|---------------------------------------------------------------------------------------------------------|
 | `token`          | Required          | Access token. You can retrieve this from the ‘Access Tokens’ section of the Event Store Cloud console.  |
-| `organizationId` | Required          | The organization id. You can find it in the organization settings page of the Event Store Cloud console.|
+| `organizationId` | Required          | The organization id. You can find it in the organization settings page if the ESC console.              |
 | `url`            | Optional          | The URL of the Event Store Cloud API. This defaults to the public cloud instance of Event Store Cloud.  |
 | `tokenStore`     | Optional          | The location on the local filesystem of the token cache. This is shared with the Event Store Cloud CLI. |

@@ -16,7 +16,7 @@ layout: package
     <a class="flex flex-wrap items-center rounded-md font-display text-lg text-white bg-blue-600 border-2 border-blue-600 px-2 mr-2 whitespace-no-wrap hover:text-white" style="height: 45px;" href="https://github.com/pulumi/examples/tree/master/azure-py-virtual-data-center" target="_blank">
         <span><i class="fab fa-github pr-2"></i> View Code</span>
     </a>
-    <a href="https://app.pulumi.com/new?template=https://github.com/pulumi/examples/blob/master/azure-py-virtual-data-center/README.md" target="_blank">
+    <a href="https://app.pulumi.com/new?template=https://github.com/pulumi/examples/blob/master/azure-py-virtual-data-center/README.md#gh-dark-mode-only" target="_blank">
         <img src="https://get.pulumi.com/new/button.svg" alt="Deploy">
     </a>
 </p>
@@ -201,7 +201,7 @@ After cloning this repo, `cd` into the `azure-py-virtual-data-center` directory 
     ```bash
     $ pulumi config set azure_bastion            true
     $ pulumi config set forced_tunnel            10.0.200.1
-    $ pulumi config set separator                _    
+    $ pulumi config set separator                _
     $ pulumi config set suffix                   ase
     ```
 

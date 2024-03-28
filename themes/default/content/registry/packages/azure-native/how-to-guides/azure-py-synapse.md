@@ -16,7 +16,7 @@ layout: package
     <a class="flex flex-wrap items-center rounded-md font-display text-lg text-white bg-blue-600 border-2 border-blue-600 px-2 mr-2 whitespace-no-wrap hover:text-white" style="height: 45px;" href="https://github.com/pulumi/examples/tree/master/azure-py-synapse" target="_blank">
         <span><i class="fab fa-github pr-2"></i> View Code</span>
     </a>
-    <a href="https://app.pulumi.com/new?template=https://github.com/pulumi/examples/blob/master/azure-py-synapse/README.md" target="_blank">
+    <a href="https://app.pulumi.com/new?template=https://github.com/pulumi/examples/blob/master/azure-py-synapse/README.md#gh-dark-mode-only" target="_blank">
         <img src="https://get.pulumi.com/new/button.svg" alt="Deploy">
     </a>
 </p>
@@ -41,7 +41,7 @@ Starting point for enterprise analytics solutions based on Azure Synapse.
     $ source venv/bin/activate
     $ pip3 install -r requirements.txt
     ```
-   
+
 1. Login to Azure CLI (you will be prompted to do this during deployment if you forget this step):
 
     ```bash
@@ -49,13 +49,13 @@ Starting point for enterprise analytics solutions based on Azure Synapse.
     ```
 
 1. Set the Azure region location to use:
-    
+
     ```
     $ pulumi config set azure-native:location westus2
     ```
 
 1. Set the user ID to grant access to (e.g., your current user):
-    
+
     ```
     $ pulumi config set userObjectId $(az ad signed-in-user show --query=objectId | tr -d '"')
     ```

@@ -16,7 +16,7 @@ layout: package
     <a class="flex flex-wrap items-center rounded-md font-display text-lg text-white bg-blue-600 border-2 border-blue-600 px-2 mr-2 whitespace-no-wrap hover:text-white" style="height: 45px;" href="https://github.com/pulumi/examples/tree/master/aws-cs-s3-folder" target="_blank">
         <span><i class="fab fa-github pr-2"></i> View Code</span>
     </a>
-    <a href="https://app.pulumi.com/new?template=https://github.com/pulumi/examples/blob/master/aws-cs-s3-folder/README.md" target="_blank">
+    <a href="https://app.pulumi.com/new?template=https://github.com/pulumi/examples/blob/master/aws-cs-s3-folder/README.md#gh-dark-mode-only" target="_blank">
         <img src="https://get.pulumi.com/new/button.svg" alt="Deploy">
     </a>
 </p>
@@ -42,23 +42,23 @@ A static website that uses [S3's website support](https://docs.aws.amazon.com/Am
 
     ```bash
     Previewing update (dev):
-        Type                       Name                  Plan       
-    +   pulumi:pulumi:Stack        aws-cs-s3-folder-dev  create     
-    +   └─ aws:s3:Bucket           my-bucket             create     
-    +      ├─ aws:s3:BucketObject  index.html            create     
-    +      └─ aws:s3:BucketObject  favicon.png           create     
-    
+        Type                       Name                  Plan
+    +   pulumi:pulumi:Stack        aws-cs-s3-folder-dev  create
+    +   └─ aws:s3:Bucket           my-bucket             create
+    +      ├─ aws:s3:BucketObject  index.html            create
+    +      └─ aws:s3:BucketObject  favicon.png           create
+
     Resources:
         + 4 to create
 
     Do you want to perform this update? yes
     Updating (dev):
-        Type                       Name                  Status      
-    +   pulumi:pulumi:Stack        aws-cs-s3-folder-dev  created     
-    +   └─ aws:s3:Bucket           my-bucket             created     
-    +      ├─ aws:s3:BucketObject  index.html            created     
-    +      └─ aws:s3:BucketObject  favicon.png           created     
-    
+        Type                       Name                  Status
+    +   pulumi:pulumi:Stack        aws-cs-s3-folder-dev  created
+    +   └─ aws:s3:Bucket           my-bucket             created
+    +      ├─ aws:s3:BucketObject  index.html            created
+    +      └─ aws:s3:BucketObject  favicon.png           created
+
     Outputs:
         Endpoint: "http://my-bucket-1234567.s3-website.us-west-2.amazonaws.com"
     ```

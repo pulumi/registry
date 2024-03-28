@@ -16,12 +16,15 @@ layout: package
     <a class="flex flex-wrap items-center rounded-md font-display text-lg text-white bg-blue-600 border-2 border-blue-600 px-2 mr-2 whitespace-no-wrap hover:text-white" style="height: 45px;" href="https://github.com/pulumi/examples/tree/master/azure-java-function-graal-spring" target="_blank">
         <span><i class="fab fa-github pr-2"></i> View Code</span>
     </a>
+    <a href="https://app.pulumi.com/new?template=https://github.com/pulumi/examples/blob/master/azure-java-function-graal-spring/README.md#gh-dark-mode-only" target="_blank">
+        <img src="https://get.pulumi.com/new/button.svg" alt="Deploy">
+    </a>
 </p>
 
 
 Starting point for building Spring Native application hosted in Azure Function.
 
-Inspired by [Julien Dubois](https://github.com/jdubois/azure-native-spring-function) 
+Inspired by [Julien Dubois](https://github.com/jdubois/azure-native-spring-function)
 and [Spring Native - Cloud Function Netty example](https://github.com/spring-projects-experimental/spring-native/tree/main/samples/cloud-function-netty).
 
 Azure Functions custom handlers are used to run the GraalVM binary.
@@ -77,5 +80,4 @@ Azure Functions custom handlers are used to run the GraalVM binary.
     gradle bootRun
     curl localhost:8080
     ```
-
 

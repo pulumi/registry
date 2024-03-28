@@ -16,16 +16,16 @@ layout: package
     <a class="flex flex-wrap items-center rounded-md font-display text-lg text-white bg-blue-600 border-2 border-blue-600 px-2 mr-2 whitespace-no-wrap hover:text-white" style="height: 45px;" href="https://github.com/pulumi/examples/tree/master/gcp-py-network-component" target="_blank">
         <span><i class="fab fa-github pr-2"></i> View Code</span>
     </a>
-    <a href="https://app.pulumi.com/new?template=https://github.com/pulumi/examples/blob/master/gcp-py-network-component/README.md" target="_blank">
+    <a href="https://app.pulumi.com/new?template=https://github.com/pulumi/examples/blob/master/gcp-py-network-component/README.md#gh-dark-mode-only" target="_blank">
         <img src="https://get.pulumi.com/new/button.svg" alt="Deploy">
     </a>
 </p>
 
 
-This example uses `pulumi.ComponentResource` as described [here](https://www.pulumi.com/docs/intro/concepts/resources/#components) 
+This example uses `pulumi.ComponentResource` as described [here](https://www.pulumi.com/docs/intro/concepts/resources/#components)
 to create a Google Cloud Network and instance.
 
-The use of `pulumi.ComponentResource` demonstrates how multiple low-level resources 
+The use of `pulumi.ComponentResource` demonstrates how multiple low-level resources
 can be composed into a higher-level, reusable abstraction.
 
 ## Prerequisites
@@ -49,7 +49,7 @@ can be composed into a higher-level, reusable abstraction.
     $ pulumi config set gcp:region us-central1
     ```
 
-1. Configure one or more subnetwork CIDRs for the program to use  
+1. Configure one or more subnetwork CIDRs for the program to use
    Note: This example is using structured configuration as per [Structured Configuration](https://www.pulumi.com/docs/intro/concepts/config/#structured-configuration)
 
     ```bash
@@ -106,7 +106,7 @@ can be composed into a higher-level, reusable abstraction.
     Permalink: https://app.pulumi.com/clstokes/gcp-py-network-component/dev/updates/10
     ```
 
-1. Get the IP address of the newly-created instance from the stack's outputs: 
+1. Get the IP address of the newly-created instance from the stack's outputs:
 
     ```bash
     $ pulumi stack output nginx_public_ip

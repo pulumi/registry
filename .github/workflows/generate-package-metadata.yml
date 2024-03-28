@@ -38,7 +38,7 @@ jobs:
         id: regex-prov
         run: |
           if [[ "$REPO_SLUG" =~ (\/[^-]*-)(.*?$) ]]; then
-            echo "group2=${BASH_REMATCH[2]}" >> $GITHUB_OUTPUT
+            echo "group2= ${BASH_REMATCH[2]}" >> $GITHUB_OUTPUT
           else
             echo "Regex pattern match error."
             exit 1
@@ -46,7 +46,7 @@ jobs:
         env:
           REPO_SLUG: ${{ matrix.repoSlug }}
       - name: Check if there is already an open PR
-        if: contains(needs.generate-packages-list.outputs.prs, steps.regex-prov.outputs.group2 )  
+        if: contains(needs.generate-packages-list.outputs.prs, steps.regex-prov.outputs.group2 )
         id: skip-run
         run: echo "skip=1" >> $GITHUB_OUTPUT
       - name: Check out registry repo

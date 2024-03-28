@@ -16,7 +16,7 @@ layout: package
     <a class="flex flex-wrap items-center rounded-md font-display text-lg text-white bg-blue-600 border-2 border-blue-600 px-2 mr-2 whitespace-no-wrap hover:text-white" style="height: 45px;" href="https://github.com/pulumi/examples/tree/master/aws-ts-synthetics-canary" target="_blank">
         <span><i class="fab fa-github pr-2"></i> View Code</span>
     </a>
-    <a href="https://app.pulumi.com/new?template=https://github.com/pulumi/examples/tree/master/aws-ts-synthetics-canary" target="_blank">
+    <a href="https://app.pulumi.com/new?template=https://github.com/pulumi/examples/blob/master/aws-ts-synthetics-canary/README.md#gh-dark-mode-only" target="_blank">
         <img src="https://get.pulumi.com/new/button.svg" alt="Deploy">
     </a>
 </p>
@@ -32,7 +32,7 @@ This example does the following:
 
 The canary used in this example is a simple no-op script that writes a message.
 See [Writing Canary Scripts](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Synthetics_Canaries_WritingCanary.html) for details regarding canary directory structure and naming conventions.
-There are some prebaked canary scripts for doing things like checking an API or a link that can be found on AWS. 
+There are some prebaked canary scripts for doing things like checking an API or a link that can be found on AWS.
 
 ## Deploying and running the program
 
@@ -63,15 +63,15 @@ There are some prebaked canary scripts for doing things like checking an API or 
     Updating (dev)
     View Live: https://app.pulumi.com/acmecorp/aws-synthetics-canary/dev/updates/1
 
-        Type                      Name                       Status      
-    +   pulumi:pulumi:Stack       aws-synthetics-canary-dev  created     
-    +   ├─ aws:s3:BucketV2        canary-results             created     
-    +   ├─ aws:s3:BucketV2        canary-scripts             created     
-    +   ├─ aws:iam:Role           canary-exec-role           created     
-    +   ├─ aws:iam:RolePolicy     canary-exec-policy         created     
-    +   ├─ aws:s3:BucketObjectv2  canary-simple-canary       created     
-    +   └─ aws:synthetics:Canary  canary-simple              created     
-    
+        Type                      Name                       Status
+    +   pulumi:pulumi:Stack       aws-synthetics-canary-dev  created
+    +   ├─ aws:s3:BucketV2        canary-results             created
+    +   ├─ aws:s3:BucketV2        canary-scripts             created
+    +   ├─ aws:iam:Role           canary-exec-role           created
+    +   ├─ aws:iam:RolePolicy     canary-exec-policy         created
+    +   ├─ aws:s3:BucketObjectv2  canary-simple-canary       created
+    +   └─ aws:synthetics:Canary  canary-simple              created
+
     Outputs:
         canaryName   : "canary-simple-a4a3974"
         canaryNameArn: "arn:aws:synthetics:us-east-1:052848974346:canary:canary-simple-a4a3974"
@@ -84,3 +84,4 @@ There are some prebaked canary scripts for doing things like checking an API or 
     NOTE: Until https://github.com/hashicorp/terraform-provider-aws/issues/19288 is addressed, the Canary's lambda function and related layers are left after the stack is destroyed. So you will want to manually clean up these items.
 
 1.  To delete the stack itself, run `pulumi stack rm`. Note that this command deletes all deployment history from the Pulumi console.
+

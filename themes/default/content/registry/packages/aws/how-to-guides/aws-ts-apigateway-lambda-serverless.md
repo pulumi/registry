@@ -16,7 +16,7 @@ layout: package
     <a class="flex flex-wrap items-center rounded-md font-display text-lg text-white bg-blue-600 border-2 border-blue-600 px-2 mr-2 whitespace-no-wrap hover:text-white" style="height: 45px;" href="https://github.com/pulumi/examples/tree/master/aws-ts-apigateway-lambda-serverless" target="_blank">
         <span><i class="fab fa-github pr-2"></i> View Code</span>
     </a>
-    <a href="https://app.pulumi.com/new?template=https://github.com/pulumi/examples/blob/master/aws-ts-apigateway-lambda-serverless/README.md" target="_blank">
+    <a href="https://app.pulumi.com/new?template=https://github.com/pulumi/examples/blob/master/aws-ts-apigateway-lambda-serverless/README.md#gh-dark-mode-only" target="_blank">
         <img src="https://get.pulumi.com/new/button.svg" alt="Deploy">
     </a>
 </p>
@@ -59,28 +59,28 @@ This sample uses the following AWS products:
 
   View Live: https://app.pulumi.com/***/aws-ts-apigateway-lambda-serverless/aws-ts-apigateway-lambda-serverless/updates/1
 
-      Type                                Name                                                                     Status      
-  +   pulumi:pulumi:Stack                 aws-ts-apigateway-lambda-serverless-aws-ts-apigateway-lambda-serverless  created     
-  +   └─ aws:apigateway:x:API             hello-world                                                              created     
-  +      ├─ aws:iam:Role                  hello-world40ecbb97                                                      created     
-  +      ├─ aws:iam:Policy                hello-world2bb21f83-LambdaFullAccess                                     created     
-  +      ├─ aws:iam:Role                  hello-world2bb21f83                                                      created     
-  +      ├─ aws:iam:Role                  hello-world4fcc7b60                                                      created     
-  +      ├─ aws:iam:Policy                hello-world40ecbb97-LambdaFullAccess                                     created     
-  +      ├─ aws:iam:Policy                hello-world4fcc7b60-LambdaFullAccess                                     created     
-  +      ├─ aws:lambda:Function           hello-world40ecbb97                                                      created     
-  +      ├─ aws:lambda:Function           hello-world2bb21f83                                                      created     
-  +      ├─ aws:iam:RolePolicyAttachment  hello-world2bb21f83-lambdaFullAccessCopyAttachment                       created     
-  +      ├─ aws:iam:RolePolicyAttachment  hello-world40ecbb97-lambdaFullAccessCopyAttachment                       created     
-  +      ├─ aws:lambda:Function           hello-world4fcc7b60                                                      created     
-  +      ├─ aws:iam:RolePolicyAttachment  hello-world4fcc7b60-lambdaFullAccessCopyAttachment                       created     
-  +      ├─ aws:apigateway:RestApi        hello-world                                                              created     
-  +      ├─ aws:apigateway:Deployment     hello-world                                                              created     
-  +      ├─ aws:lambda:Permission         hello-world-29d762f7                                                     created     
-  +      ├─ aws:lambda:Permission         hello-world-86405973                                                     created     
-  +      ├─ aws:lambda:Permission         hello-world-d21e9c98                                                     created     
-  +      └─ aws:apigateway:Stage          hello-world                                                              created     
-  
+      Type                                Name                                                                     Status
+  +   pulumi:pulumi:Stack                 aws-ts-apigateway-lambda-serverless-aws-ts-apigateway-lambda-serverless  created
+  +   └─ aws:apigateway:x:API             hello-world                                                              created
+  +      ├─ aws:iam:Role                  hello-world40ecbb97                                                      created
+  +      ├─ aws:iam:Policy                hello-world2bb21f83-LambdaFullAccess                                     created
+  +      ├─ aws:iam:Role                  hello-world2bb21f83                                                      created
+  +      ├─ aws:iam:Role                  hello-world4fcc7b60                                                      created
+  +      ├─ aws:iam:Policy                hello-world40ecbb97-LambdaFullAccess                                     created
+  +      ├─ aws:iam:Policy                hello-world4fcc7b60-LambdaFullAccess                                     created
+  +      ├─ aws:lambda:Function           hello-world40ecbb97                                                      created
+  +      ├─ aws:lambda:Function           hello-world2bb21f83                                                      created
+  +      ├─ aws:iam:RolePolicyAttachment  hello-world2bb21f83-lambdaFullAccessCopyAttachment                       created
+  +      ├─ aws:iam:RolePolicyAttachment  hello-world40ecbb97-lambdaFullAccessCopyAttachment                       created
+  +      ├─ aws:lambda:Function           hello-world4fcc7b60                                                      created
+  +      ├─ aws:iam:RolePolicyAttachment  hello-world4fcc7b60-lambdaFullAccessCopyAttachment                       created
+  +      ├─ aws:apigateway:RestApi        hello-world                                                              created
+  +      ├─ aws:apigateway:Deployment     hello-world                                                              created
+  +      ├─ aws:lambda:Permission         hello-world-29d762f7                                                     created
+  +      ├─ aws:lambda:Permission         hello-world-86405973                                                     created
+  +      ├─ aws:lambda:Permission         hello-world-d21e9c98                                                     created
+  +      └─ aws:apigateway:Stage          hello-world                                                              created
+
   Outputs:
       endpointUrl: "https://***.execute-api.us-east-2.amazonaws.com/stage/"
 

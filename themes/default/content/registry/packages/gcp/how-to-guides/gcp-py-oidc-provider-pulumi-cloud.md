@@ -16,6 +16,9 @@ layout: package
     <a class="flex flex-wrap items-center rounded-md font-display text-lg text-white bg-blue-600 border-2 border-blue-600 px-2 mr-2 whitespace-no-wrap hover:text-white" style="height: 45px;" href="https://github.com/pulumi/examples/tree/master/gcp-py-oidc-provider-pulumi-cloud" target="_blank">
         <span><i class="fab fa-github pr-2"></i> View Code</span>
     </a>
+    <a href="https://app.pulumi.com/new?template=https://github.com/pulumi/examples/blob/master/gcp-py-oidc-provider-pulumi-cloud/README.md#gh-dark-mode-only" target="_blank">
+        <img src="https://get.pulumi.com/new/button.svg" alt="Deploy">
+    </a>
 </p>
 
 
@@ -67,24 +70,24 @@ Next, to deploy the application and its infrastructure, follow these steps:
 
 This next section will walk you through validating your OIDC configuration using [Pulumi ESC](https://www.pulumi.com/docs/pulumi-cloud/esc/).
 
-Start by [creating a new Pulumi ESC environment](https://www.pulumi.com/docs/pulumi-cloud/esc/get-started/#create-an-environment). Then, copy the template definition from the output in the CLI and paste it into your environment. Save your environment file and run the `pulumi env open <your-pulumi-org>/<your-environment>` command in the CLI. You should see output similar to the following:
+1. Start by [creating a new Pulumi ESC environment](https://www.pulumi.com/docs/pulumi-cloud/esc/get-started/#create-an-environment).
+2. Then, copy the template definition from the output in the CLI and paste it into your environment.
+3. Save your environment file and run the `pulumi env open <your-pulumi-org>/<your-environment>` command in the CLI. You should see output similar to the following:
 
 ```bash
 $ pulumi env open myOrg/myEnvironment
 {
   "environmentVariables": {
-    "GOOGLE_PROJECT": <your-project-id>
+    "GOOGLE_PROJECT": 111111111111
+    "CLOUDSDK_AUTH_ACCESS_TOKEN": "ya29...."
   },
   "gcp": {
     "login": {
-      "accessToken": "ya29.......",
-      "expiry": "2023-11-07T18:02:35Z",
-      "project": <your-project-id>,
+      "accessToken": "ya29.....",
+      "expiry": "2023-11-09T11:12:41Z",
+      "project": 111111111111,
       "tokenType": "Bearer"
     }
-  },
-  "pulumiConfig": {
-    "gcp:accessToken": "ya29......."
   }
 }
 ```

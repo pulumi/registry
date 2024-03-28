@@ -16,7 +16,7 @@ layout: package
     <a class="flex flex-wrap items-center rounded-md font-display text-lg text-white bg-blue-600 border-2 border-blue-600 px-2 mr-2 whitespace-no-wrap hover:text-white" style="height: 45px;" href="https://github.com/pulumi/examples/tree/master/gcp-ts-cloudrun" target="_blank">
         <span><i class="fab fa-github pr-2"></i> View Code</span>
     </a>
-    <a href="https://app.pulumi.com/new?template=https://github.com/pulumi/examples/blob/master/gcp-ts-cloudrun/README.md" target="_blank">
+    <a href="https://app.pulumi.com/new?template=https://github.com/pulumi/examples/blob/master/gcp-ts-cloudrun/README.md#gh-dark-mode-only" target="_blank">
         <img src="https://get.pulumi.com/new/button.svg" alt="Deploy">
     </a>
 </p>
@@ -49,27 +49,27 @@ An example of deploying a custom Docker image into Google Cloud Run service usin
 3.  Configure your GCP project and region:
 
     ```
-    $ pulumi config set gcp:project <projectname> 
+    $ pulumi config set gcp:project <projectname>
     $ pulumi config set gcp:region <region>
     ```
 
 4.  Run `pulumi up` to preview and deploy changes:
 
-    ``` 
+    ```
     $ pulumi up
     Previewing update (dev):
     ...
 
     Updating (dev):
-        Type                       Name              Status      
-    +   pulumi:pulumi:Stack        gcp-cloudrun-dev  created     
-    +   ├─ docker:image:Image      ruby-app          created     
-    +   ├─ gcp:projects:Service    EnableCloudRun    created     
-    +   ├─ gcp:cloudrun:Service    hello             created     
-    +   ├─ gcp:cloudrun:Service    ruby              created     
-    +   ├─ gcp:cloudrun:IamMember  hello-everyone    created     
-    +   └─ gcp:cloudrun:IamMember  ruby-everyone     created     
-    
+        Type                       Name              Status
+    +   pulumi:pulumi:Stack        gcp-cloudrun-dev  created
+    +   ├─ docker:image:Image      ruby-app          created
+    +   ├─ gcp:projects:Service    EnableCloudRun    created
+    +   ├─ gcp:cloudrun:Service    hello             created
+    +   ├─ gcp:cloudrun:Service    ruby              created
+    +   ├─ gcp:cloudrun:IamMember  hello-everyone    created
+    +   └─ gcp:cloudrun:IamMember  ruby-everyone     created
+
     Outputs:
         helloUrl: "https://hello-a28eea2-q1wszdxb2b-ew.a.run.app"
         rubyUrl : "https://ruby-420a973-q1wszdxb2b-ew.a.run.app"

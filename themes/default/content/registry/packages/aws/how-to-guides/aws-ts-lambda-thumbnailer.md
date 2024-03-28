@@ -16,7 +16,7 @@ layout: package
     <a class="flex flex-wrap items-center rounded-md font-display text-lg text-white bg-blue-600 border-2 border-blue-600 px-2 mr-2 whitespace-no-wrap hover:text-white" style="height: 45px;" href="https://github.com/pulumi/examples/tree/master/aws-ts-lambda-thumbnailer" target="_blank">
         <span><i class="fab fa-github pr-2"></i> View Code</span>
     </a>
-    <a href="https://app.pulumi.com/new?template=https://github.com/pulumi/examples/blob/master/aws-ts-lambda-thumbnailer/README.md" target="_blank">
+    <a href="https://app.pulumi.com/new?template=https://github.com/pulumi/examples/blob/master/aws-ts-lambda-thumbnailer/README.md#gh-dark-mode-only" target="_blank">
         <img src="https://get.pulumi.com/new/button.svg" alt="Deploy">
     </a>
 </p>
@@ -57,24 +57,24 @@ To run this example, make sure [Docker](https://docs.docker.com/engine/installat
     Do you want to perform this update? yes
     Updating (dev)
 
-         Type                                  Name                          Status      
-    +   pulumi:pulumi:Stack                   video-thumbnailer-lambda-dev  created     
-    +   ├─ awsx:ecr:Repository                sampleapp                     created     
-    +   │  ├─ aws:ecr:Repository              sampleapp                     created     
-    +   │  └─ aws:ecr:LifecyclePolicy         sampleapp                     created     
-    +   ├─ aws:s3:Bucket                      bucket                        created     
-    +   │  ├─ aws:s3:BucketEventSubscription  onNewThumbnail                created     
-    +   │  │  └─ aws:lambda:Permission        onNewThumbnail                created     
-    +   │  ├─ aws:s3:BucketEventSubscription  onNewVideo                    created     
-    +   │  │  └─ aws:lambda:Permission        onNewVideo                    created     
-    +   │  └─ aws:s3:BucketNotification       onNewVideo                    created     
-    +   ├─ aws:iam:Role                       onNewThumbnail                created     
-    +   ├─ aws:iam:Role                       thumbnailerRole               created     
-    +   ├─ aws:lambda:Function                onNewThumbnail                created     
-    +   ├─ aws:iam:RolePolicyAttachment       onNewThumbnail-32be53a2       created     
-    +   ├─ aws:iam:RolePolicyAttachment       lambdaFullAccess              created     
-    +   └─ aws:lambda:Function                thumbnailer                   created     
-    
+         Type                                  Name                          Status
+    +   pulumi:pulumi:Stack                   video-thumbnailer-lambda-dev  created
+    +   ├─ awsx:ecr:Repository                sampleapp                     created
+    +   │  ├─ aws:ecr:Repository              sampleapp                     created
+    +   │  └─ aws:ecr:LifecyclePolicy         sampleapp                     created
+    +   ├─ aws:s3:Bucket                      bucket                        created
+    +   │  ├─ aws:s3:BucketEventSubscription  onNewThumbnail                created
+    +   │  │  └─ aws:lambda:Permission        onNewThumbnail                created
+    +   │  ├─ aws:s3:BucketEventSubscription  onNewVideo                    created
+    +   │  │  └─ aws:lambda:Permission        onNewVideo                    created
+    +   │  └─ aws:s3:BucketNotification       onNewVideo                    created
+    +   ├─ aws:iam:Role                       onNewThumbnail                created
+    +   ├─ aws:iam:Role                       thumbnailerRole               created
+    +   ├─ aws:lambda:Function                onNewThumbnail                created
+    +   ├─ aws:iam:RolePolicyAttachment       onNewThumbnail-32be53a2       created
+    +   ├─ aws:iam:RolePolicyAttachment       lambdaFullAccess              created
+    +   └─ aws:lambda:Function                thumbnailer                   created
+
     Outputs:
         bucketName: "bucket-7c6b55a"
 
@@ -115,7 +115,7 @@ To run this example, make sure [Docker](https://docs.docker.com/engine/installat
     upload: ../../tmp/cat.jpg to s3://bucket-33b87c2/cat.jpg          pleted 86.6 KiB/86.6 KiB (315.8 KiB/s) with 1 file(s) remaining
     2020-12-02T09:59:11.628+01:00[           thumbnailer-dbb2a35] 2020-12-02T08:59:11.627Z	3ec2886e-e739-4764-be3b-a8e5a48a4986	INFO	*** New thumbnail: file cat_00-01.mp4 was saved at 2020-12-02T08:58:33.845Z.
     2020-12-02T09:59:11.668+01:00[           thumbnailer-dbb2a35] END RequestId: 3ec2886e-e739-4764-be3b-a8e5a48a4986
-    2020-12-02T09:59:11.668+01:00[           thumbnailer-dbb2a35] REPORT RequestId: 3ec2886e-e739-4764-be3b-a8e5a48a4986	Duration: 31920.84 ms	Billed Duration: 32733 ms	Memory Size: 128 MB	Max Memory Used: 128 MB	Init Duration: 811.55 ms	
+    2020-12-02T09:59:11.668+01:00[           thumbnailer-dbb2a35] REPORT RequestId: 3ec2886e-e739-4764-be3b-a8e5a48a4986	Duration: 31920.84 ms	Billed Duration: 32733 ms	Memory Size: 128 MB	Max Memory Used: 128 MB	Init Duration: 811.55 ms
     2020-12-02T09:59:11.777+01:00[        onNewThumbnail-2f969e0] START RequestId: 07c13039-eccb-4e38-a3cf-c7fa11982b84 Version: $LATEST
     2020-12-02T09:59:11.788+01:00[        onNewThumbnail-2f969e0] 2020-12-02T08:59:11.782Z	07c13039-eccb-4e38-a3cf-c7fa11982b84	INFO	onNewThumbnail called
     2020-12-02T09:59:11.788+01:00[        onNewThumbnail-2f969e0] 2020-12-02T08:59:11.788Z	07c13039-eccb-4e38-a3cf-c7fa11982b84	INFO	*** New thumbnail: file cat.jpg was saved at 2020-12-02T08:59:06.333Z.

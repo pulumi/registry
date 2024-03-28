@@ -16,7 +16,7 @@ layout: package
     <a class="flex flex-wrap items-center rounded-md font-display text-lg text-white bg-blue-600 border-2 border-blue-600 px-2 mr-2 whitespace-no-wrap hover:text-white" style="height: 45px;" href="https://github.com/pulumi/examples/tree/master/kubernetes-py-nginx" target="_blank">
         <span><i class="fab fa-github pr-2"></i> View Code</span>
     </a>
-    <a href="https://app.pulumi.com/new?template=https://github.com/pulumi/examples/blob/master/kubernetes-py-nginx/README.md" target="_blank">
+    <a href="https://app.pulumi.com/new?template=https://github.com/pulumi/examples/blob/master/kubernetes-py-nginx/README.md#gh-dark-mode-only" target="_blank">
         <img src="https://get.pulumi.com/new/button.svg" alt="Deploy">
     </a>
 </p>
@@ -48,19 +48,19 @@ After confirming, the deployment will take place in approximately 20 seconds:
 ```bash
     $ pulumi up -y
     Previewing update (dev):
-        Type                           Name                     Plan       
-    +   pulumi:pulumi:Stack            kubernetes-py-nginx-dev  create     
-    +   └─ kubernetes:apps:Deployment  nginx-deployment         create     
-    
+        Type                           Name                     Plan
+    +   pulumi:pulumi:Stack            kubernetes-py-nginx-dev  create
+    +   └─ kubernetes:apps:Deployment  nginx-deployment         create
+
     Resources:
         + 2 to create
 
     Do you want to perform this update? yes
     Updating (dev):
-        Type                           Name                     Status      
-    +   pulumi:pulumi:Stack            kubernetes-py-nginx-dev  created     
-    +   └─ kubernetes:apps:Deployment  nginx-deployment         created     
-    
+        Type                           Name                     Status
+    +   pulumi:pulumi:Stack            kubernetes-py-nginx-dev  created
+    +   └─ kubernetes:apps:Deployment  nginx-deployment         created
+
     Outputs:
         nginx: "nginx-deployment-ts0qpwi9"
 
@@ -80,18 +80,18 @@ that to five, by running the `pulumi config` command followed by another `pulumi
     $ pulumi up -y
     Previewing update (dev):
         Type                           Name                     Plan       Info
-        pulumi:pulumi:Stack            kubernetes-py-nginx-dev             
+        pulumi:pulumi:Stack            kubernetes-py-nginx-dev
     ~   └─ kubernetes:apps:Deployment  nginx-deployment         update     [diff: ~spec]
-    
+
     Resources:
         ~ 1 to update
         1 unchanged
 
     Updating (dev):
         Type                           Name                     Status      Info
-        pulumi:pulumi:Stack            kubernetes-py-nginx-dev              
+        pulumi:pulumi:Stack            kubernetes-py-nginx-dev
     ~   └─ kubernetes:apps:Deployment  nginx-deployment         updated     [diff: ~spec]
-    
+
     Outputs:
         nginx: "nginx-deployment-ts0qpwi9"
 

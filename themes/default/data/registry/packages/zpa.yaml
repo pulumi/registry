@@ -1,0 +1,15 @@
+category: Cloud
+component: false
+description: A Pulumi package for creating and managing Zscaler Private Access (ZPA)
+  cloud resources.
+featured: false
+logo_url: https://raw.githubusercontent.com/zscaler/pulumi-zpa/master/assets/zscaler.png
+name: zpa
+native: false
+package_status: public_preview
+publisher: Zscaler
+repo_url: https://github.com/zscaler/pulumi-zpa
+schema_file_path: provider/cmd/pulumi-resource-zpa/schema.json
+title: Zscaler Private Access
+updated_on: 1711509164
+version: v0.0.9

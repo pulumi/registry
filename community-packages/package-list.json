@@ -299,6 +299,10 @@
     {
       "repoSlug": "zscaler/pulumi-zia",
       "schemaFile": "provider/cmd/pulumi-resource-zia/schema.json"
+    },
+    {
+      "repoSlug": "ctfer-io/pulumi-ctfd",
+      "schemaFile": "provider/cmd/pulumi-resource-ctfd/schema.json"
     }
   ]
 }

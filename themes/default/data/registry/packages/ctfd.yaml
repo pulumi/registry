@@ -1,0 +1,14 @@
+category: Cloud
+component: false
+description: The CTFd provider for Pulumi, to manage its resources as code.
+featured: false
+logo_url: https://raw.githubusercontent.com/ctfer-io/pulumi-ctfd/main/res/ctfd.png
+name: ctfd
+native: false
+package_status: public_preview
+publisher: CTFer.io
+repo_url: https://github.com/ctfer-io/pulumi-ctfd
+schema_file_path: provider/cmd/pulumi-resource-ctfd/schema.json
+title: CTFd
+updated_on: 1712126919
+version: v0.1.23

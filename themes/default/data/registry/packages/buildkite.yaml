@@ -10,5 +10,5 @@ publisher: Pulumiverse
 repo_url: https://github.com/pulumiverse/pulumi-buildkite
 schema_file_path: provider/cmd/pulumi-resource-buildkite/schema.json
 title: Buildkite
-updated_on: 1711499366
-version: v3.1.5
+updated_on: 1712103422
+version: v3.1.6

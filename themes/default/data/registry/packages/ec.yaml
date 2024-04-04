@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-ec
 schema_file_path: provider/cmd/pulumi-resource-ec/schema.json
 title: ElasticCloud (EC)
-updated_on: 1711027257
-version: v0.7.2
+updated_on: 1712219913
+version: v0.8.0

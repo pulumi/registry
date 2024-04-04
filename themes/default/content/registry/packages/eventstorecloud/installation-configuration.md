@@ -8,9 +8,9 @@ layout: package
 
 The Event Store Cloud provider is available as a package in all Pulumi languages:
 
-* JavaScript/TypeScript: [`@eventstore/pulumi-eventstorecloud`](https://www.npmjs.com/package/@eventstore/pulumi-eventstorecloud)
-* Go: [`github.com/EventStore/pulumi-eventstorecloud/sdk/go/eventstorecloud`](https://github.com/EventStore/pulumi-eventstorecloud)
-* .NET: [`Pulumi.EventStoreCloud`](https://www.nuget.org/packages/Pulumi.EventStoreCloud)
+- JavaScript/TypeScript: [`@eventstore/pulumi-eventstorecloud`](https://www.npmjs.com/package/@eventstore/pulumi-eventstorecloud)
+- Go: [`github.com/EventStore/pulumi-eventstorecloud/sdk/go/eventstorecloud`](https://github.com/EventStore/pulumi-eventstorecloud)
+- .NET: [`Pulumi.EventStoreCloud`](https://www.nuget.org/packages/Pulumi.EventStoreCloud)
 
 ## Setup
 
@@ -33,8 +33,8 @@ First, you need an [access token](https://developers.eventstore.com/cloud/automa
 
 Then, go to the list of organizations you have access to in Event Store Cloud console, choose the organization that you will be provisioning resources for, and look the organization id in the settings.
 
-* `<YOUR_ACCESS_TOKEN>`: your access token
-* `<YOUR_ORGANIZATION_ID>`: the Event Store Cloud organization id
+- `<YOUR_ACCESS_TOKEN>`: your access token
+- `<YOUR_ORGANIZATION_ID>`: the Event Store Cloud organization id
 
 Once the credentials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
 
@@ -56,9 +56,9 @@ Once the credentials are obtained, there are two ways to communicate your author
 Required options can be omitted if you configure them using environment variables.
 {{% /notes %}}
 
-| Option           | Required/Optional | Description                                                                                             |
-|------------------|-------------------|---------------------------------------------------------------------------------------------------------|
-| `token`          | Required          | Access token. You can retrieve this from the ‘Access Tokens’ section of the Event Store Cloud console.  |
-| `organizationId` | Required          | The organization id. You can find it in the organization settings page of the Event Store Cloud console.|
-| `url`            | Optional          | The URL of the Event Store Cloud API. This defaults to the public cloud instance of Event Store Cloud.  |
-| `tokenStore`     | Optional          | The location on the local filesystem of the token cache. This is shared with the Event Store Cloud CLI. |
+| Option           | Required/Optional | Description                                                                                              |
+| ---------------- | ----------------- | -------------------------------------------------------------------------------------------------------- |
+| `token`          | Required          | Access token. You can retrieve this from the ‘Access Tokens’ section of the Event Store Cloud console.   |
+| `organizationId` | Required          | The organization id. You can find it in the organization settings page of the Event Store Cloud console. |
+| `url`            | Optional          | The URL of the Event Store Cloud API. This defaults to the public cloud instance of Event Store Cloud.   |
+| `tokenStore`     | Optional          | The location on the local filesystem of the token cache. This is shared with the Event Store Cloud CLI.  |

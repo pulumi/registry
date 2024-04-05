@@ -303,6 +303,10 @@
     {
       "repoSlug": "ctfer-io/pulumi-ctfd",
       "schemaFile": "provider/cmd/pulumi-resource-ctfd/schema.json"
+    },
+    {
+      "repoSlug": "pulumiverse/pulumi-fortios",
+      "schemaFile": "provider/cmd/pulumi-resource-fortios/schema.json"
     }
   ]
 }

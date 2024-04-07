@@ -10,5 +10,5 @@ publisher: pinecone-io
 repo_url: https://github.com/pinecone-io/pulumi-pinecone
 schema_file_path: provider/cmd/pulumi-resource-pinecone/schema.json
 title: Pinecone
-updated_on: 1706174431
-version: v0.4.0
+updated_on: 1711581809
+version: v0.4.2

@@ -6,7 +6,7 @@ layout: package
 
 The InfluxDB provider for Pulumi can be used to provision the resources available in [InfluxDB](https://www.influxdata.com/).
 
-The InfluxDB provider must be configured with credentials to deploy and update resources in InfluxDB; see [Installation & Configuration](./installation-configuration.md) for instructions.
+The InfluxDB provider must be configured with credentials to deploy and update resources in InfluxDB; see [Installation & Configuration](./installation-configuration) for instructions.
 
 ## Example
 

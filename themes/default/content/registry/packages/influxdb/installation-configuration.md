@@ -26,7 +26,7 @@ The following configuration points are available for the `InfluxDB` provider:
 The InfluxDB provider binary is a third party binary. It can be installed using the `pulumi plugin` command.
 
 ```bash
-pulumi plugin install resource InfluxDB <version>
+pulumi plugin install resource influxdb <version> --server github://api.github.com/komminarlabs
 ```
 
 Replace the version string `<version>` with your desired version.

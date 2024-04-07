@@ -1,0 +1,14 @@
+category: Cloud
+component: false
+description: A Pulumi package for creating and managing Fortios resources
+featured: false
+logo_url: https://raw.githubusercontent.com/pulumiverse/pulumi-fortios/main/docs/fortios.png
+name: fortios
+native: false
+package_status: public_preview
+publisher: pulumiverse
+repo_url: https://github.com/pulumiverse/pulumi-fortios
+schema_file_path: provider/cmd/pulumi-resource-fortios/schema.json
+title: Fortios
+updated_on: 1712355696
+version: v0.0.4

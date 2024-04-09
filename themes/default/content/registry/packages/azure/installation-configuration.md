@@ -289,8 +289,8 @@ Use `pulumi config set azure:<option>` or pass options to the [constructor of `n
 
 | Option | Required? | Description |
 | - | - | - |
-| `environment`  Required  The cloud environment to use. It can also be sourced from the ARM_ENVIRONMENT environment variable. Supported values are: `public` (default), `usgovernment`, `china`. |
-| `location`  Optional | The location to use. ResourceGroups will consult this property for a default location, if one was not supplied explicitly. |
+| `environment` | Required | The cloud environment to use. It can also be sourced from the ARM_ENVIRONMENT environment variable. Supported values are: `public` (default), `usgovernment`, `china`. |
+| `location` | Optional | The location to use. ResourceGroups will consult this property for a default location, if one was not supplied explicitly. |
 | `clientId` | Optional | The client ID to use. It can also be sourced from the `ARM_CLIENT_ID` environment variable. |
 | `clientSecret` | Optional | The client secret to use. It can also be sourced from the `ARM_CLIENT_SECRET` environment variable. |
 | `msiEndpoint` | Optional | The REST endpoint to retrieve an MSI token from. Pulumi will attempt to discover this automatically but it can be specified manually here. It can also be sourced from the `ARM_MSI_ENDPOINT` environment variable. |

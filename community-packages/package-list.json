@@ -293,6 +293,10 @@
       "schemaFile": "provider/cmd/pulumi-resource-cpln/schema.json"
     },
     {
+      "repoSlug": "runpod/pulumi-runpod-native",
+      "schemaFile": "provider/schema.json"
+    },
+    {
       "repoSlug": "zscaler/pulumi-zpa",
       "schemaFile": "provider/cmd/pulumi-resource-zpa/schema.json"
     },

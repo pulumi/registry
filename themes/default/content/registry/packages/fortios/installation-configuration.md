@@ -378,7 +378,7 @@ There are two kinds of credentials supported:
 
 #### Generate an API token for FortiOS
 
-A descriptions how to create an API token for Fortios, switch to [Generate an API token for FortiOS](generate-api-token)
+A descriptions how to create an API token for Fortios, switch to chapter [Authentication](#authentication)
 
 #### Environment variables
 
@@ -1850,4 +1850,4 @@ We will find that these policies have been submitted to the device in the order
 of 1, 2, 3, 4, 5, 6, 7, 8, 9 after executing `pulumi up`.
 
 > You find the complete (runnable) example in the
-> [examples/sorting_polcies/typescript](https://github.com/pulumiverse/pulumi-fortios/tree/main/examples/sorting_polcies/typescript) folder.
+> [examples/sorting_polcies/typescript](https://github.com/pulumiverse/pulumi-fortios/tree/main/examples/sorting_policies/typescript) folder.

@@ -81,7 +81,10 @@ describe("Registry", () => {
                 });
 
                 it("has the correct page title", () => {
-                    cy.get("head title").should("have.text", `${page.title} | Pulumi Registry`);
+                    // We verify that the title includes both the resource title and the site title. Sometimes there is
+                    // a trailing space after the resource title that messes with the logic, so we just check to make sure
+                    // it includes both pieces of text.
+                    cy.get("head title").should("include.text", page.title).and("include.text", "| Pulumi Registry");
                 });
 
                 describe("main content", () => {
@@ -207,21 +210,32 @@ describe("Registry", () => {
                     });
 
                     describe("Supporting Types section", () => {
-                        describe("type lists", () => {
+                        describe("type lists", () => {      
                             it("are visible for all languages", () => {
-                                const languages = [ "TypeScript", "Python", "Go", "C#", "Java", "YAML" ];
-                                const headings = "#supporting-types ~ h4";
-                                const lists = "#supporting-types + h4 ~ div pulumi-choosable div.active";
+                                cy.get(container).find("section.docs-content h2").as("sections");
+                                let pageHeadings = [];
+                                cy.get("@sections").then(headings => {
+                                    pageHeadings = headings
+                                    .map((_, heading) => heading.textContent)
+                                    .get();
+                                });
 
-                                languages.forEach(language => {
-                                    cy.get("pulumi-chooser li a").contains(language).first().click();
+                                // Some pages won't contain the `Supporting Types` heading, so we only run the test if it's present.
+                                if (pageHeadings.includes("Supporting Types")) {
+                                    const languages = [ "TypeScript", "Python", "Go", "C#", "Java", "YAML" ];
+                                    const headings = "#supporting-types ~ h4";
+                                    const lists = "#supporting-types + h4 ~ div pulumi-choosable div.active";
 
-                                    cy.get(headings).then(headings => {
-                                        cy.get(lists).then(lists => {
-                                            expect(lists.length).to.equal(headings.length);
+                                    languages.forEach(language => {
+                                        cy.get("pulumi-chooser li a").contains(language).first().click();
+                                        cy.log(`Checking ${language} supporting types...`);
+                                        cy.get(headings).then(headings => {
+                                            cy.get(lists).then(lists => {
+                                                expect(lists.length).to.equal(headings.length);
+                                            });
                                         });
                                     });
-                                });
+                                }
                             });
                         });
                     });

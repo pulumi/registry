@@ -318,7 +318,7 @@ All configuration parameters are optional.
 | `disablePulumiPartnerId` | This will disable the Pulumi Partner ID which is used if a custom `partnerId` isn't specified. It can also be sourced from the `ARM_DISABLE_PULUMI_PARTNER_ID` environment variable. |
 | `environment` | The cloud environment to use. It can also be sourced from the ARM_ENVIRONMENT environment variable. Supported values are: `public` (default), `usgovernment`, `china`. |
 | `location` | The location to use. ResourceGroups will consult this property for a default location, if one was not supplied explicitly when defining the resource. |
-| `metadataHost` | The REST endpoint to retrieve an MSI token from. Pulumi will attempt to discover this automatically but it can be specified manually here. It can also be sourced from the `ARM_METADATA_HOSTNAME` environment variable. |
+| `metadataHost` | The REST endpoint for the Azure Instance Metadata Service. Pulumi will attempt to discover this automatically but it can be specified manually here. It can also be sourced from the `ARM_METADATA_HOSTNAME` environment variable. |
 | `msiEndpoint` | The REST endpoint to retrieve an MSI token from. Pulumi will attempt to discover this automatically but it can be specified manually here. It can also be sourced from the `ARM_MSI_ENDPOINT` environment variable. |
 | `oidcRequestToken` | Your cloud service or provider’s bearer token to exchange for an OIDC ID token. It can also be sourced from the `ARM_OIDC_REQUEST_TOKEN` environment variable. |
 | `oidcRequestUrl` | The token exchange URL for OIDC authentication. It can also be sourced from the `ARM_OIDC_REQUEST_URL` environment variable. |

@@ -173,7 +173,7 @@
       "schemaFile": "schema.json"
     },
     {
-      "repoSlug": "twingate-labs/pulumi-twingate",
+      "repoSlug": "twingate/pulumi-twingate",
       "schemaFile": "provider/cmd/pulumi-resource-twingate/schema.json"
     },
     {

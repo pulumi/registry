@@ -10,5 +10,5 @@ publisher: lbrlabs
 repo_url: https://github.com/lbrlabs/pulumi-lbrlabs-eks
 schema_file_path: schema.yaml
 title: LBr Labs EKS
-updated_on: 1712602664
-version: v0.14.0
+updated_on: 1712781712
+version: v0.15.0

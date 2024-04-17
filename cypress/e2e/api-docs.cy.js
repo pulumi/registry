@@ -208,13 +208,8 @@ describe("Registry", () => {
 
                     describe("Lookup section", () => {
                         it("renders an example for all languages", () => {
-                            // Markup structure still TBD.
-                            // https://github.com/pulumi/pulumi/issues/14675
-                            cy.get(container)
-                                .find("#look-up")
-                                // .find("pulumi-choosable")
-                                .should("exist");
-
+                            // Should contain a code example.
+                            cy.get("#look-up + p + div > pulumi-chooser").should("exist");
                         });
                     });
 

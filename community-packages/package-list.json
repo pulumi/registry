@@ -311,6 +311,10 @@
     {
       "repoSlug": "pulumiverse/pulumi-fortios",
       "schemaFile": "provider/cmd/pulumi-resource-fortios/schema.json"
+    },
+    {
+      "repoSlug": "genesiscloud/pulumi-genesiscloud",
+      "schemaFile": "provider/cmd/pulumi-resource-genesiscloud/schema.json"
     }
   ]
 }

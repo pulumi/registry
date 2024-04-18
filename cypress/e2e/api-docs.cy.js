@@ -8,7 +8,7 @@ describe("Registry", () => {
     describe("API docs", { testIsolation: false }, () => {
 
         const resources = [
-            // [ "aws.lambda.Function", "lambda/function" ],
+            [ "aws.lambda.Function", "lambda/function" ],
             [ "aws.s3.Bucket", "s3/bucket" ],
             [ "aws.iam.Role", "iam/role" ],
             [ "aws.ec2.Instance", "ec2/instance" ],

@@ -144,7 +144,6 @@ describe("Registry", () => {
                     });
 
                     describe("Examples section", () => {
-                        const examplesContainer = "#example-usage"
                         it("contains at least one example", () => {
                             cy.get(container)
                                 .find("h2 ~ h3")

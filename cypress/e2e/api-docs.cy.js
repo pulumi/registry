@@ -8,56 +8,56 @@ describe("Registry", () => {
     describe("API docs", { testIsolation: false }, () => {
 
         const resources = [
-            [ "aws.lambda.Function", "lambda/function" ],
-            // [ "aws.s3.Bucket", "s3/bucket" ],
-            // [ "aws.iam.Role", "iam/role" ],
-            // [ "aws.ec2.Instance", "ec2/instance" ],
-            // [ "aws.rds.Instance", "rds/instance" ],
-            // [ "aws.ec2.SecurityGroup", "ec2/securitygroup" ],
-            // [ "kubernetes.helm.sh.v3.Chart", "helm/v3/chart", "kubernetes.helm.sh/v3.Chart" ],
-            // [ "aws.ec2.Vpc", "ec2/vpc" ],
-            // [ "kubernetes.helm.sh.v3.Release", "helm/v3/release", "kubernetes.helm.sh/v3.Release" ],
-            // [ "aws.alb.LoadBalancer", "alb/loadbalancer", ],
-            // [ "aws.cloudfront.Distribution", "cloudfront/distribution" ],
-            // [ "aws.ecs.TaskDefinition", "ecs/taskdefinition" ],
-            // [ "aws.route53.Record", "route53/record" ],
-            // [ "aws.ec2.LaunchTemplate", "ec2/launchtemplate" ],
-            // [ "gcp.storage.Bucket", "storage/bucket" ],
-            // [ "kubernetes.apps.v1.Deployment ", "apps/v1/deployment", "kubernetes.apps/v1.Deployment" ],
-            // [ "aws.rds.Cluster", "rds/cluster" ],
-            // [ "aws.iam.Policy", "iam/policy" ],
-            // [ "aws.eks.Cluster", "eks/cluster" ],
-            // [ "azure-native.storage.StorageAccount", "storage/storageaccount" ],
-            // [ "gcp.serviceaccount.Account", "serviceaccount/account" ],
-            // [ "aws.secretsmanager.Secret", "secretsmanager/secret" ],
-            // [ "aws.ec2.Subnet", "ec2/subnet" ],
-            // [ "kubernetes.networking.k8s.io.v1.Ingress", "networking/v1/ingress", "kubernetes.networking.k8s.io/v1.Ingress" ],
-            // [ "aws.dynamodb.Table", "dynamodb/table" ],
-            // [ "kubernetes.autoscaling.v2beta2.HorizontalPodAutoscaler", "autoscaling/v2beta2/horizontalpodautoscaler", "kubernetes.autoscaling/v2beta2.HorizontalPodAutoscaler" ],
-            // [ "aws.ecs.Service", "ecs/service" ],
-            // [ "aws.acm.Certificate", "acm/certificate" ],
-            // [ "aws.apigateway.RestApi", "apigateway/restapi" ],
-            // [ "gcp.container.Cluster", "container/cluster" ],
-            // [ "aws.autoscaling.Group", "autoscaling/group" ],
-            // [ "gcp.cloudrun.Service", "cloudrun/service" ],
-            // [ "azure-native.resources.ResourceGroup", "resources/resourcegroup" ],
-            // [ "aws.iam.RolePolicyAttachment ", "iam/rolepolicyattachment" ],
-            // [ "azure-native.web.WebApp ", "web/webapp" ],
-            // [ "aws.lb.TargetGroup", "lb/targetgroup" ],
-            // [ "awsx.ec2.Vpc", "ec2/vpc" ],
-            // [ "kubernetes.core.v1.Secret", "core/v1/secret", "kubernetes.core/v1.Secret" ],
-            // [ "aws.sqs.Queue", "sqs/queue" ],
-            // [ "gcp.compute.Instance", "compute/instance" ],
-            // [ "awsx.ecs.FargateService", "ecs/fargateservice" ],
-            // [ "kubernetes.yaml.ConfigFile", "yaml/configfile" ],
-            // [ "aws.alb.Listener", "alb/listener" ],
-            // [ "aws.eks.NodeGroup", "eks/nodegroup" ],
-            // [ "aws.ecs.Cluster", "ecs/cluster" ],
-            // [ "aws.iam.getPolicyDocument", "iam/getpolicydocument" ],
-            // [ "aws.s3.BucketPolicy", "s3/bucketpolicy" ],
-            // [ "aws.cloudwatch.MetricAlarm", "cloudwatch/metricalarm" ],
-            // [ "azure-native.keyvault.Vault ", "keyvault/vault" ],
-            // [ "aws.sns.Topic", "sns/topic" ],
+            // [ "aws.lambda.Function", "lambda/function" ],
+            [ "aws.s3.Bucket", "s3/bucket" ],
+            [ "aws.iam.Role", "iam/role" ],
+            [ "aws.ec2.Instance", "ec2/instance" ],
+            [ "aws.rds.Instance", "rds/instance" ],
+            [ "aws.ec2.SecurityGroup", "ec2/securitygroup" ],
+            [ "kubernetes.helm.sh.v3.Chart", "helm/v3/chart", "kubernetes.helm.sh/v3.Chart" ],
+            [ "aws.ec2.Vpc", "ec2/vpc" ],
+            [ "kubernetes.helm.sh.v3.Release", "helm/v3/release", "kubernetes.helm.sh/v3.Release" ],
+            [ "aws.alb.LoadBalancer", "alb/loadbalancer", ],
+            [ "aws.cloudfront.Distribution", "cloudfront/distribution" ],
+            [ "aws.ecs.TaskDefinition", "ecs/taskdefinition" ],
+            [ "aws.route53.Record", "route53/record" ],
+            [ "aws.ec2.LaunchTemplate", "ec2/launchtemplate" ],
+            [ "gcp.storage.Bucket", "storage/bucket" ],
+            [ "kubernetes.apps.v1.Deployment ", "apps/v1/deployment", "kubernetes.apps/v1.Deployment" ],
+            [ "aws.rds.Cluster", "rds/cluster" ],
+            [ "aws.iam.Policy", "iam/policy" ],
+            [ "aws.eks.Cluster", "eks/cluster" ],
+            [ "azure-native.storage.StorageAccount", "storage/storageaccount" ],
+            [ "gcp.serviceaccount.Account", "serviceaccount/account" ],
+            [ "aws.secretsmanager.Secret", "secretsmanager/secret" ],
+            [ "aws.ec2.Subnet", "ec2/subnet" ],
+            [ "kubernetes.networking.k8s.io.v1.Ingress", "networking/v1/ingress", "kubernetes.networking.k8s.io/v1.Ingress" ],
+            [ "aws.dynamodb.Table", "dynamodb/table" ],
+            [ "kubernetes.autoscaling.v2beta2.HorizontalPodAutoscaler", "autoscaling/v2beta2/horizontalpodautoscaler", "kubernetes.autoscaling/v2beta2.HorizontalPodAutoscaler" ],
+            [ "aws.ecs.Service", "ecs/service" ],
+            [ "aws.acm.Certificate", "acm/certificate" ],
+            [ "aws.apigateway.RestApi", "apigateway/restapi" ],
+            [ "gcp.container.Cluster", "container/cluster" ],
+            [ "aws.autoscaling.Group", "autoscaling/group" ],
+            [ "gcp.cloudrun.Service", "cloudrun/service" ],
+            [ "azure-native.resources.ResourceGroup", "resources/resourcegroup" ],
+            [ "aws.iam.RolePolicyAttachment ", "iam/rolepolicyattachment" ],
+            [ "azure-native.web.WebApp ", "web/webapp" ],
+            [ "aws.lb.TargetGroup", "lb/targetgroup" ],
+            [ "awsx.ec2.Vpc", "ec2/vpc" ],
+            [ "kubernetes.core.v1.Secret", "core/v1/secret", "kubernetes.core/v1.Secret" ],
+            [ "aws.sqs.Queue", "sqs/queue" ],
+            [ "gcp.compute.Instance", "compute/instance" ],
+            [ "awsx.ecs.FargateService", "ecs/fargateservice" ],
+            [ "kubernetes.yaml.ConfigFile", "yaml/configfile" ],
+            [ "aws.alb.Listener", "alb/listener" ],
+            [ "aws.eks.NodeGroup", "eks/nodegroup" ],
+            [ "aws.ecs.Cluster", "ecs/cluster" ],
+            [ "aws.iam.getPolicyDocument", "iam/getpolicydocument" ],
+            [ "aws.s3.BucketPolicy", "s3/bucketpolicy" ],
+            [ "aws.cloudwatch.MetricAlarm", "cloudwatch/metricalarm" ],
+            [ "azure-native.keyvault.Vault ", "keyvault/vault" ],
+            [ "aws.sns.Topic", "sns/topic" ],
         ];
 
         resources.forEach(resource => {
@@ -148,29 +148,26 @@ describe("Registry", () => {
                         it("contains at least one example", () => {
                             cy.get(container)
                                 .find("h2 ~ h3")
-                                .should("have.length.of.at.least", 4);
+                                .should("have.length.of.at.least", 1);
                         });
 
                         describe("examples", () => {
-                            it.skip("all have language choosers", () => {
-                                cy.get(examplesContainer)
-                                    .filter("h3").then()
-                                    .should("have.length.of.at.least", 1);
-                                // Markup structure still TBD.
-                                // https://github.com/pulumi/pulumi-aws/issues/2624
+                            it("all have language choosers", () => {
+                                cy.get("#example-usage + h3 + div > pulumi-chooser")
                             });
                         });
                     });
 
                     describe("Create section", () => {
-                        it.skip("renders a minimal example in all languages", () => {
-                            // Markup structure still TBD.
-                            // https://github.com/pulumi/pulumi/issues/14675
+                        it("renders a minimal example in all languages", () => {
+                          // renders the minimal example right after the `Constructor syntax` heading
+                          cy.get(container).find("#constructor-syntax + div > pulumi-chooser")
                         });
 
                         it.skip("renders a full example in all languages", () => {
-                            // Markup structure still TBD.
-                            // https://github.com/pulumi/pulumi/issues/14675
+                          // We may disable this section for pages that fail to convert, so some
+                          // examples may not have this section once this is done.
+                          // https://github.com/pulumi/registry/issues/4320
                         });
                     });
 
@@ -245,9 +242,10 @@ describe("Registry", () => {
                     });
 
                     describe("Import section", () => {
-                        it.skip("identifies required parameters", () => {
-                            // Details here are still TBD.
-                            // https://github.com/pulumi/registry/issues/3039
+                        it("has description text below heading", () => {
+                            cy.get(container).find("#import + p").then(p => {
+                                expect(p).to.not.be.empty;
+                            });
                         });
                     });
 

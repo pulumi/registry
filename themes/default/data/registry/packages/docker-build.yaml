@@ -1,0 +1,14 @@
+category: Infrastructure
+component: false
+description: A Pulumi package for building modern Docker images with BuildKit
+featured: false
+logo_url: "https://www.pulumi.com/logos/pkg/docker.svg"
+name: docker-build
+native: true
+package_status: public_preview
+publisher: Pulumi
+repo_url: https://github.com/pulumi/pulumi-docker-build
+schema_file_path: provider/cmd/pulumi-resource-docker-build/schema.json
+title: Docker Build
+updated_on: 1713809370
+version: v0.1.0

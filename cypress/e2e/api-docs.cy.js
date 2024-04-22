@@ -151,22 +151,22 @@ describe("Registry", () => {
                         });
 
                         describe("examples", () => {
-                            it.skip("all have language choosers", () => {
-                                // Markup structure still TBD.
-                                // https://github.com/pulumi/pulumi-aws/issues/2624
+                            it("all have language choosers", () => {
+                                cy.get("#example-usage + h3 + div > pulumi-chooser")
                             });
                         });
                     });
 
                     describe("Create section", () => {
-                        it.skip("renders a minimal example in all languages", () => {
-                            // Markup structure still TBD.
-                            // https://github.com/pulumi/pulumi/issues/14675
+                        it("renders a minimal example in all languages", () => {
+                            // renders the minimal example right after the `Constructor syntax` heading
+                            cy.get(container).find("#constructor-syntax + div > pulumi-chooser")
                         });
 
                         it.skip("renders a full example in all languages", () => {
-                            // Markup structure still TBD.
-                            // https://github.com/pulumi/pulumi/issues/14675
+                            // We may disable this section for pages that fail to convert, so some
+                            // examples may not have this section once this is done.
+                            // https://github.com/pulumi/registry/issues/4320
                         });
                     });
 
@@ -203,9 +203,9 @@ describe("Registry", () => {
                     });
 
                     describe("Lookup section", () => {
-                        it.skip("renders an example for all languages", () => {
-                            // Markup structure still TBD.
-                            // https://github.com/pulumi/pulumi/issues/14675
+                        it("renders an example for all languages", () => {
+                            // Should contain a code example.
+                            cy.get("#look-up + p + div > pulumi-chooser").should("exist");
                         });
                     });
 
@@ -241,9 +241,10 @@ describe("Registry", () => {
                     });
 
                     describe("Import section", () => {
-                        it.skip("identifies required parameters", () => {
-                            // Details here are still TBD.
-                            // https://github.com/pulumi/registry/issues/3039
+                        it("has description text below heading", () => {
+                            cy.get(container).find("#import + p").then(p => {
+                                expect(p).to.not.be.empty;
+                            });
                         });
                     });
 

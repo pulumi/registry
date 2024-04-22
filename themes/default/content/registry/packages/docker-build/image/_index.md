@@ -222,7 +222,7 @@ const v3Migrated = new dockerbuild.Image("v3-to-buildx", {
     context: {
         location: "../app",
     },
-    targets: ["mytarget"],
+    target: "mytarget",
     buildArgs: {
         MY_BUILD_ARG: "foo",
     },
@@ -281,7 +281,7 @@ const v4Migrated = new dockerbuild.Image("v4-to-buildx", {
     context: {
         location: "../app",
     },
-    targets: ["mytarget"],
+    target: "mytarget",
     buildArgs: {
         MY_BUILD_ARG: "foo",
     },
@@ -2787,6 +2787,10 @@ runtime: yaml
 
 
 ## Create Image Resource {#create}
+
+Resources are created with functions called constructors. To learn more about declaring and configuring resources, see [Resources](/docs/concepts/resources/).
+
+### Constructor syntax
 <div>
 <pulumi-chooser type="language" options="typescript,python,go,csharp,java,yaml"></pulumi-chooser>
 </div>
@@ -2794,13 +2798,18 @@ runtime: yaml
 
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
-<div class="highlight"><pre class="chroma"><code class="language-typescript" data-lang="typescript"><span class="k">new </span><span class="nx">Image</span><span class="p">(</span><span class="nx">name</span><span class="p">:</span> <span class="nx">string</span><span class="p">,</span> <span class="nx">args</span><span class="p">?:</span> <span class="nx"><a href="#inputs">ImageArgs</a></span><span class="p">,</span> <span class="nx">opts</span><span class="p">?:</span> <span class="nx"><a href="/docs/reference/pkg/nodejs/pulumi/pulumi/#CustomResourceOptions">CustomResourceOptions</a></span><span class="p">);</span></code></pre></div>
-</pulumi-choosable>
+<div class="no-copy"><div class="highlight"><pre class="chroma"><code class="language-typescript" data-lang="typescript"><span class="k">new </span><span class="nx">Image</span><span class="p">(</span><span class="nx">name</span><span class="p">:</span> <span class="nx">string</span><span class="p">,</span> <span class="nx">args</span><span class="p">?:</span> <span class="nx"><a href="#inputs">ImageArgs</a></span><span class="p">,</span> <span class="nx">opts</span><span class="p">?:</span> <span class="nx"><a href="/docs/reference/pkg/nodejs/pulumi/pulumi/#CustomResourceOptions">CustomResourceOptions</a></span><span class="p">);</span></code></pre></div>
+</div></pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="python">
-<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class=nd>@overload</span>
+<div class="no-copy"><div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class=nd>@overload</span>
+<span class="k">def </span><span class="nx">Image</span><span class="p">(</span><span class="nx">resource_name</span><span class="p">:</span> <span class="nx">str</span><span class="p">,</span>
+          <span class="nx">args</span><span class="p">:</span> <span class="nx"><a href="#inputs">Optional[ImageArgs]</a></span> = None<span class="p">,</span>
+          <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.ResourceOptions">Optional[ResourceOptions]</a></span> = None<span class="p">)</span>
+<span></span>
+<span class=nd>@overload</span>
 <span class="k">def </span><span class="nx">Image</span><span class="p">(</span><span class="nx">resource_name</span><span class="p">:</span> <span class="nx">str</span><span class="p">,</span>
           <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.ResourceOptions">Optional[ResourceOptions]</a></span> = None<span class="p">,</span>
           <span class="nx">add_hosts</span><span class="p">:</span> <span class="nx">Optional[Sequence[str]]</span> = None<span class="p">,</span>
@@ -2824,44 +2833,42 @@ runtime: yaml
           <span class="nx">secrets</span><span class="p">:</span> <span class="nx">Optional[Mapping[str, str]]</span> = None<span class="p">,</span>
           <span class="nx">ssh</span><span class="p">:</span> <span class="nx">Optional[Sequence[SSHArgs]]</span> = None<span class="p">,</span>
           <span class="nx">tags</span><span class="p">:</span> <span class="nx">Optional[Sequence[str]]</span> = None<span class="p">,</span>
-          <span class="nx">target</span><span class="p">:</span> <span class="nx">Optional[str]</span> = None<span class="p">)</span>
-<span class=nd>@overload</span>
-<span class="k">def </span><span class="nx">Image</span><span class="p">(</span><span class="nx">resource_name</span><span class="p">:</span> <span class="nx">str</span><span class="p">,</span>
-          <span class="nx">args</span><span class="p">:</span> <span class="nx"><a href="#inputs">Optional[ImageArgs]</a></span> = None<span class="p">,</span>
-          <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.ResourceOptions">Optional[ResourceOptions]</a></span> = None<span class="p">)</span></code></pre></div>
-</pulumi-choosable>
+          <span class="nx">target</span><span class="p">:</span> <span class="nx">Optional[str]</span> = None<span class="p">)</span></code></pre></div>
+</div></pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="go">
-<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="k">func </span><span class="nx">NewImage</span><span class="p">(</span><span class="nx">ctx</span><span class="p"> *</span><span class="nx"><a href="https://pkg.go.dev/github.com/pulumi/pulumi/sdk/v3/go/pulumi?tab=doc#Context">Context</a></span><span class="p">,</span> <span class="nx">name</span><span class="p"> </span><span class="nx">string</span><span class="p">,</span> <span class="nx">args</span><span class="p"> *</span><span class="nx"><a href="#inputs">ImageArgs</a></span><span class="p">,</span> <span class="nx">opts</span><span class="p"> ...</span><span class="nx"><a href="https://pkg.go.dev/github.com/pulumi/pulumi/sdk/v3/go/pulumi?tab=doc#ResourceOption">ResourceOption</a></span><span class="p">) (*<span class="nx">Image</span>, error)</span></code></pre></div>
-</pulumi-choosable>
+<div class="no-copy"><div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="k">func </span><span class="nx">NewImage</span><span class="p">(</span><span class="nx">ctx</span><span class="p"> *</span><span class="nx"><a href="https://pkg.go.dev/github.com/pulumi/pulumi/sdk/v3/go/pulumi?tab=doc#Context">Context</a></span><span class="p">,</span> <span class="nx">name</span><span class="p"> </span><span class="nx">string</span><span class="p">,</span> <span class="nx">args</span><span class="p"> *</span><span class="nx"><a href="#inputs">ImageArgs</a></span><span class="p">,</span> <span class="nx">opts</span><span class="p"> ...</span><span class="nx"><a href="https://pkg.go.dev/github.com/pulumi/pulumi/sdk/v3/go/pulumi?tab=doc#ResourceOption">ResourceOption</a></span><span class="p">) (*<span class="nx">Image</span>, error)</span></code></pre></div>
+</div></pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="csharp">
-<div class="highlight"><pre class="chroma"><code class="language-csharp" data-lang="csharp"><span class="k">public </span><span class="nx">Image</span><span class="p">(</span><span class="nx">string</span><span class="p"> </span><span class="nx">name<span class="p">,</span> <span class="nx"><a href="#inputs">ImageArgs</a></span><span class="p">? </span><span class="nx">args = null<span class="p">,</span> <span class="nx"><a href="/docs/reference/pkg/dotnet/Pulumi/Pulumi.CustomResourceOptions.html">CustomResourceOptions</a></span><span class="p">? </span><span class="nx">opts = null<span class="p">)</span></code></pre></div>
-</pulumi-choosable>
+<div class="no-copy"><div class="highlight"><pre class="chroma"><code class="language-csharp" data-lang="csharp"><span class="k">public </span><span class="nx">Image</span><span class="p">(</span><span class="nx">string</span><span class="p"> </span><span class="nx">name<span class="p">,</span> <span class="nx"><a href="#inputs">ImageArgs</a></span><span class="p">? </span><span class="nx">args = null<span class="p">,</span> <span class="nx"><a href="/docs/reference/pkg/dotnet/Pulumi/Pulumi.CustomResourceOptions.html">CustomResourceOptions</a></span><span class="p">? </span><span class="nx">opts = null<span class="p">)</span></code></pre></div>
+</div></pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="java">
-<div class="highlight"><pre class="chroma">
+<div class="no-copy"><div class="highlight"><pre class="chroma">
 <code class="language-java" data-lang="java"><span class="k">public </span><span class="nx">Image</span><span class="p">(</span><span class="nx">String</span><span class="p"> </span><span class="nx">name<span class="p">,</span> <span class="nx"><a href="#inputs">ImageArgs</a></span><span class="p"> </span><span class="nx">args<span class="p">)</span>
 <span class="k">public </span><span class="nx">Image</span><span class="p">(</span><span class="nx">String</span><span class="p"> </span><span class="nx">name<span class="p">,</span> <span class="nx"><a href="#inputs">ImageArgs</a></span><span class="p"> </span><span class="nx">args<span class="p">,</span> <span class="nx">CustomResourceOptions</span><span class="p"> </span><span class="nx">options<span class="p">)</span>
-</code></pre></div>
+</code></pre></div></div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="yaml">
-<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml">type: <span class="nx">docker-build:Image</span><span class="p"></span>
+<div class="no-copy"><div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml">type: <span class="nx">docker-build:Image</span><span class="p"></span>
 <span class="p">properties</span><span class="p">: </span><span class="c">#&nbsp;The arguments to resource properties.</span>
 <span class="p"></span><span class="p">options</span><span class="p">: </span><span class="c">#&nbsp;Bag of options to control resource&#39;s behavior.</span>
 <span class="p"></span>
-</code></pre></div>
+</code></pre></div></div>
 </pulumi-choosable>
 </div>
+
+#### Parameters
 
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
@@ -2998,6 +3005,1326 @@ runtime: yaml
 
 </pulumi-choosable>
 </div>
+
+
+
+### Example
+
+The following reference example uses placeholder values for all [input properties](#inputs).
+<div>
+<pulumi-chooser type="language" options="typescript,python,go,csharp,java,yaml"></pulumi-chooser>
+</div>
+
+
+<div>
+<pulumi-choosable type="language" values="csharp">
+
+```csharp
+var imageResource = new DockerBuild.Image("imageResource", new()
+{
+    AddHosts = new[]
+    {
+        "string",
+    },
+    BuildArgs = 
+    {
+        { "string", "string" },
+    },
+    BuildOnPreview = false,
+    Builder = new DockerBuild.Inputs.BuilderConfigArgs
+    {
+        Name = "string",
+    },
+    CacheFrom = new[]
+    {
+        new DockerBuild.Inputs.CacheFromArgs
+        {
+            Azblob = new DockerBuild.Inputs.CacheFromAzureBlobArgs
+            {
+                Name = "string",
+                AccountUrl = "string",
+                SecretAccessKey = "string",
+            },
+            Disabled = false,
+            Gha = new DockerBuild.Inputs.CacheFromGitHubActionsArgs
+            {
+                Scope = "string",
+                Token = "string",
+                Url = "string",
+            },
+            Local = new DockerBuild.Inputs.CacheFromLocalArgs
+            {
+                Src = "string",
+                Digest = "string",
+            },
+            Raw = "string",
+            Registry = new DockerBuild.Inputs.CacheFromRegistryArgs
+            {
+                Ref = "string",
+            },
+            S3 = new DockerBuild.Inputs.CacheFromS3Args
+            {
+                Bucket = "string",
+                Region = "string",
+                AccessKeyId = "string",
+                BlobsPrefix = "string",
+                EndpointUrl = "string",
+                ManifestsPrefix = "string",
+                Name = "string",
+                SecretAccessKey = "string",
+                SessionToken = "string",
+                UsePathStyle = false,
+            },
+        },
+    },
+    CacheTo = new[]
+    {
+        new DockerBuild.Inputs.CacheToArgs
+        {
+            Azblob = new DockerBuild.Inputs.CacheToAzureBlobArgs
+            {
+                Name = "string",
+                AccountUrl = "string",
+                IgnoreError = false,
+                Mode = DockerBuild.CacheMode.Min,
+                SecretAccessKey = "string",
+            },
+            Disabled = false,
+            Gha = new DockerBuild.Inputs.CacheToGitHubActionsArgs
+            {
+                IgnoreError = false,
+                Mode = DockerBuild.CacheMode.Min,
+                Scope = "string",
+                Token = "string",
+                Url = "string",
+            },
+            Inline = null,
+            Local = new DockerBuild.Inputs.CacheToLocalArgs
+            {
+                Dest = "string",
+                Compression = DockerBuild.CompressionType.Gzip,
+                CompressionLevel = 0,
+                ForceCompression = false,
+                IgnoreError = false,
+                Mode = DockerBuild.CacheMode.Min,
+            },
+            Raw = "string",
+            Registry = new DockerBuild.Inputs.CacheToRegistryArgs
+            {
+                Ref = "string",
+                Compression = DockerBuild.CompressionType.Gzip,
+                CompressionLevel = 0,
+                ForceCompression = false,
+                IgnoreError = false,
+                ImageManifest = false,
+                Mode = DockerBuild.CacheMode.Min,
+                OciMediaTypes = false,
+            },
+            S3 = new DockerBuild.Inputs.CacheToS3Args
+            {
+                Bucket = "string",
+                Region = "string",
+                AccessKeyId = "string",
+                BlobsPrefix = "string",
+                EndpointUrl = "string",
+                IgnoreError = false,
+                ManifestsPrefix = "string",
+                Mode = DockerBuild.CacheMode.Min,
+                Name = "string",
+                SecretAccessKey = "string",
+                SessionToken = "string",
+                UsePathStyle = false,
+            },
+        },
+    },
+    Context = new DockerBuild.Inputs.BuildContextArgs
+    {
+        Location = "string",
+        Named = 
+        {
+            { "string", new DockerBuild.Inputs.ContextArgs
+            {
+                Location = "string",
+            } },
+        },
+    },
+    Dockerfile = new DockerBuild.Inputs.DockerfileArgs
+    {
+        Inline = "string",
+        Location = "string",
+    },
+    Exec = false,
+    Exports = new[]
+    {
+        new DockerBuild.Inputs.ExportArgs
+        {
+            Cacheonly = null,
+            Disabled = false,
+            Docker = new DockerBuild.Inputs.ExportDockerArgs
+            {
+                Annotations = 
+                {
+                    { "string", "string" },
+                },
+                Compression = DockerBuild.CompressionType.Gzip,
+                CompressionLevel = 0,
+                Dest = "string",
+                ForceCompression = false,
+                Names = new[]
+                {
+                    "string",
+                },
+                OciMediaTypes = false,
+                Tar = false,
+            },
+            Image = new DockerBuild.Inputs.ExportImageArgs
+            {
+                Annotations = 
+                {
+                    { "string", "string" },
+                },
+                Compression = DockerBuild.CompressionType.Gzip,
+                CompressionLevel = 0,
+                DanglingNamePrefix = "string",
+                ForceCompression = false,
+                Insecure = false,
+                NameCanonical = false,
+                Names = new[]
+                {
+                    "string",
+                },
+                OciMediaTypes = false,
+                Push = false,
+                PushByDigest = false,
+                Store = false,
+                Unpack = false,
+            },
+            Local = new DockerBuild.Inputs.ExportLocalArgs
+            {
+                Dest = "string",
+            },
+            Oci = new DockerBuild.Inputs.ExportOCIArgs
+            {
+                Annotations = 
+                {
+                    { "string", "string" },
+                },
+                Compression = DockerBuild.CompressionType.Gzip,
+                CompressionLevel = 0,
+                Dest = "string",
+                ForceCompression = false,
+                Names = new[]
+                {
+                    "string",
+                },
+                OciMediaTypes = false,
+                Tar = false,
+            },
+            Raw = "string",
+            Registry = new DockerBuild.Inputs.ExportRegistryArgs
+            {
+                Annotations = 
+                {
+                    { "string", "string" },
+                },
+                Compression = DockerBuild.CompressionType.Gzip,
+                CompressionLevel = 0,
+                DanglingNamePrefix = "string",
+                ForceCompression = false,
+                Insecure = false,
+                NameCanonical = false,
+                Names = new[]
+                {
+                    "string",
+                },
+                OciMediaTypes = false,
+                Push = false,
+                PushByDigest = false,
+                Store = false,
+                Unpack = false,
+            },
+            Tar = new DockerBuild.Inputs.ExportTarArgs
+            {
+                Dest = "string",
+            },
+        },
+    },
+    Labels = 
+    {
+        { "string", "string" },
+    },
+    Load = false,
+    Network = DockerBuild.NetworkMode.@Default,
+    NoCache = false,
+    Platforms = new[]
+    {
+        DockerBuild.Platform.Darwin_386,
+    },
+    Pull = false,
+    Push = false,
+    Registries = new[]
+    {
+        new DockerBuild.Inputs.RegistryArgs
+        {
+            Address = "string",
+            Password = "string",
+            Username = "string",
+        },
+    },
+    Secrets = 
+    {
+        { "string", "string" },
+    },
+    Ssh = new[]
+    {
+        new DockerBuild.Inputs.SSHArgs
+        {
+            Id = "string",
+            Paths = new[]
+            {
+                "string",
+            },
+        },
+    },
+    Tags = new[]
+    {
+        "string",
+    },
+    Target = "string",
+});
+```
+
+</pulumi-choosable>
+</div>
+
+
+<div>
+<pulumi-choosable type="language" values="go">
+
+```go
+example, err := dockerbuild.NewImage(ctx, "imageResource", &dockerbuild.ImageArgs{
+	AddHosts: pulumi.StringArray{
+		pulumi.String("string"),
+	},
+	BuildArgs: pulumi.StringMap{
+		"string": pulumi.String("string"),
+	},
+	BuildOnPreview: pulumi.Bool(false),
+	Builder: &dockerbuild.BuilderConfigArgs{
+		Name: pulumi.String("string"),
+	},
+	CacheFrom: dockerbuild.CacheFromArray{
+		&dockerbuild.CacheFromArgs{
+			Azblob: &dockerbuild.CacheFromAzureBlobArgs{
+				Name:            pulumi.String("string"),
+				AccountUrl:      pulumi.String("string"),
+				SecretAccessKey: pulumi.String("string"),
+			},
+			Disabled: pulumi.Bool(false),
+			Gha: &dockerbuild.CacheFromGitHubActionsArgs{
+				Scope: pulumi.String("string"),
+				Token: pulumi.String("string"),
+				Url:   pulumi.String("string"),
+			},
+			Local: &dockerbuild.CacheFromLocalArgs{
+				Src:    pulumi.String("string"),
+				Digest: pulumi.String("string"),
+			},
+			Raw: pulumi.String("string"),
+			Registry: &dockerbuild.CacheFromRegistryArgs{
+				Ref: pulumi.String("string"),
+			},
+			S3: &dockerbuild.CacheFromS3Args{
+				Bucket:          pulumi.String("string"),
+				Region:          pulumi.String("string"),
+				AccessKeyId:     pulumi.String("string"),
+				BlobsPrefix:     pulumi.String("string"),
+				EndpointUrl:     pulumi.String("string"),
+				ManifestsPrefix: pulumi.String("string"),
+				Name:            pulumi.String("string"),
+				SecretAccessKey: pulumi.String("string"),
+				SessionToken:    pulumi.String("string"),
+				UsePathStyle:    pulumi.Bool(false),
+			},
+		},
+	},
+	CacheTo: dockerbuild.CacheToArray{
+		&dockerbuild.CacheToArgs{
+			Azblob: &dockerbuild.CacheToAzureBlobArgs{
+				Name:            pulumi.String("string"),
+				AccountUrl:      pulumi.String("string"),
+				IgnoreError:     pulumi.Bool(false),
+				Mode:            dockerbuild.CacheModeMin,
+				SecretAccessKey: pulumi.String("string"),
+			},
+			Disabled: pulumi.Bool(false),
+			Gha: &dockerbuild.CacheToGitHubActionsArgs{
+				IgnoreError: pulumi.Bool(false),
+				Mode:        dockerbuild.CacheModeMin,
+				Scope:       pulumi.String("string"),
+				Token:       pulumi.String("string"),
+				Url:         pulumi.String("string"),
+			},
+			Inline: nil,
+			Local: &dockerbuild.CacheToLocalArgs{
+				Dest:             pulumi.String("string"),
+				Compression:      dockerbuild.CompressionTypeGzip,
+				CompressionLevel: pulumi.Int(0),
+				ForceCompression: pulumi.Bool(false),
+				IgnoreError:      pulumi.Bool(false),
+				Mode:             dockerbuild.CacheModeMin,
+			},
+			Raw: pulumi.String("string"),
+			Registry: &dockerbuild.CacheToRegistryArgs{
+				Ref:              pulumi.String("string"),
+				Compression:      dockerbuild.CompressionTypeGzip,
+				CompressionLevel: pulumi.Int(0),
+				ForceCompression: pulumi.Bool(false),
+				IgnoreError:      pulumi.Bool(false),
+				ImageManifest:    pulumi.Bool(false),
+				Mode:             dockerbuild.CacheModeMin,
+				OciMediaTypes:    pulumi.Bool(false),
+			},
+			S3: &dockerbuild.CacheToS3Args{
+				Bucket:          pulumi.String("string"),
+				Region:          pulumi.String("string"),
+				AccessKeyId:     pulumi.String("string"),
+				BlobsPrefix:     pulumi.String("string"),
+				EndpointUrl:     pulumi.String("string"),
+				IgnoreError:     pulumi.Bool(false),
+				ManifestsPrefix: pulumi.String("string"),
+				Mode:            dockerbuild.CacheModeMin,
+				Name:            pulumi.String("string"),
+				SecretAccessKey: pulumi.String("string"),
+				SessionToken:    pulumi.String("string"),
+				UsePathStyle:    pulumi.Bool(false),
+			},
+		},
+	},
+	Context: &dockerbuild.BuildContextArgs{
+		Location: pulumi.String("string"),
+		Named: dockerbuild.ContextMap{
+			"string": &dockerbuild.ContextArgs{
+				Location: pulumi.String("string"),
+			},
+		},
+	},
+	Dockerfile: &dockerbuild.DockerfileArgs{
+		Inline:   pulumi.String("string"),
+		Location: pulumi.String("string"),
+	},
+	Exec: pulumi.Bool(false),
+	Exports: dockerbuild.ExportArray{
+		&dockerbuild.ExportArgs{
+			Cacheonly: nil,
+			Disabled:  pulumi.Bool(false),
+			Docker: &dockerbuild.ExportDockerArgs{
+				Annotations: pulumi.StringMap{
+					"string": pulumi.String("string"),
+				},
+				Compression:      dockerbuild.CompressionTypeGzip,
+				CompressionLevel: pulumi.Int(0),
+				Dest:             pulumi.String("string"),
+				ForceCompression: pulumi.Bool(false),
+				Names: pulumi.StringArray{
+					pulumi.String("string"),
+				},
+				OciMediaTypes: pulumi.Bool(false),
+				Tar:           pulumi.Bool(false),
+			},
+			Image: &dockerbuild.ExportImageArgs{
+				Annotations: pulumi.StringMap{
+					"string": pulumi.String("string"),
+				},
+				Compression:        dockerbuild.CompressionTypeGzip,
+				CompressionLevel:   pulumi.Int(0),
+				DanglingNamePrefix: pulumi.String("string"),
+				ForceCompression:   pulumi.Bool(false),
+				Insecure:           pulumi.Bool(false),
+				NameCanonical:      pulumi.Bool(false),
+				Names: pulumi.StringArray{
+					pulumi.String("string"),
+				},
+				OciMediaTypes: pulumi.Bool(false),
+				Push:          pulumi.Bool(false),
+				PushByDigest:  pulumi.Bool(false),
+				Store:         pulumi.Bool(false),
+				Unpack:        pulumi.Bool(false),
+			},
+			Local: &dockerbuild.ExportLocalArgs{
+				Dest: pulumi.String("string"),
+			},
+			Oci: &dockerbuild.ExportOCIArgs{
+				Annotations: pulumi.StringMap{
+					"string": pulumi.String("string"),
+				},
+				Compression:      dockerbuild.CompressionTypeGzip,
+				CompressionLevel: pulumi.Int(0),
+				Dest:             pulumi.String("string"),
+				ForceCompression: pulumi.Bool(false),
+				Names: pulumi.StringArray{
+					pulumi.String("string"),
+				},
+				OciMediaTypes: pulumi.Bool(false),
+				Tar:           pulumi.Bool(false),
+			},
+			Raw: pulumi.String("string"),
+			Registry: &dockerbuild.ExportRegistryArgs{
+				Annotations: pulumi.StringMap{
+					"string": pulumi.String("string"),
+				},
+				Compression:        dockerbuild.CompressionTypeGzip,
+				CompressionLevel:   pulumi.Int(0),
+				DanglingNamePrefix: pulumi.String("string"),
+				ForceCompression:   pulumi.Bool(false),
+				Insecure:           pulumi.Bool(false),
+				NameCanonical:      pulumi.Bool(false),
+				Names: pulumi.StringArray{
+					pulumi.String("string"),
+				},
+				OciMediaTypes: pulumi.Bool(false),
+				Push:          pulumi.Bool(false),
+				PushByDigest:  pulumi.Bool(false),
+				Store:         pulumi.Bool(false),
+				Unpack:        pulumi.Bool(false),
+			},
+			Tar: &dockerbuild.ExportTarArgs{
+				Dest: pulumi.String("string"),
+			},
+		},
+	},
+	Labels: pulumi.StringMap{
+		"string": pulumi.String("string"),
+	},
+	Load:    pulumi.Bool(false),
+	Network: dockerbuild.NetworkModeDefault,
+	NoCache: pulumi.Bool(false),
+	Platforms: docker - build.PlatformArray{
+		dockerbuild.Platform_Darwin_386,
+	},
+	Pull: pulumi.Bool(false),
+	Push: pulumi.Bool(false),
+	Registries: dockerbuild.RegistryArray{
+		&dockerbuild.RegistryArgs{
+			Address:  pulumi.String("string"),
+			Password: pulumi.String("string"),
+			Username: pulumi.String("string"),
+		},
+	},
+	Secrets: pulumi.StringMap{
+		"string": pulumi.String("string"),
+	},
+	Ssh: dockerbuild.SSHArray{
+		&dockerbuild.SSHArgs{
+			Id: pulumi.String("string"),
+			Paths: pulumi.StringArray{
+				pulumi.String("string"),
+			},
+		},
+	},
+	Tags: pulumi.StringArray{
+		pulumi.String("string"),
+	},
+	Target: pulumi.String("string"),
+})
+```
+
+</pulumi-choosable>
+</div>
+
+
+<div>
+<pulumi-choosable type="language" values="java">
+
+```java
+var imageResource = new Image("imageResource", ImageArgs.builder()        
+    .addHosts("string")
+    .buildArgs(Map.of("string", "string"))
+    .buildOnPreview(false)
+    .builder(BuilderConfigArgs.builder()
+        .name("string")
+        .build())
+    .cacheFrom(CacheFromArgs.builder()
+        .azblob(CacheFromAzureBlobArgs.builder()
+            .name("string")
+            .accountUrl("string")
+            .secretAccessKey("string")
+            .build())
+        .disabled(false)
+        .gha(CacheFromGitHubActionsArgs.builder()
+            .scope("string")
+            .token("string")
+            .url("string")
+            .build())
+        .local(CacheFromLocalArgs.builder()
+            .src("string")
+            .digest("string")
+            .build())
+        .raw("string")
+        .registry(CacheFromRegistryArgs.builder()
+            .ref("string")
+            .build())
+        .s3(CacheFromS3Args.builder()
+            .bucket("string")
+            .region("string")
+            .accessKeyId("string")
+            .blobsPrefix("string")
+            .endpointUrl("string")
+            .manifestsPrefix("string")
+            .name("string")
+            .secretAccessKey("string")
+            .sessionToken("string")
+            .usePathStyle(false)
+            .build())
+        .build())
+    .cacheTo(CacheToArgs.builder()
+        .azblob(CacheToAzureBlobArgs.builder()
+            .name("string")
+            .accountUrl("string")
+            .ignoreError(false)
+            .mode("min")
+            .secretAccessKey("string")
+            .build())
+        .disabled(false)
+        .gha(CacheToGitHubActionsArgs.builder()
+            .ignoreError(false)
+            .mode("min")
+            .scope("string")
+            .token("string")
+            .url("string")
+            .build())
+        .inline()
+        .local(CacheToLocalArgs.builder()
+            .dest("string")
+            .compression("gzip")
+            .compressionLevel(0)
+            .forceCompression(false)
+            .ignoreError(false)
+            .mode("min")
+            .build())
+        .raw("string")
+        .registry(CacheToRegistryArgs.builder()
+            .ref("string")
+            .compression("gzip")
+            .compressionLevel(0)
+            .forceCompression(false)
+            .ignoreError(false)
+            .imageManifest(false)
+            .mode("min")
+            .ociMediaTypes(false)
+            .build())
+        .s3(CacheToS3Args.builder()
+            .bucket("string")
+            .region("string")
+            .accessKeyId("string")
+            .blobsPrefix("string")
+            .endpointUrl("string")
+            .ignoreError(false)
+            .manifestsPrefix("string")
+            .mode("min")
+            .name("string")
+            .secretAccessKey("string")
+            .sessionToken("string")
+            .usePathStyle(false)
+            .build())
+        .build())
+    .context(BuildContextArgs.builder()
+        .location("string")
+        .named(Map.of("string", Map.of("location", "string")))
+        .build())
+    .dockerfile(DockerfileArgs.builder()
+        .inline("string")
+        .location("string")
+        .build())
+    .exec(false)
+    .exports(ExportArgs.builder()
+        .cacheonly()
+        .disabled(false)
+        .docker(ExportDockerArgs.builder()
+            .annotations(Map.of("string", "string"))
+            .compression("gzip")
+            .compressionLevel(0)
+            .dest("string")
+            .forceCompression(false)
+            .names("string")
+            .ociMediaTypes(false)
+            .tar(false)
+            .build())
+        .image(ExportImageArgs.builder()
+            .annotations(Map.of("string", "string"))
+            .compression("gzip")
+            .compressionLevel(0)
+            .danglingNamePrefix("string")
+            .forceCompression(false)
+            .insecure(false)
+            .nameCanonical(false)
+            .names("string")
+            .ociMediaTypes(false)
+            .push(false)
+            .pushByDigest(false)
+            .store(false)
+            .unpack(false)
+            .build())
+        .local(ExportLocalArgs.builder()
+            .dest("string")
+            .build())
+        .oci(ExportOCIArgs.builder()
+            .annotations(Map.of("string", "string"))
+            .compression("gzip")
+            .compressionLevel(0)
+            .dest("string")
+            .forceCompression(false)
+            .names("string")
+            .ociMediaTypes(false)
+            .tar(false)
+            .build())
+        .raw("string")
+        .registry(ExportRegistryArgs.builder()
+            .annotations(Map.of("string", "string"))
+            .compression("gzip")
+            .compressionLevel(0)
+            .danglingNamePrefix("string")
+            .forceCompression(false)
+            .insecure(false)
+            .nameCanonical(false)
+            .names("string")
+            .ociMediaTypes(false)
+            .push(false)
+            .pushByDigest(false)
+            .store(false)
+            .unpack(false)
+            .build())
+        .tar(ExportTarArgs.builder()
+            .dest("string")
+            .build())
+        .build())
+    .labels(Map.of("string", "string"))
+    .load(false)
+    .network("default")
+    .noCache(false)
+    .platforms("darwin/386")
+    .pull(false)
+    .push(false)
+    .registries(RegistryArgs.builder()
+        .address("string")
+        .password("string")
+        .username("string")
+        .build())
+    .secrets(Map.of("string", "string"))
+    .ssh(SSHArgs.builder()
+        .id("string")
+        .paths("string")
+        .build())
+    .tags("string")
+    .target("string")
+    .build());
+```
+
+</pulumi-choosable>
+</div>
+
+
+<div>
+<pulumi-choosable type="language" values="python">
+
+```python
+image_resource = docker_build.Image("imageResource",
+    add_hosts=["string"],
+    build_args={
+        "string": "string",
+    },
+    build_on_preview=False,
+    builder=docker_build.BuilderConfigArgs(
+        name="string",
+    ),
+    cache_from=[docker_build.CacheFromArgs(
+        azblob=docker_build.CacheFromAzureBlobArgs(
+            name="string",
+            account_url="string",
+            secret_access_key="string",
+        ),
+        disabled=False,
+        gha=docker_build.CacheFromGitHubActionsArgs(
+            scope="string",
+            token="string",
+            url="string",
+        ),
+        local=docker_build.CacheFromLocalArgs(
+            src="string",
+            digest="string",
+        ),
+        raw="string",
+        registry=docker_build.CacheFromRegistryArgs(
+            ref="string",
+        ),
+        s3=docker_build.CacheFromS3Args(
+            bucket="string",
+            region="string",
+            access_key_id="string",
+            blobs_prefix="string",
+            endpoint_url="string",
+            manifests_prefix="string",
+            name="string",
+            secret_access_key="string",
+            session_token="string",
+            use_path_style=False,
+        ),
+    )],
+    cache_to=[docker_build.CacheToArgs(
+        azblob=docker_build.CacheToAzureBlobArgs(
+            name="string",
+            account_url="string",
+            ignore_error=False,
+            mode=docker_build.CacheMode.MIN,
+            secret_access_key="string",
+        ),
+        disabled=False,
+        gha=docker_build.CacheToGitHubActionsArgs(
+            ignore_error=False,
+            mode=docker_build.CacheMode.MIN,
+            scope="string",
+            token="string",
+            url="string",
+        ),
+        inline=docker_build.CacheToInlineArgs(),
+        local=docker_build.CacheToLocalArgs(
+            dest="string",
+            compression=docker_build.CompressionType.GZIP,
+            compression_level=0,
+            force_compression=False,
+            ignore_error=False,
+            mode=docker_build.CacheMode.MIN,
+        ),
+        raw="string",
+        registry=docker_build.CacheToRegistryArgs(
+            ref="string",
+            compression=docker_build.CompressionType.GZIP,
+            compression_level=0,
+            force_compression=False,
+            ignore_error=False,
+            image_manifest=False,
+            mode=docker_build.CacheMode.MIN,
+            oci_media_types=False,
+        ),
+        s3=docker_build.CacheToS3Args(
+            bucket="string",
+            region="string",
+            access_key_id="string",
+            blobs_prefix="string",
+            endpoint_url="string",
+            ignore_error=False,
+            manifests_prefix="string",
+            mode=docker_build.CacheMode.MIN,
+            name="string",
+            secret_access_key="string",
+            session_token="string",
+            use_path_style=False,
+        ),
+    )],
+    context=docker_build.BuildContextArgs(
+        location="string",
+        named={
+            "string": docker_build.ContextArgs(
+                location="string",
+            ),
+        },
+    ),
+    dockerfile=docker_build.DockerfileArgs(
+        inline="string",
+        location="string",
+    ),
+    exec_=False,
+    exports=[docker_build.ExportArgs(
+        cacheonly=docker_build.ExportCacheOnlyArgs(),
+        disabled=False,
+        docker=docker_build.ExportDockerArgs(
+            annotations={
+                "string": "string",
+            },
+            compression=docker_build.CompressionType.GZIP,
+            compression_level=0,
+            dest="string",
+            force_compression=False,
+            names=["string"],
+            oci_media_types=False,
+            tar=False,
+        ),
+        image=docker_build.ExportImageArgs(
+            annotations={
+                "string": "string",
+            },
+            compression=docker_build.CompressionType.GZIP,
+            compression_level=0,
+            dangling_name_prefix="string",
+            force_compression=False,
+            insecure=False,
+            name_canonical=False,
+            names=["string"],
+            oci_media_types=False,
+            push=False,
+            push_by_digest=False,
+            store=False,
+            unpack=False,
+        ),
+        local=docker_build.ExportLocalArgs(
+            dest="string",
+        ),
+        oci=docker_build.ExportOCIArgs(
+            annotations={
+                "string": "string",
+            },
+            compression=docker_build.CompressionType.GZIP,
+            compression_level=0,
+            dest="string",
+            force_compression=False,
+            names=["string"],
+            oci_media_types=False,
+            tar=False,
+        ),
+        raw="string",
+        registry=docker_build.ExportRegistryArgs(
+            annotations={
+                "string": "string",
+            },
+            compression=docker_build.CompressionType.GZIP,
+            compression_level=0,
+            dangling_name_prefix="string",
+            force_compression=False,
+            insecure=False,
+            name_canonical=False,
+            names=["string"],
+            oci_media_types=False,
+            push=False,
+            push_by_digest=False,
+            store=False,
+            unpack=False,
+        ),
+        tar=docker_build.ExportTarArgs(
+            dest="string",
+        ),
+    )],
+    labels={
+        "string": "string",
+    },
+    load=False,
+    network=docker_build.NetworkMode.DEFAULT,
+    no_cache=False,
+    platforms=[docker_build.Platform.DARWIN_386],
+    pull=False,
+    push=False,
+    registries=[docker_build.RegistryArgs(
+        address="string",
+        password="string",
+        username="string",
+    )],
+    secrets={
+        "string": "string",
+    },
+    ssh=[docker_build.SSHArgs(
+        id="string",
+        paths=["string"],
+    )],
+    tags=["string"],
+    target="string")
+```
+
+</pulumi-choosable>
+</div>
+
+
+<div>
+<pulumi-choosable type="language" values="typescript">
+
+```typescript
+const imageResource = new docker_build.Image("imageResource", {
+    addHosts: ["string"],
+    buildArgs: {
+        string: "string",
+    },
+    buildOnPreview: false,
+    builder: {
+        name: "string",
+    },
+    cacheFrom: [{
+        azblob: {
+            name: "string",
+            accountUrl: "string",
+            secretAccessKey: "string",
+        },
+        disabled: false,
+        gha: {
+            scope: "string",
+            token: "string",
+            url: "string",
+        },
+        local: {
+            src: "string",
+            digest: "string",
+        },
+        raw: "string",
+        registry: {
+            ref: "string",
+        },
+        s3: {
+            bucket: "string",
+            region: "string",
+            accessKeyId: "string",
+            blobsPrefix: "string",
+            endpointUrl: "string",
+            manifestsPrefix: "string",
+            name: "string",
+            secretAccessKey: "string",
+            sessionToken: "string",
+            usePathStyle: false,
+        },
+    }],
+    cacheTo: [{
+        azblob: {
+            name: "string",
+            accountUrl: "string",
+            ignoreError: false,
+            mode: docker_build.CacheMode.Min,
+            secretAccessKey: "string",
+        },
+        disabled: false,
+        gha: {
+            ignoreError: false,
+            mode: docker_build.CacheMode.Min,
+            scope: "string",
+            token: "string",
+            url: "string",
+        },
+        inline: {},
+        local: {
+            dest: "string",
+            compression: docker_build.CompressionType.Gzip,
+            compressionLevel: 0,
+            forceCompression: false,
+            ignoreError: false,
+            mode: docker_build.CacheMode.Min,
+        },
+        raw: "string",
+        registry: {
+            ref: "string",
+            compression: docker_build.CompressionType.Gzip,
+            compressionLevel: 0,
+            forceCompression: false,
+            ignoreError: false,
+            imageManifest: false,
+            mode: docker_build.CacheMode.Min,
+            ociMediaTypes: false,
+        },
+        s3: {
+            bucket: "string",
+            region: "string",
+            accessKeyId: "string",
+            blobsPrefix: "string",
+            endpointUrl: "string",
+            ignoreError: false,
+            manifestsPrefix: "string",
+            mode: docker_build.CacheMode.Min,
+            name: "string",
+            secretAccessKey: "string",
+            sessionToken: "string",
+            usePathStyle: false,
+        },
+    }],
+    context: {
+        location: "string",
+        named: {
+            string: {
+                location: "string",
+            },
+        },
+    },
+    dockerfile: {
+        inline: "string",
+        location: "string",
+    },
+    exec: false,
+    exports: [{
+        cacheonly: {},
+        disabled: false,
+        docker: {
+            annotations: {
+                string: "string",
+            },
+            compression: docker_build.CompressionType.Gzip,
+            compressionLevel: 0,
+            dest: "string",
+            forceCompression: false,
+            names: ["string"],
+            ociMediaTypes: false,
+            tar: false,
+        },
+        image: {
+            annotations: {
+                string: "string",
+            },
+            compression: docker_build.CompressionType.Gzip,
+            compressionLevel: 0,
+            danglingNamePrefix: "string",
+            forceCompression: false,
+            insecure: false,
+            nameCanonical: false,
+            names: ["string"],
+            ociMediaTypes: false,
+            push: false,
+            pushByDigest: false,
+            store: false,
+            unpack: false,
+        },
+        local: {
+            dest: "string",
+        },
+        oci: {
+            annotations: {
+                string: "string",
+            },
+            compression: docker_build.CompressionType.Gzip,
+            compressionLevel: 0,
+            dest: "string",
+            forceCompression: false,
+            names: ["string"],
+            ociMediaTypes: false,
+            tar: false,
+        },
+        raw: "string",
+        registry: {
+            annotations: {
+                string: "string",
+            },
+            compression: docker_build.CompressionType.Gzip,
+            compressionLevel: 0,
+            danglingNamePrefix: "string",
+            forceCompression: false,
+            insecure: false,
+            nameCanonical: false,
+            names: ["string"],
+            ociMediaTypes: false,
+            push: false,
+            pushByDigest: false,
+            store: false,
+            unpack: false,
+        },
+        tar: {
+            dest: "string",
+        },
+    }],
+    labels: {
+        string: "string",
+    },
+    load: false,
+    network: docker_build.NetworkMode.Default,
+    noCache: false,
+    platforms: [docker_build.Platform.Darwin_386],
+    pull: false,
+    push: false,
+    registries: [{
+        address: "string",
+        password: "string",
+        username: "string",
+    }],
+    secrets: {
+        string: "string",
+    },
+    ssh: [{
+        id: "string",
+        paths: ["string"],
+    }],
+    tags: ["string"],
+    target: "string",
+});
+```
+
+</pulumi-choosable>
+</div>
+
+
+<div>
+<pulumi-choosable type="language" values="yaml">
+
+```yaml
+type: docker-build:Image
+properties:
+    addHosts:
+        - string
+    buildArgs:
+        string: string
+    buildOnPreview: false
+    builder:
+        name: string
+    cacheFrom:
+        - azblob:
+            accountUrl: string
+            name: string
+            secretAccessKey: string
+          disabled: false
+          gha:
+            scope: string
+            token: string
+            url: string
+          local:
+            digest: string
+            src: string
+          raw: string
+          registry:
+            ref: string
+          s3:
+            accessKeyId: string
+            blobsPrefix: string
+            bucket: string
+            endpointUrl: string
+            manifestsPrefix: string
+            name: string
+            region: string
+            secretAccessKey: string
+            sessionToken: string
+            usePathStyle: false
+    cacheTo:
+        - azblob:
+            accountUrl: string
+            ignoreError: false
+            mode: min
+            name: string
+            secretAccessKey: string
+          disabled: false
+          gha:
+            ignoreError: false
+            mode: min
+            scope: string
+            token: string
+            url: string
+          inline: {}
+          local:
+            compression: gzip
+            compressionLevel: 0
+            dest: string
+            forceCompression: false
+            ignoreError: false
+            mode: min
+          raw: string
+          registry:
+            compression: gzip
+            compressionLevel: 0
+            forceCompression: false
+            ignoreError: false
+            imageManifest: false
+            mode: min
+            ociMediaTypes: false
+            ref: string
+          s3:
+            accessKeyId: string
+            blobsPrefix: string
+            bucket: string
+            endpointUrl: string
+            ignoreError: false
+            manifestsPrefix: string
+            mode: min
+            name: string
+            region: string
+            secretAccessKey: string
+            sessionToken: string
+            usePathStyle: false
+    context:
+        location: string
+        named:
+            string:
+                location: string
+    dockerfile:
+        inline: string
+        location: string
+    exec: false
+    exports:
+        - cacheonly: {}
+          disabled: false
+          docker:
+            annotations:
+                string: string
+            compression: gzip
+            compressionLevel: 0
+            dest: string
+            forceCompression: false
+            names:
+                - string
+            ociMediaTypes: false
+            tar: false
+          image:
+            annotations:
+                string: string
+            compression: gzip
+            compressionLevel: 0
+            danglingNamePrefix: string
+            forceCompression: false
+            insecure: false
+            nameCanonical: false
+            names:
+                - string
+            ociMediaTypes: false
+            push: false
+            pushByDigest: false
+            store: false
+            unpack: false
+          local:
+            dest: string
+          oci:
+            annotations:
+                string: string
+            compression: gzip
+            compressionLevel: 0
+            dest: string
+            forceCompression: false
+            names:
+                - string
+            ociMediaTypes: false
+            tar: false
+          raw: string
+          registry:
+            annotations:
+                string: string
+            compression: gzip
+            compressionLevel: 0
+            danglingNamePrefix: string
+            forceCompression: false
+            insecure: false
+            nameCanonical: false
+            names:
+                - string
+            ociMediaTypes: false
+            push: false
+            pushByDigest: false
+            store: false
+            unpack: false
+          tar:
+            dest: string
+    labels:
+        string: string
+    load: false
+    network: default
+    noCache: false
+    platforms:
+        - darwin/386
+    pull: false
+    push: false
+    registries:
+        - address: string
+          password: string
+          username: string
+    secrets:
+        string: string
+    ssh:
+        - id: string
+          paths:
+            - string
+    tags:
+        - string
+    target: string
+```
+
+</pulumi-choosable>
+</div>
+
+
 
 ## Image Resource Properties {#properties}
 

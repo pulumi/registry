@@ -25,6 +25,6 @@ A Pulumi provider for Docker buildx
 	<dt>License</dt>
 	<dd>Apache-2.0</dd>
 	<dt>Version</dt>
-	<dd>0.1.0</dd>
+	<dd>0.0.1-alpha.3</dd>
 </dl>
 

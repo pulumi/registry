@@ -9,6 +9,6 @@ package_status: "public_preview"
 publisher: "Pulumi"
 repo_url: "https://github.com/pulumi/pulumi-docker-build"
 schema_file_path: "provider/cmd/pulumi-resource-docker-build/schema.json"
-title: "Docker Build"
+title: "Docker-Build"
 updated_on: 1713809370
-version: "v0.1.0"
+version: "v0.0.1-alpha.3"

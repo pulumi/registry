@@ -14,7 +14,7 @@ The Event Store Cloud provider must be configured with credentials to deploy and
 import * as eventstore from "@eventstore/pulumi-eventstorecloud";
 
 const project = new eventstore.Project("sample-project", {
-    name: "Improved Chicken Window"
+    name: "Improved Chicken Window",
 });
 
 const network = new eventstore.Network("sample-network", {
@@ -22,6 +22,6 @@ const network = new eventstore.Network("sample-network", {
     projectId: project.id,
     resourceProvider: "aws",
     region: "eu-west1",
-    cidrBlock: "172.21.0.0/16"
+    cidrBlock: "172.21.0.0/16",
 });
 ```

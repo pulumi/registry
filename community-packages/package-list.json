@@ -33,7 +33,7 @@
       "schemaFile": "provider/cmd/pulumi-resource-hcp/schema.json"
     },
     {
-      "repoSlug": "lbrlabs/pulumi-scaleway",
+      "repoSlug": "pulumiverse/pulumi-scaleway",
       "schemaFile": "provider/cmd/pulumi-resource-scaleway/schema.json"
     },
     {
@@ -85,7 +85,7 @@
       "schemaFile": "provider/cmd/pulumi-resource-ovh/schema.json"
     },
     {
-      "repoSlug": "lbrlabs/pulumi-grafana",
+      "repoSlug": "pulumiverse/pulumi-grafana",
       "schemaFile": "provider/cmd/pulumi-resource-grafana/schema.json"
     },
     {
@@ -221,7 +221,7 @@
       "schemaFile": "schema.yaml"
     },
     {
-      "repoSlug": "lbrlabs/pulumi-cockroach",
+      "repoSlug": "pulumiverse/pulumi-cockroach",
       "schemaFile": "provider/cmd/pulumi-resource-cockroach/schema.json"
     },
     {
@@ -283,6 +283,38 @@
     {
       "repoSlug": "pinecone-io/pulumi-pinecone",
       "schemaFile": "provider/cmd/pulumi-resource-pinecone/schema.json"
+    },
+    {
+      "repoSlug": "komminarlabs/pulumi-influxdb",
+      "schemaFile": "provider/cmd/pulumi-resource-influxdb/schema.json"
+    },
+    {
+      "repoSlug": "pulumiverse/pulumi-cpln",
+      "schemaFile": "provider/cmd/pulumi-resource-cpln/schema.json"
+    },
+    {
+      "repoSlug": "runpod/pulumi-runpod-native",
+      "schemaFile": "provider/schema.json"
+    },
+    {
+      "repoSlug": "zscaler/pulumi-zpa",
+      "schemaFile": "provider/cmd/pulumi-resource-zpa/schema.json"
+    },
+    {
+      "repoSlug": "zscaler/pulumi-zia",
+      "schemaFile": "provider/cmd/pulumi-resource-zia/schema.json"
+    },
+    {
+      "repoSlug": "ctfer-io/pulumi-ctfd",
+      "schemaFile": "provider/cmd/pulumi-resource-ctfd/schema.json"
+    },
+    {
+      "repoSlug": "pulumiverse/pulumi-fortios",
+      "schemaFile": "provider/cmd/pulumi-resource-fortios/schema.json"
+    },
+    {
+      "repoSlug": "genesiscloud/pulumi-genesiscloud",
+      "schemaFile": "provider/cmd/pulumi-resource-genesiscloud/schema.json"
     }
   ]
 }

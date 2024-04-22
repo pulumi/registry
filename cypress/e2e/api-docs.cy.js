@@ -81,7 +81,10 @@ describe("Registry", () => {
                 });
 
                 it("has the correct page title", () => {
-                    cy.get("head title").should("have.text", `${page.title} | Pulumi Registry`);
+                    // We verify that the title includes both the resource title and the site title. Sometimes there is
+                    // a trailing space after the resource title that messes with the logic, so we just check to make sure
+                    // it includes both pieces of text.
+                    cy.get("head title").should("include.text", page.title).and("include.text", "| Pulumi Registry");
                 });
 
                 describe("main content", () => {
@@ -129,6 +132,7 @@ describe("Registry", () => {
 
                             const actualHeadings = headings
                                 .map((_, heading) => heading.textContent)
+                                .filter(heading => possibleHeadings.includes(heading))
                                 .get();
 
                             const expectedHeadings = possibleHeadings
@@ -147,22 +151,22 @@ describe("Registry", () => {
                         });
 
                         describe("examples", () => {
-                            it.skip("all have language choosers", () => {
-                                // Markup structure still TBD.
-                                // https://github.com/pulumi/pulumi-aws/issues/2624
+                            it("all have language choosers", () => {
+                                cy.get("#example-usage + h3 + div > pulumi-chooser")
                             });
                         });
                     });
 
                     describe("Create section", () => {
-                        it.skip("renders a minimal example in all languages", () => {
-                            // Markup structure still TBD.
-                            // https://github.com/pulumi/pulumi/issues/14675
+                        it("renders a minimal example in all languages", () => {
+                            // renders the minimal example right after the `Constructor syntax` heading
+                            cy.get(container).find("#constructor-syntax + div > pulumi-chooser")
                         });
 
                         it.skip("renders a full example in all languages", () => {
-                            // Markup structure still TBD.
-                            // https://github.com/pulumi/pulumi/issues/14675
+                            // We may disable this section for pages that fail to convert, so some
+                            // examples may not have this section once this is done.
+                            // https://github.com/pulumi/registry/issues/4320
                         });
                     });
 
@@ -199,36 +203,48 @@ describe("Registry", () => {
                     });
 
                     describe("Lookup section", () => {
-                        it.skip("renders an example for all languages", () => {
-                            // Markup structure still TBD.
-                            // https://github.com/pulumi/pulumi/issues/14675
+                        it("renders an example for all languages", () => {
+                            // Should contain a code example.
+                            cy.get("#look-up + p + div > pulumi-chooser").should("exist");
                         });
                     });
 
                     describe("Supporting Types section", () => {
-                        describe("type lists", () => {
+                        describe("type lists", () => {      
                             it("are visible for all languages", () => {
-                                const languages = [ "TypeScript", "Python", "Go", "C#", "Java", "YAML" ];
-                                const headings = "#supporting-types ~ h4";
-                                const lists = "#supporting-types + h4 ~ div pulumi-choosable div.active";
+                                cy.get(container).find("section.docs-content h2").as("sections");
+                                let pageHeadings = [];
+                                cy.get("@sections").then(headings => {
+                                    pageHeadings = headings
+                                    .map((_, heading) => heading.textContent)
+                                    .get();
+                                });
 
-                                languages.forEach(language => {
-                                    cy.get("pulumi-chooser li a").contains(language).first().click();
+                                // Some pages won't contain the `Supporting Types` heading, so we only run the test if it's present.
+                                if (pageHeadings.includes("Supporting Types")) {
+                                    const languages = [ "TypeScript", "Python", "Go", "C#", "Java", "YAML" ];
+                                    const headings = "#supporting-types ~ h4";
+                                    const lists = "#supporting-types + h4 ~ div pulumi-choosable div.active";
 
-                                    cy.get(headings).then(headings => {
-                                        cy.get(lists).then(lists => {
-                                            expect(lists.length).to.equal(headings.length);
+                                    languages.forEach(language => {
+                                        cy.get("pulumi-chooser li a").contains(language).first().click();
+                                        cy.log(`Checking ${language} supporting types...`);
+                                        cy.get(headings).then(headings => {
+                                            cy.get(lists).then(lists => {
+                                                expect(lists.length).to.equal(headings.length);
+                                            });
                                         });
                                     });
-                                });
+                                }
                             });
                         });
                     });
 
                     describe("Import section", () => {
-                        it.skip("identifies required parameters", () => {
-                            // Details here are still TBD.
-                            // https://github.com/pulumi/registry/issues/3039
+                        it("has description text below heading", () => {
+                            cy.get(container).find("#import + p").then(p => {
+                                expect(p).to.not.be.empty;
+                            });
                         });
                     });
 

@@ -159,8 +159,8 @@ describe("Registry", () => {
 
                     describe("Create section", () => {
                         it("renders a minimal example in all languages", () => {
-                          // renders the minimal example right after the `Constructor syntax` heading
-                          cy.get(container).find("#constructor-syntax + div > pulumi-chooser")
+                            // renders the minimal example right after the `Constructor syntax` heading
+                            cy.get(container).find("#constructor-syntax + div > pulumi-chooser")
                         });
 
                         it.skip("renders a full example in all languages", () => {

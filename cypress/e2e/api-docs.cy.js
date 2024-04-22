@@ -164,9 +164,9 @@ describe("Registry", () => {
                         });
 
                         it.skip("renders a full example in all languages", () => {
-                          // We may disable this section for pages that fail to convert, so some
-                          // examples may not have this section once this is done.
-                          // https://github.com/pulumi/registry/issues/4320
+                            // We may disable this section for pages that fail to convert, so some
+                            // examples may not have this section once this is done.
+                            // https://github.com/pulumi/registry/issues/4320
                         });
                     });
 

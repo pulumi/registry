@@ -1,0 +1,14 @@
+category: Cloud
+component: false
+description: A Pulumi provider for building modern Docker images with buildx and BuildKit.
+featured: false
+logo_url: ""
+name: docker-build
+native: true
+package_status: public_preview
+publisher: Pulumi
+repo_url: https://github.com/pulumi/pulumi-docker-build
+schema_file_path: provider/cmd/pulumi-resource-docker-build/schema.json
+title: docker-build
+updated_on: 1713890022
+version: v0.0.1

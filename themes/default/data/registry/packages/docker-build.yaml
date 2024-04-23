@@ -11,4 +11,4 @@ repo_url: "https://github.com/pulumi/pulumi-docker-build"
 schema_file_path: "provider/cmd/pulumi-resource-docker-build/schema.json"
 title: "Docker-Build"
 updated_on: 1713809370
-version: "v0.0.1-alpha.3"
+version: "v0.0.1"

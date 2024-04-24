@@ -8,17 +8,17 @@ layout: package
 
 The Pulumi Twingate provider is available as a package in all Pulumi languages:
 
-* JavaScript/TypeScript: [`@twingate-labs/pulumi-twingate`](https://www.npmjs.com/package/@twingate-labs/pulumi-twingate)
+* JavaScript/TypeScript: [`@twingate/pulumi-twingate`](https://www.npmjs.com/package/@twingate/pulumi-twingate)
 * Python: [`pulumi_twingate`](https://pypi.org/project/pulumi-twingate/)
-* Go: [`github.com/Twingate-Labs/pulumi-twingate/sdk/go/twingate`](https://github.com/Twingate-Labs/pulumi-twingate/tree/master/sdk/go/twingate)
-* .NET: [`TwingateLabs.Twingate`](https://www.nuget.org/packages/TwingateLabs.Twingate)
+* Go: [`github.com/Twingate/pulumi-twingate/sdk/go/twingate`](https://github.com/Twingate/pulumi-twingate/tree/main/sdk/go/twingate)
+* .NET: [`Twingate.Twingate`](https://www.nuget.org/packages/Twingate.Twingate)
 
 ### Provider Binary
 
 The Twingate provider binary is a third party binary, this should be installed automatically by package managers (e.g. Python Pip). It can be manually installed using the `pulumi plugin` command.
 
 ```bash
-pulumi plugin install resource twingate --server github://api.github.com/twingate-labs
+pulumi plugin install resource twingate --server github://api.github.com/Twingate/pulumi-twingate
 ```
 
 Replace the version string with your desired version.
@@ -62,10 +62,10 @@ $ export TWINGATE_NETWORK=<TWINGATE_NETWORK>
 
 If you prefer that they be stored alongside your Pulumi stack for easy multi-user access:
 
-    ```bash
-    $ pulumi config set twingate:apiToken XXXXXX --secret
-    $ pulumi config set twingate:network YYYYYY
-    ```
+```bash
+$ pulumi config set twingate:apiToken XXXXXX --secret
+$ pulumi config set twingate:network YYYYYY
+```
 
 The complete list of
-configuration parameters is in the [Twingate provider README](https://github.com/Twingate-Labs/pulumi-twingate/blob/master/README.md).
+configuration parameters is in the [Twingate provider README](https://github.com/Twingate/pulumi-twingate/blob/main/README.md).

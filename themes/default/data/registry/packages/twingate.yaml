@@ -2,13 +2,13 @@ category: Infrastructure
 component: false
 description: A Pulumi package for creating and managing Twingate cloud resources.
 featured: false
-logo_url: ""
+logo_url: https://raw.githubusercontent.com/Twingate/pulumi-twingate/main/docs/logo.png
 name: twingate
 native: false
-package_status: public_preview
+package_status: ga
 publisher: Twingate
-repo_url: https://github.com/Twingate-Labs/pulumi-twingate
+repo_url: https://github.com/Twingate/pulumi-twingate
 schema_file_path: provider/cmd/pulumi-resource-twingate/schema.json
 title: Twingate
-updated_on: 1697168546
-version: v0.0.48
+updated_on: 1713545593
+version: v3.0.1

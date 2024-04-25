@@ -56,43 +56,12 @@ values:
           workloadPoolId: <your-pool-id>
           providerId: <your-provider-id>
           serviceAccount: <your-service-account>
-  pulumiConfig:
-    gcp:accessToken: ${gcp.login.accessToken}
   environmentVariables:
     GOOGLE_PROJECT: ${gcp.login.project}
     GOOGLE_REGION: <your-region>
     GOOGLE_ZONE: <your-zone>
+    GOOGLE_OAUTH_ACCESS_TOKEN: ${gcp.login.accessToken}
 ```
-
-{{< notes type="warning" >}}
-Your GCP access token must always be defined under the `pulumiConfig` section. The deployment will fail if it is defined as an environment variable in the `environmentVariables` section.
-{{< /notes >}}
-
-To [expose these values to Pulumi IaC](/docs/pulumi-cloud/esc/environments/#using-environments-with-pulumi-iac), you will need to add any desired values underneath the `pulumiConfig` key. Further, if your workflow does not require the exposure of environment variables, you can also define those variables under the `pulumiConfig` block as shown below:
-
-```yaml
-values:
-  gcp:
-    login:
-      fn::open::gcp-login:
-        project: <your-project-id>
-        oidc:
-          workloadPoolId: <your-pool-id>
-          providerId: <your-provider-id>
-          serviceAccount: <your-service-account>
-  pulumiConfig:
-    project:environment: 'dev'
-    gcp:accessToken: ${gcp.login.accessToken}
-    gcp:project: ${gcp.login.project}
-    gcp:region: <your-region>
-    gcp:zone: <your-zone>
-```
-
-This will ensure that those values are scoped only to your `pulumi` run.
-
-{{< notes type="info" >}}
-The configuration values under `pulumiConfig` can also be referenced directly from within your Pulumi program code. This is done using the same method to reference values from your project's stack settings file. You can see examples of how to do this in the [Accessing Configuration from Code](/docs/concepts/config/#code) section of the Pulumi documentation.
-{{< /notes >}}
 
 #### Import your environment
 

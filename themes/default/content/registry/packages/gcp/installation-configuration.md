@@ -57,10 +57,10 @@ values:
           providerId: <your-provider-id>
           serviceAccount: <your-service-account>
   environmentVariables:
+    GOOGLE_OAUTH_ACCESS_TOKEN: ${gcp.login.accessToken}
     GOOGLE_PROJECT: ${gcp.login.project}
     GOOGLE_REGION: <your-region>
     GOOGLE_ZONE: <your-zone>
-    GOOGLE_OAUTH_ACCESS_TOKEN: ${gcp.login.accessToken}
 ```
 
 #### Import your environment

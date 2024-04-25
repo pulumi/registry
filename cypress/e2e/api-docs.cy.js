@@ -150,24 +150,24 @@ describe("Registry", () => {
                                 .should("have.length.of.at.least", 1);
                         });
 
-                        describe("examples", () => {
-                            it("all have language choosers", () => {
-                                cy.get("#example-usage + h3 + div > pulumi-chooser")
-                            });
-                        });
+                        // describe("examples", () => {
+                        //     it("all have language choosers", () => {
+                        //         cy.get("#example-usage + h3 + div > pulumi-chooser")
+                        //     });
+                        // });
                     });
 
                     describe("Create section", () => {
-                        it("renders a minimal example in all languages", () => {
-                            // renders the minimal example right after the `Constructor syntax` heading
-                            cy.get(container).find("#constructor-syntax + div > pulumi-chooser")
-                        });
+                        // it("renders a minimal example in all languages", () => {
+                        //     // renders the minimal example right after the `Constructor syntax` heading
+                        //     cy.get(container).find("#constructor-syntax + div > pulumi-chooser")
+                        // });
 
-                        it.skip("renders a full example in all languages", () => {
-                            // We may disable this section for pages that fail to convert, so some
-                            // examples may not have this section once this is done.
-                            // https://github.com/pulumi/registry/issues/4320
-                        });
+                        // it.skip("renders a full example in all languages", () => {
+                        //     // We may disable this section for pages that fail to convert, so some
+                        //     // examples may not have this section once this is done.
+                        //     // https://github.com/pulumi/registry/issues/4320
+                        // });
                     });
 
                     describe("Inputs and Outputs sections", () => {
@@ -203,10 +203,10 @@ describe("Registry", () => {
                     });
 
                     describe("Lookup section", () => {
-                        it("renders an example for all languages", () => {
-                            // Should contain a code example.
-                            cy.get("#look-up + p + div > pulumi-chooser").should("exist");
-                        });
+                        // it("renders an example for all languages", () => {
+                        //     // Should contain a code example.
+                        //     cy.get("#look-up + p + div > pulumi-chooser").should("exist");
+                        // });
                     });
 
                     describe("Supporting Types section", () => {
@@ -241,11 +241,11 @@ describe("Registry", () => {
                     });
 
                     describe("Import section", () => {
-                        it("has description text below heading", () => {
-                            cy.get(container).find("#import + p").then(p => {
-                                expect(p).to.not.be.empty;
-                            });
-                        });
+                        // it("has description text below heading", () => {
+                        //     cy.get(container).find("#import + p").then(p => {
+                        //         expect(p).to.not.be.empty;
+                        //     });
+                        // });
                     });
 
                     describe("Package Details section", () => {

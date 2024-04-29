@@ -30,7 +30,7 @@ popd
 
 REGISTRY_COMMIT="$(git_sha_short)"
 printf "Generating API docs from registry commit %s...\n\n" "${REGISTRY_COMMIT}"
-resourcedocsgen docs registry --commitSha "${REGISTRY_COMMIT}" \
+resourcedocsgen docs registry "azure-native" --commitSha "${REGISTRY_COMMIT}" \
     --baseDocsOutDir "themes/default/content/registry/packages" \
     --basePackageTreeJSONOutDir "themes/default/static/registry/packages/navs" \
     --logtostderr

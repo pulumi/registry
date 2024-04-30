@@ -1,10 +1,10 @@
 ---
 title: Doppler
 meta_desc: Provides an overview of the Doppler Provider for Pulumi.
-layout: package
+layout: overview
 ---
 
-The Doppler provider for Pulumi can be used to provision any of the monitoring resources available in [Doppler](https://dopplerhq.com/).
+The Doppler provider for Pulumi can be used to provision any of the monitoring resources available in [Doppler](https://doppler.com/).
 
 ## Example
 

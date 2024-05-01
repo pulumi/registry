@@ -4,6 +4,14 @@ meta_desc: Provides an overview of the Snowflake Provider for Pulumi.
 layout: package
 ---
 
+{{< notes >}}
+
+The Snowflake provider is still in an experimental phase. It can be used in production but makes no stability or backward compatibility guarantees.
+
+Please check the upstream [migration guide](https://github.com/Snowflake-Labs/terraform-provider-snowflake/blob/main/MIGRATION_GUIDE.md) when upgrading versions.
+
+{{< /notes >}}
+
 The Snowflake provider for Pulumi can be used to provision any of the cloud resources available in [Snowflake](https://www.snowflake.com/).
 The Snowflake provider must be configured with credentials to deploy and update resources in Snowflake.
 

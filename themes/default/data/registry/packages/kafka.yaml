@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-kafka
 schema_file_path: provider/cmd/pulumi-resource-kafka/schema.json
 title: Kafka
-updated_on: 1712078841
-version: v3.7.1
+updated_on: 1715267369
+version: v3.7.3

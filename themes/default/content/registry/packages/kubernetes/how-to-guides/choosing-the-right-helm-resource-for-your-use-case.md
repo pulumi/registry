@@ -85,7 +85,7 @@ If these are important for your use case, then the `Helm Chart` resource is pref
 
 #### Resource Ordering and Readiness
 
-The order in which Kubnernetes resources are applied by Pulumi is based on the dependency
+The order in which Kubernetes resources are applied by Pulumi is based on the dependency
 links between the resources. The `Chart` resource automatically creates some dependency links, based on [this specification](https://github.com/kubernetes-sigs/cli-utils?tab=readme-ov-file#implicit-dependency-ordering). It also supports the `config.kubernetes.io/depends-on` annotation,
 which you may apply via a transformation or via a post-renderer to force one object
 to be installed before another.

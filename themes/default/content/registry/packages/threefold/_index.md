@@ -8,13 +8,11 @@ The Threefold Resource Provider for the [threefold grid](https://threefold.io) l
 
 ## Example
 
+### Network resource
+
 {{< chooser language "go,yaml" >}}
 
 {{% choosable language go %}}
-
-{{< chooser language "network,virtual machine,kubernetes,ZDB,name gateway,FQDN gateway" >}}
-
-{{% choosable language network %}}
 
 ```go
 package main
@@ -70,7 +68,52 @@ func main() {
 
 {{% /choosable %}}
 
-{{% choosable language virtual machine %}}
+{{% choosable language yaml %}}
+
+```yml
+name: pulumi-threefold
+runtime: yaml
+
+resources:
+  provider:
+    type: pulumi:providers:threefold
+    properties:
+      mnemonic:
+
+  scheduler:
+    type: threefold:provider:Scheduler
+    options:
+      provider: ${provider}
+    properties:
+      farm_ids: [1]
+
+  network:
+    type: threefold:provider:Network
+    options:
+      provider: ${provider}
+      dependsOn:
+        - ${scheduler}
+    properties:
+      name: testing
+      description: test network
+      nodes:
+        - ${scheduler.nodes[0]}
+      ip_range: 10.1.0.0/16
+
+outputs:
+  node_deployment_id: ${network.node_deployment_id}
+  nodes_ip_range: ${network.nodes_ip_range}
+```
+
+{{% /choosable %}}
+
+{{< /chooser >}}
+
+### Virtual machine resource
+
+{{< chooser language "go,yaml" >}}
+
+{{% choosable language go %}}
 
 ```go
 package main
@@ -165,7 +208,88 @@ func main() {
 
 {{% /choosable %}}
 
-{{% choosable language kubernetes %}}
+{{% choosable language yaml %}}
+
+```yml
+name: pulumi-threefold
+runtime: yaml
+
+resources:
+  provider:
+    type: pulumi:providers:threefold
+    options:
+      pluginDownloadURL: github://api.github.com/threefoldtech/pulumi-threefold # optional
+    properties:
+      mnemonic:
+
+  scheduler:
+    type: threefold:provider:Scheduler
+    options:
+      provider: ${provider}
+    properties:
+      mru: 0.25 # 256 megabytes
+      sru: 2
+      farm_ids: [1]
+
+  network:
+    type: threefold:provider:Network
+    options:
+      provider: ${provider}
+      dependsOn:
+        - ${scheduler}
+    properties:
+      name: test
+      description: test network
+      nodes:
+        - ${scheduler.nodes[0]}
+      ip_range: 10.1.0.0/16
+      # mycelium_keys:
+      #   ${scheduler.nodes[0]}: 9751c596c7c951aedad1a5f78f18b59515064adf660e0d55abead65e6fbbd627 # hex encoded 32 bytes
+
+  deployment:
+    type: threefold:provider:Deployment
+    options:
+      provider: ${provider}
+      dependsOn:
+        - ${network}
+    properties:
+      node_id: ${scheduler.nodes[0]}
+      name: deployment
+      network_name: test
+      vms:
+        - name: vm
+          flist: https://hub.grid.tf/tf-official-apps/base:latest.flist
+          entrypoint: "/sbin/zinit init"
+          network_name: test
+          cpu: 2
+          memory: 256
+          planetary: true
+          # mycelium_ip_seed: b60f2b7ec39c # hex encoded 6 bytes
+          mounts:
+            - disk_name: data
+              mount_point: /app
+          env_vars:
+            SSH_KEY:
+
+      disks:
+        - name: data
+          size: 2
+
+outputs:
+  node_deployment_id: ${deployment.node_deployment_id}
+  planetary_ip: ${deployment.vms_computed[0].planetary_ip}
+  # mycelium_ip: ${deployment.vms_computed[0].mycelium_ip}
+```
+
+{{% /choosable %}}
+
+{{< /chooser >}}
+
+### Kubernetes resource
+
+{{< chooser language "go,yaml" >}}
+
+{{% choosable language go %}}
 
 ```go
 package main
@@ -262,71 +386,87 @@ func main() {
 
 {{% /choosable %}}
 
-{{% choosable language ZDB %}}
+{{% choosable language yaml %}}
 
-```go
-package main
+```yml
+name: pulumi-threefold
+runtime: yaml
 
-import (
-  "fmt"
-  "os"
+resources:
+  provider:
+    type: pulumi:providers:threefold
+    options:
+      pluginDownloadURL: github://api.github.com/threefoldtech/pulumi-threefold # optional
+    properties:
+      mnemonic:
 
-  "github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-  "github.com/threefoldtech/pulumi-threefold/sdk/go/threefold"
-  "github.com/threefoldtech/pulumi-threefold/sdk/go/threefold/provider"
-)
+  scheduler:
+    type: threefold:provider:Scheduler
+    options:
+      provider: ${provider}
+    properties:
+      mru: 6
+      sru: 6
+      farm_ids: [1]
 
-func main() {
-  pulumi.Run(func(ctx *pulumi.Context) error {
-    tfProvider, err := threefold.NewProvider(ctx, "provider", &threefold.ProviderArgs{
-      Mnemonic: pulumi.String(os.Getenv("MNEMONIC")),
-    })
-    if err != nil {
-      return err
-    }
-    scheduler, err := provider.NewScheduler(ctx, "scheduler", &provider.SchedulerArgs{
-      Mru: pulumi.Int(1),
-      Sru: pulumi.Int(2),
-      Farm_ids: pulumi.IntArray{
-        pulumi.Int(1),
-      },
-    }, pulumi.Provider(tfProvider))
-    if err != nil {
-      return err
-    }
-    deployment, err := provider.NewDeployment(ctx, "deployment", &provider.DeploymentArgs{
-      Node_id: scheduler.Nodes.ApplyT(func(nodes []int) (int, error) {
-        return nodes[0], nil
-      }).(pulumi.IntOutput),
-      Name: pulumi.String("zdb"),
-      Zdbs: provider.ZDBInputArray{
-        &provider.ZDBInputArgs{
-          Name:     pulumi.String("zdbsTest"),
-          Size:     pulumi.Int(2),
-          Password: pulumi.String("123456"),
-        },
-      },
-    }, pulumi.Provider(tfProvider))
-    if err != nil {
-      return err
-    }
-    ctx.Export("node_deployment_id", deployment.Node_deployment_id)
-    ctx.Export("zdb_endpoint", pulumi.All(deployment.Zdbs_computed, deployment.Zdbs_computed).ApplyT(func(_args []interface{}) (string, error) {
-      deploymentZdbs_computed := _args[0].([]provider.ZDBComputed)
-      deploymentZdbs_computed1 := _args[1].([]provider.ZDBComputed)
-      return fmt.Sprintf("[%v]:%v", deploymentZdbs_computed[0].Ips[1], deploymentZdbs_computed1[0].Port), nil
-    }).(pulumi.StringOutput))
-    ctx.Export("zdb_namespace", deployment.Zdbs_computed.ApplyT(func(zdbs_computed []provider.ZDBComputed) (*string, error) {
-      return &zdbs_computed[0].Namespace, nil
-    }).(pulumi.StringPtrOutput))
-    return nil
-  })
-}
+  network:
+    type: threefold:provider:Network
+    options:
+      provider: ${provider}
+      dependsOn:
+        - ${scheduler}
+    properties:
+      name: test
+      description: test network
+      nodes:
+        - ${scheduler.nodes[0]}
+      ip_range: 10.1.0.0/16
+
+  kubernetes:
+    type: threefold:provider:Kubernetes
+    options:
+      provider: ${provider}
+      dependsOn:
+        - ${network}
+    properties:
+      master:
+        name: kubernetes
+        node: ${scheduler.nodes[0]}
+        disk_size: 2
+        planetary: true
+        cpu: 2
+        memory: 2048
+
+      workers:
+        - name: worker1
+          node: ${scheduler.nodes[0]}
+          disk_size: 2
+          cpu: 2
+          memory: 2048
+        - name: worker2
+          node: ${scheduler.nodes[0]}
+          disk_size: 2
+          cpu: 2
+          memory: 2048
+
+      token: t123456789
+      network_name: test
+      ssh_key:
+
+outputs:
+  node_deployment_id: ${kubernetes.node_deployment_id}
+  planetary_ip: ${kubernetes.master_computed.planetary_ip}
 ```
 
 {{% /choosable %}}
 
-{{% choosable language name gateway %}}
+{{< /chooser >}}
+
+### Name gateway resource
+
+{{< chooser language "go,yaml" >}}
+
+{{% choosable language go %}}
 
 ```go
 package main
@@ -380,7 +520,55 @@ func main() {
 
 {{% /choosable %}}
 
-{{% choosable language FQDN gateway %}}
+{{% choosable language yaml %}}
+
+```yml
+name: pulumi-threefold
+runtime: yaml
+
+resources:
+  provider:
+    type: pulumi:providers:threefold
+    options:
+      pluginDownloadURL: github://api.github.com/threefoldtech/pulumi-threefold # optional
+    properties:
+      mnemonic:
+
+  scheduler:
+    type: threefold:provider:Scheduler
+    options:
+      provider: ${provider}
+    properties:
+      farm_ids: [1]
+      ipv4: true
+      free_ips: 1
+
+  gatewayName:
+    type: threefold:provider:GatewayName
+    options:
+      provider: ${provider}
+      dependsOn:
+        - ${scheduler}
+    properties:
+      name: pulumi
+      node_id: ${scheduler.nodes[0]}
+      backends:
+        - "http://69.164.223.208"
+
+outputs:
+  node_deployment_id: ${gatewayName.node_deployment_id}
+  fqdn: ${gatewayName.fqdn}
+```
+
+{{% /choosable %}}
+
+{{< /chooser >}}
+
+### FQDN gateway resource
+
+{{< chooser language "go,yaml" >}}
+
+{{% choosable language go %}}
 
 ```go
 package main
@@ -474,288 +662,7 @@ func main() {
 
 {{% /choosable %}}
 
-{{< /chooser >}}
-
-{{% /choosable %}}
-
 {{% choosable language yaml %}}
-
-{{< chooser language "network,virtual machine,kubernetes,ZDB,name gateway,FQDN gateway" >}}
-
-{{% choosable language network %}}
-
-```yml
-name: pulumi-threefold
-runtime: yaml
-
-resources:
-  provider:
-    type: pulumi:providers:threefold
-    properties:
-      mnemonic:
-
-  scheduler:
-    type: threefold:provider:Scheduler
-    options:
-      provider: ${provider}
-    properties:
-      farm_ids: [1]
-
-  network:
-    type: threefold:provider:Network
-    options:
-      provider: ${provider}
-      dependsOn:
-        - ${scheduler}
-    properties:
-      name: testing
-      description: test network
-      nodes:
-        - ${scheduler.nodes[0]}
-      ip_range: 10.1.0.0/16
-
-outputs:
-  node_deployment_id: ${network.node_deployment_id}
-  nodes_ip_range: ${network.nodes_ip_range}
-```
-
-{{% /choosable %}}
-
-{{% choosable language virtual machine %}}
-
-```yml
-name: pulumi-threefold
-runtime: yaml
-
-resources:
-  provider:
-    type: pulumi:providers:threefold
-    options:
-      pluginDownloadURL: github://api.github.com/threefoldtech/pulumi-threefold # optional
-    properties:
-      mnemonic:
-
-  scheduler:
-    type: threefold:provider:Scheduler
-    options:
-      provider: ${provider}
-    properties:
-      mru: 0.25 # 256 megabytes
-      sru: 2
-      farm_ids: [1]
-
-  network:
-    type: threefold:provider:Network
-    options:
-      provider: ${provider}
-      dependsOn:
-        - ${scheduler}
-    properties:
-      name: test
-      description: test network
-      nodes:
-        - ${scheduler.nodes[0]}
-      ip_range: 10.1.0.0/16
-      # mycelium_keys:
-      #   ${scheduler.nodes[0]}: 9751c596c7c951aedad1a5f78f18b59515064adf660e0d55abead65e6fbbd627 # hex encoded 32 bytes
-
-  deployment:
-    type: threefold:provider:Deployment
-    options:
-      provider: ${provider}
-      dependsOn:
-        - ${network}
-    properties:
-      node_id: ${scheduler.nodes[0]}
-      name: deployment
-      network_name: test
-      vms:
-        - name: vm
-          flist: https://hub.grid.tf/tf-official-apps/base:latest.flist
-          entrypoint: "/sbin/zinit init"
-          network_name: test
-          cpu: 2
-          memory: 256
-          planetary: true
-          # mycelium_ip_seed: b60f2b7ec39c # hex encoded 6 bytes
-          mounts:
-            - disk_name: data
-              mount_point: /app
-          env_vars:
-            SSH_KEY:
-
-      disks:
-        - name: data
-          size: 2
-
-outputs:
-  node_deployment_id: ${deployment.node_deployment_id}
-  planetary_ip: ${deployment.vms_computed[0].planetary_ip}
-  # mycelium_ip: ${deployment.vms_computed[0].mycelium_ip}
-```
-
-{{% /choosable %}}
-
-{{% choosable language kubernetes %}}
-
-```yml
-name: pulumi-threefold
-runtime: yaml
-
-resources:
-  provider:
-    type: pulumi:providers:threefold
-    options:
-      pluginDownloadURL: github://api.github.com/threefoldtech/pulumi-threefold # optional
-    properties:
-      mnemonic:
-
-  scheduler:
-    type: threefold:provider:Scheduler
-    options:
-      provider: ${provider}
-    properties:
-      mru: 6
-      sru: 6
-      farm_ids: [1]
-
-  network:
-    type: threefold:provider:Network
-    options:
-      provider: ${provider}
-      dependsOn:
-        - ${scheduler}
-    properties:
-      name: test
-      description: test network
-      nodes:
-        - ${scheduler.nodes[0]}
-      ip_range: 10.1.0.0/16
-
-  kubernetes:
-    type: threefold:provider:Kubernetes
-    options:
-      provider: ${provider}
-      dependsOn:
-        - ${network}
-    properties:
-      master:
-        name: kubernetes
-        node: ${scheduler.nodes[0]}
-        disk_size: 2
-        planetary: true
-        cpu: 2
-        memory: 2048
-
-      workers:
-        - name: worker1
-          node: ${scheduler.nodes[0]}
-          disk_size: 2
-          cpu: 2
-          memory: 2048
-        - name: worker2
-          node: ${scheduler.nodes[0]}
-          disk_size: 2
-          cpu: 2
-          memory: 2048
-
-      token: t123456789
-      network_name: test
-      ssh_key:
-
-outputs:
-  node_deployment_id: ${kubernetes.node_deployment_id}
-  planetary_ip: ${kubernetes.master_computed.planetary_ip}
-```
-
-{{% /choosable %}}
-
-{{% choosable language ZDB %}}
-
-```yml
-name: pulumi-threefold
-runtime: yaml
-
-resources:
-  provider:
-    type: pulumi:providers:threefold
-    options:
-      pluginDownloadURL: github://api.github.com/threefoldtech/pulumi-threefold # optional
-    properties:
-      mnemonic:
-
-  scheduler:
-    type: threefold:provider:Scheduler
-    options:
-      provider: ${provider}
-    properties:
-      mru: 0.25 # 256 megabytes
-      sru: 2
-      farm_ids: [1]
-
-  deployment:
-    type: threefold:provider:Deployment
-    options:
-      provider: ${provider}
-    properties:
-      node_id: ${scheduler.nodes[0]}
-      name: zdb
-      zdbs:
-        - name: zdbsTest
-          size: 2
-          password: "123456"
-
-outputs:
-  node_deployment_id: ${deployment.node_deployment_id}
-  zdb_endpoint: "[${deployment.zdbs_computed[0].ips[1]}]:${deployment.zdbs_computed[0].port}"
-  zdb_namespace: ${deployment.zdbs_computed[0].namespace}
-```
-
-{{% /choosable %}}
-
-{{% choosable language name gateway %}}
-
-```yml
-name: pulumi-threefold
-runtime: yaml
-
-resources:
-  provider:
-    type: pulumi:providers:threefold
-    options:
-      pluginDownloadURL: github://api.github.com/threefoldtech/pulumi-threefold # optional
-    properties:
-      mnemonic:
-
-  scheduler:
-    type: threefold:provider:Scheduler
-    options:
-      provider: ${provider}
-    properties:
-      farm_ids: [1]
-      ipv4: true
-      free_ips: 1
-
-  gatewayName:
-    type: threefold:provider:GatewayName
-    options:
-      provider: ${provider}
-      dependsOn:
-        - ${scheduler}
-    properties:
-      name: pulumi
-      node_id: ${scheduler.nodes[0]}
-      backends:
-        - "http://69.164.223.208"
-
-outputs:
-  node_deployment_id: ${gatewayName.node_deployment_id}
-  fqdn: ${gatewayName.fqdn}
-```
-
-{{% /choosable %}}
-
-{{% choosable language FQDN gateway %}}
 
 ```yml
 name: pulumi-threefold
@@ -831,6 +738,115 @@ outputs:
 {{% /choosable %}}
 
 {{< /chooser >}}
+
+### ZDB resource
+
+{{< chooser language "go,yaml" >}}
+
+{{% choosable language go %}}
+
+```go
+package main
+
+import (
+  "fmt"
+  "os"
+
+  "github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+  "github.com/threefoldtech/pulumi-threefold/sdk/go/threefold"
+  "github.com/threefoldtech/pulumi-threefold/sdk/go/threefold/provider"
+)
+
+func main() {
+  pulumi.Run(func(ctx *pulumi.Context) error {
+    tfProvider, err := threefold.NewProvider(ctx, "provider", &threefold.ProviderArgs{
+      Mnemonic: pulumi.String(os.Getenv("MNEMONIC")),
+    })
+    if err != nil {
+      return err
+    }
+    scheduler, err := provider.NewScheduler(ctx, "scheduler", &provider.SchedulerArgs{
+      Mru: pulumi.Int(1),
+      Sru: pulumi.Int(2),
+      Farm_ids: pulumi.IntArray{
+        pulumi.Int(1),
+      },
+    }, pulumi.Provider(tfProvider))
+    if err != nil {
+      return err
+    }
+    deployment, err := provider.NewDeployment(ctx, "deployment", &provider.DeploymentArgs{
+      Node_id: scheduler.Nodes.ApplyT(func(nodes []int) (int, error) {
+        return nodes[0], nil
+      }).(pulumi.IntOutput),
+      Name: pulumi.String("zdb"),
+      Zdbs: provider.ZDBInputArray{
+        &provider.ZDBInputArgs{
+          Name:     pulumi.String("zdbsTest"),
+          Size:     pulumi.Int(2),
+          Password: pulumi.String("123456"),
+        },
+      },
+    }, pulumi.Provider(tfProvider))
+    if err != nil {
+      return err
+    }
+    ctx.Export("node_deployment_id", deployment.Node_deployment_id)
+    ctx.Export("zdb_endpoint", pulumi.All(deployment.Zdbs_computed, deployment.Zdbs_computed).ApplyT(func(_args []interface{}) (string, error) {
+      deploymentZdbs_computed := _args[0].([]provider.ZDBComputed)
+      deploymentZdbs_computed1 := _args[1].([]provider.ZDBComputed)
+      return fmt.Sprintf("[%v]:%v", deploymentZdbs_computed[0].Ips[1], deploymentZdbs_computed1[0].Port), nil
+    }).(pulumi.StringOutput))
+    ctx.Export("zdb_namespace", deployment.Zdbs_computed.ApplyT(func(zdbs_computed []provider.ZDBComputed) (*string, error) {
+      return &zdbs_computed[0].Namespace, nil
+    }).(pulumi.StringPtrOutput))
+    return nil
+  })
+}
+```
+
+{{% /choosable %}}
+
+{{% choosable language yaml %}}
+
+```yml
+name: pulumi-threefold
+runtime: yaml
+
+resources:
+  provider:
+    type: pulumi:providers:threefold
+    options:
+      pluginDownloadURL: github://api.github.com/threefoldtech/pulumi-threefold # optional
+    properties:
+      mnemonic:
+
+  scheduler:
+    type: threefold:provider:Scheduler
+    options:
+      provider: ${provider}
+    properties:
+      mru: 0.25 # 256 megabytes
+      sru: 2
+      farm_ids: [1]
+
+  deployment:
+    type: threefold:provider:Deployment
+    options:
+      provider: ${provider}
+    properties:
+      node_id: ${scheduler.nodes[0]}
+      name: zdb
+      zdbs:
+        - name: zdbsTest
+          size: 2
+          password: "123456"
+
+outputs:
+  node_deployment_id: ${deployment.node_deployment_id}
+  zdb_endpoint: "[${deployment.zdbs_computed[0].ips[1]}]:${deployment.zdbs_computed[0].port}"
+  zdb_namespace: ${deployment.zdbs_computed[0].namespace}
+```
 
 {{% /choosable %}}
 

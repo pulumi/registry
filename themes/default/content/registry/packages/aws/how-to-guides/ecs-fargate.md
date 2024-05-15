@@ -90,7 +90,8 @@ const repo = new awsx.ecr.Repository("repo", {
 // Build and publish our application's container image from ./app to the ECR repository.
 const image = new awsx.ecr.Image("image", {
     repositoryUrl: repo.url,
-    path: "./app",
+    context: "./app",
+    platform: "linux/amd64",
 });
 
 // Define the service and configure it to use our image and load balancer.

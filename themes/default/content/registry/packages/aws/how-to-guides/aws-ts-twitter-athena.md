@@ -16,7 +16,7 @@ layout: package
     <a class="flex flex-wrap items-center rounded-md font-display text-lg text-white bg-blue-600 border-2 border-blue-600 px-2 mr-2 whitespace-no-wrap hover:text-white" style="height: 45px;" href="https://github.com/pulumi/examples/tree/master/aws-ts-twitter-athena" target="_blank">
         <span><i class="fab fa-github pr-2"></i> View Code</span>
     </a>
-    <a href="https://app.pulumi.com/new?template=https://github.com/pulumi/examples/blob/master/aws-ts-twitter-athena/README.md" target="_blank">
+    <a href="https://app.pulumi.com/new?template=https://github.com/pulumi/examples/blob/master/aws-ts-twitter-athena/README.md#gh-dark-mode-only" target="_blank">
         <img src="https://get.pulumi.com/new/button.svg" alt="Deploy">
     </a>
 </p>
@@ -26,7 +26,7 @@ A sample project that queries Twitter every 2 minutes and stores the results in 
 
 ## Setup
 
-Register a new [Twitter app](https://apps.twitter.com/). 
+Register a new [Twitter app](https://apps.twitter.com/).
 
 ## Deploy and run the program
 
@@ -40,7 +40,7 @@ Register a new [Twitter app](https://apps.twitter.com/).
 
     ```
     pulumi config set twitterAccessTokenKey <Value for Consumer Key (API Key)>
-    pulumi config set --secret twitterAccessTokenSecret <Value for Consumer Secret (API Secret)> 
+    pulumi config set --secret twitterAccessTokenSecret <Value for Consumer Secret (API Secret)>
     pulumi config set twitterConsumerKey <Value for Access Token>
     pulumi config set --secret twitterConsumerSecret <Value for Access Token Secret>
     ```
@@ -50,7 +50,7 @@ Register a new [Twitter app](https://apps.twitter.com/).
     ```
     pulumi config set twitterQuery "Amazon Web Services"
     ```
-  
+
 1.  Set the AWS region:
 
     ```bash
@@ -83,6 +83,4 @@ Register a new [Twitter app](https://apps.twitter.com/).
 ## Clean up
 
 To clean up resources, run `pulumi destroy` and answer the confirmation question at the prompt.
-
-
 

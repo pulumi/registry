@@ -16,7 +16,7 @@ layout: package
     <a class="flex flex-wrap items-center rounded-md font-display text-lg text-white bg-blue-600 border-2 border-blue-600 px-2 mr-2 whitespace-no-wrap hover:text-white" style="height: 45px;" href="https://github.com/pulumi/examples/tree/master/classic-azure-ts-serverless-url-shortener-global" target="_blank">
         <span><i class="fab fa-github pr-2"></i> View Code</span>
     </a>
-    <a href="https://app.pulumi.com/new?template=https://github.com/pulumi/examples/blob/master/classic-azure-ts-serverless-url-shortener-global/README.md" target="_blank">
+    <a href="https://app.pulumi.com/new?template=https://github.com/pulumi/examples/blob/master/classic-azure-ts-serverless-url-shortener-global/README.md#gh-dark-mode-only" target="_blank">
         <img src="https://get.pulumi.com/new/button.svg" alt="Deploy">
     </a>
 </p>
@@ -52,7 +52,7 @@ Multi-region deployment of Azure Functions and Cosmos DB with Traffic Manager
 
 1.  Run `pulumi up` to preview and deploy changes:
 
-    ``` 
+    ```
     $ pulumi up
     Previewing changes:
     ...
@@ -72,7 +72,7 @@ Multi-region deployment of Azure Functions and Cosmos DB with Traffic Manager
     $ curl -H "Content-Type: application/json" \
         --request POST \
         -d '{"id":"pulumi","url":"https://pulumi.com"}' \
-        "$(pulumi stack output addEndpoint)"    
+        "$(pulumi stack output addEndpoint)"
     Short URL saved
     ```
 

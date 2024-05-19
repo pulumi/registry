@@ -16,13 +16,13 @@ layout: package
     <a class="flex flex-wrap items-center rounded-md font-display text-lg text-white bg-blue-600 border-2 border-blue-600 px-2 mr-2 whitespace-no-wrap hover:text-white" style="height: 45px;" href="https://github.com/pulumi/examples/tree/master/aws-py-apigatewayv2-http-api-quickcreate" target="_blank">
         <span><i class="fab fa-github pr-2"></i> View Code</span>
     </a>
-    <a href="https://app.pulumi.com/new?template=https://github.com/pulumi/examples/blob/master/aws-py-apigatewayv2-http-api-quickcreate/README.md" target="_blank">
+    <a href="https://app.pulumi.com/new?template=https://github.com/pulumi/examples/blob/master/aws-py-apigatewayv2-http-api-quickcreate/README.md#gh-dark-mode-only" target="_blank">
         <img src="https://get.pulumi.com/new/button.svg" alt="Deploy">
     </a>
 </p>
 
 
-Set up a simple HTTP API using AWS API Gateway V2. The API executes a simple Lambda function 
+Set up a simple HTTP API using AWS API Gateway V2. The API executes a simple Lambda function
 found in `/app/index.js`.
 
 ## Prerequisites
@@ -90,7 +90,7 @@ with `***`.
 1.  To view the runtime logs of the Lambda function, use the `pulumi logs` command. To get a log stream, use `pulumi logs --follow`.
 
 1.  At this point, you have a running HTTP API. Feel free to modify your program, and run `pulumi up`
-to redeploy changes. The Pulumi CLI automatically detects what has changed and makes the minimal 
+to redeploy changes. The Pulumi CLI automatically detects what has changed and makes the minimal
 edits necessary to accomplish these changes. This could be altering the function used by the Lambda,
 or anything else you'd like!
 

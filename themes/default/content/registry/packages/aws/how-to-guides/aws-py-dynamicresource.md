@@ -16,7 +16,7 @@ layout: package
     <a class="flex flex-wrap items-center rounded-md font-display text-lg text-white bg-blue-600 border-2 border-blue-600 px-2 mr-2 whitespace-no-wrap hover:text-white" style="height: 45px;" href="https://github.com/pulumi/examples/tree/master/aws-py-dynamicresource" target="_blank">
         <span><i class="fab fa-github pr-2"></i> View Code</span>
     </a>
-    <a href="https://app.pulumi.com/new?template=https://github.com/pulumi/examples/blob/master/aws-py-dynamicresource/README.md" target="_blank">
+    <a href="https://app.pulumi.com/new?template=https://github.com/pulumi/examples/blob/master/aws-py-dynamicresource/README.md#gh-dark-mode-only" target="_blank">
         <img src="https://get.pulumi.com/new/button.svg" alt="Deploy">
     </a>
 </p>
@@ -52,23 +52,23 @@ A simple example demonstrating how to write Dynamic Providers using Pulumi.
 
     ```bash
     Updating (aws-py-dynamicresource):
-        Type                                  Name                                           Status      
-    +   pulumi:pulumi:Stack                   aws-py-dynamicresource-aws-py-dynamicresource  created     
-    +   ├─ aws:ec2:Vpc                        app-vpc                                        created     
-    +   ├─ aws:ec2:InternetGateway            app-gateway                                    created     
-    +   ├─ aws:ec2:SecurityGroup              security-group                                 created     
-    +   ├─ aws:ec2:Subnet                     app-vpc-subnet                                 created     
-    +   ├─ aws:ec2:Subnet                     extra-rds-subnet                               created     
-    +   ├─ aws:ec2:RouteTable                 app-routetable                                 created     
-    +   ├─ aws:rds:SubnetGroup                app-database-subnetgroup                       created     
-    +   ├─ aws:ec2:MainRouteTableAssociation  app_routetable_association                     created     
-    +   ├─ aws:rds:Instance                   mysql-server                                   created     
-    +   ├─ pulumi:providers:mysql             mysql-provider                                 created     
-    +   ├─ mysql:index:Database               mysql-database                                 created     
-    +   ├─ mysql:index:User                   mysql-standard-user                            created     
-    +   ├─ mysql:index:Grant                  mysql-access-grant                             created     
-    +   └─ pulumi-python:dynamic:Resource     mysql_votes_table                              created     
-    
+        Type                                  Name                                           Status
+    +   pulumi:pulumi:Stack                   aws-py-dynamicresource-aws-py-dynamicresource  created
+    +   ├─ aws:ec2:Vpc                        app-vpc                                        created
+    +   ├─ aws:ec2:InternetGateway            app-gateway                                    created
+    +   ├─ aws:ec2:SecurityGroup              security-group                                 created
+    +   ├─ aws:ec2:Subnet                     app-vpc-subnet                                 created
+    +   ├─ aws:ec2:Subnet                     extra-rds-subnet                               created
+    +   ├─ aws:ec2:RouteTable                 app-routetable                                 created
+    +   ├─ aws:rds:SubnetGroup                app-database-subnetgroup                       created
+    +   ├─ aws:ec2:MainRouteTableAssociation  app_routetable_association                     created
+    +   ├─ aws:rds:Instance                   mysql-server                                   created
+    +   ├─ pulumi:providers:mysql             mysql-provider                                 created
+    +   ├─ mysql:index:Database               mysql-database                                 created
+    +   ├─ mysql:index:User                   mysql-standard-user                            created
+    +   ├─ mysql:index:Grant                  mysql-access-grant                             created
+    +   └─ pulumi-python:dynamic:Resource     mysql_votes_table                              created
+
     Outputs:
         dynamic-resource-id: "schema-44462d37c8e04c18be08cbf05670a328"
 

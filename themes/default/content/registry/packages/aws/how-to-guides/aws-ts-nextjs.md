@@ -16,7 +16,7 @@ layout: package
     <a class="flex flex-wrap items-center rounded-md font-display text-lg text-white bg-blue-600 border-2 border-blue-600 px-2 mr-2 whitespace-no-wrap hover:text-white" style="height: 45px;" href="https://github.com/pulumi/examples/tree/master/aws-ts-nextjs" target="_blank">
         <span><i class="fab fa-github pr-2"></i> View Code</span>
     </a>
-    <a href="https://app.pulumi.com/new?template=https://github.com/pulumi/examples/blob/master/aws-ts-nextjs/README.md" target="_blank">
+    <a href="https://app.pulumi.com/new?template=https://github.com/pulumi/examples/blob/master/aws-ts-nextjs/README.md#gh-dark-mode-only" target="_blank">
         <img src="https://get.pulumi.com/new/button.svg" alt="Deploy">
     </a>
 </p>
@@ -65,9 +65,9 @@ After cloning this repo, from this working directory, run these commands:
     ```
 
 5. Most of the infrastructure will deploy within about 30s, but the CloudFront CDN can take 4-5 minutes.  After this is complete, a CloudFront URL where your application is served will be shown.
-   
 
-    ```bash    
+
+    ```bash
     Outputs:
         url: "https://d119mwdwutz4hu.cloudfront.net"
 
@@ -81,7 +81,7 @@ After cloning this repo, from this working directory, run these commands:
 
     ![Screenshot of demo app](https://raw.githubusercontent.com/pulumi/examples/master/aws-ts-nextjs/screenshot.png)
 
-7. Make changes to the Next.js app in the `demoapp` folder, or bring your own Next.js app and point the Pulumi component at it instead.  
+7. Make changes to the Next.js app in the `demoapp` folder, or bring your own Next.js app and point the Pulumi component at it instead.
 
 8. Once you've finished experimenting, tear down your stack's resources by destroying and removing it:
 

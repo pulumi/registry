@@ -16,7 +16,7 @@ layout: package
     <a class="flex flex-wrap items-center rounded-md font-display text-lg text-white bg-blue-600 border-2 border-blue-600 px-2 mr-2 whitespace-no-wrap hover:text-white" style="height: 45px;" href="https://github.com/pulumi/examples/tree/master/classic-azure-cs-botservice" target="_blank">
         <span><i class="fab fa-github pr-2"></i> View Code</span>
     </a>
-    <a href="https://app.pulumi.com/new?template=https://github.com/pulumi/examples/blob/master/classic-azure-cs-botservice/README.md" target="_blank">
+    <a href="https://app.pulumi.com/new?template=https://github.com/pulumi/examples/blob/master/classic-azure-cs-botservice/README.md#gh-dark-mode-only" target="_blank">
         <img src="https://get.pulumi.com/new/button.svg" alt="Deploy">
     </a>
 </p>
@@ -25,7 +25,7 @@ layout: package
 Starting point for building Azure Bot Service hosted in Azure App Service.
 
 Provisions Azure Bot Service, Azure Bot Channel registration and Azure Application Insights to be used in combination
-with App Service - registering Azure AD Microsoft Application with secret.  
+with App Service - registering Azure AD Microsoft Application with secret.
 
 This will deploy the echo bot code within the ~/bot directory - you can tweak the contents or replace the contents with your own bot.  Please ensure you publish the bot first to the ~/bot/publish subfolder - following the instructions for `Publish Bot Steps`.
 
@@ -87,14 +87,14 @@ To deploy your infrastructure, follow the below steps.
     ```
 
 6.  Check the deployed bot using either:
-  
+
    * Azure Portal Azure Bot Service - [Test in Webchat feature](https://docs.microsoft.com/en-us/azure/bot-service/abs-quickstart?view=azure-bot-service-4.0#test-the-bot)
    * [Bot Framework Emulator](https://github.com/Microsoft/BotFramework-Emulator) pointing to the output bot endpoint and Microsoft Application Id and the secret you supplied:
 
       ```bash
       $ BotEndpoint: "https://app8asdf.azurewebsites.net/api/messages"
       $ MicrosoftAppId: "b5e65403-923c-4568-z2f6-a6f41b258azz"
-      $ MicrosoftAppPassword: "<secret>"    
+      $ MicrosoftAppPassword: "<secret>"
       ```
 
 7.  Once you've finished, you can tear down your stack's resources by destroying and removing it:

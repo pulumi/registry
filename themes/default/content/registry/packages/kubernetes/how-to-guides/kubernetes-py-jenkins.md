@@ -16,7 +16,7 @@ layout: package
     <a class="flex flex-wrap items-center rounded-md font-display text-lg text-white bg-blue-600 border-2 border-blue-600 px-2 mr-2 whitespace-no-wrap hover:text-white" style="height: 45px;" href="https://github.com/pulumi/examples/tree/master/kubernetes-py-jenkins" target="_blank">
         <span><i class="fab fa-github pr-2"></i> View Code</span>
     </a>
-    <a href="https://app.pulumi.com/new?template=https://github.com/pulumi/examples/blob/master/kubernetes-py-jenkins/README.md" target="_blank">
+    <a href="https://app.pulumi.com/new?template=https://github.com/pulumi/examples/blob/master/kubernetes-py-jenkins/README.md#gh-dark-mode-only" target="_blank">
         <img src="https://get.pulumi.com/new/button.svg" alt="Deploy">
     </a>
 </p>
@@ -64,13 +64,13 @@ Preview the deployment of the application:
 ```bash
     $ pulumi preview
     Previewing update (dev):
-         Type                                         Name                       Plan       
-     +   pulumi:pulumi:Stack                          kubernetes-py-jenkins-dev  create     
-     +   └─ jenkins:jenkins:Instance                  dev                        create     
-     +      ├─ kubernetes:core:Service                dev-service                create     
-     +      ├─ kubernetes:core:PersistentVolumeClaim  dev-pvc                    create     
-     +      ├─ kubernetes:core:Secret                 dev-secret                 create     
-     +      └─ kubernetes:apps:Deployment             dev-deploy                 create     
+         Type                                         Name                       Plan
+     +   pulumi:pulumi:Stack                          kubernetes-py-jenkins-dev  create
+     +   └─ jenkins:jenkins:Instance                  dev                        create
+     +      ├─ kubernetes:core:Service                dev-service                create
+     +      ├─ kubernetes:core:PersistentVolumeClaim  dev-pvc                    create
+     +      ├─ kubernetes:core:Secret                 dev-secret                 create
+     +      └─ kubernetes:apps:Deployment             dev-deploy                 create
 
     Resources:
         + 6 to create
@@ -81,13 +81,13 @@ Perform the deployment:
 ```bash
     $ pulumi up --skip-preview
     Updating (dev):
-         Type                                         Name                       Status      
-     +   pulumi:pulumi:Stack                          kubernetes-py-jenkins-dev  created     
-     +   └─ jenkins:jenkins:Instance                  dev                        created     
-     +      ├─ kubernetes:core:PersistentVolumeClaim  dev-pvc                    created     
-     +      ├─ kubernetes:core:Service                dev-service                created     
-     +      ├─ kubernetes:core:Secret                 dev-secret                 created     
-     +      └─ kubernetes:apps:Deployment             dev-deploy                 created     
+         Type                                         Name                       Status
+     +   pulumi:pulumi:Stack                          kubernetes-py-jenkins-dev  created
+     +   └─ jenkins:jenkins:Instance                  dev                        created
+     +      ├─ kubernetes:core:PersistentVolumeClaim  dev-pvc                    created
+     +      ├─ kubernetes:core:Service                dev-service                created
+     +      ├─ kubernetes:core:Secret                 dev-secret                 created
+     +      └─ kubernetes:apps:Deployment             dev-deploy                 created
 
     Outputs:
         external_ip: "35.239.72.50"
@@ -118,20 +118,20 @@ When you're ready to be done with Jenkins, you can destroy the instance:
 ```bash
     $ pulumi destroy
         Destroying (dev):
-         Type                                         Name                       Status      
-     -   pulumi:pulumi:Stack                          kubernetes-py-jenkins-dev  deleted     
-     -   └─ jenkins:jenkins:Instance                  dev                        deleted     
-     -      ├─ kubernetes:core:Secret                 dev-secret                 deleted     
-     -      ├─ kubernetes:core:Service                dev-service                deleted     
-     -      ├─ kubernetes:core:PersistentVolumeClaim  dev-pvc                    deleted     
-     -      └─ kubernetes:apps:Deployment             dev-deploy                 deleted     
-     
+         Type                                         Name                       Status
+     -   pulumi:pulumi:Stack                          kubernetes-py-jenkins-dev  deleted
+     -   └─ jenkins:jenkins:Instance                  dev                        deleted
+     -      ├─ kubernetes:core:Secret                 dev-secret                 deleted
+     -      ├─ kubernetes:core:Service                dev-service                deleted
+     -      ├─ kubernetes:core:PersistentVolumeClaim  dev-pvc                    deleted
+     -      └─ kubernetes:apps:Deployment             dev-deploy                 deleted
+
     Outputs:
       - external_ip: "35.239.72.50"
-    
+
     Resources:
         - 6 deleted
-    
+
     Duration: 33s
 ```
 

@@ -16,7 +16,7 @@ layout: package
     <a class="flex flex-wrap items-center rounded-md font-display text-lg text-white bg-blue-600 border-2 border-blue-600 px-2 mr-2 whitespace-no-wrap hover:text-white" style="height: 45px;" href="https://github.com/pulumi/examples/tree/master/gcp-ts-gke-serviceaccount" target="_blank">
         <span><i class="fab fa-github pr-2"></i> View Code</span>
     </a>
-    <a href="https://app.pulumi.com/new?template=https://github.com/pulumi/examples/blob/master/gcp-ts-gke-serviceaccount/README.md" target="_blank">
+    <a href="https://app.pulumi.com/new?template=https://github.com/pulumi/examples/blob/master/gcp-ts-gke-serviceaccount/README.md#gh-dark-mode-only" target="_blank">
         <img src="https://get.pulumi.com/new/button.svg" alt="Deploy">
     </a>
 </p>
@@ -79,7 +79,7 @@ After cloning this repo, from this working directory, run these commands:
     ```
 
 1. Set some optional configuration variables (note, these values are optional and have defaults set):
-    
+
     ```bash
     $ pulumi config set name <NAME>
     $ pulumi config set machineType n1-standard-1
@@ -101,7 +101,7 @@ After cloning this repo, from this working directory, run these commands:
     new GKE cluster takes between 3-5 minutes.
 
     ```bash
-    
+
     ```
 
 1. After 3-5 minutes, your cluster will be ready, and the kubeconfig YAML you'll use to connect to the cluster will
@@ -122,7 +122,7 @@ After cloning this repo, from this working directory, run these commands:
     ```
 
 1. Verify the pubsub example is working
-   
+
     The pubsub deployment should be running, you can check it by examining the logs:
 
     ```bash
@@ -136,5 +136,4 @@ After cloning this repo, from this working directory, run these commands:
     $ pulumi destroy --yes
     $ pulumi stack rm --yes
     ```
-
 

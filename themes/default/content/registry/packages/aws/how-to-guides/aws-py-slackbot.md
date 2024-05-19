@@ -16,7 +16,7 @@ layout: package
     <a class="flex flex-wrap items-center rounded-md font-display text-lg text-white bg-blue-600 border-2 border-blue-600 px-2 mr-2 whitespace-no-wrap hover:text-white" style="height: 45px;" href="https://github.com/pulumi/examples/tree/master/aws-py-slackbot" target="_blank">
         <span><i class="fab fa-github pr-2"></i> View Code</span>
     </a>
-    <a href="https://app.pulumi.com/new?template=https://github.com/pulumi/examples/blob/master/aws-py-slackbot/README.md" target="_blank">
+    <a href="https://app.pulumi.com/new?template=https://github.com/pulumi/examples/blob/master/aws-py-slackbot/README.md#gh-dark-mode-only" target="_blank">
         <img src="https://get.pulumi.com/new/button.svg" alt="Deploy">
     </a>
 </p>
@@ -66,7 +66,7 @@ To create a new Slackbot, first go to https://api.slack.com/apps and create an a
 <p align=center>
 <img src=https://user-images.githubusercontent.com/4564579/55648728-e7127180-5795-11e9-9ddf-849d789ea05b.png>
 </p>
-    
+
 Pick your desired name for the app, and the Workspace the app belongs to.  Here we choose `MentionBot`:
 
 <p align=center>
@@ -80,7 +80,7 @@ Once created, you will need to 'Add features and functionality' to your app. You
 </p>
 
 First, we'll enable 'Incoming Webhooks'.  This allows your Slack bot to post messages into Slack for you:
- 
+
 <p align=center>
 <img src=https://user-images.githubusercontent.com/4564579/55648806-22ad3b80-5796-11e9-8dfd-ba86b7ba9351.png>
 </p>
@@ -110,7 +110,7 @@ Underneath this, we'll set the following Scopes defining the permissions of the 
    <img src=https://user-images.githubusercontent.com/4564579/55647362-55edcb80-5792-11e9-8f60-ae5261fa9c9a.png>
 </p>
 
-Now, we're almost done.  The only thing left to do is supply your Pulumi App with the appropriate secrets/tokens.  We'll need the Bot OAuth token (shown above), and the 'Verification Token' (found under 'Basic Information'): 
+Now, we're almost done.  The only thing left to do is supply your Pulumi App with the appropriate secrets/tokens.  We'll need the Bot OAuth token (shown above), and the 'Verification Token' (found under 'Basic Information'):
 
 <p align=center>
    <img src=https://user-images.githubusercontent.com/4564579/55647507-af55fa80-5792-11e9-80bf-b07b894d996f.png>

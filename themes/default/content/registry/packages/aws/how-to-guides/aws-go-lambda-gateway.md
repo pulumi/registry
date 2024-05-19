@@ -16,6 +16,9 @@ layout: package
     <a class="flex flex-wrap items-center rounded-md font-display text-lg text-white bg-blue-600 border-2 border-blue-600 px-2 mr-2 whitespace-no-wrap hover:text-white" style="height: 45px;" href="https://github.com/pulumi/examples/tree/master/aws-go-lambda-gateway" target="_blank">
         <span><i class="fab fa-github pr-2"></i> View Code</span>
     </a>
+    <a href="https://app.pulumi.com/new?template=https://github.com/pulumi/examples/blob/master/aws-go-lambda-gateway/README.md#gh-dark-mode-only" target="_blank">
+        <img src="https://get.pulumi.com/new/button.svg" alt="Deploy">
+    </a>
 </p>
 
 
@@ -42,18 +45,18 @@ After cloning this repo, run these commands from the working directory:
 		```bash
 		make build
 		```
-		
+
 	- For developers on Windows:
-		
+
 		- Get the `build-lambda-zip` tool:
-			
+
 			```bash
 			set GO111MODULE=on
 			go.exe get -u github.com/aws/aws-lambda-go/cmd/build-lambda-zip
 			```
-		
+
 		- Use the tool from your GOPATH:
-				
+
 			```bash
 			set GOOS=linux
 			set GOARCH=amd64
@@ -61,7 +64,7 @@ After cloning this repo, run these commands from the working directory:
 			go build -o handler\handler handler\handler.go
 			%USERPROFILE%\Go\bin\build-lambda-zip.exe -o handler\handler.zip handler\handler
 			```
-		
+
 
 2. Create a new Pulumi stack, which is an isolated deployment target for this example:
 
@@ -77,37 +80,37 @@ After cloning this repo, run these commands from the working directory:
 4. Execute the Pulumi program to create our lambda:
 
 	```bash
-	$ pulumi up                              
+	$ pulumi up
 	Previewing update (dev):
-		Type                           Name               Plan       
-	+   pulumi:pulumi:Stack            go-lambda-dev      create     
-	+   ├─ aws:apigateway:RestApi      UpperCaseGateway   create     
-	+   ├─ aws:iam:Role                task-exec-role     create     
-	+   ├─ aws:apigateway:Resource     UpperAPI           create     
-	+   ├─ aws:iam:RolePolicy          lambda-log-policy  create     
-	+   ├─ aws:apigateway:Method       AnyMethod          create     
-	+   ├─ aws:lambda:Function         basicLambda        create     
-	+   ├─ aws:lambda:Permission       APIPermission      create     
-	+   ├─ aws:apigateway:Integration  LambdaIntegration  create     
-	+   └─ aws:apigateway:Deployment   APIDeployment      create     
-	
+		Type                           Name               Plan
+	+   pulumi:pulumi:Stack            go-lambda-dev      create
+	+   ├─ aws:apigateway:RestApi      UpperCaseGateway   create
+	+   ├─ aws:iam:Role                task-exec-role     create
+	+   ├─ aws:apigateway:Resource     UpperAPI           create
+	+   ├─ aws:iam:RolePolicy          lambda-log-policy  create
+	+   ├─ aws:apigateway:Method       AnyMethod          create
+	+   ├─ aws:lambda:Function         basicLambda        create
+	+   ├─ aws:lambda:Permission       APIPermission      create
+	+   ├─ aws:apigateway:Integration  LambdaIntegration  create
+	+   └─ aws:apigateway:Deployment   APIDeployment      create
+
 	Resources:
 		+ 10 to create
 
 	Do you want to perform this update? yes
 	Updating (dev):
-		Type                           Name               Status      
-	+   pulumi:pulumi:Stack            go-lambda-dev      created     
-	+   ├─ aws:apigateway:RestApi      UpperCaseGateway   created     
-	+   ├─ aws:iam:Role                task-exec-role     created     
-	+   ├─ aws:apigateway:Resource     UpperAPI           created     
-	+   ├─ aws:iam:RolePolicy          lambda-log-policy  created     
-	+   ├─ aws:apigateway:Method       AnyMethod          created     
-	+   ├─ aws:lambda:Function         basicLambda        created     
-	+   ├─ aws:apigateway:Integration  LambdaIntegration  created     
-	+   ├─ aws:lambda:Permission       APIPermission      created     
-	+   └─ aws:apigateway:Deployment   APIDeployment      created     
-	
+		Type                           Name               Status
+	+   pulumi:pulumi:Stack            go-lambda-dev      created
+	+   ├─ aws:apigateway:RestApi      UpperCaseGateway   created
+	+   ├─ aws:iam:Role                task-exec-role     created
+	+   ├─ aws:apigateway:Resource     UpperAPI           created
+	+   ├─ aws:iam:RolePolicy          lambda-log-policy  created
+	+   ├─ aws:apigateway:Method       AnyMethod          created
+	+   ├─ aws:lambda:Function         basicLambda        created
+	+   ├─ aws:apigateway:Integration  LambdaIntegration  created
+	+   ├─ aws:lambda:Permission       APIPermission      created
+	+   └─ aws:apigateway:Deployment   APIDeployment      created
+
 	Outputs:
 		invocation URL: "https://<gateway-id>.execute-api.us-west-2.amazonaws.com/prod/{message}"
 
@@ -120,8 +123,8 @@ After cloning this repo, run these commands from the working directory:
 5. Call our lambda function from the cli:
 
 	```bash
-	curl https://<gateway-id>.execute-api.us-west-2.amazonaws.com/prod/helloworld   
-	HELLOWORLD% 
+	curl https://<gateway-id>.execute-api.us-west-2.amazonaws.com/prod/helloworld
+	HELLOWORLD%
 	```
 
 6. From there, feel free to experiment. Simply making edits, rebuilding your handler, and running `pulumi up` will update your lambda.

@@ -16,7 +16,7 @@ layout: package
     <a class="flex flex-wrap items-center rounded-md font-display text-lg text-white bg-blue-600 border-2 border-blue-600 px-2 mr-2 whitespace-no-wrap hover:text-white" style="height: 45px;" href="https://github.com/pulumi/examples/tree/master/kubernetes-go-helm-wordpress" target="_blank">
         <span><i class="fab fa-github pr-2"></i> View Code</span>
     </a>
-    <a href="https://app.pulumi.com/new?template=https://github.com/pulumi/examples/blob/master/kubernetes-go-helm-wordpress/README.md" target="_blank">
+    <a href="https://app.pulumi.com/new?template=https://github.com/pulumi/examples/blob/master/kubernetes-go-helm-wordpress/README.md#gh-dark-mode-only" target="_blank">
         <img src="https://get.pulumi.com/new/button.svg" alt="Deploy">
     </a>
 </p>
@@ -53,19 +53,19 @@ Previewing update (wordpress-dev)
 
 View Live: https://app.pulumi.com/...
 
-     Type                                            Name                                        Plan       
- +   pulumi:pulumi:Stack                             kubernetes-go-helm-wordpress-wordpress-dev  create     
- +   └─ kubernetes:helm.sh/v2:Chart                  wpdev                                       create     
- +      ├─ kubernetes:core/v1:PersistentVolumeClaim  wpdev-wordpress                             create     
- +      ├─ kubernetes:core/v1:Secret                 wpdev-wordpress                             create     
- +      ├─ kubernetes:core/v1:Service                wpdev-wordpress                             create     
- +      ├─ kubernetes:core/v1:ConfigMap              default/wpdev-mariadb                       create     
- +      ├─ kubernetes:core/v1:Secret                 default/wpdev-mariadb                       create     
- +      ├─ kubernetes:core/v1:Pod                    wpdev-credentials-test                      create     
- +      ├─ kubernetes:core/v1:Service                default/wpdev-mariadb                       create     
- +      ├─ kubernetes:apps/v1:Deployment             wpdev-wordpress                             create     
- +      └─ kubernetes:apps/v1:StatefulSet            default/wpdev-mariadb                       create     
- 
+     Type                                            Name                                        Plan
+ +   pulumi:pulumi:Stack                             kubernetes-go-helm-wordpress-wordpress-dev  create
+ +   └─ kubernetes:helm.sh/v2:Chart                  wpdev                                       create
+ +      ├─ kubernetes:core/v1:PersistentVolumeClaim  wpdev-wordpress                             create
+ +      ├─ kubernetes:core/v1:Secret                 wpdev-wordpress                             create
+ +      ├─ kubernetes:core/v1:Service                wpdev-wordpress                             create
+ +      ├─ kubernetes:core/v1:ConfigMap              default/wpdev-mariadb                       create
+ +      ├─ kubernetes:core/v1:Secret                 default/wpdev-mariadb                       create
+ +      ├─ kubernetes:core/v1:Pod                    wpdev-credentials-test                      create
+ +      ├─ kubernetes:core/v1:Service                default/wpdev-mariadb                       create
+ +      ├─ kubernetes:apps/v1:Deployment             wpdev-wordpress                             create
+ +      └─ kubernetes:apps/v1:StatefulSet            default/wpdev-mariadb                       create
+
 Resources:
     + 11 to create
 

@@ -16,7 +16,7 @@ layout: package
     <a class="flex flex-wrap items-center rounded-md font-display text-lg text-white bg-blue-600 border-2 border-blue-600 px-2 mr-2 whitespace-no-wrap hover:text-white" style="height: 45px;" href="https://github.com/pulumi/examples/tree/master/aws-py-fargate" target="_blank">
         <span><i class="fab fa-github pr-2"></i> View Code</span>
     </a>
-    <a href="https://app.pulumi.com/new?template=https://github.com/pulumi/examples/blob/master/aws-py-fargate/README.md" target="_blank">
+    <a href="https://app.pulumi.com/new?template=https://github.com/pulumi/examples/blob/master/aws-py-fargate/README.md#gh-dark-mode-only" target="_blank">
         <img src="https://get.pulumi.com/new/button.svg" alt="Deploy">
     </a>
 </p>
@@ -117,7 +117,7 @@ Next, to deploy the application and its infrastructure, follow these steps:
     </body>
     </html>
     ```
-   
+
 **Please Note**: It may take a few minutes for the app to start up. Until that point, you may receive a 503 error response code.
 
 1. Try making some changes, and rerunning `pulumi up`. For example, let's scale up to 3 instances:
@@ -143,7 +143,7 @@ Next, to deploy the application and its infrastructure, follow these steps:
     Resources:
         ~ 1 updated
         9 unchanged
-  
+
     Duration: 14s
 
     Permalink: https://app.pulumi.com/acmecorp/aws-python-fargate/dev/updates/2

@@ -16,6 +16,9 @@ layout: package
     <a class="flex flex-wrap items-center rounded-md font-display text-lg text-white bg-blue-600 border-2 border-blue-600 px-2 mr-2 whitespace-no-wrap hover:text-white" style="height: 45px;" href="https://github.com/pulumi/examples/tree/master/aws-py-hub-and-spoke-network" target="_blank">
         <span><i class="fab fa-github pr-2"></i> View Code</span>
     </a>
+    <a href="https://app.pulumi.com/new?template=https://github.com/pulumi/examples/blob/master/aws-py-hub-and-spoke-network/README.md#gh-dark-mode-only" target="_blank">
+        <img src="https://get.pulumi.com/new/button.svg" alt="Deploy">
+    </a>
 </p>
 
 
@@ -87,7 +90,7 @@ You can comment out the `SpokeWorkload` components after testing as it is not re
 
 There are several modifications to the code that can be made:
 
-1. To enable traffic inspection, set the `create-firewall` config variable to `true`. 
+1. To enable traffic inspection, set the `create-firewall` config variable to `true`.
 
     ```bash
     pulumi config set create-firewall true

@@ -16,13 +16,13 @@ layout: package
     <a class="flex flex-wrap items-center rounded-md font-display text-lg text-white bg-blue-600 border-2 border-blue-600 px-2 mr-2 whitespace-no-wrap hover:text-white" style="height: 45px;" href="https://github.com/pulumi/examples/tree/master/classic-azure-ts-appservice-devops" target="_blank">
         <span><i class="fab fa-github pr-2"></i> View Code</span>
     </a>
-    <a href="https://app.pulumi.com/new?template=https://github.com/pulumi/examples/tree/master/azure-ts-appservice-devops/infra" target="_blank">
+    <a href="https://app.pulumi.com/new?template=https://github.com/pulumi/examples/blob/master/classic-azure-ts-appservice-devops/infra/index.ts#gh-dark-mode-only" target="_blank">
         <img src="https://get.pulumi.com/new/button.svg" alt="Deploy">
     </a>
 </p>
 
 
-A Todo List application from Azure Samples GitHub: [.NET Core MVC sample for Azure App Service](https://github.com/azure-samples/dotnetcore-sqldb-tutorial), a web app built with ASP.NET Core, Entity Framework Core and a SQL database. 
+A Todo List application from Azure Samples GitHub: [.NET Core MVC sample for Azure App Service](https://github.com/azure-samples/dotnetcore-sqldb-tutorial), a web app built with ASP.NET Core, Entity Framework Core and a SQL database.
 
 Provisions Azure SQL Database and Azure Application Insights to be used in combination with App Service. Defines an Azure DevOps pipeline to deploy in CI/CD environment.
 
@@ -72,7 +72,7 @@ Provisions Azure SQL Database and Azure Application Insights to be used in combi
 
 1.  Run `pulumi up` to preview and deploy changes:
 
-    ``` 
+    ```
     $ pulumi up
     Previewing changes:
     ...

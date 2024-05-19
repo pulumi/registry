@@ -16,7 +16,7 @@ layout: package
     <a class="flex flex-wrap items-center rounded-md font-display text-lg text-white bg-blue-600 border-2 border-blue-600 px-2 mr-2 whitespace-no-wrap hover:text-white" style="height: 45px;" href="https://github.com/pulumi/examples/tree/master/azure-py-webserver" target="_blank">
         <span><i class="fab fa-github pr-2"></i> View Code</span>
     </a>
-    <a href="https://app.pulumi.com/new?template=https://github.com/pulumi/examples/blob/master/azure-py-webserver/README.md" target="_blank">
+    <a href="https://app.pulumi.com/new?template=https://github.com/pulumi/examples/blob/master/azure-py-webserver/README.md#gh-dark-mode-only" target="_blank">
         <img src="https://get.pulumi.com/new/button.svg" alt="Deploy">
     </a>
 </p>
@@ -43,7 +43,7 @@ This example deploys an Azure Virtual Machine and starts an HTTP server on it.
     ```
     $ pulumi config set azure-native:location westus    # any valid Azure region will do
     $ pulumi config set username webmaster
-    $ pulumi config set password --secret <your-password> 
+    $ pulumi config set password --secret <your-password>
     ```
 
     Note that `--secret` ensures your password is encrypted safely.
@@ -55,14 +55,14 @@ This example deploys an Azure Virtual Machine and starts an HTTP server on it.
     $ pulumi update
     Previewing update (azuredev):
 
-        Type                                      Name                         Plan       
-    +   pulumi:pulumi:Stack                       azure-py-webserver-azuredev  create     
-    +   ├─ azure-native:core:ResourceGroup        server                       create     
-    +   ├─ azure-native:network:VirtualNetwork    server-network               create     
-    +   ├─ azure-native:network:PublicIp          server-ip                    create     
-    +   ├─ azure-native:network:Subnet            server-subnet                create     
-    +   ├─ azure-native:network:NetworkInterface  server-nic                   create     
-    +   └─ azure-native:compute:VirtualMachine    server-vm                    create     
+        Type                                      Name                         Plan
+    +   pulumi:pulumi:Stack                       azure-py-webserver-azuredev  create
+    +   ├─ azure-native:core:ResourceGroup        server                       create
+    +   ├─ azure-native:network:VirtualNetwork    server-network               create
+    +   ├─ azure-native:network:PublicIp          server-ip                    create
+    +   ├─ azure-native:network:Subnet            server-subnet                create
+    +   ├─ azure-native:network:NetworkInterface  server-nic                   create
+    +   └─ azure-native:compute:VirtualMachine    server-vm                    create
 
     Resources:
         + 7 to create
@@ -70,14 +70,14 @@ This example deploys an Azure Virtual Machine and starts an HTTP server on it.
     Do you want to perform this update? yes
     Updating (azuredev):
 
-        Type                                      Name                         Status      
-    +   pulumi:pulumi:Stack                       azure-py-webserver-azuredev  created     
-    +   ├─ azure-native:core:ResourceGroup        server                       created     
-    +   ├─ azure-native:network:VirtualNetwork    server-network               created     
-    +   ├─ azure-native:network:PublicIp          server-ip                    created     
-    +   ├─ azure-native:network:Subnet            server-subnet                created     
-    +   ├─ azure-native:network:NetworkInterface  server-nic                   created     
-    +   └─ azure-native:compute:VirtualMachine    server-vm                    created     
+        Type                                      Name                         Status
+    +   pulumi:pulumi:Stack                       azure-py-webserver-azuredev  created
+    +   ├─ azure-native:core:ResourceGroup        server                       created
+    +   ├─ azure-native:network:VirtualNetwork    server-network               created
+    +   ├─ azure-native:network:PublicIp          server-ip                    created
+    +   ├─ azure-native:network:Subnet            server-subnet                created
+    +   ├─ azure-native:network:NetworkInterface  server-nic                   created
+    +   └─ azure-native:compute:VirtualMachine    server-vm                    created
 
     Outputs:
         public_ip: "137.117.15.111"
@@ -90,7 +90,7 @@ This example deploys an Azure Virtual Machine and starts an HTTP server on it.
     Permalink: https://app.pulumi.com/swgillespie/azure-py-webserver/azuredev/updates/3
     ```
 
-1. Get the IP address of the newly-created instance from the stack's outputs: 
+1. Get the IP address of the newly-created instance from the stack's outputs:
 
     ```bash
     $ pulumi stack output public_ip
@@ -110,28 +110,28 @@ This example deploys an Azure Virtual Machine and starts an HTTP server on it.
     ▶ pulumi destroy --yes
     Previewing destroy (azuredev):
 
-        Type                                      Name                         Plan       
-    -   pulumi:pulumi:Stack                       azure-py-webserver-azuredev  delete     
-    -   ├─ azure-native:compute:VirtualMachine    server-vm                    delete     
-    -   ├─ azure-native:network:NetworkInterface  server-nic                   delete     
-    -   ├─ azure-native:network:Subnet            server-subnet                delete     
-    -   ├─ azure-native:network:PublicIp          server-ip                    delete     
-    -   ├─ azure-native:network:VirtualNetwork    server-network               delete     
-    -   └─ azure-native:core:ResourceGroup        server                       delete     
+        Type                                      Name                         Plan
+    -   pulumi:pulumi:Stack                       azure-py-webserver-azuredev  delete
+    -   ├─ azure-native:compute:VirtualMachine    server-vm                    delete
+    -   ├─ azure-native:network:NetworkInterface  server-nic                   delete
+    -   ├─ azure-native:network:Subnet            server-subnet                delete
+    -   ├─ azure-native:network:PublicIp          server-ip                    delete
+    -   ├─ azure-native:network:VirtualNetwork    server-network               delete
+    -   └─ azure-native:core:ResourceGroup        server                       delete
 
     Resources:
         - 7 to delete
 
     Destroying (azuredev):
 
-        Type                                      Name                         Status      
-    -   pulumi:pulumi:Stack                       azure-py-webserver-azuredev  deleted     
-    -   ├─ azure-native:compute:VirtualMachine    server-vm                    deleted     
-    -   ├─ azure-native:network:NetworkInterface  server-nic                   deleted     
-    -   ├─ azure-native:network:Subnet            server-subnet                deleted     
-    -   ├─ azure-native:network:VirtualNetwork    server-network               deleted     
-    -   ├─ azure-native:network:PublicIp          server-ip                    deleted     
-    -   └─ azure-native:core:ResourceGroup        server                       deleted     
+        Type                                      Name                         Status
+    -   pulumi:pulumi:Stack                       azure-py-webserver-azuredev  deleted
+    -   ├─ azure-native:compute:VirtualMachine    server-vm                    deleted
+    -   ├─ azure-native:network:NetworkInterface  server-nic                   deleted
+    -   ├─ azure-native:network:Subnet            server-subnet                deleted
+    -   ├─ azure-native:network:VirtualNetwork    server-network               deleted
+    -   ├─ azure-native:network:PublicIp          server-ip                    deleted
+    -   └─ azure-native:core:ResourceGroup        server                       deleted
 
     Resources:
         - 7 deleted

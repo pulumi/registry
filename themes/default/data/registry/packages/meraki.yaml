@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-meraki
 schema_file_path: provider/cmd/pulumi-resource-meraki/schema.json
 title: Meraki
-updated_on: 1715896924
-version: v0.1.1
+updated_on: 1716250106
+version: v0.1.2

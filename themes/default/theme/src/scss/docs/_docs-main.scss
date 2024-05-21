@@ -8,7 +8,7 @@ body.section-registry {
         color: map-get($gray, 950);
         margin: 16px 0;
     }
-    
+
     div.special-h1 {
         display: inline-block;
     }
@@ -79,7 +79,7 @@ body.section-registry {
             font-weight: 600;
             font-size: 16px;
             color: map-get($gray, 600);
-            
+
         }
 
         p {
@@ -103,18 +103,9 @@ body.section-registry {
         p a:not(.btn-secondary),
         ul li a[href]  {
             color: map-get($brand, "blue");
-            background: linear-gradient(90deg,rgba(142, 143, 151, 0),rgba(142, 143, 151, 0)),linear-gradient(90deg,map-get($gray, 450),map-get($gray, 450));
-            background-position: 100% 100%,0 100%;
-            background-repeat: no-repeat;
-            background-size: 100% 0.1em,0 0.1em;
-            padding-bottom: 0.2rem;
-            transition: background-size .3s;
-            transition-timing-function: ease-in;
 
             &:hover {
                 color: map-get($brand, "blue-darker");
-                text-decoration: none;
-                background-size: 0 0.1em,100% 0.1em;
             }
         }
 
@@ -124,6 +115,18 @@ body.section-registry {
             font-family: 'Iosevka';
             font-weight: 400;
         }
+    }
+
+    // Hide these imported buttons (from pulumi/examples READMEs), as we don't
+    // want to display them directly. (The mktutorial script walks the README
+    // looking for these URLs and builds its own Deploy with Pulumi buttons.)
+
+    a[href$="#gh-dark-mode-only"] {
+        display: none;
+    }
+
+    a[href$="#gh-light-mode-only"] {
+        display: none;
     }
 }
 
@@ -148,11 +151,11 @@ body.section-registry {
             position: sticky;
             left: 0;
             top: 0;
-    
+
             nav.main-nav div:first-of-type {
                 margin-top: 0;
             }
-    
+
             nav.main-nav {
                 display: none;
                 padding: 32px 0 0 0;
@@ -219,7 +222,7 @@ body.section-registry {
                     border-radius: 6px;
                 }
             }
-    
+
             @media (min-width: 1280px) {
                 width: 240px;
                 flex-basis: 240px;
@@ -228,7 +231,7 @@ body.section-registry {
                 border-right: 1px solid map-get($gray, 150);
                 box-shadow: none;
                 position: sticky;
-    
+
                 nav.main-nav {
                     display: block !important;
                 }
@@ -265,13 +268,13 @@ body.section-registry {
             display: flex;
         }
 
-        &.docs-nav-show { 
+        &.docs-nav-show {
             display: flex;
 
             .docs-main-nav-wrapper {
                 border-right: 1px solid map-get($gray, 150);
             }
-            
+
             .docs-main-nav-wrapper .docs-main-nav {
                 width: 240px;
                 flex-basis: 240px;
@@ -357,7 +360,7 @@ body.section-registry {
                 max-width: 634px;
                 flex-direction: column;
             }
-    
+
             @media (min-width: 1280px) {
                 margin-left: 24px;
                 max-width: 700px;
@@ -446,7 +449,7 @@ body.section-registry {
         .docs-toc-desktop {
             display: none;
         }
-    
+
 
         @media (min-width: 1024px) {
             flex-direction: row;
@@ -514,7 +517,7 @@ body.section-registry {
         border-radius: 4px;
         margin-top: 24px;
     }
-    
+
     div.package-card-top-of-page {
         justify-content: space-between;
         align-items: center;
@@ -610,7 +613,7 @@ body.section-registry {
         input:checked ~ label.show  {
             display: none;
         }
-    
+
         input:checked ~ div.accordion-content,
         input:checked ~ label.hide {
             display: flex;
@@ -640,7 +643,7 @@ body.section-registry {
         div.package-card {
             display: none;
             box-shadow: 0px 4px 4px 0px #DCDCDC40;
-            
+
             @media (min-width: 1024px) {
                 display: flex;
             }
@@ -729,7 +732,7 @@ body.section-registry {
         input:checked ~ label.show  {
             display: none;
         }
-    
+
         input:checked ~ div.accordion-content,
         input:checked ~ label.hide {
             margin-bottom: 24px;
@@ -740,7 +743,7 @@ body.section-registry {
             div.icon {
                 background-color: map-get($gray, 900);
             }
-            
+
             .icon-heading-wrapper {
                 h2 {
                     color: map-get($gray, 900);

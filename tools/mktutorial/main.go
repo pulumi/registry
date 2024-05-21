@@ -58,7 +58,7 @@ func main() {
 		exitErr("creating temp dir for tutorial repo: %v", err)
 	}
 	defer os.RemoveAll(tmp)
-	cmd := exec.Command("git", "clone", repo, "--depth=1", tmp)
+	cmd := exec.Command("git", "clone", "-b", "master", repo, "--depth=1", tmp)
 	cmd.Stdout = os.Stdout
 	if err = cmd.Run(); err != nil {
 		exitErr("cloning tutorial repo: %v", err)
@@ -124,22 +124,25 @@ func gatherTutorials(root string) ([]tutorial, error) {
 		// The first H1 is assumed to be the title.
 		var h1 string
 		top.Walk(func(node *blackfriday.Node, entering bool) blackfriday.WalkStatus {
-			if node.Type == blackfriday.Link {
+
+			if node.Type == blackfriday.Link && pulumiTemplateURL == "" {
 				destination := string(node.LinkData.Destination)
+
 				if destination == "https://app.pulumi.com/new" {
 					pulumiTemplateURL = githubURL
 				} else if strings.HasPrefix(destination, "https://app.pulumi.com/new?template=") {
 					pulumiTemplateURL = strings.TrimPrefix(destination, "https://app.pulumi.com/new?template=")
+					pulumiTemplateURL = strings.ReplaceAll(pulumiTemplateURL, "#gh-dark-mode-only", "")
+					pulumiTemplateURL = strings.ReplaceAll(pulumiTemplateURL, "#gh-light-mode-only", "")
 				}
 			}
-			if node.Type == blackfriday.Heading && node.HeadingData.Level == 1 {
+			if (node.Type == blackfriday.Heading && node.HeadingData.Level == 1) && h1 == "" {
 				node.Walk(func(inner *blackfriday.Node, entering bool) blackfriday.WalkStatus {
 					if inner.Type == blackfriday.Text {
 						h1 += string(inner.Literal)
 					}
 					return blackfriday.GoToNext
 				})
-				return blackfriday.Terminate
 			}
 			return blackfriday.GoToNext
 		})

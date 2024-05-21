@@ -1,5 +1,5 @@
 ---
-title: Ise
+title: Cisco ISE
 meta_desc: Provides an overview of the Cisco ISE Provider for Pulumi.
 layout: overview
 ---

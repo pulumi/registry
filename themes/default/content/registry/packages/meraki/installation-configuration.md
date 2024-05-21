@@ -1,5 +1,5 @@
 ---
-title: Meraki Installation & Configuration
+title: Cisco Meraki Installation & Configuration
 meta_desc: Information on how to install the Meraki provider.
 layout: installation
 ---
@@ -16,21 +16,9 @@ The Pulumi Meraki provider is available as a package in all Pulumi languages:
 
 ## Configuration
 
-> Note:  
-> Replace the following **sample content**, with the configuration options
-> of the wrapped Terraform provider and remove this note.
-
 The following configuration points are available for the `meraki` provider:
 
-- `meraki:apiKey` (environment: `meraki_API_KEY`) - the API key for `meraki`
-- `meraki:region` (environment: `meraki_REGION`) - the region in which to deploy resources
-
-### Provider Binary
-
-The Meraki provider binary is a third party binary. It can be installed using the `pulumi plugin` command.
-
-```bash
-pulumi plugin install resource meraki <version>
-```
-
-Replace the version string `<version>` with your desired version.
+- `meraki:merakiBaseUrl` (environment: `MERAKI_BASE_URL`) - base URL, FQDN or IP, default is https://api.meraki.com/
+- `meraki:merakiDashboardApiKey` (environment: `MERAKI_DASHBOARD_API_KEY`) - dashboard API key to authenticate
+- `meraki:merakiDebug` (environment: `MERAKI_DEBUG`) - flag to enable debugging, default is false
+- `meraki:merakiRequestsPerSecond` - requests per second allowed for client, default is 10

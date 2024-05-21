@@ -1,9 +1,9 @@
 ---
-title: Meraki
+title: Cisco Meraki
 meta_desc: Provides an overview of the Meraki Provider for Pulumi.
 layout: overview
 ---
 
-The Meraki provider for Pulumi can be used to provision any of the cloud resources available in Meraki.
+The Cisco Meraki provider for Pulumi to manage and automate your Cisco Meraki environment. It contains resources and functions for performing tasks related to Meraki.
 
-The Meraki provider must be configured with credentials to deploy and update resources in Meraki.
+This provider supports Cisco Meraki 1.33.0.

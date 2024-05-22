@@ -103,10 +103,15 @@ body.section-registry {
         p a:not(.btn-secondary),
         ul li a[href]  {
             color: map-get($brand, "blue");
+            background-color: #ffffff;
 
             &:hover {
                 color: map-get($brand, "blue-darker");
             }
+        }
+
+        .note .content p a {
+            background-color: transparent;
         }
 
         div.highlight pre,

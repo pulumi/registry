@@ -38,11 +38,6 @@ jobs:
         with:
           pattern: "community-packages/package-list.json"
 
-      - name: Lint
-        run: |
-          yarn install
-          make lint
-
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:

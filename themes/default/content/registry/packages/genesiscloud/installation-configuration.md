@@ -10,7 +10,7 @@ The Pulumi Genesis Cloud provider is available as a package in the following lan
 
 - JavaScript/TypeScript: [`@genesiscloud/pulumi-genesiscloud`](https://www.npmjs.com/package/@genesiscloud/pulumi-genesiscloud)
 - Python: [`pulumi-genesiscloud`](https://pypi.org/project/pulumi-genesiscloud/)
-- Go: [`github.com/genesiscloud/pulumi-genesiscloud/sdk/go/genesiscloud`](https://pkg.go.dev/github.com/pulumi/pulumi-genesiscloud/sdk)
+- Go: [`github.com/genesiscloud/pulumi-genesiscloud/sdk/go/genesiscloud`](https://pkg.go.dev/github.com/genesiscloud/pulumi-genesiscloud/sdk/go)
 - Dotnet: [GenesisCloud.PackagePulumi.Genesiscloud](https://www.nuget.org/packages/GenesisCloud.PulumiPackage.Genesiscloud)
 
 ### Provider Binary

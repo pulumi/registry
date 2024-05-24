@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-rabbitmq
 schema_file_path: provider/cmd/pulumi-resource-rabbitmq/schema.json
 title: RabbitMQ
-updated_on: 1711030739
-version: v3.3.2
+updated_on: 1716514397
+version: v3.3.3

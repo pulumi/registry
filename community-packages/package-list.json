@@ -315,6 +315,10 @@
     {
       "repoSlug": "genesiscloud/pulumi-genesiscloud",
       "schemaFile": "provider/cmd/pulumi-resource-genesiscloud/schema.json"
+    },
+    {
+      "repoSlug": "wttech/pulumi-aem",
+      "schemaFile": "provider/cmd/pulumi-resource-aem/schema.json"
     }
   ]
 }

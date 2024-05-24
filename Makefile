@@ -59,7 +59,7 @@ ci_bucket_cleanup:
 .PHONY: check_links
 check_links:
 	$(MAKE) ensure
-	./scripts/link-checker/check-links.sh "https://www.pulumi.com/registry"
+	./scripts/link-checker/check-links.sh "https://www.pulumi-test.io/registry"
 
 .PHONY: run-browser-tests
 run-browser-tests:

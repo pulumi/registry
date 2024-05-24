@@ -171,7 +171,7 @@ async function onComplete(brokenLinks) {
             .join("\n");
 
         // Post the results to Slack.
-        await postToSlack("docs-ops", list);
+        await postToSlack("docs-ops-test", list);
     }
 }
 

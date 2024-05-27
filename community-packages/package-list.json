@@ -315,6 +315,10 @@
     {
       "repoSlug": "genesiscloud/pulumi-genesiscloud",
       "schemaFile": "provider/cmd/pulumi-resource-genesiscloud/schema.json"
+    },
+    {
+      "repoSlug": "satoricyber/pulumi-satori",
+      "schemaFile": "provider/cmd/pulumi-resource-satori/schema.json"
     }
   ]
 }

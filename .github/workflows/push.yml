@@ -46,19 +46,6 @@ jobs:
       - name: Install Pulumi CLI
         uses: pulumi/actions@v4
 
-      - name: Fetch the latest sibling modules
-        run: |
-          hugo mod get github.com/pulumi/pulumi-hugo/themes/default
-          hugo mod tidy
-
-      - name: Commit any changes to go.mod/go.sum
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          file_pattern: go.*
-          commit_user_name: pulumi-bot
-          commit_user_email: bot@pulumi.com
-          commit_message: Update go.mod
-
       - name: Build and deploy
         run: make ci_push
         env:

@@ -1,0 +1,14 @@
+category: Network
+component: false
+description: A Pulumi package for managing resources on Cisco Catalyst SD-WAN.
+featured: false
+logo_url: https://raw.githubusercontent.com/pulumi/pulumi-sdwan/main/docs/logo.png
+name: sdwan
+native: false
+package_status: public_preview
+publisher: Pulumi
+repo_url: https://github.com/pulumi/pulumi-sdwan
+schema_file_path: provider/cmd/pulumi-resource-sdwan/schema.json
+title: Cisco Catalyst SD-WAN
+updated_on: 1716883043
+version: v0.1.0

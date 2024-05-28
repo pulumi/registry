@@ -59,6 +59,8 @@ jobs:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
           PULUMI_STACK_NAME: ${{ vars.PULUMI_STACK_NAME }}
           NODE_OPTIONS: "--max_old_space_size=8192"
+          ALGOLIA_APP_ID: ${{ vars.ALGOLIA_APP_ID }}
+          ALGOLIA_APP_SEARCH_KEY: ${{ vars.ALGOLIA_APP_SEARCH_KEY }}
 
   notify:
     if: (github.event.pull_request.user.login == 'pulumi-bot') && failure()

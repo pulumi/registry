@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-digitalocean
 schema_file_path: provider/cmd/pulumi-resource-digitalocean/schema.json
 title: DigitalOcean
-updated_on: 1714983514
-version: v4.29.0
+updated_on: 1717002328
+version: v4.30.0

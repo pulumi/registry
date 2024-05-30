@@ -80,5 +80,48 @@ return await Deployment.RunAsync(() =>
 
 {{% /choosable %}}
 
+{{% /choosable %}}
+{{% choosable language java %}}
+
+```java
+import java.util.Map;
+import java.util.HashMap;
+import com.pulumi.Pulumi;
+import com.pulumi.core.Output;
+import com.pulumi.resources.Deployment;
+import com.pulumi.dbtcloud.Project;
+import com.pulumi.dbtcloud.ProjectArgs;
+
+public class Main {
+    public static void main(String[] args) {
+        Pulumi.run(ctx -> {
+            var project = new Project("java-project", ProjectArgs.builder()
+                .name("java-project")
+                .build());
+
+            ctx.export("ProjectName", project.name());
+        });
+    }
+}
+```
+
+{{% /choosable %}}
+
+{{% /choosable %}}
+{{% choosable language yaml %}}
+
+```yaml
+resources:
+  yaml-project:
+    type: dbtcloud:index:Project
+    properties:
+      name: "yaml-project"
+outputs:
+  project_name: ${yaml-project.name}
+
+```
+
+{{% /choosable %}}
+
 {{< /chooser >}}
 

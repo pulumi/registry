@@ -82,11 +82,7 @@ return await Deployment.RunAsync(() =>
 {{% choosable language java %}}
 
 ```java
-import java.util.Map;
-import java.util.HashMap;
 import com.pulumi.Pulumi;
-import com.pulumi.core.Output;
-import com.pulumi.resources.Deployment;
 import com.pulumi.dbtcloud.Project;
 import com.pulumi.dbtcloud.ProjectArgs;
 

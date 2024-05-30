@@ -10,7 +10,7 @@ The dbt Cloud Resource Provider lets you manage [dbt Cloud](https://www.getdbt.c
 
 ## Example
 
-{{< chooser language "typescript,python,go,csharp" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
 {{% choosable language typescript %}}
 
 ```typescript

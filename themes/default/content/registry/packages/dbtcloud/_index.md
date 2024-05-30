@@ -79,8 +79,6 @@ return await Deployment.RunAsync(() =>
 ```
 
 {{% /choosable %}}
-
-{{% /choosable %}}
 {{% choosable language java %}}
 
 ```java
@@ -106,8 +104,6 @@ public class Main {
 ```
 
 {{% /choosable %}}
-
-{{% /choosable %}}
 {{% choosable language yaml %}}
 
 ```yaml
@@ -122,6 +118,5 @@ outputs:
 ```
 
 {{% /choosable %}}
-
 {{< /chooser >}}
 

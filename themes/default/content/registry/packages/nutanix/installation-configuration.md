@@ -13,6 +13,16 @@ The Pulumi Nutanix provider is available as a package from the following reposit
 - Go: [`github.com/pierskarsenbarg/pulumi-nutanix/sdk/go/nutanix`](https://pkg.go.dev/github.com/pierskarsenbarg/pulumi-nutanix/sdk)
 - .NET: [`PiersKarsenbarg.Nutanix`](https://www.nuget.org/packages/PiersKarsenbarg.Nutanix)
 
+### Provider Binary
+
+The Nutanix provider binary is a third party binary. It can be installed using the `pulumi plugin` command.
+
+```bash
+pulumi plugin install resource nutanix <version> --server github://api.github.com/pulumiverse
+```
+
+Replace the version string with your desired version.
+
 ## Setup
 
 To provision resources with the Pulumi Nutanix provider, you need to provide the `apiKey` and `region`.

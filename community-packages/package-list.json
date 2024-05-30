@@ -315,6 +315,10 @@
     {
       "repoSlug": "genesiscloud/pulumi-genesiscloud",
       "schemaFile": "provider/cmd/pulumi-resource-genesiscloud/schema.json"
+    },
+    {
+      "repoSlug": "pierskarsenbarg/pulumi-nutanix",
+      "schemaFile": "provider/cmd/pulumi-resource-nutanix/schema.json"
     }
   ]
 }

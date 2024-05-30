@@ -10,5 +10,5 @@ publisher: pulumiverse
 repo_url: https://github.com/pulumiverse/pulumi-zitadel
 schema_file_path: provider/cmd/pulumi-resource-zitadel/schema.json
 title: zitadel
-updated_on: 1711472973
-version: v0.1.7
+updated_on: 1717062229
+version: v0.1.8

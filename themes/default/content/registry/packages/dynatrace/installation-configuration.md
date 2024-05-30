@@ -8,10 +8,10 @@ layout: package
 
 The Pulumi Dynatrace provider is available as a package in all Pulumi languages:
 
-* JavaScript/TypeScript: [`@lbrlabs/pulumi-dynatrace`](https://www.npmjs.com/package/@lbrlabs/pulumi-dynatrace)
-* Python: [`dynatrace`](https://pypi.org/project/lbrlabs-pulumi-dynatrace/)
-* Go: [`github.com/lbrlabs/pulumi-dynatrace/sdk/go/dynatrace`](https://github.com/lbrlabs/pulumi-dynatrace/tree/main/sdk/go)
-* .NET: [`Lbrlabs.PulumiPackage.Dynatrace`](https://www.nuget.org/packages/Lbrlabs.PulumiPackage.Dynatrace)
+* JavaScript/TypeScript: [`@pulumiverse/pulumi-dynatrace`](https://www.npmjs.com/package/@pulumiverse/pulumi-dynatrace)
+* Python: [`dynatrace`](https://pypi.org/project/pulumiverse-pulumi-dynatrace/)
+* Go: [`github.com/pulumiverse/pulumi-dynatrace/sdk/go/dynatrace`](https://pkg.go.dev/github.com/pulumiverse/pulumi-dynatrace/sdk)
+* .NET: [`Pulumiverse.PulumiPackage.Dynatrace`](https://www.nuget.org/packages/Pulumiverse.PulumiPackage.Dynatrace)
 
 ### Provider Binary
 

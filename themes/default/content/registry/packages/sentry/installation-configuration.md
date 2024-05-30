@@ -8,7 +8,7 @@ layout: package
 
 The Pulumi Sentry provider is available as a package in all Pulumi languages:
 
-* JavaScript/TypeScript: [`@pulumiserve/sentry`](https://www.npmjs.com/package/@pulumiverse/sentry)
+* JavaScript/TypeScript: [`@pulumiverse/sentry`](https://www.npmjs.com/package/@pulumiverse/sentry)
 * Python: [`pulumiverse_sentry`](https://pypi.org/project/pulumiverse-sentry/)
 * Go: [`github.com/pulumiverse/pulumi-sentry/sdk/go/sentry`](https://pkg.go.dev/github.com/pulumiverse/pulumi-sentry/sdk)
 * .NET: [`Pulumiverse.Sentry`](https://www.nuget.org/packages/Pulumiverse.Sentry)

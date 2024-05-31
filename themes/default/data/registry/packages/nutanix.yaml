@@ -1,0 +1,14 @@
+category: Cloud
+component: false
+description: A Pulumi package for creating and managing Nutanix cloud resources.
+featured: false
+logo_url: https://raw.githubusercontent.com/pierskarsenbarg/pulumi-nutanix/main/docs/nutanix-logo.png
+name: nutanix
+native: false
+package_status: public_preview
+publisher: Piers Karsenbarg
+repo_url: https://github.com/pierskarsenbarg/pulumi-nutanix
+schema_file_path: provider/cmd/pulumi-resource-nutanix/schema.json
+title: Nutanix
+updated_on: 1717080940
+version: v0.0.50

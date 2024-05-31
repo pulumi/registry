@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"net/http"
 	"strings"
 	"time"
@@ -77,7 +76,7 @@ func PackageMetadataCmd() *cobra.Command {
 			schemaFilePath := fmt.Sprintf("https://raw.githubusercontent.com/%s/%s/%s",
 				repoSlug, version, schemaFile)
 
-			schema, err := readRemoteFile(schemaFilePath)
+			schema, err := readRemoteFile(schemaFilePath, repoOwner)
 			if err != nil {
 				return err
 			}
@@ -249,7 +248,7 @@ func PackageMetadataCmd() *cobra.Command {
 			for _, requiredFile := range requiredFiles {
 				requiredFilePath := fmt.Sprintf("https://raw.githubusercontent.com/%s/%s/docs/%s",
 					repoSlug, version, requiredFile)
-				details, err := readRemoteFile(requiredFilePath)
+				details, err := readRemoteFile(requiredFilePath, repoOwner)
 				if err != nil {
 					return err
 				}
@@ -288,7 +287,7 @@ func PackageMetadataCmd() *cobra.Command {
 	return cmd
 }
 
-func readRemoteFile(url string) ([]byte, error) {
+func readRemoteFile(url, repoOwner string) ([]byte, error) {
 	resp, err := http.Get(url)
 	if err != nil {
 		return nil, errors.Wrap(err, fmt.Sprintf("downloading remote file from %s", url))
@@ -296,11 +295,17 @@ func readRemoteFile(url string) ([]byte, error) {
 
 	defer resp.Body.Close()
 	if resp.StatusCode < 200 || resp.StatusCode > 299 {
-		// this ultimately checks that the file exists and has content
-		return nil, nil
+		// For pulumi repos, we have hard coded top-level config files in the registry.
+		//To avoid overwriting them prematurely while we migrate, we default to returning nil, which will allow the
+		//registry to fall back on top-level config files already in existence since we won't write empty content.
+		if repoOwner == "pulumi" {
+			return nil, nil
+		}
+		// For third-level providers, send an error if files could not be found.
+		return nil, errors.New(fmt.Sprintf("finding remote file at %s: %s", url, resp.Status))
 	}
 
-	contents, err := ioutil.ReadAll(resp.Body)
+	contents, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return nil, errors.Wrap(err, "reading contents of remote file")
 	}

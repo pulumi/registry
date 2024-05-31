@@ -34,6 +34,7 @@ func RootCmd() *cobra.Command {
 
 	rootCmd.AddCommand(docs.ResourceDocsCmd())
 	rootCmd.AddCommand(PackageMetadataCmd())
+	rootCmd.AddCommand(CheckVersion())
 
 	return rootCmd
 }

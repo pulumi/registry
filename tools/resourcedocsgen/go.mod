@@ -10,6 +10,7 @@ require (
 	github.com/pulumi/pulumi/pkg/v3 v3.118.0
 	github.com/pulumi/pulumi/sdk/v3 v3.118.0
 	github.com/spf13/cobra v1.8.0
+	golang.org/x/text v0.14.0
 )
 
 require (
@@ -90,6 +91,7 @@ require (
 	github.com/grpc-ecosystem/grpc-opentracing v0.0.0-20180507213350-8e809c8a8645 // indirect
 	github.com/hashicorp/errwrap v1.1.0 // indirect
 	github.com/hashicorp/go-cleanhttp v0.5.2 // indirect
+	github.com/hashicorp/go-hclog v1.3.1 // indirect
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
 	github.com/hashicorp/go-retryablehttp v0.7.5 // indirect
 	github.com/hashicorp/go-rootcerts v1.0.2 // indirect

@@ -3,240 +3,87 @@ package cmd
 import (
 	"encoding/json"
 	"fmt"
+	"io"
 	"io/ioutil"
+	"net/http"
 	"strings"
 	"time"
 
 	"github.com/golang/glog"
 
-	"github.com/pkg/errors"
-
-	"github.com/spf13/cobra"
-
 	"github.com/ghodss/yaml"
-
-	pschema "github.com/pulumi/pulumi/pkg/v3/codegen/schema"
-
+	"github.com/pkg/errors"
 	"github.com/pulumi/docs/tools/resourcedocsgen/pkg"
+	pschema "github.com/pulumi/pulumi/pkg/v3/codegen/schema"
+	"github.com/spf13/cobra"
+	"golang.org/x/text/cases"
+	"golang.org/x/text/language"
 )
 
 const defaultPackageCategory = pkg.PackageCategoryCloud
 
 var mainSpec *pschema.PackageSpec
 
-var categoryNameMap = map[string]pkg.PackageCategory{
-	"cloud":          pkg.PackageCategoryCloud,
-	"database":       pkg.PackageCategoryDatabase,
-	"infrastructure": pkg.PackageCategoryInfrastructure,
-	"monitoring":     pkg.PackageCategoryMonitoring,
-	"network":        pkg.PackageCategoryNetwork,
-	"utility":        pkg.PackageCategoryUtility,
-	"vcs":            pkg.PackageCategoryVCS,
+var featuredPackages = []string{
+	"aws",
+	"azure-native",
+	"gcp",
+	"kubernetes",
 }
 
-var categoryLookup = map[string]pkg.PackageCategory{
-	"aiven":                               pkg.PackageCategoryInfrastructure,
-	"akamai":                              pkg.PackageCategoryNetwork,
-	"alicloud":                            pkg.PackageCategoryCloud,
-	"auth0":                               pkg.PackageCategoryInfrastructure,
-	"aws":                                 pkg.PackageCategoryCloud,
-	"aws-apigateway":                      pkg.PackageCategoryCloud,
-	"aws-miniflux":                        pkg.PackageCategoryCloud,
-	"aws-native":                          pkg.PackageCategoryCloud,
-	"aws-quickstart-aurora-mysql":         pkg.PackageCategoryCloud,
-	"aws-quickstart-aurora-postgresql":    pkg.PackageCategoryCloud,
-	"aws-quickstart-redshift":             pkg.PackageCategoryCloud,
-	"aws-serverless":                      pkg.PackageCategoryCloud,
-	"aws-quickstart-vpc":                  pkg.PackageCategoryCloud,
-	"aws-s3-replicated-bucket":            pkg.PackageCategoryCloud,
-	"azure":                               pkg.PackageCategoryCloud,
-	"azure-native":                        pkg.PackageCategoryCloud,
-	"azure-quickstart-acr-geo-replicated": pkg.PackageCategoryCloud,
-	"azure-quickstart-aks":                pkg.PackageCategoryCloud,
-	"azure-quickstart-compute":            pkg.PackageCategoryCloud,
-	"azure-quickstart-sql":                pkg.PackageCategoryCloud,
-	"azuread":                             pkg.PackageCategoryInfrastructure,
-	"azuredevops":                         pkg.PackageCategoryInfrastructure,
-	"civo":                                pkg.PackageCategoryCloud,
-	"cloudamqp":                           pkg.PackageCategoryCloud,
-	"cloudflare":                          pkg.PackageCategoryNetwork,
-	"cloudinit":                           pkg.PackageCategoryUtility,
-	"confluent":                           pkg.PackageCategoryInfrastructure,
-	"consul":                              pkg.PackageCategoryInfrastructure,
-	"coredns-helm":                        pkg.PackageCategoryNetwork,
-	"datadog":                             pkg.PackageCategoryMonitoring,
-	"digitalocean":                        pkg.PackageCategoryCloud,
-	"dnsimple":                            pkg.PackageCategoryNetwork,
-	"docker":                              pkg.PackageCategoryInfrastructure,
-	"docker-buildkit":                     pkg.PackageCategoryInfrastructure,
-	"eks":                                 pkg.PackageCategoryCloud,
-	"equinix-metal":                       pkg.PackageCategoryCloud,
-	"f5bigip":                             pkg.PackageCategoryNetwork,
-	"fastly":                              pkg.PackageCategoryCloud,
-	"gcp":                                 pkg.PackageCategoryCloud,
-	"gcp-cloudrun-multi-region":           pkg.PackageCategoryCloud,
-	"gcp-project-scaffold":                pkg.PackageCategoryCloud,
-	"google-native":                       pkg.PackageCategoryCloud,
-	"github":                              pkg.PackageCategoryVCS,
-	"github-serverless-webhook":           pkg.PackageCategoryVCS,
-	"gitlab":                              pkg.PackageCategoryVCS,
-	"hcloud":                              pkg.PackageCategoryCloud,
-	"istio-helm":                          pkg.PackageCategoryInfrastructure,
-	"jaeger-helm":                         pkg.PackageCategoryMonitoring,
-	"kafka":                               pkg.PackageCategoryInfrastructure,
-	"keycloak":                            pkg.PackageCategoryInfrastructure,
-	"kong":                                pkg.PackageCategoryInfrastructure,
-	"kubernetes":                          pkg.PackageCategoryCloud,
-	"libvirt":                             pkg.PackageCategoryUtility,
-	"linode":                              pkg.PackageCategoryCloud,
-	"mailgun":                             pkg.PackageCategoryInfrastructure,
-	"minio":                               pkg.PackageCategoryInfrastructure,
-	"mongodbatlas":                        pkg.PackageCategoryDatabase,
-	"mysql":                               pkg.PackageCategoryDatabase,
-	"newrelic":                            pkg.PackageCategoryMonitoring,
-	"nginx-ingress-controller-helm":       pkg.PackageCategoryNetwork,
-	"nomad":                               pkg.PackageCategoryInfrastructure,
-	"ns1":                                 pkg.PackageCategoryNetwork,
-	"okta":                                pkg.PackageCategoryInfrastructure,
-	"onelogin":                            pkg.PackageCategoryInfrastructure,
-	"openstack":                           pkg.PackageCategoryCloud,
-	"opsgenie":                            pkg.PackageCategoryInfrastructure,
-	"pagerduty":                           pkg.PackageCategoryInfrastructure,
-	"postgresql":                          pkg.PackageCategoryDatabase,
-	"prometheus-helm":                     pkg.PackageCategoryMonitoring,
-	"rabbitmq":                            pkg.PackageCategoryInfrastructure,
-	"rancher2":                            pkg.PackageCategoryInfrastructure,
-	"random":                              pkg.PackageCategoryUtility,
-	"rke":                                 pkg.PackageCategoryInfrastructure,
-	"shipa":                               pkg.PackageCategoryCloud,
-	"signalfx":                            pkg.PackageCategoryMonitoring,
-	"snowflake":                           pkg.PackageCategoryInfrastructure,
-	"splunk":                              pkg.PackageCategoryInfrastructure,
-	"spotinst":                            pkg.PackageCategoryInfrastructure,
-	"sumologic":                           pkg.PackageCategoryMonitoring,
-	"tls":                                 pkg.PackageCategoryUtility,
-	"vault":                               pkg.PackageCategoryInfrastructure,
-	"venafi":                              pkg.PackageCategoryInfrastructure,
-	"vsphere":                             pkg.PackageCategoryCloud,
-	"wavefront":                           pkg.PackageCategoryMonitoring,
-	"yandex":                              pkg.PackageCategoryCloud,
-}
-
-// TODO[pulumi/pulumi#7813]: Remove this lookup once display name is available in
-// the Pulumi schema.
-//
-// NOTE: For the time being this lookup map and the one used by the docs
-// generator in `pulumi/pulumi` must be kept up-to-date.
-//
-// titleLookup is a map pf package name to the desired display name
-// for display in the TOC menu under API Reference.
-var titleLookup = map[string]string{
-	"aiven":                               "Aiven",
-	"akamai":                              "Akamai",
-	"alicloud":                            "Alibaba Cloud",
-	"auth0":                               "Auth0",
-	"aws":                                 "AWS Classic",
-	"aws-apigateway":                      "AWS API Gateway",
-	"aws-miniflux":                        "Miniflux",
-	"aws-native":                          "AWS Native",
-	"aws-quickstart-aurora-mysql":         "AWS QuickStart Aurora MySQL",
-	"aws-quickstart-aurora-postgresql":    "AWS QuickStart Aurora PostgreSQL",
-	"aws-quickstart-redshift":             "AWS QuickStart Redshift",
-	"aws-serverless":                      "AWS Serverless",
-	"aws-quickstart-vpc":                  "AWS QuickStart VPC",
-	"aws-s3-replicated-bucket":            "AWS S3 Replicated Bucket",
-	"azure":                               "Azure Classic",
-	"azure-native":                        "Azure Native",
-	"azure-quickstart-acr-geo-replicated": "Azure QuickStart ACR Geo Replicated",
-	"azure-quickstart-aks":                "Azure QuickStart AKS",
-	"azure-quickstart-compute":            "Azure QuickStart Compute",
-	"azure-quickstart-sql":                "Azure QuickStart SQL",
-	"azuread":                             "Azure Active Directory",
-	"azuredevops":                         "Azure DevOps",
-	"azuresel":                            "Azure",
-	"civo":                                "Civo",
-	"cloudamqp":                           "CloudAMQP",
-	"cloudflare":                          "Cloudflare",
-	"cloudinit":                           "cloud-init",
-	"confluent":                           "Confluent Cloud",
-	"consul":                              "Consul",
-	"coredns-helm":                        "CoreDNS (Helm)",
-	"datadog":                             "Datadog",
-	"digitalocean":                        "DigitalOcean",
-	"dnsimple":                            "DNSimple",
-	"docker":                              "Docker",
-	"docker-buildkit":                     "Docker BuildKit",
-	"eks":                                 "Amazon EKS",
-	"equinix-metal":                       "Equinix Metal",
-	"f5bigip":                             "f5 BIG-IP",
-	"fastly":                              "Fastly",
-	"gcp":                                 "Google Cloud Classic",
-	"gcp-cloudrun-multi-region":           "Google Cloud Run Multi-Region",
-	"gcp-project-scaffold":                "Google Project Scaffolding",
-	"google-native":                       "Google Cloud Native",
-	"github":                              "GitHub",
-	"github-serverless-webhook":           "GitHub Serverless Webhook",
-	"gitlab":                              "GitLab",
-	"hcloud":                              "Hetzner Cloud",
-	"istio-helm":                          "Istio (Helm)",
-	"jaeger-helm":                         "Jaeger (Helm)",
-	"kafka":                               "Kafka",
-	"keycloak":                            "Keycloak",
-	"kong":                                "Kong",
-	"kubernetes":                          "Kubernetes",
-	"libvirt":                             "libvirt",
-	"linode":                              "Linode",
-	"mailgun":                             "Mailgun",
-	"minio":                               "MinIO",
-	"mongodbatlas":                        "MongoDB Atlas",
-	"mysql":                               "MySQL",
-	"newrelic":                            "New Relic",
-	"nginx-ingress-controller-helm":       "NGINX Ingress Controller (Helm)",
-	"nomad":                               "Nomad",
-	"ns1":                                 "NS1",
-	"okta":                                "Okta",
-	"openstack":                           "OpenStack",
-	"opsgenie":                            "Opsgenie",
-	"packet":                              "Packet",
-	"pagerduty":                           "PagerDuty",
-	"postgresql":                          "PostgreSQL",
-	"prometheus-helm":                     "Prometheus (Helm)",
-	"rabbitmq":                            "RabbitMQ",
-	"rancher2":                            "Rancher 2",
-	"random":                              "random",
-	"rke":                                 "Rancher RKE",
-	"shipa":                               "Shipa",
-	"signalfx":                            "SignalFx",
-	"snowflake":                           "Snowflake",
-	"splunk":                              "Splunk",
-	"spotinst":                            "Spotinst",
-	"sumologic":                           "Sumo Logic",
-	"tls":                                 "TLS",
-	"vault":                               "Vault",
-	"venafi":                              "Venafi",
-	"vsphere":                             "vSphere",
-	"wavefront":                           "Wavefront",
-	"yandex":                              "Yandex",
-}
-
-func packageMetadataCmd() *cobra.Command {
-	var metadataOutDir string
+func PackageMetadataCmd() *cobra.Command {
+	var repoSlug string
+	var providerName string
 	var categoryStr string
 	var component bool
-	var featured bool
 	var publisher string
 	var schemaFile string
 	var title string
-	var updatedOn int64
 	var version string
+	var metadataDir string
+	var packageDocsDir string
 
 	cmd := &cobra.Command{
-		Use:   "metadata <metadataOutDir> [featured]",
+		Use:   "metadata <args>",
 		Short: "Generate package metadata from Pulumi schema",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			schema, err := ioutil.ReadFile(schemaFile)
+
+			if strings.Contains(repoSlug, "https") || strings.Contains(repoSlug, "github.com") {
+				return errors.New(fmt.Sprintf("Expected repoSlug to be in the format of `owner/repo`"+
+					" but got %q", repoSlug))
+			}
+
+			repoName := ""
+			repoOwner := ""
+			githubSlugParts := strings.Split(repoSlug, "/")
+			if len(githubSlugParts) > 0 {
+				repoOwner = githubSlugParts[0]
+				repoName = githubSlugParts[1]
+			} else {
+				return errors.New(fmt.Sprintf("Expected repoSlug to be in the format of `owner/repo`"+
+					" but got %q", repoSlug))
+			}
+
+			if schemaFile == "" && providerName == "" {
+				providerName = strings.Replace(repoName, "pulumi-", "", -1)
+			}
+
+			if schemaFile == "" {
+				schemaFile = fmt.Sprintf("provider/cmd/pulumi-resource-%s/schema.json", providerName)
+			}
+
+			// we should be able to take the repo URL + the version + the schema url and
+			// construct a file that we can download and read
+			schemaFilePath := fmt.Sprintf("https://raw.githubusercontent.com/%s/%s/%s",
+				repoSlug, version, schemaFile)
+
+			schema, err := readRemoteFile(schemaFilePath)
 			if err != nil {
-				return errors.Wrap(err, "reading schema file from path")
+				return err
+			}
+
+			if schema == nil {
+				return fmt.Errorf("unable to get contents of schemaFile %q", schemaFilePath)
 			}
 
 			// The source schema can be in YAML format. If that's the case
@@ -248,6 +95,38 @@ func packageMetadataCmd() *cobra.Command {
 				}
 			}
 
+			// try and get the version release data using the github releases API
+			tags, err := getGitHubTags(repoSlug)
+			if err != nil {
+				return errors.Wrap(err, "github tags")
+			}
+
+			var commitDetails string
+			for _, tag := range tags {
+				if tag.Name == version {
+					commitDetails = tag.Commit.URL
+					break
+				}
+			}
+
+			publishedDate := time.Now()
+			if commitDetails != "" {
+				var commit pkg.GitHubCommit
+				// now let's make a request to the specific commit to get the date
+				commitResp, err := http.Get(commitDetails)
+				if err != nil {
+					return errors.Wrap(err, fmt.Sprintf("getting release info for %s", repoSlug))
+				}
+
+				defer commitResp.Body.Close()
+				err = json.NewDecoder(commitResp.Body).Decode(&commit)
+				if err != nil {
+					return errors.Wrap(err, fmt.Sprintf("constructing commit information for %s", repoSlug))
+				}
+
+				publishedDate = commit.Commit.Author.Date
+			}
+
 			mainSpec = &pschema.PackageSpec{}
 			if err := json.Unmarshal(schema, mainSpec); err != nil {
 				return errors.Wrap(err, "unmarshalling schema into a PackageSpec")
@@ -255,7 +134,8 @@ func packageMetadataCmd() *cobra.Command {
 			mainSpec.Version = version
 
 			if mainSpec.Repository == "" {
-				return errors.New("repository field must be set in the package schema")
+				// we already know the repo slug so we can reconstruct the repository name using that
+				mainSpec.Repository = fmt.Sprintf("https://github.com/%s", repoSlug)
 			}
 
 			status := pkg.PackageStatusGA
@@ -278,7 +158,7 @@ func packageMetadataCmd() *cobra.Command {
 					// Eventually all of Pulumi's own packages will have the displayName
 					// set in their schema but for the time being until they are updated
 					// with that info, let's lookup the proper title from the lookup map.
-					if v, ok := titleLookup[mainSpec.Name]; ok {
+					if v, ok := pkg.TitleLookup[mainSpec.Name]; ok {
 						title = v
 					}
 				} else {
@@ -298,14 +178,22 @@ func packageMetadataCmd() *cobra.Command {
 			}
 
 			if native && component {
-				glog.Warning("Package found to be marked as both native and component. Will proceed with tagging the package as a component but not native.")
 				native = false
 			}
 
-			if publisher == "" && mainSpec.Publisher != "" {
-				publisher = mainSpec.Publisher
-			} else if publisher == "" {
-				publisher = "Pulumi"
+			// if there's a publisher then we need to use that immediately
+			// if there is no publisher on cmd, then try and use packageSpec
+			// if there's no publisher or packageSpec publisher, then assume repo owner is the publisher
+			// otherwise error
+			publisherName := ""
+			if publisher != "" {
+				publisherName = publisher
+			} else if publisher == "" && mainSpec.Publisher != "" {
+				publisherName = mainSpec.Publisher
+			} else if publisher == "" && repoOwner != "" {
+				publisherName = cases.Title(language.Und, cases.NoLower).String(repoOwner)
+			} else {
+				return errors.New("unable to determine package publisher")
 			}
 
 			cleanSchemaFilePath := func(s string) string {
@@ -318,19 +206,19 @@ func packageMetadataCmd() *cobra.Command {
 				Name:        mainSpec.Name,
 				Description: mainSpec.Description,
 				LogoURL:     mainSpec.LogoURL,
-				Publisher:   publisher,
+				Publisher:   publisherName,
 				Title:       title,
 
 				RepoURL:        mainSpec.Repository,
 				SchemaFilePath: cleanSchemaFilePath(schemaFile),
 
 				PackageStatus: status,
-				UpdatedOn:     updatedOn,
+				UpdatedOn:     publishedDate.Unix(),
 				Version:       version,
 
 				Category:  category,
 				Component: component,
-				Featured:  featured,
+				Featured:  isFeaturedPackage(mainSpec.Name),
 				Native:    native,
 			}
 			b, err := yaml.Marshal(pm)
@@ -338,30 +226,86 @@ func packageMetadataCmd() *cobra.Command {
 				return errors.Wrap(err, "generating package metadata")
 			}
 
+			if metadataDir == "" {
+				// if the user hasn't specified an metadataDir, we will default to
+				// the path within the registry folder.
+				metadataDir = "themes/default/data/registry/packages"
+			}
 			metadataFileName := fmt.Sprintf("%s.yaml", mainSpec.Name)
-			if err := pkg.EmitFile(metadataOutDir, metadataFileName, b); err != nil {
+			if err := pkg.EmitFile(metadataDir, metadataFileName, b); err != nil {
 				return errors.Wrap(err, "writing metadata file")
+			}
+
+			if packageDocsDir == "" {
+				// if the user hasn't specified an packageDocsDir, we will default to
+				// the path within the registry folder.
+				packageDocsDir = fmt.Sprintf("themes/default/content/registry/packages/%s", mainSpec.Name)
+			}
+
+			requiredFiles := []string{
+				"_index.md",
+				"installation-configuration.md",
+			}
+			for _, requiredFile := range requiredFiles {
+				requiredFilePath := fmt.Sprintf("https://raw.githubusercontent.com/%s/%s/docs/%s",
+					repoSlug, version, requiredFile)
+				details, err := readRemoteFile(requiredFilePath)
+				if err != nil {
+					return err
+				}
+
+				if err := pkg.EmitFile(packageDocsDir, requiredFile, details); err != nil {
+					return errors.Wrap(err, fmt.Sprintf("writing %s file", requiredFile))
+				}
 			}
 
 			return nil
 		},
 	}
 
-	cmd.Flags().StringVarP(&schemaFile, "schemaFile", "s", "", "Relative path to the schema.json file")
+	cmd.Flags().StringVar(&repoSlug, "repoSlug", "", "The repository slug e.g. pulumi/pulumi-provider")
+	cmd.Flags().StringVar(&providerName, "providerName", "", "The name of the provider e.g. aws, aws-native. "+
+		"Required when there is no schemaFile flag specified.")
+	cmd.Flags().StringVarP(&schemaFile, "schemaFile", "s", "", "Relative path to the schema.json file from "+
+		"the root of the repository. If no schemaFile is specified, then providerName is required so the schemaFile path can "+
+		"be inferred to be provider/cmd/pulumi-resource-<providerName>/schema.json")
 	cmd.Flags().StringVar(&version, "version", "", "The version of the package")
-	cmd.Flags().StringVar(&metadataOutDir, "metadataOutDir", "", "The directory path to where the docs will be written to")
-	cmd.Flags().StringVar(&categoryStr, "category", "", fmt.Sprintf("The category for the package. Value must match one of the keys in the map: %v", categoryNameMap))
-	cmd.Flags().BoolVar(&featured, "featured", false, "Whether or not this package should be marked as featured in its metadata")
-	cmd.Flags().StringVar(&publisher, "publisher", "", "The publisher's display name to be shown in the package")
-	cmd.Flags().StringVar(&title, "title", "", "The display name of the package. If ommitted, the name of the package will be used")
-	cmd.Flags().Int64Var(&updatedOn, "updatedOn", time.Now().Unix(), "The timestamp (epoch) to use for when the package was last updated")
+	cmd.Flags().StringVar(&categoryStr, "category", "", fmt.Sprintf("The category for the package. Value must "+
+		"match one of the keys in the map: %v", pkg.CategoryNameMap))
+	cmd.Flags().StringVar(&publisher, "publisher", "", "The publisher's display name to be shown in the package. "+
+		"This will default to Pulumi")
+	cmd.Flags().StringVar(&title, "title", "", "The display name of the package. If omitted, the name of the "+
+		"package will be used")
 	cmd.Flags().BoolVar(&component, "component", false, "Whether or not this package is a component and not a provider")
+	cmd.Flags().StringVar(&metadataDir, "metadataDir", "", "The location to save the metadata - this will default to the folder "+
+		"structure that the registry expects (themes/default/data/registry/packages)")
+	cmd.Flags().StringVar(&packageDocsDir, "packageDocsDir", "", "The location to save the package docs - this will default to the folder "+
+		"structure that the registry expects (themes/default/content/registry/packages)")
 
-	cmd.MarkFlagRequired("metadataOutDir")
-	cmd.MarkFlagRequired("schemaFile")
 	cmd.MarkFlagRequired("version")
+	cmd.MarkFlagRequired("repoSlug")
 
 	return cmd
+}
+
+func readRemoteFile(url string) ([]byte, error) {
+	resp, err := http.Get(url)
+	if err != nil {
+		return nil, errors.Wrap(err, fmt.Sprintf("downloading remote file from %s", url))
+	}
+
+	defer resp.Body.Close()
+	if resp.StatusCode < 200 || resp.StatusCode > 299 {
+		// this ultimately checks that the file exists and has content
+		return nil, nil
+	}
+
+	contents, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return nil, errors.Wrap(err, "reading contents of remote file")
+	}
+
+	return contents, nil
 }
 
 func getPackageCategory(mainSpec *pschema.PackageSpec, categoryOverrideStr string) (pkg.PackageCategory, error) {
@@ -371,12 +315,12 @@ func getPackageCategory(mainSpec *pschema.PackageSpec, categoryOverrideStr strin
 	// If a category override was passed-in, use that instead of what's in the schema.
 	if categoryOverrideStr != "" {
 		glog.V(2).Infof("Using category override name %s\n", categoryOverrideStr)
-		if n, ok := categoryNameMap[categoryOverrideStr]; !ok {
+		if n, ok := pkg.CategoryNameMap[categoryOverrideStr]; !ok {
 			return "", errors.New(fmt.Sprintf("invalid override for category name %s", categoryOverrideStr))
 		} else {
 			category = n
 		}
-	} else if c, ok := categoryLookup[mainSpec.Name]; ok {
+	} else if c, ok := pkg.CategoryLookup[mainSpec.Name]; ok {
 		glog.V(2).Infoln("Using the category for this package from the lookup map")
 		// TODO: This condition can be removed when all packages under the `pulumi` org
 		// have a proper category tag in their schema.
@@ -407,7 +351,7 @@ func getCategoryFromKeywords(keywords []string) (pkg.PackageCategory, error) {
 
 	categoryName := strings.Replace(*categoryTag, "category/", "", -1)
 	var category pkg.PackageCategory
-	if n, ok := categoryNameMap[categoryName]; !ok {
+	if n, ok := pkg.CategoryNameMap[categoryName]; !ok {
 		return defaultPackageCategory, errors.New(fmt.Sprintf("invalid category tag %s", *categoryTag))
 	} else {
 		category = n
@@ -418,6 +362,15 @@ func getCategoryFromKeywords(keywords []string) (pkg.PackageCategory, error) {
 
 func isComponent(keywords []string) bool {
 	return getTagFromKeywords(keywords, "kind/component") != nil
+}
+
+func isFeaturedPackage(str string) bool {
+	for _, v := range featuredPackages {
+		if v == str {
+			return true
+		}
+	}
+	return false
 }
 
 func isNative(keywords []string) bool {
@@ -444,4 +397,30 @@ func getTagFromKeywords(keywords []string, tag string) *string {
 
 	glog.V(2).Infof("The tag %q was not found in the package's keywords", tag)
 	return nil
+}
+
+func getGitHubTags(repoSlug string) ([]pkg.GitHubTag, error) {
+	path := fmt.Sprintf("/repos/%s/tags", repoSlug)
+	tagsResp, err := pkg.GetGitHubAPI(path)
+	if err != nil {
+		return nil, errors.Wrap(err, fmt.Sprintf("getting tags info for %s", repoSlug))
+	}
+	defer tagsResp.Body.Close()
+
+	if tagsResp.StatusCode != 200 {
+		respBody, err := io.ReadAll(tagsResp.Body)
+		if err != nil {
+			return nil, errors.Wrap(err, fmt.Sprintf("getting tags info for %s: %s", repoSlug, tagsResp.Status))
+		}
+
+		return nil, fmt.Errorf("getting tags info for %s: %s", repoSlug, string(respBody))
+	}
+
+	var tags []pkg.GitHubTag
+	err = json.NewDecoder(tagsResp.Body).Decode(&tags)
+	if err != nil {
+		return nil, errors.Wrap(err, fmt.Sprintf("constructing tags information for %s", repoSlug))
+	}
+
+	return tags, nil
 }

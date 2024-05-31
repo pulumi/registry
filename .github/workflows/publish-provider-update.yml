@@ -22,13 +22,10 @@ jobs:
       - run: echo "Building ${{ env.PROVIDER_NAME }} docs @ ${{ env.PROVIDER_VERSION }}"
       - name: checkout registry repo
         uses: actions/checkout@v2
-      - name: Install Registrygen CLI
-        uses: jaxxstorm/action-install-gh-release@v1.2.0
-        with:
-          repo: pulumi/registrygen
       - name: Generate Package Metadata
         run: |
-          registrygen metadata --providerName=${{ env.PROVIDER_SHORT_NAME }} --repoSlug pulumi/pulumi-${{ env.PROVIDER_SHORT_NAME }} --schemaFile="${{ env.PROVIDER_SCHEMA_PATH }}" --version="${{ env.PROVIDER_VERSION }}" --publisher Pulumi
+          cd tools/resourcedocsgen && go run github.com/pulumi/registry/tools/resourcedocsgen \
+          resourcedocsgen metadata --providerName=${{ env.PROVIDER_SHORT_NAME }} --repoSlug pulumi/pulumi-${{ env.PROVIDER_SHORT_NAME }} --schemaFile="${{ env.PROVIDER_SCHEMA_PATH }}" --version="${{ env.PROVIDER_VERSION }}" --publisher Pulumi
       - name: git status
         run: git status && git diff
       - name: Create registry PR

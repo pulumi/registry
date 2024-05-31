@@ -55,24 +55,20 @@ jobs:
       - name: Sleep to prevent hitting secondary rate limits
         if: steps.skip-run.outputs.skip != 1
         run: sleep 1
-      - name: Install Resourcedocsgen CLI
-        if: steps.skip-run.outputs.skip != 1
-        uses: jaxxstorm/action-install-gh-release@v1.5.0
-        with:
-          repo: pulumi/registrygen
       - name: Check for a new version
         if: steps.skip-run.outputs.skip != 1
         id: version
         run: |
           echo 'PROVIDER_VERSION<<EOF' >> $GITHUB_ENV
-          registrygen pkgversion --repoSlug ${{ matrix.repoSlug }} \
+          cd tools/resourcedocsgen && \
+          go run github.com/pulumi/registry/tools/resourcedocsgen pkgversion --repoSlug ${{ matrix.repoSlug }} \
           >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
       # This will only be populated if the registry version does not match the latest provider version.
       - name: Display new version
         if: env.PROVIDER_VERSION
         run: echo ${{ env.PROVIDER_VERSION}}
-      # We only need to run the following steps if registrygen found a newer version of the community provider.
+      # We only need to run the following steps if resourcedocsgen found a newer version of the community provider.
       - name: Generate Package Metadata
         if: env.PROVIDER_VERSION
         run: |

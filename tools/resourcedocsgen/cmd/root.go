@@ -5,8 +5,8 @@ import (
 
 	"github.com/golang/glog"
 
-	"github.com/pulumi/docs/tools/resourcedocsgen/cmd/docs"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/util/logging"
+	"github.com/pulumi/registry/tools/resourcedocsgen/cmd/docs"
 )
 
 var (

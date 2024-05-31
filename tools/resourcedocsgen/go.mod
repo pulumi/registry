@@ -1,4 +1,4 @@
-module github.com/pulumi/docs/tools/resourcedocsgen
+module github.com/pulumi/registry/tools/resourcedocsgen
 
 go 1.19
 

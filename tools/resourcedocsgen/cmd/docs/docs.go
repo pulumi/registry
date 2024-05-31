@@ -11,7 +11,7 @@ import (
 	"github.com/golang/glog"
 	"github.com/hashicorp/hcl/v2"
 	"github.com/pkg/errors"
-	"github.com/pulumi/docs/tools/resourcedocsgen/pkg"
+	"github.com/pulumi/registry/tools/resourcedocsgen/pkg"
 	"github.com/spf13/cobra"
 
 	docsgen "github.com/pulumi/pulumi/pkg/v3/codegen/docs"

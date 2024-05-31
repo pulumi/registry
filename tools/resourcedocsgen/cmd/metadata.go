@@ -3,9 +3,7 @@ package cmd
 import (
 	"encoding/json"
 	"fmt"
-	"io"
-	"io/ioutil"
-	"net/http"
+	"os"
 	"strings"
 	"time"
 
@@ -20,6 +18,7 @@ import (
 	pschema "github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 
 	"github.com/pulumi/docs/tools/resourcedocsgen/pkg"
+	"github.com/ryboe/q"
 )
 
 const defaultPackageCategory = pkg.PackageCategoryCloud
@@ -235,10 +234,16 @@ func packageMetadataCmd() *cobra.Command {
 	var packageDocsDir string
 
 	cmd := &cobra.Command{
-		Use:   "metadata <metadataOutDir> [featured]",
+		Use:   "metadata <args> [featured]",
 		Short: "Generate package metadata from Pulumi schema",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			schema, err := ioutil.ReadFile(schemaFile)
+
+			if strings.Contains(repoSlug, "https") || strings.Contains(repoSlug, "github.com") {
+				return errors.New(fmt.Sprintf("Expected repoSlug to be in the format of `owner/repo`"+
+					" but got %q", repoSlug))
+			}
+
+			schema, err := os.ReadFile(schemaFile)
 			if err != nil {
 				return errors.Wrap(err, "reading schema file from path")
 			}
@@ -342,9 +347,21 @@ func packageMetadataCmd() *cobra.Command {
 				return errors.Wrap(err, "generating package metadata")
 			}
 
+			if metadataOutDir == "" {
+				// if the user hasn't specified a metadataOutDir, default to
+				// the path within the registry folder.
+				metadataOutDir = "themes/default/data/registry/packages"
+			}
+
 			metadataFileName := fmt.Sprintf("%s.yaml", mainSpec.Name)
 			if err := pkg.EmitFile(metadataOutDir, metadataFileName, b); err != nil {
 				return errors.Wrap(err, "writing metadata file")
+			}
+
+			if packageDocsDir == "" {
+				// if the user hasn't specified a packageDocsDir, default to
+				// the path within the registry folder.
+				packageDocsDir = fmt.Sprintf("themes/default/content/registry/packages/%s", mainSpec.Name)
 			}
 
 			requiredFiles := []string{
@@ -352,18 +369,22 @@ func packageMetadataCmd() *cobra.Command {
 				"installation-configuration.md",
 			}
 			for _, requiredFile := range requiredFiles {
-				requiredFilePath := fmt.Sprintf("https://raw.githubusercontent.com/%s/%s/docs/%s",
-					repoSlug, version, requiredFile)
-				details, err := readRemoteFile(requiredFilePath)
+				//requiredFilePath := fmt.Sprintf("https://raw.githubusercontent.com/%s/%s/docs/%s",
+				//	repoSlug, version, requiredFile)
+				//details, err := readRemoteFile(requiredFilePath)
+				requiredFilePath := fmt.Sprintf("%s",
+					requiredFile)
+				details, err := os.ReadFile(requiredFilePath)
+				q.Q(string(details), err)
 				if err != nil {
 					return err
 				}
 
 				if err := pkg.EmitFile(packageDocsDir, requiredFile, details); err != nil {
+					panic("wtf?")
 					return errors.Wrap(err, fmt.Sprintf("writing %s file", requiredFile))
 				}
 			}
-
 			return nil
 		},
 	}
@@ -379,33 +400,13 @@ func packageMetadataCmd() *cobra.Command {
 	cmd.Flags().BoolVar(&component, "component", false, "Whether or not this package is a component and not a provider")
 	cmd.Flags().StringVar(&repoSlug, "repoSlug", "", "The repository slug e.g. pulumi/pulumi-provider")
 	cmd.Flags().StringVar(&packageDocsDir, "packageDocsDir", "", "The location to save the package docs - this will default to the folder "+
-		"structure that the registry expects (themes/default/data/registry/packages)")
+		"structure that the registry expects (themes/default/content/registry/packages)")
 
-	cmd.MarkFlagRequired("metadataOutDir")
-	cmd.MarkFlagRequired("schemaFile")
+	//cmd.MarkFlagRequired("metadataOutDir")
+	//cmd.MarkFlagRequired("schemaFile")
 	cmd.MarkFlagRequired("version")
 
 	return cmd
-}
-
-func readRemoteFile(url string) ([]byte, error) {
-	resp, err := http.Get(url)
-	if err != nil {
-		return nil, errors.Wrap(err, fmt.Sprintf("downloading remote file from %s", url))
-	}
-
-	defer resp.Body.Close()
-	if resp.StatusCode < 200 || resp.StatusCode > 299 {
-		// this ultimately checks that the file exists and has content
-		return nil, errors.New(fmt.Sprintf("finding remote file at %s: %s", url, resp.Status))
-	}
-
-	contents, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return nil, errors.Wrap(err, "reading contents of remote file")
-	}
-
-	return contents, nil
 }
 
 func getPackageCategory(mainSpec *pschema.PackageSpec, categoryOverrideStr string) (pkg.PackageCategory, error) {

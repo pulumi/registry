@@ -1,15 +1,18 @@
 module github.com/pulumi/docs/tools/resourcedocsgen
 
-go 1.19
+go 1.22
+
+toolchain go1.22.0
 
 require (
 	github.com/ghodss/yaml v1.0.0
 	github.com/golang/glog v1.1.2
 	github.com/hashicorp/hcl/v2 v2.17.0
 	github.com/pkg/errors v0.9.1
-	github.com/pulumi/pulumi/pkg/v3 v3.112.1-0.20240411163819-1b65e6c8856b
-	github.com/pulumi/pulumi/sdk/v3 v3.112.1-0.20240411163819-1b65e6c8856b
-	github.com/spf13/cobra v1.8.0
+	github.com/pulumi/pulumi/pkg/v3 v3.108.0
+	github.com/pulumi/pulumi/sdk/v3 v3.108.0
+	github.com/ryboe/q v1.0.21
+	github.com/spf13/cobra v1.7.0
 )
 
 require (
@@ -101,6 +104,8 @@ require (
 	github.com/jmespath/go-jmespath v0.4.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/kevinburke/ssh_config v1.2.0 // indirect
+	github.com/kr/pretty v0.3.1 // indirect
+	github.com/kr/text v0.2.0 // indirect
 	github.com/kylelemons/godebug v1.1.0 // indirect
 	github.com/lucasb-eyer/go-colorful v1.2.0 // indirect
 	github.com/mattn/go-isatty v0.0.19 // indirect
@@ -132,7 +137,7 @@ require (
 	github.com/pulumi/pulumi-java/pkg v0.10.0 // indirect
 	github.com/pulumi/pulumi-yaml v1.6.0 // indirect
 	github.com/rivo/uniseg v0.4.4 // indirect
-	github.com/rogpeppe/go-internal v1.11.0 // indirect
+	github.com/rogpeppe/go-internal v1.12.0 // indirect
 	github.com/ryanuber/go-glob v1.0.0 // indirect
 	github.com/sabhiram/go-gitignore v0.0.0-20210923224102-525f6e181f06 // indirect
 	github.com/santhosh-tekuri/jsonschema/v5 v5.0.0 // indirect

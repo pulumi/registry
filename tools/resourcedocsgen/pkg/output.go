@@ -1,6 +1,7 @@
 package pkg
 
 import (
+	"github.com/ryboe/q"
 	"os"
 	"path"
 
@@ -17,7 +18,7 @@ func EmitFile(outDir, relPath string, contents []byte) error {
 	if err := tools.EnsureDir(path.Dir(p)); err != nil {
 		return errors.Wrap(err, "creating directory")
 	}
-
+	q.Q(outDir, relPath, string(contents))
 	f, err := os.Create(p)
 	if err != nil {
 		return errors.Wrap(err, "creating file")

@@ -9,7 +9,7 @@ layout: package
 The Pulumi Nutanix provider is available as a package from the following repositories:
 
 - JavaScript/TypeScript: [`@pierskarsenbarg/nutanix`](https://www.npmjs.com/package/@pierskarsenbarg/nutanix)
-- Python: [`pierskarsenbarg-pulumi-nutanix`](https://pypi.org/project/pierskarsenbarg-pulumi-nutanix/)
+- Python: [`pierskarsenbarg-pulumi-nutanix`](https://pypi.org/project/pulumi-nutanix/)
 - Go: [`github.com/pierskarsenbarg/pulumi-nutanix/sdk/go/nutanix`](https://pkg.go.dev/github.com/pierskarsenbarg/pulumi-nutanix/sdk)
 - .NET: [`PiersKarsenbarg.Nutanix`](https://www.nuget.org/packages/PiersKarsenbarg.Nutanix)
 

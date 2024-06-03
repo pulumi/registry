@@ -369,13 +369,8 @@ func isComponent(keywords []string) bool {
 	return getTagFromKeywords(keywords, "kind/component") != nil
 }
 
-func isFeaturedPackage(str string) bool {
-	for _, v := range featuredPackages {
-		if v == str {
-			return true
-		}
-	}
-	return false
+func isFeaturedPackage(package string) bool {
+	return slices.Contains(featuredPackages, package)
 }
 
 func isNative(keywords []string) bool {

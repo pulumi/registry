@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"slices"
 	"strings"
 	"time"
 
@@ -369,8 +370,8 @@ func isComponent(keywords []string) bool {
 	return getTagFromKeywords(keywords, "kind/component") != nil
 }
 
-func isFeaturedPackage(package string) bool {
-	return slices.Contains(featuredPackages, package)
+func isFeaturedPackage(pkgName string) bool {
+	return slices.Contains(featuredPackages, pkgName)
 }
 
 func isNative(keywords []string) bool {

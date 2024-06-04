@@ -5,10 +5,10 @@ featured: false
 logo_url: https://raw.githubusercontent.com/ctfer-io/pulumi-ctfd/main/res/ctfd.png
 name: ctfd
 native: false
-package_status: public_preview
+package_status: ga
 publisher: CTFer.io
 repo_url: https://github.com/ctfer-io/pulumi-ctfd
 schema_file_path: provider/cmd/pulumi-resource-ctfd/schema.json
 title: CTFd
-updated_on: 1712669151
-version: v0.1.25
+updated_on: 1717434357
+version: v1.0.0

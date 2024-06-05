@@ -6,7 +6,7 @@ layout: installation
 
 ## Installation
 
-The Pulumi Meraki provider is available as a package in all Pulumi languages:
+The Pulumi Cisco Meraki provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/meraki`](https://www.npmjs.com/package/@pulumi/meraki)
 * Python: [`pulumi_meraki`](https://pypi.org/project/pulumi_meraki/)

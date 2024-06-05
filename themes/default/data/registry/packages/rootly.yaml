@@ -10,5 +10,5 @@ publisher: Rootly
 repo_url: https://github.com/rootlyhq/pulumi-rootly
 schema_file_path: provider/cmd/pulumi-resource-rootly/schema.json
 title: Rootly
-updated_on: 1712069509
-version: v1.2.1
+updated_on: 1714017410
+version: v1.5.0

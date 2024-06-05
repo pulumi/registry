@@ -13,14 +13,14 @@ The Dynatrace provider must be configured with credentials to deploy and update 
 {{% choosable language typescript %}}
 
 ```typescript
-import * as dynatrace from "@lbrlabs/pulumi-dynatrace";
+import * as dynatrace from "@pulumiverse/dynatrace";
 ```
 
 {{% /choosable %}}
 {{% choosable language python %}}
 
 ```python
-import lbrlabs_pulumi_dynatrace as dynatrace
+import pulumiverse_dynatrace as dynatrace
 ```
 
 {{% /choosable %}}
@@ -29,7 +29,7 @@ import lbrlabs_pulumi_dynatrace as dynatrace
 ```go
 import (
 	"fmt"
-	dynatrace "github.com/lbrlabs/pulumi-dynatrace/sdk/go/dynatrace"
+	dynatrace "github.com/pulumiverse/pulumi-dynatrace/sdk/go/dynatrace"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 ```
@@ -39,7 +39,7 @@ import (
 
 ```csharp
 using Pulumi;
-using Lbrlabs.PulumiPackage.Dynatrace;
+using Pulumiverse.Dynatrace;
 
 ```
 

@@ -20,7 +20,7 @@ import (
 
 	"github.com/golang/glog"
 
-	"github.com/pulumi/docs/tools/resourcedocsgen/cmd"
+	"github.com/pulumi/registry/tools/resourcedocsgen/cmd"
 )
 
 func main() {

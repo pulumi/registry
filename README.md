@@ -125,13 +125,14 @@ cp ../docs/content/registry/packages/aws/how-to-guides ./themes/default/content/
 
 #### Generating API docs for packages
 
-The API docs for packages can be generated on-demand using the [`registrygen` tool](https://github.com/pulumi/registrygen).
+The API docs for packages can be generated on-demand using the [`resourcedocsgen` tool](tools/resourcedocsgen/README.md).
 
 ```
-go install github.com/pulumi/registrygen@master
+cd tools/resourcedocsgen
+go build -o "${GOPATH}/bin/resourcedocsgen" .
 ```
 
-Run `registrygen --help` for help regarding its use or [see the `registrygen` README](https://github.com/pulumi/registrygen#readme).
+Run `resourcedocsgen --help` for help regarding its use or [see the `resourcedocsgen` README](tools/resourcedocsgen/README.md).
 
 ## Submitting, merging and releasing
 

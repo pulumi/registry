@@ -5,8 +5,8 @@ import (
 
 	"github.com/golang/glog"
 
-	"github.com/pulumi/docs/tools/resourcedocsgen/cmd/docs"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/util/logging"
+	"github.com/pulumi/registry/tools/resourcedocsgen/cmd/docs"
 )
 
 var (
@@ -33,7 +33,8 @@ func RootCmd() *cobra.Command {
 	rootCmd.PersistentFlags().IntVarP(&verbose, "verbose", "v", 0, "Enable verbose logging (e.g., v=3); anything >3 is very verbose")
 
 	rootCmd.AddCommand(docs.ResourceDocsCmd())
-	rootCmd.AddCommand(packageMetadataCmd())
+	rootCmd.AddCommand(PackageMetadataCmd())
+	rootCmd.AddCommand(CheckVersion())
 
 	return rootCmd
 }

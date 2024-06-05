@@ -1,4 +1,4 @@
-module github.com/pulumi/docs/tools/resourcedocsgen
+module github.com/pulumi/registry/tools/resourcedocsgen
 
 go 1.19
 
@@ -10,6 +10,7 @@ require (
 	github.com/pulumi/pulumi/pkg/v3 v3.118.0
 	github.com/pulumi/pulumi/sdk/v3 v3.118.0
 	github.com/spf13/cobra v1.8.0
+	golang.org/x/text v0.15.0
 )
 
 require (
@@ -90,6 +91,7 @@ require (
 	github.com/grpc-ecosystem/grpc-opentracing v0.0.0-20180507213350-8e809c8a8645 // indirect
 	github.com/hashicorp/errwrap v1.1.0 // indirect
 	github.com/hashicorp/go-cleanhttp v0.5.2 // indirect
+	github.com/hashicorp/go-hclog v1.3.1 // indirect
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
 	github.com/hashicorp/go-retryablehttp v0.7.5 // indirect
 	github.com/hashicorp/go-rootcerts v1.0.2 // indirect
@@ -173,7 +175,6 @@ require (
 	golang.org/x/sync v0.6.0 // indirect
 	golang.org/x/sys v0.20.0 // indirect
 	golang.org/x/term v0.20.0 // indirect
-	golang.org/x/text v0.15.0 // indirect
 	golang.org/x/time v0.5.0 // indirect
 	golang.org/x/tools v0.17.0 // indirect
 	golang.org/x/xerrors v0.0.0-20231012003039-104605ab7028 // indirect

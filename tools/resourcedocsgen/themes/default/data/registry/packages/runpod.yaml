@@ -1,0 +1,15 @@
+category: Cloud
+component: false
+description: The Runpod Pulumi provider provides resources to interact with Runpod's
+  native APIs.
+featured: false
+logo_url: https://avatars.githubusercontent.com/u/95939477?s=200&v=4
+name: runpod
+native: true
+package_status: ga
+publisher: Runpod
+repo_url: https://github.com/runpod/pulumi-runpod-native
+schema_file_path: provider/schema.json
+title: Runpod
+updated_on: 1712452688
+version: v1.2.7

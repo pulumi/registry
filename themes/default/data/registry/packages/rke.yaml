@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-rke
 schema_file_path: provider/cmd/pulumi-resource-rke/schema.json
 title: Rancher Kubernetes Engine (RKE)
-updated_on: 1712653573
-version: v3.4.0
+updated_on: 1717549071
+version: v3.4.1

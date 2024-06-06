@@ -1,0 +1,14 @@
+category: Cloud
+component: false
+description: A Pulumi package for creating and managing Scaleway cloud resources.
+featured: false
+logo_url: https://raw.githubusercontent.com/pulumiverse/pulumi-scaleway/master/assets/scaleway.png
+name: scaleway
+native: false
+package_status: ga
+publisher: pulumiverse
+repo_url: https://github.com/pulumiverse/pulumi-scaleway
+schema_file_path: provider/cmd/pulumi-resource-scaleway/schema.json
+title: Scaleway
+updated_on: 1717672632
+version: v1.14.0

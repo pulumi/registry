@@ -1,0 +1,14 @@
+category: Infrastructure
+component: false
+description: A native Pulumi package for creating and managing Pulumi Cloud constructs
+featured: false
+logo_url: ""
+name: pulumiservice
+native: true
+package_status: public_preview
+publisher: Pulumi
+repo_url: https://github.com/pulumi/pulumi-pulumiservice
+schema_file_path: provider/cmd/pulumi-resource-pulumiservice/schema.json
+title: Pulumi Cloud
+updated_on: 1717632720
+version: v0.21.2

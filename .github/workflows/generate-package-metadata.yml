@@ -61,7 +61,7 @@ jobs:
         run: |
           echo 'PROVIDER_VERSION<<EOF' >> $GITHUB_ENV
           go build -C tools/resourcedocsgen
-          ./tools/resourcedocsgen pkgversion --repoSlug ${{ matrix.repoSlug }} \
+          ./tools/resourcedocsgen/resourcedocsgen pkgversion --repoSlug ${{ matrix.repoSlug }} \
           >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
       # This will only be populated if the registry version does not match the latest provider version.
@@ -73,7 +73,7 @@ jobs:
         if: env.PROVIDER_VERSION
         run: |
           go build -C tools/resourcedocsgen
-          ./tools/resourcedocsgen \
+          ./tools/resourcedocsgen/resourcedocsgen \
           metadata --repoSlug ${{ matrix.repoSlug }} --schemaFile ${{ matrix.schemaFile }} \
           --version ${{ env.PROVIDER_VERSION }}
       - name: Create registry PR

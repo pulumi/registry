@@ -10,5 +10,5 @@ publisher: dirien
 repo_url: https://github.com/dirien/pulumi-qovery
 schema_file_path: provider/cmd/pulumi-resource-qovery/schema.json
 title: Qovery
-updated_on: 1715466969
-version: v0.28.9
+updated_on: 1717751532
+version: v0.28.10

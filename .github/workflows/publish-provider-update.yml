@@ -24,7 +24,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Generate Package Metadata
         run: |
-          cd tools/resourcedocsgen && go run github.com/pulumi/registry/tools/resourcedocsgen \
+          go build -C tools/resourcedocsgen
+          ./tools/resourcedocsgen \
           metadata --providerName=${{ env.PROVIDER_SHORT_NAME }} --repoSlug pulumi/pulumi-${{ env.PROVIDER_SHORT_NAME }} --schemaFile="${{ env.PROVIDER_SCHEMA_PATH }}" --version="${{ env.PROVIDER_VERSION }}" --publisher Pulumi
       - name: git status
         run: git status && git diff

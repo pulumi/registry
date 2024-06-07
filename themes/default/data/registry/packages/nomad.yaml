@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-nomad
 schema_file_path: provider/cmd/pulumi-resource-nomad/schema.json
 title: Nomad
-updated_on: 1715303914
-version: v2.2.1
+updated_on: 1717612320
+version: v2.3.0

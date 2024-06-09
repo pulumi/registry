@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-gitlab
 schema_file_path: provider/cmd/pulumi-resource-gitlab/schema.json
 title: GitLab
-updated_on: 1717091887
-version: v8.0.0
+updated_on: 1717895347
+version: v8.0.1

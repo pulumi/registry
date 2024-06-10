@@ -10,7 +10,7 @@ The dbt Cloud Resource Provider lets you manage [dbt Cloud](https://www.getdbt.c
 
 ## Example
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp" >}}
 {{% choosable language typescript %}}
 
 ```typescript
@@ -79,40 +79,6 @@ return await Deployment.RunAsync(() =>
 ```
 
 {{% /choosable %}}
-{{% choosable language java %}}
 
-```java
-import com.pulumi.Pulumi;
-import com.pulumi.dbtcloud.Project;
-import com.pulumi.dbtcloud.ProjectArgs;
-
-public class Main {
-    public static void main(String[] args) {
-        Pulumi.run(ctx -> {
-            var project = new Project("java-project", ProjectArgs.builder()
-                .name("java-project")
-                .build());
-
-            ctx.export("ProjectName", project.name());
-        });
-    }
-}
-```
-
-{{% /choosable %}}
-{{% choosable language yaml %}}
-
-```yaml
-resources:
-  yaml-project:
-    type: dbtcloud:index:Project
-    properties:
-      name: "yaml-project"
-outputs:
-  project_name: ${yaml-project.name}
-
-```
-
-{{% /choosable %}}
 {{< /chooser >}}
 

@@ -11,5 +11,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-oci
 schema_file_path: provider/cmd/pulumi-resource-oci/schema.json
 title: Oracle Cloud Infrastructure
-updated_on: 1717785264
-version: v1.39.0
+updated_on: 1718211931
+version: v1.40.0

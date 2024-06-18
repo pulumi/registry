@@ -33,10 +33,9 @@ const testNetworkStorage = new runpod.NetworkStorage("testNetworkStorage", {
     size: 20,
     dataCenterId: "US-NJ",
 });
-
 const myRandomPod = new runpod.Pod("myRandomPod", {
     cloudType: "ALL",
-    networkVolumeId: testNetworkStorage.networkStorage.id,
+    networkVolumeId: testNetworkStorage.networkStorage.apply(networkStorage => networkStorage.id),
     gpuCount: 1,
     volumeInGb: 50,
     containerDiskInGb: 50,
@@ -53,9 +52,12 @@ const myRandomPod = new runpod.Pod("myRandomPod", {
         value: "rns1hunbsstltcpad22d",
     }],
 });
-
-export const pod = myRandomPod.pod;
-export const networkStorage = testNetworkStorage.networkStorage;
+export const pod = {
+    value: myRandomPod.pod,
+};
+export const networkStorage = {
+    value: testNetworkStorage.networkStorage,
+};
 ```
 
 {{% /choosable %}}

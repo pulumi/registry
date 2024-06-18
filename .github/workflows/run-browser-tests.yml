@@ -12,7 +12,7 @@ jobs:
     env:
       GOPATH: ${{ github.workspace }}/go
     name: Run browser tests
-    runs-on: ubuntu-22.04-8core
+    runs-on: pulumi-ubuntu-8core
     steps:
       - uses: actions/checkout@v2
 

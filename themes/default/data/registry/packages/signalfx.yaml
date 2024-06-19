@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-signalfx
 schema_file_path: provider/cmd/pulumi-resource-signalfx/schema.json
 title: SignalFx
-updated_on: 1717002466
-version: v7.1.5
+updated_on: 1718770573
+version: v7.1.6

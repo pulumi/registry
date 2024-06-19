@@ -11,5 +11,5 @@ publisher: Runpod
 repo_url: https://github.com/runpod/pulumi-runpod-native
 schema_file_path: provider/schema.json
 title: Runpod
-updated_on: 1712452688
-version: v1.2.7
+updated_on: 1718728449
+version: v1.3.1

@@ -20,7 +20,7 @@ $ yarn add @pgEdge/pulumi-pgedge
 ### Go
 
 ```bash
-$ go get -u github.com/pgedge/pulumi-pgedge
+$ go get -u github.com/pgEdge/pulumi-pgedge/sdk
 ```
 
 ## Authentication

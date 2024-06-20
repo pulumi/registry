@@ -75,21 +75,15 @@ jobs:
           go build -C tools/resourcedocsgen
           ./tools/resourcedocsgen/resourcedocsgen \
           metadata --repoSlug ${{ matrix.repoSlug }} --schemaFile ${{ matrix.schemaFile }} \
-          --version ${{ env.PROVIDER_VERSION }}
+          --version ${{ env.PROVIDER_VERSION }} 
       - name: Create registry PR
         if: env.PROVIDER_VERSION
-        uses: peter-evans/create-pull-request@v5
-        env:
-          PROVIDER_SHORT_NAME: ${{ steps.regex-prov.outputs.group2 }}
+        uses: ./github/actions/new-provider-version-pr
         with:
-          token: ${{ secrets.PULUMI_BOT_TOKEN }}
-          committer: Pulumi Bot <bot@pulumi.com>
-          author: Pulumi Bot <bot@pulumi.com>
-          commit-message: "Publish Package Metadata for ${{ env.PROVIDER_SHORT_NAME }}@${{ env.PROVIDER_VERSION }}"
-          title: "Publish Package Metadata ${{ env.PROVIDER_SHORT_NAME }}@${{ env.PROVIDER_VERSION }}"
-          body: ""
-          branch: "${{ env.PROVIDER_SHORT_NAME }}/${{ github.run_id }}-${{ github.run_number }}"   
-  
+          GITHUB_TOKEN: ${{ secrets.PULUMI_BOT_TOKEN }}
+          provider_short_name: ${{ env.PROVIDER_SHORT_NAME }}
+          provider_version: ${{ env.PROVIDER_VERSION }}
+
   notify:
     if: failure()
     name: Send slack notification

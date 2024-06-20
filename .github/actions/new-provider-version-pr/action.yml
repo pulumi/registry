@@ -1,0 +1,36 @@
+name: Create PR for new provider version
+description: Create a Pull Request to publish the metadata and Markdown docs for a new version of a provider.
+
+inputs:
+  GITHUB_TOKEN:
+    description: Token used to create the PR
+    required: true
+  provider_short_name:
+    description: The short name of provider to publish the metadata/docs for.
+    required: true
+  provider_version:
+    description: The version of provider to publish the metadata/docs for.
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+      - name: Create registry PR
+        id: create-pr
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ inputs.GITHUB_TOKEN }}
+          committer: Pulumi Bot <bot@pulumi.com>
+          author: Pulumi Bot <bot@pulumi.com>
+          commit-message: "Publish Package Metadata for ${{ inputs.provider_short_name }}@${{ inputs.provider_version }}"
+          title: "Publish Package Metadata ${{ inputs.provider_short_name }}@${{ inputs.provider_version }}"
+          body: ""
+          branch: "${{ inputs.provider_short_name }}/${{ github.run_id }}-${{ github.run_number }}"
+      - if: steps.create-pr.outputs.pull-request-operation == 'created'
+        name: Set Automerge
+        uses: peter-evans/enable-pull-request-automerge@v3
+        with:
+          merge-method: squash
+          pull-request-number: ${{ steps.create-pr.outputs.pull-request-number }}
+          repository: ${{ github.repository }}
+          token: ${{ inputs.GITHUB_TOKEN }}

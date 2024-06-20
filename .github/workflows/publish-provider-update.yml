@@ -30,7 +30,7 @@ jobs:
       - name: git status
         run: git status && git diff
       - name: Create registry PR
-        uses: ./github/actions/new-provider-version-pr
+        uses: ./.github/actions/new-provider-version-pr
         with:
           GITHUB_TOKEN: ${{ secrets.PULUMI_BOT_TOKEN }}
           provider_short_name: ${{ env.PROVIDER_SHORT_NAME }}

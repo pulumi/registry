@@ -2,7 +2,7 @@ name: Create PR for new provider version
 description: Create a Pull Request to publish the metadata and Markdown docs for a new version of a provider.
 
 inputs:
-  GITHUB_TOKEN:
+  github_token:
     description: Token used to create the PR
     required: true
   provider_short_name:

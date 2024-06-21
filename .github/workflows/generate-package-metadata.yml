@@ -80,7 +80,7 @@ jobs:
         if: env.PROVIDER_VERSION
         uses: ./.github/actions/new-provider-version-pr
         with:
-          GITHUB_TOKEN: ${{ secrets.PULUMI_BOT_TOKEN }}
+          github_token: ${{ secrets.PULUMI_BOT_TOKEN }}
           provider_short_name: ${{ steps.regex-prov.outputs.group2 }}
           provider_version: ${{ env.PROVIDER_VERSION }}
 

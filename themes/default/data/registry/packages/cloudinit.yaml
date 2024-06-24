@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-cloudinit
 schema_file_path: provider/cmd/pulumi-resource-cloudinit/schema.json
 title: cloud-init
-updated_on: -62135596800
-version: v1.4.3
+updated_on: 1719260046
+version: v1.4.4

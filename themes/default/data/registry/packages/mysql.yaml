@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-mysql
 schema_file_path: provider/cmd/pulumi-resource-mysql/schema.json
 title: MySQL
-updated_on: 1713899861
-version: v3.2.4
+updated_on: 1719260870
+version: v3.2.5

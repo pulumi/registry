@@ -319,6 +319,10 @@
     {
       "repoSlug": "pierskarsenbarg/pulumi-nutanix",
       "schemaFile": "provider/cmd/pulumi-resource-nutanix/schema.json"
+    },
+    {
+      "repoSlug": "splightplatform/pulumi-splight",
+      "schemaFile": "provider/cmd/pulumi-resource-splight/schema.json"
     }
   ]
 }

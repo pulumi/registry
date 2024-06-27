@@ -1,0 +1,14 @@
+category: Cloud
+component: false
+description: Utilities for building AWS Lambda Functions
+featured: false
+logo_url: ""
+name: lambda-builders
+native: true
+package_status: public_preview
+publisher: Pulumi
+repo_url: https://github.com/pulumi/pulumi-lambda-builders
+schema_file_path: provider/cmd/pulumi-resource-lambda-builders/schema.json
+title: AWS Lambda Builders
+updated_on: 1719503919
+version: v0.1.0

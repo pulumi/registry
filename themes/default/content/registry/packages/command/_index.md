@@ -25,7 +25,7 @@ You'll need to [install and configure the Pulumi CLI](https://pulumi.com/docs/in
 
 The simplest use case for `local.Command` is to just run a command on `create`, which can return some value which will be stored in the state file, and will be persistent for the life of the stack (or until the resource is destroyed or replaced).  The example below uses this as an alternative to the `random` package to create some randomness which is stored in Pulumi state.
 
-{{< chooser language "javascript,typescript,python,go,csharp" >}}
+{{< chooser language "javascript,typescript,python,go,csharp,yaml,java" >}}
 
 {{% choosable language javascript %}}
 
@@ -43,7 +43,7 @@ exports.output = random.stdout;
 
 {{% choosable language typescript %}}
 
-```ts
+```typescript
 import { local } from "@pulumi/command";
 
 const random = new local.Command("random", {
@@ -54,6 +54,7 @@ export const output = random.stdout;
 ```
 
 {{% /choosable %}}
+
 {{% choosable language csharp %}}
 
 ```csharp
@@ -105,7 +106,7 @@ import (
 func main() {
 	pulumi.Run(func(ctx *pulumi.Context) error {
 
-		random, err := local.NewCommand(ctx, "my-bucket", &local.CommandArgs{
+		random, err := local.NewCommand(ctx, "random", &local.CommandArgs{
 			Create: pulumi.String("openssl rand -hex 16"),
 		})
 		if err != nil {
@@ -115,6 +116,47 @@ func main() {
 		ctx.Export("output", random.Stdout)
 		return nil
 	})
+}
+```
+
+{{% /choosable %}}
+
+{{% choosable language yaml %}}
+
+```yaml
+outputs:
+  rand: "${random.stdout}"
+resources:
+  random:
+    type: command:local:Command
+    properties:
+      create: "openssl rand -hex 16"
+```
+
+{{% /choosable %}}
+
+{{% choosable language java %}}
+
+```java
+package generated_program;
+
+import com.pulumi.Context;
+import com.pulumi.Pulumi;
+import com.pulumi.command.local.Command;
+import com.pulumi.command.local.CommandArgs;
+
+public class App {
+    public static void main(String[] args) {
+        Pulumi.run(App::stack);
+    }
+
+    public static void stack(Context ctx) {
+        var random = new Command("random", CommandArgs.builder()
+            .create("openssl rand -hex 16")
+            .build());
+
+        ctx.export("rand", random.stdout());
+    }
 }
 ```
 

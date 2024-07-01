@@ -4,7 +4,7 @@ meta_desc: The Pulumi Command Provider enables you to execute commands and scrip
 layout: package
 ---
 
-The Pulumi Command Provider enables you to execute commands and scripts either locally or remotely as part of the Pulumi resource model.  Resources in the command package support running scripts on `create` and `destroy` operations, supporting stateful local and remote command execution. In addition, the package provides a resource for copying assets to remote hosts via SSH.
+The Pulumi Command Provider enables you to execute commands and scripts either locally or remotely as part of the Pulumi resource model.  The package also includes a resource for copying assets and archives to remote hosts via SSH.  Resources in the command package support running scripts on `create`, `update`, and `destroy` operations, supporting stateful command execution.
 
 There are many scenarios where the Command package can be useful:
 

@@ -167,94 +167,353 @@ public class App {
 
 {{< /chooser >}}
 
-### Remote provisioning of an EC2 instance
+### Remote Commands and Copying Assets To Remote Hosts
 
-This example creates an EC2 instance, and then uses `remote.Command` and `remote.CopyToRemote` to run commands and copy files to the remote instance (via SSH). Similar things are possible with Azure, Google Cloud and other cloud provider virtual machines.  Support for Windows-based VMs is being tracked [here](https://github.com/pulumi/pulumi-command/issues/15).
+This example takes a host name or IP, user name, and private SSH key from [Pulumi configuration](https://www.pulumi.com/docs/concepts/config/).  It copies a local file or directory to the remote host (via SSH), then runs a command on the remote host to verify the contents of the copied directory.  The `Command` has a `dependsOn` relationship on the `CopyToRemote` resource to ensure that it runs after the copy.
 
-Implicit and explicit (`dependsOn`) dependencies can be used to control the order that these `Command` and `CopyToRemote` resources are constructed relative to each other and to the cloud resources they depend on.  This ensures that the `create` operations run after all dependencies are created, and the `delete` operations run before all dependencies are deleted.
-
-Because the `Command` and `CopyToRemote` resources replace on changes to their connection, if the EC2 instance is replaced, the commands will all re-run on the new instance (and the `delete` operations will run on the old instance).
+Because the `Command` and `CopyToRemote` resources replace on changes to their connection, if the remote host is replaced, the commands will all re-run on the new host (and the `delete` operations will run on the old host).
 
 Note also that `deleteBeforeReplace` can be composed with `Command` resources to ensure that the `delete` operation on an "old" instance is run before the `create` operation of the new instance, in case a scarce resource is managed by the command.  Similarly, other resource options can naturally be applied to `Command` resources, like `ignoreChanges`.
 
+{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+
+{{% choosable language "javascript,typescript" %}}
+
 ```typescript
-import { interpolate, Config } from "@pulumi/pulumi";
-import { local, remote, types } from "@pulumi/command";
-import * as aws from "@pulumi/aws";
+import * as pulumi from "@pulumi/pulumi";
+import { remote, types } from "@pulumi/command";
 import * as fs from "fs";
 import * as os from "os";
 import * as path from "path";
-import { size } from "./size";
 
-const config = new Config();
-const keyName = config.get("keyName") ?? new aws.ec2.KeyPair("key", { publicKey: config.require("publicKey") }).keyName;
-const privateKeyBase64 = config.get("privateKeyBase64");
-const privateKey = privateKeyBase64 ? Buffer.from(privateKeyBase64, 'base64').toString('ascii') : fs.readFileSync(path.join(os.homedir(), ".ssh", "id_rsa")).toString("utf8");
+export = async () => {
+    const config = new pulumi.Config();
 
-const secgrp = new aws.ec2.SecurityGroup("secgrp", {
-    description: "Foo",
-    ingress: [
-        { protocol: "tcp", fromPort: 22, toPort: 22, cidrBlocks: ["0.0.0.0/0"] },
-        { protocol: "tcp", fromPort: 80, toPort: 80, cidrBlocks: ["0.0.0.0/0"] },
-    ],
-});
+    // Get the private key to connect to the server. If a key is
+    // provided, use it, otherwise default to the standard id_rsa SSH key.
+    const privateKeyBase64 = config.get("privateKeyBase64");
+    const privateKey = privateKeyBase64 ?
+        Buffer.from(privateKeyBase64, 'base64').toString('ascii') :
+        fs.readFileSync(path.join(os.homedir(), ".ssh", "id_rsa")).toString("utf8");
 
-const ami = aws.ec2.getAmiOutput({
-    owners: ["amazon"],
-    mostRecent: true,
-    filters: [{
-        name: "name",
-        values: ["amzn2-ami-hvm-2.0.????????-x86_64-gp2"],
-    }],
-});
+    const serverPublicIp = config.require("serverPublicIp");
+    const userName = config.require("userName");
 
-const server = new aws.ec2.Instance("server", {
-    instanceType: size,
-    ami: ami.id,
-    keyName: keyName,
-    vpcSecurityGroupIds: [secgrp.id],
-}, { replaceOnChanges: ["instanceType"] });
+    // The configuration of our SSH connection to the instance.
+    const connection: types.input.remote.ConnectionArgs = {
+        host: serverPublicIp,
+        user: userName,
+        privateKey: privateKey,
+    };
 
-// Now set up a connection to the instance and run some provisioning operations on the instance.
+    // Set up source and target of the remote copy.
+    const from = config.require("payload")!;
+    const archive = new pulumi.asset.FileArchive(from);
+    const to = config.require("destDir")!;
 
-const connection: types.input.remote.ConnectionArgs = {
-    host: server.publicIp,
-    user: "ec2-user",
-    privateKey: privateKey,
-};
+    // Copy the files to the remote.
+    const copy = new remote.CopyToRemote("copy", {
+        connection,
+        source: archive,
+        remotePath: to,
+    });
 
-const hostname = new remote.Command("hostname", {
-    connection,
-    create: "hostname",
-});
+    // Verify that the expected files were copied to the remote.
+    // We want to run this after each copy, i.e., when something changed,
+    // so we use the asset to be copied as a trigger.
+    const find = new remote.Command("ls", {
+        connection,
+        create: `find ${to}/${from} | sort`,
+        triggers: [archive],
+    }, { dependsOn: copy });
 
-new remote.Command("remotePrivateIP", {
-    connection,
-    create: interpolate`echo ${server.privateIp} > private_ip.txt`,
-    delete: `rm private_ip.txt`,
-}, { deleteBeforeReplace: true });
-
-new local.Command("localPrivateIP", {
-    create: interpolate`echo ${server.privateIp} > private_ip.txt`,
-    delete: `rm private_ip.txt`,
-}, { deleteBeforeReplace: true });
-
-const sizeFile = new remote.CopyToRemote("size", {
-    connection,
-    source: pulumi.asset.FileAsset("./size.ts"),
-    remotePath: "size.ts",
-})
-
-const catSize = new remote.Command("checkSize", {
-    connection,
-    create: "cat size.ts",
-}, { dependsOn: sizeFile })
-
-export const confirmSize = catSize.stdout;
-export const publicIp = server.publicIp;
-export const publicHostName = server.publicDns;
-export const hostnameStdout = hostname.stdout;
+    return {
+        remoteContents: find.stdout
+    }
+}
 ```
+
+{{% /choosable %}}
+
+{{% choosable language python %}}
+
+```python
+import pulumi
+import pulumi_command as command
+
+config = pulumi.Config()
+
+server_public_ip = config.require("serverPublicIp")
+user_name = config.require("userName")
+private_key = config.require("privateKey")
+payload = config.require("payload")
+dest_dir = config.require("destDir")
+
+archive = pulumi.FileArchive(payload)
+
+# The configuration of our SSH connection to the instance.
+conn = command.remote.ConnectionArgs(
+    host = server_public_ip,
+    user = user_name,
+    privateKey = private_key,
+)
+
+# Copy the files to the remote.
+copy = command.remote.CopyToRemote("copy",
+    connection=conn,
+    source=archive,
+    destination=dest_dir)
+
+# Verify that the expected files were copied to the remote.
+# We want to run this after each copy, i.e., when something changed,
+# so we use the asset to be copied as a trigger.
+find = command.remote.Command("find",
+    connection=conn,
+    create=f"find {dest_dir}/{payload} | sort",
+    triggers=[archive],
+    opts = pulumi.ResourceOptions(depends_on=[copy]))
+
+pulumi.export("remoteContents", find.stdout)
+```
+
+{{% /choosable %}}
+
+{{% choosable language go %}}
+
+```go
+package main
+
+import (
+	"fmt"
+
+	"github.com/pulumi/pulumi-command/sdk/go/command/remote"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		cfg := config.New(ctx, "")
+		serverPublicIp := cfg.Require("serverPublicIp")
+		userName := cfg.Require("userName")
+		privateKey := cfg.Require("privateKey")
+		payload := cfg.Require("payload")
+		destDir := cfg.Require("destDir")
+
+		archive := pulumi.NewFileArchive(payload)
+
+		conn := remote.ConnectionArgs{
+			Host:       pulumi.String(serverPublicIp),
+			User:       pulumi.String(userName),
+			PrivateKey: pulumi.String(privateKey),
+		}
+
+		copy, err := remote.NewCopyToRemote(ctx, "copy", &remote.CopyToRemoteArgs{
+			Connection: conn,
+			Source:     archive,
+		})
+		if err != nil {
+			return err
+		}
+
+		find, err := remote.NewCommand(ctx, "find", &remote.CommandArgs{
+			Connection: conn,
+			Create:     pulumi.String(fmt.Sprintf("find %v/%v | sort", destDir, payload)),
+			Triggers: pulumi.Array{
+				archive,
+			},
+		}, pulumi.DependsOn([]pulumi.Resource{
+			copy,
+		}))
+		if err != nil {
+			return err
+		}
+
+		ctx.Export("remoteContents", find.Stdout)
+		return nil
+	})
+}
+```
+
+{{% /choosable %}}
+
+{{% choosable language csharp %}}
+
+```csharp
+using System.Collections.Generic;
+using Pulumi;
+using Command = Pulumi.Command;
+
+return await Deployment.RunAsync(() =>
+{
+    var config = new Config();
+    var serverPublicIp = config.Require("serverPublicIp");
+    var userName = config.Require("userName");
+    var privateKey = config.Require("privateKey");
+    var payload = config.Require("payload");
+    var destDir = config.Require("destDir");
+
+    var archive = new FileArchive(payload);
+
+    // The configuration of our SSH connection to the instance.
+    var conn = new Command.Remote.Inputs.ConnectionArgs
+    {
+        Host = serverPublicIp,
+        User = userName,
+        PrivateKey = privateKey,
+    };
+
+    // Copy the files to the remote.
+    var copy = new Command.Remote.CopyToRemote("copy", new()
+    {
+        Connection = conn,
+        Source = archive,
+    });
+
+    // Verify that the expected files were copied to the remote.
+    // We want to run this after each copy, i.e., when something changed,
+    // so we use the asset to be copied as a trigger.
+    var find = new Command.Remote.Command("find", new()
+    {
+        Connection = conn,
+        Create = $"find {destDir}/{payload} | sort",
+        Triggers = new[]
+        {
+            archive,
+        },
+    }, new CustomResourceOptions
+    {
+        DependsOn =
+        {
+            copy,
+        },
+    });
+
+    return new Dictionary<string, object?>
+    {
+        ["remoteContents"] = find.Stdout,
+    };
+});
+```
+
+{{% /choosable %}}
+
+{{% choosable language java %}}
+
+```java
+package myproject;
+
+import com.pulumi.Context;
+import com.pulumi.Pulumi;
+import com.pulumi.command.remote.Command;
+import com.pulumi.command.remote.CommandArgs;
+import com.pulumi.command.remote.CopyToRemote;
+import com.pulumi.command.remote.inputs.*;
+import com.pulumi.resources.CustomResourceOptions;
+import com.pulumi.asset.FileArchive;
+
+public class App {
+    public static void main(String[] args) {
+        Pulumi.run(App::stack);
+    }
+
+    public static void stack(Context ctx) {
+        final var config = ctx.config();
+        final var serverPublicIp = config.require("serverPublicIp");
+        final var userName = config.require("userName");
+        final var privateKey = config.require("privateKey");
+        final var payload = config.require("payload");
+        final var destDir = config.require("destDir");
+
+        final var archive = new FileArchive(payload);
+
+        // The configuration of our SSH connection to the instance.
+        final var conn = ConnectionArgs.builder()
+            .host(serverPublicIp)
+            .user(userName)
+            .privateKey(privateKey)
+            .build();
+
+        // Copy the files to the remote.
+        var copy = new CopyToRemote("copy", CopyToRemoteArgs.builder()
+            .connection(conn)
+            .source(archive)
+            .destination(destDir)
+            .build());
+
+        // Verify that the expected files were copied to the remote.
+        // We want to run this after each copy, i.e., when something changed,
+        // so we use the asset to be copied as a trigger.
+        var find = new Command("find", CommandArgs.builder()
+            .connection(conn)
+            .create(String.format("find %s/%s | sort", destDir,payload))
+            .triggers(archive)
+            .build(), CustomResourceOptions.builder()
+                .dependsOn(copy)
+                .build());
+
+        ctx.export("remoteContents", find.stdout());
+    }
+}
+```
+
+{{% /choosable %}}
+
+{{% choosable language yaml %}}
+
+```yaml
+resources:
+  # Copy the files to the remote.
+  copy:
+    type: command:remote:CopyToRemote
+    properties:
+      connection: ${conn}
+      source: ${archive}
+      remotePath: ${destDir}
+
+  # Verify that the expected files were copied to the remote.
+  # We want to run this after each copy, i.e., when something changed,
+  # so we use the asset to be copied as a trigger.
+  find:
+    type: command:remote:Command
+    properties:
+      connection: ${conn}
+      create: find ${destDir}/${payload} | sort
+      triggers:
+        - ${archive}
+    options:
+      dependsOn:
+        - ${copy}
+
+config:
+  serverPublicIp:
+    type: string
+  userName:
+    type: string
+  privateKey:
+    type: string
+  payload:
+    type: string
+  destDir:
+    type: string
+
+variables:
+  # The source directory or archive to copy.
+  archive:
+    fn::fileArchive: ${payload}
+  # The configuration of our SSH connection to the instance.
+  conn:
+    host: ${serverPublicIp}
+    user: ${userName}
+    privateKey: ${privateKey}
+
+outputs:
+  remoteContents: ${find.stdout}
+```
+
+{{% /choosable %}}
+
+{{< /chooser >}}
 
 ### Invoking a Lambda during Pulumi deployment
 

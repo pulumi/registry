@@ -323,6 +323,10 @@
     {
       "repoSlug": "splightplatform/pulumi-splight",
       "schemaFile": "provider/cmd/pulumi-resource-splight/schema.json"
+    },
+    {
+      "repoSlug": "chronosphereio/pulumi-chronosphere",
+      "schemaFile": "provider/cmd/pulumi-resource-chronosphere/schema.json"
     }
   ]
 }

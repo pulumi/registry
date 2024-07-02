@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-tls
 schema_file_path: provider/cmd/pulumi-resource-tls/schema.json
 title: TLS
-updated_on: 1714566736
-version: v5.0.3
+updated_on: 1719961042
+version: v5.0.4

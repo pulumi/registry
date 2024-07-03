@@ -28,35 +28,87 @@ Please make sure that you are inside the Python virtual environment created by P
 import * as pulumi from "@pulumi/pulumi";
 import * as runpod from "@runpod-infra/pulumi";
 
+const myTemplate = new runpod.Template("testTemplate", {
+  containerDiskInGb: 5,
+  dockerArgs: "python handler.py",
+  env: [
+    {
+      key: "key1",
+      value: "value1",
+    },
+    {
+      key: "key2",
+      value: "value2",
+    },
+  ],
+  imageName: "runpod/serverless-hello-world:latest",
+  isServerless: true,
+  name: "Testing Pulumi V1",
+  readme: "## Hello, World!",
+  volumeInGb: 0,
+});
+
 const testNetworkStorage = new runpod.NetworkStorage("testNetworkStorage", {
-    name: "testStorage1",
-    size: 20,
-    dataCenterId: "US-NJ",
+  name: "testStorage1",
+  size: 10,
+  dataCenterId: "US-OR-1",
 });
+
 const myRandomPod = new runpod.Pod("myRandomPod", {
-    cloudType: "ALL",
-    networkVolumeId: testNetworkStorage.networkStorage.apply(networkStorage => networkStorage.id),
-    gpuCount: 1,
-    volumeInGb: 50,
-    containerDiskInGb: 50,
-    minVcpuCount: 2,
-    minMemoryInGb: 15,
-    gpuTypeId: "NVIDIA GeForce RTX 3070",
-    name: "RunPod Pytorch",
-    imageName: "runpod/pytorch",
-    dockerArgs: "",
-    ports: "8888/http",
-    volumeMountPath: "/workspace",
-    env: [{
-        key: "JUPYTER_PASSWORD",
-        value: "rns1hunbsstltcpad22d",
-    }],
+  cloudType: "ALL",
+  networkVolumeId: testNetworkStorage.networkStorage.apply(
+    // @ts-ignore
+    (networkStorage) => networkStorage.id
+  ),
+  gpuCount: 1,
+  volumeInGb: 50,
+  containerDiskInGb: 50,
+  minVcpuCount: 2,
+  minMemoryInGb: 15,
+  gpuTypeId: "NVIDIA GeForce RTX 4090",
+  name: "RunPod Pytorch",
+  imageName: "runpod/pytorch:latest",
+  dockerArgs: "",
+  ports: "8888/http",
+  volumeMountPath: "/workspace",
+  env: [
+    {
+      key: "JUPYTER_PASSWORD",
+      value: "rns1hunbsstltcpad22d",
+    },
+  ],
 });
-export const pod = {
-    value: myRandomPod.pod,
+
+const myRandomEndpoint = new runpod.Endpoint("myRandomEndpoint", {
+  gpuIds: "AMPERE_16,AMPERE_24,-NVIDIA L4",
+  idleTimeout: 100,
+  locations: "CA-MTL-2,CA-MTL-3,EU-RO-1,US-CA-1,US-GA-1,US-KS-2,US-OR-1,CA-MTL-1,US-TX-3,EUR-IS-1,EUR-IS-2,SEA-SG-1",
+  name: "myRandomEndpoint",
+  networkVolumeId: testNetworkStorage.networkStorage.apply(
+    // @ts-ignore
+    (networkStorage) => networkStorage.id
+  ),
+  scalerType: 'REQUEST_COUNT',
+  scalerValue: 2,
+  templateId: myTemplate.template.apply(t => t.id),
+  workersMax: 2,
+  workersMin: 1,
+})
+
+export const template = {
+  value: myTemplate.template,
 };
+
+export const endpoint = {
+  value: myRandomEndpoint.endpoint,
+};
+
+export const pod = {
+  value: myRandomPod.pod,
+};
+
 export const networkStorage = {
-    value: testNetworkStorage.networkStorage,
+  value: testNetworkStorage.networkStorage,
 };
 ```
 
@@ -108,34 +160,47 @@ func main() {
 		if err != nil {
 			return err
 		}
-		myRandomTemplate, err := runpod.NewTemplate(ctx, "myRandomTemplate", &runpod.TemplateArgs{
+		myTemplate, err := runpod.NewTemplate(ctx, "myTemplate", &runpod.TemplateArgs{
 			ContainerDiskInGb:       pulumi.Int(5),
-			ContainerRegistryAuthId: pulumi.String(""),
 			DockerArgs:              pulumi.String("python3 -m http.server 8080"),
-			Env: runpod.PodEnvArray{
+		    Env: runpod.PodEnvArray{
 				&runpod.PodEnvArgs{
 					Key:   pulumi.String("JUPYTER_PASSWORD"),
 					Value: pulumi.String("rns1hunbsstltcpad22d"),
 				},
 			},
-			ImageName:       pulumi.String("nginx:latest"),
-			IsPublic:        pulumi.BoolPtr(false),
-			IsServerless:    pulumi.BoolPtr(false),
-			Name:            pulumi.String("RunPod Nginx"),
-			Ports:           pulumi.String("8080/http"),
-			Readme:          pulumi.String("Please set this even if you don't have a readme"),
-			StartJupyter:    pulumi.BoolPtr(false),
-			StartSsh:        pulumi.BoolPtr(false),
-			VolumeInGb:      pulumi.Int(5),
-			VolumeMountPath: pulumi.String("/usr/share/nginx/html"),
+			ImageName:       pulumi.String("runpod/serverless-hello-world:latest"),
+			IsServerless:    pulumi.Bool(true),
+			Name:            pulumi.String("Testing Pulumi V1"),
+			Readme:          pulumi.String("## Hello, World!"),
+			VolumeInGb:      pulumi.Int(0),
 		})
+
+		if err != nil {
+			return err
+		}
+
+		myEndpoint, err := runpod.NewEndpoint(ctx, "myEndpoint", &runpod.EndpointArgs{
+			GpuIds:         pulumi.String("AMPERE_16"),
+			Name:           pulumi.String("Pulumi Endpoint Test V2 -fb"),
+			TemplateId:     myTemplate.Template.Id(),
+			WorkersMax:     pulumi.Int(2),
+			WorkersMin:     pulumi.Int(1),
+			IdleTimeout:    pulumi.Int(6),
+			Locations:      pulumi.String("EU-RO-1"),
+			NetworkVolumeId: testNetworkStorage.NetworkStorage.Id(),
+			ScalerType:     pulumi.String("QUEUE_DELAY"),
+			ScalerValue:    pulumi.Int(4),
+		})
+
 		if err != nil {
 			return err
 		}
 
 		ctx.Export("pod", myRandomPod.Pod.Id())
 		ctx.Export("networkStorage", testNetworkStorage.NetworkStorage.Id())
-		ctx.Export("template", myRandomTemplate.Template.Id())
+		ctx.Export("template", myTemplate.Template.Id())
+		ctx.Export("endpoint", myEndpoint.Endpoint.Id())
 		return nil
 	})
 }
@@ -161,12 +226,19 @@ def fetch_id(a):
     else:
         return a
 
+def fetch_template_id(a):
+    if type(a) == runpod.outputs.Template:
+        return a.id
+    else:
+        return a
+
 try:
-    test_network_storage = runpod.NetworkStorage(
-            "testNetworkStorage", name="testStorage1", size=20, data_center_id="US-NJ"
-        )
-    my_random_pod = runpod.Pod(
-        "myRandomPod",
+    test_network_storage = runpod.NetworkStorage("testNetworkStorage",
+        name="testStorage1",
+        size=5,
+        data_center_id="EU-RO-1")
+
+    my_random_pod = runpod.Pod("myRandomPod",
         cloud_type="ALL",
         network_volume_id=test_network_storage.network_storage.apply(lambda x : fetch_id(x)),
         gpu_count=1,
@@ -174,32 +246,59 @@ try:
         container_disk_in_gb=50,
         min_vcpu_count=2,
         min_memory_in_gb=15,
-        gpu_type_id="NVIDIA GeForce RTX 3070",
+        gpu_type_id="NVIDIA GeForce RTX 4090",
         name="RunPod Pytorch",
         image_name="runpod/pytorch",
         docker_args="",
         ports="8888/http",
         volume_mount_path="/workspace",
-        env=[
-            runpod.PodEnvArgs(
-                key="JUPYTER_PASSWORD",
-                value="rns1hunbsstltcpad22d",
-            ).__dict__,
-        ],
+        env=[runpod.PodEnvArgs(
+            key="JUPYTER_PASSWORD",
+            value="rns1hunbsstltcpad22d",
+        )])
+
+    my_random_template = runpod.Template("myRandomTemplate",
+        container_disk_in_gb = 5,
+        container_registry_auth_id = "",
+        docker_args="python handler.py",
+        env=[{"key": "hi", "value": "hello"}],
+        image_name="runpod/serverless-hello-world:latest",
+        is_public=False,
+        is_serverless=True,
+        name="Generated Serverless Template",
+        ports="1293/http",
+        readme="Some readme", # pass some value to this. Won't work otherwise
+        start_jupyter=False,
+        start_ssh=False,
+        volume_in_gb=20,
+        volume_mount_path="/workspace",
     )
-    print(my_random_pod)
-    pulumi.export(
-        "pod",
-        {
-            "value": my_random_pod.pod,
-        },
+
+    my_random_endpoint = runpod.Endpoint("myRandomEndpoint",
+        gpu_ids="AMPERE_16,AMPERE_24,-NVIDIA L4",
+        idle_timeout=100,
+        locations="CA-MTL-2,CA-MTL-3,EU-RO-1,US-CA-1,US-GA-1,US-KS-2,US-OR-1,CA-MTL-1,US-TX-3,EUR-IS-1,EUR-IS-2,SEA-SG-1",
+        name="myRandomEndpoint",
+        network_volume_id=test_network_storage.network_storage.apply(lambda x : fetch_id(x)),
+        scaler_type='REQUEST_COUNT',
+        scaler_value=2,
+        template_id=my_random_template.template.apply(lambda x : fetch_template_id(x)),
+        workers_max=2,
+        workers_min=1,
     )
-    pulumi.export(
-        "networkStorage",
-        {
-            "value": test_network_storage.network_storage,
-        },
-    )
+
+    pulumi.export("pod", {
+        "value": my_random_pod.pod,
+    })
+    pulumi.export("networkStorage", {
+        "value": test_network_storage.network_storage,
+    })
+    pulumi.export("testTemplate", {
+        "value": my_random_template.template,
+    })
+    pulumi.export("testEndpoint", {
+        "value": my_random_endpoint.endpoint,
+    })
 except Exception as e:
     logger.exception(e)
 ```
@@ -209,13 +308,20 @@ except Exception as e:
 {{% choosable language yaml %}}
 
 ```yaml
+name: provider-runpod-native
+runtime: yaml
+plugins:
+  providers:
+    - name: runpod
+      path: ../../bin
+
 resources:
   testNetworkStorage:
     type: runpod:NetworkStorage
     properties:
-      name: "testStorage1"
-      size: 20
-      dataCenterId: "US-NJ"
+      name: testStorage1
+      size: 5
+      dataCenterId: EU-RO-1
 
   myRandomPod:
     type: runpod:Pod
@@ -223,11 +329,11 @@ resources:
       cloudType: ALL
       networkVolumeId: ${testNetworkStorage.networkStorage.id}
       gpuCount: 1
-      volumeInGb: 50
+      volumeInGb: 60
       containerDiskInGb: 50
       minVcpuCount: 2
       minMemoryInGb: 15
-      gpuTypeId: "NVIDIA GeForce RTX 3070"
+      gpuTypeId: "NVIDIA GeForce RTX 4090"
       name: "RunPod Pytorch"
       imageName: "runpod/pytorch"
       dockerArgs: ""
@@ -237,9 +343,47 @@ resources:
         - key: "JUPYTER_PASSWORD"
           value: "rns1hunbsstltcpad22d"
 
+  myRandomTemplate:
+    type: runpod:Template
+    properties:
+      containerDiskInGb: 20
+      containerRegistryAuthId: ""
+      dockerArgs: "python3 -m http.server 8080"
+      env: [{ key: "JUPYTER_PASSWORD", value: "rns1hunbsstltcpad22d" }]
+      imageName: "nginx:latest"
+      isPublic: false
+      isServerless: true
+      name: "RunPod Nginx"
+      ports: "8080/http"
+      readme: "Test template"
+      startJupyter: false
+      startSsh: false
+      volumeInGb: 10
+      volumeMountPath: "/workspace"
+
+  myRandomEndpoint:
+    type: runpod:Endpoint
+    properties:
+      gpuIds: "AMPERE_16,AMPERE_24,-NVIDIA L4"
+      idleTimeout: 100
+      locations: "CA-MTL-2,CA-MTL-3,EU-RO-1,US-CA-1,US-GA-1,US-KS-2,US-OR-1,CA-MTL-1,US-TX-3,EUR-IS-1,EUR-IS-2,SEA-SG-1"
+      name: "myRandomEndpoint"
+      networkVolumeId: ${testNetworkStorage.networkStorage.id}
+      scalerType: "REQUEST_COUNT"
+      scalerValue: 2
+      templateId: ${myRandomTemplate.template.id}
+      workersMax: 2
+      workersMin: 1
+
 outputs:
-  pod: ${myRandomPod.pod}
-  networkStorage: ${testNetworkStorage.networkStorage}
+  pod:
+    value: ${myRandomPod.pod}
+  networkStorage:
+    value: ${testNetworkStorage.networkStorage}
+  template:
+    value: ${myRandomTemplate.template}
+  endpoint:
+    value: ${myRandomEndpoint.endpoint}
 ```
 
 {{% /choosable %}}

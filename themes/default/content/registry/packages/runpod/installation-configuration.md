@@ -9,9 +9,29 @@ layout: package
 The RunPod provider is available as a package in these Pulumi languages:
 
 * JavaScript/TypeScript: [`@runpod-infra/pulumi`](https://www.npmjs.com/package/@runpod-infra/pulumi)
-* Python: [`pulumi-runpod`](https://pypi.org/project/pulumi-runpod/)
+* Python: [`runpodinfra`](https://pypi.org/project/runpodinfra/)
 * Go: [`github.com/runpod/pulumi-runpod-native/tree/main/sdk/go/runpod`](https://www.github.com/runpod/pulumi-runpod-native)
 * Pulumi YAML
+
+## Pulumi guide
+Create an empty directory and navigate inside
+
+```bash
+mkdir -p empty
+cd empty
+```
+
+Create a new pulumi stack:
+```
+    pulumi new
+```
+
+A dropdown box will appear. Please select a minimal project from in there. For example, if you prefer using Python, you would select the following:
+```bash
+    python                             A minimal Python Pulumi program
+```
+
+Then populate the entrypoint file (__main__.py/main.go/index.ts) with the your data. Please use the guide below to understand what parameters you can pass. For Python, please remember to activate the virtual environment.
 
 ### Go
 

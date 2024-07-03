@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-fastly
 schema_file_path: provider/cmd/pulumi-resource-fastly/schema.json
 title: Fastly
-updated_on: 1715351477
-version: v8.7.0
+updated_on: 1720027316
+version: v8.9.0

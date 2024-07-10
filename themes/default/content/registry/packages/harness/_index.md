@@ -14,7 +14,7 @@ The Harness provider must be configured with credentials to deploy and update re
 
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
-import * as harness from "@lbrlabs/pulumi-harness";
+import * as harness from "@pulumi/harness";
 
 const secret = new harness.platform.SecretText("example", {
     identifier: "ts_example",

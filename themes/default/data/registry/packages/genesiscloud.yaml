@@ -10,5 +10,5 @@ publisher: Genesiscloud
 repo_url: https://github.com/genesiscloud/pulumi-genesiscloud
 schema_file_path: provider/cmd/pulumi-resource-genesiscloud/schema.json
 title: Genesis Cloud
-updated_on: 1716469290
-version: v0.0.26
+updated_on: 1720696280
+version: v0.0.27

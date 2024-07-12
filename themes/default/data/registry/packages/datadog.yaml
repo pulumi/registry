@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-datadog
 schema_file_path: provider/cmd/pulumi-resource-datadog/schema.json
 title: Datadog
-updated_on: 1719260887
-version: v4.28.1
+updated_on: 1720785364
+version: v4.29.0

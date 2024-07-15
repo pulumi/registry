@@ -1,4 +1,4 @@
-category: Infrastructure
+category: Cloud
 component: false
 description: A Pulumi package for creating and managing Splight resources.
 featured: false
@@ -10,5 +10,5 @@ publisher: splightplatform
 repo_url: https://github.com/splightplatform/pulumi-splight
 schema_file_path: provider/cmd/pulumi-resource-splight/schema.json
 title: splight
-updated_on: 1719606746
-version: v0.1.24
+updated_on: 1721053316
+version: v0.1.25

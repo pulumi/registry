@@ -21,6 +21,8 @@ packages.forEach(pkg => {
       const doc = parser.parse(fileContent);
 
       describe(constructPageRoute(p), function () {
+        // Verify page has a title and it is an h1 that contains the package and
+        // module name.
         describe('h1 title', function () {
           const h1s = doc.querySelectorAll("h1");
           it('contains exactly 1 "h1"', function () {
@@ -33,7 +35,20 @@ packages.forEach(pkg => {
             chai.expect(h1s[0].innerHTML.toLowerCase()).to.have.string(mod);
           })
         })
-        
+
+        // Verify it contains a description paragraph.
+        describe('Description paragraph', function () {
+          const paragraph = doc.querySelectorAll("section.docs-content > p");
+          it('paragraph exists', function () {
+            chai.expect(paragraph.length).to.be.at.least(1);
+          })
+          // it('contains the text', function () {
+          //   chai.expect(paragraph[0].innerHTML.length()).to.be.at.least(1);
+          // })
+        })
+
+        // Verify the page contains an Example Usage section and contains
+        // at least 1 code example.
         if (shouldContainExamples(pkg)) {
           describe("Examples section", () => {
             it("contains Example Usage heading", () => {
@@ -51,6 +66,8 @@ packages.forEach(pkg => {
           })
         }
 
+        // Verify the page contains an Import section and that it comes somewhere
+        // after the Properties section.
         describe("Import section", () => {
           const heading = doc.querySelectorAll("h2#import");
           if (heading.length > 0) {
@@ -72,10 +89,16 @@ packages.forEach(pkg => {
 
 
 function getPackagesList() {
+  // const pkgs = fs.readdirSync(`./public/registry/packages/`, { withFileTypes: true })
+  //   .filter(dirent => dirent.isDirectory())
+  //   .map(dirent => dirent.name);
+
+  // return pkgs;
   return [
     "acme",
     "aiven",
     "aws",
+    "azure"
   ];
 }
 

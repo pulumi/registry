@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-civo
 schema_file_path: provider/cmd/pulumi-resource-civo/schema.json
 title: Civo
-updated_on: 1718128790
-version: v2.3.18
+updated_on: 1721088109
+version: v2.3.19

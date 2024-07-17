@@ -1,8 +1,8 @@
-var chai = require('chai')
+const chai = require('chai')
 const glob = require("glob");
 const fs = require("fs");
 const parser = require("node-html-parser");
-var path = require("path");
+const path = require("path");
 
 const expect = chai.expect
 

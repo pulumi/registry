@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-akamai
 schema_file_path: provider/cmd/pulumi-resource-akamai/schema.json
 title: Akamai
-updated_on: 1717132192
-version: v7.2.0
+updated_on: 1721253022
+version: v7.3.0

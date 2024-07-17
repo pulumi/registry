@@ -22,6 +22,8 @@ packages.forEach(pkg => {
       const fileContent = fs.readFileSync(p, "utf-8").toString();
       const doc = parser.parse(fileContent);
 
+      const sections = doc.querySelectorAll("section.docs-content > h2");
+
       if (!path.basename(path.dirname(p)).startsWith("get")) {
 
         describe(constructPageRoute(p), function () {
@@ -37,6 +39,30 @@ packages.forEach(pkg => {
             })
             it("contains the module name", function () {
               expect(h1s[0].innerHTML.toLowerCase()).to.have.string(mod);
+            })
+          })
+
+          // Verify sections exist in correct order
+          describe("Sections", function () {
+            const sections = doc.querySelectorAll("section.docs-content > h2");
+            const headings = sections.map(s => s.innerHTML.trim());
+            it('exist in correct order', function () {
+              const possibleHeadings = [
+                "Example Usage",
+                "Create",
+                "Resource Properties",
+                "Look up Existing",
+                "Supporting Types",
+                "Import",
+                "Package Details",
+              ];
+              const actual = possibleHeadings.filter(ph => {
+                return headings.some(h => {
+                  return ph.includes(h);
+                })
+              });
+              const expected = possibleHeadings.filter(h => actual.includes(h))
+              expect(JSON.stringify(actual)).to.equal(JSON.stringify(expected));
             })
           })
 

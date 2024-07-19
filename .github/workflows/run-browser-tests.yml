@@ -36,6 +36,6 @@ jobs:
           extended: true
 
       - name: Run browser tests
-        run: make run-browser-tests
+        run: make run-api-docs-tests
         env:
           NODE_OPTIONS: "--max_old_space_size=8192"

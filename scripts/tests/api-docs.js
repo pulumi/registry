@@ -3,6 +3,8 @@ const glob = require("glob");
 const fs = require("fs");
 const parser = require("node-html-parser");
 const path = require("path");
+const cheerio = require('cheerio');
+const htmlparser2 = require('htmlparser2');
 
 const expect = chai.expect
 
@@ -20,9 +22,11 @@ packages.forEach(pkg => {
     });
     paths.forEach(p => {
       const fileContent = fs.readFileSync(p, "utf-8").toString();
-      const doc = parser.parse(fileContent);
+      // const doc = parser.parse(fileContent);
+      // const dom = htmlparser2.parseDocument(document, options);
 
-      const sections = doc.querySelectorAll("section.docs-content > h2");
+      const dom = htmlparser2.parseDocument(fileContent);
+      const $ = cheerio.load(dom);
 
       if (!path.basename(path.dirname(p)).startsWith("get")) {
 
@@ -30,22 +34,27 @@ packages.forEach(pkg => {
           // Verify page has a title and it is an h1 that contains the package and
           // module name.
           describe("h1 title", function () {
-            const h1s = doc.querySelectorAll("h1");
+            const h1s = $("h1");
+         
             it("contains exactly 1 h1", function () {
               expect(h1s.length).to.equal(1);
             })
             it("contains the package name", function () {
-              expect(h1s[0].innerHTML.toLowerCase()).to.have.string(pkg);
+              expect(h1s.text().toLowerCase()).to.have.string(pkg);
             })
             it("contains the module name", function () {
-              expect(h1s[0].innerHTML.toLowerCase()).to.have.string(mod);
+              expect(h1s.text().toLowerCase()).to.have.string(mod);
             })
           })
 
           // Verify sections exist in correct order
           describe("Sections", function () {
-            const sections = doc.querySelectorAll("section.docs-content > h2");
-            const headings = sections.map(s => s.innerHTML.trim());
+            const headings = [];
+            $("section.docs-content > h2").each((i, elm) => {
+              if (elm) {
+                headings.push($(elm).text());
+              }
+            })
             it('exist in correct order', function () {
               const possibleHeadings = [
                 "Example Usage",
@@ -68,7 +77,7 @@ packages.forEach(pkg => {
 
           // Verify it contains a description paragraph.
           describe("Description paragraph", function () {
-            const paragraph = doc.querySelectorAll("section.docs-content > p");
+            const paragraph = $(".docs-main-content .docs-content > p").text();
             it('paragraph exists', function () {
               expect(paragraph.length).to.be.at.least(1);
             })
@@ -77,15 +86,15 @@ packages.forEach(pkg => {
           // Verify constructor section exists.
           describe("Constructor", function () {
             it("constructor section exists", function () {
-              const constructorSection = doc.querySelectorAll("h2#create");
+              const constructorSection = $("h2#create");
               expect(constructorSection.length).to.equal(1);
             })
             it("syntax section exists", function () {
-              const syntax = doc.querySelectorAll("h3#constructor-syntax");
+              const syntax = $("h3#constructor-syntax");
               expect(syntax.length).to.equal(1);
             })
             it('contains syntax code', function () {
-              const syntaxCode = doc.querySelectorAll("h3#constructor-syntax + div > pulumi-chooser");
+              const syntaxCode = $("h3#constructor-syntax + div > pulumi-chooser");
               expect(syntaxCode.length).to.be.at.least(1);
             })
           })
@@ -93,15 +102,15 @@ packages.forEach(pkg => {
           // Verify Input/Output Properties section.
           describe("Properties", function () {
             it("properties section exists", function () {
-              const properties = doc.querySelectorAll("h2#properties");
+              const properties = $("h2#properties");
               expect(properties.length).to.equal(1);
             })
             it("inputs section exists", function () {
-              const inputs = doc.querySelectorAll("h3#inputs");
+              const inputs = $("h3#inputs");
               expect(inputs.length).to.equal(1);
             })
             it("outputs section exists", function () {
-              const outputs = doc.querySelectorAll("h3#outputs");
+              const outputs = $("h3#outputs");
               expect(outputs.length).to.equal(1);
             })
           })
@@ -111,12 +120,12 @@ packages.forEach(pkg => {
           if (shouldContainExamples(pkg)) {
             describe("Examples section", () => {
               it("contains Example Usage heading", () => {
-                const heading = doc.querySelectorAll("h2#example-usage");
+                const heading = $("h2#example-usage");
                 expect(heading.length).to.equal(1);
-                expect(heading[0].innerHTML).to.have.string("Example Usage");
+                expect(heading.text()).to.have.string("Example Usage");
               });
 
-              const examples = doc.querySelectorAll("h2#example-usage ~ div > pulumi-chooser");
+              const examples = $("h2#example-usage ~ div > pulumi-chooser");
               it("contains at least one example", () => {
                 expect(examples.length).to.be.at.least(1);
               });
@@ -126,16 +135,16 @@ packages.forEach(pkg => {
           // Verify the page contains an Import section and that it comes somewhere
           // after the Properties section.
           describe("Import section", () => {
-            const heading = doc.querySelectorAll("h2#import");
+            const heading = $("h2#import");
             if (heading.length > 0) {
               it("comes after Properties list", () => {
-                const importSection = doc.querySelectorAll("h2#properties ~ h2#import");
+                const importSection = $("h2#properties ~ h2#import");
                 expect(importSection.length).to.equal(1);
               });
             } else {
               it("contains Import section", () => {
                 expect(heading.length).to.equal(1);
-                expect(heading[0].innerHTML).to.have.string("Import");
+                expect(heading.text()).to.have.string("Import");
               });
             }
           });
@@ -156,6 +165,7 @@ function getPackagesList() {
     // "acme",
     // "aiven",
     "aws",
+    // "gcp",
     // "azure"
   ];
 }

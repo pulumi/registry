@@ -327,6 +327,10 @@
     {
       "repoSlug": "chronosphereio/pulumi-chronosphere",
       "schemaFile": "provider/cmd/pulumi-resource-chronosphere/schema.json"
+    },
+    {
+      "repoSlug": "pulumiverse/pulumi-clickhouse",
+      "schemaFile": "provider/cmd/pulumi-resource-clickhouse/schema.json"
     }
   ]
 }

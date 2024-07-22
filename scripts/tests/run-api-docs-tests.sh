@@ -3,9 +3,9 @@
 
 # Get currently website bucket
 
-# bucket="$(curl -s https://www.pulumi.com/registry/metadata.json | jq -r '.bucket' || echo '')"
+bucket="$(curl -s https://www.pulumi.com/registry/metadata.json | jq -r '.bucket' || echo '')"
 
-bucket="registry-production-origin-push-c4c4803f"
+# bucket="registry-production-origin-push-c4c4803f"
 
 echo "Downloading current site to public dir...."
 aws s3 cp "s3://${bucket}/registry" public/registry --recursive --quiet

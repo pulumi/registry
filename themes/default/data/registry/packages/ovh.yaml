@@ -10,5 +10,5 @@ publisher: OVHcloud
 repo_url: https://github.com/ovh/pulumi-ovh
 schema_file_path: provider/cmd/pulumi-resource-ovh/schema.json
 title: OVHCloud
-updated_on: 1717501852
-version: v0.45.0
+updated_on: 1721659077
+version: v0.47.0

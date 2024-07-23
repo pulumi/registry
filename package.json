@@ -27,7 +27,8 @@
         "node-html-parser": "^6.1.13",
         "postcss": "^8.3.7",
         "postcss-cli": "^8.3.1",
-        "sitemapper": "^3.2.2"
+        "sitemapper": "^3.2.2",
+        "util": "^0.12.5"
     },
     "scripts": {
         "minify-css": "node scripts/minify-css.js",

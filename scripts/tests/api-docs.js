@@ -9,16 +9,13 @@ const process = require('process')
 
 const expect = chai.expect
 
-console.log("args", process.argv[3]);
+const pkg = process.argv[5].replace("--pkg=", "");
 
-const pkg = process.argv[3];
+console.log("pkg", pkg);
 
 if (!pkg) {
   console.error("package not set", 1);
 }
-
-
-
 
 const modules = getModules(pkg);
 modules.forEach(mod => {

@@ -1,54 +1,69 @@
-const cp = require('child_process');
+// const cp = require('child_process');
+const util = require('util');
+const exec = util.promisify(require('child_process').exec);
 const fs = require('fs');
 const AWS = require('aws-sdk');
 
-// Extract command-line arguments
-const args = process.argv.slice(2); // Remove first two elements (node and script path)
+const pkgs = [
+    "aws",
+    "azure",
+    "gcp"
+]
 
-// Assuming you're passing two arguments: arg1 and arg2
-const baseUrl = args[0];
-const spec = args[1];
-
-if (!(args[0] && args[1])) {
-    console.error("baseURL and spec file are required as arguments")
-    process.exit(1)
+const results = {
+    tests: 0,
+    passes: 0,
+    failures: 0,
+    start: 0,
+    end: 0,
+    duration: 0,
+    failedPages: [],
+    failedPageCount: 0,
 }
 
-cp.exec(`CYPRESS_BASE_URL="${baseUrl}" yarn run cypress run --headless --reporter cypress-multi-reporters --spec "./cypress/e2e/${spec}"`, processResults)
+const proms = pkgs.map(pkg => {
+    return exec(`npm run test-api-docs-json -- --pkg=${pkg} || true`).then((stdout, stderr) => {
+        console.log(stdout)
+        processJSON(stdout, stderr)
+    })
+})
 
-async function processResults(error, stdout, stderr) {
-    // log full run output to runner console.
-    console.log(stdout);
+Promise.all(proms).then(_ => {
+    console.log(results);
+    // pushS3(results);
+})
 
-    // EXTREME HACK: Extracts JSON out of console output.
-    const startIndex = stdout.indexOf("{");
-    const endIndex = stdout.lastIndexOf("}");
-    const jsonString = stdout.substring(startIndex, endIndex + 1);
-    const results = JSON.parse(jsonString);
-    const transformed = transformResults(results)
-    // Log JSON structure to the console.
-    console.log(transformed);
-    await pushS3(transformed);
+
+async function processJSON(stdout, stderr) {
+    const contents = fs.readFileSync("ctrf/ctrf-report.json", { encoding: 'utf8'});
+    const results = JSON.parse(contents);
+    transformResults(results)
 
     // The cli command error is trapped here since it is a sub process of this script.
     // Checking if error here will enable us to mark this as a failed run by exiting
     // unsuccessfully. Otherwise the run will always pass successfully regardless of
     // the result of the cypress tests.
-    if (error) {
+    if (stderr) {
         console.error("errors:", stderr);
         process.exit(1)
     }
 }
 
-function transformResults(results) {
-    const result = results.stats;
-    result["ghRunURL"] = getRunUrl();
+function transformResults(res) {
+    const summary = res.results.summary;
+    results["tests"] = summary["tests"] + results.tests;
+    results["passes"] = summary["passed"] + results.passes;
+    results["failures"] = summary["failed"] + results.failures;
+    results["start"] = summary["start"] + results.start;
+    results["end"] = summary["stop"] + results.end;
+    results["duration"] = (summary["stop"] - summary["start"]) + results.duration;
+    results["ghRunURL"] = getRunUrl();
 
     // Get list of failed pages.
     const failedPages = [];
     // iterate over test failures and add page url to failedPages array.
-    results.failures.forEach(f => {
-        failedPages.push(extractPageUrl(f.fullTitle))
+    res.results.tests.filter(t => t.status !== "passed").forEach(f => {
+        failedPages.push(extractPageUrl(f.name))
     })
 
     // dedupe pages and keep track of a count for each page failure occurance to map
@@ -59,18 +74,18 @@ function transformResults(results) {
     })
     
     // Convert pageMap to an array of objects with failure counts. This 
-    result["failedPages"] = Object.keys(pageMap).map(key => ({
+    results["failedPages"] = [...results["failedPages"], ...Object.keys(pageMap).map(key => ({
         page: key,
         failures: pageMap[key],
-        tests: result.tests/50,
-    }));
+        tests: 15,
+    }))];
 
-    result["failedPageCount"] = Object.keys(pageMap).length;
-    return result;
+    results["failedPageCount"] = Object.keys(pageMap).length + results.failedPageCount;
+    return results;
 }
 
 function extractPageUrl(msg) {
-    const urlRegex = /(https?:\/\/[^)]+)/;
+    const urlRegex = /^(https?:\/\/[^)]+\/)/;
     const match = msg.match(urlRegex);
     const url = match ? match[0] : null;
 

@@ -149,6 +149,14 @@ modules.forEach(mod => {
             });
           }
         });
+
+        // Verify the page contains a Package Details section
+        describe("Package Details section", () => {       
+          it("it exists", () => {
+            const packageSection = $("h2#package-details");
+            expect(packageSection.length).to.equal(1);
+          });
+        });
       });
     };
   });

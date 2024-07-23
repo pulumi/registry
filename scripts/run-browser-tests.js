@@ -7,7 +7,7 @@ const AWS = require('aws-sdk');
 const pkgs = [
     "aws",
     "azure",
-    "gcp"
+    "gcp",
 ]
 
 const results = {
@@ -30,7 +30,7 @@ const proms = pkgs.map(pkg => {
 
 Promise.all(proms).then(_ => {
     console.log(results);
-    // pushS3(results);
+    pushS3(results);
 })
 
 

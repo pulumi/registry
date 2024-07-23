@@ -1,7 +1,6 @@
 const chai = require('chai')
 const glob = require("glob");
 const fs = require("fs");
-const parser = require("node-html-parser");
 const path = require("path");
 const cheerio = require('cheerio');
 const htmlparser2 = require('htmlparser2');
@@ -26,9 +25,6 @@ modules.forEach(mod => {
   });
   paths.forEach(p => {
     const fileContent = fs.readFileSync(p, "utf-8").toString();
-    // const doc = parser.parse(fileContent);
-    // const dom = htmlparser2.parseDocument(document, options);
-
     const dom = htmlparser2.parseDocument(fileContent);
     const $ = cheerio.load(dom);
 

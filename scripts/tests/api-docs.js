@@ -118,20 +118,18 @@ modules.forEach(mod => {
 
         // Verify the page contains an Example Usage section and contains
         // at least 1 code example.
-        if (shouldContainExamples(pkg)) {
-          describe("Examples section", () => {
-            it("contains Example Usage heading", () => {
-              const heading = $("h2#example-usage");
-              expect(heading.length).to.equal(1);
-              expect(heading.text()).to.have.string("Example Usage");
-            });
+        describe("Examples section", () => {
+          it("contains Example Usage heading", () => {
+            const heading = $("h2#example-usage");
+            expect(heading.length).to.equal(1);
+            expect(heading.text()).to.have.string("Example Usage");
+          });
 
-            const examples = $("h2#example-usage ~ div > pulumi-chooser");
-            it("contains at least one example", () => {
-              expect(examples.length).to.be.at.least(1);
-            });
-          })
-        }
+          const examples = $("h2#example-usage ~ div > pulumi-chooser");
+          it("contains at least one example", () => {
+            expect(examples.length).to.be.at.least(1);
+          });
+        })
 
         // Verify the page contains an Import section and that it comes somewhere
         // after the Properties section.
@@ -151,24 +149,20 @@ modules.forEach(mod => {
         });
 
         // Verify the page contains a Package Details section
-        describe("Package Details section", () => {       
+        describe("Package Details section", () => {
           it("it exists", () => {
             const packageSection = $("h2#package-details");
             expect(packageSection.length).to.equal(1);
           });
+          it("contains details table", () => {
+            const table = $("h2#package-details + dl");
+            expect(table.length).to.equal(1);
+          })
         });
       });
     };
   });
 });
-
-function shouldContainExamples(pkg) {
-  return [
-    "aws",
-    "azure",
-    "gcp",
-  ].includes(pkg);
-}
 
 function getModules(pkg) {
   const mods = fs.readdirSync(`./public/registry/packages/${pkg}/api-docs`, { withFileTypes: true })

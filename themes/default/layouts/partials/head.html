@@ -381,6 +381,28 @@
 
         <!-- Facebook Domain Verification -->
         <meta name="facebook-domain-verification" content="phlf6qes2bxa9ufzk8zt2es0qivg8j" />
+
+        <!-- Common Room-->
+        <script>
+            (function() {
+                if (typeof window === 'undefined') return;
+                if (typeof window.signals !== 'undefined') return;
+                var script = document.createElement('script');
+                script.src = 'https://cdn.cr-relay.com/v1/site/a725b5ba-75f1-44dc-b250-11023fc10b9d/signals.js';
+                script.async = true;
+                window.signals = Object.assign(
+                    [],
+                    ['page', 'identify', 'form'].reduce(function (acc, method){
+                        acc[method] = function () {
+                        signals.push([method, arguments]);
+                        return signals;
+                        };
+                        return acc;
+                    }, {})
+                );
+                document.head.appendChild(script);
+            })();
+        </script>
     {{- end }}
 
 

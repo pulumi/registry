@@ -6,7 +6,7 @@ layout: package
 
 The HashiCorp Cloud Platform provider (HCP) for Pulumi can be used to
 provision any of the cloud resources available in [HashiCorp Cloud
-Platform](https://www.hashicorp.com/cloud-platform). The HCP provider
+Platform](https://www.hashicorp.com/cloud). The HCP provider
 must be configured with credentials to deploy and update resources.
 
 ## Example

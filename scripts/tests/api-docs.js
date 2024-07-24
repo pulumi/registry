@@ -36,7 +36,7 @@ modules.forEach((mod) => {
             describe(constructPageRoute(p), function () {
                 // Verify page has a title and it is an h1 that contains the package and
                 // module name.
-                describe("h1 title", function () {
+                describe("h1 title", () => {
                     const h1s = $("h1");
 
                     it("contains exactly 1 h1", function () {
@@ -51,14 +51,14 @@ modules.forEach((mod) => {
                 });
 
                 // Verify sections exist in correct order
-                describe("Sections", function () {
+                describe("Sections", () => {
                     const headings = [];
-                    $("section.docs-content > h2").each((i, elm) => {
-                        if (elm) {
-                            headings.push($(elm).text());
+                    $("section.docs-content > h2").each((i, h) => {
+                        if (h) {
+                            headings.push($(h).text());
                         }
                     });
-                    it("exist in correct order", function () {
+                    it("exist in correct order", () => {
                         const possibleHeadings = [
                             "Example Usage",
                             "Create",
@@ -83,18 +83,18 @@ modules.forEach((mod) => {
                 });
 
                 // Verify it contains a description paragraph.
-                describe("Description paragraph", function () {
+                describe("Description paragraph", () => {
                     const paragraph = $(
                         ".docs-main-content .docs-content > p",
                     ).text();
-                    it("paragraph exists", function () {
+                    it("exists", () => {
                         expect(paragraph.length).to.be.at.least(1);
                     });
                 });
 
                 // Verify constructor section exists.
-                describe("Constructor", function () {
-                    it("constructor section exists", function () {
+                describe("Constructor", () => {
+                    it("constructor section exists", () => {
                         const constructorSection = $("h2#create");
                         expect(constructorSection.length).to.equal(1);
                     });
@@ -102,7 +102,7 @@ modules.forEach((mod) => {
                         const syntax = $("h3#constructor-syntax");
                         expect(syntax.length).to.equal(1);
                     });
-                    it("contains syntax code", function () {
+                    it("contains syntax code", () => {
                         const syntaxCode = $(
                             "h3#constructor-syntax + div > pulumi-chooser",
                         );
@@ -111,16 +111,16 @@ modules.forEach((mod) => {
                 });
 
                 // Verify Input/Output Properties section.
-                describe("Properties", function () {
-                    it("properties section exists", function () {
+                describe("Properties", () => {
+                    it("properties section exists", () => {
                         const properties = $("h2#properties");
                         expect(properties.length).to.equal(1);
                     });
-                    it("inputs section exists", function () {
+                    it("inputs section exists", () => {
                         const inputs = $("h3#inputs");
                         expect(inputs.length).to.equal(1);
                     });
-                    it("outputs section exists", function () {
+                    it("outputs section exists", () => {
                         const outputs = $("h3#outputs");
                         expect(outputs.length).to.equal(1);
                     });

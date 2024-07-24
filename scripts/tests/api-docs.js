@@ -10,8 +10,6 @@ const expect = chai.expect;
 
 const pkg = process.argv[5].replace("--pkg=", "");
 
-console.log("pkg", pkg);
-
 if (!pkg) {
     console.error("package not set", 1);
 }
@@ -94,19 +92,23 @@ modules.forEach((mod) => {
 
                 // Verify constructor section exists.
                 describe("Constructor", () => {
-                    it("constructor section exists", () => {
+                    it("has a the constructor section heading", () => {
                         const constructorSection = $("h2#create");
                         expect(constructorSection.length).to.equal(1);
                     });
-                    it("syntax section exists", () => {
+                    it("has a description following the heading", () => {
+                      const constructorSection = $("h2#create + p");
+                      expect(constructorSection.length).to.equal(1);
+                  });
+                    it("has a constructor syntax section", () => {
                         const syntax = $("h3#constructor-syntax");
                         expect(syntax.length).to.equal(1);
                     });
-                    it("contains syntax code", () => {
-                        const syntaxCode = $(
+                    it("has a code chooser block", () => {
+                        const codeChooser = $(
                             "h3#constructor-syntax + div > pulumi-chooser",
                         );
-                        expect(syntaxCode.length).to.be.at.least(1);
+                        expect(codeChooser.length).to.be.at.least(1);
                     });
                 });
 

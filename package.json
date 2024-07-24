@@ -24,7 +24,6 @@
         "jsdom": "^22.0.0",
         "markdownlint": "^0.28.0",
         "mocha": "^10.6.0",
-        "node-html-parser": "^6.1.13",
         "postcss": "^8.3.7",
         "postcss-cli": "^8.3.1",
         "sitemapper": "^3.2.2",

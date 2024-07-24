@@ -20,20 +20,20 @@ const results = {
     failedPageCount: 0,
 }
 
-const proms = pkgs.map(pkg => {
-    return exec(`npm run test-api-docs-json -- --pkg=${pkg} || true`).then((stdout, stderr) => {
+const testRuns = pkgs.map(pkg => {
+    return exec(`npm run test-api-docs -- --pkg=${pkg} || true`).then((stdout, stderr) => {
         console.log(stdout)
         processJSON(stdout, stderr)
     })
 })
 
-Promise.all(proms).then(async () => {
+Promise.all(testRuns).then(async () => {
     console.log(results);
-    await pushS3(results);
+    await pushResultsS3(results);
 })
 
 
-async function processJSON(stdout, stderr) {
+function processJSON(stdout, stderr) {
     const contents = fs.readFileSync("ctrf/ctrf-report.json", { encoding: 'utf8'});
     const results = JSON.parse(contents);
     transformResults(results)
@@ -114,7 +114,7 @@ function expandDate(dateString) {
 }
 
 // upload to S3 with yyyy/mm/dd prefix.
-async function pushS3(obj) {
+async function pushResultsS3(obj) {
     const bucketName = 'pulumi-api-docs-e2e-test-results-prodution';
     
     const jsonData = JSON.stringify(obj);

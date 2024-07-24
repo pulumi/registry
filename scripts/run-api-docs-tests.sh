@@ -1,6 +1,4 @@
 #!/bin/bash
-
-
 # Get current website bucket.
 bucket="$(curl -s https://www.pulumi.com/registry/metadata.json | jq -r '.bucket' || echo '')"
 

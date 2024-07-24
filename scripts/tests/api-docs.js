@@ -28,7 +28,7 @@ modules.forEach(mod => {
     const dom = htmlparser2.parseDocument(fileContent);
     const $ = cheerio.load(dom);
 
-    // Ignore funtion pages for now.
+    // Ignore function pages for now.
     if (!path.basename(path.dirname(p)).startsWith("get")) {
 
       describe(constructPageRoute(p), function () {
@@ -90,7 +90,7 @@ modules.forEach(mod => {
             const constructorSection = $("h2#create");
             expect(constructorSection.length).to.equal(1);
           })
-          it("syntax section exists", function () {
+          it("syntax section exists", () => {
             const syntax = $("h3#constructor-syntax");
             expect(syntax.length).to.equal(1);
           })
@@ -150,7 +150,7 @@ modules.forEach(mod => {
 
         // Verify the page contains a Package Details section
         describe("Package Details section", () => {
-          it("it exists", () => {
+          it("exists", () => {
             const packageSection = $("h2#package-details");
             expect(packageSection.length).to.equal(1);
           });

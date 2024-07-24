@@ -1,4 +1,3 @@
-// const cp = require('child_process');
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
 const fs = require('fs');
@@ -28,9 +27,9 @@ const proms = pkgs.map(pkg => {
     })
 })
 
-Promise.all(proms).then(_ => {
+Promise.all(proms).then(async () => {
     console.log(results);
-    pushS3(results);
+    await pushS3(results);
 })
 
 
@@ -42,7 +41,7 @@ async function processJSON(stdout, stderr) {
     // The cli command error is trapped here since it is a sub process of this script.
     // Checking if error here will enable us to mark this as a failed run by exiting
     // unsuccessfully. Otherwise the run will always pass successfully regardless of
-    // the result of the cypress tests.
+    // the result of the tests.
     if (stderr) {
         console.error("errors:", stderr);
         process.exit(1)
@@ -51,20 +50,22 @@ async function processJSON(stdout, stderr) {
 
 function transformResults(res) {
     const summary = res.results.summary;
-    results["tests"] = summary["tests"] + results.tests;
-    results["passes"] = summary["passed"] + results.passes;
-    results["failures"] = summary["failed"] + results.failures;
-    results["start"] = summary["start"] + results.start;
-    results["end"] = summary["stop"] + results.end;
-    results["duration"] = (summary["stop"] - summary["start"]) + results.duration;
-    results["ghRunURL"] = getRunUrl();
+    results.tests += summary.tests;
+    results.passes += summary.passed;
+    results.failures += summary.failed;
+    results.start += summary.start;
+    results.end += summary.stop;
+    results.duration = (summary.stop - summary.start) + results.duration;
+    results.ghRunURL = getRunUrl();
 
     // Get list of failed pages.
     const failedPages = [];
     // iterate over test failures and add page url to failedPages array.
-    res.results.tests.filter(t => t.status !== "passed").forEach(f => {
-        failedPages.push(extractPageUrl(f.name))
-    })
+    res.results.tests
+        .filter(t => t.status !== "passed")
+        .forEach(f => {
+            failedPages.push(extractPageUrl(f.name))
+        });
 
     // dedupe pages and keep track of a count for each page failure occurance to map
     // the page to the number of failure occurances for each page.
@@ -74,7 +75,7 @@ function transformResults(res) {
     })
     
     // Convert pageMap to an array of objects with failure counts. This 
-    results["failedPages"] = [...results["failedPages"], ...Object.keys(pageMap).map(key => ({
+    results.failedPages = [...results.failedPages, ...Object.keys(pageMap).map(key => ({
         page: key,
         failures: pageMap[key],
         tests: 15,

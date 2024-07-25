@@ -10,5 +10,5 @@ publisher: port-labs
 repo_url: https://github.com/port-labs/pulumi-port
 schema_file_path: provider/cmd/pulumi-resource-port/schema.json
 title: Port
-updated_on: 1721213454
-version: v2.0.12
+updated_on: 1721926089
+version: v2.0.13

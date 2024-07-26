@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-slack
 schema_file_path: provider/cmd/pulumi-resource-slack/schema.json
 title: Slack
-updated_on: 1716512789
-version: v0.4.5
+updated_on: 1721957381
+version: v0.4.6

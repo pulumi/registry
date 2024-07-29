@@ -52,7 +52,7 @@ function transformResults(res) {
     results.tests += summary.tests;
     results.passes += summary.passed;
     results.failures += summary.failed;
-    results.start += summary.start;
+    results.start = summary.start;
     results.end += summary.stop;
     results.duration = summary.stop - summary.start + results.duration;
     results.ghRunURL = getRunUrl();

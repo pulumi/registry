@@ -1,0 +1,14 @@
+category: Cloud
+component: false
+description: Chronosphere Pulumi Provider
+featured: false
+logo_url: ""
+name: chronosphere
+native: false
+package_status: public_preview
+publisher: Chronosphere
+repo_url: https://github.com/chronosphereio/pulumi-chronosphere
+schema_file_path: provider/cmd/pulumi-resource-chronosphere/schema.json
+title: Chronosphere
+updated_on: 1721917026
+version: v0.9.1

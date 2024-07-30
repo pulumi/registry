@@ -53,8 +53,8 @@ function transformResults(res) {
     results.passes += summary.passed;
     results.failures += summary.failed;
     results.start = summary.start;
-    results.end += summary.stop;
-    results.duration = summary.stop - summary.start + results.duration;
+    results.end = summary.stop;
+    results.duration = summary.stop - summary.start;
     results.ghRunURL = getRunUrl();
 
     // Get list of failed pages.

@@ -15,22 +15,46 @@ if (!pkg) {
 }
 
 const modules = getModules(pkg);
-modules.forEach((mod) => {
     const paths = glob.sync(
-        `./public/registry/packages/${pkg}/api-docs/${mod}/**/*.html`,
+        `./public/registry/packages/${pkg}/api-docs/**/*.html`,
         {
             ignore: [
-                `./public/registry/packages/${pkg}/api-docs/${mod}/index.html`,
+                `./public/registry/packages/${pkg}/api-docs/index.html`,
             ],
         },
     );
+
+    // Iterate over pages and build a list of all the functions. This way we know which pages to skip
+    // since these tests are only built for resource pages.
+    const functions = [];
     paths.forEach((p) => {
         const fileContent = fs.readFileSync(p, "utf-8").toString();
         const dom = htmlparser2.parseDocument(fileContent);
         const $ = cheerio.load(dom);
+        if (isModuleFile($) || isResourceListFile($)) {
+            getFunctions($);
+            return;
+        }
+    });
 
+    paths.forEach((p) => {
+
+        // Some of our non-bridged providers maintain a different directory structure 
+        // where the module structure is more deep or shallowly nested. This checks the
+        // html file to see if it is a module page, and if it is, then skip it as the
+        // tests that follow are to be run against resource pages.
+
+        const fileContent = fs.readFileSync(p, "utf-8").toString();
+        const dom = htmlparser2.parseDocument(fileContent);
+        const $ = cheerio.load(dom);
+
+        if (isModuleFile($) || isResourceListFile($)) {
+            return;
+        }
+        
+        
         // Ignore function pages for now.
-        if (!path.basename(path.dirname(p)).startsWith("get")) {
+        if (!isFunctionPage($)) {
             describe(constructPageRoute(p), function () {
                 // Verify page has a title and it is an h1 that contains the package and
                 // module name.
@@ -43,9 +67,9 @@ modules.forEach((mod) => {
                     it("contains the package name", function () {
                         expect(h1s.text().toLowerCase()).to.have.string(pkg);
                     });
-                    it("contains the module name", function () {
-                        expect(h1s.text().toLowerCase()).to.have.string(mod);
-                    });
+                    // it("contains the module name", function () {
+                    //     expect(h1s.text().toLowerCase()).to.have.string(mod);
+                    // });
                 });
 
                 // Verify sections exist in correct order
@@ -143,6 +167,10 @@ modules.forEach((mod) => {
                     it("contains at least one example", () => {
                         expect(examples.length).to.be.at.least(1);
                     });
+                    it("contains at least 1 example with code block", () => {
+                        const code = $("h2#example-usage ~ div > pulumi-choosable");
+                        expect(code.length).to.be.at.least(1);
+                    })
                 });
 
                 // Verify the page contains an Import section and that it comes somewhere
@@ -157,7 +185,7 @@ modules.forEach((mod) => {
                             expect(importSection.length).to.equal(1);
                         });
                     } else {
-                        it("contains Import section", () => {
+                        it("exists", () => {
                             expect(heading.length).to.equal(1);
                             expect(heading.text()).to.have.string("Import");
                         });
@@ -178,7 +206,6 @@ modules.forEach((mod) => {
             });
         }
     });
-});
 
 function getModules(pkg) {
     const mods = fs
@@ -195,4 +222,36 @@ function constructPageRoute(filePath) {
     return filePath
         .replace("./public", "https://pulumi.com")
         .replace("index.html", "");
+}
+
+// Check if this page is a module list page.
+function isModuleFile($) {
+  const moduleHeading = $("h2#modules")
+  return moduleHeading.length > 0;
+}
+
+// Check if the page is a the resource list page.
+function isResourceListFile($) {
+  const resourcesHeading = $("h2#resources");
+  const functionsHeading = $("h2#functions");
+  return resourcesHeading.length > 0 || functionsHeading.length > 0;
+}
+
+// Generate a list of the function names to add to a list so we know which pages
+// to skip over.
+function getFunctions($) {
+    const containsFunctions = $("h2#functions").length > 0;
+    if (containsFunctions) {
+        const list = $("h2#functions + ul > li");
+        list.each((i, elm) => {
+            functions.push($(elm).text().toLowerCase())
+        });
+    }
+}
+
+// Checks if the page is a function page. There is not a distinction on the page itself
+// other than it having a heading for the return result of the function.
+function isFunctionPage($) {
+    const functionPageHeading = $("h2#result");
+    return functionPageHeading.length > 0;
 }

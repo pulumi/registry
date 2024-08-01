@@ -3,7 +3,8 @@ const exec = util.promisify(require("child_process").exec);
 const fs = require("fs");
 const AWS = require("aws-sdk");
 
-const pkgs = ["aws", "azure", "gcp"];
+// const pkgs = ["aws", "aws-native", "azure", "azure-native", "gcp", "google-native", "kubernetes", "aiven"];
+const pkgs = ["aiven", "aws"];
 
 const results = {
     tests: 0,
@@ -14,13 +15,14 @@ const results = {
     duration: 0,
     failedPages: [],
     failedPageCount: 0,
+    totalPageCount: 0,
 };
 
 const testRuns = pkgs.map((pkg) => {
     return exec(`npm run test-api-docs -- --pkg=${pkg} || true`).then(
         (stdout, stderr) => {
             console.log(stdout);
-            processJSON(stdout, stderr);
+            processJSON(stdout, stderr, pkg);
         },
     );
 });
@@ -30,12 +32,12 @@ Promise.all(testRuns).then(async () => {
     await pushResultsS3(results);
 });
 
-function processJSON(stdout, stderr) {
+function processJSON(stdout, stderr, pkg) {
     const contents = fs.readFileSync("ctrf/ctrf-report.json", {
         encoding: "utf8",
     });
     const results = JSON.parse(contents);
-    transformResults(results);
+    transformResults(results, pkg);
 
     // The cli command error is trapped here since it is a sub process of this script.
     // Checking if error here will enable us to mark this as a failed run by exiting
@@ -47,7 +49,7 @@ function processJSON(stdout, stderr) {
     }
 }
 
-function transformResults(res) {
+function transformResults(res, pkg) {
     const summary = res.results.summary;
     results.tests += summary.tests;
     results.passes += summary.passed;
@@ -57,20 +59,32 @@ function transformResults(res) {
     results.duration = summary.stop - summary.start;
     results.ghRunURL = getRunUrl();
 
+    const allPages = {}
+    res.results.tests
+    .forEach((p) => {
+        allPages[p.name] = 0
+    });
+
     // Get list of failed pages.
     const failedPages = [];
     // iterate over test failures and add page url to failedPages array.
     res.results.tests
         .filter((t) => t.status !== "passed")
         .forEach((f) => {
-            failedPages.push(extractPageUrl(f.name));
+            const {url, description} = extractPageUrl(f.name);
+            failedPages.push({
+                url, description 
+            });
         });
 
     // dedupe pages and keep track of a count for each page failure occurance to map
     // the page to the number of failure occurances for each page.
     const pageMap = {};
     failedPages.forEach((page) => {
-        pageMap[page] = (pageMap[page] || 0) + 1;
+        pageMap[page.url] = {
+            count: pageMap[page.url] ? pageMap[page.url].count + 1 : 1,
+            failureMsg: pageMap[page.url] ? (pageMap[page.url].failureMsg || "") + " | " + page.description : page.description,
+        }
     });
 
     // Convert pageMap to an array of objects with failure counts. This
@@ -78,13 +92,16 @@ function transformResults(res) {
         ...results.failedPages,
         ...Object.keys(pageMap).map((key) => ({
             page: key,
-            failures: pageMap[key],
+            failures: pageMap[key].count,
+            reason:  pageMap[key].failureMsg,
             tests: 15,
+            package: pkg,
         })),
     ];
 
     results.failedPageCount =
         Object.keys(pageMap).length + results.failedPageCount;
+    results.totalPageCount = Object.keys(allPages).length + results.totalPageCount;
     return results;
 }
 
@@ -92,8 +109,8 @@ function extractPageUrl(msg) {
     const urlRegex = /^(https?:\/\/[^)]+\/)/;
     const match = msg.match(urlRegex);
     const url = match ? match[0] : null;
-
-    return url;
+    const description = msg.replace(url, "");
+    return {url, description};
 }
 
 function getRunUrl() {

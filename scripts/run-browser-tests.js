@@ -1,10 +1,12 @@
 const util = require("util");
 const exec = util.promisify(require("child_process").exec);
 const fs = require("fs");
+const path = require("path");
 const AWS = require("aws-sdk");
+const yaml = require("yaml");
 
 // const pkgs = ["aws", "aws-native", "azure", "azure-native", "gcp", "google-native", "kubernetes", "aiven"];
-const pkgs = ["aiven", "aws"];
+const pkgs = getPackagesMetadata().slice(0,3);
 
 const results = {
     tests: 0,
@@ -18,11 +20,12 @@ const results = {
     totalPageCount: 0,
 };
 
-const testRuns = pkgs.map((pkg) => {
-    return exec(`npm run test-api-docs -- --pkg=${pkg} || true`).then(
+const testRuns = pkgs.map((pkgMetadata) => {
+    return exec(`npm run test-api-docs -- --pkg=${pkgMetadata.name} || true`).then(
         (stdout, stderr) => {
+            const pkgType = resolvePackageType(pkgMetadata);
             console.log(stdout);
-            processJSON(stdout, stderr, pkg);
+            processJSON(stdout, stderr, pkgMetadata.name, pkgType);
         },
     );
 });
@@ -32,12 +35,12 @@ Promise.all(testRuns).then(async () => {
     await pushResultsS3(results);
 });
 
-function processJSON(stdout, stderr, pkg) {
+function processJSON(stdout, stderr, pkg, pkgType) {
     const contents = fs.readFileSync("ctrf/ctrf-report.json", {
         encoding: "utf8",
     });
     const results = JSON.parse(contents);
-    transformResults(results, pkg);
+    transformResults(results, pkg, pkgType);
 
     // The cli command error is trapped here since it is a sub process of this script.
     // Checking if error here will enable us to mark this as a failed run by exiting
@@ -49,7 +52,7 @@ function processJSON(stdout, stderr, pkg) {
     }
 }
 
-function transformResults(res, pkg) {
+function transformResults(res, pkg, pkgType) {
     const summary = res.results.summary;
     results.tests += summary.tests;
     results.passes += summary.passed;
@@ -71,7 +74,7 @@ function transformResults(res, pkg) {
     res.results.tests
         .filter((t) => t.status !== "passed")
         .forEach((f) => {
-            const {url, description} = extractPageUrl(f.name);
+            const {url, description} = extractTestInfo(f.name);
             failedPages.push({
                 url, description 
             });
@@ -96,6 +99,7 @@ function transformResults(res, pkg) {
             reason:  pageMap[key].failureMsg,
             tests: 15,
             package: pkg,
+            type: pkgType,
         })),
     ];
 
@@ -105,7 +109,7 @@ function transformResults(res, pkg) {
     return results;
 }
 
-function extractPageUrl(msg) {
+function extractTestInfo(msg) {
     const urlRegex = /^(https?:\/\/[^)]+\/)/;
     const match = msg.match(urlRegex);
     const url = match ? match[0] : null;
@@ -166,3 +170,34 @@ async function pushResultsS3(obj) {
 
     return s3.upload(uploadParams).promise();
 }
+
+function getPackagesMetadata() {
+    const dirPath = "./themes/default/data/registry/packages/";
+    const files = fs.readdirSync(dirPath);
+    const yamlFiles = files.filter(file => file.endsWith('.yaml'));
+    const packageMetadata = [];
+
+    yamlFiles.forEach(file => {
+        const filePath = path.join(dirPath, file);
+        const fileContents = fs.readFileSync(filePath, 'utf8');
+        const jsonObject = yaml.parse(fileContents);
+        packageMetadata.push(jsonObject);
+    });
+
+    return packageMetadata;
+}
+
+function resolvePackageType(pkg) {
+    const isComponent = pkg.component;
+    const isNative = pkg.native;
+
+    if (isComponent) {
+        return "component";
+    } else if (isNative) {
+        return "native";
+    } else {
+        return "bridged";
+    }
+}
+
+console.log(getPackagesMetadata());

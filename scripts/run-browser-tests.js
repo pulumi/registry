@@ -24,9 +24,6 @@ const results = {
 };
 
 async function runTests() {
-
-    
-    
     async function processBatches(pkgs, size) {
         for (let i = 0; i < pkgs.length; i += size) {
             const batch = pkgs.slice(i, i + size);
@@ -39,8 +36,9 @@ async function runTests() {
                     },
                 );
             });
+            console.log("processing batch:", i, "-", i+size);
             await Promise.all(runs).then(() => {
-                console.log("processed batch", i, "-", i+size);
+                console.log("batch done:", i, "-", i+size);
             });
         }
     }
@@ -51,11 +49,6 @@ async function runTests() {
 }
 
 runTests();
-
-// Promise.all(testRuns).then(async () => {
-//     console.log(results);
-//     await pushResultsS3(results);
-// });
 
 function processJSON(stdout, stderr, pkgMetadata) {
     const contents = fs.readFileSync("ctrf/ctrf-report.json", {
@@ -85,10 +78,12 @@ function transformResults(res, pkgMetadata) {
     results.duration = summary.stop - summary.start;
     results.ghRunURL = getRunUrl();
 
-    const allPages = {}
+    // Track total count of pages.
+    const allPages = new Set();
     res.results.tests
-    .forEach((p) => {
-        allPages[p.name] = 0
+    .forEach((t) => {
+        const {url, _} = extractTestInfo(t.name);
+        allPages.add(url)
     });
 
     // Get list of failed pages.
@@ -96,8 +91,8 @@ function transformResults(res, pkgMetadata) {
     // iterate over test failures and add page url to failedPages array.
     res.results.tests
         .filter((t) => t.status !== "passed")
-        .forEach((f) => {
-            const {url, description} = extractTestInfo(f.name);
+        .forEach((t) => {
+            const {url, description} = extractTestInfo(t.name);
             failedPages.push({
                 url, description 
             });
@@ -129,7 +124,7 @@ function transformResults(res, pkgMetadata) {
 
     results.failedPageCount =
         Object.keys(pageMap).length + results.failedPageCount;
-    results.totalPageCount = Object.keys(allPages).length + results.totalPageCount;
+    results.totalPageCount = allPages.size + results.totalPageCount;
     return results;
 }
 

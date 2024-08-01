@@ -5,11 +5,9 @@ const path = require("path");
 const AWS = require("aws-sdk");
 const yaml = require("yaml");
 
-
 const batchSize = 5;
 
-// const pkgs = ["aws", "aws-native", "azure", "azure-native", "gcp", "google-native", "kubernetes", "aiven"];
-const pkgs = getPackagesMetadata().slice(0,7);
+const pkgs = getPackagesMetadata();
 
 const results = {
     tests: 0,
@@ -28,22 +26,22 @@ async function runTests() {
         for (let i = 0; i < pkgs.length; i += size) {
             const batch = pkgs.slice(i, i + size);
             const runs = batch.map((pkgMetadata) => {
-                return exec(`npm run test-api-docs -- --pkg=${pkgMetadata.name} || true`).then(
-                    (stdout, stderr) => {
-                        // console.log(stdout);
-                        console.log("processed:", pkgMetadata.name)
-                        processJSON(stdout, stderr, pkgMetadata);
-                    },
-                );
+                return exec(
+                    `npm run test-api-docs -- --pkg=${pkgMetadata.name} || true`,
+                ).then((stdout, stderr) => {
+                    // console.log(stdout);
+                    console.log("processed:", pkgMetadata.name);
+                    processJSON(stdout, stderr, pkgMetadata);
+                });
             });
-            console.log("processing batch:", i, "-", i+size);
+            console.log("processing batch:", i, "-", i + size);
             await Promise.all(runs).then(() => {
-                console.log("batch done:", i, "-", i+size);
+                console.log("batch done:", i, "-", i + size);
             });
         }
     }
 
-    await processBatches(pkgs, batchSize)
+    await processBatches(pkgs, batchSize);
     console.log(results);
     await pushResultsS3(results);
 }
@@ -68,7 +66,6 @@ function processJSON(stdout, stderr, pkgMetadata) {
 }
 
 function transformResults(res, pkgMetadata) {
-
     const summary = res.results.summary;
     results.tests += summary.tests;
     results.passes += summary.passed;
@@ -80,10 +77,9 @@ function transformResults(res, pkgMetadata) {
 
     // Track total count of pages.
     const allPages = new Set();
-    res.results.tests
-    .forEach((t) => {
-        const {url, _} = extractTestInfo(t.name);
-        allPages.add(url)
+    res.results.tests.forEach((t) => {
+        const { url, _ } = extractTestInfo(t.name);
+        allPages.add(url);
     });
 
     // Get list of failed pages.
@@ -92,9 +88,10 @@ function transformResults(res, pkgMetadata) {
     res.results.tests
         .filter((t) => t.status !== "passed")
         .forEach((t) => {
-            const {url, description} = extractTestInfo(t.name);
+            const { url, description } = extractTestInfo(t.name);
             failedPages.push({
-                url, description 
+                url,
+                description,
             });
         });
 
@@ -104,8 +101,12 @@ function transformResults(res, pkgMetadata) {
     failedPages.forEach((page) => {
         pageMap[page.url] = {
             count: pageMap[page.url] ? pageMap[page.url].count + 1 : 1,
-            failureMsg: pageMap[page.url] ? (pageMap[page.url].failureMsg || "") + " | " + page.description : page.description,
-        }
+            failureMsg: pageMap[page.url]
+                ? (pageMap[page.url].failureMsg || "") +
+                  " | " +
+                  page.description
+                : page.description,
+        };
     });
 
     // Convert pageMap to an array of objects with failure counts. This
@@ -114,7 +115,7 @@ function transformResults(res, pkgMetadata) {
         ...Object.keys(pageMap).map((key) => ({
             page: key,
             failures: pageMap[key].count,
-            reason:  pageMap[key].failureMsg,
+            reason: pageMap[key].failureMsg,
             tests: 15,
             package: pkgMetadata.name,
             type: resolvePackageType(pkgMetadata),
@@ -133,7 +134,7 @@ function extractTestInfo(msg) {
     const match = msg.match(urlRegex);
     const url = match ? match[0] : null;
     const description = msg.replace(url, "");
-    return {url, description};
+    return { url, description };
 }
 
 function getRunUrl() {
@@ -193,12 +194,12 @@ async function pushResultsS3(obj) {
 function getPackagesMetadata() {
     const dirPath = "./themes/default/data/registry/packages/";
     const files = fs.readdirSync(dirPath);
-    const yamlFiles = files.filter(file => file.endsWith('.yaml'));
+    const yamlFiles = files.filter((file) => file.endsWith(".yaml"));
     const packageMetadata = [];
 
-    yamlFiles.forEach(file => {
+    yamlFiles.forEach((file) => {
         const filePath = path.join(dirPath, file);
-        const fileContents = fs.readFileSync(filePath, 'utf8');
+        const fileContents = fs.readFileSync(filePath, "utf8");
         const jsonObject = yaml.parse(fileContents);
         packageMetadata.push(jsonObject);
     });

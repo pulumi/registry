@@ -10,5 +10,5 @@ publisher: Threefold
 repo_url: https://github.com/threefoldtech/pulumi-threefold
 schema_file_path: provider/cmd/pulumi-resource-threefold/schema.json
 title: Threefold Grid
-updated_on: 1716906600
-version: v0.6.4
+updated_on: 1722331693
+version: v0.6.5

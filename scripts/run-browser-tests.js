@@ -5,6 +5,9 @@ const path = require("path");
 const AWS = require("aws-sdk");
 const yaml = require("yaml");
 
+
+const batchSize = 5;
+
 // const pkgs = ["aws", "aws-native", "azure", "azure-native", "gcp", "google-native", "kubernetes", "aiven"];
 const pkgs = getPackagesMetadata().slice(0,7);
 
@@ -20,19 +23,39 @@ const results = {
     totalPageCount: 0,
 };
 
-const testRuns = pkgs.map((pkgMetadata) => {
-    return exec(`npm run test-api-docs -- --pkg=${pkgMetadata.name} || true`).then(
-        (stdout, stderr) => {
-            console.log(stdout);
-            processJSON(stdout, stderr, pkgMetadata);
-        },
-    );
-});
+async function runTests() {
 
-Promise.all(testRuns).then(async () => {
+    
+    
+    async function processBatches(pkgs, size) {
+        for (let i = 0; i < pkgs.length; i += size) {
+            const batch = pkgs.slice(i, i + size);
+            const runs = batch.map((pkgMetadata) => {
+                return exec(`npm run test-api-docs -- --pkg=${pkgMetadata.name} || true`).then(
+                    (stdout, stderr) => {
+                        // console.log(stdout);
+                        console.log("processed:", pkgMetadata.name)
+                        processJSON(stdout, stderr, pkgMetadata);
+                    },
+                );
+            });
+            await Promise.all(runs).then(() => {
+                console.log("processed batch", i, "-", i+size);
+            });
+        }
+    }
+
+    await processBatches(pkgs, batchSize)
     console.log(results);
     await pushResultsS3(results);
-});
+}
+
+runTests();
+
+// Promise.all(testRuns).then(async () => {
+//     console.log(results);
+//     await pushResultsS3(results);
+// });
 
 function processJSON(stdout, stderr, pkgMetadata) {
     const contents = fs.readFileSync("ctrf/ctrf-report.json", {

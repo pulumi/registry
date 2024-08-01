@@ -6,7 +6,7 @@ const AWS = require("aws-sdk");
 const yaml = require("yaml");
 
 // const pkgs = ["aws", "aws-native", "azure", "azure-native", "gcp", "google-native", "kubernetes", "aiven"];
-const pkgs = getPackagesMetadata().slice(0,3);
+const pkgs = getPackagesMetadata().slice(0,7);
 
 const results = {
     tests: 0,
@@ -23,9 +23,8 @@ const results = {
 const testRuns = pkgs.map((pkgMetadata) => {
     return exec(`npm run test-api-docs -- --pkg=${pkgMetadata.name} || true`).then(
         (stdout, stderr) => {
-            const pkgType = resolvePackageType(pkgMetadata);
             console.log(stdout);
-            processJSON(stdout, stderr, pkgMetadata.name, pkgType);
+            processJSON(stdout, stderr, pkgMetadata);
         },
     );
 });
@@ -35,12 +34,12 @@ Promise.all(testRuns).then(async () => {
     await pushResultsS3(results);
 });
 
-function processJSON(stdout, stderr, pkg, pkgType) {
+function processJSON(stdout, stderr, pkgMetadata) {
     const contents = fs.readFileSync("ctrf/ctrf-report.json", {
         encoding: "utf8",
     });
     const results = JSON.parse(contents);
-    transformResults(results, pkg, pkgType);
+    transformResults(results, pkgMetadata);
 
     // The cli command error is trapped here since it is a sub process of this script.
     // Checking if error here will enable us to mark this as a failed run by exiting
@@ -52,7 +51,8 @@ function processJSON(stdout, stderr, pkg, pkgType) {
     }
 }
 
-function transformResults(res, pkg, pkgType) {
+function transformResults(res, pkgMetadata) {
+
     const summary = res.results.summary;
     results.tests += summary.tests;
     results.passes += summary.passed;
@@ -98,8 +98,9 @@ function transformResults(res, pkg, pkgType) {
             failures: pageMap[key].count,
             reason:  pageMap[key].failureMsg,
             tests: 15,
-            package: pkg,
-            type: pkgType,
+            package: pkgMetadata.name,
+            type: resolvePackageType(pkgMetadata),
+            repo: pkgMetadata.repo_url,
         })),
     ];
 
@@ -199,5 +200,3 @@ function resolvePackageType(pkg) {
         return "bridged";
     }
 }
-
-console.log(getPackagesMetadata());

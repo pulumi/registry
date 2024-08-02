@@ -141,13 +141,82 @@ See the [SSA how-to guide][ssa-guide] for more information about using SSA.
 
 ## Annotations
 
-A few Pulumi-specific annotations can be applied to Kubernetes resources managed by Pulumi to control aspects of how Pulumi deploys and manages the Kubernetes resource:
+A few Pulumi-specific annotations can be applied to Kubernetes resources to control aspects of how Pulumi deploys and manages them:
 
-- `pulumi.com/patchFieldManager`: Server-Side Apply option: Specify the `FieldManager` name to use for the Server-Side Apply operation.
-- `pulumi.com/patchForce`: Server-Side Apply option: Force override any conflicts for the specified resource.
-- `pulumi.com/replaceUnready`: If the resource failed to become ready in the previous Pulumi update, replace the resource rather than continuing to wait for it to become ready. Only `batch/v1/Job` currently supports this annotation.
-- `pulumi.com/skipAwait`: Disables Pulumi's default await logic that waits for a Kubernetes resource to become "ready" before marking the resource as having created or updated succesfully.
-- `pulumi.com/timeoutSeconds`: Specifies the number of seconds that the Pulumi Kubernetes provider will wait for the resource to become "ready".
+### pulumi.com/skipAwait
+
+Controls Pulumi's default behavior when waiting for resources.
+It accepts three possible values:
+
+  1. "ready" (new in v4.16.0) will skip waiting for the resource to become ready when it is created or updated.
+  2. "delete" (new in v4.16.0) will skip waiting for the resource to become fully deleted.
+  3. "true" will skip waiting for the resource to become ready or fully deleted.
+
+### pulumi.com/waitFor
+
+(New in v4.16.0.)
+
+Defines custom criteria for Pulumi to use when waiting for the resource to become ready.
+It accepts three possible forms:
+  1. A `kubectl`
+      [JSONPath](https://kubernetes.io/docs/reference/kubectl/jsonpath):
+      a string prefixed with "jsonpath=" followed by a path expression and an
+      optional value.
+
+      If a value is provided, the resource is considered ready when the
+      JSONPath expression evaluates to the same value. For example this
+      resource expects its "phase" field to have a value of "Running":
+
+          "pulumi.com/waitFor": "jsonpath={.phase}=Running"
+
+      If a value is not provided, the resource will be considered ready when
+      any value exists at the given path. This resource will wait until it has
+      a webhook configured with a CA bundle:
+
+          "pulumi.com/waitFor": "jsonpath={.webhooks[*].clientConfig.caBundle}"
+
+   2. A string prefixed with "condition=" followed by the type of the
+      condition and an optional status. This matches the behavior of
+      `kubectl --for=condition=...` and will wait until the resource has a
+      matching condition. The expected status defaults to "True" if not
+      specified. For example:
+
+          "pulumi.com/waitFor": "condition=Synced"
+
+          "pulumi.com/waitFor": "condition=Reconciling=False"
+
+   3. A string containing a JSON array of one or more "jsonpath=" or
+      "condition=" expressions.
+
+          "pulumi.com/waitFor": '["jsonpath={.foo}", "condition=Bar"]'
+
+      The resource will be considered ready when all of the criteria are
+      simultaneously met.
+
+  This annotation has no effect if the `pulumi.com/skipAwait` annotation is also present with a value of "true" or "ready".
+
+### pulumi.com/patchForce
+
+(Server-Side Apply option.)
+
+Force override any conflicts for the specified resource.
+
+###  pulumi.com/patchFieldManager
+
+(Server-Side Apply option.)
+
+Specify the `FieldManager` name to use for the Server-Side Apply operation.
+
+### pulumi.com/timeoutSeconds
+
+Specifies the number of seconds that the Pulumi Kubernetes provider will wait for the resource to become "ready".
+Consider using [custom timeouts](https://www.pulumi.com/docs/concepts/options/customtimeouts/) instead.
+
+### pulumi.com/replaceUnready
+
+If the resource failed to become ready in the previous Pulumi update, replace the resource rather than continuing to wait for it to become ready. Only `batch/v1/Job` currently supports this annotation.
+
+### Others
 
 In addition, the Pulumi provider may write the following annotations onto resources it manages:
 

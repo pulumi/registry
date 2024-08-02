@@ -8,47 +8,53 @@ const process = require("process");
 
 const expect = chai.expect;
 
-const pkg = process.argv[5].replace("--pkg=", "");
+const pkg = process.argv[6].replace("--pkg=", "");
+const split = process.argv[8].replace("--split=", "");
 
 if (!pkg) {
     console.error("package not set", 1);
 }
 
-const paths = glob.sync(
-    `./public/registry/packages/${pkg}/api-docs/**/*.html`,
-    {
-        ignore: [`./public/registry/packages/${pkg}/api-docs/index.html`],
-    },
-);
+if (!fs.existsSync(`./public/registry/packages/${pkg}/api-docs/`)) {
+    console.log("pkg skipped:", pkg);
+    return;
+}
 
-// Iterate over pages and build a list of all the functions. This way we know which pages to skip
+const paths = getPaths(split);
+
+// Iterate over all pages and build a list of all the functions. This way we know which pages to skip
 // since these tests are only built for resource pages.
 const functions = [];
-paths.forEach((p) => {
+getPaths("0").forEach((p) => {
     const fileContent = fs.readFileSync(p, "utf-8").toString();
-    const dom = htmlparser2.parseDocument(fileContent);
+    let dom = htmlparser2.parseDocument(fileContent);
     const $ = cheerio.load(dom);
+
+    // Check if page is a module file or resource list file. These pages could also be both depending on
+    // how deeply nested the module structure is, i.e. Module file could contain list of other sub modules.
+    // If it is, grab the functions list off of the page so we can build a list of all the function pages
+    // and know which ones should use the function page tests.
     if (isModuleFile($) || isResourceListFile($)) {
         getFunctions($);
         return;
     }
 });
 
+let processed = 0;
+
 paths.forEach((p) => {
+    let fileContent = fs.readFileSync(p, "utf-8").toString();
+    let dom = htmlparser2.parseDocument(fileContent);
+    const $ = cheerio.load(dom);
+
     // Some of our non-bridged providers maintain a different directory structure
     // where the module structure is more deep or shallowly nested. This checks the
     // html file to see if it is a module page, and if it is, then skip it as the
     // tests that follow are to be run against resource pages.
-
-    const fileContent = fs.readFileSync(p, "utf-8").toString();
-    const dom = htmlparser2.parseDocument(fileContent);
-    const $ = cheerio.load(dom);
-
     if (isModuleFile($) || isResourceListFile($)) {
         return;
     }
 
-    // Ignore function pages for now.
     if (!isFunctionPage($)) {
         describe(constructPageRoute(p), function () {
             // Verify page has a title and it is an h1 that contains the package and
@@ -64,7 +70,7 @@ paths.forEach((p) => {
                 });
             });
 
-            // Verify sections exist in correct order
+            // Verify sections exist in correct order.
             describe("Sections", () => {
                 const headings = [];
                 $("section.docs-content > h2").each((i, h) => {
@@ -152,10 +158,15 @@ paths.forEach((p) => {
                     expect(heading.length).to.equal(1);
                     expect(heading.text()).to.have.string("Example Usage");
                 });
-
-                const examples = $("h2#example-usage ~ div > pulumi-chooser");
-                it("contains at least one example", () => {
-                    expect(examples.length).to.be.at.least(1);
+                const examplesChooser = $(
+                    "h2#example-usage ~ div > pulumi-chooser",
+                );
+                it("contains at least one example with chooser", () => {
+                    expect(examplesChooser.length).to.be.at.least(1);
+                });
+                it("contains at least 1 example with code block", () => {
+                    const code = $("h2#example-usage ~ div > pulumi-choosable");
+                    expect(code.length).to.be.at.least(1);
                 });
                 it("contains at least 1 example with code block", () => {
                     const code = $("h2#example-usage ~ div > pulumi-choosable");
@@ -192,6 +203,100 @@ paths.forEach((p) => {
                 });
             });
         });
+    } else {
+        // Skip function testing for these for now. These providers are our largest and
+        // causing out of memory errors.
+        describe(constructPageRoute(p) + " (Fn)", function () {
+            describe("h1 title", () => {
+                const h1s = $("h1");
+
+                it("contains exactly 1 h1", function () {
+                    expect(h1s.length).to.equal(1);
+                });
+                it("contains the package name", function () {
+                    expect(h1s.text().toLowerCase()).to.have.string(pkg);
+                });
+            });
+            // Verify it contains a description paragraph.
+            describe("Description paragraph", () => {
+                const paragraph = $(
+                    ".docs-main-content .docs-content > p",
+                ).text();
+                it("exists", () => {
+                    expect(paragraph.length).to.be.at.least(1);
+                });
+            });
+            // Contains a section describing the function syntax
+            describe("Syntax usage", () => {
+                it("has a usage section heading", () => {
+                    const constructorSection = $("h2#using");
+                    expect(constructorSection.length).to.equal(1);
+                });
+                it("has a description paragraph following the heading", () => {
+                    const constructorSection = $("h2#using + p");
+                    expect(constructorSection.length).to.equal(1);
+                });
+                it("contains code syntax", () => {
+                    const syntax = $("h2#using + p + div > pulumi-chooser");
+                    expect(syntax.length).to.equal(1);
+                });
+            });
+
+            // Contains a section describing the output of the function.
+            describe("Result section", () => {
+                it("has a result heading", () => {
+                    const resultHeading = $("h2#result");
+                    expect(resultHeading.length).to.equal(1);
+                });
+                it("has a properties table", () => {
+                    const propsTable = $(
+                        "h2#result ~ div > pulumi-choosable > dl",
+                    );
+                    expect(propsTable.length).to.be.at.least(1);
+                });
+            });
+
+            // Verify the page contains an Example Usage section and contains
+            // at least 1 code example.
+            describe("Examples section", () => {
+                it("contains Example Usage heading", () => {
+                    const heading = $("h2#example-usage");
+                    expect(heading.length).to.equal(1);
+                    expect(heading.text()).to.have.string("Example Usage");
+                });
+                const examplesChooser = $(
+                    "h2#example-usage ~ div > pulumi-chooser",
+                );
+                it("contains at least one example with chooser", () => {
+                    expect(examplesChooser.length).to.be.at.least(1);
+                });
+                it("contains at least 1 example with code block", () => {
+                    const code = $("h2#example-usage ~ div > pulumi-choosable");
+                    expect(code.length).to.be.at.least(1);
+                });
+            });
+
+            // Contains a Package Details section
+            describe("Package Details section", () => {
+                it("exists", () => {
+                    const packageSection = $("h2#package-details");
+                    expect(packageSection.length).to.equal(1);
+                });
+                it("contains details table", () => {
+                    const table = $("h2#package-details + dl");
+                    expect(table.length).to.equal(1);
+                });
+            });
+        });
+    }
+
+    // By default node runs garbage collection very lazily since it needs to hault
+    // execution in order to run it, so this manually invokes the garbage collector
+    // every 200 pages and tends to slightly help the memory issues.
+    processed++;
+    if (processed > 200) {
+        global.gc();
+        processed = 0;
     }
 });
 
@@ -231,4 +336,25 @@ function getFunctions($) {
 function isFunctionPage($) {
     const functionPageHeading = $("h2#result");
     return functionPageHeading.length > 0;
+}
+
+function getPaths(split) {
+    const paths = glob.sync(
+        `./public/registry/packages/${pkg}/api-docs/**/*.html`,
+        {
+            ignore: [`./public/registry/packages/${pkg}/api-docs/index.html`],
+        },
+    );
+    switch (split) {
+        case "1":
+            console.log("processing first half...");
+            return paths.sort().slice(0, paths.length / 2);
+            break;
+        case "2":
+            console.log("processing second half...");
+            return paths.sort().slice(paths.length / 2);
+            break;
+        default:
+            return paths;
+    }
 }

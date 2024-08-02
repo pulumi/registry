@@ -5,9 +5,32 @@ const path = require("path");
 const AWS = require("aws-sdk");
 const yaml = require("yaml");
 
-const batchSize = 5;
+const batchSize = 8;
 
-const pkgs = getPackagesMetadata();
+// List of the larger packages to process syncronously (not as part of a batch). They
+// have been causing out of memory issues so process them by themselves to mitigate this.
+// In addtion the processing will be split into two halves, so each half of the pages will
+// process separately.
+const singles = [
+    "aws",
+    "aws-native",
+    "azure",
+    "azure-native",
+    "azure-native-v1",
+    "gcp",
+    "google-native",
+    "kubernetes",
+    "alicloud",
+    "oci",
+    "fortios",
+];
+
+// Retry queue to process failed packages.
+const retry = [];
+
+const allPkgs = getPackagesMetadata();
+const pkgs = allPkgs.filter((pkg) => !singles.includes(pkg.name));
+const largePkgs = allPkgs.filter((pkg) => singles.includes(pkg.name));
 
 const results = {
     tests: 0,
@@ -22,14 +45,49 @@ const results = {
 };
 
 async function runTests() {
+    async function processSync(pkgs, split) {
+        for (let pkgMetadata of pkgs) {
+            if (split) {
+                // process first half of pages.
+                await exec(
+                    `npm run test-api-docs -- --pkg=${pkgMetadata.name} --split=1 || true`,
+                ).then((stdout, stderr) => {
+                    console.log(stdout);
+                    console.log("processed:", pkgMetadata.name);
+                    processJSON(stdout, stderr, pkgMetadata);
+                });
+                // process second half of pages.
+                await exec(
+                    `npm run test-api-docs -- --pkg=${pkgMetadata.name} --split=2 || true`,
+                ).then((stdout, stderr) => {
+                    console.log(stdout);
+                    console.log("processed:", pkgMetadata.name);
+                    processJSON(stdout, stderr, pkgMetadata);
+                });
+            } else {
+                // Do not split, process all pages in package.
+                await exec(
+                    `npm run test-api-docs -- --pkg=${pkgMetadata.name} --split=0 || true`,
+                ).then((stdout, stderr) => {
+                    console.log(stdout);
+                    console.log("processed:", pkgMetadata.name);
+                    processJSON(stdout, stderr, pkgMetadata);
+                });
+            }
+        }
+    }
+
     async function processBatches(pkgs, size) {
         for (let i = 0; i < pkgs.length; i += size) {
             const batch = pkgs.slice(i, i + size);
+            // Shell out to run test for package. This causes it to fork sepatate node processes for each package
+            // being tested. This enables us to test many packages since each node process has its own memory space,
+            // so we do not run out of heap memory.
             const runs = batch.map((pkgMetadata) => {
                 return exec(
-                    `npm run test-api-docs -- --pkg=${pkgMetadata.name} || true`,
+                    `npm run test-api-docs -- --pkg=${pkgMetadata.name} --split=0 || true`,
                 ).then((stdout, stderr) => {
-                    // console.log(stdout);
+                    console.log(stdout);
                     console.log("processed:", pkgMetadata.name);
                     processJSON(stdout, stderr, pkgMetadata);
                 });
@@ -41,7 +99,13 @@ async function runTests() {
         }
     }
 
-    await processBatches(pkgs, batchSize);
+    // Batch process smaller packages.
+    await processBatches(pkgs, batchSize, false);
+    // Process retry queue syncronously.
+    await processSync(retry, false);
+    // Process the larger packages syncronously.
+    await processSync(largePkgs, true);
+
     console.log(results);
     await pushResultsS3(results);
 }
@@ -53,6 +117,16 @@ function processJSON(stdout, stderr, pkgMetadata) {
         encoding: "utf8",
     });
     const results = JSON.parse(contents);
+
+    // The test results get written to ctrf/ctrf-report.json, and since we process in batches asyncronoulsy, there
+    // is the potential for a reace condition where before the test results are read from the file another package
+    // test could have written to it, so we verify the results match the package being processed and if not, add
+    // to retry queue to be processed syncronously later.
+    if (!results.results.tests[0].name.includes(`${pkgMetadata.name}/`)) {
+        retry.push(pkgMetadata);
+        return;
+    }
+
     transformResults(results, pkgMetadata);
 
     // The cli command error is trapped here since it is a sub process of this script.
@@ -65,6 +139,8 @@ function processJSON(stdout, stderr, pkgMetadata) {
     }
 }
 
+// Transform results into the structure we want and add them to the results object that will get pushed
+// to s3 once all the tests complete.
 function transformResults(res, pkgMetadata) {
     const summary = res.results.summary;
     results.tests += summary.tests;
@@ -191,6 +267,8 @@ async function pushResultsS3(obj) {
     return s3.upload(uploadParams).promise();
 }
 
+// Load package metadata from metadata files, convert YAML to JSON object,
+// then return array containing package metadata. 
 function getPackagesMetadata() {
     const dirPath = "./themes/default/data/registry/packages/";
     const files = fs.readdirSync(dirPath);

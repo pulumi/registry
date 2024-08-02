@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-ns1
 schema_file_path: provider/cmd/pulumi-resource-ns1/schema.json
 title: NS1
-updated_on: 1720026804
-version: v3.3.1
+updated_on: 1722603428
+version: v3.4.0

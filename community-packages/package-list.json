@@ -331,6 +331,10 @@
     {
       "repoSlug": "pulumiverse/pulumi-clickhouse",
       "schemaFile": "provider/cmd/pulumi-resource-clickhouse/schema.json"
+    },
+    {
+      "repoSlug": "komminarlabs/pulumi-influxdb3",
+      "schemaFile": "provider/cmd/pulumi-resource-influxdb3/schema.json"
     }
   ]
 }

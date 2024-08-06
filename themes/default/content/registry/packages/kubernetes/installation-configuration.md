@@ -177,40 +177,41 @@ The `pulumi.com/deletionPropagationPolicy` annotation configures alternative del
 
 Defines custom criteria for Pulumi to use when waiting for the resource to become ready.
 It accepts three possible forms:
+
   1. A `kubectl`
-      [JSONPath](https://kubernetes.io/docs/reference/kubectl/jsonpath):
-      a string prefixed with "jsonpath=" followed by a path expression and an
-      optional value.
+     [JSONPath](https://kubernetes.io/docs/reference/kubectl/jsonpath):
+     a string prefixed with "jsonpath=" followed by a path expression and an
+     optional value.
 
-      If a value is provided, the resource is considered ready when the
-      JSONPath expression evaluates to the same value. For example this
-      resource expects its "phase" field to have a value of "Running":
+     If a value is provided, the resource is considered ready when the
+     JSONPath expression evaluates to the same value. For example this
+     resource expects its "phase" field to have a value of "Running":
 
-          "pulumi.com/waitFor": "jsonpath={.phase}=Running"
+         "pulumi.com/waitFor": "jsonpath={.phase}=Running"
 
-      If a value is not provided, the resource will be considered ready when
-      any value exists at the given path. This resource will wait until it has
-      a webhook configured with a CA bundle:
+     If a value is not provided, the resource will be considered ready when
+     any value exists at the given path. This resource will wait until it has
+     a webhook configured with a CA bundle:
 
-          "pulumi.com/waitFor": "jsonpath={.webhooks[*].clientConfig.caBundle}"
+         "pulumi.com/waitFor": "jsonpath={.webhooks[*].clientConfig.caBundle}"
 
-   2. A string prefixed with "condition=" followed by the type of the
-      condition and an optional status. This matches the behavior of
-      `kubectl --for=condition=...` and will wait until the resource has a
-      matching condition. The expected status defaults to "True" if not
-      specified. For example:
+  2. A string prefixed with "condition=" followed by the type of the
+     condition and an optional status. This matches the behavior of
+     `kubectl --for=condition=...` and will wait until the resource has a
+     matching condition. The expected status defaults to "True" if not
+     specified. For example:
 
-          "pulumi.com/waitFor": "condition=Synced"
+         "pulumi.com/waitFor": "condition=Synced"
 
-          "pulumi.com/waitFor": "condition=Reconciling=False"
+         "pulumi.com/waitFor": "condition=Reconciling=False"
 
-   3. A string containing a JSON array of one or more "jsonpath=" or
-      "condition=" expressions.
+  3. A string containing a JSON array of one or more "jsonpath=" or
+     "condition=" expressions.
 
-          "pulumi.com/waitFor": '["jsonpath={.foo}", "condition=Bar"]'
+         "pulumi.com/waitFor": '["jsonpath={.foo}", "condition=Bar"]'
 
-      The resource will be considered ready when all of the criteria are
-      simultaneously met.
+     The resource will be considered ready when all of the criteria are
+     simultaneously met.
 
   This annotation has no effect if the `pulumi.com/skipAwait` annotation is also present with a value of "true" or "ready".
 
@@ -220,7 +221,7 @@ It accepts three possible forms:
 
 Force override any conflicts for the specified resource.
 
-###  pulumi.com/patchFieldManager
+### pulumi.com/patchFieldManager
 
 (Server-Side Apply option.)
 

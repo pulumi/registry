@@ -145,12 +145,31 @@ A few Pulumi-specific annotations can be applied to Kubernetes resources to cont
 
 ### pulumi.com/skipAwait
 
-Controls Pulumi's default behavior when waiting for resources.
+{{% notes type="warning" %}}
+Using `skipAwait` with deletion is not recommended as it can lead to race conditions between objects being created and others still being deleted.
+
+A `pulumi.com/deletionPropagationPolicy: background` annotation, described below, is almost always the preferred way to delete something quickly and safely.
+{{% /notes %}}
+
+Controls Pulumi's behavior while waiting for resources.
 It accepts three possible values:
 
   1. "ready" (new in v4.16.0) will skip waiting for the resource to become ready when it is created or updated.
   2. "delete" (new in v4.16.0) will skip waiting for the resource to become fully deleted.
   3. "true" will skip waiting for the resource to become ready or fully deleted.
+
+### pulumi.com/deletionPropagationPolicy
+
+By default Pulumi uses [foreground](https://kubernetes.io/docs/concepts/architecture/garbage-collection/#foreground-deletion) cascading deletion, which deletes the resource _and_ all of its dependents.
+This ensures all dependent resources are cleaned up, but it can be slow.
+
+The `pulumi.com/deletionPropagationPolicy` annotation configures alternative deletion propagation policies:
+1. "background": delete the owner resource and let dependent resources be asynchronously garbage collected.
+   This is faster than "foreground" deletion propagation, but dependent resources can remain temporarily or even indefinitely if they are not finalized.
+2. "orphan": delete the owner resource and leave dependent resources untouched.
+   This can be useful if you want to keep resources around for migration or debugging purposes.
+3. "foreground": the default behavior of deleting the resource and all of its dependents.
+   This is slower but guarantees all dependents have been cleaned up if it succeeds.
 
 ### pulumi.com/waitFor
 

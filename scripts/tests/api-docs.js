@@ -204,8 +204,6 @@ paths.forEach((p) => {
             });
         });
     } else {
-        // Skip function testing for these for now. These providers are our largest and
-        // causing out of memory errors.
         describe(constructPageRoute(p) + " (Fn)", function () {
             describe("h1 title", () => {
                 const h1s = $("h1");
@@ -320,7 +318,7 @@ function isResourceListFile($) {
 }
 
 // Generate a list of the function names to add to a list so we know which pages
-// to skip over.
+// are functions.
 function getFunctions($) {
     const containsFunctions = $("h2#functions").length > 0;
     if (containsFunctions) {

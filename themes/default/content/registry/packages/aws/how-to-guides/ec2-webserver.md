@@ -39,32 +39,32 @@ Create a project directory, `webserver`, and change into it. Run [`pulumi new aw
 {{% choosable language javascript %}}
 
 ```bash
-mkdir webserver && cd webserver
-pulumi new aws-javascript --name myproject
+$ mkdir webserver && cd webserver
+$ pulumi new aws-javascript --name myproject
 ```
 
 {{% /choosable %}}
 {{% choosable language typescript %}}
 
 ```bash
-mkdir webserver && cd webserver
-pulumi new aws-typescript --name myproject
+$ mkdir webserver && cd webserver
+$ pulumi new aws-typescript --name myproject
 ```
 
 {{% /choosable %}}
 {{% choosable language python %}}
 
 ```bash
-mkdir webserver && cd webserver
-pulumi new aws-python --name myproject
+$ mkdir webserver && cd webserver
+$ pulumi new aws-python --name myproject
 ```
 
 {{% /choosable %}}
 {{% choosable language csharp %}}
 
 ```bash
-mkdir webserver && cd webserver
-pulumi new aws-csharp --name myproject
+$ mkdir webserver && cd webserver
+$ pulumi new aws-csharp --name myproject
 ```
 
 {{% /choosable %}}

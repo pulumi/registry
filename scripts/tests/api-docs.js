@@ -22,24 +22,6 @@ if (!fs.existsSync(`./public/registry/packages/${pkg}/api-docs/`)) {
 
 const paths = getPaths(split);
 
-// Iterate over all pages and build a list of all the functions. This way we know which pages to skip
-// since these tests are only built for resource pages.
-const functions = [];
-getPaths("0").forEach((p) => {
-    const fileContent = fs.readFileSync(p, "utf-8").toString();
-    let dom = htmlparser2.parseDocument(fileContent);
-    const $ = cheerio.load(dom);
-
-    // Check if page is a module file or resource list file. These pages could also be both depending on
-    // how deeply nested the module structure is, i.e. Module file could contain list of other sub modules.
-    // If it is, grab the functions list off of the page so we can build a list of all the function pages
-    // and know which ones should use the function page tests.
-    if (isModuleFile($) || isResourceListFile($)) {
-        getFunctions($);
-        return;
-    }
-});
-
 let processed = 0;
 
 paths.forEach((p) => {

@@ -1,0 +1,14 @@
+category: Cloud
+component: false
+description: A Pulumi package for creating and managing Juniper Mist resources.
+featured: false
+logo_url: https://raw.githubusercontent.com/pulumi/pulumi-junipermist/main/res/juniper.png
+name: junipermist
+native: false
+package_status: public_preview
+publisher: Pulumi
+repo_url: https://github.com/pulumi/pulumi-junipermist
+schema_file_path: provider/cmd/pulumi-resource-junipermist/schema.json
+title: Juniper Mist
+updated_on: 1722889504
+version: v0.0.1

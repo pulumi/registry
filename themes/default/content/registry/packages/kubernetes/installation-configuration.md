@@ -145,18 +145,23 @@ A few Pulumi-specific annotations can be applied to Kubernetes resources to cont
 
 ### pulumi.com/skipAwait
 
-{{% notes type="warning" %}}
-Using `skipAwait` with deletion is not recommended as it can lead to race conditions between objects being created and others still being deleted.
+Controls Pulumi's behavior while waiting for resources to become ready.
+When set to "true" Pulumi will create the resource but will not wait for it to become ready.
 
-A `pulumi.com/deletionPropagationPolicy: background` annotation, described below, is almost always the preferred way to delete something quickly and safely.
+{{% notes type="warning" %}}
+A small number of resources (Deployments, DaemonSets, StatefulSets, Pods and Namespaces) currently respect the `skipAwait` annotation during deletion and do not wait for deletion to succeed.
+However, using `skipAwait` during deletion is not recommended when server-side apply is enabled because it can lead to race conditions during replacement.
+The current behavior is considered buggy and these resource may change in the future to no longer respect the `skipAwait` annotation.
+
+The `pulumi.com/deletionPropagationPolicy` annotation, described below, is almost always the preferred way to delete something quickly and safely.
 {{% /notes %}}
 
-Controls Pulumi's behavior while waiting for resources.
-It accepts three possible values:
+{{% notes type="info" %}}
+Pulumi does not have a concept of "readiness" for all resources by default, and in many cases it will assume a resource is immediately ready even without a `skipAwait` annotation.
+This can cause problems if dependent resources do depend on readiness.
 
-  1. "ready" (new in v4.16.0) will skip waiting for the resource to become ready when it is created or updated.
-  2. "delete" (new in v4.16.0) will skip waiting for the resource to become fully deleted.
-  3. "true" will skip waiting for the resource to become ready or fully deleted.
+You can use the `waitFor` annotation (described below), or you can try running your program with the environment variable `PULUMI_K8S_AWAIT_ALL=true`, to have Pulumi wait for arbitrary resources to become ready.
+{{% /notes %}}
 
 ### pulumi.com/deletionPropagationPolicy
 
@@ -173,7 +178,7 @@ The `pulumi.com/deletionPropagationPolicy` annotation configures alternative del
 
 ### pulumi.com/waitFor
 
-(New in v4.16.0.)
+(New in v4.17.0.)
 
 Defines custom criteria for Pulumi to use when waiting for the resource to become ready.
 It accepts three possible forms:

@@ -243,8 +243,7 @@ resources:
       nodes:
         - ${scheduler.nodes[0]}
       ip_range: 10.1.0.0/16
-      # mycelium_keys:
-      #   ${scheduler.nodes[0]}: 9751c596c7c951aedad1a5f78f18b59515064adf660e0d55abead65e6fbbd627 # hex encoded 32 bytes
+      mycelium: true
 
   deployment:
     type: threefold:provider:Deployment
@@ -264,7 +263,7 @@ resources:
           cpu: 2
           memory: 256
           planetary: true
-          # mycelium_ip_seed: b60f2b7ec39c # hex encoded 6 bytes
+          mycelium: true
           mounts:
             - disk_name: data
               mount_point: /app
@@ -278,7 +277,7 @@ resources:
 outputs:
   node_deployment_id: ${deployment.node_deployment_id}
   planetary_ip: ${deployment.vms_computed[0].planetary_ip}
-  # mycelium_ip: ${deployment.vms_computed[0].mycelium_ip}
+  mycelium_ip: ${deployment.vms_computed[0].mycelium_ip}
 ```
 
 {{% /choosable %}}

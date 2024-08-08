@@ -9,7 +9,7 @@ jobs:
     # PRs with the automation/tfgen-provider-docs label contain only metadata file changes and don't need a PR build.
     if: github.event.pull_request.head.repo.full_name == github.repository && contains(github.event.pull_request.labels.*.name, 'automation/tfgen-provider-docs') != true
     name: Build and deploy preview
-    runs-on: pulumi-ubuntu-8core
+    runs-on: pulumi-service-ubuntu-22.04-16core
     environment: testing
     env:
       GOPATH: ${{ github.workspace }}/go

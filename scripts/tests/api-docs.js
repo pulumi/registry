@@ -84,6 +84,15 @@ paths.forEach((p) => {
                 });
             });
 
+            // If contains a supporting types section check properties contain descriptions.
+            if($("h2#supporting-types").length > 0) {
+                describe("Supporting Types", () => {
+                    it("all props should contain descriptions", () => {
+                        expect(checkSupportingTypePropertyDescriptions($).length).to.equal(0);
+                    })
+                })
+            }
+
             // Verify it contains a description paragraph.
             describe("Description paragraph", () => {
                 const paragraph = $(
@@ -126,9 +135,15 @@ paths.forEach((p) => {
                     const inputs = $("h3#inputs");
                     expect(inputs.length).to.equal(1);
                 });
+                it("all input properties contain descriptions", () => {
+                    expect(checkInputPropertyDescriptions($).length).to.equal(0);
+                });
                 it("outputs section exists", () => {
                     const outputs = $("h3#outputs");
                     expect(outputs.length).to.equal(1);
+                });
+                it("all output properties contain descriptions", () => {
+                    expect(checkOutputPropertyDescriptions($).length).to.equal(0);
                 });
             });
 
@@ -309,6 +324,36 @@ function getFunctions($) {
             functions.push($(elm).text().toLowerCase());
         });
     }
+}
+
+function checkInputPropertyDescriptions($) {
+    const props = $("h3#inputs + p + div > pulumi-choosable > dl > dd");
+    return props.filter((i, elm) => {
+        if($(elm).html().length < 1) {
+            return true;
+        }
+        return false;
+    }).toArray();
+}
+
+function checkOutputPropertyDescriptions($) {
+    const props = $("h3#outputs + p + div > pulumi-choosable > dl > dd");
+    return props.filter((i, elm) => {
+        if($(elm).html().length < 1) {
+            return true;
+        }
+        return false;
+    }).toArray();
+}
+
+function checkSupportingTypePropertyDescriptions($) {
+    const props = $("h2#supporting-types + h4 + div > pulumi-choosable > dl > dd");
+    return props.filter((i, elm) => {
+        if($(elm).html().length < 1) {
+            return true;
+        }
+        return false;
+    }).toArray();
 }
 
 // Checks if the page is a function page. There is not a distinction on the page itself

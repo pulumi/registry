@@ -8,11 +8,11 @@ layout: package
 
 The mist provider is available as a package in all Pulumi languages:
 
-* JavaScript/TypeScript: [`@pulumi/mist`](https://www.npmjs.com/package/@pulumi/mist)
-* Python: [`pulumi-mist`](https://pypi.org/project/pulumi-mist/)
-* Go: [`github.com/pulumi/pulumi-junipermist/sdk/go/junipermist`](https://github.com/pulumi/pulumi-mist)
-* .NET: [`Pulumi.Mist`](https://www.nuget.org/packages/Pulumi.Mist)
-* Java: [`com.pulumi/mist`](https://central.sonatype.com/artifact/com.pulumi/mist)
+* JavaScript/TypeScript: [`@pulumi/juniper-mist`](https://www.npmjs.com/package/@pulumi/juniper-mist)
+* Python: [`pulumi-juniper-mist`](https://pypi.org/project/pulumi-juniper-mist/)
+* Go: [`github.com/pulumi/pulumi-junipermist/sdk/go/junipermist`](https://github.com/pulumi/pulumi-junipermist)
+* .NET: [`Pulumi.JuniperMist`](https://www.nuget.org/packages/Pulumi.JuniperMist)
+* Java: [`com.pulumi/junipermist`](https://central.sonatype.com/artifact/com.pulumi/junipermist)
 
 
 The Mist Provider allows Pulumi to manage Juniper Mist Organizations.

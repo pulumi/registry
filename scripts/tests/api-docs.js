@@ -52,6 +52,18 @@ paths.forEach((p) => {
                 });
             });
 
+            describe("Structure", () => {
+                it("is nested correctly within docs-content", () => {
+                    // check if correctly nested withing the docs-main-content and docs-content.
+                    // This is kind of hard to verify 100%, but package details section is
+                    // a section that is ~always reliably there since it is not something 
+                    // conditionally there or relies on upstream parsing, so is an indicator
+                    // something is wildly off it there is a failure here.
+                    const structures = $(`.docs-main-content .docs-content > h2#package-details`);
+                    expect(structures.length).to.be.at.least(1);
+                })
+            })
+
             // Verify sections exist in correct order.
             describe("Sections", () => {
                 const headings = [];

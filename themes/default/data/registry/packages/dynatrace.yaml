@@ -10,5 +10,5 @@ publisher: Pulumiverse
 repo_url: https://github.com/pulumiverse/pulumi-dynatrace
 schema_file_path: provider/cmd/pulumi-resource-dynatrace/schema.json
 title: Dynatrace
-updated_on: 1722525821
-version: v0.14.0
+updated_on: 1723798859
+version: v0.15.0

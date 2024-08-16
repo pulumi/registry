@@ -10,5 +10,5 @@ publisher: Pulumiverse
 repo_url: https://github.com/pulumiverse/pulumi-doppler
 schema_file_path: provider/cmd/pulumi-resource-doppler/schema.json
 title: Doppler
-updated_on: 1719558450
-version: v0.7.2
+updated_on: 1723796535
+version: v0.8.0

@@ -1,42 +1,223 @@
 ---
-title: Auth0 Installation & Configuration
-meta_desc: Provides an overview on how to configure credentials for the Pulumi Auth0 Provider.
+title: Auth0 Provider Installation & Configuration
+meta_desc: Provides an overview on how to configure the Pulumi Auth0 Provider.
 layout: package
 ---
-
-The Pulumi Auth0 provider uses the Auth0 SDK to manage and provision resources.
-
 ## Installation
 
-The Auth0 provider is available as a package in all Pulumi languages:
+The auth0 provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/auth0`](https://www.npmjs.com/package/@pulumi/auth0)
 * Python: [`pulumi-auth0`](https://pypi.org/project/pulumi-auth0/)
-* Go: [`github.com/pulumi/pulumi-auth0/sdk/v2/go/auth0`](https://github.com/pulumi/pulumi-auth0)
+* Go: [`github.com/pulumi/pulumi-auth0/sdk/v3/go/auth0`](https://github.com/pulumi/pulumi-auth0)
 * .NET: [`Pulumi.Auth0`](https://www.nuget.org/packages/Pulumi.Auth0)
 * Java: [`com.pulumi/auth0`](https://central.sonatype.com/artifact/com.pulumi/auth0)
 
-## Configuring Credentials
+The Auth0 provider is used to interact with the [Auth0 Management API](https://auth0.com/docs/api/management/v2) in
+order to configure an Auth0 Tenant.
 
-Pulumi relies on the Auth0 SDK to authenticate requests from your computer to Auth0. Your credentials are never sent
-to pulumi.com. The Pulumi Auth0 Provider needs to be configured with Auth0 credentials
-before it can be used to create resources. Once the credentials are obtained, there are two ways to communicate your authorization tokens to Pulumi:
+It provides resources that allow you to create and manage clients, resource servers, client grants, connections, email
+providers and templates, rules and rule variables, users, roles, tenants, custom domains, and many more, as part of a
+Pulumi deployment.
 
-1. Set the environment variables `AUTH0_DOMAIN`, `AUTH0_CLIENT_ID` and `AUTH0_CLIENT_SECRET`:
+Use the navigation to the left to read about the available resources and data sources.
+## Example Usage
 
-    ```bash
-    $ export AUTH0_DOMAIN=XXXXXXXXXXXXXX
-    $ export AUTH0_CLIENT_ID=YYYYYYYYYYYYYY
-    $ export AUTH0_CLIENT_SECRET=ZZZZZZZZZZZZZZ
-    ```
+{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{% choosable language typescript %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: nodejs
+config:
+    auth0:clientId:
+        value: <client-id>
+    auth0:clientSecret:
+        value: <client-secret>
+    auth0:debug:
+        value: <debug>
+    auth0:domain:
+        value: <domain>
 
-2. Set them using configuration, if you prefer that they be stored alongside your Pulumi stack for easy multi-user access:
+```
 
-    ```bash
-    $ pulumi config set auth0:domain XXXXXXXXXXXXXX
-    $ pulumi config set auth0:client_id YYYYYYYYYYYYYY --secret
-    $ pulumi config set auth0:client_secret ZZZZZZZZZZZZZZ --secret
-    ```
+{{% /choosable %}}
+{{% choosable language python %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: python
+config:
+    auth0:clientId:
+        value: <client-id>
+    auth0:clientSecret:
+        value: <client-secret>
+    auth0:debug:
+        value: <debug>
+    auth0:domain:
+        value: <domain>
 
-Remember to pass `--secret` when setting `auth0:client_id` and `auth0:client_secret` so that it is properly encrypted. The complete list of
-configuration parameters is in the [Auth0 Provider README](https://github.com/pulumi/pulumi-auth0/blob/master/README.md).
+```
+
+{{% /choosable %}}
+{{% choosable language csharp %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: dotnet
+config:
+    auth0:clientId:
+        value: <client-id>
+    auth0:clientSecret:
+        value: <client-secret>
+    auth0:debug:
+        value: <debug>
+    auth0:domain:
+        value: <domain>
+
+```
+
+{{% /choosable %}}
+{{% choosable language go %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: go
+config:
+    auth0:clientId:
+        value: <client-id>
+    auth0:clientSecret:
+        value: <client-secret>
+    auth0:debug:
+        value: <debug>
+    auth0:domain:
+        value: <domain>
+
+```
+
+{{% /choosable %}}
+{{% choosable language yaml %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: yaml
+config:
+    auth0:clientId:
+        value: <client-id>
+    auth0:clientSecret:
+        value: <client-secret>
+    auth0:debug:
+        value: <debug>
+    auth0:domain:
+        value: <domain>
+
+```
+
+{{% /choosable %}}
+{{% choosable language java %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: java
+config:
+    auth0:clientId:
+        value: <client-id>
+    auth0:clientSecret:
+        value: <client-secret>
+    auth0:debug:
+        value: <debug>
+    auth0:domain:
+        value: <domain>
+
+```
+
+{{% /choosable %}}
+{{< /chooser >}}
+
+> Hard-coding credentials into any Pulumi configuration is not recommended, and risks secret leakage should this
+file ever be committed to a public version control system. See Environment Variables for a
+better alternative.
+
+<!-- schema generated by tfplugindocs -->
+## Schema
+### Optional
+
+- `apiToken` (String) Your Auth0 [management api access token](https://auth0.com/docs/security/tokens/access-tokens/management-api-access-tokens). It can also be sourced from the `AUTH0_API_TOKEN` environment variable. It can be used instead of `clientId` + `clientSecret`. If both are specified, `apiToken` will be used over `clientId` + `clientSecret` fields.
+- `audience` (String) Your Auth0 audience when using a custom domain. It can also be sourced from the `AUTH0_AUDIENCE` environment variable.
+- `clientId` (String) Your Auth0 client ID. It can also be sourced from the `AUTH0_CLIENT_ID` environment variable.
+- `clientSecret` (String) Your Auth0 client secret. It can also be sourced from the `AUTH0_CLIENT_SECRET` environment variable.
+- `debug` (Boolean) Indicates whether to turn on debug mode.
+- `domain` (String) Your Auth0 domain name. It can also be sourced from the `AUTH0_DOMAIN` environment variable.
+## Environment Variables
+
+You can provide your credentials via the `AUTH0_DOMAIN`, `AUTH0_CLIENT_ID` and `AUTH0_CLIENT_SECRET`
+or `AUTH0_API_TOKEN` environment variables, respectively.
+
+{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{% choosable language typescript %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: nodejs
+
+```
+
+{{% /choosable %}}
+{{% choosable language python %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: python
+
+```
+
+{{% /choosable %}}
+{{% choosable language csharp %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: dotnet
+
+```
+
+{{% /choosable %}}
+{{% choosable language go %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: go
+
+```
+
+{{% /choosable %}}
+{{% choosable language yaml %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: yaml
+
+```
+
+{{% /choosable %}}
+{{% choosable language java %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: java
+
+```
+
+{{% /choosable %}}
+{{< /chooser >}}
+### Example Usage
+
+```shell
+AUTH0_DOMAIN="<domain>" \
+AUTH0_CLIENT_ID="<client-id>" \
+AUTH0_CLIENT_SECRET="<client_secret>" \
+pulumi preview
+```
+## Importing resources
+
+To import Auth0 resources, you will need to know their ID. You can use
+the [Auth0 API Explorer](https://auth0.com/docs/api/management/v2) to find your resource ID.

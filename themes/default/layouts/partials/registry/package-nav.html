@@ -5,6 +5,7 @@
 {{ $migratePath := printf "%s/" (path.Join $packageUrl "from-classic") }}
 {{ $upgradeV2Path := printf "%s/" (path.Join $packageUrl "from-v1-to-v2") }}
 {{ $apiDocsPath := printf "%s/" (path.Join $packageUrl "api-docs") }}
+{{ $currentDir := .File.Dir }}
 
 <nav class="main-nav">
     <div class="all-packages-icon-link">
@@ -19,10 +20,14 @@
         <li class="sidenav-topic {{ $sidenav_selected }}">
             <a href="{{ $packageUrl }}">Overview</a>
         </li>
-        {{ $sidenav_selected = cond (eq .Page.RelPermalink $installPath) "active" "" }}
-        <li class="sidenav-topic {{ $sidenav_selected }}">
-            <a href="{{ $installPath }}">Install & config</a>
-        </li>
+        {{ $filepath := printf "%s/%s" $currentDir "installation-configuration.md" }}
+        {{ $installConfigExists := fileExists $filepath }}
+        {{ if $installConfigExists }}
+            {{ $sidenav_selected = cond (eq .Page.RelPermalink $installPath) "active" "" }}
+            <li class="sidenav-topic {{ $sidenav_selected }}">
+                <a href="{{ $installPath }}">Install & config</a>
+            </li>
+        {{ end }}
         {{ $sidenav_selected = cond (eq .Page.RelPermalink $howToPath) "active" "" }}
         {{ if .GetPage $howToPath }}
             <li class="sidenav-topic {{ $sidenav_selected }}">

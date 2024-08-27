@@ -335,6 +335,10 @@
     {
       "repoSlug": "komminarlabs/pulumi-influxdb3",
       "schemaFile": "provider/cmd/pulumi-resource-influxdb3/schema.json"
+    },
+    {
+      "repoSlug": "pulumi/pulumi-terraform-provider",
+      "schemaFile": "schema.json"
     }
   ]
 }

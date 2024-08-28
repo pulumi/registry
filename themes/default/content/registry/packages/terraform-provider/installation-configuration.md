@@ -52,12 +52,12 @@ You can specify `<provider ...>` in a couple of different ways:
 
     Local paths must start with `./` or `/` and must end with `terraform-provider-<name>`.
 
-    {{% notes type="warning" %}}
+{{% notes type="warning" %}}
 
-    The generated SDK will only work as long as it can find the Terraform provider binary
-    at the specified path.
+The generated SDK will only work as long as it can find the Terraform provider binary
+at the specified path.
 
-    {{% /notes %}}
+{{% /notes %}}
 
 
 Regardless of the way you run `pulumi package add`, it will generate a local Pulumi SDK

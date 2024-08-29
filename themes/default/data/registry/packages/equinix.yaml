@@ -10,5 +10,5 @@ publisher: Equinix
 repo_url: https://github.com/equinix/pulumi-equinix
 schema_file_path: provider/cmd/pulumi-resource-equinix/schema.json
 title: Equinix
-updated_on: 1724262818
-version: v0.16.1
+updated_on: 1724877662
+version: v0.17.1

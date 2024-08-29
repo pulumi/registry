@@ -2,7 +2,7 @@ category: Cloud
 component: false
 description: A Pulumi provider for building modern Docker images with buildx and BuildKit.
 featured: false
-logo_url: ""
+logo_url: "https://pulumi.com/logos/pkg/docker.svg"
 name: docker-build
 native: true
 package_status: public_preview

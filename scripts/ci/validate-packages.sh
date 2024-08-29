@@ -47,7 +47,7 @@ ls -l "themes/default/data/registry/packages" | tail -n +2 | awk '{print $9}' | 
 
     content=$(check_overview_content $overview_path)
 
-    # check that content exists and is at least 200 characters.
+    # check that content exists and is at least 250 characters.
     if [ ${#content} -lt 250 ]; then
         echo "ERROR: The content in the overview file, ${overview_path}, does not meet the 200 character minimum requirement for content."
         exit 1;

@@ -6,18 +6,19 @@ set -e
 check_overview_content() {
     inside_frontmatter=false
     while IFS= read -r line; do
-        # Check if the line is the start or end of front matter
+        # Check if the line is the start or end of front matter.
         if [[ $line == "---" ]]; then
-            # Toggle the inside_frontmatter flag
+            # Toggle the inside_frontmatter flag.
             if $inside_frontmatter; then
-            inside_frontmatter=false
+                inside_frontmatter=false
             else
-            inside_frontmatter=true
+                inside_frontmatter=true
             fi
             continue
         fi
 
-        # If we're not inside front matter, print the line
+        # If we're no longer inside front matter (i.e. in the content portion
+        # of the file), then print the line.
         if ! $inside_frontmatter; then
             echo "$line"
         fi
@@ -47,7 +48,7 @@ ls -l "themes/default/data/registry/packages" | tail -n +2 | awk '{print $9}' | 
     content=$(check_overview_content $overview_path)
 
     # check that content exists and is at least 200 characters.
-    if [ ${#content} -lt 200 ]; then
+    if [ ${#content} -lt 250 ]; then
         echo "ERROR: The content in the overview file, ${overview_path}, does not meet the 200 character minimum requirement for content."
         exit 1;
     fi

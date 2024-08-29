@@ -2,7 +2,7 @@ category: Cloud
 component: false
 description: A Pulumi package for creating and managing control tower accounts.
 featured: false
-logo_url: ""
+logo_url: https://pulumi.com/logos/pkg/aws.svg
 name: awscontroltower
 native: false
 package_status: public_preview

@@ -6,21 +6,21 @@ set -e
 check_overview_content() {
     inside_frontmatter=false
     while IFS= read -r line; do
-    # Check if the line is the start or end of front matter
-    if [[ $line == "---" ]]; then
-        # Toggle the inside_frontmatter flag
-        if $inside_frontmatter; then
-        inside_frontmatter=false
-        else
-        inside_frontmatter=true
+        # Check if the line is the start or end of front matter
+        if [[ $line == "---" ]]; then
+            # Toggle the inside_frontmatter flag
+            if $inside_frontmatter; then
+            inside_frontmatter=false
+            else
+            inside_frontmatter=true
+            fi
+            continue
         fi
-        continue
-    fi
 
-    # If we're not inside front matter, print the line
-    if ! $inside_frontmatter; then
-        echo "$line"
-    fi
+        # If we're not inside front matter, print the line
+        if ! $inside_frontmatter; then
+            echo "$line"
+        fi
     done < "$1"
 }
 

@@ -24,8 +24,7 @@ ls -l "themes/default/data/registry/packages" | tail -n +2 | awk '{print $9}' | 
 
     install_path="themes/default/content/registry/packages/$pkg/installation-configuration.md"
     if [ ! -f $install_path ]; then
-        echo "ERROR: '$install_path' does not exist."
-        exit 1
+        echo "WARN: '$install_path' does not exist. Package will be displayed with a single overview file."
     fi
 
 done;

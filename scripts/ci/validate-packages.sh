@@ -46,7 +46,10 @@ ls -l "themes/default/data/registry/packages" | tail -n +2 | awk '{print $9}' | 
     fi
 
     content=$(check_overview_content $overview_path)
+
+    # TODO: Remove this line and the reference to excluded_pkgs below when https://github.com/pulumi/registry/issues/5307 is resolved.
     excluded_pkgs=("heroku" "junipermist" "meraki" "packet" "sdwan")
+    
     # check that content exists and is at least 250 characters.
     if [ ${#content} -lt 250 ] && [[ ! " ${excluded_pkgs[*]} " =~ "$pkg" ]]; then
         echo "ERROR: The content in the overview file, ${overview_path}, does not meet the 250 character minimum requirement for content."

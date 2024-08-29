@@ -1,6 +1,6 @@
 ---
-title: dbtcloud
-meta_desc: Provides an overview on how to configure the Pulumi dbtcloud Provider.
+title: Dbtcloud Provider
+meta_desc: Provides an overview on how to configure the Pulumi Dbtcloud provider.
 layout: package
 ---
 ## Installation

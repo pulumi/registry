@@ -192,6 +192,9 @@ func main() {
       Vms: threefold.VMInputArray{
         &threefold.VMInputArgs{
           Name:         pulumi.String("vm"),
+          Node_id: scheduler.Nodes.ApplyT(func(nodes []int) (int, error) {
+            return nodes[0], nil
+          }).(pulumi.IntOutput),
           Flist:        pulumi.String("https://hub.grid.tf/tf-official-apps/base:latest.flist"),
           Entrypoint:   pulumi.String("/sbin/zinit init"),
           Network_name: pulumi.String("test"),
@@ -260,6 +263,7 @@ deployment = threefold.Deployment("deployment",
     network_name="example",
     vms=[threefold.VMInputArgs(
         name="vm",
+        node_id=scheduler.nodes[0],
         flist="https://hub.grid.tf/tf-official-apps/base:latest.flist",
         entrypoint="/sbin/zinit init",
         network_name="test",
@@ -337,6 +341,7 @@ resources:
       network_name: test
       vms:
         - name: vm
+          node_id: ${scheduler.nodes[0]}
           flist: https://hub.grid.tf/tf-official-apps/base:latest.flist
           entrypoint: "/sbin/zinit init"
           network_name: test
@@ -416,6 +421,7 @@ func main() {
     kubernetes, err := threefold.NewKubernetes(ctx, "kubernetes", &threefold.KubernetesArgs{
       Master: &threefold.K8sNodeInputArgs{
         Name: pulumi.String("kubernetes"),
+        Network_name: pulumi.String("test"),
         Node: scheduler.Nodes.ApplyT(func(nodes []int) (int, error) {
           return nodes[0], nil
         }).(pulumi.IntOutput),
@@ -427,6 +433,7 @@ func main() {
       Workers: threefold.K8sNodeInputArray{
         &threefold.K8sNodeInputArgs{
           Name: pulumi.String("worker1"),
+          Network_name: pulumi.String("test"),
           Node: scheduler.Nodes.ApplyT(func(nodes []int) (int, error) {
             return nodes[0], nil
           }).(pulumi.IntOutput),
@@ -436,6 +443,7 @@ func main() {
         },
         &threefold.K8sNodeInputArgs{
           Name: pulumi.String("worker2"),
+          Network_name: pulumi.String("test"),
           Node: scheduler.Nodes.ApplyT(func(nodes []int) (int, error) {
             return nodes[0], nil
           }).(pulumi.IntOutput),
@@ -490,6 +498,7 @@ network = threefold.Network("network",
 kubernetes = threefold.Kubernetes("kubernetes",
     master=threefold.K8sNodeInputArgs(
         name="kubernetes",
+        network_name="example",
         node=scheduler.nodes[0],
         disk_size=2,
         planetary=True,
@@ -499,6 +508,7 @@ kubernetes = threefold.Kubernetes("kubernetes",
     workers=[
         threefold.K8sNodeInputArgs(
             name="worker1",
+            network_name="example",
             node=scheduler.nodes[0],
             disk_size=2,
             cpu=2,
@@ -506,6 +516,7 @@ kubernetes = threefold.Kubernetes("kubernetes",
         ),
         threefold.K8sNodeInputArgs(
             name="worker2",
+            network_name="example",
             node=scheduler.nodes[0],
             disk_size=2,
             cpu=2,
@@ -569,6 +580,7 @@ resources:
     properties:
       master:
         name: kubernetes
+        network_name: test
         node: ${scheduler.nodes[0]}
         disk_size: 2
         planetary: true
@@ -577,11 +589,13 @@ resources:
 
       workers:
         - name: worker1
+          network_name: test
           node: ${scheduler.nodes[0]}
           disk_size: 2
           cpu: 2
           memory: 2048
         - name: worker2
+          network_name: test
           node: ${scheduler.nodes[0]}
           disk_size: 2
           cpu: 2
@@ -789,6 +803,9 @@ func main() {
       Vms: threefold.VMInputArray{
         &threefold.VMInputArgs{
           Name:         pulumi.String("vm"),
+          Node_id: scheduler.Nodes.ApplyT(func(nodes []int) (int, error) {
+            return nodes[0], nil
+          }).(pulumi.IntOutput),
           Flist:        pulumi.String("https://hub.grid.tf/tf-official-apps/base:latest.flist"),
           Network_name: pulumi.String("test"),
           Cpu:          pulumi.Int(2),
@@ -856,6 +873,7 @@ deployment = threefold.Deployment("deployment",
     network_name="example",
     vms=[threefold.VMInputArgs(
         name="vm",
+        node_id=scheduler.nodes[0],
         flist="https://hub.grid.tf/tf-official-apps/base:latest.flist",
         network_name="example",
         cpu=2,
@@ -926,6 +944,7 @@ resources:
       network_name: test
       vms:
         - name: vm
+          node_id: ${scheduler.nodes[0]}
           flist: https://hub.grid.tf/tf-official-apps/base:latest.flist
           network_name: test
           cpu: 2

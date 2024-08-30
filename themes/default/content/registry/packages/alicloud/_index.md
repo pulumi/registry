@@ -1,6 +1,6 @@
 ---
-title: Alibaba Cloud
-meta_desc: Provides an overview on how to configure the Pulumi Alibaba Cloud Provider.
+title: Alicloud Provider
+meta_desc: Provides an overview on how to configure the Pulumi Alicloud provider.
 layout: package
 ---
 ## Installation
@@ -371,7 +371,7 @@ config:
 
 ```
 ```yaml
-Example unavailable in this language
+Example currently unavailable in this language
 ```
 {{% /choosable %}}
 {{% choosable language java %}}

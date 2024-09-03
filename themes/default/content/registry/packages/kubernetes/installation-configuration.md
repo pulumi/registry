@@ -165,11 +165,13 @@ You can use the `waitFor` annotation (described below), or you can try running y
 
 ### pulumi.com/deletionPropagationPolicy
 
+(New in v4.12.0.)
+
 By default Pulumi uses [foreground](https://kubernetes.io/docs/concepts/architecture/garbage-collection/#foreground-deletion) cascading deletion, which deletes the resource _and_ all of its dependents.
 This ensures all dependent resources are cleaned up, but it can be slow.
 
 The `pulumi.com/deletionPropagationPolicy` annotation configures alternative deletion propagation policies:
-1. "background": delete the owner resource and let dependent resources be asynchronously garbage collected.
+1. "background": delete the owner resource and leave dependent resources to be asynchronously garbage collected.
    This is faster than "foreground" deletion propagation, but dependent resources can remain temporarily or even indefinitely if they are not finalized.
 2. "orphan": delete the owner resource and leave dependent resources untouched.
    This can be useful if you want to keep resources around for migration or debugging purposes.
@@ -178,7 +180,7 @@ The `pulumi.com/deletionPropagationPolicy` annotation configures alternative del
 
 ### pulumi.com/waitFor
 
-(New in v4.17.0.)
+(New in v4.18.0.)
 
 Defines custom criteria for Pulumi to use when waiting for the resource to become ready.
 It accepts three possible forms:

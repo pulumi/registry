@@ -19,10 +19,13 @@
         <li class="sidenav-topic {{ $sidenav_selected }}">
             <a href="{{ $packageUrl }}">Overview</a>
         </li>
-        {{ $sidenav_selected = cond (eq .Page.RelPermalink $installPath) "active" "" }}
-        <li class="sidenav-topic {{ $sidenav_selected }}">
-            <a href="{{ $installPath }}">Install & config</a>
-        </li>
+        {{ $installConfigFile := printf "%s/%s" $packageUrl "installation-configuration.md" }}
+        {{ if fileExists $installConfigFile }}
+            {{ $sidenav_selected = cond (eq .Page.RelPermalink $installPath) "active" "" }}
+            <li class="sidenav-topic {{ $sidenav_selected }}">
+                <a href="{{ $installPath }}">Install & config</a>
+            </li>
+        {{ end }}
         {{ $sidenav_selected = cond (eq .Page.RelPermalink $howToPath) "active" "" }}
         {{ if .GetPage $howToPath }}
             <li class="sidenav-topic {{ $sidenav_selected }}">

@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-dnsimple
 schema_file_path: provider/cmd/pulumi-resource-dnsimple/schema.json
 title: DNSimple
-updated_on: 1722601673
-version: v4.1.0
+updated_on: 1724698178
+version: v4.1.1

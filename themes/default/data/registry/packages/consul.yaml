@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-consul
 schema_file_path: provider/cmd/pulumi-resource-consul/schema.json
 title: Consul
-updated_on: 1721951242
-version: v3.11.4
+updated_on: 1724432942
+version: v3.12.1

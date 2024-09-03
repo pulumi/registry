@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-mongodbatlas
 schema_file_path: provider/cmd/pulumi-resource-mongodbatlas/schema.json
 title: MongoDB Atlas
-updated_on: 1722601467
-version: v3.16.6
+updated_on: 1724753403
+version: v3.17.1

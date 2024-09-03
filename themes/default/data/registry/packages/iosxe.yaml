@@ -2,7 +2,7 @@ category: Utility
 component: false
 description: A Pulumi package for creating and managing Cisco IOS XE Devices.
 featured: false
-logo_url: ""
+logo_url: "https://www.pulumi.com/logos/tech/cisco.svg"
 name: iosxe
 native: false
 package_status: public_preview

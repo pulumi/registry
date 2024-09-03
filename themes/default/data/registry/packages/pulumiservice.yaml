@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-pulumiservice
 schema_file_path: provider/cmd/pulumi-resource-pulumiservice/schema.json
 title: Pulumi Cloud
-updated_on: 1721924426
-version: v0.23.0
+updated_on: 1724952403
+version: v0.24.1

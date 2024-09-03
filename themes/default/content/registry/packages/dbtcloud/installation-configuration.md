@@ -1,62 +1,121 @@
 ---
-title: dbt Cloud Installation & Configuration
-meta_desc: Information on how to install the dbt Cloud provider.
+title: dbtcloud Provider Installation & Configuration
+meta_desc: Provides an overview on how to configure the Pulumi dbtcloud Provider.
 layout: package
 ---
-
 ## Installation
 
-This package is available for several languages/platforms:
+The dbtcloud provider is available as a package in all Pulumi languages:
 
-- JavaScript/TypeScript: [`@pulumi/dbtcloud`](https://www.npmjs.com/package/@pulumi/dbtcloud)
-- Python: [`pulumi-dbtcloud`](https://pypi.org/project/pulumi-dbtcloud/)
-- Go: [`github.com/pulumi/pulumi-dbtcloud/sdk/go/dbtcloud`](https://pkg.go.dev/github.com/pulumi/pulumi-dbtcloud/sdk/go/dbtcloud)
-- .NET: [`Pulumi.DbtCloud`](https://www.nuget.org/packages/Pulumi.DbtCloud)
+* JavaScript/TypeScript: [`@pulumi/dbtcloud`](https://www.npmjs.com/package/@pulumi/dbtcloud)
+* Python: [`pulumi-dbtcloud`](https://pypi.org/project/pulumi-dbtcloud/)
+* Go: [`github.com/pulumi/pulumi-dbtcloud/sdk/go/dbtcloud`](https://github.com/pulumi/pulumi-dbtcloud)
+* .NET: [`Pulumi.Dbtcloud`](https://www.nuget.org/packages/Pulumi.Dbtcloud)
+* Java: [`com.pulumi/dbtcloud`](https://central.sonatype.com/artifact/com.pulumi/dbtcloud)
+## Provider configuration
 
-### Node.js (JavaScript/TypeScript)
+{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{% choosable language typescript %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: nodejs
+config:
+    dbtcloud:accountId:
+        value: 'TODO: var.dbt_cloud_account_id'
+    dbtcloud:hostUrl:
+        value: https://cloud.getdbt.com/api
+    dbtcloud:token:
+        value: 'TODO: var.dbt_cloud_token'
 
-To use from JavaScript or TypeScript in Node.js, install using either `npm`:
-
-```bash
-npm install @pulumi/dbtcloud
 ```
 
-or `yarn`:
+{{% /choosable %}}
+{{% choosable language python %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: python
+config:
+    dbtcloud:accountId:
+        value: 'TODO: var.dbt_cloud_account_id'
+    dbtcloud:hostUrl:
+        value: https://cloud.getdbt.com/api
+    dbtcloud:token:
+        value: 'TODO: var.dbt_cloud_token'
 
-```bash
-yarn add @pulumi/dbtcloud
 ```
 
-### Python
+{{% /choosable %}}
+{{% choosable language csharp %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: dotnet
+config:
+    dbtcloud:accountId:
+        value: 'TODO: var.dbt_cloud_account_id'
+    dbtcloud:hostUrl:
+        value: https://cloud.getdbt.com/api
+    dbtcloud:token:
+        value: 'TODO: var.dbt_cloud_token'
 
-To use from Python, install using `pip`:
-
-```bash
-pip install pulumi-dbtcloud
 ```
 
-### Go
+{{% /choosable %}}
+{{% choosable language go %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: go
+config:
+    dbtcloud:accountId:
+        value: 'TODO: var.dbt_cloud_account_id'
+    dbtcloud:hostUrl:
+        value: https://cloud.getdbt.com/api
+    dbtcloud:token:
+        value: 'TODO: var.dbt_cloud_token'
 
-To use from Go, use `go get` to grab the latest version of the library:
-
-```bash
-go get github.com/pulumi/pulumi-dbtcloud/sdk/go/dbtcloud
 ```
 
-### .NET
+{{% /choosable %}}
+{{% choosable language yaml %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: yaml
+config:
+    dbtcloud:accountId:
+        value: 'TODO: var.dbt_cloud_account_id'
+    dbtcloud:hostUrl:
+        value: https://cloud.getdbt.com/api
+    dbtcloud:token:
+        value: 'TODO: var.dbt_cloud_token'
 
-To use from .NET, install using `dotnet add package`:
-
-```bash
-dotnet add package Pulumi.DbtCloud
 ```
 
-## Configuration Options
+{{% /choosable %}}
+{{% choosable language java %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: java
+config:
+    dbtcloud:accountId:
+        value: 'TODO: var.dbt_cloud_account_id'
+    dbtcloud:hostUrl:
+        value: https://cloud.getdbt.com/api
+    dbtcloud:token:
+        value: 'TODO: var.dbt_cloud_token'
 
-Use `pulumi config set dbtcloud:<option> (--secret)`.
+```
 
-| Option     | Environment Variable   | Required/Optional | Default                                                      | Description                             |
-|------------|------------------------|-------------------|--------------------------------------------------------------|-----------------------------------------|
-| `token`    | `DBT_CLOUD_TOKEN`      | Required          |                                                              | The API token for your dbt Cloud user   |
-| `accountId`| `DBT_CLOUD_ACCOUNT_ID` | Required          |                                                              | The ID for your dbt Cloud account       |
-| `hostUrl`  | `DBT_CLOUD_HOST_URL`   | Optional          | [https://cloud.getdbt.com/api](https://cloud.getdbt.com/api) | The host URL for your dbt Cloud account |
+{{% /choosable %}}
+{{< /chooser >}}
+
+<!-- schema generated by tfplugindocs -->
+## Configuration Reference
+
+- `accountId` (Number) Account identifier for your dbt Cloud implementation. Instead of setting the parameter, you can set the environment variable `DBT_CLOUD_ACCOUNT_ID`
+- `hostUrl` (String) URL for your dbt Cloud deployment. Instead of setting the parameter, you can set the environment variable `DBT_CLOUD_HOST_URL` - Defaults to <https://cloud.getdbt.com/api>
+- `token` (String, Sensitive) API token for your dbt Cloud. Instead of setting the parameter, you can set the environment variable `DBT_CLOUD_TOKEN`

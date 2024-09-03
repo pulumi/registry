@@ -1,25 +1,17 @@
 <div class="docs-type-nav-search">
     <div class="docs-type-nav">
-        {{ $mode := .Scratch.Get "mode" }}
-        {{ if eq "docs" $mode }}
-            <a class="tab-selected" href="/docs">
-                <img class="tab-icon" src="/icons/docs.svg" />
-                Docs
-            </a>
-            <a class="tab" href="/registry">
-                <img class="tab-icon" src="/icons/registry-light.svg" />
-                Packages
-            </a>
-        {{ else }}
-            <a class="tab" href="/docs">
-                <img class="tab-icon" src="/icons/docs-light.svg" />
-                Docs
-            </a>
-            <a class="tab-selected" href="/registry">
-                <img class="tab-icon" src="/icons/registry.svg" />
-                Packages
-            </a>
-        {{ end }}
+        <a class="tab" href="/docs/">
+            <img class="tab-icon" src="/icons/docs-light.svg" />
+            Docs
+        </a>
+        <a class="tab-selected" href="/registry">
+            <img class="tab-icon" src="/icons/registry.svg" />
+            Packages
+        </a>
+        <a class="tab" href="/tutorials/">
+            <img class="tab-icon" src="/icons/graduation-cap.svg" />
+            <span>Tutorials</span>
+        </a>
     </div>
     <div class="docs-search">
         <div

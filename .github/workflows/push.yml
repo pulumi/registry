@@ -11,7 +11,7 @@ jobs:
     name: Build
     env:
       GOPATH: ${{ github.workspace }}/go
-    runs-on: pulumi-ubuntu-8core
+    runs-on: pulumi-service-ubuntu-22.04-16core
     environment: production
     steps:
       - name: Install Node

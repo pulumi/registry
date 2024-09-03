@@ -1,120 +1,18 @@
 ---
-title: cloud-init
-meta_desc: Provides an overview of the cloud-init Provider for Pulumi.
+title: Cloudinit
+meta_desc: Provides an overview on how to configure the Pulumi cloudinit Provider.
 layout: package
 ---
+## Installation
 
-The cloud-init provider for Pulumi can be used to render valid MIME-multipart cloud-init config.
+The cloudinit provider is available as a package in all Pulumi languages:
 
-## Example
+* JavaScript/TypeScript: [`@pulumi/cloudinit`](https://www.npmjs.com/package/@pulumi/cloudinit)
+* Python: [`pulumi-cloudinit`](https://pypi.org/project/pulumi-cloudinit/)
+* Go: [`github.com/pulumi/pulumi-cloudinit/sdk/go/cloudinit`](https://github.com/pulumi/pulumi-cloudinit)
+* .NET: [`Pulumi.Cloudinit`](https://www.nuget.org/packages/Pulumi.Cloudinit)
+* Java: [`com.pulumi/cloudinit`](https://central.sonatype.com/artifact/com.pulumi/cloudinit)
 
-{{< chooser language "javascript,typescript,python,go,csharp" >}}
+The cloud-init Pulumi provider exposes the `cloudinit.Config` function which renders a [multipart MIME configuration](https://cloudinit.readthedocs.io/en/latest/explanation/format.html#mime-multi-part-archive) for use with [cloud-init](https://cloudinit.readthedocs.io/en/latest/).
 
-{{% choosable language javascript %}}
-
-```javascript
-const cloudinit = require("@pulumi/cloudinit")
-
-const resourceConf = new cloudinit.Config("config", {
-    gzip: false,
-    base64Encode: false,
-    parts: [{
-        contentType: "text/x-shellscript",
-        content: "baz",
-        filename: "foobar.sh",
-    }]
-});
-```
-
-{{% /choosable %}}
-{{% choosable language typescript %}}
-
-```typescript
-import * as cloudinit from "@pulumi/cloudinit";
-
-const resourceConf = new cloudinit.Config("config", {
-    gzip: false,
-    base64Encode: false,
-    parts: [{
-        contentType: "text/x-shellscript",
-        content: "baz",
-        filename: "foobar.sh",
-    }]
-});
-```
-
-{{% /choosable %}}
-{{% choosable language python %}}
-
-```python
-import pulumi_cloudinit as cloudinit
-
-resource_config = cloudinit.Config("resource", base64_encode=False,
-                                   gzip=False,
-                                   parts=[cloudinit.GetConfigPartArgs(
-                                       content="baz",
-                                       content_type="text/x-shellscript",
-                                       filename="foobar.sh",
-                                   )])
-```
-
-{{% /choosable %}}
-{{% choosable language go %}}
-
-```go
-import (
-  "github.com/pulumi/pulumi-cloudinit/sdk/go/cloudinit"
-  "github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-)
-
-func main() {
-  pulumi.Run(func(ctx *pulumi.Context) error {
-    conf, err := cloudinit.NewConfig(ctx, "test", &cloudinit.ConfigArgs{
-      Gzip:         pulumi.Bool(false),
-      Base64Encode: pulumi.Bool(false),
-      Parts: cloudinit.ConfigPartArray{
-        &cloudinit.ConfigPartArgs{
-          Content:     pulumi.String("baz"),
-          ContentType: pulumi.String("text/x-shellscript"),
-          Filename:    pulumi.String("foobar.sh"),
-        },
-      },
-    })
-    if err != nil {
-      return err
-    }
-
-    return nil
-  })
-}
-```
-
-{{% /choosable %}}
-{{% choosable language csharp %}}
-
-```csharp
-using Pulumi;
-using Pulumi.CloudInit;
-
-await Deployment.RunAsync(() =>
-{
-  var conf = new Pulumi.CloudInit.Config("demo", new Pulumi.CloudInit.ConfigArgs
-  {
-    Gzip = false,
-    Base64Encode = false,
-    Parts =
-    {
-      new ConfigPartArgs
-      {
-        Content = "baz",
-        ContentType = "text/x-shellscript",
-        Filename = "foobar.sh",
-      }
-    }
-  });
-});
-```
-
-{{% /choosable %}}
-
-{{< /chooser >}}
+This provider requires no configuration. For information on the resources it provides, see the navigation bar.

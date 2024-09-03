@@ -6,12 +6,6 @@ layout: overview
 
 The Strata Cloud Manager Resource Provider lets you manage [Strata Cloud Manager](https://docs.paloaltonetworks.com/strata-cloud-manager) resources. This is a bridged provider from the terraform SCM provider, located at [github.com/PaloAltoNetworks/terraform-provider-scm](https://github.com/PaloAltoNetworks/terraform-provider-scm).
 
-{{% notes %}}
-Please note that, due to how Strata Cloud Manager works, any changes made using the Strata Cloud Manager Resource provider will only be applied to the candidate configuration. For these changes to take effect, you must manually push the candidate configuration to become the running configuration. This can be done either through the Strata Cloud Manager GUI or via the [Strata Cloud Manager API](https://pan.dev/access/api/prisma-access-config/post-sse-config-v-1-config-versions-candidate-push/). 
-
-Please see [Strata Cloud Manager Manage: Push Config](https://docs.paloaltonetworks.com/strata-cloud-manager/getting-started/operations/push-config) for more details.
-{{% /notes %}}
-
 ## Example
 
 {{< chooser language "typescript,python,go,csharp" >}}

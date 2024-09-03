@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-alicloud
 schema_file_path: provider/cmd/pulumi-resource-alicloud/schema.json
 title: Alibaba Cloud
-updated_on: 1721928270
-version: v3.59.1
+updated_on: 1725006221
+version: v3.61.2

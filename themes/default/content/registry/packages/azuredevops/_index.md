@@ -1,11 +1,11 @@
 ---
-title: Azure DevOps
-meta_desc: Provides an overview on how to configure the Pulumi Azure DevOps provider.
+title: Azuredevops Provider
+meta_desc: Provides an overview on how to configure the Pulumi Azuredevops provider.
 layout: package
 ---
 ## Installation
 
-The Azuredevops provider is available as a package in all Pulumi languages:
+The azuredevops provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/azuredevops`](https://www.npmjs.com/package/@pulumi/azuredevops)
 * Python: [`pulumi-azuredevops`](https://pypi.org/project/pulumi-azuredevops/)

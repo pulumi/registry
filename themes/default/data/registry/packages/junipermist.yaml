@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-junipermist
 schema_file_path: provider/cmd/pulumi-resource-junipermist/schema.json
 title: Juniper Mist
-updated_on: 1725037849
-version: v0.0.11
+updated_on: 1725471327
+version: v0.0.12

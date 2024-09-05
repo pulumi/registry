@@ -1,6 +1,6 @@
 ---
-title: Artifactory
-meta_desc: Provides an overview on how to configure the Pulumi Artifactory Provider.
+title: Artifactory Provider
+meta_desc: Provides an overview on how to configure the Pulumi Artifactory provider.
 layout: package
 ---
 ## Installation

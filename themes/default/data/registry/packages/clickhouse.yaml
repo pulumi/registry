@@ -5,10 +5,10 @@ featured: false
 logo_url: https://avatars3.githubusercontent.com/ClickHouse
 name: clickhouse
 native: false
-package_status: public_preview
+package_status: ga
 publisher: pulumiverse
 repo_url: https://github.com/pulumiverse/pulumi-clickhouse
 schema_file_path: provider/cmd/pulumi-resource-clickhouse/schema.json
 title: Clickhouse
-updated_on: 1723436833
-version: v0.3.0
+updated_on: 1725512677
+version: v1.0.1

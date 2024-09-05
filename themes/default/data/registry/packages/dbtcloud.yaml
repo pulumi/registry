@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-dbtcloud
 schema_file_path: provider/cmd/pulumi-resource-dbtcloud/schema.json
 title: dbt Cloud
-updated_on: 1725006234
-version: v0.1.15
+updated_on: 1725491538
+version: v0.1.16

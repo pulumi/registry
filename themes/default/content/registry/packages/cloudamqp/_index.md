@@ -1,6 +1,6 @@
 ---
-title: CloudAMQP
-meta_desc: Provides an overview on how to configure the Pulumi CloudAMQP Provider.
+title: Cloudamqp Provider
+meta_desc: Provides an overview on how to configure the Pulumi Cloudamqp provider.
 layout: package
 ---
 ## Installation

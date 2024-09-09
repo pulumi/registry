@@ -11,4 +11,4 @@ repo_url: https://github.com/pulumi/pulumi-terraform-provider
 schema_file_path: assets/schema.json
 title: Any Terraform Provider
 updated_on: 1724860628
-version: v0.1.0
+version: v0.2.0

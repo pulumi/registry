@@ -60,7 +60,7 @@ jobs:
           NODE_OPTIONS: "--max_old_space_size=8192"
 
       - name: Archive bucket metadata
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: origin-bucket-metadata
           path: origin-bucket-metadata.json

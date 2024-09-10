@@ -15,23 +15,23 @@ jobs:
       GOPATH: ${{ github.workspace }}/go
     steps:
       - name: Install Node
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v4
         with:
           node-version: '18.x'
 
       - name: Install Go
-        uses: actions/setup-go@v2
+        uses: actions/setup-go@v5
         with:
           go-version: 1.21.x
 
       - name: Install Hugo
-        uses: peaceiris/actions-hugo@v2
+        uses: peaceiris/actions-hugo@v3
         with:
           hugo-version: '0.111.0'
           extended: true
 
       - name: Check out branch
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Validate JSON file syntax
         uses: limitusus/json-syntax-check@v2
@@ -44,7 +44,7 @@ jobs:
           make lint
 
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v2
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

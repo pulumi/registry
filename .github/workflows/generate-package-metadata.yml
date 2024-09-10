@@ -10,7 +10,7 @@ jobs:
   generate-packages-list:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - id: set-matrix
         run: echo "matrix=$(python generate_package_list.py)" >> $GITHUB_OUTPUT
         working-directory: community-packages
@@ -51,7 +51,7 @@ jobs:
         run: echo "skip=1" >> $GITHUB_OUTPUT
       - name: Check out registry repo
         if: steps.skip-run.outputs.skip != 1
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Sleep to prevent hitting secondary rate limits
         if: steps.skip-run.outputs.skip != 1
         run: sleep 1

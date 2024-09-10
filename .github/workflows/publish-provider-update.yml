@@ -21,7 +21,7 @@ jobs:
     steps:
       - run: echo "Building ${{ env.PROVIDER_NAME }} docs @ ${{ env.PROVIDER_VERSION }}"
       - name: checkout registry repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Generate Package Metadata
         run: |
           go build -C tools/resourcedocsgen

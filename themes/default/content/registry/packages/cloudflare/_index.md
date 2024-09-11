@@ -1,5 +1,5 @@
 ---
-title: Cloudflare
+title: Cloudflare Provider
 meta_desc: Provides an overview on how to configure the Pulumi Cloudflare Provider.
 layout: package
 ---

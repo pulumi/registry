@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-vsphere
 schema_file_path: provider/cmd/pulumi-resource-vsphere/schema.json
 title: vSphere
-updated_on: 1725549683
-version: v4.11.0
+updated_on: 1726065828
+version: v4.11.1

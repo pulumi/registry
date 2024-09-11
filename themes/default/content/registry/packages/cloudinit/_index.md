@@ -1,6 +1,6 @@
 ---
-title: Cloudinit
-meta_desc: Provides an overview on how to configure the Pulumi cloudinit Provider.
+title: Cloudinit Provider
+meta_desc: Provides an overview on how to configure the Pulumi Cloudinit provider.
 layout: package
 ---
 ## Installation

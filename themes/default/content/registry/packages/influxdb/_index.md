@@ -8,6 +8,17 @@ The InfluxDB provider for Pulumi can be used to provision the resources availabl
 
 The InfluxDB provider must be configured with credentials to deploy and update resources in InfluxDB; see [Installation & Configuration](./installation-configuration) for instructions.
 
+## Supported InfluxDB flavours
+
+### v3
+
+* [InfluxDB Cloud Serverless](https://www.influxdata.com/products/influxdb-cloud/serverless/)
+
+### v2
+
+* [InfluxDB Cloud TSM](https://docs.influxdata.com/influxdb/cloud/)
+* [InfluxDB OSS](https://docs.influxdata.com/influxdb/v2/)
+
 ## Example
 
 {{< chooser language "typescript,python,go,csharp" >}}

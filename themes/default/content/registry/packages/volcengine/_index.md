@@ -76,7 +76,7 @@ func main() {
 ```csharp
 using System.Collections.Generic;
 using Pulumi;
-using Volcengine.Pulumi.Volcengine.Vpc;
+using Pulumi.Volcengine.Vpc;
 
 return await Deployment.RunAsync(() =>
 {

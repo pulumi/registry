@@ -13,7 +13,7 @@ The Volcengine provider is available as a package in the following Pulumi langua
 - JavaScript/TypeScript: [@volcengine/pulumi](https://www.npmjs.com/package/@volcengine/pulumi)
 - Python: [pulumi-volcengine](https://pypi.org/project/pulumi-volcengine/)
 - Go: [github.com/volcengine/pulumi-volcengine/sdk/go](https://pkg.go.dev/github.com/volcengine/pulumi-volcengine/sdk)
-- .Net: [Volcengine.Pulumi.Volcengine](https://www.nuget.org/packages/Volcengine.Pulumi.Volcengine)
+- .Net: [Pulumi.Volcengine](https://www.nuget.org/packages/Pulumi.Volcengine)
 
 ### Provider Binary
 

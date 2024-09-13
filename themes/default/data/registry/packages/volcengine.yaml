@@ -10,5 +10,5 @@ publisher: Volcengine
 repo_url: https://github.com/volcengine/pulumi-volcengine
 schema_file_path: provider/cmd/pulumi-resource-volcengine/schema.json
 title: Volcengine
-updated_on: 1719914277
-version: v0.0.25
+updated_on: 1726212218
+version: v0.0.26

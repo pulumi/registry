@@ -26,8 +26,8 @@ This version of the provider adds a new global default label, `goog-pulumi-provi
 It will be written to the `pulumiLabels` and `effectiveLabels` output fields.
 Note that this label is not managed in the resource’s `labels` field. 
 It is set by the provider, to help differentiate pulumi-provisioned resources from others in the GCP console.
-To opt out of this default behavior, a new config value on the provider is available, called `addPulumiAttributionLabel`. 
+To opt out of this default behavior, set `addPulumiAttributionLabel` to `false`:
 
-Set this to false as follows:
-
-`pulumi config set gcp:addPulumiAttributionLabel false`
+```console
+pulumi config set gcp:addPulumiAttributionLabel false
+```

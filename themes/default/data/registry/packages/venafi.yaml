@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-venafi
 schema_file_path: provider/cmd/pulumi-resource-venafi/schema.json
 title: Venafi
-updated_on: 1723454321
-version: v1.10.1
+updated_on: 1726258218
+version: v1.10.2

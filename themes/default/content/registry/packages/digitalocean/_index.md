@@ -1,6 +1,6 @@
 ---
-title: DigitalOcean
-meta_desc: Provides an overview on how to configure the Pulumi DigitalOcean Provider.
+title: Digitalocean Provider
+meta_desc: Provides an overview on how to configure the Pulumi Digitalocean provider.
 layout: package
 ---
 ## Installation
@@ -185,15 +185,15 @@ public class App {
 {{< /chooser >}}
 
 > **Note for Module Developers** Although provider configurations are shared between modules, each module must
-declare its own provider requirements for additional information.
+declare its own provider requirements. See the module development documentation for additional information.
 ## Configuration Reference
 
 The following configuration inputs are supported:
 
 * `token` - (Required) This is the DO API token. Alternatively, this can also be specified
   using environment variables ordered by precedence:
-    * `DIGITALOCEAN_TOKEN`
-    * `DIGITALOCEAN_ACCESS_TOKEN`
+  * `DIGITALOCEAN_TOKEN`
+  * `DIGITALOCEAN_ACCESS_TOKEN`
 * `spacesAccessId` - (Optional) The access key ID used for Spaces API
   operations (Defaults to the value of the `SPACES_ACCESS_KEY_ID` environment
   variable).

@@ -1,9 +1,36 @@
 const util = require("util");
 const exec = util.promisify(require("child_process").exec);
 const fs = require("fs");
+const path = require("path");
 const AWS = require("aws-sdk");
+const yaml = require("yaml");
 
-const pkgs = ["aws", "azure", "gcp"];
+const batchSize = 8;
+
+// List of the larger packages to process syncronously (not as part of a batch). They
+// have been causing out of memory issues so process them by themselves to mitigate this.
+// In addtion the processing will be split into two halves, so each half of the pages will
+// process separately.
+const singles = [
+    "aws",
+    "aws-native",
+    "azure",
+    "azure-native",
+    "azure-native-v1",
+    "gcp",
+    "google-native",
+    "kubernetes",
+    "alicloud",
+    "oci",
+    "fortios",
+];
+
+// Retry queue to process failed packages.
+const retry = [];
+
+const allPkgs = getPackagesMetadata();
+const pkgs = allPkgs.filter((pkg) => !singles.includes(pkg.name));
+const largePkgs = allPkgs.filter((pkg) => singles.includes(pkg.name));
 
 const results = {
     tests: 0,
@@ -14,28 +41,93 @@ const results = {
     duration: 0,
     failedPages: [],
     failedPageCount: 0,
+    totalPageCount: 0,
 };
 
-const testRuns = pkgs.map((pkg) => {
-    return exec(`npm run test-api-docs -- --pkg=${pkg} || true`).then(
-        (stdout, stderr) => {
-            console.log(stdout);
-            processJSON(stdout, stderr);
-        },
-    );
-});
+async function runTests() {
+    async function processSync(pkgs, split) {
+        for (let pkgMetadata of pkgs) {
+            if (split) {
+                // process first half of pages.
+                await exec(
+                    `npm run test-api-docs -- --pkg=${pkgMetadata.name} --split=1 || true`,
+                ).then((stdout, stderr) => {
+                    console.log(stdout);
+                    console.log("processed:", pkgMetadata.name);
+                    processJSON(stdout, stderr, pkgMetadata);
+                });
+                // process second half of pages.
+                await exec(
+                    `npm run test-api-docs -- --pkg=${pkgMetadata.name} --split=2 || true`,
+                ).then((stdout, stderr) => {
+                    console.log(stdout);
+                    console.log("processed:", pkgMetadata.name);
+                    processJSON(stdout, stderr, pkgMetadata);
+                });
+            } else {
+                // Do not split, process all pages in package.
+                await exec(
+                    `npm run test-api-docs -- --pkg=${pkgMetadata.name} --split=0 || true`,
+                ).then((stdout, stderr) => {
+                    console.log(stdout);
+                    console.log("processed:", pkgMetadata.name);
+                    processJSON(stdout, stderr, pkgMetadata);
+                });
+            }
+        }
+    }
 
-Promise.all(testRuns).then(async () => {
+    async function processBatches(pkgs, size) {
+        for (let i = 0; i < pkgs.length; i += size) {
+            const batch = pkgs.slice(i, i + size);
+            // Shell out to run test for package. This causes it to fork sepatate node processes for each package
+            // being tested. This enables us to test many packages since each node process has its own memory space,
+            // so we do not run out of heap memory.
+            const runs = batch.map((pkgMetadata) => {
+                return exec(
+                    `npm run test-api-docs -- --pkg=${pkgMetadata.name} --split=0 || true`,
+                ).then((stdout, stderr) => {
+                    console.log(stdout);
+                    console.log("processed:", pkgMetadata.name);
+                    processJSON(stdout, stderr, pkgMetadata);
+                });
+            });
+            console.log("processing batch:", i, "-", i + size);
+            await Promise.all(runs).then(() => {
+                console.log("batch done:", i, "-", i + size);
+            });
+        }
+    }
+
+    // Batch process smaller packages.
+    await processBatches(pkgs, batchSize, false);
+    // Process retry queue syncronously.
+    await processSync(retry, false);
+    // Process the larger packages syncronously.
+    await processSync(largePkgs, true);
+
     console.log(results);
     await pushResultsS3(results);
-});
+}
 
-function processJSON(stdout, stderr) {
+runTests();
+
+function processJSON(stdout, stderr, pkgMetadata) {
     const contents = fs.readFileSync("ctrf/ctrf-report.json", {
         encoding: "utf8",
     });
     const results = JSON.parse(contents);
-    transformResults(results);
+
+    // The test results get written to ctrf/ctrf-report.json, and since we process in batches asyncronoulsy, there
+    // is the potential for a reace condition where before the test results are read from the file another package
+    // test could have written to it, so we verify the results match the package being processed and if not, add
+    // to retry queue to be processed syncronously later.
+    if (!results.results.tests[0].name.includes(`${pkgMetadata.name}/`)) {
+        retry.push(pkgMetadata);
+        return;
+    }
+
+    transformResults(results, pkgMetadata);
 
     // The cli command error is trapped here since it is a sub process of this script.
     // Checking if error here will enable us to mark this as a failed run by exiting
@@ -47,7 +139,9 @@ function processJSON(stdout, stderr) {
     }
 }
 
-function transformResults(res) {
+// Transform results into the structure we want and add them to the results object that will get pushed
+// to s3 once all the tests complete.
+function transformResults(res, pkgMetadata) {
     const summary = res.results.summary;
     results.tests += summary.tests;
     results.passes += summary.passed;
@@ -57,20 +151,38 @@ function transformResults(res) {
     results.duration = summary.stop - summary.start;
     results.ghRunURL = getRunUrl();
 
+    // Track total count of pages.
+    const allPages = new Set();
+    res.results.tests.forEach((t) => {
+        const { url, _ } = extractTestInfo(t.name);
+        allPages.add(url);
+    });
+
     // Get list of failed pages.
     const failedPages = [];
     // iterate over test failures and add page url to failedPages array.
     res.results.tests
         .filter((t) => t.status !== "passed")
-        .forEach((f) => {
-            failedPages.push(extractPageUrl(f.name));
+        .forEach((t) => {
+            const { url, description } = extractTestInfo(t.name);
+            failedPages.push({
+                url,
+                description,
+            });
         });
 
     // dedupe pages and keep track of a count for each page failure occurance to map
     // the page to the number of failure occurances for each page.
     const pageMap = {};
     failedPages.forEach((page) => {
-        pageMap[page] = (pageMap[page] || 0) + 1;
+        pageMap[page.url] = {
+            count: pageMap[page.url] ? pageMap[page.url].count + 1 : 1,
+            failureMsg: pageMap[page.url]
+                ? (pageMap[page.url].failureMsg || "") +
+                  " | " +
+                  page.description
+                : page.description,
+        };
     });
 
     // Convert pageMap to an array of objects with failure counts. This
@@ -78,22 +190,27 @@ function transformResults(res) {
         ...results.failedPages,
         ...Object.keys(pageMap).map((key) => ({
             page: key,
-            failures: pageMap[key],
+            failures: pageMap[key].count,
+            reason: pageMap[key].failureMsg,
             tests: 15,
+            package: pkgMetadata.name,
+            type: resolvePackageType(pkgMetadata),
+            repo: pkgMetadata.repo_url,
         })),
     ];
 
     results.failedPageCount =
         Object.keys(pageMap).length + results.failedPageCount;
+    results.totalPageCount = allPages.size + results.totalPageCount;
     return results;
 }
 
-function extractPageUrl(msg) {
+function extractTestInfo(msg) {
     const urlRegex = /^(https?:\/\/[^)]+\/)/;
     const match = msg.match(urlRegex);
     const url = match ? match[0] : null;
-
-    return url;
+    const description = msg.replace(url, "");
+    return { url, description };
 }
 
 function getRunUrl() {
@@ -148,4 +265,35 @@ async function pushResultsS3(obj) {
     };
 
     return s3.upload(uploadParams).promise();
+}
+
+// Load package metadata from metadata files, convert YAML to JSON object,
+// then return array containing package metadata. 
+function getPackagesMetadata() {
+    const dirPath = "./themes/default/data/registry/packages/";
+    const files = fs.readdirSync(dirPath);
+    const yamlFiles = files.filter((file) => file.endsWith(".yaml"));
+    const packageMetadata = [];
+
+    yamlFiles.forEach((file) => {
+        const filePath = path.join(dirPath, file);
+        const fileContents = fs.readFileSync(filePath, "utf8");
+        const jsonObject = yaml.parse(fileContents);
+        packageMetadata.push(jsonObject);
+    });
+
+    return packageMetadata;
+}
+
+function resolvePackageType(pkg) {
+    const isComponent = pkg.component;
+    const isNative = pkg.native;
+
+    if (isComponent) {
+        return "component";
+    } else if (isNative) {
+        return "native";
+    } else {
+        return "bridged";
+    }
 }

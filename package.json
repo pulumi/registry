@@ -31,7 +31,7 @@
     },
     "scripts": {
         "minify-css": "node scripts/minify-css.js",
-        "test-api-docs": "mocha scripts/tests --reporter mocha-ctrf-json-reporter"
+        "test-api-docs": "NODE_OPTIONS=--max_old_space_size=8192 mocha scripts/tests -n expose-gc --reporter mocha-ctrf-json-reporter"
     },
     "devDependencies": {
         "chai": "4.2.0",

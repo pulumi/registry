@@ -270,6 +270,7 @@ resources:
 
 
 
+
 Use the `aws.s3.BucketPolicy` resource:
 
 {{< chooser language "typescript,python,go,csharp,java,yaml" >}}
@@ -527,6 +528,7 @@ resources:
 
 
 
+
 As a bonus, the policy can now more easily refer to the concrete name of the bucket.
 
 ### serverSideEncryptionConfiguration input
@@ -696,6 +698,7 @@ resources:
 {{% /choosable %}}
 
 {{< /chooser >}}
+
 
 
 
@@ -880,6 +883,7 @@ resources:
 {{< /chooser >}}
 
 
+
 ### acceleration input
 
 To enable acceleration, instead of:
@@ -1007,6 +1011,7 @@ resources:
 {{% /choosable %}}
 
 {{< /chooser >}}
+
 
 
 Use the `aws.s3.BucketAccelerationConfiguration` resource:
@@ -1141,43 +1146,333 @@ resources:
 {{< /chooser >}}
 
 
+
 ### corsRules input
 
 To configure [Cross-Origin Resource Sharing](https://docs.aws.amazon.com/AmazonS3/latest/dev/cors.html),
 instead of:
 
-``` typescript
-new aws.s3.Bucket("my-bucket", {
-  corsRules: [
-    {
-      allowedHeaders: ["*"],
-      allowedMethods: ["GET"],
-      allowedOrigins: ["*"],
-      exposeHeaders: ["ETag"],
-      maxAgeSeconds: 3000,
-    },
-  ],
-});
+{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+
+{{% choosable language typescript %}}
+
+```typescript
+import * as pulumi from "@pulumi/pulumi";
+import * as aws from "@pulumi/aws";
+
+const myBucket = new aws.s3.Bucket("my-bucket", {corsRules: [{
+    allowedHeaders: ["*"],
+    allowedMethods: ["GET"],
+    allowedOrigins: ["*"],
+    exposeHeaders: ["ETag"],
+    maxAgeSeconds: 3000,
+}]});
+
 ```
+
+{{% /choosable %}}
+
+{{% choosable language python %}}
+
+```python
+import pulumi
+import pulumi_aws as aws
+
+my_bucket = aws.s3.Bucket("my-bucket", cors_rules=[{
+    "allowed_headers": ["*"],
+    "allowed_methods": ["GET"],
+    "allowed_origins": ["*"],
+    "expose_headers": ["ETag"],
+    "max_age_seconds": 3000,
+}])
+
+```
+
+{{% /choosable %}}
+
+{{% choosable language go %}}
+
+```go
+package main
+
+import (
+	"github.com/pulumi/pulumi-aws/sdk/v6/go/aws/s3"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		_, err := s3.NewBucket(ctx, "my-bucket", &s3.BucketArgs{
+			CorsRules: s3.BucketCorsRuleArray{
+				&s3.BucketCorsRuleArgs{
+					AllowedHeaders: pulumi.StringArray{
+						pulumi.String("*"),
+					},
+					AllowedMethods: pulumi.StringArray{
+						pulumi.String("GET"),
+					},
+					AllowedOrigins: pulumi.StringArray{
+						pulumi.String("*"),
+					},
+					ExposeHeaders: pulumi.StringArray{
+						pulumi.String("ETag"),
+					},
+					MaxAgeSeconds: pulumi.Int(3000),
+				},
+			},
+		})
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+}
+
+```
+
+{{% /choosable %}}
+
+{{% choosable language csharp %}}
+
+```csharp
+using System.Collections.Generic;
+using System.Linq;
+using Pulumi;
+using Aws = Pulumi.Aws;
+
+return await Deployment.RunAsync(() => 
+{
+    var myBucket = new Aws.S3.Bucket("my-bucket", new()
+    {
+        CorsRules = new[]
+        {
+            new Aws.S3.Inputs.BucketCorsRuleArgs
+            {
+                AllowedHeaders = new[]
+                {
+                    "*",
+                },
+                AllowedMethods = new[]
+                {
+                    "GET",
+                },
+                AllowedOrigins = new[]
+                {
+                    "*",
+                },
+                ExposeHeaders = new[]
+                {
+                    "ETag",
+                },
+                MaxAgeSeconds = 3000,
+            },
+        },
+    });
+
+});
+
+
+```
+
+{{% /choosable %}}
+
+{{% choosable language java %}}
+
+```java
+package generated_program;
+
+import com.pulumi.Context;
+import com.pulumi.Pulumi;
+import com.pulumi.core.Output;
+import com.pulumi.aws.s3.Bucket;
+import com.pulumi.aws.s3.BucketArgs;
+import com.pulumi.aws.s3.inputs.BucketCorsRuleArgs;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+public class App {
+    public static void main(String[] args) {
+        Pulumi.run(App::stack);
+    }
+
+    public static void stack(Context ctx) {
+        var myBucket = new Bucket("myBucket", BucketArgs.builder()
+            .corsRules(BucketCorsRuleArgs.builder()
+                .allowedHeaders("*")
+                .allowedMethods("GET")
+                .allowedOrigins("*")
+                .exposeHeaders("ETag")
+                .maxAgeSeconds(3000)
+                .build())
+            .build());
+
+    }
+}
+
+```
+
+{{% /choosable %}}
+
+{{% choosable language yaml %}}
+
+```yaml
+name: example
+runtime: yaml
+resources:
+  my-bucket:
+    type: aws:s3:Bucket
+    properties:
+      corsRules:
+        - allowedHeaders:
+            - "*"
+          allowedMethods:
+            - "GET"
+          allowedOrigins:
+            - "*"
+          exposeHeaders:
+            - "ETag"
+          maxAgeSeconds: 3000
+```
+
+{{% /choosable %}}
+
+{{< /chooser >}}
+
 
 Use the `aws.s3.BucketCorsConfiguration` resource:
 
-``` typescript
-const myBucket = new aws.s3.BucketV2("my-new-bucket", {});
+{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
 
-new aws.s3.BucketCorsConfigurationV2("my-bucket-cors", {
-  bucket: myBucket.bucket,
-  corsRules: [
-    {
-      allowedHeaders: ["*"],
-      allowedMethods: ["GET"],
-      allowedOrigins: ["*"],
-      exposeHeaders: ["ETag"],
-      maxAgeSeconds: 3000,
-    },
-  ]
-});
+{{% choosable language typescript %}}
+
+```typescript
+import * as pulumi from "@pulumi/pulumi";
+import * as aws from "@pulumi/aws";
+
+const myBucket = new aws.s3.BucketV2("my-bucket", {});
+
 ```
+
+{{% /choosable %}}
+
+{{% choosable language python %}}
+
+```python
+import pulumi
+import pulumi_aws as aws
+
+my_bucket = aws.s3.BucketV2("my-bucket")
+
+```
+
+{{% /choosable %}}
+
+{{% choosable language go %}}
+
+```go
+package main
+
+import (
+	"github.com/pulumi/pulumi-aws/sdk/v6/go/aws/s3"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		_, err := s3.NewBucketV2(ctx, "my-bucket", nil)
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+}
+
+```
+
+{{% /choosable %}}
+
+{{% choosable language csharp %}}
+
+```csharp
+using System.Collections.Generic;
+using System.Linq;
+using Pulumi;
+using Aws = Pulumi.Aws;
+
+return await Deployment.RunAsync(() => 
+{
+    var myBucket = new Aws.S3.BucketV2("my-bucket");
+
+});
+
+
+```
+
+{{% /choosable %}}
+
+{{% choosable language java %}}
+
+```java
+package generated_program;
+
+import com.pulumi.Context;
+import com.pulumi.Pulumi;
+import com.pulumi.core.Output;
+import com.pulumi.aws.s3.BucketV2;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+public class App {
+    public static void main(String[] args) {
+        Pulumi.run(App::stack);
+    }
+
+    public static void stack(Context ctx) {
+        var myBucket = new BucketV2("myBucket");
+
+    }
+}
+
+```
+
+{{% /choosable %}}
+
+{{% choosable language yaml %}}
+
+```yaml
+name: example
+runtime: yaml
+resources:
+  my-bucket:
+    type: aws:s3:BucketV2
+  my-bucket-cors:
+    type: aws:s3:BucketCorsConfiguration
+    properties:
+      bucket: ${my-bucket.bucket}
+      corsRules:
+        - allowedHeaders:
+            - "*"
+          allowedMethods:
+            - "GET"
+          allowedOrigins:
+            - "*"
+          exposeHeaders:
+            - "ETag"
+          maxAgeSeconds: 3000
+```
+
+{{% /choosable %}}
+
+{{< /chooser >}}
+
 
 ### acl and grants inputs
 
@@ -1186,50 +1481,483 @@ The `aws.s3.BucketAcl` resource is now required to configure either
 or [ACL policy grant](https://docs.aws.amazon.com/AmazonS3/latest/dev/acl-overview.html#sample-acl),
 and it replaces the use of `acl` and `grants` inputs. To illustrate migrating the uses of `grants`, instead of:
 
-``` typescript
-const currentUser = aws.s3.getCanonicalUserIdOutput({});
+{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
 
-new aws.s3.Bucket("my-bucket", {
-  grants: [
-    {
-      permissions: ["READ"],
-      type: "CanonicalUser",
-      id: currentUser.id,
-    },
-  ],
-});
+{{% choosable language typescript %}}
+
+```typescript
+import * as pulumi from "@pulumi/pulumi";
+import * as aws from "@pulumi/aws";
+
+const currentUser = aws.s3.getCanonicalUserIdOutput({});
+const myBucket = new aws.s3.Bucket("my-bucket", {grants: [{
+    permissions: ["READ"],
+    type: "CanonicalUser",
+    id: currentUser.apply(currentUser => currentUser.id),
+}]});
+
 ```
+
+{{% /choosable %}}
+
+{{% choosable language python %}}
+
+```python
+import pulumi
+import pulumi_aws as aws
+
+current_user = aws.s3.get_canonical_user_id_output()
+my_bucket = aws.s3.Bucket("my-bucket", grants=[{
+    "permissions": ["READ"],
+    "type": "CanonicalUser",
+    "id": current_user.id,
+}])
+
+```
+
+{{% /choosable %}}
+
+{{% choosable language go %}}
+
+```go
+package main
+
+import (
+	"github.com/pulumi/pulumi-aws/sdk/v6/go/aws/s3"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		currentUser, err := s3.GetCanonicalUserId(ctx, nil, nil)
+		if err != nil {
+			return err
+		}
+		_, err = s3.NewBucket(ctx, "my-bucket", &s3.BucketArgs{
+			Grants: s3.BucketGrantArray{
+				&s3.BucketGrantArgs{
+					Permissions: pulumi.StringArray{
+						pulumi.String("READ"),
+					},
+					Type: pulumi.String("CanonicalUser"),
+					Id:   pulumi.String(currentUser.Id),
+				},
+			},
+		})
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+}
+
+```
+
+{{% /choosable %}}
+
+{{% choosable language csharp %}}
+
+```csharp
+using System.Collections.Generic;
+using System.Linq;
+using Pulumi;
+using Aws = Pulumi.Aws;
+
+return await Deployment.RunAsync(() => 
+{
+    var currentUser = Aws.S3.GetCanonicalUserId.Invoke();
+
+    var myBucket = new Aws.S3.Bucket("my-bucket", new()
+    {
+        Grants = new[]
+        {
+            new Aws.S3.Inputs.BucketGrantArgs
+            {
+                Permissions = new[]
+                {
+                    "READ",
+                },
+                Type = "CanonicalUser",
+                Id = currentUser.Apply(getCanonicalUserIdResult => getCanonicalUserIdResult.Id),
+            },
+        },
+    });
+
+});
+
+
+```
+
+{{% /choosable %}}
+
+{{% choosable language java %}}
+
+```java
+package generated_program;
+
+import com.pulumi.Context;
+import com.pulumi.Pulumi;
+import com.pulumi.core.Output;
+import com.pulumi.aws.s3.S3Functions;
+import com.pulumi.aws.s3.Bucket;
+import com.pulumi.aws.s3.BucketArgs;
+import com.pulumi.aws.s3.inputs.BucketGrantArgs;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+public class App {
+    public static void main(String[] args) {
+        Pulumi.run(App::stack);
+    }
+
+    public static void stack(Context ctx) {
+        final var currentUser = S3Functions.getCanonicalUserId();
+
+        var myBucket = new Bucket("myBucket", BucketArgs.builder()
+            .grants(BucketGrantArgs.builder()
+                .permissions("READ")
+                .type("CanonicalUser")
+                .id(currentUser.applyValue(getCanonicalUserIdResult -> getCanonicalUserIdResult.id()))
+                .build())
+            .build());
+
+    }
+}
+
+```
+
+{{% /choosable %}}
+
+{{% choosable language yaml %}}
+
+```yaml
+name: example
+runtime: yaml
+variables:
+  currentUser:
+    fn::invoke:
+      function: aws:s3:getCanonicalUserId
+      arguments: {}
+resources:
+  my-bucket:
+    type: aws:s3:Bucket
+    properties:
+      grants:
+        - permissions:
+            - "READ"
+          type: "CanonicalUser"
+          id: ${currentUser.id}
+```
+
+{{% /choosable %}}
+
+{{< /chooser >}}
+
 
 Use the `aws.s3.BucketAcl` resource like this:
 
-``` typescript
-const myBucket = new aws.s3.BucketV2("my-new-bucket", {});
+{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
 
-const myBucketOwnershipControls = new aws.s3.BucketOwnershipControls("my-new-bucket-oc", {
-  bucket: myBucket.id,
-  rule: {
-    objectOwnership: "BucketOwnerPreferred",
-  },
+{{% choosable language typescript %}}
+
+```typescript
+import * as pulumi from "@pulumi/pulumi";
+import * as aws from "@pulumi/aws";
+
+const currentUser = aws.s3.getCanonicalUserIdOutput({});
+const myBucket = new aws.s3.BucketV2("my-bucket", {});
+const myBucketOwnership = new aws.s3.BucketOwnershipControls("my-bucket-ownership", {
+    bucket: myBucket.id,
+    rule: {
+        objectOwnership: "BucketOwnerPreferred",
+    },
 });
-
-new aws.s3.BucketAclV2("grant", {
-  bucket: myBucket.bucket,
-  accessControlPolicy: {
-    owner: {id: currentUser.id},
-    grants: [
-      {
-        permission: "READ",
-        grantee: {
-          type: "CanonicalUser",
-          id: currentUser.id,
+const myBucketAcl = new aws.s3.BucketAclV2("my-bucket-acl", {
+    bucket: myBucket.bucket,
+    accessControlPolicy: {
+        owner: {
+            id: currentUser.apply(currentUser => currentUser.id),
         },
-      },
-    ],
-  },
+        grants: [{
+            permission: "READ",
+            grantee: {
+                type: "CanonicalUser",
+                id: currentUser.apply(currentUser => currentUser.id),
+            },
+        }],
+    },
 }, {
-  dependsOn: [myBucketOwnershipControls]
+    dependsOn: [myBucketOwnership],
 });
+
 ```
+
+{{% /choosable %}}
+
+{{% choosable language python %}}
+
+```python
+import pulumi
+import pulumi_aws as aws
+
+current_user = aws.s3.get_canonical_user_id_output()
+my_bucket = aws.s3.BucketV2("my-bucket")
+my_bucket_ownership = aws.s3.BucketOwnershipControls("my-bucket-ownership",
+    bucket=my_bucket.id,
+    rule={
+        "object_ownership": "BucketOwnerPreferred",
+    })
+my_bucket_acl = aws.s3.BucketAclV2("my-bucket-acl",
+    bucket=my_bucket.bucket,
+    access_control_policy={
+        "owner": {
+            "id": current_user.id,
+        },
+        "grants": [{
+            "permission": "READ",
+            "grantee": {
+                "type": "CanonicalUser",
+                "id": current_user.id,
+            },
+        }],
+    },
+    opts = pulumi.ResourceOptions(depends_on=[my_bucket_ownership]))
+
+```
+
+{{% /choosable %}}
+
+{{% choosable language go %}}
+
+```go
+package main
+
+import (
+	"github.com/pulumi/pulumi-aws/sdk/v6/go/aws/s3"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		currentUser, err := s3.GetCanonicalUserId(ctx, nil, nil)
+		if err != nil {
+			return err
+		}
+		myBucket, err := s3.NewBucketV2(ctx, "my-bucket", nil)
+		if err != nil {
+			return err
+		}
+		myBucketOwnership, err := s3.NewBucketOwnershipControls(ctx, "my-bucket-ownership", &s3.BucketOwnershipControlsArgs{
+			Bucket: myBucket.ID(),
+			Rule: &s3.BucketOwnershipControlsRuleArgs{
+				ObjectOwnership: pulumi.String("BucketOwnerPreferred"),
+			},
+		})
+		if err != nil {
+			return err
+		}
+		_, err = s3.NewBucketAclV2(ctx, "my-bucket-acl", &s3.BucketAclV2Args{
+			Bucket: myBucket.Bucket,
+			AccessControlPolicy: &s3.BucketAclV2AccessControlPolicyArgs{
+				Owner: &s3.BucketAclV2AccessControlPolicyOwnerArgs{
+					Id: pulumi.String(currentUser.Id),
+				},
+				Grants: s3.BucketAclV2AccessControlPolicyGrantArray{
+					&s3.BucketAclV2AccessControlPolicyGrantArgs{
+						Permission: pulumi.String("READ"),
+						Grantee: &s3.BucketAclV2AccessControlPolicyGrantGranteeArgs{
+							Type: pulumi.String("CanonicalUser"),
+							Id:   pulumi.String(currentUser.Id),
+						},
+					},
+				},
+			},
+		}, pulumi.DependsOn([]pulumi.Resource{
+			myBucketOwnership,
+		}))
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+}
+
+```
+
+{{% /choosable %}}
+
+{{% choosable language csharp %}}
+
+```csharp
+using System.Collections.Generic;
+using System.Linq;
+using Pulumi;
+using Aws = Pulumi.Aws;
+
+return await Deployment.RunAsync(() => 
+{
+    var currentUser = Aws.S3.GetCanonicalUserId.Invoke();
+
+    var myBucket = new Aws.S3.BucketV2("my-bucket");
+
+    var myBucketOwnership = new Aws.S3.BucketOwnershipControls("my-bucket-ownership", new()
+    {
+        Bucket = myBucket.Id,
+        Rule = new Aws.S3.Inputs.BucketOwnershipControlsRuleArgs
+        {
+            ObjectOwnership = "BucketOwnerPreferred",
+        },
+    });
+
+    var myBucketAcl = new Aws.S3.BucketAclV2("my-bucket-acl", new()
+    {
+        Bucket = myBucket.Bucket,
+        AccessControlPolicy = new Aws.S3.Inputs.BucketAclV2AccessControlPolicyArgs
+        {
+            Owner = new Aws.S3.Inputs.BucketAclV2AccessControlPolicyOwnerArgs
+            {
+                Id = currentUser.Apply(getCanonicalUserIdResult => getCanonicalUserIdResult.Id),
+            },
+            Grants = new[]
+            {
+                new Aws.S3.Inputs.BucketAclV2AccessControlPolicyGrantArgs
+                {
+                    Permission = "READ",
+                    Grantee = new Aws.S3.Inputs.BucketAclV2AccessControlPolicyGrantGranteeArgs
+                    {
+                        Type = "CanonicalUser",
+                        Id = currentUser.Apply(getCanonicalUserIdResult => getCanonicalUserIdResult.Id),
+                    },
+                },
+            },
+        },
+    }, new CustomResourceOptions
+    {
+        DependsOn =
+        {
+            myBucketOwnership,
+        },
+    });
+
+});
+
+
+```
+
+{{% /choosable %}}
+
+{{% choosable language java %}}
+
+```java
+package generated_program;
+
+import com.pulumi.Context;
+import com.pulumi.Pulumi;
+import com.pulumi.core.Output;
+import com.pulumi.aws.s3.S3Functions;
+import com.pulumi.aws.s3.BucketV2;
+import com.pulumi.aws.s3.BucketOwnershipControls;
+import com.pulumi.aws.s3.BucketOwnershipControlsArgs;
+import com.pulumi.aws.s3.inputs.BucketOwnershipControlsRuleArgs;
+import com.pulumi.aws.s3.BucketAclV2;
+import com.pulumi.aws.s3.BucketAclV2Args;
+import com.pulumi.aws.s3.inputs.BucketAclV2AccessControlPolicyArgs;
+import com.pulumi.aws.s3.inputs.BucketAclV2AccessControlPolicyOwnerArgs;
+import com.pulumi.resources.CustomResourceOptions;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+public class App {
+    public static void main(String[] args) {
+        Pulumi.run(App::stack);
+    }
+
+    public static void stack(Context ctx) {
+        final var currentUser = S3Functions.getCanonicalUserId();
+
+        var myBucket = new BucketV2("myBucket");
+
+        var myBucketOwnership = new BucketOwnershipControls("myBucketOwnership", BucketOwnershipControlsArgs.builder()
+            .bucket(myBucket.id())
+            .rule(BucketOwnershipControlsRuleArgs.builder()
+                .objectOwnership("BucketOwnerPreferred")
+                .build())
+            .build());
+
+        var myBucketAcl = new BucketAclV2("myBucketAcl", BucketAclV2Args.builder()
+            .bucket(myBucket.bucket())
+            .accessControlPolicy(BucketAclV2AccessControlPolicyArgs.builder()
+                .owner(BucketAclV2AccessControlPolicyOwnerArgs.builder()
+                    .id(currentUser.applyValue(getCanonicalUserIdResult -> getCanonicalUserIdResult.id()))
+                    .build())
+                .grants(BucketAclV2AccessControlPolicyGrantArgs.builder()
+                    .permission("READ")
+                    .grantee(BucketAclV2AccessControlPolicyGrantGranteeArgs.builder()
+                        .type("CanonicalUser")
+                        .id(currentUser.applyValue(getCanonicalUserIdResult -> getCanonicalUserIdResult.id()))
+                        .build())
+                    .build())
+                .build())
+            .build(), CustomResourceOptions.builder()
+                .dependsOn(myBucketOwnership)
+                .build());
+
+    }
+}
+
+```
+
+{{% /choosable %}}
+
+{{% choosable language yaml %}}
+
+```yaml
+name: example
+runtime: yaml
+variables:
+  currentUser:
+    fn::invoke:
+      function: aws:s3:getCanonicalUserId
+      arguments: {}
+resources:
+  my-bucket:
+    type: aws:s3:BucketV2
+  my-bucket-ownership:
+    type: aws:s3:BucketOwnershipControls
+    properties:
+      bucket: ${my-bucket.id}
+      rule:
+        objectOwnership: "BucketOwnerPreferred"
+  my-bucket-acl:
+    type: aws:s3:BucketAclV2
+    properties:
+      bucket: ${my-bucket.bucket}
+      accessControlPolicy:
+        owner:
+          id: ${currentUser.id}
+        grants:
+          - permission: "READ"
+            grantee:
+              type: "CanonicalUser"
+              id: ${currentUser.id}
+    options:
+      dependsOn:
+        - ${my-bucket-ownership}
+```
+
+{{% /choosable %}}
+
+{{< /chooser >}}
+
+
 
 Note that `dependsOn` on `BucketOwnershipControls` is required for Pulumi to correctly order the operations for this
 infrastructure. Consult the documentation on `aws.s3.BucketAclV2` for more fully worked examples of configuring ACL.

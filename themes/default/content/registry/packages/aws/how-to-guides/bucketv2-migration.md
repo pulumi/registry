@@ -5,8 +5,6 @@ meta_desc: Practitioner level instructions for migrating from aws.s3.Bucket to a
 layout: package
 ---
 
-## Migrating from aws.s3.Bucket to aws.s3.BucketV2
-
 In the upcoming AWS Classic major release (v7), `aws.s3.Bucket` will be discontinued in favor of `BucketV2`. Users of
 `aws.s3.Bucket` resource are encouraged to migrate early. The migration is straightforward for simple use cases but
 requires some care for advanced configurations. Specifically `BucketV2` inputs such as `policy` and `accelerationStatus`
@@ -153,7 +151,7 @@ using System.Text.Json;
 using Pulumi;
 using Aws = Pulumi.Aws;
 
-return await Deployment.RunAsync(() => 
+return await Deployment.RunAsync(() =>
 {
     var myBucket = new Aws.S3.Bucket("my-bucket", new()
     {
@@ -405,7 +403,7 @@ using System.Text.Json;
 using Pulumi;
 using Aws = Pulumi.Aws;
 
-return await Deployment.RunAsync(() => 
+return await Deployment.RunAsync(() =>
 {
     var myBucket = new Aws.S3.BucketV2("my-bucket");
 
@@ -616,7 +614,7 @@ using System.Linq;
 using Pulumi;
 using Aws = Pulumi.Aws;
 
-return await Deployment.RunAsync(() => 
+return await Deployment.RunAsync(() =>
 {
     var myBucket = new Aws.S3.Bucket("my-bucket", new()
     {
@@ -794,7 +792,7 @@ using System.Linq;
 using Pulumi;
 using Aws = Pulumi.Aws;
 
-return await Deployment.RunAsync(() => 
+return await Deployment.RunAsync(() =>
 {
     var myBucket = new Aws.S3.BucketV2("my-bucket");
 
@@ -952,7 +950,7 @@ using System.Linq;
 using Pulumi;
 using Aws = Pulumi.Aws;
 
-return await Deployment.RunAsync(() => 
+return await Deployment.RunAsync(() =>
 {
     var myBucket = new Aws.S3.Bucket("my-bucket", new()
     {
@@ -1081,7 +1079,7 @@ using System.Linq;
 using Pulumi;
 using Aws = Pulumi.Aws;
 
-return await Deployment.RunAsync(() => 
+return await Deployment.RunAsync(() =>
 {
     var myBucket = new Aws.S3.BucketV2("my-bucket", new()
     {
@@ -1246,7 +1244,7 @@ using System.Linq;
 using Pulumi;
 using Aws = Pulumi.Aws;
 
-return await Deployment.RunAsync(() => 
+return await Deployment.RunAsync(() =>
 {
     var myBucket = new Aws.S3.Bucket("my-bucket", new()
     {
@@ -1410,7 +1408,7 @@ using System.Linq;
 using Pulumi;
 using Aws = Pulumi.Aws;
 
-return await Deployment.RunAsync(() => 
+return await Deployment.RunAsync(() =>
 {
     var myBucket = new Aws.S3.BucketV2("my-bucket");
 
@@ -1571,7 +1569,7 @@ using System.Linq;
 using Pulumi;
 using Aws = Pulumi.Aws;
 
-return await Deployment.RunAsync(() => 
+return await Deployment.RunAsync(() =>
 {
     var currentUser = Aws.S3.GetCanonicalUserId.Invoke();
 
@@ -1807,7 +1805,7 @@ using System.Linq;
 using Pulumi;
 using Aws = Pulumi.Aws;
 
-return await Deployment.RunAsync(() => 
+return await Deployment.RunAsync(() =>
 {
     var currentUser = Aws.S3.GetCanonicalUserId.Invoke();
 
@@ -2093,7 +2091,7 @@ using System.Linq;
 using Pulumi;
 using Aws = Pulumi.Aws;
 
-return await Deployment.RunAsync(() => 
+return await Deployment.RunAsync(() =>
 {
     var myBucket = new Aws.S3.Bucket("my-bucket", new()
     {
@@ -2301,7 +2299,7 @@ using System.Linq;
 using Pulumi;
 using Aws = Pulumi.Aws;
 
-return await Deployment.RunAsync(() => 
+return await Deployment.RunAsync(() =>
 {
     var myBucket = new Aws.S3.BucketV2("my-bucket", new()
     {

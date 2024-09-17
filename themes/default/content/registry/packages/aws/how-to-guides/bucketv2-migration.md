@@ -269,35 +269,261 @@ resources:
 {{< /chooser >}}
 
 
-
-
 Use the `aws.s3.BucketPolicy` resource:
 
-``` typescript
-const myBucket = new aws.s3.BucketV2("my-new-bucket", {});
+{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
 
-new aws.s3.BucketPolicy("my-bucket-policy", {
-  bucket: myBucket.bucket,
-  policy: myBucket.bucket.apply(bucket => JSON.stringify({
-    "Version": "2012-10-17",
-    "Id": "PutObjPolicy",
-    "Statement": [
-      {
-        "Sid": "DenyObjectsThatAreNotSSEKMS",
-        "Principal": "*",
-        "Effect": "Deny",
-        "Action": "s3:PutObject",
-        "Resource": `arn:aws:s3:::${bucket}/*`,
-        "Condition": {
-          "Null": {
-            "s3:x-amz-server-side-encryption-aws-kms-key-id": "true"
-          }
-        }
-      }
-    ]
-  })),
+{{% choosable language typescript %}}
+
+```typescript
+import * as pulumi from "@pulumi/pulumi";
+import * as aws from "@pulumi/aws";
+
+const myBucket = new aws.s3.BucketV2("my-bucket", {});
+const myBucketPolicy = new aws.s3.BucketPolicy("my-bucket-policy", {
+    bucket: "my-bucket-26224916",
+    policy: pulumi.jsonStringify({
+        Version: "2012-10-17",
+        Id: "PutObjPolicy",
+        Statement: {
+            Sid: "DenyObjectsThatAreNotSSEKMS",
+            Principal: "*",
+            Effect: "Deny",
+            Action: "s3:PutObject",
+            Resource: pulumi.interpolate`arn:aws:s3:::${myBucket.bucket}/*`,
+            Condition: {
+                Null: {
+                    "s3:x-amz-server-side-encryption-aws-kms-key-id": "true",
+                },
+            },
+        },
+    }),
 });
+
 ```
+
+{{% /choosable %}}
+
+{{% choosable language python %}}
+
+```python
+import pulumi
+import json
+import pulumi_aws as aws
+
+my_bucket = aws.s3.BucketV2("my-bucket")
+my_bucket_policy = aws.s3.BucketPolicy("my-bucket-policy",
+    bucket="my-bucket-26224916",
+    policy=pulumi.Output.json_dumps({
+        "Version": "2012-10-17",
+        "Id": "PutObjPolicy",
+        "Statement": {
+            "Sid": "DenyObjectsThatAreNotSSEKMS",
+            "Principal": "*",
+            "Effect": "Deny",
+            "Action": "s3:PutObject",
+            "Resource": my_bucket.bucket.apply(lambda bucket: f"arn:aws:s3:::{bucket}/*"),
+            "Condition": {
+                "Null": {
+                    "s3:x-amz-server-side-encryption-aws-kms-key-id": "true",
+                },
+            },
+        },
+    }))
+
+```
+
+{{% /choosable %}}
+
+{{% choosable language go %}}
+
+```go
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+
+	"github.com/pulumi/pulumi-aws/sdk/v6/go/aws/iam"
+	"github.com/pulumi/pulumi-aws/sdk/v6/go/aws/s3"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		myBucket, err := s3.NewBucketV2(ctx, "my-bucket", nil)
+		if err != nil {
+			return err
+		}
+		_, err = s3.NewBucketPolicy(ctx, "my-bucket-policy", &s3.BucketPolicyArgs{
+			Bucket: pulumi.String("my-bucket-26224916"),
+			Policy: myBucket.Bucket.ApplyT(func(bucket string) (pulumi.String, error) {
+				var _zero pulumi.String
+				tmpJSON0, err := json.Marshal(map[string]interface{}{
+					"Version": "2012-10-17",
+					"Id":      "PutObjPolicy",
+					"Statement": map[string]interface{}{
+						"Sid":       "DenyObjectsThatAreNotSSEKMS",
+						"Principal": "*",
+						"Effect":    "Deny",
+						"Action":    "s3:PutObject",
+						"Resource":  fmt.Sprintf("arn:aws:s3:::%v/*", bucket),
+						"Condition": map[string]interface{}{
+							"Null": map[string]interface{}{
+								"s3:x-amz-server-side-encryption-aws-kms-key-id": "true",
+							},
+						},
+					},
+				})
+				if err != nil {
+					return _zero, err
+				}
+				json0 := string(tmpJSON0)
+				return pulumi.String(json0), nil
+			}).(pulumi.StringOutput),
+		})
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+}
+
+```
+
+{{% /choosable %}}
+
+{{% choosable language csharp %}}
+
+```csharp
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.Json;
+using Pulumi;
+using Aws = Pulumi.Aws;
+
+return await Deployment.RunAsync(() => 
+{
+    var myBucket = new Aws.S3.BucketV2("my-bucket");
+
+    var myBucketPolicy = new Aws.S3.BucketPolicy("my-bucket-policy", new()
+    {
+        Bucket = "my-bucket-26224916",
+        Policy = Output.JsonSerialize(Output.Create(new Dictionary<string, object?>
+        {
+            ["Version"] = "2012-10-17",
+            ["Id"] = "PutObjPolicy",
+            ["Statement"] = new Dictionary<string, object?>
+            {
+                ["Sid"] = "DenyObjectsThatAreNotSSEKMS",
+                ["Principal"] = "*",
+                ["Effect"] = "Deny",
+                ["Action"] = "s3:PutObject",
+                ["Resource"] = myBucket.Bucket.Apply(bucket => $"arn:aws:s3:::{bucket}/*"),
+                ["Condition"] = new Dictionary<string, object?>
+                {
+                    ["Null"] = new Dictionary<string, object?>
+                    {
+                        ["s3:x-amz-server-side-encryption-aws-kms-key-id"] = "true",
+                    },
+                },
+            },
+        })),
+    });
+
+});
+
+
+```
+
+{{% /choosable %}}
+
+{{% choosable language java %}}
+
+```java
+package generated_program;
+
+import com.pulumi.Context;
+import com.pulumi.Pulumi;
+import com.pulumi.core.Output;
+import com.pulumi.aws.s3.BucketV2;
+import com.pulumi.aws.s3.BucketPolicy;
+import com.pulumi.aws.s3.BucketPolicyArgs;
+import static com.pulumi.codegen.internal.Serialization.*;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+public class App {
+    public static void main(String[] args) {
+        Pulumi.run(App::stack);
+    }
+
+    public static void stack(Context ctx) {
+        var myBucket = new BucketV2("myBucket");
+
+        var myBucketPolicy = new BucketPolicy("myBucketPolicy", BucketPolicyArgs.builder()
+            .bucket("my-bucket-26224916")
+            .policy(myBucket.bucket().applyValue(bucket -> serializeJson(
+                jsonObject(
+                    jsonProperty("Version", "2012-10-17"),
+                    jsonProperty("Id", "PutObjPolicy"),
+                    jsonProperty("Statement", jsonObject(
+                        jsonProperty("Sid", "DenyObjectsThatAreNotSSEKMS"),
+                        jsonProperty("Principal", "*"),
+                        jsonProperty("Effect", "Deny"),
+                        jsonProperty("Action", "s3:PutObject"),
+                        jsonProperty("Resource", String.format("arn:aws:s3:::%s/*", bucket)),
+                        jsonProperty("Condition", jsonObject(
+                            jsonProperty("Null", jsonObject(
+                                jsonProperty("s3:x-amz-server-side-encryption-aws-kms-key-id", "true")
+                            ))
+                        ))
+                    ))
+                ))))
+            .build());
+
+    }
+}
+
+```
+
+{{% /choosable %}}
+
+{{% choosable language yaml %}}
+
+```yaml
+name: example
+runtime: yaml
+resources:
+  my-bucket:
+    type: aws:s3:BucketV2
+  my-bucket-policy:
+    type: aws:s3:BucketPolicy
+    properties:
+      bucket: "my-bucket-26224916"
+      policy:
+        fn::toJSON:
+          Version: 2012-10-17
+          Id: PutObjPolicy
+          Statement:
+            Sid: DenyObjectsThatAreNotSSEKMS
+            Principal: "*"
+            Effect: Deny
+            Action: s3:PutObject
+            Resource: "arn:aws:s3:::${my-bucket.bucket}/*"
+            Condition:
+              "Null":
+                s3:x-amz-server-side-encryption-aws-kms-key-id: "true"
+```
+
+{{% /choosable %}}
+
+{{< /chooser >}}
+
 
 As a bonus, the policy can now more easily refer to the concrete name of the bucket.
 
@@ -468,6 +694,7 @@ resources:
 {{% /choosable %}}
 
 {{< /chooser >}}
+
 
 
 Use the `aws.s3.BucketServerSideEncryptionConfiguration` resource:
@@ -648,6 +875,7 @@ resources:
 {{% /choosable %}}
 
 {{< /chooser >}}
+
 
 
 ### acceleration input

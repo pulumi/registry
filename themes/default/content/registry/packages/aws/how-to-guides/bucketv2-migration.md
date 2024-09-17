@@ -270,6 +270,7 @@ resources:
 
 
 
+
 Use the `aws.s3.BucketPolicy` resource:
 
 ``` typescript
@@ -305,32 +306,349 @@ As a bonus, the policy can now more easily refer to the concrete name of the buc
 To specify [server-side encryption configuration](http://docs.aws.amazon.com/AmazonS3/latest/dev/bucket-encryption.html),
 instead of:
 
-``` typescript
-new aws.s3.Bucket("my-bucket", {
-  serverSideEncryptionConfiguration: {
+{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+
+{{% choosable language typescript %}}
+
+```typescript
+import * as pulumi from "@pulumi/pulumi";
+import * as aws from "@pulumi/aws";
+
+const myBucket = new aws.s3.Bucket("my-bucket", {serverSideEncryptionConfiguration: {
     rule: {
-      applyServerSideEncryptionByDefault: {
-        sseAlgorithm: "aws:kms",
-      },
+        applyServerSideEncryptionByDefault: {
+            sseAlgorithm: "aws:kms",
+        },
     },
-  },
-});
+}});
+
 ```
+
+{{% /choosable %}}
+
+{{% choosable language python %}}
+
+```python
+import pulumi
+import pulumi_aws as aws
+
+my_bucket = aws.s3.Bucket("my-bucket", server_side_encryption_configuration={
+    "rule": {
+        "apply_server_side_encryption_by_default": {
+            "sse_algorithm": "aws:kms",
+        },
+    },
+})
+
+```
+
+{{% /choosable %}}
+
+{{% choosable language go %}}
+
+```go
+package main
+
+import (
+	"github.com/pulumi/pulumi-aws/sdk/v6/go/aws/s3"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		_, err := s3.NewBucket(ctx, "my-bucket", &s3.BucketArgs{
+			ServerSideEncryptionConfiguration: &s3.BucketServerSideEncryptionConfigurationArgs{
+				Rule: &s3.BucketServerSideEncryptionConfigurationRuleArgs{
+					ApplyServerSideEncryptionByDefault: &s3.BucketServerSideEncryptionConfigurationRuleApplyServerSideEncryptionByDefaultArgs{
+						SseAlgorithm: pulumi.String("aws:kms"),
+					},
+				},
+			},
+		})
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+}
+
+```
+
+{{% /choosable %}}
+
+{{% choosable language csharp %}}
+
+```csharp
+using System.Collections.Generic;
+using System.Linq;
+using Pulumi;
+using Aws = Pulumi.Aws;
+
+return await Deployment.RunAsync(() => 
+{
+    var myBucket = new Aws.S3.Bucket("my-bucket", new()
+    {
+        ServerSideEncryptionConfiguration = new Aws.S3.Inputs.BucketServerSideEncryptionConfigurationArgs
+        {
+            Rule = new Aws.S3.Inputs.BucketServerSideEncryptionConfigurationRuleArgs
+            {
+                ApplyServerSideEncryptionByDefault = new Aws.S3.Inputs.BucketServerSideEncryptionConfigurationRuleApplyServerSideEncryptionByDefaultArgs
+                {
+                    SseAlgorithm = "aws:kms",
+                },
+            },
+        },
+    });
+
+});
+
+
+```
+
+{{% /choosable %}}
+
+{{% choosable language java %}}
+
+```java
+package generated_program;
+
+import com.pulumi.Context;
+import com.pulumi.Pulumi;
+import com.pulumi.core.Output;
+import com.pulumi.aws.s3.Bucket;
+import com.pulumi.aws.s3.BucketArgs;
+import com.pulumi.aws.s3.inputs.BucketServerSideEncryptionConfigurationArgs;
+import com.pulumi.aws.s3.inputs.BucketServerSideEncryptionConfigurationRuleArgs;
+import com.pulumi.aws.s3.inputs.BucketServerSideEncryptionConfigurationRuleApplyServerSideEncryptionByDefaultArgs;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+public class App {
+    public static void main(String[] args) {
+        Pulumi.run(App::stack);
+    }
+
+    public static void stack(Context ctx) {
+        var myBucket = new Bucket("myBucket", BucketArgs.builder()
+            .serverSideEncryptionConfiguration(BucketServerSideEncryptionConfigurationArgs.builder()
+                .rule(BucketServerSideEncryptionConfigurationRuleArgs.builder()
+                    .applyServerSideEncryptionByDefault(BucketServerSideEncryptionConfigurationRuleApplyServerSideEncryptionByDefaultArgs.builder()
+                        .sseAlgorithm("aws:kms")
+                        .build())
+                    .build())
+                .build())
+            .build());
+
+    }
+}
+
+```
+
+{{% /choosable %}}
+
+{{% choosable language yaml %}}
+
+```yaml
+name: example
+runtime: yaml
+resources:
+  my-bucket:
+    type: aws:s3:Bucket
+    properties:
+      serverSideEncryptionConfiguration:
+        rule:
+          applyServerSideEncryptionByDefault:
+            sseAlgorithm: "aws:kms"
+```
+
+{{% /choosable %}}
+
+{{< /chooser >}}
+
 
 Use the `aws.s3.BucketServerSideEncryptionConfiguration` resource:
 
-``` typescript
-const myBucket = new aws.s3.BucketV2("my-new-bucket", {});
+{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
 
-new aws.s3.BucketServerSideEncryptionConfigurationV2("my-new-bucket-sse-config", {
-  bucket: myBucket.bucket,
-  rules: [{
-    applyServerSideEncryptionByDefault: {
-      sseAlgorithm: "aws:kms"
-    },
-  }],
+{{% choosable language typescript %}}
+
+```typescript
+import * as pulumi from "@pulumi/pulumi";
+import * as aws from "@pulumi/aws";
+
+const myBucket = new aws.s3.BucketV2("my-bucket", {});
+const myBucketSseConfig = new aws.s3.BucketServerSideEncryptionConfigurationV2("my-bucket-sse-config", {
+    bucket: myBucket.bucket,
+    rules: [{
+        applyServerSideEncryptionByDefault: {
+            sseAlgorithm: "aws:kms",
+        },
+    }],
 });
+
 ```
+
+{{% /choosable %}}
+
+{{% choosable language python %}}
+
+```python
+import pulumi
+import pulumi_aws as aws
+
+my_bucket = aws.s3.BucketV2("my-bucket")
+my_bucket_sse_config = aws.s3.BucketServerSideEncryptionConfigurationV2("my-bucket-sse-config",
+    bucket=my_bucket.bucket,
+    rules=[{
+        "apply_server_side_encryption_by_default": {
+            "sse_algorithm": "aws:kms",
+        },
+    }])
+
+```
+
+{{% /choosable %}}
+
+{{% choosable language go %}}
+
+```go
+package main
+
+import (
+	"github.com/pulumi/pulumi-aws/sdk/v6/go/aws/s3"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		myBucket, err := s3.NewBucketV2(ctx, "my-bucket", nil)
+		if err != nil {
+			return err
+		}
+		_, err = s3.NewBucketServerSideEncryptionConfigurationV2(ctx, "my-bucket-sse-config", &s3.BucketServerSideEncryptionConfigurationV2Args{
+			Bucket: myBucket.Bucket,
+			Rules: s3.BucketServerSideEncryptionConfigurationV2RuleArray{
+				&s3.BucketServerSideEncryptionConfigurationV2RuleArgs{
+					ApplyServerSideEncryptionByDefault: &s3.BucketServerSideEncryptionConfigurationV2RuleApplyServerSideEncryptionByDefaultArgs{
+						SseAlgorithm: pulumi.String("aws:kms"),
+					},
+				},
+			},
+		})
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+}
+
+```
+
+{{% /choosable %}}
+
+{{% choosable language csharp %}}
+
+```csharp
+using System.Collections.Generic;
+using System.Linq;
+using Pulumi;
+using Aws = Pulumi.Aws;
+
+return await Deployment.RunAsync(() => 
+{
+    var myBucket = new Aws.S3.BucketV2("my-bucket");
+
+    var myBucketSseConfig = new Aws.S3.BucketServerSideEncryptionConfigurationV2("my-bucket-sse-config", new()
+    {
+        Bucket = myBucket.Bucket,
+        Rules = new[]
+        {
+            new Aws.S3.Inputs.BucketServerSideEncryptionConfigurationV2RuleArgs
+            {
+                ApplyServerSideEncryptionByDefault = new Aws.S3.Inputs.BucketServerSideEncryptionConfigurationV2RuleApplyServerSideEncryptionByDefaultArgs
+                {
+                    SseAlgorithm = "aws:kms",
+                },
+            },
+        },
+    });
+
+});
+
+
+```
+
+{{% /choosable %}}
+
+{{% choosable language java %}}
+
+```java
+package generated_program;
+
+import com.pulumi.Context;
+import com.pulumi.Pulumi;
+import com.pulumi.core.Output;
+import com.pulumi.aws.s3.BucketV2;
+import com.pulumi.aws.s3.BucketServerSideEncryptionConfigurationV2;
+import com.pulumi.aws.s3.BucketServerSideEncryptionConfigurationV2Args;
+import com.pulumi.aws.s3.inputs.BucketServerSideEncryptionConfigurationV2RuleArgs;
+import com.pulumi.aws.s3.inputs.BucketServerSideEncryptionConfigurationV2RuleApplyServerSideEncryptionByDefaultArgs;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+public class App {
+    public static void main(String[] args) {
+        Pulumi.run(App::stack);
+    }
+
+    public static void stack(Context ctx) {
+        var myBucket = new BucketV2("myBucket");
+
+        var myBucketSseConfig = new BucketServerSideEncryptionConfigurationV2("myBucketSseConfig", BucketServerSideEncryptionConfigurationV2Args.builder()
+            .bucket(myBucket.bucket())
+            .rules(BucketServerSideEncryptionConfigurationV2RuleArgs.builder()
+                .applyServerSideEncryptionByDefault(BucketServerSideEncryptionConfigurationV2RuleApplyServerSideEncryptionByDefaultArgs.builder()
+                    .sseAlgorithm("aws:kms")
+                    .build())
+                .build())
+            .build());
+
+    }
+}
+
+```
+
+{{% /choosable %}}
+
+{{% choosable language yaml %}}
+
+```yaml
+name: example
+runtime: yaml
+resources:
+  my-bucket:
+    type: aws:s3:BucketV2
+  my-bucket-sse-config:
+    type: aws:s3:BucketServerSideEncryptionConfigurationV2
+    properties:
+      bucket: ${my-bucket.bucket}
+      rules:
+        - applyServerSideEncryptionByDefault:
+            sseAlgorithm: "aws:kms"
+```
+
+{{% /choosable %}}
+
+{{< /chooser >}}
+
 
 ### acceleration input
 

@@ -269,6 +269,7 @@ resources:
 {{< /chooser >}}
 
 
+
 Use the `aws.s3.BucketPolicy` resource:
 
 {{< chooser language "typescript,python,go,csharp,java,yaml" >}}
@@ -525,6 +526,7 @@ resources:
 {{< /chooser >}}
 
 
+
 As a bonus, the policy can now more easily refer to the concrete name of the bucket.
 
 ### serverSideEncryptionConfiguration input
@@ -694,6 +696,7 @@ resources:
 {{% /choosable %}}
 
 {{< /chooser >}}
+
 
 
 
@@ -877,27 +880,266 @@ resources:
 {{< /chooser >}}
 
 
-
 ### acceleration input
 
 To enable acceleration, instead of:
 
-``` typescript
-new aws.s3.Bucket("my-bucket", {
-  accelerationStatus: "Enabled",
-});
+{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+
+{{% choosable language typescript %}}
+
+```typescript
+import * as pulumi from "@pulumi/pulumi";
+import * as aws from "@pulumi/aws";
+
+const myBucket = new aws.s3.Bucket("my-bucket", {accelerationStatus: "Enabled"});
+
 ```
+
+{{% /choosable %}}
+
+{{% choosable language python %}}
+
+```python
+import pulumi
+import pulumi_aws as aws
+
+my_bucket = aws.s3.Bucket("my-bucket", acceleration_status="Enabled")
+
+```
+
+{{% /choosable %}}
+
+{{% choosable language go %}}
+
+```go
+package main
+
+import (
+	"github.com/pulumi/pulumi-aws/sdk/v6/go/aws/s3"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		_, err := s3.NewBucket(ctx, "my-bucket", &s3.BucketArgs{
+			AccelerationStatus: pulumi.String("Enabled"),
+		})
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+}
+
+```
+
+{{% /choosable %}}
+
+{{% choosable language csharp %}}
+
+```csharp
+using System.Collections.Generic;
+using System.Linq;
+using Pulumi;
+using Aws = Pulumi.Aws;
+
+return await Deployment.RunAsync(() => 
+{
+    var myBucket = new Aws.S3.Bucket("my-bucket", new()
+    {
+        AccelerationStatus = "Enabled",
+    });
+
+});
+
+
+```
+
+{{% /choosable %}}
+
+{{% choosable language java %}}
+
+```java
+package generated_program;
+
+import com.pulumi.Context;
+import com.pulumi.Pulumi;
+import com.pulumi.core.Output;
+import com.pulumi.aws.s3.Bucket;
+import com.pulumi.aws.s3.BucketArgs;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+public class App {
+    public static void main(String[] args) {
+        Pulumi.run(App::stack);
+    }
+
+    public static void stack(Context ctx) {
+        var myBucket = new Bucket("myBucket", BucketArgs.builder()
+            .accelerationStatus("Enabled")
+            .build());
+
+    }
+}
+
+```
+
+{{% /choosable %}}
+
+{{% choosable language yaml %}}
+
+```yaml
+name: example
+runtime: yaml
+resources:
+  my-bucket:
+    type: aws:s3:Bucket
+    properties:
+      accelerationStatus: Enabled
+```
+
+{{% /choosable %}}
+
+{{< /chooser >}}
+
 
 Use the `aws.s3.BucketAccelerationConfiguration` resource:
 
-``` typescript
-const myBucket = new aws.s3.BucketV2("my-new-bucket", {});
+{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
 
-new aws.s3.BucketAccelerateConfigurationV2("my-bucket-acceleration", {
-  bucket: myBucket.bucket,
-  status: "Enabled",
-});
+{{% choosable language typescript %}}
+
+```typescript
+import * as pulumi from "@pulumi/pulumi";
+import * as aws from "@pulumi/aws";
+
+const myBucket = new aws.s3.BucketV2("my-bucket", {accelerationStatus: "Enabled"});
+
 ```
+
+{{% /choosable %}}
+
+{{% choosable language python %}}
+
+```python
+import pulumi
+import pulumi_aws as aws
+
+my_bucket = aws.s3.BucketV2("my-bucket", acceleration_status="Enabled")
+
+```
+
+{{% /choosable %}}
+
+{{% choosable language go %}}
+
+```go
+package main
+
+import (
+	"github.com/pulumi/pulumi-aws/sdk/v6/go/aws/s3"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		_, err := s3.NewBucketV2(ctx, "my-bucket", &s3.BucketV2Args{
+			AccelerationStatus: pulumi.String("Enabled"),
+		})
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+}
+
+```
+
+{{% /choosable %}}
+
+{{% choosable language csharp %}}
+
+```csharp
+using System.Collections.Generic;
+using System.Linq;
+using Pulumi;
+using Aws = Pulumi.Aws;
+
+return await Deployment.RunAsync(() => 
+{
+    var myBucket = new Aws.S3.BucketV2("my-bucket", new()
+    {
+        AccelerationStatus = "Enabled",
+    });
+
+});
+
+
+```
+
+{{% /choosable %}}
+
+{{% choosable language java %}}
+
+```java
+package generated_program;
+
+import com.pulumi.Context;
+import com.pulumi.Pulumi;
+import com.pulumi.core.Output;
+import com.pulumi.aws.s3.BucketV2;
+import com.pulumi.aws.s3.BucketV2Args;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+public class App {
+    public static void main(String[] args) {
+        Pulumi.run(App::stack);
+    }
+
+    public static void stack(Context ctx) {
+        var myBucket = new BucketV2("myBucket", BucketV2Args.builder()
+            .accelerationStatus("Enabled")
+            .build());
+
+    }
+}
+
+```
+
+{{% /choosable %}}
+
+{{% choosable language yaml %}}
+
+```yaml
+name: example
+runtime: yaml
+resources:
+  my-bucket:
+    type: aws:s3:BucketV2
+    properties:
+      accelerationStatus: Enabled
+  my-bucket-acceleration:
+    type: aws:s3:BucketAccelerationConfigurationV2
+    properties:
+      bucket: ${my-bucket.bucket}
+      accelerationStatus: Enabled
+```
+
+{{% /choosable %}}
+
+{{< /chooser >}}
+
 
 ### corsRules input
 

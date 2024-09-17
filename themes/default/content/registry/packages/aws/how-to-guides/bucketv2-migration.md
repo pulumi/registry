@@ -15,12 +15,12 @@ guide aims to cover all relevant scenarios with precise migration instructions.
 
 To migrate existing `aws.s3.Bucket` resources to `aws.s3.BucketV2`:
 
-1. Edit your Pulumi program sources to replace [Removed inputs](#removed-inputs) with equivalent side-by-side resources.
+1. Edit your Pulumi program sources to replace removed inputs (see below) with equivalent side-by-side resources.
 
 2. Perform `pulumi up` to replace (delete and re-create) the buckets in AWS.
 
-If replacement is not acceptable, it is possible to perform a manual migration with `pulumi import`. For a fully worked
-example see [Avoiding replacement](#avoiding-replacement).
+If replacement is not acceptable, it is possible to perform a manual migration with `pulumi import` (see Avoiding
+replacement).
 
 ## Migrating deprecated inputs
 

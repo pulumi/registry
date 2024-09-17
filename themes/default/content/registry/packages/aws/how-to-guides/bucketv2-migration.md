@@ -33,29 +33,31 @@ To specify a
 [bucket policy](https://docs.aws.amazon.com/AmazonS3/latest/dev/example-bucket-policies.html),
 instead of:
 
-``` typescript
-new aws.s3.Bucket("my-bucket", {
-  bucket: "my-bucket-26224916",
-  policy: JSON.stringify({
-    "Version": "2012-10-17",
-    "Id": "PutObjPolicy",
-    "Statement": [
-      {
-        "Sid": "DenyObjectsThatAreNotSSEKMS",
-        "Principal": "*",
-        "Effect": "Deny",
-        "Action": "s3:PutObject",
-        "Resource": "arn:aws:s3:::my-bucket-26224916/*",
-        "Condition": {
-          "Null": {
-            "s3:x-amz-server-side-encryption-aws-kms-key-id": "true"
-          }
-        }
-      }
-    ]
-  }),
-});
+{{% choosable %}}
+
+```yaml
+name: example
+runtime: yaml
+resources:
+  my-bucket:
+    type: aws:s3:Bucket
+    properties:
+      bucket: "my-bucket-26224916"
+      policy:
+        fn::toJSON:
+          Version: 2012-10-17
+          Id: PutObjPolicy
+          Statement:
+            Sid: DenyObjectsThatAreNotSSEKMS
+            Principal: "*"
+            Effect: Deny
+            Action: s3:PutObject
+            Resource: "arn:aws:s3:::my-bucket-26224916/*"
+            Condition:
+              "Null":
+                s3:x-amz-server-side-encryption-aws-kms-key-id: "true"
 ```
+{{% /choosable %}}
 
 Use the `aws.s3.BucketPolicy` resource:
 

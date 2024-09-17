@@ -10,8 +10,8 @@ layout: package
 In the upcoming AWS Classic major release (v7), `aws.s3.Bucket` will be discontinued in favor of `BucketV2`. Users of
 `aws.s3.Bucket` resource are encouraged to migrate early. The migration is straightforward for simple use cases but
 requires some care for advanced configurations. Specifically `BucketV2` inputs such as `policy` and `accelerationStatus`
-are deprecated and using the requires migrating to side-by-side resources (see [Removed inputs](#removed-inputs)). This
-guide aims to cover all relevant scenarios with precise migration instructions.
+are deprecated and using the requires migrating to side-by-side resources (see Removed inputs). This guide aims to cover
+all relevant scenarios with precise migration instructions.
 
 To migrate existing `aws.s3.Bucket` resources to `aws.s3.BucketV2`:
 

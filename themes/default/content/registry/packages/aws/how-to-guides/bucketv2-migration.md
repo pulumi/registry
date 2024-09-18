@@ -2000,15 +2000,15 @@ migration that changes Pulumi program and state to track buckets using the new r
 against the actual cloud account. While the details will vary depending on your use case, this procedure generally
 involves the following steps:
 
-1. Find URNs for legacy Bucket Pulumi resources using `pulumi stack export`
-2. Determine the actual bucket name(s)
-3. Determine which side-by-side resources will be needed for each bucket
-4. Construct an `pulumi-import.json` file listing the buckets and their side-by-side resources
-5. Run `pulumi import --file import-file.json` using the [Bulk Importing](https://www.pulumi.com/tutorials/importing/bulk-importing/) feature
-6. Add the suggested code into your Pulumi program source
-7. Remove the legacy Bucket code from your Pulumi program source
-8. Remove the legacy Bucket resources from state using `pulumi state delete $bucketURN`
-9. Run `pulumi preview` to confirm a no-change plan
+- Find URNs for legacy Bucket Pulumi resources using `pulumi stack export`
+- Determine the actual bucket name(s)
+- Determine which side-by-side resources will be needed for each bucket
+- Construct an `pulumi-import.json` file listing the buckets and their side-by-side resources
+- Run `pulumi import --file import-file.json` using the [Bulk Importing](https://www.pulumi.com/tutorials/importing/bulk-importing/) feature
+- Add the suggested code into your Pulumi program source
+- Remove the legacy Bucket code from your Pulumi program source
+- Remove the legacy Bucket resources from state using `pulumi state delete $bucketURN`
+- Run `pulumi preview` to confirm a no-change plan
 
 Consider a concrete example, suppose you have provisioned a bucket with a `serverSideEncryptionConfiguration` as
 follows:
@@ -2176,15 +2176,16 @@ resources:
 
 {{< /chooser >}}
 
+Migrate as follows:
 
-1. Scanning through the state in `pulumi stack export`, observe and note its URN is
-   `"urn:pulumi:dev::bucket-playground::aws:s3/bucket:Bucket::my-bucket"`
+- Scanning through the state in `pulumi stack export`, observe and note its URN is
+  `"urn:pulumi:dev::bucket-playground::aws:s3/bucket:Bucket::my-bucket"`
 
-2. The state file should also include the actual cloud name for the bucket such as `"bucket": "my-bucket-cd24744"`
+- The state file should also include the actual cloud name for the bucket such as `"bucket": "my-bucket-cd24744"`
 
-3. This bucket will require a `BucketServerSideEncryptionConfiguration` side-by-side resource
+- This bucket will require a `BucketServerSideEncryptionConfiguration` side-by-side resource
 
-4. The import file should therefore look like this:
+- The import file should therefore look like this:
 
     ```json
     {
@@ -2203,7 +2204,7 @@ resources:
     }
     ```
 
-5. `pulumi import --file import-file.json` will suggest new code to include in your program, for example:
+- `pulumi import --file import-file.json` will suggest new code to include in your program, for example:
 
 {{< chooser language "typescript,python,go,csharp,java,yaml" >}}
 
@@ -2414,9 +2415,9 @@ resources:
 {{< /chooser >}}
 
 
-6. Run `pulumi state delete "urn:pulumi:dev::bucket-playground::aws:s3/bucket:Bucket::my-bucket"` to remove the old
-   bucket from the state
+- Run `pulumi state delete "urn:pulumi:dev::bucket-playground::aws:s3/bucket:Bucket::my-bucket"` to remove the old
+  bucket from the state
 
-7. Delete the code for the old bucket from the sources.
+- Delete the code for the old bucket from the sources.
 
-8. `pulumi preview` should result in `Resources: N unchanged` to confirm everything went well.
+- `pulumi preview` should result in `Resources: N unchanged` to confirm everything went well.

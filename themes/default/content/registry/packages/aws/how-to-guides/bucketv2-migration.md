@@ -148,7 +148,7 @@ using System.Text.Json;
 using Pulumi;
 using Aws = Pulumi.Aws;
 
-return await Deployment.RunAsync(() =>
+return await Deployment.RunAsync(() => 
 {
     var myBucket = new Aws.S3.Bucket("my-bucket", new()
     {
@@ -279,7 +279,7 @@ import * as aws from "@pulumi/aws";
 
 const myBucket = new aws.s3.BucketV2("my-bucket", {});
 const myBucketPolicy = new aws.s3.BucketPolicy("my-bucket-policy", {
-    bucket: "my-bucket-26224916",
+    bucket: myBucket.bucket,
     policy: pulumi.jsonStringify({
         Version: "2012-10-17",
         Id: "PutObjPolicy",
@@ -311,7 +311,7 @@ import pulumi_aws as aws
 
 my_bucket = aws.s3.BucketV2("my-bucket")
 my_bucket_policy = aws.s3.BucketPolicy("my-bucket-policy",
-    bucket="my-bucket-26224916",
+    bucket=my_bucket.bucket,
     policy=pulumi.Output.json_dumps({
         "Version": "2012-10-17",
         "Id": "PutObjPolicy",
@@ -354,7 +354,7 @@ func main() {
 			return err
 		}
 		_, err = s3.NewBucketPolicy(ctx, "my-bucket-policy", &s3.BucketPolicyArgs{
-			Bucket: pulumi.String("my-bucket-26224916"),
+			Bucket: myBucket.Bucket,
 			Policy: myBucket.Bucket.ApplyT(func(bucket string) (pulumi.String, error) {
 				var _zero pulumi.String
 				tmpJSON0, err := json.Marshal(map[string]interface{}{
@@ -400,13 +400,13 @@ using System.Text.Json;
 using Pulumi;
 using Aws = Pulumi.Aws;
 
-return await Deployment.RunAsync(() =>
+return await Deployment.RunAsync(() => 
 {
     var myBucket = new Aws.S3.BucketV2("my-bucket");
 
     var myBucketPolicy = new Aws.S3.BucketPolicy("my-bucket-policy", new()
     {
-        Bucket = "my-bucket-26224916",
+        Bucket = myBucket.Bucket,
         Policy = Output.JsonSerialize(Output.Create(new Dictionary<string, object?>
         {
             ["Version"] = "2012-10-17",
@@ -464,7 +464,7 @@ public class App {
         var myBucket = new BucketV2("myBucket");
 
         var myBucketPolicy = new BucketPolicy("myBucketPolicy", BucketPolicyArgs.builder()
-            .bucket("my-bucket-26224916")
+            .bucket(myBucket.bucket())
             .policy(myBucket.bucket().applyValue(bucket -> serializeJson(
                 jsonObject(
                     jsonProperty("Version", "2012-10-17"),
@@ -502,7 +502,7 @@ resources:
   my-bucket-policy:
     type: aws:s3:BucketPolicy
     properties:
-      bucket: "my-bucket-26224916"
+      bucket: ${my-bucket.bucket}
       policy:
         fn::toJSON:
           Version: 2012-10-17
@@ -521,10 +521,6 @@ resources:
 {{% /choosable %}}
 
 {{< /chooser >}}
-
-
-
-
 
 As a bonus, the policy can now more easily refer to the concrete name of the bucket.
 
@@ -611,7 +607,7 @@ using System.Linq;
 using Pulumi;
 using Aws = Pulumi.Aws;
 
-return await Deployment.RunAsync(() =>
+return await Deployment.RunAsync(() => 
 {
     var myBucket = new Aws.S3.Bucket("my-bucket", new()
     {
@@ -789,7 +785,7 @@ using System.Linq;
 using Pulumi;
 using Aws = Pulumi.Aws;
 
-return await Deployment.RunAsync(() =>
+return await Deployment.RunAsync(() => 
 {
     var myBucket = new Aws.S3.BucketV2("my-bucket");
 
@@ -947,7 +943,7 @@ using System.Linq;
 using Pulumi;
 using Aws = Pulumi.Aws;
 
-return await Deployment.RunAsync(() =>
+return await Deployment.RunAsync(() => 
 {
     var myBucket = new Aws.S3.Bucket("my-bucket", new()
     {
@@ -1014,7 +1010,7 @@ resources:
 
 
 
-Use the `aws.s3.BucketAccelerationConfiguration` resource:
+Use the `aws.s3.BucketAccelerateConfigurationV2` resource:
 
 {{< chooser language "typescript,python,go,csharp,java,yaml" >}}
 
@@ -1024,7 +1020,11 @@ Use the `aws.s3.BucketAccelerationConfiguration` resource:
 import * as pulumi from "@pulumi/pulumi";
 import * as aws from "@pulumi/aws";
 
-const myBucket = new aws.s3.BucketV2("my-bucket", {accelerationStatus: "Enabled"});
+const myBucket = new aws.s3.BucketV2("my-bucket", {});
+const myBucketAcceleration = new aws.s3.BucketAccelerateConfigurationV2("my-bucket-acceleration", {
+    bucket: myBucket.bucket,
+    status: "Enabled",
+});
 
 ```
 
@@ -1036,7 +1036,10 @@ const myBucket = new aws.s3.BucketV2("my-bucket", {accelerationStatus: "Enabled"
 import pulumi
 import pulumi_aws as aws
 
-my_bucket = aws.s3.BucketV2("my-bucket", acceleration_status="Enabled")
+my_bucket = aws.s3.BucketV2("my-bucket")
+my_bucket_acceleration = aws.s3.BucketAccelerateConfigurationV2("my-bucket-acceleration",
+    bucket=my_bucket.bucket,
+    status="Enabled")
 
 ```
 
@@ -1054,8 +1057,13 @@ import (
 
 func main() {
 	pulumi.Run(func(ctx *pulumi.Context) error {
-		_, err := s3.NewBucketV2(ctx, "my-bucket", &s3.BucketV2Args{
-			AccelerationStatus: pulumi.String("Enabled"),
+		myBucket, err := s3.NewBucketV2(ctx, "my-bucket", nil)
+		if err != nil {
+			return err
+		}
+		_, err = s3.NewBucketAccelerateConfigurationV2(ctx, "my-bucket-acceleration", &s3.BucketAccelerateConfigurationV2Args{
+			Bucket: myBucket.Bucket,
+			Status: pulumi.String("Enabled"),
 		})
 		if err != nil {
 			return err
@@ -1076,11 +1084,14 @@ using System.Linq;
 using Pulumi;
 using Aws = Pulumi.Aws;
 
-return await Deployment.RunAsync(() =>
+return await Deployment.RunAsync(() => 
 {
-    var myBucket = new Aws.S3.BucketV2("my-bucket", new()
+    var myBucket = new Aws.S3.BucketV2("my-bucket");
+
+    var myBucketAcceleration = new Aws.S3.BucketAccelerateConfigurationV2("my-bucket-acceleration", new()
     {
-        AccelerationStatus = "Enabled",
+        Bucket = myBucket.Bucket,
+        Status = "Enabled",
     });
 
 });
@@ -1099,7 +1110,8 @@ import com.pulumi.Context;
 import com.pulumi.Pulumi;
 import com.pulumi.core.Output;
 import com.pulumi.aws.s3.BucketV2;
-import com.pulumi.aws.s3.BucketV2Args;
+import com.pulumi.aws.s3.BucketAccelerateConfigurationV2;
+import com.pulumi.aws.s3.BucketAccelerateConfigurationV2Args;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
@@ -1113,8 +1125,11 @@ public class App {
     }
 
     public static void stack(Context ctx) {
-        var myBucket = new BucketV2("myBucket", BucketV2Args.builder()
-            .accelerationStatus("Enabled")
+        var myBucket = new BucketV2("myBucket");
+
+        var myBucketAcceleration = new BucketAccelerateConfigurationV2("myBucketAcceleration", BucketAccelerateConfigurationV2Args.builder()
+            .bucket(myBucket.bucket())
+            .status("Enabled")
             .build());
 
     }
@@ -1132,13 +1147,11 @@ runtime: yaml
 resources:
   my-bucket:
     type: aws:s3:BucketV2
-    properties:
-      accelerationStatus: Enabled
   my-bucket-acceleration:
-    type: aws:s3:BucketAccelerationConfigurationV2
+    type: aws:s3:BucketAccelerateConfigurationV2
     properties:
       bucket: ${my-bucket.bucket}
-      accelerationStatus: Enabled
+      status: Enabled
 ```
 
 {{% /choosable %}}
@@ -1239,7 +1252,7 @@ using System.Linq;
 using Pulumi;
 using Aws = Pulumi.Aws;
 
-return await Deployment.RunAsync(() =>
+return await Deployment.RunAsync(() => 
 {
     var myBucket = new Aws.S3.Bucket("my-bucket", new()
     {
@@ -1343,7 +1356,7 @@ resources:
 
 
 
-Use the `aws.s3.BucketCorsConfiguration` resource:
+Use the `aws.s3.BucketCorsConfigurationV2` resource:
 
 {{< chooser language "typescript,python,go,csharp,java,yaml" >}}
 
@@ -1354,6 +1367,16 @@ import * as pulumi from "@pulumi/pulumi";
 import * as aws from "@pulumi/aws";
 
 const myBucket = new aws.s3.BucketV2("my-bucket", {});
+const myBucketCors = new aws.s3.BucketCorsConfigurationV2("my-bucket-cors", {
+    bucket: myBucket.bucket,
+    corsRules: [{
+        allowedHeaders: ["*"],
+        allowedMethods: ["GET"],
+        allowedOrigins: ["*"],
+        exposeHeaders: ["ETag"],
+        maxAgeSeconds: 3000,
+    }],
+});
 
 ```
 
@@ -1366,6 +1389,15 @@ import pulumi
 import pulumi_aws as aws
 
 my_bucket = aws.s3.BucketV2("my-bucket")
+my_bucket_cors = aws.s3.BucketCorsConfigurationV2("my-bucket-cors",
+    bucket=my_bucket.bucket,
+    cors_rules=[{
+        "allowed_headers": ["*"],
+        "allowed_methods": ["GET"],
+        "allowed_origins": ["*"],
+        "expose_headers": ["ETag"],
+        "max_age_seconds": 3000,
+    }])
 
 ```
 
@@ -1383,7 +1415,30 @@ import (
 
 func main() {
 	pulumi.Run(func(ctx *pulumi.Context) error {
-		_, err := s3.NewBucketV2(ctx, "my-bucket", nil)
+		myBucket, err := s3.NewBucketV2(ctx, "my-bucket", nil)
+		if err != nil {
+			return err
+		}
+		_, err = s3.NewBucketCorsConfigurationV2(ctx, "my-bucket-cors", &s3.BucketCorsConfigurationV2Args{
+			Bucket: myBucket.Bucket,
+			CorsRules: s3.BucketCorsConfigurationV2CorsRuleArray{
+				&s3.BucketCorsConfigurationV2CorsRuleArgs{
+					AllowedHeaders: pulumi.StringArray{
+						pulumi.String("*"),
+					},
+					AllowedMethods: pulumi.StringArray{
+						pulumi.String("GET"),
+					},
+					AllowedOrigins: pulumi.StringArray{
+						pulumi.String("*"),
+					},
+					ExposeHeaders: pulumi.StringArray{
+						pulumi.String("ETag"),
+					},
+					MaxAgeSeconds: pulumi.Int(3000),
+				},
+			},
+		})
 		if err != nil {
 			return err
 		}
@@ -1403,9 +1458,37 @@ using System.Linq;
 using Pulumi;
 using Aws = Pulumi.Aws;
 
-return await Deployment.RunAsync(() =>
+return await Deployment.RunAsync(() => 
 {
     var myBucket = new Aws.S3.BucketV2("my-bucket");
+
+    var myBucketCors = new Aws.S3.BucketCorsConfigurationV2("my-bucket-cors", new()
+    {
+        Bucket = myBucket.Bucket,
+        CorsRules = new[]
+        {
+            new Aws.S3.Inputs.BucketCorsConfigurationV2CorsRuleArgs
+            {
+                AllowedHeaders = new[]
+                {
+                    "*",
+                },
+                AllowedMethods = new[]
+                {
+                    "GET",
+                },
+                AllowedOrigins = new[]
+                {
+                    "*",
+                },
+                ExposeHeaders = new[]
+                {
+                    "ETag",
+                },
+                MaxAgeSeconds = 3000,
+            },
+        },
+    });
 
 });
 
@@ -1423,6 +1506,9 @@ import com.pulumi.Context;
 import com.pulumi.Pulumi;
 import com.pulumi.core.Output;
 import com.pulumi.aws.s3.BucketV2;
+import com.pulumi.aws.s3.BucketCorsConfigurationV2;
+import com.pulumi.aws.s3.BucketCorsConfigurationV2Args;
+import com.pulumi.aws.s3.inputs.BucketCorsConfigurationV2CorsRuleArgs;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
@@ -1437,6 +1523,17 @@ public class App {
 
     public static void stack(Context ctx) {
         var myBucket = new BucketV2("myBucket");
+
+        var myBucketCors = new BucketCorsConfigurationV2("myBucketCors", BucketCorsConfigurationV2Args.builder()
+            .bucket(myBucket.bucket())
+            .corsRules(BucketCorsConfigurationV2CorsRuleArgs.builder()
+                .allowedHeaders("*")
+                .allowedMethods("GET")
+                .allowedOrigins("*")
+                .exposeHeaders("ETag")
+                .maxAgeSeconds(3000)
+                .build())
+            .build());
 
     }
 }
@@ -1454,7 +1551,7 @@ resources:
   my-bucket:
     type: aws:s3:BucketV2
   my-bucket-cors:
-    type: aws:s3:BucketCorsConfiguration
+    type: aws:s3:BucketCorsConfigurationV2
     properties:
       bucket: ${my-bucket.bucket}
       corsRules:
@@ -1564,7 +1661,7 @@ using System.Linq;
 using Pulumi;
 using Aws = Pulumi.Aws;
 
-return await Deployment.RunAsync(() =>
+return await Deployment.RunAsync(() => 
 {
     var currentUser = Aws.S3.GetCanonicalUserId.Invoke();
 
@@ -1800,7 +1897,7 @@ using System.Linq;
 using Pulumi;
 using Aws = Pulumi.Aws;
 
-return await Deployment.RunAsync(() =>
+return await Deployment.RunAsync(() => 
 {
     var currentUser = Aws.S3.GetCanonicalUserId.Invoke();
 
@@ -2086,7 +2183,7 @@ using System.Linq;
 using Pulumi;
 using Aws = Pulumi.Aws;
 
-return await Deployment.RunAsync(() =>
+return await Deployment.RunAsync(() => 
 {
     var myBucket = new Aws.S3.Bucket("my-bucket", new()
     {
@@ -2295,7 +2392,7 @@ using System.Linq;
 using Pulumi;
 using Aws = Pulumi.Aws;
 
-return await Deployment.RunAsync(() =>
+return await Deployment.RunAsync(() => 
 {
     var myBucket = new Aws.S3.BucketV2("my-bucket", new()
     {

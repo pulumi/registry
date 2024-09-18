@@ -148,7 +148,7 @@ using System.Text.Json;
 using Pulumi;
 using Aws = Pulumi.Aws;
 
-return await Deployment.RunAsync(() => 
+return await Deployment.RunAsync(() =>
 {
     var myBucket = new Aws.S3.Bucket("my-bucket", new()
     {
@@ -400,7 +400,7 @@ using System.Text.Json;
 using Pulumi;
 using Aws = Pulumi.Aws;
 
-return await Deployment.RunAsync(() => 
+return await Deployment.RunAsync(() =>
 {
     var myBucket = new Aws.S3.BucketV2("my-bucket");
 
@@ -607,7 +607,7 @@ using System.Linq;
 using Pulumi;
 using Aws = Pulumi.Aws;
 
-return await Deployment.RunAsync(() => 
+return await Deployment.RunAsync(() =>
 {
     var myBucket = new Aws.S3.Bucket("my-bucket", new()
     {
@@ -785,7 +785,7 @@ using System.Linq;
 using Pulumi;
 using Aws = Pulumi.Aws;
 
-return await Deployment.RunAsync(() => 
+return await Deployment.RunAsync(() =>
 {
     var myBucket = new Aws.S3.BucketV2("my-bucket");
 
@@ -943,7 +943,7 @@ using System.Linq;
 using Pulumi;
 using Aws = Pulumi.Aws;
 
-return await Deployment.RunAsync(() => 
+return await Deployment.RunAsync(() =>
 {
     var myBucket = new Aws.S3.Bucket("my-bucket", new()
     {
@@ -1084,7 +1084,7 @@ using System.Linq;
 using Pulumi;
 using Aws = Pulumi.Aws;
 
-return await Deployment.RunAsync(() => 
+return await Deployment.RunAsync(() =>
 {
     var myBucket = new Aws.S3.BucketV2("my-bucket");
 
@@ -1252,7 +1252,7 @@ using System.Linq;
 using Pulumi;
 using Aws = Pulumi.Aws;
 
-return await Deployment.RunAsync(() => 
+return await Deployment.RunAsync(() =>
 {
     var myBucket = new Aws.S3.Bucket("my-bucket", new()
     {
@@ -1458,7 +1458,7 @@ using System.Linq;
 using Pulumi;
 using Aws = Pulumi.Aws;
 
-return await Deployment.RunAsync(() => 
+return await Deployment.RunAsync(() =>
 {
     var myBucket = new Aws.S3.BucketV2("my-bucket");
 
@@ -1661,7 +1661,7 @@ using System.Linq;
 using Pulumi;
 using Aws = Pulumi.Aws;
 
-return await Deployment.RunAsync(() => 
+return await Deployment.RunAsync(() =>
 {
     var currentUser = Aws.S3.GetCanonicalUserId.Invoke();
 
@@ -1897,7 +1897,7 @@ using System.Linq;
 using Pulumi;
 using Aws = Pulumi.Aws;
 
-return await Deployment.RunAsync(() => 
+return await Deployment.RunAsync(() =>
 {
     var currentUser = Aws.S3.GetCanonicalUserId.Invoke();
 
@@ -2094,16 +2094,17 @@ involves the following steps:
 
 - Find URNs for legacy Bucket Pulumi resources using `pulumi stack export`
 - Determine the actual bucket name(s)
+- Remove the legacy Bucket code from your Pulumi program source
+- Remove the legacy Bucket resources from state using `pulumi state delete $bucketURN`
 - Determine which side-by-side resources will be needed for each bucket
 - Construct an `pulumi-import.json` file listing the buckets and their side-by-side resources
 - Run `pulumi import --file import-file.json` using the [Bulk Importing](https://www.pulumi.com/tutorials/importing/bulk-importing/) feature
 - Add the suggested code into your Pulumi program source
-- Remove the legacy Bucket code from your Pulumi program source
-- Remove the legacy Bucket resources from state using `pulumi state delete $bucketURN`
 - Run `pulumi preview` to confirm a no-change plan
+- If warnings are generated, edit the program to remove deprecated inputs from BucketV2
+- Run `pulumi preview` one more time to confirm a no-change plan on the final program
 
-Consider a concrete example, suppose you have provisioned a bucket with a `serverSideEncryptionConfiguration` as
-follows:
+Consider a concrete example, suppose you have provisioned a bucket as follows:
 
 {{< chooser language "typescript,python,go,csharp,java,yaml" >}}
 
@@ -2183,7 +2184,7 @@ using System.Linq;
 using Pulumi;
 using Aws = Pulumi.Aws;
 
-return await Deployment.RunAsync(() => 
+return await Deployment.RunAsync(() =>
 {
     var myBucket = new Aws.S3.Bucket("my-bucket", new()
     {
@@ -2252,16 +2253,40 @@ public class App {
 {{% choosable language yaml %}}
 
 ```yaml
-name: example
+name: y2
 runtime: yaml
 resources:
   my-bucket:
     type: aws:s3:Bucket
     properties:
+      bucket: "my-bucket-26224917"
       serverSideEncryptionConfiguration:
         rule:
           applyServerSideEncryptionByDefault:
-            sseAlgorithm: "aws:kms"
+            sseAlgorithm: "AES256"
+      lifecycleRules:
+         - enabled: true
+           expiration:
+             days: 30
+      policy:
+        fn::toJSON:
+          Version: "2012-10-17"
+          Id: "PutObjPolicy"
+          Statement:
+            - Sid: "DenyObjectsThatAreNotSSEKMS"
+              Principal: "*"
+              Effect: "Deny"
+              Action: "s3:PutObject"
+              Resource: "arn:aws:s3:::my-bucket-26224917/*"
+              Condition:
+                "Null":
+                  "s3:x-amz-server-side-encryption-aws-kms-key-id": "true"
+      tags:
+        Environment: "Dev"
+      objectLockConfiguration:
+        objectLockEnabled: "Enabled"
+      versioning:
+        enabled: true
 ```
 
 {{% /choosable %}}
@@ -2271,11 +2296,22 @@ resources:
 Migrate as follows:
 
 - Scanning through the state in `pulumi stack export`, observe and note its URN is
-  `"urn:pulumi:dev::bucket-playground::aws:s3/bucket:Bucket::my-bucket"`
+  `"urn:pulumi:bucket1::y2::aws:s3/bucket:Bucket::my-bucket"`
 
-- The state file should also include the actual cloud name for the bucket such as `"bucket": "my-bucket-cd24744"`
+- The state file should also include the actual cloud name for the bucket such as `"bucket": "my-bucket-36224917"`
 
-- This bucket will require a `BucketServerSideEncryptionConfiguration` side-by-side resource
+- Run `pulumi state delete "urn:pulumi:bucket1::y2::aws:s3/bucket:Bucket::my-bucket"` to remove the old bucket from the
+  state
+
+- Delete the code for the old bucket from the sources.
+
+- This bucket will require the following side-by-side resources:
+
+  aws:s3:BucketServerSideEncryptionConfigurationV2
+  aws:s3:BucketLifecycleConfigurationV2
+  aws:s3:BucketPolicy
+  aws:s3:BucketObjectLockConfigurationV2
+  aws:s3:BucketVersioningV2
 
 - The import file should therefore look like this:
 
@@ -2284,13 +2320,33 @@ Migrate as follows:
       "resources": [
         {
           "type": "aws:s3/bucketV2:BucketV2",
-          "name": "my-bucket",
-          "id": "my-bucket-cd24744"
+          "name": "my-bucket2",
+          "id": "my-bucket-36224917"
         },
         {
           "type": "aws:s3/bucketServerSideEncryptionConfigurationV2:BucketServerSideEncryptionConfigurationV2",
           "name": "my-bucket-encryption-configuration",
-          "id": "my-bucket-cd24744"
+          "id": "my-bucket-36224917"
+        },
+        {
+          "type": "aws:s3/bucketPolicy:BucketPolicy",
+          "name": "my-bucket-policy",
+          "id": "my-bucket-36224917"
+        },
+        {
+          "type": "aws:s3/bucketLifecycleConfigurationV2:BucketLifecycleConfigurationV2",
+          "name": "my-bucket-policy",
+          "id": "my-bucket-36224917"
+        },
+        {
+          "type": "aws:s3/bucketObjectLockConfigurationV2:BucketObjectLockConfigurationV2",
+          "name": "my-bucket-object-lock-configuration",
+          "id": "my-bucket-36224917"
+        },
+        {
+          "type": "aws:s3/bucketVersioningV2:BucketVersioningV2",
+          "name": "my-bucket-versioning",
+          "id": "my-bucket-36224917"
         }
       ]
     }
@@ -2392,7 +2448,7 @@ using System.Linq;
 using Pulumi;
 using Aws = Pulumi.Aws;
 
-return await Deployment.RunAsync(() => 
+return await Deployment.RunAsync(() =>
 {
     var myBucket = new Aws.S3.BucketV2("my-bucket", new()
     {
@@ -2482,22 +2538,78 @@ public class App {
 {{% choosable language yaml %}}
 
 ```yaml
-name: example
+name: y2
 runtime: yaml
 resources:
   my-bucket:
     type: aws:s3:BucketV2
     properties:
-      bucket: "my-bucket-cd24744"
+      bucket: my-bucket-36224917
+      grants:
+        - id: e07865a5679c7977370948f1f1e51c21b12d8cfdd396a7e3172275d9164e01b8
+          permissions:
+            - FULL_CONTROL
+          type: CanonicalUser
+      lifecycleRules:
+        - enabled: true
+          expirations:
+            - days: 30
+          id: pu-s3-lifecycle-20240918194815251100000001
+      objectLockConfiguration:
+        objectLockEnabled: Enabled
+      policy: '{"Id":"PutObjPolicy","Statement":[{"Action":"s3:PutObject","Condition":{"Null":{"s3:x-amz-server-side-encryption-aws-kms-key-id":"true"}},"Effect":"Deny","Principal":"*","Resource":"arn:aws:s3:::my-bucket-36224917/*","Sid":"DenyObjectsThatAreNotSSEKMS"}],"Version":"2012-10-17"}'
+      requestPayer: BucketOwner
+      serverSideEncryptionConfigurations:
+        - rules:
+            - applyServerSideEncryptionByDefaults:
+                - sseAlgorithm: AES256
+      tags:
+        Environment: Dev
+      versionings:
+        - enabled: true
     options:
       protect: true
   my-bucket-encryption-configuration:
     type: aws:s3:BucketServerSideEncryptionConfigurationV2
     properties:
-      bucket: "my-bucket-cd24744"
+      bucket: my-bucket-36224917
       rules:
         - applyServerSideEncryptionByDefault:
-            sseAlgorithm: "aws:kms"
+            sseAlgorithm: AES256
+    options:
+      protect: true
+  my-bucket-policy:
+    type: aws:s3:BucketPolicy
+    properties:
+      bucket: my-bucket-36224917
+      policy: '{"Id":"PutObjPolicy","Statement":[{"Action":"s3:PutObject","Condition":{"Null":{"s3:x-amz-server-side-encryption-aws-kms-key-id":"true"}},"Effect":"Deny","Principal":"*","Resource":"arn:aws:s3:::my-bucket-36224917/*","Sid":"DenyObjectsThatAreNotSSEKMS"}],"Version":"2012-10-17"}'
+    options:
+      protect: true
+  my-bucket-lifecycle:
+    type: aws:s3:BucketLifecycleConfigurationV2
+    properties:
+      bucket: my-bucket-36224917
+      rules:
+        - expiration:
+            days: 30
+          id: pu-s3-lifecycle-20240918194815251100000001
+          status: Enabled
+    options:
+      protect: true
+  my-bucket-object-lock-configuration:
+    type: aws:s3:BucketObjectLockConfigurationV2
+    properties:
+      bucket: my-bucket-36224917
+      objectLockEnabled: Enabled
+    options:
+      protect: true
+  my-bucket-versioning:
+    type: aws:s3:BucketVersioningV2
+    properties:
+      bucket: my-bucket-36224917
+      versioningConfiguration:
+        mfaDelete: Disabled
+        status: Enabled
     options:
       protect: true
 ```
@@ -2506,14 +2618,84 @@ resources:
 
 {{< /chooser >}}
 
-
-- Run `pulumi state delete "urn:pulumi:dev::bucket-playground::aws:s3/bucket:Bucket::my-bucket"` to remove the old
-  bucket from the state
-
-- Delete the code for the old bucket from the sources.
-
 - `pulumi preview` should result in `Resources: N unchanged` to confirm everything went well.
 
+- At this point you may see warnings from deprecated inputs like this:
+
+```shell
+warning: urn:pulumi:bucket1::y2::aws:s3/bucketV2:BucketV2::my-bucket verification warning: Use the top-level parameter object_lock_enabled instead
+warning: urn:pulumi:bucket1::y2::aws:s3/bucketV2:BucketV2::my-bucket verification warning: Use the top-level parameter object_lock_enabled and the aws_s3_bucket_object_lock_configuration resource instead
+warning: urn:pulumi:bucket1::y2::aws:s3/bucketV2:BucketV2::my-bucket verification warning: Use the aws_s3_bucket_lifecycle_configuration resource instead
+warning: urn:pulumi:bucket1::y2::aws:s3/bucketV2:BucketV2::my-bucket verification warning: Use the aws_s3_bucket_versioning resource instead
+warning: urn:pulumi:bucket1::y2::aws:s3/bucketV2:BucketV2::my-bucket verification warning: Use the aws_s3_bucket_acl resource instead
+warning: urn:pulumi:bucket1::y2::aws:s3/bucketV2:BucketV2::my-bucket verification warning: Use the aws_s3_bucket_request_payment_configuration resource instead
+warning: urn:pulumi:bucket1::y2::aws:s3/bucketV2:BucketV2::my-bucket verification warning: Use the aws_s3_bucket_policy resource instead
+warning: urn:pulumi:bucket1::y2::aws:s3/bucketV2:BucketV2::my-bucket verification warning: Use the aws_s3_bucket_server_side_encryption_configuration resource instead
+```
+
+- To mitigate, edit the program to remove the deprecated inputs, leaving the final simplify program that should still
+  result in an empty `pulumi preview`:
+
+{{< chooser >}}
+
+```yaml
+name: y2
+runtime: yaml
+resources:
+  my-bucket:
+    type: aws:s3:BucketV2
+    properties:
+      bucket: my-bucket-36224917
+      tags:
+        Environment: Dev
+    options:
+      protect: true
+  my-bucket-encryption-configuration:
+    type: aws:s3:BucketServerSideEncryptionConfigurationV2
+    properties:
+      bucket: my-bucket-36224917
+      rules:
+        - applyServerSideEncryptionByDefault:
+            sseAlgorithm: AES256
+    options:
+      protect: true
+  my-bucket-policy:
+    type: aws:s3:BucketPolicy
+    properties:
+      bucket: my-bucket-36224917
+      policy: '{"Id":"PutObjPolicy","Statement":[{"Action":"s3:PutObject","Condition":{"Null":{"s3:x-amz-server-side-encryption-aws-kms-key-id":"true"}},"Effect":"Deny","Principal":"*","Resource":"arn:aws:s3:::my-bucket-36224917/*","Sid":"DenyObjectsThatAreNotSSEKMS"}],"Version":"2012-10-17"}'
+    options:
+      protect: true
+  my-bucket-lifecycle:
+    type: aws:s3:BucketLifecycleConfigurationV2
+    properties:
+      bucket: my-bucket-36224917
+      rules:
+        - expiration:
+            days: 30
+          id: pu-s3-lifecycle-20240918194815251100000001
+          status: Enabled
+    options:
+      protect: true
+  my-bucket-object-lock-configuration:
+    type: aws:s3:BucketObjectLockConfigurationV2
+    properties:
+      bucket: my-bucket-36224917
+      objectLockEnabled: Enabled
+    options:
+      protect: true
+  my-bucket-versioning:
+    type: aws:s3:BucketVersioningV2
+    properties:
+      bucket: my-bucket-36224917
+      versioningConfiguration:
+        mfaDelete: Disabled
+        status: Enabled
+    options:
+      protect: true
+```
+
+{{< /chooser >}}
 
 ## Historical context
 

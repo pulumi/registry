@@ -148,7 +148,7 @@ using System.Text.Json;
 using Pulumi;
 using Aws = Pulumi.Aws;
 
-return await Deployment.RunAsync(() =>
+return await Deployment.RunAsync(() => 
 {
     var myBucket = new Aws.S3.Bucket("my-bucket", new()
     {
@@ -400,7 +400,7 @@ using System.Text.Json;
 using Pulumi;
 using Aws = Pulumi.Aws;
 
-return await Deployment.RunAsync(() =>
+return await Deployment.RunAsync(() => 
 {
     var myBucket = new Aws.S3.BucketV2("my-bucket");
 
@@ -607,7 +607,7 @@ using System.Linq;
 using Pulumi;
 using Aws = Pulumi.Aws;
 
-return await Deployment.RunAsync(() =>
+return await Deployment.RunAsync(() => 
 {
     var myBucket = new Aws.S3.Bucket("my-bucket", new()
     {
@@ -785,7 +785,7 @@ using System.Linq;
 using Pulumi;
 using Aws = Pulumi.Aws;
 
-return await Deployment.RunAsync(() =>
+return await Deployment.RunAsync(() => 
 {
     var myBucket = new Aws.S3.BucketV2("my-bucket");
 
@@ -943,7 +943,7 @@ using System.Linq;
 using Pulumi;
 using Aws = Pulumi.Aws;
 
-return await Deployment.RunAsync(() =>
+return await Deployment.RunAsync(() => 
 {
     var myBucket = new Aws.S3.Bucket("my-bucket", new()
     {
@@ -1084,7 +1084,7 @@ using System.Linq;
 using Pulumi;
 using Aws = Pulumi.Aws;
 
-return await Deployment.RunAsync(() =>
+return await Deployment.RunAsync(() => 
 {
     var myBucket = new Aws.S3.BucketV2("my-bucket");
 
@@ -1252,7 +1252,7 @@ using System.Linq;
 using Pulumi;
 using Aws = Pulumi.Aws;
 
-return await Deployment.RunAsync(() =>
+return await Deployment.RunAsync(() => 
 {
     var myBucket = new Aws.S3.Bucket("my-bucket", new()
     {
@@ -1458,7 +1458,7 @@ using System.Linq;
 using Pulumi;
 using Aws = Pulumi.Aws;
 
-return await Deployment.RunAsync(() =>
+return await Deployment.RunAsync(() => 
 {
     var myBucket = new Aws.S3.BucketV2("my-bucket");
 
@@ -1661,7 +1661,7 @@ using System.Linq;
 using Pulumi;
 using Aws = Pulumi.Aws;
 
-return await Deployment.RunAsync(() =>
+return await Deployment.RunAsync(() => 
 {
     var currentUser = Aws.S3.GetCanonicalUserId.Invoke();
 
@@ -1897,7 +1897,7 @@ using System.Linq;
 using Pulumi;
 using Aws = Pulumi.Aws;
 
-return await Deployment.RunAsync(() =>
+return await Deployment.RunAsync(() => 
 {
     var currentUser = Aws.S3.GetCanonicalUserId.Invoke();
 
@@ -2114,13 +2114,47 @@ Consider a concrete example, suppose you have provisioned a bucket as follows:
 import * as pulumi from "@pulumi/pulumi";
 import * as aws from "@pulumi/aws";
 
-const myBucket = new aws.s3.Bucket("my-bucket", {serverSideEncryptionConfiguration: {
-    rule: {
-        applyServerSideEncryptionByDefault: {
-            sseAlgorithm: "aws:kms",
+const myBucket = new aws.s3.Bucket("my-bucket", {
+    bucket: "my-bucket-26224917",
+    serverSideEncryptionConfiguration: {
+        rule: {
+            applyServerSideEncryptionByDefault: {
+                sseAlgorithm: "AES256",
+            },
         },
     },
-}});
+    lifecycleRules: [{
+        enabled: true,
+        expiration: {
+            days: 30,
+        },
+    }],
+    policy: JSON.stringify({
+        Version: "2012-10-17",
+        Id: "PutObjPolicy",
+        Statement: [{
+            Sid: "DenyObjectsThatAreNotSSEKMS",
+            Principal: "*",
+            Effect: "Deny",
+            Action: "s3:PutObject",
+            Resource: "arn:aws:s3:::my-bucket-26224917/*",
+            Condition: {
+                Null: {
+                    "s3:x-amz-server-side-encryption-aws-kms-key-id": "true",
+                },
+            },
+        }],
+    }),
+    tags: {
+        Environment: "Dev",
+    },
+    objectLockConfiguration: {
+        objectLockEnabled: "Enabled",
+    },
+    versioning: {
+        enabled: true,
+    },
+});
 
 ```
 
@@ -2130,15 +2164,49 @@ const myBucket = new aws.s3.Bucket("my-bucket", {serverSideEncryptionConfigurati
 
 ```python
 import pulumi
+import json
 import pulumi_aws as aws
 
-my_bucket = aws.s3.Bucket("my-bucket", server_side_encryption_configuration={
-    "rule": {
-        "apply_server_side_encryption_by_default": {
-            "sse_algorithm": "aws:kms",
+my_bucket = aws.s3.Bucket("my-bucket",
+    bucket="my-bucket-26224917",
+    server_side_encryption_configuration={
+        "rule": {
+            "apply_server_side_encryption_by_default": {
+                "sse_algorithm": "AES256",
+            },
         },
     },
-})
+    lifecycle_rules=[{
+        "enabled": True,
+        "expiration": {
+            "days": 30,
+        },
+    }],
+    policy=json.dumps({
+        "Version": "2012-10-17",
+        "Id": "PutObjPolicy",
+        "Statement": [{
+            "Sid": "DenyObjectsThatAreNotSSEKMS",
+            "Principal": "*",
+            "Effect": "Deny",
+            "Action": "s3:PutObject",
+            "Resource": "arn:aws:s3:::my-bucket-26224917/*",
+            "Condition": {
+                "Null": {
+                    "s3:x-amz-server-side-encryption-aws-kms-key-id": "true",
+                },
+            },
+        }],
+    }),
+    tags={
+        "Environment": "Dev",
+    },
+    object_lock_configuration={
+        "object_lock_enabled": "Enabled",
+    },
+    versioning={
+        "enabled": True,
+    })
 
 ```
 
@@ -2150,19 +2218,62 @@ my_bucket = aws.s3.Bucket("my-bucket", server_side_encryption_configuration={
 package main
 
 import (
+	"encoding/json"
+
 	"github.com/pulumi/pulumi-aws/sdk/v6/go/aws/s3"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
 func main() {
 	pulumi.Run(func(ctx *pulumi.Context) error {
-		_, err := s3.NewBucket(ctx, "my-bucket", &s3.BucketArgs{
+		tmpJSON0, err := json.Marshal(map[string]interface{}{
+			"Version": "2012-10-17",
+			"Id":      "PutObjPolicy",
+			"Statement": []map[string]interface{}{
+				map[string]interface{}{
+					"Sid":       "DenyObjectsThatAreNotSSEKMS",
+					"Principal": "*",
+					"Effect":    "Deny",
+					"Action":    "s3:PutObject",
+					"Resource":  "arn:aws:s3:::my-bucket-26224917/*",
+					"Condition": map[string]interface{}{
+						"Null": map[string]interface{}{
+							"s3:x-amz-server-side-encryption-aws-kms-key-id": "true",
+						},
+					},
+				},
+			},
+		})
+		if err != nil {
+			return err
+		}
+		json0 := string(tmpJSON0)
+		_, err = s3.NewBucket(ctx, "my-bucket", &s3.BucketArgs{
+			Bucket: pulumi.String("my-bucket-26224917"),
 			ServerSideEncryptionConfiguration: &s3.BucketServerSideEncryptionConfigurationArgs{
 				Rule: &s3.BucketServerSideEncryptionConfigurationRuleArgs{
 					ApplyServerSideEncryptionByDefault: &s3.BucketServerSideEncryptionConfigurationRuleApplyServerSideEncryptionByDefaultArgs{
-						SseAlgorithm: pulumi.String("aws:kms"),
+						SseAlgorithm: pulumi.String("AES256"),
 					},
 				},
+			},
+			LifecycleRules: s3.BucketLifecycleRuleArray{
+				&s3.BucketLifecycleRuleArgs{
+					Enabled: pulumi.Bool(true),
+					Expiration: &s3.BucketLifecycleRuleExpirationArgs{
+						Days: pulumi.Int(30),
+					},
+				},
+			},
+			Policy: pulumi.String(json0),
+			Tags: pulumi.StringMap{
+				"Environment": pulumi.String("Dev"),
+			},
+			ObjectLockConfiguration: &s3.BucketObjectLockConfigurationArgs{
+				ObjectLockEnabled: pulumi.String("Enabled"),
+			},
+			Versioning: &s3.BucketVersioningArgs{
+				Enabled: pulumi.Bool(true),
 			},
 		})
 		if err != nil {
@@ -2181,22 +2292,70 @@ func main() {
 ```csharp
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using Pulumi;
 using Aws = Pulumi.Aws;
 
-return await Deployment.RunAsync(() =>
+return await Deployment.RunAsync(() => 
 {
     var myBucket = new Aws.S3.Bucket("my-bucket", new()
     {
+        BucketName = "my-bucket-26224917",
         ServerSideEncryptionConfiguration = new Aws.S3.Inputs.BucketServerSideEncryptionConfigurationArgs
         {
             Rule = new Aws.S3.Inputs.BucketServerSideEncryptionConfigurationRuleArgs
             {
                 ApplyServerSideEncryptionByDefault = new Aws.S3.Inputs.BucketServerSideEncryptionConfigurationRuleApplyServerSideEncryptionByDefaultArgs
                 {
-                    SseAlgorithm = "aws:kms",
+                    SseAlgorithm = "AES256",
                 },
             },
+        },
+        LifecycleRules = new[]
+        {
+            new Aws.S3.Inputs.BucketLifecycleRuleArgs
+            {
+                Enabled = true,
+                Expiration = new Aws.S3.Inputs.BucketLifecycleRuleExpirationArgs
+                {
+                    Days = 30,
+                },
+            },
+        },
+        Policy = JsonSerializer.Serialize(new Dictionary<string, object?>
+        {
+            ["Version"] = "2012-10-17",
+            ["Id"] = "PutObjPolicy",
+            ["Statement"] = new[]
+            {
+                new Dictionary<string, object?>
+                {
+                    ["Sid"] = "DenyObjectsThatAreNotSSEKMS",
+                    ["Principal"] = "*",
+                    ["Effect"] = "Deny",
+                    ["Action"] = "s3:PutObject",
+                    ["Resource"] = "arn:aws:s3:::my-bucket-26224917/*",
+                    ["Condition"] = new Dictionary<string, object?>
+                    {
+                        ["Null"] = new Dictionary<string, object?>
+                        {
+                            ["s3:x-amz-server-side-encryption-aws-kms-key-id"] = "true",
+                        },
+                    },
+                },
+            },
+        }),
+        Tags = 
+        {
+            { "Environment", "Dev" },
+        },
+        ObjectLockConfiguration = new Aws.S3.Inputs.BucketObjectLockConfigurationArgs
+        {
+            ObjectLockEnabled = "Enabled",
+        },
+        Versioning = new Aws.S3.Inputs.BucketVersioningArgs
+        {
+            Enabled = true,
         },
     });
 
@@ -2220,6 +2379,11 @@ import com.pulumi.aws.s3.BucketArgs;
 import com.pulumi.aws.s3.inputs.BucketServerSideEncryptionConfigurationArgs;
 import com.pulumi.aws.s3.inputs.BucketServerSideEncryptionConfigurationRuleArgs;
 import com.pulumi.aws.s3.inputs.BucketServerSideEncryptionConfigurationRuleApplyServerSideEncryptionByDefaultArgs;
+import com.pulumi.aws.s3.inputs.BucketLifecycleRuleArgs;
+import com.pulumi.aws.s3.inputs.BucketLifecycleRuleExpirationArgs;
+import com.pulumi.aws.s3.inputs.BucketObjectLockConfigurationArgs;
+import com.pulumi.aws.s3.inputs.BucketVersioningArgs;
+import static com.pulumi.codegen.internal.Serialization.*;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
@@ -2234,12 +2398,43 @@ public class App {
 
     public static void stack(Context ctx) {
         var myBucket = new Bucket("myBucket", BucketArgs.builder()
+            .bucket("my-bucket-26224917")
             .serverSideEncryptionConfiguration(BucketServerSideEncryptionConfigurationArgs.builder()
                 .rule(BucketServerSideEncryptionConfigurationRuleArgs.builder()
                     .applyServerSideEncryptionByDefault(BucketServerSideEncryptionConfigurationRuleApplyServerSideEncryptionByDefaultArgs.builder()
-                        .sseAlgorithm("aws:kms")
+                        .sseAlgorithm("AES256")
                         .build())
                     .build())
+                .build())
+            .lifecycleRules(BucketLifecycleRuleArgs.builder()
+                .enabled(true)
+                .expiration(BucketLifecycleRuleExpirationArgs.builder()
+                    .days(30)
+                    .build())
+                .build())
+            .policy(serializeJson(
+                jsonObject(
+                    jsonProperty("Version", "2012-10-17"),
+                    jsonProperty("Id", "PutObjPolicy"),
+                    jsonProperty("Statement", jsonArray(jsonObject(
+                        jsonProperty("Sid", "DenyObjectsThatAreNotSSEKMS"),
+                        jsonProperty("Principal", "*"),
+                        jsonProperty("Effect", "Deny"),
+                        jsonProperty("Action", "s3:PutObject"),
+                        jsonProperty("Resource", "arn:aws:s3:::my-bucket-26224917/*"),
+                        jsonProperty("Condition", jsonObject(
+                            jsonProperty("Null", jsonObject(
+                                jsonProperty("s3:x-amz-server-side-encryption-aws-kms-key-id", "true")
+                            ))
+                        ))
+                    )))
+                )))
+            .tags(Map.of("Environment", "Dev"))
+            .objectLockConfiguration(BucketObjectLockConfigurationArgs.builder()
+                .objectLockEnabled("Enabled")
+                .build())
+            .versioning(BucketVersioningArgs.builder()
+                .enabled(true)
                 .build())
             .build());
 
@@ -2362,16 +2557,81 @@ Migrate as follows:
 import * as pulumi from "@pulumi/pulumi";
 import * as aws from "@pulumi/aws";
 
-const myBucket = new aws.s3.BucketV2("my-bucket", {bucket: "my-bucket-cd24744"}, {
+const myBucket = new aws.s3.BucketV2("my-bucket", {
+    bucket: "my-bucket-36224917",
+    grants: [{
+        id: "e07865a5679c7977370948f1f1e51c21b12d8cfdd396a7e3172275d9164e01b8",
+        permissions: ["FULL_CONTROL"],
+        type: "CanonicalUser",
+    }],
+    lifecycleRules: [{
+        enabled: true,
+        expirations: [{
+            days: 30,
+        }],
+        id: "pu-s3-lifecycle-20240918194815251100000001",
+    }],
+    objectLockConfiguration: {
+        objectLockEnabled: "Enabled",
+    },
+    policy: "{\"Id\":\"PutObjPolicy\",\"Statement\":[{\"Action\":\"s3:PutObject\",\"Condition\":{\"Null\":{\"s3:x-amz-server-side-encryption-aws-kms-key-id\":\"true\"}},\"Effect\":\"Deny\",\"Principal\":\"*\",\"Resource\":\"arn:aws:s3:::my-bucket-36224917/*\",\"Sid\":\"DenyObjectsThatAreNotSSEKMS\"}],\"Version\":\"2012-10-17\"}",
+    requestPayer: "BucketOwner",
+    serverSideEncryptionConfigurations: [{
+        rules: [{
+            applyServerSideEncryptionByDefaults: [{
+                sseAlgorithm: "AES256",
+            }],
+        }],
+    }],
+    tags: {
+        Environment: "Dev",
+    },
+    versionings: [{
+        enabled: true,
+    }],
+}, {
     protect: true,
 });
 const myBucketEncryptionConfiguration = new aws.s3.BucketServerSideEncryptionConfigurationV2("my-bucket-encryption-configuration", {
-    bucket: "my-bucket-cd24744",
+    bucket: "my-bucket-36224917",
     rules: [{
         applyServerSideEncryptionByDefault: {
-            sseAlgorithm: "aws:kms",
+            sseAlgorithm: "AES256",
         },
     }],
+}, {
+    protect: true,
+});
+const myBucketPolicy = new aws.s3.BucketPolicy("my-bucket-policy", {
+    bucket: "my-bucket-36224917",
+    policy: "{\"Id\":\"PutObjPolicy\",\"Statement\":[{\"Action\":\"s3:PutObject\",\"Condition\":{\"Null\":{\"s3:x-amz-server-side-encryption-aws-kms-key-id\":\"true\"}},\"Effect\":\"Deny\",\"Principal\":\"*\",\"Resource\":\"arn:aws:s3:::my-bucket-36224917/*\",\"Sid\":\"DenyObjectsThatAreNotSSEKMS\"}],\"Version\":\"2012-10-17\"}",
+}, {
+    protect: true,
+});
+const myBucketLifecycle = new aws.s3.BucketLifecycleConfigurationV2("my-bucket-lifecycle", {
+    bucket: "my-bucket-36224917",
+    rules: [{
+        expiration: {
+            days: 30,
+        },
+        id: "pu-s3-lifecycle-20240918194815251100000001",
+        status: "Enabled",
+    }],
+}, {
+    protect: true,
+});
+const myBucketObjectLockConfiguration = new aws.s3.BucketObjectLockConfigurationV2("my-bucket-object-lock-configuration", {
+    bucket: "my-bucket-36224917",
+    objectLockEnabled: "Enabled",
+}, {
+    protect: true,
+});
+const myBucketVersioning = new aws.s3.BucketVersioningV2("my-bucket-versioning", {
+    bucket: "my-bucket-36224917",
+    versioningConfiguration: {
+        mfaDelete: "Disabled",
+        status: "Enabled",
+    },
 }, {
     protect: true,
 });
@@ -2386,15 +2646,71 @@ const myBucketEncryptionConfiguration = new aws.s3.BucketServerSideEncryptionCon
 import pulumi
 import pulumi_aws as aws
 
-my_bucket = aws.s3.BucketV2("my-bucket", bucket="my-bucket-cd24744",
-opts = pulumi.ResourceOptions(protect=True))
+my_bucket = aws.s3.BucketV2("my-bucket",
+    bucket="my-bucket-36224917",
+    grants=[{
+        "id": "e07865a5679c7977370948f1f1e51c21b12d8cfdd396a7e3172275d9164e01b8",
+        "permissions": ["FULL_CONTROL"],
+        "type": "CanonicalUser",
+    }],
+    lifecycle_rules=[{
+        "enabled": True,
+        "expirations": [{
+            "days": 30,
+        }],
+        "id": "pu-s3-lifecycle-20240918194815251100000001",
+    }],
+    object_lock_configuration={
+        "object_lock_enabled": "Enabled",
+    },
+    policy="{\"Id\":\"PutObjPolicy\",\"Statement\":[{\"Action\":\"s3:PutObject\",\"Condition\":{\"Null\":{\"s3:x-amz-server-side-encryption-aws-kms-key-id\":\"true\"}},\"Effect\":\"Deny\",\"Principal\":\"*\",\"Resource\":\"arn:aws:s3:::my-bucket-36224917/*\",\"Sid\":\"DenyObjectsThatAreNotSSEKMS\"}],\"Version\":\"2012-10-17\"}",
+    request_payer="BucketOwner",
+    server_side_encryption_configurations=[{
+        "rules": [{
+            "apply_server_side_encryption_by_defaults": [{
+                "sse_algorithm": "AES256",
+            }],
+        }],
+    }],
+    tags={
+        "Environment": "Dev",
+    },
+    versionings=[{
+        "enabled": True,
+    }],
+    opts = pulumi.ResourceOptions(protect=True))
 my_bucket_encryption_configuration = aws.s3.BucketServerSideEncryptionConfigurationV2("my-bucket-encryption-configuration",
-    bucket="my-bucket-cd24744",
+    bucket="my-bucket-36224917",
     rules=[{
         "apply_server_side_encryption_by_default": {
-            "sse_algorithm": "aws:kms",
+            "sse_algorithm": "AES256",
         },
     }],
+    opts = pulumi.ResourceOptions(protect=True))
+my_bucket_policy = aws.s3.BucketPolicy("my-bucket-policy",
+    bucket="my-bucket-36224917",
+    policy="{\"Id\":\"PutObjPolicy\",\"Statement\":[{\"Action\":\"s3:PutObject\",\"Condition\":{\"Null\":{\"s3:x-amz-server-side-encryption-aws-kms-key-id\":\"true\"}},\"Effect\":\"Deny\",\"Principal\":\"*\",\"Resource\":\"arn:aws:s3:::my-bucket-36224917/*\",\"Sid\":\"DenyObjectsThatAreNotSSEKMS\"}],\"Version\":\"2012-10-17\"}",
+    opts = pulumi.ResourceOptions(protect=True))
+my_bucket_lifecycle = aws.s3.BucketLifecycleConfigurationV2("my-bucket-lifecycle",
+    bucket="my-bucket-36224917",
+    rules=[{
+        "expiration": {
+            "days": 30,
+        },
+        "id": "pu-s3-lifecycle-20240918194815251100000001",
+        "status": "Enabled",
+    }],
+    opts = pulumi.ResourceOptions(protect=True))
+my_bucket_object_lock_configuration = aws.s3.BucketObjectLockConfigurationV2("my-bucket-object-lock-configuration",
+    bucket="my-bucket-36224917",
+    object_lock_enabled="Enabled",
+    opts = pulumi.ResourceOptions(protect=True))
+my_bucket_versioning = aws.s3.BucketVersioningV2("my-bucket-versioning",
+    bucket="my-bucket-36224917",
+    versioning_configuration={
+        "mfa_delete": "Disabled",
+        "status": "Enabled",
+    },
     opts = pulumi.ResourceOptions(protect=True))
 
 ```
@@ -2414,19 +2730,104 @@ import (
 func main() {
 	pulumi.Run(func(ctx *pulumi.Context) error {
 		_, err := s3.NewBucketV2(ctx, "my-bucket", &s3.BucketV2Args{
-			Bucket: pulumi.String("my-bucket-cd24744"),
+			Bucket: pulumi.String("my-bucket-36224917"),
+			Grants: s3.BucketV2GrantArray{
+				&s3.BucketV2GrantArgs{
+					Id: pulumi.String("e07865a5679c7977370948f1f1e51c21b12d8cfdd396a7e3172275d9164e01b8"),
+					Permissions: pulumi.StringArray{
+						pulumi.String("FULL_CONTROL"),
+					},
+					Type: pulumi.String("CanonicalUser"),
+				},
+			},
+			LifecycleRules: s3.BucketV2LifecycleRuleArray{
+				&s3.BucketV2LifecycleRuleArgs{
+					Enabled: pulumi.Bool(true),
+					Expirations: s3.BucketV2LifecycleRuleExpirationArray{
+						&s3.BucketV2LifecycleRuleExpirationArgs{
+							Days: pulumi.Int(30),
+						},
+					},
+					Id: pulumi.String("pu-s3-lifecycle-20240918194815251100000001"),
+				},
+			},
+			ObjectLockConfiguration: &s3.BucketV2ObjectLockConfigurationArgs{
+				ObjectLockEnabled: pulumi.String("Enabled"),
+			},
+			Policy:       pulumi.String("{\"Id\":\"PutObjPolicy\",\"Statement\":[{\"Action\":\"s3:PutObject\",\"Condition\":{\"Null\":{\"s3:x-amz-server-side-encryption-aws-kms-key-id\":\"true\"}},\"Effect\":\"Deny\",\"Principal\":\"*\",\"Resource\":\"arn:aws:s3:::my-bucket-36224917/*\",\"Sid\":\"DenyObjectsThatAreNotSSEKMS\"}],\"Version\":\"2012-10-17\"}"),
+			RequestPayer: pulumi.String("BucketOwner"),
+			ServerSideEncryptionConfigurations: s3.BucketV2ServerSideEncryptionConfigurationArray{
+				&s3.BucketV2ServerSideEncryptionConfigurationArgs{
+					Rules: s3.BucketV2ServerSideEncryptionConfigurationRuleArray{
+						&s3.BucketV2ServerSideEncryptionConfigurationRuleArgs{
+							ApplyServerSideEncryptionByDefaults: s3.BucketV2ServerSideEncryptionConfigurationRuleApplyServerSideEncryptionByDefaultArray{
+								&s3.BucketV2ServerSideEncryptionConfigurationRuleApplyServerSideEncryptionByDefaultArgs{
+									SseAlgorithm: pulumi.String("AES256"),
+								},
+							},
+						},
+					},
+				},
+			},
+			Tags: pulumi.StringMap{
+				"Environment": pulumi.String("Dev"),
+			},
+			Versionings: s3.BucketV2VersioningArray{
+				&s3.BucketV2VersioningArgs{
+					Enabled: pulumi.Bool(true),
+				},
+			},
 		}, pulumi.Protect(true))
 		if err != nil {
 			return err
 		}
 		_, err = s3.NewBucketServerSideEncryptionConfigurationV2(ctx, "my-bucket-encryption-configuration", &s3.BucketServerSideEncryptionConfigurationV2Args{
-			Bucket: pulumi.String("my-bucket-cd24744"),
+			Bucket: pulumi.String("my-bucket-36224917"),
 			Rules: s3.BucketServerSideEncryptionConfigurationV2RuleArray{
 				&s3.BucketServerSideEncryptionConfigurationV2RuleArgs{
 					ApplyServerSideEncryptionByDefault: &s3.BucketServerSideEncryptionConfigurationV2RuleApplyServerSideEncryptionByDefaultArgs{
-						SseAlgorithm: pulumi.String("aws:kms"),
+						SseAlgorithm: pulumi.String("AES256"),
 					},
 				},
+			},
+		}, pulumi.Protect(true))
+		if err != nil {
+			return err
+		}
+		_, err = s3.NewBucketPolicy(ctx, "my-bucket-policy", &s3.BucketPolicyArgs{
+			Bucket: pulumi.String("my-bucket-36224917"),
+			Policy: pulumi.Any("{\"Id\":\"PutObjPolicy\",\"Statement\":[{\"Action\":\"s3:PutObject\",\"Condition\":{\"Null\":{\"s3:x-amz-server-side-encryption-aws-kms-key-id\":\"true\"}},\"Effect\":\"Deny\",\"Principal\":\"*\",\"Resource\":\"arn:aws:s3:::my-bucket-36224917/*\",\"Sid\":\"DenyObjectsThatAreNotSSEKMS\"}],\"Version\":\"2012-10-17\"}"),
+		}, pulumi.Protect(true))
+		if err != nil {
+			return err
+		}
+		_, err = s3.NewBucketLifecycleConfigurationV2(ctx, "my-bucket-lifecycle", &s3.BucketLifecycleConfigurationV2Args{
+			Bucket: pulumi.String("my-bucket-36224917"),
+			Rules: s3.BucketLifecycleConfigurationV2RuleArray{
+				&s3.BucketLifecycleConfigurationV2RuleArgs{
+					Expiration: &s3.BucketLifecycleConfigurationV2RuleExpirationArgs{
+						Days: pulumi.Int(30),
+					},
+					Id:     pulumi.String("pu-s3-lifecycle-20240918194815251100000001"),
+					Status: pulumi.String("Enabled"),
+				},
+			},
+		}, pulumi.Protect(true))
+		if err != nil {
+			return err
+		}
+		_, err = s3.NewBucketObjectLockConfigurationV2(ctx, "my-bucket-object-lock-configuration", &s3.BucketObjectLockConfigurationV2Args{
+			Bucket:            pulumi.String("my-bucket-36224917"),
+			ObjectLockEnabled: pulumi.String("Enabled"),
+		}, pulumi.Protect(true))
+		if err != nil {
+			return err
+		}
+		_, err = s3.NewBucketVersioningV2(ctx, "my-bucket-versioning", &s3.BucketVersioningV2Args{
+			Bucket: pulumi.String("my-bucket-36224917"),
+			VersioningConfiguration: &s3.BucketVersioningV2VersioningConfigurationArgs{
+				MfaDelete: pulumi.String("Disabled"),
+				Status:    pulumi.String("Enabled"),
 			},
 		}, pulumi.Protect(true))
 		if err != nil {
@@ -2448,11 +2849,74 @@ using System.Linq;
 using Pulumi;
 using Aws = Pulumi.Aws;
 
-return await Deployment.RunAsync(() =>
+return await Deployment.RunAsync(() => 
 {
     var myBucket = new Aws.S3.BucketV2("my-bucket", new()
     {
-        Bucket = "my-bucket-cd24744",
+        Bucket = "my-bucket-36224917",
+        Grants = new[]
+        {
+            new Aws.S3.Inputs.BucketV2GrantArgs
+            {
+                Id = "e07865a5679c7977370948f1f1e51c21b12d8cfdd396a7e3172275d9164e01b8",
+                Permissions = new[]
+                {
+                    "FULL_CONTROL",
+                },
+                Type = "CanonicalUser",
+            },
+        },
+        LifecycleRules = new[]
+        {
+            new Aws.S3.Inputs.BucketV2LifecycleRuleArgs
+            {
+                Enabled = true,
+                Expirations = new[]
+                {
+                    new Aws.S3.Inputs.BucketV2LifecycleRuleExpirationArgs
+                    {
+                        Days = 30,
+                    },
+                },
+                Id = "pu-s3-lifecycle-20240918194815251100000001",
+            },
+        },
+        ObjectLockConfiguration = new Aws.S3.Inputs.BucketV2ObjectLockConfigurationArgs
+        {
+            ObjectLockEnabled = "Enabled",
+        },
+        Policy = "{\"Id\":\"PutObjPolicy\",\"Statement\":[{\"Action\":\"s3:PutObject\",\"Condition\":{\"Null\":{\"s3:x-amz-server-side-encryption-aws-kms-key-id\":\"true\"}},\"Effect\":\"Deny\",\"Principal\":\"*\",\"Resource\":\"arn:aws:s3:::my-bucket-36224917/*\",\"Sid\":\"DenyObjectsThatAreNotSSEKMS\"}],\"Version\":\"2012-10-17\"}",
+        RequestPayer = "BucketOwner",
+        ServerSideEncryptionConfigurations = new[]
+        {
+            new Aws.S3.Inputs.BucketV2ServerSideEncryptionConfigurationArgs
+            {
+                Rules = new[]
+                {
+                    new Aws.S3.Inputs.BucketV2ServerSideEncryptionConfigurationRuleArgs
+                    {
+                        ApplyServerSideEncryptionByDefaults = new[]
+                        {
+                            new Aws.S3.Inputs.BucketV2ServerSideEncryptionConfigurationRuleApplyServerSideEncryptionByDefaultArgs
+                            {
+                                SseAlgorithm = "AES256",
+                            },
+                        },
+                    },
+                },
+            },
+        },
+        Tags = 
+        {
+            { "Environment", "Dev" },
+        },
+        Versionings = new[]
+        {
+            new Aws.S3.Inputs.BucketV2VersioningArgs
+            {
+                Enabled = true,
+            },
+        },
     }, new CustomResourceOptions
     {
         Protect = true,
@@ -2460,16 +2924,67 @@ return await Deployment.RunAsync(() =>
 
     var myBucketEncryptionConfiguration = new Aws.S3.BucketServerSideEncryptionConfigurationV2("my-bucket-encryption-configuration", new()
     {
-        Bucket = "my-bucket-cd24744",
+        Bucket = "my-bucket-36224917",
         Rules = new[]
         {
             new Aws.S3.Inputs.BucketServerSideEncryptionConfigurationV2RuleArgs
             {
                 ApplyServerSideEncryptionByDefault = new Aws.S3.Inputs.BucketServerSideEncryptionConfigurationV2RuleApplyServerSideEncryptionByDefaultArgs
                 {
-                    SseAlgorithm = "aws:kms",
+                    SseAlgorithm = "AES256",
                 },
             },
+        },
+    }, new CustomResourceOptions
+    {
+        Protect = true,
+    });
+
+    var myBucketPolicy = new Aws.S3.BucketPolicy("my-bucket-policy", new()
+    {
+        Bucket = "my-bucket-36224917",
+        Policy = "{\"Id\":\"PutObjPolicy\",\"Statement\":[{\"Action\":\"s3:PutObject\",\"Condition\":{\"Null\":{\"s3:x-amz-server-side-encryption-aws-kms-key-id\":\"true\"}},\"Effect\":\"Deny\",\"Principal\":\"*\",\"Resource\":\"arn:aws:s3:::my-bucket-36224917/*\",\"Sid\":\"DenyObjectsThatAreNotSSEKMS\"}],\"Version\":\"2012-10-17\"}",
+    }, new CustomResourceOptions
+    {
+        Protect = true,
+    });
+
+    var myBucketLifecycle = new Aws.S3.BucketLifecycleConfigurationV2("my-bucket-lifecycle", new()
+    {
+        Bucket = "my-bucket-36224917",
+        Rules = new[]
+        {
+            new Aws.S3.Inputs.BucketLifecycleConfigurationV2RuleArgs
+            {
+                Expiration = new Aws.S3.Inputs.BucketLifecycleConfigurationV2RuleExpirationArgs
+                {
+                    Days = 30,
+                },
+                Id = "pu-s3-lifecycle-20240918194815251100000001",
+                Status = "Enabled",
+            },
+        },
+    }, new CustomResourceOptions
+    {
+        Protect = true,
+    });
+
+    var myBucketObjectLockConfiguration = new Aws.S3.BucketObjectLockConfigurationV2("my-bucket-object-lock-configuration", new()
+    {
+        Bucket = "my-bucket-36224917",
+        ObjectLockEnabled = "Enabled",
+    }, new CustomResourceOptions
+    {
+        Protect = true,
+    });
+
+    var myBucketVersioning = new Aws.S3.BucketVersioningV2("my-bucket-versioning", new()
+    {
+        Bucket = "my-bucket-36224917",
+        VersioningConfiguration = new Aws.S3.Inputs.BucketVersioningV2VersioningConfigurationArgs
+        {
+            MfaDelete = "Disabled",
+            Status = "Enabled",
         },
     }, new CustomResourceOptions
     {
@@ -2493,10 +3008,26 @@ import com.pulumi.Pulumi;
 import com.pulumi.core.Output;
 import com.pulumi.aws.s3.BucketV2;
 import com.pulumi.aws.s3.BucketV2Args;
+import com.pulumi.aws.s3.inputs.BucketV2GrantArgs;
+import com.pulumi.aws.s3.inputs.BucketV2LifecycleRuleArgs;
+import com.pulumi.aws.s3.inputs.BucketV2ObjectLockConfigurationArgs;
+import com.pulumi.aws.s3.inputs.BucketV2ServerSideEncryptionConfigurationArgs;
+import com.pulumi.aws.s3.inputs.BucketV2VersioningArgs;
 import com.pulumi.aws.s3.BucketServerSideEncryptionConfigurationV2;
 import com.pulumi.aws.s3.BucketServerSideEncryptionConfigurationV2Args;
 import com.pulumi.aws.s3.inputs.BucketServerSideEncryptionConfigurationV2RuleArgs;
 import com.pulumi.aws.s3.inputs.BucketServerSideEncryptionConfigurationV2RuleApplyServerSideEncryptionByDefaultArgs;
+import com.pulumi.aws.s3.BucketPolicy;
+import com.pulumi.aws.s3.BucketPolicyArgs;
+import com.pulumi.aws.s3.BucketLifecycleConfigurationV2;
+import com.pulumi.aws.s3.BucketLifecycleConfigurationV2Args;
+import com.pulumi.aws.s3.inputs.BucketLifecycleConfigurationV2RuleArgs;
+import com.pulumi.aws.s3.inputs.BucketLifecycleConfigurationV2RuleExpirationArgs;
+import com.pulumi.aws.s3.BucketObjectLockConfigurationV2;
+import com.pulumi.aws.s3.BucketObjectLockConfigurationV2Args;
+import com.pulumi.aws.s3.BucketVersioningV2;
+import com.pulumi.aws.s3.BucketVersioningV2Args;
+import com.pulumi.aws.s3.inputs.BucketVersioningV2VersioningConfigurationArgs;
 import com.pulumi.resources.CustomResourceOptions;
 import java.util.List;
 import java.util.ArrayList;
@@ -2512,17 +3043,82 @@ public class App {
 
     public static void stack(Context ctx) {
         var myBucket = new BucketV2("myBucket", BucketV2Args.builder()
-            .bucket("my-bucket-cd24744")
+            .bucket("my-bucket-36224917")
+            .grants(BucketV2GrantArgs.builder()
+                .id("e07865a5679c7977370948f1f1e51c21b12d8cfdd396a7e3172275d9164e01b8")
+                .permissions("FULL_CONTROL")
+                .type("CanonicalUser")
+                .build())
+            .lifecycleRules(BucketV2LifecycleRuleArgs.builder()
+                .enabled(true)
+                .expirations(BucketV2LifecycleRuleExpirationArgs.builder()
+                    .days(30)
+                    .build())
+                .id("pu-s3-lifecycle-20240918194815251100000001")
+                .build())
+            .objectLockConfiguration(BucketV2ObjectLockConfigurationArgs.builder()
+                .objectLockEnabled("Enabled")
+                .build())
+            .policy("{\"Id\":\"PutObjPolicy\",\"Statement\":[{\"Action\":\"s3:PutObject\",\"Condition\":{\"Null\":{\"s3:x-amz-server-side-encryption-aws-kms-key-id\":\"true\"}},\"Effect\":\"Deny\",\"Principal\":\"*\",\"Resource\":\"arn:aws:s3:::my-bucket-36224917/*\",\"Sid\":\"DenyObjectsThatAreNotSSEKMS\"}],\"Version\":\"2012-10-17\"}")
+            .requestPayer("BucketOwner")
+            .serverSideEncryptionConfigurations(BucketV2ServerSideEncryptionConfigurationArgs.builder()
+                .rules(BucketV2ServerSideEncryptionConfigurationRuleArgs.builder()
+                    .applyServerSideEncryptionByDefaults(BucketV2ServerSideEncryptionConfigurationRuleApplyServerSideEncryptionByDefaultArgs.builder()
+                        .sseAlgorithm("AES256")
+                        .build())
+                    .build())
+                .build())
+            .tags(Map.of("Environment", "Dev"))
+            .versionings(BucketV2VersioningArgs.builder()
+                .enabled(true)
+                .build())
             .build(), CustomResourceOptions.builder()
                 .protect(true)
                 .build());
 
         var myBucketEncryptionConfiguration = new BucketServerSideEncryptionConfigurationV2("myBucketEncryptionConfiguration", BucketServerSideEncryptionConfigurationV2Args.builder()
-            .bucket("my-bucket-cd24744")
+            .bucket("my-bucket-36224917")
             .rules(BucketServerSideEncryptionConfigurationV2RuleArgs.builder()
                 .applyServerSideEncryptionByDefault(BucketServerSideEncryptionConfigurationV2RuleApplyServerSideEncryptionByDefaultArgs.builder()
-                    .sseAlgorithm("aws:kms")
+                    .sseAlgorithm("AES256")
                     .build())
+                .build())
+            .build(), CustomResourceOptions.builder()
+                .protect(true)
+                .build());
+
+        var myBucketPolicy = new BucketPolicy("myBucketPolicy", BucketPolicyArgs.builder()
+            .bucket("my-bucket-36224917")
+            .policy("{\"Id\":\"PutObjPolicy\",\"Statement\":[{\"Action\":\"s3:PutObject\",\"Condition\":{\"Null\":{\"s3:x-amz-server-side-encryption-aws-kms-key-id\":\"true\"}},\"Effect\":\"Deny\",\"Principal\":\"*\",\"Resource\":\"arn:aws:s3:::my-bucket-36224917/*\",\"Sid\":\"DenyObjectsThatAreNotSSEKMS\"}],\"Version\":\"2012-10-17\"}")
+            .build(), CustomResourceOptions.builder()
+                .protect(true)
+                .build());
+
+        var myBucketLifecycle = new BucketLifecycleConfigurationV2("myBucketLifecycle", BucketLifecycleConfigurationV2Args.builder()
+            .bucket("my-bucket-36224917")
+            .rules(BucketLifecycleConfigurationV2RuleArgs.builder()
+                .expiration(BucketLifecycleConfigurationV2RuleExpirationArgs.builder()
+                    .days(30)
+                    .build())
+                .id("pu-s3-lifecycle-20240918194815251100000001")
+                .status("Enabled")
+                .build())
+            .build(), CustomResourceOptions.builder()
+                .protect(true)
+                .build());
+
+        var myBucketObjectLockConfiguration = new BucketObjectLockConfigurationV2("myBucketObjectLockConfiguration", BucketObjectLockConfigurationV2Args.builder()
+            .bucket("my-bucket-36224917")
+            .objectLockEnabled("Enabled")
+            .build(), CustomResourceOptions.builder()
+                .protect(true)
+                .build());
+
+        var myBucketVersioning = new BucketVersioningV2("myBucketVersioning", BucketVersioningV2Args.builder()
+            .bucket("my-bucket-36224917")
+            .versioningConfiguration(BucketVersioningV2VersioningConfigurationArgs.builder()
+                .mfaDelete("Disabled")
+                .status("Enabled")
                 .build())
             .build(), CustomResourceOptions.builder()
                 .protect(true)
@@ -2636,7 +3232,401 @@ warning: urn:pulumi:bucket1::y2::aws:s3/bucketV2:BucketV2::my-bucket verificatio
 - To mitigate, edit the program to remove the deprecated inputs, leaving the final simplify program that should still
   result in an empty `pulumi preview`:
 
-{{< chooser >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+
+{{% choosable language typescript %}}
+
+```typescript
+import * as pulumi from "@pulumi/pulumi";
+import * as aws from "@pulumi/aws";
+
+const myBucket = new aws.s3.BucketV2("my-bucket", {
+    bucket: "my-bucket-36224917",
+    tags: {
+        Environment: "Dev",
+    },
+}, {
+    protect: true,
+});
+const myBucketEncryptionConfiguration = new aws.s3.BucketServerSideEncryptionConfigurationV2("my-bucket-encryption-configuration", {
+    bucket: "my-bucket-36224917",
+    rules: [{
+        applyServerSideEncryptionByDefault: {
+            sseAlgorithm: "AES256",
+        },
+    }],
+}, {
+    protect: true,
+});
+const myBucketPolicy = new aws.s3.BucketPolicy("my-bucket-policy", {
+    bucket: "my-bucket-36224917",
+    policy: "{\"Id\":\"PutObjPolicy\",\"Statement\":[{\"Action\":\"s3:PutObject\",\"Condition\":{\"Null\":{\"s3:x-amz-server-side-encryption-aws-kms-key-id\":\"true\"}},\"Effect\":\"Deny\",\"Principal\":\"*\",\"Resource\":\"arn:aws:s3:::my-bucket-36224917/*\",\"Sid\":\"DenyObjectsThatAreNotSSEKMS\"}],\"Version\":\"2012-10-17\"}",
+}, {
+    protect: true,
+});
+const myBucketLifecycle = new aws.s3.BucketLifecycleConfigurationV2("my-bucket-lifecycle", {
+    bucket: "my-bucket-36224917",
+    rules: [{
+        expiration: {
+            days: 30,
+        },
+        id: "pu-s3-lifecycle-20240918194815251100000001",
+        status: "Enabled",
+    }],
+}, {
+    protect: true,
+});
+const myBucketObjectLockConfiguration = new aws.s3.BucketObjectLockConfigurationV2("my-bucket-object-lock-configuration", {
+    bucket: "my-bucket-36224917",
+    objectLockEnabled: "Enabled",
+}, {
+    protect: true,
+});
+const myBucketVersioning = new aws.s3.BucketVersioningV2("my-bucket-versioning", {
+    bucket: "my-bucket-36224917",
+    versioningConfiguration: {
+        mfaDelete: "Disabled",
+        status: "Enabled",
+    },
+}, {
+    protect: true,
+});
+
+```
+
+{{% /choosable %}}
+
+{{% choosable language python %}}
+
+```python
+import pulumi
+import pulumi_aws as aws
+
+my_bucket = aws.s3.BucketV2("my-bucket",
+    bucket="my-bucket-36224917",
+    tags={
+        "Environment": "Dev",
+    },
+    opts = pulumi.ResourceOptions(protect=True))
+my_bucket_encryption_configuration = aws.s3.BucketServerSideEncryptionConfigurationV2("my-bucket-encryption-configuration",
+    bucket="my-bucket-36224917",
+    rules=[{
+        "apply_server_side_encryption_by_default": {
+            "sse_algorithm": "AES256",
+        },
+    }],
+    opts = pulumi.ResourceOptions(protect=True))
+my_bucket_policy = aws.s3.BucketPolicy("my-bucket-policy",
+    bucket="my-bucket-36224917",
+    policy="{\"Id\":\"PutObjPolicy\",\"Statement\":[{\"Action\":\"s3:PutObject\",\"Condition\":{\"Null\":{\"s3:x-amz-server-side-encryption-aws-kms-key-id\":\"true\"}},\"Effect\":\"Deny\",\"Principal\":\"*\",\"Resource\":\"arn:aws:s3:::my-bucket-36224917/*\",\"Sid\":\"DenyObjectsThatAreNotSSEKMS\"}],\"Version\":\"2012-10-17\"}",
+    opts = pulumi.ResourceOptions(protect=True))
+my_bucket_lifecycle = aws.s3.BucketLifecycleConfigurationV2("my-bucket-lifecycle",
+    bucket="my-bucket-36224917",
+    rules=[{
+        "expiration": {
+            "days": 30,
+        },
+        "id": "pu-s3-lifecycle-20240918194815251100000001",
+        "status": "Enabled",
+    }],
+    opts = pulumi.ResourceOptions(protect=True))
+my_bucket_object_lock_configuration = aws.s3.BucketObjectLockConfigurationV2("my-bucket-object-lock-configuration",
+    bucket="my-bucket-36224917",
+    object_lock_enabled="Enabled",
+    opts = pulumi.ResourceOptions(protect=True))
+my_bucket_versioning = aws.s3.BucketVersioningV2("my-bucket-versioning",
+    bucket="my-bucket-36224917",
+    versioning_configuration={
+        "mfa_delete": "Disabled",
+        "status": "Enabled",
+    },
+    opts = pulumi.ResourceOptions(protect=True))
+
+```
+
+{{% /choosable %}}
+
+{{% choosable language go %}}
+
+```go
+package main
+
+import (
+	"github.com/pulumi/pulumi-aws/sdk/v6/go/aws/s3"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		_, err := s3.NewBucketV2(ctx, "my-bucket", &s3.BucketV2Args{
+			Bucket: pulumi.String("my-bucket-36224917"),
+			Tags: pulumi.StringMap{
+				"Environment": pulumi.String("Dev"),
+			},
+		}, pulumi.Protect(true))
+		if err != nil {
+			return err
+		}
+		_, err = s3.NewBucketServerSideEncryptionConfigurationV2(ctx, "my-bucket-encryption-configuration", &s3.BucketServerSideEncryptionConfigurationV2Args{
+			Bucket: pulumi.String("my-bucket-36224917"),
+			Rules: s3.BucketServerSideEncryptionConfigurationV2RuleArray{
+				&s3.BucketServerSideEncryptionConfigurationV2RuleArgs{
+					ApplyServerSideEncryptionByDefault: &s3.BucketServerSideEncryptionConfigurationV2RuleApplyServerSideEncryptionByDefaultArgs{
+						SseAlgorithm: pulumi.String("AES256"),
+					},
+				},
+			},
+		}, pulumi.Protect(true))
+		if err != nil {
+			return err
+		}
+		_, err = s3.NewBucketPolicy(ctx, "my-bucket-policy", &s3.BucketPolicyArgs{
+			Bucket: pulumi.String("my-bucket-36224917"),
+			Policy: pulumi.Any("{\"Id\":\"PutObjPolicy\",\"Statement\":[{\"Action\":\"s3:PutObject\",\"Condition\":{\"Null\":{\"s3:x-amz-server-side-encryption-aws-kms-key-id\":\"true\"}},\"Effect\":\"Deny\",\"Principal\":\"*\",\"Resource\":\"arn:aws:s3:::my-bucket-36224917/*\",\"Sid\":\"DenyObjectsThatAreNotSSEKMS\"}],\"Version\":\"2012-10-17\"}"),
+		}, pulumi.Protect(true))
+		if err != nil {
+			return err
+		}
+		_, err = s3.NewBucketLifecycleConfigurationV2(ctx, "my-bucket-lifecycle", &s3.BucketLifecycleConfigurationV2Args{
+			Bucket: pulumi.String("my-bucket-36224917"),
+			Rules: s3.BucketLifecycleConfigurationV2RuleArray{
+				&s3.BucketLifecycleConfigurationV2RuleArgs{
+					Expiration: &s3.BucketLifecycleConfigurationV2RuleExpirationArgs{
+						Days: pulumi.Int(30),
+					},
+					Id:     pulumi.String("pu-s3-lifecycle-20240918194815251100000001"),
+					Status: pulumi.String("Enabled"),
+				},
+			},
+		}, pulumi.Protect(true))
+		if err != nil {
+			return err
+		}
+		_, err = s3.NewBucketObjectLockConfigurationV2(ctx, "my-bucket-object-lock-configuration", &s3.BucketObjectLockConfigurationV2Args{
+			Bucket:            pulumi.String("my-bucket-36224917"),
+			ObjectLockEnabled: pulumi.String("Enabled"),
+		}, pulumi.Protect(true))
+		if err != nil {
+			return err
+		}
+		_, err = s3.NewBucketVersioningV2(ctx, "my-bucket-versioning", &s3.BucketVersioningV2Args{
+			Bucket: pulumi.String("my-bucket-36224917"),
+			VersioningConfiguration: &s3.BucketVersioningV2VersioningConfigurationArgs{
+				MfaDelete: pulumi.String("Disabled"),
+				Status:    pulumi.String("Enabled"),
+			},
+		}, pulumi.Protect(true))
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+}
+
+```
+
+{{% /choosable %}}
+
+{{% choosable language csharp %}}
+
+```csharp
+using System.Collections.Generic;
+using System.Linq;
+using Pulumi;
+using Aws = Pulumi.Aws;
+
+return await Deployment.RunAsync(() => 
+{
+    var myBucket = new Aws.S3.BucketV2("my-bucket", new()
+    {
+        Bucket = "my-bucket-36224917",
+        Tags = 
+        {
+            { "Environment", "Dev" },
+        },
+    }, new CustomResourceOptions
+    {
+        Protect = true,
+    });
+
+    var myBucketEncryptionConfiguration = new Aws.S3.BucketServerSideEncryptionConfigurationV2("my-bucket-encryption-configuration", new()
+    {
+        Bucket = "my-bucket-36224917",
+        Rules = new[]
+        {
+            new Aws.S3.Inputs.BucketServerSideEncryptionConfigurationV2RuleArgs
+            {
+                ApplyServerSideEncryptionByDefault = new Aws.S3.Inputs.BucketServerSideEncryptionConfigurationV2RuleApplyServerSideEncryptionByDefaultArgs
+                {
+                    SseAlgorithm = "AES256",
+                },
+            },
+        },
+    }, new CustomResourceOptions
+    {
+        Protect = true,
+    });
+
+    var myBucketPolicy = new Aws.S3.BucketPolicy("my-bucket-policy", new()
+    {
+        Bucket = "my-bucket-36224917",
+        Policy = "{\"Id\":\"PutObjPolicy\",\"Statement\":[{\"Action\":\"s3:PutObject\",\"Condition\":{\"Null\":{\"s3:x-amz-server-side-encryption-aws-kms-key-id\":\"true\"}},\"Effect\":\"Deny\",\"Principal\":\"*\",\"Resource\":\"arn:aws:s3:::my-bucket-36224917/*\",\"Sid\":\"DenyObjectsThatAreNotSSEKMS\"}],\"Version\":\"2012-10-17\"}",
+    }, new CustomResourceOptions
+    {
+        Protect = true,
+    });
+
+    var myBucketLifecycle = new Aws.S3.BucketLifecycleConfigurationV2("my-bucket-lifecycle", new()
+    {
+        Bucket = "my-bucket-36224917",
+        Rules = new[]
+        {
+            new Aws.S3.Inputs.BucketLifecycleConfigurationV2RuleArgs
+            {
+                Expiration = new Aws.S3.Inputs.BucketLifecycleConfigurationV2RuleExpirationArgs
+                {
+                    Days = 30,
+                },
+                Id = "pu-s3-lifecycle-20240918194815251100000001",
+                Status = "Enabled",
+            },
+        },
+    }, new CustomResourceOptions
+    {
+        Protect = true,
+    });
+
+    var myBucketObjectLockConfiguration = new Aws.S3.BucketObjectLockConfigurationV2("my-bucket-object-lock-configuration", new()
+    {
+        Bucket = "my-bucket-36224917",
+        ObjectLockEnabled = "Enabled",
+    }, new CustomResourceOptions
+    {
+        Protect = true,
+    });
+
+    var myBucketVersioning = new Aws.S3.BucketVersioningV2("my-bucket-versioning", new()
+    {
+        Bucket = "my-bucket-36224917",
+        VersioningConfiguration = new Aws.S3.Inputs.BucketVersioningV2VersioningConfigurationArgs
+        {
+            MfaDelete = "Disabled",
+            Status = "Enabled",
+        },
+    }, new CustomResourceOptions
+    {
+        Protect = true,
+    });
+
+});
+
+
+```
+
+{{% /choosable %}}
+
+{{% choosable language java %}}
+
+```java
+package generated_program;
+
+import com.pulumi.Context;
+import com.pulumi.Pulumi;
+import com.pulumi.core.Output;
+import com.pulumi.aws.s3.BucketV2;
+import com.pulumi.aws.s3.BucketV2Args;
+import com.pulumi.aws.s3.BucketServerSideEncryptionConfigurationV2;
+import com.pulumi.aws.s3.BucketServerSideEncryptionConfigurationV2Args;
+import com.pulumi.aws.s3.inputs.BucketServerSideEncryptionConfigurationV2RuleArgs;
+import com.pulumi.aws.s3.inputs.BucketServerSideEncryptionConfigurationV2RuleApplyServerSideEncryptionByDefaultArgs;
+import com.pulumi.aws.s3.BucketPolicy;
+import com.pulumi.aws.s3.BucketPolicyArgs;
+import com.pulumi.aws.s3.BucketLifecycleConfigurationV2;
+import com.pulumi.aws.s3.BucketLifecycleConfigurationV2Args;
+import com.pulumi.aws.s3.inputs.BucketLifecycleConfigurationV2RuleArgs;
+import com.pulumi.aws.s3.inputs.BucketLifecycleConfigurationV2RuleExpirationArgs;
+import com.pulumi.aws.s3.BucketObjectLockConfigurationV2;
+import com.pulumi.aws.s3.BucketObjectLockConfigurationV2Args;
+import com.pulumi.aws.s3.BucketVersioningV2;
+import com.pulumi.aws.s3.BucketVersioningV2Args;
+import com.pulumi.aws.s3.inputs.BucketVersioningV2VersioningConfigurationArgs;
+import com.pulumi.resources.CustomResourceOptions;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+public class App {
+    public static void main(String[] args) {
+        Pulumi.run(App::stack);
+    }
+
+    public static void stack(Context ctx) {
+        var myBucket = new BucketV2("myBucket", BucketV2Args.builder()
+            .bucket("my-bucket-36224917")
+            .tags(Map.of("Environment", "Dev"))
+            .build(), CustomResourceOptions.builder()
+                .protect(true)
+                .build());
+
+        var myBucketEncryptionConfiguration = new BucketServerSideEncryptionConfigurationV2("myBucketEncryptionConfiguration", BucketServerSideEncryptionConfigurationV2Args.builder()
+            .bucket("my-bucket-36224917")
+            .rules(BucketServerSideEncryptionConfigurationV2RuleArgs.builder()
+                .applyServerSideEncryptionByDefault(BucketServerSideEncryptionConfigurationV2RuleApplyServerSideEncryptionByDefaultArgs.builder()
+                    .sseAlgorithm("AES256")
+                    .build())
+                .build())
+            .build(), CustomResourceOptions.builder()
+                .protect(true)
+                .build());
+
+        var myBucketPolicy = new BucketPolicy("myBucketPolicy", BucketPolicyArgs.builder()
+            .bucket("my-bucket-36224917")
+            .policy("{\"Id\":\"PutObjPolicy\",\"Statement\":[{\"Action\":\"s3:PutObject\",\"Condition\":{\"Null\":{\"s3:x-amz-server-side-encryption-aws-kms-key-id\":\"true\"}},\"Effect\":\"Deny\",\"Principal\":\"*\",\"Resource\":\"arn:aws:s3:::my-bucket-36224917/*\",\"Sid\":\"DenyObjectsThatAreNotSSEKMS\"}],\"Version\":\"2012-10-17\"}")
+            .build(), CustomResourceOptions.builder()
+                .protect(true)
+                .build());
+
+        var myBucketLifecycle = new BucketLifecycleConfigurationV2("myBucketLifecycle", BucketLifecycleConfigurationV2Args.builder()
+            .bucket("my-bucket-36224917")
+            .rules(BucketLifecycleConfigurationV2RuleArgs.builder()
+                .expiration(BucketLifecycleConfigurationV2RuleExpirationArgs.builder()
+                    .days(30)
+                    .build())
+                .id("pu-s3-lifecycle-20240918194815251100000001")
+                .status("Enabled")
+                .build())
+            .build(), CustomResourceOptions.builder()
+                .protect(true)
+                .build());
+
+        var myBucketObjectLockConfiguration = new BucketObjectLockConfigurationV2("myBucketObjectLockConfiguration", BucketObjectLockConfigurationV2Args.builder()
+            .bucket("my-bucket-36224917")
+            .objectLockEnabled("Enabled")
+            .build(), CustomResourceOptions.builder()
+                .protect(true)
+                .build());
+
+        var myBucketVersioning = new BucketVersioningV2("myBucketVersioning", BucketVersioningV2Args.builder()
+            .bucket("my-bucket-36224917")
+            .versioningConfiguration(BucketVersioningV2VersioningConfigurationArgs.builder()
+                .mfaDelete("Disabled")
+                .status("Enabled")
+                .build())
+            .build(), CustomResourceOptions.builder()
+                .protect(true)
+                .build());
+
+    }
+}
+
+```
+
+{{% /choosable %}}
+
+{{% choosable language yaml %}}
 
 ```yaml
 name: y2
@@ -2694,6 +3684,8 @@ resources:
     options:
       protect: true
 ```
+
+{{% /choosable %}}
 
 {{< /chooser >}}
 

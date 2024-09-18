@@ -13,8 +13,8 @@ instructions.
 To migrate existing `aws.s3.Bucket` resources to `aws.s3.BucketV2`:
 
 1. Edit your Pulumi program sources to replace removed inputs with equivalent side-by-side resources. Specifically
-   `BucketV2` inputs such as `policy` and `accelerationStatus` are to be replaced with migrating to side-by-side
-   resources `aws.s3.BucketPolicy` and `aws.s3.BucketAccelerateConfigurationV2`.
+   `BucketV2` inputs such as `policy` and `accelerationStatus` are to be replaced by side-by-side resources
+   `aws.s3.BucketPolicy` and `aws.s3.BucketAccelerateConfigurationV2`.
 
 2. Perform `pulumi up` to replace the buckets in AWS. **WARNING**: replacing the buckets will delete and re-create them,
    losing any data stored in these buckets. If this is not acceptable, consider using `pulumi import` to migrate

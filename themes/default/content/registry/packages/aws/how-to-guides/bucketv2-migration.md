@@ -6,24 +6,21 @@ layout: package
 ---
 
 In the upcoming AWS Classic major release (v7), `aws.s3.Bucket` will be discontinued in favor of `BucketV2`. Users of
-`aws.s3.Bucket` resource are encouraged to migrate early. The migration is straightforward for simple use cases but
-requires some care for advanced configurations. Specifically `BucketV2` inputs such as `policy` and `accelerationStatus`
-are deprecated and using the requires migrating to side-by-side resources (see Removed inputs). This guide aims to cover
-all relevant scenarios with precise migration instructions.
+`aws.s3.Bucket` resource are encouraged to migrate early. The migration requires a significant refactor to the source
+code and additional steps for avoiding data loss. This guide aims to cover all relevant scenarios with precise migration
+instructions.
 
 To migrate existing `aws.s3.Bucket` resources to `aws.s3.BucketV2`:
 
-1. Edit your Pulumi program sources to replace removed inputs (see below) with equivalent side-by-side resources.
+1. Edit your Pulumi program sources to replace removed inputs with equivalent side-by-side resources. Specifically
+   `BucketV2` inputs such as `policy` and `accelerationStatus` are to be replaced with migrating to side-by-side
+   resources `aws.s3.BucketPolicy` and `aws.s3.BucketAccelerateConfigurationV2`.
 
-2. Perform `pulumi up` to replace (delete and re-create) the buckets in AWS.
-
-If replacement is not acceptable, it is possible to perform a manual migration with `pulumi import` (see Avoiding
-replacement).
+2. Perform `pulumi up` to replace the buckets in AWS. **WARNING**: replacing the buckets will delete and re-create them,
+   losing any data stored in these buckets. If this is not acceptable, consider using `pulumi import` to migrate
+   manually instead as outlined in the "Avoiding replacement" section.
 
 ## Migrating deprecated inputs
-
-Inputs such as `policy` and `accelerationStatus` are deprecated on the `aws.s3.BucketV2` resource. Instead of using
-these inputs, it is recommended to use side-by-side resources to achieve the same effect.
 
 ### policy input
 
@@ -1147,8 +1144,6 @@ resources:
 {{% /choosable %}}
 
 {{< /chooser >}}
-
-
 
 
 ### corsRules input
@@ -2421,3 +2416,15 @@ resources:
 - Delete the code for the old bucket from the sources.
 
 - `pulumi preview` should result in `Resources: N unchanged` to confirm everything went well.
+
+
+## Historical context
+
+The distinction between Bucket and BucketV2 originates from breaking changes introduced in the V4 release of the
+Terraform AWS Provider. In the Pulumi AWS provider projection BucketV2 represents the latest version of the upstream
+resource, while Bucket is maintained by Pulumi to enable backwards compatibility.
+
+See also:
+
+- [Announcing v5.0.0 of the Pulumi AWS Provider](https://www.pulumi.com/blog/announcing-v5.0.0-of-the-pulumi-aws-provider/)
+- [Terraform AWS Provider Version 4 Upgrade Guide](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/guides/version-4-upgrade#s3-bucket-refactor)

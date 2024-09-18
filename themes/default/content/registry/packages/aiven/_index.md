@@ -1,6 +1,6 @@
 ---
-title: Aiven
-meta_desc: Provides an overview on how to configure the Pulumi Aiven Provider for Pulumi.
+title: Aiven Provider
+meta_desc: Provides an overview on how to configure the Pulumi Aiven provider.
 layout: package
 ---
 ## Installation
@@ -19,6 +19,7 @@ Sign up for Aiven and [create a personal token](https://aiven.io/docs/platform/h
 
 You can also create an [application user](https://aiven.io/docs/platform/howto/manage-application-users) and use its token for accessing the Aiven Provider.
 ## Example usage
+
 
 {{< chooser language "typescript,python,go,csharp,java,yaml" >}}
 {{% choosable language typescript %}}

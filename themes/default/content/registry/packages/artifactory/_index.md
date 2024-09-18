@@ -413,4 +413,3 @@ The following configuration inputs are supported:
 * `accessToken` - (Optional) This can also be sourced from `JFROG_ACCESS_TOKEN` or `ARTIFACTORY_ACCESS_TOKEN` environment variables.
 * `apiKey` - (Optional, deprecated) API key for api auth.
 * `oidcProviderName` - (Optional) OIDC provider name. See [Configure an OIDC Integration](https://jfrog.com/help/r/jfrog-platform-administration-documentation/configure-an-oidc-integration) for more details.
-* `checkLicense` - (Optional) Toggle for pre-flight checking of Artifactory license. Default to `true`.

@@ -339,6 +339,10 @@
     {
       "repoSlug": "1Password/pulumi-onepassword",
       "schemaFile": "provider/cmd/pulumi-resource-onepassword/schema.json"
+    },
+    {
+      "repoSlug": "descope/pulumi-descope",
+      "schemaFile": "provider/cmd/pulumi-resource-descope/schema.json"
     }
   ]
 }

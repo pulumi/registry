@@ -4,7 +4,7 @@ meta_desc: How to upgrade from v5 to v6 of the Azure Classic provider
 layout: package
 ---
 
-Version 6 of the Azure Classic provider is the first major release since April 2022\. There are some breaking changes which are detailed in this document. Version 6 of the pulumi-azure provider is based on version 4 of the terraform provider. The original release notes can be found in the [4.0 upgrade guide](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/guides/4.0-upgrade-guide).
+Version 6 of the Azure Classic provider is the first major release since April 2022. There are some breaking changes which are detailed in this document. Version 6 of the pulumi-azure provider is based on version 4 of the terraform provider. The original release notes can be found in the [4.0 upgrade guide](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/guides/4.0-upgrade-guide).
 
 Upgrade to version `5.89.0` of the provider and resolve any deprecation warnings before moving to version 6\.
 

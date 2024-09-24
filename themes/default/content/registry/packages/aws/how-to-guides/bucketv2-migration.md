@@ -16,8 +16,10 @@ To migrate existing `aws.s3.Bucket` resources to `aws.s3.BucketV2`:
    `BucketV2` inputs such as `policy` and `accelerationStatus` are to be replaced by side-by-side resources
    `aws.s3.BucketPolicy` and `aws.s3.BucketAccelerateConfigurationV2`.
 
-2. Perorm this is not acceptable, consider using `pulumi import` to migrate
-   manually instead as outlined in the "Avoiding replacement" section.
+2. To avoid replacing the buckets and risking data loss, we recommend manually migrating the Bucket resources via
+   `pulumi import`
+
+3. If replacing buckets is not a concern for your use case, consider a simpler migration procedure with `pulumi up`
 
 ## Migrating with `pulumi import`
 

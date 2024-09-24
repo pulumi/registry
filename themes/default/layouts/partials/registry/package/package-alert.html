@@ -1,6 +1,6 @@
 {{ $package := .Scratch.Get "package" }}
 
-{{ if (eq $package "aws") }}
+{{ if (eq $package "aws-native") }}
     <div class="note note-info">
         <div class="icon-and-line">
             <i class="fas fa-info-circle"></i>
@@ -8,22 +8,8 @@
         </div>
         <div>
             <p>
-                Try
-                <a href="/registry/packages/aws-native/">AWS Native preview</a>
-                for resources not in the classic version.
-            </p>
-        </div>
-    </div>
-{{ else if (eq $package "aws-native") }}
-    <div class="note note-info">
-        <div class="icon-and-line">
-            <i class="fas fa-info-circle"></i>
-            <div class="line"></div>
-        </div>
-        <div>
-            <p>
-                AWS Native is in preview. 
-                <a href="/registry/packages/aws/">AWS Classic</a> is fully supported.
+                We recommend new projects start with resources from the
+                <a href="/registry/packages/aws/">AWS</a> provider.
             </p>
         </div>
     </div>
@@ -47,7 +33,7 @@
         </div>
         <div>
             <p>
-                Google Cloud Native is in preview. 
+                Google Cloud Native is in preview.
                 <a href="/registry/packages/gcp/">Google Cloud Classic</a> is fully supported.
             </p>
         </div>
@@ -60,7 +46,7 @@
         </div>
         <div>
             <p>
-                This package is deprecated. We recommend using the 
+                This package is deprecated. We recommend using the
                 <a href="/registry/packages/confluentcloud/">new Confluent Cloud package</a>.
             </p>
         </div>
@@ -73,7 +59,7 @@
         </div>
         <div>
             <p>
-                This package is deprecated. 
+                This package is deprecated.
                 We recommend using the <a href="/registry/packages/equinix/">new Equinix package</a>.
             </p>
         </div>

@@ -1,6 +1,6 @@
 ---
-title: AWS Classic
-meta_desc: Learn how you can use Pulumi's AWS Classic Provider to reduce the complexity of provisioning and managing resources on AWS.
+title: AWS
+meta_desc: Learn how you can use Pulumi's AWS Provider to reduce the complexity of provisioning and managing resources on AWS.
 layout: package
 ---
 
@@ -9,12 +9,6 @@ The Amazon Web Services (AWS) provider for Pulumi can provision many of the clou
 The AWS provider must be configured with credentials to deploy and update resources in AWS; see [Installation & Configuration](./installation-configuration/) for instructions.
 
 **New to Pulumi and AWS?** [Get started with AWS using our tutorial](/docs/get-started/aws).
-
-{{% notes %}}
-Pulumi has a new AWS provider: the [Pulumi AWS Native Provider](/registry/packages/aws-native). AWS Native gives you same-day access to all new AWS resources and includes coverage of all resources in the [AWS Cloud Control API](https://aws.amazon.com/blogs/aws/announcing-aws-cloud-control-api/).
-
-Consider trying [AWS Native](/registry/packages/aws-native) if you need AWS resources that aren't available in this provider.
-{{% /notes %}}
 
 ## Example
 

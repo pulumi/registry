@@ -10,6 +10,6 @@ package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-aws
 schema_file_path: provider/cmd/pulumi-resource-aws/schema.json
-title: AWS Classic
+title: AWS
 updated_on: 1726492988
 version: v6.52.0

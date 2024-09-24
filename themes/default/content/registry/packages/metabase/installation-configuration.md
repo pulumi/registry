@@ -6,7 +6,7 @@ layout: package
 
 {{< aws-resource-note >}}
 
-To provision a Metabase Fargate Service with this Component, you need to have AWS credentials configured. Use the instructions on the AWS Classic Provider's [Installation & Configuration](/registry/packages/aws/installation-configuration) to configure your credentials. Your AWS credentials are never sent to Pulumi.com. Pulumi uses the AWS SDK and the credentials in your environment to authenticate requests from your computer to AWS.
+To provision a Metabase Fargate Service with this Component, you need to have AWS credentials configured. Use the instructions on the AWS Provider's [Installation & Configuration](/registry/packages/aws/installation-configuration) to configure your credentials. Your AWS credentials are never sent to Pulumi.com. Pulumi uses the AWS SDK and the credentials in your environment to authenticate requests from your computer to AWS.
 
 ## Installation
 

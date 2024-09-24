@@ -1,6 +1,6 @@
 ---
-title: AWS Classic How-to Guides
+title: AWS How-to Guides
 meta_desc: |
-    Tutorials for using infrastructure as code in the Pulumi AWS Classic package
+    Tutorials for using infrastructure as code in the Pulumi AWS package
 layout: package
 ---

@@ -6,7 +6,7 @@ layout: package
 
 {{< aws-resource-note >}}
 
-To provision an AWS IAM Roles with this Component, you need to have AWS credentials configured. Use the instructions on the [AWS Classic provider's installation & configuration](/registry/packages/aws/installation-configuration) to configure your credentials. Your AWS credentials are never sent to Pulumi.com. Pulumi uses the AWS SDK and the credentials in your environment to authenticate requests from your computer to AWS.
+To provision an AWS IAM Roles with this Component, you need to have AWS credentials configured. Use the instructions on the [AWS provider's installation & configuration](/registry/packages/aws/installation-configuration) to configure your credentials. Your AWS credentials are never sent to Pulumi.com. Pulumi uses the AWS SDK and the credentials in your environment to authenticate requests from your computer to AWS.
 
 ## Installation
 

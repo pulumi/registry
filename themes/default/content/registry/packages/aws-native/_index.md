@@ -8,9 +8,9 @@ aliases:
 ---
 
 {{% notes type="info" %}}
-AWS Native is in public preview. AWS Native provides coverage of all resources in the [AWS Cloud Control API](https://aws.amazon.com/blogs/aws/announcing-aws-cloud-control-api/), including same-day access to all new AWS resources. However, some AWS resources are not yet available in AWS Native.
+AWS Native provides coverage of all resources in the [AWS Cloud Control API](https://aws.amazon.com/blogs/aws/announcing-aws-cloud-control-api/), including same-day access to all new AWS resources. However, some AWS resources are not yet available in AWS Native.
 
-For new projects, we recommend using AWS Native and [AWS Classic](/registry/packages/aws) side-by-side so you can get the speed and correctness benefits of AWS Native where possible. For existing projects, [AWS Classic](/registry/packages/aws) remains fully supported; at this time, we recommend waiting to migrate existing projects to AWS Native.
+For new projects, we recommend starting with our primary [AWS Provider](/registry/packages/aws) and adding AWS Native resources on an as needed basis.
 {{% /notes %}}
 
 The AWS Native provider for Pulumi can provision many of the cloud resources available in [AWS](https://aws.amazon.com/). It manages and provisions resources using the [AWS Cloud Control API](https://aws.amazon.com/blogs/aws/announcing-aws-cloud-control-api/), which typically supports new AWS features on the day of launch. Resources available in the Pulumi AWS Native provider are based on the resources defined in the [AWS CloudFormation Registry](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/registry.html).
@@ -333,7 +333,7 @@ return await Deployment.RunAsync(() =>
     var myBucket = new AwsNative.ExtensionResource("myBucket", new()
     {
         Type = "AWS::S3::Bucket",
-        Properties = 
+        Properties =
         {
             { "BucketName", "my-bucket" },
         },

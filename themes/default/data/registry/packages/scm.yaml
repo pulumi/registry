@@ -9,6 +9,6 @@ package_status: public_preview
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-scm
 schema_file_path: provider/cmd/pulumi-resource-scm/schema.json
-title: Strata Cloud Manager
+title: Strata Cloud Manager (Palo Alto SCM)
 updated_on: 1723454290
 version: v0.1.3

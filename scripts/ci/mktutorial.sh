@@ -19,7 +19,8 @@ for cloud in "aws-apigateway" "aws" "aws-native" "classic-azure" "azure" "gcp" "
     mkdir -p ./themes/default/content/registry/packages/$dest
     mkdir -p ./themes/default/content/registry/packages/$dest/how-to-guides
 
-    # Check if the directory exists before copying
+    # Check if the directory exists before copying.
+    # (meaning there are tutorials for that cloud provider, if not the dir would not get created)
     if [ -d "$TUTORIAL_OUT/tutorials/$cloud" ]; then
         cp $TUTORIAL_OUT/tutorials/$cloud/* ./themes/default/content/registry/packages/$dest/how-to-guides/
     fi

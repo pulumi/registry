@@ -343,6 +343,14 @@
     {
       "repoSlug": "descope/pulumi-descope",
       "schemaFile": "provider/cmd/pulumi-resource-descope/schema.json"
+    },
+    {
+      "repoSlug": "datarobot-community/pulumi-datarobot",
+      "schemaFile": "provider/cmd/pulumi-resource-datarobot/schema.json"
+    },
+    {
+      "repoSlug": "wttech/pulumi-aem",
+      "schemaFile": "provider/cmd/pulumi-resource-aem/schema.json"
     }
   ]
 }

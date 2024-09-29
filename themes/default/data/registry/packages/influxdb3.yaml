@@ -10,5 +10,5 @@ publisher: komminarlabs
 repo_url: https://github.com/komminarlabs/pulumi-influxdb3
 schema_file_path: provider/cmd/pulumi-resource-influxdb3/schema.json
 title: InfluxDB3
-updated_on: 1726150668
-version: v1.2.2
+updated_on: 1727629318
+version: v1.2.3

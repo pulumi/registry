@@ -132,4 +132,4 @@ As an optional step, if you have multiple AWS profiles set up, you can specify a
 
 ### Configuration
 
-The configuration options available for this provider  mirror those of the [Pulumi AWS Classic Provider](https://github.com/pulumi/pulumi-aws#configuration)
+The configuration options available for this provider  mirror those of the [Pulumi AWS Provider](https://github.com/pulumi/pulumi-aws#configuration)

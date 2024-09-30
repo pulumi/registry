@@ -2,7 +2,7 @@ category: Cloud
 component: false
 description: A Pulumi package for creating and managing DataRobot resources.
 featured: false
-logo_url: https://www.datarobot.com/wp-content/uploads/2024/03/mascot-blue.png
+logo_url: https://raw.githubusercontent.com/datarobot-community/pulumi-datarobot/main/assets/datarobot-logo.png
 name: datarobot
 native: false
 package_status: public_preview
@@ -10,5 +10,5 @@ publisher: DataRobot, Inc.
 repo_url: https://github.com/datarobot-community/pulumi-datarobot
 schema_file_path: provider/cmd/pulumi-resource-datarobot/schema.json
 title: DataRobot
-updated_on: 1727104936
-version: v0.1.44
+updated_on: 1727710903
+version: v0.1.45

@@ -1,6 +1,6 @@
 ---
-title: AWS Native Installation & Configuration
-meta_desc: Set up credentials to use the Pulumi AWS Native Provider and choose configuration options to customize how the provider works.
+title: AWS Cloud Control Installation & Configuration
+meta_desc: Set up credentials to use the Pulumi AWS Cloud Control Provider and choose configuration options to customize how the provider works.
 layout: package
 ---
 
@@ -8,7 +8,7 @@ layout: package
 
 ## Installation
 
-The AWS Native provider is available as a package in all Pulumi languages:
+The AWS Cloud Control provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/aws-native`](https://www.npmjs.com/package/@pulumi/aws-native)
 * Python: [`pulumi-aws-native`](https://pypi.org/project/pulumi-aws-native/)
@@ -18,7 +18,7 @@ The AWS Native provider is available as a package in all Pulumi languages:
 
 ## Credentials
 
-To provision resources with the Pulumi AWS Native provider, you need to have AWS credentials. To do so:
+To provision resources with the Pulumi AWS Cloud Control provider, you need to have AWS credentials. To do so:
 
 1. [Create an IAM user in the AWS console](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html#id_users_create_console) with programmatic access and ensure it has sufficient permissions to deploy and manage your Pulumi program’s resources.
 2. [Set up AWS credentials](https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys) for your user.
@@ -34,7 +34,7 @@ Your AWS credentials are never sent to pulumi.com. Pulumi uses the AWS SDK and t
 There are a few different ways you can configure your AWS credentials to work with Pulumi.
 
 {{% notes "info" %}}
-Authenticating via EC2 instance metadata is not currently supported for the AWS Native provider.
+Authenticating via EC2 instance metadata is not currently supported for the AWS Cloud Control provider.
 {{% /notes %}}
 
 ### Set credentials as environment variables
@@ -163,7 +163,7 @@ You can specify which profile to use with Pulumi through one of the following me
 
 ### Dynamically generate credentials
 
-In addition to configuring the AWS Native provider locally, you also have the option to centralize your configurations using [Pulumi ESC (Environments, Secrets, and Configuration)](/docs/pulumi-cloud/esc/). Using this service will enable you to run AWS or Pulumi CLI commands with dynamically generated credentials, removing the need to configure and manage your credentials locally.
+In addition to configuring the AWS Cloud Control provider locally, you also have the option to centralize your configurations using [Pulumi ESC (Environments, Secrets, and Configuration)](/docs/pulumi-cloud/esc/). Using this service will enable you to run AWS or Pulumi CLI commands with dynamically generated credentials, removing the need to configure and manage your credentials locally.
 
 To do this, you will need to complete the following steps:
 
@@ -222,7 +222,7 @@ values:
           duration: 1h
           roleArn: <your-oidc-iam-role-arn>
           sessionName: pulumi-environments-session
-  pulumiConfig: 
+  pulumiConfig:
     aws:region: <YOUR_AWS_REGION>
     aws:accessKey: ${aws.login.accessKeyId}
     aws:secretKey: ${aws.login.secretAccessKey}
@@ -260,7 +260,7 @@ To learn more about projecting environment variables in Pulumi ESC, refer to the
 ## Configuration options
 
 {{% notes type="info" %}}
-Some configuration options are not supported in AWS Native. You can check on the status of a configuration option you need by visiting our backlog of [Github issues](https://github.com/pulumi/pulumi-aws-native/issues?q=is%3Aissue+is%3Aopen+label%3Aprovider-config); feel free to add your vote to an issue by adding a 👍 reaction.
+Some configuration options are not supported in AWS Cloud Control. You can check on the status of a configuration option you need by visiting our backlog of [Github issues](https://github.com/pulumi/pulumi-aws-native/issues?q=is%3Aissue+is%3Aopen+label%3Aprovider-config); feel free to add your vote to an issue by adding a 👍 reaction.
 {{% /notes %}}
 
 Use `pulumi config set aws-native:<option>` or pass options to the [constructor of `new aws-native.Provider`](/registry/packages/aws-native/api-docs/provider).

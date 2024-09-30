@@ -1,8 +1,8 @@
 ---
-title: "Create an ECS cluster on AWS with the AWS Native Provider | TypeScript"
-h1: "Create an ECS cluster on AWS with the AWS Native Provider"
-linktitle: "Create an ECS cluster on AWS with the AWS Native Provider"
-meta_desc: "Create an ECS cluster on AWS with the AWS Native Provider How-to Guide using TypeScript"
+title: "Create an ECS cluster on AWS with the AWS Cloud Control Provider | TypeScript"
+h1: "Create an ECS cluster on AWS with the AWS Cloud Control Provider"
+linktitle: "Create an ECS cluster on AWS with the AWS Cloud Control Provider"
+meta_desc: "Create an ECS cluster on AWS with the AWS Cloud Control Provider How-to Guide using TypeScript"
 no_edit_this_page: true
 cloud: aws-native
 language: ts
@@ -27,9 +27,8 @@ layout: package
 
 Create an ECS cluster, and deploy a task and service.
 
-Note: Some resources are not yet supported by the Native AWS provider, so we are using both the Native
-and Classic provider in this example. The resources will be updated to use native resources as they are
-available in AWS's Cloud Control API.
+Note: Some resources are not yet supported by the AWS Cloud Control provider, so we are also using
+the standard AWS provider for additional resources in this example.
 
 ## Deploying and running the program
 

@@ -1,8 +1,8 @@
 ---
-title: "Host a Static Website on Amazon S3 with the AWS Native Provider | Java"
-h1: "Host a Static Website on Amazon S3 with the AWS Native Provider"
-linktitle: "Host a Static Website on Amazon S3 with the AWS Native Provider"
-meta_desc: "Host a Static Website on Amazon S3 with the AWS Native Provider How-to Guide using Java"
+title: "Host a Static Website on Amazon S3 with the AWS Cloud Control Provider | Java"
+h1: "Host a Static Website on Amazon S3 with the AWS Cloud Control Provider"
+linktitle: "Host a Static Website on Amazon S3 with the AWS Cloud Control Provider"
+meta_desc: "Host a Static Website on Amazon S3 with the AWS Cloud Control Provider How-to Guide using Java"
 no_edit_this_page: true
 cloud: aws-native
 language: java
@@ -28,9 +28,8 @@ layout: package
 A static website that uses [S3's website support](https://docs.aws.amazon.com/AmazonS3/latest/dev/WebsiteHosting.html).
 For a detailed walkthrough of this example, see the tutorial [Static Website on AWS S3](https://www.pulumi.com/docs/tutorials/aws/s3-website/).
 
-Note: Some resources are not yet supported by the Native AWS provider, so we are using both the Native
-and Classic provider in this example. The resources will be updated to use native resources as they are
-available in AWS's Cloud Control API.
+Note: Some resources are not yet supported by the AWS Cloud Control provider, so we are also using
+the standard AWS provider for additional resources in this example.
 
 ## Deploying and running the program
 

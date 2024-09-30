@@ -1,6 +1,6 @@
 ---
-title: DNSimple
-meta_desc: Provides an overview on how to configure the Pulumi DNSimple Provider.
+title: Dnsimple Provider
+meta_desc: Provides an overview on how to configure the Pulumi Dnsimple provider.
 layout: package
 ---
 ## Installation

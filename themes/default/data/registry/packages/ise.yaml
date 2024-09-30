@@ -11,5 +11,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-ise
 schema_file_path: provider/cmd/pulumi-resource-ise/schema.json
 title: Cisco ISE
-updated_on: 1727134725
-version: v0.1.6
+updated_on: 1727221402
+version: v0.1.7

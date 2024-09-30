@@ -5,10 +5,9 @@ meta_desc: Practitioner level instructions for migrating from aws.s3.Bucket to a
 layout: package
 ---
 
-In the upcoming AWS Classic major release (v7), `aws.s3.Bucket` will be discontinued in favor of `BucketV2`. Users of
-`aws.s3.Bucket` resource are encouraged to migrate early. The migration requires a significant refactor to the source
-code and additional steps for avoiding data loss. This guide aims to cover all relevant scenarios with precise migration
-instructions.
+In the upcoming AWS Classic major release (v7), `aws.s3.Bucket` will be discontinued in favor of `BucketV2`. The
+migration requires a significant refactor to the source code and additional steps for avoiding data loss. This guide is
+for users opting to migrate early.
 
 To migrate existing `aws.s3.Bucket` resources to `aws.s3.BucketV2`:
 
@@ -16,16 +15,15 @@ To migrate existing `aws.s3.Bucket` resources to `aws.s3.BucketV2`:
    `BucketV2` inputs such as `policy` and `accelerationStatus` are to be replaced by side-by-side resources
    `aws.s3.BucketPolicy` and `aws.s3.BucketAccelerateConfigurationV2`.
 
-2. To avoid replacing the buckets and risking data loss, we recommend manually migrating the Bucket resources via
-   `pulumi import`
+2. To avoid replacing the buckets and risking data loss, migrate via `pulumi import`
 
-3. If replacing buckets is not a concern for your use case, consider a simpler migration procedure with `pulumi up`
+3. If replacing buckets is not a concern for your use case, use a simpler migration procedure via `pulumi up`
 
 ## Migrating with `pulumi import`
 
-This migration path is recommended in situations when replacing the bucket in the AWS account is not acceptable. After
-performing the steps your Pulumi program and state will be updated to track buckets using the new resource without
-executing any changes against the actual cloud account. The steps involve:
+This migration path is best for when replacing the bucket in the AWS account is not acceptable. After performing the
+steps your Pulumi program and state will be updated to track buckets using the new resource without executing any
+changes against the actual cloud account. The steps involve:
 
 - Find URNs for legacy Bucket Pulumi resources using `pulumi stack export`
 - Determine the actual bucket name(s)
@@ -3700,7 +3698,8 @@ for more information:
 The distinction between Bucket and BucketV2 originates from breaking changes introduced in the V4 release of the
 Terraform AWS Provider. In the Pulumi AWS provider projection BucketV2 represents the latest version of the upstream
 resource, while Bucket is maintained by Pulumi to enable backwards compatibility. We recommend using BucketV2 for new
-code and migrating old code to BucketV2 as it will remain the preferred long-term supported resource.
+code. Migrating existing old code to BucketV2 is not required in the V6 version of the provider, but has the benefits of
+aligning the code with the preferred long-term supported resource.
 
 See also:
 

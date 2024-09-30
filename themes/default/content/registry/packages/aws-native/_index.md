@@ -255,7 +255,7 @@ resources:
 
 The SDK for the AWS Cloud Control provider only includes resources for which Amazon have published the corresponding CloudFormation specifications. AWS also supports [CloudFormation extensions via the CloudFormation registry](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/registry.html) which can also be accessed via Cloud Control.
 
-If you want to manage resources using Pulumi's AWS Cloud Control Cloud Control Provider which aren't in the SDK, you can use the [ExtensionResource](https://www.pulumi.com/registry/packages/aws-native/api-docs/extensionresource/) resource within root of the SDK. The input properties and output properties are untyped allowing passing in any arbitrary values which will be passed to the Cloud Control API and tracked with Pulumi's managed state model.
+If you want to manage resources using Pulumi's AWS Cloud Control Provider which aren't in the SDK, you can use the [ExtensionResource](https://www.pulumi.com/registry/packages/aws-native/api-docs/extensionresource/) resource within root of the SDK. The input properties and output properties are untyped allowing passing in any arbitrary values which will be passed to the Cloud Control API and tracked with Pulumi's managed state model.
 
 Here's a very simple demonstration of using the ExtensionResource to create an S3 bucket:
 

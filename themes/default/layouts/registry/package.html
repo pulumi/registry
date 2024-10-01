@@ -1,5 +1,5 @@
 {{ define "main" }}
-    {{ $directories := (split .Page.File "/")}}
+    {{ $directories := (split .Page.File.Path "/")}}
     {{ $packageName := index $directories 2 }}
     {{ $packageHome := path.Join "registry/packages" $packageName }}
     {{ $title_tag := .Params.title_tag }}
@@ -29,7 +29,7 @@
                         <h1>{{ with .GetPage $packageHome }}{{ .Title }}{{ end }}: How-to-Guides</h1>
                     {{ else if strings.Contains .Permalink "api-docs" }}
                         <!--Don't show the title in the top-most index page.-->
-                        {{ if not (in .Page.File "api-docs/_index.md") }}
+                        {{ if not (in .Page.File.Path "api-docs/_index.md") }}
                             {{ if and (.Params.h1) (not .Params.notitle) }}
                                 <h1>{{ .Params.h1 }}</h1>
                             {{ else if and (ne .Title "") (not .Params.notitle) }}
@@ -40,9 +40,9 @@
                                     {{ partial "registry/package/pulumi-ai.html" . }}
                                 {{ end }}
                             {{ end }}
-                        {{ else if (in .Page.File "api-docs/_index.md")}}
+                        {{ else if (in .Page.File.Path "api-docs/_index.md")}}
                             <!-- HACK: to get custom azure-native-v2 title for now. -->
-                            {{ if (in .Page.File "azure-native-v2") }}
+                            {{ if (in .Page.File.Path "azure-native-v2") }}
                                 <h1>Azure Native (v2 Beta): API Docs</h1>
                             {{ else }}
                                 <h1>{{ .Params.title }}: API Docs</h1>
@@ -51,7 +51,7 @@
                     {{ else }}
                         {{ if and (.Params.h1) (not .Params.notitle) }}
                             <h1>{{ .Params.h1 }}</h1>
-                        {{ else if and (ne .Title "") (not .Params.notitle) (not (in .Page.File "how-to-guides/_index.md")) }}
+                        {{ else if and (ne .Title "") (not .Params.notitle) (not (in .Page.File.Path "how-to-guides/_index.md")) }}
                             <h1>{{ .Title }}</h1>
                         {{ end }}
                     {{ end }}

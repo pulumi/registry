@@ -8,15 +8,14 @@
         @apply flex flex-row flex-grow;
 
         a {
-            @apply flex gap-3 items-center font-display text-base;
-            padding: 11px 24px 12px 24px;
+            @apply flex gap-3 items-center font-display text-base py-3 px-6;
             font-weight: 500;
-            border-bottom: 5px solid transparent;
+            border-bottom: 4px solid transparent;
             color: map-get($gray, 650);
 
             &.tab-selected {
                 @apply font-bold;
-                border-bottom: 5px solid map-get($brand, "violet");
+                border-bottom: 4px solid map-get($brand, "violet");
                 color: map-get($gray, 950);
                 background-color: map-get($gray, 100);
             }

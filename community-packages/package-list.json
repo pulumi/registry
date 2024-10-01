@@ -341,6 +341,10 @@
       "schemaFile": "provider/cmd/pulumi-resource-onepassword/schema.json"
     },
     {
+      "repoSlug": "descope/pulumi-descope",
+      "schemaFile": "provider/cmd/pulumi-resource-descope/schema.json"
+    },
+    {
       "repoSlug": "datarobot-community/pulumi-datarobot",
       "schemaFile": "provider/cmd/pulumi-resource-datarobot/schema.json"
     },

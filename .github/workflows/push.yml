@@ -4,8 +4,8 @@ on:
     branches:
       - master
 permissions:
-      id-token: write   # This is required for requesting the JWT
-      contents: read    # This is required for actions/checkout
+  id-token: write # This is required for requesting the JWT
+  contents: read # This is required for actions/checkout
 jobs:
   build:
     name: Build
@@ -17,7 +17,7 @@ jobs:
       - name: Install Node
         uses: actions/setup-node@v4
         with:
-          node-version: '18.x'
+          node-version: "18.x"
 
       - name: Install Go
         uses: actions/setup-go@v5
@@ -27,7 +27,7 @@ jobs:
       - name: Install Hugo
         uses: peaceiris/actions-hugo@v3
         with:
-          hugo-version: '0.111.0'
+          hugo-version: "0.135.0"
           extended: true
 
       - name: Check out branch

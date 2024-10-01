@@ -1,6 +1,6 @@
 
-{{ $directories := (split .Page.File "/")}}
-{{ $packageName := index $directories 2 }}
+{{ $directories := (split .Page.File.Path "/") }}
+{{ $packageName := (index $directories 2) }}
 
 <div id="accordion-package-card" class="accordion">
     <div>
@@ -37,13 +37,10 @@
         </label>
         <div class="accordion-content flex">
             <div class="content">
-                {{ $directories := (split .Page.File "/")}}
-                {{ $packageName := index $directories 2 }}
-
                 <div class="package-card">
                     {{ .Scratch.Set "package" $packageName }}
                     {{ partial "registry/package/package-alert.html" . }}
-                    
+
                     {{ with (index $.Site.Data.registry.packages ($packageName)) }}
                         <div class="version-info">
                             {{ .title }} {{ .version }} published on {{ ((time .updated_on).Format "Monday, Jan 2, 2006") }} by {{ .publisher }}

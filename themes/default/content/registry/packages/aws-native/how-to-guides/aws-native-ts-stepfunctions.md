@@ -1,8 +1,8 @@
 ---
-title: "AWS Step Functions with the AWS Native Provider | TypeScript"
-h1: "AWS Step Functions with the AWS Native Provider"
-linktitle: "AWS Step Functions with the AWS Native Provider"
-meta_desc: "AWS Step Functions with the AWS Native Provider How-to Guide using TypeScript"
+title: "AWS Step Functions with the AWS Cloud Control Provider | TypeScript"
+h1: "AWS Step Functions with the AWS Cloud Control Provider"
+linktitle: "AWS Step Functions with the AWS Cloud Control Provider"
+meta_desc: "AWS Step Functions with the AWS Cloud Control Provider How-to Guide using TypeScript"
 no_edit_this_page: true
 cloud: aws-native
 language: ts
@@ -25,11 +25,10 @@ layout: package
 </p>
 
 
-A basic example that demonstrates using AWS Step Functions with a Lambda function using the AWS Native provider.
+A basic example that demonstrates using AWS Step Functions with a Lambda function using the AWS Cloud Control provider.
 
-Note: Some resources are not yet supported by the Native AWS provider, so we are using both the Native
-and Classic provider in this example. The resources will be updated to use native resources as they are
-available in AWS's Cloud Control API.
+Note: Some resources are not yet supported by the AWS Cloud Control provider, so we are also using
+the standard AWS provider for additional resources in this example.
 
 ## Known error
 

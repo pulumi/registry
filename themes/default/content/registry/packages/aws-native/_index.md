@@ -1,6 +1,6 @@
 ---
-title: AWS Native
-meta_desc: Learn how you can use Pulumi's AWS Native Provider to reduce the complexity of provisioning and managing resources on AWS.
+title: AWS Cloud Control
+meta_desc: Learn how you can use Pulumi's AWS Cloud Control Provider to reduce the complexity of provisioning and managing resources on AWS.
 layout: package
 aliases:
     - "/docs/reference/clouds/aws-native/"
@@ -8,22 +8,22 @@ aliases:
 ---
 
 {{% notes type="info" %}}
-AWS Native provides coverage of all resources in the [AWS Cloud Control API](https://aws.amazon.com/blogs/aws/announcing-aws-cloud-control-api/), including same-day access to all new AWS resources. However, some AWS resources are not yet available in AWS Native.
+AWS Cloud Control provides coverage of all resources in the [AWS Cloud Control API](https://aws.amazon.com/blogs/aws/announcing-aws-cloud-control-api/), including same-day access to all new AWS resources. However, some AWS resources are not yet available in AWS Cloud Control.
 
-For new projects, we recommend starting with our primary [AWS Provider](/registry/packages/aws) and adding AWS Native resources on an as needed basis.
+For new projects, we recommend starting with our primary [AWS Provider](/registry/packages/aws) and adding AWS Cloud Control resources on an as needed basis.
 {{% /notes %}}
 
-The AWS Native provider for Pulumi can provision many of the cloud resources available in [AWS](https://aws.amazon.com/). It manages and provisions resources using the [AWS Cloud Control API](https://aws.amazon.com/blogs/aws/announcing-aws-cloud-control-api/), which typically supports new AWS features on the day of launch. Resources available in the Pulumi AWS Native provider are based on the resources defined in the [AWS CloudFormation Registry](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/registry.html).
+The AWS Cloud Control provider for Pulumi can provision many of the cloud resources available in [AWS](https://aws.amazon.com/). It manages and provisions resources using the [AWS Cloud Control API](https://aws.amazon.com/blogs/aws/announcing-aws-cloud-control-api/), which typically supports new AWS features on the day of launch. Resources available in the Pulumi AWS Cloud Control provider are based on the resources defined in the [AWS CloudFormation Registry](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/registry.html).
 
-[Hundreds of AWS resources](/registry/packages/aws-native/api-docs) are available in AWS Native. As AWS Cloud Control API adds resources, we will update AWS Native to include them.
+[Hundreds of AWS resources](/registry/packages/aws-native/api-docs) are available in AWS Cloud Control. As AWS Cloud Control API adds resources, we will update AWS Cloud Control to include them.
 
-AWS Native must be configured with credentials to deploy and update resources in AWS; see [Installation & Configuration](./installation-configuration) for instructions.
+AWS Cloud Control must be configured with credentials to deploy and update resources in AWS; see [Installation & Configuration](./installation-configuration) for instructions.
 
 {{< youtube oKxaZCyu2OQ >}}
 
 ## Examples
 
-Check out the examples below to try out AWS Native:
+Check out the examples below to try out AWS Cloud Control:
 
 * [Create an ECS Cluster on AWS](/registry/packages/aws-native/how-to-guides/aws-native-ts-ecs)
 * [Host a Static Website on Amazon S3](/registry/packages/aws-native/how-to-guides/aws-native-ts-s3-folder)
@@ -253,9 +253,9 @@ resources:
 
 ## Third Party Resources
 
-The SDK for the AWS Native Cloud Control provider only includes resources for which Amazon have published the corresponding CloudFormation specifications. AWS also supports [CloudFormation extensions via the CloudFormation registry](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/registry.html) which can also be accessed via Cloud Control.
+The SDK for the AWS Cloud Control provider only includes resources for which Amazon have published the corresponding CloudFormation specifications. AWS also supports [CloudFormation extensions via the CloudFormation registry](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/registry.html) which can also be accessed via Cloud Control.
 
-If you want to manage resources using Pulumi's AWS Native Cloud Control Provider which aren't in the SDK, you can use the [ExtensionResource](https://www.pulumi.com/registry/packages/aws-native/api-docs/extensionresource/) resource within root of the SDK. The input properties and output properties are untyped allowing passing in any arbitrary values which will be passed to the Cloud Control API and tracked with Pulumi's managed state model.
+If you want to manage resources using Pulumi's AWS Cloud Control Provider which aren't in the SDK, you can use the [ExtensionResource](https://www.pulumi.com/registry/packages/aws-native/api-docs/extensionresource/) resource within root of the SDK. The input properties and output properties are untyped allowing passing in any arbitrary values which will be passed to the Cloud Control API and tracked with Pulumi's managed state model.
 
 Here's a very simple demonstration of using the ExtensionResource to create an S3 bucket:
 

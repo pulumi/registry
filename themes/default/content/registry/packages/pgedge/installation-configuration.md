@@ -13,8 +13,8 @@ layout: package
 To use from JavaScript or TypeScript in Node.js, install using either `npm` or `yarn`:
 
 ```bash
-$ npm install @pgEdge/pulumi-pgedge
-$ yarn add @pgEdge/pulumi-pgedge
+$ npm install @pgedge/pulumi-pgedge
+$ yarn add @pgedge/pulumi-pgedge
 ```
 
 ### Go

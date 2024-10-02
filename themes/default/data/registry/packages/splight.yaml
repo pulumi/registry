@@ -1,0 +1,14 @@
+category: Cloud
+component: false
+description: A Pulumi package for creating and managing Splight resources.
+featured: false
+logo_url: https://raw.githubusercontent.com/splightplatform/pulumi-splight/main/docs/logo.png
+name: splight
+native: false
+package_status: ga
+publisher: splightplatform
+repo_url: https://github.com/splightplatform/pulumi-splight
+schema_file_path: provider/cmd/pulumi-resource-splight/schema.json
+title: splight
+updated_on: 1727808844
+version: v1.1.4

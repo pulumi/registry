@@ -1,47 +1,204 @@
 ---
-title: Cloudflare Installation & Configuration
+title: Cloudflare Provider Installation & Configuration
 meta_desc: Provides an overview on how to configure the Pulumi Cloudflare Provider.
 layout: package
 ---
-
-The Pulumi Cloudflare provider uses the Cloudflare SDK to manage resources.
-
 ## Installation
 
-The Cloudflare provider is available as a package in all Pulumi languages:
+The cloudflare provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/cloudflare`](https://www.npmjs.com/package/@pulumi/cloudflare)
 * Python: [`pulumi-cloudflare`](https://pypi.org/project/pulumi-cloudflare/)
-* Go: [`github.com/pulumi/pulumi-cloudflare/sdk/v3/go/cloudflare`](https://github.com/pulumi/pulumi-cloudflare)
+* Go: [`github.com/pulumi/pulumi-cloudflare/sdk/v5/go/cloudflare`](https://github.com/pulumi/pulumi-cloudflare)
 * .NET: [`Pulumi.Cloudflare`](https://www.nuget.org/packages/Pulumi.Cloudflare)
 * Java: [`com.pulumi/cloudflare`](https://central.sonatype.com/artifact/com.pulumi/cloudflare)
 
-### Configuring The Provider
+The Cloudflare provider is used to interact with resources supported by
+Cloudflare. The provider needs to be configured with the proper credentials
+before it can be used.
+## Example Usage
 
-Pulumi relies on the Cloudflare SDK to authenticate requests from your computer to Cloudflare. Your credentials are never sent
-to pulumi.com. Once the credentials are obtained, there are two ways to communicate your configuration parameters to Pulumi:
+{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{% choosable language typescript %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: nodejs
+config:
+    cloudflare:apiToken:
+        value: 'TODO: var.cloudflare_api_token'
 
-{{% notes type="info" %}}
-For authentication, you must use only one of: `apiToken` _or_ `apiKey`/`email`. We recommend using `apiToken`.
-{{% /notes %}}
+```
+```typescript
+import * as pulumi from "@pulumi/pulumi";
+import * as cloudflare from "@pulumi/cloudflare";
 
-1. Set the environment variable `CLOUDFLARE_API_TOKEN` (or the legacy `CLOUDFLARE_EMAIL` and `CLOUDFLARE_API_KEY`):
+// Create a record
+const www = new cloudflare.Record("www", {});
+// Create a page rule
+const wwwPageRule = new cloudflare.PageRule("www", {});
+```
+{{% /choosable %}}
+{{% choosable language python %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: python
+config:
+    cloudflare:apiToken:
+        value: 'TODO: var.cloudflare_api_token'
 
-    ```bash
-    $ export CLOUDFLARE_API_TOKEN=YYYYYY
-    # Legacy
-    $ export CLOUDFLARE_EMAIL=XXXXXX
-    $ export CLOUDFLARE_API_KEY=YYYYYY
-    ```
+```
+```python
+import pulumi
+import pulumi_cloudflare as cloudflare
 
-2. If you prefer that they be stored alongside your Pulumi stack for easy multi-user access:
+# Create a record
+www = cloudflare.Record("www")
+# Create a page rule
+www_page_rule = cloudflare.PageRule("www")
+```
+{{% /choosable %}}
+{{% choosable language csharp %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: dotnet
+config:
+    cloudflare:apiToken:
+        value: 'TODO: var.cloudflare_api_token'
 
-    ```bash
-    $ pulumi config set cloudflare:apiToken --secret
-    # Legacy
-    $ pulumi config set cloudflare:email XXXXXX
-    $ pulumi config set cloudflare:apiKey YYYYYY --secret
-    ```
+```
+```csharp
+using System.Collections.Generic;
+using System.Linq;
+using Pulumi;
+using Cloudflare = Pulumi.Cloudflare;
 
- The complete list of
-configuration parameters is in the [Cloudflare provider README](https://github.com/pulumi/pulumi-cloudflare/blob/master/README.md).
+return await Deployment.RunAsync(() =>
+{
+    // Create a record
+    var www = new Cloudflare.Record("www");
+
+    // Create a page rule
+    var wwwPageRule = new Cloudflare.PageRule("www");
+
+});
+
+```
+{{% /choosable %}}
+{{% choosable language go %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: go
+config:
+    cloudflare:apiToken:
+        value: 'TODO: var.cloudflare_api_token'
+
+```
+```go
+package main
+
+import (
+	"github.com/pulumi/pulumi-cloudflare/sdk/v5/go/cloudflare"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		// Create a record
+		_, err := cloudflare.NewRecord(ctx, "www", nil)
+		if err != nil {
+			return err
+		}
+		// Create a page rule
+		_, err = cloudflare.NewPageRule(ctx, "www", nil)
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+}
+```
+{{% /choosable %}}
+{{% choosable language yaml %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: yaml
+config:
+    cloudflare:apiToken:
+        value: 'TODO: var.cloudflare_api_token'
+
+```
+```yaml
+resources:
+  # Create a record
+  www:
+    type: cloudflare:Record
+  # Create a page rule
+  wwwPageRule:
+    type: cloudflare:PageRule
+    name: www
+```
+{{% /choosable %}}
+{{% choosable language java %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: java
+config:
+    cloudflare:apiToken:
+        value: 'TODO: var.cloudflare_api_token'
+
+```
+```java
+package generated_program;
+
+import com.pulumi.Context;
+import com.pulumi.Pulumi;
+import com.pulumi.core.Output;
+import com.pulumi.cloudflare.Record;
+import com.pulumi.cloudflare.PageRule;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+public class App {
+    public static void main(String[] args) {
+        Pulumi.run(App::stack);
+    }
+
+    public static void stack(Context ctx) {
+        // Create a record
+        var www = new Record("www");
+
+        // Create a page rule
+        var wwwPageRule = new PageRule("wwwPageRule");
+
+    }
+}
+```
+{{% /choosable %}}
+{{< /chooser >}}
+
+<!-- schema generated by tfplugindocs -->
+## Schema
+### Optional
+
+- `apiBasePath` (String) Configure the base path used by the API client. Alternatively, can be configured using the `CLOUDFLARE_API_BASE_PATH` environment variable.
+- `apiClientLogging` (Boolean) Whether to print logs from the API client (using the default log library logger). Alternatively, can be configured using the `CLOUDFLARE_API_CLIENT_LOGGING` environment variable.
+- `apiHostname` (String) Configure the hostname used by the API client. Alternatively, can be configured using the `CLOUDFLARE_API_HOSTNAME` environment variable.
+- `apiKey` (String) The API key for operations. Alternatively, can be configured using the `CLOUDFLARE_API_KEY` environment variable. API keys are [now considered legacy by Cloudflare](https://developers.cloudflare.com/fundamentals/api/get-started/keys/#limitations), API tokens should be used instead. Must provide only one of `apiKey`, `apiToken`, `apiUserServiceKey`.
+- `apiToken` (String) The API Token for operations. Alternatively, can be configured using the `CLOUDFLARE_API_TOKEN` environment variable. Must provide only one of `apiKey`, `apiToken`, `apiUserServiceKey`.
+- `apiUserServiceKey` (String) A special Cloudflare API key good for a restricted set of endpoints. Alternatively, can be configured using the `CLOUDFLARE_API_USER_SERVICE_KEY` environment variable. Must provide only one of `apiKey`, `apiToken`, `apiUserServiceKey`.
+- `email` (String) A registered Cloudflare email address. Alternatively, can be configured using the `CLOUDFLARE_EMAIL` environment variable. Required when using `apiKey`. Conflicts with `apiToken`.
+- `maxBackoff` (Number) Maximum backoff period in seconds after failed API calls. Alternatively, can be configured using the `CLOUDFLARE_MAX_BACKOFF` environment variable.
+- `minBackoff` (Number) Minimum backoff period in seconds after failed API calls. Alternatively, can be configured using the `CLOUDFLARE_MIN_BACKOFF` environment variable.
+- `retries` (Number) Maximum number of retries to perform when an API request fails. Alternatively, can be configured using the `CLOUDFLARE_RETRIES` environment variable.
+- `rps` (Number) RPS limit to apply when making calls to the API. Alternatively, can be configured using the `CLOUDFLARE_RPS` environment variable.
+- `userAgentOperatorSuffix` (String) A value to append to the HTTP User Agent for all API calls. This value is not something most users need to modify however, if you are using a non-standard provider or operator configuration, this is recommended to assist in uniquely identifying your traffic. **Setting this value will remove the Pulumi version from the HTTP User Agent string and may have unintended consequences**. Alternatively, can be configured using the `CLOUDFLARE_USER_AGENT_OPERATOR_SUFFIX` environment variable.

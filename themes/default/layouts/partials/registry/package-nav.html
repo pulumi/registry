@@ -1,4 +1,4 @@
-{{ $packageUrl := printf "%s/" (path.Join "/registry/packages" (index (split .Page.File "/") 2)) }}
+{{ $packageUrl := printf "%s/" (path.Join "/registry/packages" (index (split .Page.File.Path "/") 2)) }}
 {{ $installPath := printf "%s/" (path.Join $packageUrl "installation-configuration") }}
 {{ $howToPath := printf "%s/" (path.Join $packageUrl "how-to-guides/") }}
 {{ $versionGuidePath := printf "%s/" (path.Join $packageUrl "version-guide") }}
@@ -19,10 +19,13 @@
         <li class="sidenav-topic {{ $sidenav_selected }}">
             <a href="{{ $packageUrl }}">Overview</a>
         </li>
-        {{ $sidenav_selected = cond (eq .Page.RelPermalink $installPath) "active" "" }}
-        <li class="sidenav-topic {{ $sidenav_selected }}">
-            <a href="{{ $installPath }}">Install & config</a>
-        </li>
+        {{ $installConfigFile := printf "%s/%s" $packageUrl "installation-configuration.md" }}
+        {{ if fileExists $installConfigFile }}
+            {{ $sidenav_selected = cond (eq .Page.RelPermalink $installPath) "active" "" }}
+            <li class="sidenav-topic {{ $sidenav_selected }}">
+                <a href="{{ $installPath }}">Install & config</a>
+            </li>
+        {{ end }}
         {{ $sidenav_selected = cond (eq .Page.RelPermalink $howToPath) "active" "" }}
         {{ if .GetPage $howToPath }}
             <li class="sidenav-topic {{ $sidenav_selected }}">

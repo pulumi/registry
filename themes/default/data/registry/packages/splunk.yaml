@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-splunk
 schema_file_path: provider/cmd/pulumi-resource-splunk/schema.json
 title: Splunk
-updated_on: 1716513058
-version: v1.2.7
+updated_on: 1726659138
+version: v1.2.10

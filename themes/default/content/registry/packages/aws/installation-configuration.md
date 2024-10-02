@@ -1,6 +1,6 @@
 ---
-title: AWS Classic Installation & Configuration
-meta_desc: How to set up credentials to use the Pulumi AWS Classic Provider and choose configuration options to tailor the provider to suit your use case.
+title: AWS Installation & Configuration
+meta_desc: How to set up credentials to use the Pulumi AWS Provider and choose configuration options to tailor the provider to suit your use case.
 layout: package
 ---
 
@@ -8,7 +8,7 @@ layout: package
 
 ## Installation
 
-The AWS Classic provider is available as a package in all Pulumi languages:
+The AWS provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/aws`](https://www.npmjs.com/package/@pulumi/aws)
 * Python: [`pulumi-aws`](https://pypi.org/project/pulumi-aws/)

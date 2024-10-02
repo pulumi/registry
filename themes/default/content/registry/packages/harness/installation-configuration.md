@@ -8,10 +8,10 @@ layout: package
 
 The Pulumi Harness provider is available as a package in all Pulumi languages:
 
-* JavaScript/TypeScript: [`@lbrlabs/pulumi-harness`](https://www.npmjs.com/package/@lbrlabs/pulumi-harness)
-* Python: [`lbrlabs_pulumi_harness`](https://pypi.org/project/lbrlabs-pulumi-harness/)
-* Go: [`github.com/lbrlabs/pulumi-harness/sdk/go/harness`](https://pkg.go.dev/github.com/lbrlabs/pulumi-harness/sdk)
-* .NET: [`Lbrlabs.PulumiPackage.Harness`](https://www.nuget.org/packages/Lbrlabs.PulumiPackage.Harness)
+* JavaScript/TypeScript: [`@pulumi/harness`](https://www.npmjs.com/package/@pulumi/harness)
+* Python: [`pulumi_harness`](https://pypi.org/project/pulumi-harness/)
+* Go: [`github.com/pulumi/pulumi-harness/sdk/go/harness`](https://pkg.go.dev/github.com/pulumi/pulumi-harness/sdk)
+* .NET: [`Pulumi.Harness`](https://www.nuget.org/packages/Pulumi.Harness)
 
 ### Provider Binary
 
@@ -65,5 +65,5 @@ $ export HARNESS_PLATFORM_API_KEY=<HARNESS_PLATFORM_API_KEY>
 
 ## Configuration Options
 
-Use `pulumi config set harness:<option>` or pass options to the [constructor of `new harness.Provider`](/registry/packages/harness/api-docs/provider).
+Use `pulumi config set harness:<option>` or pass options to the [constructor of `new harness.Provider`]({{< relref "/registry/packages/harness/api-docs/provider" >}}).
 

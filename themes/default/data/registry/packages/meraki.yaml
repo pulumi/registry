@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-meraki
 schema_file_path: provider/cmd/pulumi-resource-meraki/schema.json
 title: Cisco Meraki
-updated_on: 1718405003
-version: v0.2.4
+updated_on: 1727221844
+version: v0.3.2

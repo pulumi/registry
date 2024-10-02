@@ -10,5 +10,5 @@ publisher: pulumiverse
 repo_url: https://github.com/pulumiverse/pulumi-time
 schema_file_path: provider/cmd/pulumi-resource-time/schema.json
 title: Time
-updated_on: 1711125334
-version: v0.0.17
+updated_on: 1725478946
+version: v0.1.0

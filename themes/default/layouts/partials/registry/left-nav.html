@@ -1,4 +1,4 @@
-{{ $directories := (split .Page.File "/")}}
+{{ $directories := (split .Page.File.Path "/")}}
 {{ $packageName := index $directories 2 }}
 {{ $baseDirectory := printf "/registry/packages/%s/api-docs/" $packageName }}
 

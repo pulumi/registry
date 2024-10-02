@@ -1,0 +1,14 @@
+category: Database
+component: false
+description: A Pulumi package for creating and managing InfluxDB V3 resources.
+featured: false
+logo_url: https://avatars.githubusercontent.com/u/5713248?s=200&v=4
+name: influxdb3
+native: false
+package_status: ga
+publisher: komminarlabs
+repo_url: https://github.com/komminarlabs/pulumi-influxdb3
+schema_file_path: provider/cmd/pulumi-resource-influxdb3/schema.json
+title: InfluxDB3
+updated_on: 1727629318
+version: v1.2.3

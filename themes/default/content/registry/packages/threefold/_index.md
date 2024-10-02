@@ -10,7 +10,7 @@ The Threefold Resource Provider for the [threefold grid](https://threefold.io) l
 
 ### Network resource
 
-{{< chooser language "go,yaml" >}}
+{{< chooser language "go,python,yaml,nodejs" >}}
 
 {{% choosable language go %}}
 
@@ -22,7 +22,6 @@ import (
 
   "github.com/pulumi/pulumi/sdk/v3/go/pulumi"
   "github.com/threefoldtech/pulumi-threefold/sdk/go/threefold"
-  "github.com/threefoldtech/pulumi-threefold/sdk/go/threefold/provider"
 )
 
 func main() {
@@ -34,7 +33,7 @@ func main() {
       return err
     }
 
-    scheduler, err := provider.NewScheduler(ctx, "scheduler", &provider.SchedulerArgs{
+    scheduler, err := threefold.NewScheduler(ctx, "scheduler", &threefold.SchedulerArgs{
       Farm_ids: pulumi.IntArray{
         pulumi.Int(1),
       },
@@ -43,7 +42,7 @@ func main() {
       return err
     }
 
-    network, err := provider.NewNetwork(ctx, "network", &provider.NetworkArgs{
+    network, err := threefold.NewNetwork(ctx, "network", &threefold.NetworkArgs{
       Name:        pulumi.String("testing"),
       Description: pulumi.String("test network"),
       Nodes: pulumi.Array{
@@ -68,6 +67,32 @@ func main() {
 
 {{% /choosable %}}
 
+{{% choosable language python %}}
+
+```python
+import os
+import pulumi
+import pulumi_threefold as threefold
+
+mnemonic = os.environ['MNEMONIC']
+network = os.environ['NETWORK']
+
+provider = threefold.Provider("provider", mnemonic=mnemonic, network=network)
+scheduler = threefold.Scheduler("scheduler", farm_ids=[1],
+opts=pulumi.ResourceOptions(provider=provider))
+network = threefold.Network("network",
+    name="example",
+    description="example network",
+    nodes=[scheduler.nodes[0]],
+    ip_range="10.1.0.0/16",
+    opts=pulumi.ResourceOptions(provider=provider,
+        depends_on=[scheduler]))
+pulumi.export("node_deployment_id", network.node_deployment_id)
+pulumi.export("nodes_ip_range", network.nodes_ip_range)
+```
+
+{{% /choosable %}}
+
 {{% choosable language yaml %}}
 
 ```yml
@@ -81,14 +106,14 @@ resources:
       mnemonic:
 
   scheduler:
-    type: threefold:provider:Scheduler
+    type: threefold:Scheduler
     options:
       provider: ${provider}
     properties:
       farm_ids: [1]
 
   network:
-    type: threefold:provider:Network
+    type: threefold:Network
     options:
       provider: ${provider}
       dependsOn:
@@ -107,11 +132,35 @@ outputs:
 
 {{% /choosable %}}
 
+{{% choosable language nodejs %}}
+
+```ts
+import * as threefold from "@threefold/pulumi";
+
+const provider = new threefold.Provider("provider", {mnemonic: process.env.MNEMONIC, network: process.env.NETWORK});
+const scheduler = new threefold.Scheduler("scheduler", {farm_ids: [1]}, {
+    provider: provider,
+});
+const network = new threefold.Network("network", {
+    name: "testing",
+    description: "test network",
+    nodes: [scheduler.nodes[0]],
+    ip_range: "10.1.0.0/16",
+}, {
+    provider: provider,
+    dependsOn: [scheduler],
+});
+export const nodeDeploymentId = network.node_deployment_id;
+export const nodesIpRange = network.nodes_ip_range;
+```
+
+{{% /choosable %}}
+
 {{< /chooser >}}
 
 ### Virtual machine resource
 
-{{< chooser language "go,yaml" >}}
+{{< chooser language "go,python,yaml,nodejs" >}}
 
 {{% choosable language go %}}
 
@@ -123,7 +172,6 @@ import (
 
   "github.com/pulumi/pulumi/sdk/v3/go/pulumi"
   "github.com/threefoldtech/pulumi-threefold/sdk/go/threefold"
-  "github.com/threefoldtech/pulumi-threefold/sdk/go/threefold/provider"
 )
 
 func main() {
@@ -134,7 +182,7 @@ func main() {
     if err != nil {
       return err
     }
-    scheduler, err := provider.NewScheduler(ctx, "scheduler", &provider.SchedulerArgs{
+    scheduler, err := threefold.NewScheduler(ctx, "scheduler", &threefold.SchedulerArgs{
       Mru: pulumi.Int(1),
       Sru: pulumi.Int(2),
       Farm_ids: pulumi.IntArray{
@@ -144,7 +192,7 @@ func main() {
     if err != nil {
       return err
     }
-    network, err := provider.NewNetwork(ctx, "network", &provider.NetworkArgs{
+    network, err := threefold.NewNetwork(ctx, "network", &threefold.NetworkArgs{
       Name:        pulumi.String("test"),
       Description: pulumi.String("test network"),
       Nodes: pulumi.Array{
@@ -159,23 +207,26 @@ func main() {
     if err != nil {
       return err
     }
-    deployment, err := provider.NewDeployment(ctx, "deployment", &provider.DeploymentArgs{
+    deployment, err := threefold.NewDeployment(ctx, "deployment", &threefold.DeploymentArgs{
       Node_id: scheduler.Nodes.ApplyT(func(nodes []int) (int, error) {
         return nodes[0], nil
       }).(pulumi.IntOutput),
       Name:         pulumi.String("deployment"),
       Network_name: pulumi.String("test"),
-      Vms: provider.VMInputArray{
-        &provider.VMInputArgs{
+      Vms: threefold.VMInputArray{
+        &threefold.VMInputArgs{
           Name:         pulumi.String("vm"),
+          Node_id: scheduler.Nodes.ApplyT(func(nodes []int) (int, error) {
+            return nodes[0], nil
+          }).(pulumi.IntOutput),
           Flist:        pulumi.String("https://hub.grid.tf/tf-official-apps/base:latest.flist"),
           Entrypoint:   pulumi.String("/sbin/zinit init"),
           Network_name: pulumi.String("test"),
           Cpu:          pulumi.Int(2),
           Memory:       pulumi.Int(256),
           Planetary:    pulumi.Bool(true),
-          Mounts: provider.MountArray{
-            &provider.MountArgs{
+          Mounts: threefold.MountArray{
+            &threefold.MountArgs{
               Disk_name:   pulumi.String("data"),
               Mount_point: pulumi.String("/app"),
             },
@@ -185,8 +236,8 @@ func main() {
           },
         },
       },
-      Disks: provider.DiskArray{
-        &provider.DiskArgs{
+      Disks: threefold.DiskArray{
+        &threefold.DiskArgs{
           Name: pulumi.String("data"),
           Size: pulumi.Int(2),
         },
@@ -198,12 +249,69 @@ func main() {
       return err
     }
     ctx.Export("node_deployment_id", deployment.Node_deployment_id)
-    ctx.Export("planetary_ip", deployment.Vms_computed.ApplyT(func(vms_computed []provider.VMComputed) (*string, error) {
+    ctx.Export("planetary_ip", deployment.Vms_computed.ApplyT(func(vms_computed []threefold.VMComputed) (*string, error) {
       return &vms_computed[0].Planetary_ip, nil
     }).(pulumi.StringPtrOutput))
     return nil
   })
 }
+```
+
+{{% /choosable %}}
+
+{{% choosable language python %}}
+
+```python
+import os
+import pulumi
+import pulumi_threefold as threefold
+
+mnemonic = os.environ['MNEMONIC']
+network = os.environ['NETWORK']
+
+provider = threefold.Provider("provider", mnemonic=mnemonic, network=network)
+scheduler = threefold.Scheduler("scheduler", farm_ids=[1],
+opts=pulumi.ResourceOptions(provider=provider))
+network = threefold.Network("network",
+    name="example",
+    description="example network",
+    nodes=[scheduler.nodes[0]],
+    ip_range="10.1.0.0/16",
+    mycelium=True,
+    opts=pulumi.ResourceOptions(provider=provider,
+        depends_on=[scheduler]))
+
+deployment = threefold.Deployment("deployment",
+    node_id=scheduler.nodes[0],
+    name="deployment",
+    network_name="example",
+    vms=[threefold.VMInputArgs(
+        name="vm",
+        node_id=scheduler.nodes[0],
+        flist="https://hub.grid.tf/tf-official-apps/base:latest.flist",
+        entrypoint="/sbin/zinit init",
+        network_name="test",
+        cpu=2,
+        memory=256, #MB
+        mycelium=True,
+        mounts=[threefold.MountArgs(
+            disk_name="data",
+            mount_point="/app",
+        )],
+        env_vars={
+            "SSH_KEY": None,
+        },
+    )],
+    disks=[threefold.DiskArgs(
+        name="data",
+        size=2,
+    )],
+    opts=pulumi.ResourceOptions(provider=provider,
+        depends_on=[network]))
+
+pulumi.export("node_deployment_id", deployment.node_deployment_id)
+pulumi.export("planetary_ip", deployment.vms_computed[0].planetary_ip)
+pulumi.export("mycelium_ip", deployment.vms_computed[0].mycelium_ip)
 ```
 
 {{% /choosable %}}
@@ -223,7 +331,7 @@ resources:
       mnemonic:
 
   scheduler:
-    type: threefold:provider:Scheduler
+    type: threefold:Scheduler
     options:
       provider: ${provider}
     properties:
@@ -232,7 +340,7 @@ resources:
       farm_ids: [1]
 
   network:
-    type: threefold:provider:Network
+    type: threefold:Network
     options:
       provider: ${provider}
       dependsOn:
@@ -243,11 +351,10 @@ resources:
       nodes:
         - ${scheduler.nodes[0]}
       ip_range: 10.1.0.0/16
-      # mycelium_keys:
-      #   ${scheduler.nodes[0]}: 9751c596c7c951aedad1a5f78f18b59515064adf660e0d55abead65e6fbbd627 # hex encoded 32 bytes
+      mycelium: true
 
   deployment:
-    type: threefold:provider:Deployment
+    type: threefold:Deployment
     options:
       provider: ${provider}
       dependsOn:
@@ -258,13 +365,14 @@ resources:
       network_name: test
       vms:
         - name: vm
+          node_id: ${scheduler.nodes[0]}
           flist: https://hub.grid.tf/tf-official-apps/base:latest.flist
           entrypoint: "/sbin/zinit init"
           network_name: test
           cpu: 2
           memory: 256
           planetary: true
-          # mycelium_ip_seed: b60f2b7ec39c # hex encoded 6 bytes
+          mycelium: true
           mounts:
             - disk_name: data
               mount_point: /app
@@ -278,7 +386,67 @@ resources:
 outputs:
   node_deployment_id: ${deployment.node_deployment_id}
   planetary_ip: ${deployment.vms_computed[0].planetary_ip}
-  # mycelium_ip: ${deployment.vms_computed[0].mycelium_ip}
+  mycelium_ip: ${deployment.vms_computed[0].mycelium_ip}
+```
+
+{{% /choosable %}}
+
+{{% choosable language nodejs %}}
+
+```ts
+import * as threefold from "@threefold/pulumi";
+
+const provider = new threefold.Provider("provider", {mnemonic: process.env.MNEMONIC, network: process.env.NETWORK});
+const scheduler = new threefold.Scheduler("scheduler", {
+    mru: 0.25,
+    sru: 2,
+    farm_ids: [1],
+}, {
+    provider: provider,
+});
+const network = new threefold.Network("network", {
+    name: "test",
+    description: "test network",
+    nodes: [scheduler.nodes[0]],
+    ip_range: "10.1.0.0/16",
+    mycelium: true,
+}, {
+    provider: provider,
+    dependsOn: [scheduler],
+});
+const deployment = new threefold.Deployment("deployment", {
+    node_id: scheduler.nodes[0],
+    name: "deployment",
+    network_name: "test",
+    vms: [{
+        name: "vm",
+        node_id: scheduler.nodes[0],
+        flist: "https://hub.grid.tf/tf-official-apps/base:latest.flist",
+        entrypoint: "/sbin/zinit init",
+        network_name: "test",
+        cpu: 2,
+        memory: 256,
+        planetary: true,
+        mycelium: true,
+        mounts: [{
+            disk_name: "data",
+            mount_point: "/app",
+        }],
+        env_vars: {
+            SSH_KEY: "",
+        },
+    }],
+    disks: [{
+        name: "data",
+        size: 2,
+    }],
+}, {
+    provider: provider,
+    dependsOn: [network],
+});
+export const nodeDeploymentId = deployment.node_deployment_id;
+export const planetaryIp = deployment.vms_computed.apply(vms_computed => vms_computed[0].planetary_ip);
+export const myceliumIp = deployment.vms_computed.apply(vms_computed => vms_computed[0].mycelium_ip);
 ```
 
 {{% /choosable %}}
@@ -287,7 +455,7 @@ outputs:
 
 ### Kubernetes resource
 
-{{< chooser language "go,yaml" >}}
+{{< chooser language "go,python,yaml,nodejs" >}}
 
 {{% choosable language go %}}
 
@@ -299,7 +467,6 @@ import (
 
   "github.com/pulumi/pulumi/sdk/v3/go/pulumi"
   "github.com/threefoldtech/pulumi-threefold/sdk/go/threefold"
-  "github.com/threefoldtech/pulumi-threefold/sdk/go/threefold/provider"
 )
 
 func main() {
@@ -310,7 +477,7 @@ func main() {
     if err != nil {
       return err
     }
-    scheduler, err := provider.NewScheduler(ctx, "scheduler", &provider.SchedulerArgs{
+    scheduler, err := threefold.NewScheduler(ctx, "scheduler", &threefold.SchedulerArgs{
       Mru: pulumi.Int(6),
       Sru: pulumi.Int(6),
       Farm_ids: pulumi.IntArray{
@@ -320,7 +487,7 @@ func main() {
     if err != nil {
       return err
     }
-    network, err := provider.NewNetwork(ctx, "network", &provider.NetworkArgs{
+    network, err := threefold.NewNetwork(ctx, "network", &threefold.NetworkArgs{
       Name:        pulumi.String("test"),
       Description: pulumi.String("test network"),
       Nodes: pulumi.Array{
@@ -335,9 +502,10 @@ func main() {
     if err != nil {
       return err
     }
-    kubernetes, err := provider.NewKubernetes(ctx, "kubernetes", &provider.KubernetesArgs{
-      Master: &provider.K8sNodeInputArgs{
+    kubernetes, err := threefold.NewKubernetes(ctx, "kubernetes", &threefold.KubernetesArgs{
+      Master: &threefold.K8sNodeInputArgs{
         Name: pulumi.String("kubernetes"),
+        Network_name: pulumi.String("test"),
         Node: scheduler.Nodes.ApplyT(func(nodes []int) (int, error) {
           return nodes[0], nil
         }).(pulumi.IntOutput),
@@ -346,9 +514,10 @@ func main() {
         Cpu:       pulumi.Int(2),
         Memory:    pulumi.Int(2048),
       },
-      Workers: provider.K8sNodeInputArray{
-        &provider.K8sNodeInputArgs{
+      Workers: threefold.K8sNodeInputArray{
+        &threefold.K8sNodeInputArgs{
           Name: pulumi.String("worker1"),
+          Network_name: pulumi.String("test"),
           Node: scheduler.Nodes.ApplyT(func(nodes []int) (int, error) {
             return nodes[0], nil
           }).(pulumi.IntOutput),
@@ -356,8 +525,9 @@ func main() {
           Cpu:       pulumi.Int(2),
           Memory:    pulumi.Int(2048),
         },
-        &provider.K8sNodeInputArgs{
+        &threefold.K8sNodeInputArgs{
           Name: pulumi.String("worker2"),
+          Network_name: pulumi.String("test"),
           Node: scheduler.Nodes.ApplyT(func(nodes []int) (int, error) {
             return nodes[0], nil
           }).(pulumi.IntOutput),
@@ -376,12 +546,75 @@ func main() {
       return err
     }
     ctx.Export("node_deployment_id", kubernetes.Node_deployment_id)
-    ctx.Export("planetary_ip", kubernetes.Master_computed.ApplyT(func(master_computed provider.K8sNodeComputed) (*string, error) {
+    ctx.Export("planetary_ip", kubernetes.Master_computed.ApplyT(func(master_computed threefold.K8sNodeComputed) (*string, error) {
       return &master_computed.Planetary_ip, nil
     }).(pulumi.StringPtrOutput))
     return nil
   })
 }
+```
+
+{{% /choosable %}}
+
+{{% choosable language python %}}
+
+```python
+import os
+import pulumi
+import pulumi_threefold as threefold
+
+mnemonic = os.environ['MNEMONIC']
+network = os.environ['NETWORK']
+
+provider = threefold.Provider("provider", mnemonic=mnemonic, network=network)
+scheduler = threefold.Scheduler("scheduler",
+    mru=6,
+    sru=6,
+    farm_ids=[1],
+    opts = pulumi.ResourceOptions(provider=provider))
+network = threefold.Network("network",
+    name="example",
+    description="example network",
+    nodes=[scheduler.nodes[0]],
+    ip_range="10.1.0.0/16",
+    opts = pulumi.ResourceOptions(provider=provider,
+        depends_on=[scheduler]))
+kubernetes = threefold.Kubernetes("kubernetes",
+    master=threefold.K8sNodeInputArgs(
+        name="kubernetes",
+        network_name="example",
+        node=scheduler.nodes[0],
+        disk_size=2,
+        planetary=True,
+        cpu=2,
+        memory=2048,
+    ),
+    workers=[
+        threefold.K8sNodeInputArgs(
+            name="worker1",
+            network_name="example",
+            node=scheduler.nodes[0],
+            disk_size=2,
+            cpu=2,
+            memory=2048,
+        ),
+        threefold.K8sNodeInputArgs(
+            name="worker2",
+            network_name="example",
+            node=scheduler.nodes[0],
+            disk_size=2,
+            cpu=2,
+            memory=2048,
+        ),
+    ],
+    token="t123456789",
+    network_name="example",
+    ssh_key=None,
+    opts = pulumi.ResourceOptions(provider=provider,
+        depends_on=[network]))
+
+pulumi.export("node_deployment_id", kubernetes.node_deployment_id)
+pulumi.export("master", kubernetes.master_computed)
 ```
 
 {{% /choosable %}}
@@ -401,7 +634,7 @@ resources:
       mnemonic:
 
   scheduler:
-    type: threefold:provider:Scheduler
+    type: threefold:Scheduler
     options:
       provider: ${provider}
     properties:
@@ -410,7 +643,7 @@ resources:
       farm_ids: [1]
 
   network:
-    type: threefold:provider:Network
+    type: threefold:Network
     options:
       provider: ${provider}
       dependsOn:
@@ -423,7 +656,7 @@ resources:
       ip_range: 10.1.0.0/16
 
   kubernetes:
-    type: threefold:provider:Kubernetes
+    type: threefold:Kubernetes
     options:
       provider: ${provider}
       dependsOn:
@@ -431,6 +664,7 @@ resources:
     properties:
       master:
         name: kubernetes
+        network_name: test
         node: ${scheduler.nodes[0]}
         disk_size: 2
         planetary: true
@@ -439,11 +673,13 @@ resources:
 
       workers:
         - name: worker1
+          network_name: test
           node: ${scheduler.nodes[0]}
           disk_size: 2
           cpu: 2
           memory: 2048
         - name: worker2
+          network_name: test
           node: ${scheduler.nodes[0]}
           disk_size: 2
           cpu: 2
@@ -460,11 +696,74 @@ outputs:
 
 {{% /choosable %}}
 
+{{% choosable language nodejs %}}
+
+```ts
+import * as threefold from "@threefold/pulumi";
+
+const provider = new threefold.Provider("provider", {mnemonic: process.env.MNEMONIC, network: process.env.NETWORK});
+const scheduler = new threefold.Scheduler("scheduler", {
+    mru: 6,
+    sru: 6,
+    farm_ids: [1],
+}, {
+    provider: provider,
+});
+const network = new threefold.Network("network", {
+    name: "test",
+    description: "test network",
+    nodes: [scheduler.nodes[0]],
+    ip_range: "10.1.0.0/16",
+}, {
+    provider: provider,
+    dependsOn: [scheduler],
+});
+const kubernetes = new threefold.Kubernetes("kubernetes", {
+    master: {
+        name: "kubernetes",
+        network_name: "test",
+        node: scheduler.nodes[0],
+        disk_size: 2,
+        planetary: true,
+        cpu: 2,
+        memory: 2048,
+    },
+    workers: [
+        {
+            name: "worker1",
+            network_name: "test",
+            node: scheduler.nodes[0],
+            disk_size: 2,
+            cpu: 2,
+            memory: 2048,
+        },
+        {
+            name: "worker2",
+            network_name: "test",
+            node: scheduler.nodes[0],
+            disk_size: 2,
+            cpu: 2,
+            memory: 2048,
+        },
+    ],
+    token: "t123456789",
+    network_name: "test",
+    ssh_key: undefined,
+}, {
+    provider: provider,
+    dependsOn: [network],
+});
+export const nodeDeploymentId = kubernetes.node_deployment_id;
+export const planetaryIp = kubernetes.master_computed.apply(master_computed => master_computed.planetary_ip);
+```
+
+{{% /choosable %}}
+
 {{< /chooser >}}
 
 ### Name gateway resource
 
-{{< chooser language "go,yaml" >}}
+{{< chooser language "go,python,yaml,nodejs" >}}
 
 {{% choosable language go %}}
 
@@ -476,7 +775,6 @@ import (
 
   "github.com/pulumi/pulumi/sdk/v3/go/pulumi"
   "github.com/threefoldtech/pulumi-threefold/sdk/go/threefold"
-  "github.com/threefoldtech/pulumi-threefold/sdk/go/threefold/provider"
 )
 
 func main() {
@@ -487,7 +785,7 @@ func main() {
     if err != nil {
       return err
     }
-    scheduler, err := provider.NewScheduler(ctx, "scheduler", &provider.SchedulerArgs{
+    scheduler, err := threefold.NewScheduler(ctx, "scheduler", &threefold.SchedulerArgs{
       Farm_ids: pulumi.IntArray{
         pulumi.Int(1),
       },
@@ -497,7 +795,7 @@ func main() {
     if err != nil {
       return err
     }
-    gatewayName, err := provider.NewGatewayName(ctx, "gatewayName", &provider.GatewayNameArgs{
+    gatewayName, err := threefold.NewGatewayName(ctx, "gatewayName", &threefold.GatewayNameArgs{
       Name: pulumi.String("pulumi"),
       Node_id: scheduler.Nodes.ApplyT(func(nodes []int) (int, error) {
         return nodes[0], nil
@@ -520,6 +818,34 @@ func main() {
 
 {{% /choosable %}}
 
+{{% choosable language python %}}
+
+```python
+import os
+import pulumi
+import pulumi_threefold as threefold
+
+mnemonic = os.environ['MNEMONIC']
+network = os.environ['NETWORK']
+
+provider = threefold.Provider("provider", mnemonic=mnemonic, network=network)
+scheduler = threefold.Scheduler("scheduler",
+    farm_ids=[1],
+    ipv4=True,
+    free_ips=1,
+    opts = pulumi.ResourceOptions(provider=provider))
+gateway_name = threefold.GatewayName("gatewayName",
+    name="pulumi",
+    node_id=scheduler.nodes[0],
+    backends=["http://69.164.223.208"],
+    opts = pulumi.ResourceOptions(provider=provider,
+        depends_on=[scheduler]))
+pulumi.export("node_deployment_id", gateway_name.node_deployment_id)
+pulumi.export("fqdn", gateway_name.fqdn)
+```
+
+{{% /choosable %}}
+
 {{% choosable language yaml %}}
 
 ```yml
@@ -535,7 +861,7 @@ resources:
       mnemonic:
 
   scheduler:
-    type: threefold:provider:Scheduler
+    type: threefold:Scheduler
     options:
       provider: ${provider}
     properties:
@@ -544,7 +870,7 @@ resources:
       free_ips: 1
 
   gatewayName:
-    type: threefold:provider:GatewayName
+    type: threefold:GatewayName
     options:
       provider: ${provider}
       dependsOn:
@@ -562,11 +888,38 @@ outputs:
 
 {{% /choosable %}}
 
+{{% choosable language nodejs %}}
+
+```ts
+import * as threefold from "@threefold/pulumi";
+
+const provider = new threefold.Provider("provider", {mnemonic: process.env.MNEMONIC, network: process.env.NETWORK});
+const scheduler = new threefold.Scheduler("scheduler", {
+    farm_ids: [1],
+    ipv4: true,
+    free_ips: 1,
+}, {
+    provider: provider,
+});
+const gatewayName = new threefold.GatewayName("gatewayName", {
+    name: "pulumi",
+    node_id: scheduler.nodes[0],
+    backends: ["http://69.164.223.208"],
+}, {
+    provider: provider,
+    dependsOn: [scheduler],
+});
+export const nodeDeploymentId = gatewayName.node_deployment_id;
+export const fqdn = gatewayName.fqdn;
+```
+
+{{% /choosable %}}
+
 {{< /chooser >}}
 
 ### FQDN gateway resource
 
-{{< chooser language "go,yaml" >}}
+{{< chooser language "go,python,yaml,nodejs" >}}
 
 {{% choosable language go %}}
 
@@ -579,7 +932,6 @@ import (
 
   "github.com/pulumi/pulumi/sdk/v3/go/pulumi"
   "github.com/threefoldtech/pulumi-threefold/sdk/go/threefold"
-  "github.com/threefoldtech/pulumi-threefold/sdk/go/threefold/provider"
 )
 
 func main() {
@@ -590,7 +942,7 @@ func main() {
     if err != nil {
       return err
     }
-    scheduler, err := provider.NewScheduler(ctx, "scheduler", &provider.SchedulerArgs{
+    scheduler, err := threefold.NewScheduler(ctx, "scheduler", &threefold.SchedulerArgs{
       Mru: pulumi.Int(1),
       Farm_ids: pulumi.IntArray{
         pulumi.Int(1),
@@ -601,7 +953,7 @@ func main() {
     if err != nil {
       return err
     }
-    network, err := provider.NewNetwork(ctx, "network", &provider.NetworkArgs{
+    network, err := threefold.NewNetwork(ctx, "network", &threefold.NetworkArgs{
       Name:        pulumi.String("test"),
       Description: pulumi.String("test network"),
       Nodes: pulumi.Array{
@@ -616,15 +968,18 @@ func main() {
     if err != nil {
       return err
     }
-    deployment, err := provider.NewDeployment(ctx, "deployment", &provider.DeploymentArgs{
+    deployment, err := threefold.NewDeployment(ctx, "deployment", &threefold.DeploymentArgs{
       Node_id: scheduler.Nodes.ApplyT(func(nodes []int) (int, error) {
         return nodes[0], nil
       }).(pulumi.IntOutput),
       Name:         pulumi.String("deployment"),
       Network_name: pulumi.String("test"),
-      Vms: provider.VMInputArray{
-        &provider.VMInputArgs{
+      Vms: threefold.VMInputArray{
+        &threefold.VMInputArgs{
           Name:         pulumi.String("vm"),
+          Node_id: scheduler.Nodes.ApplyT(func(nodes []int) (int, error) {
+            return nodes[0], nil
+          }).(pulumi.IntOutput),
           Flist:        pulumi.String("https://hub.grid.tf/tf-official-apps/base:latest.flist"),
           Network_name: pulumi.String("test"),
           Cpu:          pulumi.Int(2),
@@ -638,12 +993,12 @@ func main() {
     if err != nil {
       return err
     }
-    gatewayFQDN, err := provider.NewGatewayFQDN(ctx, "gatewayFQDN", &provider.GatewayFQDNArgs{
+    gatewayFQDN, err := threefold.NewGatewayFQDN(ctx, "gatewayFQDN", &threefold.GatewayFQDNArgs{
       Name:    pulumi.String("testing"),
       Node_id: pulumi.Any(14),
       Fqdn:    pulumi.String("remote.omar.grid.tf"),
       Backends: pulumi.StringArray{
-        deployment.Vms_computed.ApplyT(func(vms_computed []provider.VMComputed) (string, error) {
+        deployment.Vms_computed.ApplyT(func(vms_computed []threefold.VMComputed) (string, error) {
           return fmt.Sprintf("http://[%v]:9000", vms_computed[0].Planetary_ip), nil
         }).(pulumi.StringOutput),
       },
@@ -662,6 +1017,58 @@ func main() {
 
 {{% /choosable %}}
 
+{{% choosable language python %}}
+
+```python
+import os
+import pulumi
+import pulumi_threefold as threefold
+
+mnemonic = os.environ['MNEMONIC']
+network = os.environ['NETWORK']
+
+provider = threefold.Provider("provider", mnemonic=mnemonic, network=network)
+scheduler = threefold.Scheduler("scheduler",
+    mru=0.25,
+    farm_ids=[1],
+    ipv4=True,
+    free_ips=1,
+    opts = pulumi.ResourceOptions(provider=provider))
+network = threefold.Network("network",
+    name="example",
+    description="example network",
+    nodes=[scheduler.nodes[0]],
+    ip_range="10.1.0.0/16",
+    opts = pulumi.ResourceOptions(provider=provider,
+        depends_on=[scheduler]))
+deployment = threefold.Deployment("deployment",
+    node_id=scheduler.nodes[0],
+    name="deployment",
+    network_name="example",
+    vms=[threefold.VMInputArgs(
+        name="vm",
+        node_id=scheduler.nodes[0],
+        flist="https://hub.grid.tf/tf-official-apps/base:latest.flist",
+        network_name="example",
+        cpu=2,
+        memory=256,
+        planetary=True,
+    )],
+    opts = pulumi.ResourceOptions(provider=provider,
+        depends_on=[network]))
+gateway_fqdn = threefold.GatewayFQDN("gatewayFQDN",
+    name="testing",
+    node_id=14,
+    fqdn="remote.omar.grid.tf",
+    backends=[deployment.vms_computed.apply(lambda vms_computed: f"http://[{vms_computed[0].planetary_ip}]:9000")],
+    opts = pulumi.ResourceOptions(provider=provider,
+        depends_on=[deployment]))
+pulumi.export("node_deployment_id", gateway_fqdn.node_deployment_id)
+pulumi.export("fqdn", gateway_fqdn.fqdn)
+```
+
+{{% /choosable %}}
+
 {{% choosable language yaml %}}
 
 ```yml
@@ -677,7 +1084,7 @@ resources:
       mnemonic:
 
   scheduler:
-    type: threefold:provider:Scheduler
+    type: threefold:Scheduler
     options:
       provider: ${provider}
     properties:
@@ -687,7 +1094,7 @@ resources:
       free_ips: 1
 
   network:
-    type: threefold:provider:Network
+    type: threefold:Network
     options:
       provider: ${provider}
       dependsOn:
@@ -700,7 +1107,7 @@ resources:
       ip_range: 10.1.0.0/16
 
   deployment:
-    type: threefold:provider:Deployment
+    type: threefold:Deployment
     options:
       provider: ${provider}
       dependsOn:
@@ -711,6 +1118,7 @@ resources:
       network_name: test
       vms:
         - name: vm
+          node_id: ${scheduler.nodes[0]}
           flist: https://hub.grid.tf/tf-official-apps/base:latest.flist
           network_name: test
           cpu: 2
@@ -718,7 +1126,7 @@ resources:
           planetary: true
 
   gatewayFQDN:
-    type: threefold:provider:GatewayFQDN
+    type: threefold:GatewayFQDN
     options:
       provider: ${provider}
       dependsOn:
@@ -737,11 +1145,67 @@ outputs:
 
 {{% /choosable %}}
 
+{{% choosable language nodejs %}}
+
+```ts
+import * as pulumi from "@pulumi/pulumi";
+import * as threefold from "@threefold/pulumi";
+
+const provider = new threefold.Provider("provider", {mnemonic: process.env.MNEMONIC, network: process.env.NETWORK});
+const scheduler = new threefold.Scheduler("scheduler", {
+    mru: 0.25,
+    farm_ids: [1],
+    ipv4: true,
+    free_ips: 1,
+}, {
+    provider: provider,
+});
+const network = new threefold.Network("network", {
+    name: "test",
+    description: "test network",
+    nodes: [scheduler.nodes[0]],
+    ip_range: "10.1.0.0/16",
+}, {
+    provider: provider,
+    dependsOn: [scheduler],
+});
+const deployment = new threefold.Deployment("deployment", {
+    node_id: scheduler.nodes[0],
+    name: "deployment",
+    network_name: "test",
+    vms: [{
+        name: "vm",
+        node_id: scheduler.nodes[0],
+        flist: "https://hub.grid.tf/tf-official-apps/base:latest.flist",
+        network_name: "test",
+        cpu: 2,
+        memory: 256,
+        planetary: true,
+    }],
+}, {
+    provider: provider,
+    dependsOn: [network],
+});
+const gatewayFQDN = new threefold.GatewayFQDN("gatewayFQDN", {
+    name: "testing",
+    node_id: 14,
+    fqdn: "remote.omar.grid.tf",
+    backends: [pulumi.interpolate `http://[${deployment.vms_computed[0].planetary_ip}]:9000`],
+}, {
+    provider: provider,
+    dependsOn: [deployment],
+});
+export const nodeDeploymentId = gatewayFQDN.node_deployment_id;
+export const fqdn = gatewayFQDN.fqdn;
+```
+
+{{% /choosable %}}
+
 {{< /chooser >}}
 
 ### ZDB resource
 
-{{< chooser language "go,yaml" >}}
+{{< chooser language "go,python,yaml,nodejs" >}}
 
 {{% choosable language go %}}
 
@@ -754,7 +1218,6 @@ import (
 
   "github.com/pulumi/pulumi/sdk/v3/go/pulumi"
   "github.com/threefoldtech/pulumi-threefold/sdk/go/threefold"
-  "github.com/threefoldtech/pulumi-threefold/sdk/go/threefold/provider"
 )
 
 func main() {
@@ -765,7 +1228,7 @@ func main() {
     if err != nil {
       return err
     }
-    scheduler, err := provider.NewScheduler(ctx, "scheduler", &provider.SchedulerArgs{
+    scheduler, err := threefold.NewScheduler(ctx, "scheduler", &threefold.SchedulerArgs{
       Mru: pulumi.Int(1),
       Sru: pulumi.Int(2),
       Farm_ids: pulumi.IntArray{
@@ -775,13 +1238,13 @@ func main() {
     if err != nil {
       return err
     }
-    deployment, err := provider.NewDeployment(ctx, "deployment", &provider.DeploymentArgs{
+    deployment, err := threefold.NewDeployment(ctx, "deployment", &threefold.DeploymentArgs{
       Node_id: scheduler.Nodes.ApplyT(func(nodes []int) (int, error) {
         return nodes[0], nil
       }).(pulumi.IntOutput),
       Name: pulumi.String("zdb"),
-      Zdbs: provider.ZDBInputArray{
-        &provider.ZDBInputArgs{
+      Zdbs: threefold.ZDBInputArray{
+        &threefold.ZDBInputArgs{
           Name:     pulumi.String("zdbsTest"),
           Size:     pulumi.Int(2),
           Password: pulumi.String("123456"),
@@ -793,16 +1256,50 @@ func main() {
     }
     ctx.Export("node_deployment_id", deployment.Node_deployment_id)
     ctx.Export("zdb_endpoint", pulumi.All(deployment.Zdbs_computed, deployment.Zdbs_computed).ApplyT(func(_args []interface{}) (string, error) {
-      deploymentZdbs_computed := _args[0].([]provider.ZDBComputed)
-      deploymentZdbs_computed1 := _args[1].([]provider.ZDBComputed)
+      deploymentZdbs_computed := _args[0].([]threefold.ZDBComputed)
+      deploymentZdbs_computed1 := _args[1].([]threefold.ZDBComputed)
       return fmt.Sprintf("[%v]:%v", deploymentZdbs_computed[0].Ips[1], deploymentZdbs_computed1[0].Port), nil
     }).(pulumi.StringOutput))
-    ctx.Export("zdb_namespace", deployment.Zdbs_computed.ApplyT(func(zdbs_computed []provider.ZDBComputed) (*string, error) {
+    ctx.Export("zdb_namespace", deployment.Zdbs_computed.ApplyT(func(zdbs_computed []threefold.ZDBComputed) (*string, error) {
       return &zdbs_computed[0].Namespace, nil
     }).(pulumi.StringPtrOutput))
     return nil
   })
 }
+```
+
+{{% /choosable %}}
+
+{{% choosable language python %}}
+
+```python
+import os
+import pulumi
+import pulumi_threefold as threefold
+
+mnemonic = os.environ['MNEMONIC']
+network = os.environ['NETWORK']
+
+provider = threefold.Provider("provider", mnemonic=mnemonic, network=network)
+scheduler = threefold.Scheduler("scheduler",
+    mru=0.25,
+    sru=2,
+    farm_ids=[1],
+    opts = pulumi.ResourceOptions(provider=provider))
+deployment = threefold.Deployment("deployment",
+    node_id=scheduler.nodes[0],
+    name="zdb",
+    zdbs=[threefold.ZDBInputArgs(
+        name="zdbsTest",
+        size=2,
+        password="123456",
+    )],
+    opts = pulumi.ResourceOptions(provider=provider))
+
+pulumi.export("node_deployment_id", deployment.node_deployment_id)
+pulumi.export("zdb_endpoint_ip", deployment.zdbs_computed[0].ips[1])
+pulumi.export("zdb_endpoint_port", deployment.zdbs_computed[0].port)
+pulumi.export("zdb_namespace", deployment.zdbs_computed[0].namespace)
 ```
 
 {{% /choosable %}}
@@ -822,7 +1319,7 @@ resources:
       mnemonic:
 
   scheduler:
-    type: threefold:provider:Scheduler
+    type: threefold:Scheduler
     options:
       provider: ${provider}
     properties:
@@ -831,7 +1328,7 @@ resources:
       farm_ids: [1]
 
   deployment:
-    type: threefold:provider:Deployment
+    type: threefold:Deployment
     options:
       provider: ${provider}
     properties:
@@ -846,6 +1343,38 @@ outputs:
   node_deployment_id: ${deployment.node_deployment_id}
   zdb_endpoint: "[${deployment.zdbs_computed[0].ips[1]}]:${deployment.zdbs_computed[0].port}"
   zdb_namespace: ${deployment.zdbs_computed[0].namespace}
+```
+
+{{% /choosable %}}
+
+{{% choosable language nodejs %}}
+
+```ts
+import * as pulumi from "@pulumi/pulumi";
+import * as threefold from "@threefold/pulumi";
+
+const provider = new threefold.Provider("provider", {mnemonic: process.env.MNEMONIC, network: process.env.NETWORK});
+const scheduler = new threefold.Scheduler("scheduler", {
+    mru: 0.25,
+    sru: 2,
+    farm_ids: [1],
+}, {
+    provider: provider,
+});
+const deployment = new threefold.Deployment("deployment", {
+    node_id: scheduler.nodes[0],
+    name: "zdb",
+    zdbs: [{
+        name: "zdbsTest",
+        size: 2,
+        password: "123456",
+    }],
+}, {
+    provider: provider,
+});
+export const nodeDeploymentId = deployment.node_deployment_id;
+export const zdbEndpoint = pulumi.all([deployment.zdbs_computed, deployment.zdbs_computed]).apply(([deploymentZdbs_computed, deploymentZdbs_computed1]) => `[${deploymentZdbs_computed[0].ips?.[1]}]:${deploymentZdbs_computed1[0].port}`);
+export const zdbNamespace = deployment.zdbs_computed.apply(zdbs_computed => zdbs_computed[0].namespace);
 ```
 
 {{% /choosable %}}

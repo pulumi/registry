@@ -1,5 +1,5 @@
 ---
-title: Strata Cloud Manager
+title: Strata Cloud Manager (Palo Alto SCM)
 meta_desc: Provides an overview of the Strata Cloud Manager Provider for Pulumi.
 layout: overview
 ---

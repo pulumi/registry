@@ -9,6 +9,8 @@ layout: package
 The Pulumi Threefold provider is available as a package in those Pulumi languages:
 
 * Go: [`github.com/threefoldtech/pulumi-threefold/sdk`](https://pkg.go.dev/github.com/threefoldtech/pulumi-threefold/sdk)
+* JavaScript/TypeScript: [`@threefold/pulumi`](https://www.npmjs.com/package/@threefold/pulumi)
+* Python: [`pulumi-threefold`](https://pypi.org/project/pulumi-threefold/)
 
 ## Setup
 

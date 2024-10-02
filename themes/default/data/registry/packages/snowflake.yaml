@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-snowflake
 schema_file_path: provider/cmd/pulumi-resource-snowflake/schema.json
 title: Snowflake
-updated_on: 1717776380
-version: v0.55.0
+updated_on: 1726831379
+version: v0.59.0

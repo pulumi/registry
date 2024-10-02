@@ -10,7 +10,7 @@ jobs:
   generate-packages-list:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - id: set-matrix
         run: echo "matrix=$(python generate_package_list.py)" >> $GITHUB_OUTPUT
         working-directory: community-packages
@@ -51,7 +51,7 @@ jobs:
         run: echo "skip=1" >> $GITHUB_OUTPUT
       - name: Check out registry repo
         if: steps.skip-run.outputs.skip != 1
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Sleep to prevent hitting secondary rate limits
         if: steps.skip-run.outputs.skip != 1
         run: sleep 1
@@ -75,21 +75,15 @@ jobs:
           go build -C tools/resourcedocsgen
           ./tools/resourcedocsgen/resourcedocsgen \
           metadata --repoSlug ${{ matrix.repoSlug }} --schemaFile ${{ matrix.schemaFile }} \
-          --version ${{ env.PROVIDER_VERSION }}
+          --version ${{ env.PROVIDER_VERSION }} 
       - name: Create registry PR
         if: env.PROVIDER_VERSION
-        uses: peter-evans/create-pull-request@v5
-        env:
-          PROVIDER_SHORT_NAME: ${{ steps.regex-prov.outputs.group2 }}
+        uses: ./.github/actions/new-provider-version-pr
         with:
-          token: ${{ secrets.PULUMI_BOT_TOKEN }}
-          committer: Pulumi Bot <bot@pulumi.com>
-          author: Pulumi Bot <bot@pulumi.com>
-          commit-message: "Publish Package Metadata for ${{ env.PROVIDER_SHORT_NAME }}@${{ env.PROVIDER_VERSION }}"
-          title: "Publish Package Metadata ${{ env.PROVIDER_SHORT_NAME }}@${{ env.PROVIDER_VERSION }}"
-          body: ""
-          branch: "${{ env.PROVIDER_SHORT_NAME }}/${{ github.run_id }}-${{ github.run_number }}"   
-  
+          github_token: ${{ secrets.PULUMI_BOT_TOKEN }}
+          provider_short_name: ${{ steps.regex-prov.outputs.group2 }}
+          provider_version: ${{ env.PROVIDER_VERSION }}
+
   notify:
     if: failure()
     name: Send slack notification

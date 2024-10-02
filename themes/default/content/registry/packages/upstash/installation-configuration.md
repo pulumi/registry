@@ -61,7 +61,7 @@ $ export UPSTASH_API_KEY=<UPSTASH_API_KEY>
 
 Use `pulumi config set upstash:<option>` or pass options to the [constructor of `new upstash.Provider`](https://www.pulumi.com/registry/packages/upstash/api-docs/provider).
 
-| Option | Required? | Description |
-| - | - | - |
+| Option | Required/Optional | Description |
+|-----|------|----|
 | `email`| Required | Upstash user email
 | `apiKey`| Required | [Upstash Api key](https://console.upstash.com/account/api) |

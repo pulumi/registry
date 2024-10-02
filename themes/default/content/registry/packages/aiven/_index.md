@@ -1,110 +1,104 @@
 ---
-title: Aiven
-meta_desc: Provides an overview of the Aiven Provider for Pulumi.
+title: Aiven Provider
+meta_desc: Provides an overview on how to configure the Pulumi Aiven provider.
 layout: package
 ---
+## Installation
 
-The Aiven provider for Pulumi can be used to provision any of the cloud resources available in [Aiven](https://aiven.io/).
-The Aiven provider must be configured with credentials to deploy and update resources in Aiven.
+The aiven provider is available as a package in all Pulumi languages:
 
-## Example
+* JavaScript/TypeScript: [`@pulumi/aiven`](https://www.npmjs.com/package/@pulumi/aiven)
+* Python: [`pulumi-aiven`](https://pypi.org/project/pulumi-aiven/)
+* Go: [`github.com/pulumi/pulumi-aiven/sdk/v6/go/aiven`](https://github.com/pulumi/pulumi-aiven)
+* .NET: [`Pulumi.Aiven`](https://www.nuget.org/packages/Pulumi.Aiven)
+* Java: [`com.pulumi/aiven`](https://central.sonatype.com/artifact/com.pulumi/aiven)
 
-{{< chooser language "javascript,typescript,python,go,csharp" >}}
+The Pulumi provider for [Aiven](https://aiven.io/), the trusted open source data platform for everyone.
+## Authentication
+Sign up for Aiven and [create a personal token](https://aiven.io/docs/platform/howto/create_authentication_token).
 
-{{% choosable language javascript %}}
+You can also create an [application user](https://aiven.io/docs/platform/howto/manage-application-users) and use its token for accessing the Aiven Provider.
+## Example usage
 
-```javascript
-const aiven = require("@pulumi/aiven")
 
-const service = new aiven.Service("my-new-service", {
-    project: "my-project",
-    cloudName: "google-europe-west1",
-    plan:"startup-4",
-    serviceName: "my-service",
-    serviceType: "grafana",
-});
-```
-
-{{% /choosable %}}
+{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
 {{% choosable language typescript %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: nodejs
+config:
+    aiven:apiToken:
+        value: 'TODO: var.aiven_api_token'
 
-```typescript
-import * as aiven from "@pulumi/aiven";
-
-const service = new aiven.Service("my-new-service", {
-    project: "my-project",
-    cloudName: "google-europe-west1",
-    plan:"startup-4",
-    serviceName: "my-service",
-    serviceType: "grafana",
-});
 ```
 
 {{% /choosable %}}
 {{% choosable language python %}}
-
-```python
-import pulumi_aiven as aiven
-
-service = aiven.Service("my-service",
-  project="my-project",
-  cloud_name="google-europe-west1",
-  plan="startup-4",
-  service_name="my-service",
-  service_type="grafana",
-)
-```
-
-{{% /choosable %}}
-{{% choosable language go %}}
-
-```go
-import (
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	aiven "github.com/pulumi/pulumi-aiven/sdk/v4/go/aiven"
-)
-
-func main() {
-	pulumi.Run(func(ctx *pulumi.Context) error {
-		service, err := aiven.NewService(ctx, "test", &aiven.ServiceArgs{
-			Project:     pulumi.String("my-project"),
-			CloudName:   pulumi.String("google-europe-west1"),
-			Plan:        pulumi.String("startup-4"),
-			ServiceName: pulumi.String("my-service"),
-			ServiceType: pulumi.String("grafana"),
-		})
-		if err != nil {
-			return err
-		}
-
-		return nil
-	})
-}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: python
+config:
+    aiven:apiToken:
+        value: 'TODO: var.aiven_api_token'
 
 ```
 
 {{% /choosable %}}
 {{% choosable language csharp %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: dotnet
+config:
+    aiven:apiToken:
+        value: 'TODO: var.aiven_api_token'
 
-```csharp
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Pulumi;
-using Pulumi.Aiven;
-
-await Deployment.RunAsync(() =>
-{
-    var service = new Servicev1("test", new Servicev1Args
-    {
-        Project = "my-project",
-        CloudName = "google-europe-west1",
-        Plan = "startup-4",
-        ServiceName = "my-service",
-        ServiceType = "grafana",
-    });
-});
 ```
 
 {{% /choosable %}}
+{{% choosable language go %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: go
+config:
+    aiven:apiToken:
+        value: 'TODO: var.aiven_api_token'
 
+```
+
+{{% /choosable %}}
+{{% choosable language yaml %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: yaml
+config:
+    aiven:apiToken:
+        value: 'TODO: var.aiven_api_token'
+
+```
+
+{{% /choosable %}}
+{{% choosable language java %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: java
+config:
+    aiven:apiToken:
+        value: 'TODO: var.aiven_api_token'
+
+```
+
+{{% /choosable %}}
 {{< /chooser >}}
+## Environment variables
+
+* For authentication, you can set the `AIVEN_TOKEN` to your token value.
+* To use beta resources, set `PROVIDER_AIVEN_ENABLE_BETA` to any value.
+* To allow IP filters to be purged, set `AIVEN_ALLOW_IP_FILTER_PURGE` to any value. This feature prevents accidental purging of IP filters, which can cause you to lose access to services.
+## Resource options
+The list of options in this document is not comprehensive. However, most map directly to the [Aiven REST API](https://api.aiven.io/doc/) properties.

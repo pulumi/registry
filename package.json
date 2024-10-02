@@ -13,22 +13,29 @@
         "@slack/web-api": "^5.12.0",
         "aws-sdk": "^2.1567.0",
         "broken-link-checker": "^0.7.8",
+        "cheerio": "^1.0.0-rc.12",
         "concurrently": "^6.0.0",
         "cssnano": "^5.0.8",
         "cypress": "^13.6.4",
         "glob": "^7.2.0",
+        "htmlparser2": "^9.1.0",
         "http-server": "^0.12.1",
         "js-yaml": "^4.1.0",
         "jsdom": "^22.0.0",
         "markdownlint": "^0.28.0",
+        "mocha": "^10.6.0",
         "postcss": "^8.3.7",
         "postcss-cli": "^8.3.1",
-        "sitemapper": "^3.2.2"
+        "sitemapper": "^3.2.2",
+        "util": "^0.12.5"
     },
     "scripts": {
-        "minify-css": "node scripts/minify-css.js"
+        "minify-css": "node scripts/minify-css.js",
+        "test-api-docs": "NODE_OPTIONS=--max_old_space_size=8192 mocha scripts/tests -n expose-gc --reporter mocha-ctrf-json-reporter"
     },
     "devDependencies": {
-        "cypress-multi-reporters": "^1.6.4"
+        "chai": "4.2.0",
+        "cypress-multi-reporters": "^1.6.4",
+        "mocha-ctrf-json-reporter": "^0.0.4"
     }
 }

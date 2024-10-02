@@ -323,6 +323,38 @@
     {
       "repoSlug": "pierskarsenbarg/pulumi-nutanix",
       "schemaFile": "provider/cmd/pulumi-resource-nutanix/schema.json"
+    },
+    {
+      "repoSlug": "splightplatform/pulumi-splight",
+      "schemaFile": "provider/cmd/pulumi-resource-splight/schema.json"
+    },
+    {
+      "repoSlug": "chronosphereio/pulumi-chronosphere",
+      "schemaFile": "provider/cmd/pulumi-resource-chronosphere/schema.json"
+    },
+    {
+      "repoSlug": "pulumiverse/pulumi-clickhouse",
+      "schemaFile": "provider/cmd/pulumi-resource-clickhouse/schema.json"
+    },
+    {
+      "repoSlug": "komminarlabs/pulumi-influxdb3",
+      "schemaFile": "provider/cmd/pulumi-resource-influxdb3/schema.json"
+    },
+    {
+      "repoSlug": "1Password/pulumi-onepassword",
+      "schemaFile": "provider/cmd/pulumi-resource-onepassword/schema.json"
+    },
+    {
+      "repoSlug": "descope/pulumi-descope",
+      "schemaFile": "provider/cmd/pulumi-resource-descope/schema.json"
+    },
+    {
+      "repoSlug": "datarobot-community/pulumi-datarobot",
+      "schemaFile": "provider/cmd/pulumi-resource-datarobot/schema.json"
+    },
+    {
+      "repoSlug": "wttech/pulumi-aem",
+      "schemaFile": "provider/cmd/pulumi-resource-aem/schema.json"
     }
   ]
 }

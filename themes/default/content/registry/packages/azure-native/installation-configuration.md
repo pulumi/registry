@@ -90,6 +90,9 @@ Next, supply the Pulumi provider with the ID token to exchange for an Azure toke
 - Other identity providers offer a way to access the ID token. For instance, in GitLab CI/CD jobs, the ID token is available
 via the environment variable `GITLAB_OIDC_TOKEN`. Configure the Pulumi provider to use the ID token by assigning it to
 the Pulumi configuration `azure-native:oidcToken` or the environment variable `ARM_OIDC_TOKEN`.
+- Some identity providers, such as Azure Workload Identity, supply the ID token in a file. In this case, set the
+Pulumi configuration `azure-native:oidcTokenFilePath` or the environment variable `ARM_OIDC_TOKEN_FILE_PATH` to the path
+of the file.
 
 {{% notes type="info" %}}
 If your identity provider does not offer an ID token directly but it does offer a way to exchange a local bearer token
@@ -323,6 +326,7 @@ All configuration parameters are optional.
 | `oidcRequestToken` | Your cloud service or provider’s bearer token to exchange for an OIDC ID token. It can also be sourced from the `ARM_OIDC_REQUEST_TOKEN` environment variable. |
 | `oidcRequestUrl` | The token exchange URL for OIDC authentication. It can also be sourced from the `ARM_OIDC_REQUEST_URL` environment variable. |
 | `oidcToken` | The token to exchange for OIDC authentication. It can also be sourced from the `ARM_OIDC_TOKEN` environment variable. |
+| `oidcTokenFilePath` | The path to a file containing a token to exchange for OIDC authentication. It can also be sourced from the `ARM_OIDC_TOKEN_FILE_PATH` environment variable. |
 | `partnerId` | A GUID/UUID that is registered with Microsoft to facilitate partner resource usage attribution. It can also be sourced from the `ARM_PARTNER_ID` environment variable. |
 | `subscriptionId` | The subscription ID to use. It can also be sourced from the `ARM_SUBSCRIPTION_ID` environment variable. |
 | `tenantId` | The tenant ID to use for OIDC or Service Principal authentication. It can also be sourced from the `ARM_TENANT_ID` environment variable. |

@@ -2,11 +2,11 @@ name: "Scheduled jobs: Run browser tests"
 on:
   schedule:
     # Run every day at 2:00PM UTC.
-    - cron:  "0 14 * * *"
+    - cron: "0 14 * * *"
   workflow_dispatch:
 permissions:
-      id-token: write   # This is required for requesting the JWT
-      contents: read    # This is required for actions/checkout
+  id-token: write # This is required for requesting the JWT
+  contents: read # This is required for actions/checkout
 jobs:
   all:
     env:
@@ -14,10 +14,10 @@ jobs:
     name: Run browser tests
     runs-on: pulumi-ubuntu-8core
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v2
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: arn:aws:iam::388588623842:role/ContinuousDelivery
           role-session-name: docs-deploy
@@ -25,14 +25,14 @@ jobs:
           aws-region: us-west-2
 
       - name: Install Node
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v4
         with:
-          node-version: '18.x'
+          node-version: "18.x"
 
       - name: Install Hugo
-        uses: peaceiris/actions-hugo@v2
+        uses: peaceiris/actions-hugo@v3
         with:
-          hugo-version: '0.111.0'
+          hugo-version: "0.135.0"
           extended: true
 
       - name: Run browser tests

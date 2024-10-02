@@ -6,10 +6,10 @@ featured: false
 logo_url: https://raw.githubusercontent.com/pulumi/pulumi-command/master/assets/logo.svg
 name: command
 native: true
-package_status: public_preview
+package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-command
 schema_file_path: provider/cmd/pulumi-resource-command/schema.json
 title: Command
-updated_on: 1715973461
-version: v0.11.1
+updated_on: 1721331486
+version: v1.0.1

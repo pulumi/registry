@@ -64,4 +64,4 @@ check_links:
 .PHONY: run-browser-tests
 run-browser-tests:
 	$(MAKE) ensure
-	node ./scripts/run-browser-tests.js https://www.pulumi.com api-docs.cy.js
+	./scripts/run-api-docs-tests.sh

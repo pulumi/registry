@@ -1,0 +1,14 @@
+category: Cloud
+component: false
+description: A Pulumi package for creating and managing descope cloud resources.
+featured: false
+logo_url: https://avatars3.githubusercontent.com/descope
+name: descope
+native: false
+package_status: public_preview
+publisher: Descope
+repo_url: https://github.com/descope/pulumi-descope
+schema_file_path: provider/cmd/pulumi-resource-descope/schema.json
+title: Descope
+updated_on: 1727546660
+version: v0.0.4

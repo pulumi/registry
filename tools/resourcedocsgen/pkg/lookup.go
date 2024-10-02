@@ -78,7 +78,7 @@ var CategoryLookup = map[string]PackageCategory{
 	"openstack":                           PackageCategoryCloud,
 	"opsgenie":                            PackageCategoryInfrastructure,
 	"pagerduty":                           PackageCategoryInfrastructure,
-	"pgedge":                              PackageCategoryCloud,
+	"pgedge":                              PackageCategoryDatabase,
 	"postgresql":                          PackageCategoryDatabase,
 	"prometheus-helm":                     PackageCategoryMonitoring,
 	"rabbitmq":                            PackageCategoryInfrastructure,

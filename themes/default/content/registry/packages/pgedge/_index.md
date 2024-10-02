@@ -145,13 +145,15 @@ const database = new pgedge.Database("exampleDatabase", {
   clusterId: cluster.id,
   options: [
     "autoddl:enabled",
-    "install:northwind",
-    "rest:enabled",
+    // "install:northwind",
+    // "rest:enabled",
+    // "cloudwatch_metrics:enabled",
   ],
   extensions: {
     autoManage: true,
     requesteds: [
       "postgis",
+      "vector",
     ],
   },
   nodes:{

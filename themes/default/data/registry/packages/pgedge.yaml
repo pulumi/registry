@@ -1,6 +1,6 @@
 category: Database
 component: false
-description: A Pulumi package for creating and managing pgedge cloud resources.
+description: A Pulumi package for creating and managing pgEdge Cloud resources.
 featured: false
 logo_url: https://pgedge-public-assets.s3.amazonaws.com/product/images/pgedge_mark.svg
 name: pgedge

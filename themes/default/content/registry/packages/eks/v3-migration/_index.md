@@ -51,7 +51,7 @@ For self-managed node groups (i.e., the `NodeGroup` and `NodeGroupV2` components
 
 The second option involves the following steps:
 
-1. Create the replacement node group side-by-side with the existing node group. When doing this you need to make sure that the two node groups are allowed to communicate with each other. You can achieve this in the following way:
+* Create the replacement node group side-by-side with the existing node group. When doing this you need to make sure that the two node groups are allowed to communicate with each other. You can achieve this in the following way:
 
 
 {{< chooser language "typescript,python,go,csharp,java" >}}
@@ -248,20 +248,20 @@ var newToOld = new SecurityGroupIngressRule("newToOld", SecurityGroupIngressRule
 
 {{< /chooser >}}
 
-2. Find the nodes of the old node group. First take a note of the name of the auto scaling group associated with that node group and then run the following AWS CLI command, replacing `$ASG_GROUP_NAME` with the actual name of the auto scaling group:
+* Find the nodes of the old node group. First take a note of the name of the auto scaling group associated with that node group and then run the following AWS CLI command, replacing `$ASG_GROUP_NAME` with the actual name of the auto scaling group:
 
 ```bash
 aws ec2 describe-instances --filter "Name=tag:aws:autoscaling:groupName,Values=$ASG_GROUP_NAME" \
     | jq -r '.Reservations[].Instances[].PrivateDnsName'
 ```
 
-3. Drain each of the nodes of the old node group one by one. This will mark the nodes as unschedulable and gracefully move pods to other nodes. For more information have a look at this article in the [kubernetes documentation](https://kubernetes.io/docs/tasks/administer-cluster/safely-drain-node/).
+* Drain each of the nodes of the old node group one by one. This will mark the nodes as unschedulable and gracefully move pods to other nodes. For more information have a look at this article in the [kubernetes documentation](https://kubernetes.io/docs/tasks/administer-cluster/safely-drain-node/).
 
 ```bash
 kubectl drain $NODE_NAME --ignore-daemonsets --delete-emptydir-data
 ```
 
-4. The old nodes are now empty and can be safely shut down. Remove them from your pulumi program and run `pulumi up`
+* The old nodes are now empty and can be safely shut down. Remove them from your pulumi program and run `pulumi up`
 
 ## aws-auth ConfigMap Deprecation
 

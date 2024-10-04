@@ -29,6 +29,9 @@ if [ ! "$(find $build_dir -type f | grep index.html | wc -l)" -ge 1000 ]; then
     exit 1
 fi
 
+# Move the sitemap from root to the registry directory.
+mv "${build_dir}/sitemap.xml" "${build_dir}/registry/sitemap.xml"
+
 # For previews, name the destination bucket with the PR number, to reduce the number of
 # buckets we create and to facilitate shorter sync times.
 destination_bucket="$(origin_bucket_prefix)-$(build_identifier)"

@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-postgresql
 schema_file_path: provider/cmd/pulumi-resource-postgresql/schema.json
 title: PostgreSQL
-updated_on: 1726165277
-version: v3.12.0
+updated_on: 1728321847
+version: v3.12.1

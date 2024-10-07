@@ -11,5 +11,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-aws
 schema_file_path: provider/cmd/pulumi-resource-aws/schema.json
 title: AWS
-updated_on: 1727853908
-version: v6.54.2
+updated_on: 1728308381
+version: v6.55.0

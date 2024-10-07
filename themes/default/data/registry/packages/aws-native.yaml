@@ -11,5 +11,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-aws-native
 schema_file_path: provider/cmd/pulumi-resource-aws-native/schema.json
 title: AWS Cloud Control
-updated_on: 1727821856
-version: v1.0.1
+updated_on: 1728065180
+version: v1.0.2

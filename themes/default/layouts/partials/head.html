@@ -232,9 +232,19 @@
     </script>
 
     <script async defer src="https://buttons.github.io/buttons.js"></script>
-    {{- if eq hugo.Environment "production" }}
-        <!-- Clearbit snippet -->
-        <script src="https://tag.clearbitscripts.com/v1/pk_54e7d7c428c6d5e79098374d93a7b333/tags.js" referrerpolicy="strict-origin-when-cross-origin"></script>
+
+    <script>
+        var segmentWriteKey;
+        var snippetName;
+        {{- if eq hugo.Environment "production" }}
+            segmentWriteKey = "UK90Ofwacetj5VCPJ7cUgkbNcKLSHO3u";
+            snippetName = "C8Y429BDEy/06ujkUhzfL.min.js"
+        {{- else }}
+            segmentWriteKey = "bATvhu6XKpwi7Cs258MGsELkDpVOzvdY";
+            snippetName = "C8Y429BDEy/hpBKpR8Nx1yVCjKPB2nJWg.min.js"
+        {{- end }}
+    </script>
+
 
         <!--Segment tracking-->
         <script>
@@ -300,14 +310,15 @@
                             t.type = "text/javascript";
                             t.async = !0;
                             t.setAttribute("data-global-segment-analytics-key", i);
-                            t.src = "https://cdn.segment.com/analytics.js/v1/" + key + "/analytics.min.js";
+                            t.src = "https://evs.analytics.pulumi.com/" + snippetName;
                             var r = document.getElementsByTagName("script")[0];
                             r.parentNode.insertBefore(t, r);
                             analytics._loadOptions = n;
                         };
-                        analytics._writeKey = "UK90Ofwacetj5VCPJ7cUgkbNcKLSHO3u";
+                        analytics._writeKey = segmentWriteKey;
+                        analytics._cdn = "https://evs.analytics.pulumi.com";
                         analytics.SNIPPET_VERSION = "5.2.0";
-                        analytics.load("UK90Ofwacetj5VCPJ7cUgkbNcKLSHO3u");
+                        analytics.load(segmentWriteKey);
                         analytics.page();
                     }
             })();
@@ -346,7 +357,7 @@
 
                 return {
                     container: '#segment-consent-manager',
-                    writeKey: 'UK90Ofwacetj5VCPJ7cUgkbNcKLSHO3u',
+                    writeKey: segmentWriteKey,
                     bannerContent: bannerContent,
                     bannerSubContent: bannerSubContent,
                     preferencesDialogTitle: preferencesDialogTitle,
@@ -364,6 +375,16 @@
             src="https://unpkg.com/@segment/consent-manager@5.3.0/standalone/consent-manager.js"
             defer
         ></script>
+
+        <script async
+            data-api-host="https://cdn.growthbook.io"
+            data-client-key="sdk-0aUDa6bDbQqms3aJ"
+            src="https://cdn.jsdelivr.net/npm/@growthbook/growthbook/dist/bundles/auto.min.js"
+            ></script>
+
+    {{- if eq hugo.Environment "production" }}
+        <!-- Clearbit snippet -->
+        <script src="https://tag.clearbitscripts.com/v1/pk_54e7d7c428c6d5e79098374d93a7b333/tags.js" referrerpolicy="strict-origin-when-cross-origin"></script>
 
         <!-- Facebook Domain Verification -->
         <meta name="facebook-domain-verification" content="phlf6qes2bxa9ufzk8zt2es0qivg8j" />

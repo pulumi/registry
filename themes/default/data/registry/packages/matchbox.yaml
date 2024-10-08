@@ -10,5 +10,5 @@ publisher: Pulumiverse
 repo_url: https://github.com/pulumiverse/pulumi-matchbox
 schema_file_path: provider/cmd/pulumi-resource-matchbox/schema.json
 title: Matchbox
-updated_on: 1695668273
-version: v0.1.8
+updated_on: 1728380287
+version: v0.1.10

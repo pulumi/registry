@@ -367,6 +367,7 @@
                     shouldRequireConsent: () => true,
                     closeBehavior: exports.inEU() ? "dismiss" : "accept",
                     bannerTextColor: "black",
+                    cdnHost: "evs.analytics.pulumi.com",
                 }
             }
         </script>
@@ -378,7 +379,11 @@
 
         <script async
             data-api-host="https://cdn.growthbook.io"
+            {{- if eq hugo.Environment "production" }}
             data-client-key="sdk-0aUDa6bDbQqms3aJ"
+            {{- else }}
+            data-client-key="sdk-ut2foRRgupXGuPj3"
+            {{- end }}
             src="https://cdn.jsdelivr.net/npm/@growthbook/growthbook/dist/bundles/auto.min.js"
             ></script>
 

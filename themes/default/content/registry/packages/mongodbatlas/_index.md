@@ -1,89 +1,599 @@
 ---
-title: MongoDB Atlas
-meta_desc: Provides an overview of the MongoDB Atlas Provider for Pulumi.
+title: Mongodbatlas Provider
+meta_desc: Provides an overview on how to configure the Pulumi Mongodbatlas provider.
 layout: package
 ---
+## Installation
 
-The MongoDB Atlas provider for Pulumi can be used to provision any of the resources available for MongoDB Atlas.
-The MongoDB Atlas provider must be configured with credentials to deploy and update resources in MongoDB Atlas.
+The mongodbatlas provider is available as a package in all Pulumi languages:
 
-## Example
+* JavaScript/TypeScript: [`@pulumi/mongodbatlas`](https://www.npmjs.com/package/@pulumi/mongodbatlas)
+* Python: [`pulumi-mongodbatlas`](https://pypi.org/project/pulumi-mongodbatlas/)
+* Go: [`github.com/pulumi/pulumi-mongodbatlas/sdk/v3/go/mongodbatlas`](https://github.com/pulumi/pulumi-mongodbatlas)
+* .NET: [`Pulumi.Mongodbatlas`](https://www.nuget.org/packages/Pulumi.Mongodbatlas)
+* Java: [`com.pulumi/mongodbatlas`](https://central.sonatype.com/artifact/com.pulumi/mongodbatlas)
+## Overview
 
-{{< chooser language "javascript,typescript,python,go,csharp" >}}
+You can use the MongoDB Atlas provider to interact with the resources supported by [MongoDB Atlas](https://www.mongodb.com/cloud/atlas).
+The provider needs to be configured with the proper credentials before it can be used.
 
-{{% choosable language javascript %}}
+Use the navigation to the left to read about the available provider resources and data sources.
 
-```javascript
-const mongodbatlas = require("@pulumi/mongodbatlas")
+You may want to consider pinning the provider version to ensure you have a chance to review and prepare for changes.
+Speaking of changes, see CHANGELOG for current version information.
+## Example Usage
 
-const project = new mongodbatlas.Project("my-demo-project", {
-    orgId: "12345",
-});
-```
-
-{{% /choosable %}}
+{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
 {{% choosable language typescript %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: nodejs
+config:
+    mongodbatlas:privateKey:
+        value: 'TODO: var.mongodbatlas_private_key'
+    mongodbatlas:publicKey:
+        value: 'TODO: var.mongodbatlas_public_key'
 
-```typescript
-import * as mongodbatlas from "@pulumi/mongodbatlas";
-
-const project = new mongodbatlas.Project("my-demo-project", {
-    orgId: "12345",
-});
 ```
 
 {{% /choosable %}}
 {{% choosable language python %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: python
+config:
+    mongodbatlas:privateKey:
+        value: 'TODO: var.mongodbatlas_private_key'
+    mongodbatlas:publicKey:
+        value: 'TODO: var.mongodbatlas_public_key'
 
-```python
-import pulumi_mongodbatlas as mongodbatlas
-
-project = mongodbatlas.Project("my-demo-project", org_id="12345")
-```
-
-{{% /choosable %}}
-{{% choosable language go %}}
-
-```go
-import (
-    "github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-    mongodbatlas "github.com/pulumi/pulumi-mongodbatlas/sdk/v2/go/mongodbatlas"
-)
-
-func main() {
-    pulumi.Run(func(ctx *pulumi.Context) error {
-        project, err := mongodb.NewProject(ctx, "my-demo-project", &mongodb.ProjectArgs{
-        OrgId: pulumi.String("12345"),
-    })
-    if err != nil {
-        return err
-    }
-
-    return nil
-  })
-}
 ```
 
 {{% /choosable %}}
 {{% choosable language csharp %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: dotnet
+config:
+    mongodbatlas:privateKey:
+        value: 'TODO: var.mongodbatlas_private_key'
+    mongodbatlas:publicKey:
+        value: 'TODO: var.mongodbatlas_public_key'
 
-```csharp
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Pulumi;
-using Pulumi.Mongodbatlas;
-
-class Program
-{
-    static Task Main() =>
-        Deployment.Run(() => {
-            project = new Project("my-demo-project", new ProjectArgs{
-              OrgId = "12345",
-            });
-        });
-}
 ```
 
 {{% /choosable %}}
+{{% choosable language go %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: go
+config:
+    mongodbatlas:privateKey:
+        value: 'TODO: var.mongodbatlas_private_key'
+    mongodbatlas:publicKey:
+        value: 'TODO: var.mongodbatlas_public_key'
 
+```
+
+{{% /choosable %}}
+{{% choosable language yaml %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: yaml
+config:
+    mongodbatlas:privateKey:
+        value: 'TODO: var.mongodbatlas_private_key'
+    mongodbatlas:publicKey:
+        value: 'TODO: var.mongodbatlas_public_key'
+
+```
+
+{{% /choosable %}}
+{{% choosable language java %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: java
+config:
+    mongodbatlas:privateKey:
+        value: 'TODO: var.mongodbatlas_private_key'
+    mongodbatlas:publicKey:
+        value: 'TODO: var.mongodbatlas_public_key'
+
+```
+
+{{% /choosable %}}
 {{< /chooser >}}
+## Configure Atlas Programmatic Access
+
+In order to set up authentication with the MongoDB Atlas provider, you must generate a programmatic API key for MongoDB Atlas with the appropriate [role](https://docs.atlas.mongodb.com/reference/user-roles/).
+The [MongoDB Atlas documentation](https://docs.atlas.mongodb.com/tutorial/manage-programmatic-access/index.html) contains the most up-to-date instructions for creating and managing your key(s), setting the appropriate role, and optionally configuring IP access.
+
+**Role**: If unsure of which role level to grant your key, we suggest creating an organization API Key with an Organization Owner role. This ensures that you have sufficient access for all actions.
+## Configure MongoDB Atlas for Government
+
+In order to enable the Pulumi MongoDB Atlas Provider for use with MongoDB Atlas for Government add isMongodbgovCloud = true to your provider configuration:
+{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{% choosable language typescript %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: nodejs
+config:
+    mongodbatlas:isMongodbgovCloud:
+        value: true
+    mongodbatlas:privateKey:
+        value: 'TODO: var.mongodbatlas_private_key'
+    mongodbatlas:publicKey:
+        value: 'TODO: var.mongodbatlas_public_key'
+
+```
+
+{{% /choosable %}}
+{{% choosable language python %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: python
+config:
+    mongodbatlas:isMongodbgovCloud:
+        value: true
+    mongodbatlas:privateKey:
+        value: 'TODO: var.mongodbatlas_private_key'
+    mongodbatlas:publicKey:
+        value: 'TODO: var.mongodbatlas_public_key'
+
+```
+
+{{% /choosable %}}
+{{% choosable language csharp %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: dotnet
+config:
+    mongodbatlas:isMongodbgovCloud:
+        value: true
+    mongodbatlas:privateKey:
+        value: 'TODO: var.mongodbatlas_private_key'
+    mongodbatlas:publicKey:
+        value: 'TODO: var.mongodbatlas_public_key'
+
+```
+
+{{% /choosable %}}
+{{% choosable language go %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: go
+config:
+    mongodbatlas:isMongodbgovCloud:
+        value: true
+    mongodbatlas:privateKey:
+        value: 'TODO: var.mongodbatlas_private_key'
+    mongodbatlas:publicKey:
+        value: 'TODO: var.mongodbatlas_public_key'
+
+```
+
+{{% /choosable %}}
+{{% choosable language yaml %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: yaml
+config:
+    mongodbatlas:isMongodbgovCloud:
+        value: true
+    mongodbatlas:privateKey:
+        value: 'TODO: var.mongodbatlas_private_key'
+    mongodbatlas:publicKey:
+        value: 'TODO: var.mongodbatlas_public_key'
+
+```
+
+{{% /choosable %}}
+{{% choosable language java %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: java
+config:
+    mongodbatlas:isMongodbgovCloud:
+        value: true
+    mongodbatlas:privateKey:
+        value: 'TODO: var.mongodbatlas_private_key'
+    mongodbatlas:publicKey:
+        value: 'TODO: var.mongodbatlas_public_key'
+
+```
+
+{{% /choosable %}}
+{{< /chooser >}}
+
+Also see [`Atlas for Government Considerations`](https://www.mongodb.com/docs/atlas/government/api/#atlas-for-government-considerations).
+## Authenticate the Provider
+
+The MongoDB Atlas provider offers a flexible means of providing credentials for authentication.
+You can use any the following methods:
+### Environment Variables
+
+You can also provide your credentials via the environment variables,
+`MONGODB_ATLAS_PUBLIC_KEY` and `MONGODB_ATLAS_PRIVATE_KEY`,
+for your public and private MongoDB Atlas programmatic API key pair respectively:
+
+{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{% choosable language typescript %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: nodejs
+
+```
+
+{{% /choosable %}}
+{{% choosable language python %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: python
+
+```
+
+{{% /choosable %}}
+{{% choosable language csharp %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: dotnet
+
+```
+
+{{% /choosable %}}
+{{% choosable language go %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: go
+
+```
+
+{{% /choosable %}}
+{{% choosable language yaml %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: yaml
+
+```
+
+{{% /choosable %}}
+{{% choosable language java %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: java
+
+```
+
+{{% /choosable %}}
+{{< /chooser >}}
+
+Usage (prefix the export commands with a space to avoid the keys being recorded in OS history):
+
+```shell
+$  export MONGODB_ATLAS_PUBLIC_KEY="xxxx"
+$  export MONGODB_ATLAS_PRIVATE_KEY="xxxx"
+$ pulumi preview
+```
+
+As an alternative to `MONGODB_ATLAS_PUBLIC_KEY` and `MONGODB_ATLAS_PRIVATE_KEY`
+if you are using [MongoDB CLI](https://docs.mongodb.com/mongocli/stable/)
+then `MCLI_PUBLIC_API_KEY` and `MCLI_PRIVATE_API_KEY` are also supported.
+### AWS Secrets Manager
+AWS Secrets Manager (AWS SM) helps to manage, retrieve, and rotate database credentials, API keys, and other secrets throughout their lifecycles. See [product page](https://aws.amazon.com/secrets-manager/) and [documentation](https://docs.aws.amazon.com/systems-manager/latest/userguide/what-is-systems-manager.html) for more details.
+
+In order to enable the Pulumi MongoDB Atlas Provider with AWS SM, please follow the below steps:
+
+1. Create Atlas API Keys and add them as one secret to AWS SM with a raw value. Take note of which AWS Region secret is being stored in. Public Key and Private Key each need to be entered as their own key value pair. See below example:
+```
+     {
+      "public_key": "secret1",
+      "private_key":"secret2"
+     }
+```
+2. Create an AWS IAM Role to attach to the AWS STS (Security Token Service) generated short lived API keys. This is required since STS generated API Keys by default have restricted permissions and need to have their permissions elevated in order to authenticate with Pulumi. Take note of Role ARN and ensure IAM Role has permission for “sts:AssumeRole”. For example:
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "Statement1",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "*"
+            },
+            "Action": "sts:AssumeRole"
+        }
+    ]
+}
+```
+In addition, you are required to also attach the AWS Managed policy of `SecretsManagerReadWrite` to this IAM role.
+
+Note: this policy may be overly broad for many use cases, feel free to adjust accordingly to your organization's needs.
+
+3. In terminal, store as environmental variables AWS API Keys (while you can also hardcode in config files these will then be stored as plain text in .tfstate file and should be avoided if possible). For example:
+```
+export AWS_ACCESS_KEY_ID="secret"
+export AWS_SECRET_ACCESS_KEY="secret”
+```
+4. In terminal, use the AWS CLI command: `aws sts assume-role --role-arn ROLE_ARN_FROM_ABOVE --role-session-name newSession`
+
+Note: AWS STS secrets are short lived by default, use the ` --duration-seconds` flag to specify longer duration as needed
+
+5. Store each of the 3 new created secrets from AWS STS as environment variables (hardcoding secrets into config file with additional risk is also supported). For example:
+```
+export AWS_ACCESS_KEY_ID="ASIAYBYSK3S5FZEKLETV"
+export AWS_SECRET_ACCESS_KEY="lgT6kL9lr1fxM6mCEwJ33MeoJ1M6lIzgsiW23FGH"
+export AWS_SESSION_TOKEN="IQoXX3+Q"
+```
+
+6. Add assumeRole block with `roleArn`, `secretName`, and AWS `region` where secret is stored as part of AWS SM. Each of these 3 fields are REQUIRED. For example:
+   {{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+   {{% choosable language typescript %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: nodejs
+config:
+    mongodbatlas:awsAccessKeyId:
+        value: ASIXXBNEK
+    mongodbatlas:awsSecretAccessKey:
+        value: ZUZgVb8XYZWEXXEDURGFHFc5Au
+    mongodbatlas:awsSessionToken:
+        value: IQoXX3+Q=
+    mongodbatlas:region:
+        value: us-east-2
+    mongodbatlas:secretName:
+        value: mongodbsecret
+    mongodbatlas:stsEndpoint:
+        value: https://sts.us-east-2.amazonaws.com/
+
+```
+
+{{% /choosable %}}
+{{% choosable language python %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: python
+config:
+    mongodbatlas:awsAccessKeyId:
+        value: ASIXXBNEK
+    mongodbatlas:awsSecretAccessKey:
+        value: ZUZgVb8XYZWEXXEDURGFHFc5Au
+    mongodbatlas:awsSessionToken:
+        value: IQoXX3+Q=
+    mongodbatlas:region:
+        value: us-east-2
+    mongodbatlas:secretName:
+        value: mongodbsecret
+    mongodbatlas:stsEndpoint:
+        value: https://sts.us-east-2.amazonaws.com/
+
+```
+
+{{% /choosable %}}
+{{% choosable language csharp %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: dotnet
+config:
+    mongodbatlas:awsAccessKeyId:
+        value: ASIXXBNEK
+    mongodbatlas:awsSecretAccessKey:
+        value: ZUZgVb8XYZWEXXEDURGFHFc5Au
+    mongodbatlas:awsSessionToken:
+        value: IQoXX3+Q=
+    mongodbatlas:region:
+        value: us-east-2
+    mongodbatlas:secretName:
+        value: mongodbsecret
+    mongodbatlas:stsEndpoint:
+        value: https://sts.us-east-2.amazonaws.com/
+
+```
+
+{{% /choosable %}}
+{{% choosable language go %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: go
+config:
+    mongodbatlas:awsAccessKeyId:
+        value: ASIXXBNEK
+    mongodbatlas:awsSecretAccessKey:
+        value: ZUZgVb8XYZWEXXEDURGFHFc5Au
+    mongodbatlas:awsSessionToken:
+        value: IQoXX3+Q=
+    mongodbatlas:region:
+        value: us-east-2
+    mongodbatlas:secretName:
+        value: mongodbsecret
+    mongodbatlas:stsEndpoint:
+        value: https://sts.us-east-2.amazonaws.com/
+
+```
+
+{{% /choosable %}}
+{{% choosable language yaml %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: yaml
+config:
+    mongodbatlas:awsAccessKeyId:
+        value: ASIXXBNEK
+    mongodbatlas:awsSecretAccessKey:
+        value: ZUZgVb8XYZWEXXEDURGFHFc5Au
+    mongodbatlas:awsSessionToken:
+        value: IQoXX3+Q=
+    mongodbatlas:region:
+        value: us-east-2
+    mongodbatlas:secretName:
+        value: mongodbsecret
+    mongodbatlas:stsEndpoint:
+        value: https://sts.us-east-2.amazonaws.com/
+
+```
+
+{{% /choosable %}}
+{{% choosable language java %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: java
+config:
+    mongodbatlas:awsAccessKeyId:
+        value: ASIXXBNEK
+    mongodbatlas:awsSecretAccessKey:
+        value: ZUZgVb8XYZWEXXEDURGFHFc5Au
+    mongodbatlas:awsSessionToken:
+        value: IQoXX3+Q=
+    mongodbatlas:region:
+        value: us-east-2
+    mongodbatlas:secretName:
+        value: mongodbsecret
+    mongodbatlas:stsEndpoint:
+        value: https://sts.us-east-2.amazonaws.com/
+
+```
+
+{{% /choosable %}}
+{{< /chooser >}}
+
+Note: `awsAccessKeyId`, `awsSecretAccessKey`, and `awsSessionToken` can also be passed in using environment variables i.e. awsAccessKeyId will accept AWS_ACCESS_KEY_ID and TF_VAR_AWS_ACCESS_KEY_ID as a default value in place of value in a pulumi file variable.
+
+Note: Fully qualified `secretName` ARN as input is REQUIRED for cross-AWS account secrets. For more detatils see:
+* <https://aws.amazon.com/blogs/security/how-to-access-secrets-across-aws-accounts-by-attaching-resource-based-policies/>
+* <https://aws.amazon.com/premiumsupport/knowledge-center/secrets-manager-share-between-accounts/>
+
+Note: `stsEndpoint` parameter is REQUIRED for cross-AWS region or cross-AWS account secrets.
+
+7. In terminal, `pulumi up`
+### Static Credentials
+
+Static credentials can be provided by adding the following attributes in-line in the MongoDB Atlas provider configuration,
+either directly or via input variable/local value:
+
+{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{% choosable language typescript %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: nodejs
+config:
+    mongodbatlas:privateKey:
+        value: atlas_private_api_key
+    mongodbatlas:publicKey:
+        value: atlas_public_api_key
+
+```
+
+{{% /choosable %}}
+{{% choosable language python %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: python
+config:
+    mongodbatlas:privateKey:
+        value: atlas_private_api_key
+    mongodbatlas:publicKey:
+        value: atlas_public_api_key
+
+```
+
+{{% /choosable %}}
+{{% choosable language csharp %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: dotnet
+config:
+    mongodbatlas:privateKey:
+        value: atlas_private_api_key
+    mongodbatlas:publicKey:
+        value: atlas_public_api_key
+
+```
+
+{{% /choosable %}}
+{{% choosable language go %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: go
+config:
+    mongodbatlas:privateKey:
+        value: atlas_private_api_key
+    mongodbatlas:publicKey:
+        value: atlas_public_api_key
+
+```
+
+{{% /choosable %}}
+{{% choosable language yaml %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: yaml
+config:
+    mongodbatlas:privateKey:
+        value: atlas_private_api_key
+    mongodbatlas:publicKey:
+        value: atlas_public_api_key
+
+```
+
+{{% /choosable %}}
+{{% choosable language java %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: java
+config:
+    mongodbatlas:privateKey:
+        value: atlas_private_api_key
+    mongodbatlas:publicKey:
+        value: atlas_public_api_key
+
+```
+
+{{% /choosable %}}
+{{< /chooser >}}
+
+> *IMPORTANT* Hard-coding your MongoDB Atlas programmatic API key pair into a Pulumi configuration is not recommended.
+Consider the risks, especially the inadvertent submission of a configuration file containing secrets to a public repository.
+## Configuration Reference
+
+In addition to generic `provider` arguments
+(e.g. `alias` and `version`), the MongoDB Atlas `provider` supports the following arguments:
+
+* `publicKey` - (Optional) This is the public key of your MongoDB Atlas API key pair. It must be
+  provided, but it can also be sourced from the `MONGODB_ATLAS_PUBLIC_KEY` or `MCLI_PUBLIC_API_KEY`
+  environment variable.
+
+* `privateKey` - (Optional) This is the private key of your MongoDB Atlas key pair. It must be
+  provided, but it can also be sourced from the `MONGODB_ATLAS_PRIVATE_KEY` or `MCLI_PRIVATE_API_KEY`
+  environment variable.
+
+For more information on configuring and managing programmatic API Keys see the [MongoDB Atlas Documentation](https://docs.atlas.mongodb.com/tutorial/manage-programmatic-access/index.html).

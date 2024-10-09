@@ -14,6 +14,12 @@ The VPC CNI cluster component is now configured as an EKS addon as mentioned in 
 - Removed `enableIpv6` input property. The component automatically configures the IP version now depending on whether the cluster is running in IPv4 or IPv6 mode.  
 - Removed `image`, `initImage`, `nodeAgentImage` input properties. The component now automatically selects an image registry in the cluster’s region to pull the images from.
 
+During the update, you'll observe two key changes:
+1. The removal of the previous `kubectl`-based `VpcCni` component.
+2. The creation of the new EKS addon-based `VpcCniAddon` component.
+
+It's important to note that deleting the `VpcCni` component will not modify or delete any existing on-cluster resources. When creating the `VpcCniAddon` component, it will safely adopt the existing VPC CNI resources and update them to the current recommended version.
+
 ## Node Group Updates
 
 ### `NodeGroup` component deprecation
@@ -278,12 +284,13 @@ More details about this can be found [here](https://docs.aws.amazon.com/eks/late
 The Nodejs SDK is updated to use state of the art Pulumi tooling, improving stability, documentation and security. The update requires the following changes to programs:
 
 - Properties of the components are now outputs instead of plain types. Notable cases where you need to change your program are:
-  - The [`Cluster::getKubeConfig`](https://www.pulumi.com/registry/packages/eks/api-docs/cluster/#method_GetKubeconfig) method now returns an output.  
-  - Creating an IRSA based IAM role now requires you to use `apply` for accessing the OIDC provider ARN and URL. An example of how this works can be found [here](https://github.com/pulumi/pulumi-eks/blob/release-3.x.x/examples/oidc-iam-sa/index.ts).  
-  - `k8s.Provider` will be deleted if not referenced (no impact, but it will appear in the diff)
-  - `clusterOidcProvider` is an output now. `getKubeConfig` returns an output now  
+  - The [`Cluster.getKubeConfig`](https://www.pulumi.com/registry/packages/eks/api-docs/cluster/#method_GetKubeconfig) method now returns an output.  
+  - The `Cluster.core.oidcProvider` property is an output now. Creating an IRSA based IAM role now requires you to use `apply` for accessing the OIDC provider ARN and URL. An example of how this works can be found [here](https://github.com/pulumi/pulumi-eks/blob/release-3.x.x/examples/oidc-iam-sa/index.ts).  
+  - `cluster.core.oidcProvider` is an output now.
+- The `cluster.provider` will be deleted if not referenced (no impact, but it will appear in the diff)
 - The deprecated input property `deployDashboard` of the `Cluster` component has been removed from the Nodejs SDK. This has already been removed from the other SDKs in the past. If you’d like to continue using it, you can adopt the existing code into your own program from [here](https://github.com/pulumi/pulumi-eks/blob/bcc170e72b802a78e7f0a99bc92316a5f8a62b0e/nodejs/eks/dashboard.ts).
 - The `createManagedNodeGroup` function will now create an Pulumi EKS `ManagedNodeGroup` instead of creating the underlying `aws.eks.NodeGroup` resource directly. During the upgrade to Pulumi EKS v3 you'll see the additional wrapper component being created.
+- The capitalization of the `AuthenticationMode` and `AccessEntryType` enum values has been aligned with other providers (e.g. `AuthenticationMode.API` => `AuthenticationMode.Api`). The previous values have been marked as deprecated and now point to their new counterparts.
 
 ## Miscellaneous changes
 

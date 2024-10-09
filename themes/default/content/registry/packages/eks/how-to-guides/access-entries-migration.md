@@ -8,8 +8,7 @@ AWS introduced a new method for granting IAM principals access to Kubernetes res
 
 Previously, the aws-auth ConfigMap was the sole method for mapping IAM principals to Kubernetes RBAC. Now, users can choose between using the ConfigMap (access mode `CONFIG_MAP`), Access Entries (access mode `API`), or both (access mode `API_AND_CONFIG_MAP`). If no authentication mode is configured for a cluster, AWS defaults to using the aws-auth ConfigMap.
 
-> [!CAUTION]
-> Once the access entry method is enabled, it cannot be disabled. If the ConfigMap method is not enabled during cluster creation, it cannot be enabled later. All clusters created before the introduction of access entries have the ConfigMap method enabled.
+> Caution! Once the access entry method is enabled, it cannot be disabled. If the ConfigMap method is not enabled during cluster creation, it cannot be enabled later. All clusters created before the introduction of access entries have the ConfigMap method enabled.
 
 This guide is based on the [AWS Docs](https://docs.aws.amazon.com/eks/latest/userguide/migrating-access-entries.html) for migrating existing aws-auth ConfigMap entries to access entries.
 
@@ -380,8 +379,7 @@ After you've confirmed that all entries of the `aws-auth` ConfigMap have corresp
 - `userMappings`
 - `instanceRoles`
 
-> [!CAUTION]
-> This can cause disruptions if any of the parameters are not represented as Access Entries.
+> Caution! This can cause disruptions if any of the parameters are not represented as Access Entries.
 
 #### 5. Switch the Authentication Mode to `API`
 Now that the authentication is fully driven by access entries you can switch to the `API` authentication mode. This will delete the `aws-auth` ConfigMap.

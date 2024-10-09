@@ -10,5 +10,5 @@ publisher: pulumiverse
 repo_url: https://github.com/pulumiverse/pulumi-mssql
 schema_file_path: provider/cmd/pulumi-resource-mssql/schema.json
 title: Microsoft SQL Server
-updated_on: 1698867912
-version: v0.0.8
+updated_on: 1728421250
+version: v0.1.0

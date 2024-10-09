@@ -10,5 +10,5 @@ publisher: DataRobot, Inc.
 repo_url: https://github.com/datarobot-community/pulumi-datarobot
 schema_file_path: provider/cmd/pulumi-resource-datarobot/schema.json
 title: DataRobot
-updated_on: 1728342465
-version: v0.2.3
+updated_on: 1728428566
+version: v0.2.4

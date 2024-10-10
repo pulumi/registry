@@ -97,7 +97,7 @@ The `aws-auth` ConfigMap gets populated based on the following parameters:
 
 To create Access Entries for those you need to choose the right Access Entry type.
 
-#### `roleMappings` & `userMappings`
+#### roleMappings & userMappings
 These map to Access Entries of type `STANDARD`, which is the default.
 
 The following shows how you'd add access entries for the role and user mappings:
@@ -349,8 +349,8 @@ eksCluster:
 
 {{< /chooser >}}
 
-#### `instanceRoles`
-These map to Access Entries of type `EC2_LINUX`. If those are Fargate Profile
+#### instanceRoles
+These map to Access Entries of type `EC2_LINUX`.
 
 The following shows how you'd add access entries for the instance roles:
 ```ts

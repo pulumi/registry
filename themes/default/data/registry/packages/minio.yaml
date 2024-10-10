@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-minio
 schema_file_path: provider/cmd/pulumi-resource-minio/schema.json
 title: MinIO
-updated_on: 1719260722
-version: v0.15.4
+updated_on: 1728590666
+version: v0.16.1

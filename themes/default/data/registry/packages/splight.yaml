@@ -10,5 +10,5 @@ publisher: splightplatform
 repo_url: https://github.com/splightplatform/pulumi-splight
 schema_file_path: provider/cmd/pulumi-resource-splight/schema.json
 title: splight
-updated_on: 1728575759
-version: v1.1.6
+updated_on: 1728593068
+version: v1.1.7

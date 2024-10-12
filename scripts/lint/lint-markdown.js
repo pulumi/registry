@@ -142,7 +142,7 @@ function searchForMarkdown(paths, result, resultIndex) {
                         metaDescription: checkPageMetaDescription(obj.meta_desc),
                     };
                     resultIndex.files.push(fullPath);
-                }
+                } else {
                     // Build the front matter error object and add the file path.
                     result.frontMatter[fullPath] = {
                         error: null,
@@ -150,14 +150,24 @@ function searchForMarkdown(paths, result, resultIndex) {
                         metaDescription: checkPageMetaDescription(obj.meta_desc),
                     };
                     result.files.push(fullPath);
+                }
             }
         } catch (e) {
-            // Include the error message in the front matter error object
-            // so we can display it to the user.
-            result.frontMatter[fullPath] = {
-                error: e.message,
-            };
-            result.files.push(fullPath);
+            if (file.endsWith(indexFileSuffix)){
+                // Include the error message in the front matter error object
+                // so we can display it to the user.
+                resultIndex.frontMatter[fullPath] = {
+                    error: e.message,
+                };
+                resultIndex.files.push(fullPath);
+            } else {
+                // Include the error message in the front matter error object
+                // so we can display it to the user.
+                result.frontMatter[fullPath] = {
+                    error: e.message,
+                };
+                result.files.push(fullPath);
+            }
         }
     }
 
@@ -191,7 +201,7 @@ function getMarkdownFiles(parentPath) {
  * @return {string} result.path The full path of the linted file.
  * @return {Object[]} result.errors An array of error objects. Same as the result param.
  */
-function groupLintErrorOutput(result) {
+function groupLintErrorOutput(result, filesToLint) {
     // Grab the keys of the result object.
     const keys = Object.keys(result);
 
@@ -203,7 +213,7 @@ function groupLintErrorOutput(result) {
         const frontMatterErrors = filesToLint.frontMatter[key];
 
         // If the front matter error check threw an error add it to the lint
-        // error array. Else add title and meta descriptoins if they exist.
+        // error array. Else add title and meta descriptions if they exist.
         if (frontMatterErrors.error) {
             lintErrors.push({
                 lineNumber: "File Header",
@@ -238,7 +248,9 @@ function groupLintErrorOutput(result) {
 }
 
 // Build the lint object for the content directory.
-const [filesToLint, shit] = getMarkdownFiles(`../../themes/default/content`);
+const [filesToLint, indexFilesToLint] = getMarkdownFiles(`../../themes/default/content`);
+
+
 /**
  * The config options for lint markdown files. All rules
  * are enabled by default. The config object let us customize
@@ -304,85 +316,52 @@ const opts = {
     customRules: [],
 };
 
-// function getIndexFiles(parentPath) {
-//   console.log(filesToLint)
-//
-// }
-// Get all index files from the registry
-// const indexFilesToLint = getIndexFiles(filesToLint);
-// /**
-//  * The config options for lint markdown files. All rules
-//  * are enabled by default. The config object let us customize
-//  * what rules we enforce and how we enforce them.
-//  *
-//  * See: https://github.com/DavidAnson/markdownlint
-//  */
-// const indexFileOpts = {
-//     // The array of markdown files to lint.
-//     files: indexFilesToLint.files,
-//     config: {
-//         // Allow inline HTML.
-//         MD033: false,
-//         // Do not enforce line length.
-//         MD013: false,
-//         // Don't force language specification on code blocks.
-//         MD040: false,
-//         // Allow hard tabs.
-//         MD010: false,
-//         // Allow punctuation in headers.
-//         MD026: false,
-//         // Allow dollars signs in code blocks without values
-//         // immediately below the command.
-//         MD014: false,
-//         // Allow all code block styles in a file. Code block styles
-//         // are created equal and we shall not discriminate.
-//         MD046: false,
-//         // Allow indents on unordered lists to be 4 spaces instead of 2.
-//         MD007: { indent: 4 },
-//         // Allow duplicate headings.
-//         MD024: false,
-//         // Allow headings to be indented.
-//         MD023: false,
-//         // Allow blank lines in blockquotes.
-//         MD028: false,
-//         // Allow indentation in unordered lists.
-//         MD007: false,
-//         // Allow bareURLs.
-//         MD034: false,
-//         // Allow ordered list item prefix, including
-//
-//         // Turning off the following rules so we can get this linter into a passing state so
-//         // we can turn it on. We can follow up and remove these in the future if we feel the
-//         // need to lint these rules.
-//
-//         // Headings should be surrounded by blank lines
-//         MD022: false,
-//         // Lists should be surrounded by blank lines
-//         MD032: false,
-//         // Fenced code blocks should be surrounded by blank lines
-//         MD031: false,
-//         // Header line length
-//         MD036: false,
-//         // Unordered list style
-//         MD004: false,
-//         // Trailing spaces
-//         MD009: false,
-//         // Consecutive blank lines
-//         MD012: false,
-//         // Files should end with a single newline character
-//         MD047: false,
-//     },
-//     customRules: [],
-// };
+function indexConfigs(opts) {
+   return  opts.config +
+    {
+        // Multiple top-level headings in the same document
+        MD025: false,
+        // Ordered list item prefix
+        MD029: false,
+        // Spaces inside code span elements
+        MD038: false
+    }
+}
 
-console.log(shit)q
+/**
+ * The config options for lint markdown files. All rules
+ * are enabled by default. The config object let us customize
+ * what rules we enforce and how we enforce them.
+ *
+ * See: https://github.com/DavidAnson/markdownlint
+ */
+const indexFileOpts = {
+    // The array of markdown files to lint.
+    files: indexFilesToLint.files,
+    config: Object.assign(opts.config,
+        {
+            // Multiple top-level headings in the same document
+            MD025: false,
+            // Ordered list item prefix
+            MD029: false,
+            // Spaces inside code span elements
+            MD038: false
+        }),
+    customRules: [],
+};
+console.log(indexFileOpts)
+
+
 // Lint the markdown files.
 let result = markdownlint.sync(opts);
 
 // Lint `_index.md files`
+let lintResult = markdownlint.sync(indexFileOpts)
 
 // Group the lint errors by file.
-const errors = groupLintErrorOutput(result);
+let errors = groupLintErrorOutput(result, filesToLint);
+let lintErrors = groupLintErrorOutput(lintResult, indexFilesToLint)
+errors = errors.concat(lintErrors)
 
 // Get the total number of errors.
 const errorsArray = errors.map(function (err) { return err.errors });

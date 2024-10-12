@@ -59,20 +59,23 @@ function checkPageMetaDescription(meta) {
  * for formatting errors.
  *
  * @param {string[]} paths An array of paths to search for markdown files.
- * @param {Object} [result] The result object returned after finishing searching.
- * @returns {Object} The markdown file paths to search and an error object for the files front matter.
+ * @param {Object} [markdownFiles] The markdownFiles object returned after finishing searching for non-index.md
+ * markdown files.
+ * @param {Object} [indexFiles] The indexFiles object returned after finishing searching for _index.md markdown files.
+ * @returns [{Object}, {Object}] The markdown file objects for the two separate types of markdown files,
+ * each including an error object for the files' front matter.
  */
-function searchForMarkdown(paths, result, resultIndex) {
+function searchForMarkdown(paths, markdownFiles, indexFiles) {
     // If the result arg does not exist we should create it.
-    if (!result) {
-        result = {
+    if (!markdownFiles) {
+        markdownFiles = {
             files: [],
             frontMatter: {},
         }
     }
 
-    if (!resultIndex) {
-        resultIndex = {
+    if (!indexFiles) {
+        indexFiles = {
             files: [],
             frontMatter: {},
         }
@@ -95,7 +98,7 @@ function searchForMarkdown(paths, result, resultIndex) {
     // Ignore auto generated docs.
     if (file.indexOf("/content/docs/reference/pkg") > -1) {
         const remaining = paths.slice(1, paths.length);
-        return searchForMarkdown(remaining, result);
+        return searchForMarkdown(remaining, markdownFiles, indexFiles);
     }
     // If the path is a directory we want to add the contents of the directory
     // to the list.
@@ -107,7 +110,7 @@ function searchForMarkdown(paths, result, resultIndex) {
 
         // Flatten the array.
         const newPaths = [].concat.apply([], paths);
-        return searchForMarkdown(newPaths, result, resultIndex);
+        return searchForMarkdown(newPaths, markdownFiles, indexFiles);
         // Else check if the file suffix is a markdown
         // and add it the resulting file list.
     }
@@ -134,39 +137,38 @@ function searchForMarkdown(paths, result, resultIndex) {
 
             if (shouldCheckFrontMatter) {
                 if (file.endsWith(indexFileSuffix)){
-                    // console.log("found one", file)
                     // Build the front matter error object and add the file path.
-                    resultIndex.frontMatter[fullPath] = {
+                    indexFiles.frontMatter[fullPath] = {
                         error: null,
                         title: checkPageTitle(obj.title),
                         metaDescription: checkPageMetaDescription(obj.meta_desc),
                     };
-                    resultIndex.files.push(fullPath);
+                    indexFiles.files.push(fullPath);
                 } else {
                     // Build the front matter error object and add the file path.
-                    result.frontMatter[fullPath] = {
+                    markdownFiles.frontMatter[fullPath] = {
                         error: null,
                         title: checkPageTitle(obj.title),
                         metaDescription: checkPageMetaDescription(obj.meta_desc),
                     };
-                    result.files.push(fullPath);
+                    markdownFiles.files.push(fullPath);
                 }
             }
         } catch (e) {
             if (file.endsWith(indexFileSuffix)){
                 // Include the error message in the front matter error object
                 // so we can display it to the user.
-                resultIndex.frontMatter[fullPath] = {
+                indexFiles.frontMatter[fullPath] = {
                     error: e.message,
                 };
-                resultIndex.files.push(fullPath);
+                indexFiles.files.push(fullPath);
             } else {
                 // Include the error message in the front matter error object
                 // so we can display it to the user.
-                result.frontMatter[fullPath] = {
+                markdownFiles.frontMatter[fullPath] = {
                     error: e.message,
                 };
-                result.files.push(fullPath);
+                markdownFiles.files.push(fullPath);
             }
         }
     }
@@ -174,9 +176,9 @@ function searchForMarkdown(paths, result, resultIndex) {
     // If there are remaining paths in the list, keep going.
     const remaining = paths.slice(1, paths.length);
     if (remaining.length > 0) {
-        return searchForMarkdown(remaining, result, resultIndex);
+        return searchForMarkdown(remaining, markdownFiles, indexFiles);
     }
-    return [result, resultIndex];
+    return [markdownFiles, indexFiles];
 }
 
 /**
@@ -248,7 +250,7 @@ function groupLintErrorOutput(result, filesToLint) {
 }
 
 // Build the lint object for the content directory.
-const [filesToLint, indexFilesToLint] = getMarkdownFiles(`../../themes/default/content`);
+const [markdownToLint, indexToLint] = getMarkdownFiles(`../../themes/default/content`);
 
 
 /**
@@ -258,9 +260,9 @@ const [filesToLint, indexFilesToLint] = getMarkdownFiles(`../../themes/default/c
  *
  * See: https://github.com/DavidAnson/markdownlint
  */
-const opts = {
+const markdownFileOpts = {
     // The array of markdown files to lint.
-    files: filesToLint.files,
+    files: markdownToLint.files,
     config: {
         // Allow inline HTML.
         MD033: false,
@@ -316,29 +318,17 @@ const opts = {
     customRules: [],
 };
 
-function indexConfigs(opts) {
-   return  opts.config +
-    {
-        // Multiple top-level headings in the same document
-        MD025: false,
-        // Ordered list item prefix
-        MD029: false,
-        // Spaces inside code span elements
-        MD038: false
-    }
-}
 
 /**
- * The config options for lint markdown files. All rules
- * are enabled by default. The config object let us customize
- * what rules we enforce and how we enforce them.
- *
- * See: https://github.com/DavidAnson/markdownlint
+ * The config options for _index markdown files.
+ * Similar to markdownFileOpts but with a few more rules disabled.
  */
 const indexFileOpts = {
     // The array of markdown files to lint.
-    files: indexFilesToLint.files,
-    config: Object.assign(opts.config,
+    files: indexToLint.files,
+    config: Object.assign(markdownFileOpts.config,
+        // Due to upstream docs not being linted rigorously, we ignore the following linting rules
+        // in addition to the ones for other Markdown files.
         {
             // Multiple top-level headings in the same document
             MD025: false,
@@ -349,18 +339,16 @@ const indexFileOpts = {
         }),
     customRules: [],
 };
-console.log(indexFileOpts)
-
 
 // Lint the markdown files.
-let result = markdownlint.sync(opts);
+let markdownLintResults = markdownlint.sync(markdownFileOpts);
 
 // Lint `_index.md files`
-let lintResult = markdownlint.sync(indexFileOpts)
+let indexLintResults = markdownlint.sync(indexFileOpts)
 
 // Group the lint errors by file.
-let errors = groupLintErrorOutput(result, filesToLint);
-let lintErrors = groupLintErrorOutput(lintResult, indexFilesToLint)
+let errors = groupLintErrorOutput(markdownLintResults, markdownToLint);
+let lintErrors = groupLintErrorOutput(indexLintResults, indexToLint)
 errors = errors.concat(lintErrors)
 
 // Get the total number of errors.
@@ -383,7 +371,8 @@ const errorOutput = errors.map(function (err) {
 if (errors.length > 0) {
     console.log(`
 Markdown Lint Results:
-    - ${filesToLint.files.length} files parsed.
+// TODO: add the other files here!!!! 
+    - ${markdownToLint.files.length + indexToLint.files.length} files parsed.
     - ${errorsCount} errors found.
 
 Errors:
@@ -397,7 +386,7 @@ ${errorOutput}
 
 console.log(`
 Markdown Lint Results:
-    - ${filesToLint.files.length} files parsed.
+    - ${markdownToLint.files.length + indexToLint.files.length} files parsed.
     - ${errorsCount} errors found.
 `);
 process.exit(0);

@@ -351,6 +351,10 @@
     {
       "repoSlug": "wttech/pulumi-aem",
       "schemaFile": "provider/cmd/pulumi-resource-aem/schema.json"
+    },
+    {
+      "repoSlug": "crowdstrike/pulumi-crowdstrike",
+      "schemaFile": "provider/cmd/pulumi-resource-crowdstrike/schema.json"
     }
   ]
 }

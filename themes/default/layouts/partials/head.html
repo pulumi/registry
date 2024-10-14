@@ -368,7 +368,7 @@
                     preferencesDialogContent: preferencesDialogContent,
                     cancelDialogTitle: cancelDialogTitle,
                     cancelDialogContent: cancelDialogContent,
-                    shouldRequireConsent: () => 'true',
+                    shouldRequireConsent: exports.inEU,
                     closeBehavior: exports.inEU() ? "dismiss" : "accept",
                     bannerTextColor: "black",
                     cdnHost: "evs.analytics.pulumi.com",

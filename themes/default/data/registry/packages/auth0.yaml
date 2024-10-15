@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-auth0
 schema_file_path: provider/cmd/pulumi-resource-auth0/schema.json
 title: Auth0
-updated_on: 1728641190
-version: v3.8.0
+updated_on: 1729014823
+version: v3.8.1

@@ -1,0 +1,14 @@
+category: Cloud
+component: false
+description: A Pulumi package for creating and managing xyz cloud resources.
+featured: false
+logo_url: ""
+name: xyz
+native: false
+package_status: ga
+publisher: Pulumi
+repo_url: https://github.com/pulumi/pulumi-xyz
+schema_file_path: provider/cmd/pulumi-resource-xyz/schema.json
+title: xyz
+updated_on: 1728986294
+version: v1.1.25

@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-keycloak
 schema_file_path: provider/cmd/pulumi-resource-keycloak/schema.json
 title: Keycloak
-updated_on: 1726827168
-version: v5.3.4
+updated_on: 1729057395
+version: v5.3.5

@@ -199,7 +199,7 @@ eks.NewCluster(ctx, "cluster", &eks.ClusterArgs{
 		},
 	},
 	AccessEntries: map[string]eks.AccessEntryArgs{
-		"myRole": &eks.AccessEntryArgs{
+		"myRole": eks.AccessEntryArgs{
 			PrincipalArn: pulumi.String("arn:aws:iam::123456789012:role/eks-cluster-role"),
 			Username:     pulumi.String("test-role"),
 			KubernetesGroups: pulumi.StringArray{
@@ -207,7 +207,7 @@ eks.NewCluster(ctx, "cluster", &eks.ClusterArgs{
 			},
 			Type: eks.AccessEntryTypeStandard,
 		},
-		"myUser": &eks.AccessEntryArgs{
+		"myUser": eks.AccessEntryArgs{
 			PrincipalArn: pulumi.String("arn:aws:iam::123456789012:user/test-user"),
 			Username:     pulumi.String("test-user"),
 			KubernetesGroups: pulumi.StringArray{
@@ -353,10 +353,14 @@ eksCluster:
 These map to Access Entries of type `EC2_LINUX`.
 
 The following shows how you'd add access entries for the instance roles:
+
+{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+
+{{% choosable language typescript %}}
+
 ```ts
 const cluster = new eks.Cluster(`${projectName}-cluster`, {
-    ...
-    authenticationMode: eks.AuthenticationMode.API_AND_CONFIG_MAP,
+    authenticationMode: eks.AuthenticationMode.ApiAndConfigMap,
     instanceRoles: [
         ec2IamRole
     ],
@@ -366,9 +370,103 @@ const cluster = new eks.Cluster(`${projectName}-cluster`, {
             type: eks.AccessEntryType.EC2_LINUX
         }
     }
-    ...
 });
 ```
+
+{{% /choosable %}}
+
+{{% choosable language python %}}
+
+```python
+eks.Cluster("cluster",
+    authentication_mode=eks.AuthenticationMode.API_AND_CONFIG_MAP,
+    instance_roles=[ec2_iam_role],
+    access_entries={
+        "myEC2InstanceRole": {
+            "principal_arn": ec2_iam_role.arn,
+            "type": eks.AccessEntryType.EC2_LINUX,
+        },
+    })
+```
+
+{{% /choosable %}}
+
+{{% choosable language go %}}
+
+```go
+authMode := eks.AuthenticationModeApiAndConfigMap
+eks.NewCluster(ctx, "cluster", &eks.ClusterArgs{
+    AuthenticationMode: &authMode,
+    InstanceRoles: iam.RoleArray{
+        ec2IamRole,
+    },
+    AccessEntries: map[string]eks.AccessEntryArgs{
+        "myEC2InstanceRole": eks.AccessEntryArgs{
+            PrincipalArn: ec2IamRole.Arn,
+            Type:         eks.AccessEntryTypeEC2Linux,
+        },
+    },
+})
+```
+
+{{% /choosable %}}
+
+{{% choosable language csharp %}}
+
+```csharp
+new Eks.Cluster("cluster", new()
+{
+    AuthenticationMode = Eks.AuthenticationMode.ApiAndConfigMap,
+    InstanceRoles = new[]
+    {
+        ec2IamRole,
+    },
+    AccessEntries = 
+    {
+        { "myEC2InstanceRole", new Eks.Inputs.AccessEntryArgs
+        {
+            PrincipalArn = ec2IamRole.Arn,
+            Type = Eks.AccessEntryType.EC2Linux,
+        } },
+    },
+});
+```
+
+{{% /choosable %}}
+
+{{% choosable language java %}}
+
+```java
+var eksCluster = new Cluster("cluster", ClusterArgs.builder()
+    .authenticationMode("API_AND_CONFIG_MAP")
+    .instanceRoles(ec2IamRole)
+    .accessEntries(Map.of("myEC2InstanceRole", Map.ofEntries(
+        Map.entry("principalArn", ec2IamRole.arn()),
+        Map.entry("type", "EC2_LINUX")
+    )))
+    .build());
+```
+
+{{% /choosable %}}
+
+{{% choosable language yaml %}}
+
+```yaml
+eksCluster:
+  type: eks:index:Cluster
+  properties:
+    authenticationMode: API_AND_CONFIG_MAP
+    instanceRoles:
+      - ${ec2IamRole}
+    accessEntries:
+      myEC2InstanceRole:
+        principalArn: ${ec2IamRole.arn}
+        type: EC2_LINUX
+```
+
+{{% /choosable %}}
+
+{{< /chooser >}}
 
 ### 3. Confirm all entries of the `aws-auth` ConfigMap have corresponding access entries
 You can either inspect the `aws-auth` ConfigMap in the `kube-system` namespace directly or use the [eksctl](https://eksctl.io/installation/) command line utility to analyze it by running `eksctl get iamidentitymapping --cluster my-cluster`.
@@ -381,7 +479,7 @@ After you've confirmed that all entries of the `aws-auth` ConfigMap have corresp
 
 > Caution! This can cause disruptions if any of the parameters are not represented as Access Entries.
 
-#### 5. Switch the Authentication Mode to `API`
+### 5. Switch the Authentication Mode to `API`
 Now that the authentication is fully driven by access entries you can switch to the `API` authentication mode. This will delete the `aws-auth` ConfigMap.
 
 {{< chooser language "typescript,python,go,csharp,java,yaml" >}}

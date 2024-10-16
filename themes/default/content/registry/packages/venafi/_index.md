@@ -13,6 +13,17 @@ The venafi provider is available as a package in all Pulumi languages:
 * .NET: [`Pulumi.Venafi`](https://www.nuget.org/packages/Pulumi.Venafi)
 * Java: [`com.pulumi/venafi`](https://central.sonatype.com/artifact/com.pulumi/venafi)
 ## Overview
+
+!> We dropped support for RSA PKCS#1 formatted keys for TLS certificates in version 15.0 and also for EC Keys in version
+0.15.4 (you can find out more about this transition in [here](https://github.com/Venafi/vcert/releases/tag/v4.17.0)).
+For backward compatibility during Pulumi state refresh please update to version 0.15.5 or above.
+
+!> As a part for upgrading our provider to SDK version 2, we dropped support for Pulumi version 0.11 and below.
+
+> With the introduction of version 0.18.0 the Venafi
+Pulumi provider now incorporates a new feature related to certificate retirement. When an infrastructure is
+decommissioned, the associated certificate will be automatically retired from the Venafi Platform (TLSPDC and VCP).
+
 [Venafi](https://www.venafi.com) is the enterprise platform for Machine Identity Protection. The Venafi provider
 streamlines the process of acquiring SSL/TLS keys and certificates from Venafi services giving assurance of compliance
 with Information Security policies. It provides resources that allow private keys and certificates to be created as

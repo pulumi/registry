@@ -1,5 +1,6 @@
 config:
   aws:region: us-west-2
+  registry:copilotUrl: https://app.pulumi.com/ai
   registry:websiteLogsBucketName: pulumi-regisry-production-logs
   registry:pathToOriginBucketMetadata: ../origin-bucket-metadata.json
   registry:e2eTestsBucketName: pulumi-api-docs-e2e-test-results-prodution

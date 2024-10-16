@@ -377,7 +377,7 @@ public class App {
 {{< /chooser >}}
 ## Configuration Reference
 
-- `proxy` (Block List) Proxy used by resources and data sources that connect to external endpoints. (see below for nested schema)
+- `proxy` (Block List) Proxy used by resources and functions that connect to external endpoints. (see below for nested schema)
 
 <a id="nestedblock--proxy"></a>
 ### Nested Configuration Reference for `proxy`
@@ -393,8 +393,8 @@ Optional:
 
 When using `ECDSA` with `P224`, all the (computed) attributes
 that have to do with [OpenSSH](https://www.openssh.com/) will have a value of `""` (empty string).
-This applies to different resources and data sources offered by this provider,
-like the `tls.PrivateKey` resource or the `tls.getPublicKey` data source.
+This applies to different resources and functions offered by this provider,
+like the `tls.PrivateKey` resource or the `tls.getPublicKey` function.
 
 The attributes affected are:
 

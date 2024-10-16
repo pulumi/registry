@@ -446,7 +446,7 @@ pulumi preview
 
 In addition to generic `provider` arguments
 (e.g. `alias` and `version`), the following arguments are supported in the Slack
-`provider` block:
+provider configuration:
 
 - `token` - (Mandatory) The Slack token. It must be provided,
   but it can also be sourced from the `SLACK_TOKEN` environment variable.

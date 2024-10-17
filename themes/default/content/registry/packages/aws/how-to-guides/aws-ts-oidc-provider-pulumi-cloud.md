@@ -25,9 +25,9 @@ layout: package
 A Pulumi template to:
 
 - Create AWS resources for AWS OIDC (IdP + Role)
-- Create a new Pulumi Cloud ESC Environment (optional)
+- Create a new Pulumi Cloud ESC Environment
 
-Last update: June 2024
+Last update: September 2024
 
 ## 📋 Pre-requisites
 
@@ -54,7 +54,7 @@ Once copied to your machine, feel free to edit as needed.
 
 ## 🎬 How to run
 
-Note that this templates contains a default value which contains a valid AWS OIDC thumbprint as of June 2024. If this thumbprint becomes invalid, obtain a new OIDC thumbprint. For more information, see [Obtain the thumbprint for an OpenID Connect identity provider](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_create_oidc_verify-thumbprint.html) in the AWS docs.
+This template will pick up the thumbprint from the URL that you set in the stack configuration. By default it will use the OIDC IDP URL for Pulumi Cloud.
 
 To deploy your infrastructure, run:
 

@@ -260,7 +260,7 @@ kubectl drain $NODE_NAME --ignore-daemonsets --delete-emptydir-data
 AWS introduced a new method for granting IAM principals access to Kubernetes resources called [Access Entries](https://docs.aws.amazon.com/eks/latest/userguide/grant-k8s-access.html#authentication-modes). In contrast to the existing approach using the aws-auth ConfigMap, this solely relies on AWS resources for managing Kubernetes auth.  
 Recently the aws-auth ConfigMap has been deprecated in favor of Access Entries.  
 You can start using Access Entries with your cluster by changing the `authenticationMode` to `API`.  
-A step-by-step migration guide can be found [here](https://github.com/pulumi/pulumi-eks/blob/master/docs/authentication-mode-migration.md).
+A step-by-step migration guide can be found [here](https://www.pulumi.com/registry/packages/eks/how-to-guides/access-entries-migration/).
 
 We currently recommend users create all new clusters with the `API` authentication mode.
 More details about this can be found [here](https://docs.aws.amazon.com/eks/latest/userguide/grant-k8s-access.html).

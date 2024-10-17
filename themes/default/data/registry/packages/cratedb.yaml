@@ -10,5 +10,5 @@ publisher: komminarlabs
 repo_url: https://github.com/komminarlabs/pulumi-cratedb
 schema_file_path: provider/cmd/pulumi-resource-cratedb/schema.json
 title: CrateDB
-updated_on: 1728984120
-version: v0.2.1
+updated_on: 1729159430
+version: v0.2.2

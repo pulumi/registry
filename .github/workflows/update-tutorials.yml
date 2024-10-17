@@ -1,4 +1,4 @@
-name: "Scheduled jobs: Update tutorials"
+name: "Scheduled jobs: Update How To Guides from examples repo"
 on:
   schedule:
     - cron:  '0 15 * * *'

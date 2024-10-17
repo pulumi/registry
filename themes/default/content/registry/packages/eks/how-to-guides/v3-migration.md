@@ -11,7 +11,7 @@ There are some breaking changes which are detailed in this document.
 
 The VPC CNI cluster component is now configured as an EKS addon as mentioned in the “New Features” section above. This brings the following changes:
 
-- Removed `enableIpv6` input property. The component automatically configures the IP version now depending on whether the cluster is running in IPv4 or IPv6 mode.  
+- Removed `enableIpv6` input property. The component automatically configures the IP version now, depending on whether the cluster is running in IPv4 or IPv6 mode.
 - Removed `image`, `initImage`, `nodeAgentImage` input properties. The component now automatically selects an image registry in the cluster’s region to pull the images from.
 
 During the update, you'll observe two key changes:
@@ -276,14 +276,12 @@ The Node.js SDK is updated to use state of the art Pulumi tooling, improving sta
 - The capitalization of the `AuthenticationMode` and `AccessEntryType` enum values has been aligned with other providers (e.g. `AuthenticationMode.API` => `AuthenticationMode.Api`). The previous values have been marked as deprecated and now point to their new counterparts.
 
 ### Properties of the components are now outputs instead of plain types
-All properties of components in the Node.js SDK are now wrapped in `Output`. This aligns it with other language SDKs but introduces some breaking changes for optional resource properties.
+All properties of components in the Node.js SDK are now wrapped in `Output`. This aligns it with other language SDKs but introduces breaking changes for optional resource properties.
 Accessing those optional resource outputs now requires using `apply`.
 
-To work around this we've exposed the most commonly used resource properties at the top level of the components. This change allows for easier access without requiring to use `apply`.
-
-The following sections will offer an overview off the new top-level properties. Notable cases where you need to change your program are:
-- Creating an IRSA based IAM role now requires you to use `apply` for accessing the cluster's OIDC provider ARN and URL. Alternatively you can use the new top level properties `oidcProviderArn` and `oidcIssuer`. An example of how this works can be found [here](https://github.com/pulumi/pulumi-eks/blob/release-3.x.x/examples/oidc-iam-sa/index.ts).
-- Accessing a cluster's `clusterSecurityGroup`, `nodeSecurityGroup`, and `eksClusterIngressRule` requires you to use `apply`. Alternatively you can use the new top-level properties. The `NodeGroup` and `NodeGroupV2` components were updated to also take those new top-level properties as inputs.
+We added convenient access properties for frequently used outputs:
+- Creating an IRSA based IAM role now requires using `apply` for accessing the cluster's OIDC provider ARN and URL. Alternatively, use the new top level properties `oidcProviderArn` and `oidcIssuer`. An example can be found [here](https://github.com/pulumi/pulumi-eks/blob/release-3.x.x/examples/oidc-iam-sa/index.ts).
+- Accessing a cluster's `clusterSecurityGroup`, `nodeSecurityGroup`, and `eksClusterIngressRule` requires using `apply`. Alternatively, use the new top-level properties. The `NodeGroup` and `NodeGroupV2` components were updated to also take those new top-level properties as inputs.
   - Use the following top-level properties of the `Cluster` component:
     - `clusterSecurityGroupId` instead of `cluster.clusterSecurityGroup.id`
     - `nodeSecurityGroupId` instead of `cluster.nodeSecurityGroup.id`
@@ -325,13 +323,13 @@ The `NodeGroup` and `NodeGroupV2` components now accept inputs for the following
 If you are using Go you will need to adjust your program to handle those types being inputs.
 
 #### Security group and ingress rule inputs
-We've updated the `NodeGroup` and `NodeGroupV2` components to allow passing in `nodeSecurityGroup` and `clusterIngressRule` by their IDs. You can now use `nodeSecurityGroupId` and `clusterIngressRuleId` as input properties.
+We have updated the `NodeGroup` and `NodeGroupV2` components to allow passing in `nodeSecurityGroup` and `clusterIngressRule` by their IDs. You can now use `nodeSecurityGroupId` and `clusterIngressRuleId` as input properties.
 
-Because of this change, the `nodeSecurityGroup` output property is now optional. To work around this, we've added a required `nodeSecurityGroupId` output property you can use instead. Use `nodegroup.nodeSecurityGroupId` instead of `nodegroup.nodeSecurityGroup.id`.
+Because of this change, the `nodeSecurityGroup` output property is now optional. To work around this, we have added a required `nodeSecurityGroupId` output property you can use instead. Use `nodegroup.nodeSecurityGroupId` instead of `nodegroup.nodeSecurityGroup.id`.
 
 ### Default Security Groups can now be disabled
 If you do not need the default cluster and node security groups you can disable those now
-with the `skipDefaultSecurityGroups` flag. Those security groups will not be created when setting that flag to true.
+with the `skipDefaultSecurityGroups` flag. Those security groups will not be created when setting this flag to true.
 
 Because of this change, the `clusterSecurityGroup`, `nodeSecurityGroup` and `clusterIngressRule` properties are optional now. If you're using those outputs you'll need to update your code accordingly.
 

@@ -2,7 +2,7 @@ category: Database
 component: false
 description: A Pulumi package for creating and managing CrateDB resources.
 featured: false
-logo_url: https://avatars.githubusercontent.com/u/5713248?s=200&v=4
+logo_url: https://avatars.githubusercontent.com/u/4048232?s=48&v=4
 name: cratedb
 native: false
 package_status: public_preview
@@ -10,5 +10,5 @@ publisher: komminarlabs
 repo_url: https://github.com/komminarlabs/pulumi-cratedb
 schema_file_path: provider/cmd/pulumi-resource-cratedb/schema.json
 title: CrateDB
-updated_on: 1729159430
-version: v0.2.2
+updated_on: 1729239983
+version: v0.2.3

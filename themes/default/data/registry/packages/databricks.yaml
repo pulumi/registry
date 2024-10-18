@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-databricks
 schema_file_path: provider/cmd/pulumi-resource-databricks/schema.json
 title: Databricks
-updated_on: 1728386684
-version: v1.51.0
+updated_on: 1729056504
+version: v1.51.1

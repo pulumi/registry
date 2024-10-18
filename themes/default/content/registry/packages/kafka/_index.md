@@ -1,103 +1,38 @@
 ---
-title: Kafka
-meta_desc: Provides an overview of the Kafka Provider for Pulumi.
+title: Kafka Provider
+meta_desc: Provides an overview on how to configure the Pulumi Kafka provider.
 layout: package
 ---
+## Installation
 
-The Kafka provider for Pulumi can be used to provision any of the resources available for Kafka.
-The Kafka provider must be configured with credentials to deploy and update resources in Kafka.
+The kafka provider is available as a package in all Pulumi languages:
 
-## Example
+* JavaScript/TypeScript: [`@pulumi/kafka`](https://www.npmjs.com/package/@pulumi/kafka)
+* Python: [`pulumi-kafka`](https://pypi.org/project/pulumi-kafka/)
+* Go: [`github.com/pulumi/pulumi-kafka/sdk/v3/go/kafka`](https://github.com/pulumi/pulumi-kafka)
+* .NET: [`Pulumi.Kafka`](https://www.nuget.org/packages/Pulumi.Kafka)
+* Java: [`com.pulumi/kafka`](https://central.sonatype.com/artifact/com.pulumi/kafka)
+## Configuration Reference
+### Required
 
-{{< chooser language "javascript,typescript,python,go,csharp" >}}
+- `bootstrapServers` (List of String) A list of kafka brokers
 
-{{% choosable language javascript %}}
-
-```javascript
-const kafka = require("@pulumi/kafka")
-
-const topic = new kafka.Topic("topic", {
-  name: "sample-topic",
-  replicationFactor: 1,
-  partitions: 4,
-});
-```
-
-{{% /choosable %}}
-{{% choosable language typescript %}}
-
-```typescript
-import * as kafka from "@pulumi/kafka";
-
-const topic = new kafka.Topic("topic", {
-  name: "sample-topic",
-  replicationFactor: 1,
-  partitions: 4,
-});
-```
-
-{{% /choosable %}}
-{{% choosable language python %}}
-
-```python
-import pulumi_kafka as kafka
-
-topic = kafka.Topic("topic",
-  name="sample-topic",
-  replication_factor=1,
-  partitions=4,
-)
-```
-
-{{% /choosable %}}
-{{% choosable language go %}}
-
-```go
-import (
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	kafka "github.com/pulumi/pulumi-kafka/sdk/v3/go/kafka"
-)
-
-func main() {
-	pulumi.Run(func(ctx *pulumi.Context) error {
-		topic, err := kafka.NewTopic(ctx, "topic", &kafka.TopicArgs{
-			Name:              pulumi.String("sample-topic"),
-			ReplicationFactor: pulumi.Int(1),
-			Partitions:        pulumi.Int(4),
-		})
-		if err != nil {
-			return err
-		}
-
-		return nil
-	})
-}
-
-```
-
-{{% /choosable %}}
-{{% choosable language csharp %}}
-
-```csharp
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Pulumi;
-using Pulumi.Kafka;
-
-class Program
-{
-    static Task Main() =>
-        Deployment.Run(() => {
-            var topic = new Topic("topic", new TopicArgs
-            {
-                Name = "sample-topic",
-                ReplicationFactor = 1,
-                Partitions = 4,
-            });
-        });
-}
-```
-
-{{% /choosable %}}
-
-{{< /chooser >}}
+- `caCert` (String) CA certificate file to validate the server's certificate.
+- `caCertFile` (String, Deprecated) Path to a CA certificate file to validate the server's certificate.
+- `clientCert` (String) The client certificate.
+- `clientCertFile` (String, Deprecated) Path to a file containing the client certificate.
+- `clientKey` (String) The private key that the certificate was issued for.
+- `clientKeyFile` (String, Deprecated) Path to a file containing the private key that the certificate was issued for.
+- `clientKeyPassphrase` (String) The passphrase for the private key that the certificate was issued for.
+- `kafkaVersion` (String) The version of Kafka protocol to use in `$MAJOR.$MINOR.$PATCH` format. Some features may not be available on older versions. Default is 2.7.0.
+- `saslAwsCredsDebug` (Boolean) Set this to true to turn AWS credentials debug.
+- `saslAwsProfile` (String) AWS profile name to use
+- `saslAwsRegion` (String) AWS region where MSK is deployed.
+- `saslAwsRoleArn` (String) Arn of an AWS IAM role to assume
+- `saslMechanism` (String) SASL mechanism, can be plain, scram-sha512, scram-sha256, aws-iam
+- `saslPassword` (String) Password for SASL authentication.
+- `saslTokenUrl` (String) The url to retrieve oauth2 tokens from, when using sasl mechanism oauthbearer
+- `saslUsername` (String) Username for SASL authentication.
+- `skipTlsVerify` (Boolean) Set this to true only if the target Kafka server is an insecure development instance.
+- `timeout` (Number) Timeout in seconds
+- `tlsEnabled` (Boolean) Enable communication with the Kafka Cluster over TLS.

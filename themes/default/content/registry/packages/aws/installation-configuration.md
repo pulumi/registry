@@ -365,7 +365,6 @@ Use `pulumi config set aws:<option>` or pass options to the [constructor of `new
 | `secretKey` |  Optional | The secret key for API operations. You can retrieve this from the 'Security & Credentials' section of the AWS console. |
 | `sharedCredentialsFile` | Optional | The path to the shared credentials file. If not set this defaults to `~/.aws/credentials`. |
 | `skipCredentialsValidation` | Optional | Skip the credentials validation via STS API. Used for AWS API implementations that do not have STS available/implemented. |
-| `skipGetEc2Platforms` | Optional | Skip getting the supported EC2 platforms. Used by users that don't have `ec2:DescribeAccountAttributes` permissions. |
 | `skipMetadataApiCheck` | Optional | Skip the AWS Metadata API check. Useful for AWS API implementations that do not have a metadata API endpoint. Setting to true prevents Pulumi from authenticating via the Metadata API. You may need to use other authentication methods like static credentials, configuration variables, or environment variables. |
 | `skipRegionValidation` | Optional | Skip static validation of region name. Used by users of alternative AWS-like APIs or users w/ access to regions that are not public (yet). |
 | `skipRequestingAccountId` | Optional | Skip requesting the account ID. Used for AWS API implementations that do not have IAM/STS API and/or metadata API. |

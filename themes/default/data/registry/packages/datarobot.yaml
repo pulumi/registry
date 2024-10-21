@@ -5,10 +5,10 @@ featured: false
 logo_url: https://raw.githubusercontent.com/datarobot-community/pulumi-datarobot/main/assets/datarobot-logo.png
 name: datarobot
 native: false
-package_status: public_preview
+package_status: ga
 publisher: DataRobot, Inc.
 repo_url: https://github.com/datarobot-community/pulumi-datarobot
 schema_file_path: provider/cmd/pulumi-resource-datarobot/schema.json
 title: DataRobot
-updated_on: 1728950191
-version: v0.2.7
+updated_on: 1729537535
+version: v1.0.1

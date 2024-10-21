@@ -16,7 +16,7 @@ The okta provider is available as a package in all Pulumi languages:
 
 The Okta provider is used to interact with the resources supported by Okta. The provider needs to be configured with the proper credentials before it can be used.
 
-Use the navigation to the left to read about the available resources and data sources.
+Use the navigation to the left to read about the available resources and functions.
 
 In case the provider configuration is still using old `"oktadeveloper/okta"` source, please change it to `"okta/okta"`. Okta no longer supports `"oktadeveloper/okta"`.
 ## Example Usage
@@ -158,7 +158,7 @@ config:
 {{% /choosable %}}
 {{< /chooser >}}
 
-For the resources and data sources examples, please check the examples directory.
+For the resources and functions examples, please check the examples directory.
 ## Authentication
 
 The Okta provider offers a flexible means of providing credentials for
@@ -264,7 +264,7 @@ and applies to org level operations. This is a legacy authorization scheme.
 In addition to generic `provider`
 arguments (e.g.
 `alias` and `version`), the following arguments are supported in the Okta
-`provider` block:
+provider configuration:
 
 - `orgName` - (Optional) This is the org name of your Okta account, for example `dev-123456.oktapreview.com` would have an org name of `dev-123456`. It must be provided, but it can also be sourced from the `OKTA_ORG_NAME` environment variable.
 

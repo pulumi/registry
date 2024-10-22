@@ -85,7 +85,7 @@ let size = "t2.micro";     // t2.micro is available in the AWS free tier
 let ami = aws.ec2.getAmiOutput({
     filters: [{
       name: "name",
-      values: ["amzn-ami-hvm-*"],
+      values: ["amzn2-ami-hvm-*"],
     }],
     owners: ["137112412989"], // This owner ID is Amazon
     mostRecent: true,
@@ -118,7 +118,7 @@ const size = "t2.micro";     // t2.micro is available in the AWS free tier
 const ami = aws.ec2.getAmiOutput({
     filters: [{
         name: "name",
-        values: ["amzn-ami-hvm-*"],
+        values: ["amzn2-ami-hvm-*"],
     }],
     owners: ["137112412989"], // This owner ID is Amazon
     mostRecent: true,
@@ -150,7 +150,7 @@ import pulumi_aws as aws
 size = 't2.micro'
 ami = aws.ec2.get_ami(most_recent="true",
                   owners=["137112412989"],
-                  filters=[{"name":"name","values":["amzn-ami-hvm-*"]}])
+                  filters=[{"name":"name","values":["amzn2-ami-hvm-*"]}])
 
 group = aws.ec2.SecurityGroup('webserver-secgrp',
     description='Enable HTTP access',
@@ -186,7 +186,7 @@ return await Deployment.RunAsync(() =>
             new GetAmiFilterInputArgs
             {
                 Name = "name",
-                Values =  { "amzn-ami-hvm-*" },
+                Values =  { "amzn2-ami-hvm-*" },
             },
         },
     });

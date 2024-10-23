@@ -10,5 +10,5 @@ publisher: Piers Karsenbarg
 repo_url: https://github.com/pierskarsenbarg/pulumi-sdm
 schema_file_path: provider/cmd/pulumi-resource-sdm/schema.json
 title: StrongDM
-updated_on: 1729070856
-version: v1.19.0
+updated_on: 1729694729
+version: v1.20.0

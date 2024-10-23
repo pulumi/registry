@@ -10,5 +10,5 @@ publisher: Theo Gravity
 repo_url: https://github.com/theogravity/pulumi-fusionauth
 schema_file_path: provider/cmd/pulumi-resource-fusionauth/schema.json
 title: FusionAuth
-updated_on: 1720567497
-version: v5.0.4
+updated_on: 1729631952
+version: v5.1.0

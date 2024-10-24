@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-vault
 schema_file_path: provider/cmd/pulumi-resource-vault/schema.json
 title: HashiCorp Vault
-updated_on: 1728636480
-version: v6.3.1
+updated_on: 1729803197
+version: v6.3.2

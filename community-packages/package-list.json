@@ -38,7 +38,7 @@
     },
     {
       "repoSlug": "pulumi/pulumi-kubernetes-cert-manager",
-      "schemaFile": "schema.json"
+      "schemaFile": "provider/cmd/pulumi-resource-kubernetes-cert-manager/schema.json"
     },
     {
       "repoSlug": "pulumi/pulumi-kubernetes-coredns",

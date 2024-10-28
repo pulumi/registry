@@ -1,7 +1,7 @@
 ---
 title: Unifi
 meta_desc: Provides an overview of the Unifi Provider for Pulumi.
-layout: package
+layout: overview
 ---
 
 The Unifi provider for Pulumi can be used to provision any of the network resources available in a Unifi based network controlled by a Unifi controller.

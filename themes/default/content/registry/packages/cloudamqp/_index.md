@@ -12,6 +12,7 @@ The cloudamqp provider is available as a package in all Pulumi languages:
 * Go: [`github.com/pulumi/pulumi-cloudamqp/sdk/v3/go/cloudamqp`](https://github.com/pulumi/pulumi-cloudamqp)
 * .NET: [`Pulumi.Cloudamqp`](https://www.nuget.org/packages/Pulumi.Cloudamqp)
 * Java: [`com.pulumi/cloudamqp`](https://central.sonatype.com/artifact/com.pulumi/cloudamqp)
+## Overview
 
 The CloudAMQP provider is used to interact with CloudAMQP organization resources.
 

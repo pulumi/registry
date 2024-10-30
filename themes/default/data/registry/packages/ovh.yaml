@@ -5,10 +5,10 @@ featured: false
 logo_url: ""
 name: ovh
 native: false
-package_status: public_preview
+package_status: ga
 publisher: OVHcloud
 repo_url: https://github.com/ovh/pulumi-ovh
 schema_file_path: provider/cmd/pulumi-resource-ovh/schema.json
 title: OVHCloud
-updated_on: 1727456594
-version: v0.50.1
+updated_on: 1730299429
+version: v1.0.0

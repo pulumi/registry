@@ -9,9 +9,10 @@ The artifactory provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/artifactory`](https://www.npmjs.com/package/@pulumi/artifactory)
 * Python: [`pulumi-artifactory`](https://pypi.org/project/pulumi-artifactory/)
-* Go: [`github.com/pulumi/pulumi-artifactory/sdk/v7/go/artifactory`](https://github.com/pulumi/pulumi-artifactory)
+* Go: [`github.com/pulumi/pulumi-artifactory/sdk/v8/go/artifactory`](https://github.com/pulumi/pulumi-artifactory)
 * .NET: [`Pulumi.Artifactory`](https://www.nuget.org/packages/Pulumi.Artifactory)
 * Java: [`com.pulumi/artifactory`](https://central.sonatype.com/artifact/com.pulumi/artifactory)
+## Overview
 
 The [Artifactory](https://jfrog.com/artifactory/) provider is used to interact with the resources supported by Artifactory. The provider needs to be configured with the proper credentials before it can be used.
 
@@ -126,7 +127,7 @@ config:
 package main
 
 import (
-	"github.com/pulumi/pulumi-artifactory/sdk/v7/go/artifactory"
+	"github.com/pulumi/pulumi-artifactory/sdk/v8/go/artifactory"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -221,7 +222,7 @@ The Artifactory provider supports two ways of authentication. The following meth
 * API Key (deprecated)
 ### Access Token
 
-Artifactory access tokens may be used via the Authorization header by providing the `accessToken` attribute to the provider block. Getting this value from the environment is supported with `JFROG_ACCESS_TOKEN` or `ARTIFACTORY_ACCESS_TOKEN` variables.
+Artifactory access tokens may be used via the Authorization header by providing the `accessToken` attribute to the provider configuration. Getting this value from the environment is supported with `JFROG_ACCESS_TOKEN` or `ARTIFACTORY_ACCESS_TOKEN` variables.
 
 Usage:
 {{< chooser language "typescript,python,go,csharp,java,yaml" >}}
@@ -316,7 +317,7 @@ config:
 
 ~>If `accessToken` attribute, `JFROG_ACCESS_TOKEN` or `ARTIFACTORY_ACCESS_TOKEN` environment variable is set, the provider will ignore `apiKey` attribute.
 
-Artifactory API keys may be used via the `X-JFrog-Art-Api` header by providing the `apiKey` attribute in the provider block.
+Artifactory API keys may be used via the `X-JFrog-Art-Api` header by providing the `apiKey` attribute in the provider configuration.
 
 Usage:
 {{< chooser language "typescript,python,go,csharp,java,yaml" >}}

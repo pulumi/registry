@@ -11,5 +11,5 @@ publisher: pulumiverse
 repo_url: https://github.com/pulumiverse/pulumi-cockroach
 schema_file_path: provider/cmd/pulumi-resource-cockroach/schema.json
 title: CockroachDB
-updated_on: 1730280266
-version: v0.4.0
+updated_on: 1730393443
+version: v0.5.0

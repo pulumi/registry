@@ -10,5 +10,5 @@ publisher: pulumiverse
 repo_url: https://github.com/pulumiverse/pulumi-scaleway
 schema_file_path: provider/cmd/pulumi-resource-scaleway/schema.json
 title: Scaleway
-updated_on: 1730280133
-version: v1.18.0
+updated_on: 1730362099
+version: v1.19.0

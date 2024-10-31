@@ -343,6 +343,8 @@ const indexFileOpts = {
         // Due to upstream docs not being linted rigorously, we ignore the following linting rules
         // in addition to the ones for other Markdown files.
         {
+            // Heading levels should only increment by one level at a time
+            MD001:false,
             // Multiple top-level headings in the same document
             MD025: false,
             // Ordered list item prefix

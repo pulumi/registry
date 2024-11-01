@@ -42,9 +42,6 @@ resourcedocsgen docs registry --commitSha "${REGISTRY_COMMIT}" \
     --basePackageTreeJSONOutDir "themes/default/static/registry/packages/navs" \
     --logtostderr
 
-# Apply fixes. See script for details.
-node ./scripts/apply-fixes.js
-
 printf "Running Hugo...\n\n"
 
 case ${1} in

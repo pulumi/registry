@@ -40,15 +40,10 @@ Once the community member has submitted the PR to add the provider to the regist
 
 ## About this repository
 
-This repository is a [Hugo module](https://gohugo.io/hugo-modules/) that doubles as a development server to make it easier to work on the pages that make up Pulumi Registry. It contains most of the Hugo `content` and `layouts` files comprising what you see at https://pulumi.com/registry -- but not everything. A few things you won't find in this repository include:
+This repository is a [Hugo module](https://gohugo.io/hugo-modules/) that doubles as a development server to make it easier to work on the pages that make up Pulumi Registry. It contains all of the Hugo `content` and `layouts` files, JavaScript, CSS, and web components. comprising what you see at https://pulumi.com/registry
 
-* JavaScript, CSS, and web component - We build the JavaScript and CSS bundles that power the Pulumi Registry here, under the `themes/default/theme` directory. If you are making styling changes along-side content changes, use `make serve-all` to enable hot reloading of both the pages and CSS/JS assets.
+We build the JavaScript and CSS bundles that power the Pulumi Registry here, under the `themes/default/theme` directory. If you are making styling changes along-side content changes, use `make serve-all` to enable hot reloading of both the pages and CSS/JS assets.
 
-* Layouts and content for pulumi.com marketing pages, CLI docs, the blog, etc., all of which are managed in the [pulumi/pulumi-hugo](https://github.com/pulumi/pulumi-hugo) repository.
-
-    <img src="https://user-images.githubusercontent.com/274700/139131567-b8e3c43d-6407-4638-ae4e-4ad3f3794d89.png" width="60%">
-
-You can, however, develop locally with this repository using content from these other Hugo-module repositories, either by loading their content remotely or pointing your Hugo development server to local clones of them. More on this below.
 
 ## Using this repository
 
@@ -56,8 +51,8 @@ You can, however, develop locally with this repository using content from these 
 
 We build the Pulumi website statically with Hugo, manage our Node.js dependencies with Yarn, and write most of our documentation in Markdown. Below is a list of the tools you'll need to run the website locally:
 
-* [Go](https://golang.org/) (>= 1.15)
-* [Hugo](https://gohugo.io) (>= 0.92)
+* [Go](https://golang.org/) (>= 1.21)
+* [Hugo](https://gohugo.io) (>= 0.126.0)
 * [Node.js](https://nodejs.org/en/) (>= 18)
 * [Yarn](https://classic.yarnpkg.com/en/) (1.x)
 
@@ -84,44 +79,7 @@ Once you've run the above successfully, you're ready to run the development serv
 make serve
 ```
 
-When you do this, Hugo will load the latest versions of:
-
-* The [pulumi/pulumi-hugo](https://github.com/pulumi/pulumi-hugo) module, which contains our marketing pages, some docs content, the blog, and our CSS and JavaScript bundles (web components, styles, etc.).
-
-... and then start a development server at http://localhost:1313. Any changes you make to the content, layouts, or other [Hugo component folders](https://gohugo.io/getting-started/directory-structure/) should be reloaded automatically.
-
-### Developing alongside another Hugo module
-
-If you want to develop another module alongside this one -- e.g., add a new web component to use in the Registry, or to make changes to Registry-specific CSS -- you can point your development server to a local clone of [pulumi/pulumi-hugo](https://github.com/pulumi/pulumi-hugo). To do that, first clone the repository, then add a `replace` line to the `go.mod` file at the root of _this_ repository to override the existing reference to `pulumi/pulumi-hugo` temporarily. For instance:
-
-```
-module github.com/pulumi/pulumi-hugo
-
-go 1.16
-
-require (
-	github.com/pulumi/pulumi-hugo v0.0.0-20211015193555-271ef1f67093 // indirect
-)
-
-// Add this line to tell Hugo to use your local clone of pulumi/pulumi-hugo.
-replace github.com/pulumi/pulumi-hugo => ../pulumi-hugo
-```
-
-**Tip:** If you run `make serve-assets` from the root of pulumi/pulumi-hugo (in another terminal tab) while also running `make serve` in this one, the changes you make to the CSS and JavaScript source files in pulumi/pulumi-hugo will be recompiled and reloaded in the browser automatically.
-
-Be sure to remove the `replace` line before you commit.
-
-### Temporarily pulling in content from pulumi/docs
-
-If the change you're working on requires content from pulumi/docs -- e.g., the aforementioned how-to guides -- you may
-want to be able to see some of that content as you develop. To do that, just copy the files you need from the
-[`content` folder of pulumi/docs](https://github.com/pulumi/docs/tree/master/content) into the `content` folder of this
-repository, remembering to remove those files before you commit. For example:
-
-```
-# Copy the AWS how-to guides from a local/sibling clone of pulumi/docs.
-cp ../docs/content/registry/packages/aws/how-to-guides ./themes/default/content/registry/packages/aws/
-```
+Optionally, use `make serve-all` to enable hot reloading of both the pages and CSS/JS assets.
 
 #### Generating API docs for packages
 
@@ -144,15 +102,8 @@ make lint
 
 When you're ready to submit a pull request, make sure you've removed anything that doesn't seem to belong (`go.mod`/`go.sum` changes, content from pulumi/docs, etc.) and submit the PR in the usual way.
 
-If you're doing work in another repository that's associated with the changes in your PR, you can "pin" your PR branch to another module repository branch by pointing Hugo to that branch. To do that, use `hugo mod get` and pass a reference to the target branch:
+If you would like to generate API docs for packages beyond AWS and Aiven (the docs available in PR previews by default), add the package name you would like docs for [in this file](https://github.com/pulumi/registry/blob/master/scripts/ci/build.sh#L5). Be sure to remove these changes before merging. 
 
-```
-hugo mod get github.com/pulumi/pulumi-hugo@my-special-branch
-```
+> Note: It currently requires a machine with a minimum of 32 GB of memory (64 GB preferred) to build the registry in its entirety including _all_ pacakges.
 
-This will modify `go.mod` and `go.sum` accordingly and result in a PR preview that incorporates your changes from the other branch. Just be sure to remove these changes before you're ready to merge.
-
-If you would like to generate API docs for packages beyond AWS and Aiven (the docs available in PR previews by default), add the package name you would like docs for [in this file](https://github.com/pulumi/registry/blob/master/scripts/ci/build.sh#L5). Be sure to remove these changes before merging.
-
-Once your PR is approved and merged into the default branch of this repository, an automated process that runs on [pulumi/docs](https://github.com/pulumi/docs) will detect your changes and produce a PR and integration build containing content from all other Hugo modules. Once that PR build completes and is approved and merged into pulumi/docs, your changes will be deployed to https://pulumi.com.
-
+Once your PR is approved and merged into the default branch of this repository, it will be deployed to the registry site (https://pulumi.com/registry).

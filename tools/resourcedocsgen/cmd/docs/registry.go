@@ -4,11 +4,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"net/http"
 	"net/url"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"strings"
 
@@ -137,10 +135,8 @@ func genResourceDocsForAllRegistryPackages(registryRepoPath, baseDocsOutDir, bas
 }
 
 func resourceDocsFromRegistryCmd() *cobra.Command {
-	var branch string
 	var baseDocsOutDir string
 	var basePackageTreeJSONOutDir string
-	var commitSha string
 
 	cmd := &cobra.Command{
 		Use:   "registry [pkgName]",
@@ -148,35 +144,14 @@ func resourceDocsFromRegistryCmd() *cobra.Command {
 		Long: "Generate resource docs for all packages in the registry or specific packages. " +
 			"Pass a package name in the registry as an optional arg to generate docs only for that package.",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			tempDir, err := ioutil.TempDir("", "")
+			registryDir, err := os.Getwd()
 			if err != nil {
-				return errors.Wrap(err, "creating temp dir for registry repo")
-			}
-
-			defer os.RemoveAll(tempDir)
-
-			glog.Infoln("Cloning the registry repo @", branch)
-			gitCmd := exec.Command("git", "clone", "-b", branch, registryRepo, tempDir)
-			gitCmd.Stdout = os.Stdout
-			if err := gitCmd.Run(); err != nil {
-				return errors.Wrap(err, "cloning the registry repo")
-			}
-
-			glog.Infoln("Cloned the repo successfully!")
-
-			if commitSha != "" {
-				glog.Infoln("Resetting registry repo HEAD to", commitSha)
-				gitCmd = exec.Command("git", "reset", "--hard", commitSha)
-				gitCmd.Dir = tempDir
-				gitCmd.Stdout = os.Stdout
-				if err := gitCmd.Run(); err != nil {
-					return errors.Wrap(err, "resetting the registry repo HEAD")
-				}
+				return errors.Wrap(err, "finding the cwd")
 			}
 
 			if len(args) > 0 {
 				glog.Infoln("Generating docs for a single package:", args[0])
-				registryPackagesPath := getRegistryPackagesPath(tempDir)
+				registryPackagesPath := getRegistryPackagesPath(registryDir)
 				pkgName := args[0]
 				metadataFilePath := filepath.Join(registryPackagesPath, fmt.Sprintf("%s.yaml", pkgName))
 				b, err := os.ReadFile(metadataFilePath)
@@ -197,7 +172,7 @@ func resourceDocsFromRegistryCmd() *cobra.Command {
 				}
 			} else {
 				glog.Infoln("Generating docs for all packages in the registry...")
-				err := genResourceDocsForAllRegistryPackages(tempDir, baseDocsOutDir, basePackageTreeJSONOutDir)
+				err := genResourceDocsForAllRegistryPackages(registryDir, baseDocsOutDir, basePackageTreeJSONOutDir)
 				if err != nil {
 					return errors.Wrap(err, "generating docs for all packages from registry metadata")
 				}
@@ -209,8 +184,6 @@ func resourceDocsFromRegistryCmd() *cobra.Command {
 	}
 
 	cmd.Flags().StringVar(&baseDocsOutDir, "baseDocsOutDir", "../../content/registry/packages", "The directory path to where the docs will be written to")
-	cmd.Flags().StringVarP(&branch, "branch", "b", "master", "The branch at which the registry repo will be checked out. If the commitSha flag is also passed, the commit must be valid for the specified branch.")
-	cmd.Flags().StringVar(&commitSha, "commitSha", "", "The commit SHA to point the registry repo to. If the branch is also specified, this hash should be vaild for that branch.")
 	cmd.Flags().StringVar(&basePackageTreeJSONOutDir, "basePackageTreeJSONOutDir", "../../static/registry/packages/navs", "The directory path to write the package tree JSON file to")
 
 	return cmd

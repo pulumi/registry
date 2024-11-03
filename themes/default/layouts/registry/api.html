@@ -98,8 +98,9 @@
                             {{ partial "registry/packages/how-to-language-index" (dict "package" . "language" "cs") }}
                             </pulumi-choosable>
                         {{ end }}
-                    {{ else }}
-                        {{ .Content }}
+                            {{ else }}
+                        {{ $opts := dict "display" "block" }}
+                        {{ .RenderShortcodes | .RenderString $opts }}
                     {{ end }}
                 </section>
             </div>

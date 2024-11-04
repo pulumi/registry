@@ -1,21 +1,33 @@
+// Copyright 2024, Pulumi Corporation.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 package cmd
 
 import (
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
+	"net/http"
+	"strings"
 
 	"github.com/ghodss/yaml"
 	"github.com/pkg/errors"
 	"github.com/pulumi/registry/tools/resourcedocsgen/pkg"
 	"github.com/spf13/cobra"
-
-	"io/ioutil"
-	"net/http"
-	"strings"
 )
 
 func CheckVersion() *cobra.Command {
-
 	var repoSlug string
 	cmd := &cobra.Command{
 		Use:   "pkgversion",
@@ -28,7 +40,6 @@ The version in the registry is defined in the YAML file at:
 
     https://raw.githubusercontent.com/pulumi/registry/master/themes/default/data/registry/packages/${PKG#pulumi/pulumi-}.yaml`,
 		RunE: func(cmd *cobra.Command, args []string) error {
-
 			if strings.Contains(repoSlug, "https") || strings.Contains(repoSlug, "github.com") {
 				return errors.New(fmt.Sprintf("Expected repoSlug to be in the format of `owner/repo`"+
 					" but got %q", repoSlug))
@@ -70,7 +81,6 @@ The version in the registry is defined in the YAML file at:
 func getLatestVersion(repoSlug string) (string, error) {
 	path := fmt.Sprintf("/repos/%s/releases/latest", repoSlug)
 	resp, err := pkg.GetGitHubAPI(path)
-
 	if err != nil {
 		return "", errors.Wrap(err, fmt.Sprintf("getting latest version from https://api.github.com%s", path))
 	}
@@ -82,7 +92,6 @@ func getLatestVersion(repoSlug string) (string, error) {
 
 	var tag pkg.GitHubTag
 	err = json.NewDecoder(resp.Body).Decode(&tag)
-
 	if err != nil {
 		return "", errors.Wrap(err, "failure reading contents of latest tag")
 	}

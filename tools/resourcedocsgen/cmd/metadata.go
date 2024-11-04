@@ -1,3 +1,17 @@
+// Copyright 2024, Pulumi Corporation.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 package cmd
 
 import (
@@ -47,7 +61,6 @@ func PackageMetadataCmd() *cobra.Command {
 		Use:   "metadata <args>",
 		Short: "Generate package metadata from Pulumi schema",
 		RunE: func(cmd *cobra.Command, args []string) error {
-
 			if strings.Contains(repoSlug, "https") || strings.Contains(repoSlug, "github.com") {
 				return errors.New(fmt.Sprintf("Expected repoSlug to be in the format of `owner/repo`"+
 					" but got %q", repoSlug))
@@ -297,8 +310,8 @@ func readRemoteFile(url, repoOwner string) ([]byte, error) {
 	defer resp.Body.Close()
 	if resp.StatusCode < 200 || resp.StatusCode > 299 {
 		// For pulumi repos, we have hard coded top-level config files in the registry.
-		//To avoid overwriting them prematurely while we migrate, we default to returning nil, which will allow the
-		//registry to fall back on top-level config files already in existence since we won't write empty content.
+		// To avoid overwriting them prematurely while we migrate, we default to returning nil, which will allow the
+		// registry to fall back on top-level config files already in existence since we won't write empty content.
 		if repoOwner == "pulumi" {
 			return nil, nil
 		}

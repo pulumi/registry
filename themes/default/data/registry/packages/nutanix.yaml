@@ -10,5 +10,5 @@ publisher: Piers Karsenbarg
 repo_url: https://github.com/pierskarsenbarg/pulumi-nutanix
 schema_file_path: provider/cmd/pulumi-resource-nutanix/schema.json
 title: Nutanix
-updated_on: 1729698236
-version: v0.4.0
+updated_on: 1730712236
+version: v0.5.0

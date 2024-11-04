@@ -75,7 +75,7 @@ $ export AWS_SECRET_ACCESS_KEY=<YOUR_SECRET_ACCESS_KEY>
 You may alternatively set the AWS region in your `Pulumi.<stack-name>.yaml` file:
 
 ```bash
-$ pulumi config set aws:region <your-region> # e.g.`ap-south-1`
+$ pulumi config set aws-native:region <your-region> # e.g.`ap-south-1`
 ```
 
 ### Create a shared credentials file
@@ -155,10 +155,10 @@ You can specify which profile to use with Pulumi through one of the following me
     $ export AWS_PROFILE=<YOUR_PROFILE_NAME>
     ```
 
-* Set `aws:profile` in your Pulumi.yaml
+* Set `aws-native:profile` in your Pulumi.yaml
 
     ```bash
-    pulumi config set aws:profile <profilename>
+    pulumi config set aws-native:profile <profilename>
     ```
 
 ### Dynamically generate credentials
@@ -207,8 +207,7 @@ values:
     AWS_REGION: <YOUR_AWS_REGION>
   pulumiConfig: # exposes Pulumi config values to the Pulumi CLI
     project:environment: 'dev'
-    aws:roleArn: 'arn:aws:iam::058111598222:role/OrganizationAccountAccessRole'
-    aws:dynamodbEndpoint: 'dynamodb.us-east-2.amazonaws.com'
+    aws-native:roleArn: 'arn:aws:iam::058111598222:role/OrganizationAccountAccessRole'
 ```
 
 If your workflow does not require the exposure of environment variables, you can also define those variables under the `pulumiConfig` block so that they are scoped only to your `pulumi` run.
@@ -223,13 +222,12 @@ values:
           roleArn: <your-oidc-iam-role-arn>
           sessionName: pulumi-environments-session
   pulumiConfig:
-    aws:region: <YOUR_AWS_REGION>
-    aws:accessKey: ${aws.login.accessKeyId}
-    aws:secretKey: ${aws.login.secretAccessKey}
-    aws:token: ${aws.login.sessionToken}
+    aws-native:region: <YOUR_AWS_REGION>
+    aws-native:accessKey: ${aws.login.accessKeyId}
+    aws-native:secretKey: ${aws.login.secretAccessKey}
+    aws-native:token: ${aws.login.sessionToken}
     project:environment: 'dev'
-    aws:roleArn: 'arn:aws:iam::058111598222:role/OrganizationAccountAccessRole'
-    aws:dynamodbEndpoint: 'dynamodb.us-east-2.amazonaws.com'
+    aws-native:roleArn: 'arn:aws:iam::058111598222:role/OrganizationAccountAccessRole'
 ```
 
 {{< notes type="info" >}}

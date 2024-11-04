@@ -108,6 +108,8 @@ make lint
 
 When you're ready to submit a pull request, make sure you've removed anything that doesn't seem to belong (`go.mod`/`go.sum` changes, content from pulumi/docs, etc.) and submit the PR in the usual way.
 
-> Note: It currently requires a machine with a minimum of 32 GB of memory (64 GB preferred) to build the registry in its entirety including _all_ pacakges.
+
+> [!NOTE]
+> It currently requires a machine with a minimum of 32 GB of memory (64 GB preferred) to build the registry in its entirety including _all_ pacakges.
 
 Once your PR is approved and merged into the default branch of this repository, it will be deployed to the registry site (https://pulumi.com/registry).

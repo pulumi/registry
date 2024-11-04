@@ -46,7 +46,9 @@ func getRepoSlug(repoURL string) (string, error) {
 	return u.Path, nil
 }
 
-func genResourceDocsForPackageFromRegistryMetadata(metadata pkg.PackageMeta, docsOutDir, packageTreeJSONOutDir string) error {
+func genResourceDocsForPackageFromRegistryMetadata(
+	metadata pkg.PackageMeta, docsOutDir, packageTreeJSONOutDir string,
+) error {
 	glog.Infoln("Generating docs for", metadata.Name)
 	if metadata.RepoURL == "" {
 		return errors.Errorf("metadata for package %q does not contain the repo_url", metadata.Name)
@@ -62,11 +64,14 @@ func genResourceDocsForPackageFromRegistryMetadata(metadata pkg.PackageMeta, doc
 	schemaFilePath = strings.TrimPrefix(schemaFilePath, "/")
 
 	repoSlug, err := getRepoSlug(metadata.RepoURL)
+	if err != nil {
+		return errors.WithMessage(err, "could not get repo slug")
+	}
 
 	glog.Infoln("Reading remote schema file from VCS")
 	// TODO: Support raw URLs for other VCS too.
 	schemaFileURL := fmt.Sprintf("https://raw.githubusercontent.com/%s/%s/%s", repoSlug, metadata.Version, schemaFilePath)
-	resp, err := http.Get(schemaFileURL)
+	resp, err := http.Get(schemaFileURL) //nolint:gosec
 	if err != nil {
 		return errors.Wrapf(err, "reading schema file from VCS %s", schemaFileURL)
 	}
@@ -167,7 +172,7 @@ func resourceDocsFromRegistryCmd() *cobra.Command {
 				glog.Infoln("Generating docs for a single package:", args[0])
 				registryPackagesPath := getRegistryPackagesPath(registryDir)
 				pkgName := args[0]
-				metadataFilePath := filepath.Join(registryPackagesPath, fmt.Sprintf("%s.yaml", pkgName))
+				metadataFilePath := filepath.Join(registryPackagesPath, pkgName+".yaml")
 				b, err := os.ReadFile(metadataFilePath)
 				if err != nil {
 					return errors.Wrapf(err, "reading the metadata file %s", metadataFilePath)
@@ -197,8 +202,12 @@ func resourceDocsFromRegistryCmd() *cobra.Command {
 		},
 	}
 
-	cmd.Flags().StringVar(&baseDocsOutDir, "baseDocsOutDir", "../../content/registry/packages", "The directory path to where the docs will be written to")
-	cmd.Flags().StringVar(&basePackageTreeJSONOutDir, "basePackageTreeJSONOutDir", "../../static/registry/packages/navs", "The directory path to write the package tree JSON file to")
+	cmd.Flags().StringVar(&baseDocsOutDir, "baseDocsOutDir",
+		"../../content/registry/packages",
+		"The directory path to where the docs will be written to")
+	cmd.Flags().StringVar(&basePackageTreeJSONOutDir, "basePackageTreeJSONOutDir",
+		"../../static/registry/packages/navs",
+		"The directory path to write the package tree JSON file to")
 
 	return cmd
 }

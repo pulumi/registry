@@ -15,7 +15,6 @@
 package pkg
 
 import (
-	"fmt"
 	"net/http"
 	"os"
 	"time"
@@ -25,7 +24,7 @@ import (
 
 func GetGitHubAPI(path string) (*http.Response, error) {
 	token := os.Getenv("GITHUB_TOKEN")
-	url := fmt.Sprintf("https://api.github.com%s", path)
+	url := "https://api.github.com" + path
 
 	client := &http.Client{}
 	req, err := http.NewRequest("GET", url, nil)
@@ -38,7 +37,7 @@ func GetGitHubAPI(path string) (*http.Response, error) {
 	}
 
 	if token != "" {
-		req.Header.Add("Authorization", fmt.Sprintf("Bearer %s", token))
+		req.Header.Add("Authorization", "Bearer "+token)
 	}
 
 	return client.Do(req)

@@ -28,6 +28,7 @@ import (
 	"github.com/ghodss/yaml"
 	"github.com/pkg/errors"
 	pschema "github.com/pulumi/pulumi/pkg/v3/codegen/schema"
+	"github.com/pulumi/pulumi/sdk/v3/go/common/util/contract"
 	"github.com/pulumi/registry/tools/resourcedocsgen/pkg"
 	"github.com/spf13/cobra"
 	"golang.org/x/text/cases"
@@ -62,19 +63,18 @@ func PackageMetadataCmd() *cobra.Command {
 		Short: "Generate package metadata from Pulumi schema",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if strings.Contains(repoSlug, "https") || strings.Contains(repoSlug, "github.com") {
-				return errors.New(fmt.Sprintf("Expected repoSlug to be in the format of `owner/repo`"+
-					" but got %q", repoSlug))
+				return fmt.Errorf("Expected repoSlug to be in the format of `owner/repo`"+
+					" but got %q", repoSlug)
 			}
 
-			repoName := ""
-			repoOwner := ""
+			var repoName, repoOwner string
 			githubSlugParts := strings.Split(repoSlug, "/")
 			if len(githubSlugParts) > 0 {
 				repoOwner = githubSlugParts[0]
 				repoName = githubSlugParts[1]
 			} else {
-				return errors.New(fmt.Sprintf("Expected repoSlug to be in the format of `owner/repo`"+
-					" but got %q", repoSlug))
+				return fmt.Errorf("Expected repoSlug to be in the format of `owner/repo`"+
+					" but got %q", repoSlug)
 			}
 
 			if schemaFile == "" && providerName == "" {
@@ -126,15 +126,15 @@ func PackageMetadataCmd() *cobra.Command {
 			if commitDetails != "" {
 				var commit pkg.GitHubCommit
 				// now let's make a request to the specific commit to get the date
-				commitResp, err := http.Get(commitDetails)
+				commitResp, err := http.Get(commitDetails) //nolint:gosec
 				if err != nil {
-					return errors.Wrap(err, fmt.Sprintf("getting release info for %s", repoSlug))
+					return fmt.Errorf("getting release info for %s: %w", repoSlug, err)
 				}
 
 				defer commitResp.Body.Close()
 				err = json.NewDecoder(commitResp.Body).Decode(&commit)
 				if err != nil {
-					return errors.Wrap(err, fmt.Sprintf("constructing commit information for %s", repoSlug))
+					return fmt.Errorf("constructing commit information for %s: %w", repoSlug, err)
 				}
 
 				publishedDate = commit.Commit.Author.Date
@@ -148,7 +148,7 @@ func PackageMetadataCmd() *cobra.Command {
 
 			if mainSpec.Repository == "" {
 				// we already know the repo slug so we can reconstruct the repository name using that
-				mainSpec.Repository = fmt.Sprintf("https://github.com/%s", repoSlug)
+				mainSpec.Repository = "https://github.com/" + repoSlug
 			}
 
 			status := pkg.PackageStatusGA
@@ -194,11 +194,10 @@ func PackageMetadataCmd() *cobra.Command {
 				native = false
 			}
 
-			// if there's a publisher then we need to use that immediately
-			// if there is no publisher on cmd, then try and use packageSpec
-			// if there's no publisher or packageSpec publisher, then assume repo owner is the publisher
-			// otherwise error
-			publisherName := ""
+			// if there's a publisher then we need to use that immediately if there is no
+			// publisher on cmd, then try and use packageSpec if there's no publisher or
+			// packageSpec publisher, then assume repo owner is the publisher otherwise error
+			var publisherName string
 			if publisher != "" {
 				publisherName = publisher
 			} else if publisher == "" && mainSpec.Publisher != "" {
@@ -211,7 +210,7 @@ func PackageMetadataCmd() *cobra.Command {
 
 			cleanSchemaFilePath := func(s string) string {
 				s = strings.ReplaceAll(s, "../", "")
-				s = strings.ReplaceAll(s, fmt.Sprintf("pulumi-%s", mainSpec.Name), "")
+				s = strings.ReplaceAll(s, "pulumi-"+mainSpec.Name, "")
 				return s
 			}
 
@@ -244,7 +243,7 @@ func PackageMetadataCmd() *cobra.Command {
 				// the path within the registry folder.
 				metadataDir = "themes/default/data/registry/packages"
 			}
-			metadataFileName := fmt.Sprintf("%s.yaml", mainSpec.Name)
+			metadataFileName := mainSpec.Name + ".yaml"
 			if err := pkg.EmitFile(metadataDir, metadataFileName, b); err != nil {
 				return errors.Wrap(err, "writing metadata file")
 			}
@@ -252,7 +251,7 @@ func PackageMetadataCmd() *cobra.Command {
 			if packageDocsDir == "" {
 				// if the user hasn't specified an packageDocsDir, we will default to
 				// the path within the registry folder.
-				packageDocsDir = fmt.Sprintf("themes/default/content/registry/packages/%s", mainSpec.Name)
+				packageDocsDir = "themes/default/content/registry/packages/" + mainSpec.Name
 			}
 
 			requiredFiles := []string{
@@ -279,32 +278,36 @@ func PackageMetadataCmd() *cobra.Command {
 	cmd.Flags().StringVar(&repoSlug, "repoSlug", "", "The repository slug e.g. pulumi/pulumi-provider")
 	cmd.Flags().StringVar(&providerName, "providerName", "", "The name of the provider e.g. aws, aws-native. "+
 		"Required when there is no schemaFile flag specified.")
-	cmd.Flags().StringVarP(&schemaFile, "schemaFile", "s", "", "Relative path to the schema.json file from "+
-		"the root of the repository. If no schemaFile is specified, then providerName is required so the schemaFile path can "+
-		"be inferred to be provider/cmd/pulumi-resource-<providerName>/schema.json")
+	cmd.Flags().StringVarP(&schemaFile, "schemaFile", "s", "",
+		"Relative path to the schema.json file from the root of the repository. If no schemaFile is specified,"+
+			" then providerName is required so the schemaFile path can "+
+			"be inferred to be provider/cmd/pulumi-resource-<providerName>/schema.json")
 	cmd.Flags().StringVar(&version, "version", "", "The version of the package")
 	cmd.Flags().StringVar(&categoryStr, "category", "", fmt.Sprintf("The category for the package. Value must "+
 		"match one of the keys in the map: %v", pkg.CategoryNameMap))
 	cmd.Flags().StringVar(&publisher, "publisher", "", "The publisher's display name to be shown in the package. "+
 		"This will default to Pulumi")
-	cmd.Flags().StringVar(&title, "title", "", "The display name of the package. If omitted, the name of the "+
-		"package will be used")
-	cmd.Flags().BoolVar(&component, "component", false, "Whether or not this package is a component and not a provider")
-	cmd.Flags().StringVar(&metadataDir, "metadataDir", "", "The location to save the metadata - this will default to the folder "+
-		"structure that the registry expects (themes/default/data/registry/packages)")
-	cmd.Flags().StringVar(&packageDocsDir, "packageDocsDir", "", "The location to save the package docs - this will default to the folder "+
-		"structure that the registry expects (themes/default/content/registry/packages)")
+	cmd.Flags().StringVar(&title, "title", "",
+		"The display name of the package. If omitted, the name of the package will be used")
+	cmd.Flags().BoolVar(&component, "component", false,
+		"Whether or not this package is a component and not a provider")
+	cmd.Flags().StringVar(&metadataDir, "metadataDir", "",
+		"The location to save the metadata - this will default to the folder "+
+			"structure that the registry expects (themes/default/data/registry/packages)")
+	cmd.Flags().StringVar(&packageDocsDir, "packageDocsDir", "",
+		"The location to save the package docs - this will default to the folder "+
+			"structure that the registry expects (themes/default/content/registry/packages)")
 
-	cmd.MarkFlagRequired("version")
-	cmd.MarkFlagRequired("repoSlug")
+	contract.AssertNoErrorf(cmd.MarkFlagRequired("version"), "could not find version")
+	contract.AssertNoErrorf(cmd.MarkFlagRequired("repoSlug"), "could not find repoSlug")
 
 	return cmd
 }
 
 func readRemoteFile(url, repoOwner string) ([]byte, error) {
-	resp, err := http.Get(url)
+	resp, err := http.Get(url) //nolint:gosec
 	if err != nil {
-		return nil, errors.Wrap(err, fmt.Sprintf("downloading remote file from %s", url))
+		return nil, fmt.Errorf("downloading remote file from %s: %w", url, err)
 	}
 
 	defer resp.Body.Close()
@@ -316,7 +319,7 @@ func readRemoteFile(url, repoOwner string) ([]byte, error) {
 			return nil, nil
 		}
 		// For third-level providers, send an error if files could not be found.
-		return nil, errors.New(fmt.Sprintf("finding remote file at %s: %s", url, resp.Status))
+		return nil, fmt.Errorf("finding remote file at %s: %s", url, resp.Status)
 	}
 
 	contents, err := io.ReadAll(resp.Body)
@@ -334,11 +337,11 @@ func getPackageCategory(mainSpec *pschema.PackageSpec, categoryOverrideStr strin
 	// If a category override was passed-in, use that instead of what's in the schema.
 	if categoryOverrideStr != "" {
 		glog.V(2).Infof("Using category override name %s\n", categoryOverrideStr)
-		if n, ok := pkg.CategoryNameMap[categoryOverrideStr]; !ok {
-			return "", errors.New(fmt.Sprintf("invalid override for category name %s", categoryOverrideStr))
-		} else {
-			category = n
+		n, ok := pkg.CategoryNameMap[categoryOverrideStr]
+		if !ok {
+			return "", fmt.Errorf("invalid override for category name %s", categoryOverrideStr)
 		}
+		category = n
 	} else if c, ok := pkg.CategoryLookup[mainSpec.Name]; ok {
 		glog.V(2).Infoln("Using the category for this package from the lookup map")
 		// TODO: This condition can be removed when all packages under the `pulumi` org
@@ -369,11 +372,9 @@ func getCategoryFromKeywords(keywords []string) (pkg.PackageCategory, error) {
 	}
 
 	categoryName := strings.Replace(*categoryTag, "category/", "", -1)
-	var category pkg.PackageCategory
-	if n, ok := pkg.CategoryNameMap[categoryName]; !ok {
-		return defaultPackageCategory, errors.New(fmt.Sprintf("invalid category tag %s", *categoryTag))
-	} else {
-		category = n
+	category, ok := pkg.CategoryNameMap[categoryName]
+	if !ok {
+		return defaultPackageCategory, fmt.Errorf("invalid category tag %s", *categoryTag)
 	}
 
 	return category, nil
@@ -417,7 +418,7 @@ func getGitHubTags(repoSlug string) ([]pkg.GitHubTag, error) {
 	path := fmt.Sprintf("/repos/%s/tags", repoSlug)
 	tagsResp, err := pkg.GetGitHubAPI(path)
 	if err != nil {
-		return nil, errors.Wrap(err, fmt.Sprintf("getting tags info for %s", repoSlug))
+		return nil, fmt.Errorf("getting tags info for %s: %w", repoSlug, err)
 	}
 	defer tagsResp.Body.Close()
 
@@ -433,7 +434,7 @@ func getGitHubTags(repoSlug string) ([]pkg.GitHubTag, error) {
 	var tags []pkg.GitHubTag
 	err = json.NewDecoder(tagsResp.Body).Decode(&tags)
 	if err != nil {
-		return nil, errors.Wrap(err, fmt.Sprintf("constructing tags information for %s", repoSlug))
+		return nil, fmt.Errorf("constructing tags information for %s: %w", repoSlug, err)
 	}
 
 	return tags, nil

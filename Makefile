@@ -10,6 +10,13 @@ ensure:
 lint:
 	./scripts/lint.sh
 
+.PHONY: lint-go
+lint-go: lint-resourcedocsgen
+
+.PHONY: lint-resourcedocsgen
+lint-resourcedocsgen:
+	cd tools/resourcedocsgen/ && golangci-lint run --config ../../.golangci.yml --path-prefix tools/resourcedocsgen/
+
 .PHONY: test
 test:
 	./scripts/test.sh

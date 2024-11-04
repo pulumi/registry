@@ -70,7 +70,7 @@ func main() {
 
 ```csharp
 using Pulumi;
-using Gpc = Pulumi.Gcp;
+using Gcp = Pulumi.Gcp;
 
 await Deployment.RunAsync(() =>
 {

@@ -106,7 +106,7 @@ Before submitting a pull request, run the linter locally:
 make lint
 ```
 
-When you're ready to submit a pull request, make sure you've removed anything that doesn't seem to belong (`go.mod`/`go.sum` changes, content from pulumi/docs, etc.) and submit the PR in the usual way.
+When you're ready to submit a pull request, make sure you've removed anything that doesn't seem to belong (`go.mod`/`go.sum` changes, etc.) and submit the PR in the usual way.
 
 
 > [!NOTE]

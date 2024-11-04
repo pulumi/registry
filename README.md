@@ -1,6 +1,6 @@
 # Registry
 
-[Pulumi Registry](https://pulumi.com/registry) is the global index of everything you can do with Pulumi.
+[Pulumi Registry](https://pulumi.com/registry) is the global index of everything you can do with Pulumi. The home of pulumi.com/registry.
 
 ## Authoring a Pulumi Package
 
@@ -83,11 +83,17 @@ Optionally, use `make serve-all` to enable hot reloading of both the pages and C
 
 #### Generating API docs for packages
 
-The API docs for packages can be generated on-demand using the [`resourcedocsgen` tool](tools/resourcedocsgen/README.md).
+This repository does not contain the content of the API docs packages. We generate these pages at deployemnt time. In order to render the API docs for a package locally you will need to generate the API Docs pages for it. The API docs for packages can be generated on-demand using the [`resourcedocsgen` tool](tools/resourcedocsgen/README.md).
 
 ```
 cd tools/resourcedocsgen
 go build -o "${GOPATH}/bin/resourcedocsgen" .
+```
+
+As an example, you can generate the API docs for a specific package by running the resourcedocsgen tool and passing it the name of the package as follows:
+
+```
+resourcedocsgen docs registry <package_name> --baseDocsOutDir "./themes/default/content/registry/packages"
 ```
 
 Run `resourcedocsgen --help` for help regarding its use or [see the `resourcedocsgen` README](tools/resourcedocsgen/README.md).

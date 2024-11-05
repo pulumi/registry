@@ -6,7 +6,14 @@ on:
 jobs:
 
   resourcedocsgen:
-    uses: ./.github/workflows/check-resourcedocsgen.yml
+    uses: ./.github/workflows/check-go.yml
+    with:
+      path: tools/resourcedocsgen/
+
+  mktutorial:
+    uses: ./.github/workflows/check-go.yml
+    with:
+      path: tools/mktutorial/
 
   lint-markdown:
     name: Lint Markdown

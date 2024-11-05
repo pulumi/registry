@@ -14,11 +14,15 @@ lint-markdown:
 	./scripts/lint/lint-markdown.js
 
 .PHONY: lint-go
-lint-go: lint-resourcedocsgen
+lint-go: lint-resourcedocsgen lint-mktutorial
 
 .PHONY: lint-resourcedocsgen
 lint-resourcedocsgen:
 	cd tools/resourcedocsgen/ && golangci-lint run --config ../../.golangci.yml --path-prefix tools/resourcedocsgen/
+
+.PHONY: lint-mktutorial
+lint-mktutorial:
+	cd tools/mktutorial/ && golangci-lint run --config ../../.golangci.yml --path-prefix tools/mktutorial/
 
 .PHONY: test
 test:

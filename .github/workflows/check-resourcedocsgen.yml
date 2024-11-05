@@ -1,0 +1,24 @@
+name: "Check `resourcedocsgen`"
+
+on:
+  workflow_call: {}
+
+jobs:
+  prerequisites:
+    name: Check `resourcedocsgen`
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repo
+      uses: actions/checkout@v4
+      with:
+         sparse-checkout: |
+           tools/resourcedocsgen/
+           .golangci.yml
+    - name: Setup Go
+      uses: actions/setup-go@v5
+    - name: golangci-lint
+      uses: golangci/golangci-lint-action@v6
+      with:
+        version: v1.61
+        working-directory: tools/resourcedocsgen/
+        args: --config ../../.golangci.yml

@@ -1,4 +1,4 @@
-// Copyright 2016-2018, Pulumi Corporation.
+// Copyright 2016-2024, Pulumi Corporation.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,7 +17,6 @@ package main
 import (
 	"flag"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -53,7 +52,7 @@ func main() {
 
 	// Clone the tutorial repo at master/HEAD so the tool isn't dependent on the local filesystem.
 	fmt.Printf("Gathering tutorials from %s...\n", repo)
-	tmp, err := ioutil.TempDir("", "")
+	tmp, err := os.MkdirTemp("", "")
 	if err != nil {
 		exitErr("creating temp dir for tutorial repo: %v", err)
 	}
@@ -94,13 +93,13 @@ type tutorial struct {
 }
 
 func gatherTutorials(root string) ([]tutorial, error) {
-	files, err := ioutil.ReadDir(root)
+	files, err := os.ReadDir(root)
 	if err != nil {
 		return nil, errors.Wrapf(err, "reading tutorial repo")
 	}
 
 	// For all tutorials, gather up the metadata.
-	var tutorials []tutorial
+	tutorials := make([]tutorial, 0, len(files))
 	for _, file := range files {
 		name := file.Name()
 		if !file.IsDir() || name[0] == '.' {
@@ -110,7 +109,7 @@ func gatherTutorials(root string) ([]tutorial, error) {
 		pulumiTemplateURL := ""
 
 		// Now that we've got the cloud and language, parse the contents to get extra metadata.
-		body, err := ioutil.ReadFile(filepath.Join(root, name, "README.md"))
+		body, err := os.ReadFile(filepath.Join(root, name, "README.md"))
 		if err != nil {
 			if os.IsNotExist(err) {
 				warn("tutorial is missing a README: %s", name)
@@ -124,7 +123,6 @@ func gatherTutorials(root string) ([]tutorial, error) {
 		// The first H1 is assumed to be the title.
 		var h1 string
 		top.Walk(func(node *blackfriday.Node, entering bool) blackfriday.WalkStatus {
-
 			if node.Type == blackfriday.Link && pulumiTemplateURL == "" {
 				destination := string(node.LinkData.Destination)
 
@@ -240,9 +238,7 @@ func cleanMarkdownBody(name, body string) string {
 		// If the URL contains a scheme, we have no reason to replace it.
 		if !strings.Contains(mdurl, "://") && !strings.HasPrefix(mdurl, "../") {
 			// Otherwise, we need to make it relative to the Git repo's contents.
-			if strings.HasPrefix(mdurl, "./") {
-				mdurl = mdurl[2:]
-			}
+			mdurl = strings.TrimPrefix(mdurl, "./")
 			// If it's an image, we use the GitHub user content domain to the image actually displays.
 			if imageLink.MatchString(mdurl) {
 				mdurl = fmt.Sprintf("%s/master/%s/%s", gitHubUserContentBaseURL, name, mdurl)
@@ -266,7 +262,7 @@ func emitTutorialDocs(root string, tutorials []tutorial) error {
 	for _, tut := range tutorials {
 		// Open the file for writing and ensure the cloud directory exists.
 		path := filepath.Join(root, tut.Cloud, tut.Name+".md")
-		if err := os.MkdirAll(filepath.Dir(path), 0700); err != nil {
+		if err := os.MkdirAll(filepath.Dir(path), 0o700); err != nil {
 			return err
 		}
 		f, err := os.Create(path)

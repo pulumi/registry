@@ -7,8 +7,11 @@ ensure:
 	./scripts/ensure.sh
 
 .PHONY: lint
-lint:
-	./scripts/lint.sh
+lint: lint-go lint-markdown
+
+.PHONY: lint-markdown
+lint-markdown:
+	./scripts/lint/lint-markdown.js
 
 .PHONY: lint-go
 lint-go: lint-resourcedocsgen

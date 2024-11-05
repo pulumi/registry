@@ -8,6 +8,23 @@ jobs:
   resourcedocsgen:
     uses: ./.github/workflows/check-resourcedocsgen.yml
 
+  lint-markdown:
+    name: Lint Markdown
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "23.x"
+
+      - name: Check out branch
+        uses: actions/checkout@v4
+
+      - name: Lint Markdown
+        run: |
+          yarn install
+          make lint-markdown
+
   # Preview runs a registry build into a commit specific S3 bucket to preview changes.
   #
   # A link to the generated build is appended to the PR on each commit.
@@ -24,7 +41,7 @@ jobs:
       - name: Install Node
         uses: actions/setup-node@v4
         with:
-          node-version: "18.x"
+          node-version: "23.x"
 
       - name: Install Go
         uses: actions/setup-go@v5
@@ -45,10 +62,8 @@ jobs:
         with:
           pattern: "community-packages/package-list.json"
 
-      - name: Lint
-        run: |
-          yarn install
-          make lint
+      - name: Yarn Install
+        run: yarn install
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -73,7 +88,10 @@ jobs:
     if: (github.event.pull_request.user.login == 'pulumi-bot') && failure()
     name: Send slack notification
     runs-on: ubuntu-latest
-    needs: [preview]
+    needs:
+      - preview
+      - lint-markdown
+      - resourcedocsgen
     steps:
       - name: Slack Notification
         uses: docker://sholung/action-slack-notify:v2.3.0

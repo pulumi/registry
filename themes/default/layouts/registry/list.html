@@ -15,7 +15,7 @@
                             <ul>
                                 {{ range $featuredPackages }}
                                     <li class="sidenav-topic">
-                                        {{ $href := printf "/registry/packages/%s/" .name }} 
+                                        {{ $href := printf "/registry/packages/%s/" .name }}
                                         <a href="{{ $href }}">{{ .title }}</a>
                                     </li>
                                 {{ end }}
@@ -26,7 +26,7 @@
                             <ul>
                                 {{ range (sort $.Site.Data.registry.packages "title") }}
                                     <li class="sidenav-topic">
-                                        {{ $href := printf "/registry/packages/%s/" .name }} 
+                                        {{ $href := printf "/registry/packages/%s/" .name }}
                                         <a href="{{ $href }}">{{ .title }}</a>
                                     </li>
                                 {{ end }}
@@ -50,5 +50,5 @@
 {{ end }}
 
 {{ define "footer" }}
-    {{ partial "docs/footer.html" . }}
+    {{ partialCached "docs/footer.html" . }}
 {{ end }}

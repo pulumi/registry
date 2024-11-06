@@ -10,7 +10,7 @@
                 <div class="img-name-version">
                     {{ with (index $.Site.Data.registry.packages ($packageName)) }}
                         <div>
-                            {{ partial "registry/package/icon.html" . }}
+                            {{ partialCached "registry/package/icon.html" . .name }}
                         </div>
                     {{ end }}
                     {{ with (index $.Site.Data.registry.packages ($packageName)) }}
@@ -25,7 +25,7 @@
                 <div class="img-name-version">
                     {{ with (index $.Site.Data.registry.packages ($packageName)) }}
                         <div>
-                            {{ partial "registry/package/icon.html" . }}
+                            {{ partialCached "registry/package/icon.html" . .name }}
                         </div>
                     {{ end }}
                     {{ with (index $.Site.Data.registry.packages ($packageName)) }}

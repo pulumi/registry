@@ -23,7 +23,7 @@
         <div class="p-6" data-type="{{ $packageType }}" data-category="{{ $packageCategory }}" data-title="{{ .package.title }}">
             <div class="flex flex-wrap">
                 <div class="flex w-full items-center justify-between mb-4">
-                        {{ partial "registry/package/icon.html" .package }}
+                        {{ partialCached "registry/package/icon.html" .package .package.name }}
                 </div>
                 <div class="w-full">
                     <h3 class="text-gray-900 no-anchor text-lg font-semibold font-body title">

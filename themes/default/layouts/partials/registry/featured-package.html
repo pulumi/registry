@@ -4,7 +4,7 @@
 <div class="featured-package">
     <a href="{{ $href }}" title="{{ .package.title }}">
         <div class="package-logo">
-            {{ partial "registry/package/icon.html" .package }}
+            {{ partialCached "registry/package/icon.html" .package .package.name }}
         </div>
         <div class="package-title">
             {{ .package.title }}

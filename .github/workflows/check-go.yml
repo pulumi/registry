@@ -10,8 +10,10 @@ on:
           The file path from the root of the repo to the go code to check. For example:
 
           	tools/resourcedocsgen/
+
+          Path should be the root of a go module.
 jobs:
-  prerequisites:
+  lint:
     name: Lint
     runs-on: ubuntu-latest
     steps:
@@ -29,3 +31,20 @@ jobs:
         version: v1.61
         working-directory: ${{ inputs.path }}
         args: --config $GITHUB_WORKSPACE/.golangci.yml
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repo
+      uses: actions/checkout@v4
+      with:
+         sparse-checkout: |
+           ${{ inputs.path }}
+           .golangci.yml
+    - name: Setup Go
+      uses: actions/setup-go@v5
+    - name: Run Tests
+      run: |
+        cd $GITHUB_WORKSPACE/${{ inputs.path }}
+        go test ./... -v

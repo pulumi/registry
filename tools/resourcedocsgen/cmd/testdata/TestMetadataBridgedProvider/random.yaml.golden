@@ -1,0 +1,14 @@
+category: Utility
+component: false
+description: A Pulumi package to safely use randomness in Pulumi programs.
+featured: false
+logo_url: ""
+name: random
+native: false
+package_status: ga
+publisher: Pulumi
+repo_url: https://github.com/pulumi/pulumi-random
+schema_file_path: provider/cmd/pulumi-resource-random/schema.json
+title: random
+updated_on: 1729058626
+version: v4.16.7

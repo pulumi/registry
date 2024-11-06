@@ -150,10 +150,9 @@ func PackageMetadataCmd() *cobra.Command {
 				publisherName = publisher
 			case mainSpec.Publisher != "":
 				publisherName = mainSpec.Publisher
-			case repoSlug.owner != "":
-				publisherName = cases.Title(language.Und, cases.NoLower).String(repoSlug.owner)
 			default:
-				return errors.New("unable to determine package publisher")
+				contract.Assertf(repoSlug.owner != "", "repoSlug.owner is non-empty by construction")
+				publisherName = cases.Title(language.Und, cases.NoLower).String(repoSlug.owner)
 			}
 
 			cleanSchemaFilePath := func(s string) string {
@@ -394,19 +393,31 @@ func (s repoSlug) String() string { return s.owner + "/" + s.name }
 
 func (s *repoSlug) Set(input string) error {
 	if strings.Contains(input, "https") || strings.Contains(input, "github.com") {
-		return fmt.Errorf("Expected repoSlug to be in the format of `owner/repo`"+
+		return fmt.Errorf("Expected repoSlug to be in the format of `{owner}/{repo}`"+
 			" but got %q", input)
 	}
 
 	githubSlugParts := strings.Split(input, "/")
 
 	if len(githubSlugParts) != 2 {
-		return fmt.Errorf("Expected repoSlug to be in the format of `owner/repo`"+
+		return fmt.Errorf("Expected repoSlug to be in the format of `{owner}/{repo}`"+
 			" but got %q", input)
 	}
 
-	s.owner = githubSlugParts[0]
-	s.name = githubSlugParts[1]
+	owner := strings.TrimSpace(githubSlugParts[0])
+	name := strings.TrimSpace(githubSlugParts[1])
+
+	switch {
+	case owner == "" && name == "":
+		return fmt.Errorf("Expected non-empty {owner} and non-empty {name} in {owner}/{name}, but got %q", input)
+	case owner == "":
+		return fmt.Errorf("Expected non-empty {owner} in {owner}/%s, but got %q", name, input)
+	case name == "":
+		return fmt.Errorf("Expected non-empty {name} in %s/{name}, but got %q", owner, input)
+	}
+
+	s.owner = owner
+	s.name = name
 	return nil
 }
 

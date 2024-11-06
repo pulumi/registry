@@ -37,8 +37,6 @@ import (
 
 const defaultPackageCategory = pkg.PackageCategoryCloud
 
-var mainSpec *pschema.PackageSpec
-
 var featuredPackages = []string{
 	"aws",
 	"azure-native",
@@ -125,7 +123,7 @@ func PackageMetadataCmd() *cobra.Command {
 				publishedDate = commit.Commit.Author.Date
 			}
 
-			mainSpec = &pschema.PackageSpec{}
+			mainSpec := &pschema.PackageSpec{}
 			if err := json.Unmarshal(schema, mainSpec); err != nil {
 				return errors.Wrap(err, "unmarshalling schema into a PackageSpec")
 			}

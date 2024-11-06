@@ -21,14 +21,9 @@ AWS Cloud Control must be configured with credentials to deploy and update resou
 
 {{< youtube oKxaZCyu2OQ >}}
 
-## Examples
+## Example
 
-Check out the examples below to try out AWS Cloud Control:
-
-* [Create an ECS Cluster on AWS](/registry/packages/aws-native/how-to-guides/aws-native-ts-ecs)
-* [Host a Static Website on Amazon S3](/registry/packages/aws-native/how-to-guides/aws-native-ts-s3-folder)
-* [Launch a Simple AWS Step Function State Machine With Lambda Functions](/registry/packages/aws-native/how-to-guides/aws-native-ts-stepfunctions)
-* Create an Object Lambda access point that transforms object requests to a bucket:
+Create an Object Lambda access point that transforms object requests to a bucket:
 
 {{< chooser language "typescript,python,csharp,go,java,yaml" >}}
 

@@ -64,31 +64,11 @@ func PackageMetadataCmd() *cobra.Command {
 				providerName = strings.Replace(repoSlug.name, "pulumi-", "", -1)
 			}
 
-			if schemaFile == "" {
-				schemaFile = fmt.Sprintf("provider/cmd/pulumi-resource-%s/schema.json", providerName)
-			}
-
-			// we should be able to take the repo URL + the version + the schema url and
-			// construct a file that we can download and read
-			schemaFilePath := fmt.Sprintf("https://raw.githubusercontent.com/%s/%s/%s",
-				repoSlug, version, schemaFile)
-
-			schema, err := readRemoteFile(schemaFilePath, repoSlug.owner)
+			mainSpec, err := readRemoteSchemaFile(
+				inferSchemaFileURL(providerName, schemaFile, repoSlug.String(), version),
+				repoSlug)
 			if err != nil {
-				return err
-			}
-
-			if schema == nil {
-				return fmt.Errorf("unable to get contents of schemaFile %q", schemaFilePath)
-			}
-
-			// The source schema can be in YAML format. If that's the case
-			// convert it to JSON first.
-			if strings.HasSuffix(schemaFile, ".yaml") {
-				schema, err = yaml.YAMLToJSON(schema)
-				if err != nil {
-					return errors.Wrap(err, "reading YAML schema")
-				}
+				return errors.WithMessage(err, "unable to read remote schema file")
 			}
 
 			// try and get the version release data using the github releases API
@@ -123,10 +103,6 @@ func PackageMetadataCmd() *cobra.Command {
 				publishedDate = commit.Commit.Author.Date
 			}
 
-			mainSpec := &pschema.PackageSpec{}
-			if err := json.Unmarshal(schema, mainSpec); err != nil {
-				return errors.Wrap(err, "unmarshalling schema into a PackageSpec")
-			}
 			mainSpec.Version = version
 
 			if mainSpec.Repository == "" {
@@ -446,3 +422,40 @@ func (s *repoSlug) Set(input string) error {
 }
 
 func (s repoSlug) Type() string { return "repo slug" }
+
+func inferSchemaFileURL(providerName, schemaFile, repo, version string) string {
+	if schemaFile == "" {
+		schemaFile = fmt.Sprintf("provider/cmd/pulumi-resource-%s/schema.json", providerName)
+	}
+
+	// we should be able to take the repo URL + the version + the schema url and
+	// construct a file that we can download and read
+	return fmt.Sprintf("https://raw.githubusercontent.com/%s/%s/%s",
+		repo, version, schemaFile)
+}
+
+func readRemoteSchemaFile(schemaFileURL string, repo repoSlug) (*pschema.PackageSpec, error) {
+	schema, err := readRemoteFile(schemaFileURL, repo.owner)
+	if err != nil {
+		return nil, err
+	}
+
+	if schema == nil {
+		return nil, fmt.Errorf("unable to get contents of schema file at %q", schemaFileURL)
+	}
+
+	// The source schema can be in YAML format. If that's the case
+	// convert it to JSON first.
+	if strings.HasSuffix(schemaFileURL, ".yaml") {
+		schema, err = yaml.YAMLToJSON(schema)
+		if err != nil {
+			return nil, errors.Wrap(err, "reading YAML schema")
+		}
+	}
+
+	spec := &pschema.PackageSpec{}
+	if err := json.Unmarshal(schema, spec); err != nil {
+		return nil, errors.Wrap(err, "unmarshalling schema into a PackageSpec")
+	}
+	return spec, nil
+}

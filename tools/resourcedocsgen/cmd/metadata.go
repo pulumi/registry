@@ -138,20 +138,8 @@ func PackageMetadataCmd() *cobra.Command {
 				}
 			}
 
-			native := mainSpec.Attribution == ""
-			// If native is false, check if the schema has the "kind/native" tag in the Keywords
-			// array.
-			if !native {
-				native = isNative(mainSpec.Keywords)
-			}
-
-			if !component {
-				component = isComponent(mainSpec.Keywords)
-			}
-
-			if native && component {
-				native = false
-			}
+			component = component /* CLI flag */ || isComponent(mainSpec.Keywords)
+			native := !component && (mainSpec.Attribution == "" || isNative(mainSpec.Keywords))
 
 			// if there's a publisher then we need to use that immediately if there is no
 			// publisher on cmd, then try and use packageSpec if there's no publisher or

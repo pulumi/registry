@@ -47,7 +47,7 @@ var featuredPackages = []string{
 }
 
 func PackageMetadataCmd() *cobra.Command {
-	var repoSlug string
+	var repoSlug repoSlug
 	var providerName string
 	var categoryStr string
 	var component bool
@@ -62,23 +62,8 @@ func PackageMetadataCmd() *cobra.Command {
 		Use:   "metadata <args>",
 		Short: "Generate package metadata from Pulumi schema",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			if strings.Contains(repoSlug, "https") || strings.Contains(repoSlug, "github.com") {
-				return fmt.Errorf("Expected repoSlug to be in the format of `owner/repo`"+
-					" but got %q", repoSlug)
-			}
-
-			var repoName, repoOwner string
-			githubSlugParts := strings.Split(repoSlug, "/")
-			if len(githubSlugParts) > 0 {
-				repoOwner = githubSlugParts[0]
-				repoName = githubSlugParts[1]
-			} else {
-				return fmt.Errorf("Expected repoSlug to be in the format of `owner/repo`"+
-					" but got %q", repoSlug)
-			}
-
 			if schemaFile == "" && providerName == "" {
-				providerName = strings.Replace(repoName, "pulumi-", "", -1)
+				providerName = strings.Replace(repoSlug.name, "pulumi-", "", -1)
 			}
 
 			if schemaFile == "" {
@@ -90,7 +75,7 @@ func PackageMetadataCmd() *cobra.Command {
 			schemaFilePath := fmt.Sprintf("https://raw.githubusercontent.com/%s/%s/%s",
 				repoSlug, version, schemaFile)
 
-			schema, err := readRemoteFile(schemaFilePath, repoOwner)
+			schema, err := readRemoteFile(schemaFilePath, repoSlug.owner)
 			if err != nil {
 				return err
 			}
@@ -109,7 +94,7 @@ func PackageMetadataCmd() *cobra.Command {
 			}
 
 			// try and get the version release data using the github releases API
-			tags, err := getGitHubTags(repoSlug)
+			tags, err := getGitHubTags(repoSlug.String())
 			if err != nil {
 				return errors.Wrap(err, "github tags")
 			}
@@ -148,7 +133,7 @@ func PackageMetadataCmd() *cobra.Command {
 
 			if mainSpec.Repository == "" {
 				// we already know the repo slug so we can reconstruct the repository name using that
-				mainSpec.Repository = "https://github.com/" + repoSlug
+				mainSpec.Repository = "https://github.com/" + repoSlug.String()
 			}
 
 			status := pkg.PackageStatusGA
@@ -202,8 +187,8 @@ func PackageMetadataCmd() *cobra.Command {
 				publisherName = publisher
 			} else if publisher == "" && mainSpec.Publisher != "" {
 				publisherName = mainSpec.Publisher
-			} else if publisher == "" && repoOwner != "" {
-				publisherName = cases.Title(language.Und, cases.NoLower).String(repoOwner)
+			} else if publisher == "" && repoSlug.owner != "" {
+				publisherName = cases.Title(language.Und, cases.NoLower).String(repoSlug.owner)
 			} else {
 				return errors.New("unable to determine package publisher")
 			}
@@ -261,7 +246,7 @@ func PackageMetadataCmd() *cobra.Command {
 			for _, requiredFile := range requiredFiles {
 				requiredFilePath := fmt.Sprintf("https://raw.githubusercontent.com/%s/%s/docs/%s",
 					repoSlug, version, requiredFile)
-				details, err := readRemoteFile(requiredFilePath, repoOwner)
+				details, err := readRemoteFile(requiredFilePath, repoSlug.owner)
 				if err != nil {
 					return err
 				}
@@ -275,7 +260,7 @@ func PackageMetadataCmd() *cobra.Command {
 		},
 	}
 
-	cmd.Flags().StringVar(&repoSlug, "repoSlug", "", "The repository slug e.g. pulumi/pulumi-provider")
+	cmd.Flags().Var(&repoSlug, "repoSlug", "The repository slug e.g. pulumi/pulumi-provider")
 	cmd.Flags().StringVar(&providerName, "providerName", "", "The name of the provider e.g. aws, aws-native. "+
 		"Required when there is no schemaFile flag specified.")
 	cmd.Flags().StringVarP(&schemaFile, "schemaFile", "s", "",
@@ -439,3 +424,27 @@ func getGitHubTags(repoSlug string) ([]pkg.GitHubTag, error) {
 
 	return tags, nil
 }
+
+type repoSlug struct{ name, owner string }
+
+func (s repoSlug) String() string { return s.owner + "/" + s.name }
+
+func (s *repoSlug) Set(input string) error {
+	if strings.Contains(input, "https") || strings.Contains(input, "github.com") {
+		return fmt.Errorf("Expected repoSlug to be in the format of `owner/repo`"+
+			" but got %q", input)
+	}
+
+	githubSlugParts := strings.Split(input, "/")
+
+	if len(githubSlugParts) != 2 {
+		return fmt.Errorf("Expected repoSlug to be in the format of `owner/repo`"+
+			" but got %q", input)
+	}
+
+	s.owner = githubSlugParts[0]
+	s.name = githubSlugParts[1]
+	return nil
+}
+
+func (s repoSlug) Type() string { return "repo slug" }

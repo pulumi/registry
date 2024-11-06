@@ -145,13 +145,14 @@ func PackageMetadataCmd() *cobra.Command {
 			// publisher on cmd, then try and use packageSpec if there's no publisher or
 			// packageSpec publisher, then assume repo owner is the publisher otherwise error
 			var publisherName string
-			if publisher != "" {
+			switch {
+			case publisher != "" /* CLI flag */ :
 				publisherName = publisher
-			} else if publisher == "" && mainSpec.Publisher != "" {
+			case mainSpec.Publisher != "":
 				publisherName = mainSpec.Publisher
-			} else if publisher == "" && repoSlug.owner != "" {
+			case repoSlug.owner != "":
 				publisherName = cases.Title(language.Und, cases.NoLower).String(repoSlug.owner)
-			} else {
+			default:
 				return errors.New("unable to determine package publisher")
 			}
 

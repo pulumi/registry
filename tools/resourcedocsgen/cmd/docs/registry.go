@@ -95,22 +95,22 @@ func genResourceDocsForPackageFromRegistryMetadata(
 	}
 
 	var mainSpec pschema.PackageSpec
-	if err := json.Unmarshal(schemaBytes, mainSpec); err != nil {
+	if err := json.Unmarshal(schemaBytes, &mainSpec); err != nil {
 		return errors.Wrap(err, "unmarshalling schema into a PackageSpec")
 	}
 
-	pulPkg, err := getPulumiPackageFromSchema(docsOutDir, mainSpec)
+	pulPkg, genctx, err := getPulumiPackageFromSchema(docsOutDir, mainSpec)
 	if err != nil {
 		return errors.Wrap(err, "generating package from schema file")
 	}
 
 	glog.Infoln("Running docs generator...")
-	if err := generateDocsFromSchema(docsOutDir, pulPkg); err != nil {
+	if err := generateDocsFromSchema(docsOutDir, genctx); err != nil {
 		return errors.Wrap(err, "generating docs from schema")
 	}
 
 	glog.Infoln("Generating the package tree JSON file...")
-	if err := generatePackageTree(packageTreeJSONOutDir, pulPkg.Name); err != nil {
+	if err := generatePackageTree(packageTreeJSONOutDir, pulPkg.Name, genctx); err != nil {
 		return errors.Wrap(err, "generating package tree")
 	}
 
@@ -120,8 +120,6 @@ func genResourceDocsForPackageFromRegistryMetadata(
 func getRegistryPackagesPath(repoPath string) string {
 	return filepath.Join(repoPath, "themes", "default", "data", "registry", "packages")
 }
-
-const maxConcurrency = 1
 
 func genResourceDocsForAllRegistryPackages(registryRepoPath, baseDocsOutDir, basePackageTreeJSONOutDir string) error {
 	registryPackagesPath := getRegistryPackagesPath(registryRepoPath)
@@ -147,6 +145,8 @@ func genResourceDocsForAllRegistryPackages(registryRepoPath, baseDocsOutDir, bas
 	// Because there are a fixed number of hallpasses (maxConcurrency), and each
 	// process needs a hallpass to run, we limit effective concurrency to the number
 	// of available hallpasses.
+	const maxConcurrency = 8
+
 	var hallpass struct{}
 	monitor := make(chan struct{}, maxConcurrency)
 	for i := 0; i < maxConcurrency; i++ {

@@ -37,10 +37,10 @@ const (
 	defaultSchemaFilePathFormat = "/provider/cmd/pulumi-resource-%s/schema.json"
 )
 
-func getPulumiPackageFromSchema(docsOutDir string, mainSpec pschema.PackageSpec) (*pschema.Package, error) {
+func getPulumiPackageFromSchema(docsOutDir string, mainSpec pschema.PackageSpec) (*pschema.Package, docsgen.Context, error) {
 	// Delete existing docs before generating new ones.
 	if err := os.RemoveAll(docsOutDir); err != nil {
-		return nil, errors.Wrapf(err, "deleting provider directory %v", docsOutDir)
+		return nil, docsgen.Context{}, errors.Wrapf(err, "deleting provider directory %v", docsOutDir)
 	}
 
 	pulPkg, err := pschema.ImportSpec(mainSpec, nil)
@@ -52,7 +52,7 @@ func getPulumiPackageFromSchema(docsOutDir string, mainSpec pschema.PackageSpec)
 				err = wErr
 			}
 		}
-		return nil, fmt.Errorf("importing package spec: %w", err)
+		return nil, docsgen.Context{}, fmt.Errorf("importing package spec: %w", err)
 	}
 
 	// THIS IS A TEMPORARY HACK!!
@@ -65,9 +65,7 @@ func getPulumiPackageFromSchema(docsOutDir string, mainSpec pschema.PackageSpec)
 		pulPkg.Name = "azure-native-v1"
 	}
 
-	docsgen.Initialize(tool, pulPkg)
-
-	return pulPkg, nil
+	return pulPkg, docsgen.NewContext(tool, pulPkg), nil
 }
 
 func ResourceDocsCmd() *cobra.Command {
@@ -100,16 +98,16 @@ func ResourceDocsCmd() *cobra.Command {
 			}
 			mainSpec.Version = version
 
-			pulPkg, err := getPulumiPackageFromSchema(docsOutDir, mainSpec)
+			pulPkg, genctx, err := getPulumiPackageFromSchema(docsOutDir, mainSpec)
 			if err != nil {
 				return errors.Wrap(err, "generating package from schema file")
 			}
 
-			if err := generateDocsFromSchema(docsOutDir, pulPkg); err != nil {
+			if err := generateDocsFromSchema(docsOutDir, genctx); err != nil {
 				return errors.Wrap(err, "generating docs from schema")
 			}
 
-			if err := generatePackageTree(packageTreeJSONOutDir, pulPkg.Name); err != nil {
+			if err := generatePackageTree(packageTreeJSONOutDir, pulPkg.Name, genctx); err != nil {
 				return errors.Wrap(err, "generating package tree")
 			}
 
@@ -133,8 +131,8 @@ func ResourceDocsCmd() *cobra.Command {
 	return cmd
 }
 
-func generateDocsFromSchema(outDir string, pulPkg *pschema.Package) error {
-	files, err := docsgen.GeneratePackage(tool, pulPkg)
+func generateDocsFromSchema(outDir string, pulPkg docsgen.Context) error {
+	files, err := pulPkg.GeneratePackage()
 	if err != nil {
 		return errors.Wrap(err, "generating Pulumi package")
 	}
@@ -147,8 +145,8 @@ func generateDocsFromSchema(outDir string, pulPkg *pschema.Package) error {
 	return nil
 }
 
-func generatePackageTree(outDir string, pkgName string) error {
-	tree, err := docsgen.GeneratePackageTree()
+func generatePackageTree(outDir string, pkgName string, genctx docsgen.Context) error {
+	tree, err := genctx.GeneratePackageTree()
 	if err != nil {
 		return errors.Wrap(err, "generating the package tree")
 	}

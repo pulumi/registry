@@ -23,6 +23,7 @@ import (
 	"net/url"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"sync"
 
@@ -145,7 +146,7 @@ func genResourceDocsForAllRegistryPackages(registryRepoPath, baseDocsOutDir, bas
 	// Because there are a fixed number of hallpasses (maxConcurrency), and each
 	// process needs a hallpass to run, we limit effective concurrency to the number
 	// of available hallpasses.
-	const maxConcurrency = 8
+	maxConcurrency := runtime.NumCPU()
 
 	var hallpass struct{}
 	monitor := make(chan struct{}, maxConcurrency)

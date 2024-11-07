@@ -37,18 +37,13 @@ const (
 	defaultSchemaFilePathFormat = "/provider/cmd/pulumi-resource-%s/schema.json"
 )
 
-// mainSpec represents a package's original schema. It's called "main" because a package
-// could have a hand-authored overlays schema spec in the overlays folder that could be
-// merged into it.
-var mainSpec *pschema.PackageSpec
-
-func getPulumiPackageFromSchema(docsOutDir string) (*pschema.Package, error) {
+func getPulumiPackageFromSchema(docsOutDir string, mainSpec pschema.PackageSpec) (*pschema.Package, error) {
 	// Delete existing docs before generating new ones.
 	if err := os.RemoveAll(docsOutDir); err != nil {
 		return nil, errors.Wrapf(err, "deleting provider directory %v", docsOutDir)
 	}
 
-	pulPkg, err := pschema.ImportSpec(*mainSpec, nil)
+	pulPkg, err := pschema.ImportSpec(mainSpec, nil)
 	if err != nil {
 		if dErr, ok := err.(hcl.Diagnostics); ok {
 			writer := hcl.NewDiagnosticTextWriter(os.Stderr, nil, 80, true)
@@ -99,13 +94,13 @@ func ResourceDocsCmd() *cobra.Command {
 				}
 			}
 
-			mainSpec = &pschema.PackageSpec{}
-			if err := json.Unmarshal(schema, mainSpec); err != nil {
+			var mainSpec pschema.PackageSpec
+			if err := json.Unmarshal(schema, &mainSpec); err != nil {
 				return errors.Wrap(err, "unmarshalling schema into a PackageSpec")
 			}
 			mainSpec.Version = version
 
-			pulPkg, err := getPulumiPackageFromSchema(docsOutDir)
+			pulPkg, err := getPulumiPackageFromSchema(docsOutDir, mainSpec)
 			if err != nil {
 				return errors.Wrap(err, "generating package from schema file")
 			}

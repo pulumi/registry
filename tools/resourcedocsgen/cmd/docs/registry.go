@@ -94,12 +94,12 @@ func genResourceDocsForPackageFromRegistryMetadata(
 		}
 	}
 
-	mainSpec = &pschema.PackageSpec{}
+	var mainSpec pschema.PackageSpec
 	if err := json.Unmarshal(schemaBytes, mainSpec); err != nil {
 		return errors.Wrap(err, "unmarshalling schema into a PackageSpec")
 	}
 
-	pulPkg, err := getPulumiPackageFromSchema(docsOutDir)
+	pulPkg, err := getPulumiPackageFromSchema(docsOutDir, mainSpec)
 	if err != nil {
 		return errors.Wrap(err, "generating package from schema file")
 	}

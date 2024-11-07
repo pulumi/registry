@@ -10,5 +10,5 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-harness
 schema_file_path: provider/cmd/pulumi-resource-harness/schema.json
 title: Harness
-updated_on: 1729803917
-version: v0.4.2
+updated_on: 1731005573
+version: v0.4.3

@@ -16,13 +16,16 @@ package docs
 
 import (
 	"encoding/json"
+	stderrors "errors"
 	"fmt"
 	"io"
 	"net/http"
 	"net/url"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
+	"sync"
 
 	"github.com/spf13/cobra"
 
@@ -92,23 +95,23 @@ func genResourceDocsForPackageFromRegistryMetadata(
 		}
 	}
 
-	mainSpec = &pschema.PackageSpec{}
-	if err := json.Unmarshal(schemaBytes, mainSpec); err != nil {
+	var mainSpec pschema.PackageSpec
+	if err := json.Unmarshal(schemaBytes, &mainSpec); err != nil {
 		return errors.Wrap(err, "unmarshalling schema into a PackageSpec")
 	}
 
-	pulPkg, err := getPulumiPackageFromSchema(docsOutDir)
+	pulPkg, genctx, err := getPulumiPackageFromSchema(docsOutDir, mainSpec)
 	if err != nil {
 		return errors.Wrap(err, "generating package from schema file")
 	}
 
 	glog.Infoln("Running docs generator...")
-	if err := generateDocsFromSchema(docsOutDir, pulPkg); err != nil {
+	if err := generateDocsFromSchema(docsOutDir, genctx); err != nil {
 		return errors.Wrap(err, "generating docs from schema")
 	}
 
 	glog.Infoln("Generating the package tree JSON file...")
-	if err := generatePackageTree(packageTreeJSONOutDir, pulPkg.Name); err != nil {
+	if err := generatePackageTree(packageTreeJSONOutDir, pulPkg.Name, genctx); err != nil {
 		return errors.Wrap(err, "generating package tree")
 	}
 
@@ -126,31 +129,71 @@ func genResourceDocsForAllRegistryPackages(registryRepoPath, baseDocsOutDir, bas
 		return errors.Wrap(err, "reading the registry packages dir")
 	}
 
-	for _, f := range metadataFiles {
-		glog.Infof("=== starting %s ===\n", f.Name())
-		glog.Infoln("Processing metadata file")
-		metadataFilePath := filepath.Join(registryPackagesPath, f.Name())
-
-		b, err := os.ReadFile(metadataFilePath)
-		if err != nil {
-			return errors.Wrapf(err, "reading the metadata file %s", metadataFilePath)
-		}
-
-		var metadata pkg.PackageMeta
-		if err := yaml.Unmarshal(b, &metadata); err != nil {
-			return errors.Wrapf(err, "unmarshalling the metadata file %s", metadataFilePath)
-		}
-
-		docsOutDir := filepath.Join(baseDocsOutDir, metadata.Name, "api-docs")
-		err = genResourceDocsForPackageFromRegistryMetadata(metadata, docsOutDir, basePackageTreeJSONOutDir)
-		if err != nil {
-			return errors.Wrapf(err, "generating resource docs using metadata file info %s", f.Name())
-		}
-
-		glog.Infof("=== completed %s ===", f.Name())
+	var m sync.Mutex
+	var errs []error
+	addError := func(err error) {
+		m.Lock()
+		defer m.Unlock()
+		errs = append(errs, err)
 	}
 
-	return nil
+	// Concurrency is limited via a checkout-checkin system.
+	//
+	// Each time a process starts, it checks out a hallpass from the monitor (blocking
+	// if none are available). When the process completes, it returns it's hallpass to
+	// the monitor.
+	//
+	// Because there are a fixed number of hallpasses (maxConcurrency), and each
+	// process needs a hallpass to run, we limit effective concurrency to the number
+	// of available hallpasses.
+	maxConcurrency := runtime.NumCPU()
+
+	var hallpass struct{}
+	monitor := make(chan struct{}, maxConcurrency)
+	for i := 0; i < maxConcurrency; i++ {
+		monitor <- hallpass
+	}
+
+	var w sync.WaitGroup
+	w.Add(len(metadataFiles))
+	for _, f := range metadataFiles {
+		go func(f os.DirEntry) {
+			defer func(hallpass struct{}) {
+				w.Done()
+				monitor <- hallpass
+			}(<-monitor)
+			glog.Infof("=== starting %s ===\n", f.Name())
+			glog.Infoln("Processing metadata file")
+			metadataFilePath := filepath.Join(registryPackagesPath, f.Name())
+
+			b, err := os.ReadFile(metadataFilePath)
+			if err != nil {
+				addError(errors.Wrapf(err, "reading the metadata file %s", metadataFilePath))
+				return
+			}
+
+			var metadata pkg.PackageMeta
+			if err := yaml.Unmarshal(b, &metadata); err != nil {
+				addError(errors.Wrapf(err, "unmarshalling the metadata file %s", metadataFilePath))
+				return
+			}
+
+			docsOutDir := filepath.Join(baseDocsOutDir, metadata.Name, "api-docs")
+			err = genResourceDocsForPackageFromRegistryMetadata(metadata, docsOutDir, basePackageTreeJSONOutDir)
+			if err != nil {
+				addError(errors.Wrapf(err, "generating resource docs using metadata file info %s", f.Name()))
+				return
+			}
+
+			glog.Infof("=== completed %s ===", f.Name())
+		}(f)
+	}
+
+	w.Wait()
+	contract.Assertf(len(monitor) == maxConcurrency,
+		"Every process should have completed, so every flag should be checked in")
+
+	return stderrors.Join(errs...)
 }
 
 func resourceDocsFromRegistryCmd() *cobra.Command {

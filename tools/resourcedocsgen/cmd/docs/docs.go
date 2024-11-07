@@ -37,7 +37,9 @@ const (
 	defaultSchemaFilePathFormat = "/provider/cmd/pulumi-resource-%s/schema.json"
 )
 
-func getPulumiPackageFromSchema(docsOutDir string, mainSpec pschema.PackageSpec) (*pschema.Package, docsgen.Context, error) {
+func getPulumiPackageFromSchema(
+	docsOutDir string, mainSpec pschema.PackageSpec,
+) (*pschema.Package, docsgen.Context, error) {
 	// Delete existing docs before generating new ones.
 	if err := os.RemoveAll(docsOutDir); err != nil {
 		return nil, docsgen.Context{}, errors.Wrapf(err, "deleting provider directory %v", docsOutDir)

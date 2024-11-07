@@ -25,7 +25,7 @@ layout: package
 </p>
 
 
-This example builds, deploys,
+This example, inspired by the [Docker Getting Started Tutorial](https://docs.docker.com/get-started/), builds, deploys,
 and runs a simple containerized application to a private container registry, and scales out five load balanced replicas,
 all in just a handful of lines of Node.js code, and leveraging modern and best-in-class AWS features.
 

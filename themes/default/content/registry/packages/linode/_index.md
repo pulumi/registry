@@ -1,4 +1,5 @@
 ---
+# *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Linode Provider
 meta_desc: Provides an overview on how to configure the Pulumi Linode provider.
 layout: package
@@ -14,10 +15,10 @@ The linode provider is available as a package in all Pulumi languages:
 * Java: [`com.pulumi/linode`](https://central.sonatype.com/artifact/com.pulumi/linode)
 ## Overview
 
-The Linode provider exposes resources and data sources to interact with [Linode](https://www.linode.com/) services.
+The Linode provider exposes resources and functions to interact with [Linode](https://www.linode.com/) services.
 The provider needs to be configured with the proper credentials before it can be used.
 
-Use the navigation to the left to read about the available data sources.
+Use the navigation to the left to read about the available functions.
 ## Example Usage
 
 
@@ -312,6 +313,10 @@ This section outlines commonly used provider configuration options.
 
   The Linode API version can also be specified using the `LINODE_API_VERSION` environment variable.
 
+* `apiCaPath` (Optional) The path to a CA file to trust when making API requests.
+
+  The Linode API CA file path can also be specified using the `LINODE_CA` environment variable.
+
 * `objAccessKey` - (Optional) The access key to be used in [linode.ObjectStorageBucket](https://www.terraform.io/docs/resources/object_storage_bucket.md) and [linode.ObjectStorageObject](https://www.terraform.io/docs/resources/object_storage_object.md).
 
   The Object Access Key can also be specified using the `LINODE_OBJ_ACCESS_KEY` shell environment variable.
@@ -355,7 +360,7 @@ This section outlines less frequently used provider configuration options.
 Some resources are made available before the feature reaches general availability. These resources are subject to change, and may not be available to all customers in all regions. Early access features can be accessed by configuring the provider to use a different version of the API.
 ### Configuring the Target API Version
 
-The `apiVersion` can be set on the provider block like so:
+The `apiVersion` can be set on the provider configuration like so:
 
 {{< chooser language "typescript,python,go,csharp,java,yaml" >}}
 {{% choosable language typescript %}}

@@ -25,6 +25,18 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+// AssertDirEqual asserts that each file located under root is byte-for-byte identical
+// with it's test representation.
+//
+// To update files under test, use:
+//
+//	go test ./... -update
+//
+// WARNING: Multiple AssertDirEqual should not run in the same go test. If you need to
+// call AssertDirEqual more then once in a test, place each in a subtest:
+//
+//	t.Run("docs", func(t *testing.T) { util.AssertDirEqual(t, baseDocsOutDir) })
+//	t.Run("tree", func(t *testing.T) { util.AssertDirEqual(t, basePackageTreeJSONOutDir) })
 func AssertDirEqual(t *testing.T, root string) {
 	var structure []string
 	require.NoError(t, filepath.WalkDir(root, func(path string, d fs.DirEntry, err error) error {

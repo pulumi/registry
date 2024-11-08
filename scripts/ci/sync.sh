@@ -47,6 +47,7 @@ aws s3api put-public-access-block --bucket $destination_bucket --public-access-b
 aws s3api put-bucket-ownership-controls --bucket $destination_bucket --ownership-controls="Rules=[{ObjectOwnership=ObjectWriter}]"
 aws s3api put-bucket-acl --bucket $destination_bucket --acl bucket-owner-full-control --acl public-read
 
+aws configure set default.s3.max_concurrent_requests "$(( "$(nproc --all)" * 2))" # Default is 10
 aws s3api put-bucket-tagging --bucket $destination_bucket --tagging "TagSet=[{$(aws_owner_tag)}]" --region "$(aws_region)"
 
 # Make the bucket an S3 website.
@@ -55,10 +56,10 @@ aws s3 website $destination_bucket_uri --index-document index.html --error-docum
 # Sync the local build directory to the bucket. Note that we do pass the --delete option
 # here, since in most cases, we'll be continually updating a bucket associated with a PR;
 # passing this option keeps the destination bucket clean.
-echo "Synchronizing to $destination_bucket_uri..."
+log "Synchronizing to $destination_bucket_uri..."
 aws s3 sync "$build_dir" "$destination_bucket_uri" --acl public-read --delete --quiet --region "$(aws_region)"
+log "Sync complete."
 
-echo "Sync complete."
 s3_website_url="http://${destination_bucket}.s3-website.$(aws_region).amazonaws.com"
 echo "$s3_website_url"
 
@@ -67,7 +68,7 @@ aws s3 cp "$build_dir/latest-version" "${destination_bucket_uri}/latest-version"
     --content-type "text/plain" --acl public-read --region "$(aws_region)" --metadata-directive REPLACE
 
 # Smoke test the deployed website.
-echo "Running browser tests on $s3_website_url..."
+log "Running browser tests on $s3_website_url..."
 ./scripts/run-browser-tests.sh "$s3_website_url"
 
 # At this point, we have a bucket that's suitable for deployment. As a result of this run,
@@ -80,7 +81,7 @@ echo "Running browser tests on $s3_website_url..."
 # we need ensure that every CI job deploys only what it was responsible for building.
 # Coupled with the locking we get from the Pulumi Cloud, using a local file is a safe
 # way to ensure we're deploying what we just finished building and testing.
-echo "Writing result metadata."
+log "Writing result metadata."
 metadata='{
     "timestamp": %s,
     "commit": "%s",
@@ -103,4 +104,4 @@ if [[ "$1" == "preview" ]]; then
         $pr_comment_api_url
 fi
 
-echo "Done! The bucket website is now built and available at ${s3_website_url}."
+log "Done! The bucket website is now built and available at ${s3_website_url}."

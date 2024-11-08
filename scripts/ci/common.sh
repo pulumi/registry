@@ -161,3 +161,9 @@ retry() {
     }
     done
 }
+
+
+# Provides a time-stamped log entry.
+log() {
+    echo "[$(date "+%Y.%m.%d:%H.%M.%S")]" "$@"
+}

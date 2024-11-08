@@ -45,7 +45,9 @@ resourcedocsgen docs registry \
 # Apply fixes. See script for details.
 node ./scripts/apply-fixes.js
 
-printf "Running Hugo...\n\n"
+log "Running Hugo..."
+echo
+echo
 
 case ${1} in
     preview)
@@ -64,4 +66,6 @@ esac
 # Purge unused CSS.
 yarn run minify-css
 
-printf "Done!\n\n"
+log "Done!"
+echo
+echo

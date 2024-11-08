@@ -47,6 +47,7 @@ aws s3api put-public-access-block --bucket $destination_bucket --public-access-b
 aws s3api put-bucket-ownership-controls --bucket $destination_bucket --ownership-controls="Rules=[{ObjectOwnership=ObjectWriter}]"
 aws s3api put-bucket-acl --bucket $destination_bucket --acl bucket-owner-full-control --acl public-read
 
+aws configure set default.s3.max_concurrent_requests "$(nproc --all)" # Default is 10
 aws s3api put-bucket-tagging --bucket $destination_bucket --tagging "TagSet=[{$(aws_owner_tag)}]" --region "$(aws_region)"
 
 # Make the bucket an S3 website.

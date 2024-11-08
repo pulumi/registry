@@ -16,7 +16,6 @@ package docs
 
 import (
 	"encoding/json"
-	stderrors "errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -25,7 +24,6 @@ import (
 	"path/filepath"
 	"runtime"
 	"strings"
-	"sync"
 
 	"github.com/spf13/cobra"
 
@@ -38,6 +36,7 @@ import (
 	pschema "github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/util/contract"
 	"github.com/pulumi/registry/tools/resourcedocsgen/pkg"
+	concpool "github.com/sourcegraph/conc/pool"
 )
 
 func getRepoSlug(repoURL string) (string, error) {
@@ -129,71 +128,36 @@ func genResourceDocsForAllRegistryPackages(registryRepoPath, baseDocsOutDir, bas
 		return errors.Wrap(err, "reading the registry packages dir")
 	}
 
-	var m sync.Mutex
-	var errs []error
-	addError := func(err error) {
-		m.Lock()
-		defer m.Unlock()
-		errs = append(errs, err)
-	}
-
-	// Concurrency is limited via a checkout-checkin system.
-	//
-	// Each time a process starts, it checks out a hallpass from the monitor (blocking
-	// if none are available). When the process completes, it returns it's hallpass to
-	// the monitor.
-	//
-	// Because there are a fixed number of hallpasses (maxConcurrency), and each
-	// process needs a hallpass to run, we limit effective concurrency to the number
-	// of available hallpasses.
-	maxConcurrency := runtime.NumCPU()
-
-	var hallpass struct{}
-	monitor := make(chan struct{}, maxConcurrency)
-	for i := 0; i < maxConcurrency; i++ {
-		monitor <- hallpass
-	}
-
-	var w sync.WaitGroup
-	w.Add(len(metadataFiles))
+	pool := concpool.New().WithErrors().WithMaxGoroutines(runtime.NumCPU())
 	for _, f := range metadataFiles {
-		go func(f os.DirEntry) {
-			defer func(hallpass struct{}) {
-				w.Done()
-				monitor <- hallpass
-			}(<-monitor)
+		f := f
+		pool.Go(func() error {
 			glog.Infof("=== starting %s ===\n", f.Name())
 			glog.Infoln("Processing metadata file")
 			metadataFilePath := filepath.Join(registryPackagesPath, f.Name())
 
 			b, err := os.ReadFile(metadataFilePath)
 			if err != nil {
-				addError(errors.Wrapf(err, "reading the metadata file %s", metadataFilePath))
-				return
+				return errors.Wrapf(err, "reading the metadata file %s", metadataFilePath)
 			}
 
 			var metadata pkg.PackageMeta
 			if err := yaml.Unmarshal(b, &metadata); err != nil {
-				addError(errors.Wrapf(err, "unmarshalling the metadata file %s", metadataFilePath))
-				return
+				return errors.Wrapf(err, "unmarshalling the metadata file %s", metadataFilePath)
 			}
 
 			docsOutDir := filepath.Join(baseDocsOutDir, metadata.Name, "api-docs")
 			err = genResourceDocsForPackageFromRegistryMetadata(metadata, docsOutDir, basePackageTreeJSONOutDir)
 			if err != nil {
-				addError(errors.Wrapf(err, "generating resource docs using metadata file info %s", f.Name()))
-				return
+				return errors.Wrapf(err, "generating resource docs using metadata file info %s", f.Name())
 			}
 
 			glog.Infof("=== completed %s ===", f.Name())
-		}(f)
+			return nil
+		})
 	}
 
-	w.Wait()
-	contract.Assertf(len(monitor) == maxConcurrency,
-		"Every process should have completed, so every flag should be checked in")
-
-	return stderrors.Join(errs...)
+	return pool.Wait()
 }
 
 func resourceDocsFromRegistryCmd() *cobra.Command {

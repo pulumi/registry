@@ -50,10 +50,10 @@ printf "Running Hugo...\n\n"
 case ${1} in
     preview)
         export HUGO_BASEURL="http://$(origin_bucket_prefix)-$(build_identifier).s3-website.$(aws_region).amazonaws.com"
-        GOGC=3 hugo --minify --buildFuture --templateMetrics -e preview
+        hugo --minify --buildFuture --templateMetrics -e preview
         ;;
     update)
-        GOGC=3 hugo --minify --buildFuture --templateMetrics -e production
+        hugo --minify --buildFuture --templateMetrics -e production
         ;;
     *)
         echo "Unknown mode, '${1}' must be one of 'preview' or 'update'"

@@ -156,6 +156,7 @@ func genResourceDocsForAllRegistryPackages(registryRepoPath, baseDocsOutDir, bas
 func resourceDocsFromRegistryCmd() *cobra.Command {
 	var baseDocsOutDir string
 	var basePackageTreeJSONOutDir string
+	var registryDir string
 
 	cmd := &cobra.Command{
 		Use:   "registry [pkgName]",
@@ -163,7 +164,7 @@ func resourceDocsFromRegistryCmd() *cobra.Command {
 		Long: "Generate resource docs for all packages in the registry or specific packages. " +
 			"Pass a package name in the registry as an optional arg to generate docs only for that package.",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			registryDir, err := os.Getwd()
+			registryDir, err := filepath.Abs(registryDir)
 			if err != nil {
 				return errors.Wrap(err, "finding the cwd")
 			}
@@ -208,6 +209,9 @@ func resourceDocsFromRegistryCmd() *cobra.Command {
 	cmd.Flags().StringVar(&basePackageTreeJSONOutDir, "basePackageTreeJSONOutDir",
 		"../../static/registry/packages/navs",
 		"The directory path to write the package tree JSON file to")
+	cmd.Flags().StringVar(&registryDir, "registryDir",
+		".",
+		"The root of the pulumi/registry directory")
 
 	return cmd
 }

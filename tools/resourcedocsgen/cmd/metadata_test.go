@@ -15,11 +15,9 @@
 package cmd
 
 import (
-	"os"
-	"path/filepath"
 	"testing"
 
-	"github.com/hexops/autogold/v2"
+	"github.com/pulumi/registry/tools/resourcedocsgen/internal/tests/util"
 	"github.com/stretchr/testify/require"
 )
 
@@ -29,7 +27,6 @@ func TestMetadataBridgedProvider(t *testing.T) {
 		providerName: "random",
 		version:      "v4.16.7",
 		schemaFile:   "provider/cmd/pulumi-resource-random/schema.json",
-		checkIndex:   true,
 	})
 }
 
@@ -54,7 +51,6 @@ func TestMetadataComponentProvider(t *testing.T) {
 type testMetadataArgs struct {
 	providerName, version string
 	schemaFile            string
-	checkIndex            bool
 }
 
 func testMetadata(t *testing.T, args testMetadataArgs) {
@@ -69,24 +65,6 @@ func testMetadata(t *testing.T, args testMetadataArgs) {
 		"--packageDocsDir", pacakgeDocsDir,
 	})
 	require.NoError(t, cmd.Execute())
-	t.Run(args.providerName+".yaml", func(t *testing.T) {
-		t.Parallel()
-		autogold.ExpectFile(t, autogold.Raw(
-			readFile(t, filepath.Join(metadataDir, args.providerName+".yaml")),
-		))
-	})
-	if args.checkIndex {
-		t.Run("_index.md", func(t *testing.T) {
-			t.Parallel()
-			autogold.ExpectFile(t, autogold.Raw(
-				readFile(t, filepath.Join(pacakgeDocsDir, "_index.md")),
-			))
-		})
-	}
-}
-
-func readFile(t *testing.T, path string) string {
-	b, err := os.ReadFile(path)
-	require.NoError(t, err)
-	return string(b)
+	t.Run("metadata", func(t *testing.T) { util.AssertDirEqual(t, metadataDir) })
+	t.Run("index", func(t *testing.T) { util.AssertDirEqual(t, pacakgeDocsDir) })
 }

@@ -9,7 +9,7 @@ native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-aws
-schema_file_path: provider/cmd/pulumi-resource-aws/schema.json
+schema_file_path: ""
 title: AWS
-updated_on: 1730929406
-version: v6.58.0
+updated_on: 1731334164
+version: v6.59.0

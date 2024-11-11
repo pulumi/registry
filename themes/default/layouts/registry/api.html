@@ -52,10 +52,6 @@
                     {{ partial "docs/table-of-contents.html" . }}
                 </div>
 
-                {{ if .Params.cloud_overview }}
-                    {{ partial "docs/cloud-overview.html" . }}
-                {{ end }}
-
                 <section class="docs-content">
                     {{ if strings.HasSuffix .Permalink "how-to-guides/" }}
                         {{ if (eq (len .Pages) 0) }}

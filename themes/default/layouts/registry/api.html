@@ -1,7 +1,4 @@
 {{ define "main" }}
-    {{ $directories := (split .Page.File.Path "/")}}
-    {{ $packageName := index $directories 2 }}
-    {{ $packageHome := path.Join "registry/packages" $packageName }}
     {{ $title_tag := .Params.title_tag }}
 
     <div class="docs-list-main">

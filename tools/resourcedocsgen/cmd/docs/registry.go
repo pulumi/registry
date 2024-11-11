@@ -22,6 +22,7 @@ import (
 	"net/url"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
 
 	"github.com/spf13/cobra"
@@ -35,6 +36,7 @@ import (
 	pschema "github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/util/contract"
 	"github.com/pulumi/registry/tools/resourcedocsgen/pkg"
+	concpool "github.com/sourcegraph/conc/pool"
 )
 
 func getRepoSlug(repoURL string) (string, error) {
@@ -92,23 +94,23 @@ func genResourceDocsForPackageFromRegistryMetadata(
 		}
 	}
 
-	mainSpec = &pschema.PackageSpec{}
-	if err := json.Unmarshal(schemaBytes, mainSpec); err != nil {
+	var mainSpec pschema.PackageSpec
+	if err := json.Unmarshal(schemaBytes, &mainSpec); err != nil {
 		return errors.Wrap(err, "unmarshalling schema into a PackageSpec")
 	}
 
-	pulPkg, err := getPulumiPackageFromSchema(docsOutDir)
+	pulPkg, genctx, err := getPulumiPackageFromSchema(docsOutDir, mainSpec)
 	if err != nil {
 		return errors.Wrap(err, "generating package from schema file")
 	}
 
 	glog.Infoln("Running docs generator...")
-	if err := generateDocsFromSchema(docsOutDir, pulPkg); err != nil {
+	if err := generateDocsFromSchema(docsOutDir, genctx); err != nil {
 		return errors.Wrap(err, "generating docs from schema")
 	}
 
 	glog.Infoln("Generating the package tree JSON file...")
-	if err := generatePackageTree(packageTreeJSONOutDir, pulPkg.Name); err != nil {
+	if err := generatePackageTree(packageTreeJSONOutDir, pulPkg.Name, genctx); err != nil {
 		return errors.Wrap(err, "generating package tree")
 	}
 
@@ -126,31 +128,36 @@ func genResourceDocsForAllRegistryPackages(registryRepoPath, baseDocsOutDir, bas
 		return errors.Wrap(err, "reading the registry packages dir")
 	}
 
+	pool := concpool.New().WithErrors().WithMaxGoroutines(runtime.NumCPU())
 	for _, f := range metadataFiles {
-		glog.Infof("=== starting %s ===\n", f.Name())
-		glog.Infoln("Processing metadata file")
-		metadataFilePath := filepath.Join(registryPackagesPath, f.Name())
+		f := f
+		pool.Go(func() error {
+			glog.Infof("=== starting %s ===\n", f.Name())
+			glog.Infoln("Processing metadata file")
+			metadataFilePath := filepath.Join(registryPackagesPath, f.Name())
 
-		b, err := os.ReadFile(metadataFilePath)
-		if err != nil {
-			return errors.Wrapf(err, "reading the metadata file %s", metadataFilePath)
-		}
+			b, err := os.ReadFile(metadataFilePath)
+			if err != nil {
+				return errors.Wrapf(err, "reading the metadata file %s", metadataFilePath)
+			}
 
-		var metadata pkg.PackageMeta
-		if err := yaml.Unmarshal(b, &metadata); err != nil {
-			return errors.Wrapf(err, "unmarshalling the metadata file %s", metadataFilePath)
-		}
+			var metadata pkg.PackageMeta
+			if err := yaml.Unmarshal(b, &metadata); err != nil {
+				return errors.Wrapf(err, "unmarshalling the metadata file %s", metadataFilePath)
+			}
 
-		docsOutDir := filepath.Join(baseDocsOutDir, metadata.Name, "api-docs")
-		err = genResourceDocsForPackageFromRegistryMetadata(metadata, docsOutDir, basePackageTreeJSONOutDir)
-		if err != nil {
-			return errors.Wrapf(err, "generating resource docs using metadata file info %s", f.Name())
-		}
+			docsOutDir := filepath.Join(baseDocsOutDir, metadata.Name, "api-docs")
+			err = genResourceDocsForPackageFromRegistryMetadata(metadata, docsOutDir, basePackageTreeJSONOutDir)
+			if err != nil {
+				return errors.Wrapf(err, "generating resource docs using metadata file info %s", f.Name())
+			}
 
-		glog.Infof("=== completed %s ===", f.Name())
+			glog.Infof("=== completed %s ===", f.Name())
+			return nil
+		})
 	}
 
-	return nil
+	return pool.Wait()
 }
 
 func resourceDocsFromRegistryCmd() *cobra.Command {

@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-harbor/v3.10.15/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Harbor
 meta_desc: Provides an overview of the Harbor Provider for Pulumi.
 layout: overview

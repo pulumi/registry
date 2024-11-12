@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/komminarlabs/pulumi-influxdb/v1.2.2/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: InfluxDB
 meta_desc: Provides an overview of the InfluxDB Provider for Pulumi.
 layout: package

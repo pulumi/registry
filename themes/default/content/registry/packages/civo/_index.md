@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-civo/v2.4.6/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Civo Provider
 meta_desc: Provides an overview on how to configure the Pulumi Civo provider.

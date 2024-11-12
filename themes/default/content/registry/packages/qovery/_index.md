@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/dirien/pulumi-qovery/v0.41.0/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Qovery
 meta_desc: Provides an overview of the Qovery Provider for Pulumi.
 layout: package

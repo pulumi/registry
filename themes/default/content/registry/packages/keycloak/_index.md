@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-keycloak/v5.3.5/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Keycloak Provider
 meta_desc: Provides an overview on how to configure the Pulumi Keycloak provider.
 layout: package

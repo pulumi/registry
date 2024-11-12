@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-matchbox/v0.2.0/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Matchbox
 meta_desc: Provides an overview of the Matchbox Provider for Pulumi.
 layout: package

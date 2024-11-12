@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-fortios/v0.0.6/docs/installation-configuration.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Fortios Installation, Configuration and Usage
 meta_desc: Information on how to install, configure use and debug the Fortios provider.
 layout: package

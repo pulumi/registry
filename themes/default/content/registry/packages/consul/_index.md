@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-consul/v3.12.2/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Consul Provider
 meta_desc: Provides an overview on how to configure the Pulumi Consul provider.
 layout: package

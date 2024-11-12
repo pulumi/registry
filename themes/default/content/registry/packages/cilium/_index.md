@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/littlejo/pulumi-cilium/v0.1.7/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Cilium
 meta_desc: Provides an overview of the Cilium Provider for Pulumi.
 layout: package

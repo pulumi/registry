@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/equinix/pulumi-equinix/v0.19.0/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Equinix
 meta_desc: Provides an overview of the Equinix Provider for Pulumi.
 layout: package

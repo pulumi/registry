@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/equinix/pulumi-equinix/v0.19.0/docs/installation-configuration.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Equinix Installation & Configuration
 meta_desc: Information on how to install the Equinix provider.
 layout: package

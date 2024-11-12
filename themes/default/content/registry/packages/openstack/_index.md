@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-openstack/v5.0.0/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Openstack Provider
 meta_desc: Provides an overview on how to configure the Pulumi Openstack provider.
 layout: package

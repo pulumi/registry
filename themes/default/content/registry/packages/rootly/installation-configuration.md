@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/rootlyhq/pulumi-rootly/v1.5.0/docs/installation-configuration.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Rootly Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi Rootly Provider.
 layout: package

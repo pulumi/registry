@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-fortios/v0.0.6/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Fortios
 meta_desc: Provides an overview of the Fortios Provider for Pulumi.
 layout: package

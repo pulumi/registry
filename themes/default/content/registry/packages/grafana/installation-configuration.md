@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-grafana/v0.7.0/docs/installation-configuration.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Grafana Cloud Installation & Configuration
 meta_desc: Information on how to install the Grafana provider.
 layout: package

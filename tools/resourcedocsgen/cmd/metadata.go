@@ -20,6 +20,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"net/url"
 	"slices"
 	"strings"
 	"time"
@@ -31,6 +32,7 @@ import (
 	"github.com/pulumi/pulumi/sdk/v3/go/common/util/contract"
 	"github.com/pulumi/registry/tools/resourcedocsgen/pkg"
 	"github.com/spf13/cobra"
+	"github.com/spf13/pflag"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 )
@@ -45,7 +47,7 @@ var featuredPackages = []string{
 }
 
 func PackageMetadataCmd() *cobra.Command {
-	var repoSlug repoSlug
+	var repoSlug optional[repoSlug, *repoSlug]
 	var providerName string
 	var categoryStr string
 	var component bool
@@ -55,63 +57,85 @@ func PackageMetadataCmd() *cobra.Command {
 	var version string
 	var metadataDir string
 	var packageDocsDir string
+	var schemaFileURL string
+	var indexFileURL string
+	var installationConfigurationURL string
 
 	cmd := &cobra.Command{
 		Use:   "metadata <args>",
 		Short: "Generate package metadata from Pulumi schema",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			if schemaFile == "" && providerName == "" {
-				providerName = strings.Replace(repoSlug.name, "pulumi-", "", -1)
+			if repoSlug.isSet && schemaFile == "" && providerName == "" {
+				providerName = strings.Replace(repoSlug.v.name, "pulumi-", "", -1)
 			}
 
-			mainSpec, err := readRemoteSchemaFile(
-				inferSchemaFileURL(providerName, schemaFile, repoSlug.String(), version),
-				repoSlug)
+			publishedDate := time.Now()
+
+			if schemaFileURL == "" {
+				if !repoSlug.isSet {
+					return errors.New("repoSlug is required unless schemaFileURL is passed")
+				}
+				schemaFileURL = inferSchemaFileURL(providerName, schemaFile, repoSlug.String(), version)
+				// try and get the version release data using the github releases API
+				//
+				// We only attempt to infer the date when schemaFileURL is missing, implying we are
+				// sourcing this from a GH repo.
+				if pd, ok, err := inferPublishDate(repoSlug.v, version); err != nil {
+					return errors.WithMessage(err, "failed to infer publish date")
+				} else if ok {
+					publishedDate = pd
+				}
+			} else {
+				if schemaFile != "" {
+					glog.Warning("schemaFile was ignored - schemaFileURL takes precedence")
+				}
+			}
+			mainSpec, err := readRemoteSchemaFile(schemaFileURL, repoSlug.v)
 			if err != nil {
 				return errors.WithMessage(err, "unable to read remote schema file")
 			}
 
-			// try and get the version release data using the github releases API
-			tags, err := getGitHubTags(repoSlug.String())
-			if err != nil {
-				return errors.Wrap(err, "github tags")
+			// Unify the version passed in (if any) with the version on the schema (if any).
+			switch {
+			// If we don't have any version, then error.
+			case mainSpec.Version == "" && version == "":
+				return fmt.Errorf("No version available for package %s", providerName)
+			// Version has been specified, so use it.
+			//
+			// This can override mainSpec.Version.
+			case version != "":
+				mainSpec.Version = version
+			// Infer the version from the schema.
+			default:
+				contract.Assertf(mainSpec.Version != "", "impossible - version was checked earlier")
+				version = mainSpec.Version
 			}
 
-			var commitDetails string
-			for _, tag := range tags {
-				if tag.Name == version {
-					commitDetails = tag.Commit.URL
-					break
-				}
-			}
-
-			publishedDate := time.Now()
-			if commitDetails != "" {
-				var commit pkg.GitHubCommit
-				// now let's make a request to the specific commit to get the date
-				commitResp, err := http.Get(commitDetails) //nolint:gosec
-				if err != nil {
-					return fmt.Errorf("getting release info for %s: %w", repoSlug, err)
-				}
-
-				defer commitResp.Body.Close()
-				err = json.NewDecoder(commitResp.Body).Decode(&commit)
-				if err != nil {
-					return fmt.Errorf("constructing commit information for %s: %w", repoSlug, err)
-				}
-
-				publishedDate = commit.Commit.Author.Date
-			}
-
-			mainSpec.Version = version
-
-			if mainSpec.Repository == "" {
-				// we already know the repo slug so we can reconstruct the repository name using that
+			// Unify the repo passed in (if any) with the version in the schema (if any).
+			switch {
+			case mainSpec.Repository == "" && !repoSlug.isSet:
+				return fmt.Errorf("No repository available for package %s", providerName)
+			case repoSlug.isSet:
 				mainSpec.Repository = "https://github.com/" + repoSlug.String()
+			default:
+				r, err := url.Parse(mainSpec.Repository)
+				if err == nil {
+					err = repoSlug.Set(r.Path)
+				}
+				if err != nil {
+					return errors.Wrapf(err, "parsing repo url %q from schema", mainSpec.Repository)
+				}
+				if r.Hostname() != "github.com" {
+					return fmt.Errorf("mainSpec.Repository host must be from GH, found %q", r.Hostname())
+				}
+
+				if err := repoSlug.Set(r.Path); err != nil {
+					return errors.Wrapf(err, "parsing repo slug from %q", mainSpec.Repository)
+				}
 			}
 
 			status := pkg.PackageStatusGA
-			if strings.HasPrefix(version, "v0.") {
+			if strings.HasPrefix(version, "v0.") || strings.HasPrefix(version, "0.") {
 				status = pkg.PackageStatusPublicPreview
 			}
 
@@ -151,14 +175,8 @@ func PackageMetadataCmd() *cobra.Command {
 			case mainSpec.Publisher != "":
 				publisherName = mainSpec.Publisher
 			default:
-				contract.Assertf(repoSlug.owner != "", "repoSlug.owner is non-empty by construction")
-				publisherName = cases.Title(language.Und, cases.NoLower).String(repoSlug.owner)
-			}
-
-			cleanSchemaFilePath := func(s string) string {
-				s = strings.ReplaceAll(s, "../", "")
-				s = strings.ReplaceAll(s, "pulumi-"+mainSpec.Name, "")
-				return s
+				contract.Assertf(repoSlug.v.owner != "", "repoSlug.owner is non-empty by construction")
+				publisherName = cases.Title(language.Und, cases.NoLower).String(repoSlug.v.owner)
 			}
 
 			pm := pkg.PackageMeta{
@@ -168,9 +186,8 @@ func PackageMetadataCmd() *cobra.Command {
 				Publisher:   publisherName,
 				Title:       title,
 
-				RepoURL:        mainSpec.Repository,
-				SchemaFilePath: cleanSchemaFilePath(schemaFile),
-
+				RepoURL:       mainSpec.Repository,
+				SchemaFileURL: schemaFileURL,
 				PackageStatus: status,
 				UpdatedOn:     publishedDate.Unix(),
 				Version:       version,
@@ -185,11 +202,6 @@ func PackageMetadataCmd() *cobra.Command {
 				return errors.Wrap(err, "generating package metadata")
 			}
 
-			if metadataDir == "" {
-				// if the user hasn't specified an metadataDir, we will default to
-				// the path within the registry folder.
-				metadataDir = "themes/default/data/registry/packages"
-			}
 			if err := pkg.EmitFile(metadataDir, mainSpec.Name+".yaml", append([]byte(
 				`# WARNING: this file was generated by resourcedocsgen
 # Do not edit by hand unless you're certain you know what you are doing!
@@ -203,14 +215,24 @@ func PackageMetadataCmd() *cobra.Command {
 				packageDocsDir = "themes/default/content/registry/packages/" + mainSpec.Name
 			}
 
-			requiredFiles := []string{
-				"_index.md",
-				"installation-configuration.md",
+			requiredFiles := []struct {
+				name, url string
+			}{
+				{"_index.md", indexFileURL},
+				{"installation-configuration.md", installationConfigurationURL},
 			}
+
 			for _, requiredFile := range requiredFiles {
-				requiredFilePath := fmt.Sprintf("https://raw.githubusercontent.com/%s/%s/docs/%s",
-					repoSlug, version, requiredFile)
-				content, err := readRemoteFile(requiredFilePath, repoSlug.owner)
+				docsURLOrDefault := func(specified, name string) string {
+					if specified != "" {
+						return specified
+					}
+					return "https://raw.githubusercontent.com/" + repoSlug.String() + "/" + version + "/docs/" + name
+				}
+
+				url := docsURLOrDefault(requiredFile.url, requiredFile.name)
+
+				content, err := readRemoteFile(url, repoSlug.v.owner)
 				if err != nil {
 					return err
 				}
@@ -223,15 +245,15 @@ func PackageMetadataCmd() *cobra.Command {
 
 				if rest, ok := bytes.CutPrefix(bytes.TrimLeft(content, "\n\t\r "), []byte("---\n")); ok {
 					content = append([]byte(`---
-# WARNING: this file was fetched from `+requiredFilePath+`
+# WARNING: this file was fetched from `+url+`
 # Do not edit by hand unless you're certain you know what you are doing!
 `), rest...)
 				} else {
 					return fmt.Errorf(`expected file %s to start with YAML front-matter ("---\n"), found leading %q`,
-						requiredFilePath, strings.Split(string(content), "\n")[0])
+						url, strings.Split(string(content), "\n")[0])
 				}
 
-				if err := pkg.EmitFile(packageDocsDir, requiredFile, content); err != nil {
+				if err := pkg.EmitFile(packageDocsDir, requiredFile.name, content); err != nil {
 					return errors.Wrap(err, fmt.Sprintf("writing %s file", requiredFile))
 				}
 			}
@@ -243,6 +265,14 @@ func PackageMetadataCmd() *cobra.Command {
 	cmd.Flags().Var(&repoSlug, "repoSlug", "The repository slug e.g. pulumi/pulumi-provider")
 	cmd.Flags().StringVar(&providerName, "providerName", "", "The name of the provider e.g. aws, aws-native. "+
 		"Required when there is no schemaFile flag specified.")
+	cmd.Flags().StringVar(&schemaFileURL, "schemaFileURL", "",
+		`The URL from which the schema can be retrieved.
+
+schemaFileURL takes precedence over schemaFile.`)
+	cmd.Flags().StringVar(&indexFileURL, "indexFileURL", "",
+		`The URL from which the docs/_index.md file can be retrieved.`)
+	cmd.Flags().StringVar(&installationConfigurationURL, "installationConfigurationFileURL", "",
+		`The URL from which the docs/installation-configuration.md file can be retrieved.`)
 	cmd.Flags().StringVarP(&schemaFile, "schemaFile", "s", "",
 		"Relative path to the schema.json file from the root of the repository. If no schemaFile is specified,"+
 			" then providerName is required so the schemaFile path can "+
@@ -256,15 +286,12 @@ func PackageMetadataCmd() *cobra.Command {
 		"The display name of the package. If omitted, the name of the package will be used")
 	cmd.Flags().BoolVar(&component, "component", false,
 		"Whether or not this package is a component and not a provider")
-	cmd.Flags().StringVar(&metadataDir, "metadataDir", "",
+	cmd.Flags().StringVar(&metadataDir, "metadataDir", "themes/default/data/registry/packages",
 		"The location to save the metadata - this will default to the folder "+
 			"structure that the registry expects (themes/default/data/registry/packages)")
 	cmd.Flags().StringVar(&packageDocsDir, "packageDocsDir", "",
 		"The location to save the package docs - this will default to the folder "+
 			"structure that the registry expects (themes/default/content/registry/packages)")
-
-	contract.AssertNoErrorf(cmd.MarkFlagRequired("version"), "could not find version")
-	contract.AssertNoErrorf(cmd.MarkFlagRequired("repoSlug"), "could not find repoSlug")
 
 	return cmd
 }
@@ -405,6 +432,27 @@ func getGitHubTags(repoSlug string) ([]pkg.GitHubTag, error) {
 	return tags, nil
 }
 
+// optional makes a pflag.Value optional
+type optional[V any, T interface {
+	*V
+	pflag.Value
+}] struct {
+	v     V
+	isSet bool
+}
+
+func (s *optional[U, T]) String() string { return T(&s.v).String() }
+
+func (s *optional[U, T]) Set(input string) error {
+	if input == "" {
+		return nil
+	}
+	s.isSet = true
+	return T(&s.v).Set(input)
+}
+
+func (s *optional[U, T]) Type() string { return T(&s.v).Type() }
+
 type repoSlug struct{ name, owner string }
 
 func (s repoSlug) String() string { return s.owner + "/" + s.name }
@@ -476,4 +524,39 @@ func readRemoteSchemaFile(schemaFileURL string, repo repoSlug) (*pschema.Package
 		return nil, errors.Wrap(err, "unmarshalling schema into a PackageSpec")
 	}
 	return spec, nil
+}
+
+func inferPublishDate(repo repoSlug, version string) (time.Time, bool, error) {
+	// try and get the version release data using the github releases API
+	tags, err := getGitHubTags(repo.String())
+	if err != nil {
+		return time.Time{}, false, errors.Wrap(err, "github tags")
+	}
+
+	var commitDetails string
+	for _, tag := range tags {
+		if tag.Name == version {
+			commitDetails = tag.Commit.URL
+			break
+		}
+	}
+
+	if commitDetails == "" {
+		return time.Time{}, false, nil
+	}
+
+	var commit pkg.GitHubCommit
+	// now let's make a request to the specific commit to get the date
+	commitResp, err := http.Get(commitDetails) //nolint:gosec
+	if err != nil {
+		return time.Time{}, false, fmt.Errorf("getting release info for %s: %w", repo, err)
+	}
+
+	defer commitResp.Body.Close()
+	err = json.NewDecoder(commitResp.Body).Decode(&commit)
+	if err != nil {
+		return time.Time{}, false, fmt.Errorf("constructing commit information for %s: %w", repo, err)
+	}
+
+	return commit.Commit.Author.Date, true, nil
 }

@@ -45,11 +45,13 @@ type PackageMeta struct {
 	// Title is the package's display-friendly name.
 	Title       string `json:"title"`
 	Description string `json:"description"`
-	LogoURL     string `json:"logo_url"`
-	RepoURL     string `json:"repo_url"`
-	// SchemaFilePath is the path to the package's schema file (json or yaml)
-	// relative to the root of that package's repo.
-	SchemaFilePath string `json:"schema_file_path"`
+
+	// A publicly available URL to retrieve the schema from.
+	//
+	// LogoURL is derived from the provider schema.
+	LogoURL       string `json:"logo_url"`
+	RepoURL       string `json:"repo_url"`
+	SchemaFileURL string `json:"schema_file_url"` // A publicly available URL to retrieve the schema from.
 
 	UpdatedOn     int64           `json:"updated_on"`
 	Publisher     string          `json:"publisher"`
@@ -65,4 +67,10 @@ type PackageMeta struct {
 	// Component indicates if the package is a component and not
 	// a provider.
 	Component bool `json:"component"`
+
+	// SchemaFilePath is the path to the package's schema file (json or yaml)
+	// relative to the root of that package's repo.
+	//
+	// Deprecated: Prefer to use SchemaFileURL.
+	SchemaFilePath string `json:"schema_file_path,omitempty"`
 }

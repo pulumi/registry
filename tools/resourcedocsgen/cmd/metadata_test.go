@@ -21,8 +21,8 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-//nolint:paralleltest //PackageMetadataCmd relies on global state.
 func TestMetadataBridgedProvider(t *testing.T) {
+	t.Parallel()
 	testMetadata(t, testMetadataArgs{
 		providerName: "random",
 		version:      "v4.16.7",
@@ -30,17 +30,42 @@ func TestMetadataBridgedProvider(t *testing.T) {
 	})
 }
 
-//nolint:paralleltest //PackageMetadataCmd relies on global state.
 func TestMetadataNativeProvider(t *testing.T) {
+	t.Parallel()
+
+	var metadataDir, pacakgeDocsDir string
 	testMetadata(t, testMetadataArgs{
 		providerName: "command",
 		version:      "v1.0.0",
 		schemaFile:   "provider/cmd/pulumi-resource-command/schema.json",
+		assert: func(t *testing.T, metadata, pacakgeDocs string) {
+			defaultAssert(t, metadata, pacakgeDocs)
+			metadataDir = metadata
+			pacakgeDocsDir = pacakgeDocs
+		},
+	})
+
+	t.Run("test-remote-equivalence", func(t *testing.T) {
+		t.Parallel()
+		testMetadata(t, testMetadataArgs{
+			providerName: "command",
+			version:      "v1.0.0",
+			schemaFileURL: "https://raw.githubusercontent.com/pulumi/pulumi-command/" +
+				"v1.0.0/provider/cmd/pulumi-resource-command/schema.json",
+			indexFileURL: "https://raw.githubusercontent.com/pulumi/pulumi-command/" +
+				"v1.0.0/docs/_index.md",
+			assert: func(t *testing.T, metadata, pacakgeDocs string) {
+				util.AssertDirsEqual(t, metadataDir, metadata,
+					// We fix the time stamp, since we expect URL based lookups to have stable time stamps.
+					util.OptionAssertDirsEqualReplace("updated_on: [0-9]+", "updated_on: 1719590084"))
+				util.AssertDirsEqual(t, pacakgeDocsDir, pacakgeDocs)
+			},
+		})
 	})
 }
 
-//nolint:paralleltest // PackageMetadataCmd relies on global state.
 func TestMetadataComponentProvider(t *testing.T) {
+	t.Parallel()
 	testMetadata(t, testMetadataArgs{
 		providerName: "aws-apigateway",
 		version:      "v2.6.1",
@@ -49,8 +74,15 @@ func TestMetadataComponentProvider(t *testing.T) {
 }
 
 type testMetadataArgs struct {
-	providerName, version string
-	schemaFile            string
+	providerName, version       string
+	schemaFile                  string
+	schemaFileURL, indexFileURL string
+	assert                      func(t *testing.T, metadataDir, pacakgeDocsDir string)
+}
+
+func defaultAssert(t *testing.T, metadataDir, pacakgeDocsDir string) {
+	t.Run("metadata", func(t *testing.T) { t.Parallel(); util.AssertDirEqual(t, metadataDir) })
+	t.Run("index", func(t *testing.T) { t.Parallel(); util.AssertDirEqual(t, pacakgeDocsDir) })
 }
 
 func testMetadata(t *testing.T, args testMetadataArgs) {
@@ -60,11 +92,16 @@ func testMetadata(t *testing.T, args testMetadataArgs) {
 	cmd.SetArgs([]string{
 		"--repoSlug", "pulumi/pulumi-" + args.providerName,
 		"--schemaFile", args.schemaFile,
+		"--schemaFileURL", args.schemaFileURL,
+		"--indexFileURL", args.indexFileURL,
 		"--version", args.version,
 		"--metadataDir", metadataDir,
 		"--packageDocsDir", pacakgeDocsDir,
 	})
 	require.NoError(t, cmd.Execute())
-	t.Run("metadata", func(t *testing.T) { util.AssertDirEqual(t, metadataDir) })
-	t.Run("index", func(t *testing.T) { util.AssertDirEqual(t, pacakgeDocsDir) })
+	if args.assert != nil {
+		args.assert(t, metadataDir, pacakgeDocsDir)
+	} else {
+		defaultAssert(t, metadataDir, pacakgeDocsDir)
+	}
 }

@@ -15,13 +15,16 @@
 package util
 
 import (
+	"errors"
 	"io/fs"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strings"
 	"testing"
 
 	"github.com/hexops/autogold/v2"
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
@@ -40,31 +43,107 @@ import (
 func AssertDirEqual(t *testing.T, root string) {
 	var structure []string
 	require.NoError(t, filepath.WalkDir(root, func(path string, d fs.DirEntry, err error) error {
-		t.Logf("examining %s", path)
-		if path == root {
-			return nil
-		}
-		if err != nil {
+		if path == root || err != nil {
 			return err
 		}
 
 		pathName := strings.TrimLeft(strings.TrimPrefix(path, root), "/")
 		require.NotEmpty(t, pathName, "internal error - pathName should not be empty")
-		t.Logf("named path - %s", pathName)
 		structure = append(structure, pathName)
 		if d.IsDir() {
 			return nil
 		}
 
-		t.Logf("reading file %s", pathName)
 		content, err := os.ReadFile(path)
-		if err != nil {
-			return err
-		}
+		require.NoError(t, err, "could not read walked file")
 		t.Run(pathName, func(t *testing.T) { autogold.ExpectFile(t, autogold.Raw(content)) })
 		return nil
 	}))
 	t.Run("directory-structure", (func(t *testing.T) { autogold.ExpectFile(t, structure) }))
+}
+
+// AssertDirsEqual asserts that each file located under root is byte-for-byte identical
+// with another directory, and that the directory structures match.
+//
+// If you just want to assert that a directory structure is unchanged or show updates, see
+// [AssertDirEqual]. AssertDirsEqual is about showing that two already written out
+// directories are equivalent.
+func AssertDirsEqual(t *testing.T, expected, actual string, options ...OptionAssertDirsEqual) {
+	require.NotEqual(t, expected, actual, "cannot assert on the same directory")
+	var opts optionAssertDirsEqual
+	for _, o := range options {
+		o(&opts)
+	}
+	var expectedStructure, actualStructure []string
+	require.NoError(t, filepath.WalkDir(expected, func(path string, d fs.DirEntry, err error) error {
+		if path == expected || err != nil {
+			return err
+		}
+
+		pathName := strings.TrimLeft(strings.TrimPrefix(path, expected), "/")
+		require.NotEmpty(t, pathName, "internal error - pathName should not be empty")
+		expectedStructure = append(expectedStructure, pathName)
+		if d.IsDir() {
+			return nil
+		}
+
+		actualPath := filepath.Join(actual, pathName)
+		actualContentBytes, err := os.ReadFile(actualPath)
+		if errors.Is(err, os.ErrNotExist) {
+			assert.Fail(t, "Missing expected file [%s/]%s", pathName, actual)
+			return nil
+		}
+		require.NoError(t, err, "Could not open existing file %q", actualPath)
+
+		expectedContentBytes, err := os.ReadFile(path)
+		require.NoError(t, err, "walked file should exist")
+
+		expectedContent := string(expectedContentBytes)
+		actualContent := string(actualContentBytes)
+		for _, f := range opts.actualTransform {
+			expectedContent = f.f(t, expectedContent)
+			actualContent = f.f(t, actualContent)
+		}
+
+		assert.Equalf(t, expectedContent, actualContent, "File %s doesn't match", pathName)
+
+		return nil
+	}))
+
+	require.NoError(t, filepath.WalkDir(actual, func(path string, d fs.DirEntry, err error) error {
+		if path == actual || err != nil {
+			return err
+		}
+
+		pathName := strings.TrimLeft(strings.TrimPrefix(path, actual), "/")
+		require.NotEmpty(t, pathName, "internal error - pathName should not be empty")
+		actualStructure = append(actualStructure, pathName)
+		return nil
+	}))
+
+	assert.ElementsMatch(t, expectedStructure, actualStructure,
+		"Directory structure does not match")
+}
+
+type OptionAssertDirsEqual func(*optionAssertDirsEqual)
+
+type optionAssertDirsEqual struct {
+	actualTransform []transform
+}
+
+type transform struct {
+	f func(*testing.T, string) string
+}
+
+// Apply a regexp based transformation to both the expected and actual content of each file.
+func OptionAssertDirsEqualReplace(regex, with string) OptionAssertDirsEqual {
+	r, err := regexp.Compile(regex) // Pre-compile the regexp
+	return func(o *optionAssertDirsEqual) {
+		o.actualTransform = append(o.actualTransform, transform{f: func(t *testing.T, src string) string {
+			require.NoError(t, err)
+			return r.ReplaceAllString(src, with)
+		}})
+	}
 }
 
 func WriteFile(t *testing.T, path, contents string) {

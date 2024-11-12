@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-aquasec/v0.8.29/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Aquasec
 meta_desc: Provides an overview of the Aquasec Provider for Pulumi.
 layout: package

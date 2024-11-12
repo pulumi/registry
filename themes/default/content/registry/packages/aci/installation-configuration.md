@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/netascode/pulumi-aci/v0.0.6/docs/installation-configuration.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: ACI Installation & Configuration
 meta_desc: Information on how to install the ACI provider.
 layout: installation

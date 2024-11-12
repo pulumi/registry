@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-zitadel/v0.1.8/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Zitadel
 meta_desc: Provides an overview of the Zitadel Provider for Pulumi.
 layout: overview

@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-vercel/v1.14.3/docs/installation-configuration.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Vercel Installation & Configuration
 meta_desc: Information on how to install the Vercel provider.
 layout: package

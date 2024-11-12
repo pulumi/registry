@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/komminarlabs/pulumi-cratedb/v0.2.3/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: CrateDB
 meta_desc: Provides an overview of the CrateDB Provider for Pulumi.
 layout: package

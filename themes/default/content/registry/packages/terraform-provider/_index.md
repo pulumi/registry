@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-terraform-provider/v0.3.0/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Any Terraform Provider
 meta_desc: Learn how to use any Terraform provider in Pulumi.
 layout: package

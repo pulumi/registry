@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-esxi-native/v1.0.0/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: ESXi Native
 meta_desc: Provides an overview of the ESXi Native Provider for Pulumi.
 layout: package

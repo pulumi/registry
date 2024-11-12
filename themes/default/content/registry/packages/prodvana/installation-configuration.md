@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/prodvana/pulumi-prodvana/v0.1.20/docs/installation-configuration.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Prodvana Installation & Configuration
 meta_desc: Provides an overview of how to install and configure the Prodvana provider.
 layout: package

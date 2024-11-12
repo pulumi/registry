@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/impart-security/pulumi-impart/v0.8.0/docs/installation-configuration.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Impart Installation & Configuration
 meta_desc: Information on how to install the Impart provider.
 layout: package

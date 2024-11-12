@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/wttech/pulumi-aem/v0.1.3/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Adobe Experience Manager Provider
 meta_desc: Provides an overview of the Adobe Experience Manager Provider for Pulumi.
 layout: package

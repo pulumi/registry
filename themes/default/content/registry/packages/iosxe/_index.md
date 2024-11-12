@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/lbrlabs/pulumi-iosxe/v0.0.1/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Cisco IOS XE Resource Provider
 meta_desc: Provides an overview of the Cisco IOS XE Provider for Pulumi.
 layout: package

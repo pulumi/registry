@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pinecone-io/pulumi-pinecone/v0.4.3/docs/installation-configuration.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Pinecone Setup
 meta_desc: Information on how to install the Pinecone Provider for Pulumi.
 layout: package

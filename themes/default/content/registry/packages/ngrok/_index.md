@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pierskarsenbarg/pulumi-ngrok/v0.0.24/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: ngrok
 meta_desc: Provides an overview of the ngrok Provider for Pulumi.
 layout: package

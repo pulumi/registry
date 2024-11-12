@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/runpod/pulumi-runpod-native/v1.9.99/docs/installation-configuration.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: RunPod Setup
 meta_desc: Information on how to install the RunPod Provider for Pulumi.
 layout: package

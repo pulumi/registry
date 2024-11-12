@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/lbrlabs/pulumi-lbrlabs-eks/v0.22.0/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: LBr Labs EKS
 meta_desc: Provides an overview of the batteries include EKS provider for Pulumi by LBr Labs.
 layout: package

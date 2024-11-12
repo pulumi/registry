@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-auto-deploy/v0.0.4/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Pulumi Auto Deploy (preview)
 meta_desc: The Pulumi Auto Deploy Provider enables you to automatically deploy dependent stacks using Pulumi Deployments.
 layout: package

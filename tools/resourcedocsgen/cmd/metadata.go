@@ -15,6 +15,7 @@
 package cmd
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -23,9 +24,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/golang/glog"
-
 	"github.com/ghodss/yaml"
+	"github.com/golang/glog"
 	"github.com/pkg/errors"
 	pschema "github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/util/contract"
@@ -208,12 +208,28 @@ func PackageMetadataCmd() *cobra.Command {
 			for _, requiredFile := range requiredFiles {
 				requiredFilePath := fmt.Sprintf("https://raw.githubusercontent.com/%s/%s/docs/%s",
 					repoSlug, version, requiredFile)
-				details, err := readRemoteFile(requiredFilePath, repoSlug.owner)
+				content, err := readRemoteFile(requiredFilePath, repoSlug.owner)
 				if err != nil {
 					return err
 				}
+				if len(content) == 0 {
+					continue
+				}
 
-				if err := pkg.EmitFile(packageDocsDir, requiredFile, details); err != nil {
+				// Normalize end of line representation
+				content = bytes.ReplaceAll(content, []byte("\r\n"), []byte("\n"))
+
+				if rest, ok := bytes.CutPrefix(bytes.TrimLeft(content, "\n\t\r "), []byte("---\n")); ok {
+					content = append([]byte(`---
+# WARNING: this file was fetched from `+requiredFilePath+`
+# Do not edit by hand unless you're certain you know what you are doing!
+`), rest...)
+				} else {
+					return fmt.Errorf(`expected file %s to start with YAML front-matter ("---\n"), found leading %q`,
+						requiredFilePath, string(content))
+				}
+
+				if err := pkg.EmitFile(packageDocsDir, requiredFile, content); err != nil {
 					return errors.Wrap(err, fmt.Sprintf("writing %s file", requiredFile))
 				}
 			}
@@ -262,7 +278,7 @@ func readRemoteFile(url, repoOwner string) ([]byte, error) {
 		// For pulumi repos, we have hard coded top-level config files in the registry.
 		// To avoid overwriting them prematurely while we migrate, we default to returning nil, which will allow the
 		// registry to fall back on top-level config files already in existence since we won't write empty content.
-		if repoOwner == "pulumi" {
+		if repoOwner == "pulumi" && resp.StatusCode == 404 {
 			return nil, nil
 		}
 		// For third-level providers, send an error if files could not be found.

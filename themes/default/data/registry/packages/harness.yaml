@@ -8,7 +8,7 @@ native: false
 package_status: public_preview
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-harness
-schema_file_path: provider/cmd/pulumi-resource-harness/schema.json
+schema_file_path: ""
 title: Harness
-updated_on: 1731005573
-version: v0.4.3
+updated_on: 1731412926
+version: v0.4.4

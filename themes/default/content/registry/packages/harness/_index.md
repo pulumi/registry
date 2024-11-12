@@ -6,7 +6,7 @@ layout: package
 ---
 ## Installation
 
-The harness provider is available as a package in all Pulumi languages:
+The Harness provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/harness`](https://www.npmjs.com/package/@pulumi/harness)
 * Python: [`pulumi-harness`](https://pypi.org/project/pulumi-harness/)

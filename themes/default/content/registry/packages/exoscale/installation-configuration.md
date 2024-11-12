@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-exoscale/v0.59.2/docs/installation-configuration.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Exoscale Installation & Configuration
 meta_desc: Information on how to install the Exoscale provider.
 layout: installation

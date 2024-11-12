@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/dirien/pulumi-qovery/v0.41.0/docs/installation-configuration.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Qovery Setup
 meta_desc: Information on how to install the Qovery provider.
 layout: package

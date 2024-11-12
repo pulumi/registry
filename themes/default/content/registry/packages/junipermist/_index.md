@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-junipermist/v0.1.1/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Juniper Mist
 meta_desc: The Juniper Mist provider for Pulumi can be used to provision any of the cloud resources available in Juniper Mist.
 layout: package

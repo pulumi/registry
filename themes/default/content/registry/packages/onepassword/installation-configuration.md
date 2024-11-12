@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/1Password/pulumi-onepassword/v1.1.4/docs/installation-configuration.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: 1Password Provider Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the 1Password provider for Pulumi.
 layout: package

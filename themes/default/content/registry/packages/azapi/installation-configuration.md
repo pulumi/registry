@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/dirien/pulumi-azapi/v1.12.2/docs/installation-configuration.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: AzAPI Setup
 meta_desc: Information on how to install the AzAPI provider.
 layout: package

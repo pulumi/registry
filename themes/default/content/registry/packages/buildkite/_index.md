@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-buildkite/v3.1.6/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Buildkite
 meta_desc: Provides an overview of the Buildkite Provider for Pulumi.
 layout: package

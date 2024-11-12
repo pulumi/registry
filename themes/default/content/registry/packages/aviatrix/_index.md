@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/astipkovits/pulumi-aviatrix/v0.0.11/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Aviatrix
 meta_desc: Provides an overview of the Aviatrix Provider for Pulumi.
 layout: package

@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/netascode/pulumi-aci/v0.0.6/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: ACI
 meta_desc: Provides an overview of the Cisco ACI Provider for Pulumi.
 layout: overview

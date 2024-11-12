@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/RedisLabs/pulumi-rediscloud/v1.3.5/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: RedisCloud
 meta_desc: Provides an overview of the RedisCloud Provider for Pulumi.
 layout: package

@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-doppler/v0.9.0/docs/installation-configuration.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Doppler Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi Doppler Provider.
 layout: installation

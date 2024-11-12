@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/prodvana/pulumi-prodvana/v0.1.20/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Prodvana
 meta_desc: Provides an overview of the Prodvana Provider for Pulumi.
 layout: package

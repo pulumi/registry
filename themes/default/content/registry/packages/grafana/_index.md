@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-grafana/v0.7.0/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Grafana Cloud
 meta_desc: Provides an overview of the Grafana Provider for Pulumi.
 layout: package

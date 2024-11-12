@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-mongodbatlas/v3.20.4/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Mongodbatlas Provider
 meta_desc: Provides an overview on how to configure the Pulumi Mongodbatlas provider.
 layout: package

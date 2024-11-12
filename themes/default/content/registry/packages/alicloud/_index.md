@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-alicloud/v3.65.0/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Alicloud Provider
 meta_desc: Provides an overview on how to configure the Pulumi Alicloud provider.

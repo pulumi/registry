@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/oun/pulumi-flux/v1.0.1/docs/installation-configuration.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Flux Installation & Configuration
 meta_desc: Information on how to install the Flux provider.
 layout: package

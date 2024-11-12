@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-sumologic/v0.23.7/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Sumologic Provider
 meta_desc: Provides an overview on how to configure the Pulumi Sumologic provider.
 layout: package

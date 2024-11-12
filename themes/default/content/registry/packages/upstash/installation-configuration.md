@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/upstash/pulumi-upstash/v0.3.14/docs/installation-configuration.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Upstash Installation & Configuration
 meta_desc: Information on how to install the Upstash provider.
 layout: package

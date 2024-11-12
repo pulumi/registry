@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/wttech/pulumi-aem/v0.1.3/docs/installation-configuration.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Adobe Experience Manager Provider Installation & Configuration
 meta_desc: Information on how to install the Adobe Experience Manager provider.
 layout: package

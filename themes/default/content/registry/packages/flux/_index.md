@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/oun/pulumi-flux/v1.0.1/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Flux
 meta_desc: Provides an overview of the Flux provider for Pulumi.
 layout: package

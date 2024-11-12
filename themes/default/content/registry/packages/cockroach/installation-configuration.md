@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-cockroach/v0.6.0/docs/installation-configuration.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: CockroachDB Cloud Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the CockroachDB provider.
 layout: package

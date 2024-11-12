@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/lbrlabs/pulumi-nxos/v0.0.2/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Cisco NX OS Resource Provider
 meta_desc: Provides an overview of the Cisco NX OS Provider for Pulumi.
 layout: package

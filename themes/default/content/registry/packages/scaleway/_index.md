@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-scaleway/v1.20.0/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Scaleway
 meta_desc: Provides an overview of the Scaleway Provider for Pulumi.
 layout: package

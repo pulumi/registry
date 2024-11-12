@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/dirien/pulumi-azapi/v1.12.2/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: AzAPI
 meta_desc: Provides an overview of the AzAPI Provider for Pulumi.
 layout: package

@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-azuredevops/v3.4.0/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Azuredevops Provider
 meta_desc: Provides an overview on how to configure the Pulumi Azuredevops provider.
 layout: package

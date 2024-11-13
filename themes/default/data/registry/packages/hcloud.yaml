@@ -8,7 +8,7 @@ native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-hcloud
-schema_file_path: provider/cmd/pulumi-resource-hcloud/schema.json
+schema_file_path: ""
 title: Hetzner Cloud
-updated_on: 1729057247
-version: v1.20.5
+updated_on: 1731391377
+version: v1.21.0

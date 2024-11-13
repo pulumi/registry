@@ -10,5 +10,5 @@ publisher: Pulumiverse
 repo_url: https://github.com/pulumiverse/pulumi-acme
 schema_file_path: provider/cmd/pulumi-resource-acme/schema.json
 title: ACME
-updated_on: 1730888421
-version: v0.5.0
+updated_on: 1731493587
+version: v0.6.0

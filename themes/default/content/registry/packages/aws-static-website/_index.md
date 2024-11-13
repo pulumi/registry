@@ -1,7 +1,9 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-aws-static-website/v0.4.0/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: AWS Static Website
 meta_desc: Provides an overview of the AWS Static Website component.
-layout: package
+layout: overview
 ---
 
 This component makes it easy to deploy a static website to s3 along with an optional CloudFront distribution using any of the supported Pulumi programming languages including markup languages like YAML and JSON.

@@ -1,20 +1,21 @@
 ---
-title: Pulumi AWS QuickStart Aurora Postgres
-meta_desc: Information on how to set up credentials to use the AWS QuickStart Aurora Postgres component.
-layout: package
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-aws-quickstart-aurora-postgres/v0.0.3/docs/installation-configuration.md
+# Do not edit by hand unless you're certain you know what you are doing!
+# Replace Package Name here and throughout the document with the friendly name of your package
+title: Package Name Setup
+# Add a meta description of around 160 characters that will be shown when your package is viewed in a search engine
+meta_desc: 
+layout: installation
 ---
 
-{{< aws-resource-note >}}
+<!-- Use this page to describe any steps a user needs to take to configure your package before using it. Common configuring includes logging into the cloud provider and making those credentials available to Pulumi, setting project-wide configuration values, and more. You can use the suggested structure below or replace it with your own. -->
 
-To provision an AWS Aurora Postgres Cluster based on the AWS QuickStart guide with this component, you need to have AWS credentials. Use the instructions on the AWS Provider's [Installation & Configuration](/registry/packages/aws/installation-configuration) to get credentials if needed.
+## Setup
 
-Your AWS credentials are never sent to pulumi.com. Pulumi uses the AWS SDK and the credentials in your environment to authenticate requests from your computer to AWS.
+<!-- Add your content here -->
 
-## Installation
+## Configuration options
 
-The Pulumi AWS QuickStart Aurora Postgres provider is available as a package in all Pulumi languages:
-
-* JavaScript/TypeScript: [`@pulumi/aws-quickstart-aurora-postgres`](https://www.npmjs.com/package/@pulumi/aws-quickstart-aurora-postgres)
-* Python: [`pulumi-aws-quickstart-aurora-postgres`](https://pypi.org/project/pulumi-aws-quickstart-aurora-postgres/)
-* Go: [`github.com/pulumi/pulumi-aws-quickstart-aurora-postgres/sdk/go/aws`](https://github.com/pulumi/pulumi-aws-quickstart-aurora-postgres)
-* .NET: [`Pulumi.AwsQuickStartAuroraPostgres`](https://www.nuget.org/packages/Pulumi.AwsQuickStartAuroraPostgres)
+| Option | Required/Optional | Description |
+|--------|-------------------|-------------|
+|        |                   |             |

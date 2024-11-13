@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/lbrlabs/pulumi-nxos/v0.0.2/docs/installation-configuration.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Cisco NX OS Installation & Configuration
 meta_desc: Information on how to install the Cisco NX OS.
 layout: package
@@ -65,4 +67,4 @@ $ export NXOS_USERNAME=<USERNAME>
 
 ## Configuration Options
 
-Use `pulumi config set nxos:<option>` or pass options to the [constructor of `new nxos.Provider`](/registry/packages/nxos/api-docs/provider).
+Use `pulumi config set nxos:<option>` or pass options to the [constructor of `new nxos.Provider`]({{< relref "/registry/packages/nxos/api-docs/provider" >}}).

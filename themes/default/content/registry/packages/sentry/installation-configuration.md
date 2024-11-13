@@ -1,7 +1,9 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-sentry/v0.0.8/docs/installation-configuration.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Sentry Installation & Configuration
 meta_desc: Information on how to install the Sentry provider.
-layout: package
+layout: installation
 ---
 
 ## Installation
@@ -22,7 +24,7 @@ Sentry maintains documentation on how to [create auth tokens](https://docs.sentr
 
 Use `pulumi config set sentry:<option>`.
 
-| Option | Required? | Description |
+| Option | Required/Optional | Description |
 |-----|------|----|
 | `token`| Required | Sentry access token |
 | `base_url`| Optional | Sentry base URL when self-hosting Sentry |

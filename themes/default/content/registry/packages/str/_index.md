@@ -1,7 +1,9 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-str/v1.0.0/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: String
 meta_desc: The Pulumi String provider provides a set of simple string functions accessible from all languages (including Pulumi YAML).
-layout: package
+layout: overview
 ---
 
 The Pulumi String provider contains a set of string manipulation functions that are

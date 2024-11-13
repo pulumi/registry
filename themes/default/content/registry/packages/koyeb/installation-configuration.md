@@ -1,7 +1,9 @@
 ---
-title: Koyeb Installation & Configuration
+# WARNING: this file was fetched from https://raw.githubusercontent.com/koyeb/pulumi-koyeb/v0.1.7/docs/installation-configuration.md
+# Do not edit by hand unless you're certain you know what you are doing!
+title: Koyeb Setup
 meta_desc: Information on how to install the Koyeb provider.
-layout: package
+layout: installation
 ---
 
 ## Installation

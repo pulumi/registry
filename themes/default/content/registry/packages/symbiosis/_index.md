@@ -1,7 +1,9 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/symbiosis-cloud/pulumi-symbiosis/v1.0.4/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Symbiosis
 meta_desc: Provides an overview of the Symbiosis Provider for Pulumi.
-layout: package
+layout: overview
 ---
 
 The Symbiosis provider for Pulumi can be used to provision any of the resources available in a Symbiosis cloud account.

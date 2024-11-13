@@ -1,7 +1,9 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/grapl-security/pulumi-hcp/v0.1.14/docs/installation-configuration.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: HCP Setup
 meta_desc: Information on how to install the HashiCorp Cloud Platform Provider for Pulumi.
-layout: package
+layout: installation
 ---
 
 ## Installation
@@ -53,9 +55,9 @@ $ export HCP_CLIENT_SECRET=<HCP_CLIENT_SECRET>
 
 ## Configuration Options
 
-Use `pulumi config set hcp:<option>` or pass options to the [constructor of `new hcp.Provider`](/registry/packages/hcp/api-docs/provider).
+Use `pulumi config set hcp:<option>` or pass options to the [constructor of `new hcp.Provider`]({{< relref "/registry/packages/hcp/api-docs/provider" >}}).
 
-| Option | Required? | Description |
-| - | - | - |
-| `client_id` | Required | The OAuth2 Client ID for API operations. Can be configured from the environment variable `HCP_CLIENT_ID` |
-| `client_secret` | Required | The OAuth2 Client Secret for API operations. Can be configured from the environment variable `HCP_CLIENT_SECRET`. |
+| Option          | Required/Optional | Description                                                                                                       |
+|-----------------|-------------------|-------------------------------------------------------------------------------------------------------------------|
+| `client_id`     | Required          | The OAuth2 Client ID for API operations. Can be configured from the environment variable `HCP_CLIENT_ID`.         |
+| `client_secret` | Required          | The OAuth2 Client Secret for API operations. Can be configured from the environment variable `HCP_CLIENT_SECRET`. |

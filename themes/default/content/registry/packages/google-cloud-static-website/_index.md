@@ -1,7 +1,9 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-google-cloud-static-website/v0.0.3/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Google Cloud Static Website
 meta_desc: Provides an overview of the Google Cloud Static Website component.
-layout: package
+layout: overview
 ---
 
 This component makes it easy to deploy a static website to Google Cloud using any of the supported Pulumi programming languages.

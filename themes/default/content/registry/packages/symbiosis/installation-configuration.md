@@ -1,7 +1,9 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/symbiosis-cloud/pulumi-symbiosis/v1.0.4/docs/installation-configuration.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Symbiosis Installation & Configuration
 meta_desc: Information on how to install the Symbiosis provider.
-layout: package
+layout: installation
 ---
 
 ## Installation

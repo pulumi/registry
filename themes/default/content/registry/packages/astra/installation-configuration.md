@@ -1,7 +1,9 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-astra/v1.0.42/docs/installation-configuration.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Astra DB Installation & Configuration
 meta_desc: Information on how to install the Astra DB provider.
-layout: package
+layout: installation
 ---
 
 ## Installation
@@ -21,6 +23,6 @@ To provision resources with the Pulumi Astra DB provider, you need to have an As
 
 Use `pulumi config set astra:<option>`.
 
-| Option | Required? | Description |
+| Option | Required/Optional | Description |
 |-----|------|----|
 | `token`| Required | Astra access token |

@@ -1,7 +1,9 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-heroku/v1.0.3/docs/installation-configuration.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Heroku Installation & Configuration
 meta_desc: Information on how to install the Pulumi Heroku provider.
-layout: package
+layout: installation
 ---
 
 ## Installation

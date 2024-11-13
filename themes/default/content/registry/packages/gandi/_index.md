@@ -1,7 +1,9 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-gandi/v0.0.14/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Gandi
 meta_desc: Provides an overview of the Gandi Provider for Pulumi.
-layout: package
+layout: overview
 ---
 
 The Gandi provider for Pulumi can be used to provision any of the resources available in [Gandi](https://gandi.net/).

@@ -1,7 +1,9 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/lbrlabs/pulumi-launchdarkly/v0.0.6/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Launch Darkly
 meta_desc: Provides an overview of the Launch Darkly Provider for Pulumi.
-layout: package
+layout: overview
 ---
 
 The Launch Darkly provider for Pulumi can be used to provision any of the cloud resources available in [Launch Darkly](https://launchdarkly.com/).

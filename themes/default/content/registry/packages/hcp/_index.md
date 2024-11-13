@@ -1,12 +1,14 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/grapl-security/pulumi-hcp/v0.1.14/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: HCP
 meta_desc: Provides an overview of the HashiCorp Cloud Platform Provider for Pulumi.
-layout: package
+layout: overview
 ---
 
 The HashiCorp Cloud Platform provider (HCP) for Pulumi can be used to
 provision any of the cloud resources available in [HashiCorp Cloud
-Platform](https://www.hashicorp.com/cloud). The HCP provider
+Platform](https://www.hashicorp.com/cloud-platform). The HCP provider
 must be configured with credentials to deploy and update resources.
 
 ## Example

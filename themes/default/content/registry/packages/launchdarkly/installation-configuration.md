@@ -1,7 +1,9 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/lbrlabs/pulumi-launchdarkly/v0.0.6/docs/installation-configuration.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Launch Darkly Installation & Configuration
 meta_desc: Information on how to install the Launch Darkly provider.
-layout: package
+layout: installation
 ---
 
 ## Installation
@@ -62,4 +64,4 @@ $ export LAUNCHDARKLY_OAUTH_TOKEN=<LAUNCHDARKLY_OAUTH_TOKEN>
 
 ## Configuration Options
 
-Use `pulumi config set launchdarkly:<option>` or pass options to the [constructor of `new launchdarkly.Provider`](/registry/packages/launchdarkly/api-docs/provider).
+Use `pulumi config set launchdarkly:<option>` or pass options to the [constructor of `new launchdarkly.Provider`]({{< relref "/registry/packages/launchdarkly/api-docs/provider" >}}).

@@ -1,7 +1,9 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/checkly/pulumi-checkly/v1.1.4/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Checkly
 meta_desc: Provides an overview of the Checkly Provider for Pulumi.
-layout: package
+layout: overview
 ---
 
 The Checkly provider for Pulumi can be used to provision any of the monitoring resources available in [Checkly](https://checklyhq.com/).

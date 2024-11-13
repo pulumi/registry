@@ -1,7 +1,9 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-google-cloud-static-website/v0.0.3/docs/installation-configuration.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Google Cloud Static Website Installation
 meta_desc: Information on how to install the Google Cloud Static Website component.
-layout: package
+layout: installation
 ---
 
 ## Installation
@@ -10,6 +12,7 @@ The Pulumi Google Cloud Static Website component is available as a package in al
 
 * JavaScript/TypeScript: [`@pulumi/google-cloud-static-website`](https://www.npmjs.com/package/@pulumi/google-cloud-static-website)
 * Python: [`pulumi_google_cloud_static_website`](https://pypi.org/project/pulumi-google-cloud-static-website/)
+* Go: [`github.com/pulumi/pulumi-google-cloud-static-website/sdk`](https://pkg.go.dev/github.com/pulumi/pulumi-google-cloud-static-website/sdk)
 * .NET: [`Pulumi.GoogleCloudStaticWebsite`](https://www.nuget.org/packages/Pulumi.GoogleCloudStaticWebsite/)
 
 If you are new to Pulumi and do not yet have Pulumi installed, see our [getting started](https://www.pulumi.com/docs/get-started/) guide to get up and running.

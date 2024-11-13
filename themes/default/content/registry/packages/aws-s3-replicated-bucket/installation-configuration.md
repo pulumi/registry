@@ -1,18 +1,21 @@
 ---
-title: AWS S3 Replicated Bucket Installation & Configuration
-meta_desc: Information on how to set up credentials to use the AWS S3 Replicated Bucket component.
-layout: package
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-aws-s3-replicated-bucket/v0.0.6/docs/installation-configuration.md
+# Do not edit by hand unless you're certain you know what you are doing!
+# Replace Package Name here and throughout the document with the friendly name of your package
+title: Package Name Setup
+# Add a meta description of around 160 characters that will be shown when your package is viewed in a search engine
+meta_desc: 
+layout: installation
 ---
 
-{{< aws-resource-note >}}
+<!-- Use this page to describe any steps a user needs to take to configure your package before using it. Common configuring includes logging into the cloud provider and making those credentials available to Pulumi, setting project-wide configuration values, and more. You can use the suggested structure below or replace it with your own. -->
 
-To provision an AWS S3 Replicated Bucket with this component, you need to have AWS credentials. Use the instructions on the AWS Provider's [Installation & Configuration](/registry/packages/aws/installation-configuration) to get credentials if needed. Your AWS credentials are never sent to Pulumi.com. Pulumi uses the AWS SDK and the credentials in your environment to authenticate requests from your computer to AWS.
+## Setup
 
-## Installation
+<!-- Add your content here -->
 
-The AWS S3 Replicated Bucket provider is available as a package in all Pulumi languages:
+## Configuration options
 
-* JavaScript/TypeScript: [`@pulumi/aws-s3-replicated-bucket`](https://www.npmjs.com/package/@pulumi/aws-s3-replicated-bucket)
-* Python: [`pulumi-aws-s3-replicated-bucket`](https://pypi.org/project/pulumi-aws-s3-replicated-bucket/)
-* Go: [`github.com/pulumi/pulumi-aws-s3-replicated-bucket/sdk/go/aws`](https://github.com/pulumi/pulumi-aws-s3-replicated-bucket)
-* .NET: [`Pulumi.AwsS3ReplicatedBucket`](https://www.nuget.org/packages/Pulumi.AwsS3ReplicatedBucket)
+| Option | Required/Optional | Description |
+|--------|-------------------|-------------|
+|        |                   |             |

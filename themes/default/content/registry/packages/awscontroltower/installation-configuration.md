@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/lbrlabs/pulumi-awscontroltower/v0.0.2/docs/installation-configuration.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: AWS Control Tower Installation & Configuration
 meta_desc: Information on how to install the AWS Control Tower provider.
 layout: package
@@ -27,7 +29,8 @@ Replace the version string with your desired version.
 
 The AWS control tower uses the AWS SDK to connect to AWS. Many of the authentication options you're familiar with using [Pulumi AWS)(https://www.pulumi.com/registry/packages/aws/) apply here.
 
-{{< chooser os "macos,windows" >}}
+{{% /choosable %}}
+
 {{% choosable os macos %}}
 
 ```bash
@@ -49,4 +52,4 @@ $ export AWS_SECRET_ACCESS_KEY=<AWS_SECRET_ACCESS_KEY>
 
 ## Configuration Options
 
-Use `pulumi config set awscontroltower:<option>` or pass options to the [constructor of `new awscontroltower.Provider`](/registry/packages/awscontroltower/api-docs/provider).
+Use `pulumi config set awscontroltower:<option>` or pass options to the [constructor of `new awscontroltower.Provider`]({{< relref "/registry/packages/awscontroltower/api-docs/provider" >}}).

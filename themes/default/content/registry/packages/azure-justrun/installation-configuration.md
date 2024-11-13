@@ -1,7 +1,9 @@
 ---
-title: Azure Justrun Installation & Configuration
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-azure-justrun/v0.2.3/docs/installation-configuration.md
+# Do not edit by hand unless you're certain you know what you are doing!
+title: Azure Justrun Setup
 meta_desc: Information on how to install and use the Pulumi Azure Justrun package.
-layout: package
+layout: installation
 ---
 
 ## Installation

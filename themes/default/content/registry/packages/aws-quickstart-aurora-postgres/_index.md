@@ -1,32 +1,48 @@
 ---
-title: AWS QuickStart Aurora Postgres
-meta_desc: Use Pulumi's Component for creating an AWS QuickStart Aurora Postgres Cluster using infrastructure as code.
-layout: package
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-aws-quickstart-aurora-postgres/v0.0.3/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
+# Replace Package Name here and throughout the document with the friendly name of your package
+title: Package Name
+# Add a meta description of around 160 characters that will be shown when your package is viewed in a search engine
+meta_desc: 
+layout: overview
 ---
 
-Easily create AWS Aurora Postgres Cluster based on the AWS QuickStart Aurora Postgres guide as a package available in all Pulumi languages.
+<!-- Write a brief description of your package. -->
 
 ## Example
 
-{{< chooser language "typescript" >}}
+<!-- Provide a simple example of how to use your package, ideally in all languages. -->
+
+{{< chooser language "typescript,python,go,csharp" >}}
 
 {{% choosable language typescript %}}
 
 ```typescript
-const myDb = new aurora.Cluster("demo-cluster", {
-    vpcID: myVpc.vpcID,
-    dbName: "myDemoDatabase",
-    dbEngineVersion: "9.6.16",
-    dbInstanceClass: "db.r4.large",
-    availabilityZoneNames: ["us-west-2a", "us-west-2b"],
-    dbNumDbClusterInstances: 3,
-    dbMasterUsername: "rootUser",
-    enableEventSubscription: false,
-    dbMasterPassword: pulumi.secret("TestPassword1234!"),
-    dbParameterGroupFamily: "aurora-postgresql9.6",
-    privateSubnetID1: "private Subnet ID 1",
-    privateSubnetID2: "private Subnet ID 2",
-});
+// Replace this with your example
+```
+
+{{% /choosable %}}
+{{% choosable language python %}}
+
+```python
+# Replace this with your example
+```
+
+{{% /choosable %}}
+{{% choosable language go %}}
+
+```go
+// Replace this with your example
+}
+
+```
+
+{{% /choosable %}}
+{{% choosable language csharp %}}
+
+```csharp
+// Replace this with your example
 ```
 
 {{% /choosable %}}

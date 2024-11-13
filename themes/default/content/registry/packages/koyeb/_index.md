@@ -1,7 +1,9 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/koyeb/pulumi-koyeb/v0.1.7/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Koyeb
 meta_desc: Provides an overview of the Koyeb Provider for Pulumi.
-layout: package
+layout: overview
 ---
 
 The Koyeb provider for Pulumi can be used to provision any of the cloud resources available in [Koyeb](https://www.koyeb.com).

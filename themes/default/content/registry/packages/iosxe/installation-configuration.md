@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/lbrlabs/pulumi-iosxe/v0.0.1/docs/installation-configuration.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Cisco IOS XE Installation & Configuration
 meta_desc: Information on how to install the Cisco IOS XE.
 layout: package
@@ -65,4 +67,4 @@ $ export IOSXE_USERNAME=<USERNAME>
 
 ## Configuration Options
 
-Use `pulumi config set iosxe:<option>` or pass options to the [constructor of `new iosxe.Provider`](/registry/packages/iosxe/api-docs/provider).
+Use `pulumi config set iosxe:<option>` or pass options to the [constructor of `new iosxe.Provider`]({{< relref "/registry/packages/iosxe/api-docs/provider" >}}).

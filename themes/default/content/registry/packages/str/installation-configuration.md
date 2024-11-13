@@ -1,7 +1,9 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-str/v1.0.0/docs/installation-configuration.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: String Provider Setup
 meta_desc: Information on how to install the Pulumi String provider.
-layout: package
+layout: installation
 ---
 
 ## Installation

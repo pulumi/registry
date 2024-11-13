@@ -1,7 +1,9 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-astra/v1.0.42/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Astra DB
 meta_desc: Provides an overview of the Astra DB Provider for Pulumi.
-layout: package
+layout: overview
 ---
 
 The Astra DB provider for Pulumi can be used to provision any of the cloud resources available in [Astra DB](https://www.datastax.com/products/datastax-astra).

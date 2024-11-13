@@ -1,7 +1,9 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/nuage-studio/pulumi-nuage/v0.1.1/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Pulumi Nuage
 meta_desc: Provides an overview of the Nuage Provider for Pulumi.
-layout: package
+layout: overview
 ---
 
 The Pulumi Nuage Provider is a valuable tool for provisioning cloud resources on Amazon Web Services (AWS). This provider boasts well-designed, pre-packaged infrastructure as code components that streamline the deployment process.

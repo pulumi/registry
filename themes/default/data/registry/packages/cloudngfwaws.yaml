@@ -8,7 +8,7 @@ native: false
 package_status: public_preview
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-cloudngfwaws
-schema_file_path: provider/cmd/pulumi-resource-cloudngfwaws/schema.json
+schema_file_path: ""
 title: Palo Alto Networks Cloud NGFW for AWS
-updated_on: 1730760314
-version: v0.0.1
+updated_on: 1731489309
+version: v0.0.2

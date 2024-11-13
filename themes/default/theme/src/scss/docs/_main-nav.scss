@@ -36,6 +36,10 @@ nav.main-nav {
             text-underline-offset: 6px;
             color: map-get($blue, 750);
         }
+        
+        span.count-badge:hover {
+            text-decoration: none;
+        }
     }
 
     div.active a:hover,

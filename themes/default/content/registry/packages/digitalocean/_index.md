@@ -1,6 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-digitalocean/v4.34.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-digitalocean/v4.34.1/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+# *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Digitalocean Provider
 meta_desc: Provides an overview on how to configure the Pulumi Digitalocean provider.
 layout: package
@@ -14,6 +15,7 @@ The digitalocean provider is available as a package in all Pulumi languages:
 * Go: [`github.com/pulumi/pulumi-digitalocean/sdk/v4/go/digitalocean`](https://github.com/pulumi/pulumi-digitalocean)
 * .NET: [`Pulumi.Digitalocean`](https://www.nuget.org/packages/Pulumi.Digitalocean)
 * Java: [`com.pulumi/digitalocean`](https://central.sonatype.com/artifact/com.pulumi/digitalocean)
+## Overview
 
 The DigitalOcean (DO) provider is used to interact with the
 resources supported by DigitalOcean. The provider needs to be configured

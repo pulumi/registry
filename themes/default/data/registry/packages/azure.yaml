@@ -11,7 +11,7 @@ native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-azure
-schema_file_path: provider/cmd/pulumi-resource-azure/schema.json
-title: Azure Classic
-updated_on: 1730724623
-version: v6.8.0
+schema_file_path: ""
+title: Azure
+updated_on: 1731596827
+version: v6.9.0

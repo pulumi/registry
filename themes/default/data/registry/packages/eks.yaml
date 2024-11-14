@@ -8,7 +8,7 @@ native: true
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-eks
-schema_file_path: provider/cmd/pulumi-resource-eks/schema.json
+schema_file_path: ""
 title: Amazon EKS
-updated_on: 1726576356
-version: v2.8.1
+updated_on: 1731416936
+version: v3.0.2

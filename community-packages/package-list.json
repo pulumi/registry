@@ -38,7 +38,7 @@
     },
     {
       "repoSlug": "pulumi/pulumi-kubernetes-cert-manager",
-      "schemaFile": "schema.json"
+      "schemaFile": "provider/cmd/pulumi-resource-kubernetes-cert-manager/schema.json"
     },
     {
       "repoSlug": "pulumi/pulumi-kubernetes-coredns",
@@ -355,6 +355,10 @@
     {
       "repoSlug": "crowdstrike/pulumi-crowdstrike",
       "schemaFile": "provider/cmd/pulumi-resource-crowdstrike/schema.json"
+    },
+    {
+      "repoSlug": "komminarlabs/pulumi-cratedb",
+      "schemaFile": "provider/cmd/pulumi-resource-cratedb/schema.json"
     }
   ]
 }

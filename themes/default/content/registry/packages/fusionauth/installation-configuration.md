@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/theogravity/pulumi-fusionauth/v5.1.0/docs/installation-configuration.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: FusionAuth Installation & Configuration
 meta_desc: Provides an overview on how to setup the FusionAuth Provider for Pulumi.
 layout: package

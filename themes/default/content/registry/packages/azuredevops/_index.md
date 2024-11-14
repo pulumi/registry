@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-azuredevops/v3.4.0/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Azuredevops Provider
 meta_desc: Provides an overview on how to configure the Pulumi Azuredevops provider.
 layout: package
@@ -12,6 +14,7 @@ The azuredevops provider is available as a package in all Pulumi languages:
 * Go: [`github.com/pulumi/pulumi-azuredevops/sdk/v3/go/azuredevops`](https://github.com/pulumi/pulumi-azuredevops)
 * .NET: [`Pulumi.Azuredevops`](https://www.nuget.org/packages/Pulumi.Azuredevops)
 * Java: [`com.pulumi/azuredevops`](https://central.sonatype.com/artifact/com.pulumi/azuredevops)
+## Overview
 
 The Azure DevOps provider can be used to configure Azure DevOps project in [Microsoft Azure](https://azure.microsoft.com/en-us/) using [Azure DevOps Service REST API](https://docs.microsoft.com/en-us/rest/api/azure/devops/?view=azure-devops-rest-7.0)
 
@@ -128,7 +131,7 @@ public class App {
 {{< /chooser >}}
 ## Configuration Reference
 
-The following configuration inputs are supported in the `provider` block:
+The following configuration inputs are supported in the provider configuration:
 
 - `orgServiceUrl` - (Required) This is the Azure DevOps organization url. It can also be
   sourced from the `AZDO_ORG_SERVICE_URL` environment variable.

@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-time/v0.1.0/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Time
 meta_desc: Provides an overview of the Time Provider for Pulumi.
 layout: package

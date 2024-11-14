@@ -369,12 +369,10 @@ section.newsletter-input pulumi-hubspot-form input.hs-input {
     @apply fixed bottom-0 right-0 left-0 text-black;
     z-index: 100;
 
-    > div:first-child {
-        @apply w-full px-3;
+    @apply w-full px-3;
 
-        @screen lg {
-            @apply w-1/3 float-right mb-2 mr-2 rounded-lg shadow-lg overflow-hidden px-4 py-2;
-        }
+    @screen lg {
+        @apply w-1/3 float-left mb-2 mr-2 rounded-lg shadow-lg overflow-hidden px-4 py-2;
     }
 
     div {

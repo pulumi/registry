@@ -1,4 +1,7 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-fastly/v8.13.0/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
+# *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Fastly Provider
 meta_desc: Provides an overview on how to configure the Pulumi Fastly provider.
 layout: package
@@ -12,6 +15,7 @@ The fastly provider is available as a package in all Pulumi languages:
 * Go: [`github.com/pulumi/pulumi-fastly/sdk/v8/go/fastly`](https://github.com/pulumi/pulumi-fastly)
 * .NET: [`Pulumi.Fastly`](https://www.nuget.org/packages/Pulumi.Fastly)
 * Java: [`com.pulumi/fastly`](https://central.sonatype.com/artifact/com.pulumi/fastly)
+## Overview
 
 The Fastly provider is used to interact with the content delivery network (CDN)
 provided by Fastly.
@@ -440,4 +444,4 @@ $ pulumi preview
 - `apiKey` (String) Fastly API Key from <https://app.fastly.com/#account>
 - `baseUrl` (String) Fastly API URL
 - `forceHttp2` (Boolean) Set this to `true` to disable HTTP/1.x fallback mechanism that the underlying Go library will attempt upon connection to `api.fastly.com:443` by default. This may slightly improve the provider's performance and reduce unnecessary TLS handshakes. Default: `false`
-- `noAuth` (Boolean) Set to `true` if your configuration only consumes data sources that do not require authentication, such as `fastly.getFastlyIpRanges`
+- `noAuth` (Boolean) Set to `true` if your configuration only consumes functions that do not require authentication, such as `fastly.getFastlyIpRanges`

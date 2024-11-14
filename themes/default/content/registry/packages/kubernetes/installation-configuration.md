@@ -115,7 +115,7 @@ to the constructor of a `new kubernetes.Provider` to construct a specific instan
 
 ### kubectl proxy
 
-Each Kubernetes resource managed by Pulumi will have a link in the [Pulumi Cloud](https://app.pulumi.com")
+Each Kubernetes resource managed by Pulumi will have a link in the [Pulumi Cloud](https://app.pulumi.com)
 to view the resource in the cluster. These links are local, and require the client run `kubectl proxy` beforehand to access the resource.
 
 To learn more about `kubectl proxy` check out the [reference docs](https://kubernetes.io/docs/concepts/cluster-administration/proxies/).
@@ -141,13 +141,109 @@ See the [SSA how-to guide][ssa-guide] for more information about using SSA.
 
 ## Annotations
 
-A few Pulumi-specific annotations can be applied to Kubernetes resources managed by Pulumi to control aspects of how Pulumi deploys and manages the Kubernetes resource:
+A few Pulumi-specific annotations can be applied to Kubernetes resources to control aspects of how Pulumi deploys and manages them:
 
-- `pulumi.com/patchFieldManager`: Server-Side Apply option: Specify the `FieldManager` name to use for the Server-Side Apply operation.
-- `pulumi.com/patchForce`: Server-Side Apply option: Force override any conflicts for the specified resource.
-- `pulumi.com/replaceUnready`: If the resource failed to become ready in the previous Pulumi update, replace the resource rather than continuing to wait for it to become ready. Only `batch/v1/Job` currently supports this annotation.
-- `pulumi.com/skipAwait`: Disables Pulumi's default await logic that waits for a Kubernetes resource to become "ready" before marking the resource as having created or updated succesfully.
-- `pulumi.com/timeoutSeconds`: Specifies the number of seconds that the Pulumi Kubernetes provider will wait for the resource to become "ready".
+### pulumi.com/skipAwait
+
+Controls Pulumi's behavior while waiting for resources to become ready.
+When set to "true" Pulumi will create the resource but will not wait for it to become ready.
+
+{{% notes type="warning" %}}
+A small number of resources (Deployments, DaemonSets, StatefulSets, Pods and Namespaces) currently respect the `skipAwait` annotation during deletion and do not wait for deletion to succeed.
+However, using `skipAwait` during deletion is not recommended when server-side apply is enabled because it can lead to race conditions during replacement.
+The current behavior is considered buggy and these resource may change in the future to no longer respect the `skipAwait` annotation.
+
+The `pulumi.com/deletionPropagationPolicy` annotation, described below, is almost always the preferred way to delete something quickly and safely.
+{{% /notes %}}
+
+{{% notes type="info" %}}
+Pulumi does not have a concept of "readiness" for all resources by default, and in many cases it will assume a resource is immediately ready even without a `skipAwait` annotation.
+This can cause problems if dependent resources do depend on readiness.
+
+You can use the `waitFor` annotation (described below), or you can try running your program with the environment variable `PULUMI_K8S_AWAIT_ALL=true`, to have Pulumi wait for arbitrary resources to become ready.
+{{% /notes %}}
+
+### pulumi.com/deletionPropagationPolicy
+
+(New in v4.12.0.)
+
+By default Pulumi uses [foreground](https://kubernetes.io/docs/concepts/architecture/garbage-collection/#foreground-deletion) cascading deletion, which deletes the resource _and_ all of its dependents.
+This ensures all dependent resources are cleaned up, but it can be slow.
+
+The `pulumi.com/deletionPropagationPolicy` annotation configures alternative deletion propagation policies:
+1. "background": delete the owner resource and leave dependent resources to be asynchronously garbage collected.
+   This is faster than "foreground" deletion propagation, but dependent resources can remain temporarily or even indefinitely if they are not finalized.
+2. "orphan": delete the owner resource and leave dependent resources untouched.
+   This can be useful if you want to keep resources around for migration or debugging purposes.
+3. "foreground": the default behavior of deleting the resource and all of its dependents.
+   This is slower but guarantees all dependents have been cleaned up if it succeeds.
+
+### pulumi.com/waitFor
+
+(New in v4.18.0.)
+
+Defines custom criteria for Pulumi to use when waiting for the resource to become ready.
+It accepts three possible forms:
+
+  1. A `kubectl`
+     [JSONPath](https://kubernetes.io/docs/reference/kubectl/jsonpath):
+     a string prefixed with "jsonpath=" followed by a path expression and an
+     optional value.
+
+     If a value is provided, the resource is considered ready when the
+     JSONPath expression evaluates to the same value. For example this
+     resource expects its "phase" field to have a value of "Running":
+
+         "pulumi.com/waitFor": "jsonpath={.phase}=Running"
+
+     If a value is not provided, the resource will be considered ready when
+     any value exists at the given path. This resource will wait until it has
+     a webhook configured with a CA bundle:
+
+         "pulumi.com/waitFor": "jsonpath={.webhooks[*].clientConfig.caBundle}"
+
+  2. A string prefixed with "condition=" followed by the type of the
+     condition and an optional status. This matches the behavior of
+     `kubectl --for=condition=...` and will wait until the resource has a
+     matching condition. The expected status defaults to "True" if not
+     specified. For example:
+
+         "pulumi.com/waitFor": "condition=Synced"
+
+         "pulumi.com/waitFor": "condition=Reconciling=False"
+
+  3. A string containing a JSON array of one or more "jsonpath=" or
+     "condition=" expressions.
+
+         "pulumi.com/waitFor": '["jsonpath={.foo}", "condition=Bar"]'
+
+     The resource will be considered ready when all of the criteria are
+     simultaneously met.
+
+  This annotation has no effect if the `pulumi.com/skipAwait` annotation is also present with a value of "true" or "ready".
+
+### pulumi.com/patchForce
+
+(Server-Side Apply option.)
+
+Force override any conflicts for the specified resource.
+
+### pulumi.com/patchFieldManager
+
+(Server-Side Apply option.)
+
+Specify the `FieldManager` name to use for the Server-Side Apply operation.
+
+### pulumi.com/timeoutSeconds
+
+Specifies the number of seconds that the Pulumi Kubernetes provider will wait for the resource to become "ready".
+Consider using [custom timeouts](https://www.pulumi.com/docs/concepts/options/customtimeouts/) instead.
+
+### pulumi.com/replaceUnready
+
+If the resource failed to become ready in the previous Pulumi update, replace the resource rather than continuing to wait for it to become ready. Only `batch/v1/Job` currently supports this annotation.
+
+### Others
 
 In addition, the Pulumi provider may write the following annotations onto resources it manages:
 

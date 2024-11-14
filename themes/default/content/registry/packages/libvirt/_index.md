@@ -1,93 +1,205 @@
 ---
-title: libvirt
-meta_desc: Provides an overview of the libvirt Provider for Pulumi.
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-libvirt/v0.5.3/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
+title: Libvirt Provider
+meta_desc: Provides an overview on how to configure the Pulumi Libvirt provider.
 layout: package
 ---
+## Installation
 
-A Pulumi provider that lets you provision servers on a libvirt host using Pulumi.
+The libvirt provider is available as a package in all Pulumi languages:
 
-## Example
+* JavaScript/TypeScript: [`@pulumi/libvirt`](https://www.npmjs.com/package/@pulumi/libvirt)
+* Python: [`pulumi-libvirt`](https://pypi.org/project/pulumi-libvirt/)
+* Go: [`github.com/pulumi/pulumi-libvirt/sdk/go/libvirt`](https://github.com/pulumi/pulumi-libvirt)
+* .NET: [`Pulumi.Libvirt`](https://www.nuget.org/packages/Pulumi.Libvirt)
+* Java: [`com.pulumi/libvirt`](https://central.sonatype.com/artifact/com.pulumi/libvirt)
+## Overview
 
-{{< chooser language "javascript,typescript,python,go,csharp" >}}
+The Libvirt provider is used to interact with Linux
+[libvirt](https://libvirt.org) hypervisors.
 
-{{% choosable language javascript %}}
+The provider needs to be configured with the proper connection information
+before it can be used.
 
-```javascript
-const libvirt = require("@pulumi/libvirt")
+> **Note:** while libvirt can be used with several types of hypervisors, this
+provider focuses on [KVM](http://libvirt.org/drvqemu.html). Other drivers may not be
+working and haven't been tested.
+## The connection URI
 
-const myPool = new libvirt.Pool("test", {
-  type: "dir",
-  path: "/home/user/cluster_storage"
-})
-```
+The provider understands [connection URIs](https://libvirt.org/uri.html). The supported transports are:
 
-{{% /choosable %}}
+* `tcp` (non-encrypted connection)
+* `unix` (UNIX domain socket)
+* `tls` (See [here](https://libvirt.org/kbase/tlscerts.html) for information how to setup certificates)
+* `ssh` (Secure shell)
+
+Unlike the original libvirt, the `ssh` transport is not implemented using the ssh command and therefore does not require `nc` (netcat) on the server side.
+
+Additionally, the `ssh` URI supports passwords using the `driver+ssh://[username:PASSWORD@][hostname][:port]/[path]?sshauth=ssh-password` syntax.
+
+As the provider does not use libvirt on the client side, not all connection URI options are supported or apply.
+## Example Usage
+
+{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
 {{% choosable language typescript %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: nodejs
+config:
+    libvirt:uri:
+        value: qemu:///system
 
+```
 ```typescript
+import * as pulumi from "@pulumi/pulumi";
 import * as libvirt from "@pulumi/libvirt";
 
-const myPool = new libvirt.Pool("test", {
-  type: "dir",
-  path: "/home/user/cluster_storage"
-})
+// Create a new domain
+const test1 = new libvirt.Domain("test1", {});
 ```
-
 {{% /choosable %}}
 {{% choosable language python %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: python
+config:
+    libvirt:uri:
+        value: qemu:///system
 
+```
 ```python
+import pulumi
 import pulumi_libvirt as libvirt
 
-pool = libvirt.Pool("demo-py-pool", type="dir", path="/home/user/cluster_storage")
+# Create a new domain
+test1 = libvirt.Domain("test1")
 ```
+{{% /choosable %}}
+{{% choosable language csharp %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: dotnet
+config:
+    libvirt:uri:
+        value: qemu:///system
 
+```
+```csharp
+using System.Collections.Generic;
+using System.Linq;
+using Pulumi;
+using Libvirt = Pulumi.Libvirt;
+
+return await Deployment.RunAsync(() =>
+{
+    // Create a new domain
+    var test1 = new Libvirt.Domain("test1");
+
+});
+
+```
 {{% /choosable %}}
 {{% choosable language go %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: go
+config:
+    libvirt:uri:
+        value: qemu:///system
 
+```
 ```go
+package main
+
 import (
-  "github.com/pulumi/pulumi-libvirt/sdk/go/libvirt"
-  "github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumi/pulumi-libvirt/sdk/go/libvirt"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
 func main() {
-  pulumi.Run(func(ctx *pulumi.Context) error {
-    pool, err := libvirt.NewPool(ctx, "cluster", &libvirt.PoolArgs{
-        Type: pulumi.String("dir"),
-        Path: pulumi.String("/home/user/cluster_storage"),
-    })
-    if err != nil {
-      return err
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		// Create a new domain
+		_, err := libvirt.NewDomain(ctx, "test1", nil)
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+}
+```
+{{% /choosable %}}
+{{% choosable language yaml %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: yaml
+config:
+    libvirt:uri:
+        value: qemu:///system
+
+```
+```yaml
+resources:
+  # Create a new domain
+  test1:
+    type: libvirt:Domain
+```
+{{% /choosable %}}
+{{% choosable language java %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: java
+config:
+    libvirt:uri:
+        value: qemu:///system
+
+```
+```java
+package generated_program;
+
+import com.pulumi.Context;
+import com.pulumi.Pulumi;
+import com.pulumi.core.Output;
+import com.pulumi.libvirt.Domain;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+public class App {
+    public static void main(String[] args) {
+        Pulumi.run(App::stack);
     }
 
-    return nil
-  })
+    public static void stack(Context ctx) {
+        // Create a new domain
+        var test1 = new Domain("test1");
+
+    }
 }
 ```
-
 {{% /choosable %}}
-{{% choosable language csharp %}}
-
-```csharp
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Pulumi;
-using Pulumi.Libvirt;
-
-class Program
-{
-    static Task Main() =>
-        Deployment.Run(() => {
-          var cluster = new Libvirt.Pool("cluster", new Libvirt.PoolArgs
-          {
-              Type = "dir",
-              Path = "/home/user/cluster_storage",
-          });
-        });
-}
-```
-
-{{% /choosable %}}
-
 {{< /chooser >}}
+## Configuration Reference
+
+The following keys can be used to configure the provider.
+
+* `uri` - (Required) The [connection URI](https://libvirt.org/uri.html) used
+  to connect to the libvirt host.
+## Environment variables
+
+The libvirt connection URI can also be specified with the `LIBVIRT_DEFAULT_URI`
+shell environment variable.
+
+```
+$ export LIBVIRT_DEFAULT_URI="qemu+ssh://root@192.168.1.100/system"
+$ pulumi preview
+```

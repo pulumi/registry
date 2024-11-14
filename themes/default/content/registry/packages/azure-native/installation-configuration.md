@@ -297,10 +297,11 @@ as shown above except use `clientCertPath`/`ARM_CLIENT_CERTIFICATE_PATH` instead
 
 ### Authenticate using Managed Service Identity (MSI)
 
-When MSI is used for authentication, all
-[configuration is done in Azure](https://learn.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/overview)
-and we only need to tell the provider to use MSI. You can set the Pulumi configuration `useMsi` or the environment
-variable `ARM_USE_MSI` to "true".
+MSI is [configured in Azure](https://learn.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/overview).
+
+When using a system-assigned identity, or when using a user-assigned identity _and there's only a single one_, you don't need to do anything else. The provider will automatically use the identity.
+
+When one or more resources in your program have multiple user-assigned identities, you need to set the `clientId` config or the `ARM_CLIENT_ID` environment variable to the client ID of the identity you want to use.
 
 You can also configure a custom MSI endpoint, although this is not generally required. Do so via the `msiEndpoint`
 configuration or the `ARM_MSI_ENDPOINT` environment variable.
@@ -316,7 +317,7 @@ All configuration parameters are optional.
 | `auxiliaryTenantIds` | Any additional Tenant IDs which should be used for authentication. It can also be sourced from the `ARM_AUXILIARY_TENANT_IDS` environment variable. |
 | `clientCertificatePassword` | The password associated with the Client Certificate. For use when authenticating as a Service Principal using a Client Certificate. It can also be sourced from the `ARM_CLIENT_CERTIFICATE_PASSWORD` environment variable. |
 | `clientCertificatePath` | The path to a certificate to use as client secret for Service Principal authentication. It can also be sourced from the `ARM_CLIENT_CERTIFICATE_PATH` environment variable. |
-| `clientId` | The client ID to use for OIDC or Service Principal authentication. It can also be sourced from the `ARM_CLIENT_ID` environment variable. |
+| `clientId` | The client ID to use for OIDC, Service Principal, or user-assigned identity authentication. It can also be sourced from the `ARM_CLIENT_ID` environment variable. |
 | `clientSecret` | The client secret to use for Service Principal authentication. It can also be sourced from the `ARM_CLIENT_SECRET` environment variable. |
 | `disablePulumiPartnerId` | This will disable the Pulumi Partner ID which is used if a custom `partnerId` isn't specified. It can also be sourced from the `ARM_DISABLE_PULUMI_PARTNER_ID` environment variable. |
 | `environment` | The cloud environment to use. It can also be sourced from the ARM_ENVIRONMENT environment variable. Supported values are: `public` (default), `usgovernment`, `china`. |

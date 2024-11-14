@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/1Password/pulumi-onepassword/v1.1.4/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: 1Password
 meta_desc: Provides an overview of the 1Password Provider for Pulumi.
 layout: package

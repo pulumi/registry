@@ -4,11 +4,42 @@ on:
     branches:
       - master
 jobs:
+
+  resourcedocsgen:
+    uses: ./.github/workflows/check-go.yml
+    with:
+      path: tools/resourcedocsgen/
+
+  mktutorial:
+    uses: ./.github/workflows/check-go.yml
+    with:
+      path: tools/mktutorial/
+
+  lint-markdown:
+    name: Lint Markdown
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "23.x"
+
+      - name: Check out branch
+        uses: actions/checkout@v4
+
+      - name: Lint Markdown
+        run: |
+          yarn install
+          make lint-markdown
+
+  # Preview runs a registry build into a commit specific S3 bucket to preview changes.
+  #
+  # A link to the generated build is appended to the PR on each commit.
   preview:
+    name: Build and deploy preview
     # Only run this job for events that originate on this repository and if the automation/merge label is not applied to the PR.
     # PRs with the automation/tfgen-provider-docs label contain only metadata file changes and don't need a PR build.
     if: github.event.pull_request.head.repo.full_name == github.repository && contains(github.event.pull_request.labels.*.name, 'automation/tfgen-provider-docs') != true
-    name: Build and deploy preview
     runs-on: pulumi-service-ubuntu-22.04-16core
     environment: testing
     env:
@@ -22,7 +53,7 @@ jobs:
       - name: Install Go
         uses: actions/setup-go@v5
         with:
-          go-version: 1.21.x
+          go-version: 1.23.x
 
       - name: Install Hugo
         uses: peaceiris/actions-hugo@v3
@@ -38,10 +69,8 @@ jobs:
         with:
           pattern: "community-packages/package-list.json"
 
-      - name: Lint
-        run: |
-          yarn install
-          make lint
+      - name: Yarn Install
+        run: yarn install
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4

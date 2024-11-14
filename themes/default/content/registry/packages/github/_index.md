@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-github/v6.3.2/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Github Provider
 meta_desc: Provides an overview on how to configure the Pulumi Github provider.
 layout: package
@@ -544,7 +546,7 @@ The following configuration inputs are supported in the provider configuration:
   * `installationId` - (Required) This is the ID of the GitHub App installation. It can sourced from the `GITHUB_APP_INSTALLATION_ID` environment variable.
   * `pemFile` - (Required) This is the contents of the GitHub App private key PEM file. It can also be sourced from the `GITHUB_APP_PEM_FILE` environment variable and may use `\n` instead of actual new lines.
 
-* `writeDelayMs` - (Optional) The number of milliseconds to sleep in between write operations in order to satisfy the GitHub API rate limits. Defaults to 1000ms or 1 second if not provided.
+* `writeDelayMs` - (Optional) The number of milliseconds to sleep in between write operations in order to satisfy the GitHub API rate limits. Note that requests to the GraphQL API are implemented as `POST` requests under the hood, so this setting affects those calls as well. Defaults to 1000ms or 1 second if not provided.
 
 * `retryDelayMs` - (Optional) Amount of time in milliseconds to sleep in between requests to GitHub API after an error response. Defaults to 1000ms or 1 second if not provided, the maxRetries must be set to greater than zero.
 

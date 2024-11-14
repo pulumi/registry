@@ -11,6 +11,13 @@ make build-assets
 export PULUMI_CONVERT_URL="${PULUMI_CONVERT_URL:-$(pulumi stack output --stack pulumi/tf2pulumi-service/production url)}"
 export PULUMI_AI_WS_URL=${PULUMI_AI_WS_URL:-$(pulumi stack output --stack pulumi/pulumigpt-api/corp websocketUri)}
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+INFRA_PATH="$SCRIPT_DIR/../../infrastructure"
+# Read Copilot API URL from Pulumi config, ignoring any errors.
+# If the config value is not set Copilot will not be available.
+export PULUMI_COPILOT_URL=${PULUMI_COPILOT_URL:-$(pulumi --cwd "$INFRA_PATH" config get copilotUrl 2>/dev/null || echo "")}
+printf "Copilot URL: $PULUMI_COPILOT_URL\n"
+
 printf "Compiling theme JavaScript and CSS...\n\n"
 export ASSET_BUNDLE_ID="$(build_identifier)"
 
@@ -30,7 +37,7 @@ popd
 
 REGISTRY_COMMIT="$(git_sha_short)"
 printf "Generating API docs from registry commit %s...\n\n" "${REGISTRY_COMMIT}"
-resourcedocsgen docs registry --commitSha "${REGISTRY_COMMIT}" \
+resourcedocsgen docs registry \
     --baseDocsOutDir "themes/default/content/registry/packages" \
     --basePackageTreeJSONOutDir "themes/default/static/registry/packages/navs" \
     --logtostderr
@@ -38,15 +45,17 @@ resourcedocsgen docs registry --commitSha "${REGISTRY_COMMIT}" \
 # Apply fixes. See script for details.
 node ./scripts/apply-fixes.js
 
-printf "Running Hugo...\n\n"
+log "Running Hugo..."
+echo
+echo
 
 case ${1} in
     preview)
         export HUGO_BASEURL="http://$(origin_bucket_prefix)-$(build_identifier).s3-website.$(aws_region).amazonaws.com"
-        GOGC=3 hugo --minify --buildFuture --templateMetrics -e preview
+        hugo --minify --buildFuture --templateMetrics -e preview
         ;;
     update)
-        GOGC=3 hugo --minify --buildFuture --templateMetrics -e production
+        hugo --minify --buildFuture --templateMetrics -e production
         ;;
     *)
         echo "Unknown mode, '${1}' must be one of 'preview' or 'update'"
@@ -57,4 +66,6 @@ esac
 # Purge unused CSS.
 yarn run minify-css
 
-printf "Done!\n\n"
+log "Done!"
+echo
+echo

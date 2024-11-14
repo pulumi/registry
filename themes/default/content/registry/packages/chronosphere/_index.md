@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/chronosphereio/pulumi-chronosphere/v0.9.3/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Chronosphere
 meta_desc: Provides an overview of the Chronosphere Provider for Pulumi.
 layout: overview

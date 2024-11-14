@@ -1,25 +1,39 @@
+// Copyright 2024, Pulumi Corporation.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 package cmd
 
 import (
 	"encoding/json"
 	"fmt"
+	"io"
+	"net/http"
+	"strings"
 
 	"github.com/ghodss/yaml"
 	"github.com/pkg/errors"
+	"github.com/pulumi/pulumi/sdk/v3/go/common/util/contract"
 	"github.com/pulumi/registry/tools/resourcedocsgen/pkg"
 	"github.com/spf13/cobra"
-
-	"io/ioutil"
-	"net/http"
-	"strings"
 )
 
 func CheckVersion() *cobra.Command {
-
 	var repoSlug string
 	cmd := &cobra.Command{
 		Use:   "pkgversion",
 		Short: "Check a Pulumi package version",
+		//nolint:lll
 		Long: `Print the most recent version of a Pulumi package. If the most recent version of a Pulumi package is the same as the version published in the Pulumi Registry, print nothing.
 
 The most recent version of a Pulumi package is taken to be the most recent release published in GitHub.
@@ -28,10 +42,9 @@ The version in the registry is defined in the YAML file at:
 
     https://raw.githubusercontent.com/pulumi/registry/master/themes/default/data/registry/packages/${PKG#pulumi/pulumi-}.yaml`,
 		RunE: func(cmd *cobra.Command, args []string) error {
-
 			if strings.Contains(repoSlug, "https") || strings.Contains(repoSlug, "github.com") {
-				return errors.New(fmt.Sprintf("Expected repoSlug to be in the format of `owner/repo`"+
-					" but got %q", repoSlug))
+				return fmt.Errorf("Expected repoSlug to be in the format of `owner/repo`"+
+					" but got %q", repoSlug)
 			}
 
 			repoName := ""
@@ -46,7 +59,9 @@ The version in the registry is defined in the YAML file at:
 			}
 
 			pkgName := strings.TrimPrefix(repoName, "pulumi-")
-			pkgMetadata := fmt.Sprintf("https://raw.githubusercontent.com/pulumi/registry/master/themes/default/data/registry/packages/%s.yaml", pkgName)
+			pkgMetadata := fmt.Sprintf(
+				"https://raw.githubusercontent.com/pulumi/registry/master/themes/default/data/registry/packages/%s.yaml",
+				pkgName)
 			regVersion, err := getRegistryVersion(pkgMetadata)
 			if err != nil {
 				return err
@@ -63,26 +78,24 @@ The version in the registry is defined in the YAML file at:
 	}
 
 	cmd.Flags().StringVar(&repoSlug, "repoSlug", "", "The repository slug e.g. pulumi/pulumi-provider")
-	cmd.MarkFlagRequired("repoSlug")
+	contract.AssertNoErrorf(cmd.MarkFlagRequired("repoSlug"), "could not find repoSlug")
 	return cmd
 }
 
 func getLatestVersion(repoSlug string) (string, error) {
 	path := fmt.Sprintf("/repos/%s/releases/latest", repoSlug)
 	resp, err := pkg.GetGitHubAPI(path)
-
 	if err != nil {
-		return "", errors.Wrap(err, fmt.Sprintf("getting latest version from https://api.github.com%s", path))
+		return "", fmt.Errorf("getting latest version from https://api.github.com%s: %w", path, err)
 	}
 
 	defer resp.Body.Close()
 	if resp.StatusCode != 200 {
-		return "", errors.Wrap(err, fmt.Sprintf("Could not find a release at https://api.github.com%s", path))
+		return "", fmt.Errorf("Could not find a release at https://api.github.com%s: %w", path, err)
 	}
 
 	var tag pkg.GitHubTag
 	err = json.NewDecoder(resp.Body).Decode(&tag)
-
 	if err != nil {
 		return "", errors.Wrap(err, "failure reading contents of latest tag")
 	}
@@ -91,16 +104,16 @@ func getLatestVersion(repoSlug string) (string, error) {
 }
 
 func getRegistryVersion(url string) (string, error) {
-	resp, err := http.Get(url)
+	resp, err := http.Get(url) //nolint:gosec
 	if err != nil {
-		return "", errors.Wrap(err, fmt.Sprintf("getting latest version from %s", url))
+		return "", fmt.Errorf("getting latest version from %s: %w", url, err)
 	}
 	defer resp.Body.Close()
 	if resp.StatusCode != 200 {
 		return "", errors.Wrap(err, "file not found")
 	}
 
-	contents, err := ioutil.ReadAll(resp.Body)
+	contents, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return "", errors.Wrap(err, "failure reading contents of remote file")
 	}

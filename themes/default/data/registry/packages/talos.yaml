@@ -10,5 +10,5 @@ publisher: Pulumiverse
 repo_url: https://github.com/pulumiverse/pulumi-talos
 schema_file_path: provider/cmd/pulumi-resource-talos/schema.json
 title: talos
-updated_on: 1703148709
-version: v0.2.0
+updated_on: 1730845993
+version: v0.4.1

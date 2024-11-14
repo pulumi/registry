@@ -1,6 +1,8 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-consul/v3.12.2/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Consul Provider
-meta_desc: Provides an overview on how to configure the Pulumi Consul Provider.
+meta_desc: Provides an overview on how to configure the Pulumi Consul provider.
 layout: package
 ---
 ## Installation
@@ -258,8 +260,7 @@ public class App {
 ```
 {{% /choosable %}}
 {{< /chooser >}}
-## Schema
-### Optional
+## Configuration Reference
 
 - `address` (String) The HTTP(S) API address of the agent to use. Defaults to "127.0.0.1:8500".
 - `authJwt` (Block List, Max: 1) Authenticates to Consul using a JWT authentication method. (see below for nested schema)
@@ -279,7 +280,7 @@ public class App {
 - `token` (String, Sensitive) The ACL token to use by default when making requests to the agent. Can also be specified with `CONSUL_HTTP_TOKEN` or `CONSUL_TOKEN` as an environment variable.
 
 <a id="nestedblock--auth_jwt"></a>
-### Nested Schema for `authJwt`
+### Nested Configuration Reference for `authJwt`
 
 Required:
 
@@ -292,7 +293,7 @@ Optional:
 - `usePulumiCloudWorkloadIdentity` (Boolean) Whether to use a Pulumi Workload Identity token. The token will be read from the `TFC_WORKLOAD_IDENTITY_TOKEN` environment variable.
 
 <a id="nestedblock--header"></a>
-### Nested Schema for `header`
+### Nested Configuration Reference for `header`
 
 Required:
 

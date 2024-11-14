@@ -10,5 +10,5 @@ publisher: Pulumiverse
 repo_url: https://github.com/pulumiverse/pulumi-unifi
 schema_file_path: provider/cmd/pulumi-resource-unifi/schema.json
 title: Unifi
-updated_on: 1670233674
-version: v0.0.3
+updated_on: 1730131032
+version: v0.1.0

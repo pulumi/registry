@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/EventStore/pulumi-eventstorecloud/v0.2.15/docs/installation-configuration.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Event Store Cloud Installation & Configuration
 meta_desc: How to set up credentials to use the Event Store Cloud provider for Pulumi.
 layout: package

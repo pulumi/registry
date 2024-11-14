@@ -8,7 +8,7 @@ native: false
 package_status: public_preview
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-snowflake
-schema_file_path: provider/cmd/pulumi-resource-snowflake/schema.json
+schema_file_path: ""
 title: Snowflake
-updated_on: 1726831379
-version: v0.59.0
+updated_on: 1731504398
+version: v0.61.0

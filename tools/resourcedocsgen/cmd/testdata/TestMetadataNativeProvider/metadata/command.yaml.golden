@@ -1,0 +1,15 @@
+category: Utility
+component: false
+description: The Pulumi Command Provider enables you to execute commands and scripts
+  either locally or remotely as part of the Pulumi resource model.
+featured: false
+logo_url: https://raw.githubusercontent.com/pulumi/pulumi-command/master/assets/logo.svg
+name: command
+native: true
+package_status: ga
+publisher: Pulumi
+repo_url: https://github.com/pulumi/pulumi-command
+schema_file_path: provider/cmd/pulumi-resource-command/schema.json
+title: Command
+updated_on: 1719590084
+version: v1.0.0

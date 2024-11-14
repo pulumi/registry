@@ -1,7 +1,9 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-unifi/v0.1.0/docs/installation-configuration.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Unifi Installation & Configuration
 meta_desc: Information on how to install the Unifi provider.
-layout: package
+layout: installation
 ---
 
 ## Installation
@@ -21,8 +23,8 @@ To provision resources with the Pulumi Unifi provider, you need to have correct 
 
 Use `pulumi config set unifi:<option> (--secret)`.
 
-| Option | Environment Variable | Required? | Description | 
-| - | - | - |
+| Option | Environment Variable | Required/Optional | Description | 
+|-----|------|------|----|
 | `username`| `UNIFI_USERNAME` | Required | Unifi user name |
 | `password`| `UNIFI_PASSWORD` | Required (Secret) | Unifi Password |
 | `api_url` | `UNIFI_API` | Required | Unifi user name |

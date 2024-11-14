@@ -8,7 +8,7 @@ native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-fastly
-schema_file_path: provider/cmd/pulumi-resource-fastly/schema.json
+schema_file_path: ""
 title: Fastly
-updated_on: 1728040136
-version: v8.12.0
+updated_on: 1731504446
+version: v8.13.0

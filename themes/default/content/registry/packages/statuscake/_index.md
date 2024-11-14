@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-statuscake/v1.0.2/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Statuscake
 meta_desc: Provides an overview of the Statuscake Provider for Pulumi.
 layout: overview

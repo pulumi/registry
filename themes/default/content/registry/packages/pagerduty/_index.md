@@ -1,4 +1,7 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-pagerduty/v4.16.0/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
+# *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Pagerduty Provider
 meta_desc: Provides an overview on how to configure the Pulumi Pagerduty provider.
 layout: package
@@ -278,7 +281,7 @@ The `useAppOauthScopedToken` input has the following nested fields:
 
 * `pdClientId` - (Required) An identifier issued when the Scoped OAuth client was added to a PagerDuty App. It can also be sourced from the `PAGERDUTY_CLIENT_ID` environment variable.
 * `pdClientSecret` - (Required) A secret issued when the Scoped OAuth client was added to a PagerDuty App. It can also be sourced from the `PAGERDUTY_CLIENT_SECRET` environment variable.
-* `pdSubdomain` - (Required) Your PagerDuty account subdomain; i.e: If the *URL* shown by the Browser when you are in your PagerDuty account is some like: <https://acme.pagerudty.com>, then your PagerDuty subdomain is `acme`. It can also be sourced from the `PAGERDUTY_SUBDOMAIN` environment variable.
+* `pdSubdomain` - (Required) Your PagerDuty account subdomain; i.e: If the *URL* shown by the Browser when you are in your PagerDuty account is some like: <https://acme.pagerduty.com>, then your PagerDuty subdomain is `acme`. It can also be sourced from the `PAGERDUTY_SUBDOMAIN` environment variable.
 ## Example using App Oauth scoped token
 
 {{< chooser language "typescript,python,go,csharp,java,yaml" >}}

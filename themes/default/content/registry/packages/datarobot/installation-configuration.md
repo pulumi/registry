@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/datarobot-community/pulumi-datarobot/v0.4.0/docs/installation-configuration.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: DataRobot Installation & Configuration
 meta_desc: Information on how to install the DataRobot provider.
 layout: package
@@ -67,14 +69,14 @@ Replace the version string with your desired version.
 
 You must configure the DataRobot provider for Pulumi with a [DataRobot API Key](https://docs.datarobot.com/en/docs/get-started/acct-mgmt/acct-settings/api-key-mgmt.html#api-key-management) before the provider can be used to access and manage items in your DataRobot account.
 
-- `datarobot:apikey` (environment: `DATAROBOT_API_KEY`) - the API key for `datarobot`
+- `datarobot:apikey` (environment: `DATAROBOT_API_TOKEN`) - the API key for `datarobot`
 
 Once you have your API Key, there are two ways to provide it to Pulumi:
 
 1. Set the environment variable for the preferred method. For example, to set the environment variable for an API Key:
 
    ```sh
-   $ export DATAROBOT_API_KEY=XXXXXXXXXXXXXX
+   $ export DATAROBOT_API_TOKEN=XXXXXXXXXXXXXX
    ```
 
 2. If you prefer to store your API Key alongside your Pulumi stack for easy multi-user access, use configuration to set them.

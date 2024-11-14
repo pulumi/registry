@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-opsgenie/v1.3.12/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Opsgenie Provider
 meta_desc: Provides an overview on how to configure the Pulumi Opsgenie provider.
 layout: package
@@ -17,6 +19,11 @@ The opsgenie provider is available as a package in all Pulumi languages:
 The Opsgenie provider is used to interact with the
 many resources supported by Opsgenie. The provider needs to be configured
 with the proper credentials before it can be used.
+
+**Breaking Change - v0.6.0**
+
+With 0.6.0 version provider adopted Pulumi Plugin SDK v2 therefore some resources reads has changed.
+If you encounter any problems you can contact us via Github
 
 Use the navigation to the left to read about the available resources.
 ## Example Usage

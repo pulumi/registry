@@ -8,7 +8,7 @@ native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-splunk
-schema_file_path: provider/cmd/pulumi-resource-splunk/schema.json
+schema_file_path: ""
 title: Splunk
-updated_on: 1726659138
-version: v1.2.10
+updated_on: 1731436597
+version: v1.2.13

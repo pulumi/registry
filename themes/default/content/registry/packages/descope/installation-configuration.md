@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/descope/pulumi-descope/v0.0.4/docs/installation-configuration.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Descope Installation & Configuration
 meta_desc: Information on how to install the Descope provider.
 layout: package

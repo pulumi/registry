@@ -1,15 +1,28 @@
+// Copyright 2024, Pulumi Corporation.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 package docs
 
 import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"net/http"
 	"net/url"
 	"os"
-	"os/exec"
 	"path/filepath"
+	"runtime"
 	"strings"
 
 	"github.com/spf13/cobra"
@@ -23,6 +36,7 @@ import (
 	pschema "github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/util/contract"
 	"github.com/pulumi/registry/tools/resourcedocsgen/pkg"
+	concpool "github.com/sourcegraph/conc/pool"
 )
 
 func getRepoSlug(repoURL string) (string, error) {
@@ -34,7 +48,9 @@ func getRepoSlug(repoURL string) (string, error) {
 	return u.Path, nil
 }
 
-func genResourceDocsForPackageFromRegistryMetadata(metadata pkg.PackageMeta, docsOutDir, packageTreeJSONOutDir string) error {
+func genResourceDocsForPackageFromRegistryMetadata(
+	metadata pkg.PackageMeta, docsOutDir, packageTreeJSONOutDir string,
+) error {
 	glog.Infoln("Generating docs for", metadata.Name)
 	if metadata.RepoURL == "" {
 		return errors.Errorf("metadata for package %q does not contain the repo_url", metadata.Name)
@@ -50,11 +66,14 @@ func genResourceDocsForPackageFromRegistryMetadata(metadata pkg.PackageMeta, doc
 	schemaFilePath = strings.TrimPrefix(schemaFilePath, "/")
 
 	repoSlug, err := getRepoSlug(metadata.RepoURL)
+	if err != nil {
+		return errors.WithMessage(err, "could not get repo slug")
+	}
 
 	glog.Infoln("Reading remote schema file from VCS")
 	// TODO: Support raw URLs for other VCS too.
 	schemaFileURL := fmt.Sprintf("https://raw.githubusercontent.com/%s/%s/%s", repoSlug, metadata.Version, schemaFilePath)
-	resp, err := http.Get(schemaFileURL)
+	resp, err := http.Get(schemaFileURL) //nolint:gosec
 	if err != nil {
 		return errors.Wrapf(err, "reading schema file from VCS %s", schemaFileURL)
 	}
@@ -75,23 +94,23 @@ func genResourceDocsForPackageFromRegistryMetadata(metadata pkg.PackageMeta, doc
 		}
 	}
 
-	mainSpec = &pschema.PackageSpec{}
-	if err := json.Unmarshal(schemaBytes, mainSpec); err != nil {
+	var mainSpec pschema.PackageSpec
+	if err := json.Unmarshal(schemaBytes, &mainSpec); err != nil {
 		return errors.Wrap(err, "unmarshalling schema into a PackageSpec")
 	}
 
-	pulPkg, err := getPulumiPackageFromSchema(docsOutDir)
+	pulPkg, genctx, err := getPulumiPackageFromSchema(docsOutDir, mainSpec)
 	if err != nil {
 		return errors.Wrap(err, "generating package from schema file")
 	}
 
 	glog.Infoln("Running docs generator...")
-	if err := generateDocsFromSchema(docsOutDir, pulPkg); err != nil {
+	if err := generateDocsFromSchema(docsOutDir, genctx); err != nil {
 		return errors.Wrap(err, "generating docs from schema")
 	}
 
 	glog.Infoln("Generating the package tree JSON file...")
-	if err := generatePackageTree(packageTreeJSONOutDir, pulPkg.Name); err != nil {
+	if err := generatePackageTree(packageTreeJSONOutDir, pulPkg.Name, genctx); err != nil {
 		return errors.Wrap(err, "generating package tree")
 	}
 
@@ -109,38 +128,42 @@ func genResourceDocsForAllRegistryPackages(registryRepoPath, baseDocsOutDir, bas
 		return errors.Wrap(err, "reading the registry packages dir")
 	}
 
+	pool := concpool.New().WithErrors().WithMaxGoroutines(runtime.NumCPU())
 	for _, f := range metadataFiles {
-		glog.Infof("=== starting %s ===\n", f.Name())
-		glog.Infoln("Processing metadata file")
-		metadataFilePath := filepath.Join(registryPackagesPath, f.Name())
+		f := f
+		pool.Go(func() error {
+			glog.Infof("=== starting %s ===\n", f.Name())
+			glog.Infoln("Processing metadata file")
+			metadataFilePath := filepath.Join(registryPackagesPath, f.Name())
 
-		b, err := os.ReadFile(metadataFilePath)
-		if err != nil {
-			return errors.Wrapf(err, "reading the metadata file %s", metadataFilePath)
-		}
+			b, err := os.ReadFile(metadataFilePath)
+			if err != nil {
+				return errors.Wrapf(err, "reading the metadata file %s", metadataFilePath)
+			}
 
-		var metadata pkg.PackageMeta
-		if err := yaml.Unmarshal(b, &metadata); err != nil {
-			return errors.Wrapf(err, "unmarshalling the metadata file %s", metadataFilePath)
-		}
+			var metadata pkg.PackageMeta
+			if err := yaml.Unmarshal(b, &metadata); err != nil {
+				return errors.Wrapf(err, "unmarshalling the metadata file %s", metadataFilePath)
+			}
 
-		docsOutDir := filepath.Join(baseDocsOutDir, metadata.Name, "api-docs")
-		err = genResourceDocsForPackageFromRegistryMetadata(metadata, docsOutDir, basePackageTreeJSONOutDir)
-		if err != nil {
-			return errors.Wrapf(err, "generating resource docs using metadata file info %s", f.Name())
-		}
+			docsOutDir := filepath.Join(baseDocsOutDir, metadata.Name, "api-docs")
+			err = genResourceDocsForPackageFromRegistryMetadata(metadata, docsOutDir, basePackageTreeJSONOutDir)
+			if err != nil {
+				return errors.Wrapf(err, "generating resource docs using metadata file info %s", f.Name())
+			}
 
-		glog.Infof("=== completed %s ===", f.Name())
+			glog.Infof("=== completed %s ===", f.Name())
+			return nil
+		})
 	}
 
-	return nil
+	return pool.Wait()
 }
 
 func resourceDocsFromRegistryCmd() *cobra.Command {
-	var branch string
 	var baseDocsOutDir string
 	var basePackageTreeJSONOutDir string
-	var commitSha string
+	var registryDir string
 
 	cmd := &cobra.Command{
 		Use:   "registry [pkgName]",
@@ -148,37 +171,16 @@ func resourceDocsFromRegistryCmd() *cobra.Command {
 		Long: "Generate resource docs for all packages in the registry or specific packages. " +
 			"Pass a package name in the registry as an optional arg to generate docs only for that package.",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			tempDir, err := ioutil.TempDir("", "")
+			registryDir, err := filepath.Abs(registryDir)
 			if err != nil {
-				return errors.Wrap(err, "creating temp dir for registry repo")
-			}
-
-			defer os.RemoveAll(tempDir)
-
-			glog.Infoln("Cloning the registry repo @", branch)
-			gitCmd := exec.Command("git", "clone", "-b", branch, registryRepo, tempDir)
-			gitCmd.Stdout = os.Stdout
-			if err := gitCmd.Run(); err != nil {
-				return errors.Wrap(err, "cloning the registry repo")
-			}
-
-			glog.Infoln("Cloned the repo successfully!")
-
-			if commitSha != "" {
-				glog.Infoln("Resetting registry repo HEAD to", commitSha)
-				gitCmd = exec.Command("git", "reset", "--hard", commitSha)
-				gitCmd.Dir = tempDir
-				gitCmd.Stdout = os.Stdout
-				if err := gitCmd.Run(); err != nil {
-					return errors.Wrap(err, "resetting the registry repo HEAD")
-				}
+				return errors.Wrap(err, "finding the cwd")
 			}
 
 			if len(args) > 0 {
 				glog.Infoln("Generating docs for a single package:", args[0])
-				registryPackagesPath := getRegistryPackagesPath(tempDir)
+				registryPackagesPath := getRegistryPackagesPath(registryDir)
 				pkgName := args[0]
-				metadataFilePath := filepath.Join(registryPackagesPath, fmt.Sprintf("%s.yaml", pkgName))
+				metadataFilePath := filepath.Join(registryPackagesPath, pkgName+".yaml")
 				b, err := os.ReadFile(metadataFilePath)
 				if err != nil {
 					return errors.Wrapf(err, "reading the metadata file %s", metadataFilePath)
@@ -197,7 +199,7 @@ func resourceDocsFromRegistryCmd() *cobra.Command {
 				}
 			} else {
 				glog.Infoln("Generating docs for all packages in the registry...")
-				err := genResourceDocsForAllRegistryPackages(tempDir, baseDocsOutDir, basePackageTreeJSONOutDir)
+				err := genResourceDocsForAllRegistryPackages(registryDir, baseDocsOutDir, basePackageTreeJSONOutDir)
 				if err != nil {
 					return errors.Wrap(err, "generating docs for all packages from registry metadata")
 				}
@@ -208,10 +210,15 @@ func resourceDocsFromRegistryCmd() *cobra.Command {
 		},
 	}
 
-	cmd.Flags().StringVar(&baseDocsOutDir, "baseDocsOutDir", "../../content/registry/packages", "The directory path to where the docs will be written to")
-	cmd.Flags().StringVarP(&branch, "branch", "b", "master", "The branch at which the registry repo will be checked out. If the commitSha flag is also passed, the commit must be valid for the specified branch.")
-	cmd.Flags().StringVar(&commitSha, "commitSha", "", "The commit SHA to point the registry repo to. If the branch is also specified, this hash should be vaild for that branch.")
-	cmd.Flags().StringVar(&basePackageTreeJSONOutDir, "basePackageTreeJSONOutDir", "../../static/registry/packages/navs", "The directory path to write the package tree JSON file to")
+	cmd.Flags().StringVar(&baseDocsOutDir, "baseDocsOutDir",
+		"../../content/registry/packages",
+		"The directory path to where the docs will be written to")
+	cmd.Flags().StringVar(&basePackageTreeJSONOutDir, "basePackageTreeJSONOutDir",
+		"../../static/registry/packages/navs",
+		"The directory path to write the package tree JSON file to")
+	cmd.Flags().StringVar(&registryDir, "registryDir",
+		".",
+		"The root of the pulumi/registry directory")
 
 	return cmd
 }

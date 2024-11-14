@@ -13,6 +13,9 @@ import { SourceKind } from "./components/convert/convert";
 import { Filter } from "./components/filter-select/filter-select-option";
 import { MultiSelectFormItem } from "./components/pulumi-multi-select-form/pulumi-multi-select-form";
 export namespace Components {
+    interface CopilotSidebar {
+        "copilotSrc": string;
+    }
     interface EventSessionRegistrationModal {
         "buttonClass": string;
         "buttonText": string;
@@ -205,6 +208,12 @@ export namespace Components {
     }
 }
 declare global {
+    interface HTMLCopilotSidebarElement extends Components.CopilotSidebar, HTMLStencilElement {
+    }
+    var HTMLCopilotSidebarElement: {
+        prototype: HTMLCopilotSidebarElement;
+        new (): HTMLCopilotSidebarElement;
+    };
     interface HTMLEventSessionRegistrationModalElement extends Components.EventSessionRegistrationModal, HTMLStencilElement {
     }
     var HTMLEventSessionRegistrationModalElement: {
@@ -434,6 +443,7 @@ declare global {
         new (): HTMLPulumiWebinarFormSelectElement;
     };
     interface HTMLElementTagNameMap {
+        "copilot-sidebar": HTMLCopilotSidebarElement;
         "event-session-registration-modal": HTMLEventSessionRegistrationModalElement;
         "home-slots": HTMLHomeSlotsElement;
         "pulumi-ai": HTMLPulumiAiElement;
@@ -475,6 +485,9 @@ declare global {
     }
 }
 declare namespace LocalJSX {
+    interface CopilotSidebar {
+        "copilotSrc"?: string;
+    }
     interface EventSessionRegistrationModal {
         "buttonClass"?: string;
         "buttonText"?: string;
@@ -661,6 +674,7 @@ declare namespace LocalJSX {
         "sessions"?: string;
     }
     interface IntrinsicElements {
+        "copilot-sidebar": CopilotSidebar;
         "event-session-registration-modal": EventSessionRegistrationModal;
         "home-slots": HomeSlots;
         "pulumi-ai": PulumiAi;
@@ -705,6 +719,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "copilot-sidebar": LocalJSX.CopilotSidebar & JSXBase.HTMLAttributes<HTMLCopilotSidebarElement>;
             "event-session-registration-modal": LocalJSX.EventSessionRegistrationModal & JSXBase.HTMLAttributes<HTMLEventSessionRegistrationModalElement>;
             "home-slots": LocalJSX.HomeSlots & JSXBase.HTMLAttributes<HTMLHomeSlotsElement>;
             "pulumi-ai": LocalJSX.PulumiAi & JSXBase.HTMLAttributes<HTMLPulumiAiElement>;

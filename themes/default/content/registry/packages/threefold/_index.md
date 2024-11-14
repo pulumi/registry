@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/threefoldtech/pulumi-threefold/v0.8.1/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: threefold
 meta_desc: Provides an overview of the threefold grid Provider for Pulumi.
 layout: package

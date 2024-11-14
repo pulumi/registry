@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pinecone-io/pulumi-pinecone/v0.4.3/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Pinecone
 meta_desc: Provides an overview of the Pinecone Provider for Pulumi.
 layout: package

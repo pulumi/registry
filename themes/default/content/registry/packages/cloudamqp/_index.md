@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-cloudamqp/v3.20.2/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Cloudamqp Provider
 meta_desc: Provides an overview on how to configure the Pulumi Cloudamqp provider.
 layout: package
@@ -12,6 +14,7 @@ The cloudamqp provider is available as a package in all Pulumi languages:
 * Go: [`github.com/pulumi/pulumi-cloudamqp/sdk/v3/go/cloudamqp`](https://github.com/pulumi/pulumi-cloudamqp)
 * .NET: [`Pulumi.Cloudamqp`](https://www.nuget.org/packages/Pulumi.Cloudamqp)
 * Java: [`com.pulumi/cloudamqp`](https://central.sonatype.com/artifact/com.pulumi/cloudamqp)
+## Overview
 
 The CloudAMQP provider is used to interact with CloudAMQP organization resources.
 

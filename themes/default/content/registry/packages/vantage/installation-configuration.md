@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/lbrlabs/pulumi-vantage/v0.0.3/docs/installation-configuration.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Vantage Installation & Configuration
 meta_desc: Information on how to install the Vantage provider.
 layout: installation

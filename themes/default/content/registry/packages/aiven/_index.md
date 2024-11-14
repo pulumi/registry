@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-aiven/v6.27.0/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Aiven Provider
 meta_desc: Provides an overview on how to configure the Pulumi Aiven provider.
 layout: package
@@ -12,6 +14,7 @@ The aiven provider is available as a package in all Pulumi languages:
 * Go: [`github.com/pulumi/pulumi-aiven/sdk/v6/go/aiven`](https://github.com/pulumi/pulumi-aiven)
 * .NET: [`Pulumi.Aiven`](https://www.nuget.org/packages/Pulumi.Aiven)
 * Java: [`com.pulumi/aiven`](https://central.sonatype.com/artifact/com.pulumi/aiven)
+## Overview
 
 The Pulumi provider for [Aiven](https://aiven.io/), the trusted open source data platform for everyone.
 ## Authentication
@@ -19,7 +22,6 @@ Sign up for Aiven and [create a personal token](https://aiven.io/docs/platform/h
 
 You can also create an [application user](https://aiven.io/docs/platform/howto/manage-application-users) and use its token for accessing the Aiven Provider.
 ## Example usage
-
 
 {{< chooser language "typescript,python,go,csharp,java,yaml" >}}
 {{% choosable language typescript %}}

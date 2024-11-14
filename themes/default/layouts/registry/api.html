@@ -1,7 +1,4 @@
 {{ define "main" }}
-    {{ $directories := (split .Page.File.Path "/")}}
-    {{ $packageName := index $directories 2 }}
-    {{ $packageHome := path.Join "registry/packages" $packageName }}
     {{ $title_tag := .Params.title_tag }}
 
     <div class="docs-list-main">
@@ -54,10 +51,6 @@
                 <div class="docs-table-of-contents docs-toc-mobile">
                     {{ partial "docs/table-of-contents.html" . }}
                 </div>
-
-                {{ if .Params.cloud_overview }}
-                    {{ partial "docs/cloud-overview.html" . }}
-                {{ end }}
 
                 <section class="docs-content">
                     {{ if strings.HasSuffix .Permalink "how-to-guides/" }}

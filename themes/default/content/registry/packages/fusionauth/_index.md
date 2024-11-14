@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/theogravity/pulumi-fusionauth/v5.1.0/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: FusionAuth
 meta_desc: Provides configuration management for FusionAuth Provider
 layout: package

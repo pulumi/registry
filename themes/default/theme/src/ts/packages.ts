@@ -22,7 +22,7 @@ const filterByTextAndTags = (filters, filterText) => {
 
             const packageType = el.attr("data-type");
             const packageCategory = el.attr("data-category");
-            const packageIsNative = packageType === "native-provider";
+            let packageIsNative = packageType === "native-provider";
 
             const packageHasSelectedType =
                 !!filters.find(f => f.group === "type" && f.value === packageType) || (filters.find(f => f.group === "type" && f.value === "provider") && packageIsNative);
@@ -30,9 +30,17 @@ const filterByTextAndTags = (filters, filterText) => {
 
             const packageTitle = el.attr("data-title");
             const downcasedPackageTitle = packageTitle.toLowerCase();
-            const downcasedFilterText = filterText?.trim().toLowerCase();
+            let downcasedFilterText = filterText?.trim().toLowerCase();
+            
 
             let packageIsAMatch;
+
+            // hack to include anything marked as native as responsive to a filter text including the word "native"
+            // see https://github.com/pulumi/registry/issues/5715 for reasoning
+            if (downcasedFilterText.includes("native")) {
+                downcasedFilterText = downcasedFilterText.replace(/native/g, "");
+                packageIsNative = true;
+            }
 
             if (downcasedFilterText === AMAZON_STRING || downcasedFilterText === AWS_STRING){
                 packageIsAMatch = downcasedPackageTitle.includes(AMAZON_STRING) || downcasedPackageTitle.includes(AWS_STRING);

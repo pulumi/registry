@@ -22,13 +22,9 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-//nolint:paralleltest // resourceDocsFromRegistryCmd relies on global state.
 func TestGenerateDocsSinglePackage(t *testing.T) {
-	// Set up the correct directory structure:
-	registryDir := t.TempDir()
-	util.WriteFile(t,
-		filepath.Join(registryDir, "themes", "default", "data", "registry", "packages", "random.yaml"),
-		`category: Utility
+	t.Parallel()
+	const partialMetadata = `category: Utility
 component: false
 description: A Pulumi package to safely use randomness in Pulumi programs.
 featured: false
@@ -38,10 +34,14 @@ native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-random
-schema_file_path: provider/cmd/pulumi-resource-random/schema.json
 title: random
 updated_on: 1729058626
-version: v4.16.7`)
+version: v4.16.7`
+	registryDir := t.TempDir()
+	util.WriteFile(t,
+		filepath.Join(registryDir, "themes", "default", "data", "registry", "packages", "random.yaml"),
+		partialMetadata+`
+schema_file_path: provider/cmd/pulumi-resource-random/schema.json`)
 	basePackageTreeJSONOutDir := t.TempDir()
 	baseDocsOutDir := t.TempDir()
 
@@ -53,12 +53,33 @@ version: v4.16.7`)
 		"--registryDir", registryDir,
 	})
 	require.NoError(t, cmd.Execute())
-	t.Run("docs", func(t *testing.T) { util.AssertDirEqual(t, baseDocsOutDir) })
-	t.Run("tree", func(t *testing.T) { util.AssertDirEqual(t, basePackageTreeJSONOutDir) })
+	t.Run("docs", func(t *testing.T) { t.Parallel(); util.AssertDirEqual(t, baseDocsOutDir) })
+	t.Run("tree", func(t *testing.T) { t.Parallel(); util.AssertDirEqual(t, basePackageTreeJSONOutDir) })
+	t.Run("check-schema-file-url", func(t *testing.T) {
+		t.Parallel()
+		registryDirV2 := t.TempDir()
+		util.WriteFile(t,
+			filepath.Join(registryDirV2, "themes", "default", "data", "registry", "packages", "random.yaml"),
+			partialMetadata+`
++schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-random/v4.16.7/provider/cmd/pulumi-resource-random/schema.json`) //nolint:lll
+		basePackageTreeJSONOutDirV2 := t.TempDir()
+		baseDocsOutDirV2 := t.TempDir()
+
+		cmd := resourceDocsFromRegistryCmd()
+		cmd.SetArgs([]string{
+			"random", /* pkgName */
+			"--baseDocsOutDir", baseDocsOutDirV2,
+			"--basePackageTreeJSONOutDir", basePackageTreeJSONOutDirV2,
+			"--registryDir", registryDirV2,
+		})
+		require.NoError(t, cmd.Execute())
+		util.AssertDirsEqual(t, baseDocsOutDir, baseDocsOutDirV2)
+		util.AssertDirsEqual(t, basePackageTreeJSONOutDir, basePackageTreeJSONOutDirV2)
+	})
 }
 
-//nolint:paralleltest // resourceDocsFromRegistryCmd relies on global state.
 func TestGenerateDocsAllPackage(t *testing.T) {
+	t.Parallel()
 	// Set up the correct directory structure:
 	registryDir := t.TempDir()
 	util.WriteFile(t,
@@ -106,6 +127,6 @@ version: v2.6.1
 		"--registryDir", registryDir,
 	})
 	require.NoError(t, cmd.Execute())
-	t.Run("docs", func(t *testing.T) { util.AssertDirEqual(t, baseDocsOutDir) })
-	t.Run("tree", func(t *testing.T) { util.AssertDirEqual(t, basePackageTreeJSONOutDir) })
+	t.Run("docs", func(t *testing.T) { t.Parallel(); util.AssertDirEqual(t, baseDocsOutDir) })
+	t.Run("tree", func(t *testing.T) { t.Parallel(); util.AssertDirEqual(t, basePackageTreeJSONOutDir) })
 }

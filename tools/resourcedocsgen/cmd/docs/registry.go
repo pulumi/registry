@@ -52,27 +52,13 @@ func genResourceDocsForPackageFromRegistryMetadata(
 	metadata pkg.PackageMeta, docsOutDir, packageTreeJSONOutDir string,
 ) error {
 	glog.Infoln("Generating docs for", metadata.Name)
-	if metadata.RepoURL == "" {
-		return errors.Errorf("metadata for package %q does not contain the repo_url", metadata.Name)
-	}
 
-	schemaFilePath := fmt.Sprintf(defaultSchemaFilePathFormat, metadata.Name)
-	if metadata.SchemaFilePath != "" {
-		schemaFilePath = metadata.SchemaFilePath
-	}
-
-	// Make sure the schema file path does not have a leading slash.
-	// We'll add in the URL format below. It's easier to read that way.
-	schemaFilePath = strings.TrimPrefix(schemaFilePath, "/")
-
-	repoSlug, err := getRepoSlug(metadata.RepoURL)
+	schemaFileURL, err := getSchemaFileURL(metadata)
 	if err != nil {
-		return errors.WithMessage(err, "could not get repo slug")
+		return fmt.Errorf("failed to get schema_file_url: %w", err)
 	}
-
 	glog.Infoln("Reading remote schema file from VCS")
-	// TODO: Support raw URLs for other VCS too.
-	schemaFileURL := fmt.Sprintf("https://raw.githubusercontent.com/%s/%s/%s", repoSlug, metadata.Version, schemaFilePath)
+
 	resp, err := http.Get(schemaFileURL) //nolint:gosec
 	if err != nil {
 		return errors.Wrapf(err, "reading schema file from VCS %s", schemaFileURL)
@@ -85,18 +71,19 @@ func genResourceDocsForPackageFromRegistryMetadata(
 		return errors.Wrapf(err, "reading response body from %s", schemaFileURL)
 	}
 
-	// The source schema can be in YAML format. If that's the case
-	// convert it to JSON first.
-	if strings.HasSuffix(schemaFilePath, ".yaml") {
-		schemaBytes, err = yaml.YAMLToJSON(schemaBytes)
-		if err != nil {
-			return errors.Wrap(err, "reading YAML schema")
-		}
-	}
-
 	var mainSpec pschema.PackageSpec
-	if err := json.Unmarshal(schemaBytes, &mainSpec); err != nil {
-		return errors.Wrap(err, "unmarshalling schema into a PackageSpec")
+
+	switch {
+	// The source schema can be in YAML format.
+	case strings.HasSuffix(schemaFileURL, ".yaml"):
+		if err := yaml.Unmarshal(schemaBytes, &mainSpec); err != nil {
+			return errors.Wrap(err, "unmarshalling YAML schema into PackageSpec")
+		}
+	// If we don't have another format, assume JSON.
+	default:
+		if err := json.Unmarshal(schemaBytes, &mainSpec); err != nil {
+			return errors.Wrap(err, "unmarshalling JSON schema into PackageSpec")
+		}
 	}
 
 	pulPkg, genctx, err := getPulumiPackageFromSchema(docsOutDir, mainSpec)
@@ -115,6 +102,34 @@ func genResourceDocsForPackageFromRegistryMetadata(
 	}
 
 	return nil
+}
+
+func getSchemaFileURL(metadata pkg.PackageMeta) (string, error) {
+	if metadata.SchemaFileURL != "" {
+		return metadata.SchemaFileURL, nil
+	}
+
+	// We don't have an explicit SchemaFileURL, so migrate from SchemaFilePath.
+
+	if metadata.RepoURL == "" {
+		return "", errors.Errorf("metadata for package %q does not contain the repo_url", metadata.Name)
+	}
+
+	schemaFilePath := fmt.Sprintf(defaultSchemaFilePathFormat, metadata.Name)
+	if p := metadata.SchemaFilePath; p != "" { //nolint:staticcheck
+		schemaFilePath = p
+	}
+
+	// Make sure the schema file path does not have a leading slash.
+	// We'll add in the URL format below. It's easier to read that way.
+	schemaFilePath = strings.TrimPrefix(schemaFilePath, "/")
+
+	repoSlug, err := getRepoSlug(metadata.RepoURL)
+	if err != nil {
+		return "", errors.WithMessage(err, "could not get repo slug")
+	}
+
+	return fmt.Sprintf("https://raw.githubusercontent.com/%s/%s/%s", repoSlug, metadata.Version, schemaFilePath), nil
 }
 
 func getRegistryPackagesPath(repoPath string) string {

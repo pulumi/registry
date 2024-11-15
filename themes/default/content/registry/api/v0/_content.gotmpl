@@ -1,0 +1,10 @@
+{{ range $package := .Site.Data.registry.packages }}
+  {{ $.AddResource (dict
+    "content" (dict
+      "mediaType" "application/json"
+      "value" (dict "published-latest" $package.version | jsonify)
+    )
+    "kind" "page"
+    "path" (printf "packages/%s/version" $package.name)
+  )}}
+{{ end }}

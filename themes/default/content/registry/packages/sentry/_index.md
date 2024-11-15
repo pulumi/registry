@@ -1,7 +1,9 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-sentry/v0.0.9/docs/_index.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Sentry
 meta_desc: Provides an overview of the Sentry Provider for Pulumi.
-layout: package
+layout: overview
 ---
 
 The Sentry provider for Pulumi can be used to provision Teams and Projects in [Sentry](https://sentry.io).

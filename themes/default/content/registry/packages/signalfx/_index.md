@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-signalfx/v7.3.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-signalfx/v7.4.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Signalfx Provider
@@ -27,10 +27,20 @@ To learn more about Splunk Observability Cloud and its features, see [the offici
 You can use the SignalFlow programming language to create charts and detectors using `programText`. For more information about SignalFlow, see the [Splunk developer documentation](https://dev.splunk.com/observability/docs/signalflow/).
 # Authentication
 
-When authenticating to the Splunk Observability Cloud API you can use either an Org token or a
-Session token. See [Authenticate API Requests](https://dev.splunk.com/observability/docs/apibasics/authentication_basics/) in the Splunk developer documentation.
+When authenticating to the Splunk Observability Cloud API you can use:
 
-Session tokens are short-lived and provide administrative permissions to edit integrations. They expire relatively quickly, but let you manipulate some sensitive resources. Resources that require session tokens are flagged in their documentation.
+1. An Org token.
+2. A Session token.
+3. A Service account.
+
+See [Authenticate API Requests](https://dev.splunk.com/observability/docs/apibasics/authentication_basics/) in the Splunk developer documentation.
+
+Session tokens are short-lived and provide administrative permissions to edit integrations.
+They expire relatively quickly, but let you manipulate some sensitive resources.
+Resources that require session tokens are flagged in their documentation.
+
+A Service account is term used when a user is created within organization that can login via Username and Password,
+this allows for a *Session Token* to be created by the pulumi provider and then used throughout the application.
 
 > **NOTE** Separate the less sensitive resources, such as dashboards, from the
 more sensitive ones, such as integrations, to avoid having to change tokens.
@@ -205,6 +215,105 @@ public class App {
 ```
 {{% /choosable %}}
 {{< /chooser >}}
+
+{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{% choosable language typescript %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: nodejs
+config:
+    signalfx:email:
+        value: service.account@example
+    signalfx:organizationId:
+        value: 'TODO: "${var.service_account_org_id}"'
+    signalfx:password:
+        value: 'TODO: "${var.service_account_password}"'
+
+```
+
+{{% /choosable %}}
+{{% choosable language python %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: python
+config:
+    signalfx:email:
+        value: service.account@example
+    signalfx:organizationId:
+        value: 'TODO: "${var.service_account_org_id}"'
+    signalfx:password:
+        value: 'TODO: "${var.service_account_password}"'
+
+```
+
+{{% /choosable %}}
+{{% choosable language csharp %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: dotnet
+config:
+    signalfx:email:
+        value: service.account@example
+    signalfx:organizationId:
+        value: 'TODO: "${var.service_account_org_id}"'
+    signalfx:password:
+        value: 'TODO: "${var.service_account_password}"'
+
+```
+
+{{% /choosable %}}
+{{% choosable language go %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: go
+config:
+    signalfx:email:
+        value: service.account@example
+    signalfx:organizationId:
+        value: 'TODO: "${var.service_account_org_id}"'
+    signalfx:password:
+        value: 'TODO: "${var.service_account_password}"'
+
+```
+
+{{% /choosable %}}
+{{% choosable language yaml %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: yaml
+config:
+    signalfx:email:
+        value: service.account@example
+    signalfx:organizationId:
+        value: 'TODO: "${var.service_account_org_id}"'
+    signalfx:password:
+        value: 'TODO: "${var.service_account_password}"'
+
+```
+
+{{% /choosable %}}
+{{% choosable language java %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: java
+config:
+    signalfx:email:
+        value: service.account@example
+    signalfx:organizationId:
+        value: 'TODO: "${var.service_account_org_id}"'
+    signalfx:password:
+        value: 'TODO: "${var.service_account_password}"'
+
+```
+
+{{% /choosable %}}
+{{< /chooser >}}
 ## Configuration Reference
 
 The following configuration inputs are supported:
@@ -216,3 +325,6 @@ The following configuration inputs are supported:
 * `retryMaxAttempts` - (Optional) The number of retry attempts when making HTTP API calls to Splunk Observability Cloud. Defaults to `4`.
 * `retryWaitMinSeconds` - (Optional) The minimum wait time between retry attempts when making HTTP API calls to Splunk Observability Cloud, in seconds. Defaults to `1`.
 * `retryWaitMaxSeconds` - (Optional) The maximum wait time between retry attempts when making HTTP API calls to Splunk Observability Cloud, in seconds. Defaults to `30`.
+* `email` - (Optional) The provided email address is used to generate a *Session Token* that is then used for all API interactions. Requires email address to be configured with a password, and not via SSO.
+* `password` - (Optional) The password is used to authenticate the email provided to generate a *Session Token*. Requires email address to be configured with a password, and not via SSO.
+* `organizationId` - (Optional) The organisation id is used to select which organization if the user provided belongs to multiple.

@@ -1,0 +1,14 @@
+category: Database
+component: false
+description: A Pulumi package for creating and managing pgEdge Cloud resources.
+featured: false
+logo_url: https://pgedge-public-assets.s3.amazonaws.com/product/images/pgedge_mark.svg
+name: pgedge
+native: false
+package_status: public_preview
+publisher: pgEdge
+repo_url: https://github.com/pgedge/pulumi-pgedge
+schema_file_path: provider/cmd/pulumi-resource-pgedge/schema.json
+title: pgEdge
+updated_on: 1678329019 # TODO: needs to be updated
+version: v0.0.25

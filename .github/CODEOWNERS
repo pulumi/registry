@@ -9,4 +9,4 @@
 CODEOWNERS @sean1588 @mjeffryes @iwahbe
 
 # Community packages.
-/community-packages/ @sean1588 @mjeffryes @iwahbe
+/community-packages/ @sean1588 @pulumi/providers

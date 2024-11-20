@@ -6,7 +6,7 @@
 # will be required to merge pull requests in protected areas.
 
 # Changes to this file itself require sign-off
-CODEOWNERS @sean1588 @cnunciato @ringods
+CODEOWNERS @sean1588 @mjeffryes @iwahbe
 
 # Community packages.
-/community-packages/ @sean1588 @cnunciato @ringods
+/community-packages/ @sean1588 @pulumi/providers

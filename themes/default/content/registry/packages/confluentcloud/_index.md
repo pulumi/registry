@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-confluentcloud/v2.9.1/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-confluentcloud/v2.10.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Confluent Provider
@@ -8,13 +8,13 @@ layout: package
 ---
 ## Installation
 
-The confluent provider is available as a package in all Pulumi languages:
+The Confluent provider is available as a package in all Pulumi languages:
 
-* JavaScript/TypeScript: [`@pulumi/confluent`](https://www.npmjs.com/package/@pulumi/confluent)
-* Python: [`pulumi-confluent`](https://pypi.org/project/pulumi-confluent/)
-* Go: [`github.com/pulumi/pulumi-confluentcloud/sdk/v2/go/confluentcloud`](https://github.com/pulumi/pulumi-confluent)
-* .NET: [`Pulumi.Confluent`](https://www.nuget.org/packages/Pulumi.Confluent)
-* Java: [`com.pulumi/confluent`](https://central.sonatype.com/artifact/com.pulumi/confluent)
+* JavaScript/TypeScript: [`@pulumi/confluentcloud`](https://www.npmjs.com/package/@pulumi/confluentcloud)
+* Python: [`pulumi-confluentcloud`](https://pypi.org/project/pulumi-confluentcloud/)
+* Go: [`github.com/pulumi/pulumi-confluentcloud/sdk/v2/go/confluentcloud`](https://github.com/pulumi/pulumi-confluentcloud)
+* .NET: [`Pulumi.Confluentcloud`](https://www.nuget.org/packages/Pulumi.Confluentcloud)
+* Java: [`com.pulumi/confluentcloud`](https://central.sonatype.com/artifact/com.pulumi/confluentcloud)
 ## Overview
 
 Simplify Apache Kafka Pulumi deployment with the Confluent Pulumi Provider. Manage Environments, Kafka Clusters, Kafka Topics, Kafka ACLs, Service Accounts, and more in Confluent.
@@ -221,7 +221,7 @@ config:
 
 {{% /choosable %}}
 {{< /chooser >}}
-#### Option #3: Manage a single Configuration Reference Registry cluster in the same Pulumi Stack
+#### Option #3: Manage a single Schema Registry cluster in the same Pulumi Stack
 {{< chooser language "typescript,python,go,csharp,java,yaml" >}}
 {{% choosable language typescript %}}
 ```yaml
@@ -355,7 +355,7 @@ $ export KAFKA_REST_ENDPOINT="<kafka_rest_endpoint>"
 $ export KAFKA_API_KEY="<kafka_api_key>"
 $ export KAFKA_API_SECRET="<kafka_api_secret>"
 
-# Option #2: Manage a single Configuration Reference Registry cluster in the same Pulumi Stack
+# Option #2: Manage a single Schema Registry cluster in the same Pulumi Stack
 $ export SCHEMA_REGISTRY_ID="<schema_registry_id>"
 $ export SCHEMA_REGISTRY_REST_ENDPOINT="<schema_registry_rest_endpoint>"
 $ export SCHEMA_REGISTRY_API_KEY="<schema_registry_api_key>"

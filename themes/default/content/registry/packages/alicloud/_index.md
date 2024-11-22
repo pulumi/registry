@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-alicloud/v3.66.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-alicloud/v3.67.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Alibaba Cloud Provider
@@ -1357,3 +1357,4 @@ The `assumeRoleWithOidc` configuration block supports the following arguments:
 * `cloudsso` - (Optional) Use this to override the default endpoint URL constructed from the `region`. It's typically used to connect to custom Cloud SSO endpoints.
 
 * `edas` - (Optional) Use this to override the default endpoint URL constructed from the `region`. It's typically used to connect to custom EDAS endpoints.
+* `dmsenterprise` - - (Optional) Use this to override the default endpoint URL constructed from the `region`. It's typically used to connect to custom DMS Enterprise endpoints.

@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-hcloud/v1.21.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-hcloud/v1.21.1/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Hcloud Provider
@@ -35,12 +35,9 @@ config:
 ```
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
-import * as hcloud from "@pulumi/hcloud";
 
 const config = new pulumi.Config();
 const hcloudToken = config.requireObject("hcloudToken");
-// Create a server
-const web = new hcloud.Server("web", {});
 ```
 {{% /choosable %}}
 {{% choosable language python %}}
@@ -55,12 +52,9 @@ config:
 ```
 ```python
 import pulumi
-import pulumi_hcloud as hcloud
 
 config = pulumi.Config()
 hcloud_token = config.require_object("hcloudToken")
-# Create a server
-web = hcloud.Server("web")
 ```
 {{% /choosable %}}
 {{% choosable language csharp %}}
@@ -77,15 +71,11 @@ config:
 using System.Collections.Generic;
 using System.Linq;
 using Pulumi;
-using HCloud = Pulumi.HCloud;
 
 return await Deployment.RunAsync(() =>
 {
     var config = new Config();
     var hcloudToken = config.RequireObject<dynamic>("hcloudToken");
-    // Create a server
-    var web = new HCloud.Server("web");
-
 });
 
 ```
@@ -104,7 +94,6 @@ config:
 package main
 
 import (
-	"github.com/pulumi/pulumi-hcloud/sdk/go/hcloud"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config"
 )
@@ -113,11 +102,6 @@ func main() {
 	pulumi.Run(func(ctx *pulumi.Context) error {
 		cfg := config.New(ctx, "")
 		hcloudToken := cfg.RequireObject("hcloudToken")
-		// Create a server
-		_, err := hcloud.NewServer(ctx, "web", nil)
-		if err != nil {
-			return err
-		}
 		return nil
 	})
 }
@@ -139,10 +123,6 @@ configuration:
   # or using the -var="hcloud_token=..." CLI option
   hcloudToken:
     type: dynamic
-resources:
-  # Create a server
-  web:
-    type: hcloud:Server
 ```
 {{% /choosable %}}
 {{% choosable language java %}}
@@ -161,7 +141,6 @@ package generated_program;
 import com.pulumi.Context;
 import com.pulumi.Pulumi;
 import com.pulumi.core.Output;
-import com.pulumi.hcloud.Server;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
@@ -177,9 +156,6 @@ public class App {
     public static void stack(Context ctx) {
         final var config = ctx.config();
         final var hcloudToken = config.get("hcloudToken");
-        // Create a server
-        var web = new Server("web");
-
     }
 }
 ```

@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-grafana/v0.7.0/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-grafana/v0.7.1/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: Grafana Cloud Installation & Configuration
 meta_desc: Information on how to install the Grafana provider.
@@ -53,6 +53,8 @@ Once you have provisioned these credentials, you can set environment variables t
 {{% choosable os linux %}}
 
 ```bash
+$ export GRAFANA_CLOUD_ACCESS_POLICY_TOKEN=<GRAFANA_CLOUD_ACCESS_POLICY_TOKEN>
+
 $ export GRAFANA_URL=<GRAFANA_URL>
 $ export GRAFANA_AUTH=<GRAFANA_AUTH>
 ```
@@ -62,6 +64,8 @@ $ export GRAFANA_AUTH=<GRAFANA_AUTH>
 {{% choosable os macos %}}
 
 ```bash
+$ export GRAFANA_CLOUD_ACCESS_POLICY_TOKEN=<GRAFANA_CLOUD_ACCESS_POLICY_TOKEN>
+
 $ export GRAFANA_URL=<GRAFANA_URL>
 $ export GRAFANA_AUTH=<GRAFANA_AUTH>
 ```
@@ -71,6 +75,8 @@ $ export GRAFANA_AUTH=<GRAFANA_AUTH>
 {{% choosable os windows %}}
 
 ```powershell
+> $env:GRAFANA_CLOUD_ACCESS_POLICY_TOKEN = "<GRAFANA_CLOUD_ACCESS_POLICY_TOKEN>"
+
 > $env:GRAFANA_URL = "<GRAFANA_URL>"
 > $env:GRAFANA_AUTH = "<GRAFANA_AUTH>"
 ```

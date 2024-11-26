@@ -8,7 +8,7 @@ layout: package
 ---
 ## Installation
 
-The hcloud provider is available as a package in all Pulumi languages:
+The hcloud provider is available as a package in all Pulumi languages(except yaml):
 
 * JavaScript/TypeScript: [`@pulumi/hcloud`](https://www.npmjs.com/package/@pulumi/hcloud)
 * Python: [`pulumi-hcloud`](https://pypi.org/project/pulumi-hcloud/)

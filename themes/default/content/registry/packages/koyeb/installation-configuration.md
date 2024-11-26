@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/koyeb/pulumi-koyeb/v0.1.8/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/koyeb/pulumi-koyeb/v0.1.10/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: Koyeb Installation & Configuration
 meta_desc: Information on how to install the Koyeb provider.
@@ -10,9 +10,9 @@ layout: installation
 
 The Pulumi Koyeb provider is available as a package in all Pulumi languages:
 
-* JavaScript/TypeScript: [`@koyeb/pulumi-koyeb`](https://www.npmjs.com/package/@koyeb/pulumi-koyeb)
-* Go: [`github.com/koyeb/pulumi-koyeb/sdk/go/koyeb`](https://pkg.go.dev/github.com/koyeb/pulumi-koyeb/sdk)
-* Python: [`pulumi_koyeb`](https://pypi.org/project/pulumi-koyeb/)
+- JavaScript/TypeScript: [`@koyeb/pulumi-koyeb`](https://www.npmjs.com/package/@koyeb/pulumi-koyeb)
+- Go: [`github.com/koyeb/pulumi-koyeb/sdk/go/koyeb`](https://pkg.go.dev/github.com/koyeb/pulumi-koyeb/sdk)
+- Python: [`pulumi_koyeb`](https://pypi.org/project/pulumi-koyeb/)
 
 ## Setup
 

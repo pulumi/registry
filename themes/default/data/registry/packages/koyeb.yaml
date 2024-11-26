@@ -10,7 +10,7 @@ native: false
 package_status: public_preview
 publisher: Koyeb
 repo_url: https://github.com/koyeb/pulumi-koyeb
-schema_file_url: https://raw.githubusercontent.com/koyeb/pulumi-koyeb/v0.1.8/provider/cmd/pulumi-resource-koyeb/schema.json
-title: koyeb
-updated_on: 1731687966
-version: v0.1.8
+schema_file_url: https://raw.githubusercontent.com/koyeb/pulumi-koyeb/v0.1.10/provider/cmd/pulumi-resource-koyeb/schema.json
+title: Koyeb
+updated_on: 1732575253
+version: v0.1.10

@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/koyeb/pulumi-koyeb/v0.1.8/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/koyeb/pulumi-koyeb/v0.1.10/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: Koyeb
 meta_desc: Provides an overview of the Koyeb Provider for Pulumi.
@@ -18,11 +18,11 @@ To be able to manage Koyeb resources using Pulumi, you first need a Koyeb API ac
 ```typescript
 import * as koyeb from "@koyeb/pulumi-koyeb";
 
-const koyebApp = new koyeb.KoyebApp("sample-app", {
+const koyebApp = new koyeb.App("sample-app", {
   name: "sample-app",
 });
 
-const koyebService = new koyeb.KoyebService("sample-service", {
+const koyebService = new koyeb.Service("sample-service", {
   appName: koyebApp.name,
   definition: {
     name: "sample-service",
@@ -65,7 +65,7 @@ import (
 
 func main() {
 	pulumi.Run(func(ctx *pulumi.Context) error {
-		app, err := koyeb.NewKoyebApp(ctx, "sample-app", &koyeb.KoyebAppArgs{
+		app, err := koyeb.App(ctx, "sample-app", &koyeb.AppArgs{
 			Name: pulumi.String("sample-app"),
 		})
 
@@ -73,33 +73,33 @@ func main() {
 			return err
 		}
 
-		_, err = koyeb.NewKoyebService(ctx, "sample-service", &koyeb.KoyebServiceArgs{
+		_, err = koyeb.NewKoyebService(ctx, "sample-service", &koyeb.ServiceArgs{
 			AppName: app.Name,
-			Definition: &koyeb.KoyebServiceDefinitionArgs{
+			Definition: &koyeb.ServiceDefinitionArgs{
 				Name: pulumi.String("sample-service"),
 				Regions: pulumi.StringArray{
 					pulumi.String("fra"),
 				},
-				Git: &koyeb.KoyebServiceDefinitionGitArgs{
+				Git: &koyeb.ServiceDefinitionGitArgs{
 					Repository: pulumi.String("github.com/koyeb/example-golang"),
 					Branch:     pulumi.String("main"),
 				},
-				InstanceTypes: &koyeb.KoyebServiceDefinitionInstanceTypesArgs{
+				InstanceTypes: &koyeb.ServiceDefinitionInstanceTypesArgs{
 					Type: pulumi.String("micro"),
 				},
-				Routes: koyeb.KoyebServiceDefinitionRouteArray{
-					&koyeb.KoyebServiceDefinitionRouteArgs{
+				Routes: koyeb.ServiceDefinitionRouteArray{
+					&koyeb.ServiceDefinitionRouteArgs{
 						Path: pulumi.String("/"),
 						Port: pulumi.Int(8080),
 					},
 				},
-				Ports: koyeb.KoyebServiceDefinitionPortArray{
-					&koyeb.KoyebServiceDefinitionPortArgs{
+				Ports: koyeb.ServiceDefinitionPortArray{
+					&koyeb.ServiceDefinitionPortArgs{
 						Port:     pulumi.Int(8080),
 						Protocol: pulumi.String("http"),
 					},
 				},
-				Scalings: &koyeb.KoyebServiceDefinitionScalingsArgs{
+				Scalings: &koyeb.ServiceDefinitionScalingsArgs{
 					Min: pulumi.Int(1),
 					Max: pulumi.Int(1),
 				},
@@ -121,27 +121,27 @@ func main() {
 ```python
 import pulumi_koyeb as koyeb
 
-app = koyeb.KoyebApp("sample-app", name="sample-app")
+app = koyeb.App("sample-app", name="sample-app")
 
-koyeb.KoyebService("sample-service", app_name=app.name,  definition=koyeb.KoyebServiceDefinitionArgs(
+koyeb.Service("sample-service", app_name=app.name,  definition=koyeb.ServiceDefinitionArgs(
     name="sample-service",
     regions=["fra"],
-    git=koyeb.KoyebServiceDefinitionGitArgs(
+    git=koyeb.ServiceDefinitionGitArgs(
         repository="github.com/koyeb/example-golang",
         branch="main",
     ),
-    instance_types=koyeb.KoyebServiceDefinitionInstanceTypesArgs(
+    instance_types=koyeb.ServiceDefinitionInstanceTypesArgs(
         type="micro",
     ),
-    routes=[koyeb.KoyebServiceDefinitionRouteArgs(
+    routes=[koyeb.ServiceDefinitionRouteArgs(
         path="/",
         port=8080,
     )],
-    ports=[koyeb.KoyebServiceDefinitionPortArgs(
+    ports=[koyeb.ServiceDefinitionPortArgs(
         port=8080,
         protocol="http",
     )],
-    scalings=koyeb.KoyebServiceDefinitionScalingsArgs(
+    scalings=koyeb.ServiceDefinitionScalingsArgs(
         min=1,
         max=1,
     ),

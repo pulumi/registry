@@ -1,17 +1,48 @@
 env:
   GITHUB_TOKEN: ${{ secrets.PULUMI_BOT_TOKEN }}
+  # The path within the Pulumi provider repo to the schema file.
   PROVIDER_SCHEMA_PATH: ${{ github.event.client_payload.schema-path }}
+  # The short-name of the provider, used in URL names. This is effectively the provider's
+  # identity in the Pulumi registry right now.
   PROVIDER_SHORT_NAME: ${{ github.event.client_payload.project-shortname }}
+  # The git tag that the provider is released with.
+  #
+  # This is only meaningful when the provider is based on a GitHub repo.
   PROVIDER_VERSION: ${{ github.event.client_payload.ref }}
+  # A public URL which hosts the provider's Pulumi schema.
+  #
+  # This URL must be durable, as it will be required available to build the registry.
+  PROVIDER_SCHEMA_URL: ${{ github.event.client_payload.schema-url }}
+  # A public URL which hosts the provider's  _index.md file.
+  #
+  # This URL must be durable, as it will be required available to build the registry.
+  PROVIDER_INDEX_URL:  ${{ github.event.client_payload.index-url }}
 
 name: provider docs build
 on:
   repository_dispatch:
     types:
+      # An update for a provider that is hosted in a Pulumi repo.
+      #
+      # Required inputs are:
+      # - PROVIDER_SHORT_NAME
+      # - PROVIDER_VERSION
+      #
+      # Optional inputs are:
+      # - PROVIDER_SCHEMA_PATH
       - resource-provider
+      # An update for a provider that is hosted opaquely - where we don't assume a backing
+      # GH repo.
+      #
+      # Required inputs are:
+      # - PROVIDER_SHORT_NAME
+      # - PROVIDER_SCHEMA_URL
+      # - PROVIDER_INDEX_URL
+      - push-provider-update
 
 jobs:
   build-resource-provider-docs:
+    if: ${{ github.event.event_type == resource-provider }}
     runs-on: ubuntu-latest
     steps:
       - run: echo "Building ${{ env.PROVIDER_SHORT_NAME }} docs @ ${{ env.PROVIDER_VERSION }}"
@@ -35,12 +66,52 @@ jobs:
           github_token: ${{ secrets.PULUMI_BOT_TOKEN }}
           provider_short_name: ${{ env.PROVIDER_SHORT_NAME }}
           provider_version: ${{ env.PROVIDER_VERSION }}
+
+  build-provider-docs:
+    if: ${{ github.event.event_type == push-provider-update }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate Inputs
+        run: |
+          should_not_set() {
+            if ! [ "${!1}" = "" ]; then
+            	echo "$1 is not respected, and should not be set"
+                exit 1
+            fi
+          }
+          PROVIDER_VERSION="${{ env.PROVIDER_VERSION }}"         should_not_set PROVIDER_VERSION
+          PROVIDER_SCHEMA_PATH="${{ env.PROVIDER_SCHEMA_PATH }}" should_not_set PROVIDER_SCHEMA_PATH
+      - name: Fetch upstream schema
+        run: |
+          curl "${{ env.PROVIDER_SCHEMA_URL }}" > ${{ runner.temp }}/schema.json
+          echo "PROVIDER_VERSION=$(jq .version --raw-output --exit-status ${{ runner.temp }}/schema.json)" >> "$GITHUB_ENV"
+      - run: echo "Building ${{ env.PROVIDER_SHORT_NAME }} docs @ ${{ env.PROVIDER_VERSION }}"
+      - name: checkout registry repo
+        uses: actions/checkout@v4
+      - name: Build resourcedocsgen
+        run: go build -C tools/resourcedocsgen
+      - name: Generate Package Metadata
+        run: >-
+          ./tools/resourcedocsgen/resourcedocsgen metadata
+          --providerName  "${{ env.PROVIDER_SHORT_NAME }}"
+          --schemaFileURL "${{ env.PROVIDER_SCHEMA_URL }}"
+          --indexFileURL  "${{ env.PROVIDER_INDEX_URL  }}"
+      - name: git status
+        run: git status && git diff
+      - name: Create registry PR
+        uses: ./.github/actions/new-provider-version-pr
+        with:
+          github_token: ${{ secrets.PULUMI_BOT_TOKEN }}
+          provider_short_name: ${{ env.PROVIDER_SHORT_NAME }}
+          provider_version: ${{ env.PROVIDER_VERSION }}
   
   notify:
     if: failure()
     name: Send slack notification
     runs-on: ubuntu-latest
-    needs: [build-resource-provider-docs]
+    needs:
+      - build-resource-provider-docs
+      - build-provider-docs
     steps:
       - name: Slack Notification
         uses: docker://sholung/action-slack-notify:v2.3.0

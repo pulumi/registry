@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/dirien/pulumi-vultr/v2.21.1/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/dirien/pulumi-vultr/v2.22.1/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: Vultr
 meta_desc: Provides an overview of the Vultr Provider for Pulumi.

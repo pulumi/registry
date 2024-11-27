@@ -1,7 +1,12 @@
 env:
   GITHUB_TOKEN: ${{ secrets.PULUMI_BOT_TOKEN }}
+  PROVIDER_CATEGORY: ${{ github.event.client_payload.category }}
+  PROVIDER_DISPLAY_NAME: ${{ github.event.client_payload.display-name }}
+  PROVIDER_IS_COMPONENT: false
+  PROVIDER_NAME: ${{ github.event.client_payload.project }}
   PROVIDER_SCHEMA_PATH: ${{ github.event.client_payload.schema-path }}
   PROVIDER_SHORT_NAME: ${{ github.event.client_payload.project-shortname }}
+  PROVIDER_PUBLISHER_NAME: ${{ github.event.client_payload.publisher }}
   PROVIDER_VERSION: ${{ github.event.client_payload.ref }}
 
 name: provider docs build
@@ -14,19 +19,14 @@ jobs:
   build-resource-provider-docs:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Building ${{ env.PROVIDER_SHORT_NAME }} docs @ ${{ env.PROVIDER_VERSION }}"
+      - run: echo "Building ${{ env.PROVIDER_NAME }} docs @ ${{ env.PROVIDER_VERSION }}"
       - name: checkout registry repo
         uses: actions/checkout@v4
-      - name: Build resourcedocsgen
-        run: go build -C tools/resourcedocsgen
       - name: Generate Package Metadata
-        run: >-
-          ./tools/resourcedocsgen/resourcedocsgen metadata
-          	--providerName=${{ env.PROVIDER_SHORT_NAME }}
-                --repoSlug pulumi/pulumi-${{ env.PROVIDER_SHORT_NAME }}
-                --schemaFile="${{ env.PROVIDER_SCHEMA_PATH }}"
-                --version="${{ env.PROVIDER_VERSION }}"
-                --publisher Pulumi
+        run: |
+          go build -C tools/resourcedocsgen
+          ./tools/resourcedocsgen/resourcedocsgen \
+          metadata --providerName=${{ env.PROVIDER_SHORT_NAME }} --repoSlug pulumi/pulumi-${{ env.PROVIDER_SHORT_NAME }} --schemaFile="${{ env.PROVIDER_SCHEMA_PATH }}" --version="${{ env.PROVIDER_VERSION }}" --publisher Pulumi
       - name: git status
         run: git status && git diff
       - name: Create registry PR

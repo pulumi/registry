@@ -22,11 +22,11 @@ jobs:
       - name: Generate Package Metadata
         run: >-
           ./tools/resourcedocsgen/resourcedocsgen metadata
-          	--providerName=${{ env.PROVIDER_SHORT_NAME }}
-                --repoSlug pulumi/pulumi-${{ env.PROVIDER_SHORT_NAME }}
-                --schemaFile="${{ env.PROVIDER_SCHEMA_PATH }}"
-                --version="${{ env.PROVIDER_VERSION }}"
-                --publisher Pulumi
+          --providerName=${{ env.PROVIDER_SHORT_NAME }}
+          --repoSlug pulumi/pulumi-${{ env.PROVIDER_SHORT_NAME }}
+          --schemaFile="${{ env.PROVIDER_SCHEMA_PATH }}"
+          --version="${{ env.PROVIDER_VERSION }}"
+          --publisher Pulumi
       - name: git status
         run: git status && git diff
       - name: Create registry PR

@@ -42,7 +42,7 @@ on:
 
 jobs:
   build-resource-provider-docs:
-    if: ${{ github.event.event_type == resource-provider }}
+    if: ${{ github.event.event_type == "resource-provider" }}
     runs-on: ubuntu-latest
     steps:
       - run: echo "Building ${{ env.PROVIDER_SHORT_NAME }} docs @ ${{ env.PROVIDER_VERSION }}"
@@ -68,7 +68,7 @@ jobs:
           provider_version: ${{ env.PROVIDER_VERSION }}
 
   build-provider-docs:
-    if: ${{ github.event.event_type == push-provider-update }}
+    if: ${{ github.event.event_type == "push-provider-update" }}
     runs-on: ubuntu-latest
     steps:
       - name: Validate Inputs

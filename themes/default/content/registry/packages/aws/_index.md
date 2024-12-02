@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was moved to the pulumi-aws repo in https://github.com/pulumi/pulumi-aws/pull/4861.
+# Do not edit by hand unless you're certain you know what you are doing!
 title: AWS
 meta_desc: Learn how you can use Pulumi's AWS Provider to reduce the complexity of provisioning and managing resources on AWS.
 layout: package

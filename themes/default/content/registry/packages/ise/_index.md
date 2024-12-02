@@ -1,120 +1,136 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-ise/v0.1.10/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-ise/v0.1.11/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-title: Cisco ISE
-meta_desc: Provides an overview of the Cisco ISE Provider for Pulumi.
-layout: overview
+# *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
+title: Cisco ISE Provider
+meta_desc: Provides an overview on how to configure the Pulumi Cisco ISE provider.
+layout: package
 ---
+## Installation
 
-The Cisco ISE provider for Pulumi can be used to provision the resources available in Cisco ISE.
-The Cisco ISE provider must be configured with credentials to deploy and update resources in ISE.
+The Cisco ISE provider is available as a package in all Pulumi languages:
 
-## Example
+* JavaScript/TypeScript: [`@pulumi/ise`](https://www.npmjs.com/package/@pulumi/ise)
+* Python: [`pulumi-ise`](https://pypi.org/project/pulumi-ise/)
+* Go: [`github.com/pulumi/pulumi-ise/sdk/go/ise`](https://github.com/pulumi/pulumi-ise)
+* .NET: [`Pulumi.Ise`](https://www.nuget.org/packages/Pulumi.Ise)
+* Java: [`com.pulumi/ise`](https://central.sonatype.com/artifact/com.pulumi/ise)
+## Overview
 
-{{< chooser language "typescript,python,go,csharp,yaml" >}}
+The ISE provider provides resources to interact with a Cisco ISE (Identity Service Engine) instance. It communicates with ISE via the REST API.
 
+This provider uses both, the ERS and Open API. Instructions on how to enable API access can be found here: <https://developer.cisco.com/docs/identity-services-engine/latest/#!cisco-ise-api-framework>
+
+All resources and functions have been tested with the following releases.
+
+| Platform |    Version    |
+|----------|---------------|
+| ISE      | 3.2.0 Patch 4 |
+| ISE      | 3.3.0         |
+## Example Usage
+
+{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
 {{% choosable language typescript %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: nodejs
+config:
+    ise:password:
+        value: password
+    ise:url:
+        value: https://10.1.1.1
+    ise:username:
+        value: admin
 
-```typescript
-import * as ise from "@pulumi/ise";
-
-const example = new ise.system.Repository("example", {
-    name: "repo1",
-    protocol: "SFTP",
-    path: "/dir",
-    serverName: "server1",
-    userName: "user9",
-    password: "cisco123",
-    enablePki: false,
-});
 ```
 
 {{% /choosable %}}
 {{% choosable language python %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: python
+config:
+    ise:password:
+        value: password
+    ise:url:
+        value: https://10.1.1.1
+    ise:username:
+        value: admin
 
-```python
-import pulumi_ise as ise
-
-example = ise.system.Repository("example",
-    name="repo1",
-    protocol="SFTP",
-    path="/dir",
-    server_name="server1",
-    user_name="user9",
-    password="cisco123",
-    enable_pki=False)
-```
-
-{{% /choosable %}}
-{{% choosable language go %}}
-
-```go
-package main
-
-import (
-	"github.com/pulumi/pulumi-ise/sdk/go/ise/system"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-)
-
-func main() {
-	pulumi.Run(func(ctx *pulumi.Context) error {
-		_, err := system.NewRepository(ctx, "example", &system.RepositoryArgs{
-			Name:       pulumi.String("repo1"),
-			Protocol:   pulumi.String("SFTP"),
-			Path:       pulumi.String("/dir"),
-			ServerName: pulumi.String("server1"),
-			UserName:   pulumi.String("user9"),
-			Password:   pulumi.String("cisco123"),
-			EnablePki:  pulumi.Bool(false),
-		})
-		if err != nil {
-			return err
-		}
-		return nil
-	})
-}
 ```
 
 {{% /choosable %}}
 {{% choosable language csharp %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: dotnet
+config:
+    ise:password:
+        value: password
+    ise:url:
+        value: https://10.1.1.1
+    ise:username:
+        value: admin
 
-```csharp
-using Pulumi;
-using Ise = Pulumi.Ise;
+```
 
-return await Deployment.RunAsync(() => 
-{
-    var example = new Ise.System.Repository("example", new()
-    {
-        Name = "repo1",
-        Protocol = "SFTP",
-        Path = "/dir",
-        ServerName = "server1",
-        UserName = "user9",
-        Password = "cisco123",
-        EnablePki = false,
-    });
+{{% /choosable %}}
+{{% choosable language go %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: go
+config:
+    ise:password:
+        value: password
+    ise:url:
+        value: https://10.1.1.1
+    ise:username:
+        value: admin
 
-});
 ```
 
 {{% /choosable %}}
 {{% choosable language yaml %}}
-
 ```yaml
-resources:
-  example:
-    type: ise:system:Repository
-    properties:
-      name: repo1
-      protocol: SFTP
-      path: /dir
-      serverName: server1
-      userName: user9
-      password: cisco123
-      enablePki: false
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: yaml
+config:
+    ise:password:
+        value: password
+    ise:url:
+        value: https://10.1.1.1
+    ise:username:
+        value: admin
+
 ```
 
 {{% /choosable %}}
+{{% choosable language java %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: java
+config:
+    ise:password:
+        value: password
+    ise:url:
+        value: https://10.1.1.1
+    ise:username:
+        value: admin
 
+```
+
+{{% /choosable %}}
 {{< /chooser >}}
+## Configuration Reference
+
+- `insecure` (Boolean) Allow insecure HTTPS client. This can also be set as the ISE_INSECURE environment variable. Defaults to `true`.
+- `password` (String, Sensitive) Password for the ISE instance. This can also be set as the ISE_PASSWORD environment variable.
+- `retries` (Number) Number of retries for REST API calls. This can also be set as the ISE_RETRIES environment variable. Defaults to `3`.
+- `url` (String) URL of the Cisco ISE instance. This can also be set as the ISE_URL environment variable.
+- `username` (String) Username for the ISE instance. This can also be set as the ISE_USERNAME environment variable.

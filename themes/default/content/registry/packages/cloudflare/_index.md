@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-cloudflare/v5.43.1/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-cloudflare/v5.44.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Cloudflare Provider
@@ -8,7 +8,7 @@ layout: package
 ---
 ## Installation
 
-The cloudflare provider is available as a package in all Pulumi languages:
+The Cloudflare provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/cloudflare`](https://www.npmjs.com/package/@pulumi/cloudflare)
 * Python: [`pulumi-cloudflare`](https://pypi.org/project/pulumi-cloudflare/)

@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-gitlab/v8.6.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-gitlab/v8.6.1/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Gitlab Provider
@@ -8,7 +8,7 @@ layout: package
 ---
 ## Installation
 
-The gitlab provider is available as a package in all Pulumi languages:
+The Gitlab provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/gitlab`](https://www.npmjs.com/package/@pulumi/gitlab)
 * Python: [`pulumi-gitlab`](https://pypi.org/project/pulumi-gitlab/)

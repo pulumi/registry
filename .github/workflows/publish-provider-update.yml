@@ -41,6 +41,15 @@ on:
       - push-provider-update
 
 jobs:
+
+  unknown-event-type:
+    if: ${{ github.event.event_type != 'resource-provider' && github.event.event_type != 'push-provider-update' }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: printf "Unknown event type '%s'\n" "${{ github.event.event_type}}"
+      - name: fail
+        run: exit 1
+
   build-resource-provider-docs:
     if: ${{ github.event.event_type == 'resource-provider' }}
     runs-on: ubuntu-latest
@@ -112,6 +121,7 @@ jobs:
     needs:
       - build-resource-provider-docs
       - build-provider-docs
+      - unknown-event-type
     steps:
       - name: Slack Notification
         uses: docker://sholung/action-slack-notify:v2.3.0

@@ -1,14 +1,14 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-rke/v3.5.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-rke/v3.6.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
-title: Rke Provider
-meta_desc: Provides an overview on how to configure the Pulumi Rke provider.
+title: Rancher Kubernetes Engine (RKE) Provider
+meta_desc: Provides an overview on how to configure the Pulumi Rancher Kubernetes Engine (RKE) provider.
 layout: package
 ---
 ## Installation
 
-The rke provider is available as a package in all Pulumi languages:
+The Rancher Kubernetes Engine (RKE) provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/rke`](https://www.npmjs.com/package/@pulumi/rke)
 * Python: [`pulumi-rke`](https://pypi.org/project/pulumi-rke/)

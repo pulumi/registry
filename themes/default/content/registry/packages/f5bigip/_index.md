@@ -1,19 +1,20 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-f5bigip/v3.17.6/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-f5bigip/v3.17.7/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-title: Bigip Provider
-meta_desc: Provides an overview on how to configure the Pulumi Bigip provider.
+# *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
+title: F5bigip Provider
+meta_desc: Provides an overview on how to configure the Pulumi F5bigip provider.
 layout: package
 ---
 ## Installation
 
-The bigip provider is available as a package in all Pulumi languages:
+The F5bigip provider is available as a package in all Pulumi languages:
 
-* JavaScript/TypeScript: [`@pulumi/bigip`](https://www.npmjs.com/package/@pulumi/bigip)
-* Python: [`pulumi-bigip`](https://pypi.org/project/pulumi-bigip/)
-* Go: [`github.com/pulumi/pulumi-f5bigip/sdk/v3/go/f5bigip`](https://github.com/pulumi/pulumi-bigip)
-* .NET: [`Pulumi.Bigip`](https://www.nuget.org/packages/Pulumi.Bigip)
-* Java: [`com.pulumi/bigip`](https://central.sonatype.com/artifact/com.pulumi/bigip)
+* JavaScript/TypeScript: [`@pulumi/f5bigip`](https://www.npmjs.com/package/@pulumi/f5bigip)
+* Python: [`pulumi-f5bigip`](https://pypi.org/project/pulumi-f5bigip/)
+* Go: [`github.com/pulumi/pulumi-f5bigip/sdk/v3/go/f5bigip`](https://github.com/pulumi/pulumi-f5bigip)
+* .NET: [`Pulumi.F5bigip`](https://www.nuget.org/packages/Pulumi.F5bigip)
+* Java: [`com.pulumi/f5bigip`](https://central.sonatype.com/artifact/com.pulumi/f5bigip)
 ## Overview
 
 Use the F5 BIG-IP Pulumi Provider to manage and provision your BIG-IP

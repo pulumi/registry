@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-auth0/v3.8.3/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-auth0/v3.9.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Auth0 Provider
@@ -8,7 +8,7 @@ layout: package
 ---
 ## Installation
 
-The auth0 provider is available as a package in all Pulumi languages:
+The Auth0 provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/auth0`](https://www.npmjs.com/package/@pulumi/auth0)
 * Python: [`pulumi-auth0`](https://pypi.org/project/pulumi-auth0/)

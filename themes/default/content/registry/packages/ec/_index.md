@@ -1,13 +1,14 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-ec/v0.10.2/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-ec/v0.10.4/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-title: Ec Provider
-meta_desc: Provides an overview on how to configure the Pulumi Ec provider.
+# *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
+title: ElasticCloud (EC) Provider
+meta_desc: Provides an overview on how to configure the Pulumi ElasticCloud (EC) provider.
 layout: package
 ---
 ## Installation
 
-The ec provider is available as a package in all Pulumi languages:
+The ElasticCloud (EC) provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/ec`](https://www.npmjs.com/package/@pulumi/ec)
 * Python: [`pulumi-ec`](https://pypi.org/project/pulumi-ec/)
@@ -16,8 +17,10 @@ The ec provider is available as a package in all Pulumi languages:
 * Java: [`com.pulumi/ec`](https://central.sonatype.com/artifact/com.pulumi/ec)
 ## Overview
 
+---
+## page_title: "Provider: Elastic Cloud"
 The Elastic Cloud Pulumi provider can be used to configure and manage Elastic Cloud deployments using the Elastic Cloud
-APIs. Use the navigation to the left to read about data sources and resources supported by the Elastic Cloud provider. Elastic Cloud APIs are available for:
+APIs. Use the navigation to the left to read about functions and resources supported by the Elastic Cloud provider. Elastic Cloud APIs are available for:
 
 * Elasticsearch Service (ESS).
 * Elastic Cloud Enterprise (ECE).

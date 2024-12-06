@@ -1,13 +1,14 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-postgresql/v3.13.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-postgresql/v3.14.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+# *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Postgresql Provider
 meta_desc: Provides an overview on how to configure the Pulumi Postgresql provider.
 layout: package
 ---
 ## Installation
 
-The postgresql provider is available as a package in all Pulumi languages:
+The Postgresql provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/postgresql`](https://www.npmjs.com/package/@pulumi/postgresql)
 * Python: [`pulumi-postgresql`](https://pypi.org/project/pulumi-postgresql/)

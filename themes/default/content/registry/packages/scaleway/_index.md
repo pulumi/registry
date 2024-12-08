@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-scaleway/v1.20.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-scaleway/v1.21.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: Scaleway
 meta_desc: Provides an overview of the Scaleway Provider for Pulumi.
@@ -111,3 +111,8 @@ class ScalewayServer : Stack
 This is a community maintained provider. Please file issues and feature requests here:
 
 [pulumiverse/pulumi-scaleway](https://github.com/pulumiverse/pulumi-scaleway/issues)
+
+You can also reach out on one of these channels:
+
+* `#pulumiverse` channel on the [Pulumi Community Slack](https://slack.pulumi.com)
+* `#pulumi` channel on the [Scaleway Community Slack](https://slack.scaleway.com)

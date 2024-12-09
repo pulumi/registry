@@ -1,13 +1,14 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-keycloak/v5.3.5/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-keycloak/v5.4.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+# *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Keycloak Provider
 meta_desc: Provides an overview on how to configure the Pulumi Keycloak provider.
 layout: package
 ---
 ## Installation
 
-The keycloak provider is available as a package in all Pulumi languages:
+The Keycloak provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/keycloak`](https://www.npmjs.com/package/@pulumi/keycloak)
 * Python: [`pulumi-keycloak`](https://pypi.org/project/pulumi-keycloak/)
@@ -15,6 +16,7 @@ The keycloak provider is available as a package in all Pulumi languages:
 * .NET: [`Pulumi.Keycloak`](https://www.nuget.org/packages/Pulumi.Keycloak)
 * Java: [`com.pulumi/keycloak`](https://central.sonatype.com/artifact/com.pulumi/keycloak)
 ## Overview
+
 The Keycloak provider can be used to interact with [Keycloak](https://www.keycloak.org/).
 ## A note for users of the legacy Wildfly distribution
 

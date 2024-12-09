@@ -1,13 +1,14 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-kafka/v3.8.1/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-kafka/v3.8.2/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+# *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Kafka Provider
 meta_desc: Provides an overview on how to configure the Pulumi Kafka provider.
 layout: package
 ---
 ## Installation
 
-The kafka provider is available as a package in all Pulumi languages:
+The Kafka provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/kafka`](https://www.npmjs.com/package/@pulumi/kafka)
 * Python: [`pulumi-kafka`](https://pypi.org/project/pulumi-kafka/)

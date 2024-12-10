@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-splunk/v1.2.14/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-splunk/v1.2.15/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Splunk Provider
@@ -8,7 +8,7 @@ layout: package
 ---
 ## Installation
 
-The splunk provider is available as a package in all Pulumi languages:
+The Splunk provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/splunk`](https://www.npmjs.com/package/@pulumi/splunk)
 * Python: [`pulumi-splunk`](https://pypi.org/project/pulumi-splunk/)

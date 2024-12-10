@@ -1,13 +1,14 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-minio/v0.16.1/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-minio/v0.16.2/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+# *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Minio Provider
 meta_desc: Provides an overview on how to configure the Pulumi Minio provider.
 layout: package
 ---
 ## Installation
 
-The minio provider is available as a package in all Pulumi languages:
+The Minio provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/minio`](https://www.npmjs.com/package/@pulumi/minio)
 * Python: [`pulumi-minio`](https://pypi.org/project/pulumi-minio/)
@@ -163,7 +164,7 @@ authentication, in this order, and explained below:
 ### Static API Key
 
 Static credentials can be provided by adding the `minio-server`, `minioUser` and `minioPassword` variables in-line in the
-Minio provider block:
+Minio provider configuration:
 
 Usage:
 
@@ -276,7 +277,7 @@ $ export MINIO_PASSWORD="xgwgwqqwv"
 ```
 
 When using this method, you may omit the
-minio `provider` block entirely:
+minio provider configuration entirely:
 
 {{< chooser language "typescript,python,go,csharp,java,yaml" >}}
 {{% choosable language typescript %}}
@@ -368,7 +369,7 @@ public class App {
 {{< /chooser >}}
 ## Configuration Reference
 
-The following configuration inputs are supported in the `provider` block:
+The following configuration inputs are supported in the provider configuration:
 
 * `minioServer` - (Required) Minio Host and Port. It must be provided, but
   it can also be sourced from the `MINIO_ENDPOINT` environment variable

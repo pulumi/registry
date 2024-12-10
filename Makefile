@@ -33,9 +33,12 @@ build:
 	$(MAKE) build-assets
 	./scripts/build.sh
 
+HUGO_SERVE := hugo serve --buildDrafts --buildFuture --ignoreVendorPaths="github.com/pulumi/registry/**/*" | grep -v -e 'WARN .* REF_NOT_FOUND'
+
+# Run hugo locally, ignoring REF_NOT_FOUND warnings
 .PHONY: serve
 serve:
-	./scripts/serve.sh
+	${HUGO_SERVE}
 
 .PHONY: ci-pull-request
 ci-pull-request: ensure
@@ -60,7 +63,7 @@ serve-assets:
 
 .PHONY: serve-all
 serve-all:
-	./node_modules/.bin/concurrently --kill-others -r "./scripts/serve.sh" "yarn --cwd ./themes/default/theme run start"
+	./node_modules/.bin/concurrently --kill-others -r "${HUGO_SERVE}" "yarn --cwd ./themes/default/theme run start"
 
 .PHONY: build-assets
 build-assets:

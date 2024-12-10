@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/koyeb/pulumi-koyeb/v0.1.10/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/koyeb/pulumi-koyeb/v0.1.11/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: Koyeb
 meta_desc: Provides an overview of the Koyeb Provider for Pulumi.

@@ -2,6 +2,7 @@
 title: Installation & Configuration Service Account
 meta_desc: Provides an overview of how set up a Google Cloud Platform Service Account
            with Pulumi.
+layout: package
 ---
 
 [Google Cloud Platform Credentials]: https://console.cloud.google.com/apis/credentials

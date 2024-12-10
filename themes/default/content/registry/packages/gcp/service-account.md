@@ -19,21 +19,15 @@ You can create and download credentials using the [Google Cloud Platform Credent
 To communicate your credentials to the Pulumi Google Cloud Platform Provider,
 you can do any of the following:
 
-### Set the `GOOGLE_CREDENTIALS` environment variable
+### Set the `GOOGLE_APPLICATION_CREDENTIALS` environment variable
 
-The `GOOGLE_CREDENTIALS` variable can accept _either_ the contents _or_ the filepath pointing at the location of your credentials file.
+The `GOOGLE_APPLICATION_CREDENTIALS` variable should hold the path to the JSON file that contains your credentials.
 
 {{< chooser os "linux,macos,windows" >}}
 {{% choosable os linux %}}
 
 ```bash
-export GOOGLE_CREDENTIALS=$(cat credentials.json)
-```
-
-or
-
-```bash
-export GOOGLE_CREDENTIALS=<path-to-credentials.json>
+export GOOGLE_APPLICATION_CREDENTIALS=<path-to-credentials.json>
 ```
 
 {{% /choosable %}}
@@ -41,13 +35,7 @@ export GOOGLE_CREDENTIALS=<path-to-credentials.json>
 {{% choosable os macos %}}
 
 ```bash
-export GOOGLE_CREDENTIALS=$(cat credentials.json)
-```
-
-or
-
-```bash
-export GOOGLE_CREDENTIALS=<path-to-credentials.json>
+export GOOGLE_APPLICATION_CREDENTIALS=<path-to-credentials.json>
 ```
 
 {{% /choosable %}}
@@ -57,13 +45,7 @@ export GOOGLE_CREDENTIALS=<path-to-credentials.json>
 Windows Powershell
 
 ```powershell
-$env:GOOGLE_CREDENTIALS=cat credentials.json
-```
-
-or
-
-```powershell
-$env:GOOGLE_CREDENTIALS=<path-tocredentials.json>
+$env:GOOGLE_APPLICATION_CREDENTIALS=<path-tocredentials.json>
 ```
 
 {{% /choosable %}}
@@ -100,3 +82,5 @@ pulumi config set gcp:credentials <your-credentials> # contents or filepath
 
 {{% /choosable %}}
 {{< /chooser >}}
+
+> The `gcp:credentials` variable can accept _either_ the contents _or_ the filepath pointing at the location of your credentials file.

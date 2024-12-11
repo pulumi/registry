@@ -15,7 +15,7 @@ If this pull request adds a new package, please verify/document:
   - [ ] a valid logo URL that points to a PNG whose dimensions conform to the others in this repo (e.g., 100x100).
 - [ ] The package repo contains an Overview doc (`/docs/_index.md`) that includes:
   - [ ] a brief explanation of what the package is and what it does.
-  - [ ] at least one representative example in all supported languages (ie. ts/js, python, go and c#).
+  - [ ] at least one representative example in all supported languages (i.e. TypeScript, Python, Go and C#).
   - [ ] a front-matter property for the `layout` set to `package`.
 - [ ] The package repo contains an Installation and Configuration doc (`/docs/installation-configuration.md`) that includes:
   - [ ] links to SDKs in all supported languages (ie. should link to published SDKs in NPM, PyPi and NuGet).

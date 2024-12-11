@@ -18,7 +18,7 @@ If this pull request adds a new package, please verify/document:
   - [ ] at least one representative example in all supported languages (i.e. TypeScript, Python, Go and C#).
   - [ ] a front-matter property for the `layout` set to `package`.
 - [ ] The package repo contains an Installation and Configuration doc (`/docs/installation-configuration.md`) that includes:
-  - [ ] links to SDKs in all supported languages (ie. should link to published SDKs in NPM, PyPi and NuGet).
+  - [ ] links to SDKs in all supported languages (i.e. should link to published SDKs in NPM, PyPi and NuGet).
   - [ ] a copyable command for installing the resource plugin if necessary.
   - [ ] an example of configuring the provider with `pulumi config set`.
   - [ ] an example of configuring the provider with environment variables.

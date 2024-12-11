@@ -1,13 +1,14 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-sumologic/v0.23.7/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-sumologic/v1.0.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+# *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Sumologic Provider
 meta_desc: Provides an overview on how to configure the Pulumi Sumologic provider.
 layout: package
 ---
 ## Installation
 
-The sumologic provider is available as a package in all Pulumi languages:
+The Sumologic provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/sumologic`](https://www.npmjs.com/package/@pulumi/sumologic)
 * Python: [`pulumi-sumologic`](https://pypi.org/project/pulumi-sumologic/)
@@ -423,7 +424,7 @@ func main() {
 		// Sumo Logic Access Key
 		sumologicAccessKey := cfg.Require("sumologicAccessKey")
 		// Look up the Admin Recommended Folder
-		folder, err := sumologic.GetAdminRecommendedFolder(ctx, nil, nil)
+		folder, err := sumologic.GetAdminRecommendedFolder(ctx, &sumologic.GetAdminRecommendedFolderArgs{}, nil)
 		if err != nil {
 			return err
 		}

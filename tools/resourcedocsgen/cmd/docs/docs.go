@@ -24,9 +24,9 @@ import (
 	"github.com/hashicorp/hcl/v2"
 	"github.com/pkg/errors"
 	"github.com/pulumi/registry/tools/resourcedocsgen/pkg"
+	"github.com/pulumi/registry/tools/resourcedocsgen/pkg/docs"
 	"github.com/spf13/cobra"
 
-	docsgen "github.com/pulumi/pulumi/pkg/v3/codegen/docs"
 	pschema "github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/util/contract"
 )
@@ -39,10 +39,10 @@ const (
 
 func getPulumiPackageFromSchema(
 	docsOutDir string, mainSpec pschema.PackageSpec,
-) (*pschema.Package, docsgen.Context, error) {
+) (*pschema.Package, *docs.Context, error) {
 	// Delete existing docs before generating new ones.
 	if err := os.RemoveAll(docsOutDir); err != nil {
-		return nil, docsgen.Context{}, errors.Wrapf(err, "deleting provider directory %v", docsOutDir)
+		return nil, nil, errors.Wrapf(err, "deleting provider directory %v", docsOutDir)
 	}
 
 	pulPkg, err := pschema.ImportSpec(mainSpec, nil)
@@ -54,7 +54,7 @@ func getPulumiPackageFromSchema(
 				err = wErr
 			}
 		}
-		return nil, docsgen.Context{}, fmt.Errorf("importing package spec: %w", err)
+		return nil, nil, fmt.Errorf("importing package spec: %w", err)
 	}
 
 	// THIS IS A TEMPORARY HACK!!
@@ -67,7 +67,7 @@ func getPulumiPackageFromSchema(
 		pulPkg.Name = "azure-native-v1"
 	}
 
-	return pulPkg, docsgen.NewContext(tool, pulPkg), nil
+	return pulPkg, docs.NewContext(tool, pulPkg), nil
 }
 
 func ResourceDocsCmd() *cobra.Command {
@@ -133,7 +133,7 @@ func ResourceDocsCmd() *cobra.Command {
 	return cmd
 }
 
-func generateDocsFromSchema(outDir string, pulPkg docsgen.Context) error {
+func generateDocsFromSchema(outDir string, pulPkg *docs.Context) error {
 	files, err := pulPkg.GeneratePackage()
 	if err != nil {
 		return errors.Wrap(err, "generating Pulumi package")
@@ -147,7 +147,7 @@ func generateDocsFromSchema(outDir string, pulPkg docsgen.Context) error {
 	return nil
 }
 
-func generatePackageTree(outDir string, pkgName string, genctx docsgen.Context) error {
+func generatePackageTree(outDir string, pkgName string, genctx *docs.Context) error {
 	tree, err := genctx.GeneratePackageTree()
 	if err != nil {
 		return errors.Wrap(err, "generating the package tree")

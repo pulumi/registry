@@ -13,6 +13,10 @@
       "schemaFile": "provider/cmd/pulumi-resource-doppler/schema.json"
     },
     {
+      "repoSlug": "pgEdge/pulumi-pgedge",
+      "schemaFile": "provider/cmd/pulumi-resource-pgedge/schema.json"
+    },
+    {
       "repoSlug": "checkly/pulumi-checkly",
       "schemaFile": "provider/cmd/pulumi-resource-checkly/schema.json"
     },

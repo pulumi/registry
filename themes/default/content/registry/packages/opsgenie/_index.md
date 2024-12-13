@@ -1,13 +1,14 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-opsgenie/v1.3.12/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-opsgenie/v1.3.13/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+# *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Opsgenie Provider
 meta_desc: Provides an overview on how to configure the Pulumi Opsgenie provider.
 layout: package
 ---
 ## Installation
 
-The opsgenie provider is available as a package in all Pulumi languages:
+The Opsgenie provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/opsgenie`](https://www.npmjs.com/package/@pulumi/opsgenie)
 * Python: [`pulumi-opsgenie`](https://pypi.org/project/pulumi-opsgenie/)

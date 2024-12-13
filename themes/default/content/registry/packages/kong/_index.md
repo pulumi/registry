@@ -1,13 +1,14 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-kong/v4.5.6/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-kong/v4.5.7/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+# *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Kong Provider
 meta_desc: Provides an overview on how to configure the Pulumi Kong provider.
 layout: package
 ---
 ## Installation
 
-The kong provider is available as a package in all Pulumi languages:
+The Kong provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/kong`](https://www.npmjs.com/package/@pulumi/kong)
 * Python: [`pulumi-kong`](https://pypi.org/project/pulumi-kong/)
@@ -198,7 +199,7 @@ config:
 {{< /chooser >}}
 ## Configuration Reference
 
-In addition to generic provider arguments (e.g. alias and version), the following arguments are supported in the Kong provider block:
+In addition to generic provider arguments (e.g. alias and version), the following arguments are supported in the Kong provider configuration:
 
 * `kongAdminUri` - (Required) The URI of the Kong admin API, can be sourced from the `KONG_ADMIN_ADDR` environment variable
 * `kongAdminUsername` - (Optional) The username for the Kong admin API if set, can be sourced from the `KONG_ADMIN_USERNAME` environment variable

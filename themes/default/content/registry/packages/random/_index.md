@@ -1,13 +1,14 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-random/v4.16.7/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-random/v4.16.8/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+# *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Random Provider
 meta_desc: Provides an overview on how to configure the Pulumi Random provider.
 layout: package
 ---
 ## Installation
 
-The random provider is available as a package in all Pulumi languages:
+The Random provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/random`](https://www.npmjs.com/package/@pulumi/random)
 * Python: [`pulumi-random`](https://pypi.org/project/pulumi-random/)

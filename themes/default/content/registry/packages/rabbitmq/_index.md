@@ -1,13 +1,14 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-rabbitmq/v3.3.6/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-rabbitmq/v3.3.8/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+# *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Rabbitmq Provider
 meta_desc: Provides an overview on how to configure the Pulumi Rabbitmq provider.
 layout: package
 ---
 ## Installation
 
-The rabbitmq provider is available as a package in all Pulumi languages:
+The Rabbitmq provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/rabbitmq`](https://www.npmjs.com/package/@pulumi/rabbitmq)
 * Python: [`pulumi-rabbitmq`](https://pypi.org/project/pulumi-rabbitmq/)

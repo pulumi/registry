@@ -1,13 +1,14 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-mysql/v3.2.7/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-mysql/v3.2.8/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+# *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Mysql Provider
 meta_desc: Provides an overview on how to configure the Pulumi Mysql provider.
 layout: package
 ---
 ## Installation
 
-The mysql provider is available as a package in all Pulumi languages:
+The Mysql provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/mysql`](https://www.npmjs.com/package/@pulumi/mysql)
 * Python: [`pulumi-mysql`](https://pypi.org/project/pulumi-mysql/)

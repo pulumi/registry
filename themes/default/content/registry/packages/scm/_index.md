@@ -1,13 +1,14 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-scm/v0.1.6/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-scm/v0.1.7/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-title: Scm Provider
-meta_desc: Provides an overview on how to configure the Pulumi Scm provider.
+# *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
+title: Strata Cloud Manager Provider
+meta_desc: Provides an overview on how to configure the Pulumi Strata Cloud Manager provider.
 layout: package
 ---
 ## Installation
 
-The scm provider is available as a package in all Pulumi languages:
+The Strata Cloud Manager provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/scm`](https://www.npmjs.com/package/@pulumi/scm)
 * Python: [`pulumi-scm`](https://pypi.org/project/pulumi-scm/)

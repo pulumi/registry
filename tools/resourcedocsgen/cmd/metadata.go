@@ -57,9 +57,7 @@ func PackageMetadataCmd() *cobra.Command {
 	var version string
 	var metadataDir string
 	var packageDocsDir string
-	var schemaFileURL string
-	var indexFileURL string
-	var installationConfigurationURL string
+	var rawSource rawDownloadURLs
 
 	cmd := &cobra.Command{
 		Use:   "metadata <args>",
@@ -71,11 +69,17 @@ func PackageMetadataCmd() *cobra.Command {
 
 			publishedDate := time.Now()
 
-			if schemaFileURL == "" {
+			var urlSource downloadURLs
+			if rawSource.schemaFileURL == "" {
 				if !repoSlug.isSet {
 					return errors.New("repoSlug is required unless schemaFileURL is passed")
 				}
-				schemaFileURL = inferSchemaFileURL(providerName, schemaFile, repoSlug.String(), version)
+				urlSource = githubDownloadURLs{
+					repoSlug:     repoSlug.v,
+					providerName: providerName,
+					version:      version,
+					schemaFile:   schemaFile,
+				}
 				// try and get the version release data using the github releases API
 				//
 				// We only attempt to infer the date when schemaFileURL is missing, implying we are
@@ -89,8 +93,10 @@ func PackageMetadataCmd() *cobra.Command {
 				if schemaFile != "" {
 					glog.Warning("schemaFile was ignored - schemaFileURL takes precedence")
 				}
+				urlSource = rawSource
 			}
-			mainSpec, err := readRemoteSchemaFile(schemaFileURL, repoSlug.v)
+
+			mainSpec, err := readRemoteSchemaFile(urlSource.schemaURL(), repoSlug.v.owner)
 			if err != nil {
 				return errors.WithMessage(err, "unable to read remote schema file")
 			}
@@ -191,7 +197,7 @@ func PackageMetadataCmd() *cobra.Command {
 				Title:       title,
 
 				RepoURL:       mainSpec.Repository,
-				SchemaFileURL: schemaFileURL,
+				SchemaFileURL: urlSource.schemaURL(),
 				PackageStatus: status,
 				UpdatedOn:     publishedDate.Unix(),
 				Version:       version,
@@ -219,24 +225,23 @@ func PackageMetadataCmd() *cobra.Command {
 				packageDocsDir = "themes/default/content/registry/packages/" + mainSpec.Name
 			}
 
-			requiredFiles := []struct {
-				name, url string
+			remoteFiles := []struct {
+				name     string
+				required bool
+				url      string
 			}{
-				{"_index.md", indexFileURL},
-				{"installation-configuration.md", installationConfigurationURL},
+				{"_index.md", true, urlSource.indexURL()},
+				{"installation-configuration.md", false, urlSource.installationConfigurationURL()},
 			}
 
-			for _, requiredFile := range requiredFiles {
-				docsURLOrDefault := func(specified, name string) string {
-					if specified != "" {
-						return specified
+			for _, remoteFile := range remoteFiles {
+				if remoteFile.url == "" {
+					if remoteFile.required {
+						return fmt.Errorf("missing URL for required file %q", remoteFile.name)
 					}
-					return "https://raw.githubusercontent.com/" + repoSlug.String() + "/" + version + "/docs/" + name
+					continue
 				}
-
-				url := docsURLOrDefault(requiredFile.url, requiredFile.name)
-
-				content, err := readRemoteFile(url, repoSlug.v.owner)
+				content, err := readRemoteFile(remoteFile.url, repoSlug.v.owner)
 				if err != nil {
 					return err
 				}
@@ -249,16 +254,16 @@ func PackageMetadataCmd() *cobra.Command {
 
 				if rest, ok := bytes.CutPrefix(bytes.TrimLeft(content, "\n\t\r "), []byte("---\n")); ok {
 					content = append([]byte(`---
-# WARNING: this file was fetched from `+url+`
+# WARNING: this file was fetched from `+remoteFile.url+`
 # Do not edit by hand unless you're certain you know what you are doing!
 `), rest...)
 				} else {
 					return fmt.Errorf(`expected file %s to start with YAML front-matter ("---\n"), found leading %q`,
-						url, strings.Split(string(content), "\n")[0])
+						remoteFile.url, strings.Split(string(content), "\n")[0])
 				}
 
-				if err := pkg.EmitFile(packageDocsDir, requiredFile.name, content); err != nil {
-					return errors.Wrap(err, fmt.Sprintf("writing %s file", requiredFile))
+				if err := pkg.EmitFile(packageDocsDir, remoteFile.name, content); err != nil {
+					return errors.Wrapf(err, "writing %s file", remoteFile.name)
 				}
 			}
 
@@ -269,13 +274,13 @@ func PackageMetadataCmd() *cobra.Command {
 	cmd.Flags().Var(&repoSlug, "repoSlug", "The repository slug e.g. pulumi/pulumi-provider")
 	cmd.Flags().StringVar(&providerName, "providerName", "", "The name of the provider e.g. aws, aws-native. "+
 		"Required when there is no schemaFile flag specified.")
-	cmd.Flags().StringVar(&schemaFileURL, "schemaFileURL", "",
+	cmd.Flags().StringVar(&rawSource.schemaFileURL, "schemaFileURL", "",
 		`The URL from which the schema can be retrieved.
 
 schemaFileURL takes precedence over schemaFile.`)
-	cmd.Flags().StringVar(&indexFileURL, "indexFileURL", "",
+	cmd.Flags().StringVar(&rawSource.indexFileURL, "indexFileURL", "",
 		`The URL from which the docs/_index.md file can be retrieved.`)
-	cmd.Flags().StringVar(&installationConfigurationURL, "installationConfigurationFileURL", "",
+	cmd.Flags().StringVar(&rawSource.installationConfigurationFileURL, "installationConfigurationFileURL", "",
 		`The URL from which the docs/installation-configuration.md file can be retrieved.`)
 	cmd.Flags().StringVarP(&schemaFile, "schemaFile", "s", "",
 		"Relative path to the schema.json file from the root of the repository. If no schemaFile is specified,"+
@@ -493,19 +498,8 @@ func (s *repoSlug) Set(input string) error {
 
 func (s repoSlug) Type() string { return "repo slug" }
 
-func inferSchemaFileURL(providerName, schemaFile, repo, version string) string {
-	if schemaFile == "" {
-		schemaFile = fmt.Sprintf("provider/cmd/pulumi-resource-%s/schema.json", providerName)
-	}
-
-	// we should be able to take the repo URL + the version + the schema url and
-	// construct a file that we can download and read
-	return fmt.Sprintf("https://raw.githubusercontent.com/%s/%s/%s",
-		repo, version, schemaFile)
-}
-
-func readRemoteSchemaFile(schemaFileURL string, repo repoSlug) (*pschema.PackageSpec, error) {
-	schema, err := readRemoteFile(schemaFileURL, repo.owner)
+func readRemoteSchemaFile(schemaFileURL, repoOwner string) (*pschema.PackageSpec, error) {
+	schema, err := readRemoteFile(schemaFileURL, repoOwner)
 	if err != nil {
 		return nil, err
 	}

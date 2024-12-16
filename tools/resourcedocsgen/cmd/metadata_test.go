@@ -107,6 +107,72 @@ layout: package
 	})
 }
 
+func TestMissingMetadataFile(t *testing.T) {
+	t.Parallel()
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch r.URL.Path {
+		case "/schema.json":
+			schema := &schema.Package{
+				Name:       "test",
+				Version:    ref(semver.MustParse("1.0.0")),
+				Repository: "https://github.com/pulumi/pulumi-test",
+				Publisher:  "example",
+				Provider:   &schema.Resource{},
+			}
+			bytes, err := schema.MarshalJSON()
+			require.NoError(t, err)
+			_, err = w.Write(bytes)
+			require.NoError(t, err)
+		case "/docs/_index.md":
+			_, err := w.Write([]byte(`---
+layout: package
+---
+
+# some docs`))
+			require.NoError(t, err)
+		default:
+			assert.Failf(t, "unknown path %s", r.URL.Path)
+			w.WriteHeader(http.StatusUnauthorized)
+		}
+	}))
+	defer server.Close()
+	testMetadata(t, testMetadataArgs{
+		schemaFileURL: server.URL + "/schema.json",
+		indexFileURL:  server.URL + "/docs/_index.md",
+		assertOptions: []util.AssertOption{
+			util.AssertOptionsPreCompareTransform("[0-9]{5}", "*****"),
+		},
+	})
+}
+
+func TestMissingAllDocsFiles(t *testing.T) {
+	t.Parallel()
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch r.URL.Path {
+		case "/schema.json":
+			schema := &schema.Package{
+				Name:       "test",
+				Version:    ref(semver.MustParse("1.0.0")),
+				Repository: "https://github.com/example/pulumi-does-not-exist",
+				Publisher:  "example",
+				Provider:   &schema.Resource{},
+			}
+			bytes, err := schema.MarshalJSON()
+			require.NoError(t, err)
+			_, err = w.Write(bytes)
+			require.NoError(t, err)
+		default:
+			assert.Failf(t, "unknown path %s", r.URL.Path)
+			w.WriteHeader(http.StatusUnauthorized)
+		}
+	}))
+	defer server.Close()
+	testMetadata(t, testMetadataArgs{
+		schemaFileURL: server.URL + "/schema.json",
+		errorContains: `missing URL for required file "_index.md"`,
+	})
+}
+
 func TestMetadataComponentProvider(t *testing.T) {
 	t.Parallel()
 	testMetadata(t, testMetadataArgs{

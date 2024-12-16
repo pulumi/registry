@@ -29,7 +29,7 @@ import (
 )
 
 // AssertDirEqual asserts that each file located under root is byte-for-byte identical
-// with it's test representation.
+// with it's corresponding golden file. It also asserts on the directory structure itself.
 //
 // To update files under test, use:
 //
@@ -40,7 +40,11 @@ import (
 //
 //	t.Run("docs", func(t *testing.T) { util.AssertDirEqual(t, baseDocsOutDir) })
 //	t.Run("tree", func(t *testing.T) { util.AssertDirEqual(t, basePackageTreeJSONOutDir) })
-func AssertDirEqual(t *testing.T, root string) {
+func AssertDirEqual(t *testing.T, root string, options ...AssertOption) {
+	var opts assertOptions
+	for _, o := range options {
+		o(&opts)
+	}
 	var structure []string
 	require.NoError(t, filepath.WalkDir(root, func(path string, d fs.DirEntry, err error) error {
 		if path == root || err != nil {
@@ -56,21 +60,26 @@ func AssertDirEqual(t *testing.T, root string) {
 
 		content, err := os.ReadFile(path)
 		require.NoError(t, err, "could not read walked file")
-		t.Run(pathName, func(t *testing.T) { autogold.ExpectFile(t, autogold.Raw(content)) })
+
+		fileContent := string(content)
+		for _, f := range opts.preCompareFileTransform {
+			fileContent = f(t, fileContent)
+		}
+
+		t.Run(pathName, func(t *testing.T) { autogold.ExpectFile(t, autogold.Raw(fileContent)) })
 		return nil
 	}))
 	t.Run("directory-structure", (func(t *testing.T) { autogold.ExpectFile(t, structure) }))
 }
 
-// AssertDirsEqual asserts that each file located under root is byte-for-byte identical
-// with another directory, and that the directory structures match.
+// AssertDirsEqual asserts that the file-tree at actual matches the file-tree at expected.
 //
 // If you just want to assert that a directory structure is unchanged or show updates, see
 // [AssertDirEqual]. AssertDirsEqual is about showing that two already written out
 // directories are equivalent.
-func AssertDirsEqual(t *testing.T, expected, actual string, options ...OptionAssertDirsEqual) {
+func AssertDirsEqual(t *testing.T, expected, actual string, options ...AssertOption) {
 	require.NotEqual(t, expected, actual, "cannot assert on the same directory")
-	var opts optionAssertDirsEqual
+	var opts assertOptions
 	for _, o := range options {
 		o(&opts)
 	}
@@ -100,9 +109,9 @@ func AssertDirsEqual(t *testing.T, expected, actual string, options ...OptionAss
 
 		expectedContent := string(expectedContentBytes)
 		actualContent := string(actualContentBytes)
-		for _, f := range opts.actualTransform {
-			expectedContent = f.f(t, expectedContent)
-			actualContent = f.f(t, actualContent)
+		for _, f := range opts.preCompareFileTransform {
+			expectedContent = f(t, expectedContent)
+			actualContent = f(t, actualContent)
 		}
 
 		assert.Equalf(t, expectedContent, actualContent, "File %s doesn't match", pathName)
@@ -125,24 +134,20 @@ func AssertDirsEqual(t *testing.T, expected, actual string, options ...OptionAss
 		"Directory structure does not match")
 }
 
-type OptionAssertDirsEqual func(*optionAssertDirsEqual)
+type AssertOption func(*assertOptions)
 
-type optionAssertDirsEqual struct {
-	actualTransform []transform
+type assertOptions struct {
+	preCompareFileTransform []func(t *testing.T, fileContent string) (newFileContent string)
 }
 
-type transform struct {
-	f func(*testing.T, string) string
-}
-
-// Apply a regexp based transformation to both the expected and actual content of each file.
-func OptionAssertDirsEqualReplace(regex, with string) OptionAssertDirsEqual {
+// Apply a regexp based transformation to all files before they are used in comparison..
+func AssertOptionsPreCompareTransform(regex, with string) AssertOption {
 	r, err := regexp.Compile(regex) // Pre-compile the regexp
-	return func(o *optionAssertDirsEqual) {
-		o.actualTransform = append(o.actualTransform, transform{f: func(t *testing.T, src string) string {
+	return func(o *assertOptions) {
+		o.preCompareFileTransform = append(o.preCompareFileTransform, func(t *testing.T, src string) string {
 			require.NoError(t, err)
 			return r.ReplaceAllString(src, with)
-		}})
+		})
 	}
 }
 

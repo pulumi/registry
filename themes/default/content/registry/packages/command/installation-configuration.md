@@ -1,4 +1,8 @@
 ---
+# This file was moved to github.com/pulumi/pulumi-command/docs/installtion-configuration.md in https://github.com/pulumi/pulumi-command/pull/606.
+# Future edits should be made there.
+#
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Command (preview) Installation & Configuration
 meta_desc: Information on how to install the Pulumi Command provider.
 layout: package

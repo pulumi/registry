@@ -112,21 +112,26 @@ var CategoryLookup = map[string]PackageCategory{
 	"yandex":                              PackageCategoryCloud,
 }
 
-// TODO[pulumi/pulumi#7813]: Remove this lookup once display name is available in
-// the Pulumi schema.
+// TitleLookup is a map pf package name to the desired display name
+// for display in the TOC menu under API Reference.
 //
 // NOTE: For the time being this lookup map and the one used by the docs
 // generator in `pulumi/pulumi` must be kept up-to-date.
 //
-// titleLookup is a map pf package name to the desired display name
-// for display in the TOC menu under API Reference.
+// TODO[pulumi/pulumi#7813]: Remove this lookup once display name is available in the
+// Pulumi schema. To remove safely, we must show that .DisplayName is set in the latest
+// *released* version of each of these providers.
+//
+// Safe removal is tracked in pulumi/registry#4672.
+//
+//nolint:lll
 var TitleLookup = map[string]string{
-	"aiven":                               "Aiven",
-	"akamai":                              "Akamai",
-	"alicloud":                            "Alibaba Cloud",
-	"auth0":                               "Auth0",
-	"aws":                                 "AWS",
-	"aws-apigateway":                      "AWS API Gateway",
+	"aiven":                               "Aiven",           // https://github.com/pulumi/pulumi-aiven/pull/761
+	"akamai":                              "Akamai",          // https://github.com/pulumi/pulumi-akamai/pull/642
+	"alicloud":                            "Alibaba Cloud",   // https://github.com/pulumi/pulumi-alicloud/pull/839
+	"auth0":                               "Auth0",           // https://github.com/pulumi/pulumi-auth0/pull/695
+	"aws":                                 "AWS",             // https://github.com/pulumi/pulumi-aws/pull/4765
+	"aws-apigateway":                      "AWS API Gateway", // https://github.com/pulumi/pulumi-aws-apigateway/pull/43
 	"aws-miniflux":                        "Miniflux",
 	"aws-native":                          "AWS Cloud Control",
 	"aws-quickstart-aurora-mysql":         "AWS QuickStart Aurora MySQL",
@@ -135,32 +140,32 @@ var TitleLookup = map[string]string{
 	"aws-serverless":                      "AWS Serverless",
 	"aws-quickstart-vpc":                  "AWS QuickStart VPC",
 	"aws-s3-replicated-bucket":            "AWS S3 Replicated Bucket",
-	"azure":                               "Azure Classic",
+	"azure":                               "Azure Classic", // https://github.com/pulumi/pulumi-azure/pull/2630
 	"azure-native":                        "Azure Native",
 	"azure-quickstart-acr-geo-replicated": "Azure QuickStart ACR Geo Replicated",
 	"azure-quickstart-aks":                "Azure QuickStart AKS",
 	"azure-quickstart-compute":            "Azure QuickStart Compute",
 	"azure-quickstart-sql":                "Azure QuickStart SQL",
-	"azuread":                             "Azure Active Directory",
-	"azuredevops":                         "Azure DevOps",
-	"azuresel":                            "Azure",
-	"civo":                                "Civo",
-	"cloudamqp":                           "CloudAMQP",
-	"cloudflare":                          "Cloudflare",
-	"cloudinit":                           "cloud-init",
-	"confluent":                           "Confluent Cloud",
-	"consul":                              "Consul",
+	"azuread":                             "Azure Active Directory", // https://github.com/pulumi/pulumi-azuread/pull/321
+	"azuredevops":                         "Azure DevOps",           // https://github.com/pulumi/pulumi-azuredevops/pull/519
+	"azuresel":                            "Azure",                  // https://github.com/pulumi/pulumi-azure/pull/2630
+	"civo":                                "Civo",                   // https://github.com/pulumi/pulumi-civo/pull/647
+	"cloudamqp":                           "CloudAMQP",              // https://github.com/pulumi/pulumi-cloudamqp/pull/589
+	"cloudflare":                          "Cloudflare",             // https://github.com/pulumi/pulumi-cloudflare/pull/1008
+	"cloudinit":                           "cloud-init",             // https://github.com/pulumi/pulumi-cloudinit/pull/465
+	"confluent":                           "Confluent Cloud",        // https://github.com/pulumi/pulumi-confluentcloud/blob/0f4313de2fc3a025225950279f1ac68c6116cad9/provider/resources.go#L58
+	"consul":                              "Consul",                 // https://github.com/pulumi/pulumi-consul/pull/574
 	"coredns-helm":                        "CoreDNS (Helm)",
-	"datadog":                             "Datadog",
-	"digitalocean":                        "DigitalOcean",
-	"dnsimple":                            "DNSimple",
+	"datadog":                             "Datadog",      // https://github.com/pulumi/pulumi-datadog/pull/729
+	"digitalocean":                        "DigitalOcean", // https://github.com/pulumi/pulumi-digitalocean/pull/908
+	"dnsimple":                            "DNSimple",     // https://github.com/pulumi/pulumi-dnsimple/pull/558
 	"docker":                              "Docker",
 	"docker-buildkit":                     "Docker BuildKit",
 	"eks":                                 "Amazon EKS",
 	"equinix-metal":                       "Equinix Metal",
 	"f5bigip":                             "f5 BIG-IP",
-	"fastly":                              "Fastly",
-	"gcp":                                 "Google Cloud Classic",
+	"fastly":                              "Fastly",               // https://github.com/pulumi/pulumi-fastly/pull/693
+	"gcp":                                 "Google Cloud Classic", // https://github.com/pulumi/pulumi-gcp/pull/2745
 	"gcp-cloudrun-multi-region":           "Google Cloud Run Multi-Region",
 	"gcp-project-scaffold":                "Google Project Scaffolding",
 	"google-native":                       "Google Cloud Native",

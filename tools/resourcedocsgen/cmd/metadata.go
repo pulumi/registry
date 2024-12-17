@@ -119,17 +119,21 @@ func PackageMetadataCmd() *cobra.Command {
 				mainSpec.Repository = "https://github.com/" + repoSlug.String()
 			default:
 				r, err := url.Parse(mainSpec.Repository)
-				if err == nil {
-					err = repoSlug.Set(r.Path)
-				}
 				if err != nil {
 					return errors.Wrapf(err, "parsing repo url %q from schema", mainSpec.Repository)
 				}
+
 				if r.Hostname() != "github.com" {
 					return fmt.Errorf("mainSpec.Repository host must be from GH, found %q", r.Hostname())
 				}
 
-				if err := repoSlug.Set(r.Path); err != nil {
+				// r.Path starts with a "/", and may end with a "/". For example:
+				//
+				// If the URL is "https://github.com/example/pulumi-example", then the path would be
+				// "/example/pulumi-example". repoSlug.Set expects a slug of the form "{owner}/{repo}",
+				// so we need to strip the leading "/". If there is a trailing "/", we need to strip
+				// that too.
+				if err := repoSlug.Set(strings.Trim(r.Path, "/")); err != nil {
 					return errors.Wrapf(err, "parsing repo slug from %q", mainSpec.Repository)
 				}
 			}

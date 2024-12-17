@@ -16,8 +16,12 @@ package cmd
 
 import (
 	"bytes"
+	"net/http"
+	"net/http/httptest"
 	"testing"
 
+	"github.com/blang/semver"
+	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 	"github.com/pulumi/registry/tools/resourcedocsgen/internal/tests/util"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -63,6 +67,43 @@ func TestMetadataNativeProvider(t *testing.T) {
 				util.AssertDirsEqual(t, pacakgeDocsDir, pacakgeDocs)
 			},
 		})
+	})
+}
+
+func TestRepoURLFromRemoteSchema(t *testing.T) {
+	t.Parallel()
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch r.URL.Path {
+		case "/schema.json":
+			schema := &schema.Package{
+				Name:       "test",
+				Version:    ref(semver.MustParse("1.0.0")),
+				Repository: "https://github.com/pulumi/pulumi-test",
+				Provider:   &schema.Resource{},
+			}
+			bytes, err := schema.MarshalJSON()
+			require.NoError(t, err)
+			_, err = w.Write(bytes)
+			require.NoError(t, err)
+		case "/docs/_index.md":
+			_, err := w.Write([]byte(`---
+layout: package
+---
+
+# some docs`))
+			require.NoError(t, err)
+		default:
+			assert.Failf(t, "unknown path %s", r.URL.Path)
+			w.WriteHeader(http.StatusUnauthorized)
+		}
+	}))
+	defer server.Close()
+	testMetadata(t, testMetadataArgs{
+		schemaFileURL: server.URL + "/schema.json",
+		indexFileURL:  server.URL + "/docs/_index.md",
+		assertOptions: []util.AssertOption{
+			util.AssertOptionsPreCompareTransform("[0-9]{5}", "*****"),
+		},
 	})
 }
 
@@ -140,3 +181,5 @@ func testMetadata(t *testing.T, args testMetadataArgs) {
 		defaultAssert(t, metadataDir, pacakgeDocsDir, args.assertOptions...)
 	}
 }
+
+func ref[T any](t T) *T { return &t }

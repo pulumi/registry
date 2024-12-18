@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-terraform-provider/v0.4.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-terraform-provider/v0.5.2/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: Any Terraform Provider
 meta_desc: Learn how to use any Terraform provider in Pulumi.
@@ -78,7 +78,7 @@ To use this SDK in your Go project, run the following command:
 
 You can then use the SDK in your Go code with:
 
-  import "github.com/pulumi/pulumi-terraform-provider/sdks/go/random/v3"
+  import "github.com/pulumi/pulumi-terraform-provider/sdks/go/random/v3/random"
 
 ```
 
@@ -173,7 +173,7 @@ random.Pet("hi")
 package main
 
 import (
-	"github.com/pulumi/pulumi-terraform-provider/sdks/go/random/v3"
+	"github.com/pulumi/pulumi-terraform-provider/sdks/go/random/v3/random"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 

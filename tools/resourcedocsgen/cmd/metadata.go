@@ -17,10 +17,10 @@ package cmd
 import (
 	"bytes"
 	"encoding/json"
+	stderrors "errors"
 	"fmt"
 	"io"
 	"net/http"
-	"net/url"
 	"slices"
 	"strings"
 	"time"
@@ -28,13 +28,11 @@ import (
 	"github.com/ghodss/yaml"
 	"github.com/golang/glog"
 	"github.com/pkg/errors"
+	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 	pschema "github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/util/contract"
 	"github.com/pulumi/registry/tools/resourcedocsgen/pkg"
 	"github.com/spf13/cobra"
-	"github.com/spf13/pflag"
-	"golang.org/x/text/cases"
-	"golang.org/x/text/language"
 )
 
 const defaultPackageCategory = pkg.PackageCategoryCloud
@@ -47,262 +45,313 @@ var featuredPackages = []string{
 }
 
 func PackageMetadataCmd() *cobra.Command {
-	var repoSlug optional[repoSlug, *repoSlug]
-	var providerName string
-	var categoryStr string
-	var component bool
-	var publisher string
-	var schemaFile string
-	var title string
-	var version string
-	var metadataDir string
-	var packageDocsDir string
-	var rawSource rawDownloadURLs
-
 	cmd := &cobra.Command{
 		Use:   "metadata <args>",
 		Short: "Generate package metadata from Pulumi schema",
-		RunE: func(cmd *cobra.Command, args []string) error {
-			if repoSlug.isSet && schemaFile == "" && providerName == "" {
-				providerName = strings.Replace(repoSlug.v.name, "pulumi-", "", -1)
-			}
-
-			publishedDate := time.Now()
-
-			var urlSource downloadURLs
-			if rawSource.schemaFileURL == "" {
-				if !repoSlug.isSet {
-					return errors.New("repoSlug is required unless schemaFileURL is passed")
-				}
-				urlSource = githubDownloadURLs{
-					repoSlug:     repoSlug.v,
-					providerName: providerName,
-					version:      version,
-					schemaFile:   schemaFile,
-				}
-				// try and get the version release data using the github releases API
-				//
-				// We only attempt to infer the date when schemaFileURL is missing, implying we are
-				// sourcing this from a GH repo.
-				if pd, ok, err := inferPublishDate(repoSlug.v, version); err != nil {
-					return errors.WithMessage(err, "failed to infer publish date")
-				} else if ok {
-					publishedDate = pd
-				}
-			} else {
-				if schemaFile != "" {
-					glog.Warning("schemaFile was ignored - schemaFileURL takes precedence")
-				}
-				urlSource = rawSource
-			}
-
-			mainSpec, err := readRemoteSchemaFile(urlSource.schemaURL(), repoSlug.v.owner)
-			if err != nil {
-				return errors.WithMessage(err, "unable to read remote schema file")
-			}
-
-			// Unify the version passed in (if any) with the version on the schema (if any).
-			switch {
-			// If we don't have any version, then error.
-			case mainSpec.Version == "" && version == "":
-				return fmt.Errorf("No version available for package %s", providerName)
-			// Version has been specified, so use it.
-			//
-			// This can override mainSpec.Version.
-			case version != "":
-				mainSpec.Version = version
-			// Infer the version from the schema.
-			default:
-				contract.Assertf(mainSpec.Version != "", "impossible - version was checked earlier")
-				version = mainSpec.Version
-			}
-
-			// Unify the repo passed in (if any) with the version in the schema (if any).
-			switch {
-			case mainSpec.Repository == "" && !repoSlug.isSet:
-				return fmt.Errorf("No repository available for package %s", providerName)
-			case repoSlug.isSet:
-				mainSpec.Repository = "https://github.com/" + repoSlug.String()
-			default:
-				r, err := url.Parse(mainSpec.Repository)
-				if err != nil {
-					return errors.Wrapf(err, "parsing repo url %q from schema", mainSpec.Repository)
-				}
-
-				if r.Hostname() != "github.com" {
-					return fmt.Errorf("mainSpec.Repository host must be from GH, found %q", r.Hostname())
-				}
-
-				// r.Path starts with a "/", and may end with a "/". For example:
-				//
-				// If the URL is "https://github.com/example/pulumi-example", then the path would be
-				// "/example/pulumi-example". repoSlug.Set expects a slug of the form "{owner}/{repo}",
-				// so we need to strip the leading "/". If there is a trailing "/", we need to strip
-				// that too.
-				if err := repoSlug.Set(strings.Trim(r.Path, "/")); err != nil {
-					return errors.Wrapf(err, "parsing repo slug from %q", mainSpec.Repository)
-				}
-			}
-
-			status := pkg.PackageStatusGA
-			if strings.HasPrefix(version, "v0.") || strings.HasPrefix(version, "0.") {
-				status = pkg.PackageStatusPublicPreview
-			}
-
-			category, err := getPackageCategory(mainSpec, categoryStr)
-			if err != nil {
-				return errors.Wrap(err, "getting category")
-			}
-
-			// If the title was not overridden, then try to determine
-			// the title from the schema.
-			if title == "" {
-				// If the schema for this package does not have the
-				// displayName, then use its package name.
-				if mainSpec.DisplayName == "" {
-					title = mainSpec.Name
-					// Eventually all of Pulumi's own packages will have the displayName
-					// set in their schema but for the time being until they are updated
-					// with that info, let's lookup the proper title from the lookup map.
-					if v, ok := pkg.TitleLookup[mainSpec.Name]; ok {
-						title = v
-					}
-				} else {
-					title = mainSpec.DisplayName
-				}
-			}
-
-			component = component /* CLI flag */ || isComponent(mainSpec.Keywords)
-			native := !component && (mainSpec.Attribution == "" || isNative(mainSpec.Keywords))
-
-			// if there's a publisher then we need to use that immediately if there is no
-			// publisher on cmd, then try and use packageSpec if there's no publisher or
-			// packageSpec publisher, then assume repo owner is the publisher otherwise error
-			var publisherName string
-			switch {
-			case publisher != "" /* CLI flag */ :
-				publisherName = publisher
-			case mainSpec.Publisher != "":
-				publisherName = mainSpec.Publisher
-			default:
-				contract.Assertf(repoSlug.v.owner != "", "repoSlug.owner is non-empty by construction")
-				publisherName = cases.Title(language.Und, cases.NoLower).String(repoSlug.v.owner)
-			}
-
-			pm := pkg.PackageMeta{
-				Name:        mainSpec.Name,
-				Description: mainSpec.Description,
-				LogoURL:     mainSpec.LogoURL,
-				Publisher:   publisherName,
-				Title:       title,
-
-				RepoURL:       mainSpec.Repository,
-				SchemaFileURL: urlSource.schemaURL(),
-				PackageStatus: status,
-				UpdatedOn:     publishedDate.Unix(),
-				Version:       version,
-
-				Category:  category,
-				Component: component,
-				Featured:  isFeaturedPackage(mainSpec.Name),
-				Native:    native,
-			}
-			packageMetaBytes, err := yaml.Marshal(pm)
-			if err != nil {
-				return errors.Wrap(err, "generating package metadata")
-			}
-
-			if err := pkg.EmitFile(metadataDir, mainSpec.Name+".yaml", append([]byte(
-				`# WARNING: this file was generated by resourcedocsgen
-# Do not edit by hand unless you're certain you know what you are doing!
-`), packageMetaBytes...)); err != nil {
-				return errors.Wrap(err, "writing metadata file")
-			}
-
-			if packageDocsDir == "" {
-				// if the user hasn't specified an packageDocsDir, we will default to
-				// the path within the registry folder.
-				packageDocsDir = "themes/default/content/registry/packages/" + mainSpec.Name
-			}
-
-			remoteFiles := []struct {
-				name     string
-				required bool
-				url      string
-			}{
-				{"_index.md", true, urlSource.indexURL()},
-				{"installation-configuration.md", false, urlSource.installationConfigurationURL()},
-			}
-
-			for _, remoteFile := range remoteFiles {
-				if remoteFile.url == "" {
-					if remoteFile.required {
-						return fmt.Errorf("missing URL for required file %q", remoteFile.name)
-					}
-					continue
-				}
-				content, err := readRemoteFile(remoteFile.url, repoSlug.v.owner)
-				if err != nil {
-					return err
-				}
-				if len(content) == 0 {
-					continue
-				}
-
-				// Normalize end of line representation
-				content = bytes.ReplaceAll(content, []byte("\r\n"), []byte("\n"))
-
-				if rest, ok := bytes.CutPrefix(bytes.TrimLeft(content, "\n\t\r "), []byte("---\n")); ok {
-					content = append([]byte(`---
-# WARNING: this file was fetched from `+remoteFile.url+`
-# Do not edit by hand unless you're certain you know what you are doing!
-`), rest...)
-				} else {
-					return fmt.Errorf(`expected file %s to start with YAML front-matter ("---\n"), found leading %q`,
-						remoteFile.url, strings.Split(string(content), "\n")[0])
-				}
-
-				if err := pkg.EmitFile(packageDocsDir, remoteFile.name, content); err != nil {
-					return errors.Wrapf(err, "writing %s file", remoteFile.name)
-				}
-			}
-
-			return nil
-		},
 	}
 
-	cmd.Flags().Var(&repoSlug, "repoSlug", "The repository slug e.g. pulumi/pulumi-provider")
-	cmd.Flags().StringVar(&providerName, "providerName", "", "The name of the provider e.g. aws, aws-native. "+
+	metadataDir := cmd.PersistentFlags().String("metadataDir", "themes/default/data/registry/packages",
+		"The location to save the metadata - this will default to the folder "+
+			"structure that the registry expects (themes/default/data/registry/packages)")
+	packageDocsDir := cmd.PersistentFlags().String("packageDocsDir", "",
+		"The location to save the package docs - this will default to the folder "+
+			"structure that the registry expects (themes/default/content/registry/packages/<provider-name>)")
+
+	cmd.AddCommand(
+		packageMetadataFromGitHubCmd(metadataDir, packageDocsDir),
+		packageMetadataFromURLsCmd(metadataDir, packageDocsDir),
+	)
+
+	return cmd
+}
+
+func packageMetadataFromURLsCmd(metadataDir, packageDocsDir *string) *cobra.Command {
+	cmd := &cobra.Command{
+		Use:          "from-urls <args>",
+		Short:        "Generate package metadata from a Pulumi schema",
+		SilenceUsage: true,
+	}
+
+	// Inputs (required)
+
+	providerName := cmd.Flags().String("providerName", "", "The name of the provider e.g. aws, aws-native. "+
 		"Required when there is no schemaFile flag specified.")
-	cmd.Flags().StringVar(&rawSource.schemaFileURL, "schemaFileURL", "",
+	schemaURL := cmd.Flags().String("schemaFileURL", "",
 		`The URL from which the schema can be retrieved.
 
 schemaFileURL takes precedence over schemaFile.`)
-	cmd.Flags().StringVar(&rawSource.indexFileURL, "indexFileURL", "",
+	indexURL := cmd.Flags().String("indexFileURL", "",
 		`The URL from which the docs/_index.md file can be retrieved.`)
-	cmd.Flags().StringVar(&rawSource.installationConfigurationFileURL, "installationConfigurationFileURL", "",
+
+	contract.AssertNoErrorf(stderrors.Join(
+		cmd.MarkFlagRequired("providerName"),
+		cmd.MarkFlagRequired("schemaFileURL"),
+		cmd.MarkFlagRequired("indexFileURL"),
+	), "impossible")
+
+	// Inputs (optional)
+	installationConfigurationURL := cmd.Flags().String("installationConfigurationFileURL", "",
 		`The URL from which the docs/installation-configuration.md file can be retrieved.`)
+
+	cmd.PreRunE = func(cmd *cobra.Command, args []string) error {
+		var errs []error
+		if *indexURL == "" {
+			errs = append(errs, stderrors.New(`missing URL for required file "_index.md"`))
+		}
+
+		return stderrors.Join(errs...)
+	}
+
+	cmd.RunE = func(cmd *cobra.Command, args []string) error {
+		// Inputs are now cooked, so dereference them.
+		//
+		// They are guaranteed to be non-nil.
+
+		providerName := *providerName
+		schemaURL := *schemaURL
+		indexURL := *indexURL
+		installationConfigurationURL := *installationConfigurationURL
+		metadataDir := *metadataDir
+		packageDocsDir := *packageDocsDir
+
+		// Get the schema.
+
+		mainSpec, err := readRemoteSchemaFile(schemaURL, "")
+		if err != nil {
+			return errors.WithMessage(err, "unable to read remote schema file")
+		}
+
+		err = writePackageMetadata(mainSpec, providerName, schemaURL, metadataDir, time.Now())
+		if err != nil {
+			return err
+		}
+
+		// Write docs files
+
+		if packageDocsDir == "" {
+			// if the user hasn't specified an packageDocsDir, we will default to
+			// the path within the registry folder.
+			packageDocsDir = "themes/default/content/registry/packages/" + mainSpec.Name
+		}
+
+		var errs []error
+		index, err := readDocsFile(indexURL)
+		if err != nil {
+			errs = append(errs, err)
+		} else {
+			errs = append(errs, pkg.EmitFile(packageDocsDir, "_index.md", index))
+		}
+
+		if installationConfigurationURL != "" {
+			installationConfiguration, err := readDocsFile(installationConfigurationURL)
+			if err != nil {
+				errs = append(errs, err)
+			} else {
+				errs = append(errs, pkg.EmitFile(packageDocsDir, "installation-configuration.md", installationConfiguration))
+			}
+		}
+
+		return stderrors.Join(errs...)
+	}
+
+	return cmd
+}
+
+func packageMetadataFromGitHubCmd(metadataDir, packageDocsDir *string) *cobra.Command {
+	cmd := &cobra.Command{
+		Use:          "from-github <args>",
+		Short:        "Generate package metadata from Pulumi schema",
+		SilenceUsage: true,
+	}
+
+	// Inputs (required)
+
+	var repoSlug repoSlug
+	var version string
+	cmd.Flags().Var(&repoSlug, "repoSlug", "The repository slug e.g. pulumi/pulumi-provider")
+	cmd.Flags().StringVar(&version, "version", "", "The version of the package")
+
+	contract.AssertNoErrorf(stderrors.Join(
+		cmd.MarkFlagRequired("repoSlug"),
+		cmd.MarkFlagRequired("version"),
+	), "impossible")
+
+	// Inputs (optional)
+
+	var providerName string
+	var schemaFile string
+	var publisher string
+
+	cmd.Flags().StringVar(&providerName, "providerName", "", "The name of the provider e.g. aws, aws-native. "+
+		"Required when there is no schemaFile flag specified.")
 	cmd.Flags().StringVarP(&schemaFile, "schemaFile", "s", "",
 		"Relative path to the schema.json file from the root of the repository. If no schemaFile is specified,"+
 			" then providerName is required so the schemaFile path can "+
 			"be inferred to be provider/cmd/pulumi-resource-<providerName>/schema.json")
-	cmd.Flags().StringVar(&version, "version", "", "The version of the package")
-	cmd.Flags().StringVar(&categoryStr, "category", "", fmt.Sprintf("The category for the package. Value must "+
-		"match one of the keys in the map: %v", pkg.CategoryNameMap))
 	cmd.Flags().StringVar(&publisher, "publisher", "", "The publisher's display name to be shown in the package. "+
 		"This will default to Pulumi")
-	cmd.Flags().StringVar(&title, "title", "",
-		"The display name of the package. If omitted, the name of the package will be used")
-	cmd.Flags().BoolVar(&component, "component", false,
-		"Whether or not this package is a component and not a provider")
-	cmd.Flags().StringVar(&metadataDir, "metadataDir", "themes/default/data/registry/packages",
-		"The location to save the metadata - this will default to the folder "+
-			"structure that the registry expects (themes/default/data/registry/packages)")
-	cmd.Flags().StringVar(&packageDocsDir, "packageDocsDir", "",
-		"The location to save the package docs - this will default to the folder "+
-			"structure that the registry expects (themes/default/content/registry/packages)")
+
+	// Apply complex defaults
+	cmd.PreRun = func(cmd *cobra.Command, args []string) {
+		if providerName == "" {
+			providerName = strings.Replace(repoSlug.name, "pulumi-", "", -1)
+		}
+		if schemaFile == "" {
+			schemaFile = fmt.Sprintf("provider/cmd/pulumi-resource-%s/schema.json", providerName)
+		}
+	}
+
+	cmd.RunE = func(cmd *cobra.Command, args []string) error {
+		metadataDir := *metadataDir
+		packageDocsDir := *packageDocsDir
+
+		publishedDate := time.Now()
+		// try and get the version release data using the github releases API
+		if pd, ok, err := inferPublishDate(repoSlug, version); err != nil {
+			return errors.WithMessage(err, "failed to infer publish date")
+		} else if ok {
+			publishedDate = pd
+		}
+
+		// we should be able to take the repo URL + the version + the schema url and
+		// construct a file that we can download and read
+		schemaURL := fmt.Sprintf("https://raw.githubusercontent.com/%s/%s/%s",
+			repoSlug, version, schemaFile)
+
+		mainSpec, err := readRemoteSchemaFile(schemaURL, repoSlug.owner)
+		if err != nil {
+			return errors.WithMessage(err, "unable to read remote schema file")
+		}
+
+		contract.Assertf(version != "", "version is a required field")
+		mainSpec.Version = version
+
+		mainSpec.Repository = "https://github.com/" + repoSlug.String()
+
+		// If the schema for this package does not have the displayName, and it
+		// does have a pre-baked title, use that title.
+		if mainSpec.DisplayName == "" {
+			// Eventually all of Pulumi's own packages will have the displayName
+			// set in their schema but for the time being until they are updated
+			// with that info, let's lookup the proper title from the lookup map.
+			mainSpec.DisplayName = pkg.TitleLookup[mainSpec.Name]
+		}
+
+		// Apply the publisher CLI option to the schema, if specified.
+		if publisher != "" {
+			mainSpec.Publisher = publisher
+		}
+
+		err = writePackageMetadata(mainSpec, providerName, schemaURL, metadataDir, publishedDate)
+		if err != nil {
+			return errors.Wrap(err, "generating package metadata")
+		}
+
+		if packageDocsDir == "" {
+			// if the user hasn't specified an packageDocsDir, we will default to
+			// the path within the registry folder.
+			packageDocsDir = "themes/default/content/registry/packages/" + mainSpec.Name
+		}
+
+		remoteFiles := []struct {
+			name     string
+			required bool
+		}{
+			{"_index.md", true},
+			{"installation-configuration.md", false},
+		}
+
+		for _, remoteFile := range remoteFiles {
+			url := "https://raw.githubusercontent.com/" + repoSlug.String() + "/" + mainSpec.Version + "/docs/" + remoteFile.name
+			content, err := readRemoteFile(url, repoSlug.owner)
+			if err != nil {
+				return err
+			}
+			if len(content) == 0 {
+				continue
+			}
+
+			// Normalize end of line representation
+			content = bytes.ReplaceAll(content, []byte("\r\n"), []byte("\n"))
+
+			if rest, ok := bytes.CutPrefix(bytes.TrimLeft(content, "\n\t\r "), []byte("---\n")); ok {
+				content = append([]byte(`---
+# WARNING: this file was fetched from `+url+`
+# Do not edit by hand unless you're certain you know what you are doing!
+`), rest...)
+			} else {
+				return fmt.Errorf(`expected file %s to start with YAML front-matter ("---\n"), found leading %q`,
+					url, strings.Split(string(content), "\n")[0])
+			}
+
+			if err := pkg.EmitFile(packageDocsDir, remoteFile.name, content); err != nil {
+				return errors.Wrapf(err, "writing %s file", remoteFile.name)
+			}
+		}
+
+		return nil
+	}
 
 	return cmd
+}
+
+func writePackageMetadata(
+	spec *schema.PackageSpec, providerName, schemaURL, metadataDir string, updatedOn time.Time,
+) error {
+	// Validate the schema for usage.
+
+	var validationErrors []error
+
+	if spec.Name != providerName {
+		validationErrors = append(validationErrors, fmt.Errorf(
+			"--providerName doesn't match the schema name: %q != %q", providerName, spec.Name))
+	}
+
+	if spec.Version == "" {
+		validationErrors = append(validationErrors, fmt.Errorf("schema for %q has no version", spec.Name))
+	}
+
+	category, err := getPackageCategory(spec)
+	if err != nil {
+		validationErrors = append(validationErrors, errors.Wrap(err, "getting category"))
+	}
+
+	if spec.Publisher == "" {
+		validationErrors = append(validationErrors, stderrors.New("Publisher is a required field on the schema"))
+	}
+
+	// Check if the schema failed to validate.
+	if err := stderrors.Join(validationErrors...); err != nil {
+		return err
+	}
+
+	// The schema is now considered *valid* to publish.
+
+	title := spec.Name
+	if spec.DisplayName != "" {
+		title = spec.DisplayName
+	}
+
+	component := isComponent(spec.Keywords)
+	native := !component && (spec.Attribution == "" || isNative(spec.Keywords))
+	return emitPackageMetadata(pkg.PackageMeta{
+		Name:        spec.Name,
+		Description: spec.Description,
+		LogoURL:     spec.LogoURL,
+		Publisher:   spec.Publisher,
+		Title:       title,
+
+		RepoURL:       spec.Repository,
+		SchemaFileURL: schemaURL,
+		PackageStatus: getPackageStatus(spec.Version),
+		UpdatedOn:     updatedOn.Unix(),
+		Version:       spec.Version,
+
+		Category:  category,
+		Component: component,
+		Featured:  isFeaturedPackage(spec.Name),
+		Native:    native,
+	}, metadataDir)
 }
 
 func readRemoteFile(url, repoOwner string) ([]byte, error) {
@@ -331,19 +380,11 @@ func readRemoteFile(url, repoOwner string) ([]byte, error) {
 	return contents, nil
 }
 
-func getPackageCategory(mainSpec *pschema.PackageSpec, categoryOverrideStr string) (pkg.PackageCategory, error) {
+func getPackageCategory(mainSpec *pschema.PackageSpec) (pkg.PackageCategory, error) {
 	var category pkg.PackageCategory
 	var err error
 
-	// If a category override was passed-in, use that instead of what's in the schema.
-	if categoryOverrideStr != "" {
-		glog.V(2).Infof("Using category override name %s\n", categoryOverrideStr)
-		n, ok := pkg.CategoryNameMap[categoryOverrideStr]
-		if !ok {
-			return "", fmt.Errorf("invalid override for category name %s", categoryOverrideStr)
-		}
-		category = n
-	} else if c, ok := pkg.CategoryLookup[mainSpec.Name]; ok {
+	if c, ok := pkg.CategoryLookup[mainSpec.Name]; ok {
 		glog.V(2).Infoln("Using the category for this package from the lookup map")
 		// TODO: This condition can be removed when all packages under the `pulumi` org
 		// have a proper category tag in their schema.
@@ -441,27 +482,6 @@ func getGitHubTags(repoSlug string) ([]pkg.GitHubTag, error) {
 	return tags, nil
 }
 
-// optional makes a pflag.Value optional
-type optional[V any, T interface {
-	*V
-	pflag.Value
-}] struct {
-	v     V
-	isSet bool
-}
-
-func (s *optional[U, T]) String() string { return T(&s.v).String() }
-
-func (s *optional[U, T]) Set(input string) error {
-	if input == "" {
-		return nil
-	}
-	s.isSet = true
-	return T(&s.v).Set(input)
-}
-
-func (s *optional[U, T]) Type() string { return T(&s.v).Type() }
-
 type repoSlug struct{ name, owner string }
 
 func (s repoSlug) String() string { return s.owner + "/" + s.name }
@@ -557,4 +577,46 @@ func inferPublishDate(repo repoSlug, version string) (time.Time, bool, error) {
 	}
 
 	return commit.Commit.Author.Date, true, nil
+}
+
+func readDocsFile(url string) ([]byte, error) {
+	content, err := readRemoteFile(url, "")
+	if err != nil {
+		return nil, err
+	}
+
+	// Normalize end of line representation
+	content = bytes.ReplaceAll(content, []byte("\r\n"), []byte("\n"))
+
+	rest, ok := bytes.CutPrefix(bytes.TrimLeft(content, "\n\t\r "), []byte("---\n"))
+	if !ok {
+		return nil, fmt.Errorf(`expected file %s to start with YAML front-matter ("---\n"), found leading %q`,
+			url, strings.Split(string(content), "\n")[0])
+	}
+	return append([]byte(`---
+# WARNING: this file was fetched from `+url+`
+# Do not edit by hand unless you're certain you know what you are doing!
+`), rest...), nil
+}
+
+func emitPackageMetadata(pm pkg.PackageMeta, metadataDir string) error {
+	packageMetaBytes, err := yaml.Marshal(pm)
+	if err != nil {
+		return errors.Wrap(err, "generating package metadata")
+	}
+
+	if err := pkg.EmitFile(metadataDir, pm.Name+".yaml", append([]byte(
+		`# WARNING: this file was generated by resourcedocsgen
+# Do not edit by hand unless you're certain you know what you are doing!
+`), packageMetaBytes...)); err != nil {
+		return errors.Wrap(err, "writing metadata file")
+	}
+	return nil
+}
+
+func getPackageStatus(version string) pkg.PackageStatus {
+	if strings.HasPrefix(version, "v0.") || strings.HasPrefix(version, "0.") {
+		return pkg.PackageStatusPublicPreview
+	}
+	return pkg.PackageStatusGA
 }

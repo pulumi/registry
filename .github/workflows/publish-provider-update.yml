@@ -61,7 +61,7 @@ jobs:
         run: go build -C tools/resourcedocsgen
       - name: Generate Package Metadata
         run: >-
-          ./tools/resourcedocsgen/resourcedocsgen metadata
+          ./tools/resourcedocsgen/resourcedocsgen metadata from-github
           --providerName=${{ env.PROVIDER_SHORT_NAME }}
           --repoSlug pulumi/pulumi-${{ env.PROVIDER_SHORT_NAME }}
           --schemaFile="${{ env.PROVIDER_SCHEMA_PATH }}"
@@ -101,7 +101,7 @@ jobs:
         run: go build -C tools/resourcedocsgen
       - name: Generate Package Metadata
         run: >-
-          ./tools/resourcedocsgen/resourcedocsgen metadata
+          ./tools/resourcedocsgen/resourcedocsgen metadata from-urls
           --providerName  "${{ env.PROVIDER_SHORT_NAME }}"
           --schemaFileURL "${{ env.PROVIDER_SCHEMA_URL }}"
           --indexFileURL  "${{ env.PROVIDER_INDEX_URL  }}"

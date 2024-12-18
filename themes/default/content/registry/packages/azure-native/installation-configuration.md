@@ -297,14 +297,11 @@ as shown above except use `clientCertPath`/`ARM_CLIENT_CERTIFICATE_PATH` instead
 
 ### Authenticate using Managed Service Identity (MSI)
 
-MSI is [configured in Azure](https://learn.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/overview).
+MSI is [configured in Azure](https://learn.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/overview). Once that's done, tell the provider to use it by setting the `useMsi` config or the `ARM_USE_MSI` environment variable to `true`.
 
 When using a system-assigned identity, or when using a user-assigned identity _and there's only a single one_, you don't need to do anything else. The provider will automatically use the identity.
 
 When one or more resources in your program have multiple user-assigned identities, you need to set the `clientId` config or the `ARM_CLIENT_ID` environment variable to the client ID of the identity you want to use.
-
-You can also configure a custom MSI endpoint, although this is not generally required. Do so via the `msiEndpoint`
-configuration or the `ARM_MSI_ENDPOINT` environment variable.
 
 ## Configuration options
 

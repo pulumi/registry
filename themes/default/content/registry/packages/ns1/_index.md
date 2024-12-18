@@ -1,13 +1,14 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-ns1/v3.4.6/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-ns1/v3.5.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+# *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Ns1 Provider
 meta_desc: Provides an overview on how to configure the Pulumi Ns1 provider.
 layout: package
 ---
 ## Installation
 
-The ns1 provider is available as a package in all Pulumi languages:
+The Ns1 provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/ns1`](https://www.npmjs.com/package/@pulumi/ns1)
 * Python: [`pulumi-ns1`](https://pypi.org/project/pulumi-ns1/)

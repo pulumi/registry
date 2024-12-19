@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/ovh/pulumi-ovh/v1.1.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/ovh/pulumi-ovh/v1.2.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: OVH
 meta_desc: Provides an overview of the OVH Provider for Pulumi.
@@ -60,7 +60,7 @@ pulumi.export("version", my_kube_cluster.version)
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
 
-import * as ovh from "@ovh-devrelteam/pulumi-ovh"
+import * as ovh from "@ovhcloud/pulumi-ovh"
 
 let config = new pulumi.Config();
 let serviceName = config.require("serviceName")

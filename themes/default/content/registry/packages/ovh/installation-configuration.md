@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/ovh/pulumi-ovh/v1.1.0/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/ovh/pulumi-ovh/v1.2.0/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: OVH Installation & Configuration
 meta_desc: Information on how to install the OVH provider.
@@ -14,7 +14,7 @@ Note that the [lbrlabs Pulumi OVH provider](https://github.com/lbrlabs/pulumi-ov
 
 The Pulumi `OVH` provider is available as a package in all Pulumi languages:
 
-* JavaScript/TypeScript: [`@ovh-devrelteam/pulumi-ovh`](https://www.npmjs.com/package/@ovh-devrelteam/pulumi-ovh)
+* JavaScript/TypeScript: [`@ovhcloud/pulumi-ovh`](https://www.npmjs.com/package/@ovhcloud/pulumi-ovh)
 * Python: [`pulumi_ovh`](https://pypi.org/project/pulumi-ovh/)
 * Go: [`github.com/ovh/pulumi-ovh/sdk/go/ovh`](https://pkg.go.dev/github.com/ovh/pulumi-ovh/sdk)
 * .NET: [`Pulumi.Ovh`](https://www.nuget.org/packages/Pulumi.Ovh)

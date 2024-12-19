@@ -359,6 +359,10 @@
     {
       "repoSlug": "komminarlabs/pulumi-cratedb",
       "schemaFile": "provider/cmd/pulumi-resource-cratedb/schema.json"
+    },
+    {
+      "repoSlug": "kislerdm/pulumi-neon",
+      "schemaFile": "schema.json"
     }
   ]
 }

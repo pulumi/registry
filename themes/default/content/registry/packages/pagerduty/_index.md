@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-pagerduty/v4.17.1/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-pagerduty/v4.17.2/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Pagerduty Provider
@@ -8,7 +8,7 @@ layout: package
 ---
 ## Installation
 
-The pagerduty provider is available as a package in all Pulumi languages:
+The Pagerduty provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/pagerduty`](https://www.npmjs.com/package/@pulumi/pagerduty)
 * Python: [`pulumi-pagerduty`](https://pypi.org/project/pulumi-pagerduty/)

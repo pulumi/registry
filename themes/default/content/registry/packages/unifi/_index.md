@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-unifi/v0.1.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-unifi/v0.1.1/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: Unifi
 meta_desc: Provides an overview of the Unifi Provider for Pulumi.

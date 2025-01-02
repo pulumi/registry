@@ -1,13 +1,14 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-libvirt/v0.5.3/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-libvirt/v0.5.4/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+# *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Libvirt Provider
 meta_desc: Provides an overview on how to configure the Pulumi Libvirt provider.
 layout: package
 ---
 ## Installation
 
-The libvirt provider is available as a package in all Pulumi languages:
+The Libvirt provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/libvirt`](https://www.npmjs.com/package/@pulumi/libvirt)
 * Python: [`pulumi-libvirt`](https://pypi.org/project/pulumi-libvirt/)

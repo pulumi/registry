@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-github/v6.4.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-github/v6.5.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Github Provider
@@ -8,7 +8,7 @@ layout: package
 ---
 ## Installation
 
-The github provider is available as a package in all Pulumi languages:
+The Github provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/github`](https://www.npmjs.com/package/@pulumi/github)
 * Python: [`pulumi-github`](https://pypi.org/project/pulumi-github/)

@@ -1,13 +1,14 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-wavefront/v3.1.6/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-wavefront/v3.1.7/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+# *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Wavefront Provider
 meta_desc: Provides an overview on how to configure the Pulumi Wavefront provider.
 layout: package
 ---
 ## Installation
 
-The wavefront provider is available as a package in all Pulumi languages:
+The Wavefront provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/wavefront`](https://www.npmjs.com/package/@pulumi/wavefront)
 * Python: [`pulumi-wavefront`](https://pypi.org/project/pulumi-wavefront/)

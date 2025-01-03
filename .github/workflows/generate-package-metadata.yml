@@ -68,14 +68,17 @@ jobs:
       - name: Display new version
         if: env.PROVIDER_VERSION
         run: echo ${{ env.PROVIDER_VERSION}}
+      - name: Build resourcedocsgen
+        if: env.PROVIDER_VERSION
+        run: go build -C tools/resourcedocsgen
       # We only need to run the following steps if resourcedocsgen found a newer version of the community provider.
       - name: Generate Package Metadata
         if: env.PROVIDER_VERSION
-        run: |
-          go build -C tools/resourcedocsgen
-          ./tools/resourcedocsgen/resourcedocsgen \
-          metadata --repoSlug ${{ matrix.repoSlug }} --schemaFile ${{ matrix.schemaFile }} \
-          --version ${{ env.PROVIDER_VERSION }} 
+        run: >-
+          ./tools/resourcedocsgen/resourcedocsgen metadata from-github
+          --repoSlug   "${{ matrix.repoSlug      }}"
+          --schemaFile "${{ matrix.schemaFile    }}"
+          --version    "${{ env.PROVIDER_VERSION }}"
       - name: Create registry PR
         if: env.PROVIDER_VERSION
         uses: ./.github/actions/new-provider-version-pr

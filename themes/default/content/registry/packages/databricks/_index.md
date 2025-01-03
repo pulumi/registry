@@ -1,11 +1,12 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-databricks/v1.56.2/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-databricks/v1.57.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Databricks Provider
 meta_desc: Provides an overview on how to configure the Pulumi Databricks provider.
 layout: package
 ---
+
 ## Installation
 
 The Databricks provider is available as a package in all Pulumi languages:
@@ -15,6 +16,7 @@ The Databricks provider is available as a package in all Pulumi languages:
 * Go: [`github.com/pulumi/pulumi-databricks/sdk/go/databricks`](https://github.com/pulumi/pulumi-databricks)
 * .NET: [`Pulumi.Databricks`](https://www.nuget.org/packages/Pulumi.Databricks)
 * Java: [`com.pulumi/databricks`](https://central.sonatype.com/artifact/com.pulumi/databricks)
+
 ## Overview
 
 Use the Databricks Pulumi provider to interact with almost all of [Databricks](http://databricks.com/) resources.
@@ -658,7 +660,7 @@ The provider configuration supports the following arguments:
 * `configFile` - (optional) Location of the Databricks CLI credentials file created by `databricks configure --token` command (~/.databrickscfg by default). Check [Databricks CLI documentation](https://docs.databricks.com/dev-tools/cli/index.html#set-up-authentication) for more details. The provider uses configuration file credentials when you don't specify host/token/azure attributes. Alternatively, you can provide this value as an environment variable `DATABRICKS_CONFIG_FILE`. This field defaults to `~/.databrickscfg`.
 * `profile` - (optional) Connection profile specified within ~/.databrickscfg. Please check [connection profiles section](https://docs.databricks.com/dev-tools/cli/index.html#connection-profiles) for more details. This field defaults to
   `DEFAULT`.
-* `accountId` - (optional for workspace-level operations, but required for account-level) Account Id that could be found in the top right corner of [Accounts Console](https://accounts.cloud.databricks.com/). Alternatively, you can provide this value as an environment variable `DATABRICKS_ACCOUNT_ID`. Only has effect when `host = "https://accounts.cloud.databricks.com/"`, and is currently used to provision account admins via databricks_user. In the future releases of the provider this property will also be used specify account for `databricks_mws_*` resources as well.
+* `accountId` - (required for account-level operations) Account ID found in the top right corner of [Accounts Console](https://accounts.cloud.databricks.com/). Alternatively, you can provide this value as an environment variable `DATABRICKS_ACCOUNT_ID`. Only has effect when `host = "https://accounts.cloud.databricks.com/"`, and is currently used to provision account admins via databricks_user. **Note:  do NOT use in the workspace-level provider to avoid `...invalid Databricks Account configuration` errors**.
 * `authType` - (optional) enforce specific auth type to be used in very rare cases, where a single Pulumi state manages Databricks workspaces on more than one cloud and `more than one authorization method configured` error is a false positive. Valid values are `pat`, `basic`, `oauth-m2m`, `azure-client-secret`, `azure-msi`, `azure-cli`, `github-oidc-azure`, `google-credentials`, and `google-id`.
 ## Special configurations for Azure
 

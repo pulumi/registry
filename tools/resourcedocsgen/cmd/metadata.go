@@ -25,6 +25,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/blang/semver"
 	"github.com/ghodss/yaml"
 	"github.com/golang/glog"
 	"github.com/pkg/errors"
@@ -72,15 +73,12 @@ func packageMetadataFromURLsCmd(metadataDir, packageDocsDir *string) *cobra.Comm
 		SilenceUsage: true,
 	}
 
-	// Inputs (required)
+	// Required Flags
 
 	providerName := cmd.Flags().String("providerName", "", "The name of the provider e.g. aws, aws-native. "+
 		"Required when there is no schemaFile flag specified.")
-	schemaURL := cmd.Flags().String("schemaFileURL", "",
-		`The URL from which the schema can be retrieved.
-
-schemaFileURL takes precedence over schemaFile.`)
-	indexURL := cmd.Flags().String("indexFileURL", "",
+	schemaFileURL := cmd.Flags().String("schemaFileURL", "", `The URL from which the schema can be retrieved.`)
+	indexFileURL := cmd.Flags().String("indexFileURL", "",
 		`The URL from which the docs/_index.md file can be retrieved.`)
 
 	contract.AssertNoErrorf(stderrors.Join(
@@ -89,13 +87,13 @@ schemaFileURL takes precedence over schemaFile.`)
 		cmd.MarkFlagRequired("indexFileURL"),
 	), "impossible")
 
-	// Inputs (optional)
+	// Optional Flags
 	installationConfigurationURL := cmd.Flags().String("installationConfigurationFileURL", "",
 		`The URL from which the docs/installation-configuration.md file can be retrieved.`)
 
 	cmd.PreRunE = func(cmd *cobra.Command, args []string) error {
 		var errs []error
-		if *indexURL == "" {
+		if *indexFileURL == "" {
 			errs = append(errs, stderrors.New(`missing URL for required file "_index.md"`))
 		}
 
@@ -103,25 +101,26 @@ schemaFileURL takes precedence over schemaFile.`)
 	}
 
 	cmd.RunE = func(cmd *cobra.Command, args []string) error {
-		// Inputs are now cooked, so dereference them.
+		// By the time this function runs, input *string values have been set by
+		// cobra.
 		//
 		// They are guaranteed to be non-nil.
 
 		providerName := *providerName
-		schemaURL := *schemaURL
-		indexURL := *indexURL
+		schemaFileURL := *schemaFileURL
+		indexFileURL := *indexFileURL
 		installationConfigurationURL := *installationConfigurationURL
 		metadataDir := *metadataDir
 		packageDocsDir := *packageDocsDir
 
 		// Get the schema.
 
-		mainSpec, err := readRemoteSchemaFile(schemaURL, "")
+		mainSpec, err := readRemoteSchemaFile(schemaFileURL, "")
 		if err != nil {
 			return errors.WithMessage(err, "unable to read remote schema file")
 		}
 
-		err = writePackageMetadata(mainSpec, providerName, schemaURL, metadataDir, time.Now())
+		err = writePackageMetadata(mainSpec, providerName, schemaFileURL, metadataDir, time.Now())
 		if err != nil {
 			return err
 		}
@@ -129,13 +128,13 @@ schemaFileURL takes precedence over schemaFile.`)
 		// Write docs files
 
 		if packageDocsDir == "" {
-			// if the user hasn't specified an packageDocsDir, we will default to
-			// the path within the registry folder.
+			// if the user hasn't specified a packageDocsDir, we will default
+			// to the path within the registry folder.
 			packageDocsDir = "themes/default/content/registry/packages/" + mainSpec.Name
 		}
 
 		var errs []error
-		index, err := readDocsFile(indexURL)
+		index, err := readDocsFile(indexFileURL)
 		if err != nil {
 			errs = append(errs, err)
 		} else {
@@ -164,7 +163,7 @@ func packageMetadataFromGitHubCmd(metadataDir, packageDocsDir *string) *cobra.Co
 		SilenceUsage: true,
 	}
 
-	// Inputs (required)
+	// Required Flags
 
 	var repoSlug repoSlug
 	var version string
@@ -176,7 +175,7 @@ func packageMetadataFromGitHubCmd(metadataDir, packageDocsDir *string) *cobra.Co
 		cmd.MarkFlagRequired("version"),
 	), "impossible")
 
-	// Inputs (optional)
+	// Optional Flags
 
 	var providerName string
 	var schemaFile string
@@ -191,7 +190,7 @@ func packageMetadataFromGitHubCmd(metadataDir, packageDocsDir *string) *cobra.Co
 	cmd.Flags().StringVar(&publisher, "publisher", "", "The publisher's display name to be shown in the package. "+
 		"This will default to Pulumi")
 
-	// Apply complex defaults
+	// Apply default values that depend on other inputs.
 	cmd.PreRun = func(cmd *cobra.Command, args []string) {
 		if providerName == "" {
 			providerName = strings.Replace(repoSlug.name, "pulumi-", "", -1)
@@ -231,9 +230,10 @@ func packageMetadataFromGitHubCmd(metadataDir, packageDocsDir *string) *cobra.Co
 		// If the schema for this package does not have the displayName, and it
 		// does have a pre-baked title, use that title.
 		if mainSpec.DisplayName == "" {
-			// Eventually all of Pulumi's own packages will have the displayName
-			// set in their schema but for the time being until they are updated
-			// with that info, let's lookup the proper title from the lookup map.
+			// Eventually all of Pulumi's own packages should have the
+			// displayName set in their schema but for the time being until
+			// they are updated with that info, let's lookup the proper title
+			// from the lookup map.
 			mainSpec.DisplayName = pkg.TitleLookup[mainSpec.Name]
 		}
 
@@ -248,7 +248,7 @@ func packageMetadataFromGitHubCmd(metadataDir, packageDocsDir *string) *cobra.Co
 		}
 
 		if packageDocsDir == "" {
-			// if the user hasn't specified an packageDocsDir, we will default to
+			// if the user hasn't specified a packageDocsDir, we will default to
 			// the path within the registry folder.
 			packageDocsDir = "themes/default/content/registry/packages/" + mainSpec.Name
 		}
@@ -299,6 +299,12 @@ func writePackageMetadata(
 	spec *schema.PackageSpec, providerName, schemaURL, metadataDir string, updatedOn time.Time,
 ) error {
 	// Validate the schema for usage.
+	//
+	// A schema is valid if:
+	// - spec.Name is non-empty (and it matches providerName)
+	// - spec.Version is non-empty, and valid semver
+	// - spec.Keywords is valid
+	// - spec.Publisher is non-empty
 
 	var validationErrors []error
 
@@ -306,9 +312,12 @@ func writePackageMetadata(
 		validationErrors = append(validationErrors, fmt.Errorf(
 			"--providerName doesn't match the schema name: %q != %q", providerName, spec.Name))
 	}
+	contract.Assertf(providerName != "", "providerName is required, and should never be empty")
 
 	if spec.Version == "" {
 		validationErrors = append(validationErrors, fmt.Errorf("schema for %q has no version", spec.Name))
+	} else if _, err := semver.Parse(strings.TrimPrefix(spec.Version, "v")); err != nil {
+		validationErrors = append(validationErrors, fmt.Errorf("Version %q is not valid semver: %w", spec.Version, err))
 	}
 
 	category, err := getPackageCategory(spec)
@@ -579,6 +588,9 @@ func inferPublishDate(repo repoSlug, version string) (time.Time, bool, error) {
 	return commit.Commit.Author.Date, true, nil
 }
 
+// readDocsFile is a specialized version of [readRemoteFile] for docs files.
+//
+// Docs files are expected to be markdown and have a YAML frontmatter.
 func readDocsFile(url string) ([]byte, error) {
 	content, err := readRemoteFile(url, "")
 	if err != nil {

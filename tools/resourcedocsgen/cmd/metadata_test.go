@@ -16,8 +16,11 @@ package cmd
 
 import (
 	"bytes"
+	"encoding/json"
 	"net/http"
 	"net/http/httptest"
+	"os"
+	"path/filepath"
 	"testing"
 
 	"github.com/blang/semver"
@@ -31,6 +34,7 @@ func TestMetadataBridgedProvider(t *testing.T) {
 	t.Parallel()
 	testMetadata(t, testMetadataArgs{
 		repoSlug:   "pulumi/pulumi-random",
+		publisher:  "Pulumi",
 		version:    "v4.16.7",
 		schemaFile: "provider/cmd/pulumi-resource-random/schema.json",
 	})
@@ -53,17 +57,42 @@ func TestMetadataNativeProvider(t *testing.T) {
 
 	t.Run("test-remote-equivalence", func(t *testing.T) {
 		t.Parallel()
+
+		server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			switch r.URL.Path {
+			case "/schema.json":
+				b, err := os.ReadFile("./testdata/command-v1.0.0.json")
+				require.NoError(t, err)
+				var schema schema.PackageSpec
+				require.NoError(t, json.Unmarshal(b, &schema))
+				schema.Version = "v1.0.0"
+				bytes, err := json.Marshal(schema)
+				require.NoError(t, err)
+				_, err = w.Write(bytes)
+				require.NoError(t, err)
+			// We need to serve a docs file, since from-url based commands require a doc file.
+			case "/docs/_index.md":
+				_, err := w.Write([]byte(`---
+---`))
+				require.NoError(t, err)
+			default:
+				require.Fail(t, "Unknown URL path %q", r.URL.Path)
+			}
+		}))
+		defer server.Close()
+
 		testMetadata(t, testMetadataArgs{
-			repoSlug: "pulumi/pulumi-command",
-			version:  "v1.0.0",
-			schemaFileURL: "https://raw.githubusercontent.com/pulumi/pulumi-command/" +
-				"v1.0.0/provider/cmd/pulumi-resource-command/schema.json",
-			indexFileURL: "https://raw.githubusercontent.com/pulumi/pulumi-command/" +
-				"v1.0.0/docs/_index.md",
+			providerName:  "command",
+			schemaFileURL: server.URL + "/schema.json",
+			indexFileURL:  server.URL + "/docs/_index.md",
 			assert: func(t *testing.T, metadata, pacakgeDocs string) {
+				require.NoError(t, os.Remove(filepath.Join(pacakgeDocs, "_index.md")))
 				util.AssertDirsEqual(t, metadataDir, metadata,
 					// We fix the time stamp, since we expect URL based lookups to have stable time stamps.
-					util.AssertOptionsPreCompareTransform("updated_on: [0-9]+", "updated_on: 1719590084"))
+					util.AssertOptionsPreCompareTransform("updated_on: -?[0-9]{5,}", "updated_on: *********"),
+					//nolint:lll
+					util.AssertOptionsPreCompareTransform("https://raw.githubusercontent.com/pulumi/pulumi-command/v1.0.0/provider/cmd/pulumi-resource-command", server.URL),
+				)
 				util.AssertDirsEqual(t, pacakgeDocsDir, pacakgeDocs)
 			},
 		})
@@ -79,6 +108,7 @@ func TestRepoURLFromRemoteSchema(t *testing.T) {
 				Name:       "test",
 				Version:    ref(semver.MustParse("1.0.0")),
 				Repository: "https://github.com/pulumi/pulumi-test",
+				Publisher:  "Some Publisher",
 				Provider:   &schema.Resource{},
 			}
 			bytes, err := schema.MarshalJSON()
@@ -99,6 +129,7 @@ layout: package
 	}))
 	defer server.Close()
 	testMetadata(t, testMetadataArgs{
+		providerName:  "test",
 		schemaFileURL: server.URL + "/schema.json",
 		indexFileURL:  server.URL + "/docs/_index.md",
 		assertOptions: []util.AssertOption{
@@ -137,6 +168,7 @@ layout: package
 	}))
 	defer server.Close()
 	testMetadata(t, testMetadataArgs{
+		providerName:  "test",
 		schemaFileURL: server.URL + "/schema.json",
 		indexFileURL:  server.URL + "/docs/_index.md",
 		assertOptions: []util.AssertOption{
@@ -168,6 +200,7 @@ func TestMissingAllDocsFiles(t *testing.T) {
 	}))
 	defer server.Close()
 	testMetadata(t, testMetadataArgs{
+		providerName:  "test",
 		schemaFileURL: server.URL + "/schema.json",
 		errorContains: `missing URL for required file "_index.md"`,
 	})
@@ -183,21 +216,12 @@ func TestMetadataComponentProvider(t *testing.T) {
 }
 
 type testMetadataArgs struct {
-	repoSlug, version           string
-	schemaFile                  string
-	schemaFileURL, indexFileURL string
-
-	// assert is a custom assert on a successfully run.
-	//
-	// If no assert is provided, then [defaultAssert] is used.
-	assert func(t *testing.T, metadataDir, pacakgeDocsDir string)
-	// Options to give to [defaultAssert].
-	//
-	// Cannot be provided with assert, since assert overrides the default assert.
-	assertOptions []util.AssertOption
-
-	// Assert that the command fails, and that the error contains errorContains.
-	errorContains string
+	providerName                             string // shared args
+	repoSlug, version, schemaFile, publisher string // from-github args
+	schemaFileURL, indexFileURL              string // from-url args
+	assert                                   func(t *testing.T, metadataDir, pacakgeDocsDir string)
+	assertOptions                            []util.AssertOption
+	errorContains                            string
 }
 
 func defaultAssert(t *testing.T, metadataDir, pacakgeDocsDir string, opts ...util.AssertOption) {
@@ -206,18 +230,38 @@ func defaultAssert(t *testing.T, metadataDir, pacakgeDocsDir string, opts ...uti
 }
 
 func testMetadata(t *testing.T, args testMetadataArgs) {
+	t.Helper()
 	cmd := PackageMetadataCmd()
 	metadataDir := t.TempDir()
 	pacakgeDocsDir := t.TempDir()
-	cmd.SetArgs([]string{
-		"--repoSlug", args.repoSlug,
-		"--schemaFile", args.schemaFile,
-		"--schemaFileURL", args.schemaFileURL,
-		"--indexFileURL", args.indexFileURL,
-		"--version", args.version,
+
+	var cliArgs []string
+	if args.schemaFileURL != "" || args.indexFileURL != "" {
+		assert.Empty(t, args.repoSlug)
+		assert.Empty(t, args.schemaFile)
+		assert.Empty(t, args.version)
+		cliArgs = []string{
+			"from-urls",
+			"--schemaFileURL", args.schemaFileURL,
+			"--indexFileURL", args.indexFileURL,
+		}
+	} else {
+		assert.Empty(t, args.schemaFileURL)
+		assert.Empty(t, args.indexFileURL)
+		cliArgs = []string{
+			"from-github",
+			"--repoSlug", args.repoSlug,
+			"--schemaFile", args.schemaFile,
+			"--version", args.version,
+			"--publisher", args.publisher,
+		}
+	}
+
+	cmd.SetArgs(append(cliArgs,
+		"--providerName", args.providerName,
 		"--metadataDir", metadataDir,
 		"--packageDocsDir", pacakgeDocsDir,
-	})
+	))
 
 	// Capture output into the test
 	var stdout bytes.Buffer

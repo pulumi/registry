@@ -1,14 +1,14 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-dbtcloud/v0.1.25/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-dbtcloud/v0.1.26/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
-title: Dbtcloud Provider
-meta_desc: Provides an overview on how to configure the Pulumi Dbtcloud provider.
+title: dbt Cloud Provider
+meta_desc: Provides an overview on how to configure the Pulumi dbt Cloud provider.
 layout: package
 ---
 ## Installation
 
-The dbtcloud provider is available as a package in all Pulumi languages:
+The dbt Cloud provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/dbtcloud`](https://www.npmjs.com/package/@pulumi/dbtcloud)
 * Python: [`pulumi-dbtcloud`](https://pypi.org/project/pulumi-dbtcloud/)

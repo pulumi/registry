@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-fastly/v8.13.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-fastly/v8.13.1/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Fastly Provider
@@ -8,7 +8,7 @@ layout: package
 ---
 ## Installation
 
-The fastly provider is available as a package in all Pulumi languages:
+The Fastly provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/fastly`](https://www.npmjs.com/package/@pulumi/fastly)
 * Python: [`pulumi-fastly`](https://pypi.org/project/pulumi-fastly/)

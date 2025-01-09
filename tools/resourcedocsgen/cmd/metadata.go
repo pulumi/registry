@@ -308,7 +308,7 @@ func writePackageMetadata(
 
 	var validationErrors []error
 
-	if spec.Name != providerName {
+	if spec.Name != providerName && !legacyNameRuleException(spec.Name, providerName) {
 		validationErrors = append(validationErrors, fmt.Errorf(
 			"--providerName doesn't match the schema name: %q != %q", providerName, spec.Name))
 	}
@@ -361,6 +361,19 @@ func writePackageMetadata(
 		Featured:  isFeaturedPackage(spec.Name),
 		Native:    native,
 	}, metadataDir)
+}
+
+// legacyNameRuleException prevents the registry from rejecting previously acceptable
+// names, even if they don't agree.
+//
+// New providers should not be added to the legacyNameRuleException list. Instead, they
+// should comply with the registry's preferred naming scheme.
+func legacyNameRuleException(schemaName, providerName string) bool {
+	// The only exception we have is runpod:
+	//
+	// The repo name is "runpod/pulumi-runpod-native" but the name of the provider is
+	// "runpod" (not the inferred "runpod-native").
+	return schemaName == "runpod" && providerName == "runpod-native"
 }
 
 func readRemoteFile(url, repoOwner string) ([]byte, error) {

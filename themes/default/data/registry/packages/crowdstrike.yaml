@@ -10,7 +10,7 @@ native: false
 package_status: public_preview
 publisher: CrowdStrike
 repo_url: https://github.com/crowdstrike/pulumi-crowdstrike
-schema_file_url: https://raw.githubusercontent.com/crowdstrike/pulumi-crowdstrike/v0.0.6/provider/cmd/pulumi-resource-crowdstrike/schema.json
+schema_file_url: https://raw.githubusercontent.com/crowdstrike/pulumi-crowdstrike/v0.0.7/provider/cmd/pulumi-resource-crowdstrike/schema.json
 title: CrowdStrike
-updated_on: 1733499160
-version: v0.0.6
+updated_on: 1736821706
+version: v0.0.7

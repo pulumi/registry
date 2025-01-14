@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/crowdstrike/pulumi-crowdstrike/v0.0.6/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/crowdstrike/pulumi-crowdstrike/v0.0.7/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: CrowdStrike
 meta_desc: Provides an overview of the CrowdStrike Provider for Pulumi.
@@ -66,6 +66,29 @@ func main() {
   ctx.Export("hostgroup_3", hostGroup)
   return nil
  })
+}
+
+```
+
+### CSharp
+
+```csharp
+using System;
+using Pulumi;
+using CrowdStrike.Crowdstrike;
+
+class MyStack : Stack
+{
+    public MyStack()
+    {
+        var hostGroup = new HostGroup("hostgroup_pulumi_csharp_published", new HostGroupArgs
+        {
+            Name = "hostgroup_pulumi_dotnet",
+            Type = "dynamic",
+            Description = "Test pulumi hostgroup",
+            AssignmentRule = "tags:'SensorGroupingTags/cloud-lab'+os_version:'Amazon Linux 2'"
+        });
+    }
 }
 
 ```

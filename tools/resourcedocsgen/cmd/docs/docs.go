@@ -59,12 +59,12 @@ func getPulumiPackageFromSchema(
 
 	// THIS IS A TEMPORARY HACK!!
 	// temporarily hacking this tool to accommodate multiple versions of the azure-native package,
-	// since both v1 and v2 are techically the same package (just different versons) so the
+	// since both v2 and v3 are techically the same package (just different versons) so the
 	// schema.json file will have `azure-native` as the package name. Without this, the files genned
 	// will be overwritten by the second version of the package, since they will end up being written
 	// to the same azure-native directory.
-	if strings.Contains(docsOutDir, "azure-native-v1") {
-		pulPkg.Name = "azure-native-v1"
+	if strings.Contains(docsOutDir, "azure-native-v2") {
+		pulPkg.Name = "azure-native-v2"
 	}
 
 	return pulPkg, docs.NewContext(tool, pulPkg), nil

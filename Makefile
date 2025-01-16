@@ -29,11 +29,26 @@ test:
 	./scripts/test.sh
 
 .PHONY: build
-build:
-	$(MAKE) build-assets
-	./scripts/build.sh
+build: build-assets
+	node scripts/apply-fixes.js
+	hugo | grep -v -e 'WARN .* REF_NOT_FOUND'
 
 HUGO_SERVE := hugo serve --buildDrafts --buildFuture --ignoreVendorPaths="github.com/pulumi/registry/**/*" | grep -v -e 'WARN .* REF_NOT_FOUND'
+
+# bin/resourcedocsgen is considered to depend on all files in the tools/resourcedocsgen directory.
+#
+# Caveat: This does not account for `replace` directives in `go.mod`.
+bin/resourcedocsgen: $(shell find tools/resourcedocsgen | sed 's@ @\\ @g')
+	mkdir -p bin
+	go build -C tools/resourcedocsgen -o ../../bin ./...
+
+# Generate the API docs for `content/registry/packages/<pkg>`, where <pkg> is the name of
+# the package to be handed off to resourcedocsgen.
+content/registry/packages/%: bin/resourcedocsgen
+	bin/resourcedocsgen docs registry \
+		--baseDocsOutDir ./content/registry/packages \
+		--basePackageTreeJSONOutDir ./static/registry/packages/navs \
+		$*
 
 # Run hugo locally, ignoring REF_NOT_FOUND warnings
 .PHONY: serve
@@ -53,8 +68,7 @@ ci-scheduled:
 	./scripts/ci/scheduled.sh
 
 .PHONY: ci_push
-ci_push::
-	$(MAKE) ensure
+ci_push:: ensure
 	./scripts/ci/push.sh
 
 .PHONY: serve-assets
@@ -74,11 +88,9 @@ ci_bucket_cleanup:
 	./scripts/ci/bucket-cleanup.sh
 
 .PHONY: check_links
-check_links:
-	$(MAKE) ensure
+check_links: ensure
 	./scripts/link-checker/check-links.sh "https://www.pulumi.com/registry"
 
 .PHONY: run-browser-tests
-run-browser-tests:
-	$(MAKE) ensure
+run-browser-tests: ensure
 	./scripts/run-api-docs-tests.sh

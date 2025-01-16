@@ -368,7 +368,7 @@ func assertEqualFiles(t *testing.T, expected map[string][]byte, actual map[strin
 	for f, expectedBytes := range expected {
 		actualBytes, ok := actual[f]
 		assert.Truef(t, ok, "Expected file %s not found", f)
-		assert.Equalf(t, expectedBytes, actualBytes, "File %s does not match", f)
+		assert.Equalf(t, string(expectedBytes), string(actualBytes), "File %s does not match", f)
 	}
 
 	for f := range actual {

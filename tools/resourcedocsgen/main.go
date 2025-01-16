@@ -15,7 +15,6 @@
 package main
 
 import (
-	"flag"
 	"os"
 
 	"github.com/golang/glog"
@@ -24,8 +23,6 @@ import (
 )
 
 func main() {
-	flag.Parse()
-
 	defer glog.Flush()
 
 	if err := cmd.RootCmd().Execute(); err != nil {

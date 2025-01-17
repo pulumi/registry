@@ -363,6 +363,10 @@
     {
       "repoSlug": "komminarlabs/pulumi-cratedb",
       "schemaFile": "provider/cmd/pulumi-resource-cratedb/schema.json"
+    },
+    {
+      "repoSlug": "azaurus1/pulumi-kafka-connect",
+      "schemaFile": "provider/cmd/pulumi-resource-kafkaconnect/schema.json"
     }
   ]
 }

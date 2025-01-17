@@ -1,13 +1,14 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-meraki/v0.3.2/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-meraki/v0.4.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-title: Meraki Provider
-meta_desc: Provides an overview on how to configure the Pulumi Meraki provider.
+# *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
+title: Cisco Meraki Provider
+meta_desc: Provides an overview on how to configure the Pulumi Cisco Meraki provider.
 layout: package
 ---
 ## Installation
 
-The meraki provider is available as a package in all Pulumi languages:
+The Cisco Meraki provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/meraki`](https://www.npmjs.com/package/@pulumi/meraki)
 * Python: [`pulumi-meraki`](https://pypi.org/project/pulumi-meraki/)

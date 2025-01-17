@@ -1,19 +1,19 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-random/v4.16.7/docs/_index.md
+# WARNING: this file was fetched from https://d3uflda8hlgvg8.cloudfront.net/docs/registry.opentofu.org/hashicorp/random/3.6.3/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+# *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Random Provider
 meta_desc: Provides an overview on how to configure the Pulumi Random provider.
 layout: package
 ---
-## Installation
 
-The random provider is available as a package in all Pulumi languages:
+## Generate Provider
 
-* JavaScript/TypeScript: [`@pulumi/random`](https://www.npmjs.com/package/@pulumi/random)
-* Python: [`pulumi-random`](https://pypi.org/project/pulumi-random/)
-* Go: [`github.com/pulumi/pulumi-random/sdk/v4/go/random`](https://github.com/pulumi/pulumi-random)
-* .NET: [`Pulumi.Random`](https://www.nuget.org/packages/Pulumi.Random)
-* Java: [`com.pulumi/random`](https://central.sonatype.com/artifact/com.pulumi/random)
+The Random provider must be installed as a Local Package by following the [instructions for Any Terraform Provider](https://www.pulumi.com/registry/packages/terraform-provider/):
+
+```bash
+pulumi package add terraform-provider hashicorp/random
+```
 ## Overview
 
 The "random" provider allows the use of randomness within Pulumi
@@ -57,17 +57,17 @@ import * as pulumi from "@pulumi/pulumi";
 import * as aws from "@pulumi/aws";
 import * as random from "@pulumi/random";
 
-const server = new random.RandomId("server", {
+const server = new random.Id("server", {
     keepers: {
         ami_id: amiId,
     },
     byteLength: 8,
 });
-const serverInstance = new aws.ec2.Instance("server", {
+const serverInstance = new aws.index.Instance("server", {
     tags: {
-        Name: pulumi.interpolate`web-server ${server.hex}`,
+        name: `web-server ${server.hex}`,
     },
-    ami: server.keepers.apply(keepers => keepers?.amiId),
+    ami: server.keepers?.amiId,
 });
 ```
 {{% /choosable %}}
@@ -77,16 +77,16 @@ import pulumi
 import pulumi_aws as aws
 import pulumi_random as random
 
-server = random.RandomId("server",
+server = random.Id("server",
     keepers={
         "ami_id": ami_id,
     },
     byte_length=8)
-server_instance = aws.ec2.Instance("server",
+server_instance = aws.index.Instance("server",
     tags={
-        "Name": server.hex.apply(lambda hex: f"web-server {hex}"),
+        name: fweb-server {server.hex},
     },
-    ami=server.keepers["amiId"])
+    ami=server.keepers.ami_id)
 ```
 {{% /choosable %}}
 {{% choosable language csharp %}}
@@ -99,7 +99,7 @@ using Random = Pulumi.Random;
 
 return await Deployment.RunAsync(() =>
 {
-    var server = new Random.RandomId("server", new()
+    var server = new Random.Id("server", new()
     {
         Keepers =
         {
@@ -108,13 +108,13 @@ return await Deployment.RunAsync(() =>
         ByteLength = 8,
     });
 
-    var serverInstance = new Aws.Ec2.Instance("server", new()
+    var serverInstance = new Aws.Index.Instance("server", new()
     {
         Tags =
         {
-            { "Name", server.Hex.Apply(hex => $"web-server {hex}") },
+            { "name", $"web-server {server.Hex}" },
         },
-        Ami = server.Keepers.Apply(keepers => keepers?.AmiId),
+        Ami = server.Keepers?.AmiId,
     });
 
 });
@@ -128,31 +128,27 @@ package main
 import (
 	"fmt"
 
-	"github.com/pulumi/pulumi-aws/sdk/v6/go/aws/ec2"
-	"github.com/pulumi/pulumi-random/sdk/v4/go/random"
+	"github.com/pulumi/pulumi-aws/sdk/go/aws"
+	"github.com/pulumi/pulumi-pulumi-provider/sdks/go/random/v3/random"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
 func main() {
 	pulumi.Run(func(ctx *pulumi.Context) error {
-		server, err := random.NewRandomId(ctx, "server", &random.RandomIdArgs{
+		server, err := random.NewId(ctx, "server", &random.IdArgs{
 			Keepers: pulumi.StringMap{
 				"ami_id": pulumi.Any(amiId),
 			},
-			ByteLength: pulumi.Int(8),
+			ByteLength: pulumi.Float64(8),
 		})
 		if err != nil {
 			return err
 		}
-		_, err = ec2.NewInstance(ctx, "server", &ec2.InstanceArgs{
-			Tags: pulumi.StringMap{
-				"Name": server.Hex.ApplyT(func(hex string) (string, error) {
-					return fmt.Sprintf("web-server %v", hex), nil
-				}).(pulumi.StringOutput),
+		_, err = aws.NewInstance(ctx, "server", &aws.InstanceArgs{
+			Tags: map[string]interface{}{
+				"name": pulumi.Sprintf("web-server %v", server.Hex),
 			},
-			Ami: pulumi.String(server.Keepers.ApplyT(func(keepers map[string]string) (*string, error) {
-				return &keepers.AmiId, nil
-			}).(pulumi.StringPtrOutput)),
+			Ami: server.Keepers.AmiId,
 		})
 		if err != nil {
 			return err
@@ -166,17 +162,17 @@ func main() {
 ```yaml
 resources:
   server:
-    type: random:RandomId
+    type: random:Id
     properties:
       keepers:
         ami_id: ${amiId}
       byteLength: 8
   serverInstance:
-    type: aws:ec2:Instance
+    type: aws:Instance
     name: server
     properties:
       tags:
-        Name: web-server ${server.hex}
+        name: web-server ${server.hex}
       ami: ${server.keepers.amiId}
 ```
 {{% /choosable %}}
@@ -187,10 +183,10 @@ package generated_program;
 import com.pulumi.Context;
 import com.pulumi.Pulumi;
 import com.pulumi.core.Output;
-import com.pulumi.random.RandomId;
-import com.pulumi.random.RandomIdArgs;
-import com.pulumi.aws.ec2.Instance;
-import com.pulumi.aws.ec2.InstanceArgs;
+import com.pulumi.random.Id;
+import com.pulumi.random.IdArgs;
+import com.pulumi.aws.Instance;
+import com.pulumi.aws.InstanceArgs;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
@@ -204,14 +200,14 @@ public class App {
     }
 
     public static void stack(Context ctx) {
-        var server = new RandomId("server", RandomIdArgs.builder()
+        var server = new Id("server", IdArgs.builder()
             .keepers(Map.of("ami_id", amiId))
             .byteLength(8)
             .build());
 
         var serverInstance = new Instance("serverInstance", InstanceArgs.builder()
-            .tags(Map.of("Name", server.hex().applyValue(hex -> String.format("web-server %s", hex))))
-            .ami(server.keepers().applyValue(keepers -> keepers.amiId()))
+            .tags(%!v(PANIC=Format method: runtime error: invalid memory address or nil pointer dereference))
+            .ami(server.keepers().amiId())
             .build());
 
     }
@@ -224,3 +220,6 @@ Resource "keepers" are optional. The other arguments to each resource must
 *also* remain constant in order to retain a random result.
 
 `keepers` are *not* treated as sensitive attributes; a value used for `keepers` will be displayed in Pulumi UI output as plaintext.
+
+To force a random result to be replaced, the `taint` command can be used to
+produce a new result on the next run.

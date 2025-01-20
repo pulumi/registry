@@ -11,7 +11,7 @@ native: false
 package_status: public_preview
 publisher: pulumiverse
 repo_url: https://github.com/pulumiverse/pulumi-cockroach
-schema_file_url: https://raw.githubusercontent.com/pulumiverse/pulumi-cockroach/v0.9.0/provider/cmd/pulumi-resource-cockroach/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumiverse/pulumi-cockroach/v0.9.1/provider/cmd/pulumi-resource-cockroach/schema.json
 title: CockroachDB
-updated_on: 1734426809
-version: v0.9.0
+updated_on: 1737361970
+version: v0.9.1

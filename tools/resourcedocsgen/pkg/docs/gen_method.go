@@ -25,6 +25,7 @@ import (
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/slice"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/util/contract"
+	. "github.com/pulumi/registry/tools/resourcedocsgen/pkg/docs/templates"
 )
 
 type methodDocArgs struct {
@@ -319,11 +320,11 @@ func (mod *modContext) genMethodArgs(r *schema.Resource, m *schema.Method,
 		}
 
 		for i, p := range params {
-			if err := dctx.templates.ExecuteTemplate(b, paramTemplate, p); err != nil {
+			if err := Templates.ExecuteTemplate(b, paramTemplate, p); err != nil {
 				panic(err)
 			}
 			if i != n-1 {
-				if err := dctx.templates.ExecuteTemplate(b, paramSeparatorTemplate, ps); err != nil {
+				if err := Templates.ExecuteTemplate(b, paramSeparatorTemplate, ps); err != nil {
 					panic(err)
 				}
 			}

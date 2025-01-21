@@ -18,21 +18,19 @@ package docs
 
 import (
 	"bytes"
-	"embed"
 	"errors"
 	"fmt"
 	"go/format"
 	"html"
-	"html/template"
 	"path"
 	"sort"
 	"strings"
 
 	"github.com/hashicorp/hcl/v2"
 	"github.com/pulumi/pulumi/pkg/v3/codegen/pcl"
+	. "github.com/pulumi/registry/tools/resourcedocsgen/pkg/docs/templates"
 
 	"github.com/golang/glog"
-	"github.com/pgavlin/goldmark"
 
 	"github.com/pulumi/pulumi-java/pkg/codegen/java"
 	yaml "github.com/pulumi/pulumi-yaml/pkg/pulumiyaml/codegen"
@@ -46,9 +44,6 @@ import (
 	"github.com/pulumi/pulumi/sdk/v3/go/common/tokens"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/util/contract"
 )
-
-//go:embed templates/*.tmpl
-var packagedTemplates embed.FS
 
 // titleLookup maps a package name to a desired display name.
 //
@@ -195,7 +190,6 @@ type Context struct {
 
 	supportedLanguages []string
 	snippetLanguages   []string
-	templates          *template.Template
 	docHelpers         map[string]codegen.DocLanguageHelper
 
 	// The language-specific info objects for a certain package (provider).
@@ -260,42 +254,7 @@ func NewContext(tool string, pkg *schema.Package) *Context {
 		moduleConflictLinkMap: map[interface{}]string{},
 	}
 
-	dctx.templates = template.New("").Funcs(template.FuncMap{
-		"htmlSafe": func(html string) template.HTML {
-			// Markdown fragments in the templates need to be rendered as-is, so that html/template package doesn't try to
-			// inject data into it, which will most certainly fail.
-			//nolint:gosec
-			return template.HTML(html)
-		},
-		"markdownify": func(html string) template.HTML {
-			// Convert a string of Markdown into HTML.
-			var buf bytes.Buffer
-			if err := goldmark.Convert([]byte(html), &buf); err != nil {
-				glog.Fatalf("rendering Markdown: %v", err)
-			}
-			rendered := buf.String()
-
-			// Trim surrounding <p></p> tags.
-			result := strings.TrimSpace(rendered)
-			result = strings.TrimPrefix(result, "<p>")
-			result = strings.TrimSuffix(result, "</p>")
-
-			// If there are still <p> tags, there are multiple paragraphs, in which case use the original rendered string
-			// (untrimmed).
-			if strings.Contains(result, "<p>") {
-				result = rendered
-			}
-
-			//nolint:gosec
-			return template.HTML(result)
-		},
-	})
-
 	defer glog.Flush()
-
-	if _, err := dctx.templates.ParseFS(packagedTemplates, "templates/*.tmpl"); err != nil {
-		glog.Fatalf("initializing templates: %v", err)
-	}
 
 	dctx.constructorSyntaxData = generateConstructorSyntaxData(pkg, dctx.supportedLanguages)
 	// Generate the modules from the schema, and for every module run the generator functions to generate markdown files.
@@ -1425,11 +1384,11 @@ func (mod *modContext) genConstructors(
 		if paramTemplate != "" {
 			for i, p := range params {
 				if i != 0 {
-					if err := dctx.templates.ExecuteTemplate(b, paramSeparatorTemplate, ps); err != nil {
+					if err := Templates.ExecuteTemplate(b, paramSeparatorTemplate, ps); err != nil {
 						panic(err)
 					}
 				}
-				if err := dctx.templates.ExecuteTemplate(b, paramTemplate, p); err != nil {
+				if err := Templates.ExecuteTemplate(b, paramTemplate, p); err != nil {
 					panic(err)
 				}
 			}
@@ -1721,11 +1680,11 @@ func (mod *modContext) genLookupParams(r *schema.Resource, stateParam string) ma
 
 		n := len(params)
 		for i, p := range params {
-			if err := dctx.templates.ExecuteTemplate(b, paramTemplate, p); err != nil {
+			if err := Templates.ExecuteTemplate(b, paramTemplate, p); err != nil {
 				panic(err)
 			}
 			if i != n-1 {
-				if err := dctx.templates.ExecuteTemplate(b, paramSeparatorTemplate, ps); err != nil {
+				if err := Templates.ExecuteTemplate(b, paramSeparatorTemplate, ps); err != nil {
 					panic(err)
 				}
 			}
@@ -2067,7 +2026,7 @@ func (mod *modContext) gen(fs codegen.Fs) error {
 	// addFileTemplated executes template tmpl with data, and adds a file $dirName/_index.md with the result.
 	addFileTemplated := func(dirName, tmpl string, data interface{}) error {
 		var buff bytes.Buffer
-		if err := mod.context.templates.ExecuteTemplate(&buff, tmpl, data); err != nil {
+		if err := Templates.ExecuteTemplate(&buff, tmpl, data); err != nil {
 			return err
 		}
 		p := path.Join(modName, dirName, "_index.md")

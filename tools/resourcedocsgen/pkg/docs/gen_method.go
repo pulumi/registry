@@ -25,7 +25,7 @@ import (
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/slice"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/util/contract"
-	. "github.com/pulumi/registry/tools/resourcedocsgen/pkg/docs/templates"
+	"github.com/pulumi/registry/tools/resourcedocsgen/pkg/docs/templates"
 )
 
 type methodDocArgs struct {
@@ -266,12 +266,12 @@ func (mod *modContext) genMethodArgs(r *schema.Resource, m *schema.Method,
 	functionParams := make(map[string]string)
 	for _, lang := range dctx.supportedLanguages {
 		var (
-			paramTemplate string
+			paramTemplate templates.Template
 			params        []formalParam
 		)
 		b := &bytes.Buffer{}
 
-		paramSeparatorTemplate := "param_separator"
+		paramSeparatorTemplate := templates.ParamSeparator
 		ps := paramSeparator{}
 
 		var hasArgs bool
@@ -296,17 +296,17 @@ func (mod *modContext) genMethodArgs(r *schema.Resource, m *schema.Method,
 		switch lang {
 		case "nodejs":
 			params = mod.genMethodTS(f, resourceName(r), methodNameMap["nodejs"], optionalArgs)
-			paramTemplate = "ts_formal_param"
+			paramTemplate = templates.TsFormalParam
 		case "go":
 			params = mod.genMethodGo(f, resourceName(r), methodNameMap["go"], optionalArgs)
-			paramTemplate = "go_formal_param"
+			paramTemplate = templates.GoFormalParam
 		case "csharp":
 			params = mod.genMethodCS(f, resourceName(r), methodNameMap["csharp"], optionalArgs)
-			paramTemplate = "csharp_formal_param"
+			paramTemplate = templates.CSharpFormalParam
 		case "python":
 			params = mod.genMethodPython(f)
-			paramTemplate = "py_formal_param"
-			paramSeparatorTemplate = "py_param_separator"
+			paramTemplate = templates.PyFormalParam
+			paramSeparatorTemplate = templates.PyParamSeparator
 
 			docHelper := dctx.getLanguageDocHelper(lang)
 			methodName := docHelper.GetMethodName(m)
@@ -320,11 +320,11 @@ func (mod *modContext) genMethodArgs(r *schema.Resource, m *schema.Method,
 		}
 
 		for i, p := range params {
-			if err := Templates.ExecuteTemplate(b, paramTemplate, p); err != nil {
+			if err := paramTemplate(b, p); err != nil {
 				panic(err)
 			}
 			if i != n-1 {
-				if err := Templates.ExecuteTemplate(b, paramSeparatorTemplate, ps); err != nil {
+				if err := paramSeparatorTemplate(b, ps); err != nil {
 					panic(err)
 				}
 			}

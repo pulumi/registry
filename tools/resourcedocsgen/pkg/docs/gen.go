@@ -28,7 +28,7 @@ import (
 
 	"github.com/hashicorp/hcl/v2"
 	"github.com/pulumi/pulumi/pkg/v3/codegen/pcl"
-	. "github.com/pulumi/registry/tools/resourcedocsgen/pkg/docs/templates"
+	"github.com/pulumi/registry/tools/resourcedocsgen/pkg/docs/templates"
 
 	"github.com/golang/glog"
 
@@ -1345,50 +1345,50 @@ func (mod *modContext) genConstructors(
 
 	for _, lang := range langs {
 		var (
-			paramTemplate string
+			paramTemplate templates.Template
 			params        []formalParam
 		)
 		b := &bytes.Buffer{}
 
-		paramSeparatorTemplate := "param_separator"
+		paramSeparatorTemplate := templates.ParamSeparator
 		ps := paramSeparator{}
 
 		switch lang {
 		case "nodejs":
 			params = mod.genConstructorTS(r, allOptionalInputs)
-			paramTemplate = "ts_formal_param"
+			paramTemplate = templates.TsFormalParam
 		case "go":
 			params = mod.genConstructorGo(r, allOptionalInputs)
-			paramTemplate = "go_formal_param"
+			paramTemplate = templates.GoFormalParam
 		case "csharp":
 			params = mod.genConstructorCS(r, allOptionalInputs)
-			paramTemplate = "csharp_formal_param"
+			paramTemplate = templates.CSharpFormalParam
 		case "java":
 			fallthrough
 		case "javaargs":
 			argsOverload := lang == "javaargs"
 			params = mod.genConstructorJava(r, argsOverload)
-			paramTemplate = "java_formal_param"
+			paramTemplate = templates.JavaFormalParam
 		case "python":
 			fallthrough
 		case "pythonargs":
 			argsOverload := lang == "pythonargs"
 			params = mod.genConstructorPython(r, allOptionalInputs, argsOverload)
-			paramTemplate = "py_formal_param"
-			paramSeparatorTemplate = "py_param_separator"
+			paramTemplate = templates.PyFormalParam
+			paramSeparatorTemplate = templates.PyParamSeparator
 			ps = paramSeparator{Indent: strings.Repeat(" ", len("def (")+len(resourceName(r)))}
 		case "yaml":
 			params = mod.genConstructorYaml()
 		}
 
-		if paramTemplate != "" {
+		if paramTemplate != nil {
 			for i, p := range params {
 				if i != 0 {
-					if err := Templates.ExecuteTemplate(b, paramSeparatorTemplate, ps); err != nil {
+					if err := paramSeparatorTemplate(b, ps); err != nil {
 						panic(err)
 					}
 				}
-				if err := Templates.ExecuteTemplate(b, paramTemplate, p); err != nil {
+				if err := paramTemplate(b, p); err != nil {
 					panic(err)
 				}
 			}
@@ -1650,41 +1650,41 @@ func (mod *modContext) genLookupParams(r *schema.Resource, stateParam string) ma
 
 	for _, lang := range dctx.supportedLanguages {
 		var (
-			paramTemplate string
+			paramTemplate templates.Template
 			params        []formalParam
 		)
 		b := &bytes.Buffer{}
 
-		paramSeparatorTemplate := "param_separator"
+		paramSeparatorTemplate := templates.ParamSeparator
 		ps := paramSeparator{}
 
 		switch lang {
 		case "nodejs":
 			params = mod.getTSLookupParams(r, stateParam)
-			paramTemplate = "ts_formal_param"
+			paramTemplate = templates.TsFormalParam
 		case "go":
 			params = mod.getGoLookupParams(r, stateParam)
-			paramTemplate = "go_formal_param"
+			paramTemplate = templates.GoFormalParam
 		case "csharp":
 			params = mod.getCSLookupParams(r, stateParam)
-			paramTemplate = "csharp_formal_param"
+			paramTemplate = templates.CSharpFormalParam
 		case "java":
 			params = mod.getJavaLookupParams(r, stateParam)
-			paramTemplate = "java_formal_param"
+			paramTemplate = templates.JavaFormalParam
 		case "python":
 			params = mod.getPythonLookupParams(r, stateParam)
-			paramTemplate = "py_formal_param"
-			paramSeparatorTemplate = "py_param_separator"
+			paramTemplate = templates.PyFormalParam
+			paramSeparatorTemplate = templates.PyParamSeparator
 			ps = paramSeparator{Indent: strings.Repeat(" ", len("def get("))}
 		}
 
 		n := len(params)
 		for i, p := range params {
-			if err := Templates.ExecuteTemplate(b, paramTemplate, p); err != nil {
+			if err := paramTemplate(b, p); err != nil {
 				panic(err)
 			}
 			if i != n-1 {
-				if err := Templates.ExecuteTemplate(b, paramSeparatorTemplate, ps); err != nil {
+				if err := paramSeparatorTemplate(b, ps); err != nil {
 					panic(err)
 				}
 			}
@@ -2024,9 +2024,9 @@ func (mod *modContext) gen(fs codegen.Fs) error {
 	}
 
 	// addFileTemplated executes template tmpl with data, and adds a file $dirName/_index.md with the result.
-	addFileTemplated := func(dirName, tmpl string, data interface{}) error {
+	addFileTemplated := func(dirName string, tmpl templates.Template, data interface{}) error {
 		var buff bytes.Buffer
-		if err := Templates.ExecuteTemplate(&buff, tmpl, data); err != nil {
+		if err := tmpl(&buff, data); err != nil {
 			return err
 		}
 		p := path.Join(modName, dirName, "_index.md")
@@ -2061,7 +2061,7 @@ func (mod *modContext) gen(fs codegen.Fs) error {
 		}
 
 		data := mod.genResource(r)
-		if err := addFileTemplated(link, "resource.tmpl", data); err != nil {
+		if err := addFileTemplated(link, templates.Resource, data); err != nil {
 			return err
 		}
 
@@ -2083,7 +2083,7 @@ func (mod *modContext) gen(fs codegen.Fs) error {
 		}
 
 		data := mod.genFunction(f)
-		if err := addFileTemplated(link, "function.tmpl", data); err != nil {
+		if err := addFileTemplated(link, templates.Function, data); err != nil {
 			return err
 		}
 
@@ -2139,7 +2139,7 @@ func (mod *modContext) gen(fs codegen.Fs) error {
 		idxData.PackageDescription = mod.pkg.Description()
 	}
 
-	return addFileTemplated("", "index.tmpl", idxData)
+	return addFileTemplated("", templates.Index, idxData)
 }
 
 // indexEntry represents an individual entry on an index page.

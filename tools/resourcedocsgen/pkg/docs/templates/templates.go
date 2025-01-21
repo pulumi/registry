@@ -12,12 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// Package templates encapsulates **all** templates used by docs generation.
+//
+// All functions in this package are safe to call concurrently.
 package templates
 
 import (
 	"bytes"
 	"embed"
 	"html/template"
+	"io"
 	"strings"
 
 	"github.com/golang/glog"
@@ -27,7 +31,43 @@ import (
 //go:embed *.tmpl
 var packagedTemplates embed.FS
 
-var Templates *template.Template
+type Template = func(io.Writer, any) error
+
+func Index(wr io.Writer, a any) error { return templates.ExecuteTemplate(wr, "index.tmpl", a) }
+
+func Resource(wr io.Writer, a any) error { return templates.ExecuteTemplate(wr, "resource.tmpl", a) }
+
+func Function(wr io.Writer, a any) error { return templates.ExecuteTemplate(wr, "function.tmpl", a) }
+
+func ParamSeparator(wr io.Writer, a any) error {
+	return templates.ExecuteTemplate(wr, "param_separator", a)
+}
+
+func PyParamSeparator(wr io.Writer, a any) error {
+	return templates.ExecuteTemplate(wr, "py_param_separator", a)
+}
+
+func TsFormalParam(wr io.Writer, a any) error {
+	return templates.ExecuteTemplate(wr, "ts_formal_param", a)
+}
+
+func GoFormalParam(wr io.Writer, a any) error {
+	return templates.ExecuteTemplate(wr, "go_formal_param", a)
+}
+
+func CSharpFormalParam(wr io.Writer, a any) error {
+	return templates.ExecuteTemplate(wr, "csharp_formal_param", a)
+}
+
+func JavaFormalParam(wr io.Writer, a any) error {
+	return templates.ExecuteTemplate(wr, "java_formal_param", a)
+}
+
+func PyFormalParam(wr io.Writer, a any) error {
+	return templates.ExecuteTemplate(wr, "py_formal_param", a)
+}
+
+var templates *template.Template
 
 func init() {
 	tmpl, err := template.New("").Funcs(template.FuncMap{
@@ -63,5 +103,5 @@ func init() {
 	if err != nil {
 		glog.Fatal("initializing templates: %v", err)
 	}
-	Templates = tmpl
+	templates = tmpl
 }

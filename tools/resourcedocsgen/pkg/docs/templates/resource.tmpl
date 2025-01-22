@@ -176,28 +176,28 @@ All [input](#inputs) properties are implicitly available as output properties. A
 <!-- TS/JS -->
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
-<div class="highlight"><pre class="chroma"><code class="language-typescript" data-lang="typescript">{{ .MethodName.nodejs }}<span class="p">(</span>{{ if ne .MethodArgs.nodejs "" }}{{ htmlSafe .MethodArgs.nodejs }}{{ end }}<span class="p">): {{ if ne .MethodResult.nodejs.Name "" }}Output&lt;{{ template "linkify_param" .MethodResult.nodejs }}&gt;{{ else }}void{{ end }}</span></code></pre></div>
+<div class="highlight"><pre class="chroma"><code class="language-typescript" data-lang="typescript">{{ .MethodName.nodejs }}<span class="p">(</span>{{ if ne (index .MethodArgs lNodejs) "" }}{{ htmlSafe (index .MethodArgs lNodejs) }}{{ end }}<span class="p">): {{ if ne .MethodResult.nodejs.Name "" }}Output&lt;{{ template "linkify_param" .MethodResult.nodejs }}&gt;{{ else }}void{{ end }}</span></code></pre></div>
 </pulumi-choosable>
 </div>
 
 <!-- Python -->
 <div>
 <pulumi-choosable type="language" values="python">
-<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">def </span>{{ .MethodName.python }}(</span>{{ if ne .MethodArgs.python "" }}{{ htmlSafe .MethodArgs.python }}{{ end }}<span class="p">) -&gt;</span> {{ if ne .MethodResult.python.Name "" }}Output[{{ template "linkify_param" .MethodResult.python }}]{{ else }}None{{ end }}</code></pre></div>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">def </span>{{ .MethodName.python }}(</span>{{ if ne (index .MethodArgs lPython) "" }}{{ htmlSafe (index .MethodArgs lPython) }}{{ end }}<span class="p">) -&gt;</span> {{ if ne .MethodResult.python.Name "" }}Output[{{ template "linkify_param" .MethodResult.python }}]{{ else }}None{{ end }}</code></pre></div>
 </pulumi-choosable>
 </div>
 
 <!-- Go -->
 <div>
 <pulumi-choosable type="language" values="go">
-<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="k">func</span> <span class="p">(r *{{ .ResourceName }})</span> {{ .MethodName.go }}<span class="p">(</span>{{ if ne .MethodArgs.go "" }}{{ htmlSafe .MethodArgs.go }}{{ end }}<span class="p">) {{ if ne .MethodResult.go.Name "" }}({{ template "linkify_param" .MethodResult.go }}, error){{ else }}error{{ end }}</span></code></pre></div>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="k">func</span> <span class="p">(r *{{ .ResourceName }})</span> {{ .MethodName.go }}<span class="p">(</span>{{ if ne (index .MethodArgs lGo) "" }}{{ htmlSafe (index .MethodArgs lGo) }}{{ end }}<span class="p">) {{ if ne .MethodResult.go.Name "" }}({{ template "linkify_param" .MethodResult.go }}, error){{ else }}error{{ end }}</span></code></pre></div>
 </pulumi-choosable>
 </div>
 
 <!-- C# -->
 <div>
 <pulumi-choosable type="language" values="csharp">
-<div class="highlight"><pre class="chroma"><code class="language-csharp" data-lang="csharp"><span class="k">public </span>{{ if ne .MethodResult.csharp.Name "" }}Output&lt;{{ template "linkify_param" .MethodResult.csharp }}&gt;{{ else }}void{{ end }} <span class="nx">{{ .MethodName.csharp }}</span><span class="p">({{ if ne .MethodArgs.csharp "" }}{{ htmlSafe .MethodArgs.csharp }}{{ end }})</span></code></pre></div>
+<div class="highlight"><pre class="chroma"><code class="language-csharp" data-lang="csharp"><span class="k">public </span>{{ if ne .MethodResult.csharp.Name "" }}Output&lt;{{ template "linkify_param" .MethodResult.csharp }}&gt;{{ else }}void{{ end }} <span class="nx">{{ .MethodName.csharp }}</span><span class="p">({{ if ne (index .MethodArgs lCSharp) "" }}{{ htmlSafe (index .MethodArgs lCSharp) }}{{ end }})</span></code></pre></div>
 </pulumi-choosable>
 </div>
 

@@ -41,7 +41,7 @@ type methodDocArgs struct {
 	// MethodName is a map of the language and the method name in that language.
 	MethodName map[string]string
 	// MethodArgs is map per language view of the parameters in the method.
-	MethodArgs map[string]string
+	MethodArgs map[language.Language]string
 	// MethodResult is a map per language property types that is returned as a result of calling a method.
 	MethodResult map[string]propertyType
 
@@ -260,12 +260,13 @@ func (mod *modContext) genMethodPython(f *schema.Function) []formalParam {
 // empty string indicates no args.
 func (mod *modContext) genMethodArgs(r *schema.Resource, m *schema.Method,
 	methodNameMap map[string]string,
-) map[string]string {
+) map[language.Language]string {
 	dctx := mod.context
 	f := m.Function
 
-	functionParams := make(map[string]string)
+	functionParams := make(map[language.Language]string)
 	for _, lang := range dctx.supportedLanguages {
+		lang := mustConvertPulumiSchemaLanguage(lang)
 		var (
 			paramTemplate templates.Template
 			params        []formalParam
@@ -295,21 +296,21 @@ func (mod *modContext) genMethodArgs(r *schema.Resource, m *schema.Method,
 		}
 
 		switch lang {
-		case "nodejs":
+		case language.Typescript:
 			params = mod.genMethodTS(f, resourceName(r), methodNameMap["nodejs"], optionalArgs)
 			paramTemplate = templates.TsFormalParam
-		case "go":
+		case language.Go:
 			params = mod.genMethodGo(f, resourceName(r), methodNameMap["go"], optionalArgs)
 			paramTemplate = templates.GoFormalParam
-		case "csharp":
+		case language.CSharp:
 			params = mod.genMethodCS(f, resourceName(r), methodNameMap["csharp"], optionalArgs)
 			paramTemplate = templates.CSharpFormalParam
-		case "python":
+		case language.Python:
 			params = mod.genMethodPython(f)
 			paramTemplate = templates.PyFormalParam
 			paramSeparatorTemplate = templates.PyParamSeparator
 
-			docHelper := dctx.getLanguageDocHelper(mustConvertPulumiSchemaLanguage(lang))
+			docHelper := dctx.getLanguageDocHelper(lang)
 			methodName := docHelper.GetMethodName(m)
 			ps = paramSeparator{Indent: strings.Repeat(" ", len("def (")+len(methodName))}
 		}

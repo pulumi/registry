@@ -1,13 +1,14 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-vsphere/v4.12.1/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-vsphere/v4.13.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+# *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Vsphere Provider
 meta_desc: Provides an overview on how to configure the Pulumi Vsphere provider.
 layout: package
 ---
 ## Installation
 
-The vsphere provider is available as a package in all Pulumi languages:
+The Vsphere provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/vsphere`](https://www.npmjs.com/package/@pulumi/vsphere)
 * Python: [`pulumi-vsphere`](https://pypi.org/project/pulumi-vsphere/)

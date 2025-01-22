@@ -367,7 +367,7 @@ type resourceDocArgs struct {
 	// ConstructorParamsTyped is the typed set of parameters for the constructor, in order.
 	ConstructorParamsTyped map[string][]formalParam
 	// ConstructorResource is the resource that is being constructed or is the result of a constructor-like function.
-	ConstructorResource map[string]propertyType
+	ConstructorResource map[language.Language]propertyType
 	// ArgsRequired is a flag indicating if the args param is required when creating a new resource.
 	ArgsRequired bool
 
@@ -1394,22 +1394,23 @@ func (mod *modContext) genConstructors(
 }
 
 // getConstructorResourceInfo returns a map of per-language information about the resource being constructed.
-func (mod *modContext) getConstructorResourceInfo(resourceTypeName, tok string) map[string]propertyType {
+func (mod *modContext) getConstructorResourceInfo(resourceTypeName, tok string) map[language.Language]propertyType {
 	dctx := mod.context
 	docLangHelper := dctx.getLanguageDocHelper(language.YAML)
-	resourceMap := make(map[string]propertyType)
+	resourceMap := make(map[language.Language]propertyType)
 	resourceDisplayName := resourceTypeName
 
 	for _, lang := range dctx.supportedLanguages {
+		lang := mustConvertPulumiSchemaLanguage(lang)
 		// Use the module to package lookup to transform the module name to its normalized package name.
-		modName := mod.getLanguageModuleName(mustConvertPulumiSchemaLanguage(lang))
+		modName := mod.getLanguageModuleName(lang)
 		// Reset the type name back to the display name.
 		resourceTypeName = resourceDisplayName
 
 		switch lang {
-		case "nodejs", "go", "python", "java":
+		case language.Typescript, language.Go, language.Python, language.Java:
 			// Intentionally left blank.
-		case "csharp":
+		case language.CSharp:
 			namespace := title(mod.pkg.Name(), language.CSharp)
 			if ns, ok := dctx.csharpPkgInfo.Namespaces[mod.pkg.Name()]; ok {
 				namespace = ns
@@ -1420,7 +1421,7 @@ func (mod *modContext) getConstructorResourceInfo(resourceTypeName, tok string) 
 			}
 
 			resourceTypeName = fmt.Sprintf("Pulumi.%s.%s.%s", namespace, modName, resourceTypeName)
-		case "yaml":
+		case language.YAML:
 			def, err := mod.pkg.Definition()
 			contract.AssertNoErrorf(err, "failed to get definition for package %q", mod.pkg.Name())
 			resourceMap[lang] = propertyType{

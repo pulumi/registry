@@ -538,30 +538,30 @@ func (mod *modContext) details(t *schema.ObjectType) *typeDetails {
 
 // getLanguageModuleName transforms the current module's name to a language-specific name using the language info, if
 // any, for the current package.
-func (mod *modContext) getLanguageModuleName(lang string) string {
+func (mod *modContext) getLanguageModuleName(lang language.Language) string {
 	dctx := mod.context
 	modName := mod.mod
-	lookupKey := lang + "_" + modName
+	lookupKey := lang.String() + "_" + modName
 	if v, ok := mod.context.langModuleNameLookup[lookupKey]; ok {
 		return v
 	}
 
 	switch lang {
-	case "go":
+	case language.Go:
 		// Go module names use lowercase.
 		modName = strings.ToLower(modName)
 		if override, ok := dctx.goPkgInfo.ModuleToPackage[modName]; ok {
 			modName = override
 		}
-	case "csharp":
+	case language.CSharp:
 		if override, ok := dctx.csharpPkgInfo.Namespaces[modName]; ok {
 			modName = override
 		}
-	case "nodejs":
+	case language.Typescript:
 		if override, ok := dctx.nodePkgInfo.ModuleToPackage[modName]; ok {
 			modName = override
 		}
-	case "python":
+	case language.Python:
 		if override, ok := dctx.pythonPkgInfo.ModuleNameOverrides[modName]; ok {
 			modName = override
 		}
@@ -573,9 +573,11 @@ func (mod *modContext) getLanguageModuleName(lang string) string {
 
 // cleanTypeString removes any namespaces from the generated type string for all languages. The result of this function
 // should be used display purposes only.
-func (mod *modContext) cleanTypeString(t schema.Type, langTypeString, lang, modName string, isInput bool) string {
+func (mod *modContext) cleanTypeString(
+	t schema.Type, langTypeString string, lang language.Language, modName string, isInput bool,
+) string {
 	switch lang {
-	case "go":
+	case language.Go:
 		langTypeString = cleanOptionalIdentifier(langTypeString, lang)
 		parts := strings.Split(langTypeString, ".")
 		return parts[len(parts)-1]
@@ -642,7 +644,7 @@ func (mod *modContext) cleanTypeString(t schema.Type, langTypeString, lang, modN
 	switch t := t.(type) {
 	case *schema.ObjectType:
 		// Strip "Args" suffixes from display names for everything but Python inputs.
-		if lang != "python" || (lang == "python" && !isInput) {
+		if lang != language.Python || !isInput {
 			name := tokenToName(t.Token)
 			nameWithArgs := name + "Args"
 
@@ -674,11 +676,11 @@ func (mod *modContext) cleanTypeString(t schema.Type, langTypeString, lang, modN
 	}
 
 	switch lang {
-	case "nodejs":
+	case language.Typescript:
 		return cleanNodeJSName(modName)
-	case "csharp":
+	case language.CSharp:
 		return cleanCSharpName(mod.pkg.Name(), modName)
-	case "python":
+	case language.Python:
 		return cleanPythonName(langTypeString)
 	default:
 		return strings.ReplaceAll(langTypeString, modName, "")
@@ -689,13 +691,13 @@ func (mod *modContext) cleanTypeString(t schema.Type, langTypeString, lang, modN
 // of the property is an array or an object.
 func (mod *modContext) typeString(
 	t schema.Type,
-	lang string,
+	lang language.Language,
 	characteristics propertyCharacteristics,
 	insertWordBreaks bool,
 ) propertyType {
 	t = codegen.PlainType(t)
 
-	docLanguageHelper := mod.context.getLanguageDocHelper(mustConvertPulumiSchemaLanguage(lang))
+	docLanguageHelper := mod.context.getLanguageDocHelper(lang)
 	modName := mod.getLanguageModuleName(lang)
 	def, err := mod.pkg.Definition()
 	contract.AssertNoErrorf(err, "failed to get package definition for %q", mod.pkg.Name())
@@ -753,15 +755,13 @@ func (mod *modContext) typeString(
 }
 
 // cleanOptionalIdentifier removes the type identifier (i.e. "?" in "string?").
-func cleanOptionalIdentifier(s, lang string) string {
+func cleanOptionalIdentifier(s string, lang language.Language) string {
 	switch lang {
-	case "nodejs":
+	case language.Typescript, language.CSharp:
 		return strings.TrimSuffix(s, "?")
-	case "go":
+	case language.Go:
 		return strings.TrimPrefix(s, "*")
-	case "csharp":
-		return strings.TrimSuffix(s, "?")
-	case "python":
+	case language.Python:
 		if strings.HasPrefix(s, "Optional[") && strings.HasSuffix(s, "]") {
 			s = strings.TrimPrefix(s, "Optional[")
 			s = strings.TrimSuffix(s, "]")
@@ -1227,9 +1227,11 @@ func (mod *modContext) getPropertiesWithIDPrefixAndExclude(properties []*schema.
 		propTypes := make([]propertyType, 0)
 		if typ, isUnion := codegen.UnwrapType(prop.Type).(*schema.UnionType); isUnion {
 			for _, elementType := range typ.ElementTypes {
+				lang := mustConvertPulumiSchemaLanguage(lang)
 				propTypes = append(propTypes, mod.typeString(elementType, lang, characteristics, true))
 			}
 		} else {
+			lang := mustConvertPulumiSchemaLanguage(lang)
 			propTypes = append(propTypes, mod.typeString(prop.Type, lang, characteristics, true))
 		}
 
@@ -1401,7 +1403,7 @@ func (mod *modContext) getConstructorResourceInfo(resourceTypeName, tok string) 
 
 	for _, lang := range dctx.supportedLanguages {
 		// Use the module to package lookup to transform the module name to its normalized package name.
-		modName := mod.getLanguageModuleName(lang)
+		modName := mod.getLanguageModuleName(mustConvertPulumiSchemaLanguage(lang))
 		// Reset the type name back to the display name.
 		resourceTypeName = resourceDisplayName
 

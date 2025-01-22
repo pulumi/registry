@@ -86,7 +86,7 @@ func (mod *modContext) getFunctionResourceInfo(f *schema.Function, outputVersion
 
 	var resultTypeName string
 	for _, lang := range dctx.supportedLanguages {
-		docLangHelper := dctx.getLanguageDocHelper(lang)
+		docLangHelper := dctx.getLanguageDocHelper(mustConvertPulumiSchemaLanguage(lang))
 		switch lang {
 		case "nodejs":
 			resultTypeName = docLangHelper.GetResourceFunctionResultName(mod.mod, f)
@@ -139,7 +139,7 @@ func (mod *modContext) genFunctionTS(f *schema.Function, funcName string, output
 
 	argsType := title(fmt.Sprintf("%s%s", funcName, argsTypeSuffix), language.Typescript)
 
-	docLangHelper := dctx.getLanguageDocHelper("nodejs")
+	docLangHelper := dctx.getLanguageDocHelper(language.Typescript)
 	var params []formalParam
 	if f.Inputs != nil {
 		params = append(params, formalParam{
@@ -213,7 +213,7 @@ func (mod *modContext) genFunctionCS(f *schema.Function, funcName string, output
 	}
 
 	argsType := funcName + argsTypeSuffix
-	docLangHelper := dctx.getLanguageDocHelper("csharp")
+	docLangHelper := dctx.getLanguageDocHelper(language.CSharp)
 	var params []formalParam
 	if f.Inputs != nil {
 		params = append(params, formalParam{
@@ -249,7 +249,7 @@ func (mod *modContext) genFunctionJava(f *schema.Function, funcName string, outp
 	}
 
 	argsType := title(funcName+argsTypeSuffix, language.Java)
-	docLangHelper := dctx.getLanguageDocHelper("java")
+	docLangHelper := dctx.getLanguageDocHelper(language.Java)
 	var params []formalParam
 	if f.Inputs != nil {
 		params = append(params, formalParam{
@@ -277,7 +277,7 @@ func (mod *modContext) genFunctionJava(f *schema.Function, funcName string, outp
 
 func (mod *modContext) genFunctionPython(f *schema.Function, resourceName string, outputVersion bool) []formalParam {
 	dctx := mod.context
-	docLanguageHelper := dctx.getLanguageDocHelper("python")
+	docLanguageHelper := dctx.getLanguageDocHelper(language.Python)
 	var params []formalParam
 
 	// Some functions don't have any inputs other than the InvokeOptions. For example, the `get_billing_service_account`
@@ -365,7 +365,7 @@ func (mod *modContext) genFunctionArgs(
 			paramTemplate = templates.PyFormalParam
 			paramSeparatorTemplate = templates.PyParamSeparator
 
-			docHelper := dctx.getLanguageDocHelper(lang)
+			docHelper := dctx.getLanguageDocHelper(language.Python)
 			funcName := docHelper.GetFunctionName(mod.mod, f)
 			ps = paramSeparator{Indent: strings.Repeat(" ", len("def (")+len(funcName))}
 		}
@@ -452,7 +452,7 @@ func (mod *modContext) genFunction(f *schema.Function) functionDocArgs {
 	// Generate the per-language map for the function name.
 	funcNameMap := map[string]string{}
 	for _, lang := range dctx.supportedLanguages {
-		docHelper := dctx.getLanguageDocHelper(lang)
+		docHelper := dctx.getLanguageDocHelper(mustConvertPulumiSchemaLanguage(lang))
 		funcNameMap[lang] = docHelper.GetFunctionName(mod.mod, f)
 	}
 

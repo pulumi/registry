@@ -190,8 +190,7 @@ type Context struct {
 	internalModMap map[string]*modContext
 
 	supportedLanguages []string
-	snippetLanguages   []string
-	docHelpers         map[string]codegen.DocLanguageHelper
+	docHelpers         map[language.Language]codegen.DocLanguageHelper
 
 	// The language-specific info objects for a certain package (provider).
 	goPkgInfo     go_gen.GoPackageInfo
@@ -229,35 +228,24 @@ func (dctx *Context) setModules(modules map[string]*modContext) {
 
 func NewContext(tool string, pkg *schema.Package) *Context {
 	supportedLanguages := []string{"csharp", "go", "nodejs", "python", "yaml", "java"}
-	docHelpers := make(map[string]codegen.DocLanguageHelper)
-	for _, lang := range supportedLanguages {
-		switch lang {
-		case "csharp":
-			docHelpers[lang] = &dotnet.DocLanguageHelper{}
-		case "go":
-			docHelpers[lang] = &go_gen.DocLanguageHelper{}
-		case "nodejs":
-			docHelpers[lang] = &nodejs.DocLanguageHelper{}
-		case "python":
-			docHelpers[lang] = &python.DocLanguageHelper{}
-		case "yaml":
-			docHelpers[lang] = &yaml.DocLanguageHelper{}
-		case "java":
-			docHelpers[lang] = &java.DocLanguageHelper{}
-		}
-	}
 
 	dctx := &Context{
-		supportedLanguages:    supportedLanguages,
-		snippetLanguages:      []string{"csharp", "go", "python", "typescript", "yaml", "java"},
-		langModuleNameLookup:  map[string]string{},
-		docHelpers:            docHelpers,
+		supportedLanguages:   supportedLanguages,
+		langModuleNameLookup: map[string]string{},
+		docHelpers: map[language.Language]codegen.DocLanguageHelper{
+			language.CSharp:     &dotnet.DocLanguageHelper{},
+			language.Go:         &go_gen.DocLanguageHelper{},
+			language.Typescript: &nodejs.DocLanguageHelper{},
+			language.Python:     &python.DocLanguageHelper{},
+			language.YAML:       &yaml.DocLanguageHelper{},
+			language.Java:       &java.DocLanguageHelper{},
+		},
 		moduleConflictLinkMap: map[interface{}]string{},
 	}
 
 	defer glog.Flush()
 
-	dctx.constructorSyntaxData = generateConstructorSyntaxData(pkg, dctx.supportedLanguages)
+	dctx.constructorSyntaxData = generateConstructorSyntaxData(pkg, language.FullSet())
 	// Generate the modules from the schema, and for every module run the generator functions to generate markdown files.
 	dctx.setModules(dctx.generateModulesFromSchemaPackage(tool, pkg))
 
@@ -524,7 +512,7 @@ func resourceName(r *schema.Resource) string {
 	return strings.Title(tokenToName(r.Token))
 }
 
-func (dctx *Context) getLanguageDocHelper(lang string) codegen.DocLanguageHelper {
+func (dctx *Context) getLanguageDocHelper(lang language.Language) codegen.DocLanguageHelper {
 	if h, ok := dctx.docHelpers[lang]; ok {
 		return h
 	}
@@ -707,7 +695,7 @@ func (mod *modContext) typeString(
 ) propertyType {
 	t = codegen.PlainType(t)
 
-	docLanguageHelper := mod.context.getLanguageDocHelper(lang)
+	docLanguageHelper := mod.context.getLanguageDocHelper(mustConvertPulumiSchemaLanguage(lang))
 	modName := mod.getLanguageModuleName(lang)
 	def, err := mod.pkg.Definition()
 	contract.AssertNoErrorf(err, "failed to get package definition for %q", mod.pkg.Name())
@@ -793,7 +781,7 @@ const (
 
 func (mod *modContext) genConstructorTS(r *schema.Resource, argsOptional bool) []formalParam {
 	name := resourceName(r)
-	docLangHelper := mod.context.getLanguageDocHelper("nodejs")
+	docLangHelper := mod.context.getLanguageDocHelper(language.Typescript)
 
 	var argsType string
 
@@ -864,7 +852,7 @@ func (mod *modContext) genConstructorGo(r *schema.Resource, argsOptional bool) [
 		argsFlag = "*"
 	}
 
-	docLangHelper := mod.context.getLanguageDocHelper("go")
+	docLangHelper := mod.context.getLanguageDocHelper(language.Go)
 
 	def, err := mod.pkg.Definition()
 	contract.AssertNoErrorf(err, "failed to get definition for package %q", mod.pkg.Name())
@@ -923,7 +911,7 @@ func (mod *modContext) genConstructorCS(r *schema.Resource, argsOptional bool) [
 		argsFlag = "?"
 	}
 
-	docLangHelper := mod.context.getLanguageDocHelper("csharp")
+	docLangHelper := mod.context.getLanguageDocHelper(language.CSharp)
 
 	def, err := mod.pkg.Definition()
 	contract.AssertNoErrorf(err, "failed to get definition for package %q", mod.pkg.Name())
@@ -980,7 +968,7 @@ func (mod *modContext) genConstructorJava(r *schema.Resource, argsOverload bool)
 		optsType = "ComponentResourceOptions"
 	}
 
-	docLangHelper := mod.context.getLanguageDocHelper("java")
+	docLangHelper := mod.context.getLanguageDocHelper(language.Java)
 
 	def, err := mod.pkg.Definition()
 	contract.AssertNoErrorf(err, "failed to get definition for package %q", mod.pkg.Name())
@@ -1017,7 +1005,7 @@ func (mod *modContext) genConstructorJava(r *schema.Resource, argsOverload bool)
 }
 
 func (mod *modContext) genConstructorPython(r *schema.Resource, argsOptional, argsOverload bool) []formalParam {
-	docLanguageHelper := mod.context.getLanguageDocHelper("python")
+	docLanguageHelper := mod.context.getLanguageDocHelper(language.Python)
 	isK8sOverlayMod := mod.isKubernetesOverlayModule()
 	isDockerImageResource := mod.pkg.Name() == "docker" && resourceName(r) == "Image"
 
@@ -1157,7 +1145,7 @@ func (mod *modContext) genNestedTypes(member interface{}, resourceType, isProvid
 
 				enums := make(map[string][]enum)
 				for _, lang := range dctx.supportedLanguages {
-					docLangHelper := dctx.getLanguageDocHelper(lang)
+					docLangHelper := dctx.getLanguageDocHelper(mustConvertPulumiSchemaLanguage(lang))
 
 					var langEnumValues []enum
 					for _, e := range typ.Elements {
@@ -1227,7 +1215,7 @@ func (mod *modContext) getPropertiesWithIDPrefixAndExclude(properties []*schema.
 
 		characteristics := propertyCharacteristics{input: input}
 
-		langDocHelper := dctx.getLanguageDocHelper(lang)
+		langDocHelper := dctx.getLanguageDocHelper(mustConvertPulumiSchemaLanguage(lang))
 		name, err := langDocHelper.GetPropertyName(prop)
 		if err != nil {
 			panic(err)
@@ -1407,7 +1395,7 @@ func (mod *modContext) genConstructors(
 // getConstructorResourceInfo returns a map of per-language information about the resource being constructed.
 func (mod *modContext) getConstructorResourceInfo(resourceTypeName, tok string) map[string]propertyType {
 	dctx := mod.context
-	docLangHelper := dctx.getLanguageDocHelper("yaml")
+	docLangHelper := dctx.getLanguageDocHelper(language.YAML)
 	resourceMap := make(map[string]propertyType)
 	resourceDisplayName := resourceTypeName
 
@@ -1457,7 +1445,7 @@ func (mod *modContext) getConstructorResourceInfo(resourceTypeName, tok string) 
 
 func (mod *modContext) getTSLookupParams(r *schema.Resource, stateParam string) []formalParam {
 	dctx := mod.context
-	docLangHelper := dctx.getLanguageDocHelper("nodejs")
+	docLangHelper := dctx.getLanguageDocHelper(language.Typescript)
 	def, err := mod.pkg.Definition()
 	contract.AssertNoErrorf(err, "failed to get definition for package %q", mod.pkg.Name())
 
@@ -1496,7 +1484,7 @@ func (mod *modContext) getTSLookupParams(r *schema.Resource, stateParam string) 
 
 func (mod *modContext) getGoLookupParams(r *schema.Resource, stateParam string) []formalParam {
 	dctx := mod.context
-	docLangHelper := dctx.getLanguageDocHelper("go")
+	docLangHelper := dctx.getLanguageDocHelper(language.Go)
 
 	def, err := mod.pkg.Definition()
 	contract.AssertNoErrorf(err, "failed to get definition for package %q", mod.pkg.Name())
@@ -1543,7 +1531,7 @@ func (mod *modContext) getGoLookupParams(r *schema.Resource, stateParam string) 
 
 func (mod *modContext) getCSLookupParams(r *schema.Resource, stateParam string) []formalParam {
 	dctx := mod.context
-	docLangHelper := dctx.getLanguageDocHelper("csharp")
+	docLangHelper := dctx.getLanguageDocHelper(language.CSharp)
 
 	def, err := mod.pkg.Definition()
 	contract.AssertNoErrorf(err, "failed to get definition for package %q", mod.pkg.Name())
@@ -1583,7 +1571,7 @@ func (mod *modContext) getCSLookupParams(r *schema.Resource, stateParam string) 
 
 func (mod *modContext) getJavaLookupParams(r *schema.Resource, stateParam string) []formalParam {
 	dctx := mod.context
-	docLangHelper := dctx.getLanguageDocHelper("java")
+	docLangHelper := dctx.getLanguageDocHelper(language.Java)
 	def, err := mod.pkg.Definition()
 	contract.AssertNoErrorf(err, "failed to get definition for package %q", mod.pkg.Name())
 
@@ -1620,7 +1608,7 @@ func (mod *modContext) getJavaLookupParams(r *schema.Resource, stateParam string
 func (mod *modContext) getPythonLookupParams(r *schema.Resource, stateParam string) []formalParam {
 	dctx := mod.context
 	// The input properties for a resource needs to be exploded as individual constructor params.
-	docLanguageHelper := dctx.getLanguageDocHelper("python")
+	docLanguageHelper := dctx.getLanguageDocHelper(language.Python)
 	params := slice.Prealloc[formalParam](len(r.StateInputs.Properties))
 	for _, p := range r.StateInputs.Properties {
 		def, err := mod.pkg.Definition()
@@ -2254,11 +2242,11 @@ func (dctx *Context) generateModulesFromSchemaPackage(tool string, pkg *schema.P
 	dctx.nodePkgInfo, _ = pkg.Language["nodejs"].(nodejs.NodePackageInfo)
 	dctx.pythonPkgInfo, _ = pkg.Language["python"].(python.PackageInfo)
 
-	goLangHelper := dctx.getLanguageDocHelper("go").(*go_gen.DocLanguageHelper)
+	goLangHelper := dctx.getLanguageDocHelper(language.Go).(*go_gen.DocLanguageHelper)
 	// Generate the Go package map info now, so we can use that to get the type string names later.
 	goLangHelper.GeneratePackagesMap(pkg, tool, dctx.goPkgInfo)
 
-	csharpLangHelper := dctx.getLanguageDocHelper("csharp").(*dotnet.DocLanguageHelper)
+	csharpLangHelper := dctx.getLanguageDocHelper(language.CSharp).(*dotnet.DocLanguageHelper)
 	csharpLangHelper.Namespaces = dctx.csharpPkgInfo.Namespaces
 
 	visitObjects := func(r *schema.Resource) {
@@ -2333,7 +2321,7 @@ func (dctx *Context) generateModulesFromSchemaPackage(tool string, pkg *schema.P
 // The reason we generate a full program a schema with all the resources is that if we did every resource separately, it
 // would take too long to generate the programs and the rest of the docs. That is why we batch generate them and split
 // the resource declarations by comment delimiters.
-func generateConstructorSyntaxData(pkg *schema.Package, languages []string) *constructorSyntaxData {
+func generateConstructorSyntaxData(pkg *schema.Package, languages language.Set) *constructorSyntaxData {
 	loader := NewStaticSchemaLoader(pkg)
 	constructorGenerator := &constructorSyntaxGenerator{
 		indentSize:             0,
@@ -2350,14 +2338,12 @@ func generateConstructorSyntaxData(pkg *schema.Package, languages []string) *con
 		},
 	})
 
-	packagesToSkip := map[string]codegen.StringSet{
-		"aws-native": codegen.NewStringSet("python", "typescript", "go", "csharp", "yaml", "java"),
-	}
+	packagesToSkip := map[string]language.Set{"aws-native": language.FullSet()}
 
 	type ProgramGenerator = func(program *pcl.Program) (files map[string][]byte, diags hcl.Diagnostics, err error)
 
 	constructorSyntax := newConstructorSyntaxData()
-	for _, lang := range languages {
+	for lang := range languages.Iter() {
 		if skippedLanguages, ok := packagesToSkip[pkg.Name]; ok && skippedLanguages.Has(lang) {
 			continue
 		}
@@ -2378,7 +2364,7 @@ func generateConstructorSyntaxData(pkg *schema.Package, languages []string) *con
 		}
 
 		switch lang {
-		case "nodejs":
+		case language.Typescript:
 			files, diags, err := safeExtract(nodejs.GenerateProgram)
 			if !diags.HasErrors() && err == nil {
 				program := string(files["index.ts"])
@@ -2388,7 +2374,7 @@ func generateConstructorSyntaxData(pkg *schema.Package, languages []string) *con
 					"//",    /* comment prefix */
 					func(line string) bool { return strings.HasSuffix(line, "});") })
 			}
-		case "python":
+		case language.Python:
 			files, diags, err := safeExtract(python.GenerateProgram)
 			if !diags.HasErrors() && err == nil {
 				program := string(files["__main__.py"])
@@ -2398,7 +2384,7 @@ func generateConstructorSyntaxData(pkg *schema.Package, languages []string) *con
 					"#",     /* comment prefix */
 					func(line string) bool { return strings.HasSuffix(line, ")") })
 			}
-		case "csharp":
+		case language.CSharp:
 			files, diags, err := safeExtract(dotnet.GenerateProgram)
 			if !diags.HasErrors() && err == nil {
 				exampleEnd := func(line string) bool {
@@ -2411,7 +2397,7 @@ func generateConstructorSyntaxData(pkg *schema.Package, languages []string) *con
 					"//",    /* comment prefix */
 					exampleEnd)
 			}
-		case "go":
+		case language.Go:
 			files, diags, err := safeExtract(go_gen.GenerateProgram)
 			if !diags.HasErrors() && err == nil {
 				var program string
@@ -2428,13 +2414,13 @@ func generateConstructorSyntaxData(pkg *schema.Package, languages []string) *con
 					"//",    /* comment prefix */
 					func(line string) bool { return strings.HasSuffix(strings.TrimSpace(line), ")") })
 			}
-		case "yaml":
+		case language.YAML:
 			files, diags, err := safeExtract(yaml.GenerateProgram)
 			if !diags.HasErrors() && err == nil {
 				program := string(files["Main.yaml"])
 				constructorSyntax.yaml = extractConstructorSyntaxExamplesFromYAML(program)
 			}
-		case "java":
+		case language.Java:
 			files, diags, err := safeExtract(java.GenerateProgram)
 			if !diags.HasErrors() && err == nil {
 				program := string(files["MyStack.java"])

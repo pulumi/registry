@@ -15,6 +15,7 @@
 package docs
 
 import (
+	"fmt"
 	"strings"
 	"unicode"
 
@@ -159,3 +160,51 @@ type noCopy struct{}
 
 // Lock is a type hint for go vet. It need not be called.
 func (*noCopy) Lock() {}
+
+// Convert a markdown language tag to a [language.Language] if there is a corresponding
+// language. If no language exists, then _, false will be returned.
+func convertMarkdownLanguage(s string) (language.Language, bool) {
+	switch s {
+	case "csharp":
+		return language.CSharp, true
+	case "go":
+		return language.Go, true
+	case "python":
+		return language.Python, true
+	case "typescript":
+		return language.Typescript, true
+	case "yaml":
+		return language.YAML, true
+	case "java":
+		return language.Java, true
+	default:
+		return language.Language{}, false
+	}
+}
+
+func convertPulumiSchemaLanguage(s string) (language.Language, bool) {
+	switch s {
+	case "csharp":
+		return language.CSharp, true
+	case "go":
+		return language.Go, true
+	case "python":
+		return language.Python, true
+	case "nodejs":
+		return language.Typescript, true
+	case "yaml":
+		return language.YAML, true
+	case "java":
+		return language.Java, true
+	default:
+		return language.Language{}, false
+	}
+}
+
+func mustConvertPulumiSchemaLanguage(s string) language.Language {
+	l, ok := convertPulumiSchemaLanguage(s)
+	if !ok {
+		panic(fmt.Sprintf("invalid language: %q", s))
+	}
+	return l
+}

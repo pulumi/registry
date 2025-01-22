@@ -19,6 +19,7 @@ import (
 	"testing"
 
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
+	"github.com/pulumi/registry/tools/resourcedocsgen/pkg/util/language"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -493,14 +494,14 @@ func TestExamplesProcessing(t *testing.T) {
 	assert.Equal(t, 2, len(examplesSection))
 	assert.Equal(t, "### Basic Example", examplesSection[0].Title)
 	assert.Equal(t, "### Custom Sub-Domain Example", examplesSection[1].Title)
-	expectedLangSnippets := []string{"typescript", "python"}
-	otherLangSnippets := []string{"csharp", "go"}
+	expectedLangSnippets := language.NewSet(language.Typescript, language.Python)
+	otherLangSnippets := language.NewSet(language.CSharp, language.Go)
 	for _, e := range examplesSection {
-		for _, lang := range expectedLangSnippets {
+		for lang := range expectedLangSnippets.Iter() {
 			_, ok := e.Snippets[lang]
 			assert.True(t, ok, "Could not find %s snippet", lang)
 		}
-		for _, lang := range otherLangSnippets {
+		for lang := range otherLangSnippets.Iter() {
 			snippet, ok := e.Snippets[lang]
 			assert.True(t, ok, "Expected to find default placeholders for other languages")
 			assert.Contains(t, "Coming soon!", snippet)
@@ -599,35 +600,35 @@ func TestDecomposeDocstring(t *testing.T) {
 		examples: []exampleSection{
 			{
 				Title: "Basic usage",
-				Snippets: map[string]string{
-					"csharp":     "```csharp\nBasic usage: csharp\n```\n",
-					"go":         "```go\nBasic usage: go\n```\n",
-					"java":       "```java\nBasic usage: java\n```\n",
-					"python":     "```python\nBasic usage: python\n```\n",
-					"typescript": "\n```typescript\nBasic usage: typescript\n```\n",
-					"yaml":       "```yaml\nBasic usage: yaml\n```\n",
+				Snippets: map[language.Language]string{
+					language.CSharp:     "```csharp\nBasic usage: csharp\n```\n",
+					language.Go:         "```go\nBasic usage: go\n```\n",
+					language.Java:       "```java\nBasic usage: java\n```\n",
+					language.Python:     "```python\nBasic usage: python\n```\n",
+					language.Typescript: "\n```typescript\nBasic usage: typescript\n```\n",
+					language.YAML:       "```yaml\nBasic usage: yaml\n```\n",
 				},
 			},
 			{
 				Title: "Basic usage with tags",
-				Snippets: map[string]string{
-					"csharp":     "```csharp\nBasic usage with tags: csharp\n```\n",
-					"go":         "```go\nBasic usage with tags: go\n```\n",
-					"java":       "```java\nBasic usage with tags: java\n```\n",
-					"python":     "```python\nBasic usage with tags: python\n```\n",
-					"typescript": "\n```typescript\nBasic usage with tags: typescript\n```\n",
-					"yaml":       "```yaml\nBasic usage with tags: yaml\n```\n",
+				Snippets: map[language.Language]string{
+					language.CSharp:     "```csharp\nBasic usage with tags: csharp\n```\n",
+					language.Go:         "```go\nBasic usage with tags: go\n```\n",
+					language.Java:       "```java\nBasic usage with tags: java\n```\n",
+					language.Python:     "```python\nBasic usage with tags: python\n```\n",
+					language.Typescript: "\n```typescript\nBasic usage with tags: typescript\n```\n",
+					language.YAML:       "```yaml\nBasic usage with tags: yaml\n```\n",
 				},
 			},
 			{
 				Title: "VPC with CIDR from AWS IPAM",
-				Snippets: map[string]string{
-					"csharp":     "```csharp\nVPC with CIDR from AWS IPAM: csharp\n```\n",
-					"go":         "Coming soon!",
-					"java":       "```java\nVPC with CIDR from AWS IPAM: java\n```\n",
-					"python":     "```python\nVPC with CIDR from AWS IPAM: python\n```\n",
-					"typescript": "\n```typescript\nVPC with CIDR from AWS IPAM: typescript\n```\n",
-					"yaml":       "```yaml\nVPC with CIDR from AWS IPAM: yaml\n```\n",
+				Snippets: map[language.Language]string{
+					language.CSharp:     "```csharp\nVPC with CIDR from AWS IPAM: csharp\n```\n",
+					language.Go:         "Coming soon!",
+					language.Java:       "```java\nVPC with CIDR from AWS IPAM: java\n```\n",
+					language.Python:     "```python\nVPC with CIDR from AWS IPAM: python\n```\n",
+					language.Typescript: "\n```typescript\nVPC with CIDR from AWS IPAM: typescript\n```\n",
+					language.YAML:       "```yaml\nVPC with CIDR from AWS IPAM: yaml\n```\n",
 				},
 			},
 		},

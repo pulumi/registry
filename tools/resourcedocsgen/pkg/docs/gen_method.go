@@ -86,7 +86,7 @@ func (mod *modContext) genMethod(r *schema.Resource, m *schema.Method) methodDoc
 	// Generate the per-language map for the method name.
 	methodNameMap := map[string]string{}
 	for _, lang := range dctx.supportedLanguages {
-		docHelper := dctx.getLanguageDocHelper(lang)
+		docHelper := dctx.getLanguageDocHelper(mustConvertPulumiSchemaLanguage(lang))
 		methodNameMap[lang] = docHelper.GetMethodName(m)
 	}
 
@@ -210,7 +210,7 @@ func (mod *modContext) genMethodCS(
 
 func (mod *modContext) genMethodPython(f *schema.Function) []formalParam {
 	dctx := mod.context
-	docLanguageHelper := dctx.getLanguageDocHelper("python")
+	docLanguageHelper := dctx.getLanguageDocHelper(language.Python)
 	var params []formalParam
 
 	params = append(params, formalParam{
@@ -309,7 +309,7 @@ func (mod *modContext) genMethodArgs(r *schema.Resource, m *schema.Method,
 			paramTemplate = templates.PyFormalParam
 			paramSeparatorTemplate = templates.PyParamSeparator
 
-			docHelper := dctx.getLanguageDocHelper(lang)
+			docHelper := dctx.getLanguageDocHelper(mustConvertPulumiSchemaLanguage(lang))
 			methodName := docHelper.GetMethodName(m)
 			ps = paramSeparator{Indent: strings.Repeat(" ", len("def (")+len(methodName))}
 		}
@@ -347,7 +347,8 @@ func (mod *modContext) getMethodResult(r *schema.Resource, m *schema.Method) map
 		if m.Function.ReturnType != nil {
 			def, err := mod.pkg.Definition()
 			contract.AssertNoErrorf(err, "failed to get definition for package %q", mod.pkg.Name())
-			resultTypeName = dctx.getLanguageDocHelper(lang).GetMethodResultName(def, mod.mod, r, m)
+			resultTypeName = dctx.getLanguageDocHelper(mustConvertPulumiSchemaLanguage(lang)).
+				GetMethodResultName(def, mod.mod, r, m)
 		}
 		resourceMap[lang] = propertyType{
 			Name: resultTypeName,

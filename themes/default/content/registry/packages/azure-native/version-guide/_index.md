@@ -63,7 +63,7 @@ new Vault(/*...*/);
 
 ```go
 import (
-    keyvault "github.com/pulumi/pulumi-azure-native-sdk/keyvault/v2/v20230201"
+    keyvault "github.com/pulumi/pulumi-azure-native-sdk/keyvault/v3/v20230201"
 )
 
 // ...
@@ -134,7 +134,7 @@ new Vault(/*...*/);
 
 ```go
 import (
-    "github.com/pulumi/pulumi-azure-native-sdk/keyvault/v2"
+    "github.com/pulumi/pulumi-azure-native-sdk/keyvault/v3"
 )
 
 // ...

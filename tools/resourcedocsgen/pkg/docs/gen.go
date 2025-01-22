@@ -227,10 +227,8 @@ func (dctx *Context) setModules(modules map[string]*modContext) {
 }
 
 func NewContext(tool string, pkg *schema.Package) *Context {
-	supportedLanguages := []string{"csharp", "go", "nodejs", "python", "yaml", "java"}
-
 	dctx := &Context{
-		supportedLanguages:   supportedLanguages,
+		supportedLanguages:   []string{"csharp", "go", "nodejs", "python", "yaml", "java"},
 		langModuleNameLookup: map[string]string{},
 		docHelpers: map[language.Language]codegen.DocLanguageHelper{
 			language.CSharp:     &dotnet.DocLanguageHelper{},
@@ -298,7 +296,7 @@ type docNestedType struct {
 	Name       string
 	Input      bool
 	AnchorID   string
-	Properties map[string][]property
+	Properties map[language.Language][]property
 	EnumValues map[string][]enum
 }
 
@@ -375,16 +373,16 @@ type resourceDocArgs struct {
 
 	// InputProperties is a map per language and a corresponding slice of input properties accepted as args while creating
 	// a new resource.
-	InputProperties map[string][]property
+	InputProperties map[language.Language][]property
 	// OutputProperties is a map per language and a corresponding slice of output properties returned when a new instance
 	// of the resource is created.
-	OutputProperties map[string][]property
+	OutputProperties map[language.Language][]property
 
 	// LookupParams is a map of the param string to be rendered per language for looking-up a resource.
 	LookupParams map[string]string
 	// StateInputs is a map per language and the corresponding slice of state input properties required while looking-up
 	// an existing resource.
-	StateInputs map[string][]property
+	StateInputs map[language.Language][]property
 	// StateParam is the type name of the state param, if any.
 	StateParam string
 
@@ -1124,8 +1122,9 @@ func (mod *modContext) genNestedTypes(member interface{}, resourceType, isProvid
 				}
 
 				// Create a map to hold the per-language properties of this object.
-				props := make(map[string][]property)
+				props := make(map[language.Language][]property)
 				for _, lang := range dctx.supportedLanguages {
+					lang := mustConvertPulumiSchemaLanguage(lang)
 					props[lang] = mod.getProperties(typ.Properties, lang, true, true, isProvider)
 				}
 
@@ -1184,13 +1183,15 @@ func (mod *modContext) genNestedTypes(member interface{}, resourceType, isProvid
 
 // getProperties returns a slice of properties that can be rendered for docs for the provided slice of properties in the
 // schema.
-func (mod *modContext) getProperties(properties []*schema.Property, lang string, input, nested, isProvider bool,
+func (mod *modContext) getProperties(
+	properties []*schema.Property, lang language.Language, input, nested, isProvider bool,
 ) []property {
 	return mod.getPropertiesWithIDPrefixAndExclude(properties, lang, input, nested, isProvider, "", nil)
 }
 
-func (mod *modContext) getPropertiesWithIDPrefixAndExclude(properties []*schema.Property, lang string, input, nested,
-	isProvider bool, idPrefix string, exclude func(name string) bool,
+func (mod *modContext) getPropertiesWithIDPrefixAndExclude(
+	properties []*schema.Property, lang language.Language, input, nested, isProvider bool,
+	idPrefix string, exclude func(name string) bool,
 ) []property {
 	dctx := mod.context
 	if len(properties) == 0 {
@@ -1215,23 +1216,21 @@ func (mod *modContext) getPropertiesWithIDPrefixAndExclude(properties []*schema.
 
 		characteristics := propertyCharacteristics{input: input}
 
-		langDocHelper := dctx.getLanguageDocHelper(mustConvertPulumiSchemaLanguage(lang))
+		langDocHelper := dctx.getLanguageDocHelper(lang)
 		name, err := langDocHelper.GetPropertyName(prop)
 		if err != nil {
 			panic(err)
 		}
 		propLangName := name
 
-		propID := idPrefix + strings.ToLower(propLangName+propertyLangSeparator+lang)
+		propID := idPrefix + strings.ToLower(propLangName+propertyLangSeparator+lang.String())
 
 		propTypes := make([]propertyType, 0)
 		if typ, isUnion := codegen.UnwrapType(prop.Type).(*schema.UnionType); isUnion {
 			for _, elementType := range typ.ElementTypes {
-				lang := mustConvertPulumiSchemaLanguage(lang)
 				propTypes = append(propTypes, mod.typeString(elementType, lang, characteristics, true))
 			}
 		} else {
-			lang := mustConvertPulumiSchemaLanguage(lang)
 			propTypes = append(propTypes, mod.typeString(prop.Type, lang, characteristics, true))
 		}
 
@@ -1733,9 +1732,9 @@ func (mod *modContext) genResource(r *schema.Resource) resourceDocArgs {
 	// Create a resource module file into which all of this resource's types will go.
 	name := resourceName(r)
 
-	inputProps := make(map[string][]property)
-	outputProps := make(map[string][]property)
-	stateInputs := make(map[string][]property)
+	inputProps := make(map[language.Language][]property)
+	outputProps := make(map[language.Language][]property)
+	stateInputs := make(map[language.Language][]property)
 
 	var filteredOutputProps []*schema.Property
 	// Provider resources do not have output properties, so there won't be anything to filter.
@@ -1753,6 +1752,7 @@ func (mod *modContext) genResource(r *schema.Resource) resourceDocArgs {
 	}
 
 	for _, lang := range dctx.supportedLanguages {
+		lang := mustConvertPulumiSchemaLanguage(lang)
 		inputProps[lang] = mod.getProperties(r.InputProperties, lang, true, false, r.IsProvider)
 		outputProps[lang] = mod.getProperties(filteredOutputProps, lang, false, false, r.IsProvider)
 		if r.IsProvider {

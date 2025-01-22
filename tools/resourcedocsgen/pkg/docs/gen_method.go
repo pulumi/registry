@@ -46,10 +46,10 @@ type methodDocArgs struct {
 	MethodResult map[string]propertyType
 
 	// InputProperties is a map per language and the corresponding slice of input properties accepted by the method.
-	InputProperties map[string][]property
+	InputProperties map[language.Language][]property
 	// OutputProperties is a map per language and the corresponding slice of output properties, which are properties of
 	// the MethodResult type.
-	OutputProperties map[string][]property
+	OutputProperties map[language.Language][]property
 }
 
 func (mod *modContext) genMethods(r *schema.Resource) []methodDocArgs {
@@ -63,8 +63,9 @@ func (mod *modContext) genMethods(r *schema.Resource) []methodDocArgs {
 func (mod *modContext) genMethod(r *schema.Resource, m *schema.Method) methodDocArgs {
 	dctx := mod.context
 	f := m.Function
-	inputProps, outputProps := make(map[string][]property), make(map[string][]property)
+	inputProps, outputProps := make(map[language.Language][]property), make(map[language.Language][]property)
 	for _, lang := range dctx.supportedLanguages {
+		lang := mustConvertPulumiSchemaLanguage(lang)
 		if f.Inputs != nil {
 			exclude := func(name string) bool {
 				return name == "__self__"

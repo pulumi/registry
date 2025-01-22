@@ -32,7 +32,7 @@ var (
 	Go         = Language{"go"}
 	Java       = Language{"java"}
 	Python     = Language{"python"}
-	Typescript = Language{"typescript"}
+	Typescript = Language{"nodejs"}
 	YAML       = Language{"yaml"}
 )
 

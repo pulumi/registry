@@ -53,10 +53,10 @@ type functionDocArgs struct {
 	FunctionResult map[string]propertyType
 
 	// InputProperties is a map per language and the corresponding slice of input properties accepted by the Function.
-	InputProperties map[string][]property
+	InputProperties map[language.Language][]property
 	// InputProperties is a map per language and the corresponding slice of output properties, which are properties of the
 	// FunctionResult type.
-	OutputProperties map[string][]property
+	OutputProperties map[language.Language][]property
 
 	// NestedTypes is a slice of the nested types used in the input and output properties.
 	NestedTypes []docNestedType
@@ -433,9 +433,10 @@ func (mod *modContext) genFunctionOutputVersionMap(f *schema.Function) map[strin
 // the `function.tmpl` doc template.
 func (mod *modContext) genFunction(f *schema.Function) functionDocArgs {
 	dctx := mod.context
-	inputProps := make(map[string][]property)
-	outputProps := make(map[string][]property)
+	inputProps := make(map[language.Language][]property)
+	outputProps := make(map[language.Language][]property)
 	for _, lang := range dctx.supportedLanguages {
+		lang := mustConvertPulumiSchemaLanguage(lang)
 		if f.Inputs != nil {
 			inputProps[lang] = mod.getProperties(f.Inputs.Properties, lang, true, false, false)
 		}

@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/hcl/v2"
 	"github.com/pulumi/pulumi/pkg/v3/codegen/pcl"
 	"github.com/pulumi/registry/tools/resourcedocsgen/pkg/docs/templates"
+	"github.com/pulumi/registry/tools/resourcedocsgen/pkg/util/language"
 
 	"github.com/golang/glog"
 
@@ -603,9 +604,12 @@ func (mod *modContext) cleanTypeString(t schema.Type, langTypeString, lang, modN
 		var csharpNS string
 		// This type could be at the package-level, so it won't have a module name.
 		if objModName != "" {
-			csharpNS = fmt.Sprintf("Pulumi.%s.%s.%s.", title(pkgName, lang), title(objModName, lang), qualifier)
+			csharpNS = fmt.Sprintf("Pulumi.%s.%s.%s.",
+				title(pkgName, language.CSharp),
+				title(objModName, language.CSharp),
+				qualifier)
 		} else {
-			csharpNS = fmt.Sprintf("Pulumi.%s.%s.", title(pkgName, lang), qualifier)
+			csharpNS = fmt.Sprintf("Pulumi.%s.%s.", title(pkgName, language.CSharp), qualifier)
 		}
 		return strings.ReplaceAll(langTypeString, csharpNS, "")
 	}
@@ -1417,7 +1421,7 @@ func (mod *modContext) getConstructorResourceInfo(resourceTypeName, tok string) 
 		case "nodejs", "go", "python", "java":
 			// Intentionally left blank.
 		case "csharp":
-			namespace := title(mod.pkg.Name(), lang)
+			namespace := title(mod.pkg.Name(), language.CSharp)
 			if ns, ok := dctx.csharpPkgInfo.Namespaces[mod.pkg.Name()]; ok {
 				namespace = ns
 			}

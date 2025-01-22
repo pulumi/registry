@@ -24,6 +24,7 @@ import (
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/slice"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/util/contract"
+	"github.com/pulumi/registry/tools/resourcedocsgen/pkg/util/language"
 )
 
 // isDotNetTypeNameBoundary returns true if the prev and next runes represent a boundary between two parts of a .Net/C#
@@ -87,11 +88,11 @@ func tokenToPackageName(tok string) string {
 	return components[0]
 }
 
-func title(s, lang string) string {
+func title(s string, lang language.Language) string {
 	switch lang {
-	case "go":
+	case language.Go:
 		return go_gen.Title(s)
-	case "csharp":
+	case language.CSharp:
 		return dotnet.Title(s)
 	default:
 		//nolint:staticcheck

@@ -26,6 +26,7 @@ import (
 	"github.com/pulumi/pulumi/sdk/v3/go/common/slice"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/util/contract"
 	"github.com/pulumi/registry/tools/resourcedocsgen/pkg/docs/templates"
+	"github.com/pulumi/registry/tools/resourcedocsgen/pkg/util/language"
 )
 
 type methodDocArgs struct {
@@ -104,7 +105,7 @@ func (mod *modContext) genMethod(r *schema.Resource, m *schema.Method) methodDoc
 
 	docInfo := dctx.decomposeDocstring(f.Comment, resourceSnippetLanguages)
 	args := methodDocArgs{
-		Title: title(m.Name, ""),
+		Title: strings.Title(m.Name), //nolint:staticcheck // Maintain usage of strings.Title for backwards compatibility.
 
 		ResourceName: resourceName(r),
 
@@ -129,7 +130,7 @@ func (mod *modContext) genMethod(r *schema.Resource, m *schema.Method) methodDoc
 func (mod *modContext) genMethodTS(f *schema.Function, resourceName, methodName string,
 	optionalArgs bool,
 ) []formalParam {
-	argsType := fmt.Sprintf("%s.%sArgs", resourceName, title(methodName, "nodejs"))
+	argsType := fmt.Sprintf("%s.%sArgs", resourceName, title(methodName, language.Typescript))
 
 	var optionalFlag string
 	if optionalArgs {
@@ -152,7 +153,7 @@ func (mod *modContext) genMethodTS(f *schema.Function, resourceName, methodName 
 func (mod *modContext) genMethodGo(f *schema.Function, resourceName, methodName string,
 	optionalArgs bool,
 ) []formalParam {
-	argsType := fmt.Sprintf("%s%sArgs", resourceName, title(methodName, "go"))
+	argsType := fmt.Sprintf("%s%sArgs", resourceName, title(methodName, language.Go))
 
 	params := []formalParam{
 		{
@@ -188,7 +189,7 @@ func (mod *modContext) genMethodCS(
 	methodName string,
 	optionalArgs bool,
 ) []formalParam {
-	argsType := fmt.Sprintf("%s.%sArgs", resourceName, title(methodName, "csharp"))
+	argsType := fmt.Sprintf("%s.%sArgs", resourceName, title(methodName, language.CSharp))
 	var params []formalParam
 	if f.Inputs != nil {
 		var optionalFlag string
@@ -350,7 +351,8 @@ func (mod *modContext) getMethodResult(r *schema.Resource, m *schema.Method) map
 		}
 		resourceMap[lang] = propertyType{
 			Name: resultTypeName,
-			Link: fmt.Sprintf("#method_%s_result", title(m.Name, "")),
+			//nolint:staticcheck // Maintain usage of strings.Title for backwards compatibility.
+			Link: fmt.Sprintf("#method_%s_result", strings.Title(m.Name)),
 		}
 	}
 

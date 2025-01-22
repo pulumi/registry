@@ -26,6 +26,7 @@ import (
 	"github.com/pulumi/pulumi/sdk/v3/go/common/slice"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/util/contract"
 	"github.com/pulumi/registry/tools/resourcedocsgen/pkg/docs/templates"
+	"github.com/pulumi/registry/tools/resourcedocsgen/pkg/util/language"
 )
 
 // functionDocArgs represents the args that a Function doc template needs.
@@ -95,7 +96,7 @@ func (mod *modContext) getFunctionResourceInfo(f *schema.Function, outputVersion
 				resultTypeName = resultTypeName + "Output"
 			}
 		case "csharp":
-			namespace := title(mod.pkg.Name(), lang)
+			namespace := title(mod.pkg.Name(), language.CSharp)
 			if ns, ok := dctx.csharpPkgInfo.Namespaces[mod.pkg.Name()]; ok {
 				namespace = ns
 			}
@@ -103,7 +104,7 @@ func (mod *modContext) getFunctionResourceInfo(f *schema.Function, outputVersion
 			if mod.mod == "" {
 				resultTypeName = fmt.Sprintf("Pulumi.%s.%s", namespace, resultTypeName)
 			} else {
-				resultTypeName = fmt.Sprintf("Pulumi.%s.%s.%s", namespace, title(mod.mod, lang), resultTypeName)
+				resultTypeName = fmt.Sprintf("Pulumi.%s.%s.%s", namespace, title(mod.mod, language.CSharp), resultTypeName)
 			}
 
 		case "python":
@@ -136,7 +137,7 @@ func (mod *modContext) genFunctionTS(f *schema.Function, funcName string, output
 		argsTypeSuffix = "OutputArgs"
 	}
 
-	argsType := title(fmt.Sprintf("%s%s", funcName, argsTypeSuffix), "nodejs")
+	argsType := title(fmt.Sprintf("%s%s", funcName, argsTypeSuffix), language.Typescript)
 
 	docLangHelper := dctx.getLanguageDocHelper("nodejs")
 	var params []formalParam
@@ -247,7 +248,7 @@ func (mod *modContext) genFunctionJava(f *schema.Function, funcName string, outp
 		argsTypeSuffix = "InvokeArgs"
 	}
 
-	argsType := title(funcName+argsTypeSuffix, "java")
+	argsType := title(funcName+argsTypeSuffix, language.Java)
 	docLangHelper := dctx.getLanguageDocHelper("java")
 	var params []formalParam
 	if f.Inputs != nil {

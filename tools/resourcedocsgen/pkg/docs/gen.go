@@ -189,8 +189,7 @@ func newConstructorSyntaxData() *constructorSyntaxData {
 type Context struct {
 	internalModMap map[string]*modContext
 
-	supportedLanguages language.Set
-	docHelpers         map[language.Language]codegen.DocLanguageHelper
+	docHelpers map[language.Language]codegen.DocLanguageHelper
 
 	// The language-specific info objects for a certain package (provider).
 	goPkgInfo     go_gen.GoPackageInfo
@@ -228,7 +227,6 @@ func (dctx *Context) setModules(modules map[string]*modContext) {
 
 func NewContext(tool string, pkg *schema.Package) *Context {
 	dctx := &Context{
-		supportedLanguages:   language.FullSet(),
 		langModuleNameLookup: map[string]string{},
 		docHelpers: map[language.Language]codegen.DocLanguageHelper{
 			language.CSharp:     &dotnet.DocLanguageHelper{},
@@ -243,7 +241,7 @@ func NewContext(tool string, pkg *schema.Package) *Context {
 
 	defer glog.Flush()
 
-	dctx.constructorSyntaxData = generateConstructorSyntaxData(pkg, language.FullSet())
+	dctx.constructorSyntaxData = generateConstructorSyntaxData(pkg, language.All())
 	// Generate the modules from the schema, and for every module run the generator functions to generate markdown files.
 	dctx.setModules(dctx.generateModulesFromSchemaPackage(tool, pkg))
 
@@ -469,8 +467,8 @@ func (mod *modContext) withDocGenContext(dctx *Context) *modContext {
 // false or `overlaySupportedLanguages` is empty/nil, it returns the default list of supported languages. Otherwise, it
 // filters the `overlaySupportedLanguages` to ensure that they are a subset of the default supported languages.
 func (dctx *Context) getSupportedLanguages(isOverlay bool, overlaySupportedLanguages []string) []string {
-	contextSupportedLanguages := make([]string, 0, dctx.supportedLanguages.Len())
-	for l := range dctx.supportedLanguages.Iter() {
+	contextSupportedLanguages := make([]string, 0, language.All().Len())
+	for l := range language.All().Iter() {
 		contextSupportedLanguages = append(contextSupportedLanguages, l.String())
 	}
 	if !isOverlay || len(overlaySupportedLanguages) == 0 {
@@ -1127,7 +1125,7 @@ func (mod *modContext) genNestedTypes(member interface{}, resourceType, isProvid
 
 				// Create a map to hold the per-language properties of this object.
 				props := make(map[language.Language][]property)
-				for lang := range dctx.supportedLanguages.Iter() {
+				for lang := range language.All().Iter() {
 					props[lang] = mod.getProperties(typ.Properties, lang, true, true, isProvider)
 				}
 
@@ -1146,7 +1144,7 @@ func (mod *modContext) genNestedTypes(member interface{}, resourceType, isProvid
 				name := strings.Title(tokenToName(typ.Token))
 
 				enums := make(map[language.Language][]enum)
-				for lang := range dctx.supportedLanguages.Iter() {
+				for lang := range language.All().Iter() {
 					docLangHelper := dctx.getLanguageDocHelper(lang)
 
 					var langEnumValues []enum
@@ -1365,7 +1363,7 @@ func (mod *modContext) genConstructors(
 		return b.String()
 	}
 
-	for lang := range mod.context.supportedLanguages.Iter() {
+	for lang := range language.All().Iter() {
 		switch lang {
 		case language.Typescript:
 			params := mod.genConstructorTS(r, allOptionalInputs)
@@ -1422,7 +1420,7 @@ func (mod *modContext) getConstructorResourceInfo(resourceTypeName, tok string) 
 	resourceMap := make(map[language.Language]propertyType)
 	resourceDisplayName := resourceTypeName
 
-	for lang := range dctx.supportedLanguages.Iter() {
+	for lang := range language.All().Iter() {
 		// Use the module to package lookup to transform the module name to its normalized package name.
 		modName := mod.getLanguageModuleName(lang)
 		// Reset the type name back to the display name.
@@ -1657,13 +1655,12 @@ func (mod *modContext) getPythonLookupParams(r *schema.Resource, stateParam stri
 // genLookupParams generates a map of per-language way of rendering the formal parameters of the lookup function used to
 // lookup an existing resource.
 func (mod *modContext) genLookupParams(r *schema.Resource, stateParam string) map[language.Language]string {
-	dctx := mod.context
 	lookupParams := make(map[language.Language]string)
 	if r.StateInputs == nil {
 		return lookupParams
 	}
 
-	for lang := range dctx.supportedLanguages.Iter() {
+	for lang := range language.All().Iter() {
 		var (
 			paramTemplate templates.Template
 			params        []formalParam
@@ -1773,7 +1770,7 @@ func (mod *modContext) genResource(r *schema.Resource) resourceDocArgs {
 		})
 	}
 
-	for lang := range dctx.supportedLanguages.Iter() {
+	for lang := range language.All().Iter() {
 		inputProps[lang] = mod.getProperties(r.InputProperties, lang, true, false, r.IsProvider)
 		outputProps[lang] = mod.getProperties(filteredOutputProps, lang, false, false, r.IsProvider)
 		if r.IsProvider {
@@ -2361,7 +2358,7 @@ func generateConstructorSyntaxData(pkg *schema.Package, languages language.Set) 
 		},
 	})
 
-	packagesToSkip := map[string]language.Set{"aws-native": language.FullSet()}
+	packagesToSkip := map[string]language.Set{"aws-native": language.All()}
 
 	type ProgramGenerator = func(program *pcl.Program) (files map[string][]byte, diags hcl.Diagnostics, err error)
 

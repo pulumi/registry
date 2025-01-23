@@ -30,10 +30,10 @@ func (s *Set) Add(l Language) { s.m = s.m | s.mask(l) }
 // Remove modifies s to no longer contain l.
 func (s *Set) Remove(l Language) { s.m = s.m & ^s.mask(l) }
 
-var fullSet = NewSet(ListAll()...)
+var fullSet = NewSet(langOrder[:]...)
 
-// FullSet returns a [Set] that contains all valid languages.
-func FullSet() Set { return fullSet }
+// All returns a [Set] that contains all valid languages.
+func All() Set { return fullSet }
 
 // NewSet creates a new [Set] that contains the languages in elems.
 func NewSet(elems ...Language) Set {
@@ -42,16 +42,6 @@ func NewSet(elems ...Language) Set {
 		s.Add(l)
 	}
 	return s
-}
-
-// langOrder describes the order that Set.Iter will return languages in.
-var langOrder = [...]Language{
-	CSharp,
-	Go,
-	Typescript,
-	Python,
-	YAML,
-	Java,
 }
 
 // Iter providers a deterministic iteration of the languages within s.

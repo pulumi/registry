@@ -99,7 +99,7 @@ func TestConstructorSyntaxGeneratorForSchema(t *testing.T) {
 		},
 	})
 
-	constructorSyntax := generateConstructorSyntaxData(pkg, language.FullSet())
+	constructorSyntax := generateConstructorSyntaxData(pkg, language.All())
 
 	trim := func(s string) string {
 		return strings.TrimPrefix(strings.TrimSuffix(s, "\n"), "\n")

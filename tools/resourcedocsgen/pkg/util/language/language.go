@@ -36,15 +36,16 @@ var (
 	YAML       = Language{"yaml"}
 )
 
-func ListAll() []Language {
-	return []Language{
-		CSharp,
-		Go,
-		Java,
-		Python,
-		Typescript,
-		YAML,
-	}
+// Iteration order of a [Set] of languages is well defined.
+//
+// When-ever a new language is added above, it needs to be added here.
+var langOrder = [...]Language{
+	CSharp,
+	Go,
+	Typescript,
+	Python,
+	YAML,
+	Java,
 }
 
 func (l Language) String() string {

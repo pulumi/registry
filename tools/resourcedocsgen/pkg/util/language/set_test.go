@@ -25,7 +25,7 @@ func TestSetPresense(t *testing.T) {
 
 	s := NewSet(CSharp)
 
-	for _, l := range ListAll() {
+	for _, l := range langOrder {
 		if l == CSharp {
 			assert.True(t, s.Has(CSharp))
 		} else {

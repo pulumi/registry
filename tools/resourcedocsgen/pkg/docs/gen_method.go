@@ -39,11 +39,11 @@ type methodDocArgs struct {
 	ExamplesSection    examplesSection
 
 	// MethodName is a map of the language and the method name in that language.
-	MethodName map[string]string
+	MethodName map[language.Language]string
 	// MethodArgs is map per language view of the parameters in the method.
 	MethodArgs map[language.Language]string
 	// MethodResult is a map per language property types that is returned as a result of calling a method.
-	MethodResult map[string]propertyType
+	MethodResult map[language.Language]propertyType
 
 	// InputProperties is a map per language and the corresponding slice of input properties accepted by the method.
 	InputProperties map[language.Language][]property
@@ -85,9 +85,10 @@ func (mod *modContext) genMethod(r *schema.Resource, m *schema.Method) methodDoc
 	}
 
 	// Generate the per-language map for the method name.
-	methodNameMap := map[string]string{}
+	methodNameMap := map[language.Language]string{}
 	for _, lang := range dctx.supportedLanguages {
-		docHelper := dctx.getLanguageDocHelper(mustConvertPulumiSchemaLanguage(lang))
+		lang := mustConvertPulumiSchemaLanguage(lang)
+		docHelper := dctx.getLanguageDocHelper(lang)
 		methodNameMap[lang] = docHelper.GetMethodName(m)
 	}
 
@@ -260,7 +261,7 @@ func (mod *modContext) genMethodPython(f *schema.Function) []formalParam {
 // genMethodArgs generates the arguments string for a given method that can be rendered directly into a template. An
 // empty string indicates no args.
 func (mod *modContext) genMethodArgs(r *schema.Resource, m *schema.Method,
-	methodNameMap map[string]string,
+	methodNameMap map[language.Language]string,
 ) map[language.Language]string {
 	dctx := mod.context
 	f := m.Function
@@ -298,13 +299,13 @@ func (mod *modContext) genMethodArgs(r *schema.Resource, m *schema.Method,
 
 		switch lang {
 		case language.Typescript:
-			params = mod.genMethodTS(f, resourceName(r), methodNameMap["nodejs"], optionalArgs)
+			params = mod.genMethodTS(f, resourceName(r), methodNameMap[language.Typescript], optionalArgs)
 			paramTemplate = templates.TsFormalParam
 		case language.Go:
-			params = mod.genMethodGo(f, resourceName(r), methodNameMap["go"], optionalArgs)
+			params = mod.genMethodGo(f, resourceName(r), methodNameMap[language.Go], optionalArgs)
 			paramTemplate = templates.GoFormalParam
 		case language.CSharp:
-			params = mod.genMethodCS(f, resourceName(r), methodNameMap["csharp"], optionalArgs)
+			params = mod.genMethodCS(f, resourceName(r), methodNameMap[language.CSharp], optionalArgs)
 			paramTemplate = templates.CSharpFormalParam
 		case language.Python:
 			params = mod.genMethodPython(f)
@@ -339,17 +340,18 @@ func (mod *modContext) genMethodArgs(r *schema.Resource, m *schema.Method,
 
 // getMethodResult returns a map of per-language information about the method result. An empty propertyType.Name
 // indicates no result.
-func (mod *modContext) getMethodResult(r *schema.Resource, m *schema.Method) map[string]propertyType {
-	resourceMap := make(map[string]propertyType)
+func (mod *modContext) getMethodResult(r *schema.Resource, m *schema.Method) map[language.Language]propertyType {
+	resourceMap := make(map[language.Language]propertyType)
 
 	dctx := mod.context
 
 	var resultTypeName string
 	for _, lang := range dctx.supportedLanguages {
+		lang := mustConvertPulumiSchemaLanguage(lang)
 		if m.Function.ReturnType != nil {
 			def, err := mod.pkg.Definition()
 			contract.AssertNoErrorf(err, "failed to get definition for package %q", mod.pkg.Name())
-			resultTypeName = dctx.getLanguageDocHelper(mustConvertPulumiSchemaLanguage(lang)).
+			resultTypeName = dctx.getLanguageDocHelper(lang).
 				GetMethodResultName(def, mod.mod, r, m)
 		}
 		resourceMap[lang] = propertyType{

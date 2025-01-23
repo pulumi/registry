@@ -46,11 +46,11 @@ type functionDocArgs struct {
 	ExamplesSection    examplesSection
 
 	// FunctionName is a map of the language and the function name in that language.
-	FunctionName map[string]string
+	FunctionName map[language.Language]string
 	// FunctionArgs is map per language view of the parameters in the Function.
-	FunctionArgs map[string]string
+	FunctionArgs map[language.Language]string
 	// FunctionResult is a map per language property types that is returned as a result of calling a Function.
-	FunctionResult map[string]propertyType
+	FunctionResult map[language.Language]propertyType
 
 	// InputProperties is a map per language and the corresponding slice of input properties accepted by the Function.
 	InputProperties map[language.Language][]property
@@ -65,37 +65,40 @@ type functionDocArgs struct {
 
 	// Check if the function supports an `Output` version that is automatically lifted to accept `Input` values and return
 	// an `Output` (per language).
-	HasOutputVersion map[string]bool
+	HasOutputVersion map[language.Language]bool
 
 	// True if any of the entries in `HasOutputVersion` are true.
 	AnyLanguageHasOutputVersion bool
 
 	// Same as FunctionArgs, but specific to the Output version of the function.
-	FunctionArgsOutputVersion map[string]string
+	FunctionArgsOutputVersion map[language.Language]string
 
 	// Same as FunctionResult, but specific to the Output version of the function. In languages like Go, `Output<Result>`
 	// gets a dedicated nominal type to emulate generics, which will be passed in here.
-	FunctionResultOutputVersion map[string]propertyType
+	FunctionResultOutputVersion map[language.Language]propertyType
 }
 
 // getFunctionResourceInfo returns a map of per-language information about the resource being looked-up using a static
 // "getter" function.
-func (mod *modContext) getFunctionResourceInfo(f *schema.Function, outputVersion bool) map[string]propertyType {
+func (mod *modContext) getFunctionResourceInfo(
+	f *schema.Function, outputVersion bool,
+) map[language.Language]propertyType {
 	dctx := mod.context
-	resourceMap := make(map[string]propertyType)
+	resourceMap := make(map[language.Language]propertyType)
 
 	var resultTypeName string
 	for _, lang := range dctx.supportedLanguages {
-		docLangHelper := dctx.getLanguageDocHelper(mustConvertPulumiSchemaLanguage(lang))
+		lang := mustConvertPulumiSchemaLanguage(lang)
+		docLangHelper := dctx.getLanguageDocHelper(lang)
 		switch lang {
-		case "nodejs":
+		case language.Typescript:
 			resultTypeName = docLangHelper.GetResourceFunctionResultName(mod.mod, f)
-		case "go":
+		case language.Go:
 			resultTypeName = docLangHelper.GetResourceFunctionResultName(mod.mod, f)
 			if outputVersion {
 				resultTypeName = resultTypeName + "Output"
 			}
-		case "csharp":
+		case language.CSharp:
 			namespace := title(mod.pkg.Name(), language.CSharp)
 			if ns, ok := dctx.csharpPkgInfo.Namespaces[mod.pkg.Name()]; ok {
 				namespace = ns
@@ -107,14 +110,14 @@ func (mod *modContext) getFunctionResourceInfo(f *schema.Function, outputVersion
 				resultTypeName = fmt.Sprintf("Pulumi.%s.%s.%s", namespace, title(mod.mod, language.CSharp), resultTypeName)
 			}
 
-		case "python":
+		case language.Python:
 			resultTypeName = docLangHelper.GetResourceFunctionResultName(mod.mod, f)
-		case "java":
+		case language.Java:
 			resultTypeName = docLangHelper.GetResourceFunctionResultName(mod.mod, f)
-		case "yaml":
+		case language.YAML:
 			resultTypeName = docLangHelper.GetResourceFunctionResultName(mod.mod, f)
 		default:
-			panic(fmt.Errorf("cannot generate function resource info for unhandled language %q", lang))
+			panic(fmt.Errorf("cannot generate function resource info for unhandled language %#v", lang))
 		}
 
 		parts := strings.Split(resultTypeName, ".")
@@ -329,13 +332,14 @@ func (mod *modContext) genFunctionPython(f *schema.Function, resourceName string
 // genFunctionArgs generates the arguments string for a given Function that can be rendered directly into a template.
 func (mod *modContext) genFunctionArgs(
 	f *schema.Function,
-	funcNameMap map[string]string,
+	funcNameMap map[language.Language]string,
 	outputVersion bool,
-) map[string]string {
+) map[language.Language]string {
 	dctx := mod.context
-	functionParams := make(map[string]string)
+	functionParams := make(map[language.Language]string)
 
 	for _, lang := range dctx.supportedLanguages {
+		lang := mustConvertPulumiSchemaLanguage(lang)
 		var (
 			paramTemplate templates.Template
 			params        []formalParam
@@ -346,22 +350,22 @@ func (mod *modContext) genFunctionArgs(
 		ps := paramSeparator{}
 
 		switch lang {
-		case "nodejs":
-			params = mod.genFunctionTS(f, funcNameMap["nodejs"], outputVersion)
+		case language.Typescript:
+			params = mod.genFunctionTS(f, funcNameMap[language.Typescript], outputVersion)
 			paramTemplate = templates.TsFormalParam
-		case "go":
-			params = mod.genFunctionGo(f, funcNameMap["go"], outputVersion)
+		case language.Go:
+			params = mod.genFunctionGo(f, funcNameMap[language.Go], outputVersion)
 			paramTemplate = templates.GoFormalParam
-		case "csharp":
-			params = mod.genFunctionCS(f, funcNameMap["csharp"], outputVersion)
+		case language.CSharp:
+			params = mod.genFunctionCS(f, funcNameMap[language.CSharp], outputVersion)
 			paramTemplate = templates.CSharpFormalParam
-		case "java":
-			params = mod.genFunctionJava(f, funcNameMap["java"], outputVersion)
+		case language.Java:
+			params = mod.genFunctionJava(f, funcNameMap[language.Java], outputVersion)
 			paramTemplate = templates.JavaFormalParam
-		case "yaml":
+		case language.YAML:
 			// Left blank
-		case "python":
-			params = mod.genFunctionPython(f, funcNameMap["python"], outputVersion)
+		case language.Python:
+			params = mod.genFunctionPython(f, funcNameMap[language.Python], outputVersion)
 			paramTemplate = templates.PyFormalParam
 			paramSeparatorTemplate = templates.PyParamSeparator
 
@@ -413,15 +417,16 @@ func (mod *modContext) genFunctionHeader(f *schema.Function) header {
 	}
 }
 
-func (mod *modContext) genFunctionOutputVersionMap(f *schema.Function) map[string]bool {
+func (mod *modContext) genFunctionOutputVersionMap(f *schema.Function) map[language.Language]bool {
 	dctx := mod.context
-	result := map[string]bool{}
+	result := map[language.Language]bool{}
 	for _, lang := range dctx.supportedLanguages {
+		lang := mustConvertPulumiSchemaLanguage(lang)
 		hasOutputVersion := f.NeedsOutputVersion()
-		if lang == "go" {
+		switch lang {
+		case language.Go:
 			hasOutputVersion = go_gen.NeedsGoOutputVersion(f)
-		}
-		if lang == "java" || lang == "yaml" {
+		case language.Java, language.YAML:
 			hasOutputVersion = false
 		}
 		result[lang] = hasOutputVersion
@@ -451,9 +456,10 @@ func (mod *modContext) genFunction(f *schema.Function) functionDocArgs {
 	nestedTypes := mod.genNestedTypes(f, false /*resourceType*/, false /*isProvider*/)
 
 	// Generate the per-language map for the function name.
-	funcNameMap := map[string]string{}
+	funcNameMap := map[language.Language]string{}
 	for _, lang := range dctx.supportedLanguages {
-		docHelper := dctx.getLanguageDocHelper(mustConvertPulumiSchemaLanguage(lang))
+		lang := mustConvertPulumiSchemaLanguage(lang)
+		docHelper := dctx.getLanguageDocHelper(lang)
 		funcNameMap[lang] = docHelper.GetFunctionName(mod.mod, f)
 	}
 

@@ -64,8 +64,7 @@ func (mod *modContext) genMethod(r *schema.Resource, m *schema.Method) methodDoc
 	dctx := mod.context
 	f := m.Function
 	inputProps, outputProps := make(map[language.Language][]property), make(map[language.Language][]property)
-	for _, lang := range dctx.supportedLanguages {
-		lang := mustConvertPulumiSchemaLanguage(lang)
+	for lang := range dctx.supportedLanguages.Iter() {
 		if f.Inputs != nil {
 			exclude := func(name string) bool {
 				return name == "__self__"
@@ -86,8 +85,7 @@ func (mod *modContext) genMethod(r *schema.Resource, m *schema.Method) methodDoc
 
 	// Generate the per-language map for the method name.
 	methodNameMap := map[language.Language]string{}
-	for _, lang := range dctx.supportedLanguages {
-		lang := mustConvertPulumiSchemaLanguage(lang)
+	for lang := range dctx.supportedLanguages.Iter() {
 		docHelper := dctx.getLanguageDocHelper(lang)
 		methodNameMap[lang] = docHelper.GetMethodName(m)
 	}
@@ -267,8 +265,7 @@ func (mod *modContext) genMethodArgs(r *schema.Resource, m *schema.Method,
 	f := m.Function
 
 	functionParams := make(map[language.Language]string)
-	for _, lang := range dctx.supportedLanguages {
-		lang := mustConvertPulumiSchemaLanguage(lang)
+	for lang := range dctx.supportedLanguages.Iter() {
 		var (
 			paramTemplate templates.Template
 			params        []formalParam
@@ -346,8 +343,7 @@ func (mod *modContext) getMethodResult(r *schema.Resource, m *schema.Method) map
 	dctx := mod.context
 
 	var resultTypeName string
-	for _, lang := range dctx.supportedLanguages {
-		lang := mustConvertPulumiSchemaLanguage(lang)
+	for lang := range dctx.supportedLanguages.Iter() {
 		if m.Function.ReturnType != nil {
 			def, err := mod.pkg.Definition()
 			contract.AssertNoErrorf(err, "failed to get definition for package %q", mod.pkg.Name())

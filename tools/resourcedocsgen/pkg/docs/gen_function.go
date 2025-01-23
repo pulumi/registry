@@ -87,8 +87,7 @@ func (mod *modContext) getFunctionResourceInfo(
 	resourceMap := make(map[language.Language]propertyType)
 
 	var resultTypeName string
-	for _, lang := range dctx.supportedLanguages {
-		lang := mustConvertPulumiSchemaLanguage(lang)
+	for lang := range dctx.supportedLanguages.Iter() {
 		docLangHelper := dctx.getLanguageDocHelper(lang)
 		switch lang {
 		case language.Typescript:
@@ -338,8 +337,7 @@ func (mod *modContext) genFunctionArgs(
 	dctx := mod.context
 	functionParams := make(map[language.Language]string)
 
-	for _, lang := range dctx.supportedLanguages {
-		lang := mustConvertPulumiSchemaLanguage(lang)
+	for lang := range dctx.supportedLanguages.Iter() {
 		var (
 			paramTemplate templates.Template
 			params        []formalParam
@@ -420,8 +418,7 @@ func (mod *modContext) genFunctionHeader(f *schema.Function) header {
 func (mod *modContext) genFunctionOutputVersionMap(f *schema.Function) map[language.Language]bool {
 	dctx := mod.context
 	result := map[language.Language]bool{}
-	for _, lang := range dctx.supportedLanguages {
-		lang := mustConvertPulumiSchemaLanguage(lang)
+	for lang := range dctx.supportedLanguages.Iter() {
 		hasOutputVersion := f.NeedsOutputVersion()
 		switch lang {
 		case language.Go:
@@ -440,8 +437,7 @@ func (mod *modContext) genFunction(f *schema.Function) functionDocArgs {
 	dctx := mod.context
 	inputProps := make(map[language.Language][]property)
 	outputProps := make(map[language.Language][]property)
-	for _, lang := range dctx.supportedLanguages {
-		lang := mustConvertPulumiSchemaLanguage(lang)
+	for lang := range dctx.supportedLanguages.Iter() {
 		if f.Inputs != nil {
 			inputProps[lang] = mod.getProperties(f.Inputs.Properties, lang, true, false, false)
 		}
@@ -457,8 +453,7 @@ func (mod *modContext) genFunction(f *schema.Function) functionDocArgs {
 
 	// Generate the per-language map for the function name.
 	funcNameMap := map[language.Language]string{}
-	for _, lang := range dctx.supportedLanguages {
-		lang := mustConvertPulumiSchemaLanguage(lang)
+	for lang := range dctx.supportedLanguages.Iter() {
 		docHelper := dctx.getLanguageDocHelper(lang)
 		funcNameMap[lang] = docHelper.GetFunctionName(mod.mod, f)
 	}

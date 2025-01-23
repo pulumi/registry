@@ -48,10 +48,10 @@ func NewSet(elems ...Language) Set {
 var langOrder = [...]Language{
 	CSharp,
 	Go,
-	Java,
-	Python,
 	Typescript,
+	Python,
 	YAML,
+	Java,
 }
 
 // Iter providers a deterministic iteration of the languages within s.

@@ -79,6 +79,19 @@ func init() {
 		"lPython": func() language.Language { return language.Python },
 		"lYAML":   func() language.Language { return language.YAML },
 
+		"codeChooserFromLang": func(m map[language.Language]string) map[string]string {
+			dst := make(map[string]string, len(m))
+			for l, v := range m {
+				switch l {
+				case language.Typescript:
+					dst["typescript"] = v
+				default:
+					dst[l.String()] = v
+				}
+			}
+			return dst
+		},
+
 		"htmlSafe": func(html string) template.HTML {
 			// Markdown fragments in the templates need to be rendered as-is, so that html/template package doesn't try to
 			// inject data into it, which will most certainly fail.

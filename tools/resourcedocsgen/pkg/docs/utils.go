@@ -15,7 +15,6 @@
 package docs
 
 import (
-	"fmt"
 	"strings"
 	"unicode"
 
@@ -180,31 +179,4 @@ func convertMarkdownLanguage(s string) (language.Language, bool) {
 	default:
 		return language.Language{}, false
 	}
-}
-
-func convertPulumiSchemaLanguage(s string) (language.Language, bool) {
-	switch s {
-	case "csharp":
-		return language.CSharp, true
-	case "go":
-		return language.Go, true
-	case "python":
-		return language.Python, true
-	case "nodejs":
-		return language.Typescript, true
-	case "yaml":
-		return language.YAML, true
-	case "java":
-		return language.Java, true
-	default:
-		return language.Language{}, false
-	}
-}
-
-func mustConvertPulumiSchemaLanguage(s string) language.Language {
-	l, ok := convertPulumiSchemaLanguage(s)
-	if !ok {
-		panic(fmt.Sprintf("invalid language: %q", s))
-	}
-	return l
 }

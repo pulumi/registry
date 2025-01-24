@@ -78,7 +78,7 @@ func (Set) mask(l Language) uint16 {
 		return 1 << 2
 	case Python:
 		return 1 << 3
-	case Typescript:
+	case NodeJS:
 		return 1 << 4
 	case YAML:
 		return 1 << 5

@@ -229,12 +229,12 @@ func NewContext(tool string, pkg *schema.Package) *Context {
 	dctx := &Context{
 		langModuleNameLookup: map[string]string{},
 		docHelpers: map[language.Language]codegen.DocLanguageHelper{
-			language.CSharp:     &dotnet.DocLanguageHelper{},
-			language.Go:         &go_gen.DocLanguageHelper{},
-			language.Typescript: &nodejs.DocLanguageHelper{},
-			language.Python:     &python.DocLanguageHelper{},
-			language.YAML:       &yaml.DocLanguageHelper{},
-			language.Java:       &java.DocLanguageHelper{},
+			language.CSharp: &dotnet.DocLanguageHelper{},
+			language.Go:     &go_gen.DocLanguageHelper{},
+			language.NodeJS: &nodejs.DocLanguageHelper{},
+			language.Python: &python.DocLanguageHelper{},
+			language.YAML:   &yaml.DocLanguageHelper{},
+			language.Java:   &java.DocLanguageHelper{},
 		},
 		moduleConflictLinkMap: map[interface{}]string{},
 	}
@@ -557,7 +557,7 @@ func (mod *modContext) getLanguageModuleName(lang language.Language) string {
 		if override, ok := dctx.csharpPkgInfo.Namespaces[modName]; ok {
 			modName = override
 		}
-	case language.Typescript:
+	case language.NodeJS:
 		if override, ok := dctx.nodePkgInfo.ModuleToPackage[modName]; ok {
 			modName = override
 		}
@@ -676,7 +676,7 @@ func (mod *modContext) cleanTypeString(
 	}
 
 	switch lang {
-	case language.Typescript:
+	case language.NodeJS:
 		return cleanNodeJSName(modName)
 	case language.CSharp:
 		return cleanCSharpName(mod.pkg.Name(), modName)
@@ -757,7 +757,7 @@ func (mod *modContext) typeString(
 // cleanOptionalIdentifier removes the type identifier (i.e. "?" in "string?").
 func cleanOptionalIdentifier(s string, lang language.Language) string {
 	switch lang {
-	case language.Typescript, language.CSharp:
+	case language.NodeJS, language.CSharp:
 		return strings.TrimSuffix(s, "?")
 	case language.Go:
 		return strings.TrimPrefix(s, "*")
@@ -781,7 +781,7 @@ const (
 
 func (mod *modContext) genConstructorTS(r *schema.Resource, argsOptional bool) []formalParam {
 	name := resourceName(r)
-	docLangHelper := mod.context.getLanguageDocHelper(language.Typescript)
+	docLangHelper := mod.context.getLanguageDocHelper(language.NodeJS)
 
 	var argsType string
 
@@ -1365,7 +1365,7 @@ func (mod *modContext) genConstructors(
 
 	for lang := range language.All().Iter() {
 		switch lang {
-		case language.Typescript:
+		case language.NodeJS:
 			params := mod.genConstructorTS(r, allOptionalInputs)
 			formalParams[lang] = formalConstructParams{Params: params}
 			renderedParams[lang] = renderedConstructorParam{Param: renderParams(
@@ -1427,7 +1427,7 @@ func (mod *modContext) getConstructorResourceInfo(resourceTypeName, tok string) 
 		resourceTypeName = resourceDisplayName
 
 		switch lang {
-		case language.Typescript, language.Go, language.Python, language.Java:
+		case language.NodeJS, language.Go, language.Python, language.Java:
 			// Intentionally left blank.
 		case language.CSharp:
 			namespace := title(mod.pkg.Name(), language.CSharp)
@@ -1466,7 +1466,7 @@ func (mod *modContext) getConstructorResourceInfo(resourceTypeName, tok string) 
 
 func (mod *modContext) getTSLookupParams(r *schema.Resource, stateParam string) []formalParam {
 	dctx := mod.context
-	docLangHelper := dctx.getLanguageDocHelper(language.Typescript)
+	docLangHelper := dctx.getLanguageDocHelper(language.NodeJS)
 	def, err := mod.pkg.Definition()
 	contract.AssertNoErrorf(err, "failed to get definition for package %q", mod.pkg.Name())
 
@@ -1671,7 +1671,7 @@ func (mod *modContext) genLookupParams(r *schema.Resource, stateParam string) ma
 		ps := paramSeparator{}
 
 		switch lang {
-		case language.Typescript:
+		case language.NodeJS:
 			params = mod.getTSLookupParams(r, stateParam)
 			paramTemplate = templates.TsFormalParam
 		case language.Go:
@@ -1814,7 +1814,7 @@ func (mod *modContext) genResource(r *schema.Resource) resourceDocArgs {
 			if strings.Contains(example, "notImplemented") || strings.Contains(example, "PANIC") {
 				example = ""
 			}
-			creationExampleSyntax[language.Typescript] = example
+			creationExampleSyntax[language.NodeJS] = example
 		}
 		if example, found := dctx.constructorSyntaxData.python.resources[r.Token]; found {
 			if strings.Contains(example, "not_implemented") || strings.Contains(example, "PANIC") {
@@ -2384,7 +2384,7 @@ func generateConstructorSyntaxData(pkg *schema.Package, languages language.Set) 
 		}
 
 		switch lang {
-		case language.Typescript:
+		case language.NodeJS:
 			files, diags, err := safeExtract(nodejs.GenerateProgram)
 			if !diags.HasErrors() && err == nil {
 				program := string(files["index.ts"])

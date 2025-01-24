@@ -38,10 +38,10 @@ func TestSetAdd(t *testing.T) {
 	t.Parallel()
 
 	s := NewSet()
-	assert.False(t, s.Has(Typescript))
+	assert.False(t, s.Has(NodeJS))
 	assert.False(t, s.Has(Go))
-	s.Add(Typescript)
-	assert.True(t, s.Has(Typescript))
+	s.Add(NodeJS)
+	assert.True(t, s.Has(NodeJS))
 	assert.False(t, s.Has(Go))
 }
 
@@ -63,7 +63,7 @@ func TestSetLen(t *testing.T) {
 		assert.Equal(t, 1, s.Len())
 		assert.False(t, s.IsEmpty())
 
-		s.Add(Typescript)
+		s.Add(NodeJS)
 		assert.Equal(t, 2, s.Len())
 		assert.False(t, s.IsEmpty())
 	})

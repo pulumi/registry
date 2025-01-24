@@ -130,7 +130,7 @@ func (mod *modContext) genMethod(r *schema.Resource, m *schema.Method) methodDoc
 func (mod *modContext) genMethodTS(f *schema.Function, resourceName, methodName string,
 	optionalArgs bool,
 ) []formalParam {
-	argsType := fmt.Sprintf("%s.%sArgs", resourceName, title(methodName, language.Typescript))
+	argsType := fmt.Sprintf("%s.%sArgs", resourceName, title(methodName, language.NodeJS))
 
 	var optionalFlag string
 	if optionalArgs {
@@ -295,8 +295,8 @@ func (mod *modContext) genMethodArgs(r *schema.Resource, m *schema.Method,
 		}
 
 		switch lang {
-		case language.Typescript:
-			params = mod.genMethodTS(f, resourceName(r), methodNameMap[language.Typescript], optionalArgs)
+		case language.NodeJS:
+			params = mod.genMethodTS(f, resourceName(r), methodNameMap[language.NodeJS], optionalArgs)
 			paramTemplate = templates.TsFormalParam
 		case language.Go:
 			params = mod.genMethodGo(f, resourceName(r), methodNameMap[language.Go], optionalArgs)

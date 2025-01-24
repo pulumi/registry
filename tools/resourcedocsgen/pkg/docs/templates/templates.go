@@ -75,7 +75,7 @@ func init() {
 		"lCSharp": func() language.Language { return language.CSharp },
 		"lGo":     func() language.Language { return language.Go },
 		"lJava":   func() language.Language { return language.Java },
-		"lNodejs": func() language.Language { return language.Typescript },
+		"lNodejs": func() language.Language { return language.NodeJS },
 		"lPython": func() language.Language { return language.Python },
 		"lYAML":   func() language.Language { return language.YAML },
 
@@ -83,7 +83,7 @@ func init() {
 			dst := make(map[string]string, len(m))
 			for l, v := range m {
 				switch l {
-				case language.Typescript:
+				case language.NodeJS:
 					dst["typescript"] = v
 				default:
 					dst[l.String()] = v

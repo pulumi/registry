@@ -90,7 +90,7 @@ func (mod *modContext) getFunctionResourceInfo(
 	for lang := range language.All().Iter() {
 		docLangHelper := dctx.getLanguageDocHelper(lang)
 		switch lang {
-		case language.Typescript:
+		case language.NodeJS:
 			resultTypeName = docLangHelper.GetResourceFunctionResultName(mod.mod, f)
 		case language.Go:
 			resultTypeName = docLangHelper.GetResourceFunctionResultName(mod.mod, f)
@@ -139,9 +139,9 @@ func (mod *modContext) genFunctionTS(f *schema.Function, funcName string, output
 		argsTypeSuffix = "OutputArgs"
 	}
 
-	argsType := title(fmt.Sprintf("%s%s", funcName, argsTypeSuffix), language.Typescript)
+	argsType := title(fmt.Sprintf("%s%s", funcName, argsTypeSuffix), language.NodeJS)
 
-	docLangHelper := dctx.getLanguageDocHelper(language.Typescript)
+	docLangHelper := dctx.getLanguageDocHelper(language.NodeJS)
 	var params []formalParam
 	if f.Inputs != nil {
 		params = append(params, formalParam{
@@ -348,8 +348,8 @@ func (mod *modContext) genFunctionArgs(
 		ps := paramSeparator{}
 
 		switch lang {
-		case language.Typescript:
-			params = mod.genFunctionTS(f, funcNameMap[language.Typescript], outputVersion)
+		case language.NodeJS:
+			params = mod.genFunctionTS(f, funcNameMap[language.NodeJS], outputVersion)
 			paramTemplate = templates.TsFormalParam
 		case language.Go:
 			params = mod.genFunctionGo(f, funcNameMap[language.Go], outputVersion)

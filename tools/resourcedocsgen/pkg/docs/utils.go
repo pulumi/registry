@@ -171,7 +171,7 @@ func convertMarkdownLanguage(s string) (language.Language, bool) {
 	case "python":
 		return language.Python, true
 	case "typescript":
-		return language.Typescript, true
+		return language.NodeJS, true
 	case "yaml":
 		return language.YAML, true
 	case "java":

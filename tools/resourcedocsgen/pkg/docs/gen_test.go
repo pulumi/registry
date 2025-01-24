@@ -494,7 +494,7 @@ func TestExamplesProcessing(t *testing.T) {
 	assert.Equal(t, 2, len(examplesSection))
 	assert.Equal(t, "### Basic Example", examplesSection[0].Title)
 	assert.Equal(t, "### Custom Sub-Domain Example", examplesSection[1].Title)
-	expectedLangSnippets := language.NewSet(language.Typescript, language.Python)
+	expectedLangSnippets := language.NewSet(language.NodeJS, language.Python)
 	otherLangSnippets := language.NewSet(language.CSharp, language.Go)
 	for _, e := range examplesSection {
 		for lang := range expectedLangSnippets.Iter() {
@@ -601,34 +601,34 @@ func TestDecomposeDocstring(t *testing.T) {
 			{
 				Title: "Basic usage",
 				Snippets: map[language.Language]string{
-					language.CSharp:     "```csharp\nBasic usage: csharp\n```\n",
-					language.Go:         "```go\nBasic usage: go\n```\n",
-					language.Java:       "```java\nBasic usage: java\n```\n",
-					language.Python:     "```python\nBasic usage: python\n```\n",
-					language.Typescript: "\n```typescript\nBasic usage: typescript\n```\n",
-					language.YAML:       "```yaml\nBasic usage: yaml\n```\n",
+					language.CSharp: "```csharp\nBasic usage: csharp\n```\n",
+					language.Go:     "```go\nBasic usage: go\n```\n",
+					language.Java:   "```java\nBasic usage: java\n```\n",
+					language.Python: "```python\nBasic usage: python\n```\n",
+					language.NodeJS: "\n```typescript\nBasic usage: typescript\n```\n",
+					language.YAML:   "```yaml\nBasic usage: yaml\n```\n",
 				},
 			},
 			{
 				Title: "Basic usage with tags",
 				Snippets: map[language.Language]string{
-					language.CSharp:     "```csharp\nBasic usage with tags: csharp\n```\n",
-					language.Go:         "```go\nBasic usage with tags: go\n```\n",
-					language.Java:       "```java\nBasic usage with tags: java\n```\n",
-					language.Python:     "```python\nBasic usage with tags: python\n```\n",
-					language.Typescript: "\n```typescript\nBasic usage with tags: typescript\n```\n",
-					language.YAML:       "```yaml\nBasic usage with tags: yaml\n```\n",
+					language.CSharp: "```csharp\nBasic usage with tags: csharp\n```\n",
+					language.Go:     "```go\nBasic usage with tags: go\n```\n",
+					language.Java:   "```java\nBasic usage with tags: java\n```\n",
+					language.Python: "```python\nBasic usage with tags: python\n```\n",
+					language.NodeJS: "\n```typescript\nBasic usage with tags: typescript\n```\n",
+					language.YAML:   "```yaml\nBasic usage with tags: yaml\n```\n",
 				},
 			},
 			{
 				Title: "VPC with CIDR from AWS IPAM",
 				Snippets: map[language.Language]string{
-					language.CSharp:     "```csharp\nVPC with CIDR from AWS IPAM: csharp\n```\n",
-					language.Go:         "Coming soon!",
-					language.Java:       "```java\nVPC with CIDR from AWS IPAM: java\n```\n",
-					language.Python:     "```python\nVPC with CIDR from AWS IPAM: python\n```\n",
-					language.Typescript: "\n```typescript\nVPC with CIDR from AWS IPAM: typescript\n```\n",
-					language.YAML:       "```yaml\nVPC with CIDR from AWS IPAM: yaml\n```\n",
+					language.CSharp: "```csharp\nVPC with CIDR from AWS IPAM: csharp\n```\n",
+					language.Go:     "Coming soon!",
+					language.Java:   "```java\nVPC with CIDR from AWS IPAM: java\n```\n",
+					language.Python: "```python\nVPC with CIDR from AWS IPAM: python\n```\n",
+					language.NodeJS: "\n```typescript\nVPC with CIDR from AWS IPAM: typescript\n```\n",
+					language.YAML:   "```yaml\nVPC with CIDR from AWS IPAM: yaml\n```\n",
 				},
 			},
 		},

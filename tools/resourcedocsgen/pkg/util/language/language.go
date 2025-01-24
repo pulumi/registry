@@ -18,22 +18,22 @@
 // - [Go]
 // - [Java]
 // - [Python]
-// - [Typescript]
+// - [NodeJS]
 // - [YAML]
 //
-// For a list of all languages, use [ListAll].
+// For a list of all languages, use [All].
 package language
 
 // Language is a valid docsgen language. The default value is not valid.
 type Language struct{ tag string }
 
 var (
-	CSharp     = Language{"csharp"}
-	Go         = Language{"go"}
-	Java       = Language{"java"}
-	Python     = Language{"python"}
-	Typescript = Language{"nodejs"}
-	YAML       = Language{"yaml"}
+	CSharp = Language{"csharp"}
+	Go     = Language{"go"}
+	Java   = Language{"java"}
+	Python = Language{"python"}
+	NodeJS = Language{"nodejs"}
+	YAML   = Language{"yaml"}
 )
 
 // Iteration order of a [Set] of languages is well defined.
@@ -42,7 +42,7 @@ var (
 var langOrder = [...]Language{
 	CSharp,
 	Go,
-	Typescript,
+	NodeJS,
 	Python,
 	YAML,
 	Java,
@@ -66,7 +66,7 @@ func (l Language) GoString() string {
 		varName = "Java"
 	case Python:
 		varName = "Python"
-	case Typescript:
+	case NodeJS:
 		varName = "Typescript"
 	case YAML:
 		varName = "YAML"

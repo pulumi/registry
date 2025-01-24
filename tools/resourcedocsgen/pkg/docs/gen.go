@@ -241,7 +241,7 @@ func NewContext(tool string, pkg *schema.Package) *Context {
 
 	defer glog.Flush()
 
-	dctx.constructorSyntaxData = generateConstructorSyntaxData(pkg, language.All())
+	dctx.constructorSyntaxData = generateConstructorSyntaxData(pkg)
 	// Generate the modules from the schema, and for every module run the generator functions to generate markdown files.
 	dctx.setModules(dctx.generateModulesFromSchemaPackage(tool, pkg))
 
@@ -467,8 +467,8 @@ func (mod *modContext) withDocGenContext(dctx *Context) *modContext {
 // false or `overlaySupportedLanguages` is empty/nil, it returns the default list of supported languages. Otherwise, it
 // filters the `overlaySupportedLanguages` to ensure that they are a subset of the default supported languages.
 func (dctx *Context) getSupportedLanguages(isOverlay bool, overlaySupportedLanguages []string) []string {
-	contextSupportedLanguages := make([]string, 0, language.All().Len())
-	for l := range language.All().Iter() {
+	contextSupportedLanguages := make([]string, 0, 6 /* the number of supported languages */)
+	for l := range language.All() {
 		contextSupportedLanguages = append(contextSupportedLanguages, l.String())
 	}
 	if !isOverlay || len(overlaySupportedLanguages) == 0 {
@@ -1125,7 +1125,7 @@ func (mod *modContext) genNestedTypes(member interface{}, resourceType, isProvid
 
 				// Create a map to hold the per-language properties of this object.
 				props := make(map[language.Language][]property)
-				for lang := range language.All().Iter() {
+				for lang := range language.All() {
 					props[lang] = mod.getProperties(typ.Properties, lang, true, true, isProvider)
 				}
 
@@ -1144,7 +1144,7 @@ func (mod *modContext) genNestedTypes(member interface{}, resourceType, isProvid
 				name := strings.Title(tokenToName(typ.Token))
 
 				enums := make(map[language.Language][]enum)
-				for lang := range language.All().Iter() {
+				for lang := range language.All() {
 					docLangHelper := dctx.getLanguageDocHelper(lang)
 
 					var langEnumValues []enum
@@ -1363,7 +1363,7 @@ func (mod *modContext) genConstructors(
 		return b.String()
 	}
 
-	for lang := range language.All().Iter() {
+	for lang := range language.All() {
 		switch lang {
 		case language.NodeJS:
 			params := mod.genConstructorTS(r, allOptionalInputs)
@@ -1420,7 +1420,7 @@ func (mod *modContext) getConstructorResourceInfo(resourceTypeName, tok string) 
 	resourceMap := make(map[language.Language]propertyType)
 	resourceDisplayName := resourceTypeName
 
-	for lang := range language.All().Iter() {
+	for lang := range language.All() {
 		// Use the module to package lookup to transform the module name to its normalized package name.
 		modName := mod.getLanguageModuleName(lang)
 		// Reset the type name back to the display name.
@@ -1660,7 +1660,7 @@ func (mod *modContext) genLookupParams(r *schema.Resource, stateParam string) ma
 		return lookupParams
 	}
 
-	for lang := range language.All().Iter() {
+	for lang := range language.All() {
 		var (
 			paramTemplate templates.Template
 			params        []formalParam
@@ -1770,7 +1770,7 @@ func (mod *modContext) genResource(r *schema.Resource) resourceDocArgs {
 		})
 	}
 
-	for lang := range language.All().Iter() {
+	for lang := range language.All() {
 		inputProps[lang] = mod.getProperties(r.InputProperties, lang, true, false, r.IsProvider)
 		outputProps[lang] = mod.getProperties(filteredOutputProps, lang, false, false, r.IsProvider)
 		if r.IsProvider {
@@ -2341,7 +2341,7 @@ func (dctx *Context) generateModulesFromSchemaPackage(tool string, pkg *schema.P
 // The reason we generate a full program a schema with all the resources is that if we did every resource separately, it
 // would take too long to generate the programs and the rest of the docs. That is why we batch generate them and split
 // the resource declarations by comment delimiters.
-func generateConstructorSyntaxData(pkg *schema.Package, languages language.Set) *constructorSyntaxData {
+func generateConstructorSyntaxData(pkg *schema.Package) *constructorSyntaxData {
 	loader := NewStaticSchemaLoader(pkg)
 	constructorGenerator := &constructorSyntaxGenerator{
 		indentSize:             0,
@@ -2358,13 +2358,13 @@ func generateConstructorSyntaxData(pkg *schema.Package, languages language.Set) 
 		},
 	})
 
-	packagesToSkip := map[string]language.Set{"aws-native": language.All()}
+	packagesToSkip := map[string]bool{"aws-native": true}
 
 	type ProgramGenerator = func(program *pcl.Program) (files map[string][]byte, diags hcl.Diagnostics, err error)
 
 	constructorSyntax := newConstructorSyntaxData()
-	for lang := range languages.Iter() {
-		if skippedLanguages, ok := packagesToSkip[pkg.Name]; ok && skippedLanguages.Has(lang) {
+	for lang := range language.All() {
+		if packagesToSkip[pkg.Name] {
 			continue
 		}
 

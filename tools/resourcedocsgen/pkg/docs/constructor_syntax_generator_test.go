@@ -19,7 +19,6 @@ import (
 	"testing"
 
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
-	"github.com/pulumi/registry/tools/resourcedocsgen/pkg/util/language"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -99,7 +98,7 @@ func TestConstructorSyntaxGeneratorForSchema(t *testing.T) {
 		},
 	})
 
-	constructorSyntax := generateConstructorSyntaxData(pkg, language.All())
+	constructorSyntax := generateConstructorSyntaxData(pkg)
 
 	trim := func(s string) string {
 		return strings.TrimPrefix(strings.TrimSuffix(s, "\n"), "\n")

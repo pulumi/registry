@@ -21,8 +21,10 @@
 // - [NodeJS]
 // - [YAML]
 //
-// For a list of all languages, use [All].
+// For an iterator over all valid languages, use [All].
 package language
+
+import "iter"
 
 // Language is a valid docsgen language. The default value is not valid.
 type Language struct{ tag string }
@@ -35,6 +37,18 @@ var (
 	NodeJS = Language{"nodejs"}
 	YAML   = Language{"yaml"}
 )
+
+// All provides a deterministic iteration of all valid languages.
+func All() iter.Seq[Language] { return all }
+
+// all is the implementation of [All].
+func all(yield func(Language) bool) {
+	for _, v := range langOrder {
+		if !yield(v) {
+			return
+		}
+	}
+}
 
 // Iteration order of a [Set] of languages is well defined.
 //

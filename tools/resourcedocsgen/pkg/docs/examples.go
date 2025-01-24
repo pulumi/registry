@@ -72,7 +72,7 @@ func (dctx *Context) decomposeDocstring(docstring, supportedSnippetLanguages str
 	// it needs to behave correctly when no examples were found.
 	pushExamples := func() {
 		if len(currentSection.Snippets) > 0 {
-			for l := range language.All().Iter() {
+			for l := range language.All() {
 				if _, ok := currentSection.Snippets[l]; !ok {
 					currentSection.Snippets[l] = defaultMissingExampleSnippetPlaceholder
 				}

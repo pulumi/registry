@@ -10,7 +10,7 @@ native: true
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-azure-native
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-azure-native/v2.83.0/provider/cmd/pulumi-resource-azure-native/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-azure-native/v2.84.0/provider/cmd/pulumi-resource-azure-native/schema.json
 title: Azure Native
-updated_on: 1737355563
-version: v2.83.0
+updated_on: 1737706742
+version: v2.84.0

@@ -40,15 +40,18 @@ ls -l "themes/default/data/registry/packages" | tail -n +2 | awk '{print $9}' | 
 
     # check to see that package _index.md file exists.
     overview_path="themes/default/content/registry/packages/$pkg/_index.md"
-    if [ ! -f $overview_path ]; then
+    if [ ! -f "$overview_path" ]; then
         echo "ERROR: '$overview_path' does not exist."
         exit 1
     fi
 
-    content=$(check_overview_content $overview_path)
+    content=$(check_overview_content "$overview_path")
 
-    # TODO: Remove this line and the reference to excluded_pkgs below when https://github.com/pulumi/registry/issues/5307 is resolved.
-    excluded_pkgs=("heroku" "junipermist" "packet" "sdwan")
+    # excluded_pkgs contains exceptions to the minimum 250 character rule for _index.md pages.
+    excluded_pkgs=(
+        "heroku" # Owned by the Pulumiverse: https://github.com/pulumiverse/pulumi-heroku, fix pending: https://github.com/pulumiverse/pulumi-heroku/pull/103
+        "packet" # Deprecated in favor of Equinix Metal (which has also been deprecated). We will not fix the docs for this provider.
+    )
     
     # check that content exists and is at least 250 characters.
     if [ ${#content} -lt 250 ] && [[ ! " ${excluded_pkgs[*]} " =~ "$pkg" ]]; then
@@ -57,7 +60,7 @@ ls -l "themes/default/data/registry/packages" | tail -n +2 | awk '{print $9}' | 
     fi
 
     install_path="themes/default/content/registry/packages/$pkg/installation-configuration.md"
-    if [ ! -f $install_path ]; then
+    if [ ! -f "$install_path" ]; then
         echo "WARN: '$install_path' does not exist. Package will be displayed with a single overview file."
     fi
 

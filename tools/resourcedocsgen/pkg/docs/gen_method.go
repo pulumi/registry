@@ -264,75 +264,99 @@ func (mod *modContext) genMethodArgs(r *schema.Resource, m *schema.Method,
 	dctx := mod.context
 	f := m.Function
 
-	functionParams := make(map[language.Language]string)
-	for lang := range language.All() {
-		var (
-			paramTemplate templates.Template
-			params        []formalParam
-		)
-		b := &bytes.Buffer{}
+	pyDocHelper := dctx.getLanguageDocHelper(language.Python)
+	pyIdent := strings.Repeat(" ", len("def (")+len(pyDocHelper.GetMethodName(m)))
 
-		paramSeparatorTemplate := templates.ParamSeparator
-		ps := paramSeparator{}
-
-		var hasArgs bool
-		optionalArgs := true
-		if f.Inputs != nil {
-			for _, arg := range f.Inputs.InputShape.Properties {
-				if arg.Name == "__self__" {
-					continue
-				}
-				hasArgs = true
-				if arg.IsRequired() {
-					optionalArgs = false
-				}
+	optionalArgs := true
+	hasArgs := false
+	if f.Inputs != nil {
+		for _, arg := range f.Inputs.InputShape.Properties {
+			if arg.Name == "__self__" {
+				continue
+			}
+			hasArgs = true
+			if arg.IsRequired() {
+				optionalArgs = false
+				break
 			}
 		}
+	}
 
+	functionParams := make(map[language.Language]string)
+	for lang := range language.All() {
 		if !hasArgs {
 			functionParams[lang] = ""
 			continue
 		}
-
-		switch lang {
-		case language.NodeJS:
-			params = mod.genMethodTS(f, resourceName(r), methodNameMap[language.NodeJS], optionalArgs)
-			paramTemplate = templates.TsFormalParam
-		case language.Go:
-			params = mod.genMethodGo(f, resourceName(r), methodNameMap[language.Go], optionalArgs)
-			paramTemplate = templates.GoFormalParam
-		case language.CSharp:
-			params = mod.genMethodCS(f, resourceName(r), methodNameMap[language.CSharp], optionalArgs)
-			paramTemplate = templates.CSharpFormalParam
-		case language.Python:
-			params = mod.genMethodPython(f)
-			paramTemplate = templates.PyFormalParam
-			paramSeparatorTemplate = templates.PyParamSeparator
-
-			docHelper := dctx.getLanguageDocHelper(lang)
-			methodName := docHelper.GetMethodName(m)
-			ps = paramSeparator{Indent: strings.Repeat(" ", len("def (")+len(methodName))}
-		}
-
-		n := len(params)
-		if n == 0 {
-			functionParams[lang] = ""
-			continue
-		}
-
-		for i, p := range params {
-			if err := paramTemplate(b, p); err != nil {
-				panic(err)
-			}
-			if i != n-1 {
-				if err := paramSeparatorTemplate(b, ps); err != nil {
-					panic(err)
-				}
-			}
-		}
-		functionParams[lang] = b.String()
+		params := mod.genMethodParams(lang, f, resourceName(r), methodNameMap[lang], optionalArgs)
+		functionParams[lang] = renderParams(lang, params, pyIdent)
 	}
 	return functionParams
+}
+
+func (mod *modContext) genMethodParams(
+	lang language.Language,
+	f *schema.Function,
+	resourceName string,
+	methodName string,
+	optionalArgs bool,
+) []formalParam {
+	switch lang {
+	case language.NodeJS:
+		return mod.genMethodTS(f, resourceName, methodName, optionalArgs)
+	case language.Go:
+		return mod.genMethodGo(f, resourceName, methodName, optionalArgs)
+	case language.CSharp:
+		return mod.genMethodCS(f, resourceName, methodName, optionalArgs)
+	case language.Python:
+		return mod.genMethodPython(f)
+	case language.Java, language.YAML:
+		// Java and YAML don't have method documentation.
+		return nil
+	default:
+		glog.Fatalf("Unknown language %#v", lang)
+		return nil
+	}
+}
+
+func renderParams(lang language.Language, params []formalParam, pyIndent string) string {
+	var param templates.Template
+	var ps paramSeparator
+	separator := templates.ParamSeparator
+
+	switch lang {
+	case language.CSharp:
+		param = templates.CSharpFormalParam
+	case language.Go:
+		param = templates.GoFormalParam
+	case language.Java:
+		param = templates.JavaFormalParam
+	case language.NodeJS:
+		param = templates.TsFormalParam
+	case language.Python:
+		param = templates.PyFormalParam
+		separator = templates.PyParamSeparator
+		ps = paramSeparator{Indent: pyIndent}
+	case language.YAML:
+		return "" // YAML doesn't use rendered parameters
+	default:
+		glog.Fatalf("Unknown language %#v", lang)
+	}
+
+	b := &bytes.Buffer{}
+	n := len(params)
+	for i, p := range params {
+		if err := param(b, p); err != nil {
+			panic(err)
+		}
+		if i != n-1 {
+			if err := separator(b, ps); err != nil {
+				panic(err)
+			}
+		}
+	}
+
+	return b.String()
 }
 
 // getMethodResult returns a map of per-language information about the method result. An empty propertyType.Name

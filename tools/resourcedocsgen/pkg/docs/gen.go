@@ -1344,42 +1344,22 @@ func (mod *modContext) genConstructors(
 	renderedParams := make(map[language.Language]renderedConstructorParam)
 	formalParams := make(map[language.Language]formalConstructParams)
 
-	renderParams := func(
-		renderParam, renderSeperator templates.Template,
-		seperatorArgs paramSeparator,
-		params []formalParam,
-	) string {
-		b := &bytes.Buffer{}
-		for i, p := range params {
-			if i != 0 {
-				if err := renderSeperator(b, seperatorArgs); err != nil {
-					panic(err)
-				}
-			}
-			if err := renderParam(b, p); err != nil {
-				panic(err)
-			}
-		}
-		return b.String()
-	}
+	pyIdent := strings.Repeat(" ", len("def (")+len(resourceName(r)))
 
 	for lang := range language.All() {
 		switch lang {
 		case language.NodeJS:
 			params := mod.genConstructorTS(r, allOptionalInputs)
 			formalParams[lang] = formalConstructParams{Params: params}
-			renderedParams[lang] = renderedConstructorParam{Param: renderParams(
-				templates.TsFormalParam, templates.ParamSeparator, paramSeparator{}, params)}
+			renderedParams[lang] = renderedConstructorParam{Param: renderParams(lang, params, pyIdent)}
 		case language.Go:
 			params := mod.genConstructorGo(r, allOptionalInputs)
 			formalParams[lang] = formalConstructParams{Params: params}
-			renderedParams[lang] = renderedConstructorParam{Param: renderParams(
-				templates.GoFormalParam, templates.ParamSeparator, paramSeparator{}, params)}
+			renderedParams[lang] = renderedConstructorParam{Param: renderParams(lang, params, pyIdent)}
 		case language.CSharp:
 			params := mod.genConstructorCS(r, allOptionalInputs)
 			formalParams[lang] = formalConstructParams{Params: params}
-			renderedParams[lang] = renderedConstructorParam{Param: renderParams(
-				templates.CSharpFormalParam, templates.ParamSeparator, paramSeparator{}, params)}
+			renderedParams[lang] = renderedConstructorParam{Param: renderParams(lang, params, pyIdent)}
 		case language.Java:
 			params := mod.genConstructorJava(r, false)
 			argsOverloadParams := mod.genConstructorJava(r, true)
@@ -1388,8 +1368,8 @@ func (mod *modContext) genConstructors(
 				ArgParams: argsOverloadParams,
 			}
 			renderedParams[lang] = renderedConstructorParam{
-				Param:    renderParams(templates.JavaFormalParam, templates.ParamSeparator, paramSeparator{}, params),
-				ArgParam: renderParams(templates.JavaFormalParam, templates.ParamSeparator, paramSeparator{}, argsOverloadParams),
+				Param:    renderParams(lang, params, pyIdent),
+				ArgParam: renderParams(lang, argsOverloadParams, pyIdent),
 			}
 		case language.Python:
 			params := mod.genConstructorPython(r, allOptionalInputs, false)
@@ -1398,12 +1378,10 @@ func (mod *modContext) genConstructors(
 				Params:    params,
 				ArgParams: argsOverloadParams,
 			}
-			ps := paramSeparator{Indent: strings.Repeat(" ", len("def (")+len(resourceName(r)))}
 			renderedParams[lang] = renderedConstructorParam{
-				Param:    renderParams(templates.PyFormalParam, templates.PyParamSeparator, ps, params),
-				ArgParam: renderParams(templates.PyFormalParam, templates.PyParamSeparator, ps, argsOverloadParams),
+				Param:    renderParams(lang, params, pyIdent),
+				ArgParam: renderParams(lang, argsOverloadParams, pyIdent),
 			}
-
 		case language.YAML:
 			formalParams[lang] = formalConstructParams{Params: mod.genConstructorYaml()}
 			renderedParams[lang] = renderedConstructorParam{}
@@ -1660,50 +1638,33 @@ func (mod *modContext) genLookupParams(r *schema.Resource, stateParam string) ma
 		return lookupParams
 	}
 
+	pyIndent := strings.Repeat(" ", len("def get("))
+
 	for lang := range language.All() {
-		var (
-			paramTemplate templates.Template
-			params        []formalParam
-		)
-		b := &bytes.Buffer{}
-
-		paramSeparatorTemplate := templates.ParamSeparator
-		ps := paramSeparator{}
-
-		switch lang {
-		case language.NodeJS:
-			params = mod.getTSLookupParams(r, stateParam)
-			paramTemplate = templates.TsFormalParam
-		case language.Go:
-			params = mod.getGoLookupParams(r, stateParam)
-			paramTemplate = templates.GoFormalParam
-		case language.CSharp:
-			params = mod.getCSLookupParams(r, stateParam)
-			paramTemplate = templates.CSharpFormalParam
-		case language.Java:
-			params = mod.getJavaLookupParams(r, stateParam)
-			paramTemplate = templates.JavaFormalParam
-		case language.Python:
-			params = mod.getPythonLookupParams(r, stateParam)
-			paramTemplate = templates.PyFormalParam
-			paramSeparatorTemplate = templates.PyParamSeparator
-			ps = paramSeparator{Indent: strings.Repeat(" ", len("def get("))}
-		}
-
-		n := len(params)
-		for i, p := range params {
-			if err := paramTemplate(b, p); err != nil {
-				panic(err)
-			}
-			if i != n-1 {
-				if err := paramSeparatorTemplate(b, ps); err != nil {
-					panic(err)
-				}
-			}
-		}
-		lookupParams[lang] = b.String()
+		params := mod.getLookupParams(lang, r, stateParam)
+		lookupParams[lang] = renderParams(lang, params, pyIndent)
 	}
 	return lookupParams
+}
+
+func (mod *modContext) getLookupParams(lang language.Language, r *schema.Resource, stateParam string) []formalParam {
+	switch lang {
+	case language.NodeJS:
+		return mod.getTSLookupParams(r, stateParam)
+	case language.Go:
+		return mod.getGoLookupParams(r, stateParam)
+	case language.CSharp:
+		return mod.getCSLookupParams(r, stateParam)
+	case language.Java:
+		return mod.getJavaLookupParams(r, stateParam)
+	case language.Python:
+		return mod.getPythonLookupParams(r, stateParam)
+	case language.YAML, language.Java:
+		return nil // We don't render lookup parameters for Java and YAML
+	default:
+		glog.Fatalf("Unknown language %#v", lang)
+		return nil
+	}
 }
 
 // filterOutputProperties removes the input properties from the output properties list (since input props are implicitly

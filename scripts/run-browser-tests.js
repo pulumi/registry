@@ -1,5 +1,6 @@
 const util = require("util");
 const exec = util.promisify(require("child_process").exec);
+const process = require('node:process');
 const fs = require("fs");
 const path = require("path");
 const AWS = require("aws-sdk");
@@ -25,9 +26,6 @@ const singles = [
     "oci",
 ];
 
-// Retry queue to process failed packages.
-const retry = [];
-
 const allPkgs = getPackagesMetadata();
 const pkgs = allPkgs.filter((pkg) => !singles.includes(pkg.name));
 const largePkgs = allPkgs.filter((pkg) => singles.includes(pkg.name));
@@ -46,15 +44,28 @@ const results = {
 
 async function runTests() {
     async function runTest(pkgMetadata, split) {
+        // We assume that any failure in `yarn run test-api-docs` is due to a failing
+        // test, and not a failure to run the tests.
+        //
+        // `yarn run test-api-docs` (and `mocha` under the hood) do not allow
+        // distinguishing between "some tests failed" and "the tests did not run
+        // correctly".
         try {
-            await exec(`npm run test-api-docs -- --pkg=${pkgMetadata.name} --split=${split}`);
-            console.log(`processed ${pkgMetadata.name}`);
-            processJSON(pkgMetadata);
+            await exec(`yarn run test-api-docs -- --pkg=${pkgMetadata.name} --split=${split} --reporter-options "outputFile=${pkgMetadata.name}.json"`);
+            console.log(`${pkgMetadata.name}: no tests failed`);
         } catch (err) {
-            console.log(`failed to process ${pkgMetadata.name}: exit code ${code}`);
+            console.log(`${pkgMetadata.name}: some tests failed (exit code ${err.code})`);
             console.log(err.stdout);
             console.log(err.stderr);
-            process.exit(1);
+        } finally {
+            const resultPath = `ctrf/${pkgMetadata.name}.json`;
+            const contents = fs.readFileSync(resultPath, {
+                encoding: "utf8",
+            });
+            processTestResult(pkgMetadata, contents);
+            fs.unlink(resultPath, (err) => {
+                if (err) console.log(err);
+            });
         }
     }
 
@@ -88,8 +99,6 @@ async function runTests() {
 
     // Batch process smaller packages.
     await processBatches(pkgs, batchSize, false);
-    // Process retry queue synchronously.
-    await processSync(retry, false);
     // Process the larger packages synchronously.
     await processSync(largePkgs, true);
 
@@ -97,21 +106,8 @@ async function runTests() {
     await pushResultsS3(results);
 }
 
-function processJSON(pkgMetadata) {
-    const contents = fs.readFileSync("ctrf/ctrf-report.json", {
-        encoding: "utf8",
-    });
+function processTestResult(pkgMetadata, contents) {
     const results = JSON.parse(contents);
-
-    // The test results get written to ctrf/ctrf-report.json, and since we process in batches asynchronously, there
-    // is the potential for a race condition where before the test results are read from the file another package
-    // test could have written to it, so we verify the results match the package being processed and if not, add
-    // to retry queue to be processed synchronously later.
-    if (!results.results.tests[0].name.includes(`${pkgMetadata.name}/`)) {
-        retry.push(pkgMetadata);
-        return;
-    }
-
     transformResults(results, pkgMetadata);
 }
 

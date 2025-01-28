@@ -1,10 +1,7 @@
 const { HtmlUrlChecker } = require("broken-link-checker");
 const { WebClient, LogLevel } = require("@slack/web-api");
-const httpServer = require("http-server");
 const Sitemapper = require("sitemapper");
 const sitemap = new Sitemapper();
-const path = require("path");
-const fs = require("fs");
 
 /**
  *  This script uses the programmatic API of https://github.com/stevenvachon/broken-link-checker
@@ -32,7 +29,7 @@ if (!maxRetries || Number.isNaN(maxRetries)) {
 const bhttp = require("bhttp");
 const oldRequest = bhttp.request;
 bhttp.request = function () {
-    const [url, options, callback] = arguments;
+    const options = arguments[1];
 
     // Modify request options.
     // https://git.cryto.net/joepie91/node-bhttp/src/branch/master/lib/bhttp.js#L886

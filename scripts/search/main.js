@@ -1,7 +1,5 @@
 const fs = require("fs");
 const registry = require("./registry");
-const path = require("path");
-const yaml = require("js-yaml");
 const page = require("./page");
 
 // As part of the Registry build, we also generate a collection of JSON files that we use to power

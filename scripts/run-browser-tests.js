@@ -130,7 +130,7 @@ function transformResults(res, pkgMetadata) {
     // Track total count of pages.
     const allPages = new Set();
     res.results.tests.forEach((t) => {
-        const { url, _ } = extractTestInfo(t.name);
+        const url = extractTestInfo(t.name).url;
         allPages.add(url);
     });
 

@@ -1,10 +1,10 @@
 const chai = require("chai");
 const glob = require("glob");
 const fs = require("fs");
-const path = require("path");
 const cheerio = require("cheerio");
 const htmlparser2 = require("htmlparser2");
 const process = require("process");
+const { describe, it } = require("mocha");
 
 const expect = chai.expect;
 
@@ -334,18 +334,6 @@ function isResourceListFile($) {
     return resourcesHeading.length > 0 || functionsHeading.length > 0;
 }
 
-// Generate a list of the function names to add to a list so we know which pages
-// are functions.
-function getFunctions($) {
-    const containsFunctions = $("h2#functions").length > 0;
-    if (containsFunctions) {
-        const list = $("h2#functions + ul > li");
-        list.each((i, elm) => {
-            functions.push($(elm).text().toLowerCase());
-        });
-    }
-}
-
 function checkInputPropertyDescriptions($) {
     const props = $("h3#inputs + p + div > pulumi-choosable > dl > dd");
     return props
@@ -402,11 +390,9 @@ function getPaths(split) {
         case "1":
             console.log("processing first half...");
             return paths.sort().slice(0, paths.length / 2);
-            break;
         case "2":
             console.log("processing second half...");
             return paths.sort().slice(paths.length / 2);
-            break;
         default:
             return paths;
     }

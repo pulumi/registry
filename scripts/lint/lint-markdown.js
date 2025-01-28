@@ -23,7 +23,7 @@ const AUTO_GENERATED_HEADING_REGEX =
  * registry/themes/default/content/registry/packages/auth0/_index.md
  *
  */
-const PACKAGE_INDEX_REGEX = /packages\/[a-z0-9\-]*\/_index.md/;
+const PACKAGE_INDEX_REGEX = /packages\/[a-z0-9-]*\/_index.md/;
 
 /**
  * Validates if a title exists, has length, and does not have a length over 60 characters.
@@ -313,8 +313,6 @@ const markdownFileOpts = {
         // Allow all code block styles in a file. Code block styles
         // are created equal and we shall not discriminate.
         MD046: false,
-        // Allow indents on unordered lists to be 4 spaces instead of 2.
-        MD007: { indent: 4 },
         // Allow duplicate headings.
         MD024: false,
         // Allow headings to be indented.

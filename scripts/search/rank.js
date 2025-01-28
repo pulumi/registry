@@ -1,10 +1,8 @@
 module.exports = {
-
     // Return the explicit or implicit rank for a given page. See the Algolia documentation to learn
     // more about how Algolia ranking and relevance work.
     // https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/
     get(page) {
-
         // If the page is explicitly ranked zero, return zero.
         const explicitRank = this.getExplicitRank(page);
         if (explicitRank === 0) {
@@ -33,12 +31,12 @@ module.exports = {
     // Implicit keywords are derived from the page's URL. We do this to make string matches more
     // likely. (For example, to surface both AWS Classic and AWS Native for queries for 'aws'.)
     getImplicitKeywords(page) {
-        const match = page.href.match(/^\/registry\/packages\/(aws|aws-native|azure|azure-native|gcp|google-native|kubernetes)\/$/);
+        const match = page.href.match(
+            /^\/registry\/packages\/(aws|aws-native|azure|azure-native|gcp|google-native|kubernetes)\/$/,
+        );
 
         if (match && match[1]) {
-            return [
-                match[1].replace("-native", ""),
-            ];
+            return [match[1].replace("-native", "")];
         }
 
         return [];
@@ -48,10 +46,12 @@ module.exports = {
     // Rankings are applied in descending order numerically (i.e., for a given query, higher-ranked
     // pages will will show up before lower-ranked ones).
     getImplicitRank(page) {
-
         // Get-started pages.
-        if (page.href.match(/^\/docs\/clouds\/(aws|azure|gcp|kubernetes)\/get-started\//)) {
-
+        if (
+            page.href.match(
+                /^\/docs\/clouds\/(aws|azure|gcp|kubernetes)\/get-started\//,
+            )
+        ) {
             // Top-level get-started pages rank highest.
             if (page.kind === "section") {
                 return 1000;
@@ -64,7 +64,6 @@ module.exports = {
 
         // Cloud landing pages are next.
         if (page.href.match(/^\/docs\/clouds\/(aws|azure|gcp|kubernetes)\//)) {
-
             // Top-level pages again rank highest.
             if (page.kind === "section") {
                 return 990;
@@ -75,7 +74,6 @@ module.exports = {
 
         // Docs pages are next.
         if (page.href.startsWith("/docs")) {
-
             // First concepts.
             if (page.href.startsWith("/docs/concepts/")) {
                 return 890;
@@ -88,21 +86,27 @@ module.exports = {
 
             // Top-level pages again rank highest.
             if (page.kind === "section") {
-                return 870
+                return 870;
             }
 
             return 860;
         }
 
         // Tier-1 provider pages are next.
-        if (page.href.match(/^\/registry\/packages\/(aws|azure-native|gcp|kubernetes)\//)) {
-
-            if (page.href.match(/^\/registry\/packages\/(aws|azure-native|gcp|kubernetes)\/$/)) {
+        if (
+            page.href.match(
+                /^\/registry\/packages\/(aws|azure-native|gcp|kubernetes)\//,
+            )
+        ) {
+            if (
+                page.href.match(
+                    /^\/registry\/packages\/(aws|azure-native|gcp|kubernetes)\/$/,
+                )
+            ) {
                 return 790;
             } else if (page.href.match(/installation-configuration/)) {
                 return 780;
             } else if (page.href.match(/api-docs/)) {
-
                 // Order Kubernetes API docs more recent first (e.g., v1 over v1beta1).
                 if (page.href.match(/\/kubernetes\/api-docs/)) {
                     if (page.href.match(/\/v\d\//)) {
@@ -117,9 +121,16 @@ module.exports = {
         }
 
         // Tier-2 providers are next.
-        if (page.href.match(/^\/registry\/packages\/(aws-native|azure|google-native|digitalocean)\//)) {
-
-            if (page.href.match(/^\/registry\/packages\/(aws-native|azure|google-native|digitalocean)\/$/)) {
+        if (
+            page.href.match(
+                /^\/registry\/packages\/(aws-native|azure|google-native|digitalocean)\//,
+            )
+        ) {
+            if (
+                page.href.match(
+                    /^\/registry\/packages\/(aws-native|azure|google-native|digitalocean)\/$/,
+                )
+            ) {
                 return 690;
             } else if (page.href.match(/installation-configuration/)) {
                 return 680;
@@ -131,9 +142,16 @@ module.exports = {
         }
 
         // Then officially supported component packages.
-        if (page.href.match(/^\/registry\/packages\/(awsx|eks|aws-iam|aws-apigateway|aws-quickstart-vpc)\//)) {
-
-            if (page.href.match(/^\/registry\/packages\/(awsx|eks|aws-iam|aws-apigateway|aws-quickstart-vpc)\/$/)) {
+        if (
+            page.href.match(
+                /^\/registry\/packages\/(awsx|eks|aws-iam|aws-apigateway|aws-quickstart-vpc)\//,
+            )
+        ) {
+            if (
+                page.href.match(
+                    /^\/registry\/packages\/(awsx|eks|aws-iam|aws-apigateway|aws-quickstart-vpc)\/$/,
+                )
+            ) {
                 return 590;
             } else if (page.href.match(/installation-configuration/)) {
                 return 580;
@@ -146,7 +164,6 @@ module.exports = {
 
         // Then the rest.
         if (page.href.match(/^\/registry\/packages\//)) {
-
             if (page.href.match(/^\/registry\/packages\/[\w-]+\/$/)) {
                 return 490;
             } else if (page.href.match(/installation-configuration/)) {
@@ -168,12 +185,15 @@ module.exports = {
     },
 
     isImplicitlyBoosted(page) {
-
         // Tier-1 provider pages also get boosted.
-        if (page.href.match(/^\/registry\/packages\/(aws|azure-native|gcp|kubernetes)\/$/)) {
+        if (
+            page.href.match(
+                /^\/registry\/packages\/(aws|azure-native|gcp|kubernetes)\/$/,
+            )
+        ) {
             return true;
         }
 
         return false;
-    }
-}
+    },
+};

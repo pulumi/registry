@@ -4,7 +4,7 @@ const postcss = require("postcss");
 const purgecss = require("@fullhuman/postcss-purgecss");
 const cssnano = require("cssnano");
 
-const registryBundleSlug = "-registry"
+const registryBundleSlug = "-registry";
 
 function minifyCSS(filePath) {
     const bundlePath = glob.sync(filePath)[0];
@@ -17,11 +17,13 @@ function minifyCSS(filePath) {
     const css = fs.readFileSync(bundlePath);
 
     return postcss([
-
         // PurgeCSS removes unused CSS by analyzing the files of the built website.
         // https://purgecss.com/
         purgecss({
-            content: [ "public/**/*.html", `public/js/bundle${registryBundleSlug}.*.js` ],
+            content: [
+                "public/**/*.html",
+                `public/js/bundle${registryBundleSlug}.*.js`,
+            ],
             // PurgeCSS looks through all the built files but, making an exception here
             // to skip the files in the azure-native-v2 package because it is causing
             // out of memory errors with all the new files added from the package. This
@@ -30,9 +32,7 @@ function minifyCSS(filePath) {
             skippedContentGlobs: [
                 "public/registry/packages/azure-native-v1/**/*",
             ],
-            css: [
-                bundlePath,
-            ],
+            css: [bundlePath],
             safelist: {
                 deep: [
                     /^hs-/,
@@ -54,7 +54,8 @@ function minifyCSS(filePath) {
             // so that we do not strip them out. As long as a class name appears in the HTML
             // in its entirety, PurgeCSS will not remove it.
             // Ex. https://tailwindcss.com/docs/optimizing-for-production#writing-purgeable-html
-            defaultExtractor: content => content.match(/[\w-/.:]+(?<!:)/g) || [],
+            defaultExtractor: (content) =>
+                content.match(/[\w-/.:]+(?<!:)/g) || [],
         }),
 
         // CSSNano minifies our rendered CSS by removing whitespace, comments, etc.
@@ -70,18 +71,18 @@ function minifyCSS(filePath) {
             ],
         }),
     ])
-    .process(css, { from: bundlePath, to: bundlePath })
-    .then(result => {
-        const css = result.css;
+        .process(css, { from: bundlePath, to: bundlePath })
+        .then((result) => {
+            const css = result.css;
 
-        // Make sure there's at least some valid-looking CSS in the result.
-        if (!css || !css.match(/html|body/)) {
-            throw new Error(`Unexpected PostCSS result: ${css}`);
-        }
+            // Make sure there's at least some valid-looking CSS in the result.
+            if (!css || !css.match(/html|body/)) {
+                throw new Error(`Unexpected PostCSS result: ${css}`);
+            }
 
-        // Write the result back to the file.
-        fs.writeFileSync(bundlePath, css);
-    });
+            // Write the result back to the file.
+            fs.writeFileSync(bundlePath, css);
+        });
 }
 
 minifyCSS(`public/css/bundle${registryBundleSlug}.*.css`).then(() => {
@@ -91,6 +92,6 @@ minifyCSS(`public/css/bundle${registryBundleSlug}.*.css`).then(() => {
 });
 
 // Exit non-zero when something goes wrong in the promise chain.
-process.on("unhandledRejection", error => {
+process.on("unhandledRejection", (error) => {
     throw new Error(error);
 });

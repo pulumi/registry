@@ -1,6 +1,6 @@
 const util = require("util");
 const exec = util.promisify(require("child_process").exec);
-const process = require('node:process');
+const process = require("node:process");
 const fs = require("fs");
 const path = require("path");
 const AWS = require("aws-sdk");
@@ -51,10 +51,14 @@ async function runTests() {
         // distinguishing between "some tests failed" and "the tests did not run
         // correctly".
         try {
-            await exec(`yarn run test-api-docs -- --pkg=${pkgMetadata.name} --split=${split} --reporter-options "outputFile=${pkgMetadata.name}.json"`);
+            await exec(
+                `yarn run test-api-docs -- --pkg=${pkgMetadata.name} --split=${split} --reporter-options "outputFile=${pkgMetadata.name}.json"`,
+            );
             console.log(`${pkgMetadata.name}: no tests failed`);
         } catch (err) {
-            console.log(`${pkgMetadata.name}: some tests failed (exit code ${err.code})`);
+            console.log(
+                `${pkgMetadata.name}: some tests failed (exit code ${err.code})`,
+            );
             console.log(err.stdout);
             console.log(err.stderr);
         } finally {
@@ -240,12 +244,13 @@ async function pushResultsS3(obj) {
 }
 
 // Load package metadata from metadata files, convert YAML to JSON object,
-// then return array containing package metadata. 
+// then return array containing package metadata.
 function getPackagesMetadata() {
     const dirPath = "./themes/default/data/registry/packages/";
-    return fs.readdirSync(dirPath).
-        filter((file) => file.endsWith(".yaml")).
-        map((file) => {
+    return fs
+        .readdirSync(dirPath)
+        .filter((file) => file.endsWith(".yaml"))
+        .map((file) => {
             const filePath = path.join(dirPath, file);
             const fileContents = fs.readFileSync(filePath, "utf8");
             return yaml.parse(fileContents);

@@ -31,7 +31,7 @@ paths.forEach((p) => {
 
     // Some of our non-bridged providers maintain a different directory structure
     // where the module structure is more deep or shallowly nested. This checks the
-    // html file to see if it is a module page, and if it is, then skip it as the
+    // HTML file to see if it is a module page, and if it is, then skip it as the
     // tests that follow are to be run against resource pages.
     if (isModuleFile($) || isResourceListFile($)) {
         return;
@@ -54,7 +54,7 @@ paths.forEach((p) => {
 
             describe("Structure", () => {
                 it("is nested correctly within docs-content", () => {
-                    // check if correctly nested withing the docs-main-content and docs-content.
+                    // Check if correctly nested withing the docs-main-content and docs-content.
                     // This is kind of hard to verify 100%, but package details section is
                     // a section that is ~always reliably there since it is not something 
                     // conditionally there or relies on upstream parsing, so is an indicator
@@ -297,7 +297,7 @@ paths.forEach((p) => {
         });
     }
 
-    // By default node runs garbage collection very lazily since it needs to hault
+    // By default node runs garbage collection very lazily since it needs to halt
     // execution in order to run it, so this manually invokes the garbage collector
     // every 200 pages and tends to slightly help the memory issues.
     processed++;

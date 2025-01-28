@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-hcloud/v1.21.1/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-hcloud/v1.21.2/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Hcloud Provider
@@ -8,7 +8,7 @@ layout: package
 ---
 ## Installation
 
-The hcloud provider is available as a package in all Pulumi languages:
+The Hcloud provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/hcloud`](https://www.npmjs.com/package/@pulumi/hcloud)
 * Python: [`pulumi-hcloud`](https://pypi.org/project/pulumi-hcloud/)

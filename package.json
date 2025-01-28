@@ -32,12 +32,15 @@
     "scripts": {
         "minify-css": "node scripts/minify-css.js",
         "test-api-docs": "NODE_OPTIONS=--max_old_space_size=8192 mocha scripts/tests -n expose-gc --reporter mocha-ctrf-json-reporter",
-        "lint": "prettier scripts --check",
+        "lint": "eslint scripts && prettier scripts --check",
         "format": "prettier scripts --write"
     },
     "devDependencies": {
+        "@eslint/js": "^9.19.0",
         "chai": "4.2.0",
         "cypress-multi-reporters": "^1.6.4",
+        "eslint": "^9.19.0",
+        "globals": "^15.14.0",
         "mocha-ctrf-json-reporter": "^0.0.4",
         "prettier": "3.4.2"
     }

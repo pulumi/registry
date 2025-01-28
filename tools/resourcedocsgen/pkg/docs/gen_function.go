@@ -15,17 +15,16 @@
 package docs
 
 import (
-	"bytes"
 	"fmt"
 	"strings"
 
+	"github.com/golang/glog"
 	"github.com/pulumi/pulumi/pkg/v3/codegen"
 	go_gen "github.com/pulumi/pulumi/pkg/v3/codegen/go"
 	"github.com/pulumi/pulumi/pkg/v3/codegen/python"
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/slice"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/util/contract"
-	"github.com/pulumi/registry/tools/resourcedocsgen/pkg/docs/templates"
 	"github.com/pulumi/registry/tools/resourcedocsgen/pkg/util/language"
 )
 
@@ -131,7 +130,7 @@ func (mod *modContext) getFunctionResourceInfo(
 	return resourceMap
 }
 
-func (mod *modContext) genFunctionTS(f *schema.Function, funcName string, outputVersion bool) []formalParam {
+func (mod *modContext) genFunctionParamsTS(f *schema.Function, funcName string, outputVersion bool) []formalParam {
 	dctx := mod.context
 
 	argsTypeSuffix := "Args"
@@ -166,7 +165,7 @@ func (mod *modContext) genFunctionTS(f *schema.Function, funcName string, output
 	return params
 }
 
-func (mod *modContext) genFunctionGo(f *schema.Function, funcName string, outputVersion bool) []formalParam {
+func (mod *modContext) genFunctionParamsGo(f *schema.Function, funcName string, outputVersion bool) []formalParam {
 	argsTypeSuffix := "Args"
 	if outputVersion {
 		argsTypeSuffix = "OutputArgs"
@@ -206,7 +205,7 @@ func (mod *modContext) genFunctionGo(f *schema.Function, funcName string, output
 	return params
 }
 
-func (mod *modContext) genFunctionCS(f *schema.Function, funcName string, outputVersion bool) []formalParam {
+func (mod *modContext) genFunctionParamsCS(f *schema.Function, funcName string, outputVersion bool) []formalParam {
 	dctx := mod.context
 
 	argsTypeSuffix := "Args"
@@ -242,7 +241,7 @@ func (mod *modContext) genFunctionCS(f *schema.Function, funcName string, output
 	return params
 }
 
-func (mod *modContext) genFunctionJava(f *schema.Function, funcName string, outputVersion bool) []formalParam {
+func (mod *modContext) genFunctionParamsJava(f *schema.Function, funcName string, outputVersion bool) []formalParam {
 	dctx := mod.context
 
 	argsTypeSuffix := "Args"
@@ -277,7 +276,7 @@ func (mod *modContext) genFunctionJava(f *schema.Function, funcName string, outp
 	return params
 }
 
-func (mod *modContext) genFunctionPython(f *schema.Function, resourceName string, outputVersion bool) []formalParam {
+func (mod *modContext) genFunctionParamsPython(f *schema.Function, _ string, outputVersion bool) []formalParam {
 	dctx := mod.context
 	docLanguageHelper := dctx.getLanguageDocHelper(language.Python)
 	var params []formalParam
@@ -334,62 +333,42 @@ func (mod *modContext) genFunctionArgs(
 	funcNameMap map[language.Language]string,
 	outputVersion bool,
 ) map[language.Language]string {
-	dctx := mod.context
+	pyDocHelper := mod.context.getLanguageDocHelper(language.Python)
+	pyIdent := strings.Repeat(" ", len("def (")+len(pyDocHelper.GetFunctionName(mod.mod, f)))
+
 	functionParams := make(map[language.Language]string)
-
 	for lang := range language.All() {
-		var (
-			paramTemplate templates.Template
-			params        []formalParam
-		)
-		b := &bytes.Buffer{}
-
-		paramSeparatorTemplate := templates.ParamSeparator
-		ps := paramSeparator{}
-
-		switch lang {
-		case language.NodeJS:
-			params = mod.genFunctionTS(f, funcNameMap[language.NodeJS], outputVersion)
-			paramTemplate = templates.TsFormalParam
-		case language.Go:
-			params = mod.genFunctionGo(f, funcNameMap[language.Go], outputVersion)
-			paramTemplate = templates.GoFormalParam
-		case language.CSharp:
-			params = mod.genFunctionCS(f, funcNameMap[language.CSharp], outputVersion)
-			paramTemplate = templates.CSharpFormalParam
-		case language.Java:
-			params = mod.genFunctionJava(f, funcNameMap[language.Java], outputVersion)
-			paramTemplate = templates.JavaFormalParam
-		case language.YAML:
-			// Left blank
-		case language.Python:
-			params = mod.genFunctionPython(f, funcNameMap[language.Python], outputVersion)
-			paramTemplate = templates.PyFormalParam
-			paramSeparatorTemplate = templates.PyParamSeparator
-
-			docHelper := dctx.getLanguageDocHelper(language.Python)
-			funcName := docHelper.GetFunctionName(mod.mod, f)
-			ps = paramSeparator{Indent: strings.Repeat(" ", len("def (")+len(funcName))}
-		}
-
-		n := len(params)
-		if n == 0 {
+		params := mod.genFunctionParams(lang, f, funcNameMap, outputVersion)
+		if len(params) == 0 {
 			continue
 		}
-
-		for i, p := range params {
-			if err := paramTemplate(b, p); err != nil {
-				panic(err)
-			}
-			if i != n-1 {
-				if err := paramSeparatorTemplate(b, ps); err != nil {
-					panic(err)
-				}
-			}
-		}
-		functionParams[lang] = b.String()
+		functionParams[lang] = renderParams(lang, params, pyIdent)
 	}
 	return functionParams
+}
+
+func (mod *modContext) genFunctionParams(
+	lang language.Language, f *schema.Function,
+	funcNameMap map[language.Language]string, outputVersion bool,
+) []formalParam {
+	funcName := funcNameMap[lang]
+	switch lang {
+	case language.NodeJS:
+		return mod.genFunctionParamsTS(f, funcName, outputVersion)
+	case language.Go:
+		return mod.genFunctionParamsGo(f, funcName, outputVersion)
+	case language.CSharp:
+		return mod.genFunctionParamsCS(f, funcName, outputVersion)
+	case language.Java:
+		return mod.genFunctionParamsJava(f, funcName, outputVersion)
+	case language.Python:
+		return mod.genFunctionParamsPython(f, funcName, outputVersion)
+	case language.YAML: // Left blank
+		return nil
+	default:
+		glog.Fatalf("Unknown %#v", lang)
+		return nil
+	}
 }
 
 func (mod *modContext) genFunctionHeader(f *schema.Function) header {

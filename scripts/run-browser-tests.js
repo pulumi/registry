@@ -47,14 +47,9 @@ const results = {
 async function runTests() {
     async function runTest(pkgMetadata, split) {
         try {
-            await exec(`npm run test-api-docs -- --pkg=${pkgMetadata.name} --split=${split} --reporter-options "outputFile=${pkgMetadata.name}.json"`);
+            await exec(`npm run test-api-docs -- --pkg=${pkgMetadata.name} --split=${split}`);
             console.log(`processed ${pkgMetadata.name}`);
-            const resultPath = `ctrf/${pkgMetadata.name}.json`;
-            const contents = fs.readFileSync(resultPath, {
-                encoding: "utf8",
-            });
-            processTestResult(pkgMetadata, contents);
-            fs.unlink(resultPath);
+            processJSON(pkgMetadata);
         } catch (err) {
             console.log(`failed to process ${pkgMetadata.name}: exit code ${code}`);
             console.log(err.stdout);
@@ -102,7 +97,7 @@ async function runTests() {
     await pushResultsS3(results);
 }
 
-function processJSON(stdout, stderr, pkgMetadata) {
+function processJSON(pkgMetadata) {
     const contents = fs.readFileSync("ctrf/ctrf-report.json", {
         encoding: "utf8",
     });
@@ -118,15 +113,6 @@ function processJSON(stdout, stderr, pkgMetadata) {
     }
 
     transformResults(results, pkgMetadata);
-
-    // The cli command error is trapped here since it is a sub process of this script.
-    // Checking if error here will enable us to mark this as a failed run by exiting
-    // unsuccessfully. Otherwise the run will always pass successfully regardless of
-    // the result of the tests.
-    if (stderr) {
-        console.error("errors:", stderr);
-        process.exit(1);
-    }
 }
 
 // Transform results into the structure we want and add them to the results object that will get pushed

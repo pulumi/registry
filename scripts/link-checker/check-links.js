@@ -1,10 +1,7 @@
 const { HtmlUrlChecker } = require("broken-link-checker");
-const { WebClient, LogLevel } = require('@slack/web-api');
-const httpServer = require("http-server");
+const { WebClient, LogLevel } = require("@slack/web-api");
 const Sitemapper = require("sitemapper");
 const sitemap = new Sitemapper();
-const path = require("path");
-const fs = require("fs");
 
 /**
  *  This script uses the programmatic API of https://github.com/stevenvachon/broken-link-checker
@@ -15,7 +12,7 @@ const fs = require("fs");
     $ DEBUG=1 node scripts/check-links.js "https://www.pulumi.com"
  */
 
-let [ baseURL, maxRetries ] = process.argv.slice(2);
+let [baseURL, maxRetries] = process.argv.slice(2);
 let retryCount = 0;
 
 if (!baseURL) {
@@ -31,8 +28,8 @@ if (!maxRetries || Number.isNaN(maxRetries)) {
 // HTTP requests that lack certain headers (like Accept) or other characteristics.
 const bhttp = require("bhttp");
 const oldRequest = bhttp.request;
-bhttp.request = function() {
-    const [ url, options, callback ] = arguments;
+bhttp.request = function () {
+    const options = arguments[1];
 
     // Modify request options.
     // https://git.cryto.net/joepie91/node-bhttp/src/branch/master/lib/bhttp.js#L886
@@ -58,13 +55,12 @@ async function checkLinks() {
 
     // Start the checker.
     checker.enqueue(baseURL);
-    urls.forEach(url => checker.enqueue(url));
+    urls.forEach((url) => checker.enqueue(url));
 }
 
 // Returns an instance of either HtmlUrlChecker.
 // https://github.com/stevenvachon/broken-link-checker#htmlurlchecker
 function getChecker(brokenLinks) {
-
     // Specify an alternative user agent, as BLC's default doesn't pass some services' validations.
     const userAgent = "pulumi+blc/0.1";
 
@@ -77,9 +73,7 @@ function getChecker(brokenLinks) {
         excludeInternalLinks: false,
         excludeExternalLinks: false,
         excludeLinksToSamePage: true,
-        excludedKeywords: [
-            ...getDefaultExcludedKeywords(),
-        ]
+        excludedKeywords: [...getDefaultExcludedKeywords()],
     };
 
     return new HtmlUrlChecker(opts, getDefaultHandlers(brokenLinks));
@@ -92,8 +86,7 @@ function getDefaultHandlers(brokenLinks) {
         link: (result) => {
             try {
                 onLink(result, brokenLinks);
-            }
-            catch (error) {
+            } catch (error) {
                 fail(error);
             }
         },
@@ -103,16 +96,14 @@ function getDefaultHandlers(brokenLinks) {
         page: (error, pageURL) => {
             try {
                 onPage(error, pageURL, brokenLinks);
-            }
-            catch(error) {
+            } catch (error) {
                 fail(error);
             }
         },
         end: async () => {
             try {
                 await onComplete(brokenLinks);
-            }
-            catch (error) {
+            } catch (error) {
                 fail(error);
             }
         },
@@ -131,9 +122,7 @@ function onLink(result, brokenLinks) {
 
         // Always log broken links to the console.
         logLink(source, destination, reason);
-
     } else if (process.env.DEBUG) {
-
         // Log successes when DEBUG is truthy.
         logLink(source, destination, result.http.response.statusCode);
     }
@@ -144,8 +133,7 @@ function onPage(error, pageURL, brokenLinks) {
     if (error) {
         addLink(pageURL, pageURL, error.message, brokenLinks);
         logLink(pageURL, pageURL, error.message);
-    }
-    else if (process.env.DEBUG) {
+    } else if (process.env.DEBUG) {
         logLink(pageURL, pageURL, "PAGE_OK");
     }
 }
@@ -155,7 +143,6 @@ async function onComplete(brokenLinks) {
     const filtered = excludeAcceptable(brokenLinks);
 
     if (filtered.length > 0) {
-
         // If we failed and a retry count was provided, retry. Note that retry count !==
         // run count, so a retry count of 1 means run once, then retry once, which means a
         // total run count of two.
@@ -167,7 +154,10 @@ async function onComplete(brokenLinks) {
         }
 
         const list = filtered
-            .map(link => `:link: <${link.source}|${new URL(link.source).pathname}> → ${link.destination} (${link.reason})`)
+            .map(
+                (link) =>
+                    `:link: <${link.source}|${new URL(link.source).pathname}> → ${link.destination} (${link.reason})`,
+            )
             .join("\n");
 
         // Post the results to Slack.
@@ -262,32 +252,39 @@ function getDefaultExcludedKeywords() {
 
 // Filters out transient errors that needn't fail a link-check run.
 function excludeAcceptable(links) {
-    return (links
-        // Ignore GitHub and npm 429s (rate-limited). We should really be handling these more
-        // intelligently, but we can come back to that in a follow up.
-        .filter(b => !(b.reason === "HTTP_429" && b.destination.match(/github.com|npmjs.com/)))
+    return (
+        links
+            // Ignore GitHub and npm 429s (rate-limited). We should really be handling these more
+            // intelligently, but we can come back to that in a follow up.
+            .filter(
+                (b) =>
+                    !(
+                        b.reason === "HTTP_429" &&
+                        b.destination.match(/github.com|npmjs.com/)
+                    ),
+            )
 
-        // Ignore remote disconnects.
-        .filter(b => b.reason !== "ERRNO_ECONNRESET")
+            // Ignore remote disconnects.
+            .filter((b) => b.reason !== "ERRNO_ECONNRESET")
 
-        // Ignore BLC_UNKNOWN's
-        .filter(b => b.reason !== "BLC_UNKNOWN")
+            // Ignore BLC_UNKNOWN's
+            .filter((b) => b.reason !== "BLC_UNKNOWN")
 
-        // Ignore BLC_INVALID's
-        .filter(b => b.reason !== "BLC_INVALID")
+            // Ignore BLC_INVALID's
+            .filter((b) => b.reason !== "BLC_INVALID")
 
-        // Ignore HTTP 308s.
-        .filter(b => b.reason !== "HTTP_308")
+            // Ignore HTTP 308s.
+            .filter((b) => b.reason !== "HTTP_308")
 
-        // Ignore HTTP 503s.
-        .filter(b => b.reason !== "HTTP_503")
+            // Ignore HTTP 503s.
+            .filter((b) => b.reason !== "HTTP_503")
 
-        // Ignore complaints about MIME types. BLC currently hard-codes an expectation of
-        // type text/html, which causes it to fail on direct links to images, PDFs, and
-        // other media.
-        // https://github.com/stevenvachon/broken-link-checker/issues/65
-        // https://github.com/stevenvachon/broken-link-checker/blob/43770535ad7b84cadec9dc54c5140694389e33dc/lib/internal/streamHTML.js#L36-L39
-        .filter(b => !b.reason.startsWith(`Expected type "text/html"`))
+            // Ignore complaints about MIME types. BLC currently hard-codes an expectation of
+            // type text/html, which causes it to fail on direct links to images, PDFs, and
+            // other media.
+            // https://github.com/stevenvachon/broken-link-checker/issues/65
+            // https://github.com/stevenvachon/broken-link-checker/blob/43770535ad7b84cadec9dc54c5140694389e33dc/lib/internal/streamHTML.js#L36-L39
+            .filter((b) => !b.reason.startsWith(`Expected type "text/html"`))
     );
 }
 
@@ -335,34 +332,35 @@ function fail(error) {
 
 // Start by fetching the sitemap from `baseURL`.
 async function getURLsToCheck(base) {
-    return await sitemap
-        .fetch(`${base}/sitemap.xml`)
-        .then(map => {
-            const urls = map.sites
+    return await sitemap.fetch(`${base}/sitemap.xml`).then((map) => {
+        const urls = map.sites
 
-                // Exclude resource docs, SDK docs, and CLI download pages.
-                .filter(page => !page.match(/\/registry\/packages\/.+\/api-docs\//))
-                .filter(page => !page.match(/\/docs\/reference\/pkg\/nodejs|python\//))
-                .filter(page => !page.match(/\/docs\/install\/versions\//))
+            // Exclude resource docs, SDK docs, and CLI download pages.
+            .filter(
+                (page) => !page.match(/\/registry\/packages\/.+\/api-docs\//),
+            )
+            .filter(
+                (page) =>
+                    !page.match(/\/docs\/reference\/pkg\/nodejs|python\//),
+            )
+            .filter((page) => !page.match(/\/docs\/install\/versions\//))
 
-                // Always check using the supplied baseURL.
-                .map(url => {
-                    const newURL = new URL(url);
-                    const baseURLObj = new URL(base);
-                    newURL.hostname = baseURLObj.hostname;
-                    newURL.protocol = baseURLObj.protocol;
-                    return newURL.toString();
-                })
+            // Always check using the supplied baseURL.
+            .map((url) => {
+                const newURL = new URL(url);
+                const baseURLObj = new URL(base);
+                newURL.hostname = baseURLObj.hostname;
+                newURL.protocol = baseURLObj.protocol;
+                return newURL.toString();
+            })
 
-                // Tack on any additional pages we'd like to check.
-                .concat([
-                    "https://github.com/pulumi/pulumi",
-                ])
+            // Tack on any additional pages we'd like to check.
+            .concat(["https://github.com/pulumi/pulumi"])
 
-                // Sort everything alphabetically.
-                .sort();
+            // Sort everything alphabetically.
+            .sort();
 
-            // Return the list of URLs to be crawled.
-            return urls;
-        });
+        // Return the list of URLs to be crawled.
+        return urls;
+    });
 }

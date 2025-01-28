@@ -32,6 +32,23 @@ jobs:
           yarn install
           make lint-markdown
 
+  lint-scripts:
+    name: Lint Scripts
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "23.x"
+
+      - name: Check out branch
+        uses: actions/checkout@v4
+
+      - name: Yarn Install
+        run: yarn install
+      - name: Run Linter
+        run: yarn run lint
+
   # Preview runs a registry build into a commit specific S3 bucket to preview changes.
   #
   # A link to the generated build is appended to the PR on each commit.

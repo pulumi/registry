@@ -8,6 +8,7 @@ ensure:
 
 .PHONY: lint
 lint: lint-go lint-markdown
+	yarn run lint
 
 .PHONY: lint-markdown
 lint-markdown:

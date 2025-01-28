@@ -19,9 +19,9 @@ import (
 
 	"github.com/pgavlin/goldmark/ast"
 
-	"github.com/pulumi/pulumi/pkg/v3/codegen"
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/util/contract"
+	"github.com/pulumi/registry/tools/resourcedocsgen/pkg/util/language"
 )
 
 const defaultMissingExampleSnippetPlaceholder = "Coming soon!"
@@ -40,7 +40,7 @@ type examplesSection struct {
 type exampleSection struct {
 	Title string
 	// Snippets is a map of language to its code snippet, if any.
-	Snippets map[string]string
+	Snippets map[language.Language]string
 }
 
 type docInfo struct {
@@ -57,8 +57,6 @@ func (dctx *Context) decomposeDocstring(docstring, supportedSnippetLanguages str
 		return dctx.processDescription(docstring, supportedSnippetLanguages)
 	}
 
-	languages := codegen.NewStringSet(dctx.snippetLanguages...)
-
 	source := []byte(docstring)
 	parsed := schema.ParseDocs(source)
 
@@ -66,7 +64,7 @@ func (dctx *Context) decomposeDocstring(docstring, supportedSnippetLanguages str
 	var exampleShortcode *schema.Shortcode
 	var examples []exampleSection
 	currentSection := exampleSection{
-		Snippets: map[string]string{},
+		Snippets: map[language.Language]string{},
 	}
 	var nextTitle string
 	var nextInferredTitle string
@@ -74,7 +72,7 @@ func (dctx *Context) decomposeDocstring(docstring, supportedSnippetLanguages str
 	// it needs to behave correctly when no examples were found.
 	pushExamples := func() {
 		if len(currentSection.Snippets) > 0 {
-			for _, l := range dctx.snippetLanguages {
+			for l := range language.All() {
 				if _, ok := currentSection.Snippets[l]; !ok {
 					currentSection.Snippets[l] = defaultMissingExampleSnippetPlaceholder
 				}
@@ -86,7 +84,7 @@ func (dctx *Context) decomposeDocstring(docstring, supportedSnippetLanguages str
 			nextTitle = nextInferredTitle
 		}
 		currentSection = exampleSection{
-			Snippets: map[string]string{},
+			Snippets: map[language.Language]string{},
 			Title:    nextTitle,
 		}
 		nextTitle = ""
@@ -109,7 +107,7 @@ func (dctx *Context) decomposeDocstring(docstring, supportedSnippetLanguages str
 			case schema.ExampleShortcode:
 				if exampleShortcode == nil {
 					exampleShortcode = shortcode
-					currentSection.Title, currentSection.Snippets = "", map[string]string{}
+					currentSection.Title, currentSection.Snippets = "", map[language.Language]string{}
 				} else if !enter && shortcode == exampleShortcode {
 					pushExamples()
 					exampleShortcode = nil
@@ -136,9 +134,12 @@ func (dctx *Context) decomposeDocstring(docstring, supportedSnippetLanguages str
 			return ast.WalkSkipChildren, nil
 
 		case *ast.FencedCodeBlock:
-			language := string(n.Language(source))
+			language, ok := convertMarkdownLanguage(string(n.Language(source)))
+			if !ok {
+				return ast.WalkContinue, nil
+			}
 			snippet := schema.RenderDocsToString(source, n)
-			if !languages.Has(language) || len(snippet) == 0 {
+			if len(snippet) == 0 {
 				return ast.WalkContinue, nil
 			}
 			if _, ok := currentSection.Snippets[language]; ok {

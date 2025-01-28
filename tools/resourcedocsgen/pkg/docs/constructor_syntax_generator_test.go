@@ -98,8 +98,7 @@ func TestConstructorSyntaxGeneratorForSchema(t *testing.T) {
 		},
 	})
 
-	languages := []string{"csharp", "go", "nodejs", "python", "yaml", "java"}
-	constructorSyntax := generateConstructorSyntaxData(pkg, languages)
+	constructorSyntax := generateConstructorSyntaxData(pkg)
 
 	trim := func(s string) string {
 		return strings.TrimPrefix(strings.TrimSuffix(s, "\n"), "\n")

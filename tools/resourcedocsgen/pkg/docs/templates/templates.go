@@ -26,6 +26,7 @@ import (
 
 	"github.com/golang/glog"
 	"github.com/pgavlin/goldmark"
+	"github.com/pulumi/registry/tools/resourcedocsgen/pkg/util/language"
 )
 
 //go:embed *.tmpl
@@ -71,6 +72,26 @@ var templates *template.Template
 
 func init() {
 	tmpl, err := template.New("").Funcs(template.FuncMap{
+		"lCSharp": func() language.Language { return language.CSharp },
+		"lGo":     func() language.Language { return language.Go },
+		"lJava":   func() language.Language { return language.Java },
+		"lNodejs": func() language.Language { return language.NodeJS },
+		"lPython": func() language.Language { return language.Python },
+		"lYAML":   func() language.Language { return language.YAML },
+
+		"codeChooserFromLang": func(m map[language.Language]string) map[string]string {
+			dst := make(map[string]string, len(m))
+			for l, v := range m {
+				switch l {
+				case language.NodeJS:
+					dst["typescript"] = v
+				default:
+					dst[l.String()] = v
+				}
+			}
+			return dst
+		},
+
 		"htmlSafe": func(html string) template.HTML {
 			// Markdown fragments in the templates need to be rendered as-is, so that html/template package doesn't try to
 			// inject data into it, which will most certainly fail.

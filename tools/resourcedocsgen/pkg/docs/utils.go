@@ -24,6 +24,7 @@ import (
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/slice"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/util/contract"
+	"github.com/pulumi/registry/tools/resourcedocsgen/pkg/util/language"
 )
 
 // isDotNetTypeNameBoundary returns true if the prev and next runes represent a boundary between two parts of a .Net/C#
@@ -87,11 +88,11 @@ func tokenToPackageName(tok string) string {
 	return components[0]
 }
 
-func title(s, lang string) string {
+func title(s string, lang language.Language) string {
 	switch lang {
-	case "go":
+	case language.Go:
 		return go_gen.Title(s)
-	case "csharp":
+	case language.CSharp:
 		return dotnet.Title(s)
 	default:
 		//nolint:staticcheck
@@ -158,3 +159,24 @@ type noCopy struct{}
 
 // Lock is a type hint for go vet. It need not be called.
 func (*noCopy) Lock() {}
+
+// Convert a markdown language tag to a [language.Language] if there is a corresponding
+// language. If no language exists, then _, false will be returned.
+func convertMarkdownLanguage(s string) (language.Language, bool) {
+	switch s {
+	case "csharp":
+		return language.CSharp, true
+	case "go":
+		return language.Go, true
+	case "python":
+		return language.Python, true
+	case "typescript":
+		return language.NodeJS, true
+	case "yaml":
+		return language.YAML, true
+	case "java":
+		return language.Java, true
+	default:
+		return language.Language{}, false
+	}
+}

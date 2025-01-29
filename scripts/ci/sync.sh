@@ -24,7 +24,7 @@ build_dir="public"
 metadata_file="$(origin_bucket_metadata_filepath)"
 
 # Verify we have at least 1000 index.html files in total across the site.
-if [ ! "$(find $build_dir -type f | grep index.html | wc -l)" -ge 1000 ]; then
+if [ ! "$(find $build_dir -type f | grep --count index.html)" -ge 1000 ]; then
     echo "Page-count check failed. Exiting."
     exit 1
 fi
@@ -42,16 +42,16 @@ destination_bucket_uri="s3://${destination_bucket}"
 # which case we should simply proceed (to repopulate it), or the bucket was somehow
 # created in another account, in which case subsequent operations on the bucket will also
 # fail, causing this script to exit nonzero. In either case, it's okay to continue.
-aws s3 mb $destination_bucket_uri --region "$(aws_region)" || true
-aws s3api put-public-access-block --bucket $destination_bucket --public-access-block-configuration BlockPublicAcls=false
-aws s3api put-bucket-ownership-controls --bucket $destination_bucket --ownership-controls="Rules=[{ObjectOwnership=ObjectWriter}]"
-aws s3api put-bucket-acl --bucket $destination_bucket --acl bucket-owner-full-control --acl public-read
+aws s3 mb "$destination_bucket_uri" --region "$(aws_region)" || true
+aws s3api put-public-access-block --bucket "$destination_bucket" --public-access-block-configuration BlockPublicAcls=false
+aws s3api put-bucket-ownership-controls --bucket "$destination_bucket" --ownership-controls="Rules=[{ObjectOwnership=ObjectWriter}]"
+aws s3api put-bucket-acl --bucket "$destination_bucket" --acl bucket-owner-full-control --acl public-read
 
 aws configure set default.s3.max_concurrent_requests "$(( "$(nproc --all)" * 2))" # Default is 10
-aws s3api put-bucket-tagging --bucket $destination_bucket --tagging "TagSet=[{$(aws_owner_tag)}]" --region "$(aws_region)"
+aws s3api put-bucket-tagging --bucket "$destination_bucket" --tagging "TagSet=[{$(aws_owner_tag)}]" --region "$(aws_region)"
 
 # Make the bucket an S3 website.
-aws s3 website $destination_bucket_uri --index-document index.html --error-document 404.html --region "$(aws_region)"
+aws s3 website "$destination_bucket_uri" --index-document index.html --error-document 404.html --region "$(aws_region)"
 
 # Sync the local build directory to the bucket. Note that we do pass the --delete option
 # here, since in most cases, we'll be continually updating a bucket associated with a PR;

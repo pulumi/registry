@@ -30,6 +30,10 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+func TestPleaseDoFail(t *testing.T) {
+	t.Fatalf("An intentional failure to show #6547 works as intended")
+}
+
 func TestMetadataBridgedProvider(t *testing.T) {
 	t.Parallel()
 	testMetadata(t, testMetadataArgs{

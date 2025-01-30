@@ -197,10 +197,6 @@ type Context struct {
 	nodePkgInfo   nodejs.NodePackageInfo
 	pythonPkgInfo python.PackageInfo
 
-	// langModuleNameLookup is a map of module name to its language-specific
-	// name.
-	langModuleNameLookup map[string]string
-
 	// Maps a *modContext, *schema.Resource, or *schema.Function to the link that was assigned to it.
 	moduleConflictLinkMap map[interface{}]string
 
@@ -227,7 +223,6 @@ func (dctx *Context) setModules(modules map[string]*modContext) {
 
 func NewContext(tool string, pkg *schema.Package) *Context {
 	dctx := &Context{
-		langModuleNameLookup: map[string]string{},
 		docHelpers: map[language.Language]codegen.DocLanguageHelper{
 			language.CSharp: &dotnet.DocLanguageHelper{},
 			language.Go:     &go_gen.DocLanguageHelper{},
@@ -237,11 +232,11 @@ func NewContext(tool string, pkg *schema.Package) *Context {
 			language.Java:   &java.DocLanguageHelper{},
 		},
 		moduleConflictLinkMap: map[interface{}]string{},
+		constructorSyntaxData: generateConstructorSyntaxData(pkg),
 	}
 
 	defer glog.Flush()
 
-	dctx.constructorSyntaxData = generateConstructorSyntaxData(pkg)
 	// Generate the modules from the schema, and for every module run the generator functions to generate markdown files.
 	dctx.setModules(dctx.generateModulesFromSchemaPackage(tool, pkg))
 
@@ -440,6 +435,7 @@ func (ss nestedTypeUsageInfo) contains(token string, input bool) bool {
 type modContext struct {
 	pkg         schema.PackageReference
 	mod         string
+	moduleName  map[language.Language]string
 	inputTypes  []*schema.ObjectType
 	resources   []*schema.Resource
 	functions   []*schema.Function
@@ -539,36 +535,27 @@ func (mod *modContext) details(t *schema.ObjectType) *typeDetails {
 // getLanguageModuleName transforms the current module's name to a language-specific name using the language info, if
 // any, for the current package.
 func (mod *modContext) getLanguageModuleName(lang language.Language) string {
-	dctx := mod.context
-	modName := mod.mod
-	lookupKey := lang.String() + "_" + modName
-	if v, ok := mod.context.langModuleNameLookup[lookupKey]; ok {
-		return v
-	}
+	if mod.moduleName == nil {
+		dctx := mod.context
+		name := mod.mod
+		withOverride := func(defaultName string, overrides map[string]string) string {
+			if override, ok := overrides[name]; ok {
+				return override
+			}
+			return defaultName
+		}
 
-	switch lang {
-	case language.Go:
-		// Go module names use lowercase.
-		modName = strings.ToLower(modName)
-		if override, ok := dctx.goPkgInfo.ModuleToPackage[modName]; ok {
-			modName = override
-		}
-	case language.CSharp:
-		if override, ok := dctx.csharpPkgInfo.Namespaces[modName]; ok {
-			modName = override
-		}
-	case language.NodeJS:
-		if override, ok := dctx.nodePkgInfo.ModuleToPackage[modName]; ok {
-			modName = override
-		}
-	case language.Python:
-		if override, ok := dctx.pythonPkgInfo.ModuleNameOverrides[modName]; ok {
-			modName = override
+		mod.moduleName = map[language.Language]string{
+			language.CSharp: withOverride(name, dctx.csharpPkgInfo.Namespaces),
+			// Go module names use lowercase.
+			language.Go:     withOverride(strings.ToLower(name), dctx.goPkgInfo.ModuleToPackage),
+			language.Java:   name,
+			language.NodeJS: withOverride(name, dctx.nodePkgInfo.ModuleToPackage),
+			language.Python: withOverride(name, dctx.pythonPkgInfo.ModuleNameOverrides),
+			language.YAML:   name,
 		}
 	}
-
-	mod.context.langModuleNameLookup[lookupKey] = modName
-	return modName
+	return mod.moduleName[lang]
 }
 
 // cleanTypeString removes any namespaces from the generated type string for all languages. The result of this function
@@ -1240,7 +1227,7 @@ func (mod *modContext) getPropertiesWithIDPrefixAndExclude(
 
 		// Check if type is defined in a package external to the current package. If it is external, update comment to
 		// indicate to user that type is defined in another package and link there.
-		if isExt := isExternalType(codegen.UnwrapType(prop.Type), mod.pkg); isExt {
+		if isExternalType(codegen.UnwrapType(prop.Type), mod.pkg) {
 			packageName := tokenToPackageName(fmt.Sprintf("%v", codegen.UnwrapType(prop.Type)))
 			extPkgLink := "/registry/packages/" + packageName
 			comment += fmt.Sprintf(

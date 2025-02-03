@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-terraform-provider/v0.8.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-terraform-provider/v0.8.1/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: Any Terraform Provider
 meta_desc: Learn how to use any Terraform provider in Pulumi.
@@ -23,7 +23,7 @@ As an example, let's depend directly on Hashicorp's [terraform-provider-random](
 
 {{% notes type="info" %}}
 
-You will need to be using a version of Pulumi >= 3.130.0.
+You will need to be using a version of Pulumi >= 3.147.0.
 
 {{% /notes %}}
 

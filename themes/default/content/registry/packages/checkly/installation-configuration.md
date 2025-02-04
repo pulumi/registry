@@ -1,47 +1,45 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/checkly/pulumi-checkly/v2.0.0/docs/installation-configuration.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Checkly Installation & Configuration
-meta_desc: Provides an overview on how to configure credentials for the Pulumi Checkly Provider.
+meta_desc: Provides an overview on how to configure credentials for the Checkly provider for Pulumi.
 layout: package
 ---
-
 ## Installation
 
-1. To use this package, please [install the Pulumi CLI first](https://www.pulumi.com/docs/install/).
-1. This package is only available for JavaScript and TypeScript but support for other languages will be available soon.
+The Checkly provider is available as a package in most Pulumi languages:
 
-### Node.js (JavaScript/TypeScript)
-
-To use from JavaScript or TypeScript in Node.js, install using either `npm` or `yarn`:
-
-```bash
-$ npm install @checkly/pulumi
-$ yarn add @checkly/pulumi
-```
-
-### Python, Go & .NET
-
-> *TBA*
+* JavaScript/TypeScript: [`@checkly/pulumi`](https://www.npmjs.com/package/@checkly/pulumi)
+* Python: [`pulumi-checkly`](https://pypi.org/project/pulumi-checkly/)
+* Go: [`github.com/checkly/pulumi-checkly/sdk/v2/go/checkly`](https://github.com/checkly/pulumi-checkly)
+* .NET: [`Pulumi.Checkly`](https://www.nuget.org/packages/Pulumi.Checkly)
 
 ## Authentication
 
-The Pulumi Checkly Provider needs to be configured with a Checkly `API Key` and `Account ID` before it can be used to create resources.
+The Checkly provider must be configured with an `API Key` and an `Account ID` in order to deploy Checkly resources. Sign up for a [Checkly](https://www.checklyhq.com) account and follow our [integration guide](https://www.checklyhq.com/docs/integrations/pulumi/) to create and configure your credentials.
 
-> If you don't have an `API Key`, you can create one [here](https://app.checklyhq.com/settings/user/api-keys).
+## Example configuration
 
-Once you generated the `API Key` there are two ways to communicate your authorization tokens to Pulumi:
+First, configure your Checkly Account ID:
 
-1. Set the environment variables `CHECKLY_API_KEY` and `CHECKLY_ACCOUNT_ID`:
+```
+pulumi config set checkly:accountId YOUR_CHECKLY_ACCOUNT_ID
+```
 
-    ```bash
-    $ export CHECKLY_API_KEY=cu_xxx
-    $ export CHECKLY_ACCOUNT_ID=xxx
-    ```
+Then, configure you Checkly API key (with `--secret`):
 
-2. Set them using `pulumi config` command, if you prefer that they be stored alongside your Pulumi stack for easy multi-user access:
+```
+pulumi config set checkly:apiKey YOUR_CHECKLY_API_KEY --secret
+```
 
-    ```bash
-    $ pulumi config set checkly:apiKey cu_xxx --secret
-    $ pulumi config set checkly:accountId xxx
-    ```
+You should now be able to deploy Checkly resources.
 
-> Remember to pass `--secret` when setting `checkly:apiKey` so it is properly encrypted.
+## Configuration options
+
+The following configuration options are available for the Checkly provider:
+
+- `checkly:accountId` (environment: `CHECKLY_ACCOUNT_ID`) - your Checkly Account ID
+- `checkly:apiKey` (environment: `CHECKLY_API_KEY`) - your Checkly API Key
+    * If you don't have an API Key, you can create one [here](https://app.checklyhq.com/settings/user/api-keys).
+    * Make sure to use the `--secret` flag with `pulumi config set`.
+- `checkly:apiUrl` (environment: `CHECKLY_API_URL`) - for internal development purposes only

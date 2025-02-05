@@ -83,7 +83,7 @@ func </span>AbsMultiArgsReducedOutputOutput<span class="p">(</span><span class="
 <div>
 <pulumi-choosable type="language" values="java">
 <div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="k">public static CompletableFuture&lt;<span class="nx"><a href="#result">AbsMultiArgsReducedOutputResult</a></span>> </span>absMultiArgsReducedOutput<span class="p">(</span><span class="nx">AbsMultiArgsReducedOutputArgs</span><span class="p"> </span><span class="nx">args<span class="p">,</span> <span class="nx">InvokeOptions</span><span class="p"> </span><span class="nx">options<span class="p">)</span>
-<span class="c">// Output-based functions aren't available in Java yet</span>
+<span class="k">public static Output&lt;<span class="nx"><a href="#result">AbsMultiArgsReducedOutputResult</a></span>> </span>absMultiArgsReducedOutput<span class="p">(</span><span class="nx">AbsMultiArgsReducedOutputArgs</span><span class="p"> </span><span class="nx">args<span class="p">,</span> <span class="nx">InvokeOptions</span><span class="p"> </span><span class="nx">options<span class="p">)</span>
 </code></pre></div>
 </pulumi-choosable>
 </div>

@@ -86,7 +86,7 @@ func </span>{{ index .FunctionName lGo }}Output<span class="p">(</span>{{ htmlSa
 <div>
 <pulumi-choosable type="language" values="java">
 <div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="k">public static CompletableFuture<{{ template "linkify_param" (index .FunctionResult lJava) }}> </span>{{ index .FunctionName lJava }}<span class="p">(</span>{{ htmlSafe (index .FunctionArgs lJava) }}<span class="p">)</span>
-<span class="c">// Output-based functions aren't available in Java yet</span>
+<span class="k">public static Output<{{ template "linkify_param" (index .FunctionResult lJava) }}> </span>{{ index .FunctionName lJava }}<span class="p">(</span>{{ htmlSafe (index .FunctionArgs lJava) }}<span class="p">)</span>
 </code></pre></div>
 </pulumi-choosable>
 </div>

@@ -10,7 +10,7 @@ native: false
 package_status: public_preview
 publisher: hashicorp
 repo_url: https://github.com/hashicorp/terraform-provider-googleworkspace
-schema_file_url: https://ds7waww6k7rw2.cloudfront.net/schemas/registry.opentofu.org/hashicorp/googleworkspace/0.7.0/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/hashicorp/googleworkspace/0.7.0/schema.json
 title: googleworkspace
 updated_on: 1736960547
 version: 0.7.0

@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://ds7waww6k7rw2.cloudfront.net/docs/registry.opentofu.org/timescale/timescale/1.12.1/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/timescale/timescale/1.13.1/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Timescale Provider

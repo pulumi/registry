@@ -2,15 +2,15 @@
 # Do not edit by hand unless you're certain you know what you are doing!
 category: Infrastructure
 component: false
-description: A Pulumi package for creating and managing rke cloud resources.
+description: A Pulumi provider dynamically bridged from rke.
 featured: false
 logo_url: ""
 name: rke
 native: false
 package_status: ga
-publisher: Pulumi
-repo_url: https://github.com/pulumi/pulumi-rke
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-rke/v3.6.0/provider/cmd/pulumi-resource-rke/schema.json
-title: Rancher Kubernetes Engine (RKE)
-updated_on: 1733315304
-version: v3.6.0
+publisher: rancher
+repo_url: https://github.com/rancher/terraform-provider-rke
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/rancher/rke/1.7.0/schema.json
+title: rke
+updated_on: 1738848144
+version: 1.7.0

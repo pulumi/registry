@@ -6,7 +6,9 @@ on:
 jobs:
 
   sentinel:
-    name: Sentinel
+    # The name of this action cannot be "Sentinel", since this job exists to create an
+    # action result called "Sentinel".
+    name: Sentinel Tower
     if: github.event_name == 'repository_dispatch' ||
       github.event.pull_request.head.repo.full_name == github.repository
     permissions:

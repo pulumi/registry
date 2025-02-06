@@ -2,15 +2,15 @@
 # Do not edit by hand unless you're certain you know what you are doing!
 category: Cloud
 component: false
-description: A Pulumi package for creating and managing Civo cloud resources.
+description: A Pulumi provider dynamically bridged from civo.
 featured: false
 logo_url: ""
 name: civo
 native: false
 package_status: ga
-publisher: Pulumi
-repo_url: https://github.com/pulumi/pulumi-civo
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-civo/v2.4.8/provider/cmd/pulumi-resource-civo/schema.json
-title: Civo
-updated_on: 1737764974
-version: v2.4.8
+publisher: civo
+repo_url: https://github.com/civo/terraform-provider-civo
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/civo/civo/1.1.5/schema.json
+title: civo
+updated_on: 1738848144
+version: 1.1.5

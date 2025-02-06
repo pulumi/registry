@@ -1,20 +1,19 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-civo/v2.4.8/docs/_index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/civo/civo/1.1.5/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Civo Provider
 meta_desc: Provides an overview on how to configure the Pulumi Civo provider.
 layout: package
 ---
-## Installation
 
-The civo provider is available as a package in all Pulumi languages:
+## Generate Provider
 
-* JavaScript/TypeScript: [`@pulumi/civo`](https://www.npmjs.com/package/@pulumi/civo)
-* Python: [`pulumi-civo`](https://pypi.org/project/pulumi-civo/)
-* Go: [`github.com/pulumi/pulumi-civo/sdk/v2/go/civo`](https://github.com/pulumi/pulumi-civo)
-* .NET: [`Pulumi.Civo`](https://www.nuget.org/packages/Pulumi.Civo)
-* Java: [`com.pulumi/civo`](https://central.sonatype.com/artifact/com.pulumi/civo)
+The Civo provider must be installed as a Local Package by following the [instructions for Any Terraform Provider](https://www.pulumi.com/registry/packages/terraform-provider/):
+
+```bash
+pulumi package add terraform-provider civo/civo
+```
 ## Overview
 
 The Civo provider is used to interact with the resources supported by Civo.
@@ -79,7 +78,10 @@ config:
         value: LON1
 
 ```
+```typescript
+import * as pulumi from "@pulumi/pulumi";
 
+```
 {{% /choosable %}}
 {{% choosable language python %}}
 ```yaml
@@ -91,7 +93,10 @@ config:
         value: LON1
 
 ```
+```python
+import pulumi
 
+```
 {{% /choosable %}}
 {{% choosable language csharp %}}
 ```yaml
@@ -103,7 +108,16 @@ config:
         value: LON1
 
 ```
+```csharp
+using System.Collections.Generic;
+using System.Linq;
+using Pulumi;
 
+return await Deployment.RunAsync(() =>
+{
+});
+
+```
 {{% /choosable %}}
 {{% choosable language go %}}
 ```yaml
@@ -115,7 +129,19 @@ config:
         value: LON1
 
 ```
+```go
+package main
 
+import (
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		return nil
+	})
+}
+```
 {{% /choosable %}}
 {{% choosable language yaml %}}
 ```yaml
@@ -127,7 +153,9 @@ config:
         value: LON1
 
 ```
-
+```yaml
+{}
+```
 {{% /choosable %}}
 {{% choosable language java %}}
 ```yaml
@@ -139,7 +167,28 @@ config:
         value: LON1
 
 ```
+```java
+package generated_program;
 
+import com.pulumi.Context;
+import com.pulumi.Pulumi;
+import com.pulumi.core.Output;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+public class App {
+    public static void main(String[] args) {
+        Pulumi.run(App::stack);
+    }
+
+    public static void stack(Context ctx) {
+    }
+}
+```
 {{% /choosable %}}
 {{< /chooser >}}
 ### Example with credentials file
@@ -159,7 +208,10 @@ config:
         value: LON1
 
 ```
+```typescript
+import * as pulumi from "@pulumi/pulumi";
 
+```
 {{% /choosable %}}
 {{% choosable language python %}}
 ```yaml
@@ -173,7 +225,10 @@ config:
         value: LON1
 
 ```
+```python
+import pulumi
 
+```
 {{% /choosable %}}
 {{% choosable language csharp %}}
 ```yaml
@@ -187,7 +242,16 @@ config:
         value: LON1
 
 ```
+```csharp
+using System.Collections.Generic;
+using System.Linq;
+using Pulumi;
 
+return await Deployment.RunAsync(() =>
+{
+});
+
+```
 {{% /choosable %}}
 {{% choosable language go %}}
 ```yaml
@@ -201,7 +265,19 @@ config:
         value: LON1
 
 ```
+```go
+package main
 
+import (
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		return nil
+	})
+}
+```
 {{% /choosable %}}
 {{% choosable language yaml %}}
 ```yaml
@@ -215,7 +291,9 @@ config:
         value: LON1
 
 ```
-
+```yaml
+{}
+```
 {{% /choosable %}}
 {{% choosable language java %}}
 ```yaml
@@ -229,7 +307,28 @@ config:
         value: LON1
 
 ```
+```java
+package generated_program;
 
+import com.pulumi.Context;
+import com.pulumi.Pulumi;
+import com.pulumi.core.Output;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+public class App {
+    public static void main(String[] args) {
+        Pulumi.run(App::stack);
+    }
+
+    public static void stack(Context ctx) {
+    }
+}
+```
 {{% /choosable %}}
 {{< /chooser >}}
 ## Configuration Reference

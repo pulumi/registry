@@ -30,6 +30,8 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+func TestMetadataBridgedProvider2(t *testing.T) { t.Errorf("show a test failing") }
+
 func TestMetadataBridgedProvider(t *testing.T) {
 	t.Parallel()
 	testMetadata(t, testMetadataArgs{

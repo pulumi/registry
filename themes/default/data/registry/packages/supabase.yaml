@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: supabase
 repo_url: https://github.com/supabase/terraform-provider-supabase
-schema_file_url: https://ds7waww6k7rw2.cloudfront.net/schemas/registry.opentofu.org/supabase/supabase/1.5.1/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/supabase/supabase/1.5.1/schema.json
 title: supabase
 updated_on: 1736960461
 version: 1.5.1

@@ -10,7 +10,7 @@ native: true
 package_status: public_preview
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-pulumiservice
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-pulumiservice/v0.27.4/provider/cmd/pulumi-resource-pulumiservice/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-pulumiservice/v0.29.0/provider/cmd/pulumi-resource-pulumiservice/schema.json
 title: Pulumi Cloud
-updated_on: 1734548757
-version: v0.27.4
+updated_on: 1737484627
+version: v0.29.0

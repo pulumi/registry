@@ -13,3 +13,4 @@ cypress/screenshots
 tools/resourcedocsgen/resourcedocsgen
 ctrf/
 bin
+.make

@@ -83,20 +83,15 @@ Optionally, use `make serve-all` to enable hot reloading of both the pages and C
 
 #### Generating API docs for packages
 
-This repository does not contain the content of the API docs packages. We generate these pages at deployemnt time. In order to render the API docs for a package locally you will need to generate the API Docs pages for it. The API docs for packages can be generated on-demand using the [`resourcedocsgen` tool](tools/resourcedocsgen/README.md).
+This repository does not contain the content of the API docs packages. We generate these pages at deployment time. In order to render the API docs for a package locally you will need to generate the API Docs pages for it. The API docs for packages can be generated on-demand using the [`resourcedocsgen` tool](tools/resourcedocsgen/README.md).
 
-```
-cd tools/resourcedocsgen
-go build -o "${GOPATH}/bin/resourcedocsgen" .
-```
+To build the API docs for a single package, run:
 
-As an example, you can generate the API docs for a specific package by running the resourcedocsgen tool and passing it the name of the package as follows:
-
-```
-resourcedocsgen docs registry <package_name> --baseDocsOutDir "./themes/default/content/registry/packages"
+``` bash
+make .make/content/registry/packages/<package_name>/api-docs
 ```
 
-Run `resourcedocsgen --help` for help regarding its use or [see the `resourcedocsgen` README](tools/resourcedocsgen/README.md).
+Run `make bin/resourcedocsgen && ./bin/resourcedocsgen --help` for help regarding its use or [see the `resourcedocsgen` README](tools/resourcedocsgen/README.md).
 
 ## Submitting, merging and releasing
 

@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: Theo Gravity
 repo_url: https://github.com/theogravity/pulumi-fusionauth
-schema_file_path: provider/cmd/pulumi-resource-fusionauth/schema.json
+schema_file_url: https://raw.githubusercontent.com/theogravity/pulumi-fusionauth/v6.0.2/provider/cmd/pulumi-resource-fusionauth/schema.json
 title: FusionAuth
-updated_on: 1729631952
-version: v5.1.0
+updated_on: 1739071813
+version: v6.0.2

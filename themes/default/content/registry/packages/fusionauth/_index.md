@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/theogravity/pulumi-fusionauth/v5.1.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/theogravity/pulumi-fusionauth/v6.0.2/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: FusionAuth
 meta_desc: Provides configuration management for FusionAuth Provider
@@ -8,9 +8,9 @@ layout: package
 
 FusionAuth for Pulumi can be used to configure FusionAuth instances.
 
-This is bridged using the [gpsinsight Terraform FusionAuth package](https://github.com/gpsinsight/terraform-provider-fusionauth).
+This is bridged using the [Terraform FusionAuth package](https://github.com/FusionAuth/terraform-provider-fusionauth).
 
-You can look at the [Terraform FusionAuth docs by gpsinsight](https://registry.terraform.io/providers/gpsinsight/fusionauth/latest/docs)
+You can look at the [Terraform FusionAuth docs](https://registry.terraform.io/providers/fusionauth/fusionauth/latest/docs)
 to get an idea of what is available in this package.
 
 ## Example

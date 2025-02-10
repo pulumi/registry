@@ -241,13 +241,11 @@ func (mod *modContext) genFunctionParamsCS(f *schema.Function, funcName string, 
 	return params
 }
 
-func (mod *modContext) genFunctionParamsJava(f *schema.Function, funcName string, outputVersion bool) []formalParam {
+func (mod *modContext) genFunctionParamsJava(f *schema.Function, funcName string) []formalParam {
 	dctx := mod.context
 
+	// java uses the same args type for both the regular and output versions of the function
 	argsTypeSuffix := "Args"
-	if outputVersion {
-		argsTypeSuffix = "InvokeArgs"
-	}
 
 	argsType := title(funcName+argsTypeSuffix, language.Java)
 	docLangHelper := dctx.getLanguageDocHelper(language.Java)
@@ -360,7 +358,7 @@ func (mod *modContext) genFunctionParams(
 	case language.CSharp:
 		return mod.genFunctionParamsCS(f, funcName, outputVersion)
 	case language.Java:
-		return mod.genFunctionParamsJava(f, funcName, outputVersion)
+		return mod.genFunctionParamsJava(f, funcName)
 	case language.Python:
 		return mod.genFunctionParamsPython(f, funcName, outputVersion)
 	case language.YAML: // Left blank
@@ -401,7 +399,7 @@ func (mod *modContext) genFunctionOutputVersionMap(f *schema.Function) map[langu
 		switch lang {
 		case language.Go:
 			hasOutputVersion = go_gen.NeedsGoOutputVersion(f)
-		case language.Java, language.YAML:
+		case language.YAML:
 			hasOutputVersion = false
 		}
 		result[lang] = hasOutputVersion

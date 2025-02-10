@@ -85,8 +85,8 @@ func </span>{{ index .FunctionName lGo }}Output<span class="p">(</span>{{ htmlSa
 <!-- Java -->
 <div>
 <pulumi-choosable type="language" values="java">
-<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="k">public static CompletableFuture<{{ template "linkify_param" (index .FunctionResult lJava) }}> </span>{{ index .FunctionName lJava }}<span class="p">(</span>{{ htmlSafe (index .FunctionArgs lJava) }}<span class="p">)</span>
-<span class="k">public static Output<{{ template "linkify_param" (index .FunctionResult lJava) }}> </span>{{ index .FunctionName lJava }}<span class="p">(</span>{{ htmlSafe (index .FunctionArgs lJava) }}<span class="p">)</span>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="k">public static CompletableFuture<{{ template "linkify_param" (index .FunctionResult lJava) }}> </span>{{ index .FunctionName lJava }}<span class="p">(</span>{{ htmlSafe (index .FunctionArgs lJava) }}<span class="p">)</span>{{ if (index .HasOutputVersion lJava) }}
+<span class="k">public static Output<{{ template "linkify_param" (index .FunctionResult lJava) }}> </span>{{ index .FunctionName lJava }}<span class="p">(</span>{{ htmlSafe (index .FunctionArgsOutputVersion lJava) }}<span class="p">)</span>{{ end }}
 </code></pre></div>
 </pulumi-choosable>
 </div>

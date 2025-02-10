@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-purrl/v0.6.0/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-purrl/v0.6.2/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: Purrl Installation & Configuration
 meta_desc: Information on how to install the Purrl provider.

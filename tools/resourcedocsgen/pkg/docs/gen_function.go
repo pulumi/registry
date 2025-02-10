@@ -399,7 +399,7 @@ func (mod *modContext) genFunctionOutputVersionMap(f *schema.Function) map[langu
 		switch lang {
 		case language.Go:
 			hasOutputVersion = go_gen.NeedsGoOutputVersion(f)
-		case language.Java, language.YAML:
+		case language.YAML:
 			hasOutputVersion = false
 		}
 		result[lang] = hasOutputVersion

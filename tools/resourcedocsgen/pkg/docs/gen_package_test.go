@@ -250,6 +250,10 @@ var testCases = []testCase{
 		directory:   "using-shared-types-in-config",
 		description: "Tests that shared types can be used in config.",
 	},
+	{
+		directory:   "example-op-code",
+		description: "Check that {{% examples %}} works as expected; repros 6641",
+	},
 }
 
 // testCaseProvider captures details about a provider to be used in a test case for GeneratePackage.

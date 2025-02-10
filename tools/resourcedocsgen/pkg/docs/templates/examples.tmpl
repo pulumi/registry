@@ -10,7 +10,7 @@
 
 {{ range $key, $val := .Snippets }}
 {{ htmlSafe "<div>" }}
-{{ htmlSafe "<pulumi-choosable type=\"language\" values=\"" }}{{ $key }}{{ htmlSafe "\">" }}
+{{ htmlSafe "<pulumi-choosable type=\"language\" values=\"" }}{{ if eq $key lNodejs }}typescript{{ else }}{{ $key }}{{end}}{{ htmlSafe "\">" }}
 
 {{ htmlSafe $val }}
 

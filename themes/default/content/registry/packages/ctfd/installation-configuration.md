@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/ctfer-io/pulumi-ctfd/v1.0.1/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/ctfer-io/pulumi-ctfd/v2.0.0/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: CTFd Installation & Configuration
 meta_desc: Provides an overview on how to setup the CTFd Provider for Pulumi.
@@ -12,7 +12,7 @@ The CTFd provider is available as a package in all Pulumi languages:
 
 - JavaScript/TypeScript: [`@ctfer-io/pulumi-ctfd`](https://www.npmjs.com/package/@ctfer-io/pulumi-ctfd)
 - Python: [`ctfer-io_pulumi-ctfd`](https://pypi.org/project/ctfer-io_pulumi-ctfd/)
-- Golang: [`github.com/ctfer-io/pulumi-ctfd/sdk/go/ctfd`](https://github.com/ctfer-io/pulumi-ctfd)
+- Golang: [`github.com/ctfer-io/pulumi-ctfd/sdk/v2/go/ctfd`](https://github.com/ctfer-io/pulumi-ctfd)
 - .NET: [`CTFerio.Ctfd`](https://www.nuget.org/packages/CTFerio.Ctfd)
 
 ## Provider Binary
@@ -57,7 +57,7 @@ For instance, you can set the url using `pulumi config set url https://my-ctf.la
 package main
 
 import (
-    "github.com/ctfer-io/pulumi-ctfd/sdk/go/ctfd"
+    "github.com/ctfer-io/pulumi-ctfd/sdk/v2/go/ctfd"
     "github.com/pulumi/pulumi/sdk/v3/go/pulumi"
     "github.com/pulumi/pulumi/sdk/v3/go/pulumi/config"
 )

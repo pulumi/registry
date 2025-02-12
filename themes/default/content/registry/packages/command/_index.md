@@ -1,7 +1,5 @@
 ---
-# This file was moved to github.com/pulumi/pulumi-command/docs/_index.md in https://github.com/pulumi/pulumi-command/pull/606.
-# Future edits should be made there.
-#
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-command/v1.0.2/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: Command
 meta_desc: The Pulumi Command Provider enables you to execute commands and scripts either locally or remotely as part of the Pulumi resource model.

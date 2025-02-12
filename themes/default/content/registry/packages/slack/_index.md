@@ -1,13 +1,14 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-slack/v0.4.8/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-slack/v0.4.11/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+# *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Slack Provider
 meta_desc: Provides an overview on how to configure the Pulumi Slack provider.
 layout: package
 ---
 ## Installation
 
-The slack provider is available as a package in all Pulumi languages:
+The Slack provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/slack`](https://www.npmjs.com/package/@pulumi/slack)
 * Python: [`pulumi-slack`](https://pypi.org/project/pulumi-slack/)
@@ -448,7 +449,7 @@ pulumi preview
 
 In addition to generic `provider` arguments
 (e.g. `alias` and `version`), the following arguments are supported in the Slack
-`provider` block:
+provider configuration:
 
 - `token` - (Mandatory) The Slack token. It must be provided,
   but it can also be sourced from the `SLACK_TOKEN` environment variable.

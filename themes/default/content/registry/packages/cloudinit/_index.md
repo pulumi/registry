@@ -1,6 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-cloudinit/v1.4.8/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-cloudinit/v1.4.10/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+# *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Cloudinit Provider
 meta_desc: Provides an overview on how to configure the Pulumi Cloudinit provider.
 layout: package
@@ -14,6 +15,7 @@ The cloudinit provider is available as a package in all Pulumi languages:
 * Go: [`github.com/pulumi/pulumi-cloudinit/sdk/go/cloudinit`](https://github.com/pulumi/pulumi-cloudinit)
 * .NET: [`Pulumi.Cloudinit`](https://www.nuget.org/packages/Pulumi.Cloudinit)
 * Java: [`com.pulumi/cloudinit`](https://central.sonatype.com/artifact/com.pulumi/cloudinit)
+## Overview
 
 The cloud-init Pulumi provider exposes the `cloudinit.Config` function which renders a [multipart MIME configuration](https://cloudinit.readthedocs.io/en/latest/explanation/format.html#mime-multi-part-archive) for use with [cloud-init](https://cloudinit.readthedocs.io/en/latest/).
 

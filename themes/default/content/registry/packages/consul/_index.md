@@ -1,19 +1,21 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-consul/v3.12.2/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-consul/v3.12.4/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+# *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Consul Provider
 meta_desc: Provides an overview on how to configure the Pulumi Consul provider.
 layout: package
 ---
 ## Installation
 
-The consul provider is available as a package in all Pulumi languages:
+The Consul provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/consul`](https://www.npmjs.com/package/@pulumi/consul)
 * Python: [`pulumi-consul`](https://pypi.org/project/pulumi-consul/)
 * Go: [`github.com/pulumi/pulumi-consul/sdk/v3/go/consul`](https://github.com/pulumi/pulumi-consul)
 * .NET: [`Pulumi.Consul`](https://www.nuget.org/packages/Pulumi.Consul)
 * Java: [`com.pulumi/consul`](https://central.sonatype.com/artifact/com.pulumi/consul)
+## Overview
 
 [Consul](https://www.consul.io) is a service networking platform which provides
 service discovery, service mesh, and application configuration capabilities.
@@ -280,7 +282,7 @@ public class App {
 - `token` (String, Sensitive) The ACL token to use by default when making requests to the agent. Can also be specified with `CONSUL_HTTP_TOKEN` or `CONSUL_TOKEN` as an environment variable.
 
 <a id="nestedblock--auth_jwt"></a>
-### Nested Configuration Reference for `authJwt`
+### Nested Schema for `authJwt`
 
 Required:
 
@@ -293,7 +295,7 @@ Optional:
 - `usePulumiCloudWorkloadIdentity` (Boolean) Whether to use a Pulumi Workload Identity token. The token will be read from the `TFC_WORKLOAD_IDENTITY_TOKEN` environment variable.
 
 <a id="nestedblock--header"></a>
-### Nested Configuration Reference for `header`
+### Nested Schema for `header`
 
 Required:
 

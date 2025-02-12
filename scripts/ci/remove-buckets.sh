@@ -29,6 +29,7 @@ echo
 for bucket in $buckets_to_remove; do
     echo "Removing ${bucket}..."
     aws s3 rb "s3://${bucket}" --force
+    remove_param_for_commit "$(git_sha)" "$(aws_region)"
     echo
 done
 

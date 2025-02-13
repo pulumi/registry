@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/ctfer-io/pulumi-ctfd/v2.0.4/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/ctfer-io/pulumi-ctfd/v2.0.5/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: CTFd Provider
 meta_desc: Provides an overview on how to setup the CTFd Provider for Pulumi.
@@ -43,7 +43,7 @@ let pv = new ctfd.Provider('ctfd-fine-grained', {
 });
 
 // Create resources with the custom provider
-let ch = new ctfd.Challenge('some-challenge', {
+let ch = new ctfd.ChallengeStandard('some-challenge', {
     name: 'My Challenge',
     category: 'misc',
     description: '...',
@@ -66,7 +66,7 @@ let pv = new ctfd.Provider('ctfd-fine-grained', {
 });
 
 // Create resources with the custom provider
-let ch = new ctfd.Challenge('some-challenge', {
+let ch = new ctfd.ChallengeStandard('some-challenge', {
     name: 'My Challenge',
     category: 'misc',
     description: '...',
@@ -107,7 +107,7 @@ func main() {
         }
 
         // Create resources with the custom provider
-        _, err = ctfd.NewChallenge(ctx, "some-challenge", &ctfd.ChallengeArgs{
+        _, err = ctfd.NewChallengeStandard(ctx, "some-challenge", &ctfd.ChallengeStandardArgs{
             Name:        pulumi.String("My Challenge"),
             Category:    pulumi.String("misc"),
             Description: pulumi.String("..."),
@@ -138,7 +138,7 @@ import pulumi
 pv = ctfd.Provider("ctfd-fine-grained", url="https://my-ctf.lan", api_key="ctfd_xxx") # please do not hardcode your credentials/api keys
 
 # Create resources with the custom provider
-ch = ctfd.Challenge("some-challenge", name="My Challenge", category="misc", description="...", value=500, opts=pulumi.ResourceOptions(provider=pv))
+ch = ctfd.ChallengeStandard("some-challenge", name="My Challenge", category="misc", description="...", value=500, opts=pulumi.ResourceOptions(provider=pv))
 
 # Other resources, export, etc.
 # ...
@@ -166,7 +166,7 @@ class Program
             });
 
             // Create resources with the custom provider
-            var ch = new Ctfd.Challenge("my-challenge", new Ctfd.ChallengeArgs{
+            var ch = new Ctfd.ChallengeStandard("my-challenge", new Ctfd.ChallengeArgs{
                 Name = "My Challenge",
                 Category = "misc",
                 Description = "...",

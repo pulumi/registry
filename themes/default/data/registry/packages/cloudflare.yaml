@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-cloudflare
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-cloudflare/v5.49.0/provider/cmd/pulumi-resource-cloudflare/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-cloudflare/v5.49.1/provider/cmd/pulumi-resource-cloudflare/schema.json
 title: Cloudflare
-updated_on: 1737659858
-version: v5.49.0
+updated_on: 1739856657
+version: v5.49.1

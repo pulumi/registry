@@ -128,9 +128,13 @@ set_bucket_for_commit() {
 
 # Remove the parameter key associated with a specific commit.
 remove_param_for_commit() {
-    aws ssm delete-parameter \
-        --name "$(ssm_parameter_key_for_commit $1)" \
-        --region $2
+    # SSM errors when the parameter doesn't exist (e.g. somebody manually deleted it), so we check and ignore that error.
+    output=$(aws ssm delete-parameter --name "$(ssm_parameter_key_for_commit $1)" --region $2 2>&1)
+    if [[ $? -eq 0 ]] || [[ $output == *"ParameterNotFound"* ]]; then
+        return 0
+    fi
+    echo "$output" >&2
+    return 1
 }
 
 # List the 100 most recent bucket in the current account, sorted descendingly by

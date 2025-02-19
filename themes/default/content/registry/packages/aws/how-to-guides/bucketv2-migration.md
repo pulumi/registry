@@ -31,7 +31,7 @@ changes against the actual cloud account. The steps involve:
 - Remove the legacy Bucket resources from state using `pulumi state delete $bucketURN`
 - Determine which side-by-side resources will be needed for each bucket
 - Construct an `pulumi-import.json` file listing the buckets and their side-by-side resources
-- Run `pulumi import --file import-file.json` using the [Bulk Importing](https://www.pulumi.com/tutorials/importing/bulk-importing/) feature
+- Run `pulumi import --file import-file.json` using the [Bulk Importing](/tutorials/importing-aws-infrastructure/) feature
 - Add the suggested code into your Pulumi program source
 - Run `pulumi preview` to confirm a no-change plan
 - If warnings are generated, edit the program to remove deprecated inputs from BucketV2

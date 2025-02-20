@@ -367,6 +367,10 @@
     {
       "repoSlug": "azaurus1/pulumi-kafka-connect",
       "schemaFile": "provider/cmd/pulumi-resource-kafkaconnect/schema.json"
+    },
+    {
+      "repoSlug": "three141/pulumi-argocd",
+      "schemaFile": "provider/cmd/pulumi-resource-argocd/schema.json"
     }
   ]
 }

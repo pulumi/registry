@@ -2,12 +2,10 @@
     "name": "registry",
     "main": "index.ts",
     "devDependencies": {
-        "@types/node": "^16"
+        "@types/node": "^18"
     },
     "dependencies": {
-        "@pulumi/aws": "^5.0.0",
-        "@pulumi/aws-static-website": "^0.2.1",
-        "@pulumi/awsx": "^1.0.0",
+        "@pulumi/aws": "^6.0.0",
         "@pulumi/pulumi": "^3.0.0"
     }
 }

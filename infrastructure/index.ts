@@ -1,4 +1,4 @@
-// Copyright 2016-2019, Pulumi Corporation.  All rights reserved.
+// Copyright 2025, Pulumi Corporation.  All rights reserved.
 
 import * as aws from "@pulumi/aws";
 import * as pulumi from "@pulumi/pulumi";
@@ -27,19 +27,15 @@ const bucketReaderRole = bucketReaderStackRef.getOutput('dwhBucketReaderRole')
 // originBucketName is the name of the S3 bucket to use as the CloudFront origin for the
 // website. This bucket is presumed to exist prior to the Pulumi run; if it doesn't, this
 // program will fail.
-export let originBucketName: string | undefined;
-
-// If a build metadata file is present and contains valid content, use that for the bucket
-// name by default. Will fail if there's a file present that isn't parsable as expected.
-if (fs.existsSync(config.pathToOriginBucketMetadata)) {
-    originBucketName = JSON.parse(fs.readFileSync(config.pathToOriginBucketMetadata).toString()).bucket;
-}
-
-// However, if the bucket's been configured manually, use that instead. A manually
-// configured bucket means that someone's decided to pin it.
-if (config.originBucketNameOverride) {
-    originBucketName = config.originBucketNameOverride;
-}
+export const originBucketName: string =
+           // If the bucket's been configured manually, use that. A manually configured
+           // bucket means that someone's decided to pin it.
+           config.originBucketNameOverride ||
+             // If a build metadata file is present and contains valid content, use that
+             // for the bucket name by default. Will fail if there's a file present that
+             // isn't parsable as expected.
+             (fs.existsSync(config.pathToOriginBucketMetadata) &&
+               JSON.parse(fs.readFileSync(config.pathToOriginBucketMetadata).toString()).bucket);
 
 // If there's still no bucket selected, it's an error.
 if (!originBucketName) {
@@ -47,9 +43,9 @@ if (!originBucketName) {
 }
 
 // Fetch the bucket we'll use for the preview or update.
-const originBucket = pulumi.output(aws.s3.getBucket({
+const originBucket = aws.s3.getBucketOutput({
     bucket: originBucketName,
-}));
+});
 
 // We deny the s3:ListBucket permission to anyone but account users to prevent unintended 
 // disclosure of the bucket's contents.
@@ -180,7 +176,6 @@ const logsBucketDeliveryACL = new aws.s3.BucketAclV2("logs-bucket-delivery-acl",
 const fiveMinutes = 60 * 5;
 const oneHour = fiveMinutes * 12;
 const oneWeek = oneHour * 24 * 7;
-const oneYear = oneWeek * 52;
 
 const baseCacheBehavior = {
     targetOriginId: originBucket.arn,

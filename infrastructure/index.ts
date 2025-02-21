@@ -27,20 +27,23 @@ const bucketReaderRole = bucketReaderStackRef.getOutput('dwhBucketReaderRole')
 // originBucketName is the name of the S3 bucket to use as the CloudFront origin for the
 // website. This bucket is presumed to exist prior to the Pulumi run; if it doesn't, this
 // program will fail.
-export const originBucketName: string =
-           // If the bucket's been configured manually, use that. A manually configured
-           // bucket means that someone's decided to pin it.
-           config.originBucketNameOverride ||
+export const originBucketName: string = (() => {
+    let bucketName =
+        // If the bucket's been configured manually, use that. A manually configured
+        // bucket means that someone's decided to pin it.
+        config.originBucketNameOverride ||
              // If a build metadata file is present and contains valid content, use that
              // for the bucket name by default. Will fail if there's a file present that
              // isn't parsable as expected.
              (fs.existsSync(config.pathToOriginBucketMetadata) &&
-               JSON.parse(fs.readFileSync(config.pathToOriginBucketMetadata).toString()).bucket);
+                 JSON.parse(fs.readFileSync(config.pathToOriginBucketMetadata).toString()).bucket);
 
-// If there's still no bucket selected, it's an error.
-if (!originBucketName) {
-    throw new Error("An origin bucket was not specified.");
-}
+    if (!bucketName) {
+        throw new Error("An origin bucket was not specified.");
+    }
+
+    return bucketName;
+})();
 
 // Fetch the bucket we'll use for the preview or update.
 const originBucket = aws.s3.getBucketOutput({

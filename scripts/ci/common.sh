@@ -129,8 +129,9 @@ set_bucket_for_commit() {
 # Remove the parameter key associated with a specific commit.
 remove_param_for_commit() {
     # SSM errors when the parameter doesn't exist (e.g. somebody manually deleted it), so we check and ignore that error.
-    output=$(aws ssm delete-parameter --name "$(ssm_parameter_key_for_commit $1)" --region $2 2>&1)
-    if [[ $? -eq 0 ]] || [[ $output == *"ParameterNotFound"* ]]; then
+    cmd_status=0
+    output=$(aws ssm delete-parameter --name "$(ssm_parameter_key_for_commit $1)" --region $2 2>&1) || cmd_status=$?
+    if [[ $cmd_status -eq 0 ]] || [[ $output == *"ParameterNotFound"* ]]; then
         return 0
     fi
     echo "$output" >&2

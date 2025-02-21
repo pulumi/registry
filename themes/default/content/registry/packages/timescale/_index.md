@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/timescale/timescale/1.14.0/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/timescale/timescale/1.15.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Timescale Provider
@@ -40,6 +40,8 @@ Below is a minimal working example:
 name: configuration-example
 runtime: nodejs
 config:
+    aws:region:
+        value: 'TODO: var.aws_region'
     timescale:accessKey:
         value: 'TODO: var.ts_access_key'
     timescale:projectId:
@@ -88,6 +90,8 @@ const peerVpcPeeringConnectionAccepter = new aws.index.VpcPeeringConnectionAccep
 name: configuration-example
 runtime: python
 config:
+    aws:region:
+        value: 'TODO: var.aws_region'
     timescale:accessKey:
         value: 'TODO: var.ts_access_key'
     timescale:projectId:
@@ -136,6 +140,8 @@ peer_vpc_peering_connection_accepter = aws.index.VpcPeeringConnectionAccepter("p
 name: configuration-example
 runtime: dotnet
 config:
+    aws:region:
+        value: 'TODO: var.aws_region'
     timescale:accessKey:
         value: 'TODO: var.ts_access_key'
     timescale:projectId:
@@ -204,6 +210,8 @@ return await Deployment.RunAsync(() =>
 name: configuration-example
 runtime: go
 config:
+    aws:region:
+        value: 'TODO: var.aws_region'
     timescale:accessKey:
         value: 'TODO: var.ts_access_key'
     timescale:projectId:
@@ -282,6 +290,8 @@ func main() {
 name: configuration-example
 runtime: yaml
 config:
+    aws:region:
+        value: 'TODO: var.aws_region'
     timescale:accessKey:
         value: 'TODO: var.ts_access_key'
     timescale:projectId:
@@ -344,6 +354,8 @@ resources:
 name: configuration-example
 runtime: java
 config:
+    aws:region:
+        value: 'TODO: var.aws_region'
     timescale:accessKey:
         value: 'TODO: var.ts_access_key'
     timescale:projectId:

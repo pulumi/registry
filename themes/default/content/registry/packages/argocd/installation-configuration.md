@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/three141/pulumi-argocd/v1.0.0/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/three141/pulumi-argocd/v1.0.1/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: ArgoCD Provider Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the ArgoCD provider for Pulumi.
@@ -12,9 +12,9 @@ The Argo CD Resource Provider lets you manage [Argo CD](https://argoproj.github.
 
 The ArgoCD provider for Pulumi is available as a package in most Pulumi languages:
 
-- JavaScript/TypeScript: [@three14/pulumi-onepassword](https://www.npmjs.com/package/@three14/pulumi-argocd)
-- Python: [pulumi-argocd](https://pypi.org/project/pulumi-argocd/)
-- Go: [github.com/Three14/pulumi-argocd/sdk/go/argocd](https://pkg.go.dev/github.com/Three14/pulumi-argocd/sdk/go/onepassword)
+- JavaScript/TypeScript: [`@three14/pulumi-argocd`](https://www.npmjs.com/package/@three14/pulumi-argocd)
+- Python: [`pulumi-argocd`](https://pypi.org/project/pulumi-argocd/)
+- Go: [`github.com/Three14/pulumi-argocd/sdk/go/argocd`](https://pkg.go.dev/github.com/Three141/pulumi-argocd/sdk/go/argocd)
 - .NET: [`Three14.Argocd`](https://www.nuget.org/packages/Three14.Argocd)
 
 ### Provider Binary
@@ -22,7 +22,7 @@ The ArgoCD provider for Pulumi is available as a package in most Pulumi language
 The ArgoCD provider binary is a third party binary. It can be installed using the `pulumi plugin` command.
 
 ```sh
-pulumi plugin install resource argocd <version> --server github://api.github.com/Three14/pulumi-argocd
+pulumi plugin install resource argocd <version> --server 'https://github.com/Three141/pulumi-argocd/releases/download/v${VERSION}/'
 ```
 
 Replace the version string with your desired version.

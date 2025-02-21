@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: Three141
 repo_url: https://github.com/three141/pulumi-argocd
-schema_file_url: https://raw.githubusercontent.com/three141/pulumi-argocd/v1.0.0/provider/cmd/pulumi-resource-argocd/schema.json
+schema_file_url: https://raw.githubusercontent.com/three141/pulumi-argocd/v1.0.1/provider/cmd/pulumi-resource-argocd/schema.json
 title: Argo CD
-updated_on: 1739562881
-version: v1.0.0
+updated_on: 1740133545
+version: v1.0.1

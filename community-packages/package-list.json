@@ -371,6 +371,10 @@
     {
       "repoSlug": "three141/pulumi-argocd",
       "schemaFile": "provider/cmd/pulumi-resource-argocd/schema.json"
+    },
+    {
+      "repoSlug": "UpCloudLtd/pulumi-upcloud",
+      "schemaFile": "provider/cmd/pulumi-resource-upcloud/schema.json"
     }
   ]
 }

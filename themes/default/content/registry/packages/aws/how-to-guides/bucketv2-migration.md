@@ -27,13 +27,15 @@ changes against the actual cloud account. The steps involve:
 
 - Find URNs for legacy Bucket Pulumi resources using `pulumi stack export`
 - Determine the actual bucket name(s)
-- Remove the legacy Bucket code from your Pulumi program source
-- Remove the legacy Bucket resources from state using `pulumi state delete $bucketURN`
 - Determine which side-by-side resources will be needed for each bucket
 - Construct an `pulumi-import.json` file listing the buckets and their side-by-side resources
 - Run `pulumi import --file import-file.json` using the [Bulk Importing](/tutorials/importing-aws-infrastructure/) feature
 - Add the suggested code into your Pulumi program source
+- Update dependent resource to reference the new bucket resource
 - Run `pulumi preview` to confirm a no-change plan
+- Run `pulumi up` to update the references in state to the new `BucketV2` resource
+- Remove the legacy Bucket code from your Pulumi program source
+- Remove the legacy Bucket resources from state using `pulumi state delete $bucketURN`
 - If warnings are generated, edit the program to remove deprecated inputs from BucketV2
 - Run `pulumi preview` one more time to confirm a no-change plan on the final program
 
@@ -47,7 +49,7 @@ Consider a concrete example, suppose you have provisioned a bucket as follows:
 import * as pulumi from "@pulumi/pulumi";
 import * as aws from "@pulumi/aws";
 
-const myBucket = new aws.s3.Bucket("my-bucket", {
+const oldBucket = new aws.s3.Bucket("my-bucket", {
     bucket: "my-bucket-26224917",
     serverSideEncryptionConfiguration: {
         rule: {
@@ -89,6 +91,20 @@ const myBucket = new aws.s3.Bucket("my-bucket", {
     },
 });
 
+// dependent resource
+new aws.iam.Policy('my-policy', {
+    policy: pulumi.jsonStringify({
+      Version: '2012-10-17',
+      Statement: [
+        {
+          Effect: 'Allow',
+          Action: ['s3:ListBucket'],
+          Resource: oldBucket.arn,
+        },
+      ],
+    }),
+});
+
 ```
 
 {{% /choosable %}}
@@ -100,7 +116,7 @@ import pulumi
 import json
 import pulumi_aws as aws
 
-my_bucket = aws.s3.Bucket("my-bucket",
+old_bucket = aws.s3.Bucket("my-bucket",
     bucket="my-bucket-26224917",
     server_side_encryption_configuration={
         "rule": {
@@ -140,6 +156,21 @@ my_bucket = aws.s3.Bucket("my-bucket",
     versioning={
         "enabled": True,
     })
+
+
+aws.iam.Policy("my-policy",
+    policy=pulumi.Output.json_dumps(
+        {
+            Version: '2012-10-17',
+            Statement: [
+              {
+                Effect: 'Allow',
+                Action: ['s3:ListBucket'],
+                Resource: old_bucket.arn,
+              },
+            ],
+        }
+    ))
 
 ```
 
@@ -181,7 +212,7 @@ func main() {
 			return err
 		}
 		json0 := string(tmpJSON0)
-		_, err = s3.NewBucket(ctx, "my-bucket", &s3.BucketArgs{
+		oldBucket, err := s3.NewBucket(ctx, "my-bucket", &s3.BucketArgs{
 			Bucket: pulumi.String("my-bucket-26224917"),
 			ServerSideEncryptionConfiguration: &s3.BucketServerSideEncryptionConfigurationArgs{
 				Rule: &s3.BucketServerSideEncryptionConfigurationRuleArgs{
@@ -212,6 +243,22 @@ func main() {
 		if err != nil {
 			return err
 		}
+
+		_, err = iam.NewPolicy(ctx, "my-policy", &iam.PolicyArgs{
+			Policy: pulumi.JSONMarshal(map[string]interface{}{
+				"Version": "2012-10-17",
+				"Statement": pulumi.ToOutput([]interface{}{
+					pulumi.ToMapOutput(map[string]pulumi.Output{
+						"Effect": "Allow",
+						"Action": []string{"s3:ListBucket"},
+						"Resource": oldBucket.Arn,
+					})
+				})
+			})
+		})
+		if err != nil {
+			return err
+		}
 		return nil
 	})
 }
@@ -231,7 +278,7 @@ using Aws = Pulumi.Aws;
 
 return await Deployment.RunAsync(() =>
 {
-    var myBucket = new Aws.S3.Bucket("my-bucket", new()
+    var oldBucket = new Aws.S3.Bucket("my-bucket", new()
     {
         BucketName = "my-bucket-26224917",
         ServerSideEncryptionConfiguration = new Aws.S3.Inputs.BucketServerSideEncryptionConfigurationArgs
@@ -291,6 +338,26 @@ return await Deployment.RunAsync(() =>
             Enabled = true,
         },
     });
+
+    new Aws.Iam.Policy("policy", new Aws.Iam.PolicyArgs
+        {
+            Policy = Output.JsonSerialize(Output.Create(
+                new
+                {
+                    Version = "2012-10-17",
+                    Statement = new[]
+                    {
+                        new
+                        {
+                            Effect = "Allow",
+                            Action = "s3:ListBucket",
+                            Resource = oldBucket.Arn,
+                        }
+                    }
+                }
+            ))
+        }
+    );
 
 });
 
@@ -428,11 +495,6 @@ Migrate as follows:
 
 - The state file should also include the actual cloud name for the bucket such as `"bucket": "my-bucket-36224917"`
 
-- Run `pulumi state delete "urn:pulumi:bucket1::y2::aws:s3/bucket:Bucket::my-bucket"` to remove the old bucket from the
-  state
-
-- Delete the code for the old bucket from the sources.
-
 - This bucket will require the following side-by-side resources:
 
   aws:s3:BucketServerSideEncryptionConfigurationV2
@@ -480,7 +542,14 @@ Migrate as follows:
     }
     ```
 
-- `pulumi import --file import-file.json` will suggest new code to include in your program, for example:
+- `pulumi import --file import-file.json` will suggest new code to include in your program:
+
+- Add the new code side-by-side with the old `Bucket` code.
+
+- If there are resources that depend on the old `Bucket` resource, update those
+  references to point to the new `BucketV2` resource.
+
+At this point your program should look something like this:
 
 {{< chooser language "typescript,python,go,csharp,java,yaml" >}}
 
@@ -489,6 +558,50 @@ Migrate as follows:
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
 import * as aws from "@pulumi/aws";
+
+// keep the old bucket definition
+const oldBucket = new aws.s3.Bucket("my-bucket", {
+    bucket: "my-bucket-26224917",
+    serverSideEncryptionConfiguration: {
+        rule: {
+            applyServerSideEncryptionByDefault: {
+                sseAlgorithm: "AES256",
+            },
+        },
+    },
+    lifecycleRules: [{
+        enabled: true,
+        expiration: {
+            days: 30,
+        },
+    }],
+    policy: JSON.stringify({
+        Version: "2012-10-17",
+        Id: "PutObjPolicy",
+        Statement: [{
+            Sid: "DenyObjectsThatAreNotSSEKMS",
+            Principal: "*",
+            Effect: "Deny",
+            Action: "s3:PutObject",
+            Resource: "arn:aws:s3:::my-bucket-26224917/*",
+            Condition: {
+                Null: {
+                    "s3:x-amz-server-side-encryption-aws-kms-key-id": "true",
+                },
+            },
+        }],
+    }),
+    tags: {
+        Environment: "Dev",
+    },
+    objectLockConfiguration: {
+        objectLockEnabled: "Enabled",
+    },
+    versioning: {
+        enabled: true,
+    },
+});
+
 
 const myBucket = new aws.s3.BucketV2("my-bucket", {
     bucket: "my-bucket-36224917",
@@ -569,6 +682,20 @@ const myBucketVersioning = new aws.s3.BucketVersioningV2("my-bucket-versioning",
     protect: true,
 });
 
+// dependent resource
+new aws.iam.Policy('my-policy', {
+    policy: pulumi.jsonStringify({
+      Version: '2012-10-17',
+      Statement: [
+        {
+          Effect: 'Allow',
+          Action: ['s3:ListBucket'],
+          Resource: myBucket.arn, // update the reference to the new bucket
+        },
+      ],
+    }),
+});
+
 ```
 
 {{% /choosable %}}
@@ -578,6 +705,49 @@ const myBucketVersioning = new aws.s3.BucketVersioningV2("my-bucket-versioning",
 ```python
 import pulumi
 import pulumi_aws as aws
+
+# keep old bucket definition
+old_bucket = aws.s3.Bucket("my-bucket",
+    bucket="my-bucket-26224917",
+    server_side_encryption_configuration={
+        "rule": {
+            "apply_server_side_encryption_by_default": {
+                "sse_algorithm": "AES256",
+            },
+        },
+    },
+    lifecycle_rules=[{
+        "enabled": True,
+        "expiration": {
+            "days": 30,
+        },
+    }],
+    policy=json.dumps({
+        "Version": "2012-10-17",
+        "Id": "PutObjPolicy",
+        "Statement": [{
+            "Sid": "DenyObjectsThatAreNotSSEKMS",
+            "Principal": "*",
+            "Effect": "Deny",
+            "Action": "s3:PutObject",
+            "Resource": "arn:aws:s3:::my-bucket-26224917/*",
+            "Condition": {
+                "Null": {
+                    "s3:x-amz-server-side-encryption-aws-kms-key-id": "true",
+                },
+            },
+        }],
+    }),
+    tags={
+        "Environment": "Dev",
+    },
+    object_lock_configuration={
+        "object_lock_enabled": "Enabled",
+    },
+    versioning={
+        "enabled": True,
+    })
+
 
 my_bucket = aws.s3.BucketV2("my-bucket",
     bucket="my-bucket-36224917",
@@ -646,6 +816,20 @@ my_bucket_versioning = aws.s3.BucketVersioningV2("my-bucket-versioning",
     },
     opts = pulumi.ResourceOptions(protect=True))
 
+aws.iam.Policy("my-policy",
+    policy=pulumi.Output.json_dumps(
+        {
+            Version: '2012-10-17',
+            Statement: [
+              {
+                Effect: 'Allow',
+                Action: ['s3:ListBucket'],
+                Resource: my_bucket.arn, # update reference to new bucket
+              },
+            ],
+        }
+    ))
+
 ```
 
 {{% /choosable %}}
@@ -662,7 +846,62 @@ import (
 
 func main() {
 	pulumi.Run(func(ctx *pulumi.Context) error {
-		_, err := s3.NewBucketV2(ctx, "my-bucket", &s3.BucketV2Args{
+		tmpJSON0, err := json.Marshal(map[string]interface{}{
+			"Version": "2012-10-17",
+			"Id":      "PutObjPolicy",
+			"Statement": []map[string]interface{}{
+				map[string]interface{}{
+					"Sid":       "DenyObjectsThatAreNotSSEKMS",
+					"Principal": "*",
+					"Effect":    "Deny",
+					"Action":    "s3:PutObject",
+					"Resource":  "arn:aws:s3:::my-bucket-26224917/*",
+					"Condition": map[string]interface{}{
+						"Null": map[string]interface{}{
+							"s3:x-amz-server-side-encryption-aws-kms-key-id": "true",
+						},
+					},
+				},
+			},
+		})
+		if err != nil {
+			return err
+		}
+		json0 := string(tmpJSON0)
+		// keep old bucket definition
+		oldBucket, err := s3.NewBucket(ctx, "my-bucket", &s3.BucketArgs{
+			Bucket: pulumi.String("my-bucket-26224917"),
+			ServerSideEncryptionConfiguration: &s3.BucketServerSideEncryptionConfigurationArgs{
+				Rule: &s3.BucketServerSideEncryptionConfigurationRuleArgs{
+					ApplyServerSideEncryptionByDefault: &s3.BucketServerSideEncryptionConfigurationRuleApplyServerSideEncryptionByDefaultArgs{
+						SseAlgorithm: pulumi.String("AES256"),
+					},
+				},
+			},
+			LifecycleRules: s3.BucketLifecycleRuleArray{
+				&s3.BucketLifecycleRuleArgs{
+					Enabled: pulumi.Bool(true),
+					Expiration: &s3.BucketLifecycleRuleExpirationArgs{
+						Days: pulumi.Int(30),
+					},
+				},
+			},
+			Policy: pulumi.String(json0),
+			Tags: pulumi.StringMap{
+				"Environment": pulumi.String("Dev"),
+			},
+			ObjectLockConfiguration: &s3.BucketObjectLockConfigurationArgs{
+				ObjectLockEnabled: pulumi.String("Enabled"),
+			},
+			Versioning: &s3.BucketVersioningArgs{
+				Enabled: pulumi.Bool(true),
+			},
+		})
+		if err != nil {
+			return err
+		}
+
+		bucket, err := s3.NewBucketV2(ctx, "my-bucket", &s3.BucketV2Args{
 			Bucket: pulumi.String("my-bucket-36224917"),
 			Grants: s3.BucketV2GrantArray{
 				&s3.BucketV2GrantArgs{
@@ -766,6 +1005,21 @@ func main() {
 		if err != nil {
 			return err
 		}
+		_, err = iam.NewPolicy(ctx, "my-policy", &iam.PolicyArgs{
+			Policy: pulumi.JSONMarshal(map[string]interface{}{
+				"Version": "2012-10-17",
+				"Statement": pulumi.ToOutput([]interface{}{
+					pulumi.ToMapOutput(map[string]pulumi.Output{
+						"Effect": "Allow",
+						"Action": []string{"s3:ListBucket"},
+						"Resource": bucket.Arn, // update reference to new bucket
+					})
+				})
+			})
+		})
+		if err != nil {
+			return err
+		}
 		return nil
 	})
 }
@@ -784,6 +1038,67 @@ using Aws = Pulumi.Aws;
 
 return await Deployment.RunAsync(() =>
 {
+    var oldBucket = new Aws.S3.Bucket("my-bucket", new()
+    {
+        BucketName = "my-bucket-26224917",
+        ServerSideEncryptionConfiguration = new Aws.S3.Inputs.BucketServerSideEncryptionConfigurationArgs
+        {
+            Rule = new Aws.S3.Inputs.BucketServerSideEncryptionConfigurationRuleArgs
+            {
+                ApplyServerSideEncryptionByDefault = new Aws.S3.Inputs.BucketServerSideEncryptionConfigurationRuleApplyServerSideEncryptionByDefaultArgs
+                {
+                    SseAlgorithm = "AES256",
+                },
+            },
+        },
+        LifecycleRules = new[]
+        {
+            new Aws.S3.Inputs.BucketLifecycleRuleArgs
+            {
+                Enabled = true,
+                Expiration = new Aws.S3.Inputs.BucketLifecycleRuleExpirationArgs
+                {
+                    Days = 30,
+                },
+            },
+        },
+        Policy = JsonSerializer.Serialize(new Dictionary<string, object?>
+        {
+            ["Version"] = "2012-10-17",
+            ["Id"] = "PutObjPolicy",
+            ["Statement"] = new[]
+            {
+                new Dictionary<string, object?>
+                {
+                    ["Sid"] = "DenyObjectsThatAreNotSSEKMS",
+                    ["Principal"] = "*",
+                    ["Effect"] = "Deny",
+                    ["Action"] = "s3:PutObject",
+                    ["Resource"] = "arn:aws:s3:::my-bucket-26224917/*",
+                    ["Condition"] = new Dictionary<string, object?>
+                    {
+                        ["Null"] = new Dictionary<string, object?>
+                        {
+                            ["s3:x-amz-server-side-encryption-aws-kms-key-id"] = "true",
+                        },
+                    },
+                },
+            },
+        }),
+        Tags =
+        {
+            { "Environment", "Dev" },
+        },
+        ObjectLockConfiguration = new Aws.S3.Inputs.BucketObjectLockConfigurationArgs
+        {
+            ObjectLockEnabled = "Enabled",
+        },
+        Versioning = new Aws.S3.Inputs.BucketVersioningArgs
+        {
+            Enabled = true,
+        },
+    });
+
     var myBucket = new Aws.S3.BucketV2("my-bucket", new()
     {
         Bucket = "my-bucket-36224917",
@@ -923,6 +1238,25 @@ return await Deployment.RunAsync(() =>
     {
         Protect = true,
     });
+    new Aws.Iam.Policy("policy", new Aws.Iam.PolicyArgs
+        {
+            Policy = Output.JsonSerialize(Output.Create(
+                new
+                {
+                    Version = "2012-10-17",
+                    Statement = new[]
+                    {
+                        new
+                        {
+                            Effect = "Allow",
+                            Action = "s3:ListBucket",
+                            Resource = myBucket.Arn,
+                        }
+                    }
+                }
+            ))
+        }
+    );
 
 });
 
@@ -1147,7 +1481,15 @@ resources:
 
 {{< /chooser >}}
 
-- `pulumi preview` should result in `Resources: N unchanged` to confirm everything went well.
+
+- Run `pulumi up` to migrate the references to the new `BucketV2` resource. You
+  will probably see a preview with no changes, but you need to complete the
+  `pulumi up` to successfully update the state.
+
+- Run `pulumi state delete "urn:pulumi:bucket1::y2::aws:s3/bucket:Bucket::my-bucket"` to remove the old bucket from the
+  state
+
+- Delete the code for the old bucket from the sources.
 
 - At this point you may see warnings from deprecated inputs like this:
 
@@ -1622,6 +1964,8 @@ resources:
 
 {{< /chooser >}}
 
+
+- `pulumi preview` should result in `Resources: N unchanged` to confirm everything went well.
 
 
 

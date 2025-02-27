@@ -399,6 +399,7 @@ func legacyPublisherRuleException(repoSlug repoSlug) bool {
 // to derive a publisher name when one is not explicitly specified in the schema.
 // This maintains backward compatibility with previously established publisher names.
 func getLegacyPublisher(repoSlug repoSlug) string {
+	contract.Assertf(repoSlug.owner != "", "repoSlug.owner is non-empty by construction")
 	return cases.Title(language.Und, cases.NoLower).String(repoSlug.owner)
 }
 

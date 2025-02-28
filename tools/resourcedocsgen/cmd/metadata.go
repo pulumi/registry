@@ -29,11 +29,14 @@ import (
 	"github.com/ghodss/yaml"
 	"github.com/golang/glog"
 	"github.com/pkg/errors"
+	"github.com/pulumi/pulumi/pkg/v3/codegen"
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 	pschema "github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/util/contract"
 	"github.com/pulumi/registry/tools/resourcedocsgen/pkg"
 	"github.com/spf13/cobra"
+	"golang.org/x/text/cases"
+	"golang.org/x/text/language"
 )
 
 const defaultPackageCategory = pkg.PackageCategoryCloud
@@ -120,7 +123,7 @@ func packageMetadataFromURLsCmd(metadataDir, packageDocsDir *string) *cobra.Comm
 			return errors.WithMessage(err, "unable to read remote schema file")
 		}
 
-		err = writePackageMetadata(mainSpec, providerName, schemaFileURL, metadataDir, time.Now())
+		err = writePackageMetadata(mainSpec, providerName, schemaFileURL, metadataDir, time.Now(), nil)
 		if err != nil {
 			return err
 		}
@@ -242,7 +245,7 @@ func packageMetadataFromGitHubCmd(metadataDir, packageDocsDir *string) *cobra.Co
 			mainSpec.Publisher = publisher
 		}
 
-		err = writePackageMetadata(mainSpec, providerName, schemaURL, metadataDir, publishedDate)
+		err = writePackageMetadata(mainSpec, providerName, schemaURL, metadataDir, publishedDate, &repoSlug)
 		if err != nil {
 			return errors.Wrap(err, "generating package metadata")
 		}
@@ -296,7 +299,7 @@ func packageMetadataFromGitHubCmd(metadataDir, packageDocsDir *string) *cobra.Co
 }
 
 func writePackageMetadata(
-	spec *schema.PackageSpec, providerName, schemaURL, metadataDir string, updatedOn time.Time,
+	spec *schema.PackageSpec, providerName, schemaURL, metadataDir string, updatedOn time.Time, repoSlug *repoSlug,
 ) error {
 	// Validate the schema for usage.
 	//
@@ -326,7 +329,11 @@ func writePackageMetadata(
 	}
 
 	if spec.Publisher == "" {
-		validationErrors = append(validationErrors, stderrors.New("Publisher is a required field on the schema"))
+		if repoSlug != nil && legacyPublisherRuleException(*repoSlug) {
+			spec.Publisher = getLegacyPublisher(*repoSlug)
+		} else {
+			validationErrors = append(validationErrors, stderrors.New("Publisher is a required field on the schema"))
+		}
 	}
 
 	// Check if the schema failed to validate.
@@ -374,6 +381,36 @@ func legacyNameRuleException(schemaName, providerName string) bool {
 	// The repo name is "runpod/pulumi-runpod-native" but the name of the provider is
 	// "runpod" (not the inferred "runpod-native").
 	return schemaName == "runpod" && providerName == "runpod-native"
+}
+
+// legacyPublisherExceptions is a set of repository slugs that are exceptions to the
+// rule of requiring a publisher field in the schema.
+var legacyPublisherExceptions = codegen.NewStringSet(
+	"genesiscloud/pulumi-genesiscloud",
+	"nuage-studio/pulumi-nuage",
+	"wttech/pulumi-aem",
+	"pulumi/pulumi-tls-self-signed-cert",
+)
+
+// legacyPublisherRuleException checks if the repository slug is an exception to the
+// standard publisher naming rules. This allows certain repositories to maintain
+// backward compatibility with the previous behavior of not requiring a publisher field
+// in the schema.
+//
+// For existing providers, we allow the publisher field to be empty and derive it from
+// the repository owner. New providers should not be added to this exception list and
+// should explicitly specify their publisher in the schema.
+func legacyPublisherRuleException(repoSlug repoSlug) bool {
+	return legacyPublisherExceptions.Has(repoSlug.String())
+}
+
+// getLegacyPublisher returns the publisher name for repositories that are exceptions
+// to the standard publisher naming rules. It converts the repository owner to title case
+// to derive a publisher name when one is not explicitly specified in the schema.
+// This maintains backward compatibility with previously established publisher names.
+func getLegacyPublisher(repoSlug repoSlug) string {
+	contract.Assertf(repoSlug.owner != "", "repoSlug.owner is non-empty by construction")
+	return cases.Title(language.Und, cases.NoLower).String(repoSlug.owner)
 }
 
 func readRemoteFile(url, repoOwner string) ([]byte, error) {

@@ -244,7 +244,7 @@ func packageMetadataFromGitHubCmd(metadataDir, packageDocsDir *string) *cobra.Co
 			mainSpec.Publisher = publisher
 		}
 
-		err = writePackageMetadata(mainSpec, providerName, schemaURL, metadataDir, publishedDate, repoSlug)
+		err = writePackageMetadata(mainSpec, providerName, schemaURL, metadataDir, publishedDate, &repoSlug)
 		if err != nil {
 			return errors.Wrap(err, "generating package metadata")
 		}

@@ -375,6 +375,10 @@
     {
       "repoSlug": "UpCloudLtd/pulumi-upcloud",
       "schemaFile": "provider/cmd/pulumi-resource-upcloud/schema.json"
+    },
+    {
+      "repoSlug": "vatesfr/pulumi-xenorchestra",
+      "schemaFile": "provider/cmd/pulumi-resource-xenorchestra/schema.json"
     }
   ]
 }

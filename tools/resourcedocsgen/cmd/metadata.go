@@ -29,6 +29,7 @@ import (
 	"github.com/ghodss/yaml"
 	"github.com/golang/glog"
 	"github.com/pkg/errors"
+	"github.com/pulumi/pulumi/pkg/v3/codegen"
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 	pschema "github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/util/contract"
@@ -382,6 +383,15 @@ func legacyNameRuleException(schemaName, providerName string) bool {
 	return schemaName == "runpod" && providerName == "runpod-native"
 }
 
+// legacyPublisherExceptions is a set of repository slugs that are exceptions to the
+// rule of requiring a publisher field in the schema.
+var legacyPublisherExceptions = codegen.NewStringSet(
+	"genesiscloud/pulumi-genesiscloud",
+	"nuage-studio/pulumi-nuage",
+	"wttech/pulumi-aem",
+	"pulumi/pulumi-tls-self-signed-cert",
+)
+
 // legacyPublisherRuleException checks if the repository slug is an exception to the
 // standard publisher naming rules. This allows certain repositories to maintain
 // backward compatibility with the previous behavior of not requiring a publisher field
@@ -391,7 +401,7 @@ func legacyNameRuleException(schemaName, providerName string) bool {
 // the repository owner. New providers should not be added to this exception list and
 // should explicitly specify their publisher in the schema.
 func legacyPublisherRuleException(repoSlug repoSlug) bool {
-	return repoSlug.String() == "genesiscloud/pulumi-genesiscloud"
+	return legacyPublisherExceptions.Has(repoSlug.String())
 }
 
 // getLegacyPublisher returns the publisher name for repositories that are exceptions

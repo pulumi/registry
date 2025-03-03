@@ -17,7 +17,7 @@ To keep quality in the Pulumi Registry high, we have a check-list before merging
   ```sh
   $ make bin/resourcedocsgen
   $ ./bin/resourcedocsgen metadata from-github \
-          --repo-slug '<repoSlug>' \
+          --repoSlug '<repoSlug>' \
           --schemaFile '<schemaFile>' \
           --version '<version>'
   ```

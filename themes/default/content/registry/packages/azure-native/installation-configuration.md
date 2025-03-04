@@ -317,10 +317,11 @@ All configuration parameters are optional.
 | `clientId` | The client ID to use for OIDC, Service Principal, or user-assigned identity authentication. It can also be sourced from the `ARM_CLIENT_ID` environment variable. |
 | `clientSecret` | The client secret to use for Service Principal authentication. It can also be sourced from the `ARM_CLIENT_SECRET` environment variable. |
 | `disablePulumiPartnerId` | This will disable the Pulumi Partner ID which is used if a custom `partnerId` isn't specified. It can also be sourced from the `ARM_DISABLE_PULUMI_PARTNER_ID` environment variable. |
-| `environment` | The cloud environment to use. It can also be sourced from the ARM_ENVIRONMENT environment variable. Supported values are: `public` (default), `usgovernment`, `china`. |
+| `environment` | The cloud environment to use. It can also be sourced from the ARM_ENVIRONMENT environment variable. Supported values are (case-insensitive): `public` (default), `usgovernment` or `AzureUSGovernment`, `china` or `AzureChinaCloud`. |
 | `location` | The location to use. ResourceGroups will consult this property for a default location, if one was not supplied explicitly when defining the resource. |
 | `metadataHost` | The REST endpoint for the Azure Instance Metadata Service. Pulumi will attempt to discover this automatically but it can be specified manually here. It can also be sourced from the `ARM_METADATA_HOSTNAME` environment variable. |
 | `msiEndpoint` | The REST endpoint to retrieve an MSI token from. Pulumi will attempt to discover this automatically but it can be specified manually here. It can also be sourced from the `ARM_MSI_ENDPOINT` environment variable. |
+| `oidcAudience` | The audience to use for OIDC authentication. Typically not needed; defaults to the standard `api://AzureADTokenExchange`. It can also be sourced from the `ARM_OIDC_AUDIENCE` environment variable. |
 | `oidcRequestToken` | Your cloud service or provider’s bearer token to exchange for an OIDC ID token. It can also be sourced from the `ARM_OIDC_REQUEST_TOKEN` environment variable. |
 | `oidcRequestUrl` | The token exchange URL for OIDC authentication. It can also be sourced from the `ARM_OIDC_REQUEST_URL` environment variable. |
 | `oidcToken` | The token to exchange for OIDC authentication. It can also be sourced from the `ARM_OIDC_TOKEN` environment variable. |

@@ -375,6 +375,10 @@
     {
       "repoSlug": "UpCloudLtd/pulumi-upcloud",
       "schemaFile": "provider/cmd/pulumi-resource-upcloud/schema.json"
+    },
+    {
+      "repoSlug": "DefangLabs/pulumi-defang",
+      "schemaFile": "provider/cmd/pulumi-resource-defang/schema.json"
     }
   ]
 }

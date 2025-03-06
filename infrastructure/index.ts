@@ -213,6 +213,7 @@ const baseCacheBehavior = {
 // https://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html#limits_cloudfront
 const distributionArgs: aws.cloudfront.DistributionArgs = {
     enabled: true,
+    staging: false, // Attempt to work around https://github.com/pulumi/pulumi-aws/issues/5229
 
     // We only specify one origin for this distribution: the S3 content bucket.
     origins: [

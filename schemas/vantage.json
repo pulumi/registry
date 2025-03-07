@@ -1,0 +1,4356 @@
+{
+  "name": "vantage",
+  "version": "0.1.46",
+  "description": "A Pulumi provider dynamically bridged from vantage.",
+  "attribution": "This Pulumi package is based on the [`vantage` Terraform Provider](https://github.com/vantage-sh/terraform-provider-vantage).",
+  "repository": "https://github.com/vantage-sh/terraform-provider-vantage",
+  "publisher": "vantage-sh",
+  "meta": {
+    "moduleFormat": "(.*)(?:/[^/]*)"
+  },
+  "language": {
+    "csharp": {
+      "compatibility": "tfbridge20",
+      "liftSingleValueMethodReturns": true,
+      "respectSchemaVersion": true
+    },
+    "go": {
+      "importBasePath": "github.com/pulumi/pulumi-terraform-provider/sdks/go/vantage/vantage",
+      "rootPackageName": "vantage",
+      "liftSingleValueMethodReturns": true,
+      "generateExtraInputTypes": true,
+      "respectSchemaVersion": true
+    },
+    "java": {
+      "basePackage": "",
+      "buildFiles": "",
+      "gradleNexusPublishPluginVersion": "",
+      "gradleTest": ""
+    },
+    "nodejs": {
+      "packageDescription": "A Pulumi provider dynamically bridged from vantage.",
+      "readme": "\u003e This provider is a derived work of the [Terraform Provider](https://github.com/vantage-sh/terraform-provider-vantage)\n\u003e distributed under [MPL 2.0](https://www.mozilla.org/en-US/MPL/2.0/). If you encounter a bug or missing feature,\n\u003e please consult the source [`terraform-provider-vantage` repo](https://github.com/vantage-sh/terraform-provider-vantage/issues).",
+      "compatibility": "tfbridge20",
+      "disableUnionOutputTypes": true,
+      "liftSingleValueMethodReturns": true,
+      "respectSchemaVersion": true
+    },
+    "python": {
+      "readme": "\u003e This provider is a derived work of the [Terraform Provider](https://github.com/vantage-sh/terraform-provider-vantage)\n\u003e distributed under [MPL 2.0](https://www.mozilla.org/en-US/MPL/2.0/). If you encounter a bug or missing feature,\n\u003e please consult the source [`terraform-provider-vantage` repo](https://github.com/vantage-sh/terraform-provider-vantage/issues).",
+      "compatibility": "tfbridge20",
+      "respectSchemaVersion": true,
+      "pyproject": {
+        "enabled": true
+      }
+    }
+  },
+  "config": {
+    "variables": {
+      "apiToken": {
+        "type": "string",
+        "secret": true
+      },
+      "host": {
+        "type": "string"
+      }
+    }
+  },
+  "types": {
+    "vantage:index/BudgetPerformance:BudgetPerformance": {
+      "properties": {
+        "actual": {
+          "type": "string",
+          "description": "The date and time, in UTC, the Budget was created. ISO 8601 Formatted.\n"
+        },
+        "amount": {
+          "type": "string",
+          "description": "The amount of the Budget Period as a string to ensure precision.\n"
+        },
+        "date": {
+          "type": "string",
+          "description": "The date and time, in UTC, the Budget was created. ISO 8601 Formatted.\n"
+        }
+      },
+      "type": "object",
+      "language": {
+        "nodejs": {
+          "requiredOutputs": [
+            "actual",
+            "amount",
+            "date"
+          ]
+        }
+      }
+    },
+    "vantage:index/BudgetPeriod:BudgetPeriod": {
+      "properties": {
+        "amount": {
+          "type": "number",
+          "description": "The amount of the period.\n"
+        },
+        "endAt": {
+          "type": "string",
+          "description": "The end date of the period.\n"
+        },
+        "startAt": {
+          "type": "string",
+          "description": "The start date of the period.\n"
+        }
+      },
+      "type": "object",
+      "required": [
+        "amount",
+        "startAt"
+      ],
+      "language": {
+        "nodejs": {
+          "requiredOutputs": [
+            "amount",
+            "endAt",
+            "startAt"
+          ]
+        }
+      }
+    },
+    "vantage:index/BusinessMetricCostReportTokensWithMetadata:BusinessMetricCostReportTokensWithMetadata": {
+      "properties": {
+        "costReportToken": {
+          "type": "string",
+          "description": "The token of the CostReport the BusinessMetric is attached to.\n"
+        },
+        "labelFilters": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Include only values with these labels in the CostReport.\n"
+        },
+        "unitScale": {
+          "type": "string",
+          "description": "Determines the scale of the BusinessMetric's values within the CostReport.\n"
+        }
+      },
+      "type": "object",
+      "required": [
+        "costReportToken"
+      ],
+      "language": {
+        "nodejs": {
+          "requiredOutputs": [
+            "costReportToken",
+            "labelFilters",
+            "unitScale"
+          ]
+        }
+      }
+    },
+    "vantage:index/BusinessMetricValue:BusinessMetricValue": {
+      "properties": {
+        "amount": {
+          "type": "number"
+        },
+        "date": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        }
+      },
+      "type": "object",
+      "required": [
+        "amount",
+        "date"
+      ],
+      "language": {
+        "nodejs": {
+          "requiredOutputs": [
+            "amount",
+            "date",
+            "label"
+          ]
+        }
+      }
+    },
+    "vantage:index/DashboardWidget:DashboardWidget": {
+      "properties": {
+        "settings": {
+          "$ref": "#/types/vantage:index%2FDashboardWidgetSettings:DashboardWidgetSettings",
+          "description": "The settings for the DashboardWidget.\n"
+        },
+        "title": {
+          "type": "string",
+          "description": "The title of the Widget (defaults to the title of the Resource).\n"
+        },
+        "widgetableToken": {
+          "type": "string",
+          "description": "The token of the represented Resource.\n"
+        }
+      },
+      "type": "object",
+      "required": [
+        "widgetableToken"
+      ],
+      "language": {
+        "nodejs": {
+          "requiredOutputs": [
+            "settings",
+            "title",
+            "widgetableToken"
+          ]
+        }
+      }
+    },
+    "vantage:index/DashboardWidgetSettings:DashboardWidgetSettings": {
+      "properties": {
+        "displayType": {
+          "type": "string"
+        }
+      },
+      "type": "object",
+      "required": [
+        "displayType"
+      ]
+    },
+    "vantage:index/VirtualTagConfigValue:VirtualTagConfigValue": {
+      "properties": {
+        "businessMetricToken": {
+          "type": "string",
+          "description": "The token of the associated BusinessMetric.\n"
+        },
+        "costMetric": {
+          "$ref": "#/types/vantage:index%2FVirtualTagConfigValueCostMetric:VirtualTagConfigValueCostMetric"
+        },
+        "filter": {
+          "type": "string",
+          "description": "The filter VQL for the Value.\n"
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the Value.\n"
+        }
+      },
+      "type": "object",
+      "required": [
+        "filter"
+      ],
+      "language": {
+        "nodejs": {
+          "requiredOutputs": [
+            "businessMetricToken",
+            "costMetric",
+            "filter",
+            "name"
+          ]
+        }
+      }
+    },
+    "vantage:index/VirtualTagConfigValueCostMetric:VirtualTagConfigValueCostMetric": {
+      "properties": {
+        "aggregation": {
+          "$ref": "#/types/vantage:index%2FVirtualTagConfigValueCostMetricAggregation:VirtualTagConfigValueCostMetricAggregation"
+        },
+        "filter": {
+          "type": "string",
+          "description": "The filter VQL for the cost metric.\n"
+        }
+      },
+      "type": "object"
+    },
+    "vantage:index/VirtualTagConfigValueCostMetricAggregation:VirtualTagConfigValueCostMetricAggregation": {
+      "properties": {
+        "tag": {
+          "type": "string",
+          "description": "The tag to aggregate on.\n"
+        }
+      },
+      "type": "object"
+    },
+    "vantage:index/getAccessGrantsAccessGrant:getAccessGrantsAccessGrant": {
+      "properties": {
+        "access": {
+          "type": "string"
+        },
+        "resourceToken": {
+          "type": "string"
+        },
+        "teamToken": {
+          "type": "string"
+        },
+        "token": {
+          "type": "string"
+        }
+      },
+      "type": "object",
+      "required": [
+        "access",
+        "resourceToken",
+        "teamToken",
+        "token"
+      ],
+      "language": {
+        "nodejs": {
+          "requiredInputs": []
+        }
+      }
+    },
+    "vantage:index/getAnomalyNotificationsAnomalyNotification:getAnomalyNotificationsAnomalyNotification": {
+      "properties": {
+        "costReportToken": {
+          "type": "string",
+          "description": "The token for the CostReport the AnomalyNotification is associated with.\n"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "The date and time, in UTC, the AnomalyNotification was created. ISO 8601 Formatted.\n"
+        },
+        "recipientChannels": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The channels that the notification is sent to.\n"
+        },
+        "threshold": {
+          "type": "number",
+          "description": "The threshold amount that must be met for the notification to fire.\n"
+        },
+        "token": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "The date and time, in UTC, the AnomalyNotification was last updated at. ISO 8601 Formatted.\n"
+        },
+        "userTokens": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The tokens of the users that receive the notification.\n"
+        }
+      },
+      "type": "object",
+      "required": [
+        "costReportToken",
+        "createdAt",
+        "recipientChannels",
+        "threshold",
+        "token",
+        "updatedAt",
+        "userTokens"
+      ],
+      "language": {
+        "nodejs": {
+          "requiredInputs": []
+        }
+      }
+    },
+    "vantage:index/getBillingRulesBillingRule:getBillingRulesBillingRule": {
+      "properties": {
+        "amount": {
+          "type": "string",
+          "description": "The amount for the Billing Rule (Charge).\n"
+        },
+        "category": {
+          "type": "string",
+          "description": "The category for the Billing Rule (Charge).\n"
+        },
+        "chargeType": {
+          "type": "string",
+          "description": "The charge type for the Billing Rule.\n"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "The date and time, in UTC, the Billing Rule was created. ISO 8601 Formatted.\n"
+        },
+        "createdByToken": {
+          "type": "string",
+          "description": "The token of the Creator of the Billing Rule.\n"
+        },
+        "percentage": {
+          "type": "string",
+          "description": "The percentage of the cost shown for the Billing Rule (Adjustment).\n"
+        },
+        "service": {
+          "type": "string",
+          "description": "The service for the Billing Rule (Charge).\n"
+        },
+        "startPeriod": {
+          "type": "string",
+          "description": "The start period for the Billing Rule (Charge).\n"
+        },
+        "subCategory": {
+          "type": "string",
+          "description": "The subcategory for the Billing Rule (Charge).\n"
+        },
+        "title": {
+          "type": "string",
+          "description": "The title of the Billing Rule.\n"
+        },
+        "token": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "description": "The type of the Billing Rule.\n"
+        }
+      },
+      "type": "object",
+      "required": [
+        "amount",
+        "category",
+        "chargeType",
+        "createdAt",
+        "createdByToken",
+        "percentage",
+        "service",
+        "startPeriod",
+        "subCategory",
+        "title",
+        "token",
+        "type"
+      ],
+      "language": {
+        "nodejs": {
+          "requiredInputs": []
+        }
+      }
+    },
+    "vantage:index/getBudgetsBudget:getBudgetsBudget": {
+      "properties": {
+        "budgetAlertTokens": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The tokens of the BudgetAlerts associated with the Budget.\n"
+        },
+        "childBudgetTokens": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The tokens of the child Budgets associated with the hierarchical Budget.\n"
+        },
+        "costReportToken": {
+          "type": "string",
+          "description": "The token of the Report associated with the Budget.\n"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "The date and time, in UTC, the Budget was created. ISO 8601 Formatted.\n"
+        },
+        "createdByToken": {
+          "type": "string",
+          "description": "The token of the Creator of the Budget.\n"
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the Budget.\n"
+        },
+        "performances": {
+          "type": "array",
+          "items": {
+            "$ref": "#/types/vantage:index%2FgetBudgetsBudgetPerformance:getBudgetsBudgetPerformance"
+          },
+          "description": "The historical performance of the Budget.\n"
+        },
+        "periods": {
+          "type": "array",
+          "items": {
+            "$ref": "#/types/vantage:index%2FgetBudgetsBudgetPeriod:getBudgetsBudgetPeriod"
+          },
+          "description": "The budget periods associated with the Budget.\n"
+        },
+        "token": {
+          "type": "string"
+        },
+        "userToken": {
+          "type": "string",
+          "description": "The token for the User who created this Budget.\n"
+        },
+        "workspaceToken": {
+          "type": "string",
+          "description": "The token for the Workspace the Budget is a part of.\n"
+        }
+      },
+      "type": "object",
+      "required": [
+        "budgetAlertTokens",
+        "childBudgetTokens",
+        "costReportToken",
+        "createdAt",
+        "createdByToken",
+        "name",
+        "performances",
+        "periods",
+        "token",
+        "userToken",
+        "workspaceToken"
+      ],
+      "language": {
+        "nodejs": {
+          "requiredInputs": []
+        }
+      }
+    },
+    "vantage:index/getBudgetsBudgetPerformance:getBudgetsBudgetPerformance": {
+      "properties": {
+        "actual": {
+          "type": "string",
+          "description": "The date and time, in UTC, the Budget was created. ISO 8601 Formatted.\n"
+        },
+        "amount": {
+          "type": "string",
+          "description": "The amount of the Budget Period as a string to ensure precision.\n"
+        },
+        "date": {
+          "type": "string",
+          "description": "The date and time, in UTC, the Budget was created. ISO 8601 Formatted.\n"
+        }
+      },
+      "type": "object",
+      "required": [
+        "actual",
+        "amount",
+        "date"
+      ],
+      "language": {
+        "nodejs": {
+          "requiredInputs": []
+        }
+      }
+    },
+    "vantage:index/getBudgetsBudgetPeriod:getBudgetsBudgetPeriod": {
+      "properties": {
+        "amount": {
+          "type": "string",
+          "description": "The amount of the Budget Period as a string to ensure precision.\n"
+        },
+        "endAt": {
+          "type": "string",
+          "description": "The date and time, in UTC, the Budget was created. ISO 8601 Formatted.\n"
+        },
+        "startAt": {
+          "type": "string",
+          "description": "The date and time, in UTC, the Budget was created. ISO 8601 Formatted.\n"
+        }
+      },
+      "type": "object",
+      "required": [
+        "amount",
+        "endAt",
+        "startAt"
+      ],
+      "language": {
+        "nodejs": {
+          "requiredInputs": []
+        }
+      }
+    },
+    "vantage:index/getBusinessMetricsBusinessMetric:getBusinessMetricsBusinessMetric": {
+      "properties": {
+        "costReportTokensWithMetadatas": {
+          "type": "array",
+          "items": {
+            "$ref": "#/types/vantage:index%2FgetBusinessMetricsBusinessMetricCostReportTokensWithMetadata:getBusinessMetricsBusinessMetricCostReportTokensWithMetadata"
+          },
+          "description": "The tokens for any CostReports that use the BusinessMetric, the unit scale, and label filter.\n"
+        },
+        "createdByToken": {
+          "type": "string",
+          "description": "The token of the Creator of the BusinessMetric.\n"
+        },
+        "title": {
+          "type": "string",
+          "description": "The title of the BusinessMetric.\n"
+        },
+        "token": {
+          "type": "string",
+          "description": "The token of the BusinessMetric.\n"
+        }
+      },
+      "type": "object",
+      "required": [
+        "costReportTokensWithMetadatas",
+        "createdByToken",
+        "title",
+        "token"
+      ],
+      "language": {
+        "nodejs": {
+          "requiredInputs": []
+        }
+      }
+    },
+    "vantage:index/getBusinessMetricsBusinessMetricCostReportTokensWithMetadata:getBusinessMetricsBusinessMetricCostReportTokensWithMetadata": {
+      "properties": {
+        "costReportToken": {
+          "type": "string",
+          "description": "The token of the CostReport the BusinessMetric is attached to.\n"
+        },
+        "labelFilters": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The labels that the BusinessMetric is filtered by within a particular CostReport.\n"
+        },
+        "unitScale": {
+          "type": "string",
+          "description": "Determines the scale of the BusinessMetric's values within a particular CostReport.\n"
+        }
+      },
+      "type": "object",
+      "required": [
+        "costReportToken",
+        "labelFilters",
+        "unitScale"
+      ],
+      "language": {
+        "nodejs": {
+          "requiredInputs": []
+        }
+      }
+    },
+    "vantage:index/getCostReportsCostReport:getCostReportsCostReport": {
+      "properties": {
+        "chartType": {
+          "type": "string"
+        },
+        "dateBin": {
+          "type": "string"
+        },
+        "dateInterval": {
+          "type": "string"
+        },
+        "endDate": {
+          "type": "string"
+        },
+        "filter": {
+          "type": "string"
+        },
+        "folderToken": {
+          "type": "string"
+        },
+        "groupings": {
+          "type": "string"
+        },
+        "previousPeriodEndDate": {
+          "type": "string"
+        },
+        "previousPeriodStartDate": {
+          "type": "string"
+        },
+        "savedFilterTokens": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "startDate": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "token": {
+          "type": "string"
+        },
+        "workspaceToken": {
+          "type": "string"
+        }
+      },
+      "type": "object",
+      "required": [
+        "chartType",
+        "dateBin",
+        "dateInterval",
+        "endDate",
+        "filter",
+        "folderToken",
+        "groupings",
+        "previousPeriodEndDate",
+        "previousPeriodStartDate",
+        "savedFilterTokens",
+        "startDate",
+        "title",
+        "token",
+        "workspaceToken"
+      ],
+      "language": {
+        "nodejs": {
+          "requiredInputs": []
+        }
+      }
+    },
+    "vantage:index/getDashboardsDashboard:getDashboardsDashboard": {
+      "properties": {
+        "createdAt": {
+          "type": "string",
+          "description": "The date and time, in UTC, the Dashboard was created. ISO 8601 Formatted.\n"
+        },
+        "dateBin": {
+          "type": "string",
+          "description": "Determines how to group costs in the Dashboard.\n"
+        },
+        "dateInterval": {
+          "type": "string",
+          "description": "Determines the date range for Reports in the Dashboard. Guaranteed to be set to 'custom' if 'start*date' and 'end*date' are set.\n"
+        },
+        "endDate": {
+          "type": "string",
+          "description": "The end date for the date range for Reports in the Dashboard. ISO 8601 Formatted. Overwrites 'date_interval' if set.\n"
+        },
+        "savedFilterTokens": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The tokens of the Saved Filters used in the Dashboard.\n"
+        },
+        "startDate": {
+          "type": "string",
+          "description": "The start date for the date range for Reports in the Dashboard. ISO 8601 Formatted. Overwrites 'date_interval' if set.\n"
+        },
+        "title": {
+          "type": "string",
+          "description": "The title of the Dashboard.\n"
+        },
+        "token": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "The date and time, in UTC, the Dashboard was created. ISO 8601 Formatted.\n"
+        },
+        "widgets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/types/vantage:index%2FgetDashboardsDashboardWidget:getDashboardsDashboardWidget"
+          }
+        },
+        "workspaceToken": {
+          "type": "string",
+          "description": "The token for the Workspace the Dashboard is a part of.\n"
+        }
+      },
+      "type": "object",
+      "required": [
+        "createdAt",
+        "dateBin",
+        "dateInterval",
+        "endDate",
+        "savedFilterTokens",
+        "startDate",
+        "title",
+        "token",
+        "updatedAt",
+        "widgets",
+        "workspaceToken"
+      ],
+      "language": {
+        "nodejs": {
+          "requiredInputs": []
+        }
+      }
+    },
+    "vantage:index/getDashboardsDashboardWidget:getDashboardsDashboardWidget": {
+      "properties": {
+        "settings": {
+          "$ref": "#/types/vantage:index%2FgetDashboardsDashboardWidgetSettings:getDashboardsDashboardWidgetSettings"
+        },
+        "title": {
+          "type": "string",
+          "description": "The title of the Widget.\n"
+        },
+        "widgetableToken": {
+          "type": "string"
+        }
+      },
+      "type": "object",
+      "required": [
+        "settings",
+        "title",
+        "widgetableToken"
+      ],
+      "language": {
+        "nodejs": {
+          "requiredInputs": []
+        }
+      }
+    },
+    "vantage:index/getDashboardsDashboardWidgetSettings:getDashboardsDashboardWidgetSettings": {
+      "properties": {
+        "displayType": {
+          "type": "string"
+        }
+      },
+      "type": "object",
+      "required": [
+        "displayType"
+      ],
+      "language": {
+        "nodejs": {
+          "requiredInputs": []
+        }
+      }
+    },
+    "vantage:index/getFinancialCommitmentReportsFinancialCommitmentReport:getFinancialCommitmentReportsFinancialCommitmentReport": {
+      "properties": {
+        "createdAt": {
+          "type": "string",
+          "description": "The date and time, in UTC, the report was created. ISO 8601 Formatted.\n"
+        },
+        "dateBucket": {
+          "type": "string",
+          "description": "How costs are grouped and displayed in the FinancialCommitmentReport. Possible values: day, week, month.\n"
+        },
+        "dateInterval": {
+          "type": "string",
+          "description": "The date range for the FinancialCommitmentReport. Only present if a custom date range is not specified.\n"
+        },
+        "default": {
+          "type": "boolean",
+          "description": "Indicates whether the FinancialCommitmentReport is the default report.\n"
+        },
+        "endDate": {
+          "type": "string",
+          "description": "The end date for the FinancialCommitmentReport. Only set for custom date ranges. ISO 8601 Formatted.\n"
+        },
+        "filter": {
+          "type": "string",
+          "description": "The filter applied to the FinancialCommitmentReport. Additional documentation available at https://docs.vantage.sh/vql.\n"
+        },
+        "groupings": {
+          "type": "string",
+          "description": "The grouping aggregations applied to the filtered data.\n"
+        },
+        "onDemandCostsScope": {
+          "type": "string",
+          "description": "The scope for the costs. Possible values: discountable, all.\n"
+        },
+        "startDate": {
+          "type": "string",
+          "description": "The start date for the FinancialCommitmentReport. Only set for custom date ranges. ISO 8601 Formatted.\n"
+        },
+        "title": {
+          "type": "string",
+          "description": "The title of the FinancialCommitmentReport.\n"
+        },
+        "token": {
+          "type": "string"
+        },
+        "userToken": {
+          "type": "string",
+          "description": "The token for the User who created this FinancialCommitmentReport.\n"
+        },
+        "workspaceToken": {
+          "type": "string",
+          "description": "The token for the Workspace the FinancialCommitmentReport is a part of.\n"
+        }
+      },
+      "type": "object",
+      "required": [
+        "createdAt",
+        "dateBucket",
+        "dateInterval",
+        "default",
+        "endDate",
+        "filter",
+        "groupings",
+        "onDemandCostsScope",
+        "startDate",
+        "title",
+        "token",
+        "userToken",
+        "workspaceToken"
+      ],
+      "language": {
+        "nodejs": {
+          "requiredInputs": []
+        }
+      }
+    },
+    "vantage:index/getFoldersFolder:getFoldersFolder": {
+      "properties": {
+        "parentFolderToken": {
+          "type": "string"
+        },
+        "savedFilterTokens": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "title": {
+          "type": "string"
+        },
+        "token": {
+          "type": "string"
+        },
+        "workspaceToken": {
+          "type": "string"
+        }
+      },
+      "type": "object",
+      "required": [
+        "parentFolderToken",
+        "savedFilterTokens",
+        "title",
+        "token",
+        "workspaceToken"
+      ],
+      "language": {
+        "nodejs": {
+          "requiredInputs": []
+        }
+      }
+    },
+    "vantage:index/getKubernetesEfficiencyReportsKubernetesEfficiencyReport:getKubernetesEfficiencyReportsKubernetesEfficiencyReport": {
+      "properties": {
+        "aggregatedBy": {
+          "type": "string",
+          "description": "How costs are aggregated by. Possible values: idle*cost, amount, cost*efficiency.\n"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "The date and time, in UTC, the report was created. ISO 8601 Formatted.\n"
+        },
+        "dateBucket": {
+          "type": "string",
+          "description": "How costs are grouped and displayed in the KubernetesEfficiencyReport. Possible values: day, week, month.\n"
+        },
+        "dateInterval": {
+          "type": "string",
+          "description": "The date range for the KubernetesEfficiencyReport. Only present if a custom date range is not specified.\n"
+        },
+        "default": {
+          "type": "boolean",
+          "description": "Indicates whether the KubernetesEfficiencyReport is the default report.\n"
+        },
+        "endDate": {
+          "type": "string",
+          "description": "The end date for the KubernetesEfficiencyReport. Only set for custom date ranges. ISO 8601 Formatted.\n"
+        },
+        "filter": {
+          "type": "string",
+          "description": "The filter applied to the KubernetesEfficiencyReport. Additional documentation available at https://docs.vantage.sh/vql.\n"
+        },
+        "groupings": {
+          "type": "string",
+          "description": "Grouping values for aggregating costs on the KubernetesEfficiencyReport. Valid groupings: cluster*id, namespace, labeled, category, label, label:\\n\\n*name\u003e.\n"
+        },
+        "startDate": {
+          "type": "string",
+          "description": "The start date for the KubernetesEfficiencyReport. Only set for custom date ranges. ISO 8601 Formatted.\n"
+        },
+        "title": {
+          "type": "string",
+          "description": "The title of the KubernetesEfficiencyReport.\n"
+        },
+        "token": {
+          "type": "string"
+        },
+        "userToken": {
+          "type": "string",
+          "description": "The token for the User who created this KubernetesEfficiencyReport.\n"
+        },
+        "workspaceToken": {
+          "type": "string",
+          "description": "The token for the Workspace the KubernetesEfficiencyReport is a part of.\n"
+        }
+      },
+      "type": "object",
+      "required": [
+        "aggregatedBy",
+        "createdAt",
+        "dateBucket",
+        "dateInterval",
+        "default",
+        "endDate",
+        "filter",
+        "groupings",
+        "startDate",
+        "title",
+        "token",
+        "userToken",
+        "workspaceToken"
+      ],
+      "language": {
+        "nodejs": {
+          "requiredInputs": []
+        }
+      }
+    },
+    "vantage:index/getManagedAccountsManagedAccount:getManagedAccountsManagedAccount": {
+      "properties": {
+        "accessCredentialTokens": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The tokens for the Access Credentials assigned to the Managed Account.\n"
+        },
+        "billingRuleTokens": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The tokens for the Billing Rules assigned to the Managed Account.\n"
+        },
+        "contactEmail": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "parentAccountToken": {
+          "type": "string",
+          "description": "The token for the parent Account.\n"
+        },
+        "token": {
+          "type": "string"
+        }
+      },
+      "type": "object",
+      "required": [
+        "accessCredentialTokens",
+        "billingRuleTokens",
+        "contactEmail",
+        "name",
+        "parentAccountToken",
+        "token"
+      ],
+      "language": {
+        "nodejs": {
+          "requiredInputs": []
+        }
+      }
+    },
+    "vantage:index/getNetworkFlowReportsNetworkFlowReport:getNetworkFlowReportsNetworkFlowReport": {
+      "properties": {
+        "createdAt": {
+          "type": "string",
+          "description": "The date and time, in UTC, the report was created. ISO 8601 Formatted.\n"
+        },
+        "createdByToken": {
+          "type": "string",
+          "description": "The token for the User or Team that created this NetworkFlowReport.\n"
+        },
+        "dateInterval": {
+          "type": "string",
+          "description": "The date range for the NetworkFlowReport. Only present if a custom date range is not specified.\n"
+        },
+        "default": {
+          "type": "boolean",
+          "description": "Indicates whether the NetworkFlowReport is the default report.\n"
+        },
+        "endDate": {
+          "type": "string",
+          "description": "The end date for the NetworkFlowReport. Only set for custom date ranges. ISO 8601 Formatted.\n"
+        },
+        "filter": {
+          "type": "string",
+          "description": "The filter applied to the NetworkFlowReport. Additional documentation available at https://docs.vantage.sh/vql.\n"
+        },
+        "flowDirection": {
+          "type": "string",
+          "description": "The flow weight of the NetworkFlowReport. Possible values: costs, bytes.\n"
+        },
+        "flowWeight": {
+          "type": "string",
+          "description": "The flow weight of the NetworkFlowReport. Possible values: costs, bytes.\n"
+        },
+        "groupings": {
+          "type": "string",
+          "description": "The grouping aggregations applied to the filtered data.\n"
+        },
+        "startDate": {
+          "type": "string",
+          "description": "The start date for the NetworkFlowReport. Only set for custom date ranges. ISO 8601 Formatted.\n"
+        },
+        "title": {
+          "type": "string",
+          "description": "The title of the NetworkFlowReport.\n"
+        },
+        "token": {
+          "type": "string"
+        },
+        "workspaceToken": {
+          "type": "string",
+          "description": "The token for the Workspace the NetworkFlowReport is a part of.\n"
+        }
+      },
+      "type": "object",
+      "required": [
+        "createdAt",
+        "createdByToken",
+        "dateInterval",
+        "default",
+        "endDate",
+        "filter",
+        "flowDirection",
+        "flowWeight",
+        "groupings",
+        "startDate",
+        "title",
+        "token",
+        "workspaceToken"
+      ],
+      "language": {
+        "nodejs": {
+          "requiredInputs": []
+        }
+      }
+    },
+    "vantage:index/getReportNotificationsReportNotification:getReportNotificationsReportNotification": {
+      "properties": {
+        "change": {
+          "type": "string",
+          "description": "The type of change the ReportNotification is tracking.\n"
+        },
+        "costReportToken": {
+          "type": "string",
+          "description": "The token for a CostReport the ReportNotification is applied to.\n"
+        },
+        "frequency": {
+          "type": "string",
+          "description": "The frequency the ReportNotification is sent.\n"
+        },
+        "recipientChannels": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The Slack or Microsoft Teams channels that receive the notification.\n"
+        },
+        "title": {
+          "type": "string",
+          "description": "The title of the ReportNotification.\n"
+        },
+        "token": {
+          "type": "string"
+        },
+        "userTokens": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The Users that receive the notification.\n"
+        }
+      },
+      "type": "object",
+      "required": [
+        "change",
+        "costReportToken",
+        "frequency",
+        "recipientChannels",
+        "title",
+        "token",
+        "userTokens"
+      ],
+      "language": {
+        "nodejs": {
+          "requiredInputs": []
+        }
+      }
+    },
+    "vantage:index/getResourceReportsResourceReport:getResourceReportsResourceReport": {
+      "properties": {
+        "createdAt": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "token": {
+          "type": "string"
+        },
+        "userToken": {
+          "type": "string"
+        },
+        "workspaceToken": {
+          "type": "string"
+        }
+      },
+      "type": "object",
+      "required": [
+        "createdAt",
+        "title",
+        "token",
+        "userToken",
+        "workspaceToken"
+      ],
+      "language": {
+        "nodejs": {
+          "requiredInputs": []
+        }
+      }
+    },
+    "vantage:index/getSavedFiltersFilter:getSavedFiltersFilter": {
+      "properties": {
+        "costReportTokens": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "title": {
+          "type": "string"
+        },
+        "token": {
+          "type": "string"
+        },
+        "workspaceToken": {
+          "type": "string"
+        }
+      },
+      "type": "object",
+      "required": [
+        "costReportTokens",
+        "title",
+        "token",
+        "workspaceToken"
+      ],
+      "language": {
+        "nodejs": {
+          "requiredInputs": []
+        }
+      }
+    },
+    "vantage:index/getSegmentsSegment:getSegmentsSegment": {
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "filter": {
+          "type": "string"
+        },
+        "parentSegmentToken": {
+          "type": "string"
+        },
+        "priority": {
+          "type": "number"
+        },
+        "reportToken": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "token": {
+          "type": "string"
+        },
+        "trackUnallocated": {
+          "type": "boolean"
+        },
+        "workspaceToken": {
+          "type": "string"
+        }
+      },
+      "type": "object",
+      "required": [
+        "description",
+        "filter",
+        "parentSegmentToken",
+        "priority",
+        "reportToken",
+        "title",
+        "token",
+        "trackUnallocated",
+        "workspaceToken"
+      ],
+      "language": {
+        "nodejs": {
+          "requiredInputs": []
+        }
+      }
+    },
+    "vantage:index/getTeamsTeam:getTeamsTeam": {
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "token": {
+          "type": "string"
+        },
+        "userEmails": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "userTokens": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "workspaceTokens": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "type": "object",
+      "required": [
+        "description",
+        "name",
+        "token",
+        "userEmails",
+        "userTokens",
+        "workspaceTokens"
+      ],
+      "language": {
+        "nodejs": {
+          "requiredInputs": []
+        }
+      }
+    },
+    "vantage:index/getUsersUser:getUsersUser": {
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
+        },
+        "token": {
+          "type": "string"
+        }
+      },
+      "type": "object",
+      "required": [
+        "email",
+        "name",
+        "role",
+        "token"
+      ],
+      "language": {
+        "nodejs": {
+          "requiredInputs": []
+        }
+      }
+    },
+    "vantage:index/getVirtualTagConfigsVirtualTagConfig:getVirtualTagConfigsVirtualTagConfig": {
+      "properties": {
+        "backfillUntil": {
+          "type": "string",
+          "description": "The earliest month VirtualTagConfig should be backfilled to.\n"
+        },
+        "createdByToken": {
+          "type": "string",
+          "description": "The token of the Creator of the VirtualTagConfig.\n"
+        },
+        "key": {
+          "type": "string",
+          "description": "The key of the VirtualTagConfig.\n"
+        },
+        "overridable": {
+          "type": "boolean",
+          "description": "Whether the VirtualTagConfig can override a provider-supplied tag on a matching Cost.\n"
+        },
+        "token": {
+          "type": "string",
+          "description": "The token of the VirtualTagConfig.\n"
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "$ref": "#/types/vantage:index%2FgetVirtualTagConfigsVirtualTagConfigValue:getVirtualTagConfigsVirtualTagConfigValue"
+          },
+          "description": "Values for the VirtualTagConfig, with match precedence determined by their relative order in the list.\n"
+        }
+      },
+      "type": "object",
+      "required": [
+        "backfillUntil",
+        "createdByToken",
+        "key",
+        "overridable",
+        "token",
+        "values"
+      ],
+      "language": {
+        "nodejs": {
+          "requiredInputs": []
+        }
+      }
+    },
+    "vantage:index/getVirtualTagConfigsVirtualTagConfigValue:getVirtualTagConfigsVirtualTagConfigValue": {
+      "properties": {
+        "businessMetricToken": {
+          "type": "string",
+          "description": "The token of the associated BusinessMetric.\n"
+        },
+        "costMetric": {
+          "$ref": "#/types/vantage:index%2FgetVirtualTagConfigsVirtualTagConfigValueCostMetric:getVirtualTagConfigsVirtualTagConfigValueCostMetric"
+        },
+        "filter": {
+          "type": "string",
+          "description": "The filter VQL for the Value.\n"
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the Value.\n"
+        }
+      },
+      "type": "object",
+      "required": [
+        "businessMetricToken",
+        "costMetric",
+        "filter",
+        "name"
+      ],
+      "language": {
+        "nodejs": {
+          "requiredInputs": []
+        }
+      }
+    },
+    "vantage:index/getVirtualTagConfigsVirtualTagConfigValueCostMetric:getVirtualTagConfigsVirtualTagConfigValueCostMetric": {
+      "properties": {
+        "aggregation": {
+          "$ref": "#/types/vantage:index%2FgetVirtualTagConfigsVirtualTagConfigValueCostMetricAggregation:getVirtualTagConfigsVirtualTagConfigValueCostMetricAggregation"
+        },
+        "filter": {
+          "type": "string",
+          "description": "The filter VQL for the cost metric.\n"
+        }
+      },
+      "type": "object",
+      "required": [
+        "aggregation",
+        "filter"
+      ],
+      "language": {
+        "nodejs": {
+          "requiredInputs": []
+        }
+      }
+    },
+    "vantage:index/getVirtualTagConfigsVirtualTagConfigValueCostMetricAggregation:getVirtualTagConfigsVirtualTagConfigValueCostMetricAggregation": {
+      "properties": {
+        "tag": {
+          "type": "string",
+          "description": "The tag to aggregate on.\n"
+        }
+      },
+      "type": "object",
+      "required": [
+        "tag"
+      ],
+      "language": {
+        "nodejs": {
+          "requiredInputs": []
+        }
+      }
+    },
+    "vantage:index/getWorkspacesWorkspace:getWorkspacesWorkspace": {
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "token": {
+          "type": "string"
+        }
+      },
+      "type": "object",
+      "required": [
+        "name",
+        "token"
+      ],
+      "language": {
+        "nodejs": {
+          "requiredInputs": []
+        }
+      }
+    }
+  },
+  "provider": {
+    "description": "The provider type for the vantage package. By default, resources use package-wide configuration\nsettings, however an explicit `Provider` instance may be created and passed during resource\nconstruction to achieve fine-grained programmatic control over provider settings. See the\n[documentation](https://www.pulumi.com/docs/reference/programming-model/#providers) for more information.\n",
+    "properties": {
+      "apiToken": {
+        "type": "string",
+        "secret": true
+      },
+      "host": {
+        "type": "string"
+      }
+    },
+    "type": "object",
+    "inputProperties": {
+      "apiToken": {
+        "type": "string",
+        "secret": true
+      },
+      "host": {
+        "type": "string"
+      }
+    }
+  },
+  "resources": {
+    "vantage:index/accessGrant:AccessGrant": {
+      "description": "Manages an AccessGrant.\n\n## Example Usage\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vantage from \"@pulumi/vantage\";\n\nconst demoAccessGrant = new vantage.AccessGrant(\"demoAccessGrant\", {\n    resourceToken: \"rprt_39d256c871cb6b2b\",\n    teamToken: \"team_bd5c2d8abc233bfd\",\n});\n```\n```python\nimport pulumi\nimport pulumi_vantage as vantage\n\ndemo_access_grant = vantage.AccessGrant(\"demoAccessGrant\",\n    resource_token=\"rprt_39d256c871cb6b2b\",\n    team_token=\"team_bd5c2d8abc233bfd\")\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vantage = Pulumi.Vantage;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var demoAccessGrant = new Vantage.AccessGrant(\"demoAccessGrant\", new()\n    {\n        ResourceToken = \"rprt_39d256c871cb6b2b\",\n        TeamToken = \"team_bd5c2d8abc233bfd\",\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi-terraform-provider/sdks/go/vantage/vantage\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vantage.NewAccessGrant(ctx, \"demoAccessGrant\", \u0026vantage.AccessGrantArgs{\n\t\t\tResourceToken: pulumi.String(\"rprt_39d256c871cb6b2b\"),\n\t\t\tTeamToken:     pulumi.String(\"team_bd5c2d8abc233bfd\"),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vantage.AccessGrant;\nimport com.pulumi.vantage.AccessGrantArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var demoAccessGrant = new AccessGrant(\"demoAccessGrant\", AccessGrantArgs.builder()\n            .resourceToken(\"rprt_39d256c871cb6b2b\")\n            .teamToken(\"team_bd5c2d8abc233bfd\")\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  demoAccessGrant:\n    type: vantage:AccessGrant\n    properties:\n      resourceToken: rprt_39d256c871cb6b2b\n      teamToken: team_bd5c2d8abc233bfd\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
+      "properties": {
+        "access": {
+          "type": "string",
+          "description": "Access level of the grant. Must be either `allowed` or `denied`.\n"
+        },
+        "resourceToken": {
+          "type": "string",
+          "description": "Token of the resource being granted.\n"
+        },
+        "teamToken": {
+          "type": "string",
+          "description": "Token of the team being granted.\n"
+        },
+        "token": {
+          "type": "string",
+          "description": "Token of the access grant.\n"
+        }
+      },
+      "type": "object",
+      "required": [
+        "access",
+        "resourceToken",
+        "teamToken",
+        "token"
+      ],
+      "inputProperties": {
+        "access": {
+          "type": "string",
+          "description": "Access level of the grant. Must be either `allowed` or `denied`.\n"
+        },
+        "resourceToken": {
+          "type": "string",
+          "description": "Token of the resource being granted.\n"
+        },
+        "teamToken": {
+          "type": "string",
+          "description": "Token of the team being granted.\n"
+        }
+      },
+      "requiredInputs": [
+        "resourceToken",
+        "teamToken"
+      ],
+      "stateInputs": {
+        "description": "Input properties used for looking up and filtering AccessGrant resources.\n",
+        "properties": {
+          "access": {
+            "type": "string",
+            "description": "Access level of the grant. Must be either `allowed` or `denied`.\n"
+          },
+          "resourceToken": {
+            "type": "string",
+            "description": "Token of the resource being granted.\n"
+          },
+          "teamToken": {
+            "type": "string",
+            "description": "Token of the team being granted.\n"
+          },
+          "token": {
+            "type": "string",
+            "description": "Token of the access grant.\n"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "vantage:index/anomalyNotification:AnomalyNotification": {
+      "description": "## Example Usage\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vantage from \"@pulumi/vantage\";\n\nconst demoAnomalyNotification = new vantage.AnomalyNotification(\"demoAnomalyNotification\", {\n    costReportToken: \"rpt_47c3254c790e9351\",\n    recipientChannels: [\"#alerts\"],\n    threshold: 10,\n});\n```\n```python\nimport pulumi\nimport pulumi_vantage as vantage\n\ndemo_anomaly_notification = vantage.AnomalyNotification(\"demoAnomalyNotification\",\n    cost_report_token=\"rpt_47c3254c790e9351\",\n    recipient_channels=[\"#alerts\"],\n    threshold=10)\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vantage = Pulumi.Vantage;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var demoAnomalyNotification = new Vantage.AnomalyNotification(\"demoAnomalyNotification\", new()\n    {\n        CostReportToken = \"rpt_47c3254c790e9351\",\n        RecipientChannels = new[]\n        {\n            \"#alerts\",\n        },\n        Threshold = 10,\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi-terraform-provider/sdks/go/vantage/vantage\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vantage.NewAnomalyNotification(ctx, \"demoAnomalyNotification\", \u0026vantage.AnomalyNotificationArgs{\n\t\t\tCostReportToken: pulumi.String(\"rpt_47c3254c790e9351\"),\n\t\t\tRecipientChannels: pulumi.StringArray{\n\t\t\t\tpulumi.String(\"#alerts\"),\n\t\t\t},\n\t\t\tThreshold: pulumi.Float64(10),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vantage.AnomalyNotification;\nimport com.pulumi.vantage.AnomalyNotificationArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var demoAnomalyNotification = new AnomalyNotification(\"demoAnomalyNotification\", AnomalyNotificationArgs.builder()\n            .costReportToken(\"rpt_47c3254c790e9351\")\n            .recipientChannels(\"#alerts\")\n            .threshold(10)\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  demoAnomalyNotification:\n    type: vantage:AnomalyNotification\n    properties:\n      costReportToken: rpt_47c3254c790e9351\n      recipientChannels:\n        - '#alerts'\n      threshold: 10\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
+      "properties": {
+        "costReportToken": {
+          "type": "string",
+          "description": "The token of the Cost Report folder that has the notification.\n"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "The date and time, in UTC, the AnomalyNotification was created. ISO 8601 Formatted.\n"
+        },
+        "recipientChannels": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The Slack/MS Teams channels that receive the notification.\n"
+        },
+        "threshold": {
+          "type": "number",
+          "description": "The threshold amount that must be met for the notification to fire.\n"
+        },
+        "token": {
+          "type": "string",
+          "description": "The token of the report alert\n"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "The date and time, in UTC, the AnomalyNotification was last updated at. ISO 8601 Formatted.\n"
+        },
+        "userTokens": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The tokens of the users that receive the notification.\n"
+        }
+      },
+      "type": "object",
+      "required": [
+        "costReportToken",
+        "createdAt",
+        "recipientChannels",
+        "threshold",
+        "token",
+        "updatedAt",
+        "userTokens"
+      ],
+      "inputProperties": {
+        "costReportToken": {
+          "type": "string",
+          "description": "The token of the Cost Report folder that has the notification.\n"
+        },
+        "recipientChannels": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The Slack/MS Teams channels that receive the notification.\n"
+        },
+        "threshold": {
+          "type": "number",
+          "description": "The threshold amount that must be met for the notification to fire.\n"
+        },
+        "userTokens": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The tokens of the users that receive the notification.\n"
+        }
+      },
+      "requiredInputs": [
+        "costReportToken"
+      ],
+      "stateInputs": {
+        "description": "Input properties used for looking up and filtering AnomalyNotification resources.\n",
+        "properties": {
+          "costReportToken": {
+            "type": "string",
+            "description": "The token of the Cost Report folder that has the notification.\n"
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "The date and time, in UTC, the AnomalyNotification was created. ISO 8601 Formatted.\n"
+          },
+          "recipientChannels": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The Slack/MS Teams channels that receive the notification.\n"
+          },
+          "threshold": {
+            "type": "number",
+            "description": "The threshold amount that must be met for the notification to fire.\n"
+          },
+          "token": {
+            "type": "string",
+            "description": "The token of the report alert\n"
+          },
+          "updatedAt": {
+            "type": "string",
+            "description": "The date and time, in UTC, the AnomalyNotification was last updated at. ISO 8601 Formatted.\n"
+          },
+          "userTokens": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The tokens of the users that receive the notification.\n"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "vantage:index/awsProvider:AwsProvider": {
+      "description": "Manages an AWS Account Integration.\n",
+      "properties": {
+        "awsProviderId": {
+          "type": "number",
+          "description": "Service generated identifier for the the account access.\n"
+        },
+        "bucketArn": {
+          "type": "string",
+          "description": "Bucket ARN for where CUR data is being stored.\n"
+        },
+        "crossAccountArn": {
+          "type": "string",
+          "description": "ARN to use for cross account access.\n"
+        }
+      },
+      "type": "object",
+      "required": [
+        "awsProviderId",
+        "crossAccountArn"
+      ],
+      "inputProperties": {
+        "bucketArn": {
+          "type": "string",
+          "description": "Bucket ARN for where CUR data is being stored.\n"
+        },
+        "crossAccountArn": {
+          "type": "string",
+          "description": "ARN to use for cross account access.\n"
+        }
+      },
+      "requiredInputs": [
+        "crossAccountArn"
+      ],
+      "stateInputs": {
+        "description": "Input properties used for looking up and filtering AwsProvider resources.\n",
+        "properties": {
+          "awsProviderId": {
+            "type": "number",
+            "description": "Service generated identifier for the the account access.\n"
+          },
+          "bucketArn": {
+            "type": "string",
+            "description": "Bucket ARN for where CUR data is being stored.\n"
+          },
+          "crossAccountArn": {
+            "type": "string",
+            "description": "ARN to use for cross account access.\n"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "vantage:index/billingRule:BillingRule": {
+      "properties": {
+        "amount": {
+          "type": "number",
+          "description": "The credit amount for the Billing Rule. Example value: 300\n"
+        },
+        "category": {
+          "type": "string",
+          "description": "The category of the Billing Rule.\n"
+        },
+        "chargeType": {
+          "type": "string",
+          "description": "The charge type of the Billing Rule.\n"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "The date and time, in UTC, the Billing Rule was created. ISO 8601 Formatted.\n"
+        },
+        "createdByToken": {
+          "type": "string",
+          "description": "The token of the User who created the Billing Rule.\n"
+        },
+        "percentage": {
+          "type": "number",
+          "description": "The percentage of the cost shown. Example value: 75.0\n"
+        },
+        "service": {
+          "type": "string",
+          "description": "The service of the Billing Rule.\n"
+        },
+        "startPeriod": {
+          "type": "string",
+          "description": "The start period of the Billing Rule.\n"
+        },
+        "subCategory": {
+          "type": "string",
+          "description": "The subcategory of the Billing Rule.\n"
+        },
+        "title": {
+          "type": "string",
+          "description": "The title of the Billing Rule.\n"
+        },
+        "token": {
+          "type": "string",
+          "description": "The token of the billing rule\n"
+        },
+        "type": {
+          "type": "string",
+          "description": "The type of the Billing Rule. Note: the values are case insensitive.\n"
+        }
+      },
+      "type": "object",
+      "required": [
+        "createdAt",
+        "createdByToken",
+        "title",
+        "token",
+        "type"
+      ],
+      "inputProperties": {
+        "amount": {
+          "type": "number",
+          "description": "The credit amount for the Billing Rule. Example value: 300\n"
+        },
+        "category": {
+          "type": "string",
+          "description": "The category of the Billing Rule.\n"
+        },
+        "chargeType": {
+          "type": "string",
+          "description": "The charge type of the Billing Rule.\n"
+        },
+        "percentage": {
+          "type": "number",
+          "description": "The percentage of the cost shown. Example value: 75.0\n"
+        },
+        "service": {
+          "type": "string",
+          "description": "The service of the Billing Rule.\n"
+        },
+        "startPeriod": {
+          "type": "string",
+          "description": "The start period of the Billing Rule.\n"
+        },
+        "subCategory": {
+          "type": "string",
+          "description": "The subcategory of the Billing Rule.\n"
+        },
+        "title": {
+          "type": "string",
+          "description": "The title of the Billing Rule.\n"
+        },
+        "type": {
+          "type": "string",
+          "description": "The type of the Billing Rule. Note: the values are case insensitive.\n"
+        }
+      },
+      "requiredInputs": [
+        "title",
+        "type"
+      ],
+      "stateInputs": {
+        "description": "Input properties used for looking up and filtering BillingRule resources.\n",
+        "properties": {
+          "amount": {
+            "type": "number",
+            "description": "The credit amount for the Billing Rule. Example value: 300\n"
+          },
+          "category": {
+            "type": "string",
+            "description": "The category of the Billing Rule.\n"
+          },
+          "chargeType": {
+            "type": "string",
+            "description": "The charge type of the Billing Rule.\n"
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "The date and time, in UTC, the Billing Rule was created. ISO 8601 Formatted.\n"
+          },
+          "createdByToken": {
+            "type": "string",
+            "description": "The token of the User who created the Billing Rule.\n"
+          },
+          "percentage": {
+            "type": "number",
+            "description": "The percentage of the cost shown. Example value: 75.0\n"
+          },
+          "service": {
+            "type": "string",
+            "description": "The service of the Billing Rule.\n"
+          },
+          "startPeriod": {
+            "type": "string",
+            "description": "The start period of the Billing Rule.\n"
+          },
+          "subCategory": {
+            "type": "string",
+            "description": "The subcategory of the Billing Rule.\n"
+          },
+          "title": {
+            "type": "string",
+            "description": "The title of the Billing Rule.\n"
+          },
+          "token": {
+            "type": "string",
+            "description": "The token of the billing rule\n"
+          },
+          "type": {
+            "type": "string",
+            "description": "The type of the Billing Rule. Note: the values are case insensitive.\n"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "vantage:index/budget:Budget": {
+      "description": "## Example Usage\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vantage from \"@pulumi/vantage\";\n\nconst demoBudget = new vantage.Budget(\"demoBudget\", {\n    costReportToken: vantage_cost_report.demo_report.token,\n    periods: [{\n        startAt: \"2023-12-01\",\n        endAt: \"2024-01-01\",\n        amount: 1000,\n    }],\n});\n```\n```python\nimport pulumi\nimport pulumi_vantage as vantage\n\ndemo_budget = vantage.Budget(\"demoBudget\",\n    cost_report_token=vantage_cost_report[\"demo_report\"][\"token\"],\n    periods=[{\n        \"start_at\": \"2023-12-01\",\n        \"end_at\": \"2024-01-01\",\n        \"amount\": 1000,\n    }])\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vantage = Pulumi.Vantage;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var demoBudget = new Vantage.Budget(\"demoBudget\", new()\n    {\n        CostReportToken = vantage_cost_report.Demo_report.Token,\n        Periods = new[]\n        {\n            new Vantage.Inputs.BudgetPeriodArgs\n            {\n                StartAt = \"2023-12-01\",\n                EndAt = \"2024-01-01\",\n                Amount = 1000,\n            },\n        },\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi-terraform-provider/sdks/go/vantage/vantage\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vantage.NewBudget(ctx, \"demoBudget\", \u0026vantage.BudgetArgs{\n\t\t\tCostReportToken: pulumi.Any(vantage_cost_report.Demo_report.Token),\n\t\t\tPeriods: vantage.BudgetPeriodArray{\n\t\t\t\t\u0026vantage.BudgetPeriodArgs{\n\t\t\t\t\tStartAt: pulumi.String(\"2023-12-01\"),\n\t\t\t\t\tEndAt:   pulumi.String(\"2024-01-01\"),\n\t\t\t\t\tAmount:  pulumi.Float64(1000),\n\t\t\t\t},\n\t\t\t},\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vantage.Budget;\nimport com.pulumi.vantage.BudgetArgs;\nimport com.pulumi.vantage.inputs.BudgetPeriodArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var demoBudget = new Budget(\"demoBudget\", BudgetArgs.builder()\n            .costReportToken(vantage_cost_report.demo_report().token())\n            .periods(BudgetPeriodArgs.builder()\n                .startAt(\"2023-12-01\")\n                .endAt(\"2024-01-01\")\n                .amount(1000)\n                .build())\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  demoBudget:\n    type: vantage:Budget\n    properties:\n      costReportToken: ${vantage_cost_report.demo_report.token}\n      periods:\n        - startAt: 2023-12-01\n          endAt: 2024-01-01\n          amount: 1000\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
+      "properties": {
+        "budgetAlertTokens": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The tokens of the BudgetAlerts associated with the Budget.\n"
+        },
+        "childBudgetTokens": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The tokens of any child Budgets when creating a hierarchical Budget.\n"
+        },
+        "costReportToken": {
+          "type": "string",
+          "description": "The CostReport token. Ignored for hierarchical Budgets.\n"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "The date and time, in UTC, the Budget was created. ISO 8601 Formatted.\n"
+        },
+        "createdByToken": {
+          "type": "string",
+          "description": "The token of the Creator of the Budget.\n"
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the Budget.\n"
+        },
+        "performances": {
+          "type": "array",
+          "items": {
+            "$ref": "#/types/vantage:index%2FBudgetPerformance:BudgetPerformance"
+          },
+          "description": "The historical performance of the Budget.\n"
+        },
+        "periods": {
+          "type": "array",
+          "items": {
+            "$ref": "#/types/vantage:index%2FBudgetPeriod:BudgetPeriod"
+          },
+          "description": "The periods for the Budget. The start*at and end*at must be iso8601 formatted e.g. YYYY-MM-DD. Ignored for hierarchical Budgets.\n"
+        },
+        "token": {
+          "type": "string",
+          "description": "The token of the budget\n"
+        },
+        "userToken": {
+          "type": "string",
+          "description": "The token for the User who created this Budget.\n"
+        },
+        "workspaceToken": {
+          "type": "string",
+          "description": "The token of the Workspace to add the Budget to.\n"
+        }
+      },
+      "type": "object",
+      "required": [
+        "budgetAlertTokens",
+        "childBudgetTokens",
+        "costReportToken",
+        "createdAt",
+        "createdByToken",
+        "name",
+        "performances",
+        "periods",
+        "token",
+        "userToken",
+        "workspaceToken"
+      ],
+      "inputProperties": {
+        "childBudgetTokens": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The tokens of any child Budgets when creating a hierarchical Budget.\n"
+        },
+        "costReportToken": {
+          "type": "string",
+          "description": "The CostReport token. Ignored for hierarchical Budgets.\n"
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the Budget.\n"
+        },
+        "periods": {
+          "type": "array",
+          "items": {
+            "$ref": "#/types/vantage:index%2FBudgetPeriod:BudgetPeriod"
+          },
+          "description": "The periods for the Budget. The start*at and end*at must be iso8601 formatted e.g. YYYY-MM-DD. Ignored for hierarchical Budgets.\n"
+        },
+        "workspaceToken": {
+          "type": "string",
+          "description": "The token of the Workspace to add the Budget to.\n"
+        }
+      },
+      "stateInputs": {
+        "description": "Input properties used for looking up and filtering Budget resources.\n",
+        "properties": {
+          "budgetAlertTokens": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The tokens of the BudgetAlerts associated with the Budget.\n"
+          },
+          "childBudgetTokens": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The tokens of any child Budgets when creating a hierarchical Budget.\n"
+          },
+          "costReportToken": {
+            "type": "string",
+            "description": "The CostReport token. Ignored for hierarchical Budgets.\n"
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "The date and time, in UTC, the Budget was created. ISO 8601 Formatted.\n"
+          },
+          "createdByToken": {
+            "type": "string",
+            "description": "The token of the Creator of the Budget.\n"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the Budget.\n"
+          },
+          "performances": {
+            "type": "array",
+            "items": {
+              "$ref": "#/types/vantage:index%2FBudgetPerformance:BudgetPerformance"
+            },
+            "description": "The historical performance of the Budget.\n"
+          },
+          "periods": {
+            "type": "array",
+            "items": {
+              "$ref": "#/types/vantage:index%2FBudgetPeriod:BudgetPeriod"
+            },
+            "description": "The periods for the Budget. The start*at and end*at must be iso8601 formatted e.g. YYYY-MM-DD. Ignored for hierarchical Budgets.\n"
+          },
+          "token": {
+            "type": "string",
+            "description": "The token of the budget\n"
+          },
+          "userToken": {
+            "type": "string",
+            "description": "The token for the User who created this Budget.\n"
+          },
+          "workspaceToken": {
+            "type": "string",
+            "description": "The token of the Workspace to add the Budget to.\n"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "vantage:index/businessMetric:BusinessMetric": {
+      "properties": {
+        "costReportTokensWithMetadatas": {
+          "type": "array",
+          "items": {
+            "$ref": "#/types/vantage:index%2FBusinessMetricCostReportTokensWithMetadata:BusinessMetricCostReportTokensWithMetadata"
+          },
+          "description": "The tokens for any CostReports that use the BusinessMetric, the unit scale, and label filter.\n"
+        },
+        "createdByToken": {
+          "type": "string",
+          "description": "The token of the Creator of the BusinessMetric.\n"
+        },
+        "title": {
+          "type": "string",
+          "description": "The title of the BusinessMetrics.\n"
+        },
+        "token": {
+          "type": "string",
+          "description": "The token of the business metric\n"
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "$ref": "#/types/vantage:index%2FBusinessMetricValue:BusinessMetricValue"
+          },
+          "description": "The dates, amounts, and (optional) labels for the BusinessMetric.\n"
+        }
+      },
+      "type": "object",
+      "required": [
+        "costReportTokensWithMetadatas",
+        "createdByToken",
+        "title",
+        "token",
+        "values"
+      ],
+      "inputProperties": {
+        "costReportTokensWithMetadatas": {
+          "type": "array",
+          "items": {
+            "$ref": "#/types/vantage:index%2FBusinessMetricCostReportTokensWithMetadata:BusinessMetricCostReportTokensWithMetadata"
+          },
+          "description": "The tokens for any CostReports that use the BusinessMetric, the unit scale, and label filter.\n"
+        },
+        "title": {
+          "type": "string",
+          "description": "The title of the BusinessMetrics.\n"
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "$ref": "#/types/vantage:index%2FBusinessMetricValue:BusinessMetricValue"
+          },
+          "description": "The dates, amounts, and (optional) labels for the BusinessMetric.\n"
+        }
+      },
+      "requiredInputs": [
+        "title"
+      ],
+      "stateInputs": {
+        "description": "Input properties used for looking up and filtering BusinessMetric resources.\n",
+        "properties": {
+          "costReportTokensWithMetadatas": {
+            "type": "array",
+            "items": {
+              "$ref": "#/types/vantage:index%2FBusinessMetricCostReportTokensWithMetadata:BusinessMetricCostReportTokensWithMetadata"
+            },
+            "description": "The tokens for any CostReports that use the BusinessMetric, the unit scale, and label filter.\n"
+          },
+          "createdByToken": {
+            "type": "string",
+            "description": "The token of the Creator of the BusinessMetric.\n"
+          },
+          "title": {
+            "type": "string",
+            "description": "The title of the BusinessMetrics.\n"
+          },
+          "token": {
+            "type": "string",
+            "description": "The token of the business metric\n"
+          },
+          "values": {
+            "type": "array",
+            "items": {
+              "$ref": "#/types/vantage:index%2FBusinessMetricValue:BusinessMetricValue"
+            },
+            "description": "The dates, amounts, and (optional) labels for the BusinessMetric.\n"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "vantage:index/costReport:CostReport": {
+      "description": "Manages a CostReport.\n\n## Example Usage\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vantage from \"@pulumi/vantage\";\n\nconst demoReport = new vantage.CostReport(\"demoReport\", {\n    filter: \"costs.provider = 'aws'\",\n    folderToken: \"fldr_3555785cd0409118\",\n    savedFilterTokens: [\n        \"svd_fltr_e844a2ccace05933\",\n        \"svd_fltr_1b4b80a380ef4ba2\",\n    ],\n    title: \"Demo Report\",\n    workspaceToken: \"wrkspc_47c3254c790e9351\",\n});\n```\n```python\nimport pulumi\nimport pulumi_vantage as vantage\n\ndemo_report = vantage.CostReport(\"demoReport\",\n    filter=\"costs.provider = 'aws'\",\n    folder_token=\"fldr_3555785cd0409118\",\n    saved_filter_tokens=[\n        \"svd_fltr_e844a2ccace05933\",\n        \"svd_fltr_1b4b80a380ef4ba2\",\n    ],\n    title=\"Demo Report\",\n    workspace_token=\"wrkspc_47c3254c790e9351\")\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vantage = Pulumi.Vantage;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var demoReport = new Vantage.CostReport(\"demoReport\", new()\n    {\n        Filter = \"costs.provider = 'aws'\",\n        FolderToken = \"fldr_3555785cd0409118\",\n        SavedFilterTokens = new[]\n        {\n            \"svd_fltr_e844a2ccace05933\",\n            \"svd_fltr_1b4b80a380ef4ba2\",\n        },\n        Title = \"Demo Report\",\n        WorkspaceToken = \"wrkspc_47c3254c790e9351\",\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi-terraform-provider/sdks/go/vantage/vantage\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vantage.NewCostReport(ctx, \"demoReport\", \u0026vantage.CostReportArgs{\n\t\t\tFilter:      pulumi.String(\"costs.provider = 'aws'\"),\n\t\t\tFolderToken: pulumi.String(\"fldr_3555785cd0409118\"),\n\t\t\tSavedFilterTokens: pulumi.StringArray{\n\t\t\t\tpulumi.String(\"svd_fltr_e844a2ccace05933\"),\n\t\t\t\tpulumi.String(\"svd_fltr_1b4b80a380ef4ba2\"),\n\t\t\t},\n\t\t\tTitle:          pulumi.String(\"Demo Report\"),\n\t\t\tWorkspaceToken: pulumi.String(\"wrkspc_47c3254c790e9351\"),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vantage.CostReport;\nimport com.pulumi.vantage.CostReportArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var demoReport = new CostReport(\"demoReport\", CostReportArgs.builder()\n            .filter(\"costs.provider = 'aws'\")\n            .folderToken(\"fldr_3555785cd0409118\")\n            .savedFilterTokens(            \n                \"svd_fltr_e844a2ccace05933\",\n                \"svd_fltr_1b4b80a380ef4ba2\")\n            .title(\"Demo Report\")\n            .workspaceToken(\"wrkspc_47c3254c790e9351\")\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  demoReport:\n    type: vantage:CostReport\n    properties:\n      filter: costs.provider = 'aws'\n      folderToken: fldr_3555785cd0409118\n      savedFilterTokens:\n        - svd_fltr_e844a2ccace05933\n        - svd_fltr_1b4b80a380ef4ba2\n      title: Demo Report\n      workspaceToken: wrkspc_47c3254c790e9351\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
+      "properties": {
+        "chartType": {
+          "type": "string",
+          "description": "Chart type to apply to the Cost Report.\n"
+        },
+        "dateBin": {
+          "type": "string",
+          "description": "Date bin to apply to the Cost Report.\n"
+        },
+        "dateInterval": {
+          "type": "string",
+          "description": "Date interval to apply to the Cost Report.\n"
+        },
+        "endDate": {
+          "type": "string",
+          "description": "End date to apply to the Cost Report.\n"
+        },
+        "filter": {
+          "type": "string",
+          "description": "Filter query to apply to the Cost Report\n"
+        },
+        "folderToken": {
+          "type": "string",
+          "description": "Token of the folder this Cost Report resides in.\n"
+        },
+        "groupings": {
+          "type": "string",
+          "description": "Grouping aggregations applied to the filtered data.\n"
+        },
+        "previousPeriodEndDate": {
+          "type": "string",
+          "description": "End date to apply to the Cost Report.\n"
+        },
+        "previousPeriodStartDate": {
+          "type": "string",
+          "description": "Start date to apply to the Cost Report.\n"
+        },
+        "savedFilterTokens": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Saved filter tokens to be applied to the Cost Report.\n"
+        },
+        "startDate": {
+          "type": "string",
+          "description": "Start date to apply to the Cost Report.\n"
+        },
+        "title": {
+          "type": "string",
+          "description": "Title of the Cost Report\n"
+        },
+        "token": {
+          "type": "string",
+          "description": "Unique cost report identifier\n"
+        },
+        "workspaceToken": {
+          "type": "string",
+          "description": "Workspace token to add the Cost Report to.\n"
+        }
+      },
+      "type": "object",
+      "required": [
+        "chartType",
+        "dateBin",
+        "dateInterval",
+        "endDate",
+        "filter",
+        "folderToken",
+        "groupings",
+        "previousPeriodEndDate",
+        "previousPeriodStartDate",
+        "savedFilterTokens",
+        "startDate",
+        "title",
+        "token",
+        "workspaceToken"
+      ],
+      "inputProperties": {
+        "chartType": {
+          "type": "string",
+          "description": "Chart type to apply to the Cost Report.\n"
+        },
+        "dateBin": {
+          "type": "string",
+          "description": "Date bin to apply to the Cost Report.\n"
+        },
+        "dateInterval": {
+          "type": "string",
+          "description": "Date interval to apply to the Cost Report.\n"
+        },
+        "endDate": {
+          "type": "string",
+          "description": "End date to apply to the Cost Report.\n"
+        },
+        "filter": {
+          "type": "string",
+          "description": "Filter query to apply to the Cost Report\n"
+        },
+        "folderToken": {
+          "type": "string",
+          "description": "Token of the folder this Cost Report resides in.\n"
+        },
+        "groupings": {
+          "type": "string",
+          "description": "Grouping aggregations applied to the filtered data.\n"
+        },
+        "previousPeriodEndDate": {
+          "type": "string",
+          "description": "End date to apply to the Cost Report.\n"
+        },
+        "previousPeriodStartDate": {
+          "type": "string",
+          "description": "Start date to apply to the Cost Report.\n"
+        },
+        "savedFilterTokens": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Saved filter tokens to be applied to the Cost Report.\n"
+        },
+        "startDate": {
+          "type": "string",
+          "description": "Start date to apply to the Cost Report.\n"
+        },
+        "title": {
+          "type": "string",
+          "description": "Title of the Cost Report\n"
+        },
+        "workspaceToken": {
+          "type": "string",
+          "description": "Workspace token to add the Cost Report to.\n"
+        }
+      },
+      "requiredInputs": [
+        "title"
+      ],
+      "stateInputs": {
+        "description": "Input properties used for looking up and filtering CostReport resources.\n",
+        "properties": {
+          "chartType": {
+            "type": "string",
+            "description": "Chart type to apply to the Cost Report.\n"
+          },
+          "dateBin": {
+            "type": "string",
+            "description": "Date bin to apply to the Cost Report.\n"
+          },
+          "dateInterval": {
+            "type": "string",
+            "description": "Date interval to apply to the Cost Report.\n"
+          },
+          "endDate": {
+            "type": "string",
+            "description": "End date to apply to the Cost Report.\n"
+          },
+          "filter": {
+            "type": "string",
+            "description": "Filter query to apply to the Cost Report\n"
+          },
+          "folderToken": {
+            "type": "string",
+            "description": "Token of the folder this Cost Report resides in.\n"
+          },
+          "groupings": {
+            "type": "string",
+            "description": "Grouping aggregations applied to the filtered data.\n"
+          },
+          "previousPeriodEndDate": {
+            "type": "string",
+            "description": "End date to apply to the Cost Report.\n"
+          },
+          "previousPeriodStartDate": {
+            "type": "string",
+            "description": "Start date to apply to the Cost Report.\n"
+          },
+          "savedFilterTokens": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Saved filter tokens to be applied to the Cost Report.\n"
+          },
+          "startDate": {
+            "type": "string",
+            "description": "Start date to apply to the Cost Report.\n"
+          },
+          "title": {
+            "type": "string",
+            "description": "Title of the Cost Report\n"
+          },
+          "token": {
+            "type": "string",
+            "description": "Unique cost report identifier\n"
+          },
+          "workspaceToken": {
+            "type": "string",
+            "description": "Workspace token to add the Cost Report to.\n"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "vantage:index/dashboard:Dashboard": {
+      "description": "## Example Usage\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vantage from \"@pulumi/vantage\";\n\nconst demoDashboard = new vantage.Dashboard(\"demoDashboard\", {\n    dateInterval: \"last_month\",\n    title: \"Demo Dashboard\",\n    widgets: [{\n        settings: {\n            displayType: \"chart\",\n        },\n        widgetableToken: \"rprt_a2846903070824f4\",\n    }],\n    workspaceToken: \"wrkspc_47c3254c790e9351\",\n});\n```\n```python\nimport pulumi\nimport pulumi_vantage as vantage\n\ndemo_dashboard = vantage.Dashboard(\"demoDashboard\",\n    date_interval=\"last_month\",\n    title=\"Demo Dashboard\",\n    widgets=[{\n        \"settings\": {\n            \"display_type\": \"chart\",\n        },\n        \"widgetable_token\": \"rprt_a2846903070824f4\",\n    }],\n    workspace_token=\"wrkspc_47c3254c790e9351\")\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vantage = Pulumi.Vantage;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var demoDashboard = new Vantage.Dashboard(\"demoDashboard\", new()\n    {\n        DateInterval = \"last_month\",\n        Title = \"Demo Dashboard\",\n        Widgets = new[]\n        {\n            new Vantage.Inputs.DashboardWidgetArgs\n            {\n                Settings = new Vantage.Inputs.DashboardWidgetSettingsArgs\n                {\n                    DisplayType = \"chart\",\n                },\n                WidgetableToken = \"rprt_a2846903070824f4\",\n            },\n        },\n        WorkspaceToken = \"wrkspc_47c3254c790e9351\",\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi-terraform-provider/sdks/go/vantage/vantage\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vantage.NewDashboard(ctx, \"demoDashboard\", \u0026vantage.DashboardArgs{\n\t\t\tDateInterval: pulumi.String(\"last_month\"),\n\t\t\tTitle:        pulumi.String(\"Demo Dashboard\"),\n\t\t\tWidgets: vantage.DashboardWidgetArray{\n\t\t\t\t\u0026vantage.DashboardWidgetArgs{\n\t\t\t\t\tSettings: \u0026vantage.DashboardWidgetSettingsArgs{\n\t\t\t\t\t\tDisplayType: pulumi.String(\"chart\"),\n\t\t\t\t\t},\n\t\t\t\t\tWidgetableToken: pulumi.String(\"rprt_a2846903070824f4\"),\n\t\t\t\t},\n\t\t\t},\n\t\t\tWorkspaceToken: pulumi.String(\"wrkspc_47c3254c790e9351\"),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vantage.Dashboard;\nimport com.pulumi.vantage.DashboardArgs;\nimport com.pulumi.vantage.inputs.DashboardWidgetArgs;\nimport com.pulumi.vantage.inputs.DashboardWidgetSettingsArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var demoDashboard = new Dashboard(\"demoDashboard\", DashboardArgs.builder()\n            .dateInterval(\"last_month\")\n            .title(\"Demo Dashboard\")\n            .widgets(DashboardWidgetArgs.builder()\n                .settings(DashboardWidgetSettingsArgs.builder()\n                    .displayType(\"chart\")\n                    .build())\n                .widgetableToken(\"rprt_a2846903070824f4\")\n                .build())\n            .workspaceToken(\"wrkspc_47c3254c790e9351\")\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  demoDashboard:\n    type: vantage:Dashboard\n    properties:\n      dateInterval: last_month\n      title: Demo Dashboard\n      widgets:\n        - settings:\n            displayType: chart\n          widgetableToken: rprt_a2846903070824f4\n      workspaceToken: wrkspc_47c3254c790e9351\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
+      "properties": {
+        "createdAt": {
+          "type": "string",
+          "description": "The date and time, in UTC, the Dashboard was created. ISO 8601 Formatted.\n"
+        },
+        "dateBin": {
+          "type": "string",
+          "description": "Determines how to group costs in the Dashboard.\n"
+        },
+        "dateInterval": {
+          "type": "string",
+          "description": "Determines the date range in the Dashboard. Incompatible with 'start*date' and 'end*date' parameters.\n"
+        },
+        "endDate": {
+          "type": "string",
+          "description": "The end date for the date range for costs in the Dashboard. ISO 8601 Formatted. Incompatible with 'date_interval' parameter.\n"
+        },
+        "savedFilterTokens": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The tokens of the Saved Filters used in the Dashboard.\n"
+        },
+        "startDate": {
+          "type": "string",
+          "description": "The start date for the date range for costs in the Dashboard. ISO 8601 Formatted. Incompatible with 'date_interval' parameter.\n"
+        },
+        "title": {
+          "type": "string",
+          "description": "The title of the Dashboard.\n"
+        },
+        "token": {
+          "type": "string",
+          "description": "The token of the dashboard\n"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "The date and time, in UTC, the Dashboard was created. ISO 8601 Formatted.\n"
+        },
+        "widgets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/types/vantage:index%2FDashboardWidget:DashboardWidget"
+          },
+          "description": "The widgets to add to the Dashboard. Currently supports CostReport, ResourceReport, KubernetesEfficiencyReport, and FinancialCommitmentReport.\n"
+        },
+        "workspaceToken": {
+          "type": "string",
+          "description": "The token of the Workspace to add the Dashboard to. Required if the API token is associated with multiple Workspaces.\n"
+        }
+      },
+      "type": "object",
+      "required": [
+        "createdAt",
+        "dateBin",
+        "dateInterval",
+        "endDate",
+        "savedFilterTokens",
+        "startDate",
+        "title",
+        "token",
+        "updatedAt",
+        "widgets",
+        "workspaceToken"
+      ],
+      "inputProperties": {
+        "dateBin": {
+          "type": "string",
+          "description": "Determines how to group costs in the Dashboard.\n"
+        },
+        "dateInterval": {
+          "type": "string",
+          "description": "Determines the date range in the Dashboard. Incompatible with 'start*date' and 'end*date' parameters.\n"
+        },
+        "endDate": {
+          "type": "string",
+          "description": "The end date for the date range for costs in the Dashboard. ISO 8601 Formatted. Incompatible with 'date_interval' parameter.\n"
+        },
+        "savedFilterTokens": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The tokens of the Saved Filters used in the Dashboard.\n"
+        },
+        "startDate": {
+          "type": "string",
+          "description": "The start date for the date range for costs in the Dashboard. ISO 8601 Formatted. Incompatible with 'date_interval' parameter.\n"
+        },
+        "title": {
+          "type": "string",
+          "description": "The title of the Dashboard.\n"
+        },
+        "widgets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/types/vantage:index%2FDashboardWidget:DashboardWidget"
+          },
+          "description": "The widgets to add to the Dashboard. Currently supports CostReport, ResourceReport, KubernetesEfficiencyReport, and FinancialCommitmentReport.\n"
+        },
+        "workspaceToken": {
+          "type": "string",
+          "description": "The token of the Workspace to add the Dashboard to. Required if the API token is associated with multiple Workspaces.\n"
+        }
+      },
+      "stateInputs": {
+        "description": "Input properties used for looking up and filtering Dashboard resources.\n",
+        "properties": {
+          "createdAt": {
+            "type": "string",
+            "description": "The date and time, in UTC, the Dashboard was created. ISO 8601 Formatted.\n"
+          },
+          "dateBin": {
+            "type": "string",
+            "description": "Determines how to group costs in the Dashboard.\n"
+          },
+          "dateInterval": {
+            "type": "string",
+            "description": "Determines the date range in the Dashboard. Incompatible with 'start*date' and 'end*date' parameters.\n"
+          },
+          "endDate": {
+            "type": "string",
+            "description": "The end date for the date range for costs in the Dashboard. ISO 8601 Formatted. Incompatible with 'date_interval' parameter.\n"
+          },
+          "savedFilterTokens": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The tokens of the Saved Filters used in the Dashboard.\n"
+          },
+          "startDate": {
+            "type": "string",
+            "description": "The start date for the date range for costs in the Dashboard. ISO 8601 Formatted. Incompatible with 'date_interval' parameter.\n"
+          },
+          "title": {
+            "type": "string",
+            "description": "The title of the Dashboard.\n"
+          },
+          "token": {
+            "type": "string",
+            "description": "The token of the dashboard\n"
+          },
+          "updatedAt": {
+            "type": "string",
+            "description": "The date and time, in UTC, the Dashboard was created. ISO 8601 Formatted.\n"
+          },
+          "widgets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/types/vantage:index%2FDashboardWidget:DashboardWidget"
+            },
+            "description": "The widgets to add to the Dashboard. Currently supports CostReport, ResourceReport, KubernetesEfficiencyReport, and FinancialCommitmentReport.\n"
+          },
+          "workspaceToken": {
+            "type": "string",
+            "description": "The token of the Workspace to add the Dashboard to. Required if the API token is associated with multiple Workspaces.\n"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "vantage:index/financialCommitmentReport:FinancialCommitmentReport": {
+      "properties": {
+        "createdAt": {
+          "type": "string",
+          "description": "The date and time, in UTC, the report was created. ISO 8601 Formatted.\n"
+        },
+        "dateBucket": {
+          "type": "string",
+          "description": "The date bucket of the FinancialCommitmentReport.\n"
+        },
+        "dateInterval": {
+          "type": "string",
+          "description": "The date interval of the FinancialCommitmentReport. Unless 'custom' is used, this is incompatible with 'start*date' and 'end*date' parameters. Defaults to 'last*3*months'.\n"
+        },
+        "default": {
+          "type": "boolean",
+          "description": "Indicates whether the FinancialCommitmentReport is the default report.\n"
+        },
+        "endDate": {
+          "type": "string",
+          "description": "The end date of the FinancialCommitmentReport. YYYY-MM-DD formatted. Incompatible with 'date_interval' parameter.\n"
+        },
+        "filter": {
+          "type": "string",
+          "description": "The filter query language to apply to the FinancialCommitmentReport. Additional documentation available at https://docs.vantage.sh/vql.\n"
+        },
+        "groupings": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Grouping values for aggregating costs on the FinancialCommitmentReport. Valid groupings: cost*type, commitment*type, service, resource*account*id, provider*account*id, region, cost*category, cost*sub*category, instance*type, tag, tag:\\n\\n.\n"
+        },
+        "onDemandCostsScope": {
+          "type": "string",
+          "description": "The scope for the costs. Possible values: discountable, all.\n"
+        },
+        "startDate": {
+          "type": "string",
+          "description": "The start date of the FinancialCommitmentReport. YYYY-MM-DD formatted. Incompatible with 'date_interval' parameter.\n"
+        },
+        "title": {
+          "type": "string",
+          "description": "The title of the FinancialCommitmentReport.\n"
+        },
+        "token": {
+          "type": "string",
+          "description": "The token of the report\n"
+        },
+        "userToken": {
+          "type": "string",
+          "description": "The token for the User who created this FinancialCommitmentReport.\n"
+        },
+        "workspaceToken": {
+          "type": "string",
+          "description": "The Workspace in which the FinancialCommitmentReport will be created.\n"
+        }
+      },
+      "type": "object",
+      "required": [
+        "createdAt",
+        "dateBucket",
+        "dateInterval",
+        "default",
+        "endDate",
+        "filter",
+        "groupings",
+        "onDemandCostsScope",
+        "startDate",
+        "title",
+        "token",
+        "userToken",
+        "workspaceToken"
+      ],
+      "inputProperties": {
+        "dateBucket": {
+          "type": "string",
+          "description": "The date bucket of the FinancialCommitmentReport.\n"
+        },
+        "dateInterval": {
+          "type": "string",
+          "description": "The date interval of the FinancialCommitmentReport. Unless 'custom' is used, this is incompatible with 'start*date' and 'end*date' parameters. Defaults to 'last*3*months'.\n"
+        },
+        "endDate": {
+          "type": "string",
+          "description": "The end date of the FinancialCommitmentReport. YYYY-MM-DD formatted. Incompatible with 'date_interval' parameter.\n"
+        },
+        "filter": {
+          "type": "string",
+          "description": "The filter query language to apply to the FinancialCommitmentReport. Additional documentation available at https://docs.vantage.sh/vql.\n"
+        },
+        "groupings": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Grouping values for aggregating costs on the FinancialCommitmentReport. Valid groupings: cost*type, commitment*type, service, resource*account*id, provider*account*id, region, cost*category, cost*sub*category, instance*type, tag, tag:\\n\\n.\n"
+        },
+        "onDemandCostsScope": {
+          "type": "string",
+          "description": "The scope for the costs. Possible values: discountable, all.\n"
+        },
+        "startDate": {
+          "type": "string",
+          "description": "The start date of the FinancialCommitmentReport. YYYY-MM-DD formatted. Incompatible with 'date_interval' parameter.\n"
+        },
+        "title": {
+          "type": "string",
+          "description": "The title of the FinancialCommitmentReport.\n"
+        },
+        "workspaceToken": {
+          "type": "string",
+          "description": "The Workspace in which the FinancialCommitmentReport will be created.\n"
+        }
+      },
+      "requiredInputs": [
+        "title",
+        "workspaceToken"
+      ],
+      "stateInputs": {
+        "description": "Input properties used for looking up and filtering FinancialCommitmentReport resources.\n",
+        "properties": {
+          "createdAt": {
+            "type": "string",
+            "description": "The date and time, in UTC, the report was created. ISO 8601 Formatted.\n"
+          },
+          "dateBucket": {
+            "type": "string",
+            "description": "The date bucket of the FinancialCommitmentReport.\n"
+          },
+          "dateInterval": {
+            "type": "string",
+            "description": "The date interval of the FinancialCommitmentReport. Unless 'custom' is used, this is incompatible with 'start*date' and 'end*date' parameters. Defaults to 'last*3*months'.\n"
+          },
+          "default": {
+            "type": "boolean",
+            "description": "Indicates whether the FinancialCommitmentReport is the default report.\n"
+          },
+          "endDate": {
+            "type": "string",
+            "description": "The end date of the FinancialCommitmentReport. YYYY-MM-DD formatted. Incompatible with 'date_interval' parameter.\n"
+          },
+          "filter": {
+            "type": "string",
+            "description": "The filter query language to apply to the FinancialCommitmentReport. Additional documentation available at https://docs.vantage.sh/vql.\n"
+          },
+          "groupings": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Grouping values for aggregating costs on the FinancialCommitmentReport. Valid groupings: cost*type, commitment*type, service, resource*account*id, provider*account*id, region, cost*category, cost*sub*category, instance*type, tag, tag:\\n\\n.\n"
+          },
+          "onDemandCostsScope": {
+            "type": "string",
+            "description": "The scope for the costs. Possible values: discountable, all.\n"
+          },
+          "startDate": {
+            "type": "string",
+            "description": "The start date of the FinancialCommitmentReport. YYYY-MM-DD formatted. Incompatible with 'date_interval' parameter.\n"
+          },
+          "title": {
+            "type": "string",
+            "description": "The title of the FinancialCommitmentReport.\n"
+          },
+          "token": {
+            "type": "string",
+            "description": "The token of the report\n"
+          },
+          "userToken": {
+            "type": "string",
+            "description": "The token for the User who created this FinancialCommitmentReport.\n"
+          },
+          "workspaceToken": {
+            "type": "string",
+            "description": "The Workspace in which the FinancialCommitmentReport will be created.\n"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "vantage:index/folder:Folder": {
+      "description": "Manages a Folder.\n\n## Example Usage\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vantage from \"@pulumi/vantage\";\n\nconst demoFolder = new vantage.Folder(\"demoFolder\", {\n    title: \"Demo Folder\",\n    workspaceToken: \"wrkspc_47c3254c790e9351\",\n});\n```\n```python\nimport pulumi\nimport pulumi_vantage as vantage\n\ndemo_folder = vantage.Folder(\"demoFolder\",\n    title=\"Demo Folder\",\n    workspace_token=\"wrkspc_47c3254c790e9351\")\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vantage = Pulumi.Vantage;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var demoFolder = new Vantage.Folder(\"demoFolder\", new()\n    {\n        Title = \"Demo Folder\",\n        WorkspaceToken = \"wrkspc_47c3254c790e9351\",\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi-terraform-provider/sdks/go/vantage/vantage\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vantage.NewFolder(ctx, \"demoFolder\", \u0026vantage.FolderArgs{\n\t\t\tTitle:          pulumi.String(\"Demo Folder\"),\n\t\t\tWorkspaceToken: pulumi.String(\"wrkspc_47c3254c790e9351\"),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vantage.Folder;\nimport com.pulumi.vantage.FolderArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var demoFolder = new Folder(\"demoFolder\", FolderArgs.builder()\n            .title(\"Demo Folder\")\n            .workspaceToken(\"wrkspc_47c3254c790e9351\")\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  demoFolder:\n    type: vantage:Folder\n    properties:\n      title: Demo Folder\n      # Uncomment one of the following:\n      #     // parent_folder_token = \"fldr_47c3254c790e9351\"\n      workspaceToken: wrkspc_47c3254c790e9351\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
+      "properties": {
+        "parentFolderToken": {
+          "type": "string",
+          "description": "Token of the folder's parent folder\n"
+        },
+        "title": {
+          "type": "string",
+          "description": "Title of the folder\n"
+        },
+        "token": {
+          "type": "string",
+          "description": "Unique folder identifier\n"
+        },
+        "workspaceToken": {
+          "type": "string",
+          "description": "Workspace token to add the cost report to.\n"
+        }
+      },
+      "type": "object",
+      "required": [
+        "parentFolderToken",
+        "title",
+        "token",
+        "workspaceToken"
+      ],
+      "inputProperties": {
+        "parentFolderToken": {
+          "type": "string",
+          "description": "Token of the folder's parent folder\n"
+        },
+        "title": {
+          "type": "string",
+          "description": "Title of the folder\n"
+        },
+        "workspaceToken": {
+          "type": "string",
+          "description": "Workspace token to add the cost report to.\n"
+        }
+      },
+      "requiredInputs": [
+        "title"
+      ],
+      "stateInputs": {
+        "description": "Input properties used for looking up and filtering Folder resources.\n",
+        "properties": {
+          "parentFolderToken": {
+            "type": "string",
+            "description": "Token of the folder's parent folder\n"
+          },
+          "title": {
+            "type": "string",
+            "description": "Title of the folder\n"
+          },
+          "token": {
+            "type": "string",
+            "description": "Unique folder identifier\n"
+          },
+          "workspaceToken": {
+            "type": "string",
+            "description": "Workspace token to add the cost report to.\n"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "vantage:index/kubernetesEfficiencyReport:KubernetesEfficiencyReport": {
+      "properties": {
+        "aggregatedBy": {
+          "type": "string",
+          "description": "The column by which the costs are aggregated.\n"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "The date and time, in UTC, the report was created. ISO 8601 Formatted.\n"
+        },
+        "dateBucket": {
+          "type": "string",
+          "description": "The date bucket of the KubernetesEfficiencyReport.\n"
+        },
+        "dateInterval": {
+          "type": "string",
+          "description": "The date interval of the KubernetesEfficiencyReport. Incompatible with 'start*date' and 'end*date' parameters. Defaults to 'this*month' if start*date and end_date are not provided.\n"
+        },
+        "default": {
+          "type": "boolean",
+          "description": "Indicates whether the KubernetesEfficiencyReport is the default report.\n"
+        },
+        "endDate": {
+          "type": "string",
+          "description": "The end date of the KubernetesEfficiencyReport. ISO 8601 Formatted. Incompatible with 'date_interval' parameter.\n"
+        },
+        "filter": {
+          "type": "string",
+          "description": "The filter query language to apply to the KubernetesEfficiencyReport. Additional documentation available at https://docs.vantage.sh/vql.\n"
+        },
+        "groupings": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Grouping values for aggregating costs on the KubernetesEfficiencyReport. Valid groupings: cluster*id, namespace, labeled, category, label, label:\\n\\n*name\u003e.\n"
+        },
+        "startDate": {
+          "type": "string",
+          "description": "The start date of the KubernetesEfficiencyReport. ISO 8601 Formatted. Incompatible with 'date_interval' parameter.\n"
+        },
+        "title": {
+          "type": "string",
+          "description": "The title of the KubernetesEfficiencyReport.\n"
+        },
+        "token": {
+          "type": "string",
+          "description": "The token of the report\n"
+        },
+        "userToken": {
+          "type": "string",
+          "description": "The token for the User who created this KubernetesEfficiencyReport.\n"
+        },
+        "workspaceToken": {
+          "type": "string",
+          "description": "The Workspace in which the KubernetesEfficiencyReport will be created.\n"
+        }
+      },
+      "type": "object",
+      "required": [
+        "aggregatedBy",
+        "createdAt",
+        "dateBucket",
+        "dateInterval",
+        "default",
+        "endDate",
+        "filter",
+        "groupings",
+        "startDate",
+        "title",
+        "token",
+        "userToken",
+        "workspaceToken"
+      ],
+      "inputProperties": {
+        "aggregatedBy": {
+          "type": "string",
+          "description": "The column by which the costs are aggregated.\n"
+        },
+        "dateBucket": {
+          "type": "string",
+          "description": "The date bucket of the KubernetesEfficiencyReport.\n"
+        },
+        "dateInterval": {
+          "type": "string",
+          "description": "The date interval of the KubernetesEfficiencyReport. Incompatible with 'start*date' and 'end*date' parameters. Defaults to 'this*month' if start*date and end_date are not provided.\n"
+        },
+        "endDate": {
+          "type": "string",
+          "description": "The end date of the KubernetesEfficiencyReport. ISO 8601 Formatted. Incompatible with 'date_interval' parameter.\n"
+        },
+        "filter": {
+          "type": "string",
+          "description": "The filter query language to apply to the KubernetesEfficiencyReport. Additional documentation available at https://docs.vantage.sh/vql.\n"
+        },
+        "groupings": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Grouping values for aggregating costs on the KubernetesEfficiencyReport. Valid groupings: cluster*id, namespace, labeled, category, label, label:\\n\\n*name\u003e.\n"
+        },
+        "startDate": {
+          "type": "string",
+          "description": "The start date of the KubernetesEfficiencyReport. ISO 8601 Formatted. Incompatible with 'date_interval' parameter.\n"
+        },
+        "title": {
+          "type": "string",
+          "description": "The title of the KubernetesEfficiencyReport.\n"
+        },
+        "workspaceToken": {
+          "type": "string",
+          "description": "The Workspace in which the KubernetesEfficiencyReport will be created.\n"
+        }
+      },
+      "requiredInputs": [
+        "title",
+        "workspaceToken"
+      ],
+      "stateInputs": {
+        "description": "Input properties used for looking up and filtering KubernetesEfficiencyReport resources.\n",
+        "properties": {
+          "aggregatedBy": {
+            "type": "string",
+            "description": "The column by which the costs are aggregated.\n"
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "The date and time, in UTC, the report was created. ISO 8601 Formatted.\n"
+          },
+          "dateBucket": {
+            "type": "string",
+            "description": "The date bucket of the KubernetesEfficiencyReport.\n"
+          },
+          "dateInterval": {
+            "type": "string",
+            "description": "The date interval of the KubernetesEfficiencyReport. Incompatible with 'start*date' and 'end*date' parameters. Defaults to 'this*month' if start*date and end_date are not provided.\n"
+          },
+          "default": {
+            "type": "boolean",
+            "description": "Indicates whether the KubernetesEfficiencyReport is the default report.\n"
+          },
+          "endDate": {
+            "type": "string",
+            "description": "The end date of the KubernetesEfficiencyReport. ISO 8601 Formatted. Incompatible with 'date_interval' parameter.\n"
+          },
+          "filter": {
+            "type": "string",
+            "description": "The filter query language to apply to the KubernetesEfficiencyReport. Additional documentation available at https://docs.vantage.sh/vql.\n"
+          },
+          "groupings": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Grouping values for aggregating costs on the KubernetesEfficiencyReport. Valid groupings: cluster*id, namespace, labeled, category, label, label:\\n\\n*name\u003e.\n"
+          },
+          "startDate": {
+            "type": "string",
+            "description": "The start date of the KubernetesEfficiencyReport. ISO 8601 Formatted. Incompatible with 'date_interval' parameter.\n"
+          },
+          "title": {
+            "type": "string",
+            "description": "The title of the KubernetesEfficiencyReport.\n"
+          },
+          "token": {
+            "type": "string",
+            "description": "The token of the report\n"
+          },
+          "userToken": {
+            "type": "string",
+            "description": "The token for the User who created this KubernetesEfficiencyReport.\n"
+          },
+          "workspaceToken": {
+            "type": "string",
+            "description": "The Workspace in which the KubernetesEfficiencyReport will be created.\n"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "vantage:index/managedAccount:ManagedAccount": {
+      "properties": {
+        "accessCredentialTokens": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Access Credential (aka Integrations) tokens to assign to the Managed Account.\n"
+        },
+        "billingRuleTokens": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Billing Rule tokens to assign to the Managed Account.\n"
+        },
+        "contactEmail": {
+          "type": "string",
+          "description": "The contact email address for the Managed Account.\n"
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the Managed Account.\n"
+        },
+        "parentAccountToken": {
+          "type": "string",
+          "description": "The token for the parent Account.\n"
+        },
+        "token": {
+          "type": "string",
+          "description": "The token of the managed account\n"
+        }
+      },
+      "type": "object",
+      "required": [
+        "accessCredentialTokens",
+        "billingRuleTokens",
+        "contactEmail",
+        "name",
+        "parentAccountToken",
+        "token"
+      ],
+      "inputProperties": {
+        "accessCredentialTokens": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Access Credential (aka Integrations) tokens to assign to the Managed Account.\n"
+        },
+        "billingRuleTokens": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Billing Rule tokens to assign to the Managed Account.\n"
+        },
+        "contactEmail": {
+          "type": "string",
+          "description": "The contact email address for the Managed Account.\n"
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the Managed Account.\n"
+        }
+      },
+      "requiredInputs": [
+        "contactEmail"
+      ],
+      "stateInputs": {
+        "description": "Input properties used for looking up and filtering ManagedAccount resources.\n",
+        "properties": {
+          "accessCredentialTokens": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Access Credential (aka Integrations) tokens to assign to the Managed Account.\n"
+          },
+          "billingRuleTokens": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Billing Rule tokens to assign to the Managed Account.\n"
+          },
+          "contactEmail": {
+            "type": "string",
+            "description": "The contact email address for the Managed Account.\n"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the Managed Account.\n"
+          },
+          "parentAccountToken": {
+            "type": "string",
+            "description": "The token for the parent Account.\n"
+          },
+          "token": {
+            "type": "string",
+            "description": "The token of the managed account\n"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "vantage:index/networkFlowReport:NetworkFlowReport": {
+      "properties": {
+        "createdAt": {
+          "type": "string",
+          "description": "The date and time, in UTC, the report was created. ISO 8601 Formatted.\n"
+        },
+        "createdByToken": {
+          "type": "string",
+          "description": "The token for the User or Team that created this NetworkFlowReport.\n"
+        },
+        "dateInterval": {
+          "type": "string",
+          "description": "The date interval of the NetworkFlowReport. Unless 'custom' is used, this is incompatible with 'start*date' and 'end*date' parameters. Defaults to 'last*7*days'.\n"
+        },
+        "default": {
+          "type": "boolean",
+          "description": "Indicates whether the NetworkFlowReport is the default report.\n"
+        },
+        "endDate": {
+          "type": "string",
+          "description": "The end date of the NetworkFlowReport. YYYY-MM-DD formatted. Incompatible with 'date_interval' parameter.\n"
+        },
+        "filter": {
+          "type": "string",
+          "description": "The filter query language to apply to the NetworkFlowReport. Additional documentation available at https://docs.vantage.sh/vql.\n"
+        },
+        "flowDirection": {
+          "type": "string",
+          "description": "The flow direction of the NetworkFlowReport.\n"
+        },
+        "flowWeight": {
+          "type": "string",
+          "description": "The dimension by which the logs in the report are sorted. Defaults to costs.\n"
+        },
+        "groupings": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Grouping values for aggregating data on the NetworkFlowReport. Valid groupings: account*id, az*id, dstaddr, dsthostname, flow*direction, interface*id, instance*id, peer*resource*uuid, peer*account*id, peer*vpc*id, peer*region, peer*az*id, peer*subnet*id, peer*interface*id, peer*instance*id, region, resource*uuid, srcaddr, srchostname, subnet*id, traffic*category, traffic*path, vpc_id.\n"
+        },
+        "startDate": {
+          "type": "string",
+          "description": "The start date of the NetworkFlowReport. YYYY-MM-DD formatted. Incompatible with 'date_interval' parameter.\n"
+        },
+        "title": {
+          "type": "string",
+          "description": "The title of the NetworkFlowReport.\n"
+        },
+        "token": {
+          "type": "string",
+          "description": "The token of the report\n"
+        },
+        "workspaceToken": {
+          "type": "string",
+          "description": "The Workspace in which the NetworkFlowReport will be created.\n"
+        }
+      },
+      "type": "object",
+      "required": [
+        "createdAt",
+        "createdByToken",
+        "dateInterval",
+        "default",
+        "endDate",
+        "filter",
+        "flowDirection",
+        "flowWeight",
+        "groupings",
+        "startDate",
+        "title",
+        "token",
+        "workspaceToken"
+      ],
+      "inputProperties": {
+        "dateInterval": {
+          "type": "string",
+          "description": "The date interval of the NetworkFlowReport. Unless 'custom' is used, this is incompatible with 'start*date' and 'end*date' parameters. Defaults to 'last*7*days'.\n"
+        },
+        "endDate": {
+          "type": "string",
+          "description": "The end date of the NetworkFlowReport. YYYY-MM-DD formatted. Incompatible with 'date_interval' parameter.\n"
+        },
+        "filter": {
+          "type": "string",
+          "description": "The filter query language to apply to the NetworkFlowReport. Additional documentation available at https://docs.vantage.sh/vql.\n"
+        },
+        "flowDirection": {
+          "type": "string",
+          "description": "The flow direction of the NetworkFlowReport.\n"
+        },
+        "flowWeight": {
+          "type": "string",
+          "description": "The dimension by which the logs in the report are sorted. Defaults to costs.\n"
+        },
+        "groupings": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Grouping values for aggregating data on the NetworkFlowReport. Valid groupings: account*id, az*id, dstaddr, dsthostname, flow*direction, interface*id, instance*id, peer*resource*uuid, peer*account*id, peer*vpc*id, peer*region, peer*az*id, peer*subnet*id, peer*interface*id, peer*instance*id, region, resource*uuid, srcaddr, srchostname, subnet*id, traffic*category, traffic*path, vpc_id.\n"
+        },
+        "startDate": {
+          "type": "string",
+          "description": "The start date of the NetworkFlowReport. YYYY-MM-DD formatted. Incompatible with 'date_interval' parameter.\n"
+        },
+        "title": {
+          "type": "string",
+          "description": "The title of the NetworkFlowReport.\n"
+        },
+        "workspaceToken": {
+          "type": "string",
+          "description": "The Workspace in which the NetworkFlowReport will be created.\n"
+        }
+      },
+      "requiredInputs": [
+        "title",
+        "workspaceToken"
+      ],
+      "stateInputs": {
+        "description": "Input properties used for looking up and filtering NetworkFlowReport resources.\n",
+        "properties": {
+          "createdAt": {
+            "type": "string",
+            "description": "The date and time, in UTC, the report was created. ISO 8601 Formatted.\n"
+          },
+          "createdByToken": {
+            "type": "string",
+            "description": "The token for the User or Team that created this NetworkFlowReport.\n"
+          },
+          "dateInterval": {
+            "type": "string",
+            "description": "The date interval of the NetworkFlowReport. Unless 'custom' is used, this is incompatible with 'start*date' and 'end*date' parameters. Defaults to 'last*7*days'.\n"
+          },
+          "default": {
+            "type": "boolean",
+            "description": "Indicates whether the NetworkFlowReport is the default report.\n"
+          },
+          "endDate": {
+            "type": "string",
+            "description": "The end date of the NetworkFlowReport. YYYY-MM-DD formatted. Incompatible with 'date_interval' parameter.\n"
+          },
+          "filter": {
+            "type": "string",
+            "description": "The filter query language to apply to the NetworkFlowReport. Additional documentation available at https://docs.vantage.sh/vql.\n"
+          },
+          "flowDirection": {
+            "type": "string",
+            "description": "The flow direction of the NetworkFlowReport.\n"
+          },
+          "flowWeight": {
+            "type": "string",
+            "description": "The dimension by which the logs in the report are sorted. Defaults to costs.\n"
+          },
+          "groupings": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Grouping values for aggregating data on the NetworkFlowReport. Valid groupings: account*id, az*id, dstaddr, dsthostname, flow*direction, interface*id, instance*id, peer*resource*uuid, peer*account*id, peer*vpc*id, peer*region, peer*az*id, peer*subnet*id, peer*interface*id, peer*instance*id, region, resource*uuid, srcaddr, srchostname, subnet*id, traffic*category, traffic*path, vpc_id.\n"
+          },
+          "startDate": {
+            "type": "string",
+            "description": "The start date of the NetworkFlowReport. YYYY-MM-DD formatted. Incompatible with 'date_interval' parameter.\n"
+          },
+          "title": {
+            "type": "string",
+            "description": "The title of the NetworkFlowReport.\n"
+          },
+          "token": {
+            "type": "string",
+            "description": "The token of the report\n"
+          },
+          "workspaceToken": {
+            "type": "string",
+            "description": "The Workspace in which the NetworkFlowReport will be created.\n"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "vantage:index/reportNotification:ReportNotification": {
+      "description": "Manages a Report Notification.\n\n## Example Usage\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vantage from \"@pulumi/vantage\";\n\nconst testNotif = new vantage.ReportNotification(\"testNotif\", {\n    costReportToken: vantage_cost_report.demo_report.token,\n    title: \"Test Notification\",\n    userTokens: [\n        \"usr_36b848747e1683bc\",\n        \"usr_899b013c355547db\",\n    ],\n    frequency: \"daily\",\n    change: \"dollars\",\n    workspaceToken: \"wrkspc_47c3254c790e9351\",\n});\n```\n```python\nimport pulumi\nimport pulumi_vantage as vantage\n\ntest_notif = vantage.ReportNotification(\"testNotif\",\n    cost_report_token=vantage_cost_report[\"demo_report\"][\"token\"],\n    title=\"Test Notification\",\n    user_tokens=[\n        \"usr_36b848747e1683bc\",\n        \"usr_899b013c355547db\",\n    ],\n    frequency=\"daily\",\n    change=\"dollars\",\n    workspace_token=\"wrkspc_47c3254c790e9351\")\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vantage = Pulumi.Vantage;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var testNotif = new Vantage.ReportNotification(\"testNotif\", new()\n    {\n        CostReportToken = vantage_cost_report.Demo_report.Token,\n        Title = \"Test Notification\",\n        UserTokens = new[]\n        {\n            \"usr_36b848747e1683bc\",\n            \"usr_899b013c355547db\",\n        },\n        Frequency = \"daily\",\n        Change = \"dollars\",\n        WorkspaceToken = \"wrkspc_47c3254c790e9351\",\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi-terraform-provider/sdks/go/vantage/vantage\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vantage.NewReportNotification(ctx, \"testNotif\", \u0026vantage.ReportNotificationArgs{\n\t\t\tCostReportToken: pulumi.Any(vantage_cost_report.Demo_report.Token),\n\t\t\tTitle:           pulumi.String(\"Test Notification\"),\n\t\t\tUserTokens: pulumi.StringArray{\n\t\t\t\tpulumi.String(\"usr_36b848747e1683bc\"),\n\t\t\t\tpulumi.String(\"usr_899b013c355547db\"),\n\t\t\t},\n\t\t\tFrequency:      pulumi.String(\"daily\"),\n\t\t\tChange:         pulumi.String(\"dollars\"),\n\t\t\tWorkspaceToken: pulumi.String(\"wrkspc_47c3254c790e9351\"),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vantage.ReportNotification;\nimport com.pulumi.vantage.ReportNotificationArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var testNotif = new ReportNotification(\"testNotif\", ReportNotificationArgs.builder()\n            .costReportToken(vantage_cost_report.demo_report().token())\n            .title(\"Test Notification\")\n            .userTokens(            \n                \"usr_36b848747e1683bc\",\n                \"usr_899b013c355547db\")\n            .frequency(\"daily\")\n            .change(\"dollars\")\n            .workspaceToken(\"wrkspc_47c3254c790e9351\")\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  testNotif:\n    type: vantage:ReportNotification\n    properties:\n      costReportToken: ${vantage_cost_report.demo_report.token}\n      title: Test Notification\n      userTokens:\n        - usr_36b848747e1683bc\n        - usr_899b013c355547db\n      frequency: daily\n      change: dollars\n      workspaceToken: wrkspc_47c3254c790e9351\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
+      "properties": {
+        "change": {
+          "type": "string",
+          "description": "The kind of change sent ReportNotification. One of percentage/dollars\n"
+        },
+        "costReportToken": {
+          "type": "string",
+          "description": "Token for the cost report to be used in the notification\n"
+        },
+        "frequency": {
+          "type": "string",
+          "description": "The frequency at which the ReportNotification is sent. One of daily/weekly/monthly\n"
+        },
+        "title": {
+          "type": "string",
+          "description": "Title of the report notification\n"
+        },
+        "token": {
+          "type": "string",
+          "description": "Unique report notification identifier\n"
+        },
+        "userTokens": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Tokens for the users to be notified\n"
+        },
+        "workspaceToken": {
+          "type": "string",
+          "description": "Token for the workspace the report notification is added toe notification\n"
+        }
+      },
+      "type": "object",
+      "required": [
+        "change",
+        "costReportToken",
+        "frequency",
+        "title",
+        "token",
+        "userTokens"
+      ],
+      "inputProperties": {
+        "change": {
+          "type": "string",
+          "description": "The kind of change sent ReportNotification. One of percentage/dollars\n"
+        },
+        "costReportToken": {
+          "type": "string",
+          "description": "Token for the cost report to be used in the notification\n"
+        },
+        "frequency": {
+          "type": "string",
+          "description": "The frequency at which the ReportNotification is sent. One of daily/weekly/monthly\n"
+        },
+        "title": {
+          "type": "string",
+          "description": "Title of the report notification\n"
+        },
+        "userTokens": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Tokens for the users to be notified\n"
+        },
+        "workspaceToken": {
+          "type": "string",
+          "description": "Token for the workspace the report notification is added toe notification\n"
+        }
+      },
+      "requiredInputs": [
+        "change",
+        "costReportToken",
+        "frequency",
+        "title",
+        "userTokens"
+      ],
+      "stateInputs": {
+        "description": "Input properties used for looking up and filtering ReportNotification resources.\n",
+        "properties": {
+          "change": {
+            "type": "string",
+            "description": "The kind of change sent ReportNotification. One of percentage/dollars\n"
+          },
+          "costReportToken": {
+            "type": "string",
+            "description": "Token for the cost report to be used in the notification\n"
+          },
+          "frequency": {
+            "type": "string",
+            "description": "The frequency at which the ReportNotification is sent. One of daily/weekly/monthly\n"
+          },
+          "title": {
+            "type": "string",
+            "description": "Title of the report notification\n"
+          },
+          "token": {
+            "type": "string",
+            "description": "Unique report notification identifier\n"
+          },
+          "userTokens": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Tokens for the users to be notified\n"
+          },
+          "workspaceToken": {
+            "type": "string",
+            "description": "Token for the workspace the report notification is added toe notification\n"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "vantage:index/resourceReport:ResourceReport": {
+      "description": "## Example Usage\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vantage from \"@pulumi/vantage\";\n\nconst demoResourceReport = new vantage.ResourceReport(\"demoResourceReport\", {\n    filter: \"resources.provider = 'aws' AND resources.type = 'aws_cloudtrail'\",\n    title: \"Demo Resource Report\",\n    workspaceToken: \"wrkspc_47c3254c790e9351\",\n});\n```\n```python\nimport pulumi\nimport pulumi_vantage as vantage\n\ndemo_resource_report = vantage.ResourceReport(\"demoResourceReport\",\n    filter=\"resources.provider = 'aws' AND resources.type = 'aws_cloudtrail'\",\n    title=\"Demo Resource Report\",\n    workspace_token=\"wrkspc_47c3254c790e9351\")\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vantage = Pulumi.Vantage;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var demoResourceReport = new Vantage.ResourceReport(\"demoResourceReport\", new()\n    {\n        Filter = \"resources.provider = 'aws' AND resources.type = 'aws_cloudtrail'\",\n        Title = \"Demo Resource Report\",\n        WorkspaceToken = \"wrkspc_47c3254c790e9351\",\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi-terraform-provider/sdks/go/vantage/vantage\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vantage.NewResourceReport(ctx, \"demoResourceReport\", \u0026vantage.ResourceReportArgs{\n\t\t\tFilter:         pulumi.String(\"resources.provider = 'aws' AND resources.type = 'aws_cloudtrail'\"),\n\t\t\tTitle:          pulumi.String(\"Demo Resource Report\"),\n\t\t\tWorkspaceToken: pulumi.String(\"wrkspc_47c3254c790e9351\"),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vantage.ResourceReport;\nimport com.pulumi.vantage.ResourceReportArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var demoResourceReport = new ResourceReport(\"demoResourceReport\", ResourceReportArgs.builder()\n            .filter(\"resources.provider = 'aws' AND resources.type = 'aws_cloudtrail'\")\n            .title(\"Demo Resource Report\")\n            .workspaceToken(\"wrkspc_47c3254c790e9351\")\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  demoResourceReport:\n    type: vantage:ResourceReport\n    properties:\n      filter: resources.provider = 'aws' AND resources.type = 'aws_cloudtrail'\n      title: Demo Resource Report\n      workspaceToken: wrkspc_47c3254c790e9351\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
+      "properties": {
+        "createdAt": {
+          "type": "string",
+          "description": "The date and time, in UTC, the report was created. ISO 8601 Formatted.\n"
+        },
+        "createdByToken": {
+          "type": "string",
+          "description": "The token for the User or Team who created this ResourceReport.\n"
+        },
+        "filter": {
+          "type": "string",
+          "description": "The VQL filter for the ResourceReport.\n"
+        },
+        "title": {
+          "type": "string",
+          "description": "The title of the ResourceReport.\n"
+        },
+        "token": {
+          "type": "string",
+          "description": "The token of the report\n"
+        },
+        "userToken": {
+          "type": "string",
+          "description": "The token for the User who created this ResourceReport.\n"
+        },
+        "workspaceToken": {
+          "type": "string",
+          "description": "The token of the Workspace to add the ResourceReport to.\n"
+        }
+      },
+      "type": "object",
+      "required": [
+        "createdAt",
+        "createdByToken",
+        "filter",
+        "title",
+        "token",
+        "userToken",
+        "workspaceToken"
+      ],
+      "inputProperties": {
+        "filter": {
+          "type": "string",
+          "description": "The VQL filter for the ResourceReport.\n"
+        },
+        "title": {
+          "type": "string",
+          "description": "The title of the ResourceReport.\n"
+        },
+        "workspaceToken": {
+          "type": "string",
+          "description": "The token of the Workspace to add the ResourceReport to.\n"
+        }
+      },
+      "requiredInputs": [
+        "workspaceToken"
+      ],
+      "stateInputs": {
+        "description": "Input properties used for looking up and filtering ResourceReport resources.\n",
+        "properties": {
+          "createdAt": {
+            "type": "string",
+            "description": "The date and time, in UTC, the report was created. ISO 8601 Formatted.\n"
+          },
+          "createdByToken": {
+            "type": "string",
+            "description": "The token for the User or Team who created this ResourceReport.\n"
+          },
+          "filter": {
+            "type": "string",
+            "description": "The VQL filter for the ResourceReport.\n"
+          },
+          "title": {
+            "type": "string",
+            "description": "The title of the ResourceReport.\n"
+          },
+          "token": {
+            "type": "string",
+            "description": "The token of the report\n"
+          },
+          "userToken": {
+            "type": "string",
+            "description": "The token for the User who created this ResourceReport.\n"
+          },
+          "workspaceToken": {
+            "type": "string",
+            "description": "The token of the Workspace to add the ResourceReport to.\n"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "vantage:index/savedFilter:SavedFilter": {
+      "description": "Manages a SavedFilter.\n\n## Example Usage\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vantage from \"@pulumi/vantage\";\n\nconst demoFilter = new vantage.SavedFilter(\"demoFilter\", {\n    filter: \"(costs.provider = 'aws')\",\n    title: \"Demo Saved Filter\",\n});\n```\n```python\nimport pulumi\nimport pulumi_vantage as vantage\n\ndemo_filter = vantage.SavedFilter(\"demoFilter\",\n    filter=\"(costs.provider = 'aws')\",\n    title=\"Demo Saved Filter\")\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vantage = Pulumi.Vantage;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var demoFilter = new Vantage.SavedFilter(\"demoFilter\", new()\n    {\n        Filter = \"(costs.provider = 'aws')\",\n        Title = \"Demo Saved Filter\",\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi-terraform-provider/sdks/go/vantage/vantage\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vantage.NewSavedFilter(ctx, \"demoFilter\", \u0026vantage.SavedFilterArgs{\n\t\t\tFilter: pulumi.String(\"(costs.provider = 'aws')\"),\n\t\t\tTitle:  pulumi.String(\"Demo Saved Filter\"),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vantage.SavedFilter;\nimport com.pulumi.vantage.SavedFilterArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var demoFilter = new SavedFilter(\"demoFilter\", SavedFilterArgs.builder()\n            .filter(\"(costs.provider = 'aws')\")\n            .title(\"Demo Saved Filter\")\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  demoFilter:\n    type: vantage:SavedFilter\n    properties:\n      filter: (costs.provider = 'aws')\n      title: Demo Saved Filter\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
+      "properties": {
+        "filter": {
+          "type": "string",
+          "description": "VQL Query used for this saved filter.\n"
+        },
+        "title": {
+          "type": "string",
+          "description": "Title of the Saved Filter\n"
+        },
+        "token": {
+          "type": "string",
+          "description": "Unique saved filter identifier\n"
+        },
+        "workspaceToken": {
+          "type": "string",
+          "description": "Workspace token to add the saved filter into.\n"
+        }
+      },
+      "type": "object",
+      "required": [
+        "filter",
+        "title",
+        "token",
+        "workspaceToken"
+      ],
+      "inputProperties": {
+        "filter": {
+          "type": "string",
+          "description": "VQL Query used for this saved filter.\n"
+        },
+        "title": {
+          "type": "string",
+          "description": "Title of the Saved Filter\n"
+        },
+        "workspaceToken": {
+          "type": "string",
+          "description": "Workspace token to add the saved filter into.\n"
+        }
+      },
+      "requiredInputs": [
+        "title",
+        "workspaceToken"
+      ],
+      "stateInputs": {
+        "description": "Input properties used for looking up and filtering SavedFilter resources.\n",
+        "properties": {
+          "filter": {
+            "type": "string",
+            "description": "VQL Query used for this saved filter.\n"
+          },
+          "title": {
+            "type": "string",
+            "description": "Title of the Saved Filter\n"
+          },
+          "token": {
+            "type": "string",
+            "description": "Unique saved filter identifier\n"
+          },
+          "workspaceToken": {
+            "type": "string",
+            "description": "Workspace token to add the saved filter into.\n"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "vantage:index/segment:Segment": {
+      "description": "Manages a Segment.\n\n## Example Usage\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vantage from \"@pulumi/vantage\";\n\nconst demoSegment = new vantage.Segment(\"demoSegment\", {\n    description: \"This is still a demo segment\",\n    filter: \"(costs.provider = 'aws' AND tags.name = NULL)\",\n    priority: 50,\n    title: \"Demo Segment\",\n    trackUnallocated: false,\n    workspaceToken: \"wrkspc_47c3254c790e9351\",\n});\n```\n```python\nimport pulumi\nimport pulumi_vantage as vantage\n\ndemo_segment = vantage.Segment(\"demoSegment\",\n    description=\"This is still a demo segment\",\n    filter=\"(costs.provider = 'aws' AND tags.name = NULL)\",\n    priority=50,\n    title=\"Demo Segment\",\n    track_unallocated=False,\n    workspace_token=\"wrkspc_47c3254c790e9351\")\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vantage = Pulumi.Vantage;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var demoSegment = new Vantage.Segment(\"demoSegment\", new()\n    {\n        Description = \"This is still a demo segment\",\n        Filter = \"(costs.provider = 'aws' AND tags.name = NULL)\",\n        Priority = 50,\n        Title = \"Demo Segment\",\n        TrackUnallocated = false,\n        WorkspaceToken = \"wrkspc_47c3254c790e9351\",\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi-terraform-provider/sdks/go/vantage/vantage\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vantage.NewSegment(ctx, \"demoSegment\", \u0026vantage.SegmentArgs{\n\t\t\tDescription:      pulumi.String(\"This is still a demo segment\"),\n\t\t\tFilter:           pulumi.String(\"(costs.provider = 'aws' AND tags.name = NULL)\"),\n\t\t\tPriority:         pulumi.Float64(50),\n\t\t\tTitle:            pulumi.String(\"Demo Segment\"),\n\t\t\tTrackUnallocated: pulumi.Bool(false),\n\t\t\tWorkspaceToken:   pulumi.String(\"wrkspc_47c3254c790e9351\"),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vantage.Segment;\nimport com.pulumi.vantage.SegmentArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var demoSegment = new Segment(\"demoSegment\", SegmentArgs.builder()\n            .description(\"This is still a demo segment\")\n            .filter(\"(costs.provider = 'aws' AND tags.name = NULL)\")\n            .priority(50)\n            .title(\"Demo Segment\")\n            .trackUnallocated(false)\n            .workspaceToken(\"wrkspc_47c3254c790e9351\")\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  demoSegment:\n    type: vantage:Segment\n    properties:\n      description: This is still a demo segment\n      filter: (costs.provider = 'aws' AND tags.name = NULL)\n      priority: 50\n      title: Demo Segment\n      trackUnallocated: false\n      # either provide workspace_token or parent_segment_token\n      workspaceToken: wrkspc_47c3254c790e9351\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
+      "properties": {
+        "description": {
+          "type": "string",
+          "description": "The description of the Segment.\n"
+        },
+        "filter": {
+          "type": "string",
+          "description": "The filter query language to apply to the Segment. Additional documentation available at https://docs.vantage.sh/vql.\n"
+        },
+        "parentSegmentToken": {
+          "type": "string",
+          "description": "The token of the parent Segment this new Segment belongs to. Determines the Workspace the segment is assigned to.\n"
+        },
+        "priority": {
+          "type": "number",
+          "description": "The priority of the Segment.\n"
+        },
+        "reportToken": {
+          "type": "string",
+          "description": "Token of the report for this segment.\n"
+        },
+        "title": {
+          "type": "string",
+          "description": "The title of the Segment.\n"
+        },
+        "token": {
+          "type": "string",
+          "description": "Unique segment identifier\n"
+        },
+        "trackUnallocated": {
+          "type": "boolean",
+          "description": "Whether or not to track unallocated resources in this Segment.\n"
+        },
+        "workspaceToken": {
+          "type": "string",
+          "description": "Workspace token to add the segment to.\n"
+        }
+      },
+      "type": "object",
+      "required": [
+        "filter",
+        "parentSegmentToken",
+        "priority",
+        "reportToken",
+        "title",
+        "token",
+        "trackUnallocated",
+        "workspaceToken"
+      ],
+      "inputProperties": {
+        "description": {
+          "type": "string",
+          "description": "The description of the Segment.\n"
+        },
+        "filter": {
+          "type": "string",
+          "description": "The filter query language to apply to the Segment. Additional documentation available at https://docs.vantage.sh/vql.\n"
+        },
+        "parentSegmentToken": {
+          "type": "string",
+          "description": "The token of the parent Segment this new Segment belongs to. Determines the Workspace the segment is assigned to.\n"
+        },
+        "priority": {
+          "type": "number",
+          "description": "The priority of the Segment.\n"
+        },
+        "title": {
+          "type": "string",
+          "description": "The title of the Segment.\n"
+        },
+        "trackUnallocated": {
+          "type": "boolean",
+          "description": "Whether or not to track unallocated resources in this Segment.\n"
+        },
+        "workspaceToken": {
+          "type": "string",
+          "description": "Workspace token to add the segment to.\n"
+        }
+      },
+      "requiredInputs": [
+        "title"
+      ],
+      "stateInputs": {
+        "description": "Input properties used for looking up and filtering Segment resources.\n",
+        "properties": {
+          "description": {
+            "type": "string",
+            "description": "The description of the Segment.\n"
+          },
+          "filter": {
+            "type": "string",
+            "description": "The filter query language to apply to the Segment. Additional documentation available at https://docs.vantage.sh/vql.\n"
+          },
+          "parentSegmentToken": {
+            "type": "string",
+            "description": "The token of the parent Segment this new Segment belongs to. Determines the Workspace the segment is assigned to.\n"
+          },
+          "priority": {
+            "type": "number",
+            "description": "The priority of the Segment.\n"
+          },
+          "reportToken": {
+            "type": "string",
+            "description": "Token of the report for this segment.\n"
+          },
+          "title": {
+            "type": "string",
+            "description": "The title of the Segment.\n"
+          },
+          "token": {
+            "type": "string",
+            "description": "Unique segment identifier\n"
+          },
+          "trackUnallocated": {
+            "type": "boolean",
+            "description": "Whether or not to track unallocated resources in this Segment.\n"
+          },
+          "workspaceToken": {
+            "type": "string",
+            "description": "Workspace token to add the segment to.\n"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "vantage:index/team:Team": {
+      "description": "Manages a Team.\n\n## Example Usage\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vantage from \"@pulumi/vantage\";\n\nconst demoTeam = new vantage.Team(\"demoTeam\", {\n    description: \"Demo Team Description\",\n    userEmails: [\"support@vantage.sh\"],\n    workspaceTokens: [\"wrkspc_47c3254c790e9351\"],\n});\n```\n```python\nimport pulumi\nimport pulumi_vantage as vantage\n\ndemo_team = vantage.Team(\"demoTeam\",\n    description=\"Demo Team Description\",\n    user_emails=[\"support@vantage.sh\"],\n    workspace_tokens=[\"wrkspc_47c3254c790e9351\"])\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vantage = Pulumi.Vantage;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var demoTeam = new Vantage.Team(\"demoTeam\", new()\n    {\n        Description = \"Demo Team Description\",\n        UserEmails = new[]\n        {\n            \"support@vantage.sh\",\n        },\n        WorkspaceTokens = new[]\n        {\n            \"wrkspc_47c3254c790e9351\",\n        },\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi-terraform-provider/sdks/go/vantage/vantage\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vantage.NewTeam(ctx, \"demoTeam\", \u0026vantage.TeamArgs{\n\t\t\tDescription: pulumi.String(\"Demo Team Description\"),\n\t\t\tUserEmails: pulumi.StringArray{\n\t\t\t\tpulumi.String(\"support@vantage.sh\"),\n\t\t\t},\n\t\t\tWorkspaceTokens: pulumi.StringArray{\n\t\t\t\tpulumi.String(\"wrkspc_47c3254c790e9351\"),\n\t\t\t},\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vantage.Team;\nimport com.pulumi.vantage.TeamArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var demoTeam = new Team(\"demoTeam\", TeamArgs.builder()\n            .description(\"Demo Team Description\")\n            .userEmails(\"support@vantage.sh\")\n            .workspaceTokens(\"wrkspc_47c3254c790e9351\")\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  demoTeam:\n    type: vantage:Team\n    properties:\n      description: Demo Team Description\n      userEmails:\n        - support@vantage.sh\n      workspaceTokens:\n        - wrkspc_47c3254c790e9351\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
+      "properties": {
+        "description": {
+          "type": "string",
+          "description": "Description of the team.\n"
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the team.\n"
+        },
+        "token": {
+          "type": "string",
+          "description": "Unique team identifier.\n"
+        },
+        "userEmails": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "User emails.\n"
+        },
+        "userTokens": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "User tokens.\n"
+        },
+        "workspaceTokens": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Workspace tokens to add the team to.\n"
+        }
+      },
+      "type": "object",
+      "required": [
+        "description",
+        "name",
+        "token",
+        "userEmails",
+        "userTokens",
+        "workspaceTokens"
+      ],
+      "inputProperties": {
+        "description": {
+          "type": "string",
+          "description": "Description of the team.\n"
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the team.\n"
+        },
+        "userEmails": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "User emails.\n"
+        },
+        "userTokens": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "User tokens.\n"
+        },
+        "workspaceTokens": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Workspace tokens to add the team to.\n"
+        }
+      },
+      "stateInputs": {
+        "description": "Input properties used for looking up and filtering Team resources.\n",
+        "properties": {
+          "description": {
+            "type": "string",
+            "description": "Description of the team.\n"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the team.\n"
+          },
+          "token": {
+            "type": "string",
+            "description": "Unique team identifier.\n"
+          },
+          "userEmails": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "User emails.\n"
+          },
+          "userTokens": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "User tokens.\n"
+          },
+          "workspaceTokens": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Workspace tokens to add the team to.\n"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "vantage:index/virtualTagConfig:VirtualTagConfig": {
+      "description": "Manages a Virtual Tag Config.\n\n## Example Usage\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vantage from \"@pulumi/vantage\";\n\nconst demo = vantage.getVirtualTagConfigs({});\nconst demoVirtualTagConfig = new vantage.VirtualTagConfig(\"demoVirtualTagConfig\", {\n    backfillUntil: \"2024-01-01\",\n    key: \"Demo Tag\",\n    overridable: true,\n    values: [\n        {\n            filter: \"(costs.provider = 'aws' AND costs.region = 'us-east-1') OR (costs.provider = 'gcp' AND costs.region = 'us-central1')\",\n            name: \"Demo Value 0\",\n        },\n        {\n            costMetric: {\n                aggregation: {\n                    tag: \"environment\",\n                },\n                filter: \"(costs.provider = 'aws' AND costs.service = 'AmazonECS')\",\n            },\n            filter: \"(costs.provider = 'aws' AND costs.service = 'AwsApiGateway')\",\n        },\n    ],\n});\n```\n```python\nimport pulumi\nimport pulumi_vantage as vantage\n\ndemo = vantage.get_virtual_tag_configs()\ndemo_virtual_tag_config = vantage.VirtualTagConfig(\"demoVirtualTagConfig\",\n    backfill_until=\"2024-01-01\",\n    key=\"Demo Tag\",\n    overridable=True,\n    values=[\n        {\n            \"filter\": \"(costs.provider = 'aws' AND costs.region = 'us-east-1') OR (costs.provider = 'gcp' AND costs.region = 'us-central1')\",\n            \"name\": \"Demo Value 0\",\n        },\n        {\n            \"cost_metric\": {\n                \"aggregation\": {\n                    \"tag\": \"environment\",\n                },\n                \"filter\": \"(costs.provider = 'aws' AND costs.service = 'AmazonECS')\",\n            },\n            \"filter\": \"(costs.provider = 'aws' AND costs.service = 'AwsApiGateway')\",\n        },\n    ])\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vantage = Pulumi.Vantage;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var demo = Vantage.GetVirtualTagConfigs.Invoke();\n\n    var demoVirtualTagConfig = new Vantage.VirtualTagConfig(\"demoVirtualTagConfig\", new()\n    {\n        BackfillUntil = \"2024-01-01\",\n        Key = \"Demo Tag\",\n        Overridable = true,\n        Values = new[]\n        {\n            new Vantage.Inputs.VirtualTagConfigValueArgs\n            {\n                Filter = \"(costs.provider = 'aws' AND costs.region = 'us-east-1') OR (costs.provider = 'gcp' AND costs.region = 'us-central1')\",\n                Name = \"Demo Value 0\",\n            },\n            new Vantage.Inputs.VirtualTagConfigValueArgs\n            {\n                CostMetric = new Vantage.Inputs.VirtualTagConfigValueCostMetricArgs\n                {\n                    Aggregation = new Vantage.Inputs.VirtualTagConfigValueCostMetricAggregationArgs\n                    {\n                        Tag = \"environment\",\n                    },\n                    Filter = \"(costs.provider = 'aws' AND costs.service = 'AmazonECS')\",\n                },\n                Filter = \"(costs.provider = 'aws' AND costs.service = 'AwsApiGateway')\",\n            },\n        },\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi-terraform-provider/sdks/go/vantage/vantage\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vantage.GetVirtualTagConfigs(ctx, map[string]interface{}{}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\t_, err = vantage.NewVirtualTagConfig(ctx, \"demoVirtualTagConfig\", \u0026vantage.VirtualTagConfigArgs{\n\t\t\tBackfillUntil: pulumi.String(\"2024-01-01\"),\n\t\t\tKey:           pulumi.String(\"Demo Tag\"),\n\t\t\tOverridable:   pulumi.Bool(true),\n\t\t\tValues: vantage.VirtualTagConfigValueArray{\n\t\t\t\t\u0026vantage.VirtualTagConfigValueArgs{\n\t\t\t\t\tFilter: pulumi.String(\"(costs.provider = 'aws' AND costs.region = 'us-east-1') OR (costs.provider = 'gcp' AND costs.region = 'us-central1')\"),\n\t\t\t\t\tName:   pulumi.String(\"Demo Value 0\"),\n\t\t\t\t},\n\t\t\t\t\u0026vantage.VirtualTagConfigValueArgs{\n\t\t\t\t\tCostMetric: \u0026vantage.VirtualTagConfigValueCostMetricArgs{\n\t\t\t\t\t\tAggregation: \u0026vantage.VirtualTagConfigValueCostMetricAggregationArgs{\n\t\t\t\t\t\t\tTag: pulumi.String(\"environment\"),\n\t\t\t\t\t\t},\n\t\t\t\t\t\tFilter: pulumi.String(\"(costs.provider = 'aws' AND costs.service = 'AmazonECS')\"),\n\t\t\t\t\t},\n\t\t\t\t\tFilter: pulumi.String(\"(costs.provider = 'aws' AND costs.service = 'AwsApiGateway')\"),\n\t\t\t\t},\n\t\t\t},\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vantage.VantageFunctions;\nimport com.pulumi.vantage.VirtualTagConfig;\nimport com.pulumi.vantage.VirtualTagConfigArgs;\nimport com.pulumi.vantage.inputs.VirtualTagConfigValueArgs;\nimport com.pulumi.vantage.inputs.VirtualTagConfigValueCostMetricArgs;\nimport com.pulumi.vantage.inputs.VirtualTagConfigValueCostMetricAggregationArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var demo = VantageFunctions.getVirtualTagConfigs();\n\n        var demoVirtualTagConfig = new VirtualTagConfig(\"demoVirtualTagConfig\", VirtualTagConfigArgs.builder()\n            .backfillUntil(\"2024-01-01\")\n            .key(\"Demo Tag\")\n            .overridable(true)\n            .values(            \n                VirtualTagConfigValueArgs.builder()\n                    .filter(\"(costs.provider = 'aws' AND costs.region = 'us-east-1') OR (costs.provider = 'gcp' AND costs.region = 'us-central1')\")\n                    .name(\"Demo Value 0\")\n                    .build(),\n                VirtualTagConfigValueArgs.builder()\n                    .costMetric(VirtualTagConfigValueCostMetricArgs.builder()\n                        .aggregation(VirtualTagConfigValueCostMetricAggregationArgs.builder()\n                            .tag(\"environment\")\n                            .build())\n                        .filter(\"(costs.provider = 'aws' AND costs.service = 'AmazonECS')\")\n                        .build())\n                    .filter(\"(costs.provider = 'aws' AND costs.service = 'AwsApiGateway')\")\n                    .build())\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  demoVirtualTagConfig:\n    type: vantage:VirtualTagConfig\n    properties:\n      backfillUntil: 2024-01-01\n      key: Demo Tag\n      overridable: true\n      values:\n        - filter: (costs.provider = 'aws' AND costs.region = 'us-east-1') OR (costs.provider = 'gcp' AND costs.region = 'us-central1')\n          name: Demo Value 0\n        - costMetric:\n            aggregation:\n              tag: environment\n            filter: (costs.provider = 'aws' AND costs.service = 'AmazonECS')\n          filter: (costs.provider = 'aws' AND costs.service = 'AwsApiGateway')\nvariables:\n  demo:\n    fn::invoke:\n      function: vantage:getVirtualTagConfigs\n      arguments: {}\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
+      "properties": {
+        "backfillUntil": {
+          "type": "string",
+          "description": "The earliest month VirtualTagConfig should be backfilled to.\n"
+        },
+        "createdByToken": {
+          "type": "string",
+          "description": "The token of the User who created the VirtualTagConfig.\n"
+        },
+        "key": {
+          "type": "string",
+          "description": "The key of the VirtualTagConfig.\n"
+        },
+        "overridable": {
+          "type": "boolean",
+          "description": "Whether the VirtualTagConfig can override a provider-supplied tag on a matching Cost.\n"
+        },
+        "token": {
+          "type": "string",
+          "description": "The token of the VirtualTagConfig.\n"
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "$ref": "#/types/vantage:index%2FVirtualTagConfigValue:VirtualTagConfigValue"
+          }
+        }
+      },
+      "type": "object",
+      "required": [
+        "backfillUntil",
+        "createdByToken",
+        "key",
+        "overridable",
+        "token",
+        "values"
+      ],
+      "inputProperties": {
+        "backfillUntil": {
+          "type": "string",
+          "description": "The earliest month VirtualTagConfig should be backfilled to.\n"
+        },
+        "key": {
+          "type": "string",
+          "description": "The key of the VirtualTagConfig.\n"
+        },
+        "overridable": {
+          "type": "boolean",
+          "description": "Whether the VirtualTagConfig can override a provider-supplied tag on a matching Cost.\n"
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "$ref": "#/types/vantage:index%2FVirtualTagConfigValue:VirtualTagConfigValue"
+          }
+        }
+      },
+      "requiredInputs": [
+        "backfillUntil",
+        "key",
+        "overridable"
+      ],
+      "stateInputs": {
+        "description": "Input properties used for looking up and filtering VirtualTagConfig resources.\n",
+        "properties": {
+          "backfillUntil": {
+            "type": "string",
+            "description": "The earliest month VirtualTagConfig should be backfilled to.\n"
+          },
+          "createdByToken": {
+            "type": "string",
+            "description": "The token of the User who created the VirtualTagConfig.\n"
+          },
+          "key": {
+            "type": "string",
+            "description": "The key of the VirtualTagConfig.\n"
+          },
+          "overridable": {
+            "type": "boolean",
+            "description": "Whether the VirtualTagConfig can override a provider-supplied tag on a matching Cost.\n"
+          },
+          "token": {
+            "type": "string",
+            "description": "The token of the VirtualTagConfig.\n"
+          },
+          "values": {
+            "type": "array",
+            "items": {
+              "$ref": "#/types/vantage:index%2FVirtualTagConfigValue:VirtualTagConfigValue"
+            }
+          }
+        },
+        "type": "object"
+      }
+    }
+  },
+  "functions": {
+    "vantage:index/getAccessGrants:getAccessGrants": {
+      "outputs": {
+        "description": "A collection of values returned by getAccessGrants.\n",
+        "properties": {
+          "accessGrants": {
+            "items": {
+              "$ref": "#/types/vantage:index%2FgetAccessGrantsAccessGrant:getAccessGrantsAccessGrant"
+            },
+            "type": "array"
+          },
+          "id": {
+            "description": "The provider-assigned unique ID for this managed resource.\n",
+            "type": "string"
+          }
+        },
+        "required": [
+          "accessGrants",
+          "id"
+        ],
+        "type": "object"
+      }
+    },
+    "vantage:index/getAnomalyNotifications:getAnomalyNotifications": {
+      "outputs": {
+        "description": "A collection of values returned by getAnomalyNotifications.\n",
+        "properties": {
+          "anomalyNotifications": {
+            "items": {
+              "$ref": "#/types/vantage:index%2FgetAnomalyNotificationsAnomalyNotification:getAnomalyNotificationsAnomalyNotification"
+            },
+            "type": "array"
+          },
+          "id": {
+            "description": "The provider-assigned unique ID for this managed resource.\n",
+            "type": "string"
+          }
+        },
+        "required": [
+          "anomalyNotifications",
+          "id"
+        ],
+        "type": "object"
+      }
+    },
+    "vantage:index/getAwsProviderInfo:getAwsProviderInfo": {
+      "outputs": {
+        "description": "A collection of values returned by getAwsProviderInfo.\n",
+        "properties": {
+          "additionalResourcesPolicy": {
+            "description": "The policy that allows Vantage to list and describe resources from your AWS account.\n",
+            "type": "string"
+          },
+          "autopilotPolicy": {
+            "description": "The policy that allows Vantage to manage autopilot.\n",
+            "type": "string"
+          },
+          "cloudwatchMetricsPolicy": {
+            "description": "The policy that allows Vantage to retrieve cloudwatch metrics from your AWS account.\n",
+            "type": "string"
+          },
+          "externalId": {
+            "description": "The Vantage external ID to authenticate your account.\n",
+            "secret": true,
+            "type": "string"
+          },
+          "iamRoleArn": {
+            "description": "The IAM role that Vantage assumes into your account.\n",
+            "type": "string"
+          },
+          "id": {
+            "description": "The provider-assigned unique ID for this managed resource.\n",
+            "type": "string"
+          },
+          "rootPolicy": {
+            "description": "The policy that allows Vantage to manage autopilot.\n",
+            "type": "string"
+          }
+        },
+        "required": [
+          "additionalResourcesPolicy",
+          "autopilotPolicy",
+          "cloudwatchMetricsPolicy",
+          "externalId",
+          "iamRoleArn",
+          "id",
+          "rootPolicy"
+        ],
+        "type": "object"
+      }
+    },
+    "vantage:index/getBillingRules:getBillingRules": {
+      "outputs": {
+        "description": "A collection of values returned by getBillingRules.\n",
+        "properties": {
+          "billingRules": {
+            "items": {
+              "$ref": "#/types/vantage:index%2FgetBillingRulesBillingRule:getBillingRulesBillingRule"
+            },
+            "type": "array"
+          },
+          "id": {
+            "description": "The provider-assigned unique ID for this managed resource.\n",
+            "type": "string"
+          }
+        },
+        "required": [
+          "billingRules",
+          "id"
+        ],
+        "type": "object"
+      }
+    },
+    "vantage:index/getBudgets:getBudgets": {
+      "outputs": {
+        "description": "A collection of values returned by getBudgets.\n",
+        "properties": {
+          "budgets": {
+            "items": {
+              "$ref": "#/types/vantage:index%2FgetBudgetsBudget:getBudgetsBudget"
+            },
+            "type": "array"
+          },
+          "id": {
+            "description": "The provider-assigned unique ID for this managed resource.\n",
+            "type": "string"
+          }
+        },
+        "required": [
+          "budgets",
+          "id"
+        ],
+        "type": "object"
+      }
+    },
+    "vantage:index/getBusinessMetrics:getBusinessMetrics": {
+      "outputs": {
+        "description": "A collection of values returned by getBusinessMetrics.\n",
+        "properties": {
+          "businessMetrics": {
+            "items": {
+              "$ref": "#/types/vantage:index%2FgetBusinessMetricsBusinessMetric:getBusinessMetricsBusinessMetric"
+            },
+            "type": "array"
+          },
+          "id": {
+            "description": "The provider-assigned unique ID for this managed resource.\n",
+            "type": "string"
+          }
+        },
+        "required": [
+          "businessMetrics",
+          "id"
+        ],
+        "type": "object"
+      }
+    },
+    "vantage:index/getCostReports:getCostReports": {
+      "outputs": {
+        "description": "A collection of values returned by getCostReports.\n",
+        "properties": {
+          "costReports": {
+            "items": {
+              "$ref": "#/types/vantage:index%2FgetCostReportsCostReport:getCostReportsCostReport"
+            },
+            "type": "array"
+          },
+          "id": {
+            "description": "The provider-assigned unique ID for this managed resource.\n",
+            "type": "string"
+          }
+        },
+        "required": [
+          "costReports",
+          "id"
+        ],
+        "type": "object"
+      }
+    },
+    "vantage:index/getDashboards:getDashboards": {
+      "outputs": {
+        "description": "A collection of values returned by getDashboards.\n",
+        "properties": {
+          "dashboards": {
+            "items": {
+              "$ref": "#/types/vantage:index%2FgetDashboardsDashboard:getDashboardsDashboard"
+            },
+            "type": "array"
+          },
+          "id": {
+            "description": "The provider-assigned unique ID for this managed resource.\n",
+            "type": "string"
+          }
+        },
+        "required": [
+          "dashboards",
+          "id"
+        ],
+        "type": "object"
+      }
+    },
+    "vantage:index/getFinancialCommitmentReports:getFinancialCommitmentReports": {
+      "outputs": {
+        "description": "A collection of values returned by getFinancialCommitmentReports.\n",
+        "properties": {
+          "financialCommitmentReports": {
+            "items": {
+              "$ref": "#/types/vantage:index%2FgetFinancialCommitmentReportsFinancialCommitmentReport:getFinancialCommitmentReportsFinancialCommitmentReport"
+            },
+            "type": "array"
+          },
+          "id": {
+            "description": "The provider-assigned unique ID for this managed resource.\n",
+            "type": "string"
+          }
+        },
+        "required": [
+          "financialCommitmentReports",
+          "id"
+        ],
+        "type": "object"
+      }
+    },
+    "vantage:index/getFolders:getFolders": {
+      "outputs": {
+        "description": "A collection of values returned by getFolders.\n",
+        "properties": {
+          "folders": {
+            "items": {
+              "$ref": "#/types/vantage:index%2FgetFoldersFolder:getFoldersFolder"
+            },
+            "type": "array"
+          },
+          "id": {
+            "description": "The provider-assigned unique ID for this managed resource.\n",
+            "type": "string"
+          }
+        },
+        "required": [
+          "folders",
+          "id"
+        ],
+        "type": "object"
+      }
+    },
+    "vantage:index/getKubernetesEfficiencyReports:getKubernetesEfficiencyReports": {
+      "outputs": {
+        "description": "A collection of values returned by getKubernetesEfficiencyReports.\n",
+        "properties": {
+          "id": {
+            "description": "The provider-assigned unique ID for this managed resource.\n",
+            "type": "string"
+          },
+          "kubernetesEfficiencyReports": {
+            "items": {
+              "$ref": "#/types/vantage:index%2FgetKubernetesEfficiencyReportsKubernetesEfficiencyReport:getKubernetesEfficiencyReportsKubernetesEfficiencyReport"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "id",
+          "kubernetesEfficiencyReports"
+        ],
+        "type": "object"
+      }
+    },
+    "vantage:index/getManagedAccounts:getManagedAccounts": {
+      "outputs": {
+        "description": "A collection of values returned by getManagedAccounts.\n",
+        "properties": {
+          "id": {
+            "description": "The provider-assigned unique ID for this managed resource.\n",
+            "type": "string"
+          },
+          "managedAccounts": {
+            "items": {
+              "$ref": "#/types/vantage:index%2FgetManagedAccountsManagedAccount:getManagedAccountsManagedAccount"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "id",
+          "managedAccounts"
+        ],
+        "type": "object"
+      }
+    },
+    "vantage:index/getNetworkFlowReports:getNetworkFlowReports": {
+      "outputs": {
+        "description": "A collection of values returned by getNetworkFlowReports.\n",
+        "properties": {
+          "id": {
+            "description": "The provider-assigned unique ID for this managed resource.\n",
+            "type": "string"
+          },
+          "networkFlowReports": {
+            "items": {
+              "$ref": "#/types/vantage:index%2FgetNetworkFlowReportsNetworkFlowReport:getNetworkFlowReportsNetworkFlowReport"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "id",
+          "networkFlowReports"
+        ],
+        "type": "object"
+      }
+    },
+    "vantage:index/getReportNotifications:getReportNotifications": {
+      "outputs": {
+        "description": "A collection of values returned by getReportNotifications.\n",
+        "properties": {
+          "id": {
+            "description": "The provider-assigned unique ID for this managed resource.\n",
+            "type": "string"
+          },
+          "reportNotifications": {
+            "items": {
+              "$ref": "#/types/vantage:index%2FgetReportNotificationsReportNotification:getReportNotificationsReportNotification"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "id",
+          "reportNotifications"
+        ],
+        "type": "object"
+      }
+    },
+    "vantage:index/getResourceReports:getResourceReports": {
+      "outputs": {
+        "description": "A collection of values returned by getResourceReports.\n",
+        "properties": {
+          "id": {
+            "description": "The provider-assigned unique ID for this managed resource.\n",
+            "type": "string"
+          },
+          "resourceReports": {
+            "items": {
+              "$ref": "#/types/vantage:index%2FgetResourceReportsResourceReport:getResourceReportsResourceReport"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "id",
+          "resourceReports"
+        ],
+        "type": "object"
+      }
+    },
+    "vantage:index/getSavedFilters:getSavedFilters": {
+      "outputs": {
+        "description": "A collection of values returned by getSavedFilters.\n",
+        "properties": {
+          "filters": {
+            "items": {
+              "$ref": "#/types/vantage:index%2FgetSavedFiltersFilter:getSavedFiltersFilter"
+            },
+            "type": "array"
+          },
+          "id": {
+            "description": "The provider-assigned unique ID for this managed resource.\n",
+            "type": "string"
+          }
+        },
+        "required": [
+          "filters",
+          "id"
+        ],
+        "type": "object"
+      }
+    },
+    "vantage:index/getSegments:getSegments": {
+      "outputs": {
+        "description": "A collection of values returned by getSegments.\n",
+        "properties": {
+          "id": {
+            "description": "The provider-assigned unique ID for this managed resource.\n",
+            "type": "string"
+          },
+          "segments": {
+            "items": {
+              "$ref": "#/types/vantage:index%2FgetSegmentsSegment:getSegmentsSegment"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "id",
+          "segments"
+        ],
+        "type": "object"
+      }
+    },
+    "vantage:index/getTeams:getTeams": {
+      "outputs": {
+        "description": "A collection of values returned by getTeams.\n",
+        "properties": {
+          "id": {
+            "description": "The provider-assigned unique ID for this managed resource.\n",
+            "type": "string"
+          },
+          "teams": {
+            "items": {
+              "$ref": "#/types/vantage:index%2FgetTeamsTeam:getTeamsTeam"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "id",
+          "teams"
+        ],
+        "type": "object"
+      }
+    },
+    "vantage:index/getUsers:getUsers": {
+      "outputs": {
+        "description": "A collection of values returned by getUsers.\n",
+        "properties": {
+          "id": {
+            "description": "The provider-assigned unique ID for this managed resource.\n",
+            "type": "string"
+          },
+          "users": {
+            "items": {
+              "$ref": "#/types/vantage:index%2FgetUsersUser:getUsersUser"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "id",
+          "users"
+        ],
+        "type": "object"
+      }
+    },
+    "vantage:index/getVirtualTagConfigs:getVirtualTagConfigs": {
+      "outputs": {
+        "description": "A collection of values returned by getVirtualTagConfigs.\n",
+        "properties": {
+          "id": {
+            "description": "The provider-assigned unique ID for this managed resource.\n",
+            "type": "string"
+          },
+          "virtualTagConfigs": {
+            "items": {
+              "$ref": "#/types/vantage:index%2FgetVirtualTagConfigsVirtualTagConfig:getVirtualTagConfigsVirtualTagConfig"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "id",
+          "virtualTagConfigs"
+        ],
+        "type": "object"
+      }
+    },
+    "vantage:index/getWorkspaces:getWorkspaces": {
+      "outputs": {
+        "description": "A collection of values returned by getWorkspaces.\n",
+        "properties": {
+          "id": {
+            "description": "The provider-assigned unique ID for this managed resource.\n",
+            "type": "string"
+          },
+          "workspaces": {
+            "items": {
+              "$ref": "#/types/vantage:index%2FgetWorkspacesWorkspace:getWorkspacesWorkspace"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "id",
+          "workspaces"
+        ],
+        "type": "object"
+      }
+    }
+  },
+  "parameterization": {
+    "baseProvider": {
+      "name": "terraform-provider",
+      "version": "0.8.1"
+    },
+    "parameter": "eyJyZW1vdGUiOnsidXJsIjoicmVnaXN0cnkub3BlbnRvZnUub3JnL3ZhbnRhZ2Utc2gvdmFudGFnZSIsInZlcnNpb24iOiIwLjEuNDYifX0="
+  }
+}

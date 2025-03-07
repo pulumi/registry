@@ -1,0 +1,1394 @@
+{
+  "name": "temporalcloud",
+  "version": "0.6.1",
+  "description": "A Pulumi provider dynamically bridged from temporalcloud.",
+  "attribution": "This Pulumi package is based on the [`temporalcloud` Terraform Provider](https://github.com/temporalio/terraform-provider-temporalcloud).",
+  "repository": "https://github.com/temporalio/terraform-provider-temporalcloud",
+  "publisher": "temporalio",
+  "meta": {
+    "moduleFormat": "(.*)(?:/[^/]*)"
+  },
+  "language": {
+    "csharp": {
+      "compatibility": "tfbridge20",
+      "liftSingleValueMethodReturns": true,
+      "respectSchemaVersion": true
+    },
+    "go": {
+      "importBasePath": "github.com/pulumi/pulumi-terraform-provider/sdks/go/temporalcloud/temporalcloud",
+      "rootPackageName": "temporalcloud",
+      "liftSingleValueMethodReturns": true,
+      "generateExtraInputTypes": true,
+      "respectSchemaVersion": true
+    },
+    "java": {
+      "basePackage": "",
+      "buildFiles": "",
+      "gradleNexusPublishPluginVersion": "",
+      "gradleTest": ""
+    },
+    "nodejs": {
+      "packageDescription": "A Pulumi provider dynamically bridged from temporalcloud.",
+      "readme": "\u003e This provider is a derived work of the [Terraform Provider](https://github.com/temporalio/terraform-provider-temporalcloud)\n\u003e distributed under [MPL 2.0](https://www.mozilla.org/en-US/MPL/2.0/). If you encounter a bug or missing feature,\n\u003e please consult the source [`terraform-provider-temporalcloud` repo](https://github.com/temporalio/terraform-provider-temporalcloud/issues).",
+      "compatibility": "tfbridge20",
+      "disableUnionOutputTypes": true,
+      "liftSingleValueMethodReturns": true,
+      "respectSchemaVersion": true
+    },
+    "python": {
+      "readme": "\u003e This provider is a derived work of the [Terraform Provider](https://github.com/temporalio/terraform-provider-temporalcloud)\n\u003e distributed under [MPL 2.0](https://www.mozilla.org/en-US/MPL/2.0/). If you encounter a bug or missing feature,\n\u003e please consult the source [`terraform-provider-temporalcloud` repo](https://github.com/temporalio/terraform-provider-temporalcloud/issues).",
+      "compatibility": "tfbridge20",
+      "respectSchemaVersion": true,
+      "pyproject": {
+        "enabled": true
+      }
+    }
+  },
+  "config": {
+    "variables": {
+      "allowInsecure": {
+        "type": "boolean",
+        "description": "If set to True, it allows for an insecure connection to the Temporal Cloud API. This should never be set to 'true' in\nproduction and defaults to false.\n"
+      },
+      "allowedAccountId": {
+        "type": "string",
+        "description": "The ID of the account to operate on. Prevents accidental mutation of accounts other than that provided.\n"
+      },
+      "apiKey": {
+        "type": "string",
+        "description": "The API key for Temporal Cloud. See [this documentation](https://docs.temporal.io/cloud/api-keys) for information on how\nto obtain an API key.\n",
+        "secret": true
+      },
+      "endpoint": {
+        "type": "string",
+        "description": "The endpoint for the Temporal Cloud API. Defaults to `saas-api.tmprl.cloud:443`.\n"
+      }
+    }
+  },
+  "types": {
+    "temporalcloud:index/ApikeyTimeouts:ApikeyTimeouts": {
+      "properties": {
+        "create": {
+          "type": "string",
+          "description": "A string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as \"30s\" or \"2h45m\". Valid time units are \"s\" (seconds), \"m\" (minutes), \"h\" (hours).\n"
+        },
+        "delete": {
+          "type": "string",
+          "description": "A string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as \"30s\" or \"2h45m\". Valid time units are \"s\" (seconds), \"m\" (minutes), \"h\" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.\n"
+        }
+      },
+      "type": "object"
+    },
+    "temporalcloud:index/MetricsEndpointTimeouts:MetricsEndpointTimeouts": {
+      "properties": {
+        "create": {
+          "type": "string",
+          "description": "A string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as \"30s\" or \"2h45m\". Valid time units are \"s\" (seconds), \"m\" (minutes), \"h\" (hours).\n"
+        },
+        "delete": {
+          "type": "string",
+          "description": "A string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as \"30s\" or \"2h45m\". Valid time units are \"s\" (seconds), \"m\" (minutes), \"h\" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.\n"
+        },
+        "update": {
+          "type": "string",
+          "description": "A string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as \"30s\" or \"2h45m\". Valid time units are \"s\" (seconds), \"m\" (minutes), \"h\" (hours).\n"
+        }
+      },
+      "type": "object"
+    },
+    "temporalcloud:index/NamespaceCertificateFilter:NamespaceCertificateFilter": {
+      "properties": {
+        "commonName": {
+          "type": "string",
+          "description": "The certificate's common name.\n"
+        },
+        "organization": {
+          "type": "string",
+          "description": "The certificate's organization.\n"
+        },
+        "organizationalUnit": {
+          "type": "string",
+          "description": "The certificate's organizational unit.\n"
+        },
+        "subjectAlternativeName": {
+          "type": "string",
+          "description": "The certificate's subject alternative name (or SAN).\n"
+        }
+      },
+      "type": "object"
+    },
+    "temporalcloud:index/NamespaceCodecServer:NamespaceCodecServer": {
+      "properties": {
+        "endpoint": {
+          "type": "string",
+          "description": "The endpoint of the codec server. Must begin with \"https\".\n"
+        },
+        "includeCrossOriginCredentials": {
+          "type": "boolean",
+          "description": "If true, Temporal Cloud will include cross-origin credentials in requests to the codec server.\n"
+        },
+        "passAccessToken": {
+          "type": "boolean",
+          "description": "If true, Temporal Cloud will pass the access token to the codec server upon each request.\n"
+        }
+      },
+      "type": "object",
+      "required": [
+        "endpoint"
+      ],
+      "language": {
+        "nodejs": {
+          "requiredOutputs": [
+            "endpoint",
+            "includeCrossOriginCredentials",
+            "passAccessToken"
+          ]
+        }
+      }
+    },
+    "temporalcloud:index/NamespaceEndpoints:NamespaceEndpoints": {
+      "properties": {
+        "grpcAddress": {
+          "type": "string",
+          "description": "The gRPC address for API key client connections (may be empty if API keys are disabled).\n"
+        },
+        "mtlsGrpcAddress": {
+          "type": "string",
+          "description": "The gRPC address for mTLS client connections (may be empty if mTLS is disabled).\n"
+        },
+        "webAddress": {
+          "type": "string",
+          "description": "The address in the Temporal Cloud Web UI for the namespace\n"
+        }
+      },
+      "type": "object",
+      "language": {
+        "nodejs": {
+          "requiredOutputs": [
+            "grpcAddress",
+            "mtlsGrpcAddress",
+            "webAddress"
+          ]
+        }
+      }
+    },
+    "temporalcloud:index/NamespaceTimeouts:NamespaceTimeouts": {
+      "properties": {
+        "create": {
+          "type": "string",
+          "description": "A string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as \"30s\" or \"2h45m\". Valid time units are \"s\" (seconds), \"m\" (minutes), \"h\" (hours).\n"
+        },
+        "delete": {
+          "type": "string",
+          "description": "A string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as \"30s\" or \"2h45m\". Valid time units are \"s\" (seconds), \"m\" (minutes), \"h\" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.\n"
+        }
+      },
+      "type": "object"
+    },
+    "temporalcloud:index/NexusEndpointTimeouts:NexusEndpointTimeouts": {
+      "properties": {
+        "create": {
+          "type": "string",
+          "description": "A string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as \"30s\" or \"2h45m\". Valid time units are \"s\" (seconds), \"m\" (minutes), \"h\" (hours).\n"
+        },
+        "delete": {
+          "type": "string",
+          "description": "A string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as \"30s\" or \"2h45m\". Valid time units are \"s\" (seconds), \"m\" (minutes), \"h\" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.\n"
+        }
+      },
+      "type": "object"
+    },
+    "temporalcloud:index/NexusEndpointWorkerTarget:NexusEndpointWorkerTarget": {
+      "properties": {
+        "namespaceId": {
+          "type": "string",
+          "description": "The target cloud namespace to route requests to. Namespace must be in same account as the endpoint.\n"
+        },
+        "taskQueue": {
+          "type": "string",
+          "description": "The task queue on the cloud namespace to route requests to.\n"
+        }
+      },
+      "type": "object",
+      "required": [
+        "namespaceId",
+        "taskQueue"
+      ]
+    },
+    "temporalcloud:index/ServiceAccountNamespaceAccess:ServiceAccountNamespaceAccess": {
+      "properties": {
+        "namespaceId": {
+          "type": "string",
+          "description": "The namespace to assign permissions to.\n"
+        },
+        "permission": {
+          "type": "string",
+          "description": "The permission to assign. Must be one of admin, write, or read (case-insensitive)\n"
+        }
+      },
+      "type": "object",
+      "required": [
+        "namespaceId",
+        "permission"
+      ]
+    },
+    "temporalcloud:index/ServiceAccountTimeouts:ServiceAccountTimeouts": {
+      "properties": {
+        "create": {
+          "type": "string",
+          "description": "A string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as \"30s\" or \"2h45m\". Valid time units are \"s\" (seconds), \"m\" (minutes), \"h\" (hours).\n"
+        },
+        "delete": {
+          "type": "string",
+          "description": "A string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as \"30s\" or \"2h45m\". Valid time units are \"s\" (seconds), \"m\" (minutes), \"h\" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.\n"
+        }
+      },
+      "type": "object"
+    },
+    "temporalcloud:index/UserNamespaceAccess:UserNamespaceAccess": {
+      "properties": {
+        "namespaceId": {
+          "type": "string",
+          "description": "The namespace to assign permissions to.\n"
+        },
+        "permission": {
+          "type": "string",
+          "description": "The permission to assign. Must be one of admin, write, or read (case-insensitive)\n"
+        }
+      },
+      "type": "object",
+      "required": [
+        "namespaceId",
+        "permission"
+      ]
+    },
+    "temporalcloud:index/UserTimeouts:UserTimeouts": {
+      "properties": {
+        "create": {
+          "type": "string",
+          "description": "A string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as \"30s\" or \"2h45m\". Valid time units are \"s\" (seconds), \"m\" (minutes), \"h\" (hours).\n"
+        },
+        "delete": {
+          "type": "string",
+          "description": "A string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as \"30s\" or \"2h45m\". Valid time units are \"s\" (seconds), \"m\" (minutes), \"h\" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.\n"
+        }
+      },
+      "type": "object"
+    },
+    "temporalcloud:index/getNamespacesNamespace:getNamespacesNamespace": {
+      "properties": {
+        "acceptedClientCa": {
+          "type": "string",
+          "description": "The Base64-encoded CA cert in PEM format that clients use when authenticating with Temporal Cloud.\n"
+        },
+        "activeRegion": {
+          "type": "string",
+          "description": "The currently active region for the namespace.\n"
+        },
+        "apiKeyAuth": {
+          "type": "boolean",
+          "description": "If true, Temporal Cloud will use API key authentication for this namespace. If false, mutual TLS (mTLS) authentication will be used.\n"
+        },
+        "certificateFilters": {
+          "type": "array",
+          "items": {
+            "$ref": "#/types/temporalcloud:index%2FgetNamespacesNamespaceCertificateFilter:getNamespacesNamespaceCertificateFilter"
+          },
+          "description": "A list of filters to apply to client certificates when initiating a connection Temporal Cloud. If present, connections will only be allowed from client certificates whose distinguished name properties match at least one of the filters.\n"
+        },
+        "codecServer": {
+          "$ref": "#/types/temporalcloud:index%2FgetNamespacesNamespaceCodecServer:getNamespacesNamespaceCodecServer",
+          "description": "A codec server is used by the Temporal Cloud UI to decode payloads for all users interacting with this namespace, even if the workflow history itself is encrypted.\n"
+        },
+        "createdTime": {
+          "type": "string",
+          "description": "The date and time when the namespace was created.\n"
+        },
+        "customSearchAttributes": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "The custom search attributes to use for the namespace.\n"
+        },
+        "endpoints": {
+          "$ref": "#/types/temporalcloud:index%2FgetNamespacesNamespaceEndpoints:getNamespacesNamespaceEndpoints",
+          "description": "The endpoints for the namespace.\n"
+        },
+        "id": {
+          "type": "string",
+          "description": "The unique identifier of the namespace across all Temporal Cloud tenants.\n"
+        },
+        "lastModifiedTime": {
+          "type": "string",
+          "description": "The date and time when the namespace was last modified. Will not be set if the namespace has never been modified.\n"
+        },
+        "limits": {
+          "$ref": "#/types/temporalcloud:index%2FgetNamespacesNamespaceLimits:getNamespacesNamespaceLimits",
+          "description": "The limits set on the namespace currently.\n"
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the namespace.\n"
+        },
+        "privateConnectivities": {
+          "type": "array",
+          "items": {
+            "$ref": "#/types/temporalcloud:index%2FgetNamespacesNamespacePrivateConnectivity:getNamespacesNamespacePrivateConnectivity"
+          },
+          "description": "The private connectivities for the namespace, if any.\n"
+        },
+        "regions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "retentionDays": {
+          "type": "number",
+          "description": "The number of days to retain workflow history. Any changes to the retention period will be applied to all new running workflows.\n"
+        },
+        "state": {
+          "type": "string",
+          "description": "The current state of the namespace.\n"
+        }
+      },
+      "type": "object",
+      "required": [
+        "acceptedClientCa",
+        "activeRegion",
+        "certificateFilters",
+        "codecServer",
+        "createdTime",
+        "customSearchAttributes",
+        "endpoints",
+        "id",
+        "lastModifiedTime",
+        "limits",
+        "name",
+        "privateConnectivities",
+        "regions",
+        "retentionDays",
+        "state"
+      ],
+      "language": {
+        "nodejs": {
+          "requiredInputs": []
+        }
+      }
+    },
+    "temporalcloud:index/getNamespacesNamespaceCertificateFilter:getNamespacesNamespaceCertificateFilter": {
+      "properties": {
+        "commonName": {
+          "type": "string",
+          "description": "The certificate's common name.\n"
+        },
+        "organization": {
+          "type": "string",
+          "description": "The certificate's organization.\n"
+        },
+        "organizationalUnit": {
+          "type": "string",
+          "description": "The certificate's organizational unit.\n"
+        },
+        "subjectAlternativeName": {
+          "type": "string",
+          "description": "The certificate's subject alternative name (or SAN).\n"
+        }
+      },
+      "type": "object",
+      "required": [
+        "commonName",
+        "organization",
+        "organizationalUnit",
+        "subjectAlternativeName"
+      ],
+      "language": {
+        "nodejs": {
+          "requiredInputs": []
+        }
+      }
+    },
+    "temporalcloud:index/getNamespacesNamespaceCodecServer:getNamespacesNamespaceCodecServer": {
+      "properties": {
+        "endpoint": {
+          "type": "string",
+          "description": "The endpoint of the codec server.\n"
+        },
+        "includeCrossOriginCredentials": {
+          "type": "boolean",
+          "description": "If true, Temporal Cloud will include cross-origin credentials in requests to the codec server.\n"
+        },
+        "passAccessToken": {
+          "type": "boolean",
+          "description": "If true, Temporal Cloud will pass the access token to the codec server upon each request.\n"
+        }
+      },
+      "type": "object",
+      "required": [
+        "endpoint",
+        "includeCrossOriginCredentials",
+        "passAccessToken"
+      ],
+      "language": {
+        "nodejs": {
+          "requiredInputs": []
+        }
+      }
+    },
+    "temporalcloud:index/getNamespacesNamespaceEndpoints:getNamespacesNamespaceEndpoints": {
+      "properties": {
+        "grpcAddress": {
+          "type": "string",
+          "description": "The gRPC hostport address that the temporal workers, clients and tctl connect to.\n"
+        },
+        "webAddress": {
+          "type": "string",
+          "description": "The web UI address.\n"
+        }
+      },
+      "type": "object",
+      "required": [
+        "grpcAddress",
+        "webAddress"
+      ],
+      "language": {
+        "nodejs": {
+          "requiredInputs": []
+        }
+      }
+    },
+    "temporalcloud:index/getNamespacesNamespaceLimits:getNamespacesNamespaceLimits": {
+      "properties": {
+        "actionsPerSecondLimit": {
+          "type": "number",
+          "description": "The number of actions per second (APS) that is currently allowed for the namespace. The namespace may be throttled if its APS exceeds the limit.\n"
+        }
+      },
+      "type": "object",
+      "required": [
+        "actionsPerSecondLimit"
+      ],
+      "language": {
+        "nodejs": {
+          "requiredInputs": []
+        }
+      }
+    },
+    "temporalcloud:index/getNamespacesNamespacePrivateConnectivity:getNamespacesNamespacePrivateConnectivity": {
+      "properties": {
+        "awsPrivateLinkInfo": {
+          "$ref": "#/types/temporalcloud:index%2FgetNamespacesNamespacePrivateConnectivityAwsPrivateLinkInfo:getNamespacesNamespacePrivateConnectivityAwsPrivateLinkInfo",
+          "description": "The AWS PrivateLink info. This will only be set for namespaces whose cloud provider is AWS.\n"
+        },
+        "region": {
+          "type": "string",
+          "description": "The id of the region where the private connectivity applies.\n"
+        }
+      },
+      "type": "object",
+      "required": [
+        "awsPrivateLinkInfo",
+        "region"
+      ],
+      "language": {
+        "nodejs": {
+          "requiredInputs": []
+        }
+      }
+    },
+    "temporalcloud:index/getNamespacesNamespacePrivateConnectivityAwsPrivateLinkInfo:getNamespacesNamespacePrivateConnectivityAwsPrivateLinkInfo": {
+      "properties": {
+        "allowedPrincipalArns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The list of principal arns that are allowed to access the namespace on the private link.\n"
+        },
+        "vpcEndpointServiceNames": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The list of vpc endpoint service names that are associated with the namespace.\n"
+        }
+      },
+      "type": "object",
+      "required": [
+        "allowedPrincipalArns",
+        "vpcEndpointServiceNames"
+      ],
+      "language": {
+        "nodejs": {
+          "requiredInputs": []
+        }
+      }
+    },
+    "temporalcloud:index/getRegionsRegion:getRegionsRegion": {
+      "properties": {
+        "cloudProvider": {
+          "type": "string",
+          "description": "The name of the Cloud provider for this region, e.g. `aws`.\n"
+        },
+        "cloudProviderRegion": {
+          "type": "string",
+          "description": "The name of the region within the Cloud provider, e.g. `us-east-1`.\n"
+        },
+        "id": {
+          "type": "string",
+          "description": "The unique identifier for the region, e.g. `aws-us-east-1`.\n"
+        },
+        "location": {
+          "type": "string",
+          "description": "The physical location of the region, e.g. \"US East (N. Virginia)\".\n"
+        }
+      },
+      "type": "object",
+      "required": [
+        "cloudProvider",
+        "cloudProviderRegion",
+        "id",
+        "location"
+      ],
+      "language": {
+        "nodejs": {
+          "requiredInputs": []
+        }
+      }
+    },
+    "temporalcloud:index/getServiceAccountsServiceAccount:getServiceAccountsServiceAccount": {
+      "properties": {
+        "accountAccess": {
+          "type": "string",
+          "description": "The role on the account. Must be one of admin, developer, or read (case-insensitive).\n"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "The creation time of the Service Account.\n"
+        },
+        "description": {
+          "type": "string",
+          "description": "The description of the Service Account.\n"
+        },
+        "id": {
+          "type": "string",
+          "description": "The unique identifier of the Service Account.\n"
+        },
+        "name": {
+          "type": "string",
+          "description": "The name associated with the service account.\n"
+        },
+        "namespaceAccesses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/types/temporalcloud:index%2FgetServiceAccountsServiceAccountNamespaceAccess:getServiceAccountsServiceAccountNamespaceAccess"
+          },
+          "description": "The set of namespace permissions for this service account, including each namespace and its role.\n"
+        },
+        "state": {
+          "type": "string",
+          "description": "The current state of the Service Account.\n"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "The last update time of the Service Account.\n"
+        }
+      },
+      "type": "object",
+      "required": [
+        "accountAccess",
+        "createdAt",
+        "description",
+        "id",
+        "name",
+        "namespaceAccesses",
+        "state",
+        "updatedAt"
+      ],
+      "language": {
+        "nodejs": {
+          "requiredInputs": []
+        }
+      }
+    },
+    "temporalcloud:index/getServiceAccountsServiceAccountNamespaceAccess:getServiceAccountsServiceAccountNamespaceAccess": {
+      "properties": {
+        "namespaceId": {
+          "type": "string",
+          "description": "The namespace to assign permissions to.\n"
+        },
+        "permission": {
+          "type": "string",
+          "description": "The permission to assign. Must be one of admin, write, or read (case-insensitive)\n"
+        }
+      },
+      "type": "object",
+      "required": [
+        "namespaceId",
+        "permission"
+      ],
+      "language": {
+        "nodejs": {
+          "requiredInputs": []
+        }
+      }
+    }
+  },
+  "provider": {
+    "description": "The provider type for the temporalcloud package. By default, resources use package-wide configuration\nsettings, however an explicit `Provider` instance may be created and passed during resource\nconstruction to achieve fine-grained programmatic control over provider settings. See the\n[documentation](https://www.pulumi.com/docs/reference/programming-model/#providers) for more information.\n",
+    "properties": {
+      "allowedAccountId": {
+        "type": "string",
+        "description": "The ID of the account to operate on. Prevents accidental mutation of accounts other than that provided.\n"
+      },
+      "apiKey": {
+        "type": "string",
+        "description": "The API key for Temporal Cloud. See [this documentation](https://docs.temporal.io/cloud/api-keys) for information on how\nto obtain an API key.\n",
+        "secret": true
+      },
+      "endpoint": {
+        "type": "string",
+        "description": "The endpoint for the Temporal Cloud API. Defaults to `saas-api.tmprl.cloud:443`.\n"
+      }
+    },
+    "type": "object",
+    "inputProperties": {
+      "allowInsecure": {
+        "type": "boolean",
+        "description": "If set to True, it allows for an insecure connection to the Temporal Cloud API. This should never be set to 'true' in\nproduction and defaults to false.\n"
+      },
+      "allowedAccountId": {
+        "type": "string",
+        "description": "The ID of the account to operate on. Prevents accidental mutation of accounts other than that provided.\n"
+      },
+      "apiKey": {
+        "type": "string",
+        "description": "The API key for Temporal Cloud. See [this documentation](https://docs.temporal.io/cloud/api-keys) for information on how\nto obtain an API key.\n",
+        "secret": true
+      },
+      "endpoint": {
+        "type": "string",
+        "description": "The endpoint for the Temporal Cloud API. Defaults to `saas-api.tmprl.cloud:443`.\n"
+      }
+    }
+  },
+  "resources": {
+    "temporalcloud:index/apikey:Apikey": {
+      "description": "Provisions a Temporal Cloud API key.\n\n## Example Usage\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as temporalcloud from \"@pulumi/temporalcloud\";\n\nconst globalServiceAccount = new temporalcloud.ServiceAccount(\"globalServiceAccount\", {accountAccess: \"Admin\"});\nconst globalApikey = new temporalcloud.Apikey(\"globalApikey\", {\n    displayName: \"admin\",\n    ownerType: \"service-account\",\n    ownerId: globalServiceAccount.id,\n    expiryTime: \"2024-11-01T00:00:00Z\",\n    disabled: false,\n});\n```\n```python\nimport pulumi\nimport pulumi_temporalcloud as temporalcloud\n\nglobal_service_account = temporalcloud.ServiceAccount(\"globalServiceAccount\", account_access=\"Admin\")\nglobal_apikey = temporalcloud.Apikey(\"globalApikey\",\n    display_name=\"admin\",\n    owner_type=\"service-account\",\n    owner_id=global_service_account.id,\n    expiry_time=\"2024-11-01T00:00:00Z\",\n    disabled=False)\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Temporalcloud = Pulumi.Temporalcloud;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var globalServiceAccount = new Temporalcloud.ServiceAccount(\"globalServiceAccount\", new()\n    {\n        AccountAccess = \"Admin\",\n    });\n\n    var globalApikey = new Temporalcloud.Apikey(\"globalApikey\", new()\n    {\n        DisplayName = \"admin\",\n        OwnerType = \"service-account\",\n        OwnerId = globalServiceAccount.Id,\n        ExpiryTime = \"2024-11-01T00:00:00Z\",\n        Disabled = false,\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi-terraform-provider/sdks/go/temporalcloud/temporalcloud\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\tglobalServiceAccount, err := temporalcloud.NewServiceAccount(ctx, \"globalServiceAccount\", \u0026temporalcloud.ServiceAccountArgs{\n\t\t\tAccountAccess: pulumi.String(\"Admin\"),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\t_, err = temporalcloud.NewApikey(ctx, \"globalApikey\", \u0026temporalcloud.ApikeyArgs{\n\t\t\tDisplayName: pulumi.String(\"admin\"),\n\t\t\tOwnerType:   pulumi.String(\"service-account\"),\n\t\t\tOwnerId:     globalServiceAccount.ID(),\n\t\t\tExpiryTime:  pulumi.String(\"2024-11-01T00:00:00Z\"),\n\t\t\tDisabled:    pulumi.Bool(false),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.temporalcloud.ServiceAccount;\nimport com.pulumi.temporalcloud.ServiceAccountArgs;\nimport com.pulumi.temporalcloud.Apikey;\nimport com.pulumi.temporalcloud.ApikeyArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var globalServiceAccount = new ServiceAccount(\"globalServiceAccount\", ServiceAccountArgs.builder()\n            .accountAccess(\"Admin\")\n            .build());\n\n        var globalApikey = new Apikey(\"globalApikey\", ApikeyArgs.builder()\n            .displayName(\"admin\")\n            .ownerType(\"service-account\")\n            .ownerId(globalServiceAccount.id())\n            .expiryTime(\"2024-11-01T00:00:00Z\")\n            .disabled(false)\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  globalServiceAccount:\n    type: temporalcloud:ServiceAccount\n    properties:\n      accountAccess: Admin\n  globalApikey:\n    type: temporalcloud:Apikey\n    properties:\n      displayName: admin\n      ownerType: service-account\n      ownerId: ${globalServiceAccount.id}\n      expiryTime: 2024-11-01T00:00:00Z\n      disabled: false\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
+      "properties": {
+        "description": {
+          "type": "string",
+          "description": "The description for the API key.\n"
+        },
+        "disabled": {
+          "type": "boolean",
+          "description": "Whether the API key is disabled.\n"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "The display name for the API key.\n"
+        },
+        "expiryTime": {
+          "type": "string",
+          "description": "The expiry time for the API key in ISO 8601 format.\n"
+        },
+        "ownerId": {
+          "type": "string",
+          "description": "The ID of the owner to create the API key for.\n"
+        },
+        "ownerType": {
+          "type": "string",
+          "description": "The type of the owner to create the API key.\n"
+        },
+        "state": {
+          "type": "string",
+          "description": "The current state of the API key.\n"
+        },
+        "timeouts": {
+          "$ref": "#/types/temporalcloud:index%2FApikeyTimeouts:ApikeyTimeouts"
+        },
+        "token": {
+          "type": "string",
+          "secret": true
+        }
+      },
+      "type": "object",
+      "required": [
+        "disabled",
+        "displayName",
+        "expiryTime",
+        "ownerId",
+        "ownerType",
+        "state",
+        "token"
+      ],
+      "inputProperties": {
+        "description": {
+          "type": "string",
+          "description": "The description for the API key.\n"
+        },
+        "disabled": {
+          "type": "boolean",
+          "description": "Whether the API key is disabled.\n"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "The display name for the API key.\n"
+        },
+        "expiryTime": {
+          "type": "string",
+          "description": "The expiry time for the API key in ISO 8601 format.\n"
+        },
+        "ownerId": {
+          "type": "string",
+          "description": "The ID of the owner to create the API key for.\n"
+        },
+        "ownerType": {
+          "type": "string",
+          "description": "The type of the owner to create the API key.\n"
+        },
+        "timeouts": {
+          "$ref": "#/types/temporalcloud:index%2FApikeyTimeouts:ApikeyTimeouts"
+        }
+      },
+      "requiredInputs": [
+        "displayName",
+        "expiryTime",
+        "ownerId",
+        "ownerType"
+      ],
+      "stateInputs": {
+        "description": "Input properties used for looking up and filtering Apikey resources.\n",
+        "properties": {
+          "description": {
+            "type": "string",
+            "description": "The description for the API key.\n"
+          },
+          "disabled": {
+            "type": "boolean",
+            "description": "Whether the API key is disabled.\n"
+          },
+          "displayName": {
+            "type": "string",
+            "description": "The display name for the API key.\n"
+          },
+          "expiryTime": {
+            "type": "string",
+            "description": "The expiry time for the API key in ISO 8601 format.\n"
+          },
+          "ownerId": {
+            "type": "string",
+            "description": "The ID of the owner to create the API key for.\n"
+          },
+          "ownerType": {
+            "type": "string",
+            "description": "The type of the owner to create the API key.\n"
+          },
+          "state": {
+            "type": "string",
+            "description": "The current state of the API key.\n"
+          },
+          "timeouts": {
+            "$ref": "#/types/temporalcloud:index%2FApikeyTimeouts:ApikeyTimeouts"
+          },
+          "token": {
+            "type": "string",
+            "secret": true
+          }
+        },
+        "type": "object"
+      }
+    },
+    "temporalcloud:index/metricsEndpoint:MetricsEndpoint": {
+      "description": "Configures a Temporal Cloud account's metrics\n\n## Import\n\n```sh\n$ pulumi import temporalcloud:index/metricsEndpoint:MetricsEndpoint terraform terraform.account-11111-metrics\n```\n\n",
+      "properties": {
+        "acceptedClientCa": {
+          "type": "string",
+          "description": "The Base64-encoded CA cert in PEM format used to authenticate clients connecting to the metrics endpoint.\n"
+        },
+        "timeouts": {
+          "$ref": "#/types/temporalcloud:index%2FMetricsEndpointTimeouts:MetricsEndpointTimeouts"
+        },
+        "uri": {
+          "type": "string",
+          "description": "The Prometheus metrics endpoint URI\n"
+        }
+      },
+      "type": "object",
+      "required": [
+        "acceptedClientCa",
+        "uri"
+      ],
+      "inputProperties": {
+        "acceptedClientCa": {
+          "type": "string",
+          "description": "The Base64-encoded CA cert in PEM format used to authenticate clients connecting to the metrics endpoint.\n"
+        },
+        "timeouts": {
+          "$ref": "#/types/temporalcloud:index%2FMetricsEndpointTimeouts:MetricsEndpointTimeouts"
+        }
+      },
+      "requiredInputs": [
+        "acceptedClientCa"
+      ],
+      "stateInputs": {
+        "description": "Input properties used for looking up and filtering MetricsEndpoint resources.\n",
+        "properties": {
+          "acceptedClientCa": {
+            "type": "string",
+            "description": "The Base64-encoded CA cert in PEM format used to authenticate clients connecting to the metrics endpoint.\n"
+          },
+          "timeouts": {
+            "$ref": "#/types/temporalcloud:index%2FMetricsEndpointTimeouts:MetricsEndpointTimeouts"
+          },
+          "uri": {
+            "type": "string",
+            "description": "The Prometheus metrics endpoint URI\n"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "temporalcloud:index/namespace:Namespace": {
+      "description": "Provisions a Temporal Cloud namespace.\n\n## Import\n\nNamespace can be imported to incorporate existing Namespaces into your Terraform pipeline. \n\nTo import a Namespace, you need\n\n- a resource configuration in your Terraform configuration file/module to accept the imported Namespace. In the example below, the placeholder is \"temporalcloud_namespace\" \"terraform\"\n\n- the Namespace ID, which includes the Namespace Name and Account ID available at the top of the Namespace's page in the Temporal Cloud UI. In the example below, this is namespaceid.acctid\n\n```sh\n$ pulumi import temporalcloud:index/namespace:Namespace terraform namespaceid.acctid\n```\n\n",
+      "properties": {
+        "acceptedClientCa": {
+          "type": "string",
+          "description": "The Base64-encoded CA cert in PEM format that clients use when authenticating with Temporal Cloud. This is a required field when a Namespace uses mTLS authentication.\n"
+        },
+        "apiKeyAuth": {
+          "type": "boolean",
+          "description": "If true, Temporal Cloud will use API key authentication for this namespace. If false, mutual TLS (mTLS) authentication will be used.\n"
+        },
+        "certificateFilters": {
+          "type": "array",
+          "items": {
+            "$ref": "#/types/temporalcloud:index%2FNamespaceCertificateFilter:NamespaceCertificateFilter"
+          },
+          "description": "A list of filters to apply to client certificates when initiating a connection Temporal Cloud. If present, connections will only be allowed from client certificates whose distinguished name properties match at least one of the filters. Empty lists are not allowed, omit the attribute instead.\n"
+        },
+        "codecServer": {
+          "$ref": "#/types/temporalcloud:index%2FNamespaceCodecServer:NamespaceCodecServer",
+          "description": "A codec server is used by the Temporal Cloud UI to decode payloads for all users interacting with this namespace, even if the workflow history itself is encrypted.\n"
+        },
+        "endpoints": {
+          "$ref": "#/types/temporalcloud:index%2FNamespaceEndpoints:NamespaceEndpoints",
+          "description": "The endpoints for the namespace.\n"
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the namespace.\n"
+        },
+        "regions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "retentionDays": {
+          "type": "number",
+          "description": "The number of days to retain workflow history. Any changes to the retention period will be applied to all new running workflows.\n"
+        },
+        "timeouts": {
+          "$ref": "#/types/temporalcloud:index%2FNamespaceTimeouts:NamespaceTimeouts"
+        }
+      },
+      "type": "object",
+      "required": [
+        "apiKeyAuth",
+        "endpoints",
+        "name",
+        "regions",
+        "retentionDays"
+      ],
+      "inputProperties": {
+        "acceptedClientCa": {
+          "type": "string",
+          "description": "The Base64-encoded CA cert in PEM format that clients use when authenticating with Temporal Cloud. This is a required field when a Namespace uses mTLS authentication.\n"
+        },
+        "apiKeyAuth": {
+          "type": "boolean",
+          "description": "If true, Temporal Cloud will use API key authentication for this namespace. If false, mutual TLS (mTLS) authentication will be used.\n"
+        },
+        "certificateFilters": {
+          "type": "array",
+          "items": {
+            "$ref": "#/types/temporalcloud:index%2FNamespaceCertificateFilter:NamespaceCertificateFilter"
+          },
+          "description": "A list of filters to apply to client certificates when initiating a connection Temporal Cloud. If present, connections will only be allowed from client certificates whose distinguished name properties match at least one of the filters. Empty lists are not allowed, omit the attribute instead.\n"
+        },
+        "codecServer": {
+          "$ref": "#/types/temporalcloud:index%2FNamespaceCodecServer:NamespaceCodecServer",
+          "description": "A codec server is used by the Temporal Cloud UI to decode payloads for all users interacting with this namespace, even if the workflow history itself is encrypted.\n"
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the namespace.\n"
+        },
+        "regions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "retentionDays": {
+          "type": "number",
+          "description": "The number of days to retain workflow history. Any changes to the retention period will be applied to all new running workflows.\n"
+        },
+        "timeouts": {
+          "$ref": "#/types/temporalcloud:index%2FNamespaceTimeouts:NamespaceTimeouts"
+        }
+      },
+      "requiredInputs": [
+        "regions",
+        "retentionDays"
+      ],
+      "stateInputs": {
+        "description": "Input properties used for looking up and filtering Namespace resources.\n",
+        "properties": {
+          "acceptedClientCa": {
+            "type": "string",
+            "description": "The Base64-encoded CA cert in PEM format that clients use when authenticating with Temporal Cloud. This is a required field when a Namespace uses mTLS authentication.\n"
+          },
+          "apiKeyAuth": {
+            "type": "boolean",
+            "description": "If true, Temporal Cloud will use API key authentication for this namespace. If false, mutual TLS (mTLS) authentication will be used.\n"
+          },
+          "certificateFilters": {
+            "type": "array",
+            "items": {
+              "$ref": "#/types/temporalcloud:index%2FNamespaceCertificateFilter:NamespaceCertificateFilter"
+            },
+            "description": "A list of filters to apply to client certificates when initiating a connection Temporal Cloud. If present, connections will only be allowed from client certificates whose distinguished name properties match at least one of the filters. Empty lists are not allowed, omit the attribute instead.\n"
+          },
+          "codecServer": {
+            "$ref": "#/types/temporalcloud:index%2FNamespaceCodecServer:NamespaceCodecServer",
+            "description": "A codec server is used by the Temporal Cloud UI to decode payloads for all users interacting with this namespace, even if the workflow history itself is encrypted.\n"
+          },
+          "endpoints": {
+            "$ref": "#/types/temporalcloud:index%2FNamespaceEndpoints:NamespaceEndpoints",
+            "description": "The endpoints for the namespace.\n"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the namespace.\n"
+          },
+          "regions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "retentionDays": {
+            "type": "number",
+            "description": "The number of days to retain workflow history. Any changes to the retention period will be applied to all new running workflows.\n"
+          },
+          "timeouts": {
+            "$ref": "#/types/temporalcloud:index%2FNamespaceTimeouts:NamespaceTimeouts"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "temporalcloud:index/namespaceSearchAttribute:NamespaceSearchAttribute": {
+      "description": "Create a [search attribute](https://docs.temporal.io/visibility#search-attribute) in a Temporal Cloud namespace. Note the limits on [quantity](https://docs.temporal.io/cloud/limits#number-of-custom-search-attributes) and [naming](https://docs.temporal.io/cloud/limits#custom-search-attribute-names).\n\n## Import\n\nSearch Attributes can be imported to incorporate existing Namespace Search Attributes into your Terraform pipeline. \n\nTo import a Search Attribute, you need\n\n- a resource configuration in your Terraform configuration file/module to accept the imported Search Attribute. In the example below, the placeholder is \"temporalcloud_namespace_search_attribute\" \"saimport\"\n\n- the Namespace ID, which includes the Namespace Name and Account ID available at the top of the Namespace's page in the Temporal Cloud UI. In the example below, this is namespaceid.acctid\n\n- the name of the Search Attribute, which is available in the Search Attribute configuration of Namespace's page in the Temporal Cloud UI. In the example below, this is searchAttr\n\n```sh\n$ pulumi import temporalcloud:index/namespaceSearchAttribute:NamespaceSearchAttribute saimport namespaceid.acctid/searchAttr\n```\n\n",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name of the search attribute.\n"
+        },
+        "namespaceId": {
+          "type": "string",
+          "description": "The ID of the namespace to which this search attribute belongs.\n"
+        },
+        "type": {
+          "type": "string",
+          "description": "The type of the search attribute. Must be one of `bool`, `datetime`, `double`, `int`, `keyword`, `keyword_list` or `text`. (case-insensitive)\n"
+        }
+      },
+      "type": "object",
+      "required": [
+        "name",
+        "namespaceId",
+        "type"
+      ],
+      "inputProperties": {
+        "name": {
+          "type": "string",
+          "description": "The name of the search attribute.\n"
+        },
+        "namespaceId": {
+          "type": "string",
+          "description": "The ID of the namespace to which this search attribute belongs.\n"
+        },
+        "type": {
+          "type": "string",
+          "description": "The type of the search attribute. Must be one of `bool`, `datetime`, `double`, `int`, `keyword`, `keyword_list` or `text`. (case-insensitive)\n"
+        }
+      },
+      "requiredInputs": [
+        "namespaceId",
+        "type"
+      ],
+      "stateInputs": {
+        "description": "Input properties used for looking up and filtering NamespaceSearchAttribute resources.\n",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the search attribute.\n"
+          },
+          "namespaceId": {
+            "type": "string",
+            "description": "The ID of the namespace to which this search attribute belongs.\n"
+          },
+          "type": {
+            "type": "string",
+            "description": "The type of the search attribute. Must be one of `bool`, `datetime`, `double`, `int`, `keyword`, `keyword_list` or `text`. (case-insensitive)\n"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "temporalcloud:index/nexusEndpoint:NexusEndpoint": {
+      "description": "Provisions a Temporal Cloud Nexus endpoint.\n\n## Example Usage\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.temporalcloud.Namespace;\nimport com.pulumi.temporalcloud.NamespaceArgs;\nimport com.pulumi.temporalcloud.NexusEndpoint;\nimport com.pulumi.temporalcloud.NexusEndpointArgs;\nimport com.pulumi.temporalcloud.inputs.NexusEndpointWorkerTargetArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var targetNamespace = new Namespace(\"targetNamespace\", NamespaceArgs.builder()\n            .regions(\"aws-us-west-2\")\n            .apiKeyAuth(true)\n            .retentionDays(14)\n            .timeouts(NamespaceTimeoutsArgs.builder()\n                .create(\"10m\")\n                .delete(\"10m\")\n                .build())\n            .build());\n\n        var callerNamespace = new Namespace(\"callerNamespace\", NamespaceArgs.builder()\n            .regions(\"aws-us-east-1\")\n            .apiKeyAuth(true)\n            .retentionDays(14)\n            .timeouts(NamespaceTimeoutsArgs.builder()\n                .create(\"10m\")\n                .delete(\"10m\")\n                .build())\n            .build());\n\n        var callerNamespace2 = new Namespace(\"callerNamespace2\", NamespaceArgs.builder()\n            .regions(\"gcp-us-central1\")\n            .apiKeyAuth(true)\n            .retentionDays(14)\n            .timeouts(NamespaceTimeoutsArgs.builder()\n                .create(\"10m\")\n                .delete(\"10m\")\n                .build())\n            .build());\n\n        var nexusEndpoint = new NexusEndpoint(\"nexusEndpoint\", NexusEndpointArgs.builder()\n            .description(\"\"\"\nService Name:\n  my-hello-service\nOperation Names:\n  echo\n  say-hello\n\nInput / Output arguments are in the following repository:\nhttps://github.com/temporalio/samples-go/blob/main/nexus/service/api.go\n            \"\"\")\n            .workerTarget(NexusEndpointWorkerTargetArgs.builder()\n                .namespace_id(targetNamespace.id())\n                .task_queue(\"terraform-task-queue\")\n                .build())\n            .allowedCallerNamespaces(            \n                callerNamespace.id(),\n                callerNamespace2.id())\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  targetNamespace:\n    type: temporalcloud:Namespace\n    properties:\n      regions:\n        - aws-us-west-2\n      apiKeyAuth: true\n      retentionDays: 14\n      timeouts:\n        - create: 10m\n          delete: 10m\n  callerNamespace:\n    type: temporalcloud:Namespace\n    properties:\n      regions:\n        - aws-us-east-1\n      apiKeyAuth: true\n      retentionDays: 14\n      timeouts:\n        - create: 10m\n          delete: 10m\n  callerNamespace2:\n    type: temporalcloud:Namespace\n    properties:\n      regions:\n        - gcp-us-central1\n      apiKeyAuth: true\n      retentionDays: 14\n      timeouts:\n        - create: 10m\n          delete: 10m\n  nexusEndpoint:\n    type: temporalcloud:NexusEndpoint\n    properties:\n      description: |\n        Service Name:\n          my-hello-service\n        Operation Names:\n          echo\n          say-hello\n\n        Input / Output arguments are in the following repository:\n        https://github.com/temporalio/samples-go/blob/main/nexus/service/api.go\n      workerTarget:\n        namespace_id: ${targetNamespace.id}\n        task_queue: terraform-task-queue\n      allowedCallerNamespaces:\n        - ${callerNamespace.id}\n        - ${callerNamespace2.id}\n```\n\u003c!--End PulumiCodeChooser --\u003e\n\n## Import\n\nNexus Endpoints can be imported to incorporate existing Nexus Endpoints into your Terraform pipeline. \n\nTo import a Nexus Endpoint, you need\n\n- a resource configuration in your Terraform configuration file/module to accept the imported Nexus Endpoint. In the example below, the placeholder is \"temporalcloud_nexus_endpoint\" \"nexus_endpoint\"\n\n- the Nexus Endpoint's ID, which is found using the Temporal Cloud CLI tcld nexus endpoint list. In the example below, this is 405f7da4224a43d99c211904ed9b3819\n\n```sh\n$ pulumi import temporalcloud:index/nexusEndpoint:NexusEndpoint nexus_endpoint 405f7da4224a43d99c211904ed9b3819\n```\n\n",
+      "properties": {
+        "allowedCallerNamespaces": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Namespace Id(s) that are allowed to call this Endpoint.\n"
+        },
+        "description": {
+          "type": "string",
+          "description": "The description for the Nexus endpoint.\n",
+          "secret": true
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the endpoint. Must be unique within an account and match `^[a-zA-Z][a-zA-Z0-9\\-]*[a-zA-Z0-9]$`\n"
+        },
+        "timeouts": {
+          "$ref": "#/types/temporalcloud:index%2FNexusEndpointTimeouts:NexusEndpointTimeouts"
+        },
+        "workerTarget": {
+          "$ref": "#/types/temporalcloud:index%2FNexusEndpointWorkerTarget:NexusEndpointWorkerTarget",
+          "description": "A target spec for routing nexus requests to a specific cloud namespace worker.\n"
+        }
+      },
+      "type": "object",
+      "required": [
+        "allowedCallerNamespaces",
+        "name",
+        "workerTarget"
+      ],
+      "inputProperties": {
+        "allowedCallerNamespaces": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Namespace Id(s) that are allowed to call this Endpoint.\n"
+        },
+        "description": {
+          "type": "string",
+          "description": "The description for the Nexus endpoint.\n",
+          "secret": true
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the endpoint. Must be unique within an account and match `^[a-zA-Z][a-zA-Z0-9\\-]*[a-zA-Z0-9]$`\n"
+        },
+        "timeouts": {
+          "$ref": "#/types/temporalcloud:index%2FNexusEndpointTimeouts:NexusEndpointTimeouts"
+        },
+        "workerTarget": {
+          "$ref": "#/types/temporalcloud:index%2FNexusEndpointWorkerTarget:NexusEndpointWorkerTarget",
+          "description": "A target spec for routing nexus requests to a specific cloud namespace worker.\n"
+        }
+      },
+      "requiredInputs": [
+        "allowedCallerNamespaces",
+        "workerTarget"
+      ],
+      "stateInputs": {
+        "description": "Input properties used for looking up and filtering NexusEndpoint resources.\n",
+        "properties": {
+          "allowedCallerNamespaces": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Namespace Id(s) that are allowed to call this Endpoint.\n"
+          },
+          "description": {
+            "type": "string",
+            "description": "The description for the Nexus endpoint.\n",
+            "secret": true
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the endpoint. Must be unique within an account and match `^[a-zA-Z][a-zA-Z0-9\\-]*[a-zA-Z0-9]$`\n"
+          },
+          "timeouts": {
+            "$ref": "#/types/temporalcloud:index%2FNexusEndpointTimeouts:NexusEndpointTimeouts"
+          },
+          "workerTarget": {
+            "$ref": "#/types/temporalcloud:index%2FNexusEndpointWorkerTarget:NexusEndpointWorkerTarget",
+            "description": "A target spec for routing nexus requests to a specific cloud namespace worker.\n"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "temporalcloud:index/serviceAccount:ServiceAccount": {
+      "description": "Provisions a Temporal Cloud Service Account.\n\n## Import\n\nService Accounts can be imported to incorporate existing Service Accounts into your Terraform pipeline. \n\nTo import a Service Account, you need\n\n- a resource configuration in your Terraform configuration file/module to accept the imported Service Account. In the example below, the placeholder is \"temporalcloud_service_account\" \"saimport\"\n\n- the Service Accounts's ID, which is found using the Temporal Cloud CLI tcld sa l. In the example below, this is e3cb94fbdbb845f480044d053d00665b\n\n```sh\n$ pulumi import temporalcloud:index/serviceAccount:ServiceAccount saimport e3cb94fbdbb845f480044d053d00665b\n```\n\n",
+      "properties": {
+        "accountAccess": {
+          "type": "string",
+          "description": "The role on the account. Must be one of admin, developer, or read (case-insensitive).\n"
+        },
+        "name": {
+          "type": "string",
+          "description": "The name associated with the service account.\n"
+        },
+        "namespaceAccesses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/types/temporalcloud:index%2FServiceAccountNamespaceAccess:ServiceAccountNamespaceAccess"
+          },
+          "description": "The set of namespace accesses. Empty sets are not allowed, omit the attribute instead. Service Accounts with an account*access role of admin cannot be assigned explicit permissions to namespaces. Admins implicitly receive access to all Namespaces.\n"
+        },
+        "state": {
+          "type": "string",
+          "description": "The current state of the Service Account.\n"
+        },
+        "timeouts": {
+          "$ref": "#/types/temporalcloud:index%2FServiceAccountTimeouts:ServiceAccountTimeouts"
+        }
+      },
+      "type": "object",
+      "required": [
+        "accountAccess",
+        "name",
+        "state"
+      ],
+      "inputProperties": {
+        "accountAccess": {
+          "type": "string",
+          "description": "The role on the account. Must be one of admin, developer, or read (case-insensitive).\n"
+        },
+        "name": {
+          "type": "string",
+          "description": "The name associated with the service account.\n"
+        },
+        "namespaceAccesses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/types/temporalcloud:index%2FServiceAccountNamespaceAccess:ServiceAccountNamespaceAccess"
+          },
+          "description": "The set of namespace accesses. Empty sets are not allowed, omit the attribute instead. Service Accounts with an account*access role of admin cannot be assigned explicit permissions to namespaces. Admins implicitly receive access to all Namespaces.\n"
+        },
+        "timeouts": {
+          "$ref": "#/types/temporalcloud:index%2FServiceAccountTimeouts:ServiceAccountTimeouts"
+        }
+      },
+      "requiredInputs": [
+        "accountAccess"
+      ],
+      "stateInputs": {
+        "description": "Input properties used for looking up and filtering ServiceAccount resources.\n",
+        "properties": {
+          "accountAccess": {
+            "type": "string",
+            "description": "The role on the account. Must be one of admin, developer, or read (case-insensitive).\n"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name associated with the service account.\n"
+          },
+          "namespaceAccesses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/types/temporalcloud:index%2FServiceAccountNamespaceAccess:ServiceAccountNamespaceAccess"
+            },
+            "description": "The set of namespace accesses. Empty sets are not allowed, omit the attribute instead. Service Accounts with an account*access role of admin cannot be assigned explicit permissions to namespaces. Admins implicitly receive access to all Namespaces.\n"
+          },
+          "state": {
+            "type": "string",
+            "description": "The current state of the Service Account.\n"
+          },
+          "timeouts": {
+            "$ref": "#/types/temporalcloud:index%2FServiceAccountTimeouts:ServiceAccountTimeouts"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "temporalcloud:index/user:User": {
+      "description": "Provisions a Temporal Cloud user.\n\n## Import\n\nUsers can be imported to incorporate existing Users into your Terraform pipeline. \n\nTo import a User, you need\n\n- a resource configuration in your Terraform configuration file/module to accept the imported User. In the example below, the placeholder is \"temporalcloud_user\" \"user\"\n\n- the User's ID, which is found using the Temporal Cloud CLI tcld u l. In the example below, this is 72360058153949edb2f1d47019c1e85f\n\n```sh\n$ pulumi import temporalcloud:index/user:User user 72360058153949edb2f1d47019c1e85f\n```\n\n",
+      "properties": {
+        "accountAccess": {
+          "type": "string",
+          "description": "The role on the account. Must be one of owner, admin, developer, or read (case-insensitive). owner is only valid for import and cannot be created, updated or deleted without Temporal support.\n"
+        },
+        "email": {
+          "type": "string",
+          "description": "The email address for the user.\n"
+        },
+        "namespaceAccesses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/types/temporalcloud:index%2FUserNamespaceAccess:UserNamespaceAccess"
+          },
+          "description": "The set of namespace accesses. Empty sets are not allowed, omit the attribute instead. Users with account*access roles of owner or admin cannot be assigned explicit permissions to namespaces. They implicitly receive access to all Namespaces.\n"
+        },
+        "state": {
+          "type": "string",
+          "description": "The current state of the user.\n"
+        },
+        "timeouts": {
+          "$ref": "#/types/temporalcloud:index%2FUserTimeouts:UserTimeouts"
+        }
+      },
+      "type": "object",
+      "required": [
+        "accountAccess",
+        "email",
+        "state"
+      ],
+      "inputProperties": {
+        "accountAccess": {
+          "type": "string",
+          "description": "The role on the account. Must be one of owner, admin, developer, or read (case-insensitive). owner is only valid for import and cannot be created, updated or deleted without Temporal support.\n"
+        },
+        "email": {
+          "type": "string",
+          "description": "The email address for the user.\n"
+        },
+        "namespaceAccesses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/types/temporalcloud:index%2FUserNamespaceAccess:UserNamespaceAccess"
+          },
+          "description": "The set of namespace accesses. Empty sets are not allowed, omit the attribute instead. Users with account*access roles of owner or admin cannot be assigned explicit permissions to namespaces. They implicitly receive access to all Namespaces.\n"
+        },
+        "timeouts": {
+          "$ref": "#/types/temporalcloud:index%2FUserTimeouts:UserTimeouts"
+        }
+      },
+      "requiredInputs": [
+        "accountAccess",
+        "email"
+      ],
+      "stateInputs": {
+        "description": "Input properties used for looking up and filtering User resources.\n",
+        "properties": {
+          "accountAccess": {
+            "type": "string",
+            "description": "The role on the account. Must be one of owner, admin, developer, or read (case-insensitive). owner is only valid for import and cannot be created, updated or deleted without Temporal support.\n"
+          },
+          "email": {
+            "type": "string",
+            "description": "The email address for the user.\n"
+          },
+          "namespaceAccesses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/types/temporalcloud:index%2FUserNamespaceAccess:UserNamespaceAccess"
+            },
+            "description": "The set of namespace accesses. Empty sets are not allowed, omit the attribute instead. Users with account*access roles of owner or admin cannot be assigned explicit permissions to namespaces. They implicitly receive access to all Namespaces.\n"
+          },
+          "state": {
+            "type": "string",
+            "description": "The current state of the user.\n"
+          },
+          "timeouts": {
+            "$ref": "#/types/temporalcloud:index%2FUserTimeouts:UserTimeouts"
+          }
+        },
+        "type": "object"
+      }
+    }
+  },
+  "functions": {
+    "temporalcloud:index/getNamespaces:getNamespaces": {
+      "description": "## Example Usage\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as temporalcloud from \"@pulumi/temporalcloud\";\n\nconst myNamespaces = temporalcloud.getNamespaces({});\nexport const namespaces = myNamespaces.then(myNamespaces =\u003e myNamespaces.namespaces);\n```\n```python\nimport pulumi\nimport pulumi_temporalcloud as temporalcloud\n\nmy_namespaces = temporalcloud.get_namespaces()\npulumi.export(\"namespaces\", my_namespaces.namespaces)\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Temporalcloud = Pulumi.Temporalcloud;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var myNamespaces = Temporalcloud.GetNamespaces.Invoke();\n\n    return new Dictionary\u003cstring, object?\u003e\n    {\n        [\"namespaces\"] = myNamespaces.Apply(getNamespacesResult =\u003e getNamespacesResult.Namespaces),\n    };\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi-terraform-provider/sdks/go/temporalcloud/temporalcloud\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\tmyNamespaces, err := temporalcloud.GetNamespaces(ctx, map[string]interface{}{}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tctx.Export(\"namespaces\", myNamespaces.Namespaces)\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.temporalcloud.TemporalcloudFunctions;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var myNamespaces = TemporalcloudFunctions.getNamespaces();\n\n        ctx.export(\"namespaces\", myNamespaces.applyValue(getNamespacesResult -\u003e getNamespacesResult.namespaces()));\n    }\n}\n```\n```yaml\nvariables:\n  myNamespaces:\n    fn::invoke:\n      function: temporalcloud:getNamespaces\n      arguments: {}\noutputs:\n  namespaces: ${myNamespaces.namespaces}\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
+      "outputs": {
+        "description": "A collection of values returned by getNamespaces.\n",
+        "properties": {
+          "id": {
+            "description": "The ID of this resource.\n",
+            "type": "string"
+          },
+          "namespaces": {
+            "items": {
+              "$ref": "#/types/temporalcloud:index%2FgetNamespacesNamespace:getNamespacesNamespace"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "id",
+          "namespaces"
+        ],
+        "type": "object"
+      }
+    },
+    "temporalcloud:index/getRegions:getRegions": {
+      "description": "## Example Usage\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as temporalcloud from \"@pulumi/temporalcloud\";\n\nconst regionsRegions = temporalcloud.getRegions({});\nexport const regions = regionsRegions.then(regionsRegions =\u003e regionsRegions.regions);\n```\n```python\nimport pulumi\nimport pulumi_temporalcloud as temporalcloud\n\nregions_regions = temporalcloud.get_regions()\npulumi.export(\"regions\", regions_regions.regions)\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Temporalcloud = Pulumi.Temporalcloud;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var regionsRegions = Temporalcloud.GetRegions.Invoke();\n\n    return new Dictionary\u003cstring, object?\u003e\n    {\n        [\"regions\"] = regionsRegions.Apply(getRegionsResult =\u003e getRegionsResult.Regions),\n    };\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi-terraform-provider/sdks/go/temporalcloud/temporalcloud\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\tregionsRegions, err := temporalcloud.GetRegions(ctx, map[string]interface{}{}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tctx.Export(\"regions\", regionsRegions.Regions)\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.temporalcloud.TemporalcloudFunctions;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var regionsRegions = TemporalcloudFunctions.getRegions();\n\n        ctx.export(\"regions\", regionsRegions.applyValue(getRegionsResult -\u003e getRegionsResult.regions()));\n    }\n}\n```\n```yaml\nvariables:\n  regionsRegions:\n    fn::invoke:\n      function: temporalcloud:getRegions\n      arguments: {}\noutputs:\n  regions: ${regionsRegions.regions}\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
+      "outputs": {
+        "description": "A collection of values returned by getRegions.\n",
+        "properties": {
+          "id": {
+            "description": "The ID of this resource.\n",
+            "type": "string"
+          },
+          "regions": {
+            "items": {
+              "$ref": "#/types/temporalcloud:index%2FgetRegionsRegion:getRegionsRegion"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "id",
+          "regions"
+        ],
+        "type": "object"
+      }
+    },
+    "temporalcloud:index/getServiceAccounts:getServiceAccounts": {
+      "description": "Fetches details about all Service Accounts.\n",
+      "outputs": {
+        "description": "A collection of values returned by getServiceAccounts.\n",
+        "properties": {
+          "id": {
+            "description": "The unique identifier of the Service Accounts data source.\n",
+            "type": "string"
+          },
+          "serviceAccounts": {
+            "description": "The list of Service Accounts.\n",
+            "items": {
+              "$ref": "#/types/temporalcloud:index%2FgetServiceAccountsServiceAccount:getServiceAccountsServiceAccount"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "id",
+          "serviceAccounts"
+        ],
+        "type": "object"
+      }
+    }
+  },
+  "parameterization": {
+    "baseProvider": {
+      "name": "terraform-provider",
+      "version": "0.8.1"
+    },
+    "parameter": "eyJyZW1vdGUiOnsidXJsIjoicmVnaXN0cnkub3BlbnRvZnUub3JnL3RlbXBvcmFsaW8vdGVtcG9yYWxjbG91ZCIsInZlcnNpb24iOiIwLjYuMSJ9fQ=="
+  }
+}

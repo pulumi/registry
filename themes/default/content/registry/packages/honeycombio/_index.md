@@ -1,0 +1,241 @@
+---
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/honeycombio/honeycombio/0.31.0/index.md
+# Do not edit by hand unless you're certain you know what you are doing!
+# *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
+title: Honeycombio Provider
+meta_desc: Provides an overview on how to configure the Pulumi Honeycombio provider.
+layout: package
+---
+
+## Generate Provider
+
+The Honeycombio provider must be installed as a Local Package by following the [instructions for Any Terraform Provider](https://www.pulumi.com/registry/packages/terraform-provider/):
+
+```bash
+pulumi package add terraform-provider honeycombio/honeycombio
+```
+## Overview
+
+[Honeycomb](https://honeycomb.io) provides observability for high-performance engineering teams so they can quickly understand what their code does in the hands of real users in unpredictable and highly complex cloud environments.
+Honeycomb customers stop wasting precious time on engineering mysteries because they can quickly solve them and know exactly how to create fast, reliable, and great customer experiences.
+
+In order to use this provider, you must have a Honeycomb account. You can get started today with a free account.
+
+Use the navigation to the left to read about the available resources and functions.
+## Example usage
+
+{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{% choosable language typescript %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: nodejs
+
+```
+```typescript
+import * as pulumi from "@pulumi/pulumi";
+import * as honeycombio from "@pulumi/honeycombio";
+
+const config = new pulumi.Config();
+const dataset = config.require("dataset");
+// Create a marker
+const hello = new honeycombio.index/marker.Marker("hello", {
+    message: "Hello world!",
+    dataset: dataset,
+});
+```
+{{% /choosable %}}
+{{% choosable language python %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: python
+
+```
+```python
+import pulumi
+import pulumi_honeycombio as honeycombio
+
+config = pulumi.Config()
+dataset = config.require("dataset")
+# Create a marker
+hello = honeycombio.index.marker.Marker("hello",
+    message=Hello world!,
+    dataset=dataset)
+```
+{{% /choosable %}}
+{{% choosable language csharp %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: dotnet
+
+```
+```csharp
+using System.Collections.Generic;
+using System.Linq;
+using Pulumi;
+using Honeycombio = Pulumi.Honeycombio;
+
+return await Deployment.RunAsync(() =>
+{
+    var config = new Config();
+    var dataset = config.Require("dataset");
+    // Create a marker
+    var hello = new Honeycombio.Index.Marker.Marker("hello", new()
+    {
+        Message = "Hello world!",
+        Dataset = dataset,
+    });
+
+});
+
+```
+{{% /choosable %}}
+{{% choosable language go %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: go
+
+```
+```go
+package main
+
+import (
+	"github.com/pulumi/pulumi-honeycombio/sdk/go/honeycombio"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		cfg := config.New(ctx, "")
+		dataset := cfg.Require("dataset")
+		// Create a marker
+		_, err := index / marker.NewMarker(ctx, "hello", &index/marker.MarkerArgs{
+			Message: "Hello world!",
+			Dataset: dataset,
+		})
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+}
+```
+{{% /choosable %}}
+{{% choosable language yaml %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: yaml
+
+```
+```yaml
+configuration:
+  dataset:
+    type: string
+resources:
+  # Create a marker
+  hello:
+    type: honeycombio:Marker
+    properties:
+      message: Hello world!
+      dataset: ${dataset}
+```
+{{% /choosable %}}
+{{% choosable language java %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: java
+
+```
+```java
+package generated_program;
+
+import com.pulumi.Context;
+import com.pulumi.Pulumi;
+import com.pulumi.core.Output;
+import com.pulumi.honeycombio.Marker;
+import com.pulumi.honeycombio.MarkerArgs;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+public class App {
+    public static void main(String[] args) {
+        Pulumi.run(App::stack);
+    }
+
+    public static void stack(Context ctx) {
+        final var config = ctx.config();
+        final var dataset = config.get("dataset");
+        // Create a marker
+        var hello = new Marker("hello", MarkerArgs.builder()
+            .message("Hello world!")
+            .dataset(dataset)
+            .build());
+
+    }
+}
+```
+{{% /choosable %}}
+{{< /chooser >}}
+
+More advanced examples can be found in the example directory.
+### Configuring the provider for Honeycomb EU
+
+If you are a Honeycomb EU customer, to use the provider you must override the default API host.
+This can be done with a provider configuration or by setting the `HONEYCOMB_API_ENDPOINT` environment variable.
+
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime:
+config:
+    honeycombio:apiUrl:
+        value: https://api.eu1.honeycomb.io
+
+```
+## Authentication
+
+The Honeycomb provider requires an API key to communicate with the Honeycomb APIs.
+The provider can make calls to v1 and v2 APIs and requires specific key configurations for each.
+For more information about API Keys, check out [Best Practices for API Keys](https://docs.honeycomb.io/get-started/best-practices/api-keys/).
+
+A single instance of the provider can be configured with both key types.
+At least one of the v1 or v2 API key configuration is required.
+### v1 APIs
+
+v1 APIs require Configuration Keys.
+Their permissions can be managed in *Environment settings*.
+Most resources and functions call v1 APIs today.
+
+The key can be set with the `apiKey` argument or via the `HONEYCOMB_API_KEY` or `HONEYCOMBIO_APIKEY` environment variable.
+
+`HONEYCOMB_API_KEY` environment variable will take priority over the `HONEYCOMBIO_APIKEY` environment variable.
+### v2 APIs
+
+v2 APIs require a Mangement Key.
+Their permissions can be managed in *Team settings*.
+Resources and functions that call v2 APIs will be noted along with the scope required to use the resource or function.
+
+The key pair can be set with the `apiKeyId` and `apiKeySecret` arguments, or via the `HONEYCOMB_KEY_ID` and `HONEYCOMB_KEY_SECRET` environment variables.
+
+> **Note** Hard-coding API keys in any Pulumi configuration is not recommended. Consider using the one of the environment variable options.
+## Configuration Reference
+
+Arguments accepted by this provider include:
+
+* `apiKey` - (Optional) The Honeycomb API key to use. It can also be set using `HONEYCOMB_API_KEY` or `HONEYCOMBIO_APIKEY` environment variables.
+* `apiKeyId` - (Optional) The ID portion of the Honeycomb Management API key to use. It can also be set via the `HONEYCOMB_KEY_ID` environment variable.
+* `apiKeySecret` - (Optional) The secret portion of the Honeycomb Management API key to use. It can also be set via the `HONEYCOMB_KEY_SECRET` environment variable.
+* `apiUrl` - (Optional) Override the URL of the Honeycomb.io API. It can also be set using `HONEYCOMB_API_ENDPOINT`. Defaults to `https://api.honeycomb.io`.
+* `debug` - (Optional) Enable to log additional debug information. To view the logs, set `TF_LOG` to at least debug.
+
+At least one of `apiKey`, or the `apiKeyId` and `apiKeySecret` pair must be configured.

@@ -1,28 +1,39 @@
-## Description
+<!--
 
-<!-- A brief description of the PR here. -->
+        +--------------------------------------------------------+
+        | If you are adding a new package to the Pulumi Registry |
+        +--------------------------------------------------------+
 
-## Adding a new package?
+        Please make sure that you have:
 
-If this pull request adds a new package, please verify/document:
+        - [ ] Released your package with a version prefixed with `v` (e.g. `v0.1.0`). The
+              part after the leading `v` must be valid semver 2.0.
 
-- [ ] The primary maintainer contact for this package (please indicate if the provider is sponsored by a company or community maintained)
-- [ ] The package's schema URL in this PR is correct.
-- [ ] The package metadata file, if present, contains:
-  - [ ] a supported category (one of `Cloud`, `Infrastructure`, `Network`, `Database`, `Monitoring`, or `Utility`).
-  - [ ] a valid plugin download URL. See [Publish Your Package](https://www.pulumi.com/docs/using-pulumi/pulumi-packages/how-to-author/#publish-your-package).
-  - [ ] a description that explains what the package does.
-  - [ ] a valid logo URL that points to a PNG whose dimensions conform to the others in this repo (e.g., 100x100).
-- [ ] The package repo contains an Overview doc (`/docs/_index.md`) that includes:
-  - [ ] a brief explanation of what the package is and what it does.
-  - [ ] at least one representative example in all supported languages (i.e. TypeScript, Python, Go and C#).
-  - [ ] a front-matter property for the `layout` set to `package`.
-- [ ] The package repo contains an Installation and Configuration doc (`/docs/installation-configuration.md`) that includes:
-  - [ ] links to SDKs in all supported languages (i.e. should link to published SDKs in NPM, PyPi and NuGet).
-  - [ ] a copyable command for installing the resource plugin if necessary.
-  - [ ] an example of configuring the provider with `pulumi config set`.
-  - [ ] an example of configuring the provider with environment variables.
-- [ ] The repository has:
-  - [ ] a version tag prefixed with `v` that corresponds with a valid GitHub release and published package SDKs (in NPM, PyPi, and NuGet)
-- [ ] A CODEOWNER has reviewed the PR.
-- [ ] A member of the @pulumi/docs team has reviewed all documentation.
+            - Published an SDK for your provider in:
+                - [ ] Typescript
+                - [ ] Python
+                - [ ] Go
+                - [ ] C#
+                - [ ] Java (optional)
+
+        - [ ] Have checked in a schema.json that matches the location of the `schemaFile`
+              specified in `/community-packages/package-list.json`.
+
+        - [ ] Have a `/docs/_index.md` and `/docs/installation-configuration.md` filled
+              out in your repo.
+
+            - [ ] `/docs/installation-configuration.md` links to all published SDKs.
+
+            - [ ] `/docs/index.md` shows an example of using your provider in each language.
+
+        Once you are ready to publish, opening a PR will tag a member of Pulumi who will
+        review your PR.
+
+        Thanks for contributing to the Pulumi Registry!
+
+        ---
+
+        For maintainers, see the full checklist for adding a new provider at
+        <https://github.com/pulumi/registry/blob/main/docs/adding-a-new-pacakge.md>.
+
+-->

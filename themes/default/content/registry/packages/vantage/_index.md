@@ -1,212 +1,34 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/vantage-sh/vantage/0.1.47/index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/lbrlabs/pulumi-vantage/v0.0.3/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-# *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
-title: Vantage Provider
-meta_desc: Provides an overview on how to configure the Pulumi Vantage provider.
-layout: package
+title: Vantage
+meta_desc: Provides an overview of the Vantage Provider for Pulumi.
+layout: overview
 ---
 
-## Generate Provider
+The Vantage provider for Pulumi can be used to provision any of the cloud resources available in [Vantage](https://vantage.sh).
+The Vantage provider must be configured with credentials to deploy and update resources in Vantage.
 
-The Vantage provider must be installed as a Local Package by following the [instructions for Any Terraform Provider](https://www.pulumi.com/registry/packages/terraform-provider/):
+## Example
 
-```bash
-pulumi package add terraform-provider vantage-sh/vantage
-```
-## Example Usage
-
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python" >}}
 {{% choosable language typescript %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: nodejs
-config:
-    vantage:apiToken:
-        value: 'TODO: var.api_token'
 
-```
 ```typescript
-import * as pulumi from "@pulumi/pulumi";
-import * as vantage from "@pulumi/vantage";
+import * as vantage from "@lbrlabs/pulumi-vantage";
 
-const aws = new vantage.index/folder.Folder("aws", {title: "AWS Costs"});
-const awsCostReport = new vantage.index/costReport.CostReport("aws", {
-    folderToken: aws.token,
-    filter: "costs.provider = 'aws'",
-    title: "AWS Costs",
-});
+
+
 ```
+
 {{% /choosable %}}
 {{% choosable language python %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: python
-config:
-    vantage:apiToken:
-        value: 'TODO: var.api_token'
 
-```
 ```python
-import pulumi
-import pulumi_vantage as vantage
+import lbrlabs_pulumi_vantage as vantage
 
-aws = vantage.index.folder.Folder("aws", title=AWS Costs)
-aws_cost_report = vantage.index.cost_report.CostReport("aws",
-    folder_token=aws.token,
-    filter=costs.provider = 'aws',
-    title=AWS Costs)
-```
-{{% /choosable %}}
-{{% choosable language csharp %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: dotnet
-config:
-    vantage:apiToken:
-        value: 'TODO: var.api_token'
 
 ```
-```csharp
-using System.Collections.Generic;
-using System.Linq;
-using Pulumi;
-using Vantage = Pulumi.Vantage;
 
-return await Deployment.RunAsync(() =>
-{
-    var aws = new Vantage.Index.Folder.Folder("aws", new()
-    {
-        Title = "AWS Costs",
-    });
-
-    var awsCostReport = new Vantage.Index.CostReport.CostReport("aws", new()
-    {
-        FolderToken = aws.Token,
-        Filter = "costs.provider = 'aws'",
-        Title = "AWS Costs",
-    });
-
-});
-
-```
-{{% /choosable %}}
-{{% choosable language go %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: go
-config:
-    vantage:apiToken:
-        value: 'TODO: var.api_token'
-
-```
-```go
-package main
-
-import (
-	"github.com/pulumi/pulumi-vantage/sdk/go/vantage"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-)
-
-func main() {
-	pulumi.Run(func(ctx *pulumi.Context) error {
-		aws, err := index / folder.NewFolder(ctx, "aws", &index/folder.FolderArgs{
-			Title: "AWS Costs",
-		})
-		if err != nil {
-			return err
-		}
-		_, err = index / costreport.NewCostReport(ctx, "aws", &index/costreport.CostReportArgs{
-			FolderToken: aws.Token,
-			Filter:      "costs.provider = 'aws'",
-			Title:       "AWS Costs",
-		})
-		if err != nil {
-			return err
-		}
-		return nil
-	})
-}
-```
-{{% /choosable %}}
-{{% choosable language yaml %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: yaml
-config:
-    vantage:apiToken:
-        value: 'TODO: var.api_token'
-
-```
-```yaml
-resources:
-  aws:
-    type: vantage:Folder
-    properties:
-      title: AWS Costs
-  awsCostReport:
-    type: vantage:CostReport
-    name: aws
-    properties:
-      folderToken: ${aws.token}
-      filter: costs.provider = 'aws'
-      title: AWS Costs
-```
-{{% /choosable %}}
-{{% choosable language java %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: java
-config:
-    vantage:apiToken:
-        value: 'TODO: var.api_token'
-
-```
-```java
-package generated_program;
-
-import com.pulumi.Context;
-import com.pulumi.Pulumi;
-import com.pulumi.core.Output;
-import com.pulumi.vantage.Folder;
-import com.pulumi.vantage.FolderArgs;
-import com.pulumi.vantage.CostReport;
-import com.pulumi.vantage.CostReportArgs;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Map;
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
-public class App {
-    public static void main(String[] args) {
-        Pulumi.run(App::stack);
-    }
-
-    public static void stack(Context ctx) {
-        var aws = new Folder("aws", FolderArgs.builder()
-            .title("AWS Costs")
-            .build());
-
-        var awsCostReport = new CostReport("awsCostReport", CostReportArgs.builder()
-            .folderToken(aws.token())
-            .filter("costs.provider = 'aws'")
-            .title("AWS Costs")
-            .build());
-
-    }
-}
-```
 {{% /choosable %}}
 {{< /chooser >}}
-## Configuration Reference
-
-- `apiToken` (String, Sensitive)
-- `host` (String)

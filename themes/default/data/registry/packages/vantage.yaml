@@ -2,15 +2,15 @@
 # Do not edit by hand unless you're certain you know what you are doing!
 category: Cloud
 component: false
-description: A Pulumi package to create resource in vantage.sh.
+description: A Pulumi provider dynamically bridged from vantage.
 featured: false
-logo_url: https://raw.githubusercontent.com/lbrlabs/pulumi-vantage/main/assets/vantage.png
+logo_url: ""
 name: vantage
 native: false
 package_status: public_preview
-publisher: lbrlabs
-repo_url: https://github.com/lbrlabs/pulumi-vantage
-schema_file_url: https://raw.githubusercontent.com/lbrlabs/pulumi-vantage/v0.0.3/provider/cmd/pulumi-resource-vantage/schema.json
-title: Vantage
-updated_on: 1706728613
-version: v0.0.3
+publisher: vantage-sh
+repo_url: https://github.com/vantage-sh/terraform-provider-vantage
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/vantage-sh/vantage/0.1.47/schema.json
+title: vantage
+updated_on: 1741563330
+version: 0.1.47

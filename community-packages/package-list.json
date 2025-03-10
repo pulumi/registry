@@ -213,10 +213,6 @@
       "schemaFile": "provider/cmd/pulumi-resource-mssql/schema.json"
     },
     {
-      "repoSlug": "lbrlabs/pulumi-vantage",
-      "schemaFile": "provider/cmd/pulumi-resource-vantage/schema.json"
-    },
-    {
       "repoSlug": "pulumiverse/pulumi-matchbox",
       "schemaFile": "provider/cmd/pulumi-resource-matchbox/schema.json"
     },

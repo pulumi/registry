@@ -375,6 +375,10 @@
     {
       "repoSlug": "UpCloudLtd/pulumi-upcloud",
       "schemaFile": "provider/cmd/pulumi-resource-upcloud/schema.json"
+    },
+    {
+      "repoSlug": "dirien/pulumi-fly",
+      "schemaFile": "provider/cmd/pulumi-resource-fly/schema.json"
     }
   ]
 }

@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/komminarlabs/pulumi-influxdb3/v1.2.3/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/komminarlabs/pulumi-influxdb3/v1.3.0/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: InfluxDB V3 Installation & Configuration
 meta_desc: Information on how to install the InfluxDB V3 provider.
@@ -23,7 +23,6 @@ The following configuration points are available for the `InfluxDB3` provider:
 - `influxdb3:account_id` (environment: `INFLUXDB3_ACCOUNT_ID`) - The ID of the account that the cluster belongs to
 - `influxdb3:cluster_id` (environment: `INFLUXDB3_CLUSTER_ID`) - The ID of the cluster that you want to manage
 - `influxdb3:token` (environment: `INFLUXDB3_TOKEN`) - The InfluxDB management token
-- `influxdb3:url` (environment: `INFLUXDB3_URL`) - The InfluxDB Cloud Dedicated Management API URL
 
 ### Provider Binary
 

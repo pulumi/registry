@@ -293,6 +293,10 @@ const cdn = new aws.cloudfront.Distribution(
     {
         protect: true,
         dependsOn: [ websiteLogsBucket ],
+        // Work-around https://github.com/pulumi/pulumi-aws/issues/5229 to allow upgrading the version of pulumi-aws used.
+        //
+        // Before upgrading to v6, this has no effect.
+        ignoreChanges: ["staging"],
     },
 );
 

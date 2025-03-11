@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/komminarlabs/pulumi-influxdb3/v1.2.3/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/komminarlabs/pulumi-influxdb3/v1.3.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: InfluxDB V3
 meta_desc: Provides an overview of the InfluxDB V3 Provider for Pulumi.
@@ -21,10 +21,10 @@ The InfluxDB V3 provider must be configured with credentials to deploy and updat
 
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
-import * as influxdb from "@komminarlabs/influxdb3";
+import * as influxdb3 from "@komminarlabs/influxdb3";
 
 // Create a new Bucket
-export const database = new influxdb.Database("signals", {
+export const database = new influxdb3.Database("signals", {
     name: "signals",
     retentionPeriod: 604800,
 });

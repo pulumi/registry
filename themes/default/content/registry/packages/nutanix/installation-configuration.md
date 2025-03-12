@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pierskarsenbarg/pulumi-nutanix/v0.7.1/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pierskarsenbarg/pulumi-nutanix/v0.7.2/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: Nutanix Installation & Configuration
 meta_desc: Information on how to install the Nutanix provider.
@@ -27,16 +27,19 @@ Replace the version string with your desired version.
 
 ## Setup
 
-To provision resources with the Pulumi Nutanix provider, you need to provide the `apiKey` and `region`.
+To provision resources with the Pulumi Nutanix provider, you need to authenticate using the configuration options as specified below.
 
 ## Configuration Options
 
 Use `pulumi config set nutanix:<option> --secret`.
 
-| Option   | Required/Optional | Description                                                                                      |
-| -------- | ----------------- | ------------------------------------------------------------------------------------------------ |
-| `apiKey` | Required          | This is the user id that should be used to make the connection (environment: `NUTANIX_API_KEY`). |
-| `region` | Required          | This is the password that should be used to make the connection (environment: `NUTANIX_REGION`). |
+| Option     | Required/Optional | Description                                                                                                                                         |
+| ---------- | ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `username` | Required          | This is the username for the Prism Elements or Prism Central instance. This can also be specified with the `NUTANIX_USERNAME` environment variable. |
+| `password` | Required          | This is the password for the Prism Elements or Prism Central instance. This can also be specified with the `NUTANIX_PASSWORD` environment variable. |
+| `endpoint` | Required          | This is the endpoint for the Prism Elements or Prism Central instance. This can also be specified with the NUTANIX_ENDPOINT environment variable.   |
+| `insecure` | Optional          | This specifies whether to allow verify ssl certificates. This can also be specified with `NUTANIX_INSECURE`. Defaults to `false`.                     |
+| `port`     | Optional          | This is the port for the Prism Elements or Prism Central instance. This can also be specified with the `NUTANIX_PORT` environment variable. Defaults to `9440`. |
 
 {{% notes type="warning" %}}
 You should use the `--secret` flag to encrypt the config values using your secret provider. For more information on this, view the [Pulumi Configuration Secrets](https://www.pulumi.com/docs/intro/concepts/secrets/#secrets) section in the Pulumi docs.

@@ -10,7 +10,7 @@ native: false
 package_status: public_preview
 publisher: Piers Karsenbarg
 repo_url: https://github.com/pierskarsenbarg/pulumi-nutanix
-schema_file_url: https://raw.githubusercontent.com/pierskarsenbarg/pulumi-nutanix/v0.7.2/provider/cmd/pulumi-resource-nutanix/schema.json
+schema_file_url: https://raw.githubusercontent.com/pierskarsenbarg/pulumi-nutanix/v0.7.3/provider/cmd/pulumi-resource-nutanix/schema.json
 title: Nutanix
-updated_on: 1741786999
-version: v0.7.2
+updated_on: 1741857112
+version: v0.7.3

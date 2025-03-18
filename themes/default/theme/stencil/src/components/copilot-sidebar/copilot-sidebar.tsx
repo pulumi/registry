@@ -43,7 +43,7 @@ export class CopilotSidebar {
 
         this.showAtlas =
             this.atlasUrl &&
-            window.localStorage.getItem(ATLAS_LOCAL_STORAGE_KEY) === "true";
+            window.localStorage.getItem(ATLAS_LOCAL_STORAGE_KEY) !== "false";
         if (this.showAtlas) {
             await this.loadAtlasScripts();
         }

@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/vantage-sh/vantage/0.1.47/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/vantage-sh/vantage/0.1.48/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Vantage Provider
@@ -31,8 +31,8 @@ config:
 import * as pulumi from "@pulumi/pulumi";
 import * as vantage from "@pulumi/vantage";
 
-const aws = new vantage.index/folder.Folder("aws", {title: "AWS Costs"});
-const awsCostReport = new vantage.index/costReport.CostReport("aws", {
+const aws = new vantage.Folder("aws", {title: "AWS Costs"});
+const awsCostReport = new vantage.CostReport("aws", {
     folderToken: aws.token,
     filter: "costs.provider = 'aws'",
     title: "AWS Costs",
@@ -53,11 +53,11 @@ config:
 import pulumi
 import pulumi_vantage as vantage
 
-aws = vantage.index.folder.Folder("aws", title=AWS Costs)
-aws_cost_report = vantage.index.cost_report.CostReport("aws",
+aws = vantage.Folder("aws", title="AWS Costs")
+aws_cost_report = vantage.CostReport("aws",
     folder_token=aws.token,
-    filter=costs.provider = 'aws',
-    title=AWS Costs)
+    filter="costs.provider = 'aws'",
+    title="AWS Costs")
 ```
 {{% /choosable %}}
 {{% choosable language csharp %}}
@@ -78,12 +78,12 @@ using Vantage = Pulumi.Vantage;
 
 return await Deployment.RunAsync(() =>
 {
-    var aws = new Vantage.Index.Folder.Folder("aws", new()
+    var aws = new Vantage.Folder("aws", new()
     {
         Title = "AWS Costs",
     });
 
-    var awsCostReport = new Vantage.Index.CostReport.CostReport("aws", new()
+    var awsCostReport = new Vantage.CostReport("aws", new()
     {
         FolderToken = aws.Token,
         Filter = "costs.provider = 'aws'",
@@ -108,22 +108,22 @@ config:
 package main
 
 import (
-	"github.com/pulumi/pulumi-vantage/sdk/go/vantage"
+	"github.com/pulumi/pulumi-pulumi-provider/sdks/go/vantage/vantage"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
 func main() {
 	pulumi.Run(func(ctx *pulumi.Context) error {
-		aws, err := index / folder.NewFolder(ctx, "aws", &index/folder.FolderArgs{
-			Title: "AWS Costs",
+		aws, err := vantage.NewFolder(ctx, "aws", &vantage.FolderArgs{
+			Title: pulumi.String("AWS Costs"),
 		})
 		if err != nil {
 			return err
 		}
-		_, err = index / costreport.NewCostReport(ctx, "aws", &index/costreport.CostReportArgs{
+		_, err = vantage.NewCostReport(ctx, "aws", &vantage.CostReportArgs{
 			FolderToken: aws.Token,
-			Filter:      "costs.provider = 'aws'",
-			Title:       "AWS Costs",
+			Filter:      pulumi.String("costs.provider = 'aws'"),
+			Title:       pulumi.String("AWS Costs"),
 		})
 		if err != nil {
 			return err

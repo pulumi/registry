@@ -10,7 +10,7 @@ Should not be shown, when loaded it will portal the content to the sidebar targe
 
 /* Element that will be the target of the portal
 If empty it will have a width of 0 and will not be visible. */
-#ai-sidebar-target {
+pulumi-copilot, #ai-sidebar-target {
   /* Relative to the viewport so copilot moves w/ the scrolling */
   position: fixed;
 

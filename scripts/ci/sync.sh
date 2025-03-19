@@ -34,7 +34,7 @@ mv "${build_dir}/sitemap.xml" "${build_dir}/registry/sitemap.xml"
 
 # For previews, name the destination bucket with the PR number, to reduce the number of
 # buckets we create and to facilitate shorter sync times.
-destination_bucket="$(origin_bucket_prefix)-$(build_identifier)"
+destination_bucket=$(echo "$(origin_bucket_prefix)-$(build_identifier)" | tr '_' '-')
 destination_bucket_uri="s3://${destination_bucket}"
 
 # Make the bucket. If this fails, there are two explanations, given the way we're naming

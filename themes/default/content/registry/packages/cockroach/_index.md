@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-cockroach/v0.9.2/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-cockroach/v0.9.4/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: CockroachDB Cloud
 meta_desc: Provides an overview of the CockroachDB provider for Pulumi.
@@ -9,6 +9,8 @@ layout: package
 The Cockroach provider for Pulumi can be used to provision any of the cloud resources available in [CockroachDB](https://www.cockroachlabs.com) or a self hosted CockroachDB instance.
 
 The Cockroach provider must be configured with credentials to deploy and update resources in CockroachDB.
+
+**NOTE** this is a community package in [need of new maintainers](https://github.com/pulumiverse/pulumi-cockroach/issues/75).
 
 ## Example
 

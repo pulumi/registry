@@ -7,10 +7,10 @@ featured: false
 logo_url: ""
 name: zenduty
 native: false
-package_status: public_preview
+package_status: ga
 publisher: zenduty
 repo_url: https://github.com/zenduty/terraform-provider-zenduty
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/zenduty/zenduty/0.2.6/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/zenduty/zenduty/1.0.1/schema.json
 title: zenduty
-updated_on: 1736960489
-version: 0.2.6
+updated_on: 1742556928
+version: 1.0.1

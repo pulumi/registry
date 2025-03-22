@@ -4,14 +4,14 @@ meta_desc: How Azure API versions are represented in the native Azure provider f
 layout: package
 ---
 
-The native Azure provider SDKs follow the semantic versioning convention, similarly to other Pulumi providers. At the same time, Azure API is structured around date-based API versions defined per Azure resource provider.
+The native Azure provider SDKs follow the semantic versioning convention, similarly to other Pulumi providers. At the same time, Azure API is structured around date-based API versions like `2020-03-01` defined per Azure resource provider.
 
-This guide describes how we combine both versioning approaches to achieve the following high-level design goals:
+This guide describes how we combine both versioning approaches to achieve the following design goals:
 
-- Provide access to the entire API surface of Azure resources.
+- Provide access to almost the entire API surface of Azure resources.
 - Ship new updates as soon as Microsoft publishes them.
 - Provide stable SDKs without unexpected breaking changes.
-- Enable user experience similar to other Pulumi providers.
+- Keep the SDK size manageable.
 
 ## Azure Native Semantic Versioning
 
@@ -25,18 +25,44 @@ Microsoft has defined [Breaking changes guidelines](https://github.com/Azure/azu
 
 Occasionally, Microsoft ships breaking changes. For example, they may rename a misspelled property in the spec to match it with the actual service behavior. We treat these occurrences as bug fixes and ship them in patch or minor provider versions without revving the major version.
 
-## Module Per Version
+## Azure Default API Versions
 
-Every Azure API endpoint defines a set of API versions that it accepts. API versions are based on a date, for instance, `2020-03-01` or `2019-05-15-preview`. Breaking changes may occur between API versions. API versions are defined per Azure resource provider and are published frequently (almost every week).
+The Azure API with its endpoints and the shape of requests and responses is versioned. API versions are defined per Azure service (resource provider) and are published frequently. API versions are based on a date, for instance, `2020-03-01` or `2019-05-15-preview`. Breaking changes may occur between API versions. 
 
-The native Azure provider maps every published API version of every Azure resource provider and represents it 1:1 as a separate module. For example, the `Vault` resource of the `KeyVault` resource provider of version `2023-02-01` is published as the Pulumi resource `azure-native:keyvault/v20230201:Vault`. You can import this resource with the following statement:
+The Pulumi provider chooses a set of default API versions for each release. For the resources in the Azure Native SDKs, these are the API versions that the resources are generated from and that the provider will use for its requests to Azure. The default API version is often, but not always, the same for all resources in a resource provider. The [API reference docs](/registry/packages/azure-native/api-docs/) describe these resources.
+
+Following the semantic versioning outlined above, patch versions will not contain API version changes. Minor versions contain API version changes when we determine that they don't cause breaking changes, as far as we can tell from the Azure specification. Therefore, regular minor version upgrades allow users to stay current with Azure API changes while minimizing the risk of breaking changes.
+
+TODO how we choose the default API versions
+
+## Accessing any API Version via Local Packages
+
+We expect most users to use the standard resources with the default API versions most of the time, without the need to specify an explicit API version. There are cases, however, where you may want to use a specific API version:
+- you have a resource on an older API version and cannot migrate yet,
+- the default version has an issue,
+- you want to pin an API version for extra stability , or
+- you need a new preview version for access to bleeding edge features.
+
+For such cases, the Pulumi provider allows you to generate a local SDK for a specific API version and use it in your project. This is enabled by our new Local Packages feature, which lets you generate Pulumi Packages locally into your Pulumi project, instead of relying only on packages published to the Pulumi Registry.
+
+A single command generates a local package for a specific API version of an Azure resource provider:
+
+```bash
+pulumi package add azure-native storage v20240101
+```
+
+This command generates a local package for the `storage` resource provider with the API version `2024-01-01` and adds it to your project.
+
+You can then update your Pulumi program to use the new, local SDK:
 
 {{< chooser language "typescript,python,csharp,go,java,yaml" >}}
 
 {{% choosable language typescript %}}
 
 ```typescript
-import Vault from "@pulumi/azure-native/keyvault/v20230201";
+import * as storage_v20240101 from "@pulumi/azure-native_storage_v20240101";
+
+const storageAccount = new storage_v20240101.storage.v20240101.StorageAccount(...)
 ```
 
 {{% /choosable %}}
@@ -44,7 +70,7 @@ import Vault from "@pulumi/azure-native/keyvault/v20230201";
 {{% choosable language python %}}
 
 ```python
-from pulumi_azure_native.keyvault.v20230201 import Vault
+TODO
 ```
 
 {{% /choosable %}}
@@ -52,9 +78,7 @@ from pulumi_azure_native.keyvault.v20230201 import Vault
 {{% choosable language csharp %}}
 
 ```csharp
-using Pulumi.AzureNative.KeyVault.V20230201;
-
-new Vault(/*...*/);
+TODO
 ```
 
 {{% /choosable %}}
@@ -62,26 +86,21 @@ new Vault(/*...*/);
 {{% choosable language go %}}
 
 ```go
-import (
-    keyvault "github.com/pulumi/pulumi-azure-native-sdk/keyvault/v2/v20230201"
-)
-
-// ...
-keyvault.NewVault(/*...*/)
-// ...
+TODO
 ```
 
 {{% /choosable %}}
 
 {{% choosable language java %}}
 
-Java is not supported.
+TODO Java is not supported.
 
 {{% /choosable %}}
 
 
 {{% choosable language yaml %}}
 
+TODO
 ```yaml
 resources:
   my-cluster:
@@ -93,72 +112,3 @@ resources:
 {{% /choosable %}}
 
 {{< /chooser >}}
-
-As soon as Microsoft publishes a new API version, the corresponding module is created in the native Azure provider for Pulumi and will be published in the next minor release.
-
-Older API versions remain in the provider indefinitely; therefore, you can pin all your resources to specific API versions. You can keep using them for as long as those versions are supported by Azure and are within the same major version of the Pulumi Azure Native provider.
-
-## Top-Level Modules
-
-In addition to all versioned modules described above, the Pulumi Azure Native provider publishes a default version of every resource in top-level modules. For example, the `Vault` resource of the `KeyVault` resource provider is published as the Pulumi resource `azure-native:keyvault:Vault`. You can import this resource with the following statement:
-
-{{< chooser language "typescript,python,csharp,go" >}}
-
-{{% choosable language typescript %}}
-
-```typescript
-import Vault from "@pulumi/azure-native/keyvault";
-```
-
-{{% /choosable %}}
-
-{{% choosable language python %}}
-
-```python
-from pulumi_azure_native.keyvault import Vault
-```
-
-{{% /choosable %}}
-
-{{% choosable language csharp %}}
-
-```csharp
-using Pulumi.AzureNative.KeyVault;
-
-new Vault(/*...*/);
-```
-
-{{% /choosable %}}
-
-{{% choosable language go %}}
-
-```go
-import (
-    "github.com/pulumi/pulumi-azure-native-sdk/keyvault/v2"
-)
-
-// ...
-keyvault.NewVault(/*...*/)
-// ...
-```
-
-{{% /choosable %}}
-
-{{< /chooser >}}
-
-Top-level resources are useful when you don't have a preference over which API version is used for every resource. We expect most users to use top-level resources most of the time, without the need to specify an explicit API version.
-
-Each top-level resource maps internally to a specific API version. The native Azure provider maintains this mapping with the following guidelines:
-
-- When a new major version of the provider is released, the API versions are set to the latest stable API version available at that moment. If no stable version is published yet, the newest preview version is used.
-- Azure API reports a list of supported API versions per resource and resource provider. We promote resources to new API versions once they show up as supported with the `az provider list` command.
-- The selected API version is pinned across all minor versions of the same major version. Even if a newer API version is released, we do not promote the top-level resources to it.
-- We may introduce some manual overrides to the rules above. For example, we may use a new preview version when the latest stable version is obviously out of date. We may manually promote top-level resources to a new API version to get access to new necessary functionality. In any case, we adhere to the breaking changes policy.
-
-Because of that, top-level resources may miss newly released features shipped in brand-new API versions after the last major release. In such cases, you are encouraged to use explicitly versioned modules to access the latest Azure functionality.
-
-The [API reference docs](/registry/packages/azure-native/api-docs/) describe top-level resources and do not currently show any module-per-version variations.
-
-## Switching Between API Versions
-
-You may switch between different API versions of a given resource, including to and from its top-level default representation, whenever you want. Resource types have aliases defined, so the switch does not require resource re-creation.

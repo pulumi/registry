@@ -143,52 +143,48 @@ You can set the environment variable `PULUMI_FORCE_NEW_FROM_SUBTYPES` to `false`
 
 #### Improved flattening of resource shapes
 
-Tracked by [#3195](https://github.com/pulumi/pulumi-azure-native/issues/3195), this change improved the correctness of the provider by avoiding to flatten nested properties, even when requested by the Azure API specification, when it would lead to the overwriting of properties. Affected resources are listed below.
+Tracked by [#3195](https://github.com/pulumi/pulumi-azure-native/issues/3195), this change improved the correctness of the provider by avoiding to flatten nested properties, even when requested by the Azure API specification, when it would lead to the overwriting of properties. 
 
-TODO,tkappler format nicely
+For instance, the `network:NetworkVirtualApplianceConnection` resource has a property called `Properties` which has in turn, slightly simplified, two properties: `Name` and `TunnelIdentifier`.
 
-```json
-{
-  "azure-native:authorization:AccessReviewHistoryDefinitionById": {
-    "range.type": {}
-  },
-  "azure-native:authorization:AccessReviewScheduleDefinitionById": {
-    "range.type": {},
-    "scope.principalType": {}
-  },
-  "azure-native:authorization:ScopeAccessReviewHistoryDefinitionById": {
-    "range.type": {}
-  },
-  "azure-native:authorization:ScopeAccessReviewScheduleDefinitionById": {
-    "range.type": {},
-    "scope.principalType": {}
-  },
-  "azure-native:devhub:Workflow": {
-    "githubWorkflowProfile.namespace": {}
-  },
-  "azure-native:education:Lab": {
-    "totalBudget.currency": {},
-    "totalBudget.value": {}
-  },
-  "azure-native:network:P2sVpnServerConfiguration": {
-    "properties.etag": {},
-    "properties.name": {}
-  },
-  "azure-native:network:VpnServerConfiguration": {
-    "properties.etag": {},
-    "properties.name": {}
-  },
-  "azure-native:security:DefenderForStorage": {
-    "malwareScanning.isEnabled": {},
-    "sensitiveDataDiscovery.isEnabled": {},
-    "sensitiveDataDiscovery.operationStatus": {}
-  },
-  "azure-native:vmwarecloudsimple:DedicatedCloudNode": {
-    "properties.id": {},
-    "properties.name": {}
-  }
-}
 ```
+NetworkVirtualApplianceConnection:
+  Name
+  Properties:
+    Name
+    TunnelIdentifier
+```
+
+`Properties` is annotated in the API spec to be flattened into the outer `NetworkVirtualApplianceConnection`. That's what v2 of the provider does, with the result being:
+
+```
+NetworkVirtualApplianceConnection:
+  Name
+  TunnelIdentifier
+```
+
+Since `NetworkVirtualApplianceConnection` already has a `Name` property, the two `Name`s are in conflict. In v3, the provider does not flatten `Properties` due to this conflict and the result is:
+
+```
+NetworkVirtualApplianceConnection:
+  Name
+  Properties:
+    Name
+    TunnelIdentifier
+```
+
+All affected resources are listed below:
+
+- `azure-native:authorization:AccessReviewHistoryDefinitionById`
+- `azure-native:authorization:AccessReviewScheduleDefinitionById`
+- `azure-native:authorization:ScopeAccessReviewHistoryDefinitionById`
+- `azure-native:authorization:ScopeAccessReviewScheduleDefinitionById`
+- `azure-native:devhub:Workflow`
+- `azure-native:education:Lab`
+- `azure-native:network:P2sVpnServerConfiguration`
+- `azure-native:network:VpnServerConfiguration`
+- `azure-native:security:DefenderForStorage`
+- `azure-native:vmwarecloudsimple:DedicatedCloudNode`
 
 #### MySQL and PostgreSQL Server and Flexible Server
 

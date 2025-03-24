@@ -10,7 +10,7 @@ native: false
 package_status: public_preview
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-kubernetes-cert-manager
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-kubernetes-cert-manager/v0.1.1/provider/cmd/pulumi-resource-kubernetes-cert-manager/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-kubernetes-cert-manager/v0.2.0/provider/cmd/pulumi-resource-kubernetes-cert-manager/schema.json
 title: Kubernetes Cert Manager
-updated_on: 1736265771
-version: v0.1.1
+updated_on: 1741967137
+version: v0.2.0

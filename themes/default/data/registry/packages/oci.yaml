@@ -11,7 +11,7 @@ native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-oci
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-oci/v2.25.0/provider/cmd/pulumi-resource-oci/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-oci/v2.27.0/provider/cmd/pulumi-resource-oci/schema.json
 title: Oracle Cloud Infrastructure
-updated_on: 1740096539
-version: v2.25.0
+updated_on: 1742444119
+version: v2.27.0

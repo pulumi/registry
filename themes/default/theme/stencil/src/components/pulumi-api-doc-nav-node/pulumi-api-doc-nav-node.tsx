@@ -60,6 +60,24 @@ export class PulumiApiDocNavNode {
         );
     }
 
+    // This is a minimally invasive change to avoid "Zone" being used as an DOM id.
+    // If Zone is used as an DOM id then it available as a global variable as window.Zone.
+    // This in turn breaks loading zone.js in the browser.
+    // Copilot needs zone.js to be loaded in the browser.
+    //
+    // Zone is at least present in at:
+    // - https://www.pulumi.com/registry/packages/azure-native/api-docs/network/zone/
+    //
+    getNodeId(nodeName: string) {
+        // We could do this for all ids but I'm not sure if they're used for other telemetry
+        // etc etc.
+        if (nodeName === "Zone") {
+           return "nodeNameZone";
+        }
+
+        return nodeName;
+    }
+
     // If a node is in the path for the page a user is currently on, it should
     // be expanded, even if the expansion icon has not been clicked.
     isNodeInPathForCurrentlyVisiblePage(nodeName) {
@@ -112,7 +130,7 @@ export class PulumiApiDocNavNode {
                     }
                     
                     class="nav-tree-item nested"
-                                    id={node.name}
+                                    id={this.getNodeId(node.name)}
                 title={node.name}
                 onClick={() => this.onExpansionChange(nodeHref, !hasChildren)}
                 >
@@ -138,7 +156,7 @@ export class PulumiApiDocNavNode {
                             : "false"
                     }
                     class="nav-tree-item nested"
-                                    id={this.node.name}
+                                    id={this.getNodeId(this.node.name)}
                                     
                 title={this.node.name}
                 onClick={() => this.onExpansionChange(this.href, this.node.children.length === 0)}

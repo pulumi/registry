@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/checkly/pulumi-checkly/v2.0.1/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/checkly/pulumi-checkly/v2.1.1/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: Checkly
 meta_desc: Provides an overview of the Checkly provider for Pulumi.

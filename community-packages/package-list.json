@@ -213,10 +213,6 @@
       "schemaFile": "provider/cmd/pulumi-resource-mssql/schema.json"
     },
     {
-      "repoSlug": "lbrlabs/pulumi-vantage",
-      "schemaFile": "provider/cmd/pulumi-resource-vantage/schema.json"
-    },
-    {
       "repoSlug": "pulumiverse/pulumi-matchbox",
       "schemaFile": "provider/cmd/pulumi-resource-matchbox/schema.json"
     },
@@ -379,6 +375,10 @@
     {
       "repoSlug": "DefangLabs/pulumi-defang",
       "schemaFile": "provider/cmd/pulumi-resource-defang/schema.json"
+    },
+    {
+      "repoSlug": "vatesfr/pulumi-xenorchestra",
+      "schemaFile": "provider/cmd/pulumi-resource-xenorchestra/schema.json"
     }
   ]
 }

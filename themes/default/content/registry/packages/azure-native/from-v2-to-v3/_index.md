@@ -73,8 +73,8 @@ Go programs will need all imports updated to include `v3` in the path.
 
 ```go
 import (
-- "github.com/pulumi/pulumi-azure-native-sdk/resources"
-- "github.com/pulumi/pulumi-azure-native-sdk/storage"
+- "github.com/pulumi/pulumi-azure-native-sdk/resources/v2"
+- "github.com/pulumi/pulumi-azure-native-sdk/storage/v2"
 + "github.com/pulumi/pulumi-azure-native-sdk/resources/v3"
 + "github.com/pulumi/pulumi-azure-native-sdk/storage/v3"
 )
@@ -93,21 +93,108 @@ After updating all imports to reflect v3 included Azure API versions, run `pulum
 
 #### Pending Changes on Default Versions
 
-You may see pending changes when using the default version as the shape of the resource may have changed. You can choose to accept the changes, update your program to modify the resource properties to mitigate changes, or choose an explicit version which is compatible with the older version of the resource.
+You may see pending changes when using the default version as the shape of the resource may have changed. You can choose to accept the changes, update your program to modify the resource properties to mitigate changes, or choose an API version which is compatible with the older version of the resource.
 
 A full list of default version changes can be found in the [top-level resource versions](./top-level-resource-versions).
 
 To continue using the previous Azure API version of a resource:
 
-1. Check the documentation in your IDE or our [registry API docs](https://www.pulumi.com/registry/packages/azure-native/) which identifies the previous version for each resource. For example: `Azure REST API Version: 2024-10-01. Prior API version in Azure Native 2.x: 2023-05-01`.
+1. Check the resource documentation in your IDE or our [registry API docs](https://www.pulumi.com/registry/packages/azure-native/) which identifies the previous version for each resource. For example: `Azure REST API Version: 2024-10-01. Prior API version in Azure Native 2.x: 2023-05-01`.
 2. Generate and use the local SDK for the previous version of the resource as described in the [version guide](./version-guide).
 
 
-#### TODO,tkappler list breaking changes
+#### New module structure and naming aligned closer to Azure SDKs
+
+In the Azure specification, folders and namespaces don't always align. For example, the Microsoft.Network specification is split across multiple folders:
+
+```
+dns/resource-manager/Microsoft.Network
+dnsresolver/resource-manager/Microsoft.Network
+frontdoor/resource-manager/Microsoft.Network
+network/resource-manager/Microsoft.Network
+privatedns/resource-manager/Microsoft.Network
+trafficmanager/resource-manager/Microsoft.Network
+```
+
+The Azure SDKs mirror this split so that different network-related services are logically grouped instead of mixed up in one `Network` namespace. In v3 of this provider, we have aligned several modules to match the Azure SDK layout. The changes are:
+
+- `Cache` is split into `Redis` and `RedisEnterprise` which also reflects the current names of the services.
+- `Devices` is split into `DeviceProvisioningServices` and `IotHub`.
+- `DocumentDB` is not split but renamed to `CosmosDB` to reflect the current naming of the service.
+- `Insights` is split into `ApplicationInsights` and `Monitor`.
+- `Network` is split into `Dns`, `DnsResolver`, `Frontdoor`, `Network`, `PrivateDns`, and `TrafficManager`.
+
+This changes require corresponding updates in your Pulumi programs. Existing resources will not be recreated, however, due to the use of aliases.
+
+#### De-duplication of conflicting resources and types
+
+The Azure specification sometimes uses the same name for different resources in the same module. For example, `CosmosDB.FirewallRule` can refer to both regular and MongoDB (`Microsoft.DocumentDB/mongoClusters`) instances. In v3, we have de-duplicated these to `FirewallRule` and `MongoClusterFirewallRule`. The complete list of changes are:
+
+- In `CosmosDB`, `FirewallRule` was split into `FirewallRule` and `MongoClusterFirewallRule`.
+- In `HDInsight`, `Cluster` was split into `Cluster` and `ClusterPoolCluster`.
+- In `HybridContainerService`, `HybridIdentityMetadatum` was split into `HybridIdentityMetadata` and `ClusterInstanceHybridIdentityMetadatum`.
+- In `NetApp`, resources relating to Capacity Pools are prefixed with `CapacityPool`, splitting `Backup` into `Backup` and `CapacityPoolBackup`.
+
+#### Propagating `forceNew` from referenced types
+
+Tracked by [#3006](https://github.com/pulumi/pulumi-azure-native/issues/3006), this change extended the [`replaceOnChanges`](https://www.pulumi.com/docs/iac/concepts/options/replaceonchanges/) parameter to be propagated from referenced types. This improves the correctness of the provider by correctly replacing resources when sub-properties of the resource that are annotated with `replaceOnChanges` are updated.
+
+You can set the environment variable `PULUMI_FORCE_NEW_FROM_SUBTYPES` to `false` to disable this behavior if you observe unnecessary recreation of resources. Please [file an issue](https://github.com/pulumi/pulumi-azure-native/issues) in that case since that would be unexpected.
+
+#### Improved flattening of resource shapes
+
+Tracked by [#3195](https://github.com/pulumi/pulumi-azure-native/issues/3195), this change improved the correctness of the provider by avoiding to flatten nested properties, even when requested by the Azure API specification, when it would lead to the overwriting of properties. Affected resources are listed below.
+
+TODO,tkappler format nicely
+
+```json
+{
+  "azure-native:authorization:AccessReviewHistoryDefinitionById": {
+    "range.type": {}
+  },
+  "azure-native:authorization:AccessReviewScheduleDefinitionById": {
+    "range.type": {},
+    "scope.principalType": {}
+  },
+  "azure-native:authorization:ScopeAccessReviewHistoryDefinitionById": {
+    "range.type": {}
+  },
+  "azure-native:authorization:ScopeAccessReviewScheduleDefinitionById": {
+    "range.type": {},
+    "scope.principalType": {}
+  },
+  "azure-native:devhub:Workflow": {
+    "githubWorkflowProfile.namespace": {}
+  },
+  "azure-native:education:Lab": {
+    "totalBudget.currency": {},
+    "totalBudget.value": {}
+  },
+  "azure-native:network:P2sVpnServerConfiguration": {
+    "properties.etag": {},
+    "properties.name": {}
+  },
+  "azure-native:network:VpnServerConfiguration": {
+    "properties.etag": {},
+    "properties.name": {}
+  },
+  "azure-native:security:DefenderForStorage": {
+    "malwareScanning.isEnabled": {},
+    "sensitiveDataDiscovery.isEnabled": {},
+    "sensitiveDataDiscovery.operationStatus": {}
+  },
+  "azure-native:vmwarecloudsimple:DedicatedCloudNode": {
+    "properties.id": {},
+    "properties.name": {}
+  }
+}
+```
 
 #### MySQL and PostgreSQL Server and Flexible Server
 
-TODO,tkappler
+Tracked by [#2753](https://github.com/pulumi/pulumi-azure-native/issues/2753), this change cleanly separates the different PostgreSQL offerings from Azure: Flexible Servers, Server Groups V2, and the deprecated Single Server offering.
+
+TODO,tkappler elaborate with examples
 
 {{< chooser language "typescript,python,csharp,go,yaml" >}}
 
@@ -167,6 +254,10 @@ TODO,tkappler
 
 {{% /choosable %}}
 {{< /chooser >}}
+
+#### Removed `__inputs` from state
+
+This change is completely transparent to users, except for those who have custom code or scripts working with Pulumi stack state. In v2 and older, the provider added a field `__inputs` to the state of each resources which tracked the inputs of the resource at the time of its creation. This is not necessary anymore since the Pulumi engine [now supports sending the old inputs](https://github.com/pulumi/pulumi/pull/13139).
 
 ### Contributing
 

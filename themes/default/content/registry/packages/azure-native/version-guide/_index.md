@@ -117,14 +117,47 @@ resources:
 
 The generic resource [azure-native.resources.Resource](../api-docs/resources/resource/) is a special resource that allows you to access any Azure resource at any API version. The downside is that it is not explicitly typed and type-safe like the specific resources. It's useful when you need to access a resource that is not yet supported by the Pulumi provider or when an issue prevents you from using a specific resource.
 
-The example below creates a storage account using the generic resource.
+The example below creates two storage accounts, one using the generic resource and one using the dedicated `StorageAccount` resource for comparison.
 
 {{< chooser language "typescript,python,csharp,go,java,yaml" >}}
 
 {{% choosable language typescript %}}
 
 ```typescript
-TODO
+import * as pulumi from "@pulumi/pulumi";
+import * as azure_native from "@pulumi/azure-native";
+
+const resourceGroup = new azure_native.resources.ResourceGroup("resourceGroup", {});
+
+// Create a Storage Account
+const sa = new azure_native.storage.StorageAccount("sa", {
+    resourceGroupName: resourceGroup.name,
+    sku: {
+        name: azure_native.storage.SkuName.Standard_LRS,
+    },
+    kind: azure_native.storage.Kind.StorageV2,
+});
+
+// Create another Storage Account using the generic resource
+const generic = new azure_native.resources.Resource("generic", {
+    resourceGroupName: resourceGroup.name,
+    resourceProviderNamespace: "Microsoft.Storage",
+    resourceType: "storageAccounts",
+    apiVersion: "2022-09-01",
+    // This property is required even when empty.
+    parentResourcePath: "",
+
+    // These properties are optional and are defined because many resources have a kind or a SKU.
+    kind: "StorageV2",
+    sku: {
+        name: "Standard_LRS",
+    },
+
+    // This is a generic property bag for all other properties of the targeted resource.
+    properties: {
+        allowBlobPublicAccess: false,
+    },
+});
 ```
 
 {{% /choosable %}}
@@ -132,7 +165,38 @@ TODO
 {{% choosable language python %}}
 
 ```python
-TODO
+import pulumi
+import pulumi_azure_native as azure_native
+
+resource_group = azure_native.resources.ResourceGroup("resourceGroup")
+
+# Create a Storage Account
+sa = azure_native.storage.StorageAccount("sa",
+    resource_group_name=resource_group.name,
+    sku={
+        "name": azure_native.storage.SkuName.STANDARD_LRS,
+    },
+    kind=azure_native.storage.Kind.STORAGE_V2)
+
+# Create another Storage Account using the generic resource
+generic = azure_native.resources.Resource("generic",
+    resource_group_name=resource_group.name,
+    resource_provider_namespace="Microsoft.Storage",
+    resource_type="storageAccounts",
+    api_version="2022-09-01",
+    # This property is required even when empty.
+    parent_resource_path="",
+
+    # These properties are optional and are defined because many resources have a kind or a SKU.
+    kind="StorageV2",
+    sku={
+        "name": "Standard_LRS",
+    },
+
+    # This is a generic property bag for all other properties of the targeted resource.
+    properties={
+        "allowBlobPublicAccess": False,
+    })
 ```
 
 {{% /choosable %}}
@@ -140,7 +204,51 @@ TODO
 {{% choosable language csharp %}}
 
 ```csharp
-TODO
+using System.Collections.Generic;
+using System.Linq;
+using Pulumi;
+using AzureNative = Pulumi.AzureNative;
+
+return await Deployment.RunAsync(() => 
+{
+    var resourceGroup = new AzureNative.Resources.ResourceGroup("resourceGroup");
+
+    // Create a Storage Account
+    var sa = new AzureNative.Storage.StorageAccount("sa", new()
+    {
+        ResourceGroupName = resourceGroup.Name,
+        Sku = new AzureNative.Storage.Inputs.SkuArgs
+        {
+            Name = AzureNative.Storage.SkuName.Standard_LRS,
+        },
+        Kind = AzureNative.Storage.Kind.StorageV2,
+    });
+
+    // Create another Storage Account using the generic resource
+    var generic = new AzureNative.Resources.Resource("generic", new()
+    {
+        ResourceGroupName = resourceGroup.Name,
+        ResourceProviderNamespace = "Microsoft.Storage",
+        ResourceType = "storageAccounts",
+        ApiVersion = "2022-09-01",
+        // This property is required even when empty.
+        ParentResourcePath = "",
+
+        // These properties are optional and are defined because many resources have a kind or a SKU.
+        Kind = "StorageV2",
+        Sku = new AzureNative.Resources.Inputs.SkuArgs
+        {
+            Name = "Standard_LRS",
+        },
+
+        // This is a generic property bag for all other properties of the targeted resource.
+        Properties = new Dictionary<string, object?>
+        {
+            ["allowBlobPublicAccess"] = false,
+        },
+    });
+
+});
 ```
 
 {{% /choosable %}}
@@ -148,7 +256,56 @@ TODO
 {{% choosable language go %}}
 
 ```go
-TODO
+package main
+
+import (
+	resources "github.com/pulumi/pulumi-azure-native-sdk/resources/v2"
+	storage "github.com/pulumi/pulumi-azure-native-sdk/storage/v2"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		resourceGroup, err := resources.NewResourceGroup(ctx, "resourceGroup", nil)
+		if err != nil {
+			return err
+		}
+
+    // Create a Storage Account
+		_, err = storage.NewStorageAccount(ctx, "sa", &storage.StorageAccountArgs{
+			ResourceGroupName: resourceGroup.Name,
+			Sku: &storage.SkuArgs{
+				Name: pulumi.String(storage.SkuName_Standard_LRS),
+			},
+			Kind: pulumi.String(storage.KindStorageV2),
+		})
+		if err != nil {
+			return err
+		}
+
+    // Create another Storage Account using the generic resource
+		_, err = resources.NewResource(ctx, "generic", &resources.ResourceArgs{
+			ResourceGroupName:         resourceGroup.Name,
+			ResourceProviderNamespace: pulumi.String("Microsoft.Storage"),
+			ResourceType:              pulumi.String("storageAccounts"),
+			ApiVersion:                pulumi.String("2022-09-01"),
+      // This property is required even when empty.
+			ParentResourcePath:        pulumi.String(""),
+			Kind:                      pulumi.String("StorageV2"),
+			Sku: &resources.SkuArgs{
+				Name: pulumi.String("Standard_LRS"),
+			},
+      // This is a generic property bag for all other properties of the targeted resource.
+			Properties: pulumi.Any(map[string]interface{}{
+				"allowBlobPublicAccess": false,
+			}),
+		})
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+}
 ```
 
 {{% /choosable %}}
@@ -162,8 +319,40 @@ TODO
 
 {{% choosable language yaml %}}
 
-TODO
 ```yaml
+resources:
+  resourceGroup:
+    type: azure-native:resources:ResourceGroup
+
+  # Create a Storage Account
+  sa:
+    type: azure-native:storage:StorageAccount
+    properties:
+      resourceGroupName: ${resourceGroup.name}
+      sku:
+        name: Standard_LRS
+      kind: StorageV2
+
+  # Create another Storage Account using the generic resource
+  generic:
+    type: azure-native:resources:Resource
+    properties:
+      # These properties are required.
+      resourceGroupName: ${resourceGroup.name}
+      resourceProviderNamespace: Microsoft.Storage
+      resourceType: storageAccounts
+      apiVersion: "2022-09-01"
+      # This property is required even when empty.
+      parentResourcePath: ""
+
+      # These properties are optional and are defined because many resources have a kind or a SKU.
+      kind: StorageV2
+      sku:
+        name: Standard_LRS
+
+      # This is a generic property bag for all other properties of the targeted resource.
+      properties:
+        allowBlobPublicAccess: false
 ```
 
 {{% /choosable %}}

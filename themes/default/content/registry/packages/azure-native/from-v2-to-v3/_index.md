@@ -102,21 +102,11 @@ To continue using the previous Azure API version of a resource:
 1. Check the resource documentation in your IDE or our [registry API docs](https://www.pulumi.com/registry/packages/azure-native/) which identifies the previous version for each resource. For example: `Azure REST API Version: 2024-10-01. Prior API version in Azure Native 2.x: 2023-05-01`.
 2. Generate and use the local SDK for the previous version of the resource as described in the [version guide](./version-guide).
 
-
 #### New module structure and naming aligned closer to Azure SDKs
 
-In the Azure specification, folders and namespaces don't always align. For example, the Microsoft.Network specification is split across multiple folders:
+The Azure specification sometimes contains related but distinct services in one namespace. For example, `Microsoft.Network` contains `DNS`, `DnsResolver`, `Frontdoor`, `Network`, `PrivateDns`, and `TrafficManager`.
 
-```
-dns/resource-manager/Microsoft.Network
-dnsresolver/resource-manager/Microsoft.Network
-frontdoor/resource-manager/Microsoft.Network
-network/resource-manager/Microsoft.Network
-privatedns/resource-manager/Microsoft.Network
-trafficmanager/resource-manager/Microsoft.Network
-```
-
-The Azure SDKs mirror this split so that different network-related services are logically grouped instead of mixed up in one `Network` namespace. In v3 of this provider, we have aligned several modules to match the Azure SDK layout. The changes are:
+The Azure SDKs reflect this so that these different network-related services are logically grouped instead of mixed up in one `Network` namespace. In v3 of this provider, we have aligned several modules to match the Azure SDK layout. The changes are:
 
 - `Cache` is split into `Redis` and `RedisEnterprise` which also reflects the current names of the services.
 - `Devices` is split into `DeviceProvisioningServices` and `IotHub`.

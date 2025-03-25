@@ -8,7 +8,7 @@ The native Azure provider SDKs follow the semantic versioning convention, simila
 
 This guide describes how we combine both versioning approaches to achieve the following design goals:
 
-- Provide access to almost the entire API surface of Azure resources.
+- Provide access to the entire API surface of Azure resources.
 - Ship new updates as soon as Microsoft publishes them.
 - Provide stable SDKs without unexpected breaking changes.
 - Keep the SDK size manageable.
@@ -27,7 +27,7 @@ Occasionally, Microsoft ships breaking changes. For example, they may rename a m
 
 ## Azure Default API Versions
 
-The Azure API with its endpoints and the shape of requests and responses is versioned. API versions are defined per Azure service (resource provider) and are published frequently. API versions are based on a date, for instance, `2020-03-01` or `2019-05-15-preview`. Breaking changes may occur between API versions. 
+Azure's APIs are versioned. API versions are defined per Azure service (resource provider) and are published frequently. API versions are based on a date, for instance, `2020-03-01` or `2019-05-15-preview`. Breaking changes may occur between API versions.
 
 The Pulumi provider chooses a set of default API versions for each release. For the resources in the Azure Native SDKs, these are the API versions that the resources are generated from and that the provider will use for its requests to Azure. The default API version is often, but not always, the same for all resources in a resource provider. The [API reference docs](/registry/packages/azure-native/api-docs/) describe these resources.
 
@@ -107,6 +107,63 @@ resources:
    type: "azure-native:containerservice/v20220301:ManagedCluster"
    properties:
      # ...
+```
+
+{{% /choosable %}}
+
+{{< /chooser >}}
+
+## Using the generic resource
+
+The generic resource [azure-native.resources.Resource](../api-docs/resources/resource/) is a special resource that allows you to access any Azure resource at any API version. The downside is that it is not explicitly typed and type-safe like the specific resources. It's useful when you need to access a resource that is not yet supported by the Pulumi provider or when an issue prevents you from using a specific resource.
+
+The example below creates a storage account using the generic resource.
+
+{{< chooser language "typescript,python,csharp,go,java,yaml" >}}
+
+{{% choosable language typescript %}}
+
+```typescript
+TODO
+```
+
+{{% /choosable %}}
+
+{{% choosable language python %}}
+
+```python
+TODO
+```
+
+{{% /choosable %}}
+
+{{% choosable language csharp %}}
+
+```csharp
+TODO
+```
+
+{{% /choosable %}}
+
+{{% choosable language go %}}
+
+```go
+TODO
+```
+
+{{% /choosable %}}
+
+{{% choosable language java %}}
+
+TODO
+
+{{% /choosable %}}
+
+
+{{% choosable language yaml %}}
+
+TODO
+```yaml
 ```
 
 {{% /choosable %}}

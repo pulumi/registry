@@ -29,11 +29,17 @@ Occasionally, Microsoft ships breaking changes. For example, they may rename a m
 
 Azure's APIs are versioned. API versions are defined per Azure service (resource provider) and are published frequently. API versions are based on a date, for instance, `2020-03-01` or `2019-05-15-preview`. Breaking changes may occur between API versions.
 
-The Pulumi provider chooses a set of default API versions for each release. For the resources in the Azure Native SDKs, these are the API versions that the resources are generated from and that the provider will use for its requests to Azure. The default API version is often, but not always, the same for all resources in a resource provider. The [API reference docs](/registry/packages/azure-native/api-docs/) describe these resources.
+For each resource, Pulumi chooses a default API version. The default API version is often, but not always, the same for all resources in a resource provider. We choose the default version through a combination of factors, including comparing with Azure SDKs, preferring newer versions, and preferring stable versions over preview versions unless the latest stable version is rather old.
+
+The SDKs represent these default versions of the resources. The [API reference docs](/registry/packages/azure-native/api-docs/) document them.
 
 Following the semantic versioning outlined above, patch versions will not contain API version changes. Minor versions contain API version changes when we determine that they don't cause breaking changes, as far as we can tell from the Azure specification. Therefore, regular minor version upgrades allow users to stay current with Azure API changes while minimizing the risk of breaking changes.
 
-TODO how we choose the default API versions
+## Other API versions
+
+Other API versions are still available through the two methods detailed below, local packages and the generic resource.
+
+Due to the large size of the Azure API surface, we remove some API versions from our metadata. We determine these versions by comparing them to adjacent ones and removing the ones that are not significantly different. We remove only older API versions. These removed versions are not available via local packages, but they are available via the generic resource.
 
 ## Accessing any API Version via Local Packages
 

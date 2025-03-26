@@ -135,4 +135,4 @@ Some Azure resources aren't included in Azure Native because they're not compati
 
 ## How resources are versioned
 
-Azure Native provides access to most API versions of each Azure resource so that you can access the entire Azure API surface. The SDK comes with a default version of each resource, and you can generate local SDKs for other versions. Read the [version guide](./version-guide) to learn more.
+Azure Native provides access to all API versions of each Azure resource so that you can access the entire Azure API surface. The SDK comes with a default version of each resource, and you can generate local SDKs for other versions. Read the [version guide](./version-guide) to learn more.

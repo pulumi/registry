@@ -10,7 +10,7 @@ native: false
 package_status: public_preview
 publisher: pulumiverse
 repo_url: https://github.com/pulumiverse/pulumi-zitadel
-schema_file_path: provider/cmd/pulumi-resource-zitadel/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumiverse/pulumi-zitadel/v0.2.0/provider/cmd/pulumi-resource-zitadel/schema.json
 title: zitadel
-updated_on: 1717062229
-version: v0.1.8
+updated_on: 1742823198
+version: v0.2.0

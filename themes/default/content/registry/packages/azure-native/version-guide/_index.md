@@ -147,7 +147,7 @@ const generic = new azure_native.resources.Resource("generic", {
     // This property is required even when empty.
     parentResourcePath: "",
 
-    // These properties are optional and are defined because many resources have a kind or a SKU.
+    // These properties are optional and are defined on the generic resource because many resources have a kind or a SKU.
     kind: "StorageV2",
     sku: {
         name: "Standard_LRS",
@@ -187,7 +187,8 @@ generic = azure_native.resources.Resource("generic",
     # This property is required even when empty.
     parent_resource_path="",
 
-    # These properties are optional and are defined because many resources have a kind or a SKU.
+    # These properties are optional and are defined on the generic resource
+    # because many resources have a kind or a SKU.
     kind="StorageV2",
     sku={
         "name": "Standard_LRS",
@@ -234,14 +235,16 @@ return await Deployment.RunAsync(() =>
         // This property is required even when empty.
         ParentResourcePath = "",
 
-        // These properties are optional and are defined because many resources have a kind or a SKU.
+        // These properties are optional and are defined on the generic
+        // resource because many resources have a kind or a SKU.
         Kind = "StorageV2",
         Sku = new AzureNative.Resources.Inputs.SkuArgs
         {
             Name = "Standard_LRS",
         },
 
-        // This is a generic property bag for all other properties of the targeted resource.
+        // This is a generic property bag for all other properties of the
+        // targeted resource.
         Properties = new Dictionary<string, object?>
         {
             ["allowBlobPublicAccess"] = false,
@@ -291,11 +294,16 @@ func main() {
 			ApiVersion:                pulumi.String("2022-09-01"),
       // This property is required even when empty.
 			ParentResourcePath:        pulumi.String(""),
+
+      // These properties are optional and are defined on the generic
+      // resource because many resources have a kind or a SKU.
 			Kind:                      pulumi.String("StorageV2"),
 			Sku: &resources.SkuArgs{
 				Name: pulumi.String("Standard_LRS"),
 			},
-      // This is a generic property bag for all other properties of the targeted resource.
+
+      // This is a generic property bag for all other properties of the
+      // targeted resource.
 			Properties: pulumi.Any(map[string]interface{}{
 				"allowBlobPublicAccess": false,
 			}),
@@ -312,7 +320,59 @@ func main() {
 
 {{% choosable language java %}}
 
-TODO
+```java
+package generated_program;
+
+import com.pulumi.Context;
+import com.pulumi.Pulumi;
+import com.pulumi.azurenative.resources.ResourceGroup;
+import com.pulumi.azurenative.storage.StorageAccount;
+import com.pulumi.azurenative.storage.StorageAccountArgs;
+import com.pulumi.azurenative.storage.inputs.SkuArgs;
+import com.pulumi.azurenative.resources.Resource;
+import com.pulumi.azurenative.resources.ResourceArgs;
+import java.util.Map;
+
+public class App {
+    public static void main(String[] args) {
+        Pulumi.run(App::stack);
+    }
+
+    public static void stack(Context ctx) {
+        var resourceGroup = new ResourceGroup("resourceGroup");
+
+        // Create a Storage Account
+        var sa = new StorageAccount("sa", StorageAccountArgs.builder()
+            .resourceGroupName(resourceGroup.name())
+            .sku(SkuArgs.builder()
+                .name("Standard_LRS")
+                .build())
+            .kind("StorageV2")
+            .build());
+
+        // Create another Storage Account using the generic resource
+        var generic = new Resource("generic", ResourceArgs.builder()
+            .resourceGroupName(resourceGroup.name())
+            .resourceProviderNamespace("Microsoft.Storage")
+            .resourceType("storageAccounts")
+            .apiVersion("2022-09-01")
+            // This property is required even when empty.
+            .parentResourcePath("")
+
+            // These properties are optional and are defined on the generic
+            // resource because many resources have a kind or a SKU.
+            .kind("StorageV2")
+            .sku(com.pulumi.azurenative.resources.inputs.SkuArgs.builder()
+                .name("Standard_LRS")
+                .build())
+
+            // This is a generic property bag for all other properties of the
+            // targeted resource.
+            .properties(Map.of("allowBlobPublicAccess", false))
+            .build());
+    }
+}
+```
 
 {{% /choosable %}}
 
@@ -345,7 +405,8 @@ resources:
       # This property is required even when empty.
       parentResourcePath: ""
 
-      # These properties are optional and are defined because many resources have a kind or a SKU.
+      # These properties are optional and are defined on the generic resource
+      # because many resources have a kind or a SKU.
       kind: StorageV2
       sku:
         name: Standard_LRS

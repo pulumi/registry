@@ -57,18 +57,27 @@ A single command generates a local package for a specific API version of an Azur
 pulumi package add azure-native storage v20240101
 ```
 
-This command generates a local package for the `storage` resource provider with the API version `2024-01-01` and adds it to your project.
+This command generates a local package for the `storage` resource provider with the API version `2024-01-01` and adds it to your project (`.csproj`, `package.json`, `go.mod`, etc.).
 
-You can then update your Pulumi program to use the new, local SDK:
+You can then update your Pulumi program to use the new, local SDK.
 
 {{< chooser language "typescript,python,csharp,go,java,yaml" >}}
 
 {{% choosable language typescript %}}
 
 ```typescript
+import * as resources from "@pulumi/azure-native/resources";
 import * as storage_v20240101 from "@pulumi/azure-native_storage_v20240101";
 
-const storageAccount = new storage_v20240101.storage.v20240101.StorageAccount(...)
+const resourceGroup = new resources.ResourceGroup("resourceGroup");
+
+const storageAccount = new storage_v20240101.storage.v20240101.StorageAccount("sa", {
+    resourceGroupName: resourceGroup.name,
+    sku: {
+        name: storage_v20240101.storage.v20240101.SkuName.Standard_LRS,
+    },
+    kind: storage_v20240101.storage.v20240101.Kind.StorageV2,
+});
 ```
 
 {{% /choosable %}}
@@ -76,7 +85,19 @@ const storageAccount = new storage_v20240101.storage.v20240101.StorageAccount(..
 {{% choosable language python %}}
 
 ```python
-TODO
+from pulumi_azure_native_storage_v20240101 import storage
+from pulumi_azure_native import resources
+
+resource_group = resources.ResourceGroup("resource_group")
+
+account = storage.v20240101.StorageAccount(
+    "sa",
+    resource_group_name=resource_group.name,
+    sku={
+        "name": storage.v20240101.SkuName.STANDARD_LRS,
+    },
+    kind=storage.v20240101.Kind.STORAGE_V2,
+)
 ```
 
 {{% /choosable %}}
@@ -84,35 +105,114 @@ TODO
 {{% choosable language csharp %}}
 
 ```csharp
-TODO
+using Pulumi.AzureNative.Resources;
+using Pulumi.AzureNative_storage_v20240101.Storage.V20240101;
+using Pulumi.AzureNative_storage_v20240101.Storage.V20240101.Inputs;
+
+return await Pulumi.Deployment.RunAsync(() =>
+{
+    var resourceGroup = new ResourceGroup("resourceGroup");
+
+    var storageAccount = new StorageAccount("sa", new StorageAccountArgs
+    {
+        ResourceGroupName = resourceGroup.Name,
+        Sku = new SkuArgs
+        {
+            Name = SkuName.Standard_LRS
+        },
+        Kind = Kind.StorageV2
+    });
+});
 ```
 
 {{% /choosable %}}
 
 {{% choosable language go %}}
 
+Note: there is no change in the Pulumi program. `pulumi package add` sets up a `replace` directive in `go.mod` to use the local package.
+
 ```go
-TODO
+package main
+
+import (
+	"github.com/pulumi/pulumi-azure-native-sdk/resources/v2"
+	"github.com/pulumi/pulumi-azure-native-sdk/storage/v2"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		resourceGroup, err := resources.NewResourceGroup(ctx, "resourceGroup", nil)
+		if err != nil {
+			return err
+		}
+
+		_, err = storage.NewStorageAccount(ctx, "sa", &storage.StorageAccountArgs{
+			ResourceGroupName: resourceGroup.Name,
+			Sku: &storage.SkuArgs{
+				Name: pulumi.String("Standard_LRS"),
+			},
+			Kind: pulumi.String("StorageV2"),
+		})
+		if err != nil {
+			return err
+		}
+
+		return nil
+	})
+}
+
 ```
 
 {{% /choosable %}}
 
 {{% choosable language java %}}
 
-TODO Java is not supported.
+```java
+package myproject;
+
+import com.pulumi.Pulumi;
+import com.pulumi.azurenative.resources.ResourceGroup;
+import com.pulumi.azurenative_storage_v20240101.storage.v20240101.StorageAccount;
+import com.pulumi.azurenative_storage_v20240101.storage.v20240101.StorageAccountArgs;
+import com.pulumi.azurenative_storage_v20240101.storage.v20240101.enums.Kind;
+import com.pulumi.azurenative_storage_v20240101.storage.v20240101.enums.SkuName;
+import com.pulumi.azurenative_storage_v20240101.storage.v20240101.inputs.SkuArgs;
+
+public class App {
+    public static void main(String[] args) {
+        Pulumi.run(ctx -> {
+            var resourceGroup = new ResourceGroup("resourceGroup");
+            var storageAccount = new StorageAccount("sa", StorageAccountArgs.builder()
+                    .resourceGroupName(resourceGroup.name())
+                    .sku(SkuArgs.builder()
+                            .name(SkuName.Standard_LRS)
+                            .build())
+                    .kind(Kind.StorageV2)
+                    .build());
+        });
+    }
+}
+```
 
 {{% /choosable %}}
 
 
 {{% choosable language yaml %}}
 
-TODO
 ```yaml
+name: yaml
+runtime: yaml
 resources:
-  my-cluster:
-   type: "azure-native:containerservice/v20220301:ManagedCluster"
-   properties:
-     # ...
+  resourceGroup:
+    type: azure-native:resources:ResourceGroup
+  sa:
+    type: azure-native_storage_v20240101:storage.V20240101:StorageAccount
+    properties:
+      resourceGroupName: ${resourceGroup.name}
+      sku:
+        name: Standard_LRS
+      kind: StorageV2
 ```
 
 {{% /choosable %}}

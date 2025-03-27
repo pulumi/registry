@@ -6,7 +6,7 @@ layout: package
 
 ## About
 
-The Pulumi Azure Native Provider v3 is now available. To upgrade to v3 and take advantages of the smaller, streamlined SDKs, there are a few changes you may need to make depending on your Pulumi programs.
+The Pulumi Azure Native Provider v3 is now available. To upgrade to v3 and take advantage of the smaller SDKs and other improvements, there are a few changes you may need to make depending on your Pulumi programs.
 
 ## Upgrade Steps
 
@@ -14,7 +14,7 @@ The Pulumi Azure Native Provider v3 is now available. To upgrade to v3 and take 
 
 We recommend upgrading to the [latest version](https://github.com/pulumi/pulumi-azure-native/releases/tag/v2.89.3) of the v2 provider as a prerequisite to the v3 upgrade. This will enable you to resolve any pre-existing deprecated versions or resource structure changes.
 
-Review your program for warnings on missing imports or deprecated resources. If your program uses any deprecated explicit API versions where the import contains the API version, you will need to update these since explicit API versions are no longer included in the SDK. It's recommended to migrate to the default version, if possible, or you can generate a local SDK for the desired API version as described in the [version guide](./version-guide).
+Review your program for warnings on missing imports or deprecated resources. If your program uses any explicit API versions where the import contains the API version, you will need to update these since explicit API versions are no longer included in the SDK. It's recommended to migrate to the default version, if possible, or you can generate a local SDK for the desired API version as described in the [version guide](./version-guide).
 
 ### Upgrade Dependencies
 
@@ -56,19 +56,13 @@ In your Pulumi program, upgrade the package to point to the latest v3.x version.
 {{% /choosable %}}
 {{% choosable language go %}}
 
+In go.mod:
 ```go
 - github.com/pulumi/pulumi-azure-native-sdk/storage v2.89.3
 + github.com/pulumi/pulumi-azure-native-sdk/v3/storage v3.0.0
 ```
 
-{{% /choosable %}}
-
-{{% /chooser %}}
-
-### Upgrade Imports
-
-Go programs will need all imports updated to include `v3` in the path.
-
+Go programs will also need all imports updated to include `v3` in the path.
 ```go
 import (
 - "github.com/pulumi/pulumi-azure-native-sdk/resources/v2"
@@ -78,12 +72,9 @@ import (
 )
 ```
 
-If you do not replace the deprecated import, you can expect to see an error message:
+{{% /choosable %}}
 
-```bash
-    error: Running program '<path/to/project>' failed with an unhandled exception:
-Error: Cannot find module '@pulumi/azure-native/resources/v20210501'
-```
+{{% /chooser %}}
 
 ### Review Pulumi Diff
 
@@ -97,7 +88,8 @@ A full list of default version changes can be found in the [resource versions ta
 
 To continue using the previous Azure API version of a resource:
 
-1. Check the resource documentation in your IDE or our [registry API docs](https://www.pulumi.com/registry/packages/azure-native/) which identifies the previous version for each resource. For example: `Azure REST API Version: 2024-10-01. Prior API version in Azure Native 2.x: 2023-05-01`.
+1. Check the resource documentation in your IDE or our [registry API docs](https://www.pulumi.com/registry/packages/azure-native/) which identifies the previous version for each resource. For example:
+  > _Uses Azure REST API version 2024-10-01. In version 2.x of the Azure Native provider, it used API version 2023-05-01._
 2. Generate and use the local SDK for the previous version of the resource as described in the [version guide](./version-guide).
 
 #### New module structure and naming aligned closer to Azure SDKs
@@ -112,7 +104,7 @@ The Azure SDKs reflect this so that these different network-related services are
 - `Insights` is split into `ApplicationInsights` and `Monitor`.
 - `Network` is split into `Dns`, `DnsResolver`, `Frontdoor`, `Network`, `PrivateDns`, and `TrafficManager`.
 
-This changes require corresponding updates in your Pulumi programs. Existing resources will not be recreated, however, due to the use of aliases.
+You'll need to update your code to use the new module names. The resources in these modules have been aliased to support this migration with no replacements of existing resources.
 
 #### De-duplication of conflicting resources and types
 
@@ -122,6 +114,8 @@ The Azure specification sometimes uses the same name for different resources in 
 - In `HDInsight`, `Cluster` was split into `Cluster` and `ClusterPoolCluster`.
 - In `HybridContainerService`, `HybridIdentityMetadatum` was split into `HybridIdentityMetadata` and `ClusterInstanceHybridIdentityMetadatum`.
 - In `NetApp`, resources relating to Capacity Pools are prefixed with `CapacityPool`, splitting `Backup` into `Backup` and `CapacityPoolBackup`.
+
+You'll need to update your code to use the new names. The resources in these modules have been aliased to support this migration with no replacements of existing resources.
 
 #### Propagating `forceNew` from referenced types
 
@@ -177,8 +171,6 @@ All affected resources are listed below:
 #### MySQL and PostgreSQL Server and Flexible Server
 
 Tracked by [#2753](https://github.com/pulumi/pulumi-azure-native/issues/2753), this change cleanly separates the different PostgreSQL offerings from Azure: Flexible Servers, Server Groups V2, and the deprecated Single Server offering.
-
-TODO,tkappler elaborate with examples
 
 {{< chooser language "typescript,python,csharp,go,yaml" >}}
 

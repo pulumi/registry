@@ -33,7 +33,7 @@ For each resource, Pulumi chooses a default API version. The default API version
 
 The SDKs represent these default versions of the resources. The [API reference docs](/registry/packages/azure-native/api-docs/) document them.
 
-Following the semantic versioning outlined above, patch versions will not contain API version changes. Minor versions contain API version changes when we determine that they don't cause breaking changes, as far as we can tell from the Azure specification. Therefore, regular minor version upgrades allow users to stay current with Azure API changes while minimizing the risk of breaking changes.
+Following the semantic versioning outlined above, patch versions of the Pulumi SDKs will not contain API version changes. Minor versions contain API version changes when we determine that they don't cause breaking changes, as far as we can tell from the Azure specification. Therefore, regular minor version upgrades allow users to stay current with Azure API changes while minimizing the risk of breaking changes.
 
 ## Other API versions
 

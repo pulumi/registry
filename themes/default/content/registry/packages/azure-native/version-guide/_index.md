@@ -4,7 +4,7 @@ meta_desc: How Azure API versions are represented in the native Azure provider f
 layout: package
 ---
 
-The native Azure provider SDKs follow the semantic versioning convention, similarly to other Pulumi providers. At the same time, Azure API is structured around date-based API versions like `2020-03-01` defined per Azure resource provider.
+The native Azure provider SDKs follow the semantic versioning convention, similarly to other Pulumi providers. At the same time, the Azure API is structured around date-based API versions like `2020-03-01` defined per Azure resource provider.
 
 This guide describes how we combine both versioning approaches to achieve the following design goals:
 
@@ -29,7 +29,7 @@ Occasionally, Microsoft ships breaking changes. For example, they may rename a m
 
 Azure's APIs are versioned. API versions are defined per Azure service (resource provider) and are published frequently. API versions are based on a date, for instance, `2020-03-01` or `2019-05-15-preview`. Breaking changes may occur between API versions.
 
-For each resource, Pulumi chooses a default API version. The default API version is often, but not always, the same for all resources in a resource provider. We choose the default version through a combination of factors, including comparing with Azure SDKs, preferring newer versions, and preferring stable versions over preview versions unless the latest stable version is rather old.
+For each resource, Pulumi chooses a default API version. The default API version is often, but not always, the same for all resources in a resource provider. We choose the default version through a combination of factors, including comparing with Azure SDKs, preferring newer over older versions, and preferring stable versions over preview versions unless the latest stable version is rather old.
 
 The SDKs represent these default versions of the resources. The [API reference docs](/registry/packages/azure-native/api-docs/) document them.
 

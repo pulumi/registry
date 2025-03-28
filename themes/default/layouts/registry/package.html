@@ -41,12 +41,7 @@
                                 {{ end }}
                             {{ end }}
                         {{ else if (in .Page.File.Path "api-docs/_index.md")}}
-                            <!-- HACK: to get custom azure-native-v2 title for now. -->
-                            {{ if (in .Page.File.Path "azure-native-v2") }}
-                                <h1>Azure Native (v2 Beta): API Docs</h1>
-                            {{ else }}
-                                <h1>{{ .Params.title }}: API Docs</h1>
-                            {{ end }}
+                            <h1>{{ .Params.title }}: API Docs</h1>
                         {{ end }}
                     {{ else }}
                         {{ if and (.Params.h1) (not .Params.notitle) }}

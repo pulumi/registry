@@ -18,7 +18,7 @@ const singles = [
     "aws-native",
     "azure",
     "azure-native",
-    "azure-native-v1",
+    "azure-native-v2",
     "fortios",
     "gcp",
     "google-native",

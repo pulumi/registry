@@ -25,8 +25,7 @@
                         {{ if and (.Params.h1) (not .Params.notitle) }}
                             <h1>{{ .Params.h1 }}</h1>
                         {{ else if and (ne .Title "") (not .Params.notitle) }}
-                            <!-- HACK: azure-native-v2 resources should still belong to azure-native -->
-                            <h1 class="break-words">{{ replace $title_tag "azure-native-v2" "azure-native" }}</h1>
+                            <h1 class="break-words">{{ $title_tag }}</h1>
                             {{ if not (strings.Contains .Params.meta_desc "module") }}
                                 {{ .Scratch.Set "title_tag" $title_tag }}
                                 {{ partial "registry/package/pulumi-ai.html" . }}

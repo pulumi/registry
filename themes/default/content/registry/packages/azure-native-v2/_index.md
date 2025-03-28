@@ -1,5 +1,5 @@
 ---
-title: Azure Native
+title: Azure Native v2
 meta_desc: Learn how to use Pulumi's Azure Native Provider to reduce the complexity of managing and provisioning Azure resources with Azure Resource Manager (ARM) APIs.
 layout: package
 ---

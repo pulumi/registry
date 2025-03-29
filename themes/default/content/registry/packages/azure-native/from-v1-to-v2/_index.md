@@ -6,7 +6,7 @@ layout: package
 
 ## About
 
-The Pulumi Azure Native Provider v2 is now available. You can start taking advantages of the smaller, streamlined SDKs right away while also incorporating other enhancements including simplified user assigned identity handling, refreshed default versions, and consistent title casing. To upgrade to v2, there are a few changes you may need to make depending on your Pulumi programs.
+The v2 provider featured enhancements such as simplified user assigned identity handling, refreshed default versions, and consistent title casing. To upgrade to v2, there are a few changes you may need to make depending on your Pulumi programs.
 
 ## Upgrade Steps
 

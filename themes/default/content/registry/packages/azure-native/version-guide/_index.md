@@ -71,12 +71,12 @@ import * as storage_v20240101 from "@pulumi/azure-native_storage_v20240101";
 
 const resourceGroup = new resources.ResourceGroup("resourceGroup");
 
-const storageAccount = new storage_v20240101.storage.v20240101.StorageAccount("sa", {
+const storageAccount = new storage_v20240101.storage.StorageAccount("sa", {
     resourceGroupName: resourceGroup.name,
     sku: {
-        name: storage_v20240101.storage.v20240101.SkuName.Standard_LRS,
+        name: storage_v20240101.storage.SkuName.Standard_LRS,
     },
-    kind: storage_v20240101.storage.v20240101.Kind.StorageV2,
+    kind: storage_v20240101.storage.Kind.StorageV2,
 });
 ```
 
@@ -94,9 +94,9 @@ account = storage.v20240101.StorageAccount(
     "sa",
     resource_group_name=resource_group.name,
     sku={
-        "name": storage.v20240101.SkuName.STANDARD_LRS,
+        "name": storage.SkuName.STANDARD_LRS,
     },
-    kind=storage.v20240101.Kind.STORAGE_V2,
+    kind=storage.Kind.STORAGE_V2,
 )
 ```
 
@@ -106,8 +106,8 @@ account = storage.v20240101.StorageAccount(
 
 ```csharp
 using Pulumi.AzureNative.Resources;
-using Pulumi.AzureNative_storage_v20240101.Storage.V20240101;
-using Pulumi.AzureNative_storage_v20240101.Storage.V20240101.Inputs;
+using Pulumi.AzureNative_storage_v20240101.Storage;
+using Pulumi.AzureNative_storage_v20240101.Storage.Inputs;
 
 return await Pulumi.Deployment.RunAsync(() =>
 {
@@ -173,11 +173,11 @@ package myproject;
 
 import com.pulumi.Pulumi;
 import com.pulumi.azurenative.resources.ResourceGroup;
-import com.pulumi.azurenative_storage_v20240101.storage.v20240101.StorageAccount;
-import com.pulumi.azurenative_storage_v20240101.storage.v20240101.StorageAccountArgs;
-import com.pulumi.azurenative_storage_v20240101.storage.v20240101.enums.Kind;
-import com.pulumi.azurenative_storage_v20240101.storage.v20240101.enums.SkuName;
-import com.pulumi.azurenative_storage_v20240101.storage.v20240101.inputs.SkuArgs;
+import com.pulumi.azurenative_storage_v20240101.storage.StorageAccount;
+import com.pulumi.azurenative_storage_v20240101.storage.StorageAccountArgs;
+import com.pulumi.azurenative_storage_v20240101.storage.enums.Kind;
+import com.pulumi.azurenative_storage_v20240101.storage.enums.SkuName;
+import com.pulumi.azurenative_storage_v20240101.storage.inputs.SkuArgs;
 
 public class App {
     public static void main(String[] args) {
@@ -207,7 +207,7 @@ resources:
   resourceGroup:
     type: azure-native:resources:ResourceGroup
   sa:
-    type: azure-native_storage_v20240101:storage.V20240101:StorageAccount
+    type: azure-native_storage_v20240101:storage:StorageAccount
     properties:
       resourceGroupName: ${resourceGroup.name}
       sku:

@@ -40,7 +40,7 @@ let allObjects = [...filteredPageObjects, ...registryObjects];
 // removed once the azure-native-v2 package is removed from the Registry.
 // https://github.com/pulumi/registry/issues/2879
 // https://github.com/pulumi/pulumi-azure-native/issues/3420
-allObjects = allObjects.filter(o => !o.href.includes("azure-native-v2"));
+allObjects = allObjects.filter((o) => !o.href.includes("azure-native-v2"));
 
 // Write the results, just so we have them.
 console.log(" ↳ Writing results...");

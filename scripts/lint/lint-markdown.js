@@ -112,7 +112,9 @@ function searchForMarkdown(paths, markdownFiles, indexFiles) {
     }
     // If the path is a directory we want to add the contents of the directory
     // to the list.
-    if (isDirectory) {
+    // azure-native-v2 is a static copy that's not updated anymore and whose
+    // number of files causes stack overflow, so we skip it.
+    if (isDirectory && file.indexOf("azure-native-v2") === -1) {
         const contents = fs.readdirSync(fullPath).map(function (file) {
             return fullPath + "/" + file;
         });

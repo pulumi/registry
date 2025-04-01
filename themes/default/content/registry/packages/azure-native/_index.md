@@ -112,9 +112,13 @@ Visit the [How-to Guides](./how-to-guides) to find step-by-step guides for speci
 
 If you're already using the [Pulumi Azure Classic Provider](/registry/packages/azure) and would like to migrate to Azure Native, use the [migration guide](./from-classic).
 
+### From v2 to v3
+
+To migrate from v2 to v3 of the Pulumi Azure Native Provider, use the [v3 upgrade guide](./from-v2-to-v3/).
+
 ### From v1 to v2
 
-To migrate from v1 to v2 of the Pulumi Azure Native Provider, use the [version upgrade guide](./from-v1-to-v2/).
+To migrate from v1 to v2 of the Pulumi Azure Native Provider, use the [v2 upgrade guide](./from-v1-to-v2/).
 
 ### From Azure Resource Manager (ARM) templates
 
@@ -131,6 +135,4 @@ Some Azure resources aren't included in Azure Native because they're not compati
 
 ## How resources are versioned
 
-Azure Native provides access to all API versions of each Azure resource so that you can access the entire Azure API surface and pin to the version you prefer.
-
-Read the [version guide](./version-guide) to learn more about how you can manage the Azure API versions you're using, including both module-per-version and top-level-resources approaches.
+Azure Native provides access to all API versions of each Azure resource so that you can access the entire Azure API surface. The SDK comes with a default version of each resource, and you can generate local SDKs for other versions. Read the [version guide](./version-guide) to learn more.

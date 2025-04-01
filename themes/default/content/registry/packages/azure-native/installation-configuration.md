@@ -14,7 +14,7 @@ The Azure Native provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/azure-native`](https://www.npmjs.com/package/@pulumi/azure-native)
 * Python: [`pulumi-azure-native`](https://pypi.org/project/pulumi-azure-native/)
-* Go: [`github.com/pulumi/pulumi-azure-native/sdk/go/azure`](https://github.com/pulumi/pulumi-azure-native)
+* Go: [`github.com/pulumi/pulumi-azure-native-sdk`](https://github.com/pulumi/pulumi-azure-native-sdk)
 * .NET: [`Pulumi.AzureNative`](https://www.nuget.org/packages/Pulumi.AzureNative)
 * Java: [`com.pulumi.azurenative`](https://search.maven.org/search?q=com.pulumi.azure-native)
 

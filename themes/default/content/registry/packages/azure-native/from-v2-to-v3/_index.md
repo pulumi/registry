@@ -14,7 +14,7 @@ The Pulumi Azure Native Provider v3 is now available. To upgrade to v3 and take 
 
 We recommend upgrading to the [latest version](https://github.com/pulumi/pulumi-azure-native/releases/tag/v2.89.3) of the v2 provider as a prerequisite to the v3 upgrade. This will enable you to resolve any pre-existing deprecated versions or resource structure changes.
 
-Review your program for warnings on missing imports or deprecated resources. If your program uses any explicit API versions where the import contains the API version, you will need to update these since explicit API versions are no longer included in the SDK. It's recommended to migrate to the default version, if possible, or you can generate a local SDK for the desired API version as described in the [version guide](./version-guide).
+Review your program for warnings on missing imports or deprecated resources. If your program uses any explicit API versions where the import contains the API version, you will need to update these since explicit API versions are no longer included in the SDK. It's recommended to migrate to the default version, if possible, or you can generate a local SDK for the desired API version as described in the [version guide](https://www.pulumi.com/registry/packages/azure-native/version-guide/#accessing-any-api-version-via-local-packages).
 
 ### Upgrade Dependencies
 

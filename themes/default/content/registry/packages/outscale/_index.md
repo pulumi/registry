@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/outscale/outscale/1.0.1/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/outscale/outscale/1.1.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Outscale Provider
@@ -102,11 +102,11 @@ $ pulumi preview
 ## Configuration
 ### Set a profile using a configuration file
 
-Use the `profile` or the `OSC_PROFILE` parameter to specify a named profile.
+You can set a named profile by specifying the `profile` attribute in the provider configuration.
 
-The locations of the shared configuration and credentials files can be configured using either the parameters `configFile` and `OSC_PROFILE`.
+The location of the shared configuration and credential file can be specified using the `configFile` attribute:
 
-Example with the provider:
+Example:
 
 ```yaml
 # Pulumi.yaml provider configuration file
@@ -119,8 +119,11 @@ config:
         value: default
 
 ```
+### Set a profile using environment variables
 
-Examples with the environment variable export:
+You can also set a named profile by specifying the `OSC_PROFILE` environment variable.
+
+The locations of the shared configuration and credential file can be specified using the `OSC_CONFIG_FILE` environment variable:
 ## Configuration Reference Reference
 
 In addition to generic provider arguments, the following arguments are supported in the OUTSCALE provider configuration:

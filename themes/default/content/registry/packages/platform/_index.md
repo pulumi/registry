@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/jfrog/platform/2.2.1/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/jfrog/platform/2.2.2/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Platform Provider
@@ -54,7 +54,7 @@ import * as platform from "@pulumi/platform";
 
 const config = new pulumi.Config();
 const jfrogUrl = config.get("jfrogUrl") || "http://localhost:8081";
-const my_global_role = new platform.index/globalRole.GlobalRole("my-global-role", {
+const my_global_role = new platform.GlobalRole("my-global-role", {
     name: "my-global-role",
     description: "Test description",
     type: "CUSTOM_GLOBAL",
@@ -65,7 +65,7 @@ const my_global_role = new platform.index/globalRole.GlobalRole("my-global-role"
     ],
 });
 const my_generic_local = new artifactory.index.LocalGenericRepository("my-generic-local", {key: "my-generic-local"});
-const my_workers_service = new platform.index/workersService.WorkersService("my-workers-service", {
+const my_workers_service = new platform.WorkersService("my-workers-service", {
     key: "my-workers-service",
     enabled: true,
     description: "My workers service",
@@ -110,35 +110,35 @@ config = pulumi.Config()
 jfrog_url = config.get("jfrogUrl")
 if jfrog_url is None:
     jfrog_url = "http://localhost:8081"
-my_global_role = platform.index.global_role.GlobalRole("my-global-role",
-    name=my-global-role,
-    description=Test description,
-    type=CUSTOM_GLOBAL,
-    environments=[DEV],
+my_global_role = platform.GlobalRole("my-global-role",
+    name="my-global-role",
+    description="Test description",
+    type="CUSTOM_GLOBAL",
+    environments=["DEV"],
     actions=[
-        READ_REPOSITORY,
-        READ_BUILD,
+        "READ_REPOSITORY",
+        "READ_BUILD",
     ])
 my_generic_local = artifactory.index.LocalGenericRepository("my-generic-local", key=my-generic-local)
-my_workers_service = platform.index.workers_service.WorkersService("my-workers-service",
-    key=my-workers-service,
+my_workers_service = platform.WorkersService("my-workers-service",
+    key="my-workers-service",
     enabled=True,
-    description=My workers service,
-    source_code=export default async (context: PlatformContext, data: BeforeDownloadRequest): Promise<BeforeDownloadResponse> => { console.log(await context.clients.platformHttp.get('/artifactory/api/system/ping')); console.log(await axios.get('https://my.external.resource')); return { status: 'DOWNLOAD_PROCEED', message: 'proceed', } },
-    action=BEFORE_DOWNLOAD,
+    description="My workers service",
+    source_code="export default async (context: PlatformContext, data: BeforeDownloadRequest): Promise<BeforeDownloadResponse> => { console.log(await context.clients.platformHttp.get('/artifactory/api/system/ping')); console.log(await axios.get('https://my.external.resource')); return { status: 'DOWNLOAD_PROCEED', message: 'proceed', } }",
+    action="BEFORE_DOWNLOAD",
     filter_criteria={
-        artifactFilterCriteria: {
-            repoKeys: [my_generic_local.key],
+        "artifact_filter_criteria": {
+            "repo_keys": [my_generic_local["key"]],
         },
     },
     secrets=[
         {
-            key: my-secret-key-1,
-            value: my-secret-value-1,
+            "key": "my-secret-key-1",
+            "value": "my-secret-value-1",
         },
         {
-            key: my-secret-key-2,
-            value: my-secret-value-2,
+            "key": "my-secret-key-2",
+            "value": "my-secret-value-2",
         },
     ])
 ```
@@ -166,7 +166,7 @@ return await Deployment.RunAsync(() =>
 {
     var config = new Config();
     var jfrogUrl = config.Get("jfrogUrl") ?? "http://localhost:8081";
-    var my_global_role = new Platform.Index.GlobalRole.GlobalRole("my-global-role", new()
+    var my_global_role = new Platform.GlobalRole("my-global-role", new()
     {
         Name = "my-global-role",
         Description = "Test description",
@@ -187,34 +187,34 @@ return await Deployment.RunAsync(() =>
         Key = "my-generic-local",
     });
 
-    var my_workers_service = new Platform.Index.WorkersService.WorkersService("my-workers-service", new()
+    var my_workers_service = new Platform.WorkersService("my-workers-service", new()
     {
         Key = "my-workers-service",
         Enabled = true,
         Description = "My workers service",
         SourceCode = "export default async (context: PlatformContext, data: BeforeDownloadRequest): Promise<BeforeDownloadResponse> => { console.log(await context.clients.platformHttp.get('/artifactory/api/system/ping')); console.log(await axios.get('https://my.external.resource')); return { status: 'DOWNLOAD_PROCEED', message: 'proceed', } }",
         Action = "BEFORE_DOWNLOAD",
-        FilterCriteria =
+        FilterCriteria = new Platform.Inputs.WorkersServiceFilterCriteriaArgs
         {
-            { "artifactFilterCriteria",
+            ArtifactFilterCriteria = new Platform.Inputs.WorkersServiceFilterCriteriaArtifactFilterCriteriaArgs
             {
-                { "repoKeys", new[]
+                RepoKeys = new[]
                 {
                     my_generic_local.Key,
-                } },
-            } },
+                },
+            },
         },
         Secrets = new[]
         {
-
+            new Platform.Inputs.WorkersServiceSecretArgs
             {
-                { "key", "my-secret-key-1" },
-                { "value", "my-secret-value-1" },
+                Key = "my-secret-key-1",
+                Value = "my-secret-value-1",
             },
-
+            new Platform.Inputs.WorkersServiceSecretArgs
             {
-                { "key", "my-secret-key-2" },
-                { "value", "my-secret-value-2" },
+                Key = "my-secret-key-2",
+                Value = "my-secret-value-2",
             },
         },
     });
@@ -240,7 +240,7 @@ package main
 
 import (
 	"github.com/pulumi/pulumi-artifactory/sdk/go/artifactory"
-	"github.com/pulumi/pulumi-platform/sdk/go/platform"
+	"github.com/pulumi/pulumi-pulumi-provider/sdks/go/platform/v2/platform"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config"
 )
@@ -252,48 +252,48 @@ func main() {
 		if param := cfg.Get("jfrogUrl"); param != "" {
 			jfrogUrl = param
 		}
-		_, err := index / globalrole.NewGlobalRole(ctx, "my-global-role", &index/globalrole.GlobalRoleArgs{
-			Name:        "my-global-role",
-			Description: "Test description",
-			Type:        "CUSTOM_GLOBAL",
-			Environments: []string{
-				"DEV",
+		_, err := platform.NewGlobalRole(ctx, "my-global-role", &platform.GlobalRoleArgs{
+			Name:        pulumi.String("my-global-role"),
+			Description: pulumi.String("Test description"),
+			Type:        pulumi.String("CUSTOM_GLOBAL"),
+			Environments: pulumi.StringArray{
+				pulumi.String("DEV"),
 			},
-			Actions: []string{
-				"READ_REPOSITORY",
-				"READ_BUILD",
+			Actions: pulumi.StringArray{
+				pulumi.String("READ_REPOSITORY"),
+				pulumi.String("READ_BUILD"),
 			},
 		})
 		if err != nil {
 			return err
 		}
-		_, err = artifactory.NewLocalGenericRepository(ctx, "my-generic-local", &artifactory.LocalGenericRepositoryArgs{
+		my_generic_local, err := artifactory.NewLocalGenericRepository(ctx, "my-generic-local", &artifactory.LocalGenericRepositoryArgs{
 			Key: "my-generic-local",
 		})
 		if err != nil {
 			return err
 		}
-		_, err = index / workersservice.NewWorkersService(ctx, "my-workers-service", &index/workersservice.WorkersServiceArgs{
-			Key:         "my-workers-service",
-			Enabled:     true,
-			Description: "My workers service",
-			SourceCode:  "export default async (context: PlatformContext, data: BeforeDownloadRequest): Promise<BeforeDownloadResponse> => { console.log(await context.clients.platformHttp.get('/artifactory/api/system/ping')); console.log(await axios.get('https://my.external.resource')); return { status: 'DOWNLOAD_PROCEED', message: 'proceed', } }",
-			Action:      "BEFORE_DOWNLOAD",
-			FilterCriteria: map[string]interface{}{
-				"artifactFilterCriteria": map[string]interface{}{
-					"repoKeys": []interface{}{
+		_, err = platform.NewWorkersService(ctx, "my-workers-service", &platform.WorkersServiceArgs{
+			Key:         pulumi.String("my-workers-service"),
+			Enabled:     pulumi.Bool(true),
+			Description: pulumi.String("My workers service"),
+			SourceCode:  pulumi.String("export default async (context: PlatformContext, data: BeforeDownloadRequest): Promise<BeforeDownloadResponse> => { console.log(await context.clients.platformHttp.get('/artifactory/api/system/ping')); console.log(await axios.get('https://my.external.resource')); return { status: 'DOWNLOAD_PROCEED', message: 'proceed', } }"),
+			Action:      pulumi.String("BEFORE_DOWNLOAD"),
+			FilterCriteria: &platform.WorkersServiceFilterCriteriaArgs{
+				ArtifactFilterCriteria: &platform.WorkersServiceFilterCriteriaArtifactFilterCriteriaArgs{
+					RepoKeys: pulumi.StringArray{
 						my_generic_local.Key,
 					},
 				},
 			},
-			Secrets: []map[string]interface{}{
-				map[string]interface{}{
-					"key":   "my-secret-key-1",
-					"value": "my-secret-value-1",
+			Secrets: platform.WorkersServiceSecretArray{
+				&platform.WorkersServiceSecretArgs{
+					Key:   pulumi.String("my-secret-key-1"),
+					Value: pulumi.String("my-secret-value-1"),
 				},
-				map[string]interface{}{
-					"key":   "my-secret-key-2",
-					"value": "my-secret-value-2",
+				&platform.WorkersServiceSecretArgs{
+					Key:   pulumi.String("my-secret-key-2"),
+					Value: pulumi.String("my-secret-value-2"),
 				},
 			},
 		})
@@ -381,6 +381,9 @@ import com.pulumi.artifactory.LocalGenericRepository;
 import com.pulumi.artifactory.LocalGenericRepositoryArgs;
 import com.pulumi.platform.WorkersService;
 import com.pulumi.platform.WorkersServiceArgs;
+import com.pulumi.platform.inputs.WorkersServiceFilterCriteriaArgs;
+import com.pulumi.platform.inputs.WorkersServiceFilterCriteriaArtifactFilterCriteriaArgs;
+import com.pulumi.platform.inputs.WorkersServiceSecretArgs;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
@@ -416,10 +419,20 @@ public class App {
             .description("My workers service")
             .sourceCode("export default async (context: PlatformContext, data: BeforeDownloadRequest): Promise<BeforeDownloadResponse> => { console.log(await context.clients.platformHttp.get('/artifactory/api/system/ping')); console.log(await axios.get('https://my.external.resource')); return { status: 'DOWNLOAD_PROCEED', message: 'proceed', } }")
             .action("BEFORE_DOWNLOAD")
-            .filterCriteria(%!v(PANIC=Format method: runtime error: invalid memory address or nil pointer dereference))
+            .filterCriteria(WorkersServiceFilterCriteriaArgs.builder()
+                .artifactFilterCriteria(WorkersServiceFilterCriteriaArtifactFilterCriteriaArgs.builder()
+                    .repoKeys(my_generic_local.key())
+                    .build())
+                .build())
             .secrets(
-                %!v(PANIC=Format method: runtime error: invalid memory address or nil pointer dereference),
-                %!v(PANIC=Format method: runtime error: invalid memory address or nil pointer dereference))
+                WorkersServiceSecretArgs.builder()
+                    .key("my-secret-key-1")
+                    .value("my-secret-value-1")
+                    .build(),
+                WorkersServiceSecretArgs.builder()
+                    .key("my-secret-key-2")
+                    .value("my-secret-value-2")
+                    .build())
             .build());
 
     }

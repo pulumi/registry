@@ -10,7 +10,7 @@ native: false
 package_status: public_preview
 publisher: Chronosphere
 repo_url: https://github.com/chronosphereio/pulumi-chronosphere
-schema_file_url: https://raw.githubusercontent.com/chronosphereio/pulumi-chronosphere/v0.9.7/provider/cmd/pulumi-resource-chronosphere/schema.json
+schema_file_url: https://raw.githubusercontent.com/chronosphereio/pulumi-chronosphere/v0.9.8/provider/cmd/pulumi-resource-chronosphere/schema.json
 title: Chronosphere
-updated_on: 1740771006
-version: v0.9.7
+updated_on: 1743701374
+version: v0.9.8

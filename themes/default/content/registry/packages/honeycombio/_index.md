@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/honeycombio/honeycombio/0.31.0/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/honeycombio/honeycombio/0.32.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Honeycombio Provider
@@ -39,7 +39,7 @@ import * as honeycombio from "@pulumi/honeycombio";
 const config = new pulumi.Config();
 const dataset = config.require("dataset");
 // Create a marker
-const hello = new honeycombio.index/marker.Marker("hello", {
+const hello = new honeycombio.Marker("hello", {
     message: "Hello world!",
     dataset: dataset,
 });
@@ -59,8 +59,8 @@ import pulumi_honeycombio as honeycombio
 config = pulumi.Config()
 dataset = config.require("dataset")
 # Create a marker
-hello = honeycombio.index.marker.Marker("hello",
-    message=Hello world!,
+hello = honeycombio.Marker("hello",
+    message="Hello world!",
     dataset=dataset)
 ```
 {{% /choosable %}}
@@ -82,7 +82,7 @@ return await Deployment.RunAsync(() =>
     var config = new Config();
     var dataset = config.Require("dataset");
     // Create a marker
-    var hello = new Honeycombio.Index.Marker.Marker("hello", new()
+    var hello = new Honeycombio.Marker("hello", new()
     {
         Message = "Hello world!",
         Dataset = dataset,
@@ -103,7 +103,7 @@ runtime: go
 package main
 
 import (
-	"github.com/pulumi/pulumi-honeycombio/sdk/go/honeycombio"
+	"github.com/pulumi/pulumi-pulumi-provider/sdks/go/honeycombio/honeycombio"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config"
 )
@@ -113,9 +113,9 @@ func main() {
 		cfg := config.New(ctx, "")
 		dataset := cfg.Require("dataset")
 		// Create a marker
-		_, err := index / marker.NewMarker(ctx, "hello", &index/marker.MarkerArgs{
-			Message: "Hello world!",
-			Dataset: dataset,
+		_, err := honeycombio.NewMarker(ctx, "hello", &honeycombio.MarkerArgs{
+			Message: pulumi.String("Hello world!"),
+			Dataset: pulumi.String(dataset),
 		})
 		if err != nil {
 			return err

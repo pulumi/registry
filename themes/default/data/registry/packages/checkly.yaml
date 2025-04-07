@@ -4,13 +4,13 @@ category: Monitoring
 component: false
 description: A Pulumi package for creating and managing Checkly monitoring resources.
 featured: false
-logo_url: https://raw.githubusercontent.com/checkly/pulumi-checkly/main/assets/checkly.svg
+logo_url: https://raw.githubusercontent.com/checkly/pulumi-checkly/main/assets/checkly.png
 name: checkly
 native: false
 package_status: ga
 publisher: Checkly
 repo_url: https://github.com/checkly/pulumi-checkly
-schema_file_url: https://raw.githubusercontent.com/checkly/pulumi-checkly/v2.1.1/provider/cmd/pulumi-resource-checkly/schema.json
+schema_file_url: https://raw.githubusercontent.com/checkly/pulumi-checkly/v2.1.3/provider/cmd/pulumi-resource-checkly/schema.json
 title: Checkly
-updated_on: 1741706273
-version: v2.1.1
+updated_on: 1744026052
+version: v2.1.3

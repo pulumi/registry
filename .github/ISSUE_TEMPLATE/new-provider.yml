@@ -1,0 +1,32 @@
+name: New Provider
+description: Request to add a new provider to the registry.
+type: Task
+labels:
+  - needs-triage
+  - kind/package
+body:
+  - type: dropdown
+    id: PackageType
+    attributes:
+      label: Package Type
+      description: Type of the package (e.g., Terraform, Ansible).
+      options:
+        - Pulumi Provider (bridged or native)
+        - Terraform/OpenTofu provider
+        - Component
+  - type: input
+    id: PackageName
+    attributes:
+      label: Package Name
+      description: Name of the package from the source.
+      placeholder: Your package name
+  - type: input
+    id: RepositoryUrl
+    attributes:
+      label: Repository URL
+      description: URL of the repository where the package can be found.
+      placeholder: https://github.com/pulumi/pulumi-xyz
+  - type: markdown
+    attributes:
+      value: |
+        Please provide any additional information or context that may be helpful in reviewing this request.

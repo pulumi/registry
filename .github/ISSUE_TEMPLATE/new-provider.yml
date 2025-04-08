@@ -9,7 +9,7 @@ body:
     id: PackageType
     attributes:
       label: Package Type
-      description: Type of the package (e.g., Terraform, Ansible).
+      description: Type of the package (e.g., Terraform, Native, Component).
       options:
         - Pulumi Provider (bridged or native)
         - Terraform/OpenTofu provider

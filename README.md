@@ -4,44 +4,28 @@
 
 ## Adding a Package
 
-To add a package to the Pulumi Registry, open an issue requesting the addition using the ["New Provider"](https://github.com/pulumi/registry/issues/new?template=new-provider.yml) issue template.
+If you want to see a new package to the Pulumi Registry, open an issue requesting the addition using the ["New Provider"](https://github.com/pulumi/registry/issues/new?template=new-provider.yml) issue template. You can request either a [Pulumi Package](https://www.pulumi.com/docs/guides/pulumi-packages/) (Native, Bridged or Component) that you have written or any Terraform Provider present in the [opentofu package registry](https://search.opentofu.org).
 
 For assistance, please reach out on the [Pulumi community slack](https://slack.pulumi.com/) or get in touch with us via this [contact form](https://pulumi.com/contact/?form=registry).
 
-### Preparing a Pulumi Provider Package
+### Adding a Pulumi Package that you have authored
 
 We’re always eager to expand that index with new [Pulumi Packages](https://www.pulumi.com/docs/guides/pulumi-packages/). To get started, use our [guide on authoring a Pulumi Package](https://www.pulumi.com/docs/guides/pulumi-packages/how-to-author/) of your own.
 
 To publish a community-maintained package on the Pulumi Registry as a community member:
 
 1. Ensure your provider repo has the following files:
-    * `docs/_index.md`, which should contain a summary of the provider's purpose (required) along with a code sample (preferred). This file will render as the index page for your provider ([example](https://www.pulumi.com/registry/packages/aiven/)).
-    * `docs/installation-configuration.md`, which should contain links to SDK packages in each language along with instructions for configuring the provider (e.g., required credentials and/or environment variables). This file will render as the Installation & Configuration page for your provider ([example](https://www.pulumi.com/registry/packages/aiven/installation-configuration/)).
-1. Create a release of your provider in GitHub.
-
-### Other Package Types
-
-Terraform/OpenTofu providers which have not yet been bridged can be requested through the ["Any Terraform Provider" wrapper](https://www.pulumi.com/registry/packages/terraform-provider/), though we recommend following the [authoring guide](https://www.pulumi.com/docs/guides/pulumi-packages/how-to-author/) to create published SDKs & refine resource configurations.
-
-[Components can also created and shared](https://www.pulumi.com/docs/iac/using-pulumi/extending-pulumi/build-a-component/) via the registry, combining one or more resources into a reusable abstraction.
+    * `docs/_index.md`, which should contain a summary of the provider's purpose (required) along with a code sample in each language (required). This file will render as the index page for your provider ([example](https://www.pulumi.com/registry/packages/aiven/)).
+    * `docs/installation-configuration.md`, which should contain links to published SDKs in (Go, Typescript, C#, Python; required) along with instructions for configuring the provider (e.g., required credentials and/or environment variables). This file will render as the Installation & Configuration page for your provider ([example](https://www.pulumi.com/registry/packages/aiven/installation-configuration/)).
+1. Create a release of your provider in GitHub with a "v" + [Semver 2.0](https://semver.org) compliant tag (`vX.Y.Z`).
 
 ## Internal Process
 
 When a community member requests adding a provider to the registry, a Pulumi staff member should perform the following steps:
 
 1. Add the package to the [community packages list](./community-packages/package-list.json) via pull request to this repository.
-1. Review the PR. Ensure that the PR has been rebased if necessary before merging. If ok, merge.
-1. Once the PR is merged, a [scheduled task](https://github.com/pulumi/registry/actions/workflows/generate-package-metadata.yml) will pick up the changes and create a PR to add the package metadata to the registry. A correct metadata PR ([example](https://github.com/pulumi/registry/pull/1606/files)) will include the following files, at a minimum:
-   * `data/registry/${PROVIDER}.yaml` which includes structured metadata about the provider. This file is always included with every PR that gets generated for a new release.
-   * `themes/default/content/registry/packages/${PROVIDER}/installation-configuration.md`, as described above. This file *must* be included in the first release, but will only be included in subsequent PRs if the content has changed.
-   * `themes/default/content/registry/packages/exoscale/_index.md`, as described above. This file *must* be included in the first release, but will only be included in subsequent PRs if the content has changed.
-
-   Optionally, the PR may include additional content files like How-To Guides if they are present in the upstream repo.
-
-1. Merge the PR if it looks ok.
-1. In pulumi/docs, a [scheduled task](https://github.com/pulumi/docs/actions/workflows/update-theme.yml) runs hourly and will pick up any changes in this repo, generate files from the provider schema and `data/registry/${PROVIDER}.yaml`, and publish to pulumi.com.
-
-  This scheduled task currently lacks adequate monitoring, and **should be watched to ensure that it runs correctly to completion**. (If it fails, it will block all updates to pulumi.com, including marketing and manually maintained docs pages.)
+1. Follow the instructions outlined in [docs/adding-a-new-package.md](./docs/adding-a-new-package.md) to validate the PR, requesting updates as necessary.
+1. Merge the PR.
 
 ## About this repository
 

@@ -10,7 +10,7 @@ native: false
 package_status: public_preview
 publisher: airbytehq
 repo_url: https://github.com/airbytehq/terraform-provider-airbyte
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/airbytehq/airbyte/0.8.1-beta/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/airbytehq/airbyte/0.9.0/schema.json
 title: airbyte
-updated_on: 1743248189
-version: 0.8.1-beta
+updated_on: 1744155396
+version: 0.9.0

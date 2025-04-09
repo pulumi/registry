@@ -44,9 +44,9 @@ import (
 // from either the filesystem directory or the Pulumi Registry API.
 type PackageMetadataProvider interface {
 	// GetPackageMetadata returns metadata for a specific package
-	GetPackageMetadata(pkgName string) (*pkg.PackageMeta, error)
+	GetPackageMetadata(pkgName string) (pkg.PackageMeta, error)
 	// ListPackageMetadata returns metadata for all packages
-	ListPackageMetadata() ([]*pkg.PackageMeta, error)
+	ListPackageMetadata() ([]pkg.PackageMeta, error)
 }
 
 // FileSystemProvider implements PackageMetadataProvider using the local yaml data files
@@ -222,7 +222,7 @@ func genResourceDocsForAllRegistryPackages(
 		pool.Go(func() error {
 			glog.Infof("=== starting %s ===\n", metadata.Name)
 			docsOutDir := filepath.Join(baseDocsOutDir, metadata.Name, "api-docs")
-			err = genResourceDocsForPackageFromRegistryMetadata(*metadata, docsOutDir, basePackageTreeJSONOutDir)
+			err = genResourceDocsForPackageFromRegistryMetadata(metadata, docsOutDir, basePackageTreeJSONOutDir)
 			if err != nil {
 				return errors.Wrapf(err, "generating resource docs using metadata file info %s", metadata.Name)
 			}
@@ -281,7 +281,7 @@ func resourceDocsFromRegistryCmd() *cobra.Command {
 				}
 
 				docsOutDir := filepath.Join(baseDocsOutDir, metadata.Name, "api-docs")
-				err = genResourceDocsForPackageFromRegistryMetadata(*metadata, docsOutDir, basePackageTreeJSONOutDir)
+				err = genResourceDocsForPackageFromRegistryMetadata(metadata, docsOutDir, basePackageTreeJSONOutDir)
 				if err != nil {
 					return errors.Wrapf(err, "generating docs for package %q from registry metadata", args[0])
 				}
@@ -316,23 +316,23 @@ func resourceDocsFromRegistryCmd() *cobra.Command {
 }
 
 // GetPackageMetadata implements PackageMetadataProvider for fileSystemProvider
-func (p *fileSystemProvider) GetPackageMetadata(pkgName string) (*pkg.PackageMeta, error) {
+func (p *fileSystemProvider) GetPackageMetadata(pkgName string) (pkg.PackageMeta, error) {
 	metadataFilePath := filepath.Join(getRegistryPackagesPath(p.registryDir), pkgName+".yaml")
 	b, err := os.ReadFile(metadataFilePath)
 	if err != nil {
-		return nil, errors.Wrapf(err, "reading the metadata file %s", metadataFilePath)
+		return pkg.PackageMeta{}, errors.Wrapf(err, "reading the metadata file %s", metadataFilePath)
 	}
 
 	var metadata pkg.PackageMeta
 	if err := yaml.Unmarshal(b, &metadata); err != nil {
-		return nil, errors.Wrapf(err, "unmarshalling the metadata file %s", metadataFilePath)
+		return pkg.PackageMeta{}, errors.Wrapf(err, "unmarshalling the metadata file %s", metadataFilePath)
 	}
 
-	return &metadata, nil
+	return metadata, nil
 }
 
 // ListPackageMetadata implements PackageMetadataProvider for fileSystemProvider
-func (p *fileSystemProvider) ListPackageMetadata() ([]*pkg.PackageMeta, error) {
+func (p *fileSystemProvider) ListPackageMetadata() ([]pkg.PackageMeta, error) {
 	registryPackagesPath := getRegistryPackagesPath(p.registryDir)
 	files, err := os.ReadDir(registryPackagesPath)
 	if err != nil {
@@ -347,7 +347,7 @@ func (p *fileSystemProvider) ListPackageMetadata() ([]*pkg.PackageMeta, error) {
 		}
 	}
 
-	metadataList := make([]*pkg.PackageMeta, 0, metadataCount)
+	metadataList := make([]pkg.PackageMeta, 0, metadataCount)
 	for _, file := range files {
 		if !strings.HasSuffix(file.Name(), ".yaml") {
 			continue
@@ -364,35 +364,39 @@ func (p *fileSystemProvider) ListPackageMetadata() ([]*pkg.PackageMeta, error) {
 }
 
 // GetPackageMetadata implements PackageMetadataProvider for registryAPIProvider
-func (p *registryAPIProvider) GetPackageMetadata(pkgName string) (*pkg.PackageMeta, error) {
+func (p *registryAPIProvider) GetPackageMetadata(pkgName string) (pkg.PackageMeta, error) {
 	resp, err := http.Get(fmt.Sprintf("%s/packages?name=%s", p.apiURL, pkgName))
 	if err != nil {
-		return nil, errors.Wrapf(err, "fetching package metadata from API for %s", pkgName)
+		return pkg.PackageMeta{}, errors.Wrapf(err, "fetching package metadata from API for %s", pkgName)
 	}
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		return nil, errors.Errorf("unexpected status code %d when fetching package metadata", resp.StatusCode)
+		return pkg.PackageMeta{}, errors.Errorf("unexpected status code %d when fetching package metadata", resp.StatusCode)
 	}
 
 	var response PackageListResponse
 	if err := json.NewDecoder(resp.Body).Decode(&response); err != nil {
-		return nil, errors.Wrap(err, "decoding API response")
+		return pkg.PackageMeta{}, errors.Wrap(err, "decoding API response")
 	}
 
 	if len(response.Packages) == 0 {
-		return nil, errors.Errorf("no package found with name %s", pkgName)
+		return pkg.PackageMeta{}, errors.Errorf("no package found with name %s", pkgName)
 	}
 
 	if len(response.Packages) > 1 {
-		return nil, errors.Errorf("multiple packages found with name %s", pkgName)
+		return pkg.PackageMeta{}, errors.Errorf("multiple packages found with name %s", pkgName)
 	}
 
-	return convertAPIPackageToPackageMeta(response.Packages[0])
+	metadata, err := convertAPIPackageToPackageMeta(response.Packages[0])
+	if err != nil {
+		return pkg.PackageMeta{}, err
+	}
+	return *metadata, nil
 }
 
 // ListPackageMetadata implements PackageMetadataProvider for registryAPIProvider
-func (p *registryAPIProvider) ListPackageMetadata() ([]*pkg.PackageMeta, error) {
+func (p *registryAPIProvider) ListPackageMetadata() ([]pkg.PackageMeta, error) {
 	resp, err := http.Get(p.apiURL + "/packages")
 	if err != nil {
 		return nil, errors.Wrap(err, "fetching package list from API")
@@ -408,13 +412,13 @@ func (p *registryAPIProvider) ListPackageMetadata() ([]*pkg.PackageMeta, error) 
 		return nil, errors.Wrap(err, "decoding API response")
 	}
 
-	metadataList := make([]*pkg.PackageMeta, 0, len(response.Packages))
+	metadataList := make([]pkg.PackageMeta, 0, len(response.Packages))
 	for _, apiPkg := range response.Packages {
 		metadata, err := convertAPIPackageToPackageMeta(apiPkg)
 		if err != nil {
 			return nil, err
 		}
-		metadataList = append(metadataList, metadata)
+		metadataList = append(metadataList, *metadata)
 	}
 
 	return metadataList, nil

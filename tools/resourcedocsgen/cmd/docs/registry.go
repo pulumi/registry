@@ -64,7 +64,7 @@ type registryAPIProvider struct {
 
 // PackageMetadata represents the API response structure for package metadata
 // from the Pulumi Registry API.
-// TODO: import this from the pulumi-service if possible.
+// TODO: will eventually be available in the "github.com/pulumi/pulumi/sdk/v3/go/common/apitype" package.
 type PackageMetadata struct {
 	Name          string    `json:"name"`
 	Publisher     string    `json:"publisher"`
@@ -370,19 +370,18 @@ func (p *registryAPIProvider) GetPackageMetadata(pkgName string) (pkg.PackageMet
 		return pkg.PackageMeta{}, errors.Wrap(err, "decoding API response")
 	}
 
-	if len(response.Packages) == 0 {
+	switch len(response.Packages) {
+	case 0:
 		return pkg.PackageMeta{}, errors.Errorf("no package found with name %s", pkgName)
-	}
-
-	if len(response.Packages) > 1 {
+	case 1:
+		metadata, err := convertAPIPackageToPackageMeta(response.Packages[0])
+		if err != nil {
+			return pkg.PackageMeta{}, err
+		}
+		return *metadata, nil
+	default:
 		return pkg.PackageMeta{}, errors.Errorf("multiple packages found with name %s", pkgName)
 	}
-
-	metadata, err := convertAPIPackageToPackageMeta(response.Packages[0])
-	if err != nil {
-		return pkg.PackageMeta{}, err
-	}
-	return *metadata, nil
 }
 
 // ListPackageMetadata implements PackageMetadataProvider for registryAPIProvider

@@ -23,6 +23,7 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
+	"slices"
 	"strings"
 	"time"
 
@@ -98,16 +99,6 @@ func NewAPIProvider(apiURL string) PackageMetadataProvider {
 	return &registryAPIProvider{
 		apiURL: apiURL,
 	}
-}
-
-// contains checks if a string is in a slice
-func contains(slice []string, item string) bool {
-	for _, s := range slice {
-		if s == item {
-			return true
-		}
-	}
-	return false
 }
 
 func getRepoSlug(repoURL string) (string, error) {
@@ -243,8 +234,8 @@ func convertAPIPackageToPackageMeta(apiPkg PackageMetadata) (*pkg.PackageMeta, e
 		RepoURL:       apiPkg.RepoURL,
 		Category:      pkg.PackageCategory(apiPkg.Category),
 		Featured:      apiPkg.IsFeatured,
-		Native:        contains(apiPkg.PackageTypes, "native"),
-		Component:     contains(apiPkg.PackageTypes, "component"),
+		Native:        slices.Contains(apiPkg.PackageTypes, "native"),
+		Component:     slices.Contains(apiPkg.PackageTypes, "component"),
 		PackageStatus: pkg.PackageStatus(apiPkg.PackageStatus),
 		SchemaFileURL: apiPkg.SchemaURL,
 		Version:       apiPkg.Version,

@@ -51,13 +51,13 @@ type PackageMetadataProvider interface {
 
 // FileSystemProvider implements PackageMetadataProvider using the local yaml data files
 // in the pulumi/registry repository.
-type FileSystemProvider struct {
+type fileSystemProvider struct {
 	registryDir string
 }
 
 // RegistryAPIProvider implements PackageMetadataProvider using the Pulumi API
 // to retrieve package metadata.
-type RegistryAPIProvider struct {
+type registryAPIProvider struct {
 	apiURL string
 }
 
@@ -86,16 +86,16 @@ type PackageListResponse struct {
 	Packages []PackageMetadata `json:"packages"`
 }
 
-// NewFileSystemProvider creates a new FileSystemProvider
-func NewFileSystemProvider(registryDir string) *FileSystemProvider {
-	return &FileSystemProvider{
+// NewFileSystemProvider creates a new PackageMetadataProvider that reads from the filesystem
+func NewFileSystemProvider(registryDir string) PackageMetadataProvider {
+	return &fileSystemProvider{
 		registryDir: registryDir,
 	}
 }
 
-// NewAPIProvider creates a new RegistryAPIProvider
-func NewAPIProvider(apiURL string) *RegistryAPIProvider {
-	return &RegistryAPIProvider{
+// NewAPIProvider creates a new PackageMetadataProvider that reads from the Pulumi API
+func NewAPIProvider(apiURL string) PackageMetadataProvider {
+	return &registryAPIProvider{
 		apiURL: apiURL,
 	}
 }
@@ -315,8 +315,8 @@ func resourceDocsFromRegistryCmd() *cobra.Command {
 	return cmd
 }
 
-// GetPackageMetadata implements PackageMetadataProvider for FileSystemProvider
-func (p *FileSystemProvider) GetPackageMetadata(pkgName string) (*pkg.PackageMeta, error) {
+// GetPackageMetadata implements PackageMetadataProvider for fileSystemProvider
+func (p *fileSystemProvider) GetPackageMetadata(pkgName string) (*pkg.PackageMeta, error) {
 	metadataFilePath := filepath.Join(getRegistryPackagesPath(p.registryDir), pkgName+".yaml")
 	b, err := os.ReadFile(metadataFilePath)
 	if err != nil {
@@ -331,8 +331,8 @@ func (p *FileSystemProvider) GetPackageMetadata(pkgName string) (*pkg.PackageMet
 	return &metadata, nil
 }
 
-// ListPackageMetadata implements PackageMetadataProvider for FileSystemProvider
-func (p *FileSystemProvider) ListPackageMetadata() ([]*pkg.PackageMeta, error) {
+// ListPackageMetadata implements PackageMetadataProvider for fileSystemProvider
+func (p *fileSystemProvider) ListPackageMetadata() ([]*pkg.PackageMeta, error) {
 	registryPackagesPath := getRegistryPackagesPath(p.registryDir)
 	files, err := os.ReadDir(registryPackagesPath)
 	if err != nil {
@@ -363,8 +363,8 @@ func (p *FileSystemProvider) ListPackageMetadata() ([]*pkg.PackageMeta, error) {
 	return metadataList, nil
 }
 
-// GetPackageMetadata implements PackageMetadataProvider for RegistryAPIProvider
-func (p *RegistryAPIProvider) GetPackageMetadata(pkgName string) (*pkg.PackageMeta, error) {
+// GetPackageMetadata implements PackageMetadataProvider for registryAPIProvider
+func (p *registryAPIProvider) GetPackageMetadata(pkgName string) (*pkg.PackageMeta, error) {
 	resp, err := http.Get(fmt.Sprintf("%s/packages?name=%s", p.apiURL, pkgName))
 	if err != nil {
 		return nil, errors.Wrapf(err, "fetching package metadata from API for %s", pkgName)
@@ -391,8 +391,8 @@ func (p *RegistryAPIProvider) GetPackageMetadata(pkgName string) (*pkg.PackageMe
 	return convertAPIPackageToPackageMeta(response.Packages[0])
 }
 
-// ListPackageMetadata implements PackageMetadataProvider for RegistryAPIProvider
-func (p *RegistryAPIProvider) ListPackageMetadata() ([]*pkg.PackageMeta, error) {
+// ListPackageMetadata implements PackageMetadataProvider for registryAPIProvider
+func (p *registryAPIProvider) ListPackageMetadata() ([]*pkg.PackageMeta, error) {
 	resp, err := http.Get(p.apiURL + "/packages")
 	if err != nil {
 		return nil, errors.Wrap(err, "fetching package list from API")

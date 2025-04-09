@@ -1,6 +1,10 @@
 {
   "include": [
     {
+      "repoSlug": "castai/pulumi-castai",
+      "schemaFile": "provider/sdk/schema/schema.json"
+    },
+    {
       "repoSlug": "koyeb/pulumi-koyeb",
       "schemaFile": "provider/cmd/pulumi-resource-koyeb/schema.json"
     },

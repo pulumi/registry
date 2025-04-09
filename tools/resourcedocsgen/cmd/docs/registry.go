@@ -209,7 +209,6 @@ func genResourceDocsForAllRegistryPackages(
 
 	pool := concpool.New().WithErrors().WithMaxGoroutines(runtime.NumCPU())
 	for _, metadata := range metadataList {
-		metadata := metadata
 		pool.Go(func() error {
 			glog.Infof("=== starting %s ===\n", metadata.Name)
 			docsOutDir := filepath.Join(baseDocsOutDir, metadata.Name, "api-docs")

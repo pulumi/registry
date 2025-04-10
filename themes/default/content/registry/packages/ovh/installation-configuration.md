@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/ovh/pulumi-ovh/v2.1.0/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/ovh/pulumi-ovh/v2.1.1/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: OVH Installation & Configuration
 meta_desc: Information on how to install the OVH provider.
@@ -18,6 +18,7 @@ The Pulumi `OVH` provider is available as a package in all Pulumi languages:
 * Python: [`pulumi_ovh`](https://pypi.org/project/pulumi-ovh/)
 * Go: [`github.com/ovh/pulumi-ovh/sdk/v2/go/ovh`](https://pkg.go.dev/github.com/ovh/pulumi-ovh/sdk/v2)
 * .NET: [`Pulumi.Ovh`](https://www.nuget.org/packages/Pulumi.Ovh)
+* Java: [`com.ovhcloud.pulumi.ovh`](https://s01.oss.sonatype.org/#nexus-search;quick~com.ovhcloud.pulumi.ovh)
 
 ### Provider Binary
 
@@ -34,19 +35,36 @@ Replace the version string with your desired version.
 To provision resources with the Pulumi OVH provider, you need to have OVH credentials.
 Your OVH credentials are never sent to pulumi.com. Pulumi uses the OVH API and the credentials in your environment to authenticate requests from your computer to OVH.
 
+The provider needs to be configured with the proper credentials before it can be used. Requests to OVHcloud APIs require a set of secrets keys and the definition of the API endpoint. See [First Steps with the API](https://docs.ovh.com/gb/en/customer/first-steps-with-ovh-api/) (or the French version, [Premiers pas avec les API OVHcloud](https://docs.ovh.com/fr/api/api-premiers-pas/)) for a detailed explanation.
+
+Three forms of authentication are supported by the provider:
+
+* OAuth2, using scoped service accounts, and compatible with OVHcloud IAM
+* Short-lived access token received from [OVH API](https://support.us.ovhcloud.com/hc/en-us/articles/19901571606547-Using-Service-Accounts-to-Connect-to-OVHcloud-APIs) (for example with the help of Hashicorp Vault OAuth2 secret engine configured to work with OVH auth API).
+* Application key & application secret & consumer key
+
 ### Get your credentials
 
 The "OVH provider" needs to be configured with a set of credentials, which can be set using
-[Pulumi stack configuration](https://www.pulumi.com/docs/concepts/config/) or environment variables:
+[Pulumi stack configuration](https://www.pulumi.com/docs/concepts/config/) or environment variables.
+
+#### OAuth2
+
+First, you need to generate a pair of valid `client_id` and `client_secret`: you can proceed by [following this documentation](https://help.ovhcloud.com/csm/en-manage-service-account?id=kb_article_view&sysparm_article=KB0059343).
+
+Once you have retrieved your `client_id` and `client_secret`, these parameters can be configured as shown hereafter:
 
 * `ovh:endpoint` (environment variable: `OVH_ENDPOINT`)
-* `ovh:applicationKey` (environment variable: `OVH_APPLICATION_KEY`)
-* `ovh:applicationSecret` (secret) (environment variable: `OVH_APPLICATION_SECRET`)
-* `ovh:consumerKey` (environment variable: `OVH_CONSUMER_KEY`)
+* `ovh:clientId` (environment variable: `OVH_CLIENT_ID`)
+* `ovh:clientSecret` (secret) (environment variable: `OVH_CLIENT_SECRET`)
 
-Why?
+#### Access Token
 
-Because, behind the scenes, the provider is doing requests to OVHcloud APIs. 
+The provider will look for the token either at `OVH_ACCESS_TOKEN` environment variable, or get it via `ovh:access_token` argument in the provider's stanza.
+
+Similarly to OAuth2 method, the endpoint must be configured (either via `ovh:endpoint` argument, or with `OVH_ENDPOINT` environment variable).
+
+#### Application Key/Application Secret
 
 In order to retrieve this necessary information, please follow [First steps with the OVHcloud APIs](https://docs.ovh.com/gb/en/customer/first-steps-with-ovh-api/) tutorial.
 
@@ -57,43 +75,22 @@ Concretely, you have to generate these credentials via the [OVH token generation
 * PUT `/*`
 * DELETE `/*`
 
-When you have successfully generated your OVH tokens, please keep them. You'll have to define them in the coming minutes ;-).
+Once you have retrieved your `application_key`, `application_secret` and `consumer_key`, these parameters can be configured as shown hereafter:
 
-### Set environment variables
+* `ovh:endpoint` (environment variable: `OVH_ENDPOINT`)
+* `ovh:applicationKey` (environment variable: `OVH_APPLICATION_KEY`)
+* `ovh:applicationSecret` (secret) (environment variable: `OVH_APPLICATION_SECRET`)
+* `ovh:consumerKey` (environment variable: `OVH_CONSUMER_KEY`)
 
-Once you have provisioned these credentials, you can set environment variables to provision resources in Grafana:
+### Endpoints
 
-{{< chooser os "linux,macos,windows" >}}
-{{% choosable os linux %}}
+Depending on the API you want to use, you may set the `endpoint` to:
 
-```bash
-$ export OVH_ENDPOINT="<the Ovh endpoint, for example ovh-eu>"
-$ export OVH_APPLICATION_KEY="<the Ovh application key>"
-$ export OVH_APPLICATION_SECRET="<the Ovh application secret>"
-$ export OVH_CONSUMER_KEY="<the Ovh consumer key>"
-```
-
-{{% /choosable %}}
-
-{{% choosable os macos %}}
-
-```bash
-$ export OVH_ENDPOINT="<the Ovh endpoint, for example ovh-eu>"
-$ export OVH_APPLICATION_KEY="<the Ovh application key>"
-$ export OVH_APPLICATION_SECRET="<the Ovh application secret>"
-$ export OVH_CONSUMER_KEY="<the Ovh consumer key>"
-```
-
-{{% /choosable %}}
-
-{{% choosable os windows %}}
-
-```powershell
-> $env:OVH_ENDPOINT = "<the Ovh endpoint, for example ovh-eu>"
-> $env:OVH_APPLICATION_KEY = "<the Ovh application key>"
-> $env:OVH_APPLICATION_SECRET = "<the Ovh application secret>"
-> $env:OVH_CONSUMER_KEY = "<the Ovh consumer key>"
-```
-
-{{% /choosable %}}
-{{< /chooser >}}
+* `ovh-eu` for OVHcloud Europe API
+* `ovh-us` for OVHcloud US API
+* `ovh-ca` for OVHcloud Canada API
+* `soyoustart-eu` for So you Start Europe API
+* `soyoustart-ca` for So you Start Canada API
+* `kimsufi-eu` for Kimsufi Europe API
+* `kimsufi-ca` for Kimsufi Canada API
+* Or any arbitrary URL to use in a test for example

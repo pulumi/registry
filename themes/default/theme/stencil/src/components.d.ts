@@ -15,7 +15,6 @@ import { MultiSelectFormItem } from "./components/pulumi-multi-select-form/pulum
 export namespace Components {
     interface CopilotSidebar {
         "atlasUrl": string;
-        "copilotSrc": string;
     }
     interface EventSessionRegistrationModal {
         "buttonClass": string;
@@ -488,7 +487,6 @@ declare global {
 declare namespace LocalJSX {
     interface CopilotSidebar {
         "atlasUrl"?: string;
-        "copilotSrc"?: string;
     }
     interface EventSessionRegistrationModal {
         "buttonClass"?: string;

@@ -21,12 +21,9 @@ import (
 	"io"
 	"net/http"
 	"net/url"
-	"os"
 	"path/filepath"
 	"runtime"
-	"slices"
 	"strings"
-	"time"
 
 	"github.com/spf13/cobra"
 
@@ -39,77 +36,9 @@ import (
 	pschema "github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/util/contract"
 	"github.com/pulumi/registry/tools/resourcedocsgen/pkg"
+	"github.com/pulumi/registry/tools/resourcedocsgen/pkg/registry/svc"
 	concpool "github.com/sourcegraph/conc/pool"
 )
-
-// PackageMetadataProvider is an interface for providers that retrieve package metadata
-// from either the filesystem directory or the Pulumi Registry API.
-type PackageMetadataProvider interface {
-	// GetPackageMetadata returns metadata for a specific package
-	GetPackageMetadata(ctx context.Context, pkgName string) (pkg.PackageMeta, error)
-	// ListPackageMetadata returns metadata for all packages
-	ListPackageMetadata(ctx context.Context) ([]pkg.PackageMeta, error)
-}
-
-// FileSystemProvider implements PackageMetadataProvider using the local yaml data files
-// in the pulumi/registry repository.
-type fileSystemProvider struct {
-	registryDir string
-}
-
-// RegistryAPIProvider implements PackageMetadataProvider using the Pulumi API
-// to retrieve package metadata.
-type registryAPIProvider struct {
-	apiURL string
-}
-
-// PackageMetadata represents the API response structure for package metadata
-// from the Pulumi Registry API.
-// TODO: will eventually be available in the "github.com/pulumi/pulumi/sdk/v3/go/common/apitype" package.
-type PackageMetadata struct {
-	Name          string    `json:"name"`
-	Publisher     string    `json:"publisher"`
-	Source        string    `json:"source"`
-	Version       string    `json:"version"`
-	Title         string    `json:"title,omitempty"`
-	Description   string    `json:"description,omitempty"`
-	LogoURL       string    `json:"logoUrl,omitempty"`
-	RepoURL       string    `json:"repoUrl,omitempty"`
-	Category      string    `json:"category,omitempty"`
-	IsFeatured    bool      `json:"isFeatured"`
-	PackageTypes  []string  `json:"packageTypes,omitempty"`
-	PackageStatus string    `json:"packageStatus"`
-	SchemaURL     string    `json:"schemaURL"`
-	CreatedAt     time.Time `json:"createdAt"`
-}
-
-// PackageListResponse represents the API response structure for package lists
-type PackageListResponse struct {
-	Packages []PackageMetadata `json:"packages"`
-}
-
-// NewFileSystemProvider creates a new PackageMetadataProvider that reads from the filesystem
-func NewFileSystemProvider(registryDir string) PackageMetadataProvider {
-	return &fileSystemProvider{
-		registryDir: registryDir,
-	}
-}
-
-// NewAPIProvider creates a new PackageMetadataProvider that reads from the Pulumi API
-func NewAPIProvider(apiURL string) PackageMetadataProvider {
-	return &registryAPIProvider{
-		apiURL: apiURL,
-	}
-}
-
-func getRepoSlug(repoURL string) (string, error) {
-	u, err := url.Parse(repoURL)
-	if err != nil {
-		return "", errors.Wrapf(err, "parsing repo url %s", repoURL)
-	}
-
-	return u.Path, nil
-}
 
 func genResourceDocsForPackageFromRegistryMetadata(
 	metadata pkg.PackageMeta, docsOutDir, packageTreeJSONOutDir string,
@@ -195,12 +124,17 @@ func getSchemaFileURL(metadata pkg.PackageMeta) (string, error) {
 	return fmt.Sprintf("https://raw.githubusercontent.com/%s/%s/%s", repoSlug, metadata.Version, schemaFilePath), nil
 }
 
-func getRegistryPackagesPath(repoPath string) string {
-	return filepath.Join(repoPath, "themes", "default", "data", "registry", "packages")
+func getRepoSlug(repoURL string) (string, error) {
+	u, err := url.Parse(repoURL)
+	if err != nil {
+		return "", errors.Wrapf(err, "parsing repo url %s", repoURL)
+	}
+
+	return u.Path, nil
 }
 
 func genResourceDocsForAllRegistryPackages(
-	provider PackageMetadataProvider,
+	provider svc.PackageMetadataProvider,
 	baseDocsOutDir, basePackageTreeJSONOutDir string,
 ) error {
 	ctx := context.Background()
@@ -226,25 +160,6 @@ func genResourceDocsForAllRegistryPackages(
 	return pool.Wait()
 }
 
-func convertAPIPackageToPackageMeta(apiPkg PackageMetadata) (*pkg.PackageMeta, error) {
-	return &pkg.PackageMeta{
-		Name:          apiPkg.Name,
-		Publisher:     apiPkg.Publisher,
-		Description:   apiPkg.Description,
-		LogoURL:       apiPkg.LogoURL,
-		RepoURL:       apiPkg.RepoURL,
-		Category:      pkg.PackageCategory(apiPkg.Category),
-		Featured:      apiPkg.IsFeatured,
-		Native:        slices.Contains(apiPkg.PackageTypes, "native"),
-		Component:     slices.Contains(apiPkg.PackageTypes, "component"),
-		PackageStatus: pkg.PackageStatus(apiPkg.PackageStatus),
-		SchemaFileURL: apiPkg.SchemaURL,
-		Version:       apiPkg.Version,
-		Title:         apiPkg.Title,
-		UpdatedOn:     apiPkg.CreatedAt.Unix(),
-	}, nil
-}
-
 func resourceDocsFromRegistryCmd() *cobra.Command {
 	var baseDocsOutDir string
 	var basePackageTreeJSONOutDir string
@@ -259,11 +174,11 @@ func resourceDocsFromRegistryCmd() *cobra.Command {
 			"Pass a package name in the registry as an optional arg to generate docs only for that package.",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx := cmd.Context()
-			var provider PackageMetadataProvider
+			var provider svc.PackageMetadataProvider
 			if useAPI {
-				provider = NewAPIProvider(apiURL)
+				provider = svc.NewAPIProvider(apiURL)
 			} else {
-				provider = NewFileSystemProvider(registryDir)
+				provider = svc.NewFileSystemProvider(registryDir)
 			}
 
 			if len(args) > 0 {
@@ -306,145 +221,4 @@ func resourceDocsFromRegistryCmd() *cobra.Command {
 		"URL of the Pulumi Registry API")
 
 	return cmd
-}
-
-// GetPackageMetadata implements PackageMetadataProvider for fileSystemProvider
-func (p *fileSystemProvider) GetPackageMetadata(ctx context.Context, pkgName string) (pkg.PackageMeta, error) {
-	metadataFilePath := filepath.Join(getRegistryPackagesPath(p.registryDir), pkgName+".yaml")
-	b, err := os.ReadFile(metadataFilePath)
-	if err != nil {
-		return pkg.PackageMeta{}, errors.Wrapf(err, "reading the metadata file %s", metadataFilePath)
-	}
-
-	var metadata pkg.PackageMeta
-	if err := yaml.Unmarshal(b, &metadata); err != nil {
-		return pkg.PackageMeta{}, errors.Wrapf(err, "unmarshalling the metadata file %s", metadataFilePath)
-	}
-
-	return metadata, nil
-}
-
-// ListPackageMetadata implements PackageMetadataProvider for fileSystemProvider
-func (p *fileSystemProvider) ListPackageMetadata(ctx context.Context) ([]pkg.PackageMeta, error) {
-	registryPackagesPath := getRegistryPackagesPath(p.registryDir)
-	files, err := os.ReadDir(registryPackagesPath)
-	if err != nil {
-		return nil, errors.Wrapf(err, "reading directory %s", registryPackagesPath)
-	}
-
-	// Count YAML files to pre-allocate the slice mostly to appease the linter.
-	var metadataCount int
-	for _, file := range files {
-		if strings.HasSuffix(file.Name(), ".yaml") {
-			metadataCount++
-		}
-	}
-
-	metadataList := make([]pkg.PackageMeta, 0, metadataCount)
-	for _, file := range files {
-		if !strings.HasSuffix(file.Name(), ".yaml") {
-			continue
-		}
-
-		metadata, err := p.GetPackageMetadata(ctx, strings.TrimSuffix(file.Name(), ".yaml"))
-		if err != nil {
-			return nil, err
-		}
-		metadataList = append(metadataList, metadata)
-	}
-
-	return metadataList, nil
-}
-
-// GetPackageMetadata implements PackageMetadataProvider for registryAPIProvider
-func (p *registryAPIProvider) GetPackageMetadata(ctx context.Context, pkgName string) (pkg.PackageMeta, error) {
-	req, err := http.NewRequestWithContext(ctx, http.MethodGet,
-		fmt.Sprintf("%s/packages?name=%s", p.apiURL, pkgName), nil)
-	if err != nil {
-		return pkg.PackageMeta{}, errors.Wrapf(err, "creating request for package %s", pkgName)
-	}
-
-	resp, err := http.DefaultClient.Do(req)
-	if err != nil {
-		return pkg.PackageMeta{}, errors.Wrapf(err, "fetching package metadata from API for %s", pkgName)
-	}
-	defer resp.Body.Close()
-
-	if resp.StatusCode != http.StatusOK {
-		return pkg.PackageMeta{}, errors.Errorf("unexpected status code %d when fetching package metadata", resp.StatusCode)
-	}
-
-	var response PackageListResponse
-	if err := json.NewDecoder(resp.Body).Decode(&response); err != nil {
-		return pkg.PackageMeta{}, errors.Wrap(err, "decoding API response")
-	}
-
-	switch len(response.Packages) {
-	case 0:
-		return pkg.PackageMeta{}, errors.Errorf("no package found with name %s", pkgName)
-	case 1:
-		metadata, err := convertAPIPackageToPackageMeta(response.Packages[0])
-		if err != nil {
-			return pkg.PackageMeta{}, err
-		}
-		return *metadata, nil
-	default:
-		return pkg.PackageMeta{}, errors.Errorf("multiple packages found with name %s", pkgName)
-	}
-}
-
-// ListPackageMetadata implements PackageMetadataProvider for registryAPIProvider
-func (p *registryAPIProvider) ListPackageMetadata(ctx context.Context) ([]pkg.PackageMeta, error) {
-	var allPackages []pkg.PackageMeta
-	// Maximum allowed by the API (must be less than 500). Request up to 499 to account for pagination
-	// with minimum number of requests.
-	const limit = 499
-	continuationToken := ""
-
-	for {
-		url := fmt.Sprintf("%s/packages?limit=%d", p.apiURL, limit)
-		if continuationToken != "" {
-			url = fmt.Sprintf("%s&continuationToken=%s", url, continuationToken)
-		}
-
-		req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
-		if err != nil {
-			return nil, errors.Wrap(err, "creating request for package list")
-		}
-
-		resp, err := http.DefaultClient.Do(req)
-		if err != nil {
-			return nil, errors.Wrap(err, "fetching package list from API")
-		}
-		defer resp.Body.Close()
-
-		if resp.StatusCode != http.StatusOK {
-			return nil, errors.Errorf("unexpected status code %d when fetching package list", resp.StatusCode)
-		}
-
-		var response struct {
-			Packages          []PackageMetadata `json:"packages"`
-			ContinuationToken *string           `json:"continuationToken"`
-		}
-		if err := json.NewDecoder(resp.Body).Decode(&response); err != nil {
-			return nil, errors.Wrap(err, "decoding API response")
-		}
-
-		for _, apiPkg := range response.Packages {
-			metadata, err := convertAPIPackageToPackageMeta(apiPkg)
-			if err != nil {
-				return nil, err
-			}
-			allPackages = append(allPackages, *metadata)
-		}
-
-		// If there's no continuation token, we've reached the end
-		if response.ContinuationToken == nil {
-			break
-		}
-
-		continuationToken = *response.ContinuationToken
-	}
-
-	return allPackages, nil
 }

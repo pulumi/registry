@@ -40,6 +40,15 @@ import (
 	concpool "github.com/sourcegraph/conc/pool"
 )
 
+func getRepoSlug(repoURL string) (string, error) {
+	u, err := url.Parse(repoURL)
+	if err != nil {
+		return "", errors.Wrapf(err, "parsing repo url %s", repoURL)
+	}
+
+	return u.Path, nil
+}
+
 func genResourceDocsForPackageFromRegistryMetadata(
 	metadata pkg.PackageMeta, docsOutDir, packageTreeJSONOutDir string,
 ) error {
@@ -122,15 +131,6 @@ func getSchemaFileURL(metadata pkg.PackageMeta) (string, error) {
 	}
 
 	return fmt.Sprintf("https://raw.githubusercontent.com/%s/%s/%s", repoSlug, metadata.Version, schemaFilePath), nil
-}
-
-func getRepoSlug(repoURL string) (string, error) {
-	u, err := url.Parse(repoURL)
-	if err != nil {
-		return "", errors.Wrapf(err, "parsing repo url %s", repoURL)
-	}
-
-	return u.Path, nil
 }
 
 func genResourceDocsForAllRegistryPackages(

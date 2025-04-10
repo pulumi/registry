@@ -15,6 +15,7 @@
 package docs
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -45,9 +46,9 @@ import (
 // from either the filesystem directory or the Pulumi Registry API.
 type PackageMetadataProvider interface {
 	// GetPackageMetadata returns metadata for a specific package
-	GetPackageMetadata(pkgName string) (pkg.PackageMeta, error)
+	GetPackageMetadata(ctx context.Context, pkgName string) (pkg.PackageMeta, error)
 	// ListPackageMetadata returns metadata for all packages
-	ListPackageMetadata() ([]pkg.PackageMeta, error)
+	ListPackageMetadata(ctx context.Context) ([]pkg.PackageMeta, error)
 }
 
 // FileSystemProvider implements PackageMetadataProvider using the local yaml data files
@@ -202,7 +203,8 @@ func genResourceDocsForAllRegistryPackages(
 	provider PackageMetadataProvider,
 	baseDocsOutDir, basePackageTreeJSONOutDir string,
 ) error {
-	metadataList, err := provider.ListPackageMetadata()
+	ctx := context.Background()
+	metadataList, err := provider.ListPackageMetadata(ctx)
 	if err != nil {
 		return errors.Wrap(err, "listing package metadata")
 	}
@@ -256,6 +258,7 @@ func resourceDocsFromRegistryCmd() *cobra.Command {
 		Long: "Generate resource docs for all packages in the registry or specific packages. " +
 			"Pass a package name in the registry as an optional arg to generate docs only for that package.",
 		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx := cmd.Context()
 			var provider PackageMetadataProvider
 			if useAPI {
 				provider = NewAPIProvider(apiURL)
@@ -265,7 +268,7 @@ func resourceDocsFromRegistryCmd() *cobra.Command {
 
 			if len(args) > 0 {
 				glog.Infoln("Generating docs for a single package:", args[0])
-				metadata, err := provider.GetPackageMetadata(args[0])
+				metadata, err := provider.GetPackageMetadata(ctx, args[0])
 				if err != nil {
 					return errors.Wrapf(err, "getting metadata for package %q", args[0])
 				}
@@ -306,7 +309,7 @@ func resourceDocsFromRegistryCmd() *cobra.Command {
 }
 
 // GetPackageMetadata implements PackageMetadataProvider for fileSystemProvider
-func (p *fileSystemProvider) GetPackageMetadata(pkgName string) (pkg.PackageMeta, error) {
+func (p *fileSystemProvider) GetPackageMetadata(ctx context.Context, pkgName string) (pkg.PackageMeta, error) {
 	metadataFilePath := filepath.Join(getRegistryPackagesPath(p.registryDir), pkgName+".yaml")
 	b, err := os.ReadFile(metadataFilePath)
 	if err != nil {
@@ -322,7 +325,7 @@ func (p *fileSystemProvider) GetPackageMetadata(pkgName string) (pkg.PackageMeta
 }
 
 // ListPackageMetadata implements PackageMetadataProvider for fileSystemProvider
-func (p *fileSystemProvider) ListPackageMetadata() ([]pkg.PackageMeta, error) {
+func (p *fileSystemProvider) ListPackageMetadata(ctx context.Context) ([]pkg.PackageMeta, error) {
 	registryPackagesPath := getRegistryPackagesPath(p.registryDir)
 	files, err := os.ReadDir(registryPackagesPath)
 	if err != nil {
@@ -343,7 +346,7 @@ func (p *fileSystemProvider) ListPackageMetadata() ([]pkg.PackageMeta, error) {
 			continue
 		}
 
-		metadata, err := p.GetPackageMetadata(strings.TrimSuffix(file.Name(), ".yaml"))
+		metadata, err := p.GetPackageMetadata(ctx, strings.TrimSuffix(file.Name(), ".yaml"))
 		if err != nil {
 			return nil, err
 		}
@@ -354,8 +357,14 @@ func (p *fileSystemProvider) ListPackageMetadata() ([]pkg.PackageMeta, error) {
 }
 
 // GetPackageMetadata implements PackageMetadataProvider for registryAPIProvider
-func (p *registryAPIProvider) GetPackageMetadata(pkgName string) (pkg.PackageMeta, error) {
-	resp, err := http.Get(fmt.Sprintf("%s/packages?name=%s", p.apiURL, pkgName))
+func (p *registryAPIProvider) GetPackageMetadata(ctx context.Context, pkgName string) (pkg.PackageMeta, error) {
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet,
+		fmt.Sprintf("%s/packages?name=%s", p.apiURL, pkgName), nil)
+	if err != nil {
+		return pkg.PackageMeta{}, errors.Wrapf(err, "creating request for package %s", pkgName)
+	}
+
+	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
 		return pkg.PackageMeta{}, errors.Wrapf(err, "fetching package metadata from API for %s", pkgName)
 	}
@@ -385,30 +394,57 @@ func (p *registryAPIProvider) GetPackageMetadata(pkgName string) (pkg.PackageMet
 }
 
 // ListPackageMetadata implements PackageMetadataProvider for registryAPIProvider
-func (p *registryAPIProvider) ListPackageMetadata() ([]pkg.PackageMeta, error) {
-	resp, err := http.Get(p.apiURL + "/packages")
-	if err != nil {
-		return nil, errors.Wrap(err, "fetching package list from API")
-	}
-	defer resp.Body.Close()
+func (p *registryAPIProvider) ListPackageMetadata(ctx context.Context) ([]pkg.PackageMeta, error) {
+	var allPackages []pkg.PackageMeta
+	// Maximum allowed by the API (must be less than 500). Request up to 499 to account for pagination
+	// with minimum number of requests.
+	const limit = 499
+	continuationToken := ""
 
-	if resp.StatusCode != http.StatusOK {
-		return nil, errors.Errorf("unexpected status code %d when fetching package list", resp.StatusCode)
-	}
-
-	var response PackageListResponse
-	if err := json.NewDecoder(resp.Body).Decode(&response); err != nil {
-		return nil, errors.Wrap(err, "decoding API response")
-	}
-
-	metadataList := make([]pkg.PackageMeta, 0, len(response.Packages))
-	for _, apiPkg := range response.Packages {
-		metadata, err := convertAPIPackageToPackageMeta(apiPkg)
-		if err != nil {
-			return nil, err
+	for {
+		url := fmt.Sprintf("%s/packages?limit=%d", p.apiURL, limit)
+		if continuationToken != "" {
+			url = fmt.Sprintf("%s&continuationToken=%s", url, continuationToken)
 		}
-		metadataList = append(metadataList, *metadata)
+
+		req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
+		if err != nil {
+			return nil, errors.Wrap(err, "creating request for package list")
+		}
+
+		resp, err := http.DefaultClient.Do(req)
+		if err != nil {
+			return nil, errors.Wrap(err, "fetching package list from API")
+		}
+		defer resp.Body.Close()
+
+		if resp.StatusCode != http.StatusOK {
+			return nil, errors.Errorf("unexpected status code %d when fetching package list", resp.StatusCode)
+		}
+
+		var response struct {
+			Packages          []PackageMetadata `json:"packages"`
+			ContinuationToken *string           `json:"continuationToken"`
+		}
+		if err := json.NewDecoder(resp.Body).Decode(&response); err != nil {
+			return nil, errors.Wrap(err, "decoding API response")
+		}
+
+		for _, apiPkg := range response.Packages {
+			metadata, err := convertAPIPackageToPackageMeta(apiPkg)
+			if err != nil {
+				return nil, err
+			}
+			allPackages = append(allPackages, *metadata)
+		}
+
+		// If there's no continuation token, we've reached the end
+		if response.ContinuationToken == nil {
+			break
+		}
+
+		continuationToken = *response.ContinuationToken
 	}
 
-	return metadataList, nil
+	return allPackages, nil
 }

@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/redpanda-data/redpanda/0.14.1/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/redpanda-data/redpanda/0.15.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Redpanda Provider
@@ -1948,7 +1948,7 @@ const config = new pulumi.Config();
 const resourceGroupName = config.get("resourceGroupName") || "testgroup";
 const test = new redpanda.ResourceGroup("test", {name: resourceGroupName});
 const clusterName = config.get("clusterName") || "testname";
-const region = config.get("region") || "pro-us-east-1";
+const region = config.get("region") || "eu-west-1";
 const testServerlessCluster = new redpanda.ServerlessCluster("test", {
     name: clusterName,
     resourceGroupId: test.id,
@@ -1977,7 +1977,7 @@ if cluster_name is None:
     cluster_name = "testname"
 region = config.get("region")
 if region is None:
-    region = "pro-us-east-1"
+    region = "eu-west-1"
 test_serverless_cluster = redpanda.ServerlessCluster("test",
     name=cluster_name,
     resource_group_id=test.id,
@@ -2007,7 +2007,7 @@ return await Deployment.RunAsync(() =>
     });
 
     var clusterName = config.Get("clusterName") ?? "testname";
-    var region = config.Get("region") ?? "pro-us-east-1";
+    var region = config.Get("region") ?? "eu-west-1";
     var testServerlessCluster = new Redpanda.ServerlessCluster("test", new()
     {
         Name = clusterName,
@@ -2052,7 +2052,7 @@ func main() {
 		if param := cfg.Get("clusterName"); param != "" {
 			clusterName = param
 		}
-		region := "pro-us-east-1"
+		region := "eu-west-1"
 		if param := cfg.Get("region"); param != "" {
 			region = param
 		}
@@ -2086,7 +2086,7 @@ configuration:
     default: testname
   region:
     type: string
-    default: pro-us-east-1
+    default: eu-west-1
 resources:
   test:
     type: redpanda:ResourceGroup
@@ -2138,7 +2138,7 @@ public class App {
             .build());
 
         final var clusterName = config.get("clusterName").orElse("testname");
-        final var region = config.get("region").orElse("pro-us-east-1");
+        final var region = config.get("region").orElse("eu-west-1");
         var testServerlessCluster = new ServerlessCluster("testServerlessCluster", ServerlessClusterArgs.builder()
             .name(clusterName)
             .resourceGroupId(test.id())

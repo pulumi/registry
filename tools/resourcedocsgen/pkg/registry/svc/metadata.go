@@ -104,8 +104,8 @@ func getRegistryPackagesPath(repoPath string) string {
 	return filepath.Join(repoPath, "themes", "default", "data", "registry", "packages")
 }
 
-func convertAPIPackageToPackageMeta(apiPkg PackageMetadata) (*pkg.PackageMeta, error) {
-	return &pkg.PackageMeta{
+func convertAPIPackageToPackageMeta(apiPkg PackageMetadata) pkg.PackageMeta {
+	return pkg.PackageMeta{
 		Name:          apiPkg.Name,
 		Publisher:     apiPkg.Publisher,
 		Description:   apiPkg.Description,
@@ -120,7 +120,7 @@ func convertAPIPackageToPackageMeta(apiPkg PackageMetadata) (*pkg.PackageMeta, e
 		Version:       apiPkg.Version,
 		Title:         apiPkg.Title,
 		UpdatedOn:     apiPkg.CreatedAt.Unix(),
-	}, nil
+	}
 }
 
 // GetPackageMetadata implements PackageMetadataProvider for fileSystemProvider

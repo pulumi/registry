@@ -134,10 +134,10 @@ func getSchemaFileURL(metadata pkg.PackageMeta) (string, error) {
 }
 
 func genResourceDocsForAllRegistryPackages(
+	ctx conxtext.Context,
 	provider svc.PackageMetadataProvider,
 	baseDocsOutDir, basePackageTreeJSONOutDir string,
 ) error {
-	ctx := context.Background()
 	metadataList, err := provider.ListPackageMetadata(ctx)
 	if err != nil {
 		return errors.Wrap(err, "listing package metadata")

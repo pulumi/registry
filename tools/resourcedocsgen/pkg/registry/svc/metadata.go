@@ -40,6 +40,13 @@ type PackageMetadataProvider interface {
 	ListPackageMetadata(ctx context.Context) ([]pkg.PackageMeta, error)
 }
 
+// HTTPClient is an interface for making HTTP requests
+//
+//go:generate mockgen -destination=mock_httpclient_test.go -package=svc github.com/pulumi/registry/tools/resourcedocsgen/pkg/registry/svc HTTPClient
+type HTTPClient interface {
+	Do(req *http.Request) (*http.Response, error)
+}
+
 // fileSystemProvider implements PackageMetadataProvider using the local yaml data files
 // in the pulumi/registry repository.
 type fileSystemProvider struct {
@@ -50,6 +57,7 @@ type fileSystemProvider struct {
 // to retrieve package metadata.
 type registryAPIProvider struct {
 	apiURL string
+	client HTTPClient
 }
 
 // PackageMetadata represents the API response structure for package metadata
@@ -88,6 +96,7 @@ func NewFileSystemProvider(registryDir string) PackageMetadataProvider {
 func NewAPIProvider(apiURL string) PackageMetadataProvider {
 	return &registryAPIProvider{
 		apiURL: apiURL,
+		client: http.DefaultClient,
 	}
 }
 
@@ -170,7 +179,7 @@ func (p *registryAPIProvider) GetPackageMetadata(ctx context.Context, pkgName st
 		return pkg.PackageMeta{}, errors.Wrapf(err, "creating request for package %s", pkgName)
 	}
 
-	resp, err := http.DefaultClient.Do(req)
+	resp, err := p.client.Do(req)
 	if err != nil {
 		return pkg.PackageMeta{}, errors.Wrapf(err, "fetching package metadata from API for %s", pkgName)
 	}
@@ -218,7 +227,7 @@ func (p *registryAPIProvider) ListPackageMetadata(ctx context.Context) ([]pkg.Pa
 			return nil, errors.Wrap(err, "creating request for package list")
 		}
 
-		resp, err := http.DefaultClient.Do(req)
+		resp, err := p.client.Do(req)
 		if err != nil {
 			return nil, errors.Wrap(err, "fetching package list from API")
 		}

@@ -134,7 +134,7 @@ func getSchemaFileURL(metadata pkg.PackageMeta) (string, error) {
 }
 
 func genResourceDocsForAllRegistryPackages(
-	ctx conxtext.Context,
+	ctx context.Context,
 	provider svc.PackageMetadataProvider,
 	baseDocsOutDir, basePackageTreeJSONOutDir string,
 ) error {
@@ -195,7 +195,7 @@ func resourceDocsFromRegistryCmd() *cobra.Command {
 				}
 			} else {
 				glog.Infoln("Generating docs for all packages in the registry...")
-				err := genResourceDocsForAllRegistryPackages(provider, baseDocsOutDir, basePackageTreeJSONOutDir)
+				err := genResourceDocsForAllRegistryPackages(ctx, provider, baseDocsOutDir, basePackageTreeJSONOutDir)
 				if err != nil {
 					return errors.Wrap(err, "generating docs for all packages from registry metadata")
 				}

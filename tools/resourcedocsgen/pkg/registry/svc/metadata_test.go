@@ -17,6 +17,7 @@ package svc
 import (
 	"context"
 	"encoding/json"
+	"io/fs"
 	"net/http"
 	"net/http/httptest"
 	"os"
@@ -36,6 +37,7 @@ func stringPtr(s string) *string {
 }
 
 func TestConvertAPIPackageToPackageMeta(t *testing.T) {
+	t.Parallel()
 	createdAt := time.Date(2025, 4, 10, 12, 0, 0, 0, time.UTC)
 	tests := []struct {
 		name    string
@@ -93,6 +95,7 @@ func TestConvertAPIPackageToPackageMeta(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
 			got := convertAPIPackageToPackageMeta(tt.input)
 			assert.Equal(t, tt.want, got)
 		})
@@ -100,10 +103,11 @@ func TestConvertAPIPackageToPackageMeta(t *testing.T) {
 }
 
 func TestFileSystemProvider(t *testing.T) {
+	t.Parallel()
 	// Create a temporary directory for test files
 	tmpDir := t.TempDir()
 	packagesDir := filepath.Join(tmpDir, "themes", "default", "data", "registry", "packages")
-	require.NoError(t, os.MkdirAll(packagesDir, 0755))
+	require.NoError(t, os.MkdirAll(packagesDir, fs.ModePerm))
 
 	// Create test metadata files
 	testPackages := []pkg.PackageMeta{
@@ -132,13 +136,14 @@ func TestFileSystemProvider(t *testing.T) {
 	for _, p := range testPackages {
 		data, err := yaml.Marshal(p)
 		require.NoError(t, err)
-		err = os.WriteFile(filepath.Join(packagesDir, p.Name+".yaml"), data, 0755)
+		err = os.WriteFile(filepath.Join(packagesDir, p.Name+".yaml"), data, fs.ModePerm)
 		require.NoError(t, err)
 	}
 
 	provider := NewFileSystemProvider(tmpDir)
 
 	t.Run("GetPackageMetadata", func(t *testing.T) {
+		t.Parallel()
 		got, err := provider.GetPackageMetadata(context.Background(), "aws-test")
 		require.NoError(t, err)
 		assert.Equal(t, testPackages[0], got)
@@ -148,6 +153,7 @@ func TestFileSystemProvider(t *testing.T) {
 	})
 
 	t.Run("ListPackageMetadata", func(t *testing.T) {
+		t.Parallel()
 		got, err := provider.ListPackageMetadata(context.Background())
 		require.NoError(t, err)
 		assert.Len(t, got, len(testPackages))
@@ -155,6 +161,7 @@ func TestFileSystemProvider(t *testing.T) {
 	})
 
 	t.Run("GetPackageMetadata errors", func(t *testing.T) {
+		t.Parallel()
 		t.Run("non-existent file", func(t *testing.T) {
 			provider := NewFileSystemProvider(tmpDir)
 			_, err := provider.GetPackageMetadata(context.Background(), "non-existent")
@@ -163,7 +170,7 @@ func TestFileSystemProvider(t *testing.T) {
 		})
 
 		t.Run("invalid yaml", func(t *testing.T) {
-			err := os.WriteFile(filepath.Join(packagesDir, "invalid.yaml"), []byte("invalid yaml: ]["), 0755)
+			err := os.WriteFile(filepath.Join(packagesDir, "invalid.yaml"), []byte("invalid yaml: ]["), fs.ModePerm)
 			require.NoError(t, err)
 
 			provider := NewFileSystemProvider(tmpDir)
@@ -174,6 +181,7 @@ func TestFileSystemProvider(t *testing.T) {
 	})
 
 	t.Run("ListPackageMetadata errors", func(t *testing.T) {
+		t.Parallel()
 		t.Run("non-existent directory", func(t *testing.T) {
 			tmpDir := t.TempDir()
 			provider := NewFileSystemProvider(tmpDir)
@@ -185,17 +193,17 @@ func TestFileSystemProvider(t *testing.T) {
 		t.Run("ignores non-yaml files", func(t *testing.T) {
 			tmpDir := t.TempDir()
 			packagesDir := filepath.Join(tmpDir, "themes", "default", "data", "registry", "packages")
-			require.NoError(t, os.MkdirAll(packagesDir, 0755))
+			require.NoError(t, os.MkdirAll(packagesDir, fs.ModePerm))
 
 			// Create a valid yaml file
 			validPkg := pkg.PackageMeta{Name: "valid", Publisher: "Pulumi"}
 			validYAML, err := yaml.Marshal(validPkg)
 			require.NoError(t, err)
-			err = os.WriteFile(filepath.Join(packagesDir, "valid.yaml"), validYAML, 0755)
+			err = os.WriteFile(filepath.Join(packagesDir, "valid.yaml"), validYAML, fs.ModePerm)
 			require.NoError(t, err)
 
 			// Create an invalid yaml file
-			err = os.WriteFile(filepath.Join(packagesDir, "readme.txt"), []byte("not valid yaml"), 0755)
+			err = os.WriteFile(filepath.Join(packagesDir, "readme.txt"), []byte("not valid yaml"), fs.ModePerm)
 			require.NoError(t, err)
 
 			provider := NewFileSystemProvider(tmpDir)
@@ -208,8 +216,11 @@ func TestFileSystemProvider(t *testing.T) {
 }
 
 func TestRegistryAPIProvider(t *testing.T) {
+	t.Parallel()
 	t.Run("GetPackageMetadata", func(t *testing.T) {
+		t.Parallel()
 		t.Run("successfully returns package metadata", func(t *testing.T) {
+			t.Parallel()
 			// configure test server
 			expectedPackage := PackageMetadata{
 				Name:      "aws-test",
@@ -227,7 +238,8 @@ func TestRegistryAPIProvider(t *testing.T) {
 				assert.Equal(t, "/packages", r.URL.Path)
 				assert.Equal(t, "name=aws-test", r.URL.RawQuery)
 				w.WriteHeader(http.StatusOK)
-				w.Write(jsonResponse)
+				_, err = w.Write(jsonResponse)
+				require.NoError(t, err)
 			}))
 			defer server.Close()
 
@@ -244,6 +256,7 @@ func TestRegistryAPIProvider(t *testing.T) {
 		})
 
 		t.Run("non existent package", func(t *testing.T) {
+			t.Parallel()
 			server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 				w.WriteHeader(http.StatusNotFound)
 			}))
@@ -271,7 +284,8 @@ func TestRegistryAPIProvider(t *testing.T) {
 
 			server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 				w.WriteHeader(http.StatusOK)
-				w.Write(jsonResponse)
+				_, err = w.Write(jsonResponse)
+				require.NoError(t, err)
 			}))
 			defer server.Close()
 
@@ -287,7 +301,9 @@ func TestRegistryAPIProvider(t *testing.T) {
 	})
 
 	t.Run("ListPackageMetadata", func(t *testing.T) {
+		t.Parallel()
 		t.Run("successfully lists packages with pagination", func(t *testing.T) {
+			t.Parallel()
 			// configure to test with pagination
 			firstPage := struct {
 				Packages          []PackageMetadata `json:"packages"`
@@ -321,9 +337,11 @@ func TestRegistryAPIProvider(t *testing.T) {
 
 				// Return different responses based on continuation token
 				if r.URL.Query().Get("continuationToken") == "page2" {
-					w.Write(secondPageJSON)
+					_, err = w.Write(secondPageJSON)
+					require.NoError(t, err)
 				} else {
-					w.Write(firstPageJSON)
+					_, err = w.Write(firstPageJSON)
+					require.NoError(t, err)
 				}
 			}))
 			defer server.Close()
@@ -340,9 +358,11 @@ func TestRegistryAPIProvider(t *testing.T) {
 		})
 
 		t.Run("invalid json response", func(t *testing.T) {
+			t.Parallel()
 			server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 				w.WriteHeader(http.StatusOK)
-				w.Write([]byte("invalid json"))
+				_, err := w.Write([]byte("invalid json"))
+				require.NoError(t, err)
 			}))
 			defer server.Close()
 
@@ -357,6 +377,7 @@ func TestRegistryAPIProvider(t *testing.T) {
 		})
 
 		t.Run("500 server error", func(t *testing.T) {
+			t.Parallel()
 			server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 				w.WriteHeader(http.StatusInternalServerError)
 			}))

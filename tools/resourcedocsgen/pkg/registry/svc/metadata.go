@@ -198,11 +198,8 @@ func (p *registryAPIProvider) GetPackageMetadata(ctx context.Context, pkgName st
 	case 0:
 		return pkg.PackageMeta{}, errors.Errorf("no package found with name %s", pkgName)
 	case 1:
-		metadata, err := convertAPIPackageToPackageMeta(response.Packages[0])
-		if err != nil {
-			return pkg.PackageMeta{}, err
-		}
-		return *metadata, nil
+		metadata := convertAPIPackageToPackageMeta(response.Packages[0])
+		return metadata, nil
 	default:
 		return pkg.PackageMeta{}, errors.Errorf("multiple packages found with name %s", pkgName)
 	}
@@ -246,11 +243,8 @@ func (p *registryAPIProvider) ListPackageMetadata(ctx context.Context) ([]pkg.Pa
 		}
 
 		for _, apiPkg := range response.Packages {
-			metadata, err := convertAPIPackageToPackageMeta(apiPkg)
-			if err != nil {
-				return nil, err
-			}
-			allPackages = append(allPackages, *metadata)
+			metadata := convertAPIPackageToPackageMeta(apiPkg)
+			allPackages = append(allPackages, metadata)
 		}
 
 		// If there's no continuation token, we've reached the end

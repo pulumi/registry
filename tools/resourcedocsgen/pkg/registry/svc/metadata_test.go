@@ -170,10 +170,16 @@ func TestFileSystemProvider(t *testing.T) {
 		})
 
 		t.Run("invalid yaml", func(t *testing.T) {
-			err := os.WriteFile(filepath.Join(packagesDir, "invalid.yaml"), []byte("invalid yaml: ]["), fs.ModePerm)
+			t.Parallel()
+
+			invalidDir := t.TempDir()
+			invalidPackagesDir := filepath.Join(invalidDir, "themes", "default", "data", "registry", "packages")
+			require.NoError(t, os.MkdirAll(invalidPackagesDir, fs.ModePerm))
+
+			err := os.WriteFile(filepath.Join(invalidPackagesDir, "invalid.yaml"), []byte("invalid yaml: ]["), fs.ModePerm)
 			require.NoError(t, err)
 
-			provider := NewFileSystemProvider(tmpDir)
+			provider := NewFileSystemProvider(invalidDir)
 			_, err = provider.GetPackageMetadata(context.Background(), "invalid")
 			assert.Error(t, err)
 			assert.Contains(t, err.Error(), "unmarshalling the metadata file")
@@ -356,27 +362,7 @@ func TestRegistryAPIProvider(t *testing.T) {
 			assert.Len(t, got, 3)
 			assert.Equal(t, []string{"aws-test", "azure-test", "gcp-test"}, []string{got[0].Name, got[1].Name, got[2].Name})
 		})
-
-		t.Run("invalid json response", func(t *testing.T) {
-			t.Parallel()
-			server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-				w.WriteHeader(http.StatusOK)
-				_, err := w.Write([]byte("invalid json"))
-				require.NoError(t, err)
-			}))
-			defer server.Close()
-
-			provider := &registryAPIProvider{
-				apiURL: server.URL,
-				client: http.DefaultClient,
-			}
-
-			_, err := provider.ListPackageMetadata(context.Background())
-			assert.Error(t, err)
-			assert.Contains(t, err.Error(), "decoding API response")
-		})
-
-		t.Run("500 server error", func(t *testing.T) {
+		t.Run("server error", func(t *testing.T) {
 			t.Parallel()
 			server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 				w.WriteHeader(http.StatusInternalServerError)

@@ -7,10 +7,10 @@ featured: false
 logo_url: ""
 name: opensearch
 native: false
-package_status: public_preview
-publisher: ferlab-ste-justine
-repo_url: https://github.com/ferlab-ste-justine/terraform-provider-opensearch
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/ferlab-ste-justine/opensearch/0.1.0/schema.json
+package_status: ga
+publisher: opensearch-project
+repo_url: https://github.com/opensearch-project/terraform-provider-opensearch
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/opensearch-project/opensearch/2.3.1/schema.json
 title: opensearch
-updated_on: 1744673776
-version: 0.1.0
+updated_on: 1744673795
+version: 2.3.1

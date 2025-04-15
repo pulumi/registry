@@ -340,54 +340,6 @@ var componentResource = new Foo.Component("componentResource", new()
                         TerminationGracePeriodSeconds = 0,
                         TimeoutSeconds = 0,
                     },
-                    ImagePullPolicy = "string",
-                    Resources = new Kubernetes.Types.Inputs.Core.V1.ResourceRequirementsArgs
-                    {
-                        Limits = 
-                        {
-                            { "string", "string" },
-                        },
-                        Requests = 
-                        {
-                            { "string", "string" },
-                        },
-                    },
-                    StartupProbe = new Kubernetes.Types.Inputs.Core.V1.ProbeArgs
-                    {
-                        Exec = new Kubernetes.Types.Inputs.Core.V1.ExecActionArgs
-                        {
-                            Command = new[]
-                            {
-                                "string",
-                            },
-                        },
-                        FailureThreshold = 0,
-                        HttpGet = new Kubernetes.Types.Inputs.Core.V1.HTTPGetActionArgs
-                        {
-                            Port = 0,
-                            Host = "string",
-                            HttpHeaders = new[]
-                            {
-                                new Kubernetes.Types.Inputs.Core.V1.HTTPHeaderArgs
-                                {
-                                    Name = "string",
-                                    Value = "string",
-                                },
-                            },
-                            Path = "string",
-                            Scheme = "string",
-                        },
-                        InitialDelaySeconds = 0,
-                        PeriodSeconds = 0,
-                        SuccessThreshold = 0,
-                        TcpSocket = new Kubernetes.Types.Inputs.Core.V1.TCPSocketActionArgs
-                        {
-                            Port = 0,
-                            Host = "string",
-                        },
-                        TerminationGracePeriodSeconds = 0,
-                        TimeoutSeconds = 0,
-                    },
                     SecurityContext = new Kubernetes.Types.Inputs.Core.V1.SecurityContextArgs
                     {
                         AllowPrivilegeEscalation = false,
@@ -428,6 +380,25 @@ var componentResource = new Foo.Component("componentResource", new()
                             RunAsUserName = "string",
                         },
                     },
+                    EnvFrom = new[]
+                    {
+                        new Kubernetes.Types.Inputs.Core.V1.EnvFromSourceArgs
+                        {
+                            ConfigMapRef = new Kubernetes.Types.Inputs.Core.V1.ConfigMapEnvSourceArgs
+                            {
+                                Name = "string",
+                                Optional = false,
+                            },
+                            Prefix = "string",
+                            SecretRef = new Kubernetes.Types.Inputs.Core.V1.SecretEnvSourceArgs
+                            {
+                                Name = "string",
+                                Optional = false,
+                            },
+                        },
+                    },
+                    Image = "string",
+                    ImagePullPolicy = "string",
                     Lifecycle = new Kubernetes.Types.Inputs.Core.V1.LifecycleArgs
                     {
                         PostStart = new Kubernetes.Types.Inputs.Core.V1.HandlerArgs
@@ -546,23 +517,6 @@ var componentResource = new Foo.Component("componentResource", new()
                     {
                         "string",
                     },
-                    EnvFrom = new[]
-                    {
-                        new Kubernetes.Types.Inputs.Core.V1.EnvFromSourceArgs
-                        {
-                            ConfigMapRef = new Kubernetes.Types.Inputs.Core.V1.ConfigMapEnvSourceArgs
-                            {
-                                Name = "string",
-                                Optional = false,
-                            },
-                            Prefix = "string",
-                            SecretRef = new Kubernetes.Types.Inputs.Core.V1.SecretEnvSourceArgs
-                            {
-                                Name = "string",
-                                Optional = false,
-                            },
-                        },
-                    },
                     Env = new[]
                     {
                         new Kubernetes.Types.Inputs.Core.V1.EnvVarArgs
@@ -597,7 +551,53 @@ var componentResource = new Foo.Component("componentResource", new()
                             },
                         },
                     },
-                    Image = "string",
+                    StartupProbe = new Kubernetes.Types.Inputs.Core.V1.ProbeArgs
+                    {
+                        Exec = new Kubernetes.Types.Inputs.Core.V1.ExecActionArgs
+                        {
+                            Command = new[]
+                            {
+                                "string",
+                            },
+                        },
+                        FailureThreshold = 0,
+                        HttpGet = new Kubernetes.Types.Inputs.Core.V1.HTTPGetActionArgs
+                        {
+                            Port = 0,
+                            Host = "string",
+                            HttpHeaders = new[]
+                            {
+                                new Kubernetes.Types.Inputs.Core.V1.HTTPHeaderArgs
+                                {
+                                    Name = "string",
+                                    Value = "string",
+                                },
+                            },
+                            Path = "string",
+                            Scheme = "string",
+                        },
+                        InitialDelaySeconds = 0,
+                        PeriodSeconds = 0,
+                        SuccessThreshold = 0,
+                        TcpSocket = new Kubernetes.Types.Inputs.Core.V1.TCPSocketActionArgs
+                        {
+                            Port = 0,
+                            Host = "string",
+                        },
+                        TerminationGracePeriodSeconds = 0,
+                        TimeoutSeconds = 0,
+                    },
+                    Resources = new Kubernetes.Types.Inputs.Core.V1.ResourceRequirementsArgs
+                    {
+                        Limits = 
+                        {
+                            { "string", "string" },
+                        },
+                        Requests = 
+                        {
+                            { "string", "string" },
+                        },
+                    },
                     Stdin = false,
                     StdinOnce = false,
                     TerminationMessagePath = "string",
@@ -630,17 +630,7 @@ var componentResource = new Foo.Component("componentResource", new()
             {
                 { "string", "string" },
             },
-            HostAliases = new[]
-            {
-                new Kubernetes.Types.Inputs.Core.V1.HostAliasArgs
-                {
-                    Hostnames = new[]
-                    {
-                        "string",
-                    },
-                    Ip = "string",
-                },
-            },
+            PreemptionPolicy = "string",
             Affinity = new Kubernetes.Types.Inputs.Core.V1.AffinityArgs
             {
                 NodeAffinity = new Kubernetes.Types.Inputs.Core.V1.NodeAffinityArgs
@@ -943,10 +933,7 @@ var componentResource = new Foo.Component("componentResource", new()
                     "string",
                 },
             },
-            Overhead = 
-            {
-                { "string", "string" },
-            },
+            DnsPolicy = "string",
             EnableServiceLinks = false,
             EphemeralContainers = new[]
             {
@@ -989,23 +976,6 @@ var componentResource = new Foo.Component("componentResource", new()
                         TerminationGracePeriodSeconds = 0,
                         TimeoutSeconds = 0,
                     },
-                    EnvFrom = new[]
-                    {
-                        new Kubernetes.Types.Inputs.Core.V1.EnvFromSourceArgs
-                        {
-                            ConfigMapRef = new Kubernetes.Types.Inputs.Core.V1.ConfigMapEnvSourceArgs
-                            {
-                                Name = "string",
-                                Optional = false,
-                            },
-                            Prefix = "string",
-                            SecretRef = new Kubernetes.Types.Inputs.Core.V1.SecretEnvSourceArgs
-                            {
-                                Name = "string",
-                                Optional = false,
-                            },
-                        },
-                    },
                     SecurityContext = new Kubernetes.Types.Inputs.Core.V1.SecurityContextArgs
                     {
                         AllowPrivilegeEscalation = false,
@@ -1044,6 +1014,23 @@ var componentResource = new Foo.Component("componentResource", new()
                             GmsaCredentialSpecName = "string",
                             HostProcess = false,
                             RunAsUserName = "string",
+                        },
+                    },
+                    EnvFrom = new[]
+                    {
+                        new Kubernetes.Types.Inputs.Core.V1.EnvFromSourceArgs
+                        {
+                            ConfigMapRef = new Kubernetes.Types.Inputs.Core.V1.ConfigMapEnvSourceArgs
+                            {
+                                Name = "string",
+                                Optional = false,
+                            },
+                            Prefix = "string",
+                            SecretRef = new Kubernetes.Types.Inputs.Core.V1.SecretEnvSourceArgs
+                            {
+                                Name = "string",
+                                Optional = false,
+                            },
                         },
                     },
                     Image = "string",
@@ -1151,6 +1138,17 @@ var componentResource = new Foo.Component("componentResource", new()
                     {
                         "string",
                     },
+                    Ports = new[]
+                    {
+                        new Kubernetes.Types.Inputs.Core.V1.ContainerPortArgs
+                        {
+                            ContainerPortValue = 0,
+                            HostIP = "string",
+                            HostPort = 0,
+                            Name = "string",
+                            Protocol = "string",
+                        },
+                    },
                     StartupProbe = new Kubernetes.Types.Inputs.Core.V1.ProbeArgs
                     {
                         Exec = new Kubernetes.Types.Inputs.Core.V1.ExecActionArgs
@@ -1187,11 +1185,6 @@ var componentResource = new Foo.Component("componentResource", new()
                         TerminationGracePeriodSeconds = 0,
                         TimeoutSeconds = 0,
                     },
-                    Args = new[]
-                    {
-                        "string",
-                    },
-                    WorkingDir = "string",
                     Env = new[]
                     {
                         new Kubernetes.Types.Inputs.Core.V1.EnvVarArgs
@@ -1226,16 +1219,20 @@ var componentResource = new Foo.Component("componentResource", new()
                             },
                         },
                     },
-                    Ports = new[]
+                    Resources = new Kubernetes.Types.Inputs.Core.V1.ResourceRequirementsArgs
                     {
-                        new Kubernetes.Types.Inputs.Core.V1.ContainerPortArgs
+                        Limits = 
                         {
-                            ContainerPortValue = 0,
-                            HostIP = "string",
-                            HostPort = 0,
-                            Name = "string",
-                            Protocol = "string",
+                            { "string", "string" },
                         },
+                        Requests = 
+                        {
+                            { "string", "string" },
+                        },
+                    },
+                    Args = new[]
+                    {
+                        "string",
                     },
                     Stdin = false,
                     StdinOnce = false,
@@ -1263,23 +1260,23 @@ var componentResource = new Foo.Component("componentResource", new()
                             SubPathExpr = "string",
                         },
                     },
-                    Resources = new Kubernetes.Types.Inputs.Core.V1.ResourceRequirementsArgs
-                    {
-                        Limits = 
-                        {
-                            { "string", "string" },
-                        },
-                        Requests = 
-                        {
-                            { "string", "string" },
-                        },
-                    },
+                    WorkingDir = "string",
                 },
             },
-            PreemptionPolicy = "string",
+            HostAliases = new[]
+            {
+                new Kubernetes.Types.Inputs.Core.V1.HostAliasArgs
+                {
+                    Hostnames = new[]
+                    {
+                        "string",
+                    },
+                    Ip = "string",
+                },
+            },
             HostIPC = false,
+            HostNetwork = false,
             Priority = 0,
-            HostPID = false,
             Hostname = "string",
             ImagePullSecrets = new[]
             {
@@ -1329,54 +1326,6 @@ var componentResource = new Foo.Component("componentResource", new()
                         TerminationGracePeriodSeconds = 0,
                         TimeoutSeconds = 0,
                     },
-                    ImagePullPolicy = "string",
-                    Resources = new Kubernetes.Types.Inputs.Core.V1.ResourceRequirementsArgs
-                    {
-                        Limits = 
-                        {
-                            { "string", "string" },
-                        },
-                        Requests = 
-                        {
-                            { "string", "string" },
-                        },
-                    },
-                    StartupProbe = new Kubernetes.Types.Inputs.Core.V1.ProbeArgs
-                    {
-                        Exec = new Kubernetes.Types.Inputs.Core.V1.ExecActionArgs
-                        {
-                            Command = new[]
-                            {
-                                "string",
-                            },
-                        },
-                        FailureThreshold = 0,
-                        HttpGet = new Kubernetes.Types.Inputs.Core.V1.HTTPGetActionArgs
-                        {
-                            Port = 0,
-                            Host = "string",
-                            HttpHeaders = new[]
-                            {
-                                new Kubernetes.Types.Inputs.Core.V1.HTTPHeaderArgs
-                                {
-                                    Name = "string",
-                                    Value = "string",
-                                },
-                            },
-                            Path = "string",
-                            Scheme = "string",
-                        },
-                        InitialDelaySeconds = 0,
-                        PeriodSeconds = 0,
-                        SuccessThreshold = 0,
-                        TcpSocket = new Kubernetes.Types.Inputs.Core.V1.TCPSocketActionArgs
-                        {
-                            Port = 0,
-                            Host = "string",
-                        },
-                        TerminationGracePeriodSeconds = 0,
-                        TimeoutSeconds = 0,
-                    },
                     SecurityContext = new Kubernetes.Types.Inputs.Core.V1.SecurityContextArgs
                     {
                         AllowPrivilegeEscalation = false,
@@ -1417,6 +1366,25 @@ var componentResource = new Foo.Component("componentResource", new()
                             RunAsUserName = "string",
                         },
                     },
+                    EnvFrom = new[]
+                    {
+                        new Kubernetes.Types.Inputs.Core.V1.EnvFromSourceArgs
+                        {
+                            ConfigMapRef = new Kubernetes.Types.Inputs.Core.V1.ConfigMapEnvSourceArgs
+                            {
+                                Name = "string",
+                                Optional = false,
+                            },
+                            Prefix = "string",
+                            SecretRef = new Kubernetes.Types.Inputs.Core.V1.SecretEnvSourceArgs
+                            {
+                                Name = "string",
+                                Optional = false,
+                            },
+                        },
+                    },
+                    Image = "string",
+                    ImagePullPolicy = "string",
                     Lifecycle = new Kubernetes.Types.Inputs.Core.V1.LifecycleArgs
                     {
                         PostStart = new Kubernetes.Types.Inputs.Core.V1.HandlerArgs
@@ -1535,23 +1503,6 @@ var componentResource = new Foo.Component("componentResource", new()
                     {
                         "string",
                     },
-                    EnvFrom = new[]
-                    {
-                        new Kubernetes.Types.Inputs.Core.V1.EnvFromSourceArgs
-                        {
-                            ConfigMapRef = new Kubernetes.Types.Inputs.Core.V1.ConfigMapEnvSourceArgs
-                            {
-                                Name = "string",
-                                Optional = false,
-                            },
-                            Prefix = "string",
-                            SecretRef = new Kubernetes.Types.Inputs.Core.V1.SecretEnvSourceArgs
-                            {
-                                Name = "string",
-                                Optional = false,
-                            },
-                        },
-                    },
                     Env = new[]
                     {
                         new Kubernetes.Types.Inputs.Core.V1.EnvVarArgs
@@ -1586,7 +1537,53 @@ var componentResource = new Foo.Component("componentResource", new()
                             },
                         },
                     },
-                    Image = "string",
+                    StartupProbe = new Kubernetes.Types.Inputs.Core.V1.ProbeArgs
+                    {
+                        Exec = new Kubernetes.Types.Inputs.Core.V1.ExecActionArgs
+                        {
+                            Command = new[]
+                            {
+                                "string",
+                            },
+                        },
+                        FailureThreshold = 0,
+                        HttpGet = new Kubernetes.Types.Inputs.Core.V1.HTTPGetActionArgs
+                        {
+                            Port = 0,
+                            Host = "string",
+                            HttpHeaders = new[]
+                            {
+                                new Kubernetes.Types.Inputs.Core.V1.HTTPHeaderArgs
+                                {
+                                    Name = "string",
+                                    Value = "string",
+                                },
+                            },
+                            Path = "string",
+                            Scheme = "string",
+                        },
+                        InitialDelaySeconds = 0,
+                        PeriodSeconds = 0,
+                        SuccessThreshold = 0,
+                        TcpSocket = new Kubernetes.Types.Inputs.Core.V1.TCPSocketActionArgs
+                        {
+                            Port = 0,
+                            Host = "string",
+                        },
+                        TerminationGracePeriodSeconds = 0,
+                        TimeoutSeconds = 0,
+                    },
+                    Resources = new Kubernetes.Types.Inputs.Core.V1.ResourceRequirementsArgs
+                    {
+                        Limits = 
+                        {
+                            { "string", "string" },
+                        },
+                        Requests = 
+                        {
+                            { "string", "string" },
+                        },
+                    },
                     Stdin = false,
                     StdinOnce = false,
                     TerminationMessagePath = "string",
@@ -1617,9 +1614,12 @@ var componentResource = new Foo.Component("componentResource", new()
             },
             NodeName = "string",
             ActiveDeadlineSeconds = 0,
-            DnsPolicy = "string",
             AutomountServiceAccountToken = false,
-            HostNetwork = false,
+            Overhead = 
+            {
+                { "string", "string" },
+            },
+            HostPID = false,
             PriorityClassName = "string",
             ReadinessGates = new[]
             {
@@ -1726,6 +1726,36 @@ var componentResource = new Foo.Component("componentResource", new()
                         Directory = "string",
                         Revision = "string",
                     },
+                    PersistentVolumeClaim = new Kubernetes.Types.Inputs.Core.V1.PersistentVolumeClaimVolumeSourceArgs
+                    {
+                        ClaimName = "string",
+                        ReadOnly = false,
+                    },
+                    Cephfs = new Kubernetes.Types.Inputs.Core.V1.CephFSVolumeSourceArgs
+                    {
+                        Monitors = new[]
+                        {
+                            "string",
+                        },
+                        Path = "string",
+                        ReadOnly = false,
+                        SecretFile = "string",
+                        SecretRef = new Kubernetes.Types.Inputs.Core.V1.LocalObjectReferenceArgs
+                        {
+                            Name = "string",
+                        },
+                        User = "string",
+                    },
+                    Cinder = new Kubernetes.Types.Inputs.Core.V1.CinderVolumeSourceArgs
+                    {
+                        VolumeID = "string",
+                        FsType = "string",
+                        ReadOnly = false,
+                        SecretRef = new Kubernetes.Types.Inputs.Core.V1.LocalObjectReferenceArgs
+                        {
+                            Name = "string",
+                        },
+                    },
                     ConfigMap = new Kubernetes.Types.Inputs.Core.V1.ConfigMapVolumeSourceArgs
                     {
                         DefaultMode = 0,
@@ -1740,27 +1770,6 @@ var componentResource = new Foo.Component("componentResource", new()
                         },
                         Name = "string",
                         Optional = false,
-                    },
-                    Glusterfs = new Kubernetes.Types.Inputs.Core.V1.GlusterfsVolumeSourceArgs
-                    {
-                        Endpoints = "string",
-                        Path = "string",
-                        ReadOnly = false,
-                    },
-                    Cinder = new Kubernetes.Types.Inputs.Core.V1.CinderVolumeSourceArgs
-                    {
-                        VolumeID = "string",
-                        FsType = "string",
-                        ReadOnly = false,
-                        SecretRef = new Kubernetes.Types.Inputs.Core.V1.LocalObjectReferenceArgs
-                        {
-                            Name = "string",
-                        },
-                    },
-                    HostPath = new Kubernetes.Types.Inputs.Core.V1.HostPathVolumeSourceArgs
-                    {
-                        Path = "string",
-                        Type = "string",
                     },
                     Csi = new Kubernetes.Types.Inputs.Core.V1.CSIVolumeSourceArgs
                     {
@@ -1942,6 +1951,31 @@ var componentResource = new Foo.Component("componentResource", new()
                             Name = "string",
                         },
                     },
+                    Flocker = new Kubernetes.Types.Inputs.Core.V1.FlockerVolumeSourceArgs
+                    {
+                        DatasetName = "string",
+                        DatasetUUID = "string",
+                    },
+                    GcePersistentDisk = new Kubernetes.Types.Inputs.Core.V1.GCEPersistentDiskVolumeSourceArgs
+                    {
+                        PdName = "string",
+                        FsType = "string",
+                        Partition = 0,
+                        ReadOnly = false,
+                    },
+                    AwsElasticBlockStore = new Kubernetes.Types.Inputs.Core.V1.AWSElasticBlockStoreVolumeSourceArgs
+                    {
+                        VolumeID = "string",
+                        FsType = "string",
+                        Partition = 0,
+                        ReadOnly = false,
+                    },
+                    AzureFile = new Kubernetes.Types.Inputs.Core.V1.AzureFileVolumeSourceArgs
+                    {
+                        SecretName = "string",
+                        ShareName = "string",
+                        ReadOnly = false,
+                    },
                     Iscsi = new Kubernetes.Types.Inputs.Core.V1.ISCSIVolumeSourceArgs
                     {
                         Iqn = "string",
@@ -1962,45 +1996,11 @@ var componentResource = new Foo.Component("componentResource", new()
                             Name = "string",
                         },
                     },
-                    GcePersistentDisk = new Kubernetes.Types.Inputs.Core.V1.GCEPersistentDiskVolumeSourceArgs
+                    Glusterfs = new Kubernetes.Types.Inputs.Core.V1.GlusterfsVolumeSourceArgs
                     {
-                        PdName = "string",
-                        FsType = "string",
-                        Partition = 0,
-                        ReadOnly = false,
-                    },
-                    AwsElasticBlockStore = new Kubernetes.Types.Inputs.Core.V1.AWSElasticBlockStoreVolumeSourceArgs
-                    {
-                        VolumeID = "string",
-                        FsType = "string",
-                        Partition = 0,
-                        ReadOnly = false,
-                    },
-                    Cephfs = new Kubernetes.Types.Inputs.Core.V1.CephFSVolumeSourceArgs
-                    {
-                        Monitors = new[]
-                        {
-                            "string",
-                        },
+                        Endpoints = "string",
                         Path = "string",
                         ReadOnly = false,
-                        SecretFile = "string",
-                        SecretRef = new Kubernetes.Types.Inputs.Core.V1.LocalObjectReferenceArgs
-                        {
-                            Name = "string",
-                        },
-                        User = "string",
-                    },
-                    AzureFile = new Kubernetes.Types.Inputs.Core.V1.AzureFileVolumeSourceArgs
-                    {
-                        SecretName = "string",
-                        ShareName = "string",
-                        ReadOnly = false,
-                    },
-                    Flocker = new Kubernetes.Types.Inputs.Core.V1.FlockerVolumeSourceArgs
-                    {
-                        DatasetName = "string",
-                        DatasetUUID = "string",
                     },
                     AzureDisk = new Kubernetes.Types.Inputs.Core.V1.AzureDiskVolumeSourceArgs
                     {
@@ -2017,10 +2017,10 @@ var componentResource = new Foo.Component("componentResource", new()
                         Server = "string",
                         ReadOnly = false,
                     },
-                    PersistentVolumeClaim = new Kubernetes.Types.Inputs.Core.V1.PersistentVolumeClaimVolumeSourceArgs
+                    HostPath = new Kubernetes.Types.Inputs.Core.V1.HostPathVolumeSourceArgs
                     {
-                        ClaimName = "string",
-                        ReadOnly = false,
+                        Path = "string",
+                        Type = "string",
                     },
                     PhotonPersistentDisk = new Kubernetes.Types.Inputs.Core.V1.PhotonPersistentDiskVolumeSourceArgs
                     {
@@ -2478,44 +2478,6 @@ example, err := foo.NewComponent(ctx, "componentResource", &foo.ComponentArgs{
 						TerminationGracePeriodSeconds: pulumi.Int(0),
 						TimeoutSeconds:                pulumi.Int(0),
 					},
-					ImagePullPolicy: pulumi.String("string"),
-					Resources: &corev1.ResourceRequirementsArgs{
-						Limits: pulumi.StringMap{
-							"string": pulumi.String("string"),
-						},
-						Requests: pulumi.StringMap{
-							"string": pulumi.String("string"),
-						},
-					},
-					StartupProbe: &corev1.ProbeArgs{
-						Exec: &corev1.ExecActionArgs{
-							Command: pulumi.StringArray{
-								pulumi.String("string"),
-							},
-						},
-						FailureThreshold: pulumi.Int(0),
-						HttpGet: &corev1.HTTPGetActionArgs{
-							Port: pulumi.Any(0),
-							Host: pulumi.String("string"),
-							HttpHeaders: corev1.HTTPHeaderArray{
-								&corev1.HTTPHeaderArgs{
-									Name:  pulumi.String("string"),
-									Value: pulumi.String("string"),
-								},
-							},
-							Path:   pulumi.String("string"),
-							Scheme: pulumi.String("string"),
-						},
-						InitialDelaySeconds: pulumi.Int(0),
-						PeriodSeconds:       pulumi.Int(0),
-						SuccessThreshold:    pulumi.Int(0),
-						TcpSocket: &corev1.TCPSocketActionArgs{
-							Port: pulumi.Any(0),
-							Host: pulumi.String("string"),
-						},
-						TerminationGracePeriodSeconds: pulumi.Int(0),
-						TimeoutSeconds:                pulumi.Int(0),
-					},
 					SecurityContext: &corev1.SecurityContextArgs{
 						AllowPrivilegeEscalation: pulumi.Bool(false),
 						Capabilities: &corev1.CapabilitiesArgs{
@@ -2549,6 +2511,21 @@ example, err := foo.NewComponent(ctx, "componentResource", &foo.ComponentArgs{
 							RunAsUserName:          pulumi.String("string"),
 						},
 					},
+					EnvFrom: corev1.EnvFromSourceArray{
+						&corev1.EnvFromSourceArgs{
+							ConfigMapRef: &corev1.ConfigMapEnvSourceArgs{
+								Name:     pulumi.String("string"),
+								Optional: pulumi.Bool(false),
+							},
+							Prefix: pulumi.String("string"),
+							SecretRef: &corev1.SecretEnvSourceArgs{
+								Name:     pulumi.String("string"),
+								Optional: pulumi.Bool(false),
+							},
+						},
+					},
+					Image:           pulumi.String("string"),
+					ImagePullPolicy: pulumi.String("string"),
 					Lifecycle: &corev1.LifecycleArgs{
 						PostStart: &corev1.HandlerArgs{
 							Exec: &corev1.ExecActionArgs{
@@ -2641,19 +2618,6 @@ example, err := foo.NewComponent(ctx, "componentResource", &foo.ComponentArgs{
 					Args: pulumi.StringArray{
 						pulumi.String("string"),
 					},
-					EnvFrom: corev1.EnvFromSourceArray{
-						&corev1.EnvFromSourceArgs{
-							ConfigMapRef: &corev1.ConfigMapEnvSourceArgs{
-								Name:     pulumi.String("string"),
-								Optional: pulumi.Bool(false),
-							},
-							Prefix: pulumi.String("string"),
-							SecretRef: &corev1.SecretEnvSourceArgs{
-								Name:     pulumi.String("string"),
-								Optional: pulumi.Bool(false),
-							},
-						},
-					},
 					Env: corev1.EnvVarArray{
 						&corev1.EnvVarArgs{
 							Name:  pulumi.String("string"),
@@ -2681,7 +2645,43 @@ example, err := foo.NewComponent(ctx, "componentResource", &foo.ComponentArgs{
 							},
 						},
 					},
-					Image:                    pulumi.String("string"),
+					StartupProbe: &corev1.ProbeArgs{
+						Exec: &corev1.ExecActionArgs{
+							Command: pulumi.StringArray{
+								pulumi.String("string"),
+							},
+						},
+						FailureThreshold: pulumi.Int(0),
+						HttpGet: &corev1.HTTPGetActionArgs{
+							Port: pulumi.Any(0),
+							Host: pulumi.String("string"),
+							HttpHeaders: corev1.HTTPHeaderArray{
+								&corev1.HTTPHeaderArgs{
+									Name:  pulumi.String("string"),
+									Value: pulumi.String("string"),
+								},
+							},
+							Path:   pulumi.String("string"),
+							Scheme: pulumi.String("string"),
+						},
+						InitialDelaySeconds: pulumi.Int(0),
+						PeriodSeconds:       pulumi.Int(0),
+						SuccessThreshold:    pulumi.Int(0),
+						TcpSocket: &corev1.TCPSocketActionArgs{
+							Port: pulumi.Any(0),
+							Host: pulumi.String("string"),
+						},
+						TerminationGracePeriodSeconds: pulumi.Int(0),
+						TimeoutSeconds:                pulumi.Int(0),
+					},
+					Resources: &corev1.ResourceRequirementsArgs{
+						Limits: pulumi.StringMap{
+							"string": pulumi.String("string"),
+						},
+						Requests: pulumi.StringMap{
+							"string": pulumi.String("string"),
+						},
+					},
 					Stdin:                    pulumi.Bool(false),
 					StdinOnce:                pulumi.Bool(false),
 					TerminationMessagePath:   pulumi.String("string"),
@@ -2709,14 +2709,7 @@ example, err := foo.NewComponent(ctx, "componentResource", &foo.ComponentArgs{
 			NodeSelector: pulumi.StringMap{
 				"string": pulumi.String("string"),
 			},
-			HostAliases: corev1.HostAliasArray{
-				&corev1.HostAliasArgs{
-					Hostnames: pulumi.StringArray{
-						pulumi.String("string"),
-					},
-					Ip: pulumi.String("string"),
-				},
-			},
+			PreemptionPolicy: pulumi.String("string"),
 			Affinity: &corev1.AffinityArgs{
 				NodeAffinity: &corev1.NodeAffinityArgs{
 					PreferredDuringSchedulingIgnoredDuringExecution: corev1.PreferredSchedulingTermArray{
@@ -2938,9 +2931,7 @@ example, err := foo.NewComponent(ctx, "componentResource", &foo.ComponentArgs{
 					pulumi.String("string"),
 				},
 			},
-			Overhead: pulumi.StringMap{
-				"string": pulumi.String("string"),
-			},
+			DnsPolicy:          pulumi.String("string"),
 			EnableServiceLinks: pulumi.Bool(false),
 			EphemeralContainers: corev1.EphemeralContainerArray{
 				&corev1.EphemeralContainerArgs{
@@ -2974,19 +2965,6 @@ example, err := foo.NewComponent(ctx, "componentResource", &foo.ComponentArgs{
 						TerminationGracePeriodSeconds: pulumi.Int(0),
 						TimeoutSeconds:                pulumi.Int(0),
 					},
-					EnvFrom: corev1.EnvFromSourceArray{
-						&corev1.EnvFromSourceArgs{
-							ConfigMapRef: &corev1.ConfigMapEnvSourceArgs{
-								Name:     pulumi.String("string"),
-								Optional: pulumi.Bool(false),
-							},
-							Prefix: pulumi.String("string"),
-							SecretRef: &corev1.SecretEnvSourceArgs{
-								Name:     pulumi.String("string"),
-								Optional: pulumi.Bool(false),
-							},
-						},
-					},
 					SecurityContext: &corev1.SecurityContextArgs{
 						AllowPrivilegeEscalation: pulumi.Bool(false),
 						Capabilities: &corev1.CapabilitiesArgs{
@@ -3018,6 +2996,19 @@ example, err := foo.NewComponent(ctx, "componentResource", &foo.ComponentArgs{
 							GmsaCredentialSpecName: pulumi.String("string"),
 							HostProcess:            pulumi.Bool(false),
 							RunAsUserName:          pulumi.String("string"),
+						},
+					},
+					EnvFrom: corev1.EnvFromSourceArray{
+						&corev1.EnvFromSourceArgs{
+							ConfigMapRef: &corev1.ConfigMapEnvSourceArgs{
+								Name:     pulumi.String("string"),
+								Optional: pulumi.Bool(false),
+							},
+							Prefix: pulumi.String("string"),
+							SecretRef: &corev1.SecretEnvSourceArgs{
+								Name:     pulumi.String("string"),
+								Optional: pulumi.Bool(false),
+							},
 						},
 					},
 					Image:           pulumi.String("string"),
@@ -3102,6 +3093,15 @@ example, err := foo.NewComponent(ctx, "componentResource", &foo.ComponentArgs{
 					Command: pulumi.StringArray{
 						pulumi.String("string"),
 					},
+					Ports: corev1.ContainerPortArray{
+						&corev1.ContainerPortArgs{
+							ContainerPort: pulumi.Int(0),
+							HostIP:        pulumi.String("string"),
+							HostPort:      pulumi.Int(0),
+							Name:          pulumi.String("string"),
+							Protocol:      pulumi.String("string"),
+						},
+					},
 					StartupProbe: &corev1.ProbeArgs{
 						Exec: &corev1.ExecActionArgs{
 							Command: pulumi.StringArray{
@@ -3131,10 +3131,6 @@ example, err := foo.NewComponent(ctx, "componentResource", &foo.ComponentArgs{
 						TerminationGracePeriodSeconds: pulumi.Int(0),
 						TimeoutSeconds:                pulumi.Int(0),
 					},
-					Args: pulumi.StringArray{
-						pulumi.String("string"),
-					},
-					WorkingDir: pulumi.String("string"),
 					Env: corev1.EnvVarArray{
 						&corev1.EnvVarArgs{
 							Name:  pulumi.String("string"),
@@ -3162,14 +3158,16 @@ example, err := foo.NewComponent(ctx, "componentResource", &foo.ComponentArgs{
 							},
 						},
 					},
-					Ports: corev1.ContainerPortArray{
-						&corev1.ContainerPortArgs{
-							ContainerPort: pulumi.Int(0),
-							HostIP:        pulumi.String("string"),
-							HostPort:      pulumi.Int(0),
-							Name:          pulumi.String("string"),
-							Protocol:      pulumi.String("string"),
+					Resources: &corev1.ResourceRequirementsArgs{
+						Limits: pulumi.StringMap{
+							"string": pulumi.String("string"),
 						},
+						Requests: pulumi.StringMap{
+							"string": pulumi.String("string"),
+						},
+					},
+					Args: pulumi.StringArray{
+						pulumi.String("string"),
 					},
 					Stdin:                    pulumi.Bool(false),
 					StdinOnce:                pulumi.Bool(false),
@@ -3193,21 +3191,21 @@ example, err := foo.NewComponent(ctx, "componentResource", &foo.ComponentArgs{
 							SubPathExpr:      pulumi.String("string"),
 						},
 					},
-					Resources: &corev1.ResourceRequirementsArgs{
-						Limits: pulumi.StringMap{
-							"string": pulumi.String("string"),
-						},
-						Requests: pulumi.StringMap{
-							"string": pulumi.String("string"),
-						},
-					},
+					WorkingDir: pulumi.String("string"),
 				},
 			},
-			PreemptionPolicy: pulumi.String("string"),
-			HostIPC:          pulumi.Bool(false),
-			Priority:         pulumi.Int(0),
-			HostPID:          pulumi.Bool(false),
-			Hostname:         pulumi.String("string"),
+			HostAliases: corev1.HostAliasArray{
+				&corev1.HostAliasArgs{
+					Hostnames: pulumi.StringArray{
+						pulumi.String("string"),
+					},
+					Ip: pulumi.String("string"),
+				},
+			},
+			HostIPC:     pulumi.Bool(false),
+			HostNetwork: pulumi.Bool(false),
+			Priority:    pulumi.Int(0),
+			Hostname:    pulumi.String("string"),
 			ImagePullSecrets: corev1.LocalObjectReferenceArray{
 				&corev1.LocalObjectReferenceArgs{
 					Name: pulumi.String("string"),
@@ -3217,44 +3215,6 @@ example, err := foo.NewComponent(ctx, "componentResource", &foo.ComponentArgs{
 				&corev1.ContainerArgs{
 					Name: pulumi.String("string"),
 					ReadinessProbe: &corev1.ProbeArgs{
-						Exec: &corev1.ExecActionArgs{
-							Command: pulumi.StringArray{
-								pulumi.String("string"),
-							},
-						},
-						FailureThreshold: pulumi.Int(0),
-						HttpGet: &corev1.HTTPGetActionArgs{
-							Port: pulumi.Any(0),
-							Host: pulumi.String("string"),
-							HttpHeaders: corev1.HTTPHeaderArray{
-								&corev1.HTTPHeaderArgs{
-									Name:  pulumi.String("string"),
-									Value: pulumi.String("string"),
-								},
-							},
-							Path:   pulumi.String("string"),
-							Scheme: pulumi.String("string"),
-						},
-						InitialDelaySeconds: pulumi.Int(0),
-						PeriodSeconds:       pulumi.Int(0),
-						SuccessThreshold:    pulumi.Int(0),
-						TcpSocket: &corev1.TCPSocketActionArgs{
-							Port: pulumi.Any(0),
-							Host: pulumi.String("string"),
-						},
-						TerminationGracePeriodSeconds: pulumi.Int(0),
-						TimeoutSeconds:                pulumi.Int(0),
-					},
-					ImagePullPolicy: pulumi.String("string"),
-					Resources: &corev1.ResourceRequirementsArgs{
-						Limits: pulumi.StringMap{
-							"string": pulumi.String("string"),
-						},
-						Requests: pulumi.StringMap{
-							"string": pulumi.String("string"),
-						},
-					},
-					StartupProbe: &corev1.ProbeArgs{
 						Exec: &corev1.ExecActionArgs{
 							Command: pulumi.StringArray{
 								pulumi.String("string"),
@@ -3316,6 +3276,21 @@ example, err := foo.NewComponent(ctx, "componentResource", &foo.ComponentArgs{
 							RunAsUserName:          pulumi.String("string"),
 						},
 					},
+					EnvFrom: corev1.EnvFromSourceArray{
+						&corev1.EnvFromSourceArgs{
+							ConfigMapRef: &corev1.ConfigMapEnvSourceArgs{
+								Name:     pulumi.String("string"),
+								Optional: pulumi.Bool(false),
+							},
+							Prefix: pulumi.String("string"),
+							SecretRef: &corev1.SecretEnvSourceArgs{
+								Name:     pulumi.String("string"),
+								Optional: pulumi.Bool(false),
+							},
+						},
+					},
+					Image:           pulumi.String("string"),
+					ImagePullPolicy: pulumi.String("string"),
 					Lifecycle: &corev1.LifecycleArgs{
 						PostStart: &corev1.HandlerArgs{
 							Exec: &corev1.ExecActionArgs{
@@ -3408,19 +3383,6 @@ example, err := foo.NewComponent(ctx, "componentResource", &foo.ComponentArgs{
 					Args: pulumi.StringArray{
 						pulumi.String("string"),
 					},
-					EnvFrom: corev1.EnvFromSourceArray{
-						&corev1.EnvFromSourceArgs{
-							ConfigMapRef: &corev1.ConfigMapEnvSourceArgs{
-								Name:     pulumi.String("string"),
-								Optional: pulumi.Bool(false),
-							},
-							Prefix: pulumi.String("string"),
-							SecretRef: &corev1.SecretEnvSourceArgs{
-								Name:     pulumi.String("string"),
-								Optional: pulumi.Bool(false),
-							},
-						},
-					},
 					Env: corev1.EnvVarArray{
 						&corev1.EnvVarArgs{
 							Name:  pulumi.String("string"),
@@ -3448,7 +3410,43 @@ example, err := foo.NewComponent(ctx, "componentResource", &foo.ComponentArgs{
 							},
 						},
 					},
-					Image:                    pulumi.String("string"),
+					StartupProbe: &corev1.ProbeArgs{
+						Exec: &corev1.ExecActionArgs{
+							Command: pulumi.StringArray{
+								pulumi.String("string"),
+							},
+						},
+						FailureThreshold: pulumi.Int(0),
+						HttpGet: &corev1.HTTPGetActionArgs{
+							Port: pulumi.Any(0),
+							Host: pulumi.String("string"),
+							HttpHeaders: corev1.HTTPHeaderArray{
+								&corev1.HTTPHeaderArgs{
+									Name:  pulumi.String("string"),
+									Value: pulumi.String("string"),
+								},
+							},
+							Path:   pulumi.String("string"),
+							Scheme: pulumi.String("string"),
+						},
+						InitialDelaySeconds: pulumi.Int(0),
+						PeriodSeconds:       pulumi.Int(0),
+						SuccessThreshold:    pulumi.Int(0),
+						TcpSocket: &corev1.TCPSocketActionArgs{
+							Port: pulumi.Any(0),
+							Host: pulumi.String("string"),
+						},
+						TerminationGracePeriodSeconds: pulumi.Int(0),
+						TimeoutSeconds:                pulumi.Int(0),
+					},
+					Resources: &corev1.ResourceRequirementsArgs{
+						Limits: pulumi.StringMap{
+							"string": pulumi.String("string"),
+						},
+						Requests: pulumi.StringMap{
+							"string": pulumi.String("string"),
+						},
+					},
 					Stdin:                    pulumi.Bool(false),
 					StdinOnce:                pulumi.Bool(false),
 					TerminationMessagePath:   pulumi.String("string"),
@@ -3475,10 +3473,12 @@ example, err := foo.NewComponent(ctx, "componentResource", &foo.ComponentArgs{
 			},
 			NodeName:                     pulumi.String("string"),
 			ActiveDeadlineSeconds:        pulumi.Int(0),
-			DnsPolicy:                    pulumi.String("string"),
 			AutomountServiceAccountToken: pulumi.Bool(false),
-			HostNetwork:                  pulumi.Bool(false),
-			PriorityClassName:            pulumi.String("string"),
+			Overhead: pulumi.StringMap{
+				"string": pulumi.String("string"),
+			},
+			HostPID:           pulumi.Bool(false),
+			PriorityClassName: pulumi.String("string"),
 			ReadinessGates: corev1.PodReadinessGateArray{
 				&corev1.PodReadinessGateArgs{
 					ConditionType: pulumi.String("string"),
@@ -3563,6 +3563,30 @@ example, err := foo.NewComponent(ctx, "componentResource", &foo.ComponentArgs{
 						Directory:  pulumi.String("string"),
 						Revision:   pulumi.String("string"),
 					},
+					PersistentVolumeClaim: &corev1.PersistentVolumeClaimVolumeSourceArgs{
+						ClaimName: pulumi.String("string"),
+						ReadOnly:  pulumi.Bool(false),
+					},
+					Cephfs: &corev1.CephFSVolumeSourceArgs{
+						Monitors: pulumi.StringArray{
+							pulumi.String("string"),
+						},
+						Path:       pulumi.String("string"),
+						ReadOnly:   pulumi.Bool(false),
+						SecretFile: pulumi.String("string"),
+						SecretRef: &corev1.LocalObjectReferenceArgs{
+							Name: pulumi.String("string"),
+						},
+						User: pulumi.String("string"),
+					},
+					Cinder: &corev1.CinderVolumeSourceArgs{
+						VolumeID: pulumi.String("string"),
+						FsType:   pulumi.String("string"),
+						ReadOnly: pulumi.Bool(false),
+						SecretRef: &corev1.LocalObjectReferenceArgs{
+							Name: pulumi.String("string"),
+						},
+					},
 					ConfigMap: &corev1.ConfigMapVolumeSourceArgs{
 						DefaultMode: pulumi.Int(0),
 						Items: corev1.KeyToPathArray{
@@ -3574,23 +3598,6 @@ example, err := foo.NewComponent(ctx, "componentResource", &foo.ComponentArgs{
 						},
 						Name:     pulumi.String("string"),
 						Optional: pulumi.Bool(false),
-					},
-					Glusterfs: &corev1.GlusterfsVolumeSourceArgs{
-						Endpoints: pulumi.String("string"),
-						Path:      pulumi.String("string"),
-						ReadOnly:  pulumi.Bool(false),
-					},
-					Cinder: &corev1.CinderVolumeSourceArgs{
-						VolumeID: pulumi.String("string"),
-						FsType:   pulumi.String("string"),
-						ReadOnly: pulumi.Bool(false),
-						SecretRef: &corev1.LocalObjectReferenceArgs{
-							Name: pulumi.String("string"),
-						},
-					},
-					HostPath: &corev1.HostPathVolumeSourceArgs{
-						Path: pulumi.String("string"),
-						Type: pulumi.String("string"),
 					},
 					Csi: &corev1.CSIVolumeSourceArgs{
 						Driver: pulumi.String("string"),
@@ -3735,6 +3742,27 @@ example, err := foo.NewComponent(ctx, "componentResource", &foo.ComponentArgs{
 							Name: pulumi.String("string"),
 						},
 					},
+					Flocker: &corev1.FlockerVolumeSourceArgs{
+						DatasetName: pulumi.String("string"),
+						DatasetUUID: pulumi.String("string"),
+					},
+					GcePersistentDisk: &corev1.GCEPersistentDiskVolumeSourceArgs{
+						PdName:    pulumi.String("string"),
+						FsType:    pulumi.String("string"),
+						Partition: pulumi.Int(0),
+						ReadOnly:  pulumi.Bool(false),
+					},
+					AwsElasticBlockStore: &corev1.AWSElasticBlockStoreVolumeSourceArgs{
+						VolumeID:  pulumi.String("string"),
+						FsType:    pulumi.String("string"),
+						Partition: pulumi.Int(0),
+						ReadOnly:  pulumi.Bool(false),
+					},
+					AzureFile: &corev1.AzureFileVolumeSourceArgs{
+						SecretName: pulumi.String("string"),
+						ShareName:  pulumi.String("string"),
+						ReadOnly:   pulumi.Bool(false),
+					},
 					Iscsi: &corev1.ISCSIVolumeSourceArgs{
 						Iqn:               pulumi.String("string"),
 						Lun:               pulumi.Int(0),
@@ -3752,38 +3780,10 @@ example, err := foo.NewComponent(ctx, "componentResource", &foo.ComponentArgs{
 							Name: pulumi.String("string"),
 						},
 					},
-					GcePersistentDisk: &corev1.GCEPersistentDiskVolumeSourceArgs{
-						PdName:    pulumi.String("string"),
-						FsType:    pulumi.String("string"),
-						Partition: pulumi.Int(0),
+					Glusterfs: &corev1.GlusterfsVolumeSourceArgs{
+						Endpoints: pulumi.String("string"),
+						Path:      pulumi.String("string"),
 						ReadOnly:  pulumi.Bool(false),
-					},
-					AwsElasticBlockStore: &corev1.AWSElasticBlockStoreVolumeSourceArgs{
-						VolumeID:  pulumi.String("string"),
-						FsType:    pulumi.String("string"),
-						Partition: pulumi.Int(0),
-						ReadOnly:  pulumi.Bool(false),
-					},
-					Cephfs: &corev1.CephFSVolumeSourceArgs{
-						Monitors: pulumi.StringArray{
-							pulumi.String("string"),
-						},
-						Path:       pulumi.String("string"),
-						ReadOnly:   pulumi.Bool(false),
-						SecretFile: pulumi.String("string"),
-						SecretRef: &corev1.LocalObjectReferenceArgs{
-							Name: pulumi.String("string"),
-						},
-						User: pulumi.String("string"),
-					},
-					AzureFile: &corev1.AzureFileVolumeSourceArgs{
-						SecretName: pulumi.String("string"),
-						ShareName:  pulumi.String("string"),
-						ReadOnly:   pulumi.Bool(false),
-					},
-					Flocker: &corev1.FlockerVolumeSourceArgs{
-						DatasetName: pulumi.String("string"),
-						DatasetUUID: pulumi.String("string"),
 					},
 					AzureDisk: &corev1.AzureDiskVolumeSourceArgs{
 						DiskName:    pulumi.String("string"),
@@ -3798,9 +3798,9 @@ example, err := foo.NewComponent(ctx, "componentResource", &foo.ComponentArgs{
 						Server:   pulumi.String("string"),
 						ReadOnly: pulumi.Bool(false),
 					},
-					PersistentVolumeClaim: &corev1.PersistentVolumeClaimVolumeSourceArgs{
-						ClaimName: pulumi.String("string"),
-						ReadOnly:  pulumi.Bool(false),
+					HostPath: &corev1.HostPathVolumeSourceArgs{
+						Path: pulumi.String("string"),
+						Type: pulumi.String("string"),
 					},
 					PhotonPersistentDisk: &corev1.PhotonPersistentDiskVolumeSourceArgs{
 						PdID:   pulumi.String("string"),
@@ -4175,36 +4175,6 @@ var componentResource = new Component("componentResource", ComponentArgs.builder
                     .terminationGracePeriodSeconds(0)
                     .timeoutSeconds(0)
                     .build())
-                .imagePullPolicy("string")
-                .resources(ResourceRequirementsArgs.builder()
-                    .limits(Map.of("string", "string"))
-                    .requests(Map.of("string", "string"))
-                    .build())
-                .startupProbe(ProbeArgs.builder()
-                    .exec(ExecActionArgs.builder()
-                        .command("string")
-                        .build())
-                    .failureThreshold(0)
-                    .httpGet(HTTPGetActionArgs.builder()
-                        .port(0)
-                        .host("string")
-                        .httpHeaders(HTTPHeaderArgs.builder()
-                            .name("string")
-                            .value("string")
-                            .build())
-                        .path("string")
-                        .scheme("string")
-                        .build())
-                    .initialDelaySeconds(0)
-                    .periodSeconds(0)
-                    .successThreshold(0)
-                    .tcpSocket(TCPSocketActionArgs.builder()
-                        .port(0)
-                        .host("string")
-                        .build())
-                    .terminationGracePeriodSeconds(0)
-                    .timeoutSeconds(0)
-                    .build())
                 .securityContext(SecurityContextArgs.builder()
                     .allowPrivilegeEscalation(false)
                     .capabilities(CapabilitiesArgs.builder()
@@ -4234,6 +4204,19 @@ var componentResource = new Component("componentResource", ComponentArgs.builder
                         .runAsUserName("string")
                         .build())
                     .build())
+                .envFrom(EnvFromSourceArgs.builder()
+                    .configMapRef(ConfigMapEnvSourceArgs.builder()
+                        .name("string")
+                        .optional(false)
+                        .build())
+                    .prefix("string")
+                    .secretRef(SecretEnvSourceArgs.builder()
+                        .name("string")
+                        .optional(false)
+                        .build())
+                    .build())
+                .image("string")
+                .imagePullPolicy("string")
                 .lifecycle(LifecycleArgs.builder()
                     .postStart(HandlerArgs.builder()
                         .exec(ExecActionArgs.builder()
@@ -4308,17 +4291,6 @@ var componentResource = new Component("componentResource", ComponentArgs.builder
                     .protocol("string")
                     .build())
                 .args("string")
-                .envFrom(EnvFromSourceArgs.builder()
-                    .configMapRef(ConfigMapEnvSourceArgs.builder()
-                        .name("string")
-                        .optional(false)
-                        .build())
-                    .prefix("string")
-                    .secretRef(SecretEnvSourceArgs.builder()
-                        .name("string")
-                        .optional(false)
-                        .build())
-                    .build())
                 .env(EnvVarArgs.builder()
                     .name("string")
                     .value("string")
@@ -4344,7 +4316,35 @@ var componentResource = new Component("componentResource", ComponentArgs.builder
                             .build())
                         .build())
                     .build())
-                .image("string")
+                .startupProbe(ProbeArgs.builder()
+                    .exec(ExecActionArgs.builder()
+                        .command("string")
+                        .build())
+                    .failureThreshold(0)
+                    .httpGet(HTTPGetActionArgs.builder()
+                        .port(0)
+                        .host("string")
+                        .httpHeaders(HTTPHeaderArgs.builder()
+                            .name("string")
+                            .value("string")
+                            .build())
+                        .path("string")
+                        .scheme("string")
+                        .build())
+                    .initialDelaySeconds(0)
+                    .periodSeconds(0)
+                    .successThreshold(0)
+                    .tcpSocket(TCPSocketActionArgs.builder()
+                        .port(0)
+                        .host("string")
+                        .build())
+                    .terminationGracePeriodSeconds(0)
+                    .timeoutSeconds(0)
+                    .build())
+                .resources(ResourceRequirementsArgs.builder()
+                    .limits(Map.of("string", "string"))
+                    .requests(Map.of("string", "string"))
+                    .build())
                 .stdin(false)
                 .stdinOnce(false)
                 .terminationMessagePath("string")
@@ -4365,10 +4365,7 @@ var componentResource = new Component("componentResource", ComponentArgs.builder
                 .workingDir("string")
                 .build())
             .nodeSelector(Map.of("string", "string"))
-            .hostAliases(HostAliasArgs.builder()
-                .hostnames("string")
-                .ip("string")
-                .build())
+            .preemptionPolicy("string")
             .affinity(AffinityArgs.builder()
                 .nodeAffinity(NodeAffinityArgs.builder()
                     .preferredDuringSchedulingIgnoredDuringExecution(PreferredSchedulingTermArgs.builder()
@@ -4500,7 +4497,7 @@ var componentResource = new Component("componentResource", ComponentArgs.builder
                     .build())
                 .searches("string")
                 .build())
-            .overhead(Map.of("string", "string"))
+            .dnsPolicy("string")
             .enableServiceLinks(false)
             .ephemeralContainers(EphemeralContainerArgs.builder()
                 .name("string")
@@ -4529,17 +4526,6 @@ var componentResource = new Component("componentResource", ComponentArgs.builder
                     .terminationGracePeriodSeconds(0)
                     .timeoutSeconds(0)
                     .build())
-                .envFrom(EnvFromSourceArgs.builder()
-                    .configMapRef(ConfigMapEnvSourceArgs.builder()
-                        .name("string")
-                        .optional(false)
-                        .build())
-                    .prefix("string")
-                    .secretRef(SecretEnvSourceArgs.builder()
-                        .name("string")
-                        .optional(false)
-                        .build())
-                    .build())
                 .securityContext(SecurityContextArgs.builder()
                     .allowPrivilegeEscalation(false)
                     .capabilities(CapabilitiesArgs.builder()
@@ -4567,6 +4553,17 @@ var componentResource = new Component("componentResource", ComponentArgs.builder
                         .gmsaCredentialSpecName("string")
                         .hostProcess(false)
                         .runAsUserName("string")
+                        .build())
+                    .build())
+                .envFrom(EnvFromSourceArgs.builder()
+                    .configMapRef(ConfigMapEnvSourceArgs.builder()
+                        .name("string")
+                        .optional(false)
+                        .build())
+                    .prefix("string")
+                    .secretRef(SecretEnvSourceArgs.builder()
+                        .name("string")
+                        .optional(false)
                         .build())
                     .build())
                 .image("string")
@@ -4637,6 +4634,13 @@ var componentResource = new Component("componentResource", ComponentArgs.builder
                     .timeoutSeconds(0)
                     .build())
                 .command("string")
+                .ports(ContainerPortArgs.builder()
+                    .containerPort(0)
+                    .hostIP("string")
+                    .hostPort(0)
+                    .name("string")
+                    .protocol("string")
+                    .build())
                 .startupProbe(ProbeArgs.builder()
                     .exec(ExecActionArgs.builder()
                         .command("string")
@@ -4662,8 +4666,6 @@ var componentResource = new Component("componentResource", ComponentArgs.builder
                     .terminationGracePeriodSeconds(0)
                     .timeoutSeconds(0)
                     .build())
-                .args("string")
-                .workingDir("string")
                 .env(EnvVarArgs.builder()
                     .name("string")
                     .value("string")
@@ -4689,13 +4691,11 @@ var componentResource = new Component("componentResource", ComponentArgs.builder
                             .build())
                         .build())
                     .build())
-                .ports(ContainerPortArgs.builder()
-                    .containerPort(0)
-                    .hostIP("string")
-                    .hostPort(0)
-                    .name("string")
-                    .protocol("string")
+                .resources(ResourceRequirementsArgs.builder()
+                    .limits(Map.of("string", "string"))
+                    .requests(Map.of("string", "string"))
                     .build())
+                .args("string")
                 .stdin(false)
                 .stdinOnce(false)
                 .targetContainerName("string")
@@ -4714,15 +4714,15 @@ var componentResource = new Component("componentResource", ComponentArgs.builder
                     .subPath("string")
                     .subPathExpr("string")
                     .build())
-                .resources(ResourceRequirementsArgs.builder()
-                    .limits(Map.of("string", "string"))
-                    .requests(Map.of("string", "string"))
-                    .build())
+                .workingDir("string")
                 .build())
-            .preemptionPolicy("string")
+            .hostAliases(HostAliasArgs.builder()
+                .hostnames("string")
+                .ip("string")
+                .build())
             .hostIPC(false)
+            .hostNetwork(false)
             .priority(0)
-            .hostPID(false)
             .hostname("string")
             .imagePullSecrets(LocalObjectReferenceArgs.builder()
                 .name("string")
@@ -4754,36 +4754,6 @@ var componentResource = new Component("componentResource", ComponentArgs.builder
                     .terminationGracePeriodSeconds(0)
                     .timeoutSeconds(0)
                     .build())
-                .imagePullPolicy("string")
-                .resources(ResourceRequirementsArgs.builder()
-                    .limits(Map.of("string", "string"))
-                    .requests(Map.of("string", "string"))
-                    .build())
-                .startupProbe(ProbeArgs.builder()
-                    .exec(ExecActionArgs.builder()
-                        .command("string")
-                        .build())
-                    .failureThreshold(0)
-                    .httpGet(HTTPGetActionArgs.builder()
-                        .port(0)
-                        .host("string")
-                        .httpHeaders(HTTPHeaderArgs.builder()
-                            .name("string")
-                            .value("string")
-                            .build())
-                        .path("string")
-                        .scheme("string")
-                        .build())
-                    .initialDelaySeconds(0)
-                    .periodSeconds(0)
-                    .successThreshold(0)
-                    .tcpSocket(TCPSocketActionArgs.builder()
-                        .port(0)
-                        .host("string")
-                        .build())
-                    .terminationGracePeriodSeconds(0)
-                    .timeoutSeconds(0)
-                    .build())
                 .securityContext(SecurityContextArgs.builder()
                     .allowPrivilegeEscalation(false)
                     .capabilities(CapabilitiesArgs.builder()
@@ -4813,6 +4783,19 @@ var componentResource = new Component("componentResource", ComponentArgs.builder
                         .runAsUserName("string")
                         .build())
                     .build())
+                .envFrom(EnvFromSourceArgs.builder()
+                    .configMapRef(ConfigMapEnvSourceArgs.builder()
+                        .name("string")
+                        .optional(false)
+                        .build())
+                    .prefix("string")
+                    .secretRef(SecretEnvSourceArgs.builder()
+                        .name("string")
+                        .optional(false)
+                        .build())
+                    .build())
+                .image("string")
+                .imagePullPolicy("string")
                 .lifecycle(LifecycleArgs.builder()
                     .postStart(HandlerArgs.builder()
                         .exec(ExecActionArgs.builder()
@@ -4887,17 +4870,6 @@ var componentResource = new Component("componentResource", ComponentArgs.builder
                     .protocol("string")
                     .build())
                 .args("string")
-                .envFrom(EnvFromSourceArgs.builder()
-                    .configMapRef(ConfigMapEnvSourceArgs.builder()
-                        .name("string")
-                        .optional(false)
-                        .build())
-                    .prefix("string")
-                    .secretRef(SecretEnvSourceArgs.builder()
-                        .name("string")
-                        .optional(false)
-                        .build())
-                    .build())
                 .env(EnvVarArgs.builder()
                     .name("string")
                     .value("string")
@@ -4923,7 +4895,35 @@ var componentResource = new Component("componentResource", ComponentArgs.builder
                             .build())
                         .build())
                     .build())
-                .image("string")
+                .startupProbe(ProbeArgs.builder()
+                    .exec(ExecActionArgs.builder()
+                        .command("string")
+                        .build())
+                    .failureThreshold(0)
+                    .httpGet(HTTPGetActionArgs.builder()
+                        .port(0)
+                        .host("string")
+                        .httpHeaders(HTTPHeaderArgs.builder()
+                            .name("string")
+                            .value("string")
+                            .build())
+                        .path("string")
+                        .scheme("string")
+                        .build())
+                    .initialDelaySeconds(0)
+                    .periodSeconds(0)
+                    .successThreshold(0)
+                    .tcpSocket(TCPSocketActionArgs.builder()
+                        .port(0)
+                        .host("string")
+                        .build())
+                    .terminationGracePeriodSeconds(0)
+                    .timeoutSeconds(0)
+                    .build())
+                .resources(ResourceRequirementsArgs.builder()
+                    .limits(Map.of("string", "string"))
+                    .requests(Map.of("string", "string"))
+                    .build())
                 .stdin(false)
                 .stdinOnce(false)
                 .terminationMessagePath("string")
@@ -4945,9 +4945,9 @@ var componentResource = new Component("componentResource", ComponentArgs.builder
                 .build())
             .nodeName("string")
             .activeDeadlineSeconds(0)
-            .dnsPolicy("string")
             .automountServiceAccountToken(false)
-            .hostNetwork(false)
+            .overhead(Map.of("string", "string"))
+            .hostPID(false)
             .priorityClassName("string")
             .readinessGates(PodReadinessGateArgs.builder()
                 .conditionType("string")
@@ -5016,20 +5016,19 @@ var componentResource = new Component("componentResource", ComponentArgs.builder
                     .directory("string")
                     .revision("string")
                     .build())
-                .configMap(ConfigMapVolumeSourceArgs.builder()
-                    .defaultMode(0)
-                    .items(KeyToPathArgs.builder()
-                        .key("string")
-                        .path("string")
-                        .mode(0)
-                        .build())
-                    .name("string")
-                    .optional(false)
+                .persistentVolumeClaim(PersistentVolumeClaimVolumeSourceArgs.builder()
+                    .claimName("string")
+                    .readOnly(false)
                     .build())
-                .glusterfs(GlusterfsVolumeSourceArgs.builder()
-                    .endpoints("string")
+                .cephfs(CephFSVolumeSourceArgs.builder()
+                    .monitors("string")
                     .path("string")
                     .readOnly(false)
+                    .secretFile("string")
+                    .secretRef(LocalObjectReferenceArgs.builder()
+                        .name("string")
+                        .build())
+                    .user("string")
                     .build())
                 .cinder(CinderVolumeSourceArgs.builder()
                     .volumeID("string")
@@ -5039,9 +5038,15 @@ var componentResource = new Component("componentResource", ComponentArgs.builder
                         .name("string")
                         .build())
                     .build())
-                .hostPath(HostPathVolumeSourceArgs.builder()
-                    .path("string")
-                    .type("string")
+                .configMap(ConfigMapVolumeSourceArgs.builder()
+                    .defaultMode(0)
+                    .items(KeyToPathArgs.builder()
+                        .key("string")
+                        .path("string")
+                        .mode(0)
+                        .build())
+                    .name("string")
+                    .optional(false)
                     .build())
                 .csi(CSIVolumeSourceArgs.builder()
                     .driver("string")
@@ -5154,6 +5159,27 @@ var componentResource = new Component("componentResource", ComponentArgs.builder
                         .name("string")
                         .build())
                     .build())
+                .flocker(FlockerVolumeSourceArgs.builder()
+                    .datasetName("string")
+                    .datasetUUID("string")
+                    .build())
+                .gcePersistentDisk(GCEPersistentDiskVolumeSourceArgs.builder()
+                    .pdName("string")
+                    .fsType("string")
+                    .partition(0)
+                    .readOnly(false)
+                    .build())
+                .awsElasticBlockStore(AWSElasticBlockStoreVolumeSourceArgs.builder()
+                    .volumeID("string")
+                    .fsType("string")
+                    .partition(0)
+                    .readOnly(false)
+                    .build())
+                .azureFile(AzureFileVolumeSourceArgs.builder()
+                    .secretName("string")
+                    .shareName("string")
+                    .readOnly(false)
+                    .build())
                 .iscsi(ISCSIVolumeSourceArgs.builder()
                     .iqn("string")
                     .lun(0)
@@ -5169,36 +5195,10 @@ var componentResource = new Component("componentResource", ComponentArgs.builder
                         .name("string")
                         .build())
                     .build())
-                .gcePersistentDisk(GCEPersistentDiskVolumeSourceArgs.builder()
-                    .pdName("string")
-                    .fsType("string")
-                    .partition(0)
-                    .readOnly(false)
-                    .build())
-                .awsElasticBlockStore(AWSElasticBlockStoreVolumeSourceArgs.builder()
-                    .volumeID("string")
-                    .fsType("string")
-                    .partition(0)
-                    .readOnly(false)
-                    .build())
-                .cephfs(CephFSVolumeSourceArgs.builder()
-                    .monitors("string")
+                .glusterfs(GlusterfsVolumeSourceArgs.builder()
+                    .endpoints("string")
                     .path("string")
                     .readOnly(false)
-                    .secretFile("string")
-                    .secretRef(LocalObjectReferenceArgs.builder()
-                        .name("string")
-                        .build())
-                    .user("string")
-                    .build())
-                .azureFile(AzureFileVolumeSourceArgs.builder()
-                    .secretName("string")
-                    .shareName("string")
-                    .readOnly(false)
-                    .build())
-                .flocker(FlockerVolumeSourceArgs.builder()
-                    .datasetName("string")
-                    .datasetUUID("string")
                     .build())
                 .azureDisk(AzureDiskVolumeSourceArgs.builder()
                     .diskName("string")
@@ -5213,9 +5213,9 @@ var componentResource = new Component("componentResource", ComponentArgs.builder
                     .server("string")
                     .readOnly(false)
                     .build())
-                .persistentVolumeClaim(PersistentVolumeClaimVolumeSourceArgs.builder()
-                    .claimName("string")
-                    .readOnly(false)
+                .hostPath(HostPathVolumeSourceArgs.builder()
+                    .path("string")
+                    .type("string")
                     .build())
                 .photonPersistentDisk(PhotonPersistentDiskVolumeSourceArgs.builder()
                     .pdID("string")
@@ -5573,40 +5573,6 @@ component_resource = foo.Component("componentResource",
                     "termination_grace_period_seconds": 0,
                     "timeout_seconds": 0,
                 },
-                "image_pull_policy": "string",
-                "resources": {
-                    "limits": {
-                        "string": "string",
-                    },
-                    "requests": {
-                        "string": "string",
-                    },
-                },
-                "startup_probe": {
-                    "exec_": {
-                        "command": ["string"],
-                    },
-                    "failure_threshold": 0,
-                    "http_get": {
-                        "port": 0,
-                        "host": "string",
-                        "http_headers": [{
-                            "name": "string",
-                            "value": "string",
-                        }],
-                        "path": "string",
-                        "scheme": "string",
-                    },
-                    "initial_delay_seconds": 0,
-                    "period_seconds": 0,
-                    "success_threshold": 0,
-                    "tcp_socket": {
-                        "port": 0,
-                        "host": "string",
-                    },
-                    "termination_grace_period_seconds": 0,
-                    "timeout_seconds": 0,
-                },
                 "security_context": {
                     "allow_privilege_escalation": False,
                     "capabilities": {
@@ -5636,6 +5602,19 @@ component_resource = foo.Component("componentResource",
                         "run_as_user_name": "string",
                     },
                 },
+                "env_from": [{
+                    "config_map_ref": {
+                        "name": "string",
+                        "optional": False,
+                    },
+                    "prefix": "string",
+                    "secret_ref": {
+                        "name": "string",
+                        "optional": False,
+                    },
+                }],
+                "image": "string",
+                "image_pull_policy": "string",
                 "lifecycle": {
                     "post_start": {
                         "exec_": {
@@ -5710,17 +5689,6 @@ component_resource = foo.Component("componentResource",
                     "protocol": "string",
                 }],
                 "args": ["string"],
-                "env_from": [{
-                    "config_map_ref": {
-                        "name": "string",
-                        "optional": False,
-                    },
-                    "prefix": "string",
-                    "secret_ref": {
-                        "name": "string",
-                        "optional": False,
-                    },
-                }],
                 "env": [{
                     "name": "string",
                     "value": "string",
@@ -5746,7 +5714,39 @@ component_resource = foo.Component("componentResource",
                         },
                     },
                 }],
-                "image": "string",
+                "startup_probe": {
+                    "exec_": {
+                        "command": ["string"],
+                    },
+                    "failure_threshold": 0,
+                    "http_get": {
+                        "port": 0,
+                        "host": "string",
+                        "http_headers": [{
+                            "name": "string",
+                            "value": "string",
+                        }],
+                        "path": "string",
+                        "scheme": "string",
+                    },
+                    "initial_delay_seconds": 0,
+                    "period_seconds": 0,
+                    "success_threshold": 0,
+                    "tcp_socket": {
+                        "port": 0,
+                        "host": "string",
+                    },
+                    "termination_grace_period_seconds": 0,
+                    "timeout_seconds": 0,
+                },
+                "resources": {
+                    "limits": {
+                        "string": "string",
+                    },
+                    "requests": {
+                        "string": "string",
+                    },
+                },
                 "stdin": False,
                 "stdin_once": False,
                 "termination_message_path": "string",
@@ -5769,10 +5769,7 @@ component_resource = foo.Component("componentResource",
             "node_selector": {
                 "string": "string",
             },
-            "host_aliases": [{
-                "hostnames": ["string"],
-                "ip": "string",
-            }],
+            "preemption_policy": "string",
             "affinity": {
                 "node_affinity": {
                     "preferred_during_scheduling_ignored_during_execution": [{
@@ -5920,9 +5917,7 @@ component_resource = foo.Component("componentResource",
                 }],
                 "searches": ["string"],
             },
-            "overhead": {
-                "string": "string",
-            },
+            "dns_policy": "string",
             "enable_service_links": False,
             "ephemeral_containers": [{
                 "name": "string",
@@ -5951,17 +5946,6 @@ component_resource = foo.Component("componentResource",
                     "termination_grace_period_seconds": 0,
                     "timeout_seconds": 0,
                 },
-                "env_from": [{
-                    "config_map_ref": {
-                        "name": "string",
-                        "optional": False,
-                    },
-                    "prefix": "string",
-                    "secret_ref": {
-                        "name": "string",
-                        "optional": False,
-                    },
-                }],
                 "security_context": {
                     "allow_privilege_escalation": False,
                     "capabilities": {
@@ -5991,6 +5975,17 @@ component_resource = foo.Component("componentResource",
                         "run_as_user_name": "string",
                     },
                 },
+                "env_from": [{
+                    "config_map_ref": {
+                        "name": "string",
+                        "optional": False,
+                    },
+                    "prefix": "string",
+                    "secret_ref": {
+                        "name": "string",
+                        "optional": False,
+                    },
+                }],
                 "image": "string",
                 "image_pull_policy": "string",
                 "lifecycle": {
@@ -6059,6 +6054,13 @@ component_resource = foo.Component("componentResource",
                     "timeout_seconds": 0,
                 },
                 "command": ["string"],
+                "ports": [{
+                    "container_port": 0,
+                    "host_ip": "string",
+                    "host_port": 0,
+                    "name": "string",
+                    "protocol": "string",
+                }],
                 "startup_probe": {
                     "exec_": {
                         "command": ["string"],
@@ -6084,8 +6086,6 @@ component_resource = foo.Component("componentResource",
                     "termination_grace_period_seconds": 0,
                     "timeout_seconds": 0,
                 },
-                "args": ["string"],
-                "working_dir": "string",
                 "env": [{
                     "name": "string",
                     "value": "string",
@@ -6111,13 +6111,15 @@ component_resource = foo.Component("componentResource",
                         },
                     },
                 }],
-                "ports": [{
-                    "container_port": 0,
-                    "host_ip": "string",
-                    "host_port": 0,
-                    "name": "string",
-                    "protocol": "string",
-                }],
+                "resources": {
+                    "limits": {
+                        "string": "string",
+                    },
+                    "requests": {
+                        "string": "string",
+                    },
+                },
+                "args": ["string"],
                 "stdin": False,
                 "stdin_once": False,
                 "target_container_name": "string",
@@ -6136,19 +6138,15 @@ component_resource = foo.Component("componentResource",
                     "sub_path": "string",
                     "sub_path_expr": "string",
                 }],
-                "resources": {
-                    "limits": {
-                        "string": "string",
-                    },
-                    "requests": {
-                        "string": "string",
-                    },
-                },
+                "working_dir": "string",
             }],
-            "preemption_policy": "string",
+            "host_aliases": [{
+                "hostnames": ["string"],
+                "ip": "string",
+            }],
             "host_ipc": False,
+            "host_network": False,
             "priority": 0,
-            "host_pid": False,
             "hostname": "string",
             "image_pull_secrets": [{
                 "name": "string",
@@ -6180,40 +6178,6 @@ component_resource = foo.Component("componentResource",
                     "termination_grace_period_seconds": 0,
                     "timeout_seconds": 0,
                 },
-                "image_pull_policy": "string",
-                "resources": {
-                    "limits": {
-                        "string": "string",
-                    },
-                    "requests": {
-                        "string": "string",
-                    },
-                },
-                "startup_probe": {
-                    "exec_": {
-                        "command": ["string"],
-                    },
-                    "failure_threshold": 0,
-                    "http_get": {
-                        "port": 0,
-                        "host": "string",
-                        "http_headers": [{
-                            "name": "string",
-                            "value": "string",
-                        }],
-                        "path": "string",
-                        "scheme": "string",
-                    },
-                    "initial_delay_seconds": 0,
-                    "period_seconds": 0,
-                    "success_threshold": 0,
-                    "tcp_socket": {
-                        "port": 0,
-                        "host": "string",
-                    },
-                    "termination_grace_period_seconds": 0,
-                    "timeout_seconds": 0,
-                },
                 "security_context": {
                     "allow_privilege_escalation": False,
                     "capabilities": {
@@ -6243,6 +6207,19 @@ component_resource = foo.Component("componentResource",
                         "run_as_user_name": "string",
                     },
                 },
+                "env_from": [{
+                    "config_map_ref": {
+                        "name": "string",
+                        "optional": False,
+                    },
+                    "prefix": "string",
+                    "secret_ref": {
+                        "name": "string",
+                        "optional": False,
+                    },
+                }],
+                "image": "string",
+                "image_pull_policy": "string",
                 "lifecycle": {
                     "post_start": {
                         "exec_": {
@@ -6317,17 +6294,6 @@ component_resource = foo.Component("componentResource",
                     "protocol": "string",
                 }],
                 "args": ["string"],
-                "env_from": [{
-                    "config_map_ref": {
-                        "name": "string",
-                        "optional": False,
-                    },
-                    "prefix": "string",
-                    "secret_ref": {
-                        "name": "string",
-                        "optional": False,
-                    },
-                }],
                 "env": [{
                     "name": "string",
                     "value": "string",
@@ -6353,7 +6319,39 @@ component_resource = foo.Component("componentResource",
                         },
                     },
                 }],
-                "image": "string",
+                "startup_probe": {
+                    "exec_": {
+                        "command": ["string"],
+                    },
+                    "failure_threshold": 0,
+                    "http_get": {
+                        "port": 0,
+                        "host": "string",
+                        "http_headers": [{
+                            "name": "string",
+                            "value": "string",
+                        }],
+                        "path": "string",
+                        "scheme": "string",
+                    },
+                    "initial_delay_seconds": 0,
+                    "period_seconds": 0,
+                    "success_threshold": 0,
+                    "tcp_socket": {
+                        "port": 0,
+                        "host": "string",
+                    },
+                    "termination_grace_period_seconds": 0,
+                    "timeout_seconds": 0,
+                },
+                "resources": {
+                    "limits": {
+                        "string": "string",
+                    },
+                    "requests": {
+                        "string": "string",
+                    },
+                },
                 "stdin": False,
                 "stdin_once": False,
                 "termination_message_path": "string",
@@ -6375,9 +6373,11 @@ component_resource = foo.Component("componentResource",
             }],
             "node_name": "string",
             "active_deadline_seconds": 0,
-            "dns_policy": "string",
             "automount_service_account_token": False,
-            "host_network": False,
+            "overhead": {
+                "string": "string",
+            },
+            "host_pid": False,
             "priority_class_name": "string",
             "readiness_gates": [{
                 "condition_type": "string",
@@ -6448,20 +6448,19 @@ component_resource = foo.Component("componentResource",
                     "directory": "string",
                     "revision": "string",
                 },
-                "config_map": {
-                    "default_mode": 0,
-                    "items": [{
-                        "key": "string",
-                        "path": "string",
-                        "mode": 0,
-                    }],
-                    "name": "string",
-                    "optional": False,
+                "persistent_volume_claim": {
+                    "claim_name": "string",
+                    "read_only": False,
                 },
-                "glusterfs": {
-                    "endpoints": "string",
+                "cephfs": {
+                    "monitors": ["string"],
                     "path": "string",
                     "read_only": False,
+                    "secret_file": "string",
+                    "secret_ref": {
+                        "name": "string",
+                    },
+                    "user": "string",
                 },
                 "cinder": {
                     "volume_id": "string",
@@ -6471,9 +6470,15 @@ component_resource = foo.Component("componentResource",
                         "name": "string",
                     },
                 },
-                "host_path": {
-                    "path": "string",
-                    "type": "string",
+                "config_map": {
+                    "default_mode": 0,
+                    "items": [{
+                        "key": "string",
+                        "path": "string",
+                        "mode": 0,
+                    }],
+                    "name": "string",
+                    "optional": False,
                 },
                 "csi": {
                     "driver": "string",
@@ -6600,6 +6605,27 @@ component_resource = foo.Component("componentResource",
                         "name": "string",
                     },
                 },
+                "flocker": {
+                    "dataset_name": "string",
+                    "dataset_uuid": "string",
+                },
+                "gce_persistent_disk": {
+                    "pd_name": "string",
+                    "fs_type": "string",
+                    "partition": 0,
+                    "read_only": False,
+                },
+                "aws_elastic_block_store": {
+                    "volume_id": "string",
+                    "fs_type": "string",
+                    "partition": 0,
+                    "read_only": False,
+                },
+                "azure_file": {
+                    "secret_name": "string",
+                    "share_name": "string",
+                    "read_only": False,
+                },
                 "iscsi": {
                     "iqn": "string",
                     "lun": 0,
@@ -6615,36 +6641,10 @@ component_resource = foo.Component("componentResource",
                         "name": "string",
                     },
                 },
-                "gce_persistent_disk": {
-                    "pd_name": "string",
-                    "fs_type": "string",
-                    "partition": 0,
-                    "read_only": False,
-                },
-                "aws_elastic_block_store": {
-                    "volume_id": "string",
-                    "fs_type": "string",
-                    "partition": 0,
-                    "read_only": False,
-                },
-                "cephfs": {
-                    "monitors": ["string"],
+                "glusterfs": {
+                    "endpoints": "string",
                     "path": "string",
                     "read_only": False,
-                    "secret_file": "string",
-                    "secret_ref": {
-                        "name": "string",
-                    },
-                    "user": "string",
-                },
-                "azure_file": {
-                    "secret_name": "string",
-                    "share_name": "string",
-                    "read_only": False,
-                },
-                "flocker": {
-                    "dataset_name": "string",
-                    "dataset_uuid": "string",
                 },
                 "azure_disk": {
                     "disk_name": "string",
@@ -6659,9 +6659,9 @@ component_resource = foo.Component("componentResource",
                     "server": "string",
                     "read_only": False,
                 },
-                "persistent_volume_claim": {
-                    "claim_name": "string",
-                    "read_only": False,
+                "host_path": {
+                    "path": "string",
+                    "type": "string",
                 },
                 "photon_persistent_disk": {
                     "pd_id": "string",
@@ -7018,40 +7018,6 @@ const componentResource = new foo.Component("componentResource", {
                     terminationGracePeriodSeconds: 0,
                     timeoutSeconds: 0,
                 },
-                imagePullPolicy: "string",
-                resources: {
-                    limits: {
-                        string: "string",
-                    },
-                    requests: {
-                        string: "string",
-                    },
-                },
-                startupProbe: {
-                    exec: {
-                        command: ["string"],
-                    },
-                    failureThreshold: 0,
-                    httpGet: {
-                        port: 0,
-                        host: "string",
-                        httpHeaders: [{
-                            name: "string",
-                            value: "string",
-                        }],
-                        path: "string",
-                        scheme: "string",
-                    },
-                    initialDelaySeconds: 0,
-                    periodSeconds: 0,
-                    successThreshold: 0,
-                    tcpSocket: {
-                        port: 0,
-                        host: "string",
-                    },
-                    terminationGracePeriodSeconds: 0,
-                    timeoutSeconds: 0,
-                },
                 securityContext: {
                     allowPrivilegeEscalation: false,
                     capabilities: {
@@ -7081,6 +7047,19 @@ const componentResource = new foo.Component("componentResource", {
                         runAsUserName: "string",
                     },
                 },
+                envFrom: [{
+                    configMapRef: {
+                        name: "string",
+                        optional: false,
+                    },
+                    prefix: "string",
+                    secretRef: {
+                        name: "string",
+                        optional: false,
+                    },
+                }],
+                image: "string",
+                imagePullPolicy: "string",
                 lifecycle: {
                     postStart: {
                         exec: {
@@ -7155,17 +7134,6 @@ const componentResource = new foo.Component("componentResource", {
                     protocol: "string",
                 }],
                 args: ["string"],
-                envFrom: [{
-                    configMapRef: {
-                        name: "string",
-                        optional: false,
-                    },
-                    prefix: "string",
-                    secretRef: {
-                        name: "string",
-                        optional: false,
-                    },
-                }],
                 env: [{
                     name: "string",
                     value: "string",
@@ -7191,7 +7159,39 @@ const componentResource = new foo.Component("componentResource", {
                         },
                     },
                 }],
-                image: "string",
+                startupProbe: {
+                    exec: {
+                        command: ["string"],
+                    },
+                    failureThreshold: 0,
+                    httpGet: {
+                        port: 0,
+                        host: "string",
+                        httpHeaders: [{
+                            name: "string",
+                            value: "string",
+                        }],
+                        path: "string",
+                        scheme: "string",
+                    },
+                    initialDelaySeconds: 0,
+                    periodSeconds: 0,
+                    successThreshold: 0,
+                    tcpSocket: {
+                        port: 0,
+                        host: "string",
+                    },
+                    terminationGracePeriodSeconds: 0,
+                    timeoutSeconds: 0,
+                },
+                resources: {
+                    limits: {
+                        string: "string",
+                    },
+                    requests: {
+                        string: "string",
+                    },
+                },
                 stdin: false,
                 stdinOnce: false,
                 terminationMessagePath: "string",
@@ -7214,10 +7214,7 @@ const componentResource = new foo.Component("componentResource", {
             nodeSelector: {
                 string: "string",
             },
-            hostAliases: [{
-                hostnames: ["string"],
-                ip: "string",
-            }],
+            preemptionPolicy: "string",
             affinity: {
                 nodeAffinity: {
                     preferredDuringSchedulingIgnoredDuringExecution: [{
@@ -7365,9 +7362,7 @@ const componentResource = new foo.Component("componentResource", {
                 }],
                 searches: ["string"],
             },
-            overhead: {
-                string: "string",
-            },
+            dnsPolicy: "string",
             enableServiceLinks: false,
             ephemeralContainers: [{
                 name: "string",
@@ -7396,17 +7391,6 @@ const componentResource = new foo.Component("componentResource", {
                     terminationGracePeriodSeconds: 0,
                     timeoutSeconds: 0,
                 },
-                envFrom: [{
-                    configMapRef: {
-                        name: "string",
-                        optional: false,
-                    },
-                    prefix: "string",
-                    secretRef: {
-                        name: "string",
-                        optional: false,
-                    },
-                }],
                 securityContext: {
                     allowPrivilegeEscalation: false,
                     capabilities: {
@@ -7436,6 +7420,17 @@ const componentResource = new foo.Component("componentResource", {
                         runAsUserName: "string",
                     },
                 },
+                envFrom: [{
+                    configMapRef: {
+                        name: "string",
+                        optional: false,
+                    },
+                    prefix: "string",
+                    secretRef: {
+                        name: "string",
+                        optional: false,
+                    },
+                }],
                 image: "string",
                 imagePullPolicy: "string",
                 lifecycle: {
@@ -7504,6 +7499,13 @@ const componentResource = new foo.Component("componentResource", {
                     timeoutSeconds: 0,
                 },
                 command: ["string"],
+                ports: [{
+                    containerPort: 0,
+                    hostIP: "string",
+                    hostPort: 0,
+                    name: "string",
+                    protocol: "string",
+                }],
                 startupProbe: {
                     exec: {
                         command: ["string"],
@@ -7529,8 +7531,6 @@ const componentResource = new foo.Component("componentResource", {
                     terminationGracePeriodSeconds: 0,
                     timeoutSeconds: 0,
                 },
-                args: ["string"],
-                workingDir: "string",
                 env: [{
                     name: "string",
                     value: "string",
@@ -7556,13 +7556,15 @@ const componentResource = new foo.Component("componentResource", {
                         },
                     },
                 }],
-                ports: [{
-                    containerPort: 0,
-                    hostIP: "string",
-                    hostPort: 0,
-                    name: "string",
-                    protocol: "string",
-                }],
+                resources: {
+                    limits: {
+                        string: "string",
+                    },
+                    requests: {
+                        string: "string",
+                    },
+                },
+                args: ["string"],
                 stdin: false,
                 stdinOnce: false,
                 targetContainerName: "string",
@@ -7581,19 +7583,15 @@ const componentResource = new foo.Component("componentResource", {
                     subPath: "string",
                     subPathExpr: "string",
                 }],
-                resources: {
-                    limits: {
-                        string: "string",
-                    },
-                    requests: {
-                        string: "string",
-                    },
-                },
+                workingDir: "string",
             }],
-            preemptionPolicy: "string",
+            hostAliases: [{
+                hostnames: ["string"],
+                ip: "string",
+            }],
             hostIPC: false,
+            hostNetwork: false,
             priority: 0,
-            hostPID: false,
             hostname: "string",
             imagePullSecrets: [{
                 name: "string",
@@ -7625,40 +7623,6 @@ const componentResource = new foo.Component("componentResource", {
                     terminationGracePeriodSeconds: 0,
                     timeoutSeconds: 0,
                 },
-                imagePullPolicy: "string",
-                resources: {
-                    limits: {
-                        string: "string",
-                    },
-                    requests: {
-                        string: "string",
-                    },
-                },
-                startupProbe: {
-                    exec: {
-                        command: ["string"],
-                    },
-                    failureThreshold: 0,
-                    httpGet: {
-                        port: 0,
-                        host: "string",
-                        httpHeaders: [{
-                            name: "string",
-                            value: "string",
-                        }],
-                        path: "string",
-                        scheme: "string",
-                    },
-                    initialDelaySeconds: 0,
-                    periodSeconds: 0,
-                    successThreshold: 0,
-                    tcpSocket: {
-                        port: 0,
-                        host: "string",
-                    },
-                    terminationGracePeriodSeconds: 0,
-                    timeoutSeconds: 0,
-                },
                 securityContext: {
                     allowPrivilegeEscalation: false,
                     capabilities: {
@@ -7688,6 +7652,19 @@ const componentResource = new foo.Component("componentResource", {
                         runAsUserName: "string",
                     },
                 },
+                envFrom: [{
+                    configMapRef: {
+                        name: "string",
+                        optional: false,
+                    },
+                    prefix: "string",
+                    secretRef: {
+                        name: "string",
+                        optional: false,
+                    },
+                }],
+                image: "string",
+                imagePullPolicy: "string",
                 lifecycle: {
                     postStart: {
                         exec: {
@@ -7762,17 +7739,6 @@ const componentResource = new foo.Component("componentResource", {
                     protocol: "string",
                 }],
                 args: ["string"],
-                envFrom: [{
-                    configMapRef: {
-                        name: "string",
-                        optional: false,
-                    },
-                    prefix: "string",
-                    secretRef: {
-                        name: "string",
-                        optional: false,
-                    },
-                }],
                 env: [{
                     name: "string",
                     value: "string",
@@ -7798,7 +7764,39 @@ const componentResource = new foo.Component("componentResource", {
                         },
                     },
                 }],
-                image: "string",
+                startupProbe: {
+                    exec: {
+                        command: ["string"],
+                    },
+                    failureThreshold: 0,
+                    httpGet: {
+                        port: 0,
+                        host: "string",
+                        httpHeaders: [{
+                            name: "string",
+                            value: "string",
+                        }],
+                        path: "string",
+                        scheme: "string",
+                    },
+                    initialDelaySeconds: 0,
+                    periodSeconds: 0,
+                    successThreshold: 0,
+                    tcpSocket: {
+                        port: 0,
+                        host: "string",
+                    },
+                    terminationGracePeriodSeconds: 0,
+                    timeoutSeconds: 0,
+                },
+                resources: {
+                    limits: {
+                        string: "string",
+                    },
+                    requests: {
+                        string: "string",
+                    },
+                },
                 stdin: false,
                 stdinOnce: false,
                 terminationMessagePath: "string",
@@ -7820,9 +7818,11 @@ const componentResource = new foo.Component("componentResource", {
             }],
             nodeName: "string",
             activeDeadlineSeconds: 0,
-            dnsPolicy: "string",
             automountServiceAccountToken: false,
-            hostNetwork: false,
+            overhead: {
+                string: "string",
+            },
+            hostPID: false,
             priorityClassName: "string",
             readinessGates: [{
                 conditionType: "string",
@@ -7893,20 +7893,19 @@ const componentResource = new foo.Component("componentResource", {
                     directory: "string",
                     revision: "string",
                 },
-                configMap: {
-                    defaultMode: 0,
-                    items: [{
-                        key: "string",
-                        path: "string",
-                        mode: 0,
-                    }],
-                    name: "string",
-                    optional: false,
+                persistentVolumeClaim: {
+                    claimName: "string",
+                    readOnly: false,
                 },
-                glusterfs: {
-                    endpoints: "string",
+                cephfs: {
+                    monitors: ["string"],
                     path: "string",
                     readOnly: false,
+                    secretFile: "string",
+                    secretRef: {
+                        name: "string",
+                    },
+                    user: "string",
                 },
                 cinder: {
                     volumeID: "string",
@@ -7916,9 +7915,15 @@ const componentResource = new foo.Component("componentResource", {
                         name: "string",
                     },
                 },
-                hostPath: {
-                    path: "string",
-                    type: "string",
+                configMap: {
+                    defaultMode: 0,
+                    items: [{
+                        key: "string",
+                        path: "string",
+                        mode: 0,
+                    }],
+                    name: "string",
+                    optional: false,
                 },
                 csi: {
                     driver: "string",
@@ -8045,6 +8050,27 @@ const componentResource = new foo.Component("componentResource", {
                         name: "string",
                     },
                 },
+                flocker: {
+                    datasetName: "string",
+                    datasetUUID: "string",
+                },
+                gcePersistentDisk: {
+                    pdName: "string",
+                    fsType: "string",
+                    partition: 0,
+                    readOnly: false,
+                },
+                awsElasticBlockStore: {
+                    volumeID: "string",
+                    fsType: "string",
+                    partition: 0,
+                    readOnly: false,
+                },
+                azureFile: {
+                    secretName: "string",
+                    shareName: "string",
+                    readOnly: false,
+                },
                 iscsi: {
                     iqn: "string",
                     lun: 0,
@@ -8060,36 +8086,10 @@ const componentResource = new foo.Component("componentResource", {
                         name: "string",
                     },
                 },
-                gcePersistentDisk: {
-                    pdName: "string",
-                    fsType: "string",
-                    partition: 0,
-                    readOnly: false,
-                },
-                awsElasticBlockStore: {
-                    volumeID: "string",
-                    fsType: "string",
-                    partition: 0,
-                    readOnly: false,
-                },
-                cephfs: {
-                    monitors: ["string"],
+                glusterfs: {
+                    endpoints: "string",
                     path: "string",
                     readOnly: false,
-                    secretFile: "string",
-                    secretRef: {
-                        name: "string",
-                    },
-                    user: "string",
-                },
-                azureFile: {
-                    secretName: "string",
-                    shareName: "string",
-                    readOnly: false,
-                },
-                flocker: {
-                    datasetName: "string",
-                    datasetUUID: "string",
                 },
                 azureDisk: {
                     diskName: "string",
@@ -8104,9 +8104,9 @@ const componentResource = new foo.Component("componentResource", {
                     server: "string",
                     readOnly: false,
                 },
-                persistentVolumeClaim: {
-                    claimName: "string",
-                    readOnly: false,
+                hostPath: {
+                    path: "string",
+                    type: "string",
                 },
                 photonPersistentDisk: {
                     pdID: "string",

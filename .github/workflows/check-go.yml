@@ -41,7 +41,6 @@ jobs:
       with:
          sparse-checkout: |
            ${{ inputs.path }}
-           .golangci.yml
     - name: Setup Go
       uses: actions/setup-go@v5
     - name: Run Tests

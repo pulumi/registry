@@ -40,13 +40,6 @@ type PackageMetadataProvider interface {
 	ListPackageMetadata(ctx context.Context) ([]pkg.PackageMeta, error)
 }
 
-// HTTPClient is an interface for making HTTP requests
-//
-//go:generate mockgen -destination=mock_httpclient_test.go -package=svc github.com/pulumi/registry/tools/resourcedocsgen/pkg/registry/svc HTTPClient
-type HTTPClient interface {
-	Do(req *http.Request) (*http.Response, error)
-}
-
 // fileSystemProvider implements PackageMetadataProvider using the local yaml data files
 // in the pulumi/registry repository.
 type fileSystemProvider struct {
@@ -57,7 +50,7 @@ type fileSystemProvider struct {
 // to retrieve package metadata.
 type registryAPIProvider struct {
 	apiURL string
-	client HTTPClient
+	client *http.Client
 }
 
 // PackageMetadata represents the API response structure for package metadata

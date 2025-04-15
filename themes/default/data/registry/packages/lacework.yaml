@@ -12,5 +12,5 @@ publisher: lacework
 repo_url: https://github.com/lacework/terraform-provider-lacework
 schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/lacework/lacework/2.0.6/schema.json
 title: lacework
-updated_on: 1744673798
+updated_on: 1744716954
 version: 2.0.6

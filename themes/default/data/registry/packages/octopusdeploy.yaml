@@ -10,7 +10,7 @@ native: false
 package_status: public_preview
 publisher: octopusdeploylabs
 repo_url: https://github.com/octopusdeploylabs/terraform-provider-octopusdeploy
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/octopusdeploylabs/octopusdeploy/0.41.0/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/octopusdeploylabs/octopusdeploy/0.42.0/schema.json
 title: octopusdeploy
-updated_on: 1744673794
-version: 0.41.0
+updated_on: 1744716956
+version: 0.42.0

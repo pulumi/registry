@@ -12,5 +12,5 @@ publisher: mrolla
 repo_url: https://github.com/mrolla/terraform-provider-circleci
 schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/mrolla/circleci/0.6.1/schema.json
 title: circleci
-updated_on: 1744673794
+updated_on: 1744716952
 version: 0.6.1

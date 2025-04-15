@@ -12,5 +12,5 @@ publisher: paloaltonetworks
 repo_url: https://github.com/paloaltonetworks/terraform-provider-panos
 schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/paloaltonetworks/panos/2.0.0/schema.json
 title: panos
-updated_on: 1744673795
+updated_on: 1744716958
 version: 2.0.0

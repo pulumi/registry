@@ -33,6 +33,7 @@ describe("Test Provider API docs", { testIsolation: false }, () => {
         });
     });
 
+    // Verify that the page renders the set of subsections in the correct order
     it("renders the correct set of subsections, in the correct order", () => {
         cy.get(container).find("section.docs-content h2").as("sections");
         const possibleHeadings = [
@@ -54,24 +55,27 @@ describe("Test Provider API docs", { testIsolation: false }, () => {
         });
     });
 
+    // Verify that the examples section exists and contains examples for all languages
     describe("Examples section", () => {
+        // Verify that the examples section exists
         it("contains at least one example", () => {
             cy.get(container)
                 .find("h2 ~ h3")
                 .should("have.length.of.at.least", 1);
         });
 
+        // Verify that the examples section contains examples for all languages
         it("contains examples for all languages", () => {
             const languages = ["TypeScript", "Python", "Go", "C#", "Java", "YAML"];
             
             // First verify the language chooser exists
             cy.get("#example-usage + div pulumi-chooser").should("exist");
             
-            // Then check each language
+            // Then check each an example exists for each language
             languages.forEach(language => {
                 cy.get("pulumi-chooser li a").contains(language).first().click();
                 
-                // Get the appropriate pulumi-choosable based on language
+                // Find the appropriate pulumi-choosable based on language
                 let selector;
                 if (language === "TypeScript") {
                     selector = "div pulumi-choosable[type='language'][values*='javascript']";
@@ -88,6 +92,7 @@ describe("Test Provider API docs", { testIsolation: false }, () => {
         });
     });
 
+    // Verify that the inputs and outputs sections exist
     describe("Inputs and Outputs sections", () => {
         const propertyLists = ".resources-properties";
 
@@ -105,6 +110,7 @@ describe("Test Provider API docs", { testIsolation: false }, () => {
             });
         });
 
+        // Verify that the inputs section contains the properties for all languages
         it("contains input types for all languages", () => {
             const languages = ["TypeScript", "Python", "Go", "C#", "Java", "YAML"];
             
@@ -143,6 +149,7 @@ describe("Test Provider API docs", { testIsolation: false }, () => {
             });
         });
 
+        // Verify that the type links point to an on-page supporting type if there are any.
         describe("type links", () => {
             it("all point to an on-page supporting type", () => {
                 cy.get(container).find(propertyLists).find("dt .property-type a[href*='#']").then(links => {
@@ -158,6 +165,7 @@ describe("Test Provider API docs", { testIsolation: false }, () => {
         });
     });
 
+    // Verify that the Supporting Types section exists and contains the correct properties for all languages
     describe("Supporting Types section", () => {
         describe("type lists", () => {      
             it("are visible for all languages", () => {
@@ -169,7 +177,6 @@ describe("Test Provider API docs", { testIsolation: false }, () => {
                     .get();
                 });
 
-                // Some pages won't contain the `Supporting Types` heading, so we only run the test if it's present.
                 if (pageHeadings.includes("Supporting Types")) {
                     const languages = [ "TypeScript", "Python", "Go", "C#", "Java", "YAML" ];
                     const headings = "#supporting-types ~ h4";

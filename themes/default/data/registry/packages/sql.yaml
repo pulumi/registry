@@ -12,5 +12,5 @@ publisher: paultyng
 repo_url: https://github.com/paultyng/terraform-provider-sql
 schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/paultyng/sql/0.5.0/schema.json
 title: sql
-updated_on: 1744673783
+updated_on: 1744716948
 version: 0.5.0

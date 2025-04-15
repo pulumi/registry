@@ -12,5 +12,5 @@ publisher: athenz
 repo_url: https://github.com/athenz/terraform-provider-athenz
 schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/athenz/athenz/1.0.45/schema.json
 title: athenz
-updated_on: 1744673795
+updated_on: 1744716957
 version: 1.0.45

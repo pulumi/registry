@@ -12,5 +12,5 @@ publisher: opensearch-project
 repo_url: https://github.com/opensearch-project/terraform-provider-opensearch
 schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/opensearch-project/opensearch/2.3.1/schema.json
 title: opensearch
-updated_on: 1744673795
+updated_on: 1744716949
 version: 2.3.1

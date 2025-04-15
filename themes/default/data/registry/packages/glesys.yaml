@@ -12,5 +12,5 @@ publisher: glesys
 repo_url: https://github.com/glesys/terraform-provider-glesys
 schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/glesys/glesys/0.14.2/schema.json
 title: glesys
-updated_on: 1744673798
+updated_on: 1744716937
 version: 0.14.2

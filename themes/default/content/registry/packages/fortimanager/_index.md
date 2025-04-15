@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/fortinetdev/fortimanager/1.13.0/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/fortinetdev/fortimanager/1.14.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Fortimanager Provider
@@ -410,25 +410,38 @@ The following configuration inputs are supported:
 
 * `importOptions` - (List | Optional) This parameter is only used for import in some special cases. When the resource to be imported includes pkg parameter, you need to assign a value to the parameter here, for example:
 
-  ```hcl
-  provider "fortimanager" {
-    hostname       = "192.168.52.178"
-    username       = "admin"
-    password       = "admin"
-    insecure       = "true"
-
-    scopetype      = "adom"
-    adom           = "root"
-
-    import_options = ["pkg=default"]
-  }
+  ```yaml
   ```
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime:
+config:
+fortimanager:adom:
+value: root
+fortimanager:hostname:
+value: 192.168.52.178
+fortimanager:importOptions:
+value:
+- pkg=default
+fortimanager:insecure:
+value: "true"
+fortimanager:password:
+value: admin
+fortimanager:scopetype:
+value: adom
+fortimanager:username:
+value: admin
 
-* `logsession` - (Bool | Optional) Save the session to a local file. Used to assist fortimanager.ExecWorkspaceAction resource. Valid values: `true`: log to file, `false`: do not log to file. Default is `false`. See `Guides > To Lock for Restricting Configuration Changes` for details.
+```
+``
 
-* `presession` - (String | Optional) The session saved earlier and within the validity period, used to reuse the previous session and assist fortimanager.ExecWorkspaceAction resource. See `Guides > To Lock for Restricting Configuration Changes` for details. Default is empty.
+* `logsession` - (Bool | Optional) Save the session to a local file. Used to assist fortimanager_exec_workspace_action resource. Valid values: `true`: log to file, `false`: do not log to file. Default is `false`. See `Guides -> To Lock for Restricting Configuration Changes` for details.
 
-* `cleanSession` - (Bool | Optional) Whether clean sessions. **Only works on workspace mode set to `disabled`.** If set to `true`, the provider will generate and logout the session for each HTTPS request. If set to `false`, the provider will generate a session for each Pulumi operation. But the session will stay exist until it expires. Default is `false`.
+* `presession` - (String | Optional) The session saved earlier and within the validity period, used to reuse the previous session and assist fortimanager_exec_workspace_action resource. See `Guides -> To Lock for Restricting Configuration Changes` for details. Default is empty.
+
+* `clean_session` - (Bool | Optional) Whether clean sessions. **Only works on workspace mode set to `disabled` if using resource fortimanager_exec_workspace_action.** If set to `true`, the provider will generate and logout the session for each HTTPS request. If set to `false`, the provider will generate a session for each Pulumi operation. But the session will stay exist until it expires. Default is `false`.
+
+* `workspace_mode` - (String | Optional) FortiManger workspace mode. If set to `normal`, FortiManager will be locked/unlocked for each resource operation. Conflict with resource `fortimanager_exec_workspace_action`. Valid opeions: `normal`, `disabled`. Default is `disabled`.
 ## Release
 Check out the FortiManager provider release notes and additional information from: the FortiManager provider releases.
 ## FortiManager best practices
@@ -443,3 +456,4 @@ Fortinet also provides a developer community to help administrators and advanced
 ## Versioning
 
 The provider can cover FortiManager 6.4 to 7.4 versions, the configuration of all parameters should be based on the relevant FortiManager version manual and FortiManager API guide.
+```

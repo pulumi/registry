@@ -12,5 +12,5 @@ publisher: k-yomo
 repo_url: https://github.com/k-yomo/terraform-provider-algolia
 schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/k-yomo/algolia/0.6.0/schema.json
 title: algolia
-updated_on: 1744673797
+updated_on: 1744716952
 version: 0.6.0

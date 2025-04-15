@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: rancher
 repo_url: https://github.com/rancher/terraform-provider-rke
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/rancher/rke/1.7.5-rc1/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/rancher/rke/1.7.5/schema.json
 title: rke
-updated_on: 1744068934
-version: 1.7.5-rc1
+updated_on: 1744716935
+version: 1.7.5

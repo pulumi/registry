@@ -12,5 +12,5 @@ publisher: terraform-routeros
 repo_url: https://github.com/terraform-routeros/terraform-provider-routeros
 schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/terraform-routeros/routeros/1.81.2/schema.json
 title: routeros
-updated_on: 1744673797
+updated_on: 1744716956
 version: 1.81.2

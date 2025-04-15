@@ -1,0 +1,245 @@
+{
+    "name": "testprovider",
+    "description": "A test provider schema for validating documentation generation.",
+    "keywords": ["pulumi", "test", "docs"],
+    "homepage": "https://pulumi.com",
+    "license": "Apache-2.0",
+    "attribution": "This is a test provider schema for documentation testing.",
+    "repository": "https://github.com/pulumi/registry",
+    "meta": {
+        "moduleFormat": "(.*)"
+    },
+    "language": {
+        "csharp": {
+            "packageReferences": {
+                "Pulumi": "3.*"
+            },
+            "namespaces": {
+                "testprovider": "TestProvider"
+            }
+        },
+        "go": {
+            "importBasePath": "github.com/pulumi/registry/tests/testprovider/sdk/go/testprovider",
+            "generateResourceContainerTypes": true
+        },
+        "nodejs": {
+            "packageDescription": "A test provider for documentation generation testing.",
+            "dependencies": {
+                "@pulumi/pulumi": "^3.0.0"
+            }
+        },
+        "python": {
+            "requires": {
+                "pulumi": ">=3.0.0"
+            }
+        }
+    },
+    "config": {
+        "apiKey": {
+            "type": "string",
+            "description": "The API key for the test provider.",
+            "secret": true
+        },
+        "region": {
+            "type": "string",
+            "description": "The region to operate in.",
+            "default": "us-west-2"
+        }
+    },
+    "provider": {
+        "description": "The provider type for the test package. By default, resources use package-wide configuration settings, however an explicit `Provider` instance may be created and passed during resource construction to achieve fine-grained programmatic control over provider settings."
+    },
+    "types": {
+        "testprovider:index/NestedType:NestedType": {
+            "type": "object",
+            "properties": {
+                "foo": {
+                    "type": "string",
+                    "description": "A foo string property."
+                },
+                "bar": {
+                    "type": "integer",
+                    "description": "A bar integer property."
+                }
+            },
+            "required": ["foo"]
+        }
+    },
+    "resources": {
+        "testprovider:index/testResource:TestResourceCommentFence": {
+            "description": "This is a test resource that demonstrates various property types and documentation features.\n\n## Example Usage\n\n<!--Start PulumiCodeChooser -->\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as testprovider from \"@pulumi/testprovider\";\n\nconst example = new testprovider.TestResource(\"example\", {\n    name: \"test-resource\",\n    tags: {\n        environment: \"test\"\n    },\n    count: 42,\n    enabled: true\n});\n```\n```python\nimport pulumi\nimport pulumi_testprovider as testprovider\n\nexample = testprovider.TestResource(\"example\",\n    name=\"test-resource\",\n    tags={\n        \"environment\": \"test\"\n    },\n    count=42,\n    enabled=True\n)\n```\n```csharp\nusing System.Collections.Generic;\nusing Pulumi;\nusing TestProvider = Pulumi.TestProvider;\n\nreturn await Deployment.RunAsync(() => \n{\n    var example = new TestProvider.TestResource(\"example\", new TestProvider.TestResourceArgs\n    {\n        Name = \"test-resource\",\n        Tags = \n        {\n            { \"environment\", \"test\" }\n        },\n        Count = 42,\n        Enabled = true,\n    });\n});\n```\n```go\npackage main\n\nimport (\n    \"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n    \"github.com/pulumi/registry/tests/testprovider/sdk/go/testprovider\"\n)\n\nfunc main() {\n    pulumi.Run(func(ctx *pulumi.Context) error {\n        _, err := testprovider.NewTestResource(ctx, \"example\", &testprovider.TestResourceArgs{\n            Name: pulumi.String(\"test-resource\"),\n            Tags: pulumi.StringMap{\n                \"environment\": pulumi.String(\"test\"),\n            },\n            Count: pulumi.Int(42),\n            Enabled: pulumi.Bool(true),\n        })\n        if err != nil {\n            return err\n        }\n        return nil\n    })\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.testprovider.TestResource;\nimport com.pulumi.testprovider.TestResourceArgs;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var example = new TestResource(\"example\", TestResourceArgs.builder()\n            .name(\"test-resource\")\n            .tags(Map.of(\"environment\", \"test\"))\n            .count(42)\n            .enabled(true)\n            .build());\n    }\n}\n```\n```yaml\nresources:\n    example:\n        type: testprovider:index:TestResource\n        properties:\n            name: test-resource\n            tags:\n                environment: test\n            count: 42\n            enabled: true\n```\n<!--End PulumiCodeChooser -->",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "The name of the test resource."
+                },
+                "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "Tags to apply to the resource."
+                },
+                "count": {
+                    "type": "integer",
+                    "description": "A sample counter value."
+                },
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Whether the resource is enabled.",
+                    "default": true
+                },
+                "id": {
+                    "type": "string",
+                    "description": "The unique identifier for the resource."
+                },
+                "nested": {
+                    "$ref": "#/types/testprovider:index/NestedType:NestedType",
+                    "description": "A nested object property."
+                },
+                "nestedList": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/testprovider:index/NestedType:NestedType"
+                    },
+                    "description": "A list of nested objects."
+                }
+            },
+            "required": ["name"],
+            "inputProperties": {
+                "name": {
+                    "type": "string",
+                    "description": "The name of the test resource."
+                },
+                "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "Tags to apply to the resource."
+                },
+                "count": {
+                    "type": "integer",
+                    "description": "A sample counter value."
+                },
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Whether the resource is enabled.",
+                    "default": true
+                },
+                "nested": {
+                    "$ref": "#/types/testprovider:index/NestedType:NestedType",
+                    "description": "A nested object property."
+                },
+                "nestedList": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/testprovider:index/NestedType:NestedType"
+                    },
+                    "description": "A list of nested objects."
+                }
+            }
+        },
+        "testprovider:index/testResource:TestResourceExamplesFence": {
+            "description": "This is a test resource that demonstrates various property types and documentation features.\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as testprovider from \"@pulumi/testprovider\";\n\nconst example = new testprovider.TestResource(\"example\", {\n    name: \"test-resource\",\n    tags: {\n        environment: \"test\"\n    },\n    count: 42,\n    enabled: true\n});\n```\n```python\nimport pulumi\nimport pulumi_testprovider as testprovider\n\nexample = testprovider.TestResource(\"example\",\n    name=\"test-resource\",\n    tags={\n        \"environment\": \"test\"\n    },\n    count=42,\n    enabled=True\n)\n```\n```csharp\nusing System.Collections.Generic;\nusing Pulumi;\nusing TestProvider = Pulumi.TestProvider;\n\nreturn await Deployment.RunAsync(() => \n{\n    var example = new TestProvider.TestResource(\"example\", new TestProvider.TestResourceArgs\n    {\n        Name = \"test-resource\",\n        Tags = \n        {\n            { \"environment\", \"test\" }\n        },\n        Count = 42,\n        Enabled = true,\n    });\n});\n```\n```go\npackage main\n\nimport (\n    \"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n    \"github.com/pulumi/registry/tests/testprovider/sdk/go/testprovider\"\n)\n\nfunc main() {\n    pulumi.Run(func(ctx *pulumi.Context) error {\n        _, err := testprovider.NewTestResource(ctx, \"example\", &testprovider.TestResourceArgs{\n            Name: pulumi.String(\"test-resource\"),\n            Tags: pulumi.StringMap{\n                \"environment\": pulumi.String(\"test\"),\n            },\n            Count: pulumi.Int(42),\n            Enabled: pulumi.Bool(true),\n        })\n        if err != nil {\n            return err\n        }\n        return nil\n    })\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.testprovider.TestResource;\nimport com.pulumi.testprovider.TestResourceArgs;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var example = new TestResource(\"example\", TestResourceArgs.builder()\n            .name(\"test-resource\")\n            .tags(Map.of(\"environment\", \"test\"))\n            .count(42)\n            .enabled(true)\n            .build());\n    }\n}\n```\n```yaml\nresources:\n    example:\n        type: testprovider:index:TestResource\n        properties:\n            name: test-resource\n            tags:\n                environment: test\n            count: 42\n            enabled: true\n```\n{{% /example %}}\n{{% /examples %}}",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "The name of the test resource."
+                },
+                "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "Tags to apply to the resource."
+                },
+                "count": {
+                    "type": "integer",
+                    "description": "A sample counter value."
+                },
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Whether the resource is enabled.",
+                    "default": true
+                },
+                "id": {
+                    "type": "string",
+                    "description": "The unique identifier for the resource."
+                },
+                "nested": {
+                    "$ref": "#/types/testprovider:index/NestedType:NestedType",
+                    "description": "A nested object property."
+                },
+                "nestedList": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/testprovider:index/NestedType:NestedType"
+                    },
+                    "description": "A list of nested objects."
+                }
+            },
+            "required": ["name"],
+            "inputProperties": {
+                "name": {
+                    "type": "string",
+                    "description": "The name of the test resource."
+                },
+                "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "Tags to apply to the resource."
+                },
+                "count": {
+                    "type": "integer",
+                    "description": "A sample counter value."
+                },
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Whether the resource is enabled.",
+                    "default": true
+                },
+                "nested": {
+                    "$ref": "#/types/testprovider:index/NestedType:NestedType",
+                    "description": "A nested object property."
+                },
+                "nestedList": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/testprovider:index/NestedType:NestedType"
+                    },
+                    "description": "A list of nested objects."
+                }
+            }
+        }
+    },
+    "functions": {
+        "testprovider:index/getTestData:getTestData": {
+            "description": "Get test data for testing purposes.",
+            "inputs": {
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "The name of the test data to retrieve."
+                    }
+                },
+                "required": ["name"]
+            },
+            "outputs": {
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "The unique identifier of the test data."
+                    },
+                    "value": {
+                        "type": "string",
+                        "description": "The value of the test data."
+                    }
+                },
+                "required": ["id", "value"]
+            }
+        }
+    }
+}

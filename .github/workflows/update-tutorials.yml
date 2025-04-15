@@ -18,22 +18,36 @@ jobs:
         with:
           token: ${{ secrets.PULUMI_BOT_TOKEN }}
 
+      - name: Checkout examples repo
+        id: checkout-examples
+        uses: actions/checkout@v4
+        with:
+          repository: pulumi/examples
+          token: ${{ secrets.PULUMI_BOT_TOKEN }}
+          path: "examples"
+          depth: 1
+
       - name: Run mktutorial
         run: |
-          ./scripts/ci/mktutorial.sh
+          ./scripts/ci/mktutorial.sh $GITHUB_WORKSPACE/examples
 
       - name: Create a pull request
-        uses: peter-evans/create-pull-request@v3
+        id: ensure-pr
+        uses: peter-evans/create-pull-request@v7
         with:
           branch: tutorials/refresh
           author: Pulumi Bot <bot@pulumi.com>
           committer: Pulumi Bot <bot@pulumi.com>
           title: Update tutorials
-          labels: "automation/merge"
-          commit-message: Update tutorials
+          commit-message: "Update tutorials from ${{ steps.checkout-examples.commit }}"
           token: ${{ secrets.PULUMI_BOT_TOKEN }}
+          delete-branch: true
           body: |
             Regenerate all tutorials based on the latest available content at https://github.com/pulumi/examples.
+      - name: Auto-merge PR
+        # If the pull request was created, then we need to mark it as auto-merge.
+        if: ${{ steps.ensure-pr.pull-request-operation == 'created' }}
+        run: gh pr merge --auto ${{ steps.ensure-pr.pull-request-number }}
   notify:
     if: failure()
     name: Send slack notification

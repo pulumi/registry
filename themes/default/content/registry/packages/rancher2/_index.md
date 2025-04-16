@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-rancher2/v8.1.5/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-rancher2/v9.0.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Rancher2 Provider
@@ -12,7 +12,7 @@ The Rancher2 provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/rancher2`](https://www.npmjs.com/package/@pulumi/rancher2)
 * Python: [`pulumi-rancher2`](https://pypi.org/project/pulumi-rancher2/)
-* Go: [`github.com/pulumi/pulumi-rancher2/sdk/v8/go/rancher2`](https://github.com/pulumi/pulumi-rancher2)
+* Go: [`github.com/pulumi/pulumi-rancher2/sdk/v9/go/rancher2`](https://github.com/pulumi/pulumi-rancher2)
 * .NET: [`Pulumi.Rancher2`](https://www.nuget.org/packages/Pulumi.Rancher2)
 * Java: [`com.pulumi/rancher2`](https://central.sonatype.com/artifact/com.pulumi/rancher2)
 ## Overview

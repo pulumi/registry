@@ -15,10 +15,8 @@
 package main
 
 import (
-	"flag"
 	"fmt"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"regexp"
 	"strings"
@@ -41,30 +39,16 @@ var langMap = map[string]string{
 }
 
 func main() {
-	// Parse and validate the args.
-	flag.Parse()
-	args := flag.Args()
-	if len(args) < 2 {
-		exitErr("usage: %s <tutorial-repo> <docs-root-dir>", os.Args[0])
+	if len(os.Args) < 2 {
+		exitErr("usage: %s <examples-repo> <docs-root-dir>", os.Args[0])
 	}
-	repo := os.Args[1]
+	examples := os.Args[1]
 	docsRoot := os.Args[2]
 
-	// Clone the tutorial repo at master/HEAD so the tool isn't dependent on the local filesystem.
-	fmt.Printf("Gathering tutorials from %s...\n", repo)
-	tmp, err := os.MkdirTemp("", "")
-	if err != nil {
-		exitErr("creating temp dir for tutorial repo: %v", err)
-	}
-	defer os.RemoveAll(tmp)
-	cmd := exec.Command("git", "clone", "-b", "master", repo, "--depth=1", tmp)
-	cmd.Stdout = os.Stdout
-	if err = cmd.Run(); err != nil {
-		exitErr("cloning tutorial repo: %v", err)
-	}
+	fmt.Printf("Gathering tutorials from %s...\n", examples)
 
 	// Now, for every directory in the tutorial repo, accumulate metadata.
-	tuts, err := gatherTutorials(tmp)
+	tuts, err := gatherTutorials(examples)
 	if err != nil {
 		exitErr("gathering tutorials: %v", err)
 	}

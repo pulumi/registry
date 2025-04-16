@@ -1,9 +1,8 @@
 #!/bin/bash
 set -e
 TUTORIAL_OUT=$(mktemp -d)
-pushd ./tools/mktutorial
-go run ./*.go https://github.com/pulumi/examples "$TUTORIAL_OUT"
-popd
+make bin/mktutorial
+bin/mktutorial "$1" "$TUTORIAL_OUT"
 for cloud in "aws-apigateway" "aws" "classic-azure" "azure" "gcp" "kubernetes" ; do
     ## Temporary hack to address mismatched package names in pulumi/examples
     if [[ "$cloud" == "azure" ]]; then

@@ -10,7 +10,7 @@ native: false
 package_status: public_preview
 publisher: redpanda-data
 repo_url: https://github.com/redpanda-data/terraform-provider-redpanda
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/redpanda-data/redpanda/0.15.0/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/redpanda-data/redpanda/0.15.1/schema.json
 title: redpanda
-updated_on: 1744371374
-version: 0.15.0
+updated_on: 1744846544
+version: 0.15.1

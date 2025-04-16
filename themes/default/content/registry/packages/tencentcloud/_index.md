@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/tencentcloudstack/tencentcloud/1.81.182/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/tencentcloudstack/tencentcloud/1.81.183/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Tencentcloud Provider
@@ -147,6 +147,7 @@ The following methods are supported, in this order, and explained below:
 - Shared credentials
 - Enable pod OIDC
 - Cam role name
+- MFA certification
 ### Static credentials
 
 !> **Warning:** Hard-coding credentials into any Pulumi configuration is not
@@ -247,7 +248,25 @@ config:
 
 ```
 
+Combining MFA
+
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime:
+config:
+    tencentcloud:region:
+        value: ap-guangzhou
+    tencentcloud:secretId:
+        value: my-secret-id
+    tencentcloud:secretKey:
+        value: my-secret-key
+
+```
+
 The `roleArn`, `sessionName`, `sessionDuration` and `externalId` can also provided via `TENCENTCLOUD_ASSUME_ROLE_ARN`, `TENCENTCLOUD_ASSUME_ROLE_SESSION_NAME`, `TENCENTCLOUD_ASSUME_ROLE_SESSION_DURATION` and `TENCENTCLOUD_ASSUME_ROLE_EXTERNAL_ID` environment variables.
+
+The `serialNumber`, `tokenCode` can also provided via `TENCENTCLOUD_ASSUME_ROLE_SERIAL_NUMBER`, `TENCENTCLOUD_ASSUME_ROLE_TOKEN_CODE` environment variables.
 
 Usage:
 
@@ -258,6 +277,9 @@ $ export TENCENTCLOUD_REGION="ap-guangzhou"
 $ export TENCENTCLOUD_ASSUME_ROLE_ARN="my-role-arn"
 $ export TENCENTCLOUD_ASSUME_ROLE_SESSION_NAME="my-session-name"
 $ export TENCENTCLOUD_ASSUME_ROLE_SESSION_DURATION=3600
+
+$ export TENCENTCLOUD_ASSUME_ROLE_SERIAL_NUMBER="my-serial-number"
+$ export TENCENTCLOUD_ASSUME_ROLE_TOKEN_CODE="my-token-code"
 $ pulumi preview
 ```
 ### Assume role with SAML
@@ -363,6 +385,36 @@ config:
     tencentcloud:camRoleName:
         value: my-cam-role-name
 
+```
+### MFA certification
+
+If provided with MFA certification, Pulumi will attempt to use the provided credentials for MFA authentication.
+
+Usage:
+
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime:
+config:
+    tencentcloud:region:
+        value: ap-guangzhou
+    tencentcloud:secretId:
+        value: my-secret-id
+    tencentcloud:secretKey:
+        value: my-secret-key
+
+```
+
+The `serialNumber`, `tokenCode`, `durationSeconds` can also provided via `TENCENTCLOUD_MFA_CERTIFICATION_SERIAL_NUMBER`, `TENCENTCLOUD_MFA_CERTIFICATION_TOKEN_CODE`, `TENCENTCLOUD_MFA_CERTIFICATION_DURATION_SECONDS` environment variables.
+
+Usage:
+
+```shell
+$ export TENCENTCLOUD_MFA_CERTIFICATION_SERIAL_NUMBER="my-serial-number"
+$ export TENCENTCLOUD_MFA_CERTIFICATION_TOKEN_CODE="my-token-code"
+$ export TENCENTCLOUD_MFA_CERTIFICATION_DURATION_SECONDS=1800
+$ pulumi preview
 ```
 ### CDC cos usage
 

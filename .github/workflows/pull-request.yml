@@ -18,6 +18,7 @@ jobs:
     - mktutorial
     - lint-markdown
     - lint-scripts
+    - test-provider-api-docs
     - preview
     runs-on: ubuntu-latest
     steps:

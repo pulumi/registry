@@ -80,6 +80,8 @@ jobs:
   test-provider-api-docs:
     name: Test Provider API Docs
     runs-on: ubuntu-latest
+    env:
+      GOPATH: ${{ github.workspace }}/go
     steps:
       - name: Install Node
         uses: actions/setup-node@v4
@@ -100,11 +102,11 @@ jobs:
       - name: Check out branch
         uses: actions/checkout@v4
 
-      - name: Yarn Install
-        run: yarn install
-
       - name: Run Provider Tests
-        run: ./scripts/ci/run-provider-tests.sh
+        run: |
+          make ensure
+          make build-assets
+         ./scripts/ci/run-provider-tests.sh
 
   # Preview runs a registry build into a commit specific S3 bucket to preview changes.
   #

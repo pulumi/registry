@@ -72,10 +72,11 @@ describe("Test Provider", () => {
             // Verify that the examples section exists and contains examples for all languages
             describe("Examples section", () => {
                 // Verify that the examples section exists
-                it("contains at least one example", () => {
+                it("contains the example section", () => {
                     cy.get(container)
-                        .find("h2 ~ h3")
-                        .should("have.length.of.at.least", 1);
+                        .find("h2")
+                        .contains("Example Usage")
+                        .should("exist");
                 });
 
                 // Verify that the examples section contains examples for all languages

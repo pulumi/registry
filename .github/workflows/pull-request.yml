@@ -77,6 +77,35 @@ jobs:
       - name: Run Linter
         run: yarn run lint
 
+  test-provider-api-docs:
+    name: Test Provider API Docs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "23.x"
+
+      - name: Install Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: 1.23.x
+
+      - name: Install Hugo
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: "0.135.0"
+          extended: true
+
+      - name: Check out branch
+        uses: actions/checkout@v4
+
+      - name: Yarn Install
+        run: yarn install
+
+      - name: Run Provider Tests
+        run: ./scripts/ci/run-provider-tests.sh
+
   # Preview runs a registry build into a commit specific S3 bucket to preview changes.
   #
   # A link to the generated build is appended to the PR on each commit.

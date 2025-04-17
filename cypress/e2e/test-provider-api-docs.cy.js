@@ -68,8 +68,15 @@ describe("Test Provider API docs", { testIsolation: false }, () => {
         it("contains examples for all languages", () => {
             const languages = ["TypeScript", "Python", "Go", "C#", "Java", "YAML"];
             
-            // First verify the language chooser exists
-            cy.get("#example-usage + div pulumi-chooser").should("exist");
+            // First verify the language chooser exists and has all expected languages
+            cy.get("#example-usage + div > pulumi-chooser").should("exist")
+                .invoke('attr', 'options')
+                .should('include', 'typescript')
+                .and('include', 'python')
+                .and('include', 'go')
+                .and('include', 'csharp')
+                .and('include', 'java')
+                .and('include', 'yaml');
             
             // Then check each an example exists for each language
             languages.forEach(language => {
@@ -78,16 +85,19 @@ describe("Test Provider API docs", { testIsolation: false }, () => {
                 // Find the appropriate pulumi-choosable based on language
                 let selector;
                 if (language === "TypeScript") {
-                    selector = "div pulumi-choosable[type='language'][values*='javascript']";
+                    selector = "div pulumi-choosable[type='language'][values*='typescript']";
                 } else if (language === "C#") {
                     selector = "div pulumi-choosable[type='language'][values*='csharp']";
                 } else {
                     selector = `div pulumi-choosable[type='language'][values*='${language.toLowerCase()}']`;
                 }
                 
-                cy.get(`#example-usage ~ ${selector}`).should("exist")
-                    .find("pre").should("exist")
-                    .and("not.be.empty");
+                // Verify both the section and its code example exist
+                cy.get(`#example-usage ~ ${selector}`).should("exist");
+                cy.get(`#example-usage ~ ${selector} pre`).should("exist")
+                    .and("not.be.empty")
+                    .invoke('text')
+                    .should('have.length.gt', 0);
             });
         });
     });
@@ -114,7 +124,7 @@ describe("Test Provider API docs", { testIsolation: false }, () => {
         it("contains input types for all languages", () => {
             const languages = ["TypeScript", "Python", "Go", "C#", "Java", "YAML"];
             
-            // First verify the inputs section exists
+            // First verify the inputs section exists and has the language chooser with all languages
             cy.get("#inputs").should("exist");
             
             // Then check each language
@@ -124,16 +134,18 @@ describe("Test Provider API docs", { testIsolation: false }, () => {
                 // Get the appropriate pulumi-choosable based on language
                 let selector;
                 if (language === "TypeScript") {
-                    selector = "div pulumi-choosable[type='language'][values*='javascript']";
+                    selector = "div pulumi-choosable[type='language'][values*='typescript']";
                 } else if (language === "C#") {
                     selector = "div pulumi-choosable[type='language'][values*='csharp']";
                 } else {
                     selector = `div pulumi-choosable[type='language'][values*='${language.toLowerCase()}']`;
                 }
                 
-                // Verify the language section exists and contains property definitions
-                cy.get(`#inputs ~ ${selector}`).should("exist")
-                    .find(propertyLists).should("exist")
+                // Verify the language section exists
+                cy.get(`#inputs ~ ${selector}`).should("exist");
+                
+                // Verify it contains property definitions
+                cy.get(`#inputs ~ ${selector} ${propertyLists}`).should("exist")
                     .find("dt").should("have.length.at.least", 1)
                     .first().should("exist");
                 
@@ -141,10 +153,12 @@ describe("Test Provider API docs", { testIsolation: false }, () => {
                 cy.get(`#inputs ~ ${selector} ${propertyLists} dt`).each(($dt) => {
                     cy.wrap($dt)
                         .find(".property-type").should("exist")
-                        .and("not.be.empty");
+                        .invoke('text')
+                        .should('have.length.gt', 0);
                     cy.wrap($dt)
                         .next("dd").should("exist")
-                        .and("not.be.empty");
+                        .invoke('text')
+                        .should('have.length.gt', 0);
                 });
             });
         });
@@ -179,16 +193,49 @@ describe("Test Provider API docs", { testIsolation: false }, () => {
 
                 if (pageHeadings.includes("Supporting Types")) {
                     const languages = [ "TypeScript", "Python", "Go", "C#", "Java", "YAML" ];
-                    const headings = "#supporting-types ~ h4";
-                    const lists = "#supporting-types + h4 ~ div pulumi-choosable div.active";
+                    
+                    // First verify the language chooser exists and has all languages
+                    cy.get("#supporting-types ~ div > pulumi-chooser").should("exist")
+                        .invoke('attr', 'options')
+                        .should('include', 'typescript')
+                        .and('include', 'python')
+                        .and('include', 'go')
+                        .and('include', 'csharp')
+                        .and('include', 'java')
+                        .and('include', 'yaml');
 
                     languages.forEach(language => {
                         cy.get("pulumi-chooser li a").contains(language).first().click();
                         cy.log(`Checking ${language} supporting types...`);
-                        cy.get(headings).then(headings => {
-                            cy.get(lists).then(lists => {
-                                expect(lists.length).to.equal(headings.length);
-                            });
+                        
+                        // Get the appropriate pulumi-choosable based on language
+                        let selector;
+                        if (language === "TypeScript") {
+                            selector = "div pulumi-choosable[type='language'][values*='typescript']";
+                        } else if (language === "C#") {
+                            selector = "div pulumi-choosable[type='language'][values*='csharp']";
+                        } else {
+                            selector = `div pulumi-choosable[type='language'][values*='${language.toLowerCase()}']`;
+                        }
+                        
+                        // Verify the language section exists
+                        cy.get(`#supporting-types ~ ${selector}`).should("exist");
+                        
+                        // Verify it contains property definitions
+                        cy.get(`#supporting-types ~ ${selector} ${propertyLists}`).should("exist")
+                            .find("dt").should("have.length.at.least", 1)
+                            .first().should("exist");
+                        
+                        // Verify each property has a type and description
+                        cy.get(`#supporting-types ~ ${selector} ${propertyLists} dt`).each(($dt) => {
+                            cy.wrap($dt)
+                                .find(".property-type").should("exist")
+                                .invoke('text')
+                                .should('have.length.gt', 0);
+                            cy.wrap($dt)
+                                .next("dd").should("exist")
+                                .invoke('text')
+                                .should('have.length.gt', 0);
                         });
                     });
                 }

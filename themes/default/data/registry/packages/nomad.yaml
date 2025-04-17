@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-nomad
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-nomad/v2.4.3/provider/cmd/pulumi-resource-nomad/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-nomad/v2.5.0/provider/cmd/pulumi-resource-nomad/schema.json
 title: Nomad
-updated_on: 1741997515
-version: v2.4.3
+updated_on: 1744860632
+version: v2.5.0

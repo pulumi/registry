@@ -81,8 +81,6 @@ jobs:
   test-provider-api-docs:
     name: Test Provider API Docs
     runs-on: ubuntu-latest
-    env:
-      GOPATH: ${{ github.workspace }}/go
     steps:
       - name: Install Node
         uses: actions/setup-node@v4
@@ -108,6 +106,8 @@ jobs:
           make ensure
           make build-assets
          ./scripts/ci/run-provider-tests.sh
+        env:
+          GOPATH: ${{ github.workspace }}/go
 
   # Preview runs a registry build into a commit specific S3 bucket to preview changes.
   #

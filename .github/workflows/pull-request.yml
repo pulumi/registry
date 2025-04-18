@@ -19,6 +19,7 @@ jobs:
     - lint-markdown
     - lint-scripts
     - preview
+    - test-live-publish
     runs-on: ubuntu-latest
     steps:
     - uses: guibranco/github-status-action-v2@0849440ec82c5fa69b2377725b9b7852a3977e76 # v1.1.13
@@ -76,6 +77,18 @@ jobs:
         run: yarn install
       - name: Run Linter
         run: yarn run lint
+
+  test-live-publish:
+    name: Test Live Registry Publish
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out branch
+        uses: actions/checkout@v4
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+      - run: uv run --with requests,pyyaml scripts/ci/push-registry.py --dry-run
+        env:
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
 
   # Preview runs a registry build into a commit specific S3 bucket to preview changes.
   #

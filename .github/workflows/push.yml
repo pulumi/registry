@@ -64,6 +64,12 @@ jobs:
         with:
           name: origin-bucket-metadata
           path: origin-bucket-metadata.json
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+      - name: Push to the Live Registry
+        run: uv run --with requests,pyyaml ./scripts/ci/push-registry.py
+        env:
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
 
   notify:
     if: failure()

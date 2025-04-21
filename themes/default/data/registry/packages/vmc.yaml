@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: vmware
 repo_url: https://github.com/vmware/terraform-provider-vmc
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/vmware/vmc/1.15.3/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/vmware/vmc/1.15.4/schema.json
 title: vmc
-updated_on: 1744673803
-version: 1.15.3
+updated_on: 1745278543
+version: 1.15.4

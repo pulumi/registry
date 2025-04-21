@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/vmware/vmc/1.15.3/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/vmware/vmc/1.15.4/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Vmc Provider
@@ -17,7 +17,7 @@ pulumi package add terraform-provider vmware/vmc
 ## Overview
 
 <img src="https://raw.githubusercontent.com/vmware/pulumi-provider-vmc/main/docs/images/icon-color.png" alt="VMware Cloud on AWS" width="150">
-The Pulumi Provider for [VMware Cloud on AWS](https://docs.vmware.com/en/VMware-Cloud-on-AWS/index.html) is a plugin for Pulumi that allows you to
+The Pulumi Provider for [VMware Cloud on AWS](https://techdocs.broadcom.com/us/en/vmware-cis/cloud/vmware-cloud-on-aws/SaaS.html) is a plugin for Pulumi that allows you to
 interact with VMware Cloud on AWS.
 ##
 

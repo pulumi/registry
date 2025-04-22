@@ -256,7 +256,7 @@ var iamResourceResource = new Example.MyModule.IamResource("iamResourceResource"
 <pulumi-choosable type="language" values="go">
 
 ```go
-example, err := myModule.NewIamResource(ctx, "iamResourceResource", &myModule.IamResourceArgs{
+example, err := mymodule.NewIamResource(ctx, "iamResourceResource", &mymodule.IamResourceArgs{
 	Config: &iam.AuditConfigArgs{
 		AuditLogConfigs: iam.AuditLogConfigArray{
 			&iam.AuditLogConfigArgs{

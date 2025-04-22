@@ -4107,10 +4107,10 @@ example, err := foo.NewComponent(ctx, "componentResource", &foo.ComponentArgs{
 
 ```java
 var componentResource = new Component("componentResource", ComponentArgs.builder()
-    .eniConfig(Map.of("string", Map.ofEntries(
-        Map.entry("securityGroups", "string"),
-        Map.entry("subnet", "string")
-    )))
+    .eniConfig(Map.of("string", ENIConfigSpecArgs.builder()
+        .securityGroups("string")
+        .subnet("string")
+        .build()))
     .pod(PodArgs.builder()
         .apiVersion("v1")
         .kind("Pod")

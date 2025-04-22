@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/crowdstrike/pulumi-crowdstrike/v0.0.12/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/crowdstrike/pulumi-crowdstrike/v0.0.13/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: CrowdStrike
 meta_desc: Provides an overview of the CrowdStrike Provider for Pulumi.

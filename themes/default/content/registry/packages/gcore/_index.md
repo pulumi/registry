@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/g-core/gcore/0.19.0/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/g-core/gcore/0.20.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Gcore Provider
@@ -54,6 +54,7 @@ Other settings that can be configured include:
 - `gcoreDnsApi`
 - `gcorePlatformApi`
 - `gcoreStorageApi`
+- `gcoreFastedgeApi`
 ### Environment Variables
 
 The [permanent API token](https://gcore.com/docs/account-settings/create-use-or-delete-a-permanent-api-token) can be provided by setting the `GCORE_PERMANENT_TOKEN` environment variable.
@@ -83,6 +84,7 @@ Other supported environment variables include:
 - `GCORE_DNS_API`
 - `GCORE_PLATFORM_API`
 - `GCORE_STORAGE_API`
+- `GCORE_FASTEDGE_API`
 ## Example Usage
 
 {{< chooser language "typescript,python,go,csharp,java,yaml" >}}

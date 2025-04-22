@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: coralogix
 repo_url: https://github.com/coralogix/terraform-provider-coralogix
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/coralogix/coralogix/2.0.16/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/coralogix/coralogix/2.0.17/schema.json
 title: coralogix
-updated_on: 1744673805
-version: 2.0.16
+updated_on: 1745321745
+version: 2.0.17

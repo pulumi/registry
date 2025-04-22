@@ -303,7 +303,7 @@ example, err := foobar.NewModuleResource(ctx, "moduleResourceResource", &foobar.
 var moduleResourceResource = new ModuleResource("moduleResourceResource", ModuleResourceArgs.builder()
     .plainRequiredBool(false)
     .requiredString("string")
-    .requiredNumber(0)
+    .requiredNumber(0.0)
     .requiredEnum(4)
     .requiredBool(false)
     .plainRequiredString("string")
@@ -315,7 +315,7 @@ var moduleResourceResource = new ModuleResource("moduleResourceResource", Module
     .plainOptionalConst("string")
     .plainOptionalBool(false)
     .optionalBool(false)
-    .optionalNumber(0)
+    .optionalNumber(0.0)
     .optionalEnum(4)
     .optionalConst("string")
     .build());

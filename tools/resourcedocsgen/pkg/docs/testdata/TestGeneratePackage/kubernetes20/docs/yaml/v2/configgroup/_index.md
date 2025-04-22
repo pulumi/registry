@@ -266,7 +266,7 @@ example, err := yamlv2.NewConfigGroup(ctx, "configGroupResource", &yamlv2.Config
 <pulumi-choosable type="language" values="java">
 
 ```java
-var configGroupResource = new ConfigGroup("configGroupResource", ConfigGroupArgs.builder()
+var configGroupResource = new com.pulumi.kubernetes.yaml_v2.ConfigGroup("configGroupResource", com.pulumi.kubernetes.yaml_v2.ConfigGroupArgs.builder()
     .files("string")
     .objs(null)
     .resourcePrefix("string")

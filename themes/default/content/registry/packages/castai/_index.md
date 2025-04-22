@@ -1,255 +1,189 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/castai/castai/7.47.0/index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/castai/pulumi-castai/v0.1.45/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-# *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
-title: Castai Provider
-meta_desc: Provides an overview on how to configure the Pulumi Castai provider.
-layout: package
+title: CAST AI
+meta_desc: Provides an overview of the CAST AI Provider for Pulumi.
+layout: overview
 ---
 
-## Generate Provider
+# CAST AI Provider
 
-The Castai provider must be installed as a Local Package by following the [instructions for Any Terraform Provider](https://www.pulumi.com/registry/packages/terraform-provider/):
+The CAST AI Provider for Pulumi enables you to manage [CAST AI](https://cast.ai/) resources in your cloud infrastructure using Pulumi. CAST AI is a Kubernetes cost optimization platform that helps you reduce cloud costs by up to 50% through automated instance selection, scaling, and spot instance management.
 
-```bash
-pulumi package add terraform-provider castai/castai
-```
-## Overview
+## Example
 
-CAST AI provider can be used to onboard your cluster and manage resources supported by CAST AI.
-
-> **Note** To use the provider, an API token first must be generated for your account at <https://console.cast.ai/>
-## Provider configuration
-
-
-
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp" >}}
 {{% choosable language typescript %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: nodejs
-config:
-    castai:apiToken:
-        value: my-castai-api-token
 
-```
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
+import * as castai from "@castai/pulumi";
 
-```
-{{% /choosable %}}
-{{% choosable language python %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: python
-config:
-    castai:apiToken:
-        value: my-castai-api-token
-
-```
-```python
-import pulumi
-
-```
-{{% /choosable %}}
-{{% choosable language csharp %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: dotnet
-config:
-    castai:apiToken:
-        value: my-castai-api-token
-
-```
-```csharp
-using System.Collections.Generic;
-using System.Linq;
-using Pulumi;
-
-return await Deployment.RunAsync(() =>
-{
+// Initialize the CAST AI provider
+const provider = new castai.Provider("castai-provider", {
+    apiToken: process.env.CASTAI_API_TOKEN,
+    apiUrl: process.env.CASTAI_API_URL || "https://api.cast.ai",
 });
 
+// Connect a GKE cluster to CAST AI
+const gkeCluster = new castai.GkeCluster("gke-cluster-connection", {
+    projectId: process.env.GCP_PROJECT_ID || "my-gcp-project-id",
+    location: "us-central1",
+    name: process.env.GKE_CLUSTER_NAME || "cast_ai_test_cluster",
+    deleteNodesOnDisconnect: true,
+}, { provider });
+
+// Export the cluster ID
+export const clusterId = gkeCluster.id;
 ```
+
+{{% /choosable %}}
+{{% choosable language python %}}
+
+```python
+import pulumi
+import os
+from pulumi_castai import Provider, GkeCluster
+
+# Initialize the CAST AI provider
+api_token = os.environ.get("CASTAI_API_TOKEN", "your-api-token-here")
+provider = Provider("castai-provider", api_token=api_token)
+
+# Connect a GKE cluster to CAST AI
+gke_cluster = GkeCluster("gke-cluster-connection",
+    project_id=os.environ.get("GCP_PROJECT_ID", "my-gcp-project-id"),
+    location="us-central1",
+    name=os.environ.get("GKE_CLUSTER_NAME", "cast_ai_test_cluster"),
+    delete_nodes_on_disconnect=True,
+    opts=pulumi.ResourceOptions(provider=provider)
+)
+
+# Export the cluster ID
+pulumi.export("cluster_id", gke_cluster.id)
+```
+
 {{% /choosable %}}
 {{% choosable language go %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: go
-config:
-    castai:apiToken:
-        value: my-castai-api-token
 
-```
 ```go
 package main
 
 import (
+	"os"
+
+	"github.com/castai/pulumi-castai/sdk/go/castai"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
 func main() {
 	pulumi.Run(func(ctx *pulumi.Context) error {
+		// Initialize the provider
+		provider, err := castai.NewProvider(ctx, "castai-provider", &castai.ProviderArgs{
+			ApiToken: pulumi.String(os.Getenv("CASTAI_API_TOKEN")),
+		})
+		if err != nil {
+			return err
+		}
+
+		// Get GCP project ID from environment variable or use a default value
+		projectID := os.Getenv("GCP_PROJECT_ID")
+		if projectID == "" {
+			projectID = "my-gcp-project-id"
+		}
+
+		// Get GKE cluster name from environment variable or use a default value
+		clusterName := os.Getenv("GKE_CLUSTER_NAME")
+		if clusterName == "" {
+			clusterName = "cast_ai_test_cluster"
+		}
+
+		// Connect a GKE cluster to CAST AI
+		gkeCluster, err := castai.NewGkeCluster(ctx, "gke-cluster-connection", &castai.GkeClusterArgs{
+			ProjectId:              pulumi.String(projectID),
+			Location:               pulumi.String("us-central1"),
+			Name:                   pulumi.String(clusterName),
+			DeleteNodesOnDisconnect: pulumi.Bool(true),
+		}, pulumi.Provider(provider))
+		if err != nil {
+			return err
+		}
+
+		// Export the cluster ID
+		ctx.Export("clusterId", gkeCluster.ID())
 		return nil
 	})
 }
 ```
-{{% /choosable %}}
-{{% choosable language yaml %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: yaml
-config:
-    castai:apiToken:
-        value: my-castai-api-token
 
-```
-```yaml
-{}
-```
-{{% /choosable %}}
-{{% choosable language java %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: java
-config:
-    castai:apiToken:
-        value: my-castai-api-token
-
-```
-```java
-package generated_program;
-
-import com.pulumi.Context;
-import com.pulumi.Pulumi;
-import com.pulumi.core.Output;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Map;
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
-public class App {
-    public static void main(String[] args) {
-        Pulumi.run(App::stack);
-    }
-
-    public static void stack(Context ctx) {
-    }
-}
-```
-{{% /choosable %}}
-{{< /chooser >}}
-## Example Usage
-
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
-{{% choosable language typescript %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: nodejs
-config:
-    castai:apiToken:
-        value: 'TODO: var.castai_api_token'
-    castai:apiUrl:
-        value: 'TODO: var.castai_api_url'
-
-```
-```typescript
-Example currently unavailable in this language
-```
-{{% /choosable %}}
-{{% choosable language python %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: python
-config:
-    castai:apiToken:
-        value: 'TODO: var.castai_api_token'
-    castai:apiUrl:
-        value: 'TODO: var.castai_api_url'
-
-```
-```python
-Example currently unavailable in this language
-```
 {{% /choosable %}}
 {{% choosable language csharp %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: dotnet
-config:
-    castai:apiToken:
-        value: 'TODO: var.castai_api_token'
-    castai:apiUrl:
-        value: 'TODO: var.castai_api_url'
 
-```
 ```csharp
-Example currently unavailable in this language
-```
-{{% /choosable %}}
-{{% choosable language go %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: go
-config:
-    castai:apiToken:
-        value: 'TODO: var.castai_api_token'
-    castai:apiUrl:
-        value: 'TODO: var.castai_api_url'
+using System;
+using Pulumi;
+using Pulumi.CastAI;
 
-```
-```go
-Example currently unavailable in this language
-```
-{{% /choosable %}}
-{{% choosable language yaml %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: yaml
-config:
-    castai:apiToken:
-        value: 'TODO: var.castai_api_token'
-    castai:apiUrl:
-        value: 'TODO: var.castai_api_url'
+class MyStack : Stack
+{
+    public MyStack()
+    {
+        // Initialize the CAST AI provider
+        var provider = new Provider("castai-provider", new ProviderArgs
+        {
+            ApiToken = Environment.GetEnvironmentVariable("CASTAI_API_TOKEN"),
+            ApiUrl = Environment.GetEnvironmentVariable("CASTAI_API_URL") ?? "https://api.cast.ai"
+        });
 
-```
-```yaml
-Example currently unavailable in this language
-```
-{{% /choosable %}}
-{{% choosable language java %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: java
-config:
-    castai:apiToken:
-        value: 'TODO: var.castai_api_token'
-    castai:apiUrl:
-        value: 'TODO: var.castai_api_url'
+        // Connect a GKE cluster to CAST AI
+        var gkeCluster = new GkeCluster("gke-cluster-connection", new GkeClusterArgs
+        {
+            ProjectId = Environment.GetEnvironmentVariable("GCP_PROJECT_ID") ?? "my-gcp-project-id",
+            Location = "us-central1",
+            Name = Environment.GetEnvironmentVariable("GKE_CLUSTER_NAME") ?? "cast_ai_test_cluster",
+            DeleteNodesOnDisconnect = true
+        }, new CustomResourceOptions
+        {
+            Provider = provider
+        });
 
+        // Export the cluster ID
+        this.ClusterId = gkeCluster.Id;
+    }
+
+    [Output] public Output<string> ClusterId { get; set; }
+}
 ```
-```java
-Example currently unavailable in this language
-```
+
 {{% /choosable %}}
 {{< /chooser >}}
-## Configuration Reference
-### Required
 
-- `apiToken` (String) The token used to connect to CAST AI API.
+## Features
 
-- `apiUrl` (String) CAST.AI API url.
+The CAST AI Provider offers resources to:
+
+* Connect your Kubernetes clusters (EKS, GKE, AKS) to CAST AI for cost optimization
+* Configure autoscaling policies for your clusters
+* Manage node configurations and templates
+* Set up IAM roles and service accounts for CAST AI
+* Configure cost optimization policies
+
+## Available Resources
+
+The CAST AI provider supports the following resources:
+
+### Cloud Provider Resources
+- AWS EKS clusters: `castai:aws:EksCluster`
+- GCP GKE clusters: `castai:gcp:GkeCluster`
+- Azure AKS clusters: `castai:azure:AksCluster`
+
+### Core Resources
+- Cluster: `castai:index:Cluster`
+- Credentials: `castai:index:Credentials`
+- Cluster Token: `castai:index:ClusterToken`
+
+### Autoscaling Resources
+- Autoscaler: `castai:autoscaling:Autoscaler`
+
+### Organization Resources
+- Service Account: `castai:organization:ServiceAccount`
+- Service Account Key: `castai:organization:ServiceAccountKey`

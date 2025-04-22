@@ -40,6 +40,7 @@ info(f"Tempdir: {tmpdir}")
 publishers = {
     "1Password": "1Password",
     "Aviatrix": "Aviatrix",
+    "CAST AI": "castai",
     "CTFer.io": "ctfer",
     "Checkly": "checkly",
     "Christian Nunciato": "christian_nunciato",
@@ -185,10 +186,6 @@ publishers = {
     "ucloud": "ucloud",
     "vantage-sh": "vantage-sh",
     "vk-cs": "vk-cs",
-    "vmware": "vmware",
-    "vmware": "vmware",
-    "vmware": "vmware",
-    "vmware": "vmware",
     "vmware": "vmware",
     "zenduty": "zenduty",
 }

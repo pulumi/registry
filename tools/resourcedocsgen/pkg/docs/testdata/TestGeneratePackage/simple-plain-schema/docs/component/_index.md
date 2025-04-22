@@ -373,14 +373,14 @@ var componentResource = new Component("componentResource", ComponentArgs.builder
         .d(0)
         .f("string")
         .build())
-    .bazMap(Map.of("string", Map.ofEntries(
-        Map.entry("a", false),
-        Map.entry("c", 0),
-        Map.entry("e", "string"),
-        Map.entry("b", false),
-        Map.entry("d", 0),
-        Map.entry("f", "string")
-    )))
+    .bazMap(Map.of("string", FooArgs.builder()
+        .a(false)
+        .c(0)
+        .e("string")
+        .b(false)
+        .d(0)
+        .f("string")
+        .build()))
     .d(0)
     .f("string")
     .foo(FooArgs.builder()

@@ -435,11 +435,11 @@ var restAPIResource = new RestAPI("restAPIResource", RestAPIArgs.builder()
     .binaryMediaTypes("string")
     .description("string")
     .disableExecuteApiEndpoint(false)
-    .gatewayResponses(Map.of("string", Map.ofEntries(
-        Map.entry("responseParameters", Map.of("string", "string")),
-        Map.entry("responseTemplates", Map.of("string", "string")),
-        Map.entry("statusCode", 0)
-    )))
+    .gatewayResponses(Map.of("string", SwaggerGatewayResponseArgs.builder()
+        .responseParameters(Map.of("string", "string"))
+        .responseTemplates(Map.of("string", "string"))
+        .statusCode(0.0)
+        .build()))
     .requestValidator("ALL")
     .routes(RouteArgs.builder()
         .path("string")
@@ -469,14 +469,14 @@ var restAPIResource = new RestAPI("restAPIResource", RestAPIArgs.builder()
             .in("string")
             .name("string")
             .build())
-        .target(TargetArgs.builder()
-            .type("aws")
-            .connectionId("string")
-            .connectionType("INTERNET")
-            .httpMethod("ANY")
-            .passthroughBehaviour("when_no_match")
-            .uri("string")
-            .build())
+        .target(Map.ofEntries(
+            Map.entry("type", "aws"),
+            Map.entry("connectionId", "string"),
+            Map.entry("connectionType", "INTERNET"),
+            Map.entry("httpMethod", "ANY"),
+            Map.entry("passthroughBehaviour", "when_no_match"),
+            Map.entry("uri", "string")
+        ))
         .build())
     .stageName("string")
     .staticRoutesBucket(bucket)

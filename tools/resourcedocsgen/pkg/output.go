@@ -20,7 +20,6 @@ import (
 
 	"github.com/pkg/errors"
 
-	"github.com/pulumi/pulumi/sdk/v3/go/common/tools"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/util/contract"
 )
 
@@ -32,7 +31,7 @@ func EmitFile(outDir, relPath string, contents []byte) error {
 		return nil
 	}
 	p := path.Join(outDir, relPath)
-	if err := tools.EnsureDir(path.Dir(p)); err != nil {
+	if err := os.MkdirAll(path.Dir(p), 0o700); err != nil {
 		return errors.Wrap(err, "creating directory")
 	}
 

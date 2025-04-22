@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/datarobot-community/pulumi-datarobot/v0.9.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/datarobot-community/pulumi-datarobot/v0.9.2/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: DataRobot
 meta_desc: Provides an overview of the DataRobot Provider for Pulumi.
@@ -15,7 +15,7 @@ The `DataRobot` provider for Pulumi can be used to provision any of the resource
 {{% choosable language python %}}
 
 ```python
-import pulumiverse_datarobot as datarobot
+import pulumi_datarobot as datarobot
 import pulumi
 
 use_case = datarobot.UseCase("example fom python",

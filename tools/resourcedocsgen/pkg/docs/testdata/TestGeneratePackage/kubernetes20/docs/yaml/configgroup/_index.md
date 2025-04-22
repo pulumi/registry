@@ -278,7 +278,7 @@ example, err := yaml.NewConfigGroup(ctx, "kubernetesConfigGroupResource", &yaml.
 <pulumi-choosable type="language" values="java">
 
 ```java
-var kubernetesConfigGroupResource = new ConfigGroup("kubernetesConfigGroupResource", ConfigGroupArgs.builder()
+var kubernetesConfigGroupResource = new com.pulumi.kubernetes.yaml.ConfigGroup("kubernetesConfigGroupResource", com.pulumi.kubernetes.yaml.ConfigGroupArgs.builder()
     .files("string")
     .objs(null)
     .resourcePrefix("string")

@@ -542,7 +542,7 @@ All [input](#inputs) properties are implicitly available as output properties. A
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_python" style="color: inherit; text-decoration: inherit;">id</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>The provider-assigned unique ID for this managed resource.</dd><dt class="property-"
             title="">
@@ -864,7 +864,7 @@ Laser<pulumi-choosable type="language" values="python,go" class="inline">, Laser
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#batteries_python" style="color: inherit; text-decoration: inherit;">batteries</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">bool</span>
+        <span class="property-type">builtins.bool</span>
     </dt>
     <dd></dd><dt class="property-optional"
             title="Optional">
@@ -872,7 +872,7 @@ Laser<pulumi-choosable type="language" values="python,go" class="inline">, Laser
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#light_python" style="color: inherit; text-decoration: inherit;">light</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">float</span>
+        <span class="property-type">builtins.float</span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>
@@ -1048,7 +1048,7 @@ Toy<pulumi-choosable type="language" values="python,go" class="inline">, Toy<wbr
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#color_python" style="color: inherit; text-decoration: inherit;">color</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd></dd><dt class="property-optional"
             title="Optional">
@@ -1056,7 +1056,7 @@ Toy<pulumi-choosable type="language" values="python,go" class="inline">, Toy<wbr
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#wear_python" style="color: inherit; text-decoration: inherit;">wear</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">float</span>
+        <span class="property-type">builtins.float</span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>

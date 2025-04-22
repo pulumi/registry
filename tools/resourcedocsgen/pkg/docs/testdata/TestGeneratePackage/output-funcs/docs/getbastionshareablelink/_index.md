@@ -45,13 +45,13 @@ function </span>getBastionShareableLinkOutput<span class="p">(</span><span class
 <div>
 <pulumi-choosable type="language" values="python">
 <div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"
-><span class="k">def </span>get_bastion_shareable_link<span class="p">(</span><span class="nx">bastion_host_name</span><span class="p">:</span> <span class="nx">Optional[str]</span> = None<span class="p">,</span>
-                               <span class="nx">resource_group_name</span><span class="p">:</span> <span class="nx">Optional[str]</span> = None<span class="p">,</span>
+><span class="k">def </span>get_bastion_shareable_link<span class="p">(</span><span class="nx">bastion_host_name</span><span class="p">:</span> <span class="nx">Optional[builtins.str]</span> = None<span class="p">,</span>
+                               <span class="nx">resource_group_name</span><span class="p">:</span> <span class="nx">Optional[builtins.str]</span> = None<span class="p">,</span>
                                <span class="nx">vms</span><span class="p">:</span> <span class="nx">Optional[Sequence[BastionShareableLink]]</span> = None<span class="p">,</span>
                                <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.InvokeOptions">Optional[InvokeOptions]</a></span> = None<span class="p">) -&gt;</span> <span>GetBastionShareableLinkResult</span
 ><span class="k">
-def </span>get_bastion_shareable_link_output<span class="p">(</span><span class="nx">bastion_host_name</span><span class="p">:</span> <span class="nx">Optional[pulumi.Input[str]]</span> = None<span class="p">,</span>
-                               <span class="nx">resource_group_name</span><span class="p">:</span> <span class="nx">Optional[pulumi.Input[str]]</span> = None<span class="p">,</span>
+def </span>get_bastion_shareable_link_output<span class="p">(</span><span class="nx">bastion_host_name</span><span class="p">:</span> <span class="nx">Optional[pulumi.Input[builtins.str]]</span> = None<span class="p">,</span>
+                               <span class="nx">resource_group_name</span><span class="p">:</span> <span class="nx">Optional[pulumi.Input[builtins.str]]</span> = None<span class="p">,</span>
                                <span class="nx">vms</span><span class="p">:</span> <span class="nx">Optional[pulumi.Input[Sequence[pulumi.Input[BastionShareableLinkArgs]]]]</span> = None<span class="p">,</span>
                                <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.InvokeOptions">Optional[InvokeOptions]</a></span> = None<span class="p">) -&gt;</span> <span>Output[GetBastionShareableLinkResult]</span
 ></code></pre></div>
@@ -235,7 +235,7 @@ The following arguments are supported:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#bastion_host_name_python" style="color: inherit; text-decoration: inherit;">bastion_<wbr>host_<wbr>name</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>The name of the Bastion Host.</dd><dt class="property-required"
             title="Required">
@@ -243,7 +243,7 @@ The following arguments are supported:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#resource_group_name_python" style="color: inherit; text-decoration: inherit;">resource_<wbr>group_<wbr>name</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>The name of the resource group.</dd><dt class="property-optional"
             title="Optional">
@@ -360,7 +360,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#next_link_python" style="color: inherit; text-decoration: inherit;">next_<wbr>link</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>The URL to get the next set of results.</dd></dl>
 </pulumi-choosable>
@@ -454,7 +454,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#vm_python" style="color: inherit; text-decoration: inherit;">vm</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>Reference of the virtual machine resource.</dd></dl>
 </pulumi-choosable>

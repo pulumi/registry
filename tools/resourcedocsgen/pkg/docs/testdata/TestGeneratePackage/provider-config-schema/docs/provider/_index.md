@@ -41,7 +41,7 @@ Resources are created with functions called constructors. To learn more about de
 <span class=nd>@overload</span>
 <span class="k">def </span><span class="nx">Provider</span><span class="p">(</span><span class="nx">resource_name</span><span class="p">:</span> <span class="nx">str</span><span class="p">,</span>
              <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.ResourceOptions">Optional[ResourceOptions]</a></span> = None<span class="p">,</span>
-             <span class="nx">favorite_color</span><span class="p">:</span> <span class="nx">Optional[Union[str, Color]]</span> = None<span class="p">,</span>
+             <span class="nx">favorite_color</span><span class="p">:</span> <span class="nx">Optional[Union[builtins.str, Color]]</span> = None<span class="p">,</span>
              <span class="nx">secret_sandwiches</span><span class="p">:</span> <span class="nx">Optional[Sequence[_config.SandwichArgs]]</span> = None<span class="p">)</span></code></pre></div>
 </div></pulumi-choosable>
 </div>
@@ -329,7 +329,7 @@ The Provider resource accepts the following [input](/docs/intro/concepts/inputs-
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#favorite_color_python" style="color: inherit; text-decoration: inherit;">favorite_<wbr>color</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str | <a href="#color">Color</a></span>
+        <span class="property-type">builtins.str | <a href="#color">Color</a></span>
     </dt>
     <dd>this is a relaxed string enum which can also be set via env var It can also be sourced from the following environment variable: <code>FAVE_COLOR</code></dd><dt class="property-optional"
             title="Optional">
@@ -436,7 +436,7 @@ All [input](#inputs) properties are implicitly available as output properties. A
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_python" style="color: inherit; text-decoration: inherit;">id</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>The provider-assigned unique ID for this managed resource.</dd></dl>
 </pulumi-choosable>
@@ -618,7 +618,7 @@ Sandwich<pulumi-choosable type="language" values="python,go" class="inline">, Sa
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#bread_python" style="color: inherit; text-decoration: inherit;">bread</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd></dd><dt class="property-optional"
             title="Optional">
@@ -626,7 +626,7 @@ Sandwich<pulumi-choosable type="language" values="python,go" class="inline">, Sa
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#veggies_python" style="color: inherit; text-decoration: inherit;">veggies</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">Sequence[str]</span>
+        <span class="property-type">Sequence[builtins.str]</span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>

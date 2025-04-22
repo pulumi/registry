@@ -45,18 +45,18 @@ function </span>getAmiIdsOutput<span class="p">(</span><span class="nx">args</sp
 <div>
 <pulumi-choosable type="language" values="python">
 <div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"
-><span class="k">def </span>get_ami_ids<span class="p">(</span><span class="nx">executable_users</span><span class="p">:</span> <span class="nx">Optional[Sequence[str]]</span> = None<span class="p">,</span>
+><span class="k">def </span>get_ami_ids<span class="p">(</span><span class="nx">executable_users</span><span class="p">:</span> <span class="nx">Optional[Sequence[builtins.str]]</span> = None<span class="p">,</span>
                 <span class="nx">filters</span><span class="p">:</span> <span class="nx">Optional[Sequence[GetAmiIdsFilter]]</span> = None<span class="p">,</span>
-                <span class="nx">name_regex</span><span class="p">:</span> <span class="nx">Optional[str]</span> = None<span class="p">,</span>
-                <span class="nx">owners</span><span class="p">:</span> <span class="nx">Optional[Sequence[str]]</span> = None<span class="p">,</span>
-                <span class="nx">sort_ascending</span><span class="p">:</span> <span class="nx">Optional[bool]</span> = None<span class="p">,</span>
+                <span class="nx">name_regex</span><span class="p">:</span> <span class="nx">Optional[builtins.str]</span> = None<span class="p">,</span>
+                <span class="nx">owners</span><span class="p">:</span> <span class="nx">Optional[Sequence[builtins.str]]</span> = None<span class="p">,</span>
+                <span class="nx">sort_ascending</span><span class="p">:</span> <span class="nx">Optional[builtins.bool]</span> = None<span class="p">,</span>
                 <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.InvokeOptions">Optional[InvokeOptions]</a></span> = None<span class="p">) -&gt;</span> <span>GetAmiIdsResult</span
 ><span class="k">
-def </span>get_ami_ids_output<span class="p">(</span><span class="nx">executable_users</span><span class="p">:</span> <span class="nx">Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]</span> = None<span class="p">,</span>
+def </span>get_ami_ids_output<span class="p">(</span><span class="nx">executable_users</span><span class="p">:</span> <span class="nx">Optional[pulumi.Input[Sequence[pulumi.Input[builtins.str]]]]</span> = None<span class="p">,</span>
                 <span class="nx">filters</span><span class="p">:</span> <span class="nx">Optional[pulumi.Input[Sequence[pulumi.Input[GetAmiIdsFilterArgs]]]]</span> = None<span class="p">,</span>
-                <span class="nx">name_regex</span><span class="p">:</span> <span class="nx">Optional[pulumi.Input[str]]</span> = None<span class="p">,</span>
-                <span class="nx">owners</span><span class="p">:</span> <span class="nx">Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]</span> = None<span class="p">,</span>
-                <span class="nx">sort_ascending</span><span class="p">:</span> <span class="nx">Optional[pulumi.Input[bool]]</span> = None<span class="p">,</span>
+                <span class="nx">name_regex</span><span class="p">:</span> <span class="nx">Optional[pulumi.Input[builtins.str]]</span> = None<span class="p">,</span>
+                <span class="nx">owners</span><span class="p">:</span> <span class="nx">Optional[pulumi.Input[Sequence[pulumi.Input[builtins.str]]]]</span> = None<span class="p">,</span>
+                <span class="nx">sort_ascending</span><span class="p">:</span> <span class="nx">Optional[pulumi.Input[builtins.bool]]</span> = None<span class="p">,</span>
                 <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.InvokeOptions">Optional[InvokeOptions]</a></span> = None<span class="p">) -&gt;</span> <span>Output[GetAmiIdsResult]</span
 ></code></pre></div>
 </pulumi-choosable>
@@ -331,7 +331,7 @@ options to narrow down the list AWS returns.</dd><dt class="property-optional"
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#owners_python" style="color: inherit; text-decoration: inherit;">owners</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">Sequence[str]</span>
+        <span class="property-type">Sequence[builtins.str]</span>
     </dt>
     <dd>List of AMI owners to limit search. At least 1 value must be specified. Valid values: an AWS account ID, <code>self</code> (the current account), or an AWS owner alias (e.g. <code>amazon</code>, <code>aws-marketplace</code>, <code>microsoft</code>).</dd><dt class="property-optional"
             title="Optional">
@@ -339,7 +339,7 @@ options to narrow down the list AWS returns.</dd><dt class="property-optional"
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#executable_users_python" style="color: inherit; text-decoration: inherit;">executable_<wbr>users</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">Sequence[str]</span>
+        <span class="property-type">Sequence[builtins.str]</span>
     </dt>
     <dd>Limit search to users with <em>explicit</em> launch
 permission on  the image. Valid items are the numeric account ID or <code>self</code>.</dd><dt class="property-optional"
@@ -358,7 +358,7 @@ are several valid keys, for a full reference, check out
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#name_regex_python" style="color: inherit; text-decoration: inherit;">name_<wbr>regex</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>A regex string to apply to the AMI list returned
 by AWS. This allows more advanced filtering not supported from the AWS API.
@@ -370,7 +370,7 @@ options to narrow down the list AWS returns.</dd><dt class="property-optional"
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#sort_ascending_python" style="color: inherit; text-decoration: inherit;">sort_<wbr>ascending</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">bool</span>
+        <span class="property-type">builtins.bool</span>
     </dt>
     <dd>Used to sort AMIs by creation time.</dd></dl>
 </pulumi-choosable>
@@ -694,7 +694,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_python" style="color: inherit; text-decoration: inherit;">id</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>The provider-assigned unique ID for this managed resource.</dd><dt class="property-"
             title="">
@@ -702,7 +702,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#ids_python" style="color: inherit; text-decoration: inherit;">ids</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">Sequence[str]</span>
+        <span class="property-type">Sequence[builtins.str]</span>
     </dt>
     <dd></dd><dt class="property-"
             title="">
@@ -710,7 +710,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#owners_python" style="color: inherit; text-decoration: inherit;">owners</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">Sequence[str]</span>
+        <span class="property-type">Sequence[builtins.str]</span>
     </dt>
     <dd></dd><dt class="property-"
             title="">
@@ -718,7 +718,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#executable_users_python" style="color: inherit; text-decoration: inherit;">executable_<wbr>users</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">Sequence[str]</span>
+        <span class="property-type">Sequence[builtins.str]</span>
     </dt>
     <dd></dd><dt class="property-"
             title="">
@@ -734,7 +734,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#name_regex_python" style="color: inherit; text-decoration: inherit;">name_<wbr>regex</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd></dd><dt class="property-"
             title="">
@@ -742,7 +742,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#sort_ascending_python" style="color: inherit; text-decoration: inherit;">sort_<wbr>ascending</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">bool</span>
+        <span class="property-type">builtins.bool</span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>
@@ -916,7 +916,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#name_python" style="color: inherit; text-decoration: inherit;">name</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd></dd><dt class="property-required"
             title="Required">
@@ -924,7 +924,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#values_python" style="color: inherit; text-decoration: inherit;">values</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">Sequence[str]</span>
+        <span class="property-type">Sequence[builtins.str]</span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>

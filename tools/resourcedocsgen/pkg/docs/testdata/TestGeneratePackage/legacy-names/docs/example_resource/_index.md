@@ -626,7 +626,7 @@ All [input](#inputs) properties are implicitly available as output properties. A
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_python" style="color: inherit; text-decoration: inherit;">id</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>The provider-assigned unique ID for this managed resource.</dd><dt class="property-"
             title="">
@@ -634,7 +634,7 @@ All [input](#inputs) properties are implicitly available as output properties. A
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#good__urls_python" style="color: inherit; text-decoration: inherit;">good__<wbr>urls</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">Sequence[str]</span>
+        <span class="property-type">Sequence[builtins.str]</span>
     </dt>
     <dd></dd><dt class="property-"
             title="">
@@ -642,7 +642,7 @@ All [input](#inputs) properties are implicitly available as output properties. A
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#url_python" style="color: inherit; text-decoration: inherit;">url</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>
@@ -852,7 +852,7 @@ Request<pulumi-choosable type="language" values="python,go" class="inline">, Req
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#content_body_python" style="color: inherit; text-decoration: inherit;">content_<wbr>body</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd></dd><dt class="property-optional"
             title="Optional">
@@ -860,7 +860,7 @@ Request<pulumi-choosable type="language" values="python,go" class="inline">, Req
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#url_python" style="color: inherit; text-decoration: inherit;">url</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>

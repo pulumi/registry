@@ -41,14 +41,14 @@ Resources are created with functions called constructors. To learn more about de
 <span class=nd>@overload</span>
 <span class="k">def </span><span class="nx">Component</span><span class="p">(</span><span class="nx">resource_name</span><span class="p">:</span> <span class="nx">str</span><span class="p">,</span>
               <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.ResourceOptions">Optional[ResourceOptions]</a></span> = None<span class="p">,</span>
-              <span class="nx">a</span><span class="p">:</span> <span class="nx">Optional[bool]</span> = None<span class="p">,</span>
-              <span class="nx">c</span><span class="p">:</span> <span class="nx">Optional[int]</span> = None<span class="p">,</span>
-              <span class="nx">e</span><span class="p">:</span> <span class="nx">Optional[str]</span> = None<span class="p">,</span>
-              <span class="nx">b</span><span class="p">:</span> <span class="nx">Optional[bool]</span> = None<span class="p">,</span>
+              <span class="nx">a</span><span class="p">:</span> <span class="nx">Optional[builtins.bool]</span> = None<span class="p">,</span>
+              <span class="nx">c</span><span class="p">:</span> <span class="nx">Optional[builtins.int]</span> = None<span class="p">,</span>
+              <span class="nx">e</span><span class="p">:</span> <span class="nx">Optional[builtins.str]</span> = None<span class="p">,</span>
+              <span class="nx">b</span><span class="p">:</span> <span class="nx">Optional[builtins.bool]</span> = None<span class="p">,</span>
               <span class="nx">bar</span><span class="p">:</span> <span class="nx">Optional[FooArgs]</span> = None<span class="p">,</span>
               <span class="nx">baz</span><span class="p">:</span> <span class="nx">Optional[Sequence[FooArgs]]</span> = None<span class="p">,</span>
-              <span class="nx">d</span><span class="p">:</span> <span class="nx">Optional[int]</span> = None<span class="p">,</span>
-              <span class="nx">f</span><span class="p">:</span> <span class="nx">Optional[str]</span> = None<span class="p">,</span>
+              <span class="nx">d</span><span class="p">:</span> <span class="nx">Optional[builtins.int]</span> = None<span class="p">,</span>
+              <span class="nx">f</span><span class="p">:</span> <span class="nx">Optional[builtins.str]</span> = None<span class="p">,</span>
               <span class="nx">foo</span><span class="p">:</span> <span class="nx">Optional[FooArgs]</span> = None<span class="p">)</span></code></pre></div>
 </div></pulumi-choosable>
 </div>
@@ -826,7 +826,7 @@ The Component resource accepts the following [input](/docs/intro/concepts/inputs
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#a_python" style="color: inherit; text-decoration: inherit;">a</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">bool</span>
+        <span class="property-type">builtins.bool</span>
     </dt>
     <dd></dd><dt class="property-required"
             title="Required">
@@ -834,7 +834,7 @@ The Component resource accepts the following [input](/docs/intro/concepts/inputs
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#c_python" style="color: inherit; text-decoration: inherit;">c</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">int</span>
+        <span class="property-type">builtins.int</span>
     </dt>
     <dd></dd><dt class="property-required"
             title="Required">
@@ -842,7 +842,7 @@ The Component resource accepts the following [input](/docs/intro/concepts/inputs
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#e_python" style="color: inherit; text-decoration: inherit;">e</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd></dd><dt class="property-optional"
             title="Optional">
@@ -850,7 +850,7 @@ The Component resource accepts the following [input](/docs/intro/concepts/inputs
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#b_python" style="color: inherit; text-decoration: inherit;">b</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">bool</span>
+        <span class="property-type">builtins.bool</span>
     </dt>
     <dd></dd><dt class="property-optional"
             title="Optional">
@@ -874,7 +874,7 @@ The Component resource accepts the following [input](/docs/intro/concepts/inputs
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#d_python" style="color: inherit; text-decoration: inherit;">d</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">int</span>
+        <span class="property-type">builtins.int</span>
     </dt>
     <dd></dd><dt class="property-optional"
             title="Optional">
@@ -882,7 +882,7 @@ The Component resource accepts the following [input](/docs/intro/concepts/inputs
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#f_python" style="color: inherit; text-decoration: inherit;">f</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd></dd><dt class="property-optional"
             title="Optional">
@@ -1255,7 +1255,7 @@ Foo<pulumi-choosable type="language" values="python,go" class="inline">, Foo<wbr
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#a_python" style="color: inherit; text-decoration: inherit;">a</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">bool</span>
+        <span class="property-type">builtins.bool</span>
     </dt>
     <dd></dd><dt class="property-required"
             title="Required">
@@ -1263,7 +1263,7 @@ Foo<pulumi-choosable type="language" values="python,go" class="inline">, Foo<wbr
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#c_python" style="color: inherit; text-decoration: inherit;">c</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">int</span>
+        <span class="property-type">builtins.int</span>
     </dt>
     <dd></dd><dt class="property-required"
             title="Required">
@@ -1271,7 +1271,7 @@ Foo<pulumi-choosable type="language" values="python,go" class="inline">, Foo<wbr
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#e_python" style="color: inherit; text-decoration: inherit;">e</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd></dd><dt class="property-optional"
             title="Optional">
@@ -1279,7 +1279,7 @@ Foo<pulumi-choosable type="language" values="python,go" class="inline">, Foo<wbr
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#b_python" style="color: inherit; text-decoration: inherit;">b</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">bool</span>
+        <span class="property-type">builtins.bool</span>
     </dt>
     <dd></dd><dt class="property-optional"
             title="Optional">
@@ -1287,7 +1287,7 @@ Foo<pulumi-choosable type="language" values="python,go" class="inline">, Foo<wbr
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#d_python" style="color: inherit; text-decoration: inherit;">d</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">int</span>
+        <span class="property-type">builtins.int</span>
     </dt>
     <dd></dd><dt class="property-optional"
             title="Optional">
@@ -1295,7 +1295,7 @@ Foo<pulumi-choosable type="language" values="python,go" class="inline">, Foo<wbr
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#f_python" style="color: inherit; text-decoration: inherit;">f</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>

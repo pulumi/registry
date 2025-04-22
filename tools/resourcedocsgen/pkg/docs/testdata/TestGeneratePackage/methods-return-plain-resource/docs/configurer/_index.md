@@ -41,7 +41,7 @@ Resources are created with functions called constructors. To learn more about de
 <span class=nd>@overload</span>
 <span class="k">def </span><span class="nx">Configurer</span><span class="p">(</span><span class="nx">resource_name</span><span class="p">:</span> <span class="nx">str</span><span class="p">,</span>
                <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.ResourceOptions">Optional[ResourceOptions]</a></span> = None<span class="p">,</span>
-               <span class="nx">tls_proxy</span><span class="p">:</span> <span class="nx">Optional[str]</span> = None<span class="p">)</span></code></pre></div>
+               <span class="nx">tls_proxy</span><span class="p">:</span> <span class="nx">Optional[builtins.str]</span> = None<span class="p">)</span></code></pre></div>
 </div></pulumi-choosable>
 </div>
 
@@ -380,7 +380,7 @@ The Configurer resource accepts the following [input](/docs/intro/concepts/input
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#tls_proxy_python" style="color: inherit; text-decoration: inherit;">tls_<wbr>proxy</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>
@@ -630,7 +630,7 @@ All [input](#inputs) properties are implicitly available as output properties. A
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#objectMix_result_meaning_of_life_python" style="color: inherit; text-decoration: inherit;">meaning_<wbr>of_<wbr>life</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">int</span>
+        <span class="property-type">builtins.int</span>
     </dt>
     <dd></dd><dt class="property-"
             title="">

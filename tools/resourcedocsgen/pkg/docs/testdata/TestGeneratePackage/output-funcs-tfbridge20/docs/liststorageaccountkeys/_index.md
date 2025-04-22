@@ -45,14 +45,14 @@ function </span>listStorageAccountKeysOutput<span class="p">(</span><span class=
 <div>
 <pulumi-choosable type="language" values="python">
 <div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"
-><span class="k">def </span>list_storage_account_keys<span class="p">(</span><span class="nx">account_name</span><span class="p">:</span> <span class="nx">Optional[str]</span> = None<span class="p">,</span>
-                              <span class="nx">expand</span><span class="p">:</span> <span class="nx">Optional[str]</span> = None<span class="p">,</span>
-                              <span class="nx">resource_group_name</span><span class="p">:</span> <span class="nx">Optional[str]</span> = None<span class="p">,</span>
+><span class="k">def </span>list_storage_account_keys<span class="p">(</span><span class="nx">account_name</span><span class="p">:</span> <span class="nx">Optional[builtins.str]</span> = None<span class="p">,</span>
+                              <span class="nx">expand</span><span class="p">:</span> <span class="nx">Optional[builtins.str]</span> = None<span class="p">,</span>
+                              <span class="nx">resource_group_name</span><span class="p">:</span> <span class="nx">Optional[builtins.str]</span> = None<span class="p">,</span>
                               <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.InvokeOptions">Optional[InvokeOptions]</a></span> = None<span class="p">) -&gt;</span> <span>ListStorageAccountKeysResult</span
 ><span class="k">
-def </span>list_storage_account_keys_output<span class="p">(</span><span class="nx">account_name</span><span class="p">:</span> <span class="nx">Optional[pulumi.Input[str]]</span> = None<span class="p">,</span>
-                              <span class="nx">expand</span><span class="p">:</span> <span class="nx">Optional[pulumi.Input[str]]</span> = None<span class="p">,</span>
-                              <span class="nx">resource_group_name</span><span class="p">:</span> <span class="nx">Optional[pulumi.Input[str]]</span> = None<span class="p">,</span>
+def </span>list_storage_account_keys_output<span class="p">(</span><span class="nx">account_name</span><span class="p">:</span> <span class="nx">Optional[pulumi.Input[builtins.str]]</span> = None<span class="p">,</span>
+                              <span class="nx">expand</span><span class="p">:</span> <span class="nx">Optional[pulumi.Input[builtins.str]]</span> = None<span class="p">,</span>
+                              <span class="nx">resource_group_name</span><span class="p">:</span> <span class="nx">Optional[pulumi.Input[builtins.str]]</span> = None<span class="p">,</span>
                               <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.InvokeOptions">Optional[InvokeOptions]</a></span> = None<span class="p">) -&gt;</span> <span>Output[ListStorageAccountKeysResult]</span
 ></code></pre></div>
 </pulumi-choosable>
@@ -235,7 +235,7 @@ The following arguments are supported:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#account_name_python" style="color: inherit; text-decoration: inherit;">account_<wbr>name</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only.</dd><dt class="property-required"
             title="Required">
@@ -243,7 +243,7 @@ The following arguments are supported:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#resource_group_name_python" style="color: inherit; text-decoration: inherit;">resource_<wbr>group_<wbr>name</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>The name of the resource group within the user's subscription. The name is case insensitive.</dd><dt class="property-optional"
             title="Optional">
@@ -251,7 +251,7 @@ The following arguments are supported:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#expand_python" style="color: inherit; text-decoration: inherit;">expand</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>Specifies type of the key to be listed. Possible value is kerb.</dd></dl>
 </pulumi-choosable>
@@ -550,7 +550,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#creation_time_python" style="color: inherit; text-decoration: inherit;">creation_<wbr>time</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>Creation time of the key, in round trip date format.</dd><dt class="property-required"
             title="Required">
@@ -558,7 +558,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#key_name_python" style="color: inherit; text-decoration: inherit;">key_<wbr>name</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>Name of the key.</dd><dt class="property-required"
             title="Required">
@@ -566,7 +566,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#permissions_python" style="color: inherit; text-decoration: inherit;">permissions</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>Permissions for the key -- read-only or full permissions.</dd><dt class="property-required"
             title="Required">
@@ -574,7 +574,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#value_python" style="color: inherit; text-decoration: inherit;">value</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>Base 64-encoded value of the key.</dd></dl>
 </pulumi-choosable>

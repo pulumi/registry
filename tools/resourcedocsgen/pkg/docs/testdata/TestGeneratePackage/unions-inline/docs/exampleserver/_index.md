@@ -521,7 +521,7 @@ All [input](#inputs) properties are implicitly available as output properties. A
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_python" style="color: inherit; text-decoration: inherit;">id</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>The provider-assigned unique ID for this managed resource.</dd><dt class="property-"
             title="">
@@ -529,7 +529,7 @@ All [input](#inputs) properties are implicitly available as output properties. A
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#name_python" style="color: inherit; text-decoration: inherit;">name</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>
@@ -635,7 +635,7 @@ Server<wbr>Properties<wbr>For<wbr>Replica<pulumi-choosable type="language" value
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#version_python" style="color: inherit; text-decoration: inherit;">version</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>
@@ -723,7 +723,7 @@ Server<wbr>Properties<wbr>For<wbr>Restore<pulumi-choosable type="language" value
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#restore_point_in_time_python" style="color: inherit; text-decoration: inherit;">restore_<wbr>point_<wbr>in_<wbr>time</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>

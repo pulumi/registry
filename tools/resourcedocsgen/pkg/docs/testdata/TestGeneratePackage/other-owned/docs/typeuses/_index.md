@@ -716,7 +716,7 @@ All [input](#inputs) properties are implicitly available as output properties. A
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_python" style="color: inherit; text-decoration: inherit;">id</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>The provider-assigned unique ID for this managed resource.</dd></dl>
 </pulumi-choosable>
@@ -814,7 +814,7 @@ Config<wbr>Map<pulumi-choosable type="language" values="python,go" class="inline
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#config_python" style="color: inherit; text-decoration: inherit;">config</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>
@@ -1030,7 +1030,7 @@ Object<pulumi-choosable type="language" values="python,go" class="inline">, Obje
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#bar_python" style="color: inherit; text-decoration: inherit;">bar</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd></dd><dt class="property-optional"
             title="Optional">
@@ -1214,7 +1214,7 @@ Object<wbr>With<wbr>Node<wbr>Optional<wbr>Inputs<pulumi-choosable type="language
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#foo_python" style="color: inherit; text-decoration: inherit;">foo</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd></dd><dt class="property-optional"
             title="Optional">
@@ -1222,7 +1222,7 @@ Object<wbr>With<wbr>Node<wbr>Optional<wbr>Inputs<pulumi-choosable type="language
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#bar_python" style="color: inherit; text-decoration: inherit;">bar</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">int</span>
+        <span class="property-type">builtins.int</span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>
@@ -1318,7 +1318,7 @@ Some<wbr>Other<wbr>Object<pulumi-choosable type="language" values="python,go" cl
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#baz_python" style="color: inherit; text-decoration: inherit;">baz</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>

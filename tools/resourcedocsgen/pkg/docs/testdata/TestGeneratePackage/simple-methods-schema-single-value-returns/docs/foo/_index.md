@@ -411,8 +411,8 @@ All [input](#inputs) properties are implicitly available as output properties. A
 <div>
 <pulumi-choosable type="language" values="python">
 <div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">def </span>get_kubeconfig(</span><span class="nx">self</span><span class="p">,</span>
-                   <span class="nx">profile_name</span><span class="p">:</span> <span class="nx">Optional[pulumi.Input[str]]</span> = None<span class="p">,</span>
-                   <span class="nx">role_arn</span><span class="p">:</span> <span class="nx">Optional[pulumi.Input[str]]</span> = None<span class="p">) -&gt;</span> Output[<span class="nx"><a href="#method_GetKubeconfig_result">str</a></span>]</code></pre></div>
+                   <span class="nx">profile_name</span><span class="p">:</span> <span class="nx">Optional[pulumi.Input[builtins.str]]</span> = None<span class="p">,</span>
+                   <span class="nx">role_arn</span><span class="p">:</span> <span class="nx">Optional[pulumi.Input[builtins.str]]</span> = None<span class="p">) -&gt;</span> Output[<span class="nx"><a href="#method_GetKubeconfig_result">builtins.str</a></span>]</code></pre></div>
 </pulumi-choosable>
 </div>
 
@@ -531,7 +531,7 @@ The following arguments are supported:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#getKubeconfig_arg_profile_name_python" style="color: inherit; text-decoration: inherit;">profile_<wbr>name</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd></dd><dt class="property-optional"
             title="Optional">
@@ -539,7 +539,7 @@ The following arguments are supported:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#getKubeconfig_arg_role_arn_python" style="color: inherit; text-decoration: inherit;">role_<wbr>arn</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>
@@ -636,7 +636,7 @@ The following arguments are supported:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#getKubeconfig_result_kubeconfig_python" style="color: inherit; text-decoration: inherit;">kubeconfig</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>

@@ -47,16 +47,16 @@ Resources are created with functions called constructors. To learn more about de
 <span class="k">def </span><span class="nx">RestAPI</span><span class="p">(</span><span class="nx">resource_name</span><span class="p">:</span> <span class="nx">str</span><span class="p">,</span>
             <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.ResourceOptions">Optional[ResourceOptions]</a></span> = None<span class="p">,</span>
             <span class="nx">api_key_source</span><span class="p">:</span> <span class="nx">Optional[APIKeySource]</span> = None<span class="p">,</span>
-            <span class="nx">binary_media_types</span><span class="p">:</span> <span class="nx">Optional[Sequence[str]]</span> = None<span class="p">,</span>
-            <span class="nx">description</span><span class="p">:</span> <span class="nx">Optional[str]</span> = None<span class="p">,</span>
-            <span class="nx">disable_execute_api_endpoint</span><span class="p">:</span> <span class="nx">Optional[bool]</span> = None<span class="p">,</span>
+            <span class="nx">binary_media_types</span><span class="p">:</span> <span class="nx">Optional[Sequence[builtins.str]]</span> = None<span class="p">,</span>
+            <span class="nx">description</span><span class="p">:</span> <span class="nx">Optional[builtins.str]</span> = None<span class="p">,</span>
+            <span class="nx">disable_execute_api_endpoint</span><span class="p">:</span> <span class="nx">Optional[builtins.bool]</span> = None<span class="p">,</span>
             <span class="nx">gateway_responses</span><span class="p">:</span> <span class="nx">Optional[Mapping[str, SwaggerGatewayResponseArgs]]</span> = None<span class="p">,</span>
             <span class="nx">request_validator</span><span class="p">:</span> <span class="nx">Optional[RequestValidator]</span> = None<span class="p">,</span>
             <span class="nx">routes</span><span class="p">:</span> <span class="nx">Optional[Sequence[RouteArgs]]</span> = None<span class="p">,</span>
-            <span class="nx">stage_name</span><span class="p">:</span> <span class="nx">Optional[str]</span> = None<span class="p">,</span>
+            <span class="nx">stage_name</span><span class="p">:</span> <span class="nx">Optional[builtins.str]</span> = None<span class="p">,</span>
             <span class="nx">static_routes_bucket</span><span class="p">:</span> <span class="nx">Optional[pulumi_aws.s3.Bucket]</span> = None<span class="p">,</span>
-            <span class="nx">swagger_string</span><span class="p">:</span> <span class="nx">Optional[str]</span> = None<span class="p">,</span>
-            <span class="nx">tags</span><span class="p">:</span> <span class="nx">Optional[Mapping[str, str]]</span> = None<span class="p">)</span></code></pre></div>
+            <span class="nx">swagger_string</span><span class="p">:</span> <span class="nx">Optional[builtins.str]</span> = None<span class="p">,</span>
+            <span class="nx">tags</span><span class="p">:</span> <span class="nx">Optional[Mapping[str, builtins.str]]</span> = None<span class="p">)</span></code></pre></div>
 </div></pulumi-choosable>
 </div>
 
@@ -1178,7 +1178,7 @@ set to true on a route, and this is not defined the value will default to HEADER
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#binary_media_types_python" style="color: inherit; text-decoration: inherit;">binary_<wbr>media_<wbr>types</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">Sequence[str]</span>
+        <span class="property-type">Sequence[builtins.str]</span>
     </dt>
     <dd>List of binary media types supported by the REST API. By default, the REST API supports only UTF-8-encoded text payloads.
 If importing an OpenAPI specification via the body argument, this corresponds to the x-amazon-apigateway-binary-media-types extension.
@@ -1188,7 +1188,7 @@ If the argument value is provided and is different than the OpenAPI value, the a
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#description_python" style="color: inherit; text-decoration: inherit;">description</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>Description of the REST API.</dd><dt class="property-optional"
             title="Optional">
@@ -1196,7 +1196,7 @@ If the argument value is provided and is different than the OpenAPI value, the a
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#disable_execute_api_endpoint_python" style="color: inherit; text-decoration: inherit;">disable_<wbr>execute_<wbr>api_<wbr>endpoint</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">bool</span>
+        <span class="property-type">builtins.bool</span>
     </dt>
     <dd>Whether clients can invoke your API by using the default execute-api endpoint. By default, clients can invoke
 your API with the default https://{api_id}.execute-api.{region}.amazonaws.com endpoint. To require that
@@ -1235,7 +1235,7 @@ specification for the API.</p>
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#stage_name_python" style="color: inherit; text-decoration: inherit;">stage_<wbr>name</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>The stage name for your API. This will get added as a base path to your API url.</dd><dt class="property-optional"
             title="Optional">
@@ -1254,7 +1254,7 @@ be created on your behalf if any <code>StaticRoute</code>s are provided.</p>
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#swagger_string_python" style="color: inherit; text-decoration: inherit;">swagger_<wbr>string</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd><p>A Swagger specification already in string form to use to initialize the APIGateway.  Note
 that you must manually provide permission for any route targets to be invoked by API Gateway
@@ -1266,7 +1266,7 @@ when using <code>swaggerString</code>.</p>
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#tags_python" style="color: inherit; text-decoration: inherit;">tags</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">Mapping[str, str]</span>
+        <span class="property-type">Mapping[str, builtins.str]</span>
     </dt>
     <dd>'Map of tags to assign to the resource. If configured with a provider <code>defaultTags</code> configuration block present,
 tags with matching keys will overwrite those defined at the provider-level.</dd></dl>
@@ -1646,7 +1646,7 @@ All [input](#inputs) properties are implicitly available as output properties. A
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#url_python" style="color: inherit; text-decoration: inherit;">url</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>The URL where the Rest API is exposed.</dd><dt class="property-"
             title="">
@@ -2250,7 +2250,7 @@ be &quot;header&quot; or &quot;query&quot;. If there are multiple identity sourc
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#parameter_name_python" style="color: inherit; text-decoration: inherit;">parameter_<wbr>name</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>parameterName is the name of the header or query parameter containing the authorization
 token. Must be &quot;Unused&quot; for multiple identity sources.</dd><dt class="property-optional"
@@ -2259,7 +2259,7 @@ token. Must be &quot;Unused&quot; for multiple identity sources.</dd><dt class="
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#auth_type_python" style="color: inherit; text-decoration: inherit;">auth_<wbr>type</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>Specifies the authorization mechanism for the client. Typical values are &quot;oauth2&quot; or &quot;custom&quot;.</dd><dt class="property-optional"
             title="Optional">
@@ -2267,7 +2267,7 @@ token. Must be &quot;Unused&quot; for multiple identity sources.</dd><dt class="
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#authorizer_name_python" style="color: inherit; text-decoration: inherit;">authorizer_<wbr>name</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>The name for the Authorizer to be referenced as. This must be unique for each unique
 authorizer within the API. If no name if specified, a name will be generated for you.</dd><dt class="property-optional"
@@ -2276,7 +2276,7 @@ authorizer within the API. If no name if specified, a name will be generated for
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#authorizer_result_ttl_in_seconds_python" style="color: inherit; text-decoration: inherit;">authorizer_<wbr>result_<wbr>ttl_<wbr>in_<wbr>seconds</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">float</span>
+        <span class="property-type">builtins.float</span>
     </dt>
     <dd>The number of seconds during which the resulting IAM policy is cached. Default is 300s. You
 can set this value to 0 to disable caching. Max value is 3600s. Note - if you are sharing an
@@ -2297,7 +2297,7 @@ cause problems for you.</dd><dt class="property-optional"
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#identity_source_python" style="color: inherit; text-decoration: inherit;">identity_<wbr>source</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">Sequence[str]</span>
+        <span class="property-type">Sequence[builtins.str]</span>
     </dt>
     <dd>List of mapping expressions of the request parameters as the identity source. This indicates
 where in the request identity information is expected. Applicable for the authorizer of the
@@ -2308,7 +2308,7 @@ where in the request identity information is expected. Applicable for the author
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#identity_validation_expression_python" style="color: inherit; text-decoration: inherit;">identity_<wbr>validation_<wbr>expression</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>A regular expression for validating the token as the incoming identity. It only invokes the
 authorizer's lambda if there is a match, else it will return a 401. This does not apply to
@@ -2318,7 +2318,7 @@ REQUEST Lambda Authorizers. Example: &quot;^x-[a-z]+&quot;.</dd><dt class="prope
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#methods_to_authorize_python" style="color: inherit; text-decoration: inherit;">methods_<wbr>to_<wbr>authorize</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">Sequence[str]</span>
+        <span class="property-type">Sequence[builtins.str]</span>
     </dt>
     <dd>For method authorization, you can define resource servers and custom scopes by specifying the
 &quot;resource-server/scope&quot;. e.g. [&quot;com.hamuta.movies/drama.view&quot;,
@@ -2330,7 +2330,7 @@ https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-def
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#parameter_location_python" style="color: inherit; text-decoration: inherit;">parameter_<wbr>location</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>Defines where in the request API Gateway should look for identity information. The value must
 be &quot;header&quot; or &quot;query&quot;. If there are multiple identity sources, the value must be &quot;header&quot;.</dd><dt class="property-optional"
@@ -2339,7 +2339,7 @@ be &quot;header&quot; or &quot;query&quot;. If there are multiple identity sourc
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#provider_arns_python" style="color: inherit; text-decoration: inherit;">provider_<wbr>arns</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">Sequence[str]</span>
+        <span class="property-type">Sequence[builtins.str]</span>
     </dt>
     <dd>The ARNs of the Cognito User Pools to use.</dd><dt class="property-optional"
             title="Optional">
@@ -2347,7 +2347,7 @@ be &quot;header&quot; or &quot;query&quot;. If there are multiple identity sourc
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#type_python" style="color: inherit; text-decoration: inherit;">type</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>The type of the authorizer. This value must be one of the following:</p>
 <ul>
@@ -2898,7 +2898,7 @@ Required<wbr>Parameter<pulumi-choosable type="language" values="python,go" class
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#in__python" style="color: inherit; text-decoration: inherit;">in_</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd></dd><dt class="property-optional"
             title="Optional">
@@ -2906,7 +2906,7 @@ Required<wbr>Parameter<pulumi-choosable type="language" values="python,go" class
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#name_python" style="color: inherit; text-decoration: inherit;">name</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>
@@ -3430,7 +3430,7 @@ gateway will validate these before sending traffic to the event handler.</dd><dt
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#path_python" style="color: inherit; text-decoration: inherit;">path</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>The path on the API that will serve this route.  If not prefixed with <code>/</code>,
 then a <code>/</code> will be added automatically to the beginning.</dd><dt class="property-optional"
@@ -3439,7 +3439,7 @@ then a <code>/</code> will be added automatically to the beginning.</dd><dt clas
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#api_key_required_python" style="color: inherit; text-decoration: inherit;">api_<wbr>key_<wbr>required</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">bool</span>
+        <span class="property-type">builtins.bool</span>
     </dt>
     <dd>If true, an API key will be required for this route. The source for the API Key can be set at
 the API level and by default, the source will be the HEADER.</dd><dt class="property-optional"
@@ -3457,7 +3457,7 @@ the route is called.</dd><dt class="property-optional"
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#content_type_python" style="color: inherit; text-decoration: inherit;">content_<wbr>type</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>The <code>content-type</code> to serve the file as.  Only valid when <code>localPath</code> points to a file.  If
 <code>localPath</code> points to a directory, the content types for all files will be inferred.</dd><dt class="property-optional"
@@ -3484,7 +3484,7 @@ the route is called.</dd><dt class="property-optional"
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#iam_auth_enabled_python" style="color: inherit; text-decoration: inherit;">iam_<wbr>auth_<wbr>enabled</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">bool</span>
+        <span class="property-type">builtins.bool</span>
     </dt>
     <dd>By default, the route method auth type is set to <code>NONE</code>. If true, the auth type will be
 set to <code>AWS_IAM</code>.</dd><dt class="property-optional"
@@ -3493,7 +3493,7 @@ set to <code>AWS_IAM</code>.</dd><dt class="property-optional"
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#index_python" style="color: inherit; text-decoration: inherit;">index</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str | bool</span>
+        <span class="property-type">builtins.str | builtins.bool</span>
     </dt>
     <dd>By default a <code>localPath</code> hosting static content will also serve 'index.html' in response to a request on a directory.
 To disable this pass <code>false</code> or supply a new index document name.</dd><dt class="property-optional"
@@ -3502,7 +3502,7 @@ To disable this pass <code>false</code> or supply a new index document name.</dd
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#local_path_python" style="color: inherit; text-decoration: inherit;">local_<wbr>path</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>The local path on disk to create static S3 resources for.  Files will be uploaded into S3
 objects, and directories will be recursively walked into.</dd><dt class="property-optional"
@@ -3796,7 +3796,7 @@ Swagger<wbr>Gateway<wbr>Response<pulumi-choosable type="language" values="python
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#response_parameters_python" style="color: inherit; text-decoration: inherit;">response_<wbr>parameters</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">Mapping[str, str]</span>
+        <span class="property-type">Mapping[str, builtins.str]</span>
     </dt>
     <dd></dd><dt class="property-optional"
             title="Optional">
@@ -3804,7 +3804,7 @@ Swagger<wbr>Gateway<wbr>Response<pulumi-choosable type="language" values="python
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#response_templates_python" style="color: inherit; text-decoration: inherit;">response_<wbr>templates</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">Mapping[str, str]</span>
+        <span class="property-type">Mapping[str, builtins.str]</span>
     </dt>
     <dd></dd><dt class="property-optional"
             title="Optional">
@@ -3812,7 +3812,7 @@ Swagger<wbr>Gateway<wbr>Response<pulumi-choosable type="language" values="python
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#status_code_python" style="color: inherit; text-decoration: inherit;">status_<wbr>code</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">float</span>
+        <span class="property-type">builtins.float</span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>
@@ -4359,7 +4359,7 @@ without invoking any backend.</p>
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#connection_id_python" style="color: inherit; text-decoration: inherit;">connection_<wbr>id</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>The (id) of the VpcLink used for the integration when connectionType=VPC_LINK and undefined,
 otherwise.</dd><dt class="property-optional"
@@ -4409,7 +4409,7 @@ integration request.</p>
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#uri_python" style="color: inherit; text-decoration: inherit;">uri</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd><p>Specifies Uniform Resource Identifier (URI) of the integration endpoint.</p>
 <p>For HTTP or HTTP_PROXY integrations, the URI must be a fully formed, encoded HTTP(S) URL

@@ -313,7 +313,7 @@ kubernetes_config_group_resource = kubernetes.yaml.ConfigGroup("kubernetesConfig
 ```typescript
 const kubernetesConfigGroupResource = new kubernetes.yaml.ConfigGroup("kubernetesConfigGroupResource", {
     files: "string",
-    objs: undefined,
+    objs: null,
     resourcePrefix: "string",
     transformations: ["any"],
     yaml: "string",
@@ -551,7 +551,7 @@ The ConfigGroup resource accepts the following [input](/docs/intro/concepts/inpu
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#files_python" style="color: inherit; text-decoration: inherit;">files</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str | Sequence[str]</span>
+        <span class="property-type">builtins.str | Sequence[builtins.str]</span>
     </dt>
     <dd>Set of paths or a URLs that uniquely identify files.</dd><dt class="property-optional"
             title="Optional">
@@ -567,7 +567,7 @@ The ConfigGroup resource accepts the following [input](/docs/intro/concepts/inpu
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#resource_prefix_python" style="color: inherit; text-decoration: inherit;">resource_<wbr>prefix</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>An optional prefix for the auto-generated resource names. Example: A resource created with resourcePrefix=&quot;foo&quot; would produce a resource named &quot;foo-resourceName&quot;.</dd><dt class="property-optional"
             title="Optional">
@@ -583,7 +583,7 @@ The ConfigGroup resource accepts the following [input](/docs/intro/concepts/inpu
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#yaml_python" style="color: inherit; text-decoration: inherit;">yaml</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str | Sequence[str]</span>
+        <span class="property-type">builtins.str | Sequence[builtins.str]</span>
     </dt>
     <dd>YAML text containing Kubernetes resource definitions.</dd></dl>
 </pulumi-choosable>
@@ -706,7 +706,7 @@ All [input](#inputs) properties are implicitly available as output properties. A
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#resources_python" style="color: inherit; text-decoration: inherit;">resources</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>Resources created by the ConfigGroup.</dd></dl>
 </pulumi-choosable>

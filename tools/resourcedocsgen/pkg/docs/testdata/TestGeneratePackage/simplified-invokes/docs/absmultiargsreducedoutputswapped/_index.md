@@ -45,12 +45,12 @@ function </span>absMultiArgsReducedOutputSwappedOutput<span class="p">(</span><s
 <div>
 <pulumi-choosable type="language" values="python">
 <div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"
-><span class="k">def </span>abs_multi_args_reduced_output_swapped<span class="p">(</span><span class="nx">b</span><span class="p">:</span> <span class="nx">Optional[float]</span> = None<span class="p">,</span>
-                                          <span class="nx">a</span><span class="p">:</span> <span class="nx">Optional[float]</span> = None<span class="p">,</span>
+><span class="k">def </span>abs_multi_args_reduced_output_swapped<span class="p">(</span><span class="nx">b</span><span class="p">:</span> <span class="nx">Optional[builtins.float]</span> = None<span class="p">,</span>
+                                          <span class="nx">a</span><span class="p">:</span> <span class="nx">Optional[builtins.float]</span> = None<span class="p">,</span>
                                           <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.InvokeOptions">Optional[InvokeOptions]</a></span> = None<span class="p">) -&gt;</span> <span>AbsMultiArgsReducedOutputSwappedResult</span
 ><span class="k">
-def </span>abs_multi_args_reduced_output_swapped_output<span class="p">(</span><span class="nx">b</span><span class="p">:</span> <span class="nx">Optional[pulumi.Input[float]]</span> = None<span class="p">,</span>
-                                          <span class="nx">a</span><span class="p">:</span> <span class="nx">Optional[pulumi.Input[float]]</span> = None<span class="p">,</span>
+def </span>abs_multi_args_reduced_output_swapped_output<span class="p">(</span><span class="nx">b</span><span class="p">:</span> <span class="nx">Optional[pulumi.Input[builtins.float]]</span> = None<span class="p">,</span>
+                                          <span class="nx">a</span><span class="p">:</span> <span class="nx">Optional[pulumi.Input[builtins.float]]</span> = None<span class="p">,</span>
                                           <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.InvokeOptions">Optional[InvokeOptions]</a></span> = None<span class="p">) -&gt;</span> <span>Output[AbsMultiArgsReducedOutputSwappedResult]</span
 ></code></pre></div>
 </pulumi-choosable>
@@ -199,7 +199,7 @@ The following arguments are supported:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#a_python" style="color: inherit; text-decoration: inherit;">a</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">float</span>
+        <span class="property-type">builtins.float</span>
     </dt>
     <dd></dd><dt class="property-required"
             title="Required">
@@ -207,7 +207,7 @@ The following arguments are supported:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#b_python" style="color: inherit; text-decoration: inherit;">b</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">float</span>
+        <span class="property-type">builtins.float</span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>

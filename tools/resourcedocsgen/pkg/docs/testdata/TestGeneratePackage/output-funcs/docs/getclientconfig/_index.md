@@ -264,7 +264,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#client_id_python" style="color: inherit; text-decoration: inherit;">client_<wbr>id</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>Azure Client ID (Application Object ID).</dd><dt class="property-"
             title="">
@@ -272,7 +272,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#object_id_python" style="color: inherit; text-decoration: inherit;">object_<wbr>id</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>Azure Object ID of the current user or service principal.</dd><dt class="property-"
             title="">
@@ -280,7 +280,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#subscription_id_python" style="color: inherit; text-decoration: inherit;">subscription_<wbr>id</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>Azure Subscription ID</dd><dt class="property-"
             title="">
@@ -288,7 +288,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#tenant_id_python" style="color: inherit; text-decoration: inherit;">tenant_<wbr>id</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>Azure Tenant ID</dd></dl>
 </pulumi-choosable>

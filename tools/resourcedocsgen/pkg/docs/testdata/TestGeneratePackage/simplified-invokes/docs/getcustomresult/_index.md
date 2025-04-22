@@ -42,10 +42,10 @@ function </span>getCustomResultOutput<span class="p">(</span><span class="nx">ar
 <div>
 <pulumi-choosable type="language" values="python">
 <div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"
-><span class="k">def </span>get_custom_result<span class="p">(</span><span class="nx">a</span><span class="p">:</span> <span class="nx">Optional[float]</span> = None<span class="p">,</span>
+><span class="k">def </span>get_custom_result<span class="p">(</span><span class="nx">a</span><span class="p">:</span> <span class="nx">Optional[builtins.float]</span> = None<span class="p">,</span>
                       <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.InvokeOptions">Optional[InvokeOptions]</a></span> = None<span class="p">) -&gt;</span> <span>GetCustomResultResult</span
 ><span class="k">
-def </span>get_custom_result_output<span class="p">(</span><span class="nx">a</span><span class="p">:</span> <span class="nx">Optional[pulumi.Input[float]]</span> = None<span class="p">,</span>
+def </span>get_custom_result_output<span class="p">(</span><span class="nx">a</span><span class="p">:</span> <span class="nx">Optional[pulumi.Input[builtins.float]]</span> = None<span class="p">,</span>
                       <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.InvokeOptions">Optional[InvokeOptions]</a></span> = None<span class="p">) -&gt;</span> <span>Output[GetCustomResultResult]</span
 ></code></pre></div>
 </pulumi-choosable>
@@ -162,7 +162,7 @@ The following arguments are supported:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#a_python" style="color: inherit; text-decoration: inherit;">a</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">float</span>
+        <span class="property-type">builtins.float</span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>
@@ -255,7 +255,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#value_python" style="color: inherit; text-decoration: inherit;">value</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>
@@ -349,7 +349,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#value_python" style="color: inherit; text-decoration: inherit;">value</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>

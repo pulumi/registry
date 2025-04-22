@@ -43,8 +43,8 @@ Resources are created with functions called constructors. To learn more about de
 <span class=nd>@overload</span>
 <span class="k">def </span><span class="nx">Res</span><span class="p">(</span><span class="nx">resource_name</span><span class="p">:</span> <span class="nx">str</span><span class="p">,</span>
         <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.ResourceOptions">Optional[ResourceOptions]</a></span> = None<span class="p">,</span>
-        <span class="nx">id</span><span class="p">:</span> <span class="nx">Optional[str]</span> = None<span class="p">,</span>
-        <span class="nx">urn</span><span class="p">:</span> <span class="nx">Optional[str]</span> = None<span class="p">)</span></code></pre></div>
+        <span class="nx">id</span><span class="p">:</span> <span class="nx">Optional[builtins.str]</span> = None<span class="p">,</span>
+        <span class="nx">urn</span><span class="p">:</span> <span class="nx">Optional[builtins.str]</span> = None<span class="p">)</span></code></pre></div>
 </div></pulumi-choosable>
 </div>
 
@@ -424,7 +424,7 @@ The Res resource accepts the following [input](/docs/intro/concepts/inputs-outpu
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_python" style="color: inherit; text-decoration: inherit;">id</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd></dd><dt class="property-optional"
             title="Optional">
@@ -432,7 +432,7 @@ The Res resource accepts the following [input](/docs/intro/concepts/inputs-outpu
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#urn_python" style="color: inherit; text-decoration: inherit;">urn</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>
@@ -563,7 +563,7 @@ All [input](#inputs) properties are implicitly available as output properties. A
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_python" style="color: inherit; text-decoration: inherit;">id</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>The provider-assigned unique ID for this managed resource.</dd><dt class="property-"
             title="">
@@ -709,7 +709,7 @@ Inner<wbr>Type<pulumi-choosable type="language" values="python,go" class="inline
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_python" style="color: inherit; text-decoration: inherit;">id</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd></dd><dt class="property-optional"
             title="Optional">
@@ -717,7 +717,7 @@ Inner<wbr>Type<pulumi-choosable type="language" values="python,go" class="inline
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#urn_python" style="color: inherit; text-decoration: inherit;">urn</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>

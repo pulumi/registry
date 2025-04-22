@@ -193,7 +193,7 @@ Resources are created with functions called constructors. To learn more about de
 <span class=nd>@overload</span>
 <span class="k">def </span><span class="nx">RandomUuid</span><span class="p">(</span><span class="nx">resource_name</span><span class="p">:</span> <span class="nx">str</span><span class="p">,</span>
                <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.ResourceOptions">Optional[ResourceOptions]</a></span> = None<span class="p">,</span>
-               <span class="nx">keepers</span><span class="p">:</span> <span class="nx">Optional[Mapping[str, str]]</span> = None<span class="p">)</span></code></pre></div>
+               <span class="nx">keepers</span><span class="p">:</span> <span class="nx">Optional[Mapping[str, builtins.str]]</span> = None<span class="p">)</span></code></pre></div>
 </div></pulumi-choosable>
 </div>
 
@@ -542,7 +542,7 @@ The RandomUuid resource accepts the following [input](/docs/intro/concepts/input
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#keepers_python" style="color: inherit; text-decoration: inherit;">keepers</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">Mapping[str, str]</span>
+        <span class="property-type">Mapping[str, builtins.str]</span>
     </dt>
     <dd>Arbitrary map of values that, when changed, will trigger recreation of resource. See the main provider documentation for more information.</dd></dl>
 </pulumi-choosable>
@@ -665,7 +665,7 @@ All [input](#inputs) properties are implicitly available as output properties. A
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_python" style="color: inherit; text-decoration: inherit;">id</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>The provider-assigned unique ID for this managed resource.</dd><dt class="property-"
             title="">
@@ -673,7 +673,7 @@ All [input](#inputs) properties are implicitly available as output properties. A
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#result_python" style="color: inherit; text-decoration: inherit;">result</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>The generated uuid presented in string format.</dd></dl>
 </pulumi-choosable>
@@ -722,8 +722,8 @@ Get an existing RandomUuid resource's state with the given name, ID, and optiona
 <span class="k">def </span><span class="nf">get</span><span class="p">(</span><span class="nx">resource_name</span><span class="p">:</span> <span class="nx">str</span><span class="p">,</span>
         <span class="nx">id</span><span class="p">:</span> <span class="nx">str</span><span class="p">,</span>
         <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.ResourceOptions">Optional[ResourceOptions]</a></span> = None<span class="p">,</span>
-        <span class="nx">keepers</span><span class="p">:</span> <span class="nx">Optional[Mapping[str, str]]</span> = None<span class="p">,</span>
-        <span class="nx">result</span><span class="p">:</span> <span class="nx">Optional[str]</span> = None<span class="p">) -&gt;</span> RandomUuid</code></pre></div>
+        <span class="nx">keepers</span><span class="p">:</span> <span class="nx">Optional[Mapping[str, builtins.str]]</span> = None<span class="p">,</span>
+        <span class="nx">result</span><span class="p">:</span> <span class="nx">Optional[builtins.str]</span> = None<span class="p">) -&gt;</span> RandomUuid</code></pre></div>
 </div></pulumi-choosable>
 </div>
 
@@ -989,7 +989,7 @@ The following state arguments are supported:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#state_keepers_python" style="color: inherit; text-decoration: inherit;">keepers</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">Mapping[str, str]</span>
+        <span class="property-type">Mapping[str, builtins.str]</span>
     </dt>
     <dd>Arbitrary map of values that, when changed, will trigger recreation of resource. See the main provider documentation for more information.</dd><dt class="property-optional"
             title="Optional">
@@ -997,7 +997,7 @@ The following state arguments are supported:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#state_result_python" style="color: inherit; text-decoration: inherit;">result</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>The generated uuid presented in string format.</dd></dl>
 </pulumi-choosable>

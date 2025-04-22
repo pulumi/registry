@@ -41,19 +41,19 @@ Resources are created with functions called constructors. To learn more about de
 <span class=nd>@overload</span>
 <span class="k">def </span><span class="nx">ModuleResource</span><span class="p">(</span><span class="nx">resource_name</span><span class="p">:</span> <span class="nx">str</span><span class="p">,</span>
                    <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.ResourceOptions">Optional[ResourceOptions]</a></span> = None<span class="p">,</span>
-                   <span class="nx">plain_required_bool</span><span class="p">:</span> <span class="nx">Optional[bool]</span> = None<span class="p">,</span>
-                   <span class="nx">required_string</span><span class="p">:</span> <span class="nx">Optional[str]</span> = None<span class="p">,</span>
-                   <span class="nx">required_number</span><span class="p">:</span> <span class="nx">Optional[float]</span> = None<span class="p">,</span>
+                   <span class="nx">plain_required_bool</span><span class="p">:</span> <span class="nx">Optional[builtins.bool]</span> = None<span class="p">,</span>
+                   <span class="nx">required_string</span><span class="p">:</span> <span class="nx">Optional[builtins.str]</span> = None<span class="p">,</span>
+                   <span class="nx">required_number</span><span class="p">:</span> <span class="nx">Optional[builtins.float]</span> = None<span class="p">,</span>
                    <span class="nx">required_enum</span><span class="p">:</span> <span class="nx">Optional[EnumThing]</span> = None<span class="p">,</span>
-                   <span class="nx">required_bool</span><span class="p">:</span> <span class="nx">Optional[bool]</span> = None<span class="p">,</span>
-                   <span class="nx">plain_required_string</span><span class="p">:</span> <span class="nx">Optional[str]</span> = None<span class="p">,</span>
-                   <span class="nx">plain_required_number</span><span class="p">:</span> <span class="nx">Optional[float]</span> = None<span class="p">,</span>
-                   <span class="nx">optional_string</span><span class="p">:</span> <span class="nx">Optional[str]</span> = None<span class="p">,</span>
-                   <span class="nx">plain_optional_string</span><span class="p">:</span> <span class="nx">Optional[str]</span> = None<span class="p">,</span>
-                   <span class="nx">plain_optional_number</span><span class="p">:</span> <span class="nx">Optional[float]</span> = None<span class="p">,</span>
-                   <span class="nx">plain_optional_bool</span><span class="p">:</span> <span class="nx">Optional[bool]</span> = None<span class="p">,</span>
-                   <span class="nx">optional_bool</span><span class="p">:</span> <span class="nx">Optional[bool]</span> = None<span class="p">,</span>
-                   <span class="nx">optional_number</span><span class="p">:</span> <span class="nx">Optional[float]</span> = None<span class="p">,</span>
+                   <span class="nx">required_bool</span><span class="p">:</span> <span class="nx">Optional[builtins.bool]</span> = None<span class="p">,</span>
+                   <span class="nx">plain_required_string</span><span class="p">:</span> <span class="nx">Optional[builtins.str]</span> = None<span class="p">,</span>
+                   <span class="nx">plain_required_number</span><span class="p">:</span> <span class="nx">Optional[builtins.float]</span> = None<span class="p">,</span>
+                   <span class="nx">optional_string</span><span class="p">:</span> <span class="nx">Optional[builtins.str]</span> = None<span class="p">,</span>
+                   <span class="nx">plain_optional_string</span><span class="p">:</span> <span class="nx">Optional[builtins.str]</span> = None<span class="p">,</span>
+                   <span class="nx">plain_optional_number</span><span class="p">:</span> <span class="nx">Optional[builtins.float]</span> = None<span class="p">,</span>
+                   <span class="nx">plain_optional_bool</span><span class="p">:</span> <span class="nx">Optional[builtins.bool]</span> = None<span class="p">,</span>
+                   <span class="nx">optional_bool</span><span class="p">:</span> <span class="nx">Optional[builtins.bool]</span> = None<span class="p">,</span>
+                   <span class="nx">optional_number</span><span class="p">:</span> <span class="nx">Optional[builtins.float]</span> = None<span class="p">,</span>
                    <span class="nx">optional_enum</span><span class="p">:</span> <span class="nx">Optional[EnumThing]</span> = None<span class="p">)</span></code></pre></div>
 </div></pulumi-choosable>
 </div>
@@ -908,7 +908,7 @@ The ModuleResource resource accepts the following [input](/docs/intro/concepts/i
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#plain_required_bool_python" style="color: inherit; text-decoration: inherit;">plain_<wbr>required_<wbr>bool</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">bool</span>
+        <span class="property-type">builtins.bool</span>
     </dt>
     <dd></dd><dt class="property-required"
             title="Required">
@@ -916,7 +916,7 @@ The ModuleResource resource accepts the following [input](/docs/intro/concepts/i
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#plain_required_number_python" style="color: inherit; text-decoration: inherit;">plain_<wbr>required_<wbr>number</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">float</span>
+        <span class="property-type">builtins.float</span>
     </dt>
     <dd></dd><dt class="property-required"
             title="Required">
@@ -924,7 +924,7 @@ The ModuleResource resource accepts the following [input](/docs/intro/concepts/i
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#plain_required_string_python" style="color: inherit; text-decoration: inherit;">plain_<wbr>required_<wbr>string</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd></dd><dt class="property-required"
             title="Required">
@@ -932,7 +932,7 @@ The ModuleResource resource accepts the following [input](/docs/intro/concepts/i
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#required_bool_python" style="color: inherit; text-decoration: inherit;">required_<wbr>bool</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">bool</span>
+        <span class="property-type">builtins.bool</span>
     </dt>
     <dd></dd><dt class="property-required"
             title="Required">
@@ -948,7 +948,7 @@ The ModuleResource resource accepts the following [input](/docs/intro/concepts/i
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#required_number_python" style="color: inherit; text-decoration: inherit;">required_<wbr>number</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">float</span>
+        <span class="property-type">builtins.float</span>
     </dt>
     <dd></dd><dt class="property-required"
             title="Required">
@@ -956,7 +956,7 @@ The ModuleResource resource accepts the following [input](/docs/intro/concepts/i
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#required_string_python" style="color: inherit; text-decoration: inherit;">required_<wbr>string</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd></dd><dt class="property-optional"
             title="Optional">
@@ -964,7 +964,7 @@ The ModuleResource resource accepts the following [input](/docs/intro/concepts/i
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#optional_bool_python" style="color: inherit; text-decoration: inherit;">optional_<wbr>bool</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">bool</span>
+        <span class="property-type">builtins.bool</span>
     </dt>
     <dd></dd><dt class="property-optional"
             title="Optional">
@@ -980,7 +980,7 @@ The ModuleResource resource accepts the following [input](/docs/intro/concepts/i
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#optional_number_python" style="color: inherit; text-decoration: inherit;">optional_<wbr>number</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">float</span>
+        <span class="property-type">builtins.float</span>
     </dt>
     <dd></dd><dt class="property-optional"
             title="Optional">
@@ -988,7 +988,7 @@ The ModuleResource resource accepts the following [input](/docs/intro/concepts/i
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#optional_string_python" style="color: inherit; text-decoration: inherit;">optional_<wbr>string</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd></dd><dt class="property-optional"
             title="Optional">
@@ -996,7 +996,7 @@ The ModuleResource resource accepts the following [input](/docs/intro/concepts/i
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#plain_optional_bool_python" style="color: inherit; text-decoration: inherit;">plain_<wbr>optional_<wbr>bool</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">bool</span>
+        <span class="property-type">builtins.bool</span>
     </dt>
     <dd></dd><dt class="property-optional"
             title="Optional">
@@ -1004,7 +1004,7 @@ The ModuleResource resource accepts the following [input](/docs/intro/concepts/i
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#plain_optional_number_python" style="color: inherit; text-decoration: inherit;">plain_<wbr>optional_<wbr>number</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">float</span>
+        <span class="property-type">builtins.float</span>
     </dt>
     <dd></dd><dt class="property-optional"
             title="Optional">
@@ -1012,7 +1012,7 @@ The ModuleResource resource accepts the following [input](/docs/intro/concepts/i
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#plain_optional_string_python" style="color: inherit; text-decoration: inherit;">plain_<wbr>optional_<wbr>string</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>
@@ -1207,7 +1207,7 @@ All [input](#inputs) properties are implicitly available as output properties. A
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_python" style="color: inherit; text-decoration: inherit;">id</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>The provider-assigned unique ID for this managed resource.</dd></dl>
 </pulumi-choosable>

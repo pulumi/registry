@@ -257,7 +257,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#age_python" style="color: inherit; text-decoration: inherit;">age</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">int</span>
+        <span class="property-type">builtins.int</span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>

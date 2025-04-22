@@ -226,10 +226,10 @@ Resources are created with functions called constructors. To learn more about de
 <span class=nd>@overload</span>
 <span class="k">def </span><span class="nx">RandomShuffle</span><span class="p">(</span><span class="nx">resource_name</span><span class="p">:</span> <span class="nx">str</span><span class="p">,</span>
                   <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.ResourceOptions">Optional[ResourceOptions]</a></span> = None<span class="p">,</span>
-                  <span class="nx">inputs</span><span class="p">:</span> <span class="nx">Optional[Sequence[str]]</span> = None<span class="p">,</span>
-                  <span class="nx">keepers</span><span class="p">:</span> <span class="nx">Optional[Mapping[str, str]]</span> = None<span class="p">,</span>
-                  <span class="nx">result_count</span><span class="p">:</span> <span class="nx">Optional[int]</span> = None<span class="p">,</span>
-                  <span class="nx">seed</span><span class="p">:</span> <span class="nx">Optional[str]</span> = None<span class="p">)</span></code></pre></div>
+                  <span class="nx">inputs</span><span class="p">:</span> <span class="nx">Optional[Sequence[builtins.str]]</span> = None<span class="p">,</span>
+                  <span class="nx">keepers</span><span class="p">:</span> <span class="nx">Optional[Mapping[str, builtins.str]]</span> = None<span class="p">,</span>
+                  <span class="nx">result_count</span><span class="p">:</span> <span class="nx">Optional[builtins.int]</span> = None<span class="p">,</span>
+                  <span class="nx">seed</span><span class="p">:</span> <span class="nx">Optional[builtins.str]</span> = None<span class="p">)</span></code></pre></div>
 </div></pulumi-choosable>
 </div>
 
@@ -701,7 +701,7 @@ The RandomShuffle resource accepts the following [input](/docs/intro/concepts/in
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#inputs_python" style="color: inherit; text-decoration: inherit;">inputs</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">Sequence[str]</span>
+        <span class="property-type">Sequence[builtins.str]</span>
     </dt>
     <dd>The list of strings to shuffle.</dd><dt class="property-optional"
             title="Optional">
@@ -709,7 +709,7 @@ The RandomShuffle resource accepts the following [input](/docs/intro/concepts/in
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#keepers_python" style="color: inherit; text-decoration: inherit;">keepers</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">Mapping[str, str]</span>
+        <span class="property-type">Mapping[str, builtins.str]</span>
     </dt>
     <dd>Arbitrary map of values that, when changed, will trigger recreation of resource. See the main provider documentation for more information.</dd><dt class="property-optional"
             title="Optional">
@@ -717,7 +717,7 @@ The RandomShuffle resource accepts the following [input](/docs/intro/concepts/in
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#result_count_python" style="color: inherit; text-decoration: inherit;">result_<wbr>count</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">int</span>
+        <span class="property-type">builtins.int</span>
     </dt>
     <dd>The number of results to return. Defaults to the number of items in the <code>input</code> list. If fewer items are requested, some elements will be excluded from the result. If more items are requested, items will be repeated in the result but not more frequently than the number of items in the input list.</dd><dt class="property-optional"
             title="Optional">
@@ -725,7 +725,7 @@ The RandomShuffle resource accepts the following [input](/docs/intro/concepts/in
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#seed_python" style="color: inherit; text-decoration: inherit;">seed</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>Arbitrary string with which to seed the random number generator, in order to produce less-volatile permutations of the list.</dd></dl>
 </pulumi-choosable>
@@ -876,7 +876,7 @@ set, or the number of elements in <code>input</code>.</dd></dl>
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_python" style="color: inherit; text-decoration: inherit;">id</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>The provider-assigned unique ID for this managed resource.</dd><dt class="property-"
             title="">
@@ -884,7 +884,7 @@ set, or the number of elements in <code>input</code>.</dd></dl>
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#results_python" style="color: inherit; text-decoration: inherit;">results</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">Sequence[str]</span>
+        <span class="property-type">Sequence[builtins.str]</span>
     </dt>
     <dd>Random permutation of the list of strings given in <code>input</code>. The number of elements is determined by <code>result_count</code> if
 set, or the number of elements in <code>input</code>.</dd></dl>
@@ -935,11 +935,11 @@ Get an existing RandomShuffle resource's state with the given name, ID, and opti
 <span class="k">def </span><span class="nf">get</span><span class="p">(</span><span class="nx">resource_name</span><span class="p">:</span> <span class="nx">str</span><span class="p">,</span>
         <span class="nx">id</span><span class="p">:</span> <span class="nx">str</span><span class="p">,</span>
         <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.ResourceOptions">Optional[ResourceOptions]</a></span> = None<span class="p">,</span>
-        <span class="nx">inputs</span><span class="p">:</span> <span class="nx">Optional[Sequence[str]]</span> = None<span class="p">,</span>
-        <span class="nx">keepers</span><span class="p">:</span> <span class="nx">Optional[Mapping[str, str]]</span> = None<span class="p">,</span>
-        <span class="nx">result_count</span><span class="p">:</span> <span class="nx">Optional[int]</span> = None<span class="p">,</span>
-        <span class="nx">results</span><span class="p">:</span> <span class="nx">Optional[Sequence[str]]</span> = None<span class="p">,</span>
-        <span class="nx">seed</span><span class="p">:</span> <span class="nx">Optional[str]</span> = None<span class="p">) -&gt;</span> RandomShuffle</code></pre></div>
+        <span class="nx">inputs</span><span class="p">:</span> <span class="nx">Optional[Sequence[builtins.str]]</span> = None<span class="p">,</span>
+        <span class="nx">keepers</span><span class="p">:</span> <span class="nx">Optional[Mapping[str, builtins.str]]</span> = None<span class="p">,</span>
+        <span class="nx">result_count</span><span class="p">:</span> <span class="nx">Optional[builtins.int]</span> = None<span class="p">,</span>
+        <span class="nx">results</span><span class="p">:</span> <span class="nx">Optional[Sequence[builtins.str]]</span> = None<span class="p">,</span>
+        <span class="nx">seed</span><span class="p">:</span> <span class="nx">Optional[builtins.str]</span> = None<span class="p">) -&gt;</span> RandomShuffle</code></pre></div>
 </div></pulumi-choosable>
 </div>
 
@@ -1305,7 +1305,7 @@ set, or the number of elements in <code>input</code>.</dd><dt class="property-op
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#state_inputs_python" style="color: inherit; text-decoration: inherit;">inputs</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">Sequence[str]</span>
+        <span class="property-type">Sequence[builtins.str]</span>
     </dt>
     <dd>The list of strings to shuffle.</dd><dt class="property-optional"
             title="Optional">
@@ -1313,7 +1313,7 @@ set, or the number of elements in <code>input</code>.</dd><dt class="property-op
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#state_keepers_python" style="color: inherit; text-decoration: inherit;">keepers</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">Mapping[str, str]</span>
+        <span class="property-type">Mapping[str, builtins.str]</span>
     </dt>
     <dd>Arbitrary map of values that, when changed, will trigger recreation of resource. See the main provider documentation for more information.</dd><dt class="property-optional"
             title="Optional">
@@ -1321,7 +1321,7 @@ set, or the number of elements in <code>input</code>.</dd><dt class="property-op
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#state_result_count_python" style="color: inherit; text-decoration: inherit;">result_<wbr>count</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">int</span>
+        <span class="property-type">builtins.int</span>
     </dt>
     <dd>The number of results to return. Defaults to the number of items in the <code>input</code> list. If fewer items are requested, some elements will be excluded from the result. If more items are requested, items will be repeated in the result but not more frequently than the number of items in the input list.</dd><dt class="property-optional"
             title="Optional">
@@ -1329,7 +1329,7 @@ set, or the number of elements in <code>input</code>.</dd><dt class="property-op
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#state_results_python" style="color: inherit; text-decoration: inherit;">results</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">Sequence[str]</span>
+        <span class="property-type">Sequence[builtins.str]</span>
     </dt>
     <dd>Random permutation of the list of strings given in <code>input</code>. The number of elements is determined by <code>result_count</code> if
 set, or the number of elements in <code>input</code>.</dd><dt class="property-optional"
@@ -1338,7 +1338,7 @@ set, or the number of elements in <code>input</code>.</dd><dt class="property-op
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#state_seed_python" style="color: inherit; text-decoration: inherit;">seed</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>Arbitrary string with which to seed the random number generator, in order to produce less-volatile permutations of the list.</dd></dl>
 </pulumi-choosable>

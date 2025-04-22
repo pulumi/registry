@@ -549,7 +549,7 @@ This type is defined in the <a href="/registry/packages/azure-native">Azure Nati
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#acr_login_server_out_python" style="color: inherit; text-decoration: inherit;">acr_<wbr>login_<wbr>server_<wbr>out</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>The login server url</dd><dt class="property-"
             title="">

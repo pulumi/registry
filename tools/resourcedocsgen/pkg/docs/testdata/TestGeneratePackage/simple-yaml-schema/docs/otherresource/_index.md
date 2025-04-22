@@ -41,7 +41,7 @@ Resources are created with functions called constructors. To learn more about de
 <span class=nd>@overload</span>
 <span class="k">def </span><span class="nx">OtherResource</span><span class="p">(</span><span class="nx">resource_name</span><span class="p">:</span> <span class="nx">str</span><span class="p">,</span>
                   <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.ResourceOptions">Optional[ResourceOptions]</a></span> = None<span class="p">,</span>
-                  <span class="nx">bar</span><span class="p">:</span> <span class="nx">Optional[Sequence[str]]</span> = None<span class="p">,</span>
+                  <span class="nx">bar</span><span class="p">:</span> <span class="nx">Optional[Sequence[builtins.str]]</span> = None<span class="p">,</span>
                   <span class="nx">foo</span><span class="p">:</span> <span class="nx">Optional[Resource]</span> = None<span class="p">)</span></code></pre></div>
 </div></pulumi-choosable>
 </div>
@@ -428,7 +428,7 @@ The OtherResource resource accepts the following [input](/docs/intro/concepts/in
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#bar_python" style="color: inherit; text-decoration: inherit;">bar</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">Sequence[str]</span>
+        <span class="property-type">Sequence[builtins.str]</span>
     </dt>
     <dd></dd><dt class="property-optional"
             title="Optional">

@@ -44,8 +44,8 @@ Resources are created with functions called constructors. To learn more about de
 <span class="k">def </span><span class="nx">Provider</span><span class="p">(</span><span class="nx">resource_name</span><span class="p">:</span> <span class="nx">str</span><span class="p">,</span>
              <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.ResourceOptions">Optional[ResourceOptions]</a></span> = None<span class="p">,</span>
              <span class="nx">kube_client_settings</span><span class="p">:</span> <span class="nx">Optional[KubeClientSettingsArgs]</span> = None<span class="p">,</span>
-             <span class="nx">kubeconfig</span><span class="p">:</span> <span class="nx">Optional[str]</span> = None<span class="p">,</span>
-             <span class="nx">namespace</span><span class="p">:</span> <span class="nx">Optional[str]</span> = None<span class="p">)</span></code></pre></div>
+             <span class="nx">kubeconfig</span><span class="p">:</span> <span class="nx">Optional[builtins.str]</span> = None<span class="p">,</span>
+             <span class="nx">namespace</span><span class="p">:</span> <span class="nx">Optional[builtins.str]</span> = None<span class="p">)</span></code></pre></div>
 </div></pulumi-choosable>
 </div>
 
@@ -400,7 +400,7 @@ The Provider resource accepts the following [input](/docs/intro/concepts/inputs-
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#kubeconfig_python" style="color: inherit; text-decoration: inherit;">kubeconfig</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>The contents of a kubeconfig file or the path to a kubeconfig file. It can also be sourced from the following environment variable: <code>KUBECONFIG</code></dd><dt class="property-optional"
             title="Optional">
@@ -408,7 +408,7 @@ The Provider resource accepts the following [input](/docs/intro/concepts/inputs-
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#namespace_python" style="color: inherit; text-decoration: inherit;">namespace</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd><p>If present, the default namespace to use. This flag is ignored for cluster-scoped resources.</p>
 <p>A namespace can be specified in multiple places, and the precedence is as follows:</p>
@@ -529,7 +529,7 @@ All [input](#inputs) properties are implicitly available as output properties. A
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_python" style="color: inherit; text-decoration: inherit;">id</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>The provider-assigned unique ID for this managed resource.</dd></dl>
 </pulumi-choosable>
@@ -627,7 +627,7 @@ Kube<wbr>Client<wbr>Settings<pulumi-choosable type="language" values="python,go"
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#timeout_python" style="color: inherit; text-decoration: inherit;">timeout</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">int</span>
+        <span class="property-type">builtins.int</span>
     </dt>
     <dd>Maximum time in seconds to wait before cancelling a HTTP request to the Kubernetes server. Default value is 32. It can also be sourced from the following environment variable: <code>PULUMI_K8S_CLIENT_TIMEOUT</code></dd></dl>
 </pulumi-choosable>

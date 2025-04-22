@@ -44,9 +44,9 @@ Resources are created with functions called constructors. To learn more about de
              <span class="nx">config</span><span class="p">:</span> <span class="nx">Optional[ConfigArgs]</span> = None<span class="p">,</span>
              <span class="nx">config_array</span><span class="p">:</span> <span class="nx">Optional[Sequence[ConfigArgs]]</span> = None<span class="p">,</span>
              <span class="nx">config_map</span><span class="p">:</span> <span class="nx">Optional[Mapping[str, ConfigArgs]]</span> = None<span class="p">,</span>
-             <span class="nx">foo</span><span class="p">:</span> <span class="nx">Optional[str]</span> = None<span class="p">,</span>
-             <span class="nx">foo_array</span><span class="p">:</span> <span class="nx">Optional[Sequence[str]]</span> = None<span class="p">,</span>
-             <span class="nx">foo_map</span><span class="p">:</span> <span class="nx">Optional[Mapping[str, str]]</span> = None<span class="p">)</span></code></pre></div>
+             <span class="nx">foo</span><span class="p">:</span> <span class="nx">Optional[builtins.str]</span> = None<span class="p">,</span>
+             <span class="nx">foo_array</span><span class="p">:</span> <span class="nx">Optional[Sequence[builtins.str]]</span> = None<span class="p">,</span>
+             <span class="nx">foo_map</span><span class="p">:</span> <span class="nx">Optional[Mapping[str, builtins.str]]</span> = None<span class="p">)</span></code></pre></div>
 </div></pulumi-choosable>
 </div>
 
@@ -669,7 +669,7 @@ The Resource resource accepts the following [input](/docs/intro/concepts/inputs-
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#foo_python" style="color: inherit; text-decoration: inherit;">foo</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd></dd><dt class="property-required"
             title="Required">
@@ -677,7 +677,7 @@ The Resource resource accepts the following [input](/docs/intro/concepts/inputs-
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#foo_array_python" style="color: inherit; text-decoration: inherit;">foo_<wbr>array</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">Sequence[str]</span>
+        <span class="property-type">Sequence[builtins.str]</span>
     </dt>
     <dd></dd><dt class="property-required"
             title="Required">
@@ -685,7 +685,7 @@ The Resource resource accepts the following [input](/docs/intro/concepts/inputs-
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#foo_map_python" style="color: inherit; text-decoration: inherit;">foo_<wbr>map</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">Mapping[str, str]</span>
+        <span class="property-type">Mapping[str, builtins.str]</span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>
@@ -816,7 +816,7 @@ All [input](#inputs) properties are implicitly available as output properties. A
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_python" style="color: inherit; text-decoration: inherit;">id</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>The provider-assigned unique ID for this managed resource.</dd></dl>
 </pulumi-choosable>
@@ -914,7 +914,7 @@ Config<pulumi-choosable type="language" values="python,go" class="inline">, Conf
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#foo_python" style="color: inherit; text-decoration: inherit;">foo</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>

@@ -41,7 +41,7 @@ Resources are created with functions called constructors. To learn more about de
 <span class=nd>@overload</span>
 <span class="k">def </span><span class="nx">StaticPage</span><span class="p">(</span><span class="nx">resource_name</span><span class="p">:</span> <span class="nx">str</span><span class="p">,</span>
                <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.ResourceOptions">Optional[ResourceOptions]</a></span> = None<span class="p">,</span>
-               <span class="nx">index_content</span><span class="p">:</span> <span class="nx">Optional[str]</span> = None<span class="p">,</span>
+               <span class="nx">index_content</span><span class="p">:</span> <span class="nx">Optional[builtins.str]</span> = None<span class="p">,</span>
                <span class="nx">foo</span><span class="p">:</span> <span class="nx">Optional[FooArgs]</span> = None<span class="p">)</span></code></pre></div>
 </div></pulumi-choosable>
 </div>
@@ -434,7 +434,7 @@ The StaticPage resource accepts the following [input](/docs/intro/concepts/input
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#index_content_python" style="color: inherit; text-decoration: inherit;">index_<wbr>content</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>The HTML content for index.html.</dd><dt class="property-optional"
             title="Optional">
@@ -586,7 +586,7 @@ This type is defined in the <a href="/registry/packages/aws">AWS Classic</a> pac
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#website_url_python" style="color: inherit; text-decoration: inherit;">website_<wbr>url</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>The website URL.</dd></dl>
 </pulumi-choosable>
@@ -693,7 +693,7 @@ Foo<pulumi-choosable type="language" values="python,go" class="inline">, Foo<wbr
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#a_python" style="color: inherit; text-decoration: inherit;">a</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">bool</span>
+        <span class="property-type">builtins.bool</span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>

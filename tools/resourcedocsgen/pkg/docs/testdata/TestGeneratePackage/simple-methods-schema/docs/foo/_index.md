@@ -414,17 +414,17 @@ A description of bar.
 <pulumi-choosable type="language" values="python">
 <div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">def </span>bar(</span><span class="nx">self</span><span class="p">,</span>
         <span class="nx">baz_required</span><span class="p">:</span> <span class="nx">pulumi.Input[_nested.BazArgs]</span><span class="p">,</span>
-        <span class="nx">bool_value_required</span><span class="p">:</span> <span class="nx">pulumi.Input[bool]</span><span class="p">,</span>
+        <span class="nx">bool_value_required</span><span class="p">:</span> <span class="nx">pulumi.Input[builtins.bool]</span><span class="p">,</span>
         <span class="nx">name_required</span><span class="p">:</span> <span class="nx">pulumi.Input[pulumi_random.RandomPet]</span><span class="p">,</span>
-        <span class="nx">string_value_required</span><span class="p">:</span> <span class="nx">pulumi.Input[str]</span><span class="p">,</span>
+        <span class="nx">string_value_required</span><span class="p">:</span> <span class="nx">pulumi.Input[builtins.str]</span><span class="p">,</span>
         <span class="nx">baz</span><span class="p">:</span> <span class="nx">Optional[pulumi.Input[_nested.BazArgs]]</span> = None<span class="p">,</span>
         <span class="nx">baz_plain</span><span class="p">:</span> <span class="nx">Optional[_nested.BazArgs]</span> = None<span class="p">,</span>
-        <span class="nx">bool_value</span><span class="p">:</span> <span class="nx">Optional[pulumi.Input[bool]]</span> = None<span class="p">,</span>
-        <span class="nx">bool_value_plain</span><span class="p">:</span> <span class="nx">Optional[bool]</span> = None<span class="p">,</span>
+        <span class="nx">bool_value</span><span class="p">:</span> <span class="nx">Optional[pulumi.Input[builtins.bool]]</span> = None<span class="p">,</span>
+        <span class="nx">bool_value_plain</span><span class="p">:</span> <span class="nx">Optional[builtins.bool]</span> = None<span class="p">,</span>
         <span class="nx">name</span><span class="p">:</span> <span class="nx">Optional[pulumi.Input[pulumi_random.RandomPet]]</span> = None<span class="p">,</span>
         <span class="nx">name_plain</span><span class="p">:</span> <span class="nx">Optional[pulumi_random.RandomPet]</span> = None<span class="p">,</span>
-        <span class="nx">string_value</span><span class="p">:</span> <span class="nx">Optional[pulumi.Input[str]]</span> = None<span class="p">,</span>
-        <span class="nx">string_value_plain</span><span class="p">:</span> <span class="nx">Optional[str]</span> = None<span class="p">) -&gt;</span> Output[<span class="nx"><a href="#method_Bar_result">Foo.BarResult</a></span>]</code></pre></div>
+        <span class="nx">string_value</span><span class="p">:</span> <span class="nx">Optional[pulumi.Input[builtins.str]]</span> = None<span class="p">,</span>
+        <span class="nx">string_value_plain</span><span class="p">:</span> <span class="nx">Optional[builtins.str]</span> = None<span class="p">) -&gt;</span> Output[<span class="nx"><a href="#method_Bar_result">Foo.BarResult</a></span>]</code></pre></div>
 </pulumi-choosable>
 </div>
 
@@ -871,7 +871,7 @@ The following arguments are supported:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#bar_arg_bool_value_required_python" style="color: inherit; text-decoration: inherit;">bool_<wbr>value_<wbr>required</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">bool</span>
+        <span class="property-type">builtins.bool</span>
     </dt>
     <dd></dd><dt class="property-required"
             title="Required">
@@ -887,7 +887,7 @@ The following arguments are supported:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#bar_arg_string_value_required_python" style="color: inherit; text-decoration: inherit;">string_<wbr>value_<wbr>required</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd></dd><dt class="property-optional"
             title="Optional">
@@ -911,7 +911,7 @@ The following arguments are supported:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#bar_arg_bool_value_python" style="color: inherit; text-decoration: inherit;">bool_<wbr>value</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">bool</span>
+        <span class="property-type">builtins.bool</span>
     </dt>
     <dd></dd><dt class="property-optional"
             title="Optional">
@@ -919,7 +919,7 @@ The following arguments are supported:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#bar_arg_bool_value_plain_python" style="color: inherit; text-decoration: inherit;">bool_<wbr>value_<wbr>plain</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">bool</span>
+        <span class="property-type">builtins.bool</span>
     </dt>
     <dd></dd><dt class="property-optional"
             title="Optional">
@@ -943,7 +943,7 @@ The following arguments are supported:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#bar_arg_string_value_python" style="color: inherit; text-decoration: inherit;">string_<wbr>value</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd></dd><dt class="property-optional"
             title="Optional">
@@ -951,7 +951,7 @@ The following arguments are supported:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#bar_arg_string_value_plain_python" style="color: inherit; text-decoration: inherit;">string_<wbr>value_<wbr>plain</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>
@@ -1128,7 +1128,7 @@ The following arguments are supported:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#bar_result_some_value_python" style="color: inherit; text-decoration: inherit;">some_<wbr>value</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>
@@ -1216,7 +1216,7 @@ Do something with something else
 <div>
 <pulumi-choosable type="language" values="python">
 <div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">def </span>generate_kubeconfig(</span><span class="nx">self</span><span class="p">,</span>
-                        <span class="nx">bool_value</span><span class="p">:</span> <span class="nx">bool</span><span class="p">) -&gt;</span> Output[<span class="nx"><a href="#method_GenerateKubeconfig_result">Foo.Generate_kubeconfigResult</a></span>]</code></pre></div>
+                        <span class="nx">bool_value</span><span class="p">:</span> <span class="nx">builtins.bool</span><span class="p">) -&gt;</span> Output[<span class="nx"><a href="#method_GenerateKubeconfig_result">Foo.Generate_kubeconfigResult</a></span>]</code></pre></div>
 </pulumi-choosable>
 </div>
 
@@ -1303,7 +1303,7 @@ The following arguments are supported:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#generateKubeconfig_arg_bool_value_python" style="color: inherit; text-decoration: inherit;">bool_<wbr>value</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">bool</span>
+        <span class="property-type">builtins.bool</span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>
@@ -1392,7 +1392,7 @@ The following arguments are supported:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#generateKubeconfig_result_kubeconfig_python" style="color: inherit; text-decoration: inherit;">kubeconfig</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>
@@ -1523,7 +1523,7 @@ Baz<pulumi-choosable type="language" values="python,go" class="inline">, Baz<wbr
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#hello_python" style="color: inherit; text-decoration: inherit;">hello</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd></dd><dt class="property-optional"
             title="Optional">
@@ -1531,7 +1531,7 @@ Baz<pulumi-choosable type="language" values="python,go" class="inline">, Baz<wbr
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#world_python" style="color: inherit; text-decoration: inherit;">world</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>

@@ -43,10 +43,10 @@ Resources are created with functions called constructors. To learn more about de
 <span class=nd>@overload</span>
 <span class="k">def </span><span class="nx">ConfigGroup</span><span class="p">(</span><span class="nx">resource_name</span><span class="p">:</span> <span class="nx">str</span><span class="p">,</span>
                 <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.ResourceOptions">Optional[ResourceOptions]</a></span> = None<span class="p">,</span>
-                <span class="nx">files</span><span class="p">:</span> <span class="nx">Optional[Union[str, Sequence[str]]]</span> = None<span class="p">,</span>
+                <span class="nx">files</span><span class="p">:</span> <span class="nx">Optional[Union[builtins.str, Sequence[builtins.str]]]</span> = None<span class="p">,</span>
                 <span class="nx">objs</span><span class="p">:</span> <span class="nx">Optional[Union[Any, Sequence[Any]]]</span> = None<span class="p">,</span>
-                <span class="nx">resource_prefix</span><span class="p">:</span> <span class="nx">Optional[str]</span> = None<span class="p">,</span>
-                <span class="nx">yaml</span><span class="p">:</span> <span class="nx">Optional[Union[str, Sequence[str]]]</span> = None<span class="p">)</span></code></pre></div>
+                <span class="nx">resource_prefix</span><span class="p">:</span> <span class="nx">Optional[builtins.str]</span> = None<span class="p">,</span>
+                <span class="nx">yaml</span><span class="p">:</span> <span class="nx">Optional[Union[builtins.str, Sequence[builtins.str]]]</span> = None<span class="p">)</span></code></pre></div>
 </div></pulumi-choosable>
 </div>
 
@@ -299,7 +299,7 @@ config_group_resource = kubernetes.yaml.v2.ConfigGroup("configGroupResource",
 ```typescript
 const configGroupResource = new kubernetes.yaml.v2.ConfigGroup("configGroupResource", {
     files: "string",
-    objs: undefined,
+    objs: null,
     resourcePrefix: "string",
     yaml: "string",
 });
@@ -502,7 +502,7 @@ The ConfigGroup resource accepts the following [input](/docs/intro/concepts/inpu
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#files_python" style="color: inherit; text-decoration: inherit;">files</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str | Sequence[str]</span>
+        <span class="property-type">builtins.str | Sequence[builtins.str]</span>
     </dt>
     <dd>Set of paths or a URLs that uniquely identify files.</dd><dt class="property-optional"
             title="Optional">
@@ -518,7 +518,7 @@ The ConfigGroup resource accepts the following [input](/docs/intro/concepts/inpu
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#resource_prefix_python" style="color: inherit; text-decoration: inherit;">resource_<wbr>prefix</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>An optional prefix for the auto-generated resource names. Example: A resource created with resourcePrefix=&quot;foo&quot; would produce a resource named &quot;foo-resourceName&quot;.</dd><dt class="property-optional"
             title="Optional">
@@ -526,7 +526,7 @@ The ConfigGroup resource accepts the following [input](/docs/intro/concepts/inpu
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#yaml_python" style="color: inherit; text-decoration: inherit;">yaml</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str | Sequence[str]</span>
+        <span class="property-type">builtins.str | Sequence[builtins.str]</span>
     </dt>
     <dd>YAML text containing Kubernetes resource definitions.</dd></dl>
 </pulumi-choosable>

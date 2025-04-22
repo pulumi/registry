@@ -44,7 +44,7 @@ Resources are created with functions called constructors. To learn more about de
 <span class="k">def </span><span class="nx">Foo</span><span class="p">(</span><span class="nx">resource_name</span><span class="p">:</span> <span class="nx">str</span><span class="p">,</span>
         <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.ResourceOptions">Optional[ResourceOptions]</a></span> = None<span class="p">,</span>
         <span class="nx">backup_kube_client_settings</span><span class="p">:</span> <span class="nx">Optional[KubeClientSettingsArgs]</span> = None<span class="p">,</span>
-        <span class="nx">argument</span><span class="p">:</span> <span class="nx">Optional[str]</span> = None<span class="p">,</span>
+        <span class="nx">argument</span><span class="p">:</span> <span class="nx">Optional[builtins.str]</span> = None<span class="p">,</span>
         <span class="nx">kube_client_settings</span><span class="p">:</span> <span class="nx">Optional[KubeClientSettingsArgs]</span> = None<span class="p">,</span>
         <span class="nx">settings</span><span class="p">:</span> <span class="nx">Optional[LayeredTypeArgs]</span> = None<span class="p">)</span></code></pre></div>
 </div></pulumi-choosable>
@@ -624,7 +624,7 @@ The Foo resource accepts the following [input](/docs/intro/concepts/inputs-outpu
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#argument_python" style="color: inherit; text-decoration: inherit;">argument</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd></dd><dt class="property-optional"
             title="Optional">
@@ -787,7 +787,7 @@ All [input](#inputs) properties are implicitly available as output properties. A
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_python" style="color: inherit; text-decoration: inherit;">id</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>The provider-assigned unique ID for this managed resource.</dd><dt class="property-"
             title="">
@@ -965,7 +965,7 @@ Helm<wbr>Release<wbr>Settings<pulumi-choosable type="language" values="python,go
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#required_arg_python" style="color: inherit; text-decoration: inherit;">required_<wbr>arg</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>to test required args</dd><dt class="property-optional"
             title="Optional">
@@ -973,7 +973,7 @@ Helm<wbr>Release<wbr>Settings<pulumi-choosable type="language" values="python,go
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#driver_python" style="color: inherit; text-decoration: inherit;">driver</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>The backend storage driver for Helm. Values are: configmap, secret, memory, sql.</dd><dt class="property-optional"
             title="Optional">
@@ -981,7 +981,7 @@ Helm<wbr>Release<wbr>Settings<pulumi-choosable type="language" values="python,go
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#plugins_path_python" style="color: inherit; text-decoration: inherit;">plugins_<wbr>path</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>The path to the helm plugins directory.</dd></dl>
 </pulumi-choosable>
@@ -1149,7 +1149,7 @@ Kube<wbr>Client<wbr>Settings<pulumi-choosable type="language" values="python,go"
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#burst_python" style="color: inherit; text-decoration: inherit;">burst</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">int</span>
+        <span class="property-type">builtins.int</span>
     </dt>
     <dd>Maximum burst for throttle. Default value is 10.</dd><dt class="property-optional"
             title="Optional">
@@ -1157,7 +1157,7 @@ Kube<wbr>Client<wbr>Settings<pulumi-choosable type="language" values="python,go"
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#qps_python" style="color: inherit; text-decoration: inherit;">qps</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">float</span>
+        <span class="property-type">builtins.float</span>
     </dt>
     <dd>Maximum queries per second (QPS) to the API server from this client. Default value is 5.</dd><dt class="property-optional"
             title="Optional">
@@ -1437,7 +1437,7 @@ Layered<wbr>Type<pulumi-choosable type="language" values="python,go" class="inli
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#thinker_python" style="color: inherit; text-decoration: inherit;">thinker</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>To ask and answer</dd><dt class="property-optional"
             title="Optional">
@@ -1445,7 +1445,7 @@ Layered<wbr>Type<pulumi-choosable type="language" values="python,go" class="inli
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#answer_python" style="color: inherit; text-decoration: inherit;">answer</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">float</span>
+        <span class="property-type">builtins.float</span>
     </dt>
     <dd>The answer to the question</dd><dt class="property-optional"
             title="Optional">
@@ -1461,7 +1461,7 @@ Layered<wbr>Type<pulumi-choosable type="language" values="python,go" class="inli
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#question_python" style="color: inherit; text-decoration: inherit;">question</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>The question already answered</dd><dt class="property-optional"
             title="Optional">

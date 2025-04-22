@@ -42,10 +42,10 @@ function </span>functionOutput<span class="p">(</span><span class="nx">args</spa
 <div>
 <pulumi-choosable type="language" values="python">
 <div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"
-><span class="k">def </span>function<span class="p">(</span><span class="nx">arg1</span><span class="p">:</span> <span class="nx">Optional[str]</span> = None<span class="p">,</span>
+><span class="k">def </span>function<span class="p">(</span><span class="nx">arg1</span><span class="p">:</span> <span class="nx">Optional[builtins.str]</span> = None<span class="p">,</span>
              <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.InvokeOptions">Optional[InvokeOptions]</a></span> = None<span class="p">) -&gt;</span> <span>FunctionResult</span
 ><span class="k">
-def </span>function_output<span class="p">(</span><span class="nx">arg1</span><span class="p">:</span> <span class="nx">Optional[pulumi.Input[str]]</span> = None<span class="p">,</span>
+def </span>function_output<span class="p">(</span><span class="nx">arg1</span><span class="p">:</span> <span class="nx">Optional[pulumi.Input[builtins.str]]</span> = None<span class="p">,</span>
              <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.InvokeOptions">Optional[InvokeOptions]</a></span> = None<span class="p">) -&gt;</span> <span>Output[FunctionResult]</span
 ></code></pre></div>
 </pulumi-choosable>
@@ -162,7 +162,7 @@ The following arguments are supported:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#arg1_python" style="color: inherit; text-decoration: inherit;">arg1</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>
@@ -255,7 +255,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#result_python" style="color: inherit; text-decoration: inherit;">result</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>

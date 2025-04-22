@@ -41,7 +41,7 @@ Resources are created with functions called constructors. To learn more about de
 <span class=nd>@overload</span>
 <span class="k">def </span><span class="nx">Cat</span><span class="p">(</span><span class="nx">resource_name</span><span class="p">:</span> <span class="nx">str</span><span class="p">,</span>
         <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.ResourceOptions">Optional[ResourceOptions]</a></span> = None<span class="p">,</span>
-        <span class="nx">age</span><span class="p">:</span> <span class="nx">Optional[int]</span> = None<span class="p">,</span>
+        <span class="nx">age</span><span class="p">:</span> <span class="nx">Optional[builtins.int]</span> = None<span class="p">,</span>
         <span class="nx">pet</span><span class="p">:</span> <span class="nx">Optional[PetArgs]</span> = None<span class="p">)</span></code></pre></div>
 </div></pulumi-choosable>
 </div>
@@ -502,7 +502,7 @@ The Cat resource accepts the following [input](/docs/intro/concepts/inputs-outpu
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#age_python" style="color: inherit; text-decoration: inherit;">age</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">int</span>
+        <span class="property-type">builtins.int</span>
     </dt>
     <dd></dd><dt class="property-optional"
             title="Optional">
@@ -641,7 +641,7 @@ All [input](#inputs) properties are implicitly available as output properties. A
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_python" style="color: inherit; text-decoration: inherit;">id</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>The provider-assigned unique ID for this managed resource.</dd><dt class="property-"
             title="">
@@ -649,7 +649,7 @@ All [input](#inputs) properties are implicitly available as output properties. A
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#name_python" style="color: inherit; text-decoration: inherit;">name</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>
@@ -971,7 +971,7 @@ Pet<pulumi-choosable type="language" values="python,go" class="inline">, Pet<wbr
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#age_python" style="color: inherit; text-decoration: inherit;">age</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">int</span>
+        <span class="property-type">builtins.int</span>
     </dt>
     <dd></dd><dt class="property-optional"
             title="Optional">

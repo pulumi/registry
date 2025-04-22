@@ -44,12 +44,12 @@ function </span>testOutput<span class="p">(</span><span class="nx">args</span><s
 <div>
 <pulumi-choosable type="language" values="python">
 <div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"
-><span class="k">def </span>test<span class="p">(</span><span class="nx">id</span><span class="p">:</span> <span class="nx">Optional[float]</span> = None<span class="p">,</span>
-         <span class="nx">urn</span><span class="p">:</span> <span class="nx">Optional[float]</span> = None<span class="p">,</span>
+><span class="k">def </span>test<span class="p">(</span><span class="nx">id</span><span class="p">:</span> <span class="nx">Optional[builtins.float]</span> = None<span class="p">,</span>
+         <span class="nx">urn</span><span class="p">:</span> <span class="nx">Optional[builtins.float]</span> = None<span class="p">,</span>
          <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.InvokeOptions">Optional[InvokeOptions]</a></span> = None<span class="p">) -&gt;</span> <span>TestResult</span
 ><span class="k">
-def </span>test_output<span class="p">(</span><span class="nx">id</span><span class="p">:</span> <span class="nx">Optional[pulumi.Input[float]]</span> = None<span class="p">,</span>
-         <span class="nx">urn</span><span class="p">:</span> <span class="nx">Optional[pulumi.Input[float]]</span> = None<span class="p">,</span>
+def </span>test_output<span class="p">(</span><span class="nx">id</span><span class="p">:</span> <span class="nx">Optional[pulumi.Input[builtins.float]]</span> = None<span class="p">,</span>
+         <span class="nx">urn</span><span class="p">:</span> <span class="nx">Optional[pulumi.Input[builtins.float]]</span> = None<span class="p">,</span>
          <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.InvokeOptions">Optional[InvokeOptions]</a></span> = None<span class="p">) -&gt;</span> <span>Output[TestResult]</span
 ></code></pre></div>
 </pulumi-choosable>
@@ -198,7 +198,7 @@ The following arguments are supported:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_python" style="color: inherit; text-decoration: inherit;">id</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">float</span>
+        <span class="property-type">builtins.float</span>
     </dt>
     <dd></dd><dt class="property-required"
             title="Required">
@@ -206,7 +206,7 @@ The following arguments are supported:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#urn_python" style="color: inherit; text-decoration: inherit;">urn</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">float</span>
+        <span class="property-type">builtins.float</span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>
@@ -339,7 +339,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#urn_python" style="color: inherit; text-decoration: inherit;">urn</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">float</span>
+        <span class="property-type">builtins.float</span>
     </dt>
     <dd></dd><dt class="property-"
             title="">
@@ -347,7 +347,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_python" style="color: inherit; text-decoration: inherit;">id</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">float</span>
+        <span class="property-type">builtins.float</span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>

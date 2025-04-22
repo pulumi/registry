@@ -44,7 +44,7 @@ Resources are created with functions called constructors. To learn more about de
                <span class="nx">diameter</span><span class="p">:</span> <span class="nx">Optional[Diameter]</span> = None<span class="p">,</span>
                <span class="nx">type</span><span class="p">:</span> <span class="nx">Optional[RubberTreeVariety]</span> = None<span class="p">,</span>
                <span class="nx">container</span><span class="p">:</span> <span class="nx">Optional[_root_inputs.ContainerArgs]</span> = None<span class="p">,</span>
-               <span class="nx">farm</span><span class="p">:</span> <span class="nx">Optional[Union[Farm, str]]</span> = None<span class="p">,</span>
+               <span class="nx">farm</span><span class="p">:</span> <span class="nx">Optional[Union[Farm, builtins.str]]</span> = None<span class="p">,</span>
                <span class="nx">size</span><span class="p">:</span> <span class="nx">Optional[TreeSize]</span> = None<span class="p">)</span></code></pre></div>
 </div></pulumi-choosable>
 </div>
@@ -593,7 +593,7 @@ The RubberTree resource accepts the following [input](/docs/intro/concepts/input
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#farm_python" style="color: inherit; text-decoration: inherit;">farm</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type"><a href="#farm">Farm</a> | str</span>
+        <span class="property-type"><a href="#farm">Farm</a> | builtins.str</span>
     </dt>
     <dd></dd><dt class="property-optional"
             title="Optional">
@@ -724,7 +724,7 @@ All [input](#inputs) properties are implicitly available as output properties. A
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_python" style="color: inherit; text-decoration: inherit;">id</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>The provider-assigned unique ID for this managed resource.</dd></dl>
 </pulumi-choosable>
@@ -765,7 +765,7 @@ Get an existing RubberTree resource's state with the given name, ID, and optiona
 <span class="k">def </span><span class="nf">get</span><span class="p">(</span><span class="nx">resource_name</span><span class="p">:</span> <span class="nx">str</span><span class="p">,</span>
         <span class="nx">id</span><span class="p">:</span> <span class="nx">str</span><span class="p">,</span>
         <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.ResourceOptions">Optional[ResourceOptions]</a></span> = None<span class="p">,</span>
-        <span class="nx">farm</span><span class="p">:</span> <span class="nx">Optional[Union[Farm, str]]</span> = None<span class="p">) -&gt;</span> RubberTree</code></pre></div>
+        <span class="nx">farm</span><span class="p">:</span> <span class="nx">Optional[Union[Farm, builtins.str]]</span> = None<span class="p">) -&gt;</span> RubberTree</code></pre></div>
 </div></pulumi-choosable>
 </div>
 
@@ -999,7 +999,7 @@ The following state arguments are supported:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#state_farm_python" style="color: inherit; text-decoration: inherit;">farm</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type"><a href="#farm">Farm</a> | str</span>
+        <span class="property-type"><a href="#farm">Farm</a> | builtins.str</span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>
@@ -1210,7 +1210,7 @@ Container<pulumi-choosable type="language" values="python,go" class="inline">, C
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#color_python" style="color: inherit; text-decoration: inherit;">color</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type"><a href="#containercolor">Container<wbr>Color</a> | str</span>
+        <span class="property-type"><a href="#containercolor">Container<wbr>Color</a> | builtins.str</span>
     </dt>
     <dd></dd><dt class="property-optional"
             title="Optional">
@@ -1218,7 +1218,7 @@ Container<pulumi-choosable type="language" values="python,go" class="inline">, C
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#material_python" style="color: inherit; text-decoration: inherit;">material</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>

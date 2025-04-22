@@ -9882,7 +9882,7 @@ ENIConfig<wbr>Spec<pulumi-choosable type="language" values="python,go" class="in
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#security_groups_python" style="color: inherit; text-decoration: inherit;">security_<wbr>groups</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">Sequence[str]</span>
+        <span class="property-type">Sequence[builtins.str]</span>
     </dt>
     <dd></dd><dt class="property-optional"
             title="Optional">
@@ -9890,7 +9890,7 @@ ENIConfig<wbr>Spec<pulumi-choosable type="language" values="python,go" class="in
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#subnet_python" style="color: inherit; text-decoration: inherit;">subnet</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>

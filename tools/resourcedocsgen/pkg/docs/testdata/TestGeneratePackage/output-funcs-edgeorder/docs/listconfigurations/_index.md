@@ -47,12 +47,12 @@ function </span>listConfigurationsOutput<span class="p">(</span><span class="nx"
 <div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"
 ><span class="k">def </span>list_configurations<span class="p">(</span><span class="nx">configuration_filters</span><span class="p">:</span> <span class="nx">Optional[Sequence[ConfigurationFilters]]</span> = None<span class="p">,</span>
                         <span class="nx">customer_subscription_details</span><span class="p">:</span> <span class="nx">Optional[CustomerSubscriptionDetails]</span> = None<span class="p">,</span>
-                        <span class="nx">skip_token</span><span class="p">:</span> <span class="nx">Optional[str]</span> = None<span class="p">,</span>
+                        <span class="nx">skip_token</span><span class="p">:</span> <span class="nx">Optional[builtins.str]</span> = None<span class="p">,</span>
                         <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.InvokeOptions">Optional[InvokeOptions]</a></span> = None<span class="p">) -&gt;</span> <span>ListConfigurationsResult</span
 ><span class="k">
 def </span>list_configurations_output<span class="p">(</span><span class="nx">configuration_filters</span><span class="p">:</span> <span class="nx">Optional[pulumi.Input[Sequence[pulumi.Input[ConfigurationFiltersArgs]]]]</span> = None<span class="p">,</span>
                         <span class="nx">customer_subscription_details</span><span class="p">:</span> <span class="nx">Optional[pulumi.Input[CustomerSubscriptionDetailsArgs]]</span> = None<span class="p">,</span>
-                        <span class="nx">skip_token</span><span class="p">:</span> <span class="nx">Optional[pulumi.Input[str]]</span> = None<span class="p">,</span>
+                        <span class="nx">skip_token</span><span class="p">:</span> <span class="nx">Optional[pulumi.Input[builtins.str]]</span> = None<span class="p">,</span>
                         <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.InvokeOptions">Optional[InvokeOptions]</a></span> = None<span class="p">) -&gt;</span> <span>Output[ListConfigurationsResult]</span
 ></code></pre></div>
 </pulumi-choosable>
@@ -251,7 +251,7 @@ The following arguments are supported:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#skip_token_python" style="color: inherit; text-decoration: inherit;">skip_<wbr>token</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>$skipToken is supported on list of configurations, which provides the next page in the list of configurations.</dd></dl>
 </pulumi-choosable>
@@ -400,7 +400,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#next_link_python" style="color: inherit; text-decoration: inherit;">next_<wbr>link</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>Link for the next set of configurations.</dd></dl>
 </pulumi-choosable>
@@ -566,7 +566,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#availability_stage_python" style="color: inherit; text-decoration: inherit;">availability_<wbr>stage</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>Current availability stage of the product. Availability stage</dd><dt class="property-required"
             title="Required">
@@ -574,7 +574,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#disabled_reason_python" style="color: inherit; text-decoration: inherit;">disabled_<wbr>reason</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>Reason why the product is disabled.</dd><dt class="property-required"
             title="Required">
@@ -582,7 +582,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#disabled_reason_message_python" style="color: inherit; text-decoration: inherit;">disabled_<wbr>reason_<wbr>message</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>Message for why the product is disabled.</dd></dl>
 </pulumi-choosable>
@@ -782,7 +782,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#frequency_python" style="color: inherit; text-decoration: inherit;">frequency</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>Frequency of recurrence</dd><dt class="property-required"
             title="Required">
@@ -798,7 +798,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#metering_type_python" style="color: inherit; text-decoration: inherit;">metering_<wbr>type</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>Represents Metering type (eg one-time or recurrent)</dd><dt class="property-required"
             title="Required">
@@ -806,7 +806,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#name_python" style="color: inherit; text-decoration: inherit;">name</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>Represents Billing type name</dd></dl>
 </pulumi-choosable>
@@ -1342,7 +1342,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#display_name_python" style="color: inherit; text-decoration: inherit;">display_<wbr>name</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>Display Name for the product system.</dd><dt class="property-required"
             title="Required">
@@ -1558,7 +1558,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#billing_info_url_python" style="color: inherit; text-decoration: inherit;">billing_<wbr>info_<wbr>url</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>Default url to display billing information</dd><dt class="property-required"
             title="Required">
@@ -1726,7 +1726,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#quota_id_python" style="color: inherit; text-decoration: inherit;">quota_<wbr>id</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>Quota ID of a subscription</dd><dt class="property-optional"
             title="Optional">
@@ -1734,7 +1734,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#location_placement_id_python" style="color: inherit; text-decoration: inherit;">location_<wbr>placement_<wbr>id</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>Location placement Id of a subscription</dd><dt class="property-optional"
             title="Optional">
@@ -1878,7 +1878,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#name_python" style="color: inherit; text-decoration: inherit;">name</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>Name of subscription registered feature</dd><dt class="property-optional"
             title="Optional">
@@ -1886,7 +1886,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#state_python" style="color: inherit; text-decoration: inherit;">state</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>State of subscription registered feature</dd></dl>
 </pulumi-choosable>
@@ -2142,7 +2142,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#attributes_python" style="color: inherit; text-decoration: inherit;">attributes</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">Sequence[str]</span>
+        <span class="property-type">Sequence[builtins.str]</span>
     </dt>
     <dd>Attributes for the product system.</dd><dt class="property-required"
             title="Required">
@@ -2150,7 +2150,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#description_type_python" style="color: inherit; text-decoration: inherit;">description_<wbr>type</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>Type of description.</dd><dt class="property-required"
             title="Required">
@@ -2158,7 +2158,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#keywords_python" style="color: inherit; text-decoration: inherit;">keywords</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">Sequence[str]</span>
+        <span class="property-type">Sequence[builtins.str]</span>
     </dt>
     <dd>Keywords for the product system.</dd><dt class="property-required"
             title="Required">
@@ -2174,7 +2174,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#long_description_python" style="color: inherit; text-decoration: inherit;">long_<wbr>description</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>Long description of the product system.</dd><dt class="property-required"
             title="Required">
@@ -2182,7 +2182,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#short_description_python" style="color: inherit; text-decoration: inherit;">short_<wbr>description</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>Short description of the product system.</dd></dl>
 </pulumi-choosable>
@@ -2502,7 +2502,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#depth_python" style="color: inherit; text-decoration: inherit;">depth</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">float</span>
+        <span class="property-type">builtins.float</span>
     </dt>
     <dd>Depth of the device.</dd><dt class="property-required"
             title="Required">
@@ -2510,7 +2510,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#height_python" style="color: inherit; text-decoration: inherit;">height</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">float</span>
+        <span class="property-type">builtins.float</span>
     </dt>
     <dd>Height of the device.</dd><dt class="property-required"
             title="Required">
@@ -2518,7 +2518,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#length_python" style="color: inherit; text-decoration: inherit;">length</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">float</span>
+        <span class="property-type">builtins.float</span>
     </dt>
     <dd>Length of the device.</dd><dt class="property-required"
             title="Required">
@@ -2526,7 +2526,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#length_height_unit_python" style="color: inherit; text-decoration: inherit;">length_<wbr>height_<wbr>unit</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>Unit for the dimensions of length, height and width.</dd><dt class="property-required"
             title="Required">
@@ -2534,7 +2534,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#weight_python" style="color: inherit; text-decoration: inherit;">weight</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">float</span>
+        <span class="property-type">builtins.float</span>
     </dt>
     <dd>Weight of the device.</dd><dt class="property-required"
             title="Required">
@@ -2542,7 +2542,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#weight_unit_python" style="color: inherit; text-decoration: inherit;">weight_<wbr>unit</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>Unit for the dimensions of weight.</dd><dt class="property-required"
             title="Required">
@@ -2550,7 +2550,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#width_python" style="color: inherit; text-decoration: inherit;">width</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">float</span>
+        <span class="property-type">builtins.float</span>
     </dt>
     <dd>Width of the device.</dd></dl>
 </pulumi-choosable>
@@ -2718,7 +2718,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#supported_values_python" style="color: inherit; text-decoration: inherit;">supported_<wbr>values</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">Sequence[str]</span>
+        <span class="property-type">Sequence[builtins.str]</span>
     </dt>
     <dd>Values to be filtered.</dd><dt class="property-required"
             title="Required">
@@ -2726,7 +2726,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#type_python" style="color: inherit; text-decoration: inherit;">type</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str | <a href="#supportedfiltertypes">Supported<wbr>Filter<wbr>Types</a></span>
+        <span class="property-type">builtins.str | <a href="#supportedfiltertypes">Supported<wbr>Filter<wbr>Types</a></span>
     </dt>
     <dd>Type of product filter.</dd></dl>
 </pulumi-choosable>
@@ -2854,7 +2854,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#supported_values_python" style="color: inherit; text-decoration: inherit;">supported_<wbr>values</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">Sequence[str]</span>
+        <span class="property-type">Sequence[builtins.str]</span>
     </dt>
     <dd>Values to be filtered.</dd><dt class="property-required"
             title="Required">
@@ -2862,7 +2862,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#type_python" style="color: inherit; text-decoration: inherit;">type</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>Type of product filter.</dd></dl>
 </pulumi-choosable>
@@ -3054,7 +3054,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#configuration_name_python" style="color: inherit; text-decoration: inherit;">configuration_<wbr>name</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>Represents configuration name that uniquely identifies configuration</dd><dt class="property-optional"
             title="Optional">
@@ -3062,7 +3062,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#product_family_name_python" style="color: inherit; text-decoration: inherit;">product_<wbr>family_<wbr>name</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>Represents product family name that uniquely identifies product family</dd><dt class="property-optional"
             title="Optional">
@@ -3070,7 +3070,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#product_line_name_python" style="color: inherit; text-decoration: inherit;">product_<wbr>line_<wbr>name</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>Represents product line name that uniquely identifies product line</dd><dt class="property-optional"
             title="Optional">
@@ -3078,7 +3078,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#product_name_python" style="color: inherit; text-decoration: inherit;">product_<wbr>name</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>Represents product name that uniquely identifies product</dd></dl>
 </pulumi-choosable>
@@ -3286,7 +3286,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#configuration_name_python" style="color: inherit; text-decoration: inherit;">configuration_<wbr>name</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>Represents configuration name that uniquely identifies configuration</dd><dt class="property-optional"
             title="Optional">
@@ -3294,7 +3294,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#product_family_name_python" style="color: inherit; text-decoration: inherit;">product_<wbr>family_<wbr>name</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>Represents product family name that uniquely identifies product family</dd><dt class="property-optional"
             title="Optional">
@@ -3302,7 +3302,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#product_line_name_python" style="color: inherit; text-decoration: inherit;">product_<wbr>line_<wbr>name</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>Represents product line name that uniquely identifies product line</dd><dt class="property-optional"
             title="Optional">
@@ -3310,7 +3310,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#product_name_python" style="color: inherit; text-decoration: inherit;">product_<wbr>name</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>Represents product name that uniquely identifies product</dd></dl>
 </pulumi-choosable>
@@ -3454,7 +3454,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#image_type_python" style="color: inherit; text-decoration: inherit;">image_<wbr>type</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>Type of the image</dd><dt class="property-required"
             title="Required">
@@ -3462,7 +3462,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#image_url_python" style="color: inherit; text-decoration: inherit;">image_<wbr>url</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>Url of the image</dd></dl>
 </pulumi-choosable>
@@ -3590,7 +3590,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#link_type_python" style="color: inherit; text-decoration: inherit;">link_<wbr>type</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>Type of link</dd><dt class="property-required"
             title="Required">
@@ -3598,7 +3598,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#link_url_python" style="color: inherit; text-decoration: inherit;">link_<wbr>url</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>Url of the link</dd></dl>
 </pulumi-choosable>
@@ -3758,7 +3758,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#charging_type_python" style="color: inherit; text-decoration: inherit;">charging_<wbr>type</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>Charging type.</dd><dt class="property-required"
             title="Required">
@@ -3766,7 +3766,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#meter_guid_python" style="color: inherit; text-decoration: inherit;">meter_<wbr>guid</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>Validation status of requested data center and transport.</dd><dt class="property-required"
             title="Required">
@@ -3774,7 +3774,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#multiplier_python" style="color: inherit; text-decoration: inherit;">multiplier</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">float</span>
+        <span class="property-type">builtins.float</span>
     </dt>
     <dd>Billing unit applicable for Pav2 billing</dd></dl>
 </pulumi-choosable>
@@ -4006,7 +4006,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#charging_type_python" style="color: inherit; text-decoration: inherit;">charging_<wbr>type</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>Charging type.</dd><dt class="property-required"
             title="Required">
@@ -4014,7 +4014,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#multiplier_python" style="color: inherit; text-decoration: inherit;">multiplier</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">float</span>
+        <span class="property-type">builtins.float</span>
     </dt>
     <dd>Billing unit applicable for Pav2 billing</dd><dt class="property-required"
             title="Required">
@@ -4022,7 +4022,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#product_id_python" style="color: inherit; text-decoration: inherit;">product_<wbr>id</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>Product Id</dd><dt class="property-required"
             title="Required">
@@ -4030,7 +4030,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#sku_id_python" style="color: inherit; text-decoration: inherit;">sku_<wbr>id</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>Sku Id</dd><dt class="property-required"
             title="Required">
@@ -4038,7 +4038,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#term_id_python" style="color: inherit; text-decoration: inherit;">term_<wbr>id</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>Term Id</dd></dl>
 </pulumi-choosable>
@@ -4190,7 +4190,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#name_python" style="color: inherit; text-decoration: inherit;">name</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>Name of the specification</dd><dt class="property-required"
             title="Required">
@@ -4198,7 +4198,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#value_python" style="color: inherit; text-decoration: inherit;">value</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>Value of the specification</dd></dl>
 </pulumi-choosable>

@@ -389,7 +389,7 @@ All [input](#inputs) properties are implicitly available as output properties. A
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_python" style="color: inherit; text-decoration: inherit;">id</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>The provider-assigned unique ID for this managed resource.</dd></dl>
 </pulumi-choosable>
@@ -551,7 +551,7 @@ Helm<wbr>Release<wbr>Settings<pulumi-choosable type="language" values="python,go
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#required_arg_python" style="color: inherit; text-decoration: inherit;">required_<wbr>arg</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>to test required args</dd><dt class="property-optional"
             title="Optional">
@@ -559,7 +559,7 @@ Helm<wbr>Release<wbr>Settings<pulumi-choosable type="language" values="python,go
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#driver_python" style="color: inherit; text-decoration: inherit;">driver</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>The backend storage driver for Helm. Values are: configmap, secret, memory, sql. It can also be sourced from the following environment variable: <code>PULUMI_K8S_HELM_DRIVER</code></dd><dt class="property-optional"
             title="Optional">
@@ -567,7 +567,7 @@ Helm<wbr>Release<wbr>Settings<pulumi-choosable type="language" values="python,go
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#plugins_path_python" style="color: inherit; text-decoration: inherit;">plugins_<wbr>path</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">str</span>
+        <span class="property-type">builtins.str</span>
     </dt>
     <dd>The path to the helm plugins directory. It can also be sourced from the following environment variable: <code>PULUMI_K8S_HELM_PLUGINS_PATH</code></dd></dl>
 </pulumi-choosable>

@@ -4,7 +4,7 @@
 
 ## Adding a Package
 
-If you want to see a new package to the Pulumi Registry, open an issue requesting the addition using the ["New Provider"](https://github.com/pulumi/registry/issues/new?template=new-provider.yml) issue template. You can request either a [Pulumi Package](https://www.pulumi.com/docs/guides/pulumi-packages/) (Native, Bridged or Component) that you have written or any Terraform Provider present in the [opentofu package registry](https://search.opentofu.org).
+If you want to see a new package to the Pulumi Registry, open an issue requesting the addition using the ["New Package"](https://github.com/pulumi/registry/issues/new?template=new-package.yml) issue template. You can request either a [Pulumi Package](https://www.pulumi.com/docs/guides/pulumi-packages/) (Native, Bridged or Component) that you have written or any Terraform/OpenTofu provider present in the [opentofu package registry](https://search.opentofu.org).
 
 For assistance, please reach out on the [Pulumi community slack](https://slack.pulumi.com/) or get in touch with us via this [contact form](https://pulumi.com/contact/?form=registry).
 

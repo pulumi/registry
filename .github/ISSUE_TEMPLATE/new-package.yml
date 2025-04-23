@@ -1,5 +1,5 @@
-name: New Provider
-description: Request to add a new provider to the registry.
+name: New Package
+description: Request to add a new package to the registry.
 type: Task
 labels:
   - needs-triage
@@ -8,9 +8,9 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thank you for your interest in adding a new provider to the Pulumi Registry! Please fill out the following information to help us understand your request.
+        Thank you for your interest in adding a new package to the Pulumi Registry! Please fill out the following information to help us understand your request.
 
-        If you are the maintainer of the provider, please also complete the [Pulumi Registry Onboarding form](https://docs.google.com/forms/d/e/1FAIpQLSe8ohRL1PP00KTXEGPYawjY-PgrbxCH6Z88wBqxEDMa4hw2qw/viewform).
+        If you are the maintainer of the package, please also complete the [Pulumi Registry Onboarding form](https://docs.google.com/forms/d/e/1FAIpQLSe8ohRL1PP00KTXEGPYawjY-PgrbxCH6Z88wBqxEDMa4hw2qw/viewform).
   - type: dropdown
     id: PackageType
     attributes:
@@ -18,7 +18,7 @@ body:
       description: Type of the package (see https://www.pulumi.com/docs/iac/concepts/packages/).
       options:
         - Native Pulumi Provider
-        - Terraform/OpenTofu provider
+        - Terraform/OpenTofu Provider
         - Component
         - Other/Not sure
   - type: input

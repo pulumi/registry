@@ -24,6 +24,7 @@ const singles = [
     "google-native",
     "kubernetes",
     "oci",
+    "intersight",
 ];
 
 const allPkgs = getPackagesMetadata();

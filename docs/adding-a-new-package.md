@@ -52,3 +52,15 @@ To keep quality in the Pulumi Registry high, we have a check-list before merging
   - [ ] Each published SDK has a matching release
 
 - [ ] A CODEOWNER has approved the PR.
+
+## Adding the package
+
+When a community member requests adding a provider to the registry, a Pulumi staff member should perform the following steps:
+
+1. Add the package to the [community packages list](./community-packages/package-list.json) via pull request to this repository.
+1. Follow the instructions outlined in [docs/adding-a-new-package.md](./docs/adding-a-new-package.md) to validate the PR, requesting updates as necessary.
+1. Merge the PR.
+
+In pulumi/docs, a [scheduled task](https://github.com/pulumi/docs/actions/workflows/update-theme.yml) runs hourly and will pick up any changes in this repo, generate files from the provider schema and `data/registry/${PROVIDER}.yaml`, and publish to pulumi.com.
+
+  This scheduled task currently lacks adequate monitoring, and **should be watched to ensure that it runs correctly to completion**. (If it fails, it will block all updates to pulumi.com, including marketing and manually maintained docs pages.)

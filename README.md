@@ -21,11 +21,7 @@ To publish a community-maintained package on the Pulumi Registry as a community 
 
 ## Internal Process
 
-When a community member requests adding a provider to the registry, a Pulumi staff member should perform the following steps:
-
-1. Add the package to the [community packages list](./community-packages/package-list.json) via pull request to this repository.
-1. Follow the instructions outlined in [docs/adding-a-new-package.md](./docs/adding-a-new-package.md) to validate the PR, requesting updates as necessary.
-1. Merge the PR.
+Pulumi maintainers should follow the [adding a new package guide](./docs/adding-a-new-package.md).
 
 ## About this repository
 

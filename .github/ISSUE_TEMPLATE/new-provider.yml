@@ -5,15 +5,22 @@ labels:
   - needs-triage
   - kind/package
 body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for your interest in adding a new provider to the Pulumi Registry! Please fill out the following information to help us understand your request.
+
+        If you are the maintainer of the provider, please also complete the [Pulumi Registry Onboarding form](https://docs.google.com/forms/d/e/1FAIpQLSe8ohRL1PP00KTXEGPYawjY-PgrbxCH6Z88wBqxEDMa4hw2qw/viewform).
   - type: dropdown
     id: PackageType
     attributes:
       label: Package Type
-      description: Type of the package (e.g., Terraform, Native, Component).
+      description: Type of the package (see https://www.pulumi.com/docs/iac/concepts/packages/).
       options:
-        - Pulumi Provider (bridged or native)
+        - Native Pulumi Provider
         - Terraform/OpenTofu provider
         - Component
+        - Other/Not sure
   - type: input
     id: PackageName
     attributes:
@@ -26,7 +33,15 @@ body:
       label: Repository URL
       description: URL of the repository where the package can be found.
       placeholder: https://github.com/pulumi/pulumi-xyz
-  - type: markdown
+  - type: input
+    id: Connection
     attributes:
+      label: Connection to the Package
+      description: How are you connected to the package? (e.g., maintainer, user, etc.)
+      placeholder: I am a [maintainer/user/etc.] of the package.
+  - type: textarea
+    id: OtherInfo
+    attributes:
+      label: Other Information
       value: |
         Please provide any additional information or context that may be helpful in reviewing this request.

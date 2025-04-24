@@ -10,7 +10,7 @@ native: false
 package_status: public_preview
 publisher: DataRobot, Inc.
 repo_url: https://github.com/datarobot-community/pulumi-datarobot
-schema_file_url: https://raw.githubusercontent.com/datarobot-community/pulumi-datarobot/v0.9.2/provider/cmd/pulumi-resource-datarobot/schema.json
+schema_file_url: https://raw.githubusercontent.com/datarobot-community/pulumi-datarobot/v0.9.3/provider/cmd/pulumi-resource-datarobot/schema.json
 title: DataRobot
-updated_on: 1744996751
-version: v0.9.2
+updated_on: 1745493368
+version: v0.9.3

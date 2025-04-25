@@ -1,6 +1,10 @@
 {
   "include": [
     {
+      "repoSlug": "ionos-cloud/pulumi-ionoscloud",
+      "schemaFile": "provider/cmd/pulumi-resource-ionoscloud/schema.json"
+    },
+    {
       "repoSlug": "koyeb/pulumi-koyeb",
       "schemaFile": "provider/cmd/pulumi-resource-koyeb/schema.json"
     },

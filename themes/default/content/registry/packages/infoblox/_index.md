@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/infobloxopen/infoblox/2.9.0/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/infobloxopen/infoblox/2.10.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Infoblox Provider
@@ -19,7 +19,7 @@ pulumi package add terraform-provider infobloxopen/infoblox
 Whether you intend to use the published plug-in or the customized version that you have built yourself, you must complete the following prerequisites:
 
 - Install and set up a physical or virtual Infoblox NIOS appliance and has necessary licenses installed. Configure the access permissions for Pulumi to interact with NIOS Grid objects.
-- To use the Infoblox IPAM Plug-In for Pulumi, you must either define the following extensible attributes or install the Cloud Network Automation license in the NIOS Grid, which adds the extensible attributes by default:
+- To use the Infoblox IPAM Plug-In for Pulumi with a cloud user, you must either define the following extensible attributes or install the Cloud Network Automation license in the NIOS Grid, which adds the extensible attributes by default:
 ```json
 {
     "Tenant ID": "String Type",
@@ -95,6 +95,7 @@ CONNECT_TIMEOUT
 POOL_CONNECTIONS
 WAPI_VERSION
 ```
+> **Note:** Plugin version **v2.9.0** includes an upgrade to the base WAPI version to **v2.12.3**.
 
 Run the pulumi up command in the directory where the .tf file is located to initialize the plug-in.
 ## Resources
@@ -119,6 +120,12 @@ There are resources for the following objects, supported by the plugin:
 * DTC LBDN (`infoblox.DtcLbdn`)
 * DTC Pool (`infoblox.DtcPool`)
 * DTC Server (`infoblox.DtcServer`)
+* Alias-record (`infoblox.AliasRecord`)
+* NS-record (`infoblox.NsRecord`)
+* IPV4 Shared Network (`infoblox.Ipv4SharedNetwork`)
+* IPV4 Fixed Address (`infoblox.Ipv4FixedAddress`)
+* IPV4 Range (`infoblox.Ipv4Range`)
+* IPV4 Range Template (`infoblox.Ipv4RangeTemplate`)
 
 Network and network container resources have two versions: IPv4 and IPv6. In
 addition, there are two operations which are implemented as resources:
@@ -173,6 +180,12 @@ There are functions for the following objects:
 * DTC LBDN (`infoblox.DtcLbdn`)
 * DTC Pool (`infoblox.DtcPool`)
 * DTC Server (`infoblox.DtcServer`)
+* Alias-record (`infoblox.AliasRecord`)
+* NS-record (`infoblox.NsRecord`)
+* IPV4 Shared Network (`infoblox.Ipv4SharedNetwork`)
+* IPV4 Fixed Address (`infoblox.Ipv4FixedAddress`)
+* IPV4 Range (`infoblox.Ipv4Range`)
+* IPV4 Range Template (`infoblox.Ipv4RangeTemplate`)
 
 !> From version 2.5.0, new feature filters are introduced. Now the functions support to populate more than one
 matching NIOS objects.

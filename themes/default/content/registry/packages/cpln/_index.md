@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-cpln/v0.0.56/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-cpln/v0.0.57/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: Control Plane (cpln)
 meta_desc: Provides an overview of the Control Plane (cpln) Provider for Pulumi.

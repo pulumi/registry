@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-datadog
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-datadog/v4.49.0/provider/cmd/pulumi-resource-datadog/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-datadog/v4.49.1/provider/cmd/pulumi-resource-datadog/schema.json
 title: Datadog
-updated_on: 1744860896
-version: v4.49.0
+updated_on: 1745638391
+version: v4.49.1

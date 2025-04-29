@@ -10,7 +10,7 @@ native: false
 package_status: public_preview
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-minio
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-minio/v0.16.3/provider/cmd/pulumi-resource-minio/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-minio/v0.16.4/provider/cmd/pulumi-resource-minio/schema.json
 title: MinIO
-updated_on: 1739378216
-version: v0.16.3
+updated_on: 1745952033
+version: v0.16.4

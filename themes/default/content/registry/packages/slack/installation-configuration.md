@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-slack/v0.4.11/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-slack/v0.4.12/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: Slack Setup
 meta_desc: Installation and configuration for the Pulumi Slack provider.

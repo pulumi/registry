@@ -10,7 +10,7 @@ native: false
 package_status: public_preview
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-ec
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-ec/v0.10.5/provider/cmd/pulumi-resource-ec/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-ec/v0.10.6/provider/cmd/pulumi-resource-ec/schema.json
 title: ElasticCloud (EC)
-updated_on: 1739378382
-version: v0.10.5
+updated_on: 1745952129
+version: v0.10.6

@@ -48,6 +48,17 @@ func getRepoSlug(repoURL string) (string, error) {
 	return u.Path, nil
 }
 
+func addGitHubAuthHeaders(req *http.Request) {
+	// Check if the request is for GitHub domains
+	host := req.URL.Host
+	if host == "github.com" || host == "api.github.com" || host == "raw.githubusercontent.com" {
+		// Add GitHub token from environment variable if available
+		if token := os.Getenv("GITHUB_TOKEN"); token != "" {
+			req.Header.Add("Authorization", "Bearer "+token)
+		}
+	}
+}
+
 func genResourceDocsForPackageFromRegistryMetadata(
 	metadata pkg.PackageMeta, docsOutDir, packageTreeJSONOutDir string,
 ) error {
@@ -59,12 +70,27 @@ func genResourceDocsForPackageFromRegistryMetadata(
 	}
 	glog.Infoln("Reading remote schema file from VCS")
 
-	resp, err := http.Get(schemaFileURL) //nolint:gosec
+	req, err := http.NewRequest("GET", schemaFileURL, nil)
+	if err != nil {
+		return errors.Wrapf(err, "creating request for %s", schemaFileURL)
+	}
+
+	addGitHubAuthHeaders(req)
+	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
 		return errors.Wrapf(err, "reading schema file from VCS %s", schemaFileURL)
 	}
 
 	defer contract.IgnoreClose(resp.Body)
+
+	if resp.StatusCode >= 400 {
+		bodyBytes, err := io.ReadAll(resp.Body)
+		// ignore error, we'll just return the status code in that case
+		if err != nil {
+			return fmt.Errorf("failed to get schema file from VCS %s: %s", schemaFileURL, resp.Status)
+		}
+		return fmt.Errorf("failed to get schema file from VCS %s: %s\n%s", schemaFileURL, resp.Status, string(bodyBytes))
+	}
 
 	schemaBytes, err := io.ReadAll(resp.Body)
 	if err != nil {

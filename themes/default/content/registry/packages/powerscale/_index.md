@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/dell/powerscale/1.7.0/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/dell/powerscale/1.7.1/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Powerscale Provider
@@ -143,15 +143,13 @@ Example currently unavailable in this language
 {{% /choosable %}}
 {{< /chooser >}}
 ## Configuration Reference
-### Required
 
-- `endpoint` (String) The API endpoint, ex. https://172.17.177.230:8080
-- `insecure` (Boolean) whether to skip SSL validation
-- `password` (String, Sensitive) The password
-- `username` (String) The username
-
-- `authType` (Number) what should be the auth type, 0 for basic and 1 for session-based
-- `timeout` (Number) specifies a time limit for requests
+- `authType` (Number) what should be the auth type, 0 for basic and 1 for session-based. This can also be set using the environment variable POWERSCALE_AUTH_TYPE
+- `endpoint` (String) The API endpoint, ex. https://172.17.177.230:8080. This can also be set using the environment variable POWERSCALE_ENDPOINT
+- `insecure` (Boolean) whether to skip SSL validation. This can also be set using the environment variable POWERSCALE_INSECURE
+- `password` (String, Sensitive) The password. This can also be set using the environment variable POWERSCALE_PASSWORD
+- `timeout` (Number) specifies a time limit for requests. This can also be set using the environment variable POWERSCALE_TIMEOUT
+- `username` (String) The username. This can also be set using the environment variable POWERSCALE_USERNAME
 ## Best Practices
 1. The parent resource attributes of a certain resource (e.g. groupnet field of subnet resource) can only be designated
    at creation. Once designated, they cannot be modified except for parent resource renaming.

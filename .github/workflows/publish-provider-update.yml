@@ -1,5 +1,5 @@
+permissions: write-all # Equivalent to default permissions plus id-token: write
 env:
-  GITHUB_TOKEN: ${{ secrets.PULUMI_BOT_TOKEN }}
   # The path within the Pulumi provider repo to the schema file.
   PROVIDER_SCHEMA_PATH: ${{ github.event.client_payload.schema-path }}
   # The short-name of the provider, used in URL names. This is effectively the provider's
@@ -16,7 +16,12 @@ env:
   # A public URL which hosts the provider's  _index.md file.
   #
   # This URL must be durable, as it will be required available to build the registry.
-  PROVIDER_INDEX_URL:  ${{ github.event.client_payload.index-url }}
+  PROVIDER_INDEX_URL: ${{ github.event.client_payload.index-url }}
+  ESC_ACTION_OIDC_AUTH: true
+  ESC_ACTION_OIDC_ORGANIZATION: pulumi
+  ESC_ACTION_OIDC_REQUESTED_TOKEN_TYPE: urn:pulumi:token-type:access_token:organization
+  ESC_ACTION_ENVIRONMENT: imports/github-secrets
+  ESC_ACTION_EXPORT_ENVIRONMENT_VARIABLES: GITHUB_TOKEN=PULUMI_BOT_TOKEN
 
 name: provider docs build
 on:
@@ -46,6 +51,9 @@ jobs:
     if: ${{ github.event.action != 'resource-provider' && github.event.action != 'push-provider-update' }}
     runs-on: ubuntu-latest
     steps:
+      - name: Fetch secrets from ESC
+        id: esc-secrets
+        uses: pulumi/esc-action@v1
       - run: printf "Unknown event type '%s'\n" "${{ github.event.action}}"
       - name: fail
         run: exit 1
@@ -54,6 +62,9 @@ jobs:
     if: ${{ github.event.action == 'resource-provider' }}
     runs-on: ubuntu-latest
     steps:
+      - name: Fetch secrets from ESC
+        id: esc-secrets
+        uses: pulumi/esc-action@v1
       - run: echo "Building ${{ env.PROVIDER_SHORT_NAME }} docs @ ${{ env.PROVIDER_VERSION }}"
       - name: checkout registry repo
         uses: actions/checkout@v4
@@ -72,7 +83,7 @@ jobs:
       - name: Create registry PR
         uses: ./.github/actions/new-provider-version-pr
         with:
-          github_token: ${{ secrets.PULUMI_BOT_TOKEN }}
+          github_token: ${{ steps.esc-secrets.outputs.PULUMI_BOT_TOKEN }}
           provider_short_name: ${{ env.PROVIDER_SHORT_NAME }}
           provider_version: ${{ env.PROVIDER_VERSION }}
 
@@ -80,6 +91,9 @@ jobs:
     if: ${{ github.event.action == 'push-provider-update' }}
     runs-on: ubuntu-latest
     steps:
+      - name: Fetch secrets from ESC
+        id: esc-secrets
+        uses: pulumi/esc-action@v1
       - name: Validate Inputs
         run: |
           should_not_set() {
@@ -110,10 +124,10 @@ jobs:
       - name: Create registry PR
         uses: ./.github/actions/new-provider-version-pr
         with:
-          github_token: ${{ secrets.PULUMI_BOT_TOKEN }}
+          github_token: ${{ steps.esc-secrets.outputs.PULUMI_BOT_TOKEN }}
           provider_short_name: ${{ env.PROVIDER_SHORT_NAME }}
           provider_version: ${{ env.PROVIDER_VERSION }}
-  
+
   notify:
     if: failure()
     name: Send slack notification
@@ -123,6 +137,9 @@ jobs:
       - build-provider-docs
       - unknown-event-type
     steps:
+      - name: Fetch secrets from ESC
+        id: esc-secrets
+        uses: pulumi/esc-action@v1
       - name: Slack Notification
         uses: docker://sholung/action-slack-notify:v2.3.0
         env:
@@ -130,5 +147,5 @@ jobs:
           SLACK_COLOR: "#F54242"
           SLACK_MESSAGE: "provider docs build failure in pulumi/registry repo :meow_sad:"
           SLACK_USERNAME: registrybot
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_WEBHOOK: ${{ steps.esc-secrets.outputs.SLACK_WEBHOOK }}
           SLACK_ICON: https://www.pulumi.com/logos/brand/avatar-on-white.png

@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/prefecthq/prefect/2.25.0/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/prefecthq/prefect/2.26.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Prefect Provider
@@ -17,6 +17,9 @@ pulumi package add terraform-provider prefecthq/prefect
 ## Overview
 
 Use the [Prefect](https://prefect.io) provider to configure your Prefect infrastructure.
+
+The provider supports both [Prefect Cloud](https://app.prefect.cloud) and
+[Prefect OSS](https://github.com/prefecthq/prefect).
 
 See getting started for more information on setting up the provider.
 

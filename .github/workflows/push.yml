@@ -1,3 +1,9 @@
+env:
+  ESC_ACTION_OIDC_AUTH: true
+  ESC_ACTION_OIDC_ORGANIZATION: pulumi
+  ESC_ACTION_OIDC_REQUESTED_TOKEN_TYPE: urn:pulumi:token-type:access_token:organization
+  ESC_ACTION_ENVIRONMENT: imports/github-secrets
+  ESC_ACTION_EXPORT_ENVIRONMENT_VARIABLES: false
 name: Build and deploy
 on:
   push:
@@ -14,6 +20,9 @@ jobs:
     runs-on: pulumi-service-ubuntu-24.04-16core
     environment: production
     steps:
+      - name: Fetch secrets from ESC
+        id: esc-secrets
+        uses: pulumi/esc-action@v1
       - name: Install Node
         uses: actions/setup-node@v4
         with:
@@ -33,7 +42,7 @@ jobs:
       - name: Check out branch
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.PULUMI_BOT_TOKEN }}
+          token: ${{ steps.esc-secrets.outputs.PULUMI_BOT_TOKEN }}
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -49,11 +58,11 @@ jobs:
       - name: Build and deploy
         run: make ci_push
         env:
-          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+          PULUMI_ACCESS_TOKEN: ${{ steps.esc-secrets.outputs.PULUMI_ACCESS_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ALGOLIA_APP_ID: ${{ vars.ALGOLIA_APP_ID }}
           ALGOLIA_APP_SEARCH_KEY: ${{ vars.ALGOLIA_APP_SEARCH_KEY }}
-          ALGOLIA_APP_ADMIN_KEY: ${{  secrets.ALGOLIA_APP_ADMIN_KEY }}
+          ALGOLIA_APP_ADMIN_KEY: ${{  steps.esc-secrets.outputs.ALGOLIA_APP_ADMIN_KEY }}
           PULUMI_STACK_NAME: ${{ vars.PULUMI_STACK_NAME }}
           PULUMI_DOCS_STACK_NAME: ${{ vars.PULUMI_DOCS_STACK_NAME }}
           DEPLOYMENT_ENVIRONMENT: ${{ vars.DEPLOYMENT_ENVIRONMENT }}
@@ -69,7 +78,7 @@ jobs:
       - name: Push to the Live Registry
         run: uv run --with requests,pyyaml ./scripts/ci/push-registry.py
         env:
-          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+          PULUMI_ACCESS_TOKEN: ${{ steps.esc-secrets.outputs.PULUMI_ACCESS_TOKEN }}
 
   notify:
     if: failure()
@@ -77,6 +86,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build]
     steps:
+      - name: Fetch secrets from ESC
+        id: esc-secrets
+        uses: pulumi/esc-action@v1
       - name: Slack Notification
         uses: docker://sholung/action-slack-notify:v2.3.0
         env:
@@ -84,5 +96,5 @@ jobs:
           SLACK_COLOR: "#F54242"
           SLACK_MESSAGE: "build and deploy failure in pulumi/registry repo :meow_sad:"
           SLACK_USERNAME: registrybot
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK: ${{ steps.esc-secrets.outputs.SLACK_WEBHOOK_URL }}
           SLACK_ICON: https://www.pulumi.com/logos/brand/avatar-on-white.png

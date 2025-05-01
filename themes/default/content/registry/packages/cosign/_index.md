@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/chainguard-dev/cosign/0.0.26/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/chainguard-dev/cosign/0.0.27/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Cosign Provider
@@ -60,6 +60,8 @@ Example currently unavailable in this language
 {{% /choosable %}}
 {{< /chooser >}}
 ## Configuration Reference
+
+- `defaultAttestationEntryType` (String) Default Rekor entry type to use for attestations. Valid values are 'intoto' (default) or 'dsse'.
 ## Sign
 
 This provider also exposes `cosign.Sign` and `cosign.Attest` resources that will

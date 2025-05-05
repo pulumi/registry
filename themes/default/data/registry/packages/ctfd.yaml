@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: CTFer.io
 repo_url: https://github.com/ctfer-io/pulumi-ctfd
-schema_file_url: https://raw.githubusercontent.com/ctfer-io/pulumi-ctfd/v2.1.0/provider/cmd/pulumi-resource-ctfd/schema.json
+schema_file_url: https://raw.githubusercontent.com/ctfer-io/pulumi-ctfd/v2.2.0/provider/cmd/pulumi-resource-ctfd/schema.json
 title: CTFd
-updated_on: 1745584082
-version: v2.1.0
+updated_on: 1746385423
+version: v2.2.0

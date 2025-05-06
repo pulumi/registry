@@ -132,6 +132,7 @@ publishers = {
     "joneshf": "joneshf",
     "juju": "juju",
     "k-yomo": "k-yomo",
+    "kislerdm": "kislerdm",
     "komminarlabs": "komminarlabs",
     "kong": "kong",
     "labd": "labd",

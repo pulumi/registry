@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: ciscodevnet
 repo_url: https://github.com/ciscodevnet/terraform-provider-intersight
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/ciscodevnet/intersight/1.0.64/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/ciscodevnet/intersight/1.0.65/schema.json
 title: intersight
-updated_on: 1746013180
-version: 1.0.64
+updated_on: 1746617977
+version: 1.0.65

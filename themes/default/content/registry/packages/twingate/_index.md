@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/twingate/pulumi-twingate/v3.0.18/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/twingate/pulumi-twingate/v3.1.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: Twingate
 meta_desc: Provides an overview of the Twingate Provider for Pulumi.

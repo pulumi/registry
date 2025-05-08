@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-ns1
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-ns1/v3.6.2/provider/cmd/pulumi-resource-ns1/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-ns1/v3.6.3/provider/cmd/pulumi-resource-ns1/schema.json
 title: NS1
-updated_on: 1744169292
-version: v3.6.2
+updated_on: 1746675071
+version: v3.6.3

@@ -51,8 +51,8 @@ func (g *constructorSyntaxGenerator) indent(buffer *bytes.Buffer) {
 	buffer.WriteString(strings.Repeat(" ", g.indentSize))
 }
 
-func (g *constructorSyntaxGenerator) writef(buffer *bytes.Buffer, format string, args ...interface{}) {
-	buffer.WriteString(fmt.Sprintf(format, args...))
+func (g *constructorSyntaxGenerator) writef(buffer *bytes.Buffer, format string, args ...any) {
+	fmt.Fprintf(buffer, format, args...)
 }
 
 func (g *constructorSyntaxGenerator) writeValue(

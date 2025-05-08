@@ -19,11 +19,11 @@ lint-go: lint-resourcedocsgen lint-mktutorial
 
 .PHONY: lint-resourcedocsgen
 lint-resourcedocsgen:
-	cd tools/resourcedocsgen/ && golangci-lint run --config ../../.golangci.yml --path-prefix tools/resourcedocsgen/
+	cd tools/resourcedocsgen/ && golangci-lint run --config ../../.golangci.yml
 
 .PHONY: lint-mktutorial
 lint-mktutorial:
-	cd tools/mktutorial/ && golangci-lint run --config ../../.golangci.yml --path-prefix tools/mktutorial/
+	cd tools/mktutorial/ && golangci-lint run --config ../../.golangci.yml
 
 .PHONY: test
 test:

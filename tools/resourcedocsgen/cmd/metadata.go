@@ -31,7 +31,6 @@ import (
 	"github.com/pkg/errors"
 	"github.com/pulumi/pulumi/pkg/v3/codegen"
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
-	pschema "github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/util/contract"
 	"github.com/pulumi/registry/tools/resourcedocsgen/pkg"
 	"github.com/spf13/cobra"
@@ -196,7 +195,7 @@ func packageMetadataFromGitHubCmd(metadataDir, packageDocsDir *string) *cobra.Co
 	// Apply default values that depend on other inputs.
 	cmd.PreRun = func(cmd *cobra.Command, args []string) {
 		if providerName == "" {
-			providerName = strings.Replace(repoSlug.name, "pulumi-", "", -1)
+			providerName = strings.ReplaceAll(repoSlug.name, "pulumi-", "")
 		}
 		if schemaFile == "" {
 			schemaFile = fmt.Sprintf("provider/cmd/pulumi-resource-%s/schema.json", providerName)
@@ -320,7 +319,7 @@ func writePackageMetadata(
 	if spec.Version == "" {
 		validationErrors = append(validationErrors, fmt.Errorf("schema for %q has no version", spec.Name))
 	} else if _, err := semver.Parse(strings.TrimPrefix(spec.Version, "v")); err != nil {
-		validationErrors = append(validationErrors, fmt.Errorf("Version %q is not valid semver: %w", spec.Version, err))
+		validationErrors = append(validationErrors, fmt.Errorf("version %q is not valid semver: %w", spec.Version, err))
 	}
 
 	category, err := getPackageCategory(spec)
@@ -332,7 +331,7 @@ func writePackageMetadata(
 		if repoSlug != nil && legacyPublisherRuleException(*repoSlug) {
 			spec.Publisher = getLegacyPublisher(*repoSlug)
 		} else {
-			validationErrors = append(validationErrors, stderrors.New("Publisher is a required field on the schema"))
+			validationErrors = append(validationErrors, stderrors.New("publisher is a required field on the schema"))
 		}
 	}
 
@@ -439,7 +438,7 @@ func readRemoteFile(url, repoOwner string) ([]byte, error) {
 	return contents, nil
 }
 
-func getPackageCategory(mainSpec *pschema.PackageSpec) (pkg.PackageCategory, error) {
+func getPackageCategory(mainSpec *schema.PackageSpec) (pkg.PackageCategory, error) {
 	var category pkg.PackageCategory
 	var err error
 
@@ -472,7 +471,7 @@ func getCategoryFromKeywords(keywords []string) (pkg.PackageCategory, error) {
 		return defaultPackageCategory, nil
 	}
 
-	categoryName := strings.Replace(*categoryTag, "category/", "", -1)
+	categoryName := strings.ReplaceAll(*categoryTag, "category/", "")
 	category, ok := pkg.CategoryNameMap[categoryName]
 	if !ok {
 		return defaultPackageCategory, fmt.Errorf("invalid category tag %s", *categoryTag)
@@ -547,14 +546,14 @@ func (s repoSlug) String() string { return s.owner + "/" + s.name }
 
 func (s *repoSlug) Set(input string) error {
 	if strings.Contains(input, "https") || strings.Contains(input, "github.com") {
-		return fmt.Errorf("Expected repoSlug to be in the format of `{owner}/{repo}`"+
+		return fmt.Errorf("expected repoSlug to be in the format of `{owner}/{repo}`"+
 			" but got %q", input)
 	}
 
 	githubSlugParts := strings.Split(input, "/")
 
 	if len(githubSlugParts) != 2 {
-		return fmt.Errorf("Expected repoSlug to be in the format of `{owner}/{repo}`"+
+		return fmt.Errorf("expected repoSlug to be in the format of `{owner}/{repo}`"+
 			" but got %q", input)
 	}
 
@@ -563,11 +562,11 @@ func (s *repoSlug) Set(input string) error {
 
 	switch {
 	case owner == "" && name == "":
-		return fmt.Errorf("Expected non-empty {owner} and non-empty {name} in {owner}/{name}, but got %q", input)
+		return fmt.Errorf("expected non-empty {owner} and non-empty {name} in {owner}/{name}, but got %q", input)
 	case owner == "":
-		return fmt.Errorf("Expected non-empty {owner} in {owner}/%s, but got %q", name, input)
+		return fmt.Errorf("expected non-empty {owner} in {owner}/%s, but got %q", name, input)
 	case name == "":
-		return fmt.Errorf("Expected non-empty {name} in %s/{name}, but got %q", owner, input)
+		return fmt.Errorf("expected non-empty {name} in %s/{name}, but got %q", owner, input)
 	}
 
 	s.owner = owner
@@ -577,27 +576,27 @@ func (s *repoSlug) Set(input string) error {
 
 func (s repoSlug) Type() string { return "repo slug" }
 
-func readRemoteSchemaFile(schemaFileURL, repoOwner string) (*pschema.PackageSpec, error) {
-	schema, err := readRemoteFile(schemaFileURL, repoOwner)
+func readRemoteSchemaFile(schemaFileURL, repoOwner string) (*schema.PackageSpec, error) {
+	schemaBytes, err := readRemoteFile(schemaFileURL, repoOwner)
 	if err != nil {
 		return nil, err
 	}
 
-	if schema == nil {
+	if schemaBytes == nil {
 		return nil, fmt.Errorf("unable to get contents of schema file at %q", schemaFileURL)
 	}
 
 	// The source schema can be in YAML format. If that's the case
 	// convert it to JSON first.
 	if strings.HasSuffix(schemaFileURL, ".yaml") {
-		schema, err = yaml.YAMLToJSON(schema)
+		schemaBytes, err = yaml.YAMLToJSON(schemaBytes)
 		if err != nil {
 			return nil, errors.Wrap(err, "reading YAML schema")
 		}
 	}
 
-	spec := &pschema.PackageSpec{}
-	if err := json.Unmarshal(schema, spec); err != nil {
+	spec := &schema.PackageSpec{}
+	if err := json.Unmarshal(schemaBytes, spec); err != nil {
 		return nil, errors.Wrap(err, "unmarshalling schema into a PackageSpec")
 	}
 	return spec, nil

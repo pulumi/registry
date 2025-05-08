@@ -108,7 +108,7 @@ func gatherTutorials(root string) ([]tutorial, error) {
 		var h1 string
 		top.Walk(func(node *blackfriday.Node, entering bool) blackfriday.WalkStatus {
 			if node.Type == blackfriday.Link && pulumiTemplateURL == "" {
-				destination := string(node.LinkData.Destination)
+				destination := string(node.Destination)
 
 				if destination == "https://app.pulumi.com/new" {
 					pulumiTemplateURL = githubURL
@@ -118,7 +118,7 @@ func gatherTutorials(root string) ([]tutorial, error) {
 					pulumiTemplateURL = strings.ReplaceAll(pulumiTemplateURL, "#gh-light-mode-only", "")
 				}
 			}
-			if (node.Type == blackfriday.Heading && node.HeadingData.Level == 1) && h1 == "" {
+			if (node.Type == blackfriday.Heading && node.Level == 1) && h1 == "" {
 				node.Walk(func(inner *blackfriday.Node, entering bool) blackfriday.WalkStatus {
 					if inner.Type == blackfriday.Text {
 						h1 += string(inner.Literal)

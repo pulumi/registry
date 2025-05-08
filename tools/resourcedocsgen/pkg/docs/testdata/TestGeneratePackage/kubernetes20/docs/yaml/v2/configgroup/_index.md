@@ -299,7 +299,7 @@ config_group_resource = kubernetes.yaml.v2.ConfigGroup("configGroupResource",
 ```typescript
 const configGroupResource = new kubernetes.yaml.v2.ConfigGroup("configGroupResource", {
     files: "string",
-    objs: undefined,
+    objs: null,
     resourcePrefix: "string",
     yaml: "string",
 });

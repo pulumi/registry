@@ -313,7 +313,7 @@ kubernetes_config_group_resource = kubernetes.yaml.ConfigGroup("kubernetesConfig
 ```typescript
 const kubernetesConfigGroupResource = new kubernetes.yaml.ConfigGroup("kubernetesConfigGroupResource", {
     files: "string",
-    objs: undefined,
+    objs: null,
     resourcePrefix: "string",
     transformations: ["any"],
     yaml: "string",

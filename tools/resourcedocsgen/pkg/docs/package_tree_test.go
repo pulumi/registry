@@ -29,7 +29,9 @@ func TestGeneratePackageTree(t *testing.T) {
 
 	testPackageSpec := newTestPackageSpec()
 
-	schemaPkg, err := schema.ImportSpec(testPackageSpec, nil)
+	schemaPkg, err := schema.ImportSpec(testPackageSpec, nil, schema.ValidationOptions{
+		AllowDanglingReferences: true,
+	})
 	assert.NoError(t, err, "importing spec")
 
 	dctx := NewContext("test", schemaPkg)
@@ -242,7 +244,9 @@ func TestGeneratePackageTreeNested(t *testing.T) {
 	prep := func(t *testing.T, tc testCase) *Context {
 		t.Helper()
 
-		schemaPkg, err := schema.ImportSpec(tc.spec, nil)
+		schemaPkg, err := schema.ImportSpec(tc.spec, nil, schema.ValidationOptions{
+			AllowDanglingReferences: true,
+		})
 		assert.NoError(t, err, "importing spec")
 
 		return NewContext("test", schemaPkg)

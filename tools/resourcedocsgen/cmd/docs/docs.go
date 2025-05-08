@@ -45,7 +45,9 @@ func getPulumiPackageFromSchema(
 		return nil, nil, errors.Wrapf(err, "deleting provider directory %v", docsOutDir)
 	}
 
-	pulPkg, err := pschema.ImportSpec(mainSpec, nil)
+	pulPkg, err := pschema.ImportSpec(mainSpec, nil, pschema.ValidationOptions{
+		AllowDanglingReferences: true,
+	})
 	if err != nil {
 		if dErr, ok := err.(hcl.Diagnostics); ok {
 			writer := hcl.NewDiagnosticTextWriter(os.Stderr, nil, 80, true)

@@ -337,7 +337,9 @@ func TestGeneratePackage(t *testing.T) {
 			loader := schema.NewPluginLoader(host)
 
 			// Bind the package specification (schema) we decoded against the loader/set of test providers.
-			pkg, diags, err := schema.BindSpec(pkgSpec, loader)
+			pkg, diags, err := schema.BindSpec(pkgSpec, loader, schema.ValidationOptions{
+				AllowDanglingReferences: true,
+			})
 			require.NoErrorf(t, err, "Failed to bind schema %s", testCaseSchema)
 			require.Falsef(t, diags.HasErrors(), "Schema %s has errors", testCaseSchema)
 

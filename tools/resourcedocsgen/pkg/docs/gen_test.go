@@ -366,7 +366,9 @@ func TestFunctionHeaders(t *testing.T) {
 
 	testPackageSpec := newTestPackageSpec()
 
-	schemaPkg, err := schema.ImportSpec(testPackageSpec, nil)
+	schemaPkg, err := schema.ImportSpec(testPackageSpec, nil, schema.ValidationOptions{
+		AllowDanglingReferences: true,
+	})
 	assert.NoError(t, err, "importing spec")
 
 	dctx := NewContext("test", schemaPkg)
@@ -421,7 +423,9 @@ func TestResourceDocHeader(t *testing.T) {
 
 	testPackageSpec := newTestPackageSpec()
 
-	schemaPkg, err := schema.ImportSpec(testPackageSpec, nil)
+	schemaPkg, err := schema.ImportSpec(testPackageSpec, nil, schema.ValidationOptions{
+		AllowDanglingReferences: true,
+	})
 	assert.NoError(t, err, "importing spec")
 
 	dctx := NewContext("test", schemaPkg)
@@ -479,7 +483,9 @@ func TestExamplesProcessing(t *testing.T) {
 
 	testPackageSpec := newTestPackageSpec()
 
-	schemaPkg, err := schema.ImportSpec(testPackageSpec, nil)
+	schemaPkg, err := schema.ImportSpec(testPackageSpec, nil, schema.ValidationOptions{
+		AllowDanglingReferences: true,
+	})
 	assert.NoError(t, err, "importing spec")
 	dctx := NewContext("test", schemaPkg)
 
@@ -590,7 +596,9 @@ func TestDecomposeDocstring(t *testing.T) {
 		" "
 
 	testPackageSpec := newTestPackageSpec()
-	schemaPkg, err := schema.ImportSpec(testPackageSpec, nil)
+	schemaPkg, err := schema.ImportSpec(testPackageSpec, nil, schema.ValidationOptions{
+		AllowDanglingReferences: true,
+	})
 	assert.NoError(t, err, "importing spec")
 	dctx := NewContext("test", schemaPkg)
 
@@ -691,7 +699,9 @@ func TestGenOverlayResource(t *testing.T) {
 			},
 		}
 
-		schemaPkg, err := schema.ImportSpec(testPackageSpec, nil)
+		schemaPkg, err := schema.ImportSpec(testPackageSpec, nil, schema.ValidationOptions{
+			AllowDanglingReferences: true,
+		})
 		assert.NoError(t, err, "importing spec")
 		return schemaPkg
 	}
@@ -816,7 +826,9 @@ func TestGenOverlayFunction(t *testing.T) {
 			},
 		}
 
-		schemaPkg, err := schema.ImportSpec(testPackageSpec, nil)
+		schemaPkg, err := schema.ImportSpec(testPackageSpec, nil, schema.ValidationOptions{
+			AllowDanglingReferences: true,
+		})
 		assert.NoError(t, err, "importing spec")
 		return schemaPkg
 	}

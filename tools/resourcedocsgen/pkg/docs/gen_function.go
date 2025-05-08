@@ -296,11 +296,8 @@ func (mod *modContext) genFunctionParamsPython(f *schema.Function, _ string, out
 				schemaType = codegen.PlainType(codegen.OptionalType(prop))
 			}
 
-			def, err := mod.pkg.Definition()
-			contract.AssertNoErrorf(err, "failed to get definition for package %q", mod.pkg.Name())
-
-			typ := docLanguageHelper.GetLanguageTypeString(def, mod.mod,
-				schemaType, true /*input*/)
+			typ := docLanguageHelper.GetTypeName(mod.pkg,
+				schemaType, true /*input*/, mod.mod)
 			params = append(params, formalParam{
 				Name:         python.PyName(prop.Name),
 				DefaultValue: " = None",
@@ -332,7 +329,7 @@ func (mod *modContext) genFunctionArgs(
 	outputVersion bool,
 ) map[language.Language]string {
 	pyDocHelper := mod.context.getLanguageDocHelper(language.Python)
-	pyIdent := strings.Repeat(" ", len("def (")+len(pyDocHelper.GetFunctionName(mod.mod, f)))
+	pyIdent := strings.Repeat(" ", len("def (")+len(pyDocHelper.GetFunctionName(f)))
 
 	functionParams := make(map[language.Language]string)
 	for lang := range language.All() {
@@ -431,7 +428,7 @@ func (mod *modContext) genFunction(f *schema.Function) functionDocArgs {
 	funcNameMap := map[language.Language]string{}
 	for lang := range language.All() {
 		docHelper := dctx.getLanguageDocHelper(lang)
-		funcNameMap[lang] = docHelper.GetFunctionName(mod.mod, f)
+		funcNameMap[lang] = docHelper.GetFunctionName(f)
 	}
 
 	def, err := mod.pkg.Definition()

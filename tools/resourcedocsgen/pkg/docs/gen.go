@@ -686,9 +686,7 @@ func (mod *modContext) typeString(
 
 	docLanguageHelper := mod.context.getLanguageDocHelper(lang)
 	modName := mod.getLanguageModuleName(lang)
-	def, err := mod.pkg.Definition()
-	contract.AssertNoErrorf(err, "failed to get package definition for %q", mod.pkg.Name())
-	langTypeString := docLanguageHelper.GetLanguageTypeString(def, modName, t, characteristics.input)
+	langTypeString := docLanguageHelper.GetTypeName(mod.pkg, t, characteristics.input, mod.mod)
 
 	if optional, ok := t.(*schema.OptionalType); ok {
 		t = optional.ElementType
@@ -721,6 +719,7 @@ func (mod *modContext) typeString(
 	// Strip the namespace/module prefix for the type's display name.
 	displayName := langTypeString
 	if !schema.IsPrimitiveType(t) {
+		// TODO[https://github.com/pulumi/registry/issues/7512]: This shouldn't be necessary.
 		displayName = mod.cleanTypeString(t, langTypeString, lang, modName, characteristics.input)
 	}
 
@@ -1067,13 +1066,11 @@ func (mod *modContext) genConstructorPython(r *schema.Resource, argsOptional, ar
 		if p.ConstValue != nil {
 			continue
 		}
-		def, err := mod.pkg.Definition()
-		contract.AssertNoErrorf(err, "failed to get definition for package %q", mod.pkg.Name())
-		typ := docLanguageHelper.GetLanguageTypeString(
-			def,
-			mod.mod,
+		typ := docLanguageHelper.GetTypeName(
+			mod.pkg,
 			codegen.PlainType(codegen.OptionalType(p)),
 			true, /*input*/
+			mod.mod,
 		)
 		params = append(params, formalParam{
 			Name:         python.InitParamName(p.Name),
@@ -1406,11 +1403,9 @@ func (mod *modContext) getConstructorResourceInfo(resourceTypeName, tok string) 
 
 			resourceTypeName = fmt.Sprintf("Pulumi.%s.%s.%s", namespace, modName, resourceTypeName)
 		case language.YAML:
-			def, err := mod.pkg.Definition()
-			contract.AssertNoErrorf(err, "failed to get definition for package %q", mod.pkg.Name())
 			resourceMap[lang] = propertyType{
 				Name:        resourceTypeName,
-				DisplayName: docLangHelper.GetLanguageTypeString(def, mod.mod, &schema.ResourceType{Token: tok}, false),
+				DisplayName: docLangHelper.GetTypeName(mod.pkg, &schema.ResourceType{Token: tok}, false, mod.mod),
 			}
 			continue
 		default:
@@ -1597,14 +1592,11 @@ func (mod *modContext) getPythonLookupParams(r *schema.Resource, stateParam stri
 	docLanguageHelper := dctx.getLanguageDocHelper(language.Python)
 	params := slice.Prealloc[formalParam](len(r.StateInputs.Properties))
 	for _, p := range r.StateInputs.Properties {
-		def, err := mod.pkg.Definition()
-		contract.AssertNoErrorf(err, "failed to get definition for package %q", mod.pkg.Name())
-
-		typ := docLanguageHelper.GetLanguageTypeString(
-			def,
-			mod.mod,
+		typ := docLanguageHelper.GetTypeName(
+			mod.pkg,
 			codegen.PlainType(codegen.OptionalType(p)),
 			true, /*input*/
+			mod.mod,
 		)
 		params = append(params, formalParam{
 			Name:         python.PyName(p.Name),
@@ -2212,10 +2204,7 @@ func (dctx *Context) generateModulesFromSchemaPackage(tool string, pkg *schema.P
 
 	goLangHelper := dctx.getLanguageDocHelper(language.Go).(*go_gen.DocLanguageHelper)
 	// Generate the Go package map info now, so we can use that to get the type string names later.
-	goLangHelper.GeneratePackagesMap(pkg, tool, dctx.goPkgInfo)
-
-	csharpLangHelper := dctx.getLanguageDocHelper(language.CSharp).(*dotnet.DocLanguageHelper)
-	csharpLangHelper.Namespaces = dctx.csharpPkgInfo.Namespaces
+	goLangHelper.GeneratePackagesMap(pkg.Reference(), tool, dctx.goPkgInfo)
 
 	visitObjects := func(r *schema.Resource) {
 		visitObjectTypes(r.InputProperties, func(t schema.Type) {

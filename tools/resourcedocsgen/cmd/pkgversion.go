@@ -43,7 +43,7 @@ The version in the registry is defined in the YAML file at:
     https://raw.githubusercontent.com/pulumi/registry/master/themes/default/data/registry/packages/${PKG#pulumi/pulumi-}.yaml`,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if strings.Contains(repoSlug, "https") || strings.Contains(repoSlug, "github.com") {
-				return fmt.Errorf("Expected repoSlug to be in the format of `owner/repo`"+
+				return fmt.Errorf("expected repoSlug to be in the format of `owner/repo`"+
 					" but got %q", repoSlug)
 			}
 
@@ -91,7 +91,7 @@ func getLatestVersion(repoSlug string) (string, error) {
 
 	defer resp.Body.Close()
 	if resp.StatusCode != 200 {
-		return "", fmt.Errorf("Could not find a release at https://api.github.com%s: %w", path, err)
+		return "", fmt.Errorf("could not find a release at https://api.github.com%s: %w", path, err)
 	}
 
 	var tag pkg.GitHubTag

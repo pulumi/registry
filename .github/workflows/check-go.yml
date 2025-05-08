@@ -26,9 +26,9 @@ jobs:
     - name: Setup Go
       uses: actions/setup-go@v5
     - name: golangci-lint
-      uses: golangci/golangci-lint-action@v6
+      uses: golangci/golangci-lint-action@v8
       with:
-        version: v1.64.8
+        version: v2.1.6
         working-directory: ${{ inputs.path }}
         args: --config $GITHUB_WORKSPACE/.golangci.yml
 

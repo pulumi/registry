@@ -10,7 +10,7 @@ native: false
 package_status: public_preview
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-scm
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-scm/v0.3.1/provider/cmd/pulumi-resource-scm/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-scm/v0.3.2/provider/cmd/pulumi-resource-scm/schema.json
 title: Strata Cloud Manager
-updated_on: 1741836254
-version: v0.3.1
+updated_on: 1746734563
+version: v0.3.2

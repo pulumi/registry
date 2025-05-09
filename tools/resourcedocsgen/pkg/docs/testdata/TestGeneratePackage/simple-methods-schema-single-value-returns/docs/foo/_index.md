@@ -412,7 +412,7 @@ All [input](#inputs) properties are implicitly available as output properties. A
 <pulumi-choosable type="language" values="python">
 <div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">def </span>get_kubeconfig(</span><span class="nx">self</span><span class="p">,</span>
                    <span class="nx">profile_name</span><span class="p">:</span> <span class="nx">Optional[pulumi.Input[str]]</span> = None<span class="p">,</span>
-                   <span class="nx">role_arn</span><span class="p">:</span> <span class="nx">Optional[pulumi.Input[str]]</span> = None<span class="p">) -&gt;</span> Output[<span class="nx"><a href="#method_GetKubeconfig_result">builtins.str</a></span>]</code></pre></div>
+                   <span class="nx">role_arn</span><span class="p">:</span> <span class="nx">Optional[pulumi.Input[str]]</span> = None<span class="p">) -&gt;</span> Output[<span class="nx"><a href="#method_GetKubeconfig_result">str</a></span>]</code></pre></div>
 </pulumi-choosable>
 </div>
 

@@ -20,7 +20,7 @@ jobs:
     steps:
       - name: Fetch secrets from ESC
         id: esc-secrets
-        uses: pulumi/esc-action@v1
+        uses: pulumi/esc-action@cf5b30703ffd5ad60cc3a880c09b3a9592b9372d # v1
       - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
@@ -45,7 +45,7 @@ jobs:
           aws-region: us-west-2
 
       - name: Install Pulumi CLI
-        uses: pulumi/actions@v6
+        uses: pulumi/actions@df5a93ad715135263c732ba288301bd044c383c0 # v6
 
       - name: Build and deploy
         run: make ci_push
@@ -73,7 +73,7 @@ jobs:
     steps:
       - name: Fetch secrets from ESC
         id: esc-secrets
-        uses: pulumi/esc-action@v1
+        uses: pulumi/esc-action@cf5b30703ffd5ad60cc3a880c09b3a9592b9372d # v1
       - name: Slack Notification
         uses: docker://sholung/action-slack-notify:v2.3.0
         env:

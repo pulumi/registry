@@ -774,10 +774,10 @@
   resolved "https://registry.yarnpkg.com/@protobufjs/utf8/-/utf8-1.1.0.tgz#a777360b5b39a1a2e5106f8e858f2fd2d060c570"
   integrity sha512-Vvn3zZrhQZkkBE8LSuW3em98c0FwgO4nxzv6OdSxPKJIEKY2bGbHn+mhGIPerzI4twdxaP8/0+06HBpwf345Lw==
 
-"@pulumi/aws-static-website@^0.2.1":
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/@pulumi/aws-static-website/-/aws-static-website-0.2.1.tgz#8b6846eea3dc008234c837e06c04a984abc6fef5"
-  integrity sha512-kw2THOlyA3XcpLQFx07Lpg+ONQL2WQShJ33jQWuc+1uVsyBqxux7pYapAieWysTCYl6+GB/rxio8wK3cjIYqfA==
+"@pulumi/aws-static-website@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@pulumi/aws-static-website/-/aws-static-website-0.4.0.tgz#b46ead5d02ad2afd2590c42e5ddf80131b643e2a"
+  integrity sha512-S2ip4WJ6XO6vTKHJa7iIxm+N4cJN/T0OCD1/y/clgSgkJ5LiN6VF2+I0xFUFAXmtIzoCJx2iJEACcO2cV6TGJw==
   dependencies:
     "@pulumi/aws" "^5.0.0"
     "@pulumi/pulumi" "^3.37.0"

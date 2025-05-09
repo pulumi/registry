@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-scm/v0.3.1/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-scm/v0.3.2/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: Strata Cloud Manager Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi SCM Provider.

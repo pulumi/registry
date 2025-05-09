@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: castai
 repo_url: https://github.com/castai/terraform-provider-castai
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/castai/castai/7.51.0/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/castai/castai/7.52.0/schema.json
 title: castai
-updated_on: 1746488143
-version: 7.51.0
+updated_on: 1746833745
+version: 7.52.0

@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: Vates
 repo_url: https://github.com/vatesfr/pulumi-xenorchestra
-schema_file_url: https://raw.githubusercontent.com/vatesfr/pulumi-xenorchestra/v1.5.2/provider/cmd/pulumi-resource-xenorchestra/schema.json
+schema_file_url: https://raw.githubusercontent.com/vatesfr/pulumi-xenorchestra/v2.0.0/provider/cmd/pulumi-resource-xenorchestra/schema.json
 title: xenorchestra
-updated_on: 1741616780
-version: v1.5.2
+updated_on: 1746779193
+version: v2.0.0

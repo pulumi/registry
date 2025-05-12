@@ -13,9 +13,9 @@ require (
 	github.com/pgavlin/goldmark v1.1.33-0.20200616210433-b5eb04559386
 	github.com/pkg/errors v0.9.1
 	github.com/pulumi/pulumi-java/pkg v1.11.0
-	github.com/pulumi/pulumi-yaml v1.19.1-0.20250509081954-b611f847e90f
-	github.com/pulumi/pulumi/pkg/v3 v3.169.1-0.20250512121538-b21da66586a7
-	github.com/pulumi/pulumi/sdk/v3 v3.169.1-0.20250512121538-b21da66586a7
+	github.com/pulumi/pulumi-yaml v1.19.1-0.20250512143948-0f183fdf8cab
+	github.com/pulumi/pulumi/pkg/v3 v3.169.1-0.20250512133040-89ba335df98e
+	github.com/pulumi/pulumi/sdk/v3 v3.169.1-0.20250512133040-89ba335df98e
 	github.com/sourcegraph/conc v0.3.0
 	github.com/spf13/cobra v1.9.1
 	github.com/stretchr/testify v1.10.0
@@ -107,7 +107,7 @@ require (
 	go.uber.org/multierr v1.11.0 // indirect
 	golang.org/x/crypto v0.38.0 // indirect
 	golang.org/x/exp v0.0.0-20240719175910-8a7402abbf56 // indirect
-	golang.org/x/mod v0.21.0 // indirect
+	golang.org/x/mod v0.24.0 // indirect
 	golang.org/x/net v0.40.0 // indirect
 	golang.org/x/sync v0.14.0 // indirect
 	golang.org/x/sys v0.33.0 // indirect

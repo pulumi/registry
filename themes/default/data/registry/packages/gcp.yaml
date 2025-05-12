@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-gcp
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-gcp/v8.29.0/provider/cmd/pulumi-resource-gcp/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-gcp/v8.30.0/provider/cmd/pulumi-resource-gcp/schema.json
 title: Google Cloud
-updated_on: 1746140206
-version: v8.29.0
+updated_on: 1747042890
+version: v8.30.0

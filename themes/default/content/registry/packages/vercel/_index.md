@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-vercel/v1.14.3/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-vercel/v1.15.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: Vercel
 meta_desc: Provides an overview of the Vercel Provider for Pulumi.

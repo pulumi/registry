@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/onelogin/onelogin/0.6.0/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/onelogin/onelogin/0.7.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Onelogin Provider
@@ -167,5 +167,15 @@ your OneLogin credentials like so:
 ```
 export ONELOGIN_CLIENT_ID=<your client id>
 export ONELOGIN_CLIENT_SECRET=<your client secret>
-export ONELOGIN_OAPI_URL=<the api url for your region>
+export ONELOGIN_API_URL=<the complete api url, e.g., https://company.onelogin.com>
 ```
+
+For backward compatibility, you can also use the subdomain approach, but this is deprecated:
+
+```
+export ONELOGIN_CLIENT_ID=<your client id>
+export ONELOGIN_CLIENT_SECRET=<your client secret>
+export ONELOGIN_SUBDOMAIN=<your onelogin subdomain, e.g., 'company' for company.onelogin.com>
+```
+
+Using the `ONELOGIN_API_URL` is now the recommended approach.

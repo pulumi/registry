@@ -10,7 +10,7 @@ native: false
 package_status: public_preview
 publisher: Descope
 repo_url: https://github.com/descope/pulumi-descope
-schema_file_url: https://raw.githubusercontent.com/descope/pulumi-descope/v0.1.0/provider/cmd/pulumi-resource-descope/schema.json
+schema_file_url: https://raw.githubusercontent.com/descope/pulumi-descope/v0.1.11/provider/cmd/pulumi-resource-descope/schema.json
 title: Descope
-updated_on: 1731746553
-version: v0.1.0
+updated_on: 1747224181
+version: v0.1.11

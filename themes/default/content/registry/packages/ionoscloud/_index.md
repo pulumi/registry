@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/ionos-cloud/pulumi-ionoscloud/v0.2.2/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/ionos-cloud/pulumi-ionoscloud/v0.2.3/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: Ionoscloud
 meta_desc: Provides an overview of the Ionoscloud Provider for Pulumi.

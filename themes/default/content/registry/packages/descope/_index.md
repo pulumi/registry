@@ -1,97 +1,24 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/descope/pulumi-descope/v0.1.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/descope/pulumi-descope/v0.1.11/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-title: Descope
-meta_desc: Provides an overview of the Descope Provider for Pulumi.
+# *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
+title: Descope Provider
+meta_desc: Provides an overview on how to configure the Pulumi Descope provider.
 layout: package
 ---
 
-The `Descope` provider for Pulumi can be used to provision any of the resources available with `Descope`.
+## Installation
 
-## Example
+The Descope provider is available as a package in all Pulumi languages:
 
-{{< chooser language "javascript,typescript,python,go,csharp,yaml" >}}
+* JavaScript/TypeScript: [`@pulumi/descope`](https://www.npmjs.com/package/@pulumi/descope)
+* Python: [`pulumi-descope`](https://pypi.org/project/pulumi-descope/)
+* Go: [`github.com/descope/pulumi-descope/sdk/go/descope`](https://github.com/pulumi/pulumi-descope)
+* .NET: [`Pulumi.Descope`](https://www.nuget.org/packages/Pulumi.Descope)
+* Java: [`com.pulumi/descope`](https://central.sonatype.com/artifact/com.pulumi/descope)
 
-{{% choosable language javascript %}}
+## Configuration Reference
 
-```javascript
-"use strict";
-const descope = require("@descope/pulumi-descope");
-
-export const project = new descope.Project("descope-project", {});
-```
-
-{{% /choosable %}}
-
-{{% choosable language typescript %}}
-
-```typescript
-import * as descope from "@descope/pulumi-descope";
-
-export const project = new descope.Project("descope-project", {});
-```
-
-{{% /choosable %}}
-{{% choosable language python %}}
-
-```python
-import pulumi
-import descope_pulumi
-
-project = descope_pulumi.Project("pulumi-py-test", environment="production")
-
-pulumi.export("project", project)
-```
-
-{{% /choosable %}}
-
-{{% choosable language csharp %}}
-
-```csharp
-using Pulumi;
-using Descope.Pulumi.Descope;
-
-return await Deployment.RunAsync(() =>
-{
-	var project = new Project("descope-project");
-});
-```
-
-{{% /choosable %}}
-
-{{% choosable language go %}}
-
-`````go
-package main
-
-import (
-	"github.com/descope/pulumi-descope/sdk/go/descope"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-)
-
-func main() {
-	pulumi.Run(func(ctx *pulumi.Context) error {
-		project, err := descope.NewProject(ctx, "pulumi-go-test", &descope.ProjectArgs{Environment: pulumi.String("production")})
-		if err != nil {
-			return err
-		}
-		ctx.Export("project", project)
-		return nil
-	})
-}
-```
-
-{{% /choosable %}}
-
-{{% choosable language yaml %}}
-
-````yaml
-resources:
-  descopeProject:
-    type: descope:project:Project
-
-```
-
-{{% /choosable %}}
-{{< /chooser >}}
-`````
+- `baseUrl` (String)
+- `managementKey` (String, Sensitive)
+- `projectId` (String)

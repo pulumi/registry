@@ -379,6 +379,10 @@
     {
       "repoSlug": "vatesfr/pulumi-xenorchestra",
       "schemaFile": "provider/cmd/pulumi-resource-xenorchestra/schema.json"
+    },
+    {
+      "repoSlug": "duplocloud/pulumi-duplocloud",
+      "schemaFile": "provider/cmd/pulumi-resource-duplocloud/schema.json"
     }
   ]
 }

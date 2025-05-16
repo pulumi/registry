@@ -15,12 +15,12 @@
 package docs
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
 	"net/url"
-	"os"
 	"path/filepath"
 	"runtime"
 	"strings"
@@ -36,6 +36,7 @@ import (
 	pschema "github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/util/contract"
 	"github.com/pulumi/registry/tools/resourcedocsgen/pkg"
+	"github.com/pulumi/registry/tools/resourcedocsgen/pkg/registry/svc"
 	concpool "github.com/sourcegraph/conc/pool"
 )
 
@@ -158,46 +159,30 @@ func getSchemaFileURL(metadata pkg.PackageMeta) (string, error) {
 	return fmt.Sprintf("https://raw.githubusercontent.com/%s/%s/%s", repoSlug, metadata.Version, schemaFilePath), nil
 }
 
-func getRegistryPackagesPath(repoPath string) string {
-	return filepath.Join(repoPath, "themes", "default", "data", "registry", "packages")
-}
-
-func genResourceDocsForAllRegistryPackages(registryRepoPath, baseDocsOutDir, basePackageTreeJSONOutDir string) error {
-	registryPackagesPath := getRegistryPackagesPath(registryRepoPath)
-	metadataFiles, err := os.ReadDir(registryPackagesPath)
+func genResourceDocsForAllRegistryPackages(
+	ctx context.Context,
+	provider svc.PackageMetadataProvider,
+	baseDocsOutDir, basePackageTreeJSONOutDir string,
+) error {
+	metadataList, err := provider.ListPackageMetadata(ctx)
 	if err != nil {
-		return errors.Wrap(err, "reading the registry packages dir")
+		return errors.Wrap(err, "listing package metadata")
 	}
 
 	pool := concpool.New().WithErrors().WithMaxGoroutines(runtime.NumCPU())
-	for _, f := range metadataFiles {
-		f := f
+	for _, metadata := range metadataList {
 		pool.Go(func() error {
-			glog.Infof("=== starting %s ===\n", f.Name())
-			glog.Infoln("Processing metadata file")
-			metadataFilePath := filepath.Join(registryPackagesPath, f.Name())
-
-			b, err := os.ReadFile(metadataFilePath)
-			if err != nil {
-				return errors.Wrapf(err, "reading the metadata file %s", metadataFilePath)
-			}
-
-			var metadata pkg.PackageMeta
-			if err := yaml.Unmarshal(b, &metadata); err != nil {
-				return errors.Wrapf(err, "unmarshalling the metadata file %s", metadataFilePath)
-			}
-
+			glog.Infof("=== starting %s ===\n", metadata.Name)
 			docsOutDir := filepath.Join(baseDocsOutDir, metadata.Name, "api-docs")
 			err = genResourceDocsForPackageFromRegistryMetadata(metadata, docsOutDir, basePackageTreeJSONOutDir)
 			if err != nil {
-				return errors.Wrapf(err, "generating resource docs using metadata file info %s", f.Name())
+				return errors.Wrapf(err, "generating resource docs using metadata file info %s", metadata.Name)
 			}
 
-			glog.Infof("=== completed %s ===", f.Name())
+			glog.Infof("=== completed %s ===", metadata.Name)
 			return nil
 		})
 	}
-
 	return pool.Wait()
 }
 
@@ -205,6 +190,8 @@ func resourceDocsFromRegistryCmd() *cobra.Command {
 	var baseDocsOutDir string
 	var basePackageTreeJSONOutDir string
 	var registryDir string
+	var useAPI bool
+	var apiURL string
 
 	cmd := &cobra.Command{
 		Use:   "registry [pkgName]",
@@ -212,35 +199,29 @@ func resourceDocsFromRegistryCmd() *cobra.Command {
 		Long: "Generate resource docs for all packages in the registry or specific packages. " +
 			"Pass a package name in the registry as an optional arg to generate docs only for that package.",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			registryDir, err := filepath.Abs(registryDir)
-			if err != nil {
-				return errors.Wrap(err, "finding the cwd")
+			ctx := cmd.Context()
+			var provider svc.PackageMetadataProvider
+			if useAPI {
+				provider = svc.NewAPIProvider(apiURL)
+			} else {
+				provider = svc.NewFileSystemProvider(registryDir)
 			}
 
 			if len(args) > 0 {
 				glog.Infoln("Generating docs for a single package:", args[0])
-				registryPackagesPath := getRegistryPackagesPath(registryDir)
-				pkgName := args[0]
-				metadataFilePath := filepath.Join(registryPackagesPath, pkgName+".yaml")
-				b, err := os.ReadFile(metadataFilePath)
+				metadata, err := provider.GetPackageMetadata(ctx, args[0])
 				if err != nil {
-					return errors.Wrapf(err, "reading the metadata file %s", metadataFilePath)
-				}
-
-				var metadata pkg.PackageMeta
-				if err := yaml.Unmarshal(b, &metadata); err != nil {
-					return errors.Wrapf(err, "unmarshalling the metadata file %s", metadataFilePath)
+					return errors.Wrapf(err, "getting metadata for package %q", args[0])
 				}
 
 				docsOutDir := filepath.Join(baseDocsOutDir, metadata.Name, "api-docs")
-
 				err = genResourceDocsForPackageFromRegistryMetadata(metadata, docsOutDir, basePackageTreeJSONOutDir)
 				if err != nil {
-					return errors.Wrapf(err, "generating docs for package %q from registry metadata", pkgName)
+					return errors.Wrapf(err, "generating docs for package %q from registry metadata", args[0])
 				}
 			} else {
 				glog.Infoln("Generating docs for all packages in the registry...")
-				err := genResourceDocsForAllRegistryPackages(registryDir, baseDocsOutDir, basePackageTreeJSONOutDir)
+				err := genResourceDocsForAllRegistryPackages(ctx, provider, baseDocsOutDir, basePackageTreeJSONOutDir)
 				if err != nil {
 					return errors.Wrap(err, "generating docs for all packages from registry metadata")
 				}
@@ -260,6 +241,10 @@ func resourceDocsFromRegistryCmd() *cobra.Command {
 	cmd.Flags().StringVar(&registryDir, "registryDir",
 		".",
 		"The root of the pulumi/registry directory")
+	cmd.Flags().BoolVar(&useAPI, "use-api", false, "Use the Pulumi Registry API instead of local files")
+	cmd.Flags().StringVar(&apiURL, "api-url",
+		"https://api.pulumi.com/api/preview/registry",
+		"URL of the Pulumi Registry API")
 
 	return cmd
 }

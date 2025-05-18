@@ -84,6 +84,7 @@ publishers = {
     "aptible": "aptible",
     "athenz": "athenz",
     "azaurus1": "azaurus1",
+    "CAST AI": "castai",
     "castai": "castai",
     "celest-dev": "celest-dev",
     "chainguard-dev": "chainguard-dev",

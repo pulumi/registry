@@ -379,6 +379,10 @@
     {
       "repoSlug": "vatesfr/pulumi-xenorchestra",
       "schemaFile": "provider/cmd/pulumi-resource-xenorchestra/schema.json"
+    },
+    {
+      "repoSlug": "castai/pulumi-castai",
+      "schemaFile": "provider/sdk/schema/schema.json"
     }
   ]
 }

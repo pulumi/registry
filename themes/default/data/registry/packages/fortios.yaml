@@ -10,7 +10,7 @@ native: false
 package_status: public_preview
 publisher: pulumiverse
 repo_url: https://github.com/pulumiverse/pulumi-fortios
-schema_file_path: provider/cmd/pulumi-resource-fortios/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumiverse/pulumi-fortios/v0.0.6/provider/cmd/pulumi-resource-fortios/schema.json
 title: Fortios
 updated_on: 1720558860
 version: v0.0.6

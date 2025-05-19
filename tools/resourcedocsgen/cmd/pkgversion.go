@@ -104,7 +104,13 @@ func getLatestVersion(repoSlug string) (string, error) {
 }
 
 func getRegistryVersion(url string) (string, error) {
-	resp, err := http.Get(url) //nolint:gosec
+	req, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		return "", fmt.Errorf("creating request for %q: %w", url, err)
+	}
+
+	pkg.AddGitHubAuthHeaders(req)
+	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
 		return "", fmt.Errorf("getting latest version from %s: %w", url, err)
 	}

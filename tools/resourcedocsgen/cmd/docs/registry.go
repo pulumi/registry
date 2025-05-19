@@ -48,17 +48,6 @@ func getRepoSlug(repoURL string) (string, error) {
 	return u.Path, nil
 }
 
-func addGitHubAuthHeaders(req *http.Request) {
-	// Check if the request is for GitHub domains
-	host := req.URL.Host
-	if host == "github.com" || host == "api.github.com" || host == "raw.githubusercontent.com" {
-		// Add GitHub token from environment variable if available
-		if token := os.Getenv("GITHUB_TOKEN"); token != "" {
-			req.Header.Add("Authorization", "Bearer "+token)
-		}
-	}
-}
-
 func genResourceDocsForPackageFromRegistryMetadata(
 	metadata pkg.PackageMeta, docsOutDir, packageTreeJSONOutDir string,
 ) error {
@@ -72,10 +61,10 @@ func genResourceDocsForPackageFromRegistryMetadata(
 
 	req, err := http.NewRequest("GET", schemaFileURL, nil)
 	if err != nil {
-		return errors.Wrapf(err, "creating request for %s", schemaFileURL)
+		return errors.Wrapf(err, "creating request for %q", schemaFileURL)
 	}
 
-	addGitHubAuthHeaders(req)
+	pkg.AddGitHubAuthHeaders(req)
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
 		return errors.Wrapf(err, "reading schema file from VCS %s", schemaFileURL)

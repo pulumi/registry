@@ -413,7 +413,14 @@ func getLegacyPublisher(repoSlug repoSlug) string {
 }
 
 func readRemoteFile(url, repoOwner string) ([]byte, error) {
-	resp, err := http.Get(url) //nolint:gosec
+	req, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		return nil, errors.Wrapf(err, "creating request for %q", url)
+	}
+
+	pkg.AddGitHubAuthHeaders(req)
+
+	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("downloading remote file from %s: %w", url, err)
 	}
@@ -622,8 +629,13 @@ func inferPublishDate(repo repoSlug, version string) (time.Time, bool, error) {
 	}
 
 	var commit pkg.GitHubCommit
-	// now let's make a request to the specific commit to get the date
-	commitResp, err := http.Get(commitDetails) //nolint:gosec
+	req, err := http.NewRequest("GET", commitDetails, nil)
+	if err != nil {
+		return time.Time{}, false, errors.Wrapf(err, "creating request for %q", commitDetails)
+	}
+
+	pkg.AddGitHubAuthHeaders(req)
+	commitResp, err := http.DefaultClient.Do(req)
 	if err != nil {
 		return time.Time{}, false, fmt.Errorf("getting release info for %s: %w", repo, err)
 	}

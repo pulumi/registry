@@ -43,6 +43,19 @@ func GetGitHubAPI(path string) (*http.Response, error) {
 	return client.Do(req)
 }
 
+// AddGitHubAuthHeaders adds GitHub authentication headers to the request if the request is for GitHub domains
+// and the GITHUB_TOKEN environment variable is set.
+func AddGitHubAuthHeaders(req *http.Request) {
+	// Check if the request is for GitHub domains
+	host := req.URL.Host
+	if host == "github.com" || host == "api.github.com" || host == "raw.githubusercontent.com" {
+		// Add GitHub token from environment variable if available
+		if token := os.Getenv("GITHUB_TOKEN"); token != "" {
+			req.Header.Add("Authorization", "Bearer "+token)
+		}
+	}
+}
+
 type GitHubTag struct {
 	Name       string `json:"name"`
 	ZipballURL string `json:"zipball_url"`

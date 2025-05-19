@@ -30,6 +30,8 @@ echo
 # This is a lifecycle policy that deletes all objects and delete markers after 1 day (minimum).
 # After ~48 hours, the bucket will be empty and can be deleted.
 lifecycle_file=$(mktemp)
+trap 'rm -f "$lifecycle_file"' EXIT
+
 printf '{
   "Rules": [
     {
@@ -103,8 +105,5 @@ for bucket in $buckets_to_remove; do
 
     echo
 done
-
-# Clean up the temporary lifecycle policy file
-rm "$lifecycle_file"
 
 echo "Done!"

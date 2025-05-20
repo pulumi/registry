@@ -10,7 +10,7 @@ native: false
 package_status: public_preview
 publisher: Genesiscloud
 repo_url: https://github.com/genesiscloud/pulumi-genesiscloud
-schema_file_url: https://raw.githubusercontent.com/genesiscloud/pulumi-genesiscloud/v0.0.33/provider/cmd/pulumi-resource-genesiscloud/schema.json
+schema_file_url: https://raw.githubusercontent.com/genesiscloud/pulumi-genesiscloud/v0.0.35/provider/cmd/pulumi-resource-genesiscloud/schema.json
 title: Genesis Cloud
-updated_on: 1740665623
-version: v0.0.33
+updated_on: 1747429819
+version: v0.0.35

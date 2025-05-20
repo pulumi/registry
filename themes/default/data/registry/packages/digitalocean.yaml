@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-digitalocean
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-digitalocean/v4.44.0/provider/cmd/pulumi-resource-digitalocean/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-digitalocean/v4.45.0/provider/cmd/pulumi-resource-digitalocean/schema.json
 title: DigitalOcean
-updated_on: 1746675575
-version: v4.44.0
+updated_on: 1747712448
+version: v4.45.0

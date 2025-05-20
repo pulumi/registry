@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-vsphere
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-vsphere/v4.13.2/provider/cmd/pulumi-resource-vsphere/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-vsphere/v4.14.0/provider/cmd/pulumi-resource-vsphere/schema.json
 title: vSphere
-updated_on: 1744198820
-version: v4.13.2
+updated_on: 1747752163
+version: v4.14.0

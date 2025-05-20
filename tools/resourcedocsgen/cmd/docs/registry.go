@@ -64,7 +64,7 @@ func genResourceDocsForPackageFromRegistryMetadata(
 	schemaBytes, err := getSchemaFromRegistry(metadata, schemaFileURL)
 	if err != nil {
 		if errors.Is(err, ErrPackageNotFound) {
-			glog.Infoln("%s", err)
+			glog.Infoln(err)
 		} else {
 			glog.Warningf("Error getting schema from registry: %s", err)
 		}
@@ -124,7 +124,7 @@ func getSchemaFromRegistry(metadata pkg.PackageMeta, schemaURL string) ([]byte, 
 		if err != nil {
 			return nil, errors.Wrapf(err, "parsing schema URL %s", schemaURL)
 		}
-		if parsedURL.Host == "registry.opentofu.org" {
+		if strings.HasPrefix(parsedURL.Path, "/schemas/registry.opentofu.org/") {
 			source = "opentofu"
 		}
 	}

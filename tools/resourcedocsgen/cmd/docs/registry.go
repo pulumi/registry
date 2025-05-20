@@ -25,6 +25,7 @@ import (
 	"runtime"
 	"strings"
 
+	"github.com/blang/semver"
 	"github.com/spf13/cobra"
 
 	"github.com/ghodss/yaml"
@@ -36,6 +37,7 @@ import (
 	pschema "github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/util/contract"
 	"github.com/pulumi/registry/tools/resourcedocsgen/pkg"
+	"github.com/pulumi/registry/tools/resourcedocsgen/pkg/publishers"
 	concpool "github.com/sourcegraph/conc/pool"
 )
 
@@ -48,17 +50,6 @@ func getRepoSlug(repoURL string) (string, error) {
 	return u.Path, nil
 }
 
-func addGitHubAuthHeaders(req *http.Request) {
-	// Check if the request is for GitHub domains
-	host := req.URL.Host
-	if host == "github.com" || host == "api.github.com" || host == "raw.githubusercontent.com" {
-		// Add GitHub token from environment variable if available
-		if token := os.Getenv("GITHUB_TOKEN"); token != "" {
-			req.Header.Add("Authorization", "Bearer "+token)
-		}
-	}
-}
-
 func genResourceDocsForPackageFromRegistryMetadata(
 	metadata pkg.PackageMeta, docsOutDir, packageTreeJSONOutDir string,
 ) error {
@@ -68,33 +59,21 @@ func genResourceDocsForPackageFromRegistryMetadata(
 	if err != nil {
 		return fmt.Errorf("failed to get schema_file_url: %w", err)
 	}
-	glog.Infoln("Reading remote schema file from VCS")
 
-	req, err := http.NewRequest("GET", schemaFileURL, nil)
+	glog.Infoln("Reading remote schema file from registry")
+	schemaBytes, err := getSchemaFromRegistry(metadata, schemaFileURL)
 	if err != nil {
-		return errors.Wrapf(err, "creating request for %s", schemaFileURL)
-	}
-
-	addGitHubAuthHeaders(req)
-	resp, err := http.DefaultClient.Do(req)
-	if err != nil {
-		return errors.Wrapf(err, "reading schema file from VCS %s", schemaFileURL)
-	}
-
-	defer contract.IgnoreClose(resp.Body)
-
-	if resp.StatusCode >= 400 {
-		bodyBytes, err := io.ReadAll(resp.Body)
-		// ignore error, we'll just return the status code in that case
-		if err != nil {
-			return fmt.Errorf("failed to get schema file from VCS %s: %s", schemaFileURL, resp.Status)
+		if errors.Is(err, ErrPackageNotFound) {
+			glog.Infoln(err)
+		} else {
+			glog.Warningf("Error getting schema from registry: %s", err)
 		}
-		return fmt.Errorf("failed to get schema file from VCS %s: %s\n%s", schemaFileURL, resp.Status, string(bodyBytes))
-	}
 
-	schemaBytes, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return errors.Wrapf(err, "reading response body from %s", schemaFileURL)
+		glog.Infoln("Falling back to reading remote schema file from VCS")
+		schemaBytes, err = getSchemaFromVCS(metadata, schemaFileURL)
+		if err != nil {
+			return fmt.Errorf("getting schema from VCS for %q: %w", metadata.Name, err)
+		}
 	}
 
 	var mainSpec pschema.PackageSpec
@@ -128,6 +107,106 @@ func genResourceDocsForPackageFromRegistryMetadata(
 	}
 
 	return nil
+}
+
+var ErrPackageNotFound = errors.New("package not found")
+
+func getSchemaFromRegistry(metadata pkg.PackageMeta, schemaURL string) ([]byte, error) {
+	backendURL := os.Getenv("PULUMI_BACKEND_URL")
+	if backendURL == "" {
+		backendURL = "https://api.pulumi.com/api"
+	}
+
+	// Check if the schema URL is from OpenTofu registry
+	source := "pulumi"
+	if schemaURL != "" {
+		parsedURL, err := url.Parse(schemaURL)
+		if err != nil {
+			return nil, errors.Wrapf(err, "parsing schema URL %s", schemaURL)
+		}
+		if strings.HasPrefix(parsedURL.Path, "/schemas/registry.opentofu.org/") {
+			source = "opentofu"
+		}
+	}
+
+	publisher := publishers.GetPublisherName(metadata.Publisher)
+	if publisher == "" {
+		return nil, errors.Errorf("publisher %q not found, please add it to publisher-names.json", metadata.Publisher)
+	}
+
+	version, err := semver.Parse(strings.TrimPrefix(metadata.Version, "v"))
+	if err != nil {
+		return nil, errors.Wrapf(err, "parsing version %q", metadata.Version)
+	}
+
+	apiURL := fmt.Sprintf("%s/preview/registry/packages/%s/%s/%s/versions/%s",
+		backendURL, source, publisher, metadata.Name, version)
+
+	//nolint:gosec // We're constructing the URL based on a predefined pattern.
+	metadataResp, err := http.Get(apiURL)
+	if err != nil {
+		return nil, errors.Wrapf(err, "retrieving package metadata for %q", apiURL)
+	}
+
+	defer contract.IgnoreClose(metadataResp.Body)
+
+	if metadataResp.StatusCode == 404 {
+		return nil, fmt.Errorf("%w in registry: %q", ErrPackageNotFound, apiURL)
+	}
+	if metadataResp.StatusCode >= 400 {
+		return nil, errors.Errorf("failed to retrieve package metadata for %q: %s", apiURL, metadataResp.Status)
+	}
+
+	var response struct {
+		SchemaURL string `json:"schemaURL"`
+	}
+
+	if err := json.NewDecoder(metadataResp.Body).Decode(&response); err != nil {
+		return nil, errors.Wrap(err, "unmarshalling response body")
+	}
+
+	schemaResp, err := http.Get(response.SchemaURL)
+	if err != nil {
+		return nil, errors.Wrapf(err, "retrieving schema file from %q", response.SchemaURL)
+	}
+	defer contract.IgnoreClose(schemaResp.Body)
+
+	if schemaResp.StatusCode >= 400 {
+		return nil, errors.Errorf("failed to retrieve schema file from %q: %s", response.SchemaURL, schemaResp.Status)
+	}
+
+	return io.ReadAll(schemaResp.Body)
+}
+
+func getSchemaFromVCS(metadata pkg.PackageMeta, schemaFileURL string) ([]byte, error) {
+	req, err := http.NewRequest("GET", schemaFileURL, nil)
+	if err != nil {
+		return nil, errors.Wrapf(err, "creating request for %q", schemaFileURL)
+	}
+
+	pkg.AddGitHubAuthHeaders(req)
+	resp, err := http.DefaultClient.Do(req)
+	if err != nil {
+		return nil, errors.Wrapf(err, "reading schema file from VCS %s", schemaFileURL)
+	}
+
+	defer contract.IgnoreClose(resp.Body)
+
+	if resp.StatusCode >= 400 {
+		bodyBytes, err := io.ReadAll(resp.Body)
+		// ignore error, we'll just return the status code in that case
+		if err != nil {
+			return nil, fmt.Errorf("failed to get schema file from VCS %s: %s", schemaFileURL, resp.Status)
+		}
+		return nil, fmt.Errorf("failed to get schema file from VCS %s: %s\n%s", schemaFileURL, resp.Status, string(bodyBytes))
+	}
+
+	schemaBytes, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, errors.Wrapf(err, "reading response body from %s", schemaFileURL)
+	}
+
+	return schemaBytes, nil
 }
 
 func getSchemaFileURL(metadata pkg.PackageMeta) (string, error) {

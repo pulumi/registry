@@ -61,7 +61,7 @@ func genResourceDocsForPackageFromRegistryMetadata(
 	}
 
 	glog.Infoln("Reading remote schema file from registry")
-	schemaBytes, err := getSchemaFromRegistry(metadata)
+	schemaBytes, err := getSchemaFromRegistry(metadata, schemaFileURL)
 	if err != nil {
 		if errors.Is(err, ErrPackageNotFound) {
 			glog.Infoln("Schema not found in registry, trying VCS")
@@ -111,14 +111,13 @@ func genResourceDocsForPackageFromRegistryMetadata(
 
 var ErrPackageNotFound = errors.New("package not found")
 
-func getSchemaFromRegistry(metadata pkg.PackageMeta) ([]byte, error) {
+func getSchemaFromRegistry(metadata pkg.PackageMeta, schemaURL string) ([]byte, error) {
 	backendURL := os.Getenv("PULUMI_BACKEND_URL")
 	if backendURL == "" {
 		backendURL = "https://api.pulumi.com/api"
 	}
 
 	// Check if the schema URL is from OpenTofu registry
-	schemaURL := metadata.SchemaFileURL
 	source := "pulumi"
 	if schemaURL != "" {
 		parsedURL, err := url.Parse(schemaURL)

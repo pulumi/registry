@@ -62,7 +62,6 @@ func genResourceDocsForPackageFromRegistryMetadata(
 
 	glog.Infoln("Reading remote schema file from registry")
 	schemaBytes, err := getSchemaFromRegistry(metadata)
-
 	if err != nil {
 		if errors.Is(err, ErrPackageNotFound) {
 			glog.Infoln("Schema not found in registry, trying VCS")
@@ -141,7 +140,8 @@ func getSchemaFromRegistry(metadata pkg.PackageMeta) ([]byte, error) {
 		return nil, errors.Wrapf(err, "parsing version %q", metadata.Version)
 	}
 
-	apiURL := fmt.Sprintf("%s/preview/registry/packages/%s/%s/%s/versions/%s", backendURL, source, publisher, metadata.Name, version)
+	apiURL := fmt.Sprintf("%s/preview/registry/packages/%s/%s/%s/versions/%s",
+		backendURL, source, publisher, metadata.Name, version)
 
 	//nolint:gosec // We're constructing the URL based on a predefined pattern.
 	metadataResp, err := http.Get(apiURL)

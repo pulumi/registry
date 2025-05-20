@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/genesiscloud/pulumi-genesiscloud/v0.0.33/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/genesiscloud/pulumi-genesiscloud/v0.0.35/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: Genesis Cloud Installation & Configuration
 meta_desc: Information on how to install the Genesis Cloud provider.

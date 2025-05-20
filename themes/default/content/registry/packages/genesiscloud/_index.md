@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/genesiscloud/pulumi-genesiscloud/v0.0.33/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/genesiscloud/pulumi-genesiscloud/v0.0.35/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: Genesis Cloud
 meta_desc: Provides an overview of the Genesis Cloud Provider for Pulumi.

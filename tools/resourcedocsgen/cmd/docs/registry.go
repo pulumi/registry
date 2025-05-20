@@ -64,12 +64,12 @@ func genResourceDocsForPackageFromRegistryMetadata(
 	schemaBytes, err := getSchemaFromRegistry(metadata, schemaFileURL)
 	if err != nil {
 		if errors.Is(err, ErrPackageNotFound) {
-			glog.Infoln("Schema not found in registry, trying VCS")
+			glog.Infoln("%s", err)
 		} else {
-			glog.Warningf("Error getting schema from registry, falling back to VCS: %s", err)
+			glog.Warningf("Error getting schema from registry: %s", err)
 		}
 
-		glog.Infoln("Reading remote schema file from VCS")
+		glog.Infoln("Falling back to reading remote schema file from VCS")
 		schemaBytes, err = getSchemaFromVCS(metadata, schemaFileURL)
 		if err != nil {
 			return fmt.Errorf("getting schema from VCS for %q: %w", metadata.Name, err)
@@ -151,7 +151,7 @@ func getSchemaFromRegistry(metadata pkg.PackageMeta, schemaURL string) ([]byte, 
 	defer contract.IgnoreClose(metadataResp.Body)
 
 	if metadataResp.StatusCode == 404 {
-		return nil, ErrPackageNotFound
+		return nil, fmt.Errorf("%w in registry: %q", ErrPackageNotFound, apiURL)
 	}
 	if metadataResp.StatusCode >= 400 {
 		return nil, errors.Errorf("failed to retrieve package metadata for %q: %s", apiURL, metadataResp.Status)

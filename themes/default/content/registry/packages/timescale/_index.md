@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/timescale/timescale/1.15.0/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/timescale/timescale/2.0.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Timescale Provider
@@ -21,17 +21,329 @@ The Pulumi provider for [Timescale](https://www.timescale.com/cloud).
 - Pulumi >= 1.0
 ## Quick Start
 ### Authorization
-When you log in to your [Timescale Account](https://console.cloud.timescale.com/), navigate to the `Project settings` page.
+When you log in to your [Timescale Account](https://console.cloud.timescale.com/), click on your project name on the upper left-hand side of the page and go to the `Project settings` page.
 From here, you can create client credentials for programmatic usage. Click the `Create credentials` button to generate a new public/secret key pair.
+
+Find more information on creating Client Credentials in the [Timescale docs](https://docs.timescale.com/use-timescale/latest/security/client-credentials/#creating-client-credentials).
 ### Project ID
-The project ID can be found on the `Project settings` page.
+
+To view the project ID, click on your project name on the upper left-hand side of the page.
+### Example files and usage
+#### Service with HA replica and pooler
+
+> [!NOTE]The example file creates:
+> * A single instance called `tf-test` that contains:
+>   * 0.5 CPUs
+>   * 2GB of RAM
+>   * the region set to `us-west-2`
+>   * an HA replica
+>   * the connection pooler enabled
+> * Outputs to display the connection info for:
+>   * the primary hostname and port
+>   * the ha-replica hostname and port
+>   * the pooler hostname and port
 
 Create a `main.tf` configuration file with the following content.
-### VPC Peering
+{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{% choosable language typescript %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: nodejs
+config:
+    timescale:accessKey:
+        value: 'TODO: var.ts_access_key'
+    timescale:projectId:
+        value: 'TODO: var.ts_project_id'
+    timescale:secretKey:
+        value: 'TODO: var.ts_secret_key'
 
-Since v1.9.0 it is possible to peer Timescale VPCs to AWS VPCs using pulumi.
+```
+```typescript
+import * as pulumi from "@pulumi/pulumi";
+import * as timescale from "@pulumi/timescale";
 
-Below is a minimal working example:
+const config = new pulumi.Config();
+const tsProjectId = config.require("tsProjectId");
+const tsAccessKey = config.require("tsAccessKey");
+const tsSecretKey = config.require("tsSecretKey");
+const tf_test = new timescale.Service("tf-test", {
+    name: "tf-test",
+    milliCpu: 500,
+    memoryGb: 2,
+    regionCode: "us-west-2",
+    connectionPoolerEnabled: true,
+    enableHaReplica: true,
+});
+export const hostAddr = tf_test.hostname;
+export const hostPort = tf_test.port;
+export const replicaAddr = tf_test.replicaHostname;
+export const replicaPort = tf_test.replicaPort;
+export const poolerAddr = tf_test.poolerHostname;
+export const poolerPort = tf_test.poolerPort;
+```
+{{% /choosable %}}
+{{% choosable language python %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: python
+config:
+    timescale:accessKey:
+        value: 'TODO: var.ts_access_key'
+    timescale:projectId:
+        value: 'TODO: var.ts_project_id'
+    timescale:secretKey:
+        value: 'TODO: var.ts_secret_key'
+
+```
+```python
+import pulumi
+import pulumi_timescale as timescale
+
+config = pulumi.Config()
+ts_project_id = config.require("tsProjectId")
+ts_access_key = config.require("tsAccessKey")
+ts_secret_key = config.require("tsSecretKey")
+tf_test = timescale.Service("tf-test",
+    name="tf-test",
+    milli_cpu=500,
+    memory_gb=2,
+    region_code="us-west-2",
+    connection_pooler_enabled=True,
+    enable_ha_replica=True)
+pulumi.export("hostAddr", tf_test.hostname)
+pulumi.export("hostPort", tf_test.port)
+pulumi.export("replicaAddr", tf_test.replica_hostname)
+pulumi.export("replicaPort", tf_test.replica_port)
+pulumi.export("poolerAddr", tf_test.pooler_hostname)
+pulumi.export("poolerPort", tf_test.pooler_port)
+```
+{{% /choosable %}}
+{{% choosable language csharp %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: dotnet
+config:
+    timescale:accessKey:
+        value: 'TODO: var.ts_access_key'
+    timescale:projectId:
+        value: 'TODO: var.ts_project_id'
+    timescale:secretKey:
+        value: 'TODO: var.ts_secret_key'
+
+```
+```csharp
+using System.Collections.Generic;
+using System.Linq;
+using Pulumi;
+using Timescale = Pulumi.Timescale;
+
+return await Deployment.RunAsync(() =>
+{
+    var config = new Config();
+    var tsProjectId = config.Require("tsProjectId");
+    var tsAccessKey = config.Require("tsAccessKey");
+    var tsSecretKey = config.Require("tsSecretKey");
+    var tf_test = new Timescale.Service("tf-test", new()
+    {
+        Name = "tf-test",
+        MilliCpu = 500,
+        MemoryGb = 2,
+        RegionCode = "us-west-2",
+        ConnectionPoolerEnabled = true,
+        EnableHaReplica = true,
+    });
+
+    return new Dictionary<string, object?>
+    {
+        ["hostAddr"] = tf_test.Hostname,
+        ["hostPort"] = tf_test.Port,
+        ["replicaAddr"] = tf_test.ReplicaHostname,
+        ["replicaPort"] = tf_test.ReplicaPort,
+        ["poolerAddr"] = tf_test.PoolerHostname,
+        ["poolerPort"] = tf_test.PoolerPort,
+    };
+});
+
+```
+{{% /choosable %}}
+{{% choosable language go %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: go
+config:
+    timescale:accessKey:
+        value: 'TODO: var.ts_access_key'
+    timescale:projectId:
+        value: 'TODO: var.ts_project_id'
+    timescale:secretKey:
+        value: 'TODO: var.ts_secret_key'
+
+```
+```go
+package main
+
+import (
+	"github.com/pulumi/pulumi-pulumi-provider/sdks/go/timescale/v2/timescale"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		cfg := config.New(ctx, "")
+		tsProjectId := cfg.Require("tsProjectId")
+		tsAccessKey := cfg.Require("tsAccessKey")
+		tsSecretKey := cfg.Require("tsSecretKey")
+		tf_test, err := timescale.NewService(ctx, "tf-test", &timescale.ServiceArgs{
+			Name:                    pulumi.String("tf-test"),
+			MilliCpu:                pulumi.Float64(500),
+			MemoryGb:                pulumi.Float64(2),
+			RegionCode:              pulumi.String("us-west-2"),
+			ConnectionPoolerEnabled: pulumi.Bool(true),
+			EnableHaReplica:         pulumi.Bool(true),
+		})
+		if err != nil {
+			return err
+		}
+		ctx.Export("hostAddr", tf_test.Hostname)
+		ctx.Export("hostPort", tf_test.Port)
+		ctx.Export("replicaAddr", tf_test.ReplicaHostname)
+		ctx.Export("replicaPort", tf_test.ReplicaPort)
+		ctx.Export("poolerAddr", tf_test.PoolerHostname)
+		ctx.Export("poolerPort", tf_test.PoolerPort)
+		return nil
+	})
+}
+```
+{{% /choosable %}}
+{{% choosable language yaml %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: yaml
+config:
+    timescale:accessKey:
+        value: 'TODO: var.ts_access_key'
+    timescale:projectId:
+        value: 'TODO: var.ts_project_id'
+    timescale:secretKey:
+        value: 'TODO: var.ts_secret_key'
+
+```
+```yaml
+configuration:
+  tsProjectId:
+    type: string
+  tsAccessKey:
+    type: string
+  tsSecretKey:
+    type: string
+resources:
+  tf-test:
+    type: timescale:Service
+    properties:
+      name: tf-test
+      milliCpu: 500
+      memoryGb: 2
+      regionCode: us-west-2
+      connectionPoolerEnabled: true
+      enableHaReplica: true
+outputs:
+  ## host connection info
+  hostAddr: ${["tf-test"].hostname}
+  hostPort: ${["tf-test"].port}
+  ## ha-replica connection info
+  replicaAddr: ${["tf-test"].replicaHostname}
+  replicaPort: ${["tf-test"].replicaPort}
+  ## pooler connection info
+  poolerAddr: ${["tf-test"].poolerHostname}
+  poolerPort: ${["tf-test"].poolerPort}
+```
+{{% /choosable %}}
+{{% choosable language java %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: java
+config:
+    timescale:accessKey:
+        value: 'TODO: var.ts_access_key'
+    timescale:projectId:
+        value: 'TODO: var.ts_project_id'
+    timescale:secretKey:
+        value: 'TODO: var.ts_secret_key'
+
+```
+```java
+package generated_program;
+
+import com.pulumi.Context;
+import com.pulumi.Pulumi;
+import com.pulumi.core.Output;
+import com.pulumi.timescale.Service;
+import com.pulumi.timescale.ServiceArgs;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+public class App {
+    public static void main(String[] args) {
+        Pulumi.run(App::stack);
+    }
+
+    public static void stack(Context ctx) {
+        final var config = ctx.config();
+        final var tsProjectId = config.get("tsProjectId");
+        final var tsAccessKey = config.get("tsAccessKey");
+        final var tsSecretKey = config.get("tsSecretKey");
+        var tf_test = new Service("tf-test", ServiceArgs.builder()
+            .name("tf-test")
+            .milliCpu(500)
+            .memoryGb(2)
+            .regionCode("us-west-2")
+            .connectionPoolerEnabled(true)
+            .enableHaReplica(true)
+            .build());
+
+        ctx.export("hostAddr", tf_test.hostname());
+        ctx.export("hostPort", tf_test.port());
+        ctx.export("replicaAddr", tf_test.replicaHostname());
+        ctx.export("replicaPort", tf_test.replicaPort());
+        ctx.export("poolerAddr", tf_test.poolerHostname());
+        ctx.export("poolerPort", tf_test.poolerPort());
+    }
+}
+```
+{{% /choosable %}}
+{{< /chooser >}}
+
+and define the `secret.tfvars` file:
+
+> [!IMPORTANT]
+> Replace the values above with the `tsProjectId`, the `tsAccessKey`, and `tsSecretKey`
+
+Now use the `pulumi` cli with the `secrets.tfvars` file, for example:
+
+```shell
+pulumi preview --var-file=secrets.tfvars
+```
+#### VPC Peering
+
+> [!NOTE]The example file creates:
+> * A Timescale VPC with name `tf-test` in `us-east-1`
+> * An AWS VPC in eu-central-1
+> * A Peering connection between them (request and accept automatically)
+>
+> IMPORTANT: Update region, account ID and CIDRs as needed
+
+Create a `main.tf` configuration file with the following content.
 
 {{< chooser language "typescript,python,go,csharp,java,yaml" >}}
 {{% choosable language typescript %}}
@@ -41,7 +353,7 @@ name: configuration-example
 runtime: nodejs
 config:
     aws:region:
-        value: 'TODO: var.aws_region'
+        value: eu-central-1
     timescale:accessKey:
         value: 'TODO: var.ts_access_key'
     timescale:projectId:
@@ -56,26 +368,24 @@ import * as aws from "@pulumi/aws";
 import * as timescale from "@pulumi/timescale";
 
 const config = new pulumi.Config();
-const awsAccountId = config.require("awsAccountId");
-const awsRegion = config.get("awsRegion") || "us-east-1";
 const tsProjectId = config.require("tsProjectId");
 const tsAccessKey = config.require("tsAccessKey");
 const tsSecretKey = config.require("tsSecretKey");
-const tsRegion = config.get("tsRegion") || "us-east-1";
-const main = new timescale.index/vpcs.Vpcs("main", {
-    cidr: "10.10.0.0/16",
-    name: "vpc_name",
-    regionCode: tsRegion,
+const ts_test = new timescale.Vpcs("ts-test", {
+    cidr: "10.0.0.0/24",
+    name: "tf-test",
+    regionCode: "us-east-1",
 });
-const mainVpc = new aws.index.Vpc("main", {cidrBlock: "10.0.1.0/24"});
-// Requester's side of the peering connection.
-const peer = new timescale.index/peeringConnection.PeeringConnection("peer", {
-    peerAccountId: awsAccountId,
-    peerRegionCode: awsRegion,
-    peerVpcId: mainVpc.id,
-    timescaleVpcId: main.vpcsId,
+// Creating a test VPC. Change to your VPC if you already have one in your AWS account.
+const main = new aws.index.Vpc("main", {cidrBlock: "11.0.0.0/24"});
+// Requester's side of the peering connection (Timescale).
+const peer = new timescale.PeeringConnection("peer", {
+    peerAccountId: "000000000000",
+    peerRegionCode: "eu-central-1",
+    peerVpcId: main.id,
+    timescaleVpcId: ts_test.vpcsId,
 });
-// Accepter's side of the peering connection.
+// Acceptor's side of the peering connection (AWS).
 const peerVpcPeeringConnectionAccepter = new aws.index.VpcPeeringConnectionAccepter("peer", {
     vpcPeeringConnectionId: peer.provisionedId,
     autoAccept: true,
@@ -91,7 +401,7 @@ name: configuration-example
 runtime: python
 config:
     aws:region:
-        value: 'TODO: var.aws_region'
+        value: eu-central-1
     timescale:accessKey:
         value: 'TODO: var.ts_access_key'
     timescale:projectId:
@@ -106,28 +416,22 @@ import pulumi_aws as aws
 import pulumi_timescale as timescale
 
 config = pulumi.Config()
-aws_account_id = config.require("awsAccountId")
-aws_region = config.get("awsRegion")
-if aws_region is None:
-    aws_region = "us-east-1"
 ts_project_id = config.require("tsProjectId")
 ts_access_key = config.require("tsAccessKey")
 ts_secret_key = config.require("tsSecretKey")
-ts_region = config.get("tsRegion")
-if ts_region is None:
-    ts_region = "us-east-1"
-main = timescale.index.vpcs.Vpcs("main",
-    cidr=10.10.0.0/16,
-    name=vpc_name,
-    region_code=ts_region)
-main_vpc = aws.index.Vpc("main", cidr_block=10.0.1.0/24)
-# Requester's side of the peering connection.
-peer = timescale.index.peering_connection.PeeringConnection("peer",
-    peer_account_id=aws_account_id,
-    peer_region_code=aws_region,
-    peer_vpc_id=main_vpc.id,
-    timescale_vpc_id=main.vpcs_id)
-# Accepter's side of the peering connection.
+ts_test = timescale.Vpcs("ts-test",
+    cidr="10.0.0.0/24",
+    name="tf-test",
+    region_code="us-east-1")
+# Creating a test VPC. Change to your VPC if you already have one in your AWS account.
+main = aws.index.Vpc("main", cidr_block=11.0.0.0/24)
+# Requester's side of the peering connection (Timescale).
+peer = timescale.PeeringConnection("peer",
+    peer_account_id="000000000000",
+    peer_region_code="eu-central-1",
+    peer_vpc_id=main["id"],
+    timescale_vpc_id=ts_test.vpcs_id)
+# Acceptor's side of the peering connection (AWS).
 peer_vpc_peering_connection_accepter = aws.index.VpcPeeringConnectionAccepter("peer",
     vpc_peering_connection_id=peer.provisioned_id,
     auto_accept=True,
@@ -141,7 +445,7 @@ name: configuration-example
 runtime: dotnet
 config:
     aws:region:
-        value: 'TODO: var.aws_region'
+        value: eu-central-1
     timescale:accessKey:
         value: 'TODO: var.ts_access_key'
     timescale:projectId:
@@ -160,34 +464,32 @@ using Timescale = Pulumi.Timescale;
 return await Deployment.RunAsync(() =>
 {
     var config = new Config();
-    var awsAccountId = config.Require("awsAccountId");
-    var awsRegion = config.Get("awsRegion") ?? "us-east-1";
     var tsProjectId = config.Require("tsProjectId");
     var tsAccessKey = config.Require("tsAccessKey");
     var tsSecretKey = config.Require("tsSecretKey");
-    var tsRegion = config.Get("tsRegion") ?? "us-east-1";
-    var main = new Timescale.Index.Vpcs.Vpcs("main", new()
+    var ts_test = new Timescale.Vpcs("ts-test", new()
     {
-        Cidr = "10.10.0.0/16",
-        Name = "vpc_name",
-        RegionCode = tsRegion,
+        Cidr = "10.0.0.0/24",
+        Name = "tf-test",
+        RegionCode = "us-east-1",
     });
 
-    var mainVpc = new Aws.Index.Vpc("main", new()
+    // Creating a test VPC. Change to your VPC if you already have one in your AWS account.
+    var main = new Aws.Index.Vpc("main", new()
     {
-        CidrBlock = "10.0.1.0/24",
+        CidrBlock = "11.0.0.0/24",
     });
 
-    // Requester's side of the peering connection.
-    var peer = new Timescale.Index.PeeringConnection.PeeringConnection("peer", new()
+    // Requester's side of the peering connection (Timescale).
+    var peer = new Timescale.PeeringConnection("peer", new()
     {
-        PeerAccountId = awsAccountId,
-        PeerRegionCode = awsRegion,
-        PeerVpcId = mainVpc.Id,
-        TimescaleVpcId = main.VpcsId,
+        PeerAccountId = "000000000000",
+        PeerRegionCode = "eu-central-1",
+        PeerVpcId = main.Id,
+        TimescaleVpcId = ts_test.VpcsId,
     });
 
-    // Accepter's side of the peering connection.
+    // Acceptor's side of the peering connection (AWS).
     var peerVpcPeeringConnectionAccepter = new Aws.Index.VpcPeeringConnectionAccepter("peer", new()
     {
         VpcPeeringConnectionId = peer.ProvisionedId,
@@ -211,7 +513,7 @@ name: configuration-example
 runtime: go
 config:
     aws:region:
-        value: 'TODO: var.aws_region'
+        value: eu-central-1
     timescale:accessKey:
         value: 'TODO: var.ts_access_key'
     timescale:projectId:
@@ -225,7 +527,7 @@ package main
 
 import (
 	"github.com/pulumi/pulumi-aws/sdk/go/aws"
-	"github.com/pulumi/pulumi-timescale/sdk/go/timescale"
+	"github.com/pulumi/pulumi-pulumi-provider/sdks/go/timescale/v2/timescale"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config"
 )
@@ -233,43 +535,35 @@ import (
 func main() {
 	pulumi.Run(func(ctx *pulumi.Context) error {
 		cfg := config.New(ctx, "")
-		awsAccountId := cfg.Require("awsAccountId")
-		awsRegion := "us-east-1"
-		if param := cfg.Get("awsRegion"); param != "" {
-			awsRegion = param
-		}
 		tsProjectId := cfg.Require("tsProjectId")
 		tsAccessKey := cfg.Require("tsAccessKey")
 		tsSecretKey := cfg.Require("tsSecretKey")
-		tsRegion := "us-east-1"
-		if param := cfg.Get("tsRegion"); param != "" {
-			tsRegion = param
-		}
-		main, err := index / vpcs.NewVpcs(ctx, "main", &index/vpcs.VpcsArgs{
-			Cidr:       "10.10.0.0/16",
-			Name:       "vpc_name",
-			RegionCode: tsRegion,
+		ts_test, err := timescale.NewVpcs(ctx, "ts-test", &timescale.VpcsArgs{
+			Cidr:       pulumi.String("10.0.0.0/24"),
+			Name:       pulumi.String("tf-test"),
+			RegionCode: pulumi.String("us-east-1"),
 		})
 		if err != nil {
 			return err
 		}
-		mainVpc, err := aws.NewVpc(ctx, "main", &aws.VpcArgs{
-			CidrBlock: "10.0.1.0/24",
+		// Creating a test VPC. Change to your VPC if you already have one in your AWS account.
+		main, err := aws.NewVpc(ctx, "main", &aws.VpcArgs{
+			CidrBlock: "11.0.0.0/24",
 		})
 		if err != nil {
 			return err
 		}
-		// Requester's side of the peering connection.
-		peer, err := index / peeringconnection.NewPeeringConnection(ctx, "peer", &index/peeringconnection.PeeringConnectionArgs{
-			PeerAccountId:  awsAccountId,
-			PeerRegionCode: awsRegion,
-			PeerVpcId:      mainVpc.Id,
-			TimescaleVpcId: main.VpcsId,
+		// Requester's side of the peering connection (Timescale).
+		peer, err := timescale.NewPeeringConnection(ctx, "peer", &timescale.PeeringConnectionArgs{
+			PeerAccountId:  pulumi.String("000000000000"),
+			PeerRegionCode: pulumi.String("eu-central-1"),
+			PeerVpcId:      main.Id,
+			TimescaleVpcId: ts_test.VpcsId,
 		})
 		if err != nil {
 			return err
 		}
-		// Accepter's side of the peering connection.
+		// Acceptor's side of the peering connection (AWS).
 		_, err = aws.NewVpcPeeringConnectionAccepter(ctx, "peer", &aws.VpcPeeringConnectionAccepterArgs{
 			VpcPeeringConnectionId: peer.ProvisionedId,
 			AutoAccept:             true,
@@ -291,7 +585,7 @@ name: configuration-example
 runtime: yaml
 config:
     aws:region:
-        value: 'TODO: var.aws_region'
+        value: eu-central-1
     timescale:accessKey:
         value: 'TODO: var.ts_access_key'
     timescale:projectId:
@@ -302,41 +596,33 @@ config:
 ```
 ```yaml
 configuration:
-  awsAccountId:
-    type: string
-  awsRegion:
-    type: string
-    default: us-east-1
   tsProjectId:
     type: string
   tsAccessKey:
     type: string
   tsSecretKey:
     type: string
-  tsRegion:
-    type: string
-    default: us-east-1
 resources:
-  main:
+  ts-test:
     type: timescale:Vpcs
     properties:
-      cidr: 10.10.0.0/16
-      name: vpc_name
-      regionCode: ${tsRegion}
-  mainVpc:
+      cidr: 10.0.0.0/24
+      name: tf-test
+      regionCode: us-east-1
+  # Creating a test VPC. Change to your VPC if you already have one in your AWS account.
+  main:
     type: aws:Vpc
-    name: main
     properties:
-      cidrBlock: 10.0.1.0/24
-  # Requester's side of the peering connection.
+      cidrBlock: 11.0.0.0/24
+  # Requester's side of the peering connection (Timescale).
   peer:
     type: timescale:PeeringConnection
     properties:
-      peerAccountId: ${awsAccountId}
-      peerRegionCode: ${awsRegion}
-      peerVpcId: ${mainVpc.id}
-      timescaleVpcId: ${main.vpcsId}
-  # Accepter's side of the peering connection.
+      peerAccountId: '000000000000'
+      peerRegionCode: eu-central-1
+      peerVpcId: ${main.id}
+      timescaleVpcId: ${["ts-test"].vpcsId}
+  # Acceptor's side of the peering connection (AWS).
   peerVpcPeeringConnectionAccepter:
     type: aws:VpcPeeringConnectionAccepter
     name: peer
@@ -355,7 +641,7 @@ name: configuration-example
 runtime: java
 config:
     aws:region:
-        value: 'TODO: var.aws_region'
+        value: eu-central-1
     timescale:accessKey:
         value: 'TODO: var.ts_access_key'
     timescale:projectId:
@@ -370,8 +656,8 @@ package generated_program;
 import com.pulumi.Context;
 import com.pulumi.Pulumi;
 import com.pulumi.core.Output;
-import com.pulumi.timescale.index_vpcs.Vpcs;
-import com.pulumi.timescale.index_vpcs.VpcsArgs;
+import com.pulumi.timescale.Vpcs;
+import com.pulumi.timescale.VpcsArgs;
 import com.pulumi.aws.Vpc;
 import com.pulumi.aws.VpcArgs;
 import com.pulumi.timescale.PeeringConnection;
@@ -393,31 +679,29 @@ public class App {
 
     public static void stack(Context ctx) {
         final var config = ctx.config();
-        final var awsAccountId = config.get("awsAccountId");
-        final var awsRegion = config.get("awsRegion").orElse("us-east-1");
         final var tsProjectId = config.get("tsProjectId");
         final var tsAccessKey = config.get("tsAccessKey");
         final var tsSecretKey = config.get("tsSecretKey");
-        final var tsRegion = config.get("tsRegion").orElse("us-east-1");
-        var main = new Vpcs("main", VpcsArgs.builder()
-            .cidr("10.10.0.0/16")
-            .name("vpc_name")
-            .regionCode(tsRegion)
+        var ts_test = new Vpcs("ts-test", VpcsArgs.builder()
+            .cidr("10.0.0.0/24")
+            .name("tf-test")
+            .regionCode("us-east-1")
             .build());
 
-        var mainVpc = new Vpc("mainVpc", VpcArgs.builder()
-            .cidrBlock("10.0.1.0/24")
+        // Creating a test VPC. Change to your VPC if you already have one in your AWS account.
+        var main = new Vpc("main", VpcArgs.builder()
+            .cidrBlock("11.0.0.0/24")
             .build());
 
-        // Requester's side of the peering connection.
+        // Requester's side of the peering connection (Timescale).
         var peer = new PeeringConnection("peer", PeeringConnectionArgs.builder()
-            .peerAccountId(awsAccountId)
-            .peerRegionCode(awsRegion)
-            .peerVpcId(mainVpc.id())
-            .timescaleVpcId(main.vpcsId())
+            .peerAccountId("000000000000")
+            .peerRegionCode("eu-central-1")
+            .peerVpcId(main.id())
+            .timescaleVpcId(ts_test.vpcsId())
             .build());
 
-        // Accepter's side of the peering connection.
+        // Acceptor's side of the peering connection (AWS).
         var peerVpcPeeringConnectionAccepter = new VpcPeeringConnectionAccepter("peerVpcPeeringConnectionAccepter", VpcPeeringConnectionAccepterArgs.builder()
             .vpcPeeringConnectionId(peer.provisionedId())
             .autoAccept(true)
@@ -430,12 +714,6 @@ public class App {
 ```
 {{% /choosable %}}
 {{< /chooser >}}
-
-Note that this configuration may fail on first apply, as the value of
-`timescale_peering_connection.peer.provisioned_id` (starting with `pcx-`) may
-not be immediately available. This typically happens due to the asynchronous
-nature of the VPC peering request and its acceptance process. In this case, a
-second `pulumi up` can be run to ensure everything is applied.
 ## Supported Service Configurations
 ### Compute
 - 500m CPU / 2 GB Memory
@@ -448,6 +726,8 @@ second `pulumi up` can be run to ensure everything is applied.
 ### Storage
 Since June 2023, you no longer need to allocate a fixed storage volume or worry about managing your disk size, and you'll be billed only for the storage you actually use.
 See more info in our [blogpost](https://www.timescale.com/blog/savings-unlocked-why-we-switched-to-a-pay-for-what-you-store-database-storage-model/)
+### Regions
+Please reference the [docs](https://docs.timescale.com/use-timescale/latest/regions/) for a list of currently supported regions.
 ## Supported Operations
 ✅ Create service <br />
 ✅ Rename service <br />

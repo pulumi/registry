@@ -36,55 +36,87 @@ publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-random
 title: random
 updated_on: 1729058626
-version: v4.16.7`
-	registryDir := t.TempDir()
-	util.WriteFile(t,
-		filepath.Join(registryDir, "themes", "default", "data", "registry", "packages", "random.yaml"),
-		partialMetadata+`
-schema_file_path: provider/cmd/pulumi-resource-random/schema.json`)
-	basePackageTreeJSONOutDir := t.TempDir()
-	baseDocsOutDir := t.TempDir()
+version: v4.18.2`
 
-	cmd := resourceDocsFromRegistryCmd()
-	cmd.SetArgs([]string{
-		"random", /* pkgName */
-		"--baseDocsOutDir", baseDocsOutDir,
-		"--basePackageTreeJSONOutDir", basePackageTreeJSONOutDir,
-		"--registryDir", registryDir,
-	})
-	require.NoError(t, cmd.Execute())
-	t.Run("docs", func(t *testing.T) { t.Parallel(); util.AssertDirEqual(t, baseDocsOutDir) })
-	t.Run("tree", func(t *testing.T) { t.Parallel(); util.AssertDirEqual(t, basePackageTreeJSONOutDir) })
-	t.Run("check-schema-file-url", func(t *testing.T) {
+	t.Run("registry", func(t *testing.T) {
 		t.Parallel()
-		registryDirV2 := t.TempDir()
+		registryDir := t.TempDir()
+
+		// Use a wrong schema_file_path to ensure the schema can only be loaded via the Registry API.
 		util.WriteFile(t,
-			filepath.Join(registryDirV2, "themes", "default", "data", "registry", "packages", "random.yaml"),
+			filepath.Join(registryDir, "themes", "default", "data", "registry", "packages", "random.yaml"),
 			partialMetadata+`
-+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-random/v4.16.7/provider/cmd/pulumi-resource-random/schema.json`) //nolint:lll
-		basePackageTreeJSONOutDirV2 := t.TempDir()
-		baseDocsOutDirV2 := t.TempDir()
+schema_file_path: does/not/exist/schema.json`)
+		basePackageTreeJSONOutDir := t.TempDir()
+		baseDocsOutDir := t.TempDir()
 
 		cmd := resourceDocsFromRegistryCmd()
 		cmd.SetArgs([]string{
 			"random", /* pkgName */
-			"--baseDocsOutDir", baseDocsOutDirV2,
-			"--basePackageTreeJSONOutDir", basePackageTreeJSONOutDirV2,
-			"--registryDir", registryDirV2,
+			"--baseDocsOutDir", baseDocsOutDir,
+			"--basePackageTreeJSONOutDir", basePackageTreeJSONOutDir,
+			"--registryDir", registryDir,
 		})
 		require.NoError(t, cmd.Execute())
-		util.AssertDirsEqual(t, baseDocsOutDir, baseDocsOutDirV2)
-		util.AssertDirsEqual(t, basePackageTreeJSONOutDir, basePackageTreeJSONOutDirV2)
+		t.Run("docs", func(t *testing.T) { t.Parallel(); util.AssertDirEqual(t, baseDocsOutDir) })
+		t.Run("tree", func(t *testing.T) { t.Parallel(); util.AssertDirEqual(t, basePackageTreeJSONOutDir) })
+	})
+
+	t.Run("vcs", func(t *testing.T) {
+		t.Parallel()
+		registryDir := t.TempDir()
+
+		// Use a publisher name containing invalid characters to ensure the schema can only be loaded via the VCS
+		util.WriteFile(t,
+			filepath.Join(registryDir, "themes", "default", "data", "registry", "packages", "random.yaml"),
+			partialMetadata+`
+schema_file_path: provider/cmd/pulumi-resource-random/schema.json
+publisher: "contains-invalid-chars!!!"
+`)
+		basePackageTreeJSONOutDir := t.TempDir()
+		baseDocsOutDir := t.TempDir()
+
+		cmd := resourceDocsFromRegistryCmd()
+		cmd.SetArgs([]string{
+			"random", /* pkgName */
+			"--baseDocsOutDir", baseDocsOutDir,
+			"--basePackageTreeJSONOutDir", basePackageTreeJSONOutDir,
+			"--registryDir", registryDir,
+		})
+		require.NoError(t, cmd.Execute())
+		t.Run("docs", func(t *testing.T) { t.Parallel(); util.AssertDirEqual(t, baseDocsOutDir) })
+		t.Run("tree", func(t *testing.T) { t.Parallel(); util.AssertDirEqual(t, basePackageTreeJSONOutDir) })
+		t.Run("check-schema-file-url", func(t *testing.T) {
+			t.Parallel()
+			registryDirV2 := t.TempDir()
+			util.WriteFile(t,
+				filepath.Join(registryDirV2, "themes", "default", "data", "registry", "packages", "random.yaml"),
+				partialMetadata+`
+publisher: "contains-invalid-chars!!!"
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-random/v4.18.2/provider/cmd/pulumi-resource-random/schema.json`) //nolint:lll
+
+			basePackageTreeJSONOutDirV2 := t.TempDir()
+			baseDocsOutDirV2 := t.TempDir()
+
+			cmd := resourceDocsFromRegistryCmd()
+			cmd.SetArgs([]string{
+				"random", /* pkgName */
+				"--baseDocsOutDir", baseDocsOutDirV2,
+				"--basePackageTreeJSONOutDir", basePackageTreeJSONOutDirV2,
+				"--registryDir", registryDirV2,
+			})
+			require.NoError(t, cmd.Execute())
+			util.AssertDirsEqual(t, baseDocsOutDir, baseDocsOutDirV2)
+			util.AssertDirsEqual(t, basePackageTreeJSONOutDir, basePackageTreeJSONOutDirV2)
+		})
 	})
 }
 
 func TestGenerateDocsAllPackage(t *testing.T) {
 	t.Parallel()
-	// Set up the correct directory structure:
-	registryDir := t.TempDir()
-	util.WriteFile(t,
-		filepath.Join(registryDir, "themes", "default", "data", "registry", "packages", "random.yaml"),
-		`category: Utility
+
+	packageMetadata := map[string]string{
+		"random": `category: Utility
 component: false
 description: A Pulumi package to safely use randomness in Pulumi programs.
 featured: false
@@ -97,11 +129,8 @@ repo_url: https://github.com/pulumi/pulumi-random
 schema_file_path: provider/cmd/pulumi-resource-random/schema.json
 title: random
 updated_on: 1729058626
-version: v4.16.7`)
-
-	util.WriteFile(t,
-		filepath.Join(registryDir, "themes", "default", "data", "registry", "packages", "aws-apigateway.yaml"),
-		`category: Cloud
+version: v4.18.2`,
+		"aws-apigateway": `category: Cloud
 component: true
 description: Pulumi Amazon Web Services (AWS) API Gateway Components.
 featured: false
@@ -114,19 +143,56 @@ repo_url: https://github.com/pulumi/pulumi-aws-apigateway
 schema_file_path: schema.yaml
 title: AWS API Gateway
 updated_on: 1727876192
-version: v2.6.1
-`)
+version: v2.6.2`,
+	}
 
-	basePackageTreeJSONOutDir := t.TempDir()
-	baseDocsOutDir := t.TempDir()
+	t.Run("registry", func(t *testing.T) {
+		t.Parallel()
+		registryDir := t.TempDir()
+		for pkgName, partialMetadata := range packageMetadata {
+			// Use a wrong schema_file_path to ensure the schema can only be loaded via the Registry API.
+			util.WriteFile(t,
+				filepath.Join(registryDir, "themes", "default", "data", "registry", "packages", pkgName+".yaml"),
+				partialMetadata+`
+schema_file_path: does/not/exist/schema.json`)
+		}
 
-	cmd := resourceDocsFromRegistryCmd()
-	cmd.SetArgs([]string{
-		"--baseDocsOutDir", baseDocsOutDir,
-		"--basePackageTreeJSONOutDir", basePackageTreeJSONOutDir,
-		"--registryDir", registryDir,
+		basePackageTreeJSONOutDir := t.TempDir()
+		baseDocsOutDir := t.TempDir()
+
+		cmd := resourceDocsFromRegistryCmd()
+		cmd.SetArgs([]string{
+			"--baseDocsOutDir", baseDocsOutDir,
+			"--basePackageTreeJSONOutDir", basePackageTreeJSONOutDir,
+			"--registryDir", registryDir,
+		})
+		require.NoError(t, cmd.Execute())
+		t.Run("docs", func(t *testing.T) { t.Parallel(); util.AssertDirEqual(t, baseDocsOutDir) })
+		t.Run("tree", func(t *testing.T) { t.Parallel(); util.AssertDirEqual(t, basePackageTreeJSONOutDir) })
 	})
-	require.NoError(t, cmd.Execute())
-	t.Run("docs", func(t *testing.T) { t.Parallel(); util.AssertDirEqual(t, baseDocsOutDir) })
-	t.Run("tree", func(t *testing.T) { t.Parallel(); util.AssertDirEqual(t, basePackageTreeJSONOutDir) })
+
+	t.Run("vcs", func(t *testing.T) {
+		t.Parallel()
+		registryDir := t.TempDir()
+		for pkgName, partialMetadata := range packageMetadata {
+			// Use a publisher name containing invalid characters to ensure the schema can only be loaded via the VCS
+			util.WriteFile(t,
+				filepath.Join(registryDir, "themes", "default", "data", "registry", "packages", pkgName+".yaml"),
+				partialMetadata+`
+publisher: "contains-invalid-chars!!!"`)
+		}
+
+		basePackageTreeJSONOutDir := t.TempDir()
+		baseDocsOutDir := t.TempDir()
+
+		cmd := resourceDocsFromRegistryCmd()
+		cmd.SetArgs([]string{
+			"--baseDocsOutDir", baseDocsOutDir,
+			"--basePackageTreeJSONOutDir", basePackageTreeJSONOutDir,
+			"--registryDir", registryDir,
+		})
+		require.NoError(t, cmd.Execute())
+		t.Run("docs", func(t *testing.T) { t.Parallel(); util.AssertDirEqual(t, baseDocsOutDir) })
+		t.Run("tree", func(t *testing.T) { t.Parallel(); util.AssertDirEqual(t, basePackageTreeJSONOutDir) })
+	})
 }

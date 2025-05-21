@@ -68,6 +68,13 @@ website_bucket_identified=false
 # The array of deletable buckets, if any.
 deletables=()
 
+# Check if a bucket has the CleanupStarted tag
+has_cleanup_started() {
+    local bucket_name=$1
+    aws s3api get-bucket-tagging --bucket "$bucket_name" 2>/dev/null | jq -e '.TagSet[] | select(.Key=="CleanupStarted")' >/dev/null
+    return $?
+}
+
 for bucket in $buckets; do
     maybe_echo
     maybe_echo "Fetching metadata for ${bucket}..."
@@ -135,7 +142,12 @@ for bucket in $buckets; do
             buckets_beyond_current=$((buckets_beyond_current+1))
         fi
     else
-        maybe_echo "Missing metadata file. This bucket may not have been built and tested successfully."
+        if has_cleanup_started "$bucket"; then
+            maybe_echo "Found CleanupStarted tag. This bucket is already marked for deletion."
+            deletables+=($bucket)
+        else
+            maybe_echo "Missing metadata file. This bucket may not have been built and tested successfully."
+        fi
     fi
 done
 

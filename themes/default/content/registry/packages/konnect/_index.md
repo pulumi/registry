@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/kong/konnect/2.7.4/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/kong/konnect/2.8.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Konnect Provider
@@ -130,4 +130,5 @@ public class App {
 - `konnectAccessToken` (String, Sensitive)
 - `personalAccessToken` (String, Sensitive)
 - `serverUrl` (String) Server URL (defaults to <https://global.api.konghq.com>)
+- `serviceAccessToken` (String, Sensitive)
 - `systemAccountAccessToken` (String, Sensitive)

@@ -14,8 +14,8 @@ require (
 	github.com/pkg/errors v0.9.1
 	github.com/pulumi/pulumi-java/pkg v1.12.0
 	github.com/pulumi/pulumi-yaml v1.19.1
-	github.com/pulumi/pulumi/pkg/v3 v3.170.1-0.20250521135402-e4d5c7839ecf
-	github.com/pulumi/pulumi/sdk/v3 v3.170.1-0.20250521135402-e4d5c7839ecf
+	github.com/pulumi/pulumi/pkg/v3 v3.170.1-0.20250521150548-9f8cc1ed0127
+	github.com/pulumi/pulumi/sdk/v3 v3.170.1-0.20250521150548-9f8cc1ed0127
 	github.com/sourcegraph/conc v0.3.0
 	github.com/spf13/cobra v1.9.1
 	github.com/stretchr/testify v1.10.0
@@ -85,7 +85,7 @@ require (
 	github.com/pkg/term v1.1.0 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/pulumi/appdash v0.0.0-20231130102222-75f619a67231 // indirect
-	github.com/pulumi/esc v0.13.0 // indirect
+	github.com/pulumi/esc v0.14.2 // indirect
 	github.com/pulumi/inflector v0.1.1 // indirect
 	github.com/rivo/uniseg v0.4.4 // indirect
 	github.com/rogpeppe/go-internal v1.14.1 // indirect
@@ -115,7 +115,7 @@ require (
 	golang.org/x/tools v0.26.0 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20240814211410-ddb44dafa142 // indirect
 	google.golang.org/grpc v1.67.1 // indirect
-	google.golang.org/protobuf v1.36.1 // indirect
+	google.golang.org/protobuf v1.36.6 // indirect
 	gopkg.in/warnings.v0 v0.1.2 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	lukechampine.com/frand v1.4.2 // indirect

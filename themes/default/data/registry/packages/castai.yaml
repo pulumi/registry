@@ -2,15 +2,15 @@
 # Do not edit by hand unless you're certain you know what you are doing!
 category: Cloud
 component: false
-description: A Pulumi provider dynamically bridged from castai.
+description: A Pulumi package for creating and managing CAST AI cloud resources.
 featured: false
-logo_url: ""
+logo_url: https://raw.githubusercontent.com/castai/pulumi-castai/main/docs/images/castai-logo.png
 name: castai
 native: false
-package_status: ga
-publisher: castai
-repo_url: https://github.com/castai/terraform-provider-castai
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/castai/castai/7.52.0/schema.json
-title: castai
-updated_on: 1746833745
-version: 7.52.0
+package_status: public_preview
+publisher: CAST AI
+repo_url: https://github.com/castai/pulumi-castai
+schema_file_url: https://raw.githubusercontent.com/castai/pulumi-castai/v0.1.78/provider/sdk/schema/schema.json
+title: CAST AI
+updated_on: 1747816688
+version: v0.1.78

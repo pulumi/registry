@@ -14,7 +14,7 @@ require (
 	github.com/pkg/errors v0.9.1
 	github.com/pulumi/pulumi-java/pkg v1.12.0
 	github.com/pulumi/pulumi-yaml v1.19.1
-	github.com/pulumi/pulumi/pkg/v3 v3.170.1-0.20250521150548-9f8cc1ed0127
+	github.com/pulumi/pulumi/pkg/v3 v3.171.0
 	github.com/pulumi/pulumi/sdk/v3 v3.171.0
 	github.com/sourcegraph/conc v0.3.0
 	github.com/spf13/cobra v1.9.1

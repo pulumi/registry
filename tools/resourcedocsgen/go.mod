@@ -13,7 +13,7 @@ require (
 	github.com/pgavlin/goldmark v1.1.33-0.20200616210433-b5eb04559386
 	github.com/pkg/errors v0.9.1
 	github.com/pulumi/pulumi-java/pkg v1.12.0
-	github.com/pulumi/pulumi-yaml v1.19.1-0.20250521122313-c4351b731ec4
+	github.com/pulumi/pulumi-yaml v1.19.1
 	github.com/pulumi/pulumi/pkg/v3 v3.170.1-0.20250521111409-4cfe1ec82434
 	github.com/pulumi/pulumi/sdk/v3 v3.170.1-0.20250521111409-4cfe1ec82434
 	github.com/sourcegraph/conc v0.3.0

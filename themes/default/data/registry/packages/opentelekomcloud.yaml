@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: opentelekomcloud
 repo_url: https://github.com/opentelekomcloud/terraform-provider-opentelekomcloud
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/opentelekomcloud/opentelekomcloud/1.36.38/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/opentelekomcloud/opentelekomcloud/1.36.39/schema.json
 title: opentelekomcloud
-updated_on: 1746790565
-version: 1.36.38
+updated_on: 1747913770
+version: 1.36.39

@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: sysdiglabs
 repo_url: https://github.com/sysdiglabs/terraform-provider-sysdig
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/sysdiglabs/sysdig/1.56.2/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/sysdiglabs/sysdig/1.56.3/schema.json
 title: sysdig
-updated_on: 1747740951
-version: 1.56.2
+updated_on: 1747956954
+version: 1.56.3

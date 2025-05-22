@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: kong
 repo_url: https://github.com/kong/terraform-provider-konnect
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/kong/konnect/2.8.0/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/kong/konnect/2.8.1/schema.json
 title: konnect
-updated_on: 1747827361
-version: 2.8.0
+updated_on: 1747956965
+version: 2.8.1

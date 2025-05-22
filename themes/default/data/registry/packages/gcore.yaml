@@ -10,7 +10,7 @@ native: false
 package_status: public_preview
 publisher: g-core
 repo_url: https://github.com/g-core/terraform-provider-gcore
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/g-core/gcore/0.22.1/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/g-core/gcore/0.23.0/schema.json
 title: gcore
-updated_on: 1747265750
-version: 0.22.1
+updated_on: 1747913751
+version: 0.23.0

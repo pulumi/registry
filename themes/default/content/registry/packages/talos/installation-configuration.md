@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-talos/v0.5.2/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-talos/v0.6.0/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: Talos Linux Installation & Configuration
 meta_desc: Information on how to install the Talos Linux provider for Pulumi.

@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-azure/v6.22.1/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-azure/v6.23.0/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: Azure Classic Installation & Configuration
 meta_desc: How to set up credentials to use the Pulumi Azure Classic Provider and choose configuration options to tailor the provider to suit your use case.

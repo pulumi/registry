@@ -91,7 +91,12 @@ func getLatestVersion(repoSlug string) (string, error) {
 
 	defer resp.Body.Close()
 	if resp.StatusCode != 200 {
-		return "", fmt.Errorf("could not find a release at https://api.github.com%s: %w", path, err)
+		respBody, err := io.ReadAll(resp.Body)
+		if err != nil {
+			return "", errors.Wrap(err, fmt.Sprintf("getting latest version for %s: %s", repoSlug, resp.Status))
+		}
+
+		return "", fmt.Errorf("getting latest version for %s: %s", repoSlug, string(respBody))
 	}
 
 	var tag pkg.GitHubTag

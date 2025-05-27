@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-junipermist/v0.4.1/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-junipermist/v0.4.3/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: Juniper Mist Provider Installation & Configuration
 meta_desc: Provides an overview on how to configure the Pulumi Juniper Mist Provider.

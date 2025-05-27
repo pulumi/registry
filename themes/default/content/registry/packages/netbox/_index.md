@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/e-breuninger/netbox/3.10.0/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/e-breuninger/netbox/3.11.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Netbox Provider
@@ -187,6 +187,7 @@ public class App {
 - `serverUrl` (String) Location of Netbox server including scheme (http or https) and optional port. Can be set via the `NETBOX_SERVER_URL` environment variable.
 
 - `allowInsecureHttps` (Boolean) Flag to set whether to allow https with invalid certificates. Can be set via the `NETBOX_ALLOW_INSECURE_HTTPS` environment variable. Defaults to `false`.
+- `defaultTags` (Set of String) Tags to add to every resource managed by this provider.
 - `headers` (Map of String) Set these header on all requests to Netbox. Can be set via the `NETBOX_HEADERS` environment variable.
 - `requestTimeout` (Number) Netbox API HTTP request timeout in seconds. Can be set via the `NETBOX_REQUEST_TIMEOUT` environment variable.
 - `skipVersionCheck` (Boolean) If true, do not try to determine the running Netbox version at provider startup. Disables warnings about possibly unsupported Netbox version. Also useful for local testing on pulumi plans. Can be set via the `NETBOX_SKIP_VERSION_CHECK` environment variable. Defaults to `false`.

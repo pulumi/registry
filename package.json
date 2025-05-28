@@ -33,7 +33,8 @@
         "minify-css": "node scripts/minify-css.js",
         "test-api-docs": "NODE_OPTIONS=--max_old_space_size=8192 mocha scripts/tests -n expose-gc --reporter mocha-ctrf-json-reporter",
         "lint": "eslint scripts && prettier scripts --check",
-        "format": "prettier scripts --write"
+        "format": "prettier scripts --write",
+        "check-links": "node scripts/link-checker/check-links.js \"https://www.pulumi.com/registry\" 2"
     },
     "devDependencies": {
         "@eslint/js": "^9.19.0",

@@ -97,7 +97,7 @@ serve-all:
 	./node_modules/.bin/concurrently --kill-others -r "${HUGO_SERVE}" "yarn --cwd ./themes/default/theme run start"
 
 .PHONY: build-assets
-build-assets:
+build-assets: ensure
 	yarn --cwd ./themes/default/theme run build
 
 .PHONY: ci_bucket_cleanup
@@ -106,7 +106,11 @@ ci_bucket_cleanup:
 
 .PHONY: check_links
 check_links: ensure
-	./scripts/link-checker/check-links.sh "https://www.pulumi.com/registry"
+	yarn run check-links
+
+.PHONY: test_provider_api_docs
+test_provider_api_docs: ensure build-assets bin/resourcedocsgen
+	./scripts/ci/run-provider-tests.sh
 
 .PHONY: run-browser-tests
 run-browser-tests: ensure

@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-mongodbatlas
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-mongodbatlas/v3.31.0/provider/cmd/pulumi-resource-mongodbatlas/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-mongodbatlas/v3.32.0/provider/cmd/pulumi-resource-mongodbatlas/schema.json
 title: MongoDB Atlas
-updated_on: 1746560913
-version: v3.31.0
+updated_on: 1748490963
+version: v3.32.0

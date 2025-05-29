@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: checkpointsw
 repo_url: https://github.com/checkpointsw/terraform-provider-checkpoint
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/checkpointsw/checkpoint/2.9.0/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/checkpointsw/checkpoint/2.10.0/schema.json
 title: checkpoint
-updated_on: 1744673805
-version: 2.9.0
+updated_on: 1748518563
+version: 2.10.0

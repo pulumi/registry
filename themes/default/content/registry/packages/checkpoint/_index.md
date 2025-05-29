@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/checkpointsw/checkpoint/2.9.0/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/checkpointsw/checkpoint/2.10.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Checkpoint Provider
@@ -937,10 +937,9 @@ public class App {
 {{< /chooser >}}
 ## Post Apply / Destroy scripts
 
-As of right now, Pulumi does not provide native support for publish and install-policy, so both of them and more post apply actions are handled
-out-of-band.
+There are actions that can run out-of-band Pulumi using dedicated scripts for publish, install-policy and more.
 
-In order to use post Apply / Destroy commands, the authentication method must be via environment variables.
+In order to use post apply or post destroy commands, the authentication method must be via environment variables.
 ### Publish
 
 Please use the following script for Publish:
@@ -951,14 +950,20 @@ $ go build publish.go
 $ mv publish $GOPATH/src/github.com/pulumi-providers/pulumi-provider-checkpoint
 $ pulumi up && publish
 ```
-
-Another option is to use `autoPublishBatchSize` provider argument which automatically runs publish.
 ### Install Policy
 
 The following configuration inputs are supported:
 
 * `policy-package` - (Required) The name of the Policy Package to be installed.
-* `target` - (Required) On what targets to execute this command. Targets may be identified by their name or object unique identifier. Multiple targets can be added.
+* `target` - (Optional) On what targets to execute this command. Targets may be identified by their name or object unique identifier. Multiple targets can be added.
+* `access` - (Optional) Set to be true in order to install the Access Control policy. By default, the value is true if Access Control policy is enabled on the input policy package, otherwise false.
+* `desktop-security` - (Optional) Set to be true in order to install the Desktop Security policy. By default, the value is true if desktop security policy is enabled on the input policy package, otherwise false.
+* `qos` - (Optional) Set to be true in order to install the QoS policy. By default, the value is true if Quality-of-Service policy is enabled on the input policy package, otherwise false.
+* `threat-prevention` - (Optional) Set to be true in order to install the Threat Prevention policy. By default, the value is true if Threat Prevention policy is enabled on the input policy package, otherwise false.
+* `install-on-all-cluster-members-or-fail` - (Optional) Relevant for the gateway clusters. If true, the policy is installed on all the cluster members. If the installation on a cluster member fails, don't install on that cluster.
+* `prepare-only` - (Optional) If true, prepares the policy for the installation, but doesn't install it on an installation target.
+* `revision` - (Optional) The UID of the revision of the policy to install.
+* `ignore-warnings` - (Optional) Install policy ignoring policy mismatch warnings.
 
 Please use the following script for Install Policy:
 
@@ -1050,13 +1055,14 @@ Check Point Provider supports configuring objects in CME configuration file star
 
 The table below shows the compatibility between the Pulumi Release version and the CME API version:
 
-|                                                                        Pulumi Release version                                                                         | CME API version |    CME Take    |
-|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------|----------------|
-| v2.9.0                                                                                                                                                                   | v1.2.2          | 289 and higher |
-| v2.8.0                                                                                                                                                                   | v1.2            | 279 and higher |
-| v2.7.0                                                                                                                                                                   | v1.1            | 255 and higher |
-| <br>                                                                                                                                                                     |                 |                |
-| > **Note:** When you install or upgrade the Pulumi Release version, make sure to also upgrade CME to the corresponding CME Take to properly configure CME resources. |                 |                |
+| Pulumi Release version | CME API version |    CME Take    |
+|---------------------------|-----------------|----------------|
+| v2.9.0                    | v1.2.2          | 289 and higher |
+| v2.8.0                    | v1.2            | 279 and higher |
+| v2.7.0                    | v1.1            | 255 and higher |
+
+<br>
+> **Note:** When you install or upgrade the Pulumi Release version, make sure to also upgrade CME to the corresponding CME Take to properly configure CME resources.
 
 For details about upgrading CME, please refer to the documentation [here](https://sc1.checkpoint.com/documents/IaaS/WebAdminGuides/EN/CP_CME/Content/Topics-CME/Installing_and_Updating_CME.htm?tocpath=_____4).
 ## Import Resources
@@ -1196,3 +1202,156 @@ This section describes best practices for working with the Check Point provider.
 * Keep on unique `sessionFileName` when configure more than one provider for authentication purposes.
 * Resources and Functions that start with `checkpoint_management_*` using Management API and require set context to `webApi`. For GAIA API resources set context to `gaiaApi`.
 * When configure provider context to `gaiaApi` you can run only GAIA resources. Management resources will not be supported.
+* Provider state policy is to capture all resource attributes into Pulumi state. All attributes defined in the resource schema are recorded and kept up-to-date in the state. For more information, please refer here.
+### Publish best options and practices
+#### Trigger field
+From version 1.2 the provider was enhanced where a `triggers` field for resource `install-policy`, `publish` and `logout` was added for re-execution if there are any changes in the configuration files.
+#### Avoid large bulk publishes
+From version 2.5.0 the provider was enhanced with support to auto publish mode using `autoPublishBatchSize` or via the `CHECKPOINT_AUTO_PUBLISH_BATCH_SIZE` environment variable to configure the number of batch size to automatically run publish.
+<br>Note: To make sure all changes are published need to do publish explicitly at the end of the execution.
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime:
+config:
+    checkpoint:apiKey:
+        value: admin_api_key
+    checkpoint:autoPublishBatchSize:
+        value: "100"
+    checkpoint:context:
+        value: web_api
+    checkpoint:server:
+        value: chkp-mgmt-srv.local
+
+```
+#### Control publish post destroy
+From version 2.6.0 the provider was enhanced where a new flag was added `runPublishOnDestroy` to `checkpoint.ManagementPublish` which indicates whether to run publish on destroy.
+{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{% choosable language typescript %}}
+```typescript
+import * as pulumi from "@pulumi/pulumi";
+import * as checkpoint from "@pulumi/checkpoint";
+
+// Make the publish resources dependent of the module and trigger it if there is a change in the configuration files
+const publish = new checkpoint.ManagementPublish("publish", {
+    triggers: publishTriggers,
+    runPublishOnDestroy: true,
+}, {
+    dependsOn: [policy],
+});
+```
+{{% /choosable %}}
+{{% choosable language python %}}
+```python
+import pulumi
+import pulumi_checkpoint as checkpoint
+
+# Make the publish resources dependent of the module and trigger it if there is a change in the configuration files
+publish = checkpoint.ManagementPublish("publish",
+    triggers=publish_triggers,
+    run_publish_on_destroy=True,
+    opts = pulumi.ResourceOptions(depends_on=[policy]))
+```
+{{% /choosable %}}
+{{% choosable language csharp %}}
+```csharp
+using System.Collections.Generic;
+using System.Linq;
+using Pulumi;
+using Checkpoint = Pulumi.Checkpoint;
+
+return await Deployment.RunAsync(() =>
+{
+    // Make the publish resources dependent of the module and trigger it if there is a change in the configuration files
+    var publish = new Checkpoint.ManagementPublish("publish", new()
+    {
+        Triggers = publishTriggers,
+        RunPublishOnDestroy = true,
+    }, new CustomResourceOptions
+    {
+        DependsOn =
+        {
+            policy,
+        },
+    });
+
+});
+
+```
+{{% /choosable %}}
+{{% choosable language go %}}
+```go
+package main
+
+import (
+	"github.com/pulumi/pulumi-pulumi-provider/sdks/go/checkpoint/v2/checkpoint"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		// Make the publish resources dependent of the module and trigger it if there is a change in the configuration files
+		_, err := checkpoint.NewManagementPublish(ctx, "publish", &checkpoint.ManagementPublishArgs{
+			Triggers:            pulumi.Any(publishTriggers),
+			RunPublishOnDestroy: pulumi.Bool(true),
+		}, pulumi.DependsOn([]pulumi.Resource{
+			policy,
+		}))
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+}
+```
+{{% /choosable %}}
+{{% choosable language yaml %}}
+```yaml
+resources:
+  # Make the publish resources dependent of the module and trigger it if there is a change in the configuration files
+  publish:
+    type: checkpoint:ManagementPublish
+    properties:
+      triggers: ${publishTriggers}
+      runPublishOnDestroy: true
+    options:
+      dependsOn:
+        - ${policy}
+```
+{{% /choosable %}}
+{{% choosable language java %}}
+```java
+package generated_program;
+
+import com.pulumi.Context;
+import com.pulumi.Pulumi;
+import com.pulumi.core.Output;
+import com.pulumi.checkpoint.ManagementPublish;
+import com.pulumi.checkpoint.ManagementPublishArgs;
+import com.pulumi.resources.CustomResourceOptions;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+public class App {
+    public static void main(String[] args) {
+        Pulumi.run(App::stack);
+    }
+
+    public static void stack(Context ctx) {
+        // Make the publish resources dependent of the module and trigger it if there is a change in the configuration files
+        var publish = new ManagementPublish("publish", ManagementPublishArgs.builder()
+            .triggers(publishTriggers)
+            .runPublishOnDestroy(true)
+            .build(), CustomResourceOptions.builder()
+                .dependsOn(policy)
+                .build());
+
+    }
+}
+```
+{{% /choosable %}}
+{{< /chooser >}}

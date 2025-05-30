@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/octopusdeploylabs/octopusdeploy/0.43.1/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/octopusdeploylabs/octopusdeploy/0.43.2/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Octopusdeploy Provider
@@ -16,7 +16,8 @@ pulumi package add terraform-provider octopusdeploylabs/octopusdeploy
 ```
 ## Warning
 
-This provider is under active development. Its functionalty can and will change; it is a `v0.*` product until its robustness can be assured. Please be aware that types like resources can and will be modified over time. It is strongly recommended to `validate` and `plan` configuration prior to committing changes via `apply`.
+> This provider has been moved under the namespace OctopusDeploy, the provider under OctopusDeployLabs is no longer maintained.
+> Please read *0. Moving to Octopus Deploy Namespace* under the guides subcategory to learn how to upgrade your provider while maintaining state.
 ## Overview
 
 This provider is used to configure resources in Octopus Deploy. The provider must be configured with the proper credentials before it can be used.

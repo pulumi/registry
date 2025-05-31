@@ -9,8 +9,8 @@ name: "Scheduled jobs: Check links"
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string.
-    # Run every day at 3:00PM UTC.
-    - cron: "0 15 * * *"
+    # Run every Monday at 3:00PM UTC.
+    - cron: "0 15 * * MON"
   workflow_dispatch: null
 jobs:
   all:

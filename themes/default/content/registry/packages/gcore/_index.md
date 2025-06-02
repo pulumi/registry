@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/g-core/gcore/0.23.0/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/g-core/gcore/0.24.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Gcore Provider
@@ -1340,6 +1340,7 @@ public class App {
 - `gcorePlatform` (String, Deprecated) Platform URL is used for generate JWT.
 - `gcorePlatformApi` (String) Platform URL is used for generate JWT (define only if you want to override Platform API endpoint). Can also be set with the GCORE_PLATFORM_API environment variable.
 - `gcoreStorageApi` (String) Storage API (define only if you want to override Storage API endpoint). Can also be set with the GCORE_STORAGE_API environment variable.
+- `gcoreWaapApi` (String) WAAP API (define only if you want to override WAAP API endpoint). Can also be set with the GCORE_WAAP_API environment variable.
 - `ignoreCredsAuthError` (Boolean, Deprecated) Should be set to true when you are gonna to use storage resource with permanent API-token only.
 - `password` (String, Deprecated) Gcore account password. Can also be set with the GCORE_PASSWORD environment variable.
 - `permanentApiToken` (String, Sensitive) A permanent [API-token](https://gcore.com/docs/account-settings/create-use-or-delete-a-permanent-api-token). Can also be set with the GCORE_PERMANENT_TOKEN environment variable.

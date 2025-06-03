@@ -10,7 +10,7 @@ native: false
 package_status: public_preview
 publisher: littlejo
 repo_url: https://github.com/littlejo/pulumi-cilium
-schema_file_path: provider/cmd/pulumi-resource-cilium/schema.json
+schema_file_url: https://raw.githubusercontent.com/littlejo/pulumi-cilium/v0.2.0/provider/cmd/pulumi-resource-cilium/schema.json
 title: Cilium
-updated_on: 1727641396
-version: v0.1.7
+updated_on: 1748963585
+version: v0.2.0

@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/EventStore/pulumi-eventstorecloud/v0.2.17/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/EventStore/pulumi-eventstorecloud/v0.2.18+prerelease/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: Event Store Cloud
 meta_desc: Learn how you can use Event Store Cloud Provider for Pulumi to provision and manage Event Store Cloud resources.

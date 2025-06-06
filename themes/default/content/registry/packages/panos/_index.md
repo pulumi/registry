@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/paloaltonetworks/panos/2.0.1/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/paloaltonetworks/panos/2.0.2/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Panos Provider
@@ -189,7 +189,7 @@ Static credentials can be provided through either username-password combinations
 Usage:
 ### Environment Variables
 
-You can provide your credentials using the `PANOS_USERNAME` and `PANOS_PASSWORD` environment variables for username-password based authentication, or use `PANOS_API_KEY` for API key based authentication, along with `PANOS_HOST`.
+You can provide your credentials using the `PANOS_USERNAME` and `PANOS_PASSWORD` environment variables for username-password based authentication, or use `PANOS_API_KEY` for API key based authentication, along with `PANOS_HOSTNAME`.
 
 ```yaml
 # Pulumi.yaml provider configuration file
@@ -201,7 +201,7 @@ runtime:
 Usage:
 
 ```sh
-$ export PANOS_HOST="1.2.3.4"
+$ export PANOS_HOSTNAME="1.2.3.4"
 $ export PANOS_USERNAME="username"
 $ export PANOS_PASSWORD="password"
 $ pulumi preview
@@ -243,7 +243,7 @@ config:
 - `apiKeyInRequest` (Boolean) Send the API key in the request body instead of using the authentication header. Environment variable: `PANOS_API_KEY_IN_REQUEST`. JSON config file variable: `apiKeyInRequest`.
 - `authFile` (String) Filesystem path to a JSON config file that specifies the provider's params. JSON config file variable: `authFile`.
 - `configFile` (String) (Local inspection mode) The PAN-OS config file to load read in using `file()` JSON config file variable: `configFile`.
-- `hostname` (String) The hostname or IP address of the PAN-OS instance (NGFW or Panorama). Environment variable: `PANOS_HOST`. JSON config file variable: `hostname`.
+- `hostname` (String) The hostname or IP address of the PAN-OS instance (NGFW or Panorama). Environment variable: `PANOS_HOSTNAME`. JSON config file variable: `hostname`.
 - `multiConfigBatchSize` (Number) Number of operations to send as part of a single MultiConfig update Default: `500`. Environment variable: `PANOS_MULTI_CONFIG_BATCH_SIZE`. JSON config file variable: `multiConfigBatchSize`.
 - `panosVersion` (String) (Local inspection mode) The version of PAN-OS that exported the config file. This is only used if the root 'config' block does not contain the 'detail-version' attribute. Example: `10.2.3`. JSON config file variable: `panosVersion`.
 - `password` (String, Sensitive) The password.  This is required if the apiKey is not configured. Environment variable: `PANOS_PASSWORD`. JSON config file variable: `password`.

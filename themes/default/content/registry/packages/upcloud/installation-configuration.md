@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/UpCloudLtd/pulumi-upcloud/v0.3.0/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/UpCloudLtd/pulumi-upcloud/v0.3.1/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: UpCloud provider installation & configuration
 meta_desc: Instructions on how to install and configure the UpCloud provider.

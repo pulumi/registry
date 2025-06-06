@@ -383,6 +383,10 @@
     {
       "repoSlug": "castai/pulumi-castai",
       "schemaFile": "provider/sdk/schema/schema.json"
+    },
+    {
+      "repoSlug": "statsig-io/pulumi-statsig",
+      "schemaFile": "provider/cmd/pulumi-resource-statsig/schema.json"
     }
   ]
 }

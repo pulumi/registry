@@ -10,7 +10,7 @@ native: false
 package_status: public_preview
 publisher: onelogin
 repo_url: https://github.com/onelogin/terraform-provider-onelogin
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/onelogin/onelogin/0.8.2/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/onelogin/onelogin/0.8.5/schema.json
 title: onelogin
-updated_on: 1749252940
-version: 0.8.2
+updated_on: 1749296146
+version: 0.8.5

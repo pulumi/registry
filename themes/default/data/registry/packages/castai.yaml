@@ -10,7 +10,7 @@ native: false
 package_status: public_preview
 publisher: CAST AI
 repo_url: https://github.com/castai/pulumi-castai
-schema_file_url: https://raw.githubusercontent.com/castai/pulumi-castai/v0.1.78/provider/sdk/schema/schema.json
+schema_file_url: https://raw.githubusercontent.com/castai/pulumi-castai/v0.1.87/provider/sdk/schema/schema.json
 title: CAST AI
-updated_on: 1747816688
-version: v0.1.78
+updated_on: 1749398342
+version: v0.1.87

@@ -10,7 +10,7 @@ native: false
 package_status: public_preview
 publisher: jdamata
 repo_url: https://github.com/jdamata/terraform-provider-sonarqube
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/jdamata/sonarqube/0.16.15/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/jdamata/sonarqube/0.16.16/schema.json
 title: sonarqube
-updated_on: 1747611346
-version: 0.16.15
+updated_on: 1749468945
+version: 0.16.16

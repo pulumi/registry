@@ -7,10 +7,10 @@ featured: false
 logo_url: https://raw.githubusercontent.com/pulumi/pulumi-dbtcloud/main/res/dbt-bit_tm.png
 name: dbtcloud
 native: false
-package_status: public_preview
+package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-dbtcloud
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-dbtcloud/v0.1.31/provider/cmd/pulumi-resource-dbtcloud/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-dbtcloud/v1.0.0/provider/cmd/pulumi-resource-dbtcloud/schema.json
 title: dbt Cloud
-updated_on: 1748901047
-version: v0.1.31
+updated_on: 1749649896
+version: v1.0.0

@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/e-breuninger/netbox/3.11.1/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/e-breuninger/netbox/4.0.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Netbox Provider
@@ -16,7 +16,7 @@ pulumi package add terraform-provider e-breuninger/netbox
 ```
 ## Overview
 
-The Pulumi Netbox provider is a plugin for Pulumi that allows for the full lifecycle management of [Netbox](https://docs.netbox.dev/en/stable/) resources.
+The Pulumi Netbox provider is a plugin for Pulumi that allows for the full lifecycle management of [Netbox](https://netboxlabs.com/docs/netbox/) resources.
 
 Use the navigation to the left to read about the available resources.
 ## Supported Netbox versions
@@ -24,7 +24,8 @@ Netbox often makes breaking API changes even in non-major releases. Check the ta
 
 | Netbox version  | Provider version |
 |-----------------|------------------|
-| v4.1.0 - 4.1.11 | v3.10.0 and up   |
+| v4.2.2 - 4.2.9  | v4.0.0 and up    |
+| v4.1.0 - 4.1.11 | v3.10.0 - 3.11.1 |
 | v4.0.0 - 4.0.11 | v3.9.0 - 3.9.2   |
 | v3.7.0 - 3.7.8  | v3.8.0 - 3.8.9   |
 | v3.6.0 - 3.6.9  | v3.7.0 - 3.7.7   |

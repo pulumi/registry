@@ -4,13 +4,13 @@ category: Cloud
 component: false
 description: A Pulumi provider dynamically bridged from airbyte.
 featured: false
-logo_url: ""
+logo_url: https://raw.githubusercontent.com/airbytehq/airbyte/1c4ad4d536c44942b42225bf8af5bbef7e7409a4/docs/platform/assets/airbyte_new_logo.svg
 name: airbyte
 native: false
 package_status: public_preview
 publisher: airbytehq
 repo_url: https://github.com/airbytehq/terraform-provider-airbyte
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/airbytehq/airbyte/0.12.0/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/airbytehq/airbyte/0.13.0/schema.json
 title: airbyte
-updated_on: 1747309009
-version: 0.12.0
+updated_on: 1749857797
+version: 0.13.0

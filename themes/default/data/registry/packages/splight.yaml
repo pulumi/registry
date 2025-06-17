@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: splightplatform
 repo_url: https://github.com/splightplatform/pulumi-splight
-schema_file_url: https://raw.githubusercontent.com/splightplatform/pulumi-splight/v1.2.13/provider/cmd/pulumi-resource-splight/schema.json
+schema_file_url: https://raw.githubusercontent.com/splightplatform/pulumi-splight/v1.2.15/provider/cmd/pulumi-resource-splight/schema.json
 title: splight
-updated_on: 1739560868
-version: v1.2.13
+updated_on: 1750174551
+version: v1.2.15

@@ -12,7 +12,7 @@ require (
 	github.com/hexops/autogold/v2 v2.2.1
 	github.com/pgavlin/goldmark v1.1.33-0.20200616210433-b5eb04559386
 	github.com/pkg/errors v0.9.1
-	github.com/pulumi/pulumi-java/pkg v1.13.0
+	github.com/pulumi/pulumi-java/pkg v1.13.1
 	github.com/pulumi/pulumi-yaml v1.21.1
 	github.com/pulumi/pulumi/pkg/v3 v3.177.0
 	github.com/pulumi/pulumi/sdk/v3 v3.177.0
@@ -102,7 +102,7 @@ require (
 	github.com/uber/jaeger-client-go v2.30.0+incompatible // indirect
 	github.com/uber/jaeger-lib v2.4.1+incompatible // indirect
 	github.com/xanzy/ssh-agent v0.3.3 // indirect
-	github.com/zclconf/go-cty v1.16.2 // indirect
+	github.com/zclconf/go-cty v1.16.3 // indirect
 	go.uber.org/atomic v1.11.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
 	golang.org/x/crypto v0.38.0 // indirect

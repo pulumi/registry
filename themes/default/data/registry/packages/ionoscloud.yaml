@@ -2,15 +2,15 @@
 # Do not edit by hand unless you're certain you know what you are doing!
 category: Cloud
 component: false
-description: A Pulumi provider dynamically bridged from ionoscloud.
+description: A Pulumi package for creating and managing ionoscloud cloud resources.
 featured: false
-logo_url: ""
+logo_url: https://raw.githubusercontent.com/ionos-cloud/pulumi-ionoscloud/refs/heads/main/.github/LOGO_IONOS_Blue_RGB.png
 name: ionoscloud
 native: false
-package_status: ga
+package_status: public_preview
 publisher: ionos-cloud
-repo_url: https://github.com/ionos-cloud/terraform-provider-ionoscloud
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/ionos-cloud/ionoscloud/6.7.7/schema.json
-title: ionoscloud
-updated_on: 1747784167
-version: 6.7.7
+repo_url: https://github.com/ionos-cloud/pulumi-ionoscloud
+schema_file_url: https://raw.githubusercontent.com/ionos-cloud/pulumi-ionoscloud/v0.2.3/provider/cmd/pulumi-resource-ionoscloud/schema.json
+title: IonosCloud
+updated_on: 1747120108
+version: v0.2.3

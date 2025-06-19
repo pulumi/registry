@@ -387,6 +387,10 @@
     {
       "repoSlug": "statsig-io/pulumi-statsig",
       "schemaFile": "provider/cmd/pulumi-resource-statsig/schema.json"
+    },
+    {
+      "repoSlug": "ionos-cloud/pulumi-ionoscloud",
+      "schemaFile": "provider/cmd/pulumi-resource-ionoscloud/schema.json"
     }
   ]
 }

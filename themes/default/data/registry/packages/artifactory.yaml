@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-artifactory
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-artifactory/v8.8.4/provider/cmd/pulumi-resource-artifactory/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-artifactory/v8.8.5/provider/cmd/pulumi-resource-artifactory/schema.json
 title: artifactory
-updated_on: 1749096077
-version: v8.8.4
+updated_on: 1750304127
+version: v8.8.5

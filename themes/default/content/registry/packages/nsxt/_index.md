@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/vmware/nsxt/3.8.2/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/vmware/nsxt/3.9.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Nsxt Provider
@@ -41,7 +41,7 @@ Credentials can be provided statically or provided as environment variables. In
 addition, client certificates can be used for authentication. For
 authentication with certificates Pulumi will require a certificate file and
 private key file in PEM format. To use client certificates the client
-certificate needs to be registered with NSX-T manager prior to invoking
+certificate needs to be registered with NSX manager prior to invoking
 Pulumi.
 
 The provider also can accept both signed and self-signed server certificates.
@@ -194,14 +194,14 @@ config:
 ```
 ## Configuration Reference
 
-The following arguments are used to configure the VMware NSX-T Provider:
+The following arguments are used to configure the provider:
 
-* `host` - (Required) The host name or IP address of the NSX-T manager. Can also
+* `host` - (Required) The host name or IP address of the NSX manager. Can also
   be specified with the `NSXT_MANAGER_HOST` environment variable. Do not include
   `http://` or `https://` in the host.
-* `username` - (Required) The user name to connect to the NSX-T manager as. Can
+* `username` - (Required) The user name to connect to the NSX manager as. Can
   also be specified with the `NSXT_USERNAME` environment variable.
-* `password` - (Required) The password for the NSX-T manager user. Can also be
+* `password` - (Required) The password for the NSX manager user. Can also be
   specified with the `NSXT_PASSWORD` environment variable.
 * `clientAuthCertFile` - (Optional) The path to a certificate file for client
   certificate authorization. Can also be specified with the
@@ -2170,7 +2170,7 @@ func main() {
 		// by the NSX Admin. A T0 Gateway is used for north/south connectivity between
 		// the logical networking space and the physical networking space. Many Tier1
 		// Gateways will be connected to the T0 Gateway
-		demo, err := nsxt.GetPolicyEdgeCluster(ctx, &nsxt.GetPolicyEdgeClusterArgs{
+		demo, err := nsxt.LookupPolicyEdgeCluster(ctx, &nsxt.LookupPolicyEdgeClusterArgs{
 			DisplayName: pulumi.StringRef("Edge-Cluster"),
 		}, nil)
 		if err != nil {

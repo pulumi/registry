@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: jfrog
 repo_url: https://github.com/jfrog/terraform-provider-platform
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/jfrog/platform/2.2.4/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/jfrog/platform/2.2.5/schema.json
 title: platform
-updated_on: 1747654544
-version: 2.2.4
+updated_on: 1750462559
+version: 2.2.5

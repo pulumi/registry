@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/zscaler/pulumi-zpa/v1.0.1/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/zscaler/pulumi-zpa/v1.0.2/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: Zscaler Private Access (ZPA)
 meta_desc: Provides an overview of the ZPA Provider for Pulumi.

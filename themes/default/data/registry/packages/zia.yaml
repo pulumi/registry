@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: Zscaler
 repo_url: https://github.com/zscaler/pulumi-zia
-schema_file_url: https://raw.githubusercontent.com/zscaler/pulumi-zia/v1.0.1/provider/cmd/pulumi-resource-zia/schema.json
+schema_file_url: https://raw.githubusercontent.com/zscaler/pulumi-zia/v1.1.0/provider/cmd/pulumi-resource-zia/schema.json
 title: Zscaler Internet Access
-updated_on: 1749172001
-version: v1.0.1
+updated_on: 1750448031
+version: v1.1.0

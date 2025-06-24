@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/zscaler/pulumi-zia/v1.1.0/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/zscaler/pulumi-zia/v1.1.1/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: ZIA Setup
 meta_desc: Information on how to install the ZIA provider.

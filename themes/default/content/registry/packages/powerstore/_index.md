@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/dell/powerstore/1.2.0/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/dell/powerstore/1.2.1/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Powerstore Provider
@@ -331,11 +331,9 @@ public class App {
 {{% /choosable %}}
 {{< /chooser >}}
 ## Configuration Reference
-### Required
 
-- `endpoint` (String) IP or FQDN of the PowerStore host
-- `password` (String, Sensitive) The password of the PowerStore host.
-- `username` (String) The username of the PowerStore host.
-
-- `insecure` (Boolean) Boolean variable to specify whether to validate SSL certificate or not.
-- `timeout` (Number) The default timeout value for the Powerstore host.
+- `endpoint` (String) IP or FQDN of the PowerStore host. This can also be set using the environment variable POWERSTORE_ENDPOINT
+- `insecure` (Boolean) Boolean variable to specify whether to validate SSL certificate or not. This can also be set using the environment variable POWERSTORE_INSECURE
+- `password` (String, Sensitive) The password of the PowerStore host. This can also be set using the environment variable POWERSTORE_PASSWORD
+- `timeout` (Number) The default timeout value for the Powerstore host. This can also be set using the environment variable POWERSTORE_PASSWORD
+- `username` (String) The username of the PowerStore host. This can also be set using the environment variable POWERSTORE_USERNAME

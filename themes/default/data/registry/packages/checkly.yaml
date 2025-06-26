@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: Checkly
 repo_url: https://github.com/checkly/pulumi-checkly
-schema_file_url: https://raw.githubusercontent.com/checkly/pulumi-checkly/v2.2.0/provider/cmd/pulumi-resource-checkly/schema.json
+schema_file_url: https://raw.githubusercontent.com/checkly/pulumi-checkly/v2.2.1/provider/cmd/pulumi-resource-checkly/schema.json
 title: Checkly
-updated_on: 1744206007
-version: v2.2.0
+updated_on: 1750944663
+version: v2.2.1

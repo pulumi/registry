@@ -576,7 +576,7 @@ return await Deployment.RunAsync(() =>
 <pulumi-choosable type="language" values="java">
 
 ```
-Coming soon!
+Example coming soon!
 ```
 </pulumi-choosable>
 </div>
@@ -584,7 +584,7 @@ Coming soon!
 <pulumi-choosable type="language" values="yaml">
 
 ```
-Coming soon!
+Example coming soon!
 ```
 </pulumi-choosable>
 </div>
@@ -603,7 +603,7 @@ Before:
 <pulumi-choosable type="language" values="javascript,typescript">
 
 ```
-Coming soon!
+Example coming soon!
 ```
 </pulumi-choosable>
 </div>
@@ -611,7 +611,7 @@ Coming soon!
 <pulumi-choosable type="language" values="python">
 
 ```
-Coming soon!
+Example coming soon!
 ```
 </pulumi-choosable>
 </div>
@@ -619,7 +619,7 @@ Coming soon!
 <pulumi-choosable type="language" values="go">
 
 ```
-Coming soon!
+Example coming soon!
 ```
 </pulumi-choosable>
 </div>
@@ -627,7 +627,7 @@ Coming soon!
 <pulumi-choosable type="language" values="csharp">
 
 ```
-Coming soon!
+Example coming soon!
 ```
 </pulumi-choosable>
 </div>

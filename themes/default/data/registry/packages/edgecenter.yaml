@@ -10,7 +10,7 @@ native: false
 package_status: public_preview
 publisher: edge-center
 repo_url: https://github.com/edge-center/terraform-provider-edgecenter
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/edge-center/edgecenter/0.8.3/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/edge-center/edgecenter/0.8.4/schema.json
 title: edgecenter
-updated_on: 1750203343
-version: 0.8.3
+updated_on: 1751024144
+version: 0.8.4

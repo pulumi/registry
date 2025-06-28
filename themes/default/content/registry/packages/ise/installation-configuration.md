@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-ise/v0.2.3/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-ise/v0.2.4/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: Cisco ISE Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi Cisco ISE Provider.

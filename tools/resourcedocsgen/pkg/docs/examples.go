@@ -24,7 +24,7 @@ import (
 	"github.com/pulumi/registry/tools/resourcedocsgen/pkg/util/language"
 )
 
-const defaultMissingExampleSnippetPlaceholder = "Coming soon!"
+const defaultMissingExampleSnippetPlaceholder = "Example coming soon!"
 
 type examplesSection struct {
 	// Examples is a list of exampleSections. Each exampleSection contains a title and code snippets

@@ -510,7 +510,7 @@ func TestExamplesProcessing(t *testing.T) {
 		for _, lang := range otherLangSnippets {
 			snippet, ok := e.Snippets[lang]
 			assert.True(t, ok, "Expected to find default placeholders for other languages")
-			assert.Contains(t, "Coming soon!", snippet)
+			assert.Contains(t, "Example coming soon!", snippet)
 		}
 	}
 }
@@ -632,7 +632,7 @@ func TestDecomposeDocstring(t *testing.T) {
 				Title: "VPC with CIDR from AWS IPAM",
 				Snippets: map[language.Language]string{
 					language.CSharp: "```csharp\nVPC with CIDR from AWS IPAM: csharp\n```\n",
-					language.Go:     "Coming soon!",
+					language.Go:     "Example coming soon!",
 					language.Java:   "```java\nVPC with CIDR from AWS IPAM: java\n```\n",
 					language.Python: "```python\nVPC with CIDR from AWS IPAM: python\n```\n",
 					language.NodeJS: "\n```typescript\nVPC with CIDR from AWS IPAM: typescript\n```\n",

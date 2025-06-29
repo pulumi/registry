@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/muhlba91/pulumi-proxmoxve/v7.1.0/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/muhlba91/pulumi-proxmoxve/v7.2.0/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: Proxmox Virtual Environment (Proxmox VE) Installation & Configuration
 meta_desc: Provides an overview on how to setup the Proxmox VE Provider for Pulumi.

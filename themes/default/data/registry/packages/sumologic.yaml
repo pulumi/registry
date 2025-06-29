@@ -2,15 +2,15 @@
 # Do not edit by hand unless you're certain you know what you are doing!
 category: Monitoring
 component: false
-description: A Pulumi package for creating and managing sumologic cloud resources.
+description: A Pulumi provider dynamically bridged from sumologic.
 featured: false
 logo_url: ""
 name: sumologic
 native: false
 package_status: ga
-publisher: Pulumi
-repo_url: https://github.com/pulumi/pulumi-sumologic
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-sumologic/v1.0.11/provider/cmd/pulumi-resource-sumologic/schema.json
-title: Sumo Logic
-updated_on: 1747884860
-version: v1.0.11
+publisher: sumologic
+repo_url: https://github.com/sumologic/terraform-provider-sumologic
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/sumologic/sumologic/3.1.0/schema.json
+title: sumologic
+updated_on: 1751240141
+version: 3.1.0

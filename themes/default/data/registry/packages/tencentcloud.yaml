@@ -12,5 +12,5 @@ publisher: tencentcloudstack
 repo_url: https://github.com/tencentcloudstack/terraform-provider-tencentcloud
 schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/tencentcloudstack/tencentcloud/1.82.3/schema.json
 title: tencentcloud
-updated_on: 1750981080
+updated_on: 1751024273
 version: 1.82.3

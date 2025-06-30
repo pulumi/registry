@@ -10,7 +10,7 @@ native: false
 package_status: public_preview
 publisher: philips-software
 repo_url: https://github.com/philips-software/terraform-provider-hsdp
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/philips-software/hsdp/0.67.0/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/philips-software/hsdp/0.68.0/schema.json
 title: hsdp
-updated_on: 1747395353
-version: 0.67.0
+updated_on: 1751326543
+version: 0.68.0

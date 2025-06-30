@@ -10,7 +10,7 @@ native: false
 package_status: public_preview
 publisher: pgEdge
 repo_url: https://github.com/pgEdge/pulumi-pgedge
-schema_file_url: https://raw.githubusercontent.com/pgEdge/pulumi-pgedge/v0.0.40/provider/cmd/pulumi-resource-pgedge/schema.json
+schema_file_url: https://raw.githubusercontent.com/pgEdge/pulumi-pgedge/v0.0.41/provider/cmd/pulumi-resource-pgedge/schema.json
 title: pgEdge
-updated_on: 1736523434
-version: v0.0.40
+updated_on: 1751298082
+version: v0.0.41

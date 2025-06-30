@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/vatesfr/pulumi-xenorchestra/v2.0.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/vatesfr/pulumi-xenorchestra/v2.1.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: Xen Orchestra
 meta_desc: Provides an overview of the Xen Orchestra Provider for Pulumi.

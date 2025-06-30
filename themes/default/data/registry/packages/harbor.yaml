@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: Pulumiverse
 repo_url: https://github.com/pulumiverse/pulumi-harbor
-schema_file_url: https://raw.githubusercontent.com/pulumiverse/pulumi-harbor/v3.10.19/provider/cmd/pulumi-resource-harbor/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumiverse/pulumi-harbor/v3.10.21/provider/cmd/pulumi-resource-harbor/schema.json
 title: Harbor
-updated_on: 1739177040
-version: v3.10.19
+updated_on: 1751274980
+version: v3.10.21

@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/chronosphereio/pulumi-chronosphere/v0.9.8/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/chronosphereio/pulumi-chronosphere/v0.9.9/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: Chronosphere Installation & Configuration
 meta_desc: How to install and configure the Chronosphere provider.

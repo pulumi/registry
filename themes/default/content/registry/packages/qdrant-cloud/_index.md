@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/qdrant/qdrant-cloud/1.4.2/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/qdrant/qdrant-cloud/1.5.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Qdrant-Cloud Provider
@@ -363,7 +363,8 @@ curl \
 ## Configuration Reference
 ### Required
 
-- `apiKey` (String) The API Key for Qdrant Cloud API operations.
+- `apiKey` (String, Sensitive) The API Key for Qdrant Cloud API operations.
 
 - `accountId` (String) Default Account Identifier for the Qdrant cloud
 - `apiUrl` (String) The URL of the Qdrant Cloud API.
+- `insecure` (Boolean) Allow insecure gRPC connections. This is useful for development environments with self-signed certificates. Defaults to false.

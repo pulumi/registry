@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: komminarlabs
 repo_url: https://github.com/komminarlabs/pulumi-influxdb
-schema_file_url: https://raw.githubusercontent.com/komminarlabs/pulumi-influxdb/v1.4.0/provider/cmd/pulumi-resource-influxdb/schema.json
+schema_file_url: https://raw.githubusercontent.com/komminarlabs/pulumi-influxdb/v1.5.0/provider/cmd/pulumi-resource-influxdb/schema.json
 title: InfluxDB
-updated_on: 1750366108
-version: v1.4.0
+updated_on: 1751486734
+version: v1.5.0

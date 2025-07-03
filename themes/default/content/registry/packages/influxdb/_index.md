@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/komminarlabs/pulumi-influxdb/v1.4.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/komminarlabs/pulumi-influxdb/v1.5.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: InfluxDB
 meta_desc: Provides an overview of the InfluxDB Provider for Pulumi.

@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pierskarsenbarg/pulumi-sdm/v1.28.0/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pierskarsenbarg/pulumi-sdm/v1.29.0/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: StrongDM Installation & Configuration
 meta_desc: Information on how to install the StrongDM provider.

@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/lbrlabs/pulumi-dynatrace/v0.29.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/lbrlabs/pulumi-dynatrace/v0.30.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: Dynatrace
 meta_desc: Provides an overview of the Dynatrace Provider for Pulumi.

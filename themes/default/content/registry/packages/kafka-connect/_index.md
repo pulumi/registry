@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/azaurus1/pulumi-kafka-connect/v0.0.9/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/azaurus1/pulumi-kafka-connect/v0.0.11/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: Kafka Connect
 meta_desc: Provides an overview of the Kafka Connect Provider for Pulumi.

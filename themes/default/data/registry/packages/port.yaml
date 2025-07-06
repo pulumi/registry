@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: port-labs
 repo_url: https://github.com/port-labs/pulumi-port
-schema_file_url: https://raw.githubusercontent.com/port-labs/pulumi-port/v2.10.1/provider/cmd/pulumi-resource-port/schema.json
+schema_file_url: https://raw.githubusercontent.com/port-labs/pulumi-port/v2.10.2/provider/cmd/pulumi-resource-port/schema.json
 title: Port
-updated_on: 1751529845
-version: v2.10.1
+updated_on: 1751811773
+version: v2.10.2

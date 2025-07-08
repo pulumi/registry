@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/elastic/elasticstack/0.11.15/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/elastic/elasticstack/0.11.16/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Elasticstack Provider
@@ -322,6 +322,7 @@ Optional:
 - `certFile` (String) Path to a file containing the PEM encoded certificate for client auth
 - `endpoints` (List of String, Sensitive) A list of endpoints where the pulumi provider will point to, this must include the http(s) schema and port number.
 - `esClientAuthentication` (String, Sensitive) ES Client Authentication field to be used with the JWT token
+- `headers` (Map of String, Sensitive) A list of headers to be sent with each request to Elasticsearch.
 - `insecure` (Boolean) Disable TLS certificate validation
 - `keyData` (String, Sensitive) PEM encoded private key for client auth
 - `keyFile` (String) Path to a file containing the PEM encoded private key for client auth

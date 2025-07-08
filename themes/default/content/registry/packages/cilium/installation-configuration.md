@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/littlejo/pulumi-cilium/v0.2.0/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/littlejo/pulumi-cilium/v0.2.1/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: Cilium Installation & Configuration
 meta_desc: Information on how to install the Cilium provider.

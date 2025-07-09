@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: athenz
 repo_url: https://github.com/athenz/terraform-provider-athenz
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/athenz/athenz/1.0.46/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/athenz/athenz/1.0.47/schema.json
 title: athenz
-updated_on: 1748950545
-version: 1.0.46
+updated_on: 1752104141
+version: 1.0.47

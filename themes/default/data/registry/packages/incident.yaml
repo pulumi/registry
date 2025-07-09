@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: incident-io
 repo_url: https://github.com/incident-io/terraform-provider-incident
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/incident-io/incident/5.9.1/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/incident-io/incident/5.10.0/schema.json
 title: incident
-updated_on: 1750764941
-version: 5.9.1
+updated_on: 1752104144
+version: 5.10.0

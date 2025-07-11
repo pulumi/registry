@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-harness/v0.7.5/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-harness/v0.7.6/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: Harness Installation & Configuration
 meta_desc: Information on how to install the Harness provider.

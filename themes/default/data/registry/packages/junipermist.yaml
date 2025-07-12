@@ -10,7 +10,7 @@ native: false
 package_status: public_preview
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-junipermist
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-junipermist/v0.5.0/provider/cmd/pulumi-resource-junipermist/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-junipermist/v0.5.2/provider/cmd/pulumi-resource-junipermist/schema.json
 title: Juniper Mist
-updated_on: 1751082218
-version: v0.5.0
+updated_on: 1752292168
+version: v0.5.2

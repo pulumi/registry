@@ -10,7 +10,7 @@ Version 7.0.0 of the Pulumi AWS Provider adds `region` to most resources making 
 <!-- mtoc-start -->
 
 * [What's new](#whats-new)
-* [What's _not_ changing](#whats-_not_-changing)
+* [What's not changing](#whats-not-changing)
 * [Can I use `region` in every resource?](#can-i-use-region-in-every-resource)
 * [Why make this change](#why-make-this-change)
 * [How `region` works](#how-region-works)
@@ -159,7 +159,7 @@ resources:
 
 {{< /chooser >}}
 
-## What's _not_ changing
+## What's not changing
 
 _Pre-v7.0.0 configurations that use provider configurations per Region remain valid in v7.0.0 and are not deprecated._
 

@@ -3180,7 +3180,6 @@ Remove `resolveConflicts`—it is no longer supported. Use `resolveConflictsOnCr
 
 * `authTokenUpdateStrategy` no longer has a default value. If `authToken` is set, it must also be explicitly configured.
 * The ability to provide an uppercase `engine` value is deprecated. In `v7.0.0`, plan-time validation of `engine` will require an entirely lowercase value to match the returned value from the AWS API without diff suppression.
-* See also [changes](#typenullablebool-validation-update) to `atRestEncryptionEnabled` and `autoMinorVersionUpgrade`.
 
 ## Resource `aws.elasticache.User`
 
@@ -3220,7 +3219,6 @@ This resource is deprecated and will be removed in a future version. [Effective 
 
 * Remove `elasticGpuSpecifications`—it is no longer supported. Amazon Elastic Graphics reached end of life in January 2024.
 * Remove `elasticInferenceAccelerator`—it is no longer supported. Amazon Elastic Inference reached end of life in April 2024.
-* See also [changes](#typenullablebool-validation-update) to `blockDeviceMappings.ebs.deleteOnTermination`, `blockDeviceMappings.ebs.encrypted`, `ebsOptimized`, `networkInterfaces.associateCarrierIpAddress`, `networkInterfaces.associatePublicIpAddress`, `networkInterfaces.deleteOnTermination`, and `networkInterfaces.primaryIpv6`.
 
 ## Resource `aws.lb.Listener`
 

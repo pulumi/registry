@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/ciscodevnet/mso/1.4.0/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/ciscodevnet/mso/1.5.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Mso Provider
@@ -37,6 +37,8 @@ config:
         value: password
     mso:platform:
         value: nd
+    mso:retries:
+        value: 4
     mso:url:
         value: https://173.36.219.193/
     mso:username:
@@ -68,6 +70,8 @@ config:
         value: password
     mso:platform:
         value: nd
+    mso:retries:
+        value: 4
     mso:url:
         value: https://173.36.219.193/
     mso:username:
@@ -98,6 +102,8 @@ config:
         value: password
     mso:platform:
         value: nd
+    mso:retries:
+        value: 4
     mso:url:
         value: https://173.36.219.193/
     mso:username:
@@ -137,6 +143,8 @@ config:
         value: password
     mso:platform:
         value: nd
+    mso:retries:
+        value: 4
     mso:url:
         value: https://173.36.219.193/
     mso:username:
@@ -180,6 +188,8 @@ config:
         value: password
     mso:platform:
         value: nd
+    mso:retries:
+        value: 4
     mso:url:
         value: https://173.36.219.193/
     mso:username:
@@ -211,6 +221,8 @@ config:
         value: password
     mso:platform:
         value: nd
+    mso:retries:
+        value: 4
     mso:url:
         value: https://173.36.219.193/
     mso:username:
@@ -259,3 +271,4 @@ Following arguments are supported with Cisco MSO pulumi provider.
 * `insecure` - (Optional) This determines whether to use insecure HTTP connection or not. Default value is `true`.
 * `domain`- (Optional) Name of domain. Use this parameter to provide domain name in case of using remote user with the Pulumi provider. Defaults to `Local`.
 * `platform`- (Optional) Parameter is used to check the platform from which MSO is accessed. Defaults to `mso`.
+* `retries` - (Optional) Number of retries for REST API calls. Defaults to `2`.

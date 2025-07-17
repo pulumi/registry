@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/opentelekomcloud/opentelekomcloud/1.36.42/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/opentelekomcloud/opentelekomcloud/1.36.43/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Opentelekomcloud Provider
@@ -230,10 +230,12 @@ This provider offers 5 means for authentication.
 - OpenStack configuration file
 ### User name + Password
 
+{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
 name: configuration-example
-runtime:
+runtime: nodejs
 config:
     opentelekomcloud:authUrl:
         value: https://iam.eu-de.otc.t-systems.com/v3
@@ -247,6 +249,191 @@ config:
         value: 'TODO: var.user_name'
 
 ```
+```typescript
+import * as pulumi from "@pulumi/pulumi";
+
+const config = new pulumi.Config();
+const tenantName = config.get("tenantName") || "eu-xx_project";
+const domainName = config.get("domainName") || "OTC000000000010000XXXXXX";
+```
+{{% /choosable %}}
+{{% choosable language python %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: python
+config:
+    opentelekomcloud:authUrl:
+        value: https://iam.eu-de.otc.t-systems.com/v3
+    opentelekomcloud:domainName:
+        value: 'TODO: var.domain_name'
+    opentelekomcloud:password:
+        value: 'TODO: var.password'
+    opentelekomcloud:tenantName:
+        value: 'TODO: var.tenant_name'
+    opentelekomcloud:userName:
+        value: 'TODO: var.user_name'
+
+```
+```python
+import pulumi
+
+config = pulumi.Config()
+tenant_name = config.get("tenantName")
+if tenant_name is None:
+    tenant_name = "eu-xx_project"
+domain_name = config.get("domainName")
+if domain_name is None:
+    domain_name = "OTC000000000010000XXXXXX"
+```
+{{% /choosable %}}
+{{% choosable language csharp %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: dotnet
+config:
+    opentelekomcloud:authUrl:
+        value: https://iam.eu-de.otc.t-systems.com/v3
+    opentelekomcloud:domainName:
+        value: 'TODO: var.domain_name'
+    opentelekomcloud:password:
+        value: 'TODO: var.password'
+    opentelekomcloud:tenantName:
+        value: 'TODO: var.tenant_name'
+    opentelekomcloud:userName:
+        value: 'TODO: var.user_name'
+
+```
+```csharp
+using System.Collections.Generic;
+using System.Linq;
+using Pulumi;
+
+return await Deployment.RunAsync(() =>
+{
+    var config = new Config();
+    var tenantName = config.Get("tenantName") ?? "eu-xx_project";
+    var domainName = config.Get("domainName") ?? "OTC000000000010000XXXXXX";
+});
+
+```
+{{% /choosable %}}
+{{% choosable language go %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: go
+config:
+    opentelekomcloud:authUrl:
+        value: https://iam.eu-de.otc.t-systems.com/v3
+    opentelekomcloud:domainName:
+        value: 'TODO: var.domain_name'
+    opentelekomcloud:password:
+        value: 'TODO: var.password'
+    opentelekomcloud:tenantName:
+        value: 'TODO: var.tenant_name'
+    opentelekomcloud:userName:
+        value: 'TODO: var.user_name'
+
+```
+```go
+package main
+
+import (
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		cfg := config.New(ctx, "")
+		tenantName := "eu-xx_project"
+		if param := cfg.Get("tenantName"); param != "" {
+			tenantName = param
+		}
+		domainName := "OTC000000000010000XXXXXX"
+		if param := cfg.Get("domainName"); param != "" {
+			domainName = param
+		}
+		return nil
+	})
+}
+```
+{{% /choosable %}}
+{{% choosable language yaml %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: yaml
+config:
+    opentelekomcloud:authUrl:
+        value: https://iam.eu-de.otc.t-systems.com/v3
+    opentelekomcloud:domainName:
+        value: 'TODO: var.domain_name'
+    opentelekomcloud:password:
+        value: 'TODO: var.password'
+    opentelekomcloud:tenantName:
+        value: 'TODO: var.tenant_name'
+    opentelekomcloud:userName:
+        value: 'TODO: var.user_name'
+
+```
+```yaml
+configuration:
+  tenantName:
+    type: string
+    default: eu-xx_project
+  domainName:
+    type: string
+    default: OTC000000000010000XXXXXX
+```
+{{% /choosable %}}
+{{% choosable language java %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: java
+config:
+    opentelekomcloud:authUrl:
+        value: https://iam.eu-de.otc.t-systems.com/v3
+    opentelekomcloud:domainName:
+        value: 'TODO: var.domain_name'
+    opentelekomcloud:password:
+        value: 'TODO: var.password'
+    opentelekomcloud:tenantName:
+        value: 'TODO: var.tenant_name'
+    opentelekomcloud:userName:
+        value: 'TODO: var.user_name'
+
+```
+```java
+package generated_program;
+
+import com.pulumi.Context;
+import com.pulumi.Pulumi;
+import com.pulumi.core.Output;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+public class App {
+    public static void main(String[] args) {
+        Pulumi.run(App::stack);
+    }
+
+    public static void stack(Context ctx) {
+        final var config = ctx.config();
+        final var tenantName = config.get("tenantName").orElse("eu-xx_project");
+        final var domainName = config.get("domainName").orElse("OTC000000000010000XXXXXX");
+    }
+}
+```
+{{% /choosable %}}
+{{< /chooser >}}
 ### AKSK
 
 ```yaml

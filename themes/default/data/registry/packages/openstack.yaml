@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-openstack
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-openstack/v5.3.0/provider/cmd/pulumi-resource-openstack/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-openstack/v5.3.1/provider/cmd/pulumi-resource-openstack/schema.json
 title: OpenStack
-updated_on: 1752118746
-version: v5.3.0
+updated_on: 1752723718
+version: v5.3.1

@@ -44,6 +44,8 @@ jobs:
     - name: Setup Go
       uses: actions/setup-go@v5
     - name: Run Tests
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         cd $GITHUB_WORKSPACE/${{ inputs.path }}
         go test ./... -v

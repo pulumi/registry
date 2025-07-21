@@ -7,101 +7,11 @@ layout: package
 
 ## Upstream Changes
 
-The upstream target has been changed from [v5.100.0](https://github.com/pulumi/pulumi-aws/pull/2521) to targeting v5.11.0. That means that the upstream [migration guide](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/guides/version-6-upgrade) as well as the following `CHANGELOG`s are relevant:
+The upstream target has been changed from [v5.100.0](https://github.com/pulumi/pulumi-aws/pull/5605) to targeting v5.11.0. That means that the upstream [migration guide](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/guides/version-6-upgrade) as well as the following `CHANGELOG`s are relevant:
 - [v6.0.0](https://github.com/hashicorp/terraform-provider-aws/releases/tag/v6.0.0)
 - [v6.1.0](https://github.com/hashicorp/terraform-provider-aws/releases/tag/v6.1.0)
 - [v6.2.0](https://github.com/hashicorp/terraform-provider-aws/releases/tag/v6.2.0)
 - [v6.3.0](https://github.com/hashicorp/terraform-provider-aws/releases/tag/v6.3.0)
-
-
-<!-- mtoc-start -->
-
-* [Prerequisites to Upgrade to v7.0.0](#prerequisites-to-upgrade-to-v700)
-* [Removed Provider Arguments](#removed-provider-arguments)
-* [Enhanced Region Support](#enhanced-region-support)
-* [Provider role chaining](#provider-role-chaining)
-* [S3 Bucket/BucketV2 Changes](#s3-bucketbucketv2-changes)
-* [Tags Changes](#tags-changes)
-* [Patch Related Changes](#patch-related-changes)
-* [Amazon Elastic Transcoder Deprecation](#amazon-elastic-transcoder-deprecation)
-* [CloudWatch Evidently Deprecation](#cloudwatch-evidently-deprecation)
-* [OpsWorks Stacks Removal](#opsworks-stacks-removal)
-* [SimpleDB Support Removed](#simpledb-support-removed)
-* [Worklink Support Removed](#worklink-support-removed)
-* [S3 Global Endpoint Deprecation](#s3-global-endpoint-deprecation)
-* [Function `aws.ec2.getAmi`](#function-awsec2getami)
-* [Function `aws.batch.getComputeEnvironment`](#function-awsbatchgetcomputeenvironment)
-* [Function `aws.ecs.getTaskDefinition`](#function-awsecsgettaskdefinition)
-* [Function `aws.ecs.getTaskExecution`](#function-awsecsgettaskexecution)
-* [Function `aws.elbv2.getListenerRule`](#function-awselbv2getlistenerrule)
-* [Function `aws.globalaccelerator.getAccelerator`](#function-awsglobalacceleratorgetaccelerator)
-* [Function `aws.identitystore.getGroup`](#function-awsidentitystoregetgroup)
-* [Function `aws.identitystore.getUser`](#function-awsidentitystoregetuser)
-* [Function `aws.kms.getSecret`](#function-awskmsgetsecret)
-* [Function `aws.launch.getTemplate`](#function-awslaunchgettemplate)
-* [Function `aws.opensearch.getDomain`](#function-awsopensearchgetdomain)
-* [Function `aws.opensearchserverless.getSecurityConfig`](#function-awsopensearchserverlessgetsecurityconfig)
-* [Function `aws.quicksight.getDataSet`](#function-awsquicksightgetdataset)
-* [Function `aws.getRegion`](#function-awsgetregion)
-* [Function `aws.s3.getBucket`](#function-awss3getbucket)
-* [Function `aws.service.getDiscoveryService`](#function-awsservicegetdiscoveryservice)
-* [Function `aws.servicequotas.getTemplates`](#function-awsservicequotasgettemplates)
-* [Function `aws.ssmincidents.getReplicationSet`](#function-awsssmincidentsgetreplicationset)
-* [Function `aws.vpc.getEndpointService`](#function-awsvpcgetendpointservice)
-* [Function `aws.vpc.getPeeringConnection`](#function-awsvpcgetpeeringconnection)
-* [Resource `aws.apigateway.Account`](#resource-awsapigatewayaccount)
-* [Resource `aws.apigateway.Deployment`](#resource-awsapigatewaydeployment)
-* [Resource `aws.appflow.ConnectorProfile`](#resource-awsappflowconnectorprofile)
-* [Resource `aws.appflow.Flow`](#resource-awsappflowflow)
-* [Resource `aws.batch.ComputeEnvironment`](#resource-awsbatchcomputeenvironment)
-* [Resource `aws.batch.JobQueue`](#resource-awsbatchjobqueue)
-* [Resource `aws.bedrockmodel.InvocationLoggingConfiguration`](#resource-awsbedrockmodelinvocationloggingconfiguration)
-* [Resource `aws.cloudformation.StackSetInstance`](#resource-awscloudformationstacksetinstance)
-* [Resource `aws.cloudfront.KeyValueStore`](#resource-awscloudfrontkeyvaluestore)
-* [Resource `aws.cloudfront.ResponseHeadersPolicy`](#resource-awscloudfrontresponseheaderspolicy)
-* [Resource `aws.cognito.UserInGroup`](#resource-awscognitouseringroup)
-* [Resource `aws.cfg.AggregateAuthorization`](#resource-awscfgaggregateauthorization)
-* [Resource `aws.rds.Instance`](#resource-awsrdsinstance)
-* [Resource `aws.dms.Endpoint`](#resource-awsdmsendpoint)
-* [Resource `aws.directconnect.GatewayAssociation`](#resource-awsdirectconnectgatewayassociation)
-* [Resource `aws.directconnect.HostedConnection`](#resource-awsdirectconnecthostedconnection)
-* [Resource `aws.ecs.TaskDefinition`](#resource-awsecstaskdefinition)
-* [Resource `aws.ec2.Eip`](#resource-awsec2eip)
-* [Resource `aws.eks.Addon`](#resource-awseksaddon)
-* [Resource `aws.eks.Cluster`](#resource-awsekscluster)
-* [Resource `aws.elasticache.ReplicationGroup`](#resource-awselasticachereplicationgroup)
-* [Resource `aws.elasticache.User`](#resource-awselasticacheuser)
-* [Resource `aws.elasticache.UserGroup`](#resource-awselasticacheusergroup)
-* [Resource `aws.ec2.FlowLog`](#resource-awsec2flowlog)
-* [Resource `aws.guardduty.Detector`](#resource-awsguarddutydetector)
-* [Resource `aws.guardduty.OrganizationConfiguration`](#resource-awsguarddutyorganizationconfiguration)
-* [Resource `aws.ec2.Instance`](#resource-awsec2instance)
-* [Resource `aws.kinesis.AnalyticsApplication`](#resource-awskinesisanalyticsapplication)
-* [Resource `aws.ec2.LaunchTemplate`](#resource-awsec2launchtemplate)
-* [Resource `aws.lb.Listener`](#resource-awslblistener)
-* [Resource `aws.mediastore.Container`](#resource-awsmediastorecontainer)
-* [Resource `aws.mediastore.ContainerPolicy`](#resource-awsmediastorecontainerpolicy)
-* [Resource `aws.networkmanager.CoreNetwork`](#resource-awsnetworkmanagercorenetwork)
-* [Resource `aws.opensearch.Domain`](#resource-awsopensearchdomain)
-* [Resource `aws.opensearch.ServerlessSecurityConfig`](#resource-awsopensearchserverlesssecurityconfig)
-* [Resource `aws.paymentcryptography.Key`](#resource-awspaymentcryptographykey)
-* [Resource `aws.redshift.Cluster`](#resource-awsredshiftcluster)
-* [Resource `aws.redshift.ServiceAccount`](#resource-awsredshiftserviceaccount)
-* [Resource `aws.rekognition.StreamProcessor`](#resource-awsrekognitionstreamprocessor)
-* [Resource `aws.resiliencehub.ResiliencyPolicy`](#resource-awsresiliencehubresiliencypolicy)
-* [Resource `aws.s3.Bucket`](#resource-awss3bucket)
-* [Resource `aws.sagemaker.ImageVersion`](#resource-awssagemakerimageversion)
-* [Resource `aws.sagemaker.NotebookInstance`](#resource-awssagemakernotebookinstance)
-* [Resource `aws.servicequotas.Template`](#resource-awsservicequotastemplate)
-* [Resource `aws.ec2.SpotInstanceRequest`](#resource-awsec2spotinstancerequest)
-* [Resource `aws.ssm.Association`](#resource-awsssmassociation)
-* [Resource `aws.ssmincidents.ReplicationSet`](#resource-awsssmincidentsreplicationset)
-* [Resource `aws.verifiedpermissions.Schema`](#resource-awsverifiedpermissionsschema)
-* [Resource `aws.wafv2.WebAcl`](#resource-awswafv2webacl)
-* [Node Only Changes](#node-only-changes)
-* [Enum Removals](#enum-removals)
-
-<!-- mtoc-end -->
 
 ## Prerequisites to Upgrade to v7.0.0
 
@@ -156,7 +66,7 @@ backed out.
 If you are providing the `assumeRole` property on the `Provider`, you will need
 to update your code. See the below example.
 
-This (v6)
+**This (v6)**
 
 {{< chooser language "typescript,python,go,csharp,java,yaml" >}}
 
@@ -396,7 +306,7 @@ resources:
 
 {{< /chooser >}}
 
-Becomes this (v7)
+**Becomes this (v7)**
 
 {{< chooser language "typescript,python,go,csharp,java,yaml" >}}
 
@@ -672,7 +582,9 @@ In order to perform this migration first update your code to use the new resourc
 4. Run `pulumi up --refresh --run-program`
 5. Ensure there is no diff in the update. If there is, go back to step 1
 
-[!NOTE] You may see a refresh diff as Pulumi migrates the state to the new structure, but you should not see an update diff.
+{{< notes >}}
+You may see a refresh diff as Pulumi migrates the state to the new structure, but you should not see an update diff.
+{{< /notes >}}
 
 #### Example
 

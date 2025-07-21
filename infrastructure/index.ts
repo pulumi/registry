@@ -147,7 +147,7 @@ const logsBucketOwnershipControls = new aws.s3.BucketOwnershipControls("logs-buc
 
 const logsBucketACL = new aws.s3.BucketAclV2("logs-bucket-acl", {
     bucket: websiteLogsBucket.id,
-    acl: aws.s3.PrivateAcl,
+    acl: aws.s3.CannedAcl.Private,
 }, {
     dependsOn: [logsBucketOwnershipControls],
 });

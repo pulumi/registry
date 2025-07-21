@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-aws-apigateway
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-aws-apigateway/v2.6.2/provider/cmd/pulumi-resource-aws-apigateway/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-aws-apigateway/v2.6.3/provider/cmd/pulumi-resource-aws-apigateway/schema.json
 title: AWS API Gateway
-updated_on: 1737501656
-version: v2.6.2
+updated_on: 1752902704
+version: v2.6.3

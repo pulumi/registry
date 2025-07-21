@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pierskarsenbarg/pulumi-nutanix/v0.8.0/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pierskarsenbarg/pulumi-nutanix/v0.9.0/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: Nutanix Installation & Configuration
 meta_desc: Information on how to install the Nutanix provider.

@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/lbrlabs/pulumi-lbrlabs-eks/v1.3.2/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/lbrlabs/pulumi-lbrlabs-eks/v1.3.3/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: LBr Labs EKS
 meta_desc: Information on how to install the LBr Labs EKS component.

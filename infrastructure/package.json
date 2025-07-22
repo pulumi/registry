@@ -7,7 +7,7 @@
     "dependencies": {
         "@pulumi/aws": "^7.0.0",
         "@pulumi/aws-static-website": "^0.4.0",
-        "@pulumi/awsx": "^2.0.0",
+        "@pulumi/awsx": "^3.0.0",
         "@pulumi/pulumi": "^3.0.0"
     }
 }

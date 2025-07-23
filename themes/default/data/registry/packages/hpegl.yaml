@@ -10,7 +10,7 @@ native: false
 package_status: public_preview
 publisher: hpe
 repo_url: https://github.com/hpe/terraform-provider-hpegl
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/hpe/hpegl/0.4.18/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/hpe/hpegl/0.4.19/schema.json
 title: hpegl
-updated_on: 1745019341
-version: 0.4.18
+updated_on: 1753313744
+version: 0.4.19

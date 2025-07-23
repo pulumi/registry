@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: lbrlabs
 repo_url: https://github.com/lbrlabs/pulumi-lbrlabs-eks
-schema_file_url: https://raw.githubusercontent.com/lbrlabs/pulumi-lbrlabs-eks/v1.3.3/schema.yaml
+schema_file_url: https://raw.githubusercontent.com/lbrlabs/pulumi-lbrlabs-eks/v1.3.4/schema.yaml
 title: LBr Labs EKS
-updated_on: 1748905340
-version: v1.3.3
+updated_on: 1753204868
+version: v1.3.4

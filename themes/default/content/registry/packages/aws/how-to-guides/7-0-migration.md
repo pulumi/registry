@@ -20,6 +20,10 @@ The upstream target has been changed from [v5.100.0](https://github.com/pulumi/p
 - Your preview completes without errors or unexpected changes.
 - There are no deprecation warnings related to the changes described in this guide.
 
+{{< notes >}}
+It is also recommended that you run `pulumi up --refresh` prior to upgrading to ensure that your Pulumi state is up to date.
+{{< /notes >}}
+
 If you use version constraints in your package.json or requirements.txt (recommended), update them to allow the `7.x` series and run `npm install` or `pip install --upgrade` to download the new version.
 
 ### Example
@@ -41,6 +45,17 @@ import * as aws from "@pulumi/aws";
 // In package.json dependencies:
 // "@pulumi/aws": "^7.0.0"
 ```
+
+## Performing the Upgrade
+
+After you have upgraded the AWS provider library to `v7` you need to run Pulumi with the `--refresh` and `--run-program` CLI flags. 
+
+```console
+$ pulumi up --refresh --run-program
+```
+
+- `--refresh` is necessary because the major version has some schema changes and running `--refresh` makes sure the state is migrated to the new schema so that it doesn't cause a diff to be calculated.
+- `--run-program` is necessary because otherwise `--refresh` will use the old provider version to perform the refresh. `--run-program` allows refresh to use the new provider version to perform the refresh.
 
 ## Removed Provider Arguments
 

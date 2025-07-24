@@ -48,14 +48,11 @@ import * as aws from "@pulumi/aws";
 
 ## Performing the Upgrade
 
-After you have upgraded the AWS provider library to `v7` you need to run Pulumi with the `--refresh` and `--run-program` CLI flags. 
+After you have upgraded the AWS provider library to `v7` you need to run Pulumi with the `--refresh` and `--run-program` CLI flags in order to migrate the state to be compatible with the new major version. 
 
 ```console
 $ pulumi up --refresh --run-program
 ```
-
-- `--refresh` is necessary because the major version has some schema changes and running `--refresh` makes sure the state is migrated to the new schema so that it doesn't cause a diff to be calculated.
-- `--run-program` is necessary because otherwise `--refresh` will use the old provider version to perform the refresh. `--run-program` allows refresh to use the new provider version to perform the refresh.
 
 ## Removed Provider Arguments
 

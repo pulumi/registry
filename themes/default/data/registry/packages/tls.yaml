@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-tls
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-tls/v5.2.0/provider/cmd/pulumi-resource-tls/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-tls/v5.2.1/provider/cmd/pulumi-resource-tls/schema.json
 title: TLS
-updated_on: 1745477258
-version: v5.2.0
+updated_on: 1753398320
+version: v5.2.1

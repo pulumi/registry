@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-random
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-random/v4.18.2/provider/cmd/pulumi-resource-random/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-random/v4.18.3/provider/cmd/pulumi-resource-random/schema.json
 title: random
-updated_on: 1746049335
-version: v4.18.2
+updated_on: 1753398185
+version: v4.18.3

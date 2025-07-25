@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-snowflake
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-snowflake/v2.2.0/provider/cmd/pulumi-resource-snowflake/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-snowflake/v2.3.0/provider/cmd/pulumi-resource-snowflake/schema.json
 title: Snowflake
-updated_on: 1751946295
-version: v2.2.0
+updated_on: 1753415140
+version: v2.3.0

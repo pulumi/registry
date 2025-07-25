@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: ciscodevnet
 repo_url: https://github.com/ciscodevnet/terraform-provider-mso
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/ciscodevnet/mso/1.5.0/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/ciscodevnet/mso/1.5.1/schema.json
 title: mso
-updated_on: 1752752146
-version: 1.5.0
+updated_on: 1753443347
+version: 1.5.1

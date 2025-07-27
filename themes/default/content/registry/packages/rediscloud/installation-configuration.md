@@ -1,4 +1,6 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/RedisLabs/pulumi-rediscloud/v1.3.5/docs/installation-configuration.md
+# Do not edit by hand unless you're certain you know what you are doing!
 title: Redis Cloud Installation & Configuration
 meta_desc: Information on how to install the Redis Cloud provider.
 layout: package
@@ -61,7 +63,7 @@ $ export REDISCLOUD_SECRET_KEY=<REDISCLOUD_SECRET_KEY>
 
 ## Configuration Options
 
-Use `pulumi config set rediscloud:<option>` or pass options to the [constructor of `new rediscloud.Provider`](/registry/packages/rediscloud/api-docs/provider).
+Use `pulumi config set rediscloud:<option>` or pass options to the [constructor of `new rediscloud.Provider`]({{< relref "/registry/packages/rediscloud/api-docs/provider" >}}).
 
 | Option      | Environment Variables   | Required/Optional | Description            |
 | ----------- | ----------------------- | ----------------- | ---------------------- |

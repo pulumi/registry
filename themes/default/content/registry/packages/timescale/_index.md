@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/timescale/timescale/2.3.0/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/timescale/timescale/2.4.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Timescale Provider
@@ -387,7 +387,7 @@ const peer = new timescale.PeeringConnection("peer", {
 });
 // Acceptor's side of the peering connection (AWS).
 const peerVpcPeeringConnectionAccepter = new aws.index.VpcPeeringConnectionAccepter("peer", {
-    vpcPeeringConnectionId: peer.provisionedId,
+    vpcPeeringConnectionId: peer.accepterProvisionedId,
     autoAccept: true,
 }, {
     dependsOn: [peer],
@@ -433,7 +433,7 @@ peer = timescale.PeeringConnection("peer",
     timescale_vpc_id=ts_test.vpcs_id)
 # Acceptor's side of the peering connection (AWS).
 peer_vpc_peering_connection_accepter = aws.index.VpcPeeringConnectionAccepter("peer",
-    vpc_peering_connection_id=peer.provisioned_id,
+    vpc_peering_connection_id=peer.accepter_provisioned_id,
     auto_accept=True,
     opts = pulumi.ResourceOptions(depends_on=[peer]))
 ```
@@ -492,7 +492,7 @@ return await Deployment.RunAsync(() =>
     // Acceptor's side of the peering connection (AWS).
     var peerVpcPeeringConnectionAccepter = new Aws.Index.VpcPeeringConnectionAccepter("peer", new()
     {
-        VpcPeeringConnectionId = peer.ProvisionedId,
+        VpcPeeringConnectionId = peer.AccepterProvisionedId,
         AutoAccept = true,
     }, new CustomResourceOptions
     {
@@ -565,7 +565,7 @@ func main() {
 		}
 		// Acceptor's side of the peering connection (AWS).
 		_, err = aws.NewVpcPeeringConnectionAccepter(ctx, "peer", &aws.VpcPeeringConnectionAccepterArgs{
-			VpcPeeringConnectionId: peer.ProvisionedId,
+			VpcPeeringConnectionId: peer.AccepterProvisionedId,
 			AutoAccept:             true,
 		}, pulumi.DependsOn([]pulumi.Resource{
 			peer,
@@ -627,7 +627,7 @@ resources:
     type: aws:VpcPeeringConnectionAccepter
     name: peer
     properties:
-      vpcPeeringConnectionId: ${peer.provisionedId}
+      vpcPeeringConnectionId: ${peer.accepterProvisionedId}
       autoAccept: true
     options:
       dependsOn:
@@ -703,7 +703,7 @@ public class App {
 
         // Acceptor's side of the peering connection (AWS).
         var peerVpcPeeringConnectionAccepter = new VpcPeeringConnectionAccepter("peerVpcPeeringConnectionAccepter", VpcPeeringConnectionAccepterArgs.builder()
-            .vpcPeeringConnectionId(peer.provisionedId())
+            .vpcPeeringConnectionId(peer.accepterProvisionedId())
             .autoAccept(true)
             .build(), CustomResourceOptions.builder()
                 .dependsOn(peer)
@@ -738,7 +738,10 @@ Please reference the [docs](https://docs.timescale.com/use-timescale/latest/regi
 ✅ Enable High Availability replicas <br />
 ✅ Enable read replicas <br />
 ✅ VPC peering <br />
+✅ AWS Transit Gateway peering <br />
 ✅ Connection pooling <br />
+✅ Metric exporters <br />
+✅ Log exporters <br />
 ## Billing
 Services are currently billed for hourly usage. If a service is running for less than an hour,
 it will still be charged for the full hour of usage.

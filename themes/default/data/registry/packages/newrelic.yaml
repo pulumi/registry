@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-newrelic
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-newrelic/v5.48.0/provider/cmd/pulumi-resource-newrelic/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-newrelic/v5.49.0/provider/cmd/pulumi-resource-newrelic/schema.json
 title: New Relic
-updated_on: 1753156041
-version: v5.48.0
+updated_on: 1754106356
+version: v5.49.0

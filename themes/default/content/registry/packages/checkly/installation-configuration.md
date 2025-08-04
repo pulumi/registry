@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/checkly/pulumi-checkly/v2.2.1/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/checkly/pulumi-checkly/v2.3.0/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: Checkly Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Checkly provider for Pulumi.

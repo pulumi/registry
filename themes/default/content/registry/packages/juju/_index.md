@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/juju/juju/0.21.0/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/juju/juju/0.21.1/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Juju Provider
@@ -17,7 +17,7 @@ pulumi package add terraform-provider juju/juju
 ## Overview
 
 The provider can be used to interact with [Juju](https://juju.is "Juju | An open source application orchestration engine") - an open source orchestration engine by Canonical.
-Additionally, the provider supports interactions with [JAAS](https://canonical-jaas-documentation.readthedocs-hosted.com/en/latest/ "JAAS | An enterprise gateway into your Juju estate") - an orchestrator of Juju controllers.
+Additionally, the provider supports interactions with [JAAS](https://documentation.ubuntu.com/jaas/ "JAAS | An enterprise gateway into your Juju estate") - an orchestrator of Juju controllers.
 
 The provider only interacts with a single controller at a time.
 

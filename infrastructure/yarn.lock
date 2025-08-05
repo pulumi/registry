@@ -816,9 +816,9 @@
     mime "^2.0.0"
 
 "@pulumi/aws@^7.0.0":
-  version "7.2.0"
-  resolved "https://registry.yarnpkg.com/@pulumi/aws/-/aws-7.2.0.tgz#150faae30cc7fa9e85247c198e6ec2f1e2484906"
-  integrity sha512-qz1oWBByN/pk2yKNgVPLmZ0/C6tgA9iz0Qkel3a9WDz72ZfPOkScHH8Dp4dTIupZezbEEJzPkHtqotXQJAnziw==
+  version "7.3.0"
+  resolved "https://registry.yarnpkg.com/@pulumi/aws/-/aws-7.3.0.tgz#117ffc3f3f9aac39094a5b0ed8807ee77b9577ba"
+  integrity sha512-UKSKbD/QAoRXjSP1bsxZf2VGDc9XAyKdw2Ha5yvdERhWakS3WAUBoFF98GURgNxrjR3JEUNQSqbYAbMiWk7UyQ==
   dependencies:
     "@pulumi/pulumi" "^3.142.0"
     mime "^2.0.0"
@@ -1394,11 +1394,11 @@
     "@types/node" "*"
 
 "@types/node@*", "@types/node@>=13.7.0":
-  version "24.1.0"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-24.1.0.tgz#0993f7dc31ab5cc402d112315b463e383d68a49c"
-  integrity sha512-ut5FthK5moxFKH2T1CUOC6ctR67rQRvvHdFLCD2Ql6KXmMuCrjsSsRI9UsLCm9M18BMwClv4pn327UvB7eeO1w==
+  version "24.2.0"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-24.2.0.tgz#cde712f88c5190006d6b069232582ecd1f94a760"
+  integrity sha512-3xyG3pMCq3oYCNg7/ZP+E1ooTaGB4cG8JWRsqqOYQdbWNY4zbaV0Ennrd7stjiJEFZCaybcIgpTjJWHRfBSIDw==
   dependencies:
-    undici-types "~7.8.0"
+    undici-types "~7.10.0"
 
 "@types/node@^16":
   version "16.18.39"
@@ -3438,10 +3438,10 @@ unbox-primitive@^1.0.2:
     has-symbols "^1.0.3"
     which-boxed-primitive "^1.0.2"
 
-undici-types@~7.8.0:
-  version "7.8.0"
-  resolved "https://registry.yarnpkg.com/undici-types/-/undici-types-7.8.0.tgz#de00b85b710c54122e44fbfd911f8d70174cd294"
-  integrity sha512-9UJ2xGDvQ43tYyVMpuHlsgApydB8ZKfVYTsLDhXkFL/6gfkp+U8xTGdh8pMJv1SpZna0zxG1DwsKZsreLbXBxw==
+undici-types@~7.10.0:
+  version "7.10.0"
+  resolved "https://registry.yarnpkg.com/undici-types/-/undici-types-7.10.0.tgz#4ac2e058ce56b462b056e629cc6a02393d3ff350"
+  integrity sha512-t5Fy/nfn+14LuOc2KNYg75vZqClpAiqscVvMygNnlsHBFpSXdJaYtXMcdNLpl/Qvc3P2cB3s6lOV51nqsFq4ag==
 
 unique-filename@^3.0.0:
   version "3.0.0"

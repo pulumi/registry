@@ -808,9 +808,9 @@
     resolve "^1.7.1"
 
 "@pulumi/aws@^7.0.0":
-  version "7.3.0"
-  resolved "https://registry.yarnpkg.com/@pulumi/aws/-/aws-7.3.0.tgz#117ffc3f3f9aac39094a5b0ed8807ee77b9577ba"
-  integrity sha512-UKSKbD/QAoRXjSP1bsxZf2VGDc9XAyKdw2Ha5yvdERhWakS3WAUBoFF98GURgNxrjR3JEUNQSqbYAbMiWk7UyQ==
+  version "7.3.1"
+  resolved "https://registry.yarnpkg.com/@pulumi/aws/-/aws-7.3.1.tgz#77603631d0e8c713eff52fb90737bf89e955dffd"
+  integrity sha512-ob/fObLnC4YPnj+eCn0DkwfTR6KYzbgwqtdo+cYGdQlDfo7hSQqJeAWyYaPKYa32220BjYALaX9GwJrZGey84w==
   dependencies:
     "@pulumi/pulumi" "^3.142.0"
     mime "^2.0.0"
@@ -3234,9 +3234,9 @@ spdx-expression-parse@^3.0.0:
     spdx-license-ids "^3.0.0"
 
 spdx-license-ids@^3.0.0:
-  version "3.0.21"
-  resolved "https://registry.yarnpkg.com/spdx-license-ids/-/spdx-license-ids-3.0.21.tgz#6d6e980c9df2b6fc905343a3b2d702a6239536c3"
-  integrity sha512-Bvg/8F5XephndSK3JffaRqdT+gyhfqIPwDHpX80tJrF8QQRYMo8sNMeaZ2Dp5+jhwKnUmIOyFFQfHRkjJm5nXg==
+  version "3.0.22"
+  resolved "https://registry.yarnpkg.com/spdx-license-ids/-/spdx-license-ids-3.0.22.tgz#abf5a08a6f5d7279559b669f47f0a43e8f3464ef"
+  integrity sha512-4PRT4nh1EImPbt2jASOKHX7PB7I+e4IWNLvkKFDxNhJlfjbYlleYQh285Z/3mPTHSAK/AvdMmw5BNNuYH8ShgQ==
 
 sprintf-js@^1.1.3:
   version "1.1.3"
@@ -3358,9 +3358,9 @@ tar@^6.1.11, tar@^6.2.1:
     yallist "^4.0.0"
 
 tmp@^0.2.1:
-  version "0.2.3"
-  resolved "https://registry.yarnpkg.com/tmp/-/tmp-0.2.3.tgz#eb783cc22bc1e8bebd0671476d46ea4eb32a79ae"
-  integrity sha512-nZD7m9iCPC5g0pYmcaxogYKggSfLsdxl8of3Q/oIbqCqLLIO9IAF0GWjX1z9NZRHPiXv8Wex4yDCaZsgEw0Y8w==
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/tmp/-/tmp-0.2.4.tgz#c6db987a2ccc97f812f17137b36af2b6521b0d13"
+  integrity sha512-UdiSoX6ypifLmrfQ/XfiawN6hkjSBpCjhKxxZcWlUUmoXLaCKQU0bx4HF/tdDK2uzRuchf1txGvrWBzYREssoQ==
 
 treeverse@^3.0.0:
   version "3.0.0"

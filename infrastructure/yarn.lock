@@ -807,14 +807,6 @@
     read-package-tree "^5.2.1"
     resolve "^1.7.1"
 
-"@pulumi/aws@^6.66.3":
-  version "6.83.0"
-  resolved "https://registry.yarnpkg.com/@pulumi/aws/-/aws-6.83.0.tgz#5dfbc4853f0ac8ff535b5db04fad692384afaf88"
-  integrity sha512-uYpYSA5aaDERFuxy3D+FDWiwH7YYNHSwGLpHVuARAzBfQ/SQDkS/tfJI5NNo7/+KCmje3rloKE2enUK/Q9bVBg==
-  dependencies:
-    "@pulumi/pulumi" "^3.142.0"
-    mime "^2.0.0"
-
 "@pulumi/aws@^7.0.0":
   version "7.3.0"
   resolved "https://registry.yarnpkg.com/@pulumi/aws/-/aws-7.3.0.tgz#117ffc3f3f9aac39094a5b0ed8807ee77b9577ba"
@@ -823,13 +815,13 @@
     "@pulumi/pulumi" "^3.142.0"
     mime "^2.0.0"
 
-"@pulumi/awsx@^2.0.0":
-  version "2.22.0"
-  resolved "https://registry.yarnpkg.com/@pulumi/awsx/-/awsx-2.22.0.tgz#a49946e7e4b5c08de14a853c3b94018040907c6e"
-  integrity sha512-uajrWX6zkk8G9DCCkCkRaH2yzeGRkCElkC8FOE9viUtb9WyVt01EbNqJkje+QwYq4g055jWqcq2YRn7xT1Y44w==
+"@pulumi/awsx@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@pulumi/awsx/-/awsx-3.0.0.tgz#07e9d15fb0c741714eb60dc369189ae56b10e98e"
+  integrity sha512-Qce18z2zSSIpeQA+aUKNlDKAZaZIc7h5ioYgmLfmpliRFwzFGN7DbxJuZY+Ja3hbtjpe74UYBjI5VleFM+Ougw==
   dependencies:
     "@aws-sdk/client-ecs" "^3.405.0"
-    "@pulumi/aws" "^6.66.3"
+    "@pulumi/aws" "^7.0.0"
     "@pulumi/docker" "^4.6.0"
     "@pulumi/docker-build" "^0.0.8"
     "@pulumi/pulumi" "^3.142.0"

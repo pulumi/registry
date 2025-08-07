@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-terraform-provider/v0.12.0/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-terraform-provider/v0.13.0/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: Any Terraform Provider Installation
 meta_desc: How to set up and start using any Terraform provider with Pulumi.

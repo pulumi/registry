@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-pagerduty
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-pagerduty/v4.27.0/provider/cmd/pulumi-resource-pagerduty/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-pagerduty/v4.27.1/provider/cmd/pulumi-resource-pagerduty/schema.json
 title: PagerDuty
-updated_on: 1754710812
-version: v4.27.0
+updated_on: 1754883949
+version: v4.27.1

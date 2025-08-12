@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-gcp/v8.39.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-gcp/v8.40.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: Google Cloud (GCP) Classic
 meta_desc: Learn how to use Pulumi's GCP Provider to reduce the complexity of managing and provisioning GCP resources.

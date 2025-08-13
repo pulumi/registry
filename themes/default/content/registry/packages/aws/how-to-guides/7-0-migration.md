@@ -1157,6 +1157,19 @@ This release some changes to the way tags work in the Pulumi AWS Provider. In v6
 
 In v7 we are removing the Pulumi level customizations and going back to relying on the upstream provider's tagging behavior. This should only impact you if you were previously using the `tags` property of a resource to get _all_ the tags on the resource. In v7 you will need to use the `tagsAll` property.
 
+If you are currently using the `defaultTags` provider property or the `aws:defaultTags` config, then you should also expect a one time diff when you upgrade to `v7`. The diff will show the `defaultTags` being removed from the resources, but the tags **will not be removed**. The `defaultTags` are being removed as _inputs_ to the resource `tags` property, but they still remain as `defaultTags`. For example, you may see a diff like this:
+
+```console
+~ aws:s3/bucket:Bucket: (update)
+    [id=bucket-719d678]
+    [urn=urn:pulumi:project::app::aws:s3/bucket:Bucket::bucket]
+    [provider=urn:pulumi:project::app::pulumi:providers:aws::provider::ac1b6527-7bb1-4210-9e6b-980346ae0bff]
+    - tags: {
+	- application: "someapp"
+	- env        : "test"
+    }
+```
+
 **Before (v6)**
 
 {{< chooser language "typescript,python,go,csharp,java,yaml" >}}

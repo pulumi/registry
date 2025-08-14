@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/formalco/pulumi-formal/v1.0.1/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/formalco/pulumi-formal/v1.0.2/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: Formal Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Formal provider for Pulumi.

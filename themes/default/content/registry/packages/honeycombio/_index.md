@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/honeycombio/honeycombio/0.37.1/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/honeycombio/honeycombio/0.38.1/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Honeycombio Provider
@@ -250,5 +250,38 @@ Arguments accepted by this provider include:
 * `apiKeySecret` - (Optional) The secret portion of the Honeycomb Management API key to use. It can also be set via the `HONEYCOMB_KEY_SECRET` environment variable.
 * `apiUrl` - (Optional) Override the URL of the Honeycomb.io API. It can also be set using `HONEYCOMB_API_ENDPOINT`. Defaults to `https://api.honeycomb.io`.
 * `debug` - (Optional) Enable to log additional debug information. To view the logs, set `TF_LOG` to at least debug.
+* `features` - (Optional) The features block allows customization of the behavior of the Honeycomb Provider. Full details documented below.
 
 At least one of `apiKey`, or the `apiKeyId` and `apiKeySecret` pair must be configured.
+## Features Block
+
+The Honeycomb Provider allows the behavior of certain resources to be modified using the features block.
+
+This allows different users to select the behavior they require for their use case while preserving default, "Pulumi-y" behavior.
+### Example Usage
+
+If you wish to use the default behaviors of the Honeycomb provider, then nothing needs to be done to your configuration at all.
+
+Each of the blocks defined below can be optionally specified to configure the behaviour as needed - this example shows all the possible behaviors which can be configured:
+
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime:
+
+```
+### Configuration Reference Reference
+
+The `features` block supports the following:
+
+* `column` - (Optional) A `column` block as defined below.
+* `dataset` - (Optional) A `dataset` block as defined below.
+
+---
+The `column` block supports the following:
+* `importOnConflict` - (Optional) This changes the creation behavior of the column resource to import and update an existing column if it already exists, rather than erroring out. Defaults to `false`.
+  This is potentially dangerous if the type changes on the update -- switching from `string` to `boolean` and causing dataloss, for example -- and should be used with caution.
+
+---
+The `dataset` block supports the following:
+* `importOnConflict` - (Optional) This changes the creation behavior of the dataset resource to import and update an existing dataset if it already exists, rather than erroring out. Defaults to `false`.

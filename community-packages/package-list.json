@@ -391,6 +391,10 @@
     {
       "repoSlug": "ionos-cloud/pulumi-ionoscloud",
       "schemaFile": "provider/cmd/pulumi-resource-ionoscloud/schema.json"
+    },
+    {
+      "repoSlug": "formalco/pulumi-formal",
+      "schemaFile": "provider/cmd/pulumi-resource-formal/schema.json"
     }
   ]
 }

@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/muhlba91/pulumi-proxmoxve/v7.3.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/muhlba91/pulumi-proxmoxve/v7.4.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: Proxmox Virtual Environment (Proxmox VE)
 meta_desc: Provides an overview of the Proxmox VE Provider for Pulumi.

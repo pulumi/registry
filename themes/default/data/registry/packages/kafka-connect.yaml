@@ -10,7 +10,7 @@ native: true
 package_status: public_preview
 publisher: azaurus1
 repo_url: https://github.com/azaurus1/pulumi-kafka-connect
-schema_file_url: https://raw.githubusercontent.com/azaurus1/pulumi-kafka-connect/v0.0.11/provider/cmd/pulumi-resource-kafkaconnect/schema.json
+schema_file_url: https://raw.githubusercontent.com/azaurus1/pulumi-kafka-connect/v0.0.12/provider/cmd/pulumi-resource-kafkaconnect/schema.json
 title: Kafka Connect
-updated_on: 1751684492
-version: v0.0.11
+updated_on: 1755384809
+version: v0.0.12

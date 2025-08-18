@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/formalco/pulumi-formal/v1.0.2/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/formalco/pulumi-formal/v1.0.3/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: Formal Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Formal provider for Pulumi.
@@ -12,6 +12,16 @@ The Formal provider is available as a package in the following Pulumi languages:
 * JavaScript/TypeScript: [`@formalco/pulumi`](https://www.npmjs.com/package/@formalco/pulumi)
 * Python: [`pulumi-formal`](https://pypi.org/project/pulumi-formal/)
 * Go: [`github.com/formalco/pulumi-formal/sdk/go/formal`](https://pkg.go.dev/github.com/formalco/pulumi-formal/sdk/go/formal)
+* .NET: [`Formal.Pulumi`](https://www.nuget.org/packages/Formal.Pulumi)
+
+### Provider Binary
+The Formal provider plugin is a third-party binary. It can be installed using the `pulumi plugin` command.
+
+```sh
+pulumi plugin install resource formal <version> --server github://api.github.com/formalco
+```
+
+Replace the version string `<version>` with your desired version.
 
 ## Authentication
 

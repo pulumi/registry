@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/formalco/pulumi-formal/v1.0.2/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/formalco/pulumi-formal/v1.0.3/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: Formal Provider
 meta_desc: Provides an overview on how to configure the Pulumi Formal provider.
@@ -28,7 +28,7 @@ Configuration for the Formal Provider is derived from the API tokens you can gen
 
 ### Provider Configuration
 
-!> **Warning:** Hard-coded credentials are not recommended in any Pulumi
+> **Warning:** Hard-coded credentials are not recommended in any Pulumi
 configuration and risks secret leakage should this file ever be committed to a
 public version control system.
 

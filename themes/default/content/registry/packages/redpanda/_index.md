@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/redpanda-data/redpanda/1.1.0/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/redpanda-data/redpanda/1.2.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Redpanda Provider
@@ -241,6 +241,145 @@ const testTopic = new redpanda.Topic("test", {
     clusterApiUrl: testCluster.clusterApiUrl,
     allowDeletion: true,
 });
+// The type of schema (AVRO, JSON, PROTOBUF)
+const schemaType = config.get("schemaType") || "AVRO";
+// The AVRO schema definition for user data
+const userSchemaDefinition = config.get("userSchemaDefinition") || `{
+  "type": "record",
+  "name": "User",
+  "fields": [
+    {
+      "name": "id",
+      "type": "int"
+    },
+    {
+      "name": "name",
+      "type": "string"
+    },
+    {
+      "name": "email",
+      "type": "string"
+    },
+    {
+      "name": "created_at",
+      "type": "long",
+      "logicalType": "timestamp-millis"
+    }
+  ]
+}
+`;
+const userSchema = new redpanda.Schema("user_schema", {
+    clusterId: testCluster.id,
+    subject: `${topicName}-value`,
+    schemaType: schemaType,
+    schema: userSchemaDefinition,
+    username: testUser.name,
+    password: userPw,
+});
+// The AVRO schema definition for user events that references the User schema
+const userEventSchemaDefinition = config.get("userEventSchemaDefinition") || `{
+  "type": "record",
+  "name": "UserEvent",
+  "fields": [
+    {
+      "name": "event_id",
+      "type": "string"
+    },
+    {
+      "name": "event_type",
+      "type": {
+        "type": "enum",
+        "name": "EventType",
+        "symbols": ["CREATED", "UPDATED", "DELETED"]
+      }
+    },
+    {
+      "name": "user",
+      "type": "User"
+    },
+    {
+      "name": "timestamp",
+      "type": "long",
+      "logicalType": "timestamp-millis"
+    },
+    {
+      "name": "metadata",
+      "type": ["null", {
+        "type": "map",
+        "values": "string"
+      }],
+      "default": null
+    }
+  ]
+}
+`;
+const userEventSchema = new redpanda.Schema("user_event_schema", {
+    clusterId: testCluster.id,
+    subject: `${topicName}-events-value`,
+    schemaType: schemaType,
+    schema: userEventSchemaDefinition,
+    username: testUser.name,
+    password: userPw,
+    references: [{
+        name: "User",
+        subject: userSchema.subject,
+        version: userSchema.version,
+    }],
+});
+// The AVRO schema definition for product data with strict compatibility
+const productSchemaDefinition = config.get("productSchemaDefinition") || `{
+  "type": "record",
+  "name": "Product",
+  "fields": [
+    {
+      "name": "id",
+      "type": "string"
+    },
+    {
+      "name": "name",
+      "type": "string"
+    },
+    {
+      "name": "price",
+      "type": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 10,
+        "scale": 2
+      }
+    },
+    {
+      "name": "category",
+      "type": {
+        "type": "enum",
+        "name": "Category",
+        "symbols": ["ELECTRONICS", "CLOTHING", "BOOKS", "HOME"]
+      }
+    },
+    {
+      "name": "description",
+      "type": ["null", "string"],
+      "default": null
+    },
+    {
+      "name": "created_at",
+      "type": "long",
+      "logicalType": "timestamp-millis"
+    }
+  ]
+}
+`;
+// The compatibility level for schema evolution (BACKWARD, BACKWARD_TRANSITIVE, FORWARD, FORWARD_TRANSITIVE, FULL, FULL_TRANSITIVE, NONE)
+const compatibilityLevel = config.get("compatibilityLevel") || "FULL";
+const productSchema = new redpanda.Schema("product_schema", {
+    clusterId: testCluster.id,
+    subject: `${topicName}-product-value`,
+    schemaType: schemaType,
+    schema: productSchemaDefinition,
+    compatibility: compatibilityLevel,
+    username: testUser.name,
+    password: userPw,
+});
 const testAcl = new redpanda.Acl("test", {
     resourceType: "TOPIC",
     resourceName: testTopic.name,
@@ -251,6 +390,26 @@ const testAcl = new redpanda.Acl("test", {
     permissionType: "ALLOW",
     clusterApiUrl: testCluster.clusterApiUrl,
 });
+export const userSchemaInfo = {
+    id: userSchema.schemaId,
+    subject: userSchema.subject,
+    version: userSchema.version,
+    type: userSchema.schemaType,
+};
+export const userEventSchemaInfo = {
+    id: userEventSchema.schemaId,
+    subject: userEventSchema.subject,
+    version: userEventSchema.version,
+    type: userEventSchema.schemaType,
+    references: userEventSchema.references,
+};
+export const productSchemaInfo = {
+    id: productSchema.schemaId,
+    subject: productSchema.subject,
+    version: productSchema.version,
+    type: productSchema.schemaType,
+    compatibility: productSchema.compatibility,
+};
 ```
 {{% /choosable %}}
 {{% choosable language python %}}
@@ -341,6 +500,152 @@ test_topic = redpanda.Topic("test",
     replication_factor=replication_factor,
     cluster_api_url=test_cluster.cluster_api_url,
     allow_deletion=True)
+# The type of schema (AVRO, JSON, PROTOBUF)
+schema_type = config.get("schemaType")
+if schema_type is None:
+    schema_type = "AVRO"
+# The AVRO schema definition for user data
+user_schema_definition = config.get("userSchemaDefinition")
+if user_schema_definition is None:
+    user_schema_definition = """{
+  "type": "record",
+  "name": "User",
+  "fields": [
+    {
+      "name": "id",
+      "type": "int"
+    },
+    {
+      "name": "name",
+      "type": "string"
+    },
+    {
+      "name": "email",
+      "type": "string"
+    },
+    {
+      "name": "created_at",
+      "type": "long",
+      "logicalType": "timestamp-millis"
+    }
+  ]
+}
+"""
+user_schema = redpanda.Schema("user_schema",
+    cluster_id=test_cluster.id,
+    subject=f"{topic_name}-value",
+    schema_type=schema_type,
+    schema=user_schema_definition,
+    username=test_user.name,
+    password=user_pw)
+# The AVRO schema definition for user events that references the User schema
+user_event_schema_definition = config.get("userEventSchemaDefinition")
+if user_event_schema_definition is None:
+    user_event_schema_definition = """{
+  "type": "record",
+  "name": "UserEvent",
+  "fields": [
+    {
+      "name": "event_id",
+      "type": "string"
+    },
+    {
+      "name": "event_type",
+      "type": {
+        "type": "enum",
+        "name": "EventType",
+        "symbols": ["CREATED", "UPDATED", "DELETED"]
+      }
+    },
+    {
+      "name": "user",
+      "type": "User"
+    },
+    {
+      "name": "timestamp",
+      "type": "long",
+      "logicalType": "timestamp-millis"
+    },
+    {
+      "name": "metadata",
+      "type": ["null", {
+        "type": "map",
+        "values": "string"
+      }],
+      "default": null
+    }
+  ]
+}
+"""
+user_event_schema = redpanda.Schema("user_event_schema",
+    cluster_id=test_cluster.id,
+    subject=f"{topic_name}-events-value",
+    schema_type=schema_type,
+    schema=user_event_schema_definition,
+    username=test_user.name,
+    password=user_pw,
+    references=[{
+        "name": "User",
+        "subject": user_schema.subject,
+        "version": user_schema.version,
+    }])
+# The AVRO schema definition for product data with strict compatibility
+product_schema_definition = config.get("productSchemaDefinition")
+if product_schema_definition is None:
+    product_schema_definition = """{
+  "type": "record",
+  "name": "Product",
+  "fields": [
+    {
+      "name": "id",
+      "type": "string"
+    },
+    {
+      "name": "name",
+      "type": "string"
+    },
+    {
+      "name": "price",
+      "type": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 10,
+        "scale": 2
+      }
+    },
+    {
+      "name": "category",
+      "type": {
+        "type": "enum",
+        "name": "Category",
+        "symbols": ["ELECTRONICS", "CLOTHING", "BOOKS", "HOME"]
+      }
+    },
+    {
+      "name": "description",
+      "type": ["null", "string"],
+      "default": null
+    },
+    {
+      "name": "created_at",
+      "type": "long",
+      "logicalType": "timestamp-millis"
+    }
+  ]
+}
+"""
+# The compatibility level for schema evolution (BACKWARD, BACKWARD_TRANSITIVE, FORWARD, FORWARD_TRANSITIVE, FULL, FULL_TRANSITIVE, NONE)
+compatibility_level = config.get("compatibilityLevel")
+if compatibility_level is None:
+    compatibility_level = "FULL"
+product_schema = redpanda.Schema("product_schema",
+    cluster_id=test_cluster.id,
+    subject=f"{topic_name}-product-value",
+    schema_type=schema_type,
+    schema=product_schema_definition,
+    compatibility=compatibility_level,
+    username=test_user.name,
+    password=user_pw)
 test_acl = redpanda.Acl("test",
     resource_type="TOPIC",
     resource_name_=test_topic.name,
@@ -350,6 +655,26 @@ test_acl = redpanda.Acl("test",
     operation="READ",
     permission_type="ALLOW",
     cluster_api_url=test_cluster.cluster_api_url)
+pulumi.export("userSchemaInfo", {
+    "id": user_schema.schema_id,
+    "subject": user_schema.subject,
+    "version": user_schema.version,
+    "type": user_schema.schema_type,
+})
+pulumi.export("userEventSchemaInfo", {
+    "id": user_event_schema.schema_id,
+    "subject": user_event_schema.subject,
+    "version": user_event_schema.version,
+    "type": user_event_schema.schema_type,
+    "references": user_event_schema.references,
+})
+pulumi.export("productSchemaInfo", {
+    "id": product_schema.schema_id,
+    "subject": product_schema.subject,
+    "version": product_schema.version,
+    "type": product_schema.schema_type,
+    "compatibility": product_schema.compatibility,
+})
 ```
 {{% /choosable %}}
 {{% choosable language csharp %}}
@@ -436,6 +761,155 @@ return await Deployment.RunAsync(() =>
         AllowDeletion = true,
     });
 
+    // The type of schema (AVRO, JSON, PROTOBUF)
+    var schemaType = config.Get("schemaType") ?? "AVRO";
+    // The AVRO schema definition for user data
+    var userSchemaDefinition = config.Get("userSchemaDefinition") ?? @"{
+  ""type"": ""record"",
+  ""name"": ""User"",
+  ""fields"": [
+    {
+      ""name"": ""id"",
+      ""type"": ""int""
+    },
+    {
+      ""name"": ""name"",
+      ""type"": ""string""
+    },
+    {
+      ""name"": ""email"",
+      ""type"": ""string""
+    },
+    {
+      ""name"": ""created_at"",
+      ""type"": ""long"",
+      ""logicalType"": ""timestamp-millis""
+    }
+  ]
+}
+";
+    var userSchema = new Redpanda.Schema("user_schema", new()
+    {
+        ClusterId = testCluster.Id,
+        Subject = $"{topicName}-value",
+        SchemaType = schemaType,
+        Schema = userSchemaDefinition,
+        Username = testUser.Name,
+        Password = userPw,
+    });
+
+    // The AVRO schema definition for user events that references the User schema
+    var userEventSchemaDefinition = config.Get("userEventSchemaDefinition") ?? @"{
+  ""type"": ""record"",
+  ""name"": ""UserEvent"",
+  ""fields"": [
+    {
+      ""name"": ""event_id"",
+      ""type"": ""string""
+    },
+    {
+      ""name"": ""event_type"",
+      ""type"": {
+        ""type"": ""enum"",
+        ""name"": ""EventType"",
+        ""symbols"": [""CREATED"", ""UPDATED"", ""DELETED""]
+      }
+    },
+    {
+      ""name"": ""user"",
+      ""type"": ""User""
+    },
+    {
+      ""name"": ""timestamp"",
+      ""type"": ""long"",
+      ""logicalType"": ""timestamp-millis""
+    },
+    {
+      ""name"": ""metadata"",
+      ""type"": [""null"", {
+        ""type"": ""map"",
+        ""values"": ""string""
+      }],
+      ""default"": null
+    }
+  ]
+}
+";
+    var userEventSchema = new Redpanda.Schema("user_event_schema", new()
+    {
+        ClusterId = testCluster.Id,
+        Subject = $"{topicName}-events-value",
+        SchemaType = schemaType,
+        Schema = userEventSchemaDefinition,
+        Username = testUser.Name,
+        Password = userPw,
+        References = new[]
+        {
+            new Redpanda.Inputs.SchemaReferenceArgs
+            {
+                Name = "User",
+                Subject = userSchema.Subject,
+                Version = userSchema.Version,
+            },
+        },
+    });
+
+    // The AVRO schema definition for product data with strict compatibility
+    var productSchemaDefinition = config.Get("productSchemaDefinition") ?? @"{
+  ""type"": ""record"",
+  ""name"": ""Product"",
+  ""fields"": [
+    {
+      ""name"": ""id"",
+      ""type"": ""string""
+    },
+    {
+      ""name"": ""name"",
+      ""type"": ""string""
+    },
+    {
+      ""name"": ""price"",
+      ""type"": {
+        ""type"": ""bytes"",
+        ""logicalType"": ""decimal"",
+        ""precision"": 10,
+        ""scale"": 2
+      }
+    },
+    {
+      ""name"": ""category"",
+      ""type"": {
+        ""type"": ""enum"",
+        ""name"": ""Category"",
+        ""symbols"": [""ELECTRONICS"", ""CLOTHING"", ""BOOKS"", ""HOME""]
+      }
+    },
+    {
+      ""name"": ""description"",
+      ""type"": [""null"", ""string""],
+      ""default"": null
+    },
+    {
+      ""name"": ""created_at"",
+      ""type"": ""long"",
+      ""logicalType"": ""timestamp-millis""
+    }
+  ]
+}
+";
+    // The compatibility level for schema evolution (BACKWARD, BACKWARD_TRANSITIVE, FORWARD, FORWARD_TRANSITIVE, FULL, FULL_TRANSITIVE, NONE)
+    var compatibilityLevel = config.Get("compatibilityLevel") ?? "FULL";
+    var productSchema = new Redpanda.Schema("product_schema", new()
+    {
+        ClusterId = testCluster.Id,
+        Subject = $"{topicName}-product-value",
+        SchemaType = schemaType,
+        Schema = productSchemaDefinition,
+        Compatibility = compatibilityLevel,
+        Username = testUser.Name,
+        Password = userPw,
+    });
+
     var testAcl = new Redpanda.Acl("test", new()
     {
         ResourceType = "TOPIC",
@@ -448,6 +922,32 @@ return await Deployment.RunAsync(() =>
         ClusterApiUrl = testCluster.ClusterApiUrl,
     });
 
+    return new Dictionary<string, object?>
+    {
+        ["userSchemaInfo"] =
+        {
+            { "id", userSchema.SchemaId },
+            { "subject", userSchema.Subject },
+            { "version", userSchema.Version },
+            { "type", userSchema.SchemaType },
+        },
+        ["userEventSchemaInfo"] =
+        {
+            { "id", userEventSchema.SchemaId },
+            { "subject", userEventSchema.Subject },
+            { "version", userEventSchema.Version },
+            { "type", userEventSchema.SchemaType },
+            { "references", userEventSchema.References },
+        },
+        ["productSchemaInfo"] =
+        {
+            { "id", productSchema.SchemaId },
+            { "subject", productSchema.Subject },
+            { "version", productSchema.Version },
+            { "type", productSchema.SchemaType },
+            { "compatibility", productSchema.Compatibility },
+        },
+    };
 });
 
 ```
@@ -583,6 +1083,171 @@ func main() {
 		if err != nil {
 			return err
 		}
+		// The type of schema (AVRO, JSON, PROTOBUF)
+		schemaType := "AVRO"
+		if param := cfg.Get("schemaType"); param != "" {
+			schemaType = param
+		}
+		// The AVRO schema definition for user data
+		userSchemaDefinition := `{
+  "type": "record",
+  "name": "User",
+  "fields": [
+    {
+      "name": "id",
+      "type": "int"
+    },
+    {
+      "name": "name",
+      "type": "string"
+    },
+    {
+      "name": "email",
+      "type": "string"
+    },
+    {
+      "name": "created_at",
+      "type": "long",
+      "logicalType": "timestamp-millis"
+    }
+  ]
+}
+`
+		if param := cfg.Get("userSchemaDefinition"); param != "" {
+			userSchemaDefinition = param
+		}
+		userSchema, err := redpanda.NewSchema(ctx, "user_schema", &redpanda.SchemaArgs{
+			ClusterId:  testCluster.ID(),
+			Subject:    pulumi.Sprintf("%v-value", topicName),
+			SchemaType: pulumi.String(schemaType),
+			Schema:     pulumi.String(userSchemaDefinition),
+			Username:   testUser.Name,
+			Password:   pulumi.String(userPw),
+		})
+		if err != nil {
+			return err
+		}
+		// The AVRO schema definition for user events that references the User schema
+		userEventSchemaDefinition := `{
+  "type": "record",
+  "name": "UserEvent",
+  "fields": [
+    {
+      "name": "event_id",
+      "type": "string"
+    },
+    {
+      "name": "event_type",
+      "type": {
+        "type": "enum",
+        "name": "EventType",
+        "symbols": ["CREATED", "UPDATED", "DELETED"]
+      }
+    },
+    {
+      "name": "user",
+      "type": "User"
+    },
+    {
+      "name": "timestamp",
+      "type": "long",
+      "logicalType": "timestamp-millis"
+    },
+    {
+      "name": "metadata",
+      "type": ["null", {
+        "type": "map",
+        "values": "string"
+      }],
+      "default": null
+    }
+  ]
+}
+`
+		if param := cfg.Get("userEventSchemaDefinition"); param != "" {
+			userEventSchemaDefinition = param
+		}
+		userEventSchema, err := redpanda.NewSchema(ctx, "user_event_schema", &redpanda.SchemaArgs{
+			ClusterId:  testCluster.ID(),
+			Subject:    pulumi.Sprintf("%v-events-value", topicName),
+			SchemaType: pulumi.String(schemaType),
+			Schema:     pulumi.String(userEventSchemaDefinition),
+			Username:   testUser.Name,
+			Password:   pulumi.String(userPw),
+			References: redpanda.SchemaReferenceArray{
+				&redpanda.SchemaReferenceArgs{
+					Name:    pulumi.String("User"),
+					Subject: userSchema.Subject,
+					Version: userSchema.Version,
+				},
+			},
+		})
+		if err != nil {
+			return err
+		}
+		// The AVRO schema definition for product data with strict compatibility
+		productSchemaDefinition := `{
+  "type": "record",
+  "name": "Product",
+  "fields": [
+    {
+      "name": "id",
+      "type": "string"
+    },
+    {
+      "name": "name",
+      "type": "string"
+    },
+    {
+      "name": "price",
+      "type": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 10,
+        "scale": 2
+      }
+    },
+    {
+      "name": "category",
+      "type": {
+        "type": "enum",
+        "name": "Category",
+        "symbols": ["ELECTRONICS", "CLOTHING", "BOOKS", "HOME"]
+      }
+    },
+    {
+      "name": "description",
+      "type": ["null", "string"],
+      "default": null
+    },
+    {
+      "name": "created_at",
+      "type": "long",
+      "logicalType": "timestamp-millis"
+    }
+  ]
+}
+`
+		if param := cfg.Get("productSchemaDefinition"); param != "" {
+			productSchemaDefinition = param
+		}
+		// The compatibility level for schema evolution (BACKWARD, BACKWARD_TRANSITIVE, FORWARD, FORWARD_TRANSITIVE, FULL, FULL_TRANSITIVE, NONE)
+		compatibilityLevel := "FULL"
+		if param := cfg.Get("compatibilityLevel"); param != "" {
+			compatibilityLevel = param
+		}
+		productSchema, err := redpanda.NewSchema(ctx, "product_schema", &redpanda.SchemaArgs{
+			ClusterId:     testCluster.ID(),
+			Subject:       pulumi.Sprintf("%v-product-value", topicName),
+			SchemaType:    pulumi.String(schemaType),
+			Schema:        pulumi.String(productSchemaDefinition),
+			Compatibility: pulumi.String(compatibilityLevel),
+			Username:      testUser.Name,
+			Password:      pulumi.String(userPw),
+		})
+		if err != nil {
+			return err
+		}
 		_, err = redpanda.NewAcl(ctx, "test", &redpanda.AclArgs{
 			ResourceType:        pulumi.String("TOPIC"),
 			ResourceName:        testTopic.Name,
@@ -598,6 +1263,26 @@ func main() {
 		if err != nil {
 			return err
 		}
+		ctx.Export("userSchemaInfo", pulumi.Map{
+			"id":      userSchema.SchemaId,
+			"subject": userSchema.Subject,
+			"version": userSchema.Version,
+			"type":    userSchema.SchemaType,
+		})
+		ctx.Export("userEventSchemaInfo", pulumi.Map{
+			"id":         userEventSchema.SchemaId,
+			"subject":    userEventSchema.Subject,
+			"version":    userEventSchema.Version,
+			"type":       userEventSchema.SchemaType,
+			"references": userEventSchema.References,
+		})
+		ctx.Export("productSchemaInfo", pulumi.Map{
+			"id":            productSchema.SchemaId,
+			"subject":       productSchema.Subject,
+			"version":       productSchema.Version,
+			"type":          productSchema.SchemaType,
+			"compatibility": productSchema.Compatibility,
+		})
 		return nil
 	})
 }
@@ -654,6 +1339,120 @@ configuration:
   replicationFactor:
     type: number
     default: 3
+  schemaType:
+    type: string
+    default: AVRO
+  userSchemaDefinition:
+    type: string
+    default: |
+      {
+        "type": "record",
+        "name": "User",
+        "fields": [
+          {
+            "name": "id",
+            "type": "int"
+          },
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "type": "string"
+          },
+          {
+            "name": "created_at",
+            "type": "long",
+            "logicalType": "timestamp-millis"
+          }
+        ]
+      }
+  userEventSchemaDefinition:
+    type: string
+    default: |
+      {
+        "type": "record",
+        "name": "UserEvent",
+        "fields": [
+          {
+            "name": "event_id",
+            "type": "string"
+          },
+          {
+            "name": "event_type",
+            "type": {
+              "type": "enum",
+              "name": "EventType",
+              "symbols": ["CREATED", "UPDATED", "DELETED"]
+            }
+          },
+          {
+            "name": "user",
+            "type": "User"
+          },
+          {
+            "name": "timestamp",
+            "type": "long",
+            "logicalType": "timestamp-millis"
+          },
+          {
+            "name": "metadata",
+            "type": ["null", {
+              "type": "map",
+              "values": "string"
+            }],
+            "default": null
+          }
+        ]
+      }
+  productSchemaDefinition:
+    type: string
+    default: |
+      {
+        "type": "record",
+        "name": "Product",
+        "fields": [
+          {
+            "name": "id",
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "price",
+            "type": {
+              "type": "bytes",
+              "logicalType": "decimal",
+              "precision": 10,
+              "scale": 2
+            }
+          },
+          {
+            "name": "category",
+            "type": {
+              "type": "enum",
+              "name": "Category",
+              "symbols": ["ELECTRONICS", "CLOTHING", "BOOKS", "HOME"]
+            }
+          },
+          {
+            "name": "description",
+            "type": ["null", "string"],
+            "default": null
+          },
+          {
+            "name": "created_at",
+            "type": "long",
+            "logicalType": "timestamp-millis"
+          }
+        ]
+      }
+  compatibilityLevel:
+    type: string
+    default: FULL
 resources:
   test:
     type: redpanda:ResourceGroup
@@ -702,6 +1501,41 @@ resources:
       replicationFactor: ${replicationFactor}
       clusterApiUrl: ${testCluster.clusterApiUrl}
       allowDeletion: true
+  userSchema:
+    type: redpanda:Schema
+    name: user_schema
+    properties:
+      clusterId: ${testCluster.id}
+      subject: ${topicName}-value
+      schemaType: ${schemaType}
+      schema: ${userSchemaDefinition}
+      username: ${testUser.name}
+      password: ${userPw}
+  userEventSchema:
+    type: redpanda:Schema
+    name: user_event_schema
+    properties:
+      clusterId: ${testCluster.id}
+      subject: ${topicName}-events-value
+      schemaType: ${schemaType}
+      schema: ${userEventSchemaDefinition}
+      username: ${testUser.name}
+      password: ${userPw}
+      references:
+        - name: User
+          subject: ${userSchema.subject}
+          version: ${userSchema.version}
+  productSchema:
+    type: redpanda:Schema
+    name: product_schema
+    properties:
+      clusterId: ${testCluster.id}
+      subject: ${topicName}-product-value
+      schemaType: ${schemaType}
+      schema: ${productSchemaDefinition}
+      compatibility: ${compatibilityLevel}
+      username: ${testUser.name}
+      password: ${userPw}
   testAcl:
     type: redpanda:Acl
     name: test
@@ -714,6 +1548,24 @@ resources:
       operation: READ
       permissionType: ALLOW
       clusterApiUrl: ${testCluster.clusterApiUrl}
+outputs:
+  userSchemaInfo:
+    id: ${userSchema.schemaId}
+    subject: ${userSchema.subject}
+    version: ${userSchema.version}
+    type: ${userSchema.schemaType}
+  userEventSchemaInfo:
+    id: ${userEventSchema.schemaId}
+    subject: ${userEventSchema.subject}
+    version: ${userEventSchema.version}
+    type: ${userEventSchema.schemaType}
+    references: ${userEventSchema.references}
+  productSchemaInfo:
+    id: ${productSchema.schemaId}
+    subject: ${productSchema.subject}
+    version: ${productSchema.version}
+    type: ${productSchema.schemaType}
+    compatibility: ${productSchema.compatibility}
 ```
 {{% /choosable %}}
 {{% choosable language java %}}
@@ -739,6 +1591,9 @@ import com.pulumi.redpanda.User;
 import com.pulumi.redpanda.UserArgs;
 import com.pulumi.redpanda.Topic;
 import com.pulumi.redpanda.TopicArgs;
+import com.pulumi.redpanda.Schema;
+import com.pulumi.redpanda.SchemaArgs;
+import com.pulumi.redpanda.inputs.SchemaReferenceArgs;
 import com.pulumi.redpanda.Acl;
 import com.pulumi.redpanda.AclArgs;
 import java.util.List;
@@ -813,6 +1668,146 @@ public class App {
             .allowDeletion(true)
             .build());
 
+        final var schemaType = config.get("schemaType").orElse("AVRO");
+        final var userSchemaDefinition = config.get("userSchemaDefinition").orElse("""
+{
+  "type": "record",
+  "name": "User",
+  "fields": [
+    {
+      "name": "id",
+      "type": "int"
+    },
+    {
+      "name": "name",
+      "type": "string"
+    },
+    {
+      "name": "email",
+      "type": "string"
+    },
+    {
+      "name": "created_at",
+      "type": "long",
+      "logicalType": "timestamp-millis"
+    }
+  ]
+}
+        """);
+        var userSchema = new Schema("userSchema", SchemaArgs.builder()
+            .clusterId(testCluster.id())
+            .subject(String.format("%s-value", topicName))
+            .schemaType(schemaType)
+            .schema(userSchemaDefinition)
+            .username(testUser.name())
+            .password(userPw)
+            .build());
+
+        final var userEventSchemaDefinition = config.get("userEventSchemaDefinition").orElse("""
+{
+  "type": "record",
+  "name": "UserEvent",
+  "fields": [
+    {
+      "name": "event_id",
+      "type": "string"
+    },
+    {
+      "name": "event_type",
+      "type": {
+        "type": "enum",
+        "name": "EventType",
+        "symbols": ["CREATED", "UPDATED", "DELETED"]
+      }
+    },
+    {
+      "name": "user",
+      "type": "User"
+    },
+    {
+      "name": "timestamp",
+      "type": "long",
+      "logicalType": "timestamp-millis"
+    },
+    {
+      "name": "metadata",
+      "type": ["null", {
+        "type": "map",
+        "values": "string"
+      }],
+      "default": null
+    }
+  ]
+}
+        """);
+        var userEventSchema = new Schema("userEventSchema", SchemaArgs.builder()
+            .clusterId(testCluster.id())
+            .subject(String.format("%s-events-value", topicName))
+            .schemaType(schemaType)
+            .schema(userEventSchemaDefinition)
+            .username(testUser.name())
+            .password(userPw)
+            .references(SchemaReferenceArgs.builder()
+                .name("User")
+                .subject(userSchema.subject())
+                .version(userSchema.version())
+                .build())
+            .build());
+
+        final var productSchemaDefinition = config.get("productSchemaDefinition").orElse("""
+{
+  "type": "record",
+  "name": "Product",
+  "fields": [
+    {
+      "name": "id",
+      "type": "string"
+    },
+    {
+      "name": "name",
+      "type": "string"
+    },
+    {
+      "name": "price",
+      "type": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 10,
+        "scale": 2
+      }
+    },
+    {
+      "name": "category",
+      "type": {
+        "type": "enum",
+        "name": "Category",
+        "symbols": ["ELECTRONICS", "CLOTHING", "BOOKS", "HOME"]
+      }
+    },
+    {
+      "name": "description",
+      "type": ["null", "string"],
+      "default": null
+    },
+    {
+      "name": "created_at",
+      "type": "long",
+      "logicalType": "timestamp-millis"
+    }
+  ]
+}
+        """);
+        final var compatibilityLevel = config.get("compatibilityLevel").orElse("FULL");
+        var productSchema = new Schema("productSchema", SchemaArgs.builder()
+            .clusterId(testCluster.id())
+            .subject(String.format("%s-product-value", topicName))
+            .schemaType(schemaType)
+            .schema(productSchemaDefinition)
+            .compatibility(compatibilityLevel)
+            .username(testUser.name())
+            .password(userPw)
+            .build());
+
         var testAcl = new Acl("testAcl", AclArgs.builder()
             .resourceType("TOPIC")
             .resourceName(testTopic.name())
@@ -824,6 +1819,26 @@ public class App {
             .clusterApiUrl(testCluster.clusterApiUrl())
             .build());
 
+        ctx.export("userSchemaInfo", Map.ofEntries(
+            Map.entry("id", userSchema.schemaId()),
+            Map.entry("subject", userSchema.subject()),
+            Map.entry("version", userSchema.version()),
+            Map.entry("type", userSchema.schemaType())
+        ));
+        ctx.export("userEventSchemaInfo", Map.ofEntries(
+            Map.entry("id", userEventSchema.schemaId()),
+            Map.entry("subject", userEventSchema.subject()),
+            Map.entry("version", userEventSchema.version()),
+            Map.entry("type", userEventSchema.schemaType()),
+            Map.entry("references", userEventSchema.references())
+        ));
+        ctx.export("productSchemaInfo", Map.ofEntries(
+            Map.entry("id", productSchema.schemaId()),
+            Map.entry("subject", productSchema.subject()),
+            Map.entry("version", productSchema.version()),
+            Map.entry("type", productSchema.schemaType()),
+            Map.entry("compatibility", productSchema.compatibility())
+        ));
     }
 }
 ```
@@ -894,6 +1909,145 @@ const testTopic = new redpanda.Topic("test", {
     replicationFactor: replicationFactor,
     clusterApiUrl: testCluster.clusterApiUrl,
     allowDeletion: true,
+});
+// The type of schema (AVRO, JSON, PROTOBUF)
+const schemaType = config.get("schemaType") || "AVRO";
+// The AVRO schema definition for user data
+const userSchemaDefinition = config.get("userSchemaDefinition") || `{
+  "type": "record",
+  "name": "User",
+  "fields": [
+    {
+      "name": "id",
+      "type": "int"
+    },
+    {
+      "name": "name",
+      "type": "string"
+    },
+    {
+      "name": "email",
+      "type": "string"
+    },
+    {
+      "name": "created_at",
+      "type": "long",
+      "logicalType": "timestamp-millis"
+    }
+  ]
+}
+`;
+const userSchema = new redpanda.Schema("user_schema", {
+    clusterId: testCluster.id,
+    subject: `${topicName}-value`,
+    schemaType: schemaType,
+    schema: userSchemaDefinition,
+    username: testUser.name,
+    password: userPw,
+});
+// The AVRO schema definition for user events that references the User schema
+const userEventSchemaDefinition = config.get("userEventSchemaDefinition") || `{
+  "type": "record",
+  "name": "UserEvent",
+  "fields": [
+    {
+      "name": "event_id",
+      "type": "string"
+    },
+    {
+      "name": "event_type",
+      "type": {
+        "type": "enum",
+        "name": "EventType",
+        "symbols": ["CREATED", "UPDATED", "DELETED"]
+      }
+    },
+    {
+      "name": "user",
+      "type": "User"
+    },
+    {
+      "name": "timestamp",
+      "type": "long",
+      "logicalType": "timestamp-millis"
+    },
+    {
+      "name": "metadata",
+      "type": ["null", {
+        "type": "map",
+        "values": "string"
+      }],
+      "default": null
+    }
+  ]
+}
+`;
+const userEventSchema = new redpanda.Schema("user_event_schema", {
+    clusterId: testCluster.id,
+    subject: `${topicName}-events-value`,
+    schemaType: schemaType,
+    schema: userEventSchemaDefinition,
+    username: testUser.name,
+    password: userPw,
+    references: [{
+        name: "User",
+        subject: userSchema.subject,
+        version: userSchema.version,
+    }],
+});
+// The AVRO schema definition for product data with strict compatibility
+const productSchemaDefinition = config.get("productSchemaDefinition") || `{
+  "type": "record",
+  "name": "Product",
+  "fields": [
+    {
+      "name": "id",
+      "type": "string"
+    },
+    {
+      "name": "name",
+      "type": "string"
+    },
+    {
+      "name": "price",
+      "type": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 10,
+        "scale": 2
+      }
+    },
+    {
+      "name": "category",
+      "type": {
+        "type": "enum",
+        "name": "Category",
+        "symbols": ["ELECTRONICS", "CLOTHING", "BOOKS", "HOME"]
+      }
+    },
+    {
+      "name": "description",
+      "type": ["null", "string"],
+      "default": null
+    },
+    {
+      "name": "created_at",
+      "type": "long",
+      "logicalType": "timestamp-millis"
+    }
+  ]
+}
+`;
+// The compatibility level for schema evolution (BACKWARD, BACKWARD_TRANSITIVE, FORWARD, FORWARD_TRANSITIVE, FULL, FULL_TRANSITIVE, NONE)
+const compatibilityLevel = config.get("compatibilityLevel") || "FULL";
+const productSchema = new redpanda.Schema("product_schema", {
+    clusterId: testCluster.id,
+    subject: `${topicName}-product-value`,
+    schemaType: schemaType,
+    schema: productSchemaDefinition,
+    compatibility: compatibilityLevel,
+    username: testUser.name,
+    password: userPw,
 });
 const testAcl = new redpanda.Acl("test", {
     resourceType: "TOPIC",
@@ -992,6 +2146,152 @@ test_topic = redpanda.Topic("test",
     replication_factor=replication_factor,
     cluster_api_url=test_cluster.cluster_api_url,
     allow_deletion=True)
+# The type of schema (AVRO, JSON, PROTOBUF)
+schema_type = config.get("schemaType")
+if schema_type is None:
+    schema_type = "AVRO"
+# The AVRO schema definition for user data
+user_schema_definition = config.get("userSchemaDefinition")
+if user_schema_definition is None:
+    user_schema_definition = """{
+  "type": "record",
+  "name": "User",
+  "fields": [
+    {
+      "name": "id",
+      "type": "int"
+    },
+    {
+      "name": "name",
+      "type": "string"
+    },
+    {
+      "name": "email",
+      "type": "string"
+    },
+    {
+      "name": "created_at",
+      "type": "long",
+      "logicalType": "timestamp-millis"
+    }
+  ]
+}
+"""
+user_schema = redpanda.Schema("user_schema",
+    cluster_id=test_cluster.id,
+    subject=f"{topic_name}-value",
+    schema_type=schema_type,
+    schema=user_schema_definition,
+    username=test_user.name,
+    password=user_pw)
+# The AVRO schema definition for user events that references the User schema
+user_event_schema_definition = config.get("userEventSchemaDefinition")
+if user_event_schema_definition is None:
+    user_event_schema_definition = """{
+  "type": "record",
+  "name": "UserEvent",
+  "fields": [
+    {
+      "name": "event_id",
+      "type": "string"
+    },
+    {
+      "name": "event_type",
+      "type": {
+        "type": "enum",
+        "name": "EventType",
+        "symbols": ["CREATED", "UPDATED", "DELETED"]
+      }
+    },
+    {
+      "name": "user",
+      "type": "User"
+    },
+    {
+      "name": "timestamp",
+      "type": "long",
+      "logicalType": "timestamp-millis"
+    },
+    {
+      "name": "metadata",
+      "type": ["null", {
+        "type": "map",
+        "values": "string"
+      }],
+      "default": null
+    }
+  ]
+}
+"""
+user_event_schema = redpanda.Schema("user_event_schema",
+    cluster_id=test_cluster.id,
+    subject=f"{topic_name}-events-value",
+    schema_type=schema_type,
+    schema=user_event_schema_definition,
+    username=test_user.name,
+    password=user_pw,
+    references=[{
+        "name": "User",
+        "subject": user_schema.subject,
+        "version": user_schema.version,
+    }])
+# The AVRO schema definition for product data with strict compatibility
+product_schema_definition = config.get("productSchemaDefinition")
+if product_schema_definition is None:
+    product_schema_definition = """{
+  "type": "record",
+  "name": "Product",
+  "fields": [
+    {
+      "name": "id",
+      "type": "string"
+    },
+    {
+      "name": "name",
+      "type": "string"
+    },
+    {
+      "name": "price",
+      "type": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 10,
+        "scale": 2
+      }
+    },
+    {
+      "name": "category",
+      "type": {
+        "type": "enum",
+        "name": "Category",
+        "symbols": ["ELECTRONICS", "CLOTHING", "BOOKS", "HOME"]
+      }
+    },
+    {
+      "name": "description",
+      "type": ["null", "string"],
+      "default": null
+    },
+    {
+      "name": "created_at",
+      "type": "long",
+      "logicalType": "timestamp-millis"
+    }
+  ]
+}
+"""
+# The compatibility level for schema evolution (BACKWARD, BACKWARD_TRANSITIVE, FORWARD, FORWARD_TRANSITIVE, FULL, FULL_TRANSITIVE, NONE)
+compatibility_level = config.get("compatibilityLevel")
+if compatibility_level is None:
+    compatibility_level = "FULL"
+product_schema = redpanda.Schema("product_schema",
+    cluster_id=test_cluster.id,
+    subject=f"{topic_name}-product-value",
+    schema_type=schema_type,
+    schema=product_schema_definition,
+    compatibility=compatibility_level,
+    username=test_user.name,
+    password=user_pw)
 test_acl = redpanda.Acl("test",
     resource_type="TOPIC",
     resource_name_=test_topic.name,
@@ -1081,6 +2381,155 @@ return await Deployment.RunAsync(() =>
         ReplicationFactor = replicationFactor,
         ClusterApiUrl = testCluster.ClusterApiUrl,
         AllowDeletion = true,
+    });
+
+    // The type of schema (AVRO, JSON, PROTOBUF)
+    var schemaType = config.Get("schemaType") ?? "AVRO";
+    // The AVRO schema definition for user data
+    var userSchemaDefinition = config.Get("userSchemaDefinition") ?? @"{
+  ""type"": ""record"",
+  ""name"": ""User"",
+  ""fields"": [
+    {
+      ""name"": ""id"",
+      ""type"": ""int""
+    },
+    {
+      ""name"": ""name"",
+      ""type"": ""string""
+    },
+    {
+      ""name"": ""email"",
+      ""type"": ""string""
+    },
+    {
+      ""name"": ""created_at"",
+      ""type"": ""long"",
+      ""logicalType"": ""timestamp-millis""
+    }
+  ]
+}
+";
+    var userSchema = new Redpanda.Schema("user_schema", new()
+    {
+        ClusterId = testCluster.Id,
+        Subject = $"{topicName}-value",
+        SchemaType = schemaType,
+        Schema = userSchemaDefinition,
+        Username = testUser.Name,
+        Password = userPw,
+    });
+
+    // The AVRO schema definition for user events that references the User schema
+    var userEventSchemaDefinition = config.Get("userEventSchemaDefinition") ?? @"{
+  ""type"": ""record"",
+  ""name"": ""UserEvent"",
+  ""fields"": [
+    {
+      ""name"": ""event_id"",
+      ""type"": ""string""
+    },
+    {
+      ""name"": ""event_type"",
+      ""type"": {
+        ""type"": ""enum"",
+        ""name"": ""EventType"",
+        ""symbols"": [""CREATED"", ""UPDATED"", ""DELETED""]
+      }
+    },
+    {
+      ""name"": ""user"",
+      ""type"": ""User""
+    },
+    {
+      ""name"": ""timestamp"",
+      ""type"": ""long"",
+      ""logicalType"": ""timestamp-millis""
+    },
+    {
+      ""name"": ""metadata"",
+      ""type"": [""null"", {
+        ""type"": ""map"",
+        ""values"": ""string""
+      }],
+      ""default"": null
+    }
+  ]
+}
+";
+    var userEventSchema = new Redpanda.Schema("user_event_schema", new()
+    {
+        ClusterId = testCluster.Id,
+        Subject = $"{topicName}-events-value",
+        SchemaType = schemaType,
+        Schema = userEventSchemaDefinition,
+        Username = testUser.Name,
+        Password = userPw,
+        References = new[]
+        {
+            new Redpanda.Inputs.SchemaReferenceArgs
+            {
+                Name = "User",
+                Subject = userSchema.Subject,
+                Version = userSchema.Version,
+            },
+        },
+    });
+
+    // The AVRO schema definition for product data with strict compatibility
+    var productSchemaDefinition = config.Get("productSchemaDefinition") ?? @"{
+  ""type"": ""record"",
+  ""name"": ""Product"",
+  ""fields"": [
+    {
+      ""name"": ""id"",
+      ""type"": ""string""
+    },
+    {
+      ""name"": ""name"",
+      ""type"": ""string""
+    },
+    {
+      ""name"": ""price"",
+      ""type"": {
+        ""type"": ""bytes"",
+        ""logicalType"": ""decimal"",
+        ""precision"": 10,
+        ""scale"": 2
+      }
+    },
+    {
+      ""name"": ""category"",
+      ""type"": {
+        ""type"": ""enum"",
+        ""name"": ""Category"",
+        ""symbols"": [""ELECTRONICS"", ""CLOTHING"", ""BOOKS"", ""HOME""]
+      }
+    },
+    {
+      ""name"": ""description"",
+      ""type"": [""null"", ""string""],
+      ""default"": null
+    },
+    {
+      ""name"": ""created_at"",
+      ""type"": ""long"",
+      ""logicalType"": ""timestamp-millis""
+    }
+  ]
+}
+";
+    // The compatibility level for schema evolution (BACKWARD, BACKWARD_TRANSITIVE, FORWARD, FORWARD_TRANSITIVE, FULL, FULL_TRANSITIVE, NONE)
+    var compatibilityLevel = config.Get("compatibilityLevel") ?? "FULL";
+    var productSchema = new Redpanda.Schema("product_schema", new()
+    {
+        ClusterId = testCluster.Id,
+        Subject = $"{topicName}-product-value",
+        SchemaType = schemaType,
+        Schema = productSchemaDefinition,
+        Compatibility = compatibilityLevel,
+        Username = testUser.Name,
+        Password = userPw,
     });
 
     var testAcl = new Redpanda.Acl("test", new()
@@ -1227,6 +2676,171 @@ func main() {
 		if err != nil {
 			return err
 		}
+		// The type of schema (AVRO, JSON, PROTOBUF)
+		schemaType := "AVRO"
+		if param := cfg.Get("schemaType"); param != "" {
+			schemaType = param
+		}
+		// The AVRO schema definition for user data
+		userSchemaDefinition := `{
+  "type": "record",
+  "name": "User",
+  "fields": [
+    {
+      "name": "id",
+      "type": "int"
+    },
+    {
+      "name": "name",
+      "type": "string"
+    },
+    {
+      "name": "email",
+      "type": "string"
+    },
+    {
+      "name": "created_at",
+      "type": "long",
+      "logicalType": "timestamp-millis"
+    }
+  ]
+}
+`
+		if param := cfg.Get("userSchemaDefinition"); param != "" {
+			userSchemaDefinition = param
+		}
+		userSchema, err := redpanda.NewSchema(ctx, "user_schema", &redpanda.SchemaArgs{
+			ClusterId:  testCluster.ID(),
+			Subject:    pulumi.Sprintf("%v-value", topicName),
+			SchemaType: pulumi.String(schemaType),
+			Schema:     pulumi.String(userSchemaDefinition),
+			Username:   testUser.Name,
+			Password:   pulumi.String(userPw),
+		})
+		if err != nil {
+			return err
+		}
+		// The AVRO schema definition for user events that references the User schema
+		userEventSchemaDefinition := `{
+  "type": "record",
+  "name": "UserEvent",
+  "fields": [
+    {
+      "name": "event_id",
+      "type": "string"
+    },
+    {
+      "name": "event_type",
+      "type": {
+        "type": "enum",
+        "name": "EventType",
+        "symbols": ["CREATED", "UPDATED", "DELETED"]
+      }
+    },
+    {
+      "name": "user",
+      "type": "User"
+    },
+    {
+      "name": "timestamp",
+      "type": "long",
+      "logicalType": "timestamp-millis"
+    },
+    {
+      "name": "metadata",
+      "type": ["null", {
+        "type": "map",
+        "values": "string"
+      }],
+      "default": null
+    }
+  ]
+}
+`
+		if param := cfg.Get("userEventSchemaDefinition"); param != "" {
+			userEventSchemaDefinition = param
+		}
+		_, err = redpanda.NewSchema(ctx, "user_event_schema", &redpanda.SchemaArgs{
+			ClusterId:  testCluster.ID(),
+			Subject:    pulumi.Sprintf("%v-events-value", topicName),
+			SchemaType: pulumi.String(schemaType),
+			Schema:     pulumi.String(userEventSchemaDefinition),
+			Username:   testUser.Name,
+			Password:   pulumi.String(userPw),
+			References: redpanda.SchemaReferenceArray{
+				&redpanda.SchemaReferenceArgs{
+					Name:    pulumi.String("User"),
+					Subject: userSchema.Subject,
+					Version: userSchema.Version,
+				},
+			},
+		})
+		if err != nil {
+			return err
+		}
+		// The AVRO schema definition for product data with strict compatibility
+		productSchemaDefinition := `{
+  "type": "record",
+  "name": "Product",
+  "fields": [
+    {
+      "name": "id",
+      "type": "string"
+    },
+    {
+      "name": "name",
+      "type": "string"
+    },
+    {
+      "name": "price",
+      "type": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 10,
+        "scale": 2
+      }
+    },
+    {
+      "name": "category",
+      "type": {
+        "type": "enum",
+        "name": "Category",
+        "symbols": ["ELECTRONICS", "CLOTHING", "BOOKS", "HOME"]
+      }
+    },
+    {
+      "name": "description",
+      "type": ["null", "string"],
+      "default": null
+    },
+    {
+      "name": "created_at",
+      "type": "long",
+      "logicalType": "timestamp-millis"
+    }
+  ]
+}
+`
+		if param := cfg.Get("productSchemaDefinition"); param != "" {
+			productSchemaDefinition = param
+		}
+		// The compatibility level for schema evolution (BACKWARD, BACKWARD_TRANSITIVE, FORWARD, FORWARD_TRANSITIVE, FULL, FULL_TRANSITIVE, NONE)
+		compatibilityLevel := "FULL"
+		if param := cfg.Get("compatibilityLevel"); param != "" {
+			compatibilityLevel = param
+		}
+		_, err = redpanda.NewSchema(ctx, "product_schema", &redpanda.SchemaArgs{
+			ClusterId:     testCluster.ID(),
+			Subject:       pulumi.Sprintf("%v-product-value", topicName),
+			SchemaType:    pulumi.String(schemaType),
+			Schema:        pulumi.String(productSchemaDefinition),
+			Compatibility: pulumi.String(compatibilityLevel),
+			Username:      testUser.Name,
+			Password:      pulumi.String(userPw),
+		})
+		if err != nil {
+			return err
+		}
 		_, err = redpanda.NewAcl(ctx, "test", &redpanda.AclArgs{
 			ResourceType:        pulumi.String("TOPIC"),
 			ResourceName:        testTopic.Name,
@@ -1298,6 +2912,120 @@ configuration:
   replicationFactor:
     type: number
     default: 3
+  schemaType:
+    type: string
+    default: AVRO
+  userSchemaDefinition:
+    type: string
+    default: |
+      {
+        "type": "record",
+        "name": "User",
+        "fields": [
+          {
+            "name": "id",
+            "type": "int"
+          },
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "type": "string"
+          },
+          {
+            "name": "created_at",
+            "type": "long",
+            "logicalType": "timestamp-millis"
+          }
+        ]
+      }
+  userEventSchemaDefinition:
+    type: string
+    default: |
+      {
+        "type": "record",
+        "name": "UserEvent",
+        "fields": [
+          {
+            "name": "event_id",
+            "type": "string"
+          },
+          {
+            "name": "event_type",
+            "type": {
+              "type": "enum",
+              "name": "EventType",
+              "symbols": ["CREATED", "UPDATED", "DELETED"]
+            }
+          },
+          {
+            "name": "user",
+            "type": "User"
+          },
+          {
+            "name": "timestamp",
+            "type": "long",
+            "logicalType": "timestamp-millis"
+          },
+          {
+            "name": "metadata",
+            "type": ["null", {
+              "type": "map",
+              "values": "string"
+            }],
+            "default": null
+          }
+        ]
+      }
+  productSchemaDefinition:
+    type: string
+    default: |
+      {
+        "type": "record",
+        "name": "Product",
+        "fields": [
+          {
+            "name": "id",
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "price",
+            "type": {
+              "type": "bytes",
+              "logicalType": "decimal",
+              "precision": 10,
+              "scale": 2
+            }
+          },
+          {
+            "name": "category",
+            "type": {
+              "type": "enum",
+              "name": "Category",
+              "symbols": ["ELECTRONICS", "CLOTHING", "BOOKS", "HOME"]
+            }
+          },
+          {
+            "name": "description",
+            "type": ["null", "string"],
+            "default": null
+          },
+          {
+            "name": "created_at",
+            "type": "long",
+            "logicalType": "timestamp-millis"
+          }
+        ]
+      }
+  compatibilityLevel:
+    type: string
+    default: FULL
 resources:
   test:
     type: redpanda:ResourceGroup
@@ -1357,6 +3085,41 @@ resources:
       replicationFactor: ${replicationFactor}
       clusterApiUrl: ${testCluster.clusterApiUrl}
       allowDeletion: true
+  userSchema:
+    type: redpanda:Schema
+    name: user_schema
+    properties:
+      clusterId: ${testCluster.id}
+      subject: ${topicName}-value
+      schemaType: ${schemaType}
+      schema: ${userSchemaDefinition}
+      username: ${testUser.name}
+      password: ${userPw}
+  userEventSchema:
+    type: redpanda:Schema
+    name: user_event_schema
+    properties:
+      clusterId: ${testCluster.id}
+      subject: ${topicName}-events-value
+      schemaType: ${schemaType}
+      schema: ${userEventSchemaDefinition}
+      username: ${testUser.name}
+      password: ${userPw}
+      references:
+        - name: User
+          subject: ${userSchema.subject}
+          version: ${userSchema.version}
+  productSchema:
+    type: redpanda:Schema
+    name: product_schema
+    properties:
+      clusterId: ${testCluster.id}
+      subject: ${topicName}-product-value
+      schemaType: ${schemaType}
+      schema: ${productSchemaDefinition}
+      compatibility: ${compatibilityLevel}
+      username: ${testUser.name}
+      password: ${userPw}
   testAcl:
     type: redpanda:Acl
     name: test
@@ -1394,6 +3157,9 @@ import com.pulumi.redpanda.User;
 import com.pulumi.redpanda.UserArgs;
 import com.pulumi.redpanda.Topic;
 import com.pulumi.redpanda.TopicArgs;
+import com.pulumi.redpanda.Schema;
+import com.pulumi.redpanda.SchemaArgs;
+import com.pulumi.redpanda.inputs.SchemaReferenceArgs;
 import com.pulumi.redpanda.Acl;
 import com.pulumi.redpanda.AclArgs;
 import java.util.List;
@@ -1465,6 +3231,146 @@ public class App {
             .replicationFactor(replicationFactor)
             .clusterApiUrl(testCluster.clusterApiUrl())
             .allowDeletion(true)
+            .build());
+
+        final var schemaType = config.get("schemaType").orElse("AVRO");
+        final var userSchemaDefinition = config.get("userSchemaDefinition").orElse("""
+{
+  "type": "record",
+  "name": "User",
+  "fields": [
+    {
+      "name": "id",
+      "type": "int"
+    },
+    {
+      "name": "name",
+      "type": "string"
+    },
+    {
+      "name": "email",
+      "type": "string"
+    },
+    {
+      "name": "created_at",
+      "type": "long",
+      "logicalType": "timestamp-millis"
+    }
+  ]
+}
+        """);
+        var userSchema = new Schema("userSchema", SchemaArgs.builder()
+            .clusterId(testCluster.id())
+            .subject(String.format("%s-value", topicName))
+            .schemaType(schemaType)
+            .schema(userSchemaDefinition)
+            .username(testUser.name())
+            .password(userPw)
+            .build());
+
+        final var userEventSchemaDefinition = config.get("userEventSchemaDefinition").orElse("""
+{
+  "type": "record",
+  "name": "UserEvent",
+  "fields": [
+    {
+      "name": "event_id",
+      "type": "string"
+    },
+    {
+      "name": "event_type",
+      "type": {
+        "type": "enum",
+        "name": "EventType",
+        "symbols": ["CREATED", "UPDATED", "DELETED"]
+      }
+    },
+    {
+      "name": "user",
+      "type": "User"
+    },
+    {
+      "name": "timestamp",
+      "type": "long",
+      "logicalType": "timestamp-millis"
+    },
+    {
+      "name": "metadata",
+      "type": ["null", {
+        "type": "map",
+        "values": "string"
+      }],
+      "default": null
+    }
+  ]
+}
+        """);
+        var userEventSchema = new Schema("userEventSchema", SchemaArgs.builder()
+            .clusterId(testCluster.id())
+            .subject(String.format("%s-events-value", topicName))
+            .schemaType(schemaType)
+            .schema(userEventSchemaDefinition)
+            .username(testUser.name())
+            .password(userPw)
+            .references(SchemaReferenceArgs.builder()
+                .name("User")
+                .subject(userSchema.subject())
+                .version(userSchema.version())
+                .build())
+            .build());
+
+        final var productSchemaDefinition = config.get("productSchemaDefinition").orElse("""
+{
+  "type": "record",
+  "name": "Product",
+  "fields": [
+    {
+      "name": "id",
+      "type": "string"
+    },
+    {
+      "name": "name",
+      "type": "string"
+    },
+    {
+      "name": "price",
+      "type": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 10,
+        "scale": 2
+      }
+    },
+    {
+      "name": "category",
+      "type": {
+        "type": "enum",
+        "name": "Category",
+        "symbols": ["ELECTRONICS", "CLOTHING", "BOOKS", "HOME"]
+      }
+    },
+    {
+      "name": "description",
+      "type": ["null", "string"],
+      "default": null
+    },
+    {
+      "name": "created_at",
+      "type": "long",
+      "logicalType": "timestamp-millis"
+    }
+  ]
+}
+        """);
+        final var compatibilityLevel = config.get("compatibilityLevel").orElse("FULL");
+        var productSchema = new Schema("productSchema", SchemaArgs.builder()
+            .clusterId(testCluster.id())
+            .subject(String.format("%s-product-value", topicName))
+            .schemaType(schemaType)
+            .schema(productSchemaDefinition)
+            .compatibility(compatibilityLevel)
+            .username(testUser.name())
+            .password(userPw)
             .build());
 
         var testAcl = new Acl("testAcl", AclArgs.builder()

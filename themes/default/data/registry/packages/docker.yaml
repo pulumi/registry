@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-docker
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-docker/v4.8.0/provider/cmd/pulumi-resource-docker/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-docker/v4.8.1/provider/cmd/pulumi-resource-docker/schema.json
 title: Docker
-updated_on: 1750280940
-version: v4.8.0
+updated_on: 1755712187
+version: v4.8.1

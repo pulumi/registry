@@ -7,10 +7,10 @@ featured: false
 logo_url: ""
 name: temporalcloud
 native: false
-package_status: public_preview
+package_status: ga
 publisher: temporalio
 repo_url: https://github.com/temporalio/terraform-provider-temporalcloud
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/temporalio/temporalcloud/0.9.2/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/temporalio/temporalcloud/1.0.0/schema.json
 title: Temporal Cloud
-updated_on: 1754004940
-version: 0.9.2
+updated_on: 1755732950
+version: 1.0.0

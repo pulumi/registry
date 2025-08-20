@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/temporalio/temporalcloud/0.9.2/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/temporalio/temporalcloud/1.0.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Temporalcloud Provider
@@ -19,8 +19,6 @@ pulumi package add terraform-provider temporalio/temporalcloud
 Use the `temporalcloud` provider to interact with resources supported by [Temporal Cloud](https://temporal.io/cloud).
 
 Use the navigation to the left to learn about the available resources supported by this provider.
-
-> This provider is in Public Preview, is under active development, and is subject to change. We reserve the right to make breaking changes during this pre-GA period, though we will do our best to maintain compatibility wherever possible.
 ## Provider Configuration
 
 Credentials for Temporal Cloud can be provided by adding an `apiKey` property or by setting the environment variable `TEMPORAL_CLOUD_API_KEY`.

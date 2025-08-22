@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: Formal
 repo_url: https://github.com/formalco/pulumi-formal
-schema_file_url: https://raw.githubusercontent.com/formalco/pulumi-formal/v1.0.2/provider/cmd/pulumi-resource-formal/schema.json
+schema_file_url: https://raw.githubusercontent.com/formalco/pulumi-formal/v1.0.3/provider/cmd/pulumi-resource-formal/schema.json
 title: Formal
-updated_on: 1755132341
-version: v1.0.2
+updated_on: 1755545857
+version: v1.0.3

@@ -1,11 +1,12 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-harness/v0.8.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-harness/v0.8.1/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Harness Provider
 meta_desc: Provides an overview on how to configure the Pulumi Harness provider.
 layout: package
 ---
+
 ## Installation
 
 The Harness provider is available as a package in all Pulumi languages:
@@ -15,18 +16,17 @@ The Harness provider is available as a package in all Pulumi languages:
 * Go: [`github.com/pulumi/pulumi-harness/sdk/go/harness`](https://github.com/pulumi/pulumi-harness)
 * .NET: [`Pulumi.Harness`](https://www.nuget.org/packages/Pulumi.Harness)
 * Java: [`com.pulumi/harness`](https://central.sonatype.com/artifact/com.pulumi/harness)
+
 ## Overview
 
 For an explanation on how to use this Provider along with code samples, refer to the Harness Pulumi Provider Quickstart Guide <https://docs.harness.io/article/7cude5tvzh-harness-pulumi-provider>.
 ## Example Usage
 
 Configure the Harness provider for First Gen resources
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
-{{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
 name: configuration-example
-runtime: nodejs
+runtime:
 config:
     harness:accountId:
         value: '....'
@@ -36,97 +36,12 @@ config:
         value: https://app.harness.io/gateway
 
 ```
-
-{{% /choosable %}}
-{{% choosable language python %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: python
-config:
-    harness:accountId:
-        value: '....'
-    harness:apiKey:
-        value: '......'
-    harness:endpoint:
-        value: https://app.harness.io/gateway
-
-```
-
-{{% /choosable %}}
-{{% choosable language csharp %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: dotnet
-config:
-    harness:accountId:
-        value: '....'
-    harness:apiKey:
-        value: '......'
-    harness:endpoint:
-        value: https://app.harness.io/gateway
-
-```
-
-{{% /choosable %}}
-{{% choosable language go %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: go
-config:
-    harness:accountId:
-        value: '....'
-    harness:apiKey:
-        value: '......'
-    harness:endpoint:
-        value: https://app.harness.io/gateway
-
-```
-
-{{% /choosable %}}
-{{% choosable language yaml %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: yaml
-config:
-    harness:accountId:
-        value: '....'
-    harness:apiKey:
-        value: '......'
-    harness:endpoint:
-        value: https://app.harness.io/gateway
-
-```
-
-{{% /choosable %}}
-{{% choosable language java %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: java
-config:
-    harness:accountId:
-        value: '....'
-    harness:apiKey:
-        value: '......'
-    harness:endpoint:
-        value: https://app.harness.io/gateway
-
-```
-
-{{% /choosable %}}
-{{< /chooser >}}
 
 Configure the Harness provider for Next Gen resources
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
-{{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
 name: configuration-example
-runtime: nodejs
+runtime:
 config:
     harness:accountId:
         value: '....'
@@ -136,89 +51,6 @@ config:
         value: '......'
 
 ```
-
-{{% /choosable %}}
-{{% choosable language python %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: python
-config:
-    harness:accountId:
-        value: '....'
-    harness:endpoint:
-        value: https://app.harness.io/gateway
-    harness:platformApiKey:
-        value: '......'
-
-```
-
-{{% /choosable %}}
-{{% choosable language csharp %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: dotnet
-config:
-    harness:accountId:
-        value: '....'
-    harness:endpoint:
-        value: https://app.harness.io/gateway
-    harness:platformApiKey:
-        value: '......'
-
-```
-
-{{% /choosable %}}
-{{% choosable language go %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: go
-config:
-    harness:accountId:
-        value: '....'
-    harness:endpoint:
-        value: https://app.harness.io/gateway
-    harness:platformApiKey:
-        value: '......'
-
-```
-
-{{% /choosable %}}
-{{% choosable language yaml %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: yaml
-config:
-    harness:accountId:
-        value: '....'
-    harness:endpoint:
-        value: https://app.harness.io/gateway
-    harness:platformApiKey:
-        value: '......'
-
-```
-
-{{% /choosable %}}
-{{% choosable language java %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: java
-config:
-    harness:accountId:
-        value: '....'
-    harness:endpoint:
-        value: https://app.harness.io/gateway
-    harness:platformApiKey:
-        value: '......'
-
-```
-
-{{% /choosable %}}
-{{< /chooser >}}
 ## Configuration Reference
 
 - `accountId` (String) The Harness account id. This can also be set using the `HARNESS_ACCOUNT_ID` environment variable.

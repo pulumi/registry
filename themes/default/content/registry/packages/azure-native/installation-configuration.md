@@ -66,7 +66,7 @@ Pick out the `<id>` from the list and run:
 $ az account set --subscription=<id>
 ```
 
-#### Authenticate with Default Azure Credential
+### Authenticate with the Default Azure Credential
 
 The "Default Azure Credential" mode is a preconfigured chain of credentials. It's designed to support many environments, 
 along with the most common authentication flows and developer tools. Use this mode to automatically detect credentials
@@ -75,7 +75,7 @@ available in Azure hosting environments and to automatically use the Azure CLI d
 See ["DefaultAzureCredential Overview"](https://learn.microsoft.com/en-us/azure/developer/go/sdk/authentication/credential-chains#defaultazurecredential-overview)
 for a complete description of the types and ordering of credentials.
 
-You also need to obtain a Subscription ID. To retrieve your current Subscription ID, you can use:
+You'll need to obtain a Subscription ID. To retrieve your current Subscription ID, you can use:
 
 ```bash
 $ az account show --query id -o tsv
@@ -83,14 +83,14 @@ $ az account show --query id -o tsv
 
 Once you have your Subscription ID, configure the provider in one of two ways.
 
-##### Set configuration using `pulumi config`
+#### Set configuration using `pulumi config`
 
     ```bash
     $ pulumi config set azure-native:useDefaultAzureCredential true
     $ pulumi config set azure-native:subscriptionId <subscriptionId>
     ```
 
-##### Set configuration using environment variables
+#### Set configuration using environment variables
 
 {{< chooser os "linux,macos,windows" >}}
 {{% choosable os linux %}}
@@ -121,7 +121,7 @@ $ export ARM_SUBSCRIPTION_ID=<YOUR_ARM_SUBSCRIPTION_ID>
 {{% /choosable %}}
 {{< /chooser >}}
 
-##### Use a specific credential
+#### Use a specific credential
 To exclude all credentials except for one, set environment variable `AZURE_TOKEN_CREDENTIALS` to one of:
 
 - `AzureCLICredential`
@@ -130,7 +130,7 @@ To exclude all credentials except for one, set environment variable `AZURE_TOKEN
 - `ManagedIdentityCredential`
 - `WorkloadIdentityCredential`
 
-##### Exclude a credential type category
+#### Exclude a credential type category
 
 To exclude all "developer tool" or "deployed service" credentials, set environment variable `AZURE_TOKEN_CREDENTIALS` to `prod` or `dev`, respectively.
 
@@ -140,6 +140,9 @@ OIDC allows you to establish a trust relationship between Azure and another iden
 established, your program can exchange an ID token issued by the identity provider for an Azure token. Your Pulumi program running in
 the identity provider's service, for instance, GitHub Actions CI or Azure DevOps Pipelines, can then access Azure, without storing any
 secrets in GitHub.
+
+For all OIDC modes, configure a Subscription ID via Pulumi config as `azure-native:subscriptionId` or via environment
+variable as `ARM_SUBSCRIPTION_ID`.
 
 #### OIDC Azure Configuration
 
@@ -368,9 +371,13 @@ as shown above except use `clientCertPath`/`ARM_CLIENT_CERTIFICATE_PATH` instead
 
 MSI is [configured in Azure](https://learn.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/overview). Once that's done, tell the provider to use it by setting the `useMsi` config or the `ARM_USE_MSI` environment variable to `true`.
 
-When using a system-assigned identity, or when using a user-assigned identity _and there's only a single one_, you don't need to do anything else. The provider will automatically use the identity.
+When using a system-assigned identity, or when using a user-assigned identity _and there's only a single one_, 
+the provider will automatically use that identity.
 
-When one or more resources in your program have multiple user-assigned identities, you need to set the `clientId` config or the `ARM_CLIENT_ID` environment variable to the client ID of the identity you want to use.
+When multiple identities are available in the hosting environment, set the `clientId` config or the `ARM_CLIENT_ID` environment variable to the client ID of the identity you want to use.
+
+Configure a Subscription ID via Pulumi config as `azure-native:subscriptionId` or via environment
+variable as `ARM_SUBSCRIPTION_ID`.
 
 ## Connecting to a different Azure environment
 

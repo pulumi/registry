@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/maxlaverse/bitwarden/0.15.0/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/maxlaverse/bitwarden/0.16.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Bitwarden Provider
@@ -18,7 +18,7 @@ pulumi package add terraform-provider maxlaverse/bitwarden
 
 Use the Bitwarden provider to manage your [Password Manager](https://bitwarden.com/products/personal/) Logins and Secure Notes, and [Secrets Manager](https://bitwarden.com/products/secrets-manager/) Secrets.
 You must configure the provider with proper credentials before you can use it.
-If you're not trying out the experimental `embeddedClient` feature, you also need a [Bitwarden CLI](https://bitwarden.com/help/article/cli/#download-and-install) installed locally.
+If you're not using the `embeddedClient` implementation, you also need a [Password Manager CLI](https://bitwarden.com/help/article/cli/#download-and-install) or [Secrets Manager CLI](https://bitwarden.com/help/article/cli/#download-and-install) installed locally.
 ## Example Usage
 
 {{< chooser language "typescript,python,go,csharp,java,yaml" >}}
@@ -107,6 +107,20 @@ Example currently unavailable in this language
 ```
 {{% /choosable %}}
 {{< /chooser >}}
+## Client Implementation
+
+The Bitwarden provider offers two client implementations to interact with your Vault:
+### Official Bitwarden CLIs (Default)
+By default, the provider uses the official Bitwarden command-line tools ([Bitwarden CLI](https://bitwarden.com/help/article/cli/#download-and-install) for Password Manager and [BWS CLI](https://bitwarden.com/help/article/cli/#download-and-install) for Secrets Manager). This approach leverages the battle-tested reliability of Bitwarden's own tooling, backed by their engineering team and security expertise.
+
+The trade-off is that you need to pre-install the appropriate CLI tools in your Pulumi environment. Additionally, the Password Manager CLI (written in Node.js) can create performance bottlenecks when managing many resources due to process spawning overhead.
+### Embedded Client
+The provider also includes an embedded client that communicates directly with Bitwarden servers without external dependencies. This eliminates the need to install separate CLI tools and provides better performance by avoiding external process spawning, making it particularly beneficial for managing large resource sets.
+
+However, this implementation is developed and maintained by a single person as a community project without company resources. While effort goes into ensuring security and correctness, it lacks the extensive security review, testing infrastructure, and dedicated security team that backs Bitwarden's official tools.
+### Choosing Your Implementation
+
+The choice depends on your needs: the official CLIs leverage Bitwarden's proven tooling, while the embedded client is a community project offering performance benefits and zero external dependencies. The embedded client aims for security and correctness, and code reviews are always welcome to help improve it.
 ## Authentication
 Depending on the type of credentials you use, you'll be able to connect either with a Password Manager or Secret Manager.
 If you want your workspace to interact with both, have a look at [provider aliases](https://developer.pulumi.com/pulumi/language/providers/configuration#alias-multiple-provider-configurations).
@@ -197,7 +211,7 @@ export BW_CLIENTSECRET="my-client-secret"
 - `experimental` (Block Set) Enable experimental features. (see below for nested schema)
 - `extraCaCerts` (String) Extends the well known 'root' CAs (like VeriSign) with the extra certificates in file (env: `NODE_EXTRA_CA_CERTS`, doesn't work with embedded client).
 - `masterPassword` (String) Master password of the Vault (env: `BW_PASSWORD`). Do not commit this information in Git unless you know what you're doing. Prefer using a Pulumi `variable {}` in order to inject this value from the environment.
-- `server` (String) Bitwarden Server URL (default: `https://vault.bitwarden.com`, env: `BW_URL`).
+- `server` (String) Bitwarden Server URL (default: `https://vault.bitwarden.com`, env: `BW_URL` or `BWS_SERVER_URL`).
 - `sessionKey` (String) A Bitwarden Session Key (env: `BW_SESSION`)
 - `vaultPath` (String) Alternative directory for storing the Vault locally (default: `.bitwarden/`, env: `BITWARDENCLI_APPDATA_DIR`; set to empty string to use CLI default).
 

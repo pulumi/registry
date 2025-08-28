@@ -10,7 +10,7 @@ native: false
 package_status: public_preview
 publisher: Upstash
 repo_url: https://github.com/upstash/pulumi-upstash
-schema_file_url: https://raw.githubusercontent.com/upstash/pulumi-upstash/v0.4.0/provider/cmd/pulumi-resource-upstash/schema.json
+schema_file_url: https://raw.githubusercontent.com/upstash/pulumi-upstash/v0.5.0/provider/cmd/pulumi-resource-upstash/schema.json
 title: Upstash
-updated_on: 1755881274
-version: v0.4.0
+updated_on: 1756307119
+version: v0.5.0

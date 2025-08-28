@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/upstash/pulumi-upstash/v0.4.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/upstash/pulumi-upstash/v0.5.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: Upstash
 meta_desc: Provides an overview of the Upstash Provider for Pulumi.

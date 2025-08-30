@@ -1,25 +1,29 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-cloudamqp/v3.23.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-cloudamqp/v3.24.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
-title: Cloudamqp Provider
-meta_desc: Provides an overview on how to configure the Pulumi Cloudamqp provider.
+title: CloudAMQP Provider
+meta_desc: Provides an overview on how to configure the Pulumi CloudAMQP provider.
 layout: package
 ---
+
 ## Installation
 
-The cloudamqp provider is available as a package in all Pulumi languages:
+The CloudAMQP provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/cloudamqp`](https://www.npmjs.com/package/@pulumi/cloudamqp)
 * Python: [`pulumi-cloudamqp`](https://pypi.org/project/pulumi-cloudamqp/)
 * Go: [`github.com/pulumi/pulumi-cloudamqp/sdk/v3/go/cloudamqp`](https://github.com/pulumi/pulumi-cloudamqp)
 * .NET: [`Pulumi.Cloudamqp`](https://www.nuget.org/packages/Pulumi.Cloudamqp)
 * Java: [`com.pulumi/cloudamqp`](https://central.sonatype.com/artifact/com.pulumi/cloudamqp)
+
 ## Overview
 
 The CloudAMQP provider is used to interact with CloudAMQP organization resources.
 
-The provider allows you to manage your CloudAMQP instances and features. Create, configure and deploy [**RabbitMQ**](https://www.rabbitmq.com/) or [**LavinMQ**](https://lavinmq.com/) to different cloud platforms. The provider needs to be configured with the proper API key before it can be used.
+The provider allows you to manage your CloudAMQP instances and features. Create, configure and
+deploy [**LavinMQ**](https://lavinmq.com/) or [**RabbitMQ**](https://www.rabbitmq.com/) to different cloud platforms. The provider needs to be
+configured with the proper API key before it can be used.
 
 Use the navigation to the left to read about the available resources.
 ## Example Usage
@@ -44,7 +48,7 @@ import * as cloudamqp from "@pulumi/cloudamqp";
 // Create a new cloudamqp instance
 const instance = new cloudamqp.Instance("instance", {
     name: "pulumi-cloudamqp-instance",
-    plan: "bunny-1",
+    plan: "penguin-1",
     region: "amazon-web-services::us-west-1",
     tags: ["pulumi"],
 });
@@ -72,14 +76,6 @@ const firewall = new cloudamqp.SecurityFirewall("firewall", {
         ports: [4567],
         services: ["AMQPS"],
     }],
-});
-// Cloudwatch logs integration
-const cloudwatchlog = new cloudamqp.IntegrationLog("cloudwatchlog", {
-    instanceId: instance.id,
-    name: "cloudwatchlog",
-    accessKeyId: awsAccessKey,
-    secretAccessKey: awsSecretKey,
-    region: awsRegion,
 });
 // Cloudwatch metrics integration
 const cloudwatch = new cloudamqp.IntegrationMetric("cloudwatch", {
@@ -110,7 +106,7 @@ import pulumi_cloudamqp as cloudamqp
 # Create a new cloudamqp instance
 instance = cloudamqp.Instance("instance",
     name="pulumi-cloudamqp-instance",
-    plan="bunny-1",
+    plan="penguin-1",
     region="amazon-web-services::us-west-1",
     tags=["pulumi"])
 # New recipient to receieve notifications
@@ -135,13 +131,6 @@ firewall = cloudamqp.SecurityFirewall("firewall",
         "ports": [4567],
         "services": ["AMQPS"],
     }])
-# Cloudwatch logs integration
-cloudwatchlog = cloudamqp.IntegrationLog("cloudwatchlog",
-    instance_id=instance.id,
-    name="cloudwatchlog",
-    access_key_id=aws_access_key,
-    secret_access_key=aws_secret_key,
-    region=aws_region)
 # Cloudwatch metrics integration
 cloudwatch = cloudamqp.IntegrationMetric("cloudwatch",
     instance_id=instance.id,
@@ -175,7 +164,7 @@ return await Deployment.RunAsync(() =>
     var instance = new CloudAmqp.Instance("instance", new()
     {
         Name = "pulumi-cloudamqp-instance",
-        Plan = "bunny-1",
+        Plan = "penguin-1",
         Region = "amazon-web-services::us-west-1",
         Tags = new[]
         {
@@ -227,16 +216,6 @@ return await Deployment.RunAsync(() =>
         },
     });
 
-    // Cloudwatch logs integration
-    var cloudwatchlog = new CloudAmqp.IntegrationLog("cloudwatchlog", new()
-    {
-        InstanceId = instance.Id,
-        Name = "cloudwatchlog",
-        AccessKeyId = awsAccessKey,
-        SecretAccessKey = awsSecretKey,
-        Region = awsRegion,
-    });
-
     // Cloudwatch metrics integration
     var cloudwatch = new CloudAmqp.IntegrationMetric("cloudwatch", new()
     {
@@ -276,7 +255,7 @@ func main() {
 		// Create a new cloudamqp instance
 		instance, err := cloudamqp.NewInstance(ctx, "instance", &cloudamqp.InstanceArgs{
 			Name:   pulumi.String("pulumi-cloudamqp-instance"),
-			Plan:   pulumi.String("bunny-1"),
+			Plan:   pulumi.String("penguin-1"),
 			Region: pulumi.String("amazon-web-services::us-west-1"),
 			Tags: pulumi.StringArray{
 				pulumi.String("pulumi"),
@@ -327,17 +306,6 @@ func main() {
 		if err != nil {
 			return err
 		}
-		// Cloudwatch logs integration
-		_, err = cloudamqp.NewIntegrationLog(ctx, "cloudwatchlog", &cloudamqp.IntegrationLogArgs{
-			InstanceId:      instance.ID(),
-			Name:            pulumi.String("cloudwatchlog"),
-			AccessKeyId:     pulumi.Any(awsAccessKey),
-			SecretAccessKey: pulumi.Any(awsSecretKey),
-			Region:          pulumi.Any(awsRegion),
-		})
-		if err != nil {
-			return err
-		}
 		// Cloudwatch metrics integration
 		_, err = cloudamqp.NewIntegrationMetric(ctx, "cloudwatch", &cloudamqp.IntegrationMetricArgs{
 			InstanceId:      instance.ID(),
@@ -373,7 +341,7 @@ resources:
     type: cloudamqp:Instance
     properties:
       name: pulumi-cloudamqp-instance
-      plan: bunny-1
+      plan: penguin-1
       region: amazon-web-services::us-west-1
       tags:
         - pulumi
@@ -409,15 +377,6 @@ resources:
             - 4567
           services:
             - AMQPS
-  # Cloudwatch logs integration
-  cloudwatchlog:
-    type: cloudamqp:IntegrationLog
-    properties:
-      instanceId: ${instance.id}
-      name: cloudwatchlog
-      accessKeyId: ${awsAccessKey}
-      secretAccessKey: ${awsSecretKey}
-      region: ${awsRegion}
   # Cloudwatch metrics integration
   cloudwatch:
     type: cloudamqp:IntegrationMetric
@@ -456,8 +415,6 @@ import com.pulumi.cloudamqp.AlarmArgs;
 import com.pulumi.cloudamqp.SecurityFirewall;
 import com.pulumi.cloudamqp.SecurityFirewallArgs;
 import com.pulumi.cloudamqp.inputs.SecurityFirewallRuleArgs;
-import com.pulumi.cloudamqp.IntegrationLog;
-import com.pulumi.cloudamqp.IntegrationLogArgs;
 import com.pulumi.cloudamqp.IntegrationMetric;
 import com.pulumi.cloudamqp.IntegrationMetricArgs;
 import java.util.List;
@@ -476,7 +433,7 @@ public class App {
         // Create a new cloudamqp instance
         var instance = new Instance("instance", InstanceArgs.builder()
             .name("pulumi-cloudamqp-instance")
-            .plan("bunny-1")
+            .plan("penguin-1")
             .region("amazon-web-services::us-west-1")
             .tags("pulumi")
             .build());
@@ -509,15 +466,6 @@ public class App {
                 .build())
             .build());
 
-        // Cloudwatch logs integration
-        var cloudwatchlog = new IntegrationLog("cloudwatchlog", IntegrationLogArgs.builder()
-            .instanceId(instance.id())
-            .name("cloudwatchlog")
-            .accessKeyId(awsAccessKey)
-            .secretAccessKey(awsSecretKey)
-            .region(awsRegion)
-            .build());
-
         // Cloudwatch metrics integration
         var cloudwatch = new IntegrationMetric("cloudwatch", IntegrationMetricArgs.builder()
             .instanceId(instance.id())
@@ -536,17 +484,20 @@ public class App {
 
 The following configuration inputs are supported:
 
-* `apikey` - (Required) This is the CloudAMQP Customer API key needed to make calls to the customer API.
-  It can be sourced from login in to your CloudAMQP account and go to API access or go
-  directly to [API Keys](https://customer.cloudamqp.com/apikeys).
-  The API key can also be read from the environment variable `CLOUDAMQP_APIKEY`.
+* `apikey` - (Required) This is the CloudAMQP Customer API key needed to make calls to the customer
+  API. It can be sourced from login in to your CloudAMQP account and go to API access or
+  go directly to [API Keys](https://customer.cloudamqp.com/apikeys). The API key can also be read from the environment variable
+  `CLOUDAMQP_APIKEY`.
 
-* `enableFasterInstanceDestroy` - (Optional) This will speed up the destroy action for `cloudamqp.Instance`
-  when running `pulumi destroy`. It's done by skipping delete behaviour
-  for resources that don't need to be cleaned up when the servers are deleted.
-  The argument can also be read from the environment variable
-  `CLOUDAMQP_ENABLE_FASTER_INSTANCE_DESTROY`, default set to false.
-  *Available from v1.27.0*
+* `enableFasterInstanceDestroy` - (Optional) This will speed up the destroy action for
+  `cloudamqp.Instance` when running `pulumi destroy`. It's
+  done by skipping delete behaviour for resources that don't
+  need to be cleaned up when the servers are deleted. The
+  argument can also be read from the environment variable
+  `CLOUDAMQP_ENABLE_FASTER_INSTANCE_DESTROY`, default set to
+  false.
+
+  ***Note:*** Available from [v1.27.0](https://github.com/cloudamqp/pulumi-provider-cloudamqp/releases/tag/v1.27.0).
 
 ---
 

@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: goauthentik
 repo_url: https://github.com/goauthentik/terraform-provider-authentik
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/goauthentik/authentik/2025.6.0/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/goauthentik/authentik/2025.8.0/schema.json
 title: authentik
-updated_on: 1750246559
-version: 2025.6.0
+updated_on: 1756683345
+version: 2025.8.0

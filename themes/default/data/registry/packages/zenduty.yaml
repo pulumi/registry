@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: zenduty
 repo_url: https://github.com/zenduty/terraform-provider-zenduty
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/zenduty/zenduty/1.0.4/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/zenduty/zenduty/1.0.6/schema.json
 title: zenduty
-updated_on: 1743636939
-version: 1.0.4
+updated_on: 1756899339
+version: 1.0.6

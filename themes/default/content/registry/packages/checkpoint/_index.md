@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/checkpointsw/checkpoint/2.10.0/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/checkpointsw/checkpoint/2.11.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Checkpoint Provider
@@ -1057,6 +1057,7 @@ The table below shows the compatibility between the Pulumi Release version and t
 
 | Pulumi Release version | CME API version |    CME Take    |
 |---------------------------|-----------------|----------------|
+| v2.11.0                   | v1.3.1          | 309 and higher |
 | v2.9.0                    | v1.2.2          | 289 and higher |
 | v2.8.0                    | v1.2            | 279 and higher |
 | v2.7.0                    | v1.1            | 255 and higher |

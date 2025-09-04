@@ -1,20 +1,22 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-rancher2/v9.2.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-rancher2/v10.0.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Rancher2 Provider
 meta_desc: Provides an overview on how to configure the Pulumi Rancher2 provider.
 layout: package
 ---
+
 ## Installation
 
 The Rancher2 provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/rancher2`](https://www.npmjs.com/package/@pulumi/rancher2)
 * Python: [`pulumi-rancher2`](https://pypi.org/project/pulumi-rancher2/)
-* Go: [`github.com/pulumi/pulumi-rancher2/sdk/v9/go/rancher2`](https://github.com/pulumi/pulumi-rancher2)
+* Go: [`github.com/pulumi/pulumi-rancher2/sdk/v10/go/rancher2`](https://github.com/pulumi/pulumi-rancher2)
 * .NET: [`Pulumi.Rancher2`](https://www.nuget.org/packages/Pulumi.Rancher2)
 * Java: [`com.pulumi/rancher2`](https://central.sonatype.com/artifact/com.pulumi/rancher2)
+
 ## Overview
 
 The Rancher2 provider is used to interact with the
@@ -25,12 +27,10 @@ The provider can be configured in 2 modes:
 - Bootstrap: this mode is intended to bootstrap a rancher2 system. It is enabled if `bootstrap = true`. In this mode, `tokenKey` or `accessKey` and `secretKey` can not be provided. More info at rancher2.Bootstrap resource
 ## Example Usage
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
-{{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
 name: configuration-example
-runtime: nodejs
+runtime:
 config:
     rancher2:accessKey:
         value: 'TODO: var.rancher2_access_key'
@@ -41,95 +41,10 @@ config:
 
 ```
 
-{{% /choosable %}}
-{{% choosable language python %}}
 ```yaml
 # Pulumi.yaml provider configuration file
 name: configuration-example
-runtime: python
-config:
-    rancher2:accessKey:
-        value: 'TODO: var.rancher2_access_key'
-    rancher2:apiUrl:
-        value: https://rancher.my-domain.com
-    rancher2:secretKey:
-        value: 'TODO: var.rancher2_secret_key'
-
-```
-
-{{% /choosable %}}
-{{% choosable language csharp %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: dotnet
-config:
-    rancher2:accessKey:
-        value: 'TODO: var.rancher2_access_key'
-    rancher2:apiUrl:
-        value: https://rancher.my-domain.com
-    rancher2:secretKey:
-        value: 'TODO: var.rancher2_secret_key'
-
-```
-
-{{% /choosable %}}
-{{% choosable language go %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: go
-config:
-    rancher2:accessKey:
-        value: 'TODO: var.rancher2_access_key'
-    rancher2:apiUrl:
-        value: https://rancher.my-domain.com
-    rancher2:secretKey:
-        value: 'TODO: var.rancher2_secret_key'
-
-```
-
-{{% /choosable %}}
-{{% choosable language yaml %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: yaml
-config:
-    rancher2:accessKey:
-        value: 'TODO: var.rancher2_access_key'
-    rancher2:apiUrl:
-        value: https://rancher.my-domain.com
-    rancher2:secretKey:
-        value: 'TODO: var.rancher2_secret_key'
-
-```
-
-{{% /choosable %}}
-{{% choosable language java %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: java
-config:
-    rancher2:accessKey:
-        value: 'TODO: var.rancher2_access_key'
-    rancher2:apiUrl:
-        value: https://rancher.my-domain.com
-    rancher2:secretKey:
-        value: 'TODO: var.rancher2_secret_key'
-
-```
-
-{{% /choosable %}}
-{{< /chooser >}}
-
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
-{{% choosable language typescript %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: nodejs
+runtime:
 config:
     rancher2:apiUrl:
         value: https://rancher.my-domain.com
@@ -137,79 +52,6 @@ config:
         value: true
 
 ```
-
-{{% /choosable %}}
-{{% choosable language python %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: python
-config:
-    rancher2:apiUrl:
-        value: https://rancher.my-domain.com
-    rancher2:bootstrap:
-        value: true
-
-```
-
-{{% /choosable %}}
-{{% choosable language csharp %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: dotnet
-config:
-    rancher2:apiUrl:
-        value: https://rancher.my-domain.com
-    rancher2:bootstrap:
-        value: true
-
-```
-
-{{% /choosable %}}
-{{% choosable language go %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: go
-config:
-    rancher2:apiUrl:
-        value: https://rancher.my-domain.com
-    rancher2:bootstrap:
-        value: true
-
-```
-
-{{% /choosable %}}
-{{% choosable language yaml %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: yaml
-config:
-    rancher2:apiUrl:
-        value: https://rancher.my-domain.com
-    rancher2:bootstrap:
-        value: true
-
-```
-
-{{% /choosable %}}
-{{% choosable language java %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: java
-config:
-    rancher2:apiUrl:
-        value: https://rancher.my-domain.com
-    rancher2:bootstrap:
-        value: true
-
-```
-
-{{% /choosable %}}
-{{< /chooser >}}
 
 {{< chooser language "typescript,python,go,csharp,java,yaml" >}}
 {{% choosable language typescript %}}
@@ -218,12 +60,9 @@ import * as pulumi from "@pulumi/pulumi";
 import * as rancher2 from "@pulumi/rancher2";
 
 // Create a new rancher2_bootstrap using bootstrap provider config
-const admin = new rancher2.Bootstrap("admin", {
-    password: "blahblah",
-    telemetry: true,
-});
+const admin = new rancher2.Bootstrap("admin", {password: "blahblah"});
 // Create a new rancher2 resource using admin provider config
-const foo = new rancher2.Catalog("foo", {
+const foo = new rancher2.index.Catalog("foo", {
     name: "test",
     url: "http://foo.com:8080",
 });
@@ -235,13 +74,11 @@ import pulumi
 import pulumi_rancher2 as rancher2
 
 # Create a new rancher2_bootstrap using bootstrap provider config
-admin = rancher2.Bootstrap("admin",
-    password="blahblah",
-    telemetry=True)
+admin = rancher2.Bootstrap("admin", password="blahblah")
 # Create a new rancher2 resource using admin provider config
-foo = rancher2.Catalog("foo",
-    name="test",
-    url="http://foo.com:8080")
+foo = rancher2.index.Catalog("foo",
+    name=test,
+    url=http://foo.com:8080)
 ```
 {{% /choosable %}}
 {{% choosable language csharp %}}
@@ -257,11 +94,10 @@ return await Deployment.RunAsync(() =>
     var admin = new Rancher2.Bootstrap("admin", new()
     {
         Password = "blahblah",
-        Telemetry = true,
     });
 
     // Create a new rancher2 resource using admin provider config
-    var foo = new Rancher2.Catalog("foo", new()
+    var foo = new Rancher2.Index.Catalog("foo", new()
     {
         Name = "test",
         Url = "http://foo.com:8080",
@@ -276,7 +112,7 @@ return await Deployment.RunAsync(() =>
 package main
 
 import (
-	"github.com/pulumi/pulumi-rancher2/sdk/v8/go/rancher2"
+	"github.com/pulumi/pulumi-rancher2/sdk/v10/go/rancher2"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -284,16 +120,15 @@ func main() {
 	pulumi.Run(func(ctx *pulumi.Context) error {
 		// Create a new rancher2_bootstrap using bootstrap provider config
 		_, err := rancher2.NewBootstrap(ctx, "admin", &rancher2.BootstrapArgs{
-			Password:  pulumi.String("blahblah"),
-			Telemetry: pulumi.Bool(true),
+			Password: pulumi.String("blahblah"),
 		})
 		if err != nil {
 			return err
 		}
 		// Create a new rancher2 resource using admin provider config
 		_, err = rancher2.NewCatalog(ctx, "foo", &rancher2.CatalogArgs{
-			Name: pulumi.String("test"),
-			Url:  pulumi.String("http://foo.com:8080"),
+			Name: "test",
+			Url:  "http://foo.com:8080",
 		})
 		if err != nil {
 			return err
@@ -311,7 +146,6 @@ resources:
     type: rancher2:Bootstrap
     properties:
       password: blahblah
-      telemetry: true
   # Create a new rancher2 resource using admin provider config
   foo:
     type: rancher2:Catalog
@@ -347,7 +181,6 @@ public class App {
         // Create a new rancher2_bootstrap using bootstrap provider config
         var admin = new Bootstrap("admin", BootstrapArgs.builder()
             .password("blahblah")
-            .telemetry(true)
             .build());
 
         // Create a new rancher2 resource using admin provider config

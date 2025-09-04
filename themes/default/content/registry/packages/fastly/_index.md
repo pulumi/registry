@@ -1,20 +1,22 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-fastly/v10.1.1/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-fastly/v11.0.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Fastly Provider
 meta_desc: Provides an overview on how to configure the Pulumi Fastly provider.
 layout: package
 ---
+
 ## Installation
 
 The Fastly provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/fastly`](https://www.npmjs.com/package/@pulumi/fastly)
 * Python: [`pulumi-fastly`](https://pypi.org/project/pulumi-fastly/)
-* Go: [`github.com/pulumi/pulumi-fastly/sdk/v8/go/fastly`](https://github.com/pulumi/pulumi-fastly)
+* Go: [`github.com/pulumi/pulumi-fastly/sdk/v11/go/fastly`](https://github.com/pulumi/pulumi-fastly)
 * .NET: [`Pulumi.Fastly`](https://www.nuget.org/packages/Pulumi.Fastly)
 * Java: [`com.pulumi/fastly`](https://central.sonatype.com/artifact/com.pulumi/fastly)
+
 ## Overview
 
 The Fastly provider is used to interact with the content delivery network (CDN)
@@ -105,7 +107,7 @@ config:
 package main
 
 import (
-	"github.com/pulumi/pulumi-fastly/sdk/v8/go/fastly"
+	"github.com/pulumi/pulumi-fastly/sdk/v11/go/fastly"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -183,6 +185,9 @@ public class App {
 ```
 {{% /choosable %}}
 {{< /chooser >}}
+## Importing
+
+Importing using the standard Pulumi documentation should work for most use cases. If any of your Fastly resources have attributes which are considered sensitive (e.g. credentials for logging endpoints, TLS private keys) please see the Sensitive Attributes guide for the configuration necessary to ensure that those attributes will be imported.
 ## Authentication
 
 The Fastly provider offers an API key based method of providing credentials for
@@ -270,7 +275,7 @@ config:
 package main
 
 import (
-	"github.com/pulumi/pulumi-fastly/sdk/v8/go/fastly"
+	"github.com/pulumi/pulumi-fastly/sdk/v11/go/fastly"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -382,7 +387,7 @@ return await Deployment.RunAsync(() =>
 package main
 
 import (
-	"github.com/pulumi/pulumi-fastly/sdk/v8/go/fastly"
+	"github.com/pulumi/pulumi-fastly/sdk/v11/go/fastly"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 

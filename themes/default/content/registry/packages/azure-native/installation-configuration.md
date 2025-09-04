@@ -22,13 +22,14 @@ The Azure Native provider is available as a package in all Pulumi languages:
 ## Authentication Methods
 
 Pulumi can authenticate to Azure via several methods:
-- Azure CLI
+- Azure CLI (the default)
+- Default Azure Credential
 - OpenID Connect (OIDC)
 - Service Principal with a client secret or certificate
 - Managed Service Identity (MSI)
 
 If you're running the Pulumi CLI locally, in a developer scenario, we recommend using the Azure CLI.  For team
-environments, particularly in Continuous Integration, one of the other options is strongly recommended.
+environments, particularly in Continuous Integration, we recommend using Azure Default Credential (`useDefaultAzureCredential`).
 
 {{% notes type="info" %}}
 Authenticating using the CLI will not work for Service Principal logins (e.g.,
@@ -53,7 +54,7 @@ Do as instructed to log in.  After completed, `az login` will return and you are
 If you're using Government or China Clouds, you'll need to configure the Azure CLI to work with that cloud.  Do so by running `az cloud set --name <Cloud>`, where `<Cloud>` is one of `AzureUSGovernment` or `AzureChinaCloud`.
 {{% /notes %}}
 
-The Azure CLI, and thus Pulumi, will use the Default Subscription by default. You can override the subscription by setting your subscription ID to the `id` output from `az account list`'s output:
+The Azure CLI, and thus Pulumi, will use the current subscription by default. You can activate a different subscription by setting your subscription ID to the `id` output from `az account list`'s output:
 
 ```bash
 $ az account list
@@ -65,12 +66,83 @@ Pick out the `<id>` from the list and run:
 $ az account set --subscription=<id>
 ```
 
+### Authenticate with the Default Azure Credential
+
+The "Default Azure Credential" mode is a preconfigured chain of credentials. It's designed to support many environments, 
+along with the most common authentication flows and developer tools. Use this mode to automatically detect credentials
+available in Azure hosting environments and to automatically use the Azure CLI during local development.
+
+See ["DefaultAzureCredential Overview"](https://learn.microsoft.com/en-us/azure/developer/go/sdk/authentication/credential-chains#defaultazurecredential-overview)
+for a complete description of the types and ordering of credentials.
+
+You'll need to obtain a Subscription ID. To retrieve your current Subscription ID, you can use:
+
+```bash
+$ az account show --query id -o tsv
+```
+
+Once you have your Subscription ID, configure the provider in one of two ways.
+
+#### Set configuration using `pulumi config`
+
+    ```bash
+    $ pulumi config set azure-native:useDefaultAzureCredential true
+    $ pulumi config set azure-native:subscriptionId <subscriptionId>
+    ```
+
+#### Set configuration using environment variables
+
+{{< chooser os "linux,macos,windows" >}}
+{{% choosable os linux %}}
+
+```bash
+$ export ARM_USE_DEFAULT_AZURE_CREDENTIAL=true
+$ export ARM_SUBSCRIPTION_ID=<YOUR_ARM_SUBSCRIPTION_ID>
+```
+
+{{% /choosable %}}
+
+{{% choosable os macos %}}
+
+```bash
+$ export ARM_USE_DEFAULT_AZURE_CREDENTIAL=true
+$ export ARM_SUBSCRIPTION_ID=<YOUR_ARM_SUBSCRIPTION_ID>
+```
+
+{{% /choosable %}}
+
+{{% choosable os windows %}}
+
+```powershell
+> $env:ARM_USE_DEFAULT_AZURE_CREDENTIAL = "true"
+> $env:ARM_SUBSCRIPTION_ID = "<YOUR_ARM_SUBSCRIPTION_ID>"
+```
+
+{{% /choosable %}}
+{{< /chooser >}}
+
+#### Use a specific credential
+To exclude all credentials except for one, set environment variable `AZURE_TOKEN_CREDENTIALS` to one of:
+
+- `AzureCLICredential`
+- `AzureDeveloperCLICredential`
+- `EnvironmentCredential`
+- `ManagedIdentityCredential`
+- `WorkloadIdentityCredential`
+
+#### Exclude a credential type category
+
+To exclude all "developer tool" or "deployed service" credentials, set environment variable `AZURE_TOKEN_CREDENTIALS` to `prod` or `dev`, respectively.
+
 ### Authenticate with OpenID Connect (OIDC)
 
 OIDC allows you to establish a trust relationship between Azure and another identity provider such as GitHub or Azure DevOps. Once
 established, your program can exchange an ID token issued by the identity provider for an Azure token. Your Pulumi program running in
 the identity provider's service, for instance, GitHub Actions CI or Azure DevOps Pipelines, can then access Azure, without storing any
 secrets in GitHub.
+
+For all OIDC modes, configure a Subscription ID via Pulumi config as `azure-native:subscriptionId` or via environment
+variable as `ARM_SUBSCRIPTION_ID`.
 
 #### OIDC Azure Configuration
 
@@ -299,9 +371,23 @@ as shown above except use `clientCertPath`/`ARM_CLIENT_CERTIFICATE_PATH` instead
 
 MSI is [configured in Azure](https://learn.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/overview). Once that's done, tell the provider to use it by setting the `useMsi` config or the `ARM_USE_MSI` environment variable to `true`.
 
-When using a system-assigned identity, or when using a user-assigned identity _and there's only a single one_, you don't need to do anything else. The provider will automatically use the identity.
+When using a system-assigned identity, or when using a user-assigned identity _and there's only a single one_, 
+the provider will automatically use that identity.
 
-When one or more resources in your program have multiple user-assigned identities, you need to set the `clientId` config or the `ARM_CLIENT_ID` environment variable to the client ID of the identity you want to use.
+When multiple identities are available in the hosting environment, set the `clientId` config or the `ARM_CLIENT_ID` environment variable to the client ID of the identity you want to use.
+
+Configure a Subscription ID via Pulumi config as `azure-native:subscriptionId` or via environment
+variable as `ARM_SUBSCRIPTION_ID`.
+
+## Connecting to a different Azure environment
+
+The provider connects to the Azure public cloud by default. To connect to another cloud,
+set it via Pulumi config as `azure-native:environment` or via environment
+variable as `ARM_ENVIRONMENT`.  Use one of the following values:
+
+- `AzureCloud`
+- `AzureUSGovernment`
+- `AzureChinaCloud`
 
 ## Configuration options
 
@@ -317,7 +403,7 @@ All configuration parameters are optional.
 | `clientId` | The client ID to use for OIDC, Service Principal, or user-assigned identity authentication. It can also be sourced from the `ARM_CLIENT_ID` environment variable. |
 | `clientSecret` | The client secret to use for Service Principal authentication. It can also be sourced from the `ARM_CLIENT_SECRET` environment variable. |
 | `disablePulumiPartnerId` | This will disable the Pulumi Partner ID which is used if a custom `partnerId` isn't specified. It can also be sourced from the `ARM_DISABLE_PULUMI_PARTNER_ID` environment variable. |
-| `environment` | The cloud environment to use. It can also be sourced from the ARM_ENVIRONMENT environment variable. Supported values are (case-insensitive): `public` (default), `usgovernment` or `AzureUSGovernment`, `china` or `AzureChinaCloud`. |
+| `environment` | The cloud environment to use. It can also be sourced from the ARM_ENVIRONMENT environment variable. Supported values are (case-insensitive): `public` or `AzureCloud` (default), `usgovernment` or `AzureUSGovernment`, `china` or `AzureChinaCloud`. |
 | `location` | The location to use. ResourceGroups will consult this property for a default location, if one was not supplied explicitly when defining the resource. |
 | `metadataHost` | The REST endpoint for the Azure Instance Metadata Service. Pulumi will attempt to discover this automatically but it can be specified manually here. It can also be sourced from the `ARM_METADATA_HOSTNAME` environment variable. |
 | `msiEndpoint` | The REST endpoint to retrieve an MSI token from. Pulumi will attempt to discover this automatically but it can be specified manually here. It can also be sourced from the `ARM_MSI_ENDPOINT` environment variable. |
@@ -329,5 +415,6 @@ All configuration parameters are optional.
 | `partnerId` | A GUID/UUID that is registered with Microsoft to facilitate partner resource usage attribution. It can also be sourced from the `ARM_PARTNER_ID` environment variable. |
 | `subscriptionId` | The subscription ID to use. It can also be sourced from the `ARM_SUBSCRIPTION_ID` environment variable. |
 | `tenantId` | The tenant ID to use for OIDC or Service Principal authentication. It can also be sourced from the `ARM_TENANT_ID` environment variable. |
+| `useDefaultAzureCredential` | Set to true to authenticate using Default Azure Credential. It can also be sourced from the `ARM_USE_DEFAULT_AZURE_CREDENTIAL` environment variable. |
 | `useMsi` | Set to true to authenticate using managed service identity. It can also be sourced from the `ARM_USE_MSI` environment variable. |
 | `useOidc` | Set to true to authenticate using OIDC. It can also be sourced from the `ARM_USE_OIDC` environment variable. |

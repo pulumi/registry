@@ -1,20 +1,22 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-okta/v5.1.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-okta/v5.2.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Okta Provider
 meta_desc: Provides an overview on how to configure the Pulumi Okta provider.
 layout: package
 ---
+
 ## Installation
 
 The Okta provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/okta`](https://www.npmjs.com/package/@pulumi/okta)
 * Python: [`pulumi-okta`](https://pypi.org/project/pulumi-okta/)
-* Go: [`github.com/pulumi/pulumi-okta/sdk/v4/go/okta`](https://github.com/pulumi/pulumi-okta)
+* Go: [`github.com/pulumi/pulumi-okta/sdk/v5/go/okta`](https://github.com/pulumi/pulumi-okta)
 * .NET: [`Pulumi.Okta`](https://www.nuget.org/packages/Pulumi.Okta)
 * Java: [`com.pulumi/okta`](https://central.sonatype.com/artifact/com.pulumi/okta)
+
 ## Overview
 
 The Okta provider is used to interact with the resources supported by Okta. The provider needs to be configured with the proper credentials before it can be used.
@@ -22,6 +24,8 @@ The Okta provider is used to interact with the resources supported by Okta. The 
 Use the navigation to the left to read about the available resources and functions.
 
 In case the provider configuration is still using old `"oktadeveloper/okta"` source, please change it to `"okta/okta"`. Okta no longer supports `"oktadeveloper/okta"`.
+### WARNING
+We're working on releasing of the okta-pulumi-provider v6.0.0, which will introduce support for managing a broader range of Okta resources beyond just management-related ones. Following that, we'd be deprecating the v5 versions of the okta-pulumi-provider.
 ## Example Usage
 
 
@@ -47,7 +51,10 @@ config:
         value: '[COMMA,SEPARATED,SCOPE,VALUES]'
 
 ```
+```typescript
+import * as pulumi from "@pulumi/pulumi";
 
+```
 {{% /choosable %}}
 {{% choosable language python %}}
 ```yaml
@@ -69,7 +76,10 @@ config:
         value: '[COMMA,SEPARATED,SCOPE,VALUES]'
 
 ```
+```python
+import pulumi
 
+```
 {{% /choosable %}}
 {{% choosable language csharp %}}
 ```yaml
@@ -91,7 +101,16 @@ config:
         value: '[COMMA,SEPARATED,SCOPE,VALUES]'
 
 ```
+```csharp
+using System.Collections.Generic;
+using System.Linq;
+using Pulumi;
 
+return await Deployment.RunAsync(() =>
+{
+});
+
+```
 {{% /choosable %}}
 {{% choosable language go %}}
 ```yaml
@@ -113,7 +132,19 @@ config:
         value: '[COMMA,SEPARATED,SCOPE,VALUES]'
 
 ```
+```go
+package main
 
+import (
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		return nil
+	})
+}
+```
 {{% /choosable %}}
 {{% choosable language yaml %}}
 ```yaml
@@ -135,7 +166,9 @@ config:
         value: '[COMMA,SEPARATED,SCOPE,VALUES]'
 
 ```
-
+```yaml
+{}
+```
 {{% /choosable %}}
 {{% choosable language java %}}
 ```yaml
@@ -157,7 +190,28 @@ config:
         value: '[COMMA,SEPARATED,SCOPE,VALUES]'
 
 ```
+```java
+package generated_program;
 
+import com.pulumi.Context;
+import com.pulumi.Pulumi;
+import com.pulumi.core.Output;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+public class App {
+    public static void main(String[] args) {
+        Pulumi.run(App::stack);
+    }
+
+    public static void stack(Context ctx) {
+    }
+}
+```
 {{% /choosable %}}
 {{< /chooser >}}
 
@@ -179,62 +233,12 @@ representing your Okta Organization Name, Okta Base URL (i.e. `"okta.com"` or
 `"oktapreview.com"`), Okta Access Token, Okta API Token, Okta Client ID, Okta
 API scopes and Okta API private key respectively.
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
-{{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
 name: configuration-example
-runtime: nodejs
+runtime:
 
 ```
-
-{{% /choosable %}}
-{{% choosable language python %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: python
-
-```
-
-{{% /choosable %}}
-{{% choosable language csharp %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: dotnet
-
-```
-
-{{% /choosable %}}
-{{% choosable language go %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: go
-
-```
-
-{{% /choosable %}}
-{{% choosable language yaml %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: yaml
-
-```
-
-{{% /choosable %}}
-{{% choosable language java %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: java
-
-```
-
-{{% /choosable %}}
-{{< /chooser >}}
 
 Usage:
 
@@ -297,6 +301,6 @@ provider configuration:
 
 - `requestTimeout` - (Optional) Timeout for single request (in seconds) which is made to Okta, the default is `0` (means no limit is set). The maximum value can be `300`.
 
-- `maxApiCapacity` - (Optional, experimental) sets what percentage of capacity the provider can use of the total
+- `maxApiCapacity` - (Optional) sets what percentage of capacity the provider can use of the total
   rate limit capacity while making calls to the Okta management API endpoints. Okta API operates in one minute buckets.
   See Okta Management API Rate Limits: <https://developer.okta.com/docs/reference/rl-global-mgmt>. Can be set to a value between 1 and 100.

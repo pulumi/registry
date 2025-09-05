@@ -1,11 +1,12 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-signalfx/v7.16.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-signalfx/v7.17.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Signalfx Provider
 meta_desc: Provides an overview on how to configure the Pulumi Signalfx provider.
 layout: package
 ---
+
 ## Installation
 
 The Signalfx provider is available as a package in all Pulumi languages:
@@ -15,11 +16,16 @@ The Signalfx provider is available as a package in all Pulumi languages:
 * Go: [`github.com/pulumi/pulumi-signalfx/sdk/v7/go/signalfx`](https://github.com/pulumi/pulumi-signalfx)
 * .NET: [`Pulumi.Signalfx`](https://www.nuget.org/packages/Pulumi.Signalfx)
 * Java: [`com.pulumi/signalfx`](https://central.sonatype.com/artifact/com.pulumi/signalfx)
+
 ## Overview
 
 The [Splunk Observability Cloud](https://www.splunk.com/en_us/products/observability.html) provider, formerly known as SignalFx Pulumi provider, lets you interact with the resources supported by Splunk Observability Cloud. You must configure the provider with credentials before using it.
 
 Use the navigation to learn more about the available resources.
+
+> The next major release of the provider (v10) is will require a minimum Pulumi version of 1.11.0.
+Please prepare to migrate to a newer version of Pulumi soon.
+This will allow the provider to handle secrets more securely and take advantage of new features in the Pulumi Plugin Framework.
 # Learn about Splunk Observability Cloud
 
 To learn more about Splunk Observability Cloud and its features, see [the official documentation](https://docs.splunk.com/observability/en/).
@@ -35,15 +41,11 @@ When authenticating to the Splunk Observability Cloud API you can use:
 
 See [Authenticate API Requests](https://dev.splunk.com/observability/docs/apibasics/authentication_basics/) in the Splunk developer documentation.
 
-Session tokens are short-lived and provide administrative permissions to edit integrations.
-They expire relatively quickly, but let you manipulate some sensitive resources.
-Resources that require session tokens are flagged in their documentation.
+Session tokens are short-lived and provide administrative permissions to edit integrations. They expire relatively quickly, but let you manipulate some sensitive resources. Resources that require session tokens are flagged in their documentation.
 
-A Service account is term used when a user is created within organization that can login via Username and Password,
-this allows for a *Session Token* to be created by the pulumi provider and then used throughout the application.
+A Service account is term used when a user is created within organization that can login via Username and Password, this allows for a *Session Token* to be created by the pulumi provider and then used throughout the application.
 
-> **NOTE** Separate the less sensitive resources, such as dashboards, from the
-more sensitive ones, such as integrations, to avoid having to change tokens.
+ℹ️ **NOTE** Separate the less sensitive resources, such as dashboards, from the more sensitive ones, such as integrations, to avoid having to change tokens.
 ## Example
 
 The following example shows how to configure the Splunk Observability Cloud provider for Pulumi:
@@ -216,12 +218,10 @@ public class App {
 {{% /choosable %}}
 {{< /chooser >}}
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
-{{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
 name: configuration-example
-runtime: nodejs
+runtime:
 config:
     signalfx:email:
         value: service.account@example
@@ -231,100 +231,39 @@ config:
         value: 'TODO: "${var.service_account_password}"'
 
 ```
+# Feature Previews
 
-{{% /choosable %}}
-{{% choosable language python %}}
+To allow for more experimental features to be added into the provider, a feature can be added behind a preview gate that defaults to being off and requires a user to opt into the change. Once a feature has been added into the provider, in can be set to globally available which will default to the feature being on by default.
+
+There is an opportunity for the user to opt out of a globally available feature if an issue is experienced. If that is the case, please raise a support case with the provider configuration and any error messages.
+
+The feature preview can be enabled by the following example:
+
 ```yaml
 # Pulumi.yaml provider configuration file
 name: configuration-example
-runtime: python
+runtime:
 config:
-    signalfx:email:
-        value: service.account@example
-    signalfx:organizationId:
-        value: 'TODO: "${var.service_account_org_id}"'
-    signalfx:password:
-        value: 'TODO: "${var.service_account_password}"'
+    signalfx:featurePreview:
+        value:
+            feature-01: true
+            feature-02: false
 
 ```
 
-{{% /choosable %}}
-{{% choosable language csharp %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: dotnet
-config:
-    signalfx:email:
-        value: service.account@example
-    signalfx:organizationId:
-        value: 'TODO: "${var.service_account_org_id}"'
-    signalfx:password:
-        value: 'TODO: "${var.service_account_password}"'
-
-```
-
-{{% /choosable %}}
-{{% choosable language go %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: go
-config:
-    signalfx:email:
-        value: service.account@example
-    signalfx:organizationId:
-        value: 'TODO: "${var.service_account_org_id}"'
-    signalfx:password:
-        value: 'TODO: "${var.service_account_password}"'
-
-```
-
-{{% /choosable %}}
-{{% choosable language yaml %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: yaml
-config:
-    signalfx:email:
-        value: service.account@example
-    signalfx:organizationId:
-        value: 'TODO: "${var.service_account_org_id}"'
-    signalfx:password:
-        value: 'TODO: "${var.service_account_password}"'
-
-```
-
-{{% /choosable %}}
-{{% choosable language java %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: java
-config:
-    signalfx:email:
-        value: service.account@example
-    signalfx:organizationId:
-        value: 'TODO: "${var.service_account_org_id}"'
-    signalfx:password:
-        value: 'TODO: "${var.service_account_password}"'
-
-```
-
-{{% /choosable %}}
-{{< /chooser >}}
+ℹ️ **NOTE** Preview features are a subject to change and/or removal in a future version of the provider.
 ## Configuration Reference
 
-The following configuration inputs are supported:
-
-* `authToken` - (Required) The auth token for [authentication](https://developers.signalfx.com/basics/authentication.html). You can also set it using the `SFX_AUTH_TOKEN` environment variable.
-* `apiUrl` - (Optional) The API URL to use for communicating with Splunk Observability Cloud. This is helpful for organizations that need to set their realm or use a proxy. You can also set it using the `SFX_API_URL` environment variable.
-* `customAppUrl` - (Optional) The application URL that users might use to interact with assets in the browser. Used by organizations on specific realms or with a custom [SSO domain](https://docs.splunk.com/observability/en/admin/authentication/SSO/sso-about.html). You can also set it using the `SFX_CUSTOM_APP_URL` environment variable.
-* `timeoutSeconds` - (Optional) The total timeout duration to wait when making HTTP API calls to Splunk Observability Cloud, in seconds. Defaults to `120`.
-* `retryMaxAttempts` - (Optional) The number of retry attempts when making HTTP API calls to Splunk Observability Cloud. Defaults to `4`.
-* `retryWaitMinSeconds` - (Optional) The minimum wait time between retry attempts when making HTTP API calls to Splunk Observability Cloud, in seconds. Defaults to `1`.
-* `retryWaitMaxSeconds` - (Optional) The maximum wait time between retry attempts when making HTTP API calls to Splunk Observability Cloud, in seconds. Defaults to `30`.
-* `email` - (Optional) The provided email address is used to generate a *Session Token* that is then used for all API interactions. Requires email address to be configured with a password, and not via SSO.
-* `password` - (Optional) The password is used to authenticate the email provided to generate a *Session Token*. Requires email address to be configured with a password, and not via SSO.
-* `organizationId` - (Optional) The organisation id is used to select which organization if the user provided belongs to multiple.
+- `apiUrl` (String) API URL for your Splunk Observability Cloud org, may include a realm
+- `authToken` (String) Splunk Observability Cloud auth token
+- `customAppUrl` (String, Deprecated) Application URL for your Splunk Observability Cloud org, often customized for organizations using SSO
+- `email` (String) Used to create a session token instead of an API token, it requires the account to be configured to login with Email and Password
+- `featurePreview` (Map of Boolean) Allows for users to opt-in to new features that are considered experimental or not ready for general availability yet.
+- `organizationId` (String) Required if the user is configured to be part of multiple organizations
+- `password` (String, Sensitive) Used to create a session token instead of an API token, it requires the account to be configured to login with Email and Password
+- `retryMaxAttempts` (Number) Max retries for a single HTTP call. Defaults to 4
+- `retryWaitMaxSeconds` (Number) Maximum retry wait for a single HTTP call in seconds. Defaults to 30
+- `retryWaitMinSeconds` (Number) Minimum retry wait for a single HTTP call in seconds. Defaults to 1
+- `tags` (List of String) Allows for Tags to be added by default to resources that allow for tags to be included. If there is already tags configured, the global tags are added in prefix.
+- `teams` (List of String) Allows for teams to be defined at a provider level, and apply to all applicable resources created.
+- `timeoutSeconds` (Number) Timeout duration for a single HTTP call in seconds. Defaults to 120

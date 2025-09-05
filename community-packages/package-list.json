@@ -121,7 +121,7 @@
       "schemaFile": "provider/cmd/pulumi-resource-flux/schema.json"
     },
     {
-      "repoSlug": "lbrlabs/pulumi-dynatrace",
+      "repoSlug": "pulumiverse/pulumi-dynatrace",
       "schemaFile": "provider/cmd/pulumi-resource-dynatrace/schema.json"
     },
     {

@@ -1,20 +1,22 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-linode/v5.1.1/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-linode/v5.2.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Linode Provider
 meta_desc: Provides an overview on how to configure the Pulumi Linode provider.
 layout: package
 ---
+
 ## Installation
 
 The Linode provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/linode`](https://www.npmjs.com/package/@pulumi/linode)
 * Python: [`pulumi-linode`](https://pypi.org/project/pulumi-linode/)
-* Go: [`github.com/pulumi/pulumi-linode/sdk/v4/go/linode`](https://github.com/pulumi/pulumi-linode)
+* Go: [`github.com/pulumi/pulumi-linode/sdk/v5/go/linode`](https://github.com/pulumi/pulumi-linode)
 * .NET: [`Pulumi.Linode`](https://www.nuget.org/packages/Pulumi.Linode)
 * Java: [`com.pulumi/linode`](https://central.sonatype.com/artifact/com.pulumi/linode)
+
 ## Overview
 
 The Linode provider exposes resources and functions to interact with [Linode](https://www.linode.com/) services.
@@ -89,7 +91,7 @@ runtime: go
 package main
 
 import (
-	"github.com/pulumi/pulumi-linode/sdk/v4/go/linode"
+	"github.com/pulumi/pulumi-linode/sdk/v5/go/linode"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -221,7 +223,7 @@ runtime: go
 package main
 
 import (
-	"github.com/pulumi/pulumi-linode/sdk/v4/go/linode"
+	"github.com/pulumi/pulumi-linode/sdk/v5/go/linode"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -319,17 +321,17 @@ This section outlines commonly used provider configuration options.
 
   The Linode API CA file path can also be specified using the `LINODE_CA` environment variable.
 
-* `objAccessKey` - (Optional) The access key to be used in [linode.ObjectStorageBucket](https://www.terraform.io/docs/resources/object_storage_bucket.md) and [linode.ObjectStorageObject](https://www.terraform.io/docs/resources/object_storage_object.md).
+* `objAccessKey` - (Optional) The access key to be used in linode.ObjectStorageBucket and linode_object_storage_object.
 
   The Object Access Key can also be specified using the `LINODE_OBJ_ACCESS_KEY` shell environment variable.
 
-* `objSecretKey` - (Optional) The secret key to be used in [linode.ObjectStorageBucket](https://www.terraform.io/docs/resources/object_storage_bucket.md) and [linode.ObjectStorageObject](https://www.terraform.io/docs/resources/object_storage_object.md).
+* `objSecretKey` - (Optional) The secret key to be used in linode.ObjectStorageBucket and linode_object_storage_object.
 
   The Object Secret Key can also be specified using the `LINODE_OBJ_SECRET_KEY` shell environment variable.
 
-* `objUseTempKeys` - (Optional) If true, temporary object keys will be created implicitly at apply-time for the [linode.ObjectStorageBucket](https://www.terraform.io/docs/resources/object_storage_bucket.md) and [linode.ObjectStorageObject](https://www.terraform.io/docs/resources/object_storage_object.md) resource to use.
+* `objUseTempKeys` - (Optional) If true, temporary object keys will be created implicitly at apply-time for the linode.ObjectStorageBucket and linode.ObjectStorageObject resource to use.
 
-* `objBucketForceDelete` - (Optional) If true, all objects and versions will purged from a [linode.ObjectStorageBucket](https://www.terraform.io/docs/resources/object_storage_bucket.md) before it is destroyed.
+* `objBucketForceDelete` - (Optional) If true, all objects and versions will purged from a linode.ObjectStorageBucket before it is destroyed.
 
 * `skipInstanceReadyPoll` - (Optional) Skip waiting for a linode.Instance resource to be running.
 
@@ -364,80 +366,15 @@ Some resources are made available before the feature reaches general availabilit
 
 The `apiVersion` can be set on the provider configuration like so:
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
-{{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
 name: configuration-example
-runtime: nodejs
+runtime:
 config:
     linode:apiVersion:
         value: v4beta
 
 ```
-
-{{% /choosable %}}
-{{% choosable language python %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: python
-config:
-    linode:apiVersion:
-        value: v4beta
-
-```
-
-{{% /choosable %}}
-{{% choosable language csharp %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: dotnet
-config:
-    linode:apiVersion:
-        value: v4beta
-
-```
-
-{{% /choosable %}}
-{{% choosable language go %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: go
-config:
-    linode:apiVersion:
-        value: v4beta
-
-```
-
-{{% /choosable %}}
-{{% choosable language yaml %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: yaml
-config:
-    linode:apiVersion:
-        value: v4beta
-
-```
-
-{{% /choosable %}}
-{{% choosable language java %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: java
-config:
-    linode:apiVersion:
-        value: v4beta
-
-```
-
-{{% /choosable %}}
-{{< /chooser >}}
 
 Additionally, the version can be set with the `LINODE_API_VERSION` environment variable.
 ## Rate Limiting
@@ -468,62 +405,12 @@ token = mylinodetoken
 
 `Pulumi.yaml`
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
-{{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
 name: configuration-example
-runtime: nodejs
+runtime:
 
 ```
-
-{{% /choosable %}}
-{{% choosable language python %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: python
-
-```
-
-{{% /choosable %}}
-{{% choosable language csharp %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: dotnet
-
-```
-
-{{% /choosable %}}
-{{% choosable language go %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: go
-
-```
-
-{{% /choosable %}}
-{{% choosable language yaml %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: yaml
-
-```
-
-{{% /choosable %}}
-{{% choosable language java %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: java
-
-```
-
-{{% /choosable %}}
-{{< /chooser >}}
 
 Specifying the `token` provider options or defining `LINODE_TOKEN` in the environment will override any tokens loaded from a configuration file.
 
@@ -546,80 +433,15 @@ token = yetanotherlinodetoken
 
 `Pulumi.yaml`
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
-{{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
 name: configuration-example
-runtime: nodejs
+runtime:
 config:
     linode:configProfile:
         value: bar
 
 ```
-
-{{% /choosable %}}
-{{% choosable language python %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: python
-config:
-    linode:configProfile:
-        value: bar
-
-```
-
-{{% /choosable %}}
-{{% choosable language csharp %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: dotnet
-config:
-    linode:configProfile:
-        value: bar
-
-```
-
-{{% /choosable %}}
-{{% choosable language go %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: go
-config:
-    linode:configProfile:
-        value: bar
-
-```
-
-{{% /choosable %}}
-{{% choosable language yaml %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: yaml
-config:
-    linode:configProfile:
-        value: bar
-
-```
-
-{{% /choosable %}}
-{{% choosable language java %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: java
-config:
-    linode:configProfile:
-        value: bar
-
-```
-
-{{% /choosable %}}
-{{< /chooser >}}
 
 Configuration Profiles also expose additional client configuration fields such as `apiUrl` and `apiVersion`.
 
@@ -644,77 +466,12 @@ api_url = https://my.alpha.endpoint.com
 
 `Pulumi.yaml`
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
-{{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
 name: configuration-example
-runtime: nodejs
+runtime:
 config:
     linode:configProfile:
         value: beta
 
 ```
-
-{{% /choosable %}}
-{{% choosable language python %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: python
-config:
-    linode:configProfile:
-        value: beta
-
-```
-
-{{% /choosable %}}
-{{% choosable language csharp %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: dotnet
-config:
-    linode:configProfile:
-        value: beta
-
-```
-
-{{% /choosable %}}
-{{% choosable language go %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: go
-config:
-    linode:configProfile:
-        value: beta
-
-```
-
-{{% /choosable %}}
-{{% choosable language yaml %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: yaml
-config:
-    linode:configProfile:
-        value: beta
-
-```
-
-{{% /choosable %}}
-{{% choosable language java %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: java
-config:
-    linode:configProfile:
-        value: beta
-
-```
-
-{{% /choosable %}}
-{{< /chooser >}}

@@ -1,11 +1,12 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-ns1/v3.6.5/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-ns1/v3.7.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Ns1 Provider
 meta_desc: Provides an overview on how to configure the Pulumi Ns1 provider.
 layout: package
 ---
+
 ## Installation
 
 The Ns1 provider is available as a package in all Pulumi languages:
@@ -15,6 +16,7 @@ The Ns1 provider is available as a package in all Pulumi languages:
 * Go: [`github.com/pulumi/pulumi-ns1/sdk/v3/go/ns1`](https://github.com/pulumi/pulumi-ns1)
 * .NET: [`Pulumi.Ns1`](https://www.nuget.org/packages/Pulumi.Ns1)
 * Java: [`com.pulumi/ns1`](https://central.sonatype.com/artifact/com.pulumi/ns1)
+
 ## Overview
 
 The NS1 provider exposes resources to interact with the NS1 REST API. The

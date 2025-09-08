@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/civo/civo/1.1.5/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/civo/civo/1.1.6/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Civo Provider
@@ -14,6 +14,10 @@ The Civo provider must be installed as a Local Package by following the [instruc
 ```bash
 pulumi package add terraform-provider civo/civo
 ```
+~> **NOTE:** This provider was previously published as @pulumi/civo.
+However, that package is no longer being updated.Going forward, it is available as a [Local Package](https://www.pulumi.com/blog/any-terraform-provider/) instead.
+Please see the [provider's repository](https://github.com/pulumi/pulumi-civo) for details.
+
 ## Overview
 
 The Civo provider is used to interact with the resources supported by Civo.
@@ -338,3 +342,221 @@ public class App {
   <a id="credentialsFile"></a>
 - `credentialsFile` (string) specify a location for a file containing your civo credentials token
 - `token` (String) (**Deprecated**) for legacy reasons the user can still specify the token as an input, but in order to avoid storing that in pulumi state we have deprecated this and will be remove in future versions - don't use it.
+## Configuring Modules
+
+Pulumi modules allow you to group resources and reuse configurations efficiently. Below are examples of how to configure modules with the Civo provider.
+### Example Module Usage
+
+To use a module with the Civo provider, create a module directory and define your infrastructure in it.
+
+**Module Definition** (`modules/civo-instance/main.tf`)
+
+{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{% choosable language typescript %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: nodejs
+config:
+    civo:region:
+        value: 'TODO: var.region'
+
+```
+```typescript
+import * as pulumi from "@pulumi/pulumi";
+import * as civo from "@pulumi/civo";
+
+const config = new pulumi.Config();
+const region = config.requireObject("region");
+const instanceSize = config.requireObject("instanceSize");
+const example = new civo.Instance("example", {
+    hostname: "example-instance",
+    size: instanceSize,
+    region: region,
+});
+```
+{{% /choosable %}}
+{{% choosable language python %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: python
+config:
+    civo:region:
+        value: 'TODO: var.region'
+
+```
+```python
+import pulumi
+import pulumi_civo as civo
+
+config = pulumi.Config()
+region = config.require_object("region")
+instance_size = config.require_object("instanceSize")
+example = civo.Instance("example",
+    hostname="example-instance",
+    size=instance_size,
+    region=region)
+```
+{{% /choosable %}}
+{{% choosable language csharp %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: dotnet
+config:
+    civo:region:
+        value: 'TODO: var.region'
+
+```
+```csharp
+using System.Collections.Generic;
+using System.Linq;
+using Pulumi;
+using Civo = Pulumi.Civo;
+
+return await Deployment.RunAsync(() =>
+{
+    var config = new Config();
+    var region = config.RequireObject<dynamic>("region");
+    var instanceSize = config.RequireObject<dynamic>("instanceSize");
+    var example = new Civo.Instance("example", new()
+    {
+        Hostname = "example-instance",
+        Size = instanceSize,
+        Region = region,
+    });
+
+});
+
+```
+{{% /choosable %}}
+{{% choosable language go %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: go
+config:
+    civo:region:
+        value: 'TODO: var.region'
+
+```
+```go
+package main
+
+import (
+	"github.com/pulumi/pulumi-pulumi-provider/sdks/go/civo/civo"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		cfg := config.New(ctx, "")
+		region := cfg.RequireObject("region")
+		instanceSize := cfg.RequireObject("instanceSize")
+		_, err := civo.NewInstance(ctx, "example", &civo.InstanceArgs{
+			Hostname: pulumi.String("example-instance"),
+			Size:     pulumi.Any(instanceSize),
+			Region:   pulumi.Any(region),
+		})
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+}
+```
+{{% /choosable %}}
+{{% choosable language yaml %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: yaml
+config:
+    civo:region:
+        value: 'TODO: var.region'
+
+```
+```yaml
+configuration:
+  region:
+    type: dynamic
+  instanceSize:
+    type: dynamic
+resources:
+  example:
+    type: civo:Instance
+    properties:
+      hostname: example-instance
+      size: ${instanceSize}
+      region: ${region}
+```
+{{% /choosable %}}
+{{% choosable language java %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: java
+config:
+    civo:region:
+        value: 'TODO: var.region'
+
+```
+```java
+package generated_program;
+
+import com.pulumi.Context;
+import com.pulumi.Pulumi;
+import com.pulumi.core.Output;
+import com.pulumi.civo.Instance;
+import com.pulumi.civo.InstanceArgs;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+public class App {
+    public static void main(String[] args) {
+        Pulumi.run(App::stack);
+    }
+
+    public static void stack(Context ctx) {
+        final var config = ctx.config();
+        final var region = config.get("region");
+        final var instanceSize = config.get("instanceSize");
+        var example = new Instance("example", InstanceArgs.builder()
+            .hostname("example-instance")
+            .size(instanceSize)
+            .region(region)
+            .build());
+
+    }
+}
+```
+{{% /choosable %}}
+{{< /chooser >}}
+
+**Root Module** (`main.tf`)
+```
+module "civo_instance" {
+    source        = "./modules/civo-instance"
+    region        = "LON1"
+    instance_size = "g3.small"
+}
+```
+
+This approach helps in managing infrastructure more efficiently by keeping configurations modular and reusable.
+**Please note since this is a non-pulumi maintained provider, every module should have its own provider configuration.**
+Reference: Pulumi Modules
+## Configuration Reference
+
+`apiEndpoint` (String) The Base URL to use for CIVO API.
+
+`region` (String) This sets the default region for all resources. If no default region is set, you will need to specify individually in every resource.
+
+`credentialsFile` (string) Specify a location for a file containing your Civo credentials token.
+
+`token` (String) (Deprecated) For legacy reasons, the user can still specify the token as an input, but in order to avoid storing that in Pulumi state, we have deprecated this and will remove it in future versions—don't use it.

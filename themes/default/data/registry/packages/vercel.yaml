@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: Pulumiverse
 repo_url: https://github.com/pulumiverse/pulumi-vercel
-schema_file_url: https://raw.githubusercontent.com/pulumiverse/pulumi-vercel/v3.2.1/provider/cmd/pulumi-resource-vercel/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumiverse/pulumi-vercel/v3.15.1/provider/cmd/pulumi-resource-vercel/schema.json
 title: Vercel
-updated_on: 1747194186
-version: v3.2.1
+updated_on: 1757362051
+version: v3.15.1

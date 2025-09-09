@@ -1,1 +1,0 @@
-import{T as e}from"./p-f7b983e5.js";const y=e=>y=>y(e),s=s=>y({key:s,type:e.SET_LANGUAGE}),p=s=>y({key:s,type:e.SET_K8S_LANGUAGE}),t=s=>y({key:s,type:e.SET_OS}),a=s=>y({key:s,type:e.SET_CLOUD}),k=s=>y({key:s,type:e.SET_PERSONA}),o=s=>y({key:s,type:e.SET_BACKEND});export{p as a,t as b,a as c,k as d,o as e,s}

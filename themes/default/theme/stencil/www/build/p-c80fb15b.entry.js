@@ -1,1 +1,0 @@
-import{r,h as s}from"./p-68998d96.js";const l=class{constructor(s){r(this,s)}render(){return s("div",null,s("slot",null))}};l.style="";export{l as pulumi_example}

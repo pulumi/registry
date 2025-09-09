@@ -86,7 +86,39 @@
                             </pulumi-choosable>
                         {{ end }}
                     {{ else }}
-                        {{ .Content }}
+                        {{/* Check if this page needs structured data processing */}}
+                        {{ $variantAPages := slice "authorization/roleassignment" "containerservice/managedcluster" "resources/resourcegroup" "dbforpostgresql/server" }}
+                        {{ $variantBPages := slice "managedidentity/userassignedidentity" "network/virtualnetwork" "network/subnet" "app/managedenvironment" }}
+                        
+                        {{ $needsStructuredData := false }}
+                        {{ $isVariantB := false }}
+                        
+                        {{ $currentPath := .RelPermalink }}
+                        
+                        {{ range $variantAPages }}
+                            {{ if strings.Contains $currentPath . }}
+                                {{ $needsStructuredData = true }}
+                            {{ end }}
+                        {{ end }}
+                        
+                        {{ range $variantBPages }}
+                            {{ if strings.Contains $currentPath . }}
+                                {{ $needsStructuredData = true }}
+                                {{ $isVariantB = true }}
+                            {{ end }}
+                        {{ end }}
+                        
+                        {{ if $needsStructuredData }}
+                            {{/* Process content to add structured data */}}
+                            {{ partial "registry/add-structured-data.html" (dict "Content" .Content "Page" .) }}
+                            
+                            {{/* Add canonical block for Variant B pages */}}
+                            {{ if $isVariantB }}
+                                {{ partial "registry/structured-data-canonical.html" . }}
+                            {{ end }}
+                        {{ else }}
+                            {{ .Content }}
+                        {{ end }}
                     {{ end }}
                 </section>
             </div>

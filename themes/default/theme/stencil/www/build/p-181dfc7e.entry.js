@@ -1,0 +1,1 @@
+import{r as t,h as s,g as r}from"./p-68998d96.js";const e=class{constructor(s){t(this,s)}get styles(){return{display:this.active?"block":"none"}}render(){return s("div",null,s("div",{role:"tabpanel",style:this.styles,"aria-hidden":!this.active},s("slot",null)))}get el(){return r(this)}};export{e as pulumi_tab}

@@ -13,7 +13,89 @@
     {{ errorf "%s Missing required parameter 'values." .Page }}
 {{ end }}
 
+{{/* Check if this page needs structured data */}}
+{{ $variantAPages := slice "authorization/roleassignment" "containerservice/managedcluster" "resources/resourcegroup" "dbforpostgresql/server" }}
+{{ $variantBPages := slice "managedidentity/userassignedidentity" "network/virtualnetwork" "network/subnet" "app/managedenvironment" }}
+{{ $needsStructuredData := false }}
+{{ $currentPath := .Page.RelPermalink }}
 
-<div>
-    <pulumi-choosable type="{{ $type }}" values="{{ $values }}" mode="{{ $mode }}">{{ .Inner }}</pulumi-choosable>
-</div>
+{{ range $variantAPages }}
+    {{ if strings.Contains $currentPath . }}
+        {{ $needsStructuredData = true }}
+    {{ end }}
+{{ end }}
+
+{{ range $variantBPages }}
+    {{ if strings.Contains $currentPath . }}
+        {{ $needsStructuredData = true }}
+    {{ end }}
+{{ end }}
+
+{{/* Only add structured data for language choosables on experiment pages */}}
+{{ if and $needsStructuredData (eq $type "language") }}
+    {{/* Extract metadata from page parameters */}}
+    {{ $titleTag := .Page.Params.title_tag | default "" }}
+    {{ $packageName := "azure-native" }}
+    {{ $serviceName := "" }}
+    {{ $resourceName := "" }}
+    
+    {{ if $titleTag }}
+        {{ $parts := split $titleTag "." }}
+        {{ if ge (len $parts) 3 }}
+            {{ $packageName = index $parts 0 }}
+            {{ $serviceName = index $parts 1 }}
+            {{ $resourceName = index $parts 2 }}
+        {{ end }}
+    {{ end }}
+    
+    {{/* Format service and resource names for display */}}
+    {{ $serviceDisplay := $serviceName | humanize | title }}
+    {{ $resourceDisplay := $resourceName | humanize | title }}
+    
+    {{/* Map language values to display names */}}
+    {{ $langDisplay := "" }}
+    {{ if eq $values "typescript" }}
+        {{ $langDisplay = "TypeScript" }}
+    {{ else if eq $values "python" }}
+        {{ $langDisplay = "Python" }}
+    {{ else if eq $values "go" }}
+        {{ $langDisplay = "Go" }}
+    {{ else if eq $values "csharp" }}
+        {{ $langDisplay = "C#" }}
+    {{ else if eq $values "java" }}
+        {{ $langDisplay = "Java" }}
+    {{ else if eq $values "yaml" }}
+        {{ $langDisplay = "YAML" }}
+    {{ else if eq $values "javascript" }}
+        {{ $langDisplay = "JavaScript" }}
+    {{ else if eq $values "javascript,typescript" }}
+        {{ $langDisplay = "JavaScript/TypeScript" }}
+    {{ else }}
+        {{ $langDisplay = $values | title }}
+    {{ end }}
+    
+    <div>
+        <pulumi-choosable type="{{ $type }}" values="{{ $values }}" mode="{{ $mode }}">
+            <div itemscope itemtype="https://schema.org/SoftwareSourceCode">
+                <meta itemprop="name" content="Azure {{ $serviceDisplay }} {{ $resourceDisplay }} - {{ $langDisplay }} Example" />
+                <meta itemprop="description" content="Pulumi {{ $langDisplay }} code example for creating and managing Azure {{ $serviceDisplay }} {{ $resourceDisplay }} resources using Infrastructure as Code" />
+                <meta itemprop="programmingLanguage" content="{{ $langDisplay }}" />
+                <meta itemprop="codeSampleType" content="code snippet" />
+                <meta itemprop="keywords" content="Azure, {{ $serviceDisplay }}, {{ $resourceDisplay }}, Pulumi, Infrastructure as Code, IaC, {{ $langDisplay }}, Cloud, DevOps" />
+                <meta itemprop="runtimePlatform" content="Microsoft Azure" />
+                <meta itemprop="targetProduct" content="Pulumi Infrastructure as Code Platform" />
+                <meta itemprop="codeRepository" content="https://github.com/pulumi/pulumi-{{ $packageName }}" />
+                <meta itemprop="license" content="https://github.com/pulumi/pulumi-{{ $packageName }}/blob/master/LICENSE" />
+                <meta itemprop="author" content="Pulumi" />
+                <div itemprop="text">
+                    {{ .Inner }}
+                </div>
+            </div>
+        </pulumi-choosable>
+    </div>
+{{ else }}
+    {{/* Original output without structured data */}}
+    <div>
+        <pulumi-choosable type="{{ $type }}" values="{{ $values }}" mode="{{ $mode }}">{{ .Inner }}</pulumi-choosable>
+    </div>
+{{ end }}

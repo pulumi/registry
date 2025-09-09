@@ -20,7 +20,7 @@
 {{ $resourceDisplay := $resourceName | humanize | title }}
 
 {{/* Create hidden canonical block with all languages for crawlers */}}
-<div class="crawler-canonical-examples" style="position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden;" aria-hidden="true">
+<div class="crawler-canonical-examples" style="position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden;" >
   {{ range $lang := slice "TypeScript" "Python" "Go" "C#" "Java" "YAML" }}
     <div itemscope itemtype="https://schema.org/SoftwareSourceCode">
       <meta itemprop="name" content="Azure {{ $serviceDisplay }} {{ $resourceDisplay }} - {{ $lang }} Example" />

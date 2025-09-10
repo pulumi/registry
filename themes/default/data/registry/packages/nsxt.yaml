@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: vmware
 repo_url: https://github.com/vmware/terraform-provider-nsxt
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/vmware/nsxt/3.9.0/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/vmware/nsxt/3.10.0/schema.json
 title: nsxt
-updated_on: 1750462578
-version: 3.9.0
+updated_on: 1757547364
+version: 3.10.0

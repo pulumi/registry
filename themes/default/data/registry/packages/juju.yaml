@@ -7,10 +7,10 @@ featured: false
 logo_url: ""
 name: juju
 native: false
-package_status: public_preview
+package_status: ga
 publisher: juju
 repo_url: https://github.com/juju/terraform-provider-juju
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/juju/juju/0.22.0/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/juju/juju/1.0.0-beta2/schema.json
 title: juju
-updated_on: 1756121748
-version: 0.22.0
+updated_on: 1757547353
+version: 1.0.0-beta2

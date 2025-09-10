@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/vmware/nsxt/3.9.0/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/vmware/nsxt/3.10.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Nsxt Provider
@@ -237,7 +237,7 @@ The following arguments are used to configure the provider:
   Can also be specified with the `NSXT_RETRY_MAX_DELAY` environment variable.
 * `retryOnStatusCodes` - (Optional) A list of HTTP status codes to retry on.
   By default, the provider supplies a set of status codes recommended for retry with
-  policy resources: `409, 429, 500, 503, 504`. Can also be specified with the
+  policy resources: `400, 409, 429, 500, 503, 504`. Can also be specified with the
   `NSXT_RETRY_ON_STATUS_CODES` environment variable.
 * `remoteAuth` - (Optional) Would trigger remote authorization instead of basic
   authorization. This is required for users based on vIDM authentication for early

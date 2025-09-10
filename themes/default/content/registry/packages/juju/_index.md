@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/juju/juju/0.22.0/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/juju/juju/1.0.0-beta2/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Juju Provider
@@ -126,7 +126,7 @@ const development = new juju.Model("development", {
 });
 const wordpress = new juju.Application("wordpress", {
     name: "wordpress",
-    model: development.name,
+    modelUuid: development.uuid,
     charms: [{
         name: "wordpress",
     }],
@@ -134,14 +134,14 @@ const wordpress = new juju.Application("wordpress", {
 });
 const percona_cluster = new juju.Application("percona-cluster", {
     name: "percona-cluster",
-    model: development.name,
+    modelUuid: development.uuid,
     charms: [{
         name: "percona-cluster",
     }],
     units: 3,
 });
 const wpToPercona = new juju.Integration("wp_to_percona", {
-    model: development.name,
+    modelUuid: development.uuid,
     applications: [
         {
             name: wordpress.name,
@@ -174,20 +174,20 @@ development = juju.Model("development",
     }])
 wordpress = juju.Application("wordpress",
     name="wordpress",
-    model=development.name,
+    model_uuid=development.uuid,
     charms=[{
         "name": "wordpress",
     }],
     units=3)
 percona_cluster = juju.Application("percona-cluster",
     name="percona-cluster",
-    model=development.name,
+    model_uuid=development.uuid,
     charms=[{
         "name": "percona-cluster",
     }],
     units=3)
 wp_to_percona = juju.Integration("wp_to_percona",
-    model=development.name,
+    model_uuid=development.uuid,
     applications=[
         {
             "name": wordpress.name,
@@ -231,7 +231,7 @@ return await Deployment.RunAsync(() =>
     var wordpress = new Juju.Application("wordpress", new()
     {
         Name = "wordpress",
-        Model = development.Name,
+        ModelUuid = development.Uuid,
         Charms = new[]
         {
             new Juju.Inputs.ApplicationCharmArgs
@@ -245,7 +245,7 @@ return await Deployment.RunAsync(() =>
     var percona_cluster = new Juju.Application("percona-cluster", new()
     {
         Name = "percona-cluster",
-        Model = development.Name,
+        ModelUuid = development.Uuid,
         Charms = new[]
         {
             new Juju.Inputs.ApplicationCharmArgs
@@ -258,7 +258,7 @@ return await Deployment.RunAsync(() =>
 
     var wpToPercona = new Juju.Integration("wp_to_percona", new()
     {
-        Model = development.Name,
+        ModelUuid = development.Uuid,
         Applications = new[]
         {
             new Juju.Inputs.IntegrationApplicationArgs
@@ -308,8 +308,8 @@ func main() {
 			return err
 		}
 		wordpress, err := juju.NewApplication(ctx, "wordpress", &juju.ApplicationArgs{
-			Name:  pulumi.String("wordpress"),
-			Model: development.Name,
+			Name:      pulumi.String("wordpress"),
+			ModelUuid: development.Uuid,
 			Charms: juju.ApplicationCharmArray{
 				&juju.ApplicationCharmArgs{
 					Name: pulumi.String("wordpress"),
@@ -321,8 +321,8 @@ func main() {
 			return err
 		}
 		percona_cluster, err := juju.NewApplication(ctx, "percona-cluster", &juju.ApplicationArgs{
-			Name:  pulumi.String("percona-cluster"),
-			Model: development.Name,
+			Name:      pulumi.String("percona-cluster"),
+			ModelUuid: development.Uuid,
 			Charms: juju.ApplicationCharmArray{
 				&juju.ApplicationCharmArgs{
 					Name: pulumi.String("percona-cluster"),
@@ -334,7 +334,7 @@ func main() {
 			return err
 		}
 		_, err = juju.NewIntegration(ctx, "wp_to_percona", &juju.IntegrationArgs{
-			Model: development.Name,
+			ModelUuid: development.Uuid,
 			Applications: juju.IntegrationApplicationArray{
 				&juju.IntegrationApplicationArgs{
 					Name:     wordpress.Name,
@@ -374,7 +374,7 @@ resources:
     type: juju:Application
     properties:
       name: wordpress
-      model: ${development.name}
+      modelUuid: ${development.uuid}
       charms:
         - name: wordpress
       units: 3
@@ -382,7 +382,7 @@ resources:
     type: juju:Application
     properties:
       name: percona-cluster
-      model: ${development.name}
+      modelUuid: ${development.uuid}
       charms:
         - name: percona-cluster
       units: 3
@@ -390,7 +390,7 @@ resources:
     type: juju:Integration
     name: wp_to_percona
     properties:
-      model: ${development.name}
+      modelUuid: ${development.uuid}
       applications:
         - name: ${wordpress.name}
           endpoint: db
@@ -443,7 +443,7 @@ public class App {
 
         var wordpress = new Application("wordpress", ApplicationArgs.builder()
             .name("wordpress")
-            .model(development.name())
+            .modelUuid(development.uuid())
             .charms(ApplicationCharmArgs.builder()
                 .name("wordpress")
                 .build())
@@ -452,7 +452,7 @@ public class App {
 
         var percona_cluster = new Application("percona-cluster", ApplicationArgs.builder()
             .name("percona-cluster")
-            .model(development.name())
+            .modelUuid(development.uuid())
             .charms(ApplicationCharmArgs.builder()
                 .name("percona-cluster")
                 .build())
@@ -460,7 +460,7 @@ public class App {
             .build());
 
         var wpToPercona = new Integration("wpToPercona", IntegrationArgs.builder()
-            .model(development.name())
+            .modelUuid(development.uuid())
             .applications(
                 IntegrationApplicationArgs.builder()
                     .name(wordpress.name())
@@ -509,7 +509,7 @@ const development = new juju.Model("development", {
 });
 const wordpress = new juju.Application("wordpress", {
     name: "wordpress",
-    model: development.name,
+    modelUuid: development.uuid,
     charms: [{
         name: "wordpress",
     }],
@@ -517,14 +517,14 @@ const wordpress = new juju.Application("wordpress", {
 });
 const percona_cluster = new juju.Application("percona-cluster", {
     name: "percona-cluster",
-    model: development.name,
+    modelUuid: development.uuid,
     charms: [{
         name: "percona-cluster",
     }],
     units: 3,
 });
 const wpToPercona = new juju.Integration("wp_to_percona", {
-    model: development.name,
+    modelUuid: development.uuid,
     applications: [
         {
             name: wordpress.name,
@@ -566,20 +566,20 @@ development = juju.Model("development",
     }])
 wordpress = juju.Application("wordpress",
     name="wordpress",
-    model=development.name,
+    model_uuid=development.uuid,
     charms=[{
         "name": "wordpress",
     }],
     units=3)
 percona_cluster = juju.Application("percona-cluster",
     name="percona-cluster",
-    model=development.name,
+    model_uuid=development.uuid,
     charms=[{
         "name": "percona-cluster",
     }],
     units=3)
 wp_to_percona = juju.Integration("wp_to_percona",
-    model=development.name,
+    model_uuid=development.uuid,
     applications=[
         {
             "name": wordpress.name,
@@ -632,7 +632,7 @@ return await Deployment.RunAsync(() =>
     var wordpress = new Juju.Application("wordpress", new()
     {
         Name = "wordpress",
-        Model = development.Name,
+        ModelUuid = development.Uuid,
         Charms = new[]
         {
             new Juju.Inputs.ApplicationCharmArgs
@@ -646,7 +646,7 @@ return await Deployment.RunAsync(() =>
     var percona_cluster = new Juju.Application("percona-cluster", new()
     {
         Name = "percona-cluster",
-        Model = development.Name,
+        ModelUuid = development.Uuid,
         Charms = new[]
         {
             new Juju.Inputs.ApplicationCharmArgs
@@ -659,7 +659,7 @@ return await Deployment.RunAsync(() =>
 
     var wpToPercona = new Juju.Integration("wp_to_percona", new()
     {
-        Model = development.Name,
+        ModelUuid = development.Uuid,
         Applications = new[]
         {
             new Juju.Inputs.IntegrationApplicationArgs
@@ -718,8 +718,8 @@ func main() {
 			return err
 		}
 		wordpress, err := juju.NewApplication(ctx, "wordpress", &juju.ApplicationArgs{
-			Name:  pulumi.String("wordpress"),
-			Model: development.Name,
+			Name:      pulumi.String("wordpress"),
+			ModelUuid: development.Uuid,
 			Charms: juju.ApplicationCharmArray{
 				&juju.ApplicationCharmArgs{
 					Name: pulumi.String("wordpress"),
@@ -731,8 +731,8 @@ func main() {
 			return err
 		}
 		percona_cluster, err := juju.NewApplication(ctx, "percona-cluster", &juju.ApplicationArgs{
-			Name:  pulumi.String("percona-cluster"),
-			Model: development.Name,
+			Name:      pulumi.String("percona-cluster"),
+			ModelUuid: development.Uuid,
 			Charms: juju.ApplicationCharmArray{
 				&juju.ApplicationCharmArgs{
 					Name: pulumi.String("percona-cluster"),
@@ -744,7 +744,7 @@ func main() {
 			return err
 		}
 		_, err = juju.NewIntegration(ctx, "wp_to_percona", &juju.IntegrationArgs{
-			Model: development.Name,
+			ModelUuid: development.Uuid,
 			Applications: juju.IntegrationApplicationArray{
 				&juju.IntegrationApplicationArgs{
 					Name:     wordpress.Name,
@@ -793,7 +793,7 @@ resources:
     type: juju:Application
     properties:
       name: wordpress
-      model: ${development.name}
+      modelUuid: ${development.uuid}
       charms:
         - name: wordpress
       units: 3
@@ -801,7 +801,7 @@ resources:
     type: juju:Application
     properties:
       name: percona-cluster
-      model: ${development.name}
+      modelUuid: ${development.uuid}
       charms:
         - name: percona-cluster
       units: 3
@@ -809,7 +809,7 @@ resources:
     type: juju:Integration
     name: wp_to_percona
     properties:
-      model: ${development.name}
+      modelUuid: ${development.uuid}
       applications:
         - name: ${wordpress.name}
           endpoint: db
@@ -871,7 +871,7 @@ public class App {
 
         var wordpress = new Application("wordpress", ApplicationArgs.builder()
             .name("wordpress")
-            .model(development.name())
+            .modelUuid(development.uuid())
             .charms(ApplicationCharmArgs.builder()
                 .name("wordpress")
                 .build())
@@ -880,7 +880,7 @@ public class App {
 
         var percona_cluster = new Application("percona-cluster", ApplicationArgs.builder()
             .name("percona-cluster")
-            .model(development.name())
+            .modelUuid(development.uuid())
             .charms(ApplicationCharmArgs.builder()
                 .name("percona-cluster")
                 .build())
@@ -888,7 +888,7 @@ public class App {
             .build());
 
         var wpToPercona = new Integration("wpToPercona", IntegrationArgs.builder()
-            .model(development.name())
+            .modelUuid(development.uuid())
             .applications(
                 IntegrationApplicationArgs.builder()
                     .name(wordpress.name())
@@ -937,7 +937,7 @@ const development = new juju.Model("development", {
 });
 const wordpress = new juju.Application("wordpress", {
     name: "wordpress",
-    model: development.name,
+    modelUuid: development.uuid,
     charms: [{
         name: "wordpress",
     }],
@@ -945,14 +945,14 @@ const wordpress = new juju.Application("wordpress", {
 });
 const percona_cluster = new juju.Application("percona-cluster", {
     name: "percona-cluster",
-    model: development.name,
+    modelUuid: development.uuid,
     charms: [{
         name: "percona-cluster",
     }],
     units: 3,
 });
 const wpToPercona = new juju.Integration("wp_to_percona", {
-    model: development.name,
+    modelUuid: development.uuid,
     applications: [
         {
             name: wordpress.name,
@@ -994,20 +994,20 @@ development = juju.Model("development",
     }])
 wordpress = juju.Application("wordpress",
     name="wordpress",
-    model=development.name,
+    model_uuid=development.uuid,
     charms=[{
         "name": "wordpress",
     }],
     units=3)
 percona_cluster = juju.Application("percona-cluster",
     name="percona-cluster",
-    model=development.name,
+    model_uuid=development.uuid,
     charms=[{
         "name": "percona-cluster",
     }],
     units=3)
 wp_to_percona = juju.Integration("wp_to_percona",
-    model=development.name,
+    model_uuid=development.uuid,
     applications=[
         {
             "name": wordpress.name,
@@ -1060,7 +1060,7 @@ return await Deployment.RunAsync(() =>
     var wordpress = new Juju.Application("wordpress", new()
     {
         Name = "wordpress",
-        Model = development.Name,
+        ModelUuid = development.Uuid,
         Charms = new[]
         {
             new Juju.Inputs.ApplicationCharmArgs
@@ -1074,7 +1074,7 @@ return await Deployment.RunAsync(() =>
     var percona_cluster = new Juju.Application("percona-cluster", new()
     {
         Name = "percona-cluster",
-        Model = development.Name,
+        ModelUuid = development.Uuid,
         Charms = new[]
         {
             new Juju.Inputs.ApplicationCharmArgs
@@ -1087,7 +1087,7 @@ return await Deployment.RunAsync(() =>
 
     var wpToPercona = new Juju.Integration("wp_to_percona", new()
     {
-        Model = development.Name,
+        ModelUuid = development.Uuid,
         Applications = new[]
         {
             new Juju.Inputs.IntegrationApplicationArgs
@@ -1146,8 +1146,8 @@ func main() {
 			return err
 		}
 		wordpress, err := juju.NewApplication(ctx, "wordpress", &juju.ApplicationArgs{
-			Name:  pulumi.String("wordpress"),
-			Model: development.Name,
+			Name:      pulumi.String("wordpress"),
+			ModelUuid: development.Uuid,
 			Charms: juju.ApplicationCharmArray{
 				&juju.ApplicationCharmArgs{
 					Name: pulumi.String("wordpress"),
@@ -1159,8 +1159,8 @@ func main() {
 			return err
 		}
 		percona_cluster, err := juju.NewApplication(ctx, "percona-cluster", &juju.ApplicationArgs{
-			Name:  pulumi.String("percona-cluster"),
-			Model: development.Name,
+			Name:      pulumi.String("percona-cluster"),
+			ModelUuid: development.Uuid,
 			Charms: juju.ApplicationCharmArray{
 				&juju.ApplicationCharmArgs{
 					Name: pulumi.String("percona-cluster"),
@@ -1172,7 +1172,7 @@ func main() {
 			return err
 		}
 		_, err = juju.NewIntegration(ctx, "wp_to_percona", &juju.IntegrationArgs{
-			Model: development.Name,
+			ModelUuid: development.Uuid,
 			Applications: juju.IntegrationApplicationArray{
 				&juju.IntegrationApplicationArgs{
 					Name:     wordpress.Name,
@@ -1221,7 +1221,7 @@ resources:
     type: juju:Application
     properties:
       name: wordpress
-      model: ${development.name}
+      modelUuid: ${development.uuid}
       charms:
         - name: wordpress
       units: 3
@@ -1229,7 +1229,7 @@ resources:
     type: juju:Application
     properties:
       name: percona-cluster
-      model: ${development.name}
+      modelUuid: ${development.uuid}
       charms:
         - name: percona-cluster
       units: 3
@@ -1237,7 +1237,7 @@ resources:
     type: juju:Integration
     name: wp_to_percona
     properties:
-      model: ${development.name}
+      modelUuid: ${development.uuid}
       applications:
         - name: ${wordpress.name}
           endpoint: db
@@ -1299,7 +1299,7 @@ public class App {
 
         var wordpress = new Application("wordpress", ApplicationArgs.builder()
             .name("wordpress")
-            .model(development.name())
+            .modelUuid(development.uuid())
             .charms(ApplicationCharmArgs.builder()
                 .name("wordpress")
                 .build())
@@ -1308,7 +1308,7 @@ public class App {
 
         var percona_cluster = new Application("percona-cluster", ApplicationArgs.builder()
             .name("percona-cluster")
-            .model(development.name())
+            .modelUuid(development.uuid())
             .charms(ApplicationCharmArgs.builder()
                 .name("percona-cluster")
                 .build())
@@ -1316,7 +1316,7 @@ public class App {
             .build());
 
         var wpToPercona = new Integration("wpToPercona", IntegrationArgs.builder()
-            .model(development.name())
+            .modelUuid(development.uuid())
             .applications(
                 IntegrationApplicationArgs.builder()
                     .name(wordpress.name())

@@ -86,12 +86,18 @@
                             </pulumi-choosable>
                         {{ end }}
                     {{ else }}
-                        {{ .Content }}
-                        
-                        {{/* Add canonical block for Variant B pages */}}
+                        {{/* Check if this page is part of the experiment */}}
+                        {{ $variantAPages := slice "authorization/roleassignment" "containerservice/managedcluster" "resources/resourcegroup" "dbforpostgresql/server" }}
                         {{ $variantBPages := slice "managedidentity/userassignedidentity" "network/virtualnetwork" "network/subnet" "app/managedenvironment" }}
+                        {{ $isVariantA := false }}
                         {{ $isVariantB := false }}
                         {{ $currentPath := .RelPermalink }}
+                        
+                        {{ range $variantAPages }}
+                            {{ if strings.Contains $currentPath . }}
+                                {{ $isVariantA = true }}
+                            {{ end }}
+                        {{ end }}
                         
                         {{ range $variantBPages }}
                             {{ if strings.Contains $currentPath . }}
@@ -99,6 +105,16 @@
                             {{ end }}
                         {{ end }}
                         
+                        {{/* Process content based on variant */}}
+                        {{ if $isVariantA }}
+                            {{/* Variant A: Add structured data alongside each code example */}}
+                            {{ partial "registry/add-variant-a-structured-data.html" (dict "Page" . "Content" .Content) }}
+                        {{ else }}
+                            {{/* Default: Render content as-is */}}
+                            {{ .Content }}
+                        {{ end }}
+                        
+                        {{/* Variant B: Add canonical block with all languages */}}
                         {{ if $isVariantB }}
                             {{ partial "registry/structured-data-canonical.html" . }}
                         {{ end }}

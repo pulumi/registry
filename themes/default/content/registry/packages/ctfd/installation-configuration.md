@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/ctfer-io/pulumi-ctfd/v2.2.0/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/ctfer-io/pulumi-ctfd/v2.3.0/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: CTFd Installation & Configuration
 meta_desc: Provides an overview on how to setup the CTFd Provider for Pulumi.

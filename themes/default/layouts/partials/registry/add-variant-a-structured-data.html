@@ -1,31 +1,35 @@
-{{/* Add structured data alongside each code example for Variant A pages */}}
+{{/* Add SoftwareSourceCode annotations alongside each code example for Variant A pages */}}
 {{ $content := .Content }}
 {{ $page := .Page }}
 
 {{/* Extract metadata from page parameters */}}
 {{ $titleTag := $page.Params.title_tag | default "" }}
 {{ $packageName := "azure-native" }}
-{{ $serviceName := "" }}
+{{ $moduleName := "" }}
 {{ $resourceName := "" }}
 
 {{ if $titleTag }}
     {{ $parts := split $titleTag "." }}
-    {{ if ge (len $parts) 3 }}
+    {{ if eq (len $parts) 3 }}
         {{ $packageName = index $parts 0 }}
-        {{ $serviceName = index $parts 1 }}
+        {{ $moduleName = index $parts 1 }}
         {{ $resourceName = index $parts 2 }}
+    {{ else }}
+        {{ errorf "Invalid title_tag format at %s: expected 3 parts (package.module.resource), got %d parts" .Page.RelPermalink (len $parts) }}
     {{ end }}
+{{ else }}
+    {{ warnf "No title_tag found for page %s, using defaults" .Page.RelPermalink }}
 {{ end }}
 
-{{/* Format service and resource names for display */}}
-{{ $serviceDisplay := $serviceName | humanize | title }}
+{{/* Format module and resource names for display */}}
+{{ $moduleDisplay := $moduleName | humanize | title }}
 {{ $resourceDisplay := $resourceName | humanize | title }}
 
 {{/* Process content to add schema after each pulumi-choosable block */}}
 {{ $processed := $content }}
 
 {{/* Define language mappings - handle both individual languages and combined */}}
-{{ $languages := slice "typescript" "python" "go" "csharp" "java" "yaml" "javascript" }}
+{{ $languages := slice "typescript" "python" "go" "csharp" "java" "yaml" "javascript" "javascript,typescript" }}
 
 {{/* Process each language - use a simpler approach */}}
 {{ range $lang := $languages }}
@@ -35,6 +39,8 @@
         {{ $langDisplay = "TypeScript" }}
     {{ else if eq $lang "javascript" }}
         {{ $langDisplay = "JavaScript" }}
+    {{ else if eq $lang "javascript,typescript" }}
+        {{ $langDisplay = "JavaScript/TypeScript" }}
     {{ else if eq $lang "python" }}
         {{ $langDisplay = "Python" }}
     {{ else if eq $lang "go" }}
@@ -55,7 +61,7 @@
     {{ $pattern4 := printf `<pulumi-choosable type=language values=%s>` $lang }}
     
     {{/* Build the schema markup to insert */}}
-    {{ $schemaMarkup := printf `<div class="structured-data-inline" style="position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden;">
+    {{ $schemaMarkup := printf `<div class="software-source-code-annotations" style="position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden;">
     <div itemscope itemtype="https://schema.org/SoftwareSourceCode">
         <meta itemprop="name" content="Azure %s %s - %s Example" />
         <meta itemprop="description" content="Pulumi %s code example for creating and managing Azure %s %s resources using Infrastructure as Code" />
@@ -72,7 +78,7 @@
             Code snippet for %s available in the adjacent code block.
         </div>
     </div>
-</div>` $serviceDisplay $resourceDisplay $langDisplay $langDisplay $serviceDisplay $resourceDisplay $langDisplay $serviceDisplay $resourceDisplay $langDisplay $packageName $packageName $page.Permalink $langDisplay }}
+</div>` $moduleDisplay $resourceDisplay $langDisplay $langDisplay $moduleDisplay $resourceDisplay $langDisplay $moduleDisplay $resourceDisplay $langDisplay $packageName $packageName $page.Permalink $langDisplay }}
     
     {{/* Replace each pattern - add schema right after the opening tag */}}
     {{/* This ensures the schema is inside the choosable block but doesn't interfere with content */}}
@@ -86,40 +92,5 @@
     {{ $processed = replace $processed $pattern3 $replacement3 }}
     {{ $processed = replace $processed $pattern4 $replacement4 }}
 {{ end }}
-
-{{/* Also handle combined language values like javascript,typescript */}}
-{{ $pattern1 := `<pulumi-choosable type="language" values="javascript,typescript">` }}
-{{ $pattern2 := `<pulumi-choosable type="language" values=javascript,typescript>` }}
-{{ $pattern3 := `<pulumi-choosable type=language values="javascript,typescript">` }}
-{{ $pattern4 := `<pulumi-choosable type=language values=javascript,typescript>` }}
-
-{{ $schemaMarkup := printf `<div class="structured-data-inline" style="position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden;">
-    <div itemscope itemtype="https://schema.org/SoftwareSourceCode">
-        <meta itemprop="name" content="Azure %s %s - JavaScript/TypeScript Example" />
-        <meta itemprop="description" content="Pulumi JavaScript/TypeScript code example for creating and managing Azure %s %s resources using Infrastructure as Code" />
-        <meta itemprop="programmingLanguage" content="JavaScript/TypeScript" />
-        <meta itemprop="codeSampleType" content="code snippet" />
-        <meta itemprop="keywords" content="Azure, %s, %s, Pulumi, Infrastructure as Code, IaC, JavaScript, TypeScript, Cloud, DevOps" />
-        <meta itemprop="runtimePlatform" content="Microsoft Azure" />
-        <meta itemprop="targetProduct" content="Pulumi Infrastructure as Code Platform" />
-        <meta itemprop="codeRepository" content="https://github.com/pulumi/pulumi-%s" />
-        <meta itemprop="license" content="https://github.com/pulumi/pulumi-%s/blob/master/LICENSE" />
-        <meta itemprop="author" content="Pulumi" />
-        <meta itemprop="isPartOf" content="%s" />
-        <div itemprop="text">
-            Code snippet for JavaScript/TypeScript available in the adjacent code block.
-        </div>
-    </div>
-</div>` $serviceDisplay $resourceDisplay $serviceDisplay $resourceDisplay $serviceDisplay $resourceDisplay $packageName $packageName $page.Permalink }}
-
-{{ $replacement1 := printf `%s%s` $pattern1 $schemaMarkup }}
-{{ $replacement2 := printf `%s%s` $pattern2 $schemaMarkup }}
-{{ $replacement3 := printf `%s%s` $pattern3 $schemaMarkup }}
-{{ $replacement4 := printf `%s%s` $pattern4 $schemaMarkup }}
-
-{{ $processed = replace $processed $pattern1 $replacement1 }}
-{{ $processed = replace $processed $pattern2 $replacement2 }}
-{{ $processed = replace $processed $pattern3 $replacement3 }}
-{{ $processed = replace $processed $pattern4 $replacement4 }}
 
 {{ $processed | safeHTML }}

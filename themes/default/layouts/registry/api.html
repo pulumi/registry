@@ -87,8 +87,9 @@
                         {{ end }}
                     {{ else }}
                         {{/* Check if this page is part of the experiment */}}
-                        {{ $variantAPages := slice "authorization/roleassignment" "containerservice/managedcluster" "resources/resourcegroup" "dbforpostgresql/server" }}
-                        {{ $variantBPages := slice "managedidentity/userassignedidentity" "network/virtualnetwork" "network/subnet" "app/managedenvironment" }}
+                        {{ $experimentConfig := partial "registry/experiment-config.html" . }}
+                        {{ $variantAPages := $experimentConfig.variantA }}
+                        {{ $variantBPages := $experimentConfig.variantB }}
                         {{ $isVariantA := false }}
                         {{ $isVariantB := false }}
                         {{ $currentPath := .RelPermalink }}
@@ -107,7 +108,7 @@
                         
                         {{/* Process content based on variant */}}
                         {{ if $isVariantA }}
-                            {{/* Variant A: Add structured data alongside each code example */}}
+                            {{/* Variant A: Add SoftwareSourceCode annotations alongside each code example */}}
                             {{ partial "registry/add-variant-a-structured-data.html" (dict "Page" . "Content" .Content) }}
                         {{ else }}
                             {{/* Default: Render content as-is */}}

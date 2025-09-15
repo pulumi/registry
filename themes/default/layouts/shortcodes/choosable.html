@@ -13,9 +13,10 @@
     {{ errorf "%s Missing required parameter 'values." .Page }}
 {{ end }}
 
-{{/* Check if this page needs structured data */}}
-{{ $variantAPages := slice "authorization/roleassignment" "containerservice/managedcluster" "resources/resourcegroup" "dbforpostgresql/server" }}
-{{ $variantBPages := slice "managedidentity/userassignedidentity" "network/virtualnetwork" "network/subnet" "app/managedenvironment" }}
+{{/* Check if this page needs SoftwareSourceCode annotations using centralized config */}}
+{{ $experimentConfig := partial "registry/experiment-config.html" . }}
+{{ $variantAPages := $experimentConfig.variantA }}
+{{ $variantBPages := $experimentConfig.variantB }}
 {{ $needsStructuredData := false }}
 {{ $currentPath := .Page.RelPermalink }}
 
@@ -31,25 +32,29 @@
     {{ end }}
 {{ end }}
 
-{{/* Only add structured data for language choosables on experiment pages */}}
+{{/* Only add SoftwareSourceCode annotations for language choosables on experiment pages */}}
 {{ if and $needsStructuredData (eq $type "language") }}
     {{/* Extract metadata from page parameters */}}
     {{ $titleTag := .Page.Params.title_tag | default "" }}
     {{ $packageName := "azure-native" }}
-    {{ $serviceName := "" }}
+    {{ $moduleName := "" }}
     {{ $resourceName := "" }}
     
     {{ if $titleTag }}
         {{ $parts := split $titleTag "." }}
-        {{ if ge (len $parts) 3 }}
+        {{ if eq (len $parts) 3 }}
             {{ $packageName = index $parts 0 }}
-            {{ $serviceName = index $parts 1 }}
+            {{ $moduleName = index $parts 1 }}
             {{ $resourceName = index $parts 2 }}
+        {{ else }}
+            {{ errorf "Invalid title_tag format at %s: expected 3 parts (package.module.resource), got %d parts" .Page.RelPermalink (len $parts) }}
         {{ end }}
+    {{ else }}
+        {{ warnf "No title_tag found for page %s, using defaults" .Page.RelPermalink }}
     {{ end }}
     
-    {{/* Format service and resource names for display */}}
-    {{ $serviceDisplay := $serviceName | humanize | title }}
+    {{/* Format module and resource names for display */}}
+    {{ $moduleDisplay := $moduleName | humanize | title }}
     {{ $resourceDisplay := $resourceName | humanize | title }}
     
     {{/* Map language values to display names */}}
@@ -77,11 +82,11 @@
     <div>
         <pulumi-choosable type="{{ $type }}" values="{{ $values }}" mode="{{ $mode }}">
             <div itemscope itemtype="https://schema.org/SoftwareSourceCode">
-                <meta itemprop="name" content="Azure {{ $serviceDisplay }} {{ $resourceDisplay }} - {{ $langDisplay }} Example" />
-                <meta itemprop="description" content="Pulumi {{ $langDisplay }} code example for creating and managing Azure {{ $serviceDisplay }} {{ $resourceDisplay }} resources using Infrastructure as Code" />
+                <meta itemprop="name" content="Azure {{ $moduleDisplay }} {{ $resourceDisplay }} - {{ $langDisplay }} Example" />
+                <meta itemprop="description" content="Pulumi {{ $langDisplay }} code example for creating and managing Azure {{ $moduleDisplay }} {{ $resourceDisplay }} resources using Infrastructure as Code" />
                 <meta itemprop="programmingLanguage" content="{{ $langDisplay }}" />
                 <meta itemprop="codeSampleType" content="code snippet" />
-                <meta itemprop="keywords" content="Azure, {{ $serviceDisplay }}, {{ $resourceDisplay }}, Pulumi, Infrastructure as Code, IaC, {{ $langDisplay }}, Cloud, DevOps" />
+                <meta itemprop="keywords" content="Azure, {{ $moduleDisplay }}, {{ $resourceDisplay }}, Pulumi, Infrastructure as Code, IaC, {{ $langDisplay }}, Cloud, DevOps" />
                 <meta itemprop="runtimePlatform" content="Microsoft Azure" />
                 <meta itemprop="targetProduct" content="Pulumi Infrastructure as Code Platform" />
                 <meta itemprop="codeRepository" content="https://github.com/pulumi/pulumi-{{ $packageName }}" />
@@ -94,7 +99,7 @@
         </pulumi-choosable>
     </div>
 {{ else }}
-    {{/* Original output without structured data */}}
+    {{/* Original output without SoftwareSourceCode annotations */}}
     <div>
         <pulumi-choosable type="{{ $type }}" values="{{ $values }}" mode="{{ $mode }}">{{ .Inner }}</pulumi-choosable>
     </div>

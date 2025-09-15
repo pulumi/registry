@@ -10,7 +10,7 @@ native: false
 package_status: public_preview
 publisher: Impart Security
 repo_url: https://github.com/impart-security/pulumi-impart
-schema_file_url: https://raw.githubusercontent.com/impart-security/pulumi-impart/v0.10.2/provider/cmd/pulumi-resource-impart/schema.json
+schema_file_url: https://raw.githubusercontent.com/impart-security/pulumi-impart/v0.10.3/provider/cmd/pulumi-resource-impart/schema.json
 title: Impart Security
-updated_on: 1755729682
-version: v0.10.2
+updated_on: 1757955390
+version: v0.10.3

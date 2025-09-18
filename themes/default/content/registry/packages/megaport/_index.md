@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/megaport/megaport/1.4.2/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/megaport/megaport/1.4.3/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Megaport Provider
@@ -21,7 +21,7 @@ Megaport's product and services using the [Megaport API](https://dev.megaport.co
 
 This provides an opportunity for true multi-cloud hybrid environments supported by Megaport's Software
 Defined Network (SDN). Using the Pulumi provider, you can create and manage Ports,
-Virtual Cross Connects (VXCs), Megaport Cloud Routers (MCRs), and Partner VXCs.
+Virtual Cross Connects (VXCs), Megaport Cloud Routers (MCRs), Megaport Virtual Edges (MVEs), and Partner VXCs.
 
 This provider is compatible with HashiCorp Pulumi, and we have tested compatibility with OpenTofu and haven't seen issues.
 

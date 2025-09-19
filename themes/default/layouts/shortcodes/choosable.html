@@ -17,77 +17,36 @@
 {{ $experimentConfig := partial "registry/experiment-config.html" . }}
 {{ $variantAPages := $experimentConfig.variantA }}
 {{ $variantBPages := $experimentConfig.variantB }}
-{{ $needsStructuredData := false }}
+{{ $needsAnnotations := false }}
 {{ $currentPath := .Page.RelPermalink }}
 
 {{ range $variantAPages }}
     {{ if strings.Contains $currentPath . }}
-        {{ $needsStructuredData = true }}
+        {{ $needsAnnotations = true }}
     {{ end }}
 {{ end }}
 
 {{ range $variantBPages }}
     {{ if strings.Contains $currentPath . }}
-        {{ $needsStructuredData = true }}
+        {{ $needsAnnotations = true }}
     {{ end }}
 {{ end }}
 
 {{/* Only add SoftwareSourceCode annotations for language choosables on experiment pages */}}
-{{ if and $needsStructuredData (eq $type "language") }}
-    {{/* Extract metadata from page parameters */}}
+{{ if and $needsAnnotations (eq $type "language") }}
+    {{/* Parse title_tag using shared partial */}}
     {{ $titleTag := .Page.Params.title_tag | default "" }}
-    {{ $packageName := "azure-native" }}
-    {{ $moduleName := "" }}
-    {{ $resourceName := "" }}
-    
-    {{ if $titleTag }}
-        {{ $parts := split $titleTag "." }}
-        {{ if eq (len $parts) 3 }}
-            {{ $packageName = index $parts 0 }}
-            {{ $moduleName = index $parts 1 }}
-            {{ $resourceName = index $parts 2 }}
-        {{ else if eq (len $parts) 2 }}
-            {{/* Module index pages like azure-native.maps */}}
-            {{ $packageName = index $parts 0 }}
-            {{ $moduleName = index $parts 1 }}
-            {{ $resourceName = "" }}
-        {{ else if eq (len $parts) 1 }}
-            {{/* Top-level package page */}}
-            {{ $packageName = index $parts 0 }}
-            {{ $moduleName = "" }}
-            {{ $resourceName = "" }}
-        {{ else }}
-            {{ warnf "Unexpected title_tag format at %s: %s" .Page.RelPermalink $titleTag }}
-        {{ end }}
-    {{ else }}
-        {{ warnf "No title_tag found for page %s, using defaults" .Page.RelPermalink }}
-    {{ end }}
+    {{ $parsed := partial "registry/parse-title-tag.html" (dict "titleTag" $titleTag "page" .Page) }}
+    {{ $packageName := $parsed.packageName }}
+    {{ $moduleName := $parsed.moduleName }}
+    {{ $resourceName := $parsed.resourceName }}
     
     {{/* Format module and resource names for display */}}
     {{ $moduleDisplay := $moduleName | humanize | title }}
     {{ $resourceDisplay := $resourceName | humanize | title }}
     
-    {{/* Map language values to display names */}}
-    {{ $langDisplay := "" }}
-    {{ if eq $values "typescript" }}
-        {{ $langDisplay = "TypeScript" }}
-    {{ else if eq $values "python" }}
-        {{ $langDisplay = "Python" }}
-    {{ else if eq $values "go" }}
-        {{ $langDisplay = "Go" }}
-    {{ else if eq $values "csharp" }}
-        {{ $langDisplay = "C#" }}
-    {{ else if eq $values "java" }}
-        {{ $langDisplay = "Java" }}
-    {{ else if eq $values "yaml" }}
-        {{ $langDisplay = "YAML" }}
-    {{ else if eq $values "javascript" }}
-        {{ $langDisplay = "JavaScript" }}
-    {{ else if eq $values "javascript,typescript" }}
-        {{ $langDisplay = "JavaScript/TypeScript" }}
-    {{ else }}
-        {{ $langDisplay = $values | title }}
-    {{ end }}
+    {{/* Map language values to display names using shared partial */}}
+    {{ $langDisplay := partial "registry/language-display-mapping.html" $values }}
     
     <div>
         <pulumi-choosable type="{{ $type }}" values="{{ $values }}" mode="{{ $mode }}">

@@ -109,7 +109,7 @@
                         {{/* Process content based on variant */}}
                         {{ if $isVariantA }}
                             {{/* Variant A: Add SoftwareSourceCode annotations alongside each code example */}}
-                            {{ partial "registry/add-variant-a-structured-data.html" (dict "Page" . "Content" .Content) }}
+                            {{ partial "registry/add-variant-a-softwaresourcecode-annotations.html" (dict "Page" . "Content" .Content) }}
                         {{ else }}
                             {{/* Default: Render content as-is */}}
                             {{ .Content }}
@@ -117,7 +117,7 @@
                         
                         {{/* Variant B: Add canonical block with all languages */}}
                         {{ if $isVariantB }}
-                            {{ partial "registry/structured-data-canonical.html" . }}
+                            {{ partial "registry/softwaresourcecode-annotations-canonical.html" . }}
                         {{ end }}
                     {{ end }}
                 </section>

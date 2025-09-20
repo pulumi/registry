@@ -10,7 +10,7 @@ native: false
 package_status: public_preview
 publisher: spectrocloud
 repo_url: https://github.com/spectrocloud/terraform-provider-spectrocloud
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/spectrocloud/spectrocloud/0.24.3/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/spectrocloud/spectrocloud/0.24.4/schema.json
 title: spectrocloud
-updated_on: 1756812949
-version: 0.24.3
+updated_on: 1758411356
+version: 0.24.4

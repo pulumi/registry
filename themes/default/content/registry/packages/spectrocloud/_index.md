@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/spectrocloud/spectrocloud/0.24.3/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/spectrocloud/spectrocloud/0.24.4/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Spectrocloud Provider
@@ -265,7 +265,7 @@ For questions or issues with the provider, open up an issue in the provider GitH
 
 - `apiKey` (String, Sensitive) The Spectro Cloud API key. Can also be set with the `SPECTROCLOUD_APIKEY` environment variable.
 - `host` (String) The Spectro Cloud API host url. Can also be set with the `SPECTROCLOUD_HOST` environment variable. Defaults to <https://api.spectrocloud.com>
-- `ignoreInsecureTlsError` (Boolean) Ignore insecure TLS errors for Spectro Cloud API endpoints. Defaults to false.
+- `ignoreInsecureTlsError` (Boolean) Ignore insecure TLS errors for Spectro Cloud API endpoints. ⚠️ WARNING: Setting this to true disables SSL certificate verification and makes connections vulnerable to man-in-the-middle attacks. Only use this in development/testing environments or when connecting to self-signed certificates in trusted networks. Defaults to false.
 - `projectName` (String) The Palette project the provider will target. If no value is provided, the `Default` Palette project is used. The default value is `Default`.
 - `retryAttempts` (Number) Number of retry attempts. Can also be set with the `SPECTROCLOUD_RETRY_ATTEMPTS` environment variable. Defaults to 10.
 - `trace` (Boolean) Enable HTTP request tracing. Can also be set with the `SPECTROCLOUD_TRACE` environment variable. To enable Pulumi debug logging, set `TF_LOG=DEBUG`. Visit the Pulumi documentation to learn more about Pulumi debugging.

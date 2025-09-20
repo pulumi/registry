@@ -1,0 +1,32 @@
+{{/* Parse title_tag into package, module, and resource components */}}
+{{/* Returns a dict with packageName, moduleName, and resourceName */}}
+{{ $titleTag := .titleTag | default "" }}
+{{ $page := .page }}
+{{ $packageName := "azure-native" }}
+{{ $moduleName := "" }}
+{{ $resourceName := "" }}
+
+{{ if $titleTag }}
+    {{ $parts := split $titleTag "." }}
+    {{ if eq (len $parts) 3 }}
+        {{ $packageName = index $parts 0 }}
+        {{ $moduleName = index $parts 1 }}
+        {{ $resourceName = index $parts 2 }}
+    {{ else if eq (len $parts) 2 }}
+        {{/* Module index pages like azure-native.maps */}}
+        {{ $packageName = index $parts 0 }}
+        {{ $moduleName = index $parts 1 }}
+        {{ $resourceName = "" }}
+    {{ else if eq (len $parts) 1 }}
+        {{/* Top-level package page */}}
+        {{ $packageName = index $parts 0 }}
+        {{ $moduleName = "" }}
+        {{ $resourceName = "" }}
+    {{ else }}
+        {{ warnf "Unexpected title_tag format at %s: %s" $page.RelPermalink $titleTag }}
+    {{ end }}
+{{ else }}
+    {{ warnf "No title_tag found for page %s, using defaults" $page.RelPermalink }}
+{{ end }}
+
+{{ return (dict "packageName" $packageName "moduleName" $moduleName "resourceName" $resourceName) }}

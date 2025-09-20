@@ -1,0 +1,5 @@
+{{/* Centralized configuration for code snippet ingestion experiment */}}
+{{/* This partial returns the variant page lists to avoid duplication across templates */}}
+{{ $variantAPages := slice "authorization/roleassignment" "containerservice/managedcluster" "resources/resourcegroup" "dbforpostgresql/server" }}
+{{ $variantBPages := slice "managedidentity/userassignedidentity" "network/virtualnetwork" "network/subnet" "app/managedenvironment" }}
+{{ return (dict "variantA" $variantAPages "variantB" $variantBPages) }}

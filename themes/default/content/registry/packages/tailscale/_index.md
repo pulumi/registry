@@ -1,11 +1,12 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-tailscale/v0.21.1/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-tailscale/v0.22.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Tailscale Provider
 meta_desc: Provides an overview on how to configure the Pulumi Tailscale provider.
 layout: package
 ---
+
 ## Installation
 
 The Tailscale provider is available as a package in all Pulumi languages:
@@ -15,106 +16,20 @@ The Tailscale provider is available as a package in all Pulumi languages:
 * Go: [`github.com/pulumi/pulumi-tailscale/sdk/go/tailscale`](https://github.com/pulumi/pulumi-tailscale)
 * .NET: [`Pulumi.Tailscale`](https://www.nuget.org/packages/Pulumi.Tailscale)
 * Java: [`com.pulumi/tailscale`](https://central.sonatype.com/artifact/com.pulumi/tailscale)
+
 ## Example Usage
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
-{{% choosable language typescript %}}
-```
-pulumi config set tailscale:apiKey tskey-1234567CNTRL-abcdefghijklmnopqrstu --secret
-pulumi config set tailscale:tailnet example.com
-```
-
 ```yaml
 # Pulumi.yaml provider configuration file
 name: configuration-example
-runtime: nodejs
+runtime:
 config:
-    tailscale:apiKey: tskey-1234567CNTRL-abcdefghijklmnopqrstu
-    tailscale:tailnet: example.com
-```
+    tailscale:apiKey:
+        value: 12345
+    tailscale:tailnet:
+        value: example.com
 
-{{% /choosable %}}
-{{% choosable language python %}}
 ```
-pulumi config set tailscale:apiKey tskey-1234567CNTRL-abcdefghijklmnopqrstu --secret
-pulumi config set tailscale:tailnet example.com
-```
-
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: python
-config:
-    tailscale:apiKey: tskey-1234567CNTRL-abcdefghijklmnopqrstu
-    tailscale:tailnet: example.com
-```
-
-{{% /choosable %}}
-{{% choosable language csharp %}}
-```
-pulumi config set tailscale:apiKey tskey-1234567CNTRL-abcdefghijklmnopqrstu --secret
-pulumi config set tailscale:tailnet example.com
-```
-
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: dotnet
-config:
-    tailscale:apiKey: tskey-1234567CNTRL-abcdefghijklmnopqrstu
-    tailscale:tailnet: example.com
-```
-
-{{% /choosable %}}
-{{% choosable language go %}}
-```
-pulumi config set tailscale:apiKey tskey-1234567CNTRL-abcdefghijklmnopqrstu --secret
-pulumi config set tailscale:tailnet example.com
-```
-
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: go
-config:
-    tailscale:apiKey: tskey-1234567CNTRL-abcdefghijklmnopqrstu
-    tailscale:tailnet: example.com
-```
-
-{{% /choosable %}}
-{{% choosable language yaml %}}
-```
-pulumi config set tailscale:apiKey tskey-1234567CNTRL-abcdefghijklmnopqrstu --secret
-pulumi config set tailscale:tailnet example.com
-```
-
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: yaml
-config:
-    tailscale:apiKey: tskey-1234567CNTRL-abcdefghijklmnopqrstu
-    tailscale:tailnet: example.com
-```
-
-{{% /choosable %}}
-{{% choosable language java %}}
-```
-pulumi config set tailscale:apiKey tskey-1234567CNTRL-abcdefghijklmnopqrstu --secret
-pulumi config set tailscale:tailnet example.com
-```
-
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: java
-config:
-    tailscale:apiKey: tskey-1234567CNTRL-abcdefghijklmnopqrstu
-    tailscale:tailnet: example.com
-```
-
-{{% /choosable %}}
-{{< /chooser >}}
 ## Configuration Reference
 
 - `apiKey` (String, Sensitive) The API key to use for authenticating requests to the API. Can be set via the TAILSCALE_API_KEY environment variable. Conflicts with 'oauth_client_id' and 'oauth_client_secret'.

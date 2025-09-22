@@ -1,0 +1,35 @@
+{{/* Canonical block for Variant B pages - provides SoftwareSourceCode annotations for all languages */}}
+{{ $page := . }}
+
+{{/* Parse title_tag using shared partial */}}
+{{ $titleTag := $page.Params.title_tag | default "" }}
+{{ $parsed := partial "registry/parse-title-tag.html" (dict "titleTag" $titleTag "page" $page) }}
+{{ $packageName := $parsed.packageName }}
+{{ $moduleName := $parsed.moduleName }}
+{{ $resourceName := $parsed.resourceName }}
+
+{{/* Format module and resource names for display */}}
+{{ $moduleDisplay := $moduleName | humanize | title }}
+{{ $resourceDisplay := $resourceName | humanize | title }}
+
+{{/* Create hidden canonical block with all languages for crawlers */}}
+<div class="crawler-canonical-examples" style="position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden;">
+    {{ range $lang := slice "TypeScript" "Python" "Go" "C#" "Java" "YAML" }}
+        <div itemscope itemtype="https://schema.org/SoftwareSourceCode">
+            <meta itemprop="name" content="Azure {{ $moduleDisplay }} {{ $resourceDisplay }} - {{ $lang }} Example" />
+            <meta itemprop="description" content="Pulumi {{ $lang }} code example for creating and managing Azure {{ $moduleDisplay }} {{ $resourceDisplay }} resources using Infrastructure as Code" />
+            <meta itemprop="programmingLanguage" content="{{ $lang }}" />
+            <meta itemprop="codeSampleType" content="code snippet" />
+            <meta itemprop="keywords" content="Azure, {{ $moduleDisplay }}, {{ $resourceDisplay }}, Pulumi, Infrastructure as Code, IaC, {{ $lang }}, Cloud, DevOps" />
+            <meta itemprop="runtimePlatform" content="Microsoft Azure" />
+            <meta itemprop="targetProduct" content="Pulumi Infrastructure as Code Platform" />
+            <meta itemprop="codeRepository" content="https://github.com/pulumi/pulumi-{{ $packageName }}" />
+            <meta itemprop="license" content="https://github.com/pulumi/pulumi-{{ $packageName }}/blob/master/LICENSE" />
+            <meta itemprop="author" content="Pulumi" />
+            <meta itemprop="isPartOf" content="{{ $page.Permalink }}" />
+            <div itemprop="text">
+                Code snippet available in the visible tabbed interface above for {{ $lang }}.
+            </div>
+        </div>
+    {{ end }}
+</div>

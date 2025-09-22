@@ -86,7 +86,39 @@
                             </pulumi-choosable>
                         {{ end }}
                     {{ else }}
-                        {{ .Content }}
+                        {{/* Check if this page is part of the experiment */}}
+                        {{ $experimentConfig := partial "registry/experiment-config.html" . }}
+                        {{ $variantAPages := $experimentConfig.variantA }}
+                        {{ $variantBPages := $experimentConfig.variantB }}
+                        {{ $isVariantA := false }}
+                        {{ $isVariantB := false }}
+                        {{ $currentPath := .RelPermalink }}
+                        
+                        {{ range $variantAPages }}
+                            {{ if strings.Contains $currentPath . }}
+                                {{ $isVariantA = true }}
+                            {{ end }}
+                        {{ end }}
+                        
+                        {{ range $variantBPages }}
+                            {{ if strings.Contains $currentPath . }}
+                                {{ $isVariantB = true }}
+                            {{ end }}
+                        {{ end }}
+                        
+                        {{/* Process content based on variant */}}
+                        {{ if $isVariantA }}
+                            {{/* Variant A: Add SoftwareSourceCode annotations alongside each code example */}}
+                            {{ partial "registry/add-variant-a-softwaresourcecode-annotations.html" (dict "Page" . "Content" .Content) }}
+                        {{ else }}
+                            {{/* Default: Render content as-is */}}
+                            {{ .Content }}
+                        {{ end }}
+                        
+                        {{/* Variant B: Add canonical block with all languages */}}
+                        {{ if $isVariantB }}
+                            {{ partial "registry/softwaresourcecode-annotations-canonical.html" . }}
+                        {{ end }}
                     {{ end }}
                 </section>
             </div>

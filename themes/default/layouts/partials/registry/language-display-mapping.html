@@ -1,0 +1,26 @@
+{{/* Map language values to display names */}}
+{{/* Takes a language code and returns the display name */}}
+{{ $lang := . }}
+{{ $langDisplay := "" }}
+
+{{ if eq $lang "typescript" }}
+    {{ $langDisplay = "TypeScript" }}
+{{ else if eq $lang "python" }}
+    {{ $langDisplay = "Python" }}
+{{ else if eq $lang "go" }}
+    {{ $langDisplay = "Go" }}
+{{ else if eq $lang "csharp" }}
+    {{ $langDisplay = "C#" }}
+{{ else if eq $lang "java" }}
+    {{ $langDisplay = "Java" }}
+{{ else if eq $lang "yaml" }}
+    {{ $langDisplay = "YAML" }}
+{{ else if eq $lang "javascript" }}
+    {{ $langDisplay = "JavaScript" }}
+{{ else if eq $lang "javascript,typescript" }}
+    {{ $langDisplay = "JavaScript/TypeScript" }}
+{{ else }}
+    {{ $langDisplay = $lang | title }}
+{{ end }}
+
+{{ return $langDisplay }}

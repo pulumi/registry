@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-kafka
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-kafka/v3.12.0/provider/cmd/pulumi-resource-kafka/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-kafka/v3.12.1/provider/cmd/pulumi-resource-kafka/schema.json
 title: Kafka
-updated_on: 1755056251
-version: v3.12.0
+updated_on: 1758597844
+version: v3.12.1

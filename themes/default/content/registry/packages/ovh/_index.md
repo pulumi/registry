@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/ovh/pulumi-ovh/v2.7.3/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/ovh/pulumi-ovh/v2.8.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: OVH
 meta_desc: Provides an overview of the OVH Provider for Pulumi.

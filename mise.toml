@@ -1,0 +1,8 @@
+[tools]
+golang = '1.23'
+node = '20'
+
+yarn = '1.22.22'
+hugo = '0.135'
+
+golangci-lint = "2.1.6"

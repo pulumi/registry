@@ -14,3 +14,4 @@ tools/resourcedocsgen/resourcedocsgen
 ctrf/
 bin
 .make
+mise.local.toml

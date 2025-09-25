@@ -27,7 +27,7 @@ lint-mktutorial:
 
 .PHONY: test
 test:
-	./scripts/test.sh
+	cd ./tools/resourcedocsgen && go test ./...
 
 .PHONY: build
 build: build-assets

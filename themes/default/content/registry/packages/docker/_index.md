@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-docker/v4.8.2/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-docker/v4.9.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Docker Provider
@@ -298,7 +298,7 @@ config:
     docker:certMaterial:
         value: 'TODO: file(pathexpand("~/.docker/cert.pem"))'
     docker:certPath:
-        value: /Users/guin/.docker
+        value: /home/runner/.docker
     docker:host:
         value: tcp://your-host-ip:2376/
     docker:keyMaterial:

@@ -293,3 +293,49 @@ func testMetadata(t *testing.T, args testMetadataArgs) {
 }
 
 func ref[T any](t T) *T { return &t }
+
+func TestComputeEditURLFromGitHubUserContentURL(t *testing.T) {
+	t.Parallel()
+	inputBaseURL := "https://raw.githubusercontent.com/"
+	expectedBaseURL := "https://github.com/"
+
+	tests := []struct {
+		name     string
+		input    string
+		expected string
+	}{
+		{
+			name:     "pulumi-random main branch",
+			input:    inputBaseURL + "pulumi/pulumi-random/v4.16.7/docs/_index.md",
+			expected: expectedBaseURL + "pulumi/pulumi-random/blob/v4.16.7/docs/_index.md",
+		},
+		{
+			name:     "non-pulumi repo custom branch",
+			input:    inputBaseURL + "not-pulumi/random-repo/mybranch/docs/_index.md",
+			expected: expectedBaseURL + "not-pulumi/random-repo/blob/mybranch/docs/_index.md",
+		},
+		{
+			name:     "long file path",
+			input:    inputBaseURL + "not-pulumi/random-repo/mybranch/docs/subdir_1/subdir_2/subdir_3/_index.md",
+			expected: expectedBaseURL + "not-pulumi/random-repo/blob/mybranch/docs/subdir_1/subdir_2/subdir_3/_index.md",
+		},
+		{
+			name:     "short file path",
+			input:    inputBaseURL + "not-pulumi/random-repo/branch/_index.md",
+			expected: expectedBaseURL + "not-pulumi/random-repo/blob/branch/_index.md",
+		},
+		{
+			name:     "invalid URL",
+			input:    inputBaseURL + "incomplete/url",
+			expected: "",
+		},
+	}
+
+	for _, tt := range tests {
+		tt := tt // capture range variable
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			assert.Equal(t, tt.expected, computeEditURLFromGitHubUserContentURL(tt.input))
+		})
+	}
+}

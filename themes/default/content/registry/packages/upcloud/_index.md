@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/UpCloudLtd/pulumi-upcloud/v0.5.2/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/UpCloudLtd/pulumi-upcloud/v0.5.3/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 title: UpCloud
 meta_desc: Provides an overview of the UpCloud Pulumi Provider.

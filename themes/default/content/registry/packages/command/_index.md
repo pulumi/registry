@@ -257,14 +257,14 @@ archive = pulumi.FileArchive(payload)
 conn = command.remote.ConnectionArgs(
     host = server_public_ip,
     user = user_name,
-    privateKey = private_key,
+    private_key = private_key,
 )
 
 # Copy the files to the remote.
 copy = command.remote.CopyToRemote("copy",
     connection=conn,
     source=archive,
-    destination=dest_dir)
+    remote_path=dest_dir)
 
 # Verify that the expected files were copied to the remote.
 # We want to run this after each copy, i.e., when something changed,

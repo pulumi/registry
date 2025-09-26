@@ -281,10 +281,10 @@ func packageMetadataFromGitHubCmd(metadataDir, packageDocsDir *string) *cobra.Co
 # Do not edit by hand unless you're certain you know what you are doing!
 `)
 			editURL := computeEditURLFromGitHubUserContentURL(url)
-			if editURL == nil {
+			if editURL == "" {
 				return fmt.Errorf("expected URL %q to be a valid GitHub user content URL", url)
 			}
-			frontmatter = append(frontmatter, []byte(`edit_url: `+*editURL+"\n")...)
+			frontmatter = append(frontmatter, []byte(`edit_url: `+editURL+"\n")...)
 
 			if rest, ok := bytes.CutPrefix(bytes.TrimLeft(content, "\n\t\r "), []byte("---\n")); ok {
 				content = append(frontmatter, rest...)
@@ -656,13 +656,12 @@ func inferPublishDate(repo repoSlug, version string) (time.Time, bool, error) {
 	return commit.Commit.Author.Date, true, nil
 }
 
-func computeEditURLFromGitHubUserContentURL(url string) *string {
+func computeEditURLFromGitHubUserContentURL(url string) string {
 	parts := strings.Split(url, "/")
 	if len(parts) < 6 {
-		return nil
+		return ""
 	}
-	result := "https://github.com/" + parts[3] + "/" + parts[4] + "/blob/" + strings.Join(parts[5:], "/")
-	return &result
+	return "https://github.com/" + parts[3] + "/" + parts[4] + "/blob/" + strings.Join(parts[5:], "/")
 }
 
 // readDocsFile is a specialized version of [readRemoteFile] for docs files.
@@ -685,10 +684,10 @@ func readDocsFile(url string) ([]byte, error) {
 
 	if strings.HasPrefix(url, "https://raw.githubusercontent.com/") {
 		editURL := computeEditURLFromGitHubUserContentURL(url)
-		if editURL == nil {
+		if editURL == "" {
 			return nil, fmt.Errorf("expected URL %s to be a valid GitHub user content URL", url)
 		}
-		rest = append([]byte(`edit_url: `+*editURL+"\n"), rest...)
+		rest = append([]byte(`edit_url: `+editURL+"\n"), rest...)
 	}
 
 	return append([]byte(`---

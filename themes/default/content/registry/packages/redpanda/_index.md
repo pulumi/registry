@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/redpanda-data/redpanda/1.2.1/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/redpanda-data/redpanda/1.3.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Redpanda Provider
@@ -199,6 +199,10 @@ const testNetwork = new redpanda.Network("test", {
     region: region,
     clusterType: "dedicated",
     cidrBlock: "10.0.0.0/20",
+    timeouts: {
+        create: "20m",
+        "delete": "20m",
+    },
 });
 const clusterName = config.get("clusterName") || "testname";
 const zones = config.getObject("zones") || [
@@ -218,8 +222,16 @@ const testCluster = new redpanda.Cluster("test", {
     throughputTier: throughputTier,
     zones: zones,
     allowDeletion: true,
+    clusterConfiguration: {
+        customPropertiesJson: JSON.stringify({
+            schema_registry_enable_authorization: true,
+        }),
+    },
     tags: {
         key: "value",
+    },
+    timeouts: {
+        create: "90m",
     },
 });
 const userName = config.get("userName") || "test-username";
@@ -240,6 +252,95 @@ const testTopic = new redpanda.Topic("test", {
     replicationFactor: replicationFactor,
     clusterApiUrl: testCluster.clusterApiUrl,
     allowDeletion: true,
+});
+const clusterAdmin = new redpanda.Acl("cluster_admin", {
+    resourceType: "CLUSTER",
+    resourceName: "kafka-cluster",
+    resourcePatternType: "LITERAL",
+    principal: pulumi.interpolate`User:${testUser.name}`,
+    host: "*",
+    operation: "ALL",
+    permissionType: "ALLOW",
+    clusterApiUrl: testCluster.clusterApiUrl,
+    allowDeletion: true,
+});
+const schemaRegistryAdmin = new redpanda.Acl("schema_registry_admin", {
+    resourceType: "CLUSTER",
+    resourceName: "kafka-cluster",
+    resourcePatternType: "LITERAL",
+    principal: pulumi.interpolate`User:${testUser.name}`,
+    host: "*",
+    operation: "ALTER",
+    permissionType: "ALLOW",
+    clusterApiUrl: testCluster.clusterApiUrl,
+    allowDeletion: true,
+});
+const clusterAction = new redpanda.Acl("cluster_action", {
+    resourceType: "CLUSTER",
+    resourceName: "kafka-cluster",
+    resourcePatternType: "LITERAL",
+    principal: pulumi.interpolate`User:${testUser.name}`,
+    host: "*",
+    operation: "CLUSTER_ACTION",
+    permissionType: "ALLOW",
+    clusterApiUrl: testCluster.clusterApiUrl,
+    allowDeletion: true,
+});
+const topicAccess = new redpanda.Acl("topic_access", {
+    resourceType: "TOPIC",
+    resourceName: topicName,
+    resourcePatternType: "LITERAL",
+    principal: pulumi.interpolate`User:${testUser.name}`,
+    host: "*",
+    operation: "ALL",
+    permissionType: "ALLOW",
+    clusterApiUrl: testCluster.clusterApiUrl,
+    allowDeletion: true,
+});
+const allTestTopic = new redpanda.SchemaRegistryAcl("all_test_topic", {
+    clusterId: testCluster.id,
+    principal: pulumi.interpolate`User:${testUser.name}`,
+    resourceType: "SUBJECT",
+    resourceName: `${topicName}-`,
+    patternType: "PREFIXED",
+    host: "*",
+    operation: "ALL",
+    permission: "ALLOW",
+    username: testUser.name,
+    password: userPw,
+    allowDeletion: true,
+}, {
+    dependsOn: [schemaRegistryAdmin],
+});
+const describeRegistry = new redpanda.SchemaRegistryAcl("describe_registry", {
+    clusterId: testCluster.id,
+    principal: pulumi.interpolate`User:${testUser.name}`,
+    resourceType: "REGISTRY",
+    resourceName: "*",
+    patternType: "LITERAL",
+    host: "*",
+    operation: "DESCRIBE",
+    permission: "ALLOW",
+    username: testUser.name,
+    password: userPw,
+    allowDeletion: true,
+}, {
+    dependsOn: [schemaRegistryAdmin],
+});
+const alterConfigsRegistry = new redpanda.SchemaRegistryAcl("alter_configs_registry", {
+    clusterId: testCluster.id,
+    principal: pulumi.interpolate`User:${testUser.name}`,
+    resourceType: "REGISTRY",
+    resourceName: "*",
+    patternType: "LITERAL",
+    host: "*",
+    operation: "ALTER_CONFIGS",
+    permission: "ALLOW",
+    username: testUser.name,
+    password: userPw,
+    allowDeletion: true,
+}, {
+    dependsOn: [schemaRegistryAdmin],
 });
 // The type of schema (AVRO, JSON, PROTOBUF)
 const schemaType = config.get("schemaType") || "AVRO";
@@ -275,6 +376,17 @@ const userSchema = new redpanda.Schema("user_schema", {
     schema: userSchemaDefinition,
     username: testUser.name,
     password: userPw,
+    allowDeletion: true,
+}, {
+    dependsOn: [
+        clusterAdmin,
+        schemaRegistryAdmin,
+        clusterAction,
+        topicAccess,
+        allTestTopic,
+        describeRegistry,
+        alterConfigsRegistry,
+    ],
 });
 // The AVRO schema definition for user events that references the User schema
 const userEventSchemaDefinition = config.get("userEventSchemaDefinition") || `{
@@ -320,11 +432,22 @@ const userEventSchema = new redpanda.Schema("user_event_schema", {
     schema: userEventSchemaDefinition,
     username: testUser.name,
     password: userPw,
+    allowDeletion: true,
     references: [{
         name: "User",
         subject: userSchema.subject,
         version: userSchema.version,
     }],
+}, {
+    dependsOn: [
+        clusterAdmin,
+        schemaRegistryAdmin,
+        clusterAction,
+        topicAccess,
+        allTestTopic,
+        describeRegistry,
+        alterConfigsRegistry,
+    ],
 });
 // The AVRO schema definition for product data with strict compatibility
 const productSchemaDefinition = config.get("productSchemaDefinition") || `{
@@ -379,16 +502,47 @@ const productSchema = new redpanda.Schema("product_schema", {
     compatibility: compatibilityLevel,
     username: testUser.name,
     password: userPw,
+    allowDeletion: true,
+}, {
+    dependsOn: [
+        clusterAdmin,
+        schemaRegistryAdmin,
+        clusterAction,
+        topicAccess,
+        allTestTopic,
+        describeRegistry,
+        alterConfigsRegistry,
+    ],
 });
-const testAcl = new redpanda.Acl("test", {
-    resourceType: "TOPIC",
-    resourceName: testTopic.name,
-    resourcePatternType: "LITERAL",
+const readProduct = new redpanda.SchemaRegistryAcl("read_product", {
+    clusterId: testCluster.id,
     principal: pulumi.interpolate`User:${testUser.name}`,
+    resourceType: "SUBJECT",
+    resourceName: "product-",
+    patternType: "PREFIXED",
     host: "*",
     operation: "READ",
-    permissionType: "ALLOW",
-    clusterApiUrl: testCluster.clusterApiUrl,
+    permission: "ALLOW",
+    username: testUser.name,
+    password: userPw,
+    allowDeletion: true,
+}, {
+    dependsOn: [schemaRegistryAdmin],
+});
+const writeOrders = new redpanda.SchemaRegistryAcl("write_orders", {
+    clusterId: testCluster.id,
+    principal: pulumi.interpolate`User:${testUser.name}`,
+    resourceType: "SUBJECT",
+    resourceName: "orders-value",
+    patternType: "LITERAL",
+    host: "*",
+    operation: "WRITE",
+    permission: "ALLOW",
+    username: testUser.name,
+    password: userPw,
+    allowDeletion: true,
+}, {
+    dependsOn: [schemaRegistryAdmin],
 });
 export const userSchemaInfo = {
     id: userSchema.schemaId,
@@ -421,6 +575,7 @@ runtime: python
 ```
 ```python
 import pulumi
+import json
 import pulumi_redpanda as redpanda
 
 config = pulumi.Config()
@@ -443,7 +598,11 @@ test_network = redpanda.Network("test",
     cloud_provider=cloud_provider,
     region=region,
     cluster_type="dedicated",
-    cidr_block="10.0.0.0/20")
+    cidr_block="10.0.0.0/20",
+    timeouts={
+        "create": "20m",
+        "delete": "20m",
+    })
 cluster_name = config.get("clusterName")
 if cluster_name is None:
     cluster_name = "testname"
@@ -468,8 +627,16 @@ test_cluster = redpanda.Cluster("test",
     throughput_tier=throughput_tier,
     zones=zones,
     allow_deletion=True,
+    cluster_configuration={
+        "custom_properties_json": json.dumps({
+            "schema_registry_enable_authorization": True,
+        }),
+    },
     tags={
         "key": "value",
+    },
+    timeouts={
+        "create": "90m",
     })
 user_name = config.get("userName")
 if user_name is None:
@@ -500,6 +667,85 @@ test_topic = redpanda.Topic("test",
     replication_factor=replication_factor,
     cluster_api_url=test_cluster.cluster_api_url,
     allow_deletion=True)
+cluster_admin = redpanda.Acl("cluster_admin",
+    resource_type="CLUSTER",
+    resource_name_="kafka-cluster",
+    resource_pattern_type="LITERAL",
+    principal=test_user.name.apply(lambda name: f"User:{name}"),
+    host="*",
+    operation="ALL",
+    permission_type="ALLOW",
+    cluster_api_url=test_cluster.cluster_api_url,
+    allow_deletion=True)
+schema_registry_admin = redpanda.Acl("schema_registry_admin",
+    resource_type="CLUSTER",
+    resource_name_="kafka-cluster",
+    resource_pattern_type="LITERAL",
+    principal=test_user.name.apply(lambda name: f"User:{name}"),
+    host="*",
+    operation="ALTER",
+    permission_type="ALLOW",
+    cluster_api_url=test_cluster.cluster_api_url,
+    allow_deletion=True)
+cluster_action = redpanda.Acl("cluster_action",
+    resource_type="CLUSTER",
+    resource_name_="kafka-cluster",
+    resource_pattern_type="LITERAL",
+    principal=test_user.name.apply(lambda name: f"User:{name}"),
+    host="*",
+    operation="CLUSTER_ACTION",
+    permission_type="ALLOW",
+    cluster_api_url=test_cluster.cluster_api_url,
+    allow_deletion=True)
+topic_access = redpanda.Acl("topic_access",
+    resource_type="TOPIC",
+    resource_name_=topic_name,
+    resource_pattern_type="LITERAL",
+    principal=test_user.name.apply(lambda name: f"User:{name}"),
+    host="*",
+    operation="ALL",
+    permission_type="ALLOW",
+    cluster_api_url=test_cluster.cluster_api_url,
+    allow_deletion=True)
+all_test_topic = redpanda.SchemaRegistryAcl("all_test_topic",
+    cluster_id=test_cluster.id,
+    principal=test_user.name.apply(lambda name: f"User:{name}"),
+    resource_type="SUBJECT",
+    resource_name_=f"{topic_name}-",
+    pattern_type="PREFIXED",
+    host="*",
+    operation="ALL",
+    permission="ALLOW",
+    username=test_user.name,
+    password=user_pw,
+    allow_deletion=True,
+    opts = pulumi.ResourceOptions(depends_on=[schema_registry_admin]))
+describe_registry = redpanda.SchemaRegistryAcl("describe_registry",
+    cluster_id=test_cluster.id,
+    principal=test_user.name.apply(lambda name: f"User:{name}"),
+    resource_type="REGISTRY",
+    resource_name_="*",
+    pattern_type="LITERAL",
+    host="*",
+    operation="DESCRIBE",
+    permission="ALLOW",
+    username=test_user.name,
+    password=user_pw,
+    allow_deletion=True,
+    opts = pulumi.ResourceOptions(depends_on=[schema_registry_admin]))
+alter_configs_registry = redpanda.SchemaRegistryAcl("alter_configs_registry",
+    cluster_id=test_cluster.id,
+    principal=test_user.name.apply(lambda name: f"User:{name}"),
+    resource_type="REGISTRY",
+    resource_name_="*",
+    pattern_type="LITERAL",
+    host="*",
+    operation="ALTER_CONFIGS",
+    permission="ALLOW",
+    username=test_user.name,
+    password=user_pw,
+    allow_deletion=True,
+    opts = pulumi.ResourceOptions(depends_on=[schema_registry_admin]))
 # The type of schema (AVRO, JSON, PROTOBUF)
 schema_type = config.get("schemaType")
 if schema_type is None:
@@ -537,7 +783,17 @@ user_schema = redpanda.Schema("user_schema",
     schema_type=schema_type,
     schema=user_schema_definition,
     username=test_user.name,
-    password=user_pw)
+    password=user_pw,
+    allow_deletion=True,
+    opts = pulumi.ResourceOptions(depends_on=[
+            cluster_admin,
+            schema_registry_admin,
+            cluster_action,
+            topic_access,
+            all_test_topic,
+            describe_registry,
+            alter_configs_registry,
+        ]))
 # The AVRO schema definition for user events that references the User schema
 user_event_schema_definition = config.get("userEventSchemaDefinition")
 if user_event_schema_definition is None:
@@ -584,11 +840,21 @@ user_event_schema = redpanda.Schema("user_event_schema",
     schema=user_event_schema_definition,
     username=test_user.name,
     password=user_pw,
+    allow_deletion=True,
     references=[{
         "name": "User",
         "subject": user_schema.subject,
         "version": user_schema.version,
-    }])
+    }],
+    opts = pulumi.ResourceOptions(depends_on=[
+            cluster_admin,
+            schema_registry_admin,
+            cluster_action,
+            topic_access,
+            all_test_topic,
+            describe_registry,
+            alter_configs_registry,
+        ]))
 # The AVRO schema definition for product data with strict compatibility
 product_schema_definition = config.get("productSchemaDefinition")
 if product_schema_definition is None:
@@ -645,16 +911,43 @@ product_schema = redpanda.Schema("product_schema",
     schema=product_schema_definition,
     compatibility=compatibility_level,
     username=test_user.name,
-    password=user_pw)
-test_acl = redpanda.Acl("test",
-    resource_type="TOPIC",
-    resource_name_=test_topic.name,
-    resource_pattern_type="LITERAL",
+    password=user_pw,
+    allow_deletion=True,
+    opts = pulumi.ResourceOptions(depends_on=[
+            cluster_admin,
+            schema_registry_admin,
+            cluster_action,
+            topic_access,
+            all_test_topic,
+            describe_registry,
+            alter_configs_registry,
+        ]))
+read_product = redpanda.SchemaRegistryAcl("read_product",
+    cluster_id=test_cluster.id,
     principal=test_user.name.apply(lambda name: f"User:{name}"),
+    resource_type="SUBJECT",
+    resource_name_="product-",
+    pattern_type="PREFIXED",
     host="*",
     operation="READ",
-    permission_type="ALLOW",
-    cluster_api_url=test_cluster.cluster_api_url)
+    permission="ALLOW",
+    username=test_user.name,
+    password=user_pw,
+    allow_deletion=True,
+    opts = pulumi.ResourceOptions(depends_on=[schema_registry_admin]))
+write_orders = redpanda.SchemaRegistryAcl("write_orders",
+    cluster_id=test_cluster.id,
+    principal=test_user.name.apply(lambda name: f"User:{name}"),
+    resource_type="SUBJECT",
+    resource_name_="orders-value",
+    pattern_type="LITERAL",
+    host="*",
+    operation="WRITE",
+    permission="ALLOW",
+    username=test_user.name,
+    password=user_pw,
+    allow_deletion=True,
+    opts = pulumi.ResourceOptions(depends_on=[schema_registry_admin]))
 pulumi.export("userSchemaInfo", {
     "id": user_schema.schema_id,
     "subject": user_schema.subject,
@@ -687,6 +980,7 @@ runtime: dotnet
 ```csharp
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using Pulumi;
 using Redpanda = Pulumi.Redpanda;
 
@@ -710,6 +1004,11 @@ return await Deployment.RunAsync(() =>
         Region = region,
         ClusterType = "dedicated",
         CidrBlock = "10.0.0.0/20",
+        Timeouts = new Redpanda.Inputs.NetworkTimeoutsArgs
+        {
+            Create = "20m",
+            Delete = "20m",
+        },
     });
 
     var clusterName = config.Get("clusterName") ?? "testname";
@@ -732,9 +1031,20 @@ return await Deployment.RunAsync(() =>
         ThroughputTier = throughputTier,
         Zones = zones,
         AllowDeletion = true,
+        ClusterConfiguration = new Redpanda.Inputs.ClusterClusterConfigurationArgs
+        {
+            CustomPropertiesJson = JsonSerializer.Serialize(new Dictionary<string, object?>
+            {
+                ["schema_registry_enable_authorization"] = true,
+            }),
+        },
         Tags =
         {
             { "key", "value" },
+        },
+        Timeouts = new Redpanda.Inputs.ClusterTimeoutsArgs
+        {
+            Create = "90m",
         },
     });
 
@@ -759,6 +1069,121 @@ return await Deployment.RunAsync(() =>
         ReplicationFactor = replicationFactor,
         ClusterApiUrl = testCluster.ClusterApiUrl,
         AllowDeletion = true,
+    });
+
+    var clusterAdmin = new Redpanda.Acl("cluster_admin", new()
+    {
+        ResourceType = "CLUSTER",
+        ResourceName = "kafka-cluster",
+        ResourcePatternType = "LITERAL",
+        Principal = testUser.Name.Apply(name => $"User:{name}"),
+        Host = "*",
+        Operation = "ALL",
+        PermissionType = "ALLOW",
+        ClusterApiUrl = testCluster.ClusterApiUrl,
+        AllowDeletion = true,
+    });
+
+    var schemaRegistryAdmin = new Redpanda.Acl("schema_registry_admin", new()
+    {
+        ResourceType = "CLUSTER",
+        ResourceName = "kafka-cluster",
+        ResourcePatternType = "LITERAL",
+        Principal = testUser.Name.Apply(name => $"User:{name}"),
+        Host = "*",
+        Operation = "ALTER",
+        PermissionType = "ALLOW",
+        ClusterApiUrl = testCluster.ClusterApiUrl,
+        AllowDeletion = true,
+    });
+
+    var clusterAction = new Redpanda.Acl("cluster_action", new()
+    {
+        ResourceType = "CLUSTER",
+        ResourceName = "kafka-cluster",
+        ResourcePatternType = "LITERAL",
+        Principal = testUser.Name.Apply(name => $"User:{name}"),
+        Host = "*",
+        Operation = "CLUSTER_ACTION",
+        PermissionType = "ALLOW",
+        ClusterApiUrl = testCluster.ClusterApiUrl,
+        AllowDeletion = true,
+    });
+
+    var topicAccess = new Redpanda.Acl("topic_access", new()
+    {
+        ResourceType = "TOPIC",
+        ResourceName = topicName,
+        ResourcePatternType = "LITERAL",
+        Principal = testUser.Name.Apply(name => $"User:{name}"),
+        Host = "*",
+        Operation = "ALL",
+        PermissionType = "ALLOW",
+        ClusterApiUrl = testCluster.ClusterApiUrl,
+        AllowDeletion = true,
+    });
+
+    var allTestTopic = new Redpanda.SchemaRegistryAcl("all_test_topic", new()
+    {
+        ClusterId = testCluster.Id,
+        Principal = testUser.Name.Apply(name => $"User:{name}"),
+        ResourceType = "SUBJECT",
+        ResourceName = $"{topicName}-",
+        PatternType = "PREFIXED",
+        Host = "*",
+        Operation = "ALL",
+        Permission = "ALLOW",
+        Username = testUser.Name,
+        Password = userPw,
+        AllowDeletion = true,
+    }, new CustomResourceOptions
+    {
+        DependsOn =
+        {
+            schemaRegistryAdmin,
+        },
+    });
+
+    var describeRegistry = new Redpanda.SchemaRegistryAcl("describe_registry", new()
+    {
+        ClusterId = testCluster.Id,
+        Principal = testUser.Name.Apply(name => $"User:{name}"),
+        ResourceType = "REGISTRY",
+        ResourceName = "*",
+        PatternType = "LITERAL",
+        Host = "*",
+        Operation = "DESCRIBE",
+        Permission = "ALLOW",
+        Username = testUser.Name,
+        Password = userPw,
+        AllowDeletion = true,
+    }, new CustomResourceOptions
+    {
+        DependsOn =
+        {
+            schemaRegistryAdmin,
+        },
+    });
+
+    var alterConfigsRegistry = new Redpanda.SchemaRegistryAcl("alter_configs_registry", new()
+    {
+        ClusterId = testCluster.Id,
+        Principal = testUser.Name.Apply(name => $"User:{name}"),
+        ResourceType = "REGISTRY",
+        ResourceName = "*",
+        PatternType = "LITERAL",
+        Host = "*",
+        Operation = "ALTER_CONFIGS",
+        Permission = "ALLOW",
+        Username = testUser.Name,
+        Password = userPw,
+        AllowDeletion = true,
+    }, new CustomResourceOptions
+    {
+        DependsOn =
+        {
+            schemaRegistryAdmin,
+        },
     });
 
     // The type of schema (AVRO, JSON, PROTOBUF)
@@ -796,6 +1221,19 @@ return await Deployment.RunAsync(() =>
         Schema = userSchemaDefinition,
         Username = testUser.Name,
         Password = userPw,
+        AllowDeletion = true,
+    }, new CustomResourceOptions
+    {
+        DependsOn =
+        {
+            clusterAdmin,
+            schemaRegistryAdmin,
+            clusterAction,
+            topicAccess,
+            allTestTopic,
+            describeRegistry,
+            alterConfigsRegistry,
+        },
     });
 
     // The AVRO schema definition for user events that references the User schema
@@ -843,6 +1281,7 @@ return await Deployment.RunAsync(() =>
         Schema = userEventSchemaDefinition,
         Username = testUser.Name,
         Password = userPw,
+        AllowDeletion = true,
         References = new[]
         {
             new Redpanda.Inputs.SchemaReferenceArgs
@@ -851,6 +1290,18 @@ return await Deployment.RunAsync(() =>
                 Subject = userSchema.Subject,
                 Version = userSchema.Version,
             },
+        },
+    }, new CustomResourceOptions
+    {
+        DependsOn =
+        {
+            clusterAdmin,
+            schemaRegistryAdmin,
+            clusterAction,
+            topicAccess,
+            allTestTopic,
+            describeRegistry,
+            alterConfigsRegistry,
         },
     });
 
@@ -908,18 +1359,61 @@ return await Deployment.RunAsync(() =>
         Compatibility = compatibilityLevel,
         Username = testUser.Name,
         Password = userPw,
+        AllowDeletion = true,
+    }, new CustomResourceOptions
+    {
+        DependsOn =
+        {
+            clusterAdmin,
+            schemaRegistryAdmin,
+            clusterAction,
+            topicAccess,
+            allTestTopic,
+            describeRegistry,
+            alterConfigsRegistry,
+        },
     });
 
-    var testAcl = new Redpanda.Acl("test", new()
+    var readProduct = new Redpanda.SchemaRegistryAcl("read_product", new()
     {
-        ResourceType = "TOPIC",
-        ResourceName = testTopic.Name,
-        ResourcePatternType = "LITERAL",
+        ClusterId = testCluster.Id,
         Principal = testUser.Name.Apply(name => $"User:{name}"),
+        ResourceType = "SUBJECT",
+        ResourceName = "product-",
+        PatternType = "PREFIXED",
         Host = "*",
         Operation = "READ",
-        PermissionType = "ALLOW",
-        ClusterApiUrl = testCluster.ClusterApiUrl,
+        Permission = "ALLOW",
+        Username = testUser.Name,
+        Password = userPw,
+        AllowDeletion = true,
+    }, new CustomResourceOptions
+    {
+        DependsOn =
+        {
+            schemaRegistryAdmin,
+        },
+    });
+
+    var writeOrders = new Redpanda.SchemaRegistryAcl("write_orders", new()
+    {
+        ClusterId = testCluster.Id,
+        Principal = testUser.Name.Apply(name => $"User:{name}"),
+        ResourceType = "SUBJECT",
+        ResourceName = "orders-value",
+        PatternType = "LITERAL",
+        Host = "*",
+        Operation = "WRITE",
+        Permission = "ALLOW",
+        Username = testUser.Name,
+        Password = userPw,
+        AllowDeletion = true,
+    }, new CustomResourceOptions
+    {
+        DependsOn =
+        {
+            schemaRegistryAdmin,
+        },
     });
 
     return new Dictionary<string, object?>
@@ -963,6 +1457,7 @@ runtime: go
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 
 	"github.com/pulumi/pulumi-pulumi-provider/sdks/go/redpanda/redpanda"
@@ -1002,6 +1497,10 @@ func main() {
 			Region:          pulumi.String(region),
 			ClusterType:     pulumi.String("dedicated"),
 			CidrBlock:       pulumi.String("10.0.0.0/20"),
+			Timeouts: &redpanda.NetworkTimeoutsArgs{
+				Create: pulumi.String("20m"),
+				Delete: pulumi.String("20m"),
+			},
 		})
 		if err != nil {
 			return err
@@ -1022,6 +1521,13 @@ func main() {
 		if param := cfg.Get("throughputTier"); param != "" {
 			throughputTier = param
 		}
+		tmpJSON0, err := json.Marshal(map[string]interface{}{
+			"schema_registry_enable_authorization": true,
+		})
+		if err != nil {
+			return err
+		}
+		json0 := string(tmpJSON0)
 		testCluster, err := redpanda.NewCluster(ctx, "test", &redpanda.ClusterArgs{
 			Name:            pulumi.String(clusterName),
 			ResourceGroupId: test.ID(),
@@ -1033,8 +1539,14 @@ func main() {
 			ThroughputTier:  pulumi.String(throughputTier),
 			Zones:           pulumi.Any(zones),
 			AllowDeletion:   pulumi.Bool(true),
+			ClusterConfiguration: &redpanda.ClusterClusterConfigurationArgs{
+				CustomPropertiesJson: pulumi.String(json0),
+			},
 			Tags: pulumi.StringMap{
 				"key": pulumi.String("value"),
+			},
+			Timeouts: &redpanda.ClusterTimeoutsArgs{
+				Create: pulumi.String("90m"),
 			},
 		})
 		if err != nil {
@@ -1073,13 +1585,137 @@ func main() {
 		if param := cfg.GetFloat64("replicationFactor"); param != 0 {
 			replicationFactor = param
 		}
-		testTopic, err := redpanda.NewTopic(ctx, "test", &redpanda.TopicArgs{
+		_, err = redpanda.NewTopic(ctx, "test", &redpanda.TopicArgs{
 			Name:              pulumi.String(topicName),
 			PartitionCount:    pulumi.Float64(partitionCount),
 			ReplicationFactor: pulumi.Float64(replicationFactor),
 			ClusterApiUrl:     testCluster.ClusterApiUrl,
 			AllowDeletion:     pulumi.Bool(true),
 		})
+		if err != nil {
+			return err
+		}
+		clusterAdmin, err := redpanda.NewAcl(ctx, "cluster_admin", &redpanda.AclArgs{
+			ResourceType:        pulumi.String("CLUSTER"),
+			ResourceName:        pulumi.String("kafka-cluster"),
+			ResourcePatternType: pulumi.String("LITERAL"),
+			Principal: testUser.Name.ApplyT(func(name string) (string, error) {
+				return fmt.Sprintf("User:%v", name), nil
+			}).(pulumi.StringOutput),
+			Host:           pulumi.String("*"),
+			Operation:      pulumi.String("ALL"),
+			PermissionType: pulumi.String("ALLOW"),
+			ClusterApiUrl:  testCluster.ClusterApiUrl,
+			AllowDeletion:  pulumi.Bool(true),
+		})
+		if err != nil {
+			return err
+		}
+		schemaRegistryAdmin, err := redpanda.NewAcl(ctx, "schema_registry_admin", &redpanda.AclArgs{
+			ResourceType:        pulumi.String("CLUSTER"),
+			ResourceName:        pulumi.String("kafka-cluster"),
+			ResourcePatternType: pulumi.String("LITERAL"),
+			Principal: testUser.Name.ApplyT(func(name string) (string, error) {
+				return fmt.Sprintf("User:%v", name), nil
+			}).(pulumi.StringOutput),
+			Host:           pulumi.String("*"),
+			Operation:      pulumi.String("ALTER"),
+			PermissionType: pulumi.String("ALLOW"),
+			ClusterApiUrl:  testCluster.ClusterApiUrl,
+			AllowDeletion:  pulumi.Bool(true),
+		})
+		if err != nil {
+			return err
+		}
+		clusterAction, err := redpanda.NewAcl(ctx, "cluster_action", &redpanda.AclArgs{
+			ResourceType:        pulumi.String("CLUSTER"),
+			ResourceName:        pulumi.String("kafka-cluster"),
+			ResourcePatternType: pulumi.String("LITERAL"),
+			Principal: testUser.Name.ApplyT(func(name string) (string, error) {
+				return fmt.Sprintf("User:%v", name), nil
+			}).(pulumi.StringOutput),
+			Host:           pulumi.String("*"),
+			Operation:      pulumi.String("CLUSTER_ACTION"),
+			PermissionType: pulumi.String("ALLOW"),
+			ClusterApiUrl:  testCluster.ClusterApiUrl,
+			AllowDeletion:  pulumi.Bool(true),
+		})
+		if err != nil {
+			return err
+		}
+		topicAccess, err := redpanda.NewAcl(ctx, "topic_access", &redpanda.AclArgs{
+			ResourceType:        pulumi.String("TOPIC"),
+			ResourceName:        pulumi.String(topicName),
+			ResourcePatternType: pulumi.String("LITERAL"),
+			Principal: testUser.Name.ApplyT(func(name string) (string, error) {
+				return fmt.Sprintf("User:%v", name), nil
+			}).(pulumi.StringOutput),
+			Host:           pulumi.String("*"),
+			Operation:      pulumi.String("ALL"),
+			PermissionType: pulumi.String("ALLOW"),
+			ClusterApiUrl:  testCluster.ClusterApiUrl,
+			AllowDeletion:  pulumi.Bool(true),
+		})
+		if err != nil {
+			return err
+		}
+		allTestTopic, err := redpanda.NewSchemaRegistryAcl(ctx, "all_test_topic", &redpanda.SchemaRegistryAclArgs{
+			ClusterId: testCluster.ID(),
+			Principal: testUser.Name.ApplyT(func(name string) (string, error) {
+				return fmt.Sprintf("User:%v", name), nil
+			}).(pulumi.StringOutput),
+			ResourceType:  pulumi.String("SUBJECT"),
+			ResourceName:  pulumi.Sprintf("%v-", topicName),
+			PatternType:   pulumi.String("PREFIXED"),
+			Host:          pulumi.String("*"),
+			Operation:     pulumi.String("ALL"),
+			Permission:    pulumi.String("ALLOW"),
+			Username:      testUser.Name,
+			Password:      pulumi.String(userPw),
+			AllowDeletion: pulumi.Bool(true),
+		}, pulumi.DependsOn([]pulumi.Resource{
+			schemaRegistryAdmin,
+		}))
+		if err != nil {
+			return err
+		}
+		describeRegistry, err := redpanda.NewSchemaRegistryAcl(ctx, "describe_registry", &redpanda.SchemaRegistryAclArgs{
+			ClusterId: testCluster.ID(),
+			Principal: testUser.Name.ApplyT(func(name string) (string, error) {
+				return fmt.Sprintf("User:%v", name), nil
+			}).(pulumi.StringOutput),
+			ResourceType:  pulumi.String("REGISTRY"),
+			ResourceName:  pulumi.String("*"),
+			PatternType:   pulumi.String("LITERAL"),
+			Host:          pulumi.String("*"),
+			Operation:     pulumi.String("DESCRIBE"),
+			Permission:    pulumi.String("ALLOW"),
+			Username:      testUser.Name,
+			Password:      pulumi.String(userPw),
+			AllowDeletion: pulumi.Bool(true),
+		}, pulumi.DependsOn([]pulumi.Resource{
+			schemaRegistryAdmin,
+		}))
+		if err != nil {
+			return err
+		}
+		alterConfigsRegistry, err := redpanda.NewSchemaRegistryAcl(ctx, "alter_configs_registry", &redpanda.SchemaRegistryAclArgs{
+			ClusterId: testCluster.ID(),
+			Principal: testUser.Name.ApplyT(func(name string) (string, error) {
+				return fmt.Sprintf("User:%v", name), nil
+			}).(pulumi.StringOutput),
+			ResourceType:  pulumi.String("REGISTRY"),
+			ResourceName:  pulumi.String("*"),
+			PatternType:   pulumi.String("LITERAL"),
+			Host:          pulumi.String("*"),
+			Operation:     pulumi.String("ALTER_CONFIGS"),
+			Permission:    pulumi.String("ALLOW"),
+			Username:      testUser.Name,
+			Password:      pulumi.String(userPw),
+			AllowDeletion: pulumi.Bool(true),
+		}, pulumi.DependsOn([]pulumi.Resource{
+			schemaRegistryAdmin,
+		}))
 		if err != nil {
 			return err
 		}
@@ -1117,13 +1753,22 @@ func main() {
 			userSchemaDefinition = param
 		}
 		userSchema, err := redpanda.NewSchema(ctx, "user_schema", &redpanda.SchemaArgs{
-			ClusterId:  testCluster.ID(),
-			Subject:    pulumi.Sprintf("%v-value", topicName),
-			SchemaType: pulumi.String(schemaType),
-			Schema:     pulumi.String(userSchemaDefinition),
-			Username:   testUser.Name,
-			Password:   pulumi.String(userPw),
-		})
+			ClusterId:     testCluster.ID(),
+			Subject:       pulumi.Sprintf("%v-value", topicName),
+			SchemaType:    pulumi.String(schemaType),
+			Schema:        pulumi.String(userSchemaDefinition),
+			Username:      testUser.Name,
+			Password:      pulumi.String(userPw),
+			AllowDeletion: pulumi.Bool(true),
+		}, pulumi.DependsOn([]pulumi.Resource{
+			clusterAdmin,
+			schemaRegistryAdmin,
+			clusterAction,
+			topicAccess,
+			allTestTopic,
+			describeRegistry,
+			alterConfigsRegistry,
+		}))
 		if err != nil {
 			return err
 		}
@@ -1168,12 +1813,13 @@ func main() {
 			userEventSchemaDefinition = param
 		}
 		userEventSchema, err := redpanda.NewSchema(ctx, "user_event_schema", &redpanda.SchemaArgs{
-			ClusterId:  testCluster.ID(),
-			Subject:    pulumi.Sprintf("%v-events-value", topicName),
-			SchemaType: pulumi.String(schemaType),
-			Schema:     pulumi.String(userEventSchemaDefinition),
-			Username:   testUser.Name,
-			Password:   pulumi.String(userPw),
+			ClusterId:     testCluster.ID(),
+			Subject:       pulumi.Sprintf("%v-events-value", topicName),
+			SchemaType:    pulumi.String(schemaType),
+			Schema:        pulumi.String(userEventSchemaDefinition),
+			Username:      testUser.Name,
+			Password:      pulumi.String(userPw),
+			AllowDeletion: pulumi.Bool(true),
 			References: redpanda.SchemaReferenceArray{
 				&redpanda.SchemaReferenceArgs{
 					Name:    pulumi.String("User"),
@@ -1181,7 +1827,15 @@ func main() {
 					Version: userSchema.Version,
 				},
 			},
-		})
+		}, pulumi.DependsOn([]pulumi.Resource{
+			clusterAdmin,
+			schemaRegistryAdmin,
+			clusterAction,
+			topicAccess,
+			allTestTopic,
+			describeRegistry,
+			alterConfigsRegistry,
+		}))
 		if err != nil {
 			return err
 		}
@@ -1244,22 +1898,56 @@ func main() {
 			Compatibility: pulumi.String(compatibilityLevel),
 			Username:      testUser.Name,
 			Password:      pulumi.String(userPw),
-		})
+			AllowDeletion: pulumi.Bool(true),
+		}, pulumi.DependsOn([]pulumi.Resource{
+			clusterAdmin,
+			schemaRegistryAdmin,
+			clusterAction,
+			topicAccess,
+			allTestTopic,
+			describeRegistry,
+			alterConfigsRegistry,
+		}))
 		if err != nil {
 			return err
 		}
-		_, err = redpanda.NewAcl(ctx, "test", &redpanda.AclArgs{
-			ResourceType:        pulumi.String("TOPIC"),
-			ResourceName:        testTopic.Name,
-			ResourcePatternType: pulumi.String("LITERAL"),
+		_, err = redpanda.NewSchemaRegistryAcl(ctx, "read_product", &redpanda.SchemaRegistryAclArgs{
+			ClusterId: testCluster.ID(),
 			Principal: testUser.Name.ApplyT(func(name string) (string, error) {
 				return fmt.Sprintf("User:%v", name), nil
 			}).(pulumi.StringOutput),
-			Host:           pulumi.String("*"),
-			Operation:      pulumi.String("READ"),
-			PermissionType: pulumi.String("ALLOW"),
-			ClusterApiUrl:  testCluster.ClusterApiUrl,
-		})
+			ResourceType:  pulumi.String("SUBJECT"),
+			ResourceName:  pulumi.String("product-"),
+			PatternType:   pulumi.String("PREFIXED"),
+			Host:          pulumi.String("*"),
+			Operation:     pulumi.String("READ"),
+			Permission:    pulumi.String("ALLOW"),
+			Username:      testUser.Name,
+			Password:      pulumi.String(userPw),
+			AllowDeletion: pulumi.Bool(true),
+		}, pulumi.DependsOn([]pulumi.Resource{
+			schemaRegistryAdmin,
+		}))
+		if err != nil {
+			return err
+		}
+		_, err = redpanda.NewSchemaRegistryAcl(ctx, "write_orders", &redpanda.SchemaRegistryAclArgs{
+			ClusterId: testCluster.ID(),
+			Principal: testUser.Name.ApplyT(func(name string) (string, error) {
+				return fmt.Sprintf("User:%v", name), nil
+			}).(pulumi.StringOutput),
+			ResourceType:  pulumi.String("SUBJECT"),
+			ResourceName:  pulumi.String("orders-value"),
+			PatternType:   pulumi.String("LITERAL"),
+			Host:          pulumi.String("*"),
+			Operation:     pulumi.String("WRITE"),
+			Permission:    pulumi.String("ALLOW"),
+			Username:      testUser.Name,
+			Password:      pulumi.String(userPw),
+			AllowDeletion: pulumi.Bool(true),
+		}, pulumi.DependsOn([]pulumi.Resource{
+			schemaRegistryAdmin,
+		}))
 		if err != nil {
 			return err
 		}
@@ -1468,6 +2156,9 @@ resources:
       region: ${region}
       clusterType: dedicated
       cidrBlock: 10.0.0.0/20
+      timeouts:
+        create: 20m
+        delete: 20m
   testCluster:
     type: redpanda:Cluster
     name: test
@@ -1482,8 +2173,14 @@ resources:
       throughputTier: ${throughputTier}
       zones: ${zones}
       allowDeletion: true
+      clusterConfiguration:
+        customPropertiesJson:
+          fn::toJSON:
+            schema_registry_enable_authorization: true
       tags:
         key: value
+      timeouts:
+        create: 90m
   testUser:
     type: redpanda:User
     name: test
@@ -1511,6 +2208,16 @@ resources:
       schema: ${userSchemaDefinition}
       username: ${testUser.name}
       password: ${userPw}
+      allowDeletion: true
+    options:
+      dependsOn:
+        - ${clusterAdmin}
+        - ${schemaRegistryAdmin}
+        - ${clusterAction}
+        - ${topicAccess}
+        - ${allTestTopic}
+        - ${describeRegistry}
+        - ${alterConfigsRegistry}
   userEventSchema:
     type: redpanda:Schema
     name: user_event_schema
@@ -1521,10 +2228,20 @@ resources:
       schema: ${userEventSchemaDefinition}
       username: ${testUser.name}
       password: ${userPw}
+      allowDeletion: true
       references:
         - name: User
           subject: ${userSchema.subject}
           version: ${userSchema.version}
+    options:
+      dependsOn:
+        - ${clusterAdmin}
+        - ${schemaRegistryAdmin}
+        - ${clusterAction}
+        - ${topicAccess}
+        - ${allTestTopic}
+        - ${describeRegistry}
+        - ${alterConfigsRegistry}
   productSchema:
     type: redpanda:Schema
     name: product_schema
@@ -1536,18 +2253,158 @@ resources:
       compatibility: ${compatibilityLevel}
       username: ${testUser.name}
       password: ${userPw}
-  testAcl:
+      allowDeletion: true
+    options:
+      dependsOn:
+        - ${clusterAdmin}
+        - ${schemaRegistryAdmin}
+        - ${clusterAction}
+        - ${topicAccess}
+        - ${allTestTopic}
+        - ${describeRegistry}
+        - ${alterConfigsRegistry}
+  clusterAdmin:
     type: redpanda:Acl
-    name: test
+    name: cluster_admin
     properties:
-      resourceType: TOPIC
-      resourceName: ${testTopic.name}
+      resourceType: CLUSTER
+      resourceName: kafka-cluster
       resourcePatternType: LITERAL
       principal: User:${testUser.name}
       host: '*'
-      operation: READ
+      operation: ALL
       permissionType: ALLOW
       clusterApiUrl: ${testCluster.clusterApiUrl}
+      allowDeletion: true
+  schemaRegistryAdmin:
+    type: redpanda:Acl
+    name: schema_registry_admin
+    properties:
+      resourceType: CLUSTER
+      resourceName: kafka-cluster
+      resourcePatternType: LITERAL
+      principal: User:${testUser.name}
+      host: '*'
+      operation: ALTER
+      permissionType: ALLOW
+      clusterApiUrl: ${testCluster.clusterApiUrl}
+      allowDeletion: true
+  clusterAction:
+    type: redpanda:Acl
+    name: cluster_action
+    properties:
+      resourceType: CLUSTER
+      resourceName: kafka-cluster
+      resourcePatternType: LITERAL
+      principal: User:${testUser.name}
+      host: '*'
+      operation: CLUSTER_ACTION
+      permissionType: ALLOW
+      clusterApiUrl: ${testCluster.clusterApiUrl}
+      allowDeletion: true
+  topicAccess:
+    type: redpanda:Acl
+    name: topic_access
+    properties:
+      resourceType: TOPIC
+      resourceName: ${topicName}
+      resourcePatternType: LITERAL
+      principal: User:${testUser.name}
+      host: '*'
+      operation: ALL
+      permissionType: ALLOW
+      clusterApiUrl: ${testCluster.clusterApiUrl}
+      allowDeletion: true
+  readProduct:
+    type: redpanda:SchemaRegistryAcl
+    name: read_product
+    properties:
+      clusterId: ${testCluster.id}
+      principal: User:${testUser.name}
+      resourceType: SUBJECT
+      resourceName: product-
+      patternType: PREFIXED
+      host: '*'
+      operation: READ
+      permission: ALLOW
+      username: ${testUser.name}
+      password: ${userPw}
+      allowDeletion: true
+    options:
+      dependsOn:
+        - ${schemaRegistryAdmin}
+  writeOrders:
+    type: redpanda:SchemaRegistryAcl
+    name: write_orders
+    properties:
+      clusterId: ${testCluster.id}
+      principal: User:${testUser.name}
+      resourceType: SUBJECT
+      resourceName: orders-value
+      patternType: LITERAL
+      host: '*'
+      operation: WRITE
+      permission: ALLOW
+      username: ${testUser.name}
+      password: ${userPw}
+      allowDeletion: true
+    options:
+      dependsOn:
+        - ${schemaRegistryAdmin}
+  allTestTopic:
+    type: redpanda:SchemaRegistryAcl
+    name: all_test_topic
+    properties:
+      clusterId: ${testCluster.id}
+      principal: User:${testUser.name}
+      resourceType: SUBJECT
+      resourceName: ${topicName}-
+      patternType: PREFIXED
+      host: '*'
+      operation: ALL
+      permission: ALLOW
+      username: ${testUser.name}
+      password: ${userPw}
+      allowDeletion: true
+    options:
+      dependsOn:
+        - ${schemaRegistryAdmin}
+  describeRegistry:
+    type: redpanda:SchemaRegistryAcl
+    name: describe_registry
+    properties:
+      clusterId: ${testCluster.id}
+      principal: User:${testUser.name}
+      resourceType: REGISTRY
+      resourceName: '*'
+      patternType: LITERAL
+      host: '*'
+      operation: DESCRIBE
+      permission: ALLOW
+      username: ${testUser.name}
+      password: ${userPw}
+      allowDeletion: true
+    options:
+      dependsOn:
+        - ${schemaRegistryAdmin}
+  alterConfigsRegistry:
+    type: redpanda:SchemaRegistryAcl
+    name: alter_configs_registry
+    properties:
+      clusterId: ${testCluster.id}
+      principal: User:${testUser.name}
+      resourceType: REGISTRY
+      resourceName: '*'
+      patternType: LITERAL
+      host: '*'
+      operation: ALTER_CONFIGS
+      permission: ALLOW
+      username: ${testUser.name}
+      password: ${userPw}
+      allowDeletion: true
+    options:
+      dependsOn:
+        - ${schemaRegistryAdmin}
 outputs:
   userSchemaInfo:
     id: ${userSchema.schemaId}
@@ -1585,17 +2442,24 @@ import com.pulumi.redpanda.ResourceGroup;
 import com.pulumi.redpanda.ResourceGroupArgs;
 import com.pulumi.redpanda.Network;
 import com.pulumi.redpanda.NetworkArgs;
+import com.pulumi.redpanda.inputs.NetworkTimeoutsArgs;
 import com.pulumi.redpanda.Cluster;
 import com.pulumi.redpanda.ClusterArgs;
+import com.pulumi.redpanda.inputs.ClusterClusterConfigurationArgs;
+import com.pulumi.redpanda.inputs.ClusterTimeoutsArgs;
 import com.pulumi.redpanda.User;
 import com.pulumi.redpanda.UserArgs;
 import com.pulumi.redpanda.Topic;
 import com.pulumi.redpanda.TopicArgs;
+import com.pulumi.redpanda.Acl;
+import com.pulumi.redpanda.AclArgs;
+import com.pulumi.redpanda.SchemaRegistryAcl;
+import com.pulumi.redpanda.SchemaRegistryAclArgs;
 import com.pulumi.redpanda.Schema;
 import com.pulumi.redpanda.SchemaArgs;
 import com.pulumi.redpanda.inputs.SchemaReferenceArgs;
-import com.pulumi.redpanda.Acl;
-import com.pulumi.redpanda.AclArgs;
+import static com.pulumi.codegen.internal.Serialization.*;
+import com.pulumi.resources.CustomResourceOptions;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
@@ -1625,6 +2489,10 @@ public class App {
             .region(region)
             .clusterType("dedicated")
             .cidrBlock("10.0.0.0/20")
+            .timeouts(NetworkTimeoutsArgs.builder()
+                .create("20m")
+                .delete("20m")
+                .build())
             .build());
 
         final var clusterName = config.get("clusterName").orElse("testname");
@@ -1644,7 +2512,16 @@ public class App {
             .throughputTier(throughputTier)
             .zones(zones)
             .allowDeletion(true)
+            .clusterConfiguration(ClusterClusterConfigurationArgs.builder()
+                .customPropertiesJson(serializeJson(
+                    jsonObject(
+                        jsonProperty("schema_registry_enable_authorization", true)
+                    )))
+                .build())
             .tags(Map.of("key", "value"))
+            .timeouts(ClusterTimeoutsArgs.builder()
+                .create("90m")
+                .build())
             .build());
 
         final var userName = config.get("userName").orElse("test-username");
@@ -1667,6 +2544,102 @@ public class App {
             .clusterApiUrl(testCluster.clusterApiUrl())
             .allowDeletion(true)
             .build());
+
+        var clusterAdmin = new Acl("clusterAdmin", AclArgs.builder()
+            .resourceType("CLUSTER")
+            .resourceName("kafka-cluster")
+            .resourcePatternType("LITERAL")
+            .principal(testUser.name().applyValue(name -> String.format("User:%s", name)))
+            .host("*")
+            .operation("ALL")
+            .permissionType("ALLOW")
+            .clusterApiUrl(testCluster.clusterApiUrl())
+            .allowDeletion(true)
+            .build());
+
+        var schemaRegistryAdmin = new Acl("schemaRegistryAdmin", AclArgs.builder()
+            .resourceType("CLUSTER")
+            .resourceName("kafka-cluster")
+            .resourcePatternType("LITERAL")
+            .principal(testUser.name().applyValue(name -> String.format("User:%s", name)))
+            .host("*")
+            .operation("ALTER")
+            .permissionType("ALLOW")
+            .clusterApiUrl(testCluster.clusterApiUrl())
+            .allowDeletion(true)
+            .build());
+
+        var clusterAction = new Acl("clusterAction", AclArgs.builder()
+            .resourceType("CLUSTER")
+            .resourceName("kafka-cluster")
+            .resourcePatternType("LITERAL")
+            .principal(testUser.name().applyValue(name -> String.format("User:%s", name)))
+            .host("*")
+            .operation("CLUSTER_ACTION")
+            .permissionType("ALLOW")
+            .clusterApiUrl(testCluster.clusterApiUrl())
+            .allowDeletion(true)
+            .build());
+
+        var topicAccess = new Acl("topicAccess", AclArgs.builder()
+            .resourceType("TOPIC")
+            .resourceName(topicName)
+            .resourcePatternType("LITERAL")
+            .principal(testUser.name().applyValue(name -> String.format("User:%s", name)))
+            .host("*")
+            .operation("ALL")
+            .permissionType("ALLOW")
+            .clusterApiUrl(testCluster.clusterApiUrl())
+            .allowDeletion(true)
+            .build());
+
+        var allTestTopic = new SchemaRegistryAcl("allTestTopic", SchemaRegistryAclArgs.builder()
+            .clusterId(testCluster.id())
+            .principal(testUser.name().applyValue(name -> String.format("User:%s", name)))
+            .resourceType("SUBJECT")
+            .resourceName(String.format("%s-", topicName))
+            .patternType("PREFIXED")
+            .host("*")
+            .operation("ALL")
+            .permission("ALLOW")
+            .username(testUser.name())
+            .password(userPw)
+            .allowDeletion(true)
+            .build(), CustomResourceOptions.builder()
+                .dependsOn(schemaRegistryAdmin)
+                .build());
+
+        var describeRegistry = new SchemaRegistryAcl("describeRegistry", SchemaRegistryAclArgs.builder()
+            .clusterId(testCluster.id())
+            .principal(testUser.name().applyValue(name -> String.format("User:%s", name)))
+            .resourceType("REGISTRY")
+            .resourceName("*")
+            .patternType("LITERAL")
+            .host("*")
+            .operation("DESCRIBE")
+            .permission("ALLOW")
+            .username(testUser.name())
+            .password(userPw)
+            .allowDeletion(true)
+            .build(), CustomResourceOptions.builder()
+                .dependsOn(schemaRegistryAdmin)
+                .build());
+
+        var alterConfigsRegistry = new SchemaRegistryAcl("alterConfigsRegistry", SchemaRegistryAclArgs.builder()
+            .clusterId(testCluster.id())
+            .principal(testUser.name().applyValue(name -> String.format("User:%s", name)))
+            .resourceType("REGISTRY")
+            .resourceName("*")
+            .patternType("LITERAL")
+            .host("*")
+            .operation("ALTER_CONFIGS")
+            .permission("ALLOW")
+            .username(testUser.name())
+            .password(userPw)
+            .allowDeletion(true)
+            .build(), CustomResourceOptions.builder()
+                .dependsOn(schemaRegistryAdmin)
+                .build());
 
         final var schemaType = config.get("schemaType").orElse("AVRO");
         final var userSchemaDefinition = config.get("userSchemaDefinition").orElse("""
@@ -1701,7 +2674,17 @@ public class App {
             .schema(userSchemaDefinition)
             .username(testUser.name())
             .password(userPw)
-            .build());
+            .allowDeletion(true)
+            .build(), CustomResourceOptions.builder()
+                .dependsOn(
+                    clusterAdmin,
+                    schemaRegistryAdmin,
+                    clusterAction,
+                    topicAccess,
+                    allTestTopic,
+                    describeRegistry,
+                    alterConfigsRegistry)
+                .build());
 
         final var userEventSchemaDefinition = config.get("userEventSchemaDefinition").orElse("""
 {
@@ -1747,12 +2730,22 @@ public class App {
             .schema(userEventSchemaDefinition)
             .username(testUser.name())
             .password(userPw)
+            .allowDeletion(true)
             .references(SchemaReferenceArgs.builder()
                 .name("User")
                 .subject(userSchema.subject())
                 .version(userSchema.version())
                 .build())
-            .build());
+            .build(), CustomResourceOptions.builder()
+                .dependsOn(
+                    clusterAdmin,
+                    schemaRegistryAdmin,
+                    clusterAction,
+                    topicAccess,
+                    allTestTopic,
+                    describeRegistry,
+                    alterConfigsRegistry)
+                .build());
 
         final var productSchemaDefinition = config.get("productSchemaDefinition").orElse("""
 {
@@ -1806,18 +2799,49 @@ public class App {
             .compatibility(compatibilityLevel)
             .username(testUser.name())
             .password(userPw)
-            .build());
+            .allowDeletion(true)
+            .build(), CustomResourceOptions.builder()
+                .dependsOn(
+                    clusterAdmin,
+                    schemaRegistryAdmin,
+                    clusterAction,
+                    topicAccess,
+                    allTestTopic,
+                    describeRegistry,
+                    alterConfigsRegistry)
+                .build());
 
-        var testAcl = new Acl("testAcl", AclArgs.builder()
-            .resourceType("TOPIC")
-            .resourceName(testTopic.name())
-            .resourcePatternType("LITERAL")
+        var readProduct = new SchemaRegistryAcl("readProduct", SchemaRegistryAclArgs.builder()
+            .clusterId(testCluster.id())
             .principal(testUser.name().applyValue(name -> String.format("User:%s", name)))
+            .resourceType("SUBJECT")
+            .resourceName("product-")
+            .patternType("PREFIXED")
             .host("*")
             .operation("READ")
-            .permissionType("ALLOW")
-            .clusterApiUrl(testCluster.clusterApiUrl())
-            .build());
+            .permission("ALLOW")
+            .username(testUser.name())
+            .password(userPw)
+            .allowDeletion(true)
+            .build(), CustomResourceOptions.builder()
+                .dependsOn(schemaRegistryAdmin)
+                .build());
+
+        var writeOrders = new SchemaRegistryAcl("writeOrders", SchemaRegistryAclArgs.builder()
+            .clusterId(testCluster.id())
+            .principal(testUser.name().applyValue(name -> String.format("User:%s", name)))
+            .resourceType("SUBJECT")
+            .resourceName("orders-value")
+            .patternType("LITERAL")
+            .host("*")
+            .operation("WRITE")
+            .permission("ALLOW")
+            .username(testUser.name())
+            .password(userPw)
+            .allowDeletion(true)
+            .build(), CustomResourceOptions.builder()
+                .dependsOn(schemaRegistryAdmin)
+                .build());
 
         ctx.export("userSchemaInfo", Map.ofEntries(
             Map.entry("id", userSchema.schemaId()),
@@ -1859,9 +2883,9 @@ import * as pulumi from "@pulumi/pulumi";
 import * as redpanda from "@pulumi/redpanda";
 
 const config = new pulumi.Config();
-const resourceGroupName = config.get("resourceGroupName") || "";
+const resourceGroupName = config.get("resourceGroupName") || "testname";
 const test = new redpanda.ResourceGroup("test", {name: resourceGroupName});
-const networkName = config.get("networkName") || "";
+const networkName = config.get("networkName") || "testname";
 const region = config.get("region") || "us-central1";
 const cloudProvider = config.get("cloudProvider") || "gcp";
 const testNetwork = new redpanda.Network("test", {
@@ -1871,8 +2895,12 @@ const testNetwork = new redpanda.Network("test", {
     region: region,
     clusterType: "dedicated",
     cidrBlock: "10.0.0.0/20",
+    timeouts: {
+        create: "20m",
+        "delete": "20m",
+    },
 });
-const clusterName = config.get("clusterName") || "";
+const clusterName = config.get("clusterName") || "testname";
 const zones = config.getObject("zones") || [
     "us-central1-a",
     "us-central1-b",
@@ -1890,6 +2918,14 @@ const testCluster = new redpanda.Cluster("test", {
     throughputTier: throughputTier,
     zones: zones,
     allowDeletion: true,
+    clusterConfiguration: {
+        customPropertiesJson: JSON.stringify({
+            schema_registry_enable_authorization: true,
+        }),
+    },
+    timeouts: {
+        create: "90m",
+    },
 });
 const userName = config.get("userName") || "test-username";
 const userPw = config.get("userPw") || "password";
@@ -1907,6 +2943,17 @@ const testTopic = new redpanda.Topic("test", {
     name: topicName,
     partitionCount: partitionCount,
     replicationFactor: replicationFactor,
+    clusterApiUrl: testCluster.clusterApiUrl,
+    allowDeletion: true,
+});
+const schemaRegistryAdmin = new redpanda.Acl("schema_registry_admin", {
+    resourceType: "CLUSTER",
+    resourceName: "kafka-cluster",
+    resourcePatternType: "LITERAL",
+    principal: pulumi.interpolate`User:${testUser.name}`,
+    host: "*",
+    operation: "ALTER",
+    permissionType: "ALLOW",
     clusterApiUrl: testCluster.clusterApiUrl,
     allowDeletion: true,
 });
@@ -1937,6 +2984,51 @@ const userSchemaDefinition = config.get("userSchemaDefinition") || `{
   ]
 }
 `;
+const allTestTopic = new redpanda.SchemaRegistryAcl("all_test_topic", {
+    clusterId: testCluster.id,
+    principal: pulumi.interpolate`User:${testUser.name}`,
+    resourceType: "SUBJECT",
+    resourceName: `${topicName}-`,
+    patternType: "PREFIXED",
+    host: "*",
+    operation: "ALL",
+    permission: "ALLOW",
+    username: testUser.name,
+    password: userPw,
+    allowDeletion: true,
+}, {
+    dependsOn: [schemaRegistryAdmin],
+});
+const describeRegistry = new redpanda.SchemaRegistryAcl("describe_registry", {
+    clusterId: testCluster.id,
+    principal: pulumi.interpolate`User:${testUser.name}`,
+    resourceType: "REGISTRY",
+    resourceName: "*",
+    patternType: "LITERAL",
+    host: "*",
+    operation: "DESCRIBE",
+    permission: "ALLOW",
+    username: testUser.name,
+    password: userPw,
+    allowDeletion: true,
+}, {
+    dependsOn: [schemaRegistryAdmin],
+});
+const alterConfigsRegistry = new redpanda.SchemaRegistryAcl("alter_configs_registry", {
+    clusterId: testCluster.id,
+    principal: pulumi.interpolate`User:${testUser.name}`,
+    resourceType: "REGISTRY",
+    resourceName: "*",
+    patternType: "LITERAL",
+    host: "*",
+    operation: "ALTER_CONFIGS",
+    permission: "ALLOW",
+    username: testUser.name,
+    password: userPw,
+    allowDeletion: true,
+}, {
+    dependsOn: [schemaRegistryAdmin],
+});
 const userSchema = new redpanda.Schema("user_schema", {
     clusterId: testCluster.id,
     subject: `${topicName}-value`,
@@ -1944,6 +3036,14 @@ const userSchema = new redpanda.Schema("user_schema", {
     schema: userSchemaDefinition,
     username: testUser.name,
     password: userPw,
+    allowDeletion: true,
+}, {
+    dependsOn: [
+        schemaRegistryAdmin,
+        allTestTopic,
+        describeRegistry,
+        alterConfigsRegistry,
+    ],
 });
 // The AVRO schema definition for user events that references the User schema
 const userEventSchemaDefinition = config.get("userEventSchemaDefinition") || `{
@@ -1989,11 +3089,19 @@ const userEventSchema = new redpanda.Schema("user_event_schema", {
     schema: userEventSchemaDefinition,
     username: testUser.name,
     password: userPw,
+    allowDeletion: true,
     references: [{
         name: "User",
         subject: userSchema.subject,
         version: userSchema.version,
     }],
+}, {
+    dependsOn: [
+        schemaRegistryAdmin,
+        allTestTopic,
+        describeRegistry,
+        alterConfigsRegistry,
+    ],
 });
 // The AVRO schema definition for product data with strict compatibility
 const productSchemaDefinition = config.get("productSchemaDefinition") || `{
@@ -2048,17 +3156,91 @@ const productSchema = new redpanda.Schema("product_schema", {
     compatibility: compatibilityLevel,
     username: testUser.name,
     password: userPw,
+    allowDeletion: true,
+}, {
+    dependsOn: [
+        schemaRegistryAdmin,
+        allTestTopic,
+        describeRegistry,
+        alterConfigsRegistry,
+    ],
 });
-const testAcl = new redpanda.Acl("test", {
-    resourceType: "TOPIC",
-    resourceName: testTopic.name,
+const clusterAdmin = new redpanda.Acl("cluster_admin", {
+    resourceType: "CLUSTER",
+    resourceName: "kafka-cluster",
     resourcePatternType: "LITERAL",
     principal: pulumi.interpolate`User:${testUser.name}`,
     host: "*",
-    operation: "READ",
+    operation: "ALL",
     permissionType: "ALLOW",
     clusterApiUrl: testCluster.clusterApiUrl,
+    allowDeletion: true,
 });
+const readProduct = new redpanda.SchemaRegistryAcl("read_product", {
+    clusterId: testCluster.id,
+    principal: pulumi.interpolate`User:${testUser.name}`,
+    resourceType: "SUBJECT",
+    resourceName: "product-",
+    patternType: "PREFIXED",
+    host: "*",
+    operation: "READ",
+    permission: "ALLOW",
+    username: testUser.name,
+    password: userPw,
+    allowDeletion: true,
+}, {
+    dependsOn: [schemaRegistryAdmin],
+});
+const writeOrders = new redpanda.SchemaRegistryAcl("write_orders", {
+    clusterId: testCluster.id,
+    principal: pulumi.interpolate`User:${testUser.name}`,
+    resourceType: "SUBJECT",
+    resourceName: "orders-value",
+    patternType: "LITERAL",
+    host: "*",
+    operation: "WRITE",
+    permission: "ALLOW",
+    username: testUser.name,
+    password: userPw,
+    allowDeletion: true,
+}, {
+    dependsOn: [schemaRegistryAdmin],
+});
+const describeTestTopic = new redpanda.SchemaRegistryAcl("describe_test_topic", {
+    clusterId: testCluster.id,
+    principal: pulumi.interpolate`User:${testUser.name}`,
+    resourceType: "SUBJECT",
+    resourceName: `${topicName}-`,
+    patternType: "PREFIXED",
+    host: "*",
+    operation: "DESCRIBE",
+    permission: "ALLOW",
+    username: testUser.name,
+    password: userPw,
+    allowDeletion: true,
+}, {
+    dependsOn: [schemaRegistryAdmin],
+});
+export const userSchemaInfo = {
+    id: userSchema.schemaId,
+    subject: userSchema.subject,
+    version: userSchema.version,
+    type: userSchema.schemaType,
+};
+export const userEventSchemaInfo = {
+    id: userEventSchema.schemaId,
+    subject: userEventSchema.subject,
+    version: userEventSchema.version,
+    type: userEventSchema.schemaType,
+    references: userEventSchema.references,
+};
+export const productSchemaInfo = {
+    id: productSchema.schemaId,
+    subject: productSchema.subject,
+    version: productSchema.version,
+    type: productSchema.schemaType,
+    compatibility: productSchema.compatibility,
+};
 ```
 {{% /choosable %}}
 {{% choosable language python %}}
@@ -2070,16 +3252,17 @@ runtime: python
 ```
 ```python
 import pulumi
+import json
 import pulumi_redpanda as redpanda
 
 config = pulumi.Config()
 resource_group_name = config.get("resourceGroupName")
 if resource_group_name is None:
-    resource_group_name = ""
+    resource_group_name = "testname"
 test = redpanda.ResourceGroup("test", name=resource_group_name)
 network_name = config.get("networkName")
 if network_name is None:
-    network_name = ""
+    network_name = "testname"
 region = config.get("region")
 if region is None:
     region = "us-central1"
@@ -2092,10 +3275,14 @@ test_network = redpanda.Network("test",
     cloud_provider=cloud_provider,
     region=region,
     cluster_type="dedicated",
-    cidr_block="10.0.0.0/20")
+    cidr_block="10.0.0.0/20",
+    timeouts={
+        "create": "20m",
+        "delete": "20m",
+    })
 cluster_name = config.get("clusterName")
 if cluster_name is None:
-    cluster_name = ""
+    cluster_name = "testname"
 zones = config.get_object("zones")
 if zones is None:
     zones = [
@@ -2116,7 +3303,15 @@ test_cluster = redpanda.Cluster("test",
     connection_type="public",
     throughput_tier=throughput_tier,
     zones=zones,
-    allow_deletion=True)
+    allow_deletion=True,
+    cluster_configuration={
+        "custom_properties_json": json.dumps({
+            "schema_registry_enable_authorization": True,
+        }),
+    },
+    timeouts={
+        "create": "90m",
+    })
 user_name = config.get("userName")
 if user_name is None:
     user_name = "test-username"
@@ -2144,6 +3339,16 @@ test_topic = redpanda.Topic("test",
     name=topic_name,
     partition_count=partition_count,
     replication_factor=replication_factor,
+    cluster_api_url=test_cluster.cluster_api_url,
+    allow_deletion=True)
+schema_registry_admin = redpanda.Acl("schema_registry_admin",
+    resource_type="CLUSTER",
+    resource_name_="kafka-cluster",
+    resource_pattern_type="LITERAL",
+    principal=test_user.name.apply(lambda name: f"User:{name}"),
+    host="*",
+    operation="ALTER",
+    permission_type="ALLOW",
     cluster_api_url=test_cluster.cluster_api_url,
     allow_deletion=True)
 # The type of schema (AVRO, JSON, PROTOBUF)
@@ -2177,13 +3382,59 @@ if user_schema_definition is None:
   ]
 }
 """
+all_test_topic = redpanda.SchemaRegistryAcl("all_test_topic",
+    cluster_id=test_cluster.id,
+    principal=test_user.name.apply(lambda name: f"User:{name}"),
+    resource_type="SUBJECT",
+    resource_name_=f"{topic_name}-",
+    pattern_type="PREFIXED",
+    host="*",
+    operation="ALL",
+    permission="ALLOW",
+    username=test_user.name,
+    password=user_pw,
+    allow_deletion=True,
+    opts = pulumi.ResourceOptions(depends_on=[schema_registry_admin]))
+describe_registry = redpanda.SchemaRegistryAcl("describe_registry",
+    cluster_id=test_cluster.id,
+    principal=test_user.name.apply(lambda name: f"User:{name}"),
+    resource_type="REGISTRY",
+    resource_name_="*",
+    pattern_type="LITERAL",
+    host="*",
+    operation="DESCRIBE",
+    permission="ALLOW",
+    username=test_user.name,
+    password=user_pw,
+    allow_deletion=True,
+    opts = pulumi.ResourceOptions(depends_on=[schema_registry_admin]))
+alter_configs_registry = redpanda.SchemaRegistryAcl("alter_configs_registry",
+    cluster_id=test_cluster.id,
+    principal=test_user.name.apply(lambda name: f"User:{name}"),
+    resource_type="REGISTRY",
+    resource_name_="*",
+    pattern_type="LITERAL",
+    host="*",
+    operation="ALTER_CONFIGS",
+    permission="ALLOW",
+    username=test_user.name,
+    password=user_pw,
+    allow_deletion=True,
+    opts = pulumi.ResourceOptions(depends_on=[schema_registry_admin]))
 user_schema = redpanda.Schema("user_schema",
     cluster_id=test_cluster.id,
     subject=f"{topic_name}-value",
     schema_type=schema_type,
     schema=user_schema_definition,
     username=test_user.name,
-    password=user_pw)
+    password=user_pw,
+    allow_deletion=True,
+    opts = pulumi.ResourceOptions(depends_on=[
+            schema_registry_admin,
+            all_test_topic,
+            describe_registry,
+            alter_configs_registry,
+        ]))
 # The AVRO schema definition for user events that references the User schema
 user_event_schema_definition = config.get("userEventSchemaDefinition")
 if user_event_schema_definition is None:
@@ -2230,11 +3481,18 @@ user_event_schema = redpanda.Schema("user_event_schema",
     schema=user_event_schema_definition,
     username=test_user.name,
     password=user_pw,
+    allow_deletion=True,
     references=[{
         "name": "User",
         "subject": user_schema.subject,
         "version": user_schema.version,
-    }])
+    }],
+    opts = pulumi.ResourceOptions(depends_on=[
+            schema_registry_admin,
+            all_test_topic,
+            describe_registry,
+            alter_configs_registry,
+        ]))
 # The AVRO schema definition for product data with strict compatibility
 product_schema_definition = config.get("productSchemaDefinition")
 if product_schema_definition is None:
@@ -2291,16 +3549,83 @@ product_schema = redpanda.Schema("product_schema",
     schema=product_schema_definition,
     compatibility=compatibility_level,
     username=test_user.name,
-    password=user_pw)
-test_acl = redpanda.Acl("test",
-    resource_type="TOPIC",
-    resource_name_=test_topic.name,
+    password=user_pw,
+    allow_deletion=True,
+    opts = pulumi.ResourceOptions(depends_on=[
+            schema_registry_admin,
+            all_test_topic,
+            describe_registry,
+            alter_configs_registry,
+        ]))
+cluster_admin = redpanda.Acl("cluster_admin",
+    resource_type="CLUSTER",
+    resource_name_="kafka-cluster",
     resource_pattern_type="LITERAL",
     principal=test_user.name.apply(lambda name: f"User:{name}"),
     host="*",
-    operation="READ",
+    operation="ALL",
     permission_type="ALLOW",
-    cluster_api_url=test_cluster.cluster_api_url)
+    cluster_api_url=test_cluster.cluster_api_url,
+    allow_deletion=True)
+read_product = redpanda.SchemaRegistryAcl("read_product",
+    cluster_id=test_cluster.id,
+    principal=test_user.name.apply(lambda name: f"User:{name}"),
+    resource_type="SUBJECT",
+    resource_name_="product-",
+    pattern_type="PREFIXED",
+    host="*",
+    operation="READ",
+    permission="ALLOW",
+    username=test_user.name,
+    password=user_pw,
+    allow_deletion=True,
+    opts = pulumi.ResourceOptions(depends_on=[schema_registry_admin]))
+write_orders = redpanda.SchemaRegistryAcl("write_orders",
+    cluster_id=test_cluster.id,
+    principal=test_user.name.apply(lambda name: f"User:{name}"),
+    resource_type="SUBJECT",
+    resource_name_="orders-value",
+    pattern_type="LITERAL",
+    host="*",
+    operation="WRITE",
+    permission="ALLOW",
+    username=test_user.name,
+    password=user_pw,
+    allow_deletion=True,
+    opts = pulumi.ResourceOptions(depends_on=[schema_registry_admin]))
+describe_test_topic = redpanda.SchemaRegistryAcl("describe_test_topic",
+    cluster_id=test_cluster.id,
+    principal=test_user.name.apply(lambda name: f"User:{name}"),
+    resource_type="SUBJECT",
+    resource_name_=f"{topic_name}-",
+    pattern_type="PREFIXED",
+    host="*",
+    operation="DESCRIBE",
+    permission="ALLOW",
+    username=test_user.name,
+    password=user_pw,
+    allow_deletion=True,
+    opts = pulumi.ResourceOptions(depends_on=[schema_registry_admin]))
+pulumi.export("userSchemaInfo", {
+    "id": user_schema.schema_id,
+    "subject": user_schema.subject,
+    "version": user_schema.version,
+    "type": user_schema.schema_type,
+})
+pulumi.export("userEventSchemaInfo", {
+    "id": user_event_schema.schema_id,
+    "subject": user_event_schema.subject,
+    "version": user_event_schema.version,
+    "type": user_event_schema.schema_type,
+    "references": user_event_schema.references,
+})
+pulumi.export("productSchemaInfo", {
+    "id": product_schema.schema_id,
+    "subject": product_schema.subject,
+    "version": product_schema.version,
+    "type": product_schema.schema_type,
+    "compatibility": product_schema.compatibility,
+})
 ```
 {{% /choosable %}}
 {{% choosable language csharp %}}
@@ -2313,19 +3638,20 @@ runtime: dotnet
 ```csharp
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using Pulumi;
 using Redpanda = Pulumi.Redpanda;
 
 return await Deployment.RunAsync(() =>
 {
     var config = new Config();
-    var resourceGroupName = config.Get("resourceGroupName") ?? "";
+    var resourceGroupName = config.Get("resourceGroupName") ?? "testname";
     var test = new Redpanda.ResourceGroup("test", new()
     {
         Name = resourceGroupName,
     });
 
-    var networkName = config.Get("networkName") ?? "";
+    var networkName = config.Get("networkName") ?? "testname";
     var region = config.Get("region") ?? "us-central1";
     var cloudProvider = config.Get("cloudProvider") ?? "gcp";
     var testNetwork = new Redpanda.Network("test", new()
@@ -2336,9 +3662,14 @@ return await Deployment.RunAsync(() =>
         Region = region,
         ClusterType = "dedicated",
         CidrBlock = "10.0.0.0/20",
+        Timeouts = new Redpanda.Inputs.NetworkTimeoutsArgs
+        {
+            Create = "20m",
+            Delete = "20m",
+        },
     });
 
-    var clusterName = config.Get("clusterName") ?? "";
+    var clusterName = config.Get("clusterName") ?? "testname";
     var zones = config.GetObject<dynamic>("zones") ?? new[]
     {
         "us-central1-a",
@@ -2358,6 +3689,17 @@ return await Deployment.RunAsync(() =>
         ThroughputTier = throughputTier,
         Zones = zones,
         AllowDeletion = true,
+        ClusterConfiguration = new Redpanda.Inputs.ClusterClusterConfigurationArgs
+        {
+            CustomPropertiesJson = JsonSerializer.Serialize(new Dictionary<string, object?>
+            {
+                ["schema_registry_enable_authorization"] = true,
+            }),
+        },
+        Timeouts = new Redpanda.Inputs.ClusterTimeoutsArgs
+        {
+            Create = "90m",
+        },
     });
 
     var userName = config.Get("userName") ?? "test-username";
@@ -2379,6 +3721,19 @@ return await Deployment.RunAsync(() =>
         Name = topicName,
         PartitionCount = partitionCount,
         ReplicationFactor = replicationFactor,
+        ClusterApiUrl = testCluster.ClusterApiUrl,
+        AllowDeletion = true,
+    });
+
+    var schemaRegistryAdmin = new Redpanda.Acl("schema_registry_admin", new()
+    {
+        ResourceType = "CLUSTER",
+        ResourceName = "kafka-cluster",
+        ResourcePatternType = "LITERAL",
+        Principal = testUser.Name.Apply(name => $"User:{name}"),
+        Host = "*",
+        Operation = "ALTER",
+        PermissionType = "ALLOW",
         ClusterApiUrl = testCluster.ClusterApiUrl,
         AllowDeletion = true,
     });
@@ -2410,6 +3765,69 @@ return await Deployment.RunAsync(() =>
   ]
 }
 ";
+    var allTestTopic = new Redpanda.SchemaRegistryAcl("all_test_topic", new()
+    {
+        ClusterId = testCluster.Id,
+        Principal = testUser.Name.Apply(name => $"User:{name}"),
+        ResourceType = "SUBJECT",
+        ResourceName = $"{topicName}-",
+        PatternType = "PREFIXED",
+        Host = "*",
+        Operation = "ALL",
+        Permission = "ALLOW",
+        Username = testUser.Name,
+        Password = userPw,
+        AllowDeletion = true,
+    }, new CustomResourceOptions
+    {
+        DependsOn =
+        {
+            schemaRegistryAdmin,
+        },
+    });
+
+    var describeRegistry = new Redpanda.SchemaRegistryAcl("describe_registry", new()
+    {
+        ClusterId = testCluster.Id,
+        Principal = testUser.Name.Apply(name => $"User:{name}"),
+        ResourceType = "REGISTRY",
+        ResourceName = "*",
+        PatternType = "LITERAL",
+        Host = "*",
+        Operation = "DESCRIBE",
+        Permission = "ALLOW",
+        Username = testUser.Name,
+        Password = userPw,
+        AllowDeletion = true,
+    }, new CustomResourceOptions
+    {
+        DependsOn =
+        {
+            schemaRegistryAdmin,
+        },
+    });
+
+    var alterConfigsRegistry = new Redpanda.SchemaRegistryAcl("alter_configs_registry", new()
+    {
+        ClusterId = testCluster.Id,
+        Principal = testUser.Name.Apply(name => $"User:{name}"),
+        ResourceType = "REGISTRY",
+        ResourceName = "*",
+        PatternType = "LITERAL",
+        Host = "*",
+        Operation = "ALTER_CONFIGS",
+        Permission = "ALLOW",
+        Username = testUser.Name,
+        Password = userPw,
+        AllowDeletion = true,
+    }, new CustomResourceOptions
+    {
+        DependsOn =
+        {
+            schemaRegistryAdmin,
+        },
+    });
+
     var userSchema = new Redpanda.Schema("user_schema", new()
     {
         ClusterId = testCluster.Id,
@@ -2418,6 +3836,16 @@ return await Deployment.RunAsync(() =>
         Schema = userSchemaDefinition,
         Username = testUser.Name,
         Password = userPw,
+        AllowDeletion = true,
+    }, new CustomResourceOptions
+    {
+        DependsOn =
+        {
+            schemaRegistryAdmin,
+            allTestTopic,
+            describeRegistry,
+            alterConfigsRegistry,
+        },
     });
 
     // The AVRO schema definition for user events that references the User schema
@@ -2465,6 +3893,7 @@ return await Deployment.RunAsync(() =>
         Schema = userEventSchemaDefinition,
         Username = testUser.Name,
         Password = userPw,
+        AllowDeletion = true,
         References = new[]
         {
             new Redpanda.Inputs.SchemaReferenceArgs
@@ -2473,6 +3902,15 @@ return await Deployment.RunAsync(() =>
                 Subject = userSchema.Subject,
                 Version = userSchema.Version,
             },
+        },
+    }, new CustomResourceOptions
+    {
+        DependsOn =
+        {
+            schemaRegistryAdmin,
+            allTestTopic,
+            describeRegistry,
+            alterConfigsRegistry,
         },
     });
 
@@ -2530,20 +3968,120 @@ return await Deployment.RunAsync(() =>
         Compatibility = compatibilityLevel,
         Username = testUser.Name,
         Password = userPw,
+        AllowDeletion = true,
+    }, new CustomResourceOptions
+    {
+        DependsOn =
+        {
+            schemaRegistryAdmin,
+            allTestTopic,
+            describeRegistry,
+            alterConfigsRegistry,
+        },
     });
 
-    var testAcl = new Redpanda.Acl("test", new()
+    var clusterAdmin = new Redpanda.Acl("cluster_admin", new()
     {
-        ResourceType = "TOPIC",
-        ResourceName = testTopic.Name,
+        ResourceType = "CLUSTER",
+        ResourceName = "kafka-cluster",
         ResourcePatternType = "LITERAL",
         Principal = testUser.Name.Apply(name => $"User:{name}"),
         Host = "*",
-        Operation = "READ",
+        Operation = "ALL",
         PermissionType = "ALLOW",
         ClusterApiUrl = testCluster.ClusterApiUrl,
+        AllowDeletion = true,
     });
 
+    var readProduct = new Redpanda.SchemaRegistryAcl("read_product", new()
+    {
+        ClusterId = testCluster.Id,
+        Principal = testUser.Name.Apply(name => $"User:{name}"),
+        ResourceType = "SUBJECT",
+        ResourceName = "product-",
+        PatternType = "PREFIXED",
+        Host = "*",
+        Operation = "READ",
+        Permission = "ALLOW",
+        Username = testUser.Name,
+        Password = userPw,
+        AllowDeletion = true,
+    }, new CustomResourceOptions
+    {
+        DependsOn =
+        {
+            schemaRegistryAdmin,
+        },
+    });
+
+    var writeOrders = new Redpanda.SchemaRegistryAcl("write_orders", new()
+    {
+        ClusterId = testCluster.Id,
+        Principal = testUser.Name.Apply(name => $"User:{name}"),
+        ResourceType = "SUBJECT",
+        ResourceName = "orders-value",
+        PatternType = "LITERAL",
+        Host = "*",
+        Operation = "WRITE",
+        Permission = "ALLOW",
+        Username = testUser.Name,
+        Password = userPw,
+        AllowDeletion = true,
+    }, new CustomResourceOptions
+    {
+        DependsOn =
+        {
+            schemaRegistryAdmin,
+        },
+    });
+
+    var describeTestTopic = new Redpanda.SchemaRegistryAcl("describe_test_topic", new()
+    {
+        ClusterId = testCluster.Id,
+        Principal = testUser.Name.Apply(name => $"User:{name}"),
+        ResourceType = "SUBJECT",
+        ResourceName = $"{topicName}-",
+        PatternType = "PREFIXED",
+        Host = "*",
+        Operation = "DESCRIBE",
+        Permission = "ALLOW",
+        Username = testUser.Name,
+        Password = userPw,
+        AllowDeletion = true,
+    }, new CustomResourceOptions
+    {
+        DependsOn =
+        {
+            schemaRegistryAdmin,
+        },
+    });
+
+    return new Dictionary<string, object?>
+    {
+        ["userSchemaInfo"] =
+        {
+            { "id", userSchema.SchemaId },
+            { "subject", userSchema.Subject },
+            { "version", userSchema.Version },
+            { "type", userSchema.SchemaType },
+        },
+        ["userEventSchemaInfo"] =
+        {
+            { "id", userEventSchema.SchemaId },
+            { "subject", userEventSchema.Subject },
+            { "version", userEventSchema.Version },
+            { "type", userEventSchema.SchemaType },
+            { "references", userEventSchema.References },
+        },
+        ["productSchemaInfo"] =
+        {
+            { "id", productSchema.SchemaId },
+            { "subject", productSchema.Subject },
+            { "version", productSchema.Version },
+            { "type", productSchema.SchemaType },
+            { "compatibility", productSchema.Compatibility },
+        },
+    };
 });
 
 ```
@@ -2559,6 +4097,7 @@ runtime: go
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 
 	"github.com/pulumi/pulumi-pulumi-provider/sdks/go/redpanda/redpanda"
@@ -2569,7 +4108,7 @@ import (
 func main() {
 	pulumi.Run(func(ctx *pulumi.Context) error {
 		cfg := config.New(ctx, "")
-		resourceGroupName := ""
+		resourceGroupName := "testname"
 		if param := cfg.Get("resourceGroupName"); param != "" {
 			resourceGroupName = param
 		}
@@ -2579,7 +4118,7 @@ func main() {
 		if err != nil {
 			return err
 		}
-		networkName := ""
+		networkName := "testname"
 		if param := cfg.Get("networkName"); param != "" {
 			networkName = param
 		}
@@ -2598,11 +4137,15 @@ func main() {
 			Region:          pulumi.String(region),
 			ClusterType:     pulumi.String("dedicated"),
 			CidrBlock:       pulumi.String("10.0.0.0/20"),
+			Timeouts: &redpanda.NetworkTimeoutsArgs{
+				Create: pulumi.String("20m"),
+				Delete: pulumi.String("20m"),
+			},
 		})
 		if err != nil {
 			return err
 		}
-		clusterName := ""
+		clusterName := "testname"
 		if param := cfg.Get("clusterName"); param != "" {
 			clusterName = param
 		}
@@ -2618,6 +4161,13 @@ func main() {
 		if param := cfg.Get("throughputTier"); param != "" {
 			throughputTier = param
 		}
+		tmpJSON0, err := json.Marshal(map[string]interface{}{
+			"schema_registry_enable_authorization": true,
+		})
+		if err != nil {
+			return err
+		}
+		json0 := string(tmpJSON0)
 		testCluster, err := redpanda.NewCluster(ctx, "test", &redpanda.ClusterArgs{
 			Name:            pulumi.String(clusterName),
 			ResourceGroupId: test.ID(),
@@ -2629,6 +4179,12 @@ func main() {
 			ThroughputTier:  pulumi.String(throughputTier),
 			Zones:           pulumi.Any(zones),
 			AllowDeletion:   pulumi.Bool(true),
+			ClusterConfiguration: &redpanda.ClusterClusterConfigurationArgs{
+				CustomPropertiesJson: pulumi.String(json0),
+			},
+			Timeouts: &redpanda.ClusterTimeoutsArgs{
+				Create: pulumi.String("90m"),
+			},
 		})
 		if err != nil {
 			return err
@@ -2666,12 +4222,28 @@ func main() {
 		if param := cfg.GetFloat64("replicationFactor"); param != 0 {
 			replicationFactor = param
 		}
-		testTopic, err := redpanda.NewTopic(ctx, "test", &redpanda.TopicArgs{
+		_, err = redpanda.NewTopic(ctx, "test", &redpanda.TopicArgs{
 			Name:              pulumi.String(topicName),
 			PartitionCount:    pulumi.Float64(partitionCount),
 			ReplicationFactor: pulumi.Float64(replicationFactor),
 			ClusterApiUrl:     testCluster.ClusterApiUrl,
 			AllowDeletion:     pulumi.Bool(true),
+		})
+		if err != nil {
+			return err
+		}
+		schemaRegistryAdmin, err := redpanda.NewAcl(ctx, "schema_registry_admin", &redpanda.AclArgs{
+			ResourceType:        pulumi.String("CLUSTER"),
+			ResourceName:        pulumi.String("kafka-cluster"),
+			ResourcePatternType: pulumi.String("LITERAL"),
+			Principal: testUser.Name.ApplyT(func(name string) (string, error) {
+				return fmt.Sprintf("User:%v", name), nil
+			}).(pulumi.StringOutput),
+			Host:           pulumi.String("*"),
+			Operation:      pulumi.String("ALTER"),
+			PermissionType: pulumi.String("ALLOW"),
+			ClusterApiUrl:  testCluster.ClusterApiUrl,
+			AllowDeletion:  pulumi.Bool(true),
 		})
 		if err != nil {
 			return err
@@ -2709,14 +4281,80 @@ func main() {
 		if param := cfg.Get("userSchemaDefinition"); param != "" {
 			userSchemaDefinition = param
 		}
+		allTestTopic, err := redpanda.NewSchemaRegistryAcl(ctx, "all_test_topic", &redpanda.SchemaRegistryAclArgs{
+			ClusterId: testCluster.ID(),
+			Principal: testUser.Name.ApplyT(func(name string) (string, error) {
+				return fmt.Sprintf("User:%v", name), nil
+			}).(pulumi.StringOutput),
+			ResourceType:  pulumi.String("SUBJECT"),
+			ResourceName:  pulumi.Sprintf("%v-", topicName),
+			PatternType:   pulumi.String("PREFIXED"),
+			Host:          pulumi.String("*"),
+			Operation:     pulumi.String("ALL"),
+			Permission:    pulumi.String("ALLOW"),
+			Username:      testUser.Name,
+			Password:      pulumi.String(userPw),
+			AllowDeletion: pulumi.Bool(true),
+		}, pulumi.DependsOn([]pulumi.Resource{
+			schemaRegistryAdmin,
+		}))
+		if err != nil {
+			return err
+		}
+		describeRegistry, err := redpanda.NewSchemaRegistryAcl(ctx, "describe_registry", &redpanda.SchemaRegistryAclArgs{
+			ClusterId: testCluster.ID(),
+			Principal: testUser.Name.ApplyT(func(name string) (string, error) {
+				return fmt.Sprintf("User:%v", name), nil
+			}).(pulumi.StringOutput),
+			ResourceType:  pulumi.String("REGISTRY"),
+			ResourceName:  pulumi.String("*"),
+			PatternType:   pulumi.String("LITERAL"),
+			Host:          pulumi.String("*"),
+			Operation:     pulumi.String("DESCRIBE"),
+			Permission:    pulumi.String("ALLOW"),
+			Username:      testUser.Name,
+			Password:      pulumi.String(userPw),
+			AllowDeletion: pulumi.Bool(true),
+		}, pulumi.DependsOn([]pulumi.Resource{
+			schemaRegistryAdmin,
+		}))
+		if err != nil {
+			return err
+		}
+		alterConfigsRegistry, err := redpanda.NewSchemaRegistryAcl(ctx, "alter_configs_registry", &redpanda.SchemaRegistryAclArgs{
+			ClusterId: testCluster.ID(),
+			Principal: testUser.Name.ApplyT(func(name string) (string, error) {
+				return fmt.Sprintf("User:%v", name), nil
+			}).(pulumi.StringOutput),
+			ResourceType:  pulumi.String("REGISTRY"),
+			ResourceName:  pulumi.String("*"),
+			PatternType:   pulumi.String("LITERAL"),
+			Host:          pulumi.String("*"),
+			Operation:     pulumi.String("ALTER_CONFIGS"),
+			Permission:    pulumi.String("ALLOW"),
+			Username:      testUser.Name,
+			Password:      pulumi.String(userPw),
+			AllowDeletion: pulumi.Bool(true),
+		}, pulumi.DependsOn([]pulumi.Resource{
+			schemaRegistryAdmin,
+		}))
+		if err != nil {
+			return err
+		}
 		userSchema, err := redpanda.NewSchema(ctx, "user_schema", &redpanda.SchemaArgs{
-			ClusterId:  testCluster.ID(),
-			Subject:    pulumi.Sprintf("%v-value", topicName),
-			SchemaType: pulumi.String(schemaType),
-			Schema:     pulumi.String(userSchemaDefinition),
-			Username:   testUser.Name,
-			Password:   pulumi.String(userPw),
-		})
+			ClusterId:     testCluster.ID(),
+			Subject:       pulumi.Sprintf("%v-value", topicName),
+			SchemaType:    pulumi.String(schemaType),
+			Schema:        pulumi.String(userSchemaDefinition),
+			Username:      testUser.Name,
+			Password:      pulumi.String(userPw),
+			AllowDeletion: pulumi.Bool(true),
+		}, pulumi.DependsOn([]pulumi.Resource{
+			schemaRegistryAdmin,
+			allTestTopic,
+			describeRegistry,
+			alterConfigsRegistry,
+		}))
 		if err != nil {
 			return err
 		}
@@ -2760,13 +4398,14 @@ func main() {
 		if param := cfg.Get("userEventSchemaDefinition"); param != "" {
 			userEventSchemaDefinition = param
 		}
-		_, err = redpanda.NewSchema(ctx, "user_event_schema", &redpanda.SchemaArgs{
-			ClusterId:  testCluster.ID(),
-			Subject:    pulumi.Sprintf("%v-events-value", topicName),
-			SchemaType: pulumi.String(schemaType),
-			Schema:     pulumi.String(userEventSchemaDefinition),
-			Username:   testUser.Name,
-			Password:   pulumi.String(userPw),
+		userEventSchema, err := redpanda.NewSchema(ctx, "user_event_schema", &redpanda.SchemaArgs{
+			ClusterId:     testCluster.ID(),
+			Subject:       pulumi.Sprintf("%v-events-value", topicName),
+			SchemaType:    pulumi.String(schemaType),
+			Schema:        pulumi.String(userEventSchemaDefinition),
+			Username:      testUser.Name,
+			Password:      pulumi.String(userPw),
+			AllowDeletion: pulumi.Bool(true),
 			References: redpanda.SchemaReferenceArray{
 				&redpanda.SchemaReferenceArgs{
 					Name:    pulumi.String("User"),
@@ -2774,7 +4413,12 @@ func main() {
 					Version: userSchema.Version,
 				},
 			},
-		})
+		}, pulumi.DependsOn([]pulumi.Resource{
+			schemaRegistryAdmin,
+			allTestTopic,
+			describeRegistry,
+			alterConfigsRegistry,
+		}))
 		if err != nil {
 			return err
 		}
@@ -2829,7 +4473,7 @@ func main() {
 		if param := cfg.Get("compatibilityLevel"); param != "" {
 			compatibilityLevel = param
 		}
-		_, err = redpanda.NewSchema(ctx, "product_schema", &redpanda.SchemaArgs{
+		productSchema, err := redpanda.NewSchema(ctx, "product_schema", &redpanda.SchemaArgs{
 			ClusterId:     testCluster.ID(),
 			Subject:       pulumi.Sprintf("%v-product-value", topicName),
 			SchemaType:    pulumi.String(schemaType),
@@ -2837,25 +4481,112 @@ func main() {
 			Compatibility: pulumi.String(compatibilityLevel),
 			Username:      testUser.Name,
 			Password:      pulumi.String(userPw),
-		})
+			AllowDeletion: pulumi.Bool(true),
+		}, pulumi.DependsOn([]pulumi.Resource{
+			schemaRegistryAdmin,
+			allTestTopic,
+			describeRegistry,
+			alterConfigsRegistry,
+		}))
 		if err != nil {
 			return err
 		}
-		_, err = redpanda.NewAcl(ctx, "test", &redpanda.AclArgs{
-			ResourceType:        pulumi.String("TOPIC"),
-			ResourceName:        testTopic.Name,
+		_, err = redpanda.NewAcl(ctx, "cluster_admin", &redpanda.AclArgs{
+			ResourceType:        pulumi.String("CLUSTER"),
+			ResourceName:        pulumi.String("kafka-cluster"),
 			ResourcePatternType: pulumi.String("LITERAL"),
 			Principal: testUser.Name.ApplyT(func(name string) (string, error) {
 				return fmt.Sprintf("User:%v", name), nil
 			}).(pulumi.StringOutput),
 			Host:           pulumi.String("*"),
-			Operation:      pulumi.String("READ"),
+			Operation:      pulumi.String("ALL"),
 			PermissionType: pulumi.String("ALLOW"),
 			ClusterApiUrl:  testCluster.ClusterApiUrl,
+			AllowDeletion:  pulumi.Bool(true),
 		})
 		if err != nil {
 			return err
 		}
+		_, err = redpanda.NewSchemaRegistryAcl(ctx, "read_product", &redpanda.SchemaRegistryAclArgs{
+			ClusterId: testCluster.ID(),
+			Principal: testUser.Name.ApplyT(func(name string) (string, error) {
+				return fmt.Sprintf("User:%v", name), nil
+			}).(pulumi.StringOutput),
+			ResourceType:  pulumi.String("SUBJECT"),
+			ResourceName:  pulumi.String("product-"),
+			PatternType:   pulumi.String("PREFIXED"),
+			Host:          pulumi.String("*"),
+			Operation:     pulumi.String("READ"),
+			Permission:    pulumi.String("ALLOW"),
+			Username:      testUser.Name,
+			Password:      pulumi.String(userPw),
+			AllowDeletion: pulumi.Bool(true),
+		}, pulumi.DependsOn([]pulumi.Resource{
+			schemaRegistryAdmin,
+		}))
+		if err != nil {
+			return err
+		}
+		_, err = redpanda.NewSchemaRegistryAcl(ctx, "write_orders", &redpanda.SchemaRegistryAclArgs{
+			ClusterId: testCluster.ID(),
+			Principal: testUser.Name.ApplyT(func(name string) (string, error) {
+				return fmt.Sprintf("User:%v", name), nil
+			}).(pulumi.StringOutput),
+			ResourceType:  pulumi.String("SUBJECT"),
+			ResourceName:  pulumi.String("orders-value"),
+			PatternType:   pulumi.String("LITERAL"),
+			Host:          pulumi.String("*"),
+			Operation:     pulumi.String("WRITE"),
+			Permission:    pulumi.String("ALLOW"),
+			Username:      testUser.Name,
+			Password:      pulumi.String(userPw),
+			AllowDeletion: pulumi.Bool(true),
+		}, pulumi.DependsOn([]pulumi.Resource{
+			schemaRegistryAdmin,
+		}))
+		if err != nil {
+			return err
+		}
+		_, err = redpanda.NewSchemaRegistryAcl(ctx, "describe_test_topic", &redpanda.SchemaRegistryAclArgs{
+			ClusterId: testCluster.ID(),
+			Principal: testUser.Name.ApplyT(func(name string) (string, error) {
+				return fmt.Sprintf("User:%v", name), nil
+			}).(pulumi.StringOutput),
+			ResourceType:  pulumi.String("SUBJECT"),
+			ResourceName:  pulumi.Sprintf("%v-", topicName),
+			PatternType:   pulumi.String("PREFIXED"),
+			Host:          pulumi.String("*"),
+			Operation:     pulumi.String("DESCRIBE"),
+			Permission:    pulumi.String("ALLOW"),
+			Username:      testUser.Name,
+			Password:      pulumi.String(userPw),
+			AllowDeletion: pulumi.Bool(true),
+		}, pulumi.DependsOn([]pulumi.Resource{
+			schemaRegistryAdmin,
+		}))
+		if err != nil {
+			return err
+		}
+		ctx.Export("userSchemaInfo", pulumi.Map{
+			"id":      userSchema.SchemaId,
+			"subject": userSchema.Subject,
+			"version": userSchema.Version,
+			"type":    userSchema.SchemaType,
+		})
+		ctx.Export("userEventSchemaInfo", pulumi.Map{
+			"id":         userEventSchema.SchemaId,
+			"subject":    userEventSchema.Subject,
+			"version":    userEventSchema.Version,
+			"type":       userEventSchema.SchemaType,
+			"references": userEventSchema.References,
+		})
+		ctx.Export("productSchemaInfo", pulumi.Map{
+			"id":            productSchema.SchemaId,
+			"subject":       productSchema.Subject,
+			"version":       productSchema.Version,
+			"type":          productSchema.SchemaType,
+			"compatibility": productSchema.Compatibility,
+		})
 		return nil
 	})
 }
@@ -2872,13 +4603,13 @@ runtime: yaml
 configuration:
   clusterName:
     type: string
-    default: ""
+    default: testname
   resourceGroupName:
     type: string
-    default: ""
+    default: testname
   networkName:
     type: string
-    default: ""
+    default: testname
   region:
     type: string
     default: us-central1
@@ -3041,6 +4772,9 @@ resources:
       region: ${region}
       clusterType: dedicated
       cidrBlock: 10.0.0.0/20
+      timeouts:
+        create: 20m
+        delete: 20m
   testCluster:
     type: redpanda:Cluster
     name: test
@@ -3054,20 +4788,13 @@ resources:
       connectionType: public
       throughputTier: ${throughputTier}
       zones: ${zones}
-      allowDeletion: true ## This is a reference for GCP tags
-      #   #   tags = {
-      #   #     "key" = "value"
-      #   #   }
-      #   ## This is a reference for GCP Private Service Connect
-      #   #   gcp_private_service_connect = {
-      #   #     enabled               = true
-      #   #     global_access_enabled = true
-      #   #     consumer_accept_list = [
-      #   #       {
-      #   #         source = "projects/123456789012"
-      #   #       }
-      #   #     ]
-      #   #   }
+      allowDeletion: true
+      clusterConfiguration:
+        customPropertiesJson:
+          fn::toJSON:
+            schema_registry_enable_authorization: true
+      timeouts:
+        create: 90m
   testUser:
     type: redpanda:User
     name: test
@@ -3095,6 +4822,13 @@ resources:
       schema: ${userSchemaDefinition}
       username: ${testUser.name}
       password: ${userPw}
+      allowDeletion: true
+    options:
+      dependsOn:
+        - ${schemaRegistryAdmin}
+        - ${allTestTopic}
+        - ${describeRegistry}
+        - ${alterConfigsRegistry}
   userEventSchema:
     type: redpanda:Schema
     name: user_event_schema
@@ -3105,10 +4839,17 @@ resources:
       schema: ${userEventSchemaDefinition}
       username: ${testUser.name}
       password: ${userPw}
+      allowDeletion: true
       references:
         - name: User
           subject: ${userSchema.subject}
           version: ${userSchema.version}
+    options:
+      dependsOn:
+        - ${schemaRegistryAdmin}
+        - ${allTestTopic}
+        - ${describeRegistry}
+        - ${alterConfigsRegistry}
   productSchema:
     type: redpanda:Schema
     name: product_schema
@@ -3120,18 +4861,165 @@ resources:
       compatibility: ${compatibilityLevel}
       username: ${testUser.name}
       password: ${userPw}
-  testAcl:
+      allowDeletion: true
+    options:
+      dependsOn:
+        - ${schemaRegistryAdmin}
+        - ${allTestTopic}
+        - ${describeRegistry}
+        - ${alterConfigsRegistry}
+  clusterAdmin:
     type: redpanda:Acl
-    name: test
+    name: cluster_admin
     properties:
-      resourceType: TOPIC
-      resourceName: ${testTopic.name}
+      resourceType: CLUSTER
+      resourceName: kafka-cluster
       resourcePatternType: LITERAL
       principal: User:${testUser.name}
       host: '*'
-      operation: READ
+      operation: ALL
       permissionType: ALLOW
       clusterApiUrl: ${testCluster.clusterApiUrl}
+      allowDeletion: true
+  schemaRegistryAdmin:
+    type: redpanda:Acl
+    name: schema_registry_admin
+    properties:
+      resourceType: CLUSTER
+      resourceName: kafka-cluster
+      resourcePatternType: LITERAL
+      principal: User:${testUser.name}
+      host: '*'
+      operation: ALTER
+      permissionType: ALLOW
+      clusterApiUrl: ${testCluster.clusterApiUrl}
+      allowDeletion: true
+  readProduct:
+    type: redpanda:SchemaRegistryAcl
+    name: read_product
+    properties:
+      clusterId: ${testCluster.id}
+      principal: User:${testUser.name}
+      resourceType: SUBJECT
+      resourceName: product-
+      patternType: PREFIXED
+      host: '*'
+      operation: READ
+      permission: ALLOW
+      username: ${testUser.name}
+      password: ${userPw}
+      allowDeletion: true
+    options:
+      dependsOn:
+        - ${schemaRegistryAdmin}
+  writeOrders:
+    type: redpanda:SchemaRegistryAcl
+    name: write_orders
+    properties:
+      clusterId: ${testCluster.id}
+      principal: User:${testUser.name}
+      resourceType: SUBJECT
+      resourceName: orders-value
+      patternType: LITERAL
+      host: '*'
+      operation: WRITE
+      permission: ALLOW
+      username: ${testUser.name}
+      password: ${userPw}
+      allowDeletion: true
+    options:
+      dependsOn:
+        - ${schemaRegistryAdmin}
+  allTestTopic:
+    type: redpanda:SchemaRegistryAcl
+    name: all_test_topic
+    properties:
+      clusterId: ${testCluster.id}
+      principal: User:${testUser.name}
+      resourceType: SUBJECT
+      resourceName: ${topicName}-
+      patternType: PREFIXED
+      host: '*'
+      operation: ALL
+      permission: ALLOW
+      username: ${testUser.name}
+      password: ${userPw}
+      allowDeletion: true
+    options:
+      dependsOn:
+        - ${schemaRegistryAdmin}
+  describeTestTopic:
+    type: redpanda:SchemaRegistryAcl
+    name: describe_test_topic
+    properties:
+      clusterId: ${testCluster.id}
+      principal: User:${testUser.name}
+      resourceType: SUBJECT
+      resourceName: ${topicName}-
+      patternType: PREFIXED
+      host: '*'
+      operation: DESCRIBE
+      permission: ALLOW
+      username: ${testUser.name}
+      password: ${userPw}
+      allowDeletion: true
+    options:
+      dependsOn:
+        - ${schemaRegistryAdmin}
+  describeRegistry:
+    type: redpanda:SchemaRegistryAcl
+    name: describe_registry
+    properties:
+      clusterId: ${testCluster.id}
+      principal: User:${testUser.name}
+      resourceType: REGISTRY
+      resourceName: '*'
+      patternType: LITERAL
+      host: '*'
+      operation: DESCRIBE
+      permission: ALLOW
+      username: ${testUser.name}
+      password: ${userPw}
+      allowDeletion: true
+    options:
+      dependsOn:
+        - ${schemaRegistryAdmin}
+  alterConfigsRegistry:
+    type: redpanda:SchemaRegistryAcl
+    name: alter_configs_registry
+    properties:
+      clusterId: ${testCluster.id}
+      principal: User:${testUser.name}
+      resourceType: REGISTRY
+      resourceName: '*'
+      patternType: LITERAL
+      host: '*'
+      operation: ALTER_CONFIGS
+      permission: ALLOW
+      username: ${testUser.name}
+      password: ${userPw}
+      allowDeletion: true
+    options:
+      dependsOn:
+        - ${schemaRegistryAdmin}
+outputs:
+  userSchemaInfo:
+    id: ${userSchema.schemaId}
+    subject: ${userSchema.subject}
+    version: ${userSchema.version}
+    type: ${userSchema.schemaType}
+  userEventSchemaInfo:
+    id: ${userEventSchema.schemaId}
+    subject: ${userEventSchema.subject}
+    version: ${userEventSchema.version}
+    type: ${userEventSchema.schemaType}
+    references: ${userEventSchema.references}
+  productSchemaInfo:
+    id: ${productSchema.schemaId}
+    subject: ${productSchema.subject}
+    version: ${productSchema.version}
+    type: ${productSchema.schemaType}
+    compatibility: ${productSchema.compatibility}
 ```
 {{% /choosable %}}
 {{% choosable language java %}}
@@ -3151,17 +5039,24 @@ import com.pulumi.redpanda.ResourceGroup;
 import com.pulumi.redpanda.ResourceGroupArgs;
 import com.pulumi.redpanda.Network;
 import com.pulumi.redpanda.NetworkArgs;
+import com.pulumi.redpanda.inputs.NetworkTimeoutsArgs;
 import com.pulumi.redpanda.Cluster;
 import com.pulumi.redpanda.ClusterArgs;
+import com.pulumi.redpanda.inputs.ClusterClusterConfigurationArgs;
+import com.pulumi.redpanda.inputs.ClusterTimeoutsArgs;
 import com.pulumi.redpanda.User;
 import com.pulumi.redpanda.UserArgs;
 import com.pulumi.redpanda.Topic;
 import com.pulumi.redpanda.TopicArgs;
+import com.pulumi.redpanda.Acl;
+import com.pulumi.redpanda.AclArgs;
+import com.pulumi.redpanda.SchemaRegistryAcl;
+import com.pulumi.redpanda.SchemaRegistryAclArgs;
 import com.pulumi.redpanda.Schema;
 import com.pulumi.redpanda.SchemaArgs;
 import com.pulumi.redpanda.inputs.SchemaReferenceArgs;
-import com.pulumi.redpanda.Acl;
-import com.pulumi.redpanda.AclArgs;
+import static com.pulumi.codegen.internal.Serialization.*;
+import com.pulumi.resources.CustomResourceOptions;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
@@ -3176,12 +5071,12 @@ public class App {
 
     public static void stack(Context ctx) {
         final var config = ctx.config();
-        final var resourceGroupName = config.get("resourceGroupName").orElse("");
+        final var resourceGroupName = config.get("resourceGroupName").orElse("testname");
         var test = new ResourceGroup("test", ResourceGroupArgs.builder()
             .name(resourceGroupName)
             .build());
 
-        final var networkName = config.get("networkName").orElse("");
+        final var networkName = config.get("networkName").orElse("testname");
         final var region = config.get("region").orElse("us-central1");
         final var cloudProvider = config.get("cloudProvider").orElse("gcp");
         var testNetwork = new Network("testNetwork", NetworkArgs.builder()
@@ -3191,9 +5086,13 @@ public class App {
             .region(region)
             .clusterType("dedicated")
             .cidrBlock("10.0.0.0/20")
+            .timeouts(NetworkTimeoutsArgs.builder()
+                .create("20m")
+                .delete("20m")
+                .build())
             .build());
 
-        final var clusterName = config.get("clusterName").orElse("");
+        final var clusterName = config.get("clusterName").orElse("testname");
         final var zones = config.get("zones").orElse(
             "us-central1-a",
             "us-central1-b",
@@ -3210,6 +5109,15 @@ public class App {
             .throughputTier(throughputTier)
             .zones(zones)
             .allowDeletion(true)
+            .clusterConfiguration(ClusterClusterConfigurationArgs.builder()
+                .customPropertiesJson(serializeJson(
+                    jsonObject(
+                        jsonProperty("schema_registry_enable_authorization", true)
+                    )))
+                .build())
+            .timeouts(ClusterTimeoutsArgs.builder()
+                .create("90m")
+                .build())
             .build());
 
         final var userName = config.get("userName").orElse("test-username");
@@ -3229,6 +5137,18 @@ public class App {
             .name(topicName)
             .partitionCount(partitionCount)
             .replicationFactor(replicationFactor)
+            .clusterApiUrl(testCluster.clusterApiUrl())
+            .allowDeletion(true)
+            .build());
+
+        var schemaRegistryAdmin = new Acl("schemaRegistryAdmin", AclArgs.builder()
+            .resourceType("CLUSTER")
+            .resourceName("kafka-cluster")
+            .resourcePatternType("LITERAL")
+            .principal(testUser.name().applyValue(name -> String.format("User:%s", name)))
+            .host("*")
+            .operation("ALTER")
+            .permissionType("ALLOW")
             .clusterApiUrl(testCluster.clusterApiUrl())
             .allowDeletion(true)
             .build());
@@ -3259,6 +5179,54 @@ public class App {
   ]
 }
         """);
+        var allTestTopic = new SchemaRegistryAcl("allTestTopic", SchemaRegistryAclArgs.builder()
+            .clusterId(testCluster.id())
+            .principal(testUser.name().applyValue(name -> String.format("User:%s", name)))
+            .resourceType("SUBJECT")
+            .resourceName(String.format("%s-", topicName))
+            .patternType("PREFIXED")
+            .host("*")
+            .operation("ALL")
+            .permission("ALLOW")
+            .username(testUser.name())
+            .password(userPw)
+            .allowDeletion(true)
+            .build(), CustomResourceOptions.builder()
+                .dependsOn(schemaRegistryAdmin)
+                .build());
+
+        var describeRegistry = new SchemaRegistryAcl("describeRegistry", SchemaRegistryAclArgs.builder()
+            .clusterId(testCluster.id())
+            .principal(testUser.name().applyValue(name -> String.format("User:%s", name)))
+            .resourceType("REGISTRY")
+            .resourceName("*")
+            .patternType("LITERAL")
+            .host("*")
+            .operation("DESCRIBE")
+            .permission("ALLOW")
+            .username(testUser.name())
+            .password(userPw)
+            .allowDeletion(true)
+            .build(), CustomResourceOptions.builder()
+                .dependsOn(schemaRegistryAdmin)
+                .build());
+
+        var alterConfigsRegistry = new SchemaRegistryAcl("alterConfigsRegistry", SchemaRegistryAclArgs.builder()
+            .clusterId(testCluster.id())
+            .principal(testUser.name().applyValue(name -> String.format("User:%s", name)))
+            .resourceType("REGISTRY")
+            .resourceName("*")
+            .patternType("LITERAL")
+            .host("*")
+            .operation("ALTER_CONFIGS")
+            .permission("ALLOW")
+            .username(testUser.name())
+            .password(userPw)
+            .allowDeletion(true)
+            .build(), CustomResourceOptions.builder()
+                .dependsOn(schemaRegistryAdmin)
+                .build());
+
         var userSchema = new Schema("userSchema", SchemaArgs.builder()
             .clusterId(testCluster.id())
             .subject(String.format("%s-value", topicName))
@@ -3266,7 +5234,14 @@ public class App {
             .schema(userSchemaDefinition)
             .username(testUser.name())
             .password(userPw)
-            .build());
+            .allowDeletion(true)
+            .build(), CustomResourceOptions.builder()
+                .dependsOn(
+                    schemaRegistryAdmin,
+                    allTestTopic,
+                    describeRegistry,
+                    alterConfigsRegistry)
+                .build());
 
         final var userEventSchemaDefinition = config.get("userEventSchemaDefinition").orElse("""
 {
@@ -3312,12 +5287,19 @@ public class App {
             .schema(userEventSchemaDefinition)
             .username(testUser.name())
             .password(userPw)
+            .allowDeletion(true)
             .references(SchemaReferenceArgs.builder()
                 .name("User")
                 .subject(userSchema.subject())
                 .version(userSchema.version())
                 .build())
-            .build());
+            .build(), CustomResourceOptions.builder()
+                .dependsOn(
+                    schemaRegistryAdmin,
+                    allTestTopic,
+                    describeRegistry,
+                    alterConfigsRegistry)
+                .build());
 
         final var productSchemaDefinition = config.get("productSchemaDefinition").orElse("""
 {
@@ -3371,19 +5353,95 @@ public class App {
             .compatibility(compatibilityLevel)
             .username(testUser.name())
             .password(userPw)
-            .build());
+            .allowDeletion(true)
+            .build(), CustomResourceOptions.builder()
+                .dependsOn(
+                    schemaRegistryAdmin,
+                    allTestTopic,
+                    describeRegistry,
+                    alterConfigsRegistry)
+                .build());
 
-        var testAcl = new Acl("testAcl", AclArgs.builder()
-            .resourceType("TOPIC")
-            .resourceName(testTopic.name())
+        var clusterAdmin = new Acl("clusterAdmin", AclArgs.builder()
+            .resourceType("CLUSTER")
+            .resourceName("kafka-cluster")
             .resourcePatternType("LITERAL")
             .principal(testUser.name().applyValue(name -> String.format("User:%s", name)))
             .host("*")
-            .operation("READ")
+            .operation("ALL")
             .permissionType("ALLOW")
             .clusterApiUrl(testCluster.clusterApiUrl())
+            .allowDeletion(true)
             .build());
 
+        var readProduct = new SchemaRegistryAcl("readProduct", SchemaRegistryAclArgs.builder()
+            .clusterId(testCluster.id())
+            .principal(testUser.name().applyValue(name -> String.format("User:%s", name)))
+            .resourceType("SUBJECT")
+            .resourceName("product-")
+            .patternType("PREFIXED")
+            .host("*")
+            .operation("READ")
+            .permission("ALLOW")
+            .username(testUser.name())
+            .password(userPw)
+            .allowDeletion(true)
+            .build(), CustomResourceOptions.builder()
+                .dependsOn(schemaRegistryAdmin)
+                .build());
+
+        var writeOrders = new SchemaRegistryAcl("writeOrders", SchemaRegistryAclArgs.builder()
+            .clusterId(testCluster.id())
+            .principal(testUser.name().applyValue(name -> String.format("User:%s", name)))
+            .resourceType("SUBJECT")
+            .resourceName("orders-value")
+            .patternType("LITERAL")
+            .host("*")
+            .operation("WRITE")
+            .permission("ALLOW")
+            .username(testUser.name())
+            .password(userPw)
+            .allowDeletion(true)
+            .build(), CustomResourceOptions.builder()
+                .dependsOn(schemaRegistryAdmin)
+                .build());
+
+        var describeTestTopic = new SchemaRegistryAcl("describeTestTopic", SchemaRegistryAclArgs.builder()
+            .clusterId(testCluster.id())
+            .principal(testUser.name().applyValue(name -> String.format("User:%s", name)))
+            .resourceType("SUBJECT")
+            .resourceName(String.format("%s-", topicName))
+            .patternType("PREFIXED")
+            .host("*")
+            .operation("DESCRIBE")
+            .permission("ALLOW")
+            .username(testUser.name())
+            .password(userPw)
+            .allowDeletion(true)
+            .build(), CustomResourceOptions.builder()
+                .dependsOn(schemaRegistryAdmin)
+                .build());
+
+        ctx.export("userSchemaInfo", Map.ofEntries(
+            Map.entry("id", userSchema.schemaId()),
+            Map.entry("subject", userSchema.subject()),
+            Map.entry("version", userSchema.version()),
+            Map.entry("type", userSchema.schemaType())
+        ));
+        ctx.export("userEventSchemaInfo", Map.ofEntries(
+            Map.entry("id", userEventSchema.schemaId()),
+            Map.entry("subject", userEventSchema.subject()),
+            Map.entry("version", userEventSchema.version()),
+            Map.entry("type", userEventSchema.schemaType()),
+            Map.entry("references", userEventSchema.references())
+        ));
+        ctx.export("productSchemaInfo", Map.ofEntries(
+            Map.entry("id", productSchema.schemaId()),
+            Map.entry("subject", productSchema.subject()),
+            Map.entry("version", productSchema.version()),
+            Map.entry("type", productSchema.schemaType()),
+            Map.entry("compatibility", productSchema.compatibility())
+        ));
     }
 }
 ```

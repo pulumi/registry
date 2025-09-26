@@ -282,7 +282,7 @@ func packageMetadataFromGitHubCmd(metadataDir, packageDocsDir *string) *cobra.Co
 `)
 			editURL := computeEditURLFromGitHubUserContentURL(url)
 			if editURL == nil {
-				return fmt.Errorf("expected URL %s to be a valid GitHub user content URL", url)
+				return fmt.Errorf("expected URL %q to be a valid GitHub user content URL", url)
 			}
 			frontmatter = append(frontmatter, []byte(`edit_url: `+*editURL+"\n")...)
 

@@ -182,7 +182,6 @@ func packageMetadataFromGitHubCmd(metadataDir, packageDocsDir *string) *cobra.Co
 	var providerName string
 	var schemaFile string
 	var publisher string
-	var editURLAllowList string
 
 	cmd.Flags().StringVar(&providerName, "providerName", "", "The name of the provider e.g. aws, aws-native. "+
 		"Required when there is no schemaFile flag specified.")
@@ -192,9 +191,6 @@ func packageMetadataFromGitHubCmd(metadataDir, packageDocsDir *string) *cobra.Co
 			"be inferred to be provider/cmd/pulumi-resource-<providerName>/schema.json")
 	cmd.Flags().StringVar(&publisher, "publisher", "", "The publisher's display name to be shown in the package. "+
 		"This will default to Pulumi")
-	cmd.Flags().StringVar(&editURLAllowList, "editURLAllowList", "", "A comma-separated list of URLs that are allowed "+
-		"to have an edit_url in the frontmatter. If not specified, no edit_url will be added to the frontmatter. "+
-		"This is used to prevent the edit_url from being added to the frontmatter by default.")
 
 	// Apply default values that depend on other inputs.
 	cmd.PreRun = func(cmd *cobra.Command, args []string) {
@@ -284,7 +280,8 @@ func packageMetadataFromGitHubCmd(metadataDir, packageDocsDir *string) *cobra.Co
 # WARNING: this file was fetched from ` + url + `
 # Do not edit by hand unless you're certain you know what you are doing!
 `)
-			if slices.Contains(strings.Split(editURLAllowList, ","), mainSpec.Repository) {
+			// Only add edit_url for pulumi GitHub repos
+			if strings.HasPrefix(mainSpec.Repository, "https://github.com/pulumi/") {
 				editURL := mainSpec.Repository + "/blob/" + mainSpec.Version + "/docs/" + remoteFile.name
 				frontmatter = append(frontmatter, []byte(`edit_url: `+editURL+"\n")...)
 			}

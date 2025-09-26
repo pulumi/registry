@@ -40,17 +40,6 @@ func TestMetadataBridgedProvider(t *testing.T) {
 	})
 }
 
-func TestCustomEditURL(t *testing.T) {
-	t.Parallel()
-	testMetadata(t, testMetadataArgs{
-		repoSlug:         "pulumi/pulumi-random",
-		publisher:        "Pulumi",
-		version:          "v4.16.7",
-		schemaFile:       "provider/cmd/pulumi-resource-random/schema.json",
-		editURLAllowList: "https://github.com/pulumi/pulumi-foo,https://github.com/pulumi/pulumi-random,https://github.com/pulumi/pulumi-bar",
-	})
-}
-
 func TestMetadataNativeProvider(t *testing.T) {
 	t.Parallel()
 
@@ -227,12 +216,12 @@ func TestMetadataComponentProvider(t *testing.T) {
 }
 
 type testMetadataArgs struct {
-	providerName                                               string // shared args
-	repoSlug, version, schemaFile, publisher, editURLAllowList string // from-github args
-	schemaFileURL, indexFileURL                                string // from-url args
-	assert                                                     func(t *testing.T, metadataDir, pacakgeDocsDir string)
-	assertOptions                                              []util.AssertOption
-	errorContains                                              string
+	providerName                             string // shared args
+	repoSlug, version, schemaFile, publisher string // from-github args
+	schemaFileURL, indexFileURL              string // from-url args
+	assert                                   func(t *testing.T, metadataDir, pacakgeDocsDir string)
+	assertOptions                            []util.AssertOption
+	errorContains                            string
 }
 
 func defaultAssert(t *testing.T, metadataDir, packageDocsDir string, opts ...util.AssertOption) {
@@ -265,10 +254,6 @@ func testMetadata(t *testing.T, args testMetadataArgs) {
 			"--schemaFile", args.schemaFile,
 			"--version", args.version,
 			"--publisher", args.publisher,
-		}
-		// Done this way to verify that we are not breaking by not passing the flag.
-		if args.editURLAllowList != "" {
-			cliArgs = append(cliArgs, "--editURLAllowList", args.editURLAllowList)
 		}
 	}
 

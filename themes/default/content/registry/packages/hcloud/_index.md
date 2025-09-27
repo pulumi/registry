@@ -1,11 +1,13 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-hcloud/v1.24.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-hcloud/v1.25.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+edit_url: https://github.com/pulumi/pulumi-hcloud/blob/v1.25.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Hcloud Provider
 meta_desc: Provides an overview on how to configure the Pulumi Hcloud provider.
 layout: package
 ---
+
 ## Installation
 
 The Hcloud provider is available as a package in all Pulumi languages:
@@ -15,6 +17,7 @@ The Hcloud provider is available as a package in all Pulumi languages:
 * Go: [`github.com/pulumi/pulumi-hcloud/sdk/go/hcloud`](https://github.com/pulumi/pulumi-hcloud)
 * .NET: [`Pulumi.Hcloud`](https://www.nuget.org/packages/Pulumi.Hcloud)
 * Java: [`com.pulumi/hcloud`](https://central.sonatype.com/artifact/com.pulumi/hcloud)
+
 ## Overview
 
 The Hetzner Cloud (hcloud) provider is used to interact with the resources supported by [Hetzner Cloud](https://www.hetzner.com/cloud). The provider needs to be configured with the proper credentials before it can be used.
@@ -37,7 +40,7 @@ config:
 import * as pulumi from "@pulumi/pulumi";
 
 const config = new pulumi.Config();
-const hcloudToken = config.requireObject("hcloudToken");
+const hcloudToken = config.requireObject<any>("hcloudToken");
 ```
 {{% /choosable %}}
 {{% choosable language python %}}
@@ -169,3 +172,20 @@ The following configuration inputs are supported:
 - `endpoint` - (Optional, string) Hetzner Cloud API endpoint, can be used to override the default API Endpoint `https://api.hetzner.cloud/v1`.
 - `pollInterval` - (Optional, string) Configures the interval in which actions are polled by the client. Default `500ms`. Increase this interval if you run into rate limiting errors.
 - `pollFunction` - (Optional, string) Configures the type of function to be used during the polling. Valid values are `constant` and `exponential`. Default `exponential`.
+## Experimental features
+
+Experimental features are published as part of our regular releases (e.g. a product
+public beta). During an experimental phase, breaking changes on those features may occur
+within minor releases.
+
+The stability of experimental features is not related to the stability of its upstream API.
+
+Experimental features have different levels of maturity (e.g. experimental, alpha, beta)
+based on the maturity of the upstream API.
+
+While experimental features will be announced in the release notes, you can also find
+whether a resource, function or function is experimental in its documentation:
+
+```markdown
+Experimental: $PRODUCT is $MATURITY, breaking changes may occur within minor releases. See https://docs.hetzner.cloud/changelog#$SLUG for more details.
+```

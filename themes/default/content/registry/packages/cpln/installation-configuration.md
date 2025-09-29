@@ -1,6 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-cpln/v0.0.69/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-cpln/v0.0.70/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
+edit_url: https://github.com/pulumiverse/pulumi-cpln/blob/v0.0.70/docs/installation-configuration.md
 title: Control Plane (cpln) Installation & Configuration
 meta_desc: Information on how to install the Control Plane (cpln) provider.
 layout: package

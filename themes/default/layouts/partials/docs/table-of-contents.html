@@ -59,7 +59,7 @@
         {{ $editURL := $.Page.Params.edit_url }}
         {{ if not $editURL }}
             {{ $repoURL := "https://github.com/pulumi/registry" }}
-            {{ $editURL := (print $repoURL "/edit/" $.Site.Params.contentRepositoryBaseBranch "/" (getenv "REPO_THEME_PATH") "content/" .Path) }}
+            {{ $editURL = (print $repoURL "/edit/" $.Site.Params.contentRepositoryBaseBranch "/" (getenv "REPO_THEME_PATH") "content/" .Path) }}
         {{ end }}
         <li>
             <a

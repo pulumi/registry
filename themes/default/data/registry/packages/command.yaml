@@ -11,7 +11,7 @@ native: true
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-command
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-command/v1.1.1/provider/cmd/pulumi-resource-command/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-command/v1.1.2/provider/cmd/pulumi-resource-command/schema.json
 title: Command
-updated_on: 1758669897
-version: v1.1.1
+updated_on: 1759038550
+version: v1.1.2

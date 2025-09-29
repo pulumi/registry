@@ -1,6 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-command/v1.1.1/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-command/v1.1.2/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+edit_url: https://github.com/pulumi/pulumi-command/blob/v1.1.2/docs/_index.md
 title: Command
 meta_desc: The Pulumi Command Provider enables you to execute commands and scripts either locally or remotely as part of the Pulumi resource model.
 layout: package
@@ -264,7 +265,7 @@ conn = command.remote.ConnectionArgs(
 copy = command.remote.CopyToRemote("copy",
     connection=conn,
     source=archive,
-    destination=dest_dir)
+    remote_path=dest_dir)
 
 # Verify that the expected files were copied to the remote.
 # We want to run this after each copy, i.e., when something changed,

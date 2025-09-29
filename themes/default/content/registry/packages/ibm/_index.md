@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/ibm-cloud/ibm/1.83.0-beta0/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/ibm-cloud/ibm/1.83.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Ibm Provider
@@ -766,6 +766,45 @@ pulumi preview
 * Go to [Users](https://cloud.ibm.com/iam/users)
 * Click on user.
 * Find user name in the `VPN password` section under `User Details` tab
+#### IAMAssume Authenticator Support
+The IBM Cloud Pulumi provider supports the use of the IamAssumeAuthenticator, which enables applications to authenticate using a trusted profile through a two-step token acquisition process:
+
+Initial Token Acquisition: The provider first retrieves a bearer token using the urn:ibm:params:oauth:grant-type:apikey grant type. This token represents the identity associated with the provided IBM Cloud API key.
+
+Trusted Profile Token Exchange: Next, the provider exchanges the initial token for a new bearer token using the urn:ibm:params:oauth:grant-type:assume grant type. This second token reflects the identity of a trusted profile and is obtained by submitting the initial token along with trusted profile configuration details.
+
+This process allows Pulumi to authenticate securely using IAM trusted profiles without requiring static credentials in the configuration.
+
+This process helps in [Automating resource management for child accounts from Enterprise root account](https://developer.ibm.com/tutorials/awb-centrally-manage-cloud-resources-apis/).
+
+Usage:
+- Using IAM Trusted Profile ID:
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime:
+config:
+    ibm:iamProfileId:
+        value: ""
+    ibm:ibmcloudApiKey:
+        value: ""
+
+```
+
+- Using IAM Trusted Profile Name:
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime:
+config:
+    ibm:accountId:
+        value: ""
+    ibm:iamProfileName:
+        value: ""
+    ibm:ibmcloudApiKey:
+        value: ""
+
+```
 ## Argument reference
 
 The following configuration inputs are supported in the provider configuration:
@@ -816,6 +855,12 @@ The following configuration inputs are supported in the provider configuration:
 * `privateEndpointType` - (Optional) Private Endpoint type used by the service endpoints. Allowable values are `vpe`.
   By default provider targets to cse endpoints when the `visibility` is set to `private`. If you want to target to vpe private endpoints, set `privateEndpointType` to `vpe`.
   * This can also be sourced from the `IC_PRIVATE_ENDPOINT_TYPE` (higher precedence) or `IBMCLOUD_PRIVATE_ENDPOINT_TYPE` environment variable.
+
+* `iamProfileId` - (optional) The IBM Cloud IAM trusted profile ID. You must either add it as a credential in the provider configuration or source it from the `IC_IAM_PROFILE_ID`  or `IBMCLOUD_IAM_PROFILE_ID` environment variable.
+
+* `iamProfileName` - (optional) The IBM Cloud IAM trusted profile name. You must either add it as a credential in the provider configuration or source it from the `IC_IAM_PROFILE_NAME`  or `IBMCLOUD_IAM_PROFILE_NAME` environment variable.
+
+* `ibmcloudAccountId` -  - (optional) The IBM Cloud IAM trusted profile name. You must either add it as a credential in the provider configuration or source it from the `IC_ACCOUNT_ID`  or `IBMCLOUD_IAM_PROFILE_NAME` environment variable.
 
 ***Note***
 The CloudFoundry endpoint has been updated in this release of IBM Cloud Pulumi provider v0.17.4.  If you are using an earlier version of IBM Cloud Pulumi provider, export the `IBMCLOUD_UAA_ENDPOINT` to the new authentication endpoint, as illustrated below

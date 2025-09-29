@@ -10,7 +10,7 @@ native: false
 package_status: public_preview
 publisher: Pulumiverse
 repo_url: https://github.com/pulumiverse/pulumi-dynatrace
-schema_file_url: https://raw.githubusercontent.com/pulumiverse/pulumi-dynatrace/v0.31.0/provider/cmd/pulumi-resource-dynatrace/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumiverse/pulumi-dynatrace/v0.32.0/provider/cmd/pulumi-resource-dynatrace/schema.json
 title: Dynatrace
-updated_on: 1758614525
-version: v0.31.0
+updated_on: 1759156253
+version: v0.32.0

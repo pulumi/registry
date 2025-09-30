@@ -1,6 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/dirien/pulumi-vultr/v2.23.1/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/dirien/pulumi-vultr/v2.27.1/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
+edit_url: https://github.com/dirien/pulumi-vultr/blob/v2.27.1/docs/installation-configuration.md
 title: Vultr Installation & Configuration
 meta_desc: Information on how to install the Vultr provider.
 layout: package

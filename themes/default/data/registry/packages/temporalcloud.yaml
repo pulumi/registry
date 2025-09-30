@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: temporalio
 repo_url: https://github.com/temporalio/terraform-provider-temporalcloud
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/temporalio/temporalcloud/1.1.0/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/temporalio/temporalcloud/1.1.1/schema.json
 title: Temporal Cloud
-updated_on: 1757720150
-version: 1.1.0
+updated_on: 1759275351
+version: 1.1.1

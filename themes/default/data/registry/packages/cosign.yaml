@@ -10,7 +10,7 @@ native: false
 package_status: public_preview
 publisher: chainguard-dev
 repo_url: https://github.com/chainguard-dev/terraform-provider-cosign
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/chainguard-dev/cosign/0.0.31/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/chainguard-dev/cosign/0.1.0/schema.json
 title: cosign
-updated_on: 1750116946
-version: 0.0.31
+updated_on: 1759318547
+version: 0.1.0

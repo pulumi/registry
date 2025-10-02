@@ -1,11 +1,13 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-ise/v0.2.5/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-ise/v0.2.6/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+edit_url: https://github.com/pulumi/pulumi-ise/blob/v0.2.6/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Cisco ISE Provider
 meta_desc: Provides an overview on how to configure the Pulumi Cisco ISE provider.
 layout: package
 ---
+
 ## Installation
 
 The Cisco ISE provider is available as a package in all Pulumi languages:
@@ -15,6 +17,7 @@ The Cisco ISE provider is available as a package in all Pulumi languages:
 * Go: [`github.com/pulumi/pulumi-ise/sdk/go/ise`](https://github.com/pulumi/pulumi-ise)
 * .NET: [`Pulumi.Ise`](https://www.nuget.org/packages/Pulumi.Ise)
 * Java: [`com.pulumi/ise`](https://central.sonatype.com/artifact/com.pulumi/ise)
+
 ## Overview
 
 The ISE provider provides resources to interact with a Cisco ISE (Identity Service Engine) instance. It communicates with ISE via the REST API.
@@ -27,14 +30,13 @@ All resources and functions have been tested with the following releases.
 |----------|---------------|
 | ISE      | 3.2.0 Patch 4 |
 | ISE      | 3.3.0         |
+| ISE      | 3.4.0         |
 ## Example Usage
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
-{{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
 name: configuration-example
-runtime: nodejs
+runtime:
 config:
     ise:password:
         value: password
@@ -44,89 +46,6 @@ config:
         value: admin
 
 ```
-
-{{% /choosable %}}
-{{% choosable language python %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: python
-config:
-    ise:password:
-        value: password
-    ise:url:
-        value: https://10.1.1.1
-    ise:username:
-        value: admin
-
-```
-
-{{% /choosable %}}
-{{% choosable language csharp %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: dotnet
-config:
-    ise:password:
-        value: password
-    ise:url:
-        value: https://10.1.1.1
-    ise:username:
-        value: admin
-
-```
-
-{{% /choosable %}}
-{{% choosable language go %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: go
-config:
-    ise:password:
-        value: password
-    ise:url:
-        value: https://10.1.1.1
-    ise:username:
-        value: admin
-
-```
-
-{{% /choosable %}}
-{{% choosable language yaml %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: yaml
-config:
-    ise:password:
-        value: password
-    ise:url:
-        value: https://10.1.1.1
-    ise:username:
-        value: admin
-
-```
-
-{{% /choosable %}}
-{{% choosable language java %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: java
-config:
-    ise:password:
-        value: password
-    ise:url:
-        value: https://10.1.1.1
-    ise:username:
-        value: admin
-
-```
-
-{{% /choosable %}}
-{{< /chooser >}}
 ## Configuration Reference
 
 - `insecure` (Boolean) Allow insecure HTTPS client. This can also be set as the ISE_INSECURE environment variable. Defaults to `true`.

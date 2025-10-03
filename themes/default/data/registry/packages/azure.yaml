@@ -13,7 +13,7 @@ native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-azure
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-azure/v6.26.0/provider/cmd/pulumi-resource-azure/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-azure/v6.27.2/provider/cmd/pulumi-resource-azure/schema.json
 title: Azure
-updated_on: 1757519899
-version: v6.26.0
+updated_on: 1759511969
+version: v6.27.2

@@ -1,11 +1,13 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-artifactory/v8.9.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-artifactory/v8.9.1/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+edit_url: https://github.com/pulumi/pulumi-artifactory/blob/v8.9.1/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Artifactory Provider
 meta_desc: Provides an overview on how to configure the Pulumi Artifactory provider.
 layout: package
 ---
+
 ## Installation
 
 The Artifactory provider is available as a package in all Pulumi languages:
@@ -15,6 +17,7 @@ The Artifactory provider is available as a package in all Pulumi languages:
 * Go: [`github.com/pulumi/pulumi-artifactory/sdk/v8/go/artifactory`](https://github.com/pulumi/pulumi-artifactory)
 * .NET: [`Pulumi.Artifactory`](https://www.nuget.org/packages/Pulumi.Artifactory)
 * Java: [`com.pulumi/artifactory`](https://central.sonatype.com/artifact/com.pulumi/artifactory)
+
 ## Overview
 
 The [Artifactory](https://jfrog.com/artifactory/) provider is used to interact with the resources supported by Artifactory. The provider needs to be configured with the proper credentials before it can be used.
@@ -228,12 +231,10 @@ The Artifactory provider supports two ways of authentication. The following meth
 Artifactory access tokens may be used via the Authorization header by providing the `accessToken` attribute to the provider configuration. Getting this value from the environment is supported with `JFROG_ACCESS_TOKEN` or `ARTIFACTORY_ACCESS_TOKEN` variables.
 
 Usage:
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
-{{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
 name: configuration-example
-runtime: nodejs
+runtime:
 config:
     artifactory:accessToken:
         value: abc...xy
@@ -241,79 +242,6 @@ config:
         value: artifactory.site.com/artifactory
 
 ```
-
-{{% /choosable %}}
-{{% choosable language python %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: python
-config:
-    artifactory:accessToken:
-        value: abc...xy
-    artifactory:url:
-        value: artifactory.site.com/artifactory
-
-```
-
-{{% /choosable %}}
-{{% choosable language csharp %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: dotnet
-config:
-    artifactory:accessToken:
-        value: abc...xy
-    artifactory:url:
-        value: artifactory.site.com/artifactory
-
-```
-
-{{% /choosable %}}
-{{% choosable language go %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: go
-config:
-    artifactory:accessToken:
-        value: abc...xy
-    artifactory:url:
-        value: artifactory.site.com/artifactory
-
-```
-
-{{% /choosable %}}
-{{% choosable language yaml %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: yaml
-config:
-    artifactory:accessToken:
-        value: abc...xy
-    artifactory:url:
-        value: artifactory.site.com/artifactory
-
-```
-
-{{% /choosable %}}
-{{% choosable language java %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: java
-config:
-    artifactory:accessToken:
-        value: abc...xy
-    artifactory:url:
-        value: artifactory.site.com/artifactory
-
-```
-
-{{% /choosable %}}
-{{< /chooser >}}
 ### API Key (deprecated)
 
 !>An upcoming version will support the option to block the usage/creation of API Keys (for admins to set on their platform). In a future version (scheduled for end of Q3, 2023), the option to disable the usage/creation of API Keys will be available and set to disabled by default. Admins will be able to enable the usage/creation of API Keys. By end of Q4 2024, API Keys will be deprecated all together and the option to use them will no longer be available. See [JFrog API Key Deprecation Process](https://jfrog.com/help/r/jfrog-platform-administration-documentation/jfrog-api-key-deprecation-process).
@@ -323,12 +251,10 @@ config:
 Artifactory API keys may be used via the `X-JFrog-Art-Api` header by providing the `apiKey` attribute in the provider configuration.
 
 Usage:
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
-{{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
 name: configuration-example
-runtime: nodejs
+runtime:
 config:
     artifactory:apiKey:
         value: abc...xy
@@ -336,79 +262,6 @@ config:
         value: artifactory.site.com/artifactory
 
 ```
-
-{{% /choosable %}}
-{{% choosable language python %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: python
-config:
-    artifactory:apiKey:
-        value: abc...xy
-    artifactory:url:
-        value: artifactory.site.com/artifactory
-
-```
-
-{{% /choosable %}}
-{{% choosable language csharp %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: dotnet
-config:
-    artifactory:apiKey:
-        value: abc...xy
-    artifactory:url:
-        value: artifactory.site.com/artifactory
-
-```
-
-{{% /choosable %}}
-{{% choosable language go %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: go
-config:
-    artifactory:apiKey:
-        value: abc...xy
-    artifactory:url:
-        value: artifactory.site.com/artifactory
-
-```
-
-{{% /choosable %}}
-{{% choosable language yaml %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: yaml
-config:
-    artifactory:apiKey:
-        value: abc...xy
-    artifactory:url:
-        value: artifactory.site.com/artifactory
-
-```
-
-{{% /choosable %}}
-{{% choosable language java %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: java
-config:
-    artifactory:apiKey:
-        value: abc...xy
-    artifactory:url:
-        value: artifactory.site.com/artifactory
-
-```
-
-{{% /choosable %}}
-{{< /chooser >}}
 ## Configuration Reference
 
 The following configuration inputs are supported:

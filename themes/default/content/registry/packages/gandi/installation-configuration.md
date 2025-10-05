@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-gandi/v2.0.0/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-gandi/v2.3.0/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumiverse/pulumi-gandi/blob/v2.0.0/docs/installation-configuration.md
+edit_url: https://github.com/pulumiverse/pulumi-gandi/blob/v2.3.0/docs/installation-configuration.md
 title: Gandi Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi Gandi Provider.
 layout: installation

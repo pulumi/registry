@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: Pulumiverse
 repo_url: https://github.com/pulumiverse/pulumi-gandi
-schema_file_url: https://raw.githubusercontent.com/pulumiverse/pulumi-gandi/v2.0.0/provider/cmd/pulumi-resource-gandi/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumiverse/pulumi-gandi/v2.3.0/provider/cmd/pulumi-resource-gandi/schema.json
 title: Gandi
-updated_on: 1759145741
-version: v2.0.0
+updated_on: 1759606458
+version: v2.3.0

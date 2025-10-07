@@ -24,7 +24,7 @@ image, publish it to a remote AWS ECR registry, and use an [inline
 cache](https://docs.docker.com/build/cache/backends/inline/) to speed up
 subsequent builds.
 
-{{< chooser language "typescript,python,csharp,go,yaml,java" / >}}
+{{< chooser language "typescript,python,csharp,go,yaml,java" >}}
 
 {{% choosable language typescript %}}
 

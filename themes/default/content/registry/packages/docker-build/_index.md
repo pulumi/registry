@@ -424,3 +424,5 @@ public class App {
 ```
 
 {{% /choosable %}}
+
+{{< /chooser >}}

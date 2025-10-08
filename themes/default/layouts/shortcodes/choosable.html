@@ -13,63 +13,7 @@
     {{ errorf "%s Missing required parameter 'values." .Page }}
 {{ end }}
 
-{{/* Check if this page needs SoftwareSourceCode annotations using centralized config */}}
-{{ $experimentConfig := partial "registry/experiment-config.html" . }}
-{{ $variantAPages := $experimentConfig.variantA }}
-{{ $variantBPages := $experimentConfig.variantB }}
-{{ $needsAnnotations := false }}
-{{ $currentPath := .Page.RelPermalink }}
 
-{{ range $variantAPages }}
-    {{ if strings.Contains $currentPath . }}
-        {{ $needsAnnotations = true }}
-    {{ end }}
-{{ end }}
-
-{{ range $variantBPages }}
-    {{ if strings.Contains $currentPath . }}
-        {{ $needsAnnotations = true }}
-    {{ end }}
-{{ end }}
-
-{{/* Only add SoftwareSourceCode annotations for language choosables on experiment pages */}}
-{{ if and $needsAnnotations (eq $type "language") }}
-    {{/* Parse title_tag using shared partial */}}
-    {{ $titleTag := .Page.Params.title_tag | default "" }}
-    {{ $parsed := partial "registry/parse-title-tag.html" (dict "titleTag" $titleTag "page" .Page) }}
-    {{ $packageName := $parsed.packageName }}
-    {{ $moduleName := $parsed.moduleName }}
-    {{ $resourceName := $parsed.resourceName }}
-    
-    {{/* Format module and resource names for display */}}
-    {{ $moduleDisplay := $moduleName | humanize | title }}
-    {{ $resourceDisplay := $resourceName | humanize | title }}
-    
-    {{/* Map language values to display names using shared partial */}}
-    {{ $langDisplay := partial "registry/language-display-mapping.html" $values }}
-    
-    <div>
-        <pulumi-choosable type="{{ $type }}" values="{{ $values }}" mode="{{ $mode }}">
-            <div itemscope itemtype="https://schema.org/SoftwareSourceCode">
-                <meta itemprop="name" content="Azure {{ $moduleDisplay }} {{ $resourceDisplay }} - {{ $langDisplay }} Example" />
-                <meta itemprop="description" content="Pulumi {{ $langDisplay }} code example for creating and managing Azure {{ $moduleDisplay }} {{ $resourceDisplay }} resources using Infrastructure as Code" />
-                <meta itemprop="programmingLanguage" content="{{ $langDisplay }}" />
-                <meta itemprop="codeSampleType" content="code snippet" />
-                <meta itemprop="keywords" content="Azure, {{ $moduleDisplay }}, {{ $resourceDisplay }}, Pulumi, Infrastructure as Code, IaC, {{ $langDisplay }}, Cloud, DevOps" />
-                <meta itemprop="runtimePlatform" content="Microsoft Azure" />
-                <meta itemprop="targetProduct" content="Pulumi Infrastructure as Code Platform" />
-                <meta itemprop="codeRepository" content="https://github.com/pulumi/pulumi-{{ $packageName }}" />
-                <meta itemprop="license" content="https://github.com/pulumi/pulumi-{{ $packageName }}/blob/master/LICENSE" />
-                <meta itemprop="author" content="Pulumi" />
-                <div itemprop="text">
-                    {{ .Inner }}
-                </div>
-            </div>
-        </pulumi-choosable>
-    </div>
-{{ else }}
-    {{/* Original output without SoftwareSourceCode annotations */}}
-    <div>
-        <pulumi-choosable type="{{ $type }}" values="{{ $values }}" mode="{{ $mode }}">{{ .Inner }}</pulumi-choosable>
-    </div>
-{{ end }}
+<div>
+    <pulumi-choosable type="{{ $type }}" values="{{ $values }}" mode="{{ $mode }}">{{ .Inner }}</pulumi-choosable>
+</div>

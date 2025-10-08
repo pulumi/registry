@@ -9,87 +9,8 @@
             </div>
         </div>
 
-        <div class="docs-main-content-wrapper">
-            <div class="docs-main-content">
-                {{ partial "registry/breadcrumb.html" . }}
-
-                {{ partial "registry/package/package-card-top-of-page.html" . }}
-
-                {{ if strings.Contains .Permalink "api-docs" }}
-                    <!--Don't show the title in the top-most index page.-->
-                    {{ if not (in .Page.File.Path "api-docs/_index.md") }}
-                        {{ if and (.Params.h1) (not .Params.notitle) }}
-                            <h1>{{ .Params.h1 }}</h1>
-                        {{ else if and (ne .Title "") (not .Params.notitle) }}
-                            <h1 class="break-words">{{ $title_tag }}</h1>
-                            {{ if not (strings.Contains .Params.meta_desc "module") }}
-                                {{ .Scratch.Set "title_tag" $title_tag }}
-                                {{ partial "registry/package/pulumi-ai.html" . }}
-                            {{ end }}
-                        {{ end }}
-                    {{ else if (in .Page.File.Path "api-docs/_index.md")}}
-                        <h1>{{ .Params.title }}: API Docs</h1>
-                    {{ end }}
-                {{ else }}
-                    {{ if and (.Params.h1) (not .Params.notitle) }}
-                        <h1>{{ .Params.h1 }}</h1>
-                    {{ else if and (ne .Title "") (not .Params.notitle) (not (in .Page.File.Path "how-to-guides/_index.md")) }}
-                        <h1>{{ .Title }}</h1>
-                    {{ end }}
-                {{ end }}
-
-                <div class="docs-table-of-contents docs-toc-mobile">
-                    {{ partial "docs/table-of-contents.html" . }}
-                </div>
-
-                <section class="docs-content">
-                    {{ if strings.HasSuffix .Permalink "how-to-guides/" }}
-                        {{ if (eq (len .Pages) 0) }}
-                            There are no guides yet for this package.
-                        {{ else }}
-                            {{ if not (eq (len (where .Pages "Params.language" "==" nil)) 0) }}
-                                <h2>Featured Guides</h2>
-
-                                {{ range where .Pages "Params.language" "==" nil }}
-                                    <div class="pb-4">
-                                        <a class="text-blue-600 underline" href="{{ relref . .Path }}">{{ .Title }}</a>
-                                    </div>
-                                {{ end }}
-
-                                <h2>How-to Guides by Language</h2>
-                            {{ end }}
-
-                            <div><pulumi-chooser type="language" options="typescript,javascript,python,go,csharp"></pulumi-chooser></div>
-
-                            <pulumi-choosable type="language" value="typescript">
-                            {{ partial "registry/packages/how-to-language-index" (dict "package" . "language" "ts") }}
-                            </pulumi-choosable>
-
-                            <pulumi-choosable type="language" value="javascript">
-                            {{ partial "registry/packages/how-to-language-index" (dict "package" . "language" "js") }}
-                            </pulumi-choosable>
-
-                            <pulumi-choosable type="language" value="python">
-                            {{ partial "registry/packages/how-to-language-index" (dict "package" . "language" "py") }}
-                            </pulumi-choosable>
-
-                            <pulumi-choosable type="language" value="go">
-                            {{ partial "registry/packages/how-to-language-index" (dict "package" . "language" "go") }}
-                            </pulumi-choosable>
-
-                            <pulumi-choosable type="language" value="csharp">
-                            {{ partial "registry/packages/how-to-language-index" (dict "package" . "language" "cs") }}
-                            </pulumi-choosable>
-                        {{ end }}
-                    {{ else }}
-                        {{ .Content }}
-                    {{ end }}
-                </section>
-            </div>
-
-            <div class="docs-table-of-contents docs-toc-desktop">
-                {{ partial "docs/table-of-contents.html" . }}
-            </div>
+        <div class="docs-nav-toggle">
+            <div class="docs-nav-toggle-icon icon icon-24-24"></div>
         </div>
     </div>
 
@@ -167,40 +88,7 @@
                 </pulumi-choosable>
                 {{ end }}
                 {{ else }}
-                {{/* Check if this page is part of the experiment */}}
-                {{ $experimentConfig := partial "registry/experiment-config.html" . }}
-                {{ $variantAPages := $experimentConfig.variantA }}
-                {{ $variantBPages := $experimentConfig.variantB }}
-                {{ $isVariantA := false }}
-                {{ $isVariantB := false }}
-                {{ $currentPath := .RelPermalink }}
-
-                {{ range $variantAPages }}
-                {{ if strings.Contains $currentPath . }}
-                {{ $isVariantA = true }}
-                {{ end }}
-                {{ end }}
-
-                {{ range $variantBPages }}
-                {{ if strings.Contains $currentPath . }}
-                {{ $isVariantB = true }}
-                {{ end }}
-                {{ end }}
-
-                {{/* Process content based on variant */}}
-                {{ if $isVariantA }}
-                {{/* Variant A: Add SoftwareSourceCode annotations alongside each code example */}}
-                {{ partial "registry/add-variant-a-softwaresourcecode-annotations.html" (dict "Page" . "Content"
-                .Content) }}
-                {{ else }}
-                {{/* Default: Render content as-is */}}
                 {{ .Content }}
-                {{ end }}
-
-                {{/* Variant B: Add canonical block with all languages */}}
-                {{ if $isVariantB }}
-                {{ partial "registry/softwaresourcecode-annotations-canonical.html" . }}
-                {{ end }}
                 {{ end }}
             </section>
         </div>

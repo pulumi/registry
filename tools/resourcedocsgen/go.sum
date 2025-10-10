@@ -428,8 +428,8 @@ github.com/pulumi/inflector v0.1.1 h1:dvlxlWtXwOJTUUtcYDvwnl6Mpg33prhK+7mzeF+Sob
 github.com/pulumi/inflector v0.1.1/go.mod h1:HUFCjcPTz96YtTuUlwG3i3EZG4WlniBvR9bd+iJxCUY=
 github.com/pulumi/pulumi-java/pkg v1.16.1 h1:NdICb1IDJ4S2FBNb9Z4KnA0xXQ+OST74EgcvmjG6Azo=
 github.com/pulumi/pulumi-java/pkg v1.16.1/go.mod h1:Tf0rbpRsbHOrkkFClupHMpxWkuVxz9R0PpgMqzn35rU=
-github.com/pulumi/pulumi-yaml v1.23.2 h1:8Cnmu+yqWDN28QmKi4q0IKDJZf+gsBwkZqOPmGvX4cM=
-github.com/pulumi/pulumi-yaml v1.23.2/go.mod h1:X0M7nJsk1XYieJw7LnwIaLH3B1hNYZtDBY0KzPG863M=
+github.com/pulumi/pulumi-yaml v1.24.0 h1:rTapwJsypyY1x+cbM0ec9mRQKphrBsYyS7ixtyFzgMs=
+github.com/pulumi/pulumi-yaml v1.24.0/go.mod h1:B3i1ZVHQOdSh3gR+LdSOPyOBlsZCE55gA6RSVf5eFbU=
 github.com/pulumi/pulumi/pkg/v3 v3.201.0 h1:Vu36u/Hv+kGJr5ryPP40fYABDKuvWcKQKm5hYMw/gU4=
 github.com/pulumi/pulumi/pkg/v3 v3.201.0/go.mod h1:dwXMnuziQF0d66p6cfB4//gsS3qRoXdqWIMKKyNNx1I=
 github.com/pulumi/pulumi/sdk/v3 v3.201.0 h1:L35n/BAMWB2HhjTTg3n87uKLrKcjymFS74ee8vGyhE8=

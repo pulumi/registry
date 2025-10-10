@@ -1,8 +1,8 @@
 module github.com/pulumi/registry/tools/resourcedocsgen
 
-go 1.24
+go 1.24.7
 
-toolchain go1.24.3
+toolchain go1.24.8
 
 require (
 	github.com/blang/semver v3.5.1+incompatible
@@ -13,7 +13,7 @@ require (
 	github.com/pgavlin/goldmark v1.1.33-0.20200616210433-b5eb04559386
 	github.com/pkg/errors v0.9.1
 	github.com/pulumi/pulumi-java/pkg v1.16.1
-	github.com/pulumi/pulumi-yaml v1.23.2
+	github.com/pulumi/pulumi-yaml v1.24.0
 	github.com/pulumi/pulumi/pkg/v3 v3.201.0
 	github.com/pulumi/pulumi/sdk/v3 v3.201.0
 	github.com/sourcegraph/conc v0.3.0

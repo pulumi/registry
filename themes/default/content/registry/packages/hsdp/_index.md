@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/philips-software/hsdp/0.69.0/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/philips-software/hsdp/0.70.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Hsdp Provider
@@ -16,7 +16,7 @@ pulumi package add terraform-provider philips-software/hsdp
 ```
 ## Overview
 
-Use the HSDP provider to interact with the many resources supported by [HSDP](https://www.hsdp.io). This includes amongst others IAM entities, Container Host instances, Edge devices and even some Clinical Data Repository (CDR) resources
+Use the HSDP provider to interact with the many resources supported by [HSDP](https://www.hsdp.io). This includes amongst others IAM entities, Container Host instances and Edge devices
 
 Use the navigation to the left to read about the available resources.
 

@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/checkly/pulumi-checkly/v2.5.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/checkly/pulumi-checkly/v2.6.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/checkly/pulumi-checkly/blob/v2.5.0/docs/_index.md
+edit_url: https://github.com/checkly/pulumi-checkly/blob/v2.6.0/docs/_index.md
 title: Checkly
 meta_desc: Provides an overview of the Checkly provider for Pulumi.
 layout: package

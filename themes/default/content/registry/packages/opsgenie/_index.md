@@ -1,11 +1,13 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-opsgenie/v1.3.15/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-opsgenie/v1.3.17/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+edit_url: https://github.com/pulumi/pulumi-opsgenie/blob/v1.3.17/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Opsgenie Provider
 meta_desc: Provides an overview on how to configure the Pulumi Opsgenie provider.
 layout: package
 ---
+
 ## Installation
 
 The Opsgenie provider is available as a package in all Pulumi languages:
@@ -15,6 +17,7 @@ The Opsgenie provider is available as a package in all Pulumi languages:
 * Go: [`github.com/pulumi/pulumi-opsgenie/sdk/go/opsgenie`](https://github.com/pulumi/pulumi-opsgenie)
 * .NET: [`Pulumi.Opsgenie`](https://www.nuget.org/packages/Pulumi.Opsgenie)
 * Java: [`com.pulumi/opsgenie`](https://central.sonatype.com/artifact/com.pulumi/opsgenie)
+
 ## Overview
 
 The Opsgenie provider is used to interact with the

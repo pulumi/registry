@@ -1,6 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/volcengine/pulumi-volcenginecc/v0.0.1/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/volcengine/pulumi-volcenginecc/v0.0.2/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+edit_url: https://github.com/volcengine/pulumi-volcenginecc/blob/v0.0.2/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Volcenginecc Provider
 meta_desc: Provides an overview on how to configure the Pulumi Volcenginecc provider.
@@ -371,7 +372,7 @@ The following methods are supported, in this order, and explained below:
 ### Static credentials
 
 Static credentials can be provided by adding `accessKey`, `secretKey` and `region` in-line in the
-alicloud provider configuration:
+volcengine provider configuration:
 
 Usage:
 
@@ -404,7 +405,7 @@ runtime:
 ```shell
 $ export VOLCENGINE_ACCESS_KEY="<Your-Access-Key-ID>"
 $ export VOLCENGINE_SECRET_KEY="<Your-Access-Key-Secret>"
-$ export ALIBABA_CLOUD_REGION="cn-beijing"
+$ export VOLCENGINE_REGION="cn-beijing"
 $ pulumi preview
 ```
 

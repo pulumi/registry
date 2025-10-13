@@ -241,6 +241,10 @@
       "schemaFile": "provider/cmd/pulumi-resource-volcengine/schema.json"
     },
     {
+      "repoSlug": "volcengine/pulumi-volcenginecc",
+      "schemaFile": "provider/cmd/pulumi-resource-volcenginecc/schema.json"
+    },
+    {
       "repoSlug": "netascode/pulumi-aci",
       "schemaFile": "provider/cmd/pulumi-resource-aci/schema.json"
     },

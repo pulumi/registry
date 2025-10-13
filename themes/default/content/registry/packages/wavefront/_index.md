@@ -1,11 +1,13 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-wavefront/v3.1.9/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-wavefront/v3.1.11/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+edit_url: https://github.com/pulumi/pulumi-wavefront/blob/v3.1.11/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Wavefront Provider
 meta_desc: Provides an overview on how to configure the Pulumi Wavefront provider.
 layout: package
 ---
+
 ## Installation
 
 The Wavefront provider is available as a package in all Pulumi languages:
@@ -15,6 +17,7 @@ The Wavefront provider is available as a package in all Pulumi languages:
 * Go: [`github.com/pulumi/pulumi-wavefront/sdk/v3/go/wavefront`](https://github.com/pulumi/pulumi-wavefront)
 * .NET: [`Pulumi.Wavefront`](https://www.nuget.org/packages/Pulumi.Wavefront)
 * Java: [`com.pulumi/wavefront`](https://central.sonatype.com/artifact/com.pulumi/wavefront)
+
 ## Overview
 
 The Wavefront provider is used to interact with the Wavefront monitoring service. The
@@ -224,12 +227,10 @@ The Wavefront provider offers two ways of providing credentials for authenticati
 Static credentials can be provided by adding an `address` and `token` in-line in
 the Wavefront provider configuration.
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
-{{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
 name: configuration-example
-runtime: nodejs
+runtime:
 config:
     wavefront:address:
         value: cluster.wavefront.com
@@ -237,140 +238,17 @@ config:
         value: your-wf-token-secret
 
 ```
-
-{{% /choosable %}}
-{{% choosable language python %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: python
-config:
-    wavefront:address:
-        value: cluster.wavefront.com
-    wavefront:token:
-        value: your-wf-token-secret
-
-```
-
-{{% /choosable %}}
-{{% choosable language csharp %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: dotnet
-config:
-    wavefront:address:
-        value: cluster.wavefront.com
-    wavefront:token:
-        value: your-wf-token-secret
-
-```
-
-{{% /choosable %}}
-{{% choosable language go %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: go
-config:
-    wavefront:address:
-        value: cluster.wavefront.com
-    wavefront:token:
-        value: your-wf-token-secret
-
-```
-
-{{% /choosable %}}
-{{% choosable language yaml %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: yaml
-config:
-    wavefront:address:
-        value: cluster.wavefront.com
-    wavefront:token:
-        value: your-wf-token-secret
-
-```
-
-{{% /choosable %}}
-{{% choosable language java %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: java
-config:
-    wavefront:address:
-        value: cluster.wavefront.com
-    wavefront:token:
-        value: your-wf-token-secret
-
-```
-
-{{% /choosable %}}
-{{< /chooser >}}
 ### Environment Variables
 
 You can provide your credentials by using the `WAVEFRONT_ADDRESS` and `WAVEFRONT_TOKEN`,
 environment variables.
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
-{{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
 name: configuration-example
-runtime: nodejs
+runtime:
 
 ```
-
-{{% /choosable %}}
-{{% choosable language python %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: python
-
-```
-
-{{% /choosable %}}
-{{% choosable language csharp %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: dotnet
-
-```
-
-{{% /choosable %}}
-{{% choosable language go %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: go
-
-```
-
-{{% /choosable %}}
-{{% choosable language yaml %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: yaml
-
-```
-
-{{% /choosable %}}
-{{% choosable language java %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: java
-
-```
-
-{{% /choosable %}}
-{{< /chooser >}}
 
 Usage:
 

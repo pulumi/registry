@@ -10,7 +10,7 @@ native: false
 package_status: public_preview
 publisher: Volcengine
 repo_url: https://github.com/volcengine/pulumi-volcenginecc
-schema_file_url: https://raw.githubusercontent.com/volcengine/pulumi-volcenginecc/v0.0.1/provider/cmd/pulumi-resource-volcenginecc/schema.json
+schema_file_url: https://raw.githubusercontent.com/volcengine/pulumi-volcenginecc/v0.0.2/provider/cmd/pulumi-resource-volcenginecc/schema.json
 title: volcenginecc
-updated_on: 1760067354
-version: v0.0.1
+updated_on: 1760179214
+version: v0.0.2

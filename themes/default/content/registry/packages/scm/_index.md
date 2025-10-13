@@ -1,11 +1,13 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-scm/v0.4.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-scm/v0.4.2/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+edit_url: https://github.com/pulumi/pulumi-scm/blob/v0.4.2/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Strata Cloud Manager Provider
 meta_desc: Provides an overview on how to configure the Pulumi Strata Cloud Manager provider.
 layout: package
 ---
+
 ## Installation
 
 The Strata Cloud Manager provider is available as a package in all Pulumi languages:
@@ -15,12 +17,18 @@ The Strata Cloud Manager provider is available as a package in all Pulumi langua
 * Go: [`github.com/pulumi/pulumi-scm/sdk/go/scm`](https://github.com/pulumi/pulumi-scm)
 * .NET: [`Pulumi.Scm`](https://www.nuget.org/packages/Pulumi.Scm)
 * Java: [`com.pulumi/scm`](https://central.sonatype.com/artifact/com.pulumi/scm)
+
 ## Overview
 
 The `scm` provider provides resources and functions to manage and query Strata Cloud Manager.
 
 This provider covers the following aspects of Strata Cloud Manager:
 * Unified Networking Security
+## Warranty
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+THIS SOFTWARE IS RELEASED AS A PROOF OF CONCEPT FOR EXPERIMENTAL PURPOSES ONLY. USE IT AT OWN RISK. THIS SOFTWARE IS NOT SUPPORTED.
 ## Example Usage
 
 {{< chooser language "typescript,python,go,csharp,java,yaml" >}}
@@ -40,7 +48,10 @@ config:
         value: tsg_id:12345
 
 ```
+```typescript
+import * as pulumi from "@pulumi/pulumi";
 
+```
 {{% /choosable %}}
 {{% choosable language python %}}
 ```yaml
@@ -58,7 +69,10 @@ config:
         value: tsg_id:12345
 
 ```
+```python
+import pulumi
 
+```
 {{% /choosable %}}
 {{% choosable language csharp %}}
 ```yaml
@@ -76,7 +90,16 @@ config:
         value: tsg_id:12345
 
 ```
+```csharp
+using System.Collections.Generic;
+using System.Linq;
+using Pulumi;
 
+return await Deployment.RunAsync(() =>
+{
+});
+
+```
 {{% /choosable %}}
 {{% choosable language go %}}
 ```yaml
@@ -94,7 +117,19 @@ config:
         value: tsg_id:12345
 
 ```
+```go
+package main
 
+import (
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		return nil
+	})
+}
+```
 {{% /choosable %}}
 {{% choosable language yaml %}}
 ```yaml
@@ -112,7 +147,9 @@ config:
         value: tsg_id:12345
 
 ```
-
+```yaml
+{}
+```
 {{% /choosable %}}
 {{% choosable language java %}}
 ```yaml
@@ -130,7 +167,28 @@ config:
         value: tsg_id:12345
 
 ```
+```java
+package generated_program;
 
+import com.pulumi.Context;
+import com.pulumi.Pulumi;
+import com.pulumi.core.Output;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+public class App {
+    public static void main(String[] args) {
+        Pulumi.run(App::stack);
+    }
+
+    public static void stack(Context ctx) {
+    }
+}
+```
 {{% /choosable %}}
 {{< /chooser >}}
 ## Provider Parameter Priority

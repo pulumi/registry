@@ -1,16 +1,17 @@
 <div class="docs-search">
-    <div
-        id="search"
-        data-app-id="{{ getenv "ALGOLIA_APP_ID" }}"
-        data-search-key="{{ getenv "ALGOLIA_APP_SEARCH_KEY" }}"
-        data-facets="Docs,Registry"
-        data-index="production"
-    ></div>
+    {{ if getenv "ALGOLIA_APP_ID" }}
+        <div
+            id="search"
+            data-app-id="{{ getenv "ALGOLIA_APP_ID" }}"
+            data-search-key="{{ getenv "ALGOLIA_APP_SEARCH_KEY" }}"
+            data-facets="Docs,Registry"
+            data-index="production"
+        ></div>
+    {{ else }}
+        <!-- Visual placeholder styled like real search input -->
+        <div class="border border-gray-300 rounded bg-gray-50 px-3 py-2">
+            <div class="text-gray-500 text-sm">🔍 Search box location</div>
+            <div class="text-xs text-gray-400 mt-1">Algolia search would render here in production</div>
+        </div>
+    {{ end }}
 </div>
-{{ if not (getenv "ALGOLIA_APP_ID") }}
-<!-- Visual placeholder for search box location (only shown in dev without Algolia credentials) -->
-<div style="background: #f0f0f0; border: 2px dashed #666; padding: 0.75rem 1rem; margin: 0.5rem 0 1.5rem 0;">
-    <strong>🔍 Search box location</strong>
-    <p style="font-size: 12px; margin: 5px 0 0 0;">Algolia search would render here in production</p>
-</div>
-{{ end }}

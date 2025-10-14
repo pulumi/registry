@@ -8,6 +8,7 @@
 {{ $apiDocsPath := printf "%s/" (path.Join $packageUrl "api-docs") }}
 
 <nav class="main-nav">
+    {{ partial "docs/search-only.html" . }}
     <div class="all-packages-icon-link">
         <a class="all-packages" href="/registry">
             <div class="icon icon-14-14 arrow-back-gray-14-14"></div>

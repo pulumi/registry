@@ -7,3 +7,10 @@
         data-index="production"
     ></div>
 </div>
+{{ if not (getenv "ALGOLIA_APP_ID") }}
+<!-- Visual placeholder for search box location (only shown in dev without Algolia credentials) -->
+<div style="background: #f0f0f0; border: 2px dashed #666; padding: 0.75rem 1rem; margin: 0.5rem 0 1.5rem 0;">
+    <strong>🔍 Search box location</strong>
+    <p style="font-size: 12px; margin: 5px 0 0 0;">Algolia search would render here in production</p>
+</div>
+{{ end }}

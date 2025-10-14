@@ -163,7 +163,7 @@ body.section-registry {
 
             nav.main-nav {
                 display: none;
-                padding: 32px 0 0 0;
+                padding: 0;
             }
 
             h2,
@@ -375,6 +375,13 @@ body.section-registry {
             &.registry-package-list {
                 max-width: 1064px;
                 width: 1064px;
+            }
+        }
+
+        body.section-registry & .docs-main-content {
+            @media (min-width: 1526px) {
+                max-width: 1200px !important;
+                width: 100%;
             }
         }
 

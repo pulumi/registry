@@ -4,6 +4,7 @@
             <div class="docs-main-nav-wrapper">
                 <div id="docs-main-nav" class="docs-main-nav">
                     <nav class="main-nav">
+                        {{ partial "docs/search-only.html" . }}
                         <div class="featured-packages">
                             {{ $featuredPackages := slice }}
                             {{ range $.Site.Data.registry.packages }}

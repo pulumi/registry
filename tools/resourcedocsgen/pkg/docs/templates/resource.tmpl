@@ -334,6 +334,9 @@ Only the first {{ .MaxNestedTypes }} types are included in this documentation.
 {{ htmlSafe $elem.Name }}<pulumi-choosable type="language" values="python,go" class="inline">, {{ htmlSafe $elem.Name }}<wbr>Args</pulumi-choosable>
 </h4>
 
+{{- if $elem.Description }}
+{{ markdownify $elem.Description }}
+{{ end -}}
 {{- if $elem.Properties }}{{template "properties" $elem.Properties -}}{{ end -}}
 {{- if $elem.EnumValues }}{{- template "enums" $elem.EnumValues -}}{{ end -}}
 {{- end -}}

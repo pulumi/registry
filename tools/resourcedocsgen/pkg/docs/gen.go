@@ -286,11 +286,12 @@ type enum struct {
 
 // docNestedType represents a complex type.
 type docNestedType struct {
-	Name       string
-	Input      bool
-	AnchorID   string
-	Properties map[language.Language][]property
-	EnumValues map[language.Language][]enum
+	Name        string
+	Description string
+	Input       bool
+	AnchorID    string
+	Properties  map[language.Language][]property
+	EnumValues  map[language.Language][]enum
 }
 
 // propertyType represents the type of a property.
@@ -1116,9 +1117,10 @@ func (mod *modContext) genNestedTypes(member interface{}, resourceType, isProvid
 				//nolint:staticcheck
 				name := strings.Title(tokenToName(typ.Token))
 				typs = append(typs, docNestedType{
-					Name:       wbr(name),
-					AnchorID:   strings.ToLower(name),
-					Properties: props,
+					Name:        wbr(name),
+					AnchorID:    strings.ToLower(name),
+					Description: typ.Comment,
+					Properties:  props,
 				})
 			case *schema.EnumType:
 				if typ.Token != token || len(typ.Elements) == 0 {

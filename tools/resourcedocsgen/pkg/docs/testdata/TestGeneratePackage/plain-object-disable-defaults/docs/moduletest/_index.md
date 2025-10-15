@@ -640,6 +640,8 @@ All [input](#inputs) properties are implicitly available as output properties. A
 <h4 id="typ">
 Typ<pulumi-choosable type="language" values="python,go" class="inline">, Typ<wbr>Args</pulumi-choosable>
 </h4>
+A test for namespaces (mod main)
+
 
 <div>
 <pulumi-choosable type="language" values="csharp">
@@ -824,6 +826,8 @@ Typ<pulumi-choosable type="language" values="python,go" class="inline">, Typ<wbr
 <h4 id="typ">
 Typ<pulumi-choosable type="language" values="python,go" class="inline">, Typ<wbr>Args</pulumi-choosable>
 </h4>
+A test for namespaces (mod 1)
+
 
 <div>
 <pulumi-choosable type="language" values="csharp">
@@ -912,6 +916,8 @@ Typ<pulumi-choosable type="language" values="python,go" class="inline">, Typ<wbr
 <h4 id="typ">
 Typ<pulumi-choosable type="language" values="python,go" class="inline">, Typ<wbr>Args</pulumi-choosable>
 </h4>
+A test for namespaces (mod 2)
+
 
 <div>
 <pulumi-choosable type="language" values="csharp">

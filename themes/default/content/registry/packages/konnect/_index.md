@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/kong/konnect/3.2.1/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/kong/konnect/3.3.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Konnect Provider
@@ -127,8 +127,13 @@ public class App {
 {{< /chooser >}}
 ## Configuration Reference
 
-- `konnectAccessToken` (String, Sensitive)
-- `personalAccessToken` (String, Sensitive)
+- `konnectAccessToken` (String, Sensitive) The Konnect access token is meant to be used by the Konnect dashboard and the decK CLI to authenticate with..
+- `personalAccessToken` (String, Sensitive) The personal access token is meant to be used as an alternative to basic-auth when accessing Konnect via APIs. You can generate a Personal Access Token (PAT) from the personal access token page in the Konnect dashboard.. Configurable via environment variable `KONNECT_TOKEN`.
 - `serverUrl` (String) Server URL (defaults to <https://global.api.konghq.com>)
-- `serviceAccessToken` (String, Sensitive)
-- `systemAccountAccessToken` (String, Sensitive)
+- `serviceAccessToken` (String, Sensitive) The Service access token is meant to be used between internal services.
+  .
+- `systemAccountAccessToken` (String, Sensitive) The system account access token is meant for automations and integrations that are not directly associated with a human identity.
+  You can generate a system account Access Token by creating a system account and then obtaining a system account access token for that account.
+  The access token must be passed in the header of a request, for example:
+  `curl -X GET 'https://global.api.konghq.com/v2/users/' --header 'Authorization: Bearer spat_i2Ej...'`
+  . Configurable via environment variable `KONNECT_SPAT`.

@@ -162,7 +162,7 @@ body.section-registry {
             }
 
             nav.main-nav {
-                display: none;
+                display: none; // Hidden on mobile, shown on desktop via media query below
                 padding: 0;
             }
 
@@ -379,9 +379,9 @@ body.section-registry {
             }
         }
 
-        body.section-registry & .docs-main-content {
+        body.section-registry .docs-main-content.docs-main-content {
             @media (min-width: 1526px) {
-                max-width: 1200px !important;
+                max-width: 1200px;
                 width: 100%;
             }
         }

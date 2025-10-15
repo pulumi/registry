@@ -78,7 +78,8 @@
     }
 }
 
-// Search box in left navigation (not in tabstrip)
+// Override default .docs-search styles for left navigation placement
+// This variant has no horizontal padding since nav already provides spacing
 .main-nav .docs-search {
     margin: 0.5rem 0 1.5rem 0;
     padding: 1.25rem 0 0 0;

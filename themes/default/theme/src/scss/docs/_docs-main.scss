@@ -162,8 +162,8 @@ body.section-registry {
             }
 
             nav.main-nav {
-                display: none;
-                padding: 32px 0 0 0;
+                display: none; // Hidden on mobile, shown on desktop via media query below
+                padding: 0;
             }
 
             h2,
@@ -190,6 +190,7 @@ body.section-registry {
             }
 
             div.featured-packages {
+                margin-top: 0;
                 margin-bottom: 26px;
             }
 
@@ -357,7 +358,7 @@ body.section-registry {
             width: 700px;
             max-width: 700px;
             min-width: 0;
-            margin: 32px 24px 0 16px;
+            margin: 16px 24px 0 16px;
             padding-bottom: 24px;
             min-height: 100vh;
 
@@ -375,6 +376,13 @@ body.section-registry {
             &.registry-package-list {
                 max-width: 1064px;
                 width: 1064px;
+            }
+        }
+
+        body.section-registry .docs-main-content.docs-main-content {
+            @media (min-width: 1526px) {
+                max-width: 1200px;
+                width: 100%;
             }
         }
 

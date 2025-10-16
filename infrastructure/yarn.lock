@@ -845,9 +845,9 @@
     semver "^5.4.0"
 
 "@pulumi/pulumi@^3.0.0", "@pulumi/pulumi@^3.136.0", "@pulumi/pulumi@^3.142.0", "@pulumi/pulumi@^3.37.0":
-  version "3.202.0"
-  resolved "https://registry.yarnpkg.com/@pulumi/pulumi/-/pulumi-3.202.0.tgz#8066c9691bd67ef12e78a115c4fd17d7b408e33f"
-  integrity sha512-Vxpo6K4dpHb4ldxxp1IvG3lzIIthmd5dWguLySqbz7MmEksHPvbgSzk2I2v8SJKGjluozQASYpgW+1myUIZjGA==
+  version "3.203.0"
+  resolved "https://registry.yarnpkg.com/@pulumi/pulumi/-/pulumi-3.203.0.tgz#a0fd2ac723ef2ca38bd64f197031a7f0f49c24fa"
+  integrity sha512-wXGzxYC61DF+YtJYwidxrpvRxn2y3+ML5OUuAQWUzPgM0byEgKotHAhadQ9uvfutSE262mmoqv5skXaDJdBGzQ==
   dependencies:
     "@grpc/grpc-js" "^1.10.1"
     "@logdna/tail-file" "^2.0.6"
@@ -1386,9 +1386,9 @@
     "@types/node" "*"
 
 "@types/node@*", "@types/node@>=13.7.0":
-  version "24.7.1"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-24.7.1.tgz#3f0b17eddcd965c9e337af22459b04bafbf96e5e"
-  integrity sha512-CmyhGZanP88uuC5GpWU9q+fI61j2SkhO3UGMUdfYRE6Bcy0ccyzn1Rqj9YAB/ZY4kOXmNf0ocah5GtphmLMP6Q==
+  version "24.7.2"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-24.7.2.tgz#5adf66b6e2ac5cab1d10a2ad3682e359cb652f4a"
+  integrity sha512-/NbVmcGTP+lj5oa4yiYxxeBjRivKQ5Ns1eSZeB99ExsEQ6rX5XYU1Zy/gGxY/ilqtD4Etx9mKyrPxZRetiahhA==
   dependencies:
     undici-types "~7.14.0"
 
@@ -1899,9 +1899,9 @@ execa@^5.1.0:
     strip-final-newline "^2.0.0"
 
 exponential-backoff@^3.1.1:
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/exponential-backoff/-/exponential-backoff-3.1.2.tgz#a8f26adb96bf78e8cd8ad1037928d5e5c0679d91"
-  integrity sha512-8QxYTVXUkuy7fIIoitQkPwGonB8F3Zj8eEO8Sqg9Zv/bkI7RJAzowee4gr81Hak/dUTpA2Z7VfQgoijjPNlUZA==
+  version "3.1.3"
+  resolved "https://registry.yarnpkg.com/exponential-backoff/-/exponential-backoff-3.1.3.tgz#51cf92c1c0493c766053f9d3abee4434c244d2f6"
+  integrity sha512-ZgEeZXj30q+I0EN+CbSSpIyPaJ5HVQD18Z1m+u1FXbAeT94mr1zw50q4q6jiiC447Nl/YTcIYSAftiGqetwXCA==
 
 fast-xml-parser@4.4.1:
   version "4.4.1"

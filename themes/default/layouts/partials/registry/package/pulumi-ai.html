@@ -1,4 +1,5 @@
 {{ $title_tag := .Scratch.Get "title_tag" }}
-<a class="pulumi-ai-badge" target="_blank" href="https://app.pulumi.com/neo?prompt=Create%20an%20{{ $title_tag }}%20resource">
+{{ $prompt := printf "Explain and Create an %s resource" $title_tag }}
+<a class="pulumi-ai-badge" target="_blank" href="https://app.pulumi.com/neo?prompt={{ $prompt | urlquery }}">
     <img src="https://get.pulumi.com/new/button.svg" alt="Deploy with Pulumi">
 </a>

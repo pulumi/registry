@@ -1,0 +1,55 @@
+{{/*
+    Dummy shortcode for resource-example
+
+    This is a placeholder that demonstrates how the shortcode will work.
+    Eventually this will:
+    1. Read from static/registry/packages/examples/{provider}/{resource}.json
+    2. Render multi-language examples from the resource's API docs
+
+    Usage: {{< resource-example provider="aws" resource="aws.autoscaling.Group" >}}
+
+    Note: The resource parameter uses Pulumi SDK format (e.g., aws.autoscaling.Group)
+    and maps directly to the filename (aws.autoscaling.Group.json).
+*/}}
+
+{{ $provider := .Get "provider" }}
+{{ $resource := .Get "resource" }}
+
+<div class="resource-example-placeholder border-4 border-purple-300 rounded-lg p-6 bg-purple-50 my-8">
+    <div class="flex items-start mb-4">
+        <svg class="w-6 h-6 text-purple-600 mr-3 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        <div>
+            <h4 class="text-lg font-bold text-purple-900 mb-2">🚧 Placeholder for resource-example shortcode</h4>
+            <p class="text-sm text-purple-800 mb-2">
+                <strong>Provider:</strong> <code class="bg-white px-2 py-1 rounded">{{ $provider }}</code><br>
+                <strong>Resource:</strong> <code class="bg-white px-2 py-1 rounded">{{ $resource }}</code>
+            </p>
+            <p class="text-sm text-purple-700">
+                This shortcode will eventually pull multi-language examples from:<br>
+                <code class="text-xs bg-white px-2 py-1 rounded mt-1 inline-block">
+                    /static/registry/packages/examples/{{ $provider }}/{{ $resource }}.json
+                </code>
+            </p>
+        </div>
+    </div>
+
+    <div class="mt-4 p-4 bg-white rounded border border-purple-200">
+        <p class="text-sm text-gray-700 mb-2"><strong>What this will render:</strong></p>
+        <ul class="text-sm text-gray-600 space-y-1 list-disc list-inside">
+            <li>Language chooser (TypeScript, Python, Go, C#, Java, YAML)</li>
+            <li>Code examples for {{ $resource }} from the registry API docs</li>
+            <li>Automatically synced with the latest generated docs</li>
+        </ul>
+    </div>
+
+    <div class="mt-4 text-xs text-purple-600">
+        <strong>Implementation notes:</strong>
+        <ul class="list-disc list-inside mt-1 space-y-1">
+            <li>Examples will be exported by resourcedocsgen tool</li>
+            <li>JSON files will contain all language variations</li>
+            <li>Shortcode will render with pulumi-chooser/choosable components</li>
+        </ul>
+    </div>
+</div>

@@ -43,33 +43,63 @@ hugo --quiet --buildDrafts
 
 Generated pages are in `public/registry/packages/aws/guides/`
 
-## Next Steps for Resource Examples Export
+## Resource Example Shortcode (Prototype)
 
-The original goal was to create a system where guides can reference resource examples from the API docs. This would involve:
+We've created a **dummy shortcode** to demonstrate how guides will reference examples from the API docs:
+
+### Current Implementation
+
+**File**: `themes/default/layouts/shortcodes/resource-example.html`
+
+This is a placeholder that shows:
+- What provider and resource is being referenced
+- Where the JSON file will be located
+- What the final output will contain
+
+**Usage in guides**:
+```markdown
+{{< resource-example provider="aws" resource="aws.autoscaling.Group" >}}
+```
+
+Note: The resource parameter uses the Pulumi SDK format (e.g., `aws.autoscaling.Group`), not the URL path format.
+
+The shortcode currently renders a purple placeholder box explaining:
+- The provider and resource being referenced
+- The expected JSON file path: `/static/registry/packages/examples/{provider}/{resource}.json`
+- What will be rendered (language chooser, multi-language examples)
+
+### Next Steps for Full Implementation
 
 1. **Export Examples from resourcedocsgen**
    - Modify `tools/resourcedocsgen/pkg/docs/gen.go` to add `GenerateExamplesIndex()`
    - Export examples as JSON to `static/registry/packages/examples/{provider}/{resource}.json`
+   - Include all language variations (TypeScript, Python, Go, C#, Java, YAML)
 
-2. **Create Shortcode**
-   - Add `themes/default/layouts/shortcodes/resource-example.html`
-   - Reads the exported JSON and renders multi-language examples
-   - Usage: `{{< resource-example provider="aws" resource="autoscaling/group" >}}`
+2. **Implement Real Shortcode**
+   - Replace dummy with actual implementation
+   - Read JSON files from static directory
+   - Render with `pulumi-chooser` and `pulumi-choosable` components
+   - Match the styling of existing API docs examples
 
-3. **Integrate into Guides**
-   - Guides can use the shortcode instead of manually embedding code
-   - Examples stay in sync with API docs generation
+3. **Benefits**
+   - Guides stay in sync with API docs automatically
+   - No need to manually maintain multi-language examples
+   - Examples come from the same source as the registry
 
 ## File Structure
 
 ```
 content/registry/packages/aws/guides/
 ├── _index.md                         # Guides list page
-└── ec2-auto-scaling.md               # Individual guide
+└── ec2-auto-scaling.md               # Individual guide (uses resource-example shortcode)
 
-themes/default/layouts/guides/
-├── list.html                         # Layout for guides list
-└── single.html                       # Layout for individual guides
+themes/default/layouts/
+├── guides/
+│   ├── list.html                     # Layout for guides list
+│   └── single.html                   # Layout for individual guides
+├── shortcodes/
+│   └── resource-example.html         # Dummy shortcode for resource examples
+└── index.json                        # Fixed to handle pages without .File
 ```
 
 ## Design Decisions

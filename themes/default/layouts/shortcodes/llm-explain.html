@@ -1,0 +1,81 @@
+{{/*
+    Dummy shortcode for LLM-generated explanations
+
+    This shortcode will use an LLM (Claude) to generate contextual content
+    based on Pulumi resources from the registry.
+
+    Usage:
+    {{< llm-explain
+        resource="aws.autoscaling.Group"
+        context="This guide explains EC2 Auto Scaling Groups"
+        prompt="Explain the key configuration parameters. Return as markdown list with bold parameter names."
+        example="**desiredCapacity**: The number of instances to maintain."
+    >}}
+
+    Parameters:
+    - resource: The Pulumi resource type (required)
+    - context: Additional context about what this guide/section covers (optional)
+    - prompt: The specific prompt/question for the LLM (required)
+    - example: Example of desired output format (optional)
+
+    How it will work:
+    1. Fetch resource schema/docs from registry as context
+    2. Send prompt + context + example to Claude API
+    3. Cache response (keyed by resource + prompt hash)
+    4. Render markdown response
+*/}}
+
+{{ $resource := .Get "resource" }}
+{{ $context := .Get "context" | default "" }}
+{{ $prompt := .Get "prompt" }}
+{{ $example := .Get "example" | default "" }}
+
+<div class="resource-explain-placeholder border-4 border-blue-300 rounded-lg p-6 bg-blue-50 my-8">
+    <div class="flex items-start mb-4">
+        <svg class="w-6 h-6 text-blue-600 mr-3 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+        </svg>
+        <div class="flex-1">
+            <h4 class="text-lg font-bold text-blue-900 mb-2">🤖 LLM-Generated Content (Placeholder)</h4>
+            <p class="text-sm text-blue-800 mb-2">
+                <strong>Resource:</strong> <code class="bg-white px-2 py-1 rounded">{{ $resource }}</code>
+            </p>
+            {{ if $context }}
+            <p class="text-sm text-blue-700">
+                <strong>Context:</strong> {{ $context }}
+            </p>
+            {{ end }}
+        </div>
+    </div>
+
+    <div class="mt-4 p-4 bg-white rounded border border-blue-200">
+        <p class="text-sm font-bold text-gray-700 mb-2">Prompt to Claude:</p>
+        <div class="text-xs text-gray-700 bg-gray-50 p-3 rounded space-y-2">
+            <p><strong>System:</strong> You are a technical writer for Pulumi documentation.</p>
+
+            <p><strong>Resource Context:</strong><br>
+            Resource: <code>{{ $resource }}</code><br>
+            [Will include: schema, properties, examples from registry API docs]</p>
+
+            {{ if $context }}
+            <p><strong>Guide Context:</strong><br>{{ $context }}</p>
+            {{ end }}
+
+            <p><strong>Task:</strong><br>{{ $prompt }}</p>
+
+            {{ if $example }}
+            <p><strong>Example Output:</strong><br><code>{{ $example }}</code></p>
+            {{ end }}
+        </div>
+    </div>
+
+    <div class="mt-4 p-4 bg-blue-100 rounded border border-blue-300">
+        <p class="text-sm font-bold text-blue-900 mb-2">Implementation:</p>
+        <div class="text-xs text-blue-800 space-y-1">
+            <p>✓ Call Claude API at build time</p>
+            <p>✓ Cache in: <code>static/registry/packages/llm-cache/{{ $resource | md5 }}.md</code></p>
+            <p>✓ Fallback to manual content if API fails</p>
+            <p>✓ Manual override: <code>content/registry/packages/aws/llm-overrides/[resource].md</code></p>
+        </div>
+    </div>
+</div>

@@ -28,19 +28,12 @@ faq:
 
 ## Key configuration details
 
-**Launch template**: Defines the instance configuration including AMI, instance type, security groups, and user data. Using `namePrefix` instead of `name` allows AWS to generate unique names when creating new versions.
-
-**Desired capacity**: The number of instances Auto Scaling attempts to maintain. Auto Scaling replaces failed instances to maintain this count. Set this based on your baseline load.
-
-**Min and max size**: Define the boundaries for scaling. `minSize` ensures you always have at least this many instances running. `maxSize` prevents runaway scaling costs.
-
-**Availability zones**: Specifies which zones to launch instances in. For production, use multiple zones (e.g., `["us-east-1a", "us-east-1b", "us-east-1c"]`) to ensure high availability across zone failures.
-
-**Launch template version**: Using `$Latest` always launches instances with the most recent template version. You can specify a specific version number for more control over deployments.
-
-**Health checks**: By default, Auto Scaling uses EC2 status checks. For applications behind load balancers, add `healthCheckType: "ELB"` to use load balancer health checks instead.
-
-**Scaling policies not included**: This example creates a static group. Add scaling policies separately to automatically adjust capacity based on metrics like CPU utilization or request count.
+{{< llm-explain
+    resource="aws.autoscaling.Group"
+    context="This guide explains how to set up EC2 Auto Scaling Groups with Pulumi"
+    prompt="Explain the key configuration parameters for this resource. Return as a markdown list with bold parameter names followed by concise, actionable explanations. Focus on what users need to know for production deployments."
+    example="**desiredCapacity**: The number of instances to maintain. Auto Scaling replaces failed instances to maintain this count. Set based on baseline load."
+>}}
 
 ## Frequently asked questions
 

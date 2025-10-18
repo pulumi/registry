@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-snowflake/v2.7.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-snowflake/v2.8.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-snowflake/blob/v2.7.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-snowflake/blob/v2.8.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Snowflake Provider
 meta_desc: Provides an overview on how to configure the Pulumi Snowflake provider.
@@ -284,7 +284,7 @@ config:
 ## Configuration Reference
 
 - `accountName` (String) Specifies your Snowflake account name assigned by Snowflake. For information about account identifiers, see the [Snowflake documentation](https://docs.snowflake.com/en/user-guide/admin-account-identifier#account-name). Required unless using `profile`. Can also be sourced from the `SNOWFLAKE_ACCOUNT_NAME` environment variable.
-- `authenticator` (String) Specifies the [authentication type](https://pkg.go.dev/github.com/snowflakedb/gosnowflake#AuthType) to use when connecting to Snowflake. Valid options are: `SNOWFLAKE` | `OAUTH` | `EXTERNALBROWSER` | `OKTA` | `SNOWFLAKE_JWT` | `TOKENACCESSOR` | `USERNAMEPASSWORDMFA` | `PROGRAMMATIC_ACCESS_TOKEN`. Can also be sourced from the `SNOWFLAKE_AUTHENTICATOR` environment variable.
+- `authenticator` (String) Specifies the [authentication type](https://pkg.go.dev/github.com/snowflakedb/gosnowflake#AuthType) to use when connecting to Snowflake. Valid options are: `SNOWFLAKE` | `OAUTH` | `EXTERNALBROWSER` | `OKTA` | `SNOWFLAKE_JWT` | `TOKENACCESSOR` | `USERNAMEPASSWORDMFA` | `PROGRAMMATIC_ACCESS_TOKEN` | `OAUTH_CLIENT_CREDENTIALS` | `OAUTH_AUTHORIZATION_CODE`. Can also be sourced from the `SNOWFLAKE_AUTHENTICATOR` environment variable.
 - `clientIp` (String) IP address for network checks. Can also be sourced from the `SNOWFLAKE_CLIENT_IP` environment variable.
 - `clientRequestMfaToken` (String) When true the MFA token is cached in the credential manager. True by default in Windows/OSX. False for Linux. Can also be sourced from the `SNOWFLAKE_CLIENT_REQUEST_MFA_TOKEN` environment variable.
 - `clientStoreTemporaryCredential` (String) When true the ID token is cached in the credential manager. True by default in Windows/OSX. False for Linux. Can also be sourced from the `SNOWFLAKE_CLIENT_STORE_TEMPORARY_CREDENTIAL` environment variable.
@@ -293,6 +293,7 @@ config:
 - `disableQueryContextCache` (Boolean) Disables HTAP query context cache in the driver. Can also be sourced from the `SNOWFLAKE_DISABLE_QUERY_CONTEXT_CACHE` environment variable.
 - `disableTelemetry` (Boolean) Disables telemetry in the driver. Can also be sourced from the `DISABLE_TELEMETRY` environment variable.
 - `driverTracing` (String) Specifies the logging level to be used by the driver. Valid options are: `trace` | `debug` | `info` | `print` | `warning` | `error` | `fatal` | `panic`. Can also be sourced from the `SNOWFLAKE_DRIVER_TRACING` environment variable.
+- `enableSingleUseRefreshTokens` (Boolean) Enables single use refresh tokens for Snowflake IdP. Can also be sourced from the `SNOWFLAKE_ENABLE_SINGLE_USE_REFRESH_TOKENS` environment variable.
 - `externalBrowserTimeout` (Number) The timeout in seconds for the external browser to complete the authentication. Can also be sourced from the `SNOWFLAKE_EXTERNAL_BROWSER_TIMEOUT` environment variable.
 - `host` (String) Specifies a custom host value used by the driver for privatelink connections. Can also be sourced from the `SNOWFLAKE_HOST` environment variable.
 - `includeRetryReason` (String) Should retried request contain retry reason. Can also be sourced from the `SNOWFLAKE_INCLUDE_RETRY_REASON` environment variable.
@@ -302,6 +303,12 @@ config:
 - `keepSessionAlive` (Boolean) Enables the session to persist even after the connection is closed. Can also be sourced from the `SNOWFLAKE_KEEP_SESSION_ALIVE` environment variable.
 - `loginTimeout` (Number) Login retry timeout in seconds EXCLUDING network roundtrip and read out http response. Can also be sourced from the `SNOWFLAKE_LOGIN_TIMEOUT` environment variable.
 - `maxRetryCount` (Number) Specifies how many times non-periodic HTTP request can be retried by the driver. Can also be sourced from the `SNOWFLAKE_MAX_RETRY_COUNT` environment variable.
+- `oauthAuthorizationUrl` (String, Sensitive) Authorization URL of OAuth2 external IdP. See [Snowflake OAuth documentation](https://docs.snowflake.com/en/user-guide/oauth). Can also be sourced from the `SNOWFLAKE_OAUTH_AUTHORIZATION_URL` environment variable.
+- `oauthClientId` (String, Sensitive) Client id for OAuth2 external IdP. See [Snowflake OAuth documentation](https://docs.snowflake.com/en/user-guide/oauth). Can also be sourced from the `SNOWFLAKE_OAUTH_CLIENT_ID` environment variable.
+- `oauthClientSecret` (String, Sensitive) Client secret for OAuth2 external IdP. See [Snowflake OAuth documentation](https://docs.snowflake.com/en/user-guide/oauth). Can also be sourced from the `SNOWFLAKE_OAUTH_CLIENT_SECRET` environment variable.
+- `oauthRedirectUri` (String, Sensitive) Redirect URI registered in IdP. See [Snowflake OAuth documentation](https://docs.snowflake.com/en/user-guide/oauth). Can also be sourced from the `SNOWFLAKE_OAUTH_REDIRECT_URI` environment variable.
+- `oauthScope` (String) Comma separated list of scopes. If empty it is derived from role. See [Snowflake OAuth documentation](https://docs.snowflake.com/en/user-guide/oauth). Can also be sourced from the `SNOWFLAKE_OAUTH_SCOPE` environment variable.
+- `oauthTokenRequestUrl` (String, Sensitive) Token request URL of OAuth2 external IdP. See [Snowflake OAuth documentation](https://docs.snowflake.com/en/user-guide/oauth). Can also be sourced from the `SNOWFLAKE_OAUTH_TOKEN_REQUEST_URL` environment variable.
 - `ocspFailOpen` (String) True represents OCSP fail open mode. False represents OCSP fail closed mode. Fail open true by default. Can also be sourced from the `SNOWFLAKE_OCSP_FAIL_OPEN` environment variable.
 - `oktaUrl` (String) The URL of the Okta server. e.g. <https://example.okta.com>. Okta URL host needs to to have a suffix `okta.com`. Read more in Snowflake [docs](https://docs.snowflake.com/en/user-guide/oauth-okta). Can also be sourced from the `SNOWFLAKE_OKTA_URL` environment variable.
 - `organizationName` (String) Specifies your Snowflake organization name assigned by Snowflake. For information about account identifiers, see the [Snowflake documentation](https://docs.snowflake.com/en/user-guide/admin-account-identifier#organization-name). Required unless using `profile`. Can also be sourced from the `SNOWFLAKE_ORGANIZATION_NAME` environment variable.
@@ -320,7 +327,7 @@ config:
 - `skipTomlFilePermissionVerification` (Boolean) False by default. Skips TOML configuration file permission verification. This flag has no effect on Windows systems, as the permissions are not checked on this platform. Instead of skipping the permissions verification, we recommend setting the proper privileges - see the section below. Can also be sourced from the `SNOWFLAKE_SKIP_TOML_FILE_PERMISSION_VERIFICATION` environment variable.
 - `tmpDirectoryPath` (String) Sets temporary directory used by the driver for operations like encrypting, compressing etc. Can also be sourced from the `SNOWFLAKE_TMP_DIRECTORY_PATH` environment variable.
 - `token` (String, Sensitive) Token to use for OAuth and other forms of token based auth. When this field is set here, or in the TOML file, the provider sets the `authenticator` to `OAUTH`. Optionally, set the `authenticator` field to the authenticator you want to use. Can also be sourced from the `SNOWFLAKE_TOKEN` environment variable.
-- `tokenAccessor` (Block List, Max: 1) (see below for nested schema)
+- `tokenAccessor` (Block List, Max: 1) If you are using the OAuth authentication flows, use the dedicated `authenticator` and `oauth...` fields instead. See our authentication methods guide for more information. (see below for nested schema)
 - `useLegacyTomlFile` (Boolean) False by default. When this is set to true, the provider expects the legacy TOML format. Otherwise, it expects the new format. See more in the section below Can also be sourced from the `SNOWFLAKE_USE_LEGACY_TOML_FILE` environment variable.
 - `user` (String) Username. Required unless using `profile`. Can also be sourced from the `SNOWFLAKE_USER` environment variable.
 - `validateDefaultParameters` (String) True by default. If false, disables the validation checks for Database, Schema, Warehouse and Role at the time a connection is established. Can also be sourced from the `SNOWFLAKE_VALIDATE_DEFAULT_PARAMETERS` environment variable.
@@ -347,8 +354,10 @@ The Snowflake provider supports multiple ways to authenticate:
 * Browser Auth
 * Private Key
 * Config File
+* Oauth with Client Credentials
+* Oauth with Authorization Code
 
-In all cases `organizationName`, `accountName` and `user` are required.
+In all cases `organizationName`, and `accountName` are required. In all cases except for Oauth with Client Credentials, `user` is required.
 
 > **Note** Storing the credentials and other secret values safely is on the users' side. Read more in Authentication Methods guide.
 ### Keypair Authentication Environment Variables
@@ -421,12 +430,33 @@ If you choose to use Username and Password Authentication, export these credenti
 export SNOWFLAKE_USER='...'
 export SNOWFLAKE_PASSWORD='...'
 ```
+### Oauth with Client Credentials Environment Variables
+
+If you choose to use Oauth with Client Credentials Authentication, export these credentials:
+
+```shell
+export SNOWFLAKE_OAUTH_CLIENT_ID='...'
+export SNOWFLAKE_OAUTH_CLIENT_SECRET='...'
+export SNOWFLAKE_OAUTH_TOKEN_REQUEST_URL='...'
+```
+### Oauth with Authorization Code Environment Variables
+
+If you choose to use Oauth with Authorization Code Authentication, export these credentials:
+
+```shell
+export SNOWFLAKE_OAUTH_CLIENT_ID='...'
+export SNOWFLAKE_OAUTH_CLIENT_SECRET='...'
+export SNOWFLAKE_OAUTH_AUTHORIZATION_URL='...'
+export SNOWFLAKE_OAUTH_TOKEN_REQUEST_URL='...'
+export SNOWFLAKE_OAUTH_REDIRECT_URI='...'
+export SNOWFLAKE_OAUTH_SCOPE='...'
+```
 ## Order Precedence
 
 Currently, the provider can be configured in three ways:
 1. In a Pulumi file located in the Pulumi module with other resources.
 2. In environmental variables (envs). This is mainly used to provide sensitive values.
-3. In a TOML file (default in ~/.snowflake/config).
+3. In a TOML file (default in `~/.snowflake/config`).
 ### Pulumi file located in the Pulumi module with other resources
 One of the methods of configuring the provider is in the Pulumi module. Read more in the Pulumi docs.
 
@@ -460,7 +490,7 @@ When a `default` profile is not present in the TOML file, it is treated as "empt
 
 Read [TOML](https://toml.io/en/) specification for more details on the syntax.
 
-> **Note**: This configuration file is distinct from the ones used to configure [Snowflake CLI](https://docs.snowflake.com/en/developer-guide/snowflake-cli/connecting/configure-cli) or [SnowSQL](https://docs.snowflake.com/en/user-guide/snowsql-config).
+> **Note** This configuration file is distinct from the ones used to configure [Snowflake CLI](https://docs.snowflake.com/en/developer-guide/snowflake-cli/connecting/configure-cli) or [SnowSQL](https://docs.snowflake.com/en/user-guide/snowsql-config).
 
 Example content of the Pulumi file configuration:
 
@@ -494,9 +524,9 @@ role='ACCOUNTADMIN'
 #### TOML file limitations
 To ensure a better security of the provider, the following limitations are introduced:
 
-> **Note**: TOML file size is limited to 10MB.
+> **Note** TOML file size is limited to 10MB.
 
-> **Note**: Only TOML file with restricted privileges can be read. Any privileges for group or others cannot be set (the maximum valid privilege is `700`). You can set the expected privileges like `chmod 0600 ~/.snowflake/config`. This is checked only on non-Windows platforms. If you are using the provider on Windows, please make sure that your configuration file has not too permissive privileges.
+> **Note** Only TOML file with restricted privileges can be read. Any privileges for group or others cannot be set (the maximum valid privilege is `700`). You can set the expected privileges like `chmod 0600 ~/.snowflake/config`. This is checked only on non-Windows platforms. If you are using the provider on Windows, please make sure that your configuration file has not too permissive privileges.
 ### Source Hierarchy
 Not all fields must be configured in one source; users can choose which fields are configured in which source.
 Provider uses an established hierarchy of sources. The current behavior is that for each field:
@@ -545,6 +575,13 @@ tmp_dir_path = '/tmp/pulumi-provider/'
 disable_query_context_cache = true
 include_retry_reason = true
 disable_console_login = true
+oauth_client_id = 'oauth_client_id'
+oauth_client_secret = 'oauth_client_secret'
+oauth_token_request_url = 'oauth_token_request_url'
+oauth_authorization_url = 'oauth_authorization_url'
+oauth_redirect_uri = 'oauth_redirect_uri'
+oauth_scope = 'oauth_scope'
+enable_single_use_refresh_tokens = true
 
 [example.params]
 param_key = 'param_value'
@@ -584,6 +621,13 @@ tmpdirpath = '/tmp/pulumi-provider/'
 disablequerycontextcache = true
 includeretryreason = true
 disableconsolelogin = true
+oauthclientid = 'oauth_client_id'
+oauthclientsecret = 'oauth_client_secret'
+oauthtokenrequesturl = 'oauth_token_request_url'
+oauthauthorizationurl = 'oauth_authorization_url'
+oauthredirecturi = 'oauth_redirect_uri'
+oauthscope = 'oauth_scope'
+enablesingleuserefreshtokens = true
 
 [example.params]
 param_key = 'param_value'
@@ -591,10 +635,12 @@ param_key = 'param_value'
 
 An example pulumi configuration file equivalent:
 
+{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
 name: configuration-example
-runtime:
+runtime: nodejs
 config:
     snowflake:accountName:
         value: account_name
@@ -616,6 +662,8 @@ config:
         value: true
     snowflake:driverTracing:
         value: info
+    snowflake:enableSingleUseRefreshTokens:
+        value: true
     snowflake:externalBrowserTimeout:
         value: 60
     snowflake:includeRetryReason:
@@ -632,6 +680,18 @@ config:
         value: 10
     snowflake:maxRetryCount:
         value: 3
+    snowflake:oauthAuthorizationUrl:
+        value: 'TODO: var.oauth_authorization_url'
+    snowflake:oauthClientId:
+        value: 'TODO: var.oauth_client_id'
+    snowflake:oauthClientSecret:
+        value: 'TODO: var.oauth_client_secret'
+    snowflake:oauthRedirectUri:
+        value: 'TODO: var.oauth_redirect_uri'
+    snowflake:oauthScope:
+        value: session:role:PUBLIC
+    snowflake:oauthTokenRequestUrl:
+        value: 'TODO: var.oauth_token_request_url'
     snowflake:ocspFailOpen:
         value: true
     snowflake:oktaUrl:
@@ -661,6 +721,540 @@ config:
         value: SNOWFLAKE
 
 ```
+```typescript
+import * as pulumi from "@pulumi/pulumi";
+
+const config = new pulumi.Config();
+const oauthClientId = config.require("oauthClientId");
+const oauthClientSecret = config.require("oauthClientSecret");
+const oauthTokenRequestUrl = config.require("oauthTokenRequestUrl");
+const oauthAuthorizationUrl = config.require("oauthAuthorizationUrl");
+const oauthRedirectUri = config.require("oauthRedirectUri");
+```
+{{% /choosable %}}
+{{% choosable language python %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: python
+config:
+    snowflake:accountName:
+        value: account_name
+    snowflake:authenticator:
+        value: snowflake
+    snowflake:clientIp:
+        value: 1.2.3.4
+    snowflake:clientRequestMfaToken:
+        value: true
+    snowflake:clientStoreTemporaryCredential:
+        value: true
+    snowflake:clientTimeout:
+        value: 40
+    snowflake:disableConsoleLogin:
+        value: true
+    snowflake:disableQueryContextCache:
+        value: true
+    snowflake:disableTelemetry:
+        value: true
+    snowflake:driverTracing:
+        value: info
+    snowflake:enableSingleUseRefreshTokens:
+        value: true
+    snowflake:externalBrowserTimeout:
+        value: 60
+    snowflake:includeRetryReason:
+        value: true
+    snowflake:insecureMode:
+        value: true
+    snowflake:jwtClientTimeout:
+        value: 50
+    snowflake:jwtExpireTimeout:
+        value: 30
+    snowflake:keepSessionAlive:
+        value: true
+    snowflake:loginTimeout:
+        value: 10
+    snowflake:maxRetryCount:
+        value: 3
+    snowflake:oauthAuthorizationUrl:
+        value: 'TODO: var.oauth_authorization_url'
+    snowflake:oauthClientId:
+        value: 'TODO: var.oauth_client_id'
+    snowflake:oauthClientSecret:
+        value: 'TODO: var.oauth_client_secret'
+    snowflake:oauthRedirectUri:
+        value: 'TODO: var.oauth_redirect_uri'
+    snowflake:oauthScope:
+        value: session:role:PUBLIC
+    snowflake:oauthTokenRequestUrl:
+        value: 'TODO: var.oauth_token_request_url'
+    snowflake:ocspFailOpen:
+        value: true
+    snowflake:oktaUrl:
+        value: https://example.com
+    snowflake:organizationName:
+        value: organization_name
+    snowflake:params:
+        value:
+            param_key: param_value
+    snowflake:password:
+        value: password
+    snowflake:port:
+        value: "443"
+    snowflake:protocol:
+        value: https
+    snowflake:requestTimeout:
+        value: 20
+    snowflake:role:
+        value: ACCOUNTADMIN
+    snowflake:tmpDirectoryPath:
+        value: /tmp/pulumi-provider/
+    snowflake:user:
+        value: user
+    snowflake:validateDefaultParameters:
+        value: true
+    snowflake:warehouse:
+        value: SNOWFLAKE
+
+```
+```python
+import pulumi
+
+config = pulumi.Config()
+oauth_client_id = config.require("oauthClientId")
+oauth_client_secret = config.require("oauthClientSecret")
+oauth_token_request_url = config.require("oauthTokenRequestUrl")
+oauth_authorization_url = config.require("oauthAuthorizationUrl")
+oauth_redirect_uri = config.require("oauthRedirectUri")
+```
+{{% /choosable %}}
+{{% choosable language csharp %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: dotnet
+config:
+    snowflake:accountName:
+        value: account_name
+    snowflake:authenticator:
+        value: snowflake
+    snowflake:clientIp:
+        value: 1.2.3.4
+    snowflake:clientRequestMfaToken:
+        value: true
+    snowflake:clientStoreTemporaryCredential:
+        value: true
+    snowflake:clientTimeout:
+        value: 40
+    snowflake:disableConsoleLogin:
+        value: true
+    snowflake:disableQueryContextCache:
+        value: true
+    snowflake:disableTelemetry:
+        value: true
+    snowflake:driverTracing:
+        value: info
+    snowflake:enableSingleUseRefreshTokens:
+        value: true
+    snowflake:externalBrowserTimeout:
+        value: 60
+    snowflake:includeRetryReason:
+        value: true
+    snowflake:insecureMode:
+        value: true
+    snowflake:jwtClientTimeout:
+        value: 50
+    snowflake:jwtExpireTimeout:
+        value: 30
+    snowflake:keepSessionAlive:
+        value: true
+    snowflake:loginTimeout:
+        value: 10
+    snowflake:maxRetryCount:
+        value: 3
+    snowflake:oauthAuthorizationUrl:
+        value: 'TODO: var.oauth_authorization_url'
+    snowflake:oauthClientId:
+        value: 'TODO: var.oauth_client_id'
+    snowflake:oauthClientSecret:
+        value: 'TODO: var.oauth_client_secret'
+    snowflake:oauthRedirectUri:
+        value: 'TODO: var.oauth_redirect_uri'
+    snowflake:oauthScope:
+        value: session:role:PUBLIC
+    snowflake:oauthTokenRequestUrl:
+        value: 'TODO: var.oauth_token_request_url'
+    snowflake:ocspFailOpen:
+        value: true
+    snowflake:oktaUrl:
+        value: https://example.com
+    snowflake:organizationName:
+        value: organization_name
+    snowflake:params:
+        value:
+            param_key: param_value
+    snowflake:password:
+        value: password
+    snowflake:port:
+        value: "443"
+    snowflake:protocol:
+        value: https
+    snowflake:requestTimeout:
+        value: 20
+    snowflake:role:
+        value: ACCOUNTADMIN
+    snowflake:tmpDirectoryPath:
+        value: /tmp/pulumi-provider/
+    snowflake:user:
+        value: user
+    snowflake:validateDefaultParameters:
+        value: true
+    snowflake:warehouse:
+        value: SNOWFLAKE
+
+```
+```csharp
+using System.Collections.Generic;
+using System.Linq;
+using Pulumi;
+
+return await Deployment.RunAsync(() =>
+{
+    var config = new Config();
+    var oauthClientId = config.Require("oauthClientId");
+    var oauthClientSecret = config.Require("oauthClientSecret");
+    var oauthTokenRequestUrl = config.Require("oauthTokenRequestUrl");
+    var oauthAuthorizationUrl = config.Require("oauthAuthorizationUrl");
+    var oauthRedirectUri = config.Require("oauthRedirectUri");
+});
+
+```
+{{% /choosable %}}
+{{% choosable language go %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: go
+config:
+    snowflake:accountName:
+        value: account_name
+    snowflake:authenticator:
+        value: snowflake
+    snowflake:clientIp:
+        value: 1.2.3.4
+    snowflake:clientRequestMfaToken:
+        value: true
+    snowflake:clientStoreTemporaryCredential:
+        value: true
+    snowflake:clientTimeout:
+        value: 40
+    snowflake:disableConsoleLogin:
+        value: true
+    snowflake:disableQueryContextCache:
+        value: true
+    snowflake:disableTelemetry:
+        value: true
+    snowflake:driverTracing:
+        value: info
+    snowflake:enableSingleUseRefreshTokens:
+        value: true
+    snowflake:externalBrowserTimeout:
+        value: 60
+    snowflake:includeRetryReason:
+        value: true
+    snowflake:insecureMode:
+        value: true
+    snowflake:jwtClientTimeout:
+        value: 50
+    snowflake:jwtExpireTimeout:
+        value: 30
+    snowflake:keepSessionAlive:
+        value: true
+    snowflake:loginTimeout:
+        value: 10
+    snowflake:maxRetryCount:
+        value: 3
+    snowflake:oauthAuthorizationUrl:
+        value: 'TODO: var.oauth_authorization_url'
+    snowflake:oauthClientId:
+        value: 'TODO: var.oauth_client_id'
+    snowflake:oauthClientSecret:
+        value: 'TODO: var.oauth_client_secret'
+    snowflake:oauthRedirectUri:
+        value: 'TODO: var.oauth_redirect_uri'
+    snowflake:oauthScope:
+        value: session:role:PUBLIC
+    snowflake:oauthTokenRequestUrl:
+        value: 'TODO: var.oauth_token_request_url'
+    snowflake:ocspFailOpen:
+        value: true
+    snowflake:oktaUrl:
+        value: https://example.com
+    snowflake:organizationName:
+        value: organization_name
+    snowflake:params:
+        value:
+            param_key: param_value
+    snowflake:password:
+        value: password
+    snowflake:port:
+        value: "443"
+    snowflake:protocol:
+        value: https
+    snowflake:requestTimeout:
+        value: 20
+    snowflake:role:
+        value: ACCOUNTADMIN
+    snowflake:tmpDirectoryPath:
+        value: /tmp/pulumi-provider/
+    snowflake:user:
+        value: user
+    snowflake:validateDefaultParameters:
+        value: true
+    snowflake:warehouse:
+        value: SNOWFLAKE
+
+```
+```go
+package main
+
+import (
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		cfg := config.New(ctx, "")
+		oauthClientId := cfg.Require("oauthClientId")
+		oauthClientSecret := cfg.Require("oauthClientSecret")
+		oauthTokenRequestUrl := cfg.Require("oauthTokenRequestUrl")
+		oauthAuthorizationUrl := cfg.Require("oauthAuthorizationUrl")
+		oauthRedirectUri := cfg.Require("oauthRedirectUri")
+		return nil
+	})
+}
+```
+{{% /choosable %}}
+{{% choosable language yaml %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: yaml
+config:
+    snowflake:accountName:
+        value: account_name
+    snowflake:authenticator:
+        value: snowflake
+    snowflake:clientIp:
+        value: 1.2.3.4
+    snowflake:clientRequestMfaToken:
+        value: true
+    snowflake:clientStoreTemporaryCredential:
+        value: true
+    snowflake:clientTimeout:
+        value: 40
+    snowflake:disableConsoleLogin:
+        value: true
+    snowflake:disableQueryContextCache:
+        value: true
+    snowflake:disableTelemetry:
+        value: true
+    snowflake:driverTracing:
+        value: info
+    snowflake:enableSingleUseRefreshTokens:
+        value: true
+    snowflake:externalBrowserTimeout:
+        value: 60
+    snowflake:includeRetryReason:
+        value: true
+    snowflake:insecureMode:
+        value: true
+    snowflake:jwtClientTimeout:
+        value: 50
+    snowflake:jwtExpireTimeout:
+        value: 30
+    snowflake:keepSessionAlive:
+        value: true
+    snowflake:loginTimeout:
+        value: 10
+    snowflake:maxRetryCount:
+        value: 3
+    snowflake:oauthAuthorizationUrl:
+        value: 'TODO: var.oauth_authorization_url'
+    snowflake:oauthClientId:
+        value: 'TODO: var.oauth_client_id'
+    snowflake:oauthClientSecret:
+        value: 'TODO: var.oauth_client_secret'
+    snowflake:oauthRedirectUri:
+        value: 'TODO: var.oauth_redirect_uri'
+    snowflake:oauthScope:
+        value: session:role:PUBLIC
+    snowflake:oauthTokenRequestUrl:
+        value: 'TODO: var.oauth_token_request_url'
+    snowflake:ocspFailOpen:
+        value: true
+    snowflake:oktaUrl:
+        value: https://example.com
+    snowflake:organizationName:
+        value: organization_name
+    snowflake:params:
+        value:
+            param_key: param_value
+    snowflake:password:
+        value: password
+    snowflake:port:
+        value: "443"
+    snowflake:protocol:
+        value: https
+    snowflake:requestTimeout:
+        value: 20
+    snowflake:role:
+        value: ACCOUNTADMIN
+    snowflake:tmpDirectoryPath:
+        value: /tmp/pulumi-provider/
+    snowflake:user:
+        value: user
+    snowflake:validateDefaultParameters:
+        value: true
+    snowflake:warehouse:
+        value: SNOWFLAKE
+
+```
+```yaml
+configuration:
+  # Client ID from the Okta application.
+  oauthClientId:
+    type: string
+  # Client Secret from the Okta application.
+  oauthClientSecret:
+    type: string
+  # Client Token Request URL from the Okta API Authorization Server.
+  oauthTokenRequestUrl:
+    type: string
+  # Authorization URL for the Oauth flow.
+  oauthAuthorizationUrl:
+    type: string
+  # Redirect URI for the Oauth flow.
+  oauthRedirectUri:
+    type: string
+```
+{{% /choosable %}}
+{{% choosable language java %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: java
+config:
+    snowflake:accountName:
+        value: account_name
+    snowflake:authenticator:
+        value: snowflake
+    snowflake:clientIp:
+        value: 1.2.3.4
+    snowflake:clientRequestMfaToken:
+        value: true
+    snowflake:clientStoreTemporaryCredential:
+        value: true
+    snowflake:clientTimeout:
+        value: 40
+    snowflake:disableConsoleLogin:
+        value: true
+    snowflake:disableQueryContextCache:
+        value: true
+    snowflake:disableTelemetry:
+        value: true
+    snowflake:driverTracing:
+        value: info
+    snowflake:enableSingleUseRefreshTokens:
+        value: true
+    snowflake:externalBrowserTimeout:
+        value: 60
+    snowflake:includeRetryReason:
+        value: true
+    snowflake:insecureMode:
+        value: true
+    snowflake:jwtClientTimeout:
+        value: 50
+    snowflake:jwtExpireTimeout:
+        value: 30
+    snowflake:keepSessionAlive:
+        value: true
+    snowflake:loginTimeout:
+        value: 10
+    snowflake:maxRetryCount:
+        value: 3
+    snowflake:oauthAuthorizationUrl:
+        value: 'TODO: var.oauth_authorization_url'
+    snowflake:oauthClientId:
+        value: 'TODO: var.oauth_client_id'
+    snowflake:oauthClientSecret:
+        value: 'TODO: var.oauth_client_secret'
+    snowflake:oauthRedirectUri:
+        value: 'TODO: var.oauth_redirect_uri'
+    snowflake:oauthScope:
+        value: session:role:PUBLIC
+    snowflake:oauthTokenRequestUrl:
+        value: 'TODO: var.oauth_token_request_url'
+    snowflake:ocspFailOpen:
+        value: true
+    snowflake:oktaUrl:
+        value: https://example.com
+    snowflake:organizationName:
+        value: organization_name
+    snowflake:params:
+        value:
+            param_key: param_value
+    snowflake:password:
+        value: password
+    snowflake:port:
+        value: "443"
+    snowflake:protocol:
+        value: https
+    snowflake:requestTimeout:
+        value: 20
+    snowflake:role:
+        value: ACCOUNTADMIN
+    snowflake:tmpDirectoryPath:
+        value: /tmp/pulumi-provider/
+    snowflake:user:
+        value: user
+    snowflake:validateDefaultParameters:
+        value: true
+    snowflake:warehouse:
+        value: SNOWFLAKE
+
+```
+```java
+package generated_program;
+
+import com.pulumi.Context;
+import com.pulumi.Pulumi;
+import com.pulumi.core.Output;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+public class App {
+    public static void main(String[] args) {
+        Pulumi.run(App::stack);
+    }
+
+    public static void stack(Context ctx) {
+        final var config = ctx.config();
+        final var oauthClientId = config.get("oauthClientId");
+        final var oauthClientSecret = config.get("oauthClientSecret");
+        final var oauthTokenRequestUrl = config.get("oauthTokenRequestUrl");
+        final var oauthAuthorizationUrl = config.get("oauthAuthorizationUrl");
+        final var oauthRedirectUri = config.get("oauthRedirectUri");
+    }
+}
+```
+{{% /choosable %}}
+{{< /chooser >}}
 
 <!-- Section of deprecated resources -->
 

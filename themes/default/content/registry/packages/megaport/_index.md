@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/megaport/megaport/1.4.3/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/megaport/megaport/1.4.4/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Megaport Provider
@@ -21,7 +21,7 @@ Megaport's product and services using the [Megaport API](https://dev.megaport.co
 
 This provides an opportunity for true multi-cloud hybrid environments supported by Megaport's Software
 Defined Network (SDN). Using the Pulumi provider, you can create and manage Ports,
-Virtual Cross Connects (VXCs), Megaport Cloud Routers (MCRs), Megaport Virtual Edges (MVEs), and Partner VXCs.
+Virtual Cross Connects (VXCs), Megaport Cloud Routers (MCRs), MCR Prefix Filter Lists, Megaport Virtual Edges (MVEs), and Partner VXCs.
 
 This provider is compatible with HashiCorp Pulumi, and we have tested compatibility with OpenTofu and haven't seen issues.
 
@@ -200,6 +200,1493 @@ public class App {
     }
 
     public static void stack(Context ctx) {
+    }
+}
+```
+{{% /choosable %}}
+{{< /chooser >}}
+## 🚨 NEW FEATURE: MCR Prefix Filter List Resources
+### Enhanced MCR Management with Standalone Resources
+
+The Megaport Pulumi Provider now supports managing MCR prefix filter lists as individual resources, providing better lifecycle management and improved state handling compared to the previous inline approach.
+#### ✅ New Standalone Approach (Recommended)
+
+{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{% choosable language typescript %}}
+```typescript
+import * as pulumi from "@pulumi/pulumi";
+import * as megaport from "@pulumi/megaport";
+
+// Create MCR without inline prefix filter lists
+const example = new megaport.Mcr("example", {
+    productName: "my-mcr",
+    portSpeed: 1000,
+    locationId: 5,
+    contractTermMonths: 12,
+});
+// Manage prefix filter lists as individual resources
+const allowPrivateIpv4 = new megaport.McrPrefixFilterList("allow_private_ipv4", {
+    mcrId: example.productUid,
+    description: "Allow private IPv4 networks",
+    addressFamily: "IPv4",
+    entries: [
+        {
+            action: "permit",
+            prefix: "10.0.0.0/8",
+            ge: 16,
+            le: 24,
+        },
+        {
+            action: "permit",
+            prefix: "192.168.0.0/16",
+            ge: 24,
+            le: 32,
+        },
+    ],
+});
+const allowPrivateIpv6 = new megaport.McrPrefixFilterList("allow_private_ipv6", {
+    mcrId: example.productUid,
+    description: "Allow private IPv6 networks",
+    addressFamily: "IPv6",
+    entries: [{
+        action: "permit",
+        prefix: "fd00::/8",
+        ge: 48,
+        le: 64,
+    }],
+});
+```
+{{% /choosable %}}
+{{% choosable language python %}}
+```python
+import pulumi
+import pulumi_megaport as megaport
+
+# Create MCR without inline prefix filter lists
+example = megaport.Mcr("example",
+    product_name="my-mcr",
+    port_speed=1000,
+    location_id=5,
+    contract_term_months=12)
+# Manage prefix filter lists as individual resources
+allow_private_ipv4 = megaport.McrPrefixFilterList("allow_private_ipv4",
+    mcr_id=example.product_uid,
+    description="Allow private IPv4 networks",
+    address_family="IPv4",
+    entries=[
+        {
+            "action": "permit",
+            "prefix": "10.0.0.0/8",
+            "ge": 16,
+            "le": 24,
+        },
+        {
+            "action": "permit",
+            "prefix": "192.168.0.0/16",
+            "ge": 24,
+            "le": 32,
+        },
+    ])
+allow_private_ipv6 = megaport.McrPrefixFilterList("allow_private_ipv6",
+    mcr_id=example.product_uid,
+    description="Allow private IPv6 networks",
+    address_family="IPv6",
+    entries=[{
+        "action": "permit",
+        "prefix": "fd00::/8",
+        "ge": 48,
+        "le": 64,
+    }])
+```
+{{% /choosable %}}
+{{% choosable language csharp %}}
+```csharp
+using System.Collections.Generic;
+using System.Linq;
+using Pulumi;
+using Megaport = Pulumi.Megaport;
+
+return await Deployment.RunAsync(() =>
+{
+    // Create MCR without inline prefix filter lists
+    var example = new Megaport.Mcr("example", new()
+    {
+        ProductName = "my-mcr",
+        PortSpeed = 1000,
+        LocationId = 5,
+        ContractTermMonths = 12,
+    });
+
+    // Manage prefix filter lists as individual resources
+    var allowPrivateIpv4 = new Megaport.McrPrefixFilterList("allow_private_ipv4", new()
+    {
+        McrId = example.ProductUid,
+        Description = "Allow private IPv4 networks",
+        AddressFamily = "IPv4",
+        Entries = new[]
+        {
+            new Megaport.Inputs.McrPrefixFilterListEntryArgs
+            {
+                Action = "permit",
+                Prefix = "10.0.0.0/8",
+                Ge = 16,
+                Le = 24,
+            },
+            new Megaport.Inputs.McrPrefixFilterListEntryArgs
+            {
+                Action = "permit",
+                Prefix = "192.168.0.0/16",
+                Ge = 24,
+                Le = 32,
+            },
+        },
+    });
+
+    var allowPrivateIpv6 = new Megaport.McrPrefixFilterList("allow_private_ipv6", new()
+    {
+        McrId = example.ProductUid,
+        Description = "Allow private IPv6 networks",
+        AddressFamily = "IPv6",
+        Entries = new[]
+        {
+            new Megaport.Inputs.McrPrefixFilterListEntryArgs
+            {
+                Action = "permit",
+                Prefix = "fd00::/8",
+                Ge = 48,
+                Le = 64,
+            },
+        },
+    });
+
+});
+
+```
+{{% /choosable %}}
+{{% choosable language go %}}
+```go
+package main
+
+import (
+	"github.com/pulumi/pulumi-pulumi-provider/sdks/go/megaport/megaport"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		// Create MCR without inline prefix filter lists
+		example, err := megaport.NewMcr(ctx, "example", &megaport.McrArgs{
+			ProductName:        pulumi.String("my-mcr"),
+			PortSpeed:          pulumi.Float64(1000),
+			LocationId:         pulumi.Float64(5),
+			ContractTermMonths: pulumi.Float64(12),
+		})
+		if err != nil {
+			return err
+		}
+		// Manage prefix filter lists as individual resources
+		_, err = megaport.NewMcrPrefixFilterList(ctx, "allow_private_ipv4", &megaport.McrPrefixFilterListArgs{
+			McrId:         example.ProductUid,
+			Description:   pulumi.String("Allow private IPv4 networks"),
+			AddressFamily: pulumi.String("IPv4"),
+			Entries: megaport.McrPrefixFilterListEntryArray{
+				&megaport.McrPrefixFilterListEntryArgs{
+					Action: pulumi.String("permit"),
+					Prefix: pulumi.String("10.0.0.0/8"),
+					Ge:     pulumi.Float64(16),
+					Le:     pulumi.Float64(24),
+				},
+				&megaport.McrPrefixFilterListEntryArgs{
+					Action: pulumi.String("permit"),
+					Prefix: pulumi.String("192.168.0.0/16"),
+					Ge:     pulumi.Float64(24),
+					Le:     pulumi.Float64(32),
+				},
+			},
+		})
+		if err != nil {
+			return err
+		}
+		_, err = megaport.NewMcrPrefixFilterList(ctx, "allow_private_ipv6", &megaport.McrPrefixFilterListArgs{
+			McrId:         example.ProductUid,
+			Description:   pulumi.String("Allow private IPv6 networks"),
+			AddressFamily: pulumi.String("IPv6"),
+			Entries: megaport.McrPrefixFilterListEntryArray{
+				&megaport.McrPrefixFilterListEntryArgs{
+					Action: pulumi.String("permit"),
+					Prefix: pulumi.String("fd00::/8"),
+					Ge:     pulumi.Float64(48),
+					Le:     pulumi.Float64(64),
+				},
+			},
+		})
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+}
+```
+{{% /choosable %}}
+{{% choosable language yaml %}}
+```yaml
+resources:
+  # Create MCR without inline prefix filter lists
+  example:
+    type: megaport:Mcr
+    properties:
+      productName: my-mcr
+      portSpeed: 1000
+      locationId: 5
+      contractTermMonths: 12
+  # Manage prefix filter lists as individual resources
+  allowPrivateIpv4:
+    type: megaport:McrPrefixFilterList
+    name: allow_private_ipv4
+    properties:
+      mcrId: ${example.productUid}
+      description: Allow private IPv4 networks
+      addressFamily: IPv4
+      entries:
+        - action: permit
+          prefix: 10.0.0.0/8
+          ge: 16
+          le: 24
+        - action: permit
+          prefix: 192.168.0.0/16
+          ge: 24
+          le: 32
+  allowPrivateIpv6:
+    type: megaport:McrPrefixFilterList
+    name: allow_private_ipv6
+    properties:
+      mcrId: ${example.productUid}
+      description: Allow private IPv6 networks
+      addressFamily: IPv6
+      entries:
+        - action: permit
+          prefix: fd00::/8
+          ge: 48
+          le: 64
+```
+{{% /choosable %}}
+{{% choosable language java %}}
+```java
+package generated_program;
+
+import com.pulumi.Context;
+import com.pulumi.Pulumi;
+import com.pulumi.core.Output;
+import com.pulumi.megaport.Mcr;
+import com.pulumi.megaport.McrArgs;
+import com.pulumi.megaport.McrPrefixFilterList;
+import com.pulumi.megaport.McrPrefixFilterListArgs;
+import com.pulumi.megaport.inputs.McrPrefixFilterListEntryArgs;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+public class App {
+    public static void main(String[] args) {
+        Pulumi.run(App::stack);
+    }
+
+    public static void stack(Context ctx) {
+        // Create MCR without inline prefix filter lists
+        var example = new Mcr("example", McrArgs.builder()
+            .productName("my-mcr")
+            .portSpeed(1000)
+            .locationId(5)
+            .contractTermMonths(12)
+            .build());
+
+        // Manage prefix filter lists as individual resources
+        var allowPrivateIpv4 = new McrPrefixFilterList("allowPrivateIpv4", McrPrefixFilterListArgs.builder()
+            .mcrId(example.productUid())
+            .description("Allow private IPv4 networks")
+            .addressFamily("IPv4")
+            .entries(
+                McrPrefixFilterListEntryArgs.builder()
+                    .action("permit")
+                    .prefix("10.0.0.0/8")
+                    .ge(16)
+                    .le(24)
+                    .build(),
+                McrPrefixFilterListEntryArgs.builder()
+                    .action("permit")
+                    .prefix("192.168.0.0/16")
+                    .ge(24)
+                    .le(32)
+                    .build())
+            .build());
+
+        var allowPrivateIpv6 = new McrPrefixFilterList("allowPrivateIpv6", McrPrefixFilterListArgs.builder()
+            .mcrId(example.productUid())
+            .description("Allow private IPv6 networks")
+            .addressFamily("IPv6")
+            .entries(McrPrefixFilterListEntryArgs.builder()
+                .action("permit")
+                .prefix("fd00::/8")
+                .ge(48)
+                .le(64)
+                .build())
+            .build());
+
+    }
+}
+```
+{{% /choosable %}}
+{{< /chooser >}}
+#### ⚠️ Deprecated Inline Approach
+
+{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{% choosable language typescript %}}
+```typescript
+import * as pulumi from "@pulumi/pulumi";
+import * as megaport from "@pulumi/megaport";
+
+// ❌ DEPRECATED: Inline prefix filter lists (will be removed in future version)
+const deprecatedExample = new megaport.Mcr("deprecated_example", {
+    productName: "my-mcr",
+    portSpeed: 1000,
+    locationId: 5,
+    contractTermMonths: 12,
+    prefixFilterLists: [{
+        description: "Allow private networks",
+        addressFamily: "IPv4",
+        entries: [{
+            action: "permit",
+            prefix: "10.0.0.0/8",
+            ge: 16,
+            le: 24,
+        }],
+    }],
+});
+```
+{{% /choosable %}}
+{{% choosable language python %}}
+```python
+import pulumi
+import pulumi_megaport as megaport
+
+# ❌ DEPRECATED: Inline prefix filter lists (will be removed in future version)
+deprecated_example = megaport.Mcr("deprecated_example",
+    product_name="my-mcr",
+    port_speed=1000,
+    location_id=5,
+    contract_term_months=12,
+    prefix_filter_lists=[{
+        "description": "Allow private networks",
+        "address_family": "IPv4",
+        "entries": [{
+            "action": "permit",
+            "prefix": "10.0.0.0/8",
+            "ge": 16,
+            "le": 24,
+        }],
+    }])
+```
+{{% /choosable %}}
+{{% choosable language csharp %}}
+```csharp
+using System.Collections.Generic;
+using System.Linq;
+using Pulumi;
+using Megaport = Pulumi.Megaport;
+
+return await Deployment.RunAsync(() =>
+{
+    // ❌ DEPRECATED: Inline prefix filter lists (will be removed in future version)
+    var deprecatedExample = new Megaport.Mcr("deprecated_example", new()
+    {
+        ProductName = "my-mcr",
+        PortSpeed = 1000,
+        LocationId = 5,
+        ContractTermMonths = 12,
+        PrefixFilterLists = new[]
+        {
+            new Megaport.Inputs.McrPrefixFilterListArgs
+            {
+                Description = "Allow private networks",
+                AddressFamily = "IPv4",
+                Entries = new[]
+                {
+                    new Megaport.Inputs.McrPrefixFilterListEntryArgs
+                    {
+                        Action = "permit",
+                        Prefix = "10.0.0.0/8",
+                        Ge = 16,
+                        Le = 24,
+                    },
+                },
+            },
+        },
+    });
+
+});
+
+```
+{{% /choosable %}}
+{{% choosable language go %}}
+```go
+package main
+
+import (
+	"github.com/pulumi/pulumi-pulumi-provider/sdks/go/megaport/megaport"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		// ❌ DEPRECATED: Inline prefix filter lists (will be removed in future version)
+		_, err := megaport.NewMcr(ctx, "deprecated_example", &megaport.McrArgs{
+			ProductName:        pulumi.String("my-mcr"),
+			PortSpeed:          pulumi.Float64(1000),
+			LocationId:         pulumi.Float64(5),
+			ContractTermMonths: pulumi.Float64(12),
+			PrefixFilterLists: megaport.McrPrefixFilterListTypeArray{
+				&megaport.McrPrefixFilterListTypeArgs{
+					Description:   pulumi.String("Allow private networks"),
+					AddressFamily: pulumi.String("IPv4"),
+					Entries: megaport.McrPrefixFilterListEntryArray{
+						&megaport.McrPrefixFilterListEntryArgs{
+							Action: pulumi.String("permit"),
+							Prefix: pulumi.String("10.0.0.0/8"),
+							Ge:     pulumi.Float64(16),
+							Le:     pulumi.Float64(24),
+						},
+					},
+				},
+			},
+		})
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+}
+```
+{{% /choosable %}}
+{{% choosable language yaml %}}
+```yaml
+resources:
+  # ❌ DEPRECATED: Inline prefix filter lists (will be removed in future version)
+  deprecatedExample:
+    type: megaport:Mcr
+    name: deprecated_example
+    properties:
+      productName: my-mcr
+      portSpeed: 1000
+      locationId: 5
+      contractTermMonths: 12 # This approach is deprecated and will show warnings
+      prefixFilterLists:
+        - description: Allow private networks
+          addressFamily: IPv4
+          entries:
+            - action: permit
+              prefix: 10.0.0.0/8
+              ge: 16
+              le: 24
+```
+{{% /choosable %}}
+{{% choosable language java %}}
+```java
+package generated_program;
+
+import com.pulumi.Context;
+import com.pulumi.Pulumi;
+import com.pulumi.core.Output;
+import com.pulumi.megaport.Mcr;
+import com.pulumi.megaport.McrArgs;
+import com.pulumi.megaport.inputs.McrPrefixFilterListArgs;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+public class App {
+    public static void main(String[] args) {
+        Pulumi.run(App::stack);
+    }
+
+    public static void stack(Context ctx) {
+        // ❌ DEPRECATED: Inline prefix filter lists (will be removed in future version)
+        var deprecatedExample = new Mcr("deprecatedExample", McrArgs.builder()
+            .productName("my-mcr")
+            .portSpeed(1000)
+            .locationId(5)
+            .contractTermMonths(12)
+            .prefixFilterLists(McrPrefixFilterListArgs.builder()
+                .description("Allow private networks")
+                .addressFamily("IPv4")
+                .entries(McrPrefixFilterListEntryArgs.builder()
+                    .action("permit")
+                    .prefix("10.0.0.0/8")
+                    .ge(16)
+                    .le(24)
+                    .build())
+                .build())
+            .build());
+
+    }
+}
+```
+{{% /choosable %}}
+{{< /chooser >}}
+### Benefits of Standalone Resources
+
+- **Individual Lifecycle Management**: Each prefix filter list has its own Pulumi state and lifecycle
+- **Better Error Handling**: Failures in one list don't affect others
+- **Enhanced Reusability**: Lists can be referenced and managed independently
+- **Cleaner State**: Avoid complex nested object handling in Pulumi state
+- **Import Support**: Easy migration of existing lists using `pulumi import`
+### Migration Guide
+#### Step 1: Inventory Existing Lists
+
+Use the function to see what prefix filter lists you currently have:
+
+{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{% choosable language typescript %}}
+```typescript
+import * as pulumi from "@pulumi/pulumi";
+import * as megaport from "@pulumi/megaport";
+
+const existing = megaport.getMcrPrefixFilterLists({
+    mcrId: "your-mcr-uid-here",
+});
+export const currentLists = existing.then(existing => existing.prefixFilterLists);
+```
+{{% /choosable %}}
+{{% choosable language python %}}
+```python
+import pulumi
+import pulumi_megaport as megaport
+
+existing = megaport.get_mcr_prefix_filter_lists(mcr_id="your-mcr-uid-here")
+pulumi.export("currentLists", existing.prefix_filter_lists)
+```
+{{% /choosable %}}
+{{% choosable language csharp %}}
+```csharp
+using System.Collections.Generic;
+using System.Linq;
+using Pulumi;
+using Megaport = Pulumi.Megaport;
+
+return await Deployment.RunAsync(() =>
+{
+    var existing = Megaport.GetMcrPrefixFilterLists.Invoke(new()
+    {
+        McrId = "your-mcr-uid-here",
+    });
+
+    return new Dictionary<string, object?>
+    {
+        ["currentLists"] = existing.Apply(getMcrPrefixFilterListsResult => getMcrPrefixFilterListsResult.PrefixFilterLists),
+    };
+});
+
+```
+{{% /choosable %}}
+{{% choosable language go %}}
+```go
+package main
+
+import (
+	"github.com/pulumi/pulumi-pulumi-provider/sdks/go/megaport/megaport"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		existing, err := megaport.GetMcrPrefixFilterLists(ctx, &megaport.GetMcrPrefixFilterListsArgs{
+			McrId: "your-mcr-uid-here",
+		}, nil)
+		if err != nil {
+			return err
+		}
+		ctx.Export("currentLists", existing.PrefixFilterLists)
+		return nil
+	})
+}
+```
+{{% /choosable %}}
+{{% choosable language yaml %}}
+```yaml
+variables:
+  existing:
+    fn::invoke:
+      function: megaport:getMcrPrefixFilterLists
+      arguments:
+        mcrId: your-mcr-uid-here
+outputs:
+  currentLists: ${existing.prefixFilterLists}
+```
+{{% /choosable %}}
+{{% choosable language java %}}
+```java
+package generated_program;
+
+import com.pulumi.Context;
+import com.pulumi.Pulumi;
+import com.pulumi.core.Output;
+import com.pulumi.megaport.MegaportFunctions;
+import com.pulumi.megaport.inputs.GetMcrPrefixFilterListsArgs;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+public class App {
+    public static void main(String[] args) {
+        Pulumi.run(App::stack);
+    }
+
+    public static void stack(Context ctx) {
+        final var existing = MegaportFunctions.getMcrPrefixFilterLists(GetMcrPrefixFilterListsArgs.builder()
+            .mcrId("your-mcr-uid-here")
+            .build());
+
+        ctx.export("currentLists", existing.applyValue(getMcrPrefixFilterListsResult -> getMcrPrefixFilterListsResult.prefixFilterLists()));
+    }
+}
+```
+{{% /choosable %}}
+{{< /chooser >}}
+#### Step 2: Create Standalone Resources
+
+For each existing list, create a corresponding resource:
+
+{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{% choosable language typescript %}}
+```typescript
+import * as pulumi from "@pulumi/pulumi";
+import * as megaport from "@pulumi/megaport";
+
+const migratedList1 = new megaport.McrPrefixFilterList("migrated_list_1", {
+    mcrId: "your-mcr-uid-here",
+    description: "Copy description from existing list",
+    addressFamily: "IPv4",
+    entries: [],
+});
+```
+{{% /choosable %}}
+{{% choosable language python %}}
+```python
+import pulumi
+import pulumi_megaport as megaport
+
+migrated_list1 = megaport.McrPrefixFilterList("migrated_list_1",
+    mcr_id="your-mcr-uid-here",
+    description="Copy description from existing list",
+    address_family="IPv4",
+    entries=[])
+```
+{{% /choosable %}}
+{{% choosable language csharp %}}
+```csharp
+using System.Collections.Generic;
+using System.Linq;
+using Pulumi;
+using Megaport = Pulumi.Megaport;
+
+return await Deployment.RunAsync(() =>
+{
+    var migratedList1 = new Megaport.McrPrefixFilterList("migrated_list_1", new()
+    {
+        McrId = "your-mcr-uid-here",
+        Description = "Copy description from existing list",
+        AddressFamily = "IPv4",
+        Entries = new[] {},
+    });
+
+});
+
+```
+{{% /choosable %}}
+{{% choosable language go %}}
+```go
+package main
+
+import (
+	"github.com/pulumi/pulumi-pulumi-provider/sdks/go/megaport/megaport"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		_, err := megaport.NewMcrPrefixFilterList(ctx, "migrated_list_1", &megaport.McrPrefixFilterListArgs{
+			McrId:         pulumi.String("your-mcr-uid-here"),
+			Description:   pulumi.String("Copy description from existing list"),
+			AddressFamily: pulumi.String("IPv4"),
+			Entries:       megaport.McrPrefixFilterListEntryArray{},
+		})
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+}
+```
+{{% /choosable %}}
+{{% choosable language yaml %}}
+```yaml
+resources:
+  migratedList1:
+    type: megaport:McrPrefixFilterList
+    name: migrated_list_1
+    properties:
+      mcrId: your-mcr-uid-here
+      description: Copy description from existing list
+      addressFamily: IPv4
+      entries: []
+```
+{{% /choosable %}}
+{{% choosable language java %}}
+```java
+package generated_program;
+
+import com.pulumi.Context;
+import com.pulumi.Pulumi;
+import com.pulumi.core.Output;
+import com.pulumi.megaport.McrPrefixFilterList;
+import com.pulumi.megaport.McrPrefixFilterListArgs;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+public class App {
+    public static void main(String[] args) {
+        Pulumi.run(App::stack);
+    }
+
+    public static void stack(Context ctx) {
+        var migratedList1 = new McrPrefixFilterList("migratedList1", McrPrefixFilterListArgs.builder()
+            .mcrId("your-mcr-uid-here")
+            .description("Copy description from existing list")
+            .addressFamily("IPv4")
+            .entries()
+            .build());
+
+    }
+}
+```
+{{% /choosable %}}
+{{< /chooser >}}
+#### Step 3: Import Existing Lists
+
+Import each existing list to avoid recreation:
+
+```bash
+pulumi import megaport_mcr_prefix_filter_list.migrated_list_1 mcr-uid:prefix-list-id
+```
+#### Step 4: Update MCR Resource
+
+Remove the `prefixFilterLists` attribute from your MCR resource and add a lifecycle rule:
+
+{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{% choosable language typescript %}}
+```typescript
+import * as pulumi from "@pulumi/pulumi";
+import * as megaport from "@pulumi/megaport";
+
+const example = new megaport.Mcr("example", {
+    productName: "my-mcr",
+    portSpeed: 1000,
+    locationId: 5,
+    contractTermMonths: 12,
+});
+```
+{{% /choosable %}}
+{{% choosable language python %}}
+```python
+import pulumi
+import pulumi_megaport as megaport
+
+example = megaport.Mcr("example",
+    product_name="my-mcr",
+    port_speed=1000,
+    location_id=5,
+    contract_term_months=12)
+```
+{{% /choosable %}}
+{{% choosable language csharp %}}
+```csharp
+using System.Collections.Generic;
+using System.Linq;
+using Pulumi;
+using Megaport = Pulumi.Megaport;
+
+return await Deployment.RunAsync(() =>
+{
+    var example = new Megaport.Mcr("example", new()
+    {
+        ProductName = "my-mcr",
+        PortSpeed = 1000,
+        LocationId = 5,
+        ContractTermMonths = 12,
+    });
+
+});
+
+```
+{{% /choosable %}}
+{{% choosable language go %}}
+```go
+package main
+
+import (
+	"github.com/pulumi/pulumi-pulumi-provider/sdks/go/megaport/megaport"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		_, err := megaport.NewMcr(ctx, "example", &megaport.McrArgs{
+			ProductName:        pulumi.String("my-mcr"),
+			PortSpeed:          pulumi.Float64(1000),
+			LocationId:         pulumi.Float64(5),
+			ContractTermMonths: pulumi.Float64(12),
+		})
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+}
+```
+{{% /choosable %}}
+{{% choosable language yaml %}}
+```yaml
+resources:
+  example:
+    type: megaport:Mcr
+    properties:
+      productName: my-mcr
+      portSpeed: 1000
+      locationId: 5
+      contractTermMonths: 12 # Add lifecycle rule to prevent drift warnings
+```
+{{% /choosable %}}
+{{% choosable language java %}}
+```java
+package generated_program;
+
+import com.pulumi.Context;
+import com.pulumi.Pulumi;
+import com.pulumi.core.Output;
+import com.pulumi.megaport.Mcr;
+import com.pulumi.megaport.McrArgs;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+public class App {
+    public static void main(String[] args) {
+        Pulumi.run(App::stack);
+    }
+
+    public static void stack(Context ctx) {
+        var example = new Mcr("example", McrArgs.builder()
+            .productName("my-mcr")
+            .portSpeed(1000)
+            .locationId(5)
+            .contractTermMonths(12)
+            .build());
+
+    }
+}
+```
+{{% /choosable %}}
+{{< /chooser >}}
+#### Step 5: Verify Migration
+
+Run `pulumi preview` to ensure no unexpected changes are detected.
+### Mixed Usage Prevention
+
+The provider includes validation to prevent managing the same prefix filter lists through both methods simultaneously. If you attempt to use both inline and standalone management for the same MCR, you'll receive warnings about potential conflicts.
+### Deprecation Notice
+
+The inline `prefixFilterLists` attribute in the MCR resource is deprecated and will be removed in a future version. We recommend migrating to standalone `megaport.McrPrefixFilterList` resources for better lifecycle management and improved state handling.
+### Troubleshooting and Best Practices
+#### Common Issues
+
+**MCR Resource Shows Drift with Standalone Resources**
+
+When using standalone `megaport.McrPrefixFilterList` resources, you should add a lifecycle rule to your MCR resource to prevent Pulumi from detecting drift on the `prefixFilterLists` attribute. This is necessary because:
+
+1. The standalone prefix filter list resources manage the lists independently
+2. The MCR resource still reads the lists from the API, which can cause Pulumi to detect "changes" even though the lists are being managed by the standalone resources
+3. This applies to both newly created MCRs and existing ones - the lifecycle rule tells Pulumi to ignore differences in this attribute since it's being managed elsewhere
+
+{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{% choosable language typescript %}}
+```typescript
+import * as pulumi from "@pulumi/pulumi";
+import * as megaport from "@pulumi/megaport";
+
+const example = new megaport.Mcr("example", {});
+```
+{{% /choosable %}}
+{{% choosable language python %}}
+```python
+import pulumi
+import pulumi_megaport as megaport
+
+example = megaport.Mcr("example")
+```
+{{% /choosable %}}
+{{% choosable language csharp %}}
+```csharp
+using System.Collections.Generic;
+using System.Linq;
+using Pulumi;
+using Megaport = Pulumi.Megaport;
+
+return await Deployment.RunAsync(() =>
+{
+    var example = new Megaport.Mcr("example");
+
+});
+
+```
+{{% /choosable %}}
+{{% choosable language go %}}
+```go
+package main
+
+import (
+	"github.com/pulumi/pulumi-pulumi-provider/sdks/go/megaport/megaport"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		_, err := megaport.NewMcr(ctx, "example", nil)
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+}
+```
+{{% /choosable %}}
+{{% choosable language yaml %}}
+```yaml
+resources:
+  example:
+    type: megaport:Mcr
+```
+{{% /choosable %}}
+{{% choosable language java %}}
+```java
+package generated_program;
+
+import com.pulumi.Context;
+import com.pulumi.Pulumi;
+import com.pulumi.core.Output;
+import com.pulumi.megaport.Mcr;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+public class App {
+    public static void main(String[] args) {
+        Pulumi.run(App::stack);
+    }
+
+    public static void stack(Context ctx) {
+        var example = new Mcr("example");
+
+    }
+}
+```
+{{% /choosable %}}
+{{< /chooser >}}
+
+**Why is this needed for new resources?** Even when creating a new MCR alongside standalone prefix filter list resources, Pulumi's refresh cycle will detect that the MCR has prefix filter lists attached (via the standalone resources), and without the lifecycle rule, it may show these as unexpected changes on subsequent plan/apply operations.
+
+**Mixed Usage Warning**
+
+If you see warnings about mixed usage, ensure you're not managing the same prefix filter lists through both inline and standalone methods simultaneously.
+
+**Import Format**
+
+When importing existing prefix filter lists, use the format `mcr_uid:prefix_list_id`:
+
+```bash
+# Get the MCR UID and prefix list ID from the Megaport Portal or API
+pulumi import megaport_mcr_prefix_filter_list.example a1b2c3d4-5678-90ef-ghij-klmnopqrstuv:1234
+```
+#### Best Practices
+
+- **Use Location IDs**: Always use location IDs instead of names for MCR placement (more stable)
+- **Validate Prefix Ranges**: Ensure ge (greater than or equal) and le (less than or equal) values make sense for your prefix lengths
+- **Group Related Lists**: Create logically grouped prefix filter lists for easier management
+- **Test Migrations**: Always test migrations in a non-production environment first
+- **Document Purposes**: Use descriptive names and descriptions for prefix filter lists
+#### Example Production Configuration
+
+{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{% choosable language typescript %}}
+```typescript
+import * as pulumi from "@pulumi/pulumi";
+import * as megaport from "@pulumi/megaport";
+
+// Production MCR with standalone prefix filter lists
+const production = new megaport.Mcr("production", {
+    productName: "prod-mcr",
+    portSpeed: 2500,
+    locationId: 1,
+    contractTermMonths: 12,
+    resourceTags: {
+        Environment: "production",
+        Owner: "network-team",
+        Purpose: "multi-cloud-connectivity",
+    },
+});
+// Allow internal corporate networks
+const corporateNetworks = new megaport.McrPrefixFilterList("corporate_networks", {
+    mcrId: production.productUid,
+    description: "Corporate internal networks",
+    addressFamily: "IPv4",
+    entries: [
+        {
+            action: "permit",
+            prefix: "10.100.0.0/16",
+            ge: 24,
+            le: 28,
+        },
+        {
+            action: "permit",
+            prefix: "10.200.0.0/16",
+            ge: 24,
+            le: 28,
+        },
+    ],
+});
+// Allow cloud provider networks
+const cloudNetworks = new megaport.McrPrefixFilterList("cloud_networks", {
+    mcrId: production.productUid,
+    description: "AWS and Azure networks",
+    addressFamily: "IPv4",
+    entries: [{
+        action: "permit",
+        prefix: "172.16.0.0/12",
+        ge: 16,
+        le: 24,
+    }],
+});
+// IPv6 support for future expansion
+const ipv6Networks = new megaport.McrPrefixFilterList("ipv6_networks", {
+    mcrId: production.productUid,
+    description: "IPv6 corporate networks",
+    addressFamily: "IPv6",
+    entries: [{
+        action: "permit",
+        prefix: "2001:db8:100::/48",
+        ge: 56,
+        le: 64,
+    }],
+});
+```
+{{% /choosable %}}
+{{% choosable language python %}}
+```python
+import pulumi
+import pulumi_megaport as megaport
+
+# Production MCR with standalone prefix filter lists
+production = megaport.Mcr("production",
+    product_name="prod-mcr",
+    port_speed=2500,
+    location_id=1,
+    contract_term_months=12,
+    resource_tags={
+        "Environment": "production",
+        "Owner": "network-team",
+        "Purpose": "multi-cloud-connectivity",
+    })
+# Allow internal corporate networks
+corporate_networks = megaport.McrPrefixFilterList("corporate_networks",
+    mcr_id=production.product_uid,
+    description="Corporate internal networks",
+    address_family="IPv4",
+    entries=[
+        {
+            "action": "permit",
+            "prefix": "10.100.0.0/16",
+            "ge": 24,
+            "le": 28,
+        },
+        {
+            "action": "permit",
+            "prefix": "10.200.0.0/16",
+            "ge": 24,
+            "le": 28,
+        },
+    ])
+# Allow cloud provider networks
+cloud_networks = megaport.McrPrefixFilterList("cloud_networks",
+    mcr_id=production.product_uid,
+    description="AWS and Azure networks",
+    address_family="IPv4",
+    entries=[{
+        "action": "permit",
+        "prefix": "172.16.0.0/12",
+        "ge": 16,
+        "le": 24,
+    }])
+# IPv6 support for future expansion
+ipv6_networks = megaport.McrPrefixFilterList("ipv6_networks",
+    mcr_id=production.product_uid,
+    description="IPv6 corporate networks",
+    address_family="IPv6",
+    entries=[{
+        "action": "permit",
+        "prefix": "2001:db8:100::/48",
+        "ge": 56,
+        "le": 64,
+    }])
+```
+{{% /choosable %}}
+{{% choosable language csharp %}}
+```csharp
+using System.Collections.Generic;
+using System.Linq;
+using Pulumi;
+using Megaport = Pulumi.Megaport;
+
+return await Deployment.RunAsync(() =>
+{
+    // Production MCR with standalone prefix filter lists
+    var production = new Megaport.Mcr("production", new()
+    {
+        ProductName = "prod-mcr",
+        PortSpeed = 2500,
+        LocationId = 1,
+        ContractTermMonths = 12,
+        ResourceTags =
+        {
+            { "Environment", "production" },
+            { "Owner", "network-team" },
+            { "Purpose", "multi-cloud-connectivity" },
+        },
+    });
+
+    // Allow internal corporate networks
+    var corporateNetworks = new Megaport.McrPrefixFilterList("corporate_networks", new()
+    {
+        McrId = production.ProductUid,
+        Description = "Corporate internal networks",
+        AddressFamily = "IPv4",
+        Entries = new[]
+        {
+            new Megaport.Inputs.McrPrefixFilterListEntryArgs
+            {
+                Action = "permit",
+                Prefix = "10.100.0.0/16",
+                Ge = 24,
+                Le = 28,
+            },
+            new Megaport.Inputs.McrPrefixFilterListEntryArgs
+            {
+                Action = "permit",
+                Prefix = "10.200.0.0/16",
+                Ge = 24,
+                Le = 28,
+            },
+        },
+    });
+
+    // Allow cloud provider networks
+    var cloudNetworks = new Megaport.McrPrefixFilterList("cloud_networks", new()
+    {
+        McrId = production.ProductUid,
+        Description = "AWS and Azure networks",
+        AddressFamily = "IPv4",
+        Entries = new[]
+        {
+            new Megaport.Inputs.McrPrefixFilterListEntryArgs
+            {
+                Action = "permit",
+                Prefix = "172.16.0.0/12",
+                Ge = 16,
+                Le = 24,
+            },
+        },
+    });
+
+    // IPv6 support for future expansion
+    var ipv6Networks = new Megaport.McrPrefixFilterList("ipv6_networks", new()
+    {
+        McrId = production.ProductUid,
+        Description = "IPv6 corporate networks",
+        AddressFamily = "IPv6",
+        Entries = new[]
+        {
+            new Megaport.Inputs.McrPrefixFilterListEntryArgs
+            {
+                Action = "permit",
+                Prefix = "2001:db8:100::/48",
+                Ge = 56,
+                Le = 64,
+            },
+        },
+    });
+
+});
+
+```
+{{% /choosable %}}
+{{% choosable language go %}}
+```go
+package main
+
+import (
+	"github.com/pulumi/pulumi-pulumi-provider/sdks/go/megaport/megaport"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		// Production MCR with standalone prefix filter lists
+		production, err := megaport.NewMcr(ctx, "production", &megaport.McrArgs{
+			ProductName:        pulumi.String("prod-mcr"),
+			PortSpeed:          pulumi.Float64(2500),
+			LocationId:         pulumi.Float64(1),
+			ContractTermMonths: pulumi.Float64(12),
+			ResourceTags: pulumi.StringMap{
+				"Environment": pulumi.String("production"),
+				"Owner":       pulumi.String("network-team"),
+				"Purpose":     pulumi.String("multi-cloud-connectivity"),
+			},
+		})
+		if err != nil {
+			return err
+		}
+		// Allow internal corporate networks
+		_, err = megaport.NewMcrPrefixFilterList(ctx, "corporate_networks", &megaport.McrPrefixFilterListArgs{
+			McrId:         production.ProductUid,
+			Description:   pulumi.String("Corporate internal networks"),
+			AddressFamily: pulumi.String("IPv4"),
+			Entries: megaport.McrPrefixFilterListEntryArray{
+				&megaport.McrPrefixFilterListEntryArgs{
+					Action: pulumi.String("permit"),
+					Prefix: pulumi.String("10.100.0.0/16"),
+					Ge:     pulumi.Float64(24),
+					Le:     pulumi.Float64(28),
+				},
+				&megaport.McrPrefixFilterListEntryArgs{
+					Action: pulumi.String("permit"),
+					Prefix: pulumi.String("10.200.0.0/16"),
+					Ge:     pulumi.Float64(24),
+					Le:     pulumi.Float64(28),
+				},
+			},
+		})
+		if err != nil {
+			return err
+		}
+		// Allow cloud provider networks
+		_, err = megaport.NewMcrPrefixFilterList(ctx, "cloud_networks", &megaport.McrPrefixFilterListArgs{
+			McrId:         production.ProductUid,
+			Description:   pulumi.String("AWS and Azure networks"),
+			AddressFamily: pulumi.String("IPv4"),
+			Entries: megaport.McrPrefixFilterListEntryArray{
+				&megaport.McrPrefixFilterListEntryArgs{
+					Action: pulumi.String("permit"),
+					Prefix: pulumi.String("172.16.0.0/12"),
+					Ge:     pulumi.Float64(16),
+					Le:     pulumi.Float64(24),
+				},
+			},
+		})
+		if err != nil {
+			return err
+		}
+		// IPv6 support for future expansion
+		_, err = megaport.NewMcrPrefixFilterList(ctx, "ipv6_networks", &megaport.McrPrefixFilterListArgs{
+			McrId:         production.ProductUid,
+			Description:   pulumi.String("IPv6 corporate networks"),
+			AddressFamily: pulumi.String("IPv6"),
+			Entries: megaport.McrPrefixFilterListEntryArray{
+				&megaport.McrPrefixFilterListEntryArgs{
+					Action: pulumi.String("permit"),
+					Prefix: pulumi.String("2001:db8:100::/48"),
+					Ge:     pulumi.Float64(56),
+					Le:     pulumi.Float64(64),
+				},
+			},
+		})
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+}
+```
+{{% /choosable %}}
+{{% choosable language yaml %}}
+```yaml
+resources:
+  # Production MCR with standalone prefix filter lists
+  production:
+    type: megaport:Mcr
+    properties:
+      productName: prod-mcr
+      portSpeed: 2500
+      locationId: 1 # Use stable location ID
+      contractTermMonths: 12
+      resourceTags:
+        Environment: production
+        Owner: network-team
+        Purpose: multi-cloud-connectivity
+  # Allow internal corporate networks
+  corporateNetworks:
+    type: megaport:McrPrefixFilterList
+    name: corporate_networks
+    properties:
+      mcrId: ${production.productUid}
+      description: Corporate internal networks
+      addressFamily: IPv4
+      entries:
+        - action: permit
+          prefix: 10.100.0.0/16
+          ge: 24
+          le: 28
+        - action: permit
+          prefix: 10.200.0.0/16
+          ge: 24
+          le: 28
+  # Allow cloud provider networks
+  cloudNetworks:
+    type: megaport:McrPrefixFilterList
+    name: cloud_networks
+    properties:
+      mcrId: ${production.productUid}
+      description: AWS and Azure networks
+      addressFamily: IPv4
+      entries:
+        - action: permit
+          prefix: 172.16.0.0/12
+          ge: 16
+          le: 24
+  # IPv6 support for future expansion
+  ipv6Networks:
+    type: megaport:McrPrefixFilterList
+    name: ipv6_networks
+    properties:
+      mcrId: ${production.productUid}
+      description: IPv6 corporate networks
+      addressFamily: IPv6
+      entries:
+        - action: permit
+          prefix: 2001:db8:100::/48
+          ge: 56
+          le: 64
+```
+{{% /choosable %}}
+{{% choosable language java %}}
+```java
+package generated_program;
+
+import com.pulumi.Context;
+import com.pulumi.Pulumi;
+import com.pulumi.core.Output;
+import com.pulumi.megaport.Mcr;
+import com.pulumi.megaport.McrArgs;
+import com.pulumi.megaport.McrPrefixFilterList;
+import com.pulumi.megaport.McrPrefixFilterListArgs;
+import com.pulumi.megaport.inputs.McrPrefixFilterListEntryArgs;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+public class App {
+    public static void main(String[] args) {
+        Pulumi.run(App::stack);
+    }
+
+    public static void stack(Context ctx) {
+        // Production MCR with standalone prefix filter lists
+        var production = new Mcr("production", McrArgs.builder()
+            .productName("prod-mcr")
+            .portSpeed(2500)
+            .locationId(1)
+            .contractTermMonths(12)
+            .resourceTags(Map.ofEntries(
+                Map.entry("Environment", "production"),
+                Map.entry("Owner", "network-team"),
+                Map.entry("Purpose", "multi-cloud-connectivity")
+            ))
+            .build());
+
+        // Allow internal corporate networks
+        var corporateNetworks = new McrPrefixFilterList("corporateNetworks", McrPrefixFilterListArgs.builder()
+            .mcrId(production.productUid())
+            .description("Corporate internal networks")
+            .addressFamily("IPv4")
+            .entries(
+                McrPrefixFilterListEntryArgs.builder()
+                    .action("permit")
+                    .prefix("10.100.0.0/16")
+                    .ge(24)
+                    .le(28)
+                    .build(),
+                McrPrefixFilterListEntryArgs.builder()
+                    .action("permit")
+                    .prefix("10.200.0.0/16")
+                    .ge(24)
+                    .le(28)
+                    .build())
+            .build());
+
+        // Allow cloud provider networks
+        var cloudNetworks = new McrPrefixFilterList("cloudNetworks", McrPrefixFilterListArgs.builder()
+            .mcrId(production.productUid())
+            .description("AWS and Azure networks")
+            .addressFamily("IPv4")
+            .entries(McrPrefixFilterListEntryArgs.builder()
+                .action("permit")
+                .prefix("172.16.0.0/12")
+                .ge(16)
+                .le(24)
+                .build())
+            .build());
+
+        // IPv6 support for future expansion
+        var ipv6Networks = new McrPrefixFilterList("ipv6Networks", McrPrefixFilterListArgs.builder()
+            .mcrId(production.productUid())
+            .description("IPv6 corporate networks")
+            .addressFamily("IPv6")
+            .entries(McrPrefixFilterListEntryArgs.builder()
+                .action("permit")
+                .prefix("2001:db8:100::/48")
+                .ge(56)
+                .le(64)
+                .build())
+            .build());
+
     }
 }
 ```

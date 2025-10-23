@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-aws/v7.9.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-aws/v6.83.1/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-aws/blob/v7.9.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-aws/blob/v6.83.1/docs/_index.md
 title: AWS
 meta_desc: Learn how you can use Pulumi's AWS Provider to reduce the complexity of provisioning and managing resources on AWS.
 layout: package
@@ -119,10 +119,3 @@ Pulumi offers Components that provide simpler interfaces and higher-productivity
 
 * [Amazon EKS](/registry/packages/eks)
 * [Crosswalk for AWS](/docs/guides/crosswalk/aws), which includes API Gateway, CloudWatch, Elastic Container Registry, Elastic Container Service, Elastic Kubernetes Service, Elastic Load Balancing, Identity & Access Management, Lambda, Virtual Private Cloud, and more
-
-## Migrations
-
-Information about updating the major versions of the AWS Provider, along with any breaking changes that you should be aware of can be found on the following pages:
-
-* [Migrating to v6.x.x guide](/registry/packages/aws/how-to-guides/6-0-migration/)
-* [Migrating to v7.x.x guide](/registry/packages/aws/how-to-guides/7-0-migration/)

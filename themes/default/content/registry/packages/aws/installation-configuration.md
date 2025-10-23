@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-aws/v7.9.0/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-aws/v7.9.1/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-aws/blob/v7.9.0/docs/installation-configuration.md
+edit_url: https://github.com/pulumi/pulumi-aws/blob/v7.9.1/docs/installation-configuration.md
 title: AWS Installation & Configuration
 meta_desc: How to set up credentials to use the Pulumi AWS Provider and choose configuration options to tailor the provider to suit your use case.
 layout: package

@@ -812,9 +812,9 @@
     resolve "^1.7.1"
 
 "@pulumi/aws@^7.0.0", "@pulumi/aws@^7.7.0":
-  version "7.9.1"
-  resolved "https://registry.yarnpkg.com/@pulumi/aws/-/aws-7.9.1.tgz#5e4abe7ebaf7e1f27b1631f306dea185b1657c24"
-  integrity sha512-Uw2P92PbDQbHeW23UReUqqEGnYKCKHGVkOFPYABaSHr+fK1U4YN8KlBihWYF7gI8TxUW7JrYKv7l5uW9PdaQIA==
+  version "7.10.0"
+  resolved "https://registry.yarnpkg.com/@pulumi/aws/-/aws-7.10.0.tgz#1696b16f5c3b7ca887447c4174f32d525db9e79d"
+  integrity sha512-1ykqa7bRcXv7iAmfBdfLckVwbaORsZbOHsqyHZk8A0gcM0RVrv38u3EagQTq13yNjZCaYdfzM2zTYpim2fDUVQ==
   dependencies:
     "@pulumi/pulumi" "^3.142.0"
     mime "^2.0.0"

@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/redpanda-data/redpanda/1.3.2/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/redpanda-data/redpanda/1.3.3/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Redpanda Provider
@@ -227,7 +227,7 @@ const testUser = new redpanda.User("test", {
     password: userPw,
     mechanism: mechanism,
     clusterApiUrl: testCluster.clusterApiUrl,
-    allowDeletion: true,
+    allowDeletion: userAllowDeletion,
 });
 const testTopic = new redpanda.Topic("test", {
     name: topicName,
@@ -245,7 +245,7 @@ const clusterAdmin = new redpanda.Acl("cluster_admin", {
     operation: "ALL",
     permissionType: "ALLOW",
     clusterApiUrl: testCluster.clusterApiUrl,
-    allowDeletion: true,
+    allowDeletion: aclAllowDeletion,
 });
 const schemaRegistryAdmin = new redpanda.Acl("schema_registry_admin", {
     resourceType: "CLUSTER",
@@ -256,7 +256,7 @@ const schemaRegistryAdmin = new redpanda.Acl("schema_registry_admin", {
     operation: "ALTER",
     permissionType: "ALLOW",
     clusterApiUrl: testCluster.clusterApiUrl,
-    allowDeletion: true,
+    allowDeletion: aclAllowDeletion,
 });
 const clusterAction = new redpanda.Acl("cluster_action", {
     resourceType: "CLUSTER",
@@ -267,7 +267,7 @@ const clusterAction = new redpanda.Acl("cluster_action", {
     operation: "CLUSTER_ACTION",
     permissionType: "ALLOW",
     clusterApiUrl: testCluster.clusterApiUrl,
-    allowDeletion: true,
+    allowDeletion: aclAllowDeletion,
 });
 const topicAccess = new redpanda.Acl("topic_access", {
     resourceType: "TOPIC",
@@ -278,7 +278,7 @@ const topicAccess = new redpanda.Acl("topic_access", {
     operation: "ALL",
     permissionType: "ALLOW",
     clusterApiUrl: testCluster.clusterApiUrl,
-    allowDeletion: true,
+    allowDeletion: aclAllowDeletion,
 });
 const allTestTopic = new redpanda.SchemaRegistryAcl("all_test_topic", {
     clusterId: testCluster.id,
@@ -325,6 +325,36 @@ const alterConfigsRegistry = new redpanda.SchemaRegistryAcl("alter_configs_regis
 }, {
     dependsOn: [schemaRegistryAdmin],
 });
+const readRegistry = new redpanda.SchemaRegistryAcl("read_registry", {
+    clusterId: testCluster.id,
+    principal: pulumi.interpolate`User:${testUser.name}`,
+    resourceType: "REGISTRY",
+    resourceName: "*",
+    patternType: "LITERAL",
+    host: "*",
+    operation: "READ",
+    permission: "ALLOW",
+    username: testUser.name,
+    password: userPw,
+    allowDeletion: true,
+}, {
+    dependsOn: [schemaRegistryAdmin],
+});
+const writeRegistry = new redpanda.SchemaRegistryAcl("write_registry", {
+    clusterId: testCluster.id,
+    principal: pulumi.interpolate`User:${testUser.name}`,
+    resourceType: "REGISTRY",
+    resourceName: "*",
+    patternType: "LITERAL",
+    host: "*",
+    operation: "WRITE",
+    permission: "ALLOW",
+    username: testUser.name,
+    password: userPw,
+    allowDeletion: true,
+}, {
+    dependsOn: [schemaRegistryAdmin],
+});
 const userSchema = new redpanda.Schema("user_schema", {
     clusterId: testCluster.id,
     subject: `${topicName}-value`,
@@ -342,6 +372,8 @@ const userSchema = new redpanda.Schema("user_schema", {
         allTestTopic,
         describeRegistry,
         alterConfigsRegistry,
+        readRegistry,
+        writeRegistry,
     ],
 });
 const userEventSchema = new redpanda.Schema("user_event_schema", {
@@ -366,6 +398,8 @@ const userEventSchema = new redpanda.Schema("user_event_schema", {
         allTestTopic,
         describeRegistry,
         alterConfigsRegistry,
+        readRegistry,
+        writeRegistry,
     ],
 });
 const productSchema = new redpanda.Schema("product_schema", {
@@ -386,6 +420,8 @@ const productSchema = new redpanda.Schema("product_schema", {
         allTestTopic,
         describeRegistry,
         alterConfigsRegistry,
+        readRegistry,
+        writeRegistry,
     ],
 });
 const readProduct = new redpanda.SchemaRegistryAcl("read_product", {
@@ -491,7 +527,7 @@ test_user = redpanda.User("test",
     password=user_pw,
     mechanism=mechanism,
     cluster_api_url=test_cluster.cluster_api_url,
-    allow_deletion=True)
+    allow_deletion=user_allow_deletion)
 test_topic = redpanda.Topic("test",
     name=topic_name,
     partition_count=partition_count,
@@ -507,7 +543,7 @@ cluster_admin = redpanda.Acl("cluster_admin",
     operation="ALL",
     permission_type="ALLOW",
     cluster_api_url=test_cluster.cluster_api_url,
-    allow_deletion=True)
+    allow_deletion=acl_allow_deletion)
 schema_registry_admin = redpanda.Acl("schema_registry_admin",
     resource_type="CLUSTER",
     resource_name_="kafka-cluster",
@@ -517,7 +553,7 @@ schema_registry_admin = redpanda.Acl("schema_registry_admin",
     operation="ALTER",
     permission_type="ALLOW",
     cluster_api_url=test_cluster.cluster_api_url,
-    allow_deletion=True)
+    allow_deletion=acl_allow_deletion)
 cluster_action = redpanda.Acl("cluster_action",
     resource_type="CLUSTER",
     resource_name_="kafka-cluster",
@@ -527,7 +563,7 @@ cluster_action = redpanda.Acl("cluster_action",
     operation="CLUSTER_ACTION",
     permission_type="ALLOW",
     cluster_api_url=test_cluster.cluster_api_url,
-    allow_deletion=True)
+    allow_deletion=acl_allow_deletion)
 topic_access = redpanda.Acl("topic_access",
     resource_type="TOPIC",
     resource_name_=topic_name,
@@ -537,7 +573,7 @@ topic_access = redpanda.Acl("topic_access",
     operation="ALL",
     permission_type="ALLOW",
     cluster_api_url=test_cluster.cluster_api_url,
-    allow_deletion=True)
+    allow_deletion=acl_allow_deletion)
 all_test_topic = redpanda.SchemaRegistryAcl("all_test_topic",
     cluster_id=test_cluster.id,
     principal=test_user.name.apply(lambda name: f"User:{name}"),
@@ -577,6 +613,32 @@ alter_configs_registry = redpanda.SchemaRegistryAcl("alter_configs_registry",
     password=user_pw,
     allow_deletion=True,
     opts = pulumi.ResourceOptions(depends_on=[schema_registry_admin]))
+read_registry = redpanda.SchemaRegistryAcl("read_registry",
+    cluster_id=test_cluster.id,
+    principal=test_user.name.apply(lambda name: f"User:{name}"),
+    resource_type="REGISTRY",
+    resource_name_="*",
+    pattern_type="LITERAL",
+    host="*",
+    operation="READ",
+    permission="ALLOW",
+    username=test_user.name,
+    password=user_pw,
+    allow_deletion=True,
+    opts = pulumi.ResourceOptions(depends_on=[schema_registry_admin]))
+write_registry = redpanda.SchemaRegistryAcl("write_registry",
+    cluster_id=test_cluster.id,
+    principal=test_user.name.apply(lambda name: f"User:{name}"),
+    resource_type="REGISTRY",
+    resource_name_="*",
+    pattern_type="LITERAL",
+    host="*",
+    operation="WRITE",
+    permission="ALLOW",
+    username=test_user.name,
+    password=user_pw,
+    allow_deletion=True,
+    opts = pulumi.ResourceOptions(depends_on=[schema_registry_admin]))
 user_schema = redpanda.Schema("user_schema",
     cluster_id=test_cluster.id,
     subject=f"{topic_name}-value",
@@ -593,6 +655,8 @@ user_schema = redpanda.Schema("user_schema",
             all_test_topic,
             describe_registry,
             alter_configs_registry,
+            read_registry,
+            write_registry,
         ]))
 user_event_schema = redpanda.Schema("user_event_schema",
     cluster_id=test_cluster.id,
@@ -615,6 +679,8 @@ user_event_schema = redpanda.Schema("user_event_schema",
             all_test_topic,
             describe_registry,
             alter_configs_registry,
+            read_registry,
+            write_registry,
         ]))
 product_schema = redpanda.Schema("product_schema",
     cluster_id=test_cluster.id,
@@ -633,6 +699,8 @@ product_schema = redpanda.Schema("product_schema",
             all_test_topic,
             describe_registry,
             alter_configs_registry,
+            read_registry,
+            write_registry,
         ]))
 read_product = redpanda.SchemaRegistryAcl("read_product",
     cluster_id=test_cluster.id,
@@ -753,7 +821,7 @@ return await Deployment.RunAsync(() =>
         Password = userPw,
         Mechanism = mechanism,
         ClusterApiUrl = testCluster.ClusterApiUrl,
-        AllowDeletion = true,
+        AllowDeletion = userAllowDeletion,
     });
 
     var testTopic = new Redpanda.Topic("test", new()
@@ -775,7 +843,7 @@ return await Deployment.RunAsync(() =>
         Operation = "ALL",
         PermissionType = "ALLOW",
         ClusterApiUrl = testCluster.ClusterApiUrl,
-        AllowDeletion = true,
+        AllowDeletion = aclAllowDeletion,
     });
 
     var schemaRegistryAdmin = new Redpanda.Acl("schema_registry_admin", new()
@@ -788,7 +856,7 @@ return await Deployment.RunAsync(() =>
         Operation = "ALTER",
         PermissionType = "ALLOW",
         ClusterApiUrl = testCluster.ClusterApiUrl,
-        AllowDeletion = true,
+        AllowDeletion = aclAllowDeletion,
     });
 
     var clusterAction = new Redpanda.Acl("cluster_action", new()
@@ -801,7 +869,7 @@ return await Deployment.RunAsync(() =>
         Operation = "CLUSTER_ACTION",
         PermissionType = "ALLOW",
         ClusterApiUrl = testCluster.ClusterApiUrl,
-        AllowDeletion = true,
+        AllowDeletion = aclAllowDeletion,
     });
 
     var topicAccess = new Redpanda.Acl("topic_access", new()
@@ -814,7 +882,7 @@ return await Deployment.RunAsync(() =>
         Operation = "ALL",
         PermissionType = "ALLOW",
         ClusterApiUrl = testCluster.ClusterApiUrl,
-        AllowDeletion = true,
+        AllowDeletion = aclAllowDeletion,
     });
 
     var allTestTopic = new Redpanda.SchemaRegistryAcl("all_test_topic", new()
@@ -880,6 +948,48 @@ return await Deployment.RunAsync(() =>
         },
     });
 
+    var readRegistry = new Redpanda.SchemaRegistryAcl("read_registry", new()
+    {
+        ClusterId = testCluster.Id,
+        Principal = testUser.Name.Apply(name => $"User:{name}"),
+        ResourceType = "REGISTRY",
+        ResourceName = "*",
+        PatternType = "LITERAL",
+        Host = "*",
+        Operation = "READ",
+        Permission = "ALLOW",
+        Username = testUser.Name,
+        Password = userPw,
+        AllowDeletion = true,
+    }, new CustomResourceOptions
+    {
+        DependsOn =
+        {
+            schemaRegistryAdmin,
+        },
+    });
+
+    var writeRegistry = new Redpanda.SchemaRegistryAcl("write_registry", new()
+    {
+        ClusterId = testCluster.Id,
+        Principal = testUser.Name.Apply(name => $"User:{name}"),
+        ResourceType = "REGISTRY",
+        ResourceName = "*",
+        PatternType = "LITERAL",
+        Host = "*",
+        Operation = "WRITE",
+        Permission = "ALLOW",
+        Username = testUser.Name,
+        Password = userPw,
+        AllowDeletion = true,
+    }, new CustomResourceOptions
+    {
+        DependsOn =
+        {
+            schemaRegistryAdmin,
+        },
+    });
+
     var userSchema = new Redpanda.Schema("user_schema", new()
     {
         ClusterId = testCluster.Id,
@@ -900,6 +1010,8 @@ return await Deployment.RunAsync(() =>
             allTestTopic,
             describeRegistry,
             alterConfigsRegistry,
+            readRegistry,
+            writeRegistry,
         },
     });
 
@@ -932,6 +1044,8 @@ return await Deployment.RunAsync(() =>
             allTestTopic,
             describeRegistry,
             alterConfigsRegistry,
+            readRegistry,
+            writeRegistry,
         },
     });
 
@@ -956,6 +1070,8 @@ return await Deployment.RunAsync(() =>
             allTestTopic,
             describeRegistry,
             alterConfigsRegistry,
+            readRegistry,
+            writeRegistry,
         },
     });
 
@@ -1108,7 +1224,7 @@ func main() {
 			Password:      pulumi.Any(userPw),
 			Mechanism:     pulumi.Any(mechanism),
 			ClusterApiUrl: testCluster.ClusterApiUrl,
-			AllowDeletion: pulumi.Bool(true),
+			AllowDeletion: pulumi.Any(userAllowDeletion),
 		})
 		if err != nil {
 			return err
@@ -1134,7 +1250,7 @@ func main() {
 			Operation:      pulumi.String("ALL"),
 			PermissionType: pulumi.String("ALLOW"),
 			ClusterApiUrl:  testCluster.ClusterApiUrl,
-			AllowDeletion:  pulumi.Bool(true),
+			AllowDeletion:  pulumi.Any(aclAllowDeletion),
 		})
 		if err != nil {
 			return err
@@ -1150,7 +1266,7 @@ func main() {
 			Operation:      pulumi.String("ALTER"),
 			PermissionType: pulumi.String("ALLOW"),
 			ClusterApiUrl:  testCluster.ClusterApiUrl,
-			AllowDeletion:  pulumi.Bool(true),
+			AllowDeletion:  pulumi.Any(aclAllowDeletion),
 		})
 		if err != nil {
 			return err
@@ -1166,7 +1282,7 @@ func main() {
 			Operation:      pulumi.String("CLUSTER_ACTION"),
 			PermissionType: pulumi.String("ALLOW"),
 			ClusterApiUrl:  testCluster.ClusterApiUrl,
-			AllowDeletion:  pulumi.Bool(true),
+			AllowDeletion:  pulumi.Any(aclAllowDeletion),
 		})
 		if err != nil {
 			return err
@@ -1182,7 +1298,7 @@ func main() {
 			Operation:      pulumi.String("ALL"),
 			PermissionType: pulumi.String("ALLOW"),
 			ClusterApiUrl:  testCluster.ClusterApiUrl,
-			AllowDeletion:  pulumi.Bool(true),
+			AllowDeletion:  pulumi.Any(aclAllowDeletion),
 		})
 		if err != nil {
 			return err
@@ -1247,6 +1363,46 @@ func main() {
 		if err != nil {
 			return err
 		}
+		readRegistry, err := redpanda.NewSchemaRegistryAcl(ctx, "read_registry", &redpanda.SchemaRegistryAclArgs{
+			ClusterId: testCluster.ID(),
+			Principal: testUser.Name.ApplyT(func(name string) (string, error) {
+				return fmt.Sprintf("User:%v", name), nil
+			}).(pulumi.StringOutput),
+			ResourceType:  pulumi.String("REGISTRY"),
+			ResourceName:  pulumi.String("*"),
+			PatternType:   pulumi.String("LITERAL"),
+			Host:          pulumi.String("*"),
+			Operation:     pulumi.String("READ"),
+			Permission:    pulumi.String("ALLOW"),
+			Username:      testUser.Name,
+			Password:      pulumi.Any(userPw),
+			AllowDeletion: pulumi.Bool(true),
+		}, pulumi.DependsOn([]pulumi.Resource{
+			schemaRegistryAdmin,
+		}))
+		if err != nil {
+			return err
+		}
+		writeRegistry, err := redpanda.NewSchemaRegistryAcl(ctx, "write_registry", &redpanda.SchemaRegistryAclArgs{
+			ClusterId: testCluster.ID(),
+			Principal: testUser.Name.ApplyT(func(name string) (string, error) {
+				return fmt.Sprintf("User:%v", name), nil
+			}).(pulumi.StringOutput),
+			ResourceType:  pulumi.String("REGISTRY"),
+			ResourceName:  pulumi.String("*"),
+			PatternType:   pulumi.String("LITERAL"),
+			Host:          pulumi.String("*"),
+			Operation:     pulumi.String("WRITE"),
+			Permission:    pulumi.String("ALLOW"),
+			Username:      testUser.Name,
+			Password:      pulumi.Any(userPw),
+			AllowDeletion: pulumi.Bool(true),
+		}, pulumi.DependsOn([]pulumi.Resource{
+			schemaRegistryAdmin,
+		}))
+		if err != nil {
+			return err
+		}
 		userSchema, err := redpanda.NewSchema(ctx, "user_schema", &redpanda.SchemaArgs{
 			ClusterId:     testCluster.ID(),
 			Subject:       pulumi.Sprintf("%v-value", topicName),
@@ -1263,6 +1419,8 @@ func main() {
 			allTestTopic,
 			describeRegistry,
 			alterConfigsRegistry,
+			readRegistry,
+			writeRegistry,
 		}))
 		if err != nil {
 			return err
@@ -1290,6 +1448,8 @@ func main() {
 			allTestTopic,
 			describeRegistry,
 			alterConfigsRegistry,
+			readRegistry,
+			writeRegistry,
 		}))
 		if err != nil {
 			return err
@@ -1311,6 +1471,8 @@ func main() {
 			allTestTopic,
 			describeRegistry,
 			alterConfigsRegistry,
+			readRegistry,
+			writeRegistry,
 		}))
 		if err != nil {
 			return err
@@ -1436,7 +1598,7 @@ resources:
       password: ${userPw}
       mechanism: ${mechanism}
       clusterApiUrl: ${testCluster.clusterApiUrl}
-      allowDeletion: true
+      allowDeletion: ${userAllowDeletion}
   testTopic:
     type: redpanda:Topic
     name: test
@@ -1466,6 +1628,8 @@ resources:
         - ${allTestTopic}
         - ${describeRegistry}
         - ${alterConfigsRegistry}
+        - ${readRegistry}
+        - ${writeRegistry}
   userEventSchema:
     type: redpanda:Schema
     name: user_event_schema
@@ -1490,6 +1654,8 @@ resources:
         - ${allTestTopic}
         - ${describeRegistry}
         - ${alterConfigsRegistry}
+        - ${readRegistry}
+        - ${writeRegistry}
   productSchema:
     type: redpanda:Schema
     name: product_schema
@@ -1511,6 +1677,8 @@ resources:
         - ${allTestTopic}
         - ${describeRegistry}
         - ${alterConfigsRegistry}
+        - ${readRegistry}
+        - ${writeRegistry}
   clusterAdmin:
     type: redpanda:Acl
     name: cluster_admin
@@ -1523,7 +1691,7 @@ resources:
       operation: ALL
       permissionType: ALLOW
       clusterApiUrl: ${testCluster.clusterApiUrl}
-      allowDeletion: true
+      allowDeletion: ${aclAllowDeletion}
   schemaRegistryAdmin:
     type: redpanda:Acl
     name: schema_registry_admin
@@ -1536,7 +1704,7 @@ resources:
       operation: ALTER
       permissionType: ALLOW
       clusterApiUrl: ${testCluster.clusterApiUrl}
-      allowDeletion: true
+      allowDeletion: ${aclAllowDeletion}
   clusterAction:
     type: redpanda:Acl
     name: cluster_action
@@ -1549,7 +1717,7 @@ resources:
       operation: CLUSTER_ACTION
       permissionType: ALLOW
       clusterApiUrl: ${testCluster.clusterApiUrl}
-      allowDeletion: true
+      allowDeletion: ${aclAllowDeletion}
   topicAccess:
     type: redpanda:Acl
     name: topic_access
@@ -1562,7 +1730,7 @@ resources:
       operation: ALL
       permissionType: ALLOW
       clusterApiUrl: ${testCluster.clusterApiUrl}
-      allowDeletion: true
+      allowDeletion: ${aclAllowDeletion}
   readProduct:
     type: redpanda:SchemaRegistryAcl
     name: read_product
@@ -1646,6 +1814,42 @@ resources:
       patternType: LITERAL
       host: '*'
       operation: ALTER_CONFIGS
+      permission: ALLOW
+      username: ${testUser.name}
+      password: ${userPw}
+      allowDeletion: true
+    options:
+      dependsOn:
+        - ${schemaRegistryAdmin}
+  readRegistry:
+    type: redpanda:SchemaRegistryAcl
+    name: read_registry
+    properties:
+      clusterId: ${testCluster.id}
+      principal: User:${testUser.name}
+      resourceType: REGISTRY
+      resourceName: '*'
+      patternType: LITERAL
+      host: '*'
+      operation: READ
+      permission: ALLOW
+      username: ${testUser.name}
+      password: ${userPw}
+      allowDeletion: true
+    options:
+      dependsOn:
+        - ${schemaRegistryAdmin}
+  writeRegistry:
+    type: redpanda:SchemaRegistryAcl
+    name: write_registry
+    properties:
+      clusterId: ${testCluster.id}
+      principal: User:${testUser.name}
+      resourceType: REGISTRY
+      resourceName: '*'
+      patternType: LITERAL
+      host: '*'
+      operation: WRITE
       permission: ALLOW
       username: ${testUser.name}
       password: ${userPw}
@@ -1766,7 +1970,7 @@ public class App {
             .password(userPw)
             .mechanism(mechanism)
             .clusterApiUrl(testCluster.clusterApiUrl())
-            .allowDeletion(true)
+            .allowDeletion(userAllowDeletion)
             .build());
 
         var testTopic = new Topic("testTopic", TopicArgs.builder()
@@ -1786,7 +1990,7 @@ public class App {
             .operation("ALL")
             .permissionType("ALLOW")
             .clusterApiUrl(testCluster.clusterApiUrl())
-            .allowDeletion(true)
+            .allowDeletion(aclAllowDeletion)
             .build());
 
         var schemaRegistryAdmin = new Acl("schemaRegistryAdmin", AclArgs.builder()
@@ -1798,7 +2002,7 @@ public class App {
             .operation("ALTER")
             .permissionType("ALLOW")
             .clusterApiUrl(testCluster.clusterApiUrl())
-            .allowDeletion(true)
+            .allowDeletion(aclAllowDeletion)
             .build());
 
         var clusterAction = new Acl("clusterAction", AclArgs.builder()
@@ -1810,7 +2014,7 @@ public class App {
             .operation("CLUSTER_ACTION")
             .permissionType("ALLOW")
             .clusterApiUrl(testCluster.clusterApiUrl())
-            .allowDeletion(true)
+            .allowDeletion(aclAllowDeletion)
             .build());
 
         var topicAccess = new Acl("topicAccess", AclArgs.builder()
@@ -1822,7 +2026,7 @@ public class App {
             .operation("ALL")
             .permissionType("ALLOW")
             .clusterApiUrl(testCluster.clusterApiUrl())
-            .allowDeletion(true)
+            .allowDeletion(aclAllowDeletion)
             .build());
 
         var allTestTopic = new SchemaRegistryAcl("allTestTopic", SchemaRegistryAclArgs.builder()
@@ -1873,6 +2077,38 @@ public class App {
                 .dependsOn(schemaRegistryAdmin)
                 .build());
 
+        var readRegistry = new SchemaRegistryAcl("readRegistry", SchemaRegistryAclArgs.builder()
+            .clusterId(testCluster.id())
+            .principal(testUser.name().applyValue(name -> String.format("User:%s", name)))
+            .resourceType("REGISTRY")
+            .resourceName("*")
+            .patternType("LITERAL")
+            .host("*")
+            .operation("READ")
+            .permission("ALLOW")
+            .username(testUser.name())
+            .password(userPw)
+            .allowDeletion(true)
+            .build(), CustomResourceOptions.builder()
+                .dependsOn(schemaRegistryAdmin)
+                .build());
+
+        var writeRegistry = new SchemaRegistryAcl("writeRegistry", SchemaRegistryAclArgs.builder()
+            .clusterId(testCluster.id())
+            .principal(testUser.name().applyValue(name -> String.format("User:%s", name)))
+            .resourceType("REGISTRY")
+            .resourceName("*")
+            .patternType("LITERAL")
+            .host("*")
+            .operation("WRITE")
+            .permission("ALLOW")
+            .username(testUser.name())
+            .password(userPw)
+            .allowDeletion(true)
+            .build(), CustomResourceOptions.builder()
+                .dependsOn(schemaRegistryAdmin)
+                .build());
+
         var userSchema = new Schema("userSchema", SchemaArgs.builder()
             .clusterId(testCluster.id())
             .subject(String.format("%s-value", topicName))
@@ -1889,7 +2125,9 @@ public class App {
                     topicAccess,
                     allTestTopic,
                     describeRegistry,
-                    alterConfigsRegistry)
+                    alterConfigsRegistry,
+                    readRegistry,
+                    writeRegistry)
                 .build());
 
         var userEventSchema = new Schema("userEventSchema", SchemaArgs.builder()
@@ -1913,7 +2151,9 @@ public class App {
                     topicAccess,
                     allTestTopic,
                     describeRegistry,
-                    alterConfigsRegistry)
+                    alterConfigsRegistry,
+                    readRegistry,
+                    writeRegistry)
                 .build());
 
         var productSchema = new Schema("productSchema", SchemaArgs.builder()
@@ -1933,7 +2173,9 @@ public class App {
                     topicAccess,
                     allTestTopic,
                     describeRegistry,
-                    alterConfigsRegistry)
+                    alterConfigsRegistry,
+                    readRegistry,
+                    writeRegistry)
                 .build());
 
         var readProduct = new SchemaRegistryAcl("readProduct", SchemaRegistryAclArgs.builder()
@@ -2045,7 +2287,7 @@ const testUser = new redpanda.User("test", {
     password: userPw,
     mechanism: mechanism,
     clusterApiUrl: testCluster.clusterApiUrl,
-    allowDeletion: true,
+    allowDeletion: userAllowDeletion,
 });
 const testTopic = new redpanda.Topic("test", {
     name: topicName,
@@ -2063,7 +2305,7 @@ const schemaRegistryAdmin = new redpanda.Acl("schema_registry_admin", {
     operation: "ALTER",
     permissionType: "ALLOW",
     clusterApiUrl: testCluster.clusterApiUrl,
-    allowDeletion: true,
+    allowDeletion: aclAllowDeletion,
 });
 const allTestTopic = new redpanda.SchemaRegistryAcl("all_test_topic", {
     clusterId: testCluster.id,
@@ -2110,6 +2352,36 @@ const alterConfigsRegistry = new redpanda.SchemaRegistryAcl("alter_configs_regis
 }, {
     dependsOn: [schemaRegistryAdmin],
 });
+const readRegistry = new redpanda.SchemaRegistryAcl("read_registry", {
+    clusterId: testCluster.id,
+    principal: pulumi.interpolate`User:${testUser.name}`,
+    resourceType: "REGISTRY",
+    resourceName: "*",
+    patternType: "LITERAL",
+    host: "*",
+    operation: "READ",
+    permission: "ALLOW",
+    username: testUser.name,
+    password: userPw,
+    allowDeletion: true,
+}, {
+    dependsOn: [schemaRegistryAdmin],
+});
+const writeRegistry = new redpanda.SchemaRegistryAcl("write_registry", {
+    clusterId: testCluster.id,
+    principal: pulumi.interpolate`User:${testUser.name}`,
+    resourceType: "REGISTRY",
+    resourceName: "*",
+    patternType: "LITERAL",
+    host: "*",
+    operation: "WRITE",
+    permission: "ALLOW",
+    username: testUser.name,
+    password: userPw,
+    allowDeletion: true,
+}, {
+    dependsOn: [schemaRegistryAdmin],
+});
 const userSchema = new redpanda.Schema("user_schema", {
     clusterId: testCluster.id,
     subject: `${topicName}-value`,
@@ -2124,6 +2396,8 @@ const userSchema = new redpanda.Schema("user_schema", {
         allTestTopic,
         describeRegistry,
         alterConfigsRegistry,
+        readRegistry,
+        writeRegistry,
     ],
 });
 const userEventSchema = new redpanda.Schema("user_event_schema", {
@@ -2145,6 +2419,8 @@ const userEventSchema = new redpanda.Schema("user_event_schema", {
         allTestTopic,
         describeRegistry,
         alterConfigsRegistry,
+        readRegistry,
+        writeRegistry,
     ],
 });
 const productSchema = new redpanda.Schema("product_schema", {
@@ -2162,6 +2438,8 @@ const productSchema = new redpanda.Schema("product_schema", {
         allTestTopic,
         describeRegistry,
         alterConfigsRegistry,
+        readRegistry,
+        writeRegistry,
     ],
 });
 const clusterAdmin = new redpanda.Acl("cluster_admin", {
@@ -2173,7 +2451,7 @@ const clusterAdmin = new redpanda.Acl("cluster_admin", {
     operation: "ALL",
     permissionType: "ALLOW",
     clusterApiUrl: testCluster.clusterApiUrl,
-    allowDeletion: true,
+    allowDeletion: aclAllowDeletion,
 });
 const readProduct = new redpanda.SchemaRegistryAcl("read_product", {
     clusterId: testCluster.id,
@@ -2290,7 +2568,7 @@ test_user = redpanda.User("test",
     password=user_pw,
     mechanism=mechanism,
     cluster_api_url=test_cluster.cluster_api_url,
-    allow_deletion=True)
+    allow_deletion=user_allow_deletion)
 test_topic = redpanda.Topic("test",
     name=topic_name,
     partition_count=partition_count,
@@ -2306,7 +2584,7 @@ schema_registry_admin = redpanda.Acl("schema_registry_admin",
     operation="ALTER",
     permission_type="ALLOW",
     cluster_api_url=test_cluster.cluster_api_url,
-    allow_deletion=True)
+    allow_deletion=acl_allow_deletion)
 all_test_topic = redpanda.SchemaRegistryAcl("all_test_topic",
     cluster_id=test_cluster.id,
     principal=test_user.name.apply(lambda name: f"User:{name}"),
@@ -2346,6 +2624,32 @@ alter_configs_registry = redpanda.SchemaRegistryAcl("alter_configs_registry",
     password=user_pw,
     allow_deletion=True,
     opts = pulumi.ResourceOptions(depends_on=[schema_registry_admin]))
+read_registry = redpanda.SchemaRegistryAcl("read_registry",
+    cluster_id=test_cluster.id,
+    principal=test_user.name.apply(lambda name: f"User:{name}"),
+    resource_type="REGISTRY",
+    resource_name_="*",
+    pattern_type="LITERAL",
+    host="*",
+    operation="READ",
+    permission="ALLOW",
+    username=test_user.name,
+    password=user_pw,
+    allow_deletion=True,
+    opts = pulumi.ResourceOptions(depends_on=[schema_registry_admin]))
+write_registry = redpanda.SchemaRegistryAcl("write_registry",
+    cluster_id=test_cluster.id,
+    principal=test_user.name.apply(lambda name: f"User:{name}"),
+    resource_type="REGISTRY",
+    resource_name_="*",
+    pattern_type="LITERAL",
+    host="*",
+    operation="WRITE",
+    permission="ALLOW",
+    username=test_user.name,
+    password=user_pw,
+    allow_deletion=True,
+    opts = pulumi.ResourceOptions(depends_on=[schema_registry_admin]))
 user_schema = redpanda.Schema("user_schema",
     cluster_id=test_cluster.id,
     subject=f"{topic_name}-value",
@@ -2359,6 +2663,8 @@ user_schema = redpanda.Schema("user_schema",
             all_test_topic,
             describe_registry,
             alter_configs_registry,
+            read_registry,
+            write_registry,
         ]))
 user_event_schema = redpanda.Schema("user_event_schema",
     cluster_id=test_cluster.id,
@@ -2378,6 +2684,8 @@ user_event_schema = redpanda.Schema("user_event_schema",
             all_test_topic,
             describe_registry,
             alter_configs_registry,
+            read_registry,
+            write_registry,
         ]))
 product_schema = redpanda.Schema("product_schema",
     cluster_id=test_cluster.id,
@@ -2393,6 +2701,8 @@ product_schema = redpanda.Schema("product_schema",
             all_test_topic,
             describe_registry,
             alter_configs_registry,
+            read_registry,
+            write_registry,
         ]))
 cluster_admin = redpanda.Acl("cluster_admin",
     resource_type="CLUSTER",
@@ -2403,7 +2713,7 @@ cluster_admin = redpanda.Acl("cluster_admin",
     operation="ALL",
     permission_type="ALLOW",
     cluster_api_url=test_cluster.cluster_api_url,
-    allow_deletion=True)
+    allow_deletion=acl_allow_deletion)
 read_product = redpanda.SchemaRegistryAcl("read_product",
     cluster_id=test_cluster.id,
     principal=test_user.name.apply(lambda name: f"User:{name}"),
@@ -2532,7 +2842,7 @@ return await Deployment.RunAsync(() =>
         Password = userPw,
         Mechanism = mechanism,
         ClusterApiUrl = testCluster.ClusterApiUrl,
-        AllowDeletion = true,
+        AllowDeletion = userAllowDeletion,
     });
 
     var testTopic = new Redpanda.Topic("test", new()
@@ -2554,7 +2864,7 @@ return await Deployment.RunAsync(() =>
         Operation = "ALTER",
         PermissionType = "ALLOW",
         ClusterApiUrl = testCluster.ClusterApiUrl,
-        AllowDeletion = true,
+        AllowDeletion = aclAllowDeletion,
     });
 
     var allTestTopic = new Redpanda.SchemaRegistryAcl("all_test_topic", new()
@@ -2620,6 +2930,48 @@ return await Deployment.RunAsync(() =>
         },
     });
 
+    var readRegistry = new Redpanda.SchemaRegistryAcl("read_registry", new()
+    {
+        ClusterId = testCluster.Id,
+        Principal = testUser.Name.Apply(name => $"User:{name}"),
+        ResourceType = "REGISTRY",
+        ResourceName = "*",
+        PatternType = "LITERAL",
+        Host = "*",
+        Operation = "READ",
+        Permission = "ALLOW",
+        Username = testUser.Name,
+        Password = userPw,
+        AllowDeletion = true,
+    }, new CustomResourceOptions
+    {
+        DependsOn =
+        {
+            schemaRegistryAdmin,
+        },
+    });
+
+    var writeRegistry = new Redpanda.SchemaRegistryAcl("write_registry", new()
+    {
+        ClusterId = testCluster.Id,
+        Principal = testUser.Name.Apply(name => $"User:{name}"),
+        ResourceType = "REGISTRY",
+        ResourceName = "*",
+        PatternType = "LITERAL",
+        Host = "*",
+        Operation = "WRITE",
+        Permission = "ALLOW",
+        Username = testUser.Name,
+        Password = userPw,
+        AllowDeletion = true,
+    }, new CustomResourceOptions
+    {
+        DependsOn =
+        {
+            schemaRegistryAdmin,
+        },
+    });
+
     var userSchema = new Redpanda.Schema("user_schema", new()
     {
         ClusterId = testCluster.Id,
@@ -2637,6 +2989,8 @@ return await Deployment.RunAsync(() =>
             allTestTopic,
             describeRegistry,
             alterConfigsRegistry,
+            readRegistry,
+            writeRegistry,
         },
     });
 
@@ -2666,6 +3020,8 @@ return await Deployment.RunAsync(() =>
             allTestTopic,
             describeRegistry,
             alterConfigsRegistry,
+            readRegistry,
+            writeRegistry,
         },
     });
 
@@ -2687,6 +3043,8 @@ return await Deployment.RunAsync(() =>
             allTestTopic,
             describeRegistry,
             alterConfigsRegistry,
+            readRegistry,
+            writeRegistry,
         },
     });
 
@@ -2700,7 +3058,7 @@ return await Deployment.RunAsync(() =>
         Operation = "ALL",
         PermissionType = "ALLOW",
         ClusterApiUrl = testCluster.ClusterApiUrl,
-        AllowDeletion = true,
+        AllowDeletion = aclAllowDeletion,
     });
 
     var readProduct = new Redpanda.SchemaRegistryAcl("read_product", new()
@@ -2870,7 +3228,7 @@ func main() {
 			Password:      pulumi.Any(userPw),
 			Mechanism:     pulumi.Any(mechanism),
 			ClusterApiUrl: testCluster.ClusterApiUrl,
-			AllowDeletion: pulumi.Bool(true),
+			AllowDeletion: pulumi.Any(userAllowDeletion),
 		})
 		if err != nil {
 			return err
@@ -2896,7 +3254,7 @@ func main() {
 			Operation:      pulumi.String("ALTER"),
 			PermissionType: pulumi.String("ALLOW"),
 			ClusterApiUrl:  testCluster.ClusterApiUrl,
-			AllowDeletion:  pulumi.Bool(true),
+			AllowDeletion:  pulumi.Any(aclAllowDeletion),
 		})
 		if err != nil {
 			return err
@@ -2961,6 +3319,46 @@ func main() {
 		if err != nil {
 			return err
 		}
+		readRegistry, err := redpanda.NewSchemaRegistryAcl(ctx, "read_registry", &redpanda.SchemaRegistryAclArgs{
+			ClusterId: testCluster.ID(),
+			Principal: testUser.Name.ApplyT(func(name string) (string, error) {
+				return fmt.Sprintf("User:%v", name), nil
+			}).(pulumi.StringOutput),
+			ResourceType:  pulumi.String("REGISTRY"),
+			ResourceName:  pulumi.String("*"),
+			PatternType:   pulumi.String("LITERAL"),
+			Host:          pulumi.String("*"),
+			Operation:     pulumi.String("READ"),
+			Permission:    pulumi.String("ALLOW"),
+			Username:      testUser.Name,
+			Password:      pulumi.Any(userPw),
+			AllowDeletion: pulumi.Bool(true),
+		}, pulumi.DependsOn([]pulumi.Resource{
+			schemaRegistryAdmin,
+		}))
+		if err != nil {
+			return err
+		}
+		writeRegistry, err := redpanda.NewSchemaRegistryAcl(ctx, "write_registry", &redpanda.SchemaRegistryAclArgs{
+			ClusterId: testCluster.ID(),
+			Principal: testUser.Name.ApplyT(func(name string) (string, error) {
+				return fmt.Sprintf("User:%v", name), nil
+			}).(pulumi.StringOutput),
+			ResourceType:  pulumi.String("REGISTRY"),
+			ResourceName:  pulumi.String("*"),
+			PatternType:   pulumi.String("LITERAL"),
+			Host:          pulumi.String("*"),
+			Operation:     pulumi.String("WRITE"),
+			Permission:    pulumi.String("ALLOW"),
+			Username:      testUser.Name,
+			Password:      pulumi.Any(userPw),
+			AllowDeletion: pulumi.Bool(true),
+		}, pulumi.DependsOn([]pulumi.Resource{
+			schemaRegistryAdmin,
+		}))
+		if err != nil {
+			return err
+		}
 		userSchema, err := redpanda.NewSchema(ctx, "user_schema", &redpanda.SchemaArgs{
 			ClusterId:     testCluster.ID(),
 			Subject:       pulumi.Sprintf("%v-value", topicName),
@@ -2974,6 +3372,8 @@ func main() {
 			allTestTopic,
 			describeRegistry,
 			alterConfigsRegistry,
+			readRegistry,
+			writeRegistry,
 		}))
 		if err != nil {
 			return err
@@ -2998,6 +3398,8 @@ func main() {
 			allTestTopic,
 			describeRegistry,
 			alterConfigsRegistry,
+			readRegistry,
+			writeRegistry,
 		}))
 		if err != nil {
 			return err
@@ -3016,6 +3418,8 @@ func main() {
 			allTestTopic,
 			describeRegistry,
 			alterConfigsRegistry,
+			readRegistry,
+			writeRegistry,
 		}))
 		if err != nil {
 			return err
@@ -3031,7 +3435,7 @@ func main() {
 			Operation:      pulumi.String("ALL"),
 			PermissionType: pulumi.String("ALLOW"),
 			ClusterApiUrl:  testCluster.ClusterApiUrl,
-			AllowDeletion:  pulumi.Bool(true),
+			AllowDeletion:  pulumi.Any(aclAllowDeletion),
 		})
 		if err != nil {
 			return err
@@ -3175,7 +3579,7 @@ resources:
       password: ${userPw}
       mechanism: ${mechanism}
       clusterApiUrl: ${testCluster.clusterApiUrl}
-      allowDeletion: true
+      allowDeletion: ${userAllowDeletion}
   testTopic:
     type: redpanda:Topic
     name: test
@@ -3202,6 +3606,8 @@ resources:
         - ${allTestTopic}
         - ${describeRegistry}
         - ${alterConfigsRegistry}
+        - ${readRegistry}
+        - ${writeRegistry}
   userEventSchema:
     type: redpanda:Schema
     name: user_event_schema
@@ -3223,6 +3629,8 @@ resources:
         - ${allTestTopic}
         - ${describeRegistry}
         - ${alterConfigsRegistry}
+        - ${readRegistry}
+        - ${writeRegistry}
   productSchema:
     type: redpanda:Schema
     name: product_schema
@@ -3241,6 +3649,8 @@ resources:
         - ${allTestTopic}
         - ${describeRegistry}
         - ${alterConfigsRegistry}
+        - ${readRegistry}
+        - ${writeRegistry}
   clusterAdmin:
     type: redpanda:Acl
     name: cluster_admin
@@ -3253,7 +3663,7 @@ resources:
       operation: ALL
       permissionType: ALLOW
       clusterApiUrl: ${testCluster.clusterApiUrl}
-      allowDeletion: true
+      allowDeletion: ${aclAllowDeletion}
   schemaRegistryAdmin:
     type: redpanda:Acl
     name: schema_registry_admin
@@ -3266,7 +3676,7 @@ resources:
       operation: ALTER
       permissionType: ALLOW
       clusterApiUrl: ${testCluster.clusterApiUrl}
-      allowDeletion: true
+      allowDeletion: ${aclAllowDeletion}
   readProduct:
     type: redpanda:SchemaRegistryAcl
     name: read_product
@@ -3368,6 +3778,42 @@ resources:
       patternType: LITERAL
       host: '*'
       operation: ALTER_CONFIGS
+      permission: ALLOW
+      username: ${testUser.name}
+      password: ${userPw}
+      allowDeletion: true
+    options:
+      dependsOn:
+        - ${schemaRegistryAdmin}
+  readRegistry:
+    type: redpanda:SchemaRegistryAcl
+    name: read_registry
+    properties:
+      clusterId: ${testCluster.id}
+      principal: User:${testUser.name}
+      resourceType: REGISTRY
+      resourceName: '*'
+      patternType: LITERAL
+      host: '*'
+      operation: READ
+      permission: ALLOW
+      username: ${testUser.name}
+      password: ${userPw}
+      allowDeletion: true
+    options:
+      dependsOn:
+        - ${schemaRegistryAdmin}
+  writeRegistry:
+    type: redpanda:SchemaRegistryAcl
+    name: write_registry
+    properties:
+      clusterId: ${testCluster.id}
+      principal: User:${testUser.name}
+      resourceType: REGISTRY
+      resourceName: '*'
+      patternType: LITERAL
+      host: '*'
+      operation: WRITE
       permission: ALLOW
       username: ${testUser.name}
       password: ${userPw}
@@ -3487,7 +3933,7 @@ public class App {
             .password(userPw)
             .mechanism(mechanism)
             .clusterApiUrl(testCluster.clusterApiUrl())
-            .allowDeletion(true)
+            .allowDeletion(userAllowDeletion)
             .build());
 
         var testTopic = new Topic("testTopic", TopicArgs.builder()
@@ -3507,7 +3953,7 @@ public class App {
             .operation("ALTER")
             .permissionType("ALLOW")
             .clusterApiUrl(testCluster.clusterApiUrl())
-            .allowDeletion(true)
+            .allowDeletion(aclAllowDeletion)
             .build());
 
         var allTestTopic = new SchemaRegistryAcl("allTestTopic", SchemaRegistryAclArgs.builder()
@@ -3558,6 +4004,38 @@ public class App {
                 .dependsOn(schemaRegistryAdmin)
                 .build());
 
+        var readRegistry = new SchemaRegistryAcl("readRegistry", SchemaRegistryAclArgs.builder()
+            .clusterId(testCluster.id())
+            .principal(testUser.name().applyValue(name -> String.format("User:%s", name)))
+            .resourceType("REGISTRY")
+            .resourceName("*")
+            .patternType("LITERAL")
+            .host("*")
+            .operation("READ")
+            .permission("ALLOW")
+            .username(testUser.name())
+            .password(userPw)
+            .allowDeletion(true)
+            .build(), CustomResourceOptions.builder()
+                .dependsOn(schemaRegistryAdmin)
+                .build());
+
+        var writeRegistry = new SchemaRegistryAcl("writeRegistry", SchemaRegistryAclArgs.builder()
+            .clusterId(testCluster.id())
+            .principal(testUser.name().applyValue(name -> String.format("User:%s", name)))
+            .resourceType("REGISTRY")
+            .resourceName("*")
+            .patternType("LITERAL")
+            .host("*")
+            .operation("WRITE")
+            .permission("ALLOW")
+            .username(testUser.name())
+            .password(userPw)
+            .allowDeletion(true)
+            .build(), CustomResourceOptions.builder()
+                .dependsOn(schemaRegistryAdmin)
+                .build());
+
         var userSchema = new Schema("userSchema", SchemaArgs.builder()
             .clusterId(testCluster.id())
             .subject(String.format("%s-value", topicName))
@@ -3571,7 +4049,9 @@ public class App {
                     schemaRegistryAdmin,
                     allTestTopic,
                     describeRegistry,
-                    alterConfigsRegistry)
+                    alterConfigsRegistry,
+                    readRegistry,
+                    writeRegistry)
                 .build());
 
         var userEventSchema = new Schema("userEventSchema", SchemaArgs.builder()
@@ -3592,7 +4072,9 @@ public class App {
                     schemaRegistryAdmin,
                     allTestTopic,
                     describeRegistry,
-                    alterConfigsRegistry)
+                    alterConfigsRegistry,
+                    readRegistry,
+                    writeRegistry)
                 .build());
 
         var productSchema = new Schema("productSchema", SchemaArgs.builder()
@@ -3609,7 +4091,9 @@ public class App {
                     schemaRegistryAdmin,
                     allTestTopic,
                     describeRegistry,
-                    alterConfigsRegistry)
+                    alterConfigsRegistry,
+                    readRegistry,
+                    writeRegistry)
                 .build());
 
         var clusterAdmin = new Acl("clusterAdmin", AclArgs.builder()
@@ -3621,7 +4105,7 @@ public class App {
             .operation("ALL")
             .permissionType("ALLOW")
             .clusterApiUrl(testCluster.clusterApiUrl())
-            .allowDeletion(true)
+            .allowDeletion(aclAllowDeletion)
             .build());
 
         var readProduct = new SchemaRegistryAcl("readProduct", SchemaRegistryAclArgs.builder()
@@ -3727,7 +4211,7 @@ const testUser = new redpanda.User("test", {
     password: userPw,
     mechanism: mechanism,
     clusterApiUrl: test.then(test => test.clusterApiUrl),
-    allowDeletion: true,
+    allowDeletion: userAllowDeletion,
 });
 const testAcl = new redpanda.Acl("test", {
     resourceType: "CLUSTER",
@@ -3738,6 +4222,7 @@ const testAcl = new redpanda.Acl("test", {
     operation: "ALTER",
     permissionType: "ALLOW",
     clusterApiUrl: test.then(test => test.clusterApiUrl),
+    allowDeletion: aclAllowDeletion,
 });
 ```
 {{% /choosable %}}
@@ -3765,7 +4250,7 @@ test_user = redpanda.User("test",
     password=user_pw,
     mechanism=mechanism,
     cluster_api_url=test.cluster_api_url,
-    allow_deletion=True)
+    allow_deletion=user_allow_deletion)
 test_acl = redpanda.Acl("test",
     resource_type="CLUSTER",
     resource_name_="kafka-cluster",
@@ -3774,7 +4259,8 @@ test_acl = redpanda.Acl("test",
     host="*",
     operation="ALTER",
     permission_type="ALLOW",
-    cluster_api_url=test.cluster_api_url)
+    cluster_api_url=test.cluster_api_url,
+    allow_deletion=acl_allow_deletion)
 ```
 {{% /choosable %}}
 {{% choosable language csharp %}}
@@ -3813,7 +4299,7 @@ return await Deployment.RunAsync(() =>
         Password = userPw,
         Mechanism = mechanism,
         ClusterApiUrl = test.Apply(getClusterResult => getClusterResult.ClusterApiUrl),
-        AllowDeletion = true,
+        AllowDeletion = userAllowDeletion,
     });
 
     var testAcl = new Redpanda.Acl("test", new()
@@ -3826,6 +4312,7 @@ return await Deployment.RunAsync(() =>
         Operation = "ALTER",
         PermissionType = "ALLOW",
         ClusterApiUrl = test.Apply(getClusterResult => getClusterResult.ClusterApiUrl),
+        AllowDeletion = aclAllowDeletion,
     });
 
 });
@@ -3873,7 +4360,7 @@ func main() {
 			Password:      pulumi.Any(userPw),
 			Mechanism:     pulumi.Any(mechanism),
 			ClusterApiUrl: pulumi.String(test.ClusterApiUrl),
-			AllowDeletion: pulumi.Bool(true),
+			AllowDeletion: pulumi.Any(userAllowDeletion),
 		})
 		if err != nil {
 			return err
@@ -3889,6 +4376,7 @@ func main() {
 			Operation:      pulumi.String("ALTER"),
 			PermissionType: pulumi.String("ALLOW"),
 			ClusterApiUrl:  pulumi.String(test.ClusterApiUrl),
+			AllowDeletion:  pulumi.Any(aclAllowDeletion),
 		})
 		if err != nil {
 			return err
@@ -3925,7 +4413,7 @@ resources:
       password: ${userPw}
       mechanism: ${mechanism}
       clusterApiUrl: ${test.clusterApiUrl}
-      allowDeletion: true
+      allowDeletion: ${userAllowDeletion}
   testAcl:
     type: redpanda:Acl
     name: test
@@ -3938,6 +4426,7 @@ resources:
       operation: ALTER
       permissionType: ALLOW
       clusterApiUrl: ${test.clusterApiUrl}
+      allowDeletion: ${aclAllowDeletion}
 variables:
   test:
     fn::invoke:
@@ -3998,7 +4487,7 @@ public class App {
             .password(userPw)
             .mechanism(mechanism)
             .clusterApiUrl(test.applyValue(getClusterResult -> getClusterResult.clusterApiUrl()))
-            .allowDeletion(true)
+            .allowDeletion(userAllowDeletion)
             .build());
 
         var testAcl = new Acl("testAcl", AclArgs.builder()
@@ -4010,6 +4499,7 @@ public class App {
             .operation("ALTER")
             .permissionType("ALLOW")
             .clusterApiUrl(test.applyValue(getClusterResult -> getClusterResult.clusterApiUrl()))
+            .allowDeletion(aclAllowDeletion)
             .build());
 
     }
@@ -4049,7 +4539,7 @@ const testUser = new redpanda.User("test", {
     password: userPw,
     mechanism: mechanism,
     clusterApiUrl: testServerlessCluster.clusterApiUrl,
-    allowDeletion: true,
+    allowDeletion: userAllowDeletion,
 });
 ```
 {{% /choosable %}}
@@ -4080,7 +4570,7 @@ test_user = redpanda.User("test",
     password=user_pw,
     mechanism=mechanism,
     cluster_api_url=test_serverless_cluster.cluster_api_url,
-    allow_deletion=True)
+    allow_deletion=user_allow_deletion)
 ```
 {{% /choosable %}}
 {{% choosable language csharp %}}
@@ -4125,7 +4615,7 @@ return await Deployment.RunAsync(() =>
         Password = userPw,
         Mechanism = mechanism,
         ClusterApiUrl = testServerlessCluster.ClusterApiUrl,
-        AllowDeletion = true,
+        AllowDeletion = userAllowDeletion,
     });
 
 });
@@ -4178,7 +4668,7 @@ func main() {
 			Password:      pulumi.Any(userPw),
 			Mechanism:     pulumi.Any(mechanism),
 			ClusterApiUrl: testServerlessCluster.ClusterApiUrl,
-			AllowDeletion: pulumi.Bool(true),
+			AllowDeletion: pulumi.Any(userAllowDeletion),
 		})
 		if err != nil {
 			return err
@@ -4225,7 +4715,7 @@ resources:
       password: ${userPw}
       mechanism: ${mechanism}
       clusterApiUrl: ${testServerlessCluster.clusterApiUrl}
-      allowDeletion: true
+      allowDeletion: ${userAllowDeletion}
 ```
 {{% /choosable %}}
 {{% choosable language java %}}
@@ -4285,7 +4775,7 @@ public class App {
             .password(userPw)
             .mechanism(mechanism)
             .clusterApiUrl(testServerlessCluster.clusterApiUrl())
-            .allowDeletion(true)
+            .allowDeletion(userAllowDeletion)
             .build());
 
     }

@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-cpln/v0.0.72/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-cpln/v0.0.73/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumiverse/pulumi-cpln/blob/v0.0.72/docs/_index.md
+edit_url: https://github.com/pulumiverse/pulumi-cpln/blob/v0.0.73/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Control Plane Provider
 meta_desc: Provides an overview on how to configure the Pulumi Control Plane provider.
@@ -12,11 +12,10 @@ layout: package
 
 The Control Plane provider is available as a package in all Pulumi languages:
 
-- JavaScript/TypeScript: [`@pulumi/cpln`](https://www.npmjs.com/package/@pulumi/cpln)
-- Python: [`pulumi-cpln`](https://pypi.org/project/pulumi-cpln/)
-- Go: [`github.com/pulumiverse/pulumi-cpln/sdk/go/cpln`](https://github.com/pulumi/pulumi-cpln)
-- .NET: [`Pulumi.Cpln`](https://www.nuget.org/packages/Pulumi.Cpln)
-- Java: [`com.pulumi/cpln`](https://central.sonatype.com/artifact/com.pulumi/cpln)
+- JavaScript/TypeScript: [`@pulumiserve/cpln`](https://www.npmjs.com/package/@pulumiverse/cpln)
+- Python: [`pulumiverse-cpln`](https://pypi.org/project/pulumiverse-cpln/)
+- Go: [`github.com/pulumiverse/pulumi-cpln/sdk/go/cpln`](https://pkg.go.dev/github.com/pulumiverse/pulumi-cpln/sdk)
+- .NET: [`Pulumiverse.cpln`](https://www.nuget.org/packages/Pulumiverse.cpln)
 
 ## Overview
 
@@ -87,13 +86,7 @@ config:
 ```
 
 ```typescript
-import * as cpln from "@pulumiverse/cpln";
-
-const group = new cpln.Group("example", {
-  description: "example",
-});
-
-export const groupId = group.id;
+import * as pulumi from "@pulumi/pulumi";
 ```
 
 {{% /choosable %}}
@@ -118,13 +111,7 @@ config:
 
 ```python
 import pulumi
-import pulumiverse_cpln as cpln
 
-group = cpln.Group("example",
-    description="example"
-)
-
-pulumi.export("group.id", group.id)
 ```
 
 {{% /choosable %}}
@@ -149,20 +136,13 @@ config:
 
 ```csharp
 using System.Collections.Generic;
+using System.Linq;
 using Pulumi;
-using Pulumiverse.Cpln;
 
 return await Deployment.RunAsync(() =>
 {
-    var group = new Group("example", new GroupArgs{
-        Description = "example"
-    });
-
-    return new Dictionary<string, object?>
-    {
-        ["group.id"] = group.Id
-    };
 });
+
 ```
 
 {{% /choosable %}}
@@ -189,24 +169,11 @@ config:
 package main
 
 import (
-	"fmt"
-
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	cpln "github.com/pulumiverse/pulumi-cpln/sdk/go/cpln"
 )
 
 func main() {
 	pulumi.Run(func(ctx *pulumi.Context) error {
-
-		group, err := cpln.NewGroup(ctx, "example", &cpln.GroupArgs{
-			Description: pulumi.String("example"),
-		})
-		if err != nil {
-			return fmt.Errorf("error creating a group: %v", err)
-		}
-
-		ctx.Export("group.id", group.ID())
-
 		return nil
 	})
 }

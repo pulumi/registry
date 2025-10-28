@@ -399,6 +399,10 @@
     {
       "repoSlug": "formalco/pulumi-formal",
       "schemaFile": "provider/cmd/pulumi-resource-formal/schema.json"
+    },
+    {
+      "repoSlug": "byteplus-sdk/pulumi-bytepluscc",
+      "schemaFile": "provider/cmd/pulumi-resource-bytepluscc/schema.json"
     }
   ]
 }

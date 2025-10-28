@@ -12,6 +12,7 @@ The Pulumi Service provider is available as a package in all Pulumi languages:
 * Python: [`pulumi_pulumiservice`](https://pypi.org/project/pulumi-pulumiservice/)
 * Go: [`github.com/pulumi/pulumi-pulumiservice/sdk/go/pulumiservice`](https://pkg.go.dev/github.com/pulumi/pulumi-pulumiservice/sdk/go/pulumiservice)
 * .NET: [`Pulumi.PulumiService`](https://www.nuget.org/packages/Pulumi.PulumiService)
+* Java: [`com.pulumi/pulumiservice`](https://search.maven.org/artifact/com.pulumi/pulumiservice)
 
 ## Setup
 

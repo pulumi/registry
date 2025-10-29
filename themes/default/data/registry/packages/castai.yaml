@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: CAST AI
 repo_url: https://github.com/castai/pulumi-castai
-schema_file_url: https://raw.githubusercontent.com/castai/pulumi-castai/v7.73.1/provider/sdk/schema/schema.json
+schema_file_url: https://raw.githubusercontent.com/castai/pulumi-castai/v7.73.2/provider/sdk/schema/schema.json
 title: CAST AI
-updated_on: 1761703898
-version: v7.73.1
+updated_on: 1761745702
+version: v7.73.2

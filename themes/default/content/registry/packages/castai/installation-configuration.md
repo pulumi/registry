@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/castai/pulumi-castai/v7.73.1/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/castai/pulumi-castai/v7.73.2/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/castai/pulumi-castai/blob/v7.73.1/docs/installation-configuration.md
+edit_url: https://github.com/castai/pulumi-castai/blob/v7.73.2/docs/installation-configuration.md
 title: CAST AI Installation & Configuration
 meta_desc: Information on how to install the CAST AI provider for Pulumi.
 layout: installation

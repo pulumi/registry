@@ -1,6 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/castai/pulumi-castai/v0.1.87/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/castai/pulumi-castai/v7.73.1/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
+edit_url: https://github.com/castai/pulumi-castai/blob/v7.73.1/docs/installation-configuration.md
 title: CAST AI Installation & Configuration
 meta_desc: Information on how to install the CAST AI provider for Pulumi.
 layout: installation
@@ -13,7 +14,6 @@ The Pulumi CAST AI provider is available as a package in all Pulumi languages:
 * JavaScript/TypeScript: [`@castai/pulumi`](https://www.npmjs.com/package/@castai/pulumi)
 * Python: [`pulumi-castai`](https://pypi.org/project/pulumi-castai/)
 * Go: [`github.com/castai/pulumi-castai/sdk/go/castai`](https://pkg.go.dev/github.com/castai/pulumi-castai/sdk/go/castai)
-* .NET: [`Pulumi.CastAI`](https://www.nuget.org/packages/CastAI.Pulumi)
 
 ### Node.js (JavaScript/TypeScript)
 
@@ -33,12 +33,6 @@ pip install pulumi_castai
 go get github.com/castai/pulumi-castai/sdk/go/castai@latest
 ```
 
-### .NET
-
-```bash
-dotnet add package Pulumi.CastAI
-```
-
 ## Setup
 
 To use the CAST AI provider, you need to have a CAST AI account and an API token. You can sign up for a CAST AI account at [https://cast.ai](https://cast.ai) and generate an API token from the CAST AI console.
@@ -55,7 +49,7 @@ export CASTAI_API_TOKEN=your-api-token-here
 
 2. Provide the token directly in your Pulumi program:
 
-{{< chooser language "typescript,python,go,csharp" >}}
+{{< chooser language "typescript,python,go" >}}
 {{% choosable language typescript %}}
 
 ```typescript
@@ -96,25 +90,6 @@ func main() {
         // Use the provider to create resources
         return nil
     })
-}
-```
-
-{{% /choosable %}}
-{{% choosable language csharp %}}
-
-```csharp
-using Pulumi;
-using Pulumi.CastAI;
-
-class MyStack : Stack
-{
-    public MyStack()
-    {
-        var provider = new Provider("castai-provider", new ProviderArgs
-        {
-            ApiToken = "your-api-token-here",
-        });
-    }
 }
 ```
 

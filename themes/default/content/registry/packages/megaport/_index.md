@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/megaport/megaport/1.4.4/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/megaport/megaport/1.4.5/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Megaport Provider
@@ -2105,6 +2105,13 @@ public class App {
 ## Datacenter Location Function
 
 Locations for Megaport Data Centers can be retrieved using the Locations Function in the Megaport Pulumi Provider.
+### Using Location IDs for Reliable Configurations
+
+In the Megaport API, data center location names and site codes might occasionally change as facilities are rebranded, merged, or updated. However, the location ID remains constant and is the most reliable way to identify a data center.
+
+If your Pulumi configurations or API scripts rely on a location name or code that changes, those integrations will fail to execute until the references are manually updated. This can lead to automation failures, deployment delays, or service disruptions.
+
+**To ensure consistency and reliability, we strongly recommend using the location ID instead of the name or site code when integrating with the Megaport API or defining resources in Pulumi.**
 
 **Current supported search methods:**
 
@@ -2260,10 +2267,12 @@ public class App {
 ```
 {{% /choosable %}}
 {{< /chooser >}}
+### Location Reference Resources
 
-**Important:** Location IDs never change and provide the most reliable and deterministic behavior. Location names may be updated over time, which could cause Pulumi configurations to break unexpectedly.
+For the most up-to-date list of Megaport data center locations:
 
-The most up-to-date listing of Megaport Datacenter Locations can be accessed through the Megaport API at `GET /v3/locations`
+- **[Megaport Location IDs Documentation](https://docs.megaport.com/enabled-locations/location-ids/)** - Complete list of location IDs (dynamically updated with the API)
+- **[Megaport API GET /v3/locations](https://dev.megaport.com/#7c8e0706-e138-4d9a-bc4f-0419d97604cf)** - Programmatic access to location data
 ## Partner Port Stability
 
 When using filter criteria to select partner ports (used to connect to cloud service providers), the specific partner port (and therefore UID) that best matches your filters may change over time as Megaport manages capacity by rotating ports. This can lead to unexpected warning messages during Pulumi operations even when the VXCs themselves are not being modified:

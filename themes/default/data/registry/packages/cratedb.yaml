@@ -8,9 +8,9 @@ logo_url: https://avatars.githubusercontent.com/u/4048232?s=48&v=4
 name: cratedb
 native: false
 package_status: public_preview
-publisher: komminarlabs
-repo_url: https://github.com/komminarlabs/pulumi-cratedb
-schema_file_url: https://raw.githubusercontent.com/komminarlabs/pulumi-cratedb/v0.3.0/provider/cmd/pulumi-resource-cratedb/schema.json
+publisher: DEPRECATED
+repo_url: https://github.com/thulasirajkomminar/pulumi-cratedb
+schema_file_url: https://raw.githubusercontent.com/thulasirajkomminar/pulumi-cratedb/v0.3.0/provider/cmd/pulumi-resource-cratedb/schema.json
 title: CrateDB
 updated_on: 1741695175
 version: v0.3.0

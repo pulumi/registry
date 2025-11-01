@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-github
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-github/v6.8.0/provider/cmd/pulumi-resource-github/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-github/v6.8.1/provider/cmd/pulumi-resource-github/schema.json
 title: GitHub
-updated_on: 1761189922
-version: v6.8.0
+updated_on: 1761967764
+version: v6.8.1

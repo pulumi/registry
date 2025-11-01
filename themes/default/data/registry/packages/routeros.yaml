@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: terraform-routeros
 repo_url: https://github.com/terraform-routeros/terraform-provider-routeros
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/terraform-routeros/routeros/1.89.0/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/terraform-routeros/routeros/1.90.0/schema.json
 title: routeros
-updated_on: 1760528153
-version: 1.89.0
+updated_on: 1762040151
+version: 1.90.0

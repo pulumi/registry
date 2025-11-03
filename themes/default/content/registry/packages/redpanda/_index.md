@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/redpanda-data/redpanda/1.3.3/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/redpanda-data/redpanda/1.3.4/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Redpanda Provider
@@ -435,7 +435,7 @@ const readProduct = new redpanda.SchemaRegistryAcl("read_product", {
     permission: "ALLOW",
     username: testUser.name,
     password: userPw,
-    allowDeletion: true,
+    allowDeletion: srAclAllowDeletion,
 }, {
     dependsOn: [schemaRegistryAdmin],
 });
@@ -713,7 +713,7 @@ read_product = redpanda.SchemaRegistryAcl("read_product",
     permission="ALLOW",
     username=test_user.name,
     password=user_pw,
-    allow_deletion=True,
+    allow_deletion=sr_acl_allow_deletion,
     opts = pulumi.ResourceOptions(depends_on=[schema_registry_admin]))
 write_orders = redpanda.SchemaRegistryAcl("write_orders",
     cluster_id=test_cluster.id,
@@ -1087,7 +1087,7 @@ return await Deployment.RunAsync(() =>
         Permission = "ALLOW",
         Username = testUser.Name,
         Password = userPw,
-        AllowDeletion = true,
+        AllowDeletion = srAclAllowDeletion,
     }, new CustomResourceOptions
     {
         DependsOn =
@@ -1490,7 +1490,7 @@ func main() {
 			Permission:    pulumi.String("ALLOW"),
 			Username:      testUser.Name,
 			Password:      pulumi.Any(userPw),
-			AllowDeletion: pulumi.Bool(true),
+			AllowDeletion: pulumi.Any(srAclAllowDeletion),
 		}, pulumi.DependsOn([]pulumi.Resource{
 			schemaRegistryAdmin,
 		}))
@@ -1745,7 +1745,7 @@ resources:
       permission: ALLOW
       username: ${testUser.name}
       password: ${userPw}
-      allowDeletion: true
+      allowDeletion: ${srAclAllowDeletion}
     options:
       dependsOn:
         - ${schemaRegistryAdmin}
@@ -2189,7 +2189,7 @@ public class App {
             .permission("ALLOW")
             .username(testUser.name())
             .password(userPw)
-            .allowDeletion(true)
+            .allowDeletion(srAclAllowDeletion)
             .build(), CustomResourceOptions.builder()
                 .dependsOn(schemaRegistryAdmin)
                 .build());
@@ -2464,7 +2464,7 @@ const readProduct = new redpanda.SchemaRegistryAcl("read_product", {
     permission: "ALLOW",
     username: testUser.name,
     password: userPw,
-    allowDeletion: true,
+    allowDeletion: srAclAllowDeletion,
 }, {
     dependsOn: [schemaRegistryAdmin],
 });
@@ -2725,7 +2725,7 @@ read_product = redpanda.SchemaRegistryAcl("read_product",
     permission="ALLOW",
     username=test_user.name,
     password=user_pw,
-    allow_deletion=True,
+    allow_deletion=sr_acl_allow_deletion,
     opts = pulumi.ResourceOptions(depends_on=[schema_registry_admin]))
 write_orders = redpanda.SchemaRegistryAcl("write_orders",
     cluster_id=test_cluster.id,
@@ -3073,7 +3073,7 @@ return await Deployment.RunAsync(() =>
         Permission = "ALLOW",
         Username = testUser.Name,
         Password = userPw,
-        AllowDeletion = true,
+        AllowDeletion = srAclAllowDeletion,
     }, new CustomResourceOptions
     {
         DependsOn =
@@ -3453,7 +3453,7 @@ func main() {
 			Permission:    pulumi.String("ALLOW"),
 			Username:      testUser.Name,
 			Password:      pulumi.Any(userPw),
-			AllowDeletion: pulumi.Bool(true),
+			AllowDeletion: pulumi.Any(srAclAllowDeletion),
 		}, pulumi.DependsOn([]pulumi.Resource{
 			schemaRegistryAdmin,
 		}))
@@ -3691,7 +3691,7 @@ resources:
       permission: ALLOW
       username: ${testUser.name}
       password: ${userPw}
-      allowDeletion: true
+      allowDeletion: ${srAclAllowDeletion}
     options:
       dependsOn:
         - ${schemaRegistryAdmin}
@@ -4119,7 +4119,7 @@ public class App {
             .permission("ALLOW")
             .username(testUser.name())
             .password(userPw)
-            .allowDeletion(true)
+            .allowDeletion(srAclAllowDeletion)
             .build(), CustomResourceOptions.builder()
                 .dependsOn(schemaRegistryAdmin)
                 .build());

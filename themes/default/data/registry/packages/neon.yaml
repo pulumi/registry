@@ -10,7 +10,7 @@ native: false
 package_status: public_preview
 publisher: kislerdm
 repo_url: https://github.com/kislerdm/terraform-provider-neon
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/kislerdm/neon/0.11.0/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/kislerdm/neon/0.12.0/schema.json
 title: neon
-updated_on: 1761521749
-version: 0.11.0
+updated_on: 1762299347
+version: 0.12.0

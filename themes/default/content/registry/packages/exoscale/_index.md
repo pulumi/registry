@@ -1,6 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-exoscale/v0.62.7/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-exoscale/v0.66.1/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+edit_url: https://github.com/pulumiverse/pulumi-exoscale/blob/v0.66.1/docs/_index.md
 title: Exoscale
 meta_desc: Provides an overview of the Exoscale Provider for Pulumi.
 layout: overview

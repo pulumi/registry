@@ -6,7 +6,7 @@
   4. Include Pulumi logo elements and background: fill="#2B2B2C"
 */}}
 {{ $title_tag := .Scratch.Get "title_tag" }}
-{{ $prompt := printf "Explain resource %s, it's top scenarios and create a example usage for me." $title_tag }}
+{{ $prompt := printf "Explain resource %s, its top scenarios, and create a example usage for me." $title_tag }}
 <a class="pulumi-ai-badge" target="_blank" href="https://app.pulumi.com/neo?prompt={{ $prompt | urlquery }}&prefer_signup=true">
     <img src="/images/docs/icons/get-started-with-pulumi.svg" alt="Get Started">
 </a>

@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/megaport/megaport/1.4.5/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/megaport/megaport/1.4.6/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Megaport Provider
@@ -498,9 +498,9 @@ public class App {
         // Create MCR without inline prefix filter lists
         var example = new Mcr("example", McrArgs.builder()
             .productName("my-mcr")
-            .portSpeed(1000)
-            .locationId(5)
-            .contractTermMonths(12)
+            .portSpeed(1000.0)
+            .locationId(5.0)
+            .contractTermMonths(12.0)
             .build());
 
         // Manage prefix filter lists as individual resources
@@ -512,14 +512,14 @@ public class App {
                 McrPrefixFilterListEntryArgs.builder()
                     .action("permit")
                     .prefix("10.0.0.0/8")
-                    .ge(16)
-                    .le(24)
+                    .ge(16.0)
+                    .le(24.0)
                     .build(),
                 McrPrefixFilterListEntryArgs.builder()
                     .action("permit")
                     .prefix("192.168.0.0/16")
-                    .ge(24)
-                    .le(32)
+                    .ge(24.0)
+                    .le(32.0)
                     .build())
             .build());
 
@@ -530,8 +530,8 @@ public class App {
             .entries(McrPrefixFilterListEntryArgs.builder()
                 .action("permit")
                 .prefix("fd00::/8")
-                .ge(48)
-                .le(64)
+                .ge(48.0)
+                .le(64.0)
                 .build())
             .build());
 
@@ -718,17 +718,17 @@ public class App {
         // ❌ DEPRECATED: Inline prefix filter lists (will be removed in future version)
         var deprecatedExample = new Mcr("deprecatedExample", McrArgs.builder()
             .productName("my-mcr")
-            .portSpeed(1000)
-            .locationId(5)
-            .contractTermMonths(12)
+            .portSpeed(1000.0)
+            .locationId(5.0)
+            .contractTermMonths(12.0)
             .prefixFilterLists(McrPrefixFilterListArgs.builder()
                 .description("Allow private networks")
                 .addressFamily("IPv4")
                 .entries(McrPrefixFilterListEntryArgs.builder()
                     .action("permit")
                     .prefix("10.0.0.0/8")
-                    .ge(16)
-                    .le(24)
+                    .ge(16.0)
+                    .le(24.0)
                     .build())
                 .build())
             .build());
@@ -854,7 +854,7 @@ public class App {
             .mcrId("your-mcr-uid-here")
             .build());
 
-        ctx.export("currentLists", existing.applyValue(getMcrPrefixFilterListsResult -> getMcrPrefixFilterListsResult.prefixFilterLists()));
+        ctx.export("currentLists", existing.prefixFilterLists());
     }
 }
 ```
@@ -1102,9 +1102,9 @@ public class App {
     public static void stack(Context ctx) {
         var example = new Mcr("example", McrArgs.builder()
             .productName("my-mcr")
-            .portSpeed(1000)
-            .locationId(5)
-            .contractTermMonths(12)
+            .portSpeed(1000.0)
+            .locationId(5.0)
+            .contractTermMonths(12.0)
             .build());
 
     }
@@ -1631,9 +1631,9 @@ public class App {
         // Production MCR with standalone prefix filter lists
         var production = new Mcr("production", McrArgs.builder()
             .productName("prod-mcr")
-            .portSpeed(2500)
-            .locationId(1)
-            .contractTermMonths(12)
+            .portSpeed(2500.0)
+            .locationId(1.0)
+            .contractTermMonths(12.0)
             .resourceTags(Map.ofEntries(
                 Map.entry("Environment", "production"),
                 Map.entry("Owner", "network-team"),
@@ -1650,14 +1650,14 @@ public class App {
                 McrPrefixFilterListEntryArgs.builder()
                     .action("permit")
                     .prefix("10.100.0.0/16")
-                    .ge(24)
-                    .le(28)
+                    .ge(24.0)
+                    .le(28.0)
                     .build(),
                 McrPrefixFilterListEntryArgs.builder()
                     .action("permit")
                     .prefix("10.200.0.0/16")
-                    .ge(24)
-                    .le(28)
+                    .ge(24.0)
+                    .le(28.0)
                     .build())
             .build());
 
@@ -1669,8 +1669,8 @@ public class App {
             .entries(McrPrefixFilterListEntryArgs.builder()
                 .action("permit")
                 .prefix("172.16.0.0/12")
-                .ge(16)
-                .le(24)
+                .ge(16.0)
+                .le(24.0)
                 .build())
             .build());
 
@@ -1682,8 +1682,8 @@ public class App {
             .entries(McrPrefixFilterListEntryArgs.builder()
                 .action("permit")
                 .prefix("2001:db8:100::/48")
-                .ge(56)
-                .le(64)
+                .ge(56.0)
+                .le(64.0)
                 .build())
             .build());
 
@@ -1952,7 +1952,7 @@ public class App {
             .name("NextDC B1")
             .build());
 
-        ctx.export("locationIdForNextdcB1", alternative.applyValue(getLocationResult -> getLocationResult.id()));
+        ctx.export("locationIdForNextdcB1", alternative.id());
     }
 }
 ```
@@ -2090,7 +2090,7 @@ public class App {
             .name("Your Location Name")
             .build());
 
-        ctx.export("locationId", lookup.applyValue(getLocationResult -> getLocationResult.id()));
+        ctx.export("locationId", lookup.id());
     }
 }
 ```
@@ -2261,7 +2261,7 @@ public class App {
             .name("NextDC B1")
             .build());
 
-        ctx.export("locationIdForNextdcB1", nameExample.applyValue(getLocationResult -> getLocationResult.id()));
+        ctx.export("locationIdForNextdcB1", nameExample.id());
     }
 }
 ```

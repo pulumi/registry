@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: coder
 repo_url: https://github.com/coder/terraform-provider-coder
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/coder/coder/2.13.0-pre0/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/coder/coder/2.13.1/schema.json
 title: coder
-updated_on: 1762256146
-version: 2.13.0-pre0
+updated_on: 1762342541
+version: 2.13.1

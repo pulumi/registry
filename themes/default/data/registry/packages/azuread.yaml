@@ -11,7 +11,7 @@ native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-azuread
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-azuread/v6.5.1/provider/cmd/pulumi-resource-azuread/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-azuread/v6.7.0/provider/cmd/pulumi-resource-azuread/schema.json
 title: Azure Active Directory (Azure AD)
-updated_on: 1747781466
-version: v6.5.1
+updated_on: 1762366694
+version: v6.7.0

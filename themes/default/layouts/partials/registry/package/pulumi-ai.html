@@ -1,12 +1,30 @@
 {{/*
-  To regenerate get-started-with-pulumi.svg:
-  1. npm install opentype.js
-  2. node text-to-path.js ./public/fonts/gilroy-medium.woff "Get Started" 20 50 29
-  3. Wrap output path in SVG with: width="180" height="46" viewBox="0 0 180 46"
-  4. Include Pulumi logo elements and background: fill="#2B2B2C"
+To regenerate get-started-with-pulumi.svg:
+1. npm install opentype.js
+2. node text-to-path.js ./public/fonts/gilroy-medium.woff "Get Started" 20 50 29
+3. Wrap output path in SVG with: width="180" height="46" viewBox="0 0 180 46"
+4. Include Pulumi logo elements and background: fill="#2B2B2C"
 */}}
 {{ $title_tag := .Scratch.Get "title_tag" }}
 {{ $prompt := printf "Explain resource %s, its top scenarios, and create a example usage for me." $title_tag }}
-<a class="pulumi-ai-badge" target="_blank" href="https://app.pulumi.com/neo?prompt={{ $prompt | urlquery }}&prefer_signup=true">
-    <img src="/images/docs/icons/get-started-with-pulumi.svg" alt="Get Started">
+{{ $firstLetter := substr $title_tag 0 1 | lower }}
+{{ $article := "a" }}
+{{ if or (eq $firstLetter "a") (eq $firstLetter "e") (eq $firstLetter "i") (eq $firstLetter "o") (eq $firstLetter "u")
+}}
+{{ $article = "an" }}
+{{ end }}
+{{ $cta := printf "Explain and create %s %s resource" $article $title_tag }}
+
+<a class="pulumi-ai-badge mb-4" target="_blank"
+  href="https://app.pulumi.com/neo?prompt={{ $prompt | urlquery }}&prefer_signup=true">
+  <!-- <img src="/images/docs/icons/get-started-with-pulumi.svg" alt="Get Started"> -->
+  <div class="container flex flex-row items-center text-white rounded-lg p-6 gap-4 text-display transition-colors">
+    <div class="flex items-center justify-center bg-white rounded-full p-0.5">{{ partial "icon" (dict "icon" "neo") }}
+    </div>
+    <div class="flex flex-col">
+      <div class="text-base font-semibold pb-0.5">Start a Neo task</div>
+      <div class="text-sm">{{ $cta }}</div>
+    </div>
+    <div class="ml-auto">{{ partial "icon" (dict "icon" "caret-right") }}</div>
+  </div>
 </a>

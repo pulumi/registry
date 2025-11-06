@@ -8,9 +8,9 @@ logo_url: https://avatars.githubusercontent.com/u/5713248?s=200&v=4
 name: influxdb
 native: false
 package_status: ga
-publisher: komminarlabs
+publisher: thulasirajkomminar
 repo_url: https://github.com/komminarlabs/pulumi-influxdb
-schema_file_url: https://raw.githubusercontent.com/komminarlabs/pulumi-influxdb/v1.5.0/provider/cmd/pulumi-resource-influxdb/schema.json
+schema_file_url: https://raw.githubusercontent.com/komminarlabs/pulumi-influxdb/v1.6.0/provider/cmd/pulumi-resource-influxdb/schema.json
 title: InfluxDB
-updated_on: 1751486734
-version: v1.5.0
+updated_on: 1761775497
+version: v1.6.0

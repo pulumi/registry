@@ -3,6 +3,8 @@ title: "7.0 Migration Guide"
 h1: "Migrating from 6.x to 7.x"
 meta_desc: Practitioner level instructions for migrating from pulumi-aws 6.x to 7.x.
 layout: package
+aliases:
+  - /registry/packages/aws/how-to-guides/bucketv2-migration/
 ---
 
 ## Upstream Changes

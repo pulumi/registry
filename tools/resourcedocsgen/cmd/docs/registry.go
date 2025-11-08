@@ -53,14 +53,14 @@ func getRepoSlug(repoURL string) (string, error) {
 func writeSchemaFile(baseSchemasOutDir, packageName string, schemaBytes []byte) error {
 	// Create the package-specific directory if it doesn't exist
 	packageDir := filepath.Join(baseSchemasOutDir, packageName)
-	if err := os.MkdirAll(packageDir, 0755); err != nil {
+	if err := os.MkdirAll(packageDir, 0o755); err != nil {
 		return errors.Wrapf(err, "creating directory %s", packageDir)
 	}
 
 	// Write the schema.json file
 	schemaFilePath := filepath.Join(packageDir, "schema.json")
 	glog.Infof("Writing schema file to %s", schemaFilePath)
-	if err := os.WriteFile(schemaFilePath, schemaBytes, 0644); err != nil {
+	if err := os.WriteFile(schemaFilePath, schemaBytes, 0o600); err != nil {
 		return errors.Wrapf(err, "writing schema file to %s", schemaFilePath)
 	}
 
@@ -265,7 +265,9 @@ func getRegistryPackagesPath(repoPath string) string {
 	return filepath.Join(repoPath, "themes", "default", "data", "registry", "packages")
 }
 
-func genResourceDocsForAllRegistryPackages(registryRepoPath, baseDocsOutDir, basePackageTreeJSONOutDir, baseSchemasOutDir string) error {
+func genResourceDocsForAllRegistryPackages(
+	registryRepoPath, baseDocsOutDir, basePackageTreeJSONOutDir, baseSchemasOutDir string,
+) error {
 	registryPackagesPath := getRegistryPackagesPath(registryRepoPath)
 	metadataFiles, err := os.ReadDir(registryPackagesPath)
 	if err != nil {
@@ -291,7 +293,9 @@ func genResourceDocsForAllRegistryPackages(registryRepoPath, baseDocsOutDir, bas
 			}
 
 			docsOutDir := filepath.Join(baseDocsOutDir, metadata.Name, "api-docs")
-			err = genResourceDocsForPackageFromRegistryMetadata(metadata, docsOutDir, basePackageTreeJSONOutDir, baseSchemasOutDir)
+			err = genResourceDocsForPackageFromRegistryMetadata(
+				metadata, docsOutDir, basePackageTreeJSONOutDir, baseSchemasOutDir,
+			)
 			if err != nil {
 				return errors.Wrapf(err, "generating resource docs using metadata file info %s", f.Name())
 			}
@@ -338,13 +342,17 @@ func resourceDocsFromRegistryCmd() *cobra.Command {
 
 				docsOutDir := filepath.Join(baseDocsOutDir, metadata.Name, "api-docs")
 
-				err = genResourceDocsForPackageFromRegistryMetadata(metadata, docsOutDir, basePackageTreeJSONOutDir, baseSchemasOutDir)
+				err = genResourceDocsForPackageFromRegistryMetadata(
+					metadata, docsOutDir, basePackageTreeJSONOutDir, baseSchemasOutDir,
+				)
 				if err != nil {
 					return errors.Wrapf(err, "generating docs for package %q from registry metadata", pkgName)
 				}
 			} else {
 				glog.Infoln("Generating docs for all packages in the registry...")
-				err := genResourceDocsForAllRegistryPackages(registryDir, baseDocsOutDir, basePackageTreeJSONOutDir, baseSchemasOutDir)
+				err := genResourceDocsForAllRegistryPackages(
+					registryDir, baseDocsOutDir, basePackageTreeJSONOutDir, baseSchemasOutDir,
+				)
 				if err != nil {
 					return errors.Wrap(err, "generating docs for all packages from registry metadata")
 				}

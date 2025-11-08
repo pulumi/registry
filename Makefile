@@ -63,6 +63,7 @@ api-docs/%: .make/content/registry/packages/$$*/api-docs
 	bin/resourcedocsgen docs registry \
 		--baseDocsOutDir ./content/registry/packages \
 		--basePackageTreeJSONOutDir ./static/registry/packages/navs \
+		--baseSchemasOutDir ./static/registry/packages \
 		$*
 	@mkdir -p "$(@D)"
 	@touch $@

@@ -40,6 +40,7 @@ printf "Generating API docs from registry commit %s...\n\n" "${REGISTRY_COMMIT}"
 resourcedocsgen docs registry \
     --baseDocsOutDir "themes/default/content/registry/packages" \
     --basePackageTreeJSONOutDir "themes/default/static/registry/packages/navs" \
+    --baseSchemasOutDir "themes/default/static/registry/packages" \
     --logtostderr
 
 # Apply fixes. See script for details.

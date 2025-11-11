@@ -1,20 +1,13 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-terraform-provider/v1.0.1/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-terraform-provider/v1.0.2/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-terraform-provider/blob/v1.0.1/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-terraform-provider/blob/v1.0.2/docs/_index.md
 title: Any Terraform Provider
 meta_desc: Learn how to use any Terraform provider in Pulumi.
 layout: package
 ---
 
 Pulumi's `terraform-provider` can be used to generate full Pulumi SDKs for *any* Terraform provider.
-
-{{% notes type="warning" %}}
-
-This provider is in Public Beta. We are still making breaking changes to nail down the
-final design.
-
-{{% /notes %}}
 
 Any feedback is welcome! Please file suggestions and bugs at [pulumi/pulumi-terraform-provider](https://github.com/pulumi/pulumi-terraform-provider/issues).
 

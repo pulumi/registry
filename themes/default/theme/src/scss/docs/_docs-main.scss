@@ -10,16 +10,16 @@ body.section-registry {
     }
 
     div.title-ai-menu-container {
+        margin: 16px 0;
+        h1 {
+            margin: 0;
+        }
         display: flex;
         align-items: center;
         justify-content: space-between;
         column-gap: 12px;
         row-gap: 8px;
         flex-wrap: wrap;
-
-        .pulumi-ai-menu {
-            margin: 0;
-        }
     }
 
     @media (max-width: 640px) {

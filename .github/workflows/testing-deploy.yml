@@ -45,7 +45,7 @@ jobs:
           aws-region: us-west-2
 
       - name: Install Pulumi CLI
-        uses: pulumi/actions@d7ceb0215da5a14ec84f50b703365ddf0194a9c8 # v6
+        uses: pulumi/actions@8582a9e8cc630786854029b4e09281acd6794b58 # v6
 
       - name: Build and deploy
         run: make ci_push

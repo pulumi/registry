@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/redpanda-data/redpanda/1.3.4/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/redpanda-data/redpanda/1.3.5/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Redpanda Provider
@@ -1985,7 +1985,7 @@ public class App {
             .resourceType("CLUSTER")
             .resourceName("kafka-cluster")
             .resourcePatternType("LITERAL")
-            .principal(testUser.name().applyValue(name -> String.format("User:%s", name)))
+            .principal(testUser.name().applyValue(_name -> String.format("User:%s", _name)))
             .host("*")
             .operation("ALL")
             .permissionType("ALLOW")
@@ -1997,7 +1997,7 @@ public class App {
             .resourceType("CLUSTER")
             .resourceName("kafka-cluster")
             .resourcePatternType("LITERAL")
-            .principal(testUser.name().applyValue(name -> String.format("User:%s", name)))
+            .principal(testUser.name().applyValue(_name -> String.format("User:%s", _name)))
             .host("*")
             .operation("ALTER")
             .permissionType("ALLOW")
@@ -2009,7 +2009,7 @@ public class App {
             .resourceType("CLUSTER")
             .resourceName("kafka-cluster")
             .resourcePatternType("LITERAL")
-            .principal(testUser.name().applyValue(name -> String.format("User:%s", name)))
+            .principal(testUser.name().applyValue(_name -> String.format("User:%s", _name)))
             .host("*")
             .operation("CLUSTER_ACTION")
             .permissionType("ALLOW")
@@ -2021,7 +2021,7 @@ public class App {
             .resourceType("TOPIC")
             .resourceName(topicName)
             .resourcePatternType("LITERAL")
-            .principal(testUser.name().applyValue(name -> String.format("User:%s", name)))
+            .principal(testUser.name().applyValue(_name -> String.format("User:%s", _name)))
             .host("*")
             .operation("ALL")
             .permissionType("ALLOW")
@@ -2031,7 +2031,7 @@ public class App {
 
         var allTestTopic = new SchemaRegistryAcl("allTestTopic", SchemaRegistryAclArgs.builder()
             .clusterId(testCluster.id())
-            .principal(testUser.name().applyValue(name -> String.format("User:%s", name)))
+            .principal(testUser.name().applyValue(_name -> String.format("User:%s", _name)))
             .resourceType("SUBJECT")
             .resourceName(String.format("%s-", topicName))
             .patternType("PREFIXED")
@@ -2047,7 +2047,7 @@ public class App {
 
         var describeRegistry = new SchemaRegistryAcl("describeRegistry", SchemaRegistryAclArgs.builder()
             .clusterId(testCluster.id())
-            .principal(testUser.name().applyValue(name -> String.format("User:%s", name)))
+            .principal(testUser.name().applyValue(_name -> String.format("User:%s", _name)))
             .resourceType("REGISTRY")
             .resourceName("*")
             .patternType("LITERAL")
@@ -2063,7 +2063,7 @@ public class App {
 
         var alterConfigsRegistry = new SchemaRegistryAcl("alterConfigsRegistry", SchemaRegistryAclArgs.builder()
             .clusterId(testCluster.id())
-            .principal(testUser.name().applyValue(name -> String.format("User:%s", name)))
+            .principal(testUser.name().applyValue(_name -> String.format("User:%s", _name)))
             .resourceType("REGISTRY")
             .resourceName("*")
             .patternType("LITERAL")
@@ -2079,7 +2079,7 @@ public class App {
 
         var readRegistry = new SchemaRegistryAcl("readRegistry", SchemaRegistryAclArgs.builder()
             .clusterId(testCluster.id())
-            .principal(testUser.name().applyValue(name -> String.format("User:%s", name)))
+            .principal(testUser.name().applyValue(_name -> String.format("User:%s", _name)))
             .resourceType("REGISTRY")
             .resourceName("*")
             .patternType("LITERAL")
@@ -2095,7 +2095,7 @@ public class App {
 
         var writeRegistry = new SchemaRegistryAcl("writeRegistry", SchemaRegistryAclArgs.builder()
             .clusterId(testCluster.id())
-            .principal(testUser.name().applyValue(name -> String.format("User:%s", name)))
+            .principal(testUser.name().applyValue(_name -> String.format("User:%s", _name)))
             .resourceType("REGISTRY")
             .resourceName("*")
             .patternType("LITERAL")
@@ -2180,7 +2180,7 @@ public class App {
 
         var readProduct = new SchemaRegistryAcl("readProduct", SchemaRegistryAclArgs.builder()
             .clusterId(testCluster.id())
-            .principal(testUser.name().applyValue(name -> String.format("User:%s", name)))
+            .principal(testUser.name().applyValue(_name -> String.format("User:%s", _name)))
             .resourceType("SUBJECT")
             .resourceName("product-")
             .patternType("PREFIXED")
@@ -2196,7 +2196,7 @@ public class App {
 
         var writeOrders = new SchemaRegistryAcl("writeOrders", SchemaRegistryAclArgs.builder()
             .clusterId(testCluster.id())
-            .principal(testUser.name().applyValue(name -> String.format("User:%s", name)))
+            .principal(testUser.name().applyValue(_name -> String.format("User:%s", _name)))
             .resourceType("SUBJECT")
             .resourceName("orders-value")
             .patternType("LITERAL")
@@ -2296,6 +2296,17 @@ const testTopic = new redpanda.Topic("test", {
     clusterApiUrl: testCluster.clusterApiUrl,
     allowDeletion: true,
 });
+const clusterAdmin = new redpanda.Acl("cluster_admin", {
+    resourceType: "CLUSTER",
+    resourceName: "kafka-cluster",
+    resourcePatternType: "LITERAL",
+    principal: pulumi.interpolate`User:${testUser.name}`,
+    host: "*",
+    operation: "ALL",
+    permissionType: "ALLOW",
+    clusterApiUrl: testCluster.clusterApiUrl,
+    allowDeletion: aclAllowDeletion,
+});
 const schemaRegistryAdmin = new redpanda.Acl("schema_registry_admin", {
     resourceType: "CLUSTER",
     resourceName: "kafka-cluster",
@@ -2303,6 +2314,28 @@ const schemaRegistryAdmin = new redpanda.Acl("schema_registry_admin", {
     principal: pulumi.interpolate`User:${testUser.name}`,
     host: "*",
     operation: "ALTER",
+    permissionType: "ALLOW",
+    clusterApiUrl: testCluster.clusterApiUrl,
+    allowDeletion: aclAllowDeletion,
+});
+const clusterAction = new redpanda.Acl("cluster_action", {
+    resourceType: "CLUSTER",
+    resourceName: "kafka-cluster",
+    resourcePatternType: "LITERAL",
+    principal: pulumi.interpolate`User:${testUser.name}`,
+    host: "*",
+    operation: "CLUSTER_ACTION",
+    permissionType: "ALLOW",
+    clusterApiUrl: testCluster.clusterApiUrl,
+    allowDeletion: aclAllowDeletion,
+});
+const topicAccess = new redpanda.Acl("topic_access", {
+    resourceType: "TOPIC",
+    resourceName: topicName,
+    resourcePatternType: "LITERAL",
+    principal: pulumi.interpolate`User:${testUser.name}`,
+    host: "*",
+    operation: "ALL",
     permissionType: "ALLOW",
     clusterApiUrl: testCluster.clusterApiUrl,
     allowDeletion: aclAllowDeletion,
@@ -2392,7 +2425,10 @@ const userSchema = new redpanda.Schema("user_schema", {
     allowDeletion: true,
 }, {
     dependsOn: [
+        clusterAdmin,
         schemaRegistryAdmin,
+        clusterAction,
+        topicAccess,
         allTestTopic,
         describeRegistry,
         alterConfigsRegistry,
@@ -2415,7 +2451,10 @@ const userEventSchema = new redpanda.Schema("user_event_schema", {
     }],
 }, {
     dependsOn: [
+        clusterAdmin,
         schemaRegistryAdmin,
+        clusterAction,
+        topicAccess,
         allTestTopic,
         describeRegistry,
         alterConfigsRegistry,
@@ -2434,24 +2473,16 @@ const productSchema = new redpanda.Schema("product_schema", {
     allowDeletion: true,
 }, {
     dependsOn: [
+        clusterAdmin,
         schemaRegistryAdmin,
+        clusterAction,
+        topicAccess,
         allTestTopic,
         describeRegistry,
         alterConfigsRegistry,
         readRegistry,
         writeRegistry,
     ],
-});
-const clusterAdmin = new redpanda.Acl("cluster_admin", {
-    resourceType: "CLUSTER",
-    resourceName: "kafka-cluster",
-    resourcePatternType: "LITERAL",
-    principal: pulumi.interpolate`User:${testUser.name}`,
-    host: "*",
-    operation: "ALL",
-    permissionType: "ALLOW",
-    clusterApiUrl: testCluster.clusterApiUrl,
-    allowDeletion: aclAllowDeletion,
 });
 const readProduct = new redpanda.SchemaRegistryAcl("read_product", {
     clusterId: testCluster.id,
@@ -2575,6 +2606,16 @@ test_topic = redpanda.Topic("test",
     replication_factor=replication_factor,
     cluster_api_url=test_cluster.cluster_api_url,
     allow_deletion=True)
+cluster_admin = redpanda.Acl("cluster_admin",
+    resource_type="CLUSTER",
+    resource_name_="kafka-cluster",
+    resource_pattern_type="LITERAL",
+    principal=test_user.name.apply(lambda name: f"User:{name}"),
+    host="*",
+    operation="ALL",
+    permission_type="ALLOW",
+    cluster_api_url=test_cluster.cluster_api_url,
+    allow_deletion=acl_allow_deletion)
 schema_registry_admin = redpanda.Acl("schema_registry_admin",
     resource_type="CLUSTER",
     resource_name_="kafka-cluster",
@@ -2582,6 +2623,26 @@ schema_registry_admin = redpanda.Acl("schema_registry_admin",
     principal=test_user.name.apply(lambda name: f"User:{name}"),
     host="*",
     operation="ALTER",
+    permission_type="ALLOW",
+    cluster_api_url=test_cluster.cluster_api_url,
+    allow_deletion=acl_allow_deletion)
+cluster_action = redpanda.Acl("cluster_action",
+    resource_type="CLUSTER",
+    resource_name_="kafka-cluster",
+    resource_pattern_type="LITERAL",
+    principal=test_user.name.apply(lambda name: f"User:{name}"),
+    host="*",
+    operation="CLUSTER_ACTION",
+    permission_type="ALLOW",
+    cluster_api_url=test_cluster.cluster_api_url,
+    allow_deletion=acl_allow_deletion)
+topic_access = redpanda.Acl("topic_access",
+    resource_type="TOPIC",
+    resource_name_=topic_name,
+    resource_pattern_type="LITERAL",
+    principal=test_user.name.apply(lambda name: f"User:{name}"),
+    host="*",
+    operation="ALL",
     permission_type="ALLOW",
     cluster_api_url=test_cluster.cluster_api_url,
     allow_deletion=acl_allow_deletion)
@@ -2659,7 +2720,10 @@ user_schema = redpanda.Schema("user_schema",
     password=user_pw,
     allow_deletion=True,
     opts = pulumi.ResourceOptions(depends_on=[
+            cluster_admin,
             schema_registry_admin,
+            cluster_action,
+            topic_access,
             all_test_topic,
             describe_registry,
             alter_configs_registry,
@@ -2680,7 +2744,10 @@ user_event_schema = redpanda.Schema("user_event_schema",
         "version": user_schema.version,
     }],
     opts = pulumi.ResourceOptions(depends_on=[
+            cluster_admin,
             schema_registry_admin,
+            cluster_action,
+            topic_access,
             all_test_topic,
             describe_registry,
             alter_configs_registry,
@@ -2697,23 +2764,16 @@ product_schema = redpanda.Schema("product_schema",
     password=user_pw,
     allow_deletion=True,
     opts = pulumi.ResourceOptions(depends_on=[
+            cluster_admin,
             schema_registry_admin,
+            cluster_action,
+            topic_access,
             all_test_topic,
             describe_registry,
             alter_configs_registry,
             read_registry,
             write_registry,
         ]))
-cluster_admin = redpanda.Acl("cluster_admin",
-    resource_type="CLUSTER",
-    resource_name_="kafka-cluster",
-    resource_pattern_type="LITERAL",
-    principal=test_user.name.apply(lambda name: f"User:{name}"),
-    host="*",
-    operation="ALL",
-    permission_type="ALLOW",
-    cluster_api_url=test_cluster.cluster_api_url,
-    allow_deletion=acl_allow_deletion)
 read_product = redpanda.SchemaRegistryAcl("read_product",
     cluster_id=test_cluster.id,
     principal=test_user.name.apply(lambda name: f"User:{name}"),
@@ -2854,6 +2914,19 @@ return await Deployment.RunAsync(() =>
         AllowDeletion = true,
     });
 
+    var clusterAdmin = new Redpanda.Acl("cluster_admin", new()
+    {
+        ResourceType = "CLUSTER",
+        ResourceName = "kafka-cluster",
+        ResourcePatternType = "LITERAL",
+        Principal = testUser.Name.Apply(name => $"User:{name}"),
+        Host = "*",
+        Operation = "ALL",
+        PermissionType = "ALLOW",
+        ClusterApiUrl = testCluster.ClusterApiUrl,
+        AllowDeletion = aclAllowDeletion,
+    });
+
     var schemaRegistryAdmin = new Redpanda.Acl("schema_registry_admin", new()
     {
         ResourceType = "CLUSTER",
@@ -2862,6 +2935,32 @@ return await Deployment.RunAsync(() =>
         Principal = testUser.Name.Apply(name => $"User:{name}"),
         Host = "*",
         Operation = "ALTER",
+        PermissionType = "ALLOW",
+        ClusterApiUrl = testCluster.ClusterApiUrl,
+        AllowDeletion = aclAllowDeletion,
+    });
+
+    var clusterAction = new Redpanda.Acl("cluster_action", new()
+    {
+        ResourceType = "CLUSTER",
+        ResourceName = "kafka-cluster",
+        ResourcePatternType = "LITERAL",
+        Principal = testUser.Name.Apply(name => $"User:{name}"),
+        Host = "*",
+        Operation = "CLUSTER_ACTION",
+        PermissionType = "ALLOW",
+        ClusterApiUrl = testCluster.ClusterApiUrl,
+        AllowDeletion = aclAllowDeletion,
+    });
+
+    var topicAccess = new Redpanda.Acl("topic_access", new()
+    {
+        ResourceType = "TOPIC",
+        ResourceName = topicName,
+        ResourcePatternType = "LITERAL",
+        Principal = testUser.Name.Apply(name => $"User:{name}"),
+        Host = "*",
+        Operation = "ALL",
         PermissionType = "ALLOW",
         ClusterApiUrl = testCluster.ClusterApiUrl,
         AllowDeletion = aclAllowDeletion,
@@ -2985,7 +3084,10 @@ return await Deployment.RunAsync(() =>
     {
         DependsOn =
         {
+            clusterAdmin,
             schemaRegistryAdmin,
+            clusterAction,
+            topicAccess,
             allTestTopic,
             describeRegistry,
             alterConfigsRegistry,
@@ -3016,7 +3118,10 @@ return await Deployment.RunAsync(() =>
     {
         DependsOn =
         {
+            clusterAdmin,
             schemaRegistryAdmin,
+            clusterAction,
+            topicAccess,
             allTestTopic,
             describeRegistry,
             alterConfigsRegistry,
@@ -3039,26 +3144,16 @@ return await Deployment.RunAsync(() =>
     {
         DependsOn =
         {
+            clusterAdmin,
             schemaRegistryAdmin,
+            clusterAction,
+            topicAccess,
             allTestTopic,
             describeRegistry,
             alterConfigsRegistry,
             readRegistry,
             writeRegistry,
         },
-    });
-
-    var clusterAdmin = new Redpanda.Acl("cluster_admin", new()
-    {
-        ResourceType = "CLUSTER",
-        ResourceName = "kafka-cluster",
-        ResourcePatternType = "LITERAL",
-        Principal = testUser.Name.Apply(name => $"User:{name}"),
-        Host = "*",
-        Operation = "ALL",
-        PermissionType = "ALLOW",
-        ClusterApiUrl = testCluster.ClusterApiUrl,
-        AllowDeletion = aclAllowDeletion,
     });
 
     var readProduct = new Redpanda.SchemaRegistryAcl("read_product", new()
@@ -3243,6 +3338,22 @@ func main() {
 		if err != nil {
 			return err
 		}
+		clusterAdmin, err := redpanda.NewAcl(ctx, "cluster_admin", &redpanda.AclArgs{
+			ResourceType:        pulumi.String("CLUSTER"),
+			ResourceName:        pulumi.String("kafka-cluster"),
+			ResourcePatternType: pulumi.String("LITERAL"),
+			Principal: testUser.Name.ApplyT(func(name string) (string, error) {
+				return fmt.Sprintf("User:%v", name), nil
+			}).(pulumi.StringOutput),
+			Host:           pulumi.String("*"),
+			Operation:      pulumi.String("ALL"),
+			PermissionType: pulumi.String("ALLOW"),
+			ClusterApiUrl:  testCluster.ClusterApiUrl,
+			AllowDeletion:  pulumi.Any(aclAllowDeletion),
+		})
+		if err != nil {
+			return err
+		}
 		schemaRegistryAdmin, err := redpanda.NewAcl(ctx, "schema_registry_admin", &redpanda.AclArgs{
 			ResourceType:        pulumi.String("CLUSTER"),
 			ResourceName:        pulumi.String("kafka-cluster"),
@@ -3252,6 +3363,38 @@ func main() {
 			}).(pulumi.StringOutput),
 			Host:           pulumi.String("*"),
 			Operation:      pulumi.String("ALTER"),
+			PermissionType: pulumi.String("ALLOW"),
+			ClusterApiUrl:  testCluster.ClusterApiUrl,
+			AllowDeletion:  pulumi.Any(aclAllowDeletion),
+		})
+		if err != nil {
+			return err
+		}
+		clusterAction, err := redpanda.NewAcl(ctx, "cluster_action", &redpanda.AclArgs{
+			ResourceType:        pulumi.String("CLUSTER"),
+			ResourceName:        pulumi.String("kafka-cluster"),
+			ResourcePatternType: pulumi.String("LITERAL"),
+			Principal: testUser.Name.ApplyT(func(name string) (string, error) {
+				return fmt.Sprintf("User:%v", name), nil
+			}).(pulumi.StringOutput),
+			Host:           pulumi.String("*"),
+			Operation:      pulumi.String("CLUSTER_ACTION"),
+			PermissionType: pulumi.String("ALLOW"),
+			ClusterApiUrl:  testCluster.ClusterApiUrl,
+			AllowDeletion:  pulumi.Any(aclAllowDeletion),
+		})
+		if err != nil {
+			return err
+		}
+		topicAccess, err := redpanda.NewAcl(ctx, "topic_access", &redpanda.AclArgs{
+			ResourceType:        pulumi.String("TOPIC"),
+			ResourceName:        pulumi.Any(topicName),
+			ResourcePatternType: pulumi.String("LITERAL"),
+			Principal: testUser.Name.ApplyT(func(name string) (string, error) {
+				return fmt.Sprintf("User:%v", name), nil
+			}).(pulumi.StringOutput),
+			Host:           pulumi.String("*"),
+			Operation:      pulumi.String("ALL"),
 			PermissionType: pulumi.String("ALLOW"),
 			ClusterApiUrl:  testCluster.ClusterApiUrl,
 			AllowDeletion:  pulumi.Any(aclAllowDeletion),
@@ -3368,7 +3511,10 @@ func main() {
 			Password:      pulumi.Any(userPw),
 			AllowDeletion: pulumi.Bool(true),
 		}, pulumi.DependsOn([]pulumi.Resource{
+			clusterAdmin,
 			schemaRegistryAdmin,
+			clusterAction,
+			topicAccess,
 			allTestTopic,
 			describeRegistry,
 			alterConfigsRegistry,
@@ -3394,7 +3540,10 @@ func main() {
 				},
 			},
 		}, pulumi.DependsOn([]pulumi.Resource{
+			clusterAdmin,
 			schemaRegistryAdmin,
+			clusterAction,
+			topicAccess,
 			allTestTopic,
 			describeRegistry,
 			alterConfigsRegistry,
@@ -3414,29 +3563,16 @@ func main() {
 			Password:      pulumi.Any(userPw),
 			AllowDeletion: pulumi.Bool(true),
 		}, pulumi.DependsOn([]pulumi.Resource{
+			clusterAdmin,
 			schemaRegistryAdmin,
+			clusterAction,
+			topicAccess,
 			allTestTopic,
 			describeRegistry,
 			alterConfigsRegistry,
 			readRegistry,
 			writeRegistry,
 		}))
-		if err != nil {
-			return err
-		}
-		_, err = redpanda.NewAcl(ctx, "cluster_admin", &redpanda.AclArgs{
-			ResourceType:        pulumi.String("CLUSTER"),
-			ResourceName:        pulumi.String("kafka-cluster"),
-			ResourcePatternType: pulumi.String("LITERAL"),
-			Principal: testUser.Name.ApplyT(func(name string) (string, error) {
-				return fmt.Sprintf("User:%v", name), nil
-			}).(pulumi.StringOutput),
-			Host:           pulumi.String("*"),
-			Operation:      pulumi.String("ALL"),
-			PermissionType: pulumi.String("ALLOW"),
-			ClusterApiUrl:  testCluster.ClusterApiUrl,
-			AllowDeletion:  pulumi.Any(aclAllowDeletion),
-		})
 		if err != nil {
 			return err
 		}
@@ -3602,7 +3738,10 @@ resources:
       allowDeletion: true
     options:
       dependsOn:
+        - ${clusterAdmin}
         - ${schemaRegistryAdmin}
+        - ${clusterAction}
+        - ${topicAccess}
         - ${allTestTopic}
         - ${describeRegistry}
         - ${alterConfigsRegistry}
@@ -3625,7 +3764,10 @@ resources:
           version: ${userSchema.version}
     options:
       dependsOn:
+        - ${clusterAdmin}
         - ${schemaRegistryAdmin}
+        - ${clusterAction}
+        - ${topicAccess}
         - ${allTestTopic}
         - ${describeRegistry}
         - ${alterConfigsRegistry}
@@ -3645,7 +3787,10 @@ resources:
       allowDeletion: true
     options:
       dependsOn:
+        - ${clusterAdmin}
         - ${schemaRegistryAdmin}
+        - ${clusterAction}
+        - ${topicAccess}
         - ${allTestTopic}
         - ${describeRegistry}
         - ${alterConfigsRegistry}
@@ -3674,6 +3819,32 @@ resources:
       principal: User:${testUser.name}
       host: '*'
       operation: ALTER
+      permissionType: ALLOW
+      clusterApiUrl: ${testCluster.clusterApiUrl}
+      allowDeletion: ${aclAllowDeletion}
+  clusterAction:
+    type: redpanda:Acl
+    name: cluster_action
+    properties:
+      resourceType: CLUSTER
+      resourceName: kafka-cluster
+      resourcePatternType: LITERAL
+      principal: User:${testUser.name}
+      host: '*'
+      operation: CLUSTER_ACTION
+      permissionType: ALLOW
+      clusterApiUrl: ${testCluster.clusterApiUrl}
+      allowDeletion: ${aclAllowDeletion}
+  topicAccess:
+    type: redpanda:Acl
+    name: topic_access
+    properties:
+      resourceType: TOPIC
+      resourceName: ${topicName}
+      resourcePatternType: LITERAL
+      principal: User:${testUser.name}
+      host: '*'
+      operation: ALL
       permissionType: ALLOW
       clusterApiUrl: ${testCluster.clusterApiUrl}
       allowDeletion: ${aclAllowDeletion}
@@ -3944,11 +4115,23 @@ public class App {
             .allowDeletion(true)
             .build());
 
+        var clusterAdmin = new Acl("clusterAdmin", AclArgs.builder()
+            .resourceType("CLUSTER")
+            .resourceName("kafka-cluster")
+            .resourcePatternType("LITERAL")
+            .principal(testUser.name().applyValue(_name -> String.format("User:%s", _name)))
+            .host("*")
+            .operation("ALL")
+            .permissionType("ALLOW")
+            .clusterApiUrl(testCluster.clusterApiUrl())
+            .allowDeletion(aclAllowDeletion)
+            .build());
+
         var schemaRegistryAdmin = new Acl("schemaRegistryAdmin", AclArgs.builder()
             .resourceType("CLUSTER")
             .resourceName("kafka-cluster")
             .resourcePatternType("LITERAL")
-            .principal(testUser.name().applyValue(name -> String.format("User:%s", name)))
+            .principal(testUser.name().applyValue(_name -> String.format("User:%s", _name)))
             .host("*")
             .operation("ALTER")
             .permissionType("ALLOW")
@@ -3956,9 +4139,33 @@ public class App {
             .allowDeletion(aclAllowDeletion)
             .build());
 
+        var clusterAction = new Acl("clusterAction", AclArgs.builder()
+            .resourceType("CLUSTER")
+            .resourceName("kafka-cluster")
+            .resourcePatternType("LITERAL")
+            .principal(testUser.name().applyValue(_name -> String.format("User:%s", _name)))
+            .host("*")
+            .operation("CLUSTER_ACTION")
+            .permissionType("ALLOW")
+            .clusterApiUrl(testCluster.clusterApiUrl())
+            .allowDeletion(aclAllowDeletion)
+            .build());
+
+        var topicAccess = new Acl("topicAccess", AclArgs.builder()
+            .resourceType("TOPIC")
+            .resourceName(topicName)
+            .resourcePatternType("LITERAL")
+            .principal(testUser.name().applyValue(_name -> String.format("User:%s", _name)))
+            .host("*")
+            .operation("ALL")
+            .permissionType("ALLOW")
+            .clusterApiUrl(testCluster.clusterApiUrl())
+            .allowDeletion(aclAllowDeletion)
+            .build());
+
         var allTestTopic = new SchemaRegistryAcl("allTestTopic", SchemaRegistryAclArgs.builder()
             .clusterId(testCluster.id())
-            .principal(testUser.name().applyValue(name -> String.format("User:%s", name)))
+            .principal(testUser.name().applyValue(_name -> String.format("User:%s", _name)))
             .resourceType("SUBJECT")
             .resourceName(String.format("%s-", topicName))
             .patternType("PREFIXED")
@@ -3974,7 +4181,7 @@ public class App {
 
         var describeRegistry = new SchemaRegistryAcl("describeRegistry", SchemaRegistryAclArgs.builder()
             .clusterId(testCluster.id())
-            .principal(testUser.name().applyValue(name -> String.format("User:%s", name)))
+            .principal(testUser.name().applyValue(_name -> String.format("User:%s", _name)))
             .resourceType("REGISTRY")
             .resourceName("*")
             .patternType("LITERAL")
@@ -3990,7 +4197,7 @@ public class App {
 
         var alterConfigsRegistry = new SchemaRegistryAcl("alterConfigsRegistry", SchemaRegistryAclArgs.builder()
             .clusterId(testCluster.id())
-            .principal(testUser.name().applyValue(name -> String.format("User:%s", name)))
+            .principal(testUser.name().applyValue(_name -> String.format("User:%s", _name)))
             .resourceType("REGISTRY")
             .resourceName("*")
             .patternType("LITERAL")
@@ -4006,7 +4213,7 @@ public class App {
 
         var readRegistry = new SchemaRegistryAcl("readRegistry", SchemaRegistryAclArgs.builder()
             .clusterId(testCluster.id())
-            .principal(testUser.name().applyValue(name -> String.format("User:%s", name)))
+            .principal(testUser.name().applyValue(_name -> String.format("User:%s", _name)))
             .resourceType("REGISTRY")
             .resourceName("*")
             .patternType("LITERAL")
@@ -4022,7 +4229,7 @@ public class App {
 
         var writeRegistry = new SchemaRegistryAcl("writeRegistry", SchemaRegistryAclArgs.builder()
             .clusterId(testCluster.id())
-            .principal(testUser.name().applyValue(name -> String.format("User:%s", name)))
+            .principal(testUser.name().applyValue(_name -> String.format("User:%s", _name)))
             .resourceType("REGISTRY")
             .resourceName("*")
             .patternType("LITERAL")
@@ -4046,7 +4253,10 @@ public class App {
             .allowDeletion(true)
             .build(), CustomResourceOptions.builder()
                 .dependsOn(
+                    clusterAdmin,
                     schemaRegistryAdmin,
+                    clusterAction,
+                    topicAccess,
                     allTestTopic,
                     describeRegistry,
                     alterConfigsRegistry,
@@ -4069,7 +4279,10 @@ public class App {
                 .build())
             .build(), CustomResourceOptions.builder()
                 .dependsOn(
+                    clusterAdmin,
                     schemaRegistryAdmin,
+                    clusterAction,
+                    topicAccess,
                     allTestTopic,
                     describeRegistry,
                     alterConfigsRegistry,
@@ -4088,7 +4301,10 @@ public class App {
             .allowDeletion(true)
             .build(), CustomResourceOptions.builder()
                 .dependsOn(
+                    clusterAdmin,
                     schemaRegistryAdmin,
+                    clusterAction,
+                    topicAccess,
                     allTestTopic,
                     describeRegistry,
                     alterConfigsRegistry,
@@ -4096,21 +4312,9 @@ public class App {
                     writeRegistry)
                 .build());
 
-        var clusterAdmin = new Acl("clusterAdmin", AclArgs.builder()
-            .resourceType("CLUSTER")
-            .resourceName("kafka-cluster")
-            .resourcePatternType("LITERAL")
-            .principal(testUser.name().applyValue(name -> String.format("User:%s", name)))
-            .host("*")
-            .operation("ALL")
-            .permissionType("ALLOW")
-            .clusterApiUrl(testCluster.clusterApiUrl())
-            .allowDeletion(aclAllowDeletion)
-            .build());
-
         var readProduct = new SchemaRegistryAcl("readProduct", SchemaRegistryAclArgs.builder()
             .clusterId(testCluster.id())
-            .principal(testUser.name().applyValue(name -> String.format("User:%s", name)))
+            .principal(testUser.name().applyValue(_name -> String.format("User:%s", _name)))
             .resourceType("SUBJECT")
             .resourceName("product-")
             .patternType("PREFIXED")
@@ -4126,7 +4330,7 @@ public class App {
 
         var writeOrders = new SchemaRegistryAcl("writeOrders", SchemaRegistryAclArgs.builder()
             .clusterId(testCluster.id())
-            .principal(testUser.name().applyValue(name -> String.format("User:%s", name)))
+            .principal(testUser.name().applyValue(_name -> String.format("User:%s", _name)))
             .resourceType("SUBJECT")
             .resourceName("orders-value")
             .patternType("LITERAL")
@@ -4142,7 +4346,7 @@ public class App {
 
         var describeTestTopic = new SchemaRegistryAcl("describeTestTopic", SchemaRegistryAclArgs.builder()
             .clusterId(testCluster.id())
-            .principal(testUser.name().applyValue(name -> String.format("User:%s", name)))
+            .principal(testUser.name().applyValue(_name -> String.format("User:%s", _name)))
             .resourceType("SUBJECT")
             .resourceName(String.format("%s-", topicName))
             .patternType("PREFIXED")
@@ -4477,7 +4681,7 @@ public class App {
             .name(topicName)
             .partitionCount(partitionCount)
             .replicationFactor(replicationFactor)
-            .clusterApiUrl(test.applyValue(getClusterResult -> getClusterResult.clusterApiUrl()))
+            .clusterApiUrl(test.clusterApiUrl())
             .allowDeletion(true)
             .configuration(topicConfig)
             .build());
@@ -4486,7 +4690,7 @@ public class App {
             .name(userName)
             .password(userPw)
             .mechanism(mechanism)
-            .clusterApiUrl(test.applyValue(getClusterResult -> getClusterResult.clusterApiUrl()))
+            .clusterApiUrl(test.clusterApiUrl())
             .allowDeletion(userAllowDeletion)
             .build());
 
@@ -4494,11 +4698,11 @@ public class App {
             .resourceType("CLUSTER")
             .resourceName("kafka-cluster")
             .resourcePatternType("LITERAL")
-            .principal(testUser.name().applyValue(name -> String.format("User:%s", name)))
+            .principal(testUser.name().applyValue(_name -> String.format("User:%s", _name)))
             .host("*")
             .operation("ALTER")
             .permissionType("ALLOW")
-            .clusterApiUrl(test.applyValue(getClusterResult -> getClusterResult.clusterApiUrl()))
+            .clusterApiUrl(test.clusterApiUrl())
             .allowDeletion(aclAllowDeletion)
             .build());
 

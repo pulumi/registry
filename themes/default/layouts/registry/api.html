@@ -22,6 +22,7 @@
 
             {{ if strings.Contains .Permalink "api-docs" }}
             <!--Don't show the title in the top-most index page.-->
+            <div class="title-ai-menu-container">
             {{ if not (in .Page.File.Path "api-docs/_index.md") }}
             {{ if and (.Params.h1) (not .Params.notitle) }}
             <h1>{{ .Params.h1 }}</h1>
@@ -32,6 +33,7 @@
             {{ partial "registry/package/pulumi-ai.html" . }}
             {{ end }}
             {{ end }}
+            </div>
             {{ else if (in .Page.File.Path "api-docs/_index.md")}}
             <h1>{{ .Params.title }}: API Docs</h1>
             {{ end }}

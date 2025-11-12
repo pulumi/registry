@@ -1,35 +1,152 @@
-a.pulumi-ai-badge {
-    display: inline-block;
-    
-    div {
-        width: fit-content;
-        margin-top: 4px;
-        margin-bottom: 24px;
-        border-color: #a6adec;
-        border-width: 2px;
-        border-left-width: 12px;
-        border-radius: 6px;
-        border-top-left-radius: 0px;
-        border-bottom-left-radius: 0px;
+.pulumi-ai-menu {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+
+    &__trigger {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 16px;
+        background: #ffffff;
+        border: 1px solid #673EAC;
+        border-radius: 4px;
+        color: #673EAC;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: box-shadow 0.2s ease, background 0.2s ease;
+        appearance: none;
+        margin: 16px 0;
 
         &:hover {
-            border-color: #828ce4;
-            cursor: pointer;
+            background: rgba(#673EAC, 0.06);
+            box-shadow: 0 4px 12px rgba(74, 32, 155, 0.18);
         }
 
-        p {
-            margin: 4px 14px 4px 16px;
-            font-size: 14px;
-
-            i {
-                margin-left: 12px;
-                font-size: 14px;
-                position:relative;
-                top:-1px;
-                color: transparent;
-                -webkit-text-stroke-width: 1.5px;
-                -webkit-text-stroke-color: #2f3032;
-            }
+        &:focus-visible {
+            outline: 1px solid #673EAC;
         }
+    }
+
+    &__neo-icon {
+        width: 20px;
+        height: 20px;
+        color: #673EAC;
+    }
+
+    &__chevron {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 12px;
+        height: 12px;
+        font-size: 12px;
+        color: #673EAC;
+        flex-shrink: 0;
+        transition: transform 0.2s ease;
+    }
+
+    &.is-open &__chevron {
+        transform: rotate(180deg);
+    }
+
+    &__dropdown {
+        position: absolute;
+        right: 0;
+        top: 100%;
+        min-width: 360px;
+        max-width: min(500px, calc(100vw - 32px));
+        background: #ffffff;
+        box-shadow:
+            0 18px 48px rgba(63, 81, 181, 0.15),
+            0 4px 12px rgba(63, 81, 181, 0.12);
+        display: none;
+        z-index: 10;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    &__dropdown[hidden] {
+        display: none !important;
+    }
+
+    &.is-open &__dropdown {
+        display: flex;
+    }
+
+    @media (max-width: 640px) {
+        width: 100%;
+        justify-content: flex-start;
+
+        &__dropdown {
+            left: 0;
+            right: auto;
+            min-width: calc(100vw - 32px);
+        }
+
+        &__trigger {
+            margin-bottom: 16px;
+        }
+    }
+
+    &__item {
+        display: flex;
+        align-items: flex-start;
+        padding: 10px 16px;
+        text-decoration: none;
+        color: map-get($gray, 900);
+        gap: 12px;
+        transition: background-color 0.2s ease;
+
+        &:hover,
+        &:focus-visible {
+            background-color: map-get($gray, 100);
+        }
+
+        &:focus-visible {
+            outline: none;
+        }
+    }
+
+    &__item-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+        color: map-get($gray, 900);
+    }
+
+    &__item-icon-symbol {
+        font-size: 16px;
+    }
+
+    &__trigger-text {
+        color: inherit;
+        font-weight: 600;
+    }
+
+    &__item-copy {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        flex: 1 1 auto;
+    }
+
+    &__item-title {
+        font-size: 14px;
+        font-weight: 600;
+        color: map-get($gray, 900);
+    }
+
+    &__item-description {
+        font-size: 13px;
+        color: map-get($gray, 900);
+        line-height: 1.4;
+        width: auto;
+        max-width: 100%;
+        white-space: normal;
+        overflow-wrap: anywhere;
     }
 }

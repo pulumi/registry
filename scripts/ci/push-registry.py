@@ -90,7 +90,7 @@ for filename in os.listdir(yaml_db_path):
         continue
 
 
-    api_url = f"{backend_url}/preview/registry/packages/{source}/{publisher}/{name}/versions/{version.removeprefix("v")}"
+    api_url = f"{backend_url}/registry/packages/{source}/{publisher}/{name}/versions/{version.removeprefix("v")}"
     existence_check = requests.get(api_url, headers={
         "Authorization": f"token {token}",
     }).status_code

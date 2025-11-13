@@ -29,6 +29,7 @@
                 <h1>{{ with .GetPage $packageHome }}{{ .Title }}{{ end }}: How-to-Guides</h1>
                 {{ else if strings.Contains .Permalink "api-docs" }}
                 <!--Don't show the title in the top-most index page.-->
+                <div class="title-ai-menu-container">
                 {{ if not (in .Page.File.Path "api-docs/_index.md") }}
                 {{ if and (.Params.h1) (not .Params.notitle) }}
                 <h1>{{ .Params.h1 }}</h1>
@@ -38,6 +39,7 @@
                 {{ .Scratch.Set "title_tag" $title_tag }}
                 {{ partial "registry/package/pulumi-ai.html" . }}
                 {{ end }}
+                </div>
                 {{ end }}
                 {{ else if (in .Page.File.Path "api-docs/_index.md")}}
                 <h1>{{ .Params.title }}: API Docs</h1>

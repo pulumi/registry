@@ -74,38 +74,21 @@ const handleDocumentClick = (event: MouseEvent, menus: MenuElements[]) => {
     });
 };
 
+let cleanupMenus: (() => void) | null = null;
+
 const initMenus = () => {
+    cleanupMenus?.();
+
     const menus = collectMenus();
     if (!menus.length) {
+        cleanupMenus = null;
         return;
     }
 
-    menus.forEach((menu) => {
-        menu.trigger.addEventListener("click", (event) => {
-            event.preventDefault();
-            toggleMenu(menu, menus);
-        });
+    const cleanupCallbacks: Array<() => void> = [];
 
-        menu.trigger.addEventListener("keydown", (event) => {
-            if (event.key === "ArrowDown") {
-                event.preventDefault();
-                openMenu(menu);
-            } else if (event.key === "Escape") {
-                closeMenu(menu);
-            }
-        });
-
-        menu.dropdown.addEventListener("keydown", (event) => {
-            if (event.key === "Escape") {
-                event.preventDefault();
-                closeMenu(menu);
-                menu.trigger.focus();
-            }
-        });
-    });
-
-    document.addEventListener("click", (event) => handleDocumentClick(event, menus));
-    document.addEventListener("keydown", (event) => {
+    const documentClickHandler = (event: MouseEvent) => handleDocumentClick(event, menus);
+    const documentKeydownHandler = (event: KeyboardEvent) => {
         if (event.key === "Escape") {
             menus.forEach((menu) => {
                 if (menu.root.classList.contains("is-open")) {
@@ -114,7 +97,63 @@ const initMenus = () => {
                 }
             });
         }
+    };
+
+    document.addEventListener("click", documentClickHandler);
+    cleanupCallbacks.push(() => document.removeEventListener("click", documentClickHandler));
+
+    document.addEventListener("keydown", documentKeydownHandler);
+    cleanupCallbacks.push(() => document.removeEventListener("keydown", documentKeydownHandler));
+
+    menus.forEach((menu) => {
+        const triggerClickHandler = (event: MouseEvent) => {
+            event.preventDefault();
+            toggleMenu(menu, menus);
+        };
+
+        const triggerKeydownHandler = (event: KeyboardEvent) => {
+            if (event.key === "ArrowDown") {
+                event.preventDefault();
+                openMenu(menu);
+            } else if (event.key === "Escape") {
+                closeMenu(menu);
+            }
+        };
+
+        const dropdownKeydownHandler = (event: KeyboardEvent) => {
+            if (event.key === "Escape") {
+                event.preventDefault();
+                closeMenu(menu);
+                menu.trigger.focus();
+            }
+        };
+
+        menu.trigger.addEventListener("click", triggerClickHandler);
+        cleanupCallbacks.push(() =>
+            menu.trigger.removeEventListener("click", triggerClickHandler),
+        );
+
+        menu.trigger.addEventListener("keydown", triggerKeydownHandler);
+        cleanupCallbacks.push(() =>
+            menu.trigger.removeEventListener("keydown", triggerKeydownHandler),
+        );
+
+        menu.dropdown.addEventListener("keydown", dropdownKeydownHandler);
+        cleanupCallbacks.push(() =>
+            menu.dropdown.removeEventListener("keydown", dropdownKeydownHandler),
+        );
     });
+
+    cleanupMenus = () => {
+        menus.forEach((menu) => closeMenu(menu));
+        cleanupCallbacks.forEach((callback) => callback());
+        cleanupMenus = null;
+    };
+};
+
+const destroyMenus = () => {
+    cleanupMenus?.();
+    cleanupMenus = null;
 };
 
 if (document.readyState === "loading") {
@@ -122,4 +161,6 @@ if (document.readyState === "loading") {
 } else {
     initMenus();
 }
+
+export { initMenus, destroyMenus };
 

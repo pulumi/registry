@@ -163,7 +163,7 @@ func getSchemaFromRegistry(metadata pkg.PackageMeta, schemaURL string) ([]byte, 
 		return nil, errors.Wrapf(err, "parsing version %q", metadata.Version)
 	}
 
-	apiURL := fmt.Sprintf("%s/preview/registry/packages/%s/%s/%s/versions/%s",
+	apiURL := fmt.Sprintf("%s/registry/packages/%s/%s/%s/versions/%s",
 		backendURL, source, publisher, metadata.Name, version)
 
 	//nolint:gosec // We're constructing the URL based on a predefined pattern.

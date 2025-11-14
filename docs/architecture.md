@@ -5,6 +5,65 @@ Definitions:
 **Registry Repo**: Metadata, templates, scripts & workflow. Builds pulumi.com/registry
 **Registry API**: Part of pulumi-service. AKA "Private Registry"
 
+## Information Flow Diagram
+
+```mermaid
+flowchart TD
+    %% Input Sources
+    IP[Internal Provider Publish]
+    TF[Any TF Provider Cron]
+    TP[3rd Party Provider Cron]
+    
+    %% Processing Components
+    TFP[TF-to-Pulumi Pipeline<br/>Lambda]
+    S3[S3 Bucket<br/>Schema Storage]
+
+    %% Registry Processing
+    RD[Repository Dispatch Handler]
+    PR[Pull Request<br/>Update Metadata YAML]
+    
+    %% Build & Deploy
+    MASTER[Master Branch Push]
+    BUILD[Build Process<br/>resourcedocsgen + Hugo]
+    S3BUCKET[S3 Bucket<br/>Static Site]
+    SEARCH[Search Index Update]
+    DEPLOY[Pulumi Infrastructure<br/>Deployment]
+    REDIR[S3 Redirects]
+    
+    %% Output
+    SITE[pulumi.com/registry]
+    
+    %% Flows
+    IP -->|repository_dispatch<br/>resource-provider| RD
+    
+    TF -->|Check watched providers| TFP
+    TFP -->|Download binary & extract schema| S3
+    S3 -->|repository_dispatch<br/>push-provider-update| RD
+    
+    TP -->|Read package-list.json| PR
+    
+    RD -->|Fetch & validate schema| PR
+    PR -->|Merge| MASTER
+    
+    MASTER -->|Trigger push.yml| BUILD
+    BUILD -->|Generate docs from schemas| S3BUCKET
+    S3BUCKET --> SEARCH
+    SEARCH --> DEPLOY
+    DEPLOY --> REDIR
+    REDIR --> SITE
+    
+    %% Styling
+    classDef aws fill:#09bbc9,stroke:#000
+    classDef input fill:#6b3a7d,stroke:#000
+    classDef process fill:#0e9e4d,stroke:#000
+    classDef output fill:#ec3024,stroke:#000
+    
+    class TF,TFP,S3 aws
+    class IP,TP input
+    class S3BUCKET,MASTER,RD,PR,BUILD,SEARCH,DEPLOY,REDIR process
+    class SITE output
+```
+
 ## Registry Package Updates
 
 There are currently three sources of information for updating the registry.

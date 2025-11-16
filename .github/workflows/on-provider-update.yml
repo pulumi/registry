@@ -23,7 +23,7 @@ env:
   ESC_ACTION_ENVIRONMENT: github-secrets/pulumi-registry
   ESC_ACTION_EXPORT_ENVIRONMENT_VARIABLES: GITHUB_TOKEN=PULUMI_BOT_TOKEN
 
-name: provider docs build
+name: Handle Provider Update Events
 on:
   repository_dispatch:
     types:
@@ -36,8 +36,8 @@ on:
       # Optional inputs are:
       # - PROVIDER_SCHEMA_PATH
       - resource-provider
-      # An update for a provider that is hosted opaquely - where we don't assume a backing
-      # GH repo.
+      # An update for a provider without a GitHub repo (OpenTofu registry providers, anytf).
+      # Schema and docs are hosted at arbitrary URLs instead of GitHub repo structure.
       #
       # Required inputs are:
       # - PROVIDER_SHORT_NAME
@@ -80,6 +80,7 @@ jobs:
           --publisher Pulumi
       - name: git status
         run: git status && git diff
+      # Duplicate checking unnecessary: we own the repositories dispatching these events
       - name: Create registry PR
         uses: ./.github/actions/new-provider-version-pr
         with:
@@ -121,6 +122,7 @@ jobs:
           --indexFileURL  "${{ env.PROVIDER_INDEX_URL  }}"
       - name: git status
         run: git status && git diff
+      # Duplicate checking unnecessary: we own the repositories dispatching these events
       - name: Create registry PR
         uses: ./.github/actions/new-provider-version-pr
         with:

@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: hashicorp
 repo_url: https://github.com/hashicorp/terraform-provider-local
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/hashicorp/local/2.5.3/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/hashicorp/local/2.6.1/schema.json
 title: local
-updated_on: 1747265740
-version: 2.5.3
+updated_on: 1763422548
+version: 2.6.1

@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/datarobot-community/pulumi-datarobot/v0.10.23/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/datarobot-community/pulumi-datarobot/v0.10.24/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/datarobot-community/pulumi-datarobot/blob/v0.10.23/docs/_index.md
+edit_url: https://github.com/datarobot-community/pulumi-datarobot/blob/v0.10.24/docs/_index.md
 title: DataRobot
 meta_desc: Provides an overview of the DataRobot Provider for Pulumi.
 layout: package

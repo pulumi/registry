@@ -1,5 +1,5 @@
 permissions: write-all # Equivalent to default permissions plus id-token: write
-name: Check for Community Package Updates
+name: Poll Community Packages for New Versions
 on:
   workflow_dispatch: null
   schedule:

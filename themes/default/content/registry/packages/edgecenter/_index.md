@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/edge-center/edgecenter/0.10.4/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/edge-center/edgecenter/0.10.5/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Edgecenter Provider
@@ -1214,7 +1214,7 @@ public class App {
 
     public static void stack(Context ctx) {
         var kp = new Keypair("kp", KeypairArgs.builder()
-            .projectId(1)
+            .projectId(1.0)
             .publicKey("your oub key")
             .sshkeyName("testkey")
             .build());
@@ -1222,8 +1222,8 @@ public class App {
         var network = new Network("network", NetworkArgs.builder()
             .name("network_example")
             .type("vxlan")
-            .regionId(1)
-            .projectId(1)
+            .regionId(1.0)
+            .projectId(1.0)
             .build());
 
         var subnet = new Subnet("subnet", SubnetArgs.builder()
@@ -1238,8 +1238,8 @@ public class App {
                 .nexthop("10.0.0.13")
                 .build())
             .gatewayIp("192.168.10.1")
-            .regionId(1)
-            .projectId(1)
+            .regionId(1.0)
+            .projectId(1.0)
             .build());
 
         var subnet2 = new Subnet("subnet2", SubnetArgs.builder()
@@ -1254,34 +1254,34 @@ public class App {
                 .nexthop("10.0.0.13")
                 .build())
             .gatewayIp("192.168.20.1")
-            .regionId(1)
-            .projectId(1)
+            .regionId(1.0)
+            .projectId(1.0)
             .build());
 
         var firstVolume = new Volume("firstVolume", VolumeArgs.builder()
             .name("boot volume")
             .typeName("ssd_hiiops")
-            .size(6)
+            .size(6.0)
             .imageId("f4ce3d30-e29c-4cfd-811f-46f383b6081f")
-            .regionId(1)
-            .projectId(1)
+            .regionId(1.0)
+            .projectId(1.0)
             .build());
 
         var secondVolume = new Volume("secondVolume", VolumeArgs.builder()
             .name("second volume")
             .typeName("ssd_hiiops")
             .imageId("f4ce3d30-e29c-4cfd-811f-46f383b6081f")
-            .size(6)
-            .regionId(1)
-            .projectId(1)
+            .size(6.0)
+            .regionId(1.0)
+            .projectId(1.0)
             .build());
 
         var thirdVolume = new Volume("thirdVolume", VolumeArgs.builder()
             .name("third volume")
             .typeName("ssd_hiiops")
-            .size(6)
-            .regionId(1)
-            .projectId(1)
+            .size(6.0)
+            .regionId(1.0)
+            .projectId(1.0)
             .build());
 
         var instance = new Instance("instance", InstanceArgs.builder()
@@ -1291,7 +1291,7 @@ public class App {
             .volumes(InstanceVolumeArgs.builder()
                 .source("existing-volume")
                 .volumeId(firstVolume.volumeId())
-                .bootIndex(0)
+                .bootIndex(0.0)
                 .build())
             .interfaces(
                 InstanceInterfaceArgs.builder()
@@ -1304,7 +1304,10 @@ public class App {
                     .networkId(network.networkId())
                     .subnetId(subnet2.subnetId())
                     .build())
-            .securityGroups(%!v(PANIC=Format method: runtime error: invalid memory address or nil pointer dereference))
+            .securityGroups(List.of(Map.ofEntries(
+                Map.entry("id", "66988147-f1b9-43b2-aaef-dee6d009b5b7"),
+                Map.entry("name", "default")
+            )))
             .metadatas(InstanceMetadataArgs.builder()
                 .key("some_key")
                 .value("some_data")
@@ -1313,35 +1316,35 @@ public class App {
                 .key("some_key")
                 .value("some_data")
                 .build())
-            .regionId(1)
-            .projectId(1)
+            .regionId(1.0)
+            .projectId(1.0)
             .build());
 
         var lb = new Loadbalancer("lb", LoadbalancerArgs.builder()
-            .projectId(1)
-            .regionId(1)
+            .projectId(1.0)
+            .regionId(1.0)
             .name("test1")
             .flavor("lb1-1-2")
             .listener(LoadbalancerListenerArgs.builder()
                 .name("test")
                 .protocol("HTTP")
-                .protocolPort(80)
+                .protocolPort(80.0)
                 .build())
             .build());
 
         var pl = new Lbpool("pl", LbpoolArgs.builder()
-            .projectId(1)
-            .regionId(1)
+            .projectId(1.0)
+            .regionId(1.0)
             .name("test_pool1")
             .protocol("HTTP")
             .lbAlgorithm("LEAST_CONNECTIONS")
             .loadbalancerId(lb.loadbalancerId())
-            .listenerId(lb.listener().applyValue(listener -> listener.id()))
+            .listenerId(lb.listener().applyValue(_listener -> _listener.id()))
             .healthMonitor(LbpoolHealthMonitorArgs.builder()
                 .type("PING")
-                .delay(60)
-                .maxRetries(5)
-                .timeout(10)
+                .delay(60.0)
+                .maxRetries(5.0)
+                .timeout(10.0)
                 .build())
             .sessionPersistence(LbpoolSessionPersistenceArgs.builder()
                 .type("APP_COOKIE")
@@ -1350,13 +1353,13 @@ public class App {
             .build());
 
         var lbm = new Lbmember("lbm", LbmemberArgs.builder()
-            .projectId(1)
-            .regionId(1)
+            .projectId(1.0)
+            .regionId(1.0)
             .poolId(pl.lbpoolId())
             .instanceId(instance.instanceId())
-            .address(instance.interfaces().applyValue(interfaces -> interfaces[0].ipAddress()))
-            .protocolPort(8081)
-            .weight(5)
+            .address(instance.interfaces().applyValue(_interfaces -> _interfaces[0].ipAddress()))
+            .protocolPort(8081.0)
+            .weight(5.0)
             .build());
 
         var instance2 = new Instance("instance2", InstanceArgs.builder()
@@ -1367,19 +1370,22 @@ public class App {
                 InstanceVolumeArgs.builder()
                     .source("existing-volume")
                     .volumeId(secondVolume.volumeId())
-                    .bootIndex(0)
+                    .bootIndex(0.0)
                     .build(),
                 InstanceVolumeArgs.builder()
                     .source("existing-volume")
                     .volumeId(thirdVolume.volumeId())
-                    .bootIndex(1)
+                    .bootIndex(1.0)
                     .build())
             .interfaces(InstanceInterfaceArgs.builder()
                 .type("subnet")
                 .networkId(network.networkId())
                 .subnetId(subnet.subnetId())
                 .build())
-            .securityGroups(%!v(PANIC=Format method: runtime error: invalid memory address or nil pointer dereference))
+            .securityGroups(List.of(Map.ofEntries(
+                Map.entry("id", "66988147-f1b9-43b2-aaef-dee6d009b5b7"),
+                Map.entry("name", "default")
+            )))
             .metadatas(InstanceMetadataArgs.builder()
                 .key("some_key")
                 .value("some_data")
@@ -1388,18 +1394,18 @@ public class App {
                 .key("some_key")
                 .value("some_data")
                 .build())
-            .regionId(1)
-            .projectId(1)
+            .regionId(1.0)
+            .projectId(1.0)
             .build());
 
         var lbm2 = new Lbmember("lbm2", LbmemberArgs.builder()
-            .projectId(1)
-            .regionId(1)
+            .projectId(1.0)
+            .regionId(1.0)
             .poolId(pl.lbpoolId())
             .instanceId(instance2.instanceId())
-            .address(instance2.interfaces().applyValue(interfaces -> interfaces[0].ipAddress()))
-            .protocolPort(8081)
-            .weight(5)
+            .address(instance2.interfaces().applyValue(_interfaces -> _interfaces[0].ipAddress()))
+            .protocolPort(8081.0)
+            .weight(5.0)
             .build());
 
     }

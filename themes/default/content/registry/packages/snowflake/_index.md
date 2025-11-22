@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-snowflake/v2.9.1/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-snowflake/v2.10.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-snowflake/blob/v2.9.1/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-snowflake/blob/v2.10.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Snowflake Provider
 meta_desc: Provides an overview on how to configure the Pulumi Snowflake provider.
@@ -302,6 +302,8 @@ config:
 - `jwtClientTimeout` (Number) The timeout in seconds for the JWT client to complete the authentication. Can also be sourced from the `SNOWFLAKE_JWT_CLIENT_TIMEOUT` environment variable.
 - `jwtExpireTimeout` (Number) JWT expire after timeout in seconds. Can also be sourced from the `SNOWFLAKE_JWT_EXPIRE_TIMEOUT` environment variable.
 - `keepSessionAlive` (Boolean) Enables the session to persist even after the connection is closed. Can also be sourced from the `SNOWFLAKE_KEEP_SESSION_ALIVE` environment variable.
+- `logQueryParameters` (Boolean) When set to true, the parameters will be logged. Requires logQueryText to be enabled first. Be aware that it may include sensitive information. Default value is false. Can also be sourced from the `SNOWFLAKE_LOG_QUERY_PARAMETERS` environment variable.
+- `logQueryText` (Boolean) When set to true, the full query text will be logged. Be aware that it may include sensitive information. Default value is false. Can also be sourced from the `SNOWFLAKE_LOG_QUERY_TEXT` environment variable.
 - `loginTimeout` (Number) Login retry timeout in seconds EXCLUDING network roundtrip and read out http response. Can also be sourced from the `SNOWFLAKE_LOGIN_TIMEOUT` environment variable.
 - `maxRetryCount` (Number) Specifies how many times non-periodic HTTP request can be retried by the driver. Can also be sourced from the `SNOWFLAKE_MAX_RETRY_COUNT` environment variable.
 - `oauthAuthorizationUrl` (String, Sensitive) Authorization URL of OAuth2 external IdP. See [Snowflake OAuth documentation](https://docs.snowflake.com/en/user-guide/oauth). Can also be sourced from the `SNOWFLAKE_OAUTH_AUTHORIZATION_URL` environment variable.
@@ -318,7 +320,7 @@ config:
 - `passcodeInPassword` (Boolean) False by default. Set to true if the MFA passcode is embedded to the configured password. Can also be sourced from the `SNOWFLAKE_PASSCODE_IN_PASSWORD` environment variable.
 - `password` (String, Sensitive) Password for user + password or [token](https://docs.snowflake.com/en/user-guide/programmatic-access-tokens#generating-a-programmatic-access-token) for [PAT auth](https://docs.snowflake.com/en/user-guide/programmatic-access-tokens). Cannot be used with `privateKey` and `privateKeyPassphrase`. Can also be sourced from the `SNOWFLAKE_PASSWORD` environment variable.
 - `port` (Number) Specifies a custom port value used by the driver for privatelink connections. Can also be sourced from the `SNOWFLAKE_PORT` environment variable.
-- `previewFeaturesEnabled` (Set of String) A list of preview features that are handled by the provider. See preview features list. Preview features may have breaking changes in future releases, even without raising the major version. This field can not be set with environmental variables. Preview features that can be enabled are: `snowflakeAccountAuthenticationPolicyAttachmentResource` | `snowflakeAccountPasswordPolicyAttachmentResource` | `snowflakeAlertResource` | `snowflakeAlertsFunction` | `snowflakeApiIntegrationResource` | `snowflakeAuthenticationPolicyResource` | `snowflakeAuthenticationPoliciesFunction` | `snowflakeCortexSearchServiceResource` | `snowflakeCortexSearchServicesFunction` | `snowflakeCurrentAccountResource` | `snowflakeCurrentAccountFunction` | `snowflakeCurrentOrganizationAccountResource` | `snowflakeDatabaseFunction` | `snowflakeDatabaseRoleFunction` | `snowflakeDynamicTableResource` | `snowflakeDynamicTablesFunction` | `snowflakeExternalFunctionResource` | `snowflakeExternalFunctionsFunction` | `snowflakeExternalTableResource` | `snowflakeExternalTablesFunction` | `snowflakeExternalVolumeResource` | `snowflakeFailoverGroupResource` | `snowflakeFailoverGroupsFunction` | `snowflakeFileFormatResource` | `snowflakeFileFormatsFunction` | `snowflakeFunctionJavaResource` | `snowflakeFunctionJavascriptResource` | `snowflakeFunctionPythonResource` | `snowflakeFunctionScalaResource` | `snowflakeFunctionSqlResource` | `snowflakeFunctionsFunction` | `snowflakeJobServiceResource` | `snowflakeManagedAccountResource` | `snowflakeMaterializedViewResource` | `snowflakeMaterializedViewsFunction` | `snowflakeNetworkPolicyAttachmentResource` | `snowflakeNetworkRuleResource` | `snowflakeEmailNotificationIntegrationResource` | `snowflakeNotificationIntegrationResource` | `snowflakeObjectParameterResource` | `snowflakePasswordPolicyResource` | `snowflakePipeResource` | `snowflakePipesFunction` | `snowflakeCurrentRoleFunction` | `snowflakeSequenceResource` | `snowflakeSequencesFunction` | `snowflakeShareResource` | `snowflakeSharesFunction` | `snowflakeParametersFunction` | `snowflakeProcedureJavaResource` | `snowflakeProcedureJavascriptResource` | `snowflakeProcedurePythonResource` | `snowflakeProcedureScalaResource` | `snowflakeProcedureSqlResource` | `snowflakeProceduresFunction` | `snowflakeStageResource` | `snowflakeStagesFunction` | `snowflakeStorageIntegrationResource` | `snowflakeStorageIntegrationsFunction` | `snowflakeSystemGenerateScimAccessTokenFunction` | `snowflakeSystemGetAwsSnsIamPolicyFunction` | `snowflakeSystemGetPrivatelinkConfigFunction` | `snowflakeSystemGetSnowflakePlatformInfoFunction` | `snowflakeTableColumnMaskingPolicyApplicationResource` | `snowflakeTableConstraintResource` | `snowflakeTableResource` | `snowflakeTablesFunction` | `snowflakeUserAuthenticationPolicyAttachmentResource` | `snowflakeUserPublicKeysResource` | `snowflakeUserPasswordPolicyAttachmentResource`. Promoted features that are stable and are enabled by default are: `snowflakeComputePoolResource` | `snowflakeComputePoolsFunction` | `snowflakeGitRepositoryResource` | `snowflakeGitRepositoriesFunction` | `snowflakeImageRepositoryResource` | `snowflakeImageRepositoriesFunction` | `snowflakeListingResource` | `snowflakeServiceResource` | `snowflakeServicesFunction` | `snowflakeUserProgrammaticAccessTokenResource` | `snowflakeUserProgrammaticAccessTokensFunction`. Promoted features can be safely removed from this field. They will be removed in the next major version.
+- `previewFeaturesEnabled` (Set of String) A list of preview features that are handled by the provider. See preview features list. Preview features may have breaking changes in future releases, even without raising the major version. This field can not be set with environmental variables. Preview features that can be enabled are: `snowflakeAccountAuthenticationPolicyAttachmentResource` | `snowflakeAccountPasswordPolicyAttachmentResource` | `snowflakeAlertResource` | `snowflakeAlertsFunction` | `snowflakeApiIntegrationResource` | `snowflakeAuthenticationPolicyResource` | `snowflakeAuthenticationPoliciesFunction` | `snowflakeCortexSearchServiceResource` | `snowflakeCortexSearchServicesFunction` | `snowflakeCurrentAccountResource` | `snowflakeCurrentAccountFunction` | `snowflakeCurrentOrganizationAccountResource` | `snowflakeDatabaseFunction` | `snowflakeDatabaseRoleFunction` | `snowflakeDynamicTableResource` | `snowflakeDynamicTablesFunction` | `snowflakeExternalFunctionResource` | `snowflakeExternalFunctionsFunction` | `snowflakeExternalTableResource` | `snowflakeExternalTablesFunction` | `snowflakeExternalVolumeResource` | `snowflakeFailoverGroupResource` | `snowflakeFailoverGroupsFunction` | `snowflakeFileFormatResource` | `snowflakeFileFormatsFunction` | `snowflakeFunctionJavaResource` | `snowflakeFunctionJavascriptResource` | `snowflakeFunctionPythonResource` | `snowflakeFunctionScalaResource` | `snowflakeFunctionSqlResource` | `snowflakeFunctionsFunction` | `snowflakeJobServiceResource` | `snowflakeManagedAccountResource` | `snowflakeMaterializedViewResource` | `snowflakeMaterializedViewsFunction` | `snowflakeNetworkPolicyAttachmentResource` | `snowflakeNetworkRuleResource` | `snowflakeNotebookResource` | `snowflakeNotebooksFunction` | `snowflakeEmailNotificationIntegrationResource` | `snowflakeNotificationIntegrationResource` | `snowflakeObjectParameterResource` | `snowflakePasswordPolicyResource` | `snowflakePipeResource` | `snowflakePipesFunction` | `snowflakeCurrentRoleFunction` | `snowflakeSemanticViewResource` | `snowflakeSemanticViewsFunction` | `snowflakeSequenceResource` | `snowflakeSequencesFunction` | `snowflakeShareResource` | `snowflakeSharesFunction` | `snowflakeParametersFunction` | `snowflakeProcedureJavaResource` | `snowflakeProcedureJavascriptResource` | `snowflakeProcedurePythonResource` | `snowflakeProcedureScalaResource` | `snowflakeProcedureSqlResource` | `snowflakeProceduresFunction` | `snowflakeStageResource` | `snowflakeStagesFunction` | `snowflakeStorageIntegrationResource` | `snowflakeStorageIntegrationsFunction` | `snowflakeSystemGenerateScimAccessTokenFunction` | `snowflakeSystemGetAwsSnsIamPolicyFunction` | `snowflakeSystemGetPrivatelinkConfigFunction` | `snowflakeSystemGetSnowflakePlatformInfoFunction` | `snowflakeTableColumnMaskingPolicyApplicationResource` | `snowflakeTableConstraintResource` | `snowflakeTableResource` | `snowflakeTablesFunction` | `snowflakeUserAuthenticationPolicyAttachmentResource` | `snowflakeUserPublicKeysResource` | `snowflakeUserPasswordPolicyAttachmentResource`. Promoted features that are stable and are enabled by default are: `snowflakeComputePoolResource` | `snowflakeComputePoolsFunction` | `snowflakeGitRepositoryResource` | `snowflakeGitRepositoriesFunction` | `snowflakeImageRepositoryResource` | `snowflakeImageRepositoriesFunction` | `snowflakeListingResource` | `snowflakeServiceResource` | `snowflakeServicesFunction` | `snowflakeUserProgrammaticAccessTokenResource` | `snowflakeUserProgrammaticAccessTokensFunction`. Promoted features can be safely removed from this field. They will be removed in the next major version.
 - `privateKey` (String, Sensitive) Private Key for username+private-key auth. Cannot be used with `password`. Can also be sourced from the `SNOWFLAKE_PRIVATE_KEY` environment variable.
 - `privateKeyPassphrase` (String, Sensitive) Supports the encryption ciphers aes-128-cbc, aes-128-gcm, aes-192-cbc, aes-192-gcm, aes-256-cbc, aes-256-gcm, and des-ede3-cbc. Can also be sourced from the `SNOWFLAKE_PRIVATE_KEY_PASSPHRASE` environment variable.
 - `profile` (String) Sets the profile to read from ~/.snowflake/config file. Can also be sourced from the `SNOWFLAKE_PROFILE` environment variable.
@@ -596,6 +598,8 @@ oauth_scope = 'oauth_scope'
 workload_identity_provider = 'azure'
 workload_identity_entra_resource = 'workload_identity_entra_resource'
 enable_single_use_refresh_tokens = true
+log_query_text = false
+log_query_parameters = false
 
 [example.params]
 param_key = 'param_value'
@@ -644,6 +648,8 @@ oauthscope = 'oauth_scope'
 workloadidentityprovider = 'azure'
 workloadidentityentraresource = 'workload_identity_entra_resource'
 enablesingleuserefreshtokens = true
+logquerytext = false
+logqueryparameters = false
 
 [example.params]
 param_key = 'param_value'
@@ -692,6 +698,10 @@ config:
         value: 30
     snowflake:keepSessionAlive:
         value: true
+    snowflake:logQueryParameters:
+        value: false
+    snowflake:logQueryText:
+        value: false
     snowflake:loginTimeout:
         value: 10
     snowflake:maxRetryCount:
@@ -792,6 +802,10 @@ config:
         value: 30
     snowflake:keepSessionAlive:
         value: true
+    snowflake:logQueryParameters:
+        value: false
+    snowflake:logQueryText:
+        value: false
     snowflake:loginTimeout:
         value: 10
     snowflake:maxRetryCount:
@@ -892,6 +906,10 @@ config:
         value: 30
     snowflake:keepSessionAlive:
         value: true
+    snowflake:logQueryParameters:
+        value: false
+    snowflake:logQueryText:
+        value: false
     snowflake:loginTimeout:
         value: 10
     snowflake:maxRetryCount:
@@ -998,6 +1016,10 @@ config:
         value: 30
     snowflake:keepSessionAlive:
         value: true
+    snowflake:logQueryParameters:
+        value: false
+    snowflake:logQueryText:
+        value: false
     snowflake:loginTimeout:
         value: 10
     snowflake:maxRetryCount:
@@ -1108,6 +1130,10 @@ config:
         value: 30
     snowflake:keepSessionAlive:
         value: true
+    snowflake:logQueryParameters:
+        value: false
+    snowflake:logQueryText:
+        value: false
     snowflake:loginTimeout:
         value: 10
     snowflake:maxRetryCount:
@@ -1216,6 +1242,10 @@ config:
         value: 30
     snowflake:keepSessionAlive:
         value: true
+    snowflake:logQueryParameters:
+        value: false
+    snowflake:logQueryText:
+        value: false
     snowflake:loginTimeout:
         value: 10
     snowflake:maxRetryCount:
@@ -1438,6 +1468,18 @@ public class App {
 {{< /chooser >}}
 
 > Note: Timeouts can be also set at driver's level (see [driver documentation](https://pkg.go.dev/github.com/snowflakedb/gosnowflake)). These timeouts are independent. We recommend tweaking the timeouts on Pulumi level first.
+## General provider rules
+
+> Note: This section is in a `work in progress` state and will be updated over time.
+
+In this section, we describe general rules that apply to multiple resources and functions in the provider.
+This may help you understand the provider behavior when you are getting started with it.
+
+However, getting familiar with existing guides (`Guides` section on the left),
+resource-specific documentation, and Snowflake-specific documentation for a given object is still recommended.
+
+Here's a list of general rules:
+- All fields representing object identifiers (e.g., allowedNetworkRuleList in `snowflake.NetworkPolicy`) or parts of them (e.g., `database`, `schema`, and `name` in the snowflake.NetworkRule resource) are case-sensitive. This is true for all stable resources (there may be some exceptions in the preview ones; especially older ones). However, you can make all identifiers case-insensitive by enabling [QUOTED_IDENTIFIERS_IGNORE_CASE](https://docs.snowflake.com/en/sql-reference/parameters#quoted-identifiers-ignore-case), but be aware with the issues you may have when using it.
 ## A list of preview and stable resources and functions
 
 The provider supports a number of Snowflake features. Within the provider, some features are stable, while others are in preview
@@ -1564,6 +1606,7 @@ To use them, add the relevant feature name to the `previewFeaturesEnabled` field
 - snowflake.MaterializedView
 - snowflake.NetworkPolicyAttachment
 - snowflake.NetworkRule
+- snowflake.Notebook
 - snowflake.NotificationIntegration
 - snowflake.ObjectParameter
 - snowflake.PasswordPolicy
@@ -1573,6 +1616,7 @@ To use them, add the relevant feature name to the `previewFeaturesEnabled` field
 - snowflake.ProcedurePython
 - snowflake.ProcedureScala
 - snowflake.ProcedureSql
+- snowflake.SemanticView
 - snowflake.Sequence
 - snowflake.Share
 - snowflake.Stage
@@ -1601,9 +1645,11 @@ To use them, add the relevant feature name to the `previewFeaturesEnabled` field
 - snowflake.getFileFormats
 - snowflake.getFunctions
 - snowflake.getMaterializedViews
+- snowflake.getNotebooks
 - snowflake.getParameters
 - snowflake.getPipes
 - snowflake.getProcedures
+- snowflake.getSemanticViews
 - snowflake.getSequences
 - snowflake.getShares
 - snowflake.getStages

@@ -10,7 +10,7 @@ native: true
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-kubernetes
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-kubernetes/v4.24.0/provider/cmd/pulumi-resource-kubernetes/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-kubernetes/v4.24.1/provider/cmd/pulumi-resource-kubernetes/schema.json
 title: Kubernetes
-updated_on: 1762384849
-version: v4.24.0
+updated_on: 1764006266
+version: v4.24.1

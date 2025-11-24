@@ -1,6 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pierskarsenbarg/pulumi-nutanix/v0.10.0/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pierskarsenbarg/pulumi-nutanix/v0.11.0/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
+edit_url: https://github.com/pierskarsenbarg/pulumi-nutanix/blob/v0.11.0/docs/installation-configuration.md
 title: Nutanix Installation & Configuration
 meta_desc: Information on how to install the Nutanix provider.
 layout: package

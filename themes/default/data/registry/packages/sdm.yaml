@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: Piers Karsenbarg
 repo_url: https://github.com/pierskarsenbarg/pulumi-sdm
-schema_file_url: https://raw.githubusercontent.com/pierskarsenbarg/pulumi-sdm/v1.32.0/provider/cmd/pulumi-resource-sdm/schema.json
+schema_file_url: https://raw.githubusercontent.com/pierskarsenbarg/pulumi-sdm/v1.33.0/provider/cmd/pulumi-resource-sdm/schema.json
 title: StrongDM
-updated_on: 1760362536
-version: v1.32.0
+updated_on: 1763976871
+version: v1.33.0

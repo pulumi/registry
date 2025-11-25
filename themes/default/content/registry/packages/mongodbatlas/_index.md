@@ -1,6 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-mongodbatlas/v3.36.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-mongodbatlas/v3.37.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+edit_url: https://github.com/pulumi/pulumi-mongodbatlas/blob/v3.37.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Mongodbatlas Provider
 meta_desc: Provides an overview on how to configure the Pulumi Mongodbatlas provider.
@@ -69,7 +70,7 @@ You can use any the following methods:
 ### Environment Variables
 
 You can also provide your credentials via the environment variables,
-`MONGODB_ATLAS_PUBLIC_KEY` and `MONGODB_ATLAS_PRIVATE_KEY`,
+`MONGODB_ATLAS_PUBLIC_API_KEY` and `MONGODB_ATLAS_PRIVATE_API_KEY`,
 for your public and private MongoDB Atlas programmatic API key pair respectively:
 
 ```yaml
@@ -82,14 +83,13 @@ runtime:
 Usage (prefix the export commands with a space to avoid the keys being recorded in OS history):
 
 ```shell
-$  export MONGODB_ATLAS_PUBLIC_KEY="xxxx"
-$  export MONGODB_ATLAS_PRIVATE_KEY="xxxx"
+$  export MONGODB_ATLAS_PUBLIC_API_KEY="<ATLAS_PUBLIC_KEY>"
+$  export MONGODB_ATLAS_PRIVATE_API_KEY="<ATLAS_PRIVATE_KEY>"
 $ pulumi preview
 ```
 
-As an alternative to `MONGODB_ATLAS_PUBLIC_KEY` and `MONGODB_ATLAS_PRIVATE_KEY`
-if you are using [MongoDB CLI](https://docs.mongodb.com/mongocli/stable/)
-then `MCLI_PUBLIC_API_KEY` and `MCLI_PRIVATE_API_KEY` are also supported.
+We recommend that you use the `MONGODB_ATLAS_PUBLIC_API_KEY` and `MONGODB_ATLAS_PRIVATE_API_KEY` environment variables because they are compatible with other MongoDB tools, such as Atlas CLI.
+You can still use `MONGODB_ATLAS_PUBLIC_KEY` and `MONGODB_ATLAS_PRIVATE_KEY` as alternative keys in your local environment. However, these environment variables are not guaranteed to work across all tools in the MongoDB ecosystem.
 ### AWS Secrets Manager
 AWS Secrets Manager (AWS SM) helps to manage, retrieve, and rotate database credentials, API keys, and other secrets throughout their lifecycles. See [product page](https://aws.amazon.com/secrets-manager/) and [documentation](https://docs.aws.amazon.com/systems-manager/latest/userguide/what-is-systems-manager.html) for more details.
 
@@ -124,8 +124,8 @@ Note: this policy may be overly broad for many use cases, feel free to adjust ac
 
 3. In terminal, store as environmental variables AWS API Keys (while you can also hardcode in config files these will then be stored as plain text in .tfstate file and should be avoided if possible). For example:
 ```
-export AWS_ACCESS_KEY_ID="secret"
-export AWS_SECRET_ACCESS_KEY="secret”
+export AWS_ACCESS_KEY_ID='<AWS_ACCESS_KEY_ID>'
+export AWS_SECRET_ACCESS_KEY='<AWS_SECRET_ACCESS_KEY>'
 ```
 4. In terminal, use the AWS CLI command: `aws sts assume-role --role-arn ROLE_ARN_FROM_ABOVE --role-session-name newSession`
 
@@ -133,9 +133,9 @@ Note: AWS STS secrets are short lived by default, use the ` --duration-seconds` 
 
 5. Store each of the 3 new created secrets from AWS STS as environment variables (hardcoding secrets into config file with additional risk is also supported). For example:
 ```
-export AWS_ACCESS_KEY_ID="ASIAYBYSK3S5FZEKLETV"
-export AWS_SECRET_ACCESS_KEY="lgT6kL9lr1fxM6mCEwJ33MeoJ1M6lIzgsiW23FGH"
-export AWS_SESSION_TOKEN="IQoXX3+Q"
+export AWS_ACCESS_KEY_ID='<AWS_ACCESS_KEY_ID>'
+export AWS_SECRET_ACCESS_KEY='<AWS_SECRET_ACCESS_KEY>'
+export AWS_SESSION_TOKEN="<AWS_SESSION_TOKEN>"
 ```
 
 6. Add assumeRole block with `roleArn`, `secretName`, and AWS `region` where secret is stored as part of AWS SM. Each of these 3 fields are REQUIRED. For example:
@@ -145,11 +145,11 @@ name: configuration-example
 runtime:
 config:
     mongodbatlas:awsAccessKeyId:
-        value: ASIXXBNEK
+        value: <AWS_ACCESS_KEY_ID>
     mongodbatlas:awsSecretAccessKey:
-        value: ZUZgVb8XYZWEXXEDURGFHFc5Au
+        value: <AWS_SECRET_ACCESS_KEY>
     mongodbatlas:awsSessionToken:
-        value: IQoXX3+Q=
+        value: <AWS_SESSION_TOKEN>
     mongodbatlas:region:
         value: us-east-2
     mongodbatlas:secretName:
@@ -201,3 +201,68 @@ In addition to generic `provider` arguments
   environment variable.
 
 For more information on configuring and managing programmatic API Keys see the [MongoDB Atlas Documentation](https://docs.atlas.mongodb.com/tutorial/manage-programmatic-access/index.html).
+## MongoDB Atlas Provider Versioning Policy
+
+In order to promote stability, predictability, and transparency, the MongoDB Atlas Pulumi Provider will implement **semantic versioning** with a **scheduled release cadence**. Our goal is to deliver regular improvements to the provider without overburdening users with frequent breaking changes.
+
+---
+### Definition of Breaking Changes
+
+Our definition of breaking changes aligns with the impact updates have on the customer:
+
+Breaking changes are defined as any change that requires user intervention to address.
+This may include:
+
+- Modifying existing schema (e.g., removing or renaming fields, renaming resources)
+- Changes to business logic (e.g., implicit default values or server-side behavior)
+- Provider-level changes (e.g., changing retry behavior)
+
+Final confirmation of a breaking change — possibly leading to an exemption — is subject to:
+
+- MongoDB’s understanding of the adoption level of the feature
+- Timing of the next planned major release
+- The change's relation to a bug fix
+
+---
+### Versioning Strategy
+
+We follow [semantic versioning](https://semver.org/) for all updates:
+
+- **Major (X.0.0):** Introduces breaking changes (as defined by MongoDB)
+- **Minor (X.Y.0):** Adds non-breaking changes and announces deprecations
+- **Patch (X.Y.Z):** Includes bug fixes and documentation updates
+
+We do not utilize pre-release versioning at this time.
+
+---
+### Release Cadence
+
+To minimize unexpected changes, we follow a scheduled cadence:
+
+- **Minor and patch** versions follow a **biweekly** release pattern
+- **Major** versions are released **once per year**, with a maximum of **two per calendar year**
+- The provider team may adjust the schedule based on need
+
+**Off-cycle releases** may occur for critical security flaws or regressions.
+
+---
+### Deprecation Policy
+
+We use a structured deprecation window to notify customers in advance:
+
+- Breaking changes are **deprecated in a minor version** with:
+  - Warnings in migration guides, changelogs, and resource usage
+- Deprecated functionality is **removed in the next 1–2 major versions**, unless otherwise stated
+
+---
+### Customer Communication
+
+We are committed to clear and proactive communication:
+
+- **Each release** includes a changelog clearly labeling:
+  - `breaking`, `deprecated`, `bug-fix`, `feature`, and `enhancement` changes
+- **Major versions** include migration guides
+- **Minor and patch versions** generally do not include migration guides, but may if warranted
+- **GitHub tags** with `vX.Y.Z` format are provided for all releases
+
+---

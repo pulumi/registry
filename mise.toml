@@ -6,3 +6,4 @@ yarn = '1.22.22'
 hugo = '0.135'
 
 golangci-lint = "2.1.6"
+yq = "latest"

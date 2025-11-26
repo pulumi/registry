@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-scm/v0.4.3/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-scm/v1.0.1/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-scm/blob/v0.4.3/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-scm/blob/v1.0.1/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Strata Cloud Manager Provider
 meta_desc: Provides an overview on how to configure the Pulumi Strata Cloud Manager provider.
@@ -35,6 +35,35 @@ This provider covers the following aspects of Strata Cloud Manager:
 
 By using this software, you agree to these terms.
 ## Release Notes
+### v1.0.5
+#### FEATURES
+
+* resource/scm_auto_vpn_settings: Added Support for singleton resource without uuid
+* resource/scm_bgp_routing: Added Support for singleton resource without uuid
+#### ENHANCEMENTS
+
+* resource/scm_authentication_profile: Added additional examples and tests (resource, data-source)
+* resource/scm_authentication_sequence: Added additional examples and tests (resource, data-source)
+* resource/scm_authentication_portal: Added additional examples and tests (resource)
+* resource/scm_auto_vpn_cluster: Added additional examples and tests (resource, data-source)
+* resource/scm_bgp_auth_profile: Added additional examples (resource, data-source)
+* resource/scm_bgp_address_family_profile: Added additional examples (resource, data-source)
+* resource/scm_bgp_filtering_profile: Added additional examples (resource, data-source)
+* resource/scm_bgp_route_map: Added additional examples (resource, data-source)
+* resource/scm_file_blocking_profile: Added additional examples and tests (resource, data-source)
+* resource/scm_route_prefix_list: Added additional examples (resource, data-source)
+* resource/scm_site: Added additional examples and tests (resource, data-source)
+
+* RequiredFields Documentation for resources that require exactly one of multiple options (#66)
+* Import Documentation for resources (#29)
+* Interface Management Profile GetByUUID support (#64)
+#### BUG FIXES
+
+* resource/scm_authentication_portal: Removed incorrect mandatory property `id` from model
+* resource/scm_authentication_profile: Removed incorrect mandatory property `id` from model
+* resource/scm_ethernet_interface: Added missing aggregateGroup property to assign interface to aggregate-ethernet
+* resource/scm_file_blocking_profile: Added missing options for filetype
+* Resolved Issue with JWT Authentication Refresh causing 401 Errors (#51, #53, #68)
 ### v1.0.4
 #### ENHANCEMENTS
 

@@ -10,7 +10,7 @@ native: false
 package_status: public_preview
 publisher: pulumiverse
 repo_url: https://github.com/pulumiverse/pulumi-cpln
-schema_file_url: https://raw.githubusercontent.com/pulumiverse/pulumi-cpln/v0.0.75/provider/cmd/pulumi-resource-cpln/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumiverse/pulumi-cpln/v0.0.76/provider/cmd/pulumi-resource-cpln/schema.json
 title: Control Plane
-updated_on: 1764163400
-version: v0.0.75
+updated_on: 1764254096
+version: v0.0.76

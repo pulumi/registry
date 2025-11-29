@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-hcloud/v1.28.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-hcloud/v1.29.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-hcloud/blob/v1.28.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-hcloud/blob/v1.29.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Hcloud Provider
 meta_desc: Provides an overview on how to configure the Pulumi Hcloud provider.
@@ -170,6 +170,7 @@ The following configuration inputs are supported:
 
 - `token` - (Required, string) This is the Hetzner Cloud API Token, can also be specified with the `HCLOUD_TOKEN` environment variable.
 - `endpoint` - (Optional, string) Hetzner Cloud API endpoint, can be used to override the default API Endpoint `https://api.hetzner.cloud/v1`.
+- `endpointHetzner` - (Optional, string) Hetzner API endpoint, can be used to override the default API Endpoint `https://api.hetzner.com/v1`.
 - `pollInterval` - (Optional, string) Configures the interval in which actions are polled by the client. Default `500ms`. Increase this interval if you run into rate limiting errors.
 - `pollFunction` - (Optional, string) Configures the type of function to be used during the polling. Valid values are `constant` and `exponential`. Default `exponential`.
 ## Experimental features

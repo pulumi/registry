@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/juju/juju/1.0.0/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/juju/juju/1.1.0-rc1/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Juju Provider
@@ -447,7 +447,7 @@ public class App {
             .charms(ApplicationCharmArgs.builder()
                 .name("wordpress")
                 .build())
-            .units(3)
+            .units(3.0)
             .build());
 
         var percona_cluster = new Application("percona-cluster", ApplicationArgs.builder()
@@ -456,7 +456,7 @@ public class App {
             .charms(ApplicationCharmArgs.builder()
                 .name("percona-cluster")
                 .build())
-            .units(3)
+            .units(3.0)
             .build());
 
         var wpToPercona = new Integration("wpToPercona", IntegrationArgs.builder()
@@ -875,7 +875,7 @@ public class App {
             .charms(ApplicationCharmArgs.builder()
                 .name("wordpress")
                 .build())
-            .units(3)
+            .units(3.0)
             .build());
 
         var percona_cluster = new Application("percona-cluster", ApplicationArgs.builder()
@@ -884,7 +884,7 @@ public class App {
             .charms(ApplicationCharmArgs.builder()
                 .name("percona-cluster")
                 .build())
-            .units(3)
+            .units(3.0)
             .build());
 
         var wpToPercona = new Integration("wpToPercona", IntegrationArgs.builder()
@@ -1303,7 +1303,7 @@ public class App {
             .charms(ApplicationCharmArgs.builder()
                 .name("wordpress")
                 .build())
-            .units(3)
+            .units(3.0)
             .build());
 
         var percona_cluster = new Application("percona-cluster", ApplicationArgs.builder()
@@ -1312,7 +1312,7 @@ public class App {
             .charms(ApplicationCharmArgs.builder()
                 .name("percona-cluster")
                 .build())
-            .units(3)
+            .units(3.0)
             .build());
 
         var wpToPercona = new Integration("wpToPercona", IntegrationArgs.builder()
@@ -1339,6 +1339,22 @@ public class App {
 - `clientId` (String) If using JAAS: This is the client ID (OAuth2.0, created by the external identity provider) to be used. This can also be set by the `JUJU_CLIENT_ID` environment variable
 - `clientSecret` (String, Sensitive) If using JAAS: This is the client secret (OAuth2.0, created by the external identity provider) to be used. This can also be set by the `JUJU_CLIENT_SECRET` environment variable
 - `controllerAddresses` (String) This is the controller addresses to connect to, defaults to localhost:17070, multiple addresses can be provided in this format: <host>:<port>,<host>:<port>,.... This can also be set by the `JUJU_CONTROLLER_ADDRESSES` environment variable.
+- `offeringControllers` (Attributes Map) Additional controller details for cross-model integrations. The map key is the controller name. (see below for nested schema)
 - `password` (String, Sensitive) This is the password of the username to be used. This can also be set by the `JUJU_PASSWORD` environment variable
 - `skipFailedDeletion` (Boolean) Whether to issue a warning instead of an error and continue if a resource deletion fails. This can also be set by the `JUJU_SKIP_FAILED_DELETION` environment variable. Defaults to false.
 - `username` (String) This is the username registered with the controller to be used. This can also be set by the `JUJU_USERNAME` environment variable
+
+<a id="nestedatt--offering_controllers"></a>
+### Nested Schema for `offeringControllers`
+
+Required:
+
+- `controllerAddresses` (String) Controller addresses to connect to. Multiple addresses can be provided in this format: <host>:<port>,<host>:<port>,....
+
+Optional:
+
+- `caCertificate` (String) CA certificate for the controller if using a self-signed certificate.
+- `clientId` (String) The client ID (OAuth2.0, created by the external identity provider) to be used.
+- `clientSecret` (String, Sensitive) The client secret (OAuth2.0, created by the external identity provider) to be used.
+- `password` (String, Sensitive) Password for the controller username.
+- `username` (String) Username registered with the controller.

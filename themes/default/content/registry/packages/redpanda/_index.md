@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/redpanda-data/redpanda/1.3.5/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/redpanda-data/redpanda/1.4.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Redpanda Provider
@@ -209,7 +209,7 @@ const testCluster = new redpanda.Cluster("test", {
     connectionType: "public",
     throughputTier: throughputTier,
     zones: zones,
-    allowDeletion: true,
+    allowDeletion: clusterAllowDeletion,
     clusterConfiguration: {
         customPropertiesJson: JSON.stringify({
             schema_registry_enable_authorization: true,
@@ -454,6 +454,18 @@ const writeOrders = new redpanda.SchemaRegistryAcl("write_orders", {
 }, {
     dependsOn: [schemaRegistryAdmin],
 });
+const developer = new redpanda.Role("developer", {
+    name: roleName,
+    clusterApiUrl: testCluster.clusterApiUrl,
+    allowDeletion: roleAllowDeletion,
+});
+const developerAssignment = new redpanda.RoleAssignment("developer_assignment", {
+    roleName: developer.name,
+    principal: testUser.name,
+    clusterApiUrl: testCluster.clusterApiUrl,
+}, {
+    dependsOn: [testUser],
+});
 export const userSchemaInfo = {
     id: userSchema.schemaId,
     subject: userSchema.subject,
@@ -510,7 +522,7 @@ test_cluster = redpanda.Cluster("test",
     connection_type="public",
     throughput_tier=throughput_tier,
     zones=zones,
-    allow_deletion=True,
+    allow_deletion=cluster_allow_deletion,
     cluster_configuration={
         "custom_properties_json": json.dumps({
             "schema_registry_enable_authorization": True,
@@ -728,6 +740,15 @@ write_orders = redpanda.SchemaRegistryAcl("write_orders",
     password=user_pw,
     allow_deletion=True,
     opts = pulumi.ResourceOptions(depends_on=[schema_registry_admin]))
+developer = redpanda.Role("developer",
+    name=role_name,
+    cluster_api_url=test_cluster.cluster_api_url,
+    allow_deletion=role_allow_deletion)
+developer_assignment = redpanda.RoleAssignment("developer_assignment",
+    role_name=developer.name,
+    principal=test_user.name,
+    cluster_api_url=test_cluster.cluster_api_url,
+    opts = pulumi.ResourceOptions(depends_on=[test_user]))
 pulumi.export("userSchemaInfo", {
     "id": user_schema.schema_id,
     "subject": user_schema.subject,
@@ -797,7 +818,7 @@ return await Deployment.RunAsync(() =>
         ConnectionType = "public",
         ThroughputTier = throughputTier,
         Zones = zones,
-        AllowDeletion = true,
+        AllowDeletion = clusterAllowDeletion,
         ClusterConfiguration = new Redpanda.Inputs.ClusterClusterConfigurationArgs
         {
             CustomPropertiesJson = JsonSerializer.Serialize(new Dictionary<string, object?>
@@ -1117,6 +1138,26 @@ return await Deployment.RunAsync(() =>
         },
     });
 
+    var developer = new Redpanda.Role("developer", new()
+    {
+        Name = roleName,
+        ClusterApiUrl = testCluster.ClusterApiUrl,
+        AllowDeletion = roleAllowDeletion,
+    });
+
+    var developerAssignment = new Redpanda.RoleAssignment("developer_assignment", new()
+    {
+        RoleName = developer.Name,
+        Principal = testUser.Name,
+        ClusterApiUrl = testCluster.ClusterApiUrl,
+    }, new CustomResourceOptions
+    {
+        DependsOn =
+        {
+            testUser,
+        },
+    });
+
     return new Dictionary<string, object?>
     {
         ["userSchemaInfo"] =
@@ -1205,7 +1246,7 @@ func main() {
 			ConnectionType:  pulumi.String("public"),
 			ThroughputTier:  pulumi.Any(throughputTier),
 			Zones:           pulumi.Any(zones),
-			AllowDeletion:   pulumi.Bool(true),
+			AllowDeletion:   pulumi.Any(clusterAllowDeletion),
 			ClusterConfiguration: &redpanda.ClusterClusterConfigurationArgs{
 				CustomPropertiesJson: pulumi.String(json0),
 			},
@@ -1517,6 +1558,24 @@ func main() {
 		if err != nil {
 			return err
 		}
+		developer, err := redpanda.NewRole(ctx, "developer", &redpanda.RoleArgs{
+			Name:          pulumi.Any(roleName),
+			ClusterApiUrl: testCluster.ClusterApiUrl,
+			AllowDeletion: pulumi.Any(roleAllowDeletion),
+		})
+		if err != nil {
+			return err
+		}
+		_, err = redpanda.NewRoleAssignment(ctx, "developer_assignment", &redpanda.RoleAssignmentArgs{
+			RoleName:      developer.Name,
+			Principal:     testUser.Name,
+			ClusterApiUrl: testCluster.ClusterApiUrl,
+		}, pulumi.DependsOn([]pulumi.Resource{
+			testUser,
+		}))
+		if err != nil {
+			return err
+		}
 		ctx.Export("userSchemaInfo", pulumi.Map{
 			"id":      userSchema.SchemaId,
 			"subject": userSchema.Subject,
@@ -1581,7 +1640,7 @@ resources:
       connectionType: public
       throughputTier: ${throughputTier}
       zones: ${zones}
-      allowDeletion: true
+      allowDeletion: ${clusterAllowDeletion}
       clusterConfiguration:
         customPropertiesJson:
           fn::toJSON:
@@ -1857,6 +1916,22 @@ resources:
     options:
       dependsOn:
         - ${schemaRegistryAdmin}
+  developer:
+    type: redpanda:Role
+    properties:
+      name: ${roleName}
+      clusterApiUrl: ${testCluster.clusterApiUrl}
+      allowDeletion: ${roleAllowDeletion}
+  developerAssignment:
+    type: redpanda:RoleAssignment
+    name: developer_assignment
+    properties:
+      roleName: ${developer.name}
+      principal: ${testUser.name}
+      clusterApiUrl: ${testCluster.clusterApiUrl}
+    options:
+      dependsOn:
+        - ${testUser}
 outputs:
   userSchemaInfo:
     id: ${userSchema.schemaId}
@@ -1910,6 +1985,10 @@ import com.pulumi.redpanda.SchemaRegistryAclArgs;
 import com.pulumi.redpanda.Schema;
 import com.pulumi.redpanda.SchemaArgs;
 import com.pulumi.redpanda.inputs.SchemaReferenceArgs;
+import com.pulumi.redpanda.Role;
+import com.pulumi.redpanda.RoleArgs;
+import com.pulumi.redpanda.RoleAssignment;
+import com.pulumi.redpanda.RoleAssignmentArgs;
 import static com.pulumi.codegen.internal.Serialization.*;
 import com.pulumi.resources.CustomResourceOptions;
 import java.util.List;
@@ -1952,7 +2031,7 @@ public class App {
             .connectionType("public")
             .throughputTier(throughputTier)
             .zones(zones)
-            .allowDeletion(true)
+            .allowDeletion(clusterAllowDeletion)
             .clusterConfiguration(ClusterClusterConfigurationArgs.builder()
                 .customPropertiesJson(serializeJson(
                     jsonObject(
@@ -2210,6 +2289,20 @@ public class App {
                 .dependsOn(schemaRegistryAdmin)
                 .build());
 
+        var developer = new Role("developer", RoleArgs.builder()
+            .name(roleName)
+            .clusterApiUrl(testCluster.clusterApiUrl())
+            .allowDeletion(roleAllowDeletion)
+            .build());
+
+        var developerAssignment = new RoleAssignment("developerAssignment", RoleAssignmentArgs.builder()
+            .roleName(developer.name())
+            .principal(testUser.name())
+            .clusterApiUrl(testCluster.clusterApiUrl())
+            .build(), CustomResourceOptions.builder()
+                .dependsOn(testUser)
+                .build());
+
         ctx.export("userSchemaInfo", Map.ofEntries(
             Map.entry("id", userSchema.schemaId()),
             Map.entry("subject", userSchema.subject()),
@@ -2272,7 +2365,7 @@ const testCluster = new redpanda.Cluster("test", {
     connectionType: "public",
     throughputTier: throughputTier,
     zones: zones,
-    allowDeletion: true,
+    allowDeletion: clusterAllowDeletion,
     clusterConfiguration: {
         customPropertiesJson: JSON.stringify({
             schema_registry_enable_authorization: true,
@@ -2529,6 +2622,18 @@ const describeTestTopic = new redpanda.SchemaRegistryAcl("describe_test_topic", 
 }, {
     dependsOn: [schemaRegistryAdmin],
 });
+const developer = new redpanda.Role("developer", {
+    name: roleName,
+    clusterApiUrl: testCluster.clusterApiUrl,
+    allowDeletion: roleAllowDeletion,
+});
+const developerAssignment = new redpanda.RoleAssignment("developer_assignment", {
+    roleName: developer.name,
+    principal: testUser.name,
+    clusterApiUrl: testCluster.clusterApiUrl,
+}, {
+    dependsOn: [testUser],
+});
 export const userSchemaInfo = {
     id: userSchema.schemaId,
     subject: userSchema.subject,
@@ -2585,7 +2690,7 @@ test_cluster = redpanda.Cluster("test",
     connection_type="public",
     throughput_tier=throughput_tier,
     zones=zones,
-    allow_deletion=True,
+    allow_deletion=cluster_allow_deletion,
     cluster_configuration={
         "custom_properties_json": json.dumps({
             "schema_registry_enable_authorization": True,
@@ -2813,6 +2918,15 @@ describe_test_topic = redpanda.SchemaRegistryAcl("describe_test_topic",
     password=user_pw,
     allow_deletion=True,
     opts = pulumi.ResourceOptions(depends_on=[schema_registry_admin]))
+developer = redpanda.Role("developer",
+    name=role_name,
+    cluster_api_url=test_cluster.cluster_api_url,
+    allow_deletion=role_allow_deletion)
+developer_assignment = redpanda.RoleAssignment("developer_assignment",
+    role_name=developer.name,
+    principal=test_user.name,
+    cluster_api_url=test_cluster.cluster_api_url,
+    opts = pulumi.ResourceOptions(depends_on=[test_user]))
 pulumi.export("userSchemaInfo", {
     "id": user_schema.schema_id,
     "subject": user_schema.subject,
@@ -2882,7 +2996,7 @@ return await Deployment.RunAsync(() =>
         ConnectionType = "public",
         ThroughputTier = throughputTier,
         Zones = zones,
-        AllowDeletion = true,
+        AllowDeletion = clusterAllowDeletion,
         ClusterConfiguration = new Redpanda.Inputs.ClusterClusterConfigurationArgs
         {
             CustomPropertiesJson = JsonSerializer.Serialize(new Dictionary<string, object?>
@@ -3219,6 +3333,26 @@ return await Deployment.RunAsync(() =>
         },
     });
 
+    var developer = new Redpanda.Role("developer", new()
+    {
+        Name = roleName,
+        ClusterApiUrl = testCluster.ClusterApiUrl,
+        AllowDeletion = roleAllowDeletion,
+    });
+
+    var developerAssignment = new Redpanda.RoleAssignment("developer_assignment", new()
+    {
+        RoleName = developer.Name,
+        Principal = testUser.Name,
+        ClusterApiUrl = testCluster.ClusterApiUrl,
+    }, new CustomResourceOptions
+    {
+        DependsOn =
+        {
+            testUser,
+        },
+    });
+
     return new Dictionary<string, object?>
     {
         ["userSchemaInfo"] =
@@ -3307,7 +3441,7 @@ func main() {
 			ConnectionType:  pulumi.String("public"),
 			ThroughputTier:  pulumi.Any(throughputTier),
 			Zones:           pulumi.Any(zones),
-			AllowDeletion:   pulumi.Bool(true),
+			AllowDeletion:   pulumi.Any(clusterAllowDeletion),
 			ClusterConfiguration: &redpanda.ClusterClusterConfigurationArgs{
 				CustomPropertiesJson: pulumi.String(json0),
 			},
@@ -3636,6 +3770,24 @@ func main() {
 		if err != nil {
 			return err
 		}
+		developer, err := redpanda.NewRole(ctx, "developer", &redpanda.RoleArgs{
+			Name:          pulumi.Any(roleName),
+			ClusterApiUrl: testCluster.ClusterApiUrl,
+			AllowDeletion: pulumi.Any(roleAllowDeletion),
+		})
+		if err != nil {
+			return err
+		}
+		_, err = redpanda.NewRoleAssignment(ctx, "developer_assignment", &redpanda.RoleAssignmentArgs{
+			RoleName:      developer.Name,
+			Principal:     testUser.Name,
+			ClusterApiUrl: testCluster.ClusterApiUrl,
+		}, pulumi.DependsOn([]pulumi.Resource{
+			testUser,
+		}))
+		if err != nil {
+			return err
+		}
 		ctx.Export("userSchemaInfo", pulumi.Map{
 			"id":      userSchema.SchemaId,
 			"subject": userSchema.Subject,
@@ -3700,7 +3852,7 @@ resources:
       connectionType: public
       throughputTier: ${throughputTier}
       zones: ${zones}
-      allowDeletion: true
+      allowDeletion: ${clusterAllowDeletion}
       clusterConfiguration:
         customPropertiesJson:
           fn::toJSON:
@@ -3992,6 +4144,22 @@ resources:
     options:
       dependsOn:
         - ${schemaRegistryAdmin}
+  developer:
+    type: redpanda:Role
+    properties:
+      name: ${roleName}
+      clusterApiUrl: ${testCluster.clusterApiUrl}
+      allowDeletion: ${roleAllowDeletion}
+  developerAssignment:
+    type: redpanda:RoleAssignment
+    name: developer_assignment
+    properties:
+      roleName: ${developer.name}
+      principal: ${testUser.name}
+      clusterApiUrl: ${testCluster.clusterApiUrl}
+    options:
+      dependsOn:
+        - ${testUser}
 outputs:
   userSchemaInfo:
     id: ${userSchema.schemaId}
@@ -4045,6 +4213,10 @@ import com.pulumi.redpanda.SchemaRegistryAclArgs;
 import com.pulumi.redpanda.Schema;
 import com.pulumi.redpanda.SchemaArgs;
 import com.pulumi.redpanda.inputs.SchemaReferenceArgs;
+import com.pulumi.redpanda.Role;
+import com.pulumi.redpanda.RoleArgs;
+import com.pulumi.redpanda.RoleAssignment;
+import com.pulumi.redpanda.RoleAssignmentArgs;
 import static com.pulumi.codegen.internal.Serialization.*;
 import com.pulumi.resources.CustomResourceOptions;
 import java.util.List;
@@ -4087,7 +4259,7 @@ public class App {
             .connectionType("public")
             .throughputTier(throughputTier)
             .zones(zones)
-            .allowDeletion(true)
+            .allowDeletion(clusterAllowDeletion)
             .clusterConfiguration(ClusterClusterConfigurationArgs.builder()
                 .customPropertiesJson(serializeJson(
                     jsonObject(
@@ -4358,6 +4530,20 @@ public class App {
             .allowDeletion(true)
             .build(), CustomResourceOptions.builder()
                 .dependsOn(schemaRegistryAdmin)
+                .build());
+
+        var developer = new Role("developer", RoleArgs.builder()
+            .name(roleName)
+            .clusterApiUrl(testCluster.clusterApiUrl())
+            .allowDeletion(roleAllowDeletion)
+            .build());
+
+        var developerAssignment = new RoleAssignment("developerAssignment", RoleAssignmentArgs.builder()
+            .roleName(developer.name())
+            .principal(testUser.name())
+            .clusterApiUrl(testCluster.clusterApiUrl())
+            .build(), CustomResourceOptions.builder()
+                .dependsOn(testUser)
                 .build());
 
         ctx.export("userSchemaInfo", Map.ofEntries(

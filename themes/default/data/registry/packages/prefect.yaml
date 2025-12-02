@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: prefecthq
 repo_url: https://github.com/prefecthq/terraform-provider-prefect
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/prefecthq/prefect/2.90.2/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/prefecthq/prefect/2.90.4/schema.json
 title: prefect
-updated_on: 1763508940
-version: 2.90.2
+updated_on: 1764718543
+version: 2.90.4

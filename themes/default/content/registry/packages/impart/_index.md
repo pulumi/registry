@@ -1,6 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/impart-security/pulumi-impart/v0.10.3/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/impart-security/pulumi-impart/v0.10.4/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+edit_url: https://github.com/impart-security/pulumi-impart/blob/v0.10.4/docs/_index.md
 title: Impart Security
 meta_desc: Provides an overview of the Impart Provider for Pulumi.
 layout: package

@@ -1,6 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-kafka/v3.12.1/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-kafka/v3.12.2/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+edit_url: https://github.com/pulumi/pulumi-kafka/blob/v3.12.2/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Kafka Provider
 meta_desc: Provides an overview on how to configure the Pulumi Kafka provider.
@@ -50,10 +51,12 @@ config:
         value: true
 
 ```
+
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
 
 ```
+
 {{% /choosable %}}
 {{% choosable language python %}}
 ```yaml
@@ -74,10 +77,12 @@ config:
         value: true
 
 ```
+
 ```python
 import pulumi
 
 ```
+
 {{% /choosable %}}
 {{% choosable language csharp %}}
 ```yaml
@@ -98,6 +103,7 @@ config:
         value: true
 
 ```
+
 ```csharp
 using System.Collections.Generic;
 using System.Linq;
@@ -108,6 +114,7 @@ return await Deployment.RunAsync(() =>
 });
 
 ```
+
 {{% /choosable %}}
 {{% choosable language go %}}
 ```yaml
@@ -128,6 +135,7 @@ config:
         value: true
 
 ```
+
 ```go
 package main
 
@@ -141,6 +149,7 @@ func main() {
 	})
 }
 ```
+
 {{% /choosable %}}
 {{% choosable language yaml %}}
 ```yaml
@@ -161,9 +170,11 @@ config:
         value: true
 
 ```
+
 ```yaml
 {}
 ```
+
 {{% /choosable %}}
 {{% choosable language java %}}
 ```yaml
@@ -184,6 +195,7 @@ config:
         value: true
 
 ```
+
 ```java
 package generated_program;
 
@@ -206,6 +218,7 @@ public class App {
     }
 }
 ```
+
 {{% /choosable %}}
 {{< /chooser >}}
 ### SASL/PLAIN Authentication
@@ -314,16 +327,11 @@ config:
         value: true
 
 ```
-```typescript
-import * as pulumi from "@pulumi/pulumi";
-import * as vault from "@pulumi/vault";
 
-const creds = vault.aws.getAccessCredentials({
-    backend: "aws",
-    type: "sts",
-    role: "kafka-access-role",
-});
+```typescript
+Example currently unavailable in this language
 ```
+
 {{% /choosable %}}
 {{% choosable language python %}}
 ```yaml
@@ -348,14 +356,11 @@ config:
         value: true
 
 ```
-```python
-import pulumi
-import pulumi_vault as vault
 
-creds = vault.aws.get_access_credentials(backend="aws",
-    type="sts",
-    role="kafka-access-role")
+```python
+Example currently unavailable in this language
 ```
+
 {{% /choosable %}}
 {{% choosable language csharp %}}
 ```yaml
@@ -380,24 +385,11 @@ config:
         value: true
 
 ```
+
 ```csharp
-using System.Collections.Generic;
-using System.Linq;
-using Pulumi;
-using Vault = Pulumi.Vault;
-
-return await Deployment.RunAsync(() =>
-{
-    var creds = Vault.Aws.GetAccessCredentials.Invoke(new()
-    {
-        Backend = "aws",
-        Type = "sts",
-        Role = "kafka-access-role",
-    });
-
-});
-
+Example currently unavailable in this language
 ```
+
 {{% /choosable %}}
 {{% choosable language go %}}
 ```yaml
@@ -422,28 +414,11 @@ config:
         value: true
 
 ```
+
 ```go
-package main
-
-import (
-	"github.com/pulumi/pulumi-vault/sdk/v7/go/vault/aws"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-)
-
-func main() {
-	pulumi.Run(func(ctx *pulumi.Context) error {
-		_, err := aws.GetAccessCredentials(ctx, &aws.GetAccessCredentialsArgs{
-			Backend: "aws",
-			Type:    pulumi.StringRef("sts"),
-			Role:    "kafka-access-role",
-		}, nil)
-		if err != nil {
-			return err
-		}
-		return nil
-	})
-}
+Example currently unavailable in this language
 ```
+
 {{% /choosable %}}
 {{% choosable language yaml %}}
 ```yaml
@@ -468,16 +443,11 @@ config:
         value: true
 
 ```
+
 ```yaml
-variables:
-  creds:
-    fn::invoke:
-      function: vault:aws:getAccessCredentials
-      arguments:
-        backend: aws
-        type: sts
-        role: kafka-access-role
+Example currently unavailable in this language
 ```
+
 {{% /choosable %}}
 {{% choosable language java %}}
 ```yaml
@@ -502,36 +472,11 @@ config:
         value: true
 
 ```
+
 ```java
-package generated_program;
-
-import com.pulumi.Context;
-import com.pulumi.Pulumi;
-import com.pulumi.core.Output;
-import com.pulumi.vault.aws.AwsFunctions;
-import com.pulumi.vault.aws.inputs.GetAccessCredentialsArgs;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Map;
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
-public class App {
-    public static void main(String[] args) {
-        Pulumi.run(App::stack);
-    }
-
-    public static void stack(Context ctx) {
-        final var creds = AwsFunctions.getAccessCredentials(GetAccessCredentialsArgs.builder()
-            .backend("aws")
-            .type("sts")
-            .role("kafka-access-role")
-            .build());
-
-    }
-}
+Example currently unavailable in this language
 ```
+
 {{% /choosable %}}
 {{< /chooser >}}
 ### OAuth2 Authentication

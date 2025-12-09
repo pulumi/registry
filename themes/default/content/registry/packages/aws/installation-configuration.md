@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-aws/v7.12.0/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-aws/v7.13.0/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-aws/blob/v7.12.0/docs/installation-configuration.md
+edit_url: https://github.com/pulumi/pulumi-aws/blob/v7.13.0/docs/installation-configuration.md
 title: AWS Installation & Configuration
 meta_desc: How to set up credentials to use the Pulumi AWS Provider and choose configuration options to tailor the provider to suit your use case.
 layout: package
@@ -15,7 +15,7 @@ The AWS provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/aws`](https://www.npmjs.com/package/@pulumi/aws)
 * Python: [`pulumi-aws`](https://pypi.org/project/pulumi-aws/)
-* Go: [`github.com/pulumi/pulumi-aws/sdk/v6`](https://github.com/pulumi/pulumi-aws#go)
+* Go: [`github.com/pulumi/pulumi-aws/sdk/v7`](https://github.com/pulumi/pulumi-aws#go)
 * .NET: [`Pulumi.Aws`](https://www.nuget.org/packages/Pulumi.Aws)
 * Java: [`com.pulumi.aws`](https://search.maven.org/search?q=com.pulumi.aws)
 

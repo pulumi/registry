@@ -813,9 +813,9 @@
     resolve "^1.7.1"
 
 "@pulumi/aws@^7.0.0", "@pulumi/aws@^7.11.0":
-  version "7.12.0"
-  resolved "https://registry.yarnpkg.com/@pulumi/aws/-/aws-7.12.0.tgz#7f2e868e8ab0c8f1a8b7ea88d04e2fe851ba448f"
-  integrity sha512-uVrfb8PsWyGl3W3hUrnp/RipU5OQQr/5EcxZaT1qmbaHsiCo2yzv3v4/0uxq3uFnhFo4B1EjiFe2lENfTZP3mQ==
+  version "7.13.0"
+  resolved "https://registry.yarnpkg.com/@pulumi/aws/-/aws-7.13.0.tgz#6b78e5bf346b7f50168edac86631cfb8bea23ff5"
+  integrity sha512-IVq5uu/0CLECORO8DtM24+LLc/eODzfK8a7b3x358sdtx+uhHlvr0HUD4VJaN5JP8B04RrsmPI64Qb2lMV2HAA==
   dependencies:
     "@pulumi/pulumi" "^3.142.0"
     mime "^2.0.0"
@@ -1399,9 +1399,9 @@
     "@types/node" "*"
 
 "@types/node@*", "@types/node@>=13.7.0":
-  version "24.10.1"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-24.10.1.tgz#91e92182c93db8bd6224fca031e2370cef9a8f01"
-  integrity sha512-GNWcUTRBgIRJD5zj+Tq0fKOJ5XZajIiBroOF0yvj2bSU1WvNdYS/dn9UxwsujGW4JX06dnHyjV2y9rRaybH0iQ==
+  version "24.10.2"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-24.10.2.tgz#82a57476a19647d8f2c7750d0924788245e39b26"
+  integrity sha512-WOhQTZ4G8xZ1tjJTvKOpyEVSGgOTvJAfDK3FNFgELyaTpzhdgHVHeqW8V+UJvzF5BT+/B54T/1S2K6gd9c7bbA==
   dependencies:
     undici-types "~7.16.0"
 

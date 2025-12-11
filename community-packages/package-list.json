@@ -181,10 +181,6 @@
       "schemaFile": "provider/cmd/pulumi-resource-twingate/schema.json"
     },
     {
-      "repoSlug": "dirien/pulumi-azapi",
-      "schemaFile": "provider/cmd/pulumi-resource-azapi/schema.json"
-    },
-    {
       "repoSlug": "equinix/pulumi-equinix",
       "schemaFile": "provider/cmd/pulumi-resource-equinix/schema.json"
     },

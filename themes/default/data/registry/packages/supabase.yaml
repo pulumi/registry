@@ -4,13 +4,13 @@ category: Cloud
 component: false
 description: A Pulumi provider dynamically bridged from supabase.
 featured: false
-logo_url: "https://raw.githubusercontent.com/supabase/terraform-provider-supabase/refs/heads/main/assets/supabase-logo-wordmark--light.svg"
+logo_url: https://raw.githubusercontent.com/supabase/terraform-provider-supabase/refs/heads/main/assets/supabase-logo-wordmark--light.svg
 name: supabase
 native: false
 package_status: ga
 publisher: supabase
 repo_url: https://github.com/supabase/terraform-provider-supabase
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/supabase/supabase/1.5.1/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/supabase/supabase/1.6.0/schema.json
 title: supabase
-updated_on: 1736960461
-version: 1.5.1
+updated_on: 1765452942
+version: 1.6.0

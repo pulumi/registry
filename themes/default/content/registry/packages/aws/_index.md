@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-aws/v7.13.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-aws/v7.14.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-aws/blob/v7.13.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-aws/blob/v7.14.0/docs/_index.md
 title: AWS
 meta_desc: Learn how you can use Pulumi's AWS Provider to reduce the complexity of provisioning and managing resources on AWS.
 layout: package

@@ -850,9 +850,9 @@
     semver "^5.4.0"
 
 "@pulumi/pulumi@^3.0.0", "@pulumi/pulumi@^3.142.0", "@pulumi/pulumi@^3.37.0":
-  version "3.211.0"
-  resolved "https://registry.yarnpkg.com/@pulumi/pulumi/-/pulumi-3.211.0.tgz#eedee7d5ec1647209be5439d1e221c48e93f4a17"
-  integrity sha512-buIAse/ll5I+gzYRYNeDL39wjg+Ehq+OZ8oWO0ISkB6E7xuB60rvS9ATKHJYacroYFsuE6pVEA19f7wc67mRzA==
+  version "3.212.0"
+  resolved "https://registry.yarnpkg.com/@pulumi/pulumi/-/pulumi-3.212.0.tgz#2aed99e9be253beed0f4c7663c6a2a98f302f89f"
+  integrity sha512-UXV6UQLS2elP0yQNWCQWKjY+dc8w0TXC9uJLIiybzEpFyeKdPhuA0zJrI1zOql5Y7V9q5xtF2sqmHh52HLJVKg==
   dependencies:
     "@grpc/grpc-js" "^1.10.1"
     "@logdna/tail-file" "^2.0.6"

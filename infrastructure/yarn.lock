@@ -813,9 +813,9 @@
     resolve "^1.7.1"
 
 "@pulumi/aws@^7.0.0", "@pulumi/aws@^7.11.0":
-  version "7.13.0"
-  resolved "https://registry.yarnpkg.com/@pulumi/aws/-/aws-7.13.0.tgz#6b78e5bf346b7f50168edac86631cfb8bea23ff5"
-  integrity sha512-IVq5uu/0CLECORO8DtM24+LLc/eODzfK8a7b3x358sdtx+uhHlvr0HUD4VJaN5JP8B04RrsmPI64Qb2lMV2HAA==
+  version "7.14.0"
+  resolved "https://registry.yarnpkg.com/@pulumi/aws/-/aws-7.14.0.tgz#181fe841458baf051fcc75633e7a05706a765d4d"
+  integrity sha512-Cpk4Xu9HD1DThVvWN28mlB8gGGIsdLnmKzzCPCsuX1+k7hGGlnS2qhUiS8Ve2bxvS7W6VYJ4x/+BXKv9hbXPtw==
   dependencies:
     "@pulumi/pulumi" "^3.142.0"
     mime "^2.0.0"

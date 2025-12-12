@@ -426,9 +426,9 @@
   integrity sha512-RcLam17LdlbSOSp9VxmUu1eI6Mwxp+OwhD2QhiSNmNCzoDb0EeUXTD2n/WbcnrAYMGlmf05th6QYq23VqvJqpA==
 
 "@grpc/grpc-js@^1.10.1":
-  version "1.14.2"
-  resolved "https://registry.yarnpkg.com/@grpc/grpc-js/-/grpc-js-1.14.2.tgz#d245069181a1a8057abd35522d6052482730cf19"
-  integrity sha512-QzVUtEFyu05UNx2xr0fCQmStUO17uVQhGNowtxs00IgTZT6/W2PBLfUkj30s0FKJ29VtTa3ArVNIhNP6akQhqA==
+  version "1.14.3"
+  resolved "https://registry.yarnpkg.com/@grpc/grpc-js/-/grpc-js-1.14.3.tgz#4c9b817a900ae4020ddc28515ae4b52c78cfb8da"
+  integrity sha512-Iq8QQQ/7X3Sac15oB6p0FmUg/klxQvXLeileoqrTRGJYLV+/9tubbr9ipz0GKHjmXVsgFPo/+W+2cA8eNcR+XA==
   dependencies:
     "@grpc/proto-loader" "^0.8.0"
     "@js-sdsl/ordered-map" "^4.4.2"
@@ -850,9 +850,9 @@
     semver "^5.4.0"
 
 "@pulumi/pulumi@^3.0.0", "@pulumi/pulumi@^3.142.0", "@pulumi/pulumi@^3.37.0":
-  version "3.210.0"
-  resolved "https://registry.yarnpkg.com/@pulumi/pulumi/-/pulumi-3.210.0.tgz#c5d59ebaded83f5baf571e0c5c1b6a766fc694ea"
-  integrity sha512-ZMe4oH8nFNi3Tig1U8mTEuqrjTyEz0aVkn+DvvjcBPvM7WzZSdB6xR9MiRK/ZUi0G5O+H7fx2gEEeq1vYcM5Jg==
+  version "3.211.0"
+  resolved "https://registry.yarnpkg.com/@pulumi/pulumi/-/pulumi-3.211.0.tgz#eedee7d5ec1647209be5439d1e221c48e93f4a17"
+  integrity sha512-buIAse/ll5I+gzYRYNeDL39wjg+Ehq+OZ8oWO0ISkB6E7xuB60rvS9ATKHJYacroYFsuE6pVEA19f7wc67mRzA==
   dependencies:
     "@grpc/grpc-js" "^1.10.1"
     "@logdna/tail-file" "^2.0.6"
@@ -1399,9 +1399,9 @@
     "@types/node" "*"
 
 "@types/node@*", "@types/node@>=13.7.0":
-  version "24.10.2"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-24.10.2.tgz#82a57476a19647d8f2c7750d0924788245e39b26"
-  integrity sha512-WOhQTZ4G8xZ1tjJTvKOpyEVSGgOTvJAfDK3FNFgELyaTpzhdgHVHeqW8V+UJvzF5BT+/B54T/1S2K6gd9c7bbA==
+  version "25.0.1"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-25.0.1.tgz#9c41c277a1b16491174497cd075f8de7c27a1ac4"
+  integrity sha512-czWPzKIAXucn9PtsttxmumiQ9N0ok9FrBwgRWrwmVLlp86BrMExzvXRLFYRJ+Ex3g6yqj+KuaxfX1JTgV2lpfg==
   dependencies:
     undici-types "~7.16.0"
 

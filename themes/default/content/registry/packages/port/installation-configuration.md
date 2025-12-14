@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/port-labs/pulumi-port/v2.17.2/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/port-labs/pulumi-port/v2.17.3/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/port-labs/pulumi-port/blob/v2.17.2/docs/installation-configuration.md
+edit_url: https://github.com/port-labs/pulumi-port/blob/v2.17.3/docs/installation-configuration.md
 title: Port Setup
 meta_desc: Information on how to install the Port provider.
 layout: package

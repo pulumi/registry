@@ -10,7 +10,7 @@ native: false
 package_status: public_preview
 publisher: honeycombio
 repo_url: https://github.com/honeycombio/terraform-provider-honeycombio
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/honeycombio/honeycombio/0.43.0/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/honeycombio/honeycombio/0.44.0/schema.json
 title: Honeycomb
-updated_on: 1764156953
-version: 0.43.0
+updated_on: 1765841742
+version: 0.44.0

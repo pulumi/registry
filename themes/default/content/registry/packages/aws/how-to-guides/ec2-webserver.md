@@ -12,9 +12,9 @@ In this tutorial, we will show you how to deploy a simple webserver using an Ama
 
 {{< multilang-tutorial-prereqs >}}
 
-{{< chooser language "javascript,typescript,python,csharp" >}}
+{{< chooser language "typescript,python,csharp" >}}
 
-{{% choosable language "javascript,typescript" %}}
+{{% choosable language "typescript" %}}
 {{< install-node >}}
 {{% /choosable %}}
 
@@ -34,16 +34,8 @@ In this tutorial, we will show you how to deploy a simple webserver using an Ama
 
 Create a project directory, `webserver`, and change into it. Run [`pulumi new aws-<language> --name myproject`](/docs/cli/commands/pulumi_new/) to create a new project using the AWS template for your chosen language. Replace `myproject` with your desired project name.
 
-{{< chooser language "javascript,typescript,python,csharp" / >}}
+{{< chooser language "typescript,python,csharp" / >}}
 
-{{% choosable language javascript %}}
-
-```bash
-$ mkdir webserver && cd webserver
-$ pulumi new aws-javascript --name myproject
-```
-
-{{% /choosable %}}
 {{% choosable language typescript %}}
 
 ```bash
@@ -73,41 +65,8 @@ $ pulumi new aws-csharp --name myproject
 
 Open {{< langfile >}} and replace the contents with the following:
 
-{{< chooser language "javascript,typescript,python,csharp" / >}}
+{{< chooser language "typescript,python,csharp" / >}}
 
-{{% choosable language javascript %}}
-
-```javascript
-const aws = require("@pulumi/aws");
-const pulumi = require("@pulumi/pulumi");
-
-let size = "t2.micro";     // t2.micro is available in the AWS free tier
-let ami = aws.ec2.getAmiOutput({
-    filters: [{
-      name: "name",
-      values: ["amzn2-ami-hvm-*"],
-    }],
-    owners: ["137112412989"], // This owner ID is Amazon
-    mostRecent: true,
-});
-
-let group = new aws.ec2.SecurityGroup("webserver-secgrp", {
-    ingress: [
-        { protocol: "tcp", fromPort: 22, toPort: 22, cidrBlocks: ["0.0.0.0/0"] },
-    ],
-});
-
-let server = new aws.ec2.Instance("webserver-www", {
-    instanceType: size,
-    vpcSecurityGroupIds: [ group.id ], // reference the security group resource above
-    ami: ami.id,
-});
-
-exports.publicIp = server.publicIp;
-exports.publicHostName = server.publicDns;
-```
-
-{{% /choosable %}}
 {{% choosable language typescript %}}
 
 ```typescript
@@ -315,37 +274,8 @@ Pulumi program to define the new state you want your infrastructure to be in, an
 Replace the creation of the two resources with the following code. This exposes an additional port, `80`, and adds a startup
 script to run a simple HTTP server at startup.
 
-{{< chooser language "javascript,typescript,python,csharp" >}}
+{{< chooser language "typescript,python,csharp" >}}
 
-{{% choosable language javascript %}}
-
-```javascript
-...
-
-let group = new aws.ec2.SecurityGroup("webserver-secgrp", {
-    ingress: [
-        { protocol: "tcp", fromPort: 22, toPort: 22, cidrBlocks: ["0.0.0.0/0"] },
-        { protocol: "tcp", fromPort: 80, toPort: 80, cidrBlocks: ["0.0.0.0/0"] },
-        // ^-- ADD THIS LINE
-    ],
-});
-
-let userData = // <-- ADD THIS DEFINITION
-`#!/bin/bash
-echo "Hello, World!" > index.html
-nohup python -m SimpleHTTPServer 80 &`;
-
-let server = new aws.ec2.Instance("web-server-www", {
-    instanceType: size,
-    vpcSecurityGroupIds: [ group.id ], // reference the group object above
-    ami: ami.id,
-    userData: userData,             // <-- ADD THIS LINE
-});
-
-...
-```
-
-{{% /choosable %}}
 {{% choosable language typescript %}}
 
 ```typescript

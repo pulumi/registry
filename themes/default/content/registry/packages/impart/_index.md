@@ -11,43 +11,7 @@ The Impart Resource Provider lets you manage Impart resources.
 
 ## Example
 
-{{< chooser language "javascript,typescript,go" >}}
-
-{{% choosable language javascript %}}
-
-```js
-const pulumi = require("@pulumi/pulumi");
-const impart = require("@impart-security/pulumi-impart");
-const crypto = require("crypto");
-const fs = require("fs");
-
-const hashSum = crypto.createHash("sha256");
-const specSource = fs.readFileSync(`./spec.yaml`).toString();
-
-const spec = new impart.Spec("spec", {
-  name: "example_spec",
-  sourceFile: "spec.yaml",
-  //optional to track source files changes
-  sourceHash: hashSum.update(specSource).digest("hex"),
-});
-
-const apiBinding = new impart.ApiBinding("api_binding", {
-  name: "api_binding_example",
-  port: 8080,
-  hostname: "example.com",
-  basePath: "/",
-  specId: spec.id,
-});
-
-const logBinding = new impart.LogBinding("log_binding", {
-  name: "log_binding_example",
-  patternType: "grok",
-  pattern: `%{HTTPDATE:timestamp} "(?:%{WORD:http_method}|-) (?:%{GREEDYDATA:request}|-) (?:HTTP/%{NUMBER:httpversion}|-( )?)" (?:%{NUMBER:response_code}|-)`,
-  specId: spec.id,
-});
-```
-
-{{% /choosable %}}
+{{< chooser language "typescript,go" >}}
 
 {{% choosable language typescript %}}
 

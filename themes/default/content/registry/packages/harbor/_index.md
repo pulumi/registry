@@ -10,28 +10,7 @@ The `Harbor` provider for Pulumi can be used to provision any of the resources a
 
 ## Example
 
-{{< chooser language "javascript,typescript,python,go,csharp" >}}
-
-{{% choosable language javascript %}}
-
-```javascript
-"use strict";
-const harbor = require("@pulumiverse/harbor");
-
-const registry = new harbor.Registry("registry", {
-    providerName: "docker-hub",
-    endpointUrl: "https://hub.docker.com",
-    name: "pulumi-harbor"
-})
-
-const project = new harbor.Project("project", {
-    name: "pulumi-harbor",
-    registryId: registry.registryId,
-    public: "true",
-})
-```
-
-{{% /choosable %}}
+{{< chooser language "typescript,python,go,csharp" >}}
 
 {{% choosable language typescript %}}
 

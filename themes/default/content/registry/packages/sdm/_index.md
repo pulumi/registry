@@ -12,23 +12,8 @@ The StrongDM provider must be configured with credentials to deploy and update r
 
 ## Example
 
-{{< chooser language "javascript,typescript,python,go,csharp" >}}
+{{< chooser language "typescript,python,go,csharp" >}}
 
-{{% choosable language javascript %}}
-
-```javascript
-const sdm = require("@pierskarsenbarg/sdm")
-
-const account = new sdm.Account("account", {
-    user: {
-        firstName: "Alice",
-        lastName: "Bob",
-        email: "alicebob@email.com"
-    }
-});
-```
-
-{{% /choosable %}}
 {{% choosable language typescript %}}
 
 ```typescript

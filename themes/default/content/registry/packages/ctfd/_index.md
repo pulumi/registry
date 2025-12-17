@@ -29,29 +29,9 @@ Users of the CTFd provider can:
 
 To use the CTFd Provider you will have to configure it and use it to create resources: it can't infer the CTFd url and credentials.
 
-{{< chooser language "javascript,typescript,go,python,csharp" >}}
+{{< chooser language "typescript,go,python,csharp" >}}
 
-{{% choosable language javascript %}}
-
-```javascript
-import * as ctfd from '@ctfer-io/pulumi-ctfd';
-
-// Create provider
-let pv = new ctfd.Provider('ctfd-fine-grained', {
-    url: 'https://my-ctf.lan',
-    apiKey: 'ctfd_xxx', // please do not hardcode your credentials/api keys
-});
-
-// Create resources with the custom provider
-let ch = new ctfd.ChallengeStandard('some-challenge', {
-    name: 'My Challenge',
-    category: 'misc',
-    description: '...',
-    value: 500,
-}, { provider: pv });
-```
-
-{{% /choosable %}} {{% choosable language typescript %}}
+{{% choosable language typescript %}}
 
 ```typescript
 import * as ctfd from '@ctfer-io/pulumi-ctfd';

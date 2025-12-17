@@ -25,32 +25,8 @@ The Checkly provider must be configured with an `API Key` and an `Account ID` in
 
 ## Example usage
 
-{{< chooser language "javascript,typescript" >}}
+{{< chooser language "typescript" >}}
 
-{{% choosable language javascript %}}
-
-```javascript
-const checkly = require('@checkly/pulumi')
-
-new checkly.Check('api-check', {
-  activated: true,
-  frequency: 10,
-  type: 'API',
-  request: {
-    method: 'GET',
-    url: "https://checklyhq.com",
-  },
-})
-
-new checkly.Check('browser-check', {
-  activated: true,
-  frequency: 10,
-  type: 'BROWSER',
-  script: 'console.log("Hello World!")',
-})
-```
-
-{{% /choosable %}}
 {{% choosable language typescript %}}
 
 ```typescript

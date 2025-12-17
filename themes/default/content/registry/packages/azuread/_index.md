@@ -14,17 +14,6 @@ javascript removed
 --->
 {{< chooser language "typescript,python,go,csharp,java,yaml" >}}
 
-{{% choosable language javascript %}}
-
-```javascript
-const azad = require("@pulumi/azuread")
-
-const group = new azad.Group("my-group", {
-    name: "my-group",
-});
-```
-
-{{% /choosable %}}
 {{% choosable language typescript %}}
 
 ```typescript

@@ -28,22 +28,7 @@ You'll need to [install and configure the Pulumi CLI](https://pulumi.com/docs/in
 
 The simplest use case for `local.Command` is to just run a command on `create`, which can return some value which will be stored in the state file, and will be persistent for the life of the stack (or until the resource is destroyed or replaced).  The example below uses this as an alternative to the `random` package to create some randomness which is stored in Pulumi state.
 
-{{< chooser language "javascript,typescript,python,go,csharp,yaml,java" >}}
-
-{{% choosable language javascript %}}
-
-```javascript
-"use strict";
-const command = require("@pulumi/command");
-
-const random = new command.local.Command("random", {
-    create: "openssl rand -hex 16",
-});
-
-exports.output = random.stdout;
-```
-
-{{% /choosable %}}
+{{< chooser language "typescript,python,go,csharp,yaml,java" >}}
 
 {{% choosable language typescript %}}
 
@@ -180,7 +165,7 @@ Note also that `deleteBeforeReplace` can be composed with `Command` resources to
 
 {{< chooser language "typescript,python,go,csharp,java,yaml" >}}
 
-{{% choosable language "javascript,typescript" %}}
+{{% choosable language "typescript" %}}
 
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
@@ -526,36 +511,7 @@ Note that the Lambda function itself can be created within the same Pulumi progr
 
 The example below simply creates some random value within the Lambda, which is a very roundabout way of doing the same thing as the first "random" example above, but this pattern can be used for more complex scenarios where the Lambda does things a local script could not.
 
-{{< chooser language "javascript,typescript,python,go,csharp,java,yaml" >}}
-
-{{% choosable language "javascript" %}}
-
-```javascript
-"use strict";
-const aws = require("@pulumi/aws");
-const { local } = require("@pulumi/command");
-const { getStack } = require("@pulumi/pulumi");
-
-const f = new aws.lambda.CallbackFunction("f", {
-    publish: true,
-    callback: async (ev) => {
-        return `Stack ${ev.stackName} is deployed!`;
-    }
-});
-
-const invoke = new local.Command("execf", {
-    create: `aws lambda invoke --function-name "$FN" --payload '{"stackName": "${getStack()}"}' --cli-binary-format raw-in-base64-out out.txt >/dev/null && cat out.txt | tr -d '"'  && rm out.txt`,
-    environment: {
-        FN: f.qualifiedArn,
-        AWS_REGION: aws.config.region,
-        AWS_PAGER: "",
-    },
-}, { dependsOn: f })
-
-exports.output = invoke.stdout;
-```
-
-{{% /choosable %}}
+{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
 
 {{% choosable language "typescript" %}}
 
@@ -974,29 +930,7 @@ curl \
 
 There are cases where it's important to run some cleanup operation before destroying a resource, in case destroying the resource does not properly handle orderly cleanup.  For example, destroying an EKS Cluster will not ensure that all Kubernetes object finalizers are run, which may lead to leaking external resources managed by those Kubernetes resources.  This example shows how we can use a `delete`-only `Command` to ensure some cleanup is run within a cluster before destroying it.
 
-{{< chooser language "javascript,typescript,python,go,csharp,java,yaml" >}}
-
-{{% choosable language "javascript" %}}
-
-```javascript
-"use strict";
-const command = require("@pulumi/command");
-const eks = require("@pulumi/eks");
-
-const cluster = new eks.Cluster("cluster", {});
-const cleanupKubernetesNamespaces = new command.local.Command("cleanupKubernetesNamespaces", {
-    "delete": "kubectl --kubeconfig <(echo \"$KUBECONFIG_DATA\") delete namespace nginx\n",
-    interpreter: [
-        "/bin/bash",
-        "-c",
-    ],
-    environment: {
-        KUBECONFIG_DATA: cluster.kubeconfigJson,
-    },
-});
-```
-
-{{% /choosable %}}
+{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
 
 {{% choosable language "typescript" %}}
 

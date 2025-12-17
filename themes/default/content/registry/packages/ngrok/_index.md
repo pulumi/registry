@@ -11,17 +11,8 @@ The ngrok provider must be configured with credentials to deploy and update reso
 
 ## Example
 
-{{< chooser language "javascript,typescript,python,go,csharp" >}}
+{{< chooser language "typescript,python,go,csharp" >}}
 
-{{% choosable language javascript %}}
-
-```javascript
-const ngrok = require("@pierskarsenbarg/ngrok")
-
-const apikey = new ngrok.ApiKey("apikey");
-```
-
-{{% /choosable %}}
 {{% choosable language typescript %}}
 
 ```typescript

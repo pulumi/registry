@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/port-labs/pulumi-port/v2.17.3/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/port-labs/pulumi-port/v2.17.4/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/port-labs/pulumi-port/blob/v2.17.3/docs/_index.md
+edit_url: https://github.com/port-labs/pulumi-port/blob/v2.17.4/docs/_index.md
 title: Port
 meta_desc: Provides an overview of the Port Provider for Pulumi.
 layout: package
@@ -11,8 +11,31 @@ The Port Resource Provider lets you manage [Port](https://www.getport.io) resour
 
 ## Example
 
-{{< chooser language "typescript,python,go" >}}
+{{< chooser language "javascript,typescript,python,go" >}}
 
+
+{{% choosable language javascript %}}
+
+```javascript
+"use strict";
+const pulumi = require("@pulumi/pulumi");
+const port = require("@port-labs/port");
+
+const entity = new port.Entity("entity", {
+    identifier: "monolith",
+    title: "monolith",
+    blueprint: "microservice",
+    properties: {
+        stringProps: {
+            "language": "typescript",
+        }
+    }
+});
+
+exports.title = entity.title;
+```
+
+{{% /choosable %}}
 
 {{% choosable language typescript %}}
 

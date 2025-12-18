@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pierskarsenbarg/pulumi-sdm/v1.33.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pierskarsenbarg/pulumi-sdm/v1.34.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pierskarsenbarg/pulumi-sdm/blob/v1.33.0/docs/_index.md
+edit_url: https://github.com/pierskarsenbarg/pulumi-sdm/blob/v1.34.0/docs/_index.md
 title: StrongDM
 meta_desc: Provides an overview of the StrongDM Provider for Pulumi.
 layout: package
@@ -12,8 +12,23 @@ The StrongDM provider must be configured with credentials to deploy and update r
 
 ## Example
 
-{{< chooser language "typescript,python,go,csharp" >}}
+{{< chooser language "javascript,typescript,python,go,csharp" >}}
 
+{{% choosable language javascript %}}
+
+```javascript
+const sdm = require("@pierskarsenbarg/sdm")
+
+const account = new sdm.Account("account", {
+    user: {
+        firstName: "Alice",
+        lastName: "Bob",
+        email: "alicebob@email.com"
+    }
+});
+```
+
+{{% /choosable %}}
 {{% choosable language typescript %}}
 
 ```typescript

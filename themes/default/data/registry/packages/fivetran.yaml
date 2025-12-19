@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: fivetran
 repo_url: https://github.com/fivetran/terraform-provider-fivetran
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/fivetran/fivetran/1.9.17/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/fivetran/fivetran/1.9.18/schema.json
 title: fivetran
-updated_on: 1764804947
-version: 1.9.17
+updated_on: 1766187345
+version: 1.9.18

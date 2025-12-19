@@ -6,7 +6,7 @@ aliases: ["/docs/reference/tutorials/aws/tutorial-s3-website/"]
 layout: package
 ---
 
-{{< github-buttons "aws-js-s3-folder" "aws-py-s3-folder" >}}
+{{< github-buttons "aws-py-s3-folder" >}}
 
 In this tutorial, we'll show you how to provision raw resources in AWS using the [@pulumi/aws] package. First, we'll create a Pulumi program that uploads files from the `www` directory to S3. Then, we'll configure the bucket to serve a website. We'll be using JavaScript in this tutorial, but you can also run through this example [in Python].
 

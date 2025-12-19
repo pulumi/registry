@@ -6,7 +6,7 @@ aliases: ["/docs/reference/tutorials/aws/tutorial-ec2-webserver/"]
 layout: package
 ---
 
-{{< github-buttons "aws-ts-webserver" "aws-js-webserver" "aws-py-webserver" "aws-cs-webserver" >}}
+{{< github-buttons "aws-ts-webserver" "aws-py-webserver" "aws-cs-webserver" >}}
 
 In this tutorial, we will show you how to deploy a simple webserver using an Amazon EC2 instance.
 

@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-scaleway/v1.39.0/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-scaleway/v1.40.0/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumiverse/pulumi-scaleway/blob/v1.39.0/docs/installation-configuration.md
+edit_url: https://github.com/pulumiverse/pulumi-scaleway/blob/v1.40.0/docs/installation-configuration.md
 title: Scaleway Installation & Configuration
 meta_desc: Information on how to install the Scaleway provider.
 layout: package

@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-dbtcloud/v1.3.1/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-dbtcloud/v1.4.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-dbtcloud/blob/v1.3.1/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-dbtcloud/blob/v1.4.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: dbt Cloud Provider
 meta_desc: Provides an overview on how to configure the Pulumi dbt Cloud provider.
@@ -29,16 +29,35 @@ runtime: nodejs
 config:
     dbtcloud:accountId:
         value: 'TODO: var.dbt_cloud_account_id'
+    dbtcloud:disableRetry:
+        value: false
     dbtcloud:hostUrl:
         value: https://cloud.getdbt.com/api
+    dbtcloud:maxRetries:
+        value: 10
+    dbtcloud:retriableStatusCodes:
+        value:
+            - "429"
+            - "500"
+            - "502"
+            - "503"
+            - "504"
+    dbtcloud:retryIntervalSeconds:
+        value: 10
+    dbtcloud:skipCredentialsValidation:
+        value: false
+    dbtcloud:timeoutSeconds:
+        value: 60
     dbtcloud:token:
         value: 'TODO: var.dbt_cloud_token'
 
 ```
+
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
 
 ```
+
 {{% /choosable %}}
 {{% choosable language python %}}
 ```yaml
@@ -48,16 +67,35 @@ runtime: python
 config:
     dbtcloud:accountId:
         value: 'TODO: var.dbt_cloud_account_id'
+    dbtcloud:disableRetry:
+        value: false
     dbtcloud:hostUrl:
         value: https://cloud.getdbt.com/api
+    dbtcloud:maxRetries:
+        value: 10
+    dbtcloud:retriableStatusCodes:
+        value:
+            - "429"
+            - "500"
+            - "502"
+            - "503"
+            - "504"
+    dbtcloud:retryIntervalSeconds:
+        value: 10
+    dbtcloud:skipCredentialsValidation:
+        value: false
+    dbtcloud:timeoutSeconds:
+        value: 60
     dbtcloud:token:
         value: 'TODO: var.dbt_cloud_token'
 
 ```
+
 ```python
 import pulumi
 
 ```
+
 {{% /choosable %}}
 {{% choosable language csharp %}}
 ```yaml
@@ -67,12 +105,30 @@ runtime: dotnet
 config:
     dbtcloud:accountId:
         value: 'TODO: var.dbt_cloud_account_id'
+    dbtcloud:disableRetry:
+        value: false
     dbtcloud:hostUrl:
         value: https://cloud.getdbt.com/api
+    dbtcloud:maxRetries:
+        value: 10
+    dbtcloud:retriableStatusCodes:
+        value:
+            - "429"
+            - "500"
+            - "502"
+            - "503"
+            - "504"
+    dbtcloud:retryIntervalSeconds:
+        value: 10
+    dbtcloud:skipCredentialsValidation:
+        value: false
+    dbtcloud:timeoutSeconds:
+        value: 60
     dbtcloud:token:
         value: 'TODO: var.dbt_cloud_token'
 
 ```
+
 ```csharp
 using System.Collections.Generic;
 using System.Linq;
@@ -83,6 +139,7 @@ return await Deployment.RunAsync(() =>
 });
 
 ```
+
 {{% /choosable %}}
 {{% choosable language go %}}
 ```yaml
@@ -92,12 +149,30 @@ runtime: go
 config:
     dbtcloud:accountId:
         value: 'TODO: var.dbt_cloud_account_id'
+    dbtcloud:disableRetry:
+        value: false
     dbtcloud:hostUrl:
         value: https://cloud.getdbt.com/api
+    dbtcloud:maxRetries:
+        value: 10
+    dbtcloud:retriableStatusCodes:
+        value:
+            - "429"
+            - "500"
+            - "502"
+            - "503"
+            - "504"
+    dbtcloud:retryIntervalSeconds:
+        value: 10
+    dbtcloud:skipCredentialsValidation:
+        value: false
+    dbtcloud:timeoutSeconds:
+        value: 60
     dbtcloud:token:
         value: 'TODO: var.dbt_cloud_token'
 
 ```
+
 ```go
 package main
 
@@ -111,6 +186,7 @@ func main() {
 	})
 }
 ```
+
 {{% /choosable %}}
 {{% choosable language yaml %}}
 ```yaml
@@ -120,15 +196,34 @@ runtime: yaml
 config:
     dbtcloud:accountId:
         value: 'TODO: var.dbt_cloud_account_id'
+    dbtcloud:disableRetry:
+        value: false
     dbtcloud:hostUrl:
         value: https://cloud.getdbt.com/api
+    dbtcloud:maxRetries:
+        value: 10
+    dbtcloud:retriableStatusCodes:
+        value:
+            - "429"
+            - "500"
+            - "502"
+            - "503"
+            - "504"
+    dbtcloud:retryIntervalSeconds:
+        value: 10
+    dbtcloud:skipCredentialsValidation:
+        value: false
+    dbtcloud:timeoutSeconds:
+        value: 60
     dbtcloud:token:
         value: 'TODO: var.dbt_cloud_token'
 
 ```
+
 ```yaml
 {}
 ```
+
 {{% /choosable %}}
 {{% choosable language java %}}
 ```yaml
@@ -138,12 +233,30 @@ runtime: java
 config:
     dbtcloud:accountId:
         value: 'TODO: var.dbt_cloud_account_id'
+    dbtcloud:disableRetry:
+        value: false
     dbtcloud:hostUrl:
         value: https://cloud.getdbt.com/api
+    dbtcloud:maxRetries:
+        value: 10
+    dbtcloud:retriableStatusCodes:
+        value:
+            - "429"
+            - "500"
+            - "502"
+            - "503"
+            - "504"
+    dbtcloud:retryIntervalSeconds:
+        value: 10
+    dbtcloud:skipCredentialsValidation:
+        value: false
+    dbtcloud:timeoutSeconds:
+        value: 60
     dbtcloud:token:
         value: 'TODO: var.dbt_cloud_token'
 
 ```
+
 ```java
 package generated_program;
 
@@ -166,6 +279,7 @@ public class App {
     }
 }
 ```
+
 {{% /choosable %}}
 {{< /chooser >}}
 ## Configuration Reference
@@ -177,4 +291,5 @@ public class App {
 - `retriableStatusCodes` (List of String) List of HTTP status codes that should be retried when encountered. Defaults to [429, 500, 502, 503, 504].
 - `retryIntervalSeconds` (Number) The number of seconds to wait before retrying a request that failed due to rate limiting. Defaults to 10 seconds.
 - `skipCredentialsValidation` (Boolean) If set to true, the provider will not validate credentials during initialization. This can be useful for testing and for dbt Cloud API implementations that do not have standard authentication available. Defaults to false.
+- `timeoutSeconds` (Number) The timeout duration in seconds for HTTP requests to the dbt Cloud API. Defaults to 30 seconds.
 - `token` (String, Sensitive) API token for your dbt Cloud. Instead of setting the parameter, you can set the environment variable `DBT_CLOUD_TOKEN`

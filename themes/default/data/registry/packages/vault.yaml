@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-vault
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-vault/v7.5.0/provider/cmd/pulumi-resource-vault/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-vault/v7.6.0/provider/cmd/pulumi-resource-vault/schema.json
 title: HashiCorp Vault
-updated_on: 1763696324
-version: v7.5.0
+updated_on: 1766288867
+version: v7.6.0

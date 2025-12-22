@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/timescale/timescale/2.7.0-beta1/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/timescale/timescale/2.7.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Timescale Provider
@@ -748,6 +748,7 @@ Please reference the [docs](https://docs.timescale.com/use-timescale/latest/regi
 ✅ Connection pooling <br />
 ✅ Metric exporters <br />
 ✅ Log exporters <br />
+✅ S3 connector <br />
 ## Billing
 Services are currently billed for hourly usage. If a service is running for less than an hour,
 it will still be charged for the full hour of usage.

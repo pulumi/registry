@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/aptible/aptible/0.9.18/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/aptible/aptible/0.9.19/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Aptible Provider
@@ -790,13 +790,13 @@ public class App {
             .services(
                 AppServiceArgs.builder()
                     .processType("SERVICE_NAME1")
-                    .containerCount(1)
-                    .containerMemoryLimit(1024)
+                    .containerCount(1.0)
+                    .containerMemoryLimit(1024.0)
                     .build(),
                 AppServiceArgs.builder()
                     .processType("SERVICE_NAME2")
-                    .containerCount(2)
-                    .containerMemoryLimit(2048)
+                    .containerCount(2.0)
+                    .containerMemoryLimit(2048.0)
                     .build())
             .build());
 
@@ -1036,20 +1036,20 @@ public class App {
             .services(
                 AppServiceArgs.builder()
                     .processType("SERVICE_NAME1")
-                    .containerCount(1)
-                    .containerMemoryLimit(1024)
+                    .containerCount(1.0)
+                    .containerMemoryLimit(1024.0)
                     .autoscalingPolicies(AppServiceAutoscalingPolicyArgs.builder()
                         .autoscalingType("horizontal")
-                        .minContainers(2)
-                        .maxContainers(5)
+                        .minContainers(2.0)
+                        .maxContainers(5.0)
                         .minCpuThreshold(0.4)
                         .maxCpuThreshold(0.8)
                         .build())
                     .build(),
                 AppServiceArgs.builder()
                     .processType("SERVICE_NAME2")
-                    .containerCount(2)
-                    .containerMemoryLimit(2048)
+                    .containerCount(2.0)
+                    .containerMemoryLimit(2048.0)
                     .autoscalingPolicies(AppServiceAutoscalingPolicyArgs.builder()
                         .autoscalingType("vertical")
                         .memScaleUpThreshold(0.8)
@@ -1202,7 +1202,7 @@ public class App {
             .endpointType("https")
             .internal(false)
             .platform("alb")
-            .containerPort(5000)
+            .containerPort(5000.0)
             .build());
 
     }
@@ -1330,8 +1330,8 @@ public class App {
             .envId(ENVIRONMENT_ID)
             .handle("DATABASE_HANDLE")
             .databaseType("redis")
-            .containerSize(512)
-            .diskSize(10)
+            .containerSize(512.0)
+            .diskSize(10.0)
             .build());
 
     }
@@ -1455,7 +1455,7 @@ public class App {
             .envId(ENVIRONMENT_ID)
             .primaryDatabaseId(DATABASE.databaseId())
             .handle("REPLICA_HANDLE")
-            .diskSize(30)
+            .diskSize(30.0)
             .build());
 
     }

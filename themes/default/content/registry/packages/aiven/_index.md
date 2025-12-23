@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-aiven/v6.45.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-aiven/v6.46.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-aiven/blob/v6.45.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-aiven/blob/v6.46.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Aiven Provider
 meta_desc: Provides an overview on how to configure the Pulumi Aiven provider.
@@ -38,10 +38,12 @@ config:
         value: 'TODO: var.aiven_api_token'
 
 ```
+
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
 
 ```
+
 {{% /choosable %}}
 {{% choosable language python %}}
 ```yaml
@@ -53,10 +55,12 @@ config:
         value: 'TODO: var.aiven_api_token'
 
 ```
+
 ```python
 import pulumi
 
 ```
+
 {{% /choosable %}}
 {{% choosable language csharp %}}
 ```yaml
@@ -68,6 +72,7 @@ config:
         value: 'TODO: var.aiven_api_token'
 
 ```
+
 ```csharp
 using System.Collections.Generic;
 using System.Linq;
@@ -78,6 +83,7 @@ return await Deployment.RunAsync(() =>
 });
 
 ```
+
 {{% /choosable %}}
 {{% choosable language go %}}
 ```yaml
@@ -89,6 +95,7 @@ config:
         value: 'TODO: var.aiven_api_token'
 
 ```
+
 ```go
 package main
 
@@ -102,6 +109,7 @@ func main() {
 	})
 }
 ```
+
 {{% /choosable %}}
 {{% choosable language yaml %}}
 ```yaml
@@ -113,9 +121,11 @@ config:
         value: 'TODO: var.aiven_api_token'
 
 ```
+
 ```yaml
 {}
 ```
+
 {{% /choosable %}}
 {{% choosable language java %}}
 ```yaml
@@ -127,6 +137,7 @@ config:
         value: 'TODO: var.aiven_api_token'
 
 ```
+
 ```java
 package generated_program;
 
@@ -149,6 +160,7 @@ public class App {
     }
 }
 ```
+
 {{% /choosable %}}
 {{< /chooser >}}
 ## Environment variables

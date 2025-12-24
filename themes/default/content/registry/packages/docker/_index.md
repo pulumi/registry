@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-docker/v4.10.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-docker/v4.11.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-docker/blob/v4.10.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-docker/blob/v4.11.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Docker Provider
 meta_desc: Provides an overview on how to configure the Pulumi Docker provider.
@@ -42,6 +42,7 @@ config:
         value: unix:///var/run/docker.sock
 
 ```
+
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
 import * as docker from "@pulumi/docker";
@@ -54,6 +55,7 @@ const foo = new docker.Container("foo", {
     name: "foo",
 });
 ```
+
 {{% /choosable %}}
 {{% choosable language python %}}
 ```yaml
@@ -65,6 +67,7 @@ config:
         value: unix:///var/run/docker.sock
 
 ```
+
 ```python
 import pulumi
 import pulumi_docker as docker
@@ -76,6 +79,7 @@ foo = docker.Container("foo",
     image=ubuntu.image_id,
     name="foo")
 ```
+
 {{% /choosable %}}
 {{% choosable language csharp %}}
 ```yaml
@@ -87,6 +91,7 @@ config:
         value: unix:///var/run/docker.sock
 
 ```
+
 ```csharp
 using System.Collections.Generic;
 using System.Linq;
@@ -111,6 +116,7 @@ return await Deployment.RunAsync(() =>
 });
 
 ```
+
 {{% /choosable %}}
 {{% choosable language go %}}
 ```yaml
@@ -122,6 +128,7 @@ config:
         value: unix:///var/run/docker.sock
 
 ```
+
 ```go
 package main
 
@@ -151,6 +158,7 @@ func main() {
 	})
 }
 ```
+
 {{% /choosable %}}
 {{% choosable language yaml %}}
 ```yaml
@@ -162,6 +170,7 @@ config:
         value: unix:///var/run/docker.sock
 
 ```
+
 ```yaml
 resources:
   # Pulls the image
@@ -176,6 +185,7 @@ resources:
       image: ${ubuntu.imageId}
       name: foo
 ```
+
 {{% /choosable %}}
 {{% choosable language java %}}
 ```yaml
@@ -187,6 +197,7 @@ config:
         value: unix:///var/run/docker.sock
 
 ```
+
 ```java
 package generated_program;
 
@@ -224,6 +235,7 @@ public class App {
     }
 }
 ```
+
 {{% /choosable %}}
 {{< /chooser >}}
 ## Remote Hosts
@@ -295,15 +307,15 @@ name: configuration-example
 runtime:
 config:
     docker:caMaterial:
-        value: 'TODO: file(pathexpand("~/.docker/ca.pem"))'
+        value: ~/.docker/ca.pem
     docker:certMaterial:
-        value: 'TODO: file(pathexpand("~/.docker/cert.pem"))'
+        value: ~/.docker/cert.pem
     docker:certPath:
-        value: /home/runner/.docker
+        value: ~/.docker
     docker:host:
         value: tcp://your-host-ip:2376/
     docker:keyMaterial:
-        value: 'TODO: file(pathexpand("~/.docker/key.pem"))'
+        value: ~/.docker/key.pem
 
 ```
 ## Configuration Reference

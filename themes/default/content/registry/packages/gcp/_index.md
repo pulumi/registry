@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-gcp/v9.6.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-gcp/v9.7.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-gcp/blob/v9.6.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-gcp/blob/v9.7.0/docs/_index.md
 title: Google Cloud (GCP) Classic
 meta_desc: Learn how to use Pulumi's GCP Provider to reduce the complexity of managing and provisioning GCP resources.
 layout: package
@@ -21,6 +21,15 @@ javascript removed
 --->
 {{< chooser language "typescript,python,go,csharp,java,yaml" >}}
 
+{{% choosable language javascript %}}
+
+```javascript
+const gcp = require("@pulumi/gcp")
+
+const bucket = new gcp.storage.Bucket("my-bucket");
+```
+
+{{% /choosable %}}
 {{% choosable language typescript %}}
 
 ```typescript

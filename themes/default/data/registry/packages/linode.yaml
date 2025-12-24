@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-linode
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-linode/v5.4.0/provider/cmd/pulumi-resource-linode/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-linode/v5.6.0/provider/cmd/pulumi-resource-linode/schema.json
 title: Linode
-updated_on: 1760067007
-version: v5.4.0
+updated_on: 1766596462
+version: v5.6.0

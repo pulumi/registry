@@ -10,7 +10,7 @@ native: false
 package_status: public_preview
 publisher: vk-cs
 repo_url: https://github.com/vk-cs/terraform-provider-vkcs
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/vk-cs/vkcs/0.13.2/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/vk-cs/vkcs/0.14.0/schema.json
 title: vkcs
-updated_on: 1766446543
-version: 0.13.2
+updated_on: 1767137743
+version: 0.14.0

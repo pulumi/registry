@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-dnsimple
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-dnsimple/v4.4.2/provider/cmd/pulumi-resource-dnsimple/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-dnsimple/v5.0.0/provider/cmd/pulumi-resource-dnsimple/schema.json
 title: DNSimple
-updated_on: 1763071679
-version: v4.4.2
+updated_on: 1767113714
+version: v5.0.0

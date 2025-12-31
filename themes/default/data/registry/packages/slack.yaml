@@ -10,7 +10,7 @@ native: false
 package_status: public_preview
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-slack
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-slack/v0.4.12/provider/cmd/pulumi-resource-slack/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-slack/v0.4.15/provider/cmd/pulumi-resource-slack/schema.json
 title: Slack
-updated_on: 1745952195
-version: v0.4.12
+updated_on: 1767139916
+version: v0.4.15

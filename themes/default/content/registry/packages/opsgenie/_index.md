@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-opsgenie/v1.3.18/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-opsgenie/v1.3.19/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-opsgenie/blob/v1.3.18/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-opsgenie/blob/v1.3.19/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Opsgenie Provider
 meta_desc: Provides an overview on how to configure the Pulumi Opsgenie provider.
@@ -45,6 +45,7 @@ config:
         value: api.eu.opsgenie.com
 
 ```
+
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
 import * as opsgenie from "@pulumi/opsgenie";
@@ -52,6 +53,7 @@ import * as opsgenie from "@pulumi/opsgenie";
 // Create a user
 const test = new opsgenie.User("test", {});
 ```
+
 {{% /choosable %}}
 {{% choosable language python %}}
 ```yaml
@@ -65,6 +67,7 @@ config:
         value: api.eu.opsgenie.com
 
 ```
+
 ```python
 import pulumi
 import pulumi_opsgenie as opsgenie
@@ -72,6 +75,7 @@ import pulumi_opsgenie as opsgenie
 # Create a user
 test = opsgenie.User("test")
 ```
+
 {{% /choosable %}}
 {{% choosable language csharp %}}
 ```yaml
@@ -85,6 +89,7 @@ config:
         value: api.eu.opsgenie.com
 
 ```
+
 ```csharp
 using System.Collections.Generic;
 using System.Linq;
@@ -99,6 +104,7 @@ return await Deployment.RunAsync(() =>
 });
 
 ```
+
 {{% /choosable %}}
 {{% choosable language go %}}
 ```yaml
@@ -112,6 +118,7 @@ config:
         value: api.eu.opsgenie.com
 
 ```
+
 ```go
 package main
 
@@ -131,6 +138,7 @@ func main() {
 	})
 }
 ```
+
 {{% /choosable %}}
 {{% choosable language yaml %}}
 ```yaml
@@ -144,12 +152,14 @@ config:
         value: api.eu.opsgenie.com
 
 ```
+
 ```yaml
 resources:
   # Create a user
   test:
     type: opsgenie:User
 ```
+
 {{% /choosable %}}
 {{% choosable language java %}}
 ```yaml
@@ -163,6 +173,7 @@ config:
         value: api.eu.opsgenie.com
 
 ```
+
 ```java
 package generated_program;
 
@@ -189,6 +200,7 @@ public class App {
     }
 }
 ```
+
 {{% /choosable %}}
 {{< /chooser >}}
 ## Configuration Reference

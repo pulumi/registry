@@ -10,7 +10,7 @@ native: false
 package_status: public_preview
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-sdwan
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-sdwan/v0.5.1/provider/cmd/pulumi-resource-sdwan/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-sdwan/v0.5.2/provider/cmd/pulumi-resource-sdwan/schema.json
 title: Cisco Catalyst SD-WAN
-updated_on: 1762228200
-version: v0.5.1
+updated_on: 1767140173
+version: v0.5.2

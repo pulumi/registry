@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-sdwan/v0.5.1/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-sdwan/v0.5.2/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-sdwan/blob/v0.5.1/docs/installation-configuration.md
+edit_url: https://github.com/pulumi/pulumi-sdwan/blob/v0.5.2/docs/installation-configuration.md
 title: Cisco Catalyst SD-WAN Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi Cisco Catalyst SD-WAN Provider.
 layout: installation

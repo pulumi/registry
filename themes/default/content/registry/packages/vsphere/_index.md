@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-vsphere/v4.16.1/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-vsphere/v4.16.2/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-vsphere/blob/v4.16.1/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-vsphere/blob/v4.16.2/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Vsphere Provider
 meta_desc: Provides an overview on how to configure the Pulumi Vsphere provider.
@@ -69,6 +69,7 @@ config:
         value: 'TODO: var.vsphere_server'
 
 ```
+
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
 import * as vsphere from "@pulumi/vsphere";
@@ -104,6 +105,7 @@ const vm = new vsphere.VirtualMachine("vm", {
     }],
 });
 ```
+
 {{% /choosable %}}
 {{% choosable language python %}}
 ```yaml
@@ -123,6 +125,7 @@ config:
         value: 'TODO: var.vsphere_server'
 
 ```
+
 ```python
 import pulumi
 import pulumi_vsphere as vsphere
@@ -149,6 +152,7 @@ vm = vsphere.VirtualMachine("vm",
         "size": 20,
     }])
 ```
+
 {{% /choosable %}}
 {{% choosable language csharp %}}
 ```yaml
@@ -168,6 +172,7 @@ config:
         value: 'TODO: var.vsphere_server'
 
 ```
+
 ```csharp
 using System.Collections.Generic;
 using System.Linq;
@@ -227,6 +232,7 @@ return await Deployment.RunAsync(() =>
 });
 
 ```
+
 {{% /choosable %}}
 {{% choosable language go %}}
 ```yaml
@@ -246,6 +252,7 @@ config:
         value: 'TODO: var.vsphere_server'
 
 ```
+
 ```go
 package main
 
@@ -309,6 +316,7 @@ func main() {
 	})
 }
 ```
+
 {{% /choosable %}}
 {{% choosable language yaml %}}
 ```yaml
@@ -328,6 +336,7 @@ config:
         value: 'TODO: var.vsphere_server'
 
 ```
+
 ```yaml
 resources:
   vm:
@@ -369,6 +378,7 @@ variables:
         name: VM Network
         datacenterId: ${datacenter.id}
 ```
+
 {{% /choosable %}}
 {{% choosable language java %}}
 ```yaml
@@ -388,6 +398,7 @@ config:
         value: 'TODO: var.vsphere_server'
 
 ```
+
 ```java
 package generated_program;
 
@@ -454,6 +465,7 @@ public class App {
     }
 }
 ```
+
 {{% /choosable %}}
 {{< /chooser >}}
 

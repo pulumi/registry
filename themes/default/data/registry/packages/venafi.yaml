@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-venafi
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-venafi/v1.12.1/provider/cmd/pulumi-resource-venafi/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-venafi/v1.12.2/provider/cmd/pulumi-resource-venafi/schema.json
 title: Venafi
-updated_on: 1759807304
-version: v1.12.1
+updated_on: 1767140048
+version: v1.12.2

@@ -1,11 +1,13 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-random/v4.18.2/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-random/v4.18.5/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+edit_url: https://github.com/pulumi/pulumi-random/blob/v4.18.5/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Random Provider
 meta_desc: Provides an overview on how to configure the Pulumi Random provider.
 layout: package
 ---
+
 ## Installation
 
 The Random provider is available as a package in all Pulumi languages:
@@ -15,6 +17,7 @@ The Random provider is available as a package in all Pulumi languages:
 * Go: [`github.com/pulumi/pulumi-random/sdk/v4/go/random`](https://github.com/pulumi/pulumi-random)
 * .NET: [`Pulumi.Random`](https://www.nuget.org/packages/Pulumi.Random)
 * Java: [`com.pulumi/random`](https://central.sonatype.com/artifact/com.pulumi/random)
+
 ## Overview
 
 The "random" provider allows the use of randomness within Pulumi
@@ -71,6 +74,7 @@ const serverInstance = new aws.ec2.Instance("server", {
     ami: server.keepers.apply(keepers => keepers?.amiId),
 });
 ```
+
 {{% /choosable %}}
 {{% choosable language python %}}
 ```python
@@ -89,6 +93,7 @@ server_instance = aws.ec2.Instance("server",
     },
     ami=server.keepers["amiId"])
 ```
+
 {{% /choosable %}}
 {{% choosable language csharp %}}
 ```csharp
@@ -121,6 +126,7 @@ return await Deployment.RunAsync(() =>
 });
 
 ```
+
 {{% /choosable %}}
 {{% choosable language go %}}
 ```go
@@ -129,7 +135,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/pulumi/pulumi-aws/sdk/v6/go/aws/ec2"
+	"github.com/pulumi/pulumi-aws/sdk/v7/go/aws/ec2"
 	"github.com/pulumi/pulumi-random/sdk/v4/go/random"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
@@ -162,6 +168,7 @@ func main() {
 	})
 }
 ```
+
 {{% /choosable %}}
 {{% choosable language yaml %}}
 ```yaml
@@ -180,6 +187,7 @@ resources:
         Name: web-server ${server.hex}
       ami: ${server.keepers.amiId}
 ```
+
 {{% /choosable %}}
 {{% choosable language java %}}
 ```java
@@ -211,13 +219,14 @@ public class App {
             .build());
 
         var serverInstance = new Instance("serverInstance", InstanceArgs.builder()
-            .tags(Map.of("Name", server.hex().applyValue(hex -> String.format("web-server %s", hex))))
-            .ami(server.keepers().applyValue(keepers -> keepers.amiId()))
+            .tags(Map.of("Name", server.hex().applyValue(_hex -> String.format("web-server %s", _hex))))
+            .ami(server.keepers().applyValue(_keepers -> _keepers.amiId()))
             .build());
 
     }
 }
 ```
+
 {{% /choosable %}}
 {{< /chooser >}}
 

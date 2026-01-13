@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-rancher2
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-rancher2/v10.3.0/provider/cmd/pulumi-resource-rancher2/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-rancher2/v11.0.0/provider/cmd/pulumi-resource-rancher2/schema.json
 title: Rancher 2
-updated_on: 1762486765
-version: v10.3.0
+updated_on: 1766596160
+version: v11.0.0

@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: qdrant
 repo_url: https://github.com/qdrant/terraform-provider-qdrant-cloud
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/qdrant/qdrant-cloud/1.15.1/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/qdrant/qdrant-cloud/1.16.0/schema.json
 title: qdrant-cloud
-updated_on: 1765496141
-version: 1.15.1
+updated_on: 1766446538
+version: 1.16.0

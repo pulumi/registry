@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/descope/pulumi-descope/v0.3.2/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/descope/pulumi-descope/v0.3.4/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/descope/pulumi-descope/blob/v0.3.2/docs/_index.md
+edit_url: https://github.com/descope/pulumi-descope/blob/v0.3.4/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Descope Provider
 meta_desc: Provides an overview on how to configure the Pulumi Descope provider.
@@ -20,6 +20,6 @@ The Descope provider is available as a package in all Pulumi languages:
 
 ## Configuration Reference
 
-- `baseUrl` (String)
-- `managementKey` (String, Sensitive)
-- `projectId` (String)
+- `baseUrl` (String) An optional base URL for the Descope API
+- `managementKey` (String, Sensitive) A valid management key for your Descope company
+- `projectId` (String, Deprecated)

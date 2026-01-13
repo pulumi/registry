@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/octopusdeploylabs/octopusdeploy/0.43.2/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/octopusdeploylabs/octopusdeploy/0.43.3/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Octopusdeploy Provider
@@ -14,10 +14,9 @@ The Octopusdeploy provider must be installed as a Local Package by following the
 ```bash
 pulumi package add terraform-provider octopusdeploylabs/octopusdeploy
 ```
-## Warning
+## ⚠️ Warning ⚠️
 
-> This provider has been moved under the namespace OctopusDeploy, the provider under OctopusDeployLabs is no longer maintained.
-> Please read *0. Moving to Octopus Deploy Namespace* under the guides subcategory to learn how to upgrade your provider while maintaining state.
+!> Since 1st June 2025, the Octopus Deploy Pulumi Provider has moved to the OctopusDeploy namespace, and this version is no longer being maintained. If you were previously using this version of the provider, please read the guide for Moving to Octopus Deploy Namespace to learn how to upgrade your provider while maintaining state.
 ## Overview
 
 This provider is used to configure resources in Octopus Deploy. The provider must be configured with the proper credentials before it can be used.
@@ -297,7 +296,7 @@ public class App {
 
         //This resource will be scoped to the space named "Product Development".
         var env3 = new Environment("env3", EnvironmentArgs.builder()
-            .spaceId(dev.applyValue(getSpaceResult -> getSpaceResult.id()))
+            .spaceId(dev.id())
             .name("TestEnv3")
             .build());
 

@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/volcengine/pulumi-volcengine/v0.0.42/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/volcengine/pulumi-volcengine/v0.0.43/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/volcengine/pulumi-volcengine/blob/v0.0.42/docs/installation-configuration.md
+edit_url: https://github.com/volcengine/pulumi-volcengine/blob/v0.0.43/docs/installation-configuration.md
 title: Volcengine Installation & Configuration
 meta_desc: Provides an overview of how to install and configure the Volcengine Provider
 layout: package

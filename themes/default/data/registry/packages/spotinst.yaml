@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-spotinst
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-spotinst/v3.128.0/provider/cmd/pulumi-resource-spotinst/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-spotinst/v3.128.1/provider/cmd/pulumi-resource-spotinst/schema.json
 title: Spotinst
-updated_on: 1767411611
-version: v3.128.0
+updated_on: 1768621283
+version: v3.128.1

@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/maxlaverse/bitwarden/0.16.0/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/maxlaverse/bitwarden/0.16.1/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Bitwarden Provider
@@ -113,7 +113,7 @@ The Bitwarden provider offers two client implementations to interact with your V
 ### Official Bitwarden CLIs (Default)
 By default, the provider uses the official Bitwarden command-line tools ([Bitwarden CLI](https://bitwarden.com/help/article/cli/#download-and-install) for Password Manager and [BWS CLI](https://bitwarden.com/help/article/cli/#download-and-install) for Secrets Manager). This approach leverages the battle-tested reliability of Bitwarden's own tooling, backed by their engineering team and security expertise.
 
-The trade-off is that you need to pre-install the appropriate CLI tools in your Pulumi environment. Additionally, the Password Manager CLI (written in Node.js) can create performance bottlenecks when managing many resources due to process spawning overhead.
+The trade-off is that you need to pre-install the appropriate CLI tools in your Pulumi environment. Additionally, the Password Manager CLI (requiring Node.js) can create performance bottlenecks when managing many resources due to process spawning overhead.
 ### Embedded Client
 The provider also includes an embedded client that communicates directly with Bitwarden servers without external dependencies. This eliminates the need to install separate CLI tools and provides better performance by avoiding external process spawning, making it particularly beneficial for managing large resource sets.
 
@@ -167,6 +167,8 @@ In order to generate an Access Token you need to:
 5. Click on your generated Machine Account
 6. Select the *Access Tokens* tab
 7. Created a new Access Token and save it somewhere safe
+
+> **Note:** By default, new machine accounts are not assigned to any projects. After creating a machine account, make sure it is added to the project(s) you want to access, with either "Can Read" or "Can Read & Write" permissions. If the machine account does not have access to the project, you will encounter an `Error: object not found` when attempting to use/create secrets from that project.
 ## Configuration
 Configuration for the Bitwarden Provider can be derived from two sources:
 * Parameters in the provider configuration

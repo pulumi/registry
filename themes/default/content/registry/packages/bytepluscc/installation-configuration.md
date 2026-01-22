@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/byteplus-sdk/pulumi-bytepluscc/v0.0.11/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/byteplus-sdk/pulumi-bytepluscc/v0.0.12/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/byteplus-sdk/pulumi-bytepluscc/blob/v0.0.11/docs/installation-configuration.md
+edit_url: https://github.com/byteplus-sdk/pulumi-bytepluscc/blob/v0.0.12/docs/installation-configuration.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Bytepluscc Provider
 meta_desc: Provides an overview on how to configure the Pulumi Bytepluscc provider.

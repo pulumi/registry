@@ -1,6 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/zscaler/pulumi-zpa/v1.0.2/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/zscaler/pulumi-zpa/v1.0.3/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
+edit_url: https://github.com/zscaler/pulumi-zpa/blob/v1.0.3/docs/installation-configuration.md
 title: Zscaler Private Access (ZPA) Installation & Configuration
 meta_desc: Information on how to install the ZPA provider.
 layout: package

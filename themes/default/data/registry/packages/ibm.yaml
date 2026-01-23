@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: ibm-cloud
 repo_url: https://github.com/ibm-cloud/terraform-provider-ibm
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/ibm-cloud/ibm/1.87.0/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/ibm-cloud/ibm/1.87.2/schema.json
 title: ibm
-updated_on: 1768217963
-version: 1.87.0
+updated_on: 1768865961
+version: 1.87.2

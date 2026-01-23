@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-scm/v1.0.1/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-scm/v1.0.3/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-scm/blob/v1.0.1/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-scm/blob/v1.0.3/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Strata Cloud Manager Provider
 meta_desc: Provides an overview on how to configure the Pulumi Strata Cloud Manager provider.
@@ -35,6 +35,67 @@ This provider covers the following aspects of Strata Cloud Manager:
 
 By using this software, you agree to these terms.
 ## Release Notes
+### v1.0.7
+#### ENHANCEMENTS
+
+* resource/scm_log_forwarding_profile:  Added additional examples and tests (resource, data-source)
+* resource/scm_kerberos_server_profile:  Added additional examples and tests (resource, data-source)
+* resource/scm_saml_server_profile: Added additional examples and tests (resource, data-source)
+* resource/scm_qos_prpfile: Added additional examples and tests (resource, data-source)
+* resource/scm_lldp_prpfile: Added additional examples and tests (resource, data-source)
+* resource/scm_scep_profile: Added additional examples and tests (resource, data-source)
+* resource/scm_tacacs_server: Added additional examples and tests (resource, data-source)
+* resource/scm_dhcp_interface: Added additional examples(resource, data-source)
+* resource/scm_decryption_rule: Added additional examples(resource)
+
+* Documentation on using SCM SDK with new Client Support.
+* Added support for managing secrets within arrays of objects.
+#### BUG FIXES
+
+* resource/scm_decryption_rule: Resolved creation of Decryption Rule with SSL Inbound Inspection (#15)
+* resource/scm_lldp_profiles: Resolved LLDP API Support (#69)
+* resource/scm_tacacs_server: Resolved creation of Tacacs Server Profile with secrets within array of objects (#80)
+* resource/scm_loopback_interface: Resolved Loopback IPv6 interface id issue (#79)
+* resource/scm_tunnel_interface: Resolved Tunnel IPv6 interface id issue (#79)
+* resource/scm_scep_profile : Schema Fix for rsaNbits (#84)
+* resource/scm_dhcp_interface : DHCP Interface GetByUUID Fix (#82)
+* resource/scm_service_setting : md5 and sha1 sensitive values fix (#81)
+* resource/scm_service_connection: Resolved Creation of SC with protobol bgp enabled false and peerAs (ADI-51539)
+### v1.0.6
+#### FEATURES
+
+* resource/scm_authentication_settings: Added Support, examples and tests (resources, data-source)
+* resource/scm_content_id_settings: Added Support, examples and tests (resources, data-source)
+* resource/scm_motd_banner_settings: Added Support, examples and tests (resources, data-source)
+* resource/scm_update_schedule: Added Support, examples and tests (resources, data-source)
+* resource/scm_general_settings: Added Support, examples and tests (resources, data-source)
+* resource/scm_management_interface: Added Support, examples and tests (resources, data-source)
+* resource/scm_device_redistribution_collector: Added Support, examples and tests (resources, data-source)
+* resource/scm_service_route: Added Support, examples and tests (resources, data-source)
+* resource/scm_service_settings: Added Support, examples and tests (resources, data-source)
+* resource/scm_session_settings: Added Support, examples and tests (resources, data-source)
+* resource/scm_session_timeout: Added Support, examples and tests (resources, data-source)
+* resource/scm_tcp_settings: Added Support, examples and tests (resources, data-source)
+* resource/scm_vpn_settings: Added Support, examples and tests (resources, data-source)
+* resource/scm_bandwidth_allocation: Added Support, examples (resources, data-source)
+* resource/scm_lldp_profiles: Added Support (resources, data-source)
+#### ENHANCEMENTS
+
+* resource/scm_syslog_server_profile:  Added additional examples and tests (resource, data-source)
+* resource/scm_http_server_profile: Added additional examples and tests (resource, data-source)
+* resource/scm_tls_service_profile: Added additional examples and tests (resource)
+
+* Bandwidth Allocation currently supported (#9)
+* Document the import statements to import a resource into state (#23)
+* The password used on the external dynamic list can't be set  (#74)
+#### BUG FIXES
+
+* resource/scm_ethernet_interface: Resolved deletion of interfaceManagementProfile property caused due to computed flag
+* resource/scm_decryption_rules: Fixed POST response codes for Decryption Rules
+* resource/scm_security_rules: Fixed POST response codes for Security Rules
+* resource/scm_auto_vpn_cluster: Fixed GET list response for Auto VPN Cluster
+* resource/scm_tls_service_profile: Added missing tls1-3 enum for min-version under protocol-settings
+* Added missing docs on how to Import resources created outside pulumi
 ### v1.0.5
 #### FEATURES
 
@@ -178,10 +239,12 @@ config:
         value: ""
 
 ```
+
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
 
 ```
+
 {{% /choosable %}}
 {{% choosable language python %}}
 ```yaml
@@ -203,10 +266,12 @@ config:
         value: ""
 
 ```
+
 ```python
 import pulumi
 
 ```
+
 {{% /choosable %}}
 {{% choosable language csharp %}}
 ```yaml
@@ -228,6 +293,7 @@ config:
         value: ""
 
 ```
+
 ```csharp
 using System.Collections.Generic;
 using System.Linq;
@@ -238,6 +304,7 @@ return await Deployment.RunAsync(() =>
 });
 
 ```
+
 {{% /choosable %}}
 {{% choosable language go %}}
 ```yaml
@@ -259,6 +326,7 @@ config:
         value: ""
 
 ```
+
 ```go
 package main
 
@@ -272,6 +340,7 @@ func main() {
 	})
 }
 ```
+
 {{% /choosable %}}
 {{% choosable language yaml %}}
 ```yaml
@@ -293,9 +362,11 @@ config:
         value: ""
 
 ```
+
 ```yaml
 {}
 ```
+
 {{% /choosable %}}
 {{% choosable language java %}}
 ```yaml
@@ -317,6 +388,7 @@ config:
         value: ""
 
 ```
+
 ```java
 package generated_program;
 
@@ -339,6 +411,7 @@ public class App {
     }
 }
 ```
+
 {{% /choosable %}}
 {{< /chooser >}}
 ## Provider Parameter Priority

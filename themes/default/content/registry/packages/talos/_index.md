@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-talos/v0.7.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-talos/v0.7.1/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumiverse/pulumi-talos/blob/v0.7.0/docs/_index.md
+edit_url: https://github.com/pulumiverse/pulumi-talos/blob/v0.7.1/docs/_index.md
 title: Talos Linux
 meta_desc: Provides an overview of the Talos Linux Provider for Pulumi.
 layout: package

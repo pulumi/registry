@@ -1203,9 +1203,6 @@ managing it.
 
 {{< chooser language "typescript,python,go,csharp,java,yaml" >}}
 
-{{% choosable language javascript %}}
-
-{{% /choosable %}}
 {{% choosable language typescript %}}
 
 ```typescript

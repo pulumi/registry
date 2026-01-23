@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/g-core/gcore/0.29.10/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/g-core/gcore/0.32.7/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Gcore Provider
@@ -1197,7 +1197,7 @@ public class App {
             .name("test_boot_volume_1")
             .typeName("ssd_hiiops")
             .imageId("8f0900ba-2002-4f79-b866-390444caa19e")
-            .size(10)
+            .size(10.0)
             .regionId(regionId)
             .projectId(projectId)
             .build());
@@ -1206,7 +1206,7 @@ public class App {
             .name("test_boot_volume_2")
             .typeName("ssd_hiiops")
             .imageId("8f0900ba-2002-4f79-b866-390444caa19e")
-            .size(10)
+            .size(10.0)
             .regionId(regionId)
             .projectId(projectId)
             .build());
@@ -1214,7 +1214,7 @@ public class App {
         var thirdVolume = new Volume("thirdVolume", VolumeArgs.builder()
             .name("test_data_volume")
             .typeName("ssd_hiiops")
-            .size(6)
+            .size(6.0)
             .regionId(regionId)
             .projectId(projectId)
             .build());
@@ -1226,7 +1226,7 @@ public class App {
             .volumes(Instancev2VolumeArgs.builder()
                 .source("existing-volume")
                 .volumeId(firstVolume.volumeId())
-                .bootIndex(0)
+                .bootIndex(0.0)
                 .build())
             .interfaces(
                 Instancev2InterfaceArgs.builder()
@@ -1258,7 +1258,7 @@ public class App {
             .regionId(regionId)
             .name("test_listener")
             .protocol("HTTP")
-            .protocolPort(80)
+            .protocolPort(80.0)
             .loadbalancerId(lb.loadbalancerv2Id())
             .build());
 
@@ -1272,9 +1272,9 @@ public class App {
             .listenerId(listener.lblistenerId())
             .healthMonitor(LbpoolHealthMonitorArgs.builder()
                 .type("PING")
-                .delay(60)
-                .maxRetries(5)
-                .timeout(10)
+                .delay(60.0)
+                .maxRetries(5.0)
+                .timeout(10.0)
                 .build())
             .build());
 
@@ -1283,8 +1283,8 @@ public class App {
             .regionId(regionId)
             .poolId(pl.lbpoolId())
             .instanceId(instance.instancev2Id())
-            .address(instance.interfaces().applyValue(interfaces -> interfaces[0].ipAddress()))
-            .protocolPort(8081)
+            .address(instance.interfaces().applyValue(_interfaces -> _interfaces[0].ipAddress()))
+            .protocolPort(8081.0)
             .build());
 
         var instance2 = new Instancev2("instance2", Instancev2Args.builder()
@@ -1295,12 +1295,12 @@ public class App {
                 Instancev2VolumeArgs.builder()
                     .source("existing-volume")
                     .volumeId(secondVolume.volumeId())
-                    .bootIndex(0)
+                    .bootIndex(0.0)
                     .build(),
                 Instancev2VolumeArgs.builder()
                     .source("existing-volume")
                     .volumeId(thirdVolume.volumeId())
-                    .bootIndex(1)
+                    .bootIndex(1.0)
                     .build())
             .interfaces(Instancev2InterfaceArgs.builder()
                 .type("subnet")
@@ -1318,9 +1318,9 @@ public class App {
             .regionId(regionId)
             .poolId(pl.lbpoolId())
             .instanceId(instance2.instancev2Id())
-            .address(instance2.interfaces().applyValue(interfaces -> interfaces[0].ipAddress()))
-            .protocolPort(8081)
-            .weight(5)
+            .address(instance2.interfaces().applyValue(_interfaces -> _interfaces[0].ipAddress()))
+            .protocolPort(8081.0)
+            .weight(5.0)
             .build());
 
     }

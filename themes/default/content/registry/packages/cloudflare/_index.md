@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-cloudflare/v6.10.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-cloudflare/v6.13.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-cloudflare/blob/v6.10.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-cloudflare/blob/v6.13.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Cloudflare Provider
 meta_desc: Provides an overview on how to configure the Pulumi Cloudflare provider.
@@ -36,6 +36,7 @@ config:
         value: 'TODO: var.cloudflare_api_token'
 
 ```
+
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
 import * as cloudflare from "@pulumi/cloudflare";
@@ -43,6 +44,7 @@ import * as cloudflare from "@pulumi/cloudflare";
 // Create a DNS record
 const www = new cloudflare.DnsRecord("www", {});
 ```
+
 {{% /choosable %}}
 {{% choosable language python %}}
 ```yaml
@@ -54,6 +56,7 @@ config:
         value: 'TODO: var.cloudflare_api_token'
 
 ```
+
 ```python
 import pulumi
 import pulumi_cloudflare as cloudflare
@@ -61,6 +64,7 @@ import pulumi_cloudflare as cloudflare
 # Create a DNS record
 www = cloudflare.DnsRecord("www")
 ```
+
 {{% /choosable %}}
 {{% choosable language csharp %}}
 ```yaml
@@ -72,6 +76,7 @@ config:
         value: 'TODO: var.cloudflare_api_token'
 
 ```
+
 ```csharp
 using System.Collections.Generic;
 using System.Linq;
@@ -86,6 +91,7 @@ return await Deployment.RunAsync(() =>
 });
 
 ```
+
 {{% /choosable %}}
 {{% choosable language go %}}
 ```yaml
@@ -97,6 +103,7 @@ config:
         value: 'TODO: var.cloudflare_api_token'
 
 ```
+
 ```go
 package main
 
@@ -116,6 +123,7 @@ func main() {
 	})
 }
 ```
+
 {{% /choosable %}}
 {{% choosable language yaml %}}
 ```yaml
@@ -127,12 +135,14 @@ config:
         value: 'TODO: var.cloudflare_api_token'
 
 ```
+
 ```yaml
 resources:
   # Create a DNS record
   www:
     type: cloudflare:DnsRecord
 ```
+
 {{% /choosable %}}
 {{% choosable language java %}}
 ```yaml
@@ -144,6 +154,7 @@ config:
         value: 'TODO: var.cloudflare_api_token'
 
 ```
+
 ```java
 package generated_program;
 
@@ -170,6 +181,7 @@ public class App {
     }
 }
 ```
+
 {{% /choosable %}}
 {{< /chooser >}}
 ## Configuration Reference

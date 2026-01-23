@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: infobloxopen
 repo_url: https://github.com/infobloxopen/terraform-provider-infoblox
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/infobloxopen/infoblox/2.10.0/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/infobloxopen/infoblox/2.11.0/schema.json
 title: infoblox
-updated_on: 1745624142
-version: 2.10.0
+updated_on: 1761046549
+version: 2.11.0

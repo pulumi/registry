@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/elastic/elasticstack/0.12.0/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/elastic/elasticstack/0.13.1/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Elasticstack Provider
@@ -16,7 +16,9 @@ pulumi package add terraform-provider elastic/elasticstack
 ```
 ## Overview
 
-The Elasticstack provider provides the resources to interact with Elastic stack products.
+The Elasticstack provider provides the resources to interact with Elastic stack products, including:
+* Elastic Stack (Self managed, Elastic Cloud hosted, ECK managed)
+* Elasticsearch Serverless (API authentication only)
 
 It is recommended to setup at least minimum security, <https://www.elastic.co/guide/en/elasticsearch/reference/current/security-minimal-setup.html>
 in order to interact with the Elasticsearch and be able to use the provider's full capabilities

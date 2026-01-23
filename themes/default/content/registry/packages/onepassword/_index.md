@@ -11,21 +11,8 @@ You'll need to configure the 1Password provider with credentials to access and m
 
 ## Example
 
-{{< chooser language "javascript,typescript,python,go" >}}
+{{< chooser language "typescript,python,go" >}}
 
-{{% choosable language javascript %}}
-
-```javascript
-const pulumi = require("@pulumi/pulumi");
-const onepassword = require("@1password/pulumi-onepassword");
-
-const example = onepassword.getItem({
-    vault: data.onepassword_vault.example.uuid,
-    uuid: onepassword_item.demo_sections.uuid,
-});
-```
-
-{{% /choosable %}}
 {{% choosable language typescript %}}
 
 ```typescript

@@ -56,13 +56,14 @@ bin/mktutorial: $(shell ${HELPMAKEGO} tools/mktutorial)
 # Generate the API docs for `content/registry/packages/<pkg>`, where <pkg> is the name of
 # the package to be handed off to resourcedocsgen.
 .SECONDEXPANSION: # Needed for content/registry/packages/% to have dependencies that reference %.
-api-docs/%: .make/content/registry/packages/$$*/api-docs
+api-docs/%: .make/content/registry/packages/$$*/api-docs ;
 .make/content/registry/packages/%/api-docs: bin/resourcedocsgen \
 				themes/default/data/registry/packages/%.yaml \
 				$$(wildcard themes/default/content/registry/packages/%/*)
 	bin/resourcedocsgen docs registry \
 		--baseDocsOutDir ./content/registry/packages \
 		--basePackageTreeJSONOutDir ./static/registry/packages/navs \
+		--baseSchemasOutDir ./static/registry/packages \
 		$*
 	@mkdir -p "$(@D)"
 	@touch $@

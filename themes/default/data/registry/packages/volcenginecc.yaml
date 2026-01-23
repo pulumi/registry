@@ -2,7 +2,7 @@
 # Do not edit by hand unless you're certain you know what you are doing!
 category: Cloud
 component: false
-description: A Pulumi package to safely use randomness in Pulumi programs.
+description: A Pulumi package to safely use volcengine resource in Pulumi programs.
 featured: false
 logo_url: https://avatars.githubusercontent.com/u/67365215
 name: volcenginecc
@@ -10,7 +10,7 @@ native: false
 package_status: public_preview
 publisher: Volcengine
 repo_url: https://github.com/volcengine/pulumi-volcenginecc
-schema_file_url: https://raw.githubusercontent.com/volcengine/pulumi-volcenginecc/v0.0.2/provider/cmd/pulumi-resource-volcenginecc/schema.json
+schema_file_url: https://raw.githubusercontent.com/volcengine/pulumi-volcenginecc/v0.0.20/provider/cmd/pulumi-resource-volcenginecc/schema.json
 title: volcenginecc
-updated_on: 1760179214
-version: v0.0.2
+updated_on: 1769071899
+version: v0.0.20

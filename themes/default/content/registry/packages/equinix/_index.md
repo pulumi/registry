@@ -1,6 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/equinix/pulumi-equinix/v0.26.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/equinix/pulumi-equinix/v0.28.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+edit_url: https://github.com/equinix/pulumi-equinix/blob/v0.28.0/docs/_index.md
 title: Equinix
 meta_desc: Provides an overview of the Equinix Provider for Pulumi.
 layout: package

@@ -19,8 +19,6 @@ The AWS Cloud Control provider for Pulumi can provision many of the cloud resour
 
 AWS Cloud Control must be configured with credentials to deploy and update resources in AWS; see [Installation & Configuration](./installation-configuration) for instructions.
 
-{{< youtube oKxaZCyu2OQ >}}
-
 ## Example
 
 Create an Object Lambda access point that transforms object requests to a bucket:
@@ -256,7 +254,7 @@ Here's a very simple demonstration of using the ExtensionResource to create an S
 
 {{< chooser language "typescript,python,go,csharp,java,yaml" / >}}
 
-{{% choosable language "javascript,typescript" %}}
+{{% choosable language "typescript" %}}
 
 ```typescript
 import * as pulumi from "@pulumi/pulumi";

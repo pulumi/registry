@@ -7,10 +7,10 @@ featured: false
 logo_url: https://raw.githubusercontent.com/pulumi/pulumi-terraform-provider/main/assets/logo.png
 name: terraform-provider
 native: true
-package_status: public_preview
+package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-terraform-provider
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-terraform-provider/v0.14.0/assets/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-terraform-provider/v1.0.2/assets/schema.json
 title: Any Terraform Provider
-updated_on: 1754492692
-version: v0.14.0
+updated_on: 1762859466
+version: v1.0.2

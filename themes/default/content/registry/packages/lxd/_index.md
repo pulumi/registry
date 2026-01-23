@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/terraform-lxd/lxd/2.5.0/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/terraform-lxd/lxd/2.6.1/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Lxd Provider
@@ -26,7 +26,7 @@ currently looks in `~/snap/lxd/common/config` (and `~/.config/lxc`) for `client.
 and `client.key` files to authenticate against the LXD daemon.
 
 To generate these files and store them in the LXD client config, follow these
-[steps](https://documentation.ubuntu.com/lxd/en/latest/howto/server_expose/#server-authenticate).
+[steps](https://documentation.ubuntu.com/lxd/latest/howto/server_expose/#server-authenticate).
 Alternatively, the LXD Pulumi provider can generate them on demand if
 `generateClientCertificates` is set to true.
 
@@ -95,11 +95,11 @@ The `remote` block supports:
   for more information.
   The default can also be set with the `LXD_REMOTE` Environment variable.
 
-* `password` - *Optional* - The [trust password](https://documentation.ubuntu.com/lxd/en/latest/authentication/#adding-client-certificates-using-a-trust-password)
+* `password` - *Optional* - The [trust password](https://documentation.ubuntu.com/lxd/latest/authentication/#adding-client-certificates-using-a-trust-password)
   used for initial authentication with the LXD remote. This method is **not recommended** and has
   been removed in LXD 6.1. Please, use `token` instead.
 
-* `token` - *Optional* - The one-time trust [token](https://documentation.ubuntu.com/lxd/en/latest/authentication/#adding-client-certificates-using-tokens)
+* `token` - *Optional* - The one-time trust [token](https://documentation.ubuntu.com/lxd/latest/authentication/#adding-client-certificates-using-tokens)
   used for initial authentication with the LXD remote.
 ## Undefined Remote
 

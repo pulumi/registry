@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/dmacvicar/libvirt/0.8.3/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/dmacvicar/libvirt/0.9.1/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Libvirt Provider
@@ -14,38 +14,125 @@ The Libvirt provider must be installed as a Local Package by following the [inst
 ```bash
 pulumi package add terraform-provider dmacvicar/libvirt
 ```
+~> **NOTE:** This provider was previously published as @pulumi/libvirt.
+However, that package is no longer being updated.Going forward, it is available as a [Local Package](https://www.pulumi.com/blog/any-terraform-provider/) instead.
+Please see the [provider's repository](https://github.com/pulumi/pulumi-libvirt) for details.
+
 ## Overview
 
-The Libvirt provider is used to interact with Linux
-[libvirt](https://libvirt.org) hypervisors.
+The Libvirt provider is used to interact with libvirt to manage virtual machines,
+networks, storage pools, and other resources.
 
-The provider needs to be configured with the proper connection information
-before it can be used.
+This provider follows the [libvirt XML schemas](https://libvirt.org/format.html) closely,
+providing fine-grained control over all libvirt features.
+## Example Usage
 
-> **Note:** while libvirt can be used with several types of hypervisors, this
-provider focuses on [KVM](http://libvirt.org/drvqemu.html). Other drivers may not be
-working and haven't been tested.
-## The connection URI
+{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{% choosable language typescript %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: nodejs
 
-The provider understands [connection URIs](https://libvirt.org/uri.html). The supported transports are:
+```
+```typescript
+import * as pulumi from "@pulumi/pulumi";
 
-* `tcp` (non-encrypted connection)
-* `unix` (UNIX domain socket)
-* `tls` (See [here](https://libvirt.org/kbase/tlscerts.html) for information how to setup certificates)
-* `ssh` (Secure shell)
+```
+{{% /choosable %}}
+{{% choosable language python %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: python
 
-Unlike the original libvirt, the `ssh` transport is not implemented using the ssh command and therefore does not require `nc` (netcat) on the server side.
+```
+```python
+import pulumi
 
-Additionally, the `ssh` URI supports passwords using the `driver+ssh://[username:PASSWORD@][hostname][:port]/[path]?sshauth=ssh-password` syntax.
+```
+{{% /choosable %}}
+{{% choosable language csharp %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: dotnet
 
-As the provider does not use libvirt on the client side, not all connection URI options are supported or apply.
+```
+```csharp
+using System.Collections.Generic;
+using System.Linq;
+using Pulumi;
+
+return await Deployment.RunAsync(() =>
+{
+});
+
+```
+{{% /choosable %}}
+{{% choosable language go %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: go
+
+```
+```go
+package main
+
+import (
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		return nil
+	})
+}
+```
+{{% /choosable %}}
+{{% choosable language yaml %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: yaml
+
+```
+```yaml
+{}
+```
+{{% /choosable %}}
+{{% choosable language java %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: java
+
+```
+```java
+package generated_program;
+
+import com.pulumi.Context;
+import com.pulumi.Pulumi;
+import com.pulumi.core.Output;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+public class App {
+    public static void main(String[] args) {
+        Pulumi.run(App::stack);
+    }
+
+    public static void stack(Context ctx) {
+    }
+}
+```
+{{% /choosable %}}
+{{< /chooser >}}
 ## Configuration Reference
 
-The following keys can be used to configure the provider.
-
-* `uri` - (Required) The [connection URI](https://libvirt.org/uri.html) used
-  to connect to the libvirt host.
-## Environment variables
-
-The libvirt connection URI can also be specified with the `LIBVIRT_DEFAULT_URI`
-shell environment variable.
+- `uri` (String) Libvirt connection URI. Defaults to `qemu:///system` if not specified. See [libvirt URI documentation](https://libvirt.org/uri.html) for details.

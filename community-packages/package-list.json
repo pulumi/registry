@@ -337,10 +337,6 @@
       "schemaFile": "provider/cmd/pulumi-resource-clickhouse/schema.json"
     },
     {
-      "repoSlug": "komminarlabs/pulumi-influxdb3",
-      "schemaFile": "provider/cmd/pulumi-resource-influxdb3/schema.json"
-    },
-    {
       "repoSlug": "1Password/pulumi-onepassword",
       "schemaFile": "provider/cmd/pulumi-resource-onepassword/schema.json"
     },
@@ -359,10 +355,6 @@
     {
       "repoSlug": "crowdstrike/pulumi-crowdstrike",
       "schemaFile": "provider/cmd/pulumi-resource-crowdstrike/schema.json"
-    },
-    {
-      "repoSlug": "komminarlabs/pulumi-cratedb",
-      "schemaFile": "provider/cmd/pulumi-resource-cratedb/schema.json"
     },
     {
       "repoSlug": "azaurus1/pulumi-kafka-connect",
@@ -399,6 +391,10 @@
     {
       "repoSlug": "formalco/pulumi-formal",
       "schemaFile": "provider/cmd/pulumi-resource-formal/schema.json"
+    },
+    {
+      "repoSlug": "byteplus-sdk/pulumi-bytepluscc",
+      "schemaFile": "provider/cmd/pulumi-resource-bytepluscc/schema.json"
     }
   ]
 }

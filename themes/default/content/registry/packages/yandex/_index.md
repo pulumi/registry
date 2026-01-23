@@ -9,17 +9,8 @@ The Yandex Cloud provider must be configured with credentials to deploy and upda
 
 ## Example
 
-{{< chooser language "javascript,typescript,python,go,csharp" >}}
+{{< chooser language "typescript,python,go,csharp" >}}
 
-{{% choosable language javascript %}}
-
-```javascript
-const yandex = require("@pulumi/yandex")
-
-const defaultVpcNetwork = new yandex.VpcNetwork("pulumi-acc-test");
-```
-
-{{% /choosable %}}
 {{% choosable language typescript %}}
 
 ```typescript

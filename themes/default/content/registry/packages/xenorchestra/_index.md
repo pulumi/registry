@@ -1,6 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/vatesfr/pulumi-xenorchestra/v2.2.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/vatesfr/pulumi-xenorchestra/v2.3.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+edit_url: https://github.com/vatesfr/pulumi-xenorchestra/blob/v2.3.0/docs/_index.md
 title: Xen Orchestra
 meta_desc: Provides an overview of the Xen Orchestra Provider for Pulumi.
 layout: package

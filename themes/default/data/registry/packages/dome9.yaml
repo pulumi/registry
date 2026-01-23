@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: dome9
 repo_url: https://github.com/dome9/terraform-provider-dome9
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/dome9/dome9/1.40.3/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/dome9/dome9/1.40.4/schema.json
 title: dome9
-updated_on: 1744673794
-version: 1.40.3
+updated_on: 1761824148
+version: 1.40.4

@@ -50,8 +50,25 @@ func getRepoSlug(repoURL string) (string, error) {
 	return u.Path, nil
 }
 
+func writeSchemaFile(baseSchemasOutDir, packageName string, schemaBytes []byte) error {
+	// Create the package-specific directory if it doesn't exist
+	packageDir := filepath.Join(baseSchemasOutDir, packageName)
+	if err := os.MkdirAll(packageDir, 0o755); err != nil {
+		return errors.Wrapf(err, "creating directory %s", packageDir)
+	}
+
+	// Write the schema.json file
+	schemaFilePath := filepath.Join(packageDir, "schema.json")
+	glog.Infof("Writing schema file to %s", schemaFilePath)
+	if err := os.WriteFile(schemaFilePath, schemaBytes, 0o600); err != nil {
+		return errors.Wrapf(err, "writing schema file to %s", schemaFilePath)
+	}
+
+	return nil
+}
+
 func genResourceDocsForPackageFromRegistryMetadata(
-	metadata pkg.PackageMeta, docsOutDir, packageTreeJSONOutDir string,
+	metadata pkg.PackageMeta, docsOutDir, packageTreeJSONOutDir, schemasOutDir string,
 ) error {
 	glog.Infoln("Generating docs for", metadata.Name)
 
@@ -73,6 +90,13 @@ func genResourceDocsForPackageFromRegistryMetadata(
 		schemaBytes, err = getSchemaFromVCS(metadata, schemaFileURL)
 		if err != nil {
 			return fmt.Errorf("getting schema from VCS for %q: %w", metadata.Name, err)
+		}
+	}
+
+	// Write the schema.json file if schemasOutDir is provided
+	if schemasOutDir != "" {
+		if err := writeSchemaFile(schemasOutDir, metadata.Name, schemaBytes); err != nil {
+			return fmt.Errorf("writing schema file for %q: %w", metadata.Name, err)
 		}
 	}
 
@@ -139,7 +163,7 @@ func getSchemaFromRegistry(metadata pkg.PackageMeta, schemaURL string) ([]byte, 
 		return nil, errors.Wrapf(err, "parsing version %q", metadata.Version)
 	}
 
-	apiURL := fmt.Sprintf("%s/preview/registry/packages/%s/%s/%s/versions/%s",
+	apiURL := fmt.Sprintf("%s/registry/packages/%s/%s/%s/versions/%s",
 		backendURL, source, publisher, metadata.Name, version)
 
 	//nolint:gosec // We're constructing the URL based on a predefined pattern.
@@ -241,7 +265,9 @@ func getRegistryPackagesPath(repoPath string) string {
 	return filepath.Join(repoPath, "themes", "default", "data", "registry", "packages")
 }
 
-func genResourceDocsForAllRegistryPackages(registryRepoPath, baseDocsOutDir, basePackageTreeJSONOutDir string) error {
+func genResourceDocsForAllRegistryPackages(
+	registryRepoPath, baseDocsOutDir, basePackageTreeJSONOutDir, baseSchemasOutDir string,
+) error {
 	registryPackagesPath := getRegistryPackagesPath(registryRepoPath)
 	metadataFiles, err := os.ReadDir(registryPackagesPath)
 	if err != nil {
@@ -267,7 +293,9 @@ func genResourceDocsForAllRegistryPackages(registryRepoPath, baseDocsOutDir, bas
 			}
 
 			docsOutDir := filepath.Join(baseDocsOutDir, metadata.Name, "api-docs")
-			err = genResourceDocsForPackageFromRegistryMetadata(metadata, docsOutDir, basePackageTreeJSONOutDir)
+			err = genResourceDocsForPackageFromRegistryMetadata(
+				metadata, docsOutDir, basePackageTreeJSONOutDir, baseSchemasOutDir,
+			)
 			if err != nil {
 				return errors.Wrapf(err, "generating resource docs using metadata file info %s", f.Name())
 			}
@@ -283,6 +311,7 @@ func genResourceDocsForAllRegistryPackages(registryRepoPath, baseDocsOutDir, bas
 func resourceDocsFromRegistryCmd() *cobra.Command {
 	var baseDocsOutDir string
 	var basePackageTreeJSONOutDir string
+	var baseSchemasOutDir string
 	var registryDir string
 
 	cmd := &cobra.Command{
@@ -313,13 +342,17 @@ func resourceDocsFromRegistryCmd() *cobra.Command {
 
 				docsOutDir := filepath.Join(baseDocsOutDir, metadata.Name, "api-docs")
 
-				err = genResourceDocsForPackageFromRegistryMetadata(metadata, docsOutDir, basePackageTreeJSONOutDir)
+				err = genResourceDocsForPackageFromRegistryMetadata(
+					metadata, docsOutDir, basePackageTreeJSONOutDir, baseSchemasOutDir,
+				)
 				if err != nil {
 					return errors.Wrapf(err, "generating docs for package %q from registry metadata", pkgName)
 				}
 			} else {
 				glog.Infoln("Generating docs for all packages in the registry...")
-				err := genResourceDocsForAllRegistryPackages(registryDir, baseDocsOutDir, basePackageTreeJSONOutDir)
+				err := genResourceDocsForAllRegistryPackages(
+					registryDir, baseDocsOutDir, basePackageTreeJSONOutDir, baseSchemasOutDir,
+				)
 				if err != nil {
 					return errors.Wrap(err, "generating docs for all packages from registry metadata")
 				}
@@ -336,6 +369,9 @@ func resourceDocsFromRegistryCmd() *cobra.Command {
 	cmd.Flags().StringVar(&basePackageTreeJSONOutDir, "basePackageTreeJSONOutDir",
 		"../../static/registry/packages/navs",
 		"The directory path to write the package tree JSON file to")
+	cmd.Flags().StringVar(&baseSchemasOutDir, "baseSchemasOutDir",
+		"",
+		"The directory path to write the schema.json files to (optional)")
 	cmd.Flags().StringVar(&registryDir, "registryDir",
 		".",
 		"The root of the pulumi/registry directory")

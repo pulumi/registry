@@ -10,19 +10,9 @@ The Buildkite provider for Pulumi can be used to provision resources for [Buildk
 
 ## Example
 
-{{< chooser language "javascript,typescript,python,csharp" >}}
+{{< chooser language "typescript,python,csharp" >}}
 
-{{% choosable language javascript %}}
-
-```javascript
-const buildkite = require("@pulumiverse/buildkite")
-
-const agentToken = new buildkite.agent.AgentToken('token', {
-    description: 'agent token',
-})
-```
-
-{{% /choosable %}} {{% choosable language typescript %}}
+{{% choosable language typescript %}}
 
 ```typescript
 import * as buildkite from "@pulumiverse/buildkite";

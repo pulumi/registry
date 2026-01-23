@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-alicloud/v3.86.1/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-alicloud/v3.92.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-alicloud/blob/v3.86.1/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-alicloud/blob/v3.92.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Alibaba Cloud Provider
 meta_desc: Provides an overview on how to configure the Pulumi Alibaba Cloud provider.
@@ -19,6 +19,12 @@ The Alibaba Cloud provider is available as a package in all Pulumi languages:
 * Java: [`com.pulumi/alicloud`](https://central.sonatype.com/artifact/com.pulumi/alicloud)
 
 ## Overview
+
+<div style="display: block;margin-bottom: 40px;"><div class="oics-button" style="float: right;position: absolute;margin-bottom: 10px;">
+  <a href="https://api.aliyun.com/pulumi?spm=docs.r.index&intl_lang=EN_US" target="_blank">
+    <img alt="Open in AliCloud" src="https://img.alicdn.com/imgextra/i1/O1CN01hjjqXv1uYUlY56FyX_!!6000000006049-55-tps-254-36.svg" style="max-height: 44px; max-width: 100%;">
+  </a>
+</div></div>
 
 The Alibaba Cloud provider is used to interact with the
 many resources supported by [Alibaba Cloud](https://www.alibabacloud.com). The provider needs to be configured
@@ -42,6 +48,7 @@ config:
         value: 'TODO: var.secret_key'
 
 ```
+
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
 import * as alicloud from "@pulumi/alicloud";
@@ -96,6 +103,7 @@ const instance = new alicloud.ecs.Instance("instance", {
     }],
 });
 ```
+
 {{% /choosable %}}
 {{% choosable language python %}}
 ```yaml
@@ -111,6 +119,7 @@ config:
         value: 'TODO: var.secret_key'
 
 ```
+
 ```python
 import pulumi
 import pulumi_alicloud as alicloud
@@ -160,6 +169,7 @@ instance = alicloud.ecs.Instance("instance",
         "kms_key_id": key.id,
     }])
 ```
+
 {{% /choosable %}}
 {{% choosable language csharp %}}
 ```yaml
@@ -175,6 +185,7 @@ config:
         value: 'TODO: var.secret_key'
 
 ```
+
 ```csharp
 using System.Collections.Generic;
 using System.Linq;
@@ -254,6 +265,7 @@ return await Deployment.RunAsync(() =>
 });
 
 ```
+
 {{% /choosable %}}
 {{% choosable language go %}}
 ```yaml
@@ -269,6 +281,7 @@ config:
         value: 'TODO: var.secret_key'
 
 ```
+
 ```go
 package main
 
@@ -362,6 +375,7 @@ return nil
 })
 }
 ```
+
 {{% /choosable %}}
 {{% choosable language yaml %}}
 ```yaml
@@ -377,9 +391,11 @@ config:
         value: 'TODO: var.secret_key'
 
 ```
+
 ```yaml
 Example currently unavailable in this language
 ```
+
 {{% /choosable %}}
 {{% choosable language java %}}
 ```yaml
@@ -395,6 +411,7 @@ config:
         value: 'TODO: var.secret_key'
 
 ```
+
 ```java
 package generated_program;
 
@@ -485,6 +502,7 @@ public class App {
     }
 }
 ```
+
 {{% /choosable %}}
 {{< /chooser >}}
 ## Authentication
@@ -642,6 +660,26 @@ config:
         value: cn-hangzhou
 
 ```
+### Using an External Credentials Process
+
+To use an external process to source credentials, the process must be configured in a named profile, including the default profile.
+The profile is configured in a shared configuration file. For information on how to configure external access credentials, please refer to the [Alibaba Cloud CLI documentation](https://www.alibabacloud.com/help/en/cli/configure-credentials).
+
+Usage:
+
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime:
+config:
+    alicloud:profile:
+        value: ExternalProfile
+    alicloud:region:
+        value: cn-hangzhou
+    alicloud:sharedCredentialsFile:
+        value: ~/.aliyun/config.json
+
+```
 ## Configuration Reference
 
 In addition to generic `provider` arguments
@@ -676,17 +714,17 @@ provider configuration:
   Can also be set with the `ALIBABA_CLOUD_ACCOUNT_ID` environment variable since v1.228.0.
   Environment variable `ALICLOUD_ACCOUNT_ID` has been deprecated since v1.228.0.
 
-* `accountType` - (Optional, Available since 1.240.0) Alibaba Cloud Account Type.
+* `accountType` - (Optional, Available since v1.240.0) Alibaba Cloud Account Type.
   It used to indicate caller identity's account type. Can also be set with the `ALIBABA_CLOUD_ACCOUNT_TYPE` environment variable. Valid values:
   - `Domestic`(Default): China-Site Account.
   - `International`: International-Site Account.
 
-* `sharedCredentialsFile` - (Optional, Available since 1.49.0) This is the path to the shared credentials file.
+* `sharedCredentialsFile` - (Optional, Available since v1.49.0) This is the path to the shared credentials file.
   Can also be set with the `ALIBABA_CLOUD_CREDENTIALS_FILE` environment variable since v1.228.0.
   Environment variable `ALICLOUD_SHARED_CREDENTIALS_FILE` has been deprecated since v1.228.0.
   If this is not set and `profile` is specified, "~/.aliyun/config.json" will be used.
 
-* `profile` - (Optional, Available since 1.49.0) This is the Alibaba Cloud profile name as set in the shared credentials file.
+* `profile` - (Optional, Available since v1.49.0) This is the Alibaba Cloud profile name as set in the shared credentials file.
   Can also be set with the `ALIBABA_CLOUD_PROFILE` environment variable since v1.228.0.
   Environment variable `ALICLOUD_PROFILE` has been deprecated since v1.228.0.
 
@@ -694,21 +732,24 @@ provider configuration:
 
 * `assumeRoleWithOidc` - (Optional, Available since v1.220.0) Configuration block for assuming an RAM role using an OIDC. See the `assumeRoleWithOidc` Configuration Block section below. Only one `assumeRoleWithOidc` block may be in the configuration.
 
-* `credentialsUri` - (Optional, Available since 1.141.0) The URI of sidecar credentials service.
+* `credentialsUri` - (Optional, Available since v1.141.0) The URI of sidecar credentials service.
   Can also be set with the `ALIBABA_CLOUD_CREDENTIALS_URI` environment variable since v1.228.0.
   Environment variable `ALICLOUD_CREDENTIALS_URI` has been deprecated since v1.228.0.
 
 * `endpoints` - (Optional) An `endpoints` block to support custom endpoints.
 
-* `skipRegionValidation` - (Optional, Available since 1.52.0) Skip static validation of region ID. Used by users of alternative AlibabaCloud-like APIs or users w/ access to regions that are not public (yet).
+* `skipRegionValidation` - (Optional, Available since v1.52.0) Skip static validation of region ID. Used by users of alternative AlibabaCloud-like APIs or users w/ access to regions that are not public (yet).
 
-* `protocol` - (Optional, Available since 1.72.0) The Protocol of used by API request. Valid values: `HTTP` and `HTTPS`. Default to `HTTPS`.
+* `configurationSource` - (Optional, Available since v1.56.0) Use a string to mark a configuration file source, like `pulumi-alicloud-modules/pulumi-alicloud-ecs-instance` or `pulumi-provider-alicloud/examples/vpc`.
+  The length should not more than 128(Before 1.207.2, it should not more than 64). Since the version 1.145.0, it supports to be set by environment variable `TF_APPEND_USER_AGENT`. See `Custom User-Agent Information`.
 
-* `clientReadTimeout` - (Optional, Available since 1.125.0) The maximum timeout in millisecond second of the client read request. Default to 60000.
+* `protocol` - (Optional, Available since v1.72.0) The Protocol of used by API request. Valid values: `HTTP` and `HTTPS`. Default to `HTTPS`.
 
-* `clientConnectTimeout` - (Optional, Available since 1.125.0) The maximum timeout in millisecond second of the client connection server. Default to 60000.
+* `clientReadTimeout` - (Optional, Available since v1.125.0) The maximum timeout in millisecond second of the client read request. Default to 60000.
 
-* `maxRetryTimeout` - (Optional, Available since 1.183.0) The maximum retry timeout in second of the request. Default to `0`.
+* `clientConnectTimeout` - (Optional, Available since v1.125.0) The maximum timeout in millisecond second of the client connection server. Default to 60000.
+
+* `maxRetryTimeout` - (Optional, Available since v1.183.0) The maximum retry timeout in second of the request. Default to `0`.
 ### `assumeRole` Configuration Block
 
 * `roleArn` - (Required) The ARN of the role to assume. If ARN is set to an empty string, it does not perform role switching.
@@ -725,7 +766,7 @@ provider configuration:
 
 * `sessionExpiration` - (Optional) The time after which the established session for assuming role expires. Valid value range: [900-43200] seconds. Default to 3600 (in this case Alicloud use own default value). It supports environment variable `ALICLOUD_ASSUME_ROLE_SESSION_EXPIRATION`.
 
-* `externalId` - (Optional, Available since 1.207.1) The external ID of the RAM role.
+* `externalId` - (Optional, Available since v1.207.1) The external ID of the RAM role.
   This parameter is provided by an external party and is used to prevent the confused deputy problem.
   The value must be 2 to 1,224 characters in length and can contain letters, digits, and the following special characters:`= , . @ : / - _`.
 ### assumeRoleWithOidc Configuration Block

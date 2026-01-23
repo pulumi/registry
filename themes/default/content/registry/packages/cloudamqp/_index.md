@@ -1,6 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-cloudamqp/v3.24.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-cloudamqp/v3.25.1/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+edit_url: https://github.com/pulumi/pulumi-cloudamqp/blob/v3.25.1/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: CloudAMQP Provider
 meta_desc: Provides an overview on how to configure the Pulumi CloudAMQP provider.
@@ -41,6 +42,7 @@ config:
         value: true
 
 ```
+
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
 import * as cloudamqp from "@pulumi/cloudamqp";
@@ -86,6 +88,7 @@ const cloudwatch = new cloudamqp.IntegrationMetric("cloudwatch", {
     region: awsRegion,
 });
 ```
+
 {{% /choosable %}}
 {{% choosable language python %}}
 ```yaml
@@ -99,6 +102,7 @@ config:
         value: true
 
 ```
+
 ```python
 import pulumi
 import pulumi_cloudamqp as cloudamqp
@@ -139,6 +143,7 @@ cloudwatch = cloudamqp.IntegrationMetric("cloudwatch",
     secret_access_key=aws_secret_key,
     region=aws_region)
 ```
+
 {{% /choosable %}}
 {{% choosable language csharp %}}
 ```yaml
@@ -152,6 +157,7 @@ config:
         value: true
 
 ```
+
 ```csharp
 using System.Collections.Generic;
 using System.Linq;
@@ -229,6 +235,7 @@ return await Deployment.RunAsync(() =>
 });
 
 ```
+
 {{% /choosable %}}
 {{% choosable language go %}}
 ```yaml
@@ -242,6 +249,7 @@ config:
         value: true
 
 ```
+
 ```go
 package main
 
@@ -321,6 +329,7 @@ func main() {
 	})
 }
 ```
+
 {{% /choosable %}}
 {{% choosable language yaml %}}
 ```yaml
@@ -334,6 +343,7 @@ config:
         value: true
 
 ```
+
 ```yaml
 resources:
   # Create a new cloudamqp instance
@@ -387,6 +397,7 @@ resources:
       secretAccessKey: ${awsSecretKey}
       region: ${awsRegion}
 ```
+
 {{% /choosable %}}
 {{% choosable language java %}}
 ```yaml
@@ -400,6 +411,7 @@ config:
         value: true
 
 ```
+
 ```java
 package generated_program;
 
@@ -478,6 +490,7 @@ public class App {
     }
 }
 ```
+
 {{% /choosable %}}
 {{< /chooser >}}
 ## Configuration Reference

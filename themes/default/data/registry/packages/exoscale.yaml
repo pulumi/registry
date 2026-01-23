@@ -10,7 +10,7 @@ native: false
 package_status: public_preview
 publisher: Pulumiverse
 repo_url: https://github.com/pulumiverse/pulumi-exoscale
-schema_file_url: https://raw.githubusercontent.com/pulumiverse/pulumi-exoscale/v0.62.7/provider/cmd/pulumi-resource-exoscale/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumiverse/pulumi-exoscale/v0.66.1/provider/cmd/pulumi-resource-exoscale/schema.json
 title: Exoscale
-updated_on: 1733858160
-version: v0.62.7
+updated_on: 1762259465
+version: v0.66.1

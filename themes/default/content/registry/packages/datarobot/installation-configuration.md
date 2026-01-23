@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/datarobot-community/pulumi-datarobot/v0.10.21/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/datarobot-community/pulumi-datarobot/v0.10.28/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/datarobot-community/pulumi-datarobot/blob/v0.10.21/docs/installation-configuration.md
+edit_url: https://github.com/datarobot-community/pulumi-datarobot/blob/v0.10.28/docs/installation-configuration.md
 title: DataRobot Installation & Configuration
 meta_desc: Information on how to install the DataRobot provider.
 layout: package

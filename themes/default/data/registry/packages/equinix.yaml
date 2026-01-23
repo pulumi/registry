@@ -10,7 +10,7 @@ native: false
 package_status: public_preview
 publisher: Equinix
 repo_url: https://github.com/equinix/pulumi-equinix
-schema_file_url: https://raw.githubusercontent.com/equinix/pulumi-equinix/v0.26.0/provider/cmd/pulumi-resource-equinix/schema.json
+schema_file_url: https://raw.githubusercontent.com/equinix/pulumi-equinix/v0.28.0/provider/cmd/pulumi-resource-equinix/schema.json
 title: Equinix
-updated_on: 1755837667
-version: v0.26.0
+updated_on: 1766515204
+version: v0.28.0

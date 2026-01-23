@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/sumologic/sumologic/3.1.6/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/sumologic/sumologic/3.2.2/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Sumologic Provider
@@ -14,6 +14,10 @@ The Sumologic provider must be installed as a Local Package by following the [in
 ```bash
 pulumi package add terraform-provider sumologic/sumologic
 ```
+~> **NOTE:** This provider was previously published as @pulumi/sumologic.
+However, that package is no longer being updated.Going forward, it is available as a [Local Package](https://www.pulumi.com/blog/any-terraform-provider/) instead.
+Please see the [provider's repository](https://github.com/pulumi/pulumi-sumologic) for details.
+
 ## Overview
 
 This provider is used to manage resources supported by Sumo Logic. The provider needs to be configured with the proper credentials before it can be used.

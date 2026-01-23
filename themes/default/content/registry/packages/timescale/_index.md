@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/timescale/timescale/2.6.0/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/timescale/timescale/2.7.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Timescale Provider
@@ -310,12 +310,12 @@ public class App {
         final var tsSecretKey = config.get("tsSecretKey");
         var tf_test = new Service("tf-test", ServiceArgs.builder()
             .name("tf-test")
-            .milliCpu(500)
-            .memoryGb(2)
+            .milliCpu(500.0)
+            .memoryGb(2.0)
             .regionCode("us-west-2")
             .connectionPoolerEnabled(true)
-            .haReplicas(1)
-            .syncReplicas(0)
+            .haReplicas(1.0)
+            .syncReplicas(0.0)
             .build());
 
         ctx.export("hostAddr", tf_test.hostname());
@@ -712,7 +712,7 @@ public class App {
             .vpcPeeringConnectionId(peer.accepterProvisionedId())
             .autoAccept(true)
             .build(), CustomResourceOptions.builder()
-                .dependsOn(peer)
+                .dependsOn(List.of(peer))
                 .build());
 
     }
@@ -748,6 +748,7 @@ Please reference the [docs](https://docs.timescale.com/use-timescale/latest/regi
 ✅ Connection pooling <br />
 ✅ Metric exporters <br />
 ✅ Log exporters <br />
+✅ S3 connector <br />
 ## Billing
 Services are currently billed for hourly usage. If a service is running for less than an hour,
 it will still be charged for the full hour of usage.

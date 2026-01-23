@@ -11,7 +11,7 @@ native: false
 package_status: ga
 publisher: Zscaler
 repo_url: https://github.com/zscaler/pulumi-zpa
-schema_file_url: https://raw.githubusercontent.com/zscaler/pulumi-zpa/v1.0.2/provider/cmd/pulumi-resource-zpa/schema.json
+schema_file_url: https://raw.githubusercontent.com/zscaler/pulumi-zpa/v1.0.3/provider/cmd/pulumi-resource-zpa/schema.json
 title: Zscaler Private Access
-updated_on: 1750451308
-version: v1.0.2
+updated_on: 1768963117
+version: v1.0.3

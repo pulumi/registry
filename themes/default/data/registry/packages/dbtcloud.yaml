@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-dbtcloud
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-dbtcloud/v1.3.0/provider/cmd/pulumi-resource-dbtcloud/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-dbtcloud/v1.5.0/provider/cmd/pulumi-resource-dbtcloud/schema.json
 title: dbt Cloud
-updated_on: 1763523467
-version: v1.3.0
+updated_on: 1769053867
+version: v1.5.0

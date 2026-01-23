@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/lucky3028/discord/2.2.1/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/lucky3028/discord/2.2.2/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Discord Provider
@@ -214,8 +214,8 @@ public class App {
         var myServer = new Server("myServer", ServerArgs.builder()
             .name("My Awesome Server")
             .region("us-west")
-            .defaultMessageNotifications(0)
-            .iconDataUri(logo.applyValue(getLocalImageResult -> getLocalImageResult.dataUri()))
+            .defaultMessageNotifications(0.0)
+            .iconDataUri(logo.dataUri())
             .build());
 
     }

@@ -6,6 +6,7 @@
 
 import os
 import tempfile
+import re
 import requests
 import subprocess
 import json
@@ -88,7 +89,9 @@ for filename in os.listdir(yaml_db_path):
     # azure-native-v2 also.
     if name.startswith("azure-native") and name != "azure-native":
         continue
-
+    # Similarly, we skip aws-vX packages, since they are legacy and no longer updated.
+    if re.match(r"^aws-v\d+$", name):
+        continue
 
     api_url = f"{backend_url}/registry/packages/{source}/{publisher}/{name}/versions/{version.removeprefix("v")}"
     existence_check = requests.get(api_url, headers={

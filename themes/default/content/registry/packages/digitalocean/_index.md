@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-digitalocean/v4.55.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-digitalocean/v4.56.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-digitalocean/blob/v4.55.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-digitalocean/blob/v4.56.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: DigitalOcean Provider
 meta_desc: Provides an overview on how to configure the Pulumi DigitalOcean provider.
@@ -38,6 +38,7 @@ config:
         value: 'TODO: var.do_token'
 
 ```
+
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
 import * as digitalocean from "@pulumi/digitalocean";
@@ -47,6 +48,7 @@ const doToken = config.requireObject<any>("doToken");
 // Create a web server
 const web = new digitalocean.Droplet("web", {});
 ```
+
 {{% /choosable %}}
 {{% choosable language python %}}
 ```yaml
@@ -58,6 +60,7 @@ config:
         value: 'TODO: var.do_token'
 
 ```
+
 ```python
 import pulumi
 import pulumi_digitalocean as digitalocean
@@ -67,6 +70,7 @@ do_token = config.require_object("doToken")
 # Create a web server
 web = digitalocean.Droplet("web")
 ```
+
 {{% /choosable %}}
 {{% choosable language csharp %}}
 ```yaml
@@ -78,6 +82,7 @@ config:
         value: 'TODO: var.do_token'
 
 ```
+
 ```csharp
 using System.Collections.Generic;
 using System.Linq;
@@ -94,6 +99,7 @@ return await Deployment.RunAsync(() =>
 });
 
 ```
+
 {{% /choosable %}}
 {{% choosable language go %}}
 ```yaml
@@ -105,6 +111,7 @@ config:
         value: 'TODO: var.do_token'
 
 ```
+
 ```go
 package main
 
@@ -127,6 +134,7 @@ func main() {
 	})
 }
 ```
+
 {{% /choosable %}}
 {{% choosable language yaml %}}
 ```yaml
@@ -138,6 +146,7 @@ config:
         value: 'TODO: var.do_token'
 
 ```
+
 ```yaml
 configuration:
   # Set the variable value in *.tfvars file
@@ -149,6 +158,7 @@ resources:
   web:
     type: digitalocean:Droplet
 ```
+
 {{% /choosable %}}
 {{% choosable language java %}}
 ```yaml
@@ -160,6 +170,7 @@ config:
         value: 'TODO: var.do_token'
 
 ```
+
 ```java
 package generated_program;
 
@@ -188,6 +199,7 @@ public class App {
     }
 }
 ```
+
 {{% /choosable %}}
 {{< /chooser >}}
 

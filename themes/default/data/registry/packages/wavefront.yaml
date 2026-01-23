@@ -2,15 +2,15 @@
 # Do not edit by hand unless you're certain you know what you are doing!
 category: Monitoring
 component: false
-description: A Pulumi package for creating and managing wavefront cloud resources.
+description: A Pulumi provider dynamically bridged from wavefront.
 featured: false
 logo_url: ""
 name: wavefront
 native: false
 package_status: ga
-publisher: Pulumi
-repo_url: https://github.com/pulumi/pulumi-wavefront
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-wavefront/v3.1.9/provider/cmd/pulumi-resource-wavefront/schema.json
-title: Wavefront
-updated_on: 1745952368
-version: v3.1.9
+publisher: vmware
+repo_url: https://github.com/vmware/terraform-provider-wavefront
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/vmware/wavefront/5.1.0/schema.json
+title: wavefront
+updated_on: 1769038544
+version: 5.1.0

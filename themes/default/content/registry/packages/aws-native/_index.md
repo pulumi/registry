@@ -254,7 +254,7 @@ Here's a very simple demonstration of using the ExtensionResource to create an S
 
 {{< chooser language "typescript,python,go,csharp,java,yaml" / >}}
 
-{{% choosable language "javascript,typescript" %}}
+{{% choosable language "typescript" %}}
 
 ```typescript
 import * as pulumi from "@pulumi/pulumi";

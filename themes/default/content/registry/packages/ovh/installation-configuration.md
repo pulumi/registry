@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/ovh/pulumi-ovh/v2.9.0/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/ovh/pulumi-ovh/v2.10.0/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/ovh/pulumi-ovh/blob/v2.9.0/docs/installation-configuration.md
+edit_url: https://github.com/ovh/pulumi-ovh/blob/v2.10.0/docs/installation-configuration.md
 title: OVH Installation & Configuration
 meta_desc: Information on how to install the OVH provider.
 layout: installation

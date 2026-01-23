@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-cloudngfwaws/v1.0.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-cloudngfwaws/v1.0.1/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-cloudngfwaws/blob/v1.0.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-cloudngfwaws/blob/v1.0.1/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Palo Alto Networks Cloud NGFW for AWS Provider
 meta_desc: Provides an overview on how to configure the Pulumi Palo Alto Networks Cloud NGFW for AWS provider.

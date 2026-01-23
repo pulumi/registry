@@ -11,31 +11,8 @@ This Pulumi Pinecone Provider enables you to manage your [Pinecone](https://www.
 
 ## Example
 
-{{< chooser language "javascript,typescript,python,go,csharp,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,yaml" >}}
 
-
-{{% choosable language javascript %}}
-
-```javascript
-"use strict";
-const pulumi = require("@pulumi/pulumi");
-const pinecone = require("@pinecone-database/pulumi");
-
-const myPineconeIndex = new pinecone.Index("myPineconeIndex", {
-    name: "example-index",
-    dimension: 10,
-    spec: {
-        serverless: {
-            cloud: "aws",
-            region: "us-east-1",
-        },
-    },
-});
-exports.name = myPineconeIndex.name;
-exports.host = myPineconeIndex.host;
-```
-
-{{% /choosable %}}
 
 {{% choosable language typescript %}}
 

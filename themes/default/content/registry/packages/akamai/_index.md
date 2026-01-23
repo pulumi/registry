@@ -9,26 +9,8 @@ The Akamai provider must be configured with credentials to deploy and update res
 
 ## Example
 
-{{< chooser language "javascript,typescript,python,go,csharp" >}}
+{{< chooser language "typescript,python,go,csharp" >}}
 
-{{% choosable language javascript %}}
-
-```javascript
-const akamai = require("@pulumi/akamai")
-
-const contractId = akamai.getContract().then(x => x.id)
-const groupId = akamai.getGroup().then(x => x.id)
-
-const tsdomain = new akamai.properties.EdgeHostName("test", {
-    contract: contractId,
-    group: groupId,
-    product: "prd_Fresca",
-    edgeHostname: "test-js.mycompany.io",
-    ipv4: true,
-});
-```
-
-{{% /choosable %}}
 {{% choosable language typescript %}}
 
 ```typescript

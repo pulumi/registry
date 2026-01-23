@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/glesys/glesys/0.14.2/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/glesys/glesys/0.16.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Glesys Provider
@@ -16,7 +16,7 @@ pulumi package add terraform-provider glesys/glesys
 ```
 ## Overview
 
-The GleSYS Provider is used to interact with the resources supported by GleSYS.
+The Glesys Provider is used to interact with the resources supported by GleSYS.
 The provider needs to be configured with the proper credentials before it can be
 used.
 
@@ -196,12 +196,10 @@ $ pulumi up
 $ pulumi preview
 ```
 ## Configuration Reference
-### Required
 
+- `apiEndpoint` (String) The base URL to use for the Glesys API requests. (Defaults to the value of the `GLESYS_API_URL` environment variable or `https://api.glesys.com` if unset.
 - `token` (String) User token for the Glesys API. Alternatively, this can be set using the `GLESYS_TOKEN` environment variable
 - `userid` (String) UserId for the Glesys API. Alternatively, this can be set using the `GLESYS_USERID` environment variable
-
-- `apiEndpoint` (String) The base URL to use for the GleSYS API requests. (Defaults to the value of the `GLESYS_API_URL` environment variable or `https://api.glesys.com` if unset.
 ## Authentication
 ### Static credentials
 

@@ -1,6 +1,7 @@
 ---
 # WARNING: this file was fetched from https://raw.githubusercontent.com/runpod/pulumi-runpod-native/v1.9.99/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+edit_url: https://github.com/runpod/pulumi-runpod-native/blob/v1.9.99/docs/_index.md
 title: RunPod
 meta_desc: Provides an overview of the RunPod Provider for Pulumi.
 layout: package

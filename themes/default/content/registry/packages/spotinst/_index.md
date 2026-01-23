@@ -1,11 +1,13 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-spotinst/v3.124.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-spotinst/v3.128.1/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+edit_url: https://github.com/pulumi/pulumi-spotinst/blob/v3.128.1/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Spotinst Provider
 meta_desc: Provides an overview on how to configure the Pulumi Spotinst provider.
 layout: package
 ---
+
 ## Installation
 
 The Spotinst provider is available as a package in all Pulumi languages:
@@ -15,6 +17,7 @@ The Spotinst provider is available as a package in all Pulumi languages:
 * Go: [`github.com/pulumi/pulumi-spotinst/sdk/v3/go/spotinst`](https://github.com/pulumi/pulumi-spotinst)
 * .NET: [`Pulumi.Spotinst`](https://www.nuget.org/packages/Pulumi.Spotinst)
 * Java: [`com.pulumi/spotinst`](https://central.sonatype.com/artifact/com.pulumi/spotinst)
+
 ## Overview
 
 The Spotinst provider is used to interact with the
@@ -37,6 +40,7 @@ config:
         value: 'TODO: "${var.spotinst_token}"'
 
 ```
+
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
 import * as spotinst from "@pulumi/spotinst";
@@ -44,6 +48,7 @@ import * as spotinst from "@pulumi/spotinst";
 // Create an Elastigroup
 const foo = new spotinst.aws.Elastigroup("foo", {});
 ```
+
 {{% /choosable %}}
 {{% choosable language python %}}
 ```yaml
@@ -57,6 +62,7 @@ config:
         value: 'TODO: "${var.spotinst_token}"'
 
 ```
+
 ```python
 import pulumi
 import pulumi_spotinst as spotinst
@@ -64,6 +70,7 @@ import pulumi_spotinst as spotinst
 # Create an Elastigroup
 foo = spotinst.aws.Elastigroup("foo")
 ```
+
 {{% /choosable %}}
 {{% choosable language csharp %}}
 ```yaml
@@ -77,6 +84,7 @@ config:
         value: 'TODO: "${var.spotinst_token}"'
 
 ```
+
 ```csharp
 using System.Collections.Generic;
 using System.Linq;
@@ -91,6 +99,7 @@ return await Deployment.RunAsync(() =>
 });
 
 ```
+
 {{% /choosable %}}
 {{% choosable language go %}}
 ```yaml
@@ -104,6 +113,7 @@ config:
         value: 'TODO: "${var.spotinst_token}"'
 
 ```
+
 ```go
 package main
 
@@ -123,6 +133,7 @@ func main() {
 	})
 }
 ```
+
 {{% /choosable %}}
 {{% choosable language yaml %}}
 ```yaml
@@ -136,12 +147,14 @@ config:
         value: 'TODO: "${var.spotinst_token}"'
 
 ```
+
 ```yaml
 resources:
   # Create an Elastigroup
   foo:
     type: spotinst:aws:Elastigroup
 ```
+
 {{% /choosable %}}
 {{% choosable language java %}}
 ```yaml
@@ -155,6 +168,7 @@ config:
         value: 'TODO: "${var.spotinst_token}"'
 
 ```
+
 ```java
 package generated_program;
 
@@ -181,6 +195,7 @@ public class App {
     }
 }
 ```
+
 {{% /choosable %}}
 {{< /chooser >}}
 ## Configuration Reference
@@ -200,12 +215,10 @@ Credentials will be set given the following precedence:
 
 The credentials can be merge in the chain by enabling the `MergeCredentialsChain` feature flag.
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
-{{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
 name: configuration-example
-runtime: nodejs
+runtime:
 config:
     spotinst:account:
         value: 'TODO: "${var.spotinst_account}"'
@@ -213,78 +226,5 @@ config:
         value: MergeCredentialsChain=true
 
 ```
-
-{{% /choosable %}}
-{{% choosable language python %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: python
-config:
-    spotinst:account:
-        value: 'TODO: "${var.spotinst_account}"'
-    spotinst:featureFlags:
-        value: MergeCredentialsChain=true
-
-```
-
-{{% /choosable %}}
-{{% choosable language csharp %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: dotnet
-config:
-    spotinst:account:
-        value: 'TODO: "${var.spotinst_account}"'
-    spotinst:featureFlags:
-        value: MergeCredentialsChain=true
-
-```
-
-{{% /choosable %}}
-{{% choosable language go %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: go
-config:
-    spotinst:account:
-        value: 'TODO: "${var.spotinst_account}"'
-    spotinst:featureFlags:
-        value: MergeCredentialsChain=true
-
-```
-
-{{% /choosable %}}
-{{% choosable language yaml %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: yaml
-config:
-    spotinst:account:
-        value: 'TODO: "${var.spotinst_account}"'
-    spotinst:featureFlags:
-        value: MergeCredentialsChain=true
-
-```
-
-{{% /choosable %}}
-{{% choosable language java %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: java
-config:
-    spotinst:account:
-        value: 'TODO: "${var.spotinst_account}"'
-    spotinst:featureFlags:
-        value: MergeCredentialsChain=true
-
-```
-
-{{% /choosable %}}
-{{< /chooser >}}
 
 Please note that if you omit the Spotinst account, resources will be created using the default account for your organization.

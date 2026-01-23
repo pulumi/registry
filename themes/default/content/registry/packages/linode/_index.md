@@ -1,6 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-linode/v5.3.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-linode/v5.7.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+edit_url: https://github.com/pulumi/pulumi-linode/blob/v5.7.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Linode Provider
 meta_desc: Provides an overview on how to configure the Pulumi Linode provider.
@@ -35,6 +36,7 @@ name: configuration-example
 runtime: nodejs
 
 ```
+
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
 import * as linode from "@pulumi/linode";
@@ -42,6 +44,7 @@ import * as linode from "@pulumi/linode";
 // Create a Linode
 const foobar = new linode.Instance("foobar", {});
 ```
+
 {{% /choosable %}}
 {{% choosable language python %}}
 ```yaml
@@ -50,6 +53,7 @@ name: configuration-example
 runtime: python
 
 ```
+
 ```python
 import pulumi
 import pulumi_linode as linode
@@ -57,6 +61,7 @@ import pulumi_linode as linode
 # Create a Linode
 foobar = linode.Instance("foobar")
 ```
+
 {{% /choosable %}}
 {{% choosable language csharp %}}
 ```yaml
@@ -65,6 +70,7 @@ name: configuration-example
 runtime: dotnet
 
 ```
+
 ```csharp
 using System.Collections.Generic;
 using System.Linq;
@@ -79,6 +85,7 @@ return await Deployment.RunAsync(() =>
 });
 
 ```
+
 {{% /choosable %}}
 {{% choosable language go %}}
 ```yaml
@@ -87,6 +94,7 @@ name: configuration-example
 runtime: go
 
 ```
+
 ```go
 package main
 
@@ -106,6 +114,7 @@ func main() {
 	})
 }
 ```
+
 {{% /choosable %}}
 {{% choosable language yaml %}}
 ```yaml
@@ -114,12 +123,14 @@ name: configuration-example
 runtime: yaml
 
 ```
+
 ```yaml
 resources:
   # Create a Linode
   foobar:
     type: linode:Instance
 ```
+
 {{% /choosable %}}
 {{% choosable language java %}}
 ```yaml
@@ -128,6 +139,7 @@ name: configuration-example
 runtime: java
 
 ```
+
 ```java
 package generated_program;
 
@@ -154,6 +166,7 @@ public class App {
     }
 }
 ```
+
 {{% /choosable %}}
 {{< /chooser >}}
 
@@ -167,6 +180,7 @@ name: configuration-example
 runtime: nodejs
 
 ```
+
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
 import * as linode from "@pulumi/linode";
@@ -174,6 +188,7 @@ import * as linode from "@pulumi/linode";
 // Create a Linode
 const foobar = new linode.Instance("foobar", {});
 ```
+
 {{% /choosable %}}
 {{% choosable language python %}}
 ```yaml
@@ -182,6 +197,7 @@ name: configuration-example
 runtime: python
 
 ```
+
 ```python
 import pulumi
 import pulumi_linode as linode
@@ -189,6 +205,7 @@ import pulumi_linode as linode
 # Create a Linode
 foobar = linode.Instance("foobar")
 ```
+
 {{% /choosable %}}
 {{% choosable language csharp %}}
 ```yaml
@@ -197,6 +214,7 @@ name: configuration-example
 runtime: dotnet
 
 ```
+
 ```csharp
 using System.Collections.Generic;
 using System.Linq;
@@ -211,6 +229,7 @@ return await Deployment.RunAsync(() =>
 });
 
 ```
+
 {{% /choosable %}}
 {{% choosable language go %}}
 ```yaml
@@ -219,6 +238,7 @@ name: configuration-example
 runtime: go
 
 ```
+
 ```go
 package main
 
@@ -238,6 +258,7 @@ func main() {
 	})
 }
 ```
+
 {{% /choosable %}}
 {{% choosable language yaml %}}
 ```yaml
@@ -246,12 +267,14 @@ name: configuration-example
 runtime: yaml
 
 ```
+
 ```yaml
 resources:
   # Create a Linode
   foobar:
     type: linode:Instance
 ```
+
 {{% /choosable %}}
 {{% choosable language java %}}
 ```yaml
@@ -260,6 +283,7 @@ name: configuration-example
 runtime: java
 
 ```
+
 ```java
 package generated_program;
 
@@ -286,6 +310,7 @@ public class App {
     }
 }
 ```
+
 {{% /choosable %}}
 {{< /chooser >}}
 ## Configuration Reference
@@ -329,7 +354,7 @@ This section outlines commonly used provider configuration options.
 
   The Object Secret Key can also be specified using the `LINODE_OBJ_SECRET_KEY` shell environment variable.
 
-* `objUseTempKeys` - (Optional) If true, temporary object keys will be created implicitly at apply-time for the linode.ObjectStorageBucket and linode.ObjectStorageObject resource to use.
+* `objUseTempKeys` - (Optional) If true, a temporary object storage keys pair will be created implicitly at apply-time for each of the linode.ObjectStorageBucket and linode.ObjectStorageObject resources to use. Due to current technical limitations, a temporary keys pair for E2/E3 endpoints takes 30 seconds to become effective, so enabling temporary keys for E2/E3 endpoints is not recommended.
 
 * `objBucketForceDelete` - (Optional) If true, all objects and versions will purged from a linode.ObjectStorageBucket before it is destroyed.
 

@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: akeyless-community
 repo_url: https://github.com/akeyless-community/terraform-provider-akeyless
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/akeyless-community/akeyless/1.10.3/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/akeyless-community/akeyless/1.11.4/schema.json
 title: akeyless
-updated_on: 1755732950
-version: 1.10.3
+updated_on: 1769038557
+version: 1.11.4

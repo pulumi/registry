@@ -276,11 +276,18 @@ func packageMetadataFromGitHubCmd(metadataDir, packageDocsDir *string) *cobra.Co
 			// Normalize end of line representation
 			content = bytes.ReplaceAll(content, []byte("\r\n"), []byte("\n"))
 
-			if rest, ok := bytes.CutPrefix(bytes.TrimLeft(content, "\n\t\r "), []byte("---\n")); ok {
-				content = append([]byte(`---
-# WARNING: this file was fetched from `+url+`
+			frontmatter := []byte(`---
+# WARNING: this file was fetched from ` + url + `
 # Do not edit by hand unless you're certain you know what you are doing!
-`), rest...)
+`)
+			editURL := computeEditURLFromGitHubUserContentURL(url)
+			if editURL == "" {
+				return fmt.Errorf("expected URL %q to be a valid GitHub user content URL", url)
+			}
+			frontmatter = append(frontmatter, []byte(`edit_url: `+editURL+"\n")...)
+
+			if rest, ok := bytes.CutPrefix(bytes.TrimLeft(content, "\n\t\r "), []byte("---\n")); ok {
+				content = append(frontmatter, rest...)
 			} else {
 				return fmt.Errorf(`expected file %s to start with YAML front-matter ("---\n"), found leading %q`,
 					url, strings.Split(string(content), "\n")[0])
@@ -649,6 +656,14 @@ func inferPublishDate(repo repoSlug, version string) (time.Time, bool, error) {
 	return commit.Commit.Author.Date, true, nil
 }
 
+func computeEditURLFromGitHubUserContentURL(url string) string {
+	parts := strings.Split(url, "/")
+	if len(parts) < 6 {
+		return ""
+	}
+	return "https://github.com/" + parts[3] + "/" + parts[4] + "/blob/" + strings.Join(parts[5:], "/")
+}
+
 // readDocsFile is a specialized version of [readRemoteFile] for docs files.
 //
 // Docs files are expected to be markdown and have a YAML frontmatter.
@@ -666,6 +681,15 @@ func readDocsFile(url string) ([]byte, error) {
 		return nil, fmt.Errorf(`expected file %s to start with YAML front-matter ("---\n"), found leading %q`,
 			url, strings.Split(string(content), "\n")[0])
 	}
+
+	if strings.HasPrefix(url, "https://raw.githubusercontent.com/") {
+		editURL := computeEditURLFromGitHubUserContentURL(url)
+		if editURL == "" {
+			return nil, fmt.Errorf("expected URL %s to be a valid GitHub user content URL", url)
+		}
+		rest = append([]byte(`edit_url: `+editURL+"\n"), rest...)
+	}
+
 	return append([]byte(`---
 # WARNING: this file was fetched from `+url+`
 # Do not edit by hand unless you're certain you know what you are doing!

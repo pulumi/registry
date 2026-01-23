@@ -1,11 +1,13 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-digitalocean/v4.52.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-digitalocean/v4.56.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+edit_url: https://github.com/pulumi/pulumi-digitalocean/blob/v4.56.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: DigitalOcean Provider
-meta_desc: Provides an overview on how to configure the Pulumi Digitalocean provider.
+meta_desc: Provides an overview on how to configure the Pulumi DigitalOcean provider.
 layout: package
 ---
+
 ## Installation
 
 The DigitalOcean provider is available as a package in all Pulumi languages:
@@ -15,6 +17,7 @@ The DigitalOcean provider is available as a package in all Pulumi languages:
 * Go: [`github.com/pulumi/pulumi-digitalocean/sdk/v4/go/digitalocean`](https://github.com/pulumi/pulumi-digitalocean)
 * .NET: [`Pulumi.Digitalocean`](https://www.nuget.org/packages/Pulumi.Digitalocean)
 * Java: [`com.pulumi/digitalocean`](https://central.sonatype.com/artifact/com.pulumi/digitalocean)
+
 ## Overview
 
 The DigitalOcean (DO) provider is used to interact with the
@@ -35,15 +38,17 @@ config:
         value: 'TODO: var.do_token'
 
 ```
+
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
 import * as digitalocean from "@pulumi/digitalocean";
 
 const config = new pulumi.Config();
-const doToken = config.requireObject("doToken");
+const doToken = config.requireObject<any>("doToken");
 // Create a web server
 const web = new digitalocean.Droplet("web", {});
 ```
+
 {{% /choosable %}}
 {{% choosable language python %}}
 ```yaml
@@ -55,6 +60,7 @@ config:
         value: 'TODO: var.do_token'
 
 ```
+
 ```python
 import pulumi
 import pulumi_digitalocean as digitalocean
@@ -64,6 +70,7 @@ do_token = config.require_object("doToken")
 # Create a web server
 web = digitalocean.Droplet("web")
 ```
+
 {{% /choosable %}}
 {{% choosable language csharp %}}
 ```yaml
@@ -75,6 +82,7 @@ config:
         value: 'TODO: var.do_token'
 
 ```
+
 ```csharp
 using System.Collections.Generic;
 using System.Linq;
@@ -91,6 +99,7 @@ return await Deployment.RunAsync(() =>
 });
 
 ```
+
 {{% /choosable %}}
 {{% choosable language go %}}
 ```yaml
@@ -102,6 +111,7 @@ config:
         value: 'TODO: var.do_token'
 
 ```
+
 ```go
 package main
 
@@ -124,6 +134,7 @@ func main() {
 	})
 }
 ```
+
 {{% /choosable %}}
 {{% choosable language yaml %}}
 ```yaml
@@ -135,6 +146,7 @@ config:
         value: 'TODO: var.do_token'
 
 ```
+
 ```yaml
 configuration:
   # Set the variable value in *.tfvars file
@@ -146,6 +158,7 @@ resources:
   web:
     type: digitalocean:Droplet
 ```
+
 {{% /choosable %}}
 {{% choosable language java %}}
 ```yaml
@@ -157,6 +170,7 @@ config:
         value: 'TODO: var.do_token'
 
 ```
+
 ```java
 package generated_program;
 
@@ -185,6 +199,7 @@ public class App {
     }
 }
 ```
+
 {{% /choosable %}}
 {{< /chooser >}}
 
@@ -217,7 +232,7 @@ The following configuration inputs are supported:
   to `0.0` (Defaults to the value of the `DIGITALOCEAN_REQUESTS_PER_SECOND` environment
   variable or `0.0` if unset).
 * `httpRetryMax` - (Optional) This can be used to override the maximum number
-  of retries on a failed API request (client errors, 422, 500, 502...), the exponential
+  of retries on a failed API request (client errors, 429, 500, 502...), the exponential
   backoff can be configured by the `httpRetryWaitMin` and `httpRetryWaitMax` arguments
   (Defaults to the value of the `DIGITALOCEAN_HTTP_RETRY_MAX` environment variable or
   `4` if unset).

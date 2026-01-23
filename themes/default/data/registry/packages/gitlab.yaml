@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-gitlab
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-gitlab/v9.2.0/provider/cmd/pulumi-resource-gitlab/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-gitlab/v9.8.2/provider/cmd/pulumi-resource-gitlab/schema.json
 title: GitLab
-updated_on: 1752810323
-version: v9.2.0
+updated_on: 1768934994
+version: v9.8.2

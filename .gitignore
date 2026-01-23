@@ -14,3 +14,7 @@ tools/resourcedocsgen/resourcedocsgen
 ctrf/
 bin
 .make
+mise.local.toml
+.claude/settings.local.json
+content/
+static/registry/

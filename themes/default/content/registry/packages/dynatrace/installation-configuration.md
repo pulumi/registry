@@ -1,6 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/lbrlabs/pulumi-dynatrace/v0.30.0/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-dynatrace/v0.34.0/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
+edit_url: https://github.com/pulumiverse/pulumi-dynatrace/blob/v0.34.0/docs/installation-configuration.md
 title: Dynatrace Installation & Configuration
 meta_desc: Information on how to install the Dynatrace provider.
 layout: package

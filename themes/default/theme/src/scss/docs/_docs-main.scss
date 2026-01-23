@@ -13,6 +13,31 @@ body.section-registry {
         display: inline-block;
     }
 
+    div.title-ai-menu-container {
+        margin: 16px 0;
+        h1 {
+            margin: 0;
+        }
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        column-gap: 12px;
+        row-gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    @media (max-width: 640px) {
+        div.title-ai-menu-container {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        div.title-ai-menu-container .pulumi-ai-menu {
+            width: 100%;
+            justify-content: flex-start;
+        }
+    }
+
     div.h1-gradient {
         width: calc(100% - 32px);
         height: 12px;
@@ -145,13 +170,13 @@ body.section-registry {
 
         .docs-main-nav {
             border: none;
-            display: block;
+            display: flex;
+            flex-direction: column;
             padding-bottom: 24px;
             flex-shrink: 0;
             margin: 0;
             width: 32px;
             flex-basis: 32px;
-            overflow-y: auto;
             height: calc(100vh - 38px);
             position: sticky;
             left: 0;
@@ -162,8 +187,23 @@ body.section-registry {
             }
 
             nav.main-nav {
-                display: none;
-                padding: 32px 0 0 0;
+                display: none; // Hidden on mobile, shown on desktop via media query below
+                padding: 0;
+                flex: 1;
+                min-height: 0;
+                display: flex;
+                flex-direction: column;
+                overflow-y: auto; // Make nav itself scrollable
+            }
+
+            // Keep search box pinned at top when scrolling
+            .docs-search {
+                position: sticky;
+                top: 0;
+                z-index: 10;
+                background: #fff;
+                padding-bottom: 0.5rem;
+                padding-right: 0.75rem; // Space for scrollbar
             }
 
             h2,
@@ -190,6 +230,7 @@ body.section-registry {
             }
 
             div.featured-packages {
+                margin-top: 0;
                 margin-bottom: 26px;
             }
 
@@ -238,7 +279,7 @@ body.section-registry {
                 position: sticky;
 
                 nav.main-nav {
-                    display: block !important;
+                    display: flex !important;
                 }
             }
         }
@@ -283,7 +324,6 @@ body.section-registry {
             .docs-main-nav-wrapper .docs-main-nav {
                 width: 240px;
                 flex-basis: 240px;
-                overflow-y: auto;
                 height: calc(100vh);
                 padding-left: 16px;
                 background-color: $white;
@@ -296,7 +336,7 @@ body.section-registry {
             }
 
             nav.main-nav {
-                display: block !important;
+                display: flex !important;
             }
         }
 
@@ -357,7 +397,7 @@ body.section-registry {
             width: 700px;
             max-width: 700px;
             min-width: 0;
-            margin: 32px 24px 0 16px;
+            margin: 16px 24px 0 16px;
             padding-bottom: 24px;
             min-height: 100vh;
 
@@ -375,6 +415,13 @@ body.section-registry {
             &.registry-package-list {
                 max-width: 1064px;
                 width: 1064px;
+            }
+        }
+
+        body.section-registry .docs-main-content.docs-main-content {
+            @media (min-width: 1526px) {
+                max-width: 1200px;
+                width: 100%;
             }
         }
 

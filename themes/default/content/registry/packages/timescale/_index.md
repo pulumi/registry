@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/timescale/timescale/2.4.0/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/timescale/timescale/2.7.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Timescale Provider
@@ -73,7 +73,8 @@ const tf_test = new timescale.Service("tf-test", {
     memoryGb: 2,
     regionCode: "us-west-2",
     connectionPoolerEnabled: true,
-    enableHaReplica: true,
+    haReplicas: 1,
+    syncReplicas: 0,
 });
 export const hostAddr = tf_test.hostname;
 export const hostPort = tf_test.port;
@@ -111,7 +112,8 @@ tf_test = timescale.Service("tf-test",
     memory_gb=2,
     region_code="us-west-2",
     connection_pooler_enabled=True,
-    enable_ha_replica=True)
+    ha_replicas=1,
+    sync_replicas=0)
 pulumi.export("hostAddr", tf_test.hostname)
 pulumi.export("hostPort", tf_test.port)
 pulumi.export("replicaAddr", tf_test.replica_hostname)
@@ -153,7 +155,8 @@ return await Deployment.RunAsync(() =>
         MemoryGb = 2,
         RegionCode = "us-west-2",
         ConnectionPoolerEnabled = true,
-        EnableHaReplica = true,
+        HaReplicas = 1,
+        SyncReplicas = 0,
     });
 
     return new Dictionary<string, object?>
@@ -204,7 +207,8 @@ func main() {
 			MemoryGb:                pulumi.Float64(2),
 			RegionCode:              pulumi.String("us-west-2"),
 			ConnectionPoolerEnabled: pulumi.Bool(true),
-			EnableHaReplica:         pulumi.Bool(true),
+			HaReplicas:              pulumi.Float64(1),
+			SyncReplicas:            pulumi.Float64(0),
 		})
 		if err != nil {
 			return err
@@ -251,7 +255,8 @@ resources:
       memoryGb: 2
       regionCode: us-west-2
       connectionPoolerEnabled: true
-      enableHaReplica: true
+      haReplicas: 1
+      syncReplicas: 0
 outputs:
   ## host connection info
   hostAddr: ${["tf-test"].hostname}
@@ -305,11 +310,12 @@ public class App {
         final var tsSecretKey = config.get("tsSecretKey");
         var tf_test = new Service("tf-test", ServiceArgs.builder()
             .name("tf-test")
-            .milliCpu(500)
-            .memoryGb(2)
+            .milliCpu(500.0)
+            .memoryGb(2.0)
             .regionCode("us-west-2")
             .connectionPoolerEnabled(true)
-            .enableHaReplica(true)
+            .haReplicas(1.0)
+            .syncReplicas(0.0)
             .build());
 
         ctx.export("hostAddr", tf_test.hostname());
@@ -706,7 +712,7 @@ public class App {
             .vpcPeeringConnectionId(peer.accepterProvisionedId())
             .autoAccept(true)
             .build(), CustomResourceOptions.builder()
-                .dependsOn(peer)
+                .dependsOn(List.of(peer))
                 .build());
 
     }
@@ -735,13 +741,14 @@ Please reference the [docs](https://docs.timescale.com/use-timescale/latest/regi
 ✅ Pause/resume service <br />
 ✅ Delete service <br />
 ✅ Import service <br />
-✅ Enable High Availability replicas <br />
+✅ Enable High Availability replicas (all modes supported) <br />
 ✅ Enable read replicas <br />
 ✅ VPC peering <br />
 ✅ AWS Transit Gateway peering <br />
 ✅ Connection pooling <br />
 ✅ Metric exporters <br />
 ✅ Log exporters <br />
+✅ S3 connector <br />
 ## Billing
 Services are currently billed for hourly usage. If a service is running for less than an hour,
 it will still be charged for the full hour of usage.

@@ -33,11 +33,13 @@
                             {{ if and (.Params.h1) (not .Params.notitle) }}
                                 <h1>{{ .Params.h1 }}</h1>
                             {{ else if and (ne .Title "") (not .Params.notitle) }}
+                            <div class="title-ai-menu-container">
                                 <h1 class="break-words">{{ $title_tag }}</h1>
                                 {{ if not (strings.Contains .Params.meta_desc "module") }}
                                     {{ .Scratch.Set "title_tag" $title_tag }}
                                     {{ partial "registry/package/pulumi-ai.html" . }}
                                 {{ end }}
+                            </div>
                             {{ end }}
                         {{ else if (in .Page.File.Path "api-docs/_index.md")}}
                             <h1>{{ .Params.title }}: API Docs</h1>
@@ -73,14 +75,10 @@
                                 <h2>How-to Guides by Language</h2>
                             {{ end }}
 
-                            <div><pulumi-chooser type="language" options="typescript,javascript,python,go,csharp"></pulumi-chooser></div>
+                            <div><pulumi-chooser type="language" options="typescript,python,go,csharp"></pulumi-chooser></div>
 
                             <pulumi-choosable type="language" value="typescript">
                             {{ partial "registry/packages/how-to-language-index" (dict "package" . "language" "ts") }}
-                            </pulumi-choosable>
-
-                            <pulumi-choosable type="language" value="javascript">
-                            {{ partial "registry/packages/how-to-language-index" (dict "package" . "language" "js") }}
                             </pulumi-choosable>
 
                             <pulumi-choosable type="language" value="python">
@@ -103,6 +101,7 @@
 
             <div class="docs-table-of-contents docs-toc-desktop">
                 {{ partial "docs/table-of-contents.html" . }}
+                {{ partial "docs/right-nav-ad.html" }}
             </div>
         </div>
     </div>

@@ -1,6 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-rancher2/v10.1.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-rancher2/v11.0.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+edit_url: https://github.com/pulumi/pulumi-rancher2/blob/v11.0.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Rancher2 Provider
 meta_desc: Provides an overview on how to configure the Pulumi Rancher2 provider.
@@ -13,7 +14,7 @@ The Rancher2 provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/rancher2`](https://www.npmjs.com/package/@pulumi/rancher2)
 * Python: [`pulumi-rancher2`](https://pypi.org/project/pulumi-rancher2/)
-* Go: [`github.com/pulumi/pulumi-rancher2/sdk/v10/go/rancher2`](https://github.com/pulumi/pulumi-rancher2)
+* Go: [`github.com/pulumi/pulumi-rancher2/sdk/v11/go/rancher2`](https://github.com/pulumi/pulumi-rancher2)
 * .NET: [`Pulumi.Rancher2`](https://www.nuget.org/packages/Pulumi.Rancher2)
 * Java: [`com.pulumi/rancher2`](https://central.sonatype.com/artifact/com.pulumi/rancher2)
 
@@ -67,6 +68,7 @@ const foo = new rancher2.index.Catalog("foo", {
     url: "http://foo.com:8080",
 });
 ```
+
 {{% /choosable %}}
 {{% choosable language python %}}
 ```python
@@ -80,6 +82,7 @@ foo = rancher2.index.Catalog("foo",
     name=test,
     url=http://foo.com:8080)
 ```
+
 {{% /choosable %}}
 {{% choosable language csharp %}}
 ```csharp
@@ -106,13 +109,14 @@ return await Deployment.RunAsync(() =>
 });
 
 ```
+
 {{% /choosable %}}
 {{% choosable language go %}}
 ```go
 package main
 
 import (
-	"github.com/pulumi/pulumi-rancher2/sdk/v10/go/rancher2"
+	"github.com/pulumi/pulumi-rancher2/sdk/v11/go/rancher2"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -137,6 +141,7 @@ func main() {
 	})
 }
 ```
+
 {{% /choosable %}}
 {{% choosable language yaml %}}
 ```yaml
@@ -153,6 +158,7 @@ resources:
       name: test
       url: http://foo.com:8080
 ```
+
 {{% /choosable %}}
 {{% choosable language java %}}
 ```java
@@ -192,6 +198,7 @@ public class App {
     }
 }
 ```
+
 {{% /choosable %}}
 {{< /chooser >}}
 ## Configuration Reference

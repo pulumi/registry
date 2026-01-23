@@ -7,10 +7,10 @@ featured: false
 logo_url: https://raw.githubusercontent.com/pulumi/pulumi-scm/main/docs/logo.png
 name: scm
 native: false
-package_status: public_preview
+package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-scm
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-scm/v0.4.0/provider/cmd/pulumi-resource-scm/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-scm/v1.0.3/provider/cmd/pulumi-resource-scm/schema.json
 title: Strata Cloud Manager
-updated_on: 1747279941
-version: v0.4.0
+updated_on: 1769053819
+version: v1.0.3

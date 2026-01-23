@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-f5bigip
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-f5bigip/v3.19.0/provider/cmd/pulumi-resource-f5bigip/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-f5bigip/v3.19.3/provider/cmd/pulumi-resource-f5bigip/schema.json
 title: f5 BIG-IP
-updated_on: 1755056512
-version: v3.19.0
+updated_on: 1768016703
+version: v3.19.3

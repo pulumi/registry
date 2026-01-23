@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-keycloak
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-keycloak/v6.7.0/provider/cmd/pulumi-resource-keycloak/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-keycloak/v6.9.0/provider/cmd/pulumi-resource-keycloak/schema.json
 title: Keycloak
-updated_on: 1753760988
-version: v6.7.0
+updated_on: 1766581419
+version: v6.9.0

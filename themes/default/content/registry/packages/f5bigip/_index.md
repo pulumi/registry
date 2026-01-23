@@ -1,11 +1,13 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-f5bigip/v3.19.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-f5bigip/v3.19.3/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+edit_url: https://github.com/pulumi/pulumi-f5bigip/blob/v3.19.3/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: F5bigip Provider
 meta_desc: Provides an overview on how to configure the Pulumi F5bigip provider.
 layout: package
 ---
+
 ## Installation
 
 The F5bigip provider is available as a package in all Pulumi languages:
@@ -15,6 +17,7 @@ The F5bigip provider is available as a package in all Pulumi languages:
 * Go: [`github.com/pulumi/pulumi-f5bigip/sdk/v3/go/f5bigip`](https://github.com/pulumi/pulumi-f5bigip)
 * .NET: [`Pulumi.F5bigip`](https://www.nuget.org/packages/Pulumi.F5bigip)
 * Java: [`com.pulumi/f5bigip`](https://central.sonatype.com/artifact/com.pulumi/f5bigip)
+
 ## Overview
 
 Use the F5 BIG-IP Pulumi Provider to manage and provision your BIG-IP
@@ -33,22 +36,24 @@ This provider uses the iControlREST API. All the resources are validated with Bi
 name: configuration-example
 runtime: nodejs
 config:
-    bigip:address:
+    f5bigip:address:
         value: 'TODO: var.hostname'
-    bigip:password:
+    f5bigip:password:
         value: 'TODO: var.password'
-    bigip:username:
+    f5bigip:username:
         value: 'TODO: var.username'
 
 ```
+
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
 
 const config = new pulumi.Config();
-const hostname = config.requireObject("hostname");
-const username = config.requireObject("username");
-const password = config.requireObject("password");
+const hostname = config.requireObject<any>("hostname");
+const username = config.requireObject<any>("username");
+const password = config.requireObject<any>("password");
 ```
+
 {{% /choosable %}}
 {{% choosable language python %}}
 ```yaml
@@ -56,14 +61,15 @@ const password = config.requireObject("password");
 name: configuration-example
 runtime: python
 config:
-    bigip:address:
+    f5bigip:address:
         value: 'TODO: var.hostname'
-    bigip:password:
+    f5bigip:password:
         value: 'TODO: var.password'
-    bigip:username:
+    f5bigip:username:
         value: 'TODO: var.username'
 
 ```
+
 ```python
 import pulumi
 
@@ -72,6 +78,7 @@ hostname = config.require_object("hostname")
 username = config.require_object("username")
 password = config.require_object("password")
 ```
+
 {{% /choosable %}}
 {{% choosable language csharp %}}
 ```yaml
@@ -79,14 +86,15 @@ password = config.require_object("password")
 name: configuration-example
 runtime: dotnet
 config:
-    bigip:address:
+    f5bigip:address:
         value: 'TODO: var.hostname'
-    bigip:password:
+    f5bigip:password:
         value: 'TODO: var.password'
-    bigip:username:
+    f5bigip:username:
         value: 'TODO: var.username'
 
 ```
+
 ```csharp
 using System.Collections.Generic;
 using System.Linq;
@@ -101,6 +109,7 @@ return await Deployment.RunAsync(() =>
 });
 
 ```
+
 {{% /choosable %}}
 {{% choosable language go %}}
 ```yaml
@@ -108,14 +117,15 @@ return await Deployment.RunAsync(() =>
 name: configuration-example
 runtime: go
 config:
-    bigip:address:
+    f5bigip:address:
         value: 'TODO: var.hostname'
-    bigip:password:
+    f5bigip:password:
         value: 'TODO: var.password'
-    bigip:username:
+    f5bigip:username:
         value: 'TODO: var.username'
 
 ```
+
 ```go
 package main
 
@@ -134,6 +144,7 @@ func main() {
 	})
 }
 ```
+
 {{% /choosable %}}
 {{% choosable language yaml %}}
 ```yaml
@@ -141,14 +152,15 @@ func main() {
 name: configuration-example
 runtime: yaml
 config:
-    bigip:address:
+    f5bigip:address:
         value: 'TODO: var.hostname'
-    bigip:password:
+    f5bigip:password:
         value: 'TODO: var.password'
-    bigip:username:
+    f5bigip:username:
         value: 'TODO: var.username'
 
 ```
+
 ```yaml
 configuration:
   hostname:
@@ -158,6 +170,7 @@ configuration:
   password:
     type: dynamic
 ```
+
 {{% /choosable %}}
 {{% choosable language java %}}
 ```yaml
@@ -165,14 +178,15 @@ configuration:
 name: configuration-example
 runtime: java
 config:
-    bigip:address:
+    f5bigip:address:
         value: 'TODO: var.hostname'
-    bigip:password:
+    f5bigip:password:
         value: 'TODO: var.password'
-    bigip:username:
+    f5bigip:username:
         value: 'TODO: var.username'
 
 ```
+
 ```java
 package generated_program;
 
@@ -199,6 +213,7 @@ public class App {
     }
 }
 ```
+
 {{% /choosable %}}
 {{< /chooser >}}
 ## Configuration Reference

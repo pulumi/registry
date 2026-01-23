@@ -1,6 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-pagerduty/v4.27.3/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-pagerduty/v4.29.9/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+edit_url: https://github.com/pulumi/pulumi-pagerduty/blob/v4.29.9/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Pagerduty Provider
 meta_desc: Provides an overview on how to configure the Pulumi Pagerduty provider.
@@ -35,6 +36,7 @@ config:
         value: 'TODO: var.pagerduty_token'
 
 ```
+
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
 import * as pagerduty from "@pulumi/pagerduty";
@@ -55,6 +57,7 @@ const earlineEngineering = new pagerduty.TeamMembership("earline_engineering", {
     teamId: engineering.id,
 });
 ```
+
 {{% /choosable %}}
 {{% choosable language python %}}
 ```yaml
@@ -66,6 +69,7 @@ config:
         value: 'TODO: var.pagerduty_token'
 
 ```
+
 ```python
 import pulumi
 import pulumi_pagerduty as pagerduty
@@ -83,6 +87,7 @@ earline_engineering = pagerduty.TeamMembership("earline_engineering",
     user_id=earline.id,
     team_id=engineering.id)
 ```
+
 {{% /choosable %}}
 {{% choosable language csharp %}}
 ```yaml
@@ -94,6 +99,7 @@ config:
         value: 'TODO: var.pagerduty_token'
 
 ```
+
 ```csharp
 using System.Collections.Generic;
 using System.Linq;
@@ -126,6 +132,7 @@ return await Deployment.RunAsync(() =>
 });
 
 ```
+
 {{% /choosable %}}
 {{% choosable language go %}}
 ```yaml
@@ -137,6 +144,7 @@ config:
         value: 'TODO: var.pagerduty_token'
 
 ```
+
 ```go
 package main
 
@@ -175,6 +183,7 @@ func main() {
 	})
 }
 ```
+
 {{% /choosable %}}
 {{% choosable language yaml %}}
 ```yaml
@@ -186,6 +195,7 @@ config:
         value: 'TODO: var.pagerduty_token'
 
 ```
+
 ```yaml
 resources:
   # Create a PagerDuty team
@@ -208,6 +218,7 @@ resources:
       userId: ${earline.id}
       teamId: ${engineering.id}
 ```
+
 {{% /choosable %}}
 {{% choosable language java %}}
 ```yaml
@@ -219,6 +230,7 @@ config:
         value: 'TODO: var.pagerduty_token'
 
 ```
+
 ```java
 package generated_program;
 
@@ -265,6 +277,7 @@ public class App {
     }
 }
 ```
+
 {{% /choosable %}}
 {{< /chooser >}}
 ## Configuration Reference
@@ -294,6 +307,7 @@ name: configuration-example
 runtime: nodejs
 
 ```
+
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
 import * as pagerduty from "@pulumi/pagerduty";
@@ -314,6 +328,7 @@ const earlineEngineering = new pagerduty.TeamMembership("earline_engineering", {
     teamId: engineering.id,
 });
 ```
+
 {{% /choosable %}}
 {{% choosable language python %}}
 ```yaml
@@ -322,6 +337,7 @@ name: configuration-example
 runtime: python
 
 ```
+
 ```python
 import pulumi
 import pulumi_pagerduty as pagerduty
@@ -339,6 +355,7 @@ earline_engineering = pagerduty.TeamMembership("earline_engineering",
     user_id=earline.id,
     team_id=engineering.id)
 ```
+
 {{% /choosable %}}
 {{% choosable language csharp %}}
 ```yaml
@@ -347,6 +364,7 @@ name: configuration-example
 runtime: dotnet
 
 ```
+
 ```csharp
 using System.Collections.Generic;
 using System.Linq;
@@ -379,6 +397,7 @@ return await Deployment.RunAsync(() =>
 });
 
 ```
+
 {{% /choosable %}}
 {{% choosable language go %}}
 ```yaml
@@ -387,6 +406,7 @@ name: configuration-example
 runtime: go
 
 ```
+
 ```go
 package main
 
@@ -425,6 +445,7 @@ func main() {
 	})
 }
 ```
+
 {{% /choosable %}}
 {{% choosable language yaml %}}
 ```yaml
@@ -433,6 +454,7 @@ name: configuration-example
 runtime: yaml
 
 ```
+
 ```yaml
 resources:
   # Create a PagerDuty team
@@ -455,6 +477,7 @@ resources:
       userId: ${earline.id}
       teamId: ${engineering.id}
 ```
+
 {{% /choosable %}}
 {{% choosable language java %}}
 ```yaml
@@ -463,6 +486,7 @@ name: configuration-example
 runtime: java
 
 ```
+
 ```java
 package generated_program;
 
@@ -509,5 +533,6 @@ public class App {
     }
 }
 ```
+
 {{% /choosable %}}
 {{< /chooser >}}

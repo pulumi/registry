@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-mailgun
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-mailgun/v3.5.11/provider/cmd/pulumi-resource-mailgun/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-mailgun/v3.6.1/provider/cmd/pulumi-resource-mailgun/schema.json
 title: Mailgun
-updated_on: 1755712126
-version: v3.5.11
+updated_on: 1762313296
+version: v3.6.1

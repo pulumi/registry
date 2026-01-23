@@ -4,11 +4,6 @@
     <body class="section-{{ .Section }}">
         <pulumi-root></pulumi-root>
         {{ partial "docs-top-nav" . }}
-        <div class="header-container docs-hero">
-            <span class="hide-on-pinned"> </span>
-            {{ .Scratch.Set "mode" "registry" }}
-            {{ partial "docs/search.html" . }}
-        </div>
 
         <main>
             {{ block "main" . }}

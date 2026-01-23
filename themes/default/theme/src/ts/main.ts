@@ -18,6 +18,7 @@ import "./packages";
 import "./pricing-trial";
 import "./developer-advocates";
 import "./toc";
+import "./pulumi-ai-menu";
 import "./docs-main";
 import "./redirects";
 import "./algolia/autocomplete";

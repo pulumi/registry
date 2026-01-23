@@ -1,11 +1,13 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-rabbitmq/v3.3.10/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-rabbitmq/v3.4.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+edit_url: https://github.com/pulumi/pulumi-rabbitmq/blob/v3.4.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Rabbitmq Provider
 meta_desc: Provides an overview on how to configure the Pulumi Rabbitmq provider.
 layout: package
 ---
+
 ## Installation
 
 The Rabbitmq provider is available as a package in all Pulumi languages:
@@ -15,6 +17,7 @@ The Rabbitmq provider is available as a package in all Pulumi languages:
 * Go: [`github.com/pulumi/pulumi-rabbitmq/sdk/v3/go/rabbitmq`](https://github.com/pulumi/pulumi-rabbitmq)
 * .NET: [`Pulumi.Rabbitmq`](https://www.nuget.org/packages/Pulumi.Rabbitmq)
 * Java: [`com.pulumi/rabbitmq`](https://central.sonatype.com/artifact/com.pulumi/rabbitmq)
+
 ## Overview
 
 [RabbitMQ](http://www.rabbitmq.com) is an AMQP message broker server. The

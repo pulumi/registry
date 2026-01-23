@@ -3,6 +3,8 @@ title: "7.0 Migration Guide"
 h1: "Migrating from 6.x to 7.x"
 meta_desc: Practitioner level instructions for migrating from pulumi-aws 6.x to 7.x.
 layout: package
+aliases:
+  - /registry/packages/aws/how-to-guides/bucketv2-migration/
 ---
 
 ## Upstream Changes
@@ -607,9 +609,9 @@ We have also introduced new Bucket configuration resources that are alternatives
 
 In order to perform this migration first update your code to use the new resource or property names and then run pulumi with the `--refresh` and `--run-program` arguments. Make sure you have [installed](https://www.pulumi.com/docs/iac/download-install/) the latest version of the Pulumi CLI.
 
-3. Fix any differences in property types (e.g. `Bucket.loggings` (array) to `Bucket.logging` (object))
-4. Run `pulumi up --refresh --run-program`
-5. Ensure there is no diff in the update. If there is, go back to step 1
+1. Fix any differences in property types (e.g. `Bucket.loggings` (array) to `Bucket.logging` (object))
+2. Run `pulumi up --refresh --run-program`
+3. Ensure there is no diff in the update. If there is, go back to step 1
 
 {{< notes >}}
 You may see a refresh diff as Pulumi migrates the state to the new structure, but you should not see an update diff.

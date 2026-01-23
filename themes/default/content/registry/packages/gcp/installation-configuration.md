@@ -1,6 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-gcp/v8.41.1/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-gcp/v9.10.0/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
+edit_url: https://github.com/pulumi/pulumi-gcp/blob/v9.10.0/docs/installation-configuration.md
 title: Google Cloud (GCP) Classic Installation & Configuration
 meta_desc: How to set up credentials to use the Pulumi GCP Provider and choose configuration options to tailor the provider to suit your use case.
 layout: package

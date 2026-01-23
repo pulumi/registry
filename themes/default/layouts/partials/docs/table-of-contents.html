@@ -55,12 +55,17 @@
     {{ $isCLICommand := hasPrefix .Path "docs/cli/commands" }}
     {{ $isAPIDoc := and (hasPrefix .Path "docs/reference/pkg/") (ne .Path "docs/reference/pkg/_index.md") }}
     {{ if not (or $isCLICommand $isAPIDoc $.Page.Params.no_edit_this_page) }}
-        {{ $repoURL := "https://github.com/pulumi/registry" }}
+        <!-- If edit_url is set, use that instead of the default repo URL -->
+        {{ $editURL := $.Page.Params.edit_url }}
+        {{ if not $editURL }}
+            {{ $repoURL := "https://github.com/pulumi/registry" }}
+            {{ $editURL = (print $repoURL "/edit/" $.Site.Params.contentRepositoryBaseBranch "/" (getenv "REPO_THEME_PATH") "content/" .Path) }}
+        {{ end }}
         <li>
             <a
                 data-track="edit-page"
                 class="text-gray-600 hover:text-gray-700 text-xs"
-                href="{{ $repoURL }}/edit/{{ $.Site.Params.contentRepositoryBaseBranch }}/{{ getenv "REPO_THEME_PATH" }}content/{{ .Path }}"
+                href="{{ $editURL }}"
                 target="_blank"
             >
                 <i class="fas fa-edit mr-2" style="width: 14px"></i>Edit this Page

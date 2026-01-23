@@ -1,11 +1,13 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-github/v6.7.3/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-github/v6.11.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+edit_url: https://github.com/pulumi/pulumi-github/blob/v6.11.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Github Provider
 meta_desc: Provides an overview on how to configure the Pulumi Github provider.
 layout: package
 ---
+
 ## Installation
 
 The Github provider is available as a package in all Pulumi languages:
@@ -15,6 +17,7 @@ The Github provider is available as a package in all Pulumi languages:
 * Go: [`github.com/pulumi/pulumi-github/sdk/v6/go/github`](https://github.com/pulumi/pulumi-github)
 * .NET: [`Pulumi.Github`](https://www.nuget.org/packages/Pulumi.Github)
 * Java: [`com.pulumi/github`](https://central.sonatype.com/artifact/com.pulumi/github)
+
 ## Overview
 
 The GitHub provider is used to interact with GitHub resources.
@@ -35,6 +38,7 @@ name: configuration-example
 runtime: nodejs
 
 ```
+
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
 import * as github from "@pulumi/github";
@@ -42,6 +46,7 @@ import * as github from "@pulumi/github";
 // Add a user to the organization
 const membershipForUserX = new github.Membership("membership_for_user_x", {});
 ```
+
 {{% /choosable %}}
 {{% choosable language python %}}
 ```yaml
@@ -50,6 +55,7 @@ name: configuration-example
 runtime: python
 
 ```
+
 ```python
 import pulumi
 import pulumi_github as github
@@ -57,6 +63,7 @@ import pulumi_github as github
 # Add a user to the organization
 membership_for_user_x = github.Membership("membership_for_user_x")
 ```
+
 {{% /choosable %}}
 {{% choosable language csharp %}}
 ```yaml
@@ -65,6 +72,7 @@ name: configuration-example
 runtime: dotnet
 
 ```
+
 ```csharp
 using System.Collections.Generic;
 using System.Linq;
@@ -79,6 +87,7 @@ return await Deployment.RunAsync(() =>
 });
 
 ```
+
 {{% /choosable %}}
 {{% choosable language go %}}
 ```yaml
@@ -87,6 +96,7 @@ name: configuration-example
 runtime: go
 
 ```
+
 ```go
 package main
 
@@ -106,6 +116,7 @@ func main() {
 	})
 }
 ```
+
 {{% /choosable %}}
 {{% choosable language yaml %}}
 ```yaml
@@ -114,6 +125,7 @@ name: configuration-example
 runtime: yaml
 
 ```
+
 ```yaml
 resources:
   # Add a user to the organization
@@ -121,6 +133,7 @@ resources:
     type: github:Membership
     name: membership_for_user_x
 ```
+
 {{% /choosable %}}
 {{% choosable language java %}}
 ```yaml
@@ -129,6 +142,7 @@ name: configuration-example
 runtime: java
 
 ```
+
 ```java
 package generated_program;
 
@@ -155,6 +169,7 @@ public class App {
     }
 }
 ```
+
 {{% /choosable %}}
 {{< /chooser >}}
 
@@ -168,6 +183,7 @@ name: configuration-example
 runtime: nodejs
 
 ```
+
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
 import * as github from "@pulumi/github";
@@ -175,6 +191,7 @@ import * as github from "@pulumi/github";
 // Add a user to the organization
 const membershipForUserX = new github.Membership("membership_for_user_x", {});
 ```
+
 {{% /choosable %}}
 {{% choosable language python %}}
 ```yaml
@@ -183,6 +200,7 @@ name: configuration-example
 runtime: python
 
 ```
+
 ```python
 import pulumi
 import pulumi_github as github
@@ -190,6 +208,7 @@ import pulumi_github as github
 # Add a user to the organization
 membership_for_user_x = github.Membership("membership_for_user_x")
 ```
+
 {{% /choosable %}}
 {{% choosable language csharp %}}
 ```yaml
@@ -198,6 +217,7 @@ name: configuration-example
 runtime: dotnet
 
 ```
+
 ```csharp
 using System.Collections.Generic;
 using System.Linq;
@@ -212,6 +232,7 @@ return await Deployment.RunAsync(() =>
 });
 
 ```
+
 {{% /choosable %}}
 {{% choosable language go %}}
 ```yaml
@@ -220,6 +241,7 @@ name: configuration-example
 runtime: go
 
 ```
+
 ```go
 package main
 
@@ -239,6 +261,7 @@ func main() {
 	})
 }
 ```
+
 {{% /choosable %}}
 {{% choosable language yaml %}}
 ```yaml
@@ -247,6 +270,7 @@ name: configuration-example
 runtime: yaml
 
 ```
+
 ```yaml
 resources:
   # Add a user to the organization
@@ -254,6 +278,7 @@ resources:
     type: github:Membership
     name: membership_for_user_x
 ```
+
 {{% /choosable %}}
 {{% choosable language java %}}
 ```yaml
@@ -262,6 +287,7 @@ name: configuration-example
 runtime: java
 
 ```
+
 ```java
 package generated_program;
 
@@ -288,6 +314,7 @@ public class App {
     }
 }
 ```
+
 {{% /choosable %}}
 {{< /chooser >}}
 ## Authentication
@@ -300,80 +327,15 @@ The GitHub provider taps into [GitHub CLI](https://cli.github.com/) authenticati
 
 To authenticate using OAuth tokens, ensure that the `token` argument or the `GITHUB_TOKEN` environment variable is set.
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
-{{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
 name: configuration-example
-runtime: nodejs
+runtime:
 config:
     github:token:
         value: 'TODO: var.token'
 
 ```
-
-{{% /choosable %}}
-{{% choosable language python %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: python
-config:
-    github:token:
-        value: 'TODO: var.token'
-
-```
-
-{{% /choosable %}}
-{{% choosable language csharp %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: dotnet
-config:
-    github:token:
-        value: 'TODO: var.token'
-
-```
-
-{{% /choosable %}}
-{{% choosable language go %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: go
-config:
-    github:token:
-        value: 'TODO: var.token'
-
-```
-
-{{% /choosable %}}
-{{% choosable language yaml %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: yaml
-config:
-    github:token:
-        value: 'TODO: var.token'
-
-```
-
-{{% /choosable %}}
-{{% choosable language java %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: java
-config:
-    github:token:
-        value: 'TODO: var.token'
-
-```
-
-{{% /choosable %}}
-{{< /chooser >}}
 ### GitHub App Installation
 
 To authenticate using a GitHub App installation, ensure that arguments in the `appAuth` block or the `GITHUB_APP_XXX` environment variables are set.
@@ -381,155 +343,25 @@ The `owner` parameter required in this situation. Leaving out will throw a `403 
 
 Some API operations may not be available when using a GitHub App installation configuration. For more information, refer to the list of [supported endpoints](https://docs.github.com/en/rest/overview/endpoints-available-for-github-apps).
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
-{{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
 name: configuration-example
-runtime: nodejs
+runtime:
 config:
     github:owner:
         value: 'TODO: var.github_organization'
 
 ```
 
-{{% /choosable %}}
-{{% choosable language python %}}
 ```yaml
 # Pulumi.yaml provider configuration file
 name: configuration-example
-runtime: python
+runtime:
 config:
     github:owner:
         value: 'TODO: var.github_organization'
 
 ```
-
-{{% /choosable %}}
-{{% choosable language csharp %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: dotnet
-config:
-    github:owner:
-        value: 'TODO: var.github_organization'
-
-```
-
-{{% /choosable %}}
-{{% choosable language go %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: go
-config:
-    github:owner:
-        value: 'TODO: var.github_organization'
-
-```
-
-{{% /choosable %}}
-{{% choosable language yaml %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: yaml
-config:
-    github:owner:
-        value: 'TODO: var.github_organization'
-
-```
-
-{{% /choosable %}}
-{{% choosable language java %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: java
-config:
-    github:owner:
-        value: 'TODO: var.github_organization'
-
-```
-
-{{% /choosable %}}
-{{< /chooser >}}
-
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
-{{% choosable language typescript %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: nodejs
-config:
-    github:owner:
-        value: 'TODO: var.github_organization'
-
-```
-
-{{% /choosable %}}
-{{% choosable language python %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: python
-config:
-    github:owner:
-        value: 'TODO: var.github_organization'
-
-```
-
-{{% /choosable %}}
-{{% choosable language csharp %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: dotnet
-config:
-    github:owner:
-        value: 'TODO: var.github_organization'
-
-```
-
-{{% /choosable %}}
-{{% choosable language go %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: go
-config:
-    github:owner:
-        value: 'TODO: var.github_organization'
-
-```
-
-{{% /choosable %}}
-{{% choosable language yaml %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: yaml
-config:
-    github:owner:
-        value: 'TODO: var.github_organization'
-
-```
-
-{{% /choosable %}}
-{{% choosable language java %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: java
-config:
-    github:owner:
-        value: 'TODO: var.github_organization'
-
-```
-
-{{% /choosable %}}
-{{< /chooser >}}
 ## Configuration Reference
 
 The following configuration inputs are supported in the provider configuration:

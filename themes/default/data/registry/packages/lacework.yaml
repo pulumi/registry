@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: lacework
 repo_url: https://github.com/lacework/terraform-provider-lacework
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/lacework/lacework/2.0.8/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/lacework/lacework/2.1.0/schema.json
 title: lacework
-updated_on: 1755300947
-version: 2.0.8
+updated_on: 1768952148
+version: 2.1.0

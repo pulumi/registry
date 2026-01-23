@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/tencentcloudstack/tencentcloud/1.82.22/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/tencentcloudstack/tencentcloud/1.82.58/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Tencentcloud Provider
@@ -311,11 +311,25 @@ $ pulumi preview
 ```
 ### Assume role with OIDC
 
-If provided with an assume role with OIDC, Pulumi will attempt to assume this role using the supplied credentials. Assume role can be provided by adding an `roleArn`, `sessionName`, `sessionDuration` and `webIdentityToken` in-line in the tencentcloud provider configuration:
+If provided with an assume role with OIDC, Pulumi will attempt to assume this role using the supplied credentials. Assume role can be provided by adding an `roleArn`, `sessionName`, `sessionDuration` and `webIdentityToken` or `webIdentityTokenFile` in-line in the tencentcloud provider configuration:
 
 > **Note:** Assume-role-with-OIDC is a no-AK auth type, and there is no need setting secretId and secretKey while using it.
 
+> **Note:** If both `webIdentityToken` and `webIdentityTokenFile` are configured, `webIdentityToken` will be used preferentially(overriding `webIdentityTokenFile`).
+
+Content formatting guidelines of `webIdentityTokenFile`:
+
+The file content must be in JSON format and must contain the key: `webIdentityToken`.
+
+```json
+{
+    "web_identity_token": "eyJ0eXAiOiJKV1QiLCJh......E8T0qyVA7hWM55_g"
+}
+```
+
 Usage:
+
+Use webIdentityToken
 
 ```yaml
 # Pulumi.yaml provider configuration file
@@ -324,7 +338,16 @@ runtime:
 
 ```
 
-The `providerId`, `roleArn`, `sessionName`, `sessionDuration`, `webIdentityToken` can also provided via `TENCENTCLOUD_ASSUME_ROLE_PROVIDER_ID`, `TENCENTCLOUD_ASSUME_ROLE_ARN`, `TENCENTCLOUD_ASSUME_ROLE_SESSION_NAME`, `TENCENTCLOUD_ASSUME_ROLE_SESSION_DURATION` and `TENCENTCLOUD_ASSUME_ROLE_WEB_IDENTITY_TOKEN` environment variables.
+Use webIdentityTokenFile
+
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime:
+
+```
+
+The `providerId`, `roleArn`, `sessionName`, `sessionDuration`, `webIdentityToken`, `webIdentityTokenFile` can also provided via `TENCENTCLOUD_ASSUME_ROLE_PROVIDER_ID`, `TENCENTCLOUD_ASSUME_ROLE_ARN`, `TENCENTCLOUD_ASSUME_ROLE_SESSION_NAME`, `TENCENTCLOUD_ASSUME_ROLE_SESSION_DURATION`, `TENCENTCLOUD_ASSUME_ROLE_WEB_IDENTITY_TOKEN` and `TENCENTCLOUD_ASSUME_ROLE_WEB_IDENTITY_TOKEN_FILE` environment variables.
 
 Usage:
 
@@ -333,6 +356,7 @@ $ export TENCENTCLOUD_SECRET_ID="my-secret-id"
 $ export TENCENTCLOUD_SECRET_KEY="my-secret-key"
 $ export TENCENTCLOUD_ASSUME_ROLE_SESSION_DURATION=3600
 $ export TENCENTCLOUD_ASSUME_ROLE_WEB_IDENTITY_TOKEN="my-web-identity-token"
+$ export TENCENTCLOUD_ASSUME_ROLE_WEB_IDENTITY_TOKEN_FILE="/AbsolutePath/to/your/secrets/web-identity-token-file"
 $ export TENCENTCLOUD_ASSUME_ROLE_PROVIDER_ID="OIDC"
 $ pulumi preview
 ```
@@ -682,4 +706,5 @@ The nested `assumeRoleWithWebIdentity` block supports the following:
 * `roleArn` - (Required) The ARN of the role to assume. It can also be sourced from the `TENCENTCLOUD_ASSUME_ROLE_ARN` environment variable.
 * `sessionName` - (Required) The session name to use when making the AssumeRole call. It can also be sourced from the `TENCENTCLOUD_ASSUME_ROLE_SESSION_NAME` environment variable.
 * `sessionDuration` - (Required) The duration of the session when making the AssumeRole call. Its value ranges from 0 to 43200(seconds), and default is 7200 seconds. It can also be sourced from the `TENCENTCLOUD_ASSUME_ROLE_SESSION_DURATION` environment variable.
-* `webIdentityToken` - (Required) OIDC token issued by IdP. It can be sourced from the  `TENCENTCLOUD_ASSUME_ROLE_WEB_IDENTITY_TOKEN`.
+* `webIdentityToken` - (Optional) OIDC token issued by IdP. It can be sourced from the `TENCENTCLOUD_ASSUME_ROLE_WEB_IDENTITY_TOKEN`. One of `webIdentityToken` or `webIdentityTokenFile` is required.
+* `webIdentityTokenFile` - (Optional) File containing a web identity token from an OpenID Connect (OIDC) or OAuth provider. It can be sourced from the `TENCENTCLOUD_ASSUME_ROLE_WEB_IDENTITY_TOKEN_FILE`. One of `webIdentityToken` or `webIdentityTokenFile` is required.

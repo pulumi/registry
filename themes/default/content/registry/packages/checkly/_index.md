@@ -1,6 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/checkly/pulumi-checkly/v2.4.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/checkly/pulumi-checkly/v2.7.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+edit_url: https://github.com/checkly/pulumi-checkly/blob/v2.7.0/docs/_index.md
 title: Checkly
 meta_desc: Provides an overview of the Checkly provider for Pulumi.
 layout: package
@@ -24,32 +25,8 @@ The Checkly provider must be configured with an `API Key` and an `Account ID` in
 
 ## Example usage
 
-{{< chooser language "javascript,typescript" >}}
+{{< chooser language "typescript" >}}
 
-{{% choosable language javascript %}}
-
-```javascript
-const checkly = require('@checkly/pulumi')
-
-new checkly.Check('api-check', {
-  activated: true,
-  frequency: 10,
-  type: 'API',
-  request: {
-    method: 'GET',
-    url: "https://checklyhq.com",
-  },
-})
-
-new checkly.Check('browser-check', {
-  activated: true,
-  frequency: 10,
-  type: 'BROWSER',
-  script: 'console.log("Hello World!")',
-})
-```
-
-{{% /choosable %}}
 {{% choosable language typescript %}}
 
 ```typescript

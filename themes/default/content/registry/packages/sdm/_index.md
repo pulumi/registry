@@ -1,6 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pierskarsenbarg/pulumi-sdm/v1.31.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pierskarsenbarg/pulumi-sdm/v1.34.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+edit_url: https://github.com/pierskarsenbarg/pulumi-sdm/blob/v1.34.0/docs/_index.md
 title: StrongDM
 meta_desc: Provides an overview of the StrongDM Provider for Pulumi.
 layout: package

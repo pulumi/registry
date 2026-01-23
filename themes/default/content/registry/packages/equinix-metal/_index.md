@@ -14,19 +14,8 @@ The Equinix Metal provider must be configured with credentials to deploy and upd
 
 ## Example
 
-{{< chooser language "javascript,typescript,python,go,csharp" >}}
+{{< chooser language "typescript,python,go,csharp" >}}
 
-{{% choosable language javascript %}}
-
-```javascript
-import * as metal from "@pulumi/equinix-metal";
-
-const project = new metal.Project("my-project", {
-  name: "DevelopmentEnvironment"
-});
-```
-
-{{% /choosable %}}
 {{% choosable language typescript %}}
 
 ```typescript

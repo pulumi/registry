@@ -1,6 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-azure/v6.26.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-azure/v6.31.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+edit_url: https://github.com/pulumi/pulumi-azure/blob/v6.31.0/docs/_index.md
 title: Azure Classic
 meta_desc: Learn how to use Pulumi's Azure Classic Provider to reduce the complexity of managing and provisioning Azure resources with Azure Resource Manager (ARM) APIs.
 layout: package

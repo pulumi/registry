@@ -45,6 +45,7 @@
     "aptible": "aptible",
     "athenz": "athenz",
     "azaurus1": "azaurus1",
+    "Byteplus": "Byteplus",
     "CAST AI": "castai",
     "castai": "castai",
     "celest-dev": "celest-dev",
@@ -146,6 +147,8 @@
     "ucloud": "ucloud",
     "vantage-sh": "vantage-sh",
     "vk-cs": "vk-cs",
+    "volcenginecc": "volcenginecc",
     "vmware": "vmware",
+    "wavefront": "wavefront",
     "zenduty": "zenduty"
 }

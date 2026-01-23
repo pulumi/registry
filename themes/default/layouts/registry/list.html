@@ -4,6 +4,7 @@
             <div class="docs-main-nav-wrapper">
                 <div id="docs-main-nav" class="docs-main-nav">
                     <nav class="main-nav">
+                        {{ partial "docs/search-only.html" . }}
                         <div class="featured-packages">
                             {{ $featuredPackages := slice }}
                             {{ range $.Site.Data.registry.packages }}
@@ -42,7 +43,9 @@
 
         <div class="docs-main-content-wrapper">
             <div class="docs-main-content registry-package-list">
-                {{ partial "registry/breadcrumb.html" . }}
+                {{ if ne .RelPermalink "/registry/" }}
+                    {{ partial "registry/breadcrumb.html" . }}
+                {{ end }}
                 {{ partial "registry/package-list.html" . }}
             </div>
         </div>

@@ -1,6 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-okta/v5.2.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-okta/v6.2.2/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+edit_url: https://github.com/pulumi/pulumi-okta/blob/v6.2.2/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Okta Provider
 meta_desc: Provides an overview on how to configure the Pulumi Okta provider.
@@ -13,7 +14,7 @@ The Okta provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/okta`](https://www.npmjs.com/package/@pulumi/okta)
 * Python: [`pulumi-okta`](https://pypi.org/project/pulumi-okta/)
-* Go: [`github.com/pulumi/pulumi-okta/sdk/v5/go/okta`](https://github.com/pulumi/pulumi-okta)
+* Go: [`github.com/pulumi/pulumi-okta/sdk/v6/go/okta`](https://github.com/pulumi/pulumi-okta)
 * .NET: [`Pulumi.Okta`](https://www.nuget.org/packages/Pulumi.Okta)
 * Java: [`com.pulumi/okta`](https://central.sonatype.com/artifact/com.pulumi/okta)
 
@@ -24,8 +25,6 @@ The Okta provider is used to interact with the resources supported by Okta. The 
 Use the navigation to the left to read about the available resources and functions.
 
 In case the provider configuration is still using old `"oktadeveloper/okta"` source, please change it to `"okta/okta"`. Okta no longer supports `"oktadeveloper/okta"`.
-### WARNING
-We're working on releasing of the okta-pulumi-provider v6.0.0, which will introduce support for managing a broader range of Okta resources beyond just management-related ones. Following that, we'd be deprecating the v5 versions of the okta-pulumi-provider.
 ## Example Usage
 
 
@@ -51,10 +50,12 @@ config:
         value: '[COMMA,SEPARATED,SCOPE,VALUES]'
 
 ```
+
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
 
 ```
+
 {{% /choosable %}}
 {{% choosable language python %}}
 ```yaml
@@ -76,10 +77,12 @@ config:
         value: '[COMMA,SEPARATED,SCOPE,VALUES]'
 
 ```
+
 ```python
 import pulumi
 
 ```
+
 {{% /choosable %}}
 {{% choosable language csharp %}}
 ```yaml
@@ -101,6 +104,7 @@ config:
         value: '[COMMA,SEPARATED,SCOPE,VALUES]'
 
 ```
+
 ```csharp
 using System.Collections.Generic;
 using System.Linq;
@@ -111,6 +115,7 @@ return await Deployment.RunAsync(() =>
 });
 
 ```
+
 {{% /choosable %}}
 {{% choosable language go %}}
 ```yaml
@@ -132,6 +137,7 @@ config:
         value: '[COMMA,SEPARATED,SCOPE,VALUES]'
 
 ```
+
 ```go
 package main
 
@@ -145,6 +151,7 @@ func main() {
 	})
 }
 ```
+
 {{% /choosable %}}
 {{% choosable language yaml %}}
 ```yaml
@@ -166,9 +173,11 @@ config:
         value: '[COMMA,SEPARATED,SCOPE,VALUES]'
 
 ```
+
 ```yaml
 {}
 ```
+
 {{% /choosable %}}
 {{% choosable language java %}}
 ```yaml
@@ -190,6 +199,7 @@ config:
         value: '[COMMA,SEPARATED,SCOPE,VALUES]'
 
 ```
+
 ```java
 package generated_program;
 
@@ -212,6 +222,7 @@ public class App {
     }
 }
 ```
+
 {{% /choosable %}}
 {{< /chooser >}}
 

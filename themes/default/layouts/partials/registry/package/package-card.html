@@ -16,6 +16,12 @@
             {{ .title }} {{ .version }} published on {{ ((time .updated_on).Format "Monday, Jan 2, 2006") }} by {{ .publisher }}
         </div>
         <div class="package-link">
+            <i class="fas fa-file-code"></i>
+            <a href="/registry/packages/{{ $packageName }}/schema.json" target="_blank" rel="noopener noreferrer">
+                <span>Schema (JSON)</span>
+            </a>
+        </div>
+        <div class="package-link">
             <i class="fab fa-github"></i>
             <a href="{{ .repo_url }}" target="_blank" rel="noopener noreferrer">
                 <span>{{ replaceRE `^.*.com/` "" .repo_url }}</span>

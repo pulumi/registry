@@ -1,6 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/lbrlabs/pulumi-lbrlabs-eks/v1.4.0/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/lbrlabs/pulumi-lbrlabs-eks/v1.6.0/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
+edit_url: https://github.com/lbrlabs/pulumi-lbrlabs-eks/blob/v1.6.0/docs/installation-configuration.md
 title: LBr Labs EKS
 meta_desc: Information on how to install the LBr Labs EKS component.
 layout: package

@@ -1,6 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/dirien/pulumi-vultr/v2.23.1/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/dirien/pulumi-vultr/v2.27.1/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+edit_url: https://github.com/dirien/pulumi-vultr/blob/v2.27.1/docs/_index.md
 title: Vultr
 meta_desc: Provides an overview of the Vultr Provider for Pulumi.
 layout: package
@@ -10,31 +11,8 @@ The Vultr Resource Provider lets you manage [Vultr](https://vultr.com/) resource
 
 ## Example
 
-{{< chooser language "javascript,typescript,python,go,csharp" >}}
+{{< chooser language "typescript,python,go,csharp" >}}
 
-
-{{% choosable language javascript %}}
-
-```javascript
-"use strict";
-const vultr = require("@ediri/vultr");
-
-
-const vke = new vultr.Kubernetes("vke", {
-    region: "fra",
-    version: "v1.25.4+1",
-    label: "pulumi-vultr",
-    nodePools: {
-        nodeQuantity: 1,
-        plan: "vc2-2c-4gb",
-        label: "pulumi-vultr-nodepool",
-    },
-})
-
-exports.kubeConfig = vke.kubeConfig
-```
-
-{{% /choosable %}}
 
 {{% choosable language typescript %}}
 

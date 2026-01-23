@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-cloudinit
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-cloudinit/v1.4.13/provider/cmd/pulumi-resource-cloudinit/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-cloudinit/v1.4.15/provider/cmd/pulumi-resource-cloudinit/schema.json
 title: cloud-init
-updated_on: 1753397469
-version: v1.4.13
+updated_on: 1767139375
+version: v1.4.15

@@ -1,11 +1,13 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-cloudngfwaws/v0.1.3/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-cloudngfwaws/v1.0.1/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+edit_url: https://github.com/pulumi/pulumi-cloudngfwaws/blob/v1.0.1/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Palo Alto Networks Cloud NGFW for AWS Provider
 meta_desc: Provides an overview on how to configure the Pulumi Palo Alto Networks Cloud NGFW for AWS provider.
 layout: package
 ---
+
 ## Installation
 
 The Palo Alto Networks Cloud NGFW for AWS provider is available as a package in all Pulumi languages:
@@ -15,6 +17,7 @@ The Palo Alto Networks Cloud NGFW for AWS provider is available as a package in 
 * Go: [`github.com/pulumi/pulumi-cloudngfwaws/sdk/go/cloudngfwaws`](https://github.com/pulumi/pulumi-cloudngfwaws)
 * .NET: [`Pulumi.Cloudngfwaws`](https://www.nuget.org/packages/Pulumi.Cloudngfwaws)
 * Java: [`com.pulumi/cloudngfwaws`](https://central.sonatype.com/artifact/com.pulumi/cloudngfwaws)
+
 ## Overview
 
 The cloudngfwaws provider provides resources to manage your Palo Alto Networks Cloud Next-Gen Firewalls for AWS.
@@ -36,81 +39,6 @@ The initial portion of the authentication workflow uses the AWS Go SDK, and as s
 ## Example Usage
 
 
-
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
-{{% choosable language typescript %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: nodejs
-config:
-    cloudngfwaws:jsonConfigFile:
-        value: ~/.cloudngfwaws_creds.json
-
-```
-
-{{% /choosable %}}
-{{% choosable language python %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: python
-config:
-    cloudngfwaws:jsonConfigFile:
-        value: ~/.cloudngfwaws_creds.json
-
-```
-
-{{% /choosable %}}
-{{% choosable language csharp %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: dotnet
-config:
-    cloudngfwaws:jsonConfigFile:
-        value: ~/.cloudngfwaws_creds.json
-
-```
-
-{{% /choosable %}}
-{{% choosable language go %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: go
-config:
-    cloudngfwaws:jsonConfigFile:
-        value: ~/.cloudngfwaws_creds.json
-
-```
-
-{{% /choosable %}}
-{{% choosable language yaml %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: yaml
-config:
-    cloudngfwaws:jsonConfigFile:
-        value: ~/.cloudngfwaws_creds.json
-
-```
-
-{{% /choosable %}}
-{{% choosable language java %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: java
-config:
-    cloudngfwaws:jsonConfigFile:
-        value: ~/.cloudngfwaws_creds.json
-
-```
-
-{{% /choosable %}}
-{{< /chooser >}}
 
 Example JSON config file:
 
@@ -149,4 +77,4 @@ There are multiple ways to specify the provider's parameters.  If overlapping va
 - `skipVerifyCertificate` (Boolean) Skip verifying the SSL certificate. Environment variable: `CLOUDNGFWAWS_SKIP_VERIFY_CERTIFICATE`. JSON conf file variable: `skip-verify-certificate`.
 - `syncMode` (Boolean) Enable synchronous mode while creating resources Environment variable: `CLOUDNGFWAWS_SYNC_MODE`. JSON conf file variable: `syncMode`.
 - `timeout` (Number) The timeout for any single API call (default: `30`). Environment variable: `CLOUDNGFWAWS_TIMEOUT`. JSON conf file variable: `timeout`.
-- `resourceTimeout` (Number) The timeout for pulumi resource create/update/delete operations (default: `7200s`). Environment variable: `CLOUDNGFWAWS_RESOURCE_TIMEOUT`. JSON conf file variable: `resourceTimeout`.
+- `v2Host` (String) The hostname of the V2 API (default: `api.us-east-1.aws.cloudngfw.paloaltonetworks.com`). Environment variable: `CLOUDNGFWAWS_V2_HOST`. JSON conf file variable: `v2Host`.

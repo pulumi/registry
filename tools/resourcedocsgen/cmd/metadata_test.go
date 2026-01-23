@@ -43,15 +43,15 @@ func TestMetadataBridgedProvider(t *testing.T) {
 func TestMetadataNativeProvider(t *testing.T) {
 	t.Parallel()
 
-	var metadataDir, pacakgeDocsDir string
+	var metadataDir, packageDocsDir string
 	testMetadata(t, testMetadataArgs{
 		repoSlug:   "pulumi/pulumi-command",
 		version:    "v1.0.0",
 		schemaFile: "provider/cmd/pulumi-resource-command/schema.json",
-		assert: func(t *testing.T, metadata, pacakgeDocs string) {
-			defaultAssert(t, metadata, pacakgeDocs)
+		assert: func(t *testing.T, metadata, packageDocs string) {
+			defaultAssert(t, metadata, packageDocs)
 			metadataDir = metadata
-			pacakgeDocsDir = pacakgeDocs
+			packageDocsDir = packageDocs
 		},
 	})
 
@@ -85,15 +85,15 @@ func TestMetadataNativeProvider(t *testing.T) {
 			providerName:  "command",
 			schemaFileURL: server.URL + "/schema.json",
 			indexFileURL:  server.URL + "/docs/_index.md",
-			assert: func(t *testing.T, metadata, pacakgeDocs string) {
-				require.NoError(t, os.Remove(filepath.Join(pacakgeDocs, "_index.md")))
+			assert: func(t *testing.T, metadata, packageDocs string) {
+				require.NoError(t, os.Remove(filepath.Join(packageDocs, "_index.md")))
 				util.AssertDirsEqual(t, metadataDir, metadata,
 					// We fix the time stamp, since we expect URL based lookups to have stable time stamps.
 					util.AssertOptionsPreCompareTransform("updated_on: -?[0-9]{5,}", "updated_on: *********"),
 					//nolint:lll
 					util.AssertOptionsPreCompareTransform("https://raw.githubusercontent.com/pulumi/pulumi-command/v1.0.0/provider/cmd/pulumi-resource-command", server.URL),
 				)
-				util.AssertDirsEqual(t, pacakgeDocsDir, pacakgeDocs)
+				util.AssertDirsEqual(t, packageDocsDir, packageDocs)
 			},
 		})
 	})
@@ -224,16 +224,16 @@ type testMetadataArgs struct {
 	errorContains                            string
 }
 
-func defaultAssert(t *testing.T, metadataDir, pacakgeDocsDir string, opts ...util.AssertOption) {
+func defaultAssert(t *testing.T, metadataDir, packageDocsDir string, opts ...util.AssertOption) {
 	t.Run("metadata", func(t *testing.T) { t.Parallel(); util.AssertDirEqual(t, metadataDir, opts...) })
-	t.Run("index", func(t *testing.T) { t.Parallel(); util.AssertDirEqual(t, pacakgeDocsDir, opts...) })
+	t.Run("index", func(t *testing.T) { t.Parallel(); util.AssertDirEqual(t, packageDocsDir, opts...) })
 }
 
 func testMetadata(t *testing.T, args testMetadataArgs) {
 	t.Helper()
 	cmd := PackageMetadataCmd()
 	metadataDir := t.TempDir()
-	pacakgeDocsDir := t.TempDir()
+	packageDocsDir := t.TempDir()
 
 	var cliArgs []string
 	if args.schemaFileURL != "" || args.indexFileURL != "" {
@@ -260,7 +260,7 @@ func testMetadata(t *testing.T, args testMetadataArgs) {
 	cmd.SetArgs(append(cliArgs,
 		"--providerName", args.providerName,
 		"--metadataDir", metadataDir,
-		"--packageDocsDir", pacakgeDocsDir,
+		"--packageDocsDir", packageDocsDir,
 	))
 
 	// Capture output into the test
@@ -285,11 +285,57 @@ func testMetadata(t *testing.T, args testMetadataArgs) {
 	}
 	require.NoError(t, cmd.Execute())
 	if args.assert != nil {
-		args.assert(t, metadataDir, pacakgeDocsDir)
+		args.assert(t, metadataDir, packageDocsDir)
 		assert.Nil(t, args.assertOptions, "args.assertOptions are not used when args.assert is non-nil")
 	} else {
-		defaultAssert(t, metadataDir, pacakgeDocsDir, args.assertOptions...)
+		defaultAssert(t, metadataDir, packageDocsDir, args.assertOptions...)
 	}
 }
 
 func ref[T any](t T) *T { return &t }
+
+func TestComputeEditURLFromGitHubUserContentURL(t *testing.T) {
+	t.Parallel()
+	inputBaseURL := "https://raw.githubusercontent.com/"
+	expectedBaseURL := "https://github.com/"
+
+	tests := []struct {
+		name     string
+		input    string
+		expected string
+	}{
+		{
+			name:     "pulumi-random main branch",
+			input:    inputBaseURL + "pulumi/pulumi-random/v4.16.7/docs/_index.md",
+			expected: expectedBaseURL + "pulumi/pulumi-random/blob/v4.16.7/docs/_index.md",
+		},
+		{
+			name:     "non-pulumi repo custom branch",
+			input:    inputBaseURL + "not-pulumi/random-repo/mybranch/docs/_index.md",
+			expected: expectedBaseURL + "not-pulumi/random-repo/blob/mybranch/docs/_index.md",
+		},
+		{
+			name:     "long file path",
+			input:    inputBaseURL + "not-pulumi/random-repo/mybranch/docs/subdir_1/subdir_2/subdir_3/_index.md",
+			expected: expectedBaseURL + "not-pulumi/random-repo/blob/mybranch/docs/subdir_1/subdir_2/subdir_3/_index.md",
+		},
+		{
+			name:     "short file path",
+			input:    inputBaseURL + "not-pulumi/random-repo/branch/_index.md",
+			expected: expectedBaseURL + "not-pulumi/random-repo/blob/branch/_index.md",
+		},
+		{
+			name:     "invalid URL",
+			input:    inputBaseURL + "incomplete/url",
+			expected: "",
+		},
+	}
+
+	for _, tt := range tests {
+		tt := tt // capture range variable
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			assert.Equal(t, tt.expected, computeEditURLFromGitHubUserContentURL(tt.input))
+		})
+	}
+}

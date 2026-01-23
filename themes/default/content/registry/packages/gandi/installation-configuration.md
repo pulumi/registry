@@ -1,12 +1,15 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-gandi/v2.3.2/docs/installation-configuration.md
+# Do not edit by hand unless you're certain you know what you are doing!
+edit_url: https://github.com/pulumiverse/pulumi-gandi/blob/v2.3.2/docs/installation-configuration.md
 title: Gandi Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Pulumi Gandi Provider.
-layout: package
+layout: installation
 ---
 
 ## Installation
 
-1. To use this package, please [install the Pulumi CLI first](https://www.pulumi.com/docs/install/).
+1. To use this package, please [install the Pulumi CLI first](https://www.pulumi.com/docs/get-started/install/).
 1. This package is only available for JavaScript and TypeScript but support for other languages will be available soon.
 
 ### Node.js (JavaScript/TypeScript)

@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: dirien
 repo_url: https://github.com/dirien/pulumi-vultr
-schema_file_url: https://raw.githubusercontent.com/dirien/pulumi-vultr/v2.23.1/provider/cmd/pulumi-resource-vultr/schema.json
+schema_file_url: https://raw.githubusercontent.com/dirien/pulumi-vultr/v2.27.1/provider/cmd/pulumi-resource-vultr/schema.json
 title: Vultr
-updated_on: 1733860346
-version: v2.23.1
+updated_on: 1759249012
+version: v2.27.1

@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/opentelekomcloud/opentelekomcloud/1.36.47/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/opentelekomcloud/opentelekomcloud/1.36.57/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Opentelekomcloud Provider
@@ -755,6 +755,9 @@ Please note that MFA requires `userId` to be used. Setting `userName` won't work
   It can be set using the `OS_BACKOFF_RETRY_TIMEOUT` environment
   variable. If not set, default value is used.
   Default: `60` seconds.
+
+* `enterpriseProjectId` - (Optional) Default Enterprise Project ID for supported resources.
+  If omitted, the `OS_ENTERPRISE_PROJECT_ID` environment variable is used.
 ## Creating an issue
 
 Issues

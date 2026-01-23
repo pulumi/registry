@@ -1,11 +1,13 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-splunk/v1.2.19/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-splunk/v1.2.23/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+edit_url: https://github.com/pulumi/pulumi-splunk/blob/v1.2.23/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Splunk Provider
 meta_desc: Provides an overview on how to configure the Pulumi Splunk provider.
 layout: package
 ---
+
 ## Installation
 
 The Splunk provider is available as a package in all Pulumi languages:
@@ -15,17 +17,16 @@ The Splunk provider is available as a package in all Pulumi languages:
 * Go: [`github.com/pulumi/pulumi-splunk/sdk/go/splunk`](https://github.com/pulumi/pulumi-splunk)
 * .NET: [`Pulumi.Splunk`](https://www.nuget.org/packages/Pulumi.Splunk)
 * Java: [`com.pulumi/splunk`](https://central.sonatype.com/artifact/com.pulumi/splunk)
+
 ## Overview
 
 The Splunk provider can interact with the resources supported by Splunk. The provider needs to be configured with the proper credentials before it can be used.
 ## Example Usage
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
-{{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
 name: configuration-example
-runtime: nodejs
+runtime:
 config:
     splunk:insecureSkipVerify:
         value: true
@@ -37,99 +38,6 @@ config:
         value: admin
 
 ```
-
-{{% /choosable %}}
-{{% choosable language python %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: python
-config:
-    splunk:insecureSkipVerify:
-        value: true
-    splunk:password:
-        value: changeme
-    splunk:url:
-        value: localhost:8089
-    splunk:username:
-        value: admin
-
-```
-
-{{% /choosable %}}
-{{% choosable language csharp %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: dotnet
-config:
-    splunk:insecureSkipVerify:
-        value: true
-    splunk:password:
-        value: changeme
-    splunk:url:
-        value: localhost:8089
-    splunk:username:
-        value: admin
-
-```
-
-{{% /choosable %}}
-{{% choosable language go %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: go
-config:
-    splunk:insecureSkipVerify:
-        value: true
-    splunk:password:
-        value: changeme
-    splunk:url:
-        value: localhost:8089
-    splunk:username:
-        value: admin
-
-```
-
-{{% /choosable %}}
-{{% choosable language yaml %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: yaml
-config:
-    splunk:insecureSkipVerify:
-        value: true
-    splunk:password:
-        value: changeme
-    splunk:url:
-        value: localhost:8089
-    splunk:username:
-        value: admin
-
-```
-
-{{% /choosable %}}
-{{% choosable language java %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: java
-config:
-    splunk:insecureSkipVerify:
-        value: true
-    splunk:password:
-        value: changeme
-    splunk:url:
-        value: localhost:8089
-    splunk:username:
-        value: admin
-
-```
-
-{{% /choosable %}}
-{{< /chooser >}}
 ## Configuration Reference
 
 Below arguments for the provider can also be set as environment variables.

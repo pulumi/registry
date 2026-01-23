@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: Twingate
 repo_url: https://github.com/twingate/pulumi-twingate
-schema_file_url: https://raw.githubusercontent.com/twingate/pulumi-twingate/v3.7.0/provider/cmd/pulumi-resource-twingate/schema.json
+schema_file_url: https://raw.githubusercontent.com/twingate/pulumi-twingate/v3.7.1/provider/cmd/pulumi-resource-twingate/schema.json
 title: Twingate
-updated_on: 1767994872
-version: v3.7.0
+updated_on: 1769113610
+version: v3.7.1

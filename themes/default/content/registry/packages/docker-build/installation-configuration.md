@@ -1,4 +1,7 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-docker-build/v0.0.15/docs/installation-configuration.md
+# Do not edit by hand unless you're certain you know what you are doing!
+edit_url: https://github.com/pulumi/pulumi-docker-build/blob/v0.0.15/docs/installation-configuration.md
 title: Docker-Build Installation & Configuration
 meta_desc: Provides an overview on how to configure the Pulumi Docker-Build Provider.
 layout: package

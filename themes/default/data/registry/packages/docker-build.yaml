@@ -10,7 +10,7 @@ native: true
 package_status: public_preview
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-docker-build
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-docker-build/v0.0.14/provider/cmd/pulumi-resource-docker-build/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-docker-build/v0.0.15/provider/cmd/pulumi-resource-docker-build/schema.json
 title: docker-build
-updated_on: 1759298041
-version: v0.0.14
+updated_on: 1760695240
+version: v0.0.15

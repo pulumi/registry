@@ -695,60 +695,60 @@ Enum_XYZ<pulumi-choosable type="language" values="python,go" class="inline">, En
 <div>
 <pulumi-choosable type="language" values="csharp">
 <dl class="tabular"><dt>Plain</dt>
-    <dd>A</dd><dt>Snake_<wbr>case</dt>
-    <dd>B</dd><dt>SHA256</dt>
-    <dd>C</dd><dt>SHA256_<wbr>hash</dt>
-    <dd>D</dd></dl>
+    <dd><code>A</code></dd><dt>Snake_<wbr>case</dt>
+    <dd><code>B</code></dd><dt>SHA256</dt>
+    <dd><code>C</code></dd><dt>SHA256_<wbr>hash</dt>
+    <dd><code>D</code></dd></dl>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="go">
 <dl class="tabular"><dt>Enum_XYZPlain</dt>
-    <dd>A</dd><dt>Enum_XYZ_Snake_<wbr>case</dt>
-    <dd>B</dd><dt>Enum_XYZSHA256</dt>
-    <dd>C</dd><dt>Enum_XYZ_SHA256_<wbr>hash</dt>
-    <dd>D</dd></dl>
+    <dd><code>A</code></dd><dt>Enum_XYZ_Snake_<wbr>case</dt>
+    <dd><code>B</code></dd><dt>Enum_XYZSHA256</dt>
+    <dd><code>C</code></dd><dt>Enum_XYZ_SHA256_<wbr>hash</dt>
+    <dd><code>D</code></dd></dl>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="java">
 <dl class="tabular"><dt>Plain</dt>
-    <dd>A</dd><dt>Snake_<wbr>case</dt>
-    <dd>B</dd><dt>SHA256</dt>
-    <dd>C</dd><dt>SHA256_<wbr>hash</dt>
-    <dd>D</dd></dl>
+    <dd><code>A</code></dd><dt>Snake_<wbr>case</dt>
+    <dd><code>B</code></dd><dt>SHA256</dt>
+    <dd><code>C</code></dd><dt>SHA256_<wbr>hash</dt>
+    <dd><code>D</code></dd></dl>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
 <dl class="tabular"><dt>Plain</dt>
-    <dd>A</dd><dt>Snake_<wbr>case</dt>
-    <dd>B</dd><dt>SHA256</dt>
-    <dd>C</dd><dt>SHA256_<wbr>hash</dt>
-    <dd>D</dd></dl>
+    <dd><code>A</code></dd><dt>Snake_<wbr>case</dt>
+    <dd><code>B</code></dd><dt>SHA256</dt>
+    <dd><code>C</code></dd><dt>SHA256_<wbr>hash</dt>
+    <dd><code>D</code></dd></dl>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="python">
 <dl class="tabular"><dt>PLAIN</dt>
-    <dd>A</dd><dt>SNAKE_CASE</dt>
-    <dd>B</dd><dt>SHA256</dt>
-    <dd>C</dd><dt>SHA256_HASH</dt>
-    <dd>D</dd></dl>
+    <dd><code>A</code></dd><dt>SNAKE_CASE</dt>
+    <dd><code>B</code></dd><dt>SHA256</dt>
+    <dd><code>C</code></dd><dt>SHA256_HASH</dt>
+    <dd><code>D</code></dd></dl>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="yaml">
 <dl class="tabular"><dt>"A"</dt>
-    <dd>A</dd><dt>"B"</dt>
-    <dd>B</dd><dt>"C"</dt>
-    <dd>C</dd><dt>"D"</dt>
-    <dd>D</dd></dl>
+    <dd><code>A</code></dd><dt>"B"</dt>
+    <dd><code>B</code></dd><dt>"C"</dt>
+    <dd><code>C</code></dd><dt>"D"</dt>
+    <dd><code>D</code></dd></dl>
 </pulumi-choosable>
 </div>
 

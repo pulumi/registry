@@ -473,48 +473,48 @@ Color<pulumi-choosable type="language" values="python,go" class="inline">, Color
 <div>
 <pulumi-choosable type="language" values="csharp">
 <dl class="tabular"><dt>Blue</dt>
-    <dd>blue</dd><dt>Red</dt>
-    <dd>red</dd></dl>
+    <dd><code>blue</code></dd><dt>Red</dt>
+    <dd><code>red</code></dd></dl>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="go">
 <dl class="tabular"><dt>Color<wbr>Blue</dt>
-    <dd>blue</dd><dt>Color<wbr>Red</dt>
-    <dd>red</dd></dl>
+    <dd><code>blue</code></dd><dt>Color<wbr>Red</dt>
+    <dd><code>red</code></dd></dl>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="java">
 <dl class="tabular"><dt>Blue</dt>
-    <dd>blue</dd><dt>Red</dt>
-    <dd>red</dd></dl>
+    <dd><code>blue</code></dd><dt>Red</dt>
+    <dd><code>red</code></dd></dl>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
 <dl class="tabular"><dt>Blue</dt>
-    <dd>blue</dd><dt>Red</dt>
-    <dd>red</dd></dl>
+    <dd><code>blue</code></dd><dt>Red</dt>
+    <dd><code>red</code></dd></dl>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="python">
 <dl class="tabular"><dt>BLUE</dt>
-    <dd>blue</dd><dt>RED</dt>
-    <dd>red</dd></dl>
+    <dd><code>blue</code></dd><dt>RED</dt>
+    <dd><code>red</code></dd></dl>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="yaml">
 <dl class="tabular"><dt>"blue"</dt>
-    <dd>blue</dd><dt>"red"</dt>
-    <dd>red</dd></dl>
+    <dd><code>blue</code></dd><dt>"red"</dt>
+    <dd><code>red</code></dd></dl>
 </pulumi-choosable>
 </div>
 

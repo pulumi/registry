@@ -78,15 +78,11 @@
                 <h2>How-to Guides by Language</h2>
                 {{ end }}
 
-                <div><pulumi-chooser type="language" options="typescript,javascript,python,go,csharp"></pulumi-chooser>
+                <div><pulumi-chooser type="language" options="typescript,python,go,csharp"></pulumi-chooser>
                 </div>
 
                 <pulumi-choosable type="language" value="typescript">
                     {{ partial "registry/packages/how-to-language-index" (dict "package" . "language" "ts") }}
-                </pulumi-choosable>
-
-                <pulumi-choosable type="language" value="javascript">
-                    {{ partial "registry/packages/how-to-language-index" (dict "package" . "language" "js") }}
                 </pulumi-choosable>
 
                 <pulumi-choosable type="language" value="python">

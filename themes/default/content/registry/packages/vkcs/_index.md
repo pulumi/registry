@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/vk-cs/vkcs/0.13.0/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/vk-cs/vkcs/0.14.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Vkcs Provider
@@ -134,15 +134,56 @@ config:
 
 ```
 ## Configuration Reference
+- `accessToken` optional sensitive *string* &rarr;  A temporary token to use for authentication. You alternatively can use `OS_AUTH_TOKEN` environment variable. If both are specified, this attribute takes precedence. <br>**Note:** The token will not be renewed and will eventually expire, usually after 1 hour. If access is needed for longer than a token's lifetime, use credentials-based authentication.
+
 - `authUrl` optional *string* &rarr;  The Identity authentication URL.
 
 - `cloudContainersApiVersion` optional *string* &rarr;  Cloud Containers API version to use. <br>**Note:** Only for custom VKCS deployments.
+
+- `endpointOverrides` optional &rarr;  Custom endpoints for corresponding APIs. If not specified, endpoints provided by the catalog will be used.
+  - `backup` optional *string* &rarr;  Backup API custom endpoint.
+
+  - `blockStorage` optional *string* &rarr;  Block Storage API custom endpoint.
+
+  - `cdn` optional *string* &rarr;  CDN API custom endpoint.
+
+  - `compute` optional *string* &rarr;  Compute API custom endpoint.
+
+  - `containerInfra` optional *string* &rarr;  Cloud Containers API custom endpoint.
+
+  - `containerInfraAddons` optional *string* &rarr;  Cloud Containers Addons API custom endpoint.
+
+  - `dataPlatform` optional *string* &rarr;  Data Platform API custom endpoint.
+
+  - `database` optional *string* &rarr;  Database API custom endpoint.
+
+  - `iamServiceUsers` optional *string* &rarr;  IAM Service Users API custom endpoint.
+
+  - `ics` optional *string* &rarr;  ICS API custom endpoint.
+
+  - `image` optional *string* &rarr;  Image API custom endpoint.
+
+  - `keyManager` optional *string* &rarr;  Key Manager API custom endpoint.
+
+  - `loadBalancer` optional *string* &rarr;  Load Balancer API custom endpoint.
+
+  - `mlPlatform` optional *string* &rarr;  ML Platform API custom endpoint.
+
+  - `networking` optional *string* &rarr;  Networking API custom endpoint.
+
+  - `publicDns` optional *string* &rarr;  Public DNS API custom endpoint.
+
+  - `sharedFilesystem` optional *string* &rarr;  Shared Filesystem API custom endpoint.
+
+  - `templater` optional *string* &rarr;  Templater API custom endpoint.
 
 - `password` optional sensitive *string* &rarr;  Password to login with.
 
 - `projectId` optional *string* &rarr;  The ID of Project to login with.
 
 - `region` optional *string* &rarr;  A region to use.
+
+- `skipClientAuth` optional *boolean* &rarr;  Skip authentication on client initialization. Only applicablie if `accessToken` is provided. <br>**Note:** If set to true, the endpoint catalog will not be used for discovery and all required endpoints must be provided via `endpointOverrides`.
 
 - `userDomainId` optional *string* &rarr;  The id of the domain where the user resides.
 

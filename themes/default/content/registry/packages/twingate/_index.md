@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/twingate/pulumi-twingate/v3.5.1/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/twingate/pulumi-twingate/v3.7.1/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/twingate/pulumi-twingate/blob/v3.5.1/docs/_index.md
+edit_url: https://github.com/twingate/pulumi-twingate/blob/v3.7.1/docs/_index.md
 title: Twingate
 meta_desc: Provides an overview of the Twingate Provider for Pulumi.
 layout: package

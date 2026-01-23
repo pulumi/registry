@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/redpanda-data/redpanda/1.3.5/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/redpanda-data/redpanda/1.5.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Redpanda Provider
@@ -209,9 +209,10 @@ const testCluster = new redpanda.Cluster("test", {
     connectionType: "public",
     throughputTier: throughputTier,
     zones: zones,
-    allowDeletion: true,
+    allowDeletion: clusterAllowDeletion,
     clusterConfiguration: {
         customPropertiesJson: JSON.stringify({
+            enable_shadow_linking: clusterEnableShadowLinking,
             schema_registry_enable_authorization: true,
         }),
     },
@@ -454,6 +455,40 @@ const writeOrders = new redpanda.SchemaRegistryAcl("write_orders", {
 }, {
     dependsOn: [schemaRegistryAdmin],
 });
+const developer = new redpanda.Role("developer", {
+    name: roleName,
+    clusterApiUrl: testCluster.clusterApiUrl,
+    allowDeletion: roleAllowDeletion,
+});
+const developerAssignment = new redpanda.RoleAssignment("developer_assignment", {
+    roleName: developer.name,
+    principal: testUser.name,
+    clusterApiUrl: testCluster.clusterApiUrl,
+}, {
+    dependsOn: [testUser],
+});
+const testPipeline = new redpanda.Pipeline("test", {
+    clusterApiUrl: testCluster.clusterApiUrl,
+    displayName: pipelineName,
+    description: pipelineDescription,
+    configYaml: pipelineConfigYaml,
+    state: pipelineState,
+    allowDeletion: pipelineAllowDeletion,
+    resources: {
+        memoryShares: pipelineMemoryShares,
+        cpuShares: pipelineCpuShares,
+    },
+    tags: {
+        environment: "test",
+        "managed-by": "pulumi",
+    },
+});
+export const pipelineInfo = {
+    id: testPipeline.id,
+    name: testPipeline.displayName,
+    state: testPipeline.state,
+    url: testPipeline.url,
+};
 export const userSchemaInfo = {
     id: userSchema.schemaId,
     subject: userSchema.subject,
@@ -510,9 +545,10 @@ test_cluster = redpanda.Cluster("test",
     connection_type="public",
     throughput_tier=throughput_tier,
     zones=zones,
-    allow_deletion=True,
+    allow_deletion=cluster_allow_deletion,
     cluster_configuration={
         "custom_properties_json": json.dumps({
+            "enable_shadow_linking": cluster_enable_shadow_linking,
             "schema_registry_enable_authorization": True,
         }),
     },
@@ -728,6 +764,36 @@ write_orders = redpanda.SchemaRegistryAcl("write_orders",
     password=user_pw,
     allow_deletion=True,
     opts = pulumi.ResourceOptions(depends_on=[schema_registry_admin]))
+developer = redpanda.Role("developer",
+    name=role_name,
+    cluster_api_url=test_cluster.cluster_api_url,
+    allow_deletion=role_allow_deletion)
+developer_assignment = redpanda.RoleAssignment("developer_assignment",
+    role_name=developer.name,
+    principal=test_user.name,
+    cluster_api_url=test_cluster.cluster_api_url,
+    opts = pulumi.ResourceOptions(depends_on=[test_user]))
+test_pipeline = redpanda.Pipeline("test",
+    cluster_api_url=test_cluster.cluster_api_url,
+    display_name=pipeline_name,
+    description=pipeline_description,
+    config_yaml=pipeline_config_yaml,
+    state=pipeline_state,
+    allow_deletion=pipeline_allow_deletion,
+    resources={
+        "memory_shares": pipeline_memory_shares,
+        "cpu_shares": pipeline_cpu_shares,
+    },
+    tags={
+        "environment": "test",
+        "managed-by": "pulumi",
+    })
+pulumi.export("pipelineInfo", {
+    "id": test_pipeline.id,
+    "name": test_pipeline.display_name,
+    "state": test_pipeline.state,
+    "url": test_pipeline.url,
+})
 pulumi.export("userSchemaInfo", {
     "id": user_schema.schema_id,
     "subject": user_schema.subject,
@@ -797,11 +863,12 @@ return await Deployment.RunAsync(() =>
         ConnectionType = "public",
         ThroughputTier = throughputTier,
         Zones = zones,
-        AllowDeletion = true,
+        AllowDeletion = clusterAllowDeletion,
         ClusterConfiguration = new Redpanda.Inputs.ClusterClusterConfigurationArgs
         {
             CustomPropertiesJson = JsonSerializer.Serialize(new Dictionary<string, object?>
             {
+                ["enable_shadow_linking"] = clusterEnableShadowLinking,
                 ["schema_registry_enable_authorization"] = true,
             }),
         },
@@ -1117,8 +1184,55 @@ return await Deployment.RunAsync(() =>
         },
     });
 
+    var developer = new Redpanda.Role("developer", new()
+    {
+        Name = roleName,
+        ClusterApiUrl = testCluster.ClusterApiUrl,
+        AllowDeletion = roleAllowDeletion,
+    });
+
+    var developerAssignment = new Redpanda.RoleAssignment("developer_assignment", new()
+    {
+        RoleName = developer.Name,
+        Principal = testUser.Name,
+        ClusterApiUrl = testCluster.ClusterApiUrl,
+    }, new CustomResourceOptions
+    {
+        DependsOn =
+        {
+            testUser,
+        },
+    });
+
+    var testPipeline = new Redpanda.Pipeline("test", new()
+    {
+        ClusterApiUrl = testCluster.ClusterApiUrl,
+        DisplayName = pipelineName,
+        Description = pipelineDescription,
+        ConfigYaml = pipelineConfigYaml,
+        State = pipelineState,
+        AllowDeletion = pipelineAllowDeletion,
+        Resources = new Redpanda.Inputs.PipelineResourcesArgs
+        {
+            MemoryShares = pipelineMemoryShares,
+            CpuShares = pipelineCpuShares,
+        },
+        Tags =
+        {
+            { "environment", "test" },
+            { "managed-by", "pulumi" },
+        },
+    });
+
     return new Dictionary<string, object?>
     {
+        ["pipelineInfo"] =
+        {
+            { "id", testPipeline.Id },
+            { "name", testPipeline.DisplayName },
+            { "state", testPipeline.State },
+            { "url", testPipeline.Url },
+        },
         ["userSchemaInfo"] =
         {
             { "id", userSchema.SchemaId },
@@ -1189,6 +1303,7 @@ func main() {
 			return err
 		}
 		tmpJSON0, err := json.Marshal(map[string]interface{}{
+			"enable_shadow_linking":                clusterEnableShadowLinking,
 			"schema_registry_enable_authorization": true,
 		})
 		if err != nil {
@@ -1205,7 +1320,7 @@ func main() {
 			ConnectionType:  pulumi.String("public"),
 			ThroughputTier:  pulumi.Any(throughputTier),
 			Zones:           pulumi.Any(zones),
-			AllowDeletion:   pulumi.Bool(true),
+			AllowDeletion:   pulumi.Any(clusterAllowDeletion),
 			ClusterConfiguration: &redpanda.ClusterClusterConfigurationArgs{
 				CustomPropertiesJson: pulumi.String(json0),
 			},
@@ -1517,6 +1632,49 @@ func main() {
 		if err != nil {
 			return err
 		}
+		developer, err := redpanda.NewRole(ctx, "developer", &redpanda.RoleArgs{
+			Name:          pulumi.Any(roleName),
+			ClusterApiUrl: testCluster.ClusterApiUrl,
+			AllowDeletion: pulumi.Any(roleAllowDeletion),
+		})
+		if err != nil {
+			return err
+		}
+		_, err = redpanda.NewRoleAssignment(ctx, "developer_assignment", &redpanda.RoleAssignmentArgs{
+			RoleName:      developer.Name,
+			Principal:     testUser.Name,
+			ClusterApiUrl: testCluster.ClusterApiUrl,
+		}, pulumi.DependsOn([]pulumi.Resource{
+			testUser,
+		}))
+		if err != nil {
+			return err
+		}
+		testPipeline, err := redpanda.NewPipeline(ctx, "test", &redpanda.PipelineArgs{
+			ClusterApiUrl: testCluster.ClusterApiUrl,
+			DisplayName:   pulumi.Any(pipelineName),
+			Description:   pulumi.Any(pipelineDescription),
+			ConfigYaml:    pulumi.Any(pipelineConfigYaml),
+			State:         pulumi.Any(pipelineState),
+			AllowDeletion: pulumi.Any(pipelineAllowDeletion),
+			Resources: &redpanda.PipelineResourcesArgs{
+				MemoryShares: pulumi.Any(pipelineMemoryShares),
+				CpuShares:    pulumi.Any(pipelineCpuShares),
+			},
+			Tags: pulumi.StringMap{
+				"environment": pulumi.String("test"),
+				"managed-by":  pulumi.String("pulumi"),
+			},
+		})
+		if err != nil {
+			return err
+		}
+		ctx.Export("pipelineInfo", pulumi.StringMap{
+			"id":    testPipeline.ID(),
+			"name":  testPipeline.DisplayName,
+			"state": testPipeline.State,
+			"url":   testPipeline.Url,
+		})
 		ctx.Export("userSchemaInfo", pulumi.Map{
 			"id":      userSchema.SchemaId,
 			"subject": userSchema.Subject,
@@ -1581,10 +1739,11 @@ resources:
       connectionType: public
       throughputTier: ${throughputTier}
       zones: ${zones}
-      allowDeletion: true
+      allowDeletion: ${clusterAllowDeletion}
       clusterConfiguration:
         customPropertiesJson:
           fn::toJSON:
+            enable_shadow_linking: ${clusterEnableShadowLinking}
             schema_registry_enable_authorization: true
       tags:
         key: value
@@ -1857,7 +2016,44 @@ resources:
     options:
       dependsOn:
         - ${schemaRegistryAdmin}
+  developer:
+    type: redpanda:Role
+    properties:
+      name: ${roleName}
+      clusterApiUrl: ${testCluster.clusterApiUrl}
+      allowDeletion: ${roleAllowDeletion}
+  developerAssignment:
+    type: redpanda:RoleAssignment
+    name: developer_assignment
+    properties:
+      roleName: ${developer.name}
+      principal: ${testUser.name}
+      clusterApiUrl: ${testCluster.clusterApiUrl}
+    options:
+      dependsOn:
+        - ${testUser}
+  testPipeline:
+    type: redpanda:Pipeline
+    name: test
+    properties:
+      clusterApiUrl: ${testCluster.clusterApiUrl}
+      displayName: ${pipelineName}
+      description: ${pipelineDescription}
+      configYaml: ${pipelineConfigYaml}
+      state: ${pipelineState}
+      allowDeletion: ${pipelineAllowDeletion}
+      resources:
+        memoryShares: ${pipelineMemoryShares}
+        cpuShares: ${pipelineCpuShares}
+      tags:
+        environment: test
+        managed-by: pulumi
 outputs:
+  pipelineInfo:
+    id: ${testPipeline.id}
+    name: ${testPipeline.displayName}
+    state: ${testPipeline.state}
+    url: ${testPipeline.url}
   userSchemaInfo:
     id: ${userSchema.schemaId}
     subject: ${userSchema.subject}
@@ -1910,6 +2106,13 @@ import com.pulumi.redpanda.SchemaRegistryAclArgs;
 import com.pulumi.redpanda.Schema;
 import com.pulumi.redpanda.SchemaArgs;
 import com.pulumi.redpanda.inputs.SchemaReferenceArgs;
+import com.pulumi.redpanda.Role;
+import com.pulumi.redpanda.RoleArgs;
+import com.pulumi.redpanda.RoleAssignment;
+import com.pulumi.redpanda.RoleAssignmentArgs;
+import com.pulumi.redpanda.Pipeline;
+import com.pulumi.redpanda.PipelineArgs;
+import com.pulumi.redpanda.inputs.PipelineResourcesArgs;
 import static com.pulumi.codegen.internal.Serialization.*;
 import com.pulumi.resources.CustomResourceOptions;
 import java.util.List;
@@ -1952,10 +2155,11 @@ public class App {
             .connectionType("public")
             .throughputTier(throughputTier)
             .zones(zones)
-            .allowDeletion(true)
+            .allowDeletion(clusterAllowDeletion)
             .clusterConfiguration(ClusterClusterConfigurationArgs.builder()
                 .customPropertiesJson(serializeJson(
                     jsonObject(
+                        jsonProperty("enable_shadow_linking", clusterEnableShadowLinking),
                         jsonProperty("schema_registry_enable_authorization", true)
                     )))
                 .build())
@@ -2210,6 +2414,43 @@ public class App {
                 .dependsOn(schemaRegistryAdmin)
                 .build());
 
+        var developer = new Role("developer", RoleArgs.builder()
+            .name(roleName)
+            .clusterApiUrl(testCluster.clusterApiUrl())
+            .allowDeletion(roleAllowDeletion)
+            .build());
+
+        var developerAssignment = new RoleAssignment("developerAssignment", RoleAssignmentArgs.builder()
+            .roleName(developer.name())
+            .principal(testUser.name())
+            .clusterApiUrl(testCluster.clusterApiUrl())
+            .build(), CustomResourceOptions.builder()
+                .dependsOn(testUser)
+                .build());
+
+        var testPipeline = new Pipeline("testPipeline", PipelineArgs.builder()
+            .clusterApiUrl(testCluster.clusterApiUrl())
+            .displayName(pipelineName)
+            .description(pipelineDescription)
+            .configYaml(pipelineConfigYaml)
+            .state(pipelineState)
+            .allowDeletion(pipelineAllowDeletion)
+            .resources(PipelineResourcesArgs.builder()
+                .memoryShares(pipelineMemoryShares)
+                .cpuShares(pipelineCpuShares)
+                .build())
+            .tags(Map.ofEntries(
+                Map.entry("environment", "test"),
+                Map.entry("managed-by", "pulumi")
+            ))
+            .build());
+
+        ctx.export("pipelineInfo", Map.ofEntries(
+            Map.entry("id", testPipeline.id()),
+            Map.entry("name", testPipeline.displayName()),
+            Map.entry("state", testPipeline.state()),
+            Map.entry("url", testPipeline.url())
+        ));
         ctx.export("userSchemaInfo", Map.ofEntries(
             Map.entry("id", userSchema.schemaId()),
             Map.entry("subject", userSchema.subject()),
@@ -2272,9 +2513,10 @@ const testCluster = new redpanda.Cluster("test", {
     connectionType: "public",
     throughputTier: throughputTier,
     zones: zones,
-    allowDeletion: true,
+    allowDeletion: clusterAllowDeletion,
     clusterConfiguration: {
         customPropertiesJson: JSON.stringify({
+            enable_shadow_linking: clusterEnableShadowLinking,
             schema_registry_enable_authorization: true,
         }),
     },
@@ -2529,6 +2771,40 @@ const describeTestTopic = new redpanda.SchemaRegistryAcl("describe_test_topic", 
 }, {
     dependsOn: [schemaRegistryAdmin],
 });
+const developer = new redpanda.Role("developer", {
+    name: roleName,
+    clusterApiUrl: testCluster.clusterApiUrl,
+    allowDeletion: roleAllowDeletion,
+});
+const developerAssignment = new redpanda.RoleAssignment("developer_assignment", {
+    roleName: developer.name,
+    principal: testUser.name,
+    clusterApiUrl: testCluster.clusterApiUrl,
+}, {
+    dependsOn: [testUser],
+});
+const testPipeline = new redpanda.Pipeline("test", {
+    clusterApiUrl: testCluster.clusterApiUrl,
+    displayName: pipelineName,
+    description: pipelineDescription,
+    configYaml: pipelineConfigYaml,
+    state: pipelineState,
+    allowDeletion: pipelineAllowDeletion,
+    resources: {
+        memoryShares: pipelineMemoryShares,
+        cpuShares: pipelineCpuShares,
+    },
+    tags: {
+        environment: "test",
+        "managed-by": "pulumi",
+    },
+});
+export const pipelineInfo = {
+    id: testPipeline.id,
+    name: testPipeline.displayName,
+    state: testPipeline.state,
+    url: testPipeline.url,
+};
 export const userSchemaInfo = {
     id: userSchema.schemaId,
     subject: userSchema.subject,
@@ -2585,9 +2861,10 @@ test_cluster = redpanda.Cluster("test",
     connection_type="public",
     throughput_tier=throughput_tier,
     zones=zones,
-    allow_deletion=True,
+    allow_deletion=cluster_allow_deletion,
     cluster_configuration={
         "custom_properties_json": json.dumps({
+            "enable_shadow_linking": cluster_enable_shadow_linking,
             "schema_registry_enable_authorization": True,
         }),
     },
@@ -2813,6 +3090,36 @@ describe_test_topic = redpanda.SchemaRegistryAcl("describe_test_topic",
     password=user_pw,
     allow_deletion=True,
     opts = pulumi.ResourceOptions(depends_on=[schema_registry_admin]))
+developer = redpanda.Role("developer",
+    name=role_name,
+    cluster_api_url=test_cluster.cluster_api_url,
+    allow_deletion=role_allow_deletion)
+developer_assignment = redpanda.RoleAssignment("developer_assignment",
+    role_name=developer.name,
+    principal=test_user.name,
+    cluster_api_url=test_cluster.cluster_api_url,
+    opts = pulumi.ResourceOptions(depends_on=[test_user]))
+test_pipeline = redpanda.Pipeline("test",
+    cluster_api_url=test_cluster.cluster_api_url,
+    display_name=pipeline_name,
+    description=pipeline_description,
+    config_yaml=pipeline_config_yaml,
+    state=pipeline_state,
+    allow_deletion=pipeline_allow_deletion,
+    resources={
+        "memory_shares": pipeline_memory_shares,
+        "cpu_shares": pipeline_cpu_shares,
+    },
+    tags={
+        "environment": "test",
+        "managed-by": "pulumi",
+    })
+pulumi.export("pipelineInfo", {
+    "id": test_pipeline.id,
+    "name": test_pipeline.display_name,
+    "state": test_pipeline.state,
+    "url": test_pipeline.url,
+})
 pulumi.export("userSchemaInfo", {
     "id": user_schema.schema_id,
     "subject": user_schema.subject,
@@ -2882,11 +3189,12 @@ return await Deployment.RunAsync(() =>
         ConnectionType = "public",
         ThroughputTier = throughputTier,
         Zones = zones,
-        AllowDeletion = true,
+        AllowDeletion = clusterAllowDeletion,
         ClusterConfiguration = new Redpanda.Inputs.ClusterClusterConfigurationArgs
         {
             CustomPropertiesJson = JsonSerializer.Serialize(new Dictionary<string, object?>
             {
+                ["enable_shadow_linking"] = clusterEnableShadowLinking,
                 ["schema_registry_enable_authorization"] = true,
             }),
         },
@@ -3219,8 +3527,55 @@ return await Deployment.RunAsync(() =>
         },
     });
 
+    var developer = new Redpanda.Role("developer", new()
+    {
+        Name = roleName,
+        ClusterApiUrl = testCluster.ClusterApiUrl,
+        AllowDeletion = roleAllowDeletion,
+    });
+
+    var developerAssignment = new Redpanda.RoleAssignment("developer_assignment", new()
+    {
+        RoleName = developer.Name,
+        Principal = testUser.Name,
+        ClusterApiUrl = testCluster.ClusterApiUrl,
+    }, new CustomResourceOptions
+    {
+        DependsOn =
+        {
+            testUser,
+        },
+    });
+
+    var testPipeline = new Redpanda.Pipeline("test", new()
+    {
+        ClusterApiUrl = testCluster.ClusterApiUrl,
+        DisplayName = pipelineName,
+        Description = pipelineDescription,
+        ConfigYaml = pipelineConfigYaml,
+        State = pipelineState,
+        AllowDeletion = pipelineAllowDeletion,
+        Resources = new Redpanda.Inputs.PipelineResourcesArgs
+        {
+            MemoryShares = pipelineMemoryShares,
+            CpuShares = pipelineCpuShares,
+        },
+        Tags =
+        {
+            { "environment", "test" },
+            { "managed-by", "pulumi" },
+        },
+    });
+
     return new Dictionary<string, object?>
     {
+        ["pipelineInfo"] =
+        {
+            { "id", testPipeline.Id },
+            { "name", testPipeline.DisplayName },
+            { "state", testPipeline.State },
+            { "url", testPipeline.Url },
+        },
         ["userSchemaInfo"] =
         {
             { "id", userSchema.SchemaId },
@@ -3291,6 +3646,7 @@ func main() {
 			return err
 		}
 		tmpJSON0, err := json.Marshal(map[string]interface{}{
+			"enable_shadow_linking":                clusterEnableShadowLinking,
 			"schema_registry_enable_authorization": true,
 		})
 		if err != nil {
@@ -3307,7 +3663,7 @@ func main() {
 			ConnectionType:  pulumi.String("public"),
 			ThroughputTier:  pulumi.Any(throughputTier),
 			Zones:           pulumi.Any(zones),
-			AllowDeletion:   pulumi.Bool(true),
+			AllowDeletion:   pulumi.Any(clusterAllowDeletion),
 			ClusterConfiguration: &redpanda.ClusterClusterConfigurationArgs{
 				CustomPropertiesJson: pulumi.String(json0),
 			},
@@ -3636,6 +3992,49 @@ func main() {
 		if err != nil {
 			return err
 		}
+		developer, err := redpanda.NewRole(ctx, "developer", &redpanda.RoleArgs{
+			Name:          pulumi.Any(roleName),
+			ClusterApiUrl: testCluster.ClusterApiUrl,
+			AllowDeletion: pulumi.Any(roleAllowDeletion),
+		})
+		if err != nil {
+			return err
+		}
+		_, err = redpanda.NewRoleAssignment(ctx, "developer_assignment", &redpanda.RoleAssignmentArgs{
+			RoleName:      developer.Name,
+			Principal:     testUser.Name,
+			ClusterApiUrl: testCluster.ClusterApiUrl,
+		}, pulumi.DependsOn([]pulumi.Resource{
+			testUser,
+		}))
+		if err != nil {
+			return err
+		}
+		testPipeline, err := redpanda.NewPipeline(ctx, "test", &redpanda.PipelineArgs{
+			ClusterApiUrl: testCluster.ClusterApiUrl,
+			DisplayName:   pulumi.Any(pipelineName),
+			Description:   pulumi.Any(pipelineDescription),
+			ConfigYaml:    pulumi.Any(pipelineConfigYaml),
+			State:         pulumi.Any(pipelineState),
+			AllowDeletion: pulumi.Any(pipelineAllowDeletion),
+			Resources: &redpanda.PipelineResourcesArgs{
+				MemoryShares: pulumi.Any(pipelineMemoryShares),
+				CpuShares:    pulumi.Any(pipelineCpuShares),
+			},
+			Tags: pulumi.StringMap{
+				"environment": pulumi.String("test"),
+				"managed-by":  pulumi.String("pulumi"),
+			},
+		})
+		if err != nil {
+			return err
+		}
+		ctx.Export("pipelineInfo", pulumi.StringMap{
+			"id":    testPipeline.ID(),
+			"name":  testPipeline.DisplayName,
+			"state": testPipeline.State,
+			"url":   testPipeline.Url,
+		})
 		ctx.Export("userSchemaInfo", pulumi.Map{
 			"id":      userSchema.SchemaId,
 			"subject": userSchema.Subject,
@@ -3700,10 +4099,11 @@ resources:
       connectionType: public
       throughputTier: ${throughputTier}
       zones: ${zones}
-      allowDeletion: true
+      allowDeletion: ${clusterAllowDeletion}
       clusterConfiguration:
         customPropertiesJson:
           fn::toJSON:
+            enable_shadow_linking: ${clusterEnableShadowLinking}
             schema_registry_enable_authorization: true
       timeouts:
         create: 90m
@@ -3992,7 +4392,44 @@ resources:
     options:
       dependsOn:
         - ${schemaRegistryAdmin}
+  developer:
+    type: redpanda:Role
+    properties:
+      name: ${roleName}
+      clusterApiUrl: ${testCluster.clusterApiUrl}
+      allowDeletion: ${roleAllowDeletion}
+  developerAssignment:
+    type: redpanda:RoleAssignment
+    name: developer_assignment
+    properties:
+      roleName: ${developer.name}
+      principal: ${testUser.name}
+      clusterApiUrl: ${testCluster.clusterApiUrl}
+    options:
+      dependsOn:
+        - ${testUser}
+  testPipeline:
+    type: redpanda:Pipeline
+    name: test
+    properties:
+      clusterApiUrl: ${testCluster.clusterApiUrl}
+      displayName: ${pipelineName}
+      description: ${pipelineDescription}
+      configYaml: ${pipelineConfigYaml}
+      state: ${pipelineState}
+      allowDeletion: ${pipelineAllowDeletion}
+      resources:
+        memoryShares: ${pipelineMemoryShares}
+        cpuShares: ${pipelineCpuShares}
+      tags:
+        environment: test
+        managed-by: pulumi
 outputs:
+  pipelineInfo:
+    id: ${testPipeline.id}
+    name: ${testPipeline.displayName}
+    state: ${testPipeline.state}
+    url: ${testPipeline.url}
   userSchemaInfo:
     id: ${userSchema.schemaId}
     subject: ${userSchema.subject}
@@ -4045,6 +4482,13 @@ import com.pulumi.redpanda.SchemaRegistryAclArgs;
 import com.pulumi.redpanda.Schema;
 import com.pulumi.redpanda.SchemaArgs;
 import com.pulumi.redpanda.inputs.SchemaReferenceArgs;
+import com.pulumi.redpanda.Role;
+import com.pulumi.redpanda.RoleArgs;
+import com.pulumi.redpanda.RoleAssignment;
+import com.pulumi.redpanda.RoleAssignmentArgs;
+import com.pulumi.redpanda.Pipeline;
+import com.pulumi.redpanda.PipelineArgs;
+import com.pulumi.redpanda.inputs.PipelineResourcesArgs;
 import static com.pulumi.codegen.internal.Serialization.*;
 import com.pulumi.resources.CustomResourceOptions;
 import java.util.List;
@@ -4087,10 +4531,11 @@ public class App {
             .connectionType("public")
             .throughputTier(throughputTier)
             .zones(zones)
-            .allowDeletion(true)
+            .allowDeletion(clusterAllowDeletion)
             .clusterConfiguration(ClusterClusterConfigurationArgs.builder()
                 .customPropertiesJson(serializeJson(
                     jsonObject(
+                        jsonProperty("enable_shadow_linking", clusterEnableShadowLinking),
                         jsonProperty("schema_registry_enable_authorization", true)
                     )))
                 .build())
@@ -4360,6 +4805,43 @@ public class App {
                 .dependsOn(schemaRegistryAdmin)
                 .build());
 
+        var developer = new Role("developer", RoleArgs.builder()
+            .name(roleName)
+            .clusterApiUrl(testCluster.clusterApiUrl())
+            .allowDeletion(roleAllowDeletion)
+            .build());
+
+        var developerAssignment = new RoleAssignment("developerAssignment", RoleAssignmentArgs.builder()
+            .roleName(developer.name())
+            .principal(testUser.name())
+            .clusterApiUrl(testCluster.clusterApiUrl())
+            .build(), CustomResourceOptions.builder()
+                .dependsOn(testUser)
+                .build());
+
+        var testPipeline = new Pipeline("testPipeline", PipelineArgs.builder()
+            .clusterApiUrl(testCluster.clusterApiUrl())
+            .displayName(pipelineName)
+            .description(pipelineDescription)
+            .configYaml(pipelineConfigYaml)
+            .state(pipelineState)
+            .allowDeletion(pipelineAllowDeletion)
+            .resources(PipelineResourcesArgs.builder()
+                .memoryShares(pipelineMemoryShares)
+                .cpuShares(pipelineCpuShares)
+                .build())
+            .tags(Map.ofEntries(
+                Map.entry("environment", "test"),
+                Map.entry("managed-by", "pulumi")
+            ))
+            .build());
+
+        ctx.export("pipelineInfo", Map.ofEntries(
+            Map.entry("id", testPipeline.id()),
+            Map.entry("name", testPipeline.displayName()),
+            Map.entry("state", testPipeline.state()),
+            Map.entry("url", testPipeline.url())
+        ));
         ctx.export("userSchemaInfo", Map.ofEntries(
             Map.entry("id", userSchema.schemaId()),
             Map.entry("subject", userSchema.subject()),

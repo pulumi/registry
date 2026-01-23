@@ -11,7 +11,7 @@ native: false
 package_status: ga
 publisher: Daniel Muehlbachler-Pietrzykowski
 repo_url: https://github.com/muhlba91/pulumi-proxmoxve
-schema_file_url: https://raw.githubusercontent.com/muhlba91/pulumi-proxmoxve/v7.8.1/provider/cmd/pulumi-resource-proxmoxve/schema.json
+schema_file_url: https://raw.githubusercontent.com/muhlba91/pulumi-proxmoxve/v7.11.0/provider/cmd/pulumi-resource-proxmoxve/schema.json
 title: Proxmox Virtual Environment (Proxmox VE)
-updated_on: 1763205391
-version: v7.8.1
+updated_on: 1765612745
+version: v7.11.0

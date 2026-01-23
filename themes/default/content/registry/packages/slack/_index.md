@@ -1,11 +1,13 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-slack/v0.4.12/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-slack/v0.4.15/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+edit_url: https://github.com/pulumi/pulumi-slack/blob/v0.4.15/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Slack Provider
 meta_desc: Provides an overview on how to configure the Pulumi Slack provider.
 layout: package
 ---
+
 ## Installation
 
 The Slack provider is available as a package in all Pulumi languages:
@@ -15,6 +17,7 @@ The Slack provider is available as a package in all Pulumi languages:
 * Go: [`github.com/pulumi/pulumi-slack/sdk/go/slack`](https://github.com/pulumi/pulumi-slack)
 * .NET: [`Pulumi.Slack`](https://www.nuget.org/packages/Pulumi.Slack)
 * Java: [`com.pulumi/slack`](https://central.sonatype.com/artifact/com.pulumi/slack)
+
 ## Overview
 
 The Slack provider is used to interact with Slack resources supported by Slack.
@@ -36,6 +39,7 @@ config:
         value: 'TODO: var.slack_token'
 
 ```
+
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
 import * as slack from "@pulumi/slack";
@@ -58,6 +62,7 @@ const test = new slack.Conversation("test", {
     isPrivate: true,
 });
 ```
+
 {{% /choosable %}}
 {{% choosable language python %}}
 ```yaml
@@ -69,6 +74,7 @@ config:
         value: 'TODO: var.slack_token'
 
 ```
+
 ```python
 import pulumi
 import pulumi_slack as slack
@@ -87,6 +93,7 @@ test = slack.Conversation("test",
     permanent_members=my_group.users,
     is_private=True)
 ```
+
 {{% /choosable %}}
 {{% choosable language csharp %}}
 ```yaml
@@ -98,6 +105,7 @@ config:
         value: 'TODO: var.slack_token'
 
 ```
+
 ```csharp
 using System.Collections.Generic;
 using System.Linq;
@@ -135,6 +143,7 @@ return await Deployment.RunAsync(() =>
 });
 
 ```
+
 {{% /choosable %}}
 {{% choosable language go %}}
 ```yaml
@@ -146,6 +155,7 @@ config:
         value: 'TODO: var.slack_token'
 
 ```
+
 ```go
 package main
 
@@ -188,6 +198,7 @@ func main() {
 	})
 }
 ```
+
 {{% /choosable %}}
 {{% choosable language yaml %}}
 ```yaml
@@ -199,6 +210,7 @@ config:
         value: 'TODO: var.slack_token'
 
 ```
+
 ```yaml
 resources:
   # Create a User Group
@@ -222,10 +234,11 @@ resources:
 variables:
   testUser00:
     fn::invoke:
-      Function: slack:getUser
-      Arguments:
+      function: slack:getUser
+      arguments:
         name: contact_test-user-ter
 ```
+
 {{% /choosable %}}
 {{% choosable language java %}}
 ```yaml
@@ -237,6 +250,7 @@ config:
         value: 'TODO: var.slack_token'
 
 ```
+
 ```java
 package generated_program;
 
@@ -271,7 +285,7 @@ public class App {
             .name("TestGroup")
             .handle("test")
             .description("Test user group")
-            .users(testUser00.applyValue(getUserResult -> getUserResult.id()))
+            .users(testUser00.id())
             .build());
 
         // Create a Slack channel
@@ -285,6 +299,7 @@ public class App {
     }
 }
 ```
+
 {{% /choosable %}}
 {{< /chooser >}}
 ## Authentication
@@ -304,140 +319,25 @@ A static can be provided by adding `token` in-line in the Slack provider configu
 
 Usage:
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
-{{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
 name: configuration-example
-runtime: nodejs
+runtime:
 config:
     slack:token:
         value: 'TODO: var.slack_token'
 
 ```
-
-{{% /choosable %}}
-{{% choosable language python %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: python
-config:
-    slack:token:
-        value: 'TODO: var.slack_token'
-
-```
-
-{{% /choosable %}}
-{{% choosable language csharp %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: dotnet
-config:
-    slack:token:
-        value: 'TODO: var.slack_token'
-
-```
-
-{{% /choosable %}}
-{{% choosable language go %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: go
-config:
-    slack:token:
-        value: 'TODO: var.slack_token'
-
-```
-
-{{% /choosable %}}
-{{% choosable language yaml %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: yaml
-config:
-    slack:token:
-        value: 'TODO: var.slack_token'
-
-```
-
-{{% /choosable %}}
-{{% choosable language java %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: java
-config:
-    slack:token:
-        value: 'TODO: var.slack_token'
-
-```
-
-{{% /choosable %}}
-{{< /chooser >}}
 ### Environment Variables
 
 You can provide your token via the `SLACK_TOKEN` environment variable:
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
-{{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
 name: configuration-example
-runtime: nodejs
+runtime:
 
 ```
-
-{{% /choosable %}}
-{{% choosable language python %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: python
-
-```
-
-{{% /choosable %}}
-{{% choosable language csharp %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: dotnet
-
-```
-
-{{% /choosable %}}
-{{% choosable language go %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: go
-
-```
-
-{{% /choosable %}}
-{{% choosable language yaml %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: yaml
-
-```
-
-{{% /choosable %}}
-{{% choosable language java %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: java
-
-```
-
-{{% /choosable %}}
-{{< /chooser >}}
 
 Usage:
 

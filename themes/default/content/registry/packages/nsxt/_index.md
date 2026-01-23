@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/vmware/nsxt/3.10.0/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/vmware/nsxt/3.11.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Nsxt Provider
@@ -310,9 +310,9 @@ This file allows you to define some variables that can be reused in multiple
 import * as pulumi from "@pulumi/pulumi";
 
 const config = new pulumi.Config();
-const nsxManager = config.requireObject("nsxManager");
-const nsxUsername = config.requireObject("nsxUsername");
-const nsxPassword = config.requireObject("nsxPassword");
+const nsxManager = config.requireObject<any>("nsxManager");
+const nsxUsername = config.requireObject<any>("nsxUsername");
+const nsxPassword = config.requireObject<any>("nsxPassword");
 ```
 {{% /choosable %}}
 {{% choosable language python %}}
@@ -3411,14 +3411,14 @@ public class App {
         var t1Gateway = new PolicyTier1Gateway("t1Gateway", PolicyTier1GatewayArgs.builder()
             .displayName("TF_T1")
             .description("Tier1 provisioned by Pulumi")
-            .edgeClusterPath(demo.applyValue(getPolicyEdgeClusterResult -> getPolicyEdgeClusterResult.path()))
+            .edgeClusterPath(demo.path())
             .dhcpConfigPath(tierDhcp.path())
             .failoverMode("PREEMPTIVE")
-            .defaultRuleLogging("false")
-            .enableFirewall("true")
-            .enableStandbyRelocation("false")
-            .forceWhitelisting("false")
-            .tier0Path(t0Gateway.applyValue(getPolicyTier0GatewayResult -> getPolicyTier0GatewayResult.path()))
+            .defaultRuleLogging(false)
+            .enableFirewall(true)
+            .enableStandbyRelocation(false)
+            .forceWhitelisting(false)
+            .tier0Path(t0Gateway.path())
             .routeAdvertisementTypes(
                 "TIER1_STATIC_ROUTES",
                 "TIER1_CONNECTED")
@@ -3446,13 +3446,13 @@ public class App {
             .displayName("web-tier")
             .description("Pulumi provisioned Web Segment")
             .connectivityPath(t1Gateway.path())
-            .transportZonePath(overlayTz.applyValue(getPolicyTransportZoneResult -> getPolicyTransportZoneResult.path()))
+            .transportZonePath(overlayTz.path())
             .subnets(PolicySegmentSubnetArgs.builder()
                 .cidr("12.12.1.1/24")
                 .dhcpRanges("12.12.1.100-12.12.1.160")
                 .dhcpV4Config(PolicySegmentSubnetDhcpV4ConfigArgs.builder()
                     .serverAddress("12.12.1.2/24")
-                    .leaseTime(36000)
+                    .leaseTime(36000.0)
                     .dhcpOption121s(PolicySegmentSubnetDhcpV4ConfigDhcpOption121Args.builder()
                         .network("6.6.6.0/24")
                         .nextHop("1.1.1.21")
@@ -3474,13 +3474,13 @@ public class App {
             .displayName("app-tier")
             .description("Pulumi provisioned App Segment")
             .connectivityPath(t1Gateway.path())
-            .transportZonePath(overlayTz.applyValue(getPolicyTransportZoneResult -> getPolicyTransportZoneResult.path()))
+            .transportZonePath(overlayTz.path())
             .subnets(PolicySegmentSubnetArgs.builder()
                 .cidr("12.12.2.1/24")
                 .dhcpRanges("12.12.2.100-12.12.2.160")
                 .dhcpV4Config(PolicySegmentSubnetDhcpV4ConfigArgs.builder()
                     .serverAddress("12.12.2.2/24")
-                    .leaseTime(36000)
+                    .leaseTime(36000.0)
                     .dhcpOption121s(PolicySegmentSubnetDhcpV4ConfigDhcpOption121Args.builder()
                         .network("6.6.6.0/24")
                         .nextHop("1.1.1.21")
@@ -3502,13 +3502,13 @@ public class App {
             .displayName("db-tier")
             .description("Pulumi provisioned DB Segment")
             .connectivityPath(t1Gateway.path())
-            .transportZonePath(overlayTz.applyValue(getPolicyTransportZoneResult -> getPolicyTransportZoneResult.path()))
+            .transportZonePath(overlayTz.path())
             .subnets(PolicySegmentSubnetArgs.builder()
                 .cidr("12.12.3.1/24")
                 .dhcpRanges("12.12.3.100-12.12.3.160")
                 .dhcpV4Config(PolicySegmentSubnetDhcpV4ConfigArgs.builder()
                     .serverAddress("12.12.3.2/24")
-                    .leaseTime(36000)
+                    .leaseTime(36000.0)
                     .dhcpOption121s(PolicySegmentSubnetDhcpV4ConfigDhcpOption121Args.builder()
                         .network("6.6.6.0/24")
                         .nextHop("1.1.1.21")
@@ -3658,8 +3658,8 @@ public class App {
             .description("Firewall section created by Pulumi")
             .scopes(allVms.path())
             .category("Application")
-            .locked("false")
-            .stateful("true")
+            .locked(false)
+            .stateful(true)
             .tags(PolicySecurityPolicyTagArgs.builder()
                 .scope(nsxTagScope)
                 .tag(nsxTag)
@@ -3669,25 +3669,25 @@ public class App {
                     .displayName("Allow HTTPS")
                     .description("In going rule")
                     .action("ALLOW")
-                    .logged("false")
+                    .logged(false)
                     .ipVersion("IPV4")
                     .destinationGroups(webGroup.path())
-                    .services(https.applyValue(getPolicyServiceResult -> getPolicyServiceResult.path()))
+                    .services(https.path())
                     .build(),
                 PolicySecurityPolicyRuleArgs.builder()
                     .displayName("Allow SSH")
                     .description("In going rule")
                     .action("ALLOW")
-                    .logged("false")
+                    .logged(false)
                     .ipVersion("IPV4")
                     .destinationGroups(webGroup.path())
-                    .services(ssh.applyValue(getPolicyServiceResult -> getPolicyServiceResult.path()))
+                    .services(ssh.path())
                     .build(),
                 PolicySecurityPolicyRuleArgs.builder()
                     .displayName("Allow Web to App")
                     .description("Web to App communication")
                     .action("ALLOW")
-                    .logged("false")
+                    .logged(false)
                     .ipVersion("IPV4")
                     .sourceGroups(webGroup.path())
                     .destinationGroups(appGroup.path())
@@ -3697,17 +3697,17 @@ public class App {
                     .displayName("Allow App to DB")
                     .description("App to DB communication")
                     .action("ALLOW")
-                    .logged("false")
+                    .logged(false)
                     .ipVersion("IPV4")
                     .sourceGroups(appGroup.path())
                     .destinationGroups(dbGroup.path())
-                    .services(mysql.applyValue(getPolicyServiceResult -> getPolicyServiceResult.path()))
+                    .services(mysql.path())
                     .build(),
                 PolicySecurityPolicyRuleArgs.builder()
                     .displayName("Allow Infrastructure")
                     .description("Allow DNS and Management servers")
                     .action("ALLOW")
-                    .logged("true")
+                    .logged(true)
                     .ipVersion("IPV4")
                     .sourceGroups(ipSet.path())
                     .destinationGroups(allVms.path())
@@ -3716,7 +3716,7 @@ public class App {
                     .displayName("Allow out")
                     .description("Outgoing rule")
                     .action("ALLOW")
-                    .logged("true")
+                    .logged(true)
                     .ipVersion("IPV4")
                     .sourceGroups(allVms.path())
                     .build(),
@@ -3724,7 +3724,7 @@ public class App {
                     .displayName("Deny ANY")
                     .description("Default Deny the traffic")
                     .action("REJECT")
-                    .logged("true")
+                    .logged(true)
                     .ipVersion("IPV4")
                     .build())
             .build());
@@ -3799,7 +3799,7 @@ public class App {
         // Assign the right tags to the VMs so that they get included in the
         // dynamic groups created above
         var webVmTag = new PolicyVmTags("webVmTag", PolicyVmTagsArgs.builder()
-            .instanceId(webVm.applyValue(getPolicyVmResult -> getPolicyVmResult.instanceId()))
+            .instanceId(webVm.instanceId())
             .tags(
                 PolicyVmTagsTagArgs.builder()
                     .scope("tier")
@@ -3812,7 +3812,7 @@ public class App {
             .build());
 
         var appVmTag = new PolicyVmTags("appVmTag", PolicyVmTagsArgs.builder()
-            .instanceId(appVm.applyValue(getPolicyVmResult -> getPolicyVmResult.instanceId()))
+            .instanceId(appVm.instanceId())
             .tags(
                 PolicyVmTagsTagArgs.builder()
                     .scope("tier")
@@ -3825,7 +3825,7 @@ public class App {
             .build());
 
         var dbVmTag = new PolicyVmTags("dbVmTag", PolicyVmTagsArgs.builder()
-            .instanceId(dbVm.applyValue(getPolicyVmResult -> getPolicyVmResult.instanceId()))
+            .instanceId(dbVm.instanceId())
             .tags(
                 PolicyVmTagsTagArgs.builder()
                     .scope("tier")
@@ -3986,7 +3986,7 @@ public class App {
 
     public static void stack(Context ctx) {
         var appvm = new VirtualMachine("appvm", VirtualMachineArgs.builder()
-            .networkInterface(%!v(PANIC=Format method: runtime error: invalid memory address or nil pointer dereference))
+            .networkInterface(List.of(Map.of("networkId", tfApp.id())))
             .build());
 
     }

@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: pulumiverse
 repo_url: https://github.com/pulumiverse/pulumi-grafana
-schema_file_url: https://raw.githubusercontent.com/pulumiverse/pulumi-grafana/v2.16.0/provider/cmd/pulumi-resource-grafana/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumiverse/pulumi-grafana/v2.19.0/provider/cmd/pulumi-resource-grafana/schema.json
 title: Grafana
-updated_on: 1763539882
-version: v2.16.0
+updated_on: 1768246585
+version: v2.19.0

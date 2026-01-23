@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-aws/v7.11.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-aws/v7.16.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-aws/blob/v7.11.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-aws/blob/v7.16.0/docs/_index.md
 title: AWS
 meta_desc: Learn how you can use Pulumi's AWS Provider to reduce the complexity of provisioning and managing resources on AWS.
 layout: package
@@ -22,7 +22,7 @@ The AWS provider must be configured with credentials to deploy and update resour
 ```typescript
 const aws = require("@pulumi/aws");
 
-const bucket = new aws.s3.BucketV2("mybucket");
+const bucket = new aws.s3.Bucket("mybucket");
 ```
 
 {{% /choosable %}}
@@ -33,7 +33,7 @@ const bucket = new aws.s3.BucketV2("mybucket");
 import pulumi
 import pulumi_aws as aws
 
-bucket = aws.s3.BucketV2("bucket")
+bucket = aws.s3.Bucket("bucket")
 ```
 
 {{% /choosable %}}
@@ -44,13 +44,13 @@ bucket = aws.s3.BucketV2("bucket")
 package main
 
 import (
-	"github.com/pulumi/pulumi-aws/sdk/v5/go/aws/s3"
+	"github.com/pulumi/pulumi-aws/sdk/v7/go/aws/s3"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
 func main() {
 	pulumi.Run(func(ctx *pulumi.Context) error {
-		_, err := s3.NewBucketV2(ctx, "bucket", &s3.BucketV2Args{})
+		_, err := s3.NewBucket(ctx, "bucket", &s3.BucketArgs{})
 		if err != nil {
 			return err
 		}
@@ -70,7 +70,7 @@ using Aws = Pulumi.Aws;
 
 await Deployment.RunAsync(() =>
 {
-    var bucket = new Aws.S3.BucketV2("bucket");
+    var bucket = new Aws.S3.Bucket("bucket");
 });
 ```
 
@@ -89,7 +89,7 @@ public class App {
     }
 
     private static void stack(Context ctx) {
-        final var bucket = new BucketV2("my-bucket");
+        final var bucket = new Bucket("my-bucket");
         ctx.export("bucketName", bucket.name());
   }
 }
@@ -102,7 +102,7 @@ public class App {
 ```yaml
 resources:
   mybucket:
-    type: aws:s3:BucketV2
+    type: aws:s3:Bucket
 outputs:
   bucketName: ${mybucket.name}
 ```

@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-okta/v6.1.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-okta/v6.2.2/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-okta/blob/v6.1.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-okta/blob/v6.2.2/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Okta Provider
 meta_desc: Provides an overview on how to configure the Pulumi Okta provider.
@@ -50,10 +50,12 @@ config:
         value: '[COMMA,SEPARATED,SCOPE,VALUES]'
 
 ```
+
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
 
 ```
+
 {{% /choosable %}}
 {{% choosable language python %}}
 ```yaml
@@ -75,10 +77,12 @@ config:
         value: '[COMMA,SEPARATED,SCOPE,VALUES]'
 
 ```
+
 ```python
 import pulumi
 
 ```
+
 {{% /choosable %}}
 {{% choosable language csharp %}}
 ```yaml
@@ -100,6 +104,7 @@ config:
         value: '[COMMA,SEPARATED,SCOPE,VALUES]'
 
 ```
+
 ```csharp
 using System.Collections.Generic;
 using System.Linq;
@@ -110,6 +115,7 @@ return await Deployment.RunAsync(() =>
 });
 
 ```
+
 {{% /choosable %}}
 {{% choosable language go %}}
 ```yaml
@@ -131,6 +137,7 @@ config:
         value: '[COMMA,SEPARATED,SCOPE,VALUES]'
 
 ```
+
 ```go
 package main
 
@@ -144,6 +151,7 @@ func main() {
 	})
 }
 ```
+
 {{% /choosable %}}
 {{% choosable language yaml %}}
 ```yaml
@@ -165,9 +173,11 @@ config:
         value: '[COMMA,SEPARATED,SCOPE,VALUES]'
 
 ```
+
 ```yaml
 {}
 ```
+
 {{% /choosable %}}
 {{% choosable language java %}}
 ```yaml
@@ -189,6 +199,7 @@ config:
         value: '[COMMA,SEPARATED,SCOPE,VALUES]'
 
 ```
+
 ```java
 package generated_program;
 
@@ -211,6 +222,7 @@ public class App {
     }
 }
 ```
+
 {{% /choosable %}}
 {{< /chooser >}}
 

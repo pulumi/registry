@@ -1,20 +1,19 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-wavefront/v3.1.9/docs/_index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/vmware/wavefront/5.1.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Wavefront Provider
 meta_desc: Provides an overview on how to configure the Pulumi Wavefront provider.
 layout: package
 ---
-## Installation
 
-The Wavefront provider is available as a package in all Pulumi languages:
+## Generate Provider
 
-* JavaScript/TypeScript: [`@pulumi/wavefront`](https://www.npmjs.com/package/@pulumi/wavefront)
-* Python: [`pulumi-wavefront`](https://pypi.org/project/pulumi-wavefront/)
-* Go: [`github.com/pulumi/pulumi-wavefront/sdk/v3/go/wavefront`](https://github.com/pulumi/pulumi-wavefront)
-* .NET: [`Pulumi.Wavefront`](https://www.nuget.org/packages/Pulumi.Wavefront)
-* Java: [`com.pulumi/wavefront`](https://central.sonatype.com/artifact/com.pulumi/wavefront)
+The Wavefront provider must be installed as a Local Package by following the [instructions for Any Terraform Provider](https://www.pulumi.com/registry/packages/terraform-provider/):
+
+```bash
+pulumi package add terraform-provider vmware/wavefront
+```
 ## Overview
 
 The Wavefront provider is used to interact with the Wavefront monitoring service. The
@@ -118,7 +117,7 @@ runtime: go
 package main
 
 import (
-	"github.com/pulumi/pulumi-wavefront/sdk/v3/go/wavefront"
+	"github.com/pulumi/pulumi-pulumi-provider/sdks/go/wavefront/v5/wavefront"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -129,7 +128,7 @@ func main() {
 			Condition:             pulumi.String("100-ts(\"cpu.usage_idle\", environment=preprod and cpu=cpu-total ) > 80"),
 			AdditionalInformation: pulumi.String("This is an Alert"),
 			DisplayExpression:     pulumi.String("100-ts(\"cpu.usage_idle\", environment=preprod and cpu=cpu-total )"),
-			Minutes:               pulumi.Int(5),
+			Minutes:               pulumi.Float64(5),
 			Severity:              pulumi.String("WARN"),
 			Tags: pulumi.StringArray{
 				pulumi.String("env.preprod"),
@@ -201,7 +200,7 @@ public class App {
             .condition("100-ts(\"cpu.usage_idle\", environment=preprod and cpu=cpu-total ) > 80")
             .additionalInformation("This is an Alert")
             .displayExpression("100-ts(\"cpu.usage_idle\", environment=preprod and cpu=cpu-total )")
-            .minutes(5)
+            .minutes(5.0)
             .severity("WARN")
             .tags(
                 "env.preprod",
@@ -221,15 +220,16 @@ The Wavefront provider offers two ways of providing credentials for authenticati
 * Environment variables
 ### Static credentials
 
+⚠️ **Warning:** It is not recommended to hard-code credentials into any Pulumi configuration.
+There's a risk of secret leakage if this file is ever committed to a public version control system.
+
 Static credentials can be provided by adding an `address` and `token` in-line in
 the Wavefront provider configuration.
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
-{{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
 name: configuration-example
-runtime: nodejs
+runtime:
 config:
     wavefront:address:
         value: cluster.wavefront.com
@@ -237,140 +237,17 @@ config:
         value: your-wf-token-secret
 
 ```
-
-{{% /choosable %}}
-{{% choosable language python %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: python
-config:
-    wavefront:address:
-        value: cluster.wavefront.com
-    wavefront:token:
-        value: your-wf-token-secret
-
-```
-
-{{% /choosable %}}
-{{% choosable language csharp %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: dotnet
-config:
-    wavefront:address:
-        value: cluster.wavefront.com
-    wavefront:token:
-        value: your-wf-token-secret
-
-```
-
-{{% /choosable %}}
-{{% choosable language go %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: go
-config:
-    wavefront:address:
-        value: cluster.wavefront.com
-    wavefront:token:
-        value: your-wf-token-secret
-
-```
-
-{{% /choosable %}}
-{{% choosable language yaml %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: yaml
-config:
-    wavefront:address:
-        value: cluster.wavefront.com
-    wavefront:token:
-        value: your-wf-token-secret
-
-```
-
-{{% /choosable %}}
-{{% choosable language java %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: java
-config:
-    wavefront:address:
-        value: cluster.wavefront.com
-    wavefront:token:
-        value: your-wf-token-secret
-
-```
-
-{{% /choosable %}}
-{{< /chooser >}}
 ### Environment Variables
 
 You can provide your credentials by using the `WAVEFRONT_ADDRESS` and `WAVEFRONT_TOKEN`,
 environment variables.
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
-{{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
 name: configuration-example
-runtime: nodejs
+runtime:
 
 ```
-
-{{% /choosable %}}
-{{% choosable language python %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: python
-
-```
-
-{{% /choosable %}}
-{{% choosable language csharp %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: dotnet
-
-```
-
-{{% /choosable %}}
-{{% choosable language go %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: go
-
-```
-
-{{% /choosable %}}
-{{% choosable language yaml %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: yaml
-
-```
-
-{{% /choosable %}}
-{{% choosable language java %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: java
-
-```
-
-{{% /choosable %}}
-{{< /chooser >}}
 
 Usage:
 

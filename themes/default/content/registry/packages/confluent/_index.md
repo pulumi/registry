@@ -14,17 +14,8 @@ The Confluent Cloud provider must be configured with credentials to deploy and u
 
 ## Example
 
-{{< chooser language "javascript,typescript,python,go,csharp" >}}
+{{< chooser language "typescript,python,go,csharp" >}}
 
-{{% choosable language javascript %}}
-
-```javascript
-const ccloud = require("@pulumi/confluent")
-
-const env = new ccloud.ConfluentEnvironment("ts-environment");
-```
-
-{{% /choosable %}}
 {{% choosable language typescript %}}
 
 ```typescript

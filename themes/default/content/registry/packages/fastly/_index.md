@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-fastly/v11.1.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-fastly/v11.3.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-fastly/blob/v11.1.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-fastly/blob/v11.3.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Fastly Provider
 meta_desc: Provides an overview on how to configure the Pulumi Fastly provider.
@@ -40,6 +40,7 @@ config:
         value: test
 
 ```
+
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
 import * as fastly from "@pulumi/fastly";
@@ -47,6 +48,7 @@ import * as fastly from "@pulumi/fastly";
 // Create a Service
 const myservice = new fastly.ServiceVcl("myservice", {name: "myawesometestservice"});
 ```
+
 {{% /choosable %}}
 {{% choosable language python %}}
 ```yaml
@@ -58,6 +60,7 @@ config:
         value: test
 
 ```
+
 ```python
 import pulumi
 import pulumi_fastly as fastly
@@ -65,6 +68,7 @@ import pulumi_fastly as fastly
 # Create a Service
 myservice = fastly.ServiceVcl("myservice", name="myawesometestservice")
 ```
+
 {{% /choosable %}}
 {{% choosable language csharp %}}
 ```yaml
@@ -76,6 +80,7 @@ config:
         value: test
 
 ```
+
 ```csharp
 using System.Collections.Generic;
 using System.Linq;
@@ -93,6 +98,7 @@ return await Deployment.RunAsync(() =>
 });
 
 ```
+
 {{% /choosable %}}
 {{% choosable language go %}}
 ```yaml
@@ -104,6 +110,7 @@ config:
         value: test
 
 ```
+
 ```go
 package main
 
@@ -125,6 +132,7 @@ func main() {
 	})
 }
 ```
+
 {{% /choosable %}}
 {{% choosable language yaml %}}
 ```yaml
@@ -136,6 +144,7 @@ config:
         value: test
 
 ```
+
 ```yaml
 resources:
   # Create a Service
@@ -144,6 +153,7 @@ resources:
     properties:
       name: myawesometestservice
 ```
+
 {{% /choosable %}}
 {{% choosable language java %}}
 ```yaml
@@ -155,6 +165,7 @@ config:
         value: test
 
 ```
+
 ```java
 package generated_program;
 
@@ -184,6 +195,7 @@ public class App {
     }
 }
 ```
+
 {{% /choosable %}}
 {{< /chooser >}}
 ## Importing
@@ -214,12 +226,14 @@ config:
         value: test
 
 ```
+
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
 import * as fastly from "@pulumi/fastly";
 
 const myservice = new fastly.ServiceVcl("myservice", {});
 ```
+
 {{% /choosable %}}
 {{% choosable language python %}}
 ```yaml
@@ -231,12 +245,14 @@ config:
         value: test
 
 ```
+
 ```python
 import pulumi
 import pulumi_fastly as fastly
 
 myservice = fastly.ServiceVcl("myservice")
 ```
+
 {{% /choosable %}}
 {{% choosable language csharp %}}
 ```yaml
@@ -248,6 +264,7 @@ config:
         value: test
 
 ```
+
 ```csharp
 using System.Collections.Generic;
 using System.Linq;
@@ -261,6 +278,7 @@ return await Deployment.RunAsync(() =>
 });
 
 ```
+
 {{% /choosable %}}
 {{% choosable language go %}}
 ```yaml
@@ -272,6 +290,7 @@ config:
         value: test
 
 ```
+
 ```go
 package main
 
@@ -290,6 +309,7 @@ func main() {
 	})
 }
 ```
+
 {{% /choosable %}}
 {{% choosable language yaml %}}
 ```yaml
@@ -301,11 +321,13 @@ config:
         value: test
 
 ```
+
 ```yaml
 resources:
   myservice:
     type: fastly:ServiceVcl
 ```
+
 {{% /choosable %}}
 {{% choosable language java %}}
 ```yaml
@@ -317,6 +339,7 @@ config:
         value: test
 
 ```
+
 ```java
 package generated_program;
 
@@ -342,6 +365,7 @@ public class App {
     }
 }
 ```
+
 {{% /choosable %}}
 {{< /chooser >}}
 
@@ -359,6 +383,7 @@ import * as fastly from "@pulumi/fastly";
 
 const myservice = new fastly.ServiceVcl("myservice", {});
 ```
+
 {{% /choosable %}}
 {{% choosable language python %}}
 ```python
@@ -367,6 +392,7 @@ import pulumi_fastly as fastly
 
 myservice = fastly.ServiceVcl("myservice")
 ```
+
 {{% /choosable %}}
 {{% choosable language csharp %}}
 ```csharp
@@ -382,6 +408,7 @@ return await Deployment.RunAsync(() =>
 });
 
 ```
+
 {{% /choosable %}}
 {{% choosable language go %}}
 ```go
@@ -402,6 +429,7 @@ func main() {
 	})
 }
 ```
+
 {{% /choosable %}}
 {{% choosable language yaml %}}
 ```yaml
@@ -409,6 +437,7 @@ resources:
   myservice:
     type: fastly:ServiceVcl
 ```
+
 {{% /choosable %}}
 {{% choosable language java %}}
 ```java
@@ -436,6 +465,7 @@ public class App {
     }
 }
 ```
+
 {{% /choosable %}}
 {{< /chooser >}}
 

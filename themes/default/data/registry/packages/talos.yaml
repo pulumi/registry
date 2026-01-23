@@ -10,7 +10,7 @@ native: false
 package_status: public_preview
 publisher: Pulumiverse
 repo_url: https://github.com/pulumiverse/pulumi-talos
-schema_file_url: https://raw.githubusercontent.com/pulumiverse/pulumi-talos/v0.6.1/provider/cmd/pulumi-resource-talos/schema.json
-title: talos
-updated_on: 1760363489
-version: v0.6.1
+schema_file_url: https://raw.githubusercontent.com/pulumiverse/pulumi-talos/v0.7.1/provider/cmd/pulumi-resource-talos/schema.json
+title: Talos
+updated_on: 1768981177
+version: v0.7.1

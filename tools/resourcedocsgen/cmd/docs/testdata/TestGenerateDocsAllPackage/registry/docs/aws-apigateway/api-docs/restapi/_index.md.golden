@@ -1733,48 +1733,48 @@ APIKey<wbr>Source<pulumi-choosable type="language" values="python,go" class="inl
 <div>
 <pulumi-choosable type="language" values="csharp">
 <dl class="tabular"><dt>HEADER</dt>
-    <dd>HEADER</dd><dt>AUTHORIZER</dt>
-    <dd>AUTHORIZER</dd></dl>
+    <dd><code>HEADER</code></dd><dt>AUTHORIZER</dt>
+    <dd><code>AUTHORIZER</code></dd></dl>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="go">
 <dl class="tabular"><dt>APIKey<wbr>Source<wbr>HEADER</dt>
-    <dd>HEADER</dd><dt>APIKey<wbr>Source<wbr>AUTHORIZER</dt>
-    <dd>AUTHORIZER</dd></dl>
+    <dd><code>HEADER</code></dd><dt>APIKey<wbr>Source<wbr>AUTHORIZER</dt>
+    <dd><code>AUTHORIZER</code></dd></dl>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="java">
 <dl class="tabular"><dt>HEADER</dt>
-    <dd>HEADER</dd><dt>AUTHORIZER</dt>
-    <dd>AUTHORIZER</dd></dl>
+    <dd><code>HEADER</code></dd><dt>AUTHORIZER</dt>
+    <dd><code>AUTHORIZER</code></dd></dl>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
 <dl class="tabular"><dt>HEADER</dt>
-    <dd>HEADER</dd><dt>AUTHORIZER</dt>
-    <dd>AUTHORIZER</dd></dl>
+    <dd><code>HEADER</code></dd><dt>AUTHORIZER</dt>
+    <dd><code>AUTHORIZER</code></dd></dl>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="python">
 <dl class="tabular"><dt>HEADER</dt>
-    <dd>HEADER</dd><dt>AUTHORIZER</dt>
-    <dd>AUTHORIZER</dd></dl>
+    <dd><code>HEADER</code></dd><dt>AUTHORIZER</dt>
+    <dd><code>AUTHORIZER</code></dd></dl>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="yaml">
 <dl class="tabular"><dt>"HEADER"</dt>
-    <dd>HEADER</dd><dt>"AUTHORIZER"</dt>
-    <dd>AUTHORIZER</dd></dl>
+    <dd><code>HEADER</code></dd><dt>"AUTHORIZER"</dt>
+    <dd><code>AUTHORIZER</code></dd></dl>
 </pulumi-choosable>
 </div>
 
@@ -2481,48 +2481,48 @@ Integration<wbr>Connection<wbr>Type<pulumi-choosable type="language" values="pyt
 <div>
 <pulumi-choosable type="language" values="csharp">
 <dl class="tabular"><dt>INTERNET</dt>
-    <dd>INTERNET</dd><dt>VPC_LINK</dt>
-    <dd>VPC_LINK</dd></dl>
+    <dd><code>INTERNET</code></dd><dt>VPC_LINK</dt>
+    <dd><code>VPC_LINK</code></dd></dl>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="go">
 <dl class="tabular"><dt>Integration<wbr>Connection<wbr>Type<wbr>INTERNET</dt>
-    <dd>INTERNET</dd><dt>Integration<wbr>Connection<wbr>Type_VPC_LINK</dt>
-    <dd>VPC_LINK</dd></dl>
+    <dd><code>INTERNET</code></dd><dt>Integration<wbr>Connection<wbr>Type_VPC_LINK</dt>
+    <dd><code>VPC_LINK</code></dd></dl>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="java">
 <dl class="tabular"><dt>INTERNET</dt>
-    <dd>INTERNET</dd><dt>VPC_LINK</dt>
-    <dd>VPC_LINK</dd></dl>
+    <dd><code>INTERNET</code></dd><dt>VPC_LINK</dt>
+    <dd><code>VPC_LINK</code></dd></dl>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
 <dl class="tabular"><dt>INTERNET</dt>
-    <dd>INTERNET</dd><dt>VPC_LINK</dt>
-    <dd>VPC_LINK</dd></dl>
+    <dd><code>INTERNET</code></dd><dt>VPC_LINK</dt>
+    <dd><code>VPC_LINK</code></dd></dl>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="python">
 <dl class="tabular"><dt>INTERNET</dt>
-    <dd>INTERNET</dd><dt>VP_C_LINK</dt>
-    <dd>VPC_LINK</dd></dl>
+    <dd><code>INTERNET</code></dd><dt>VP_C_LINK</dt>
+    <dd><code>VPC_LINK</code></dd></dl>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="yaml">
 <dl class="tabular"><dt>"INTERNET"</dt>
-    <dd>INTERNET</dd><dt>"VPC_LINK"</dt>
-    <dd>VPC_LINK</dd></dl>
+    <dd><code>INTERNET</code></dd><dt>"VPC_LINK"</dt>
+    <dd><code>VPC_LINK</code></dd></dl>
 </pulumi-choosable>
 </div>
 
@@ -2533,54 +2533,54 @@ Integration<wbr>Passthrough<wbr>Behavior<pulumi-choosable type="language" values
 <div>
 <pulumi-choosable type="language" values="csharp">
 <dl class="tabular"><dt>When_<wbr>no_<wbr>match</dt>
-    <dd>when_no_match</dd><dt>When_<wbr>no_<wbr>templates</dt>
-    <dd>when_no_templates</dd><dt>Never</dt>
-    <dd>never</dd></dl>
+    <dd><code>when_no_match</code></dd><dt>When_<wbr>no_<wbr>templates</dt>
+    <dd><code>when_no_templates</code></dd><dt>Never</dt>
+    <dd><code>never</code></dd></dl>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="go">
 <dl class="tabular"><dt>Integration<wbr>Passthrough<wbr>Behavior_When_<wbr>no_<wbr>match</dt>
-    <dd>when_no_match</dd><dt>Integration<wbr>Passthrough<wbr>Behavior_When_<wbr>no_<wbr>templates</dt>
-    <dd>when_no_templates</dd><dt>Integration<wbr>Passthrough<wbr>Behavior<wbr>Never</dt>
-    <dd>never</dd></dl>
+    <dd><code>when_no_match</code></dd><dt>Integration<wbr>Passthrough<wbr>Behavior_When_<wbr>no_<wbr>templates</dt>
+    <dd><code>when_no_templates</code></dd><dt>Integration<wbr>Passthrough<wbr>Behavior<wbr>Never</dt>
+    <dd><code>never</code></dd></dl>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="java">
 <dl class="tabular"><dt>When_<wbr>no_<wbr>match</dt>
-    <dd>when_no_match</dd><dt>When_<wbr>no_<wbr>templates</dt>
-    <dd>when_no_templates</dd><dt>Never</dt>
-    <dd>never</dd></dl>
+    <dd><code>when_no_match</code></dd><dt>When_<wbr>no_<wbr>templates</dt>
+    <dd><code>when_no_templates</code></dd><dt>Never</dt>
+    <dd><code>never</code></dd></dl>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
 <dl class="tabular"><dt>When_<wbr>no_<wbr>match</dt>
-    <dd>when_no_match</dd><dt>When_<wbr>no_<wbr>templates</dt>
-    <dd>when_no_templates</dd><dt>Never</dt>
-    <dd>never</dd></dl>
+    <dd><code>when_no_match</code></dd><dt>When_<wbr>no_<wbr>templates</dt>
+    <dd><code>when_no_templates</code></dd><dt>Never</dt>
+    <dd><code>never</code></dd></dl>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="python">
 <dl class="tabular"><dt>WHEN_NO_MATCH</dt>
-    <dd>when_no_match</dd><dt>WHEN_NO_TEMPLATES</dt>
-    <dd>when_no_templates</dd><dt>NEVER</dt>
-    <dd>never</dd></dl>
+    <dd><code>when_no_match</code></dd><dt>WHEN_NO_TEMPLATES</dt>
+    <dd><code>when_no_templates</code></dd><dt>NEVER</dt>
+    <dd><code>never</code></dd></dl>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="yaml">
 <dl class="tabular"><dt>"when_<wbr>no_<wbr>match"</dt>
-    <dd>when_no_match</dd><dt>"when_<wbr>no_<wbr>templates"</dt>
-    <dd>when_no_templates</dd><dt>"never"</dt>
-    <dd>never</dd></dl>
+    <dd><code>when_no_match</code></dd><dt>"when_<wbr>no_<wbr>templates"</dt>
+    <dd><code>when_no_templates</code></dd><dt>"never"</dt>
+    <dd><code>never</code></dd></dl>
 </pulumi-choosable>
 </div>
 
@@ -2591,66 +2591,66 @@ Integration<wbr>Type<pulumi-choosable type="language" values="python,go" class="
 <div>
 <pulumi-choosable type="language" values="csharp">
 <dl class="tabular"><dt>Aws</dt>
-    <dd>aws</dd><dt>Aws_<wbr>proxy</dt>
-    <dd>aws_proxy</dd><dt>Http</dt>
-    <dd>http</dd><dt>Http_<wbr>proxy</dt>
-    <dd>http_proxy</dd><dt>Mock</dt>
-    <dd>mock</dd></dl>
+    <dd><code>aws</code></dd><dt>Aws_<wbr>proxy</dt>
+    <dd><code>aws_proxy</code></dd><dt>Http</dt>
+    <dd><code>http</code></dd><dt>Http_<wbr>proxy</dt>
+    <dd><code>http_proxy</code></dd><dt>Mock</dt>
+    <dd><code>mock</code></dd></dl>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="go">
 <dl class="tabular"><dt>Integration<wbr>Type<wbr>Aws</dt>
-    <dd>aws</dd><dt>Integration<wbr>Type_Aws_<wbr>proxy</dt>
-    <dd>aws_proxy</dd><dt>Integration<wbr>Type<wbr>Http</dt>
-    <dd>http</dd><dt>Integration<wbr>Type_Http_<wbr>proxy</dt>
-    <dd>http_proxy</dd><dt>Integration<wbr>Type<wbr>Mock</dt>
-    <dd>mock</dd></dl>
+    <dd><code>aws</code></dd><dt>Integration<wbr>Type_Aws_<wbr>proxy</dt>
+    <dd><code>aws_proxy</code></dd><dt>Integration<wbr>Type<wbr>Http</dt>
+    <dd><code>http</code></dd><dt>Integration<wbr>Type_Http_<wbr>proxy</dt>
+    <dd><code>http_proxy</code></dd><dt>Integration<wbr>Type<wbr>Mock</dt>
+    <dd><code>mock</code></dd></dl>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="java">
 <dl class="tabular"><dt>Aws</dt>
-    <dd>aws</dd><dt>Aws_<wbr>proxy</dt>
-    <dd>aws_proxy</dd><dt>Http</dt>
-    <dd>http</dd><dt>Http_<wbr>proxy</dt>
-    <dd>http_proxy</dd><dt>Mock</dt>
-    <dd>mock</dd></dl>
+    <dd><code>aws</code></dd><dt>Aws_<wbr>proxy</dt>
+    <dd><code>aws_proxy</code></dd><dt>Http</dt>
+    <dd><code>http</code></dd><dt>Http_<wbr>proxy</dt>
+    <dd><code>http_proxy</code></dd><dt>Mock</dt>
+    <dd><code>mock</code></dd></dl>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
 <dl class="tabular"><dt>Aws</dt>
-    <dd>aws</dd><dt>Aws_<wbr>proxy</dt>
-    <dd>aws_proxy</dd><dt>Http</dt>
-    <dd>http</dd><dt>Http_<wbr>proxy</dt>
-    <dd>http_proxy</dd><dt>Mock</dt>
-    <dd>mock</dd></dl>
+    <dd><code>aws</code></dd><dt>Aws_<wbr>proxy</dt>
+    <dd><code>aws_proxy</code></dd><dt>Http</dt>
+    <dd><code>http</code></dd><dt>Http_<wbr>proxy</dt>
+    <dd><code>http_proxy</code></dd><dt>Mock</dt>
+    <dd><code>mock</code></dd></dl>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="python">
 <dl class="tabular"><dt>AWS</dt>
-    <dd>aws</dd><dt>AWS_PROXY</dt>
-    <dd>aws_proxy</dd><dt>HTTP</dt>
-    <dd>http</dd><dt>HTTP_PROXY</dt>
-    <dd>http_proxy</dd><dt>MOCK</dt>
-    <dd>mock</dd></dl>
+    <dd><code>aws</code></dd><dt>AWS_PROXY</dt>
+    <dd><code>aws_proxy</code></dd><dt>HTTP</dt>
+    <dd><code>http</code></dd><dt>HTTP_PROXY</dt>
+    <dd><code>http_proxy</code></dd><dt>MOCK</dt>
+    <dd><code>mock</code></dd></dl>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="yaml">
 <dl class="tabular"><dt>"aws"</dt>
-    <dd>aws</dd><dt>"aws_<wbr>proxy"</dt>
-    <dd>aws_proxy</dd><dt>"http"</dt>
-    <dd>http</dd><dt>"http_<wbr>proxy"</dt>
-    <dd>http_proxy</dd><dt>"mock"</dt>
-    <dd>mock</dd></dl>
+    <dd><code>aws</code></dd><dt>"aws_<wbr>proxy"</dt>
+    <dd><code>aws_proxy</code></dd><dt>"http"</dt>
+    <dd><code>http</code></dd><dt>"http_<wbr>proxy"</dt>
+    <dd><code>http_proxy</code></dd><dt>"mock"</dt>
+    <dd><code>mock</code></dd></dl>
 </pulumi-choosable>
 </div>
 
@@ -2661,84 +2661,84 @@ Method<pulumi-choosable type="language" values="python,go" class="inline">, Meth
 <div>
 <pulumi-choosable type="language" values="csharp">
 <dl class="tabular"><dt>ANY</dt>
-    <dd>ANY</dd><dt>GET</dt>
-    <dd>GET</dd><dt>PUT</dt>
-    <dd>PUT</dd><dt>POST</dt>
-    <dd>POST</dd><dt>DELETE</dt>
-    <dd>DELETE</dd><dt>PATCH</dt>
-    <dd>PATCH</dd><dt>OPTIONS</dt>
-    <dd>OPTIONS</dd><dt>HEAD</dt>
-    <dd>HEAD</dd></dl>
+    <dd><code>ANY</code></dd><dt>GET</dt>
+    <dd><code>GET</code></dd><dt>PUT</dt>
+    <dd><code>PUT</code></dd><dt>POST</dt>
+    <dd><code>POST</code></dd><dt>DELETE</dt>
+    <dd><code>DELETE</code></dd><dt>PATCH</dt>
+    <dd><code>PATCH</code></dd><dt>OPTIONS</dt>
+    <dd><code>OPTIONS</code></dd><dt>HEAD</dt>
+    <dd><code>HEAD</code></dd></dl>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="go">
 <dl class="tabular"><dt>Method<wbr>ANY</dt>
-    <dd>ANY</dd><dt>Method<wbr>GET</dt>
-    <dd>GET</dd><dt>Method<wbr>PUT</dt>
-    <dd>PUT</dd><dt>Method<wbr>POST</dt>
-    <dd>POST</dd><dt>Method<wbr>DELETE</dt>
-    <dd>DELETE</dd><dt>Method<wbr>PATCH</dt>
-    <dd>PATCH</dd><dt>Method<wbr>OPTIONS</dt>
-    <dd>OPTIONS</dd><dt>Method<wbr>HEAD</dt>
-    <dd>HEAD</dd></dl>
+    <dd><code>ANY</code></dd><dt>Method<wbr>GET</dt>
+    <dd><code>GET</code></dd><dt>Method<wbr>PUT</dt>
+    <dd><code>PUT</code></dd><dt>Method<wbr>POST</dt>
+    <dd><code>POST</code></dd><dt>Method<wbr>DELETE</dt>
+    <dd><code>DELETE</code></dd><dt>Method<wbr>PATCH</dt>
+    <dd><code>PATCH</code></dd><dt>Method<wbr>OPTIONS</dt>
+    <dd><code>OPTIONS</code></dd><dt>Method<wbr>HEAD</dt>
+    <dd><code>HEAD</code></dd></dl>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="java">
 <dl class="tabular"><dt>ANY</dt>
-    <dd>ANY</dd><dt>GET</dt>
-    <dd>GET</dd><dt>PUT</dt>
-    <dd>PUT</dd><dt>POST</dt>
-    <dd>POST</dd><dt>DELETE</dt>
-    <dd>DELETE</dd><dt>PATCH</dt>
-    <dd>PATCH</dd><dt>OPTIONS</dt>
-    <dd>OPTIONS</dd><dt>HEAD</dt>
-    <dd>HEAD</dd></dl>
+    <dd><code>ANY</code></dd><dt>GET</dt>
+    <dd><code>GET</code></dd><dt>PUT</dt>
+    <dd><code>PUT</code></dd><dt>POST</dt>
+    <dd><code>POST</code></dd><dt>DELETE</dt>
+    <dd><code>DELETE</code></dd><dt>PATCH</dt>
+    <dd><code>PATCH</code></dd><dt>OPTIONS</dt>
+    <dd><code>OPTIONS</code></dd><dt>HEAD</dt>
+    <dd><code>HEAD</code></dd></dl>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
 <dl class="tabular"><dt>ANY</dt>
-    <dd>ANY</dd><dt>GET</dt>
-    <dd>GET</dd><dt>PUT</dt>
-    <dd>PUT</dd><dt>POST</dt>
-    <dd>POST</dd><dt>DELETE</dt>
-    <dd>DELETE</dd><dt>PATCH</dt>
-    <dd>PATCH</dd><dt>OPTIONS</dt>
-    <dd>OPTIONS</dd><dt>HEAD</dt>
-    <dd>HEAD</dd></dl>
+    <dd><code>ANY</code></dd><dt>GET</dt>
+    <dd><code>GET</code></dd><dt>PUT</dt>
+    <dd><code>PUT</code></dd><dt>POST</dt>
+    <dd><code>POST</code></dd><dt>DELETE</dt>
+    <dd><code>DELETE</code></dd><dt>PATCH</dt>
+    <dd><code>PATCH</code></dd><dt>OPTIONS</dt>
+    <dd><code>OPTIONS</code></dd><dt>HEAD</dt>
+    <dd><code>HEAD</code></dd></dl>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="python">
 <dl class="tabular"><dt>ANY</dt>
-    <dd>ANY</dd><dt>GET</dt>
-    <dd>GET</dd><dt>PUT</dt>
-    <dd>PUT</dd><dt>POST</dt>
-    <dd>POST</dd><dt>DELETE</dt>
-    <dd>DELETE</dd><dt>PATCH</dt>
-    <dd>PATCH</dd><dt>OPTIONS</dt>
-    <dd>OPTIONS</dd><dt>HEAD</dt>
-    <dd>HEAD</dd></dl>
+    <dd><code>ANY</code></dd><dt>GET</dt>
+    <dd><code>GET</code></dd><dt>PUT</dt>
+    <dd><code>PUT</code></dd><dt>POST</dt>
+    <dd><code>POST</code></dd><dt>DELETE</dt>
+    <dd><code>DELETE</code></dd><dt>PATCH</dt>
+    <dd><code>PATCH</code></dd><dt>OPTIONS</dt>
+    <dd><code>OPTIONS</code></dd><dt>HEAD</dt>
+    <dd><code>HEAD</code></dd></dl>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="yaml">
 <dl class="tabular"><dt>"ANY"</dt>
-    <dd>ANY</dd><dt>"GET"</dt>
-    <dd>GET</dd><dt>"PUT"</dt>
-    <dd>PUT</dd><dt>"POST"</dt>
-    <dd>POST</dd><dt>"DELETE"</dt>
-    <dd>DELETE</dd><dt>"PATCH"</dt>
-    <dd>PATCH</dd><dt>"OPTIONS"</dt>
-    <dd>OPTIONS</dd><dt>"HEAD"</dt>
-    <dd>HEAD</dd></dl>
+    <dd><code>ANY</code></dd><dt>"GET"</dt>
+    <dd><code>GET</code></dd><dt>"PUT"</dt>
+    <dd><code>PUT</code></dd><dt>"POST"</dt>
+    <dd><code>POST</code></dd><dt>"DELETE"</dt>
+    <dd><code>DELETE</code></dd><dt>"PATCH"</dt>
+    <dd><code>PATCH</code></dd><dt>"OPTIONS"</dt>
+    <dd><code>OPTIONS</code></dd><dt>"HEAD"</dt>
+    <dd><code>HEAD</code></dd></dl>
 </pulumi-choosable>
 </div>
 
@@ -2749,54 +2749,54 @@ Request<wbr>Validator<pulumi-choosable type="language" values="python,go" class=
 <div>
 <pulumi-choosable type="language" values="csharp">
 <dl class="tabular"><dt>ALL</dt>
-    <dd>ALL</dd><dt>PARAMS_ONLY</dt>
-    <dd>PARAMS_ONLY</dd><dt>BODY_ONLY</dt>
-    <dd>BODY_ONLY</dd></dl>
+    <dd><code>ALL</code></dd><dt>PARAMS_ONLY</dt>
+    <dd><code>PARAMS_ONLY</code></dd><dt>BODY_ONLY</dt>
+    <dd><code>BODY_ONLY</code></dd></dl>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="go">
 <dl class="tabular"><dt>Request<wbr>Validator<wbr>ALL</dt>
-    <dd>ALL</dd><dt>Request<wbr>Validator_PARAMS_ONLY</dt>
-    <dd>PARAMS_ONLY</dd><dt>Request<wbr>Validator_BODY_ONLY</dt>
-    <dd>BODY_ONLY</dd></dl>
+    <dd><code>ALL</code></dd><dt>Request<wbr>Validator_PARAMS_ONLY</dt>
+    <dd><code>PARAMS_ONLY</code></dd><dt>Request<wbr>Validator_BODY_ONLY</dt>
+    <dd><code>BODY_ONLY</code></dd></dl>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="java">
 <dl class="tabular"><dt>ALL</dt>
-    <dd>ALL</dd><dt>PARAMS_ONLY</dt>
-    <dd>PARAMS_ONLY</dd><dt>BODY_ONLY</dt>
-    <dd>BODY_ONLY</dd></dl>
+    <dd><code>ALL</code></dd><dt>PARAMS_ONLY</dt>
+    <dd><code>PARAMS_ONLY</code></dd><dt>BODY_ONLY</dt>
+    <dd><code>BODY_ONLY</code></dd></dl>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
 <dl class="tabular"><dt>ALL</dt>
-    <dd>ALL</dd><dt>PARAMS_ONLY</dt>
-    <dd>PARAMS_ONLY</dd><dt>BODY_ONLY</dt>
-    <dd>BODY_ONLY</dd></dl>
+    <dd><code>ALL</code></dd><dt>PARAMS_ONLY</dt>
+    <dd><code>PARAMS_ONLY</code></dd><dt>BODY_ONLY</dt>
+    <dd><code>BODY_ONLY</code></dd></dl>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="python">
 <dl class="tabular"><dt>ALL</dt>
-    <dd>ALL</dd><dt>PARAM_S_ONLY</dt>
-    <dd>PARAMS_ONLY</dd><dt>BOD_Y_ONLY</dt>
-    <dd>BODY_ONLY</dd></dl>
+    <dd><code>ALL</code></dd><dt>PARAM_S_ONLY</dt>
+    <dd><code>PARAMS_ONLY</code></dd><dt>BOD_Y_ONLY</dt>
+    <dd><code>BODY_ONLY</code></dd></dl>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="yaml">
 <dl class="tabular"><dt>"ALL"</dt>
-    <dd>ALL</dd><dt>"PARAMS_ONLY"</dt>
-    <dd>PARAMS_ONLY</dd><dt>"BODY_ONLY"</dt>
-    <dd>BODY_ONLY</dd></dl>
+    <dd><code>ALL</code></dd><dt>"PARAMS_ONLY"</dt>
+    <dd><code>PARAMS_ONLY</code></dd><dt>"BODY_ONLY"</dt>
+    <dd><code>BODY_ONLY</code></dd></dl>
 </pulumi-choosable>
 </div>
 

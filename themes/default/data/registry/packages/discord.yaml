@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: lucky3028
 repo_url: https://github.com/lucky3028/terraform-provider-discord
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/lucky3028/discord/2.2.2/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/lucky3028/discord/2.3.0/schema.json
 title: discord
-updated_on: 1763984142
-version: 2.2.2
+updated_on: 1769254536
+version: 2.3.0

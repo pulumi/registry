@@ -10,7 +10,7 @@ native: false
 package_status: public_preview
 publisher: dmacvicar
 repo_url: https://github.com/dmacvicar/terraform-provider-libvirt
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/dmacvicar/libvirt/0.9.1/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/dmacvicar/libvirt/0.9.2/schema.json
 title: libvirt
-updated_on: 1764632142
-version: 0.9.1
+updated_on: 1769384148
+version: 0.9.2

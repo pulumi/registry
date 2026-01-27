@@ -367,6 +367,7 @@ body.section-registry {
 
     .docs-main-content-wrapper {
         display: flex;
+        flex-direction: column;
         gap: 0;
         justify-content: center;
         flex-grow: 2;
@@ -502,7 +503,6 @@ body.section-registry {
             display: none;
         }
 
-
         @media (min-width: 1024px) {
             flex-direction: row;
             gap: 24px;
@@ -511,7 +511,7 @@ body.section-registry {
                 display: none;
             }
 
-            .docs-main-content .docs-toc-desktop {
+            .docs-toc-desktop {
                 display: flex;
             }
 

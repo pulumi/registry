@@ -395,6 +395,10 @@
     {
       "repoSlug": "byteplus-sdk/pulumi-bytepluscc",
       "schemaFile": "provider/cmd/pulumi-resource-bytepluscc/schema.json"
+    },
+    {
+      "repoSlug": "stackitcloud/pulumi-stackit",
+      "schemaFile": "provider/cmd/pulumi-resource-stackit/schema.json"
     }
   ]
 }

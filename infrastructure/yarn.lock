@@ -849,9 +849,9 @@
     semver "^5.4.0"
 
 "@pulumi/pulumi@^3.0.0", "@pulumi/pulumi@^3.142.0", "@pulumi/pulumi@^3.37.0":
-  version "3.217.1"
-  resolved "https://registry.yarnpkg.com/@pulumi/pulumi/-/pulumi-3.217.1.tgz#311e12655933fba4d74f0448ac75255853e80825"
-  integrity sha512-D2ywcnzADLE8oNmRLD7Fh+RnZ/+/yID2c/eG3B8LxP7JuHL6MBS29qR46NMa7j5Jg0viwU0D7q+F4OxWKHPoqA==
+  version "3.218.0"
+  resolved "https://registry.yarnpkg.com/@pulumi/pulumi/-/pulumi-3.218.0.tgz#b740de04ca4fe1c13ffdfbd7b4b804108198ff20"
+  integrity sha512-xqPX9zIi6cHFpO6f6W6vcTifLtjvTnlMnvCykvIdYhaHCHPbtx6QxCbOcS/YULpaWa4P7LzO219z3KMJ43/7jA==
   dependencies:
     "@grpc/grpc-js" "^1.10.1"
     "@logdna/tail-file" "^2.0.6"
@@ -2735,9 +2735,9 @@ package-directory@^8.1.0:
     find-up-simple "^1.0.0"
 
 pacote@^21.0.0, pacote@^21.0.2:
-  version "21.0.4"
-  resolved "https://registry.yarnpkg.com/pacote/-/pacote-21.0.4.tgz#59cd2a2b5a4c8c1b625f33991a96b136d1c05d95"
-  integrity sha512-RplP/pDW0NNNDh3pnaoIWYPvNenS7UqMbXyvMqJczosiFWTeGGwJC2NQBLqKf4rGLFfwCOnntw1aEp9Jiqm1MA==
+  version "21.1.0"
+  resolved "https://registry.yarnpkg.com/pacote/-/pacote-21.1.0.tgz#4f319aae0192dc96f707ac6b33c22ecf523b6253"
+  integrity sha512-WF/PwrImIIVaLmtuCeO5L7n6DA0ZGCqmDPO/XbNjZgNUX+2O5z4f4Wdmu6erBWNICkl3ftKJvit2eIVcpegRRw==
   dependencies:
     "@npmcli/git" "^7.0.0"
     "@npmcli/installed-package-contents" "^4.0.0"

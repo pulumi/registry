@@ -566,48 +566,48 @@ My<wbr>Enum<pulumi-choosable type="language" values="python,go" class="inline">,
 <div>
 <pulumi-choosable type="language" values="csharp">
 <dl class="tabular"><dt>Pi</dt>
-    <dd>3.1415</dd><dt>Small</dt>
-    <dd>1e-07</dd></dl>
+    <dd><code>3.1415</code></dd><dt>Small</dt>
+    <dd><code>1e-07</code></dd></dl>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="go">
 <dl class="tabular"><dt>My<wbr>Enum<wbr>Pi</dt>
-    <dd>3.1415</dd><dt>My<wbr>Enum<wbr>Small</dt>
-    <dd>1e-07</dd></dl>
+    <dd><code>3.1415</code></dd><dt>My<wbr>Enum<wbr>Small</dt>
+    <dd><code>1e-07</code></dd></dl>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="java">
 <dl class="tabular"><dt>Pi</dt>
-    <dd>3.1415</dd><dt>Small</dt>
-    <dd>1e-07</dd></dl>
+    <dd><code>3.1415</code></dd><dt>Small</dt>
+    <dd><code>1e-07</code></dd></dl>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
 <dl class="tabular"><dt>Pi</dt>
-    <dd>3.1415</dd><dt>Small</dt>
-    <dd>1e-07</dd></dl>
+    <dd><code>3.1415</code></dd><dt>Small</dt>
+    <dd><code>1e-07</code></dd></dl>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="python">
 <dl class="tabular"><dt>PI</dt>
-    <dd>3.1415</dd><dt>SMALL</dt>
-    <dd>1e-07</dd></dl>
+    <dd><code>3.1415</code></dd><dt>SMALL</dt>
+    <dd><code>1e-07</code></dd></dl>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="yaml">
 <dl class="tabular"><dt>%!q(float64=3.1415)</dt>
-    <dd>3.1415</dd><dt>%!q(float64=1e-07)</dt>
-    <dd>1e-07</dd></dl>
+    <dd><code>3.1415</code></dd><dt>%!q(float64=1e-07)</dt>
+    <dd><code>1e-07</code></dd></dl>
 </pulumi-choosable>
 </div>
 

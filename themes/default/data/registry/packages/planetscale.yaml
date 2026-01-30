@@ -7,10 +7,10 @@ featured: false
 logo_url: ""
 name: planetscale
 native: false
-package_status: public_preview
+package_status: ga
 publisher: planetscale
 repo_url: https://github.com/planetscale/terraform-provider-planetscale
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/planetscale/planetscale/0.6.1/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/planetscale/planetscale/1.0.0-rc1/schema.json
 title: planetscale
-updated_on: 1765323340
-version: 0.6.1
+updated_on: 1769816140
+version: 1.0.0-rc1

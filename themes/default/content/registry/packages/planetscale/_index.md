@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/planetscale/planetscale/0.6.1/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/planetscale/planetscale/1.0.0-rc1/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Planetscale Provider
@@ -16,16 +16,7 @@ pulumi package add terraform-provider planetscale/planetscale
 ```
 ## Overview
 
-The PlanetScale provider allows using the OpenAPI surface of our public API. To use this provider, one of the following are required:
-
-- access token credentials, configured or stored in the environment variable `PLANETSCALE_ACCESS_TOKEN`
-- service token credentials, configured or stored in the environment variables `PLANETSCALE_SERVICE_TOKEN_ID` and `PLANETSCALE_SERVICE_TOKEN`
-
-Note that the provider is not production ready and only for early testing at this time.
-
-Known limitations:
-- Support for deployments, deploy queues, deploy requests and reverts is not implemented at this time. If you have a use case for it, please let us know in the repository issues.
-- When using service tokens (recommended), ensure the token has the `createDatabases` organization-level permission. This allows pulumi to create new databases and automatically grants the token all other permissions on the databases created by the token.
+Pulumi Provider for PlanetScale: Manage your PlanetScale resources with Pulumi
 ## Example Usage
 
 {{< chooser language "typescript,python,go,csharp,java,yaml" >}}
@@ -35,8 +26,8 @@ Known limitations:
 name: configuration-example
 runtime: nodejs
 config:
-    planetscale:serviceTokenName:
-        value: 8fbddg0zlq0r
+    planetscale:serverUrl:
+        value: '...'
 
 ```
 ```typescript
@@ -50,8 +41,8 @@ import * as pulumi from "@pulumi/pulumi";
 name: configuration-example
 runtime: python
 config:
-    planetscale:serviceTokenName:
-        value: 8fbddg0zlq0r
+    planetscale:serverUrl:
+        value: '...'
 
 ```
 ```python
@@ -65,8 +56,8 @@ import pulumi
 name: configuration-example
 runtime: dotnet
 config:
-    planetscale:serviceTokenName:
-        value: 8fbddg0zlq0r
+    planetscale:serverUrl:
+        value: '...'
 
 ```
 ```csharp
@@ -86,8 +77,8 @@ return await Deployment.RunAsync(() =>
 name: configuration-example
 runtime: go
 config:
-    planetscale:serviceTokenName:
-        value: 8fbddg0zlq0r
+    planetscale:serverUrl:
+        value: '...'
 
 ```
 ```go
@@ -110,8 +101,8 @@ func main() {
 name: configuration-example
 runtime: yaml
 config:
-    planetscale:serviceTokenName:
-        value: 8fbddg0zlq0r
+    planetscale:serverUrl:
+        value: '...'
 
 ```
 ```yaml
@@ -124,8 +115,8 @@ config:
 name: configuration-example
 runtime: java
 config:
-    planetscale:serviceTokenName:
-        value: 8fbddg0zlq0r
+    planetscale:serverUrl:
+        value: '...'
 
 ```
 ```java
@@ -154,8 +145,6 @@ public class App {
 {{< /chooser >}}
 ## Configuration Reference
 
-- `accessToken` (String, Sensitive) Name of the service token to use. Alternatively, use `PLANETSCALE_SERVICE_TOKEN_ID`. Mutually exclusive with `serviceTokenId` and `serviceToken`.
-- `endpoint` (String) If set, points the API client to a different endpoint than `https://api.planetscale.com/v1`.
-- `serviceToken` (String, Sensitive) Value of the service token to use. Alternatively, use `PLANETSCALE_SERVICE_TOKEN`. Mutually exclusive with `accessToken`.
-- `serviceTokenId` (String) ID of the service token to use. Alternatively, use `PLANETSCALE_SERVICE_TOKEN_ID`. Mutually exclusive with `accessToken`.
-- `serviceTokenName` (String, Deprecated) Name of the service token to use. Alternatively, use `PLANETSCALE_SERVICE_TOKEN_NAME`. Mutually exclusive with `accessToken`. (Deprecated, use `serviceTokenId` instead)
+- `serverUrl` (String) Server URL (defaults to <https://api.planetscale.com/v1>)
+- `serviceToken` (String, Sensitive) PlanetScale Service Token. Configurable via environment variable `PLANETSCALE_SERVICE_TOKEN`.
+- `serviceTokenId` (String, Sensitive) PlanetScale Service Token ID. Configurable via environment variable `PLANETSCALE_SERVICE_TOKEN_ID`.

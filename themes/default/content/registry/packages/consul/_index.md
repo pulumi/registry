@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-consul/v3.13.3/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-consul/v3.14.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-consul/blob/v3.13.3/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-consul/blob/v3.14.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Consul Provider
 meta_desc: Provides an overview on how to configure the Pulumi Consul provider.
@@ -42,6 +42,7 @@ config:
         value: nyc1
 
 ```
+
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
 import * as aws from "@pulumi/aws";
@@ -58,6 +59,7 @@ const app = consul.getKeys({
 // Use our variable from Consul
 const appInstance = new aws.ec2.Instance("app", {ami: app.then(app => app["var"]?.ami)});
 ```
+
 {{% /choosable %}}
 {{% choosable language python %}}
 ```yaml
@@ -71,6 +73,7 @@ config:
         value: nyc1
 
 ```
+
 ```python
 import pulumi
 import pulumi_aws as aws
@@ -85,6 +88,7 @@ app = consul.get_keys(keys=[{
 # Use our variable from Consul
 app_instance = aws.ec2.Instance("app", ami=app.var["ami"])
 ```
+
 {{% /choosable %}}
 {{% choosable language csharp %}}
 ```yaml
@@ -98,6 +102,7 @@ config:
         value: nyc1
 
 ```
+
 ```csharp
 using System.Collections.Generic;
 using System.Linq;
@@ -130,6 +135,7 @@ return await Deployment.RunAsync(() =>
 });
 
 ```
+
 {{% /choosable %}}
 {{% choosable language go %}}
 ```yaml
@@ -143,6 +149,7 @@ config:
         value: nyc1
 
 ```
+
 ```go
 package main
 
@@ -178,6 +185,7 @@ func main() {
 	})
 }
 ```
+
 {{% /choosable %}}
 {{% choosable language yaml %}}
 ```yaml
@@ -191,6 +199,7 @@ config:
         value: nyc1
 
 ```
+
 ```yaml
 resources:
   # Use our variable from Consul
@@ -210,6 +219,7 @@ variables:
             path: service/app/launch_ami
             default: ami-1234
 ```
+
 {{% /choosable %}}
 {{% choosable language java %}}
 ```yaml
@@ -223,6 +233,7 @@ config:
         value: nyc1
 
 ```
+
 ```java
 package generated_program;
 
@@ -263,12 +274,14 @@ public class App {
     }
 }
 ```
+
 {{% /choosable %}}
 {{< /chooser >}}
 ## Configuration Reference
 
 - `address` (String) The HTTP(S) API address of the agent to use. Defaults to "127.0.0.1:8500".
 - `authJwt` (Block List, Max: 1) Authenticates to Consul using a JWT authentication method. (see below for nested schema)
+- `authLoginAws` (Block List, Max: 1) Login to Consul using the AWS IAM auth method (see below for nested schema)
 - `caFile` (String) A path to a PEM-encoded certificate authority used to verify the remote agent's certificate.
 - `caPath` (String) A path to a directory of PEM-encoded certificate authority files to use to check the authenticity of client and server connections. Can also be specified with the `CONSUL_CAPATH` environment variable.
 - `caPem` (String) PEM-encoded certificate authority used to verify the remote agent's certificate.
@@ -296,6 +309,31 @@ Optional:
 - `bearerToken` (String) The bearer token to present to the auth method during login for authentication purposes. For the Kubernetes auth method this is a [Service Account Token (JWT)](https://kubernetes.io/docs/reference/access-authn-authz/authentication/#service-account-tokens).
 - `meta` (Map of String) Specifies arbitrary KV metadata linked to the token. Can be useful to track origins.
 - `usePulumiCloudWorkloadIdentity` (Boolean) Whether to use a Pulumi Workload Identity token. The token will be read from the `TFC_WORKLOAD_IDENTITY_TOKEN` environment variable.
+
+<a id="nestedblock--auth_login_aws"></a>
+### Nested Schema for `authLoginAws`
+
+Required:
+
+- `authMethod` (String) The name of the Consul auth method to use for login.
+
+Optional:
+
+- `awsAccessKeyId` (String) The AWS access key ID.
+- `awsIamEndpoint` (String) The IAM endpoint URL.
+- `awsProfile` (String) The name of the AWS profile.
+- `awsRegion` (String) The AWS region.
+- `awsRoleArn` (String) The ARN of the AWS Role to assume. Used during STS AssumeRole
+- `awsRoleSessionName` (String) Specifies the name to attach to the AWS role session. Used during STS AssumeRole
+- `awsSecretAccessKey` (String, Sensitive) The AWS secret access key.
+- `awsSessionToken` (String, Sensitive) The AWS session token.
+- `awsSharedCredentialsFile` (String) Path to the AWS shared credentials file.
+- `awsStsEndpoint` (String) The STS endpoint URL.
+- `awsWebIdentityTokenFile` (String) Path to the file containing an OAuth 2.0 access token or OpenID Connect ID token.
+- `meta` (Map of String) Specifies arbitrary KV metadata linked to the token. Can be useful to track origins.
+- `namespace` (String) The Consul namespace to authenticate to.
+- `partition` (String) The Consul admin partition to authenticate to.
+- `serverIdHeaderValue` (String) The Consul Server ID header value to include in the STS signing request. This must match the ServerIDHeaderValue configured in the Consul auth method.
 
 <a id="nestedblock--header"></a>
 ### Nested Schema for `header`

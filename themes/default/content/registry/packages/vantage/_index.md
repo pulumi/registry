@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/vantage-sh/vantage/0.1.73/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/vantage-sh/vantage/0.1.74/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Vantage Provider
@@ -210,3 +210,4 @@ public class App {
 
 - `apiToken` (String, Sensitive)
 - `host` (String)
+- `timeout` (String) The timeout duration for API requests (e.g., "30s", "5m"). Defaults to "30s".

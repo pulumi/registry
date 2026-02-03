@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: ucloud
 repo_url: https://github.com/ucloud/terraform-provider-ucloud
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/ucloud/ucloud/1.39.1/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/ucloud/ucloud/1.39.2/schema.json
 title: ucloud
-updated_on: 1744673806
-version: 1.39.1
+updated_on: 1770032157
+version: 1.39.2

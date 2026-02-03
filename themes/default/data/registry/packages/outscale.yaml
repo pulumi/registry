@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: outscale
 repo_url: https://github.com/outscale/terraform-provider-outscale
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/outscale/outscale/1.3.1/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/outscale/outscale/1.3.2/schema.json
 title: outscale
-updated_on: 1767828944
-version: 1.3.1
+updated_on: 1769643342
+version: 1.3.2

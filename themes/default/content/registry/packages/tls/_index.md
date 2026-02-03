@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-tls/v5.2.3/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-tls/v5.3.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-tls/blob/v5.2.3/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-tls/blob/v5.3.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Tls Provider
 meta_desc: Provides an overview on how to configure the Pulumi Tls provider.
@@ -52,7 +52,6 @@ import * as tls from "@pulumi/tls";
 // security considerations and other practical tradeoffs.
 const example = new tls.PrivateKey("example", {algorithm: "ECDSA"});
 const exampleSelfSignedCert = new tls.SelfSignedCert("example", {
-    keyAlgorithm: example.algorithm,
     privateKeyPem: example.privateKeyPem,
     validityPeriodHours: 12,
     earlyRenewalHours: 3,
@@ -77,6 +76,7 @@ const exampleServerCertificate = new aws.iam.ServerCertificate("example", {
     privateKey: example.privateKeyPem,
 });
 ```
+
 {{% /choosable %}}
 {{% choosable language python %}}
 ```python
@@ -92,7 +92,6 @@ import pulumi_tls as tls
 # security considerations and other practical tradeoffs.
 example = tls.PrivateKey("example", algorithm="ECDSA")
 example_self_signed_cert = tls.SelfSignedCert("example",
-    key_algorithm=example.algorithm,
     private_key_pem=example.private_key_pem,
     validity_period_hours=12,
     early_renewal_hours=3,
@@ -115,6 +114,7 @@ example_server_certificate = aws.iam.ServerCertificate("example",
     certificate_body=example_self_signed_cert.cert_pem,
     private_key=example.private_key_pem)
 ```
+
 {{% /choosable %}}
 {{% choosable language csharp %}}
 ```csharp
@@ -139,7 +139,6 @@ return await Deployment.RunAsync(() =>
 
     var exampleSelfSignedCert = new Tls.SelfSignedCert("example", new()
     {
-        KeyAlgorithm = example.Algorithm,
         PrivateKeyPem = example.PrivateKeyPem,
         ValidityPeriodHours = 12,
         EarlyRenewalHours = 3,
@@ -172,6 +171,7 @@ return await Deployment.RunAsync(() =>
 });
 
 ```
+
 {{% /choosable %}}
 {{% choosable language go %}}
 ```go
@@ -198,7 +198,6 @@ func main() {
 			return err
 		}
 		exampleSelfSignedCert, err := tls.NewSelfSignedCert(ctx, "example", &tls.SelfSignedCertArgs{
-			KeyAlgorithm:        example.Algorithm,
 			PrivateKeyPem:       example.PrivateKeyPem,
 			ValidityPeriodHours: pulumi.Int(12),
 			EarlyRenewalHours:   pulumi.Int(3),
@@ -232,6 +231,7 @@ func main() {
 	})
 }
 ```
+
 {{% /choosable %}}
 {{% choosable language yaml %}}
 ```yaml
@@ -250,7 +250,6 @@ resources:
     type: tls:SelfSignedCert
     name: example
     properties:
-      keyAlgorithm: ${example.algorithm}
       privateKeyPem: ${example.privateKeyPem}
       validityPeriodHours: 12 # Generate a new certificate if Pulumi is run within three
       #   # hours of the certificate's expiration time.
@@ -274,6 +273,7 @@ resources:
       certificateBody: ${exampleSelfSignedCert.certPem}
       privateKey: ${example.privateKeyPem}
 ```
+
 {{% /choosable %}}
 {{% choosable language java %}}
 ```java
@@ -313,7 +313,6 @@ public class App {
             .build());
 
         var exampleSelfSignedCert = new SelfSignedCert("exampleSelfSignedCert", SelfSignedCertArgs.builder()
-            .keyAlgorithm(example.algorithm())
             .privateKeyPem(example.privateKeyPem())
             .validityPeriodHours(12)
             .earlyRenewalHours(3)
@@ -340,6 +339,7 @@ public class App {
     }
 }
 ```
+
 {{% /choosable %}}
 {{< /chooser >}}
 ### Configuring Proxy
@@ -352,6 +352,7 @@ name: configuration-example
 runtime: nodejs
 
 ```
+
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
 import * as tls from "@pulumi/tls";
@@ -360,6 +361,7 @@ const test = tls.getCertificate({
     url: "https://example.com",
 });
 ```
+
 {{% /choosable %}}
 {{% choosable language python %}}
 ```yaml
@@ -368,12 +370,14 @@ name: configuration-example
 runtime: python
 
 ```
+
 ```python
 import pulumi
 import pulumi_tls as tls
 
 test = tls.get_certificate(url="https://example.com")
 ```
+
 {{% /choosable %}}
 {{% choosable language csharp %}}
 ```yaml
@@ -382,6 +386,7 @@ name: configuration-example
 runtime: dotnet
 
 ```
+
 ```csharp
 using System.Collections.Generic;
 using System.Linq;
@@ -398,6 +403,7 @@ return await Deployment.RunAsync(() =>
 });
 
 ```
+
 {{% /choosable %}}
 {{% choosable language go %}}
 ```yaml
@@ -406,6 +412,7 @@ name: configuration-example
 runtime: go
 
 ```
+
 ```go
 package main
 
@@ -426,6 +433,7 @@ func main() {
 	})
 }
 ```
+
 {{% /choosable %}}
 {{% choosable language yaml %}}
 ```yaml
@@ -434,6 +442,7 @@ name: configuration-example
 runtime: yaml
 
 ```
+
 ```yaml
 variables:
   test:
@@ -442,6 +451,7 @@ variables:
       arguments:
         url: https://example.com
 ```
+
 {{% /choosable %}}
 {{% choosable language java %}}
 ```yaml
@@ -450,6 +460,7 @@ name: configuration-example
 runtime: java
 
 ```
+
 ```java
 package generated_program;
 
@@ -478,6 +489,7 @@ public class App {
     }
 }
 ```
+
 {{% /choosable %}}
 {{< /chooser >}}
 
@@ -489,6 +501,7 @@ name: configuration-example
 runtime: nodejs
 
 ```
+
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
 import * as tls from "@pulumi/tls";
@@ -497,6 +510,7 @@ const test = tls.getCertificate({
     url: "https://example.com",
 });
 ```
+
 {{% /choosable %}}
 {{% choosable language python %}}
 ```yaml
@@ -505,12 +519,14 @@ name: configuration-example
 runtime: python
 
 ```
+
 ```python
 import pulumi
 import pulumi_tls as tls
 
 test = tls.get_certificate(url="https://example.com")
 ```
+
 {{% /choosable %}}
 {{% choosable language csharp %}}
 ```yaml
@@ -519,6 +535,7 @@ name: configuration-example
 runtime: dotnet
 
 ```
+
 ```csharp
 using System.Collections.Generic;
 using System.Linq;
@@ -535,6 +552,7 @@ return await Deployment.RunAsync(() =>
 });
 
 ```
+
 {{% /choosable %}}
 {{% choosable language go %}}
 ```yaml
@@ -543,6 +561,7 @@ name: configuration-example
 runtime: go
 
 ```
+
 ```go
 package main
 
@@ -563,6 +582,7 @@ func main() {
 	})
 }
 ```
+
 {{% /choosable %}}
 {{% choosable language yaml %}}
 ```yaml
@@ -571,6 +591,7 @@ name: configuration-example
 runtime: yaml
 
 ```
+
 ```yaml
 variables:
   test:
@@ -579,6 +600,7 @@ variables:
       arguments:
         url: https://example.com
 ```
+
 {{% /choosable %}}
 {{% choosable language java %}}
 ```yaml
@@ -587,6 +609,7 @@ name: configuration-example
 runtime: java
 
 ```
+
 ```java
 package generated_program;
 
@@ -615,6 +638,7 @@ public class App {
     }
 }
 ```
+
 {{% /choosable %}}
 {{< /chooser >}}
 ## Configuration Reference

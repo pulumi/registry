@@ -666,42 +666,42 @@ Enum<wbr>Overlay<pulumi-choosable type="language" values="python,go" class="inli
 <div>
 <pulumi-choosable type="language" values="csharp">
 <dl class="tabular"><dt>Some<wbr>Enum<wbr>Value</dt>
-    <dd>SOME_ENUM_VALUE</dd></dl>
+    <dd><code>SOME_ENUM_VALUE</code></dd></dl>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="go">
 <dl class="tabular"><dt>Enum<wbr>Overlay<wbr>Some<wbr>Enum<wbr>Value</dt>
-    <dd>SOME_ENUM_VALUE</dd></dl>
+    <dd><code>SOME_ENUM_VALUE</code></dd></dl>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="java">
 <dl class="tabular"><dt>Some<wbr>Enum<wbr>Value</dt>
-    <dd>SOME_ENUM_VALUE</dd></dl>
+    <dd><code>SOME_ENUM_VALUE</code></dd></dl>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
 <dl class="tabular"><dt>Some<wbr>Enum<wbr>Value</dt>
-    <dd>SOME_ENUM_VALUE</dd></dl>
+    <dd><code>SOME_ENUM_VALUE</code></dd></dl>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="python">
 <dl class="tabular"><dt>SOME_ENUM_VALUE</dt>
-    <dd>SOME_ENUM_VALUE</dd></dl>
+    <dd><code>SOME_ENUM_VALUE</code></dd></dl>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="yaml">
 <dl class="tabular"><dt>"SOME_ENUM_VALUE"</dt>
-    <dd>SOME_ENUM_VALUE</dd></dl>
+    <dd><code>SOME_ENUM_VALUE</code></dd></dl>
 </pulumi-choosable>
 </div>
 

@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/nats-io/jetstream/0.2.1/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/nats-io/jetstream/0.3.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Jetstream Provider
@@ -238,7 +238,7 @@ public class App {
             .durableName("NEW")
             .deliverAll(true)
             .filterSubject("ORDERS.received")
-            .sampleFreq(100)
+            .sampleFreq(100.0)
             .build());
 
     }

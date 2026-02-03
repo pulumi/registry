@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-postgresql/v3.16.1/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-postgresql/v3.16.2/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-postgresql/blob/v3.16.1/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-postgresql/blob/v3.16.2/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Postgresql Provider
 meta_desc: Provides an overview on how to configure the Pulumi Postgresql provider.
@@ -80,6 +80,7 @@ import * as postgresql from "@pulumi/postgresql";
 const myDb1 = new postgresql.Database("my_db1", {name: "my_db1"});
 const myDb2 = new postgresql.Database("my_db2", {name: "my_db2"});
 ```
+
 {{% /choosable %}}
 {{% choosable language python %}}
 ```python
@@ -89,6 +90,7 @@ import pulumi_postgresql as postgresql
 my_db1 = postgresql.Database("my_db1", name="my_db1")
 my_db2 = postgresql.Database("my_db2", name="my_db2")
 ```
+
 {{% /choosable %}}
 {{% choosable language csharp %}}
 ```csharp
@@ -112,6 +114,7 @@ return await Deployment.RunAsync(() =>
 });
 
 ```
+
 {{% /choosable %}}
 {{% choosable language go %}}
 ```go
@@ -140,6 +143,7 @@ func main() {
 	})
 }
 ```
+
 {{% /choosable %}}
 {{% choosable language yaml %}}
 ```yaml
@@ -155,6 +159,7 @@ resources:
     properties:
       name: my_db2
 ```
+
 {{% /choosable %}}
 {{% choosable language java %}}
 ```java
@@ -189,6 +194,7 @@ public class App {
     }
 }
 ```
+
 {{% /choosable %}}
 {{< /chooser >}}
 ## Injecting Credentials
@@ -360,6 +366,7 @@ config:
         value: 'TODO: google_sql_user.postgres.name'
 
 ```
+
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
 import * as gcp from "@pulumi/gcp";
@@ -382,6 +389,7 @@ const postgres = new gcp.sql.User("postgres", {
 });
 const testDb = new postgresql.Database("test_db", {name: "test_db"});
 ```
+
 {{% /choosable %}}
 {{% choosable language python %}}
 ```yaml
@@ -399,6 +407,7 @@ config:
         value: 'TODO: google_sql_user.postgres.name'
 
 ```
+
 ```python
 import pulumi
 import pulumi_gcp as gcp
@@ -419,6 +428,7 @@ postgres = gcp.sql.User("postgres",
     password="xxxxxxxx")
 test_db = postgresql.Database("test_db", name="test_db")
 ```
+
 {{% /choosable %}}
 {{% choosable language csharp %}}
 ```yaml
@@ -436,6 +446,7 @@ config:
         value: 'TODO: google_sql_user.postgres.name'
 
 ```
+
 ```csharp
 using System.Collections.Generic;
 using System.Linq;
@@ -473,6 +484,7 @@ return await Deployment.RunAsync(() =>
 });
 
 ```
+
 {{% /choosable %}}
 {{% choosable language go %}}
 ```yaml
@@ -490,6 +502,7 @@ config:
         value: 'TODO: google_sql_user.postgres.name'
 
 ```
+
 ```go
 package main
 
@@ -532,6 +545,7 @@ func main() {
 	})
 }
 ```
+
 {{% /choosable %}}
 {{% choosable language yaml %}}
 ```yaml
@@ -549,6 +563,7 @@ config:
         value: 'TODO: google_sql_user.postgres.name'
 
 ```
+
 ```yaml
 resources:
   test:
@@ -573,6 +588,7 @@ resources:
     properties:
       name: test_db
 ```
+
 {{% /choosable %}}
 {{% choosable language java %}}
 ```yaml
@@ -590,6 +606,7 @@ config:
         value: 'TODO: google_sql_user.postgres.name'
 
 ```
+
 ```java
 package generated_program;
 
@@ -640,6 +657,7 @@ public class App {
     }
 }
 ```
+
 {{% /choosable %}}
 {{< /chooser >}}
 ### Azure
@@ -669,6 +687,7 @@ config:
         value: 'TODO: azurerm_postgresql_flexible_server_active_directory_administrator.administrators.principal_name'
 
 ```
+
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
 import * as azure from "@pulumi/azure";
@@ -690,6 +709,7 @@ const administrators = new azure.postgresql.FlexibleServerActiveDirectoryAdminis
     tenantId: current.then(current => current.tenantId),
 });
 ```
+
 {{% /choosable %}}
 {{% choosable language python %}}
 ```yaml
@@ -713,6 +733,7 @@ config:
         value: 'TODO: azurerm_postgresql_flexible_server_active_directory_administrator.administrators.principal_name'
 
 ```
+
 ```python
 import pulumi
 import pulumi_azure as azure
@@ -733,6 +754,7 @@ administrators = azure.postgresql.FlexibleServerActiveDirectoryAdministrator("ad
     server_name=pgsql.name,
     tenant_id=current.tenant_id)
 ```
+
 {{% /choosable %}}
 {{% choosable language csharp %}}
 ```yaml
@@ -756,6 +778,7 @@ config:
         value: 'TODO: azurerm_postgresql_flexible_server_active_directory_administrator.administrators.principal_name'
 
 ```
+
 ```csharp
 using System.Collections.Generic;
 using System.Linq;
@@ -791,6 +814,7 @@ return await Deployment.RunAsync(() =>
 });
 
 ```
+
 {{% /choosable %}}
 {{% choosable language go %}}
 ```yaml
@@ -814,6 +838,7 @@ config:
         value: 'TODO: azurerm_postgresql_flexible_server_active_directory_administrator.administrators.principal_name'
 
 ```
+
 ```go
 package main
 
@@ -856,6 +881,7 @@ func main() {
 	})
 }
 ```
+
 {{% /choosable %}}
 {{% choosable language yaml %}}
 ```yaml
@@ -879,6 +905,7 @@ config:
         value: 'TODO: azurerm_postgresql_flexible_server_active_directory_administrator.administrators.principal_name'
 
 ```
+
 ```yaml
 resources:
   # https://registry.pulumi.io/providers/pulumi/azurerm/latest/docs/resources/postgresql_flexible_server
@@ -905,6 +932,7 @@ variables:
       function: azure:core:getClientConfig
       arguments: {}
 ```
+
 {{% /choosable %}}
 {{% choosable language java %}}
 ```yaml
@@ -928,6 +956,7 @@ config:
         value: 'TODO: azurerm_postgresql_flexible_server_active_directory_administrator.administrators.principal_name'
 
 ```
+
 ```java
 package generated_program;
 
@@ -977,6 +1006,7 @@ public class App {
     }
 }
 ```
+
 {{% /choosable %}}
 {{< /chooser >}}
 ### SOCKS5 Proxy Support

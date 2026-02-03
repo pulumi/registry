@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-postgresql
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-postgresql/v3.16.1/provider/cmd/pulumi-resource-postgresql/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-postgresql/v3.16.2/provider/cmd/pulumi-resource-postgresql/schema.json
 title: PostgreSQL
-updated_on: 1763072214
-version: v3.16.1
+updated_on: 1770156907
+version: v3.16.2

@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-okta
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-okta/v6.2.2/provider/cmd/pulumi-resource-okta/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-okta/v6.2.3/provider/cmd/pulumi-resource-okta/schema.json
 title: Okta
-updated_on: 1768535411
-version: v6.2.2
+updated_on: 1770167665
+version: v6.2.3

@@ -10,7 +10,7 @@ native: false
 package_status: public_preview
 publisher: ferlab-ste-justine
 repo_url: https://github.com/ferlab-ste-justine/terraform-provider-netaddr
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/ferlab-ste-justine/netaddr/0.5.1/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/ferlab-ste-justine/netaddr/0.6.0/schema.json
 title: netaddr
-updated_on: 1744716937
-version: 0.5.1
+updated_on: 1770161739
+version: 0.6.0

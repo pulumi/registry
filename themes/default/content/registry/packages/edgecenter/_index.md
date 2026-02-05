@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/edge-center/edgecenter/0.10.8/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/edge-center/edgecenter/0.11.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Edgecenter Provider
@@ -1423,6 +1423,7 @@ public class App {
 - `edgecenterPlatform` (String, Deprecated) Platform URL is used for generate JWT
 - `edgecenterPlatformApi` (String) Platform URL is used for generate JWT (define only if you want to override Platform API endpoint)
 - `edgecenterProtectionApi` (String) Protection API (define only if you want to override Protection API endpoint)
+- `edgecenterRmonApi` (String) RMON API
 - `edgecenterStorageApi` (String) Storage API (define only if you want to override Storage API endpoint)
 - `ignoreCredsAuthError` (Boolean, Deprecated) Should be set to true when you are gonna to use storage resource with permanent API-token only.
 - `password` (String, Deprecated)

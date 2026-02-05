@@ -397,6 +397,10 @@
       "schemaFile": "provider/cmd/pulumi-resource-bytepluscc/schema.json"
     },
     {
+      "repoSlug": "kotaicode/pulumi-provider-dex",
+      "schemaFile": "schema.json"
+    },
+    {
       "repoSlug": "AdrianSilaghi/pulumi-danubedata",
       "schemaFile": "provider/cmd/pulumi-resource-danubedata/schema.json"
     }

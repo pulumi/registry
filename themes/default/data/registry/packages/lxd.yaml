@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: terraform-lxd
 repo_url: https://github.com/terraform-lxd/terraform-provider-lxd
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/terraform-lxd/lxd/2.6.1/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/terraform-lxd/lxd/2.6.2/schema.json
 title: lxd
-updated_on: 1763595339
-version: 2.6.1
+updated_on: 1770420938
+version: 2.6.2

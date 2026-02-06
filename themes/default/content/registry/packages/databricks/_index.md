@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-databricks/v1.83.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-databricks/v1.84.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-databricks/blob/v1.83.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-databricks/blob/v1.84.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Databricks Provider
 meta_desc: Provides an overview on how to configure the Pulumi Databricks provider.
@@ -224,7 +224,7 @@ func notImplemented(message string) pulumi.AnyOutput {
 
 func main() {
 	pulumi.Run(func(ctx *pulumi.Context) error {
-		me, err := databricks.GetCurrentUser(ctx, map[string]interface{}{}, nil)
+		me, err := databricks.GetCurrentUser(ctx, &databricks.GetCurrentUserArgs{}, nil)
 		if err != nil {
 			return err
 		}
@@ -309,6 +309,7 @@ import com.pulumi.Context;
 import com.pulumi.Pulumi;
 import com.pulumi.core.Output;
 import com.pulumi.databricks.DatabricksFunctions;
+import com.pulumi.databricks.inputs.GetCurrentUserArgs;
 import com.pulumi.databricks.inputs.GetSparkVersionArgs;
 import com.pulumi.databricks.inputs.GetNodeTypeArgs;
 import com.pulumi.databricks.Notebook;
@@ -334,7 +335,8 @@ public class App {
     }
 
     public static void stack(Context ctx) {
-        final var me = DatabricksFunctions.getCurrentUser(%!v(PANIC=Format method: runtime error: invalid memory address or nil pointer dereference);
+        final var me = DatabricksFunctions.getCurrentUser(GetCurrentUserArgs.builder()
+            .build());
 
         final var latest = DatabricksFunctions.getSparkVersion(GetSparkVersionArgs.builder()
             .build());

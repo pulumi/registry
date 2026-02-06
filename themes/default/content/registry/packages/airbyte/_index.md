@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/airbytehq/airbyte/0.13.0/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/airbytehq/airbyte/1.0.0-rc4/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Airbyte Provider
@@ -25,6 +25,9 @@ airbyte-api: Programmatically control Airbyte Cloud, OSS & Enterprise.
 # Pulumi.yaml provider configuration file
 name: configuration-example
 runtime: nodejs
+config:
+    airbyte:serverUrl:
+        value: '...'
 
 ```
 ```typescript
@@ -37,6 +40,9 @@ import * as pulumi from "@pulumi/pulumi";
 # Pulumi.yaml provider configuration file
 name: configuration-example
 runtime: python
+config:
+    airbyte:serverUrl:
+        value: '...'
 
 ```
 ```python
@@ -49,6 +55,9 @@ import pulumi
 # Pulumi.yaml provider configuration file
 name: configuration-example
 runtime: dotnet
+config:
+    airbyte:serverUrl:
+        value: '...'
 
 ```
 ```csharp
@@ -67,6 +76,9 @@ return await Deployment.RunAsync(() =>
 # Pulumi.yaml provider configuration file
 name: configuration-example
 runtime: go
+config:
+    airbyte:serverUrl:
+        value: '...'
 
 ```
 ```go
@@ -88,6 +100,9 @@ func main() {
 # Pulumi.yaml provider configuration file
 name: configuration-example
 runtime: yaml
+config:
+    airbyte:serverUrl:
+        value: '...'
 
 ```
 ```yaml
@@ -99,6 +114,9 @@ runtime: yaml
 # Pulumi.yaml provider configuration file
 name: configuration-example
 runtime: java
+config:
+    airbyte:serverUrl:
+        value: '...'
 
 ```
 ```java
@@ -127,10 +145,10 @@ public class App {
 {{< /chooser >}}
 ## Configuration Reference
 
-- `bearerAuth` (String, Sensitive)
-- `clientId` (String, Sensitive)
-- `clientSecret` (String, Sensitive)
-- `password` (String, Sensitive)
+- `bearerAuth` (String, Sensitive) HTTP Bearer.
+- `clientId` (String, Sensitive) OAuth2 Client Credentials Flow client identifier.
+- `clientSecret` (String, Sensitive) OAuth2 Client Credentials Flow client secret.
+- `password` (String, Sensitive) HTTP Basic password.
 - `serverUrl` (String) Server URL (defaults to <https://api.airbyte.com/v1>)
-- `tokenUrl` (String, Sensitive)
-- `username` (String, Sensitive)
+- `tokenUrl` (String, Sensitive) OAuth2 Client Credentials Flow token URL.
+- `username` (String, Sensitive) HTTP Basic username.

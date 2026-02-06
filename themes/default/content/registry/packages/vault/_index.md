@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-vault/v7.6.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-vault/v7.7.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-vault/blob/v7.6.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-vault/blob/v7.7.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: HashiCorp Vault Provider
 meta_desc: Provides an overview on how to configure the Pulumi HashiCorp Vault provider.
@@ -532,6 +532,7 @@ name: configuration-example
 runtime: nodejs
 
 ```
+
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
 import * as vault from "@pulumi/vault";
@@ -544,6 +545,7 @@ const example = new vault.generic.Secret("example", {
     }),
 });
 ```
+
 {{% /choosable %}}
 {{% choosable language python %}}
 ```yaml
@@ -552,6 +554,7 @@ name: configuration-example
 runtime: python
 
 ```
+
 ```python
 import pulumi
 import json
@@ -564,6 +567,7 @@ example = vault.generic.Secret("example",
         "pizza": "cheese",
     }))
 ```
+
 {{% /choosable %}}
 {{% choosable language csharp %}}
 ```yaml
@@ -572,6 +576,7 @@ name: configuration-example
 runtime: dotnet
 
 ```
+
 ```csharp
 using System.Collections.Generic;
 using System.Linq;
@@ -594,6 +599,7 @@ return await Deployment.RunAsync(() =>
 });
 
 ```
+
 {{% /choosable %}}
 {{% choosable language go %}}
 ```yaml
@@ -602,6 +608,7 @@ name: configuration-example
 runtime: go
 
 ```
+
 ```go
 package main
 
@@ -633,6 +640,7 @@ func main() {
 	})
 }
 ```
+
 {{% /choosable %}}
 {{% choosable language yaml %}}
 ```yaml
@@ -641,6 +649,7 @@ name: configuration-example
 runtime: yaml
 
 ```
+
 ```yaml
 resources:
   example:
@@ -652,6 +661,7 @@ resources:
           foo: bar
           pizza: cheese
 ```
+
 {{% /choosable %}}
 {{% choosable language java %}}
 ```yaml
@@ -660,6 +670,7 @@ name: configuration-example
 runtime: java
 
 ```
+
 ```java
 package generated_program;
 
@@ -694,6 +705,7 @@ public class App {
     }
 }
 ```
+
 {{% /choosable %}}
 {{< /chooser >}}
 ### Example `authLogin` Usage
@@ -707,6 +719,7 @@ name: configuration-example
 runtime: nodejs
 
 ```
+
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
 
@@ -714,6 +727,7 @@ const config = new pulumi.Config();
 const loginUsername = config.requireObject<any>("loginUsername");
 const loginPassword = config.requireObject<any>("loginPassword");
 ```
+
 {{% /choosable %}}
 {{% choosable language python %}}
 ```yaml
@@ -722,6 +736,7 @@ name: configuration-example
 runtime: python
 
 ```
+
 ```python
 import pulumi
 
@@ -729,6 +744,7 @@ config = pulumi.Config()
 login_username = config.require_object("loginUsername")
 login_password = config.require_object("loginPassword")
 ```
+
 {{% /choosable %}}
 {{% choosable language csharp %}}
 ```yaml
@@ -737,6 +753,7 @@ name: configuration-example
 runtime: dotnet
 
 ```
+
 ```csharp
 using System.Collections.Generic;
 using System.Linq;
@@ -750,6 +767,7 @@ return await Deployment.RunAsync(() =>
 });
 
 ```
+
 {{% /choosable %}}
 {{% choosable language go %}}
 ```yaml
@@ -758,6 +776,7 @@ name: configuration-example
 runtime: go
 
 ```
+
 ```go
 package main
 
@@ -775,6 +794,7 @@ func main() {
 	})
 }
 ```
+
 {{% /choosable %}}
 {{% choosable language yaml %}}
 ```yaml
@@ -783,6 +803,7 @@ name: configuration-example
 runtime: yaml
 
 ```
+
 ```yaml
 configuration:
   loginUsername:
@@ -790,6 +811,7 @@ configuration:
   loginPassword:
     type: dynamic
 ```
+
 {{% /choosable %}}
 {{% choosable language java %}}
 ```yaml
@@ -798,6 +820,7 @@ name: configuration-example
 runtime: java
 
 ```
+
 ```java
 package generated_program;
 
@@ -823,6 +846,7 @@ public class App {
     }
 }
 ```
+
 {{% /choosable %}}
 {{< /chooser >}}
 
@@ -836,6 +860,7 @@ name: configuration-example
 runtime: nodejs
 
 ```
+
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
 
@@ -843,6 +868,7 @@ const config = new pulumi.Config();
 const loginApproleRoleId = config.requireObject<any>("loginApproleRoleId");
 const loginApproleSecretId = config.requireObject<any>("loginApproleSecretId");
 ```
+
 {{% /choosable %}}
 {{% choosable language python %}}
 ```yaml
@@ -851,6 +877,7 @@ name: configuration-example
 runtime: python
 
 ```
+
 ```python
 import pulumi
 
@@ -858,6 +885,7 @@ config = pulumi.Config()
 login_approle_role_id = config.require_object("loginApproleRoleId")
 login_approle_secret_id = config.require_object("loginApproleSecretId")
 ```
+
 {{% /choosable %}}
 {{% choosable language csharp %}}
 ```yaml
@@ -866,6 +894,7 @@ name: configuration-example
 runtime: dotnet
 
 ```
+
 ```csharp
 using System.Collections.Generic;
 using System.Linq;
@@ -879,6 +908,7 @@ return await Deployment.RunAsync(() =>
 });
 
 ```
+
 {{% /choosable %}}
 {{% choosable language go %}}
 ```yaml
@@ -887,6 +917,7 @@ name: configuration-example
 runtime: go
 
 ```
+
 ```go
 package main
 
@@ -904,6 +935,7 @@ func main() {
 	})
 }
 ```
+
 {{% /choosable %}}
 {{% choosable language yaml %}}
 ```yaml
@@ -912,6 +944,7 @@ name: configuration-example
 runtime: yaml
 
 ```
+
 ```yaml
 configuration:
   loginApproleRoleId:
@@ -919,6 +952,7 @@ configuration:
   loginApproleSecretId:
     type: dynamic
 ```
+
 {{% /choosable %}}
 {{% choosable language java %}}
 ```yaml
@@ -927,6 +961,7 @@ name: configuration-example
 runtime: java
 
 ```
+
 ```java
 package generated_program;
 
@@ -952,6 +987,7 @@ public class App {
     }
 }
 ```
+
 {{% /choosable %}}
 {{< /chooser >}}
 ### Example `authLogin` With AWS Signing

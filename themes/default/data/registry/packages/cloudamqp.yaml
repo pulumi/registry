@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-cloudamqp
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-cloudamqp/v3.25.1/provider/cmd/pulumi-resource-cloudamqp/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-cloudamqp/v3.26.0/provider/cmd/pulumi-resource-cloudamqp/schema.json
 title: CloudAMQP
-updated_on: 1768275647
-version: v3.25.1
+updated_on: 1770436589
+version: v3.26.0

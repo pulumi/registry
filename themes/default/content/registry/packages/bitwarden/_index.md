@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/maxlaverse/bitwarden/0.17.2/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/maxlaverse/bitwarden/0.17.3/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Bitwarden Provider
@@ -169,6 +169,8 @@ In order to generate an Access Token you need to:
 7. Created a new Access Token and save it somewhere safe
 
 > **Note:** By default, new machine accounts are not assigned to any projects. After creating a machine account, make sure it is added to the project(s) you want to access, with either "Can Read" or "Can Read & Write" permissions. If the machine account does not have access to the project, you will encounter an `Error: object not found` when attempting to use/create secrets from that project.
+
+> **Note:** When using the embedded client in ephemeral environments (CI, containers), the provider stores a device identifier in `.bitwarden/device_identifier`. If that file is missing, a new one is generated each run and Bitwarden may send "new device logged in" emails. To avoid that, persist `.bitwarden/device_identifier` (e.g. in a secret or volume) and restore it before running Pulumi.
 ## Configuration
 Configuration for the Bitwarden Provider can be derived from two sources:
 * Parameters in the provider configuration

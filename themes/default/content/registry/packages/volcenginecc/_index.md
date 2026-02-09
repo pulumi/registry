@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/volcengine/pulumi-volcenginecc/v0.0.20/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/volcengine/pulumi-volcenginecc/v0.0.21/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/volcengine/pulumi-volcenginecc/blob/v0.0.20/docs/_index.md
+edit_url: https://github.com/volcengine/pulumi-volcenginecc/blob/v0.0.21/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Volcenginecc Provider
 meta_desc: Provides an overview on how to configure the Pulumi Volcenginecc provider.
@@ -59,6 +59,8 @@ import {ProviderEndpoints} from "../pulumi-volcenginecc/sdk/nodejs/types/input";
 const provider = new ve.Provider("volcengine-provider", {
     region: "cn-beijing",   // REGION
     accessKey: "",   // ACCESSKEY
+    filePath: "", // if empty, default path is ~/.volcengine
+    profile: "", //Profile name in filePath
     secretKey: "", // SECRET_ACCESS_KEY
     endpoints: {
         cloudcontrolapi: "cloudcontrol.cn-beijing.volcengineapi.com"
@@ -71,17 +73,17 @@ const user = new ve.iam.User("pulumi-node-user", {
     displayName: "pulumi-nodejs-display",       // Optional
     groups: ["ccapi-test"],                     // Optional
     policies: [                                 // Optional
-        { policyName: "ReadOnlyAccess", policyType: "System" },
-        { policyName: "TOSReadOnlyAccess", policyType: "System" },
-        { policyName: "VPCFullAccess", policyType: "System" },
-        { policyName: "IAMFullAccess", policyType: "System" },
+        {policyName: "ReadOnlyAccess", policyType: "System"},
+        {policyName: "TOSReadOnlyAccess", policyType: "System"},
+        {policyName: "VPCFullAccess", policyType: "System"},
+        {policyName: "IAMFullAccess", policyType: "System"},
 
     ],
     tags: [                                     // Optional
-        { key: "env", value: "dev" },
-        { key: "team", value: "backend" },
+        {key: "env", value: "dev"},
+        {key: "team", value: "backend"},
     ],
-}, { provider });
+}, {provider});
 ```
 {{% /choosable %}}
 {{% choosable language python %}}
@@ -160,6 +162,8 @@ return await Deployment.RunAsync(() =>
     {
         AccessKey = "",
         SecretKey = "",
+        Profile = "", //Profile name in filePath
+        FilePath = "", // if empty, default path is ~/.volcengine
         Region = "cn-beijing",
         Endpoints =new ProviderEndpointsArgs
         {
@@ -229,6 +233,8 @@ func main() {
 		prov, err := myprovider.NewProvider(ctx, "pulumi", &myprovider.ProviderArgs{
 			AccessKey: pulumi.String(""),
 			SecretKey: pulumi.String("=="),
+			Profile:   pulumi.String(""), //Profile name in filePath
+			FilePath:  pulumi.String(""),  // if empty, default path is ~/.volcengine
 			Region:    pulumi.String("cn-beijing"),
 			Endpoints: &myprovider.ProviderEndpointsArgs{
 				Cloudcontrolapi: pulumi.String("cloudcontrol.cn-beijing.volcengineapi.com"),
@@ -329,6 +335,8 @@ public class App {
             Provider volcenginecc = new Provider("volcenginecc", ProviderArgs.builder()
                     .accessKey("")
                     .secretKey("")
+                    .profile("") //Profile name in filePath
+                    .filePath("") // if empty, default path is ~/.volcengine
                     .region("cn-beijing")
                     .endpoints(ProviderEndpointsArgs.builder()
                             .cloudcontrolapi("cloudcontrol.cn-beijing.volcengineapi.com")
@@ -371,7 +379,7 @@ The following methods are supported, in this order, and explained below:
 
 ### Static credentials
 
-Static credentials can be provided by adding `accessKey`, `secretKey` and `region` in-line in the
+Static credentials can be provided by adding `accessKey`, `secretKey`, `profile`, `filePath` and `region` in-line in the
 volcengine provider configuration:
 
 Usage:
@@ -387,12 +395,16 @@ config:
         value: 'TODO: var.region'
     volcengine:secretKey:
         value: 'TODO: var.secret_key'
+    volcengine:profile:
+        value: 'TODO: var.profile'
+    volcengine:filePath:
+        value: 'TODO: var.file_path'
 
 ```
 
 ### Environment variables
 
-You can provide your credentials via `VOLCENGINE_ACCESS_KEY`, `VOLCENGINE_SECRET_KEY` environment variables. The Region can be set using the `VOLCENGINE_REGION` environment variables.
+You can provide your credentials via VOLCENGINE_ACCESS_KEY and VOLCENGINE_SECRET_KEY environment variables, representing your volcengine public key and private key respectively. VOLCENGINE_REGION, VOLCENGINE_PROFILE, and VOLCENGINE_FILE_PATH are also used, if applicable:
 
 Usage:
 ```yaml
@@ -406,6 +418,8 @@ runtime:
 $ export VOLCENGINE_ACCESS_KEY="<Your-Access-Key-ID>"
 $ export VOLCENGINE_SECRET_KEY="<Your-Access-Key-Secret>"
 $ export VOLCENGINE_REGION="cn-beijing"
+$ export VOLCENGINE_PROFILE="your_profile"
+$ export VOLCENGINE_FILE_PATH="your_file_path" # if empty, default path is ~/.volcengine
 $ pulumi preview
 ```
 
@@ -419,6 +433,8 @@ provider configuration:
 
 - `accessKey` (String) The Access Key for Volcengine Provider. It must be provided, but it can also be sourced from the `VOLCENGINE_ACCESS_KEY` environment variable
 - `secretKey` (String) he Secret Key for Volcengine Provider. It must be provided, but it can also be sourced from the `VOLCENGINE_SECRET_KEY` environment variable
+- `profile` (String) The Profile for Volcengine Provider. It can be used as an alternative authentication method to AK/SK, and can also be sourced from the `VOLCENGINE_PROFILE` environment variable
+- `file_path` (String) The File Path for Volcengine Provider. It specifies the path to the profile configuration file. If not specified, the default path `~/.volcengine` will be used, and can also be sourced from the `VOLCENGINE_FILE_PATH` environment variable
 - `assumeRole` (Attributes) An `assume_role` block (documented below). Only one `assume_role` block may be in the configuration. (see [below for nested schema](#nestedatt--assume_role))
 - `customerHeaders` (String) CUSTOMER HEADERS for Volcengine Provider. The customer_headers field uses commas (,) to separate multiple headers, and colons (:) to separate each header key from its corresponding value.
 - `disableSsl` (Boolean) Disable SSL for Volcengine Provider

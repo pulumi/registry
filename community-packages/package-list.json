@@ -395,10 +395,6 @@
     {
       "repoSlug": "byteplus-sdk/pulumi-bytepluscc",
       "schemaFile": "provider/cmd/pulumi-resource-bytepluscc/schema.json"
-    },
-    {
-      "repoSlug": "kotaicode/pulumi-provider-dex",
-      "schemaFile": "schema.json"
     }
   ]
 }

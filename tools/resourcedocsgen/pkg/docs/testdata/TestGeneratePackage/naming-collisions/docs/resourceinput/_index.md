@@ -238,7 +238,7 @@ var resourceInputResource = new Example.ResourceInput("resourceInputResource");
 <pulumi-choosable type="language" values="go">
 
 ```go
-example, err := example.NewResourceInput(ctx, "resourceInputResource", nil)
+example, err := example.NewResourceInputResource(ctx, "resourceInputResource", nil)
 ```
 
 </pulumi-choosable>

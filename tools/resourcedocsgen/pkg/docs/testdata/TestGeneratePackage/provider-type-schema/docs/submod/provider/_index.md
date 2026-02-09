@@ -242,7 +242,7 @@ var providerResource = new ProviderType.Submod.Provider("providerResource", new(
 <pulumi-choosable type="language" values="go">
 
 ```go
-example, err := submod.Newprovider(ctx, "providerResource", &submod.providerArgs{
+example, err := submod.NewProvider(ctx, "providerResource", &submod.ProviderArgs{
 	A: false,
 })
 ```

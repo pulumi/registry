@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/UpCloudLtd/pulumi-upcloud/v0.10.4/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/UpCloudLtd/pulumi-upcloud/v0.11.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/UpCloudLtd/pulumi-upcloud/blob/v0.10.4/docs/_index.md
+edit_url: https://github.com/UpCloudLtd/pulumi-upcloud/blob/v0.11.0/docs/_index.md
 title: UpCloud
 meta_desc: Provides an overview of the UpCloud Pulumi Provider.
 layout: package

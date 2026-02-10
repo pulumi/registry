@@ -10,7 +10,7 @@ native: false
 package_status: public_preview
 publisher: Byteplus
 repo_url: https://github.com/byteplus-sdk/pulumi-bytepluscc
-schema_file_url: https://raw.githubusercontent.com/byteplus-sdk/pulumi-bytepluscc/v0.0.12/provider/cmd/pulumi-resource-bytepluscc/schema.json
+schema_file_url: https://raw.githubusercontent.com/byteplus-sdk/pulumi-bytepluscc/v0.0.13/provider/cmd/pulumi-resource-bytepluscc/schema.json
 title: bytepluscc
-updated_on: 1769071897
-version: v0.0.12
+updated_on: 1770634702
+version: v0.0.13

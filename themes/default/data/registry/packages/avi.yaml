@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: vmware
 repo_url: https://github.com/vmware/terraform-provider-avi
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/vmware/avi/31.2.1/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/vmware/avi/31.2.2/schema.json
 title: avi
-updated_on: 1766446557
-version: 31.2.1
+updated_on: 1770766576
+version: 31.2.2

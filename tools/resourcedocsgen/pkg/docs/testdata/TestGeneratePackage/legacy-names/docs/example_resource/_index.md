@@ -254,7 +254,7 @@ var example_resourceResource = new Legacy_names.Example_resource("example_resour
 <pulumi-choosable type="language" values="go">
 
 ```go
-example, err := legacy_names.Newexample_resource(ctx, "example_resourceResource", &legacy_names.example_resourceArgs{
+example, err := legacy_names.NewExample_resource(ctx, "example_resourceResource", &legacy_names.Example_resourceArgs{
 	Map_enum: legacy_names.Enum_XYZMapArray{
 		legacy_names.Enum_XYZMap{
 			"string": legacy_names.Enum_XYZPlain,

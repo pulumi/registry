@@ -11,6 +11,6 @@ package_status: public_preview
 publisher: Kotaicode GmbH
 repo_url: https://github.com/kotaicode/pulumi-dex
 schema_file_url: https://raw.githubusercontent.com/kotaicode/pulumi-dex/v0.7.2/schema.json
-title: Dex Provider
+title: Dex
 updated_on: 1770641724
 version: v0.7.2

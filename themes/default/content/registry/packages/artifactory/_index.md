@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-artifactory/v8.10.1/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-artifactory/v8.10.2/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-artifactory/blob/v8.10.1/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-artifactory/blob/v8.10.2/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Artifactory Provider
 meta_desc: Provides an overview on how to configure the Pulumi Artifactory provider.
@@ -274,6 +274,56 @@ config:
         value: artifactory.site.com/artifactory
 
 ```
+## Mutual TLS
+
+Some Artifactory deployments require mutual TLS authentication. The provider can send a client certificate by either referencing local files or inlining PEM data.
+
+To reference files:
+
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime:
+config:
+    artifactory:accessToken:
+        value: 'TODO: var.artifactory_access_token'
+    artifactory:clientCertificateKeyPath:
+        value: /home/runner/.jfrog/client-key.pem
+    artifactory:clientCertificatePath:
+        value: /home/runner/.jfrog/client-cert.pem
+    artifactory:url:
+        value: https://edge.example.com/artifactory
+
+```
+
+Use the same value for both path attributes if the PEM file contains the certificate and private key together. Both attributes must be provided when using the path-based configuration.
+
+To inline PEM data (for example, when running on Pulumi Cloud), supply both the certificate and matching private key:
+
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime:
+config:
+    artifactory:accessToken:
+        value: 'TODO: var.artifactory_access_token'
+    artifactory:clientCertificatePem:
+        value: 'TODO: var.artifactory_client_certificate_pem'
+    artifactory:clientPrivateKeyPem:
+        value: 'TODO: var.artifactory_client_private_key_pem'
+    artifactory:url:
+        value: https://edge.example.com/artifactory
+
+```
+
+The following environment variables may also be used instead of configuration attributes:
+
+- `JFROG_CLIENT_CERT_PATH` or `ARTIFACTORY_CLIENT_CERT_PATH`
+- `JFROG_CLIENT_CERT_KEY_PATH` or `ARTIFACTORY_CLIENT_CERT_KEY_PATH`
+- `JFROG_CLIENT_CERT_PEM` or `ARTIFACTORY_CLIENT_CERT_PEM`
+- `JFROG_CLIENT_PRIVATE_KEY_PEM` or `ARTIFACTORY_CLIENT_PRIVATE_KEY_PEM`
+
+All four variables participate in the same precedence rules as the provider attributes. File-based and inline options are mutually exclusive.
 ## Configuration Reference
 
 The following configuration inputs are supported:
@@ -282,3 +332,8 @@ The following configuration inputs are supported:
 * `accessToken` - (Optional) This can also be sourced from `JFROG_ACCESS_TOKEN` or `ARTIFACTORY_ACCESS_TOKEN` environment variables.
 * `apiKey` - (Optional, deprecated) API key for api auth.
 * `oidcProviderName` - (Optional) OIDC provider name. See [Configure an OIDC Integration](https://jfrog.com/help/r/jfrog-platform-administration-documentation/configure-an-oidc-integration) for more details.
+
+* `clientCertificatePath` - (Optional) Filesystem path to a PEM-encoded client certificate or certificate chain used for mutual TLS. Must be provided together with `clientCertificateKeyPath`. Can also be sourced from `JFROG_CLIENT_CERT_PATH` or `ARTIFACTORY_CLIENT_CERT_PATH`.
+* `clientCertificateKeyPath` - (Optional) Filesystem path to the PEM-encoded private key that matches `clientCertificatePath`. Can also be sourced from `JFROG_CLIENT_CERT_KEY_PATH` or `ARTIFACTORY_CLIENT_CERT_KEY_PATH`.
+* `clientCertificatePem` - (Optional, Sensitive) Inline PEM-encoded client certificate or certificate chain used for mutual TLS. Must be provided together with `clientPrivateKeyPem`. Can also be sourced from `JFROG_CLIENT_CERT_PEM` or `ARTIFACTORY_CLIENT_CERT_PEM`.
+* `clientPrivateKeyPem` - (Optional, Sensitive) Inline PEM-encoded private key that matches `clientCertificatePem`. Can also be sourced from `JFROG_CLIENT_PRIVATE_KEY_PEM` or `ARTIFACTORY_CLIENT_PRIVATE_KEY_PEM`.

@@ -10,7 +10,7 @@ native: false
 package_status: public_preview
 publisher: netlify
 repo_url: https://github.com/netlify/terraform-provider-netlify
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/netlify/netlify/0.4.0/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/netlify/netlify/0.4.1/schema.json
 title: netlify
-updated_on: 1764804946
-version: 0.4.0
+updated_on: 1770939348
+version: 0.4.1

@@ -44,15 +44,19 @@ module.exports = {
                         href: `/registry/packages/${providerName}/api-docs/${itemPath.concat(item.link).slice(1).join("/").toLowerCase()}/`,
                         keywords: [
                             item.name,
+                            item.name.toLowerCase(),
                             itemPath
                                 .concat(item.name)
                                 .slice(1)
                                 .join(" ")
                                 .toLowerCase(),
                             itemPath.concat(item.name).join("."),
+                            itemPath.concat(item.name).join(".").toLowerCase(),
                             itemPath.concat(item.name).join(":"),
+                            itemPath.concat(item.name).join(":").toLowerCase(),
                             itemPath.concat(item.name).join(" "),
                             `${providerTitle} ${item.name}`,
+                            `${providerTitle} ${item.name.toLowerCase()}`,
                         ],
                         ancestors: ["Registry", providerTitle, "API Docs"],
                     });

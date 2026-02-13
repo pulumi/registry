@@ -1,0 +1,3 @@
+registry/packages/aws-v6/how-to-guides/aws-py-oidc-provider-pulumi-cloud/index.html|https://www.pulumi.com/docs/esc/guides/configuring-oidc/gcp/
+registry/packages/aws/how-to-guides/aws-py-oidc-provider-pulumi-cloud/index.html|https://www.pulumi.com/docs/esc/guides/configuring-oidc/gcp/
+registry/packages/gcp/how-to-guides/gcp-py-oidc-provider-pulumi-cloud/index.html|https://www.pulumi.com/docs/esc/guides/configuring-oidc/gcp/

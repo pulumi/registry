@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/philips-software/hsdp/1.0.0/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/philips-software/hsdp/1.1.1/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Hsdp Provider
@@ -283,7 +283,6 @@ In addition to generic provider arguments (e.g. alias and version), the followin
 * `credentials` - (Optional) Can point to a JSON file containing values for all fields here
 * `iamUrl` - (Optional) IAM API endpoint. Auto-discovered from region and environment.
 * `idmUrl` - (Optional) IDM API endpoint Auto-discovered from region and environment.
-* `s3credsUrl` - (Optional) S3 Credentials API endpoint. Auto-discovered from region and environment.
 * `notificationUrl` - (Optional) Notification service URL. Auto-discovered from region and environment.
 * `oauth2ClientId` - (Optional) The OAuth2 client ID as provided by HSDP
 * `oauth2Password` - (Optional) The OAuth2 password as provided by HSDP

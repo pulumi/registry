@@ -1,5 +1,5 @@
-registry/packages/aws-v6/how-to-guides/aws-py-oidc-provider-pulumi-cloud/index.html|https://www.pulumi.com/docs/esc/guides/configuring-oidc/gcp/
-registry/packages/aws/how-to-guides/aws-py-oidc-provider-pulumi-cloud/index.html|https://www.pulumi.com/docs/esc/guides/configuring-oidc/gcp/
-registry/packages/azure-native/how-to-guides/azure-py-oidc-provider-pulumi-cloud/index.html|https://www.pulumi.com/docs/esc/guides/configuring-oidc/gcp/
-registry/packages/azure-native-v2/how-to-guides/azure-py-oidc-provider-pulumi-cloud/index.html|https://www.pulumi.com/docs/esc/guides/configuring-oidc/gcp/
+registry/packages/aws-v6/how-to-guides/aws-py-oidc-provider-pulumi-cloud/index.html|https://www.pulumi.com/docs/esc/guides/configuring-oidc/aws/
+registry/packages/aws/how-to-guides/aws-py-oidc-provider-pulumi-cloud/index.html|https://www.pulumi.com/docs/esc/guides/configuring-oidc/aws/
+registry/packages/azure-native/how-to-guides/azure-py-oidc-provider-pulumi-cloud/index.html|https://www.pulumi.com/docs/esc/guides/configuring-oidc/azure/
+registry/packages/azure-native-v2/how-to-guides/azure-py-oidc-provider-pulumi-cloud/index.html|https://www.pulumi.com/docs/esc/guides/configuring-oidc/azure/
 registry/packages/gcp/how-to-guides/gcp-py-oidc-provider-pulumi-cloud/index.html|https://www.pulumi.com/docs/esc/guides/configuring-oidc/gcp/

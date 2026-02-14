@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-scm/v1.0.3/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-scm/v1.0.4/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-scm/blob/v1.0.3/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-scm/blob/v1.0.4/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Strata Cloud Manager Provider
 meta_desc: Provides an overview on how to configure the Pulumi Strata Cloud Manager provider.
@@ -35,14 +35,29 @@ This provider covers the following aspects of Strata Cloud Manager:
 
 By using this software, you agree to these terms.
 ## Release Notes
+### v1.0.8
+#### ENHANCEMENTS
+
+* scm_jobs: Added support and tests.
+* scm_config_versions: Added support and tests for listing versions, loading configs, pushing candidate configs, and performing rollbacks/deletions.
+
+* Added JWT token handling to enable concurrent Pulumi executions.
+* Added folder name mapping between UI and API layers.
+#### BUG FIXES
+
+* resource/scm_general_settings: SCM Resource Read failed due to missing required fields (#87)
+* Limited Concurrent IaC operations possible (#77)
+* Objects being written to "Shared" Folder for not appearing in SCM (#54)
+* resource/scm_ike_gateway: Added ip support for local address object in ike-gateway
+* resource/bgp_routing: Resolved support for inherit object for bgp routing
 ### v1.0.7
 #### ENHANCEMENTS
 
 * resource/scm_log_forwarding_profile:  Added additional examples and tests (resource, data-source)
 * resource/scm_kerberos_server_profile:  Added additional examples and tests (resource, data-source)
 * resource/scm_saml_server_profile: Added additional examples and tests (resource, data-source)
-* resource/scm_qos_prpfile: Added additional examples and tests (resource, data-source)
-* resource/scm_lldp_prpfile: Added additional examples and tests (resource, data-source)
+* resource/scm_qos_profile: Added additional examples and tests (resource, data-source)
+* resource/scm_lldp_profile: Added additional examples and tests (resource, data-source)
 * resource/scm_scep_profile: Added additional examples and tests (resource, data-source)
 * resource/scm_tacacs_server: Added additional examples and tests (resource, data-source)
 * resource/scm_dhcp_interface: Added additional examples(resource, data-source)
@@ -60,7 +75,7 @@ By using this software, you agree to these terms.
 * resource/scm_scep_profile : Schema Fix for rsaNbits (#84)
 * resource/scm_dhcp_interface : DHCP Interface GetByUUID Fix (#82)
 * resource/scm_service_setting : md5 and sha1 sensitive values fix (#81)
-* resource/scm_service_connection: Resolved Creation of SC with protobol bgp enabled false and peerAs (ADI-51539)
+* resource/scm_service_connection: Resolved Creation of SC with protocol bgp enabled false and peerAs (ADI-51539)
 ### v1.0.6
 #### FEATURES
 

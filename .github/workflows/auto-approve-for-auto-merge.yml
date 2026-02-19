@@ -1,4 +1,4 @@
-name: Auto approve pulumi-bot PRs for auto-merge
+name: Auto approve
 
 on: pull_request
 

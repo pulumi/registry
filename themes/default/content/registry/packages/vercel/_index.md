@@ -1,20 +1,23 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-vercel/v3.15.1/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-vercel/v4.6.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+edit_url: https://github.com/pulumiverse/pulumi-vercel/blob/v4.6.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Vercel Provider
 meta_desc: Provides an overview on how to configure the Pulumi Vercel provider.
 layout: package
 ---
+
 ## Installation
 
 The Vercel provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/vercel`](https://www.npmjs.com/package/@pulumi/vercel)
 * Python: [`pulumi-vercel`](https://pypi.org/project/pulumi-vercel/)
-* Go: [`github.com/pulumiverse/pulumi-vercel/sdk/v3/go/vercel`](https://github.com/pulumi/pulumi-vercel)
+* Go: [`github.com/pulumiverse/pulumi-vercel/sdk/v4/go/vercel`](https://github.com/pulumi/pulumi-vercel)
 * .NET: [`Pulumi.Vercel`](https://www.nuget.org/packages/Pulumi.Vercel)
 * Java: [`com.pulumi/vercel`](https://central.sonatype.com/artifact/com.pulumi/vercel)
+
 ## Overview
 
 The Vercel provider is used to interact with resources supported by Vercel.
@@ -36,10 +39,12 @@ config:
         value: your_team_slug_or_id
 
 ```
+
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
 
 ```
+
 {{% /choosable %}}
 {{% choosable language python %}}
 ```yaml
@@ -53,10 +58,12 @@ config:
         value: your_team_slug_or_id
 
 ```
+
 ```python
 import pulumi
 
 ```
+
 {{% /choosable %}}
 {{% choosable language csharp %}}
 ```yaml
@@ -70,6 +77,7 @@ config:
         value: your_team_slug_or_id
 
 ```
+
 ```csharp
 using System.Collections.Generic;
 using System.Linq;
@@ -80,6 +88,7 @@ return await Deployment.RunAsync(() =>
 });
 
 ```
+
 {{% /choosable %}}
 {{% choosable language go %}}
 ```yaml
@@ -93,6 +102,7 @@ config:
         value: your_team_slug_or_id
 
 ```
+
 ```go
 package main
 
@@ -106,6 +116,7 @@ func main() {
 	})
 }
 ```
+
 {{% /choosable %}}
 {{% choosable language yaml %}}
 ```yaml
@@ -119,9 +130,11 @@ config:
         value: your_team_slug_or_id
 
 ```
+
 ```yaml
 {}
 ```
+
 {{% /choosable %}}
 {{% choosable language java %}}
 ```yaml
@@ -135,6 +148,7 @@ config:
         value: your_team_slug_or_id
 
 ```
+
 ```java
 package generated_program;
 
@@ -157,6 +171,7 @@ public class App {
     }
 }
 ```
+
 {{% /choosable %}}
 {{< /chooser >}}
 ## Configuration Reference

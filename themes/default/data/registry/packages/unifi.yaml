@@ -10,7 +10,7 @@ native: false
 package_status: public_preview
 publisher: Pulumiverse
 repo_url: https://github.com/pulumiverse/pulumi-unifi
-schema_file_url: https://raw.githubusercontent.com/pulumiverse/pulumi-unifi/v0.1.1/provider/cmd/pulumi-resource-unifi/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumiverse/pulumi-unifi/v0.2.0/provider/cmd/pulumi-resource-unifi/schema.json
 title: Unifi
-updated_on: 1735735851
-version: v0.1.1
+updated_on: 1771331247
+version: v0.2.0

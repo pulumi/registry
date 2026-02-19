@@ -1,6 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/ctfer-io/pulumi-ctfd/v2.3.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/ctfer-io/pulumi-ctfd/v2.4.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+edit_url: https://github.com/ctfer-io/pulumi-ctfd/blob/v2.4.0/docs/_index.md
 title: CTFd Provider
 meta_desc: Provides an overview on how to setup the CTFd Provider for Pulumi.
 layout: package
@@ -29,9 +30,29 @@ Users of the CTFd provider can:
 
 To use the CTFd Provider you will have to configure it and use it to create resources: it can't infer the CTFd url and credentials.
 
-{{< chooser language "typescript,go,python,csharp" >}}
+{{< chooser language "javascript,typescript,go,python,csharp" >}}
 
-{{% choosable language typescript %}}
+{{% choosable language javascript %}}
+
+```javascript
+import * as ctfd from '@ctfer-io/pulumi-ctfd';
+
+// Create provider
+let pv = new ctfd.Provider('ctfd-fine-grained', {
+    url: 'https://my-ctf.lan',
+    apiKey: 'ctfd_xxx', // please do not hardcode your credentials/api keys
+});
+
+// Create resources with the custom provider
+let ch = new ctfd.ChallengeStandard('some-challenge', {
+    name: 'My Challenge',
+    category: 'misc',
+    description: '...',
+    value: 500,
+}, { provider: pv });
+```
+
+{{% /choosable %}} {{% choosable language typescript %}}
 
 ```typescript
 import * as ctfd from '@ctfer-io/pulumi-ctfd';

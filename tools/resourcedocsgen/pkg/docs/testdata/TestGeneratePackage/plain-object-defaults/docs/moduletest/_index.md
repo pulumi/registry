@@ -262,7 +262,7 @@ var moduleTestResource = new Example.ModuleTest("moduleTestResource", new()
 <pulumi-choosable type="language" values="go">
 
 ```go
-example, err := example.NewmoduleTest(ctx, "moduleTestResource", &example.moduleTestArgs{
+example, err := example.NewModuleTest(ctx, "moduleTestResource", &example.ModuleTestArgs{
 Mod1: &mod1.TypArgs{
 Val: pulumi.String("string"),
 },

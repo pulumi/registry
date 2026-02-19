@@ -1046,7 +1046,7 @@ YAML files in repo                            Pulumi Cloud Registry API
 (source of truth for                          (source of truth for CLI
  the static Hugo site)                         package resolution)
         │                                               │
-        │  scripts/ci/push-registry.py                 │
+        │  scripts/ci/push-registry.py                  │
         │  (runs on every production push)              │
         └──────────────────────────────────────────────►│
                   pulumi package publish                │

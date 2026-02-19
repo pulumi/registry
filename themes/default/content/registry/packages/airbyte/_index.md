@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/airbytehq/airbyte/1.0.0-rc6/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/airbytehq/airbyte/1.0.0-rc7/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Airbyte Provider
@@ -17,6 +17,8 @@ pulumi package add terraform-provider airbytehq/airbyte
 ## Overview
 
 airbyte-api: Programmatically control Airbyte Cloud, OSS & Enterprise.
+
+> **Upgrading to 1.0?** Typed connector-specific resources (e.g., `airbyte.SourcePostgres`) are deprecated in 1.0 and targeted for removal in 1.1. See the Migrating to 1.0 guide to move to the generic `airbyte.Source` / `airbyte.Destination` resources with the `airbyte.getConnectorConfiguration` function for type-validated configuration.
 ## Example Usage
 
 {{< chooser language "typescript,python,go,csharp,java,yaml" >}}

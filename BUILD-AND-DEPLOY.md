@@ -39,6 +39,12 @@ This document describes the build, test, and deployment system for the `pulumi/r
    - [9.3 Tool Version Matrix](#93-tool-version-matrix)
 10. [Scheduled & Maintenance Tasks](#scheduled--maintenance-tasks)
 11. [Troubleshooting](#troubleshooting)
+12. [Pulumi Cloud Service Integration](#pulumi-cloud-service-integration)
+   - [12.1 Two Parallel Systems](#121-two-parallel-systems)
+   - [12.2 Pulumi Cloud Registry API](#122-pulumi-cloud-registry-api)
+   - [12.3 How push-registry.py Bridges Them](#123-how-push-registrypy-bridges-them)
+   - [12.4 Cross-Stack References Used at Build Time](#124-cross-stack-references-used-at-build-time)
+   - [12.5 Pulumi Cloud Roles Summary](#125-pulumi-cloud-roles-summary)
 
 ---
 
@@ -1017,3 +1023,137 @@ This is set automatically in CI. If local builds still fail, consider increasing
 **Cause**: A package YAML file references a `publisher` display name that is not listed in `tools/resourcedocsgen/pkg/publishers/publisher-names.json`.
 
 **Fix**: Add the publisher to `publisher-names.json` with the correct canonical identifier, or update the package YAML to use an already-registered publisher name.
+
+---
+
+## Pulumi Cloud Service Integration
+
+### 12.1 Two Parallel Systems
+
+The Pulumi Registry is actually **two separate but tightly coupled systems** that must remain in sync:
+
+| System | URL | Primary Consumer | Data Source |
+|---|---|---|---|
+| **Static Hugo site** | `pulumi.com/registry` | Humans (browser) | YAML files in `themes/default/data/registry/packages/` |
+| **Pulumi Cloud Registry API** | `api.pulumi.com/api/registry` | Pulumi CLI (`pulumi up`, `pulumi package add`) | Pulumi Cloud database (populated via `pulumi package publish`) |
+
+These two systems are **not the same thing and do not share a data store**. The static site is rebuilt from YAML files on every push to `master`; it does not query the Pulumi Cloud API at runtime. The Pulumi Cloud API is a live service that stores package metadata independently.
+
+The bridge between them is `scripts/ci/push-registry.py`, which runs after every production build and publishes any new package versions to the Pulumi Cloud API.
+
+```
+YAML files in repo                            Pulumi Cloud Registry API
+(source of truth for                          (source of truth for CLI
+ the static Hugo site)                         package resolution)
+        │                                               │
+        │  scripts/ci/push-registry.py                 │
+        │  (runs on every production push)              │
+        └──────────────────────────────────────────────►│
+                  pulumi package publish                │
+```
+
+**Consequence**: If `push-registry.py` fails silently on a particular package, the Hugo site will show the package correctly but the Pulumi CLI will not be able to resolve it. The two systems can drift.
+
+**Consequence**: The static site does not support version browsing (no "select a version" dropdown) because Hugo generates a fixed set of pages from a fixed set of YAML files. Versioned snapshots (e.g., `aws-v6`) are implemented as entirely separate YAML files, separate Hugo pages, and separate API publication entries — not as a first-class versioned concept.
+
+---
+
+### 12.2 Pulumi Cloud Registry API
+
+**Base URL**: `https://api.pulumi.com/api/registry`
+
+**Authentication**: Bearer token via `PULUMI_ACCESS_TOKEN` for write operations. Read operations (listing packages, checking versions) are publicly accessible.
+
+**Key endpoints**:
+
+| Method | Path | Purpose |
+|---|---|---|
+| `GET` | `/packages` | List all packages (paginated via `continuationToken`) |
+| `GET` | `/packages/{source}/{publisher}/{name}/versions/{version}` | Check if a specific version exists (returns 200 or 404) |
+| *(via CLI)* | — | `pulumi package publish <schema.json>` writes a new version |
+
+**Package record fields** stored in the API:
+
+| Field | Type | Notes |
+|---|---|---|
+| `name` | string | Provider identifier (e.g., `aws`, `kubernetes`) |
+| `publisher` | string | Normalized publisher ID (e.g., `pulumi`, `aws`) |
+| `publisherDisplayName` | string | Human-readable publisher name |
+| `source` | string | `pulumi` or `opentofu` |
+| `version` | string | Semver without `v` prefix (e.g., `7.19.0`) |
+| `title` | string | Display name |
+| `description` | string | Package description |
+| `category` | string | `cloud`, `infrastructure`, `utility`, `network` |
+| `packageTypes` | array | `["native"]`, `["bridged"]`, or `["component"]` |
+| `packageStatus` | string | `ga` or `public_preview` |
+| `visibility` | string | `public` |
+| `isFeatured` | bool | Whether package is featured in the registry |
+| `repoUrl` | string | GitHub repository URL |
+| `readmeURL` | string | URL to the package README / overview doc |
+| `schemaURL` | string | URL to the Pulumi JSON schema |
+| `logoUrl` | string | Package logo URL |
+| `pluginDownloadURL` | string | Custom plugin download location (optional) |
+| `createdAt` | string | ISO 8601 timestamp |
+| `parameterization` | object | For dynamically-bridged providers: base provider and encoded parameters |
+
+**What the Pulumi CLI uses this API for**:
+
+- Resolving package dependencies when you run `pulumi up` with a package reference.
+- `pulumi package add <name> <version>` — looks up the schema URL to generate local SDKs.
+- Plugin download resolution — finds the correct `pluginDownloadURL` for `pulumi plugin install`.
+
+**What the API does NOT provide for the static site**: The Hugo site does not read from this API at build time or at request time. All package data displayed on `pulumi.com/registry` comes entirely from the YAML files in `themes/default/data/registry/packages/`, and all documentation HTML is generated by `resourcedocsgen` reading schemas from GitHub.
+
+---
+
+### 12.3 How push-registry.py Bridges Them
+
+`scripts/ci/push-registry.py` is the synchronization mechanism. On every push to `master`, after the Hugo site is built and deployed, this script:
+
+1. Reads every YAML file from `themes/default/data/registry/packages/`.
+2. For each package, queries `GET /api/registry/packages/{source}/{publisher}/{name}/versions/{version}` to check whether this exact version already exists in the API.
+3. If it does **not** exist (404):
+   - Downloads the provider schema JSON from the URL in the YAML file.
+   - Corrects the `version` field in the schema if it is absent or inconsistent with the YAML.
+   - Runs `pulumi package publish <schema.json> --readme <_index.md> --source <source> --publisher <publisher>` to register the version.
+4. If it **does** exist (200): no-op.
+5. Skips deprecated packages, `azure-native-v*` aliases, and `aws-v*` legacy versioned packages.
+
+**Important**: `push-registry.py` is also run in **dry-run mode** on every PR (`--dry-run` flag) as the `test-live-publish` CI job. This validates that all YAML files are parseable, all publishers are known, and the `pulumi package publish` invocation would be valid — without actually touching the production API.
+
+**Required credential**: `PULUMI_ACCESS_TOKEN` must be set. This is sourced from Pulumi ESC in CI.
+
+---
+
+### 12.4 Cross-Stack References Used at Build Time
+
+During the CI build (`scripts/ci/build.sh`), the build script queries several other Pulumi stacks in the `pulumi` organization to retrieve runtime service URLs. These are injected as environment variables and baked into the Hugo-generated HTML at build time.
+
+| Stack | Output key | Variable | Purpose |
+|---|---|---|---|
+| `pulumi/tf2pulumi-service/production` | *(Pulumi stack output)* | `PULUMI_CONVERT_URL` | URL of the Terraform-to-Pulumi conversion service, used for interactive code conversion on docs pages |
+| `pulumi/pulumigpt-api/corp` | *(Pulumi stack output)* | `PULUMI_AI_WS_URL` | WebSocket URL for Pulumi AI integration embedded in the Registry UI |
+| `pulumi/registry/production` (IaC config) | `atlasUrl` | `PULUMI_ATLAS_URL` | URL of the Copilot (Atlas/Neo) AI assistant |
+
+Additionally, the `infrastructure/index.ts` IaC program reads cross-stack references at **deploy time** to grant S3 bucket access to data warehouse workloads:
+
+| Stack | Output key | Purpose |
+|---|---|---|
+| `pulumi/dwh-workflows-orchestrate-airflow/production` | `airflowTaskRoleArn` | Grants Airflow task role access to the e2e test results S3 bucket |
+| `pulumi/dwh-workflows-loader-prodbuckets/production` | `dwhBucketReaderRole` | Grants DWH bucket reader role access to the e2e test results S3 bucket |
+
+The e2e test results bucket (`pulumi-api-docs-e2e-test-results-production`) stores Cypress test output, which is subsequently consumed by the Pulumi data warehouse for quality tracking.
+
+---
+
+### 12.5 Pulumi Cloud Roles Summary
+
+Pulumi Cloud plays **four distinct roles** in this system:
+
+| Role | Mechanism | Purpose |
+|---|---|---|
+| **Registry API** | `api.pulumi.com/api/registry` | Stores published package versions; queried by the Pulumi CLI for package and plugin resolution |
+| **Secrets / ESC** | `github-secrets/pulumi-registry` environment | Provides CI secrets (tokens, keys) via OIDC; eliminates long-lived secrets in GitHub |
+| **IaC State Backend** | `pulumi/registry/testing` and `pulumi/registry/production` stacks | Stores Terraform-like state for the AWS infrastructure (CloudFront, S3, policies) managed by `infrastructure/index.ts` |
+| **Stack References** | `pulumi/tf2pulumi-service`, `pulumi/pulumigpt-api`, `pulumi/dwh-workflows-*` stacks | Exposes runtime service URLs and IAM role ARNs as stack outputs, consumed by the build and deploy pipeline |
+

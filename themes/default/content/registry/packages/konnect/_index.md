@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/kong/konnect/3.7.0/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/kong/konnect/3.8.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Konnect Provider
@@ -25,6 +25,9 @@ Konnect API: The Konnect platform API
 # Pulumi.yaml provider configuration file
 name: configuration-example
 runtime: nodejs
+config:
+    konnect:serverUrl:
+        value: '...'
 
 ```
 ```typescript
@@ -37,6 +40,9 @@ import * as pulumi from "@pulumi/pulumi";
 # Pulumi.yaml provider configuration file
 name: configuration-example
 runtime: python
+config:
+    konnect:serverUrl:
+        value: '...'
 
 ```
 ```python
@@ -49,6 +55,9 @@ import pulumi
 # Pulumi.yaml provider configuration file
 name: configuration-example
 runtime: dotnet
+config:
+    konnect:serverUrl:
+        value: '...'
 
 ```
 ```csharp
@@ -67,6 +76,9 @@ return await Deployment.RunAsync(() =>
 # Pulumi.yaml provider configuration file
 name: configuration-example
 runtime: go
+config:
+    konnect:serverUrl:
+        value: '...'
 
 ```
 ```go
@@ -88,6 +100,9 @@ func main() {
 # Pulumi.yaml provider configuration file
 name: configuration-example
 runtime: yaml
+config:
+    konnect:serverUrl:
+        value: '...'
 
 ```
 ```yaml
@@ -99,6 +114,9 @@ runtime: yaml
 # Pulumi.yaml provider configuration file
 name: configuration-example
 runtime: java
+config:
+    konnect:serverUrl:
+        value: '...'
 
 ```
 ```java

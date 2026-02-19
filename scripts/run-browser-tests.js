@@ -3,7 +3,7 @@ const exec = util.promisify(require("child_process").exec);
 const process = require("node:process");
 const fs = require("fs");
 const path = require("path");
-const AWS = require("aws-sdk");
+const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
 const yaml = require("yaml");
 
 const batchSize = 8;
@@ -232,16 +232,16 @@ async function pushResultsS3(obj) {
 
     // Upload JSON file to S3 bucket
     console.log("pushing to S3");
-    const s3 = new AWS.S3();
+    const s3 = new S3Client({});
     const key = `${year}/${month}/${day}/results.json`;
 
-    const uploadParams = {
+    const command = new PutObjectCommand({
         Bucket: bucketName,
         Key: key,
         Body: fs.createReadStream(filename),
-    };
+    });
 
-    return s3.upload(uploadParams).promise();
+    return s3.send(command);
 }
 
 // Load package metadata from metadata files, convert YAML to JSON object,

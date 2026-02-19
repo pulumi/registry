@@ -10,7 +10,7 @@ native: true
 package_status: public_preview
 publisher: Kotaicode GmbH
 repo_url: https://github.com/kotaicode/pulumi-dex
-schema_file_url: https://raw.githubusercontent.com/kotaicode/pulumi-dex/v0.7.2/schema.json
+schema_file_url: https://raw.githubusercontent.com/kotaicode/pulumi-dex/v0.7.11/schema.json
 title: Dex
-updated_on: 1770641724
-version: v0.7.2
+updated_on: 1771508881
+version: v0.7.11

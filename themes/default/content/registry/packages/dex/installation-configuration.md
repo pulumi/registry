@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/kotaicode/pulumi-dex/v0.7.2/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/kotaicode/pulumi-dex/v0.7.11/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/kotaicode/pulumi-dex/blob/v0.7.2/docs/installation-configuration.md
+edit_url: https://github.com/kotaicode/pulumi-dex/blob/v0.7.11/docs/installation-configuration.md
 title: Installation and Configuration
 meta_desc: Learn how to install and configure the Dex provider for Pulumi.
 layout: package
@@ -21,10 +21,10 @@ npm install @kotaicode/pulumi-dex
 
 ### Go
 
-Install the provider using `go get`:
+Install the provider using `go get` (fetches the Go module at `sdk/go`; the package import path is `.../sdk/go/dex`):
 
 ```bash
-go get github.com/kotaicode/pulumi-provider-dex/sdk/go/dex
+go get github.com/kotaicode/pulumi-dex/sdk/go
 ```
 
 ### Python
@@ -89,7 +89,7 @@ const devProvider = new dex.Provider("dex-dev", {
 
 ```go
 import (
-    "github.com/kotaicode/pulumi-provider-dex/sdk/go/dex"
+    "github.com/kotaicode/pulumi-dex/sdk/go/dex"
     "github.com/pulumi/pulumi/sdk/v3/go/pulumi"
     "os"
 )
@@ -198,6 +198,50 @@ Ensure your Pulumi program can reach Dex's gRPC endpoint:
 - Default port: `5557`
 - Protocol: gRPC (HTTP/2)
 - For production: Use TLS/mTLS
+
+## Local development and testing
+
+To build, generate SDKs, and test against a local Dex instance:
+
+1. **Build the provider and generate schema/SDKs** (from repo root):
+   ```bash
+   make build
+   make generate-schema   # writes schema.json from the built binary (needs Pulumi CLI)
+   make generate-sdks     # generates TypeScript, Go, and Python SDKs from schema.json
+   ```
+
+2. **Install the provider so Pulumi can find it**:
+   ```bash
+   make install
+   ```
+   Or manually: `pulumi plugin install resource dex v0.1.0 --file bin/pulumi-resource-dex`
+
+3. **Start local Dex** (Docker required):
+   ```bash
+   make dex-up
+   ```
+
+4. **Run the TypeScript example**:
+   ```bash
+   cd examples/typescript
+   npm install
+   pulumi stack init dev   # or pulumi stack select dev
+   pulumi preview
+   pulumi up               # confirm with yes
+   ```
+   See `examples/typescript/TESTING.md` for more detail and troubleshooting.
+
+5. **Test the Go SDK** (optional). In a separate Go project:
+   ```bash
+   go mod init myapp
+   go get github.com/kotaicode/pulumi-dex/sdk/go
+   ```
+   Then use `import "github.com/kotaicode/pulumi-dex/sdk/go/dex"` in your Pulumi program. To test against the provider repo before publishing, use a `replace` in your `go.mod`:
+   ```go
+   replace github.com/kotaicode/pulumi-dex/sdk/go => /path/to/pulumi-provider-dex/sdk/go
+   ```
+
+6. **Stop Dex when done**: `make dex-down` (from repo root).
 
 ## Security Best Practices
 

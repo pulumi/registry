@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/kotaicode/pulumi-dex/v0.7.2/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/kotaicode/pulumi-dex/v0.7.11/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/kotaicode/pulumi-dex/blob/v0.7.2/docs/_index.md
+edit_url: https://github.com/kotaicode/pulumi-dex/blob/v0.7.11/docs/_index.md
 title: Dex Provider
 meta_desc: A Pulumi provider for managing Dex (dexidp.io) resources via infrastructure as code.
 layout: package

@@ -1,4 +1,4 @@
-import algoliasearch, { SearchClient } from "algoliasearch/lite";
+import { liteClient as algoliasearch, type LiteClient } from "algoliasearch/lite";
 import { autocomplete, getAlgoliaResults, getAlgoliaFacets } from "@algolia/autocomplete-js";
 import { getTags, getTagsPlugin, setTags, Tag, iconForTag, labelForTag, mapTagsToFilters, groupBy, formatCount, debounce, listenForEvents } from "./utils";
 
@@ -12,7 +12,7 @@ let searchKey: string;
 let indexName: string;
 
 // The autocomplete search client.
-let searchClient: SearchClient;
+let searchClient: LiteClient;
 
 // The set of tags (or "facets"), that the autocomplete control should use for filtering. At least
 // one facet is required and must be set as a comma-delimited list on the `autocompleteContainer`

@@ -1,0 +1,23 @@
+{{ if eq .Type "alert" }}
+  {{ $type := "info" }}
+  {{ $icon := "info-circle" }}
+  {{ if or (eq .AlertType "warning") (eq .AlertType "caution") }}
+    {{ $type = "warning" }}
+    {{ $icon = "exclamation-triangle" }}
+  {{ else if eq .AlertType "tip" }}
+    {{ $icon = "lightbulb" }}
+  {{ end }}
+  <div class="note note-{{ $type }}">
+    <div class="icon-and-line">
+      <i class="fas fa-{{ $icon }}"></i>
+      <div class="line"></div>
+    </div>
+    <div class="content">
+      {{ .Text }}
+    </div>
+  </div>
+{{ else }}
+  <blockquote>
+    {{ .Text }}
+  </blockquote>
+{{ end }}

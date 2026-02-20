@@ -1,0 +1,87 @@
+/* This mirrors the PDS Chip component. */
+.chip {
+    @apply inline-flex items-center justify-center font-semibold;
+    width: fit-content;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    gap: 4px;
+    transition: all 0.25s ease-in-out;
+
+    // Default size: medium
+    @apply text-sm px-3 py-0.5;
+
+    &.chip-small {
+        @apply text-xs px-2;
+        padding-top: 1px;
+        padding-bottom: 1px;
+    }
+
+    &.chip-large {
+        @apply text-base px-4 py-1;
+    }
+
+    &.chip-rounded {
+        border-radius: 16px;
+    }
+
+    // Outline mode (default: gray)
+    &.chip-outline {
+        @apply border-gray-300 text-gray-600;
+    }
+
+    // Filled mode (default: gray)
+    &.chip-filled {
+        @apply bg-gray-200 text-gray-800;
+    }
+
+    // Color variants
+    &.chip-purple {
+        &.chip-outline { @apply border-purple-800 text-purple-800; }
+        &.chip-filled { @apply bg-purple-200 text-purple-800; }
+    }
+
+    &.chip-violet {
+        &.chip-outline { @apply border-violet-800 text-violet-800; }
+        &.chip-filled { @apply bg-violet-200 text-violet-800; }
+    }
+
+    &.chip-blue {
+        &.chip-outline { @apply border-blue-800 text-blue-800; }
+        &.chip-filled { @apply bg-blue-200 text-blue-800; }
+    }
+
+    &.chip-fuchsia {
+        &.chip-outline { @apply border-fuchsia-800 text-fuchsia-800; }
+        &.chip-filled { @apply bg-fuchsia-200 text-fuchsia-800; }
+    }
+
+    &.chip-salmon {
+        &.chip-outline { @apply border-salmon-800 text-salmon-800; }
+        &.chip-filled { @apply bg-salmon-200 text-salmon-800; }
+    }
+
+    &.chip-orange {
+        &.chip-outline { @apply border-orange-800 text-orange-800; }
+        &.chip-filled { @apply bg-orange-200 text-orange-800; }
+    }
+
+    &.chip-red {
+        &.chip-outline { @apply border-red-800 text-red-800; }
+        &.chip-filled { @apply bg-red-200 text-red-800; }
+    }
+
+    &.chip-yellow {
+        &.chip-outline { @apply border-yellow-800 text-yellow-800; }
+        &.chip-filled { @apply bg-yellow-200 text-yellow-800; }
+    }
+
+    &.chip-green {
+        &.chip-outline { @apply border-green-800 text-green-800; }
+        &.chip-filled { @apply bg-green-200 text-green-800; }
+    }
+
+    &.chip-gray {
+        &.chip-outline { @apply border-gray-300 text-gray-600; }
+        &.chip-filled { @apply bg-gray-200 text-gray-600; }
+    }
+}

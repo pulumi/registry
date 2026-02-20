@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/kotaicode/pulumi-dex/v0.7.11/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/kotaicode/pulumi-dex/v0.8.0/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/kotaicode/pulumi-dex/blob/v0.7.11/docs/installation-configuration.md
+edit_url: https://github.com/kotaicode/pulumi-dex/blob/v0.8.0/docs/installation-configuration.md
 title: Installation and Configuration
 meta_desc: Learn how to install and configure the Dex provider for Pulumi.
 layout: package
@@ -43,7 +43,7 @@ The provider binary is automatically downloaded by Pulumi when you use the provi
 pulumi plugin install resource dex v0.1.0
 ```
 
-Or download from [GitHub Releases](https://github.com/kotaicode/pulumi-provider-dex/releases).
+Or download from [GitHub Releases](https://github.com/kotaicode/pulumi-dex/releases).
 
 ## Configuration
 
@@ -287,7 +287,7 @@ To build, generate SDKs, and test against a local Dex instance:
 
 ## Next Steps
 
-- See [Resource Documentation](../README.md#resources) for available resources
-- Check [Examples](../examples/) for complete working examples
+- See [Resource Documentation](../api-docs) for available resources
+- Check [Examples](https://github.com/kotaicode/pulumi-dex/tree/main/examples) for complete working examples
 - Review [Dex Documentation](https://dexidp.io/docs/) for Dex-specific configuration
 

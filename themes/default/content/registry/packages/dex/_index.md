@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/kotaicode/pulumi-dex/v0.7.11/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/kotaicode/pulumi-dex/v0.8.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/kotaicode/pulumi-dex/blob/v0.7.11/docs/_index.md
+edit_url: https://github.com/kotaicode/pulumi-dex/blob/v0.8.0/docs/_index.md
 title: Dex Provider
 meta_desc: A Pulumi provider for managing Dex (dexidp.io) resources via infrastructure as code.
 layout: package
@@ -9,7 +9,7 @@ layout: package
 
 # Dex Provider
 
-The Dex provider for Pulumi allows you to manage Dex (https://dexidp.io/) resources using infrastructure as code. This provider uses the Dex gRPC Admin API to manage OAuth2 clients and identity provider (IdP) connectors.
+The Dex provider for Pulumi allows you to manage [Dex](https://dexidp.io) resources using infrastructure as code. This provider uses the Dex gRPC Admin API to manage OAuth2 clients and identity provider (IdP) connectors.
 
 ## Features
 
@@ -68,7 +68,7 @@ export const clientSecret = client.secret;
 package main
 
 import (
-    "github.com/kotaicode/pulumi-provider-dex/sdk/go/dex"
+    "github.com/kotaicode/pulumi-dex/sdk/go/dex"
     "github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -167,7 +167,7 @@ pulumi.export("client_secret", client.secret)
 
 ## Learn More
 
-- [Installation and Configuration](installation-configuration.md)
-- [GitHub Repository](https://github.com/kotaicode/pulumi-provider-dex)
+- [Installation and Configuration](./installation-configuration)
+- [GitHub Repository](https://github.com/kotaicode/pulumi-dex)
 - [Dex Documentation](https://dexidp.io/docs/)
 

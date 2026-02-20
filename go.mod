@@ -6,5 +6,3 @@ go 1.23
 // will be considered a private Go module as well. We could configure an SSH key to get around
 // that but this is simpler for the time being.
 replace github.com/pulumi/registry/themes/default => ./themes/default
-
-require github.com/pulumi/registry/themes/default v0.0.0-20260218120017-f9a9e5c6a423 // indirect

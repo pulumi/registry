@@ -1,7 +1,6 @@
 import { Component, Element, h, Prop, State, Method } from "@stencil/core";
-import SwiperJS, { Autoplay, Navigation } from "swiper";
-import { AutoplayOptions } from "swiper/components/autoplay";
-import { NavigationOptions } from "swiper/components/navigation";
+import SwiperCore from "swiper";
+import { Autoplay, Navigation } from "swiper/modules";
 
 @Component({
     tag: "pulumi-swiper",
@@ -56,9 +55,15 @@ export class Swiper {
     @State()
     previousBtnClass: string;
 
-    swiper: SwiperJS;
+    swiper: SwiperCore;
 
     componentWillLoad() {
+        this.containerClass = `swiper-container-${this.swiperID}`;
+        this.nextBtnClass = `swiper-button-next-${this.swiperID}`;
+        this.previousBtnClass = `swiper-button-prev-${this.swiperID}`;
+    }
+
+    componentDidLoad() {
         const modules = [];
 
         if (this.autoplay) {
@@ -69,26 +74,19 @@ export class Swiper {
             modules.push(Navigation);
         }
 
-        SwiperJS.use(modules);
-
-        this.containerClass = `swiper-container-${this.swiperID}`;
-        this.nextBtnClass = `swiper-button-next-${this.swiperID}`;
-        this.previousBtnClass = `swiper-button-prev-${this.swiperID}`;
-    }
-
-    componentDidLoad() {
-        const autoplayOptions: AutoplayOptions = {
+        const autoplayOptions = {
             delay: this.autoplayDelay,
             disableOnInteraction: true,
         };
 
-        let navigationOptions: NavigationOptions = {
+        const navigationOptions = {
             nextEl: `.swiper-button-next.${this.nextBtnClass}`,
             prevEl: `.swiper-button-prev.${this.previousBtnClass}`,
         };
 
-        const swipeContainer = this.el.querySelector(`.swiper-container.${this.containerClass}`) as HTMLElement;
-        this.swiper = new SwiperJS(swipeContainer, {
+        const swipeContainer = this.el.querySelector(`.swiper.${this.containerClass}`) as HTMLElement;
+        this.swiper = new SwiperCore(swipeContainer, {
+            modules,
             speed: this.speed,
             direction: this.direction,
             loop: this.loop,
@@ -140,7 +138,7 @@ export class Swiper {
 
     render() {
         return (
-            <div class={`swiper-container ${this.containerClass}`}>
+            <div class={`swiper ${this.containerClass}`}>
                 <div class="swiper-wrapper">
                     <slot></slot>
                 </div>

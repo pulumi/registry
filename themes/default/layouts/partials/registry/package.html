@@ -22,8 +22,11 @@
     <div class="content-container rounded-xl border border-gray-300 h-full relative">
         <div class="p-6" data-type="{{ $packageType }}" data-category="{{ $packageCategory }}" data-title="{{ .package.title }}">
             <div class="flex flex-wrap">
-                <div class="flex w-full items-center justify-between mb-4">
+                <div class="flex w-full justify-between items-start flex-wrap gap-4 mb-4">
                         {{ partial "registry/package/icon.html" .package }}
+                        {{ if and .package.schema_file_url (hasPrefix (urls.Parse .package.schema_file_url).Path "/schemas/registry.opentofu.org/") }}
+                            <div class="chip chip-outline chip-gray chip-small" title="This package uses Any Terraform Provider">Any Terraform</div>
+                        {{ end }}
                 </div>
                 <div class="w-full">
                     <h3 class="text-gray-900 no-anchor text-lg font-semibold font-body title">

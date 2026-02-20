@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/stackitcloud/pulumi-stackit/v0.0.3/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/stackitcloud/pulumi-stackit/v0.0.4/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/stackitcloud/pulumi-stackit/blob/v0.0.3/docs/_index.md
+edit_url: https://github.com/stackitcloud/pulumi-stackit/blob/v0.0.4/docs/_index.md
 title: stackit
 meta_desc: Learn how to use Pulumi's STACKIT provider to manage STACKIT resources.
 layout: package
@@ -9,7 +9,7 @@ layout: package
 
 <div align="center">
 <br>
-<img src=".github/images/stackit-logo.svg" alt="STACKIT logo" width="50%"/>
+<img src="https://raw.githubusercontent.com/stackitcloud/pulumi-stackit/refs/heads/main/.github/images/stackit-logo.svg" alt="STACKIT logo" width="50%"/>
 <br>
 <br>
 </div>
@@ -37,7 +37,7 @@ Apache 2.0
 > [!NOTE]
 > Currently only the npm package is available via the mentioned packages managers but the other ones can be installed locally by using the generated sdks directly.
 > Keep in mind that this is in ALPHA state and only the Resource Manager and IaaS service for Node.js is supported.
-> E.g. in order to create and install the TypeScript SDK you can use the following [guide](./examples/ts/README.md).
+> E.g. in order to create and install the TypeScript SDK you can use the following [guide](https://github.com/stackitcloud/pulumi-stackit/blob/main/examples/ts/README.md).
 
 ### Node.js (JavaScript/TypeScript)
 
@@ -72,10 +72,10 @@ const exampleWithName = new stackit.Network("example_with_name", {
 {{% /choosable %}}
 {{< /chooser >}}
 
-For more examples, please have a look at the [Examples](./examples/).
+For more examples, please have a look at the [Examples](https://github.com/stackitcloud/pulumi-stackit/blob/main/examples).
 
-A detailed authentication guide, information on how to use beta and experimental resources, and available configuration options can be found under [Installation Configuration](./docs/installation-configuration.md).
+A detailed authentication guide, information on how to use beta and experimental resources, and available configuration options can be found under [Installation Configuration](./installation-configuration).
 
 ## Reference
 
-For detailed reference documentation, please visit [the Pulumi registry](https://www.pulumi.com/registry/packages/stackit/api-docs/).
+For detailed reference documentation, please visit [the Pulumi registry](./api-docs/).

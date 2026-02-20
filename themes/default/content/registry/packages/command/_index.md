@@ -1,13 +1,13 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-command/v1.1.3/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-command/v1.2.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-command/blob/v1.1.3/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-command/blob/v1.2.0/docs/_index.md
 title: Command
-meta_desc: The Pulumi Command Provider enables you to execute commands and scripts either locally or remotely as part of the Pulumi resource model.
+meta_desc: The Pulumi Command Provider allows you to run commands, scripts, or configuration management tasks locally or remotely as part of the Pulumi resource model.
 layout: package
 ---
 
-The Pulumi Command Provider enables you to execute commands and scripts either locally or remotely as part of the Pulumi resource model.  The package also includes a resource for copying assets and archives to remote hosts via SSH.  Resources in the command package support running scripts on `create`, `update`, and `destroy` operations, supporting stateful command execution.
+The Pulumi Command Provider enables you to execute commands either locally or remotely as part of the Pulumi resource model. It’s commonly used for running shell scripts or performing configuration management tasks with tools like Ansible, Puppet, or Chef.  The package also includes a resource for copying assets and archives to remote hosts via SSH.  Resources in the command package support running scripts on create, update, and destroy operations, supporting stateful command execution.
 
 There are many scenarios where the Command package can be useful:
 
@@ -15,6 +15,8 @@ There are many scenarios where the Command package can be useful:
 * Running a command locally before deleting a resource, to deregister it with an external service
 * Running a command remotely on a remote host immediately after creating it
 * Copying a file to a remote host after creating it (potentially as a script to be executed afterwards)
+* Running configuration management tools like Ansible playbooks, Chef recipes, or shell scripts on remote hosts
+* Bootstrapping and provisioning servers with custom software and configurations
 * As a simple alternative to some use cases for Dynamic Providers (especially in languages which do not yet support Dynamic Providers).
 
 Some users may have experience with Terraform "provisioners", and the Command package offers support for similar scenarios.  However, the Command package is provided as independent resources which can be combined with other resources in many interesting ways. This has many strengths, but also some differences, such as the fact that a Command resource failing does not cause a resource it is operating on to fail.
@@ -28,7 +30,22 @@ You'll need to [install and configure the Pulumi CLI](https://pulumi.com/docs/in
 
 The simplest use case for `local.Command` is to just run a command on `create`, which can return some value which will be stored in the state file, and will be persistent for the life of the stack (or until the resource is destroyed or replaced).  The example below uses this as an alternative to the `random` package to create some randomness which is stored in Pulumi state.
 
-{{< chooser language "typescript,python,go,csharp,yaml,java" >}}
+{{< chooser language "javascript,typescript,python,go,csharp,yaml,java" >}}
+
+{{% choosable language javascript %}}
+
+```javascript
+"use strict";
+const command = require("@pulumi/command");
+
+const random = new command.local.Command("random", {
+    create: "openssl rand -hex 16",
+});
+
+exports.output = random.stdout;
+```
+
+{{% /choosable %}}
 
 {{% choosable language typescript %}}
 
@@ -165,7 +182,7 @@ Note also that `deleteBeforeReplace` can be composed with `Command` resources to
 
 {{< chooser language "typescript,python,go,csharp,java,yaml" >}}
 
-{{% choosable language "typescript" %}}
+{{% choosable language "javascript,typescript" %}}
 
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
@@ -511,7 +528,36 @@ Note that the Lambda function itself can be created within the same Pulumi progr
 
 The example below simply creates some random value within the Lambda, which is a very roundabout way of doing the same thing as the first "random" example above, but this pattern can be used for more complex scenarios where the Lambda does things a local script could not.
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "javascript,typescript,python,go,csharp,java,yaml" >}}
+
+{{% choosable language "javascript" %}}
+
+```javascript
+"use strict";
+const aws = require("@pulumi/aws");
+const { local } = require("@pulumi/command");
+const { getStack } = require("@pulumi/pulumi");
+
+const f = new aws.lambda.CallbackFunction("f", {
+    publish: true,
+    callback: async (ev) => {
+        return `Stack ${ev.stackName} is deployed!`;
+    }
+});
+
+const invoke = new local.Command("execf", {
+    create: `aws lambda invoke --function-name "$FN" --payload '{"stackName": "${getStack()}"}' --cli-binary-format raw-in-base64-out out.txt >/dev/null && cat out.txt | tr -d '"'  && rm out.txt`,
+    environment: {
+        FN: f.qualifiedArn,
+        AWS_REGION: aws.config.region,
+        AWS_PAGER: "",
+    },
+}, { dependsOn: f })
+
+exports.output = invoke.stdout;
+```
+
+{{% /choosable %}}
 
 {{% choosable language "typescript" %}}
 
@@ -930,7 +976,29 @@ curl \
 
 There are cases where it's important to run some cleanup operation before destroying a resource, in case destroying the resource does not properly handle orderly cleanup.  For example, destroying an EKS Cluster will not ensure that all Kubernetes object finalizers are run, which may lead to leaking external resources managed by those Kubernetes resources.  This example shows how we can use a `delete`-only `Command` to ensure some cleanup is run within a cluster before destroying it.
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "javascript,typescript,python,go,csharp,java,yaml" >}}
+
+{{% choosable language "javascript" %}}
+
+```javascript
+"use strict";
+const command = require("@pulumi/command");
+const eks = require("@pulumi/eks");
+
+const cluster = new eks.Cluster("cluster", {});
+const cleanupKubernetesNamespaces = new command.local.Command("cleanupKubernetesNamespaces", {
+    "delete": "kubectl --kubeconfig <(echo \"$KUBECONFIG_DATA\") delete namespace nginx\n",
+    interpreter: [
+        "/bin/bash",
+        "-c",
+    ],
+    environment: {
+        KUBECONFIG_DATA: cluster.kubeconfigJson,
+    },
+});
+```
+
+{{% /choosable %}}
 
 {{% choosable language "typescript" %}}
 

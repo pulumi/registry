@@ -302,13 +302,13 @@ func cleanMarkdownBody(name, body string) string {
 
 	// Also rewrite any URLs that are local to this repo so they refer back to the GitHub repo content.
 	var lix int
-	var result string
+	var result strings.Builder
 	for _, loc := range markdownLinkURL.FindAllStringSubmatchIndex(tidied, -1) {
 		// Locations:
 		//    - 0:1 is start:end
 		//    - 2:3 is the [...] part, i.e. text
 		//    - 4:5 is the (...) part, i.e. URL
-		result += tidied[lix:loc[0]]
+		result.WriteString(tidied[lix:loc[0]])
 		mdtext := tidied[loc[2]:loc[3]]
 		mdurl := tidied[loc[4]:loc[5]]
 
@@ -323,15 +323,15 @@ func cleanMarkdownBody(name, body string) string {
 				mdurl = fmt.Sprintf("%s/blob/master/%s/%s", gitHubBaseURL, name, mdurl)
 			}
 		}
-		result += fmt.Sprintf("[%s](%s)", mdtext, mdurl)
+		fmt.Fprintf(&result, "[%s](%s)", mdtext, mdurl)
 
 		lix = loc[1]
 	}
 	if lix < len(tidied) {
-		result += tidied[lix:]
+		result.WriteString(tidied[lix:])
 	}
 
-	return result
+	return result.String()
 }
 
 func emitTutorialDocs(root string, tutorials []tutorial) error {

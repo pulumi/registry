@@ -166,11 +166,11 @@ func (g *constructorSyntaxGenerator) writeValue(
 			}
 
 			if value != nil {
-				write("%v", value)
+				write(fmt.Sprintf("%v", value))
 			} else {
 				// all of them enum cases deprecated
 				// choose the first one
-				write("%v", valueType.Elements[0].Value)
+				write(fmt.Sprintf("%v", valueType.Elements[0].Value))
 			}
 		} else {
 			cases := make([]string, len(valueType.Elements))
@@ -189,7 +189,7 @@ func (g *constructorSyntaxGenerator) writeValue(
 			}
 
 			if len(cases) > 0 {
-				write("%q", cases[0])
+				write(fmt.Sprintf("%q", cases[0]))
 			} else {
 				write("null")
 			}
@@ -287,10 +287,9 @@ func (g *constructorSyntaxGenerator) bindProgram(loader schema.ReferenceLoader, 
 		return nil, fmt.Errorf("failed to parse program: %w", parser.Diagnostics)
 	}
 
-	nonStrictOpts := pcl.NonStrictBindOptions()
-	bindOptions := make([]pcl.BindOption, 0, 1+len(nonStrictOpts))
+	bindOptions := make([]pcl.BindOption, 0)
 	bindOptions = append(bindOptions, pcl.Loader(loader))
-	bindOptions = append(bindOptions, nonStrictOpts...)
+	bindOptions = append(bindOptions, pcl.NonStrictBindOptions()...)
 	boundProgram, diagnostics, err := pcl.BindProgram(parser.Files, bindOptions...)
 	if err != nil {
 		return nil, fmt.Errorf("could not bind program: %w", err)

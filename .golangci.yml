@@ -63,12 +63,6 @@ linters:
       - linters:
           - revive
         text: 'redefines-builtin-id: redefinition of the built-in function new'
-      - linters:
-          - revive
-        text: 'var-naming: avoid meaningless package names'
-      - linters:
-          - gosec
-        text: 'G703|G704|G705'
     paths:
       - third_party$
       - builtin$

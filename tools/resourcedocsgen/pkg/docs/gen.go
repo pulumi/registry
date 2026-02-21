@@ -709,7 +709,7 @@ func (mod *modContext) typeString(
 		// Links to anchor tags on the same page must be lower-cased.
 		href = "#" + strings.ToLower(tokenName)
 	case *schema.UnionType:
-		elements := make([]string, 0, len(t.ElementTypes))
+		var elements []string
 		for _, e := range t.ElementTypes {
 			elementLangType := mod.typeString(e, lang, characteristics, false)
 			elements = append(elements, elementLangType.DisplayName)
@@ -1133,7 +1133,7 @@ func (mod *modContext) genNestedTypes(member interface{}, resourceType, isProvid
 				for lang := range language.All() {
 					docLangHelper := dctx.getLanguageDocHelper(lang)
 
-					langEnumValues := make([]enum, 0, len(typ.Elements))
+					var langEnumValues []enum
 					for _, e := range typ.Elements {
 						enumName, err := docLangHelper.GetEnumName(e, name)
 						if err != nil {
@@ -1243,11 +1243,12 @@ func (mod *modContext) getPropertiesWithIDPrefixAndExclude(
 				suffix = "s"
 			}
 			comment += fmt.Sprintf(" It can also be sourced from the following environment variable%s: ", suffix)
-			envVarList := make([]string, len(prop.DefaultValue.Environment))
 			for i, v := range prop.DefaultValue.Environment {
-				envVarList[i] = fmt.Sprintf("`%s`", v)
+				comment += fmt.Sprintf("`%s`", v)
+				if i != len(prop.DefaultValue.Environment)-1 {
+					comment += ", "
+				}
 			}
-			comment += strings.Join(envVarList, ", ")
 		}
 
 		docProperties = append(docProperties, property{

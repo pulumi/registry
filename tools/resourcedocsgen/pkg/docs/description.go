@@ -72,7 +72,7 @@ func markupBlock(block, supportedSnippetLanguages string) string {
 
 	var markedUpBlock strings.Builder
 	// first, append the start chooser
-	fmt.Fprintf(&markedUpBlock, chooserStartFmt, supportedSnippetLanguages)
+	markedUpBlock.WriteString(fmt.Sprintf(chooserStartFmt, supportedSnippetLanguages))
 
 	for _, lang := range languages {
 		// Add language specific open choosable
@@ -108,20 +108,20 @@ func (dctx *Context) processDescription(description, supportedSnippetLanguages s
 	codeBlocks := getCodeSection(description)
 
 	startIndex := 0
-	var markedUpDescription strings.Builder
+	var markedUpDescription string
 	for _, block := range codeBlocks {
 		// append text
-		markedUpDescription.WriteString(description[startIndex:block.open])
+		markedUpDescription += description[startIndex:block.open]
 		codeBlock := description[block.open:block.close]
 		// append marked up block
-		markedUpDescription.WriteString(markupBlock(codeBlock, supportedSnippetLanguages))
+		markedUpDescription += markupBlock(codeBlock, supportedSnippetLanguages)
 		startIndex = block.close + len(endCodeBlock)
 	}
 	// append remainder of description, if any
-	markedUpDescription.WriteString(description[startIndex:])
+	markedUpDescription += description[startIndex:]
 
 	return docInfo{
-		description:   markedUpDescription.String(),
+		description:   markedUpDescription,
 		importDetails: importDetails,
 	}
 }

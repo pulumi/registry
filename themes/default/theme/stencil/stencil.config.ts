@@ -6,7 +6,7 @@ export const config: Config = {
     buildDist: true,
     outputTargets: [
         {
-            type: "dist-custom-elements",
+            type: "dist",
             dir: "./dist",
         },
         {

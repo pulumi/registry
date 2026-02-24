@@ -53,6 +53,7 @@ function initAutocomplete(el: HTMLElement) {
                         {
                             indexName,
                             facet: "section",
+                            type: "facet" as const,
                             params: {
                                 query,
                                 filters: mapTagsToFilters(
@@ -94,8 +95,8 @@ function initAutocomplete(el: HTMLElement) {
                     queries: [
                         {
                             indexName,
-                            query,
                             params: {
+                                query,
                                 filters: mapTagsToFilters(
                                     groupBy(
                                         getTags(state), (tag: any) => tag.facet as string,

@@ -55,14 +55,14 @@ jobs:
     name: Lint Markdown
     runs-on: ubuntu-latest
     steps:
+      - name: Check out branch
+        uses: actions/checkout@v4
+
       - name: Install Node
         uses: actions/setup-node@v4
         with:
           node-version: "24.x"
           cache: 'yarn'
-
-      - name: Check out branch
-        uses: actions/checkout@v4
 
       - name: Lint Markdown
         run: |
@@ -73,14 +73,14 @@ jobs:
     name: Lint Scripts
     runs-on: ubuntu-latest
     steps:
+      - name: Check out branch
+        uses: actions/checkout@v4
+
       - name: Install Node
         uses: actions/setup-node@v4
         with:
           node-version: "24.x"
           cache: 'yarn'
-
-      - name: Check out branch
-        uses: actions/checkout@v4
 
       - name: Yarn Install
         run: yarn install
@@ -156,6 +156,9 @@ jobs:
       - name: Fetch secrets from ESC
         id: esc-secrets
         uses: pulumi/esc-action@6cf9520e68354d86f81c455e8d43eabd58f5c9f5 # v1
+      - name: Check out branch
+        uses: actions/checkout@v4
+
       - name: Install Node
         uses: actions/setup-node@v4
         with:
@@ -178,9 +181,6 @@ jobs:
         with:
           hugo-version: "0.135.0"
           extended: true
-
-      - name: Check out branch
-        uses: actions/checkout@v4
 
       - name: Validate JSON file syntax
         uses: limitusus/json-syntax-check@v2

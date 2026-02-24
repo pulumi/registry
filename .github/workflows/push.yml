@@ -21,9 +21,14 @@ jobs:
         id: esc-secrets
         uses: pulumi/esc-action@6cf9520e68354d86f81c455e8d43eabd58f5c9f5 # v1
         with:
-          # Note: This authenticates using OIDC token 
+          # Note: This authenticates using OIDC token
           environment: github-secrets/pulumi-registry
           export-environment-variables: false
+      - name: Check out branch
+        uses: actions/checkout@v4
+        with:
+          token: ${{ steps.esc-secrets.outputs.PULUMI_BOT_TOKEN }}
+
       - name: Install Node
         uses: actions/setup-node@v4
         with:
@@ -46,11 +51,6 @@ jobs:
         with:
           hugo-version: "0.135.0"
           extended: true
-
-      - name: Check out branch
-        uses: actions/checkout@v4
-        with:
-          token: ${{ steps.esc-secrets.outputs.PULUMI_BOT_TOKEN }}
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4

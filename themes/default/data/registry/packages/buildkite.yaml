@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: Pulumiverse
 repo_url: https://github.com/pulumiverse/pulumi-buildkite
-schema_file_path: provider/cmd/pulumi-resource-buildkite/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumiverse/pulumi-buildkite/v3.2.0/provider/cmd/pulumi-resource-buildkite/schema.json
 title: Buildkite
-updated_on: 1712103422
-version: v3.1.6
+updated_on: 1771859490
+version: v3.2.0

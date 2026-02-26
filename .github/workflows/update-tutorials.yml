@@ -53,13 +53,12 @@ jobs:
           delete-branch: true
           body: |
             Regenerate all tutorials based on the latest available content at https://github.com/pulumi/examples.
-    # Commented temporarily to verify behavior.
-    #   - name: Auto-merge PR
-    #     # If the pull request was created, then we need to mark it as auto-merge.
-    #     if: ${{ steps.ensure-pr.outputs.pull-request-operation == 'created' }}
-    #     run: gh pr merge --auto --rebase "${{ steps.ensure-pr.outputs.pull-request-number }}"
-    #     env:
-    #       GH_TOKEN: ${{ steps.esc-secrets.outputs.PULUMI_BOT_TOKEN }}
+      - name: Auto-merge PR
+        # If the pull request was created, then we need to mark it as auto-merge.
+        if: ${{ steps.ensure-pr.outputs.pull-request-operation == 'created' }}
+        run: gh pr merge --auto --rebase "${{ steps.ensure-pr.outputs.pull-request-number }}"
+        env:
+          GH_TOKEN: ${{ steps.esc-secrets.outputs.PULUMI_BOT_TOKEN }}
   notify:
     if: failure()
     name: Send slack notification

@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-datadog/v4.66.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-datadog/v4.68.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-datadog/blob/v4.66.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-datadog/blob/v4.68.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Datadog Provider
 meta_desc: Provides an overview on how to configure the Pulumi Datadog provider.
@@ -33,7 +33,7 @@ Use the navigation to the left to read about the available resources.
 - `awsSessionToken` (String, Sensitive) The AWS session token; used for cloud-provider-based authentication. This can also be set using the `AWS_SESSION_TOKEN` environment variable. Required when using `cloudProviderType` set to `aws` and using temporary credentials.
 - `cloudProviderRegion` (String) The cloud provider region specifier; used for cloud-provider-based authentication. For example, `us-east-1` for AWS.
 - `cloudProviderType` (String) Specifies the cloud provider used for cloud-provider-based authentication, enabling keyless access without API or app keys. Only [`aws`] is supported. This feature is in Preview. If you'd like to enable it for your organization, contact [support](https://docs.datadoghq.com/help/).
-- `defaultTags` (Block List, Max: 1) [Experimental - Logs Pipelines, Monitors Security Monitoring Rules, and Service Level Objectives only] Configuration block containing settings to apply default resource tags across all resources. (see below for nested schema)
+- `defaultTags` (Block List, Max: 1) [Experimental - Logs Indexes, Logs Pipelines, Monitors Security Monitoring Rules, and Service Level Objectives only] Configuration block containing settings to apply default resource tags across all resources. (see below for nested schema)
 - `httpClientRetryBackoffBase` (Number) The HTTP request retry back off base. Defaults to 2.
 - `httpClientRetryBackoffMultiplier` (Number) The HTTP request retry back off multiplier. Defaults to 2.
 - `httpClientRetryEnabled` (String) Enables request retries on HTTP status codes 429 and 5xx. Valid values are [`true`, `false`]. Defaults to `true`.
@@ -47,4 +47,4 @@ Use the navigation to the left to read about the available resources.
 
 Optional:
 
-- `tags` (Map of String) [Experimental - Logs Pipelines, Monitors Security Monitoring Rules, and Service Level Objectives only] Resource tags to be applied by default across all resources.
+- `tags` (Map of String) [Experimental - Logs Indexes, Logs Pipelines, Monitors Security Monitoring Rules, and Service Level Objectives only] Resource tags to be applied by default across all resources.

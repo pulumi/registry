@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-nomad/v2.5.4/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-nomad/v2.5.5/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-nomad/blob/v2.5.4/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-nomad/blob/v2.5.5/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Nomad Provider
 meta_desc: Provides an overview on how to configure the Pulumi Nomad provider.
@@ -145,7 +145,7 @@ import (
 	"fmt"
 
 	"github.com/pulumi/pulumi-nomad/sdk/v2/go/nomad"
-	"github.com/pulumi/pulumi-std/sdk/go/std"
+	"github.com/pulumi/pulumi-std/sdk/v2/go/std"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 

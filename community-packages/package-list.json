@@ -399,6 +399,14 @@
     {
       "repoSlug": "kotaicode/pulumi-dex",
       "schemaFile": "schema.json"
+    },
+    {
+      "repoSlug": "stackitcloud/pulumi-stackit",
+      "schemaFile": "provider/cmd/pulumi-resource-stackit/schema.json"
+    },
+    {
+      "repoSlug": "AdrianSilaghi/pulumi-danubedata",
+      "schemaFile": "provider/cmd/pulumi-resource-danubedata/schema.json"
     }
   ]
 }

@@ -1,6 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-buildkite/v3.1.6/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-buildkite/v3.2.0/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
+edit_url: https://github.com/pulumiverse/pulumi-buildkite/blob/v3.2.0/docs/installation-configuration.md
 title: Buildkite Installation & Configuration
 meta_desc: Information on how to install the Buildkite provider.
 layout: package
@@ -30,7 +31,18 @@ Use `pulumi config set buildkite:<option>` or pass options to the [constructor o
 
 | Option          | Required/Optional | Description                                                                                                       |
 |-----------------|-------------------|-------------------------------------------------------------------------------------------------------------------|
-| `api_token`     | Required          | A Buildkite API Access Token. Can be configured from the environment variable `BUILDKITE_API_TOKEN`. Must have GraphQL access, as well as the `write_pipelines` and `read_pipelines` scopes. |
+| `apiToken`      | Required          | A Buildkite API Access Token. Can be configured from the environment variable `BUILDKITE_API_TOKEN`. Must have GraphQL access, as well as the `write_pipelines` and `read_pipelines` scopes. |
+| `archivePipelineOnDelete` | Optional | Enable this to archive pipelines when destroying the resource. This is opposed to completely deleting pipelines. |
 | `organization`  | Required          | The Buildkite organization slug. Can be configured from the environment variable `BUILDKITE_ORGANIZATION`. |
-| `graphql_url`  | Optional          | The Buildkite GraphQL URL. Can be configured from the environment variable `BUILDKITE_GRAPHQL_URL`. |
-| `rest_url`  | Optional          | The Buildkite REST URL. Can be configured from the environment variable `BUILDKITE_REST_URL`. |
+| `graphqlUrl`    | Optional          | The Buildkite GraphQL URL. Can be configured from the environment variable `BUILDKITE_GRAPHQL_URL`. |
+| `restUrl`       | Optional          | The Buildkite REST URL. Can be configured from the environment variable `BUILDKITE_REST_URL`. |
+| `timeouts`      | Optional          | A Timeout object (see below) |
+
+### `Timeout` Object
+
+| Field    | Description     |
+|----------|-----------------|
+| `create` | A string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). |
+| `delete` | Value as above. Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs. |
+| `read`   | Value as above. Read operations occur during any refresh or planning operation when refresh is enabled. |
+| `update` | Value as above. |

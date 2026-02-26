@@ -1,6 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-buildkite/v3.1.6/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-buildkite/v3.2.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+edit_url: https://github.com/pulumiverse/pulumi-buildkite/blob/v3.2.0/docs/_index.md
 title: Buildkite
 meta_desc: Provides an overview of the Buildkite Provider for Pulumi.
 layout: package
@@ -10,9 +11,19 @@ The Buildkite provider for Pulumi can be used to provision resources for [Buildk
 
 ## Example
 
-{{< chooser language "typescript,python,csharp" >}}
+{{< chooser language "javascript,typescript,python,csharp" >}}
 
-{{% choosable language typescript %}}
+{{% choosable language javascript %}}
+
+```javascript
+const buildkite = require("@pulumiverse/buildkite")
+
+const agentToken = new buildkite.agent.AgentToken('token', {
+    description: 'agent token',
+})
+```
+
+{{% /choosable %}} {{% choosable language typescript %}}
 
 ```typescript
 import * as buildkite from "@pulumiverse/buildkite";

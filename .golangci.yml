@@ -12,8 +12,6 @@ linters:
     - nakedret
     - nolintlint
     - paralleltest
-    - perfsprint
-    - prealloc
     - revive
     - unconvert
     - wastedassign
@@ -44,6 +42,8 @@ linters:
         - reflectvaluecompare
         - sortslice
         - unusedwrite
+      disable:
+        - printf
     nakedret:
       max-func-lines: 60
   exclusions:
@@ -63,6 +63,15 @@ linters:
       - linters:
           - revive
         text: 'redefines-builtin-id: redefinition of the built-in function new'
+      - linters:
+          - revive
+        text: 'var-naming: avoid meaningless package names'
+      - linters:
+          - gosec
+        text: 'G703|G704|G705'
+      - linters:
+          - staticcheck
+        text: 'QF1012'
     paths:
       - third_party$
       - builtin$

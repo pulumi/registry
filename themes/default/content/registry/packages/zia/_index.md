@@ -1,6 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/zscaler/pulumi-zia/v1.1.1/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/zscaler/pulumi-zia/v1.2.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+edit_url: https://github.com/zscaler/pulumi-zia/blob/v1.2.0/docs/_index.md
 title: Zscaler Internet Access (ZIA)
 meta_desc: Provides an overview of the ZIA Provider for Pulumi.
 layout: overview

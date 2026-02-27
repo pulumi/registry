@@ -8,6 +8,7 @@
         "importHelpers": true,
         "experimentalDecorators": true,
         "noEmitOnError": true,
+        "skipLibCheck": true,
         "lib": ["dom", "es2015"]
     },
     "files": ["src/ts/main.ts"]

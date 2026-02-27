@@ -55,13 +55,14 @@ jobs:
     name: Lint Markdown
     runs-on: ubuntu-latest
     steps:
+      - name: Check out branch
+        uses: actions/checkout@v4
+
       - name: Install Node
         uses: actions/setup-node@v4
         with:
-          node-version: "23.x"
-
-      - name: Check out branch
-        uses: actions/checkout@v4
+          node-version: "24.x"
+          cache: 'yarn'
 
       - name: Lint Markdown
         run: |
@@ -72,13 +73,14 @@ jobs:
     name: Lint Scripts
     runs-on: ubuntu-latest
     steps:
+      - name: Check out branch
+        uses: actions/checkout@v4
+
       - name: Install Node
         uses: actions/setup-node@v4
         with:
-          node-version: "23.x"
-
-      - name: Check out branch
-        uses: actions/checkout@v4
+          node-version: "24.x"
+          cache: 'yarn'
 
       - name: Yarn Install
         run: yarn install
@@ -110,12 +112,19 @@ jobs:
       - name: Install Node
         uses: actions/setup-node@v4
         with:
-          node-version: "23.x"
+          node-version: "24.x"
+          cache: 'yarn'
+          cache-dependency-path: |
+            yarn.lock
+            infrastructure/yarn.lock
+            themes/default/yarn.lock
+            themes/default/theme/yarn.lock
+            themes/default/theme/stencil/yarn.lock
 
       - name: Install Go
         uses: actions/setup-go@v5
         with:
-          go-version: stable
+          go-version: 1.25.x
 
       - name: Install Hugo
         uses: peaceiris/actions-hugo@v3
@@ -147,24 +156,31 @@ jobs:
       - name: Fetch secrets from ESC
         id: esc-secrets
         uses: pulumi/esc-action@6cf9520e68354d86f81c455e8d43eabd58f5c9f5 # v1
+      - name: Check out branch
+        uses: actions/checkout@v4
+
       - name: Install Node
         uses: actions/setup-node@v4
         with:
-          node-version: "22.x"
+          node-version: "24.x"
+          cache: 'yarn'
+          cache-dependency-path: |
+            yarn.lock
+            infrastructure/yarn.lock
+            themes/default/yarn.lock
+            themes/default/theme/yarn.lock
+            themes/default/theme/stencil/yarn.lock
 
       - name: Install Go
         uses: actions/setup-go@v5
         with:
-          go-version: 1.23.x
+          go-version: 1.25.x
 
       - name: Install Hugo
         uses: peaceiris/actions-hugo@v3
         with:
           hugo-version: "0.135.0"
           extended: true
-
-      - name: Check out branch
-        uses: actions/checkout@v4
 
       - name: Validate JSON file syntax
         uses: limitusus/json-syntax-check@v2

@@ -17,7 +17,7 @@ runs:
   steps:
       - name: Create registry PR
         id: create-pr
-        uses: peter-evans/create-pull-request@v5
+        uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ inputs.GITHUB_TOKEN }}
           committer: Pulumi Bot <bot@pulumi.com>

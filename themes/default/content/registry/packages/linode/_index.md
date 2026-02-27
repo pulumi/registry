@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-linode/v5.7.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-linode/v5.8.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-linode/blob/v5.7.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-linode/blob/v5.8.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Linode Provider
 meta_desc: Provides an overview on how to configure the Pulumi Linode provider.
@@ -25,9 +25,6 @@ The provider needs to be configured with the proper credentials before it can be
 
 Use the navigation to the left to read about the available functions.
 ## Example Usage
-
-
-
 {{< chooser language "typescript,python,go,csharp,java,yaml" >}}
 {{% choosable language typescript %}}
 ```yaml
@@ -169,8 +166,6 @@ public class App {
 
 {{% /choosable %}}
 {{< /chooser >}}
-
-
 
 {{< chooser language "typescript,python,go,csharp,java,yaml" >}}
 {{% choosable language typescript %}}
@@ -403,9 +398,6 @@ config:
 
 Additionally, the version can be set with the `LINODE_API_VERSION` environment variable.
 ## Rate Limiting
-
-The Linode API may apply rate limiting when you update the state for a large inventory:
-
 ```
 Error: Error getting Linode DomainRecord ID 123456: [002] unexpected end of JSON input
 
@@ -418,9 +410,6 @@ If this affects you, run Pulumi with --parallelism=1
 ## Using Configuration Files
 
 Configuration files can be used to specify Linode client configuration options across various Linode integrations.
-
-For example:
-
 `~/.config/linode`
 
 ```ini
@@ -440,9 +429,6 @@ runtime:
 Specifying the `token` provider options or defining `LINODE_TOKEN` in the environment will override any tokens loaded from a configuration file.
 
 Profiles can also be defined for multitenant use-cases. Every profile will inherit fields from the `default` profile.
-
-For example:
-
 `~/.config/linode`
 
 ```ini
@@ -469,9 +455,6 @@ config:
 ```
 
 Configuration Profiles also expose additional client configuration fields such as `apiUrl` and `apiVersion`.
-
-For example:
-
 `~/.config/linode`
 
 ```ini

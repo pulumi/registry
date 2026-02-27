@@ -4,6 +4,7 @@ import { createTagsPlugin } from "@algolia/autocomplete-plugin-tags";
 export interface Tag {
     label: string;
     facet: string;
+    [key: string]: unknown;
 }
 
 // Converts a list of tags into an Algolia filter query.
@@ -39,7 +40,7 @@ export function groupBy(items, predicate) {
 // Algolia "facets" for filtering results.
 // https://www.algolia.com/doc/ui-libraries/autocomplete/api-reference/autocomplete-plugin-tags/createTagsPlugin/
 export function getTagsPlugin(baseTags) {
-    return createTagsPlugin({
+    return createTagsPlugin<Tag>({
         initialTags: baseTags,
         transformSource: ({ source }) => {
             return undefined;

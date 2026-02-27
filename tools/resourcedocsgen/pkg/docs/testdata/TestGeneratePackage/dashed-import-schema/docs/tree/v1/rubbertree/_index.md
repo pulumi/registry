@@ -256,17 +256,17 @@ var rubberTreeResource = new Plant.Tree.V1.RubberTree("rubberTreeResource", new(
 <pulumi-choosable type="language" values="go">
 
 ```go
-example, err := tree.NewRubberTree(ctx, "rubberTreeResource", &tree.RubberTreeArgs{
-	Diameter: tree.DiameterSixinch,
-	Type:     tree.RubberTreeVarietyBurgundy,
+example, err := v1.NewRubberTree(ctx, "rubberTreeResource", &v1.RubberTreeArgs{
+	Diameter: v1.DiameterSixinch,
+	Type:     v1.RubberTreeVarietyBurgundy,
 	Container: &plantprovider.ContainerArgs{
 		Size:       plant.ContainerSizeFourInch,
 		Brightness: plant.ContainerBrightnessZeroPointOne,
 		Color:      pulumi.String(plant.ContainerColorRed),
 		Material:   pulumi.String("string"),
 	},
-	Farm: pulumi.String(tree.Farm_Pulumi_Planters_Inc_),
-	Size: tree.TreeSizeSmall,
+	Farm: pulumi.String(v1.Farm_Pulumi_Planters_Inc_),
+	Size: v1.TreeSizeSmall,
 })
 ```
 

@@ -242,7 +242,7 @@ var resourceResource = new Foo.Nested.Module.Resource("resourceResource", new()
 <pulumi-choosable type="language" values="go">
 
 ```go
-example, err := nested.NewResource(ctx, "resourceResource", &nested.ResourceArgs{
+example, err := module.NewResource(ctx, "resourceResource", &module.ResourceArgs{
 	Bar: pulumi.String("string"),
 })
 ```

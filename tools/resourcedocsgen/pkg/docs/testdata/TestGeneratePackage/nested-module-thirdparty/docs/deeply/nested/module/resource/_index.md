@@ -242,7 +242,7 @@ var resourceResource = new FooBar.Deeply.Nested.Module.Resource("resourceResourc
 <pulumi-choosable type="language" values="go">
 
 ```go
-example, err := deeply.NewResource(ctx, "resourceResource", &deeply.ResourceArgs{
+example, err := module.NewResource(ctx, "resourceResource", &module.ResourceArgs{
 	Baz: pulumi.String("string"),
 })
 ```

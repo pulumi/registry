@@ -2,15 +2,15 @@
 # Do not edit by hand unless you're certain you know what you are doing!
 category: Cloud
 component: false
-description: A Pulumi package for creating and managing zia cloud resources.
+description: A native Pulumi provider for Zscaler Internet Access (ZIA).
 featured: false
-logo_url: https://raw.githubusercontent.com/zscaler/pulumi-zia/master/assets/zscaler.png
+logo_url: ""
 name: zia
-native: false
+native: true
 package_status: ga
 publisher: Zscaler
 repo_url: https://github.com/zscaler/pulumi-zia
-schema_file_url: https://raw.githubusercontent.com/zscaler/pulumi-zia/v1.2.0/provider/cmd/pulumi-resource-zia/schema.json
-title: Zscaler Internet Access
-updated_on: 1771557049
-version: v1.2.0
+schema_file_url: https://raw.githubusercontent.com/zscaler/pulumi-zia/v1.3.3/provider/cmd/pulumi-resource-zia/schema.json
+title: pulumi-resource-zia
+updated_on: 1772214674
+version: v1.3.3

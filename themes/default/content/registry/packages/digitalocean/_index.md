@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-digitalocean/v4.59.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-digitalocean/v4.60.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-digitalocean/blob/v4.59.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-digitalocean/blob/v4.60.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: DigitalOcean Provider
 meta_desc: Provides an overview on how to configure the Pulumi DigitalOcean provider.
@@ -192,7 +192,7 @@ public class App {
 
     public static void stack(Context ctx) {
         final var config = ctx.config();
-        final var doToken = config.get("doToken");
+        final var doToken = config.require("doToken");
         // Create a web server
         var web = new Droplet("web");
 

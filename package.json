@@ -6,27 +6,27 @@
     "author": "Christian Nunciato <c@nunciato.org>",
     "license": "Apache-2.0",
     "dependencies": {
-        "@aws-sdk/client-s3": "^3.0.0",
+        "@aws-sdk/client-s3": "^3.1000.0",
         "@fullhuman/postcss-purgecss": "^4.0.3",
         "@octokit/auth-action": "^5.0.0",
         "@octokit/graphql": "^7.0.0",
         "@octokit/rest": "^21.0.0",
-        "@slack/web-api": "^7.7.0",
+        "@slack/web-api": "^7.14.1",
         "broken-link-checker": "^0.7.8",
-        "cheerio": "^1.0.0-rc.12",
+        "cheerio": "^1.2.0",
         "concurrently": "^6.0.0",
         "cssnano": "^5.0.8",
-        "cypress": "^13.6.4",
+        "cypress": "^13.17.0",
         "glob": "^7.2.0",
         "htmlparser2": "^9.1.0",
         "http-server": "^14.1.1",
         "js-yaml": "^4.1.0",
         "jsdom": "^22.0.0",
-        "markdownlint": "^0.28.0",
-        "mocha": "^10.6.0",
-        "postcss": "^8.4.47",
+        "markdownlint": "^0.40.0",
+        "mocha": "^10.8.2",
+        "postcss": "^8.5.6",
         "postcss-cli": "^8.3.1",
-        "sitemapper": "^3.2.2",
+        "sitemapper": "^3.2.24",
         "util": "^0.12.5"
     },
     "scripts": {
@@ -37,12 +37,12 @@
         "check-links": "node scripts/link-checker/check-links.js \"https://www.pulumi.com/registry\" 2"
     },
     "devDependencies": {
-        "@eslint/js": "^9.19.0",
-        "chai": "4.2.0",
+        "@eslint/js": "^9.39.3",
+        "chai": "4.5.0",
         "cypress-multi-reporters": "^1.6.4",
-        "eslint": "^9.19.0",
-        "globals": "^15.14.0",
-        "mocha-ctrf-json-reporter": "^0.0.4",
-        "prettier": "3.4.2"
+        "eslint": "^9.39.3",
+        "globals": "^15.15.0",
+        "mocha-ctrf-json-reporter": "^0.0.10",
+        "prettier": "3.8.1"
     }
 }

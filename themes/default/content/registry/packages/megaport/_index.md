@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/megaport/megaport/1.4.7/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/megaport/megaport/1.5.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Megaport Provider
@@ -2285,6 +2285,40 @@ This warning appears because Pulumi detects a difference in the partner port UID
 ### Workaround
 
 To prevent these warnings and ensure configuration stability, we recommend explicitly specifying the `productUid` in your partner port function once your connections are established:
+## Importing Existing Resources
+
+When importing existing Megaport resources into Pulumi, you may notice that certain computed fields appear to change from "unknown" to their actual values on the first `pulumi up` after import. **This is expected behavior and not actual configuration drift.**
+### Expected Import Behavior for Computed Fields
+
+The following fields are managed by the Megaport API and will populate from the API during import:
+#### Timestamp Fields
+- `createDate` - Set when the resource is created
+- `liveDate` - Set when the resource becomes active
+- `contractStartDate` - Set when the contract begins
+- `contractEndDate` - Calculated based on contract term
+- `terminateDate` - Set when termination is scheduled
+#### Status Fields
+- `provisioningStatus` - Current lifecycle state (e.g., CONFIGURED, LIVE, DECOMMISSIONED)
+### What You'll See After Import
+
+```bash
+# After importing a resource
+pulumi import megaport_port.example abc123
+
+# First plan after import may show these fields changing from unknown → actual value
+pulumi preview
+```
+
+Example plan output:
+
+**This is normal!** These fields are being populated from the API for the first time. Run `pulumi up` to update the state, and subsequent plans will show no changes.
+### Best Practice for Imports
+
+1. Import the resource
+2. Run `pulumi preview` - you'll see computed fields updating
+3. Review the plan to ensure it matches your expectations
+4. Run `pulumi up` to update the state
+5. Run `pulumi preview` again - should show no changes
 ## End-of-Term Cancellation
 
 By default, when Pulumi deletes resources, they are immediately cancelled in the Megaport portal. However, you may prefer to have resources marked for cancellation at the end of their current billing term instead of immediate cancellation.

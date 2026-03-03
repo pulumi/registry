@@ -1,23 +1,37 @@
 {{ $directories := (split .Page.File.Path "/")}}
-{{ $packageName := index $directories 2 }}
+{{ $rawPackageName := index $directories 2 }}
+{{ $isVersioned := strings.Contains $rawPackageName "@" }}
+{{ $basePackageName := cond $isVersioned (index (split $rawPackageName "@") 0) $rawPackageName }}
+{{ $versionSlug := cond $isVersioned (index (split $rawPackageName "@") 1) "" }}
+
+{{ $packageData := index $.Site.Data.registry.packages $basePackageName }}
+{{ if $isVersioned }}
+    {{ with index $.Site.Data.registry.package_versions $rawPackageName }}
+        {{ $packageData = . }}
+    {{ end }}
+{{ end }}
+
+{{ $iconData := index $.Site.Data.registry.packages $basePackageName }}
 
 <div class="package-card">
-    {{ with (index $.Site.Data.registry.packages ($packageName)) }}
+    {{ with $iconData }}
         <div>
             {{ partial "registry/package/icon.html" . }}
         </div>
     {{ end }}
 
-    {{ .Scratch.Set "package" $packageName }}
+    {{ .Scratch.Set "package" $basePackageName }}
     {{ partial "registry/package/package-alert.html" . }}
 
-    {{ with (index $.Site.Data.registry.packages ($packageName)) }}
+    {{ with $packageData }}
         <div class="version-info">
-            {{ .title }} {{ .version }} published on {{ ((time .updated_on).Format "Monday, Jan 2, 2006") }} by {{ .publisher }}
+            {{ .title }} {{ .version }}{{ if $isVersioned }} ({{ $versionSlug }}){{ end }} published on {{ ((time .updated_on).Format "Monday, Jan 2, 2006") }} by {{ .publisher }}
         </div>
+    {{ end }}
+    {{ with $packageData }}
         <div class="package-link">
             <i class="fas fa-file-code"></i>
-            <a href="/registry/packages/{{ $packageName }}/schema.json" target="_blank" rel="noopener noreferrer">
+            <a href="/registry/packages/{{ $rawPackageName }}/schema.json" target="_blank" rel="noopener noreferrer">
                 <span>Schema (JSON)</span>
             </a>
         </div>
@@ -29,4 +43,5 @@
             </a>
         </div>
     {{ end }}
+    {{ partial "registry/package/version-selector.html" (dict "Site" $.Site "rawPackageName" $rawPackageName "basePackageName" $basePackageName "isVersioned" $isVersioned "versionSlug" $versionSlug) }}
 </div>

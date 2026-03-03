@@ -31,17 +31,9 @@ export REL_CSS_BUNDLE="/css/styles.${ASSET_BUNDLE_ID}.css"
 export REL_JS_BUNDLE="/js/bundle.min.${ASSET_BUNDLE_ID}.js"
 export REPO_THEME_PATH="themes/default/"
 
-pushd tools/resourcedocsgen
-go build -o "${GOPATH}/bin/resourcedocsgen" .
-popd
-
 REGISTRY_COMMIT="$(git_sha_short)"
 printf "Generating API docs from registry commit %s...\n\n" "${REGISTRY_COMMIT}"
-resourcedocsgen docs registry \
-    --baseDocsOutDir "themes/default/content/registry/packages" \
-    --basePackageTreeJSONOutDir "themes/default/static/registry/packages/navs" \
-    --baseSchemasOutDir "themes/default/static/registry/packages" \
-    --logtostderr
+make api-docs
 
 # Apply fixes. See script for details.
 node ./scripts/apply-fixes.js

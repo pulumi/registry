@@ -1,0 +1,4 @@
+registry/packages/aws-v6/index.html|https://www.pulumi.com/registry/packages/aws@6.x/
+registry/packages/aws-v6/api-docs/index.html|https://www.pulumi.com/registry/packages/aws@6.x/api-docs/
+registry/packages/azure-native-v2/index.html|https://www.pulumi.com/registry/packages/azure-native@2.x/
+registry/packages/azure-native-v2/api-docs/index.html|https://www.pulumi.com/registry/packages/azure-native@2.x/api-docs/

@@ -250,12 +250,12 @@ var nurseryResource = new Plant.Tree.V1.Nursery("nurseryResource", new()
 <pulumi-choosable type="language" values="go">
 
 ```go
-example, err := tree.NewNursery(ctx, "nurseryResource", &tree.NurseryArgs{
+example, err := v1.NewNursery(ctx, "nurseryResource", &v1.NurseryArgs{
 	Varieties: treev1.RubberTreeVarietyArray{
-		tree.RubberTreeVarietyBurgundy,
+		v1.RubberTreeVarietyBurgundy,
 	},
 	Sizes: treev1.TreeSizeMap{
-		"string": tree.TreeSizeSmall,
+		"string": v1.TreeSizeSmall,
 	},
 })
 ```

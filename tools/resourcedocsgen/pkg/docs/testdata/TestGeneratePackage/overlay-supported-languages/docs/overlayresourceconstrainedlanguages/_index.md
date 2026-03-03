@@ -248,10 +248,10 @@ var overlayResourceConstrainedLanguagesResource = new Example.OverlayResourceCon
 
 ```go
 example, err := example.NewOverlayResourceConstrainedLanguages(ctx, "overlayResourceConstrainedLanguagesResource", &example.OverlayResourceConstrainedLanguagesArgs{
-Bar: .EnumOverlaySomeEnumValue,
-Foo: &example.ConfigMapOverlayArgs{
-Config: pulumi.String("string"),
-},
+	Bar: example.EnumOverlaySomeEnumValue,
+	Foo: &example.ConfigMapOverlayArgs{
+		Config: pulumi.String("string"),
+	},
 })
 ```
 

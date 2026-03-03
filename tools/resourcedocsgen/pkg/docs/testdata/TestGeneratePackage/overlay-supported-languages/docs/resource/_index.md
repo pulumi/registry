@@ -248,10 +248,10 @@ var resourceResource = new Example.Resource("resourceResource", new()
 
 ```go
 example, err := example.NewResource(ctx, "resourceResource", &example.ResourceArgs{
-Bar: .EnumOverlaySomeEnumValue,
-Foo: &example.ConfigMapOverlayArgs{
-Config: pulumi.String("string"),
-},
+	Bar: example.EnumOverlaySomeEnumValue,
+	Foo: &example.ConfigMapOverlayArgs{
+		Config: pulumi.String("string"),
+	},
 })
 ```
 

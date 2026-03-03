@@ -248,10 +248,10 @@ var overlayResourceResource = new Example.OverlayResource("overlayResourceResour
 
 ```go
 example, err := example.NewOverlayResource(ctx, "overlayResourceResource", &example.OverlayResourceArgs{
-Bar: .EnumOverlaySomeEnumValue,
-Foo: &example.ConfigMapOverlayArgs{
-Config: pulumi.String("string"),
-},
+	Bar: example.EnumOverlaySomeEnumValue,
+	Foo: &example.ConfigMapOverlayArgs{
+		Config: pulumi.String("string"),
+	},
 })
 ```
 

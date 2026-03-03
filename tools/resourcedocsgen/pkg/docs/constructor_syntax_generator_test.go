@@ -172,9 +172,9 @@ no_inputs_resource = test.NoInputs("noInputsResource")
 	equalPrograms(constructorSyntax.golang, "test:index:First", `
 _, err := test.NewFirst(ctx, "firstResource", &test.FirstArgs{
 	FooBool:        pulumi.Bool(false),
-	FooEnum:        index.ExampleEnumFirst,
+	FooEnum:        test.ExampleEnumFirst,
 	FooInt:         pulumi.Int(0),
-	FooNumericEnum: index.ExampleNumericEnumFirst,
+	FooNumericEnum: test.ExampleNumericEnumFirst,
 	FooString:      pulumi.String("string"),
 })`)
 

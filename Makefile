@@ -53,18 +53,32 @@ bin/resourcedocsgen: $(shell ${HELPMAKEGO} tools/resourcedocsgen)
 bin/mktutorial: $(shell ${HELPMAKEGO} tools/mktutorial)
 	go build -C tools/mktutorial -o ../../bin ./...
 
+# Generate API docs for all packages, then versioned docs for blessed packages.
+.PHONY: api-docs
+api-docs: bin/resourcedocsgen
+	bin/resourcedocsgen docs registry \
+		--baseDocsOutDir ./themes/default/content/registry/packages \
+		--basePackageTreeJSONOutDir ./themes/default/static/registry/packages/navs \
+		--baseSchemasOutDir ./themes/default/static/registry/packages \
+		--logtostderr
+	./scripts/generate-versioned-docs.sh
+
 # Generate the API docs for `content/registry/packages/<pkg>`, where <pkg> is the name of
 # the package to be handed off to resourcedocsgen.
 .SECONDEXPANSION: # Needed for content/registry/packages/% to have dependencies that reference %.
 api-docs/%: .make/content/registry/packages/$$*/api-docs ;
 .make/content/registry/packages/%/api-docs: bin/resourcedocsgen \
 				themes/default/data/registry/packages/%.yaml \
+				scripts/generate-versioned-docs.sh \
 				$$(wildcard themes/default/content/registry/packages/%/*)
+	@if [ -L ./content/registry/packages/$* ]; then rm ./content/registry/packages/$*; fi
+	@if [ -L ./static/registry/packages/navs/$*.json ]; then rm ./static/registry/packages/navs/$*.json; fi
 	bin/resourcedocsgen docs registry \
 		--baseDocsOutDir ./content/registry/packages \
 		--basePackageTreeJSONOutDir ./static/registry/packages/navs \
 		--baseSchemasOutDir ./static/registry/packages \
 		$*
+	CONTENT_DIR=$(CURDIR)/content/registry/packages STATIC_DIR=$(CURDIR)/static/registry/packages ./scripts/generate-versioned-docs.sh $*
 	@mkdir -p "$(@D)"
 	@touch $@
 

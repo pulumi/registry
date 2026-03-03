@@ -14,10 +14,10 @@ jobs:
     name: Run browser tests
     runs-on: pulumi-ubuntu-8core
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@v6
         with:
           role-to-assume: arn:aws:iam::388588623842:role/ContinuousDelivery
           role-session-name: docs-deploy
@@ -25,7 +25,7 @@ jobs:
           aws-region: us-west-2
 
       - name: Install Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: "24.x"
 

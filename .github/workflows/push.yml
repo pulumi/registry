@@ -25,12 +25,12 @@ jobs:
           environment: github-secrets/pulumi-registry
           export-environment-variables: false
       - name: Check out branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           token: ${{ steps.esc-secrets.outputs.PULUMI_BOT_TOKEN }}
 
       - name: Install Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: "24.x"
           cache: 'yarn'
@@ -42,7 +42,7 @@ jobs:
             themes/default/theme/stencil/yarn.lock
 
       - name: Install Go
-        uses: actions/setup-go@v5
+        uses: actions/setup-go@v6
         with:
           go-version: 1.25.x
 
@@ -53,7 +53,7 @@ jobs:
           extended: true
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@v6
         with:
           role-to-assume: arn:aws:iam::388588623842:role/ContinuousDelivery
           role-session-name: docs-deploy
@@ -77,12 +77,12 @@ jobs:
           NODE_OPTIONS: "--max_old_space_size=8192"
 
       - name: Archive bucket metadata
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: origin-bucket-metadata
           path: origin-bucket-metadata.json
       - name: Install uv
-        uses: astral-sh/setup-uv@v5
+        uses: astral-sh/setup-uv@v7
       - name: Push to the Live Registry
         run: uv run --with requests,pyyaml ./scripts/ci/push-registry.py
         env:

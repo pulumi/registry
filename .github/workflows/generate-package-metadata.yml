@@ -18,7 +18,7 @@ jobs:
       - name: Fetch secrets from ESC
         id: esc-secrets
         uses: pulumi/esc-action@6cf9520e68354d86f81c455e8d43eabd58f5c9f5 # v1
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - id: set-matrix
         run: echo "matrix=$(python generate_package_list.py)" >> $GITHUB_OUTPUT
         working-directory: community-packages
@@ -62,7 +62,7 @@ jobs:
         run: echo "skip=1" >> $GITHUB_OUTPUT
       - name: Check out registry repo
         if: steps.skip-run.outputs.skip != 1
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Sleep to prevent hitting secondary rate limits
         if: steps.skip-run.outputs.skip != 1
         run: sleep 1

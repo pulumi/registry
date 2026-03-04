@@ -8,15 +8,19 @@
 
 {{ $latestData := index $site.Data.registry.packages $basePackageName }}
 {{ if $latestData }}
-    {{ $versions = $versions | append (dict "slug" "" "version" $latestData.version "label" (printf "%s (latest)" $latestData.version) "url" (printf "/registry/packages/%s/" $basePackageName)) }}
+    {{ $latestMajor := index (split (strings.TrimPrefix "v" $latestData.version) ".") 0 }}
+    {{ $versions = $versions | append (dict "slug" "" "sortKey" (int $latestMajor) "version" $latestData.version "label" (printf "%s (%s.x, latest)" $latestData.version $latestMajor) "url" (printf "/registry/packages/%s/" $basePackageName)) }}
 {{ end }}
 
 {{ range $key, $data := $site.Data.registry.package_versions }}
     {{ if hasPrefix $key (printf "%s@" $basePackageName) }}
         {{ $vSlug := index (split $key "@") 1 }}
-        {{ $versions = $versions | append (dict "slug" $vSlug "version" $data.version "label" (printf "%s (%s)" $data.version $vSlug) "url" (printf "/registry/packages/%s/" $key)) }}
+        {{ $sortKey := int (index (split $vSlug ".") 0) }}
+        {{ $versions = $versions | append (dict "slug" $vSlug "sortKey" $sortKey "version" $data.version "label" (printf "%s (%s)" $data.version $vSlug) "url" (printf "/registry/packages/%s/" $key)) }}
     {{ end }}
 {{ end }}
+
+{{ $versions = sort $versions "sortKey" "desc" }}
 
 {{ if gt (len $versions) 1 }}
 <div class="version-selector-wrapper package-link">

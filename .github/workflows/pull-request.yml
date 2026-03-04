@@ -204,6 +204,13 @@ jobs:
       - name: Configure git for private Go modules
         run: git config --global url."https://${{ steps.esc-secrets.outputs.PULUMI_BOT_TOKEN }}:x-oauth-basic@github.com/pulumi/registry-mirror-tools".insteadOf "https://github.com/pulumi/registry-mirror-tools"
 
+      - name: Cache provider schemas
+        uses: actions/cache@v4
+        with:
+          path: .cache/schemas
+          key: schemas-${{ github.run_id }}
+          restore-keys: schemas-
+
       - name: Build and deploy preview
         run: make ci-pull-request
         env:

@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-f5bigip/v3.19.3/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-f5bigip/v3.20.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-f5bigip/blob/v3.19.3/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-f5bigip/blob/v3.20.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: F5bigip Provider
 meta_desc: Provides an overview on how to configure the Pulumi F5bigip provider.
@@ -207,9 +207,9 @@ public class App {
 
     public static void stack(Context ctx) {
         final var config = ctx.config();
-        final var hostname = config.get("hostname");
-        final var username = config.get("username");
-        final var password = config.get("password");
+        final var hostname = config.require("hostname");
+        final var username = config.require("username");
+        final var password = config.require("password");
     }
 }
 ```

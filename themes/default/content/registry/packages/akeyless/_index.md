@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/akeyless-community/akeyless/1.11.5/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/akeyless-community/akeyless/1.11.6/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Akeyless Provider
@@ -121,7 +121,7 @@ Example currently unavailable in this language
 <a id="nestedblock--api_key_login"></a>
 ### Nested Schema for `apiKeyLogin`
 
-Optional:
+Required:
 
 - `accessId` (String)
 - `accessKey` (String, Sensitive)

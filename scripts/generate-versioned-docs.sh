@@ -1,16 +1,28 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-for cmd in jq yq curl go; do
+for cmd in jq yq curl; do
     command -v "$cmd" >/dev/null || { echo "Missing dependency: $cmd" >&2; exit 1; }
 done
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 
-# Install registry-mirror-discover (pinned commit for stability)
+# Use pre-built resourcedocsgen binary if available, otherwise build it.
+RESOURCEDOCSGEN="${RESOURCEDOCSGEN:-$REPO_ROOT/bin/resourcedocsgen}"
+if [[ ! -x "$RESOURCEDOCSGEN" ]]; then
+    echo "Building resourcedocsgen..."
+    make -C "$REPO_ROOT" bin/resourcedocsgen
+fi
+
+# Install registry-mirror-discover (pinned commit for stability).
+# Cache the built binary to avoid recompiling on every build.
 REGISTRY_MIRROR_TOOLS_COMMIT="becca918a99a2a0809ad7d35a551b8a4a8018639"
-GOPRIVATE=github.com/pulumi go install "github.com/pulumi/registry-mirror-tools/cmd/registry-mirror-discover@${REGISTRY_MIRROR_TOOLS_COMMIT}"
+DISCOVER_BIN="$REPO_ROOT/bin/registry-mirror-discover"
+if [[ ! -x "$DISCOVER_BIN" ]]; then
+    echo "Building registry-mirror-discover..."
+    GOBIN="$REPO_ROOT/bin" GOPRIVATE=github.com/pulumi go install "github.com/pulumi/registry-mirror-tools/cmd/registry-mirror-discover@${REGISTRY_MIRROR_TOOLS_COMMIT}"
+fi
 
 # Allow overriding output directories (for local vs CI paths)
 CONTENT_DIR="${CONTENT_DIR:-$REPO_ROOT/themes/default/content/registry/packages}"
@@ -80,6 +92,9 @@ derive_index_url() {
     fi
 }
 
+# Compute a fingerprint for the resourcedocsgen binary to invalidate cached output when the tool changes.
+DOCSGEN_HASH=$(sha256sum "$RESOURCEDOCSGEN" | cut -d' ' -f1)
+
 mkdir -p "$CONTENT_DIR" "$STATIC_DIR/navs" "$PACKAGE_VERSIONS_DIR"
 
 # Temp directory for resourcedocsgen output (avoids overwriting latest nav JSON)
@@ -104,7 +119,7 @@ if [[ ! -f "$PACKAGE_YAML" ]]; then
 fi
 
 echo "Discovering versions for $PACKAGE..."
-VERSIONS_JSON=$(registry-mirror-discover \
+VERSIONS_JSON=$("$DISCOVER_BIN" \
     "$REPO_ROOT" \
     --packages "$PACKAGE" \
     --major-count "$MAJOR_COUNT" \
@@ -136,10 +151,18 @@ while read -r VERSION_INFO; do
         continue
     fi
 
+    # Skip unchanged packages: if docs were already generated from this exact schema URL
+    # with this exact version of resourcedocsgen, reuse them.
+    DOCS_OUT_DIR="$CONTENT_DIR/$VERSIONED_NAME"
+    SENTINEL="$DOCS_OUT_DIR/.generated"
+    if [[ -f "$SENTINEL" ]] && grep -q "${SCHEMA_URL}	${DOCSGEN_HASH}" "$SENTINEL" 2>/dev/null; then
+        echo "Skipping $VERSIONED_NAME (already generated, inputs unchanged)"
+        GENERATED_VERSIONS+=("$VERSIONED_NAME")
+        continue
+    fi
+
     echo ""
     echo "=== Processing $PACKAGE v$VERSION ($VERSION_SLUG) ==="
-
-    DOCS_OUT_DIR="$CONTENT_DIR/$VERSIONED_NAME"
 
     rm -rf "$DOCS_OUT_DIR"
     mkdir -p "$DOCS_OUT_DIR"
@@ -180,13 +203,13 @@ while read -r VERSION_INFO; do
         fi
     fi
 
-    # Generate API docs using cached schema (output nav to temp dir to avoid overwriting latest)
+    # Generate API docs using pre-built binary (output nav to temp dir to avoid overwriting latest)
     echo "Generating API docs..."
-    if ! (cd "$REPO_ROOT/tools/resourcedocsgen" && go run . docs \
+    if ! "$RESOURCEDOCSGEN" docs \
         --schemaFile "$CACHED_SCHEMA" \
         --version "v$VERSION" \
         --docsOutDir "$DOCS_OUT_DIR/api-docs" \
-        --packageTreeJSONOutDir "$NAV_TEMP_DIR"); then
+        --packageTreeJSONOutDir "$NAV_TEMP_DIR"; then
         echo "Warning: Failed to generate docs for $VERSIONED_NAME, skipping"
         rm -rf "$DOCS_OUT_DIR"
         continue
@@ -219,6 +242,10 @@ repo_url: $PACKAGE_REPO_URL
 publisher: $PACKAGE_PUBLISHER
 updated_on: $(date +%s)
 YAML
+
+    # Write sentinel file to enable skip-if-unchanged on subsequent builds.
+    # Includes both schema URL and docsgen binary hash so we regenerate if either changes.
+    echo -e "${SCHEMA_URL}\t${DOCSGEN_HASH}" > "$SENTINEL"
 
     echo "Done with $VERSIONED_NAME"
     GENERATED_VERSIONS+=("$VERSIONED_NAME")

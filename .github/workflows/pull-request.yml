@@ -211,6 +211,12 @@ jobs:
           key: schemas-${{ github.run_id }}
           restore-keys: schemas-
 
+      - name: Cache registry-mirror-discover binary
+        uses: actions/cache@v4
+        with:
+          path: bin/registry-mirror-discover
+          key: registry-mirror-discover-becca918a99a2a0809ad7d35a551b8a4a8018639
+
       - name: Build and deploy preview
         run: make ci-pull-request
         env:

@@ -54,6 +54,7 @@ bin/mktutorial: $(shell ${HELPMAKEGO} tools/mktutorial)
 	go build -C tools/mktutorial -o ../../bin ./...
 
 # Generate API docs for all packages, then versioned docs for blessed packages.
+# Set SKIP_VERSIONED_DOCS=1 to skip versioned docs generation (e.g. when running in a parallel CI job).
 .PHONY: api-docs
 api-docs: bin/resourcedocsgen
 	bin/resourcedocsgen docs registry \
@@ -61,7 +62,7 @@ api-docs: bin/resourcedocsgen
 		--basePackageTreeJSONOutDir ./themes/default/static/registry/packages/navs \
 		--baseSchemasOutDir ./themes/default/static/registry/packages \
 		--logtostderr
-	./scripts/generate-versioned-docs.sh
+	$(if $(SKIP_VERSIONED_DOCS),,./scripts/generate-versioned-docs.sh)
 
 # Generate the API docs for `content/registry/packages/<pkg>`, where <pkg> is the name of
 # the package to be handed off to resourcedocsgen.

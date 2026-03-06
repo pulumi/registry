@@ -85,5 +85,5 @@ func isFresh(docsOutDir, packageTreeJSONOutDir, schemasOutDir, packageName, cach
 // writeSentinel writes the cache key to the sentinel file in the output dir.
 func writeSentinel(docsOutDir, cacheKey string) error {
 	sentinelPath := filepath.Join(docsOutDir, sentinelFileName)
-	return os.WriteFile(sentinelPath, []byte(cacheKey+"\n"), 0o644)
+	return os.WriteFile(sentinelPath, []byte(cacheKey+"\n"), 0o600)
 }

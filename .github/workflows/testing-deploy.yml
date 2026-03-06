@@ -54,9 +54,6 @@ jobs:
       - name: Install Pulumi CLI
         uses: pulumi/actions@8582a9e8cc630786854029b4e09281acd6794b58 # v6
 
-      - name: Configure git for private Go modules
-        run: git config --global url."https://${{ steps.esc-secrets.outputs.PULUMI_BOT_TOKEN }}:x-oauth-basic@github.com/pulumi/registry-mirror-tools".insteadOf "https://github.com/pulumi/registry-mirror-tools"
-
       - name: Build and deploy
         run: make ci_push
         env:

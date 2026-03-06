@@ -25,7 +25,7 @@ MINOR_COUNT=1
 
 # Blessed packages are first-party providers that get versioned docs.
 # Fetch dynamically from ci-mgmt (pinned commit for stability):
-CI_MGMT_COMMIT="5ec4f6d0a1fe13e6c7d066b52c31bb74dacc3833"
+CI_MGMT_COMMIT="b3cede4113152996ec67c47a2ca0cef3c5aeb626"
 PROVIDERS_JSON_URL="https://raw.githubusercontent.com/pulumi/ci-mgmt/${CI_MGMT_COMMIT}/provider-ci/providers.json"
 PROVIDERS_JSON=$(curl -sfL "$PROVIDERS_JSON_URL") || { echo "Failed to fetch providers.json from ci-mgmt" >&2; exit 1; }
 mapfile -t BLESSED_PACKAGES < <(echo "$PROVIDERS_JSON" | jq -r '.[]')

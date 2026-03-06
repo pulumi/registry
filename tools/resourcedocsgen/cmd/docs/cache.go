@@ -33,23 +33,16 @@ func buildCacheKey(yamlBytes []byte) string {
 }
 
 // getToolBuildID returns a string identifying this build of the tool.
-// It combines Go version, module version, and VCS revision so that any
-// recompilation invalidates cached output.
+// It uses Go version and module version. VCS revision is deliberately
+// excluded because the binary is rebuilt from source on every CI run,
+// which would invalidate the cache on every build even when the tool
+// code hasn't changed.
 func getToolBuildID() string {
 	info, ok := debug.ReadBuildInfo()
 	if !ok {
 		return "unknown"
 	}
-	var vcsRev, vcsDirty string
-	for _, s := range info.Settings {
-		switch s.Key {
-		case "vcs.revision":
-			vcsRev = s.Value
-		case "vcs.modified":
-			vcsDirty = s.Value
-		}
-	}
-	return fmt.Sprintf("%s;%s;%s;%s", info.GoVersion, info.Main.Version, vcsRev, vcsDirty)
+	return fmt.Sprintf("%s;%s", info.GoVersion, info.Main.Version)
 }
 
 // isFresh checks whether the output for a package is still valid by comparing

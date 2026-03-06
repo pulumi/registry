@@ -35,6 +35,9 @@ PACKAGE_VERSIONS_DIR="$REPO_ROOT/themes/default/data/registry/package_versions"
 MAJOR_COUNT=3
 MINOR_COUNT=1
 
+# Maximum number of packages to process in parallel.
+MAX_PARALLEL="${MAX_PARALLEL:-8}"
+
 # Blessed packages are first-party providers that get versioned docs.
 # Fetch dynamically from ci-mgmt (pinned commit for stability):
 CI_MGMT_COMMIT="b3cede4113152996ec67c47a2ca0cef3c5aeb626"
@@ -97,142 +100,152 @@ DOCSGEN_HASH=$(sha256sum "$RESOURCEDOCSGEN" | cut -d' ' -f1)
 
 mkdir -p "$CONTENT_DIR" "$STATIC_DIR/navs" "$PACKAGE_VERSIONS_DIR"
 
-# Temp directory for resourcedocsgen output (avoids overwriting latest nav JSON)
-NAV_TEMP_DIR=$(mktemp -d)
-trap 'rm -rf "$NAV_TEMP_DIR"' EXIT
+# Process all older major versions for a single package.
+# Designed to run as a background job alongside other packages.
+process_package() {
+    local PACKAGE="$1"
 
-for PACKAGE in "${PACKAGES_TO_PROCESS[@]}"; do
-
-if ! is_blessed "$PACKAGE"; then
-    continue
-fi
-
-echo ""
-echo "========================================"
-echo "Processing $PACKAGE"
-echo "========================================"
-
-PACKAGE_YAML="$REPO_ROOT/themes/default/data/registry/packages/${PACKAGE}.yaml"
-if [[ ! -f "$PACKAGE_YAML" ]]; then
-    echo "Package YAML not found: $PACKAGE_YAML, skipping" >&2
-    continue
-fi
-
-echo "Discovering versions for $PACKAGE..."
-VERSIONS_JSON=$("$DISCOVER_BIN" \
-    "$REPO_ROOT" \
-    --packages "$PACKAGE" \
-    --major-count "$MAJOR_COUNT" \
-    --minor-count "$MINOR_COUNT" \
-    --format json-array < /dev/null)
-
-VERSION_COUNT=$(echo "$VERSIONS_JSON" | jq length)
-echo "Found $VERSION_COUNT versions"
-
-LATEST_MAJOR=$(echo "$VERSIONS_JSON" | jq -r '.[0].version' | cut -d. -f1)
-echo "Latest major version is $LATEST_MAJOR.x (already generated above)"
-
-GENERATED_VERSIONS=()
-
-while read -r VERSION_INFO; do
-    VERSION=$(echo "$VERSION_INFO" | jq -r '.version')
-    SCHEMA_URL=$(echo "$VERSION_INFO" | jq -r '.schema_url')
-
-    MAJOR=$(echo "$VERSION" | cut -d. -f1)
-    VERSION_SLUG="${MAJOR}.x"
-    VERSIONED_NAME="${PACKAGE}@${VERSION_SLUG}"
-
-    if [[ "$MAJOR" == "$LATEST_MAJOR" ]]; then
-        continue
+    if ! is_blessed "$PACKAGE"; then
+        return 0
     fi
 
-    if [[ -z "$SCHEMA_URL" || "$SCHEMA_URL" == "null" ]]; then
-        echo "Warning: No schema URL for $VERSIONED_NAME, skipping"
-        continue
+    local PACKAGE_YAML="$REPO_ROOT/themes/default/data/registry/packages/${PACKAGE}.yaml"
+    if [[ ! -f "$PACKAGE_YAML" ]]; then
+        echo "[$PACKAGE] Package YAML not found: $PACKAGE_YAML, skipping" >&2
+        return 0
     fi
 
-    # Skip unchanged packages: if docs were already generated from this exact schema URL
-    # with this exact version of resourcedocsgen, reuse them.
-    DOCS_OUT_DIR="$CONTENT_DIR/$VERSIONED_NAME"
-    SENTINEL="$DOCS_OUT_DIR/.generated"
-    if [[ -f "$SENTINEL" ]] && grep -q "${SCHEMA_URL}	${DOCSGEN_HASH}" "$SENTINEL" 2>/dev/null; then
-        echo "Skipping $VERSIONED_NAME (already generated, inputs unchanged)"
-        GENERATED_VERSIONS+=("$VERSIONED_NAME")
-        continue
-    fi
+    # Per-invocation temp dir for resourcedocsgen nav output
+    local NAV_TEMP_DIR
+    NAV_TEMP_DIR=$(mktemp -d)
+    trap 'rm -rf "$NAV_TEMP_DIR"' EXIT
 
     echo ""
-    echo "=== Processing $PACKAGE v$VERSION ($VERSION_SLUG) ==="
+    echo "========================================"
+    echo "Processing $PACKAGE"
+    echo "========================================"
 
-    rm -rf "$DOCS_OUT_DIR"
-    mkdir -p "$DOCS_OUT_DIR"
+    echo "[$PACKAGE] Discovering versions..."
+    local VERSIONS_JSON
+    VERSIONS_JSON=$("$DISCOVER_BIN" \
+        "$REPO_ROOT" \
+        --packages "$PACKAGE" \
+        --major-count "$MAJOR_COUNT" \
+        --minor-count "$MINOR_COUNT" \
+        --format json-array < /dev/null)
 
-    # Download schema once and cache it (schemas can be 50MB+)
-    SCHEMA_CACHE_DIR="$REPO_ROOT/.cache/schemas"
-    mkdir -p "$SCHEMA_CACHE_DIR"
-    CACHED_SCHEMA="$SCHEMA_CACHE_DIR/${PACKAGE}-v${VERSION}.json"
+    local VERSION_COUNT
+    VERSION_COUNT=$(echo "$VERSIONS_JSON" | jq length)
+    echo "[$PACKAGE] Found $VERSION_COUNT versions"
 
-    if [[ ! -f "$CACHED_SCHEMA" ]]; then
-        echo "Downloading schema from $SCHEMA_URL..."
-        if [[ "$SCHEMA_URL" == *.yaml || "$SCHEMA_URL" == *.yml ]]; then
-            curl -sfL "$SCHEMA_URL" | yq -o json > "$CACHED_SCHEMA"
-        else
-            curl -sfL "$SCHEMA_URL" -o "$CACHED_SCHEMA"
+    local LATEST_MAJOR
+    LATEST_MAJOR=$(echo "$VERSIONS_JSON" | jq -r '.[0].version' | cut -d. -f1)
+    echo "[$PACKAGE] Latest major version is $LATEST_MAJOR.x (already generated above)"
+
+    local GENERATED_VERSIONS=()
+
+    while read -r VERSION_INFO; do
+        local VERSION SCHEMA_URL MAJOR VERSION_SLUG VERSIONED_NAME
+        VERSION=$(echo "$VERSION_INFO" | jq -r '.version')
+        SCHEMA_URL=$(echo "$VERSION_INFO" | jq -r '.schema_url')
+
+        MAJOR=$(echo "$VERSION" | cut -d. -f1)
+        VERSION_SLUG="${MAJOR}.x"
+        VERSIONED_NAME="${PACKAGE}@${VERSION_SLUG}"
+
+        if [[ "$MAJOR" == "$LATEST_MAJOR" ]]; then
+            continue
         fi
-    else
-        echo "Using cached schema: $CACHED_SCHEMA"
-    fi
 
-    # Fetch _index.md from derived URL, fall back to latest version's copy
-    INDEX_URL=$(derive_index_url "$SCHEMA_URL")
-    if [[ -n "$INDEX_URL" ]]; then
-        echo "Fetching _index.md from $INDEX_URL..."
-        if ! curl -sfL "$INDEX_URL" -o "$DOCS_OUT_DIR/_index.md" 2>/dev/null; then
-            echo "Could not fetch _index.md from $INDEX_URL"
-            rm -f "$DOCS_OUT_DIR/_index.md"
+        if [[ -z "$SCHEMA_URL" || "$SCHEMA_URL" == "null" ]]; then
+            echo "[$PACKAGE] Warning: No schema URL for $VERSIONED_NAME, skipping"
+            continue
         fi
-    fi
 
-    if [[ ! -f "$DOCS_OUT_DIR/_index.md" ]]; then
-        LATEST_INDEX="$REPO_ROOT/themes/default/content/registry/packages/$PACKAGE/_index.md"
-        if [[ -f "$LATEST_INDEX" ]]; then
-            echo "Copying _index.md from latest version..."
-            cp "$LATEST_INDEX" "$DOCS_OUT_DIR/_index.md"
-        else
-            echo "Warning: No _index.md available for $VERSIONED_NAME"
+        # Skip unchanged packages: if docs were already generated from this exact schema URL
+        # with this exact version of resourcedocsgen, reuse them.
+        local DOCS_OUT_DIR="$CONTENT_DIR/$VERSIONED_NAME"
+        local SENTINEL="$DOCS_OUT_DIR/.generated"
+        if [[ -f "$SENTINEL" ]] && grep -q "${SCHEMA_URL}	${DOCSGEN_HASH}" "$SENTINEL" 2>/dev/null; then
+            echo "[$PACKAGE] Skipping $VERSIONED_NAME (already generated, inputs unchanged)"
+            GENERATED_VERSIONS+=("$VERSIONED_NAME")
+            continue
         fi
-    fi
 
-    # Generate API docs using pre-built binary (output nav to temp dir to avoid overwriting latest)
-    echo "Generating API docs..."
-    if ! "$RESOURCEDOCSGEN" docs \
-        --schemaFile "$CACHED_SCHEMA" \
-        --version "v$VERSION" \
-        --docsOutDir "$DOCS_OUT_DIR/api-docs" \
-        --packageTreeJSONOutDir "$NAV_TEMP_DIR"; then
-        echo "Warning: Failed to generate docs for $VERSIONED_NAME, skipping"
+        echo ""
+        echo "[$PACKAGE] === Processing v$VERSION ($VERSION_SLUG) ==="
+
         rm -rf "$DOCS_OUT_DIR"
-        continue
-    fi
+        mkdir -p "$DOCS_OUT_DIR"
 
-    # Move nav JSON to final versioned name
-    mv "$NAV_TEMP_DIR/${PACKAGE}.json" "$STATIC_DIR/navs/${VERSIONED_NAME}.json"
+        # Download schema once and cache it (schemas can be 50MB+)
+        local SCHEMA_CACHE_DIR="$REPO_ROOT/.cache/schemas"
+        mkdir -p "$SCHEMA_CACHE_DIR"
+        local CACHED_SCHEMA="$SCHEMA_CACHE_DIR/${PACKAGE}-v${VERSION}.json"
 
-    # Generate versioned metadata YAML from cached schema
-    # Use schema's displayName if available, otherwise fall back to latest package's title
-    SCHEMA_TITLE=$(jq -r '.displayName // empty' "$CACHED_SCHEMA")
-    if [[ -n "$SCHEMA_TITLE" ]]; then
-        PACKAGE_TITLE="$SCHEMA_TITLE"
-    else
-        PACKAGE_TITLE=$(grep '^title:' "$PACKAGE_YAML" | head -1 | sed 's/^title: *//')
-    fi
-    PACKAGE_PUBLISHER=$(jq -r '.publisher // "Pulumi"' "$CACHED_SCHEMA")
-    PACKAGE_REPO_URL=$(jq -r '.repository // empty' "$CACHED_SCHEMA")
-    if [[ -z "$PACKAGE_REPO_URL" ]]; then
-        PACKAGE_REPO_URL=$(grep '^repo_url:' "$PACKAGE_YAML" | head -1 | sed 's/^repo_url: *//')
-    fi
+        if [[ ! -f "$CACHED_SCHEMA" ]]; then
+            echo "[$PACKAGE] Downloading schema from $SCHEMA_URL..."
+            if [[ "$SCHEMA_URL" == *.yaml || "$SCHEMA_URL" == *.yml ]]; then
+                curl -sfL "$SCHEMA_URL" | yq -o json > "$CACHED_SCHEMA"
+            else
+                curl -sfL "$SCHEMA_URL" -o "$CACHED_SCHEMA"
+            fi
+        else
+            echo "[$PACKAGE] Using cached schema: $CACHED_SCHEMA"
+        fi
 
-    cat > "$PACKAGE_VERSIONS_DIR/${VERSIONED_NAME}.yaml" <<YAML
+        # Fetch _index.md from derived URL, fall back to latest version's copy
+        local INDEX_URL
+        INDEX_URL=$(derive_index_url "$SCHEMA_URL")
+        if [[ -n "$INDEX_URL" ]]; then
+            echo "[$PACKAGE] Fetching _index.md from $INDEX_URL..."
+            if ! curl -sfL "$INDEX_URL" -o "$DOCS_OUT_DIR/_index.md" 2>/dev/null; then
+                echo "[$PACKAGE] Could not fetch _index.md from $INDEX_URL"
+                rm -f "$DOCS_OUT_DIR/_index.md"
+            fi
+        fi
+
+        if [[ ! -f "$DOCS_OUT_DIR/_index.md" ]]; then
+            local LATEST_INDEX="$REPO_ROOT/themes/default/content/registry/packages/$PACKAGE/_index.md"
+            if [[ -f "$LATEST_INDEX" ]]; then
+                echo "[$PACKAGE] Copying _index.md from latest version..."
+                cp "$LATEST_INDEX" "$DOCS_OUT_DIR/_index.md"
+            else
+                echo "[$PACKAGE] Warning: No _index.md available for $VERSIONED_NAME"
+            fi
+        fi
+
+        # Generate API docs using pre-built binary (output nav to per-invocation temp dir)
+        echo "[$PACKAGE] Generating API docs..."
+        if ! "$RESOURCEDOCSGEN" docs \
+            --schemaFile "$CACHED_SCHEMA" \
+            --version "v$VERSION" \
+            --docsOutDir "$DOCS_OUT_DIR/api-docs" \
+            --packageTreeJSONOutDir "$NAV_TEMP_DIR"; then
+            echo "[$PACKAGE] Warning: Failed to generate docs for $VERSIONED_NAME, skipping"
+            rm -rf "$DOCS_OUT_DIR"
+            continue
+        fi
+
+        # Move nav JSON to final versioned name
+        mv "$NAV_TEMP_DIR/${PACKAGE}.json" "$STATIC_DIR/navs/${VERSIONED_NAME}.json"
+
+        # Generate versioned metadata YAML from cached schema
+        # Use schema's displayName if available, otherwise fall back to latest package's title
+        local SCHEMA_TITLE PACKAGE_TITLE PACKAGE_PUBLISHER PACKAGE_REPO_URL
+        SCHEMA_TITLE=$(jq -r '.displayName // empty' "$CACHED_SCHEMA")
+        if [[ -n "$SCHEMA_TITLE" ]]; then
+            PACKAGE_TITLE="$SCHEMA_TITLE"
+        else
+            PACKAGE_TITLE=$(grep '^title:' "$PACKAGE_YAML" | head -1 | sed 's/^title: *//')
+        fi
+        PACKAGE_PUBLISHER=$(jq -r '.publisher // "Pulumi"' "$CACHED_SCHEMA")
+        PACKAGE_REPO_URL=$(jq -r '.repository // empty' "$CACHED_SCHEMA")
+        if [[ -z "$PACKAGE_REPO_URL" ]]; then
+            PACKAGE_REPO_URL=$(grep '^repo_url:' "$PACKAGE_YAML" | head -1 | sed 's/^repo_url: *//')
+        fi
+
+        cat > "$PACKAGE_VERSIONS_DIR/${VERSIONED_NAME}.yaml" <<YAML
 name: $PACKAGE
 title: $PACKAGE_TITLE
 version: v$VERSION
@@ -243,41 +256,73 @@ publisher: $PACKAGE_PUBLISHER
 updated_on: $(date +%s)
 YAML
 
-    # Write sentinel file to enable skip-if-unchanged on subsequent builds.
-    # Includes both schema URL and docsgen binary hash so we regenerate if either changes.
-    echo -e "${SCHEMA_URL}\t${DOCSGEN_HASH}" > "$SENTINEL"
+        # Write sentinel file to enable skip-if-unchanged on subsequent builds.
+        # Includes both schema URL and docsgen binary hash so we regenerate if either changes.
+        echo -e "${SCHEMA_URL}\t${DOCSGEN_HASH}" > "$SENTINEL"
 
-    echo "Done with $VERSIONED_NAME"
-    GENERATED_VERSIONS+=("$VERSIONED_NAME")
-done < <(echo "$VERSIONS_JSON" | jq -c '.[]')
+        echo "[$PACKAGE] Done with $VERSIONED_NAME"
+        GENERATED_VERSIONS+=("$VERSIONED_NAME")
+    done < <(echo "$VERSIONS_JSON" | jq -c '.[]')
 
-echo ""
-echo "=== Cleaning up old versions ==="
+    echo ""
+    echo "[$PACKAGE] === Cleaning up old versions ==="
 
-for existing in "$CONTENT_DIR/${PACKAGE}@"*; do
-    [[ -e "$existing" ]] || continue
-    existing_name=$(basename "$existing")
-    is_current=false
-    for generated in "${GENERATED_VERSIONS[@]}"; do
-        if [[ "$existing_name" == "$generated" ]]; then
-            is_current=true
-            break
+    for existing in "$CONTENT_DIR/${PACKAGE}@"*; do
+        [[ -e "$existing" ]] || continue
+        local existing_name
+        existing_name=$(basename "$existing")
+        local is_current=false
+        for generated in "${GENERATED_VERSIONS[@]}"; do
+            if [[ "$existing_name" == "$generated" ]]; then
+                is_current=true
+                break
+            fi
+        done
+        if [[ "$is_current" == "false" ]]; then
+            echo "[$PACKAGE] Removing old version: $existing_name"
+            rm -rf "$existing"
+            rm -f "$STATIC_DIR/navs/${existing_name}.json"
+            rm -f "$PACKAGE_VERSIONS_DIR/${existing_name}.yaml"
         fi
     done
-    if [[ "$is_current" == "false" ]]; then
-        echo "Removing old version: $existing_name"
-        rm -rf "$existing"
-        rm -f "$STATIC_DIR/navs/${existing_name}.json"
-        rm -f "$PACKAGE_VERSIONS_DIR/${existing_name}.yaml"
+
+    echo ""
+    echo "[$PACKAGE] Done. Generated ${#GENERATED_VERSIONS[@]} older versions."
+}
+
+# Run all packages in parallel, up to MAX_PARALLEL at a time.
+declare -a bg_pids=()
+declare -a bg_pkgs=()
+
+for PACKAGE in "${PACKAGES_TO_PROCESS[@]}"; do
+    if ! is_blessed "$PACKAGE"; then
+        continue
     fi
+
+    process_package "$PACKAGE" &
+    bg_pids+=($!)
+    bg_pkgs+=("$PACKAGE")
+
+    # Throttle to MAX_PARALLEL concurrent jobs
+    while (( $(jobs -rp | wc -l) >= MAX_PARALLEL )); do
+        wait -n 2>/dev/null || true
+    done
 done
 
-echo ""
-echo "Done. Generated ${#GENERATED_VERSIONS[@]} older versions for $PACKAGE."
-
+# Wait for all remaining jobs and collect failures
+declare -a failed_pkgs=()
+for i in "${!bg_pids[@]}"; do
+    if ! wait "${bg_pids[$i]}"; then
+        failed_pkgs+=("${bg_pkgs[$i]}")
+    fi
 done
 
 echo ""
 echo "========================================"
 echo "Versioned docs generation complete"
 echo "========================================"
+
+if (( ${#failed_pkgs[@]} > 0 )); then
+    echo "ERROR: The following packages failed: ${failed_pkgs[*]}" >&2
+    exit 1
+fi

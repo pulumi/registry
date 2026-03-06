@@ -100,6 +100,62 @@ DOCSGEN_HASH=$(sha256sum "$RESOURCEDOCSGEN" | cut -d' ' -f1)
 
 mkdir -p "$CONTENT_DIR" "$STATIC_DIR/navs" "$PACKAGE_VERSIONS_DIR"
 
+# Persistent cache for versioned docs output. In CI, this directory is preserved between
+# runs by actions/cache. On cache hit, the sentinel-based skip logic avoids regenerating
+# unchanged packages entirely. The cache stores only versioned (@-suffixed) content.
+VERSIONED_DOCS_CACHE="$REPO_ROOT/.cache/versioned-docs"
+mkdir -p "$VERSIONED_DOCS_CACHE/content" "$VERSIONED_DOCS_CACHE/navs" "$VERSIONED_DOCS_CACHE/metadata"
+
+# Restore cached versioned docs into the output directories.
+restore_cache() {
+    local count=0
+    for cached_dir in "$VERSIONED_DOCS_CACHE/content/"*@*; do
+        [[ -d "$cached_dir" ]] || continue
+        local name
+        name=$(basename "$cached_dir")
+        if [[ ! -d "$CONTENT_DIR/$name" ]]; then
+            cp -a "$cached_dir" "$CONTENT_DIR/$name"
+            ((count++))
+        fi
+    done
+    for cached_nav in "$VERSIONED_DOCS_CACHE/navs/"*@*.json; do
+        [[ -f "$cached_nav" ]] || continue
+        local name
+        name=$(basename "$cached_nav")
+        [[ -f "$STATIC_DIR/navs/$name" ]] || cp -a "$cached_nav" "$STATIC_DIR/navs/$name"
+    done
+    for cached_meta in "$VERSIONED_DOCS_CACHE/metadata/"*@*.yaml; do
+        [[ -f "$cached_meta" ]] || continue
+        local name
+        name=$(basename "$cached_meta")
+        [[ -f "$PACKAGE_VERSIONS_DIR/$name" ]] || cp -a "$cached_meta" "$PACKAGE_VERSIONS_DIR/$name"
+    done
+    if (( count > 0 )); then
+        echo "Restored $count versioned doc sets from cache"
+    fi
+}
+
+# Save versioned docs output back to the cache for next run.
+save_cache() {
+    # Clear stale cache entries and repopulate from current output.
+    rm -rf "$VERSIONED_DOCS_CACHE/content/"*@* "$VERSIONED_DOCS_CACHE/navs/"*@* "$VERSIONED_DOCS_CACHE/metadata/"*@*
+    for content_dir in "$CONTENT_DIR/"*@*; do
+        [[ -d "$content_dir" ]] || continue
+        cp -a "$content_dir" "$VERSIONED_DOCS_CACHE/content/"
+    done
+    for nav_file in "$STATIC_DIR/navs/"*@*.json; do
+        [[ -f "$nav_file" ]] || continue
+        cp -a "$nav_file" "$VERSIONED_DOCS_CACHE/navs/"
+    done
+    for meta_file in "$PACKAGE_VERSIONS_DIR/"*@*.yaml; do
+        [[ -f "$meta_file" ]] || continue
+        cp -a "$meta_file" "$VERSIONED_DOCS_CACHE/metadata/"
+    done
+    echo "Saved versioned docs to cache"
+}
+
+restore_cache
+
 # Process all older major versions for a single package.
 # Designed to run as a background job alongside other packages.
 process_package() {
@@ -316,6 +372,8 @@ for i in "${!bg_pids[@]}"; do
         failed_pkgs+=("${bg_pkgs[$i]}")
     fi
 done
+
+save_cache
 
 echo ""
 echo "========================================"

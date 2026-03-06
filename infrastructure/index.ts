@@ -177,6 +177,11 @@ const logsBucketDeliveryACL = new aws.s3.BucketAclV2("logs-bucket-delivery-acl",
     dependsOn: [logsBucketOwnershipControls],
 });
 
+const redirectFunction = new aws.cloudfront.Function("legacy-version-redirects", {
+    runtime: "cloudfront-js-2.0",
+    code: fs.readFileSync(`${__dirname}/redirects.js`, "utf-8"),
+});
+
 const fiveMinutes = 60 * 5;
 const oneHour = fiveMinutes * 12;
 const oneWeek = oneHour * 24 * 7;
@@ -238,6 +243,12 @@ const distributionArgs: aws.cloudfront.DistributionArgs = {
 
     defaultCacheBehavior: {
         ...baseCacheBehavior,
+        functionAssociations: [
+            {
+                eventType: "viewer-request",
+                functionArn: redirectFunction.arn,
+            },
+        ],
     },
 
     orderedCacheBehaviors: [

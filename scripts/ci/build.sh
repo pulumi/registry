@@ -52,7 +52,7 @@ if [[ -d "$API_DOCS_CACHE/content" ]]; then
         if [[ ! -d "$CONTENT_DIR/$pkg/api-docs" ]]; then
             mkdir -p "$CONTENT_DIR/$pkg"
             cp -a "$pkg_dir/api-docs" "$CONTENT_DIR/$pkg/api-docs"
-            ((count++))
+            ((count++)) || true
         fi
     done
     for nav in "$API_DOCS_CACHE/navs"/*.json; do

@@ -14,12 +14,7 @@ tools/resourcedocsgen/resourcedocsgen
 ctrf/
 bin
 .make
-.cache/
 mise.local.toml
 .claude/settings.local.json
 /content/
 static/registry/
-themes/default/content/registry/packages/*/api-docs/
-themes/default/content/registry/packages/*@*/
-themes/default/static/registry/packages/navs/
-themes/default/data/registry/package_versions/

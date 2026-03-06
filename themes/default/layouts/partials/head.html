@@ -195,7 +195,13 @@
         {{ else if eq .Type "docs" }}
             <title>{{ $title }} | Pulumi Docs</title>
         {{ else if eq .Type "registry" }}
-            <title>{{ replace $title "/" "." }} | Pulumi Registry</title>
+            {{ $registryTitle := replace $title "/" "." }}
+            {{ if strings.Contains .RelPermalink "@" }}
+                {{ $version := replaceRE `.*@(\d+)\..*` "$1" .RelPermalink }}
+                <title>{{ $registryTitle }} (v{{ $version }}) | Pulumi Registry</title>
+            {{ else }}
+                <title>{{ $registryTitle }} | Pulumi Registry</title>
+            {{ end }}
         {{ else }}
             <title>{{ $title }} | Pulumi</title>
         {{ end }}
@@ -217,7 +223,11 @@
     {{ if .Params.canonical_url }}
         <link rel="canonical" href="{{ .Params.canonical_url }}" />
     {{ else }}
-        <link rel="canonical" href="{{ .Site.Params.canonicalURL }}{{ .RelPermalink }}" />
+        {{ $canonicalPath := .RelPermalink }}
+        {{ if strings.Contains $canonicalPath "@" }}
+            {{ $canonicalPath = replaceRE `([^/]+)@[^/]+` "$1" $canonicalPath }}
+        {{ end }}
+        <link rel="canonical" href="{{ .Site.Params.canonicalURL }}{{ $canonicalPath }}" />
     {{ end }}
 
 

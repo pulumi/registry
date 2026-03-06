@@ -95,9 +95,6 @@ derive_index_url() {
     fi
 }
 
-# Compute a fingerprint for the resourcedocsgen binary to invalidate cached output when the tool changes.
-DOCSGEN_HASH=$(sha256sum "$RESOURCEDOCSGEN" | cut -d' ' -f1)
-
 mkdir -p "$CONTENT_DIR" "$STATIC_DIR/navs" "$PACKAGE_VERSIONS_DIR"
 
 # Persistent cache for versioned docs output. In CI, this directory is preserved between
@@ -222,7 +219,7 @@ process_package() {
         # with this exact version of resourcedocsgen, reuse them.
         local DOCS_OUT_DIR="$CONTENT_DIR/$VERSIONED_NAME"
         local SENTINEL="$DOCS_OUT_DIR/.generated"
-        if [[ -f "$SENTINEL" ]] && grep -q "${SCHEMA_URL}	${DOCSGEN_HASH}" "$SENTINEL" 2>/dev/null; then
+        if [[ -f "$SENTINEL" ]] && grep -qF "$SCHEMA_URL" "$SENTINEL" 2>/dev/null; then
             echo "[$PACKAGE] Skipping $VERSIONED_NAME (already generated, inputs unchanged)"
             GENERATED_VERSIONS+=("$VERSIONED_NAME")
             continue
@@ -313,8 +310,7 @@ updated_on: $(date +%s)
 YAML
 
         # Write sentinel file to enable skip-if-unchanged on subsequent builds.
-        # Includes both schema URL and docsgen binary hash so we regenerate if either changes.
-        echo -e "${SCHEMA_URL}\t${DOCSGEN_HASH}" > "$SENTINEL"
+        echo "$SCHEMA_URL" > "$SENTINEL"
 
         echo "[$PACKAGE] Done with $VERSIONED_NAME"
         GENERATED_VERSIONS+=("$VERSIONED_NAME")

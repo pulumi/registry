@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-dnsimple/v5.0.1/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-dnsimple/v5.0.2/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-dnsimple/blob/v5.0.1/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-dnsimple/blob/v5.0.2/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: DNSimple Provider
 meta_desc: Provides an overview on how to configure the Pulumi DNSimple provider.
@@ -224,8 +224,8 @@ public class App {
 
     public static void stack(Context ctx) {
         final var config = ctx.config();
-        final var dnsimpleToken = config.get("dnsimpleToken");
-        final var dnsimpleAccount = config.get("dnsimpleAccount");
+        final var dnsimpleToken = config.require("dnsimpleToken");
+        final var dnsimpleAccount = config.require("dnsimpleAccount");
     }
 }
 ```

@@ -25,10 +25,18 @@
 
     {{ with $packageData }}
         <div class="version-info">
-            {{ .title }} {{ .version }}{{ if $isVersioned }} ({{ $versionSlug }}){{ end }} published on {{ ((time .updated_on).Format "Monday, Jan 2, 2006") }} by {{ .publisher }}
+            Viewing docs for {{ .title }} {{ .version }}{{ if $isVersioned }} <strong>(Older version)</strong>{{ end }}
+            <br />
+            published on {{ ((time .updated_on).Format "Monday, Jan 2, 2006") }} by {{ .publisher }}
         </div>
-    {{ end }}
-    {{ with $packageData }}
+        {{ if $isVersioned }}
+            <div class="package-link">
+                <i class="fas fa-link"></i>
+                <a href="/registry/packages/{{ $basePackageName }}/">
+                    <span>Go to latest version</span>
+                </a>
+            </div>
+        {{ end }}
         <div class="package-link">
             <i class="fas fa-file-code"></i>
             <a href="/registry/packages/{{ $rawPackageName }}/schema.json" target="_blank" rel="noopener noreferrer">

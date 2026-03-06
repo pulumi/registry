@@ -32,17 +32,18 @@ func buildCacheKey(yamlBytes []byte) string {
 	return fmt.Sprintf("%x\t%s", yamlHash, getToolBuildID())
 }
 
+// sourceHash is set at build time via -ldflags to a hash of the
+// resourcedocsgen source tree. This ensures cache invalidation when
+// any Go source file or dependency changes.
+var sourceHash string
+
 // getToolBuildID returns a string identifying this build of the tool.
-// It uses Go version and module version. VCS revision is deliberately
-// excluded because the binary is rebuilt from source on every CI run,
-// which would invalidate the cache on every build even when the tool
-// code hasn't changed.
 func getToolBuildID() string {
 	info, ok := debug.ReadBuildInfo()
 	if !ok {
-		return "unknown"
+		return sourceHash
 	}
-	return fmt.Sprintf("%s;%s", info.GoVersion, info.Main.Version)
+	return fmt.Sprintf("%s;%s;%s", info.GoVersion, info.Main.Version, sourceHash)
 }
 
 // isFresh checks whether the output for a package is still valid by comparing

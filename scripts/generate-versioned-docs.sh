@@ -115,7 +115,7 @@ restore_cache() {
         name=$(basename "$cached_dir")
         if [[ ! -d "$CONTENT_DIR/$name" ]]; then
             cp -a "$cached_dir" "$CONTENT_DIR/$name"
-            ((count++))
+            ((count++)) || true
         fi
     done
     for cached_nav in "$VERSIONED_DOCS_CACHE/navs/"*@*.json; do

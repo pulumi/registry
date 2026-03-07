@@ -77,6 +77,8 @@ jobs:
     name: Send slack notification
     runs-on: ubuntu-latest
     needs: [buildSite]
+    permissions:
+      id-token: write
     steps:
       - name: Fetch secrets from ESC
         id: esc-secrets

@@ -136,6 +136,8 @@ jobs:
       - build-resource-provider-docs
       - build-provider-docs
       - unknown-event-type
+    permissions:
+      id-token: write
     steps:
       - name: Fetch secrets from ESC
         id: esc-secrets
@@ -147,5 +149,5 @@ jobs:
           SLACK_COLOR: "#F54242"
           SLACK_MESSAGE: "provider docs build failure in pulumi/registry repo :meow_sad:"
           SLACK_USERNAME: registrybot
-          SLACK_WEBHOOK: ${{ steps.esc-secrets.outputs.SLACK_WEBHOOK }}
+          SLACK_WEBHOOK: ${{ steps.esc-secrets.outputs.SLACK_WEBHOOK_URL }}
           SLACK_ICON: https://www.pulumi.com/logos/brand/avatar-on-white.png

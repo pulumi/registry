@@ -101,6 +101,8 @@ jobs:
     name: Send slack notification
     runs-on: ubuntu-latest
     needs: [check-for-package-update, generate-packages-list]
+    permissions:
+      id-token: write
     steps:
       - name: Fetch secrets from ESC
         id: esc-secrets
@@ -112,5 +114,5 @@ jobs:
           SLACK_COLOR: "#F54242"
           SLACK_MESSAGE: "generate package metadata failure in pulumi/registry repo :meow_sad:"
           SLACK_USERNAME: registrybot
-          SLACK_WEBHOOK: ${{ steps.esc-secrets.outputs.SLACK_WEBHOOK }}
+          SLACK_WEBHOOK: ${{ steps.esc-secrets.outputs.SLACK_WEBHOOK_URL }}
           SLACK_ICON: https://www.pulumi.com/logos/brand/avatar-on-white.png

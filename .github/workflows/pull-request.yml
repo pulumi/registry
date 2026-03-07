@@ -158,6 +158,9 @@ jobs:
         uses: pulumi/esc-action@6cf9520e68354d86f81c455e8d43eabd58f5c9f5 # v1
       - name: Check out branch
         uses: actions/checkout@v4
+        with:
+          # Full history needed for registry-mirror-discover to find package versions
+          fetch-depth: 0
 
       - name: Install Node
         uses: actions/setup-node@v4
@@ -197,6 +200,25 @@ jobs:
           role-to-assume: arn:aws:iam::571684982431:role/ContinuousDelivery
           role-duration-seconds: 7200
           role-session-name: PullRequestPreviewSession
+
+      - name: Configure git for private Go modules
+        run: git config --global url."https://${{ steps.esc-secrets.outputs.PULUMI_BOT_TOKEN }}:x-oauth-basic@github.com/pulumi/registry-mirror-tools".insteadOf "https://github.com/pulumi/registry-mirror-tools"
+
+      - name: Cache provider schemas and generated docs
+        uses: actions/cache@v4
+        with:
+          path: |
+            .cache/schemas
+            .cache/versioned-docs
+            .cache/api-docs
+          key: docs-cache-${{ github.run_id }}
+          restore-keys: docs-cache-
+
+      - name: Cache registry-mirror-discover binary
+        uses: actions/cache@v4
+        with:
+          path: bin/registry-mirror-discover
+          key: registry-mirror-discover-becca918a99a2a0809ad7d35a551b8a4a8018639
 
       - name: Build and deploy preview
         run: make ci-pull-request

@@ -47,11 +47,24 @@ _ := $(shell if ! [ -x ${HELPMAKEGO} ]; then \
 	fi \
 )
 
+DOCSGEN_SRC_HASH := $(shell find tools/resourcedocsgen -name '*.go' -o -name 'go.sum' | sort | xargs sha256sum | sha256sum | cut -d' ' -f1)
+
 bin/resourcedocsgen: $(shell ${HELPMAKEGO} tools/resourcedocsgen)
-	go build -C tools/resourcedocsgen -o ../../bin ./...
+	go build -C tools/resourcedocsgen -ldflags "-X github.com/pulumi/registry/tools/resourcedocsgen/cmd/docs.sourceHash=$(DOCSGEN_SRC_HASH)" -o ../../bin ./...
 
 bin/mktutorial: $(shell ${HELPMAKEGO} tools/mktutorial)
 	go build -C tools/mktutorial -o ../../bin ./...
+
+# Generate API docs for all packages, then versioned docs for blessed packages.
+# Set SKIP_VERSIONED_DOCS=1 to skip versioned docs generation (e.g. when running in a parallel CI job).
+.PHONY: api-docs
+api-docs: bin/resourcedocsgen
+	bin/resourcedocsgen docs registry \
+		--baseDocsOutDir ./themes/default/content/registry/packages \
+		--basePackageTreeJSONOutDir ./themes/default/static/registry/packages/navs \
+		--baseSchemasOutDir ./themes/default/static/registry/packages \
+		--logtostderr
+	$(if $(SKIP_VERSIONED_DOCS),,./scripts/generate-versioned-docs.sh)
 
 # Generate the API docs for `content/registry/packages/<pkg>`, where <pkg> is the name of
 # the package to be handed off to resourcedocsgen.
@@ -59,12 +72,16 @@ bin/mktutorial: $(shell ${HELPMAKEGO} tools/mktutorial)
 api-docs/%: .make/content/registry/packages/$$*/api-docs ;
 .make/content/registry/packages/%/api-docs: bin/resourcedocsgen \
 				themes/default/data/registry/packages/%.yaml \
+				scripts/generate-versioned-docs.sh \
 				$$(wildcard themes/default/content/registry/packages/%/*)
+	@if [ -L ./content/registry/packages/$* ]; then rm ./content/registry/packages/$*; fi
+	@if [ -L ./static/registry/packages/navs/$*.json ]; then rm ./static/registry/packages/navs/$*.json; fi
 	bin/resourcedocsgen docs registry \
 		--baseDocsOutDir ./content/registry/packages \
 		--basePackageTreeJSONOutDir ./static/registry/packages/navs \
 		--baseSchemasOutDir ./static/registry/packages \
 		$*
+	CONTENT_DIR=$(CURDIR)/content/registry/packages STATIC_DIR=$(CURDIR)/static/registry/packages ./scripts/generate-versioned-docs.sh $*
 	@mkdir -p "$(@D)"
 	@touch $@
 

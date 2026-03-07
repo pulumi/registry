@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-ise/v0.2.11/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-ise/v0.3.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-ise/blob/v0.2.11/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-ise/blob/v0.3.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Cisco ISE Provider
 meta_desc: Provides an overview on how to configure the Pulumi Cisco ISE provider.
@@ -51,6 +51,7 @@ config:
 
 - `insecure` (Boolean) Allow insecure HTTPS client. This can also be set as the ISE_INSECURE environment variable. Defaults to `true`.
 - `password` (String, Sensitive) Password for the ISE instance. This can also be set as the ISE_PASSWORD environment variable.
+- `requestTimeout` (Number) HTTP request timeout in seconds for REST API calls. This can also be set as the ISE_REQUEST_TIMEOUT environment variable. Defaults to `60`. Increase this value when working with complex nested policy conditions (e.g., 7-level nesting may require 180-300 seconds).
 - `retries` (Number) Number of retries for REST API calls. This can also be set as the ISE_RETRIES environment variable. Defaults to `3`.
 - `url` (String) URL of the Cisco ISE instance. This can also be set as the ISE_URL environment variable.
 - `username` (String) Username for the ISE instance. This can also be set as the ISE_USERNAME environment variable.

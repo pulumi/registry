@@ -78,11 +78,15 @@ jobs:
           key: docs-cache-${{ github.run_id }}
           restore-keys: docs-cache-
 
+      - name: Get registry-mirror-discover version
+        id: mirror-version
+        run: echo "hash=$(grep 'REGISTRY_MIRROR_TOOLS_COMMIT=' scripts/generate-versioned-docs.sh | cut -d'"' -f2)" >> "$GITHUB_OUTPUT"
+
       - name: Cache registry-mirror-discover binary
         uses: actions/cache@v4
         with:
           path: bin/registry-mirror-discover
-          key: registry-mirror-discover-becca918a99a2a0809ad7d35a551b8a4a8018639
+          key: registry-mirror-discover-${{ steps.mirror-version.outputs.hash }}
 
       - name: Build and deploy
         run: make ci_push

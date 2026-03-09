@@ -147,6 +147,39 @@ get_recent_buckets() {
         --output json | jq -r '.[].id'
 }
 
+# Gets the current production bucket name by fetching the public metadata endpoint.
+# Returns the bucket name on stdout, or empty string if the fetch fails.
+# Never errors — purely best-effort.
+get_production_bucket() {
+    local metadata
+    metadata=$(curl -sf --max-time 10 "https://www.pulumi.com/registry/metadata.json" 2>/dev/null) || { echo ""; return 0; }
+    local bucket
+    bucket=$(echo "$metadata" | jq -r '.bucket // empty' 2>/dev/null) || { echo ""; return 0; }
+    echo "$bucket"
+}
+
+# Performs a server-side S3-to-S3 copy to seed a new bucket from an existing one.
+# Usage: seed_from_bucket <source_bucket> <destination_bucket>
+# Non-fatal — if seeding fails, the full upload still works.
+seed_from_bucket() {
+    local source_bucket="$1"
+    local destination_bucket="$2"
+
+    log "Seeding s3://${destination_bucket} from s3://${source_bucket}..."
+    local seed_start
+    seed_start=$(date +%s)
+
+    aws s3 sync "s3://${source_bucket}" "s3://${destination_bucket}" \
+        --acl public-read --quiet --region "$(aws_region)" 2>&1 || {
+        log "Warning: seeding from ${source_bucket} failed (exit code $?). Will perform full upload."
+        return 0
+    }
+
+    local seed_end
+    seed_end=$(date +%s)
+    log "Seeding complete in $(( seed_end - seed_start )) seconds."
+}
+
 # Retry the given command some number of times, with a delay of some number of seconds between calls.
 # Usage: retry some_command <retry-count> <delay-in-seconds>
 retry() {

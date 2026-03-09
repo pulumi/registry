@@ -450,6 +450,51 @@ Templates parse versioned package names to extract the base name and version slu
 
 The version selector dropdown appears on package pages when multiple versions exist, reading from `$.Site.Data.registry.package_versions`.
 
+### 4.7 Build Caching
+
+CI builds use multiple cache layers to avoid redundant work. All caches are stored in GitHub Actions cache and restored at the start of each build.
+
+#### GitHub Actions–level caches
+
+| Cache | Key | Paths | What it stores |
+|---|---|---|---|
+| Node/Yarn | `node-cache-Linux-x64-yarn-<yarn.lock hash>` | `~/.cache/yarn/v6` | Yarn package cache |
+| Go | `setup-go-...-<go.sum hash>` | `GOMODCACHE`, `GOCACHE` | Go module and build cache |
+| Docs + schemas | `docs-cache-<run_id>` (restore key: `docs-cache-`) | `.cache/schemas`, `.cache/versioned-docs`, `.cache/api-docs` | API docs output, versioned docs, provider schemas |
+| registry-mirror-discover | `registry-mirror-discover-<commit hash>` | `bin/registry-mirror-discover` | Pre-built binary for versioned docs discovery |
+
+The docs cache uses `restore-keys: docs-cache-` so it falls back to the most recent previous run's cache when an exact match isn't found (the key includes `run_id`, so it's always unique).
+
+#### Incremental API docs generation
+
+The `resourcedocsgen` tool skips unchanged packages using sentinel files. Each generated package directory contains a `.generated` file recording a cache key composed of:
+
+- **SHA-256 of the package YAML metadata** — changes when the package version or config is updated.
+- **Go toolchain version** — changes on Go upgrades.
+- **Source hash** — a SHA-256 of all `.go` and `go.sum` files in `tools/resourcedocsgen/`, injected at build time via `-ldflags`. Changes when the doc generation logic changes.
+
+On each run, `resourcedocsgen` compares the computed cache key against the sentinel. If they match and the expected output files (api-docs, nav JSON, schema JSON) all exist, the package is skipped. Otherwise it regenerates.
+
+The `scripts/ci/build.sh` script manages the cache lifecycle:
+
+1. **Restore**: copies cached content from `.cache/api-docs/` into the Hugo content/static trees before running `resourcedocsgen`.
+2. **Generate**: `make api-docs` runs `resourcedocsgen`, which skips fresh packages and regenerates stale ones.
+3. **Save**: copies the generated output (including updated sentinel files) back to `.cache/api-docs/` for the next run.
+
+#### Versioned docs cache
+
+Versioned docs (older major versions of blessed packages) are cached separately in `.cache/versioned-docs/`. The `generate-versioned-docs.sh` script restores and saves this cache around its own generation pass. Each versioned package directory also has a `.generated` sentinel file with its own cache key.
+
+#### Cache invalidation triggers
+
+| Trigger | What invalidates |
+|---|---|
+| Package YAML file changes | That specific package regenerates |
+| Go source in `tools/resourcedocsgen/` changes | All packages regenerate (source hash changes) |
+| Go toolchain upgrade | All packages regenerate |
+| `registry-mirror-discover` commit hash changes | Binary is rebuilt and re-cached |
+| `yarn.lock` changes | Yarn cache miss, full `yarn install` |
+
 ---
 
 ## GitHub Actions Workflows

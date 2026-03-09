@@ -188,7 +188,7 @@ seed_bucket() {
         local seed_start
         seed_start=$(date +%s)
 
-        if aws s3 sync "s3://${candidate}" "s3://${destination_bucket}" \
+        if aws s3 cp "s3://${candidate}" "s3://${destination_bucket}" --recursive \
             --acl public-read --quiet --region "$(aws_region)" 2>&1; then
             local seed_end
             seed_end=$(date +%s)

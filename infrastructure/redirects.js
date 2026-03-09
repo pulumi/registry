@@ -7,8 +7,8 @@ var EXACT_REDIRECTS = [
 ];
 
 var PREFIX_REDIRECTS = [
-    { match: /^\/registry\/packages\/aws-v6\/(.*)/, replace: "/registry/packages/aws@6.x/$1" },
-    { match: /^\/registry\/packages\/azure-native-v2\/(.*)/, replace: "/registry/packages/azure-native@2.x/$1" },
+    { match: /^\/registry\/packages\/aws-v6\/?(.*)/, replace: "/registry/packages/aws@6.x/$1" },
+    { match: /^\/registry\/packages\/azure-native-v2\/?(.*)/, replace: "/registry/packages/azure-native@2.x/$1" },
 ];
 
 function handler(event) {

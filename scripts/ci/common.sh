@@ -147,11 +147,10 @@ get_recent_buckets() {
         --output json | jq -r '.[].id'
 }
 
-# Gets a seed bucket to pre-populate a new bucket from.
-# Tries the production metadata endpoint first, then falls back to the most recent
-# bucket in the current account. Returns the bucket name on stdout, or empty string
-# if nothing is found. Never errors — purely best-effort.
-get_seed_bucket() {
+# Returns a list of candidate seed buckets, one per line, best-first.
+# Tries the production metadata endpoint first, then the most recent buckets
+# in the current account. Never errors — purely best-effort.
+get_seed_candidates() {
     # Try production metadata endpoint first.
     local metadata
     metadata=$(curl -sf --max-time 10 "https://www.pulumi.com/registry/metadata.json" 2>/dev/null) || true
@@ -160,41 +159,47 @@ get_seed_bucket() {
         bucket=$(echo "$metadata" | jq -r '.bucket // empty' 2>/dev/null) || true
         if [[ -n "$bucket" ]]; then
             echo "$bucket"
-            return 0
         fi
     fi
 
-    # Fall back to the most recent bucket in the current account.
-    local recent
-    recent=$(get_recent_buckets | head -n 1) || true
-    if [[ -n "$recent" ]]; then
-        echo "$recent"
+    # Then add the most recent buckets in the current account.
+    get_recent_buckets 2>/dev/null | head -n 3 || true
+}
+
+# Tries to seed destination_bucket from the best available source bucket.
+# Iterates through candidates until one succeeds. Skips the destination bucket itself.
+# Non-fatal — if all candidates fail, the full upload still works.
+# Usage: seed_bucket <destination_bucket>
+seed_bucket() {
+    local destination_bucket="$1"
+    local candidates
+    candidates=$(get_seed_candidates)
+
+    if [[ -z "$candidates" ]]; then
+        log "No seed bucket candidates found. Will perform full upload."
         return 0
     fi
 
-    echo ""
-}
+    while IFS= read -r candidate; do
+        # Don't seed from ourselves.
+        [[ "$candidate" == "$destination_bucket" ]] && continue
 
-# Performs a server-side S3-to-S3 copy to seed a new bucket from an existing one.
-# Usage: seed_from_bucket <source_bucket> <destination_bucket>
-# Non-fatal — if seeding fails, the full upload still works.
-seed_from_bucket() {
-    local source_bucket="$1"
-    local destination_bucket="$2"
+        log "Seeding s3://${destination_bucket} from s3://${candidate}..."
+        local seed_start
+        seed_start=$(date +%s)
 
-    log "Seeding s3://${destination_bucket} from s3://${source_bucket}..."
-    local seed_start
-    seed_start=$(date +%s)
+        if aws s3 sync "s3://${candidate}" "s3://${destination_bucket}" \
+            --acl public-read --quiet --region "$(aws_region)" 2>&1; then
+            local seed_end
+            seed_end=$(date +%s)
+            log "Seeding complete in $(( seed_end - seed_start )) seconds."
+            return 0
+        fi
 
-    aws s3 sync "s3://${source_bucket}" "s3://${destination_bucket}" \
-        --acl public-read --quiet --region "$(aws_region)" 2>&1 || {
-        log "Warning: seeding from ${source_bucket} failed (exit code $?). Will perform full upload."
-        return 0
-    }
+        log "Seeding from ${candidate} failed. Trying next candidate..."
+    done <<< "$candidates"
 
-    local seed_end
-    seed_end=$(date +%s)
-    log "Seeding complete in $(( seed_end - seed_start )) seconds."
+    log "All seed candidates failed. Will perform full upload."
 }
 
 # Retry the given command some number of times, with a delay of some number of seconds between calls.

@@ -53,13 +53,8 @@ aws s3api put-bucket-tagging --bucket $destination_bucket --tagging "TagSet=[{$(
 # Make the bucket an S3 website.
 aws s3 website $destination_bucket_uri --index-document index.html --error-document 404.html --region "$(aws_region)"
 
-# Seed the new bucket from the current production bucket to speed up the sync.
-seed_bucket=$(get_seed_bucket)
-if [[ -n "$seed_bucket" ]]; then
-    seed_from_bucket "$seed_bucket" "$destination_bucket"
-else
-    log "No seed bucket found. Will perform full upload."
-fi
+# Seed the new bucket from the best available source to speed up the sync.
+seed_bucket "$destination_bucket"
 
 # Sync the local build directory to the bucket. Note that we do pass the --delete option
 # here, since in most cases, we'll be continually updating a bucket associated with a PR;

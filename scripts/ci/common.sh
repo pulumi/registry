@@ -147,15 +147,32 @@ get_recent_buckets() {
         --output json | jq -r '.[].id'
 }
 
-# Gets the current production bucket name by fetching the public metadata endpoint.
-# Returns the bucket name on stdout, or empty string if the fetch fails.
-# Never errors — purely best-effort.
-get_production_bucket() {
+# Gets a seed bucket to pre-populate a new bucket from.
+# Tries the production metadata endpoint first, then falls back to the most recent
+# bucket in the current account. Returns the bucket name on stdout, or empty string
+# if nothing is found. Never errors — purely best-effort.
+get_seed_bucket() {
+    # Try production metadata endpoint first.
     local metadata
-    metadata=$(curl -sf --max-time 10 "https://www.pulumi.com/registry/metadata.json" 2>/dev/null) || { echo ""; return 0; }
-    local bucket
-    bucket=$(echo "$metadata" | jq -r '.bucket // empty' 2>/dev/null) || { echo ""; return 0; }
-    echo "$bucket"
+    metadata=$(curl -sf --max-time 10 "https://www.pulumi.com/registry/metadata.json" 2>/dev/null) || true
+    if [[ -n "$metadata" ]]; then
+        local bucket
+        bucket=$(echo "$metadata" | jq -r '.bucket // empty' 2>/dev/null) || true
+        if [[ -n "$bucket" ]]; then
+            echo "$bucket"
+            return 0
+        fi
+    fi
+
+    # Fall back to the most recent bucket in the current account.
+    local recent
+    recent=$(get_recent_buckets | head -n 1) || true
+    if [[ -n "$recent" ]]; then
+        echo "$recent"
+        return 0
+    fi
+
+    echo ""
 }
 
 # Performs a server-side S3-to-S3 copy to seed a new bucket from an existing one.

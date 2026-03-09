@@ -54,7 +54,7 @@ aws s3api put-bucket-tagging --bucket $destination_bucket --tagging "TagSet=[{$(
 aws s3 website $destination_bucket_uri --index-document index.html --error-document 404.html --region "$(aws_region)"
 
 # Seed the new bucket from the current production bucket to speed up the sync.
-seed_bucket=$(get_production_bucket)
+seed_bucket=$(get_seed_bucket)
 if [[ -n "$seed_bucket" ]]; then
     seed_from_bucket "$seed_bucket" "$destination_bucket"
 else

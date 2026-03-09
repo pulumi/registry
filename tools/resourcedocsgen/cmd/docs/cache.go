@@ -21,6 +21,8 @@ import (
 	"path/filepath"
 	"runtime/debug"
 	"strings"
+
+	"github.com/golang/glog"
 )
 
 const sentinelFileName = ".generated"
@@ -53,15 +55,18 @@ func isFresh(docsOutDir, packageTreeJSONOutDir, schemasOutDir, packageName, cach
 	sentinelPath := filepath.Join(docsOutDir, sentinelFileName)
 	data, err := os.ReadFile(sentinelPath)
 	if err != nil {
+		glog.Infof("Cache miss for %s: sentinel read error: %v", packageName, err)
 		return false
 	}
 	if strings.TrimSpace(string(data)) != cacheKey {
+		glog.Infof("Cache miss for %s: key mismatch\n  sentinel: %q\n  expected: %q", packageName, strings.TrimSpace(string(data)), cacheKey)
 		return false
 	}
 
 	// Verify nav JSON exists
 	navPath := filepath.Join(packageTreeJSONOutDir, packageName+".json")
 	if _, err := os.Stat(navPath); os.IsNotExist(err) {
+		glog.Infof("Cache miss for %s: nav JSON missing at %s", packageName, navPath)
 		return false
 	}
 
@@ -69,6 +74,7 @@ func isFresh(docsOutDir, packageTreeJSONOutDir, schemasOutDir, packageName, cach
 	if schemasOutDir != "" {
 		schemaPath := filepath.Join(schemasOutDir, packageName, "schema.json")
 		if _, err := os.Stat(schemaPath); os.IsNotExist(err) {
+			glog.Infof("Cache miss for %s: schema missing at %s", packageName, schemaPath)
 			return false
 		}
 	}

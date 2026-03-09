@@ -31,17 +31,69 @@ export REL_CSS_BUNDLE="/css/styles.${ASSET_BUNDLE_ID}.css"
 export REL_JS_BUNDLE="/js/bundle.min.${ASSET_BUNDLE_ID}.js"
 export REPO_THEME_PATH="themes/default/"
 
-pushd tools/resourcedocsgen
-go build -o "${GOPATH}/bin/resourcedocsgen" .
-popd
-
 REGISTRY_COMMIT="$(git_sha_short)"
 printf "Generating API docs from registry commit %s...\n\n" "${REGISTRY_COMMIT}"
-resourcedocsgen docs registry \
-    --baseDocsOutDir "themes/default/content/registry/packages" \
-    --basePackageTreeJSONOutDir "themes/default/static/registry/packages/navs" \
-    --baseSchemasOutDir "themes/default/static/registry/packages" \
-    --logtostderr
+
+# Restore cached API docs output so resourcedocsgen can skip unchanged packages.
+# The .generated sentinel files inside each api-docs/ directory record the cache key;
+# if the key matches, the Go tool skips schema fetching and doc generation entirely.
+API_DOCS_CACHE=".cache/api-docs"
+CONTENT_DIR="themes/default/content/registry/packages"
+NAVS_DIR="themes/default/static/registry/packages/navs"
+SCHEMAS_DIR="themes/default/static/registry/packages"
+
+if [[ -d "$API_DOCS_CACHE/content" ]]; then
+    log "Restoring cached API docs..."
+    mkdir -p "$CONTENT_DIR" "$NAVS_DIR"
+    count=0
+    for pkg_dir in "$API_DOCS_CACHE/content"/*/; do
+        [[ -d "$pkg_dir/api-docs" ]] || continue
+        pkg=$(basename "$pkg_dir")
+        if [[ ! -d "$CONTENT_DIR/$pkg/api-docs" ]]; then
+            mkdir -p "$CONTENT_DIR/$pkg"
+            cp -a "$pkg_dir/api-docs" "$CONTENT_DIR/$pkg/api-docs"
+            ((count++)) || true
+        fi
+    done
+    for nav in "$API_DOCS_CACHE/navs"/*.json; do
+        [[ -f "$nav" ]] || continue
+        name=$(basename "$nav")
+        [[ -f "$NAVS_DIR/$name" ]] || cp -a "$nav" "$NAVS_DIR/$name"
+    done
+    for schema_dir in "$API_DOCS_CACHE/schemas"/*/; do
+        [[ -d "$schema_dir" ]] || continue
+        pkg=$(basename "$schema_dir")
+        [[ -d "$SCHEMAS_DIR/$pkg" ]] || cp -a "$schema_dir" "$SCHEMAS_DIR/$pkg"
+    done
+    log "Restored $count cached package doc sets"
+fi
+
+make api-docs
+
+# Save API docs output to cache for next run.
+log "Saving API docs to cache..."
+rm -rf "$API_DOCS_CACHE"
+mkdir -p "$API_DOCS_CACHE/content" "$API_DOCS_CACHE/navs" "$API_DOCS_CACHE/schemas"
+for pkg_dir in "$CONTENT_DIR"/*/; do
+    [[ -d "$pkg_dir/api-docs" ]] || continue
+    pkg=$(basename "$pkg_dir")
+    [[ "$pkg" == *@* ]] && continue  # versioned packages have their own cache
+    mkdir -p "$API_DOCS_CACHE/content/$pkg"
+    cp -a "$pkg_dir/api-docs" "$API_DOCS_CACHE/content/$pkg/api-docs"
+done
+for nav in "$NAVS_DIR"/*.json; do
+    [[ -f "$nav" ]] || continue
+    name=$(basename "$nav")
+    [[ "$name" == *@* ]] && continue
+    cp -a "$nav" "$API_DOCS_CACHE/navs/"
+done
+for schema_dir in "$SCHEMAS_DIR"/*/; do
+    [[ -d "$schema_dir" && -f "$schema_dir/schema.json" ]] || continue
+    pkg=$(basename "$schema_dir")
+    [[ "$pkg" == *@* ]] && continue
+    cp -a "$schema_dir" "$API_DOCS_CACHE/schemas/"
+done
+log "API docs cache saved"
 
 # Apply fixes. See script for details.
 node ./scripts/apply-fixes.js

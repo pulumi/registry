@@ -15,6 +15,7 @@ This document describes the build, test, and deployment system for the `pulumi/r
    - [4.3 resourcedocsgen Tool](#43-resourcedocsgen-tool)
    - [4.4 mktutorial Tool](#44-mktutorial-tool)
    - [4.5 CI Build Script](#45-ci-build-script-scriptscibuilds)
+   - [4.6 Versioned Documentation](#46-versioned-documentation)
 5. [GitHub Actions Workflows](#github-actions-workflows)
    - [5.1 pull-request.yml — PR Validation + Preview Deploy](#51-pull-requestyml--pr-validation--preview-deploy)
    - [5.2 push.yml — Production Build + Deploy](#52-pushyml--production-build--deploy)
@@ -395,13 +396,110 @@ This is the master build script for CI runs. It accepts one argument: `preview` 
 6. Sets asset bundle paths:
    - `CSS_BUNDLE=static/css/styles.<id>.css`
    - `JS_BUNDLE=static/js/bundle.min.<id>.js`
-7. Compiles `resourcedocsgen`: `go build -o $GOPATH/bin/resourcedocsgen .`
-8. Runs `resourcedocsgen docs registry --logtostderr` to generate all provider API docs.
-9. Runs `node ./scripts/apply-fixes.js`.
-10. Runs Hugo with `--minify --buildFuture --templateMetrics`:
+7. **Restores cached API docs** from `.cache/api-docs/` into the Hugo content/static trees (see section 4.7 for details).
+8. Runs `make api-docs`, which compiles `resourcedocsgen` and generates all provider API docs. The tool skips unchanged packages using sentinel files.
+9. **Saves API docs** output (including sentinel files) back to `.cache/api-docs/` for the next run. Versioned packages (`@`-suffixed) are excluded — they have their own cache.
+10. Runs `node ./scripts/apply-fixes.js`.
+11. Runs Hugo with `--minify --buildFuture --templateMetrics`:
     - `preview` mode: sets `HUGO_BASEURL` to the S3 website URL and uses `-e preview`
     - `update` mode: uses `-e production`
-11. Runs `yarn run minify-css` to purge and minify CSS.
+12. Runs `yarn run minify-css` to purge and minify CSS.
+
+### 4.6 Versioned documentation
+
+**Location**: `scripts/generate-versioned-docs.sh`
+
+Blessed packages (first-party Pulumi providers listed in [ci-mgmt](https://github.com/pulumi/ci-mgmt)) get versioned API docs for the last 3 major versions. URLs use the `pkg@X.x` format:
+
+- `/registry/packages/aws/` - latest version (e.g., v7.x)
+- `/registry/packages/aws@6.x/` - previous major version
+- `/registry/packages/aws@5.x/` - older major version
+
+**How it works**:
+
+1. `make api-docs/<pkg>` runs resourcedocsgen for the latest version, then calls `generate-versioned-docs.sh`
+2. The script fetches the blessed packages list from ci-mgmt
+3. For blessed packages, it discovers the last 3 major versions using `registry-mirror-discover`
+4. For each older major version:
+   - Downloads and caches the schema (schemas are 50MB+)
+   - Fetches version-specific `_index.md` from GitHub or falls back to latest
+   - Generates API docs with resourcedocsgen
+   - Creates versioned nav JSON (e.g., `aws@6.x.json`)
+   - Generates metadata YAML in `package_versions/` directory
+
+**Generated output**:
+
+| Output | Location |
+|---|---|
+| Versioned docs | `themes/default/content/registry/packages/<pkg>@<X>.x/api-docs/` |
+| Versioned nav JSON | `themes/default/static/registry/packages/navs/<pkg>@<X>.x.json` |
+| Version metadata | `themes/default/data/registry/package_versions/<pkg>@<X>.x.yaml` |
+
+**Dependencies**:
+
+- `registry-mirror-discover`: built via `go install` from `github.com/pulumi/registry-mirror-tools` at a pinned commit. In CI, the binary is cached by GitHub Actions to avoid rebuilding on every run (see section 4.7).
+
+**Hugo template handling**:
+
+Templates parse versioned package names to extract the base name and version slug:
+
+```go
+{{ $rawPackageName := index $directories 2 }}
+{{ $isVersioned := strings.Contains $rawPackageName "@" }}
+{{ $basePackageName := cond $isVersioned (index (split $rawPackageName "@") 0) $rawPackageName }}
+```
+
+The version selector dropdown appears on package pages when multiple versions exist, reading from `$.Site.Data.registry.package_versions`.
+
+### 4.7 Build Caching
+
+CI builds use multiple cache layers to avoid redundant work. All caches are stored in GitHub Actions cache and restored at the start of each build.
+
+#### GitHub Actions–level caches
+
+| Cache | Key | Paths | What it stores |
+|---|---|---|---|
+| Node/Yarn | `node-cache-Linux-x64-yarn-<yarn.lock hash>` | `~/.cache/yarn/v6` | Yarn package cache |
+| Go | `setup-go-...-<go.sum hash>` | `GOMODCACHE`, `GOCACHE` | Go module and build cache |
+| Docs + schemas | `docs-cache-<run_id>` (restore key: `docs-cache-`) | `.cache/schemas`, `.cache/versioned-docs`, `.cache/api-docs` | API docs output, versioned docs, provider schemas |
+| registry-mirror-discover | `registry-mirror-discover-<commit hash>` | `bin/registry-mirror-discover` | Pre-built binary for versioned docs discovery |
+
+The docs cache uses `restore-keys: docs-cache-` so it falls back to the most recent previous run's cache when an exact match isn't found (the key includes `run_id`, so it's always unique).
+
+#### Incremental API docs generation
+
+The `resourcedocsgen` tool skips unchanged packages using sentinel files. Each generated package directory contains a `.generated` file recording a cache key composed of:
+
+- **SHA-256 of the package YAML metadata** — changes when the package version or config is updated.
+- **Go toolchain version** — changes on Go upgrades.
+- **Source hash** — a SHA-256 of all `.go` and `go.sum` files in `tools/resourcedocsgen/`, injected at build time via `-ldflags`. Changes when the doc generation logic changes.
+
+On each run, `resourcedocsgen` compares the computed cache key against the sentinel. If they match and the expected output files (api-docs, nav JSON, schema JSON) all exist, the package is skipped. Otherwise it regenerates.
+
+The `scripts/ci/build.sh` script manages the cache lifecycle:
+
+1. **Restore**: copies cached content from `.cache/api-docs/` into the Hugo content/static trees before running `resourcedocsgen`.
+2. **Generate**: `make api-docs` runs `resourcedocsgen`, which skips fresh packages and regenerates stale ones.
+3. **Save**: copies the generated output (including updated sentinel files) back to `.cache/api-docs/` for the next run.
+
+#### Versioned docs cache
+
+Versioned docs (older major versions of blessed packages) are cached separately in `.cache/versioned-docs/`, which has three subdirectories: `content/`, `navs/`, and `metadata/`. The `generate-versioned-docs.sh` script restores from this cache before processing and saves back to it afterward.
+
+Each versioned package directory has a `.generated` sentinel file, but unlike the API docs cache, it stores only the **schema URL** (not a full composite key). If the schema URL in the sentinel matches the current version's schema URL, generation is skipped. This means versioned docs only regenerate when the schema URL changes (i.e., when a new version is published for that major version line).
+
+Provider schemas themselves are cached separately in `.cache/schemas/` (keyed by `<package>-v<version>.json`) since individual schemas can be 50MB+.
+
+#### Cache invalidation triggers
+
+| Trigger | What invalidates |
+|---|---|
+| Package YAML file changes | That specific package's API docs regenerate |
+| Go source in `tools/resourcedocsgen/` changes | All API docs regenerate (source hash changes) |
+| Go toolchain upgrade | All API docs regenerate |
+| Schema URL changes for a versioned package | That specific versioned package regenerates |
+| `registry-mirror-discover` commit hash changes | Binary is rebuilt and re-cached |
+| `yarn.lock` changes | Yarn cache miss, full `yarn install` |
 
 ---
 

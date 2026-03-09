@@ -51,6 +51,15 @@ func AssertDirEqual(t *testing.T, root string, options ...AssertOption) {
 			return err
 		}
 
+		// Skip dotfiles and dot-directories (e.g. .generated sentinels).
+		// These are cache infrastructure, not content output.
+		if strings.HasPrefix(d.Name(), ".") {
+			if d.IsDir() {
+				return filepath.SkipDir
+			}
+			return nil
+		}
+
 		pathName := strings.TrimLeft(strings.TrimPrefix(path, root), "/")
 		require.NotEmpty(t, pathName, "internal error - pathName should not be empty")
 		structure = append(structure, pathName)
@@ -89,6 +98,13 @@ func AssertDirsEqual(t *testing.T, expected, actual string, options ...AssertOpt
 			return err
 		}
 
+		if strings.HasPrefix(d.Name(), ".") {
+			if d.IsDir() {
+				return filepath.SkipDir
+			}
+			return nil
+		}
+
 		pathName := strings.TrimLeft(strings.TrimPrefix(path, expected), "/")
 		require.NotEmpty(t, pathName, "internal error - pathName should not be empty")
 		expectedStructure = append(expectedStructure, pathName)
@@ -122,6 +138,13 @@ func AssertDirsEqual(t *testing.T, expected, actual string, options ...AssertOpt
 	require.NoError(t, filepath.WalkDir(actual, func(path string, d fs.DirEntry, err error) error {
 		if path == actual || err != nil {
 			return err
+		}
+
+		if strings.HasPrefix(d.Name(), ".") {
+			if d.IsDir() {
+				return filepath.SkipDir
+			}
+			return nil
 		}
 
 		pathName := strings.TrimLeft(strings.TrimPrefix(path, actual), "/")

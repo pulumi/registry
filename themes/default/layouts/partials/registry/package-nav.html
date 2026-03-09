@@ -1,4 +1,5 @@
-{{ $packageUrl := printf "%s/" (path.Join "/registry/packages" (index (split .Page.File.Path "/") 2)) }}
+{{ $rawPackageName := index (split .Page.File.Path "/") 2 }}
+{{ $packageUrl := printf "%s/" (path.Join "/registry/packages" $rawPackageName) }}
 {{ $installPath := printf "%s/" (path.Join $packageUrl "installation-configuration") }}
 {{ $howToPath := printf "%s/" (path.Join $packageUrl "how-to-guides/") }}
 {{ $versionGuidePath := printf "%s/" (path.Join $packageUrl "version-guide") }}

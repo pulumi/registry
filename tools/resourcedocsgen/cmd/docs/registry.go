@@ -68,8 +68,17 @@ func writeSchemaFile(baseSchemasOutDir, packageName string, schemaBytes []byte) 
 }
 
 func genResourceDocsForPackageFromRegistryMetadata(
-	metadata pkg.PackageMeta, docsOutDir, packageTreeJSONOutDir, schemasOutDir string,
+	metadata pkg.PackageMeta, yamlBytes []byte,
+	docsOutDir, packageTreeJSONOutDir, schemasOutDir string,
 ) error {
+	// Skip unchanged packages: if the YAML metadata and tool version match
+	// what was used to generate the existing output, reuse it.
+	cacheKey := buildCacheKey(yamlBytes)
+	if isFresh(docsOutDir, packageTreeJSONOutDir, schemasOutDir, metadata.Name, cacheKey) {
+		glog.Infof("Skipping %s (output is fresh)", metadata.Name)
+		return nil
+	}
+
 	glog.Infoln("Generating docs for", metadata.Name)
 
 	schemaFileURL, err := getSchemaFileURL(metadata)
@@ -128,6 +137,10 @@ func genResourceDocsForPackageFromRegistryMetadata(
 	glog.Infoln("Generating the package tree JSON file...")
 	if err := generatePackageTree(packageTreeJSONOutDir, pulPkg.Name, genctx); err != nil {
 		return errors.Wrap(err, "generating package tree")
+	}
+
+	if err := writeSentinel(docsOutDir, cacheKey); err != nil {
+		glog.Warningf("Failed to write sentinel for %s: %v", metadata.Name, err)
 	}
 
 	return nil
@@ -294,7 +307,7 @@ func genResourceDocsForAllRegistryPackages(
 
 			docsOutDir := filepath.Join(baseDocsOutDir, metadata.Name, "api-docs")
 			err = genResourceDocsForPackageFromRegistryMetadata(
-				metadata, docsOutDir, basePackageTreeJSONOutDir, baseSchemasOutDir,
+				metadata, b, docsOutDir, basePackageTreeJSONOutDir, baseSchemasOutDir,
 			)
 			if err != nil {
 				return errors.Wrapf(err, "generating resource docs using metadata file info %s", f.Name())
@@ -343,7 +356,7 @@ func resourceDocsFromRegistryCmd() *cobra.Command {
 				docsOutDir := filepath.Join(baseDocsOutDir, metadata.Name, "api-docs")
 
 				err = genResourceDocsForPackageFromRegistryMetadata(
-					metadata, docsOutDir, basePackageTreeJSONOutDir, baseSchemasOutDir,
+					metadata, b, docsOutDir, basePackageTreeJSONOutDir, baseSchemasOutDir,
 				)
 				if err != nil {
 					return errors.Wrapf(err, "generating docs for package %q from registry metadata", pkgName)

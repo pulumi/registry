@@ -32,9 +32,9 @@ test:
 .PHONY: build
 build: build-assets
 	node scripts/apply-fixes.js
-	hugo | grep -v -e 'WARN .* REF_NOT_FOUND'
+	hugo 2>&1 | grep -v -e 'WARN .* REF_NOT_FOUND'
 
-HUGO_SERVE := hugo serve --buildDrafts --buildFuture --ignoreVendorPaths="github.com/pulumi/registry/**/*" | grep -v -e 'WARN .* REF_NOT_FOUND'
+HUGO_SERVE := hugo serve --buildDrafts --buildFuture --ignoreVendorPaths="github.com/pulumi/registry/**/*" 2>&1 | grep -v -e 'WARN .* REF_NOT_FOUND'
 
 HELPMAKEGO_VERSION := v0.1.0
 HELPMAKEGO := bin/${HELPMAKEGO_VERSION}/helpmakego

@@ -1,9 +1,9 @@
 [tools]
-golang = '1.25'
+golang = '1.26'
 node = '24'
 
 yarn = '1.22.22'
-hugo = '0.135'
+hugo = '0.157'
 
 golangci-lint = "2.10.1"
 yq = "latest"

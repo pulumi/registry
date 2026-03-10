@@ -166,11 +166,11 @@ func (g *constructorSyntaxGenerator) writeValue(
 			}
 
 			if value != nil {
-				write(fmt.Sprintf("%v", value))
+				write("%v", value)
 			} else {
 				// all of them enum cases deprecated
 				// choose the first one
-				write(fmt.Sprintf("%v", valueType.Elements[0].Value))
+				write("%v", valueType.Elements[0].Value)
 			}
 		} else {
 			cases := make([]string, len(valueType.Elements))
@@ -189,7 +189,7 @@ func (g *constructorSyntaxGenerator) writeValue(
 			}
 
 			if len(cases) > 0 {
-				write(fmt.Sprintf("%q", cases[0]))
+				write("%q", cases[0])
 			} else {
 				write("null")
 			}

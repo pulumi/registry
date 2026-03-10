@@ -7,7 +7,7 @@
                         {{ partial "docs/search-only.html" . }}
                         <div class="featured-packages">
                             {{ $featuredPackages := slice }}
-                            {{ range $.Site.Data.registry.packages }}
+                            {{ range site.Data.registry.packages }}
                                 {{ if .featured }}
                                     {{ $featuredPackages = $featuredPackages | append . }}
                                 {{ end }}
@@ -25,7 +25,7 @@
                         <div class="az-packages">
                             <h2 class="no-anchor az-packages-heading">A - Z packages</h2>
                             <ul>
-                                {{ range (sort $.Site.Data.registry.packages "title") }}
+                                {{ range (sort site.Data.registry.packages "title") }}
                                     <li class="sidenav-topic">
                                         {{ $href := printf "/registry/packages/%s/" .name }}
                                         <a href="{{ $href }}">{{ .title }}</a>

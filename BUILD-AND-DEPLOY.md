@@ -84,10 +84,10 @@ The canonical tool versions are tracked in `mise.toml`:
 
 | Tool | Version |
 |---|---|
-| Go | 1.23 |
+| Go | 1.26 |
 | Node.js | 20 |
 | Yarn | 1.22.22 |
-| Hugo | 0.135 (extended) |
+| Hugo | 0.157 (extended) |
 | golangci-lint | 2.1.6 |
 | yq | latest |
 
@@ -150,7 +150,7 @@ mise trust && mise install
 
 | Component | Role |
 |---|---|
-| Hugo 0.135 (extended) | Static site generation from templates and content |
+| Hugo 0.157 (extended) | Static site generation from templates and content |
 | resourcedocsgen | Generates provider API reference docs from Pulumi schemas |
 | mktutorial | Generates how-to guides from `pulumi/examples` |
 | Pulumi IaC | Manages AWS resources; reads metadata file to update CloudFront origin |
@@ -559,7 +559,7 @@ PR opened / committed
         │
         ├── preview  (skipped for fork PRs; skipped for automation/tfgen-provider-docs label)
         │       ├── Fetch ESC secrets
-        │       ├── Install Node 22, Go 1.23, Hugo 0.135
+        │       ├── Install Node 22, Go 1.26, Hugo 0.157
         │       ├── Validate community-packages/package-list.json
         │       ├── Configure AWS credentials → assume testing account role
         │       └── make ci-pull-request
@@ -606,7 +606,7 @@ Push to master
         │
         └── build job
                 ├── Fetch ESC secrets (OIDC)
-                ├── Install Node 22, Go 1.23, Hugo 0.135
+                ├── Install Node 22, Go 1.26, Hugo 0.157
                 ├── Checkout (using PULUMI_BOT_TOKEN for private module access)
                 ├── Configure AWS credentials
                 │       └── Assume arn:aws:iam::388588623842:role/ContinuousDelivery
@@ -683,7 +683,7 @@ Jobs:
 
 Runs `make check_links` which calls `yarn run check-links`, which runs `node scripts/link-checker/check-links.js "https://www.pulumi.com/registry" 2` (2 retries on failure). Broken links are reported to the `#registry-ops` Slack channel.
 
-Node version: 22.x; Hugo 0.135.0 installed but not explicitly used.
+Node version: 22.x; Hugo 0.157.0 installed but not explicitly used.
 
 #### `run-browser-tests.yml` — Scheduled Browser Tests
 
@@ -691,7 +691,7 @@ Node version: 22.x; Hugo 0.135.0 installed but not explicitly used.
 
 Runs `make run-browser-tests` on a `pulumi-ubuntu-8core` runner. Assumes the production AWS role (`388588623842:role/ContinuousDelivery`) to be able to reach the live site.
 
-Node version: 22.x; Hugo 0.135.0 installed.
+Node version: 22.x; Hugo 0.157.0 installed.
 
 #### `generate-package-metadata.yml` — Nightly Community Package Check
 
@@ -1039,8 +1039,8 @@ The `export-repo-secrets.yml` workflow provides a manual escape hatch to sync Gi
 | Tool | `mise.toml` | `pull-request.yml` (preview) | `push.yml` (production) | `testing-deploy.yml` |
 |---|---|---|---|---|
 | Node.js | 20 | 22.x | 22.x | 22.x |
-| Go | 1.23 | 1.23.x | 1.23.x | 1.21.x |
-| Hugo | 0.135 | 0.135.0 | 0.135.0 | 0.135.0 |
+| Go | 1.26 | 1.26.x | 1.26.x | 1.21.x |
+| Hugo | 0.157 | 0.157.0 | 0.157.0 | 0.157.0 |
 | golangci-lint | 2.1.6 | v2.1.6 (check-go.yml) | — | — |
 
 Note: `mise.toml` specifies Node 20 for local development, while CI workflows use Node 22. The `lint-markdown` and `lint-scripts` jobs in `pull-request.yml` use Node 23.x. The `bucket-cleanup.yml` workflow uses Node 18.x.
@@ -1065,7 +1065,7 @@ Note: `mise.toml` specifies Node 20 for local development, while CI workflows us
 
 **Symptom**: Build fails with template errors or unexpected output.
 
-**Fix**: Ensure you are using Hugo 0.135 extended. Check with `hugo version`. If using mise: `mise install` will install the correct version. Ensure you have the **extended** variant (required for SCSS processing).
+**Fix**: Ensure you are using Hugo 0.157 extended. Check with `hugo version`. If using mise: `mise install` will install the correct version. Ensure you have the **extended** variant (required for SCSS processing).
 
 ### Node out-of-memory error
 

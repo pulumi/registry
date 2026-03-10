@@ -17,7 +17,7 @@ fi
 
 # Install registry-mirror-discover (pinned commit for stability).
 # Cache the built binary to avoid recompiling on every build.
-REGISTRY_MIRROR_TOOLS_COMMIT="becca918a99a2a0809ad7d35a551b8a4a8018639"
+REGISTRY_MIRROR_TOOLS_COMMIT="dda1dfd85d540fab45a0d19060e963564d0b36aa"
 DISCOVER_BIN="$REPO_ROOT/bin/registry-mirror-discover"
 if [[ ! -x "$DISCOVER_BIN" ]]; then
     echo "Building registry-mirror-discover..."
@@ -239,9 +239,25 @@ process_package() {
         if [[ ! -f "$CACHED_SCHEMA" ]]; then
             echo "[$PACKAGE] Downloading schema from $SCHEMA_URL..."
             if [[ "$SCHEMA_URL" == *.yaml || "$SCHEMA_URL" == *.yml ]]; then
-                curl -sfL "$SCHEMA_URL" | yq -o json > "$CACHED_SCHEMA"
+                if ! curl -sfL "$SCHEMA_URL" | yq -o json > "$CACHED_SCHEMA"; then
+                    echo "[$PACKAGE] Warning: Failed to download schema from $SCHEMA_URL, skipping"
+                    rm -f "$CACHED_SCHEMA"
+                    rm -rf "$DOCS_OUT_DIR"
+                    continue
+                fi
             else
-                curl -sfL "$SCHEMA_URL" -o "$CACHED_SCHEMA"
+                if ! curl -sfL "$SCHEMA_URL" -o "$CACHED_SCHEMA"; then
+                    echo "[$PACKAGE] Warning: Failed to download schema from $SCHEMA_URL, skipping"
+                    rm -f "$CACHED_SCHEMA"
+                    rm -rf "$DOCS_OUT_DIR"
+                    continue
+                fi
+            fi
+            if [[ ! -s "$CACHED_SCHEMA" ]]; then
+                echo "[$PACKAGE] Warning: Downloaded schema is empty, skipping"
+                rm -f "$CACHED_SCHEMA"
+                rm -rf "$DOCS_OUT_DIR"
+                continue
             fi
         else
             echo "[$PACKAGE] Using cached schema: $CACHED_SCHEMA"

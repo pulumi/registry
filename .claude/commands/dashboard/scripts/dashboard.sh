@@ -129,16 +129,17 @@ calculate_priority() {
   echo "$priority"
 }
 
-# Build enriched PR list with priorities
+# Build enriched PR list with priorities using jq
+# (Avoid piped while-read loops which run in subshells and lose variable state)
 PRS_WITH_PRIORITY="$TMPDIR/prs_enriched.json"
-echo "[" > "$PRS_WITH_PRIORITY"
-first=true
 
 if [ -f "$TMPDIR/prs_all.json" ]; then
-  cat "$TMPDIR/prs_all.json" | jq -c '.[]' | while read -r pr; do
+  # Enrich each PR individually and collect into a file
+  : > "$TMPDIR/prs_enriched_lines.jsonl"
+
+  while read -r pr; do
     number=$(echo "$pr" | jq -r '.number')
     created_at=$(echo "$pr" | jq -r '.createdAt')
-    labels=$(echo "$pr" | jq -r '.labels[].name' | tr '\n' '|')
 
     priority=$(calculate_priority "$pr")
 
@@ -156,38 +157,36 @@ if [ -f "$TMPDIR/prs_all.json" ]; then
     # Check if assigned or mentions me
     is_assigned="false"
     is_mentioned="false"
-    if cat "$TMPDIR/prs_assigned.json" 2>/dev/null | jq -e ".[] | select(.number == $number)" >/dev/null 2>&1; then
+    if jq -e ".[] | select(.number == $number)" "$TMPDIR/prs_assigned.json" >/dev/null 2>&1; then
       is_assigned="true"
     fi
-    if cat "$TMPDIR/prs_mentions.json" 2>/dev/null | jq -e ".[] | select(.number == $number)" >/dev/null 2>&1; then
+    if jq -e ".[] | select(.number == $number)" "$TMPDIR/prs_mentions.json" >/dev/null 2>&1; then
       is_mentioned="true"
     fi
 
     # Add priority and metadata to PR object
-    enriched=$(echo "$pr" | jq --arg prio "$priority" --arg age "$age_days" --arg type "$type" --arg assigned "$is_assigned" --arg mentioned "$is_mentioned" \
-      '. + {priority: ($prio | tonumber), age_days: ($age | tonumber), type: $type, is_assigned: ($assigned == "true"), is_mentioned: ($mentioned == "true")}')
+    echo "$pr" | jq --arg prio "$priority" --arg age "$age_days" --arg type "$type" --arg assigned "$is_assigned" --arg mentioned "$is_mentioned" \
+      '. + {priority: ($prio | tonumber), age_days: ($age | tonumber), type: $type, is_assigned: ($assigned == "true"), is_mentioned: ($mentioned == "true")}' \
+      >> "$TMPDIR/prs_enriched_lines.jsonl"
 
-    if [ "$first" = true ]; then
-      echo "$enriched" >> "$PRS_WITH_PRIORITY"
-      first=false
-    else
-      echo ",$enriched" >> "$PRS_WITH_PRIORITY"
-    fi
-  done
+  done < <(jq -c '.[]' "$TMPDIR/prs_all.json")
+
+  # Combine JSONL into a JSON array
+  jq -s '.' "$TMPDIR/prs_enriched_lines.jsonl" > "$PRS_WITH_PRIORITY"
+else
+  echo "[]" > "$PRS_WITH_PRIORITY"
 fi
-
-echo "]" >> "$PRS_WITH_PRIORITY"
 
 # ═══════════════════════════════════════════════════════════════════════════
 # 4. Enrich Issues with Age
 # ═══════════════════════════════════════════════════════════════════════════
 
 ISSUES_ENRICHED="$TMPDIR/issues_enriched.json"
-echo "[" > "$ISSUES_ENRICHED"
-first=true
 
 if [ -f "$TMPDIR/issues_assigned.json" ]; then
-  cat "$TMPDIR/issues_assigned.json" | jq -c '.[]' | while read -r issue; do
+  : > "$TMPDIR/issues_enriched_lines.jsonl"
+
+  while read -r issue; do
     created_at=$(echo "$issue" | jq -r '.createdAt')
 
     age_days=0
@@ -197,18 +196,15 @@ if [ -f "$TMPDIR/issues_assigned.json" ]; then
       age_days=$(( (current_timestamp - created_timestamp) / 86400 ))
     fi
 
-    enriched=$(echo "$issue" | jq --arg age "$age_days" '. + {age_days: ($age | tonumber)}')
+    echo "$issue" | jq --arg age "$age_days" '. + {age_days: ($age | tonumber)}' \
+      >> "$TMPDIR/issues_enriched_lines.jsonl"
 
-    if [ "$first" = true ]; then
-      echo "$enriched" >> "$ISSUES_ENRICHED"
-      first=false
-    else
-      echo ",$enriched" >> "$ISSUES_ENRICHED"
-    fi
-  done
+  done < <(jq -c '.[]' "$TMPDIR/issues_assigned.json")
+
+  jq -s '.' "$TMPDIR/issues_enriched_lines.jsonl" > "$ISSUES_ENRICHED"
+else
+  echo "[]" > "$ISSUES_ENRICHED"
 fi
-
-echo "]" >> "$ISSUES_ENRICHED"
 
 # ═══════════════════════════════════════════════════════════════════════════
 # 5. Workflow Health Analysis
@@ -223,7 +219,7 @@ SUCCESS_RATE=0
 if [ -f "$TMPDIR/workflows.json" ]; then
   CUTOFF_TIMESTAMP=$(date -d "24 hours ago" +%s 2>/dev/null || date -v-24H +%s 2>/dev/null || echo "0")
 
-  cat "$TMPDIR/workflows.json" | jq -c '.[]' | while read -r run; do
+  while read -r run; do
     created_at=$(echo "$run" | jq -r '.createdAt')
     conclusion=$(echo "$run" | jq -r '.conclusion')
     status=$(echo "$run" | jq -r '.status')
@@ -235,7 +231,7 @@ if [ -f "$TMPDIR/workflows.json" ]; then
         echo "$conclusion|$status" >> "$TMPDIR/workflow_stats.txt"
       fi
     fi
-  done
+  done < <(jq -c '.[]' "$TMPDIR/workflows.json")
 
   if [ -f "$TMPDIR/workflow_stats.txt" ] && [ -s "$TMPDIR/workflow_stats.txt" ]; then
     # Use awk for reliable line counting

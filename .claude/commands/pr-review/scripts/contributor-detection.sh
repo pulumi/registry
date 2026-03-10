@@ -8,7 +8,7 @@
 # - PR metadata
 # - Changed file paths
 
-set -e
+set -euo pipefail
 
 if [ -z "$1" ]; then
   echo "Error: PR number required"

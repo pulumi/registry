@@ -5,7 +5,7 @@
 # Outputs:
 # JSON object with deployment URL, status, and categorized file data
 
-set -e
+set -euo pipefail
 
 if [ -z "$1" ]; then
   echo "Error: PR number required" >&2

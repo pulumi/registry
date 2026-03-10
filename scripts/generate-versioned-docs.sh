@@ -17,7 +17,7 @@ fi
 
 # Install registry-mirror-discover (pinned commit for stability).
 # Cache the built binary to avoid recompiling on every build.
-REGISTRY_MIRROR_TOOLS_COMMIT="becca918a99a2a0809ad7d35a551b8a4a8018639"
+REGISTRY_MIRROR_TOOLS_COMMIT="dda1dfd85d540fab45a0d19060e963564d0b36aa"
 DISCOVER_BIN="$REPO_ROOT/bin/registry-mirror-discover"
 if [[ ! -x "$DISCOVER_BIN" ]]; then
     echo "Building registry-mirror-discover..."

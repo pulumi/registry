@@ -131,13 +131,12 @@ jobs:
         env:
           SLACK_CHANNEL: registry-ops
           SLACK_COLOR: "#F54242"
-          # U08RF0Z7URM = @fausto
           SLACK_MESSAGE: |
-            Registry publish failed (both primary and fallback) for ${{ github.sha }} cc <@U08RF0Z7URM>
+            Registry publish failed (both primary and fallback) for ${{ github.sha }}
 
-            To manually publish, use https://github.com/pulumi/registry-mirror-tools:
+            To manually publish, see https://github.com/pulumi/registry-mirror-tools#examples
             ```
-            echo 'pulumi/pulumi/<package>@<version>' | ./bin/registry-mirror-discover $REGISTRY | ./bin/registry-mirror-publish
+            echo 'pulumi/pulumi/aws@6.50.0' | ./bin/registry-mirror-discover ./registry | ./bin/registry-mirror-publish
             ```
           SLACK_USERNAME: registrybot
           SLACK_WEBHOOK: ${{ steps.esc-secrets.outputs.SLACK_WEBHOOK_URL }}

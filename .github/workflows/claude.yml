@@ -1,0 +1,76 @@
+name: Claude Code
+
+on:
+  issue_comment:
+    types: [created]
+  pull_request_review_comment:
+    types: [created]
+  pull_request_review:
+    types: [submitted]
+  issues:
+    types: [opened, assigned]
+
+concurrency:
+  group: claude-${{ github.event.issue.number || github.event.pull_request.number }}
+  cancel-in-progress: false
+
+jobs:
+  claude:
+    if: |
+      (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@claude')) ||
+      (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '@claude')) ||
+      (github.event_name == 'pull_request_review' && contains(github.event.review.body, '@claude')) ||
+      (github.event_name == 'issues' && contains(github.event.issue.body, '@claude'))
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+      id-token: write
+      actions: read
+    steps:
+      - name: Check user permission
+        id: check_permission
+        uses: actions/github-script@v7
+        with:
+          script: |
+            let actor;
+            if (context.eventName === 'issue_comment' || context.eventName === 'pull_request_review_comment') {
+              actor = context.payload.comment.user.login;
+            } else if (context.eventName === 'pull_request_review') {
+              actor = context.payload.review.user.login;
+            } else {
+              actor = context.payload.issue.user.login;
+            }
+
+            // Always allow whitelisted bots
+            const allowedBots = ['github-copilot[bot]'];
+            if (allowedBots.includes(actor)) {
+              core.setOutput('has_permission', 'true');
+              return;
+            }
+
+            try {
+              const { data: permissionData } = await github.rest.repos.getCollaboratorPermissionLevel({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                username: actor,
+              });
+
+              const permission = permissionData.permission;
+              const hasPermission = ['write', 'maintain', 'admin'].includes(permission);
+              core.setOutput('has_permission', hasPermission.toString());
+
+              if (!hasPermission) {
+                core.info(`User ${actor} has '${permission}' permission, which is insufficient. Skipping.`);
+              }
+            } catch (error) {
+              core.info(`Failed to check permissions for ${actor}: ${error.message}. Skipping.`);
+              core.setOutput('has_permission', 'false');
+            }
+
+      - name: Run Claude Code
+        if: steps.check_permission.outputs.has_permission == 'true'
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}

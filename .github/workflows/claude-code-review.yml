@@ -69,11 +69,18 @@ jobs:
               core.setOutput('should_run', 'false');
             }
 
+      - name: Checkout repository
+        if: steps.should_review.outputs.should_run == 'true'
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
       - name: Run Claude Code Review
         if: steps.should_review.outputs.should_run == 'true'
         uses: anthropics/claude-code-action@v1
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          model: claude-opus-4-6
           prompt: |
             You are running in a CI environment. Review pull request #${{ github.event.pull_request.number }} by following the instructions in .claude/commands/registry-review.md under the 'Continuous Integration (CI) Context' section.
-          allowed_tools: "Read,Glob,Grep,Bash(gh pr view:*),Bash(gh pr diff:*),Bash(gh pr comment:*),Bash(gh issue view:*)"
+          claude_args: "--allowedTools 'Read,Glob,Grep,Bash(gh pr view:*),Bash(gh pr diff:*),Bash(gh pr comment:*),Bash(gh issue view:*)'"

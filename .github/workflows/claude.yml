@@ -69,6 +69,12 @@ jobs:
               core.setOutput('has_permission', 'false');
             }
 
+      - name: Checkout repository
+        if: steps.check_permission.outputs.has_permission == 'true'
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
       - name: Run Claude Code
         if: steps.check_permission.outputs.has_permission == 'true'
         uses: anthropics/claude-code-action@v1

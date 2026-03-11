@@ -80,6 +80,7 @@ jobs:
         uses: anthropics/claude-code-action@v1
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          model: claude-opus-4-6
           prompt: |
             You are running in a CI environment. Review pull request #${{ github.event.pull_request.number }} by following the instructions in .claude/commands/registry-review.md under the 'Continuous Integration (CI) Context' section.
           claude_args: "--allowedTools 'Read,Glob,Grep,Bash(gh pr view:*),Bash(gh pr diff:*),Bash(gh pr comment:*),Bash(gh issue view:*)'"

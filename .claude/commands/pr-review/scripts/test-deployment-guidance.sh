@@ -19,7 +19,7 @@ PR_NUMBER="$1"
 # Registry pattern: registry--origin-pr-* S3 bucket
 DEPLOYMENT_URL=$(gh api repos/pulumi/registry/issues/"$PR_NUMBER"/comments \
   --jq '.[] | select(.user.login == "pulumi-bot") | .body' 2>/dev/null | \
-  grep -oP 'https?://[a-zA-Z0-9._-]*registry[a-zA-Z0-9._-]*origin-pr-[a-zA-Z0-9._-]*\.s3-website[a-zA-Z0-9._-]*\.amazonaws\.com' | \
+  grep -Eo 'https?://[a-zA-Z0-9._-]*registry[a-zA-Z0-9._-]*origin-pr-[a-zA-Z0-9._-]*\.s3-website[a-zA-Z0-9._-]*\.amazonaws\.com' | \
   tail -1 || echo "")
 
 # Check for automation label (metadata-only PRs)

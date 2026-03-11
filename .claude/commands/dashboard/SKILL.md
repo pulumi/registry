@@ -86,7 +86,6 @@ Parse the JSON output and present it according to the mode requested. The JSON s
     ]
   },
   "deployment": {
-    "last_push_run": "string",
     "last_push_conclusion": "string",
     "last_push_time": "string"
   },

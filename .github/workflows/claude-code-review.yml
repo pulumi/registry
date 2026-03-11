@@ -58,7 +58,7 @@ jobs:
               });
 
               const permission = permissionData.permission;
-              const hasPermission = ['write', 'admin'].includes(permission);
+              const hasPermission = ['write', 'maintain', 'admin'].includes(permission);
               core.setOutput('should_run', hasPermission.toString());
 
               if (!hasPermission) {

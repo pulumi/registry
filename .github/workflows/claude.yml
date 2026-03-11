@@ -25,7 +25,7 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-      issues: read
+      issues: write
       id-token: write
       actions: read
     steps:
@@ -50,18 +50,23 @@ jobs:
               return;
             }
 
-            const { data: permissionData } = await github.rest.repos.getCollaboratorPermissionLevel({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              username: actor,
-            });
+            try {
+              const { data: permissionData } = await github.rest.repos.getCollaboratorPermissionLevel({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                username: actor,
+              });
 
-            const permission = permissionData.permission;
-            const hasPermission = ['write', 'admin'].includes(permission);
-            core.setOutput('has_permission', hasPermission.toString());
+              const permission = permissionData.permission;
+              const hasPermission = ['write', 'maintain', 'admin'].includes(permission);
+              core.setOutput('has_permission', hasPermission.toString());
 
-            if (!hasPermission) {
-              core.info(`User ${actor} has '${permission}' permission, which is insufficient. Skipping.`);
+              if (!hasPermission) {
+                core.info(`User ${actor} has '${permission}' permission, which is insufficient. Skipping.`);
+              }
+            } catch (error) {
+              core.info(`Failed to check permissions for ${actor}: ${error.message}. Skipping.`);
+              core.setOutput('has_permission', 'false');
             }
 
       - name: Run Claude Code

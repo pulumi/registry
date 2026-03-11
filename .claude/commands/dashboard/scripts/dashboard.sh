@@ -35,30 +35,32 @@ RATE_REMAINING=$(gh api rate_limit --jq '.rate.remaining' 2>/dev/null || echo "0
 TMPDIR=$(mktemp -d) || exit 1
 trap "rm -rf $TMPDIR" EXIT
 
-(
-  # PRs assigned to me
-  gh pr list --assignee @me --json number,title,author,state,createdAt,labels,isDraft,updatedAt --limit 100 > "$TMPDIR/prs_assigned.json" 2>/dev/null &
+pids=()
 
-  # PRs mentioning me
-  gh pr list --search "mentions:@me" --json number,title,author,state,createdAt,labels,isDraft,updatedAt --limit 100 > "$TMPDIR/prs_mentions.json" 2>/dev/null &
+# PRs assigned to me
+gh pr list --assignee @me --json number,title,author,state,createdAt,labels,isDraft,updatedAt --limit 100 > "$TMPDIR/prs_assigned.json" 2>/dev/null & pids+=("$!")
 
-  # All open PRs
-  gh pr list --state open --json number,title,author,state,createdAt,labels,isDraft,updatedAt --limit 100 > "$TMPDIR/prs_all.json" 2>/dev/null &
+# PRs mentioning me
+gh pr list --search "mentions:@me" --json number,title,author,state,createdAt,labels,isDraft,updatedAt --limit 100 > "$TMPDIR/prs_mentions.json" 2>/dev/null & pids+=("$!")
 
-  # Issues assigned to me
-  gh issue list --assignee @me --json number,title,author,state,createdAt,labels --limit 100 > "$TMPDIR/issues_assigned.json" 2>/dev/null &
+# All open PRs
+gh pr list --state open --json number,title,author,state,createdAt,labels,isDraft,updatedAt --limit 100 > "$TMPDIR/prs_all.json" 2>/dev/null & pids+=("$!")
 
-  # All open issues
-  gh issue list --state open --json number,title,author,state,createdAt,labels --limit 100 > "$TMPDIR/issues_all.json" 2>/dev/null &
+# Issues assigned to me
+gh issue list --assignee @me --json number,title,author,state,createdAt,labels --limit 100 > "$TMPDIR/issues_assigned.json" 2>/dev/null & pids+=("$!")
 
-  # Recent workflow runs
-  gh run list --limit 50 --json databaseId,status,conclusion,name,createdAt,headBranch,event > "$TMPDIR/workflows.json" 2>/dev/null &
+# All open issues
+gh issue list --state open --json number,title,author,state,createdAt,labels --limit 100 > "$TMPDIR/issues_all.json" 2>/dev/null & pids+=("$!")
 
-  wait
-) || {
-  printf '{"error": "Some GitHub API calls failed", "user": {"login": "%s"}, "prs": [], "issues": [], "workflows": [], "rate_remaining": 0}\n' "$GITHUB_USER" >&2
-  exit 1
-}
+# Recent workflow runs
+gh run list --limit 50 --json databaseId,status,conclusion,name,createdAt,headBranch,event > "$TMPDIR/workflows.json" 2>/dev/null & pids+=("$!")
+
+for pid in "${pids[@]}"; do
+  if ! wait "$pid"; then
+    printf '{"error": "Some GitHub API calls failed", "user": {"login": "%s"}, "prs": [], "issues": [], "workflows": [], "rate_remaining": 0}\n' "$GITHUB_USER" >&2
+    exit 1
+  fi
+done
 
 # ═══════════════════════════════════════════════════════════════════════════
 # 3. Calculate Priority Scores for PRs
@@ -270,7 +272,6 @@ fi
 # 6. Deployment Information (from last push.yml run)
 # ═══════════════════════════════════════════════════════════════════════════
 
-LAST_PUSH_RUN="unknown"
 LAST_PUSH_CONCLUSION="unknown"
 LAST_PUSH_TIME="unknown"
 

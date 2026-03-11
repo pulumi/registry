@@ -92,10 +92,11 @@ Continue to Step 3.
 
    The script outputs JSON with:
 
+   - `prNumber` - The pull request number
    - `deploymentUrl` - The preview deployment URL or null
    - `deploymentStatus` - "ready" or "pending"
+   - `isAutomationPR` - Whether the PR was opened by an automation bot
    - `fileCategories` - Categorized changed files
-   - `nonContentFiles[]` - Array of non-content file paths
 
 2. Parse the JSON output and analyze the PR diff context to understand what changed.
 

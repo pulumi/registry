@@ -10,6 +10,14 @@
 
 set -euo pipefail
 
+# Check required dependencies
+for cmd in gh jq; do
+  if ! command -v "$cmd" >/dev/null 2>&1; then
+    printf 'Error: Required command "%s" not found\n' "$cmd" >&2
+    exit 1
+  fi
+done
+
 if [ -z "$1" ]; then
   echo "Error: PR number required"
   echo "Usage: $0 <PR_NUMBER>"

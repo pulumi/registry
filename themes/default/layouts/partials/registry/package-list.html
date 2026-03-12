@@ -1,5 +1,5 @@
-{{ $allGetStarted := $.Site.Data.registry.getstarted }}
-{{ $allPackages := $.Site.Data.registry.packages }}
+{{ $allGetStarted := site.Data.registry.getstarted }}
+{{ $allPackages := site.Data.registry.packages }}
 
 {{ $featuredPackages := slice }}
 {{ range $allPackages }}

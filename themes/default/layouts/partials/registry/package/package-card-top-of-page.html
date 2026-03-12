@@ -5,14 +5,14 @@
 {{ $basePackageName := cond $isVersioned (index (split $rawPackageName "@") 0) $rawPackageName }}
 {{ $versionSlug := cond $isVersioned (index (split $rawPackageName "@") 1) "" }}
 
-{{ $packageData := index $.Site.Data.registry.packages $basePackageName }}
+{{ $packageData := index site.Data.registry.packages $basePackageName }}
 {{ if $isVersioned }}
-    {{ with index $.Site.Data.registry.package_versions $rawPackageName }}
+    {{ with index site.Data.registry.package_versions $rawPackageName }}
         {{ $packageData = . }}
     {{ end }}
 {{ end }}
 
-{{ $iconData := index $.Site.Data.registry.packages $basePackageName }}
+{{ $iconData := index site.Data.registry.packages $basePackageName }}
 
 <div id="accordion-package-card" class="accordion">
     <div>

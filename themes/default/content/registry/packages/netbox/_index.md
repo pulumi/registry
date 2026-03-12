@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/e-breuninger/netbox/5.1.0/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/e-breuninger/netbox/5.2.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Netbox Provider
@@ -24,7 +24,7 @@ Netbox often makes breaking API changes even in non-major releases. Check the ta
 
 | Netbox version  | Provider version |
 |-----------------|------------------|
-| v4.3.0 - 4.4.0  | v5.0.0 and up    |
+| v4.3.0 - 4.4.10 | v5.0.0 and up    |
 | v4.2.2 - 4.2.9  | v4.0.0 - 4.3.1   |
 | v4.1.0 - 4.1.11 | v3.10.0 - 3.11.1 |
 | v4.0.0 - 4.0.11 | v3.9.0 - 3.9.2   |

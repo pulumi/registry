@@ -106,22 +106,60 @@ jobs:
         with:
           name: origin-bucket-metadata
           path: origin-bucket-metadata.json
-      - name: Install uv
+      - name: Install uv for publish
         uses: astral-sh/setup-uv@v5
-      - name: Push to the Live Registry
+      - name: Publish to registry (primary)
+        id: mirror-publish
+        continue-on-error: true
+        run: uv run scripts/ci/publish_to_registry.py
+        env:
+          PULUMI_ACCESS_TOKEN: ${{ steps.esc-secrets.outputs.PULUMI_ACCESS_TOKEN }}
+          PULUMI_API_URL: https://api.pulumi.com
+          GITHUB_TOKEN: ${{ steps.esc-secrets.outputs.PULUMI_BOT_TOKEN }}
+
+      - name: Push to the Live Registry (legacy fallback)
+        id: legacy-publish
+        if: steps.mirror-publish.outcome == 'failure'
+        continue-on-error: true
         run: uv run --with requests,pyyaml ./scripts/ci/push-registry.py
         env:
           PULUMI_ACCESS_TOKEN: ${{ steps.esc-secrets.outputs.PULUMI_ACCESS_TOKEN }}
+
+      - name: Notify on publish failure
+        if: steps.mirror-publish.outcome == 'failure' && steps.legacy-publish.outcome == 'failure'
+        uses: docker://sholung/action-slack-notify:v2.3.0
+        env:
+          SLACK_CHANNEL: registry-ops
+          SLACK_COLOR: "#F54242"
+          SLACK_MESSAGE: |
+            Registry publish failed (both primary and fallback) for ${{ github.sha }}
+
+            To manually publish, see https://github.com/pulumi/registry-mirror-tools#examples
+            ```
+            echo 'pulumi/pulumi/aws@6.50.0' | ./bin/registry-mirror-discover ./registry | ./bin/registry-mirror-publish
+            ```
+          SLACK_USERNAME: registrybot
+          SLACK_WEBHOOK: ${{ steps.esc-secrets.outputs.SLACK_WEBHOOK_URL }}
+          SLACK_ICON: https://www.pulumi.com/logos/brand/avatar-on-white.png
 
   notify:
     if: failure()
     name: Send slack notification
     runs-on: ubuntu-latest
     needs: [build]
+    permissions:
+      id-token: write
+    env:
+      ESC_ACTION_OIDC_AUTH: true
+      ESC_ACTION_OIDC_ORGANIZATION: pulumi
+      ESC_ACTION_OIDC_REQUESTED_TOKEN_TYPE: urn:pulumi:token-type:access_token:organization
     steps:
       - name: Fetch secrets from ESC
         id: esc-secrets
         uses: pulumi/esc-action@6cf9520e68354d86f81c455e8d43eabd58f5c9f5 # v1
+        with:
+          environment: github-secrets/pulumi-registry
+          export-environment-variables: false
       - name: Slack Notification
         uses: docker://sholung/action-slack-notify:v2.3.0
         env:

@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/infobloxopen/infoblox/2.11.0/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/infobloxopen/infoblox/2.12.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Infoblox Provider
@@ -396,7 +396,7 @@ public class App {
             .ipAddr("10.3.1.65")
             .comment("special host")
             .dnsView("nondefault_dnsview2")
-            .ttl(120)
+            .ttl(120.0)
             .extAttrs(serializeJson(
                 jsonObject(
                     jsonProperty("Location", "65.8665701230204, -37.00791763398113")
@@ -411,8 +411,8 @@ public class App {
             ))
             .build());
 
-        ctx.export("aRecRes", aRecTemp.applyValue(getARecordResult -> getARecordResult));
-        ctx.export("aRecName", aRecTemp.applyValue(getARecordResult -> getARecordResult.results()[0].fqdn()));
+        ctx.export("aRecRes", aRecTemp);
+        ctx.export("aRecName", aRecTemp.results()[0].fqdn());
     }
 }
 ```
@@ -839,7 +839,7 @@ public class App {
         var aRec1Imported = new ARecord("aRec1Imported", ARecordArgs.builder()
             .fqdn("rec-a-1.imported.test.com")
             .ipAddr("192.168.1.2")
-            .ttl(10)
+            .ttl(10.0)
             .comment("A-record to be imported")
             .extAttrs(serializeJson(
                 jsonObject(

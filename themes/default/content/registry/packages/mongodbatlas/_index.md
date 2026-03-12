@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-mongodbatlas/v4.4.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-mongodbatlas/v4.5.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-mongodbatlas/blob/v4.4.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-mongodbatlas/blob/v4.5.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Mongodbatlas Provider
 meta_desc: Provides an overview on how to configure the Pulumi Mongodbatlas provider.
@@ -349,3 +349,6 @@ For detailed authentication configuration, see:
 
 MongoDB Atlas for Government is a dedicated deployment option for government agencies and contractors requiring FedRAMP compliance.
 For more details on configuration, see the Provider Configuration Guide.
+## Troubleshooting
+
+For common issues and networking diagnostics, see the Troubleshooting Guide.

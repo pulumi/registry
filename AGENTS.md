@@ -1,6 +1,6 @@
 # AGENTS.md — Canonical Instructions for This Repository
 
-This file defines guidance for AI agents like Claude Code and GitHub Copilot when working in this repository.
+This file defines guidance for AI agents (such as Claude Code and GitHub Copilot) when working in this repository.
 
 ---
 

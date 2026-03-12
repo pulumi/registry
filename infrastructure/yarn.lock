@@ -454,10 +454,11 @@
     socks-proxy-agent "^8.0.3"
 
 "@npmcli/arborist@^9.0.0":
-  version "9.4.0"
-  resolved "https://registry.yarnpkg.com/@npmcli/arborist/-/arborist-9.4.0.tgz#e8998b409c8862d272d378ea89a94ab814ead9fe"
-  integrity sha512-4Bm8hNixJG/sii1PMnag0V9i/sGOX9VRzFrUiZMSBJpGlLR38f+Btl85d07G9GL56xO0l0OZjvrGNYsDYp0xKA==
+  version "9.4.1"
+  resolved "https://registry.yarnpkg.com/@npmcli/arborist/-/arborist-9.4.1.tgz#acb5cc91378d1eaf65a0d363c70661660b778dc9"
+  integrity sha512-SaXiFtYcAbzPI+VmuI+O6hii9fEVe36vm6XRAu0QcvCR9YphHfNF8PIDeDapVkE+LJ0c7BN7uPGd3plbh9zbrw==
   dependencies:
+    "@gar/promise-retry" "^1.0.0"
     "@isaacs/string-locale-compare" "^1.1.0"
     "@npmcli/fs" "^5.0.0"
     "@npmcli/installed-package-contents" "^4.0.0"
@@ -860,9 +861,9 @@
     resolve "^1.7.1"
 
 "@pulumi/aws@^7.0.0", "@pulumi/aws@^7.15.0":
-  version "7.21.0"
-  resolved "https://registry.yarnpkg.com/@pulumi/aws/-/aws-7.21.0.tgz#174c19950a18c21f7ff2500564aaaa19fecd5f70"
-  integrity sha512-CG/0DaU9DOjjsKoe6aOKSR8/Hk6IFw3lhu3R8v1v5QAlB/vc2h+d5+xCE60NaYAp9DrnyrUawz/GfuEPI0lD/g==
+  version "7.23.0"
+  resolved "https://registry.yarnpkg.com/@pulumi/aws/-/aws-7.23.0.tgz#4d6b072fd15deca25d24b2951d3b52c8ad1a62ed"
+  integrity sha512-tRyG4cwTQQ+88gb2TwejLWXW4TvuC72zlrNpCm2BBTnBp6YaZRT23xLFTYK8GN37fjzglmoVE9DF4yYMPvt17g==
   dependencies:
     "@pulumi/pulumi" "^3.142.0"
     mime "^2.0.0"
@@ -1447,9 +1448,9 @@
     "@types/node" "*"
 
 "@types/node@*", "@types/node@>=13.7.0":
-  version "25.3.5"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-25.3.5.tgz#beccb5915561f7a9970ace547ad44d6cdbf39b46"
-  integrity sha512-oX8xrhvpiyRCQkG1MFchB09f+cXftgIXb3a7UUa4Y3wpmZPw5tyZGTLWhlESOLq1Rq6oDlc8npVU2/9xiCuXMA==
+  version "25.4.0"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-25.4.0.tgz#f25d8467984d6667cc4c1be1e2f79593834aaedb"
+  integrity sha512-9wLpoeWuBlcbBpOY3XmzSTG3oscB6xjBEEtn+pYXTfhyXhIxC5FsBer2KTopBlvKEiW9l13po9fq+SJY/5lkhw==
   dependencies:
     undici-types "~7.18.0"
 
@@ -2795,9 +2796,9 @@ package-directory@^8.1.0:
     find-up-simple "^1.0.0"
 
 pacote@^21.0.0, pacote@^21.0.2:
-  version "21.4.0"
-  resolved "https://registry.yarnpkg.com/pacote/-/pacote-21.4.0.tgz#7c66cef758bdda5fae4eb9e0b9ec395018296ad7"
-  integrity sha512-DR7mn7HUOomAX1BORnpYy678qVIidbvOojkBscqy27dRKN+s/hLeQT1MeYYrx1Cxh62jyKjiWiDV7RTTqB+ZEQ==
+  version "21.5.0"
+  resolved "https://registry.yarnpkg.com/pacote/-/pacote-21.5.0.tgz#475fe00db73585dec296590bec484109522e9e6f"
+  integrity sha512-VtZ0SB8mb5Tzw3dXDfVAIjhyVKUHZkS/ZH9/5mpKenwC9sFOXNI0JI7kEF7IMkwOnsWMFrvAZHzx1T5fmrp9FQ==
   dependencies:
     "@gar/promise-retry" "^1.0.0"
     "@npmcli/git" "^7.0.0"

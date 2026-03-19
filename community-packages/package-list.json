@@ -403,6 +403,10 @@
     {
       "repoSlug": "AdrianSilaghi/pulumi-danubedata",
       "schemaFile": "provider/cmd/pulumi-resource-danubedata/schema.json"
+    },
+    {
+      "repoSlug": "pydantic/pulumi-logfire",
+      "schemaFile": "provider/cmd/pulumi-resource-logfire/schema.json"
     }
   ]
 }

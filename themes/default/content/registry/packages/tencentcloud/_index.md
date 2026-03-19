@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/tencentcloudstack/tencentcloud/1.82.75/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/tencentcloudstack/tencentcloud/1.82.76/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Tencentcloud Provider
@@ -311,11 +311,13 @@ $ pulumi preview
 ```
 ### Assume role with OIDC
 
-If provided with an assume role with OIDC, Pulumi will attempt to assume this role using the supplied credentials. Assume role can be provided by adding an `roleArn`, `sessionName`, `sessionDuration` and `webIdentityToken` or `webIdentityTokenFile` in-line in the tencentcloud provider configuration:
+If provided with an assume role with OIDC, Pulumi will attempt to assume this role using the supplied credentials. Assume role can be provided by adding an `roleArn` or `roleArnFile`, `sessionName`, `sessionDuration` and `webIdentityToken` or `webIdentityTokenFile` in-line in the tencentcloud provider configuration:
 
 > **Note:** Assume-role-with-OIDC is a no-AK auth type, and there is no need setting secretId and secretKey while using it.
 
 > **Note:** If both `webIdentityToken` and `webIdentityTokenFile` are configured, `webIdentityToken` will be used preferentially(overriding `webIdentityTokenFile`).
+
+> **Note:** If both `roleArn` and `roleArnFile` are configured, `roleArn` will be used preferentially(overriding `roleArnFile`).
 
 Content formatting guidelines of `webIdentityTokenFile`:
 
@@ -324,6 +326,16 @@ The file content must be in JSON format and must contain the key: `webIdentityTo
 ```json
 {
     "web_identity_token": "eyJ0eXAiOiJKV1QiLCJh......E8T0qyVA7hWM55_g"
+}
+```
+
+Content formatting guidelines of `roleArnFile`:
+
+The file content must be in JSON format and must contain the key: `roleArn`.
+
+```json
+{
+    "role_arn": "my-role-arn"
 }
 ```
 
@@ -347,13 +359,24 @@ runtime:
 
 ```
 
-The `providerId`, `roleArn`, `sessionName`, `sessionDuration`, `webIdentityToken`, `webIdentityTokenFile` can also provided via `TENCENTCLOUD_ASSUME_ROLE_PROVIDER_ID`, `TENCENTCLOUD_ASSUME_ROLE_ARN`, `TENCENTCLOUD_ASSUME_ROLE_SESSION_NAME`, `TENCENTCLOUD_ASSUME_ROLE_SESSION_DURATION`, `TENCENTCLOUD_ASSUME_ROLE_WEB_IDENTITY_TOKEN` and `TENCENTCLOUD_ASSUME_ROLE_WEB_IDENTITY_TOKEN_FILE` environment variables.
+Use roleArnFile
+
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime:
+
+```
+
+The `providerId`, `roleArn`, `roleArnFile`, `sessionName`, `sessionDuration`, `webIdentityToken`, `webIdentityTokenFile` can also provided via `TENCENTCLOUD_ASSUME_ROLE_PROVIDER_ID`, `TENCENTCLOUD_ASSUME_ROLE_ARN`, `TENCENTCLOUD_ASSUME_ROLE_ARN_FILE`, `TENCENTCLOUD_ASSUME_ROLE_SESSION_NAME`, `TENCENTCLOUD_ASSUME_ROLE_SESSION_DURATION`, `TENCENTCLOUD_ASSUME_ROLE_WEB_IDENTITY_TOKEN` and `TENCENTCLOUD_ASSUME_ROLE_WEB_IDENTITY_TOKEN_FILE` environment variables.
 
 Usage:
 
 ```shell
 $ export TENCENTCLOUD_SECRET_ID="my-secret-id"
 $ export TENCENTCLOUD_SECRET_KEY="my-secret-key"
+$ export TENCENTCLOUD_ASSUME_ROLE_ARN="my-role-arn"
+$ export TENCENTCLOUD_ASSUME_ROLE_ARNN_FILE="/AbsolutePath/to/your/secrets/role-arn-file"
 $ export TENCENTCLOUD_ASSUME_ROLE_SESSION_DURATION=3600
 $ export TENCENTCLOUD_ASSUME_ROLE_WEB_IDENTITY_TOKEN="my-web-identity-token"
 $ export TENCENTCLOUD_ASSUME_ROLE_WEB_IDENTITY_TOKEN_FILE="/AbsolutePath/to/your/secrets/web-identity-token-file"

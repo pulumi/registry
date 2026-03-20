@@ -229,7 +229,7 @@ The following reference example uses placeholder values for all [input propertie
 <pulumi-choosable type="language" values="csharp">
 
 ```csharp
-var catResource = new Example.Cat("catResource", new()
+var catResource = new Example.Index.Cat("catResource", new()
 {
     Age = 0,
     Pet = new Example.Inputs.PetArgs

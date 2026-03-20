@@ -241,7 +241,7 @@ The following reference example uses placeholder values for all [input propertie
 <pulumi-choosable type="language" values="csharp">
 
 ```csharp
-var moduleResourceResource = new FooBar.ModuleResource("moduleResourceResource", new()
+var moduleResourceResource = new FooBar.Index.ModuleResource("moduleResourceResource", new()
 {
     PlainRequiredBool = false,
     RequiredString = "string",

@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-scm/v1.0.4/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-scm/v1.0.5/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-scm/blob/v1.0.4/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-scm/blob/v1.0.5/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Strata Cloud Manager Provider
 meta_desc: Provides an overview on how to configure the Pulumi Strata Cloud Manager provider.
@@ -35,11 +35,35 @@ This provider covers the following aspects of Strata Cloud Manager:
 
 By using this software, you agree to these terms.
 ## Release Notes
+### v1.0.9
+#### FEATURES
+
+* resource/scm_userid_match_list: Added Support, examples and tests (resources, data-source)
+* resource/scm_hipmatch_match_list: Added Support, examples and tests (resources, data-source)
+* resource/scm_iptag_match_list: Added Support, examples and tests (resources, data-source)
+* resource/scm_system_match_list: Added Support, examples and tests (resources, data-source)
+* resource/scm_globalprotect_match_list: Added Support, examples and tests (resources, data-source)
+* resource/scm_config_match_list: Added Support, examples and tests (resources, data-source)
+* resource/scm_data_filtering_profile: Added Support, examples and tests (resources, data-source)
+* resource/scm_data_object: Added Support, examples and tests (resources, data-source)
+* resource/scm_ldap_server_profile: Added examples and tests (resources, data-source)
+#### BUG FIXES
+
+* resource/scm_ethernet_interface: Added support for netflow profile (#98)
+* resource/scm_vlan_interface: Added support for netflow profile (#98)
+* resource/scm_tunnel_interface: Added support for netflow profile (#98)
+* resource/scm_loopback_interface: Added support for netflow profile (#98)
+* resource/scm_aggregate_ethernet: Added support for netflow profile (#98)
+* resource/scm_layer3_subinterface: Added support for netflow profile (#98)
+* resource/scm_management_interface: fixed API specs to represent the correct payload (#97)
+* resource/scm_remote_network: Added support for sameAsPrimary in bgpPeer object (#95)
+* Fixed SCM API response normalization (#92)
+* resource/scm_ipsec_tunnel: Fixed Buggy creation of the resource due to Tunnel Monitoring (#89)
 ### v1.0.8
 #### ENHANCEMENTS
 
-* scm_jobs: Added support and tests.
-* scm_config_versions: Added support and tests for listing versions, loading configs, pushing candidate configs, and performing rollbacks/deletions.
+* scm_jobs: Added support and tests (SDK-Only).
+* scm_config_versions: Added support and tests for listing versions, loading configs, pushing candidate configs, and performing rollbacks/deletions.(SDK-Only)
 
 * Added JWT token handling to enable concurrent Pulumi executions.
 * Added folder name mapping between UI and API layers.

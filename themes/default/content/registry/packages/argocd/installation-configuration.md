@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/three141/pulumi-argocd/v1.1.0/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/three141/pulumi-argocd/v1.1.1/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/three141/pulumi-argocd/blob/v1.1.0/docs/installation-configuration.md
+edit_url: https://github.com/three141/pulumi-argocd/blob/v1.1.1/docs/installation-configuration.md
 title: ArgoCD Provider Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the ArgoCD provider for Pulumi.
 layout: package

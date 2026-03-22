@@ -403,6 +403,10 @@
     {
       "repoSlug": "AdrianSilaghi/pulumi-danubedata",
       "schemaFile": "provider/cmd/pulumi-resource-danubedata/schema.json"
+    },
+    {
+      "repoSlug": "wsgtcyx/pulumi-aws-pdfzus-merge-site",
+      "schemaFile": "provider/cmd/pulumi-resource-pdfzus-merge-site/schema.json"
     }
   ]
 }

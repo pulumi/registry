@@ -243,7 +243,7 @@ The following reference example uses placeholder values for all [input propertie
 <pulumi-choosable type="language" values="csharp">
 
 ```csharp
-var restAPIResource = new AwsApiGateway.RestAPI("restAPIResource", new()
+var restAPIResource = new AwsApiGateway.Index.RestAPI("restAPIResource", new()
 {
     ApiKeySource = AwsApiGateway.APIKeySource.HEADER,
     BinaryMediaTypes = new()

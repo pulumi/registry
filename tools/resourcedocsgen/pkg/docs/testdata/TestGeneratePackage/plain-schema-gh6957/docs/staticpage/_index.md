@@ -229,7 +229,7 @@ The following reference example uses placeholder values for all [input propertie
 <pulumi-choosable type="language" values="csharp">
 
 ```csharp
-var staticPageResource = new Xyz.StaticPage("staticPageResource", new()
+var staticPageResource = new Xyz.Index.StaticPage("staticPageResource", new()
 {
     IndexContent = "string",
     Foo = new Xyz.Inputs.FooArgs

@@ -6,8 +6,8 @@ Runs registry-mirror-discover and registry-mirror-publish with retry logic.
 Falls back to push-registry.py on failure.
 
 Usage:
-    uv run scripts/ci/publish_to_registry.py
-    uv run scripts/ci/publish_to_registry.py --dry-run
+    uv run --with pyyaml scripts/ci/publish_to_registry.py
+    uv run --with pyyaml scripts/ci/publish_to_registry.py --dry-run
 """
 
 import argparse
@@ -18,6 +18,8 @@ import sys
 import time
 from dataclasses import dataclass
 from pathlib import Path
+
+import yaml
 
 REGISTRY_MIRROR_TOOLS_COMMIT = "dda1dfd85d540fab45a0d19060e963564d0b36aa"
 
@@ -53,60 +55,83 @@ def load_publishers(repo_root: Path) -> dict[str, str]:
         return json.load(f)
 
 
-def parse_yaml_field(yaml_path: Path, field: str) -> str | None:
-    """Extract a field from a YAML file using yq."""
+def load_yaml_file(yaml_path: Path) -> dict | None:
+    """Load and parse a YAML file, returning None on error."""
     try:
-        result = subprocess.run(
-            ["yq", "-r", f".{field} // empty", str(yaml_path)],
-            capture_output=True,
-            text=True,
-            check=True,
-        )
-        value = result.stdout.strip()
-        return value if value else None
-    except subprocess.CalledProcessError:
+        with open(yaml_path) as f:
+            return yaml.safe_load(f)
+    except (OSError, yaml.YAMLError) as e:
+        print(f"Error loading {yaml_path}: {e}")
         return None
+
+
+class SpecResult:
+    """Result of building a package spec."""
+
+    def __init__(self, spec: str | None, error: str | None = None, skipped: bool = False):
+        self.spec = spec
+        self.error = error
+        self.skipped = skipped
 
 
 def build_package_spec(
     yaml_file: str,
     repo_root: Path,
     publishers: dict[str, str],
-) -> str | None:
-    """Build a package spec string from a YAML file path."""
+) -> SpecResult:
+    """Build a package spec string from a YAML file path.
+
+    Returns a SpecResult with:
+    - spec set if successful
+    - skipped=True for expected skips (legacy, deprecated)
+    - error set for unexpected failures that should cause the workflow to fail
+    """
     yaml_path = repo_root / yaml_file
     if not yaml_path.exists():
-        return None
+        return SpecResult(None, error=f"{yaml_file} does not exist")
 
     pkg = yaml_path.stem
 
-    # Skip legacy packages
     if pkg.startswith("azure-native-v") or pkg.startswith("aws-v"):
-        return None
+        return SpecResult(None, skipped=True)
 
-    version = parse_yaml_field(yaml_path, "version")
-    publisher_display = parse_yaml_field(yaml_path, "publisher")
-    schema_url = parse_yaml_field(yaml_path, "schema_file_url")
+    data = load_yaml_file(yaml_path)
+    if data is None:
+        return SpecResult(None, error=f"Failed to parse {yaml_file}")
 
-    if not version or publisher_display == "DEPRECATED":
-        return None
+    version = data.get("version")
+    publisher_display = data.get("publisher")
+    schema_url = data.get("schema_file_url")
+
+    if publisher_display == "DEPRECATED":
+        return SpecResult(None, skipped=True)
+
+    if not version:
+        return SpecResult(None, error=f"{yaml_file} has no version field")
 
     publisher = publishers.get(publisher_display, "pulumi")
     source = "opentofu" if schema_url and "opentofu" in schema_url else "pulumi"
     version = version.lstrip("v")
 
-    return f"{source}/{publisher}/{pkg}@{version}"
+    return SpecResult(f"{source}/{publisher}/{pkg}@{version}")
 
 
-def build_specs(changed_files: list[str], repo_root: Path) -> list[str]:
-    """Build package specs from changed YAML files."""
+def build_specs(changed_files: list[str], repo_root: Path) -> tuple[list[str], list[str]]:
+    """Build package specs from changed YAML files.
+
+    Returns a tuple of (specs, errors) where errors are messages for packages
+    that failed to parse unexpectedly.
+    """
     publishers = load_publishers(repo_root)
     specs = []
+    errors = []
     for yaml_file in changed_files:
-        spec = build_package_spec(yaml_file, repo_root, publishers)
-        if spec:
-            specs.append(spec)
-    return specs
+        result = build_package_spec(yaml_file, repo_root, publishers)
+        if result.spec:
+            specs.append(result.spec)
+        elif result.error:
+            errors.append(result.error)
+    return specs, errors
 
 
 def ensure_tools_installed(repo_root: Path) -> tuple[Path, Path]:
@@ -173,11 +198,10 @@ def publish_specs(
 
 
 def publish_with_retry(specs: list[str], config: Config) -> bool:
-    """Publish specs with exponential backoff retry."""
-    if not specs:
-        print("No packages to publish")
-        return True
+    """Publish specs with exponential backoff retry.
 
+    Assumes specs is non-empty. Returns True on success, False on failure.
+    """
     discover_bin, publish_bin = ensure_tools_installed(config.repo_root)
 
     print("Packages to publish:")
@@ -240,6 +264,7 @@ def main() -> int:
         dry_run=args.dry_run,
     )
 
+    errors = []
     if args.specs:
         specs = args.specs
     else:
@@ -247,10 +272,23 @@ def main() -> int:
         if not changed_files:
             print("No package YAML files changed")
             return 0
-        specs = build_specs(changed_files, config.repo_root)
+        print(f"Changed package files: {changed_files}")
+        specs, errors = build_specs(changed_files, config.repo_root)
 
-    if not publish_with_retry(specs, config):
-        print("registry-mirror-publish failed, push-registry.py will attempt fallback")
+    if errors:
+        print("Errors building package specs:")
+        for error in errors:
+            print(f"  - {error}")
+
+    if specs:
+        if not publish_with_retry(specs, config):
+            print("registry-mirror-publish failed, push-registry.py will attempt fallback")
+            return 1
+    else:
+        print("No packages to publish")
+
+    if errors:
+        print("Failing due to errors building some package specs")
         return 1
 
     return 0

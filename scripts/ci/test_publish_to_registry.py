@@ -9,6 +9,7 @@ from unittest.mock import MagicMock, patch
 
 from publish_to_registry import (
     Config,
+    SpecResult,
     build_package_spec,
     build_specs,
     get_changed_packages,
@@ -72,14 +73,12 @@ class TestBuildPackageSpec(unittest.TestCase):
         with open(self.packages_dir / f"{name}.yaml", "w") as f:
             f.write(content)
 
-    @patch("publish_to_registry.parse_yaml_field")
-    def test_builds_pulumi_spec(self, mock_parse):
-        self._write_yaml("aws", "")
-        mock_parse.side_effect = lambda path, field: {
-            "version": "6.50.0",
-            "publisher": "Pulumi",
-            "schema_file_url": "https://raw.githubusercontent.com/pulumi/pulumi-aws/...",
-        }.get(field)
+    def test_builds_pulumi_spec(self):
+        self._write_yaml("aws", """
+version: "6.50.0"
+publisher: Pulumi
+schema_file_url: "https://raw.githubusercontent.com/pulumi/pulumi-aws/..."
+""")
 
         result = build_package_spec(
             "themes/default/data/registry/packages/aws.yaml",
@@ -87,16 +86,16 @@ class TestBuildPackageSpec(unittest.TestCase):
             self.publishers,
         )
 
-        self.assertEqual(result, "pulumi/pulumi/aws@6.50.0")
+        self.assertEqual(result.spec, "pulumi/pulumi/aws@6.50.0")
+        self.assertIsNone(result.error)
+        self.assertFalse(result.skipped)
 
-    @patch("publish_to_registry.parse_yaml_field")
-    def test_builds_opentofu_spec(self, mock_parse):
-        self._write_yaml("elasticstack", "")
-        mock_parse.side_effect = lambda path, field: {
-            "version": "v0.14.3",
-            "publisher": "Pulumi",
-            "schema_file_url": "https://example.com/registry.opentofu.org/schema.json",
-        }.get(field)
+    def test_builds_opentofu_spec(self):
+        self._write_yaml("elasticstack", """
+version: "v0.14.3"
+publisher: Pulumi
+schema_file_url: "https://example.com/registry.opentofu.org/schema.json"
+""")
 
         result = build_package_spec(
             "themes/default/data/registry/packages/elasticstack.yaml",
@@ -104,16 +103,13 @@ class TestBuildPackageSpec(unittest.TestCase):
             self.publishers,
         )
 
-        self.assertEqual(result, "opentofu/pulumi/elasticstack@0.14.3")
+        self.assertEqual(result.spec, "opentofu/pulumi/elasticstack@0.14.3")
 
-    @patch("publish_to_registry.parse_yaml_field")
-    def test_strips_v_prefix_from_version(self, mock_parse):
-        self._write_yaml("random", "")
-        mock_parse.side_effect = lambda path, field: {
-            "version": "v4.16.0",
-            "publisher": "Pulumi",
-            "schema_file_url": None,
-        }.get(field)
+    def test_strips_v_prefix_from_version(self):
+        self._write_yaml("random", """
+version: "v4.16.0"
+publisher: Pulumi
+""")
 
         result = build_package_spec(
             "themes/default/data/registry/packages/random.yaml",
@@ -121,16 +117,13 @@ class TestBuildPackageSpec(unittest.TestCase):
             self.publishers,
         )
 
-        self.assertEqual(result, "pulumi/pulumi/random@4.16.0")
+        self.assertEqual(result.spec, "pulumi/pulumi/random@4.16.0")
 
-    @patch("publish_to_registry.parse_yaml_field")
-    def test_skips_deprecated_publisher(self, mock_parse):
-        self._write_yaml("old", "")
-        mock_parse.side_effect = lambda path, field: {
-            "version": "1.0.0",
-            "publisher": "DEPRECATED",
-            "schema_file_url": None,
-        }.get(field)
+    def test_skips_deprecated_publisher(self):
+        self._write_yaml("old", """
+version: "1.0.0"
+publisher: DEPRECATED
+""")
 
         result = build_package_spec(
             "themes/default/data/registry/packages/old.yaml",
@@ -138,16 +131,14 @@ class TestBuildPackageSpec(unittest.TestCase):
             self.publishers,
         )
 
-        self.assertIsNone(result)
+        self.assertIsNone(result.spec)
+        self.assertIsNone(result.error)
+        self.assertTrue(result.skipped)
 
-    @patch("publish_to_registry.parse_yaml_field")
-    def test_skips_missing_version(self, mock_parse):
-        self._write_yaml("broken", "")
-        mock_parse.side_effect = lambda path, field: {
-            "version": None,
-            "publisher": "Pulumi",
-            "schema_file_url": None,
-        }.get(field)
+    def test_errors_on_missing_version(self):
+        self._write_yaml("broken", """
+publisher: Pulumi
+""")
 
         result = build_package_spec(
             "themes/default/data/registry/packages/broken.yaml",
@@ -155,10 +146,15 @@ class TestBuildPackageSpec(unittest.TestCase):
             self.publishers,
         )
 
-        self.assertIsNone(result)
+        self.assertIsNone(result.spec)
+        self.assertIsNotNone(result.error)
+        self.assertIn("no version field", result.error)
 
     def test_skips_legacy_azure_native(self):
-        self._write_yaml("azure-native-v1", "")
+        self._write_yaml("azure-native-v1", """
+version: "1.0.0"
+publisher: Pulumi
+""")
 
         result = build_package_spec(
             "themes/default/data/registry/packages/azure-native-v1.yaml",
@@ -166,10 +162,14 @@ class TestBuildPackageSpec(unittest.TestCase):
             self.publishers,
         )
 
-        self.assertIsNone(result)
+        self.assertIsNone(result.spec)
+        self.assertTrue(result.skipped)
 
     def test_skips_legacy_aws(self):
-        self._write_yaml("aws-v5", "")
+        self._write_yaml("aws-v5", """
+version: "5.0.0"
+publisher: Pulumi
+""")
 
         result = build_package_spec(
             "themes/default/data/registry/packages/aws-v5.yaml",
@@ -177,55 +177,64 @@ class TestBuildPackageSpec(unittest.TestCase):
             self.publishers,
         )
 
-        self.assertIsNone(result)
+        self.assertIsNone(result.spec)
+        self.assertTrue(result.skipped)
 
-    def test_returns_none_for_missing_file(self):
+    def test_errors_on_missing_file(self):
         result = build_package_spec(
             "themes/default/data/registry/packages/nonexistent.yaml",
             self.repo_root,
             self.publishers,
         )
 
-        self.assertIsNone(result)
+        self.assertIsNone(result.spec)
+        self.assertIsNotNone(result.error)
+        self.assertIn("does not exist", result.error)
+
+    def test_errors_on_invalid_yaml(self):
+        self._write_yaml("invalid", "{{{{not valid yaml")
+
+        result = build_package_spec(
+            "themes/default/data/registry/packages/invalid.yaml",
+            self.repo_root,
+            self.publishers,
+        )
+
+        self.assertIsNone(result.spec)
+        self.assertIsNotNone(result.error)
+        self.assertIn("Failed to parse", result.error)
 
 
 class TestBuildSpecs(unittest.TestCase):
     @patch("publish_to_registry.load_publishers")
     @patch("publish_to_registry.build_package_spec")
-    def test_builds_specs_for_all_changed_files(self, mock_build, mock_publishers):
+    def test_builds_specs_and_collects_errors(self, mock_build, mock_publishers):
         mock_publishers.return_value = {"Pulumi": "pulumi"}
         mock_build.side_effect = [
-            "pulumi/pulumi/aws@6.50.0",
-            "pulumi/pulumi/gcp@7.0.0",
-            None,  # skipped package
+            SpecResult("pulumi/pulumi/aws@6.50.0"),
+            SpecResult("pulumi/pulumi/gcp@7.0.0"),
+            SpecResult(None, skipped=True),
+            SpecResult(None, error="missing version"),
         ]
 
-        result = build_specs(
+        specs, errors = build_specs(
             [
                 "themes/default/data/registry/packages/aws.yaml",
                 "themes/default/data/registry/packages/gcp.yaml",
                 "themes/default/data/registry/packages/deprecated.yaml",
+                "themes/default/data/registry/packages/broken.yaml",
             ],
             Path("/repo"),
         )
 
-        self.assertEqual(result, [
+        self.assertEqual(specs, [
             "pulumi/pulumi/aws@6.50.0",
             "pulumi/pulumi/gcp@7.0.0",
         ])
+        self.assertEqual(errors, ["missing version"])
 
 
 class TestPublishWithRetry(unittest.TestCase):
-    @patch("publish_to_registry.ensure_tools_installed")
-    @patch("publish_to_registry.publish_specs")
-    def test_returns_true_on_empty_specs(self, mock_publish, mock_tools):
-        config = Config(repo_root=Path("/repo"))
-
-        result = publish_with_retry([], config)
-
-        self.assertTrue(result)
-        mock_publish.assert_not_called()
-
     @patch("publish_to_registry.ensure_tools_installed")
     @patch("publish_to_registry.publish_specs")
     def test_succeeds_on_first_attempt(self, mock_publish, mock_tools):

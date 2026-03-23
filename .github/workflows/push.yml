@@ -111,7 +111,7 @@ jobs:
       - name: Publish to registry (primary)
         id: mirror-publish
         continue-on-error: true
-        run: uv run scripts/ci/publish_to_registry.py
+        run: uv run --with pyyaml scripts/ci/publish_to_registry.py
         env:
           PULUMI_ACCESS_TOKEN: ${{ steps.esc-secrets.outputs.PULUMI_ACCESS_TOKEN }}
           PULUMI_API_URL: https://api.pulumi.com

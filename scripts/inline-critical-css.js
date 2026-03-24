@@ -1,17 +1,18 @@
 const fs = require("fs");
 const Beasties = require("beasties");
 
-// Pages to inline critical CSS for. These are the highest-traffic
-// entry points in the registry.
+// Pages to inline critical CSS for, based on CDN traffic data (last 30 days).
+// API docs index pages dominate registry traffic.
 const pages = [
     "public/registry/index.html",
-    "public/registry/packages/aws/index.html",
-    "public/registry/packages/gcp/index.html",
-    "public/registry/packages/azure/index.html",
-    "public/registry/packages/azure-native/index.html",
-    "public/registry/packages/aws-native/index.html",
-    "public/registry/packages/kubernetes/index.html",
-    "public/registry/packages/docker/index.html",
+    "public/registry/packages/cloudflare/api-docs/index.html",
+    "public/registry/packages/akamai/api-docs/index.html",
+    "public/registry/packages/aws/api-docs/index.html",
+    "public/registry/packages/digitalocean/api-docs/index.html",
+    "public/registry/packages/gcp/api-docs/index.html",
+    "public/registry/packages/azure/api-docs/index.html",
+    "public/registry/packages/datadog/api-docs/index.html",
+    "public/registry/packages/gitlab/api-docs/index.html",
 ];
 
 async function inlineCriticalCSS() {

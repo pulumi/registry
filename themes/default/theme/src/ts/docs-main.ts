@@ -2,7 +2,7 @@ function setDocsMainNavPosition() {
     const docsMainNavToggleWrapper = document.querySelector(".docs-main-nav-toggle-wrapper");
     const docsNavToggleIcon = document.querySelector(".docs-nav-toggle-icon");
 
-    if (window.innerWidth <= 1024) {
+    if (window.innerWidth <= 1280) {
         if (docsMainNavToggleWrapper?.classList.contains("docs-nav-show")) {
             docsNavToggleIcon?.classList.remove("open-docs-main-nav");
             docsNavToggleIcon?.classList.add("close-docs-main-nav");
@@ -30,7 +30,7 @@ function setDocsMainNavPosition() {
         }
     }
 
-    if (window.innerWidth > 1024) {
+    if (window.innerWidth > 1280) {
         docsMainNavToggleWrapper?.classList.remove("docs-nav-show");
         docsMainNavToggleWrapper?.classList.remove("docs-nav-hide");
     } else if (!docsMainNavToggleWrapper?.classList.contains("docs-nav-hide") && !docsMainNavToggleWrapper?.classList.contains("docs-nav-show")) {
@@ -40,8 +40,15 @@ function setDocsMainNavPosition() {
 
 function setTableOfContentsVisibility() {
     const docsTableOfContents = document.querySelector<HTMLElement>(".docs-toc-desktop");
+    const docsMainNavToggleWrapper = document.querySelector(".docs-main-nav-toggle-wrapper");
     if (docsTableOfContents) {
-        docsTableOfContents.style.display = window.innerWidth < 1280 ? "none" : "";
+        if (window.innerWidth > 1024 && window.innerWidth <= 1280) {
+            docsTableOfContents.style.display = docsMainNavToggleWrapper?.classList.contains("docs-nav-show") ? "none" : "";
+        } else if (window.innerWidth > 1280) {
+            docsTableOfContents.style.display = "";
+        } else {
+            docsTableOfContents.style.display = "none";
+        }
     }
 }
 
@@ -104,6 +111,11 @@ handleResize();
                 el.classList.add("expand-registry");
             }
         });
+        const banner = document.getElementById("docs-home-banner");
+        if (banner) {
+            banner.querySelectorAll("p").forEach(p => p.classList.add("wider"));
+            banner.style.backgroundImage = `url("/images/docs/docs-home-header-background-desktop-wide.svg")`;
+        }
         collapseContentButton?.classList.remove("hide");
         expandContentButton?.classList.add("hide");
         window.localStorage.setItem("content-width-state", "expanded");
@@ -113,6 +125,11 @@ handleResize();
         document.querySelectorAll(".docs-main-content").forEach(el => {
             el.classList.remove("docs-content-width-expanded");
         });
+        const banner = document.getElementById("docs-home-banner");
+        if (banner) {
+            banner.querySelectorAll("p").forEach(p => p.classList.remove("wider"));
+            banner.style.backgroundImage = `url("/images/docs/docs-home-header-background-desktop.svg")`;
+        }
         collapseContentButton?.classList.add("hide");
         expandContentButton?.classList.remove("hide");
         window.localStorage.setItem("content-width-state", "collapsed");

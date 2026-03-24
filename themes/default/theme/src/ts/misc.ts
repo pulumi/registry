@@ -56,7 +56,7 @@ function loadToggleStates() {
         if (isCurrentPage(el)) {
             const leftNav = document.getElementById("left-nav");
             if (leftNav) {
-                leftNav.scrollTop = el.offsetTop - 145;
+                leftNav.scrollTop = el.getBoundingClientRect().top + window.scrollY - 145;
             }
         }
     });
@@ -141,7 +141,7 @@ export function generateOnThisPage() {
         const setActiveItem = () => {
             let active = null;
             for (const heading of headingItems) {
-                if (!active && heading.element.offsetTop >= window.scrollY) {
+                if (!active && heading.element.getBoundingClientRect().top >= 0) {
                     active = heading;
                 }
                 heading.listItems.forEach(li => li.classList.toggle("active", heading === active));

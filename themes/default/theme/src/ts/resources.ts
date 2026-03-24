@@ -1,3 +1,33 @@
+function sortResourceItems(sortDescending: boolean) {
+    const resourceList = document.querySelector("ul.resource-list");
+    if (!resourceList) return;
+
+    const items = Array.from(resourceList.querySelectorAll<HTMLElement>(":scope > li"));
+    items.sort((a, b) => {
+        const firstDate = a.getAttribute("data-display-date");
+        const secondDate = b.getAttribute("data-display-date");
+        if (sortDescending) {
+            return new Date(firstDate).getTime() < new Date(secondDate).getTime() ? 1 : -1;
+        }
+        return new Date(firstDate).getTime() > new Date(secondDate).getTime() ? 1 : -1;
+    });
+
+    items.forEach(item => resourceList.appendChild(item));
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    const pathParts = location.pathname.split("/");
+    if (pathParts.length > 1 && pathParts[1] === "resources") {
+        window.addEventListener("hashchange", function () {
+            const shouldSortDescending = location.hash !== "#upcoming";
+            sortResourceItems(shouldSortDescending);
+        });
+
+        const shouldSortDescending = location.hash !== "#upcoming";
+        sortResourceItems(shouldSortDescending);
+    }
+});
+
 const filterResourceItems = (filters) => {
     const events = document.querySelectorAll<HTMLElement>(".event-list .event-card");
     const monthLabels = document.querySelectorAll<HTMLElement>(".event-list .month-label");

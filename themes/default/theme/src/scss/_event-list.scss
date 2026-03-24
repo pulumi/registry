@@ -10,7 +10,7 @@
             }
         }
 
-        @screen xl {
+        @include screen-xl {
             @apply hidden;
         }
     }
@@ -20,7 +20,7 @@
 
         list-style: none !important;
 
-        @screen md {
+        @include screen-md {
             @apply text-base py-0;
         }
 
@@ -36,7 +36,7 @@
             > a {
                 @apply block py-2 px-4 font-normal text-lg text-center text-gray-700 no-underline;
 
-                @screen md {
+                @include screen-md {
                     @apply py-4;
                 }
             }

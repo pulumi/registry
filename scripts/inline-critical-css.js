@@ -1,11 +1,17 @@
 const fs = require("fs");
 const Beasties = require("beasties");
 
-// Pages to inline critical CSS for. The registry package list is the
-// highest-traffic entry point; package detail pages share the same CSS
-// so they benefit from the browser cache primed by the list page.
+// Pages to inline critical CSS for. These are the highest-traffic
+// entry points in the registry.
 const pages = [
     "public/registry/index.html",
+    "public/registry/packages/aws/index.html",
+    "public/registry/packages/gcp/index.html",
+    "public/registry/packages/azure/index.html",
+    "public/registry/packages/azure-native/index.html",
+    "public/registry/packages/aws-native/index.html",
+    "public/registry/packages/kubernetes/index.html",
+    "public/registry/packages/docker/index.html",
 ];
 
 async function inlineCriticalCSS() {

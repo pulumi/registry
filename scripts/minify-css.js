@@ -87,9 +87,11 @@ function minifyCSS(filePath) {
 }
 
 minifyCSS(`public/registry/css/bundle${registryBundleSlug}.*.css`).then(() => {
-    minifyCSS(`public/registry/css/marketing${registryBundleSlug}.*.css`).then(() => {
-        console.log("CSS bundles minified successfully!");
-    });
+    minifyCSS(`public/registry/css/marketing${registryBundleSlug}.*.css`).then(
+        () => {
+            console.log("CSS bundles minified successfully!");
+        },
+    );
 });
 
 // Exit non-zero when something goes wrong in the promise chain.

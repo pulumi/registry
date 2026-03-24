@@ -37,10 +37,12 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version: '1.24'
+          go-version: '1.26'
       - name: Configure git for private Go modules
         run: git config --global url."https://${{ steps.esc-secrets.outputs.PULUMI_BOT_TOKEN }}:x-oauth-basic@github.com/pulumi/registry-mirror-tools".insteadOf "https://github.com/pulumi/registry-mirror-tools"
       - name: Install registry-mirror-tools
+        env:
+          GOPRIVATE: github.com/pulumi/registry-mirror-tools
         run: |
           COMMIT="dda1dfd85d540fab45a0d19060e963564d0b36aa"
           GOBIN="$PWD/bin" go install "github.com/pulumi/registry-mirror-tools/cmd/registry-mirror-discover@$COMMIT"

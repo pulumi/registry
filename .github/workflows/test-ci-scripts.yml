@@ -9,15 +9,44 @@ on:
     paths:
       - 'scripts/ci/*.py'
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      ESC_ACTION_OIDC_AUTH: true
+      ESC_ACTION_OIDC_ORGANIZATION: pulumi
+      ESC_ACTION_OIDC_REQUESTED_TOKEN_TYPE: urn:pulumi:token-type:access_token:organization
     steps:
+      - name: Fetch secrets from ESC
+        id: esc-secrets
+        uses: pulumi/esc-action@v1
+        with:
+          environment: github-secrets/pulumi-registry
+          export-environment-variables: false
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.26'
+      - name: Configure git for private Go modules
+        run: git config --global url."https://${{ steps.esc-secrets.outputs.PULUMI_BOT_TOKEN }}:x-oauth-basic@github.com/pulumi/registry-mirror-tools".insteadOf "https://github.com/pulumi/registry-mirror-tools"
+      - name: Install registry-mirror-tools
+        env:
+          GOPRIVATE: github.com/pulumi/registry-mirror-tools
+        run: |
+          COMMIT="dda1dfd85d540fab45a0d19060e963564d0b36aa"
+          GOBIN="$PWD/bin" go install "github.com/pulumi/registry-mirror-tools/cmd/registry-mirror-discover@$COMMIT"
+          GOBIN="$PWD/bin" go install "github.com/pulumi/registry-mirror-tools/cmd/registry-mirror-publish@$COMMIT"
       - name: Install dependencies
         run: pip install pyyaml
       - name: Run tests

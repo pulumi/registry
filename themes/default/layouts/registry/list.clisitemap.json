@@ -1,0 +1,7 @@
+{{- $pages := slice -}}
+{{- range (sort site.Data.registry.packages "title") -}}
+  {{- $path := printf "/registry/packages/%s/" .name -}}
+  {{- $entry := dict "title" .title "path" $path "hasChildren" true -}}
+  {{- $pages = $pages | append $entry -}}
+{{- end -}}
+{{- dict "pages" $pages | jsonify (dict "indent" "  ") -}}

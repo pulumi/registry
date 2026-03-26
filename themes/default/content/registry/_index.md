@@ -13,4 +13,12 @@ aliases:
     - /docs/tutorials
     - /docs/reference/tutorials/
     - /docs/clouds/pkg/
+outputs:
+    - HTML
+    - clisitemap
+cascade:
+    outputs:
+        - HTML
+        - markdown
+        - clisitemap
 ---

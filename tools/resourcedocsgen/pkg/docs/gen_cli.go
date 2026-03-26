@@ -71,29 +71,34 @@ func stripHTMLFromProperties(props []property) []property {
 	return out
 }
 
-// cliResourceDocArgs is a single-language view of resourceDocArgs for terminal-friendly rendering.
+// cliLangEntry holds per-language data for a single language within a CLI doc.
+type cliLangEntry struct {
+	Tag        string // "typescript", "python", "go", "csharp", "java", "yaml"
+	Properties []property
+}
+
+// cliResourceDocArgs holds all-language data for terminal-friendly resource rendering.
 type cliResourceDocArgs struct {
 	Title              string
 	Comment            string
 	DeprecationMessage string
-	Language           string // e.g. "typescript", "python", "go"
 
 	Examples []cliExample
 
-	// Constructor
-	ConstructorSyntax string // rendered code for the chosen language
-	ConstructorParams []formalParam
+	// Constructor — one entry per language
+	Constructors []cliConstructorEntry
 
-	InputProperties  []property
-	OutputProperties []property
+	// Properties — one entry per language
+	InputProperties  []cliLangEntry
+	OutputProperties []cliLangEntry
 
-	// State lookup
-	StateInputs []property
+	// State lookup — one entry per language
+	StateInputs []cliLangEntry
 
 	// Methods
 	Methods []cliMethodDocArgs
 
-	// Nested/supporting types
+	// Nested/supporting types — one entry per language
 	NestedTypes    []cliNestedType
 	MaxNestedTypes int
 
@@ -103,32 +108,44 @@ type cliResourceDocArgs struct {
 	PackageDetails packageDetails
 }
 
-// cliMethodDocArgs is a single-language view of methodDocArgs.
+// cliConstructorEntry holds constructor info for a single language.
+type cliConstructorEntry struct {
+	Tag    string
+	Syntax string
+	Params []formalParam
+}
+
+// cliMethodDocArgs holds method info with per-language data.
 type cliMethodDocArgs struct {
 	Title              string
 	Comment            string
 	DeprecationMessage string
-	Syntax             string // rendered method signature
-	InputProperties    []property
-	OutputProperties   []property
-	Examples           []cliExample
+	// Syntax per language
+	Syntaxes         []cliMethodSyntax
+	InputProperties  []cliLangEntry
+	OutputProperties []cliLangEntry
+	Examples         []cliExample
 }
 
-// cliFunctionDocArgs is a single-language view of functionDocArgs for terminal-friendly rendering.
+// cliMethodSyntax holds a method signature for one language.
+type cliMethodSyntax struct {
+	Tag    string
+	Syntax string
+}
+
+// cliFunctionDocArgs holds all-language data for terminal-friendly function rendering.
 type cliFunctionDocArgs struct {
 	Title              string
 	Comment            string
 	DeprecationMessage string
-	Language           string
 
 	Examples []cliExample
 
-	FunctionName   string
-	FunctionSyntax string // rendered function signature
-	FunctionResult string // result type name
+	// Function signature per language
+	Signatures []cliMethodSyntax
 
-	InputProperties  []property
-	OutputProperties []property
+	InputProperties  []cliLangEntry
+	OutputProperties []cliLangEntry
 
 	NestedTypes []cliNestedType
 
@@ -139,13 +156,14 @@ type cliFunctionDocArgs struct {
 type cliExample struct {
 	Title   string
 	Snippet string
+	Tag     string // language tag for the code fence
 }
 
-// cliNestedType is a single-language nested type.
+// cliNestedType is a nested type with per-language properties.
 type cliNestedType struct {
 	Name        string
 	Description string
-	Properties  []property
+	Properties  []cliLangEntry
 }
 
 // cliLanguageTag returns the template language tag for a given language.
@@ -157,45 +175,48 @@ func cliLanguageTag(lang language.Language) string {
 	return lang.String()
 }
 
-// toCLIResourceArgs extracts a single-language view from resourceDocArgs.
-func toCLIResourceArgs(args resourceDocArgs, lang language.Language) cliResourceDocArgs {
-	langTag := cliLanguageTag(lang)
-
+// toCLIResourceArgs builds all-language CLI resource args from the Hugo resource args.
+func toCLIResourceArgs(args resourceDocArgs) cliResourceDocArgs {
 	cli := cliResourceDocArgs{
 		Title:              args.Header.Title,
 		Comment:            stripHTML(args.Comment),
 		DeprecationMessage: stripHTML(args.DeprecationMessage),
-		Language:           langTag,
 		ImportDocs:         stripHTML(args.ImportDocs),
 		MaxNestedTypes:     args.MaxNestedTypes,
 		PackageDetails:     args.PackageDetails,
 	}
 
-	// Constructor syntax
-	if cs, ok := args.CreationExampleSyntax[lang]; ok {
-		cli.ConstructorSyntax = stripHTML(cs)
+	// Constructors, properties, state inputs — per language
+	for lang := range language.All() {
+		tag := cliLanguageTag(lang)
+
+		if cs, ok := args.CreationExampleSyntax[lang]; ok {
+			entry := cliConstructorEntry{Tag: tag, Syntax: stripHTML(cs)}
+			if fp, ok := args.ConstructorParamsTyped[lang]; ok {
+				entry.Params = fp.Params
+			}
+			cli.Constructors = append(cli.Constructors, entry)
+		}
+
+		if props, ok := args.InputProperties[lang]; ok {
+			cli.InputProperties = append(cli.InputProperties, cliLangEntry{
+				Tag: tag, Properties: stripHTMLFromProperties(props),
+			})
+		}
+		if props, ok := args.OutputProperties[lang]; ok {
+			cli.OutputProperties = append(cli.OutputProperties, cliLangEntry{
+				Tag: tag, Properties: stripHTMLFromProperties(props),
+			})
+		}
+		if props, ok := args.StateInputs[lang]; ok {
+			cli.StateInputs = append(cli.StateInputs, cliLangEntry{
+				Tag: tag, Properties: stripHTMLFromProperties(props),
+			})
+		}
 	}
 
-	// Constructor params
-	if fp, ok := args.ConstructorParamsTyped[lang]; ok {
-		cli.ConstructorParams = fp.Params
-	}
-
-	// Properties
-	if props, ok := args.InputProperties[lang]; ok {
-		cli.InputProperties = stripHTMLFromProperties(props)
-	}
-	if props, ok := args.OutputProperties[lang]; ok {
-		cli.OutputProperties = stripHTMLFromProperties(props)
-	}
-
-	// State inputs
-	if props, ok := args.StateInputs[lang]; ok {
-		cli.StateInputs = stripHTMLFromProperties(props)
-	}
-
-	// Examples
-	cli.Examples = extractCLIExamples(args.ExamplesSection, lang)
+	// Examples — collect all languages
+	cli.Examples = extractAllCLIExamples(args.ExamplesSection)
 
 	// Methods
 	for _, m := range args.Methods {
@@ -203,23 +224,30 @@ func toCLIResourceArgs(args resourceDocArgs, lang language.Language) cliResource
 			Title:              m.Title,
 			Comment:            stripHTML(m.Comment),
 			DeprecationMessage: stripHTML(m.DeprecationMessage),
-			Examples:           extractCLIExamples(m.ExamplesSection, lang),
+			Examples:           extractAllCLIExamples(m.ExamplesSection),
 		}
-		if name, ok := m.MethodName[lang]; ok {
-			if mArgs, ok := m.MethodArgs[lang]; ok {
-				cleanArgs := stripHTML(mArgs)
-				if result, ok := m.MethodResult[lang]; ok && result.Name != "" {
-					cm.Syntax = name + "(" + cleanArgs + ") -> " + propertyTypeName(result)
-				} else {
-					cm.Syntax = name + "(" + cleanArgs + ")"
+		for lang := range language.All() {
+			tag := cliLanguageTag(lang)
+			if name, ok := m.MethodName[lang]; ok {
+				if mArgs, ok := m.MethodArgs[lang]; ok {
+					cleanArgs := stripHTML(mArgs)
+					syntax := name + "(" + cleanArgs + ")"
+					if result, ok := m.MethodResult[lang]; ok && result.Name != "" {
+						syntax += " -> " + propertyTypeName(result)
+					}
+					cm.Syntaxes = append(cm.Syntaxes, cliMethodSyntax{Tag: tag, Syntax: syntax})
 				}
 			}
-		}
-		if props, ok := m.InputProperties[lang]; ok {
-			cm.InputProperties = stripHTMLFromProperties(props)
-		}
-		if props, ok := m.OutputProperties[lang]; ok {
-			cm.OutputProperties = stripHTMLFromProperties(props)
+			if props, ok := m.InputProperties[lang]; ok {
+				cm.InputProperties = append(cm.InputProperties, cliLangEntry{
+					Tag: tag, Properties: stripHTMLFromProperties(props),
+				})
+			}
+			if props, ok := m.OutputProperties[lang]; ok {
+				cm.OutputProperties = append(cm.OutputProperties, cliLangEntry{
+					Tag: tag, Properties: stripHTMLFromProperties(props),
+				})
+			}
 		}
 		cli.Methods = append(cli.Methods, cm)
 	}
@@ -233,8 +261,13 @@ func toCLIResourceArgs(args resourceDocArgs, lang language.Language) cliResource
 			Name:        stripHTML(nt.Name),
 			Description: stripHTML(nt.Description),
 		}
-		if props, ok := nt.Properties[lang]; ok {
-			cnt.Properties = stripHTMLFromProperties(props)
+		for lang := range language.All() {
+			tag := cliLanguageTag(lang)
+			if props, ok := nt.Properties[lang]; ok {
+				cnt.Properties = append(cnt.Properties, cliLangEntry{
+					Tag: tag, Properties: stripHTMLFromProperties(props),
+				})
+			}
 		}
 		cli.NestedTypes = append(cli.NestedTypes, cnt)
 	}
@@ -242,49 +275,55 @@ func toCLIResourceArgs(args resourceDocArgs, lang language.Language) cliResource
 	return cli
 }
 
-// toCLIFunctionArgs extracts a single-language view from functionDocArgs.
-func toCLIFunctionArgs(args functionDocArgs, lang language.Language) cliFunctionDocArgs {
-	langTag := cliLanguageTag(lang)
-
+// toCLIFunctionArgs builds all-language CLI function args from the Hugo function args.
+func toCLIFunctionArgs(args functionDocArgs) cliFunctionDocArgs {
 	cli := cliFunctionDocArgs{
 		Title:              args.Header.Title,
 		Comment:            stripHTML(args.Comment),
 		DeprecationMessage: stripHTML(args.DeprecationMessage),
-		Language:           langTag,
 		PackageDetails:     args.PackageDetails,
 	}
 
-	if name, ok := args.FunctionName[lang]; ok {
-		cli.FunctionName = name
-	}
-	if fArgs, ok := args.FunctionArgs[lang]; ok {
-		cleanArgs := stripHTML(fArgs)
-		if result, ok := args.FunctionResult[lang]; ok && result.Name != "" {
-			cli.FunctionSyntax = cli.FunctionName + "(" + cleanArgs + ") -> " + propertyTypeName(result)
-		} else {
-			cli.FunctionSyntax = cli.FunctionName + "(" + cleanArgs + ")"
+	for lang := range language.All() {
+		tag := cliLanguageTag(lang)
+
+		if name, ok := args.FunctionName[lang]; ok {
+			if fArgs, ok := args.FunctionArgs[lang]; ok {
+				cleanArgs := stripHTML(fArgs)
+				syntax := name + "(" + cleanArgs + ")"
+				if result, ok := args.FunctionResult[lang]; ok && result.Name != "" {
+					syntax += " -> " + propertyTypeName(result)
+				}
+				cli.Signatures = append(cli.Signatures, cliMethodSyntax{Tag: tag, Syntax: syntax})
+			}
 		}
-		if result, ok := args.FunctionResult[lang]; ok {
-			cli.FunctionResult = propertyTypeName(result)
+
+		if props, ok := args.InputProperties[lang]; ok {
+			cli.InputProperties = append(cli.InputProperties, cliLangEntry{
+				Tag: tag, Properties: stripHTMLFromProperties(props),
+			})
+		}
+		if props, ok := args.OutputProperties[lang]; ok {
+			cli.OutputProperties = append(cli.OutputProperties, cliLangEntry{
+				Tag: tag, Properties: stripHTMLFromProperties(props),
+			})
 		}
 	}
 
-	if props, ok := args.InputProperties[lang]; ok {
-		cli.InputProperties = stripHTMLFromProperties(props)
-	}
-	if props, ok := args.OutputProperties[lang]; ok {
-		cli.OutputProperties = stripHTMLFromProperties(props)
-	}
-
-	cli.Examples = extractCLIExamples(args.ExamplesSection, lang)
+	cli.Examples = extractAllCLIExamples(args.ExamplesSection)
 
 	for _, nt := range args.NestedTypes {
 		cnt := cliNestedType{
 			Name:        stripHTML(nt.Name),
 			Description: stripHTML(nt.Description),
 		}
-		if props, ok := nt.Properties[lang]; ok {
-			cnt.Properties = stripHTMLFromProperties(props)
+		for lang := range language.All() {
+			tag := cliLanguageTag(lang)
+			if props, ok := nt.Properties[lang]; ok {
+				cnt.Properties = append(cnt.Properties, cliLangEntry{
+					Tag: tag, Properties: stripHTMLFromProperties(props),
+				})
+			}
 		}
 		cli.NestedTypes = append(cli.NestedTypes, cnt)
 	}
@@ -292,18 +331,21 @@ func toCLIFunctionArgs(args functionDocArgs, lang language.Language) cliFunction
 	return cli
 }
 
-// extractCLIExamples pulls single-language examples from an examplesSection.
-func extractCLIExamples(es examplesSection, lang language.Language) []cliExample {
+// extractAllCLIExamples collects examples for all languages.
+func extractAllCLIExamples(es examplesSection) []cliExample {
 	var examples []cliExample
 	for _, ex := range es.Examples {
-		snippet, ok := ex.Snippets[lang]
-		if !ok || snippet == "" || snippet == defaultMissingExampleSnippetPlaceholder {
-			continue
+		for lang := range language.All() {
+			snippet, ok := ex.Snippets[lang]
+			if !ok || snippet == "" || snippet == defaultMissingExampleSnippetPlaceholder {
+				continue
+			}
+			examples = append(examples, cliExample{
+				Title:   ex.Title,
+				Snippet: snippet,
+				Tag:     cliLanguageTag(lang),
+			})
 		}
-		examples = append(examples, cliExample{
-			Title:   ex.Title,
-			Snippet: snippet,
-		})
 	}
 	return examples
 }

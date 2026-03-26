@@ -2097,7 +2097,7 @@ func (mod *modContext) gen(fs codegen.Fs) error {
 }
 
 // genCLI generates terminal-friendly markdown files for resources and functions in this module.
-// One file per language per resource/function.
+// One cli.md file per resource/function containing all languages with chooser comments.
 func (mod *modContext) genCLI(fs codegen.Fs) error {
 	modName := mod.getModuleFileName()
 	conflictResolver := mod.context.newModuleConflictResolver()
@@ -2118,15 +2118,13 @@ func (mod *modContext) genCLI(fs codegen.Fs) error {
 		}
 
 		data := mod.genResource(r)
-		for lang := range language.All() {
-			cliData := toCLIResourceArgs(data, lang)
-			var buff bytes.Buffer
-			if err := templates.CLIResource(&buff, cliData); err != nil {
-				return fmt.Errorf("generating CLI resource %s/%s: %w", title, lang, err)
-			}
-			p := path.Join(modName, link, fmt.Sprintf("cli-%s.md", cliLanguageTag(lang)))
-			fs.Add(p, buff.Bytes())
+		cliData := toCLIResourceArgs(data)
+		var buff bytes.Buffer
+		if err := templates.CLIResource(&buff, cliData); err != nil {
+			return fmt.Errorf("generating CLI resource %s: %w", title, err)
 		}
+		p := path.Join(modName, link, "cli.md")
+		fs.Add(p, buff.Bytes())
 	}
 
 	for _, f := range mod.functions {
@@ -2138,15 +2136,13 @@ func (mod *modContext) genCLI(fs codegen.Fs) error {
 		}
 
 		data := mod.genFunction(f)
-		for lang := range language.All() {
-			cliData := toCLIFunctionArgs(data, lang)
-			var buff bytes.Buffer
-			if err := templates.CLIFunction(&buff, cliData); err != nil {
-				return fmt.Errorf("generating CLI function %s/%s: %w", name, lang, err)
-			}
-			p := path.Join(modName, link, fmt.Sprintf("cli-%s.md", cliLanguageTag(lang)))
-			fs.Add(p, buff.Bytes())
+		cliData := toCLIFunctionArgs(data)
+		var buff bytes.Buffer
+		if err := templates.CLIFunction(&buff, cliData); err != nil {
+			return fmt.Errorf("generating CLI function %s: %w", name, err)
 		}
+		p := path.Join(modName, link, "cli.md")
+		fs.Add(p, buff.Bytes())
 	}
 
 	return nil

@@ -4,12 +4,20 @@
 {{ end }}
 {{ .Comment }}
 {{ template "cli_examples" .Examples }}
-{{ if .FunctionSyntax }}
+{{ if .Signatures }}
 ## Usage
 
-```{{ .Language }}
-{{ .FunctionSyntax }}
+<!-- chooser: language -->
+{{ range .Signatures -}}
+<!-- option: {{ .Tag }} -->
+
+```{{ .Tag }}
+{{ .Syntax }}
 ```
+
+<!-- /option -->
+{{ end -}}
+<!-- /chooser -->
 {{ end }}
 {{ if .InputProperties }}
 ## Inputs

@@ -7,7 +7,6 @@ layout: api
 no_edit_this_page: true
 outputs:
     - HTML
-    - markdown
 ---
 
 

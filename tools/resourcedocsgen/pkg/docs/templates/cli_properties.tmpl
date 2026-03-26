@@ -1,8 +1,14 @@
 {{- define "cli_properties" -}}
+<!-- chooser: language -->
 {{- range . }}
+<!-- option: {{ .Tag }} -->
+{{- range .Properties }}
 - **{{ .Name }}** ({{ range $i, $t := .Types }}{{ if gt $i 0 }} | {{ end }}{{ $t.DisplayName }}{{ end }}){{ if .IsRequired }} *(required)*{{ end }}{{ if .DeprecationMessage }} *(deprecated)*{{ end }}
 {{- if .Comment }}
   {{ .Comment }}
 {{- end }}
 {{- end }}
+<!-- /option -->
+{{- end }}
+<!-- /chooser -->
 {{- end -}}

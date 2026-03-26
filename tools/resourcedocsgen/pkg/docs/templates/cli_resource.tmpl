@@ -4,19 +4,28 @@
 {{ end }}
 {{ .Comment }}
 {{ template "cli_examples" .Examples }}
-{{ if .ConstructorSyntax }}
+{{ if .Constructors }}
 ## Create {{ .Title }} Resource
 
-```{{ .Language }}
-{{ .ConstructorSyntax }}
+<!-- chooser: language -->
+{{ range .Constructors -}}
+<!-- option: {{ .Tag }} -->
+
+```{{ .Tag }}
+{{ .Syntax }}
 ```
-{{ if .ConstructorParams }}
+{{ if .Params }}
 ### Parameters
-{{ range .ConstructorParams }}
+{{ range .Params }}
 - **{{ .Name }}**{{ if .Type.DisplayName }} ({{ .Type.DisplayName }}){{ end }}{{ if .Comment }} — {{ .Comment }}{{ end }}
 {{- end }}
 {{ end }}
+
+<!-- /option -->
+{{ end -}}
+<!-- /chooser -->
 {{ end }}
+
 ## {{ .Title }} Resource Properties
 
 ### Inputs
@@ -36,10 +45,18 @@
 > **Deprecated:** {{ .DeprecationMessage }}
 {{ end }}
 {{ .Comment }}
-{{ if .Syntax }}
+{{ if .Syntaxes }}
+<!-- chooser: language -->
+{{ range .Syntaxes -}}
+<!-- option: {{ .Tag }} -->
+
 ```
 {{ .Syntax }}
 ```
+
+<!-- /option -->
+{{ end -}}
+<!-- /chooser -->
 {{ end }}
 {{ if .InputProperties }}
 #### Arguments

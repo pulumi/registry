@@ -2,11 +2,17 @@
 {{- if . }}
 
 ## Example Usage
-{{ range . }}
+
+<!-- chooser: language -->
+{{ range . -}}
+<!-- option: {{ .Tag }} -->
 
 {{ .Title }}
 
 {{ .Snippet }}
-{{ end }}
+
+<!-- /option -->
+{{ end -}}
+<!-- /chooser -->
 {{- end -}}
 {{- end -}}

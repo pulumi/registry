@@ -5,6 +5,9 @@ title_tag: "credentials.Provider"
 meta_desc: "Documentation for the credentials.Provider resource with examples, input properties, output properties, lookup functions, and supporting types."
 layout: api
 no_edit_this_page: true
+outputs:
+    - HTML
+    - markdown
 ---
 
 

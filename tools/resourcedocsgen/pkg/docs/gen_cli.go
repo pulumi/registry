@@ -331,6 +331,16 @@ func toCLIFunctionArgs(args functionDocArgs) cliFunctionDocArgs {
 	return cli
 }
 
+// CLIDocsBundle is the JSON structure for bundled CLI docs per package.
+// It contains all resource and function markdown docs keyed by module/name path.
+type CLIDocsBundle struct {
+	Version        int               `json:"version"`
+	Package        string            `json:"package"`
+	PackageVersion string            `json:"packageVersion"`
+	Resources      map[string]string `json:"resources"`
+	Functions      map[string]string `json:"functions"`
+}
+
 // extractAllCLIExamples collects examples for all languages.
 func extractAllCLIExamples(es examplesSection) []cliExample {
 	var examples []cliExample

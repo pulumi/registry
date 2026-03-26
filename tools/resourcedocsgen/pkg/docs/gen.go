@@ -2096,9 +2096,9 @@ func (mod *modContext) gen(fs codegen.Fs) error {
 	return addFileTemplated("", templates.Index, idxData)
 }
 
-// genCLI generates terminal-friendly markdown files for resources and functions in this module.
-// One cli.md file per resource/function containing all languages with chooser comments.
-func (mod *modContext) genCLI(fs codegen.Fs) error {
+// genCLI generates terminal-friendly markdown for resources and functions in this module,
+// populating the provided maps keyed by "{module}/{name}" path.
+func (mod *modContext) genCLI(resources, functions map[string]string) error {
 	modName := mod.getModuleFileName()
 	conflictResolver := mod.context.newModuleConflictResolver()
 
@@ -2123,8 +2123,8 @@ func (mod *modContext) genCLI(fs codegen.Fs) error {
 		if err := templates.CLIResource(&buff, cliData); err != nil {
 			return fmt.Errorf("generating CLI resource %s: %w", title, err)
 		}
-		p := path.Join(modName, link, "cli.md")
-		fs.Add(p, buff.Bytes())
+		key := path.Join(modName, link)
+		resources[key] = buff.String()
 	}
 
 	for _, f := range mod.functions {
@@ -2141,8 +2141,8 @@ func (mod *modContext) genCLI(fs codegen.Fs) error {
 		if err := templates.CLIFunction(&buff, cliData); err != nil {
 			return fmt.Errorf("generating CLI function %s: %w", name, err)
 		}
-		p := path.Join(modName, link, "cli.md")
-		fs.Add(p, buff.Bytes())
+		key := path.Join(modName, link)
+		functions[key] = buff.String()
 	}
 
 	return nil
@@ -2511,8 +2511,8 @@ func (dctx *Context) GeneratePackage() (map[string][]byte, error) {
 }
 
 // GenerateCLIPackage generates terminal-friendly markdown docs for each resource and function,
-// one file per language. Returns a map of filenames to contents.
-func (dctx *Context) GenerateCLIPackage() (map[string][]byte, error) {
+// bundled into a single CLIDocsBundle per package.
+func (dctx *Context) GenerateCLIPackage() (*CLIDocsBundle, error) {
 	if dctx.modules() == nil {
 		return nil, errors.New("must call Initialize before generating CLI docs")
 	}
@@ -2520,20 +2520,36 @@ func (dctx *Context) GenerateCLIPackage() (map[string][]byte, error) {
 	defer glog.Flush()
 
 	glog.V(3).Infoln("generating CLI package docs now...")
-	files := codegen.Fs{}
-	modules := []string{}
+
+	// Get package name and version from the root module.
 	modMap := dctx.modules()
+	rootMod := modMap[""]
+	pkgName := rootMod.pkg.Name()
+	pkgVersion := ""
+	if rootMod.pkg.Version() != nil {
+		pkgVersion = rootMod.pkg.Version().String()
+	}
+
+	bundle := &CLIDocsBundle{
+		Version:        1,
+		Package:        pkgName,
+		PackageVersion: pkgVersion,
+		Resources:      make(map[string]string),
+		Functions:      make(map[string]string),
+	}
+
+	modules := []string{}
 	for k := range modMap {
 		modules = append(modules, k)
 	}
 	sort.Strings(modules)
 	for _, mod := range modules {
-		if err := modMap[mod].genCLI(files); err != nil {
+		if err := modMap[mod].genCLI(bundle.Resources, bundle.Functions); err != nil {
 			return nil, err
 		}
 	}
 
-	return files, nil
+	return bundle, nil
 }
 
 const (

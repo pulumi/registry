@@ -151,15 +151,18 @@ func generateCLIDocs(outDir string, genctx *docs.Context) error {
 		return nil // CLI docs generation is optional
 	}
 
-	files, err := genctx.GenerateCLIPackage()
+	bundle, err := genctx.GenerateCLIPackage()
 	if err != nil {
 		return errors.Wrap(err, "generating CLI package docs")
 	}
 
-	for f, contents := range files {
-		if err := pkg.EmitFile(outDir, f, contents); err != nil {
-			return errors.Wrapf(err, "emitting CLI file %v", f)
-		}
+	b, err := json.Marshal(bundle)
+	if err != nil {
+		return errors.Wrap(err, "marshalling CLI docs bundle")
+	}
+
+	if err := pkg.EmitFile(outDir, "cli-docs.json", b); err != nil {
+		return errors.Wrap(err, "emitting CLI docs bundle")
 	}
 	return nil
 }

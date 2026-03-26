@@ -60,6 +60,16 @@ log "Synchronizing to $destination_bucket_uri..."
 aws s3 sync "$build_dir" "$destination_bucket_uri" --acl public-read --delete --quiet --region "$(aws_region)"
 log "Sync complete."
 
+# Sync CLI docs separately. These are generated outside the Hugo build tree to avoid
+# Hugo processing ~54K static files. They're uploaded directly to the same URL paths
+# they'd occupy if they were in the Hugo static directory.
+cli_docs_dir="cli-docs-out"
+if [[ -d "$cli_docs_dir" ]]; then
+    log "Synchronizing CLI docs to $destination_bucket_uri..."
+    aws s3 sync "$cli_docs_dir" "$destination_bucket_uri" --acl public-read --quiet --region "$(aws_region)"
+    log "CLI docs sync complete."
+fi
+
 s3_website_url="http://${destination_bucket}.s3-website.$(aws_region).amazonaws.com"
 echo "$s3_website_url"
 

@@ -17,8 +17,15 @@ outputs:
     - HTML
     - clisitemap
 cascade:
-    outputs:
-        - HTML
-        - markdown
-        - clisitemap
+    - outputs:
+          - HTML
+          - markdown
+          - clisitemap
+      _target:
+          kind: section
+    - outputs:
+          - HTML
+          - markdown
+      _target:
+          kind: page
 ---

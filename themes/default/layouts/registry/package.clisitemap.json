@@ -1,5 +1,10 @@
 {{- $directories := (split .Page.File.Path "/") -}}
 {{- $packageName := index $directories 2 -}}
+{{- /* Only generate sitemap for package root _index.md pages */ -}}
+{{- $isPackageRoot := and (eq (len $directories) 4) (eq (index $directories 3) "_index.md") -}}
+{{- if not $isPackageRoot -}}
+{{- dict | jsonify -}}
+{{- else -}}
 {{- $children := slice -}}
 {{- /* Overview (self) */ -}}
 {{- $children = $children | append (dict "title" "Overview" "path" (printf "/registry/packages/%s/" $packageName)) -}}
@@ -24,3 +29,4 @@
   {{- $children = $children | append (dict "title" "How-to Guides" "path" $guidesPage.RelPermalink) -}}
 {{- end -}}
 {{- dict "title" .Title "path" .RelPermalink "children" $children | jsonify (dict "indent" "  ") -}}
+{{- end -}}

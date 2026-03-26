@@ -1,0 +1,8 @@
+{{- define "cli_properties" -}}
+{{- range . }}
+- **{{ .Name }}** ({{ range $i, $t := .Types }}{{ if gt $i 0 }} | {{ end }}{{ $t.DisplayName }}{{ end }}){{ if .IsRequired }} *(required)*{{ end }}{{ if .DeprecationMessage }} *(deprecated)*{{ end }}
+{{- if .Comment }}
+  {{ .Comment }}
+{{- end }}
+{{- end }}
+{{- end -}}

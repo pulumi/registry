@@ -1,0 +1,85 @@
+{{ template "cli_header" . }}
+{{ if .DeprecationMessage }}
+> **Deprecated:** {{ .DeprecationMessage }}
+{{ end }}
+{{ .Comment }}
+{{ template "cli_examples" .Examples }}
+{{ if .ConstructorSyntax }}
+## Create {{ .Title }} Resource
+
+```{{ .Language }}
+{{ .ConstructorSyntax }}
+```
+{{ if .ConstructorParams }}
+### Parameters
+{{ range .ConstructorParams }}
+- **{{ .Name }}**{{ if .Type.DisplayName }} ({{ .Type.DisplayName }}){{ end }}{{ if .Comment }} — {{ .Comment }}{{ end }}
+{{- end }}
+{{ end }}
+{{ end }}
+## {{ .Title }} Resource Properties
+
+### Inputs
+
+{{ template "cli_properties" .InputProperties }}
+
+### Outputs
+
+{{ template "cli_properties" .OutputProperties }}
+{{ if .Methods }}
+
+## Methods
+{{ range .Methods }}
+
+### {{ .Title }}
+{{ if .DeprecationMessage }}
+> **Deprecated:** {{ .DeprecationMessage }}
+{{ end }}
+{{ .Comment }}
+{{ if .Syntax }}
+```
+{{ .Syntax }}
+```
+{{ end }}
+{{ if .InputProperties }}
+#### Arguments
+
+{{ template "cli_properties" .InputProperties }}
+{{ end }}
+{{ if .OutputProperties }}
+#### Result
+
+{{ template "cli_properties" .OutputProperties }}
+{{ end }}
+{{ end }}
+{{ end }}
+{{ if .StateInputs }}
+
+## Look up Existing {{ .Title }} Resource
+
+### State Inputs
+
+{{ template "cli_properties" .StateInputs }}
+{{ end }}
+{{ if .NestedTypes }}
+
+## Supporting Types
+{{ range .NestedTypes }}
+
+### {{ .Name }}
+{{ if .Description }}
+{{ .Description }}
+{{ end }}
+{{ if .Properties }}
+{{ template "cli_properties" .Properties }}
+{{ end }}
+{{ end }}
+{{ end }}
+{{ if .ImportDocs }}
+
+## Import
+
+{{ .ImportDocs }}
+{{ end }}
+---
+*{{ .PackageDetails.DisplayName }} · {{ .PackageDetails.Version }}*

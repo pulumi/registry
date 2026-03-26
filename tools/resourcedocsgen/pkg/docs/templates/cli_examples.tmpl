@@ -1,0 +1,12 @@
+{{- define "cli_examples" -}}
+{{- if . }}
+
+## Example Usage
+{{ range . }}
+
+{{ .Title }}
+
+{{ .Snippet }}
+{{ end }}
+{{- end -}}
+{{- end -}}

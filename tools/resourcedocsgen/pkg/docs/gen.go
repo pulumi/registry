@@ -2096,6 +2096,62 @@ func (mod *modContext) gen(fs codegen.Fs) error {
 	return addFileTemplated("", templates.Index, idxData)
 }
 
+// genCLI generates terminal-friendly markdown files for resources and functions in this module.
+// One file per language per resource/function.
+func (mod *modContext) genCLI(fs codegen.Fs) error {
+	modName := mod.getModuleFileName()
+	conflictResolver := mod.context.newModuleConflictResolver()
+
+	// Regenerate conflict resolution (same as gen())
+	for _, child := range mod.children {
+		childName := child.getModuleFileName()
+		displayName := modFilenameToDisplayName(childName)
+		conflictResolver.getSafeName(displayName, child)
+	}
+
+	for _, r := range mod.resources {
+		title := resourceName(r)
+		link := getResourceLink(title)
+		link = conflictResolver.getSafeName(link, r)
+		if link == "" {
+			continue
+		}
+
+		data := mod.genResource(r)
+		for lang := range language.All() {
+			cliData := toCLIResourceArgs(data, lang)
+			var buff bytes.Buffer
+			if err := templates.CLIResource(&buff, cliData); err != nil {
+				return fmt.Errorf("generating CLI resource %s/%s: %w", title, lang, err)
+			}
+			p := path.Join(modName, link, fmt.Sprintf("cli-%s.md", cliLanguageTag(lang)))
+			fs.Add(p, buff.Bytes())
+		}
+	}
+
+	for _, f := range mod.functions {
+		name := tokenToName(f.Token)
+		link := getFunctionLink(name)
+		link = conflictResolver.getSafeName(link, f)
+		if link == "" {
+			continue
+		}
+
+		data := mod.genFunction(f)
+		for lang := range language.All() {
+			cliData := toCLIFunctionArgs(data, lang)
+			var buff bytes.Buffer
+			if err := templates.CLIFunction(&buff, cliData); err != nil {
+				return fmt.Errorf("generating CLI function %s/%s: %w", name, lang, err)
+			}
+			p := path.Join(modName, link, fmt.Sprintf("cli-%s.md", cliLanguageTag(lang)))
+			fs.Add(p, buff.Bytes())
+		}
+	}
+
+	return nil
+}
+
 // indexEntry represents an individual entry on an index page.
 type indexEntry struct {
 	Link        string
@@ -2451,6 +2507,32 @@ func (dctx *Context) GeneratePackage() (map[string][]byte, error) {
 	sort.Strings(modules)
 	for _, mod := range modules {
 		if err := modMap[mod].gen(files); err != nil {
+			return nil, err
+		}
+	}
+
+	return files, nil
+}
+
+// GenerateCLIPackage generates terminal-friendly markdown docs for each resource and function,
+// one file per language. Returns a map of filenames to contents.
+func (dctx *Context) GenerateCLIPackage() (map[string][]byte, error) {
+	if dctx.modules() == nil {
+		return nil, errors.New("must call Initialize before generating CLI docs")
+	}
+
+	defer glog.Flush()
+
+	glog.V(3).Infoln("generating CLI package docs now...")
+	files := codegen.Fs{}
+	modules := []string{}
+	modMap := dctx.modules()
+	for k := range modMap {
+		modules = append(modules, k)
+	}
+	sort.Strings(modules)
+	for _, mod := range modules {
+		if err := modMap[mod].genCLI(files); err != nil {
 			return nil, err
 		}
 	}

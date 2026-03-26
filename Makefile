@@ -63,6 +63,7 @@ api-docs: bin/resourcedocsgen
 		--baseDocsOutDir ./themes/default/content/registry/packages \
 		--basePackageTreeJSONOutDir ./themes/default/static/registry/packages/navs \
 		--baseSchemasOutDir ./themes/default/static/registry/packages \
+		--baseCLIDocsOutDir ./themes/default/static/registry/packages \
 		--logtostderr
 	$(if $(SKIP_VERSIONED_DOCS),,./scripts/generate-versioned-docs.sh)
 
@@ -80,6 +81,7 @@ api-docs/%: .make/content/registry/packages/$$*/api-docs ;
 		--baseDocsOutDir ./content/registry/packages \
 		--basePackageTreeJSONOutDir ./static/registry/packages/navs \
 		--baseSchemasOutDir ./static/registry/packages \
+		--baseCLIDocsOutDir ./static/registry/packages \
 		$*
 	CONTENT_DIR=$(CURDIR)/content/registry/packages STATIC_DIR=$(CURDIR)/static/registry/packages ./scripts/generate-versioned-docs.sh $*
 	@mkdir -p "$(@D)"

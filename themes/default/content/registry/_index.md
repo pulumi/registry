@@ -17,6 +17,13 @@ outputs:
     - HTML
     - clisitemap
 cascade:
+    # API docs are generated in bulk during CI and don't need markdown or
+    # clisitemap outputs.  Restricting them to HTML avoids a massive build-time
+    # multiplier (tens of thousands of extra pages).
+    - outputs:
+          - HTML
+      _target:
+          path: "{**/api-docs,**/api-docs/**}"
     - outputs:
           - HTML
           - markdown

@@ -47,7 +47,7 @@ _ := $(shell if ! [ -x ${HELPMAKEGO} ]; then \
 	fi \
 )
 
-DOCSGEN_SRC_HASH := $(shell find tools/resourcedocsgen -name '*.go' -o -name 'go.sum' | sort | xargs sha256sum | sha256sum | cut -d' ' -f1)
+DOCSGEN_SRC_HASH := $(shell find tools/resourcedocsgen -name '*.go' -o -name '*.tmpl' -o -name 'go.sum' | sort | xargs sha256sum | sha256sum | cut -d' ' -f1)
 
 bin/resourcedocsgen: $(shell ${HELPMAKEGO} tools/resourcedocsgen)
 	go build -C tools/resourcedocsgen -ldflags "-X github.com/pulumi/registry/tools/resourcedocsgen/cmd/docs.sourceHash=$(DOCSGEN_SRC_HASH)" -o ../../bin ./...

@@ -28,5 +28,5 @@
 {{- if $guidesPage -}}
   {{- $children = $children | append (dict "title" "How-to Guides" "path" $guidesPage.RelPermalink) -}}
 {{- end -}}
-{{- dict "title" .Title "path" .RelPermalink "children" $children | jsonify (dict "indent" "  ") -}}
+{{- dict "pages" $children | jsonify (dict "indent" "  ") -}}
 {{- end -}}

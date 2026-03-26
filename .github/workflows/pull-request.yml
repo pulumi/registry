@@ -201,6 +201,12 @@ jobs:
           role-duration-seconds: 7200
           role-session-name: PullRequestPreviewSession
 
+      - name: Install s5cmd for fast S3 uploads
+        run: |
+          S5CMD_VERSION="2.3.0"
+          curl -fsSL "https://github.com/peak/s5cmd/releases/download/v${S5CMD_VERSION}/s5cmd_${S5CMD_VERSION}_linux_amd64.tar.gz" | \
+            sudo tar -xz -C /usr/local/bin s5cmd
+
       - name: Configure git for private Go modules
         run: git config --global url."https://${{ steps.esc-secrets.outputs.PULUMI_BOT_TOKEN }}:x-oauth-basic@github.com/pulumi/registry-mirror-tools".insteadOf "https://github.com/pulumi/registry-mirror-tools"
 

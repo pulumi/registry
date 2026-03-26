@@ -9,30 +9,9 @@
 {{- $content = replaceRE `</pulumi-chooser>` "\n<!-- /chooser -->\n" $content -}}
 {{- $content = replaceRE `<pulumi-choosable[^>]*values="([^",]*)[^"]*"[^>]*>` "\n<!-- option: $1 -->\n" $content -}}
 {{- $content = replaceRE `</pulumi-choosable>` "\n<!-- /option -->\n" $content -}}
-{{- /* Phase 2: Strip all block-level and decorative tags */ -}}
-{{- $content = replaceRE `</?span[^>]*>` "" $content -}}
-{{- $content = replaceRE `<i[^>]*></i>` "" $content -}}
-{{- $content = replaceRE `<input[^>]*>` "" $content -}}
-{{- $content = replaceRE `</?label[^>]*>` "" $content -}}
-{{- $content = replaceRE `</?div[^>]*>` "" $content -}}
-{{- $content = replaceRE `</?p[^>]*>` "" $content -}}
-{{- $content = replaceRE `</?blockquote[^>]*>` "" $content -}}
-{{- $content = replaceRE `</?ol[^>]*>` "" $content -}}
-{{- $content = replaceRE `</?ul[^>]*>` "" $content -}}
-{{- $content = replaceRE `</?li[^>]*>` "" $content -}}
-{{- $content = replaceRE `</?pre[^>]*>` "" $content -}}
-{{- $content = replaceRE `</?section[^>]*>` "" $content -}}
-{{- $content = replaceRE `</?table[^>]*>` "" $content -}}
-{{- $content = replaceRE `</?thead[^>]*>` "" $content -}}
-{{- $content = replaceRE `</?tbody[^>]*>` "" $content -}}
-{{- $content = replaceRE `</?tr[^>]*>` "" $content -}}
-{{- $content = replaceRE `</?td[^>]*>` "" $content -}}
-{{- $content = replaceRE `</?th[^>]*>` "" $content -}}
-{{- $content = replaceRE `</?dl[^>]*>` "" $content -}}
-{{- $content = replaceRE `</?dt[^>]*>` "" $content -}}
-{{- $content = replaceRE `</?dd[^>]*>` "" $content -}}
-{{- $content = replaceRE `</?details[^>]*>` "" $content -}}
-{{- $content = replaceRE `</?summary[^>]*>` "" $content -}}
+{{- /* Phase 2: Strip all block-level and decorative tags in consolidated passes */ -}}
+{{- $content = replaceRE `</?(?:span|label|div|p|blockquote|ol|ul|li|pre|section|table|thead|tbody|tr|td|th|dl|dt|dd|details|summary)[^>]*>` "" $content -}}
+{{- $content = replaceRE `(?:<i[^>]*></i>|<input[^>]*>)` "" $content -}}
 {{- /* Strip non-functional HTML comments (keep chooser/option markers) */ -}}
 {{- $content = replaceRE `<!--\s*markdownlint[^>]*-->` "" $content -}}
 {{- $content = replaceRE `<!-- WARNING:.*?-->` "" $content -}}

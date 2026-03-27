@@ -578,7 +578,7 @@ PR opened / committed
         │               └── scripts/ci/sync.sh preview
         │                       ├── Create / reuse S3 bucket
         │                       ├── s5cmd sync public/ → bucket
-        │                       ├── aws s3 cp cli-docs-out/ → bucket (gzipped)
+        │                       ├── s5cmd sync cli-docs-out/ → bucket
         │                       ├── Run browser tests (Cypress smoke test)
         │                       ├── Write origin-bucket-metadata.json
         │                       └── Post PR comment with preview URL
@@ -630,7 +630,7 @@ Push to master
                 │       ├── scripts/ci/sync.sh update
                 │       │       ├── Create / reuse S3 bucket
                 │       │       ├── s5cmd sync public/ → bucket
-                │       │       ├── aws s3 cp cli-docs-out/ → bucket (gzipped)
+                │       │       ├── s5cmd sync cli-docs-out/ → bucket
                 │       │       ├── Run browser tests (Cypress smoke test)
                 │       │       └── Write origin-bucket-metadata.json
                 │       ├── scripts/generate-search-index.sh
@@ -825,12 +825,6 @@ This mapping is used by `pull-request-closed.sh` to find and delete preview buck
 
 **CloudFront distributions**: Managed by the Pulumi IaC program. After each production push, Pulumi reads `origin-bucket-metadata.json` and updates the CloudFront origin to point to the new S3 bucket.
 
-**CloudFront cache behaviors**: In addition to the default cache behavior, a dedicated cache behavior exists for CLI docs:
-
-| Path pattern | TTL | Purpose |
-|---|---|---|
-| `/registry/packages/*/api-docs/cli-docs.json` | 1 hour (default and max) | CLI docs JSON served to the Pulumi CLI; pre-compressed with gzip at upload time |
-
 ### 6.3 S3 Preview Bucket Lifecycle
 
 ```
@@ -841,7 +835,7 @@ scripts/ci/sync.sh preview
   1. aws s3 mb registry-testing-origin-pr-<N>-<sha8>
   2. Enable static website hosting
   3. s5cmd sync public/ → bucket (--delete)
-  3a. aws s3 cp cli-docs-out/ → bucket (gzipped, Content-Encoding: gzip)
+  3a. s5cmd sync cli-docs-out/ → bucket
   4. Run Cypress smoke tests
   5. Write origin-bucket-metadata.json
   6. aws ssm put-parameter /registry/commits/<sha>/bucket = <bucket-name>

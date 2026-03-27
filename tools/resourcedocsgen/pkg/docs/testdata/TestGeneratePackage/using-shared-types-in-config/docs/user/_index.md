@@ -5,6 +5,8 @@ title_tag: "credentials.User"
 meta_desc: "Documentation for the credentials.User resource with examples, input properties, output properties, lookup functions, and supporting types."
 layout: api
 no_edit_this_page: true
+outputs:
+    - HTML
 ---
 
 
@@ -228,7 +230,7 @@ The following reference example uses placeholder values for all [input propertie
 <pulumi-choosable type="language" values="csharp">
 
 ```csharp
-var userResource = new Credentials.User("userResource", new()
+var userResource = new Credentials.Index.User("userResource", new()
 {
     Shared = new Credentials.Inputs.SharedArgs
     {

@@ -111,9 +111,12 @@ mise trust && mise install
                    │  tools/resourcedocsgen/ ──► generates API docs
                    │                                  │   │
                    │  themes/default/content/         │   │
-                   │    registry/packages/ ◄──────────┘   │
+                   │    registry/packages/ ◄──────────┤   │
                    │                                  │   │
-                   │  Hugo build ◄────────────────────┘   │
+                   │  cli-docs-out/registry/packages/ │   │
+                   │    (CLI-friendly JSON) ◄─────────┘   │
+                   │                                      │
+                   │  Hugo build ◄── (reads content/)     │
                    │       │                              │
                    │       ▼                              │
                    │  public/  (built site)               │
@@ -347,6 +350,7 @@ bin/resourcedocsgen docs registry \
     --baseDocsOutDir themes/default/content/registry/packages \
     --basePackageTreeJSONOutDir themes/default/static/registry/packages/navs \
     --baseSchemasOutDir themes/default/static/registry/packages \
+    --baseCLIDocsOutDir ./cli-docs-out/registry/packages \
     [<package-name>]
 ```
 
@@ -363,6 +367,9 @@ When `<package-name>` is omitted, all packages listed in `themes/default/data/re
 - Generated docs at `themes/default/content/registry/packages/<pkg>/api-docs/`
 - Package navigation JSON at `themes/default/static/registry/packages/navs/<pkg>.json`
 - Schema JSON at `themes/default/static/registry/packages/<pkg>.json`
+- CLI docs JSON at `cli-docs-out/registry/packages/<pkg>/api-docs/cli-docs.json` (only when `--baseCLIDocsOutDir` is set)
+
+The format of `cli-docs.json` is specified in `docs/cli-markdown-spec.md`.
 
 ### 4.4 mktutorial Tool
 
@@ -398,7 +405,7 @@ This is the master build script for CI runs. It accepts one argument: `preview` 
    - `JS_BUNDLE=static/js/bundle.min.<id>.js`
 7. **Restores cached API docs** from `.cache/api-docs/` into the Hugo content/static trees (see section 4.7 for details).
 8. Runs `make api-docs`, which compiles `resourcedocsgen` and generates all provider API docs. The tool skips unchanged packages using sentinel files.
-9. **Saves API docs** output (including sentinel files) back to `.cache/api-docs/` for the next run. Versioned packages (`@`-suffixed) are excluded — they have their own cache.
+9. **Saves API docs** output (including sentinel files) back to `.cache/api-docs/` for the next run. Versioned packages (`@`-suffixed) are excluded — they have their own cache. CLI docs from `cli-docs-out/` are also cached to `.cache/api-docs/cli-docs/` and restored on the next run.
 10. Runs `node ./scripts/apply-fixes.js`.
 11. Runs Hugo with `--minify --buildFuture --templateMetrics`:
     - `preview` mode: sets `HUGO_BASEURL` to the S3 website URL and uses `-e preview`
@@ -461,7 +468,7 @@ CI builds use multiple cache layers to avoid redundant work. All caches are stor
 |---|---|---|---|
 | Node/Yarn | `node-cache-Linux-x64-yarn-<yarn.lock hash>` | `~/.cache/yarn/v6` | Yarn package cache |
 | Go | `setup-go-...-<go.sum hash>` | `GOMODCACHE`, `GOCACHE` | Go module and build cache |
-| Docs + schemas | `docs-cache-<run_id>` (restore key: `docs-cache-`) | `.cache/schemas`, `.cache/versioned-docs`, `.cache/api-docs` | API docs output, versioned docs, provider schemas |
+| Docs + schemas | `docs-cache-<run_id>` (restore key: `docs-cache-`) | `.cache/schemas`, `.cache/versioned-docs`, `.cache/api-docs` | API docs output, versioned docs, provider schemas, CLI docs JSON |
 | registry-mirror-discover | `registry-mirror-discover-<commit hash>` | `bin/registry-mirror-discover` | Pre-built binary for versioned docs discovery |
 
 The docs cache uses `restore-keys: docs-cache-` so it falls back to the most recent previous run's cache when an exact match isn't found (the key includes `run_id`, so it's always unique).
@@ -472,7 +479,7 @@ The `resourcedocsgen` tool skips unchanged packages using sentinel files. Each g
 
 - **SHA-256 of the package YAML metadata** — changes when the package version or config is updated.
 - **Go toolchain version** — changes on Go upgrades.
-- **Source hash** — a SHA-256 of all `.go` and `go.sum` files in `tools/resourcedocsgen/`, injected at build time via `-ldflags`. Changes when the doc generation logic changes.
+- **Source hash** — a SHA-256 of all `.go`, `.tmpl`, and `go.sum` files in `tools/resourcedocsgen/`, injected at build time via `-ldflags`. Changes when the doc generation logic or templates change.
 
 On each run, `resourcedocsgen` compares the computed cache key against the sentinel. If they match and the expected output files (api-docs, nav JSON, schema JSON) all exist, the package is skipped. Otherwise it regenerates.
 
@@ -481,6 +488,8 @@ The `scripts/ci/build.sh` script manages the cache lifecycle:
 1. **Restore**: copies cached content from `.cache/api-docs/` into the Hugo content/static trees before running `resourcedocsgen`.
 2. **Generate**: `make api-docs` runs `resourcedocsgen`, which skips fresh packages and regenerates stale ones.
 3. **Save**: copies the generated output (including updated sentinel files) back to `.cache/api-docs/` for the next run.
+
+CLI docs follow the same lifecycle: on restore, `.cache/api-docs/cli-docs/<pkg>/api-docs/` is copied to `cli-docs-out/registry/packages/<pkg>/api-docs/`; on save, the reverse copy is performed. Only `schema.json` (not the entire directory tree) is cached per package in the schema layer, to avoid persisting stale CLI doc files from older builds.
 
 #### Versioned docs cache
 
@@ -562,12 +571,14 @@ PR opened / committed
         │       ├── Install Node 22, Go 1.26, Hugo 0.157
         │       ├── Validate community-packages/package-list.json
         │       ├── Configure AWS credentials → assume testing account role
+        │       ├── Install s5cmd v2.3.0
         │       └── make ci-pull-request
         │               ├── scripts/ci/validate-packages.sh
         │               ├── scripts/ci/build.sh preview
         │               └── scripts/ci/sync.sh preview
         │                       ├── Create / reuse S3 bucket
-        │                       ├── aws s3 sync public/ → bucket
+        │                       ├── s5cmd sync public/ → bucket
+        │                       ├── s5cmd sync cli-docs-out/ → bucket
         │                       ├── Run browser tests (Cypress smoke test)
         │                       ├── Write origin-bucket-metadata.json
         │                       └── Post PR comment with preview URL
@@ -610,6 +621,7 @@ Push to master
                 ├── Checkout (using PULUMI_BOT_TOKEN for private module access)
                 ├── Configure AWS credentials
                 │       └── Assume arn:aws:iam::388588623842:role/ContinuousDelivery
+                ├── Install s5cmd v2.3.0
                 ├── Install Pulumi CLI
                 ├── make ci_push
                 │       ├── scripts/ci/login.sh
@@ -617,7 +629,8 @@ Push to master
                 │       ├── scripts/ci/build.sh update
                 │       ├── scripts/ci/sync.sh update
                 │       │       ├── Create / reuse S3 bucket
-                │       │       ├── aws s3 sync public/ → bucket
+                │       │       ├── s5cmd sync public/ → bucket
+                │       │       ├── s5cmd sync cli-docs-out/ → bucket
                 │       │       ├── Run browser tests (Cypress smoke test)
                 │       │       └── Write origin-bucket-metadata.json
                 │       ├── scripts/generate-search-index.sh
@@ -821,7 +834,8 @@ PR commit pushed
 scripts/ci/sync.sh preview
   1. aws s3 mb registry-testing-origin-pr-<N>-<sha8>
   2. Enable static website hosting
-  3. aws s3 sync public/ → bucket (--delete)
+  3. s5cmd sync public/ → bucket (--delete)
+  3a. s5cmd sync cli-docs-out/ → bucket
   4. Run Cypress smoke tests
   5. Write origin-bucket-metadata.json
   6. aws ssm put-parameter /registry/commits/<sha>/bucket = <bucket-name>
@@ -1042,6 +1056,7 @@ The `export-repo-secrets.yml` workflow provides a manual escape hatch to sync Gi
 | Go | 1.26 | 1.26.x | 1.26.x | 1.21.x |
 | Hugo | 0.157 | 0.157.0 | 0.157.0 | 0.157.0 |
 | golangci-lint | 2.1.6 | v2.1.6 (check-go.yml) | — | — |
+| s5cmd | — | v2.3.0 | v2.3.0 | v2.3.0 |
 
 Note: `mise.toml` specifies Node 20 for local development, while CI workflows use Node 22. The `lint-markdown` and `lint-scripts` jobs in `pull-request.yml` use Node 23.x. The `bucket-cleanup.yml` workflow uses Node 18.x.
 

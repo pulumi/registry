@@ -1,0 +1,47 @@
+{{ template "cli_header" . }}
+{{ if .DeprecationMessage }}
+> **Deprecated:** {{ .DeprecationMessage }}
+{{ end }}
+{{ .Comment }}
+{{ template "cli_examples" .Examples }}
+{{ if .Signatures }}
+## Usage
+
+<!-- chooser: language -->
+{{ range .Signatures -}}
+<!-- option: {{ .Tag }} -->
+
+```{{ .Tag }}
+{{ .Syntax }}
+```
+
+<!-- /option -->
+{{ end -}}
+<!-- /chooser -->
+{{ end }}
+{{ if .InputProperties }}
+## Inputs
+
+{{ template "cli_properties" .InputProperties }}
+{{ end }}
+{{ if .OutputProperties }}
+## Outputs
+
+{{ template "cli_properties" .OutputProperties }}
+{{ end }}
+{{ if .NestedTypes }}
+
+## Supporting Types
+{{ range .NestedTypes }}
+
+### {{ .Name }}
+{{ if .Description }}
+{{ .Description }}
+{{ end }}
+{{ if .Properties }}
+{{ template "cli_properties" .Properties }}
+{{ end }}
+{{ end }}
+{{ end }}
+---
+*{{ .PackageDetails.DisplayName }}{{ if .PackageDetails.Version }} · {{ .PackageDetails.Version }}{{ end }}*

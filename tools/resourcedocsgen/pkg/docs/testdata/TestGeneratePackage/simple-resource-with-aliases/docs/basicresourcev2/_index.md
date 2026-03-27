@@ -5,6 +5,8 @@ title_tag: "example.BasicResourceV2"
 meta_desc: "Documentation for the example.BasicResourceV2 resource with examples, input properties, output properties, lookup functions, and supporting types."
 layout: api
 no_edit_this_page: true
+outputs:
+    - HTML
 ---
 
 
@@ -228,7 +230,7 @@ The following reference example uses placeholder values for all [input propertie
 <pulumi-choosable type="language" values="csharp">
 
 ```csharp
-var basicResourceV2Resource = new Example.BasicResourceV2("basicResourceV2Resource", new()
+var basicResourceV2Resource = new Example.Index.BasicResourceV2("basicResourceV2Resource", new()
 {
     Bar = "string",
 });

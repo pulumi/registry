@@ -5,6 +5,8 @@ title_tag: "xyz.StaticPage"
 meta_desc: "Documentation for the xyz.StaticPage resource with examples, input properties, output properties, lookup functions, and supporting types."
 layout: api
 no_edit_this_page: true
+outputs:
+    - HTML
 ---
 
 
@@ -229,7 +231,7 @@ The following reference example uses placeholder values for all [input propertie
 <pulumi-choosable type="language" values="csharp">
 
 ```csharp
-var staticPageResource = new Xyz.StaticPage("staticPageResource", new()
+var staticPageResource = new Xyz.Index.StaticPage("staticPageResource", new()
 {
     IndexContent = "string",
     Foo = new Xyz.Inputs.FooArgs

@@ -5,6 +5,8 @@ title_tag: "example.ResourceWithAssets"
 meta_desc: "Documentation for the example.ResourceWithAssets resource with examples, input properties, output properties, lookup functions, and supporting types."
 layout: api
 no_edit_this_page: true
+outputs:
+    - HTML
 ---
 
 
@@ -230,7 +232,7 @@ The following reference example uses placeholder values for all [input propertie
 <pulumi-choosable type="language" values="csharp">
 
 ```csharp
-var resourceWithAssetsResource = new Example.ResourceWithAssets("resourceWithAssetsResource", new()
+var resourceWithAssetsResource = new Example.Index.ResourceWithAssets("resourceWithAssetsResource", new()
 {
     Source = new StringAsset("content"),
     Archive = new FileArchive("./path/to/archive"),

@@ -5,6 +5,8 @@ title_tag: "foo-bar.submodule1.FOOEncryptedBarClass"
 meta_desc: "Documentation for the foo-bar.submodule1.FOOEncryptedBarClass resource with examples, input properties, output properties, lookup functions, and supporting types."
 layout: api
 no_edit_this_page: true
+outputs:
+    - HTML
 ---
 
 

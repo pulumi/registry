@@ -1,0 +1,33 @@
+{{- $directories := (split .Page.File.Path "/") -}}
+{{- /* File paths follow registry/packages/{name}/... so index 2 is the package name */ -}}
+{{- $packageName := index $directories 2 -}}
+{{- /* Only generate sitemap for package root _index.md pages */ -}}
+{{- $isPackageRoot := and (eq (len $directories) 4) (eq (index $directories 3) "_index.md") -}}
+{{- if not $isPackageRoot -}}
+{{- dict | jsonify -}}
+{{- else -}}
+{{- $children := slice -}}
+{{- /* Overview (self) */ -}}
+{{- $children = $children | append (dict "title" "Overview" "path" (printf "/registry/packages/%s/" $packageName)) -}}
+{{- /* Installation & Configuration */ -}}
+{{- $installPage := .GetPage (printf "/registry/packages/%s/installation-configuration" $packageName) -}}
+{{- if $installPage -}}
+  {{- $children = $children | append (dict "title" "Installation & Configuration" "path" $installPage.RelPermalink) -}}
+{{- end -}}
+{{- /* API Docs */ -}}
+{{- $apiPage := .GetPage (printf "/registry/packages/%s/api-docs" $packageName) -}}
+{{- if $apiPage -}}
+  {{- $apiChildren := slice -}}
+  {{- range $apiPage.Pages -}}
+    {{- $apiChildren = $apiChildren | append (dict "title" .Title "path" .RelPermalink) -}}
+  {{- end -}}
+  {{- $apiEntry := dict "title" "API Docs" "path" $apiPage.RelPermalink "hasChildren" true "children" $apiChildren -}}
+  {{- $children = $children | append $apiEntry -}}
+{{- end -}}
+{{- /* How-to Guides */ -}}
+{{- $guidesPage := .GetPage (printf "/registry/packages/%s/how-to-guides" $packageName) -}}
+{{- if $guidesPage -}}
+  {{- $children = $children | append (dict "title" "How-to Guides" "path" $guidesPage.RelPermalink) -}}
+{{- end -}}
+{{- dict "pages" $children | jsonify (dict "indent" "  ") -}}
+{{- end -}}

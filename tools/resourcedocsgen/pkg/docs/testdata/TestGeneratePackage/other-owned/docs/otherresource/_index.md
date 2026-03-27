@@ -5,6 +5,8 @@ title_tag: "example.OtherResource"
 meta_desc: "Documentation for the example.OtherResource resource with examples, input properties, output properties, lookup functions, and supporting types."
 layout: api
 no_edit_this_page: true
+outputs:
+    - HTML
 ---
 
 
@@ -228,7 +230,7 @@ The following reference example uses placeholder values for all [input propertie
 <pulumi-choosable type="language" values="csharp">
 
 ```csharp
-var otherResourceResource = new Example.OtherResource("otherResourceResource", new()
+var otherResourceResource = new Example.Index.OtherResource("otherResourceResource", new()
 {
     Foo = resource,
 });

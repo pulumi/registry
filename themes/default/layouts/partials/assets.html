@@ -4,17 +4,8 @@
   JS components.
 -->
 
-{{ $manifest := .Site.Data.asset_manifest }}
-{{ if not $manifest }}
-  {{ errorf "Asset manifest not found. Run 'make build-assets' before 'make serve'." }}
-{{ end }}
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"
-  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-  crossorigin="anonymous"
-  referrerpolicy="no-referrer"></script>
-
-<script src="{{ index $manifest "bundle.js" }}" defer></script>
+{{ $js := resources.Get "registry/js/bundle-registry.js" | fingerprint }}
+<script src="{{ $js.RelPermalink }}" defer></script>
 
 <!--
   Our marketing styles diverge a bit from the other parts of the website so we load
@@ -23,7 +14,9 @@
 {{ $nonMarketingSections := slice "docs" "registry" "blog" "learn" "templates" "ai" "authors" "tags" "legal" }}
 {{ if in $nonMarketingSections .Section }}
 {{ else }}
-    <link rel="stylesheet" href="{{ index $manifest "marketing.css" }}"></link>
+    {{ $marketingCss := resources.Get "registry/css/marketing-registry.css" | fingerprint }}
+    <link rel="stylesheet" href="{{ $marketingCss.RelPermalink }}"></link>
 {{ end }}
 
-<link rel="stylesheet" href="{{ index $manifest "bundle.css" }}"></link>
+{{ $css := resources.Get "registry/css/bundle-registry.css" | fingerprint }}
+<link rel="stylesheet" href="{{ $css.RelPermalink }}"></link>

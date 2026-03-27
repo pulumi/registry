@@ -5,6 +5,8 @@ title_tag: "example.Rec"
 meta_desc: "Documentation for the example.Rec resource with examples, input properties, output properties, lookup functions, and supporting types."
 layout: api
 no_edit_this_page: true
+outputs:
+    - HTML
 ---
 
 
@@ -227,7 +229,7 @@ The following reference example uses placeholder values for all [input propertie
 <pulumi-choosable type="language" values="csharp">
 
 ```csharp
-var recResource = new Example.Rec("recResource");
+var recResource = new Example.Index.Rec("recResource");
 ```
 
 </pulumi-choosable>

@@ -5,6 +5,8 @@ title_tag: "urnid.Res"
 meta_desc: "Documentation for the urnid.Res resource with examples, input properties, output properties, lookup functions, and supporting types."
 layout: api
 no_edit_this_page: true
+outputs:
+    - HTML
 ---
 
 
@@ -231,7 +233,7 @@ The following reference example uses placeholder values for all [input propertie
 <pulumi-choosable type="language" values="csharp">
 
 ```csharp
-var resResource = new Urnid.Res("resResource", new()
+var resResource = new Urnid.Index.Res("resResource", new()
 {
     Id = "string",
     Urn = "string",

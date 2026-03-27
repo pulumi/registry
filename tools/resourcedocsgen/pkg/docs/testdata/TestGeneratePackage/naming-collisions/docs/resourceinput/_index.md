@@ -5,6 +5,8 @@ title_tag: "example.ResourceInput"
 meta_desc: "Documentation for the example.ResourceInput resource with examples, input properties, output properties, lookup functions, and supporting types."
 layout: api
 no_edit_this_page: true
+outputs:
+    - HTML
 ---
 
 
@@ -227,7 +229,7 @@ The following reference example uses placeholder values for all [input propertie
 <pulumi-choosable type="language" values="csharp">
 
 ```csharp
-var resourceInputResource = new Example.ResourceInput("resourceInputResource");
+var resourceInputResource = new Example.Index.ResourceInput("resourceInputResource");
 ```
 
 </pulumi-choosable>
@@ -238,7 +240,7 @@ var resourceInputResource = new Example.ResourceInput("resourceInputResource");
 <pulumi-choosable type="language" values="go">
 
 ```go
-example, err := example.NewResourceInputResource(ctx, "resourceInputResource", nil)
+example, err := example.NewResourceInput(ctx, "resourceInputResource", nil)
 ```
 
 </pulumi-choosable>

@@ -5,6 +5,8 @@ title_tag: "example.TypeUses"
 meta_desc: "Documentation for the example.TypeUses resource with examples, input properties, output properties, lookup functions, and supporting types."
 layout: api
 no_edit_this_page: true
+outputs:
+    - HTML
 ---
 
 
@@ -231,7 +233,7 @@ The following reference example uses placeholder values for all [input propertie
 <pulumi-choosable type="language" values="csharp">
 
 ```csharp
-var typeUsesResource = new Example.TypeUses("typeUsesResource", new()
+var typeUsesResource = new Example.Index.TypeUses("typeUsesResource", new()
 {
     Bar = new Example.Inputs.SomeOtherObjectArgs
     {

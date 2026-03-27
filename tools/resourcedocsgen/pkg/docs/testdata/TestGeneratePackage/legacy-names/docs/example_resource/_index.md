@@ -5,6 +5,8 @@ title_tag: "legacy_names.Example_resource"
 meta_desc: "Documentation for the legacy_names.Example_resource resource with examples, input properties, output properties, lookup functions, and supporting types."
 layout: api
 no_edit_this_page: true
+outputs:
+    - HTML
 ---
 
 
@@ -229,7 +231,7 @@ The following reference example uses placeholder values for all [input propertie
 <pulumi-choosable type="language" values="csharp">
 
 ```csharp
-var example_resourceResource = new Legacy_names.Example_resource("example_resourceResource", new()
+var example_resourceResource = new Legacy_names.Index.Example_resource("example_resourceResource", new()
 {
     Map_enum = new[]
     {
@@ -254,7 +256,7 @@ var example_resourceResource = new Legacy_names.Example_resource("example_resour
 <pulumi-choosable type="language" values="go">
 
 ```go
-example, err := legacy_names.NewExample_resource(ctx, "example_resourceResource", &legacy_names.Example_resourceArgs{
+example, err := legacy_names.Newexample_resource(ctx, "example_resourceResource", &legacy_names.example_resourceArgs{
 	Map_enum: legacy_names.Enum_XYZMapArray{
 		legacy_names.Enum_XYZMap{
 			"string": legacy_names.Enum_XYZPlain,

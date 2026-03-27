@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/timescale/timescale/2.8.0/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/timescale/timescale/2.9.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Timescale Provider
@@ -16,15 +16,15 @@ pulumi package add terraform-provider timescale/timescale
 ```
 ## Overview
 
-The Pulumi provider for [Timescale](https://www.timescale.com/cloud).
+The Pulumi provider for [Timescale](https://www.tigerdata.com/cloud).
 ## Requirements
 - Pulumi >= 1.0
 ## Quick Start
 ### Authorization
-When you log in to your [Timescale Account](https://console.cloud.timescale.com/), click on your project name on the upper left-hand side of the page and go to the `Project settings` page.
+When you log in to your [Timescale Account](https://console.cloud.tigerdata.com/), click on your project name on the upper left-hand side of the page and go to the `Project settings` page.
 From here, you can create client credentials for programmatic usage. Click the `Create credentials` button to generate a new public/secret key pair.
 
-Find more information on creating Client Credentials in the [Timescale docs](https://docs.timescale.com/use-timescale/latest/security/client-credentials/#creating-client-credentials).
+Find more information on creating Client Credentials in the [Timescale docs](https://docs.tigerdata.com/use-timescale/latest/security/client-credentials/#creating-client-credentials).
 ### Project ID
 
 To view the project ID, click on your project name on the upper left-hand side of the page.
@@ -731,9 +731,9 @@ public class App {
 - 32000m CPU / 128 GB Memory
 ### Storage
 Since June 2023, you no longer need to allocate a fixed storage volume or worry about managing your disk size, and you'll be billed only for the storage you actually use.
-See more info in our [blogpost](https://www.timescale.com/blog/savings-unlocked-why-we-switched-to-a-pay-for-what-you-store-database-storage-model/)
+See more info in our [blogpost](https://www.tigerdata.com/blog/savings-unlocked-why-we-switched-to-a-pay-for-what-you-store-database-storage-model/)
 ### Regions
-Please reference the [docs](https://docs.timescale.com/use-timescale/latest/regions/) for a list of currently supported regions.
+Please reference the [docs](https://docs.tigerdata.com/use-timescale/latest/regions/) for a list of currently supported regions.
 ## Supported Operations
 ✅ Create service <br />
 ✅ Rename service <br />

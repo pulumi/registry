@@ -5,6 +5,8 @@ title_tag: "foobar.ModuleResource"
 meta_desc: "Documentation for the foobar.ModuleResource resource with examples, input properties, output properties, lookup functions, and supporting types."
 layout: api
 no_edit_this_page: true
+outputs:
+    - HTML
 ---
 
 
@@ -241,7 +243,7 @@ The following reference example uses placeholder values for all [input propertie
 <pulumi-choosable type="language" values="csharp">
 
 ```csharp
-var moduleResourceResource = new FooBar.ModuleResource("moduleResourceResource", new()
+var moduleResourceResource = new FooBar.Index.ModuleResource("moduleResourceResource", new()
 {
     PlainRequiredBool = false,
     RequiredString = "string",

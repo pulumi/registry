@@ -5,6 +5,8 @@ title_tag: "example.ModuleTest"
 meta_desc: "Documentation for the example.ModuleTest resource with examples, input properties, output properties, lookup functions, and supporting types."
 layout: api
 no_edit_this_page: true
+outputs:
+    - HTML
 ---
 
 
@@ -229,7 +231,7 @@ The following reference example uses placeholder values for all [input propertie
 <pulumi-choosable type="language" values="csharp">
 
 ```csharp
-var moduleTestResource = new Example.ModuleTest("moduleTestResource", new()
+var moduleTestResource = new Example.Index.ModuleTest("moduleTestResource", new()
 {
     Mod1 = new Example.Mod1.Inputs.TypArgs
     {
@@ -262,7 +264,7 @@ var moduleTestResource = new Example.ModuleTest("moduleTestResource", new()
 <pulumi-choosable type="language" values="go">
 
 ```go
-example, err := example.NewModuleTest(ctx, "moduleTestResource", &example.ModuleTestArgs{
+example, err := example.NewmoduleTest(ctx, "moduleTestResource", &example.moduleTestArgs{
 Mod1: &mod1.TypArgs{
 Val: pulumi.String("string"),
 },

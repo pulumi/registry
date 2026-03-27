@@ -5,6 +5,8 @@ title_tag: "example.ExampleServer"
 meta_desc: "Documentation for the example.ExampleServer resource with examples, input properties, output properties, lookup functions, and supporting types."
 layout: api
 no_edit_this_page: true
+outputs:
+    - HTML
 ---
 
 
@@ -228,7 +230,7 @@ The following reference example uses placeholder values for all [input propertie
 <pulumi-choosable type="language" values="csharp">
 
 ```csharp
-var exampleServerResource = new Example.ExampleServer("exampleServerResource", new()
+var exampleServerResource = new Example.Index.ExampleServer("exampleServerResource", new()
 {
     PropertiesCollection = new[]
     {

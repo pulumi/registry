@@ -1,26 +1,21 @@
-/**
- * sortResourceItems sorts the visible items in the resource list.
- *
- * @param {bool} sortDescending Whether the items should be sorted in descending order.
- */
-function sortResourceItems(sortDescending) {
-    const resourceList = $("ul.resource-list");
-    const items = resourceList.children("li").detach();
+function sortResourceItems(sortDescending: boolean) {
+    const resourceList = document.querySelector("ul.resource-list");
+    if (!resourceList) return;
 
-    Array.from(items).sort(function (a, b) {
-        const firstDate = $(a).attr("data-display-date");
-        const secondDate = $(b).attr("data-display-date");
-
+    const items = Array.from(resourceList.querySelectorAll<HTMLElement>(":scope > li"));
+    items.sort((a, b) => {
+        const firstDate = a.getAttribute("data-display-date");
+        const secondDate = b.getAttribute("data-display-date");
         if (sortDescending) {
             return new Date(firstDate).getTime() < new Date(secondDate).getTime() ? 1 : -1;
         }
         return new Date(firstDate).getTime() > new Date(secondDate).getTime() ? 1 : -1;
     });
 
-    resourceList.append(items);
+    items.forEach(item => resourceList.appendChild(item));
 }
 
-$(function () {
+document.addEventListener("DOMContentLoaded", function () {
     const pathParts = location.pathname.split("/");
     if (pathParts.length > 1 && pathParts[1] === "resources") {
         window.addEventListener("hashchange", function () {
@@ -28,60 +23,122 @@ $(function () {
             sortResourceItems(shouldSortDescending);
         });
 
-        $(document).ready(function () {
-            const shouldSortDescending = location.hash !== "#upcoming";
-            sortResourceItems(shouldSortDescending);
-        });
+        const shouldSortDescending = location.hash !== "#upcoming";
+        sortResourceItems(shouldSortDescending);
     }
 });
 
-$(function () {
+const filterResourceItems = (filters) => {
+    const events = document.querySelectorAll<HTMLElement>(".event-list .event-card");
+    const monthLabels = document.querySelectorAll<HTMLElement>(".event-list .month-label");
+    monthLabels.forEach(el => el.style.display = "none");
+    const noResultsMessage = document.querySelector(".pulumi-event-list-container .no-results");
+    noResultsMessage?.classList.remove("hidden");
+
+    if (filters.length > 0) {
+        events.forEach(event => {
+            const tags = (event.getAttribute("data-filters") || "").split(" ");
+            const dateLabel = event.getAttribute("data-month-label");
+
+            if (!tags.includes(location.hash.slice(1))) {
+                event.style.display = "none";
+            } else {
+                let matches = 0;
+                tags.forEach(tag => {
+                    if (filters.includes(tag)) {
+                        matches++;
+                    }
+                });
+                if (matches > 0) {
+                    noResultsMessage?.classList.add("hidden");
+                    event.style.display = "block";
+                    document.querySelectorAll<HTMLElement>(`.month-label.${dateLabel}`).forEach(el => el.style.display = "block");
+                } else {
+                    event.style.display = "none";
+                }
+            }
+        });
+    } else {
+        events.forEach(event => {
+            const tags = (event.getAttribute("data-filters") || "").split(" ");
+            const dateLabel = event.getAttribute("data-month-label");
+
+            if (!tags.includes(location.hash.slice(1))) {
+                event.style.display = "none";
+            } else {
+                noResultsMessage?.classList.add("hidden");
+                event.style.display = "block";
+                document.querySelectorAll<HTMLElement>(`.month-label.${dateLabel}`).forEach(el => el.style.display = "block");
+            }
+        });
+    }
+}
+
+document.querySelector(".pulumi-event-list-container")?.addEventListener("filterSelect", (event: CustomEvent) => {
+    const filters = event.detail as any[];
+    const filtersText: string[] = [];
+
+    filters.forEach(filter => {
+        filtersText.push(filter.value);
+    });
+
+    filterResourceItems(filtersText);
+});
+
+window.addEventListener('hashchange', function() {
+    const options = Array.from(document.querySelectorAll('pulumi-filter-select-option')) as any[];
+    let selectedFilters = [];
+
+    options.forEach((option) => {
+        const shadow = option.shadowRoot;
+        if (shadow?.querySelector('.selected')) {
+            selectedFilters.push(option.value);
+        }
+    });
+    filterResourceItems(selectedFilters);
+});
+
+document.addEventListener("DOMContentLoaded", function () {
     const resourcesEventListFilterNav = document.getElementById("event-list-filter-nav");
     if (resourcesEventListFilterNav) {
-        // When the arrows are selected, they scroll the tertiary nav in either direction.
-        $("#slideForward").on("click", function () {
-            // The width of an individual tab, so the scroll brings one additional full tab into view.
+        document.getElementById("slideForward")?.addEventListener("click", function () {
             resourcesEventListFilterNav.scrollLeft += 180;
         });
 
-        $("#slideBackwards").on("click", function () {
-            // The width of an individual tab, so the scroll moves one full tab into view.
+        document.getElementById("slideBackwards")?.addEventListener("click", function () {
             resourcesEventListFilterNav.scrollLeft -= 180;
         });
 
-        // If the last or first items are fully in view (depending on the scroll direction),
-        // the scroll arrow button is hidden from view (since it's no longer possible to scroll).
         const options = {
-            root: document.getElementById("event-list-filter-nav"),
-            // To count as in view, the tab must be 100% in view.
+            root: resourcesEventListFilterNav,
             threshold: 1.0,
         };
 
-        const controlScrollForwardVisibility = (entries, observer) => {
+        const controlScrollForwardVisibility = (entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    $("#slideForward").addClass("hidden");
+                    document.getElementById("slideForward")?.classList.add("hidden");
                 } else {
-                    $("#slideForward").removeClass("hidden");
+                    document.getElementById("slideForward")?.classList.remove("hidden");
                 }
             });
         };
 
         const scrollForwardObserver = new IntersectionObserver(controlScrollForwardVisibility, options);
         const lastNavItem = document.querySelector("#event-list-filter-nav li:last-of-type");
-        scrollForwardObserver.observe(lastNavItem);
+        if (lastNavItem) scrollForwardObserver.observe(lastNavItem);
 
-        const controlScrollBackwardVisibility = (entries, observer) => {
+        const controlScrollBackwardVisibility = (entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    $("#slideBackwards").addClass("hidden");
+                    document.getElementById("slideBackwards")?.classList.add("hidden");
                 } else {
-                    $("#slideBackwards").removeClass("hidden");
+                    document.getElementById("slideBackwards")?.classList.remove("hidden");
                 }
             });
         };
         const scrollBackwardObserver = new IntersectionObserver(controlScrollBackwardVisibility, options);
         const firstNavItem = document.querySelector("#event-list-filter-nav li:first-of-type");
-        scrollBackwardObserver.observe(firstNavItem);
+        if (firstNavItem) scrollBackwardObserver.observe(firstNavItem);
     }
 });

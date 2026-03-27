@@ -5,6 +5,8 @@ title_tag: "example.Resource"
 meta_desc: "Documentation for the example.Resource resource with examples, input properties, output properties, lookup functions, and supporting types."
 layout: api
 no_edit_this_page: true
+outputs:
+    - HTML
 ---
 
 
@@ -229,7 +231,7 @@ The following reference example uses placeholder values for all [input propertie
 <pulumi-choosable type="language" values="csharp">
 
 ```csharp
-var resourceResource = new Example.Resource("resourceResource", new()
+var resourceResource = new Example.Index.Resource("resourceResource", new()
 {
     Bar = Example.EnumOverlay.SomeEnumValue,
     Foo = new Example.Inputs.ConfigMapOverlayArgs

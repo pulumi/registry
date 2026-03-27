@@ -1,0 +1,105 @@
+{{ template "cli_header" . }}
+{{ if .DeprecationMessage }}
+> **Deprecated:** {{ .DeprecationMessage }}
+{{ end }}
+{{ .Comment }}
+{{ template "cli_examples" .Examples }}
+{{ if .Constructors }}
+## Create {{ .Title }} Resource
+
+<!-- chooser: language -->
+{{ range .Constructors -}}
+<!-- option: {{ .Tag }} -->
+
+```{{ .Tag }}
+{{ .Syntax }}
+```
+{{ if .Params }}
+### Parameters
+{{ range .Params }}
+- `{{ .Name }}`{{ if .Type.DisplayName }} (**{{ .Type.DisplayName }}**){{ end }}{{ if .Comment }} — {{ .Comment }}{{ end }}
+{{- end }}
+{{ end }}
+
+<!-- /option -->
+{{ end -}}
+<!-- /chooser -->
+{{ end }}
+
+## {{ .Title }} Resource Properties
+{{ if .InputProperties }}
+
+### Inputs
+
+{{ template "cli_properties" .InputProperties }}
+{{ end }}{{ if .OutputProperties }}
+
+### Outputs
+
+{{ template "cli_properties" .OutputProperties }}
+{{ end }}
+{{ if .Methods }}
+
+## Methods
+{{ range .Methods }}
+
+### {{ .Title }}
+{{ if .DeprecationMessage }}
+> **Deprecated:** {{ .DeprecationMessage }}
+{{ end }}
+{{ .Comment }}
+{{ if .Syntaxes }}
+<!-- chooser: language -->
+{{ range .Syntaxes -}}
+<!-- option: {{ .Tag }} -->
+
+```{{ .Tag }}
+{{ .Syntax }}
+```
+
+<!-- /option -->
+{{ end -}}
+<!-- /chooser -->
+{{ end }}
+{{ if .InputProperties }}
+#### Arguments
+
+{{ template "cli_properties" .InputProperties }}
+{{ end }}
+{{ if .OutputProperties }}
+#### Result
+
+{{ template "cli_properties" .OutputProperties }}
+{{ end }}
+{{ end }}
+{{ end }}
+{{ if .StateInputs }}
+
+## Look up Existing {{ .Title }} Resource
+
+### State Inputs
+
+{{ template "cli_properties" .StateInputs }}
+{{ end }}
+{{ if .NestedTypes }}
+
+## Supporting Types
+{{ range .NestedTypes }}
+
+### {{ .Name }}
+{{ if .Description }}
+{{ .Description }}
+{{ end }}
+{{ if .Properties }}
+{{ template "cli_properties" .Properties }}
+{{ end }}
+{{ end }}
+{{ end }}
+{{ if .ImportDocs }}
+
+## Import
+
+{{ .ImportDocs }}
+{{ end }}
+---
+*{{ .PackageDetails.DisplayName }}{{ if .PackageDetails.Version }} · {{ .PackageDetails.Version }}{{ end }}*

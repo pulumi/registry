@@ -1,0 +1,1 @@
+> **Note:** If you are using the [Pulumi Cloud backend](/docs/pulumi-cloud/), you can follow the "View in Browser" link displayed in the CLI output. This will open the update in [Pulumi Cloud](https://app.pulumi.com/), where you can view the output and explore detailed information about your stack such as its activity, resources, and configuration.

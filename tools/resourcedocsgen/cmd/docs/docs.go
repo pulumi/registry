@@ -67,6 +67,7 @@ func ResourceDocsCmd() *cobra.Command {
 	var version string
 	var docsOutDir string
 	var packageTreeJSONOutDir string
+	var cliDocsOutDir string
 
 	cmd := &cobra.Command{
 		Use:   "docs",
@@ -101,6 +102,10 @@ func ResourceDocsCmd() *cobra.Command {
 				return errors.Wrap(err, "generating docs from schema")
 			}
 
+			if err := generateCLIDocs(cliDocsOutDir, genctx); err != nil {
+				return errors.Wrap(err, "generating CLI docs")
+			}
+
 			if err := generatePackageTree(packageTreeJSONOutDir, pulPkg.Name, genctx); err != nil {
 				return errors.Wrap(err, "generating package tree")
 			}
@@ -114,6 +119,8 @@ func ResourceDocsCmd() *cobra.Command {
 	cmd.Flags().StringVar(&docsOutDir, "docsOutDir", "", "The directory path to where the docs will be written to")
 	cmd.Flags().StringVar(&packageTreeJSONOutDir, "packageTreeJSONOutDir", "",
 		"The directory path to write the package tree JSON file to")
+	cmd.Flags().StringVar(&cliDocsOutDir, "cliDocsOutDir", "",
+		"The directory path to write terminal-friendly CLI docs (optional)")
 
 	contract.AssertNoErrorf(cmd.MarkFlagRequired("docsOutDir"), "could not find docsOutDir")
 	contract.AssertNoErrorf(cmd.MarkFlagRequired("packageTreeJSONOutDir"), "could not find packageTreeJSONOutDir")
@@ -135,6 +142,27 @@ func generateDocsFromSchema(outDir string, pulPkg *docs.Context) error {
 		if err := pkg.EmitFile(outDir, f, contents); err != nil {
 			return errors.Wrapf(err, "emitting file %v", f)
 		}
+	}
+	return nil
+}
+
+func generateCLIDocs(outDir string, genctx *docs.Context) error {
+	if outDir == "" {
+		return nil // CLI docs generation is optional
+	}
+
+	bundle, err := genctx.GenerateCLIPackage()
+	if err != nil {
+		return errors.Wrap(err, "generating CLI package docs")
+	}
+
+	b, err := json.Marshal(bundle)
+	if err != nil {
+		return errors.Wrap(err, "marshalling CLI docs bundle")
+	}
+
+	if err := pkg.EmitFile(outDir, "cli-docs.json", b); err != nil {
+		return errors.Wrap(err, "emitting CLI docs bundle")
 	}
 	return nil
 }

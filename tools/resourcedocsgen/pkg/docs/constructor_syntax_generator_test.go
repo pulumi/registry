@@ -115,7 +115,7 @@ func TestConstructorSyntaxGeneratorForSchema(t *testing.T) {
 	expectedResources := 3
 	assert.Equal(t, expectedResources, len(constructorSyntax.csharp.resources))
 	equalPrograms(constructorSyntax.csharp, "test:index:First", `
-var firstResource = new Test.First("firstResource", new()
+var firstResource = new Test.Index.First("firstResource", new()
 {
     FooBool = false,
     FooEnum = Test.ExampleEnum.First,
@@ -126,14 +126,14 @@ var firstResource = new Test.First("firstResource", new()
 `)
 
 	equalPrograms(constructorSyntax.csharp, "test:index:Second", `
-var secondResource = new Test.Second("secondResource", new()
+var secondResource = new Test.Index.Second("secondResource", new()
 {
     BarString = "string",
 });
 `)
 
 	equalPrograms(constructorSyntax.csharp, "test:index:NoInputs", `
-var noInputsResource = new Test.NoInputs("noInputsResource");
+var noInputsResource = new Test.Index.NoInputs("noInputsResource");
 `)
 
 	assert.Equal(t, expectedResources, len(constructorSyntax.typescript.resources))

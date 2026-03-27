@@ -233,7 +233,7 @@ The following reference example uses placeholder values for all [input propertie
 <pulumi-choosable type="language" values="csharp">
 
 ```csharp
-var fooResource = new Example.Foo("fooResource", new()
+var fooResource = new Example.Index.Foo("fooResource", new()
 {
     BackupKubeClientSettings = new Example.Inputs.KubeClientSettingsArgs
     {

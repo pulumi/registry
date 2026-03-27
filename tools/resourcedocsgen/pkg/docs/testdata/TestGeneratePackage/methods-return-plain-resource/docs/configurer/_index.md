@@ -228,7 +228,7 @@ The following reference example uses placeholder values for all [input propertie
 <pulumi-choosable type="language" values="csharp">
 
 ```csharp
-var configurerResource = new Metaprovider.Configurer("configurerResource", new()
+var configurerResource = new Metaprovider.Index.Configurer("configurerResource", new()
 {
     TlsProxy = "string",
 });

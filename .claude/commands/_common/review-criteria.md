@@ -93,6 +93,7 @@ If any of the following files change, flag whether `BUILD-AND-DEPLOY.md` needs u
 - **Template syntax**: Valid Hugo template syntax with proper `{{ }}` delimiters
 - **Asset compilation**: Theme JS/CSS changes should build cleanly with `make build-assets`
 - **Static files**: Changes to `themes/default/static/` should not conflict with generated content
+- **Shortcode parity**: Shortcodes exist in both HTML (`.html`) and markdown (`.markdown.md`) variants. When modifying a shortcode, ensure both variants reflect the change as appropriate for their output channel (HTML for the web, plain markdown for CLI/terminal)
 - **Image hosting**: Images referenced in templates (banner ads, promotional graphics, etc.) must use absolute URLs pointing to `https://www.pulumi.com/` (e.g., `https://www.pulumi.com/images/docs/ad/example.png`). The registry site is served from a separate S3 bucket/CloudFront distribution than the main docs site — relative paths like `/images/docs/ad/example.png` will 404 because those images live in `pulumi/docs`, not `pulumi/registry`. **Never add image files to the registry repo's static directory to work around this** — always reference preexisting images on `pulumi.com` with absolute URLs
 
 ## General

@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pydantic/pulumi-logfire/v0.1.4/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pydantic/pulumi-logfire/v0.1.6/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pydantic/pulumi-logfire/blob/v0.1.4/docs/installation-configuration.md
+edit_url: https://github.com/pydantic/pulumi-logfire/blob/v0.1.6/docs/installation-configuration.md
 title: Installation & Configuration
 meta_desc: Install and configure the Pulumi Logfire provider.
 layout: package
@@ -25,12 +25,14 @@ Package page: [PyPI](https://pypi.org/project/pydantic-pulumi-logfire/)
 pip install pydantic-pulumi-logfire
 ```
 
+Import it in code as `pulumi_logfire`.
+
 ## Go
 
 Package page: [pkg.go.dev](https://pkg.go.dev/github.com/pydantic/pulumi-logfire/sdk/go/logfire)
 
 ```bash
-go get github.com/pydantic/pulumi-logfire/sdk/go/...
+go get github.com/pydantic/pulumi-logfire/sdk/go/logfire
 ```
 
 ## Provider Configuration

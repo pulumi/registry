@@ -10,7 +10,7 @@ native: false
 package_status: public_preview
 publisher: Pydantic
 repo_url: https://github.com/pydantic/pulumi-logfire
-schema_file_url: https://raw.githubusercontent.com/pydantic/pulumi-logfire/v0.1.4/provider/cmd/pulumi-resource-logfire/schema.json
+schema_file_url: https://raw.githubusercontent.com/pydantic/pulumi-logfire/v0.1.6/provider/cmd/pulumi-resource-logfire/schema.json
 title: Logfire
-updated_on: 1773954847
-version: v0.1.4
+updated_on: 1774374760
+version: v0.1.6

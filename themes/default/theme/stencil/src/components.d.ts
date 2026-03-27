@@ -5,16 +5,14 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { ChatGptModel } from "./components/ai/types";
-import { ChooserKey, ChooserMode, ChooserType, LanguageKey, OSKey } from "./components/chooser/chooser";
 import { APINavNode } from "./components/pulumi-api-doc-filterable-nav/pulumi-api-doc-filterable-nav";
+import { ChooserKey, ChooserMode, ChooserType } from "./components/chooser/chooser";
 import { ChooserKey as ChooserKey1, ChooserMode as ChooserMode1, ChooserOptionStyle, ChooserType as ChooserType1 } from "./components/chooser/chooser";
 import { SourceKind } from "./components/convert/convert";
 import { Filter } from "./components/filter-select/filter-select-option";
 import { MultiSelectFormItem } from "./components/pulumi-multi-select-form/pulumi-multi-select-form";
-export { ChatGptModel } from "./components/ai/types";
-export { ChooserKey, ChooserMode, ChooserType, LanguageKey, OSKey } from "./components/chooser/chooser";
 export { APINavNode } from "./components/pulumi-api-doc-filterable-nav/pulumi-api-doc-filterable-nav";
+export { ChooserKey, ChooserMode, ChooserType } from "./components/chooser/chooser";
 export { ChooserKey as ChooserKey1, ChooserMode as ChooserMode1, ChooserOptionStyle, ChooserType as ChooserType1 } from "./components/chooser/chooser";
 export { SourceKind } from "./components/convert/convert";
 export { Filter } from "./components/filter-select/filter-select-option";
@@ -22,56 +20,6 @@ export { MultiSelectFormItem } from "./components/pulumi-multi-select-form/pulum
 export namespace Components {
     interface CopilotSidebar {
         "atlasUrl": string;
-    }
-    interface EventSessionRegistrationModal {
-        "buttonClass": string;
-        "buttonText": string;
-        "eventSessions": string;
-        "modalTitle": string;
-        /**
-          * @default "/pulumi-up/thank-you/"
-         */
-        "redirectUrl": string;
-    }
-    interface HomeSlots {
-        /**
-          * @default ""
-         */
-        "centerItems": string;
-        /**
-          * @default ""
-         */
-        "imageClass": string;
-        /**
-          * @default ""
-         */
-        "leftItems": string;
-        /**
-          * @default ""
-         */
-        "rightItems": string;
-    }
-    interface PulumiAi {
-        /**
-          * @default "Pulumi AI"
-         */
-        "h1": string;
-        "language": LanguageKey;
-        "model": ChatGptModel;
-        "prompt": string;
-        "repoUrl": string;
-        "signupUrl": string;
-        "siteUrl": string;
-        "userID": string;
-        /**
-          * @default ""
-         */
-        "welcomeContent": string;
-        /**
-          * @default ".welcome"
-         */
-        "welcomeSelector": string;
-        "wsEndpoint": string;
     }
     interface PulumiApiDocFilterableNav {
         "baseDirectory": string;
@@ -89,22 +37,6 @@ export namespace Components {
     interface PulumiApiDocNavTree {
         "baseDirectory": string;
         "nodes": APINavNode[];
-    }
-    interface PulumiAudio {
-        "pausedText": string;
-        "playingText": string;
-        "url": string;
-    }
-    interface PulumiBanner {
-        /**
-          * @default true
-         */
-        "dismissible": boolean;
-        "name": string;
-        /**
-          * @default false
-         */
-        "visible": boolean;
     }
     /**
      * The Choosable component is useful for showing or hiding information based on the
@@ -158,43 +90,6 @@ export namespace Components {
          */
         "theme": string;
     }
-    interface PulumiDateCountdown {
-        /**
-          * @default ""
-         */
-        "containerClass": string;
-        /**
-          * @default ""
-         */
-        "countdownOverText": string;
-        "dateString": string;
-        /**
-          * @default ""
-         */
-        "textClass": string;
-        /**
-          * @default ""
-         */
-        "valueLabelClass": string;
-    }
-    interface PulumiDateCountdownCircles {
-        /**
-          * @default ""
-         */
-        "containerClass": string;
-        "dateString": string;
-        /**
-          * @default ""
-         */
-        "valueLabelClass": string;
-    }
-    interface PulumiDatetime {
-        "class"?: string;
-        "date": string;
-    }
-    interface PulumiDeveloperQuotes {
-        "quotes": string;
-    }
     interface PulumiExample {
     }
     interface PulumiExamples {
@@ -216,16 +111,11 @@ export namespace Components {
         "expanded": boolean;
         "name": string;
     }
-    interface PulumiGreenhouseJobsList {
-    }
     interface PulumiHubspotForm {
         "class"?: string;
         "formId": string;
         "goToWebinarKey"?: string;
         "salesforceCampaignId": string;
-    }
-    interface PulumiInstall {
-        "os"?: OSKey;
     }
     interface PulumiMultiSelectForm {
         /**
@@ -249,73 +139,6 @@ export namespace Components {
     }
     interface PulumiRoot {
     }
-    interface PulumiSlotMachine {
-        "centerImages": string;
-        "imageClass": string;
-        "leftImages": string;
-        "rightImages": string;
-    }
-    interface PulumiSwipeable {
-    }
-    interface PulumiSwiper {
-        /**
-          * @default false
-         */
-        "autoplay": boolean;
-        /**
-          * @default 3000
-         */
-        "autoplayDelay": number;
-        /**
-          * @default false
-         */
-        "centeredSlides": boolean;
-        /**
-          * @default "horizontal"
-         */
-        "direction": "vertical" | "horizontal";
-        /**
-          * @default true
-         */
-        "enableMouseEvents": boolean;
-        /**
-          * @default 1
-         */
-        "initialSlide": number;
-        /**
-          * @default false
-         */
-        "loop": boolean;
-        /**
-          * @default false
-         */
-        "navControls": boolean;
-        /**
-          * @default 1
-         */
-        "slides": number;
-        /**
-          * @default 0
-         */
-        "spaceBetween": number;
-        /**
-          * @default 300
-         */
-        "speed": number;
-        "startSwiper": () => Promise<void>;
-        "stopSwiper": () => Promise<void>;
-    }
-    interface PulumiTab {
-        "active": boolean;
-        "label": string;
-    }
-    interface PulumiTabs {
-    }
-    interface PulumiTertiaryNav {
-        "items": string;
-        "selection": any;
-        "tabContent": string[];
-    }
     /**
      * The ToolTip component shows a tooltip bubble above another element when you hover over
      * (or, on mobile tap on) it. Use the named `content` slot for supplying the markup to
@@ -337,11 +160,6 @@ export namespace Components {
     interface PulumiUserToggle {
         "userId": string;
     }
-    interface PulumiWebinarFormSelect {
-        "labelClass"?: string;
-        "selectClass"?: string;
-        "sessions": string;
-    }
 }
 export interface PulumiFilterSelectCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -359,34 +177,12 @@ export interface PulumiRootCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLPulumiRootElement;
 }
-export interface PulumiTabsCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLPulumiTabsElement;
-}
 declare global {
     interface HTMLCopilotSidebarElement extends Components.CopilotSidebar, HTMLStencilElement {
     }
     var HTMLCopilotSidebarElement: {
         prototype: HTMLCopilotSidebarElement;
         new (): HTMLCopilotSidebarElement;
-    };
-    interface HTMLEventSessionRegistrationModalElement extends Components.EventSessionRegistrationModal, HTMLStencilElement {
-    }
-    var HTMLEventSessionRegistrationModalElement: {
-        prototype: HTMLEventSessionRegistrationModalElement;
-        new (): HTMLEventSessionRegistrationModalElement;
-    };
-    interface HTMLHomeSlotsElement extends Components.HomeSlots, HTMLStencilElement {
-    }
-    var HTMLHomeSlotsElement: {
-        prototype: HTMLHomeSlotsElement;
-        new (): HTMLHomeSlotsElement;
-    };
-    interface HTMLPulumiAiElement extends Components.PulumiAi, HTMLStencilElement {
-    }
-    var HTMLPulumiAiElement: {
-        prototype: HTMLPulumiAiElement;
-        new (): HTMLPulumiAiElement;
     };
     interface HTMLPulumiApiDocFilterableNavElement extends Components.PulumiApiDocFilterableNav, HTMLStencilElement {
     }
@@ -405,18 +201,6 @@ declare global {
     var HTMLPulumiApiDocNavTreeElement: {
         prototype: HTMLPulumiApiDocNavTreeElement;
         new (): HTMLPulumiApiDocNavTreeElement;
-    };
-    interface HTMLPulumiAudioElement extends Components.PulumiAudio, HTMLStencilElement {
-    }
-    var HTMLPulumiAudioElement: {
-        prototype: HTMLPulumiAudioElement;
-        new (): HTMLPulumiAudioElement;
-    };
-    interface HTMLPulumiBannerElement extends Components.PulumiBanner, HTMLStencilElement {
-    }
-    var HTMLPulumiBannerElement: {
-        prototype: HTMLPulumiBannerElement;
-        new (): HTMLPulumiBannerElement;
     };
     /**
      * The Choosable component is useful for showing or hiding information based on the
@@ -465,30 +249,6 @@ declare global {
     var HTMLPulumiConvertElement: {
         prototype: HTMLPulumiConvertElement;
         new (): HTMLPulumiConvertElement;
-    };
-    interface HTMLPulumiDateCountdownElement extends Components.PulumiDateCountdown, HTMLStencilElement {
-    }
-    var HTMLPulumiDateCountdownElement: {
-        prototype: HTMLPulumiDateCountdownElement;
-        new (): HTMLPulumiDateCountdownElement;
-    };
-    interface HTMLPulumiDateCountdownCirclesElement extends Components.PulumiDateCountdownCircles, HTMLStencilElement {
-    }
-    var HTMLPulumiDateCountdownCirclesElement: {
-        prototype: HTMLPulumiDateCountdownCirclesElement;
-        new (): HTMLPulumiDateCountdownCirclesElement;
-    };
-    interface HTMLPulumiDatetimeElement extends Components.PulumiDatetime, HTMLStencilElement {
-    }
-    var HTMLPulumiDatetimeElement: {
-        prototype: HTMLPulumiDatetimeElement;
-        new (): HTMLPulumiDatetimeElement;
-    };
-    interface HTMLPulumiDeveloperQuotesElement extends Components.PulumiDeveloperQuotes, HTMLStencilElement {
-    }
-    var HTMLPulumiDeveloperQuotesElement: {
-        prototype: HTMLPulumiDeveloperQuotesElement;
-        new (): HTMLPulumiDeveloperQuotesElement;
     };
     interface HTMLPulumiExampleElement extends Components.PulumiExample, HTMLStencilElement {
     }
@@ -542,23 +302,11 @@ declare global {
         prototype: HTMLPulumiFilterSelectOptionGroupElement;
         new (): HTMLPulumiFilterSelectOptionGroupElement;
     };
-    interface HTMLPulumiGreenhouseJobsListElement extends Components.PulumiGreenhouseJobsList, HTMLStencilElement {
-    }
-    var HTMLPulumiGreenhouseJobsListElement: {
-        prototype: HTMLPulumiGreenhouseJobsListElement;
-        new (): HTMLPulumiGreenhouseJobsListElement;
-    };
     interface HTMLPulumiHubspotFormElement extends Components.PulumiHubspotForm, HTMLStencilElement {
     }
     var HTMLPulumiHubspotFormElement: {
         prototype: HTMLPulumiHubspotFormElement;
         new (): HTMLPulumiHubspotFormElement;
-    };
-    interface HTMLPulumiInstallElement extends Components.PulumiInstall, HTMLStencilElement {
-    }
-    var HTMLPulumiInstallElement: {
-        prototype: HTMLPulumiInstallElement;
-        new (): HTMLPulumiInstallElement;
     };
     interface HTMLPulumiMultiSelectFormElement extends Components.PulumiMultiSelectForm, HTMLStencilElement {
     }
@@ -606,53 +354,6 @@ declare global {
         prototype: HTMLPulumiRootElement;
         new (): HTMLPulumiRootElement;
     };
-    interface HTMLPulumiSlotMachineElement extends Components.PulumiSlotMachine, HTMLStencilElement {
-    }
-    var HTMLPulumiSlotMachineElement: {
-        prototype: HTMLPulumiSlotMachineElement;
-        new (): HTMLPulumiSlotMachineElement;
-    };
-    interface HTMLPulumiSwipeableElement extends Components.PulumiSwipeable, HTMLStencilElement {
-    }
-    var HTMLPulumiSwipeableElement: {
-        prototype: HTMLPulumiSwipeableElement;
-        new (): HTMLPulumiSwipeableElement;
-    };
-    interface HTMLPulumiSwiperElement extends Components.PulumiSwiper, HTMLStencilElement {
-    }
-    var HTMLPulumiSwiperElement: {
-        prototype: HTMLPulumiSwiperElement;
-        new (): HTMLPulumiSwiperElement;
-    };
-    interface HTMLPulumiTabElement extends Components.PulumiTab, HTMLStencilElement {
-    }
-    var HTMLPulumiTabElement: {
-        prototype: HTMLPulumiTabElement;
-        new (): HTMLPulumiTabElement;
-    };
-    interface HTMLPulumiTabsElementEventMap {
-        "tabSelect": any[];
-    }
-    interface HTMLPulumiTabsElement extends Components.PulumiTabs, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLPulumiTabsElementEventMap>(type: K, listener: (this: HTMLPulumiTabsElement, ev: PulumiTabsCustomEvent<HTMLPulumiTabsElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLPulumiTabsElementEventMap>(type: K, listener: (this: HTMLPulumiTabsElement, ev: PulumiTabsCustomEvent<HTMLPulumiTabsElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
-    }
-    var HTMLPulumiTabsElement: {
-        prototype: HTMLPulumiTabsElement;
-        new (): HTMLPulumiTabsElement;
-    };
-    interface HTMLPulumiTertiaryNavElement extends Components.PulumiTertiaryNav, HTMLStencilElement {
-    }
-    var HTMLPulumiTertiaryNavElement: {
-        prototype: HTMLPulumiTertiaryNavElement;
-        new (): HTMLPulumiTertiaryNavElement;
-    };
     /**
      * The ToolTip component shows a tooltip bubble above another element when you hover over
      * (or, on mobile tap on) it. Use the named `content` slot for supplying the markup to
@@ -683,107 +384,33 @@ declare global {
         prototype: HTMLPulumiUserToggleElement;
         new (): HTMLPulumiUserToggleElement;
     };
-    interface HTMLPulumiWebinarFormSelectElement extends Components.PulumiWebinarFormSelect, HTMLStencilElement {
-    }
-    var HTMLPulumiWebinarFormSelectElement: {
-        prototype: HTMLPulumiWebinarFormSelectElement;
-        new (): HTMLPulumiWebinarFormSelectElement;
-    };
     interface HTMLElementTagNameMap {
         "copilot-sidebar": HTMLCopilotSidebarElement;
-        "event-session-registration-modal": HTMLEventSessionRegistrationModalElement;
-        "home-slots": HTMLHomeSlotsElement;
-        "pulumi-ai": HTMLPulumiAiElement;
         "pulumi-api-doc-filterable-nav": HTMLPulumiApiDocFilterableNavElement;
         "pulumi-api-doc-nav-node": HTMLPulumiApiDocNavNodeElement;
         "pulumi-api-doc-nav-tree": HTMLPulumiApiDocNavTreeElement;
-        "pulumi-audio": HTMLPulumiAudioElement;
-        "pulumi-banner": HTMLPulumiBannerElement;
         "pulumi-choosable": HTMLPulumiChoosableElement;
         "pulumi-chooser": HTMLPulumiChooserElement;
         "pulumi-contact-us-form": HTMLPulumiContactUsFormElement;
         "pulumi-convert": HTMLPulumiConvertElement;
-        "pulumi-date-countdown": HTMLPulumiDateCountdownElement;
-        "pulumi-date-countdown-circles": HTMLPulumiDateCountdownCirclesElement;
-        "pulumi-datetime": HTMLPulumiDatetimeElement;
-        "pulumi-developer-quotes": HTMLPulumiDeveloperQuotesElement;
         "pulumi-example": HTMLPulumiExampleElement;
         "pulumi-examples": HTMLPulumiExamplesElement;
         "pulumi-filter-select": HTMLPulumiFilterSelectElement;
         "pulumi-filter-select-option": HTMLPulumiFilterSelectOptionElement;
         "pulumi-filter-select-option-group": HTMLPulumiFilterSelectOptionGroupElement;
-        "pulumi-greenhouse-jobs-list": HTMLPulumiGreenhouseJobsListElement;
         "pulumi-hubspot-form": HTMLPulumiHubspotFormElement;
-        "pulumi-install": HTMLPulumiInstallElement;
         "pulumi-multi-select-form": HTMLPulumiMultiSelectFormElement;
         "pulumi-registry-list-search": HTMLPulumiRegistryListSearchElement;
         "pulumi-resource-links": HTMLPulumiResourceLinksElement;
         "pulumi-root": HTMLPulumiRootElement;
-        "pulumi-slot-machine": HTMLPulumiSlotMachineElement;
-        "pulumi-swipeable": HTMLPulumiSwipeableElement;
-        "pulumi-swiper": HTMLPulumiSwiperElement;
-        "pulumi-tab": HTMLPulumiTabElement;
-        "pulumi-tabs": HTMLPulumiTabsElement;
-        "pulumi-tertiary-nav": HTMLPulumiTertiaryNavElement;
         "pulumi-tooltip": HTMLPulumiTooltipElement;
         "pulumi-top-button": HTMLPulumiTopButtonElement;
         "pulumi-user-toggle": HTMLPulumiUserToggleElement;
-        "pulumi-webinar-form-select": HTMLPulumiWebinarFormSelectElement;
     }
 }
 declare namespace LocalJSX {
     interface CopilotSidebar {
         "atlasUrl"?: string;
-    }
-    interface EventSessionRegistrationModal {
-        "buttonClass"?: string;
-        "buttonText"?: string;
-        "eventSessions"?: string;
-        "modalTitle"?: string;
-        /**
-          * @default "/pulumi-up/thank-you/"
-         */
-        "redirectUrl"?: string;
-    }
-    interface HomeSlots {
-        /**
-          * @default ""
-         */
-        "centerItems"?: string;
-        /**
-          * @default ""
-         */
-        "imageClass"?: string;
-        /**
-          * @default ""
-         */
-        "leftItems"?: string;
-        /**
-          * @default ""
-         */
-        "rightItems"?: string;
-    }
-    interface PulumiAi {
-        /**
-          * @default "Pulumi AI"
-         */
-        "h1"?: string;
-        "language"?: LanguageKey;
-        "model"?: ChatGptModel;
-        "prompt"?: string;
-        "repoUrl"?: string;
-        "signupUrl"?: string;
-        "siteUrl"?: string;
-        "userID"?: string;
-        /**
-          * @default ""
-         */
-        "welcomeContent"?: string;
-        /**
-          * @default ".welcome"
-         */
-        "welcomeSelector"?: string;
-        "wsEndpoint"?: string;
     }
     interface PulumiApiDocFilterableNav {
         "baseDirectory"?: string;
@@ -801,22 +428,6 @@ declare namespace LocalJSX {
     interface PulumiApiDocNavTree {
         "baseDirectory"?: string;
         "nodes"?: APINavNode[];
-    }
-    interface PulumiAudio {
-        "pausedText"?: string;
-        "playingText"?: string;
-        "url"?: string;
-    }
-    interface PulumiBanner {
-        /**
-          * @default true
-         */
-        "dismissible"?: boolean;
-        "name"?: string;
-        /**
-          * @default false
-         */
-        "visible"?: boolean;
     }
     /**
      * The Choosable component is useful for showing or hiding information based on the
@@ -870,43 +481,6 @@ declare namespace LocalJSX {
          */
         "theme"?: string;
     }
-    interface PulumiDateCountdown {
-        /**
-          * @default ""
-         */
-        "containerClass"?: string;
-        /**
-          * @default ""
-         */
-        "countdownOverText"?: string;
-        "dateString"?: string;
-        /**
-          * @default ""
-         */
-        "textClass"?: string;
-        /**
-          * @default ""
-         */
-        "valueLabelClass"?: string;
-    }
-    interface PulumiDateCountdownCircles {
-        /**
-          * @default ""
-         */
-        "containerClass"?: string;
-        "dateString"?: string;
-        /**
-          * @default ""
-         */
-        "valueLabelClass"?: string;
-    }
-    interface PulumiDatetime {
-        "class"?: string;
-        "date"?: string;
-    }
-    interface PulumiDeveloperQuotes {
-        "quotes"?: string;
-    }
     interface PulumiExample {
     }
     interface PulumiExamples {
@@ -924,16 +498,11 @@ declare namespace LocalJSX {
         "expanded"?: boolean;
         "name"?: string;
     }
-    interface PulumiGreenhouseJobsList {
-    }
     interface PulumiHubspotForm {
         "class"?: string;
         "formId"?: string;
         "goToWebinarKey"?: string;
         "salesforceCampaignId"?: string;
-    }
-    interface PulumiInstall {
-        "os"?: OSKey;
     }
     interface PulumiMultiSelectForm {
         /**
@@ -959,72 +528,6 @@ declare namespace LocalJSX {
     interface PulumiRoot {
         "onRendered"?: (event: PulumiRootCustomEvent<any>) => void;
     }
-    interface PulumiSlotMachine {
-        "centerImages"?: string;
-        "imageClass"?: string;
-        "leftImages"?: string;
-        "rightImages"?: string;
-    }
-    interface PulumiSwipeable {
-    }
-    interface PulumiSwiper {
-        /**
-          * @default false
-         */
-        "autoplay"?: boolean;
-        /**
-          * @default 3000
-         */
-        "autoplayDelay"?: number;
-        /**
-          * @default false
-         */
-        "centeredSlides"?: boolean;
-        /**
-          * @default "horizontal"
-         */
-        "direction"?: "vertical" | "horizontal";
-        /**
-          * @default true
-         */
-        "enableMouseEvents"?: boolean;
-        /**
-          * @default 1
-         */
-        "initialSlide"?: number;
-        /**
-          * @default false
-         */
-        "loop"?: boolean;
-        /**
-          * @default false
-         */
-        "navControls"?: boolean;
-        /**
-          * @default 1
-         */
-        "slides"?: number;
-        /**
-          * @default 0
-         */
-        "spaceBetween"?: number;
-        /**
-          * @default 300
-         */
-        "speed"?: number;
-    }
-    interface PulumiTab {
-        "active"?: boolean;
-        "label"?: string;
-    }
-    interface PulumiTabs {
-        "onTabSelect"?: (event: PulumiTabsCustomEvent<any[]>) => void;
-    }
-    interface PulumiTertiaryNav {
-        "items"?: string;
-        "selection"?: any;
-        "tabContent"?: string[];
-    }
     /**
      * The ToolTip component shows a tooltip bubble above another element when you hover over
      * (or, on mobile tap on) it. Use the named `content` slot for supplying the markup to
@@ -1044,40 +547,9 @@ declare namespace LocalJSX {
     interface PulumiUserToggle {
         "userId"?: string;
     }
-    interface PulumiWebinarFormSelect {
-        "labelClass"?: string;
-        "selectClass"?: string;
-        "sessions"?: string;
-    }
 
     interface CopilotSidebarAttributes {
         "atlasUrl": string;
-    }
-    interface EventSessionRegistrationModalAttributes {
-        "buttonClass": string;
-        "buttonText": string;
-        "modalTitle": string;
-        "eventSessions": string;
-        "redirectUrl": string;
-    }
-    interface HomeSlotsAttributes {
-        "leftItems": string;
-        "centerItems": string;
-        "rightItems": string;
-        "imageClass": string;
-    }
-    interface PulumiAiAttributes {
-        "h1": string;
-        "welcomeContent": string;
-        "welcomeSelector": string;
-        "repoUrl": string;
-        "wsEndpoint": string;
-        "signupUrl": string;
-        "siteUrl": string;
-        "model": ChatGptModel;
-        "prompt": string;
-        "language": LanguageKey;
-        "userID": string;
     }
     interface PulumiApiDocFilterableNavAttributes {
         "baseDirectory": string;
@@ -1090,16 +562,6 @@ declare namespace LocalJSX {
     }
     interface PulumiApiDocNavTreeAttributes {
         "baseDirectory": string;
-    }
-    interface PulumiAudioAttributes {
-        "url": string;
-        "playingText": string;
-        "pausedText": string;
-    }
-    interface PulumiBannerAttributes {
-        "name": string;
-        "dismissible": boolean;
-        "visible": boolean;
     }
     interface PulumiChoosableAttributes {
         "type": ChooserType;
@@ -1126,25 +588,6 @@ declare namespace LocalJSX {
         "examples": string;
         "theme": string;
     }
-    interface PulumiDateCountdownAttributes {
-        "dateString": string;
-        "textClass": string;
-        "containerClass": string;
-        "valueLabelClass": string;
-        "countdownOverText": string;
-    }
-    interface PulumiDateCountdownCirclesAttributes {
-        "dateString": string;
-        "containerClass": string;
-        "valueLabelClass": string;
-    }
-    interface PulumiDatetimeAttributes {
-        "class": string;
-        "date": string;
-    }
-    interface PulumiDeveloperQuotesAttributes {
-        "quotes": string;
-    }
     interface PulumiFilterSelectOptionAttributes {
         "label": string;
         "value": string;
@@ -1160,9 +603,6 @@ declare namespace LocalJSX {
         "goToWebinarKey": string;
         "class": string;
     }
-    interface PulumiInstallAttributes {
-        "os": OSKey;
-    }
     interface PulumiMultiSelectFormAttributes {
         "selectClass": string;
         "labelClass": string;
@@ -1174,82 +614,32 @@ declare namespace LocalJSX {
         "moduleName": string;
         "resourceName": string;
     }
-    interface PulumiSlotMachineAttributes {
-        "imageClass": string;
-        "leftImages": string;
-        "centerImages": string;
-        "rightImages": string;
-    }
-    interface PulumiSwiperAttributes {
-        "speed": number;
-        "loop": boolean;
-        "autoplay": boolean;
-        "autoplayDelay": number;
-        "navControls": boolean;
-        "slides": number;
-        "centeredSlides": boolean;
-        "initialSlide": number;
-        "direction": "vertical" | "horizontal";
-        "enableMouseEvents": boolean;
-        "spaceBetween": number;
-    }
-    interface PulumiTabAttributes {
-        "label": string;
-        "active": boolean;
-    }
-    interface PulumiTertiaryNavAttributes {
-        "items": string;
-        "selection": string;
-    }
     interface PulumiUserToggleAttributes {
         "userId": string;
-    }
-    interface PulumiWebinarFormSelectAttributes {
-        "sessions": string;
-        "selectClass": string;
-        "labelClass": string;
     }
 
     interface IntrinsicElements {
         "copilot-sidebar": Omit<CopilotSidebar, keyof CopilotSidebarAttributes> & { [K in keyof CopilotSidebar & keyof CopilotSidebarAttributes]?: CopilotSidebar[K] } & { [K in keyof CopilotSidebar & keyof CopilotSidebarAttributes as `attr:${K}`]?: CopilotSidebarAttributes[K] } & { [K in keyof CopilotSidebar & keyof CopilotSidebarAttributes as `prop:${K}`]?: CopilotSidebar[K] };
-        "event-session-registration-modal": Omit<EventSessionRegistrationModal, keyof EventSessionRegistrationModalAttributes> & { [K in keyof EventSessionRegistrationModal & keyof EventSessionRegistrationModalAttributes]?: EventSessionRegistrationModal[K] } & { [K in keyof EventSessionRegistrationModal & keyof EventSessionRegistrationModalAttributes as `attr:${K}`]?: EventSessionRegistrationModalAttributes[K] } & { [K in keyof EventSessionRegistrationModal & keyof EventSessionRegistrationModalAttributes as `prop:${K}`]?: EventSessionRegistrationModal[K] };
-        "home-slots": Omit<HomeSlots, keyof HomeSlotsAttributes> & { [K in keyof HomeSlots & keyof HomeSlotsAttributes]?: HomeSlots[K] } & { [K in keyof HomeSlots & keyof HomeSlotsAttributes as `attr:${K}`]?: HomeSlotsAttributes[K] } & { [K in keyof HomeSlots & keyof HomeSlotsAttributes as `prop:${K}`]?: HomeSlots[K] };
-        "pulumi-ai": Omit<PulumiAi, keyof PulumiAiAttributes> & { [K in keyof PulumiAi & keyof PulumiAiAttributes]?: PulumiAi[K] } & { [K in keyof PulumiAi & keyof PulumiAiAttributes as `attr:${K}`]?: PulumiAiAttributes[K] } & { [K in keyof PulumiAi & keyof PulumiAiAttributes as `prop:${K}`]?: PulumiAi[K] };
         "pulumi-api-doc-filterable-nav": Omit<PulumiApiDocFilterableNav, keyof PulumiApiDocFilterableNavAttributes> & { [K in keyof PulumiApiDocFilterableNav & keyof PulumiApiDocFilterableNavAttributes]?: PulumiApiDocFilterableNav[K] } & { [K in keyof PulumiApiDocFilterableNav & keyof PulumiApiDocFilterableNavAttributes as `attr:${K}`]?: PulumiApiDocFilterableNavAttributes[K] } & { [K in keyof PulumiApiDocFilterableNav & keyof PulumiApiDocFilterableNavAttributes as `prop:${K}`]?: PulumiApiDocFilterableNav[K] };
         "pulumi-api-doc-nav-node": Omit<PulumiApiDocNavNode, keyof PulumiApiDocNavNodeAttributes> & { [K in keyof PulumiApiDocNavNode & keyof PulumiApiDocNavNodeAttributes]?: PulumiApiDocNavNode[K] } & { [K in keyof PulumiApiDocNavNode & keyof PulumiApiDocNavNodeAttributes as `attr:${K}`]?: PulumiApiDocNavNodeAttributes[K] } & { [K in keyof PulumiApiDocNavNode & keyof PulumiApiDocNavNodeAttributes as `prop:${K}`]?: PulumiApiDocNavNode[K] };
         "pulumi-api-doc-nav-tree": Omit<PulumiApiDocNavTree, keyof PulumiApiDocNavTreeAttributes> & { [K in keyof PulumiApiDocNavTree & keyof PulumiApiDocNavTreeAttributes]?: PulumiApiDocNavTree[K] } & { [K in keyof PulumiApiDocNavTree & keyof PulumiApiDocNavTreeAttributes as `attr:${K}`]?: PulumiApiDocNavTreeAttributes[K] } & { [K in keyof PulumiApiDocNavTree & keyof PulumiApiDocNavTreeAttributes as `prop:${K}`]?: PulumiApiDocNavTree[K] };
-        "pulumi-audio": Omit<PulumiAudio, keyof PulumiAudioAttributes> & { [K in keyof PulumiAudio & keyof PulumiAudioAttributes]?: PulumiAudio[K] } & { [K in keyof PulumiAudio & keyof PulumiAudioAttributes as `attr:${K}`]?: PulumiAudioAttributes[K] } & { [K in keyof PulumiAudio & keyof PulumiAudioAttributes as `prop:${K}`]?: PulumiAudio[K] };
-        "pulumi-banner": Omit<PulumiBanner, keyof PulumiBannerAttributes> & { [K in keyof PulumiBanner & keyof PulumiBannerAttributes]?: PulumiBanner[K] } & { [K in keyof PulumiBanner & keyof PulumiBannerAttributes as `attr:${K}`]?: PulumiBannerAttributes[K] } & { [K in keyof PulumiBanner & keyof PulumiBannerAttributes as `prop:${K}`]?: PulumiBanner[K] };
         "pulumi-choosable": Omit<PulumiChoosable, keyof PulumiChoosableAttributes> & { [K in keyof PulumiChoosable & keyof PulumiChoosableAttributes]?: PulumiChoosable[K] } & { [K in keyof PulumiChoosable & keyof PulumiChoosableAttributes as `attr:${K}`]?: PulumiChoosableAttributes[K] } & { [K in keyof PulumiChoosable & keyof PulumiChoosableAttributes as `prop:${K}`]?: PulumiChoosable[K] };
         "pulumi-chooser": Omit<PulumiChooser, keyof PulumiChooserAttributes> & { [K in keyof PulumiChooser & keyof PulumiChooserAttributes]?: PulumiChooser[K] } & { [K in keyof PulumiChooser & keyof PulumiChooserAttributes as `attr:${K}`]?: PulumiChooserAttributes[K] } & { [K in keyof PulumiChooser & keyof PulumiChooserAttributes as `prop:${K}`]?: PulumiChooser[K] };
         "pulumi-contact-us-form": Omit<PulumiContactUsForm, keyof PulumiContactUsFormAttributes> & { [K in keyof PulumiContactUsForm & keyof PulumiContactUsFormAttributes]?: PulumiContactUsForm[K] } & { [K in keyof PulumiContactUsForm & keyof PulumiContactUsFormAttributes as `attr:${K}`]?: PulumiContactUsFormAttributes[K] } & { [K in keyof PulumiContactUsForm & keyof PulumiContactUsFormAttributes as `prop:${K}`]?: PulumiContactUsForm[K] };
         "pulumi-convert": Omit<PulumiConvert, keyof PulumiConvertAttributes> & { [K in keyof PulumiConvert & keyof PulumiConvertAttributes]?: PulumiConvert[K] } & { [K in keyof PulumiConvert & keyof PulumiConvertAttributes as `attr:${K}`]?: PulumiConvertAttributes[K] } & { [K in keyof PulumiConvert & keyof PulumiConvertAttributes as `prop:${K}`]?: PulumiConvert[K] };
-        "pulumi-date-countdown": Omit<PulumiDateCountdown, keyof PulumiDateCountdownAttributes> & { [K in keyof PulumiDateCountdown & keyof PulumiDateCountdownAttributes]?: PulumiDateCountdown[K] } & { [K in keyof PulumiDateCountdown & keyof PulumiDateCountdownAttributes as `attr:${K}`]?: PulumiDateCountdownAttributes[K] } & { [K in keyof PulumiDateCountdown & keyof PulumiDateCountdownAttributes as `prop:${K}`]?: PulumiDateCountdown[K] };
-        "pulumi-date-countdown-circles": Omit<PulumiDateCountdownCircles, keyof PulumiDateCountdownCirclesAttributes> & { [K in keyof PulumiDateCountdownCircles & keyof PulumiDateCountdownCirclesAttributes]?: PulumiDateCountdownCircles[K] } & { [K in keyof PulumiDateCountdownCircles & keyof PulumiDateCountdownCirclesAttributes as `attr:${K}`]?: PulumiDateCountdownCirclesAttributes[K] } & { [K in keyof PulumiDateCountdownCircles & keyof PulumiDateCountdownCirclesAttributes as `prop:${K}`]?: PulumiDateCountdownCircles[K] };
-        "pulumi-datetime": Omit<PulumiDatetime, keyof PulumiDatetimeAttributes> & { [K in keyof PulumiDatetime & keyof PulumiDatetimeAttributes]?: PulumiDatetime[K] } & { [K in keyof PulumiDatetime & keyof PulumiDatetimeAttributes as `attr:${K}`]?: PulumiDatetimeAttributes[K] } & { [K in keyof PulumiDatetime & keyof PulumiDatetimeAttributes as `prop:${K}`]?: PulumiDatetime[K] };
-        "pulumi-developer-quotes": Omit<PulumiDeveloperQuotes, keyof PulumiDeveloperQuotesAttributes> & { [K in keyof PulumiDeveloperQuotes & keyof PulumiDeveloperQuotesAttributes]?: PulumiDeveloperQuotes[K] } & { [K in keyof PulumiDeveloperQuotes & keyof PulumiDeveloperQuotesAttributes as `attr:${K}`]?: PulumiDeveloperQuotesAttributes[K] } & { [K in keyof PulumiDeveloperQuotes & keyof PulumiDeveloperQuotesAttributes as `prop:${K}`]?: PulumiDeveloperQuotes[K] };
         "pulumi-example": PulumiExample;
         "pulumi-examples": PulumiExamples;
         "pulumi-filter-select": PulumiFilterSelect;
         "pulumi-filter-select-option": Omit<PulumiFilterSelectOption, keyof PulumiFilterSelectOptionAttributes> & { [K in keyof PulumiFilterSelectOption & keyof PulumiFilterSelectOptionAttributes]?: PulumiFilterSelectOption[K] } & { [K in keyof PulumiFilterSelectOption & keyof PulumiFilterSelectOptionAttributes as `attr:${K}`]?: PulumiFilterSelectOptionAttributes[K] } & { [K in keyof PulumiFilterSelectOption & keyof PulumiFilterSelectOptionAttributes as `prop:${K}`]?: PulumiFilterSelectOption[K] };
         "pulumi-filter-select-option-group": Omit<PulumiFilterSelectOptionGroup, keyof PulumiFilterSelectOptionGroupAttributes> & { [K in keyof PulumiFilterSelectOptionGroup & keyof PulumiFilterSelectOptionGroupAttributes]?: PulumiFilterSelectOptionGroup[K] } & { [K in keyof PulumiFilterSelectOptionGroup & keyof PulumiFilterSelectOptionGroupAttributes as `attr:${K}`]?: PulumiFilterSelectOptionGroupAttributes[K] } & { [K in keyof PulumiFilterSelectOptionGroup & keyof PulumiFilterSelectOptionGroupAttributes as `prop:${K}`]?: PulumiFilterSelectOptionGroup[K] };
-        "pulumi-greenhouse-jobs-list": PulumiGreenhouseJobsList;
         "pulumi-hubspot-form": Omit<PulumiHubspotForm, keyof PulumiHubspotFormAttributes> & { [K in keyof PulumiHubspotForm & keyof PulumiHubspotFormAttributes]?: PulumiHubspotForm[K] } & { [K in keyof PulumiHubspotForm & keyof PulumiHubspotFormAttributes as `attr:${K}`]?: PulumiHubspotFormAttributes[K] } & { [K in keyof PulumiHubspotForm & keyof PulumiHubspotFormAttributes as `prop:${K}`]?: PulumiHubspotForm[K] };
-        "pulumi-install": Omit<PulumiInstall, keyof PulumiInstallAttributes> & { [K in keyof PulumiInstall & keyof PulumiInstallAttributes]?: PulumiInstall[K] } & { [K in keyof PulumiInstall & keyof PulumiInstallAttributes as `attr:${K}`]?: PulumiInstallAttributes[K] } & { [K in keyof PulumiInstall & keyof PulumiInstallAttributes as `prop:${K}`]?: PulumiInstall[K] };
         "pulumi-multi-select-form": Omit<PulumiMultiSelectForm, keyof PulumiMultiSelectFormAttributes> & { [K in keyof PulumiMultiSelectForm & keyof PulumiMultiSelectFormAttributes]?: PulumiMultiSelectForm[K] } & { [K in keyof PulumiMultiSelectForm & keyof PulumiMultiSelectFormAttributes as `attr:${K}`]?: PulumiMultiSelectFormAttributes[K] } & { [K in keyof PulumiMultiSelectForm & keyof PulumiMultiSelectFormAttributes as `prop:${K}`]?: PulumiMultiSelectForm[K] };
         "pulumi-registry-list-search": PulumiRegistryListSearch;
         "pulumi-resource-links": Omit<PulumiResourceLinks, keyof PulumiResourceLinksAttributes> & { [K in keyof PulumiResourceLinks & keyof PulumiResourceLinksAttributes]?: PulumiResourceLinks[K] } & { [K in keyof PulumiResourceLinks & keyof PulumiResourceLinksAttributes as `attr:${K}`]?: PulumiResourceLinksAttributes[K] } & { [K in keyof PulumiResourceLinks & keyof PulumiResourceLinksAttributes as `prop:${K}`]?: PulumiResourceLinks[K] };
         "pulumi-root": PulumiRoot;
-        "pulumi-slot-machine": Omit<PulumiSlotMachine, keyof PulumiSlotMachineAttributes> & { [K in keyof PulumiSlotMachine & keyof PulumiSlotMachineAttributes]?: PulumiSlotMachine[K] } & { [K in keyof PulumiSlotMachine & keyof PulumiSlotMachineAttributes as `attr:${K}`]?: PulumiSlotMachineAttributes[K] } & { [K in keyof PulumiSlotMachine & keyof PulumiSlotMachineAttributes as `prop:${K}`]?: PulumiSlotMachine[K] };
-        "pulumi-swipeable": PulumiSwipeable;
-        "pulumi-swiper": Omit<PulumiSwiper, keyof PulumiSwiperAttributes> & { [K in keyof PulumiSwiper & keyof PulumiSwiperAttributes]?: PulumiSwiper[K] } & { [K in keyof PulumiSwiper & keyof PulumiSwiperAttributes as `attr:${K}`]?: PulumiSwiperAttributes[K] } & { [K in keyof PulumiSwiper & keyof PulumiSwiperAttributes as `prop:${K}`]?: PulumiSwiper[K] };
-        "pulumi-tab": Omit<PulumiTab, keyof PulumiTabAttributes> & { [K in keyof PulumiTab & keyof PulumiTabAttributes]?: PulumiTab[K] } & { [K in keyof PulumiTab & keyof PulumiTabAttributes as `attr:${K}`]?: PulumiTabAttributes[K] } & { [K in keyof PulumiTab & keyof PulumiTabAttributes as `prop:${K}`]?: PulumiTab[K] };
-        "pulumi-tabs": PulumiTabs;
-        "pulumi-tertiary-nav": Omit<PulumiTertiaryNav, keyof PulumiTertiaryNavAttributes> & { [K in keyof PulumiTertiaryNav & keyof PulumiTertiaryNavAttributes]?: PulumiTertiaryNav[K] } & { [K in keyof PulumiTertiaryNav & keyof PulumiTertiaryNavAttributes as `attr:${K}`]?: PulumiTertiaryNavAttributes[K] } & { [K in keyof PulumiTertiaryNav & keyof PulumiTertiaryNavAttributes as `prop:${K}`]?: PulumiTertiaryNav[K] };
         "pulumi-tooltip": PulumiTooltip;
         "pulumi-top-button": PulumiTopButton;
         "pulumi-user-toggle": Omit<PulumiUserToggle, keyof PulumiUserToggleAttributes> & { [K in keyof PulumiUserToggle & keyof PulumiUserToggleAttributes]?: PulumiUserToggle[K] } & { [K in keyof PulumiUserToggle & keyof PulumiUserToggleAttributes as `attr:${K}`]?: PulumiUserToggleAttributes[K] } & { [K in keyof PulumiUserToggle & keyof PulumiUserToggleAttributes as `prop:${K}`]?: PulumiUserToggle[K] };
-        "pulumi-webinar-form-select": Omit<PulumiWebinarFormSelect, keyof PulumiWebinarFormSelectAttributes> & { [K in keyof PulumiWebinarFormSelect & keyof PulumiWebinarFormSelectAttributes]?: PulumiWebinarFormSelect[K] } & { [K in keyof PulumiWebinarFormSelect & keyof PulumiWebinarFormSelectAttributes as `attr:${K}`]?: PulumiWebinarFormSelectAttributes[K] } & { [K in keyof PulumiWebinarFormSelect & keyof PulumiWebinarFormSelectAttributes as `prop:${K}`]?: PulumiWebinarFormSelect[K] };
     }
 }
 export { LocalJSX as JSX };
@@ -1257,14 +647,9 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "copilot-sidebar": LocalJSX.IntrinsicElements["copilot-sidebar"] & JSXBase.HTMLAttributes<HTMLCopilotSidebarElement>;
-            "event-session-registration-modal": LocalJSX.IntrinsicElements["event-session-registration-modal"] & JSXBase.HTMLAttributes<HTMLEventSessionRegistrationModalElement>;
-            "home-slots": LocalJSX.IntrinsicElements["home-slots"] & JSXBase.HTMLAttributes<HTMLHomeSlotsElement>;
-            "pulumi-ai": LocalJSX.IntrinsicElements["pulumi-ai"] & JSXBase.HTMLAttributes<HTMLPulumiAiElement>;
             "pulumi-api-doc-filterable-nav": LocalJSX.IntrinsicElements["pulumi-api-doc-filterable-nav"] & JSXBase.HTMLAttributes<HTMLPulumiApiDocFilterableNavElement>;
             "pulumi-api-doc-nav-node": LocalJSX.IntrinsicElements["pulumi-api-doc-nav-node"] & JSXBase.HTMLAttributes<HTMLPulumiApiDocNavNodeElement>;
             "pulumi-api-doc-nav-tree": LocalJSX.IntrinsicElements["pulumi-api-doc-nav-tree"] & JSXBase.HTMLAttributes<HTMLPulumiApiDocNavTreeElement>;
-            "pulumi-audio": LocalJSX.IntrinsicElements["pulumi-audio"] & JSXBase.HTMLAttributes<HTMLPulumiAudioElement>;
-            "pulumi-banner": LocalJSX.IntrinsicElements["pulumi-banner"] & JSXBase.HTMLAttributes<HTMLPulumiBannerElement>;
             /**
              * The Choosable component is useful for showing or hiding information based on the
              * currently selected ChooserType and value. For example, a component defined as:
@@ -1293,28 +678,16 @@ declare module "@stencil/core" {
             "pulumi-chooser": LocalJSX.IntrinsicElements["pulumi-chooser"] & JSXBase.HTMLAttributes<HTMLPulumiChooserElement>;
             "pulumi-contact-us-form": LocalJSX.IntrinsicElements["pulumi-contact-us-form"] & JSXBase.HTMLAttributes<HTMLPulumiContactUsFormElement>;
             "pulumi-convert": LocalJSX.IntrinsicElements["pulumi-convert"] & JSXBase.HTMLAttributes<HTMLPulumiConvertElement>;
-            "pulumi-date-countdown": LocalJSX.IntrinsicElements["pulumi-date-countdown"] & JSXBase.HTMLAttributes<HTMLPulumiDateCountdownElement>;
-            "pulumi-date-countdown-circles": LocalJSX.IntrinsicElements["pulumi-date-countdown-circles"] & JSXBase.HTMLAttributes<HTMLPulumiDateCountdownCirclesElement>;
-            "pulumi-datetime": LocalJSX.IntrinsicElements["pulumi-datetime"] & JSXBase.HTMLAttributes<HTMLPulumiDatetimeElement>;
-            "pulumi-developer-quotes": LocalJSX.IntrinsicElements["pulumi-developer-quotes"] & JSXBase.HTMLAttributes<HTMLPulumiDeveloperQuotesElement>;
             "pulumi-example": LocalJSX.IntrinsicElements["pulumi-example"] & JSXBase.HTMLAttributes<HTMLPulumiExampleElement>;
             "pulumi-examples": LocalJSX.IntrinsicElements["pulumi-examples"] & JSXBase.HTMLAttributes<HTMLPulumiExamplesElement>;
             "pulumi-filter-select": LocalJSX.IntrinsicElements["pulumi-filter-select"] & JSXBase.HTMLAttributes<HTMLPulumiFilterSelectElement>;
             "pulumi-filter-select-option": LocalJSX.IntrinsicElements["pulumi-filter-select-option"] & JSXBase.HTMLAttributes<HTMLPulumiFilterSelectOptionElement>;
             "pulumi-filter-select-option-group": LocalJSX.IntrinsicElements["pulumi-filter-select-option-group"] & JSXBase.HTMLAttributes<HTMLPulumiFilterSelectOptionGroupElement>;
-            "pulumi-greenhouse-jobs-list": LocalJSX.IntrinsicElements["pulumi-greenhouse-jobs-list"] & JSXBase.HTMLAttributes<HTMLPulumiGreenhouseJobsListElement>;
             "pulumi-hubspot-form": LocalJSX.IntrinsicElements["pulumi-hubspot-form"] & JSXBase.HTMLAttributes<HTMLPulumiHubspotFormElement>;
-            "pulumi-install": LocalJSX.IntrinsicElements["pulumi-install"] & JSXBase.HTMLAttributes<HTMLPulumiInstallElement>;
             "pulumi-multi-select-form": LocalJSX.IntrinsicElements["pulumi-multi-select-form"] & JSXBase.HTMLAttributes<HTMLPulumiMultiSelectFormElement>;
             "pulumi-registry-list-search": LocalJSX.IntrinsicElements["pulumi-registry-list-search"] & JSXBase.HTMLAttributes<HTMLPulumiRegistryListSearchElement>;
             "pulumi-resource-links": LocalJSX.IntrinsicElements["pulumi-resource-links"] & JSXBase.HTMLAttributes<HTMLPulumiResourceLinksElement>;
             "pulumi-root": LocalJSX.IntrinsicElements["pulumi-root"] & JSXBase.HTMLAttributes<HTMLPulumiRootElement>;
-            "pulumi-slot-machine": LocalJSX.IntrinsicElements["pulumi-slot-machine"] & JSXBase.HTMLAttributes<HTMLPulumiSlotMachineElement>;
-            "pulumi-swipeable": LocalJSX.IntrinsicElements["pulumi-swipeable"] & JSXBase.HTMLAttributes<HTMLPulumiSwipeableElement>;
-            "pulumi-swiper": LocalJSX.IntrinsicElements["pulumi-swiper"] & JSXBase.HTMLAttributes<HTMLPulumiSwiperElement>;
-            "pulumi-tab": LocalJSX.IntrinsicElements["pulumi-tab"] & JSXBase.HTMLAttributes<HTMLPulumiTabElement>;
-            "pulumi-tabs": LocalJSX.IntrinsicElements["pulumi-tabs"] & JSXBase.HTMLAttributes<HTMLPulumiTabsElement>;
-            "pulumi-tertiary-nav": LocalJSX.IntrinsicElements["pulumi-tertiary-nav"] & JSXBase.HTMLAttributes<HTMLPulumiTertiaryNavElement>;
             /**
              * The ToolTip component shows a tooltip bubble above another element when you hover over
              * (or, on mobile tap on) it. Use the named `content` slot for supplying the markup to
@@ -1330,7 +703,6 @@ declare module "@stencil/core" {
             "pulumi-tooltip": LocalJSX.IntrinsicElements["pulumi-tooltip"] & JSXBase.HTMLAttributes<HTMLPulumiTooltipElement>;
             "pulumi-top-button": LocalJSX.IntrinsicElements["pulumi-top-button"] & JSXBase.HTMLAttributes<HTMLPulumiTopButtonElement>;
             "pulumi-user-toggle": LocalJSX.IntrinsicElements["pulumi-user-toggle"] & JSXBase.HTMLAttributes<HTMLPulumiUserToggleElement>;
-            "pulumi-webinar-form-select": LocalJSX.IntrinsicElements["pulumi-webinar-form-select"] & JSXBase.HTMLAttributes<HTMLPulumiWebinarFormSelectElement>;
         }
     }
 }

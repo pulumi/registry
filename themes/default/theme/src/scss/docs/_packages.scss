@@ -16,7 +16,7 @@
         li {
             @apply mr-2 my-1 py-2 px-3 border-2 rounded text-sm border-gray-200;
 
-            @screen md {
+            @include screen-md {
                 @apply mr-4 px-3;
             }
         }
@@ -24,14 +24,14 @@
         &.active-tags {
             @apply mt-2;
 
-            @screen md {
+            @include screen-md {
                 @apply mt-0;
             }
 
             li {
                 @apply py-1 my-0 mb-2;
 
-                @screen md {
+                @include screen-md {
                     @apply mr-2;
                 }
             }
@@ -189,14 +189,14 @@ div.packages section.featured-packages {
                 text-align: center;
                 flex: 1;
             }
-        
+
             .package-logo {
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 height: 32px;
             }
-        
+
             .package-title {
                 flex-grow: 1;
                 font-family: 'Gilroy';
@@ -207,7 +207,7 @@ div.packages section.featured-packages {
                 align-items: center;
                 justify-content: center;
             }
-        
+
             .package-version {
                 font-family: 'Gilroy';
                 font-weight: 500;

@@ -63,7 +63,7 @@
         @apply flex flex-col justify-center pt-12;
         z-index: 100;
 
-        @screen lg {
+        @include screen-lg {
             @apply pt-8;
         }
 
@@ -75,7 +75,7 @@
         h1:not(.b-version) {
             @apply text-center mx-auto;
 
-            @screen lg {
+            @include screen-lg {
                 @apply text-left mx-0;
                 line-height: 5.5rem !important;
                 font-size: 5rem !important;
@@ -106,7 +106,7 @@
 
         h1, h2, h3 {
             @apply text-center max-w-4xl my-10;
-            @screen lg {
+            @include screen-lg {
                 font-size: 4.5rem;
                 line-height: 1.375 !important;
             }
@@ -129,7 +129,7 @@
         text-shadow: -1px -1px white, 1px -1px white, -1px 1px white, 1px 1px white;
         @apply absolute left-0;
 
-        @screen sm {
+        @include screen-sm {
             text-shadow: -3px -3px white, 3px -3px white, -3px 3px white, 3px 3px white;
         }
     }

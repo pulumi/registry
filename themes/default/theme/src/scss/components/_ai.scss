@@ -8,7 +8,7 @@
     @apply w-full;
 
     @mixin divider {
-        @apply border-blue-800 border-opacity-40;
+        @apply border-blue-800/40;
     }
 
     .border-divider {
@@ -123,7 +123,7 @@
         }
 
         .over-limit {
-            @apply my-8 bg-blue-400 bg-opacity-50 p-4 text-white rounded shadow w-full;
+            @apply my-8 bg-blue-400/50 p-4 text-white rounded shadow w-full;
 
             a {
                 @apply text-white;
@@ -135,11 +135,11 @@
         }
 
         .chat-widget-container {
-            @apply fixed pt-1 shadow-lg pb-4 lg:pb-12 bottom-0 bg-gray-900 bg-opacity-95 z-30;
+            @apply fixed pt-1 shadow-lg pb-4 lg:pb-12 bottom-0 bg-gray-900/95 z-30;
         }
 
         .chat-widget {
-            @apply py-2 px-3 bg-gray-850 bg-opacity-70 rounded shadow-lg;
+            @apply py-2 px-3 bg-gray-850/70 rounded shadow-lg;
         }
 
         .chat-widget-form-container {
@@ -170,7 +170,7 @@
                             @apply hidden;
                         }
 
-                        @screen md {
+                        @include screen-md {
                             .label-abbrev {
                                 @apply hidden;
                             }
@@ -228,12 +228,12 @@
                 pulumi-tooltip, button {
                     @apply w-full;
 
-                    @screen lg {
+                    @include screen-lg {
                         @apply w-auto;
                     }
                 }
 
-                @screen lg {
+                @include screen-lg {
 
                 }
             }
@@ -315,14 +315,14 @@
                 }
 
                 a {
-                    @apply text-gray-700 no-underline mx-0.5 py-0.5 px-1 rounded bg-opacity-30 transition-colors;
+                    @apply text-gray-700 no-underline mx-0.5 py-0.5 px-1 rounded bg-black/30 transition-colors;
 
                     &:hover {
                         @apply text-gray-600 bg-gray-800;
                     }
 
                     &.active {
-                        @apply text-gray-500 cursor-default bg-gray-600 bg-opacity-30;
+                        @apply text-gray-500 cursor-default bg-gray-600/30;
                     }
                 }
             }

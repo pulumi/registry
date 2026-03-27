@@ -133,12 +133,12 @@ div.highlight.line-numbers {
             .code-tabbed-tab-indicator {
                 @apply ml-1 mr-2 bg-orange-300 rounded-full h-2 w-2 invisible hidden;
 
-                @screen md {
+                @include screen-md {
                     @apply block;
                 }
             }
 
-            @screen md {
+            @include screen-md {
                 @apply w-40;
             }
 

@@ -9,11 +9,11 @@
         "@algolia/autocomplete-plugin-tags": "^1.17.0",
         "@algolia/autocomplete-theme-classic": "^1.17.0",
         "algoliasearch": "^5.0.0",
-        "clipboard-polyfill": "^3.0.3",
-        "tailwindcss": "^2.2.9"
+        "clipboard-polyfill": "^3.0.3"
     },
     "devDependencies": {
         "@fullhuman/postcss-purgecss": "^4.0.3",
+        "@tailwindcss/postcss": "^4",
         "concurrently": "^6.2.1",
         "css-loader": "^6.2.0",
         "cssnano": "^5.0.8",
@@ -23,6 +23,7 @@
         "prettier": "2.5.1",
         "sass": "^1.83.0",
         "sass-loader": "^12.1.0",
+        "tailwindcss": "^4",
         "terser-webpack-plugin": "^5.2.0",
         "ts-loader": "^9.2.5",
         "typescript": "^5.0.0",

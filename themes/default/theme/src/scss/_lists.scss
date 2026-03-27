@@ -6,7 +6,7 @@ dl {
     {
         @apply mb-8 mt-4 p-1 flex flex-col items-start items-stretch bg-gray-100 border rounded border-gray-300 text-sm text-gray-700;
 
-        @screen lg {
+        @include screen-lg {
             @apply flex-row flex-wrap;
 
             dt {
@@ -33,7 +33,7 @@ dl {
 
             overflow-wrap: break-word;
 
-            @screen lg {
+            @include screen-lg {
                 @apply rounded-l;
             }
         }
@@ -52,7 +52,7 @@ dl {
                 }
             }
 
-            @screen lg {
+            @include screen-lg {
                 @apply rounded-r;
             }
         }
@@ -64,7 +64,7 @@ dl {
             &:not(:first-of-type) {
                 @apply border-t;
 
-                @screen lg {
+                @include screen-lg {
                     @apply border-gray-200;
                 }
             }
@@ -120,7 +120,7 @@ dl {
                 .replacement-container {
                     @apply ml-14;
 
-                    @screen sm {
+                    @include screen-sm {
                         @apply ml-0;
                     }
                 }

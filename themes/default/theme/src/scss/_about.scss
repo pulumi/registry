@@ -6,7 +6,7 @@
 
     #about-nav {
         @apply flex gap-x-9;
-        
+
         list-style: none !important;
 
         li {
@@ -57,7 +57,7 @@
         width: 230px;
         border-radius: 14px;
         background: linear-gradient(90deg, #f7bf2a 0%, #f26e7e 18.23%, #be5188 38.02%, #8a3391 53.65%, #805ac3 74.48%, #7682f4 100%);
-    
+
         a {
             height: 226px;
             width: 226px;
@@ -139,10 +139,10 @@
     position: relative;
     background: linear-gradient(180deg, #FCC247 0%, #F06DE9 100%);
     z-index: 10;
-  
+
     &:before {
         background: linear-gradient(180deg, #f1d1a0 0%, #AE6BFE 100%);
-        content: '';    
+        content: '';
         display: block;
         height: 100%;
         position: absolute;
@@ -167,7 +167,7 @@
 
         &:before {
             background: radial-gradient(#FCC247, #DA86D8);
-            content: '';    
+            content: '';
             display: block;
             height: 100%;
             position: absolute;
@@ -189,13 +189,13 @@
         filter: blur(30px);
         transform: skew(20deg, 8deg);
         border-radius: 4% 96% 60% 40% / 61% 70% 30% 39%;
-    
+
         &:before {
             background: radial-gradient(rgba(116, 188, 248, 0.9), #B78FA8);
             border-radius: 4% 96% 60% 40% / 61% 70% 30% 39%;
             left: 18.5%;
             bottom: 20%;
-            content: '';    
+            content: '';
             display: block;
             height: 100%;
             position: absolute;
@@ -215,10 +215,10 @@
         top: -15%;
         transform: rotate(90deg);
         filter: blur(40px);
-        
+
         &:before {
             background: radial-gradient(#47C2C0, #B78FA8);
-            content: '';    
+            content: '';
             display: block;
             height: 100%;
             position: absolute;
@@ -235,8 +235,8 @@
 @keyframes opacity-animation {
   0% {
     opacity: 0;
-  } 
-  
+  }
+
   50% {
     opacity: 1
   }
@@ -246,9 +246,9 @@
 }
 
 .value-card {
-    height: 600px;   
+    height: 600px;
 
-    @screen xl {
+    @include screen-xl {
         height: 465px;
     }
     border: double 2px transparent;
@@ -263,19 +263,19 @@
     width: 90%;
     height: auto;
 
-    @screen md {
+    @include screen-md {
         height: 505px;
     }
 
     h4 {
         @apply text-3xl;
 
-        @screen md {
+        @include screen-md {
             @apply text-2xl;
         }
     }
 
-    @screen md {
+    @include screen-md {
         width: 365px;
 
         p {

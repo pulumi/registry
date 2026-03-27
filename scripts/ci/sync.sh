@@ -65,21 +65,11 @@ log "Sync complete."
 # Sync CLI docs separately. These are generated outside the Hugo build tree to avoid
 # Hugo processing static files. They're uploaded directly to the same URL paths
 # they'd occupy if they were in the Hugo static directory.
-# Files are pre-compressed with gzip so CloudFront serves them without on-the-fly
-# compression overhead. We use aws s3 cp (not s5cmd) because we need per-file
-# Content-Encoding and Content-Type headers.
 cli_docs_dir="cli-docs-out"
 if [[ -d "$cli_docs_dir" ]]; then
-    log "Compressing and synchronizing CLI docs to $destination_bucket_uri..."
-    find "$cli_docs_dir" -name 'cli-docs.json' | while read -r f; do
-        s3_key="${f#$cli_docs_dir/}"
-        gzip -9 -f "$f"
-        aws s3 cp "${f}.gz" "${destination_bucket_uri}/${s3_key}" \
-            --content-encoding gzip \
-            --content-type "application/json" \
-            --acl public-read \
-            --region "$(aws_region)"
-    done
+    log "Synchronizing CLI docs to $destination_bucket_uri..."
+    s5cmd --log error sync --acl public-read \
+        "$cli_docs_dir/" "$destination_bucket_uri/"
     log "CLI docs sync complete."
 fi
 

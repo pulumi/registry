@@ -5,6 +5,8 @@ title_tag: "std.AbsMultiArgsReducedOutputSwapped"
 meta_desc: "Documentation for the std.AbsMultiArgsReducedOutputSwapped function with examples, input properties, output properties, and supporting types."
 layout: api
 no_edit_this_page: true
+outputs:
+    - HTML
 ---
 
 

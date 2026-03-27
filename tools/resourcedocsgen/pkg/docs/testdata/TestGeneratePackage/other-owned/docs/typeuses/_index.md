@@ -5,6 +5,8 @@ title_tag: "example.TypeUses"
 meta_desc: "Documentation for the example.TypeUses resource with examples, input properties, output properties, lookup functions, and supporting types."
 layout: api
 no_edit_this_page: true
+outputs:
+    - HTML
 ---
 
 

@@ -23,6 +23,7 @@ import (
 	"html/template"
 	"io"
 	"strings"
+	texttemplate "text/template"
 
 	"github.com/golang/glog"
 	"github.com/pgavlin/goldmark"
@@ -39,6 +40,16 @@ func Index(wr io.Writer, a any) error { return templates.ExecuteTemplate(wr, "in
 func Resource(wr io.Writer, a any) error { return templates.ExecuteTemplate(wr, "resource.tmpl", a) }
 
 func Function(wr io.Writer, a any) error { return templates.ExecuteTemplate(wr, "function.tmpl", a) }
+
+// CLIResource renders a terminal-friendly resource page (plain markdown, single language).
+func CLIResource(wr io.Writer, a any) error {
+	return cliTemplates.ExecuteTemplate(wr, "cli_resource.tmpl", a)
+}
+
+// CLIFunction renders a terminal-friendly function page (plain markdown, single language).
+func CLIFunction(wr io.Writer, a any) error {
+	return cliTemplates.ExecuteTemplate(wr, "cli_function.tmpl", a)
+}
 
 func ParamSeparator(wr io.Writer, a any) error {
 	return templates.ExecuteTemplate(wr, "param_separator", a)
@@ -68,7 +79,10 @@ func PyFormalParam(wr io.Writer, a any) error {
 	return templates.ExecuteTemplate(wr, "py_formal_param", a)
 }
 
-var templates *template.Template
+var (
+	templates    *template.Template
+	cliTemplates *texttemplate.Template
+)
 
 func init() {
 	tmpl, err := template.New("").Funcs(template.FuncMap{
@@ -125,4 +139,11 @@ func init() {
 		glog.Fatal("initializing templates: %v", err)
 	}
 	templates = tmpl
+
+	// CLI templates use text/template (no HTML escaping) for terminal-friendly markdown output.
+	cliTmpl, err := texttemplate.New("").ParseFS(packagedTemplates, "cli_*.tmpl")
+	if err != nil {
+		glog.Fatal("initializing CLI templates: %v", err)
+	}
+	cliTemplates = cliTmpl
 }

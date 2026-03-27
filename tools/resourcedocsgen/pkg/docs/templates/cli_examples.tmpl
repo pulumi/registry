@@ -1,0 +1,18 @@
+{{- define "cli_examples" -}}
+{{- if . }}
+
+## Example Usage
+
+<!-- chooser: language -->
+{{ range . -}}
+<!-- option: {{ .Tag }} -->
+
+{{ .Title }}
+
+{{ .Snippet }}
+
+<!-- /option -->
+{{ end -}}
+<!-- /chooser -->
+{{- end -}}
+{{- end -}}

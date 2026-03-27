@@ -47,18 +47,31 @@ aws s3api put-public-access-block --bucket $destination_bucket --public-access-b
 aws s3api put-bucket-ownership-controls --bucket $destination_bucket --ownership-controls="Rules=[{ObjectOwnership=ObjectWriter}]"
 aws s3api put-bucket-acl --bucket $destination_bucket --acl bucket-owner-full-control --acl public-read
 
-aws configure set default.s3.max_concurrent_requests "$(( "$(nproc --all)" * 2))" # Default is 10
 aws s3api put-bucket-tagging --bucket $destination_bucket --tagging "TagSet=[{$(aws_owner_tag)}]" --region "$(aws_region)"
 
 # Make the bucket an S3 website.
 aws s3 website $destination_bucket_uri --index-document index.html --error-document 404.html --region "$(aws_region)"
 
-# Sync the local build directory to the bucket. Note that we do pass the --delete option
-# here, since in most cases, we'll be continually updating a bucket associated with a PR;
-# passing this option keeps the destination bucket clean.
+# Sync the local build directory to the bucket using s5cmd for massively parallel uploads.
+# s5cmd uses hundreds of concurrent goroutines vs aws cli's ~10-16 concurrent requests,
+# resulting in 10-50x faster uploads for large file counts.
+# The --delete flag removes destination objects not present locally, keeping the bucket clean
+# for PR preview buckets that get reused across commits.
 log "Synchronizing to $destination_bucket_uri..."
-aws s3 sync "$build_dir" "$destination_bucket_uri" --acl public-read --delete --quiet --region "$(aws_region)"
+s5cmd --log error sync --delete --acl public-read \
+    "$build_dir/" "$destination_bucket_uri/"
 log "Sync complete."
+
+# Sync CLI docs separately. These are generated outside the Hugo build tree to avoid
+# Hugo processing static files. They're uploaded directly to the same URL paths
+# they'd occupy if they were in the Hugo static directory.
+cli_docs_dir="cli-docs-out"
+if [[ -d "$cli_docs_dir" ]]; then
+    log "Synchronizing CLI docs to $destination_bucket_uri..."
+    s5cmd --log error sync --acl public-read \
+        "$cli_docs_dir/" "$destination_bucket_uri/"
+    log "CLI docs sync complete."
+fi
 
 s3_website_url="http://${destination_bucket}.s3-website.$(aws_region).amazonaws.com"
 echo "$s3_website_url"

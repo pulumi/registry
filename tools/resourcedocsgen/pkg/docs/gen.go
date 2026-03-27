@@ -2096,6 +2096,66 @@ func (mod *modContext) gen(fs codegen.Fs) error {
 	return addFileTemplated("", templates.Index, idxData)
 }
 
+// genCLI generates terminal-friendly markdown for resources and functions in this module,
+// populating the provided maps keyed by "{module}/{name}" path.
+func (mod *modContext) genCLI(resources, functions map[string]string) error {
+	modName := mod.getModuleFileName()
+	conflictResolver := mod.context.newModuleConflictResolver()
+
+	// Compute package version once for all CLI docs in this module.
+	pkgVersion := ""
+	if mod.pkg.Version() != nil {
+		pkgVersion = mod.pkg.Version().String()
+	}
+
+	// Regenerate conflict resolution (same as gen())
+	for _, child := range mod.children {
+		childName := child.getModuleFileName()
+		displayName := modFilenameToDisplayName(childName)
+		conflictResolver.getSafeName(displayName, child)
+	}
+
+	for _, r := range mod.resources {
+		title := resourceName(r)
+		link := getResourceLink(title)
+		link = conflictResolver.getSafeName(link, r)
+		if link == "" {
+			continue
+		}
+
+		data := mod.genResource(r)
+		cliData := toCLIResourceArgs(data)
+		cliData.PackageDetails.Version = pkgVersion
+		var buff bytes.Buffer
+		if err := templates.CLIResource(&buff, cliData); err != nil {
+			return fmt.Errorf("generating CLI resource %s: %w", title, err)
+		}
+		key := path.Join(modName, link)
+		resources[key] = buff.String()
+	}
+
+	for _, f := range mod.functions {
+		name := tokenToName(f.Token)
+		link := getFunctionLink(name)
+		link = conflictResolver.getSafeName(link, f)
+		if link == "" {
+			continue
+		}
+
+		data := mod.genFunction(f)
+		cliData := toCLIFunctionArgs(data)
+		cliData.PackageDetails.Version = pkgVersion
+		var buff bytes.Buffer
+		if err := templates.CLIFunction(&buff, cliData); err != nil {
+			return fmt.Errorf("generating CLI function %s: %w", name, err)
+		}
+		key := path.Join(modName, link)
+		functions[key] = buff.String()
+	}
+
+	return nil
+}
+
 // indexEntry represents an individual entry on an index page.
 type indexEntry struct {
 	Link        string
@@ -2456,6 +2516,48 @@ func (dctx *Context) GeneratePackage() (map[string][]byte, error) {
 	}
 
 	return files, nil
+}
+
+// GenerateCLIPackage generates terminal-friendly markdown docs for each resource and function,
+// bundled into a single CLIDocsBundle per package.
+func (dctx *Context) GenerateCLIPackage() (*CLIDocsBundle, error) {
+	if dctx.modules() == nil {
+		return nil, errors.New("must call Initialize before generating CLI docs")
+	}
+
+	defer glog.Flush()
+
+	glog.V(3).Infoln("generating CLI package docs now...")
+
+	// Get package name and version from the root module.
+	modMap := dctx.modules()
+	rootMod := modMap[""]
+	pkgName := rootMod.pkg.Name()
+	pkgVersion := ""
+	if rootMod.pkg.Version() != nil {
+		pkgVersion = rootMod.pkg.Version().String()
+	}
+
+	bundle := &CLIDocsBundle{
+		Version:        1,
+		Package:        pkgName,
+		PackageVersion: pkgVersion,
+		Resources:      make(map[string]string),
+		Functions:      make(map[string]string),
+	}
+
+	modules := []string{}
+	for k := range modMap {
+		modules = append(modules, k)
+	}
+	sort.Strings(modules)
+	for _, mod := range modules {
+		if err := modMap[mod].genCLI(bundle.Resources, bundle.Functions); err != nil {
+			return nil, err
+		}
+	}
+
+	return bundle, nil
 }
 
 const (

@@ -119,6 +119,9 @@ esac
 # Purge unused CSS.
 yarn run minify-css
 
+# Inline critical CSS for key pages.
+node scripts/inline-critical-css.js
+
 log "Done!"
 echo
 echo

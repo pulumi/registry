@@ -260,6 +260,16 @@ const distributionArgs: aws.cloudfront.DistributionArgs = {
             minTtl: 0,
             maxTtl: 0,
         },
+        // CLI docs are consumed by the Pulumi CLI, not browsers. They change only
+        // on provider releases and are pre-compressed with gzip at upload time, so
+        // a longer TTL reduces cache misses and avoids on-the-fly compression.
+        {
+            ...baseCacheBehavior,
+            pathPattern: "/registry/packages/*/api-docs/cli-docs.json",
+            defaultTtl: oneHour,
+            minTtl: 0,
+            maxTtl: oneHour,
+        },
     ],
 
     // "All" is the most broad distribution, and also the most expensive.

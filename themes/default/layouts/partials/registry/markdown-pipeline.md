@@ -9,7 +9,9 @@
 {{- $content = replaceRE `</pulumi-chooser>` "\n<!-- /chooser -->\n" $content -}}
 {{- $content = replaceRE `<pulumi-choosable[^>]*values="([^",]*)[^"]*"[^>]*>` "\n<!-- option: $1 -->\n" $content -}}
 {{- $content = replaceRE `</pulumi-choosable>` "\n<!-- /option -->\n" $content -}}
-{{- /* Phase 2: Strip all block-level and decorative tags in consolidated passes */ -}}
+{{- /* Phase 2: Strip all block-level and decorative tags in consolidated passes.
+     Note: Stripping <li> loses bullet/number markers — list content renders as plain text.
+     This is intentional for terminal output where nested HTML lists don't translate cleanly. */ -}}
 {{- $content = replaceRE `</?(?:span|label|div|p|blockquote|ol|ul|li|pre|section|table|thead|tbody|tr|td|th|dl|dt|dd|details|summary)[^>]*>` "" $content -}}
 {{- $content = replaceRE `(?:<i[^>]*></i>|<input[^>]*>)` "" $content -}}
 {{- /* Strip non-functional HTML comments (keep chooser/option markers) */ -}}
@@ -18,7 +20,10 @@
 {{- $content = replaceRE `<!-- Do not edit by hand.*?-->` "" $content -}}
 {{- /* Phase 3: Normalize whitespace so inline conversions can match cleanly */ -}}
 {{- $content = replaceRE `\n{3,}` "\n\n" $content -}}
-{{- /* Phase 4: Convert inline HTML to markdown */ -}}
+{{- /* Phase 4: Convert inline HTML to markdown.
+     Note: The link regex matches plain-text content only ([^<]*). Links containing nested tags
+     (e.g. <code> inside <a>) won't match here and fall through to Phase 5's catch-all strip,
+     losing the URL. This is an inherent trade-off of regex-based HTML conversion. */ -}}
 {{- $content = replaceRE `<a[^>]*href="([^"]*)"[^>]*>([^<]*)</a>` "[$2]($1)" $content -}}
 {{- /* Collapse whitespace inside markdown link brackets (from multi-line <a> tags) */ -}}
 {{- $content = replaceRE `\[\s+` "[" $content -}}

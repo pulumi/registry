@@ -1,4 +1,5 @@
 {{- $directories := (split .Page.File.Path "/") -}}
+{{- /* File paths follow registry/packages/{name}/... so index 2 is the package name */ -}}
 {{- $packageName := index $directories 2 -}}
 {{- /* Only generate sitemap for package root _index.md pages */ -}}
 {{- $isPackageRoot := and (eq (len $directories) 4) (eq (index $directories 3) "_index.md") -}}

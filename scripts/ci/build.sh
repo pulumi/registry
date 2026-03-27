@@ -80,11 +80,6 @@ if [[ -d "$API_DOCS_CACHE/content" ]]; then
     log "Restored $count cached package doc sets"
 fi
 
-# Remove any stale CLI doc files from the static tree that may have been
-# restored from an older cache. CLI docs now go to cli-docs-out/, not here.
-find "$SCHEMAS_DIR" -name 'cli*.md' -delete 2>/dev/null || true
-find "$SCHEMAS_DIR" -name 'cli-docs.json' -delete 2>/dev/null || true
-find "$SCHEMAS_DIR" -type d -name 'api-docs' -empty -delete 2>/dev/null || true
 
 make api-docs
 

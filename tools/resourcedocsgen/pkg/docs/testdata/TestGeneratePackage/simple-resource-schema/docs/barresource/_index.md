@@ -279,7 +279,7 @@ bar_resource_resource = bar.BarResource("barResourceResource", foo=resource)
 <pulumi-choosable type="language" values="typescript">
 
 ```typescript
-const barResourceResource = new bar.BarResource("barResourceResource", {foo: resource});
+const barResourceResource = new bar.index.BarResource("barResourceResource", {foo: resource});
 ```
 
 </pulumi-choosable>

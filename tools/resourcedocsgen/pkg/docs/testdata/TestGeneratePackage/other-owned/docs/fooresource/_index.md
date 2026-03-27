@@ -279,7 +279,7 @@ foo_resource_resource = foo.FooResource("fooResourceResource", foo=resource)
 <pulumi-choosable type="language" values="typescript">
 
 ```typescript
-const fooResourceResource = new foo.FooResource("fooResourceResource", {foo: resource});
+const fooResourceResource = new foo.index.FooResource("fooResourceResource", {foo: resource});
 ```
 
 </pulumi-choosable>

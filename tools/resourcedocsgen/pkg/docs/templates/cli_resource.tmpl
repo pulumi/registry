@@ -17,7 +17,7 @@
 {{ if .Params }}
 ### Parameters
 {{ range .Params }}
-- **{{ .Name }}**{{ if .Type.DisplayName }} ({{ .Type.DisplayName }}){{ end }}{{ if .Comment }} — {{ .Comment }}{{ end }}
+- `{{ .Name }}`{{ if .Type.DisplayName }} (**{{ .Type.DisplayName }}**){{ end }}{{ if .Comment }} — {{ .Comment }}{{ end }}
 {{- end }}
 {{ end }}
 

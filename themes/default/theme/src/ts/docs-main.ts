@@ -1,46 +1,96 @@
-let docsMainNavToggleWrapper = $(".docs-main-nav-toggle-wrapper");
-let docsNavToggleIcon = $(".docs-nav-toggle-icon");
+function setDocsMainNavPosition() {
+    const docsMainNavToggleWrapper = document.querySelector(".docs-main-nav-toggle-wrapper");
+    const docsNavToggleIcon = document.querySelector(".docs-nav-toggle-icon");
 
-$(window).on("resize", function () {
+    if (window.innerWidth <= 1280) {
+        if (docsMainNavToggleWrapper?.classList.contains("docs-nav-show")) {
+            docsNavToggleIcon?.classList.remove("open-docs-main-nav");
+            docsNavToggleIcon?.classList.add("close-docs-main-nav");
+        } else if (docsMainNavToggleWrapper?.classList.contains("docs-nav-hide")) {
+            docsNavToggleIcon?.classList.remove("close-docs-main-nav");
+            docsNavToggleIcon?.classList.add("open-docs-main-nav");
+        }
+    }
+
+    const mainNav = document.querySelector<HTMLElement>(".main-nav");
+    const mainNavToggle = document.querySelector<HTMLElement>(".docs-nav-toggle");
+    const docsTypeNavSearch = document.querySelector<HTMLElement>(".docs-type-nav-search");
+    const docsToggleOffset = 94;
+
+    const docsListMain = document.querySelector(".section-docs .docs-list-main") as HTMLElement;
+    if (docsListMain) {
+        const topNavContainer = document.querySelector(".top-nav-container") as HTMLElement;
+        if (docsListMain.getBoundingClientRect().y <= 0) {
+            const searchHeight = docsTypeNavSearch?.offsetHeight || 0;
+            const topNavY = topNavContainer ? Math.max(topNavContainer.getBoundingClientRect().y, 0) : 0;
+            if (mainNav) mainNav.style.marginTop = (searchHeight - topNavY) + "px";
+            if (mainNavToggle) mainNavToggle.style.top = (docsToggleOffset + searchHeight - topNavY) + "px";
+        } else {
+            if (mainNav) mainNav.style.marginTop = "0";
+        }
+    }
+
+    if (window.innerWidth > 1280) {
+        docsMainNavToggleWrapper?.classList.remove("docs-nav-show");
+        docsMainNavToggleWrapper?.classList.remove("docs-nav-hide");
+    } else if (!docsMainNavToggleWrapper?.classList.contains("docs-nav-hide") && !docsMainNavToggleWrapper?.classList.contains("docs-nav-show")) {
+        docsMainNavToggleWrapper?.classList.add("docs-nav-hide");
+    }
+}
+
+function setTableOfContentsVisibility() {
+    const docsTableOfContents = document.querySelector<HTMLElement>(".docs-toc-desktop");
+    const docsMainNavToggleWrapper = document.querySelector(".docs-main-nav-toggle-wrapper");
+    if (docsTableOfContents) {
+        if (window.innerWidth > 1024 && window.innerWidth <= 1280) {
+            docsTableOfContents.style.display = docsMainNavToggleWrapper?.classList.contains("docs-nav-show") ? "none" : "";
+        } else if (window.innerWidth > 1280) {
+            docsTableOfContents.style.display = "";
+        } else {
+            docsTableOfContents.style.display = "none";
+        }
+    }
+}
+
+function setMainNavHeight() {
+    const docsMainNav = document.querySelector<HTMLElement>(".docs-main-nav");
+    const docsFooter = document.querySelector<HTMLElement>(".docs-footer");
+    if (docsMainNav && docsFooter) {
+        docsMainNav.style.height = (docsFooter.offsetHeight + window.innerHeight) + "px";
+    }
+}
+
+function handleResize() {
     setDocsMainNavPosition();
     setTableOfContentsVisibility();
     setMainNavHeight();
-}).trigger('resize');
+}
 
-$(window).on("scroll", function () {
-    setDocsMainNavPosition();
-}).trigger('resize');
+window.addEventListener("resize", handleResize);
+window.addEventListener("scroll", setDocsMainNavPosition);
+window.addEventListener("load", handleResize);
+handleResize();
 
-$(window).on("load", function() {
-    setDocsMainNavPosition();
-    setTableOfContentsVisibility();
-    setMainNavHeight();
-});
+(function () {
+    const docsMainNavToggleWrapper = document.querySelector(".docs-main-nav-toggle-wrapper");
+    const docsNavToggleIcon = document.querySelector(".docs-nav-toggle-icon");
 
-(function (document, $) {
-    let docsToggle = $(".docs-nav-toggle");
-
-    docsToggle.on("click", function () {
-        docsMainNavToggleWrapper.toggleClass("docs-nav-show");
-        docsMainNavToggleWrapper.toggleClass("docs-nav-hide");
-        docsNavToggleIcon.toggleClass("close-docs-main-nav");
-        docsNavToggleIcon.toggleClass("open-docs-main-nav");
-        setTableOfContentsVisibility()
+    document.querySelector(".docs-nav-toggle")?.addEventListener("click", function () {
+        docsMainNavToggleWrapper?.classList.toggle("docs-nav-show");
+        docsMainNavToggleWrapper?.classList.toggle("docs-nav-hide");
+        docsNavToggleIcon?.classList.toggle("close-docs-main-nav");
+        docsNavToggleIcon?.classList.toggle("open-docs-main-nav");
+        setTableOfContentsVisibility();
     });
 
-    let packageCardCheckbox = $("#accordion-checkbox-package-card");
-    let packageCardBackground = $("#accordion-package-card");
+    const packageCardCheckbox = document.getElementById("accordion-checkbox-package-card") as HTMLInputElement;
+    const packageCardBackground = document.getElementById("accordion-package-card") as HTMLElement;
 
-    packageCardCheckbox.on("change", function () {
-        if (packageCardCheckbox.is(":checked")) {
-            packageCardBackground.css("background", "#fff");
-        }
-        else {
-            packageCardBackground.css("background", "#f9f9f9");
-        }
-    
-    });
-    
+    if (packageCardCheckbox && packageCardBackground) {
+        packageCardCheckbox.addEventListener("change", function () {
+            packageCardBackground.style.background = packageCardCheckbox.checked ? "#fff" : "#f9f9f9";
+        });
+    }
 
     function loadContentWidthState() {
         const contentWidthState = window.localStorage.getItem("content-width-state");
@@ -51,85 +101,42 @@ $(window).on("load", function() {
         }
     }
 
-    let collapseContentButton = $("#collapse-content-button")
-    let expandContentButton = $("#expand-content-button")
-    
+    const collapseContentButton = document.getElementById("collapse-content-button");
+    const expandContentButton = document.getElementById("expand-content-button");
+
     function expandContentWidth() {
-        $(".docs-main-content").addClass("docs-content-width-expanded");
-        if (window.location.pathname.startsWith("/registry")) {
-            $(".docs-main-content").addClass("expand-registry");
+        document.querySelectorAll(".docs-main-content").forEach(el => {
+            el.classList.add("docs-content-width-expanded");
+            if (window.location.pathname.startsWith("/registry")) {
+                el.classList.add("expand-registry");
+            }
+        });
+        const banner = document.getElementById("docs-home-banner");
+        if (banner) {
+            banner.querySelectorAll("p").forEach(p => p.classList.add("wider"));
+            banner.style.backgroundImage = `url("/images/docs/docs-home-header-background-desktop-wide.svg")`;
         }
-        $("#docs-home-banner").find("p").addClass("wider");
-        $("#docs-home-banner").css("background-image", `url("/images/docs/docs-home-header-background-desktop-wide.svg")`);
-        collapseContentButton.removeClass("hide");
-        expandContentButton.addClass("hide");
+        collapseContentButton?.classList.remove("hide");
+        expandContentButton?.classList.add("hide");
         window.localStorage.setItem("content-width-state", "expanded");
     }
 
     function collapseContentWidth() {
-        $(".docs-main-content").removeClass("docs-content-width-expanded");
-        $("#docs-home-banner").find("p").removeClass("wider");
-        $("#docs-home-banner").css("background-image", `url("/images/docs/docs-home-header-background-desktop.svg")`);
-        collapseContentButton.addClass("hide");
-        expandContentButton.removeClass("hide");
-        window.localStorage.setItem("content-width-state", "collaped");
+        document.querySelectorAll(".docs-main-content").forEach(el => {
+            el.classList.remove("docs-content-width-expanded");
+        });
+        const banner = document.getElementById("docs-home-banner");
+        if (banner) {
+            banner.querySelectorAll("p").forEach(p => p.classList.remove("wider"));
+            banner.style.backgroundImage = `url("/images/docs/docs-home-header-background-desktop.svg")`;
+        }
+        collapseContentButton?.classList.add("hide");
+        expandContentButton?.classList.remove("hide");
+        window.localStorage.setItem("content-width-state", "collapsed");
     }
 
-    expandContentButton.on("click", expandContentWidth);
-    collapseContentButton.on("click", collapseContentWidth);
+    expandContentButton?.addEventListener("click", expandContentWidth);
+    collapseContentButton?.addEventListener("click", collapseContentWidth);
 
     loadContentWidthState();
-})(document, jQuery);
-
-function setDocsMainNavPosition() {
-    if ($(this).width() <= 1280) {
-        if (docsMainNavToggleWrapper.hasClass("docs-nav-show")) {
-            docsNavToggleIcon.removeClass("open-docs-main-nav")
-            docsNavToggleIcon.addClass("close-docs-main-nav");
-        } else if (docsMainNavToggleWrapper.hasClass("docs-nav-hide")) {
-            docsNavToggleIcon.removeClass("close-docs-main-nav")
-            docsNavToggleIcon.addClass("open-docs-main-nav");
-        }
-    } 
-
-    let mainNav = $(".main-nav");
-    let mainNavToggle = $(".docs-nav-toggle");
-    let docsTypeNavSearch = $(".docs-type-nav-search");
-    let docsToggleOffset = 94;
-
-    if (document.getElementsByClassName("docs-list-main").length > 0) {
-        if ($(".docs-list-main").get(0).getBoundingClientRect().y <= 0) {
-            mainNav.css("margin-top", docsTypeNavSearch.height() - Math.max($(".top-nav-container").get(0).getBoundingClientRect().y, 0));
-            mainNavToggle.css("top", docsToggleOffset + docsTypeNavSearch.height() - Math.max($(".top-nav-container").get(0).getBoundingClientRect().y, 0));
-        } else {
-            mainNav.css("margin-top", 0);
-        }
-    }
-
-    if ($(this).width() > 1280) {
-        docsMainNavToggleWrapper.removeClass("docs-nav-show");
-        docsMainNavToggleWrapper.removeClass("docs-nav-hide");   
-    } else if (!docsMainNavToggleWrapper.hasClass("docs-nav-hide") && !docsMainNavToggleWrapper.hasClass("docs-nav-show")) {
-        docsMainNavToggleWrapper.addClass("docs-nav-hide");
-    }
-}
-
-function setTableOfContentsVisibility() {
-    let docsTableOfContents = $(".docs-toc-desktop");
-
-    if (window.innerWidth > 1024 && window.innerWidth <= 1280) {
-        if (docsMainNavToggleWrapper.hasClass("docs-nav-show")) {
-            docsTableOfContents.hide();
-        } else {
-            docsTableOfContents.show();
-        }
-    } else if (window.innerWidth > 1280) {
-        docsTableOfContents.show();
-    } else {
-        docsTableOfContents.hide();
-    }
-}
-
-function setMainNavHeight() {
-    $(".docs-main-nav").css("height",  $(".docs-footer").height() + window.innerHeight);
-}
+})();

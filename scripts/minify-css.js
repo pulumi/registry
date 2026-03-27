@@ -21,16 +21,17 @@ function minifyCSS(filePath) {
         // https://purgecss.com/
         purgecss({
             content: [
-                "public/**/*.html",
-                `public/js/bundle${registryBundleSlug}.*.js`,
-            ],
-            // PurgeCSS looks through all the built files but, making an exception here
-            // to skip the files in the azure-native-v2 package because it is causing
-            // out of memory errors with all the new files added from the package. This
-            // should not affect the minified bundle, since there isn't any new css being
-            // used for this package that wouldn't already be in the bundle.
-            skippedContentGlobs: [
-                "public/registry/packages/azure-native-v2/**/*",
+                // Scan top-level pages and layouts, but skip the bulk of
+                // API doc pages (they all share the same templates/classes).
+                "public/*.html",
+                "public/registry/*.html",
+                "public/registry/packages/*.html",
+                "public/registry/packages/*/index.html",
+                "public/registry/packages/*/installation-configuration/index.html",
+                "public/registry/packages/*/api-docs/index.html",
+                // Scan a representative provider's full API docs for class coverage.
+                "public/registry/packages/aws/api-docs/**/*.html",
+                `public/registry/js/bundle${registryBundleSlug}.*.js`,
             ],
             css: [bundlePath],
             safelist: {
@@ -85,10 +86,12 @@ function minifyCSS(filePath) {
         });
 }
 
-minifyCSS(`public/css/bundle${registryBundleSlug}.*.css`).then(() => {
-    minifyCSS(`public/css/marketing${registryBundleSlug}.*.css`).then(() => {
-        console.log("CSS bundles minified successfully!");
-    });
+minifyCSS(`public/registry/css/bundle${registryBundleSlug}.*.css`).then(() => {
+    minifyCSS(`public/registry/css/marketing${registryBundleSlug}.*.css`).then(
+        () => {
+            console.log("CSS bundles minified successfully!");
+        },
+    );
 });
 
 // Exit non-zero when something goes wrong in the promise chain.

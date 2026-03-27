@@ -231,7 +231,7 @@ The following reference example uses placeholder values for all [input propertie
 <pulumi-choosable type="language" values="csharp">
 
 ```csharp
-var typeUsesResource = new Example.TypeUses("typeUsesResource", new()
+var typeUsesResource = new Example.Index.TypeUses("typeUsesResource", new()
 {
     Bar = new Example.Inputs.SomeOtherObjectArgs
     {

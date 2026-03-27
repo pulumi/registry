@@ -377,7 +377,7 @@ The following reference example uses placeholder values for all [input propertie
 <pulumi-choosable type="language" values="csharp">
 
 ```csharp
-var randomStringResource = new Random.RandomString("randomStringResource", new()
+var randomStringResource = new Random.Index.RandomString("randomStringResource", new()
 {
     Length = 0,
     Keepers = 

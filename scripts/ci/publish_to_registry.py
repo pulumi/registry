@@ -170,7 +170,7 @@ def publish_specs(
     """Run discover and publish pipeline for the given specs."""
     specs_input = "\n".join(specs)
 
-    publish_cmd = [str(publish_bin)]
+    publish_cmd = [str(publish_bin), str(repo_root)]
     if dry_run:
         publish_cmd.append("--dry-run")
 

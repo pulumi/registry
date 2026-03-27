@@ -229,7 +229,7 @@ The following reference example uses placeholder values for all [input propertie
 <pulumi-choosable type="language" values="csharp">
 
 ```csharp
-var componentResource = new Foo.Component("componentResource", new()
+var componentResource = new Foo.Index.Component("componentResource", new()
 {
     EniConfig = 
     {

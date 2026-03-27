@@ -311,5 +311,47 @@ class TestPublishWithRetry(unittest.TestCase):
         self.assertEqual(calls, [10, 20, 30])
 
 
+class TestPublishSpecsIntegration(unittest.TestCase):
+    """Integration tests that run the actual discover/publish binaries."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.repo_root = Path(__file__).parent.parent.parent
+        cls.discover_bin = cls.repo_root / "bin" / "registry-mirror-discover"
+        cls.publish_bin = cls.repo_root / "bin" / "registry-mirror-publish"
+
+        if not cls.discover_bin.exists() or not cls.publish_bin.exists():
+            raise unittest.SkipTest(
+                "registry-mirror-tools binaries not found in bin/. "
+                "Run 'make ensure' or install manually to run integration tests."
+            )
+
+    def test_dry_run_succeeds_with_valid_spec(self):
+        """Verify the discover/publish pipeline works with --dry-run.
+
+        This test catches issues like missing CLI arguments that mocks would miss.
+        """
+        import os
+        from publish_to_registry import publish_specs
+
+        env_backup = os.environ.copy()
+        try:
+            os.environ["PULUMI_API_URL"] = "https://api.pulumi.com"
+            os.environ["PULUMI_ACCESS_TOKEN"] = "test-token"
+
+            result = publish_specs(
+                specs=["pulumi/pulumi/random@4.16.0"],
+                repo_root=self.repo_root,
+                discover_bin=self.discover_bin,
+                publish_bin=self.publish_bin,
+                dry_run=True,
+            )
+
+            self.assertTrue(result, "publish_specs with --dry-run should succeed")
+        finally:
+            os.environ.clear()
+            os.environ.update(env_backup)
+
+
 if __name__ == "__main__":
     unittest.main()

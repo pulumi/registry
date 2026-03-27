@@ -80,6 +80,12 @@ if [[ -d "$API_DOCS_CACHE/content" ]]; then
     log "Restored $count cached package doc sets"
 fi
 
+# Remove any stale CLI doc files from the static tree that may have been
+# restored from an older cache. CLI docs now go to cli-docs-out/, not here.
+find "$SCHEMAS_DIR" -name 'cli*.md' -delete 2>/dev/null || true
+find "$SCHEMAS_DIR" -name 'cli-docs.json' -delete 2>/dev/null || true
+find "$SCHEMAS_DIR" -type d -name 'api-docs' -empty -delete 2>/dev/null || true
+
 make api-docs
 
 # Save API docs output to cache for next run.
@@ -103,7 +109,10 @@ for schema_dir in "$SCHEMAS_DIR"/*/; do
     [[ -d "$schema_dir" && -f "$schema_dir/schema.json" ]] || continue
     pkg=$(basename "$schema_dir")
     [[ "$pkg" == *@* ]] && continue
-    cp -a "$schema_dir" "$API_DOCS_CACHE/schemas/"
+    # Only cache schema.json, not the entire directory tree (which may contain
+    # stale CLI doc files from older builds).
+    mkdir -p "$API_DOCS_CACHE/schemas/$pkg"
+    cp -a "$schema_dir/schema.json" "$API_DOCS_CACHE/schemas/$pkg/schema.json"
 done
 for pkg_dir in "$CLI_DOCS_DIR"/*/; do
     [[ -d "$pkg_dir/api-docs" ]] || continue

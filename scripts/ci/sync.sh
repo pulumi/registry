@@ -58,7 +58,7 @@ aws s3 website $destination_bucket_uri --index-document index.html --error-docum
 # The --delete flag removes destination objects not present locally, keeping the bucket clean
 # for PR preview buckets that get reused across commits.
 log "Synchronizing to $destination_bucket_uri..."
-s5cmd sync --delete --acl public-read \
+s5cmd --log error sync --delete --acl public-read \
     "$build_dir/" "$destination_bucket_uri/"
 log "Sync complete."
 
@@ -68,7 +68,7 @@ log "Sync complete."
 cli_docs_dir="cli-docs-out"
 if [[ -d "$cli_docs_dir" ]]; then
     log "Synchronizing CLI docs to $destination_bucket_uri..."
-    s5cmd sync --acl public-read \
+    s5cmd --log error sync --acl public-read \
         "$cli_docs_dir/" "$destination_bucket_uri/"
     log "CLI docs sync complete."
 fi

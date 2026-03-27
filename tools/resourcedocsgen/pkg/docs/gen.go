@@ -2102,6 +2102,12 @@ func (mod *modContext) genCLI(resources, functions map[string]string) error {
 	modName := mod.getModuleFileName()
 	conflictResolver := mod.context.newModuleConflictResolver()
 
+	// Compute package version once for all CLI docs in this module.
+	pkgVersion := ""
+	if mod.pkg.Version() != nil {
+		pkgVersion = mod.pkg.Version().String()
+	}
+
 	// Regenerate conflict resolution (same as gen())
 	for _, child := range mod.children {
 		childName := child.getModuleFileName()
@@ -2119,6 +2125,7 @@ func (mod *modContext) genCLI(resources, functions map[string]string) error {
 
 		data := mod.genResource(r)
 		cliData := toCLIResourceArgs(data)
+		cliData.PackageDetails.Version = pkgVersion
 		var buff bytes.Buffer
 		if err := templates.CLIResource(&buff, cliData); err != nil {
 			return fmt.Errorf("generating CLI resource %s: %w", title, err)
@@ -2137,6 +2144,7 @@ func (mod *modContext) genCLI(resources, functions map[string]string) error {
 
 		data := mod.genFunction(f)
 		cliData := toCLIFunctionArgs(data)
+		cliData.PackageDetails.Version = pkgVersion
 		var buff bytes.Buffer
 		if err := templates.CLIFunction(&buff, cliData); err != nil {
 			return fmt.Errorf("generating CLI function %s: %w", name, err)

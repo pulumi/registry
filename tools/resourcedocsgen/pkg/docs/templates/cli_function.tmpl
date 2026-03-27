@@ -44,4 +44,4 @@
 {{ end }}
 {{ end }}
 ---
-*{{ .PackageDetails.DisplayName }} · {{ .PackageDetails.Version }}*
+*{{ .PackageDetails.DisplayName }}{{ if .PackageDetails.Version }} · {{ .PackageDetails.Version }}{{ end }}*

@@ -41,6 +41,14 @@ func stripHTML(s string) string {
 	return s
 }
 
+// escapeAngleBrackets escapes < and > so terminal markdown renderers
+// don't interpret generic type parameters (e.g. Map<String>) as HTML tags.
+func escapeAngleBrackets(s string) string {
+	s = strings.ReplaceAll(s, "<", `\<`)
+	s = strings.ReplaceAll(s, ">", `\>`)
+	return s
+}
+
 // propertyTypeName returns a display name for a propertyType, preferring DisplayName, then Name.
 func propertyTypeName(pt propertyType) string {
 	if pt.DisplayName != "" {
@@ -61,9 +69,9 @@ func stripHTMLFromProperties(props []property) []property {
 		p.DisplayName = stripHTML(p.DisplayName)
 		for j, t := range p.Types {
 			p.Types[j] = propertyType{
-				DisplayName:     stripHTML(t.DisplayName),
-				DescriptionName: stripHTML(t.DescriptionName),
-				Name:            stripHTML(t.Name),
+				DisplayName:     escapeAngleBrackets(stripHTML(t.DisplayName)),
+				DescriptionName: escapeAngleBrackets(stripHTML(t.DescriptionName)),
+				Name:            escapeAngleBrackets(stripHTML(t.Name)),
 			}
 		}
 		out[i] = p
@@ -177,13 +185,24 @@ func cliLanguageTag(lang language.Language) string {
 
 // toCLIResourceArgs builds all-language CLI resource args from the Hugo resource args.
 func toCLIResourceArgs(args resourceDocArgs) cliResourceDocArgs {
+	// Extract examples: prefer structured ExamplesSection, fall back to
+	// extracting from PulumiCodeChooser blocks embedded in the description.
+	comment := args.Comment
+	examples := extractAllCLIExamples(args.ExamplesSection)
+	if len(examples) == 0 {
+		var extracted []cliExample
+		comment, extracted = extractExamplesFromDescription(comment)
+		examples = extracted
+	}
+
 	cli := cliResourceDocArgs{
 		Title:              args.Header.Title,
-		Comment:            stripHTML(args.Comment),
+		Comment:            stripHTML(comment),
 		DeprecationMessage: stripHTML(args.DeprecationMessage),
 		ImportDocs:         stripHTML(args.ImportDocs),
 		MaxNestedTypes:     args.MaxNestedTypes,
 		PackageDetails:     args.PackageDetails,
+		Examples:           examples,
 	}
 
 	// Constructors, properties, state inputs — per language
@@ -193,38 +212,50 @@ func toCLIResourceArgs(args resourceDocArgs) cliResourceDocArgs {
 		if cs, ok := args.CreationExampleSyntax[lang]; ok {
 			entry := cliConstructorEntry{Tag: tag, Syntax: stripHTML(cs)}
 			if fp, ok := args.ConstructorParamsTyped[lang]; ok {
-				entry.Params = fp.Params
+				params := make([]formalParam, len(fp.Params))
+				for i, p := range fp.Params {
+					p.Type = propertyType{
+						DisplayName:     escapeAngleBrackets(stripHTML(p.Type.DisplayName)),
+						DescriptionName: escapeAngleBrackets(stripHTML(p.Type.DescriptionName)),
+						Name:            escapeAngleBrackets(stripHTML(p.Type.Name)),
+					}
+					p.Comment = stripHTML(p.Comment)
+					params[i] = p
+				}
+				entry.Params = params
 			}
 			cli.Constructors = append(cli.Constructors, entry)
 		}
 
-		if props, ok := args.InputProperties[lang]; ok {
+		if props, ok := args.InputProperties[lang]; ok && len(props) > 0 {
 			cli.InputProperties = append(cli.InputProperties, cliLangEntry{
 				Tag: tag, Properties: stripHTMLFromProperties(props),
 			})
 		}
-		if props, ok := args.OutputProperties[lang]; ok {
+		if props, ok := args.OutputProperties[lang]; ok && len(props) > 0 {
 			cli.OutputProperties = append(cli.OutputProperties, cliLangEntry{
 				Tag: tag, Properties: stripHTMLFromProperties(props),
 			})
 		}
-		if props, ok := args.StateInputs[lang]; ok {
+		if props, ok := args.StateInputs[lang]; ok && len(props) > 0 {
 			cli.StateInputs = append(cli.StateInputs, cliLangEntry{
 				Tag: tag, Properties: stripHTMLFromProperties(props),
 			})
 		}
 	}
 
-	// Examples — collect all languages
-	cli.Examples = extractAllCLIExamples(args.ExamplesSection)
-
 	// Methods
 	for _, m := range args.Methods {
+		methodComment := m.Comment
+		methodExamples := extractAllCLIExamples(m.ExamplesSection)
+		if len(methodExamples) == 0 {
+			methodComment, methodExamples = extractExamplesFromDescription(methodComment)
+		}
 		cm := cliMethodDocArgs{
 			Title:              m.Title,
-			Comment:            stripHTML(m.Comment),
+			Comment:            stripHTML(methodComment),
 			DeprecationMessage: stripHTML(m.DeprecationMessage),
-			Examples:           extractAllCLIExamples(m.ExamplesSection),
+			Examples:           methodExamples,
 		}
 		for lang := range language.All() {
 			tag := cliLanguageTag(lang)
@@ -238,12 +269,12 @@ func toCLIResourceArgs(args resourceDocArgs) cliResourceDocArgs {
 					cm.Syntaxes = append(cm.Syntaxes, cliMethodSyntax{Tag: tag, Syntax: syntax})
 				}
 			}
-			if props, ok := m.InputProperties[lang]; ok {
+			if props, ok := m.InputProperties[lang]; ok && len(props) > 0 {
 				cm.InputProperties = append(cm.InputProperties, cliLangEntry{
 					Tag: tag, Properties: stripHTMLFromProperties(props),
 				})
 			}
-			if props, ok := m.OutputProperties[lang]; ok {
+			if props, ok := m.OutputProperties[lang]; ok && len(props) > 0 {
 				cm.OutputProperties = append(cm.OutputProperties, cliLangEntry{
 					Tag: tag, Properties: stripHTMLFromProperties(props),
 				})
@@ -277,11 +308,20 @@ func toCLIResourceArgs(args resourceDocArgs) cliResourceDocArgs {
 
 // toCLIFunctionArgs builds all-language CLI function args from the Hugo function args.
 func toCLIFunctionArgs(args functionDocArgs) cliFunctionDocArgs {
+	// Extract examples: prefer structured ExamplesSection, fall back to
+	// extracting from PulumiCodeChooser blocks embedded in the description.
+	fnComment := args.Comment
+	fnExamples := extractAllCLIExamples(args.ExamplesSection)
+	if len(fnExamples) == 0 {
+		fnComment, fnExamples = extractExamplesFromDescription(fnComment)
+	}
+
 	cli := cliFunctionDocArgs{
 		Title:              args.Header.Title,
-		Comment:            stripHTML(args.Comment),
+		Comment:            stripHTML(fnComment),
 		DeprecationMessage: stripHTML(args.DeprecationMessage),
 		PackageDetails:     args.PackageDetails,
+		Examples:           fnExamples,
 	}
 
 	for lang := range language.All() {
@@ -298,19 +338,17 @@ func toCLIFunctionArgs(args functionDocArgs) cliFunctionDocArgs {
 			}
 		}
 
-		if props, ok := args.InputProperties[lang]; ok {
+		if props, ok := args.InputProperties[lang]; ok && len(props) > 0 {
 			cli.InputProperties = append(cli.InputProperties, cliLangEntry{
 				Tag: tag, Properties: stripHTMLFromProperties(props),
 			})
 		}
-		if props, ok := args.OutputProperties[lang]; ok {
+		if props, ok := args.OutputProperties[lang]; ok && len(props) > 0 {
 			cli.OutputProperties = append(cli.OutputProperties, cliLangEntry{
 				Tag: tag, Properties: stripHTMLFromProperties(props),
 			})
 		}
 	}
-
-	cli.Examples = extractAllCLIExamples(args.ExamplesSection)
 
 	for _, nt := range args.NestedTypes {
 		cnt := cliNestedType{
@@ -358,4 +396,53 @@ func extractAllCLIExamples(es examplesSection) []cliExample {
 		}
 	}
 	return examples
+}
+
+// codeChooserFenceRe matches fenced code blocks with a language tag inside PulumiCodeChooser blocks.
+var codeChooserFenceRe = regexp.MustCompile("(?s)```(typescript|python|go|csharp|java|yaml)\\n(.*?)```")
+
+// extractExamplesFromDescription extracts code examples from a description that
+// contains <!--Start PulumiCodeChooser --> blocks. Returns the description with
+// those blocks removed, and structured CLI examples extracted from the code fences.
+func extractExamplesFromDescription(description string) (string, []cliExample) {
+	if !strings.Contains(description, beginCodeBlock) {
+		return description, nil
+	}
+
+	var examples []cliExample
+	cleaned := description
+
+	// Find all PulumiCodeChooser blocks
+	for {
+		startIdx := strings.Index(cleaned, beginCodeBlock)
+		if startIdx == -1 {
+			break
+		}
+		endIdx := strings.Index(cleaned[startIdx:], endCodeBlock)
+		if endIdx == -1 {
+			break
+		}
+		endIdx += startIdx + len(endCodeBlock)
+
+		block := cleaned[startIdx:endIdx]
+
+		// Extract fenced code blocks from within this chooser block
+		matches := codeChooserFenceRe.FindAllStringSubmatch(block, -1)
+		for _, m := range matches {
+			lang := m[1]
+			code := strings.TrimSpace(m[2])
+			if code == "" || code == defaultMissingExampleSnippetPlaceholder {
+				continue
+			}
+			examples = append(examples, cliExample{
+				Tag:     lang,
+				Snippet: "```" + lang + "\n" + code + "\n```",
+			})
+		}
+
+		// Remove this chooser block from the description
+		cleaned = cleaned[:startIdx] + cleaned[endIdx:]
+	}
+
+	return strings.TrimSpace(cleaned), examples
 }

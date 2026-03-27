@@ -27,14 +27,17 @@
 {{ end }}
 
 ## {{ .Title }} Resource Properties
+{{ if .InputProperties }}
 
 ### Inputs
 
 {{ template "cli_properties" .InputProperties }}
+{{ end }}{{ if .OutputProperties }}
 
 ### Outputs
 
 {{ template "cli_properties" .OutputProperties }}
+{{ end }}
 {{ if .Methods }}
 
 ## Methods
@@ -50,7 +53,7 @@
 {{ range .Syntaxes -}}
 <!-- option: {{ .Tag }} -->
 
-```
+```{{ .Tag }}
 {{ .Syntax }}
 ```
 
@@ -99,4 +102,4 @@
 {{ .ImportDocs }}
 {{ end }}
 ---
-*{{ .PackageDetails.DisplayName }} · {{ .PackageDetails.Version }}*
+*{{ .PackageDetails.DisplayName }}{{ if .PackageDetails.Version }} · {{ .PackageDetails.Version }}{{ end }}*

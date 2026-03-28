@@ -11,12 +11,24 @@
   Our marketing styles diverge a bit from the other parts of the website so we load
   in a different bundle on our marketing pages.
 -->
+{{- $bundleId := getenv "ASSET_BUNDLE_ID" -}}
+
 {{ $nonMarketingSections := slice "docs" "registry" "blog" "learn" "templates" "ai" "authors" "tags" "legal" }}
 {{ if in $nonMarketingSections .Section }}
 {{ else }}
-    {{ $marketingCss := resources.Get "registry/css/marketing-registry.css" | fingerprint }}
-    <link rel="stylesheet" href="{{ $marketingCss.RelPermalink }}"></link>
+    {{- $marketingCss := resources.Get "registry/css/marketing-registry.css" | fingerprint -}}
+    {{- $_ := $marketingCss.RelPermalink -}}{{/* force Hugo to write the file; minify-css.js reads it as input */}}
+    {{- if $bundleId -}}
+        <link rel="stylesheet" href="/registry/css/marketing-registry.{{ $bundleId }}.css">
+    {{- else -}}
+        <link rel="stylesheet" href="{{ $marketingCss.RelPermalink }}">
+    {{- end }}
 {{ end }}
 
-{{ $css := resources.Get "registry/css/bundle-registry.css" | fingerprint }}
-<link rel="stylesheet" href="{{ $css.RelPermalink }}"></link>
+{{- $css := resources.Get "registry/css/bundle-registry.css" | fingerprint -}}
+{{- $_ := $css.RelPermalink -}}{{/* force Hugo to write the file; minify-css.js reads it as input */}}
+{{- if $bundleId -}}
+    <link rel="stylesheet" href="/registry/css/bundle-registry.{{ $bundleId }}.css">
+{{- else -}}
+    <link rel="stylesheet" href="{{ $css.RelPermalink }}">
+{{- end }}

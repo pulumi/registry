@@ -6,6 +6,13 @@ const cssnano = require("cssnano");
 
 const registryBundleSlug = "-registry";
 
+const cssBundleId = process.env.ASSET_BUNDLE_ID;
+
+if (!cssBundleId) {
+    console.error("ERROR: ASSET_BUNDLE_ID environment variable not set");
+    process.exit(1);
+}
+
 // Per-bundle PurgeCSS configuration.
 const bundles = [
     {
@@ -104,18 +111,9 @@ function minifyCSS(config) {
         });
 }
 
-const cssBundleId = process.env.ASSET_BUNDLE_ID;
-
-if (!cssBundleId) {
-    console.error("ERROR: ASSET_BUNDLE_ID environment variable not set");
-    process.exit(1);
-}
-
 Promise.all(bundles.map((b) => minifyCSS(b))).then(() => {
     console.log("CSS bundles minified successfully!");
-    bundles.forEach((b) =>
-        console.log(`  - ${b.name}.${cssBundleId}.css`),
-    );
+    bundles.forEach((b) => console.log(`  - ${b.name}.${cssBundleId}.css`));
 });
 
 // Exit non-zero when something goes wrong in the promise chain.

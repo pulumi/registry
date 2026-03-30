@@ -29,24 +29,36 @@ func TestStripLangSpans(t *testing.T) {
 		expected string
 	}{
 		{
-			name:     "span with all language attributes",
-			input:    "<span pulumi-lang-nodejs=\"`mongodbatlas.Cluster`\" pulumi-lang-dotnet=\"`mongodbatlas.Cluster`\" pulumi-lang-go=\"`Cluster`\" pulumi-lang-python=\"`Cluster`\" pulumi-lang-yaml=\"`mongodbatlas.Cluster`\" pulumi-lang-java=\"`mongodbatlas.Cluster`\">`mongodbatlas.Cluster`</span> provides a resource.",
+			name: "span with all language attributes",
+			input: `<span pulumi-lang-nodejs="` + "`mongodbatlas.Cluster`" + `"` +
+				` pulumi-lang-dotnet="` + "`mongodbatlas.Cluster`" + `"` +
+				` pulumi-lang-go="` + "`Cluster`" + `"` +
+				` pulumi-lang-python="` + "`Cluster`" + `"` +
+				` pulumi-lang-yaml="` + "`mongodbatlas.Cluster`" + `"` +
+				` pulumi-lang-java="` + "`mongodbatlas.Cluster`" + `">` +
+				"`mongodbatlas.Cluster`</span> provides a resource.",
 			expected: "`mongodbatlas.Cluster` provides a resource.",
 		},
 		{
-			name:     "span with spaces as content",
-			input:    "You may find<span pulumi-lang-nodejs=\" groupId \" pulumi-lang-python=\" group_id \"> group_id </span>in the docs.",
+			name: "span with spaces as content",
+			input: `You may find<span pulumi-lang-nodejs=" groupId "` +
+				` pulumi-lang-python=" group_id "> group_id </span>in the docs.`,
 			expected: "You may find group_id in the docs.",
 		},
 		{
-			name:     "multiple spans in one string",
-			input:    "Use <span pulumi-lang-nodejs=\"`Foo`\" pulumi-lang-python=\"`Foo`\">`Foo`</span> and <span pulumi-lang-nodejs=\"`Bar`\" pulumi-lang-python=\"`Bar`\">`Bar`</span>.",
+			name: "multiple spans in one string",
+			input: "Use " +
+				`<span pulumi-lang-nodejs="` + "`Foo`" + `" pulumi-lang-python="` + "`Foo`" + `">` +
+				"`Foo`</span> and " +
+				`<span pulumi-lang-nodejs="` + "`Bar`" + `" pulumi-lang-python="` + "`Bar`" + `">` +
+				"`Bar`</span>.",
 			expected: "Use `Foo` and `Bar`.",
 		},
 		{
-			name:     "span with nested double quotes in attribute values",
-			input:    "values: <span pulumi-lang-nodejs=\"\"customS2s\"\" pulumi-lang-python=\"\"custom_s2s\"\">\"custom_s2s\"</span>.",
-			expected: "values: \"custom_s2s\".",
+			name: "span with nested double quotes in attributes",
+			input: `values: <span pulumi-lang-nodejs=""customS2s""` +
+				` pulumi-lang-python=""custom_s2s"">"custom_s2s"</span>.`,
+			expected: `values: "custom_s2s".`,
 		},
 		{
 			name:     "no spans leaves text unchanged",

@@ -9,6 +9,7 @@ module.exports = function (env, { mode }) {
         entry: {
             bundle: "./src/ts/main.ts",
             marketing: "./src/ts/marketing.ts",
+            "consent-manager": "./src/ts/consent-manager/index.ts",
         },
         output: {
             filename: "[name]-registry.js",

@@ -6,8 +6,6 @@ export interface ConsentManagerConfig {
     bannerText: string;
     preferencesDialogTitle: string;
     preferencesDialogContent: string;
-    cancelDialogTitle: string;
-    cancelDialogContent: string;
 }
 
 export interface Destination {

@@ -10,7 +10,7 @@ export function renderBanner(
     const wrapper = document.createElement("div");
 
     const content = document.createElement("div");
-    content.style.padding = "16px";
+    content.className = "consent-banner-content";
 
     const text = document.createElement("p");
     text.textContent = config.bannerText + " ";

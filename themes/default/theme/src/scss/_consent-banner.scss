@@ -30,6 +30,10 @@
         @apply font-bold no-underline;
     }
 
+    .consent-banner-content {
+        @apply p-4;
+    }
+
     .consent-actions {
         @apply flex gap-2 w-full pb-4;
     }
@@ -73,8 +77,7 @@
 }
 
 .consent-dialog-desc {
-    @apply text-sm text-gray-600 mb-4;
-    text-align: left !important;
+    @apply text-sm text-gray-600 mb-4 text-left;
 }
 
 // Category table

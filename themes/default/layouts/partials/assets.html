@@ -7,9 +7,6 @@
 {{ $js := resources.Get "registry/js/bundle-registry.js" | fingerprint }}
 <script src="{{ $js.RelPermalink }}" defer></script>
 
-{{ $consentJs := resources.Get "registry/js/consent-manager-registry.js" | fingerprint }}
-<script src="{{ $consentJs.RelPermalink }}" defer></script>
-
 <!--
   Our marketing styles diverge a bit from the other parts of the website so we load
   in a different bundle on our marketing pages.

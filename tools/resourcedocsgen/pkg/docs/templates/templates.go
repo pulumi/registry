@@ -27,8 +27,14 @@ import (
 
 	"github.com/golang/glog"
 	"github.com/pgavlin/goldmark"
+	"github.com/pgavlin/goldmark/extension"
 	"github.com/pulumi/registry/tools/resourcedocsgen/pkg/util/language"
 )
+
+// md is a goldmark instance with GFM table support enabled.
+// The default goldmark.Convert() doesn't support tables, so upstream provider
+// descriptions with markdown tables would render as plain text.
+var md = goldmark.New(goldmark.WithExtensions(extension.Table))
 
 //go:embed *.tmpl
 var packagedTemplates embed.FS
@@ -115,7 +121,7 @@ func init() {
 		"markdownify": func(html string) template.HTML {
 			// Convert a string of Markdown into HTML.
 			var buf bytes.Buffer
-			if err := goldmark.Convert([]byte(html), &buf); err != nil {
+			if err := md.Convert([]byte(html), &buf); err != nil {
 				glog.Fatalf("rendering Markdown: %v", err)
 			}
 			rendered := buf.String()

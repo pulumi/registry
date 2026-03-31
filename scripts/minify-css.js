@@ -1,7 +1,7 @@
 const fs = require("fs");
 const glob = require("glob");
 const postcss = require("postcss");
-const purgecss = require("@fullhuman/postcss-purgecss");
+const { purgeCSSPlugin: purgecss } = require("@fullhuman/postcss-purgecss");
 const cssnano = require("cssnano");
 
 const registryBundleSlug = "-registry";

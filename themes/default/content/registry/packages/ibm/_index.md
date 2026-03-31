@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/ibm-cloud/ibm/1.89.0/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/ibm-cloud/ibm/2.0.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Ibm Provider
@@ -101,7 +101,7 @@ config:
 package main
 
 import (
-	"github.com/pulumi/pulumi-pulumi-provider/sdks/go/ibm/ibm"
+	"github.com/pulumi/pulumi-pulumi-provider/sdks/go/ibm/v2/ibm"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -261,7 +261,7 @@ config:
 package main
 
 import (
-	"github.com/pulumi/pulumi-pulumi-provider/sdks/go/ibm/ibm"
+	"github.com/pulumi/pulumi-pulumi-provider/sdks/go/ibm/v2/ibm"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -421,7 +421,7 @@ config:
 package main
 
 import (
-	"github.com/pulumi/pulumi-pulumi-provider/sdks/go/ibm/ibm"
+	"github.com/pulumi/pulumi-pulumi-provider/sdks/go/ibm/v2/ibm"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -594,7 +594,7 @@ config:
 package main
 
 import (
-	"github.com/pulumi/pulumi-pulumi-provider/sdks/go/ibm/ibm"
+	"github.com/pulumi/pulumi-pulumi-provider/sdks/go/ibm/v2/ibm"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 

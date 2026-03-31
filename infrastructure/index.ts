@@ -214,7 +214,33 @@ const baseCacheBehavior = {
 
 // Fingerprinted assets (logos, etc.) include a content hash in their filename,
 // so they are safe to cache indefinitely with an immutable directive.
-const ImmutableCachePolicy = new aws.cloudfront.ResponseHeadersPolicy("immutable-cache-headers", {
+// Includes the same security headers as the AWS managed SecurityHeadersPolicy
+// so fingerprinted paths don't lose security headers.
+const immutableCachePolicy = new aws.cloudfront.ResponseHeadersPolicy("immutable-cache-headers", {
+    securityHeadersConfig: {
+        frameOptions: {
+            frameOption: "DENY",
+            override: false,
+        },
+        referrerPolicy: {
+            referrerPolicy: "strict-origin-when-cross-origin",
+            override: false,
+        },
+        contentTypeOptions: {
+            override: true,
+        },
+        strictTransportSecurity: {
+            accessControlMaxAgeSec: 31536000,
+            includeSubdomains: true,
+            preload: true,
+            override: false,
+        },
+        xssProtection: {
+            modeBlock: true,
+            protection: true,
+            override: false,
+        },
+    },
     customHeadersConfig: {
         items: [{
             header: "Cache-Control",
@@ -280,7 +306,7 @@ const distributionArgs: aws.cloudfront.DistributionArgs = {
             pathPattern: "/fingerprinted/*",
             defaultTtl: oneYear,
             maxTtl: oneYear,
-            responseHeadersPolicyId: ImmutableCachePolicy.id,
+            responseHeadersPolicyId: immutableCachePolicy.id,
         },
     ],
 

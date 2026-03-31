@@ -396,7 +396,7 @@
                 @apply absolute top-0 left-0;
             }
         }
-        
+
         .circle-left {
             @apply rounded-full absolute bg-salmon-600;
             width: 20.25rem;
@@ -418,7 +418,7 @@
             @apply w-1/4 h-full relative;
 
             .dot-background-overlay {
-                @apply w-full h-full absolute top-0 left-0;
+                @apply w-full h-full absolute left-0 top-0;
                 background-color: rgba(255, 255, 255, 0.5);
                 z-index: 0;
             }
@@ -989,7 +989,7 @@
             right: 6rem;
             top: 20rem;
         }
-    
+
         .circle-left {
             @apply rounded-full absolute bg-salmon-600;
             width: 14rem;
@@ -1007,7 +1007,7 @@
             right: -4.5rem;
             top: 0.75rem;
         }
-    
+
         .circle-center {
             @apply rounded-full absolute bg-salmon-600;
             width: 7rem;
@@ -1015,7 +1015,7 @@
             right: 27rem;
             top: -3.5rem;
         }
-    
+
         .circle-bottom {
             @apply rounded-full absolute bg-yellow-600;
             width: 21.25rem;

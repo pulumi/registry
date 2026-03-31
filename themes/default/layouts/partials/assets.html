@@ -15,10 +15,20 @@
   Our marketing styles diverge a bit from the other parts of the website so we load
   in a different bundle on our marketing pages.
 -->
+{{- $bundleId := getenv "ASSET_BUNDLE_ID" -}}
+
 {{ $nonMarketingSections := slice "docs" "registry" "blog" "learn" "templates" "ai" "authors" "tags" "legal" }}
 {{ if in $nonMarketingSections .Section }}
 {{ else }}
-    <link rel="stylesheet" href="{{ index $manifest "marketing.css" }}"></link>
+    {{- if $bundleId -}}
+        <link rel="stylesheet" href="/registry/css/marketing-registry.{{ $bundleId }}.css">
+    {{- else -}}
+        <link rel="stylesheet" href="{{ index $manifest "marketing.css" }}">
+    {{- end }}
 {{ end }}
 
-<link rel="stylesheet" href="{{ index $manifest "bundle.css" }}"></link>
+{{- if $bundleId -}}
+    <link rel="stylesheet" href="/registry/css/bundle-registry.{{ $bundleId }}.css">
+{{- else -}}
+    <link rel="stylesheet" href="{{ index $manifest "bundle.css" }}">
+{{- end }}

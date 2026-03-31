@@ -9,11 +9,6 @@
   {{ errorf "Asset manifest not found. Run 'make build-assets' before 'make serve'." }}
 {{ end }}
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"
-  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-  crossorigin="anonymous"
-  referrerpolicy="no-referrer"></script>
-
 <script src="{{ index $manifest "bundle.js" }}" defer></script>
 
 <!--

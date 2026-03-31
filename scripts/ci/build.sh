@@ -132,6 +132,9 @@ case ${1} in
         ;;
 esac
 
+# Split the sitemap into multiple files if it exceeds the per-file URL limit.
+yarn run split-sitemap
+
 # Purge unused CSS and write commit-hash-named bundles that match the <link>
 # hrefs emitted by assets.html, avoiding stale CloudFront caches (#10466).
 yarn run minify-css

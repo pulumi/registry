@@ -33,6 +33,7 @@ test:
 build: build-assets
 	node scripts/apply-fixes.js
 	hugo 2>&1 | grep -v -e 'WARN .* REF_NOT_FOUND'
+	node scripts/split-sitemap.js
 
 HUGO_SERVE := hugo serve --buildDrafts --buildFuture --ignoreVendorPaths="github.com/pulumi/registry/**/*" 2>&1 | grep -v -e 'WARN .* REF_NOT_FOUND'
 

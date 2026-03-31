@@ -233,6 +233,10 @@
       "schemaFile": "provider/cmd/pulumi-resource-prodvana/schema.json"
     },
     {
+      "repoSlug": "pydantic/pulumi-logfire",
+      "schemaFile": "provider/cmd/pulumi-resource-logfire/schema.json"
+    },
+    {
       "repoSlug": "pulumiverse/pulumi-vercel",
       "schemaFile": "provider/cmd/pulumi-resource-vercel/schema.json"
     },

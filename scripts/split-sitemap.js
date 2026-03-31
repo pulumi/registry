@@ -1,10 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-const {
-    parseSitemap,
-    SitemapAndIndexStream,
-    SitemapStream,
-} = require("sitemap");
+const { SitemapAndIndexStream, SitemapStream } = require("sitemap");
 
 const SITEMAP_PATH = path.resolve("public/sitemap.xml");
 const OUTPUT_DIR = path.resolve("public/registry");
@@ -16,9 +12,22 @@ async function splitSitemap() {
         return;
     }
 
-    // Parse the Hugo-generated sitemap into structured items.
-    const xml = fs.createReadStream(SITEMAP_PATH);
-    const items = await parseSitemap(xml);
+    // Parse URL entries directly from the Hugo-generated XML. We avoid the
+    // sitemap library's parseSitemap because it enforces a 50K-entry limit
+    // on the *input* — which is the very problem we're trying to solve.
+    const xml = fs.readFileSync(SITEMAP_PATH, "utf-8");
+    const urlPattern =
+        /<url>\s*<loc>([^<]+)<\/loc>(?:\s*<lastmod>([^<]+)<\/lastmod>)?/g;
+    const items = [];
+    let match;
+    while ((match = urlPattern.exec(xml)) !== null) {
+        const item = { url: match[1] };
+        if (match[2]) {
+            item.lastmod = match[2];
+        }
+        items.push(item);
+    }
+
     console.log(`Sitemap contains ${items.length} URLs.`);
 
     if (items.length === 0) {

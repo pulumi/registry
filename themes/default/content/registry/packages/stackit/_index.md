@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/stackitcloud/pulumi-stackit/v0.0.4/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/stackitcloud/pulumi-stackit/v0.0.5/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/stackitcloud/pulumi-stackit/blob/v0.0.4/docs/_index.md
+edit_url: https://github.com/stackitcloud/pulumi-stackit/blob/v0.0.5/docs/_index.md
 title: stackit
 meta_desc: Learn how to use Pulumi's STACKIT provider to manage STACKIT resources.
 layout: package

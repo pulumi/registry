@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-vault/v7.7.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-vault/v7.8.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-vault/blob/v7.7.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-vault/blob/v7.8.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: HashiCorp Vault Provider
 meta_desc: Provides an overview on how to configure the Pulumi HashiCorp Vault provider.
@@ -437,6 +437,9 @@ The `authLoginJwt` configuration block accepts the following arguments:
 * `role` - (Required) The name of the role against which the login is being attempted.
 
 * `jwt` - (Required) The signed JSON Web Token against which the login is being attempted.*Can be specified with the `TERRAFORM_VAULT_AUTH_JWT` environment variable.*
+
+* `distributedClaimAccessToken` - (Optional) A token used to fetch group memberships specified by the distributed claim source in the jwt. This is supported only on Azure/Entra ID. Requires Vault 1.18+.
+  *Can be specified with the `TERRAFORM_VAULT_AUTH_DISTRIBUTED_CLAIM_ACCESS_TOKEN` environment variable.*
 ### Azure
 
 Provides support for authenticating to Vault using the Azure Auth engine.
@@ -631,7 +634,7 @@ func main() {
 		json0 := string(tmpJSON0)
 		_, err = generic.NewSecret(ctx, "example", &generic.SecretArgs{
 			Path:     pulumi.String("secret/foo"),
-			DataJson: pulumi.String(json0),
+			DataJson: pulumi.String(pulumi.String(json0)),
 		})
 		if err != nil {
 			return err
@@ -841,8 +844,8 @@ public class App {
 
     public static void stack(Context ctx) {
         final var config = ctx.config();
-        final var loginUsername = config.get("loginUsername");
-        final var loginPassword = config.get("loginPassword");
+        final var loginUsername = config.require("loginUsername");
+        final var loginPassword = config.require("loginPassword");
     }
 }
 ```
@@ -982,8 +985,8 @@ public class App {
 
     public static void stack(Context ctx) {
         final var config = ctx.config();
-        final var loginApproleRoleId = config.get("loginApproleRoleId");
-        final var loginApproleSecretId = config.get("loginApproleSecretId");
+        final var loginApproleRoleId = config.require("loginApproleRoleId");
+        final var loginApproleSecretId = config.require("loginApproleSecretId");
     }
 }
 ```

@@ -4,8 +4,12 @@
   JS components.
 -->
 
-{{ $js := resources.Get "registry/js/bundle-registry.js" | fingerprint }}
-<script src="{{ $js.RelPermalink }}" defer></script>
+{{ $manifest := .Site.Data.asset_manifest }}
+{{ if not $manifest }}
+  {{ errorf "Asset manifest not found. Run 'make build-assets' before 'make serve'." }}
+{{ end }}
+
+<script src="{{ index $manifest "bundle.js" }}" defer></script>
 
 <!--
   Our marketing styles diverge a bit from the other parts of the website so we load
@@ -16,19 +20,15 @@
 {{ $nonMarketingSections := slice "docs" "registry" "blog" "learn" "templates" "ai" "authors" "tags" "legal" }}
 {{ if in $nonMarketingSections .Section }}
 {{ else }}
-    {{- $marketingCss := resources.Get "registry/css/marketing-registry.css" | fingerprint -}}
-    {{- $_ := $marketingCss.RelPermalink -}}{{/* force Hugo to write the file; minify-css.js reads it as input */}}
     {{- if $bundleId -}}
         <link rel="stylesheet" href="/registry/css/marketing-registry.{{ $bundleId }}.css">
     {{- else -}}
-        <link rel="stylesheet" href="{{ $marketingCss.RelPermalink }}">
+        <link rel="stylesheet" href="{{ index $manifest "marketing.css" }}">
     {{- end }}
 {{ end }}
 
-{{- $css := resources.Get "registry/css/bundle-registry.css" | fingerprint -}}
-{{- $_ := $css.RelPermalink -}}{{/* force Hugo to write the file; minify-css.js reads it as input */}}
 {{- if $bundleId -}}
     <link rel="stylesheet" href="/registry/css/bundle-registry.{{ $bundleId }}.css">
 {{- else -}}
-    <link rel="stylesheet" href="{{ $css.RelPermalink }}">
+    <link rel="stylesheet" href="{{ index $manifest "bundle.css" }}">
 {{- end }}

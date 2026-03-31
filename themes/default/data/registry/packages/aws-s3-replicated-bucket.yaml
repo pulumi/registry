@@ -6,7 +6,7 @@ logo_url: ""
 name: aws-s3-replicated-bucket
 native: false
 package_status: public_preview
-publisher: Lee Zen
+publisher: DEPRECATED
 repo_url: "https://github.com/pulumi/pulumi-aws-s3-replicated-bucket"
 schema_file_path: /schema.json
 title: AWS S3 Replicated Bucket

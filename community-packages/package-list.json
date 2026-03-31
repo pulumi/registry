@@ -69,10 +69,6 @@
       "schemaFile": "schema.json"
     },
     {
-      "repoSlug": "pulumi/pulumi-aws-static-website",
-      "schemaFile": "schema.json"
-    },
-    {
       "repoSlug": "muhlba91/pulumi-proxmoxve",
       "schemaFile": "provider/cmd/pulumi-resource-proxmoxve/schema.json"
     },

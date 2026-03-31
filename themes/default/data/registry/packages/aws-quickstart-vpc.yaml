@@ -6,7 +6,7 @@ logo_url: ""
 name: aws-quickstart-vpc
 native: false
 package_status: public_preview
-publisher: Pulumi
+publisher: DEPRECATED
 repo_url: "https://github.com/pulumi/pulumi-aws-quickstart-vpc"
 schema_file_path: /schema.yaml
 title: AWS QuickStart VPC

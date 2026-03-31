@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/civo/civo/1.1.7/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/civo/civo/1.2.2/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Civo Provider
@@ -367,8 +367,8 @@ import * as pulumi from "@pulumi/pulumi";
 import * as civo from "@pulumi/civo";
 
 const config = new pulumi.Config();
-const region = config.requireObject("region");
-const instanceSize = config.requireObject("instanceSize");
+const region = config.requireObject<any>("region");
+const instanceSize = config.requireObject<any>("instanceSize");
 const example = new civo.Instance("example", {
     hostname: "example-instance",
     size: instanceSize,

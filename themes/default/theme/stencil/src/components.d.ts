@@ -18,9 +18,6 @@ export { SourceKind } from "./components/convert/convert";
 export { Filter } from "./components/filter-select/filter-select-option";
 export { MultiSelectFormItem } from "./components/pulumi-multi-select-form/pulumi-multi-select-form";
 export namespace Components {
-    interface CopilotSidebar {
-        "atlasUrl": string;
-    }
     interface PulumiApiDocFilterableNav {
         "baseDirectory": string;
         "packageName": string;
@@ -178,12 +175,6 @@ export interface PulumiRootCustomEvent<T> extends CustomEvent<T> {
     target: HTMLPulumiRootElement;
 }
 declare global {
-    interface HTMLCopilotSidebarElement extends Components.CopilotSidebar, HTMLStencilElement {
-    }
-    var HTMLCopilotSidebarElement: {
-        prototype: HTMLCopilotSidebarElement;
-        new (): HTMLCopilotSidebarElement;
-    };
     interface HTMLPulumiApiDocFilterableNavElement extends Components.PulumiApiDocFilterableNav, HTMLStencilElement {
     }
     var HTMLPulumiApiDocFilterableNavElement: {
@@ -385,7 +376,6 @@ declare global {
         new (): HTMLPulumiUserToggleElement;
     };
     interface HTMLElementTagNameMap {
-        "copilot-sidebar": HTMLCopilotSidebarElement;
         "pulumi-api-doc-filterable-nav": HTMLPulumiApiDocFilterableNavElement;
         "pulumi-api-doc-nav-node": HTMLPulumiApiDocNavNodeElement;
         "pulumi-api-doc-nav-tree": HTMLPulumiApiDocNavTreeElement;
@@ -409,9 +399,6 @@ declare global {
     }
 }
 declare namespace LocalJSX {
-    interface CopilotSidebar {
-        "atlasUrl"?: string;
-    }
     interface PulumiApiDocFilterableNav {
         "baseDirectory"?: string;
         "packageName"?: string;
@@ -548,9 +535,6 @@ declare namespace LocalJSX {
         "userId"?: string;
     }
 
-    interface CopilotSidebarAttributes {
-        "atlasUrl": string;
-    }
     interface PulumiApiDocFilterableNavAttributes {
         "baseDirectory": string;
         "packageName": string;
@@ -619,7 +603,6 @@ declare namespace LocalJSX {
     }
 
     interface IntrinsicElements {
-        "copilot-sidebar": Omit<CopilotSidebar, keyof CopilotSidebarAttributes> & { [K in keyof CopilotSidebar & keyof CopilotSidebarAttributes]?: CopilotSidebar[K] } & { [K in keyof CopilotSidebar & keyof CopilotSidebarAttributes as `attr:${K}`]?: CopilotSidebarAttributes[K] } & { [K in keyof CopilotSidebar & keyof CopilotSidebarAttributes as `prop:${K}`]?: CopilotSidebar[K] };
         "pulumi-api-doc-filterable-nav": Omit<PulumiApiDocFilterableNav, keyof PulumiApiDocFilterableNavAttributes> & { [K in keyof PulumiApiDocFilterableNav & keyof PulumiApiDocFilterableNavAttributes]?: PulumiApiDocFilterableNav[K] } & { [K in keyof PulumiApiDocFilterableNav & keyof PulumiApiDocFilterableNavAttributes as `attr:${K}`]?: PulumiApiDocFilterableNavAttributes[K] } & { [K in keyof PulumiApiDocFilterableNav & keyof PulumiApiDocFilterableNavAttributes as `prop:${K}`]?: PulumiApiDocFilterableNav[K] };
         "pulumi-api-doc-nav-node": Omit<PulumiApiDocNavNode, keyof PulumiApiDocNavNodeAttributes> & { [K in keyof PulumiApiDocNavNode & keyof PulumiApiDocNavNodeAttributes]?: PulumiApiDocNavNode[K] } & { [K in keyof PulumiApiDocNavNode & keyof PulumiApiDocNavNodeAttributes as `attr:${K}`]?: PulumiApiDocNavNodeAttributes[K] } & { [K in keyof PulumiApiDocNavNode & keyof PulumiApiDocNavNodeAttributes as `prop:${K}`]?: PulumiApiDocNavNode[K] };
         "pulumi-api-doc-nav-tree": Omit<PulumiApiDocNavTree, keyof PulumiApiDocNavTreeAttributes> & { [K in keyof PulumiApiDocNavTree & keyof PulumiApiDocNavTreeAttributes]?: PulumiApiDocNavTree[K] } & { [K in keyof PulumiApiDocNavTree & keyof PulumiApiDocNavTreeAttributes as `attr:${K}`]?: PulumiApiDocNavTreeAttributes[K] } & { [K in keyof PulumiApiDocNavTree & keyof PulumiApiDocNavTreeAttributes as `prop:${K}`]?: PulumiApiDocNavTree[K] };
@@ -646,7 +629,6 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
-            "copilot-sidebar": LocalJSX.IntrinsicElements["copilot-sidebar"] & JSXBase.HTMLAttributes<HTMLCopilotSidebarElement>;
             "pulumi-api-doc-filterable-nav": LocalJSX.IntrinsicElements["pulumi-api-doc-filterable-nav"] & JSXBase.HTMLAttributes<HTMLPulumiApiDocFilterableNavElement>;
             "pulumi-api-doc-nav-node": LocalJSX.IntrinsicElements["pulumi-api-doc-nav-node"] & JSXBase.HTMLAttributes<HTMLPulumiApiDocNavNodeElement>;
             "pulumi-api-doc-nav-tree": LocalJSX.IntrinsicElements["pulumi-api-doc-nav-tree"] & JSXBase.HTMLAttributes<HTMLPulumiApiDocNavTreeElement>;

@@ -398,19 +398,18 @@ This is the master build script for CI runs. It accepts one argument: `preview` 
 1. Calls `make build-assets` (theme CSS/JS compilation).
 2. Fetches the Pulumi conversion service URL from the `pulumi/tf2pulumi-service/production` stack output (`PULUMI_CONVERT_URL`).
 3. Fetches the Pulumi AI WebSocket URL from `pulumi/pulumigpt-api/corp` stack output (`PULUMI_AI_WS_URL`).
-4. Reads Copilot (Atlas) API URL from Pulumi IaC config (`atlasUrl`).
-5. Computes a `build_identifier` (for preview: `pr-<number>-<sha8>`; for push: `push-<sha8>`).
-6. Sets asset bundle paths:
+4. Computes a `build_identifier` (for preview: `pr-<number>-<sha8>`; for push: `push-<sha8>`).
+5. Sets asset bundle paths:
    - `CSS_BUNDLE=static/css/styles.<id>.css`
    - `JS_BUNDLE=static/js/bundle.min.<id>.js`
-7. **Restores cached API docs** from `.cache/api-docs/` into the Hugo content/static trees (see section 4.7 for details).
-8. Runs `make api-docs`, which compiles `resourcedocsgen` and generates all provider API docs. The tool skips unchanged packages using sentinel files.
-9. **Saves API docs** output (including sentinel files) back to `.cache/api-docs/` for the next run. Versioned packages (`@`-suffixed) are excluded — they have their own cache. CLI docs from `cli-docs-out/` are also cached to `.cache/api-docs/cli-docs/` and restored on the next run.
-10. Runs `node ./scripts/apply-fixes.js`.
-11. Runs Hugo with `--minify --buildFuture --templateMetrics`:
+6. **Restores cached API docs** from `.cache/api-docs/` into the Hugo content/static trees (see section 4.7 for details).
+7. Runs `make api-docs`, which compiles `resourcedocsgen` and generates all provider API docs. The tool skips unchanged packages using sentinel files.
+8. **Saves API docs** output (including sentinel files) back to `.cache/api-docs/` for the next run. Versioned packages (`@`-suffixed) are excluded — they have their own cache. CLI docs from `cli-docs-out/` are also cached to `.cache/api-docs/cli-docs/` and restored on the next run.
+9. Runs `node ./scripts/apply-fixes.js`.
+10. Runs Hugo with `--minify --buildFuture --templateMetrics`:
     - `preview` mode: sets `HUGO_BASEURL` to the S3 website URL and uses `-e preview`
     - `update` mode: uses `-e production`
-12. Runs `yarn run minify-css` to purge and minify CSS.
+11. Runs `yarn run minify-css` to purge and minify CSS.
 
 ### 4.6 Versioned documentation
 
@@ -800,8 +799,6 @@ Adds new issues to the Pulumi Docs GitHub project (project #79) using `PULUMI_BO
 | `registry:pathToOriginBucketMetadata` | `../origin-bucket-metadata.json` — where Pulumi reads the newly built bucket |
 | `registry:websiteLogsBucketName` | S3 bucket for CloudFront access logs |
 | `registry:e2eTestsBucketName` | S3 bucket for Cypress test results |
-| `registry:copilotUrl` | Copilot feature URL |
-| `registry:atlasUrl` | Atlas AI feature URL |
 
 ### 6.2 AWS Resources
 
@@ -1044,7 +1041,6 @@ The `export-repo-secrets.yml` workflow provides a manual escape hatch to sync Gi
 | `SLACK_WEBHOOK_URL` | ESC | notify jobs | Slack incoming webhook for failure alerts |
 | `PULUMI_CONVERT_URL` | Pulumi stack output | `build.sh` | URL for Pulumi conversion service |
 | `PULUMI_AI_WS_URL` | Pulumi stack output | `build.sh` | URL for Pulumi AI WebSocket |
-| `PULUMI_ATLAS_URL` | Pulumi IaC config | `build.sh` | Copilot (Atlas) API URL |
 | `ASSET_BUNDLE_ID` | `build.sh` (computed) | Hugo templates | Unique suffix for CSS/JS cache-busting |
 | `CSS_BUNDLE` / `JS_BUNDLE` | `build.sh` (computed) | Hugo templates | Paths to versioned asset bundles |
 

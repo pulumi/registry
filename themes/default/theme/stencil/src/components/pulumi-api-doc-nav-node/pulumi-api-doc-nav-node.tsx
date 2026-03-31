@@ -60,10 +60,9 @@ export class PulumiApiDocNavNode {
         );
     }
 
-    // This is a minimally invasive change to avoid "Zone" being used as an DOM id.
-    // If Zone is used as an DOM id then it available as a global variable as window.Zone.
+    // This is a minimally invasive change to avoid "Zone" being used as a DOM id.
+    // If Zone is used as a DOM id then it's available as a global variable as window.Zone.
     // This in turn breaks loading zone.js in the browser.
-    // Copilot needs zone.js to be loaded in the browser.
     //
     // Zone is at least present in at:
     // - https://www.pulumi.com/registry/packages/azure-native/api-docs/network/zone/

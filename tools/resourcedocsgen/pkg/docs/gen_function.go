@@ -443,7 +443,7 @@ func (mod *modContext) genFunction(f *schema.Function) functionDocArgs {
 	}
 
 	supportedSnippetLanguages := mod.context.getSupportedSnippetLanguages(f.IsOverlay, f.OverlaySupportedLanguages)
-	docInfo := dctx.decomposeDocstring(f.Comment, supportedSnippetLanguages)
+	docInfo := dctx.decomposeDocstring(sanitizeDescription(f.Comment), supportedSnippetLanguages)
 	args := functionDocArgs{
 		Header: mod.genFunctionHeader(f),
 
@@ -455,7 +455,7 @@ func (mod *modContext) genFunction(f *schema.Function) functionDocArgs {
 		FunctionResult: mod.getFunctionResourceInfo(f, false /*outputVersion*/),
 
 		Comment:            docInfo.description,
-		DeprecationMessage: f.DeprecationMessage,
+		DeprecationMessage: sanitizeDescription(f.DeprecationMessage),
 		ExamplesSection: examplesSection{
 			Examples:             docInfo.examples,
 			LangChooserLanguages: supportedSnippetLanguages,

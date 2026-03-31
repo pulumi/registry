@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/redpanda-data/redpanda/1.7.3/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/redpanda-data/redpanda/1.8.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Redpanda Provider
@@ -241,6 +241,10 @@ const testTopic = new redpanda.Topic("test", {
     replicationFactor: replicationFactor,
     clusterApiUrl: testCluster.clusterApiUrl,
     allowDeletion: true,
+    configuration: {
+        "cleanup.policy": "delete",
+        "retention.ms": "604800000",
+    },
 }, {
     dependsOn: [testUser],
 });
@@ -463,6 +467,22 @@ const productSchema = new redpanda.Schema("product_schema", {
         writeRegistry,
     ],
 });
+const developer = new redpanda.Role("developer", {
+    name: roleName,
+    clusterApiUrl: testCluster.clusterApiUrl,
+    allowDeletion: roleAllowDeletion,
+});
+const roleTopicRead = new redpanda.Acl("role_topic_read", {
+    resourceType: "TOPIC",
+    resourceName: testTopic.name,
+    resourcePatternType: "LITERAL",
+    principal: pulumi.interpolate`RedpandaRole:${developer.name}`,
+    host: "*",
+    operation: "READ",
+    permissionType: "ALLOW",
+    clusterApiUrl: testCluster.clusterApiUrl,
+    allowDeletion: aclAllowDeletion,
+});
 const readProduct = new redpanda.SchemaRegistryAcl("read_product", {
     clusterId: testCluster.id,
     principal: pulumi.interpolate`User:${testUser.name}`,
@@ -502,11 +522,6 @@ const writeOrders = new redpanda.SchemaRegistryAcl("write_orders", {
         clusterAdmin,
         schemaRegistryAdmin,
     ],
-});
-const developer = new redpanda.Role("developer", {
-    name: roleName,
-    clusterApiUrl: testCluster.clusterApiUrl,
-    allowDeletion: roleAllowDeletion,
 });
 const developerAssignment = new redpanda.RoleAssignment("developer_assignment", {
     roleName: developer.name,
@@ -598,6 +613,10 @@ test_topic = redpanda.Topic("test",
     replication_factor=replication_factor,
     cluster_api_url=test_cluster.cluster_api_url,
     allow_deletion=True,
+    configuration={
+        "cleanup.policy": "delete",
+        "retention.ms": "604800000",
+    },
     opts = pulumi.ResourceOptions(depends_on=[test_user]))
 cluster_admin = redpanda.Acl("cluster_admin",
     resource_type="CLUSTER",
@@ -798,6 +817,20 @@ product_schema = redpanda.Schema("product_schema",
             read_registry,
             write_registry,
         ]))
+developer = redpanda.Role("developer",
+    name=role_name,
+    cluster_api_url=test_cluster.cluster_api_url,
+    allow_deletion=role_allow_deletion)
+role_topic_read = redpanda.Acl("role_topic_read",
+    resource_type="TOPIC",
+    resource_name_=test_topic.name,
+    resource_pattern_type="LITERAL",
+    principal=developer.name.apply(lambda name: f"RedpandaRole:{name}"),
+    host="*",
+    operation="READ",
+    permission_type="ALLOW",
+    cluster_api_url=test_cluster.cluster_api_url,
+    allow_deletion=acl_allow_deletion)
 read_product = redpanda.SchemaRegistryAcl("read_product",
     cluster_id=test_cluster.id,
     principal=test_user.name.apply(lambda name: f"User:{name}"),
@@ -834,10 +867,6 @@ write_orders = redpanda.SchemaRegistryAcl("write_orders",
             cluster_admin,
             schema_registry_admin,
         ]))
-developer = redpanda.Role("developer",
-    name=role_name,
-    cluster_api_url=test_cluster.cluster_api_url,
-    allow_deletion=role_allow_deletion)
 developer_assignment = redpanda.RoleAssignment("developer_assignment",
     role_name=developer.name,
     principal=test_user.name,
@@ -949,6 +978,11 @@ return await Deployment.RunAsync(() =>
         ReplicationFactor = replicationFactor,
         ClusterApiUrl = testCluster.ClusterApiUrl,
         AllowDeletion = true,
+        Configuration =
+        {
+            { "cleanup.policy", "delete" },
+            { "retention.ms", "604800000" },
+        },
     }, new CustomResourceOptions
     {
         DependsOn =
@@ -1220,6 +1254,26 @@ return await Deployment.RunAsync(() =>
         },
     });
 
+    var developer = new Redpanda.Role("developer", new()
+    {
+        Name = roleName,
+        ClusterApiUrl = testCluster.ClusterApiUrl,
+        AllowDeletion = roleAllowDeletion,
+    });
+
+    var roleTopicRead = new Redpanda.Acl("role_topic_read", new()
+    {
+        ResourceType = "TOPIC",
+        ResourceName = testTopic.Name,
+        ResourcePatternType = "LITERAL",
+        Principal = developer.Name.Apply(name => $"RedpandaRole:{name}"),
+        Host = "*",
+        Operation = "READ",
+        PermissionType = "ALLOW",
+        ClusterApiUrl = testCluster.ClusterApiUrl,
+        AllowDeletion = aclAllowDeletion,
+    });
+
     var readProduct = new Redpanda.SchemaRegistryAcl("read_product", new()
     {
         ClusterId = testCluster.Id,
@@ -1266,13 +1320,6 @@ return await Deployment.RunAsync(() =>
             clusterAdmin,
             schemaRegistryAdmin,
         },
-    });
-
-    var developer = new Redpanda.Role("developer", new()
-    {
-        Name = roleName,
-        ClusterApiUrl = testCluster.ClusterApiUrl,
-        AllowDeletion = roleAllowDeletion,
     });
 
     var developerAssignment = new Redpanda.RoleAssignment("developer_assignment", new()
@@ -1415,6 +1462,10 @@ func main() {
 			ReplicationFactor: pulumi.Any(replicationFactor),
 			ClusterApiUrl:     testCluster.ClusterApiUrl,
 			AllowDeletion:     pulumi.Bool(true),
+			Configuration: pulumi.StringMap{
+				"cleanup.policy": pulumi.String("delete"),
+				"retention.ms":   pulumi.String("604800000"),
+			},
 		}, pulumi.DependsOn([]pulumi.Resource{
 			testUser,
 		}))
@@ -1728,6 +1779,30 @@ func main() {
 		if err != nil {
 			return err
 		}
+		developer, err := redpanda.NewRole(ctx, "developer", &redpanda.RoleArgs{
+			Name:          pulumi.Any(roleName),
+			ClusterApiUrl: testCluster.ClusterApiUrl,
+			AllowDeletion: pulumi.Any(roleAllowDeletion),
+		})
+		if err != nil {
+			return err
+		}
+		_, err = redpanda.NewAcl(ctx, "role_topic_read", &redpanda.AclArgs{
+			ResourceType:        pulumi.String("TOPIC"),
+			ResourceName:        testTopic.Name,
+			ResourcePatternType: pulumi.String("LITERAL"),
+			Principal: developer.Name.ApplyT(func(name string) (string, error) {
+				return fmt.Sprintf("RedpandaRole:%v", name), nil
+			}).(pulumi.StringOutput),
+			Host:           pulumi.String("*"),
+			Operation:      pulumi.String("READ"),
+			PermissionType: pulumi.String("ALLOW"),
+			ClusterApiUrl:  testCluster.ClusterApiUrl,
+			AllowDeletion:  pulumi.Any(aclAllowDeletion),
+		})
+		if err != nil {
+			return err
+		}
 		var tmp9 pulumi.String
 		if srAclPasswordWo != nil {
 			tmp9 = nil
@@ -1783,14 +1858,6 @@ func main() {
 			clusterAdmin,
 			schemaRegistryAdmin,
 		}))
-		if err != nil {
-			return err
-		}
-		developer, err := redpanda.NewRole(ctx, "developer", &redpanda.RoleArgs{
-			Name:          pulumi.Any(roleName),
-			ClusterApiUrl: testCluster.ClusterApiUrl,
-			AllowDeletion: pulumi.Any(roleAllowDeletion),
-		})
 		if err != nil {
 			return err
 		}
@@ -1949,6 +2016,10 @@ public class App {
             .replicationFactor(replicationFactor)
             .clusterApiUrl(testCluster.clusterApiUrl())
             .allowDeletion(true)
+            .configuration(Map.ofEntries(
+                Map.entry("cleanup.policy", "delete"),
+                Map.entry("retention.ms", "604800000")
+            ))
             .build(), CustomResourceOptions.builder()
                 .dependsOn(testUser)
                 .build());
@@ -2176,6 +2247,24 @@ public class App {
                     writeRegistry)
                 .build());
 
+        var developer = new Role("developer", RoleArgs.builder()
+            .name(roleName)
+            .clusterApiUrl(testCluster.clusterApiUrl())
+            .allowDeletion(roleAllowDeletion)
+            .build());
+
+        var roleTopicRead = new Acl("roleTopicRead", AclArgs.builder()
+            .resourceType("TOPIC")
+            .resourceName(testTopic.name())
+            .resourcePatternType("LITERAL")
+            .principal(developer.name().applyValue(_name -> String.format("RedpandaRole:%s", _name)))
+            .host("*")
+            .operation("READ")
+            .permissionType("ALLOW")
+            .clusterApiUrl(testCluster.clusterApiUrl())
+            .allowDeletion(aclAllowDeletion)
+            .build());
+
         var readProduct = new SchemaRegistryAcl("readProduct", SchemaRegistryAclArgs.builder()
             .clusterId(testCluster.id())
             .principal(testUser.name().applyValue(_name -> String.format("User:%s", _name)))
@@ -2215,12 +2304,6 @@ public class App {
                     clusterAdmin,
                     schemaRegistryAdmin)
                 .build());
-
-        var developer = new Role("developer", RoleArgs.builder()
-            .name(roleName)
-            .clusterApiUrl(testCluster.clusterApiUrl())
-            .allowDeletion(roleAllowDeletion)
-            .build());
 
         var developerAssignment = new RoleAssignment("developerAssignment", RoleAssignmentArgs.builder()
             .roleName(developer.name())
@@ -2522,6 +2605,22 @@ const productSchema = new redpanda.Schema("product_schema", {
         writeRegistry,
     ],
 });
+const developer = new redpanda.Role("developer", {
+    name: roleName,
+    clusterApiUrl: testCluster.clusterApiUrl,
+    allowDeletion: roleAllowDeletion,
+});
+const roleTopicRead = new redpanda.Acl("role_topic_read", {
+    resourceType: "TOPIC",
+    resourceName: testTopic.name,
+    resourcePatternType: "LITERAL",
+    principal: pulumi.interpolate`RedpandaRole:${developer.name}`,
+    host: "*",
+    operation: "READ",
+    permissionType: "ALLOW",
+    clusterApiUrl: testCluster.clusterApiUrl,
+    allowDeletion: aclAllowDeletion,
+});
 const readProduct = new redpanda.SchemaRegistryAcl("read_product", {
     clusterId: testCluster.id,
     principal: pulumi.interpolate`User:${testUser.name}`,
@@ -2575,11 +2674,6 @@ const describeTestTopic = new redpanda.SchemaRegistryAcl("describe_test_topic", 
         clusterAdmin,
         schemaRegistryAdmin,
     ],
-});
-const developer = new redpanda.Role("developer", {
-    name: roleName,
-    clusterApiUrl: testCluster.clusterApiUrl,
-    allowDeletion: roleAllowDeletion,
 });
 const developerAssignment = new redpanda.RoleAssignment("developer_assignment", {
     roleName: developer.name,
@@ -2850,6 +2944,20 @@ product_schema = redpanda.Schema("product_schema",
             read_registry,
             write_registry,
         ]))
+developer = redpanda.Role("developer",
+    name=role_name,
+    cluster_api_url=test_cluster.cluster_api_url,
+    allow_deletion=role_allow_deletion)
+role_topic_read = redpanda.Acl("role_topic_read",
+    resource_type="TOPIC",
+    resource_name_=test_topic.name,
+    resource_pattern_type="LITERAL",
+    principal=developer.name.apply(lambda name: f"RedpandaRole:{name}"),
+    host="*",
+    operation="READ",
+    permission_type="ALLOW",
+    cluster_api_url=test_cluster.cluster_api_url,
+    allow_deletion=acl_allow_deletion)
 read_product = redpanda.SchemaRegistryAcl("read_product",
     cluster_id=test_cluster.id,
     principal=test_user.name.apply(lambda name: f"User:{name}"),
@@ -2898,10 +3006,6 @@ describe_test_topic = redpanda.SchemaRegistryAcl("describe_test_topic",
             cluster_admin,
             schema_registry_admin,
         ]))
-developer = redpanda.Role("developer",
-    name=role_name,
-    cluster_api_url=test_cluster.cluster_api_url,
-    allow_deletion=role_allow_deletion)
 developer_assignment = redpanda.RoleAssignment("developer_assignment",
     role_name=developer.name,
     principal=test_user.name,
@@ -3262,6 +3366,26 @@ return await Deployment.RunAsync(() =>
         },
     });
 
+    var developer = new Redpanda.Role("developer", new()
+    {
+        Name = roleName,
+        ClusterApiUrl = testCluster.ClusterApiUrl,
+        AllowDeletion = roleAllowDeletion,
+    });
+
+    var roleTopicRead = new Redpanda.Acl("role_topic_read", new()
+    {
+        ResourceType = "TOPIC",
+        ResourceName = testTopic.Name,
+        ResourcePatternType = "LITERAL",
+        Principal = developer.Name.Apply(name => $"RedpandaRole:{name}"),
+        Host = "*",
+        Operation = "READ",
+        PermissionType = "ALLOW",
+        ClusterApiUrl = testCluster.ClusterApiUrl,
+        AllowDeletion = aclAllowDeletion,
+    });
+
     var readProduct = new Redpanda.SchemaRegistryAcl("read_product", new()
     {
         ClusterId = testCluster.Id,
@@ -3326,13 +3450,6 @@ return await Deployment.RunAsync(() =>
             clusterAdmin,
             schemaRegistryAdmin,
         },
-    });
-
-    var developer = new Redpanda.Role("developer", new()
-    {
-        Name = roleName,
-        ClusterApiUrl = testCluster.ClusterApiUrl,
-        AllowDeletion = roleAllowDeletion,
     });
 
     var developerAssignment = new Redpanda.RoleAssignment("developer_assignment", new()
@@ -3713,6 +3830,30 @@ func main() {
 		if err != nil {
 			return err
 		}
+		developer, err := redpanda.NewRole(ctx, "developer", &redpanda.RoleArgs{
+			Name:          pulumi.Any(roleName),
+			ClusterApiUrl: testCluster.ClusterApiUrl,
+			AllowDeletion: pulumi.Any(roleAllowDeletion),
+		})
+		if err != nil {
+			return err
+		}
+		_, err = redpanda.NewAcl(ctx, "role_topic_read", &redpanda.AclArgs{
+			ResourceType:        pulumi.String("TOPIC"),
+			ResourceName:        testTopic.Name,
+			ResourcePatternType: pulumi.String("LITERAL"),
+			Principal: developer.Name.ApplyT(func(name string) (string, error) {
+				return fmt.Sprintf("RedpandaRole:%v", name), nil
+			}).(pulumi.StringOutput),
+			Host:           pulumi.String("*"),
+			Operation:      pulumi.String("READ"),
+			PermissionType: pulumi.String("ALLOW"),
+			ClusterApiUrl:  testCluster.ClusterApiUrl,
+			AllowDeletion:  pulumi.Any(aclAllowDeletion),
+		})
+		if err != nil {
+			return err
+		}
 		_, err = redpanda.NewSchemaRegistryAcl(ctx, "read_product", &redpanda.SchemaRegistryAclArgs{
 			ClusterId: testCluster.ID(),
 			Principal: testUser.Name.ApplyT(func(name string) (string, error) {
@@ -3773,14 +3914,6 @@ func main() {
 			clusterAdmin,
 			schemaRegistryAdmin,
 		}))
-		if err != nil {
-			return err
-		}
-		developer, err := redpanda.NewRole(ctx, "developer", &redpanda.RoleArgs{
-			Name:          pulumi.Any(roleName),
-			ClusterApiUrl: testCluster.ClusterApiUrl,
-			AllowDeletion: pulumi.Any(roleAllowDeletion),
-		})
 		if err != nil {
 			return err
 		}
@@ -4007,6 +4140,19 @@ resources:
       principal: User:${testUser.name}
       host: '*'
       operation: ALL
+      permissionType: ALLOW
+      clusterApiUrl: ${testCluster.clusterApiUrl}
+      allowDeletion: ${aclAllowDeletion}
+  roleTopicRead:
+    type: redpanda:Acl
+    name: role_topic_read
+    properties:
+      resourceType: TOPIC
+      resourceName: ${testTopic.name}
+      resourcePatternType: LITERAL
+      principal: RedpandaRole:${developer.name}
+      host: '*'
+      operation: READ
       permissionType: ALLOW
       clusterApiUrl: ${testCluster.clusterApiUrl}
       allowDeletion: ${aclAllowDeletion}
@@ -4515,6 +4661,24 @@ public class App {
                     writeRegistry)
                 .build());
 
+        var developer = new Role("developer", RoleArgs.builder()
+            .name(roleName)
+            .clusterApiUrl(testCluster.clusterApiUrl())
+            .allowDeletion(roleAllowDeletion)
+            .build());
+
+        var roleTopicRead = new Acl("roleTopicRead", AclArgs.builder()
+            .resourceType("TOPIC")
+            .resourceName(testTopic.name())
+            .resourcePatternType("LITERAL")
+            .principal(developer.name().applyValue(_name -> String.format("RedpandaRole:%s", _name)))
+            .host("*")
+            .operation("READ")
+            .permissionType("ALLOW")
+            .clusterApiUrl(testCluster.clusterApiUrl())
+            .allowDeletion(aclAllowDeletion)
+            .build());
+
         var readProduct = new SchemaRegistryAcl("readProduct", SchemaRegistryAclArgs.builder()
             .clusterId(testCluster.id())
             .principal(testUser.name().applyValue(_name -> String.format("User:%s", _name)))
@@ -4568,12 +4732,6 @@ public class App {
                     clusterAdmin,
                     schemaRegistryAdmin)
                 .build());
-
-        var developer = new Role("developer", RoleArgs.builder()
-            .name(roleName)
-            .clusterApiUrl(testCluster.clusterApiUrl())
-            .allowDeletion(roleAllowDeletion)
-            .build());
 
         var developerAssignment = new RoleAssignment("developerAssignment", RoleAssignmentArgs.builder()
             .roleName(developer.name())

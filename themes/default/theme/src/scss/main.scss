@@ -11,6 +11,7 @@
 
 @import "colors";
 @import "mixins";
+@import "consent-banner";
 
 // Sass variables (no CSS output)
 $sitenav-height: 90px;
@@ -397,52 +398,4 @@ $sitenav-offset: calc($sitenav-height + 16px);
         @apply rounded;
     }
 
-    #segment-consent-manager {
-        @apply fixed bottom-0 right-0 left-0 text-black;
-        z-index: 100;
-        @apply w-full px-3;
-
-        @include screen-lg {
-            @apply w-1/3 float-left mb-2 mr-2 rounded-lg shadow-lg overflow-hidden px-4 py-2;
-        }
-
-        div {
-           @apply bg-white;
-        }
-
-        div:empty {
-            @apply hidden;
-        }
-
-        p {
-            @apply text-black text-left text-sm pr-8 pb-2;
-
-            a {
-                text-decoration: none;
-                color: map-get($blue, 600);
-            }
-        }
-
-        button {
-            @apply text-black font-bold no-underline;
-            top: 10%;
-        }
-
-        .manage-cookies-btn {
-            @apply bg-white text-violet-600 border-2 border-violet-600 no-underline p-3 rounded-md;
-            @include transition;
-
-            &.disabled {
-                opacity: 0.3;
-            }
-
-            &:hover {
-                @apply bg-violet-100 text-violet-600;
-            }
-
-            &:focus {
-                @apply bg-violet-200 text-violet-600;
-            }
-        }
-    }
 }

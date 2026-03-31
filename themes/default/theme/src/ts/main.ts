@@ -14,6 +14,7 @@ import "./toc";
 import "./pulumi-ai-menu";
 import "./docs-main";
 import "./algolia/autocomplete";
+import "./consent-manager";
 
 // Register all Stencil components.
 defineCustomElements();

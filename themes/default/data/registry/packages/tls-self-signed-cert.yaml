@@ -6,7 +6,7 @@ logo_url: ""
 name: tls-self-signed-cert
 native: true
 package_status: public_preview
-publisher: Pulumi
+publisher: DEPRECATED
 repo_url: https://github.com/pulumi/pulumi-tls-self-signed-cert
 schema_file_path: schema.json
 title: Self Signed Certificate

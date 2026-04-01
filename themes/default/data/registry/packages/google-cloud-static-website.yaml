@@ -6,7 +6,7 @@ logo_url: ""
 name: google-cloud-static-website
 native: false
 package_status: public_preview
-publisher: Pulumi
+publisher: DEPRECATED
 repo_url: https://github.com/pulumi/pulumi-google-cloud-static-website
 schema_file_path: schema.json
 title: Google Cloud Static Website

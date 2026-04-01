@@ -416,7 +416,8 @@ const indexFileOpts = {
             let msg = err.path + ":\n";
             for (let i = 0; i < err.errors.length; i++) {
                 const error = err.errors[i];
-                msg += "Line " + error.lineNumber + ": " + error.ruleDescription;
+                msg +=
+                    "Line " + error.lineNumber + ": " + error.ruleDescription;
                 msg += error.errorDetail
                     ? " [" + error.errorDetail + "].\n"
                     : ".\n";

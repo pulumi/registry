@@ -27,11 +27,13 @@
         "postcss": "^8.5.1",
         "postcss-cli": "^11.0.0",
         "beasties": "^0.4.1",
+        "sitemap": "^9.0.1",
         "sitemapper": "^3.2.2",
         "util": "^0.12.5"
     },
     "scripts": {
         "minify-css": "node scripts/minify-css.js",
+        "split-sitemap": "node scripts/split-sitemap.js",
         "test-api-docs": "NODE_OPTIONS=--max_old_space_size=8192 mocha scripts/tests -n expose-gc --reporter mocha-ctrf-json-reporter",
         "lint": "eslint scripts && prettier scripts --check",
         "format": "prettier scripts --write",

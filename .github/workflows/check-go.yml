@@ -18,15 +18,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Repo
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
          sparse-checkout: |
            ${{ inputs.path }}
            .golangci.yml
     - name: Setup Go
-      uses: actions/setup-go@v5
+      uses: actions/setup-go@v6
+      with:
+        go-version-file: '${{ inputs.path }}/go.mod'
     - name: golangci-lint
-      uses: golangci/golangci-lint-action@v8
+      uses: golangci/golangci-lint-action@v9
       with:
         version: v2.10.1
         working-directory: ${{ inputs.path }}
@@ -37,12 +39,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Repo
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
          sparse-checkout: |
            ${{ inputs.path }}
     - name: Setup Go
-      uses: actions/setup-go@v5
+      uses: actions/setup-go@v6
+      with:
+        go-version-file: '${{ inputs.path }}/go.mod'
     - name: Run Tests
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

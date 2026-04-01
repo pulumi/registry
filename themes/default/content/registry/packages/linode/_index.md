@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-linode/v5.9.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-linode/v5.10.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-linode/blob/v5.9.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-linode/blob/v5.10.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Linode Provider
 meta_desc: Provides an overview on how to configure the Pulumi Linode provider.
@@ -25,148 +25,6 @@ The provider needs to be configured with the proper credentials before it can be
 
 Use the navigation to the left to read about the available functions.
 ## Example Usage
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
-{{% choosable language typescript %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: nodejs
-
-```
-
-```typescript
-import * as pulumi from "@pulumi/pulumi";
-import * as linode from "@pulumi/linode";
-
-// Create a Linode
-const foobar = new linode.Instance("foobar", {});
-```
-
-{{% /choosable %}}
-{{% choosable language python %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: python
-
-```
-
-```python
-import pulumi
-import pulumi_linode as linode
-
-# Create a Linode
-foobar = linode.Instance("foobar")
-```
-
-{{% /choosable %}}
-{{% choosable language csharp %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: dotnet
-
-```
-
-```csharp
-using System.Collections.Generic;
-using System.Linq;
-using Pulumi;
-using Linode = Pulumi.Linode;
-
-return await Deployment.RunAsync(() =>
-{
-    // Create a Linode
-    var foobar = new Linode.Instance("foobar");
-
-});
-
-```
-
-{{% /choosable %}}
-{{% choosable language go %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: go
-
-```
-
-```go
-package main
-
-import (
-	"github.com/pulumi/pulumi-linode/sdk/v5/go/linode"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-)
-
-func main() {
-	pulumi.Run(func(ctx *pulumi.Context) error {
-		// Create a Linode
-		_, err := linode.NewInstance(ctx, "foobar", nil)
-		if err != nil {
-			return err
-		}
-		return nil
-	})
-}
-```
-
-{{% /choosable %}}
-{{% choosable language yaml %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: yaml
-
-```
-
-```yaml
-resources:
-  # Create a Linode
-  foobar:
-    type: linode:Instance
-```
-
-{{% /choosable %}}
-{{% choosable language java %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: java
-
-```
-
-```java
-package generated_program;
-
-import com.pulumi.Context;
-import com.pulumi.Pulumi;
-import com.pulumi.core.Output;
-import com.pulumi.linode.Instance;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Map;
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
-public class App {
-    public static void main(String[] args) {
-        Pulumi.run(App::stack);
-    }
-
-    public static void stack(Context ctx) {
-        // Create a Linode
-        var foobar = new Instance("foobar");
-
-    }
-}
-```
-
-{{% /choosable %}}
-{{< /chooser >}}
-
 {{< chooser language "typescript,python,go,csharp,java,yaml" >}}
 {{% choosable language typescript %}}
 ```yaml
@@ -356,6 +214,8 @@ This section outlines commonly used provider configuration options.
 * `skipInstanceReadyPoll` - (Optional) Skip waiting for a linode.Instance resource to be running.
 
 * `skipInstanceDeletePoll` - (Optional) Skip waiting for a linode.Instance resource to finish deleting.
+
+* `skipLkeClusterDeletePoll` - (Optional) Skip waiting for all Linode instances in an LKE cluster to be deleted.
 
 * `skipImplicitReboots` - (Optional) If true, Linode Instances will not be rebooted on config and interface changes. (default `false`)
 ### Advanced Configuration

@@ -6,7 +6,7 @@ logo_url: ""
 name: aws-iam
 native: false
 package_status: public_preview
-publisher: Pulumi
+publisher: DEPRECATED
 repo_url: https://github.com/pulumi/pulumi-aws-iam
 schema_file_path: schema.yaml
 title: AWS IAM

@@ -25,6 +25,8 @@ jobs:
            .golangci.yml
     - name: Setup Go
       uses: actions/setup-go@v6
+      with:
+        go-version-file: '${{ inputs.path }}/go.mod'
     - name: golangci-lint
       uses: golangci/golangci-lint-action@v9
       with:
@@ -43,6 +45,8 @@ jobs:
            ${{ inputs.path }}
     - name: Setup Go
       uses: actions/setup-go@v6
+      with:
+        go-version-file: '${{ inputs.path }}/go.mod'
     - name: Run Tests
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

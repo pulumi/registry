@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pydantic/pulumi-logfire/v0.1.6/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pydantic/pulumi-logfire/v0.1.7/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pydantic/pulumi-logfire/blob/v0.1.6/docs/_index.md
+edit_url: https://github.com/pydantic/pulumi-logfire/blob/v0.1.7/docs/_index.md
 title: Logfire
 meta_desc: Use the Pulumi Logfire provider to manage projects, alerts, channels, dashboards, and API tokens.
 layout: package

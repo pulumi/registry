@@ -22,7 +22,7 @@
                 <div class="img-name-version">
                     {{ with $iconData }}
                         <div>
-                            {{ partial "registry/package/icon.html" . }}
+                            {{ partial "registry/package/icon.html" (dict "package" . "lazy" false) }}
                         </div>
                     {{ end }}
                     {{ with $packageData }}
@@ -37,7 +37,7 @@
                 <div class="img-name-version">
                     {{ with $iconData }}
                         <div>
-                            {{ partial "registry/package/icon.html" . }}
+                            {{ partial "registry/package/icon.html" (dict "package" . "lazy" false) }}
                         </div>
                     {{ end }}
                     {{ with $packageData }}

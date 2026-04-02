@@ -212,6 +212,44 @@ const baseCacheBehavior = {
     responseHeadersPolicyId: "67f7725c-6f97-4210-82d7-5512b31e9d03", // SecurityHeadersPolicy
 };
 
+// Fingerprinted assets (logos, etc.) include a content hash in their filename,
+// so they are safe to cache indefinitely with an immutable directive.
+// Includes the same security headers as the AWS managed SecurityHeadersPolicy
+// so fingerprinted paths don't lose security headers.
+const immutableCachePolicy = new aws.cloudfront.ResponseHeadersPolicy("immutable-cache-headers", {
+    securityHeadersConfig: {
+        frameOptions: {
+            frameOption: "DENY",
+            override: false,
+        },
+        referrerPolicy: {
+            referrerPolicy: "strict-origin-when-cross-origin",
+            override: false,
+        },
+        contentTypeOptions: {
+            override: true,
+        },
+        strictTransportSecurity: {
+            accessControlMaxAgeSec: 31536000,
+            includeSubdomains: true,
+            preload: true,
+            override: false,
+        },
+        xssProtection: {
+            modeBlock: true,
+            protection: true,
+            override: false,
+        },
+    },
+    customHeadersConfig: {
+        items: [{
+            header: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+            override: true,
+        }],
+    },
+});
+
 // distributionArgs configures the CloudFront distribution. Relevant documentation:
 // https://www.terraform.io/docs/providers/aws/r/cloudfront_distribution.html
 // https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/distribution-web-values-specify.html
@@ -259,6 +297,16 @@ const distributionArgs: aws.cloudfront.DistributionArgs = {
             defaultTtl: 0,
             minTtl: 0,
             maxTtl: 0,
+        },
+        // Fingerprinted assets have content hashes in their filenames
+        // (e.g. /fingerprinted/logos/pkg/aws.abc123.svg) and are safe
+        // to cache for one year.
+        {
+            ...baseCacheBehavior,
+            pathPattern: "/fingerprinted/*",
+            defaultTtl: oneYear,
+            maxTtl: oneYear,
+            responseHeadersPolicyId: immutableCachePolicy.id,
         },
     ],
 

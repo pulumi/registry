@@ -16,7 +16,7 @@
 <div class="package-card">
     {{ with $iconData }}
         <div>
-            {{ partial "registry/package/icon.html" . }}
+            {{ partial "registry/package/icon.html" (dict "package" . "lazy" false) }}
         </div>
     {{ end }}
 

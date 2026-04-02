@@ -6,7 +6,8 @@
 # caches registry HTML for up to 30 minutes, so stale HTML can reference
 # CSS/JS bundles from the previous bucket that no longer exist on the new
 # one — causing broken styles until the cache expires. Invalidating
-# /registry/css/* after the origin swap prevents this.
+# /registry/* after the origin swap forces CloudFront to fetch fresh HTML
+# whose <link> tags match the new bucket's CSS bundles.
 #
 # Requires PULUMI_DOCS_STACK_NAME to be set (e.g. "pulumi/www.pulumi.com/www-production").
 
@@ -26,10 +27,10 @@ if [[ -z "$DOCS_CF_DIST_ID" ]]; then
     exit 0
 fi
 
-log "Invalidating /registry/css/* on docs CloudFront distribution $DOCS_CF_DIST_ID..."
+log "Invalidating /registry/* on docs CloudFront distribution $DOCS_CF_DIST_ID..."
 aws cloudfront create-invalidation \
     --distribution-id "$DOCS_CF_DIST_ID" \
-    --paths "/registry/css/*" \
+    --paths "/registry/*" \
     --region us-east-1 > /dev/null
 
 log "Invalidation created."

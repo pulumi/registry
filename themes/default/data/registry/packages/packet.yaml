@@ -6,7 +6,7 @@ logo_url: ""
 name: packet
 native: false
 package_status: ga
-publisher: Pulumi
+publisher: DEPRECATED
 repo_url: https://github.com/pulumi/pulumi-packet
 schema_file_path: /provider/cmd/pulumi-resource-packet/schema.json
 title: Packet

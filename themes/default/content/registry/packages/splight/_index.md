@@ -1,6 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/splightplatform/pulumi-splight/v1.2.18/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/splightplatform/pulumi-splight/v1.2.19/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+edit_url: https://github.com/splightplatform/pulumi-splight/blob/v1.2.19/docs/_index.md
 title: Splight
 meta_desc: Provides an overview of the Splight Provider for Pulumi.
 layout: package

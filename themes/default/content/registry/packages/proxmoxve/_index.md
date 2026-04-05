@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/muhlba91/pulumi-proxmoxve/v7.13.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/muhlba91/pulumi-proxmoxve/v8.0.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/muhlba91/pulumi-proxmoxve/blob/v7.13.0/docs/_index.md
+edit_url: https://github.com/muhlba91/pulumi-proxmoxve/blob/v8.0.0/docs/_index.md
 title: Proxmox Virtual Environment (Proxmox VE)
 meta_desc: Provides an overview of the Proxmox VE Provider for Pulumi.
 layout: package
@@ -19,7 +19,7 @@ containers using [Proxmox VE](https://www.proxmox.com/en/proxmox-ve).
 ```javascript
 const proxmox = require("@muhlba91/pulumi-proxmoxve")
 
-const virtualMachine = new proxmox.vm.VirtualMachine('vm', {
+const virtualMachine = new proxmox.VmLegacy('vm', {
     nodeName: 'pve1',
     agent: {
         enabled: false, // toggles checking for ip addresses through qemu-guest-agent
@@ -91,7 +91,7 @@ const virtualMachine = new proxmox.vm.VirtualMachine('vm', {
 ```typescript
 import * as proxmox from "@muhlba91/pulumi-proxmoxve";
 
-const virtualMachine = new proxmox.vm.VirtualMachine('vm', {
+const virtualMachine = new proxmox.VmLegacy('vm', {
     nodeName: 'pve1',
     agent: {
         enabled: false, // toggles checking for ip addresses through qemu-guest-agent
@@ -163,7 +163,7 @@ const virtualMachine = new proxmox.vm.VirtualMachine('vm', {
 ```python
 import pulumi_proxmoxve as proxmox
 
-virtual_machine = proxmox.vm.VirtualMachine(
+virtual_machine = proxmox.VmLegacy(
     resource_name="vm",
     node_name="pve1",
     agent=proxmox.vm.VirtualMachineAgentArgs(
@@ -235,14 +235,14 @@ virtual_machine = proxmox.vm.VirtualMachine(
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Pulumi;
-using Pulumi.ProxmoxVE.VM;
-using Pulumi.ProxmoxVE.VM.Inputs;
+using Pulumi.ProxmoxVE;
+using Pulumi.ProxmoxVE.Inputs;
 
 class Program
 {
     static Task Main() =>
         Deployment.Run(() => {
-            var virtualMachine = new VirtualMachine("vm", new VirtualMachineArgs
+            var virtualMachine = new VmLegacy("vm", new VmLegacyArgs
             {
                 NodeName="pve1",
                 Agent=new VirtualMachineAgentArgs{

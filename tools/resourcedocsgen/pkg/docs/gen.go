@@ -2098,7 +2098,7 @@ func (mod *modContext) gen(fs codegen.Fs) error {
 
 // genCLI generates terminal-friendly markdown for resources and functions in this module,
 // populating the provided maps keyed by "{module}/{name}" path.
-func (mod *modContext) genCLI(resources, functions map[string]string) error {
+func (mod *modContext) genCLI(resources, functions map[string]CLIDocEntry) error {
 	modName := mod.getModuleFileName()
 	conflictResolver := mod.context.newModuleConflictResolver()
 
@@ -2131,7 +2131,13 @@ func (mod *modContext) genCLI(resources, functions map[string]string) error {
 			return fmt.Errorf("generating CLI resource %s: %w", title, err)
 		}
 		key := path.Join(modName, link)
-		resources[key] = buff.String()
+		resources[key] = CLIDocEntry{
+			Title:              cliData.Title,
+			Description:        normalizeWhitespace(cliData.Comment),
+			Content:            normalizeWhitespace(buff.String()),
+			Deprecated:         cliData.DeprecationMessage != "",
+			DeprecationMessage: cliData.DeprecationMessage,
+		}
 	}
 
 	for _, f := range mod.functions {
@@ -2150,7 +2156,13 @@ func (mod *modContext) genCLI(resources, functions map[string]string) error {
 			return fmt.Errorf("generating CLI function %s: %w", name, err)
 		}
 		key := path.Join(modName, link)
-		functions[key] = buff.String()
+		functions[key] = CLIDocEntry{
+			Title:              cliData.Title,
+			Description:        normalizeWhitespace(cliData.Comment),
+			Content:            normalizeWhitespace(buff.String()),
+			Deprecated:         cliData.DeprecationMessage != "",
+			DeprecationMessage: cliData.DeprecationMessage,
+		}
 	}
 
 	return nil
@@ -2539,11 +2551,10 @@ func (dctx *Context) GenerateCLIPackage() (*CLIDocsBundle, error) {
 	}
 
 	bundle := &CLIDocsBundle{
-		Version:        1,
 		Package:        pkgName,
 		PackageVersion: pkgVersion,
-		Resources:      make(map[string]string),
-		Functions:      make(map[string]string),
+		Resources:      make(map[string]CLIDocEntry),
+		Functions:      make(map[string]CLIDocEntry),
 	}
 
 	modules := []string{}
@@ -2557,7 +2568,112 @@ func (dctx *Context) GenerateCLIPackage() (*CLIDocsBundle, error) {
 		}
 	}
 
+	// Generate the overview from the root module.
+	overview, err := rootMod.genCLIOverview(pkgVersion)
+	if err != nil {
+		return nil, fmt.Errorf("generating CLI overview: %w", err)
+	}
+	bundle.Overview = overview
+
 	return bundle, nil
+}
+
+// genCLIOverview generates a clean markdown overview for the CLI bundle,
+// including the package description, module list, and package details.
+func (mod *modContext) genCLIOverview(pkgVersion string) (string, error) {
+	def, err := mod.pkg.Definition()
+	if err != nil {
+		return "", err
+	}
+
+	conflictResolver := mod.context.newModuleConflictResolver()
+
+	// Collect modules.
+	for _, child := range mod.children {
+		childName := child.getModuleFileName()
+		displayName := modFilenameToDisplayName(childName)
+		conflictResolver.getSafeName(displayName, child)
+	}
+
+	var b strings.Builder
+
+	// Package description.
+	desc := stripHTML(mod.pkg.Description())
+	if desc != "" {
+		b.WriteString(desc)
+		b.WriteString("\n")
+	}
+
+	// Modules.
+	if len(mod.children) > 0 {
+		b.WriteString("\n## Modules\n\n")
+		entries := make([]indexEntry, 0, len(mod.children))
+		for _, child := range mod.children {
+			childName := child.getModuleFileName()
+			displayName := modFilenameToDisplayName(childName)
+			entries = append(entries, indexEntry{
+				Link:        getModuleLink(childName),
+				DisplayName: displayName,
+			})
+		}
+		sortIndexEntries(entries)
+		for _, e := range entries {
+			fmt.Fprintf(&b, "- [%s](%s)\n", e.DisplayName, e.Link)
+		}
+	}
+
+	// Root-level resources.
+	if len(mod.resources) > 0 {
+		b.WriteString("\n## Resources\n\n")
+		entries := make([]indexEntry, 0, len(mod.resources))
+		for _, r := range mod.resources {
+			title := resourceName(r)
+			entries = append(entries, indexEntry{
+				Link:        getResourceLink(title) + "/",
+				DisplayName: title,
+			})
+		}
+		sortIndexEntries(entries)
+		for _, e := range entries {
+			fmt.Fprintf(&b, "- [%s](%s)\n", e.DisplayName, e.Link)
+		}
+	}
+
+	// Root-level functions.
+	if len(mod.functions) > 0 {
+		b.WriteString("\n## Functions\n\n")
+		entries := make([]indexEntry, 0, len(mod.functions))
+		for _, f := range mod.functions {
+			name := tokenToName(f.Token)
+			entries = append(entries, indexEntry{
+				Link:        getFunctionLink(name) + "/",
+				DisplayName: name,
+			})
+		}
+		sortIndexEntries(entries)
+		for _, e := range entries {
+			fmt.Fprintf(&b, "- [%s](%s)\n", e.DisplayName, e.Link)
+		}
+	}
+
+	// Package details.
+	displayName := getPackageDisplayName(def.Name)
+	b.WriteString("\n## Package Details\n\n")
+	if def.Repository != "" {
+		repoName := getRepositoryName(def.Repository)
+		fmt.Fprintf(&b, "**Repository:** [%s %s](%s)\n\n", displayName, repoName, def.Repository)
+	}
+	if def.License != "" {
+		fmt.Fprintf(&b, "**License:** %s\n\n", def.License)
+	}
+	if def.Attribution != "" {
+		fmt.Fprintf(&b, "**Notes:** %s\n\n", stripHTML(def.Attribution))
+	}
+	if pkgVersion != "" {
+		fmt.Fprintf(&b, "**Version:** %s\n", pkgVersion)
+	}
+
+	return normalizeWhitespace(b.String()), nil
 }
 
 const (

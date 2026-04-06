@@ -57,12 +57,10 @@
 </script>
 
 {{ if $pkg }}
-{{/* ---------- SoftwareSourceCode (package overview page only) ---------- */}}
-{{ $isOverview := or (strings.HasSuffix $path (printf "packages/%s/_index.md" $packageName)) (eq .Page.File.LogicalName "_index.md") }}
+{{ $isInstallPage := strings.Contains $path "installation-configuration" }}
 {{ $isApiRoot := strings.Contains $path "api-docs/_index.md" }}
-{{ $isInstallRoot := strings.Contains $path "installation-configuration" }}
-{{ $isHowToRoot := strings.Contains $path "how-to-guides/_index.md" }}
 
+{{/* ---------- SoftwareSourceCode (package overview page only) ---------- */}}
 {{ if and (eq (len $segments) 4) (eq (index $segments 3) "_index.md") }}
 <script type="application/ld+json">
 {
@@ -75,7 +73,6 @@
     "description": {{ $pkg.description | jsonify }},
     {{ with $pkg.version }}"version": {{ . | jsonify }},{{ end }}
     {{ with $pkg.repo_url }}"codeRepository": {{ . | jsonify }},{{ end }}
-    {{ with $pkg.repo_url }}"sameAs": [{{ . | jsonify }}],{{ end }}
     {{ with $pkg.logo_url }}"image": {{ . | jsonify }},{{ end }}
     {{ with $pkg.category }}"keywords": {{ printf "Pulumi, Infrastructure as Code, %s, %s provider" . $pkg.title | jsonify }},{{ end }}
     "programmingLanguage": ["TypeScript", "Python", "Go", "C#", "Java", "YAML"],
@@ -99,7 +96,7 @@
 {{ end }}
 
 {{/* ---------- HowTo (installation-configuration page) ---------- */}}
-{{ if $isInstallRoot }}
+{{ if $isInstallPage }}
 <script type="application/ld+json">
 {
     "@context": "https://schema.org",
@@ -108,6 +105,7 @@
     "description": {{ printf "How to install and configure the %s provider for Pulumi to manage %s resources as code." $pkg.title $pkg.title | jsonify }},
     "url": {{ $permalink | jsonify }},
     "mainEntityOfPage": {{ $permalink | jsonify }},
+    "educationalLevel": "Beginner",
     "tool": [
         { "@type": "HowToTool", "name": "Pulumi CLI" },
         { "@type": "HowToTool", "name": "Node.js, Python, Go, .NET, or Java" }
@@ -133,7 +131,6 @@
     "url": {{ $permalink | jsonify }},
     "mainEntityOfPage": {{ $permalink | jsonify }},
     "inLanguage": "en",
-    "proficiencyLevel": "Expert",
     "articleSection": "API Reference",
     "isPartOf": {
         "@type": "SoftwareSourceCode",

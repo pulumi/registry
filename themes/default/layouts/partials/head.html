@@ -88,6 +88,12 @@
     {{ end }}
 
 
+    <!-- Registry-specific structured data (JSON-LD) for AEO. -->
+    {{ if eq .Section "registry" }}
+        {{ partial "registry/structured-data.html" . }}
+    {{ end }}
+
+
     <!-- Events info for Google events. -->
     {{ if .Params.event_data }}
         <script type="application/ld+json">

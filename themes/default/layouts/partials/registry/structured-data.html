@@ -1,0 +1,159 @@
+{{/*
+    Structured data (JSON-LD) for Pulumi Registry pages.
+
+    Emits:
+      - BreadcrumbList for every registry page (improves entity hierarchy
+        for AI engines and Google rich results).
+      - SoftwareSourceCode for the top-level package overview page. This
+        matches what npmjs.com emits per package and is semantically accurate
+        for a provider library/SDK consumed by Pulumi.
+      - TechArticle / APIReference for API doc pages.
+      - HowTo hint for installation-configuration pages.
+
+    Data is sourced from the package YAML at
+    themes/default/data/registry/packages/<name>.yaml via
+    site.Data.registry.packages.<name>.
+*/}}
+
+{{ $path := .Page.File.Path }}
+{{ $segments := split $path "/" }}
+{{ $packageName := "" }}
+{{ if ge (len $segments) 3 }}
+    {{ $packageName = index $segments 2 }}
+{{ end }}
+{{ $pkg := index .Site.Data.registry.packages $packageName }}
+{{ $permalink := .Permalink }}
+
+{{/* ---------- BreadcrumbList (every registry page) ---------- */}}
+{{ $crumbs := slice }}
+{{ $crumbs = $crumbs | append (dict "name" "Registry" "url" (absURL "registry/")) }}
+{{ if $pkg }}
+    {{ $crumbs = $crumbs | append (dict "name" $pkg.title "url" (printf "%sregistry/packages/%s/" (absURL "") $packageName)) }}
+{{ end }}
+{{ if strings.Contains $permalink "/api-docs" }}
+    {{ $crumbs = $crumbs | append (dict "name" "API Docs" "url" (printf "%sregistry/packages/%s/api-docs/" (absURL "") $packageName)) }}
+{{ else if strings.Contains $permalink "installation-configuration" }}
+    {{ $crumbs = $crumbs | append (dict "name" "Installation & Configuration" "url" (printf "%sregistry/packages/%s/installation-configuration/" (absURL "") $packageName)) }}
+{{ else if strings.Contains $permalink "how-to-guides" }}
+    {{ $crumbs = $crumbs | append (dict "name" "How-to Guides" "url" (printf "%sregistry/packages/%s/how-to-guides/" (absURL "") $packageName)) }}
+{{ end }}
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        {{ range $i, $c := $crumbs }}
+            {{ if $i }},{{ end }}
+            {
+                "@type": "ListItem",
+                "position": {{ add $i 1 }},
+                "name": {{ $c.name | jsonify }},
+                "item": {{ $c.url | jsonify }}
+            }
+        {{ end }}
+    ]
+}
+</script>
+
+{{ if $pkg }}
+{{/* ---------- SoftwareSourceCode (package overview page only) ---------- */}}
+{{ $isOverview := or (strings.HasSuffix $path (printf "packages/%s/_index.md" $packageName)) (eq .Page.File.LogicalName "_index.md") }}
+{{ $isApiRoot := strings.Contains $path "api-docs/_index.md" }}
+{{ $isInstallRoot := strings.Contains $path "installation-configuration" }}
+{{ $isHowToRoot := strings.Contains $path "how-to-guides/_index.md" }}
+
+{{ if and (eq (len $segments) 4) (eq (index $segments 3) "_index.md") }}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "SoftwareSourceCode",
+    "name": {{ printf "%s Pulumi Provider" $pkg.title | jsonify }},
+    "alternateName": {{ $pkg.title | jsonify }},
+    "url": {{ $permalink | jsonify }},
+    "mainEntityOfPage": {{ $permalink | jsonify }},
+    "description": {{ $pkg.description | jsonify }},
+    {{ with $pkg.version }}"version": {{ . | jsonify }},{{ end }}
+    {{ with $pkg.repo_url }}"codeRepository": {{ . | jsonify }},{{ end }}
+    {{ with $pkg.repo_url }}"sameAs": [{{ . | jsonify }}],{{ end }}
+    {{ with $pkg.logo_url }}"image": {{ . | jsonify }},{{ end }}
+    {{ with $pkg.category }}"keywords": {{ printf "Pulumi, Infrastructure as Code, %s, %s provider" . $pkg.title | jsonify }},{{ end }}
+    "programmingLanguage": ["TypeScript", "Python", "Go", "C#", "Java", "YAML"],
+    "runtimePlatform": "Pulumi",
+    "isPartOf": {
+        "@type": "SoftwareSourceCode",
+        "name": "Pulumi",
+        "url": "https://www.pulumi.com/"
+    },
+    "author": {
+        "@type": "Organization",
+        "name": {{ $pkg.publisher | jsonify }}
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "Pulumi",
+        "url": "https://www.pulumi.com/"
+    }
+}
+</script>
+{{ end }}
+
+{{/* ---------- HowTo (installation-configuration page) ---------- */}}
+{{ if $isInstallRoot }}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": {{ printf "Install and configure the %s Pulumi provider" $pkg.title | jsonify }},
+    "description": {{ printf "How to install and configure the %s provider for Pulumi to manage %s resources as code." $pkg.title $pkg.title | jsonify }},
+    "url": {{ $permalink | jsonify }},
+    "mainEntityOfPage": {{ $permalink | jsonify }},
+    "tool": [
+        { "@type": "HowToTool", "name": "Pulumi CLI" },
+        { "@type": "HowToTool", "name": "Node.js, Python, Go, .NET, or Java" }
+    ],
+    "about": {
+        "@type": "SoftwareSourceCode",
+        "name": {{ printf "%s Pulumi Provider" $pkg.title | jsonify }},
+        "url": {{ printf "%sregistry/packages/%s/" (absURL "") $packageName | jsonify }}
+    }
+}
+</script>
+{{ end }}
+
+{{/* ---------- TechArticle / APIReference (API doc pages) ---------- */}}
+{{ if and (strings.Contains $path "api-docs") (not $isApiRoot) }}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": ["TechArticle", "APIReference"],
+    "headline": {{ .Title | jsonify }},
+    "name": {{ .Title | jsonify }},
+    {{ with .Params.meta_desc }}"description": {{ . | jsonify }},{{ end }}
+    "url": {{ $permalink | jsonify }},
+    "mainEntityOfPage": {{ $permalink | jsonify }},
+    "inLanguage": "en",
+    "proficiencyLevel": "Expert",
+    "articleSection": "API Reference",
+    "isPartOf": {
+        "@type": "SoftwareSourceCode",
+        "name": {{ printf "%s Pulumi Provider" $pkg.title | jsonify }},
+        "url": {{ printf "%sregistry/packages/%s/" (absURL "") $packageName | jsonify }}
+    },
+    "about": {
+        "@type": "SoftwareSourceCode",
+        "name": {{ printf "%s Pulumi Provider" $pkg.title | jsonify }}
+    },
+    "author": {
+        "@type": "Organization",
+        "name": {{ $pkg.publisher | jsonify }}
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "Pulumi",
+        "url": "https://www.pulumi.com/"
+    }
+}
+</script>
+{{ end }}
+{{ end }}

@@ -369,14 +369,32 @@ func toCLIFunctionArgs(args functionDocArgs) cliFunctionDocArgs {
 	return cli
 }
 
+// CLIDocEntry is a single resource or function entry in the CLI docs bundle.
+// It contains structured metadata fields so CLI consumers don't need to parse them from content.
+type CLIDocEntry struct {
+	Title              string `json:"title"`
+	Description        string `json:"description"`
+	Content            string `json:"content"`
+	Deprecated         bool   `json:"deprecated,omitempty"`
+	DeprecationMessage string `json:"deprecationMessage,omitempty"`
+}
+
 // CLIDocsBundle is the JSON structure for bundled CLI docs per package.
 // It contains all resource and function markdown docs keyed by module/name path.
 type CLIDocsBundle struct {
-	Version        int               `json:"version"`
-	Package        string            `json:"package"`
-	PackageVersion string            `json:"packageVersion"`
-	Resources      map[string]string `json:"resources"`
-	Functions      map[string]string `json:"functions"`
+	Package        string                 `json:"package"`
+	PackageVersion string                 `json:"packageVersion"`
+	Overview       string                 `json:"overview"`
+	Resources      map[string]CLIDocEntry `json:"resources"`
+	Functions      map[string]CLIDocEntry `json:"functions"`
+}
+
+// normalizeWhitespace normalizes line endings and tabs in generated content
+// so CLI consumers don't need to do this themselves.
+func normalizeWhitespace(s string) string {
+	s = strings.ReplaceAll(s, "\r\n", "\n")
+	s = strings.ReplaceAll(s, "\t", "    ")
+	return strings.TrimSpace(s)
 }
 
 // extractAllCLIExamples collects examples for all languages.

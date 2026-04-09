@@ -19,7 +19,7 @@ const config = {
 
 // Get role arns from datawarehouse stack.
 const airflowStackRef = new pulumi.StackReference(`pulumi/dwh-workflows-orchestrate-airflow/production`)
-const airflowTasksRole = airflowStackRef.getOutput('airflowTaskRoleArn')
+const airflowIrsaRole = airflowStackRef.getOutput('irsaRoleArn')
 
 const bucketReaderStackRef = new pulumi.StackReference(`pulumi/dwh-workflows-loader-prodbuckets/production`)
 const bucketReaderRole = bucketReaderStackRef.getOutput('dwhBucketReaderRole')
@@ -85,7 +85,7 @@ const e2eTestsBucket = new aws.s3.Bucket("api-docs-e2e-test-results",
 
 const e2eTestsBucketPolicy = new aws.s3.BucketPolicy("e2e-tests-bucket-policy", {
     bucket: e2eTestsBucket.bucket,
-    policy: pulumi.all([e2eTestsBucket.bucket, airflowTasksRole, bucketReaderRole])
+    policy: pulumi.all([e2eTestsBucket.bucket, airflowIrsaRole, bucketReaderRole])
     .apply(([bucketName, airflowRole, readerRole]) => JSON.stringify({
         Version: "2008-10-17",
         Statement: [

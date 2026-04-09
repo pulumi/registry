@@ -1,14 +1,14 @@
 ---
-title: AWSx (Pulumi Crosswalk for AWS)
+title: AWSx (Pulumi AWS Components)
 meta_desc: Well-Architected Infrastructure as Code for AWS. The easiest way to AWS — from development to production.
 layout: package
 ---
 
-The Amazon Web Services (AWS) [Crosswalk](../../../docs/guides/crosswalk/aws/) (AWSx) library uses automatic well-architected best practices to make common infrastructure-as-code tasks in [AWS](https://aws.amazon.com/) easier and more secure. It uses the AWS SDK to manage and provision resources.
+The Amazon Web Services (AWS) AWSx library uses automatic well-architected best practices to make common infrastructure-as-code tasks in [AWS](https://aws.amazon.com/) easier and more secure. It uses the AWS SDK to manage and provision resources.
 
 The AWSx provider must be configured with credentials to deploy and update resources in AWS; see [Installation & Configuration](./installation-configuration) for instructions.
 
-**New to Pulumi and AWS?** [Get started with AWS using our AWSx tutorial](/docs/guides/crosswalk/aws).
+**New to Pulumi and AWS?** [Get started with AWS using our AWSx tutorial](/docs/clouds/aws/guides/).
 
 ## Example
 

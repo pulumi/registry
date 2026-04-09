@@ -57,7 +57,7 @@ func titleLookup(shortName string) (string, bool) {
 		"alicloud":                             "Alibaba Cloud",
 		"auth0":                                "Auth0",
 		"aws":                                  "AWS Classic",
-		"awsx":                                 "AWSx (Pulumi Crosswalk for AWS)",
+		"awsx":                                 "AWSx (Pulumi AWS Components)",
 		"aws-apigateway":                       "AWS API Gateway",
 		"aws-miniflux":                         "Miniflux",
 		"aws-native":                           "AWS Native",

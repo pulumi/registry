@@ -70,26 +70,7 @@ The [`pulumi/kubernetes`](https://github.com/pulumi/pulumi-kubernetes) provider 
 - Java: [`com.pulumi.kubernetes`](https://search.maven.org/search?q=com.pulumi.kubernetes)
 - [Pulumi YAML](https://github.com/pulumi/pulumi-yaml#pulumiyaml)
 
-#### Extension Packages
-
-- [`pulumi/kx`](https://github.com/pulumi/pulumi-kubernetesx) - Kubernetes Workload Extensions
-
 [k8s]: https://kubernetes.io
-
-## Crosswalk for Kubernetes
-
-<a href="./">
-    <img src="/images/docs/reference/crosswalk/kubernetes/crosswalk-for-k8s.svg" align="right" width="280" style="margin: 0 0 32px 16px;">
-</a>
-
-[Pulumi Crosswalk for Kubernetes][crosswalk-k8s] is a collection of industry standard
-best-practices for managing Kubernetes, and its infrastructure in production.
-
-[Get started][crosswalk-control-plane] by deploying stacks of infrastructure architected to enable teams
-to run and manage Kubernetes in production.
-
-[crosswalk-control-plane]: /docs/guides/crosswalk/kubernetes/control-plane
-[crosswalk-k8s]: /docs/guides/crosswalk/kubernetes
 
 ## Pulumi Kubernetes Operator
 

@@ -65,10 +65,27 @@ log "Sync complete."
 # Sync CLI docs separately. These are generated outside the Hugo build tree to avoid
 # Hugo processing static files. They're uploaded directly to the same URL paths
 # they'd occupy if they were in the Hugo static directory.
+#
+# CLI docs bundles are uploaded gzip-compressed with Content-Encoding: gzip so they
+# pass through both CloudFront layers (registry CDN + www.pulumi.com CDN) without
+# relying on CloudFront's automatic compression -- which is disabled on /registry/*
+# because the outer CDN forwards Accept-Encoding via AllViewerExceptHostHeader, and
+# wouldn't help anyway for bundles over CloudFront's 10 MB auto-compress ceiling
+# (the aws bundle is >100 MB uncompressed). Go's http.Client decompresses
+# Content-Encoding: gzip transparently, so the pulumi docs CLI requires no changes.
+#
+# The cli-docs-out/ tree contains only cli-docs.json files, so it is safe to apply
+# --content-encoding/--content-type globally to every object in the sync.
 cli_docs_dir="cli-docs-out"
 if [[ -d "$cli_docs_dir" ]]; then
+    log "Pre-gzipping CLI docs..."
+    find "$cli_docs_dir" -type f -name 'cli-docs.json' -print0 \
+        | xargs -0 -P"$(nproc)" -I{} sh -c 'gzip -9 < "$1" > "$1.gz.tmp" && mv "$1.gz.tmp" "$1"' _ {}
+
     log "Synchronizing CLI docs to $destination_bucket_uri..."
     s5cmd --log error sync --acl public-read \
+        --content-encoding gzip \
+        --content-type application/json \
         "$cli_docs_dir/" "$destination_bucket_uri/"
     log "CLI docs sync complete."
 fi
@@ -79,6 +96,35 @@ echo "$s3_website_url"
 # Set the content-type of latest-version explicitly. (Otherwise, it'll be set as binary/octet-stream.)
 aws s3 cp "$build_dir/latest-version" "${destination_bucket_uri}/latest-version" \
     --content-type "text/plain" --acl public-read --region "$(aws_region)" --metadata-directive REPLACE
+
+# Smoke test CLI docs compression at the S3 website layer (before either CloudFront
+# layer has a chance to mask a regression). Uses the random package because it has a
+# small, reliably-present cli-docs.json bundle. Catches the regression where we
+# accidentally upload cli-docs.json files without Content-Encoding: gzip, which would
+# otherwise only surface after deploy when the CLI starts paying full wire cost again.
+#
+# Uses curl --dump-header to validate the body (gunzip -t) and capture the headers in
+# a single round trip, rather than issuing separate HEAD and GET requests.
+if [[ -d "$cli_docs_dir" && -f "$cli_docs_dir/registry/packages/random/api-docs/cli-docs.json" ]]; then
+    log "Smoke-testing CLI docs compression..."
+    cli_docs_test_url="${s3_website_url}/registry/packages/random/api-docs/cli-docs.json"
+    cli_docs_headers_file=$(mktemp)
+    if ! curl -fsS --dump-header "$cli_docs_headers_file" "$cli_docs_test_url" | gunzip -t; then
+        echo "ERROR: $cli_docs_test_url body did not decompress as gzip (or request failed)." >&2
+        rm -f "$cli_docs_headers_file"
+        exit 1
+    fi
+    cli_docs_headers=$(cat "$cli_docs_headers_file")
+    rm -f "$cli_docs_headers_file"
+    if ! grep -qi '^content-encoding: gzip' <<< "$cli_docs_headers"; then
+        echo "ERROR: $cli_docs_test_url is missing 'Content-Encoding: gzip'. Response headers:" >&2
+        echo "$cli_docs_headers" >&2
+        exit 1
+    fi
+    log "CLI docs compression smoke test passed."
+else
+    log "Skipping CLI docs compression smoke test: $cli_docs_dir/registry/packages/random/api-docs/cli-docs.json not found."
+fi
 
 # Smoke test the deployed website.
 log "Running browser tests on $s3_website_url..."

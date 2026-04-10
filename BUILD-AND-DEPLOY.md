@@ -488,7 +488,7 @@ The `scripts/ci/build.sh` script manages the cache lifecycle:
 2. **Generate**: `make api-docs` runs `resourcedocsgen`, which skips fresh packages and regenerates stale ones.
 3. **Save**: copies the generated output (including updated sentinel files) back to `.cache/api-docs/` for the next run.
 
-CLI docs follow the same lifecycle: on restore, `.cache/api-docs/cli-docs/<pkg>/api-docs/` is copied to `cli-docs-out/registry/packages/<pkg>/api-docs/`; on save, the reverse copy is performed. Only `schema.json` (not the entire directory tree) is cached per package in the schema layer, to avoid persisting stale CLI doc files from older builds.
+CLI docs follow the same lifecycle: on restore, `.cache/api-docs/cli-docs/<pkg>/api-docs/` is copied to `cli-docs-out/registry/packages/<pkg>/api-docs/`; on save, the reverse copy is performed. Only `schema.json` (not the entire directory tree) is cached per package in the schema layer, to avoid persisting stale CLI doc files from older builds. CLI docs are stored uncompressed in the cache; `sync.sh` gzip-compresses them in place immediately before uploading to S3 (with `Content-Encoding: gzip`).
 
 #### Versioned docs cache
 
@@ -577,7 +577,8 @@ PR opened / committed
         │               └── scripts/ci/sync.sh preview
         │                       ├── Create / reuse S3 bucket
         │                       ├── s5cmd sync public/ → bucket
-        │                       ├── s5cmd sync cli-docs-out/ → bucket
+        │                       ├── gzip -9 cli-docs-out/ (parallel pre-compress)
+        │                       ├── s5cmd sync cli-docs-out/ → bucket (Content-Encoding: gzip)
         │                       ├── Run browser tests (Cypress smoke test)
         │                       ├── Write origin-bucket-metadata.json
         │                       └── Post PR comment with preview URL
@@ -629,7 +630,8 @@ Push to master
                 │       ├── scripts/ci/sync.sh update
                 │       │       ├── Create / reuse S3 bucket
                 │       │       ├── s5cmd sync public/ → bucket
-                │       │       ├── s5cmd sync cli-docs-out/ → bucket
+                │       │       ├── gzip -9 cli-docs-out/ (parallel pre-compress)
+                │       │       ├── s5cmd sync cli-docs-out/ → bucket (Content-Encoding: gzip)
                 │       │       ├── Run browser tests (Cypress smoke test)
                 │       │       └── Write origin-bucket-metadata.json
                 │       ├── scripts/generate-search-index.sh
@@ -832,7 +834,8 @@ scripts/ci/sync.sh preview
   1. aws s3 mb registry-testing-origin-pr-<N>-<sha8>
   2. Enable static website hosting
   3. s5cmd sync public/ → bucket (--delete)
-  3a. s5cmd sync cli-docs-out/ → bucket
+  3a. gzip -9 cli-docs.json files in cli-docs-out/ (parallel)
+  3b. s5cmd sync cli-docs-out/ → bucket (Content-Encoding: gzip)
   4. Run Cypress smoke tests
   5. Write origin-bucket-metadata.json
   6. aws ssm put-parameter /registry/commits/<sha>/bucket = <bucket-name>

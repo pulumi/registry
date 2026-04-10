@@ -105,17 +105,22 @@ aws s3 cp "$build_dir/latest-version" "${destination_bucket_uri}/latest-version"
 if [[ -d "$cli_docs_dir" && -f "$cli_docs_dir/registry/packages/random/api-docs/cli-docs.json" ]]; then
     log "Smoke-testing CLI docs compression..."
     cli_docs_test_url="${s3_website_url}/registry/packages/random/api-docs/cli-docs.json"
-    cli_docs_headers=$(curl -fsSI "$cli_docs_test_url")
+    cli_docs_headers_file=$(mktemp)
+    if ! curl -fsS --dump-header "$cli_docs_headers_file" "$cli_docs_test_url" | gunzip -t; then
+        echo "ERROR: $cli_docs_test_url body did not decompress as gzip (or request failed)." >&2
+        rm -f "$cli_docs_headers_file"
+        exit 1
+    fi
+    cli_docs_headers=$(cat "$cli_docs_headers_file")
+    rm -f "$cli_docs_headers_file"
     if ! grep -qi '^content-encoding: gzip' <<< "$cli_docs_headers"; then
         echo "ERROR: $cli_docs_test_url is missing 'Content-Encoding: gzip'. Response headers:" >&2
         echo "$cli_docs_headers" >&2
         exit 1
     fi
-    if ! curl -fsS "$cli_docs_test_url" | gunzip -t; then
-        echo "ERROR: $cli_docs_test_url body did not decompress as gzip." >&2
-        exit 1
-    fi
     log "CLI docs compression smoke test passed."
+else
+    log "Skipping CLI docs compression smoke test: $cli_docs_dir/registry/packages/random/api-docs/cli-docs.json not found."
 fi
 
 # Smoke test the deployed website.

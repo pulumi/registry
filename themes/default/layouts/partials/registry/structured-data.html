@@ -109,7 +109,7 @@
         {{ $ts := time . | time.Format "2006-01-02T15:04:05Z" }}
         {{ $ssc = merge $ssc (dict "dateModified" $ts) }}
     {{ end }}
-    {{ with .PublishDate }}{{ $ssc = merge $ssc (dict "datePublished" (time.Format "2006-01-02T15:04:05Z" .)) }}{{ end }}
+    {{ if not $.PublishDate.IsZero }}{{ $ssc = merge $ssc (dict "datePublished" (time.Format "2006-01-02T15:04:05Z" $.PublishDate)) }}{{ end }}
 <script type="application/ld+json">{{ $ssc | jsonify | safeJS }}</script>
 {{ end }}
 
@@ -134,7 +134,7 @@
         )
     }}
     {{ with $pkg.updated_on }}{{ $howto = merge $howto (dict "dateModified" (time . | time.Format "2006-01-02T15:04:05Z")) }}{{ end }}
-    {{ with $.PublishDate }}{{ $howto = merge $howto (dict "datePublished" (time.Format "2006-01-02T15:04:05Z" .)) }}{{ end }}
+    {{ if not $.PublishDate.IsZero }}{{ $howto = merge $howto (dict "datePublished" (time.Format "2006-01-02T15:04:05Z" $.PublishDate)) }}{{ end }}
 <script type="application/ld+json">{{ $howto | jsonify | safeJS }}</script>
 {{ end }}
 
@@ -163,7 +163,7 @@
     }}
     {{ with .Params.meta_desc }}{{ $article = merge $article (dict "description" .) }}{{ end }}
     {{ with $pkg.updated_on }}{{ $article = merge $article (dict "dateModified" (time . | time.Format "2006-01-02T15:04:05Z")) }}{{ end }}
-    {{ with $.PublishDate }}{{ $article = merge $article (dict "datePublished" (time.Format "2006-01-02T15:04:05Z" .)) }}{{ end }}
+    {{ if not $.PublishDate.IsZero }}{{ $article = merge $article (dict "datePublished" (time.Format "2006-01-02T15:04:05Z" $.PublishDate)) }}{{ end }}
 <script type="application/ld+json">{{ $article | jsonify | safeJS }}</script>
 {{ end }}
 

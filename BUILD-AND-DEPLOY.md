@@ -488,7 +488,7 @@ The `scripts/ci/build.sh` script manages the cache lifecycle:
 2. **Generate**: `make api-docs` runs `resourcedocsgen`, which skips fresh packages and regenerates stale ones.
 3. **Save**: copies the generated output (including updated sentinel files) back to `.cache/api-docs/` for the next run.
 
-CLI docs follow the same lifecycle: on restore, `.cache/api-docs/cli-docs/<pkg>/api-docs/` is copied to `cli-docs-out/registry/packages/<pkg>/api-docs/`; on save, the reverse copy is performed. Only `schema.json` (not the entire directory tree) is cached per package in the schema layer, to avoid persisting stale CLI doc files from older builds. CLI docs are stored uncompressed in the cache; `sync.sh` gzip-compresses them in place immediately before uploading to S3 (with `Content-Encoding: gzip`).
+CLI docs follow the same lifecycle: on restore, `.cache/api-docs/cli-docs/<pkg>/api-docs/` is copied to `cli-docs-out/registry/packages/<pkg>/api-docs/`; on save, the reverse copy is performed. Only `schema.json` (not the entire directory tree) is cached per package in the schema layer, to avoid persisting stale CLI doc files from older builds. CLI docs and provider `schema.json` files are stored uncompressed in the cache and in the Hugo build tree; `sync.sh` gzip-compresses them immediately before uploading to S3 (with `Content-Encoding: gzip`). For `schema.json`, this happens by extracting the files out of `public/` into a sibling `schema-out/` tree before the main `s5cmd sync --delete public/` runs, so the main sync does not upload them with the wrong metadata.
 
 #### Versioned docs cache
 
@@ -576,9 +576,11 @@ PR opened / committed
         │               ├── scripts/ci/build.sh preview
         │               └── scripts/ci/sync.sh preview
         │                       ├── Create / reuse S3 bucket
-        │                       ├── s5cmd sync public/ → bucket
+        │                       ├── Extract + gzip -9 public/**/schema.json → schema-out/ (parallel)
+        │                       ├── s5cmd sync public/ → bucket (--delete)
         │                       ├── gzip -9 cli-docs-out/ (parallel pre-compress)
         │                       ├── s5cmd sync cli-docs-out/ → bucket (Content-Encoding: gzip)
+        │                       ├── s5cmd sync schema-out/ → bucket (Content-Encoding: gzip)
         │                       ├── Run browser tests (Cypress smoke test)
         │                       ├── Write origin-bucket-metadata.json
         │                       └── Post PR comment with preview URL
@@ -629,9 +631,11 @@ Push to master
                 │       ├── scripts/ci/build.sh update
                 │       ├── scripts/ci/sync.sh update
                 │       │       ├── Create / reuse S3 bucket
-                │       │       ├── s5cmd sync public/ → bucket
+                │       │       ├── Extract + gzip -9 public/**/schema.json → schema-out/ (parallel)
+                │       │       ├── s5cmd sync public/ → bucket (--delete)
                 │       │       ├── gzip -9 cli-docs-out/ (parallel pre-compress)
                 │       │       ├── s5cmd sync cli-docs-out/ → bucket (Content-Encoding: gzip)
+                │       │       ├── s5cmd sync schema-out/ → bucket (Content-Encoding: gzip)
                 │       │       ├── Run browser tests (Cypress smoke test)
                 │       │       └── Write origin-bucket-metadata.json
                 │       ├── scripts/generate-search-index.sh
@@ -833,10 +837,12 @@ PR commit pushed
 scripts/ci/sync.sh preview
   1. aws s3 mb registry-testing-origin-pr-<N>-<sha8>
   2. Enable static website hosting
+  2a. Extract + gzip -9 public/**/schema.json files into schema-out/ (parallel)
   3. s5cmd sync public/ → bucket (--delete)
   3a. gzip -9 cli-docs.json files in cli-docs-out/ (parallel)
   3b. s5cmd sync cli-docs-out/ → bucket (Content-Encoding: gzip)
-  4. Run Cypress smoke tests
+  3c. s5cmd sync schema-out/ → bucket (Content-Encoding: gzip)
+  4. Run Cypress smoke tests (including origin-gzip assertions on random)
   5. Write origin-bucket-metadata.json
   6. aws ssm put-parameter /registry/commits/<sha>/bucket = <bucket-name>
   7. Post PR comment: "Your preview is ready at http://..."

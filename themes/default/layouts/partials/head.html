@@ -73,7 +73,7 @@
                     "addressLocality": "Seattle, WA",
                     "addressCountry": "United States",
                     "postalCode": "98101",
-                    "streetAddress": "601 Union St Suite 1415"
+                    "streetAddress": "1525 4th Ave. Suite 800"
                 },
                 "email": "mailto:team@pulumi.com",
                 "url": "https://www.pulumi.com",
@@ -87,6 +87,10 @@
         </script>
     {{ end }}
 
+    <!-- Registry-specific structured data (JSON-LD) for AEO. -->
+    {{ if eq .Section "registry" }}
+        {{ partial "registry/structured-data.html" . }}
+    {{ end }}
 
     <!-- Events info for Google events. -->
     {{ if .Params.event_data }}

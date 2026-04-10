@@ -118,7 +118,7 @@ Visit the [How-to Guides](./how-to-guides) to find step-by-step guides for speci
 Pulumi offers Components that provide simpler interfaces and higher-productivity APIs for many areas of AWS:
 
 * [Amazon EKS](/registry/packages/eks)
-* [Crosswalk for AWS](/docs/guides/crosswalk/aws), which includes API Gateway, CloudWatch, Elastic Container Registry, Elastic Container Service, Elastic Kubernetes Service, Elastic Load Balancing, Identity & Access Management, Lambda, Virtual Private Cloud, and more
+* [AWSx](/registry/packages/awsx), which includes API Gateway, CloudWatch, Elastic Container Registry, Elastic Container Service, Elastic Kubernetes Service, Elastic Load Balancing, Identity & Access Management, Lambda, Virtual Private Cloud, and more
 
 ## Migrations
 

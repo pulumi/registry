@@ -31,7 +31,7 @@ Code in whatever language you want, you can use things across go, python, typesc
 
 ### How is the vpc built?
 
-The [vpc](https://www.pulumi.com/docs/guides/crosswalk/aws/vpc/) is built using pulumi [crosswalk](https://www.pulumi.com/docs/guides/crosswalk/aws/) in `typescript`.
+The [vpc](https://www.pulumi.com/docs/clouds/aws/guides/vpc/) is built using pulumi [AWSx](https://www.pulumi.com/registry/packages/awsx/) in `typescript`.
 
 ### How is the ecs cluster built?
 The ecs cluster is built in `python`.

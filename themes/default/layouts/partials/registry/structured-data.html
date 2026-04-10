@@ -184,16 +184,12 @@
             {{/* Each $part looks like: 'some-slug">Question text</h2>Answer HTML...' */}}
             {{ $h2Split := split $part "</h2>" }}
             {{ if ge (len $h2Split) 2 }}
-                {{/* Extract question text: strip the 'slug"> prefix from the first segment. */}}
+                {{/* Extract question text: strip the 'slug">' prefix using replaceRE. */}}
                 {{ $raw := index $h2Split 0 }}
-                {{ $gtIdx := strings.Index $raw ">" }}
-                {{ $question := "" }}
-                {{ if ne $gtIdx -1 }}
-                    {{ $question = substr $raw (add $gtIdx 1) }}
-                {{ end }}
+                {{ $question := replaceRE `^[^>]*>` "" $raw }}
                 {{/* Rejoin remaining segments as answer (in case answer itself contained </h2>). */}}
                 {{ $answerParts := after 1 $h2Split }}
-                {{ $answer := delimit $answerParts "</h2>" | strings.TrimLeft "\n\r " }}
+                {{ $answer := delimit $answerParts "</h2>" | replaceRE `^\s+` "" }}
                 {{ if and $question $answer }}
                     {{ $qaItems = $qaItems | append (dict
                         "@type" "Question"

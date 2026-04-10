@@ -52,39 +52,6 @@ aws s3api put-bucket-tagging --bucket $destination_bucket --tagging "TagSet=[{$(
 # Make the bucket an S3 website.
 aws s3 website $destination_bucket_uri --index-document index.html --error-document 404.html --region "$(aws_region)"
 
-# Extract schema.json files out of the Hugo build tree and gzip them into a sibling
-# schema-out/ tree. They get uploaded separately (below, after the main sync) with
-# Content-Encoding: gzip set on the object, so both CloudFront layers pass them through
-# verbatim without relying on automatic compression -- which is disabled on /registry/*
-# at the outer CDN (Accept-Encoding forwarded via AllViewerExceptHostHeader) and
-# wouldn't help anyway for schemas over the 10 MB auto-compress ceiling
-# (aws/schema.json is >50 MB).
-#
-# This pull-aside has to happen BEFORE the main `s5cmd sync --delete` runs: removing
-# the raw schema.json files from the source tree first means that (a) the main sync
-# won't upload them with text/html or application/json content-type and no encoding
-# header, and (b) --delete will clean up any raw schema.json objects left in the
-# destination bucket by previous commits on the same PR preview bucket.
-schema_out_dir="schema-out"
-rm -rf "$schema_out_dir"
-if find "$build_dir/registry/packages" -name 'schema.json' -type f -print -quit 2>/dev/null | grep -q .; then
-    log "Extracting and pre-gzipping schema.json files..."
-    find "$build_dir/registry/packages" -name 'schema.json' -type f -print0 \
-        | xargs -0 -P"$(nproc)" -I{} sh -c '
-            src="$1"
-            build_dir="$2"
-            schema_out_dir="$3"
-            rel="${src#"$build_dir/"}"
-            dest="$schema_out_dir/$rel"
-            mkdir -p "$(dirname "$dest")"
-            gzip -9 < "$src" > "$dest"
-            rm "$src"
-        ' _ {} "$build_dir" "$schema_out_dir"
-    log "Schema extraction complete."
-else
-    log "No schema.json files found under $build_dir/registry/packages; skipping schema extraction."
-fi
-
 # Sync the local build directory to the bucket using s5cmd for massively parallel uploads.
 # s5cmd uses hundreds of concurrent goroutines vs aws cli's ~10-16 concurrent requests,
 # resulting in 10-50x faster uploads for large file counts.
@@ -123,19 +90,6 @@ if [[ -d "$cli_docs_dir" ]]; then
     log "CLI docs sync complete."
 fi
 
-# Sync the extracted + gzipped schema.json tree separately, with Content-Encoding: gzip
-# and Content-Type: application/json set on every object. No --delete here: the main
-# sync above already reconciled the destination against the (schema-free) public/ tree,
-# so this pass only needs to add the correctly-tagged gzipped schemas back.
-if [[ -d "$schema_out_dir" ]]; then
-    log "Synchronizing schemas to $destination_bucket_uri..."
-    s5cmd --log error sync --acl public-read \
-        --content-encoding gzip \
-        --content-type application/json \
-        "$schema_out_dir/" "$destination_bucket_uri/"
-    log "Schema sync complete."
-fi
-
 s3_website_url="http://${destination_bucket}.s3-website.$(aws_region).amazonaws.com"
 echo "$s3_website_url"
 
@@ -143,46 +97,33 @@ echo "$s3_website_url"
 aws s3 cp "$build_dir/latest-version" "${destination_bucket_uri}/latest-version" \
     --content-type "text/plain" --acl public-read --region "$(aws_region)" --metadata-directive REPLACE
 
-# Smoke test origin-gzipped assets at the S3 website layer (before either CloudFront
-# layer has a chance to mask a regression). Uses the random package because it has
-# small, reliably-present cli-docs.json and schema.json bundles. Catches the regression
-# where we accidentally upload either file without Content-Encoding: gzip, which would
-# otherwise only surface after deploy when consumers start paying full wire cost again.
+# Smoke test CLI docs compression at the S3 website layer (before either CloudFront
+# layer has a chance to mask a regression). Uses the random package because it has a
+# small, reliably-present cli-docs.json bundle. Catches the regression where we
+# accidentally upload cli-docs.json files without Content-Encoding: gzip, which would
+# otherwise only surface after deploy when the CLI starts paying full wire cost again.
 #
 # Uses curl --dump-header to validate the body (gunzip -t) and capture the headers in
 # a single round trip, rather than issuing separate HEAD and GET requests.
-check_gzip_asset() {
-    local label="$1"
-    local url="$2"
-    log "Smoke-testing $label compression at $url..."
-    local headers_file
-    headers_file=$(mktemp)
-    if ! curl -fsS --dump-header "$headers_file" "$url" | gunzip -t; then
-        echo "ERROR: $url body did not decompress as gzip (or request failed)." >&2
-        rm -f "$headers_file"
-        exit 1
-    fi
-    local headers
-    headers=$(cat "$headers_file")
-    rm -f "$headers_file"
-    if ! grep -qi '^content-encoding: gzip' <<< "$headers"; then
-        echo "ERROR: $url is missing 'Content-Encoding: gzip'. Response headers:" >&2
-        echo "$headers" >&2
-        exit 1
-    fi
-    log "$label compression smoke test passed."
-}
-
 if [[ -d "$cli_docs_dir" && -f "$cli_docs_dir/registry/packages/random/api-docs/cli-docs.json" ]]; then
-    check_gzip_asset "CLI docs" "${s3_website_url}/registry/packages/random/api-docs/cli-docs.json"
+    log "Smoke-testing CLI docs compression..."
+    cli_docs_test_url="${s3_website_url}/registry/packages/random/api-docs/cli-docs.json"
+    cli_docs_headers_file=$(mktemp)
+    if ! curl -fsS --dump-header "$cli_docs_headers_file" "$cli_docs_test_url" | gunzip -t; then
+        echo "ERROR: $cli_docs_test_url body did not decompress as gzip (or request failed)." >&2
+        rm -f "$cli_docs_headers_file"
+        exit 1
+    fi
+    cli_docs_headers=$(cat "$cli_docs_headers_file")
+    rm -f "$cli_docs_headers_file"
+    if ! grep -qi '^content-encoding: gzip' <<< "$cli_docs_headers"; then
+        echo "ERROR: $cli_docs_test_url is missing 'Content-Encoding: gzip'. Response headers:" >&2
+        echo "$cli_docs_headers" >&2
+        exit 1
+    fi
+    log "CLI docs compression smoke test passed."
 else
     log "Skipping CLI docs compression smoke test: $cli_docs_dir/registry/packages/random/api-docs/cli-docs.json not found."
-fi
-
-if [[ -d "$schema_out_dir" && -f "$schema_out_dir/registry/packages/random/schema.json" ]]; then
-    check_gzip_asset "Schema" "${s3_website_url}/registry/packages/random/schema.json"
-else
-    log "Skipping schema compression smoke test: $schema_out_dir/registry/packages/random/schema.json not found."
 fi
 
 # Smoke test the deployed website.

@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-pagerduty/v4.31.1/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-pagerduty/v4.31.2/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-pagerduty/blob/v4.31.1/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-pagerduty/blob/v4.31.2/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Pagerduty Provider
 meta_desc: Provides an overview on how to configure the Pulumi Pagerduty provider.
@@ -109,21 +109,21 @@ using Pagerduty = Pulumi.Pagerduty;
 return await Deployment.RunAsync(() =>
 {
     // Create a PagerDuty team
-    var engineering = new Pagerduty.Team("engineering", new()
+    var engineering = new Pagerduty.Index.Team("engineering", new()
     {
         Name = "Engineering",
         Description = "All engineering",
     });
 
     // Create a PagerDuty user
-    var earline = new Pagerduty.User("earline", new()
+    var earline = new Pagerduty.Index.User("earline", new()
     {
         Name = "Earline Greenholt",
         Email = "125.greenholt.earline@graham.name",
     });
 
     // Create a team membership
-    var earlineEngineering = new Pagerduty.TeamMembership("earline_engineering", new()
+    var earlineEngineering = new Pagerduty.Index.TeamMembership("earline_engineering", new()
     {
         UserId = earline.Id,
         TeamId = engineering.Id,
@@ -374,21 +374,21 @@ using Pagerduty = Pulumi.Pagerduty;
 return await Deployment.RunAsync(() =>
 {
     // Create a PagerDuty team
-    var engineering = new Pagerduty.Team("engineering", new()
+    var engineering = new Pagerduty.Index.Team("engineering", new()
     {
         Name = "Engineering",
         Description = "All engineering",
     });
 
     // Create a PagerDuty user
-    var earline = new Pagerduty.User("earline", new()
+    var earline = new Pagerduty.Index.User("earline", new()
     {
         Name = "Earline Greenholt",
         Email = "125.greenholt.earline@graham.name",
     });
 
     // Create a team membership
-    var earlineEngineering = new Pagerduty.TeamMembership("earline_engineering", new()
+    var earlineEngineering = new Pagerduty.Index.TeamMembership("earline_engineering", new()
     {
         UserId = earline.Id,
         TeamId = engineering.Id,

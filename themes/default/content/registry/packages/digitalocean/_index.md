@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-digitalocean/v4.63.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-digitalocean/v4.64.1/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-digitalocean/blob/v4.63.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-digitalocean/blob/v4.64.1/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: DigitalOcean Provider
 meta_desc: Provides an overview on how to configure the Pulumi DigitalOcean provider.
@@ -94,7 +94,7 @@ return await Deployment.RunAsync(() =>
     var config = new Config();
     var doToken = config.RequireObject<dynamic>("doToken");
     // Create a web server
-    var web = new DigitalOcean.Droplet("web");
+    var web = new DigitalOcean.Index.Droplet("web");
 
 });
 
@@ -124,7 +124,8 @@ import (
 func main() {
 	pulumi.Run(func(ctx *pulumi.Context) error {
 		cfg := config.New(ctx, "")
-		doToken := cfg.RequireObject("doToken")
+		var doToken interface{}
+		cfg.RequireObject("doToken", &doToken)
 		// Create a web server
 		_, err := digitalocean.NewDroplet(ctx, "web", nil)
 		if err != nil {

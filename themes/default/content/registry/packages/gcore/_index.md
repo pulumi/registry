@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/g-core/gcore/2.0.0-alpha.3/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/g-core/gcore/2.0.0-alpha.4/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Gcore Provider
@@ -153,5 +153,129 @@ public class App {
 - `baseUrl` (String) Set the base url that the provider connects to.
 - `cloudPollingIntervalSeconds` (Number) Interval in seconds between polling requests for long-running cloud operations. Defaults to `3`.
 - `cloudPollingTimeoutSeconds` (Number) Timeout in seconds for polling long-running cloud operations. Defaults to `7200`.
-- `cloudProjectId` (Number) Default cloud project ID to use for cloud resources. Can also be set via the `GCORE_CLOUD_PROJECT_ID` environment variable.
-- `cloudRegionId` (Number) Default cloud region ID to use for cloud resources. Can also be set via the `GCORE_CLOUD_REGION_ID` environment variable.
+- `cloudProjectId` (Number) Default cloud project ID to use for cloud resources. Serves as a convenience fallback for local development; for production, prefer setting `projectId` explicitly on each resource. Can also be set via the `GCORE_CLOUD_PROJECT_ID` environment variable.
+- `cloudRegionId` (Number) Default cloud region ID to use for cloud resources. Serves as a convenience fallback for local development; for production, prefer setting `regionId` explicitly on each resource. Can also be set via the `GCORE_CLOUD_REGION_ID` environment variable.
+## Best Practices
+### Project and Region Configuration
+
+Cloud resources accept `projectId` and `regionId` as explicit attributes. The provider-level
+`cloudProjectId` / `cloudRegionId` (and their `GCORE_CLOUD_PROJECT_ID` / `GCORE_CLOUD_REGION_ID`
+environment variable counterparts) serve as **convenience fallbacks for local development and testing**.
+
+For production configurations, always set `projectId` and `regionId` explicitly on each resource:
+
+{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{% choosable language typescript %}}
+```typescript
+import * as pulumi from "@pulumi/pulumi";
+import * as gcore from "@pulumi/gcore";
+
+const example = new gcore.CloudVolume("example", {
+    projectId: 1,
+    regionId: 1,
+    name: "my-volume",
+});
+```
+{{% /choosable %}}
+{{% choosable language python %}}
+```python
+import pulumi
+import pulumi_gcore as gcore
+
+example = gcore.CloudVolume("example",
+    project_id=1,
+    region_id=1,
+    name="my-volume")
+```
+{{% /choosable %}}
+{{% choosable language csharp %}}
+```csharp
+using System.Collections.Generic;
+using System.Linq;
+using Pulumi;
+using Gcore = Pulumi.Gcore;
+
+return await Deployment.RunAsync(() =>
+{
+    var example = new Gcore.CloudVolume("example", new()
+    {
+        ProjectId = 1,
+        RegionId = 1,
+        Name = "my-volume",
+    });
+
+});
+
+```
+{{% /choosable %}}
+{{% choosable language go %}}
+```go
+package main
+
+import (
+	"github.com/pulumi/pulumi-pulumi-provider/sdks/go/gcore/v2/gcore"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		_, err := gcore.NewCloudVolume(ctx, "example", &gcore.CloudVolumeArgs{
+			ProjectId: pulumi.Float64(1),
+			RegionId:  pulumi.Float64(1),
+			Name:      pulumi.String("my-volume"),
+		})
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+}
+```
+{{% /choosable %}}
+{{% choosable language yaml %}}
+```yaml
+resources:
+  example:
+    type: gcore:CloudVolume
+    properties:
+      projectId: 1
+      regionId: 1
+      name: my-volume
+```
+{{% /choosable %}}
+{{% choosable language java %}}
+```java
+package generated_program;
+
+import com.pulumi.Context;
+import com.pulumi.Pulumi;
+import com.pulumi.core.Output;
+import com.pulumi.gcore.CloudVolume;
+import com.pulumi.gcore.CloudVolumeArgs;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+public class App {
+    public static void main(String[] args) {
+        Pulumi.run(App::stack);
+    }
+
+    public static void stack(Context ctx) {
+        var example = new CloudVolume("example", CloudVolumeArgs.builder()
+            .projectId(1.0)
+            .regionId(1.0)
+            .name("my-volume")
+            .build());
+
+    }
+}
+```
+{{% /choosable %}}
+{{< /chooser >}}
+
+This makes your Pulumi configuration self-contained, portable, and unambiguous — it won't
+silently change behavior when run in a different environment.

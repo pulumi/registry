@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-nomad/v2.5.5/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-nomad/v2.6.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-nomad/blob/v2.5.5/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-nomad/blob/v2.6.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Nomad Provider
 meta_desc: Provides an overview on how to configure the Pulumi Nomad provider.
@@ -112,9 +112,9 @@ object NotImplemented(string errorMessage)
 return await Deployment.RunAsync(() =>
 {
     // Register a job
-    var monitoring = new Nomad.Job("monitoring", new()
+    var monitoring = new Nomad.Index.Job("monitoring", new()
     {
-        Jobspec = Std.File.Invoke(new()
+        Jobspec = Std.Index.File.Invoke(new()
         {
             Input = $"{NotImplemented("path.module")}/jobspec.hcl",
         }).Apply(invoke => invoke.Result),

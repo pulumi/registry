@@ -26,8 +26,12 @@ lint-mktutorial:
 	cd tools/mktutorial/ && golangci-lint run --config ../../.golangci.yml
 
 .PHONY: test
-test:
+test: test-infra
 	cd ./tools/resourcedocsgen && go test ./...
+
+.PHONY: test-infra
+test-infra:
+	cd infrastructure && node --test redirects.test.js
 
 .PHONY: build
 build: build-assets

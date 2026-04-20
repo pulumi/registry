@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/e-breuninger/netbox/5.2.1/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/e-breuninger/netbox/5.3.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Netbox Provider
@@ -185,7 +185,7 @@ public class App {
 ## Configuration Reference
 ### Required
 
-- `apiToken` (String) Netbox API authentication token. Can be set via the `NETBOX_API_TOKEN` environment variable.
+- `apiToken` (String) Netbox API authentication token. Supports both v1 tokens (`Authorization: Token <key>`) and v2 tokens (`Authorization: Bearer nbt_<key>.<token>`). V2 tokens are auto-detected by their `nbt_` prefix. Can be set via the `NETBOX_API_TOKEN` environment variable.
 - `serverUrl` (String) Location of Netbox server including scheme (http or https) and optional port. Can be set via the `NETBOX_SERVER_URL` environment variable.
 
 - `allowInsecureHttps` (Boolean) Flag to set whether to allow https with invalid certificates. Can be set via the `NETBOX_ALLOW_INSECURE_HTTPS` environment variable. Defaults to `false`.

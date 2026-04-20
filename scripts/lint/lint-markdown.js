@@ -2,7 +2,6 @@
 
 const fs = require("fs");
 const yaml = require("js-yaml");
-const markdownlint = require("markdownlint");
 const path = require("path");
 
 /**
@@ -348,6 +347,19 @@ const markdownFileOpts = {
         MD012: false,
         // Files should end with a single newline character
         MD047: false,
+
+        // Rules added in markdownlint 0.32–0.40, disabled for backwards
+        // compatibility with existing content.
+        // Images should have alternate text
+        MD045: false,
+        // Table pipe style
+        MD055: false,
+        // Tables should be surrounded by blank lines
+        MD058: false,
+        // Link text should be descriptive
+        MD059: false,
+        // Table column style
+        MD060: false,
     },
     customRules: [],
 };
@@ -377,42 +389,47 @@ const indexFileOpts = {
     customRules: [],
 };
 
-// Lint the markdown files.
-let markdownLintResults = markdownlint.sync(markdownFileOpts);
+// markdownlint v0.40+ is ESM-only; use dynamic import from CJS.
+(async () => {
+    const { lint } = await import("markdownlint/sync");
 
-// Lint `_index.md files`
-let indexLintResults = markdownlint.sync(indexFileOpts);
+    // Lint the markdown files.
+    let markdownLintResults = lint(markdownFileOpts);
 
-// Group the lint errors by file.
-let errors = groupLintErrorOutput(markdownLintResults, markdownToLint);
-let lintErrors = groupLintErrorOutput(indexLintResults, indexToLint);
-errors = errors.concat(lintErrors);
+    // Lint `_index.md files`
+    let indexLintResults = lint(indexFileOpts);
 
-// Get the total number of errors.
-const errorsArray = errors.map(function (err) {
-    return err.errors;
-});
-const errorsCount = [].concat.apply([], errorsArray).length;
+    // Group the lint errors by file.
+    let errors = groupLintErrorOutput(markdownLintResults, markdownToLint);
+    let lintErrors = groupLintErrorOutput(indexLintResults, indexToLint);
+    errors = errors.concat(lintErrors);
 
-// Create the error output string.
-const errorOutput = errors
-    .map(function (err) {
-        let msg = err.path + ":\n";
-        for (let i = 0; i < err.errors.length; i++) {
-            const error = err.errors[i];
-            msg += "Line " + error.lineNumber + ": " + error.ruleDescription;
-            msg += error.errorDetail
-                ? " [" + error.errorDetail + "].\n"
-                : ".\n";
-        }
-        return msg;
-    })
-    .join("\n");
+    // Get the total number of errors.
+    const errorsArray = errors.map(function (err) {
+        return err.errors;
+    });
+    const errorsCount = [].concat.apply([], errorsArray).length;
 
-// If there are errors output the error string and exit
-// the program with an error.
-if (errors.length > 0) {
-    console.log(`
+    // Create the error output string.
+    const errorOutput = errors
+        .map(function (err) {
+            let msg = err.path + ":\n";
+            for (let i = 0; i < err.errors.length; i++) {
+                const error = err.errors[i];
+                msg +=
+                    "Line " + error.lineNumber + ": " + error.ruleDescription;
+                msg += error.errorDetail
+                    ? " [" + error.errorDetail + "].\n"
+                    : ".\n";
+            }
+            return msg;
+        })
+        .join("\n");
+
+    // If there are errors output the error string and exit
+    // the program with an error.
+    if (errors.length > 0) {
+        console.log(`
 Markdown Lint Results:
     - ${markdownToLint.files.length + indexToLint.files.length} files parsed.
     - ${errorsCount} errors found.
@@ -420,15 +437,16 @@ Markdown Lint Results:
 Errors:
 
 ${errorOutput}
-    `);
+        `);
 
-    const noError = process.argv.indexOf("--no-error") > -1;
-    process.exit(noError ? 0 : 1);
-}
+        const noError = process.argv.indexOf("--no-error") > -1;
+        process.exit(noError ? 0 : 1);
+    }
 
-console.log(`
+    console.log(`
 Markdown Lint Results:
     - ${markdownToLint.files.length + indexToLint.files.length} files parsed.
     - ${errorsCount} errors found.
-`);
-process.exit(0);
+    `);
+    process.exit(0);
+})();

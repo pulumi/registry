@@ -9,10 +9,15 @@
 {{- $content = replaceRE `</pulumi-chooser>` "\n<!-- /chooser -->\n" $content -}}
 {{- $content = replaceRE `<pulumi-choosable[^>]*values="([^",]*)[^"]*"[^>]*>` "\n<!-- option: $1 -->\n" $content -}}
 {{- $content = replaceRE `</pulumi-choosable>` "\n<!-- /option -->\n" $content -}}
-{{- /* Phase 2: Strip all block-level and decorative tags in consolidated passes.
-     Note: Stripping <li> loses bullet/number markers — list content renders as plain text.
-     This is intentional for terminal output where nested HTML lists don't translate cleanly. */ -}}
-{{- $content = replaceRE `</?(?:span|label|div|p|blockquote|ol|ul|li|pre|section|table|thead|tbody|tr|td|th|dl|dt|dd|details|summary)[^>]*>` "" $content -}}
+{{- /* Phase 1c: Convert definition lists to markdown before stripping */ -}}
+{{- $content = replaceRE `<dt>([^<]*)</dt>` "\n**$1:** " $content -}}
+{{- $content = replaceRE `</?d[dl][^>]*>` "" $content -}}
+{{- /* Phase 1d: Convert list items to markdown bullets before stripping */ -}}
+{{- $content = replaceRE `<li[^>]*>` "\n- " $content -}}
+{{- $content = replaceRE `</li>` "" $content -}}
+{{- $content = replaceRE `</?[ou]l[^>]*>` "" $content -}}
+{{- /* Phase 2: Strip all block-level and decorative tags in consolidated passes. */ -}}
+{{- $content = replaceRE `</?(?:span|label|div|p|blockquote|pre|section|table|thead|tbody|tr|td|th|details|summary)[^>]*>` "" $content -}}
 {{- $content = replaceRE `(?:<i[^>]*></i>|<input[^>]*>)` "" $content -}}
 {{- /* Strip non-functional HTML comments (keep chooser/option markers) */ -}}
 {{- $content = replaceRE `<!--\s*markdownlint[^>]*-->` "" $content -}}

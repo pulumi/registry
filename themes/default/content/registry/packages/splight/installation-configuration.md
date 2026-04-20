@@ -1,6 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/splightplatform/pulumi-splight/v1.2.18/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/splightplatform/pulumi-splight/v1.2.19/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
+edit_url: https://github.com/splightplatform/pulumi-splight/blob/v1.2.19/docs/installation-configuration.md
 title: Splight Installation & Configuration
 meta_desc: Information on how to install the Splight provider.
 layout: package

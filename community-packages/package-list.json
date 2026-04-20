@@ -65,10 +65,6 @@
       "schemaFile": "provider/cmd/pulumi-resource-astra/schema.json"
     },
     {
-      "repoSlug": "pulumi/pulumi-azure-justrun",
-      "schemaFile": "schema.json"
-    },
-    {
       "repoSlug": "muhlba91/pulumi-proxmoxve",
       "schemaFile": "provider/cmd/pulumi-resource-proxmoxve/schema.json"
     },
@@ -93,23 +89,11 @@
       "schemaFile": "provider/cmd/pulumi-resource-launchdarkly/schema.json"
     },
     {
-      "repoSlug": "pulumi/pulumi-azure-static-website",
-      "schemaFile": "schema.json"
-    },
-    {
       "repoSlug": "lbrlabs/pulumi-harness",
       "schemaFile": "provider/cmd/pulumi-resource-harness/schema.json"
     },
     {
-      "repoSlug": "pulumi/pulumi-google-cloud-static-website",
-      "schemaFile": "schema.json"
-    },
-    {
       "repoSlug": "pulumi/pulumi-synced-folder",
-      "schemaFile": "schema.json"
-    },
-    {
-      "repoSlug": "pulumi/pulumi-tls-self-signed-cert",
       "schemaFile": "schema.json"
     },
     {
@@ -135,10 +119,6 @@
     {
       "repoSlug": "pulumiverse/pulumi-heroku",
       "schemaFile": "provider/cmd/pulumi-resource-heroku/schema.json"
-    },
-    {
-      "repoSlug": "pulumi/pulumi-str",
-      "schemaFile": "sdk/schema.json"
     },
     {
       "repoSlug": "pulumiverse/pulumi-unifi",

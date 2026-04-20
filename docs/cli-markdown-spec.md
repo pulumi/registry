@@ -96,27 +96,11 @@ To display a single language, the CLI consumer should:
 
 ## Document Structure: Resources
 
-A resource `cli.md` file has the following sections in order. All sections except the title are conditional (present only if the data exists).
+The title, description, and deprecation status are provided as structured metadata fields in each `CLIDocEntry` object (see JSON Bundle Format below). They are **not** embedded in the `content` field.
 
-### 1. Title
+The `content` field contains the remaining sections in order. All sections are conditional (present only if the data exists).
 
-```markdown
-# {Resource Title}
-```
-
-The full qualified resource name (e.g., `aws.s3.Bucket`).
-
-### 2. Deprecation Notice (optional)
-
-```markdown
-> **Deprecated:** {deprecation message}
-```
-
-### 3. Description
-
-Plain markdown description of the resource. HTML has been stripped and converted to markdown equivalents.
-
-### 4. Example Usage (optional)
+### 1. Example Usage (optional)
 
 ```markdown
 ## Example Usage
@@ -135,7 +119,7 @@ Plain markdown description of the resource. HTML has been stripped and converted
 
 Examples are per-language. Each example has a title (as a markdown paragraph, not a heading) and a fenced code block with the language tag.
 
-### 5. Create Resource (optional)
+### 2. Create Resource (optional)
 
 ```markdown
 ## Create {Title} Resource
@@ -160,7 +144,7 @@ new Bucket(name: string, args: BucketArgs, opts?: CustomResourceOptions)
 
 Constructor syntax is a fenced code block. Parameters are a markdown list with bold names, optional type in parentheses, and optional description after an em dash.
 
-### 6. Resource Properties
+### 3. Resource Properties
 
 ```markdown
 ## {Title} Resource Properties
@@ -196,7 +180,7 @@ Each property is a markdown list item:
 - ` *(deprecated)*` suffix if deprecated
 - Description on the next line, indented with 2 spaces
 
-### 7. Methods (optional)
+### 4. Methods (optional)
 
 ```markdown
 ## Methods
@@ -231,7 +215,7 @@ bucket.getPolicy(args) -> GetPolicyResult
 <!-- /chooser -->
 ```
 
-### 8. Look up Existing Resource (optional)
+### 5. Look up Existing Resource (optional)
 
 ```markdown
 ## Look up Existing {Title} Resource
@@ -243,7 +227,7 @@ bucket.getPolicy(args) -> GetPolicyResult
 <!-- /chooser -->
 ```
 
-### 9. Supporting Types (optional)
+### 6. Supporting Types (optional)
 
 ```markdown
 ## Supporting Types
@@ -257,7 +241,7 @@ bucket.getPolicy(args) -> GetPolicyResult
 <!-- /chooser -->
 ```
 
-### 10. Import (optional)
+### 7. Import (optional)
 
 ```markdown
 ## Import
@@ -265,7 +249,7 @@ bucket.getPolicy(args) -> GetPolicyResult
 {import instructions in plain markdown}
 ```
 
-### 11. Footer
+### 8. Footer
 
 ```markdown
 ---
@@ -278,13 +262,12 @@ Always present. A horizontal rule followed by the package name and version in it
 
 ## Document Structure: Functions
 
-A function `cli.md` file has a similar but simpler structure:
+A function `cli.md` file has a similar but simpler structure. As with resources, title, description, and deprecation are in the `CLIDocEntry` metadata fields, not in the `content`.
 
-1. **Title** — `# {Function Title}`
-2. **Deprecation Notice** (optional)
-3. **Description**
-4. **Example Usage** (optional) — same format as resources
-5. **Usage** — function signatures per language in a chooser block:
+The `content` field contains:
+
+1. **Example Usage** (optional) — same format as resources
+2. **Usage** — function signatures per language in a chooser block:
    ```markdown
    ## Usage
 
@@ -299,10 +282,10 @@ A function `cli.md` file has a similar but simpler structure:
    ...
    <!-- /chooser -->
    ```
-6. **Inputs** (optional) — properties in chooser block
-7. **Outputs** (optional) — properties in chooser block
-8. **Supporting Types** (optional) — same as resources
-9. **Footer** — same as resources
+3. **Inputs** (optional) — properties in chooser block
+4. **Outputs** (optional) — properties in chooser block
+5. **Supporting Types** (optional) — same as resources
+6. **Footer** — same as resources
 
 ---
 
@@ -379,15 +362,29 @@ All CLI docs for a package are served as a single JSON file at `cli-docs.json`.
 
 ```json
 {
-  "version": 1,
   "package": "random",
   "packageVersion": "4.19.1",
+  "overview": "The Pulumi Random provider...\n\n## Modules\n\n- [index](index/)\n\n## Package Details\n\n**Repository:** ...",
   "resources": {
-    "randomstring": "# RandomString\n\nThe resource...",
-    "randompassword": "# RandomPassword\n\n..."
+    "randomstring": {
+      "title": "RandomString",
+      "description": "The resource random.RandomString generates a random string.",
+      "content": "## Create RandomString Resource\n\n..."
+    },
+    "randompassword": {
+      "title": "RandomPassword",
+      "description": "Generates a random password.",
+      "content": "## Create RandomPassword Resource\n\n...",
+      "deprecated": true,
+      "deprecationMessage": "Use RandomString instead."
+    }
   },
   "functions": {
-    "s3/getBucket": "# aws.s3.getBucket\n\n..."
+    "s3/getBucket": {
+      "title": "aws.s3.getBucket",
+      "description": "Returns information about an S3 bucket.",
+      "content": "## Usage\n\n..."
+    }
   }
 }
 ```
@@ -396,11 +393,31 @@ All CLI docs for a package are served as a single JSON file at `cli-docs.json`.
 
 | Field | Type | Description |
 |---|---|---|
-| `version` | integer | Schema version (currently `1`) |
 | `package` | string | Package name |
 | `packageVersion` | string | Provider version |
-| `resources` | object | Map of `{module}/{resource}` to markdown content |
-| `functions` | object | Map of `{module}/{function}` to markdown content |
+| `overview` | string | Markdown overview with module list, package details |
+| `resources` | object | Map of `{module}/{resource}` to `CLIDocEntry` |
+| `functions` | object | Map of `{module}/{function}` to `CLIDocEntry` |
+
+### CLIDocEntry Fields
+
+| Field | Type | Description |
+|---|---|---|
+| `title` | string | Display title (e.g., `aws.s3.Bucket`) |
+| `description` | string | Plain text description of the resource/function |
+| `content` | string | Markdown body (examples, properties, methods, etc.) |
+| `deprecated` | boolean | (optional) `true` if the item is deprecated |
+| `deprecationMessage` | string | (optional) Human-readable deprecation message |
+
+### Overview Field
+
+The `overview` field contains a clean markdown representation of the package index page, including:
+- Package description
+- Module list (as markdown bullet links)
+- Root-level resources and functions (if any)
+- Package details (repository, license, notes, version)
+
+This allows CLI consumers to display the package overview without fetching and parsing the web `index.md` page.
 
 ### Key Format
 
@@ -416,8 +433,8 @@ Examples:
 
 1. Fetch `cli-docs.json` for the package (one HTTP request).
 2. Look up the resource or function by its key.
-3. The value is the complete markdown content (same format described in the "Document Structure" sections above).
-4. Apply chooser filtering to show only the user's selected language.
+3. Use the `title`, `description`, and `deprecated`/`deprecationMessage` metadata fields directly — do not parse them from `content`.
+4. Apply chooser filtering to the `content` field to show only the user's selected language.
 5. Cache the JSON locally to avoid re-fetching on subsequent lookups within the same package.
 
 ### Size Considerations

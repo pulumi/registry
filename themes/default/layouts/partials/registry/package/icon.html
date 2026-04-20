@@ -1,7 +1,32 @@
-{{ $url := printf "/logos/pkg/%s.svg" .name }}
-{{ if ne .logo_url "" }}
-    <!-- It is ok to load the logo_url directly without sanitizing it since we will validate packages before we add them to the registry. -->
-    {{ $url = .logo_url }}
+{{ $name := .package.name }}
+{{ $logoUrl := .package.logo_url }}
+{{ $lazy := default false .lazy }}
+{{ $isExternal := ne $logoUrl "" }}
+{{ $url := "" }}
+{{ $showImage := false }}
+
+{{ if $isExternal }}
+    {{ $url = $logoUrl }}
+    {{ $showImage = true }}
+{{ else }}
+    {{ with resources.Get (printf "fingerprinted/logos/pkg/%s.svg" $name) }}
+        {{ $fp := . | fingerprint }}
+        {{ $url = $fp.RelPermalink }}
+        {{ $showImage = true }}
+    {{ end }}
 {{ end }}
-<img onerror="this.classList.add('hidden'); this.parentElement.querySelector('.pkg-fallback-icon').classList.remove('hidden')" class="h-6" src="{{ $url }}" alt="{{ .name }} logo">
-<i class="fa fa-archive pkg-fallback-icon text-gray-500 hidden" style="font-size: 1.5rem"></i>
+
+{{ if $showImage }}
+    <img
+        {{ if $lazy }}loading="lazy" decoding="async"{{ end }}
+        class="h-6"
+        src="{{ $url }}"
+        alt="{{ $name }} logo"
+        {{ if $isExternal }}onerror="this.classList.add('hidden'); this.parentElement.querySelector('.pkg-fallback-icon').classList.remove('hidden')"{{ end }}
+    >
+    {{ if $isExternal }}
+        <i class="fa fa-archive pkg-fallback-icon text-gray-500 hidden" style="font-size: 1.5rem"></i>
+    {{ end }}
+{{ else }}
+    <i class="fa fa-archive pkg-fallback-icon text-gray-500" style="font-size: 1.5rem"></i>
+{{ end }}

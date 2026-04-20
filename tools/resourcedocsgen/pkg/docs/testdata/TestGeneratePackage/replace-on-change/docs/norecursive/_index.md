@@ -229,7 +229,7 @@ The following reference example uses placeholder values for all [input propertie
 <pulumi-choosable type="language" values="csharp">
 
 ```csharp
-var noRecursiveResource = new Example.Index.NoRecursive("noRecursiveResource");
+var noRecursiveResource = new Example.NoRecursive("noRecursiveResource");
 ```
 
 </pulumi-choosable>

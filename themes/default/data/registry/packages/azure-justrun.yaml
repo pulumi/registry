@@ -8,7 +8,7 @@ logo_url: ""
 name: azure-justrun
 native: false
 package_status: public_preview
-publisher: Pulumi
+publisher: DEPRECATED
 repo_url: https://github.com/pulumi/pulumi-azure-justrun
 schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-azure-justrun/v0.2.3/schema.json
 title: azure-justrun

@@ -27,7 +27,12 @@
 {{- /* How-to Guides */ -}}
 {{- $guidesPage := .GetPage (printf "/registry/packages/%s/how-to-guides" $packageName) -}}
 {{- if $guidesPage -}}
-  {{- $children = $children | append (dict "title" "How-to Guides" "path" $guidesPage.RelPermalink) -}}
+  {{- $guideChildren := slice -}}
+  {{- range $guidesPage.Pages -}}
+    {{- $guideChildren = $guideChildren | append (dict "title" .Title "path" .RelPermalink) -}}
+  {{- end -}}
+  {{- $guidesEntry := dict "title" "How-to Guides" "path" $guidesPage.RelPermalink "hasChildren" true "children" $guideChildren -}}
+  {{- $children = $children | append $guidesEntry -}}
 {{- end -}}
 {{- dict "pages" $children | jsonify (dict "indent" "  ") -}}
 {{- end -}}

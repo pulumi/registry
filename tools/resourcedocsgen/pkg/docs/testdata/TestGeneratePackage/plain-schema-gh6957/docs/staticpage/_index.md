@@ -231,7 +231,7 @@ The following reference example uses placeholder values for all [input propertie
 <pulumi-choosable type="language" values="csharp">
 
 ```csharp
-var staticPageResource = new Xyz.Index.StaticPage("staticPageResource", new()
+var staticPageResource = new Xyz.StaticPage("staticPageResource", new()
 {
     IndexContent = "string",
     Foo = new Xyz.Inputs.FooArgs
@@ -251,7 +251,7 @@ var staticPageResource = new Xyz.Index.StaticPage("staticPageResource", new()
 ```go
 example, err := xyz.NewStaticPage(ctx, "staticPageResource", &xyz.StaticPageArgs{
 	IndexContent: pulumi.String("string"),
-	Foo: &xyz.FooArgs{
+	Foo: xyz.FooArgs{
 		A: pulumi.Bool(false),
 	},
 })

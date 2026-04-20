@@ -8,7 +8,7 @@ layout: package
 
 {{< github-buttons "aws-ts-containers" >}}
 
-In this tutorial, we'll build and publish a Docker container to a private Elastic Container Registry (ECR), and spin up a load-balanced Amazon Elastic Container Service (Amazon ECS) Fargate service, all in a handful of lines of code, using [Pulumi Crosswalk for AWS](/docs/guides/crosswalk/aws/).
+In this tutorial, we'll build and publish a Docker container to a private Elastic Container Registry (ECR), and spin up a load-balanced Amazon Elastic Container Service (Amazon ECS) Fargate service, all in a handful of lines of code, using [Pulumi AWSx](/registry/packages/awsx).
 
 ## Prerequisites
 
@@ -207,7 +207,7 @@ Collecting logs for stack dev since 2021-03-26T10:49:57.000-07:00.
 {{< summary >}}
 <p>
     In this tutorial, we showed you how to write a Pulumi program in Typescript, and leverage
-Pulumi Crosswalk for AWS (via the <a href="/docs/reference/pkg/nodejs/pulumi/awsx"
+Pulumi AWSx (via the <a href="/docs/reference/pkg/nodejs/pulumi/awsx"
 >}}">@pulumi/awsx package</a>) in order to build and publish a Dockerized application to a private
 Elastic Container Registry (ECR), spin up an ECS Fargate cluster, and run a scalable, load balanced
 service.
@@ -218,8 +218,8 @@ service.
 
 For more information about containerized applications on AWS, please read these User Guides:
 
-- [Pulumi Crosswalk for AWS Elastic Container Service (ECS)](/docs/guides/crosswalk/aws/ecs)
-- [Pulumi Crosswalk for AWS Elastic Kubernetes Service (EKS)](/docs/guides/crosswalk/aws/eks)
+- [Pulumi AWS Elastic Container Service (ECS) Guide](/docs/clouds/aws/guides/ecs)
+- [Pulumi AWS Elastic Kubernetes Service (EKS) Guide](/docs/clouds/aws/guides/eks)
 
 For an end-to-end application also includes serverless functions, see the
 [Serverless plus Containers Thumbnailer tutorial](/registry/packages/aws/how-to-guides/video-thumbnailer/).

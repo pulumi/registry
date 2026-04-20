@@ -10,7 +10,7 @@ native: true
 package_status: ga
 publisher: Zscaler
 repo_url: https://github.com/zscaler/pulumi-zia
-schema_file_url: https://raw.githubusercontent.com/zscaler/pulumi-zia/v1.3.8/provider/cmd/pulumi-resource-zia/schema.json
+schema_file_url: https://raw.githubusercontent.com/zscaler/pulumi-zia/v1.3.9/provider/cmd/pulumi-resource-zia/schema.json
 title: pulumi-resource-zia
-updated_on: 1773435811
-version: v1.3.8
+updated_on: 1775149918
+version: v1.3.9

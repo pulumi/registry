@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/ciscodevnet/mso/1.7.0/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/ciscodevnet/mso/2.0.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Mso Provider
@@ -16,7 +16,10 @@ pulumi package add terraform-provider ciscodevnet/mso
 ```
 ## MSO Provider
 
-Cisco ACI Multi-Site Orchestrator (MSO) is responsible for provisioning, health monitoring, and managing the full lifecycle of Cisco ACI networking policies and tenant policies across Cisco ACI sites around the world. Pulumi provider MSO is a Pulumi plugin which will be used to manage the MSO Fabric Constructs on the Cisco MSO platform with leveraging advantages of Pulumi. The provider needs to be configured with the proper credentials before it can be used.
+Cisco ACI Multi-Site Orchestrator (MSO) / Nexus Dashboard Orchestrator (NDO) is responsible for provisioning, health monitoring, and managing the full lifecycle of Cisco ACI networking policies and tenant policies across Cisco ACI sites around the world. Pulumi provider MSO is a Pulumi plugin which will be used to manage the MSO Fabric Constructs on the Cisco MSO platform with leveraging advantages of Pulumi. The provider needs to be configured with the proper credentials before it can be used.
+
+> [!NOTE]
+> Cisco NDO 4.2(2) introduces a change in behavior to Schema IDs, which impacts existing Pulumi state files. When upgrading, all managed resources must be re-imported. Please refer to the [4.2(2) release notes](https://www.cisco.com/c/en/us/td/docs/dcn/ndo/4x/release-notes/cisco-nexus-dashboard-orchestrator-release-notes-422.html#ChangesinBehavior) for behavioral changes.
 ## Authentication
 
 Authentication with user-id and password.
@@ -155,7 +158,7 @@ config:
 package main
 
 import (
-	"github.com/pulumi/pulumi-pulumi-provider/sdks/go/mso/mso"
+	"github.com/pulumi/pulumi-pulumi-provider/sdks/go/mso/v2/mso"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 

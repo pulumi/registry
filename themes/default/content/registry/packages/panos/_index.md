@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/paloaltonetworks/panos/2.0.9/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/paloaltonetworks/panos/2.0.10/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Panos Provider
@@ -239,7 +239,7 @@ config:
 ## Configuration Reference
 
 - `additionalHeaders` (Map of String) Additional HTTP headers to send with API calls Environment variable: `PANOS_HEADERS`. JSON config file variable: `additionalHeaders`.
-- `apiKey` (String) The API key for PAN-OS. Either specify this or give both username and password. Environment variable: `PANOS_API_KEY`. JSON config file variable: `apiKey`.
+- `apiKey` (String, Sensitive) The API key for PAN-OS. Either specify this or give both username and password. Environment variable: `PANOS_API_KEY`. JSON config file variable: `apiKey`.
 - `apiKeyInRequest` (Boolean) Send the API key in the request body instead of using the authentication header. Environment variable: `PANOS_API_KEY_IN_REQUEST`. JSON config file variable: `apiKeyInRequest`.
 - `authFile` (String) Filesystem path to a JSON config file that specifies the provider's params. JSON config file variable: `authFile`.
 - `configFile` (String) (Local inspection mode) The PAN-OS config file to load read in using `file()` JSON config file variable: `configFile`.

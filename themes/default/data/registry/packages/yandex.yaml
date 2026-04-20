@@ -8,7 +8,7 @@ logo_url: ""
 name: yandex
 native: false
 package_status: public_preview
-publisher: Pulumi
+publisher: DEPRECATED
 repo_url: https://github.com/pulumi/pulumi-yandex
 schema_file_path: /provider/cmd/pulumi-resource-yandex/schema.json
 title: Yandex

@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/muhlba91/pulumi-proxmoxve/v7.13.0/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/muhlba91/pulumi-proxmoxve/v8.0.0/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/muhlba91/pulumi-proxmoxve/blob/v7.13.0/docs/installation-configuration.md
+edit_url: https://github.com/muhlba91/pulumi-proxmoxve/blob/v8.0.0/docs/installation-configuration.md
 title: Proxmox Virtual Environment (Proxmox VE) Installation & Configuration
 meta_desc: Provides an overview on how to setup the Proxmox VE Provider for Pulumi.
 layout: package
@@ -47,7 +47,7 @@ In fact, we need to set the credentials using the following work-around:
 3. Pass the provider when creating a resource, e.g. in Typescript:
 
    ```typescript
-   const server = new proxmox.vm.VirtualMachine('vm',
+   const server = new proxmox.VmLegacy('vm',
       ...,
       {
         provider: provider,

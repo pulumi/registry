@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pydantic/pulumi-logfire/v0.1.7/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pydantic/pulumi-logfire/v0.1.9/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pydantic/pulumi-logfire/blob/v0.1.7/docs/installation-configuration.md
+edit_url: https://github.com/pydantic/pulumi-logfire/blob/v0.1.9/docs/installation-configuration.md
 title: Installation & Configuration
 meta_desc: Install and configure the Pulumi Logfire provider.
 layout: package

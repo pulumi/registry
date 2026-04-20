@@ -1779,6 +1779,17 @@ func (mod *modContext) genResource(r *schema.Resource) resourceDocArgs {
 			creationExampleSyntax[language.Go] = modified
 		}
 		if example, found := dctx.constructorSyntaxData.java.resources[r.Token]; found {
+			// TEMP: pulumi-java codegen panics on integer literals (cty.NumberIntVal)
+			// after pulumi/pkg/v3 3.231.0, producing PANIC text. Remove this check
+			// once pulumi-java ships a fix. See PR #10603.
+			//
+			// When the upstream fix lands, the TestGeneratePackage golden files
+			// (which no longer contain Java examples) and the inverted assertion in
+			// TestConstructorSyntaxGeneratorForSchema will both fail, signalling
+			// that this workaround should be reverted.
+			if strings.Contains(example, "PANIC") || strings.Contains(example, "notImplemented") {
+				example = ""
+			}
 			creationExampleSyntax[language.Java] = example
 		}
 		if example, found := dctx.constructorSyntaxData.yaml.resources[collapseYAMLToken(r.Token)]; found {

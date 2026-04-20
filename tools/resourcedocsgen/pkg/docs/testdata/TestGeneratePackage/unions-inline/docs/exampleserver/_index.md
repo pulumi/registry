@@ -230,7 +230,7 @@ The following reference example uses placeholder values for all [input propertie
 <pulumi-choosable type="language" values="csharp">
 
 ```csharp
-var exampleServerResource = new Example.Index.ExampleServer("exampleServerResource", new()
+var exampleServerResource = new Example.ExampleServer("exampleServerResource", new()
 {
     Properties = new Example.Inputs.ServerPropertiesForReplicaArgs
     {

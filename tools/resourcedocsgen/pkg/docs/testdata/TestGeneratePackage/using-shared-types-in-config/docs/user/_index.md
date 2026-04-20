@@ -230,7 +230,7 @@ The following reference example uses placeholder values for all [input propertie
 <pulumi-choosable type="language" values="csharp">
 
 ```csharp
-var userResource = new Credentials.Index.User("userResource", new()
+var userResource = new Credentials.User("userResource", new()
 {
     Shared = new Credentials.Inputs.SharedArgs
     {

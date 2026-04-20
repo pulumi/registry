@@ -231,7 +231,7 @@ The following reference example uses placeholder values for all [input propertie
 <pulumi-choosable type="language" values="csharp">
 
 ```csharp
-var componentResource = new Example.Index.Component("componentResource", new()
+var componentResource = new Example.Component("componentResource", new()
 {
     LocalEnum = Example.Local.MyEnum.Pi,
     RemoteEnum = GoogleNative.Accesscontextmanager.V1.DevicePolicyAllowedDeviceManagementLevelsItem.ManagementUnspecified,

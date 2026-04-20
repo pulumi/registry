@@ -231,7 +231,7 @@ The following reference example uses placeholder values for all [input propertie
 <pulumi-choosable type="language" values="csharp">
 
 ```csharp
-var overlayResourceConstrainedLanguagesResource = new Example.Index.OverlayResourceConstrainedLanguages("overlayResourceConstrainedLanguagesResource", new()
+var overlayResourceConstrainedLanguagesResource = new Example.OverlayResourceConstrainedLanguages("overlayResourceConstrainedLanguagesResource", new()
 {
     Bar = Example.EnumOverlay.SomeEnumValue,
     Foo = new Example.Inputs.ConfigMapOverlayArgs

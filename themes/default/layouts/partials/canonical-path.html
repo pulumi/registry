@@ -1,0 +1,19 @@
+{{- /*
+    Returns the canonical path for a page. Used by head.html (to emit
+    <link rel="canonical">) and sitemap.xml (to decide whether a page
+    belongs in the sitemap — non-canonical pages are excluded).
+
+    Resolution order:
+    1. If .Params.canonical_url is set, return it verbatim.
+    2. If the RelPermalink contains a "@vX.Y" version segment (versioned
+       package docs like /registry/packages/aws@6.x/...), strip the
+       @version portion so the canonical points to the unversioned page.
+    3. Otherwise, return RelPermalink unchanged.
+*/ -}}
+{{- if .Params.canonical_url -}}
+{{- .Params.canonical_url -}}
+{{- else if strings.Contains .RelPermalink "@" -}}
+{{- replaceRE `([^/]+)@[^/]+` "$1" .RelPermalink -}}
+{{- else -}}
+{{- .RelPermalink -}}
+{{- end -}}

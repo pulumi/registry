@@ -19,15 +19,31 @@ async function splitSitemap() {
     const urlPattern =
         /<url>\s*<loc>([^<]+)<\/loc>(?:\s*<lastmod>([^<]+)<\/lastmod>)?/g;
     const items = [];
+    let droppedNonCanonical = 0;
     let match;
     while ((match = urlPattern.exec(xml)) !== null) {
-        const item = { url: match[1] };
+        const url = match[1];
+        // Defense in depth for #10639: drop versioned package URLs
+        // (e.g. /registry/packages/aws@6.x/...) whose canonical tag
+        // points to the unversioned sibling. The Hugo sitemap template
+        // should already exclude these, but filtering here catches any
+        // template regression before it reaches search engines.
+        if (url.includes("@") || url.includes("%40")) {
+            droppedNonCanonical++;
+            continue;
+        }
+        const item = { url };
         if (match[2]) {
             item.lastmod = match[2];
         }
         items.push(item);
     }
 
+    if (droppedNonCanonical > 0) {
+        console.log(
+            `Dropped ${droppedNonCanonical} non-canonical (@-versioned) URLs.`,
+        );
+    }
     console.log(`Sitemap contains ${items.length} URLs.`);
 
     if (items.length === 0) {

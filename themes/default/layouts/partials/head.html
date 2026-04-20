@@ -224,13 +224,10 @@
         https://en.wikipedia.org/wiki/Canonical_link_element
     -->
 
-    {{ if .Params.canonical_url }}
-        <link rel="canonical" href="{{ .Params.canonical_url }}" />
+    {{ $canonicalPath := partial "canonical-path.html" . }}
+    {{ if or (hasPrefix $canonicalPath "http://") (hasPrefix $canonicalPath "https://") }}
+        <link rel="canonical" href="{{ $canonicalPath }}" />
     {{ else }}
-        {{ $canonicalPath := .RelPermalink }}
-        {{ if strings.Contains $canonicalPath "@" }}
-            {{ $canonicalPath = replaceRE `([^/]+)@[^/]+` "$1" $canonicalPath }}
-        {{ end }}
         <link rel="canonical" href="{{ .Site.Params.canonicalURL }}{{ $canonicalPath }}" />
     {{ end }}
 

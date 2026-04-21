@@ -7,7 +7,7 @@ title: {{ .Title }}
 {{ $content := .RenderShortcodes -}}
 {{ $content = partial "registry/markdown-pipeline.md" $content -}}
 {{ $content }}
-{{- else -}}
+{{- else }}
 {{ range .Pages -}}
 - [{{ .Title }}]({{ .RelPermalink }})
 {{ end -}}

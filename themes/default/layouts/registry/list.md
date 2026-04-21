@@ -3,7 +3,12 @@ title: {{ .Title }}
 {{ with .Description }}description: {{ . }}
 {{ end }}url: {{ .RelPermalink }}
 ---
-{{- /* For list pages (sections), output a simple listing of child pages */ -}}
-{{- range .Pages -}}
+{{ if .RawContent -}}
+{{ $content := .RenderShortcodes -}}
+{{ $content = partial "registry/markdown-pipeline.md" $content -}}
+{{ $content }}
+{{- else -}}
+{{ range .Pages -}}
 - [{{ .Title }}]({{ .RelPermalink }})
 {{ end -}}
+{{- end }}

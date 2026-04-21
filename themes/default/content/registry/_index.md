@@ -37,3 +37,18 @@ cascade:
       _target:
           kind: page
 ---
+
+The Pulumi Registry is the public index of Pulumi packages. It lists first-party Pulumi providers, bridged Terraform providers, and community components for common cloud architectures.
+
+For the full list of packages, see [/registry/packages.md](/registry/packages.md).
+
+Popular providers:
+
+- [AWS](/registry/packages/aws.md)
+- [Azure Native](/registry/packages/azure-native.md)
+- [Google Cloud](/registry/packages/gcp.md)
+- [Kubernetes](/registry/packages/kubernetes.md)
+- [Docker](/registry/packages/docker.md)
+- [Random](/registry/packages/random.md)
+
+Each package page has hand-authored overview and installation/configuration content available as markdown (append `.md` to the URL, or send `Accept: text/markdown`). API reference documentation for resources and functions is available at `/api-docs/` on each package page in HTML only.

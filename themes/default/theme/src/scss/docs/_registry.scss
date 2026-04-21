@@ -1,3 +1,42 @@
+.copy-llm-prompt {
+    margin: 8px 0 16px;
+
+    &__button {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 5px 12px;
+        font-size: 13px;
+        font-weight: 500;
+        border: 1px solid map-get($gray, 300);
+        border-radius: 6px;
+        color: map-get($gray, 600);
+        background: #ffffff;
+        cursor: pointer;
+        appearance: none;
+        transition: border-color 0.15s ease, color 0.15s ease, background-color 0.15s ease;
+
+        &:hover {
+            border-color: map-get($gray, 400);
+            color: map-get($gray, 800);
+            background-color: map-get($gray, 100);
+        }
+
+        &.is-copied {
+            border-color: #16a34a;
+            color: #16a34a;
+        }
+    }
+
+    &__icon {
+        font-size: 13px;
+    }
+
+    &__text {
+        line-height: 1;
+    }
+}
+
 .pulumi-ai-menu {
     position: relative;
     display: inline-flex;

@@ -1,0 +1,39 @@
+{{ $packageData := .packageData }}
+{{ $rawPackageName := .rawPackageName }}
+{{ $docsURL := printf "/registry/packages/%s/" $rawPackageName | absURL }}
+{{ $installURL := printf "/registry/packages/%s/installation-configuration/" $rawPackageName | absURL }}
+{{ $apiDocsURL := printf "/registry/packages/%s/api-docs/" $rawPackageName | absURL }}
+{{ $guidesURL := printf "/registry/packages/%s/how-to-guides/" $rawPackageName | absURL }}
+{{ $schemaURL := printf "/registry/packages/%s/schema.json" $rawPackageName | absURL }}
+{{ $installCmd := printf "pulumi plugin install resource %s %s" $rawPackageName $packageData.version }}
+
+<div class="copy-llm-prompt" data-component="copy-llm-prompt">
+  <template>I want to use the Pulumi {{ $packageData.title }} provider ({{ $rawPackageName }}) in my project.
+
+## Provider details
+- Package: {{ $rawPackageName }}
+- Version: {{ $packageData.version }}
+- Publisher: {{ $packageData.publisher }}
+
+## Installation
+Run the following to install the provider plugin:
+  {{ $installCmd }}
+
+Or add it as a dependency in your language of choice (npm, pip, go, nuget).
+
+## Reference links
+- Overview and getting started: {{ $docsURL }}
+- Installation and configuration: {{ $installURL }}
+- API documentation: {{ $apiDocsURL }}
+- How-to guides and examples: {{ $guidesURL }}
+- Schema (JSON): {{ $schemaURL }}
+- Repository: {{ $packageData.repo_url }}
+
+Help me get started using this provider. Show me a complete Pulumi program that provisions a common resource, including all necessary configuration and imports.</template>
+  <button type="button"
+          class="copy-llm-prompt__button"
+          aria-label="Copy LLM prompt to clipboard">
+    <i class="fas fa-copy copy-llm-prompt__icon" aria-hidden="true"></i>
+    <span class="copy-llm-prompt__text">Copy prompt</span>
+  </button>
+</div>

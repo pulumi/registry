@@ -55,6 +55,11 @@
                 <div class="h1-gradient"></div>
             </div>
 
+            {{ $copyPromptPackageData := index site.Data.registry.packages $packageName }}
+            {{ with $copyPromptPackageData }}
+                {{ partial "registry/package/copy-llm-prompt.html" (dict "packageData" . "rawPackageName" $packageName) }}
+            {{ end }}
+
             <div class="docs-table-of-contents docs-toc-mobile">
                 {{ partial "docs/table-of-contents.html" . }}
                 {{ partial "docs/right-nav-ad.html" }}

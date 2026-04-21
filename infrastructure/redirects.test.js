@@ -53,19 +53,19 @@ test("legacy prefix redirect: azure-native-v2 -> azure-native@2.x", () => {
     assertRedirect(result, "/registry/packages/azure-native@2.x/");
 });
 
-test("Accept: text/markdown on directory URL -> 301 no-store to .md", () => {
+test("Accept: text/markdown on directory URL -> URI rewrite to /index.md", () => {
     const result = handler(request("/registry/packages/aws/", "text/markdown"));
-    assertRedirect(result, "/registry/packages/aws.md", "no-store");
+    assertPassThrough(result, "/registry/packages/aws/index.md");
 });
 
-test("Accept: text/markdown on /index.html -> 301 no-store to .md", () => {
+test("Accept: text/markdown on /index.html -> URI rewrite to /index.md", () => {
     const result = handler(request("/registry/packages/aws/index.html", "text/markdown"));
-    assertRedirect(result, "/registry/packages/aws.md", "no-store");
+    assertPassThrough(result, "/registry/packages/aws/index.md");
 });
 
 test("Accept: text/markdown with q-value still matches", () => {
     const result = handler(request("/registry/packages/aws/", "text/html, text/markdown;q=0.9"));
-    assertRedirect(result, "/registry/packages/aws.md", "no-store");
+    assertPassThrough(result, "/registry/packages/aws/index.md");
 });
 
 test("/foo/index.md -> pass through (served directly from origin)", () => {
@@ -88,9 +88,9 @@ test("nested leaf: .md suffix on a how-to-guide", () => {
     assertPassThrough(result, "/registry/packages/aws/how-to-guides/6-0-migration/index.md");
 });
 
-test("registry root: /registry/ + Accept -> 301 no-store to /registry.md", () => {
+test("registry root: /registry/ + Accept -> URI rewrite to /registry/index.md", () => {
     const result = handler(request("/registry/", "text/markdown"));
-    assertRedirect(result, "/registry.md", "no-store");
+    assertPassThrough(result, "/registry/index.md");
 });
 
 test("registry root: /registry.md -> internal rewrite to /registry/index.md", () => {
@@ -143,4 +143,22 @@ test("legacy redirect wins over markdown rewrite", () => {
     // A legacy aws-v6 .md URL should hit the prefix 301, not the .md rewrite.
     const result = handler(request("/registry/packages/aws-v6/index.md"));
     assertRedirect(result, "/registry/packages/aws@6.x/index.md");
+});
+
+test("Accept normalization: text/markdown bucket collapses to 'text/markdown'", () => {
+    const event = request("/registry/packages/aws/", "text/html, text/markdown;q=0.9");
+    handler(event);
+    assert.equal(event.request.headers["accept"].value, "text/markdown");
+});
+
+test("Accept normalization: non-markdown Accept is stripped", () => {
+    const event = request("/registry/packages/aws/", "text/html,application/xhtml+xml");
+    handler(event);
+    assert.equal(event.request.headers["accept"], undefined);
+});
+
+test("Accept normalization: missing Accept stays missing", () => {
+    const event = request("/registry/packages/aws/");
+    handler(event);
+    assert.equal(event.request.headers["accept"], undefined);
 });

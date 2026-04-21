@@ -2,21 +2,19 @@
 //
 // Responsibilities, in order:
 //   1. Legacy versioned package URL 301 redirects (e.g. aws-v6 -> aws@6.x).
-//   2. Markdown content negotiation for hand-edited /registry/ pages:
+//   2. Normalize the Accept header to two buckets -- "text/markdown" if the
+//      client accepts markdown, otherwise the header is removed. The default
+//      cache behavior includes Accept in the cache key, so normalization
+//      prevents every unique browser Accept string from creating its own
+//      cache entry.
+//   3. Markdown content negotiation for hand-edited /registry/ pages:
 //        - /foo.md -> internally rewrite to Hugo's /foo/index.md output.
-//        - Accept: text/markdown on /foo/ or /foo/index.html -> 301 to /foo.md.
+//        - Accept: text/markdown on /foo/ or /foo/index.html -> internally
+//          rewrite to /foo/index.md. The client's URL stays put; Accept is
+//          in the cache key, so the HTML and markdown variants do not
+//          pollute each other's cache entries.
 //      API-generated pages under /api-docs/ are skipped: they have no backing
 //      index.md, so rewrites would produce 404s.
-//
-// Why 301 instead of URI rewrite for the Accept case: this distribution uses
-// legacy forwardedValues with no Accept header in the cache key, so the cache
-// key for /foo/ is the same regardless of what Accept was. If the function
-// rewrote /foo/ -> /foo/index.md based on Accept, CloudFront would still key
-// the cached response under the original /foo/ and pollute subsequent
-// requests with a different Accept header. A 301 with cache-control: no-store
-// avoids pollution -- the function runs fresh every time, and the underlying
-// /foo/ HTML cache entry is untouched. minTtl=0 on the cache behavior ensures
-// no-store is honored.
 
 var EXACT_REDIRECTS = [
     { match: "/registry/packages/aws-v6/how-to-guides/aws-py-oidc-provider-pulumi-cloud/index.html", target: "/docs/esc/guides/configuring-oidc/aws/" },
@@ -28,13 +26,13 @@ var PREFIX_REDIRECTS = [
     { match: /^\/registry\/packages\/azure-native-v2\/?(.*)/, replace: "/registry/packages/azure-native@2.x/$1" },
 ];
 
-function redirect(location, cacheControl) {
+function redirect(location) {
     return {
         statusCode: 301,
         statusDescription: "Moved Permanently",
         headers: {
             location: { value: location },
-            "cache-control": { value: cacheControl },
+            "cache-control": { value: "max-age=604800" },
         },
     };
 }
@@ -47,15 +45,26 @@ function handler(event) {
     for (i = 0; i < EXACT_REDIRECTS.length; i++) {
         rule = EXACT_REDIRECTS[i];
         if (uri === rule.match) {
-            return redirect(rule.target, "max-age=604800");
+            return redirect(rule.target);
         }
     }
 
     for (i = 0; i < PREFIX_REDIRECTS.length; i++) {
         rule = PREFIX_REDIRECTS[i];
         if (rule.match.test(uri)) {
-            return redirect(uri.replace(rule.match, rule.replace), "max-age=604800");
+            return redirect(uri.replace(rule.match, rule.replace));
         }
+    }
+
+    // Normalize Accept for cache-key stability. Must happen before any
+    // decision that reads Accept, since we also use the normalized value
+    // for the markdown-negotiation branch below.
+    var rawAccept = request.headers["accept"] ? request.headers["accept"].value : "";
+    var wantsMarkdown = rawAccept.indexOf("text/markdown") !== -1;
+    if (wantsMarkdown) {
+        request.headers["accept"] = { value: "text/markdown" };
+    } else if (request.headers["accept"]) {
+        delete request.headers["accept"];
     }
 
     // Markdown handling is scoped to /registry/* (plus the /registry.md alias
@@ -77,16 +86,17 @@ function handler(event) {
         return request;
     }
 
-    // Accept: text/markdown on a directory or /index.html URL -> 301 to the
-    // canonical /foo.md. Use no-store so this 301 is not cached under the
-    // original URI (see top-of-file comment).
-    var accept = request.headers["accept"] ? request.headers["accept"].value : "";
-    if (accept.indexOf("text/markdown") !== -1) {
+    // Accept: text/markdown on a directory or /index.html URL -> serve the
+    // sibling /index.md from origin. Cache key includes the normalized Accept,
+    // so HTML and markdown variants of the same URI get separate cache entries.
+    if (wantsMarkdown) {
         if (uri.endsWith("/index.html")) {
-            return redirect(uri.slice(0, -"/index.html".length) + ".md", "no-store");
+            request.uri = uri.slice(0, -"/index.html".length) + "/index.md";
+            return request;
         }
         if (uri.endsWith("/")) {
-            return redirect(uri.slice(0, -1) + ".md", "no-store");
+            request.uri = uri + "index.md";
+            return request;
         }
     }
 

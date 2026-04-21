@@ -196,12 +196,18 @@ const baseCacheBehavior = {
     allowedMethods: ["GET", "HEAD", "OPTIONS"],
     cachedMethods: ["GET", "HEAD", "OPTIONS"],
 
-    // S3 doesn't need take any of these values into account when serving content.
+    // Accept is forwarded to the origin and included in the cache key so that
+    // requests with Accept: text/markdown can be served different content
+    // from the same URI (markdown vs. HTML). The CloudFront function in
+    // redirects.js normalizes Accept to one of two values ("text/markdown"
+    // or absent) before cache lookup to prevent fragmenting the cache per
+    // unique browser Accept string.
     forwardedValues: {
         cookies: {
             forward: "none",
         },
         queryString: false,
+        headers: ["Accept"],
     },
 
     minTtl: 0,

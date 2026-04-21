@@ -50,24 +50,29 @@ test("legacy prefix redirect: azure-native-v2 -> azure-native@2.x", () => {
     assertRedirect(result, "/registry/packages/azure-native@2.x/");
 });
 
-test("Accept: text/markdown on directory URL -> 301 to .md", () => {
+test("Accept: text/markdown on directory URL -> URI rewrite to /index.md", () => {
     const result = handler(request("/registry/packages/aws/", "text/markdown"));
-    assertRedirect(result, "/registry/packages/aws.md");
+    assertPassThrough(result, "/registry/packages/aws/index.md");
 });
 
-test("Accept: text/markdown on /index.html -> 301 to .md", () => {
+test("Accept: text/markdown on /index.html -> URI rewrite to /index.md", () => {
     const result = handler(request("/registry/packages/aws/index.html", "text/markdown"));
-    assertRedirect(result, "/registry/packages/aws.md");
+    assertPassThrough(result, "/registry/packages/aws/index.md");
 });
 
 test("Accept: text/markdown with q-value still matches", () => {
     const result = handler(request("/registry/packages/aws/", "text/html, text/markdown;q=0.9"));
-    assertRedirect(result, "/registry/packages/aws.md");
+    assertPassThrough(result, "/registry/packages/aws/index.md");
 });
 
-test("/foo/index.md -> 301 to /foo.md (hidden canonical)", () => {
+test("/foo/index.md -> pass through (served directly from origin)", () => {
     const result = handler(request("/registry/packages/aws/index.md"));
-    assertRedirect(result, "/registry/packages/aws.md");
+    assertPassThrough(result, "/registry/packages/aws/index.md");
+});
+
+test("/foo/index.md + Accept:md -> no double rewrite", () => {
+    const result = handler(request("/registry/packages/aws/index.md", "text/markdown"));
+    assertPassThrough(result, "/registry/packages/aws/index.md");
 });
 
 test("/foo.md -> internal rewrite to /foo/index.md", () => {
@@ -80,9 +85,9 @@ test("nested leaf: .md suffix on a how-to-guide", () => {
     assertPassThrough(result, "/registry/packages/aws/how-to-guides/6-0-migration/index.md");
 });
 
-test("registry root: /registry/ + Accept -> 301 /registry.md", () => {
+test("registry root: /registry/ + Accept -> URI rewrite to /registry/index.md", () => {
     const result = handler(request("/registry/", "text/markdown"));
-    assertRedirect(result, "/registry.md");
+    assertPassThrough(result, "/registry/index.md");
 });
 
 test("registry root: /registry.md -> internal rewrite to /registry/index.md", () => {

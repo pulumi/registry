@@ -230,7 +230,7 @@ The following reference example uses placeholder values for all [input propertie
 <pulumi-choosable type="language" values="csharp">
 
 ```csharp
-var registryGeoReplicationResource = new Registrygeoreplication.Index.RegistryGeoReplication("registryGeoReplicationResource", new()
+var registryGeoReplicationResource = new Registrygeoreplication.RegistryGeoReplication("registryGeoReplicationResource", new()
 {
     ResourceGroup = resourceGroup,
 });

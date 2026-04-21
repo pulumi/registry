@@ -235,7 +235,7 @@ The following reference example uses placeholder values for all [input propertie
 <pulumi-choosable type="language" values="csharp">
 
 ```csharp
-var resourceResource = new Mypkg.Index.Resource("resourceResource", new()
+var resourceResource = new Mypkg.Resource("resourceResource", new()
 {
     Config = new Mypkg.Inputs.ConfigArgs
     {

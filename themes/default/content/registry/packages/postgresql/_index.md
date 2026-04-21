@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-postgresql/v3.16.2/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-postgresql/v3.16.3/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-postgresql/blob/v3.16.2/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-postgresql/blob/v3.16.3/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Postgresql Provider
 meta_desc: Provides an overview on how to configure the Pulumi Postgresql provider.
@@ -101,12 +101,12 @@ using PostgreSql = Pulumi.PostgreSql;
 
 return await Deployment.RunAsync(() =>
 {
-    var myDb1 = new PostgreSql.Database("my_db1", new()
+    var myDb1 = new PostgreSql.Index.Database("my_db1", new()
     {
         Name = "my_db1",
     });
 
-    var myDb2 = new PostgreSql.Database("my_db2", new()
+    var myDb2 = new PostgreSql.Index.Database("my_db2", new()
     {
         Name = "my_db2",
     });
@@ -476,7 +476,7 @@ return await Deployment.RunAsync(() =>
         Password = "xxxxxxxx",
     });
 
-    var testDb = new PostgreSql.Database("test_db", new()
+    var testDb = new PostgreSql.Index.Database("test_db", new()
     {
         Name = "test_db",
     });
@@ -872,7 +872,7 @@ func main() {
 			PrincipalType:     pulumi.String("Group"),
 			ResourceGroupName: pulumi.Any(rgName),
 			ServerName:        pgsql.Name,
-			TenantId:          pulumi.String(current.TenantId),
+			TenantId:          pulumi.String(pulumi.String(current.TenantId)),
 		})
 		if err != nil {
 			return err

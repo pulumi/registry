@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-f5bigip/v3.20.1/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-f5bigip/v3.21.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-f5bigip/blob/v3.20.1/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-f5bigip/blob/v3.21.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: F5bigip Provider
 meta_desc: Provides an overview on how to configure the Pulumi F5bigip provider.
@@ -137,9 +137,12 @@ import (
 func main() {
 	pulumi.Run(func(ctx *pulumi.Context) error {
 		cfg := config.New(ctx, "")
-		hostname := cfg.RequireObject("hostname")
-		username := cfg.RequireObject("username")
-		password := cfg.RequireObject("password")
+		var hostname interface{}
+		cfg.RequireObject("hostname", &hostname)
+		var username interface{}
+		cfg.RequireObject("username", &username)
+		var password interface{}
+		cfg.RequireObject("password", &password)
 		return nil
 	})
 }

@@ -1,6 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/ionos-cloud/pulumi-ionoscloud/v0.2.3/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/ionos-cloud/pulumi-ionoscloud/v0.3.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+edit_url: https://github.com/ionos-cloud/pulumi-ionoscloud/blob/v0.3.0/docs/_index.md
 title: Ionoscloud
 meta_desc: Provides an overview of the Ionoscloud Provider for Pulumi.
 layout: overview

@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-newrelic/v5.64.1/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-newrelic/v5.64.2/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-newrelic/blob/v5.64.1/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-newrelic/blob/v5.64.2/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Newrelic Provider
 meta_desc: Provides an overview on how to configure the Pulumi Newrelic provider.
@@ -259,7 +259,7 @@ using NewRelic = Pulumi.NewRelic;
 return await Deployment.RunAsync(() =>
 {
     // Read an APM application resource
-    var foo = NewRelic.GetEntity.Invoke(new()
+    var foo = NewRelic.Index.GetEntity.Invoke(new()
     {
         Name = "Your App Name",
         Domain = "APM",
@@ -267,13 +267,13 @@ return await Deployment.RunAsync(() =>
     });
 
     // Create an alert policy
-    var alert = new NewRelic.AlertPolicy("alert", new()
+    var alert = new NewRelic.Index.AlertPolicy("alert", new()
     {
         Name = "Your Concise Alert Name",
     });
 
     // Add a condition
-    var fooNrqlAlertCondition = new NewRelic.NrqlAlertCondition("foo", new()
+    var fooNrqlAlertCondition = new NewRelic.Index.NrqlAlertCondition("foo", new()
     {
         PolicyId = alert.Id,
         Type = "static",
@@ -296,7 +296,7 @@ return await Deployment.RunAsync(() =>
     });
 
     // Add a notification channel
-    var email = new NewRelic.AlertChannel("email", new()
+    var email = new NewRelic.Index.AlertChannel("email", new()
     {
         Name = "email",
         Type = "email",
@@ -308,7 +308,7 @@ return await Deployment.RunAsync(() =>
     });
 
     // Link the channel to the policy
-    var alertEmail = new NewRelic.AlertPolicyChannel("alert_email", new()
+    var alertEmail = new NewRelic.Index.AlertPolicyChannel("alert_email", new()
     {
         PolicyId = alert.Id,
         ChannelIds = new[]

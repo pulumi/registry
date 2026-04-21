@@ -2,6 +2,7 @@
 title: Kubernetes FAQ
 meta_desc: provides Frequently Asked Questions about Kubernetes and Pulumi.
 aliases: ["/docs/reference/clouds/kubernetes/faq/"]
+faq: true
 ---
 
 ## Does Pulumi create and manage Kubernetes clusters, or deploy workloads to running clusters?

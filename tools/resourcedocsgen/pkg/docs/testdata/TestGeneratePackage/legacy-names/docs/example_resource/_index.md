@@ -231,7 +231,7 @@ The following reference example uses placeholder values for all [input propertie
 <pulumi-choosable type="language" values="csharp">
 
 ```csharp
-var example_resourceResource = new Legacy_names.Index.Example_resource("example_resourceResource", new()
+var example_resourceResource = new Legacy_names.Example_resource("example_resourceResource", new()
 {
     Map_enum = new[]
     {

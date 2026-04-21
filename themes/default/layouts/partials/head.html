@@ -73,7 +73,7 @@
                     "addressLocality": "Seattle, WA",
                     "addressCountry": "United States",
                     "postalCode": "98101",
-                    "streetAddress": "1525” 4th Ave. Suite 800"
+                    "streetAddress": "1525 4th Ave. Suite 800"
                 },
                 "email": "mailto:team@pulumi.com",
                 "url": "https://www.pulumi.com",
@@ -87,6 +87,10 @@
         </script>
     {{ end }}
 
+    <!-- Registry-specific structured data (JSON-LD) for AEO. -->
+    {{ if eq .Section "registry" }}
+        {{ partial "registry/structured-data.html" . }}
+    {{ end }}
 
     <!-- Events info for Google events. -->
     {{ if .Params.event_data }}
@@ -224,13 +228,10 @@
         https://en.wikipedia.org/wiki/Canonical_link_element
     -->
 
-    {{ if .Params.canonical_url }}
-        <link rel="canonical" href="{{ .Params.canonical_url }}" />
+    {{ $canonicalPath := partial "canonical-path.html" . }}
+    {{ if or (hasPrefix $canonicalPath "http://") (hasPrefix $canonicalPath "https://") }}
+        <link rel="canonical" href="{{ $canonicalPath }}" />
     {{ else }}
-        {{ $canonicalPath := .RelPermalink }}
-        {{ if strings.Contains $canonicalPath "@" }}
-            {{ $canonicalPath = replaceRE `([^/]+)@[^/]+` "$1" $canonicalPath }}
-        {{ end }}
         <link rel="canonical" href="{{ .Site.Params.canonicalURL }}{{ $canonicalPath }}" />
     {{ end }}
 

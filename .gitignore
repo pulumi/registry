@@ -24,6 +24,7 @@ static/registry/
 themes/default/content/registry/packages/*/api-docs/
 themes/default/content/registry/packages/*@*/
 themes/default/static/registry/packages/navs/
+themes/default/static/registry/packages/*/schema.json
 themes/default/static/registry/js/
 themes/default/static/registry/css/
 themes/default/data/asset_manifest.json

@@ -232,7 +232,7 @@ The following reference example uses placeholder values for all [input propertie
 <pulumi-choosable type="language" values="csharp">
 
 ```csharp
-var resourceWithAssetsResource = new Example.Index.ResourceWithAssets("resourceWithAssetsResource", new()
+var resourceWithAssetsResource = new Example.ResourceWithAssets("resourceWithAssetsResource", new()
 {
     Source = new StringAsset("content"),
     Archive = new FileArchive("./path/to/archive"),

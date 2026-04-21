@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-hcloud/v1.32.1/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-hcloud/v1.32.2/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-hcloud/blob/v1.32.1/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-hcloud/blob/v1.32.2/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Hcloud Provider
 meta_desc: Provides an overview on how to configure the Pulumi Hcloud provider.
@@ -111,7 +111,8 @@ import (
 func main() {
 	pulumi.Run(func(ctx *pulumi.Context) error {
 		cfg := config.New(ctx, "")
-		hcloudToken := cfg.RequireObject("hcloudToken")
+		var hcloudToken interface{}
+		cfg.RequireObject("hcloudToken", &hcloudToken)
 		return nil
 	})
 }
@@ -169,7 +170,7 @@ public class App {
 
     public static void stack(Context ctx) {
         final var config = ctx.config();
-        final var hcloudToken = config.get("hcloudToken");
+        final var hcloudToken = config.require("hcloudToken");
     }
 }
 ```

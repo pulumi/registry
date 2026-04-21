@@ -51,4 +51,10 @@ Popular providers:
 - [Docker](/registry/packages/docker.md)
 - [Random](/registry/packages/random.md)
 
-Each package page has hand-authored overview and installation/configuration content available as markdown (append `.md` to the URL, or send `Accept: text/markdown`). API reference documentation for resources and functions is available at `/api-docs/` on each package page in HTML only.
+Each package exposes several endpoints for programmatic consumers:
+
+- `/registry/packages/<name>/` — hand-authored overview and installation/configuration (HTML; append `.md` or send `Accept: text/markdown` for markdown).
+- `/registry/packages/<name>/llm-sitemap.json` — machine-readable index of the package's pages.
+- `/registry/packages/<name>/schema.json` — canonical Pulumi schema (same artifact `pulumi package get-schema` returns).
+- `/registry/packages/<name>/api-docs/llm-docs.json` — pre-rendered multi-language API documentation bundled into a single JSON file.
+- `/registry/packages/<name>/api-docs/` — per-resource and per-function API reference (HTML).

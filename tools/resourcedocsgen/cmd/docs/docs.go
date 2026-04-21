@@ -161,8 +161,8 @@ func generateCLIDocs(outDir string, genctx *docs.Context) error {
 		return errors.Wrap(err, "marshalling CLI docs bundle")
 	}
 
-	if err := pkg.EmitFile(outDir, "cli-docs.json", b); err != nil {
-		return errors.Wrap(err, "emitting CLI docs bundle")
+	if err := pkg.EmitFile(outDir, "llm-docs.json", b); err != nil {
+		return errors.Wrap(err, "emitting LLM docs bundle")
 	}
 	return nil
 }

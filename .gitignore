@@ -16,7 +16,7 @@ ctrf/
 bin
 .make
 .cache/
-cli-docs-out/
+llm-docs-out/
 mise.local.toml
 .claude/settings.local.json
 /content/

@@ -16,10 +16,10 @@ aliases:
 outputs:
     - HTML
     - markdown
-    - clisitemap
+    - llmsitemap
 cascade:
     # API docs are generated in bulk during CI and don't need markdown or
-    # clisitemap outputs.  Restricting them to HTML avoids a massive build-time
+    # llmsitemap outputs.  Restricting them to HTML avoids a massive build-time
     # multiplier (tens of thousands of extra pages).
     - outputs:
           - HTML
@@ -28,7 +28,7 @@ cascade:
     - outputs:
           - HTML
           - markdown
-          - clisitemap
+          - llmsitemap
       _target:
           kind: section
     - outputs:

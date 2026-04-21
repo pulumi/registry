@@ -69,7 +69,7 @@ Every package in the registry is described by a YAML file at `themes/default/dat
 
 | Tool | Location | Purpose |
 |---|---|---|
-| `resourcedocsgen` | `tools/resourcedocsgen/` | Generates provider API reference docs and CLI-friendly JSON (`cli-docs.json`) from Pulumi provider schemas |
+| `resourcedocsgen` | `tools/resourcedocsgen/` | Generates provider API reference docs and LLM-friendly JSON bundles (`llm-docs.json`) from Pulumi provider schemas |
 | `mktutorial` | `tools/mktutorial/` | Generates how-to guides from `pulumi/examples` |
 
 Both are compiled to `bin/` by the Makefile. `mktutorial` is CI-only; it does not run in local builds.
@@ -82,7 +82,7 @@ The CI build script (`scripts/ci/build.sh`) writes to **`themes/default/content/
 
 This difference is intentional — local API doc generation stays out of the Hugo theme tree. Never commit generated content from `themes/default/content/registry/packages/`.
 
-Additionally, `resourcedocsgen` writes **CLI docs** to **`cli-docs-out/registry/packages/`** (repo root, git-ignored). These are terminal-friendly markdown bundles (`cli-docs.json`) uploaded to S3 separately from the Hugo site. The CLI docs format is specified in `docs/cli-markdown-spec.md`.
+Additionally, `resourcedocsgen` writes **LLM docs** to **`llm-docs-out/registry/packages/`** (repo root, git-ignored). These are terminal-friendly markdown bundles (`llm-docs.json`) uploaded to S3 separately from the Hugo site. The LLM docs format is specified in `docs/llm-markdown-spec.md`.
 
 ### Deployment Model
 

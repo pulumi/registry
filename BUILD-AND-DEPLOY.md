@@ -113,8 +113,8 @@ mise trust && mise install
                    │  themes/default/content/         │   │
                    │    registry/packages/ ◄──────────┤   │
                    │                                  │   │
-                   │  cli-docs-out/registry/packages/ │   │
-                   │    (CLI-friendly JSON) ◄─────────┘   │
+                   │  llm-docs-out/registry/packages/ │   │
+                   │    (LLM-friendly JSON) ◄─────────┘   │
                    │                                      │
                    │  Hugo build ◄── (reads content/)     │
                    │       │                              │
@@ -350,7 +350,7 @@ bin/resourcedocsgen docs registry \
     --baseDocsOutDir themes/default/content/registry/packages \
     --basePackageTreeJSONOutDir themes/default/static/registry/packages/navs \
     --baseSchemasOutDir themes/default/static/registry/packages \
-    --baseCLIDocsOutDir ./cli-docs-out/registry/packages \
+    --baseLLMDocsOutDir ./llm-docs-out/registry/packages \
     [<package-name>]
 ```
 
@@ -367,9 +367,9 @@ When `<package-name>` is omitted, all packages listed in `themes/default/data/re
 - Generated docs at `themes/default/content/registry/packages/<pkg>/api-docs/`
 - Package navigation JSON at `themes/default/static/registry/packages/navs/<pkg>.json`
 - Schema JSON at `themes/default/static/registry/packages/<pkg>.json`
-- CLI docs JSON at `cli-docs-out/registry/packages/<pkg>/api-docs/cli-docs.json` (only when `--baseCLIDocsOutDir` is set)
+- LLM docs JSON at `llm-docs-out/registry/packages/<pkg>/api-docs/llm-docs.json` (only when `--baseLLMDocsOutDir` is set)
 
-The format of `cli-docs.json` is specified in `docs/cli-markdown-spec.md`.
+The format of `llm-docs.json` is specified in `docs/llm-markdown-spec.md`.
 
 ### 4.4 mktutorial Tool
 
@@ -404,7 +404,7 @@ This is the master build script for CI runs. It accepts one argument: `preview` 
    - `JS_BUNDLE=static/js/bundle.min.<id>.js`
 6. **Restores cached API docs** from `.cache/api-docs/` into the Hugo content/static trees (see section 4.7 for details).
 7. Runs `make api-docs`, which compiles `resourcedocsgen` and generates all provider API docs. The tool skips unchanged packages using sentinel files.
-8. **Saves API docs** output (including sentinel files) back to `.cache/api-docs/` for the next run. Versioned packages (`@`-suffixed) are excluded — they have their own cache. CLI docs from `cli-docs-out/` are also cached to `.cache/api-docs/cli-docs/` and restored on the next run.
+8. **Saves API docs** output (including sentinel files) back to `.cache/api-docs/` for the next run. Versioned packages (`@`-suffixed) are excluded — they have their own cache. LLM docs from `llm-docs-out/` are also cached to `.cache/api-docs/llm-docs/` and restored on the next run.
 9. Runs `node ./scripts/apply-fixes.js`.
 10. Runs Hugo with `--minify --buildFuture --templateMetrics`:
     - `preview` mode: sets `HUGO_BASEURL` to the S3 website URL and uses `-e preview`
@@ -467,7 +467,7 @@ CI builds use multiple cache layers to avoid redundant work. All caches are stor
 |---|---|---|---|
 | Node/Yarn | `node-cache-Linux-x64-yarn-<yarn.lock hash>` | `~/.cache/yarn/v6` | Yarn package cache |
 | Go | `setup-go-...-<go.sum hash>` | `GOMODCACHE`, `GOCACHE` | Go module and build cache |
-| Docs + schemas | `docs-cache-<run_id>` (restore key: `docs-cache-`) | `.cache/schemas`, `.cache/versioned-docs`, `.cache/api-docs` | API docs output, versioned docs, provider schemas, CLI docs JSON |
+| Docs + schemas | `docs-cache-<run_id>` (restore key: `docs-cache-`) | `.cache/schemas`, `.cache/versioned-docs`, `.cache/api-docs` | API docs output, versioned docs, provider schemas, LLM docs JSON |
 | registry-mirror-discover | `registry-mirror-discover-<commit hash>` | `bin/registry-mirror-discover` | Pre-built binary for versioned docs discovery |
 
 The docs cache uses `restore-keys: docs-cache-` so it falls back to the most recent previous run's cache when an exact match isn't found (the key includes `run_id`, so it's always unique).
@@ -488,7 +488,7 @@ The `scripts/ci/build.sh` script manages the cache lifecycle:
 2. **Generate**: `make api-docs` runs `resourcedocsgen`, which skips fresh packages and regenerates stale ones.
 3. **Save**: copies the generated output (including updated sentinel files) back to `.cache/api-docs/` for the next run.
 
-CLI docs follow the same lifecycle: on restore, `.cache/api-docs/cli-docs/<pkg>/api-docs/` is copied to `cli-docs-out/registry/packages/<pkg>/api-docs/`; on save, the reverse copy is performed. Only `schema.json` (not the entire directory tree) is cached per package in the schema layer, to avoid persisting stale CLI doc files from older builds.
+LLM docs follow the same lifecycle: on restore, `.cache/api-docs/llm-docs/<pkg>/api-docs/` is copied to `llm-docs-out/registry/packages/<pkg>/api-docs/`; on save, the reverse copy is performed. Only `schema.json` (not the entire directory tree) is cached per package in the schema layer, to avoid persisting stale LLM doc files from older builds.
 
 #### Versioned docs cache
 
@@ -577,7 +577,7 @@ PR opened / committed
         │               └── scripts/ci/sync.sh preview
         │                       ├── Create / reuse S3 bucket
         │                       ├── s5cmd sync public/ → bucket
-        │                       ├── s5cmd sync cli-docs-out/ → bucket
+        │                       ├── s5cmd sync llm-docs-out/ → bucket
         │                       ├── Run browser tests (Cypress smoke test)
         │                       ├── Write origin-bucket-metadata.json
         │                       └── Post PR comment with preview URL
@@ -629,7 +629,7 @@ Push to master
                 │       ├── scripts/ci/sync.sh update
                 │       │       ├── Create / reuse S3 bucket
                 │       │       ├── s5cmd sync public/ → bucket
-                │       │       ├── s5cmd sync cli-docs-out/ → bucket
+                │       │       ├── s5cmd sync llm-docs-out/ → bucket
                 │       │       ├── Run browser tests (Cypress smoke test)
                 │       │       └── Write origin-bucket-metadata.json
                 │       ├── scripts/generate-search-index.sh
@@ -832,7 +832,7 @@ scripts/ci/sync.sh preview
   1. aws s3 mb registry-testing-origin-pr-<N>-<sha8>
   2. Enable static website hosting
   3. s5cmd sync public/ → bucket (--delete)
-  3a. s5cmd sync cli-docs-out/ → bucket
+  3a. s5cmd sync llm-docs-out/ → bucket
   4. Run Cypress smoke tests
   5. Write origin-bucket-metadata.json
   6. aws ssm put-parameter /registry/commits/<sha>/bucket = <bucket-name>

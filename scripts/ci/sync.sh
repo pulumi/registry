@@ -62,15 +62,15 @@ s5cmd --log error sync --delete --acl public-read \
     "$build_dir/" "$destination_bucket_uri/"
 log "Sync complete."
 
-# Sync CLI docs separately. These are generated outside the Hugo build tree to avoid
+# Sync LLM docs separately. These are generated outside the Hugo build tree to avoid
 # Hugo processing static files. They're uploaded directly to the same URL paths
 # they'd occupy if they were in the Hugo static directory.
-cli_docs_dir="cli-docs-out"
-if [[ -d "$cli_docs_dir" ]]; then
-    log "Synchronizing CLI docs to $destination_bucket_uri..."
+llm_docs_dir="llm-docs-out"
+if [[ -d "$llm_docs_dir" ]]; then
+    log "Synchronizing LLM docs to $destination_bucket_uri..."
     s5cmd --log error sync --acl public-read \
-        "$cli_docs_dir/" "$destination_bucket_uri/"
-    log "CLI docs sync complete."
+        "$llm_docs_dir/" "$destination_bucket_uri/"
+    log "LLM docs sync complete."
 fi
 
 s3_website_url="http://${destination_bucket}.s3-website.$(aws_region).amazonaws.com"

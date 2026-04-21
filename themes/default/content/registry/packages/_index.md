@@ -6,5 +6,5 @@ no_on_this_page: true
 outputs:
     - HTML
     - markdown
-    - clisitemap
+    - llmsitemap
 ---

@@ -34,7 +34,7 @@ API_DOCS_CACHE=".cache/api-docs"
 CONTENT_DIR="themes/default/content/registry/packages"
 NAVS_DIR="themes/default/static/registry/packages/navs"
 SCHEMAS_DIR="themes/default/static/registry/packages"
-CLI_DOCS_DIR="cli-docs-out/registry/packages"
+LLM_DOCS_DIR="llm-docs-out/registry/packages"
 
 if [[ -d "$API_DOCS_CACHE/content" ]]; then
     log "Restoring cached API docs..."
@@ -59,14 +59,14 @@ if [[ -d "$API_DOCS_CACHE/content" ]]; then
         pkg=$(basename "$schema_dir")
         [[ -d "$SCHEMAS_DIR/$pkg" ]] || cp -a "$schema_dir" "$SCHEMAS_DIR/$pkg"
     done
-    if [[ -d "$API_DOCS_CACHE/cli-docs" ]]; then
-        mkdir -p "$CLI_DOCS_DIR"
-        for pkg_dir in "$API_DOCS_CACHE/cli-docs"/*/; do
+    if [[ -d "$API_DOCS_CACHE/llm-docs" ]]; then
+        mkdir -p "$LLM_DOCS_DIR"
+        for pkg_dir in "$API_DOCS_CACHE/llm-docs"/*/; do
             [[ -d "$pkg_dir/api-docs" ]] || continue
             pkg=$(basename "$pkg_dir")
-            if [[ ! -d "$CLI_DOCS_DIR/$pkg/api-docs" ]]; then
-                mkdir -p "$CLI_DOCS_DIR/$pkg"
-                cp -a "$pkg_dir/api-docs" "$CLI_DOCS_DIR/$pkg/api-docs"
+            if [[ ! -d "$LLM_DOCS_DIR/$pkg/api-docs" ]]; then
+                mkdir -p "$LLM_DOCS_DIR/$pkg"
+                cp -a "$pkg_dir/api-docs" "$LLM_DOCS_DIR/$pkg/api-docs"
             fi
         done
     fi
@@ -79,7 +79,7 @@ make api-docs
 # Save API docs output to cache for next run.
 log "Saving API docs to cache..."
 rm -rf "$API_DOCS_CACHE"
-mkdir -p "$API_DOCS_CACHE/content" "$API_DOCS_CACHE/navs" "$API_DOCS_CACHE/schemas" "$API_DOCS_CACHE/cli-docs"
+mkdir -p "$API_DOCS_CACHE/content" "$API_DOCS_CACHE/navs" "$API_DOCS_CACHE/schemas" "$API_DOCS_CACHE/llm-docs"
 for pkg_dir in "$CONTENT_DIR"/*/; do
     [[ -d "$pkg_dir/api-docs" ]] || continue
     pkg=$(basename "$pkg_dir")
@@ -98,16 +98,16 @@ for schema_dir in "$SCHEMAS_DIR"/*/; do
     pkg=$(basename "$schema_dir")
     [[ "$pkg" == *@* ]] && continue
     # Only cache schema.json, not the entire directory tree (which may contain
-    # stale CLI doc files from older builds).
+    # stale LLM doc files from older builds).
     mkdir -p "$API_DOCS_CACHE/schemas/$pkg"
     cp -a "$schema_dir/schema.json" "$API_DOCS_CACHE/schemas/$pkg/schema.json"
 done
-for pkg_dir in "$CLI_DOCS_DIR"/*/; do
+for pkg_dir in "$LLM_DOCS_DIR"/*/; do
     [[ -d "$pkg_dir/api-docs" ]] || continue
     pkg=$(basename "$pkg_dir")
     [[ "$pkg" == *@* ]] && continue
-    mkdir -p "$API_DOCS_CACHE/cli-docs/$pkg"
-    cp -a "$pkg_dir/api-docs" "$API_DOCS_CACHE/cli-docs/$pkg/api-docs"
+    mkdir -p "$API_DOCS_CACHE/llm-docs/$pkg"
+    cp -a "$pkg_dir/api-docs" "$API_DOCS_CACHE/llm-docs/$pkg/api-docs"
 done
 log "API docs cache saved"
 

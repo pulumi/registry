@@ -3,16 +3,20 @@
 // Responsibilities, in order:
 //   1. Legacy versioned package URL 301 redirects (e.g. aws-v6 -> aws@6.x).
 //   2. Markdown content negotiation for hand-edited /registry/ pages:
-//        - Serve /foo.md by rewriting the URI to Hugo's /foo/index.md output.
-//        - Honor Accept: text/markdown by rewriting the URI to the same
-//          /foo/index.md target; the client's URL stays put.
+//        - /foo.md -> internally rewrite to Hugo's /foo/index.md output.
+//        - Accept: text/markdown on /foo/ or /foo/index.html -> 301 to /foo.md.
 //      API-generated pages under /api-docs/ are skipped: they have no backing
 //      index.md, so rewrites would produce 404s.
 //
-// All Accept-driven behavior is implemented as URI rewrites (not 301s) so that
-// the rewritten URI becomes the cache key. A response-returning branch here
-// would be cached under the original URI and pollute the cache for requests
-// with a different Accept header.
+// Why 301 instead of URI rewrite for the Accept case: this distribution uses
+// legacy forwardedValues with no Accept header in the cache key, so the cache
+// key for /foo/ is the same regardless of what Accept was. If the function
+// rewrote /foo/ -> /foo/index.md based on Accept, CloudFront would still key
+// the cached response under the original /foo/ and pollute subsequent
+// requests with a different Accept header. A 301 with cache-control: no-store
+// avoids pollution -- the function runs fresh every time, and the underlying
+// /foo/ HTML cache entry is untouched. minTtl=0 on the cache behavior ensures
+// no-store is honored.
 
 var EXACT_REDIRECTS = [
     { match: "/registry/packages/aws-v6/how-to-guides/aws-py-oidc-provider-pulumi-cloud/index.html", target: "/docs/esc/guides/configuring-oidc/aws/" },
@@ -24,13 +28,13 @@ var PREFIX_REDIRECTS = [
     { match: /^\/registry\/packages\/azure-native-v2\/?(.*)/, replace: "/registry/packages/azure-native@2.x/$1" },
 ];
 
-function redirect(location) {
+function redirect(location, cacheControl) {
     return {
         statusCode: 301,
         statusDescription: "Moved Permanently",
         headers: {
             location: { value: location },
-            "cache-control": { value: "max-age=604800" },
+            "cache-control": { value: cacheControl },
         },
     };
 }
@@ -43,14 +47,14 @@ function handler(event) {
     for (i = 0; i < EXACT_REDIRECTS.length; i++) {
         rule = EXACT_REDIRECTS[i];
         if (uri === rule.match) {
-            return redirect(rule.target);
+            return redirect(rule.target, "max-age=604800");
         }
     }
 
     for (i = 0; i < PREFIX_REDIRECTS.length; i++) {
         rule = PREFIX_REDIRECTS[i];
         if (rule.match.test(uri)) {
-            return redirect(uri.replace(rule.match, rule.replace));
+            return redirect(uri.replace(rule.match, rule.replace), "max-age=604800");
         }
     }
 
@@ -73,19 +77,16 @@ function handler(event) {
         return request;
     }
 
-    // Accept: text/markdown on a directory or /index.html URL -> serve the
-    // sibling /index.md from origin. We rewrite the URI rather than 301
-    // because CloudFront caches function responses under the original URI,
-    // and Accept is not in the cache key.
+    // Accept: text/markdown on a directory or /index.html URL -> 301 to the
+    // canonical /foo.md. Use no-store so this 301 is not cached under the
+    // original URI (see top-of-file comment).
     var accept = request.headers["accept"] ? request.headers["accept"].value : "";
     if (accept.indexOf("text/markdown") !== -1) {
         if (uri.endsWith("/index.html")) {
-            request.uri = uri.slice(0, -"/index.html".length) + "/index.md";
-            return request;
+            return redirect(uri.slice(0, -"/index.html".length) + ".md", "no-store");
         }
         if (uri.endsWith("/")) {
-            request.uri = uri + "index.md";
-            return request;
+            return redirect(uri.slice(0, -1) + ".md", "no-store");
         }
     }
 

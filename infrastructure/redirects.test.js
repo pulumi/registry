@@ -23,10 +23,13 @@ function request(uri, acceptHeader) {
     return { request: { uri, headers } };
 }
 
-function assertRedirect(result, expectedLocation) {
+function assertRedirect(result, expectedLocation, expectedCacheControl) {
     assert.equal(result.statusCode, 301);
     assert.equal(result.headers.location.value, expectedLocation);
-    assert.equal(result.headers["cache-control"].value, "max-age=604800");
+    assert.equal(
+        result.headers["cache-control"].value,
+        expectedCacheControl || "max-age=604800",
+    );
 }
 
 function assertPassThrough(result, expectedUri) {
@@ -50,19 +53,19 @@ test("legacy prefix redirect: azure-native-v2 -> azure-native@2.x", () => {
     assertRedirect(result, "/registry/packages/azure-native@2.x/");
 });
 
-test("Accept: text/markdown on directory URL -> URI rewrite to /index.md", () => {
+test("Accept: text/markdown on directory URL -> 301 no-store to .md", () => {
     const result = handler(request("/registry/packages/aws/", "text/markdown"));
-    assertPassThrough(result, "/registry/packages/aws/index.md");
+    assertRedirect(result, "/registry/packages/aws.md", "no-store");
 });
 
-test("Accept: text/markdown on /index.html -> URI rewrite to /index.md", () => {
+test("Accept: text/markdown on /index.html -> 301 no-store to .md", () => {
     const result = handler(request("/registry/packages/aws/index.html", "text/markdown"));
-    assertPassThrough(result, "/registry/packages/aws/index.md");
+    assertRedirect(result, "/registry/packages/aws.md", "no-store");
 });
 
 test("Accept: text/markdown with q-value still matches", () => {
     const result = handler(request("/registry/packages/aws/", "text/html, text/markdown;q=0.9"));
-    assertPassThrough(result, "/registry/packages/aws/index.md");
+    assertRedirect(result, "/registry/packages/aws.md", "no-store");
 });
 
 test("/foo/index.md -> pass through (served directly from origin)", () => {
@@ -85,9 +88,9 @@ test("nested leaf: .md suffix on a how-to-guide", () => {
     assertPassThrough(result, "/registry/packages/aws/how-to-guides/6-0-migration/index.md");
 });
 
-test("registry root: /registry/ + Accept -> URI rewrite to /registry/index.md", () => {
+test("registry root: /registry/ + Accept -> 301 no-store to /registry.md", () => {
     const result = handler(request("/registry/", "text/markdown"));
-    assertPassThrough(result, "/registry/index.md");
+    assertRedirect(result, "/registry.md", "no-store");
 });
 
 test("registry root: /registry.md -> internal rewrite to /registry/index.md", () => {

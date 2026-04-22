@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/ctfer-io/pulumi-ctfd/v2.4.0/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/ctfer-io/pulumi-ctfd/v2.4.2/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/ctfer-io/pulumi-ctfd/blob/v2.4.0/docs/installation-configuration.md
+edit_url: https://github.com/ctfer-io/pulumi-ctfd/blob/v2.4.2/docs/installation-configuration.md
 title: CTFd Installation & Configuration
 meta_desc: Provides an overview on how to setup the CTFd Provider for Pulumi.
 layout: package
@@ -12,7 +12,7 @@ layout: package
 The CTFd provider is available as a package in all Pulumi languages:
 
 - JavaScript/TypeScript: [`@ctfer-io/pulumi-ctfd`](https://www.npmjs.com/package/@ctfer-io/pulumi-ctfd)
-- Python: [`ctfer-io_pulumi-ctfd`](https://pypi.org/project/ctfer-io_pulumi-ctfd/)
+- Python: [`ctfer_io_pulumi_ctfd`](https://pypi.org/project/ctfer-io-pulumi-ctfd/)
 - Golang: [`github.com/ctfer-io/pulumi-ctfd/sdk/v2/go/ctfd`](https://github.com/ctfer-io/pulumi-ctfd)
 - .NET: [`CTFerio.Ctfd`](https://www.nuget.org/packages/CTFerio.Ctfd)
 

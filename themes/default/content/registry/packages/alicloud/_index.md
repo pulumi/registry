@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-alicloud/v3.99.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-alicloud/v3.100.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-alicloud/blob/v3.99.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-alicloud/blob/v3.100.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Alibaba Cloud Provider
 meta_desc: Provides an overview on how to configure the Pulumi Alibaba Cloud provider.
@@ -196,7 +196,7 @@ return await Deployment.RunAsync(() =>
 {
     var config = new Config();
     var name = config.Get("name") ?? "pulumi-example";
-    var @default = AliCloud.GetZones.Invoke(new()
+    var @default = AliCloud.Index.GetZones.Invoke(new()
     {
         AvailableDiskCategory = "cloud_efficiency",
         AvailableResourceCreation = "VSwitch",

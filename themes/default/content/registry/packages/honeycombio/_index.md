@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/honeycombio/honeycombio/0.47.1/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/honeycombio/honeycombio/0.48.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Honeycombio Provider
@@ -276,6 +276,7 @@ The `features` block supports the following:
 
 * `column` - (Optional) A `column` block as defined below.
 * `dataset` - (Optional) A `dataset` block as defined below.
+* `intelligence` - (Optional) An `intelligence` block as defined below.
 
 ---
 The `column` block supports the following:
@@ -285,3 +286,9 @@ The `column` block supports the following:
 ---
 The `dataset` block supports the following:
 * `importOnConflict` - (Optional) This changes the creation behavior of the dataset resource to import and update an existing dataset if it already exists, rather than erroring out. Defaults to `false`.
+
+---
+The `intelligence` block supports the following:
+* `enabled` - (Optional) Set to `true` to enable intelligence features such as `autoInvestigate` on triggers and burn alerts. Defaults to `false`.
+
+> **Note** [Honeycomb Intelligence](https://docs.honeycomb.io/security-compliance/honeycomb-intelligence) must first be enabled for your team in the Honeycomb UI before using this block. The `intelligence` feature block in the provider tells Pulumi that your team has Honeycomb Intelligence enabled and unlocks related attributes like `autoInvestigate`.

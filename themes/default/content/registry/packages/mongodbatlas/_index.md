@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-mongodbatlas/v4.7.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-mongodbatlas/v4.8.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-mongodbatlas/blob/v4.7.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-mongodbatlas/blob/v4.8.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Mongodbatlas Provider
 meta_desc: Provides an overview on how to configure the Pulumi Mongodbatlas provider.
@@ -130,14 +130,14 @@ using Mongodbatlas = Pulumi.Mongodbatlas;
 return await Deployment.RunAsync(() =>
 {
     // Create a project
-    var @this = new Mongodbatlas.Project("this", new()
+    var @this = new Mongodbatlas.Index.Project("this", new()
     {
         Name = "my-project",
         OrgId = orgId,
     });
 
     // Create a cluster
-    var thisAdvancedCluster = new Mongodbatlas.AdvancedCluster("this", new()
+    var thisAdvancedCluster = new Mongodbatlas.Index.AdvancedCluster("this", new()
     {
         ProjectId = @this.Id,
         Name = "my-cluster",

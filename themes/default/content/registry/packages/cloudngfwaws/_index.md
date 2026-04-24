@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-cloudngfwaws/v1.0.2/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-cloudngfwaws/v2.0.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-cloudngfwaws/blob/v1.0.2/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-cloudngfwaws/blob/v2.0.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Palo Alto Networks Cloud NGFW for AWS Provider
 meta_desc: Provides an overview on how to configure the Pulumi Palo Alto Networks Cloud NGFW for AWS provider.
@@ -14,7 +14,7 @@ The Palo Alto Networks Cloud NGFW for AWS provider is available as a package in 
 
 * JavaScript/TypeScript: [`@pulumi/cloudngfwaws`](https://www.npmjs.com/package/@pulumi/cloudngfwaws)
 * Python: [`pulumi-cloudngfwaws`](https://pypi.org/project/pulumi-cloudngfwaws/)
-* Go: [`github.com/pulumi/pulumi-cloudngfwaws/sdk/go/cloudngfwaws`](https://github.com/pulumi/pulumi-cloudngfwaws)
+* Go: [`github.com/pulumi/pulumi-cloudngfwaws/sdk/v2/go/cloudngfwaws`](https://github.com/pulumi/pulumi-cloudngfwaws)
 * .NET: [`Pulumi.Cloudngfwaws`](https://www.nuget.org/packages/Pulumi.Cloudngfwaws)
 * Java: [`com.pulumi/cloudngfwaws`](https://central.sonatype.com/artifact/com.pulumi/cloudngfwaws)
 

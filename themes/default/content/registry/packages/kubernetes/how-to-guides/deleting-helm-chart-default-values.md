@@ -4,6 +4,8 @@ meta_desc: How to delete a default value from a Helm chart in a Pulumi program b
 layout: package
 ---
 
+> **Note:** Requires pulumi-kubernetes v4.30.0 or later. Earlier versions strip `null` values during Helm value merging, so the patterns below have no effect on those versions.
+
 Helm charts commonly provide default values in `values.yaml`, and many chart templates guard fields with truthy checks like `{{- if .Values.foo }}`. The standard way to remove one of those defaults is to set the value to `null` — the equivalent of `helm install --set foo=null` on the Helm CLI.
 
 ## TypeScript: set the key to `null` in the inline `values` map

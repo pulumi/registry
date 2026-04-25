@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-scm/v1.0.5/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-scm/v1.0.6/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-scm/blob/v1.0.5/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-scm/blob/v1.0.6/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Strata Cloud Manager Provider
 meta_desc: Provides an overview on how to configure the Pulumi Strata Cloud Manager provider.
@@ -35,6 +35,24 @@ This provider covers the following aspects of Strata Cloud Manager:
 
 By using this software, you agree to these terms.
 ## Release Notes
+### v1.0.10
+#### FEATURES
+* resources/scm_forwarding_profile: Added Support, examples and tests (resources, data-source)
+* resources/scm_forwarding_profile_destination: Added Support, examples and tests (resources, data-source)
+* resources/scm_forwarding_profile_regional_and_custom_proxy: Added Support, examples and tests (resources, data-source)
+* resources/scm_forwarding_profile_source_application: Added Support, examples and tests (resources, data-source)
+* resources/scm_forwarding_profile_user_location: Added Support, examples and tests (resources, data-source)
+* resources/scm_device: Added Support, examples and tests (data-source)
+#### ENHANCEMENTS
+
+* scm_certificates: Added support and tests (SDK-Only)
+* resource/scm_security_rule: Added additional examples (resource)
+#### BUG FIXES
+
+* resources/scm_service_connection: Added support for a region tag
+* Added an appId field to the allowWebApplication items in the internet-rule-type schema
+* resources/scm_device: Added device support for device to folder management (#96)
+* resources/scm_service_connection: Added support for sameAsPrimary (#104)
 ### v1.0.9
 #### FEATURES
 

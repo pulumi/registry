@@ -22,7 +22,8 @@
 
             {{ partial "registry/package/package-card-top-of-page.html" . }}
 
-            <div class="special-h1">
+            <div class="title-llm-prompt-container">
+                <div class="special-h1">
                 {{ if strings.Contains .Permalink "installation-configuration" }}
                 <h1>{{ with .GetPage $packageHome }}{{ .Title }}{{ end }}: Installation & Configuration</h1>
                 {{ else if strings.HasSuffix .Permalink "how-to-guides/" }}
@@ -53,12 +54,13 @@
                 {{ end }}
                 {{ end }}
                 <div class="h1-gradient"></div>
-            </div>
+                </div>
 
-            {{ $copyPromptPackageData := index site.Data.registry.packages $packageName }}
-            {{ with $copyPromptPackageData }}
-                {{ partial "registry/package/copy-llm-prompt.html" (dict "packageData" . "rawPackageName" $packageName) }}
-            {{ end }}
+                {{ $copyPromptPackageData := index site.Data.registry.packages $packageName }}
+                {{ with $copyPromptPackageData }}
+                    {{ partial "registry/package/copy-llm-prompt.html" (dict "packageData" . "rawPackageName" $packageName) }}
+                {{ end }}
+            </div>
 
             <div class="docs-table-of-contents docs-toc-mobile">
                 {{ partial "docs/table-of-contents.html" . }}

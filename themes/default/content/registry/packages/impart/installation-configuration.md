@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/impart-security/pulumi-impart/v0.11.3/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/impart-security/pulumi-impart/v0.11.5/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/impart-security/pulumi-impart/blob/v0.11.3/docs/installation-configuration.md
+edit_url: https://github.com/impart-security/pulumi-impart/blob/v0.11.5/docs/installation-configuration.md
 title: Impart Installation & Configuration
 meta_desc: Information on how to install the Impart provider.
 layout: package

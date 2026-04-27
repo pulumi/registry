@@ -50,13 +50,41 @@ const openMenu = ({ root, trigger, dropdown, items }: MenuElements) => {
     }
 };
 
+const writeToClipboard = async (text: string): Promise<boolean> => {
+    if (navigator.clipboard?.writeText) {
+        try {
+            await navigator.clipboard.writeText(text);
+            return true;
+        } catch {
+            // Fall through to legacy path.
+        }
+    }
+
+    const textarea = document.createElement("textarea");
+    textarea.value = text;
+    textarea.setAttribute("readonly", "");
+    textarea.style.position = "fixed";
+    textarea.style.opacity = "0";
+    document.body.appendChild(textarea);
+    textarea.select();
+    let ok = false;
+    try {
+        ok = document.execCommand("copy");
+    } catch {
+        ok = false;
+    }
+    document.body.removeChild(textarea);
+    return ok;
+};
+
 const bindCopyButton = (copyButton: HTMLButtonElement, prompt: string) => {
     const label = copyButton.querySelector<HTMLElement>(".copy-llm-prompt__item-label");
     const icon = copyButton.querySelector<HTMLElement>(".copy-llm-prompt__item-icon i");
     const originalLabel = label?.textContent ?? "";
 
     copyButton.addEventListener("click", async () => {
-        await navigator.clipboard.writeText(prompt);
+        const ok = await writeToClipboard(prompt);
+        if (!ok) return;
 
         if (label) label.textContent = "Copied!";
         icon?.classList.replace("fa-copy", "fa-check");

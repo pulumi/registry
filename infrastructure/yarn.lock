@@ -873,9 +873,9 @@
     resolve "^1.7.1"
 
 "@pulumi/aws@^7.0.0", "@pulumi/aws@^7.24.0":
-  version "7.26.0"
-  resolved "https://registry.yarnpkg.com/@pulumi/aws/-/aws-7.26.0.tgz#d49e293f0a4252999c80175d8ed53495344f260e"
-  integrity sha512-fwxv09yiA9Y6SVVAd+uLnU/jtCbKiUC+4Jh7MvI9Nuq+BCEtikNWMckKaC3vyx9QR2hVU05eTyonf3tzKiKHVQ==
+  version "7.27.0"
+  resolved "https://registry.yarnpkg.com/@pulumi/aws/-/aws-7.27.0.tgz#0480e8dc177f49d8c775f29d1bbed235b794a74d"
+  integrity sha512-I3zArWb8F8QVfcWhBBW8h4dB1Omb823G3H2Ej66t0PFyfUHC7t79MDlG0UvoaZqrmXkDG7nFVFB4xdQTZ62R6w==
   dependencies:
     "@pulumi/pulumi" "^3.142.0"
     mime "^2.0.0"
@@ -2129,9 +2129,9 @@ internal-slot@^1.0.5:
     side-channel "^1.0.4"
 
 ip-address@^10.0.1:
-  version "10.1.0"
-  resolved "https://registry.yarnpkg.com/ip-address/-/ip-address-10.1.0.tgz#d8dcffb34d0e02eb241427444a6e23f5b0595aa4"
-  integrity sha512-XXADHxXmvT9+CRxhXg56LJovE+bmWnEWB78LB83VZTprKTmaC5QfruXocxzTZ2Kl0DNwKuBdlIhjL8LeY8Sf8Q==
+  version "10.1.1"
+  resolved "https://registry.yarnpkg.com/ip-address/-/ip-address-10.1.1.tgz#a7614252413e3751b841aaffba939090d2c4c37b"
+  integrity sha512-1FMu8/N15Ck1BL551Jf42NYIoin2unWjLQ2Fze/DXryJRl5twqtwNHlO39qERGbIOcKYWHdgRryhOC+NG4eaLw==
 
 is-arguments@^1.0.4:
   version "1.1.1"

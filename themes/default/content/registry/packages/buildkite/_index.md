@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-buildkite/v3.2.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-buildkite/v3.3.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumiverse/pulumi-buildkite/blob/v3.2.0/docs/_index.md
+edit_url: https://github.com/pulumiverse/pulumi-buildkite/blob/v3.3.0/docs/_index.md
 title: Buildkite
 meta_desc: Provides an overview of the Buildkite Provider for Pulumi.
 layout: package

@@ -21,7 +21,7 @@ jobs:
     steps:
       - name: Check if review should run
         id: should_review
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           script: |
             const author = context.payload.pull_request.user.login;

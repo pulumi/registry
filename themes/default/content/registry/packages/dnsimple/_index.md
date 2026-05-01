@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-dnsimple/v5.0.2/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-dnsimple/v5.0.3/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-dnsimple/blob/v5.0.2/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-dnsimple/blob/v5.0.3/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: DNSimple Provider
 meta_desc: Provides an overview on how to configure the Pulumi DNSimple provider.
@@ -296,13 +296,13 @@ using DNSimple = Pulumi.DNSimple;
 return await Deployment.RunAsync(() =>
 {
     // Create a zone
-    var example = new DNSimple.Zone("example", new()
+    var example = new DNSimple.Index.Zone("example", new()
     {
         Name = "example.com",
     });
 
     // Create DNS records
-    var www = new DNSimple.ZoneRecord("www", new()
+    var www = new DNSimple.Index.ZoneRecord("www", new()
     {
         ZoneName = example.Name,
         Name = "www",
@@ -311,7 +311,7 @@ return await Deployment.RunAsync(() =>
         Ttl = 3600,
     });
 
-    var apex = new DNSimple.ZoneRecord("apex", new()
+    var apex = new DNSimple.Index.ZoneRecord("apex", new()
     {
         ZoneName = example.Name,
         Name = "",
@@ -522,7 +522,7 @@ using DNSimple = Pulumi.DNSimple;
 return await Deployment.RunAsync(() =>
 {
     // Create a contact for domain registration
-    var registrant = new DNSimple.Contact("registrant", new()
+    var registrant = new DNSimple.Index.Contact("registrant", new()
     {
         Label = "Main Contact",
         FirstName = "John",
@@ -538,7 +538,7 @@ return await Deployment.RunAsync(() =>
     });
 
     // Register a domain
-    var exampleCom = new DNSimple.RegisteredDomain("example_com", new()
+    var exampleCom = new DNSimple.Index.RegisteredDomain("example_com", new()
     {
         Name = "example.com",
         ContactId = registrant.Id,

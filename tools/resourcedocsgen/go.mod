@@ -10,11 +10,11 @@ require (
 	github.com/hexops/autogold/v2 v2.3.1
 	github.com/pgavlin/goldmark v1.1.33-0.20200616210433-b5eb04559386
 	github.com/pkg/errors v0.9.1
-	github.com/pulumi/pulumi-dotnet/pulumi-language-dotnet/v3 v3.103.1
+	github.com/pulumi/pulumi-dotnet/pulumi-language-dotnet/v3 v3.104.0
 	github.com/pulumi/pulumi-java/pkg v1.22.0
 	github.com/pulumi/pulumi-yaml v1.32.0
-	github.com/pulumi/pulumi/pkg/v3 v3.231.0
-	github.com/pulumi/pulumi/sdk/v3 v3.231.0
+	github.com/pulumi/pulumi/pkg/v3 v3.232.0
+	github.com/pulumi/pulumi/sdk/v3 v3.232.0
 	github.com/sourcegraph/conc v0.3.0
 	github.com/spf13/cobra v1.10.2
 	github.com/stretchr/testify v1.11.1
@@ -94,7 +94,7 @@ require (
 	github.com/opentracing/basictracer-go v1.1.0 // indirect
 	github.com/opentracing/opentracing-go v1.2.0 // indirect
 	github.com/pgavlin/fx v0.1.6 // indirect
-	github.com/pgavlin/fx/v2 v2.0.10 // indirect
+	github.com/pgavlin/fx/v2 v2.0.12 // indirect
 	github.com/pjbgf/sha1cd v0.3.2 // indirect
 	github.com/pkg/term v1.1.0 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
@@ -138,8 +138,8 @@ require (
 	golang.org/x/sys v0.43.0 // indirect
 	golang.org/x/term v0.42.0 // indirect
 	golang.org/x/tools v0.43.0 // indirect
-	google.golang.org/genproto/googleapis/api v0.0.0-20260414002931-afd174a4e478 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20260414002931-afd174a4e478 // indirect
+	google.golang.org/genproto/googleapis/api v0.0.0-20260420184626-e10c466a9529 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20260420184626-e10c466a9529 // indirect
 	google.golang.org/grpc v1.80.0 // indirect
 	google.golang.org/protobuf v1.36.11 // indirect
 	gopkg.in/warnings.v0 v0.1.2 // indirect

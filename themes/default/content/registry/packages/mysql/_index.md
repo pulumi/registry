@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-mysql/v3.2.14/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-mysql/v3.2.15/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-mysql/blob/v3.2.14/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-mysql/blob/v3.2.15/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Mysql Provider
 meta_desc: Provides an overview on how to configure the Pulumi Mysql provider.
@@ -102,7 +102,7 @@ using MySql = Pulumi.MySql;
 return await Deployment.RunAsync(() =>
 {
     // Create a Database
-    var app = new MySql.Database("app", new()
+    var app = new MySql.Index.Database("app", new()
     {
         Name = "my_awesome_app",
     });
@@ -334,7 +334,7 @@ return await Deployment.RunAsync(() =>
 
     // Create a second database, in addition to the "initial_db" created
     // by the aws_db_instance resource above.
-    var app = new MySql.Database("app", new()
+    var app = new MySql.Index.Database("app", new()
     {
         Name = "another_db",
     });

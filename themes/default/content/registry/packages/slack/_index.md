@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-slack/v0.4.16/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-slack/v0.4.17/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-slack/blob/v0.4.16/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-slack/blob/v0.4.17/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Slack Provider
 meta_desc: Provides an overview on how to configure the Pulumi Slack provider.
@@ -114,13 +114,13 @@ using Slack = Pulumi.Slack;
 
 return await Deployment.RunAsync(() =>
 {
-    var testUser00 = Slack.GetUser.Invoke(new()
+    var testUser00 = Slack.Index.GetUser.Invoke(new()
     {
         Name = "contact_test-user-ter",
     });
 
     // Create a User Group
-    var myGroup = new Slack.Usergroup("my_group", new()
+    var myGroup = new Slack.Index.Usergroup("my_group", new()
     {
         Name = "TestGroup",
         Handle = "test",
@@ -132,7 +132,7 @@ return await Deployment.RunAsync(() =>
     });
 
     // Create a Slack channel
-    var test = new Slack.Conversation("test", new()
+    var test = new Slack.Index.Conversation("test", new()
     {
         Name = "my-channel",
         Topic = "The topic for my channel",
@@ -178,7 +178,7 @@ func main() {
 			Handle:      pulumi.String("test"),
 			Description: pulumi.String("Test user group"),
 			Users: pulumi.StringArray{
-				pulumi.String(testUser00.Id),
+				pulumi.String(pulumi.String(testUser00.Id)),
 			},
 		})
 		if err != nil {

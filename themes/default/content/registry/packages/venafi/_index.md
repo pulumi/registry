@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-venafi/v1.12.3/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-venafi/v1.12.4/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-venafi/blob/v1.12.3/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-venafi/blob/v1.12.4/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Venafi Provider
 meta_desc: Provides an overview on how to configure the Pulumi Venafi provider.
@@ -111,7 +111,7 @@ using Venafi = Pulumi.Venafi;
 return await Deployment.RunAsync(() =>
 {
     // Generate a key pair and request a certificate
-    var webserver = new Venafi.Certificate("webserver");
+    var webserver = new Venafi.Index.Certificate("webserver");
 
 });
 
@@ -290,7 +290,7 @@ using Venafi = Pulumi.Venafi;
 return await Deployment.RunAsync(() =>
 {
     // Generate a key pair and request a certificate
-    var webserver = new Venafi.Certificate("webserver");
+    var webserver = new Venafi.Index.Certificate("webserver");
 
 });
 
@@ -475,7 +475,7 @@ using Venafi = Pulumi.Venafi;
 return await Deployment.RunAsync(() =>
 {
     // Generate a key pair and request a certificate
-    var webserver = new Venafi.Certificate("webserver");
+    var webserver = new Venafi.Index.Certificate("webserver");
 
 });
 
@@ -660,7 +660,7 @@ using Venafi = Pulumi.Venafi;
 return await Deployment.RunAsync(() =>
 {
     // Generate a key pair and request a certificate
-    var webserver = new Venafi.Certificate("webserver");
+    var webserver = new Venafi.Index.Certificate("webserver");
 
 });
 
@@ -845,7 +845,7 @@ using Venafi = Pulumi.Venafi;
 return await Deployment.RunAsync(() =>
 {
     // Generate a key pair and request a certificate
-    var webserver = new Venafi.Certificate("webserver");
+    var webserver = new Venafi.Index.Certificate("webserver");
 
 });
 
@@ -1030,7 +1030,7 @@ using Venafi = Pulumi.Venafi;
 return await Deployment.RunAsync(() =>
 {
     // Generate a key pair and request a certificate
-    var webserver = new Venafi.Certificate("webserver");
+    var webserver = new Venafi.Index.Certificate("webserver");
 
 });
 
@@ -1232,7 +1232,7 @@ using Venafi = Pulumi.Venafi;
 return await Deployment.RunAsync(() =>
 {
     // Generate a key pair and request a certificate
-    var webserver = new Venafi.Certificate("webserver");
+    var webserver = new Venafi.Index.Certificate("webserver");
 
 });
 

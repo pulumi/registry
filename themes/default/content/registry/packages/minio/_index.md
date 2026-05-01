@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-minio/v0.16.8/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-minio/v0.16.9/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-minio/blob/v0.16.8/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-minio/blob/v0.16.9/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Minio Provider
 meta_desc: Provides an overview on how to configure the Pulumi Minio provider.
@@ -110,7 +110,7 @@ using Minio = Pulumi.Minio;
 
 return await Deployment.RunAsync(() =>
 {
-    var statePulumiS3 = new Minio.S3Bucket("state_pulumi_s3");
+    var statePulumiS3 = new Minio.Index.S3Bucket("state_pulumi_s3");
 
 });
 

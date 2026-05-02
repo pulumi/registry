@@ -206,11 +206,10 @@ Collecting logs for stack dev since 2021-03-26T10:49:57.000-07:00.
 
 {{< summary >}}
 <p>
-    In this tutorial, we showed you how to write a Pulumi program in Typescript, and leverage
-Pulumi AWSx (via the <a href="/docs/reference/pkg/nodejs/pulumi/awsx"
->}}">@pulumi/awsx package</a>) in order to build and publish a Dockerized application to a private
-Elastic Container Registry (ECR), spin up an ECS Fargate cluster, and run a scalable, load balanced
-service.
+In this tutorial, we showed you how to write a Pulumi program in Typescript, and leverage
+Pulumi AWSx (via the <a href="/docs/reference/pkg/nodejs/pulumi/awsx">@pulumi/awsx package</a>)
+in order to build and publish a Dockerized application to a private Elastic Container Registry (ECR),
+spin up an ECS Fargate cluster, and run a scalable, load balanced service.
 </p>
 {{< /summary >}}
 

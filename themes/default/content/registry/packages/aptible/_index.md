@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/aptible/aptible/0.9.24/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/aptible/aptible/0.10.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Aptible Provider
@@ -338,7 +338,7 @@ Example currently unavailable in this language
 !> Currently the only supported deployment method via Pulumi is of
 Docker images hosted in a Docker image registry.
 
-Apps configurations can be managed via the nested `config` element.
+Application environment variables can be managed via the nested `config` element.
 
 {{< chooser language "typescript,python,go,csharp,java,yaml" >}}
 {{% choosable language typescript %}}
@@ -463,12 +463,9 @@ public class App {
 {{% /choosable %}}
 {{< /chooser >}}
 
-If you specify a Docker image as the `APTIBLE_DOCKER_IMAGE`
-configuration value, that Docker image will be deployed to the App.
-Authentication for Docker images located in
-private repositories can be provided using the
-`APTIBLE_PRIVATE_REGISTRY_USERNAME` and
-`APTIBLE_PRIVATE_REGISTRY_PASSWORD` configuration values.
+To deploy a Docker image, set `dockerImage`. For images in private registries,
+also provide `privateRegistryUsername` and `privateRegistryPassword`
+(both are required together).
 
 {{< chooser language "typescript,python,go,csharp,java,yaml" >}}
 {{% choosable language typescript %}}
@@ -479,12 +476,7 @@ import * as aptible from "@pulumi/aptible";
 const APP = new aptible.App("APP", {
     envId: ENVIRONMENT_ID,
     handle: "APP_HANDLE",
-    config: {
-        KEY: "value",
-        APTIBLE_DOCKER_IMAGE: "quay.io/aptible/deploy-demo-app",
-        APTIBLE_PRIVATE_REGISTRY_USERNAME: "registry_username",
-        APTIBLE_PRIVATE_REGISTRY_PASSWORD: "registry_password",
-    },
+    dockerImage: "quay.io/aptible/deploy-demo-app",
 });
 ```
 {{% /choosable %}}
@@ -496,12 +488,7 @@ import pulumi_aptible as aptible
 app = aptible.App("APP",
     env_id=environmen_t__id,
     handle="APP_HANDLE",
-    config={
-        "KEY": "value",
-        "APTIBLE_DOCKER_IMAGE": "quay.io/aptible/deploy-demo-app",
-        "APTIBLE_PRIVATE_REGISTRY_USERNAME": "registry_username",
-        "APTIBLE_PRIVATE_REGISTRY_PASSWORD": "registry_password",
-    })
+    docker_image="quay.io/aptible/deploy-demo-app")
 ```
 {{% /choosable %}}
 {{% choosable language csharp %}}
@@ -517,13 +504,7 @@ return await Deployment.RunAsync(() =>
     {
         EnvId = ENVIRONMENT_ID,
         Handle = "APP_HANDLE",
-        Config =
-        {
-            { "KEY", "value" },
-            { "APTIBLE_DOCKER_IMAGE", "quay.io/aptible/deploy-demo-app" },
-            { "APTIBLE_PRIVATE_REGISTRY_USERNAME", "registry_username" },
-            { "APTIBLE_PRIVATE_REGISTRY_PASSWORD", "registry_password" },
-        },
+        DockerImage = "quay.io/aptible/deploy-demo-app",
     });
 
 });
@@ -542,14 +523,9 @@ import (
 func main() {
 	pulumi.Run(func(ctx *pulumi.Context) error {
 		_, err := aptible.NewApp(ctx, "APP", &aptible.AppArgs{
-			EnvId:  pulumi.Any(ENVIRONMENT_ID),
-			Handle: pulumi.String("APP_HANDLE"),
-			Config: pulumi.StringMap{
-				"KEY":                               pulumi.String("value"),
-				"APTIBLE_DOCKER_IMAGE":              pulumi.String("quay.io/aptible/deploy-demo-app"),
-				"APTIBLE_PRIVATE_REGISTRY_USERNAME": pulumi.String("registry_username"),
-				"APTIBLE_PRIVATE_REGISTRY_PASSWORD": pulumi.String("registry_password"),
-			},
+			EnvId:       pulumi.Any(ENVIRONMENT_ID),
+			Handle:      pulumi.String("APP_HANDLE"),
+			DockerImage: pulumi.String("quay.io/aptible/deploy-demo-app"),
 		})
 		if err != nil {
 			return err
@@ -567,11 +543,7 @@ resources:
     properties:
       envId: ${ENVIRONMENT_ID}
       handle: APP_HANDLE
-      config:
-        KEY: value
-        APTIBLE_DOCKER_IMAGE: quay.io/aptible/deploy-demo-app
-        APTIBLE_PRIVATE_REGISTRY_USERNAME: registry_username
-        APTIBLE_PRIVATE_REGISTRY_PASSWORD: registry_password
+      dockerImage: quay.io/aptible/deploy-demo-app
 ```
 {{% /choosable %}}
 {{% choosable language java %}}
@@ -599,12 +571,132 @@ public class App {
         var aPP = new App("APP", AppArgs.builder()
             .envId(ENVIRONMENT_ID)
             .handle("APP_HANDLE")
-            .config(Map.ofEntries(
-                Map.entry("KEY", "value"),
-                Map.entry("APTIBLE_DOCKER_IMAGE", "quay.io/aptible/deploy-demo-app"),
-                Map.entry("APTIBLE_PRIVATE_REGISTRY_USERNAME", "registry_username"),
-                Map.entry("APTIBLE_PRIVATE_REGISTRY_PASSWORD", "registry_password")
-            ))
+            .dockerImage("quay.io/aptible/deploy-demo-app")
+            .build());
+
+    }
+}
+```
+{{% /choosable %}}
+{{< /chooser >}}
+
+{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{% choosable language typescript %}}
+```typescript
+import * as pulumi from "@pulumi/pulumi";
+import * as aptible from "@pulumi/aptible";
+
+const APP = new aptible.App("APP", {
+    envId: ENVIRONMENT_ID,
+    handle: "APP_HANDLE",
+    dockerImage: "quay.io/example/private-image",
+    privateRegistryUsername: "registry_username",
+    privateRegistryPassword: "registry_password",
+});
+```
+{{% /choosable %}}
+{{% choosable language python %}}
+```python
+import pulumi
+import pulumi_aptible as aptible
+
+app = aptible.App("APP",
+    env_id=environmen_t__id,
+    handle="APP_HANDLE",
+    docker_image="quay.io/example/private-image",
+    private_registry_username="registry_username",
+    private_registry_password="registry_password")
+```
+{{% /choosable %}}
+{{% choosable language csharp %}}
+```csharp
+using System.Collections.Generic;
+using System.Linq;
+using Pulumi;
+using Aptible = Pulumi.Aptible;
+
+return await Deployment.RunAsync(() =>
+{
+    var APP = new Aptible.App("APP", new()
+    {
+        EnvId = ENVIRONMENT_ID,
+        Handle = "APP_HANDLE",
+        DockerImage = "quay.io/example/private-image",
+        PrivateRegistryUsername = "registry_username",
+        PrivateRegistryPassword = "registry_password",
+    });
+
+});
+
+```
+{{% /choosable %}}
+{{% choosable language go %}}
+```go
+package main
+
+import (
+	"github.com/pulumi/pulumi-pulumi-provider/sdks/go/aptible/aptible"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		_, err := aptible.NewApp(ctx, "APP", &aptible.AppArgs{
+			EnvId:                   pulumi.Any(ENVIRONMENT_ID),
+			Handle:                  pulumi.String("APP_HANDLE"),
+			DockerImage:             pulumi.String("quay.io/example/private-image"),
+			PrivateRegistryUsername: pulumi.String("registry_username"),
+			PrivateRegistryPassword: pulumi.String("registry_password"),
+		})
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+}
+```
+{{% /choosable %}}
+{{% choosable language yaml %}}
+```yaml
+resources:
+  APP:
+    type: aptible:App
+    properties:
+      envId: ${ENVIRONMENT_ID}
+      handle: APP_HANDLE
+      dockerImage: quay.io/example/private-image
+      privateRegistryUsername: registry_username
+      privateRegistryPassword: registry_password
+```
+{{% /choosable %}}
+{{% choosable language java %}}
+```java
+package generated_program;
+
+import com.pulumi.Context;
+import com.pulumi.Pulumi;
+import com.pulumi.core.Output;
+import com.pulumi.aptible.App;
+import com.pulumi.aptible.AppArgs;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+public class App {
+    public static void main(String[] args) {
+        Pulumi.run(App::stack);
+    }
+
+    public static void stack(Context ctx) {
+        var aPP = new App("APP", AppArgs.builder()
+            .envId(ENVIRONMENT_ID)
+            .handle("APP_HANDLE")
+            .dockerImage("quay.io/example/private-image")
+            .privateRegistryUsername("registry_username")
+            .privateRegistryPassword("registry_password")
             .build());
 
     }
@@ -1078,11 +1170,14 @@ const EXAMPLE = new aptible.Endpoint("EXAMPLE", {
     envId: ENVIRONMENT_ID,
     processType: "SERVICE_NAME",
     resourceId: APP.appId,
+    resourceType: "app",
     defaultDomain: true,
     endpointType: "https",
     internal: false,
     platform: "alb",
     containerPort: 5000,
+    forceSsl: true,
+    idleTimeout: 120,
 });
 ```
 {{% /choosable %}}
@@ -1095,11 +1190,14 @@ example = aptible.Endpoint("EXAMPLE",
     env_id=environmen_t__id,
     process_type="SERVICE_NAME",
     resource_id=app["appId"],
+    resource_type="app",
     default_domain=True,
     endpoint_type="https",
     internal=False,
     platform="alb",
-    container_port=5000)
+    container_port=5000,
+    force_ssl=True,
+    idle_timeout=120)
 ```
 {{% /choosable %}}
 {{% choosable language csharp %}}
@@ -1116,11 +1214,14 @@ return await Deployment.RunAsync(() =>
         EnvId = ENVIRONMENT_ID,
         ProcessType = "SERVICE_NAME",
         ResourceId = APP.AppId,
+        ResourceType = "app",
         DefaultDomain = true,
         EndpointType = "https",
         Internal = false,
         Platform = "alb",
         ContainerPort = 5000,
+        ForceSsl = true,
+        IdleTimeout = 120,
     });
 
 });
@@ -1142,11 +1243,14 @@ func main() {
 			EnvId:         pulumi.Any(ENVIRONMENT_ID),
 			ProcessType:   pulumi.String("SERVICE_NAME"),
 			ResourceId:    pulumi.Any(APP.AppId),
+			ResourceType:  pulumi.String("app"),
 			DefaultDomain: pulumi.Bool(true),
 			EndpointType:  pulumi.String("https"),
 			Internal:      pulumi.Bool(false),
 			Platform:      pulumi.String("alb"),
 			ContainerPort: pulumi.Float64(5000),
+			ForceSsl:      pulumi.Bool(true),
+			IdleTimeout:   pulumi.Float64(120),
 		})
 		if err != nil {
 			return err
@@ -1165,11 +1269,14 @@ resources:
       envId: ${ENVIRONMENT_ID}
       processType: SERVICE_NAME
       resourceId: ${APP.appId}
+      resourceType: app
       defaultDomain: true
       endpointType: https
       internal: false
       platform: alb
       containerPort: 5000
+      forceSsl: true
+      idleTimeout: 120
 ```
 {{% /choosable %}}
 {{% choosable language java %}}
@@ -1198,11 +1305,14 @@ public class App {
             .envId(ENVIRONMENT_ID)
             .processType("SERVICE_NAME")
             .resourceId(APP.appId())
+            .resourceType("app")
             .defaultDomain(true)
             .endpointType("https")
             .internal(false)
             .platform("alb")
             .containerPort(5000.0)
+            .forceSsl(true)
+            .idleTimeout(120.0)
             .build());
 
     }

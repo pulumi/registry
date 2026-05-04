@@ -20,6 +20,7 @@ import (
 	stderrors "errors"
 	"fmt"
 	"io"
+	"log/slog"
 	"net/http"
 	"slices"
 	"strings"
@@ -27,7 +28,6 @@ import (
 
 	"github.com/blang/semver"
 	"github.com/ghodss/yaml"
-	"github.com/golang/glog"
 	"github.com/pkg/errors"
 	"github.com/pulumi/pulumi/pkg/v3/codegen"
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
@@ -457,7 +457,7 @@ func getPackageCategory(mainSpec *schema.PackageSpec) (pkg.PackageCategory, erro
 	var err error
 
 	if c, ok := pkg.CategoryLookup[mainSpec.Name]; ok {
-		glog.V(2).Infoln("Using the category for this package from the lookup map")
+		slog.Debug("Using the category for this package from the lookup map")
 		// TODO: This condition can be removed when all packages under the `pulumi` org
 		// have a proper category tag in their schema.
 		category = c
@@ -467,7 +467,7 @@ func getPackageCategory(mainSpec *schema.PackageSpec) (pkg.PackageCategory, erro
 		return category, nil
 	}
 
-	glog.V(2).Infoln("Looking-up category from the keywords in the schema")
+	slog.Debug("Looking-up category from the keywords in the schema")
 	category, err = getCategoryFromKeywords(mainSpec.Keywords)
 	if err != nil {
 		return "", errors.Wrap(err, "getting the category from keywords")
@@ -513,7 +513,7 @@ func getTagWithPrefixFromKeywords(keywords []string, tagPrefix string) *string {
 		}
 	}
 
-	glog.V(2).Infof("A tag with the prefix %q was not found in the package's keywords", tagPrefix)
+	slog.Debug("Tag prefix not found in the package's keywords", "prefix", tagPrefix)
 	return nil
 }
 
@@ -524,7 +524,7 @@ func getTagFromKeywords(keywords []string, tag string) *string {
 		}
 	}
 
-	glog.V(2).Infof("The tag %q was not found in the package's keywords", tag)
+	slog.Debug("Tag not found in the package's keywords", "tag", tag)
 	return nil
 }
 

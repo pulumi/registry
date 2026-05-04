@@ -5,7 +5,6 @@ go 1.26
 require (
 	github.com/blang/semver v3.5.1+incompatible
 	github.com/ghodss/yaml v1.0.0
-	github.com/golang/glog v1.2.5
 	github.com/hashicorp/hcl/v2 v2.24.0
 	github.com/hexops/autogold/v2 v2.3.1
 	github.com/pgavlin/goldmark v1.1.33-0.20200616210433-b5eb04559386

@@ -22,10 +22,10 @@ import (
 	"embed"
 	"html/template"
 	"io"
+	"log"
 	"strings"
 	texttemplate "text/template"
 
-	"github.com/golang/glog"
 	"github.com/pgavlin/goldmark"
 	"github.com/pgavlin/goldmark/extension"
 	"github.com/pulumi/registry/tools/resourcedocsgen/pkg/util/language"
@@ -122,7 +122,7 @@ func init() {
 			// Convert a string of Markdown into HTML.
 			var buf bytes.Buffer
 			if err := md.Convert([]byte(html), &buf); err != nil {
-				glog.Fatalf("rendering Markdown: %v", err)
+				log.Fatalf("rendering Markdown: %v", err)
 			}
 			rendered := buf.String()
 
@@ -142,14 +142,14 @@ func init() {
 		},
 	}).ParseFS(packagedTemplates, "*")
 	if err != nil {
-		glog.Fatal("initializing templates: %v", err)
+		log.Fatalf("initializing templates: %v", err)
 	}
 	templates = tmpl
 
 	// CLI templates use text/template (no HTML escaping) for terminal-friendly markdown output.
 	cliTmpl, err := texttemplate.New("").ParseFS(packagedTemplates, "cli_*.tmpl")
 	if err != nil {
-		glog.Fatal("initializing CLI templates: %v", err)
+		log.Fatalf("initializing CLI templates: %v", err)
 	}
 	cliTemplates = cliTmpl
 }

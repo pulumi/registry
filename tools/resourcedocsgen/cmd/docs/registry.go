@@ -18,6 +18,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"log/slog"
 	"net/http"
 	"net/url"
 	"os"
@@ -29,8 +30,6 @@ import (
 	"github.com/spf13/cobra"
 
 	"github.com/ghodss/yaml"
-
-	"github.com/golang/glog"
 
 	"github.com/pkg/errors"
 
@@ -59,7 +58,7 @@ func writeSchemaFile(baseSchemasOutDir, packageName string, schemaBytes []byte) 
 
 	// Write the schema.json file
 	schemaFilePath := filepath.Join(packageDir, "schema.json")
-	glog.Infof("Writing schema file to %s", schemaFilePath)
+	slog.Info("Writing schema file", "path", schemaFilePath)
 	if err := os.WriteFile(schemaFilePath, schemaBytes, 0o600); err != nil {
 		return errors.Wrapf(err, "writing schema file to %s", schemaFilePath)
 	}
@@ -75,27 +74,27 @@ func genResourceDocsForPackageFromRegistryMetadata(
 	// what was used to generate the existing output, reuse it.
 	cacheKey := buildCacheKey(yamlBytes)
 	if isFresh(docsOutDir, packageTreeJSONOutDir, schemasOutDir, metadata.Name, cacheKey) {
-		glog.Infof("Skipping %s (output is fresh)", metadata.Name)
+		slog.Info("Skipping (output is fresh)", "package", metadata.Name)
 		return nil
 	}
 
-	glog.Infoln("Generating docs for", metadata.Name)
+	slog.Info("Generating docs", "package", metadata.Name)
 
 	schemaFileURL, err := getSchemaFileURL(metadata)
 	if err != nil {
 		return fmt.Errorf("failed to get schema_file_url: %w", err)
 	}
 
-	glog.Infoln("Reading remote schema file from registry")
+	slog.Info("Reading remote schema file from registry")
 	schemaBytes, err := getSchemaFromRegistry(metadata, schemaFileURL)
 	if err != nil {
 		if errors.Is(err, ErrPackageNotFound) {
-			glog.Infoln(err)
+			slog.Info(err.Error())
 		} else {
-			glog.Warningf("Error getting schema from registry: %s", err)
+			slog.Warn("Error getting schema from registry", "err", err)
 		}
 
-		glog.Infoln("Falling back to reading remote schema file from VCS")
+		slog.Info("Falling back to reading remote schema file from VCS")
 		schemaBytes, err = getSchemaFromVCS(metadata, schemaFileURL)
 		if err != nil {
 			return fmt.Errorf("getting schema from VCS for %q: %w", metadata.Name, err)
@@ -129,26 +128,26 @@ func genResourceDocsForPackageFromRegistryMetadata(
 		return errors.Wrap(err, "generating package from schema file")
 	}
 
-	glog.Infoln("Running docs generator...")
+	slog.Info("Running docs generator...")
 	if err := generateDocsFromSchema(docsOutDir, genctx); err != nil {
 		return errors.Wrap(err, "generating docs from schema")
 	}
 
 	if cliDocsOutDir != "" {
 		cliOutDir := filepath.Join(cliDocsOutDir, metadata.Name, "api-docs")
-		glog.Infoln("Generating CLI docs...")
+		slog.Info("Generating CLI docs...")
 		if err := generateCLIDocs(cliOutDir, genctx); err != nil {
 			return errors.Wrap(err, "generating CLI docs")
 		}
 	}
 
-	glog.Infoln("Generating the package tree JSON file...")
+	slog.Info("Generating the package tree JSON file...")
 	if err := generatePackageTree(packageTreeJSONOutDir, pulPkg.Name, genctx); err != nil {
 		return errors.Wrap(err, "generating package tree")
 	}
 
 	if err := writeSentinel(docsOutDir, cacheKey); err != nil {
-		glog.Warningf("Failed to write sentinel for %s: %v", metadata.Name, err)
+		slog.Warn("Failed to write sentinel", "package", metadata.Name, "err", err)
 	}
 
 	return nil
@@ -299,8 +298,8 @@ func genResourceDocsForAllRegistryPackages(
 	for _, f := range metadataFiles {
 		f := f
 		pool.Go(func() error {
-			glog.Infof("=== starting %s ===\n", f.Name())
-			glog.Infoln("Processing metadata file")
+			slog.Info("=== starting ===", "file", f.Name())
+			slog.Info("Processing metadata file")
 			metadataFilePath := filepath.Join(registryPackagesPath, f.Name())
 
 			b, err := os.ReadFile(metadataFilePath)
@@ -321,7 +320,7 @@ func genResourceDocsForAllRegistryPackages(
 				return errors.Wrapf(err, "generating resource docs using metadata file info %s", f.Name())
 			}
 
-			glog.Infof("=== completed %s ===", f.Name())
+			slog.Info("=== completed ===", "file", f.Name())
 			return nil
 		})
 	}
@@ -348,7 +347,7 @@ func resourceDocsFromRegistryCmd() *cobra.Command {
 			}
 
 			if len(args) > 0 {
-				glog.Infoln("Generating docs for a single package:", args[0])
+				slog.Info("Generating docs for a single package", "package", args[0])
 				registryPackagesPath := getRegistryPackagesPath(registryDir)
 				pkgName := args[0]
 				metadataFilePath := filepath.Join(registryPackagesPath, pkgName+".yaml")
@@ -371,7 +370,7 @@ func resourceDocsFromRegistryCmd() *cobra.Command {
 					return errors.Wrapf(err, "generating docs for package %q from registry metadata", pkgName)
 				}
 			} else {
-				glog.Infoln("Generating docs for all packages in the registry...")
+				slog.Info("Generating docs for all packages in the registry...")
 				err := genResourceDocsForAllRegistryPackages(
 					registryDir, baseDocsOutDir, basePackageTreeJSONOutDir, baseSchemasOutDir, baseLLMDocsOutDir,
 				)
@@ -380,7 +379,7 @@ func resourceDocsFromRegistryCmd() *cobra.Command {
 				}
 			}
 
-			glog.Infoln("Done!")
+			slog.Info("Done!")
 			return nil
 		},
 	}

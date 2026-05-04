@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/timescale/timescale/2.11.0/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/timescale/timescale/2.11.1/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Timescale Provider
@@ -31,7 +31,8 @@ To view the project ID, click on your project name on the upper left-hand side o
 ### Example files and usage
 #### Service with HA replica and pooler
 
-> [!NOTE]The example file creates:
+> [!NOTE]
+> The example file creates:
 > * A single instance called `tf-test` that contains:
 >   > * 0.5 CPUs
 >   * 2GB of RAM
@@ -342,7 +343,8 @@ pulumi preview --var-file=secrets.tfvars
 ```
 #### VPC Peering
 
-> [!NOTE]The example file creates:
+> [!NOTE]
+> The example file creates:
 > * A TigerData VPC with name `tf-test` in `us-east-1`
 > * An AWS VPC in eu-central-1
 > * A Peering connection between them (request and accept automatically)

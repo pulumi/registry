@@ -18,7 +18,6 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/golang/glog"
 	"github.com/pulumi/pulumi/pkg/v3/codegen"
 	go_gen "github.com/pulumi/pulumi/pkg/v3/codegen/go"
 	"github.com/pulumi/pulumi/pkg/v3/codegen/python"
@@ -361,7 +360,7 @@ func (mod *modContext) genFunctionParams(
 	case language.YAML: // Left blank
 		return nil
 	default:
-		glog.Fatalf("Unknown %#v", lang)
+		contract.Failf("Unknown %#v", lang)
 		return nil
 	}
 }

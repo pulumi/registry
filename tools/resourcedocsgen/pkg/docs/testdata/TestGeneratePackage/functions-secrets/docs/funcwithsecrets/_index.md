@@ -48,8 +48,8 @@ function </span>funcWithSecretsOutput<span class="p">(</span><span class="nx">ar
                       <span class="nx">plaintext</span><span class="p">:</span> <span class="nx">Optional[str]</span> = None<span class="p">,</span>
                       <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.InvokeOptions">Optional[InvokeOptions]</a></span> = None<span class="p">) -&gt;</span> <span>FuncWithSecretsResult</span
 ><span class="k">
-def </span>func_with_secrets_output<span class="p">(</span><span class="nx">crypto_key</span><span class="p">:</span> <span class="nx">Optional[pulumi.Input[str]]</span> = None<span class="p">,</span>
-                      <span class="nx">plaintext</span><span class="p">:</span> <span class="nx">Optional[pulumi.Input[str]]</span> = None<span class="p">,</span>
+def </span>func_with_secrets_output<span class="p">(</span><span class="nx">crypto_key</span><span class="p">:</span> <span class="nx">pulumi.Input[Optional[str]]</span> = None<span class="p">,</span>
+                      <span class="nx">plaintext</span><span class="p">:</span> <span class="nx">pulumi.Input[Optional[str]]</span> = None<span class="p">,</span>
                       <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.InvokeOptions">Optional[InvokeOptions]</a></span> = None<span class="p">) -&gt;</span> <span>Output[FuncWithSecretsResult]</span
 ></code></pre></div>
 </pulumi-choosable>

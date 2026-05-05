@@ -15,18 +15,15 @@
 package cmd
 
 import (
+	"log/slog"
+	"os"
+
 	"github.com/spf13/cobra"
 
-	"github.com/golang/glog"
-
-	"github.com/pulumi/pulumi/sdk/v3/go/common/util/logging"
 	"github.com/pulumi/registry/tools/resourcedocsgen/cmd/docs"
 )
 
-var (
-	logToStderr bool
-	verbose     int
-)
+var verbose int
 
 func RootCmd() *cobra.Command {
 	rootCmd := &cobra.Command{
@@ -36,17 +33,16 @@ func RootCmd() *cobra.Command {
 			"This tool relies on a Pulumi package's schema spec. " +
 			"This tool will not generate the schema.",
 		PersistentPreRun: func(cmd *cobra.Command, args []string) {
-			logging.InitLogging(logToStderr, verbose, false)
-		},
-		PersistentPostRun: func(cmd *cobra.Command, args []string) {
-			glog.Flush()
+			level := slog.LevelInfo
+			if verbose > 0 {
+				level = slog.LevelDebug
+			}
+			slog.SetDefault(slog.New(slog.NewTextHandler(os.Stderr, &slog.HandlerOptions{Level: level})))
 		},
 	}
 
-	rootCmd.PersistentFlags().BoolVar(&logToStderr, "logtostderr", false,
-		"Log to stderr instead of to files")
 	rootCmd.PersistentFlags().IntVarP(&verbose, "verbose", "v", 0,
-		"Enable verbose logging (e.g., v=3); anything >3 is very verbose")
+		"Enable verbose logging (any value > 0 enables debug-level logs)")
 
 	rootCmd.AddCommand(docs.ResourceDocsCmd())
 	rootCmd.AddCommand(PackageMetadataCmd())

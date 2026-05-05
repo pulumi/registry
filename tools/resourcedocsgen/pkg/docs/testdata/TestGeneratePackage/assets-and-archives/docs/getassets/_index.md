@@ -48,8 +48,8 @@ function </span>getAssetsOutput<span class="p">(</span><span class="nx">args</sp
                <span class="nx">source</span><span class="p">:</span> <span class="nx">Optional[Union[pulumi.Asset, pulumi.Archive]]</span> = None<span class="p">,</span>
                <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.InvokeOptions">Optional[InvokeOptions]</a></span> = None<span class="p">) -&gt;</span> <span>GetAssetsResult</span
 ><span class="k">
-def </span>get_assets_output<span class="p">(</span><span class="nx">archive</span><span class="p">:</span> <span class="nx">Optional[pulumi.Input[pulumi.Archive]]</span> = None<span class="p">,</span>
-               <span class="nx">source</span><span class="p">:</span> <span class="nx">Optional[pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]</span> = None<span class="p">,</span>
+def </span>get_assets_output<span class="p">(</span><span class="nx">archive</span><span class="p">:</span> <span class="nx">pulumi.Input[Optional[pulumi.Archive]]</span> = None<span class="p">,</span>
+               <span class="nx">source</span><span class="p">:</span> <span class="nx">pulumi.Input[Optional[Union[pulumi.Asset, pulumi.Archive]]]</span> = None<span class="p">,</span>
                <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.InvokeOptions">Optional[InvokeOptions]</a></span> = None<span class="p">) -&gt;</span> <span>Output[GetAssetsResult]</span
 ></code></pre></div>
 </pulumi-choosable>

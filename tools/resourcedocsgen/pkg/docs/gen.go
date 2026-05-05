@@ -22,6 +22,7 @@ import (
 	"fmt"
 	"go/format"
 	"html"
+	"log/slog"
 	"path"
 	"sort"
 	"strings"
@@ -30,8 +31,6 @@ import (
 	"github.com/pulumi/pulumi/pkg/v3/codegen/pcl"
 	"github.com/pulumi/registry/tools/resourcedocsgen/pkg/docs/templates"
 	"github.com/pulumi/registry/tools/resourcedocsgen/pkg/util/language"
-
-	"github.com/golang/glog"
 
 	dotnet "github.com/pulumi/pulumi-dotnet/pulumi-language-dotnet/v3/codegen"
 	"github.com/pulumi/pulumi-java/pkg/codegen/java"
@@ -234,8 +233,6 @@ func NewContext(tool string, pkg *schema.Package) *Context {
 		moduleConflictLinkMap: map[interface{}]string{},
 		constructorSyntaxData: generateConstructorSyntaxData(pkg),
 	}
-
-	defer glog.Flush()
 
 	// Generate the modules from the schema, and for every module run the generator functions to generate markdown files.
 	dctx.setModules(dctx.generateModulesFromSchemaPackage(tool, pkg))
@@ -1643,7 +1640,7 @@ func (mod *modContext) getLookupParams(lang language.Language, r *schema.Resourc
 	case language.YAML, language.Java:
 		return nil // We don't render lookup parameters for Java and YAML
 	default:
-		glog.Fatalf("Unknown language %#v", lang)
+		contract.Failf("Unknown language %#v", lang)
 		return nil
 	}
 }
@@ -1779,17 +1776,6 @@ func (mod *modContext) genResource(r *schema.Resource) resourceDocArgs {
 			creationExampleSyntax[language.Go] = modified
 		}
 		if example, found := dctx.constructorSyntaxData.java.resources[r.Token]; found {
-			// TEMP: pulumi-java codegen panics on integer literals (cty.NumberIntVal)
-			// after pulumi/pkg/v3 3.231.0, producing PANIC text. Remove this check
-			// once pulumi-java ships a fix. See PR #10603.
-			//
-			// When the upstream fix lands, the TestGeneratePackage golden files
-			// (which no longer contain Java examples) and the inverted assertion in
-			// TestConstructorSyntaxGeneratorForSchema will both fail, signalling
-			// that this workaround should be reverted.
-			if strings.Contains(example, "PANIC") || strings.Contains(example, "notImplemented") {
-				example = ""
-			}
 			creationExampleSyntax[language.Java] = example
 		}
 		if example, found := dctx.constructorSyntaxData.yaml.resources[collapseYAMLToken(r.Token)]; found {
@@ -1879,7 +1865,7 @@ func (mod *modContext) getNestedTypes(t schema.Type, types nestedTypeUsageInfo, 
 }
 
 func (mod *modContext) getTypes(member interface{}, types nestedTypeUsageInfo) {
-	glog.V(3).Infoln("getting nested types for module", mod.mod)
+	slog.Debug("getting nested types for module", "module", mod.mod)
 
 	switch t := member.(type) {
 	case *schema.ObjectType:
@@ -1965,12 +1951,12 @@ func (r *moduleConflictResolver) getSafeName(name string, item interface{}) stri
 		return candidate
 	}
 
-	glog.Error("skipping unresolvable duplicate file name: ", name)
+	slog.Error("skipping unresolvable duplicate file name", "name", name)
 	return ""
 }
 
 func (mod *modContext) gen(fs codegen.Fs) error {
-	glog.V(4).Infoln("genIndex for", mod.mod)
+	slog.Debug("genIndex", "module", mod.mod)
 
 	modName := mod.getModuleFileName()
 	conflictResolver := mod.context.newModuleConflictResolver()
@@ -2320,7 +2306,7 @@ func (dctx *Context) generateModulesFromSchemaPackage(tool string, pkg *schema.P
 		visitObjects(r)
 	}
 
-	glog.V(3).Infoln("scanning resources")
+	slog.Debug("scanning resources")
 	if isKubernetesPackage(pkg.Reference()) {
 		scanK8SResource(pkg.Provider)
 		for _, r := range pkg.Resources {
@@ -2332,7 +2318,7 @@ func (dctx *Context) generateModulesFromSchemaPackage(tool string, pkg *schema.P
 			scanResource(r)
 		}
 	}
-	glog.V(3).Infoln("done scanning resources")
+	slog.Debug("done scanning resources")
 
 	for _, f := range pkg.Functions {
 		if !f.IsMethod {
@@ -2522,9 +2508,7 @@ func (dctx *Context) GeneratePackage() (map[string][]byte, error) {
 		return nil, errors.New("must call Initialize before generating the docs package")
 	}
 
-	defer glog.Flush()
-
-	glog.V(3).Infoln("generating package docs now...")
+	slog.Debug("generating package docs now...")
 	files := codegen.Fs{}
 	modules := []string{}
 	modMap := dctx.modules()
@@ -2548,9 +2532,7 @@ func (dctx *Context) GenerateCLIPackage() (*CLIDocsBundle, error) {
 		return nil, errors.New("must call Initialize before generating CLI docs")
 	}
 
-	defer glog.Flush()
-
-	glog.V(3).Infoln("generating CLI package docs now...")
+	slog.Debug("generating CLI package docs now...")
 
 	// Get package name and version from the root module.
 	modMap := dctx.modules()
@@ -2698,18 +2680,16 @@ func (dctx *Context) GeneratePackageTree() ([]PackageTreeItem, error) {
 		return nil, errors.New("must call Initialize before generating the docs package")
 	}
 
-	defer glog.Flush()
-
 	var packageTree []PackageTreeItem
 	if rootMod, ok := dctx.modules()[string(topMostModule)]; ok {
 		tree, err := generatePackageTree(*rootMod)
 		if err != nil {
-			glog.Errorf("Error generating the package tree for package: %v", err)
+			slog.Error("Error generating the package tree for package", "err", err)
 		}
 
 		packageTree = tree
 	} else {
-		glog.Error("A root module entry was not found for the package. Cannot generate the package tree...")
+		slog.Error("A root module entry was not found for the package. Cannot generate the package tree...")
 	}
 
 	return packageTree, nil

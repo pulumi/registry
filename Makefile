@@ -68,8 +68,7 @@ api-docs: bin/resourcedocsgen
 		--baseDocsOutDir ./themes/default/content/registry/packages \
 		--basePackageTreeJSONOutDir ./themes/default/static/registry/packages/navs \
 		--baseSchemasOutDir ./themes/default/static/registry/packages \
-		--baseLLMDocsOutDir ./llm-docs-out/registry/packages \
-		--logtostderr
+		--baseLLMDocsOutDir ./llm-docs-out/registry/packages
 	$(if $(SKIP_VERSIONED_DOCS),,./scripts/generate-versioned-docs.sh)
 
 # Generate the API docs for `content/registry/packages/<pkg>`, where <pkg> is the name of

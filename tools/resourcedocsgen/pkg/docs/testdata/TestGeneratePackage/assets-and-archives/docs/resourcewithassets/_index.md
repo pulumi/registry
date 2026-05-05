@@ -336,18 +336,18 @@ const resourceWithAssetsResource = new example.ResourceWithAssets("resourceWithA
 type: example:ResourceWithAssets
 properties:
     archive:
-        fn::FileArchive: ./path/to/archive
+        fn::fileArchive: ./path/to/archive
     nested:
         archive:
-            fn::FileArchive: ./path/to/archive
+            fn::fileArchive: ./path/to/archive
         asset:
-            fn::StringAsset: content
+            fn::stringAsset: content
         plainArchive:
-            fn::FileArchive: ./path/to/archive
+            fn::fileArchive: ./path/to/archive
         plainAsset:
-            fn::StringAsset: content
+            fn::stringAsset: content
     source:
-        fn::StringAsset: content
+        fn::stringAsset: content
 ```
 
 </pulumi-choosable>

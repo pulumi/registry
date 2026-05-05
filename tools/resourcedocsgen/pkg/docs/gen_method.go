@@ -17,13 +17,14 @@ package docs
 import (
 	"bytes"
 	"fmt"
+	"log/slog"
 	"sort"
 	"strings"
 
-	"github.com/golang/glog"
 	"github.com/pulumi/pulumi/pkg/v3/codegen/python"
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/slice"
+	"github.com/pulumi/pulumi/sdk/v3/go/common/util/contract"
 	"github.com/pulumi/registry/tools/resourcedocsgen/pkg/docs/templates"
 	"github.com/pulumi/registry/tools/resourcedocsgen/pkg/util/language"
 )
@@ -89,16 +90,18 @@ func (mod *modContext) genMethod(r *schema.Resource, m *schema.Method) methodDoc
 		methodNameMap[lang] = docHelper.GetMethodName(m)
 	}
 
-	defer glog.Flush()
 	resourceSnippetLanguages := mod.context.getSupportedSnippetLanguages(r.IsOverlay, r.OverlaySupportedLanguages)
 	methodSnippetLanguages := mod.context.getSupportedSnippetLanguages(f.IsOverlay, f.OverlaySupportedLanguages)
 	if resourceSnippetLanguages != methodSnippetLanguages {
 		// All code choosers are tied together. If the method doesn't support the same languages as the resource, we default
 		// to the resource's supported languages for consistency.
-		glog.Warningf(
-			"Resource %s (%s) and method %s (%s) have different supported snippet languages. "+
-				"Defaulting to the resources supported snippet languages.",
-			r.Token, resourceSnippetLanguages, m.Name, methodSnippetLanguages,
+		slog.Warn(
+			"Resource and method have different supported snippet languages. "+
+				"Defaulting to the resource's supported snippet languages.",
+			"resource", r.Token,
+			"resourceLanguages", resourceSnippetLanguages,
+			"method", m.Name,
+			"methodLanguages", methodSnippetLanguages,
 		)
 	}
 
@@ -311,7 +314,7 @@ func (mod *modContext) genMethodParams(
 		// Java and YAML don't have method documentation.
 		return nil
 	default:
-		glog.Fatalf("Unknown language %#v", lang)
+		contract.Failf("Unknown language %#v", lang)
 		return nil
 	}
 }
@@ -337,7 +340,7 @@ func renderParams(lang language.Language, params []formalParam, pyIndent string)
 	case language.YAML:
 		return "" // YAML doesn't use rendered parameters
 	default:
-		glog.Fatalf("Unknown language %#v", lang)
+		contract.Failf("Unknown language %#v", lang)
 	}
 
 	b := &bytes.Buffer{}

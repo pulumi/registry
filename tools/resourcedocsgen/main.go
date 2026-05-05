@@ -15,18 +15,15 @@
 package main
 
 import (
+	"log/slog"
 	"os"
-
-	"github.com/golang/glog"
 
 	"github.com/pulumi/registry/tools/resourcedocsgen/cmd"
 )
 
 func main() {
-	defer glog.Flush()
-
 	if err := cmd.RootCmd().Execute(); err != nil {
-		glog.Errorf("Failed to execute command: %v", err)
+		slog.Error("Failed to execute command", "err", err)
 		os.Exit(1)
 	}
 }

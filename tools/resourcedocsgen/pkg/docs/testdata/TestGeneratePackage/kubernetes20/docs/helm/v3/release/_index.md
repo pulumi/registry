@@ -327,7 +327,7 @@ type: kubernetes:helm.sh/v3:Release
 properties:
     chart: string
     valueYamlFiles:
-        - fn::StringAsset: content
+        - fn::stringAsset: content
     values:
         string: any
 ```

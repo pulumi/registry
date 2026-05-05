@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/vk-cs/vkcs/0.14.1/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/vk-cs/vkcs/0.15.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Vkcs Provider
@@ -166,6 +166,8 @@ config:
   - `keyManager` optional *string* &rarr;  Key Manager API custom endpoint.
 
   - `loadBalancer` optional *string* &rarr;  Load Balancer API custom endpoint.
+
+  - `managedK8s` optional *string* &rarr;  Cloud Containers V2 API custom endpoint.
 
   - `mlPlatform` optional *string* &rarr;  ML Platform API custom endpoint.
 

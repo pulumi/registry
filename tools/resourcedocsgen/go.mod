@@ -9,9 +9,9 @@ require (
 	github.com/hexops/autogold/v2 v2.3.1
 	github.com/pgavlin/goldmark v1.1.33-0.20200616210433-b5eb04559386
 	github.com/pkg/errors v0.9.1
-	github.com/pulumi/pulumi-dotnet/pulumi-language-dotnet/v3 v3.104.1-0.20260504172035-925a319a4c66
-	github.com/pulumi/pulumi-java v1.25.1-0.20260504180853-40db22909969
-	github.com/pulumi/pulumi-yaml v1.32.1-0.20260504195555-9cd39487d0c2
+	github.com/pulumi/pulumi-dotnet/pulumi-language-dotnet/v3 v3.105.0
+	github.com/pulumi/pulumi-java v1.26.0
+	github.com/pulumi/pulumi-yaml v1.33.0
 	github.com/pulumi/pulumi/pkg/v3 v3.234.0
 	github.com/pulumi/pulumi/sdk/v3 v3.234.0
 	github.com/sourcegraph/conc v0.3.0

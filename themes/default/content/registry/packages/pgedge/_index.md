@@ -1,6 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pgEdge/pulumi-pgedge/v0.0.42/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pgEdge/pulumi-pgedge/v0.0.43/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+edit_url: https://github.com/pgEdge/pulumi-pgedge/blob/v0.0.43/docs/_index.md
 title: pgEdge
 meta_desc: Provides an overview of the pgEdge Provider for Pulumi.
 layout: package

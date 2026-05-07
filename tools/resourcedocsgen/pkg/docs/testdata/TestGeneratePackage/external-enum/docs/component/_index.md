@@ -23,7 +23,7 @@ Resources are created with functions called constructors. To learn more about de
 
 ### Constructor syntax
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 
@@ -76,6 +76,15 @@ Resources are created with functions called constructors. To learn more about de
 <span class="p"></span><span class="p">options</span><span class="p">: </span><span class="c">#&nbsp;Bag of options to control resource&#39;s behavior.</span>
 <span class="p"></span>
 </code></pre></div></div>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<div class="no-copy"><div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">resource</span> <span class="s2">&#34;example_component&#34;</span> <span class="s2">&#34;name&#34;</span> <span class="p">{</span>
+<span class="c">    # resource properties</span>
+<span class="p"></span>
+<span class="p">}</span></code></pre></div></div>
 </pulumi-choosable>
 </div>
 
@@ -223,7 +232,7 @@ Resources are created with functions called constructors. To learn more about de
 
 The following reference example uses placeholder values for all [input properties](#inputs).
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 
@@ -250,6 +259,20 @@ example, err := example.NewComponent(ctx, "componentResource", &example.Componen
 	LocalEnum:  local.MyEnumPi,
 	RemoteEnum: accesscontextmanager / v1.DevicePolicyAllowedDeviceManagementLevelsItemManagementUnspecified,
 })
+```
+
+</pulumi-choosable>
+</div>
+
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+
+```hcl
+resource "example_component" "componentResource" {
+  local_enum  = 3.1415
+  remote_enum = "MANAGEMENT_UNSPECIFIED"
+}
 ```
 
 </pulumi-choosable>
@@ -367,6 +390,28 @@ The Component resource accepts the following [input](/docs/intro/concepts/inputs
 </span>
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#devicepolicyalloweddevicemanagementlevelsitem">Device<wbr>Policy<wbr>Allowed<wbr>Device<wbr>Management<wbr>Levels<wbr>Item</a></span>
+    </dt>
+    <dd>This type is defined in the <a href="/registry/packages/google-native">Google Cloud Native</a> package.</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-optional"
+            title="Optional">
+        <span id="local_enum_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#local_enum_hcl" style="color: inherit; text-decoration: inherit;">local_<wbr>enum</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#myenum">3.1415 | 1e-07</a></span>
+    </dt>
+    <dd></dd><dt class="property-optional"
+            title="Optional">
+        <span id="remote_enum_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#remote_enum_hcl" style="color: inherit; text-decoration: inherit;">remote_<wbr>enum</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#devicepolicyalloweddevicemanagementlevelsitem">&#34;MANAGEMENT_UNSPECIFIED&#34; | &#34;NONE&#34; | &#34;BASIC&#34; | &#34;COMPLETE&#34;</a></span>
     </dt>
     <dd>This type is defined in the <a href="/registry/packages/google-native">Google Cloud Native</a> package.</dd></dl>
 </pulumi-choosable>
@@ -496,6 +541,20 @@ All [input](#inputs) properties are implicitly available as output properties. A
 </div>
 
 <div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-"
+            title="">
+        <span id="id_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_hcl" style="color: inherit; text-decoration: inherit;">id</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>The provider-assigned unique ID for this managed resource.</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
 <pulumi-choosable type="language" values="java">
 <dl class="resources-properties"><dt class="property-"
             title="">
@@ -577,6 +636,14 @@ My<wbr>Enum<pulumi-choosable type="language" values="python,go" class="inline">,
 <pulumi-choosable type="language" values="go">
 <dl class="tabular"><dt>My<wbr>Enum<wbr>Pi</dt>
     <dd><code>3.1415</code></dd><dt>My<wbr>Enum<wbr>Small</dt>
+    <dd><code>1e-07</code></dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="tabular"><dt>%!q(float64=3.1415)</dt>
+    <dd><code>3.1415</code></dd><dt>%!q(float64=1e-07)</dt>
     <dd><code>1e-07</code></dd></dl>
 </pulumi-choosable>
 </div>

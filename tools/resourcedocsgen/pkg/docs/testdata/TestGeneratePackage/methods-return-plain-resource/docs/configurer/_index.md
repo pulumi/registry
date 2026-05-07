@@ -23,7 +23,7 @@ Resources are created with functions called constructors. To learn more about de
 
 ### Constructor syntax
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 
@@ -75,6 +75,15 @@ Resources are created with functions called constructors. To learn more about de
 <span class="p"></span><span class="p">options</span><span class="p">: </span><span class="c">#&nbsp;Bag of options to control resource&#39;s behavior.</span>
 <span class="p"></span>
 </code></pre></div></div>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<div class="no-copy"><div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">resource</span> <span class="s2">&#34;metaprovider_configurer&#34;</span> <span class="s2">&#34;name&#34;</span> <span class="p">{</span>
+<span class="c">    # resource properties</span>
+<span class="p"></span>
+<span class="p">}</span></code></pre></div></div>
 </pulumi-choosable>
 </div>
 
@@ -222,7 +231,7 @@ Resources are created with functions called constructors. To learn more about de
 
 The following reference example uses placeholder values for all [input properties](#inputs).
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 
@@ -247,6 +256,19 @@ var configurerResource = new Metaprovider.Configurer("configurerResource", new()
 example, err := metaprovider.NewConfigurer(ctx, "configurerResource", &metaprovider.ConfigurerArgs{
 	TlsProxy: pulumi.String("string"),
 })
+```
+
+</pulumi-choosable>
+</div>
+
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+
+```hcl
+resource "metaprovider_configurer" "configurerResource" {
+  tls_proxy = "string"
+}
 ```
 
 </pulumi-choosable>
@@ -347,6 +369,20 @@ The Configurer resource accepts the following [input](/docs/intro/concepts/input
 </div>
 
 <div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-optional"
+            title="Optional">
+        <span id="tls_proxy_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#tls_proxy_hcl" style="color: inherit; text-decoration: inherit;">tls_<wbr>proxy</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd></dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
 <pulumi-choosable type="language" values="java">
 <dl class="resources-properties"><dt class="property-optional"
             title="Optional">
@@ -422,6 +458,12 @@ All [input](#inputs) properties are implicitly available as output properties. A
 </div>
 
 <div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"></dl>
+</pulumi-choosable>
+</div>
+
+<div>
 <pulumi-choosable type="language" values="java">
 <dl class="resources-properties"></dl>
 </pulumi-choosable>
@@ -456,7 +498,7 @@ All [input](#inputs) properties are implicitly available as output properties. A
 #### Using MeaningOfLife
 
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 
@@ -499,7 +541,7 @@ All [input](#inputs) properties are implicitly available as output properties. A
 #### Using ObjectMix
 
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 
@@ -575,6 +617,28 @@ All [input](#inputs) properties are implicitly available as output properties. A
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">Provider</span>
+    </dt>
+    <dd>This type is defined in the <a href="/registry/packages/pulumi">pulumi</a> package.</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-"
+            title="">
+        <span id="objectMix_result_meaning_of_life_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#objectMix_result_meaning_of_life_hcl" style="color: inherit; text-decoration: inherit;">meaning_<wbr>of_<wbr>life</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">number</span>
+    </dt>
+    <dd></dd><dt class="property-"
+            title="">
+        <span id="objectMix_result_provider_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#objectMix_result_provider_hcl" style="color: inherit; text-decoration: inherit;">provider</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">pulumi_<wbr>tls</span>
     </dt>
     <dd>This type is defined in the <a href="/registry/packages/pulumi">pulumi</a> package.</dd></dl>
 </pulumi-choosable>
@@ -677,7 +741,7 @@ All [input](#inputs) properties are implicitly available as output properties. A
 #### Using TlsProvider
 
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 

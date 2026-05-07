@@ -22,7 +22,7 @@ Codegen demo with const inputs
 ## Using funcWithConstInput {#using}
 
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 
@@ -98,6 +98,12 @@ The following arguments are supported:
 
 <div>
 <pulumi-choosable type="language" values="go">
+<dl class="resources-properties"></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
 <dl class="resources-properties"></dl>
 </pulumi-choosable>
 </div>

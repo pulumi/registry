@@ -28,7 +28,7 @@ returns a Promise-wrapped result. The output form accepts
 Input-wrapped arguments and returns an Output-wrapped result.
 
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 
@@ -161,6 +161,36 @@ The following arguments are supported:
             title="Optional">
         <span id="expand_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#expand_go" style="color: inherit; text-decoration: inherit;">Expand</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Specifies type of the key to be listed. Possible value is kerb.</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-required"
+            title="Required">
+        <span id="account_name_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#account_name_hcl" style="color: inherit; text-decoration: inherit;">account_<wbr>name</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only.</dd><dt class="property-required"
+            title="Required">
+        <span id="resource_group_name_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#resource_group_name_hcl" style="color: inherit; text-decoration: inherit;">resource_<wbr>group_<wbr>name</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>The name of the resource group within the user's subscription. The name is case insensitive.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="expand_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#expand_hcl" style="color: inherit; text-decoration: inherit;">expand</a>
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
@@ -327,6 +357,20 @@ The following output properties are available:
 </div>
 
 <div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-"
+            title="">
+        <span id="keys_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#keys_hcl" style="color: inherit; text-decoration: inherit;">keys</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#storageaccountkeyresponse">list(object)</a></span>
+    </dt>
+    <dd>Gets the list of storage account keys and their properties for the specified storage account.</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
 <pulumi-choosable type="language" values="java">
 <dl class="resources-properties"><dt class="property-"
             title="">
@@ -460,6 +504,44 @@ The following output properties are available:
             title="Required">
         <span id="value_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#value_go" style="color: inherit; text-decoration: inherit;">Value</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Base 64-encoded value of the key.</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-required"
+            title="Required">
+        <span id="creation_time_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#creation_time_hcl" style="color: inherit; text-decoration: inherit;">creation_<wbr>time</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Creation time of the key, in round trip date format.</dd><dt class="property-required"
+            title="Required">
+        <span id="key_name_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#key_name_hcl" style="color: inherit; text-decoration: inherit;">key_<wbr>name</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Name of the key.</dd><dt class="property-required"
+            title="Required">
+        <span id="permissions_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#permissions_hcl" style="color: inherit; text-decoration: inherit;">permissions</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Permissions for the key -- read-only or full permissions.</dd><dt class="property-required"
+            title="Required">
+        <span id="value_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#value_hcl" style="color: inherit; text-decoration: inherit;">value</a>
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">string</span>

@@ -28,7 +28,7 @@ Resources are created with functions called constructors. To learn more about de
 
 ### Constructor syntax
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 
@@ -90,6 +90,15 @@ Resources are created with functions called constructors. To learn more about de
 <span class="p"></span><span class="p">options</span><span class="p">: </span><span class="c">#&nbsp;Bag of options to control resource&#39;s behavior.</span>
 <span class="p"></span>
 </code></pre></div></div>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<div class="no-copy"><div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">resource</span> <span class="s2">&#34;aws-apigateway_restapi&#34;</span> <span class="s2">&#34;name&#34;</span> <span class="p">{</span>
+<span class="c">    # resource properties</span>
+<span class="p"></span>
+<span class="p">}</span></code></pre></div></div>
 </pulumi-choosable>
 </div>
 
@@ -237,7 +246,7 @@ Resources are created with functions called constructors. To learn more about de
 
 The following reference example uses placeholder values for all [input properties](#inputs).
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 
@@ -422,6 +431,77 @@ example, err := awsapigateway.NewRestAPI(ctx, "restAPIResource", &awsapigateway.
 		"string": pulumi.String("string"),
 	},
 })
+```
+
+</pulumi-choosable>
+</div>
+
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+
+```hcl
+resource "aws-apigateway_restapi" "restAPIResource" {
+  api_key_source               = "HEADER"
+  binary_media_types           = ["string"]
+  description                  = "string"
+  disable_execute_api_endpoint = false
+  gateway_responses = {
+    "string" = {
+      response_parameters = {
+        "string" = "string"
+      }
+      response_templates = {
+        "string" = "string"
+      }
+      status_code = 0
+    }
+  }
+  request_validator = "ALL"
+  routes {
+    path             = "string"
+    data             = "any"
+    content_type     = "string"
+    api_key_required = false
+    event_handler    = function
+    iam_auth_enabled = false
+    index            = "string"
+    local_path       = "string"
+    method           = "ANY"
+    authorizers {
+      parameter_name                   = "string"
+      auth_type                        = "string"
+      authorizer_name                  = "string"
+      authorizer_result_ttl_in_seconds = 0
+      handler                          = function
+      identity_source                  = ["string"]
+      identity_validation_expression   = "string"
+      methods_to_authorize             = ["string"]
+      parameter_location               = "string"
+      provider_ar_ns                   = ["string"]
+      type                             = "string"
+    }
+    request_validator = "ALL"
+    required_parameters {
+      in   = "string"
+      name = "string"
+    }
+    target = {
+      type                  = "aws"
+      connection_id         = "string"
+      connection_type       = "INTERNET"
+      http_method           = "ANY"
+      passthrough_behaviour = "when_no_match"
+      uri                   = "string"
+    }
+  }
+  stage_name           = "string"
+  static_routes_bucket = bucket
+  swagger_string       = "string"
+  tags = {
+    "string" = "string"
+  }
+}
 ```
 
 </pulumi-choosable>
@@ -933,6 +1013,118 @@ when using <code>swaggerString</code>.</p>
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">map[string]string</span>
+    </dt>
+    <dd>'Map of tags to assign to the resource. If configured with a provider <code>defaultTags</code> configuration block present,
+tags with matching keys will overwrite those defined at the provider-level.</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-optional"
+            title="Optional">
+        <span id="api_key_source_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#api_key_source_hcl" style="color: inherit; text-decoration: inherit;">api_<wbr>key_<wbr>source</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#apikeysource">&#34;HEADER&#34; | &#34;AUTHORIZER&#34;</a></span>
+    </dt>
+    <dd>The source for the apikey. This can either be a HEADER or AUTHORIZER. If <code>apiKeyRequired</code> is
+set to true on a route, and this is not defined the value will default to HEADER.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="binary_media_types_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#binary_media_types_hcl" style="color: inherit; text-decoration: inherit;">binary_<wbr>media_<wbr>types</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">list(string)</span>
+    </dt>
+    <dd>List of binary media types supported by the REST API. By default, the REST API supports only UTF-8-encoded text payloads.
+If importing an OpenAPI specification via the body argument, this corresponds to the x-amazon-apigateway-binary-media-types extension.
+If the argument value is provided and is different than the OpenAPI value, the argument value will override the OpenAPI value.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="description_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#description_hcl" style="color: inherit; text-decoration: inherit;">description</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Description of the REST API.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="disable_execute_api_endpoint_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#disable_execute_api_endpoint_hcl" style="color: inherit; text-decoration: inherit;">disable_<wbr>execute_<wbr>api_<wbr>endpoint</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">bool</span>
+    </dt>
+    <dd>Whether clients can invoke your API by using the default execute-api endpoint. By default, clients can invoke
+your API with the default https://{api_id}.execute-api.{region}.amazonaws.com endpoint. To require that
+clients use a custom domain name to invoke your API, disable the default endpoint. Defaults to false.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="gateway_responses_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#gateway_responses_hcl" style="color: inherit; text-decoration: inherit;">gateway_<wbr>responses</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">map(object)</span>
+    </dt>
+    <dd>Define custom gateway responses for the API. This can be used to properly enable
+CORS for Lambda Authorizers.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="request_validator_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#request_validator_hcl" style="color: inherit; text-decoration: inherit;">request_<wbr>validator</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#requestvalidator">&#34;ALL&#34; | &#34;PARAMS_ONLY&#34; | &#34;BODY_ONLY&#34;</a></span>
+    </dt>
+    <dd>Request Validator specifies the validator to use at the API level. Note method level validators
+override this.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="routes_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#routes_hcl" style="color: inherit; text-decoration: inherit;">routes</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#route">list(object)</a></span>
+    </dt>
+    <dd><p>Routes to use to initialize the APIGateway.  These will be used to create the Swagger
+specification for the API.</p>
+<p>Either <code>swaggerString</code> or <code>routes</code> must be specified.</p>
+</dd><dt class="property-optional"
+            title="Optional">
+        <span id="stage_name_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#stage_name_hcl" style="color: inherit; text-decoration: inherit;">stage_<wbr>name</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>The stage name for your API. This will get added as a base path to your API url.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="static_routes_bucket_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#static_routes_bucket_hcl" style="color: inherit; text-decoration: inherit;">static_<wbr>routes_<wbr>bucket</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">aws_<wbr>s3_<wbr>bucket_<wbr>bucket</span>
+    </dt>
+    <dd><p>Bucket to use for placing resources for static resources.  If not provided a default one will
+be created on your behalf if any <code>StaticRoute</code>s are provided.</p>
+<p>This type is defined in the <a href="/registry/packages/aws">AWS Classic</a> package.</p>
+</dd><dt class="property-optional"
+            title="Optional">
+        <span id="swagger_string_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#swagger_string_hcl" style="color: inherit; text-decoration: inherit;">swagger_<wbr>string</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd><p>A Swagger specification already in string form to use to initialize the APIGateway.  Note
+that you must manually provide permission for any route targets to be invoked by API Gateway
+when using <code>swaggerString</code>.</p>
+<p>Either <code>swaggerString</code> or <code>routes</code> must be specified.</p>
+</dd><dt class="property-optional"
+            title="Optional">
+        <span id="tags_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#tags_hcl" style="color: inherit; text-decoration: inherit;">tags</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">map(string)</span>
     </dt>
     <dd>'Map of tags to assign to the resource. If configured with a provider <code>defaultTags</code> configuration block present,
 tags with matching keys will overwrite those defined at the provider-level.</dd></dl>
@@ -1503,6 +1695,60 @@ All [input](#inputs) properties are implicitly available as output properties. A
 </div>
 
 <div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-"
+            title="">
+        <span id="api_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#api_hcl" style="color: inherit; text-decoration: inherit;">api</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">aws_<wbr>apigateway_<wbr>restapi_<wbr>restapi</span>
+    </dt>
+    <dd><p>The underlying RestAPI resource.</p>
+<p>This type is defined in the <a href="/registry/packages/aws">AWS Classic</a> package.</p>
+</dd><dt class="property-"
+            title="">
+        <span id="deployment_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#deployment_hcl" style="color: inherit; text-decoration: inherit;">deployment</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">aws_<wbr>apigateway_<wbr>deployment_<wbr>deployment</span>
+    </dt>
+    <dd><p>The underlying Deployment resource.</p>
+<p>This type is defined in the <a href="/registry/packages/aws">AWS Classic</a> package.</p>
+</dd><dt class="property-"
+            title="">
+        <span id="stage_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#stage_hcl" style="color: inherit; text-decoration: inherit;">stage</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">aws_<wbr>apigateway_<wbr>stage_<wbr>stage</span>
+    </dt>
+    <dd><p>The underlying Stage resource.</p>
+<p>This type is defined in the <a href="/registry/packages/aws">AWS Classic</a> package.</p>
+</dd><dt class="property-"
+            title="">
+        <span id="url_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#url_hcl" style="color: inherit; text-decoration: inherit;">url</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>The URL where the Rest API is exposed.</dd><dt class="property-"
+            title="">
+        <span id="api_policy_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#api_policy_hcl" style="color: inherit; text-decoration: inherit;">api_<wbr>policy</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">aws_<wbr>apigateway_<wbr>restapipolicy_<wbr>restapipolicy</span>
+    </dt>
+    <dd><p>The underlying RestAPIPolicy resource.</p>
+<p>This type is defined in the <a href="/registry/packages/aws">AWS Classic</a> package.</p>
+</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
 <pulumi-choosable type="language" values="java">
 <dl class="resources-properties"><dt class="property-"
             title="">
@@ -1744,6 +1990,14 @@ APIKey<wbr>Source<pulumi-choosable type="language" values="python,go" class="inl
 <pulumi-choosable type="language" values="go">
 <dl class="tabular"><dt>APIKey<wbr>Source<wbr>HEADER</dt>
     <dd><code>HEADER</code></dd><dt>APIKey<wbr>Source<wbr>AUTHORIZER</dt>
+    <dd><code>AUTHORIZER</code></dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="tabular"><dt>"HEADER"</dt>
+    <dd><code>HEADER</code></dd><dt>"AUTHORIZER"</dt>
     <dd><code>AUTHORIZER</code></dd></dl>
 </pulumi-choosable>
 </div>
@@ -2004,6 +2258,121 @@ be &quot;header&quot; or &quot;query&quot;. If there are multiple identity sourc
             title="Optional">
         <span id="type_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#type_go" style="color: inherit; text-decoration: inherit;">Type</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>The type of the authorizer. This value must be one of the following:</p>
+<ul>
+<li>&quot;token&quot;, for an authorizer with the caller identity embedded in an authorization token</li>
+<li>&quot;request&quot;, for an authorizer with the caller identity contained in request parameters</li>
+</ul></dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-required"
+            title="Required">
+        <span id="parameter_name_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#parameter_name_hcl" style="color: inherit; text-decoration: inherit;">parameter_<wbr>name</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>parameterName is the name of the header or query parameter containing the authorization
+token. Must be &quot;Unused&quot; for multiple identity sources.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="auth_type_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#auth_type_hcl" style="color: inherit; text-decoration: inherit;">auth_<wbr>type</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Specifies the authorization mechanism for the client. Typical values are &quot;oauth2&quot; or &quot;custom&quot;.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="authorizer_name_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#authorizer_name_hcl" style="color: inherit; text-decoration: inherit;">authorizer_<wbr>name</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>The name for the Authorizer to be referenced as. This must be unique for each unique
+authorizer within the API. If no name if specified, a name will be generated for you.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="authorizer_result_ttl_in_seconds_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#authorizer_result_ttl_in_seconds_hcl" style="color: inherit; text-decoration: inherit;">authorizer_<wbr>result_<wbr>ttl_<wbr>in_<wbr>seconds</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">number</span>
+    </dt>
+    <dd>The number of seconds during which the resulting IAM policy is cached. Default is 300s. You
+can set this value to 0 to disable caching. Max value is 3600s. Note - if you are sharing an
+authorizer across more than one route you will want to disable the cache or else it will
+cause problems for you.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="handler_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#handler_hcl" style="color: inherit; text-decoration: inherit;">handler</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">aws_<wbr>lambda_<wbr>function_<wbr>function</span>
+    </dt>
+    <dd><p>The authorizerHandler specifies information about the authorizing Lambda.</p>
+<p>This type is defined in the <a href="/registry/packages/aws">AWS Classic</a> package.</p>
+</dd><dt class="property-optional"
+            title="Optional">
+        <span id="identity_source_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#identity_source_hcl" style="color: inherit; text-decoration: inherit;">identity_<wbr>source</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">list(string)</span>
+    </dt>
+    <dd>List of mapping expressions of the request parameters as the identity source. This indicates
+where in the request identity information is expected. Applicable for the authorizer of the
+&quot;request&quot; type only. Example: [&quot;method.request.header.HeaderAuth1&quot;,
+&quot;method.request.querystring.QueryString1&quot;]</dd><dt class="property-optional"
+            title="Optional">
+        <span id="identity_validation_expression_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#identity_validation_expression_hcl" style="color: inherit; text-decoration: inherit;">identity_<wbr>validation_<wbr>expression</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>A regular expression for validating the token as the incoming identity. It only invokes the
+authorizer's lambda if there is a match, else it will return a 401. This does not apply to
+REQUEST Lambda Authorizers. Example: &quot;^x-[a-z]+&quot;.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="methods_to_authorize_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#methods_to_authorize_hcl" style="color: inherit; text-decoration: inherit;">methods_<wbr>to_<wbr>authorize</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">list(string)</span>
+    </dt>
+    <dd>For method authorization, you can define resource servers and custom scopes by specifying the
+&quot;resource-server/scope&quot;. e.g. [&quot;com.hamuta.movies/drama.view&quot;,
+&quot;http://my.resource.com/file.read&quot;] For more information on resource servers and custom
+scopes visit the AWS documentation -
+https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-define-resource-servers.html</dd><dt class="property-optional"
+            title="Optional">
+        <span id="parameter_location_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#parameter_location_hcl" style="color: inherit; text-decoration: inherit;">parameter_<wbr>location</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Defines where in the request API Gateway should look for identity information. The value must
+be &quot;header&quot; or &quot;query&quot;. If there are multiple identity sources, the value must be &quot;header&quot;.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="provider_ar_ns_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#provider_ar_ns_hcl" style="color: inherit; text-decoration: inherit;">provider_<wbr>ar_<wbr>ns</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">list(string)</span>
+    </dt>
+    <dd>The ARNs of the Cognito User Pools to use.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="type_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#type_hcl" style="color: inherit; text-decoration: inherit;">type</a>
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
@@ -2497,6 +2866,14 @@ Integration<wbr>Connection<wbr>Type<pulumi-choosable type="language" values="pyt
 </div>
 
 <div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="tabular"><dt>"INTERNET"</dt>
+    <dd><code>INTERNET</code></dd><dt>"VPC_LINK"</dt>
+    <dd><code>VPC_LINK</code></dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
 <pulumi-choosable type="language" values="java">
 <dl class="tabular"><dt>INTERNET</dt>
     <dd><code>INTERNET</code></dd><dt>VPC_LINK</dt>
@@ -2546,6 +2923,15 @@ Integration<wbr>Passthrough<wbr>Behavior<pulumi-choosable type="language" values
 <dl class="tabular"><dt>Integration<wbr>Passthrough<wbr>Behavior_When_<wbr>no_<wbr>match</dt>
     <dd><code>when_no_match</code></dd><dt>Integration<wbr>Passthrough<wbr>Behavior_When_<wbr>no_<wbr>templates</dt>
     <dd><code>when_no_templates</code></dd><dt>Integration<wbr>Passthrough<wbr>Behavior<wbr>Never</dt>
+    <dd><code>never</code></dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="tabular"><dt>"when_<wbr>no_<wbr>match"</dt>
+    <dd><code>when_no_match</code></dd><dt>"when_<wbr>no_<wbr>templates"</dt>
+    <dd><code>when_no_templates</code></dd><dt>"never"</dt>
     <dd><code>never</code></dd></dl>
 </pulumi-choosable>
 </div>
@@ -2608,6 +2994,17 @@ Integration<wbr>Type<pulumi-choosable type="language" values="python,go" class="
     <dd><code>aws_proxy</code></dd><dt>Integration<wbr>Type<wbr>Http</dt>
     <dd><code>http</code></dd><dt>Integration<wbr>Type_Http_<wbr>proxy</dt>
     <dd><code>http_proxy</code></dd><dt>Integration<wbr>Type<wbr>Mock</dt>
+    <dd><code>mock</code></dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="tabular"><dt>"aws"</dt>
+    <dd><code>aws</code></dd><dt>"aws_<wbr>proxy"</dt>
+    <dd><code>aws_proxy</code></dd><dt>"http"</dt>
+    <dd><code>http</code></dd><dt>"http_<wbr>proxy"</dt>
+    <dd><code>http_proxy</code></dd><dt>"mock"</dt>
     <dd><code>mock</code></dd></dl>
 </pulumi-choosable>
 </div>
@@ -2684,6 +3081,20 @@ Method<pulumi-choosable type="language" values="python,go" class="inline">, Meth
     <dd><code>DELETE</code></dd><dt>Method<wbr>PATCH</dt>
     <dd><code>PATCH</code></dd><dt>Method<wbr>OPTIONS</dt>
     <dd><code>OPTIONS</code></dd><dt>Method<wbr>HEAD</dt>
+    <dd><code>HEAD</code></dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="tabular"><dt>"ANY"</dt>
+    <dd><code>ANY</code></dd><dt>"GET"</dt>
+    <dd><code>GET</code></dd><dt>"PUT"</dt>
+    <dd><code>PUT</code></dd><dt>"POST"</dt>
+    <dd><code>POST</code></dd><dt>"DELETE"</dt>
+    <dd><code>DELETE</code></dd><dt>"PATCH"</dt>
+    <dd><code>PATCH</code></dd><dt>"OPTIONS"</dt>
+    <dd><code>OPTIONS</code></dd><dt>"HEAD"</dt>
     <dd><code>HEAD</code></dd></dl>
 </pulumi-choosable>
 </div>
@@ -2767,6 +3178,15 @@ Request<wbr>Validator<pulumi-choosable type="language" values="python,go" class=
 </div>
 
 <div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="tabular"><dt>"ALL"</dt>
+    <dd><code>ALL</code></dd><dt>"PARAMS_ONLY"</dt>
+    <dd><code>PARAMS_ONLY</code></dd><dt>"BODY_ONLY"</dt>
+    <dd><code>BODY_ONLY</code></dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
 <pulumi-choosable type="language" values="java">
 <dl class="tabular"><dt>ALL</dt>
     <dd><code>ALL</code></dd><dt>PARAMS_ONLY</dt>
@@ -2842,6 +3262,28 @@ Required<wbr>Parameter<pulumi-choosable type="language" values="python,go" class
             title="Optional">
         <span id="name_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#name_go" style="color: inherit; text-decoration: inherit;">Name</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd></dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-optional"
+            title="Optional">
+        <span id="in_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#in_hcl" style="color: inherit; text-decoration: inherit;">in</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd></dd><dt class="property-optional"
+            title="Optional">
+        <span id="name_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#name_hcl" style="color: inherit; text-decoration: inherit;">name</a>
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
@@ -3183,6 +3625,127 @@ gateway will validate these before sending traffic to the event handler.</dd><dt
 </span>
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#target">Target</a></span>
+    </dt>
+    <dd>The target for an integration route (see https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-integration-types.html).</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-required"
+            title="Required">
+        <span id="path_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#path_hcl" style="color: inherit; text-decoration: inherit;">path</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>The path on the API that will serve this route.  If not prefixed with <code>/</code>,
+then a <code>/</code> will be added automatically to the beginning.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="api_key_required_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#api_key_required_hcl" style="color: inherit; text-decoration: inherit;">api_<wbr>key_<wbr>required</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">bool</span>
+    </dt>
+    <dd>If true, an API key will be required for this route. The source for the API Key can be set at
+the API level and by default, the source will be the HEADER.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="authorizers_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#authorizers_hcl" style="color: inherit; text-decoration: inherit;">authorizers</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#authorizer">list(object)</a></span>
+    </dt>
+    <dd>Authorizers allows you to define Lambda authorizers be applied for authorization when the
+the route is called.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="content_type_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#content_type_hcl" style="color: inherit; text-decoration: inherit;">content_<wbr>type</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>The <code>content-type</code> to serve the file as.  Only valid when <code>localPath</code> points to a file.  If
+<code>localPath</code> points to a directory, the content types for all files will be inferred.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="data_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#data_hcl" style="color: inherit; text-decoration: inherit;">data</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">any</span>
+    </dt>
+    <dd>A raw Swagger object to include verbatim in the integration for this path.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="event_handler_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#event_handler_hcl" style="color: inherit; text-decoration: inherit;">event_<wbr>handler</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">aws_<wbr>lambda_<wbr>function_<wbr>function</span>
+    </dt>
+    <dd><p>A Lambda function which will handle the route for the given path and method.</p>
+<p>This type is defined in the <a href="/registry/packages/aws">AWS Classic</a> package.</p>
+</dd><dt class="property-optional"
+            title="Optional">
+        <span id="iam_auth_enabled_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#iam_auth_enabled_hcl" style="color: inherit; text-decoration: inherit;">iam_<wbr>auth_<wbr>enabled</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">bool</span>
+    </dt>
+    <dd>By default, the route method auth type is set to <code>NONE</code>. If true, the auth type will be
+set to <code>AWS_IAM</code>.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="index_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#index_hcl" style="color: inherit; text-decoration: inherit;">index</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string | bool</span>
+    </dt>
+    <dd>By default a <code>localPath</code> hosting static content will also serve 'index.html' in response to a request on a directory.
+To disable this pass <code>false</code> or supply a new index document name.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="local_path_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#local_path_hcl" style="color: inherit; text-decoration: inherit;">local_<wbr>path</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>The local path on disk to create static S3 resources for.  Files will be uploaded into S3
+objects, and directories will be recursively walked into.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="method_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#method_hcl" style="color: inherit; text-decoration: inherit;">method</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#method">&#34;ANY&#34; | &#34;GET&#34; | &#34;PUT&#34; | &#34;POST&#34; | &#34;DELETE&#34; | &#34;PATCH&#34; | &#34;OPTIONS&#34; | &#34;HEAD&#34;</a></span>
+    </dt>
+    <dd>The REST method of the route to match.  Only valid with <code>eventHandler</code> or <code>data</code> routes.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="request_validator_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#request_validator_hcl" style="color: inherit; text-decoration: inherit;">request_<wbr>validator</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#requestvalidator">&#34;ALL&#34; | &#34;PARAMS_ONLY&#34; | &#34;BODY_ONLY&#34;</a></span>
+    </dt>
+    <dd>Request Validator specifies the validator to use at the method level. This will override anything
+defined at the API level.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="required_parameters_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#required_parameters_hcl" style="color: inherit; text-decoration: inherit;">required_<wbr>parameters</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#requiredparameter">list(object)</a></span>
+    </dt>
+    <dd>Required Parameters to validate. If the request validator is set to ALL or PARAMS_ONLY, api
+gateway will validate these before sending traffic to the event handler.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="target_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#target_hcl" style="color: inherit; text-decoration: inherit;">target</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#target">object</a></span>
     </dt>
     <dd>The target for an integration route (see https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-integration-types.html).</dd></dl>
 </pulumi-choosable>
@@ -3737,6 +4300,36 @@ Swagger<wbr>Gateway<wbr>Response<pulumi-choosable type="language" values="python
 </div>
 
 <div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-optional"
+            title="Optional">
+        <span id="response_parameters_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#response_parameters_hcl" style="color: inherit; text-decoration: inherit;">response_<wbr>parameters</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">map(string)</span>
+    </dt>
+    <dd></dd><dt class="property-optional"
+            title="Optional">
+        <span id="response_templates_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#response_templates_hcl" style="color: inherit; text-decoration: inherit;">response_<wbr>templates</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">map(string)</span>
+    </dt>
+    <dd></dd><dt class="property-optional"
+            title="Optional">
+        <span id="status_code_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#status_code_hcl" style="color: inherit; text-decoration: inherit;">status_<wbr>code</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">number</span>
+    </dt>
+    <dd></dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
 <pulumi-choosable type="language" values="java">
 <dl class="resources-properties"><dt class="property-optional"
             title="Optional">
@@ -4067,6 +4660,122 @@ integration request.</p>
             title="Optional">
         <span id="uri_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#uri_go" style="color: inherit; text-decoration: inherit;">Uri</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd><p>Specifies Uniform Resource Identifier (URI) of the integration endpoint.</p>
+<p>For HTTP or HTTP_PROXY integrations, the URI must be a fully formed, encoded HTTP(S) URL
+according to the RFC-3986 specification, for either standard integration, where
+connectionType is not VPC_LINK, or private integration, where connectionType is VPC_LINK. For
+a private HTTP integration, the URI is not used for routing.</p>
+<p>For AWS or AWS_PROXY integrations, the URI is of the form
+arn:aws:apigateway:{region}:{subdomain.service|service}:path|action/{service_api}. Here,
+{Region} is the API Gateway region (e.g., us-east-1); {service} is the name of the integrated
+AWS service (e.g., s3); and {subdomain} is a designated subdomain supported by certain AWS
+service for fast host-name lookup. action can be used for an AWS service action-based API,
+using an Action={name}&amp;{p1}={v1}&amp;p2={v2}... query string. The ensuing {service_api} refers to
+a supported action {name} plus any required input parameters. Alternatively, path can be used
+for an AWS service path-based API. The ensuing service_api refers to the path to an AWS
+service resource, including the region of the integrated AWS service, if applicable. For
+example, for integration with the S3 API of GetObject, the uri can be either
+arn:aws:apigateway:us-west-2:s3:action/GetObject&amp;Bucket={bucket}&amp;Key={key} or
+arn:aws:apigateway:us-west-2:s3:path/{bucket}/{key}.</p>
+</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-required"
+            title="Required">
+        <span id="type_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#type_hcl" style="color: inherit; text-decoration: inherit;">type</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#integrationtype">&#34;aws&#34; | &#34;aws_<wbr>proxy&#34; | &#34;http&#34; | &#34;http_<wbr>proxy&#34; | &#34;mock&#34;</a></span>
+    </dt>
+    <dd><p>Specifies an API method integration type. The valid value is one of the following:</p>
+<ul>
+<li>
+<p><code>aws</code>: for integrating the API method request with an AWS service action, including the Lambda
+function-invoking action. With the Lambda function-invoking action, this is referred to as
+the Lambda custom integration. With any other AWS service action, this is known as AWS
+integration.</p>
+</li>
+<li>
+<p><code>aws_proxy</code>: for integrating the API method request with the Lambda function-invoking action
+with the client request passed through as-is. This integration is also referred to as the
+Lambda proxy integration.</p>
+</li>
+<li>
+<p><code>http</code>: for integrating the API method request with an HTTP endpoint, including a private HTTP
+endpoint within a VPC. This integration is also referred to as the HTTP custom integration.</p>
+</li>
+<li>
+<p><code>http_proxy</code>: for integrating the API method request with an HTTP endpoint, including a private
+HTTP endpoint within a VPC, with the client request passed through as-is. This is also
+referred to as the HTTP proxy integration.</p>
+</li>
+<li>
+<p><code>mock</code>: for integrating the API method request with API Gateway as a &quot;loop-back&quot; endpoint
+without invoking any backend.</p>
+</li>
+</ul>
+</dd><dt class="property-optional"
+            title="Optional">
+        <span id="connection_id_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#connection_id_hcl" style="color: inherit; text-decoration: inherit;">connection_<wbr>id</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>The (id) of the VpcLink used for the integration when connectionType=VPC_LINK and undefined,
+otherwise.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="connection_type_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#connection_type_hcl" style="color: inherit; text-decoration: inherit;">connection_<wbr>type</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#integrationconnectiontype">&#34;INTERNET&#34; | &#34;VPC_LINK&#34;</a></span>
+    </dt>
+    <dd>The type of the network connection to the integration endpoint. The valid value is <code>INTERNET</code>
+for connections through the public routable internet or <code>VPC_LINK</code> for private connections
+between API Gateway and a network load balancer in a VPC. The default value is <code>INTERNET</code>.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="passthrough_behaviour_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#passthrough_behaviour_hcl" style="color: inherit; text-decoration: inherit;">passthrough_<wbr>behaviour</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#integrationpassthroughbehavior">&#34;when_<wbr>no_<wbr>match&#34; | &#34;when_<wbr>no_<wbr>templates&#34; | &#34;never&#34;</a></span>
+    </dt>
+    <dd><p>Specifies how the method request body of an unmapped content type will be passed through the
+integration request to the back end without transformation.</p>
+<p>The valid value is one of the following:</p>
+<ul>
+<li>
+<p><code>WHEN_NO_MATCH</code>: passes the method request body through the integration request to the back end
+without transformation when the method request content type does not match any content type
+associated with the mapping templates defined in the integration request.</p>
+</li>
+<li>
+<p><code>WHEN_NO_TEMPLATES</code>: passes the method request body through the integration request to the back
+end without transformation when no mapping template is defined in the integration request. If
+a template is defined when this option is selected, the method request of an unmapped
+content-type will be rejected with an HTTP 415 Unsupported Media Type response.</p>
+</li>
+<li>
+<p><code>NEVER</code>: rejects the method request with an HTTP 415 Unsupported Media Type response when
+either the method request content type does not match any content type associated with the
+mapping templates defined in the integration request or no mapping template is defined in the
+integration request.</p>
+</li>
+</ul>
+<p>Defaults to <code>WHEN_NO_MATCH</code> if unspecified.</p>
+</dd><dt class="property-optional"
+            title="Optional">
+        <span id="uri_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#uri_hcl" style="color: inherit; text-decoration: inherit;">uri</a>
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">string</span>

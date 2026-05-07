@@ -27,7 +27,7 @@ returns a Promise-wrapped result. The output form accepts
 Input-wrapped arguments and returns an Output-wrapped result.
 
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 
@@ -143,6 +143,28 @@ The following arguments are supported:
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">float64</span>
+    </dt>
+    <dd></dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-required"
+            title="Required">
+        <span id="id_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_hcl" style="color: inherit; text-decoration: inherit;">id</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">number</span>
+    </dt>
+    <dd></dd><dt class="property-required"
+            title="Required">
+        <span id="urn_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#urn_hcl" style="color: inherit; text-decoration: inherit;">urn</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">number</span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>
@@ -284,6 +306,28 @@ The following output properties are available:
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">float64</span>
+    </dt>
+    <dd></dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-"
+            title="">
+        <span id="urn_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#urn_hcl" style="color: inherit; text-decoration: inherit;">urn</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">number</span>
+    </dt>
+    <dd></dd><dt class="property-"
+            title="">
+        <span id="id_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_hcl" style="color: inherit; text-decoration: inherit;">id</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">number</span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>

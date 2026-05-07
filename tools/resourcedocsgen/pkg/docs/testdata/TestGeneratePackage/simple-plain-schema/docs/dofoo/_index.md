@@ -20,7 +20,7 @@ outputs:
 ## Using doFoo {#using}
 
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 
@@ -111,6 +111,20 @@ The following arguments are supported:
 </span>
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#foo">Foo</a></span>
+    </dt>
+    <dd></dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-required"
+            title="Required">
+        <span id="foo_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#foo_hcl" style="color: inherit; text-decoration: inherit;">foo</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#foo">object</a></span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>
@@ -291,6 +305,60 @@ The following output properties are available:
             title="Optional">
         <span id="f_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#f_go" style="color: inherit; text-decoration: inherit;">F</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd></dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-required"
+            title="Required">
+        <span id="a_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#a_hcl" style="color: inherit; text-decoration: inherit;">a</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">bool</span>
+    </dt>
+    <dd></dd><dt class="property-required"
+            title="Required">
+        <span id="c_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#c_hcl" style="color: inherit; text-decoration: inherit;">c</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">number</span>
+    </dt>
+    <dd></dd><dt class="property-required"
+            title="Required">
+        <span id="e_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#e_hcl" style="color: inherit; text-decoration: inherit;">e</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd></dd><dt class="property-optional"
+            title="Optional">
+        <span id="b_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#b_hcl" style="color: inherit; text-decoration: inherit;">b</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">bool</span>
+    </dt>
+    <dd></dd><dt class="property-optional"
+            title="Optional">
+        <span id="d_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#d_hcl" style="color: inherit; text-decoration: inherit;">d</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">number</span>
+    </dt>
+    <dd></dd><dt class="property-optional"
+            title="Optional">
+        <span id="f_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#f_hcl" style="color: inherit; text-decoration: inherit;">f</a>
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">string</span>

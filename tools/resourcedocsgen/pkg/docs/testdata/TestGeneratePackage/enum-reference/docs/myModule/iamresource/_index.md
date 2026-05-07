@@ -23,7 +23,7 @@ Resources are created with functions called constructors. To learn more about de
 
 ### Constructor syntax
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 
@@ -75,6 +75,15 @@ Resources are created with functions called constructors. To learn more about de
 <span class="p"></span><span class="p">options</span><span class="p">: </span><span class="c">#&nbsp;Bag of options to control resource&#39;s behavior.</span>
 <span class="p"></span>
 </code></pre></div></div>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<div class="no-copy"><div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">resource</span> <span class="s2">&#34;example_mymodule_iamresource&#34;</span> <span class="s2">&#34;name&#34;</span> <span class="p">{</span>
+<span class="c">    # resource properties</span>
+<span class="p"></span>
+<span class="p">}</span></code></pre></div></div>
 </pulumi-choosable>
 </div>
 
@@ -222,7 +231,7 @@ Resources are created with functions called constructors. To learn more about de
 
 The following reference example uses placeholder values for all [input properties](#inputs).
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 
@@ -271,6 +280,25 @@ example, err := mymodule.NewIamResource(ctx, "iamResourceResource", &mymodule.Ia
 		Service: pulumi.String("string"),
 	},
 })
+```
+
+</pulumi-choosable>
+</div>
+
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+
+```hcl
+resource "example_mymodule_iamresource" "iamResourceResource" {
+  config = {
+    audit_log_configs = [{
+      "exemptedMembers" = ["string"]
+      "logType"         = "LOG_TYPE_UNSPECIFIED"
+    }]
+    service = "string"
+  }
+}
 ```
 
 </pulumi-choosable>
@@ -394,6 +422,20 @@ The IamResource resource accepts the following [input](/docs/intro/concepts/inpu
 </div>
 
 <div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-optional"
+            title="Optional">
+        <span id="config_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#config_hcl" style="color: inherit; text-decoration: inherit;">config</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#auditconfig">object</a></span>
+    </dt>
+    <dd>This type is defined in the <a href="/registry/packages/google-native">Google Cloud Native</a> package.</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
 <pulumi-choosable type="language" values="java">
 <dl class="resources-properties"><dt class="property-optional"
             title="Optional">
@@ -464,6 +506,12 @@ All [input](#inputs) properties are implicitly available as output properties. A
 
 <div>
 <pulumi-choosable type="language" values="go">
+<dl class="resources-properties"></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
 <dl class="resources-properties"></dl>
 </pulumi-choosable>
 </div>

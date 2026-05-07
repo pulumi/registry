@@ -23,7 +23,7 @@ Resources are created with functions called constructors. To learn more about de
 
 ### Constructor syntax
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 
@@ -76,6 +76,15 @@ Resources are created with functions called constructors. To learn more about de
 <span class="p"></span><span class="p">options</span><span class="p">: </span><span class="c">#&nbsp;Bag of options to control resource&#39;s behavior.</span>
 <span class="p"></span>
 </code></pre></div></div>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<div class="no-copy"><div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">resource</span> <span class="s2">&#34;xyz_staticpage&#34;</span> <span class="s2">&#34;name&#34;</span> <span class="p">{</span>
+<span class="c">    # resource properties</span>
+<span class="p"></span>
+<span class="p">}</span></code></pre></div></div>
 </pulumi-choosable>
 </div>
 
@@ -223,7 +232,7 @@ Resources are created with functions called constructors. To learn more about de
 
 The following reference example uses placeholder values for all [input properties](#inputs).
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 
@@ -255,6 +264,22 @@ example, err := xyz.NewStaticPage(ctx, "staticPageResource", &xyz.StaticPageArgs
 		A: pulumi.Bool(false),
 	},
 })
+```
+
+</pulumi-choosable>
+</div>
+
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+
+```hcl
+resource "xyz_staticpage" "staticPageResource" {
+  index_content = "string"
+  foo = {
+    a = false
+  }
+}
 ```
 
 </pulumi-choosable>
@@ -379,6 +404,28 @@ The StaticPage resource accepts the following [input](/docs/intro/concepts/input
 </span>
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#foo">Foo<wbr>Args</a></span>
+    </dt>
+    <dd></dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-required"
+            title="Required">
+        <span id="index_content_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#index_content_hcl" style="color: inherit; text-decoration: inherit;">index_<wbr>content</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>The HTML content for index.html.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="foo_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#foo_hcl" style="color: inherit; text-decoration: inherit;">foo</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#foo">object</a></span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>
@@ -526,6 +573,29 @@ This type is defined in the <a href="/registry/packages/aws">AWS Classic</a> pac
 </div>
 
 <div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-"
+            title="">
+        <span id="bucket_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#bucket_hcl" style="color: inherit; text-decoration: inherit;">bucket</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">aws_<wbr>s3_<wbr>bucket_<wbr>bucket</span>
+    </dt>
+    <dd>The bucket resource.
+This type is defined in the <a href="/registry/packages/aws">AWS Classic</a> package.</dd><dt class="property-"
+            title="">
+        <span id="website_url_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#website_url_hcl" style="color: inherit; text-decoration: inherit;">website_<wbr>url</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>The website URL.</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
 <pulumi-choosable type="language" values="java">
 <dl class="resources-properties"><dt class="property-"
             title="">
@@ -651,6 +721,20 @@ Foo<pulumi-choosable type="language" values="python,go" class="inline">, Foo<wbr
             title="Optional">
         <span id="a_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#a_go" style="color: inherit; text-decoration: inherit;">A</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">bool</span>
+    </dt>
+    <dd></dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-optional"
+            title="Optional">
+        <span id="a_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#a_hcl" style="color: inherit; text-decoration: inherit;">a</a>
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">bool</span>

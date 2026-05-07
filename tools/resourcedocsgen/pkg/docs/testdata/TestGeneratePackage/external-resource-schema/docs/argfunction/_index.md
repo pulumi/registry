@@ -25,7 +25,7 @@ returns a Promise-wrapped result. The output form accepts
 Input-wrapped arguments and returns an Output-wrapped result.
 
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 
@@ -131,6 +131,20 @@ The following arguments are supported:
 </div>
 
 <div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-optional"
+            title="Optional">
+        <span id="name_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#name_hcl" style="color: inherit; text-decoration: inherit;">name</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">random_<wbr>index_<wbr>randompet_<wbr>randompet</span>
+    </dt>
+    <dd>This type is defined in the <a href="/registry/packages/random">random</a> package.</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
 <pulumi-choosable type="language" values="java">
 <dl class="resources-properties"><dt class="property-optional"
             title="Optional">
@@ -218,6 +232,20 @@ The following output properties are available:
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">int</span>
+    </dt>
+    <dd></dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-"
+            title="">
+        <span id="age_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#age_hcl" style="color: inherit; text-decoration: inherit;">age</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">number</span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>

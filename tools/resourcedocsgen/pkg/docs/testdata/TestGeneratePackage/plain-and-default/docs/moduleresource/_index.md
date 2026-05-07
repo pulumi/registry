@@ -23,7 +23,7 @@ Resources are created with functions called constructors. To learn more about de
 
 ### Constructor syntax
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 
@@ -88,6 +88,15 @@ Resources are created with functions called constructors. To learn more about de
 <span class="p"></span><span class="p">options</span><span class="p">: </span><span class="c">#&nbsp;Bag of options to control resource&#39;s behavior.</span>
 <span class="p"></span>
 </code></pre></div></div>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<div class="no-copy"><div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">resource</span> <span class="s2">&#34;foobar_moduleresource&#34;</span> <span class="s2">&#34;name&#34;</span> <span class="p">{</span>
+<span class="c">    # resource properties</span>
+<span class="p"></span>
+<span class="p">}</span></code></pre></div></div>
 </pulumi-choosable>
 </div>
 
@@ -235,7 +244,7 @@ Resources are created with functions called constructors. To learn more about de
 
 The following reference example uses placeholder values for all [input properties](#inputs).
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 
@@ -292,6 +301,35 @@ example, err := foobar.NewModuleResource(ctx, "moduleResourceResource", &foobar.
 	OptionalEnum:        foobar.EnumThingFour,
 	OptionalConst:       pulumi.String("string"),
 })
+```
+
+</pulumi-choosable>
+</div>
+
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+
+```hcl
+resource "foobar_moduleresource" "moduleResourceResource" {
+  plain_required_bool   = false
+  required_string       = "string"
+  required_number       = 0
+  required_enum         = 4
+  required_bool         = false
+  plain_required_string = "string"
+  plain_required_number = 0
+  plain_required_const  = "string"
+  optional_string       = "string"
+  plain_optional_string = "string"
+  plain_optional_number = 0
+  plain_optional_const  = "string"
+  plain_optional_bool   = false
+  optional_bool         = false
+  optional_number       = 0
+  optional_enum         = 4
+  optional_const        = "string"
+}
 ```
 
 </pulumi-choosable>
@@ -658,6 +696,124 @@ The ModuleResource resource accepts the following [input](/docs/intro/concepts/i
             title="Optional">
         <span id="plainoptionalstring_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#plainoptionalstring_go" style="color: inherit; text-decoration: inherit;">Plain<wbr>Optional<wbr>String</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd></dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-required"
+            title="Required">
+        <span id="plain_required_bool_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#plain_required_bool_hcl" style="color: inherit; text-decoration: inherit;">plain_<wbr>required_<wbr>bool</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">bool</span>
+    </dt>
+    <dd></dd><dt class="property-required"
+            title="Required">
+        <span id="plain_required_number_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#plain_required_number_hcl" style="color: inherit; text-decoration: inherit;">plain_<wbr>required_<wbr>number</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">number</span>
+    </dt>
+    <dd></dd><dt class="property-required"
+            title="Required">
+        <span id="plain_required_string_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#plain_required_string_hcl" style="color: inherit; text-decoration: inherit;">plain_<wbr>required_<wbr>string</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd></dd><dt class="property-required"
+            title="Required">
+        <span id="required_bool_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#required_bool_hcl" style="color: inherit; text-decoration: inherit;">required_<wbr>bool</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">bool</span>
+    </dt>
+    <dd></dd><dt class="property-required"
+            title="Required">
+        <span id="required_enum_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#required_enum_hcl" style="color: inherit; text-decoration: inherit;">required_<wbr>enum</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#enumthing">4 | 6 | 8</a></span>
+    </dt>
+    <dd></dd><dt class="property-required"
+            title="Required">
+        <span id="required_number_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#required_number_hcl" style="color: inherit; text-decoration: inherit;">required_<wbr>number</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">number</span>
+    </dt>
+    <dd></dd><dt class="property-required"
+            title="Required">
+        <span id="required_string_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#required_string_hcl" style="color: inherit; text-decoration: inherit;">required_<wbr>string</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd></dd><dt class="property-optional"
+            title="Optional">
+        <span id="optional_bool_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#optional_bool_hcl" style="color: inherit; text-decoration: inherit;">optional_<wbr>bool</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">bool</span>
+    </dt>
+    <dd></dd><dt class="property-optional"
+            title="Optional">
+        <span id="optional_enum_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#optional_enum_hcl" style="color: inherit; text-decoration: inherit;">optional_<wbr>enum</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#enumthing">4 | 6 | 8</a></span>
+    </dt>
+    <dd></dd><dt class="property-optional"
+            title="Optional">
+        <span id="optional_number_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#optional_number_hcl" style="color: inherit; text-decoration: inherit;">optional_<wbr>number</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">number</span>
+    </dt>
+    <dd></dd><dt class="property-optional"
+            title="Optional">
+        <span id="optional_string_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#optional_string_hcl" style="color: inherit; text-decoration: inherit;">optional_<wbr>string</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd></dd><dt class="property-optional"
+            title="Optional">
+        <span id="plain_optional_bool_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#plain_optional_bool_hcl" style="color: inherit; text-decoration: inherit;">plain_<wbr>optional_<wbr>bool</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">bool</span>
+    </dt>
+    <dd></dd><dt class="property-optional"
+            title="Optional">
+        <span id="plain_optional_number_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#plain_optional_number_hcl" style="color: inherit; text-decoration: inherit;">plain_<wbr>optional_<wbr>number</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">number</span>
+    </dt>
+    <dd></dd><dt class="property-optional"
+            title="Optional">
+        <span id="plain_optional_string_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#plain_optional_string_hcl" style="color: inherit; text-decoration: inherit;">plain_<wbr>optional_<wbr>string</a>
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
@@ -1174,6 +1330,20 @@ All [input](#inputs) properties are implicitly available as output properties. A
 </div>
 
 <div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-"
+            title="">
+        <span id="id_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_hcl" style="color: inherit; text-decoration: inherit;">id</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>The provider-assigned unique ID for this managed resource.</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
 <pulumi-choosable type="language" values="java">
 <dl class="resources-properties"><dt class="property-"
             title="">
@@ -1257,6 +1427,15 @@ Enum<wbr>Thing<pulumi-choosable type="language" values="python,go" class="inline
 <dl class="tabular"><dt>Enum<wbr>Thing<wbr>Four</dt>
     <dd><code>4</code></dd><dt>Enum<wbr>Thing<wbr>Six</dt>
     <dd><code>6</code></dd><dt>Enum<wbr>Thing<wbr>Eight</dt>
+    <dd><code>8</code></dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="tabular"><dt>'\x04'</dt>
+    <dd><code>4</code></dd><dt>'\x06'</dt>
+    <dd><code>6</code></dd><dt>'\b'</dt>
     <dd><code>8</code></dd></dl>
 </pulumi-choosable>
 </div>

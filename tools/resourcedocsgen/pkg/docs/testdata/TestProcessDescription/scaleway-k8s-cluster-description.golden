@@ -5,7 +5,7 @@ Creates and manages Scaleway Kubernetes clusters. For more information, see [the
 ### Basic
 
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
@@ -191,12 +191,20 @@ resources:
 ```
 </pulumi-choosable>
 </div>
+<div>
+<pulumi-choosable type="language" values="hcl">
+
+```
+Example coming soon!
+```
+</pulumi-choosable>
+</div>
 
 
 ### Multicloud
 
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
@@ -375,6 +383,14 @@ resources:
 ```
 </pulumi-choosable>
 </div>
+<div>
+<pulumi-choosable type="language" values="hcl">
+
+```
+Example coming soon!
+```
+</pulumi-choosable>
+</div>
 
 
 For a detailed example of how to add or run Elastic Metal servers instead of instances on your cluster, please refer to this guide.
@@ -382,7 +398,7 @@ For a detailed example of how to add or run Elastic Metal servers instead of ins
 ### With additional configuration
 
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
@@ -588,6 +604,14 @@ Example coming soon!
 ```
 </pulumi-choosable>
 </div>
+<div>
+<pulumi-choosable type="language" values="hcl">
+
+```
+Example coming soon!
+```
+</pulumi-choosable>
+</div>
 
 
 ## Deprecation of default_pool
@@ -597,7 +621,7 @@ Example coming soon!
 Before:
 
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
@@ -682,12 +706,20 @@ resources:
 ```
 </pulumi-choosable>
 </div>
+<div>
+<pulumi-choosable type="language" values="hcl">
+
+```
+Example coming soon!
+```
+</pulumi-choosable>
+</div>
 
 
 After:
 
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
@@ -845,6 +877,14 @@ resources:
       clusterId: ${jack.id}
       nodeType: DEV1-M
       size: 1
+```
+</pulumi-choosable>
+</div>
+<div>
+<pulumi-choosable type="language" values="hcl">
+
+```
+Example coming soon!
 ```
 </pulumi-choosable>
 </div>

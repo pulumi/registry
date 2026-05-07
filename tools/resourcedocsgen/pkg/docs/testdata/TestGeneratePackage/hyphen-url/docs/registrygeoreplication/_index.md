@@ -23,7 +23,7 @@ Resources are created with functions called constructors. To learn more about de
 
 ### Constructor syntax
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 
@@ -75,6 +75,15 @@ Resources are created with functions called constructors. To learn more about de
 <span class="p"></span><span class="p">options</span><span class="p">: </span><span class="c">#&nbsp;Bag of options to control resource&#39;s behavior.</span>
 <span class="p"></span>
 </code></pre></div></div>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<div class="no-copy"><div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">resource</span> <span class="s2">&#34;registrygeoreplication_registrygeoreplication&#34;</span> <span class="s2">&#34;name&#34;</span> <span class="p">{</span>
+<span class="c">    # resource properties</span>
+<span class="p"></span>
+<span class="p">}</span></code></pre></div></div>
 </pulumi-choosable>
 </div>
 
@@ -222,7 +231,7 @@ Resources are created with functions called constructors. To learn more about de
 
 The following reference example uses placeholder values for all [input properties](#inputs).
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 
@@ -247,6 +256,19 @@ var registryGeoReplicationResource = new Registrygeoreplication.RegistryGeoRepli
 example, err := registrygeoreplication.NewRegistryGeoReplication(ctx, "registryGeoReplicationResource", &registrygeoreplication.RegistryGeoReplicationArgs{
 	ResourceGroup: pulumi.Any(resourceGroup),
 })
+```
+
+</pulumi-choosable>
+</div>
+
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+
+```hcl
+resource "registrygeoreplication_registrygeoreplication" "registryGeoReplicationResource" {
+  resource_group = resourceGroup
+}
 ```
 
 </pulumi-choosable>
@@ -342,6 +364,21 @@ This type is defined in the <a href="/registry/packages/azure-native">Azure Nati
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">Resource<wbr>Group</span>
+    </dt>
+    <dd>The resource group that hosts the component resource
+This type is defined in the <a href="/registry/packages/azure-native">Azure Native</a> package.</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-required"
+            title="Required">
+        <span id="resource_group_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#resource_group_hcl" style="color: inherit; text-decoration: inherit;">resource_<wbr>group</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">azure-native_<wbr>resources_<wbr>resourcegroup</span>
     </dt>
     <dd>The resource group that hosts the component resource
 This type is defined in the <a href="/registry/packages/azure-native">Azure Native</a> package.</dd></dl>
@@ -473,6 +510,38 @@ This type is defined in the <a href="/registry/packages/azure-native">Azure Nati
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">Replication</span>
+    </dt>
+    <dd>The replication policy
+This type is defined in the <a href="/registry/packages/azure-native">Azure Native</a> package.</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-"
+            title="">
+        <span id="acr_login_server_out_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#acr_login_server_out_hcl" style="color: inherit; text-decoration: inherit;">acr_<wbr>login_<wbr>server_<wbr>out</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>The login server url</dd><dt class="property-"
+            title="">
+        <span id="registry_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#registry_hcl" style="color: inherit; text-decoration: inherit;">registry</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">azure-native_<wbr>containerregistry_<wbr>registry</span>
+    </dt>
+    <dd>The Registry
+This type is defined in the <a href="/registry/packages/azure-native">Azure Native</a> package.</dd><dt class="property-"
+            title="">
+        <span id="replication_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#replication_hcl" style="color: inherit; text-decoration: inherit;">replication</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">azure-native_<wbr>containerregistry_<wbr>replication</span>
     </dt>
     <dd>The replication policy
 This type is defined in the <a href="/registry/packages/azure-native">Azure Native</a> package.</dd></dl>

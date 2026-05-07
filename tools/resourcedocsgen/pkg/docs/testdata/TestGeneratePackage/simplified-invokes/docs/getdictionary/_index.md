@@ -25,7 +25,7 @@ returns a Promise-wrapped result. The output form accepts
 Input-wrapped arguments and returns an Output-wrapped result.
 
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 
@@ -123,6 +123,20 @@ The following arguments are supported:
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">float64</span>
+    </dt>
+    <dd></dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-optional"
+            title="Optional">
+        <span id="a_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#a_hcl" style="color: inherit; text-decoration: inherit;">a</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">number</span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>

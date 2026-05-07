@@ -28,7 +28,7 @@ returns a Promise-wrapped result. The output form accepts
 Input-wrapped arguments and returns an Output-wrapped result.
 
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 
@@ -211,6 +211,59 @@ options to narrow down the list AWS returns.</dd><dt class="property-optional"
             title="Optional">
         <span id="sortascending_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#sortascending_go" style="color: inherit; text-decoration: inherit;">Sort<wbr>Ascending</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">bool</span>
+    </dt>
+    <dd>Used to sort AMIs by creation time.</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-required"
+            title="Required">
+        <span id="owners_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#owners_hcl" style="color: inherit; text-decoration: inherit;">owners</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">list(string)</span>
+    </dt>
+    <dd>List of AMI owners to limit search. At least 1 value must be specified. Valid values: an AWS account ID, <code>self</code> (the current account), or an AWS owner alias (e.g. <code>amazon</code>, <code>aws-marketplace</code>, <code>microsoft</code>).</dd><dt class="property-optional"
+            title="Optional">
+        <span id="executable_users_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#executable_users_hcl" style="color: inherit; text-decoration: inherit;">executable_<wbr>users</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">list(string)</span>
+    </dt>
+    <dd>Limit search to users with <em>explicit</em> launch
+permission on  the image. Valid items are the numeric account ID or <code>self</code>.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="filters_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#filters_hcl" style="color: inherit; text-decoration: inherit;">filters</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#getamiidsfilter">list(object)</a></span>
+    </dt>
+    <dd>One or more name/value pairs to filter off of. There
+are several valid keys, for a full reference, check out
+[describe-images in the AWS CLI reference][1].</dd><dt class="property-optional"
+            title="Optional">
+        <span id="name_regex_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#name_regex_hcl" style="color: inherit; text-decoration: inherit;">name_<wbr>regex</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>A regex string to apply to the AMI list returned
+by AWS. This allows more advanced filtering not supported from the AWS API.
+This filtering is done locally on what AWS returns, and could have a performance
+impact if the result is large. It is recommended to combine this with other
+options to narrow down the list AWS returns.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="sort_ascending_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#sort_ascending_hcl" style="color: inherit; text-decoration: inherit;">sort_<wbr>ascending</a>
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">bool</span>
@@ -565,6 +618,68 @@ The following output properties are available:
 </div>
 
 <div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-"
+            title="">
+        <span id="id_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_hcl" style="color: inherit; text-decoration: inherit;">id</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>The provider-assigned unique ID for this managed resource.</dd><dt class="property-"
+            title="">
+        <span id="ids_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#ids_hcl" style="color: inherit; text-decoration: inherit;">ids</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">list(string)</span>
+    </dt>
+    <dd></dd><dt class="property-"
+            title="">
+        <span id="owners_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#owners_hcl" style="color: inherit; text-decoration: inherit;">owners</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">list(string)</span>
+    </dt>
+    <dd></dd><dt class="property-"
+            title="">
+        <span id="executable_users_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#executable_users_hcl" style="color: inherit; text-decoration: inherit;">executable_<wbr>users</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">list(string)</span>
+    </dt>
+    <dd></dd><dt class="property-"
+            title="">
+        <span id="filters_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#filters_hcl" style="color: inherit; text-decoration: inherit;">filters</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#getamiidsfilter">list(object)</a></span>
+    </dt>
+    <dd></dd><dt class="property-"
+            title="">
+        <span id="name_regex_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#name_regex_hcl" style="color: inherit; text-decoration: inherit;">name_<wbr>regex</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd></dd><dt class="property-"
+            title="">
+        <span id="sort_ascending_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#sort_ascending_hcl" style="color: inherit; text-decoration: inherit;">sort_<wbr>ascending</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">bool</span>
+    </dt>
+    <dd></dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
 <pulumi-choosable type="language" values="java">
 <dl class="resources-properties"><dt class="property-"
             title="">
@@ -861,6 +976,28 @@ The following output properties are available:
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">[]string</span>
+    </dt>
+    <dd></dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-required"
+            title="Required">
+        <span id="name_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#name_hcl" style="color: inherit; text-decoration: inherit;">name</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd></dd><dt class="property-required"
+            title="Required">
+        <span id="values_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#values_hcl" style="color: inherit; text-decoration: inherit;">values</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">list(string)</span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>

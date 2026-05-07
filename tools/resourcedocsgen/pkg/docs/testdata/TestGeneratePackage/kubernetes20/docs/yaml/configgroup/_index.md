@@ -25,7 +25,7 @@ Resources are created with functions called constructors. To learn more about de
 
 ### Constructor syntax
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 
@@ -79,6 +79,15 @@ Resources are created with functions called constructors. To learn more about de
 <span class="p"></span><span class="p">options</span><span class="p">: </span><span class="c">#&nbsp;Bag of options to control resource&#39;s behavior.</span>
 <span class="p"></span>
 </code></pre></div></div>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<div class="no-copy"><div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">resource</span> <span class="s2">&#34;kubernetes_yaml_configgroup&#34;</span> <span class="s2">&#34;name&#34;</span> <span class="p">{</span>
+<span class="c">    # resource properties</span>
+<span class="p"></span>
+<span class="p">}</span></code></pre></div></div>
 </pulumi-choosable>
 </div>
 
@@ -232,7 +241,7 @@ Resources are created with functions called constructors. To learn more about de
 
 The following reference example uses placeholder values for all [input properties](#inputs).
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 
@@ -270,6 +279,23 @@ example, err := yaml.NewConfigGroup(ctx, "kubernetesConfigGroupResource", &yaml.
 	},
 	Yaml: pulumi.Any("string"),
 })
+```
+
+</pulumi-choosable>
+</div>
+
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+
+```hcl
+resource "kubernetes_yaml_configgroup" "kubernetesConfigGroupResource" {
+  files           = "string"
+  objs            = null
+  resource_prefix = "string"
+  transformations = ["any"]
+  yaml            = "string"
+}
 ```
 
 </pulumi-choosable>
@@ -448,6 +474,52 @@ The ConfigGroup resource accepts the following [input](/docs/intro/concepts/inpu
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">string | []string</span>
+    </dt>
+    <dd>YAML text containing Kubernetes resource definitions.</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-optional"
+            title="Optional">
+        <span id="files_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#files_hcl" style="color: inherit; text-decoration: inherit;">files</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string | list(string)</span>
+    </dt>
+    <dd>Set of paths or a URLs that uniquely identify files.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="objs_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#objs_hcl" style="color: inherit; text-decoration: inherit;">objs</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">any | list(any)</span>
+    </dt>
+    <dd>Objects representing Kubernetes resources.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="resource_prefix_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#resource_prefix_hcl" style="color: inherit; text-decoration: inherit;">resource_<wbr>prefix</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>An optional prefix for the auto-generated resource names. Example: A resource created with resourcePrefix=&quot;foo&quot; would produce a resource named &quot;foo-resourceName&quot;.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="transformations_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#transformations_hcl" style="color: inherit; text-decoration: inherit;">transformations</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">list(any)</span>
+    </dt>
+    <dd>A set of transformations to apply to Kubernetes resource definitions before registering with engine.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="yaml_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#yaml_hcl" style="color: inherit; text-decoration: inherit;">yaml</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string | list(string)</span>
     </dt>
     <dd>YAML text containing Kubernetes resource definitions.</dd></dl>
 </pulumi-choosable>
@@ -664,6 +736,20 @@ All [input](#inputs) properties are implicitly available as output properties. A
             title="">
         <span id="resources_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#resources_go" style="color: inherit; text-decoration: inherit;">Resources</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Resources created by the ConfigGroup.</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-"
+            title="">
+        <span id="resources_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#resources_hcl" style="color: inherit; text-decoration: inherit;">resources</a>
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">string</span>

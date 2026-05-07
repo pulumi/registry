@@ -25,7 +25,7 @@ Resources are created with functions called constructors. To learn more about de
 
 ### Constructor syntax
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 
@@ -79,6 +79,15 @@ Resources are created with functions called constructors. To learn more about de
 <span class="p"></span><span class="p">options</span><span class="p">: </span><span class="c">#&nbsp;Bag of options to control resource&#39;s behavior.</span>
 <span class="p"></span>
 </code></pre></div></div>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<div class="no-copy"><div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">resource</span> <span class="s2">&#34;kubernetes_helm.sh_v3_release&#34;</span> <span class="s2">&#34;name&#34;</span> <span class="p">{</span>
+<span class="c">    # resource properties</span>
+<span class="p"></span>
+<span class="p">}</span></code></pre></div></div>
 </pulumi-choosable>
 </div>
 
@@ -226,7 +235,7 @@ Resources are created with functions called constructors. To learn more about de
 
 The following reference example uses placeholder values for all [input properties](#inputs).
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 
@@ -265,6 +274,23 @@ example, err := helmv3.NewRelease(ctx, "releaseResource", &helmv3.ReleaseArgs{
 		"string": pulumi.Any("any"),
 	},
 })
+```
+
+</pulumi-choosable>
+</div>
+
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+
+```hcl
+resource "kubernetes_helm.sh_v3_release" "releaseResource" {
+  chart            = "string"
+  value_yaml_files = [stringAsset("content")]
+  values = {
+    "string" = "any"
+  }
+}
 ```
 
 </pulumi-choosable>
@@ -408,6 +434,36 @@ The Release resource accepts the following [input](/docs/intro/concepts/inputs-o
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">map[string]interface{}</span>
+    </dt>
+    <dd>Custom values set for the release.</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-required"
+            title="Required">
+        <span id="chart_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#chart_hcl" style="color: inherit; text-decoration: inherit;">chart</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Chart name to be installed. A path may be used.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="value_yaml_files_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#value_yaml_files_hcl" style="color: inherit; text-decoration: inherit;">value_<wbr>yaml_<wbr>files</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">list(asset)</span>
+    </dt>
+    <dd>List of assets (raw yaml files). Content is read and merged with values.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="values_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#values_hcl" style="color: inherit; text-decoration: inherit;">values</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">map(any)</span>
     </dt>
     <dd>Custom values set for the release.</dd></dl>
 </pulumi-choosable>
@@ -560,6 +616,20 @@ All [input](#inputs) properties are implicitly available as output properties. A
             title="">
         <span id="id_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_go" style="color: inherit; text-decoration: inherit;">Id</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>The provider-assigned unique ID for this managed resource.</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-"
+            title="">
+        <span id="id_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_hcl" style="color: inherit; text-decoration: inherit;">id</a>
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">string</span>

@@ -310,8 +310,8 @@ func (mod *modContext) genMethodParams(
 		return mod.genMethodCS(f, resourceName, methodName, optionalArgs)
 	case language.Python:
 		return mod.genMethodPython(f)
-	case language.Java, language.YAML:
-		// Java and YAML don't have method documentation.
+	case language.Java, language.YAML, language.HCL:
+		// Java, YAML, and HCL don't have method documentation.
 		return nil
 	default:
 		contract.Failf("Unknown language %#v", lang)
@@ -337,8 +337,8 @@ func renderParams(lang language.Language, params []formalParam, pyIndent string)
 		param = templates.PyFormalParam
 		separator = templates.PyParamSeparator
 		ps = paramSeparator{Indent: pyIndent}
-	case language.YAML:
-		return "" // YAML doesn't use rendered parameters
+	case language.YAML, language.HCL:
+		return "" // YAML and HCL don't use rendered parameters
 	default:
 		contract.Failf("Unknown language %#v", lang)
 	}

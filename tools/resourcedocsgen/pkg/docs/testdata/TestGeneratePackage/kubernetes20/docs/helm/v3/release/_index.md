@@ -86,7 +86,6 @@ Resources are created with functions called constructors. To learn more about de
 <pulumi-choosable type="language" values="hcl">
 <div class="no-copy"><div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">resource</span> <span class="s2">&#34;kubernetes_helm.sh_v3_release&#34;</span> <span class="s2">&#34;name&#34;</span> <span class="p">{</span>
 <span class="c">    # resource properties</span>
-<span class="p"></span>
 <span class="p">}</span></code></pre></div></div>
 </pulumi-choosable>
 </div>

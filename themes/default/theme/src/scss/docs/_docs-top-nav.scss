@@ -33,10 +33,6 @@ nav.actually-docs {
             align-items: center;
             gap: 18px;
 
-            div.get-started a.get-started-header-button {
-                margin-left: 0;
-            }
-
             @media (min-width: 640px){
                 gap: 36px;
             }
@@ -46,25 +42,6 @@ nav.actually-docs {
         div.logo-parent {
             @media (min-width: 640px){
                 width: auto;
-            }
-        }
-
-        div.get-started {
-            a.get-started-header-button {
-                width: auto;
-                height: auto;
-                display: flex;
-                box-shadow: none;
-                color: #fff;
-                padding: 8px 16px;
-                border: 1px solid #5a30c5;
-                border-radius: 20px;
-                background: linear-gradient(90deg,#be5188,#5a30c5) border-box;
-
-                &:hover {
-                    color: #131314;
-                    background: transparent;
-                }
             }
         }
 

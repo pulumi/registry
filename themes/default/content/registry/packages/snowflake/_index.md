@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-snowflake/v2.14.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-snowflake/v2.15.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-snowflake/blob/v2.14.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-snowflake/blob/v2.15.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Snowflake Provider
 meta_desc: Provides an overview on how to configure the Pulumi Snowflake provider.
@@ -237,8 +237,8 @@ package generated_program;
 import com.pulumi.Context;
 import com.pulumi.Pulumi;
 import com.pulumi.core.Output;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;
@@ -313,7 +313,7 @@ config:
 - `disableTelemetry` (Boolean, Deprecated) This field is deprecated. It will be removed in the next major release. Use `params` to set `CLIENT_TELEMETRY_ENABLED` session parameter instead. Setting this field adds `CLIENT_TELEMETRY_ENABLED` with value `false` to `params`. Disables telemetry in the driver. Can also be sourced from the `DISABLE_TELEMETRY` environment variable.
 - `driverTracing` (String) Specifies the logging level to be used by the driver. Valid options are (case-insensitive): `TRACE` | `DEBUG` | `INFO` | `WARN` | `ERROR` | `FATAL` | `OFF`. The following values are deprecated and will be removed in v3: `WARNING` (uses `WARN` instead), `PRINT` (uses `INFO` instead), `PANIC` (uses `FATAL` instead). Can also be sourced from the `SNOWFLAKE_DRIVER_TRACING` environment variable.
 - `enableSingleUseRefreshTokens` (Boolean) Enables single use refresh tokens for Snowflake IdP. Can also be sourced from the `SNOWFLAKE_ENABLE_SINGLE_USE_REFRESH_TOKENS` environment variable.
-- `experimentalFeaturesEnabled` (Set of String) A list of experimental features. Similarly to preview features, they are not yet stable features of the provider. Enabling given experiment is still considered a preview feature, even when applied to the stable resource. These switches offer experiments altering the provider behavior. If the given experiment is successful, it can be considered an addition in the future provider versions. This field can not be set with environmental variables. Check more details in the experimental features section. Active experiments are: `WAREHOUSE_SHOW_IMPROVED_PERFORMANCE` | `GRANTS_STRICT_PRIVILEGE_MANAGEMENT` | `PARAMETERS_IGNORE_VALUE_CHANGES_IF_NOT_ON_OBJECT_LEVEL` | `PARAMETERS_REDUCED_OUTPUT` | `USER_ENABLE_DEFAULT_WORKLOAD_IDENTITY` | `GRANTS_IMPORT_VALIDATION` | `TAGS_ALLOW_EMPTY_ALLOWED_VALUES` | `IMPORT_BOOLEAN_DEFAULT` | `GRANTS_SAFE_DESTROY` | `TAG_ASSOCIATION_SAFE_DESTROY`.
+- `experimentalFeaturesEnabled` (Set of String) A list of experimental features. Similarly to preview features, they are not yet stable features of the provider. Enabling given experiment is still considered a preview feature, even when applied to the stable resource. These switches offer experiments altering the provider behavior. If the given experiment is successful, it can be considered an addition in the future provider versions. This field can not be set with environmental variables. Check more details in the experimental features section. Active experiments are: `WAREHOUSE_SHOW_IMPROVED_PERFORMANCE` | `GRANTS_STRICT_PRIVILEGE_MANAGEMENT` | `PARAMETERS_IGNORE_VALUE_CHANGES_IF_NOT_ON_OBJECT_LEVEL` | `PARAMETERS_REDUCED_OUTPUT` | `USER_ENABLE_DEFAULT_WORKLOAD_IDENTITY` | `GRANTS_IMPORT_VALIDATION` | `TAGS_ALLOW_EMPTY_ALLOWED_VALUES` | `IMPORT_BOOLEAN_DEFAULT` | `GRANTS_SAFE_DESTROY` | `TAG_ASSOCIATION_SAFE_DESTROY` | `GRANT_ACCOUNT_ROLE_SAFE_PUBLIC_ROLE`.
 - `externalBrowserTimeout` (Number) The timeout in seconds for the external browser to complete the authentication. Can also be sourced from the `SNOWFLAKE_EXTERNAL_BROWSER_TIMEOUT` environment variable.
 - `host` (String) Specifies a custom host value used by the driver for privatelink connections. Can also be sourced from the `SNOWFLAKE_HOST` environment variable.
 - `includeRetryReason` (String) Should retried request contain retry reason. Can also be sourced from the `SNOWFLAKE_INCLUDE_RETRY_REASON` environment variable.
@@ -340,7 +340,7 @@ config:
 - `passcodeInPassword` (Boolean) False by default. Set to true if the MFA passcode is embedded to the configured password. Can also be sourced from the `SNOWFLAKE_PASSCODE_IN_PASSWORD` environment variable.
 - `password` (String, Sensitive) Password for user + password or [token](https://docs.snowflake.com/en/user-guide/programmatic-access-tokens#generating-a-programmatic-access-token) for [PAT auth](https://docs.snowflake.com/en/user-guide/programmatic-access-tokens). Cannot be used with `privateKey` and `privateKeyPassphrase`. Can also be sourced from the `SNOWFLAKE_PASSWORD` environment variable.
 - `port` (Number) Specifies a custom port value used by the driver for privatelink connections. Can also be sourced from the `SNOWFLAKE_PORT` environment variable.
-- `previewFeaturesEnabled` (Set of String) A list of preview features that are handled by the provider. See preview features list. Preview features may have breaking changes in future releases, even without raising the major version. This field can not be set with environmental variables. Preview features that can be enabled are: `snowflakeAccountAuthenticationPolicyAttachmentResource` | `snowflakeAccountPasswordPolicyAttachmentResource` | `snowflakeAlertResource` | `snowflakeAlertsFunction` | `snowflakeApiIntegrationResource` | `snowflakeAuthenticationPolicyResource` | `snowflakeAuthenticationPoliciesFunction` | `snowflakeCatalogIntegrationAwsGlueResource` | `snowflakeCatalogIntegrationObjectStorageResource` | `snowflakeCatalogIntegrationOpenCatalogResource` | `snowflakeCatalogIntegrationIcebergRestResource` | `snowflakeCatalogIntegrationsFunction` | `snowflakeCortexSearchServiceResource` | `snowflakeCortexSearchServicesFunction` | `snowflakeCurrentAccountResource` | `snowflakeCurrentAccountFunction` | `snowflakeCurrentOrganizationAccountResource` | `snowflakeDatabaseFunction` | `snowflakeDatabaseRoleFunction` | `snowflakeDynamicTableResource` | `snowflakeDynamicTablesFunction` | `snowflakeStageExternalAzureResource` | `snowflakeExternalFunctionResource` | `snowflakeExternalFunctionsFunction` | `snowflakeStageExternalGcsResource` | `snowflakeStageExternalS3Resource` | `snowflakeStageExternalS3CompatibleResource` | `snowflakeExternalTableResource` | `snowflakeExternalTablesFunction` | `snowflakeExternalVolumeResource` | `snowflakeExternalVolumesFunction` | `snowflakeFailoverGroupResource` | `snowflakeFailoverGroupsFunction` | `snowflakeFileFormatResource` | `snowflakeFileFormatsFunction` | `snowflakeFunctionJavaResource` | `snowflakeFunctionJavascriptResource` | `snowflakeFunctionPythonResource` | `snowflakeFunctionScalaResource` | `snowflakeFunctionSqlResource` | `snowflakeFunctionsFunction` | `snowflakeStageInternalResource` | `snowflakeJobServiceResource` | `snowflakeListingsFunction` | `snowflakeManagedAccountResource` | `snowflakeMaterializedViewResource` | `snowflakeMaterializedViewsFunction` | `snowflakeNetworkPolicyAttachmentResource` | `snowflakeNetworkRulesFunction` | `snowflakeNotebookResource` | `snowflakeNotebooksFunction` | `snowflakeEmailNotificationIntegrationResource` | `snowflakeNotificationIntegrationResource` | `snowflakeObjectParameterResource` | `snowflakePasswordPolicyResource` | `snowflakePipeResource` | `snowflakePipesFunction` | `snowflakeCurrentRoleFunction` | `snowflakeSemanticViewResource` | `snowflakeSemanticViewsFunction` | `snowflakeSequenceResource` | `snowflakeSequencesFunction` | `snowflakeShareResource` | `snowflakeSharesFunction` | `snowflakeParametersFunction` | `snowflakeProcedureJavaResource` | `snowflakeProcedureJavascriptResource` | `snowflakeProcedurePythonResource` | `snowflakeProcedureScalaResource` | `snowflakeProcedureSqlResource` | `snowflakeProceduresFunction` | `snowflakeStageResource` | `snowflakeStagesFunction` | `snowflakeStorageIntegrationResource` | `snowflakeStorageIntegrationAwsResource` | `snowflakeStorageIntegrationAzureResource` | `snowflakeStorageIntegrationGcsResource` | `snowflakeStorageIntegrationsFunction` | `snowflakeSystemGenerateScimAccessTokenFunction` | `snowflakeSystemGetAwsSnsIamPolicyFunction` | `snowflakeSystemGetPrivatelinkConfigFunction` | `snowflakeSystemGetSnowflakePlatformInfoFunction` | `snowflakeTableColumnMaskingPolicyApplicationResource` | `snowflakeTableConstraintResource` | `snowflakeTableResource` | `snowflakeTablesFunction` | `snowflakeUserAuthenticationPolicyAttachmentResource` | `snowflakeUserPublicKeysResource` | `snowflakeUserPasswordPolicyAttachmentResource` | `snowflakeWarehouseAdaptiveResource`. Promoted features that are stable and are enabled by default are: `snowflakeComputePoolResource` | `snowflakeComputePoolsFunction` | `snowflakeGitRepositoryResource` | `snowflakeGitRepositoriesFunction` | `snowflakeImageRepositoryResource` | `snowflakeImageRepositoriesFunction` | `snowflakeListingResource` | `snowflakeServiceResource` | `snowflakeServicesFunction` | `snowflakeUserProgrammaticAccessTokenResource` | `snowflakeUserProgrammaticAccessTokensFunction` | `snowflakeNetworkRuleResource`. Promoted features can be safely removed from this field. They will be removed in the next major version.
+- `previewFeaturesEnabled` (Set of String) A list of preview features that are handled by the provider. See preview features list. Preview features may have breaking changes in future releases, even without raising the major version. This field can not be set with environmental variables. Preview features that can be enabled are: `snowflakeAccountAuthenticationPolicyAttachmentResource` | `snowflakeAccountPasswordPolicyAttachmentResource` | `snowflakeAccountSessionPolicyAttachmentResource` | `snowflakeAlertResource` | `snowflakeAlertsFunction` | `snowflakeApiIntegrationResource` | `snowflakeAuthenticationPolicyResource` | `snowflakeAuthenticationPoliciesFunction` | `snowflakeCatalogIntegrationAwsGlueResource` | `snowflakeCatalogIntegrationObjectStorageResource` | `snowflakeCatalogIntegrationOpenCatalogResource` | `snowflakeCatalogIntegrationIcebergRestResource` | `snowflakeCatalogIntegrationsFunction` | `snowflakeCortexSearchServiceResource` | `snowflakeCortexSearchServicesFunction` | `snowflakeCurrentAccountResource` | `snowflakeCurrentAccountFunction` | `snowflakeCurrentOrganizationAccountResource` | `snowflakeDatabaseFunction` | `snowflakeDatabaseRoleFunction` | `snowflakeDynamicTableResource` | `snowflakeDynamicTablesFunction` | `snowflakeStageExternalAzureResource` | `snowflakeExternalFunctionResource` | `snowflakeExternalFunctionsFunction` | `snowflakeStageExternalGcsResource` | `snowflakeStageExternalS3Resource` | `snowflakeStageExternalS3CompatibleResource` | `snowflakeExternalTableResource` | `snowflakeExternalTablesFunction` | `snowflakeExternalVolumeResource` | `snowflakeExternalVolumesFunction` | `snowflakeFailoverGroupResource` | `snowflakeFailoverGroupsFunction` | `snowflakeFileFormatResource` | `snowflakeFileFormatsFunction` | `snowflakeFunctionJavaResource` | `snowflakeFunctionJavascriptResource` | `snowflakeFunctionPythonResource` | `snowflakeFunctionScalaResource` | `snowflakeFunctionSqlResource` | `snowflakeFunctionsFunction` | `snowflakeStageInternalResource` | `snowflakeJobServiceResource` | `snowflakeListingsFunction` | `snowflakeManagedAccountResource` | `snowflakeMaterializedViewResource` | `snowflakeMaterializedViewsFunction` | `snowflakeNetworkPolicyAttachmentResource` | `snowflakeNetworkRulesFunction` | `snowflakeNotebookResource` | `snowflakeNotebooksFunction` | `snowflakeEmailNotificationIntegrationResource` | `snowflakeNotificationIntegrationResource` | `snowflakeObjectParameterResource` | `snowflakePasswordPoliciesFunction` | `snowflakePasswordPolicyResource` | `snowflakePipeResource` | `snowflakePipesFunction` | `snowflakeCurrentRoleFunction` | `snowflakeSemanticViewResource` | `snowflakeSemanticViewsFunction` | `snowflakeSessionPoliciesFunction` | `snowflakeSessionPolicyResource` | `snowflakeSequenceResource` | `snowflakeSequencesFunction` | `snowflakeShareResource` | `snowflakeSharesFunction` | `snowflakeParametersFunction` | `snowflakeProcedureJavaResource` | `snowflakeProcedureJavascriptResource` | `snowflakeProcedurePythonResource` | `snowflakeProcedureScalaResource` | `snowflakeProcedureSqlResource` | `snowflakeProceduresFunction` | `snowflakeStageResource` | `snowflakeStagesFunction` | `snowflakeStorageIntegrationResource` | `snowflakeStorageIntegrationAwsResource` | `snowflakeStorageIntegrationAzureResource` | `snowflakeStorageIntegrationGcsResource` | `snowflakeStorageIntegrationsFunction` | `snowflakeSystemGenerateScimAccessTokenFunction` | `snowflakeSystemGetAwsSnsIamPolicyFunction` | `snowflakeSystemGetPrivatelinkConfigFunction` | `snowflakeSystemGetSnowflakePlatformInfoFunction` | `snowflakeTableColumnMaskingPolicyApplicationResource` | `snowflakeTableConstraintResource` | `snowflakeTableResource` | `snowflakeTablesFunction` | `snowflakeUserAuthenticationPolicyAttachmentResource` | `snowflakeUserPasswordPolicyAttachmentResource` | `snowflakeUserPublicKeysResource` | `snowflakeUserSessionPolicyAttachmentResource` | `snowflakeWarehouseAdaptiveResource`. Promoted features that are stable and are enabled by default are: `snowflakeComputePoolResource` | `snowflakeComputePoolsFunction` | `snowflakeGitRepositoryResource` | `snowflakeGitRepositoriesFunction` | `snowflakeImageRepositoryResource` | `snowflakeImageRepositoriesFunction` | `snowflakeListingResource` | `snowflakeServiceResource` | `snowflakeServicesFunction` | `snowflakeUserProgrammaticAccessTokenResource` | `snowflakeUserProgrammaticAccessTokensFunction` | `snowflakeNetworkRuleResource`. Promoted features can be safely removed from this field. They will be removed in the next major version.
 - `privateKey` (String, Sensitive) Private Key for username+private-key auth. Cannot be used with `password`. Can also be sourced from the `SNOWFLAKE_PRIVATE_KEY` environment variable.
 - `privateKeyPassphrase` (String, Sensitive) Supports the encryption ciphers aes-128-cbc, aes-128-gcm, aes-192-cbc, aes-192-gcm, aes-256-cbc, aes-256-gcm, and des-ede3-cbc. Can also be sourced from the `SNOWFLAKE_PRIVATE_KEY_PASSPHRASE` environment variable.
 - `profile` (String) Sets the profile to read from ~/.snowflake/config file. Can also be sourced from the `SNOWFLAKE_PROFILE` environment variable.
@@ -1526,8 +1526,8 @@ package generated_program;
 import com.pulumi.Context;
 import com.pulumi.Pulumi;
 import com.pulumi.core.Output;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;
@@ -1638,7 +1638,7 @@ using Snowflake = Pulumi.Snowflake;
 
 return await Deployment.RunAsync(() =>
 {
-    var test = new Snowflake.Index.Execute("test", new()
+    var test = new Snowflake.Execute("test", new()
     {
         ExecuteSQL = "CREATE DATABASE ABC",
         Revert = "DROP DATABASE ABC",
@@ -1696,8 +1696,8 @@ import com.pulumi.Pulumi;
 import com.pulumi.core.Output;
 import com.pulumi.snowflake.Execute;
 import com.pulumi.snowflake.ExecuteArgs;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;
@@ -1839,6 +1839,7 @@ To use them, add the relevant feature name to the `previewFeaturesEnabled` field
 
 - snowflake.AccountAuthenticationPolicyAttachment
 - snowflake.AccountPasswordPolicyAttachment
+- snowflake.AccountSessionPolicyAttachment
 - snowflake.Alert
 - snowflake.ApiIntegration
 - snowflake.AuthenticationPolicy
@@ -1877,6 +1878,7 @@ To use them, add the relevant feature name to the `previewFeaturesEnabled` field
 - snowflake.ProcedureSql
 - snowflake.SemanticView
 - snowflake.Sequence
+- snowflake.SessionPolicy
 - snowflake.Share
 - snowflake.Stage
 - snowflake.StageExternalAzure
@@ -1894,6 +1896,7 @@ To use them, add the relevant feature name to the `previewFeaturesEnabled` field
 - snowflake.UserAuthenticationPolicyAttachment
 - snowflake.UserPasswordPolicyAttachment
 - snowflake.UserPublicKeys
+- snowflake.UserSessionPolicyAttachment
 - snowflake.WarehouseAdaptive
 
 <!-- Section of preview functions -->
@@ -1919,10 +1922,12 @@ To use them, add the relevant feature name to the `previewFeaturesEnabled` field
 - snowflake.getNetworkRules
 - snowflake.getNotebooks
 - snowflake.getParameters
+- snowflake.getPasswordPolicies
 - snowflake.getPipes
 - snowflake.getProcedures
 - snowflake.getSemanticViews
 - snowflake.getSequences
+- snowflake.getSessionPolicies
 - snowflake.getShares
 - snowflake.getStages
 - snowflake.getStorageIntegrations
@@ -1987,7 +1992,7 @@ Changes import behavior for boolean fields using the special `"default"` value.
 
 When enabled, boolean fields using the special `"default"` value are set to `"default"` during import instead of the actual Snowflake value (e.g., `"false"`). This prevents unavoidable diffs on every plan after import.
 
-Note: this is supported only on all stage resources (`snowflake.StageExternalS3`, `snowflake.StageExternalAzure`, `snowflake.StageExternalGcs`, `snowflake.StageExternalS3Compatible`, and `snowflake.StageInternal`).
+Note: this is supported on all stage resources (`snowflake.StageExternalS3`, `snowflake.StageExternalAzure`, `snowflake.StageExternalGcs`, `snowflake.StageExternalS3Compatible`, and `snowflake.StageInternal`) and stream resources (`snowflake.StreamOnTable` and `snowflake.StreamOnView`).
 #### GRANTS_SAFE_DESTROY
 When enabled, grant destroy operations silently succeed when the underlying Snowflake object (or its dependencies) no longer exists.
 
@@ -2004,3 +2009,9 @@ Currently supported by: `snowflake.TagAssociation`.
 This prevents errors when, for example, a table or schema is deleted externally and the corresponding tag association resource is later removed from the Pulumi configuration.
 
 Without this experiment, destroying such resources fails with `does not exist or not authorized`.
+#### GRANT_ACCOUNT_ROLE_SAFE_PUBLIC_ROLE
+When enabled, `snowflake.GrantAccountRole` treats granting the PUBLIC role as a silent no-op instead of producing an error.
+
+Snowflake implicitly grants PUBLIC to every role and user (see [Snowflake documentation](https://docs.snowflake.com/en/user-guide/security-access-control-overview#system-defined-roles)), so an explicit `GRANT ROLE PUBLIC` is always a no-op at the SQL level. However, the provider's Read function cannot find the explicit grant via `SHOW GRANTS` and clears the state, causing an inconsistent-result error.
+
+With this experiment, Create, Read, and Delete all treat PUBLIC role grants as permanent fixtures that require no actual SQL.

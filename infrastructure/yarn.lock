@@ -910,9 +910,9 @@
     semver "^5.4.0"
 
 "@pulumi/pulumi@^3.0.0", "@pulumi/pulumi@^3.142.0", "@pulumi/pulumi@^3.37.0":
-  version "3.236.0"
-  resolved "https://registry.yarnpkg.com/@pulumi/pulumi/-/pulumi-3.236.0.tgz#66749989c5c1f5f259b3515c99b349e5ff7f097f"
-  integrity sha512-b71QNLnRrNvNJjD+ypC1hYDf6ds/BL64nhr6RxX5jAxHQDMlzNEiO2mQpPGNtnk5+fd5zNPoIfKLMG/nMEZrjQ==
+  version "3.237.0"
+  resolved "https://registry.yarnpkg.com/@pulumi/pulumi/-/pulumi-3.237.0.tgz#28cd35466b676291591673a40674efe4752e354e"
+  integrity sha512-sSha6qfV1dcLP6OkqLKyM1UdzKRLfcAsHfhAUiXhlSHia+Grsso1Zvq0ZByj44nK9sY98BLlPlQBtt1VRWHZOQ==
   dependencies:
     "@grpc/grpc-js" "^1.10.1"
     "@logdna/tail-file" "^2.0.6"
@@ -1578,9 +1578,9 @@ brace-expansion@^1.1.7:
     concat-map "0.0.1"
 
 brace-expansion@^5.0.5:
-  version "5.0.5"
-  resolved "https://registry.yarnpkg.com/brace-expansion/-/brace-expansion-5.0.5.tgz#dcc3a37116b79f3e1b46db994ced5d570e930fdb"
-  integrity sha512-VZznLgtwhn+Mact9tfiwx64fA9erHH/MCXEUfB/0bX/6Fz6ny5EGTXYltMocqg4xFAQZtnO3DHWWXi8RiuN7cQ==
+  version "5.0.6"
+  resolved "https://registry.yarnpkg.com/brace-expansion/-/brace-expansion-5.0.6.tgz#ec68fe0a641a29d8711579caf641d05bae1f2285"
+  integrity sha512-kLpxurY4Z4r9sgMsyG0Z9uzsBlgiU/EFKhj/h91/8yHu0edo7XuixOIH3VcJ8kkxs6/jPzoI6U9Vj3WqbMQ94g==
   dependencies:
     balanced-match "^4.0.2"
 
@@ -2723,9 +2723,9 @@ promise-call-limit@^3.0.1:
   integrity sha512-mRPQO2T1QQVw11E7+UdCJu7S61eJVWknzml9sC1heAdj1jxl0fWMBypIt9ZOcLFf8FkG995ZD7RnVk7HH72fZw==
 
 protobufjs@^7.3.0, protobufjs@^7.5.5:
-  version "7.5.6"
-  resolved "https://registry.yarnpkg.com/protobufjs/-/protobufjs-7.5.6.tgz#11af832ebc4b4326f658a5b1308e6141eb57edfd"
-  integrity sha512-M71sTMB146U3u0di3yup8iM+zv8yPRNQVr1KK4tyBitl3qFvEGucq/rGDRShD2rsJhtN02RJaJ7j5X5hmy8SJg==
+  version "7.5.7"
+  resolved "https://registry.yarnpkg.com/protobufjs/-/protobufjs-7.5.7.tgz#1dde1c3848ec9cc70a2ad7e3c12ff7b7e5abe280"
+  integrity sha512-NGnrxS/nLKUo5nkbVQxlC71sB4hdfImdYIbFeSCidxtwATx0AHRPcANSLd0q5Bb2BkoSWo2iisQhGg5/r+ihbA==
   dependencies:
     "@protobufjs/aspromise" "^1.1.2"
     "@protobufjs/base64" "^1.1.2"
@@ -2862,9 +2862,9 @@ sax@>=0.6.0:
   integrity sha512-cBznnQ9KjJqU67B52RMC65CMarK2600WFnbkcaiwWq3xy/5haFJlshgnpjovMVJ+Hff49d8GEn0b87C5pDQ10g==
 
 semver@^7.1.1, semver@^7.3.5, semver@^7.3.7, semver@^7.5.2, semver@^7.5.3:
-  version "7.7.4"
-  resolved "https://registry.yarnpkg.com/semver/-/semver-7.7.4.tgz#28464e36060e991fa7a11d0279d2d3f3b57a7e8a"
-  integrity sha512-vFKC2IEtQnVhpT78h1Yp8wzwrf8CM+MzKMHGJZfBtzhZNycRFnXsHk6E5TxIkkMsgNS7mdX3AGB7x2QM2di4lA==
+  version "7.8.0"
+  resolved "https://registry.yarnpkg.com/semver/-/semver-7.8.0.tgz#ed0661039fcbcda2ce71f01fa6adbefaa77040df"
+  integrity sha512-AcM7dV/5ul4EekoQ29Agm5vri8JNqRyj39o0qpX6vDF2GZrtutZl5RwgD1XnZjiTAfncsJhMI48QQH3sN87YNA==
 
 shebang-command@^2.0.0:
   version "2.0.0"
@@ -2929,9 +2929,9 @@ socks-proxy-agent@^8.0.3:
     socks "^2.8.3"
 
 socks@^2.8.3:
-  version "2.8.8"
-  resolved "https://registry.yarnpkg.com/socks/-/socks-2.8.8.tgz#23bef6d02748eac847ad75610deb6c472554c67a"
-  integrity sha512-NlGELfPrgX2f1TAAcz0WawlLn+0r3FyhhCRpFFK2CemXenPYvzMWWZINv3eDNo9ucdwme7oCHRY0Jnbs4aIkog==
+  version "2.8.9"
+  resolved "https://registry.yarnpkg.com/socks/-/socks-2.8.9.tgz#aa5f130ca0f88a43fa44faf4869c50d22aa27752"
+  integrity sha512-LJhUYUvItdQ0LkJTmPeaEObWXAqFyfmP85x0tch/ez9cahmhlBBLbIqDFnvBnUJGagb0JbIQrkBs1wJ+yRYpEw==
   dependencies:
     ip-address "^10.1.1"
     smart-buffer "^4.2.0"

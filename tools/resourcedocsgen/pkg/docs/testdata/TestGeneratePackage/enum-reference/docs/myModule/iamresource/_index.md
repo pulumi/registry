@@ -43,7 +43,7 @@ Resources are created with functions called constructors. To learn more about de
 <span class=nd>@overload</span>
 <span class="k">def </span><span class="nx">IamResource</span><span class="p">(</span><span class="nx">resource_name</span><span class="p">:</span> <span class="nx">str</span><span class="p">,</span>
                 <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.ResourceOptions">Optional[ResourceOptions]</a></span> = None<span class="p">,</span>
-                <span class="nx">config</span><span class="p">:</span> <span class="nx">Optional[pulumi_google_native.iam.v1.AuditConfigArgs]</span> = None<span class="p">)</span></code></pre></div>
+                <span class="nx">config</span><span class="p">:</span> <span class="nx">Optional[pulumi_azure_native.aad.NotificationSettingsArgs]</span> = None<span class="p">)</span></code></pre></div>
 </div></pulumi-choosable>
 </div>
 
@@ -232,20 +232,14 @@ The following reference example uses placeholder values for all [input propertie
 ```csharp
 var iamResourceResource = new Example.MyModule.IamResource("iamResourceResource", new()
 {
-    Config = new GoogleNative.IAM.V1.Inputs.AuditConfigArgs
+    Config = new AzureNative.Aad.Inputs.NotificationSettingsArgs
     {
-        AuditLogConfigs = new[]
+        AdditionalRecipients = new[]
         {
-            new GoogleNative.IAM.V1.Inputs.AuditLogConfigArgs
-            {
-                ExemptedMembers = new[]
-                {
-                    "string",
-                },
-                LogType = GoogleNative.IAM.V1.AuditLogConfigLogType.LogTypeUnspecified,
-            },
+            "string",
         },
-        Service = "string",
+        NotifyDcAdmins = "string",
+        NotifyGlobalAdmins = "string",
     },
 });
 ```
@@ -259,16 +253,12 @@ var iamResourceResource = new Example.MyModule.IamResource("iamResourceResource"
 
 ```go
 example, err := mymodule.NewIamResource(ctx, "iamResourceResource", &mymodule.IamResourceArgs{
-	Config: &iam.AuditConfigArgs{
-		AuditLogConfigs: iam.AuditLogConfigArray{
-			&iam.AuditLogConfigArgs{
-				ExemptedMembers: pulumi.StringArray{
-					pulumi.String("string"),
-				},
-				LogType: iam.AuditLogConfigLogTypeLogTypeUnspecified,
-			},
+	Config: &aad.NotificationSettingsArgs{
+		AdditionalRecipients: pulumi.StringArray{
+			pulumi.String("string"),
 		},
-		Service: pulumi.String("string"),
+		NotifyDcAdmins:     pulumi.String("string"),
+		NotifyGlobalAdmins: pulumi.String("string"),
 	},
 })
 ```
@@ -282,12 +272,10 @@ example, err := mymodule.NewIamResource(ctx, "iamResourceResource", &mymodule.Ia
 
 ```java
 var iamResourceResource = new IamResource("iamResourceResource", IamResourceArgs.builder()
-    .config(AuditConfigArgs.builder()
-        .auditLogConfigs(AuditLogConfigArgs.builder()
-            .exemptedMembers("string")
-            .logType("LOG_TYPE_UNSPECIFIED")
-            .build())
-        .service("string")
+    .config(NotificationSettingsArgs.builder()
+        .additionalRecipients("string")
+        .notifyDcAdmins("string")
+        .notifyGlobalAdmins("string")
         .build())
     .build());
 ```
@@ -301,11 +289,9 @@ var iamResourceResource = new IamResource("iamResourceResource", IamResourceArgs
 
 ```python
 iam_resource_resource = example.mymodule.IamResource("iamResourceResource", config={
-    "audit_log_configs": [{
-        "exempted_members": ["string"],
-        "log_type": google_native.iam.v1.AuditLogConfigLogType.LOG_TYPE_UNSPECIFIED,
-    }],
-    "service": "string",
+    "additional_recipients": ["string"],
+    "notify_dc_admins": "string",
+    "notify_global_admins": "string",
 })
 ```
 
@@ -318,11 +304,9 @@ iam_resource_resource = example.mymodule.IamResource("iamResourceResource", conf
 
 ```typescript
 const iamResourceResource = new example.mymodule.IamResource("iamResourceResource", {config: {
-    auditLogConfigs: [{
-        exemptedMembers: ["string"],
-        logType: google_native.iam.v1.AuditLogConfigLogType.LogTypeUnspecified,
-    }],
-    service: "string",
+    additionalRecipients: ["string"],
+    notifyDcAdmins: "string",
+    notifyGlobalAdmins: "string",
 }});
 ```
 
@@ -337,11 +321,10 @@ const iamResourceResource = new example.mymodule.IamResource("iamResourceResourc
 type: example:myModule:IamResource
 properties:
     config:
-        auditLogConfigs:
-            - exemptedMembers:
-                - string
-              logType: LOG_TYPE_UNSPECIFIED
-        service: string
+        additionalRecipients:
+            - string
+        notifyDcAdmins: string
+        notifyGlobalAdmins: string
 ```
 
 </pulumi-choosable>
@@ -373,9 +356,9 @@ The IamResource resource accepts the following [input](/docs/intro/concepts/inpu
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#config_csharp" style="color: inherit; text-decoration: inherit;">Config</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type"><a href="#auditconfig">Pulumi.<wbr>Google<wbr>Native.<wbr>IAM.<wbr>V1.<wbr>Inputs.<wbr>Audit<wbr>Config</a></span>
+        <span class="property-type"><a href="#notificationsettings">Pulumi.<wbr>Azure<wbr>Native.<wbr>Aad.<wbr>Inputs.<wbr>Notification<wbr>Settings</a></span>
     </dt>
-    <dd>This type is defined in the <a href="/registry/packages/google-native">Google Cloud Native</a> package.</dd></dl>
+    <dd>This type is defined in the <a href="/registry/packages/azure-native">Azure Native</a> package.</dd></dl>
 </pulumi-choosable>
 </div>
 
@@ -387,9 +370,9 @@ The IamResource resource accepts the following [input](/docs/intro/concepts/inpu
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#config_go" style="color: inherit; text-decoration: inherit;">Config</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type"><a href="#auditconfig">Audit<wbr>Config<wbr>Args</a></span>
+        <span class="property-type"><a href="#notificationsettings">Notification<wbr>Settings<wbr>Args</a></span>
     </dt>
-    <dd>This type is defined in the <a href="/registry/packages/google-native">Google Cloud Native</a> package.</dd></dl>
+    <dd>This type is defined in the <a href="/registry/packages/azure-native">Azure Native</a> package.</dd></dl>
 </pulumi-choosable>
 </div>
 
@@ -401,9 +384,9 @@ The IamResource resource accepts the following [input](/docs/intro/concepts/inpu
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#config_java" style="color: inherit; text-decoration: inherit;">config</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type"><a href="#auditconfig">Audit<wbr>Config</a></span>
+        <span class="property-type"><a href="#notificationsettings">Notification<wbr>Settings</a></span>
     </dt>
-    <dd>This type is defined in the <a href="/registry/packages/google-native">Google Cloud Native</a> package.</dd></dl>
+    <dd>This type is defined in the <a href="/registry/packages/azure-native">Azure Native</a> package.</dd></dl>
 </pulumi-choosable>
 </div>
 
@@ -415,9 +398,9 @@ The IamResource resource accepts the following [input](/docs/intro/concepts/inpu
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#config_nodejs" style="color: inherit; text-decoration: inherit;">config</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type"><a href="#auditconfig">pulumi<wbr>Google<wbr>Native.types.input.iam.v1.<wbr>Audit<wbr>Config</a></span>
+        <span class="property-type"><a href="#notificationsettings">pulumi<wbr>Azure<wbr>Native.types.input.aad.<wbr>Notification<wbr>Settings</a></span>
     </dt>
-    <dd>This type is defined in the <a href="/registry/packages/google-native">Google Cloud Native</a> package.</dd></dl>
+    <dd>This type is defined in the <a href="/registry/packages/azure-native">Azure Native</a> package.</dd></dl>
 </pulumi-choosable>
 </div>
 
@@ -429,9 +412,9 @@ The IamResource resource accepts the following [input](/docs/intro/concepts/inpu
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#config_python" style="color: inherit; text-decoration: inherit;">config</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type"><a href="#auditconfig">pulumi_<wbr>google_<wbr>native.iam.v1.<wbr>Audit<wbr>Config<wbr>Args</a></span>
+        <span class="property-type"><a href="#notificationsettings">pulumi_<wbr>azure_<wbr>native.aad.<wbr>Notification<wbr>Settings<wbr>Args</a></span>
     </dt>
-    <dd>This type is defined in the <a href="/registry/packages/google-native">Google Cloud Native</a> package.</dd></dl>
+    <dd>This type is defined in the <a href="/registry/packages/azure-native">Azure Native</a> package.</dd></dl>
 </pulumi-choosable>
 </div>
 
@@ -443,9 +426,9 @@ The IamResource resource accepts the following [input](/docs/intro/concepts/inpu
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#config_yaml" style="color: inherit; text-decoration: inherit;">config</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type"><a href="#auditconfig">Property Map</a></span>
+        <span class="property-type"><a href="#notificationsettings">Property Map</a></span>
     </dt>
-    <dd>This type is defined in the <a href="/registry/packages/google-native">Google Cloud Native</a> package.</dd></dl>
+    <dd>This type is defined in the <a href="/registry/packages/azure-native">Azure Native</a> package.</dd></dl>
 </pulumi-choosable>
 </div>
 

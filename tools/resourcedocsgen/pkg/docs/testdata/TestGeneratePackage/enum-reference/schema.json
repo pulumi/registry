@@ -4,7 +4,7 @@
         "example:myModule:IamResource": {
             "inputProperties": {
                 "config": {
-                    "$ref": "/google-native/v0.18.2/schema.json#/types/google-native:iam%2Fv1:AuditConfig"
+                    "$ref": "/azure-native/v1.28.0/schema.json#/types/azure-native:aad:NotificationSettings"
                 }
             },
             "isComponent": true
@@ -20,13 +20,13 @@
         "csharp": {
             "packageReferences": {
                 "Pulumi": "3.33.2",
-                "Pulumi.GoogleNative": "0.20.0"
+                "Pulumi.AzureNative": "1.28.0"
             }
         },
         "nodejs": {
             "dependencies": {
                 "@pulumi/pulumi": "^3.12",
-                "@pulumi/google-native": "^0.20.0"
+                "@pulumi/azure-native": "^1.0.0"
             },
             "devDependencies": {
                 "typescript": "^3.7.0",

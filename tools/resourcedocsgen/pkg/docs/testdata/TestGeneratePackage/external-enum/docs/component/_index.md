@@ -44,7 +44,7 @@ Resources are created with functions called constructors. To learn more about de
 <span class="k">def </span><span class="nx">Component</span><span class="p">(</span><span class="nx">resource_name</span><span class="p">:</span> <span class="nx">str</span><span class="p">,</span>
               <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.ResourceOptions">Optional[ResourceOptions]</a></span> = None<span class="p">,</span>
               <span class="nx">local_enum</span><span class="p">:</span> <span class="nx">Optional[local.MyEnum]</span> = None<span class="p">,</span>
-              <span class="nx">remote_enum</span><span class="p">:</span> <span class="nx">Optional[pulumi_google_native.accesscontextmanager.v1.DevicePolicyAllowedDeviceManagementLevelsItem]</span> = None<span class="p">)</span></code></pre></div>
+              <span class="nx">remote_enum</span><span class="p">:</span> <span class="nx">Optional[pulumi_azure_native.aad.ExternalAccess]</span> = None<span class="p">)</span></code></pre></div>
 </div></pulumi-choosable>
 </div>
 
@@ -242,7 +242,7 @@ The following reference example uses placeholder values for all [input propertie
 var componentResource = new Example.Component("componentResource", new()
 {
     LocalEnum = Example.Local.MyEnum.Pi,
-    RemoteEnum = GoogleNative.Accesscontextmanager.V1.DevicePolicyAllowedDeviceManagementLevelsItem.ManagementUnspecified,
+    RemoteEnum = AzureNative.Aad.ExternalAccess.Enabled,
 });
 ```
 
@@ -256,7 +256,7 @@ var componentResource = new Example.Component("componentResource", new()
 ```go
 example, err := example.NewComponent(ctx, "componentResource", &example.ComponentArgs{
 	LocalEnum:  local.MyEnumPi,
-	RemoteEnum: accesscontextmanager / v1.DevicePolicyAllowedDeviceManagementLevelsItemManagementUnspecified,
+	RemoteEnum: aad.ExternalAccessEnabled,
 })
 ```
 
@@ -284,7 +284,7 @@ resource "example_component" "componentResource" {
 ```java
 var componentResource = new Component("componentResource", ComponentArgs.builder()
     .localEnum(3.1415)
-    .remoteEnum("MANAGEMENT_UNSPECIFIED")
+    .remoteEnum("Enabled")
     .build());
 ```
 
@@ -298,7 +298,7 @@ var componentResource = new Component("componentResource", ComponentArgs.builder
 ```python
 component_resource = example.Component("componentResource",
     local_enum=example.local.MyEnum.PI,
-    remote_enum=google_native.accesscontextmanager.v1.DevicePolicyAllowedDeviceManagementLevelsItem.MANAGEMENT_UNSPECIFIED)
+    remote_enum=azure_native.aad.ExternalAccess.ENABLED)
 ```
 
 </pulumi-choosable>
@@ -311,7 +311,7 @@ component_resource = example.Component("componentResource",
 ```typescript
 const componentResource = new example.Component("componentResource", {
     localEnum: example.local.MyEnum.Pi,
-    remoteEnum: google_native.accesscontextmanager.v1.DevicePolicyAllowedDeviceManagementLevelsItem.ManagementUnspecified,
+    remoteEnum: azure_native.aad.ExternalAccess.Enabled,
 });
 ```
 
@@ -326,7 +326,7 @@ const componentResource = new example.Component("componentResource", {
 type: example:Component
 properties:
     localEnum: 3.1415
-    remoteEnum: MANAGEMENT_UNSPECIFIED
+    remoteEnum: Enabled
 ```
 
 </pulumi-choosable>
@@ -366,9 +366,9 @@ The Component resource accepts the following [input](/docs/intro/concepts/inputs
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#remoteenum_csharp" style="color: inherit; text-decoration: inherit;">Remote<wbr>Enum</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type"><a href="#devicepolicyalloweddevicemanagementlevelsitem">Pulumi.<wbr>Google<wbr>Native.<wbr>Accesscontextmanager.<wbr>V1.<wbr>Device<wbr>Policy<wbr>Allowed<wbr>Device<wbr>Management<wbr>Levels<wbr>Item</a></span>
+        <span class="property-type"><a href="#externalaccess">Pulumi.<wbr>Azure<wbr>Native.<wbr>Aad.<wbr>External<wbr>Access</a></span>
     </dt>
-    <dd>This type is defined in the <a href="/registry/packages/google-native">Google Cloud Native</a> package.</dd></dl>
+    <dd>This type is defined in the <a href="/registry/packages/azure-native">Azure Native</a> package.</dd></dl>
 </pulumi-choosable>
 </div>
 
@@ -388,9 +388,9 @@ The Component resource accepts the following [input](/docs/intro/concepts/inputs
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#remoteenum_go" style="color: inherit; text-decoration: inherit;">Remote<wbr>Enum</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type"><a href="#devicepolicyalloweddevicemanagementlevelsitem">Device<wbr>Policy<wbr>Allowed<wbr>Device<wbr>Management<wbr>Levels<wbr>Item</a></span>
+        <span class="property-type"><a href="#externalaccess">External<wbr>Access</a></span>
     </dt>
-    <dd>This type is defined in the <a href="/registry/packages/google-native">Google Cloud Native</a> package.</dd></dl>
+    <dd>This type is defined in the <a href="/registry/packages/azure-native">Azure Native</a> package.</dd></dl>
 </pulumi-choosable>
 </div>
 
@@ -432,9 +432,9 @@ The Component resource accepts the following [input](/docs/intro/concepts/inputs
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#remoteenum_java" style="color: inherit; text-decoration: inherit;">remote<wbr>Enum</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type"><a href="#devicepolicyalloweddevicemanagementlevelsitem">Device<wbr>Policy<wbr>Allowed<wbr>Device<wbr>Management<wbr>Levels<wbr>Item</a></span>
+        <span class="property-type"><a href="#externalaccess">External<wbr>Access</a></span>
     </dt>
-    <dd>This type is defined in the <a href="/registry/packages/google-native">Google Cloud Native</a> package.</dd></dl>
+    <dd>This type is defined in the <a href="/registry/packages/azure-native">Azure Native</a> package.</dd></dl>
 </pulumi-choosable>
 </div>
 
@@ -454,9 +454,9 @@ The Component resource accepts the following [input](/docs/intro/concepts/inputs
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#remoteenum_nodejs" style="color: inherit; text-decoration: inherit;">remote<wbr>Enum</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type"><a href="#devicepolicyalloweddevicemanagementlevelsitem">pulumi<wbr>Google<wbr>Nativeaccesscontextmanagerv1Device<wbr>Policy<wbr>Allowed<wbr>Device<wbr>Management<wbr>Levels<wbr>Item</a></span>
+        <span class="property-type"><a href="#externalaccess">pulumi<wbr>Azure<wbr>Nativeaad<wbr>External<wbr>Access</a></span>
     </dt>
-    <dd>This type is defined in the <a href="/registry/packages/google-native">Google Cloud Native</a> package.</dd></dl>
+    <dd>This type is defined in the <a href="/registry/packages/azure-native">Azure Native</a> package.</dd></dl>
 </pulumi-choosable>
 </div>
 
@@ -476,9 +476,9 @@ The Component resource accepts the following [input](/docs/intro/concepts/inputs
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#remote_enum_python" style="color: inherit; text-decoration: inherit;">remote_<wbr>enum</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type"><a href="#devicepolicyalloweddevicemanagementlevelsitem">pulumi_<wbr>google_<wbr>native.accesscontextmanager.v1.<wbr>Device<wbr>Policy<wbr>Allowed<wbr>Device<wbr>Management<wbr>Levels<wbr>Item</a></span>
+        <span class="property-type"><a href="#externalaccess">pulumi_<wbr>azure_<wbr>native.aad.<wbr>External<wbr>Access</a></span>
     </dt>
-    <dd>This type is defined in the <a href="/registry/packages/google-native">Google Cloud Native</a> package.</dd></dl>
+    <dd>This type is defined in the <a href="/registry/packages/azure-native">Azure Native</a> package.</dd></dl>
 </pulumi-choosable>
 </div>
 
@@ -498,9 +498,9 @@ The Component resource accepts the following [input](/docs/intro/concepts/inputs
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#remoteenum_yaml" style="color: inherit; text-decoration: inherit;">remote<wbr>Enum</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type"><a href="#devicepolicyalloweddevicemanagementlevelsitem">&#34;MANAGEMENT_UNSPECIFIED&#34; | &#34;NONE&#34; | &#34;BASIC&#34; | &#34;COMPLETE&#34;</a></span>
+        <span class="property-type"><a href="#externalaccess">&#34;Enabled&#34; | &#34;Disabled&#34;</a></span>
     </dt>
-    <dd>This type is defined in the <a href="/registry/packages/google-native">Google Cloud Native</a> package.</dd></dl>
+    <dd>This type is defined in the <a href="/registry/packages/azure-native">Azure Native</a> package.</dd></dl>
 </pulumi-choosable>
 </div>
 

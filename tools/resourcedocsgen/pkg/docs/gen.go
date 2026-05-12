@@ -98,7 +98,6 @@ func titleLookup(shortName string) (string, bool) {
 		"gcp":                                  "Google Cloud (GCP) Classic",
 		"gcp-global-cloudrun":                  "Google Global Cloud Run",
 		"gcp-project-scaffold":                 "Google Project Scaffolding",
-		"google-native":                        "Google Cloud Native",
 		"github":                               "GitHub",
 		"github-serverless-webhook":            "GitHub Serverless Webhook",
 		"gitlab":                               "GitLab",

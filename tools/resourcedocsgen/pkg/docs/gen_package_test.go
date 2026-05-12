@@ -275,10 +275,6 @@ var testCaseProviders = []testCaseProvider{
 		version: "1.28.0",
 	},
 	{
-		name:    "google-native",
-		version: "0.18.2",
-	},
-	{
 		name:    "kubernetes",
 		version: "3.7.0",
 	},

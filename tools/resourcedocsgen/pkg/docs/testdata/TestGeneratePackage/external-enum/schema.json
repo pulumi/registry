@@ -8,7 +8,7 @@
           "$ref": "#/types/example:local:MyEnum"
         },
         "remoteEnum": {
-          "$ref": "/google-native/v0.18.2/schema.json#/types/google-native:accesscontextmanager/v1:DevicePolicyAllowedDeviceManagementLevelsItem"
+          "$ref": "/azure-native/v1.28.0/schema.json#/types/azure-native:aad:ExternalAccess"
         }
       },
       "properties": {
@@ -16,7 +16,7 @@
           "$ref": "#/types/example:local:MyEnum"
         },
         "remoteEnum": {
-          "$ref": "/google-native/v0.18.2/schema.json#/types/google-native:accesscontextmanager/v1:DevicePolicyAllowedDeviceManagementLevelsItem"
+          "$ref": "/azure-native/v1.28.0/schema.json#/types/azure-native:aad:ExternalAccess"
         }
       }
     }
@@ -37,13 +37,13 @@
       "generateExtraInputTypes": true,
       "packageImportAliases": {
         "github.com/pulumi/pulumi-aws/sdk/v4/go/aws/ec2": "awsec2",
-        "github.com/pulumi/pulumi-google-native/sdk/go/google/iam/v1": "gcpiamv1"
+        "github.com/pulumi/pulumi-azure-native/sdk/go/azure/aad": "azurenativeaad"
       }
     },
     "nodejs": {
       "dependencies": {
         "@pulumi/pulumi": "^3.12",
-        "@pulumi/google-native": "^0.20.0"
+        "@pulumi/azure-native": "^1.0.0"
       },
       "devDependencies": {
         "typescript": "^3.7.0",
@@ -54,13 +54,13 @@
     "python": {
       "requires": {
         "pulumi": ">=3.0.0,<4.0.0",
-        "pulumi-google-native": ">=0.20.0,<1.0.0"
+        "pulumi-azure-native": ">=1.0.0,<2.0.0"
       }
     },
     "csharp": {
       "packageReferences": {
         "Pulumi": "3.13",
-        "Pulumi.GoogleNative": "0.20.0"
+        "Pulumi.AzureNative": "1.28.0"
       },
       "respectSchemaVersion": true
     }

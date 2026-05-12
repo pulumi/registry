@@ -66,7 +66,6 @@ var CategoryLookup = map[string]PackageCategory{
 	"gcp":                                 PackageCategoryCloud,
 	"gcp-cloudrun-multi-region":           PackageCategoryCloud,
 	"gcp-project-scaffold":                PackageCategoryCloud,
-	"google-native":                       PackageCategoryCloud,
 	"github":                              PackageCategoryVCS,
 	"github-serverless-webhook":           PackageCategoryVCS,
 	"gitlab":                              PackageCategoryVCS,
@@ -168,7 +167,6 @@ var TitleLookup = map[string]string{
 	"gcp":                                 "Google Cloud Classic", // https://github.com/pulumi/pulumi-gcp/pull/2745
 	"gcp-cloudrun-multi-region":           "Google Cloud Run Multi-Region",
 	"gcp-project-scaffold":                "Google Project Scaffolding",
-	"google-native":                       "Google Cloud Native",
 	"github":                              "GitHub",
 	"github-serverless-webhook":           "GitHub Serverless Webhook",
 	"gitlab":                              "GitLab",

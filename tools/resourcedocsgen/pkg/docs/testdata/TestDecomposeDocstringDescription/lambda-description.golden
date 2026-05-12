@@ -14,7 +14,7 @@ For information about Lambda and how to use it, see [What is AWS Lambda?](https:
 ### Basic Example
 
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
@@ -339,12 +339,20 @@ variables:
 ```
 </pulumi-choosable>
 </div>
+<div>
+<pulumi-choosable type="language" values="hcl">
+
+```
+Example coming soon!
+```
+</pulumi-choosable>
+</div>
 
 
 ### Lambda Layers
 
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
@@ -481,6 +489,14 @@ resources:
 ```
 </pulumi-choosable>
 </div>
+<div>
+<pulumi-choosable type="language" values="hcl">
+
+```
+Example coming soon!
+```
+</pulumi-choosable>
+</div>
 
 
 ### Lambda Ephemeral Storage
@@ -488,7 +504,7 @@ resources:
 Lambda Function Ephemeral Storage(`/tmp`) allows you to configure the storage upto `10` GB. The default value set to `512` MB.
 
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
@@ -759,6 +775,14 @@ variables:
 ```
 </pulumi-choosable>
 </div>
+<div>
+<pulumi-choosable type="language" values="hcl">
+
+```
+Example coming soon!
+```
+</pulumi-choosable>
+</div>
 
 
 ### Lambda File Systems
@@ -766,7 +790,7 @@ variables:
 Lambda File Systems allow you to connect an Amazon Elastic File System (EFS) file system to a Lambda function to share data across function invocations, access existing data including large files, and save function state.
 
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
@@ -1154,6 +1178,14 @@ resources:
 ```
 </pulumi-choosable>
 </div>
+<div>
+<pulumi-choosable type="language" values="hcl">
+
+```
+Example coming soon!
+```
+</pulumi-choosable>
+</div>
 
 
 ### Lambda retries
@@ -1165,7 +1197,7 @@ Lambda Functions allow you to configure error handling for asynchronous invocati
 For more information about CloudWatch Logs for Lambda, see the [Lambda User Guide](https://docs.aws.amazon.com/lambda/latest/dg/monitoring-functions-logs.html).
 
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
@@ -1525,6 +1557,14 @@ variables:
               - logs:PutLogEvents
             resources:
               - arn:aws:logs:*:*:*
+```
+</pulumi-choosable>
+</div>
+<div>
+<pulumi-choosable type="language" values="hcl">
+
+```
+Example coming soon!
 ```
 </pulumi-choosable>
 </div>

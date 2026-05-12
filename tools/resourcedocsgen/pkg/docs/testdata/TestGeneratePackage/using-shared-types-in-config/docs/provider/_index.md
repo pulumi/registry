@@ -23,7 +23,7 @@ Resources are created with functions called constructors. To learn more about de
 
 ### Constructor syntax
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 
@@ -78,6 +78,14 @@ Resources are created with functions called constructors. To learn more about de
 <span class="p"></span><span class="p">options</span><span class="p">: </span><span class="c">#&nbsp;Bag of options to control resource&#39;s behavior.</span>
 <span class="p"></span>
 </code></pre></div></div>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<div class="no-copy"><div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">resource</span> <span class="s2">&#34;pulumi_credentials&#34;</span> <span class="s2">&#34;name&#34;</span> <span class="p">{</span>
+<span class="c">    # resource properties</span>
+<span class="p">}</span></code></pre></div></div>
 </pulumi-choosable>
 </div>
 
@@ -314,6 +322,44 @@ The Provider resource accepts the following [input](/docs/intro/concepts/inputs-
 </div>
 
 <div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-required"
+            title="Required">
+        <span id="hash_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#hash_hcl" style="color: inherit; text-decoration: inherit;">hash</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#hashkind">&#34;Adler32&#34; | &#34;CRC32&#34;</a></span>
+    </dt>
+    <dd>The (entirely uncryptographic) hash function used to encode the &quot;password&quot;.</dd><dt class="property-required"
+            title="Required">
+        <span id="shared_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#shared_hcl" style="color: inherit; text-decoration: inherit;">shared</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#shared">object</a></span>
+    </dt>
+    <dd></dd><dt class="property-required"
+            title="Required">
+        <span id="user_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#user_hcl" style="color: inherit; text-decoration: inherit;">user</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>The username. Its important but not secret.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="password_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#password_hcl" style="color: inherit; text-decoration: inherit;">password</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>The password. It is very secret. It can also be sourced from the following environment variable: <code>FOO</code></dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
 <pulumi-choosable type="language" values="java">
 <dl class="resources-properties"><dt class="property-required"
             title="Required">
@@ -501,6 +547,20 @@ All [input](#inputs) properties are implicitly available as output properties. A
 </div>
 
 <div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-"
+            title="">
+        <span id="id_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_hcl" style="color: inherit; text-decoration: inherit;">id</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>The provider-assigned unique ID for this managed resource.</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
 <pulumi-choosable type="language" values="java">
 <dl class="resources-properties"><dt class="property-"
             title="">
@@ -587,6 +647,14 @@ Hash<wbr>Kind<pulumi-choosable type="language" values="python,go" class="inline"
 </div>
 
 <div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="tabular"><dt>"Adler32"</dt>
+    <dd><code>Adler32</code> Adler32 implements the Adler-32 checksum.</dd><dt>"CRC32"</dt>
+    <dd><code>CRC32</code> CRC32 implements the 32-bit cyclic redundancy check, or CRC-32, checksum.</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
 <pulumi-choosable type="language" values="java">
 <dl class="tabular"><dt>Adler32</dt>
     <dd><code>Adler32</code> Adler32 implements the Adler-32 checksum.</dd><dt>CRC32</dt>
@@ -642,6 +710,20 @@ Shared<pulumi-choosable type="language" values="python,go" class="inline">, Shar
             title="Optional">
         <span id="foo_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#foo_go" style="color: inherit; text-decoration: inherit;">Foo</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd></dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-optional"
+            title="Optional">
+        <span id="foo_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#foo_hcl" style="color: inherit; text-decoration: inherit;">foo</a>
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">string</span>

@@ -21,7 +21,7 @@ This resource can be used in conjunction with resources that have the `create_be
 ## Example Usage
 
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
@@ -240,6 +240,14 @@ resources:
 ```
 </pulumi-choosable>
 </div>
+<div>
+<pulumi-choosable type="language" values="hcl">
+
+```
+Example coming soon!
+```
+</pulumi-choosable>
+</div>
 
 
 
@@ -249,7 +257,7 @@ Resources are created with functions called constructors. To learn more about de
 
 ### Constructor syntax
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 
@@ -304,6 +312,14 @@ Resources are created with functions called constructors. To learn more about de
 <span class="p"></span><span class="p">options</span><span class="p">: </span><span class="c">#&nbsp;Bag of options to control resource&#39;s behavior.</span>
 <span class="p"></span>
 </code></pre></div></div>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<div class="no-copy"><div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">resource</span> <span class="s2">&#34;random_randominteger&#34;</span> <span class="s2">&#34;name&#34;</span> <span class="p">{</span>
+<span class="c">    # resource properties</span>
+<span class="p">}</span></code></pre></div></div>
 </pulumi-choosable>
 </div>
 
@@ -451,7 +467,7 @@ Resources are created with functions called constructors. To learn more about de
 
 The following reference example uses placeholder values for all [input properties](#inputs).
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 
@@ -487,6 +503,24 @@ example, err := random.NewRandomInteger(ctx, "randomIntegerResource", &random.Ra
 	},
 	Seed: pulumi.String("string"),
 })
+```
+
+</pulumi-choosable>
+</div>
+
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+
+```hcl
+resource "random_randominteger" "randomIntegerResource" {
+  max = 0
+  min = 0
+  keepers = {
+    "string" = "string"
+  }
+  seed = "string"
+}
 ```
 
 </pulumi-choosable>
@@ -646,6 +680,44 @@ The RandomInteger resource accepts the following [input](/docs/intro/concepts/in
             title="Optional">
         <span id="seed_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#seed_go" style="color: inherit; text-decoration: inherit;">Seed</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>A custom seed to always produce the same value.</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-required"
+            title="Required">
+        <span id="max_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#max_hcl" style="color: inherit; text-decoration: inherit;">max</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">number</span>
+    </dt>
+    <dd>The maximum inclusive value of the range.</dd><dt class="property-required"
+            title="Required">
+        <span id="min_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#min_hcl" style="color: inherit; text-decoration: inherit;">min</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">number</span>
+    </dt>
+    <dd>The minimum inclusive value of the range.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="keepers_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#keepers_hcl" style="color: inherit; text-decoration: inherit;">keepers</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">map(string)</span>
+    </dt>
+    <dd>Arbitrary map of values that, when changed, will trigger recreation of resource. See the main provider documentation for more information.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="seed_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#seed_hcl" style="color: inherit; text-decoration: inherit;">seed</a>
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
@@ -858,6 +930,28 @@ All [input](#inputs) properties are implicitly available as output properties. A
 </div>
 
 <div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-"
+            title="">
+        <span id="id_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_hcl" style="color: inherit; text-decoration: inherit;">id</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>The provider-assigned unique ID for this managed resource.</dd><dt class="property-"
+            title="">
+        <span id="result_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#result_hcl" style="color: inherit; text-decoration: inherit;">result</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">number</span>
+    </dt>
+    <dd>The random integer result.</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
 <pulumi-choosable type="language" values="java">
 <dl class="resources-properties"><dt class="property-"
             title="">
@@ -951,7 +1045,7 @@ All [input](#inputs) properties are implicitly available as output properties. A
 
 Get an existing RandomInteger resource's state with the given name, ID, and optional extra properties used to qualify the lookup.
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 <div>
@@ -997,6 +1091,20 @@ Get an existing RandomInteger resource's state with the given name, ID, and opti
     <div class="no-copy">
       <div class="highlight">
         <pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">resources</span><span class="p">:</span><span class="w"></span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">_</span><span class="p">:</span><span class="w"></span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l"><span class="nx">random:RandomInteger</span></span><span class="w"></span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">get</span><span class="p">:</span><span class="w"></span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l">${id}</span><span class="w"></span></span></span></code></pre>
+      </div>
+    </div>
+  </pulumi-choosable>
+</div>
+
+<div>
+  <pulumi-choosable type="language" values="hcl">
+    <div class="no-copy">
+      <div class="highlight">
+        <pre tabindex="0" class="chroma"><code class="language-hcl" data-lang="hcl"><span class="line"><span class="cl"><span class="k">import</span> {
+</span></span><span class="line"><span class="cl">  <span class="n">to</span> <span class="o">=</span> <span class="nx">random_randominteger</span>.<span class="n">example</span>
+</span></span><span class="line"><span class="cl">  <span class="n">id</span> <span class="o">=</span> <span class="s2">&#34;${id}&#34;</span>
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre>
       </div>
     </div>
   </pulumi-choosable>
@@ -1224,6 +1332,52 @@ The following state arguments are supported:
             title="Optional">
         <span id="state_seed_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#state_seed_go" style="color: inherit; text-decoration: inherit;">Seed</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>A custom seed to always produce the same value.</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-optional"
+            title="Optional">
+        <span id="state_keepers_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#state_keepers_hcl" style="color: inherit; text-decoration: inherit;">keepers</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">map(string)</span>
+    </dt>
+    <dd>Arbitrary map of values that, when changed, will trigger recreation of resource. See the main provider documentation for more information.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="state_max_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#state_max_hcl" style="color: inherit; text-decoration: inherit;">max</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">number</span>
+    </dt>
+    <dd>The maximum inclusive value of the range.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="state_min_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#state_min_hcl" style="color: inherit; text-decoration: inherit;">min</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">number</span>
+    </dt>
+    <dd>The minimum inclusive value of the range.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="state_result_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#state_result_hcl" style="color: inherit; text-decoration: inherit;">result</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">number</span>
+    </dt>
+    <dd>The random integer result.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="state_seed_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#state_seed_hcl" style="color: inherit; text-decoration: inherit;">seed</a>
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">string</span>

@@ -176,6 +176,8 @@ func convertMarkdownLanguage(s string) (language.Language, bool) {
 		return language.YAML, true
 	case "java":
 		return language.Java, true
+	case "hcl":
+		return language.HCL, true
 	default:
 		return language.Language{}, false
 	}

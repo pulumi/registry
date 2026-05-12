@@ -49,7 +49,7 @@ pulumi-chooser {
             }
 
             span {
-                @apply ml-1;
+                @apply ml-1 whitespace-nowrap;
                 @extend .badge;
                 @extend .badge-preview;
             }

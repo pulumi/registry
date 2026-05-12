@@ -23,7 +23,7 @@ Resources are created with functions called constructors. To learn more about de
 
 ### Constructor syntax
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 
@@ -74,6 +74,14 @@ Resources are created with functions called constructors. To learn more about de
 <span class="p"></span><span class="p">options</span><span class="p">: </span><span class="c">#&nbsp;Bag of options to control resource&#39;s behavior.</span>
 <span class="p"></span>
 </code></pre></div></div>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<div class="no-copy"><div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">resource</span> <span class="s2">&#34;example_norecursive&#34;</span> <span class="s2">&#34;name&#34;</span> <span class="p">{</span>
+<span class="c">    # resource properties</span>
+<span class="p">}</span></code></pre></div></div>
 </pulumi-choosable>
 </div>
 
@@ -221,7 +229,7 @@ Resources are created with functions called constructors. To learn more about de
 
 The following reference example uses placeholder values for all [input properties](#inputs).
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 
@@ -241,6 +249,19 @@ var noRecursiveResource = new Example.NoRecursive("noRecursiveResource");
 
 ```go
 example, err := example.NewNoRecursive(ctx, "noRecursiveResource", nil)
+```
+
+</pulumi-choosable>
+</div>
+
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+
+```hcl
+resource "example_norecursive" "noRecursiveResource" {
+  replace_on_changes = ["replaceMe"]
+}
 ```
 
 </pulumi-choosable>
@@ -317,6 +338,12 @@ The NoRecursive resource accepts the following [input](/docs/intro/concepts/inpu
 
 <div>
 <pulumi-choosable type="language" values="go">
+<dl class="resources-properties"></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
 <dl class="resources-properties"></dl>
 </pulumi-choosable>
 </div>
@@ -404,6 +431,36 @@ All [input](#inputs) properties are implicitly available as output properties. A
             title="">
         <span id="replaceme_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#replaceme_go" style="color: inherit; text-decoration: inherit;">Replace<wbr>Me</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd></dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-"
+            title="">
+        <span id="id_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_hcl" style="color: inherit; text-decoration: inherit;">id</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>The provider-assigned unique ID for this managed resource.</dd><dt class="property-"
+            title="">
+        <span id="rec_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#rec_hcl" style="color: inherit; text-decoration: inherit;">rec</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#rec">object</a></span>
+    </dt>
+    <dd></dd><dt class="property- property-replacement"
+            title="">
+        <span id="replace_me_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#replace_me_hcl" style="color: inherit; text-decoration: inherit;">replace_<wbr>me</a>
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
@@ -569,6 +626,20 @@ Rec<pulumi-choosable type="language" values="python,go" class="inline">, Rec<wbr
 </span>
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#rec">Rec</a></span>
+    </dt>
+    <dd></dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-optional"
+            title="Optional">
+        <span id="rec1_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#rec1_hcl" style="color: inherit; text-decoration: inherit;">rec1</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#rec">object</a></span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>

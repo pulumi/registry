@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-databricks/v1.91.1/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-databricks/v1.92.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-databricks/blob/v1.91.1/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-databricks/blob/v1.92.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Databricks Provider
 meta_desc: Provides an overview on how to configure the Pulumi Databricks provider.
@@ -143,23 +143,23 @@ object NotImplemented(string errorMessage)
 
 return await Deployment.RunAsync(() =>
 {
-    var me = Databricks.Index.GetCurrentUser.Invoke();
+    var me = Databricks.GetCurrentUser.Invoke();
 
-    var latest = Databricks.Index.GetSparkVersion.Invoke();
+    var latest = Databricks.GetSparkVersion.Invoke();
 
-    var smallest = Databricks.Index.GetNodeType.Invoke(new()
+    var smallest = Databricks.GetNodeType.Invoke(new()
     {
         LocalDisk = true,
     });
 
-    var @this = new Databricks.Index.Notebook("this", new()
+    var @this = new Databricks.Notebook("this", new()
     {
         Path = $"{me.Apply(getCurrentUserResult => getCurrentUserResult.Home)}/Pulumi",
         Language = "PYTHON",
-        ContentBase64 = Std.Index.Abspath.Invoke(new()
+        ContentBase64 = Std.Abspath.Invoke(new()
         {
             Input = NotImplemented("path.module"),
-        }).Apply(invoke => Std.Index.Base64encode.Invoke(new()
+        }).Apply(invoke => Std.Base64encode.Invoke(new()
         {
             Input = @$"# created from {invoke.Result}
 display(spark.range(10))
@@ -167,7 +167,7 @@ display(spark.range(10))
         })).Apply(invoke => invoke.Result),
     });
 
-    var thisJob = new Databricks.Index.Job("this", new()
+    var thisJob = new Databricks.Job("this", new()
     {
         Name = $"Pulumi Demo ({me.Apply(getCurrentUserResult => getCurrentUserResult.Alphanumeric)})",
         Tasks = new[]
@@ -322,8 +322,8 @@ import com.pulumi.databricks.JobArgs;
 import com.pulumi.databricks.inputs.JobTaskArgs;
 import com.pulumi.databricks.inputs.JobTaskNotebookTaskArgs;
 import com.pulumi.databricks.inputs.JobTaskNewClusterArgs;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;
@@ -531,7 +531,7 @@ using Databricks = Pulumi.Databricks;
 
 return await Deployment.RunAsync(() =>
 {
-    var clusterAdmin = new Databricks.Index.Group("cluster_admin", new()
+    var clusterAdmin = new Databricks.Group("cluster_admin", new()
     {
         DisplayName = "cluster_admin",
         AllowClusterCreate = true,
@@ -590,8 +590,8 @@ import com.pulumi.Pulumi;
 import com.pulumi.core.Output;
 import com.pulumi.databricks.Group;
 import com.pulumi.databricks.GroupArgs;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;
@@ -793,7 +793,7 @@ return await Deployment.RunAsync(() =>
         Sku = "premium",
     });
 
-    var my_user = new Databricks.Index.User("my-user", new()
+    var my_user = new Databricks.User("my-user", new()
     {
         UserName = "test-user@databricks.com",
     });
@@ -942,8 +942,8 @@ import com.pulumi.azure.databricks.Workspace;
 import com.pulumi.azure.databricks.WorkspaceArgs;
 import com.pulumi.databricks.User;
 import com.pulumi.databricks.UserArgs;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;
@@ -1067,7 +1067,7 @@ return await Deployment.RunAsync(() =>
         Sku = "premium",
     });
 
-    var my_user = new Databricks.Index.User("my-user", new()
+    var my_user = new Databricks.User("my-user", new()
     {
         UserName = "test-user@databricks.com",
         DisplayName = "Test User",
@@ -1171,8 +1171,8 @@ import com.pulumi.azure.databricks.Workspace;
 import com.pulumi.azure.databricks.WorkspaceArgs;
 import com.pulumi.databricks.User;
 import com.pulumi.databricks.UserArgs;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;
@@ -1332,7 +1332,7 @@ return await Deployment.RunAsync(() =>
         Sku = "premium",
     });
 
-    var my_user = new Databricks.Index.User("my-user", new()
+    var my_user = new Databricks.User("my-user", new()
     {
         UserName = "test-user@databricks.com",
     });
@@ -1481,8 +1481,8 @@ import com.pulumi.azure.databricks.Workspace;
 import com.pulumi.azure.databricks.WorkspaceArgs;
 import com.pulumi.databricks.User;
 import com.pulumi.databricks.UserArgs;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;

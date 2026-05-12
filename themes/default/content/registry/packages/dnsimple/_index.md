@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-dnsimple/v5.1.1/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-dnsimple/v5.1.2/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-dnsimple/blob/v5.1.1/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-dnsimple/blob/v5.1.2/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: DNSimple Provider
 meta_desc: Provides an overview on how to configure the Pulumi DNSimple provider.
@@ -210,8 +210,8 @@ package generated_program;
 import com.pulumi.Context;
 import com.pulumi.Pulumi;
 import com.pulumi.core.Output;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;
@@ -296,13 +296,13 @@ using DNSimple = Pulumi.DNSimple;
 return await Deployment.RunAsync(() =>
 {
     // Create a zone
-    var example = new DNSimple.Index.Zone("example", new()
+    var example = new DNSimple.Zone("example", new()
     {
         Name = "example.com",
     });
 
     // Create DNS records
-    var www = new DNSimple.Index.ZoneRecord("www", new()
+    var www = new DNSimple.ZoneRecord("www", new()
     {
         ZoneName = example.Name,
         Name = "www",
@@ -311,7 +311,7 @@ return await Deployment.RunAsync(() =>
         Ttl = 3600,
     });
 
-    var apex = new DNSimple.Index.ZoneRecord("apex", new()
+    var apex = new DNSimple.ZoneRecord("apex", new()
     {
         ZoneName = example.Name,
         Name = "",
@@ -409,8 +409,8 @@ import com.pulumi.dnsimple.Zone;
 import com.pulumi.dnsimple.ZoneArgs;
 import com.pulumi.dnsimple.ZoneRecord;
 import com.pulumi.dnsimple.ZoneRecordArgs;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;
@@ -476,7 +476,7 @@ const registrant = new dnsimple.Contact("registrant", {
 // Register a domain
 const exampleCom = new dnsimple.RegisteredDomain("example_com", {
     name: "example.com",
-    contactId: registrant.id,
+    contactId: registrant.id.apply(x =>Number(x)),
     autoRenewEnabled: true,
     whoisPrivacyEnabled: true,
     transferLockEnabled: true,
@@ -505,7 +505,7 @@ registrant = dnsimple.Contact("registrant",
 # Register a domain
 example_com = dnsimple.RegisteredDomain("example_com",
     name="example.com",
-    contact_id=registrant.id,
+    contact_id=registrant.id.apply(lambda x: int(x)),
     auto_renew_enabled=True,
     whois_privacy_enabled=True,
     transfer_lock_enabled=True)
@@ -522,7 +522,7 @@ using DNSimple = Pulumi.DNSimple;
 return await Deployment.RunAsync(() =>
 {
     // Create a contact for domain registration
-    var registrant = new DNSimple.Index.Contact("registrant", new()
+    var registrant = new DNSimple.Contact("registrant", new()
     {
         Label = "Main Contact",
         FirstName = "John",
@@ -538,7 +538,7 @@ return await Deployment.RunAsync(() =>
     });
 
     // Register a domain
-    var exampleCom = new DNSimple.Index.RegisteredDomain("example_com", new()
+    var exampleCom = new DNSimple.RegisteredDomain("example_com", new()
     {
         Name = "example.com",
         ContactId = registrant.Id,
@@ -639,8 +639,8 @@ import com.pulumi.dnsimple.Contact;
 import com.pulumi.dnsimple.ContactArgs;
 import com.pulumi.dnsimple.RegisteredDomain;
 import com.pulumi.dnsimple.RegisteredDomainArgs;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;

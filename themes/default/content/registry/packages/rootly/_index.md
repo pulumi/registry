@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/rootlyhq/pulumi-rootly/v3.3.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/rootlyhq/pulumi-rootly/v3.4.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/rootlyhq/pulumi-rootly/blob/v3.3.0/docs/_index.md
+edit_url: https://github.com/rootlyhq/pulumi-rootly/blob/v3.4.0/docs/_index.md
 title: Rootly
 meta_desc: Provides an overview of the Rootly Provider for Pulumi.
 layout: package

@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-buildkite/v3.3.0/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-buildkite/v3.4.0/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumiverse/pulumi-buildkite/blob/v3.3.0/docs/installation-configuration.md
+edit_url: https://github.com/pulumiverse/pulumi-buildkite/blob/v3.4.0/docs/installation-configuration.md
 title: Buildkite Installation & Configuration
 meta_desc: Information on how to install the Buildkite provider.
 layout: package

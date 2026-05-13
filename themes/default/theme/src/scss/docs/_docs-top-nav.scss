@@ -74,11 +74,11 @@ nav.actually-docs {
             width: auto;
             margin-left: 0;
             padding: 0;
-            font-family: Inter;
+            font-family: var(--font-body);
             z-index: 100;
 
             li {
-                font-family: Inter;
+                font-family: var(--font-body);
                 font-size: 16px;
             }
         }

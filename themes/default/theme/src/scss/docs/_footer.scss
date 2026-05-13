@@ -18,7 +18,7 @@ footer.docs-footer {
         }
 
         p.open-source {
-            font-family: 'Inter';
+            font-family: var(--font-body);
             font-weight: 600;
             font-size: 16px;       
             color: #5f6065;
@@ -26,7 +26,7 @@ footer.docs-footer {
         }
 
         p.copyright {
-            font-family: 'Inter';
+            font-family: var(--font-body);
             font-weight: 400;
             font-size: 14px;
             color: #808080;
@@ -41,7 +41,7 @@ footer.docs-footer {
         text-align: right;
 
         li {
-            font-family: 'Inter';
+            font-family: var(--font-body);
             font-weight: 400;
             font-size: 14px;
             color: #5f6065;

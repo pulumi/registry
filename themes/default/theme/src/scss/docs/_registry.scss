@@ -1,3 +1,149 @@
+.title-llm-prompt-container {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    column-gap: 16px;
+    row-gap: 8px;
+
+    .special-h1 {
+        flex: 0 0 auto;
+    }
+
+    .h1-gradient {
+        margin-top: -12px;
+    }
+}
+
+.copy-llm-prompt {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+
+    &__trigger {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 5px 12px;
+        font-size: 13px;
+        font-weight: 500;
+        border: 1px solid map-get($gray, 300);
+        border-radius: 6px;
+        color: map-get($gray, 600);
+        background: #ffffff;
+        cursor: pointer;
+        appearance: none;
+        transition: border-color 0.15s ease, color 0.15s ease, background-color 0.15s ease;
+
+        &:hover {
+            border-color: map-get($gray, 400);
+            color: map-get($gray, 800);
+            background-color: map-get($gray, 100);
+        }
+
+        &:focus-visible {
+            outline: 1px solid map-get($gray, 400);
+        }
+    }
+
+    &__icon {
+        font-size: 13px;
+    }
+
+    &__text {
+        line-height: 1;
+    }
+
+    &__chevron {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 10px;
+        height: 10px;
+        font-size: 10px;
+        flex-shrink: 0;
+        transition: transform 0.2s ease;
+        margin-left: 2px;
+    }
+
+    &.is-open &__chevron {
+        transform: rotate(180deg);
+    }
+
+    &__dropdown {
+        position: absolute;
+        left: 0;
+        top: 100%;
+        margin-top: 4px;
+        min-width: 200px;
+        background: #ffffff;
+        border: 1px solid map-get($gray, 200);
+        border-radius: 8px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1), 0 1px 4px rgba(0, 0, 0, 0.06);
+        display: none;
+        z-index: 10;
+        flex-direction: column;
+        padding: 4px 0;
+    }
+
+    &__dropdown[hidden] {
+        display: none !important;
+    }
+
+    &.is-open &__dropdown {
+        display: flex;
+    }
+
+    &__item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        font-size: 13px;
+        font-weight: 500;
+        color: map-get($gray, 700);
+        text-decoration: none;
+        cursor: pointer;
+        transition: background-color 0.15s ease;
+        border: none;
+        background: none;
+        width: 100%;
+        text-align: left;
+        appearance: none;
+
+        &:hover,
+        &:focus-visible {
+            background-color: map-get($gray, 100);
+            color: map-get($gray, 900);
+        }
+
+        &:focus-visible {
+            outline: none;
+        }
+    }
+
+    &__item-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 16px;
+        height: 16px;
+        flex-shrink: 0;
+        font-size: 14px;
+        color: map-get($gray, 500);
+    }
+
+    &__item-label {
+        line-height: 1;
+        white-space: nowrap;
+    }
+
+    &__divider {
+        height: 1px;
+        background-color: map-get($gray, 200);
+        margin: 4px 0;
+    }
+}
+
 .pulumi-ai-menu {
     position: relative;
     display: inline-flex;

@@ -51,6 +51,12 @@
     </div>
 {{ end }}
 <ul class="p-0 list-none table-of-contents-feedback">
+    <li>
+        <pulumi-llm-menu
+            page-url="{{ .Permalink }}"
+            page-title="{{ .Title }}"
+        ></pulumi-llm-menu>
+    </li>
     <!-- Only show "Edit this Page" for pages that are not generated. -->
     {{ $isCLICommand := hasPrefix .Path "docs/cli/commands" }}
     {{ $isAPIDoc := and (hasPrefix .Path "docs/reference/pkg/") (ne .Path "docs/reference/pkg/_index.md") }}

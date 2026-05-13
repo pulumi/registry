@@ -114,6 +114,10 @@ export namespace Components {
         "goToWebinarKey"?: string;
         "salesforceCampaignId": string;
     }
+    interface PulumiLlmMenu {
+        "pageTitle": string;
+        "pageUrl": string;
+    }
     interface PulumiMultiSelectForm {
         /**
           * @default ""
@@ -299,6 +303,12 @@ declare global {
         prototype: HTMLPulumiHubspotFormElement;
         new (): HTMLPulumiHubspotFormElement;
     };
+    interface HTMLPulumiLlmMenuElement extends Components.PulumiLlmMenu, HTMLStencilElement {
+    }
+    var HTMLPulumiLlmMenuElement: {
+        prototype: HTMLPulumiLlmMenuElement;
+        new (): HTMLPulumiLlmMenuElement;
+    };
     interface HTMLPulumiMultiSelectFormElement extends Components.PulumiMultiSelectForm, HTMLStencilElement {
     }
     var HTMLPulumiMultiSelectFormElement: {
@@ -389,6 +399,7 @@ declare global {
         "pulumi-filter-select-option": HTMLPulumiFilterSelectOptionElement;
         "pulumi-filter-select-option-group": HTMLPulumiFilterSelectOptionGroupElement;
         "pulumi-hubspot-form": HTMLPulumiHubspotFormElement;
+        "pulumi-llm-menu": HTMLPulumiLlmMenuElement;
         "pulumi-multi-select-form": HTMLPulumiMultiSelectFormElement;
         "pulumi-registry-list-search": HTMLPulumiRegistryListSearchElement;
         "pulumi-resource-links": HTMLPulumiResourceLinksElement;
@@ -491,6 +502,10 @@ declare namespace LocalJSX {
         "goToWebinarKey"?: string;
         "salesforceCampaignId"?: string;
     }
+    interface PulumiLlmMenu {
+        "pageTitle"?: string;
+        "pageUrl"?: string;
+    }
     interface PulumiMultiSelectForm {
         /**
           * @default ""
@@ -587,6 +602,10 @@ declare namespace LocalJSX {
         "goToWebinarKey": string;
         "class": string;
     }
+    interface PulumiLlmMenuAttributes {
+        "pageUrl": string;
+        "pageTitle": string;
+    }
     interface PulumiMultiSelectFormAttributes {
         "selectClass": string;
         "labelClass": string;
@@ -616,6 +635,7 @@ declare namespace LocalJSX {
         "pulumi-filter-select-option": Omit<PulumiFilterSelectOption, keyof PulumiFilterSelectOptionAttributes> & { [K in keyof PulumiFilterSelectOption & keyof PulumiFilterSelectOptionAttributes]?: PulumiFilterSelectOption[K] } & { [K in keyof PulumiFilterSelectOption & keyof PulumiFilterSelectOptionAttributes as `attr:${K}`]?: PulumiFilterSelectOptionAttributes[K] } & { [K in keyof PulumiFilterSelectOption & keyof PulumiFilterSelectOptionAttributes as `prop:${K}`]?: PulumiFilterSelectOption[K] };
         "pulumi-filter-select-option-group": Omit<PulumiFilterSelectOptionGroup, keyof PulumiFilterSelectOptionGroupAttributes> & { [K in keyof PulumiFilterSelectOptionGroup & keyof PulumiFilterSelectOptionGroupAttributes]?: PulumiFilterSelectOptionGroup[K] } & { [K in keyof PulumiFilterSelectOptionGroup & keyof PulumiFilterSelectOptionGroupAttributes as `attr:${K}`]?: PulumiFilterSelectOptionGroupAttributes[K] } & { [K in keyof PulumiFilterSelectOptionGroup & keyof PulumiFilterSelectOptionGroupAttributes as `prop:${K}`]?: PulumiFilterSelectOptionGroup[K] };
         "pulumi-hubspot-form": Omit<PulumiHubspotForm, keyof PulumiHubspotFormAttributes> & { [K in keyof PulumiHubspotForm & keyof PulumiHubspotFormAttributes]?: PulumiHubspotForm[K] } & { [K in keyof PulumiHubspotForm & keyof PulumiHubspotFormAttributes as `attr:${K}`]?: PulumiHubspotFormAttributes[K] } & { [K in keyof PulumiHubspotForm & keyof PulumiHubspotFormAttributes as `prop:${K}`]?: PulumiHubspotForm[K] };
+        "pulumi-llm-menu": Omit<PulumiLlmMenu, keyof PulumiLlmMenuAttributes> & { [K in keyof PulumiLlmMenu & keyof PulumiLlmMenuAttributes]?: PulumiLlmMenu[K] } & { [K in keyof PulumiLlmMenu & keyof PulumiLlmMenuAttributes as `attr:${K}`]?: PulumiLlmMenuAttributes[K] } & { [K in keyof PulumiLlmMenu & keyof PulumiLlmMenuAttributes as `prop:${K}`]?: PulumiLlmMenu[K] };
         "pulumi-multi-select-form": Omit<PulumiMultiSelectForm, keyof PulumiMultiSelectFormAttributes> & { [K in keyof PulumiMultiSelectForm & keyof PulumiMultiSelectFormAttributes]?: PulumiMultiSelectForm[K] } & { [K in keyof PulumiMultiSelectForm & keyof PulumiMultiSelectFormAttributes as `attr:${K}`]?: PulumiMultiSelectFormAttributes[K] } & { [K in keyof PulumiMultiSelectForm & keyof PulumiMultiSelectFormAttributes as `prop:${K}`]?: PulumiMultiSelectForm[K] };
         "pulumi-registry-list-search": PulumiRegistryListSearch;
         "pulumi-resource-links": Omit<PulumiResourceLinks, keyof PulumiResourceLinksAttributes> & { [K in keyof PulumiResourceLinks & keyof PulumiResourceLinksAttributes]?: PulumiResourceLinks[K] } & { [K in keyof PulumiResourceLinks & keyof PulumiResourceLinksAttributes as `attr:${K}`]?: PulumiResourceLinksAttributes[K] } & { [K in keyof PulumiResourceLinks & keyof PulumiResourceLinksAttributes as `prop:${K}`]?: PulumiResourceLinks[K] };
@@ -666,6 +686,7 @@ declare module "@stencil/core" {
             "pulumi-filter-select-option": LocalJSX.IntrinsicElements["pulumi-filter-select-option"] & JSXBase.HTMLAttributes<HTMLPulumiFilterSelectOptionElement>;
             "pulumi-filter-select-option-group": LocalJSX.IntrinsicElements["pulumi-filter-select-option-group"] & JSXBase.HTMLAttributes<HTMLPulumiFilterSelectOptionGroupElement>;
             "pulumi-hubspot-form": LocalJSX.IntrinsicElements["pulumi-hubspot-form"] & JSXBase.HTMLAttributes<HTMLPulumiHubspotFormElement>;
+            "pulumi-llm-menu": LocalJSX.IntrinsicElements["pulumi-llm-menu"] & JSXBase.HTMLAttributes<HTMLPulumiLlmMenuElement>;
             "pulumi-multi-select-form": LocalJSX.IntrinsicElements["pulumi-multi-select-form"] & JSXBase.HTMLAttributes<HTMLPulumiMultiSelectFormElement>;
             "pulumi-registry-list-search": LocalJSX.IntrinsicElements["pulumi-registry-list-search"] & JSXBase.HTMLAttributes<HTMLPulumiRegistryListSearchElement>;
             "pulumi-resource-links": LocalJSX.IntrinsicElements["pulumi-resource-links"] & JSXBase.HTMLAttributes<HTMLPulumiResourceLinksElement>;

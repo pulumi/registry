@@ -12,6 +12,7 @@ import "./code-tabbed";
 import "./packages";
 import "./toc";
 import "./pulumi-ai-menu";
+import "./copy-llm-prompt";
 import "./docs-main";
 import "./algolia/autocomplete";
 import "./consent-manager";

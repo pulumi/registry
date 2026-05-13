@@ -19,12 +19,13 @@
 
 {{ $prompt := "" }}
 {{ if $apiBase }}
-    {{ $prompt = printf `I want to use the Pulumi %s provider (%s) in my project.
+    {{ $prompt = printf `I want to use the Pulumi %s package (%s) in my project.
 
 ## Provider details
 - Package: %s
 - Version: %s
 - Publisher: %s
+- Source: %s
 - Repository: %s
 
 ## Documentation
@@ -32,6 +33,7 @@ The Pulumi Cloud Registry API serves canonical, up-to-date docs for this package
 
 Start at the navigation tree, which cross-links to the readme, installation guide, and per-resource docs URL template:
 - %s/nav
+  Returns a summary by default. The full tree can be hundreds of kB for large providers, so prefer targeted search: append "?q=<query>&depth=full" to filter by resource/function title or token (for example "?q=bucket&depth=full"). Only request the full nav without a query if you actually need to enumerate every resource.
 
 Other endpoints:
 - Overview and getting started: %s/readme
@@ -42,17 +44,18 @@ Other endpoints:
 
 Fetch the installation endpoint above for the correct setup steps — install instructions vary between native providers, bridged Terraform providers, and component packages.
 
-Help me get started using this provider. Show me a complete Pulumi program that provisions a common resource, including all necessary configuration and imports.` $packageData.title $rawPackageName $rawPackageName $packageData.version $packageData.publisher $packageData.repo_url $apiBase $apiBase $apiBase $apiBase }}
+Help me get started using this provider. Show me a complete Pulumi program that provisions a common resource, including all necessary configuration and imports.` $packageData.title $rawPackageName $rawPackageName $packageData.version $packageData.publisher $source $packageData.repo_url $apiBase $apiBase $apiBase $apiBase }}
 {{ else }}
-    {{ $prompt = printf `I want to use the Pulumi %s provider (%s) in my project.
+    {{ $prompt = printf `I want to use the Pulumi %s package (%s) in my project.
 
 ## Provider details
 - Package: %s
 - Version: %s
 - Publisher: %s
+- Source: %s
 - Repository: %s
 
-Help me get started using this provider. Show me a complete Pulumi program that provisions a common resource, including all necessary configuration and imports.` $packageData.title $rawPackageName $rawPackageName $packageData.version $packageData.publisher $packageData.repo_url }}
+Help me get started using this provider. Show me a complete Pulumi program that provisions a common resource, including all necessary configuration and imports.` $packageData.title $rawPackageName $rawPackageName $packageData.version $packageData.publisher $source $packageData.repo_url }}
 {{ end }}
 
 {{ $encoded := $prompt | urlquery }}

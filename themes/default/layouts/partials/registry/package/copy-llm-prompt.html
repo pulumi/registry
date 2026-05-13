@@ -1,34 +1,59 @@
 {{ $packageData := .packageData }}
 {{ $rawPackageName := .rawPackageName }}
-{{ $docsURL := printf "/registry/packages/%s/" $rawPackageName | absURL }}
-{{ $installURL := printf "/registry/packages/%s/installation-configuration/" $rawPackageName | absURL }}
-{{ $apiDocsURL := printf "/registry/packages/%s/api-docs/" $rawPackageName | absURL }}
-{{ $guidesURL := printf "/registry/packages/%s/how-to-guides/" $rawPackageName | absURL }}
-{{ $schemaURL := printf "/registry/packages/%s/schema.json" $rawPackageName | absURL }}
-{{ $installCmd := printf "pulumi plugin install resource %s %s" $rawPackageName $packageData.version }}
 
-{{ $prompt := printf `I want to use the Pulumi %s provider (%s) in my project.
+{{/* Use the Pulumi Cloud Registry API so the prompt covers private packages and every published version, not just what's rendered on the public Hugo site. */}}
+{{ $publishers := readFile "tools/resourcedocsgen/pkg/publishers/publisher-names.json" | transform.Unmarshal }}
+{{ $publisherSlug := index $publishers $packageData.publisher }}
+
+{{ $source := "pulumi" }}
+{{ with $packageData.schema_file_url }}
+    {{ if in . "registry.opentofu.org" }}
+        {{ $source = "opentofu" }}
+    {{ end }}
+{{ end }}
+
+{{ $apiBase := "" }}
+{{ if $publisherSlug }}
+    {{ $apiBase = printf "https://api.pulumi.com/api/registry/packages/%s/%s/%s/versions/latest" $source $publisherSlug $rawPackageName }}
+{{ end }}
+
+{{ $prompt := "" }}
+{{ if $apiBase }}
+    {{ $prompt = printf `I want to use the Pulumi %s provider (%s) in my project.
 
 ## Provider details
 - Package: %s
 - Version: %s
 - Publisher: %s
-
-## Installation
-Run the following to install the provider plugin:
-  %s
-
-Or add it as a dependency in your language of choice (npm, pip, go, nuget).
-
-## Reference links
-- Overview and getting started: %s
-- Installation and configuration: %s
-- API documentation: %s
-- How-to guides and examples: %s
-- Schema (JSON): %s
 - Repository: %s
 
-Help me get started using this provider. Show me a complete Pulumi program that provisions a common resource, including all necessary configuration and imports.` $packageData.title $rawPackageName $rawPackageName $packageData.version $packageData.publisher $installCmd $docsURL $installURL $apiDocsURL $guidesURL $schemaURL $packageData.repo_url }}
+## Documentation
+The Pulumi Cloud Registry API serves canonical, up-to-date docs for this package — including private packages and every published version. Send the "Accept: text/markdown" header for clean readable content, or "application/json" for structured data.
+
+Start at the navigation tree, which cross-links to the readme, installation guide, and per-resource docs URL template:
+- %s/nav
+
+Other endpoints:
+- Overview and getting started: %s/readme
+- Installation and configuration: %s/installation
+- Per-resource/function docs: %s/docs/{token}?lang={lang}
+  Replace {token} with the percent-encoded token from the nav response (for example aws:s3/bucket:Bucket).
+  Replace {lang} with typescript, python, go, csharp, java, or yaml.
+
+Fetch the installation endpoint above for the correct setup steps — install instructions vary between native providers, bridged Terraform providers, and component packages.
+
+Help me get started using this provider. Show me a complete Pulumi program that provisions a common resource, including all necessary configuration and imports.` $packageData.title $rawPackageName $rawPackageName $packageData.version $packageData.publisher $packageData.repo_url $apiBase $apiBase $apiBase $apiBase }}
+{{ else }}
+    {{ $prompt = printf `I want to use the Pulumi %s provider (%s) in my project.
+
+## Provider details
+- Package: %s
+- Version: %s
+- Publisher: %s
+- Repository: %s
+
+Help me get started using this provider. Show me a complete Pulumi program that provisions a common resource, including all necessary configuration and imports.` $packageData.title $rawPackageName $rawPackageName $packageData.version $packageData.publisher $packageData.repo_url }}
+{{ end }}
 
 {{ $encoded := $prompt | urlquery }}
 {{ $chatgptURL := printf "https://chatgpt.com/?q=%s" $encoded | safeURL }}

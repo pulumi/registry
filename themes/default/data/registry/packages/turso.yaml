@@ -8,7 +8,7 @@ logo_url: ""
 name: turso
 native: false
 package_status: public_preview
-publisher: celest-dev
+publisher: DEPRECATED
 repo_url: https://github.com/celest-dev/terraform-provider-turso
 schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/celest-dev/turso/0.2.3/schema.json
 title: turso

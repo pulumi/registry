@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: rollbar
 repo_url: https://github.com/rollbar/terraform-provider-rollbar
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/rollbar/rollbar/1.16.0/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/rollbar/rollbar/1.17.0/schema.json
 title: rollbar
-updated_on: 1746012941
-version: 1.16.0
+updated_on: 1779104151
+version: 1.17.0

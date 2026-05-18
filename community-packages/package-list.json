@@ -383,10 +383,6 @@
     {
       "repoSlug": "lokkju/pulumi-improvmx",
       "schemaFile": "schema.json"
-    },
-    {
-      "repoSlug": "pulumi/pulumi-coreweave",
-      "schemaFile": "provider/cmd/pulumi-resource-coreweave/schema.json"
     }
   ]
 }

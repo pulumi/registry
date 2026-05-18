@@ -383,6 +383,10 @@
     {
       "repoSlug": "lokkju/pulumi-improvmx",
       "schemaFile": "schema.json"
+    },
+    {
+      "repoSlug": "rpothin/pulumi-powerplatform",
+      "schemaFile": "schema.json"
     }
   ]
 }

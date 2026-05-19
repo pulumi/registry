@@ -100,12 +100,19 @@ For files that exist, check:
 - **Code example per language the contributor claims** (TS/Python/Go/C#). Grep for language fences.
 - **Relative-asset / raw-HTML scan** (the [#9934 stackit class](https://github.com/pulumi/registry/pull/9934#discussion_r2827346034)). High-confidence Fail patterns: `<img src="(?!https?://)`, markdown `!\[.*?\]\((?!https?://|#)`, raw HTML `<a href="(?!https?://|#|mailto:)`. Lower confidence Warn (rewritten on IDP by [pulumi-service#38008](https://github.com/pulumi/pulumi-service/pull/38008), not on the public registry): plain markdown `]\((?!https?://|#|mailto:)` with `./` or `/` prefix.
 
-**SDK presence probe** (Warn-only — half of community providers ship without C#). HEAD/GET each, in parallel; report which resolved. Try every variant — community-publisher naming is inconsistent:
+**SDK presence probe.** First read the schema's `language` map to learn which languages the provider declares it supports — the keys are the truth, not "all four." Then probe only the declared languages. Classify findings:
+
+- **Fail** when a language is declared in the schema but no SDK can be found at any conventional name.
+- **Fail** when a declared language has a published SDK but the version lags the provider release by more than one minor version (the schema promises an API surface that the SDK doesn't expose).
+- **Warn** for obvious packaging bugs in published names (e.g. doubled tokens like `Foo.Pulumi.Bar.Bar` — a `tfgen` config bug that affects every future release).
+- Languages NOT in the schema's `language` map are not probed and not reported (the contributor chose not to ship them, fine).
+
+Naming variants to try, in parallel:
 
 - npm: `pulumi-<name>`, `@pulumi/<name>`, `@<owner>/<name>`, `@<owner>/pulumi-<name>`
 - PyPI: `pulumi-<name>`, `pulumi_<name>`, `pulumi-<owner>-<name>`, `pulumi_<owner>_<name>`
 - pkg.go.dev: `github.com/<owner>/<repo>` (module root) AND `github.com/<owner>/<repo>/sdk/go/<name>`
-- NuGet: `curl -s 'https://azuresearch-usnc.nuget.org/query?q=<owner>&prerelease=false' | jq '.data[].id'` and grep for `<name>` (case-insensitive). Flag any obvious naming bugs (e.g. doubled tokens like `Foo.Foo`).
+- NuGet: `curl -s 'https://azuresearch-usnc.nuget.org/query?q=<owner>&prerelease=false' | jq '.data[].id'` and grep for `<name>` (case-insensitive).
 
 ---
 
@@ -313,6 +320,18 @@ Use `AskUserQuestion` to surface all three with the recommended one first. After
 Use the tone templates from [`pr-review:references:message-templates`](../pr-review/references/message-templates.md) for the actual comment bodies — warm for external contributors, technical for bot-authored PRs.
 
 If the skill detects an internal-contributor PR (author has write+ access to `pulumi/registry`, e.g. rgharris/seanyeh/jasonwzm), bail out at the top of Step 9 with a one-line "use /pr-review instead — this skill is for community contributions" and exit. Internal PRs have valid direct-merge paths this skill shouldn't disable.
+
+### Comment style (applies to every PR comment, review body, and close message the skill generates)
+
+- **Target under 150 words.** A reviewer or contributor should be able to skim it without scrolling. Long rationales belong in the cached artifact, not the PR comment.
+- **No em-dashes.** Use a period, comma, parenthesis, or colon instead. Never `—`.
+- **No opening preamble.** Skip "Hi @x, thanks for the submission, looks like a real provider, we'd like to onboard it." Open with the first ask or the operative sentence. A contributor opening a PR knows we're considering it.
+- **No closing flourish.** Skip "Happy to help if anything is unclear." The maintainer can add that by hand if they want.
+- **One line per ask.** Format: `Asked thing (one-clause justification or link)`. Don't explain why each ask matters in 3 sentences. If the link to the relevant doc/spec carries the why, that's enough.
+- **Group only when there are multiple asks.** For a single ask, no `Required:` / `Nice to have:` headers; just write the line.
+- **Links over prose.** A clickable link to the spec/file/PR is shorter and more verifiable than a paraphrase.
+
+Apply this to all three outcomes' generated bodies. If the message is over the word target after a first draft, cut explanation prose before cutting asks.
 
 ---
 

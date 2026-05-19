@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/vmware/avi/31.2.2/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/vmware/avi/32.1.1/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Avi Provider
@@ -125,7 +125,7 @@ return await Deployment.RunAsync(() =>
 package main
 
 import (
-	"github.com/pulumi/pulumi-pulumi-provider/sdks/go/avi/v31/avi"
+	"github.com/pulumi/pulumi-pulumi-provider/sdks/go/avi/v32/avi"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -281,7 +281,7 @@ return await Deployment.RunAsync(() =>
 package main
 
 import (
-	"github.com/pulumi/pulumi-pulumi-provider/sdks/go/avi/v31/avi"
+	"github.com/pulumi/pulumi-pulumi-provider/sdks/go/avi/v32/avi"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -383,7 +383,7 @@ return await Deployment.RunAsync(() =>
 package main
 
 import (
-	"github.com/pulumi/pulumi-pulumi-provider/sdks/go/avi/v31/avi"
+	"github.com/pulumi/pulumi-pulumi-provider/sdks/go/avi/v32/avi"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -828,7 +828,7 @@ return await Deployment.RunAsync(() =>
 package main
 
 import (
-	"github.com/pulumi/pulumi-pulumi-provider/sdks/go/avi/v31/avi"
+	"github.com/pulumi/pulumi-pulumi-provider/sdks/go/avi/v32/avi"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 

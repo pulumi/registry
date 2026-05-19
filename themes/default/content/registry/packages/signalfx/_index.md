@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-signalfx/v7.24.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-signalfx/v7.25.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-signalfx/blob/v7.24.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-signalfx/blob/v7.25.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Signalfx Provider
 meta_desc: Provides an overview on how to configure the Pulumi Signalfx provider.
@@ -116,10 +116,10 @@ using SignalFx = Pulumi.SignalFx;
 return await Deployment.RunAsync(() =>
 {
     // Create a new detector
-    var @default = new SignalFx.Detector("default");
+    var @default = new SignalFx.Index.Detector("default");
 
     // Create a new dashboard
-    var defaultDashboard = new SignalFx.Dashboard("default");
+    var defaultDashboard = new SignalFx.Index.Dashboard("default");
 
 });
 

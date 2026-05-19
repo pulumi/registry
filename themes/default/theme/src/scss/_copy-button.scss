@@ -71,7 +71,7 @@ div.highlight {
         @include transition;
         color: #fff;
         font-size: 12px;
-        font-family: 'Inter';
+        font-family: var(--font-body);
 
         .code-mode-dark & {
             @apply text-gray-600;

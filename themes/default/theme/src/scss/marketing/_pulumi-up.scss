@@ -22,7 +22,7 @@ body.section-pulumi-up {
     }
 
     .yellow-header-text {
-        font-family: 'Gilroy';
+        font-family: var(--font-display);
         font-style: normal;
         font-weight: 500;
         font-size: 48px;
@@ -30,7 +30,7 @@ body.section-pulumi-up {
     }
 
     .banner-description p {
-        font-family: 'Inter';
+        font-family: var(--font-body);
         font-size: 18px;
         line-height: 27px;
 

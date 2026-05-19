@@ -16,6 +16,7 @@
 //
 // - [CSharp]
 // - [Go]
+// - [HCL]
 // - [Java]
 // - [Python]
 // - [NodeJS]
@@ -32,6 +33,7 @@ type Language struct{ tag string }
 var (
 	CSharp = Language{"csharp"}
 	Go     = Language{"go"}
+	HCL    = Language{"hcl"}
 	Java   = Language{"java"}
 	Python = Language{"python"}
 	NodeJS = Language{"nodejs"}
@@ -60,6 +62,7 @@ var langOrder = [...]Language{
 	Python,
 	YAML,
 	Java,
+	HCL,
 }
 
 func (l Language) String() string {
@@ -76,6 +79,8 @@ func (l Language) GoString() string {
 		varName = "CSharp"
 	case Go:
 		varName = "Go"
+	case HCL:
+		varName = "HCL"
 	case Java:
 		varName = "Java"
 	case Python:

@@ -615,6 +615,7 @@ func TestDecomposeDocstring(t *testing.T) {
 					language.Python: "```python\nBasic usage: python\n```\n",
 					language.NodeJS: "\n```typescript\nBasic usage: typescript\n```\n",
 					language.YAML:   "```yaml\nBasic usage: yaml\n```\n",
+					language.HCL:    "Example coming soon!",
 				},
 			},
 			{
@@ -626,6 +627,7 @@ func TestDecomposeDocstring(t *testing.T) {
 					language.Python: "```python\nBasic usage with tags: python\n```\n",
 					language.NodeJS: "\n```typescript\nBasic usage with tags: typescript\n```\n",
 					language.YAML:   "```yaml\nBasic usage with tags: yaml\n```\n",
+					language.HCL:    "Example coming soon!",
 				},
 			},
 			{
@@ -637,6 +639,7 @@ func TestDecomposeDocstring(t *testing.T) {
 					language.Python: "```python\nVPC with CIDR from AWS IPAM: python\n```\n",
 					language.NodeJS: "\n```typescript\nVPC with CIDR from AWS IPAM: typescript\n```\n",
 					language.YAML:   "```yaml\nVPC with CIDR from AWS IPAM: yaml\n```\n",
+					language.HCL:    "Example coming soon!",
 				},
 			},
 		},
@@ -713,12 +716,12 @@ func TestGenOverlayResource(t *testing.T) {
 		{
 			// regular resource, should support all languages (i.e. ExpectedLangChooserLanguages should be empty)
 			ResourceName:                 "Resource",
-			ExpectedLangChooserLanguages: "csharp,go,typescript,python,yaml,java",
+			ExpectedLangChooserLanguages: "csharp,go,typescript,python,yaml,java,hcl",
 		},
 		{
 			// regular overlay resource, should support all languages (i.e. ExpectedLangChooserLanguages should be empty)
 			ResourceName:                 "OverlayResource",
-			ExpectedLangChooserLanguages: "csharp,go,typescript,python,yaml,java",
+			ExpectedLangChooserLanguages: "csharp,go,typescript,python,yaml,java,hcl",
 		},
 		{
 			// overlay resource with a constrained list of supported languages should support only the languages specified in
@@ -840,12 +843,12 @@ func TestGenOverlayFunction(t *testing.T) {
 		{
 			// regular function, should support all languages
 			FunctionName:                 "getModuleResource",
-			ExpectedLangChooserLanguages: "csharp,go,typescript,python,yaml,java",
+			ExpectedLangChooserLanguages: "csharp,go,typescript,python,yaml,java,hcl",
 		},
 		{
 			// regular overlay function, should support all languages
 			FunctionName:                 "overlayFunction",
-			ExpectedLangChooserLanguages: "csharp,go,typescript,python,yaml,java",
+			ExpectedLangChooserLanguages: "csharp,go,typescript,python,yaml,java,hcl",
 		},
 		{
 			// overlay function with a constrained list of supported languages should support only the languages specified in

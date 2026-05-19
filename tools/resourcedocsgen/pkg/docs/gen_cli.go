@@ -81,7 +81,7 @@ func stripHTMLFromProperties(props []property) []property {
 
 // cliLangEntry holds per-language data for a single language within a CLI doc.
 type cliLangEntry struct {
-	Tag        string // "typescript", "python", "go", "csharp", "java", "yaml"
+	Tag        string // "typescript", "python", "go", "csharp", "java", "yaml", "hcl"
 	Properties []property
 }
 

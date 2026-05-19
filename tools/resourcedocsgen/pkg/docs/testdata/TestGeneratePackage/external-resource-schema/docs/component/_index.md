@@ -23,7 +23,7 @@ Resources are created with functions called constructors. To learn more about de
 
 ### Constructor syntax
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 
@@ -80,6 +80,14 @@ Resources are created with functions called constructors. To learn more about de
 <span class="p"></span><span class="p">options</span><span class="p">: </span><span class="c">#&nbsp;Bag of options to control resource&#39;s behavior.</span>
 <span class="p"></span>
 </code></pre></div></div>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<div class="no-copy"><div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">resource</span> <span class="s2">&#34;example_component&#34;</span> <span class="s2">&#34;name&#34;</span> <span class="p">{</span>
+<span class="c">    # resource properties</span>
+<span class="p">}</span></code></pre></div></div>
 </pulumi-choosable>
 </div>
 
@@ -227,7 +235,7 @@ Resources are created with functions called constructors. To learn more about de
 
 The following reference example uses placeholder values for all [input properties](#inputs).
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 
@@ -834,6 +842,244 @@ example, err := example.NewComponent(ctx, "componentResource", &example.Componen
 		},
 	},
 })
+```
+
+</pulumi-choosable>
+</div>
+
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+
+```hcl
+resource "example_component" "componentResource" {
+  required_metadata = {
+    annotations = {
+      "string" = "string"
+    }
+    cluster_name                  = "string"
+    creation_timestamp            = "string"
+    deletion_grace_period_seconds = 0
+    deletion_timestamp            = "string"
+    finalizers                    = ["string"]
+    generate_name                 = "string"
+    generation                    = 0
+    labels = {
+      "string" = "string"
+    }
+    managed_fields = [{
+      "apiVersion"  = "string"
+      "fieldsType"  = "string"
+      "fieldsV1"    = "{}"
+      "manager"     = "string"
+      "operation"   = "string"
+      "subresource" = "string"
+      "time"        = "string"
+    }]
+    name      = "string"
+    namespace = "string"
+    owner_references = [{
+      "apiVersion"         = "string"
+      "kind"               = "string"
+      "name"               = "string"
+      "uid"                = "string"
+      "blockOwnerDeletion" = false
+      "controller"         = false
+    }]
+    resource_version = "string"
+    self_link        = "string"
+    uid              = "string"
+  }
+  required_metadata_array {
+    annotations = {
+      "string" = "string"
+    }
+    cluster_name                  = "string"
+    creation_timestamp            = "string"
+    deletion_grace_period_seconds = 0
+    deletion_timestamp            = "string"
+    finalizers                    = ["string"]
+    generate_name                 = "string"
+    generation                    = 0
+    labels = {
+      "string" = "string"
+    }
+    managed_fields {
+      api_version = "string"
+      fields_type = "string"
+      fields_v1   = "{}"
+      manager     = "string"
+      operation   = "string"
+      subresource = "string"
+      time        = "string"
+    }
+    name      = "string"
+    namespace = "string"
+    owner_references {
+      api_version          = "string"
+      kind                 = "string"
+      name                 = "string"
+      uid                  = "string"
+      block_owner_deletion = false
+      controller           = false
+    }
+    resource_version = "string"
+    self_link        = "string"
+    uid              = "string"
+  }
+  required_metadata_map = {
+    "string" = {
+      annotations = {
+        "string" = "string"
+      }
+      cluster_name                  = "string"
+      creation_timestamp            = "string"
+      deletion_grace_period_seconds = 0
+      deletion_timestamp            = "string"
+      finalizers                    = ["string"]
+      generate_name                 = "string"
+      generation                    = 0
+      labels = {
+        "string" = "string"
+      }
+      managed_fields = [{
+        "apiVersion"  = "string"
+        "fieldsType"  = "string"
+        "fieldsV1"    = "{}"
+        "manager"     = "string"
+        "operation"   = "string"
+        "subresource" = "string"
+        "time"        = "string"
+      }]
+      name      = "string"
+      namespace = "string"
+      owner_references = [{
+        "apiVersion"         = "string"
+        "kind"               = "string"
+        "name"               = "string"
+        "uid"                = "string"
+        "blockOwnerDeletion" = false
+        "controller"         = false
+      }]
+      resource_version = "string"
+      self_link        = "string"
+      uid              = "string"
+    }
+  }
+  metadata = {
+    annotations = {
+      "string" = "string"
+    }
+    cluster_name                  = "string"
+    creation_timestamp            = "string"
+    deletion_grace_period_seconds = 0
+    deletion_timestamp            = "string"
+    finalizers                    = ["string"]
+    generate_name                 = "string"
+    generation                    = 0
+    labels = {
+      "string" = "string"
+    }
+    managed_fields = [{
+      "apiVersion"  = "string"
+      "fieldsType"  = "string"
+      "fieldsV1"    = "{}"
+      "manager"     = "string"
+      "operation"   = "string"
+      "subresource" = "string"
+      "time"        = "string"
+    }]
+    name      = "string"
+    namespace = "string"
+    owner_references = [{
+      "apiVersion"         = "string"
+      "kind"               = "string"
+      "name"               = "string"
+      "uid"                = "string"
+      "blockOwnerDeletion" = false
+      "controller"         = false
+    }]
+    resource_version = "string"
+    self_link        = "string"
+    uid              = "string"
+  }
+  metadata_array {
+    annotations = {
+      "string" = "string"
+    }
+    cluster_name                  = "string"
+    creation_timestamp            = "string"
+    deletion_grace_period_seconds = 0
+    deletion_timestamp            = "string"
+    finalizers                    = ["string"]
+    generate_name                 = "string"
+    generation                    = 0
+    labels = {
+      "string" = "string"
+    }
+    managed_fields {
+      api_version = "string"
+      fields_type = "string"
+      fields_v1   = "{}"
+      manager     = "string"
+      operation   = "string"
+      subresource = "string"
+      time        = "string"
+    }
+    name      = "string"
+    namespace = "string"
+    owner_references {
+      api_version          = "string"
+      kind                 = "string"
+      name                 = "string"
+      uid                  = "string"
+      block_owner_deletion = false
+      controller           = false
+    }
+    resource_version = "string"
+    self_link        = "string"
+    uid              = "string"
+  }
+  metadata_map = {
+    "string" = {
+      annotations = {
+        "string" = "string"
+      }
+      cluster_name                  = "string"
+      creation_timestamp            = "string"
+      deletion_grace_period_seconds = 0
+      deletion_timestamp            = "string"
+      finalizers                    = ["string"]
+      generate_name                 = "string"
+      generation                    = 0
+      labels = {
+        "string" = "string"
+      }
+      managed_fields = [{
+        "apiVersion"  = "string"
+        "fieldsType"  = "string"
+        "fieldsV1"    = "{}"
+        "manager"     = "string"
+        "operation"   = "string"
+        "subresource" = "string"
+        "time"        = "string"
+      }]
+      name      = "string"
+      namespace = "string"
+      owner_references = [{
+        "apiVersion"         = "string"
+        "kind"               = "string"
+        "name"               = "string"
+        "uid"                = "string"
+        "blockOwnerDeletion" = false
+        "controller"         = false
+      }]
+      resource_version = "string"
+      self_link        = "string"
+      uid              = "string"
+    }
+  }
+}
 ```
 
 </pulumi-choosable>
@@ -1863,6 +2109,60 @@ The Component resource accepts the following [input](/docs/intro/concepts/inputs
 </div>
 
 <div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-required"
+            title="Required">
+        <span id="required_metadata_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#required_metadata_hcl" style="color: inherit; text-decoration: inherit;">required_<wbr>metadata</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#objectmeta">object</a></span>
+    </dt>
+    <dd>This type is defined in the <a href="/registry/packages/kubernetes">Kubernetes</a> package.</dd><dt class="property-required"
+            title="Required">
+        <span id="required_metadata_array_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#required_metadata_array_hcl" style="color: inherit; text-decoration: inherit;">required_<wbr>metadata_<wbr>array</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#objectmeta">list(object)</a></span>
+    </dt>
+    <dd></dd><dt class="property-required"
+            title="Required">
+        <span id="required_metadata_map_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#required_metadata_map_hcl" style="color: inherit; text-decoration: inherit;">required_<wbr>metadata_<wbr>map</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">map(object)</span>
+    </dt>
+    <dd></dd><dt class="property-optional"
+            title="Optional">
+        <span id="metadata_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#metadata_hcl" style="color: inherit; text-decoration: inherit;">metadata</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#objectmeta">object</a></span>
+    </dt>
+    <dd>This type is defined in the <a href="/registry/packages/kubernetes">Kubernetes</a> package.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="metadata_array_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#metadata_array_hcl" style="color: inherit; text-decoration: inherit;">metadata_<wbr>array</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#objectmeta">list(object)</a></span>
+    </dt>
+    <dd></dd><dt class="property-optional"
+            title="Optional">
+        <span id="metadata_map_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#metadata_map_hcl" style="color: inherit; text-decoration: inherit;">metadata_<wbr>map</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">map(object)</span>
+    </dt>
+    <dd></dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
 <pulumi-choosable type="language" values="java">
 <dl class="resources-properties"><dt class="property-required"
             title="Required">
@@ -2156,6 +2456,44 @@ All [input](#inputs) properties are implicitly available as output properties. A
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">Storage<wbr>Class</span>
+    </dt>
+    <dd></dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-"
+            title="">
+        <span id="id_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_hcl" style="color: inherit; text-decoration: inherit;">id</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>The provider-assigned unique ID for this managed resource.</dd><dt class="property-"
+            title="">
+        <span id="security_group_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#security_group_hcl" style="color: inherit; text-decoration: inherit;">security_<wbr>group</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">aws_<wbr>ec2_<wbr>securitygroup_<wbr>securitygroup</span>
+    </dt>
+    <dd>This type is defined in the <a href="/registry/packages/aws">AWS Classic</a> package.</dd><dt class="property-"
+            title="">
+        <span id="provider_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#provider_hcl" style="color: inherit; text-decoration: inherit;">provider</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">pulumi_<wbr>kubernetes</span>
+    </dt>
+    <dd>This type is defined in the <a href="/registry/packages/pulumi">pulumi</a> package.</dd><dt class="property-"
+            title="">
+        <span id="storage_classes_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#storage_classes_hcl" style="color: inherit; text-decoration: inherit;">storage_<wbr>classes</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">map(kubernetes_<wbr>storage.k8s.io_<wbr>v1_<wbr>storageclass)</span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>

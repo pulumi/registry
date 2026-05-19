@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/juju/juju/1.5.1/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/juju/juju/2.0.0-rc1/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Juju Provider
@@ -699,7 +699,7 @@ config:
 package main
 
 import (
-	"github.com/pulumi/pulumi-pulumi-provider/sdks/go/juju/juju"
+	"github.com/pulumi/pulumi-pulumi-provider/sdks/go/juju/v2/juju"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -1127,7 +1127,7 @@ config:
 package main
 
 import (
-	"github.com/pulumi/pulumi-pulumi-provider/sdks/go/juju/juju"
+	"github.com/pulumi/pulumi-pulumi-provider/sdks/go/juju/v2/juju"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 

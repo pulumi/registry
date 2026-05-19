@@ -32,7 +32,7 @@ exist concurrently.
 ## Example Usage
 
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
@@ -230,6 +230,14 @@ resources:
 ```
 </pulumi-choosable>
 </div>
+<div>
+<pulumi-choosable type="language" values="hcl">
+
+```
+Example coming soon!
+```
+</pulumi-choosable>
+</div>
 
 
 
@@ -239,7 +247,7 @@ Resources are created with functions called constructors. To learn more about de
 
 ### Constructor syntax
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 
@@ -293,6 +301,14 @@ Resources are created with functions called constructors. To learn more about de
 <span class="p"></span><span class="p">options</span><span class="p">: </span><span class="c">#&nbsp;Bag of options to control resource&#39;s behavior.</span>
 <span class="p"></span>
 </code></pre></div></div>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<div class="no-copy"><div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">resource</span> <span class="s2">&#34;random_randomid&#34;</span> <span class="s2">&#34;name&#34;</span> <span class="p">{</span>
+<span class="c">    # resource properties</span>
+<span class="p">}</span></code></pre></div></div>
 </pulumi-choosable>
 </div>
 
@@ -440,7 +456,7 @@ Resources are created with functions called constructors. To learn more about de
 
 The following reference example uses placeholder values for all [input properties](#inputs).
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 
@@ -474,6 +490,23 @@ example, err := random.NewRandomId(ctx, "randomIdResource", &random.RandomIdArgs
 	},
 	Prefix: pulumi.String("string"),
 })
+```
+
+</pulumi-choosable>
+</div>
+
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+
+```hcl
+resource "random_randomid" "randomIdResource" {
+  byte_length = 0
+  keepers = {
+    "string" = "string"
+  }
+  prefix = "string"
+}
 ```
 
 </pulumi-choosable>
@@ -613,6 +646,36 @@ The RandomId resource accepts the following [input](/docs/intro/concepts/inputs-
             title="Optional">
         <span id="prefix_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#prefix_go" style="color: inherit; text-decoration: inherit;">Prefix</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Arbitrary string to prefix the output value with. This string is supplied as-is, meaning it is not guaranteed to be URL-safe or base64 encoded.</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-required"
+            title="Required">
+        <span id="byte_length_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#byte_length_hcl" style="color: inherit; text-decoration: inherit;">byte_<wbr>length</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">number</span>
+    </dt>
+    <dd>The number of random bytes to produce. The minimum value is 1, which produces eight bits of randomness.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="keepers_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#keepers_hcl" style="color: inherit; text-decoration: inherit;">keepers</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">map(string)</span>
+    </dt>
+    <dd>Arbitrary map of values that, when changed, will trigger recreation of resource. See the main provider documentation for more information.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="prefix_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#prefix_hcl" style="color: inherit; text-decoration: inherit;">prefix</a>
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
@@ -841,6 +904,52 @@ All [input](#inputs) properties are implicitly available as output properties. A
 </div>
 
 <div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-"
+            title="">
+        <span id="b64_std_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#b64_std_hcl" style="color: inherit; text-decoration: inherit;">b64_<wbr>std</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>The generated id presented in base64 without additional transformations.</dd><dt class="property-"
+            title="">
+        <span id="b64_url_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#b64_url_hcl" style="color: inherit; text-decoration: inherit;">b64_<wbr>url</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>The generated id presented in base64, using the URL-friendly character set: case-sensitive letters, digits and the characters <code>_</code> and <code>-</code>.</dd><dt class="property-"
+            title="">
+        <span id="dec_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#dec_hcl" style="color: inherit; text-decoration: inherit;">dec</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>The generated id presented in non-padded decimal digits.</dd><dt class="property-"
+            title="">
+        <span id="hex_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#hex_hcl" style="color: inherit; text-decoration: inherit;">hex</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>The generated id presented in padded hexadecimal digits. This result will always be twice as long as the requested byte length.</dd><dt class="property-"
+            title="">
+        <span id="id_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_hcl" style="color: inherit; text-decoration: inherit;">id</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>The provider-assigned unique ID for this managed resource.</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
 <pulumi-choosable type="language" values="java">
 <dl class="resources-properties"><dt class="property-"
             title="">
@@ -1030,7 +1139,7 @@ All [input](#inputs) properties are implicitly available as output properties. A
 
 Get an existing RandomId resource's state with the given name, ID, and optional extra properties used to qualify the lookup.
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 <div>
@@ -1078,6 +1187,20 @@ Get an existing RandomId resource's state with the given name, ID, and optional 
     <div class="no-copy">
       <div class="highlight">
         <pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">resources</span><span class="p">:</span><span class="w"></span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">_</span><span class="p">:</span><span class="w"></span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l"><span class="nx">random:RandomId</span></span><span class="w"></span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">get</span><span class="p">:</span><span class="w"></span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l">${id}</span><span class="w"></span></span></span></code></pre>
+      </div>
+    </div>
+  </pulumi-choosable>
+</div>
+
+<div>
+  <pulumi-choosable type="language" values="hcl">
+    <div class="no-copy">
+      <div class="highlight">
+        <pre tabindex="0" class="chroma"><code class="language-hcl" data-lang="hcl"><span class="line"><span class="cl"><span class="k">import</span> {
+</span></span><span class="line"><span class="cl">  <span class="n">to</span> <span class="o">=</span> <span class="nx">random_randomid</span>.<span class="n">example</span>
+</span></span><span class="line"><span class="cl">  <span class="n">id</span> <span class="o">=</span> <span class="s2">&#34;${id}&#34;</span>
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre>
       </div>
     </div>
   </pulumi-choosable>
@@ -1337,6 +1460,68 @@ The following state arguments are supported:
             title="Optional">
         <span id="state_prefix_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#state_prefix_go" style="color: inherit; text-decoration: inherit;">Prefix</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Arbitrary string to prefix the output value with. This string is supplied as-is, meaning it is not guaranteed to be URL-safe or base64 encoded.</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-optional"
+            title="Optional">
+        <span id="state_b64_std_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#state_b64_std_hcl" style="color: inherit; text-decoration: inherit;">b64_<wbr>std</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>The generated id presented in base64 without additional transformations.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="state_b64_url_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#state_b64_url_hcl" style="color: inherit; text-decoration: inherit;">b64_<wbr>url</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>The generated id presented in base64, using the URL-friendly character set: case-sensitive letters, digits and the characters <code>_</code> and <code>-</code>.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="state_byte_length_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#state_byte_length_hcl" style="color: inherit; text-decoration: inherit;">byte_<wbr>length</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">number</span>
+    </dt>
+    <dd>The number of random bytes to produce. The minimum value is 1, which produces eight bits of randomness.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="state_dec_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#state_dec_hcl" style="color: inherit; text-decoration: inherit;">dec</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>The generated id presented in non-padded decimal digits.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="state_hex_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#state_hex_hcl" style="color: inherit; text-decoration: inherit;">hex</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>The generated id presented in padded hexadecimal digits. This result will always be twice as long as the requested byte length.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="state_keepers_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#state_keepers_hcl" style="color: inherit; text-decoration: inherit;">keepers</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">map(string)</span>
+    </dt>
+    <dd>Arbitrary map of values that, when changed, will trigger recreation of resource. See the main provider documentation for more information.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="state_prefix_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#state_prefix_hcl" style="color: inherit; text-decoration: inherit;">prefix</a>
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">string</span>

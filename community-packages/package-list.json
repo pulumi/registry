@@ -367,6 +367,10 @@
     {
       "repoSlug": "lokkju/pulumi-improvmx",
       "schemaFile": "schema.json"
+    },
+    {
+      "repoSlug": "pulumi-labs/pulumi-nvidia-aicr",
+      "schemaFile": "provider/cmd/pulumi-resource-nvidia-aicr/schema.json"
     }
   ]
 }

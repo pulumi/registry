@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/g-core/gcore/2.0.0-alpha.7/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/g-core/gcore/2.0.0-alpha.8/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Gcore Provider
@@ -18,7 +18,8 @@ pulumi package add terraform-provider g-core/gcore
 
 The Gcore provider allows you to configure your [Gcore](https://gcore.com) infrastructure.
 
-> **This is the next-generation Gcore provider (v2)**, rebuilt from the ground up with a modern architecture. Resource names, schemas, and import IDs have been redesigned and differ from v0.x. The provider is in **alpha** and may introduce breaking changes. **We'd love for you to try it out and [share your feedback](https://support.gcore.com/hc/)!** For production workloads, the stable v0.x provider remains fully supported until v2 reaches GA.
+> **This is the next-generation Gcore provider (v2)**
+Rebuilt from the ground up with a modern architecture. Resource names, schemas, and import IDs have been redesigned and differ from v0.x. The provider is in **alpha** and may introduce breaking changes. **We'd love for you to try it out and [share your feedback](https://support.gcore.com/hc/)!** For production workloads, the stable v0.x provider remains fully supported until v2 reaches GA.
 
 > **Need help?** If you encounter any issues or have questions about the Gcore Pulumi provider, please reach out to [Gcore Support](https://support.gcore.com/hc/) for assistance.
 ## Example Usage
@@ -151,10 +152,10 @@ public class App {
 
 - `apiKey` (String, Sensitive) The API key for authenticating with the Gcore API. Can also be set via the `GCORE_API_KEY` environment variable.
 - `baseUrl` (String) Set the base url that the provider connects to.
-- `pollingIntervalSeconds` (Number) Interval in seconds between polling requests for long-running cloud operations. Defaults to `3`.
-- `pollingTimeoutSeconds` (Number) Timeout in seconds for polling long-running cloud operations. Defaults to `7200`.
 - `cloudProjectId` (Number) Default cloud project ID to use for cloud resources. Serves as a convenience fallback for local development; for production, prefer setting `projectId` explicitly on each resource. Can also be set via the `GCORE_CLOUD_PROJECT_ID` environment variable.
 - `cloudRegionId` (Number) Default cloud region ID to use for cloud resources. Serves as a convenience fallback for local development; for production, prefer setting `regionId` explicitly on each resource. Can also be set via the `GCORE_CLOUD_REGION_ID` environment variable.
+- `pollingIntervalSeconds` (Number) Interval in seconds between polling requests for long-running operations. Defaults to `3`.
+- `pollingTimeoutSeconds` (Number) Timeout in seconds for polling long-running operations. Defaults to `7200`.
 ## Best Practices
 ### Project and Region Configuration
 

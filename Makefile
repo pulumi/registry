@@ -120,8 +120,16 @@ serve-assets:
 serve-all:
 	./node_modules/.bin/concurrently --kill-others -r "${HUGO_SERVE}" "yarn --cwd ./themes/default/theme run start"
 
+.PHONY: build-icon-sprite
+build-icon-sprite:
+	node scripts/build-icon-sprite.js
+
+.PHONY: fetch-github-stars
+fetch-github-stars:
+	node scripts/fetch-github-stars.js
+
 .PHONY: build-assets
-build-assets: ensure
+build-assets: ensure build-icon-sprite fetch-github-stars
 	yarn --cwd ./themes/default/theme run build
 
 .PHONY: ci_bucket_cleanup

@@ -1,11 +1,11 @@
 .docs-list-main .docs-main-content,
 body.section-registry {
     h1 {
-        font-family: var(--font-display);
-        line-height: 1.5;
-        font-weight: 400;
+        font-family: Inter;
+        line-height: 1.1em;
+        font-weight: 600;
         font-size: 30px;
-        color: map-get($gray, 950);
+        color: var(--color-gray-950);
         margin: 16px 0;
     }
 
@@ -38,22 +38,23 @@ body.section-registry {
         }
     }
 
-    div.h1-gradient {
-        width: calc(100% - 32px);
-        height: 12px;
-        background: linear-gradient(90deg, map-get($brand, "yellow") 0%, map-get($brand, "salmon") 18.23%, map-get($brand, "fuchsia-darker") 38.02%, map-get($brand, "purple") 53.65%, map-get($brand, "violet") 74.48%, map-get($brand, "blue-lighter") 100%);
-        opacity: 0.1;
-        position: relative;
-        top: -34px;
-    }
-
     section.docs-content {
-        h1, h2, h3, h4, h5, h6 {
-            font-family: var(--font-display);
-            line-height: 1.5;
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: Inter;
+            line-height: 1.1em;
+            scroll-margin-top: 60px;
         }
 
-        h2, h3, h4, h5, h6 {
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
             margin: 18px 0 !important;
         }
 
@@ -70,48 +71,47 @@ body.section-registry {
         }
 
         h1 {
-            font-weight: 400;
+            font-weight: 600;
             font-size: 30px;
-            color: map-get($gray, 950);
+            color: var(--color-gray-950);
             margin: 16px 0;
         }
 
         h2 {
-            font-weight: 400;
+            font-weight: 600;
             font-size: 24px;
-            color: map-get($gray, 950);
+            color: var(--color-gray-950);
         }
 
         h3 {
             font-weight: 600;
             font-size: 21px;
-            color: map-get($gray, 950);
+            color: var(--color-gray-950);
         }
 
         h4 {
             font-weight: 600;
             font-size: 18px;
-            color: map-get($gray, 650);
+            color: var(--color-gray-700);
         }
 
         h5 {
-            font-weight: 400;
+            font-weight: 600;
             font-size: 18px;
-            color: map-get($gray, 950);
+            color: var(--color-gray-950);
         }
 
         h6 {
             font-weight: 600;
             font-size: 16px;
-            color: map-get($gray, 600);
-
+            color: var(--color-gray-700);
         }
 
         p {
-            font-family: var(--font-body);
+            font-family: var(--font-display);
             font-weight: 400;
             font-size: 16px;
-            color: map-get($gray, 950);
+            color: var(--color-gray-950);
             padding: 0 0 12px 0;
             margin: 0;
             line-height: 1.6;
@@ -125,24 +125,46 @@ body.section-registry {
             margin-bottom: 16px;
         }
 
-        p a:not(.btn-secondary),
-        ul li a[href]  {
-            color: map-get($brand, "blue");
-            background-color: #ffffff;
+        ul {
+            margin-bottom: 1.5rem;
+        }
+
+        p a:not(.btn),
+        ul li a[href] {
+            color: var(--color-violet-primary);
+            background: linear-gradient(
+                    90deg,
+                    rgba(142, 143, 151, 0),
+                    rgba(142, 143, 151, 0)
+                ),
+                linear-gradient(
+                    90deg,
+                    var(--color-gray-500),
+                    var(--color-gray-500)
+                );
+            background-position: 100% 100%, 0 100%;
+            background-repeat: no-repeat;
+            background-size: 100% 0.1em, 0 0.1em;
+            padding-bottom: 0.2rem;
+            transition: background-size 0.3s;
+            transition-timing-function: ease-in;
 
             &:hover {
-                color: map-get($brand, "blue-darker");
+                color: var(--color-violet-800);
+                text-decoration: none;
+                background-size: 0 0.1em, 100% 0.1em;
             }
         }
 
         .note .content p a {
-            background-color: transparent;
+            background: none;
+            padding-bottom: 0;
         }
 
         div.highlight pre,
         code,
         .font-mono {
-            font-family: var(--font-mono);
+            font-family: "Monaspace Neon Var";
             font-weight: 400;
         }
     }
@@ -209,10 +231,8 @@ body.section-registry {
             h2,
             ul h2 {
                 font-family: var(--font-body);
-                font-weight: 500;
                 font-size: 16px;
                 line-height: 14px;
-                color: #5f6065;
                 margin-top: 22px;
                 margin-left: 14px;
 
@@ -264,7 +284,7 @@ body.section-registry {
                 span.count-badge {
                     font-size: 11px;
                     padding: 0px 4px;
-                    border: 1px solid #364098;
+                    border: 1px solid var(--color-violet-primary);
                     border-radius: 6px;
                 }
             }
@@ -464,7 +484,7 @@ body.section-registry {
             .content {
                 border: none;
                 margin: 0;
-                padding: 0
+                padding: 0;
             }
 
             div.expand-more-18-18 {
@@ -502,7 +522,6 @@ body.section-registry {
             display: none;
         }
 
-
         @media (min-width: 1024px) {
             flex-direction: row;
             gap: 24px;
@@ -521,7 +540,7 @@ body.section-registry {
 
             .table-of-contents-feedback,
             #docsFeedbackContainer,
-            .docs-marketing-ad  {
+            .docs-marketing-ad {
                 display: block;
             }
 
@@ -564,9 +583,6 @@ body.section-registry {
     div#accordion-package-card {
         padding: 18px;
         background: #f9f9f9;
-        border: 1px solid #dcdcdc;
-        box-shadow: 0px 4px 4px rgba(220, 220, 220, 0.25);
-        border-radius: 4px;
         margin-top: 24px;
     }
 
@@ -629,14 +645,13 @@ body.section-registry {
             a {
                 display: flex;
                 gap: 4px;
-                font-family: var(--font-body);
+                font-family: Inter;
                 font-weight: 500;
                 font-size: 12px;
-                color: #4D5BD9;
                 align-items: center;
 
-                span {
-                    text-decoration-line: underline;
+                &:hover {
+                    color: var(--color-violet-primary);
                 }
             }
         }
@@ -662,7 +677,7 @@ body.section-registry {
         div.accordion-content,
         input,
         label.hide,
-        input:checked ~ label.show  {
+        input:checked ~ label.show {
             display: none;
         }
 
@@ -694,7 +709,7 @@ body.section-registry {
 
         div.package-card {
             display: none;
-            box-shadow: 0px 4px 4px 0px #DCDCDC40;
+            box-shadow: 0px 4px 4px 0px #dcdcdc40;
 
             @media (min-width: 1024px) {
                 display: flex;
@@ -743,10 +758,10 @@ body.section-registry {
             }
 
             li a {
-                font-family: var(--font-body);
+                font-family: Inter;
                 font-weight: 400;
                 font-size: 14px;
-                color: #364098;
+                color: var(--color-violet-primary);
             }
 
             li.h3 {
@@ -762,7 +777,7 @@ body.section-registry {
                 font-weight: 700;
 
                 &::before {
-                    background-color: #805ac3;
+                    background-color: var(--color-violet-primary);
                     border-radius: 50%;
                     width: 10px;
                     height: 10px;
@@ -781,7 +796,7 @@ body.section-registry {
         div.accordion-content,
         input,
         label.hide,
-        input:checked ~ label.show  {
+        input:checked ~ label.show {
             display: none;
         }
 
@@ -829,22 +844,22 @@ body.section-registry {
         align-items: center;
 
         .version-selector {
-            font-family: var(--font-body);
+            font-family: Inter;
             font-size: 12px;
             padding: 4px 8px;
-            border: 1px solid #dcdcdc;
+            border: 1px solid var(--color-gray-300);
             border-radius: 4px;
             background: #fff;
-            color: #5a5a5a;
+            color: var(--color-gray-700);
             cursor: pointer;
 
             &:hover {
-                border-color: #b0b0b0;
+                border-color: var(--color-gray-500);
             }
 
             &:focus {
                 outline: none;
-                border-color: #4D5BD9;
+                border-color: var(--color-violet-primary);
             }
         }
     }

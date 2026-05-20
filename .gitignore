@@ -5,6 +5,9 @@ node_modules
 themes/*/resources
 themes/default/assets/*
 !themes/default/assets/fingerprinted/
+!themes/default/assets/icons/
+themes/default/assets/icons/sprite.svg
+themes/default/assets/icons/sprite-manifest.json
 public
 .DS_Store
 .hugo_build.lock
@@ -28,4 +31,5 @@ themes/default/static/registry/packages/*/schema.json
 themes/default/static/registry/js/
 themes/default/static/registry/css/
 themes/default/data/asset_manifest.json
+themes/default/data/github_stars.yml
 themes/default/data/registry/package_versions/

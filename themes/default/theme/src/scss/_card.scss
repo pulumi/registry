@@ -1,12 +1,8 @@
 .card {
-    @apply rounded-xl;
-    box-shadow: 0px 6px 36px rgba(0, 0, 0, 0.1);
+    @apply rounded-lg border border-gray-200;
+}
 
-    .card-cta-btn {
-        @apply w-full absolute left-0 z-0;
-        bottom: -0.75rem;
-
-        .btn-primary {
-        }
-    }
+.card-hover {
+    @include transition;
+    @apply cursor-pointer hover:border-gray-300;
 }

@@ -67,7 +67,7 @@
 
         .logo-nav-menu {
 
-            @apply w-full bg-gray-850 pt-2 -ml-2 text-white font-display z-50;
+            @apply w-full bg-gray-900 pt-2 -ml-2 text-white font-display z-50;
             top: 44px; // Height of the nav bar at screens below large.
 
             @include screen-md {

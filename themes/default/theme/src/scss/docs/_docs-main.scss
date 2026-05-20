@@ -614,7 +614,6 @@ body.section-registry {
     div.table-of-contents div.package-card,
     div#accordion-package-card div.package-card {
         background: #fff;
-        border: 1px solid #f2f2f4;
         border-radius: 4px;
         padding: 18px;
         display: flex;
@@ -709,7 +708,6 @@ body.section-registry {
 
         div.package-card {
             display: none;
-            box-shadow: 0px 4px 4px 0px #dcdcdc40;
 
             @media (min-width: 1024px) {
                 display: flex;

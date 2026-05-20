@@ -85,10 +85,6 @@
       "schemaFile": "provider/cmd/pulumi-resource-grafana/schema.json"
     },
     {
-      "repoSlug": "lbrlabs/pulumi-launchdarkly",
-      "schemaFile": "provider/cmd/pulumi-resource-launchdarkly/schema.json"
-    },
-    {
       "repoSlug": "lbrlabs/pulumi-harness",
       "schemaFile": "provider/cmd/pulumi-resource-harness/schema.json"
     },
@@ -103,10 +99,6 @@
     {
       "repoSlug": "pulumiverse/pulumi-dynatrace",
       "schemaFile": "provider/cmd/pulumi-resource-dynatrace/schema.json"
-    },
-    {
-      "repoSlug": "pulumiverse/pulumi-aquasec",
-      "schemaFile": "provider/cmd/pulumi-resource-aquasec/schema.json"
     },
     {
       "repoSlug": "pulumiverse/pulumi-exoscale",
@@ -155,10 +147,6 @@
     {
       "repoSlug": "twingate/pulumi-twingate",
       "schemaFile": "provider/cmd/pulumi-resource-twingate/schema.json"
-    },
-    {
-      "repoSlug": "dirien/pulumi-azapi",
-      "schemaFile": "provider/cmd/pulumi-resource-azapi/schema.json"
     },
     {
       "repoSlug": "equinix/pulumi-equinix",
@@ -255,10 +243,6 @@
     {
       "repoSlug": "pulumiverse/pulumi-talos",
       "schemaFile": "provider/cmd/pulumi-resource-talos/schema.json"
-    },
-    {
-      "repoSlug": "dirien/pulumi-qovery",
-      "schemaFile": "provider/cmd/pulumi-resource-qovery/schema.json"
     },
     {
       "repoSlug": "littlejo/pulumi-cilium",

@@ -11,7 +11,7 @@ native: true
 package_status: public_preview
 publisher: Pulumi Labs
 repo_url: https://github.com/pulumi-labs/pulumi-nvidia-aicr
-schema_file_url: https://raw.githubusercontent.com/pulumi-labs/pulumi-nvidia-aicr/v0.1.6/provider/cmd/pulumi-resource-nvidia-aicr/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi-labs/pulumi-nvidia-aicr/v0.1.7/provider/cmd/pulumi-resource-nvidia-aicr/schema.json
 title: NVIDIA AI Cluster Runtime
-updated_on: 1779364203
-version: v0.1.6
+updated_on: 1779380873
+version: v0.1.7

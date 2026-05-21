@@ -19,7 +19,7 @@
     }
 
     .navigation-header {
-        font-family: var(--heading-font);
+        font-family: var(--font-display);
         font-weight: 400;
         font-size: 18px;
         color: $black;
@@ -58,7 +58,7 @@
         }
 
         .navigation-filter-input {
-            font-family: "Gilroy";
+            font-family: var(--font-body);
             font-size: 16px;
             height: 20px;
             width: 90%;

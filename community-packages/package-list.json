@@ -371,6 +371,18 @@
     {
       "repoSlug": "pulumi-labs/pulumi-nvidia-aicr",
       "schemaFile": "provider/cmd/pulumi-resource-nvidia-aicr/schema.json"
+    },
+    {
+      "repoSlug": "DefangLabs/pulumi-defang",
+      "schemaFile": "provider/cmd/pulumi-resource-defang-aws/schema.json"
+    },
+    {
+      "repoSlug": "DefangLabs/pulumi-defang",
+      "schemaFile": "provider/cmd/pulumi-resource-defang-gcp/schema.json"
+    },
+    {
+      "repoSlug": "DefangLabs/pulumi-defang",
+      "schemaFile": "provider/cmd/pulumi-resource-defang-azure/schema.json"
     }
   ]
 }

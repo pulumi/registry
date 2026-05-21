@@ -20,9 +20,7 @@ nav.main-nav {
 
             &:hover {
                 text-decoration: none;
-                background-color: var(--color-violet-250);
-                color: var(--color-violet-850);
-                border-left: var(--color-violet-850) 3px solid;
+                color: var(--color-violet-800);
             }
         }
     }
@@ -60,9 +58,9 @@ nav.main-nav {
             text-decoration: none;
 
             &:hover {
-                background-color: var(--color-violet-250);
-                color: var(--color-violet-850);
-                border-left: var(--color-violet-850) 3px solid;
+                background-color: var(--color-violet-200);
+                color: var(--color-violet-800);
+                border-left: var(--color-violet-800) 3px solid;
             }
         }
     }

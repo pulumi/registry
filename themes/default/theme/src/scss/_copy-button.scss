@@ -23,8 +23,9 @@ div.highlight {
         border-radius: 4px;
         padding: 3px 7px 5px 7px;
         position: absolute;
-        top: 0;
-        right: 0;
+        top: 20px;
+        right: 20px;
+        cursor: pointer;
 
         .code-mode-dark & {
             background: #4d5bd9;

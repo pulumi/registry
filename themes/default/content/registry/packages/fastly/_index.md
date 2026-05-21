@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-fastly/v12.0.1/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-fastly/v12.1.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-fastly/blob/v12.0.1/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-fastly/blob/v12.1.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Fastly Provider
 meta_desc: Provides an overview on how to configure the Pulumi Fastly provider.
@@ -90,7 +90,7 @@ using Fastly = Pulumi.Fastly;
 return await Deployment.RunAsync(() =>
 {
     // Create a Service
-    var myservice = new Fastly.Index.ServiceVcl("myservice", new()
+    var myservice = new Fastly.ServiceVcl("myservice", new()
     {
         Name = "myawesometestservice",
     });
@@ -174,8 +174,8 @@ import com.pulumi.Pulumi;
 import com.pulumi.core.Output;
 import com.pulumi.fastly.ServiceVcl;
 import com.pulumi.fastly.ServiceVclArgs;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;
@@ -273,7 +273,7 @@ using Fastly = Pulumi.Fastly;
 
 return await Deployment.RunAsync(() =>
 {
-    var myservice = new Fastly.Index.ServiceVcl("myservice");
+    var myservice = new Fastly.ServiceVcl("myservice");
 
 });
 
@@ -347,8 +347,8 @@ import com.pulumi.Context;
 import com.pulumi.Pulumi;
 import com.pulumi.core.Output;
 import com.pulumi.fastly.ServiceVcl;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;
@@ -403,7 +403,7 @@ using Fastly = Pulumi.Fastly;
 
 return await Deployment.RunAsync(() =>
 {
-    var myservice = new Fastly.Index.ServiceVcl("myservice");
+    var myservice = new Fastly.ServiceVcl("myservice");
 
 });
 
@@ -447,8 +447,8 @@ import com.pulumi.Context;
 import com.pulumi.Pulumi;
 import com.pulumi.core.Output;
 import com.pulumi.fastly.ServiceVcl;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;

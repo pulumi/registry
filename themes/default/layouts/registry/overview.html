@@ -33,21 +33,23 @@ $packageName := index $directories 2 }} {{ $packageHome := path.Join
                         How-to-Guides
                     </h1>
                     {{ else if strings.Contains .Permalink "api-docs" }}
-                    <!--Don't show the title in the top-most index page.-->
-                    <div class="title-ai-menu-container">
+                        <!--Don't show the title in the top-most index page.-->
                         {{ if not (in .Page.File.Path "api-docs/_index.md") }}
-                        {{ if and (.Params.h1) (not .Params.notitle) }}
-                        <h1>{{ .Params.h1 }}</h1>
-                        {{ else if and (ne .Title "") (not .Params.notitle) }}
-                        <h1 class="break-words">{{ $title_tag }}</h1>
-                        {{ if not (strings.Contains .Params.meta_desc "module")
-                        }} {{ .Scratch.Set "title_tag" $title_tag }} {{ partial
-                        "registry/package/pulumi-ai.html" . }} {{ end }}
-                    </div>
-                    {{ end }} {{ else if (in .Page.File.Path
-                    "api-docs/_index.md")}}
-                    <h1>{{ .Params.title }}: API Docs</h1>
-                    {{ end }} {{ else }} {{ if and (.Params.h1) (not
+                            <div class="title-ai-menu-container">
+                                {{ if and (.Params.h1) (not .Params.notitle) }}
+                                    <h1>{{ .Params.h1 }}</h1>
+                                {{ else if and (ne .Title "") (not .Params.notitle) }}
+                                    <h1 class="break-words">{{ $title_tag }}</h1>
+                                    {{ if not (strings.Contains .Params.meta_desc "module") }}
+                                        {{ .Scratch.Set "title_tag" $title_tag }}
+                                        {{ partial "registry/package/pulumi-ai.html" . }}
+                                    {{ end }}
+                                {{ end }}
+                            </div>
+                        {{ else if (in .Page.File.Path "api-docs/_index.md") }}
+                            <h1>{{ .Params.title }}: API Docs</h1>
+                        {{ end }}
+                    {{ else }} {{ if and (.Params.h1) (not
                     .Params.notitle) }}
                     <h1>{{ .Params.h1 }}</h1>
                     {{ else if and (ne .Title "") (not .Params.notitle) (not (in
@@ -63,8 +65,7 @@ $packageName := index $directories 2 }} {{ $packageHome := path.Join
             </div>
 
             <div class="docs-table-of-contents docs-toc-mobile">
-                {{ partial "docs/table-of-contents.html" . }} {{ partial
-                "docs/right-nav-ad.html" }}
+                {{ partial "docs/table-of-contents.html" . }}
             </div>
 
             <section class="docs-content">

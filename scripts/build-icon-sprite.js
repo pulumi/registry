@@ -19,9 +19,10 @@
  *                                  file fall back to the base SVG content)
  *   b-{name}           → brand    (single weight)
  *
- * Adapted from pulumi/docs scripts/build-icon-sprite.js. The icon source
- * SVGs were copied directly from that repo; this project does not currently
- * run sync-icons.js (which pulls from @phosphor-icons/core and simple-icons).
+ * The icon source SVGs under phosphor/ and brand/ are refreshed from
+ * @phosphor-icons/core and simple-icons by scripts/sync-icons.js. Run
+ * `make sync-icons` followed by `make build-icon-sprite` after bumping
+ * those upstream packages.
  */
 
 "use strict";
@@ -41,19 +42,34 @@ const MANIFEST_PATH = path.join(ICONS_DIR, "sprite-manifest.json");
 const PHOSPHOR_WEIGHTS = ["regular", "bold", "fill", "duotone"];
 const CUSTOM_WEIGHTS = ["regular", "bold", "fill", "duotone"];
 
-// Directories whose contents define which icons are referenced.
+// Directories whose contents define which icons are referenced. theme/src is
+// scanned so JS/TS/SCSS files that reference symbol IDs directly (e.g.
+// copy-llm-prompt.ts swapping between #p-copy-* and #p-check-*) are picked up.
 const SCAN_DIRS = [
     path.join(THEME_ROOT, "layouts"),
     path.join(THEME_ROOT, "content"),
     path.join(THEME_ROOT, "data"),
     path.join(THEME_ROOT, "archetypes"),
+    path.join(THEME_ROOT, "theme/src"),
 ];
 
-const SCAN_EXTS = new Set([".html", ".md", ".yml", ".yaml", ".toml", ".json"]);
+const SCAN_EXTS = new Set([
+    ".html",
+    ".md",
+    ".yml",
+    ".yaml",
+    ".toml",
+    ".json",
+    ".ts",
+    ".tsx",
+    ".js",
+    ".scss",
+]);
 
-// Always-include list for icons referenced only via highly dynamic patterns
-// (e.g. concatenated names, runtime data) that the tokeniser may miss.
-// Add names here if a build error reports a missing icon symbol.
+// Always-include list for icons referenced via patterns the tokeniser can't
+// see: names built at runtime by string concatenation, names that collide with
+// common words and get filtered out, or icons used by code outside SCAN_DIRS.
+// Add a name here if a build error reports a missing icon symbol.
 const FORCE_INCLUDE = new Set([
     // Brand icons (small list; some names like "x" are short common words).
 ]);

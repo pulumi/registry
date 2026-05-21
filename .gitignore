@@ -6,13 +6,13 @@ themes/*/resources
 themes/default/assets/*
 !themes/default/assets/fingerprinted/
 !themes/default/assets/icons/
-# Phosphor + brand SVGs are pulled from npm packages by scripts/sync-icons.js.
-# Only custom/ is hand-authored and committed.
+# Ignore sync-generated icon assets (rebuilt by `make ensure`).
 themes/default/assets/icons/phosphor/
-themes/default/assets/icons/brand/*
-!themes/default/assets/icons/brand/readme.svg
+themes/default/assets/icons/brand/
 themes/default/assets/icons/sprite.svg
 themes/default/assets/icons/sprite-manifest.json
+# Ignore the inbox for custom icon staging.
+themes/default/assets/icons/custom/_inbox/
 public
 .DS_Store
 .hugo_build.lock

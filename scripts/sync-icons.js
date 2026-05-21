@@ -2,174 +2,294 @@
 /**
  * sync-icons.js
  *
- * Refreshes the vendored icon SVGs under themes/default/assets/icons/ from
- * upstream npm packages:
+ * Populates themes/default/assets/icons/ from:
+ *   - @phosphor-icons/core  → phosphor/{regular,bold,duotone}/
+ *   - simple-icons          → brand/
+ *   - svglogos.dev (CDN)    → brand/  (fallback for missing simple-icons entries)
  *
- *   - @phosphor-icons/core   → phosphor/{regular,bold,fill,duotone}/<name>.svg
- *   - simple-icons           → brand/<name>.svg  (limited to BRAND_ICONS below)
+ * Run automatically by `make ensure` after yarn install.
  *
- * Custom Pulumi icons under assets/icons/custom/ are not touched.
- *
- * After running this, run `make build-icon-sprite` (or `make build-assets`)
- * to regenerate the sprite + manifest.
- *
- * Adapted from pulumi/docs scripts/sync-icons.js.
+ * Kept identical to pulumi/docs scripts/sync-icons.js other than ICONS_DEST.
  */
 
 "use strict";
 
 const fs = require("fs");
 const path = require("path");
+const https = require("https");
 
 const ROOT = path.resolve(__dirname, "..");
-const THEME_ROOT = path.join(ROOT, "themes/default");
-const ICONS_DIR = path.join(THEME_ROOT, "assets/icons");
-const PHOSPHOR_DIR = path.join(ICONS_DIR, "phosphor");
-const BRAND_DIR = path.join(ICONS_DIR, "brand");
+const PHOSPHOR_SRC = path.join(
+    ROOT,
+    "node_modules/@phosphor-icons/core/assets",
+);
+const ICONS_DEST = path.join(ROOT, "themes/default/assets/icons");
 
 const PHOSPHOR_WEIGHTS = ["regular", "bold", "fill", "duotone"];
 
-// Brand icons sourced from simple-icons. Add a slug here (matching the
-// simple-icons filename without extension) to vendor a new brand mark.
-const BRAND_ICONS = ["bluesky", "github", "linkedin", "slack", "x", "youtube"];
+/**
+ * Brand icon allowlist.
+ *
+ * name            — output filename under assets/icons/brand/ (no .svg)
+ * simpleIconsSlug — slug to look up in simple-icons (icon.slug); null = not available
+ * svglogosUrl     — svglogos.dev URL used when simpleIconsSlug is null or not found
+ */
+const BRAND_ICONS = [
+    { name: "github", simpleIconsSlug: "github", svglogosUrl: null },
+    { name: "youtube", simpleIconsSlug: "youtube", svglogosUrl: null },
+    { name: "x", simpleIconsSlug: "x", svglogosUrl: null },
+    { name: "readme", simpleIconsSlug: "readme", svglogosUrl: null },
+    {
+        name: "slack",
+        simpleIconsSlug: null,
+        svglogosUrl: "https://cdn.svglogos.dev/logos/slack-icon.svg",
+    },
+    {
+        name: "linkedin",
+        simpleIconsSlug: null,
+        svglogosUrl: "https://cdn.svglogos.dev/logos/linkedin-icon.svg",
+    },
+    { name: "bluesky", simpleIconsSlug: "bluesky", svglogosUrl: null },
+];
 
-// Resolve a package directory without going through require.resolve(), which
-// fails for packages with restricted `exports` fields (e.g. recent
-// @phosphor-icons/core releases).
-function resolvePackageDir(name) {
-    const dir = path.join(ROOT, "node_modules", name);
-    if (!fs.existsSync(dir)) {
-        throw new Error(`package not installed: ${name}`);
-    }
-    return dir;
-}
+// ─── Utilities ───────────────────────────────────────────────────────────────
 
-function resolvePhosphorAssets() {
-    const pkgDir = resolvePackageDir("@phosphor-icons/core");
-    const candidates = [path.join(pkgDir, "assets"), path.join(pkgDir, "raw")];
-    for (const dir of candidates) {
-        if (fs.existsSync(dir)) return dir;
-    }
-    throw new Error(
-        `@phosphor-icons/core: no SVG asset directory under ${pkgDir}`,
-    );
-}
-
-function resolveSimpleIcons() {
-    const pkgDir = resolvePackageDir("simple-icons");
-    const dir = path.join(pkgDir, "icons");
-    if (!fs.existsSync(dir)) {
-        throw new Error(
-            `simple-icons: icons directory not found under ${pkgDir}`,
-        );
-    }
-    return dir;
-}
-
-function ensureCleanDir(dir) {
-    fs.rmSync(dir, { recursive: true, force: true });
+function ensureDir(dir) {
     fs.mkdirSync(dir, { recursive: true });
 }
 
-function stripPhosphorSuffix(file, weight) {
-    if (weight === "regular") return file;
-    return file.replace(new RegExp(`-${weight}\\.svg$`), ".svg");
+function rmDir(dir) {
+    if (fs.existsSync(dir)) {
+        fs.rmSync(dir, { recursive: true, force: true });
+    }
 }
 
-// Duotone SVGs from upstream are plain two-path documents. The sprite styles
-// the two layers via `.duotone-primary` / `.duotone-secondary`, so we annotate
-// each path on sync: paths with opacity="0.2" become secondary, the rest
-// primary. Idempotent — skips paths that already carry a class.
-function annotateDuotone(svg) {
-    return svg.replace(/<path\b([^>]*?)\/>/g, (match, attrs) => {
-        if (/\bclass=/.test(attrs)) return match;
-        const role = /opacity="0\.2"/.test(attrs)
-            ? "duotone-secondary"
-            : "duotone-primary";
-        return `<path${attrs} class="${role}"/>`;
+/**
+ * Strip weight suffix from a phosphor filename.
+ * 'cloud-bold.svg'    (weight=bold)    → 'cloud.svg'
+ * 'cloud-duotone.svg' (weight=duotone) → 'cloud.svg'
+ * 'cloud.svg'         (weight=regular) → 'cloud.svg'
+ */
+function stripWeightSuffix(filename, weight) {
+    if (weight === "regular") return filename;
+    const suffix = `-${weight}.svg`;
+    if (filename.endsWith(suffix)) {
+        return filename.slice(0, -suffix.length) + ".svg";
+    }
+    return filename;
+}
+
+/**
+ * Inject CSS classes into a duotone SVG's paths.
+ *   opacity="0.2" path → class="duotone-secondary"
+ *   primary path       → class="duotone-primary"
+ *
+ * Phosphor duotone SVGs have exactly 2 self-closing <path .../> elements.
+ */
+function tagDuotonePaths(svg) {
+    // Secondary path: has opacity="0.2" attribute
+    svg = svg.replace(
+        /(<path)([^>]*?) opacity="0\.2"([^>]*?)(\/?>)/g,
+        '$1$2 opacity="0.2"$3 class="duotone-secondary"$4',
+    );
+    // Primary path: no class attribute yet
+    svg = svg.replace(
+        /(<path)(?![^>]*class=)([^>]*?)(\/?>)/g,
+        '$1$2 class="duotone-primary"$3',
+    );
+    return svg;
+}
+
+/**
+ * Normalise a brand SVG fetched from simple-icons.
+ * - Remove the embedded <title> element (we handle a11y in the partial).
+ * - simple-icons paths have no explicit fill; the SVG root already lacks fill
+ *   so the partial's <svg> replacement will add fill="currentColor".
+ */
+function normaliseSimpleIconsSvg(svg) {
+    return svg.replace(/<title>[^<]*<\/title>/g, "");
+}
+
+/**
+ * Normalise a brand SVG fetched from svglogos.dev.
+ * - Strip the XML declaration.
+ * - Strip hard-coded fill="#..." attributes from all elements so they
+ *   inherit currentColor from the injected <svg> wrapper.
+ * - Remove width/height attributes from <svg> (keep viewBox).
+ */
+function normalisesvglogosSvg(svg) {
+    // Strip XML declaration
+    svg = svg.replace(/<\?xml[^?]*\?>\s*/g, "");
+    // Strip hard-coded fill attributes on any element
+    svg = svg.replace(/ fill="#[0-9a-fA-F]+"(?=[^>]*>)/g, "");
+    // Strip width/height from the root <svg> element (they come before viewBox usually)
+    svg = svg.replace(/(<svg[^>]*?) width="[^"]*"/g, "$1");
+    svg = svg.replace(/(<svg[^>]*?) height="[^"]*"/g, "$1");
+    return svg.trim();
+}
+
+/**
+ * Fetch a URL and resolve with the response body as a string.
+ * Follows HTTP 3xx redirects (up to 5 hops).
+ */
+function fetchUrl(url, redirectsLeft = 5) {
+    return new Promise((resolve, reject) => {
+        if (redirectsLeft === 0) {
+            reject(new Error(`Too many redirects for ${url}`));
+            return;
+        }
+        https
+            .get(url, { timeout: 15000 }, (res) => {
+                if (
+                    res.statusCode >= 300 &&
+                    res.statusCode < 400 &&
+                    res.headers.location
+                ) {
+                    res.resume();
+                    resolve(fetchUrl(res.headers.location, redirectsLeft - 1));
+                    return;
+                }
+                if (res.statusCode !== 200) {
+                    res.resume();
+                    reject(new Error(`HTTP ${res.statusCode} for ${url}`));
+                    return;
+                }
+                const chunks = [];
+                res.on("data", (chunk) => chunks.push(chunk));
+                res.on("end", () =>
+                    resolve(Buffer.concat(chunks).toString("utf8")),
+                );
+                res.on("error", reject);
+            })
+            .on("error", reject)
+            .on("timeout", function () {
+                this.destroy(new Error(`Request timed out: ${url}`));
+            });
     });
 }
 
-function syncPhosphor() {
-    const src = resolvePhosphorAssets();
-    console.log(`  source: ${path.relative(ROOT, src)}`);
+// ─── Phosphor sync ───────────────────────────────────────────────────────────
 
-    let total = 0;
-    for (const weight of PHOSPHOR_WEIGHTS) {
-        const srcDir = path.join(src, weight);
-        if (!fs.existsSync(srcDir)) {
-            console.warn(
-                `  warn: missing weight directory ${srcDir} — skipping`,
-            );
-            continue;
-        }
-        const destDir = path.join(PHOSPHOR_DIR, weight);
-        ensureCleanDir(destDir);
+function syncPhosphorWeight(weight) {
+    const srcDir = path.join(PHOSPHOR_SRC, weight);
+    const destDir = path.join(ICONS_DEST, "phosphor", weight);
 
-        let count = 0;
-        for (const file of fs.readdirSync(srcDir)) {
-            if (!file.endsWith(".svg")) continue;
-            const destName = stripPhosphorSuffix(file, weight);
-            const destPath = path.join(destDir, destName);
-            if (weight === "duotone") {
-                const svg = fs.readFileSync(path.join(srcDir, file), "utf8");
-                fs.writeFileSync(destPath, annotateDuotone(svg));
-            } else {
-                fs.copyFileSync(path.join(srcDir, file), destPath);
-            }
-            count++;
-        }
-        console.log(`  phosphor/${weight}: ${count} icons`);
-        total += count;
+    if (!fs.existsSync(srcDir)) {
+        console.error(`  [phosphor] Source dir not found: ${srcDir}`);
+        process.exit(1);
     }
-    return total;
-}
 
-function syncBrand() {
-    const src = resolveSimpleIcons();
-    console.log(`  source: ${path.relative(ROOT, src)}`);
-
-    // Preserve any non-simple-icons brand SVGs (e.g. readme.svg). Only the
-    // names in BRAND_ICONS are refreshed; everything else is left alone.
-    fs.mkdirSync(BRAND_DIR, { recursive: true });
+    ensureDir(destDir);
+    const files = fs.readdirSync(srcDir).filter((f) => f.endsWith(".svg"));
 
     let count = 0;
-    const missing = [];
-    for (const name of BRAND_ICONS) {
-        const srcFile = path.join(src, `${name}.svg`);
-        if (!fs.existsSync(srcFile)) {
-            missing.push(name);
-            continue;
+    for (const file of files) {
+        const outName = stripWeightSuffix(file, weight);
+        let svg = fs.readFileSync(path.join(srcDir, file), "utf8");
+
+        if (weight === "duotone") {
+            svg = tagDuotonePaths(svg);
         }
-        // Strip the inline <title> simple-icons embeds; we rely on the
-        // consuming partial's aria-label for the accessible name and
-        // would otherwise duplicate it for screen readers.
-        const svg = fs
-            .readFileSync(srcFile, "utf8")
-            .replace(/<title>[\s\S]*?<\/title>/, "");
-        fs.writeFileSync(path.join(BRAND_DIR, `${name}.svg`), svg);
+
+        fs.writeFileSync(path.join(destDir, outName), svg);
         count++;
     }
-    console.log(
-        `  brand: ${count} icons (${BRAND_ICONS.length - count} missing)`,
-    );
-    if (missing.length) {
-        console.warn(
-            `  warn: not found in simple-icons: ${missing.join(", ")}`,
-        );
-    }
-    return count;
+
+    console.log(`  [phosphor/${weight}] ${count} icons`);
 }
 
-function main() {
+function syncPhosphor() {
+    console.log("Syncing Phosphor icons…");
+    rmDir(path.join(ICONS_DEST, "phosphor"));
+
+    for (const weight of PHOSPHOR_WEIGHTS) {
+        syncPhosphorWeight(weight);
+    }
+}
+
+// ─── Brand sync ──────────────────────────────────────────────────────────────
+
+function loadSimpleIcons() {
+    try {
+        return require("simple-icons");
+    } catch (e) {
+        console.error("  [brand] Could not load simple-icons:", e.message);
+        process.exit(1);
+    }
+}
+
+async function syncBrand() {
+    console.log("Syncing brand icons…");
+    const brandDir = path.join(ICONS_DEST, "brand");
+    rmDir(brandDir);
+    ensureDir(brandDir);
+
+    const allSimpleIcons = Object.values(loadSimpleIcons());
+
+    for (const entry of BRAND_ICONS) {
+        const destFile = path.join(brandDir, `${entry.name}.svg`);
+        let svg = null;
+
+        // Try simple-icons first
+        if (entry.simpleIconsSlug) {
+            const icon = allSimpleIcons.find(
+                (i) => i.slug === entry.simpleIconsSlug,
+            );
+            if (icon) {
+                svg = normaliseSimpleIconsSvg(icon.svg);
+                console.log(`  [brand] ${entry.name} ← simple-icons`);
+            } else {
+                console.warn(
+                    `  [brand] WARN: simple-icons slug "${entry.simpleIconsSlug}" not found`,
+                );
+            }
+        }
+
+        // Fall back to svglogos.dev
+        if (!svg) {
+            if (!entry.svglogosUrl) {
+                console.error(
+                    `  [brand] ERROR: "${entry.name}" not found in simple-icons and no svglogosUrl configured`,
+                );
+                process.exit(1);
+            }
+            try {
+                const raw = await fetchUrl(entry.svglogosUrl);
+                svg = normalisesvglogosSvg(raw);
+                console.log(`  [brand] ${entry.name} ← svglogos.dev`);
+            } catch (e) {
+                console.error(
+                    `  [brand] ERROR: Failed to fetch ${entry.svglogosUrl}: ${e.message}`,
+                );
+                console.error(
+                    "  Network is required for brand icons not in simple-icons (slack, linkedin).",
+                );
+                console.error(
+                    "  Run `make ensure` with internet access, or pre-commit the fallback SVGs.",
+                );
+                process.exit(1);
+            }
+        }
+
+        fs.writeFileSync(destFile, svg);
+    }
+
+    console.log(`  [brand] ${BRAND_ICONS.length} icons`);
+}
+
+// ─── Main ─────────────────────────────────────────────────────────────────────
+
+async function main() {
     console.log("=== sync-icons ===");
-    const phosphor = syncPhosphor();
-    const brand = syncBrand();
-    console.log(`  total: ${phosphor + brand} icons synced`);
-    console.log(
-        "  next: run `make build-icon-sprite` to regenerate the sprite",
-    );
+    ensureDir(ICONS_DEST);
+
+    syncPhosphor();
+    await syncBrand();
+
     console.log("=== done ===");
 }
 
-main();
+main().catch((e) => {
+    console.error("sync-icons failed:", e);
+    process.exit(1);
+});

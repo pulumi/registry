@@ -4,7 +4,8 @@
  *
  * Builds an SVG sprite (themes/default/assets/icons/sprite.svg) plus a JSON
  * manifest (themes/default/assets/icons/sprite-manifest.json) from the per-
- * icon SVGs under themes/default/assets/icons/{phosphor,custom,brand}/.
+ * icon SVGs that sync-icons.js writes to
+ * themes/default/assets/icons/{phosphor,custom,brand}/.
  *
  * The set of icons included is determined by tokenising the source tree
  * (layouts, content, data, archetypes within themes/default) and intersecting
@@ -19,10 +20,10 @@
  *                                  file fall back to the base SVG content)
  *   b-{name}           → brand    (single weight)
  *
- * The icon source SVGs under phosphor/ and brand/ are refreshed from
- * @phosphor-icons/core and simple-icons by scripts/sync-icons.js. Run
- * `make sync-icons` followed by `make build-icon-sprite` after bumping
- * those upstream packages.
+ * Run automatically by `make ensure` after sync-icons.js.
+ *
+ * Kept identical to pulumi/docs scripts/build-icon-sprite.js other than the
+ * paths under themes/default/.
  */
 
 "use strict";
@@ -42,36 +43,23 @@ const MANIFEST_PATH = path.join(ICONS_DIR, "sprite-manifest.json");
 const PHOSPHOR_WEIGHTS = ["regular", "bold", "fill", "duotone"];
 const CUSTOM_WEIGHTS = ["regular", "bold", "fill", "duotone"];
 
-// Directories whose contents define which icons are referenced. theme/src is
-// scanned so JS/TS/SCSS files that reference symbol IDs directly (e.g.
-// copy-llm-prompt.ts swapping between #p-copy-* and #p-check-*) are picked up.
+// Directories whose contents define which icons are referenced.
 const SCAN_DIRS = [
     path.join(THEME_ROOT, "layouts"),
     path.join(THEME_ROOT, "content"),
     path.join(THEME_ROOT, "data"),
     path.join(THEME_ROOT, "archetypes"),
-    path.join(THEME_ROOT, "theme/src"),
 ];
 
-const SCAN_EXTS = new Set([
-    ".html",
-    ".md",
-    ".yml",
-    ".yaml",
-    ".toml",
-    ".json",
-    ".ts",
-    ".tsx",
-    ".js",
-    ".scss",
-]);
+const SCAN_EXTS = new Set([".html", ".md", ".yml", ".yaml", ".toml", ".json"]);
 
-// Always-include list for icons referenced via patterns the tokeniser can't
-// see: names built at runtime by string concatenation, names that collide with
-// common words and get filtered out, or icons used by code outside SCAN_DIRS.
-// Add a name here if a build error reports a missing icon symbol.
+// Always-include list for icons referenced only via highly dynamic patterns
+// (e.g. concatenated names, runtime data) that the tokeniser may miss.
+// Add names here if a build error reports a missing icon symbol.
 const FORCE_INCLUDE = new Set([
-    // Brand icons (small list; some names like "x" are short common words).
+    // Defensive: every brand icon (cheap, ~7 entries).
+    // (Brand names are short common words like "x" that the min-length
+    // filter would otherwise drop.)
 ]);
 
 // ─── Utilities ───────────────────────────────────────────────────────────────
@@ -89,6 +77,9 @@ function stripWeightSuffix(name) {
     return name.replace(/-(bold|fill|duotone)$/, "");
 }
 
+/**
+ * Walk a directory recursively, yielding files matching SCAN_EXTS.
+ */
 function* walk(dir) {
     if (!fs.existsSync(dir)) return;
     for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
@@ -101,6 +92,10 @@ function* walk(dir) {
     }
 }
 
+/**
+ * Tokenise text, yielding lowercase identifiers of length >= 2 that look
+ * like icon names: [a-z][a-z0-9-]*.
+ */
 function tokenise(text) {
     const out = new Set();
     const re = /[a-z][a-z0-9]*(?:-[a-z0-9]+)*/g;
@@ -125,10 +120,15 @@ function buildTokenSet() {
     return tokens;
 }
 
+/**
+ * Extract the inner content (children of <svg>) and the viewBox attribute
+ * from a raw SVG string. Returns { inner, viewBox }.
+ */
 function extractSvg(svg) {
     const vbMatch = svg.match(/viewBox="([^"]+)"/);
     const viewBox = vbMatch ? vbMatch[1] : "0 0 256 256";
 
+    // Strip the opening <svg ...> and closing </svg>.
     let inner = svg.replace(/^[\s\S]*?<svg\b[^>]*>/, "");
     inner = inner.replace(/<\/svg>\s*$/, "");
     return { inner: inner.trim(), viewBox };
@@ -146,6 +146,7 @@ function build() {
     const tokens = buildTokenSet();
     console.log(`  scanned tokens: ${tokens.size}`);
 
+    // Discover available icon basenames per family.
     const phosphorAvailable = new Set(
         listSvgs(path.join(PHOSPHOR_DIR, "regular")).map(basenameNoExt),
     );
@@ -154,6 +155,7 @@ function build() {
     );
     const brandAvailable = new Set(listSvgs(BRAND_DIR).map(basenameNoExt));
 
+    // Allowlist: intersection of tokens with available names.
     const phosphorWanted = new Set(
         [...phosphorAvailable].filter(
             (n) => tokens.has(n) || FORCE_INCLUDE.has(n),
@@ -164,7 +166,8 @@ function build() {
             (n) => tokens.has(n) || FORCE_INCLUDE.has(n),
         ),
     );
-    // Brand: include all (small list, names are short common words).
+    // Brand: include all (small list, names are short common words that
+    // the min-length filter or context might miss).
     const brandWanted = new Set(brandAvailable);
 
     console.log(
@@ -179,6 +182,7 @@ function build() {
 
     const symbols = [];
 
+    // Phosphor: 4 weights per icon.
     for (const name of [...phosphorWanted].sort()) {
         for (const weight of PHOSPHOR_WEIGHTS) {
             const file = path.join(PHOSPHOR_DIR, weight, `${name}.svg`);
@@ -190,6 +194,8 @@ function build() {
         }
     }
 
+    // Custom: 4 weights per icon, falling back to the base SVG when a
+    // weight-specific file does not exist.
     for (const name of [...customWanted].sort()) {
         const baseFile = path.join(CUSTOM_DIR, `${name}.svg`);
         const baseExists = fs.existsSync(baseFile);
@@ -211,6 +217,7 @@ function build() {
         }
     }
 
+    // Brand: single symbol per icon.
     for (const name of [...brandWanted].sort()) {
         const file = path.join(BRAND_DIR, `${name}.svg`);
         if (!fs.existsSync(file)) continue;
@@ -218,6 +225,8 @@ function build() {
         symbols.push(makeSymbol(`b-${name}`, viewBox, inner));
     }
 
+    // Wrap. display:none keeps the sprite from rendering if anyone ever
+    // inlines it directly.
     const sprite =
         '<svg xmlns="http://www.w3.org/2000/svg" style="display:none">' +
         symbols.join("") +

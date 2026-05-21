@@ -5,6 +5,7 @@ clean:
 .PHONY: ensure
 ensure:
 	./scripts/ensure.sh
+	$(MAKE) sync-icons
 
 .PHONY: lint
 lint: lint-go lint-markdown
@@ -133,7 +134,7 @@ fetch-github-stars:
 	node scripts/fetch-github-stars.js
 
 .PHONY: build-assets
-build-assets: ensure sync-icons build-icon-sprite fetch-github-stars
+build-assets: ensure build-icon-sprite fetch-github-stars
 	yarn --cwd ./themes/default/theme run build
 
 .PHONY: ci_bucket_cleanup

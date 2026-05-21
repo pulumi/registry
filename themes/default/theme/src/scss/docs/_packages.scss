@@ -63,10 +63,10 @@
         }
 
         &[data-filter-value="component"] {
-            @apply border-purple-300;
+            @apply border-violet-300;
 
             [data-selected-types*="component"] & {
-                @apply bg-purple-300;
+                @apply bg-violet-300;
             }
         }
     }
@@ -135,13 +135,9 @@
     .all-packages .package {
         a:hover {
             .title {
-                @apply text-blue-600 underline;
+                @apply text-violet-primary;
             }
         }
-    }
-
-    .package .content-container {
-        box-shadow: 0px 4px 4px rgba(220, 220, 220, 0.25);
     }
 }
 
@@ -149,10 +145,9 @@ div.packages {
     section.featured-packages,
     section.all-packages {
         h2 {
-            font-family: var(--font-display);
-            font-weight: 400;
-            font-size: 30px;
-            color: #131314;
+            font-family: Inter;
+            font-weight: 600;
+            color: var(--color-gray-950);
             margin-top: 16px;
         }
     }
@@ -171,13 +166,9 @@ div.packages section.featured-packages {
         gap: 24px;
 
         div.featured-package {
-            background: rgba(230, 222, 243, 0.08);
-            border: 2px solid #e6def3;
-            box-shadow: 0px 4px 4px rgba(230, 222, 243, 0.25);
-            border-radius: 12px;
             display: flex;
             flex-direction: column;
-            flex-basis: 100%;;
+            flex-basis: 100%;
             align-items: center;
             justify-content: stretch;
             padding: 18px;
@@ -194,18 +185,11 @@ div.packages section.featured-packages {
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                height: 32px;
+                height: 48px;
             }
 
             .package-title {
-                flex-grow: 1;
-                font-family: var(--font-display);
-                font-weight: 500;
-                font-size: 24px;
-                color: #131314;
-                display: flex;
-                align-items: center;
-                justify-content: center;
+                display: none;
             }
 
             .package-version {

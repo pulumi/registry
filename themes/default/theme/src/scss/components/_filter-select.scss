@@ -3,7 +3,7 @@ pulumi-filter-select {
         @apply font-display text-base;
 
         .toggle {
-            @apply pl-2 pr-6 py-1 rounded bg-white border-2 border-gray-900 transition-all;
+            @apply pl-2 pr-6 py-1 rounded-lg bg-white border-1 border-gray-300 transition-all;
 
             @include screen-md {
                 @apply w-48;
@@ -15,7 +15,7 @@ pulumi-filter-select {
         }
 
         .options {
-            @apply bg-white py-2 pl-1 pr-4 rounded border border-gray-900 shadow mt-1 leading-loose z-50;
+            @apply bg-white py-2 pl-1 pr-4 rounded-lg border border-gray-300 shadow mt-1 leading-loose z-50;
 
             @include screen-md {
                 @apply pr-8;

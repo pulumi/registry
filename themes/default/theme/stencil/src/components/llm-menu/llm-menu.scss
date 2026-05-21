@@ -14,14 +14,15 @@
     text-decoration: none;
     transition: color 0.2s ease;
 
-    i:first-child {
+    > svg:first-child {
         width: 14px;
+        height: 14px;
         margin-right: 0.5rem;
     }
 
-    .fa-chevron-up,
-    .fa-chevron-down {
-        font-size: 0.625rem;
+    .llm-menu-caret {
+        width: 0.625rem;
+        height: 0.625rem;
         margin-left: 0.25rem;
     }
 }
@@ -97,7 +98,8 @@
 
 .llm-menu-external {
     flex-shrink: 0;
-    font-size: 0.75rem;
+    width: 0.75rem;
+    height: 0.75rem;
     color: #a0aec0;
 }
 

@@ -7,11 +7,11 @@
     "license": "Apache-2.0",
     "dependencies": {
         "@aws-sdk/client-s3": "^3.1040.0",
-        "@fullhuman/postcss-purgecss": "^7.0.0",
         "@octokit/auth-action": "^5.0.0",
         "@octokit/graphql": "^7.0.0",
         "@octokit/rest": "^21.0.0",
         "@slack/web-api": "^7.15.1",
+        "beasties": "^0.4.2",
         "broken-link-checker": "^0.7.8",
         "cheerio": "^1.2.0",
         "concurrently": "^6.0.0",
@@ -26,7 +26,6 @@
         "mocha": "^10.8.2",
         "postcss": "^8.5.13",
         "postcss-cli": "^11.0.0",
-        "beasties": "^0.4.2",
         "sitemap": "^9.0.1",
         "sitemapper": "^3.2.24",
         "util": "^0.12.5"

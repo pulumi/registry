@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi-labs/pulumi-nvidia-aicr/v0.1.6/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi-labs/pulumi-nvidia-aicr/v0.1.7/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi-labs/pulumi-nvidia-aicr/blob/v0.1.6/docs/installation-configuration.md
+edit_url: https://github.com/pulumi-labs/pulumi-nvidia-aicr/blob/v0.1.7/docs/installation-configuration.md
 title: NVIDIA AI Cluster Runtime (AICR) Installation & Configuration
 meta_desc: How to install the Pulumi NVIDIA AICR provider and its language SDKs.
 layout: package

@@ -24,32 +24,32 @@
  * run sync-icons.js (which pulls from @phosphor-icons/core and simple-icons).
  */
 
-'use strict';
+"use strict";
 
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
-const ROOT = path.resolve(__dirname, '..');
-const THEME_ROOT = path.join(ROOT, 'themes/default');
-const ICONS_DIR = path.join(THEME_ROOT, 'assets/icons');
-const PHOSPHOR_DIR = path.join(ICONS_DIR, 'phosphor');
-const CUSTOM_DIR = path.join(ICONS_DIR, 'custom');
-const BRAND_DIR = path.join(ICONS_DIR, 'brand');
-const SPRITE_PATH = path.join(ICONS_DIR, 'sprite.svg');
-const MANIFEST_PATH = path.join(ICONS_DIR, 'sprite-manifest.json');
+const ROOT = path.resolve(__dirname, "..");
+const THEME_ROOT = path.join(ROOT, "themes/default");
+const ICONS_DIR = path.join(THEME_ROOT, "assets/icons");
+const PHOSPHOR_DIR = path.join(ICONS_DIR, "phosphor");
+const CUSTOM_DIR = path.join(ICONS_DIR, "custom");
+const BRAND_DIR = path.join(ICONS_DIR, "brand");
+const SPRITE_PATH = path.join(ICONS_DIR, "sprite.svg");
+const MANIFEST_PATH = path.join(ICONS_DIR, "sprite-manifest.json");
 
-const PHOSPHOR_WEIGHTS = ['regular', 'bold', 'fill', 'duotone'];
-const CUSTOM_WEIGHTS = ['regular', 'bold', 'fill', 'duotone'];
+const PHOSPHOR_WEIGHTS = ["regular", "bold", "fill", "duotone"];
+const CUSTOM_WEIGHTS = ["regular", "bold", "fill", "duotone"];
 
 // Directories whose contents define which icons are referenced.
 const SCAN_DIRS = [
-    path.join(THEME_ROOT, 'layouts'),
-    path.join(THEME_ROOT, 'content'),
-    path.join(THEME_ROOT, 'data'),
-    path.join(THEME_ROOT, 'archetypes'),
+    path.join(THEME_ROOT, "layouts"),
+    path.join(THEME_ROOT, "content"),
+    path.join(THEME_ROOT, "data"),
+    path.join(THEME_ROOT, "archetypes"),
 ];
 
-const SCAN_EXTS = new Set(['.html', '.md', '.yml', '.yaml', '.toml', '.json']);
+const SCAN_EXTS = new Set([".html", ".md", ".yml", ".yaml", ".toml", ".json"]);
 
 // Always-include list for icons referenced only via highly dynamic patterns
 // (e.g. concatenated names, runtime data) that the tokeniser may miss.
@@ -62,15 +62,15 @@ const FORCE_INCLUDE = new Set([
 
 function listSvgs(dir) {
     if (!fs.existsSync(dir)) return [];
-    return fs.readdirSync(dir).filter(f => f.endsWith('.svg'));
+    return fs.readdirSync(dir).filter((f) => f.endsWith(".svg"));
 }
 
 function basenameNoExt(file) {
-    return file.replace(/\.svg$/, '');
+    return file.replace(/\.svg$/, "");
 }
 
 function stripWeightSuffix(name) {
-    return name.replace(/-(bold|fill|duotone)$/, '');
+    return name.replace(/-(bold|fill|duotone)$/, "");
 }
 
 function* walk(dir) {
@@ -100,7 +100,7 @@ function buildTokenSet() {
     const tokens = new Set();
     for (const dir of SCAN_DIRS) {
         for (const file of walk(dir)) {
-            const text = fs.readFileSync(file, 'utf8');
+            const text = fs.readFileSync(file, "utf8");
             for (const tok of tokenise(text)) {
                 tokens.add(tok);
             }
@@ -111,10 +111,10 @@ function buildTokenSet() {
 
 function extractSvg(svg) {
     const vbMatch = svg.match(/viewBox="([^"]+)"/);
-    const viewBox = vbMatch ? vbMatch[1] : '0 0 256 256';
+    const viewBox = vbMatch ? vbMatch[1] : "0 0 256 256";
 
-    let inner = svg.replace(/^[\s\S]*?<svg\b[^>]*>/, '');
-    inner = inner.replace(/<\/svg>\s*$/, '');
+    let inner = svg.replace(/^[\s\S]*?<svg\b[^>]*>/, "");
+    inner = inner.replace(/<\/svg>\s*$/, "");
     return { inner: inner.trim(), viewBox };
 }
 
@@ -125,33 +125,41 @@ function makeSymbol(id, viewBox, inner) {
 // ─── Build ───────────────────────────────────────────────────────────────────
 
 function build() {
-    console.log('=== build-icon-sprite ===');
+    console.log("=== build-icon-sprite ===");
 
     const tokens = buildTokenSet();
     console.log(`  scanned tokens: ${tokens.size}`);
 
     const phosphorAvailable = new Set(
-        listSvgs(path.join(PHOSPHOR_DIR, 'regular')).map(basenameNoExt),
+        listSvgs(path.join(PHOSPHOR_DIR, "regular")).map(basenameNoExt),
     );
     const customAvailable = new Set(
         listSvgs(CUSTOM_DIR).map(basenameNoExt).map(stripWeightSuffix),
     );
-    const brandAvailable = new Set(
-        listSvgs(BRAND_DIR).map(basenameNoExt),
-    );
+    const brandAvailable = new Set(listSvgs(BRAND_DIR).map(basenameNoExt));
 
     const phosphorWanted = new Set(
-        [...phosphorAvailable].filter(n => tokens.has(n) || FORCE_INCLUDE.has(n)),
+        [...phosphorAvailable].filter(
+            (n) => tokens.has(n) || FORCE_INCLUDE.has(n),
+        ),
     );
     const customWanted = new Set(
-        [...customAvailable].filter(n => tokens.has(n) || FORCE_INCLUDE.has(n)),
+        [...customAvailable].filter(
+            (n) => tokens.has(n) || FORCE_INCLUDE.has(n),
+        ),
     );
     // Brand: include all (small list, names are short common words).
     const brandWanted = new Set(brandAvailable);
 
-    console.log(`  phosphor: ${phosphorWanted.size} / ${phosphorAvailable.size} included`);
-    console.log(`  custom:   ${customWanted.size} / ${customAvailable.size} included`);
-    console.log(`  brand:    ${brandWanted.size} / ${brandAvailable.size} included`);
+    console.log(
+        `  phosphor: ${phosphorWanted.size} / ${phosphorAvailable.size} included`,
+    );
+    console.log(
+        `  custom:   ${customWanted.size} / ${customAvailable.size} included`,
+    );
+    console.log(
+        `  brand:    ${brandWanted.size} / ${brandAvailable.size} included`,
+    );
 
     const symbols = [];
 
@@ -159,7 +167,9 @@ function build() {
         for (const weight of PHOSPHOR_WEIGHTS) {
             const file = path.join(PHOSPHOR_DIR, weight, `${name}.svg`);
             if (!fs.existsSync(file)) continue;
-            const { inner, viewBox } = extractSvg(fs.readFileSync(file, 'utf8'));
+            const { inner, viewBox } = extractSvg(
+                fs.readFileSync(file, "utf8"),
+            );
             symbols.push(makeSymbol(`p-${name}-${weight}`, viewBox, inner));
         }
     }
@@ -167,14 +177,14 @@ function build() {
     for (const name of [...customWanted].sort()) {
         const baseFile = path.join(CUSTOM_DIR, `${name}.svg`);
         const baseExists = fs.existsSync(baseFile);
-        const baseSvg = baseExists ? fs.readFileSync(baseFile, 'utf8') : null;
+        const baseSvg = baseExists ? fs.readFileSync(baseFile, "utf8") : null;
 
         for (const weight of CUSTOM_WEIGHTS) {
-            const suffix = weight === 'regular' ? '' : `-${weight}`;
+            const suffix = weight === "regular" ? "" : `-${weight}`;
             const file = path.join(CUSTOM_DIR, `${name}${suffix}.svg`);
             let raw;
             if (fs.existsSync(file)) {
-                raw = fs.readFileSync(file, 'utf8');
+                raw = fs.readFileSync(file, "utf8");
             } else if (baseSvg) {
                 raw = baseSvg;
             } else {
@@ -188,14 +198,14 @@ function build() {
     for (const name of [...brandWanted].sort()) {
         const file = path.join(BRAND_DIR, `${name}.svg`);
         if (!fs.existsSync(file)) continue;
-        const { inner, viewBox } = extractSvg(fs.readFileSync(file, 'utf8'));
+        const { inner, viewBox } = extractSvg(fs.readFileSync(file, "utf8"));
         symbols.push(makeSymbol(`b-${name}`, viewBox, inner));
     }
 
     const sprite =
         '<svg xmlns="http://www.w3.org/2000/svg" style="display:none">' +
-        symbols.join('') +
-        '</svg>\n';
+        symbols.join("") +
+        "</svg>\n";
 
     fs.writeFileSync(SPRITE_PATH, sprite);
 
@@ -204,12 +214,14 @@ function build() {
         custom: [...customWanted].sort(),
         brand: [...brandWanted].sort(),
     };
-    fs.writeFileSync(MANIFEST_PATH, JSON.stringify(manifest, null, 2) + '\n');
+    fs.writeFileSync(MANIFEST_PATH, JSON.stringify(manifest, null, 2) + "\n");
 
     const kb = (sprite.length / 1024).toFixed(1);
-    console.log(`  wrote ${path.relative(ROOT, SPRITE_PATH)} (${symbols.length} symbols, ${kb} KB)`);
+    console.log(
+        `  wrote ${path.relative(ROOT, SPRITE_PATH)} (${symbols.length} symbols, ${kb} KB)`,
+    );
     console.log(`  wrote ${path.relative(ROOT, MANIFEST_PATH)}`);
-    console.log('=== done ===');
+    console.log("=== done ===");
 }
 
 build();

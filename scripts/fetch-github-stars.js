@@ -8,7 +8,14 @@ const path = require("path");
 
 const REPO = "pulumi/pulumi";
 const API_URL = `https://api.github.com/repos/${REPO}`;
-const OUT = path.join(__dirname, "..", "themes", "default", "data", "github_stars.yml");
+const OUT = path.join(
+    __dirname,
+    "..",
+    "themes",
+    "default",
+    "data",
+    "github_stars.yml",
+);
 const FALLBACK_COUNT = 25000;
 
 function formatCompact(n) {
@@ -34,7 +41,9 @@ function write(count, fetched) {
     ];
     fs.mkdirSync(path.dirname(OUT), { recursive: true });
     fs.writeFileSync(OUT, lines.join("\n"));
-    console.log(`github-stars: wrote ${OUT} (count=${count}, display=${display}, fetched=${fetched})`);
+    console.log(
+        `github-stars: wrote ${OUT} (count=${count}, display=${display}, fetched=${fetched})`,
+    );
 }
 
 async function main() {
@@ -49,7 +58,10 @@ async function main() {
     try {
         const controller = new AbortController();
         const timeout = setTimeout(() => controller.abort(), 10_000);
-        const res = await fetch(API_URL, { headers, signal: controller.signal });
+        const res = await fetch(API_URL, {
+            headers,
+            signal: controller.signal,
+        });
         clearTimeout(timeout);
 
         if (!res.ok) {
@@ -58,7 +70,9 @@ async function main() {
         const body = await res.json();
         const count = body.stargazers_count;
         if (typeof count !== "number") {
-            throw new Error(`unexpected response: stargazers_count is ${typeof count}`);
+            throw new Error(
+                `unexpected response: stargazers_count is ${typeof count}`,
+            );
         }
         write(count, true);
     } catch (err) {
@@ -67,7 +81,9 @@ async function main() {
             console.warn(`github-stars: keeping existing ${OUT}.`);
             return;
         }
-        console.warn(`github-stars: writing fallback (count=${FALLBACK_COUNT}).`);
+        console.warn(
+            `github-stars: writing fallback (count=${FALLBACK_COUNT}).`,
+        );
         write(FALLBACK_COUNT, false);
     }
 }

@@ -1,6 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-clickhouse/v1.0.1/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-clickhouse/v2.0.1/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+edit_url: https://github.com/pulumiverse/pulumi-clickhouse/blob/v2.0.1/docs/_index.md
 title: Clickhouse
 meta_desc: Provides an overview of the Clickhouse Provider for Pulumi.
 layout: package

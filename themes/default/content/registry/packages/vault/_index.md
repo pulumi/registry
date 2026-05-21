@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-vault/v7.8.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-vault/v7.9.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-vault/blob/v7.8.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-vault/blob/v7.9.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: HashiCorp Vault Provider
 meta_desc: Provides an overview on how to configure the Pulumi HashiCorp Vault provider.
@@ -683,8 +683,8 @@ import com.pulumi.core.Output;
 import com.pulumi.vault.generic.Secret;
 import com.pulumi.vault.generic.SecretArgs;
 import static com.pulumi.codegen.internal.Serialization.*;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;
@@ -791,8 +791,10 @@ import (
 func main() {
 	pulumi.Run(func(ctx *pulumi.Context) error {
 		cfg := config.New(ctx, "")
-		loginUsername := cfg.RequireObject("loginUsername")
-		loginPassword := cfg.RequireObject("loginPassword")
+		var loginUsername interface{}
+		cfg.RequireObject("loginUsername", &loginUsername)
+		var loginPassword interface{}
+		cfg.RequireObject("loginPassword", &loginPassword)
 		return nil
 	})
 }
@@ -810,9 +812,9 @@ runtime: yaml
 ```yaml
 configuration:
   loginUsername:
-    type: dynamic
+    type: object
   loginPassword:
-    type: dynamic
+    type: object
 ```
 
 {{% /choosable %}}
@@ -830,8 +832,8 @@ package generated_program;
 import com.pulumi.Context;
 import com.pulumi.Pulumi;
 import com.pulumi.core.Output;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;
@@ -932,8 +934,10 @@ import (
 func main() {
 	pulumi.Run(func(ctx *pulumi.Context) error {
 		cfg := config.New(ctx, "")
-		loginApproleRoleId := cfg.RequireObject("loginApproleRoleId")
-		loginApproleSecretId := cfg.RequireObject("loginApproleSecretId")
+		var loginApproleRoleId interface{}
+		cfg.RequireObject("loginApproleRoleId", &loginApproleRoleId)
+		var loginApproleSecretId interface{}
+		cfg.RequireObject("loginApproleSecretId", &loginApproleSecretId)
 		return nil
 	})
 }
@@ -951,9 +955,9 @@ runtime: yaml
 ```yaml
 configuration:
   loginApproleRoleId:
-    type: dynamic
+    type: object
   loginApproleSecretId:
-    type: dynamic
+    type: object
 ```
 
 {{% /choosable %}}
@@ -971,8 +975,8 @@ package generated_program;
 import com.pulumi.Context;
 import com.pulumi.Pulumi;
 import com.pulumi.core.Output;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;

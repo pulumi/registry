@@ -2,7 +2,13 @@
 icon-context.html — internal helper for icon.html.
 Returns sprite URL + manifest membership dicts. Called via partialCached.
 */ -}}
-{{- $sprite := resources.Get "icons/sprite.svg" | fingerprint -}}
+{{- /*
+The sprite is published under /registry/icons/ so the outer pulumi.com
+CloudFront routes the request to this site's S3 origin. A request to
+/icons/sprite.{hash}.svg would hit the pulumi/docs origin instead, which
+serves a different sprite at a different hash.
+*/ -}}
+{{- $sprite := resources.Get "icons/sprite.svg" | resources.Copy "registry/icons/sprite.svg" | fingerprint -}}
 {{- $manifestRes := resources.Get "icons/sprite-manifest.json" -}}
 {{- $manifest := $manifestRes.Content | transform.Unmarshal -}}
 {{- $phosphor := dict -}}

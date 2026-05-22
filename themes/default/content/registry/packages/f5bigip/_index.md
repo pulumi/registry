@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-f5bigip/v3.21.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-f5bigip/v3.22.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-f5bigip/blob/v3.21.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-f5bigip/blob/v3.22.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: F5bigip Provider
 meta_desc: Provides an overview on how to configure the Pulumi F5bigip provider.
@@ -29,7 +29,7 @@ This provider uses the iControlREST API. All the resources are validated with Bi
 > **NOTE** For AWAF resources, F5 BIG-IP version should be > v16.x , and ASM need to be provisioned.
 ## Example Usage
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
@@ -167,11 +167,11 @@ config:
 ```yaml
 configuration:
   hostname:
-    type: dynamic
+    type: object
   username:
-    type: dynamic
+    type: object
   password:
-    type: dynamic
+    type: object
 ```
 
 {{% /choosable %}}
@@ -196,8 +196,8 @@ package generated_program;
 import com.pulumi.Context;
 import com.pulumi.Pulumi;
 import com.pulumi.core.Output;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;
@@ -214,6 +214,17 @@ public class App {
         final var username = config.require("username");
         final var password = config.require("password");
     }
+}
+```
+
+{{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+variable "hostname" {
+}
+variable "username" {
+}
+variable "password" {
 }
 ```
 

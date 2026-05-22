@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-openstack/v5.4.2/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-openstack/v5.5.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-openstack/blob/v5.4.2/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-openstack/blob/v5.5.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Openstack Provider
 meta_desc: Provides an overview on how to configure the Pulumi Openstack provider.
@@ -27,7 +27,7 @@ with the proper credentials before it can be used.
 Use the navigation to the left to read about the available resources.
 ## Example Usage
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
@@ -212,8 +212,8 @@ import com.pulumi.Context;
 import com.pulumi.Pulumi;
 import com.pulumi.core.Output;
 import com.pulumi.openstack.compute.Instance;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;
@@ -229,6 +229,22 @@ public class App {
         var test_server = new Instance("test-server");
 
     }
+}
+```
+
+{{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+pulumi {
+  required_providers {
+    openstack = {
+      source = "pulumi/openstack"
+    }
+  }
+}
+
+# Create a web server
+resource "openstack_compute_instance" "test-server" {
 }
 ```
 
@@ -484,7 +500,7 @@ provider "openstack" {
 * Explicitly define the public and private networks in your
   instances as shown below:
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
@@ -637,8 +653,8 @@ import com.pulumi.core.Output;
 import com.pulumi.openstack.compute.Instance;
 import com.pulumi.openstack.compute.InstanceArgs;
 import com.pulumi.openstack.compute.inputs.InstanceNetworkArgs;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;
@@ -668,6 +684,34 @@ public class App {
             .build());
 
     }
+}
+```
+
+{{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+pulumi {
+  required_providers {
+    openstack = {
+      source = "pulumi/openstack"
+    }
+  }
+}
+
+resource "openstack_compute_instance" "my_instance" {
+  name      = "my_instance"
+  region    = "DFW"
+  image_id  = "fabe045f-43f8-4991-9e6c-5cabd617538c"
+  flavor_id = "general1-4"
+  key_pair  = "provisioning_key"
+  networks {
+    uuid = "00000000-0000-0000-0000-000000000000"
+    name = "public"
+  }
+  networks {
+    uuid = "11111111-1111-1111-1111-111111111111"
+    name = "private"
+  }
 }
 ```
 

@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-random/v4.20.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-random/v4.21.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-random/blob/v4.20.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-random/blob/v4.21.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Random Provider
 meta_desc: Provides an overview on how to configure the Pulumi Random provider.
@@ -54,7 +54,7 @@ the same until new random values are desired.
 
 For example:
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
@@ -224,6 +224,34 @@ public class App {
             .build());
 
     }
+}
+```
+
+{{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+pulumi {
+  required_providers {
+    aws = {
+      source = "pulumi/aws"
+    }
+    random = {
+      source = "pulumi/random"
+    }
+  }
+}
+
+resource "random_randomid" "server" {
+  keepers = {
+    "ami_id" = amiId
+  }
+  byte_length = 8
+}
+resource "aws_ec2_instance" "server" {
+  tags = {
+    "Name" ="web-server ${random_randomid.server.hex}"
+  }
+  ami = random_randomid.server.keepers.amiId
 }
 ```
 

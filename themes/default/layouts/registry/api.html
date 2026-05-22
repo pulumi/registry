@@ -59,7 +59,7 @@
 
                 {{ range where .Pages "Params.language" "==" nil }}
                 <div class="pb-4">
-                    <a class="text-blue-600 underline" href="{{ relref . .Path }}">{{ .Title }}</a>
+                    <a class="text-violet-primary hover:underline" href="{{ relref . .Path }}">{{ .Title }}</a>
                 </div>
                 {{ end }}
 

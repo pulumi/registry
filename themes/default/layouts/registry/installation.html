@@ -68,7 +68,7 @@ $packageName := index $directories 2 }} {{ $packageHome := path.Join
                 {{ range where .Pages "Params.language" "==" nil }}
                 <div class="pb-4">
                     <a
-                        class="text-blue-600 underline"
+                        class="text-violet-primary hover:underline"
                         href="{{ relref . .Path }}"
                         >{{ .Title }}</a
                     >

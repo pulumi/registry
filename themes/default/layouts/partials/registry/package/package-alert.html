@@ -68,14 +68,14 @@
     <div class="text-xs mt-4 note note-info">
         {{ partial "icon" (dict "name" "info" "weight" "fill" "class" "text-blue-600 mr-1 my-1") }}
         <span>
-            This is the latest version of Azure Native. Use the <a class="text-blue-600 underline" href="/registry/packages/azure-native-v2/">Azure Native v2</a> docs if using the v2 version of this package.
+            This is the latest version of Azure Native. Use the <a class="text-violet-primary hover:underline" href="/registry/packages/azure-native-v2/">Azure Native v2</a> docs if using the v2 version of this package.
         </span>
     </div>
 {{ else if (eq $package "azure-native-v2") }}
     <div class="text-xs mt-4 note note-warning">
         {{ partial "icon" (dict "name" "info" "weight" "fill" "class" "text-blue-600 mr-1 my-1") }}
         <span>
-            These are the docs for Azure Native v2. We recommenend using the latest version, <a class="text-blue-600 underline" href="/registry/packages/azure-native/">Azure Native v3</a>.
+            These are the docs for Azure Native v2. We recommenend using the latest version, <a class="text-violet-primary hover:underline" href="/registry/packages/azure-native/">Azure Native v3</a>.
         </span>
     </div>
     {{ else if (eq $package "pulumiservice") }}

@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-venafi/v1.12.3/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-venafi/v1.13.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-venafi/blob/v1.12.3/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-venafi/blob/v1.13.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Venafi Provider
 meta_desc: Provides an overview on how to configure the Pulumi Venafi provider.
@@ -44,7 +44,7 @@ certificate authority that will issue certificates. The zone is formed by combin
 Template API Alias (e.g. "Business App\Enterprise CIT").
 ### US tenants
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
@@ -193,8 +193,8 @@ import com.pulumi.Context;
 import com.pulumi.Pulumi;
 import com.pulumi.core.Output;
 import com.pulumi.venafi.Certificate;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;
@@ -210,6 +210,22 @@ public class App {
         var webserver = new Certificate("webserver");
 
     }
+}
+```
+
+{{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+pulumi {
+  required_providers {
+    venafi = {
+      source = "pulumi/venafi"
+    }
+  }
+}
+
+# Generate a key pair and request a certificate
+resource "venafi_certificate" "webserver" {
 }
 ```
 
@@ -217,7 +233,7 @@ public class App {
 {{< /chooser >}}
 ### EU tenants
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
@@ -378,8 +394,8 @@ import com.pulumi.Context;
 import com.pulumi.Pulumi;
 import com.pulumi.core.Output;
 import com.pulumi.venafi.Certificate;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;
@@ -395,6 +411,22 @@ public class App {
         var webserver = new Certificate("webserver");
 
     }
+}
+```
+
+{{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+pulumi {
+  required_providers {
+    venafi = {
+      source = "pulumi/venafi"
+    }
+  }
+}
+
+# Generate a key pair and request a certificate
+resource "venafi_certificate" "webserver" {
 }
 ```
 
@@ -402,7 +434,7 @@ public class App {
 {{< /chooser >}}
 ### AU tenants
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
@@ -563,8 +595,8 @@ import com.pulumi.Context;
 import com.pulumi.Pulumi;
 import com.pulumi.core.Output;
 import com.pulumi.venafi.Certificate;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;
@@ -580,6 +612,22 @@ public class App {
         var webserver = new Certificate("webserver");
 
     }
+}
+```
+
+{{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+pulumi {
+  required_providers {
+    venafi = {
+      source = "pulumi/venafi"
+    }
+  }
+}
+
+# Generate a key pair and request a certificate
+resource "venafi_certificate" "webserver" {
 }
 ```
 
@@ -587,7 +635,7 @@ public class App {
 {{< /chooser >}}
 ### UK tenants
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
@@ -748,8 +796,8 @@ import com.pulumi.Context;
 import com.pulumi.Pulumi;
 import com.pulumi.core.Output;
 import com.pulumi.venafi.Certificate;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;
@@ -765,6 +813,22 @@ public class App {
         var webserver = new Certificate("webserver");
 
     }
+}
+```
+
+{{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+pulumi {
+  required_providers {
+    venafi = {
+      source = "pulumi/venafi"
+    }
+  }
+}
+
+# Generate a key pair and request a certificate
+resource "venafi_certificate" "webserver" {
 }
 ```
 
@@ -772,7 +836,7 @@ public class App {
 {{< /chooser >}}
 ### SG tenants
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
@@ -933,8 +997,8 @@ import com.pulumi.Context;
 import com.pulumi.Pulumi;
 import com.pulumi.core.Output;
 import com.pulumi.venafi.Certificate;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;
@@ -950,6 +1014,22 @@ public class App {
         var webserver = new Certificate("webserver");
 
     }
+}
+```
+
+{{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+pulumi {
+  required_providers {
+    venafi = {
+      source = "pulumi/venafi"
+    }
+  }
+}
+
+# Generate a key pair and request a certificate
+resource "venafi_certificate" "webserver" {
 }
 ```
 
@@ -957,7 +1037,7 @@ public class App {
 {{< /chooser >}}
 ### CA tenants
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
@@ -1118,8 +1198,8 @@ import com.pulumi.Context;
 import com.pulumi.Pulumi;
 import com.pulumi.core.Output;
 import com.pulumi.venafi.Certificate;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;
@@ -1135,6 +1215,22 @@ public class App {
         var webserver = new Certificate("webserver");
 
     }
+}
+```
+
+{{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+pulumi {
+  required_providers {
+    venafi = {
+      source = "pulumi/venafi"
+    }
+  }
+}
+
+# Generate a key pair and request a certificate
+resource "venafi_certificate" "webserver" {
 }
 ```
 
@@ -1153,7 +1249,7 @@ Obtain the required `accessToken` for Trust Protection Platform using the [VCert
 Platform's Authorize REST API method. The *configuration:manage* scope is required to set certificate policy using the
 `venafi.Policy` resource.
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
@@ -1326,8 +1422,8 @@ import com.pulumi.Context;
 import com.pulumi.Pulumi;
 import com.pulumi.core.Output;
 import com.pulumi.venafi.Certificate;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;
@@ -1343,6 +1439,22 @@ public class App {
         var webserver = new Certificate("webserver");
 
     }
+}
+```
+
+{{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+pulumi {
+  required_providers {
+    venafi = {
+      source = "pulumi/venafi"
+    }
+  }
+}
+
+# Generate a key pair and request a certificate
+resource "venafi_certificate" "webserver" {
 }
 ```
 

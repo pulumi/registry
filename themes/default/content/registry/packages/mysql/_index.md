@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-mysql/v3.2.14/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-mysql/v3.3.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-mysql/blob/v3.2.14/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-mysql/blob/v3.3.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Mysql Provider
 meta_desc: Provides an overview on how to configure the Pulumi Mysql provider.
@@ -29,7 +29,7 @@ Use the navigation to the left to read about the available resources.
 
 The following is a minimal example:
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
@@ -198,8 +198,8 @@ import com.pulumi.Pulumi;
 import com.pulumi.core.Output;
 import com.pulumi.mysql.Database;
 import com.pulumi.mysql.DatabaseArgs;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;
@@ -221,13 +221,30 @@ public class App {
 ```
 
 {{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+pulumi {
+  required_providers {
+    mysql = {
+      source = "pulumi/mysql"
+    }
+  }
+}
+
+# Create a Database
+resource "mysql_database" "app" {
+  name = "my_awesome_app"
+}
+```
+
+{{% /choosable %}}
 {{< /chooser >}}
 
 This provider can be used in conjunction with other resources that create
 MySQL servers. For example, `awsDbInstance` is able to create MySQL
 servers in Amazon's RDS service.
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
@@ -457,8 +474,8 @@ import com.pulumi.aws.rds.Instance;
 import com.pulumi.aws.rds.InstanceArgs;
 import com.pulumi.mysql.Database;
 import com.pulumi.mysql.DatabaseArgs;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;
@@ -487,6 +504,36 @@ public class App {
             .build());
 
     }
+}
+```
+
+{{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+pulumi {
+  required_providers {
+    aws = {
+      source = "pulumi/aws"
+    }
+    mysql = {
+      source = "pulumi/mysql"
+    }
+  }
+}
+
+# Create a database server
+resource "aws_rds_instance" "default" {
+  engine         = "mysql"
+  engine_version = "5.6.17"
+  instance_class = "db.t1.micro"
+  name           = "initial_db"
+  username       = "rootuser"
+  password       = "rootpasswd"
+}
+# Create a second database, in addition to the "initial_db" created
+# by the aws_db_instance resource above.
+resource "mysql_database" "app" {
+  name = "another_db"
 }
 ```
 

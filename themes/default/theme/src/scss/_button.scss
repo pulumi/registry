@@ -8,7 +8,7 @@
 .btn {
     @apply inline-flex items-center justify-center gap-1 shrink-0 max-w-full
            overflow-hidden text-ellipsis text-sm font-normal border border-transparent
-           bg-clip-padding rounded-lg transition-all outline-none cursor-pointer select-none
+           bg-clip-padding rounded-lg transition outline-none cursor-pointer select-none
            focus-visible:border-violet-primary focus-visible:ring-3 focus-visible:ring-violet-primary/50
            active:not-aria-[haspopup]:translate-y-px
            disabled:pointer-events-none disabled:opacity-50

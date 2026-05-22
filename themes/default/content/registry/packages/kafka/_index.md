@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-kafka/v3.12.3/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-kafka/v3.13.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-kafka/blob/v3.12.3/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-kafka/blob/v3.13.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Kafka Provider
 meta_desc: Provides an overview on how to configure the Pulumi Kafka provider.
@@ -31,7 +31,7 @@ The Kafka provider is used to interact with [Apache Kafka](https://kafka.apache.
 ## Example Usage
 ### Basic Configuration with TLS
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
@@ -202,8 +202,8 @@ package generated_program;
 import com.pulumi.Context;
 import com.pulumi.Pulumi;
 import com.pulumi.core.Output;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;
@@ -217,6 +217,12 @@ public class App {
     public static void stack(Context ctx) {
     }
 }
+```
+
+{{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+Example currently unavailable in this language
 ```
 
 {{% /choosable %}}
@@ -303,7 +309,7 @@ config:
 ```
 ### AWS MSK with IAM Authentication (Using Static Credentials)
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
@@ -534,8 +540,8 @@ import com.pulumi.Pulumi;
 import com.pulumi.core.Output;
 import com.pulumi.vault.aws.AwsFunctions;
 import com.pulumi.vault.aws.inputs.GetAccessCredentialsArgs;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;
@@ -555,6 +561,25 @@ public class App {
 
     }
 }
+```
+
+{{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+pulumi {
+  required_providers {
+    vault = {
+      source = "pulumi/vault"
+    }
+  }
+}
+
+data "vault_aws_getaccesscredentials" "creds" {
+  backend = "aws"
+  type    = "sts"
+  role    = "kafka-access-role"
+}
+
 ```
 
 {{% /choosable %}}

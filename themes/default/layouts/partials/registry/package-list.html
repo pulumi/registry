@@ -112,9 +112,9 @@ append . }} {{ end }} {{ end }}
                 </template>
             </div>
         </div>
-        <div class="flex justify-between items-center mb-4 px-4">
-            <h2 class="inline-flex items-center mt-8 md:mt-0">
-                A&ndash;Z packages
+        <div class="flex justify-between flex-col md:flex-row gap-4 items-start md:items-center mb-4 px-4">
+            <h2 class="flex items-center mt-8 md:mt-0">
+                <span>A&ndash;Z packages</span>
                 <span
                     class="all-count ml-4 py-0.5 px-3 rounded-full bg-gray-100 text-lg"
                 >
@@ -124,7 +124,7 @@ append . }} {{ end }} {{ end }}
 
             <a
                 href="/docs/iac/packages-and-automation/pulumi-packages/authoring/"
-                class="btn btn-outline btn-lg"
+                class="btn btn-outline btn-lg w-full md:w-auto"
                 >Contribute your own packages</a
             >
         </div>

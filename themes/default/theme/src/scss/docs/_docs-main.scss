@@ -579,8 +579,6 @@ body.section-registry {
 .docs-list-main,
 body.section-registry {
     div#accordion-package-card {
-        padding: 18px;
-        background: #f9f9f9;
         margin-top: 24px;
     }
 
@@ -612,7 +610,7 @@ body.section-registry {
     div.table-of-contents div.package-card,
     div#accordion-package-card div.package-card {
         background: #fff;
-        padding: 18px;
+        padding: 16px;
         display: flex;
         flex-direction: column;
         gap: 18px;

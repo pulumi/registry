@@ -132,7 +132,7 @@ details {
         }
 
         &[data-selected="true"] {
-            background-color: #e0e0e0;
+            background-color: var(--color-violet-100);
             color: var(--color-service-black);
             font-weight: bold;
 

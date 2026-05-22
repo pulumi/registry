@@ -16,7 +16,7 @@ nav.main-nav {
         &.active {
             background-color: var(--color-violet-100);
             border-left: var(--color-violet-primary) 3px solid;
-            width: fit-content;
+            width: 100%;
 
             &:hover {
                 text-decoration: none;
@@ -26,7 +26,7 @@ nav.main-nav {
     }
 
     a {
-        @apply py-0.5 px-1.5 rounded-sm;
+        @apply py-1 px-1.5 rounded-sm w-full;
         color: var(--color-violet-primary);
 
         &:hover {
@@ -70,9 +70,6 @@ nav.main-nav {
         display: flex;
         align-items: center;
         font-size: 15px;
-        margin-left: 8px;
-        margin-bottom: 16px;
-        margin-top: 16px;
     }
 
     .sidenav-subsection {

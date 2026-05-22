@@ -8,11 +8,11 @@ index site.Data.registry.package_versions $rawPackageName }} {{ $packageData = .
 }} {{ end }} {{ end }} {{ $iconData := index site.Data.registry.packages
 $basePackageName }}
 
-<div id="accordion-package-card" class="accordion">
+<div id="accordion-package-card" class="accordion card p-4">
     <div>
         <input type="checkbox" id="accordion-checkbox-package-card" />
         <label for="accordion-checkbox-package-card" class="show">
-            <div class="package-card-top-of-page card">
+            <div class="package-card-top-of-page">
                 <div class="img-name-version">
                     {{ with $iconData }}
                     <div>
@@ -31,7 +31,7 @@ $basePackageName }}
             </div>
         </label>
         <label for="accordion-checkbox-package-card" class="hide">
-            <div class="package-card-top-of-page card">
+            <div class="package-card-top-of-page">
                 <div class="img-name-version">
                     {{ with $iconData }}
                     <div>
@@ -49,7 +49,7 @@ $basePackageName }}
                 <div class="icon icon-16-16 keyboard-arrow-up-gray"></div>
             </div>
         </label>
-        <div class="accordion-content flex">
+        <div class="accordion-content">
             <div class="content">
                 <div class="package-card card">
                     {{ .Scratch.Set "package" $basePackageName }} {{ partial

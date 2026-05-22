@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-opsgenie/v1.3.21/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-opsgenie/v1.4.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-opsgenie/blob/v1.3.21/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-opsgenie/blob/v1.4.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Opsgenie Provider
 meta_desc: Provides an overview on how to configure the Pulumi Opsgenie provider.
@@ -32,7 +32,7 @@ If you encounter any problems you can contact us via Github
 Use the navigation to the left to read about the available resources.
 ## Example Usage
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
@@ -99,7 +99,7 @@ using Opsgenie = Pulumi.Opsgenie;
 return await Deployment.RunAsync(() =>
 {
     // Create a user
-    var test = new Opsgenie.Index.User("test");
+    var test = new Opsgenie.User("test");
 
 });
 
@@ -181,8 +181,8 @@ import com.pulumi.Context;
 import com.pulumi.Pulumi;
 import com.pulumi.core.Output;
 import com.pulumi.opsgenie.User;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;
@@ -198,6 +198,22 @@ public class App {
         var test = new User("test");
 
     }
+}
+```
+
+{{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+pulumi {
+  required_providers {
+    opsgenie = {
+      source = "pulumi/opsgenie"
+    }
+  }
+}
+
+# Create a user
+resource "opsgenie_user" "test" {
 }
 ```
 

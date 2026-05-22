@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/spectrocloud/spectrocloud/0.29.1/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/spectrocloud/spectrocloud/0.29.2/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Spectrocloud Provider
@@ -218,6 +218,37 @@ name: configuration-example
 runtime:
 
 ```
+## Feature Flags
+
+The provider accepts optional feature flags through the `featureFlag` map argument in the provider configuration. Unknown keys are ignored.
+### disableAddonDeploymentResource
+
+When set to `true`, the provider disallows the `spectrocloud.AddonDeployment` resource. Any configuration that references this resource fails during `pulumi preview` (including refresh) and apply with an error indicating the feature flag is disabled. Defaults to `false`.
+
+`clusterProfile` and `clusterTemplate` are **mutually exclusive** on `spectrocloud_cluster_*` resources. The provider returns an error if both are set in the same resource.
+
+When this flag is enabled:
+
+- **`clusterProfile` only** — On read, the provider refreshes every profile attached to the cluster from the Palette API into the top-level `clusterProfile` block (including addon profiles previously managed by `spectrocloud.AddonDeployment`). Pack and variable fields in state follow what you declare in configuration.
+- **`clusterTemplate` only** — The provider does **not** modify top-level `clusterProfile`. Profiles are managed inside `clusterTemplate` (nested `clusterProfile` blocks). Read continues to refresh `clusterTemplate` variables from the API via the existing template flow.
+- **Neither** — No profile sync from this flag.
+
+To destroy existing addon deployments still in Pulumi state, set the flag back to `false`, run `pulumi destroy` on those resources, then set the flag to `true` again if you want to keep `spectrocloud.AddonDeployment` blocked.
+
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime:
+config:
+    spectrocloud:apiKey:
+        value: 'TODO: var.sc_api_key'
+    spectrocloud:featureFlag:
+        value:
+            disable_addon_deployment_resource: true
+    spectrocloud:host:
+        value: 'TODO: var.sc_host'
+
+```
 ## Import
 Starting with Pulumi v1.5.0 and later, you can use an `import` block to import resources into your state file.
 
@@ -264,6 +295,7 @@ For questions or issues with the provider, open up an issue in the provider GitH
 ## Configuration Reference
 
 - `apiKey` (String, Sensitive) The Spectro Cloud API key. Can also be set with the `SPECTROCLOUD_APIKEY` environment variable.
+- `featureFlag` (Map of Boolean) Optional provider feature flags (map of booleans). Unknown keys are ignored. Set `disableAddonDeploymentResource` to `true` to block the `spectrocloud.AddonDeployment` resource during plan and apply.
 - `host` (String) The Spectro Cloud API host url. Can also be set with the `SPECTROCLOUD_HOST` environment variable. Defaults to <https://api.spectrocloud.com>
 - `ignoreInsecureTlsError` (Boolean) Ignore insecure TLS errors for Spectro Cloud API endpoints. ⚠️ WARNING: Setting this to true disables SSL certificate verification and makes connections vulnerable to man-in-the-middle attacks. Only use this in development/testing environments or when connecting to self-signed certificates in trusted networks. Defaults to false.
 - `projectName` (String) The Palette project the provider will target. If no value is provided, the `Default` Palette project is used. The default value is `Default`.

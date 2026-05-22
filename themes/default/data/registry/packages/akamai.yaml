@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-akamai
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-akamai/v11.2.0/provider/cmd/pulumi-resource-akamai/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-akamai/v11.3.0/provider/cmd/pulumi-resource-akamai/schema.json
 title: Akamai
-updated_on: 1778733498
-version: v11.2.0
+updated_on: 1779451741
+version: v11.3.0

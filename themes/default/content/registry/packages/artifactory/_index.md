@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-artifactory/v8.10.5/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-artifactory/v8.11.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-artifactory/blob/v8.10.5/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-artifactory/blob/v8.11.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Artifactory Provider
 meta_desc: Provides an overview on how to configure the Pulumi Artifactory provider.
@@ -37,7 +37,7 @@ curl -sL ${host}/artifactory/api/system/licenses/ | jq .
 }
 ```
 ## Example Usage
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
@@ -111,7 +111,7 @@ using Artifactory = Pulumi.Artifactory;
 return await Deployment.RunAsync(() =>
 {
     // Create a new repository
-    var pypi_libs = new Artifactory.Index.LocalPypiRepository("pypi-libs", new()
+    var pypi_libs = new Artifactory.LocalPypiRepository("pypi-libs", new()
     {
         Key = "pypi-libs",
         RepoLayoutRef = "simple-default",
@@ -207,8 +207,8 @@ import com.pulumi.Pulumi;
 import com.pulumi.core.Output;
 import com.pulumi.artifactory.LocalPypiRepository;
 import com.pulumi.artifactory.LocalPypiRepositoryArgs;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;
@@ -228,6 +228,25 @@ public class App {
             .build());
 
     }
+}
+```
+
+{{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+pulumi {
+  required_providers {
+    artifactory = {
+      source = "pulumi/artifactory"
+    }
+  }
+}
+
+# Create a new repository
+resource "artifactory_localpypirepository" "pypi-libs" {
+  key             = "pypi-libs"
+  repo_layout_ref = "simple-default"
+  description     = "A pypi repository for python packages"
 }
 ```
 

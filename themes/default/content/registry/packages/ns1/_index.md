@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-ns1/v3.8.3/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-ns1/v3.9.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-ns1/blob/v3.8.3/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-ns1/blob/v3.9.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Ns1 Provider
 meta_desc: Provides an overview on how to configure the Pulumi Ns1 provider.
@@ -30,7 +30,7 @@ Use the navigation to the left to read about the available resources.
 
 Additional usage examples can be found in <https://github.com/ns1-pulumi/pulumi-provider-ns1/tree/master/examples>
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
@@ -97,7 +97,7 @@ using Ns1 = Pulumi.Ns1;
 return await Deployment.RunAsync(() =>
 {
     // Create a new zone
-    var foobar = new Ns1.Index.Zone("foobar");
+    var foobar = new Ns1.Zone("foobar");
 
 });
 
@@ -179,8 +179,8 @@ import com.pulumi.Context;
 import com.pulumi.Pulumi;
 import com.pulumi.core.Output;
 import com.pulumi.ns1.Zone;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;
@@ -196,6 +196,22 @@ public class App {
         var foobar = new Zone("foobar");
 
     }
+}
+```
+
+{{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+pulumi {
+  required_providers {
+    ns1 = {
+      source = "pulumi/ns1"
+    }
+  }
+}
+
+# Create a new zone
+resource "ns1_zone" "foobar" {
 }
 ```
 

@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-snowflake/v2.15.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-snowflake/v2.16.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-snowflake/blob/v2.15.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-snowflake/blob/v2.16.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Snowflake Provider
 meta_desc: Provides an overview on how to configure the Pulumi Snowflake provider.
@@ -30,7 +30,7 @@ Coverage is focused on part of Snowflake related to access control.
 
 This is an example configuration of the provider. More examples are provided below.
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
@@ -252,6 +252,12 @@ public class App {
     public static void stack(Context ctx) {
     }
 }
+```
+
+{{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+Example currently unavailable in this language
 ```
 
 {{% /choosable %}}
@@ -708,7 +714,7 @@ param_key = 'param_value'
 
 An example pulumi configuration file equivalent:
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
@@ -1551,6 +1557,35 @@ public class App {
 ```
 
 {{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+# Password for the proxy.
+variable "proxyPassword" {
+  type = string
+}
+# Client ID from the Okta application.
+variable "oauthClientId" {
+  type = string
+}
+# Client Secret from the Okta application.
+variable "oauthClientSecret" {
+  type = string
+}
+# Client Token Request URL from the Okta API Authorization Server.
+variable "oauthTokenRequestUrl" {
+  type = string
+}
+# Authorization URL for the Oauth flow.
+variable "oauthAuthorizationUrl" {
+  type = string
+}
+# Redirect URI for the Oauth flow.
+variable "oauthRedirectUri" {
+  type = string
+}
+```
+
+{{% /choosable %}}
 {{< /chooser >}}
 
 <!-- Section of deprecated resources -->
@@ -1603,7 +1638,7 @@ Data sources will be supported in the future.
 Read more in following official documentation).
 
 You can specify the timeouts like the following:
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
@@ -1716,6 +1751,24 @@ public class App {
             .build());
 
     }
+}
+```
+
+{{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+pulumi {
+  required_providers {
+    snowflake = {
+      source = "pulumi/snowflake"
+    }
+  }
+}
+
+resource "snowflake_execute" "test" {
+  execute = "CREATE DATABASE ABC"
+  revert  = "DROP DATABASE ABC"
+  query   = "SHOW DATABASES LIKE '%ABC%'"
 }
 ```
 

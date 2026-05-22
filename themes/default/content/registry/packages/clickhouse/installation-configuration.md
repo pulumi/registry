@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-clickhouse/v2.0.2/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-clickhouse/v2.0.4/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumiverse/pulumi-clickhouse/blob/v2.0.2/docs/installation-configuration.md
+edit_url: https://github.com/pulumiverse/pulumi-clickhouse/blob/v2.0.4/docs/installation-configuration.md
 title: Clickhouse Installation & Configuration
 meta_desc: Information on how to install the Clickhouse provider.
 layout: package

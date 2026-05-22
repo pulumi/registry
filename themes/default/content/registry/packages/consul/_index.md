@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-consul/v3.14.1/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-consul/v3.15.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-consul/blob/v3.14.1/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-consul/blob/v3.15.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Consul Provider
 meta_desc: Provides an overview on how to configure the Pulumi Consul provider.
@@ -29,7 +29,7 @@ reasonable defaults for all arguments.
 Use the navigation to the left to read about the available resources.
 ## Example Usage
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
@@ -162,7 +162,7 @@ import (
 func main() {
 	pulumi.Run(func(ctx *pulumi.Context) error {
 		// Access a key in Consul
-		app, err := consul.LookupKeys(ctx, &consul.LookupKeysArgs{
+		app, err := consul.GetKeys(ctx, &consul.LookupKeysArgs{
 			Keys: []consul.GetKeysKey{
 				{
 					Name:    "ami",
@@ -244,8 +244,8 @@ import com.pulumi.consul.ConsulFunctions;
 import com.pulumi.consul.inputs.GetKeysArgs;
 import com.pulumi.aws.ec2.Instance;
 import com.pulumi.aws.ec2.InstanceArgs;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;
@@ -273,6 +273,35 @@ public class App {
 
     }
 }
+```
+
+{{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+pulumi {
+  required_providers {
+    aws = {
+      source = "pulumi/aws"
+    }
+    consul = {
+      source = "pulumi/consul"
+    }
+  }
+}
+
+data "consul_getkeys" "app" {
+  keys {
+    name    = "ami"
+    path    = "service/app/launch_ami"
+    default = "ami-1234"
+  }
+}
+
+# Use our variable from Consul
+resource "aws_ec2_instance" "app" {
+  ami = data.consul_getkeys.app.var.ami
+}
+# Access a key in Consul
 ```
 
 {{% /choosable %}}

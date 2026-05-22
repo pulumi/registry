@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-vault/v7.9.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-vault/v7.10.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-vault/blob/v7.9.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-vault/blob/v7.10.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: HashiCorp Vault Provider
 meta_desc: Provides an overview on how to configure the Pulumi HashiCorp Vault provider.
@@ -527,7 +527,7 @@ The path-based `authLogin` configuration block accepts the following arguments:
   to see what can go here.
 ## Example Usage
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
@@ -710,11 +710,31 @@ public class App {
 ```
 
 {{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+pulumi {
+  required_providers {
+    vault = {
+      source = "pulumi/vault"
+    }
+  }
+}
+
+resource "vault_generic_secret" "example" {
+  path = "secret/foo"
+  data_json = jsonencode({
+    "foo"   = "bar"
+    "pizza" = "cheese"
+  })
+}
+```
+
+{{% /choosable %}}
 {{< /chooser >}}
 ### Example `authLogin` Usage
 With the `userpass` backend:
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
@@ -853,11 +873,20 @@ public class App {
 ```
 
 {{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+variable "loginUsername" {
+}
+variable "loginPassword" {
+}
+```
+
+{{% /choosable %}}
 {{< /chooser >}}
 
 Or, using `approle`:
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
@@ -992,6 +1021,15 @@ public class App {
         final var loginApproleRoleId = config.require("loginApproleRoleId");
         final var loginApproleSecretId = config.require("loginApproleSecretId");
     }
+}
+```
+
+{{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+variable "loginApproleRoleId" {
+}
+variable "loginApproleSecretId" {
 }
 ```
 

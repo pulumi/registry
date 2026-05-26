@@ -117,30 +117,13 @@ export class PulumiApiDocNavNode {
             const nodeLinkLastChar = node.link.charAt(node.link.length - 1);
             const nodeLink = nodeLinkLastChar === "/" ? node.link : `${node.link}/`;
             const nodeHref = `${linkBase}${nodeLink}`;
-            const hasChildren = node.children ? node.children.length === 0 : false;
 
             return (
-                            <details
-                    open={this.isExpanded}
-                    data-expandable={
-                        node.children && node.children.length > 0
-                            ? "true"
-                            : "false"
-                    }
-                    
-                    class="nav-tree-item nested"
-                                    id={this.getNodeId(node.name)}
-                title={node.name}
-                onClick={() => this.onExpansionChange(nodeHref, !hasChildren)}
-                >
-                    <summary class={`content-container ${hasChildren ? "" : "is-link"}`} data-selected={this.shouldNodeBeSelected(nodeHref) ? "true" : "false"}>
-                     <a class={`depth-${depth}`} href={nodeHref} onClick={(e) => this.handleLinkClick(e, nodeHref)}>
-                         {this.getIcon(node.type)}
-                         <span class="link-container">{node.name}</span>
-                     </a>
-                    </summary>
-                    {this.getChildNodes(node.children, this.isExpanded, depth + 1, nodeHref)}
-                </details>
+                <pulumi-api-doc-nav-node
+                    node={node}
+                    href={nodeHref}
+                    depth={depth}
+                ></pulumi-api-doc-nav-node>
             );
         });
     }

@@ -117,7 +117,7 @@ export class PulumiApiDocNavNode {
             const nodeLinkLastChar = node.link.charAt(node.link.length - 1);
             const nodeLink = nodeLinkLastChar === "/" ? node.link : `${node.link}/`;
             const nodeHref = `${linkBase}${nodeLink}`;
-            const hasChildren = node.children ? node.children.length === 0 : false;
+            const hasChildren = node.children ? node.children.length > 0 : false;
 
             return (
                             <details

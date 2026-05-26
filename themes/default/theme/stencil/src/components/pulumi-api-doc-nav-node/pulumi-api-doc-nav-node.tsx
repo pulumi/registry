@@ -149,7 +149,7 @@ export class PulumiApiDocNavNode {
                          <span class="link-container">{this.node.name}</span>
                      </a>
                     </summary>
-                    {this.getChildNodes(this.node.children, this.isExpanded)}
+                    {this.getChildNodes(this.node.children, this.isExpanded, this.depth + 1)}
                 </details>
         );
     }

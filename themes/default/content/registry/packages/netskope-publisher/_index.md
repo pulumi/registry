@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/johnneerdael/pulumi-netskope-publisher/v0.1.11/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/johnneerdael/pulumi-netskope-publisher/v0.3.4/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/johnneerdael/pulumi-netskope-publisher/blob/v0.1.11/docs/_index.md
+edit_url: https://github.com/johnneerdael/pulumi-netskope-publisher/blob/v0.3.4/docs/_index.md
 title: Netskope Publisher
 meta_desc: Pulumi components for provisioning Netskope Private Access Publishers.
 layout: package
@@ -10,8 +10,10 @@ layout: package
 The Netskope Publisher package provides Pulumi component resources for
 provisioning Netskope Private Access Publishers on AWS, Azure, Google
 Cloud, Kubernetes, vSphere, ESXi, Hcloud, Nutanix, OpenStack, OVH,
-Scaleway, OCI, and Alicloud. The package mirrors the Terraform module
-pattern:
+Scaleway, OCI, Alicloud, Proxmox VE, DigitalOcean, Vultr, Exoscale,
+UpCloud, Stackit, Equinix Metal, Outscale, OpenTelekomCloud,
+TencentCloud, and Yandex. The package mirrors the
+Terraform module pattern:
 register or reuse Netskope publisher records, generate per-publisher
 cloud-init, and create the virtual machines that run the publisher
 appliance. On Kubernetes, it installs the
@@ -28,15 +30,22 @@ appliance. On Kubernetes, it installs the
 - `HcloudPublisher`, `NutanixPublisher`, `OpenstackPublisher`,
   `OvhPublisher`, `ScalewayPublisher`, `OciPublisher`, and
   `AlicloudPublisher` create Ubuntu 22.04 bootstrap-mode publishers.
+- `ProxmoxvePublisher` clones a Proxmox VE Ubuntu template and attaches
+  bootstrap cloud-init through a snippets datastore.
+- `DigitaloceanPublisher`, `VultrPublisher`, `ExoscalePublisher`,
+  `UpcloudPublisher`, `StackitPublisher`, `EquinixPublisher`,
+  `OutscalePublisher`, `OpentelekomcloudPublisher`,
+  `TencentcloudPublisher`, and `YandexPublisher` create Ubuntu 22.04
+  bootstrap-mode publishers.
 - `HypervPublisher` is experimental and remains opt-in.
 
 Each component accepts either Netskope tenant credentials for automatic
 publisher registration or pre-created registration tokens keyed by
 publisher name.
 
-Java and Rust SDKs are also generated. Java uses Pulumi's standard
-package SDK generator. Rust uses Pulumi Gestalt and requires the Gestalt
-Rust language plugin in Rust Pulumi programs.
+The Java SDK is also published as `com.pulumi:netskope-publisher` from
+the configured Maven-compatible repository, defaulting to GitHub
+Packages for this repository.
 
 ## TypeScript example
 
@@ -141,39 +150,6 @@ public class App {
                 .build());
         });
     }
-}
-```
-
-## Rust example
-
-```rust
-mod netskope {
-    pulumi_gestalt_rust::include_provider!("netskope-publisher");
-}
-
-use anyhow::Result;
-use pulumi_gestalt_rust::*;
-
-fn main() {
-    run(pulumi_main).unwrap();
-}
-
-fn pulumi_main(ctx: &Context) -> Result<()> {
-    let publisher = netskope::aws_publisher::create(
-        ctx,
-        "publisher",
-        netskope::aws_publisher::AwsPublisherArgs::builder()
-            .name_prefix("pub-eu")
-            .replicas(2)
-            .tenant_url("https://example.goskope.com")
-            .api_token("ns-api-token")
-            .subnet_id("subnet-0123456789abcdef0")
-            .security_group_ids(vec!["sg-0123456789abcdef0".to_string()])
-            .build_struct(),
-    );
-
-    add_export("publisherNames", &publisher.publisher_names);
-    Ok(())
 }
 ```
 

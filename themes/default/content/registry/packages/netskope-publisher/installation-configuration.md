@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/johnneerdael/pulumi-netskope-publisher/v0.1.11/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/johnneerdael/pulumi-netskope-publisher/v0.3.4/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/johnneerdael/pulumi-netskope-publisher/blob/v0.1.11/docs/installation-configuration.md
+edit_url: https://github.com/johnneerdael/pulumi-netskope-publisher/blob/v0.3.4/docs/installation-configuration.md
 title: Installation & Configuration
 meta_desc: Install and configure the Netskope Publisher Pulumi package.
 layout: package
@@ -43,34 +43,31 @@ go get github.com/johnneerdael/pulumi-netskope-publisher/sdk/go/netskopepublishe
 Published Go SDK:
 [`github.com/johnneerdael/pulumi-netskope-publisher/sdk/go/netskopepublisher`](https://pkg.go.dev/github.com/johnneerdael/pulumi-netskope-publisher/sdk/go/netskopepublisher).
 
-Install the Java SDK from the configured Maven-compatible repository:
+Install the Java SDK from GitHub Packages or the configured
+Maven-compatible repository:
 
 ```kotlin
 implementation("com.pulumi:netskope-publisher:<version>")
 ```
+
+Published Java SDK:
+[`com.pulumi:netskope-publisher`](https://github.com/johnneerdael/pulumi-netskope-publisher/packages).
 
 The release workflow publishes Java packages to GitHub Packages by
 default, or to the Maven-compatible repository configured through
 `JAVA_MAVEN_REPOSITORY_URL`. Configure the matching Maven repository in
 Gradle or Maven before resolving this dependency.
 
-Install the Rust SDK from crates.io:
-
-```toml
-pulumi-netskope-publisher = "<version>"
-```
-
-Rust programs also require the Pulumi Gestalt Rust language plugin:
-
-```bash
-pulumi plugin install language rust "0.0.10" --server github://api.github.com/andrzejressel/pulumi-gestalt
-```
-
 Install the cloud provider packages used by the component you deploy:
 
 ```bash
-npm install @pulumi/aws @pulumi/azure-native @pulumi/gcp @pulumi/kubernetes @pulumi/vsphere
+npm install @pulumi/aws @pulumi/azure-native @pulumi/gcp @pulumi/kubernetes @pulumi/vsphere @pulumiverse/esxi-native @pulumi/hcloud @pierskarsenbarg/nutanix @pulumi/openstack @ovhcloud/pulumi-ovh @pulumiverse/scaleway @pulumi/oci @pulumi/alicloud @muhlba91/pulumi-proxmoxve
 ```
+
+The expanded bootstrap components for DigitalOcean, Vultr, Exoscale,
+UpCloud, Stackit, Equinix Metal, Outscale, OpenTelekomCloud,
+TencentCloud, and Yandex are implemented through the provider schema and
+do not require TypeScript programs to install additional npm SDKs.
 
 ## Netskope configuration
 
@@ -93,7 +90,10 @@ Each entry is keyed by the publisher name and must include
 
 Configure the cloud provider used by the selected component with the
 standard Pulumi provider configuration for AWS, Azure Native, Google
-Cloud, Kubernetes, or vSphere.
+Cloud, Kubernetes, vSphere, ESXi Native, Hcloud, Nutanix, OpenStack,
+OVH, Scaleway, OCI, Alicloud, Proxmox VE, DigitalOcean, Vultr,
+Exoscale, UpCloud, Stackit, Equinix Metal, Outscale,
+OpenTelekomCloud, TencentCloud, or Yandex.
 
 Each component also requires provider-specific network and image inputs.
 See the component API docs and the examples directory for complete
@@ -101,6 +101,11 @@ programs. On GCP, use a standard Linux image such as Ubuntu 22.04; the
 `GcpPublisher` component runs the Netskope generic bootstrap script from
 cloud-init by default because there is no public Netskope Publisher GCE
 image.
+
+On Proxmox VE, prepare an Ubuntu 22.04 cloud-init template and enable
+`snippets` on the datastore used by `datastoreId`; `ProxmoxvePublisher`
+uploads bootstrap user data as a snippet and attaches it to the cloned
+VM.
 
 On Kubernetes, configure the Pulumi Kubernetes provider for the target
 cluster. `KubernetesPublisher` creates the namespace, required Secrets,

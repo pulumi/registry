@@ -1,6 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/DefangLabs/pulumi-defang/v1.0.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/DefangLabs/pulumi-defang/v2.1.1/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+edit_url: https://github.com/DefangLabs/pulumi-defang/blob/v2.1.1/docs/_index.md
 title: Defang Provider
 meta_desc: Take your app from Docker Compose to a secure and scalable cloud deployment with Pulumi.
 layout: package

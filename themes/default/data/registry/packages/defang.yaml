@@ -2,16 +2,20 @@
 # Do not edit by hand unless you're certain you know what you are doing!
 category: Cloud
 component: false
-description: Take your app from Docker Compose to a secure and scalable cloud deployment
-  with Pulumi.
+description: |-
+  This package has been split into three cloud-specific packages — choose the one for your target cloud:
+
+  - [`defang-aws`](/registry/packages/defang-aws/) — Deploy containerized services to AWS.
+  - [`defang-gcp`](/registry/packages/defang-gcp/) — Deploy containerized services to GCP.
+  - [`defang-azure`](/registry/packages/defang-azure/) — Deploy containerized services to Azure.
 featured: false
-logo_url: https://raw.githubusercontent.com/DefangLabs/pulumi-defang/refs/heads/main/docs/logo.png
+logo_url: https://raw.githubusercontent.com/DefangLabs/pulumi-defang/refs/heads/main/docs/logo.svg
 name: defang
 native: true
 package_status: ga
-publisher: Defang
+publisher: DEPRECATED
 repo_url: https://github.com/DefangLabs/pulumi-defang
 schema_file_url: https://raw.githubusercontent.com/DefangLabs/pulumi-defang/v1.0.0/provider/cmd/pulumi-resource-defang/schema.json
-title: defang
-updated_on: 1742843250
+title: Defang
+updated_on: 1779318902
 version: v1.0.0

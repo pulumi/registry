@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-scm/v1.0.6/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-scm/v1.1.1/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-scm/blob/v1.0.6/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-scm/blob/v1.1.1/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Strata Cloud Manager Provider
 meta_desc: Provides an overview on how to configure the Pulumi Strata Cloud Manager provider.
@@ -24,17 +24,12 @@ The `scm` provider provides resources and functions to manage and query Strata C
 
 This provider covers the following aspects of Strata Cloud Manager:
 * NGFW & Prisma Access
-## Beta Release Disclaimer
-
-**This software is a pre-release version and is not ready for production use.**
-
-* **No Warranty:** This software is provided "as is," without any warranty of any kind, either expressed or implied, including, but not limited to, the implied warranties of merchantability and fitness for a particular purpose.
-* **Instability:** The beta software may contain defects, may not operate correctly, and may be substantially modified or withdrawn at any time.
-* **Limitation of Liability:** In no event shall the authors or copyright holders be liable for any claim, damages, or other liability, whether in an action of contract, tort, or otherwise, arising from, out of, or in connection with the beta software or the use or other dealings in the beta software.
-* **Feedback:** We encourage and appreciate your feedback and bug reports. However, you acknowledge that any feedback you provide is non-confidential.
-
-By using this software, you agree to these terms.
 ## Release Notes
+### v1.0.11
+#### FEATURES
+
+* Introduced beta release stream for early access to new features
+* Beta versions (v1.0.11-beta.1) are now available for testing before GA release
 ### v1.0.10
 #### FEATURES
 * resources/scm_forwarding_profile: Added Support, examples and tests (resources, data-source)
@@ -275,7 +270,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 THIS SOFTWARE IS RELEASED AS A PROOF OF CONCEPT FOR EXPERIMENTAL PURPOSES ONLY. USE IT AT OWN RISK. THIS SOFTWARE IS NOT SUPPORTED.
 ## Example Usage
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
@@ -452,8 +447,8 @@ package generated_program;
 import com.pulumi.Context;
 import com.pulumi.Pulumi;
 import com.pulumi.core.Output;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;
@@ -467,6 +462,12 @@ public class App {
     public static void stack(Context ctx) {
     }
 }
+```
+
+{{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+Example currently unavailable in this language
 ```
 
 {{% /choosable %}}

@@ -31,7 +31,7 @@ jobs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
       prs: ${{ steps.list.outputs.titles }}
   check-for-package-update:
-    name: ${{ matrix.repoSlug }}
+    name: ${{ matrix.repoSlug }} (${{ matrix.schemaFile }})
     needs: generate-packages-list
     runs-on: ubuntu-latest
     strategy:
@@ -45,19 +45,32 @@ jobs:
       - name: Fetch secrets from ESC
         id: esc-secrets
         uses: pulumi/esc-action@f3cfbabf37488463817366338165b92b5f99117e # v2
-      - name: Get provider short name
-        id: regex-prov
+      - name: Read package name from its schema
+        id: package
+        # Read the name from the schema (its source of truth, and its
+        # <name>.yaml filename) rather than deriving it from the repo, so the
+        # several packages a single repo can publish get distinct update PRs.
         run: |
+          package_name_from_schema=""
+          if [[ "$SCHEMA_FILE" == *.json ]]; then
+            package_name_from_schema=$(curl -fsSL "https://raw.githubusercontent.com/${REPO_SLUG}/HEAD/${SCHEMA_FILE}" \
+              | jq -r '.name // empty' 2>/dev/null || true)
+          fi
+          package_name_from_repo=""
           if [[ "$REPO_SLUG" =~ (\/[^-]*-)(.*?$) ]]; then
-            echo "group2=${BASH_REMATCH[2]}" >> $GITHUB_OUTPUT
-          else
-            echo "Regex pattern match error."
+            package_name_from_repo="${BASH_REMATCH[2]}"
+          fi
+          package_name="${package_name_from_schema:-$package_name_from_repo}"
+          if [[ -z "$package_name" ]]; then
+            echo "Could not determine package name from schema or repoSlug."
             exit 1
           fi
+          echo "name=$package_name" >> $GITHUB_OUTPUT
         env:
           REPO_SLUG: ${{ matrix.repoSlug }}
-      - name: Check if there is already an open PR
-        if: contains(needs.generate-packages-list.outputs.prs, steps.regex-prov.outputs.group2 )
+          SCHEMA_FILE: ${{ matrix.schemaFile }}
+      - name: Skip if this package already has an open update PR
+        if: contains(needs.generate-packages-list.outputs.prs, steps.package.outputs.name )
         id: skip-run
         run: echo "skip=1" >> $GITHUB_OUTPUT
       - name: Check out registry repo
@@ -93,7 +106,7 @@ jobs:
         uses: ./.github/actions/new-provider-version-pr
         with:
           github_token: ${{ steps.esc-secrets.outputs.PULUMI_BOT_TOKEN }}
-          provider_short_name: ${{ steps.regex-prov.outputs.group2 }}
+          provider_short_name: ${{ steps.package.outputs.name }}
           provider_version: ${{ env.PROVIDER_VERSION }}
 
   notify:

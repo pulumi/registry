@@ -375,6 +375,10 @@
     {
       "repoSlug": "johnneerdael/pulumi-netskope-publisher",
       "schemaFile": "schema.json"
+    },
+    {
+      "repoSlug": "rpothin/pulumi-powerplatform",
+      "schemaFile": "schema.json"
     }
   ]
 }

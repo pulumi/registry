@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/opentelekomcloud/opentelekomcloud/1.36.66/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/opentelekomcloud/opentelekomcloud/1.36.67/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Opentelekomcloud Provider
@@ -16,8 +16,8 @@ pulumi package add terraform-provider opentelekomcloud/opentelekomcloud
 ```
 ## Overview
 
-The Open Telekom Cloud provider is used to interact with the
-many resources supported by OpenTelekomCloud. The provider needs to be configured
+The T-Cloud Public (former OpenTelekomCloud) provider is used to interact with the
+many resources supported by T-Cloud Public (former OpenTelekomCloud). The provider needs to be configured
 with the proper credentials before it can be used.
 
 Use the navigation to the left to read about the available resources.
@@ -653,10 +653,10 @@ See [OpenStack configuration documentation](https://docs.openstack.org/python-op
 
 The following configuration inputs are supported:
 
-* `accessKey` - (Optional) The access key of the OpenTelekomCloud cloud to use.
+* `accessKey` - (Optional) The access key of the T-Cloud Public (former OpenTelekomCloud) cloud to use.
   If omitted, the `OS_ACCESS_KEY` environment variable is used.
 
-* `secretKey` - (Optional) The secret key of the OpenTelekomCloud cloud to use.
+* `secretKey` - (Optional) The secret key of the T-Cloud Public (former OpenTelekomCloud) cloud to use.
   If omitted, the `OS_SECRET_KEY` environment variable is used.
 
 * `authUrl` - (Optional; required if `cloud` is not specified) The Identity
@@ -729,7 +729,7 @@ Please note that MFA requires `userId` to be used. Setting `userName` won't work
   such as `username:project`. Set the `password` to the Swauth/Swift key.
   Finally, set `authUrl` as the location of the Swift service.
 
-> This will only work when used with the OpenTelekomCloud Object Storage resources.
+> This will only work when used with the T-Cloud Public (former OpenTelekomCloud) Object Storage resources.
 
 * `agencyName` - (Optional) if authorized by assume role, it must be set. The
   name of agency.

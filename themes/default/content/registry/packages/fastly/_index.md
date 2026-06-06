@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-fastly/v12.1.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-fastly/v12.2.1/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-fastly/blob/v12.1.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-fastly/blob/v12.2.1/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Fastly Provider
 meta_desc: Provides an overview on how to configure the Pulumi Fastly provider.
@@ -29,7 +29,7 @@ Pricing and signup information can be found at <https://www.fastly.com/signup>
 Use the navigation to the left to read about the available resources.
 ## Example Usage
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
@@ -197,6 +197,23 @@ public class App {
 ```
 
 {{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+pulumi {
+  required_providers {
+    fastly = {
+      source = "pulumi/fastly"
+    }
+  }
+}
+
+# Create a Service
+resource "fastly_servicevcl" "myservice" {
+  name = "myawesometestservice"
+}
+```
+
+{{% /choosable %}}
 {{< /chooser >}}
 ## Importing
 
@@ -215,7 +232,7 @@ Static credentials can be provided by adding a `apiKey` in-line:
 
 Usage:
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
@@ -367,6 +384,21 @@ public class App {
 ```
 
 {{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+pulumi {
+  required_providers {
+    fastly = {
+      source = "pulumi/fastly"
+    }
+  }
+}
+
+resource "fastly_servicevcl" "myservice" {
+}
+```
+
+{{% /choosable %}}
 {{< /chooser >}}
 
 You can create a credential on the Personal API Tokens page: <https://manage.fastly.com/account/personal/tokens>
@@ -375,7 +407,7 @@ You can create a credential on the Personal API Tokens page: <https://manage.fas
 You can provide your API key via `FASTLY_API_KEY` environment variable,
 representing your Fastly API key.
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
@@ -463,6 +495,21 @@ public class App {
         var myservice = new ServiceVcl("myservice");
 
     }
+}
+```
+
+{{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+pulumi {
+  required_providers {
+    fastly = {
+      source = "pulumi/fastly"
+    }
+  }
+}
+
+resource "fastly_servicevcl" "myservice" {
 }
 ```
 

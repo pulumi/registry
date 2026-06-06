@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-keycloak/v6.10.1/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-keycloak/v6.12.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-keycloak/blob/v6.10.1/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-keycloak/blob/v6.12.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Keycloak Provider
 meta_desc: Provides an overview on how to configure the Pulumi Keycloak provider.
@@ -148,6 +148,8 @@ config:
 This type of configuration can be either used with the "Signed JWT" or with "Signed JWT - Federated" Client Authenticators, such as [Kubernetes Service Accounts Tokens](https://www.keycloak.org/docs/latest/server_admin/index.html#_identity_broker_kubernetes). Check the [Confidential client credentials](https://www.keycloak.org/docs/latest/server_admin/index.html#_client-credentials) Keycloak Admin Guide for more details.
 
 Note: If a Signed JWT Token is provided, it will be used for authentication even if a clientSecret or privateKey is also configured.
+
+Note: As per [RFC 7523](https://datatracker.ietf.org/doc/html/rfc7523), sending the `clientId` is optional when a pre-signed JWT is provided via `jwtToken` or `jwtTokenFile`, because the client identity is embedded in the JWT itself. However, when using `jwtSigningKey`, the provider generates the client assertion and still requires `clientId` in order to populate the JWT `iss` and `sub` claims. This distinction is particularly useful in Kubernetes environments where the JWT `sub` claim may not match the Keycloak client ID.
 ### Example Usage (password grant)
 
 ```yaml
@@ -206,7 +208,7 @@ config:
 
 The following configuration inputs are supported:
 
-- `clientId` - (Required) The `clientId` for the client that was created in the "Keycloak Setup" section. Use the `admin-cli` client if you are using the password grant. Defaults to the environment variable `KEYCLOAK_CLIENT_ID`.
+- `clientId` - (Optional) The `clientId` for the client that was created in the "Keycloak Setup" section. Use the `admin-cli` client if you are using the password grant. Defaults to the environment variable `KEYCLOAK_CLIENT_ID`. Required for client secret, password grant, and `jwtSigningKey` authentication. Per [RFC 7523](https://datatracker.ietf.org/doc/html/rfc7523), can be omitted only when a pre-signed `jwtToken` or `jwtTokenFile` is supplied.
 - `url` - (Required) The URL of the Keycloak instance, before `/auth/admin`. Defaults to the environment variable `KEYCLOAK_URL`.
 - `adminUrl` - (Optional) The admin URL of the Keycloak instance if different from the base URL, before `/auth/admin`. Defaults to the environment variable `KEYCLOAK_ADMIN_URL`.
 - `clientSecret` - (Optional) The secret for the client used by the provider for authentication via the client credentials grant. This can be found or changed using the "Credentials" tab in the client settings. Defaults to the environment variable `KEYCLOAK_CLIENT_SECRET`. This attribute is required when using the client credentials grant, and cannot be set when using the password grant.
@@ -225,4 +227,4 @@ The following configuration inputs are supported:
 - `tlsClientCertificate` - (Optional) The TLS client certificate in PEM format when the keycloak server is configured with TLS mutual authentication.
 - `tlsClientPrivateKey` - (Optional) The TLS client pkcs1 private key in PEM format when the keycloak server is configured with TLS mutual authentication.
 - `basePath` - (Optional) The base path used for accessing the Keycloak REST API.  Defaults to the environment variable `KEYCLOAK_BASE_PATH`, or an empty string if the environment variable is not specified. Note that users of the legacy distribution of Keycloak will need to set this attribute to `/auth`.
-- `additionalHeaders` - (Optional) A map of custom HTTP headers to add to each request to the Keycloak API.
+- `additionalHeaders` - (Optional) A map of custom HTTP headers to add to each request to the Keycloak API. The `Host` header is supported and will override the host used for the outgoing request.

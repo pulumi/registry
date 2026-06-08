@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/megaport/megaport/1.9.1/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/megaport/megaport/1.10.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Megaport Provider
@@ -2120,8 +2120,8 @@ If your Pulumi configurations or API scripts rely on a location name or code tha
 
 Examples:
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
-{{% choosable language typescript %}}
+{{ < chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{ % choosable language typescript %}}
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
 import * as megaport from "@pulumi/megaport";
@@ -2319,34 +2319,12 @@ Example plan output:
 3. Review the plan to ensure it matches your expectations
 4. Run `pulumi up` to update the state
 5. Run `pulumi preview` again - should show no changes
-## End-of-Term Cancellation
+## Resource Cancellation
 
-By default, when Pulumi deletes resources, they are immediately cancelled in the Megaport portal. However, you may prefer to have resources marked for cancellation at the end of their current billing term instead of immediate cancellation.
+When Pulumi deletes a Megaport resource, the provider issues an immediate cancellation or deletion request to the Megaport API. Resources are removed from Pulumi state as soon as the API call returns successfully. For Ports and LAG Ports specifically, this is always a `CANCEL_NOW` action against the Megaport Products API.
 
-The provider supports this with the `cancelAtEndOfTerm` configuration option:
+Delayed cancellation (cancel-at-end-of-term) is not supported by the provider. The previously available `cancelAtEndOfTerm` provider option has been removed because the Megaport API no longer accepts delayed cancellation for Ports or LAG Ports.
 
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime:
-config:
-    megaport:acceptPurchaseTerms:
-        value: true
-    megaport:accessKey:
-        value: your-access-key
-    megaport:cancelAtEndOfTerm:
-        value: true
-    megaport:environment:
-        value: production
-    megaport:secretKey:
-        value: your-secret-key
+**Billing impact:** Cancelling a Megaport resource before the end of its committed minimum term may incur early termination charges. Review your contract terms before destroying resources, especially in production.
 
-```
-
-**Important notes:**
-
-- This feature is currently only supported for Single Ports and LAG Ports
-- For other resource types, the option will be ignored and immediate cancellation will occur
-- When `cancelAtEndOfTerm` is set to `true`, resources will show as "CANCELLING" in the Megaport portal until the end of their billing term
-- Resources are removed from Pulumi state as soon as the API call returns successfully, regardless of whether immediate or end-of-term cancellation is used
-- If you reapply your configuration after a resource has been deleted, Pulumi will create a new resource, even if the original resource is still visible in the Megaport portal with "CANCELLING" status
+**Upgrade note:** If your existing Pulumi configuration still sets `cancelAtEndOfTerm` in the `provider "megaport"` block, Pulumi will report it as an unsupported provider argument. Remove that setting before planning or applying with this version.

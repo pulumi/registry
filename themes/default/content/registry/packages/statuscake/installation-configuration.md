@@ -1,6 +1,7 @@
 ---
 # WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-statuscake/v1.0.2/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
+edit_url: https://github.com/pulumiverse/pulumi-statuscake/blob/v1.0.2/docs/installation-configuration.md
 title: Statuscake Installation & Configuration
 meta_desc: Information on how to install the Statuscake provider.
 layout: installation

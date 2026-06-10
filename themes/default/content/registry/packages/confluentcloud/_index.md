@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-confluentcloud/v2.69.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-confluentcloud/v2.71.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-confluentcloud/blob/v2.69.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-confluentcloud/blob/v2.71.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Confluent Provider
 meta_desc: Provides an overview on how to configure the Pulumi Confluent provider.
@@ -27,7 +27,7 @@ Use the Confluent provider to deploy and manage [Confluent Cloud](https://www.co
 
 
 ##### Option #1: Manage multiple clusters in the same Pulumi Stack
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
@@ -174,6 +174,12 @@ public class App {
 ```
 
 {{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+Example currently unavailable in this language
+```
+
+{{% /choosable %}}
 {{< /chooser >}}
 #### Option #2: Manage a single Kafka cluster in the same Pulumi Stack
 ```yaml
@@ -284,4 +290,4 @@ Complete examples (with Okta and Microsoft Azure Entra ID as identity provider) 
 
 > **Note:** To switch your Pulumi configuration from API key/secret authentication to OAuth, update your provider configuration by removing any references to variables such as `cloudApiKey`, `flinkApiKey`, `kafkaApiKey`, `schemaRegistryApiKey`, and similar variables. Also, remove any `credentials` blocks from resources like `confluentcloud.KafkaTopic`, `confluentcloud.Schema`, and `confluentcloud.FlinkStatement`. Instead, specify your authentication details within the `oauth {}` block. After making these changes, apply your configuration to start using OAuth.
 
-!> **Warning:** Without proper Identity Provider setup, Identity Pool creation and RBAC roles assignment, the OAuth credentials will not work with Confluent Pulumi Provider.
+> **Warning:** Without proper Identity Provider setup, Identity Pool creation and RBAC roles assignment, the OAuth credentials will not work with Confluent Pulumi Provider.

@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/spectrocloud/spectrocloud/0.29.4/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/spectrocloud/spectrocloud/0.29.5/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Spectrocloud Provider
@@ -249,6 +249,27 @@ config:
         value: 'TODO: var.sc_host'
 
 ```
+## Feature Preview
+
+The provider accepts optional feature preview flags through the `featurePreview` map argument in the provider configuration.
+### immutable-clusterprofiles
+
+When set to `true`, `spectrocloud.ClusterProfile` uses the standard Pulumi Plugin SDK v2 immutable-versioned-resource pattern. Version bumps trigger a Pulumi replacement (`ForceNew`) instead of an in-place update. Combined with `skipDestroy = true` and `lifecycle { createBeforeDestroy = true }` on the resource, each version is preserved in Palette while Pulumi state advances to the new version. See `spectrocloud.ClusterProfile` for full usage details.
+
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime:
+config:
+    spectrocloud:apiKey:
+        value: 'TODO: var.sc_api_key'
+    spectrocloud:featurePreview:
+        value:
+            immutable-clusterprofiles: true
+    spectrocloud:host:
+        value: 'TODO: var.sc_host'
+
+```
 ## Import
 Starting with Pulumi v1.5.0 and later, you can use an `import` block to import resources into your state file.
 
@@ -296,6 +317,11 @@ For questions or issues with the provider, open up an issue in the provider GitH
 
 - `apiKey` (String, Sensitive) The Spectro Cloud API key. Can also be set with the `SPECTROCLOUD_APIKEY` environment variable.
 - `featureFlag` (Map of Boolean) Optional provider feature flags (map of booleans). Unknown keys are ignored. Set `disableAddonDeploymentResource` to `true` to block the `spectrocloud.AddonDeployment` resource during plan and apply.
+- `featurePreview` (Map of Boolean) A map of feature preview flags. Supported flags: `immutable-clusterprofiles`.
+
+The `immutable-clusterprofiles` flag enables the standard Pulumi Plugin SDK v2 immutable-versioned-resource pattern for `spectrocloud.ClusterProfile`. When set, the resource's `version` field becomes `ForceNew` (changes trigger a Pulumi replacement instead of an in-place update), the new `skipDestroy` schema field is honored, and the Create function clones from any existing version of the lineage to produce the new immutable version. The Pulumi resource id is set once at Create time and never mutates mid-update, so it respects the SDK v2 contract that a resource's primary id is stable across in-place updates.
+
+Without the flag, `spectrocloud.ClusterProfile` uses its legacy in-place mutation behavior (PUT-based updates that overwrite the previous version). The flag is purely opt-in; existing user configurations are unaffected.
 - `host` (String) The Spectro Cloud API host url. Can also be set with the `SPECTROCLOUD_HOST` environment variable. Defaults to <https://api.spectrocloud.com>
 - `ignoreInsecureTlsError` (Boolean) Ignore insecure TLS errors for Spectro Cloud API endpoints. ⚠️ WARNING: Setting this to true disables SSL certificate verification and makes connections vulnerable to man-in-the-middle attacks. Only use this in development/testing environments or when connecting to self-signed certificates in trusted networks. Defaults to false.
 - `projectName` (String) The Palette project the provider will target. If no value is provided, the `Default` Palette project is used. The default value is `Default`.

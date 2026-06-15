@@ -10,7 +10,7 @@ native: true
 package_status: public_preview
 publisher: rpothin
 repo_url: https://github.com/rpothin/pulumi-powerplatform
-schema_file_url: https://raw.githubusercontent.com/rpothin/pulumi-powerplatform/v0.4.0/schema.json
+schema_file_url: https://raw.githubusercontent.com/rpothin/pulumi-powerplatform/v0.4.1/schema.json
 title: Power Platform
-updated_on: 1781063546
-version: v0.4.0
+updated_on: 1781531482
+version: v0.4.1

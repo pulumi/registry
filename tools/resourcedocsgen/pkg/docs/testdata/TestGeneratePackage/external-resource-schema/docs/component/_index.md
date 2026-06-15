@@ -868,23 +868,23 @@ resource "example_component" "componentResource" {
       "string" = "string"
     }
     managed_fields = [{
-      "apiVersion"  = "string"
-      "fieldsType"  = "string"
-      "fieldsV1"    = "{}"
-      "manager"     = "string"
-      "operation"   = "string"
-      "subresource" = "string"
-      "time"        = "string"
+      api_version = "string"
+      fields_type = "string"
+      fields_v1   = "{}"
+      manager     = "string"
+      operation   = "string"
+      subresource = "string"
+      time        = "string"
     }]
     name      = "string"
     namespace = "string"
     owner_references = [{
-      "apiVersion"         = "string"
-      "kind"               = "string"
-      "name"               = "string"
-      "uid"                = "string"
-      "blockOwnerDeletion" = false
-      "controller"         = false
+      api_version          = "string"
+      kind                 = "string"
+      name                 = "string"
+      uid                  = "string"
+      block_owner_deletion = false
+      controller           = false
     }]
     resource_version = "string"
     self_link        = "string"
@@ -943,23 +943,23 @@ resource "example_component" "componentResource" {
         "string" = "string"
       }
       managed_fields = [{
-        "apiVersion"  = "string"
-        "fieldsType"  = "string"
-        "fieldsV1"    = "{}"
-        "manager"     = "string"
-        "operation"   = "string"
-        "subresource" = "string"
-        "time"        = "string"
+        api_version = "string"
+        fields_type = "string"
+        fields_v1   = "{}"
+        manager     = "string"
+        operation   = "string"
+        subresource = "string"
+        time        = "string"
       }]
       name      = "string"
       namespace = "string"
       owner_references = [{
-        "apiVersion"         = "string"
-        "kind"               = "string"
-        "name"               = "string"
-        "uid"                = "string"
-        "blockOwnerDeletion" = false
-        "controller"         = false
+        api_version          = "string"
+        kind                 = "string"
+        name                 = "string"
+        uid                  = "string"
+        block_owner_deletion = false
+        controller           = false
       }]
       resource_version = "string"
       self_link        = "string"
@@ -981,23 +981,23 @@ resource "example_component" "componentResource" {
       "string" = "string"
     }
     managed_fields = [{
-      "apiVersion"  = "string"
-      "fieldsType"  = "string"
-      "fieldsV1"    = "{}"
-      "manager"     = "string"
-      "operation"   = "string"
-      "subresource" = "string"
-      "time"        = "string"
+      api_version = "string"
+      fields_type = "string"
+      fields_v1   = "{}"
+      manager     = "string"
+      operation   = "string"
+      subresource = "string"
+      time        = "string"
     }]
     name      = "string"
     namespace = "string"
     owner_references = [{
-      "apiVersion"         = "string"
-      "kind"               = "string"
-      "name"               = "string"
-      "uid"                = "string"
-      "blockOwnerDeletion" = false
-      "controller"         = false
+      api_version          = "string"
+      kind                 = "string"
+      name                 = "string"
+      uid                  = "string"
+      block_owner_deletion = false
+      controller           = false
     }]
     resource_version = "string"
     self_link        = "string"
@@ -1056,23 +1056,23 @@ resource "example_component" "componentResource" {
         "string" = "string"
       }
       managed_fields = [{
-        "apiVersion"  = "string"
-        "fieldsType"  = "string"
-        "fieldsV1"    = "{}"
-        "manager"     = "string"
-        "operation"   = "string"
-        "subresource" = "string"
-        "time"        = "string"
+        api_version = "string"
+        fields_type = "string"
+        fields_v1   = "{}"
+        manager     = "string"
+        operation   = "string"
+        subresource = "string"
+        time        = "string"
       }]
       name      = "string"
       namespace = "string"
       owner_references = [{
-        "apiVersion"         = "string"
-        "kind"               = "string"
-        "name"               = "string"
-        "uid"                = "string"
-        "blockOwnerDeletion" = false
-        "controller"         = false
+        api_version          = "string"
+        kind                 = "string"
+        name                 = "string"
+        uid                  = "string"
+        block_owner_deletion = false
+        controller           = false
       }]
       resource_version = "string"
       self_link        = "string"

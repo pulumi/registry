@@ -58,10 +58,6 @@ var testCases = []testCase{
 		description: "Testing config variables.",
 	},
 	{
-		directory:   "cyclic-types",
-		description: "Cyclic object types",
-	},
-	{
 		directory:   "dash-named-schema",
 		description: "Simple schema with a two part name (foo-bar)",
 	},

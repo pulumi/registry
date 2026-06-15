@@ -18,7 +18,6 @@ import (
 	"strings"
 	"unicode"
 
-	dotnet "github.com/pulumi/pulumi-dotnet/pulumi-language-dotnet/v3/codegen"
 	"github.com/pulumi/pulumi/pkg/v3/codegen"
 	go_gen "github.com/pulumi/pulumi/pkg/v3/codegen/go"
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
@@ -93,11 +92,22 @@ func title(s string, lang language.Language) string {
 	case language.Go:
 		return go_gen.Title(s)
 	case language.CSharp:
-		return dotnet.Title(s)
+		return csharpTitle(s)
 	default:
 		//nolint:staticcheck
 		return strings.Title(s)
 	}
+}
+
+// csharpTitle upper-cases only the initial letter of s, replicating the Title
+// helper that the pulumi-dotnet codegen package exported before v3.106. That
+// helper was removed upstream, so we keep an equivalent implementation here.
+func csharpTitle(s string) string {
+	if s == "" {
+		return ""
+	}
+	runes := []rune(s)
+	return string(append([]rune{unicode.ToUpper(runes[0])}, runes[1:]...))
 }
 
 func modFilenameToDisplayName(name string) string {

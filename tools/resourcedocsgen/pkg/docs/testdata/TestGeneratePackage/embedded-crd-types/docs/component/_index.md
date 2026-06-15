@@ -4141,23 +4141,23 @@ resource "foo_component" "componentResource" {
         "string" = "string"
       }
       managed_fields = [{
-        "apiVersion"  = "string"
-        "fieldsType"  = "string"
-        "fieldsV1"    = "{}"
-        "manager"     = "string"
-        "operation"   = "string"
-        "subresource" = "string"
-        "time"        = "string"
+        api_version = "string"
+        fields_type = "string"
+        fields_v1   = "{}"
+        manager     = "string"
+        operation   = "string"
+        subresource = "string"
+        time        = "string"
       }]
       name      = "string"
       namespace = "string"
       owner_references = [{
-        "apiVersion"         = "string"
-        "kind"               = "string"
-        "name"               = "string"
-        "uid"                = "string"
-        "blockOwnerDeletion" = false
-        "controller"         = false
+        api_version          = "string"
+        kind                 = "string"
+        name                 = "string"
+        uid                  = "string"
+        block_owner_deletion = false
+        controller           = false
       }]
       resource_version = "string"
       self_link        = "string"
@@ -4165,224 +4165,224 @@ resource "foo_component" "componentResource" {
     }
     spec = {
       containers = [{
-        "name" = "string"
-        "readinessProbe" = {
-          "exec" = {
-            "command" = ["string"]
+        name = "string"
+        readiness_probe = {
+          exec = {
+            command = ["string"]
           }
-          "failureThreshold" = 0
-          "httpGet" = {
-            "port" = 0
-            "host" = "string"
-            "httpHeaders" = [{
-              "name"  = "string"
-              "value" = "string"
+          failure_threshold = 0
+          http_get = {
+            port = 0
+            host = "string"
+            http_headers = [{
+              name  = "string"
+              value = "string"
             }]
-            "path"   = "string"
-            "scheme" = "string"
+            path   = "string"
+            scheme = "string"
           }
-          "initialDelaySeconds" = 0
-          "periodSeconds"       = 0
-          "successThreshold"    = 0
-          "tcpSocket" = {
-            "port" = 0
-            "host" = "string"
+          initial_delay_seconds = 0
+          period_seconds        = 0
+          success_threshold     = 0
+          tcp_socket = {
+            port = 0
+            host = "string"
           }
-          "terminationGracePeriodSeconds" = 0
-          "timeoutSeconds"                = 0
+          termination_grace_period_seconds = 0
+          timeout_seconds                  = 0
         }
-        "securityContext" = {
-          "allowPrivilegeEscalation" = false
-          "capabilities" = {
-            "add"  = ["string"]
-            "drop" = ["string"]
+        security_context = {
+          allow_privilege_escalation = false
+          capabilities = {
+            add  = ["string"]
+            drop = ["string"]
           }
-          "privileged"             = false
-          "procMount"              = "string"
-          "readOnlyRootFilesystem" = false
-          "runAsGroup"             = 0
-          "runAsNonRoot"           = false
-          "runAsUser"              = 0
-          "seLinuxOptions" = {
-            "level" = "string"
-            "role"  = "string"
-            "type"  = "string"
-            "user"  = "string"
+          privileged                = false
+          proc_mount                = "string"
+          read_only_root_filesystem = false
+          run_as_group              = 0
+          run_as_non_root           = false
+          run_as_user               = 0
+          se_linux_options = {
+            level = "string"
+            role  = "string"
+            type  = "string"
+            user  = "string"
           }
-          "seccompProfile" = {
-            "type"             = "string"
-            "localhostProfile" = "string"
+          seccomp_profile = {
+            type              = "string"
+            localhost_profile = "string"
           }
-          "windowsOptions" = {
-            "gmsaCredentialSpec"     = "string"
-            "gmsaCredentialSpecName" = "string"
-            "hostProcess"            = false
-            "runAsUserName"          = "string"
+          windows_options = {
+            gmsa_credential_spec      = "string"
+            gmsa_credential_spec_name = "string"
+            host_process              = false
+            run_as_user_name          = "string"
           }
         }
-        "envFrom" = [{
-          "configMapRef" = {
-            "name"     = "string"
-            "optional" = false
+        env_from = [{
+          config_map_ref = {
+            name     = "string"
+            optional = false
           }
-          "prefix" = "string"
-          "secretRef" = {
-            "name"     = "string"
-            "optional" = false
+          prefix = "string"
+          secret_ref = {
+            name     = "string"
+            optional = false
           }
         }]
-        "image"           = "string"
-        "imagePullPolicy" = "string"
-        "lifecycle" = {
-          "postStart" = {
-            "exec" = {
-              "command" = ["string"]
+        image             = "string"
+        image_pull_policy = "string"
+        lifecycle = {
+          post_start = {
+            exec = {
+              command = ["string"]
             }
-            "httpGet" = {
-              "port" = 0
-              "host" = "string"
-              "httpHeaders" = [{
-                "name"  = "string"
-                "value" = "string"
+            http_get = {
+              port = 0
+              host = "string"
+              http_headers = [{
+                name  = "string"
+                value = "string"
               }]
-              "path"   = "string"
-              "scheme" = "string"
+              path   = "string"
+              scheme = "string"
             }
-            "tcpSocket" = {
-              "port" = 0
-              "host" = "string"
+            tcp_socket = {
+              port = 0
+              host = "string"
             }
           }
-          "preStop" = {
-            "exec" = {
-              "command" = ["string"]
+          pre_stop = {
+            exec = {
+              command = ["string"]
             }
-            "httpGet" = {
-              "port" = 0
-              "host" = "string"
-              "httpHeaders" = [{
-                "name"  = "string"
-                "value" = "string"
+            http_get = {
+              port = 0
+              host = "string"
+              http_headers = [{
+                name  = "string"
+                value = "string"
               }]
-              "path"   = "string"
-              "scheme" = "string"
+              path   = "string"
+              scheme = "string"
             }
-            "tcpSocket" = {
-              "port" = 0
-              "host" = "string"
+            tcp_socket = {
+              port = 0
+              host = "string"
             }
           }
         }
-        "livenessProbe" = {
-          "exec" = {
-            "command" = ["string"]
+        liveness_probe = {
+          exec = {
+            command = ["string"]
           }
-          "failureThreshold" = 0
-          "httpGet" = {
-            "port" = 0
-            "host" = "string"
-            "httpHeaders" = [{
-              "name"  = "string"
-              "value" = "string"
+          failure_threshold = 0
+          http_get = {
+            port = 0
+            host = "string"
+            http_headers = [{
+              name  = "string"
+              value = "string"
             }]
-            "path"   = "string"
-            "scheme" = "string"
+            path   = "string"
+            scheme = "string"
           }
-          "initialDelaySeconds" = 0
-          "periodSeconds"       = 0
-          "successThreshold"    = 0
-          "tcpSocket" = {
-            "port" = 0
-            "host" = "string"
+          initial_delay_seconds = 0
+          period_seconds        = 0
+          success_threshold     = 0
+          tcp_socket = {
+            port = 0
+            host = "string"
           }
-          "terminationGracePeriodSeconds" = 0
-          "timeoutSeconds"                = 0
+          termination_grace_period_seconds = 0
+          timeout_seconds                  = 0
         }
-        "command" = ["string"]
-        "ports" = [{
-          "containerPort" = 0
-          "hostIP"        = "string"
-          "hostPort"      = 0
-          "name"          = "string"
-          "protocol"      = "string"
+        command = ["string"]
+        ports = [{
+          container_port = 0
+          host_ip        = "string"
+          host_port      = 0
+          name           = "string"
+          protocol       = "string"
         }]
-        "args" = ["string"]
-        "env" = [{
-          "name"  = "string"
-          "value" = "string"
-          "valueFrom" = {
-            "configMapKeyRef" = {
-              "key"      = "string"
-              "name"     = "string"
-              "optional" = false
+        args = ["string"]
+        env = [{
+          name  = "string"
+          value = "string"
+          value_from = {
+            config_map_key_ref = {
+              key      = "string"
+              name     = "string"
+              optional = false
             }
-            "fieldRef" = {
-              "fieldPath"  = "string"
-              "apiVersion" = "string"
+            field_ref = {
+              field_path  = "string"
+              api_version = "string"
             }
-            "resourceFieldRef" = {
-              "resource"      = "string"
-              "containerName" = "string"
-              "divisor"       = "string"
+            resource_field_ref = {
+              resource       = "string"
+              container_name = "string"
+              divisor        = "string"
             }
-            "secretKeyRef" = {
-              "key"      = "string"
-              "name"     = "string"
-              "optional" = false
+            secret_key_ref = {
+              key      = "string"
+              name     = "string"
+              optional = false
             }
           }
         }]
-        "startupProbe" = {
-          "exec" = {
-            "command" = ["string"]
+        startup_probe = {
+          exec = {
+            command = ["string"]
           }
-          "failureThreshold" = 0
-          "httpGet" = {
-            "port" = 0
-            "host" = "string"
-            "httpHeaders" = [{
-              "name"  = "string"
-              "value" = "string"
+          failure_threshold = 0
+          http_get = {
+            port = 0
+            host = "string"
+            http_headers = [{
+              name  = "string"
+              value = "string"
             }]
-            "path"   = "string"
-            "scheme" = "string"
+            path   = "string"
+            scheme = "string"
           }
-          "initialDelaySeconds" = 0
-          "periodSeconds"       = 0
-          "successThreshold"    = 0
-          "tcpSocket" = {
-            "port" = 0
-            "host" = "string"
+          initial_delay_seconds = 0
+          period_seconds        = 0
+          success_threshold     = 0
+          tcp_socket = {
+            port = 0
+            host = "string"
           }
-          "terminationGracePeriodSeconds" = 0
-          "timeoutSeconds"                = 0
+          termination_grace_period_seconds = 0
+          timeout_seconds                  = 0
         }
-        "resources" = {
-          "limits" = {
+        resources = {
+          limits = {
             "string" = "string"
           }
-          "requests" = {
+          requests = {
             "string" = "string"
           }
         }
-        "stdin"                    = false
-        "stdinOnce"                = false
-        "terminationMessagePath"   = "string"
-        "terminationMessagePolicy" = "string"
-        "tty"                      = false
-        "volumeDevices" = [{
-          "devicePath" = "string"
-          "name"       = "string"
+        stdin                      = false
+        stdin_once                 = false
+        termination_message_path   = "string"
+        termination_message_policy = "string"
+        tty                        = false
+        volume_devices = [{
+          device_path = "string"
+          name        = "string"
         }]
-        "volumeMounts" = [{
-          "mountPath"        = "string"
-          "name"             = "string"
-          "mountPropagation" = "string"
-          "readOnly"         = false
-          "subPath"          = "string"
-          "subPathExpr"      = "string"
+        volume_mounts = [{
+          mount_path        = "string"
+          name              = "string"
+          mount_propagation = "string"
+          read_only         = false
+          sub_path          = "string"
+          sub_path_expr     = "string"
         }]
-        "workingDir" = "string"
+        working_dir = "string"
       }]
       node_selector = {
         "string" = "string"
@@ -4391,603 +4391,603 @@ resource "foo_component" "componentResource" {
       affinity = {
         node_affinity = {
           preferred_during_scheduling_ignored_during_execution = [{
-            "preference" = {
-              "matchExpressions" = [{
-                "key"      = "string"
-                "operator" = "string"
-                "values"   = ["string"]
+            preference = {
+              match_expressions = [{
+                key      = "string"
+                operator = "string"
+                values   = ["string"]
               }]
-              "matchFields" = [{
-                "key"      = "string"
-                "operator" = "string"
-                "values"   = ["string"]
+              match_fields = [{
+                key      = "string"
+                operator = "string"
+                values   = ["string"]
               }]
             }
-            "weight" = 0
+            weight = 0
           }]
           required_during_scheduling_ignored_during_execution = {
             node_selector_terms = [{
-              "matchExpressions" = [{
-                "key"      = "string"
-                "operator" = "string"
-                "values"   = ["string"]
+              match_expressions = [{
+                key      = "string"
+                operator = "string"
+                values   = ["string"]
               }]
-              "matchFields" = [{
-                "key"      = "string"
-                "operator" = "string"
-                "values"   = ["string"]
+              match_fields = [{
+                key      = "string"
+                operator = "string"
+                values   = ["string"]
               }]
             }]
           }
         }
         pod_affinity = {
           preferred_during_scheduling_ignored_during_execution = [{
-            "podAffinityTerm" = {
-              "topologyKey" = "string"
-              "labelSelector" = {
-                "matchExpressions" = [{
-                  "key"      = "string"
-                  "operator" = "string"
-                  "values"   = ["string"]
+            pod_affinity_term = {
+              topology_key = "string"
+              label_selector = {
+                match_expressions = [{
+                  key      = "string"
+                  operator = "string"
+                  values   = ["string"]
                 }]
-                "matchLabels" = {
+                match_labels = {
                   "string" = "string"
                 }
               }
-              "namespaceSelector" = {
-                "matchExpressions" = [{
-                  "key"      = "string"
-                  "operator" = "string"
-                  "values"   = ["string"]
+              namespace_selector = {
+                match_expressions = [{
+                  key      = "string"
+                  operator = "string"
+                  values   = ["string"]
                 }]
-                "matchLabels" = {
+                match_labels = {
                   "string" = "string"
                 }
               }
-              "namespaces" = ["string"]
+              namespaces = ["string"]
             }
-            "weight" = 0
+            weight = 0
           }]
           required_during_scheduling_ignored_during_execution = [{
-            "topologyKey" = "string"
-            "labelSelector" = {
-              "matchExpressions" = [{
-                "key"      = "string"
-                "operator" = "string"
-                "values"   = ["string"]
+            topology_key = "string"
+            label_selector = {
+              match_expressions = [{
+                key      = "string"
+                operator = "string"
+                values   = ["string"]
               }]
-              "matchLabels" = {
+              match_labels = {
                 "string" = "string"
               }
             }
-            "namespaceSelector" = {
-              "matchExpressions" = [{
-                "key"      = "string"
-                "operator" = "string"
-                "values"   = ["string"]
+            namespace_selector = {
+              match_expressions = [{
+                key      = "string"
+                operator = "string"
+                values   = ["string"]
               }]
-              "matchLabels" = {
+              match_labels = {
                 "string" = "string"
               }
             }
-            "namespaces" = ["string"]
+            namespaces = ["string"]
           }]
         }
         pod_anti_affinity = {
           preferred_during_scheduling_ignored_during_execution = [{
-            "podAffinityTerm" = {
-              "topologyKey" = "string"
-              "labelSelector" = {
-                "matchExpressions" = [{
-                  "key"      = "string"
-                  "operator" = "string"
-                  "values"   = ["string"]
+            pod_affinity_term = {
+              topology_key = "string"
+              label_selector = {
+                match_expressions = [{
+                  key      = "string"
+                  operator = "string"
+                  values   = ["string"]
                 }]
-                "matchLabels" = {
+                match_labels = {
                   "string" = "string"
                 }
               }
-              "namespaceSelector" = {
-                "matchExpressions" = [{
-                  "key"      = "string"
-                  "operator" = "string"
-                  "values"   = ["string"]
+              namespace_selector = {
+                match_expressions = [{
+                  key      = "string"
+                  operator = "string"
+                  values   = ["string"]
                 }]
-                "matchLabels" = {
+                match_labels = {
                   "string" = "string"
                 }
               }
-              "namespaces" = ["string"]
+              namespaces = ["string"]
             }
-            "weight" = 0
+            weight = 0
           }]
           required_during_scheduling_ignored_during_execution = [{
-            "topologyKey" = "string"
-            "labelSelector" = {
-              "matchExpressions" = [{
-                "key"      = "string"
-                "operator" = "string"
-                "values"   = ["string"]
+            topology_key = "string"
+            label_selector = {
+              match_expressions = [{
+                key      = "string"
+                operator = "string"
+                values   = ["string"]
               }]
-              "matchLabels" = {
+              match_labels = {
                 "string" = "string"
               }
             }
-            "namespaceSelector" = {
-              "matchExpressions" = [{
-                "key"      = "string"
-                "operator" = "string"
-                "values"   = ["string"]
+            namespace_selector = {
+              match_expressions = [{
+                key      = "string"
+                operator = "string"
+                values   = ["string"]
               }]
-              "matchLabels" = {
+              match_labels = {
                 "string" = "string"
               }
             }
-            "namespaces" = ["string"]
+            namespaces = ["string"]
           }]
         }
       }
       dns_config = {
         nameservers = ["string"]
         options = [{
-          "name"  = "string"
-          "value" = "string"
+          name  = "string"
+          value = "string"
         }]
         searches = ["string"]
       }
       dns_policy           = "string"
       enable_service_links = false
       ephemeral_containers = [{
-        "name" = "string"
-        "readinessProbe" = {
-          "exec" = {
-            "command" = ["string"]
+        name = "string"
+        readiness_probe = {
+          exec = {
+            command = ["string"]
           }
-          "failureThreshold" = 0
-          "httpGet" = {
-            "port" = 0
-            "host" = "string"
-            "httpHeaders" = [{
-              "name"  = "string"
-              "value" = "string"
+          failure_threshold = 0
+          http_get = {
+            port = 0
+            host = "string"
+            http_headers = [{
+              name  = "string"
+              value = "string"
             }]
-            "path"   = "string"
-            "scheme" = "string"
+            path   = "string"
+            scheme = "string"
           }
-          "initialDelaySeconds" = 0
-          "periodSeconds"       = 0
-          "successThreshold"    = 0
-          "tcpSocket" = {
-            "port" = 0
-            "host" = "string"
+          initial_delay_seconds = 0
+          period_seconds        = 0
+          success_threshold     = 0
+          tcp_socket = {
+            port = 0
+            host = "string"
           }
-          "terminationGracePeriodSeconds" = 0
-          "timeoutSeconds"                = 0
+          termination_grace_period_seconds = 0
+          timeout_seconds                  = 0
         }
-        "securityContext" = {
-          "allowPrivilegeEscalation" = false
-          "capabilities" = {
-            "add"  = ["string"]
-            "drop" = ["string"]
+        security_context = {
+          allow_privilege_escalation = false
+          capabilities = {
+            add  = ["string"]
+            drop = ["string"]
           }
-          "privileged"             = false
-          "procMount"              = "string"
-          "readOnlyRootFilesystem" = false
-          "runAsGroup"             = 0
-          "runAsNonRoot"           = false
-          "runAsUser"              = 0
-          "seLinuxOptions" = {
-            "level" = "string"
-            "role"  = "string"
-            "type"  = "string"
-            "user"  = "string"
+          privileged                = false
+          proc_mount                = "string"
+          read_only_root_filesystem = false
+          run_as_group              = 0
+          run_as_non_root           = false
+          run_as_user               = 0
+          se_linux_options = {
+            level = "string"
+            role  = "string"
+            type  = "string"
+            user  = "string"
           }
-          "seccompProfile" = {
-            "type"             = "string"
-            "localhostProfile" = "string"
+          seccomp_profile = {
+            type              = "string"
+            localhost_profile = "string"
           }
-          "windowsOptions" = {
-            "gmsaCredentialSpec"     = "string"
-            "gmsaCredentialSpecName" = "string"
-            "hostProcess"            = false
-            "runAsUserName"          = "string"
+          windows_options = {
+            gmsa_credential_spec      = "string"
+            gmsa_credential_spec_name = "string"
+            host_process              = false
+            run_as_user_name          = "string"
           }
         }
-        "envFrom" = [{
-          "configMapRef" = {
-            "name"     = "string"
-            "optional" = false
+        env_from = [{
+          config_map_ref = {
+            name     = "string"
+            optional = false
           }
-          "prefix" = "string"
-          "secretRef" = {
-            "name"     = "string"
-            "optional" = false
+          prefix = "string"
+          secret_ref = {
+            name     = "string"
+            optional = false
           }
         }]
-        "image"           = "string"
-        "imagePullPolicy" = "string"
-        "lifecycle" = {
-          "postStart" = {
-            "exec" = {
-              "command" = ["string"]
+        image             = "string"
+        image_pull_policy = "string"
+        lifecycle = {
+          post_start = {
+            exec = {
+              command = ["string"]
             }
-            "httpGet" = {
-              "port" = 0
-              "host" = "string"
-              "httpHeaders" = [{
-                "name"  = "string"
-                "value" = "string"
+            http_get = {
+              port = 0
+              host = "string"
+              http_headers = [{
+                name  = "string"
+                value = "string"
               }]
-              "path"   = "string"
-              "scheme" = "string"
+              path   = "string"
+              scheme = "string"
             }
-            "tcpSocket" = {
-              "port" = 0
-              "host" = "string"
+            tcp_socket = {
+              port = 0
+              host = "string"
             }
           }
-          "preStop" = {
-            "exec" = {
-              "command" = ["string"]
+          pre_stop = {
+            exec = {
+              command = ["string"]
             }
-            "httpGet" = {
-              "port" = 0
-              "host" = "string"
-              "httpHeaders" = [{
-                "name"  = "string"
-                "value" = "string"
+            http_get = {
+              port = 0
+              host = "string"
+              http_headers = [{
+                name  = "string"
+                value = "string"
               }]
-              "path"   = "string"
-              "scheme" = "string"
+              path   = "string"
+              scheme = "string"
             }
-            "tcpSocket" = {
-              "port" = 0
-              "host" = "string"
+            tcp_socket = {
+              port = 0
+              host = "string"
             }
           }
         }
-        "livenessProbe" = {
-          "exec" = {
-            "command" = ["string"]
+        liveness_probe = {
+          exec = {
+            command = ["string"]
           }
-          "failureThreshold" = 0
-          "httpGet" = {
-            "port" = 0
-            "host" = "string"
-            "httpHeaders" = [{
-              "name"  = "string"
-              "value" = "string"
+          failure_threshold = 0
+          http_get = {
+            port = 0
+            host = "string"
+            http_headers = [{
+              name  = "string"
+              value = "string"
             }]
-            "path"   = "string"
-            "scheme" = "string"
+            path   = "string"
+            scheme = "string"
           }
-          "initialDelaySeconds" = 0
-          "periodSeconds"       = 0
-          "successThreshold"    = 0
-          "tcpSocket" = {
-            "port" = 0
-            "host" = "string"
+          initial_delay_seconds = 0
+          period_seconds        = 0
+          success_threshold     = 0
+          tcp_socket = {
+            port = 0
+            host = "string"
           }
-          "terminationGracePeriodSeconds" = 0
-          "timeoutSeconds"                = 0
+          termination_grace_period_seconds = 0
+          timeout_seconds                  = 0
         }
-        "command" = ["string"]
-        "ports" = [{
-          "containerPort" = 0
-          "hostIP"        = "string"
-          "hostPort"      = 0
-          "name"          = "string"
-          "protocol"      = "string"
+        command = ["string"]
+        ports = [{
+          container_port = 0
+          host_ip        = "string"
+          host_port      = 0
+          name           = "string"
+          protocol       = "string"
         }]
-        "startupProbe" = {
-          "exec" = {
-            "command" = ["string"]
+        startup_probe = {
+          exec = {
+            command = ["string"]
           }
-          "failureThreshold" = 0
-          "httpGet" = {
-            "port" = 0
-            "host" = "string"
-            "httpHeaders" = [{
-              "name"  = "string"
-              "value" = "string"
+          failure_threshold = 0
+          http_get = {
+            port = 0
+            host = "string"
+            http_headers = [{
+              name  = "string"
+              value = "string"
             }]
-            "path"   = "string"
-            "scheme" = "string"
+            path   = "string"
+            scheme = "string"
           }
-          "initialDelaySeconds" = 0
-          "periodSeconds"       = 0
-          "successThreshold"    = 0
-          "tcpSocket" = {
-            "port" = 0
-            "host" = "string"
+          initial_delay_seconds = 0
+          period_seconds        = 0
+          success_threshold     = 0
+          tcp_socket = {
+            port = 0
+            host = "string"
           }
-          "terminationGracePeriodSeconds" = 0
-          "timeoutSeconds"                = 0
+          termination_grace_period_seconds = 0
+          timeout_seconds                  = 0
         }
-        "env" = [{
-          "name"  = "string"
-          "value" = "string"
-          "valueFrom" = {
-            "configMapKeyRef" = {
-              "key"      = "string"
-              "name"     = "string"
-              "optional" = false
+        env = [{
+          name  = "string"
+          value = "string"
+          value_from = {
+            config_map_key_ref = {
+              key      = "string"
+              name     = "string"
+              optional = false
             }
-            "fieldRef" = {
-              "fieldPath"  = "string"
-              "apiVersion" = "string"
+            field_ref = {
+              field_path  = "string"
+              api_version = "string"
             }
-            "resourceFieldRef" = {
-              "resource"      = "string"
-              "containerName" = "string"
-              "divisor"       = "string"
+            resource_field_ref = {
+              resource       = "string"
+              container_name = "string"
+              divisor        = "string"
             }
-            "secretKeyRef" = {
-              "key"      = "string"
-              "name"     = "string"
-              "optional" = false
+            secret_key_ref = {
+              key      = "string"
+              name     = "string"
+              optional = false
             }
           }
         }]
-        "resources" = {
-          "limits" = {
+        resources = {
+          limits = {
             "string" = "string"
           }
-          "requests" = {
+          requests = {
             "string" = "string"
           }
         }
-        "args"                     = ["string"]
-        "stdin"                    = false
-        "stdinOnce"                = false
-        "targetContainerName"      = "string"
-        "terminationMessagePath"   = "string"
-        "terminationMessagePolicy" = "string"
-        "tty"                      = false
-        "volumeDevices" = [{
-          "devicePath" = "string"
-          "name"       = "string"
+        args                       = ["string"]
+        stdin                      = false
+        stdin_once                 = false
+        target_container_name      = "string"
+        termination_message_path   = "string"
+        termination_message_policy = "string"
+        tty                        = false
+        volume_devices = [{
+          device_path = "string"
+          name        = "string"
         }]
-        "volumeMounts" = [{
-          "mountPath"        = "string"
-          "name"             = "string"
-          "mountPropagation" = "string"
-          "readOnly"         = false
-          "subPath"          = "string"
-          "subPathExpr"      = "string"
+        volume_mounts = [{
+          mount_path        = "string"
+          name              = "string"
+          mount_propagation = "string"
+          read_only         = false
+          sub_path          = "string"
+          sub_path_expr     = "string"
         }]
-        "workingDir" = "string"
+        working_dir = "string"
       }]
       host_aliases = [{
-        "hostnames" = ["string"]
-        "ip"        = "string"
+        hostnames = ["string"]
+        ip        = "string"
       }]
       host_ipc     = false
       host_network = false
       priority     = 0
       hostname     = "string"
       image_pull_secrets = [{
-        "name" = "string"
+        name = "string"
       }]
       init_containers = [{
-        "name" = "string"
-        "readinessProbe" = {
-          "exec" = {
-            "command" = ["string"]
+        name = "string"
+        readiness_probe = {
+          exec = {
+            command = ["string"]
           }
-          "failureThreshold" = 0
-          "httpGet" = {
-            "port" = 0
-            "host" = "string"
-            "httpHeaders" = [{
-              "name"  = "string"
-              "value" = "string"
+          failure_threshold = 0
+          http_get = {
+            port = 0
+            host = "string"
+            http_headers = [{
+              name  = "string"
+              value = "string"
             }]
-            "path"   = "string"
-            "scheme" = "string"
+            path   = "string"
+            scheme = "string"
           }
-          "initialDelaySeconds" = 0
-          "periodSeconds"       = 0
-          "successThreshold"    = 0
-          "tcpSocket" = {
-            "port" = 0
-            "host" = "string"
+          initial_delay_seconds = 0
+          period_seconds        = 0
+          success_threshold     = 0
+          tcp_socket = {
+            port = 0
+            host = "string"
           }
-          "terminationGracePeriodSeconds" = 0
-          "timeoutSeconds"                = 0
+          termination_grace_period_seconds = 0
+          timeout_seconds                  = 0
         }
-        "securityContext" = {
-          "allowPrivilegeEscalation" = false
-          "capabilities" = {
-            "add"  = ["string"]
-            "drop" = ["string"]
+        security_context = {
+          allow_privilege_escalation = false
+          capabilities = {
+            add  = ["string"]
+            drop = ["string"]
           }
-          "privileged"             = false
-          "procMount"              = "string"
-          "readOnlyRootFilesystem" = false
-          "runAsGroup"             = 0
-          "runAsNonRoot"           = false
-          "runAsUser"              = 0
-          "seLinuxOptions" = {
-            "level" = "string"
-            "role"  = "string"
-            "type"  = "string"
-            "user"  = "string"
+          privileged                = false
+          proc_mount                = "string"
+          read_only_root_filesystem = false
+          run_as_group              = 0
+          run_as_non_root           = false
+          run_as_user               = 0
+          se_linux_options = {
+            level = "string"
+            role  = "string"
+            type  = "string"
+            user  = "string"
           }
-          "seccompProfile" = {
-            "type"             = "string"
-            "localhostProfile" = "string"
+          seccomp_profile = {
+            type              = "string"
+            localhost_profile = "string"
           }
-          "windowsOptions" = {
-            "gmsaCredentialSpec"     = "string"
-            "gmsaCredentialSpecName" = "string"
-            "hostProcess"            = false
-            "runAsUserName"          = "string"
+          windows_options = {
+            gmsa_credential_spec      = "string"
+            gmsa_credential_spec_name = "string"
+            host_process              = false
+            run_as_user_name          = "string"
           }
         }
-        "envFrom" = [{
-          "configMapRef" = {
-            "name"     = "string"
-            "optional" = false
+        env_from = [{
+          config_map_ref = {
+            name     = "string"
+            optional = false
           }
-          "prefix" = "string"
-          "secretRef" = {
-            "name"     = "string"
-            "optional" = false
+          prefix = "string"
+          secret_ref = {
+            name     = "string"
+            optional = false
           }
         }]
-        "image"           = "string"
-        "imagePullPolicy" = "string"
-        "lifecycle" = {
-          "postStart" = {
-            "exec" = {
-              "command" = ["string"]
+        image             = "string"
+        image_pull_policy = "string"
+        lifecycle = {
+          post_start = {
+            exec = {
+              command = ["string"]
             }
-            "httpGet" = {
-              "port" = 0
-              "host" = "string"
-              "httpHeaders" = [{
-                "name"  = "string"
-                "value" = "string"
+            http_get = {
+              port = 0
+              host = "string"
+              http_headers = [{
+                name  = "string"
+                value = "string"
               }]
-              "path"   = "string"
-              "scheme" = "string"
+              path   = "string"
+              scheme = "string"
             }
-            "tcpSocket" = {
-              "port" = 0
-              "host" = "string"
+            tcp_socket = {
+              port = 0
+              host = "string"
             }
           }
-          "preStop" = {
-            "exec" = {
-              "command" = ["string"]
+          pre_stop = {
+            exec = {
+              command = ["string"]
             }
-            "httpGet" = {
-              "port" = 0
-              "host" = "string"
-              "httpHeaders" = [{
-                "name"  = "string"
-                "value" = "string"
+            http_get = {
+              port = 0
+              host = "string"
+              http_headers = [{
+                name  = "string"
+                value = "string"
               }]
-              "path"   = "string"
-              "scheme" = "string"
+              path   = "string"
+              scheme = "string"
             }
-            "tcpSocket" = {
-              "port" = 0
-              "host" = "string"
+            tcp_socket = {
+              port = 0
+              host = "string"
             }
           }
         }
-        "livenessProbe" = {
-          "exec" = {
-            "command" = ["string"]
+        liveness_probe = {
+          exec = {
+            command = ["string"]
           }
-          "failureThreshold" = 0
-          "httpGet" = {
-            "port" = 0
-            "host" = "string"
-            "httpHeaders" = [{
-              "name"  = "string"
-              "value" = "string"
+          failure_threshold = 0
+          http_get = {
+            port = 0
+            host = "string"
+            http_headers = [{
+              name  = "string"
+              value = "string"
             }]
-            "path"   = "string"
-            "scheme" = "string"
+            path   = "string"
+            scheme = "string"
           }
-          "initialDelaySeconds" = 0
-          "periodSeconds"       = 0
-          "successThreshold"    = 0
-          "tcpSocket" = {
-            "port" = 0
-            "host" = "string"
+          initial_delay_seconds = 0
+          period_seconds        = 0
+          success_threshold     = 0
+          tcp_socket = {
+            port = 0
+            host = "string"
           }
-          "terminationGracePeriodSeconds" = 0
-          "timeoutSeconds"                = 0
+          termination_grace_period_seconds = 0
+          timeout_seconds                  = 0
         }
-        "command" = ["string"]
-        "ports" = [{
-          "containerPort" = 0
-          "hostIP"        = "string"
-          "hostPort"      = 0
-          "name"          = "string"
-          "protocol"      = "string"
+        command = ["string"]
+        ports = [{
+          container_port = 0
+          host_ip        = "string"
+          host_port      = 0
+          name           = "string"
+          protocol       = "string"
         }]
-        "args" = ["string"]
-        "env" = [{
-          "name"  = "string"
-          "value" = "string"
-          "valueFrom" = {
-            "configMapKeyRef" = {
-              "key"      = "string"
-              "name"     = "string"
-              "optional" = false
+        args = ["string"]
+        env = [{
+          name  = "string"
+          value = "string"
+          value_from = {
+            config_map_key_ref = {
+              key      = "string"
+              name     = "string"
+              optional = false
             }
-            "fieldRef" = {
-              "fieldPath"  = "string"
-              "apiVersion" = "string"
+            field_ref = {
+              field_path  = "string"
+              api_version = "string"
             }
-            "resourceFieldRef" = {
-              "resource"      = "string"
-              "containerName" = "string"
-              "divisor"       = "string"
+            resource_field_ref = {
+              resource       = "string"
+              container_name = "string"
+              divisor        = "string"
             }
-            "secretKeyRef" = {
-              "key"      = "string"
-              "name"     = "string"
-              "optional" = false
+            secret_key_ref = {
+              key      = "string"
+              name     = "string"
+              optional = false
             }
           }
         }]
-        "startupProbe" = {
-          "exec" = {
-            "command" = ["string"]
+        startup_probe = {
+          exec = {
+            command = ["string"]
           }
-          "failureThreshold" = 0
-          "httpGet" = {
-            "port" = 0
-            "host" = "string"
-            "httpHeaders" = [{
-              "name"  = "string"
-              "value" = "string"
+          failure_threshold = 0
+          http_get = {
+            port = 0
+            host = "string"
+            http_headers = [{
+              name  = "string"
+              value = "string"
             }]
-            "path"   = "string"
-            "scheme" = "string"
+            path   = "string"
+            scheme = "string"
           }
-          "initialDelaySeconds" = 0
-          "periodSeconds"       = 0
-          "successThreshold"    = 0
-          "tcpSocket" = {
-            "port" = 0
-            "host" = "string"
+          initial_delay_seconds = 0
+          period_seconds        = 0
+          success_threshold     = 0
+          tcp_socket = {
+            port = 0
+            host = "string"
           }
-          "terminationGracePeriodSeconds" = 0
-          "timeoutSeconds"                = 0
+          termination_grace_period_seconds = 0
+          timeout_seconds                  = 0
         }
-        "resources" = {
-          "limits" = {
+        resources = {
+          limits = {
             "string" = "string"
           }
-          "requests" = {
+          requests = {
             "string" = "string"
           }
         }
-        "stdin"                    = false
-        "stdinOnce"                = false
-        "terminationMessagePath"   = "string"
-        "terminationMessagePolicy" = "string"
-        "tty"                      = false
-        "volumeDevices" = [{
-          "devicePath" = "string"
-          "name"       = "string"
+        stdin                      = false
+        stdin_once                 = false
+        termination_message_path   = "string"
+        termination_message_policy = "string"
+        tty                        = false
+        volume_devices = [{
+          device_path = "string"
+          name        = "string"
         }]
-        "volumeMounts" = [{
-          "mountPath"        = "string"
-          "name"             = "string"
-          "mountPropagation" = "string"
-          "readOnly"         = false
-          "subPath"          = "string"
-          "subPathExpr"      = "string"
+        volume_mounts = [{
+          mount_path        = "string"
+          name              = "string"
+          mount_propagation = "string"
+          read_only         = false
+          sub_path          = "string"
+          sub_path_expr     = "string"
         }]
-        "workingDir" = "string"
+        working_dir = "string"
       }]
       node_name                       = "string"
       active_deadline_seconds         = 0
@@ -4998,7 +4998,7 @@ resource "foo_component" "componentResource" {
       host_pid            = false
       priority_class_name = "string"
       readiness_gates = [{
-        "conditionType" = "string"
+        condition_type = "string"
       }]
       restart_policy     = "string"
       runtime_class_name = "string"
@@ -5021,8 +5021,8 @@ resource "foo_component" "componentResource" {
         }
         supplemental_groups = [0]
         sysctls = [{
-          "name"  = "string"
-          "value" = "string"
+          name  = "string"
+          value = "string"
         }]
         windows_options = {
           gmsa_credential_spec      = "string"
@@ -5038,504 +5038,504 @@ resource "foo_component" "componentResource" {
       subdomain                        = "string"
       termination_grace_period_seconds = 0
       tolerations = [{
-        "effect"            = "string"
-        "key"               = "string"
-        "operator"          = "string"
-        "tolerationSeconds" = 0
-        "value"             = "string"
+        effect             = "string"
+        key                = "string"
+        operator           = "string"
+        toleration_seconds = 0
+        value              = "string"
       }]
       topology_spread_constraints = [{
-        "maxSkew"           = 0
-        "topologyKey"       = "string"
-        "whenUnsatisfiable" = "string"
-        "labelSelector" = {
-          "matchExpressions" = [{
-            "key"      = "string"
-            "operator" = "string"
-            "values"   = ["string"]
+        max_skew           = 0
+        topology_key       = "string"
+        when_unsatisfiable = "string"
+        label_selector = {
+          match_expressions = [{
+            key      = "string"
+            operator = "string"
+            values   = ["string"]
           }]
-          "matchLabels" = {
+          match_labels = {
             "string" = "string"
           }
         }
       }]
       volumes = [{
-        "name" = "string"
-        "gitRepo" = {
-          "repository" = "string"
-          "directory"  = "string"
-          "revision"   = "string"
+        name = "string"
+        git_repo = {
+          repository = "string"
+          directory  = "string"
+          revision   = "string"
         }
-        "persistentVolumeClaim" = {
-          "claimName" = "string"
-          "readOnly"  = false
+        persistent_volume_claim = {
+          claim_name = "string"
+          read_only  = false
         }
-        "cephfs" = {
-          "monitors"   = ["string"]
-          "path"       = "string"
-          "readOnly"   = false
-          "secretFile" = "string"
-          "secretRef" = {
-            "name" = "string"
+        cephfs = {
+          monitors    = ["string"]
+          path        = "string"
+          read_only   = false
+          secret_file = "string"
+          secret_ref = {
+            name = "string"
           }
-          "user" = "string"
+          user = "string"
         }
-        "cinder" = {
-          "volumeID" = "string"
-          "fsType"   = "string"
-          "readOnly" = false
-          "secretRef" = {
-            "name" = "string"
+        cinder = {
+          volume_id = "string"
+          fs_type   = "string"
+          read_only = false
+          secret_ref = {
+            name = "string"
           }
         }
-        "configMap" = {
-          "defaultMode" = 0
-          "items" = [{
-            "key"  = "string"
-            "path" = "string"
-            "mode" = 0
+        config_map = {
+          default_mode = 0
+          items = [{
+            key  = "string"
+            path = "string"
+            mode = 0
           }]
-          "name"     = "string"
-          "optional" = false
+          name     = "string"
+          optional = false
         }
-        "csi" = {
-          "driver" = "string"
-          "fsType" = "string"
-          "nodePublishSecretRef" = {
-            "name" = "string"
+        csi = {
+          driver  = "string"
+          fs_type = "string"
+          node_publish_secret_ref = {
+            name = "string"
           }
-          "readOnly" = false
-          "volumeAttributes" = {
+          read_only = false
+          volume_attributes = {
             "string" = "string"
           }
         }
-        "downwardAPI" = {
-          "defaultMode" = 0
-          "items" = [{
-            "path" = "string"
-            "fieldRef" = {
-              "fieldPath"  = "string"
-              "apiVersion" = "string"
+        downward_api = {
+          default_mode = 0
+          items = [{
+            path = "string"
+            field_ref = {
+              field_path  = "string"
+              api_version = "string"
             }
-            "mode" = 0
-            "resourceFieldRef" = {
-              "resource"      = "string"
-              "containerName" = "string"
-              "divisor"       = "string"
+            mode = 0
+            resource_field_ref = {
+              resource       = "string"
+              container_name = "string"
+              divisor        = "string"
             }
           }]
         }
-        "emptyDir" = {
-          "medium"    = "string"
-          "sizeLimit" = "string"
+        empty_dir = {
+          medium     = "string"
+          size_limit = "string"
         }
-        "ephemeral" = {
-          "readOnly" = false
-          "volumeClaimTemplate" = {
-            "spec" = {
-              "accessModes" = ["string"]
-              "dataSource" = {
-                "kind"     = "string"
-                "name"     = "string"
-                "apiGroup" = "string"
+        ephemeral = {
+          read_only = false
+          volume_claim_template = {
+            spec = {
+              access_modes = ["string"]
+              data_source = {
+                kind      = "string"
+                name      = "string"
+                api_group = "string"
               }
-              "dataSourceRef" = {
-                "kind"     = "string"
-                "name"     = "string"
-                "apiGroup" = "string"
+              data_source_ref = {
+                kind      = "string"
+                name      = "string"
+                api_group = "string"
               }
-              "resources" = {
-                "limits" = {
+              resources = {
+                limits = {
                   "string" = "string"
                 }
-                "requests" = {
+                requests = {
                   "string" = "string"
                 }
               }
-              "selector" = {
-                "matchExpressions" = [{
-                  "key"      = "string"
-                  "operator" = "string"
-                  "values"   = ["string"]
+              selector = {
+                match_expressions = [{
+                  key      = "string"
+                  operator = "string"
+                  values   = ["string"]
                 }]
-                "matchLabels" = {
+                match_labels = {
                   "string" = "string"
                 }
               }
-              "storageClassName" = "string"
-              "volumeMode"       = "string"
-              "volumeName"       = "string"
+              storage_class_name = "string"
+              volume_mode        = "string"
+              volume_name        = "string"
             }
-            "metadata" = {
-              "annotations" = {
+            metadata = {
+              annotations = {
                 "string" = "string"
               }
-              "clusterName"                = "string"
-              "creationTimestamp"          = "string"
-              "deletionGracePeriodSeconds" = 0
-              "deletionTimestamp"          = "string"
-              "finalizers"                 = ["string"]
-              "generateName"               = "string"
-              "generation"                 = 0
-              "labels" = {
+              cluster_name                  = "string"
+              creation_timestamp            = "string"
+              deletion_grace_period_seconds = 0
+              deletion_timestamp            = "string"
+              finalizers                    = ["string"]
+              generate_name                 = "string"
+              generation                    = 0
+              labels = {
                 "string" = "string"
               }
-              "managedFields" = [{
-                "apiVersion"  = "string"
-                "fieldsType"  = "string"
-                "fieldsV1"    = "{}"
-                "manager"     = "string"
-                "operation"   = "string"
-                "subresource" = "string"
-                "time"        = "string"
+              managed_fields = [{
+                api_version = "string"
+                fields_type = "string"
+                fields_v1   = "{}"
+                manager     = "string"
+                operation   = "string"
+                subresource = "string"
+                time        = "string"
               }]
-              "name"      = "string"
-              "namespace" = "string"
-              "ownerReferences" = [{
-                "apiVersion"         = "string"
-                "kind"               = "string"
-                "name"               = "string"
-                "uid"                = "string"
-                "blockOwnerDeletion" = false
-                "controller"         = false
+              name      = "string"
+              namespace = "string"
+              owner_references = [{
+                api_version          = "string"
+                kind                 = "string"
+                name                 = "string"
+                uid                  = "string"
+                block_owner_deletion = false
+                controller           = false
               }]
-              "resourceVersion" = "string"
-              "selfLink"        = "string"
-              "uid"             = "string"
+              resource_version = "string"
+              self_link        = "string"
+              uid              = "string"
             }
           }
         }
-        "fc" = {
-          "fsType"     = "string"
-          "lun"        = 0
-          "readOnly"   = false
-          "targetWWNs" = ["string"]
-          "wwids"      = ["string"]
+        fc = {
+          fs_type      = "string"
+          lun          = 0
+          read_only    = false
+          target_ww_ns = ["string"]
+          wwids        = ["string"]
         }
-        "flexVolume" = {
-          "driver" = "string"
-          "fsType" = "string"
-          "options" = {
+        flex_volume = {
+          driver  = "string"
+          fs_type = "string"
+          options = {
             "string" = "string"
           }
-          "readOnly" = false
-          "secretRef" = {
-            "name" = "string"
+          read_only = false
+          secret_ref = {
+            name = "string"
           }
         }
-        "flocker" = {
-          "datasetName" = "string"
-          "datasetUUID" = "string"
+        flocker = {
+          dataset_name = "string"
+          dataset_uuid = "string"
         }
-        "gcePersistentDisk" = {
-          "pdName"    = "string"
-          "fsType"    = "string"
-          "partition" = 0
-          "readOnly"  = false
+        gce_persistent_disk = {
+          pd_name   = "string"
+          fs_type   = "string"
+          partition = 0
+          read_only = false
         }
-        "awsElasticBlockStore" = {
-          "volumeID"  = "string"
-          "fsType"    = "string"
-          "partition" = 0
-          "readOnly"  = false
+        aws_elastic_block_store = {
+          volume_id = "string"
+          fs_type   = "string"
+          partition = 0
+          read_only = false
         }
-        "azureFile" = {
-          "secretName" = "string"
-          "shareName"  = "string"
-          "readOnly"   = false
+        azure_file = {
+          secret_name = "string"
+          share_name  = "string"
+          read_only   = false
         }
-        "iscsi" = {
-          "iqn"               = "string"
-          "lun"               = 0
-          "targetPortal"      = "string"
-          "chapAuthDiscovery" = false
-          "chapAuthSession"   = false
-          "fsType"            = "string"
-          "initiatorName"     = "string"
-          "iscsiInterface"    = "string"
-          "portals"           = ["string"]
-          "readOnly"          = false
-          "secretRef" = {
-            "name" = "string"
+        iscsi = {
+          iqn                 = "string"
+          lun                 = 0
+          target_portal       = "string"
+          chap_auth_discovery = false
+          chap_auth_session   = false
+          fs_type             = "string"
+          initiator_name      = "string"
+          iscsi_interface     = "string"
+          portals             = ["string"]
+          read_only           = false
+          secret_ref = {
+            name = "string"
           }
         }
-        "glusterfs" = {
-          "endpoints" = "string"
-          "path"      = "string"
-          "readOnly"  = false
+        glusterfs = {
+          endpoints = "string"
+          path      = "string"
+          read_only = false
         }
-        "azureDisk" = {
-          "diskName"    = "string"
-          "diskURI"     = "string"
-          "cachingMode" = "string"
-          "fsType"      = "string"
-          "kind"        = "string"
-          "readOnly"    = false
+        azure_disk = {
+          disk_name    = "string"
+          disk_uri     = "string"
+          caching_mode = "string"
+          fs_type      = "string"
+          kind         = "string"
+          read_only    = false
         }
-        "nfs" = {
-          "path"     = "string"
-          "server"   = "string"
-          "readOnly" = false
+        nfs = {
+          path      = "string"
+          server    = "string"
+          read_only = false
         }
-        "hostPath" = {
-          "path" = "string"
-          "type" = "string"
+        host_path = {
+          path = "string"
+          type = "string"
         }
-        "photonPersistentDisk" = {
-          "pdID"   = "string"
-          "fsType" = "string"
+        photon_persistent_disk = {
+          pd_id   = "string"
+          fs_type = "string"
         }
-        "portworxVolume" = {
-          "volumeID" = "string"
-          "fsType"   = "string"
-          "readOnly" = false
+        portworx_volume = {
+          volume_id = "string"
+          fs_type   = "string"
+          read_only = false
         }
-        "projected" = {
-          "sources" = [{
-            "configMap" = {
-              "items" = [{
-                "key"  = "string"
-                "path" = "string"
-                "mode" = 0
+        projected = {
+          sources = [{
+            config_map = {
+              items = [{
+                key  = "string"
+                path = "string"
+                mode = 0
               }]
-              "name"     = "string"
-              "optional" = false
+              name     = "string"
+              optional = false
             }
-            "downwardAPI" = {
-              "items" = [{
-                "path" = "string"
-                "fieldRef" = {
-                  "fieldPath"  = "string"
-                  "apiVersion" = "string"
+            downward_api = {
+              items = [{
+                path = "string"
+                field_ref = {
+                  field_path  = "string"
+                  api_version = "string"
                 }
-                "mode" = 0
-                "resourceFieldRef" = {
-                  "resource"      = "string"
-                  "containerName" = "string"
-                  "divisor"       = "string"
+                mode = 0
+                resource_field_ref = {
+                  resource       = "string"
+                  container_name = "string"
+                  divisor        = "string"
                 }
               }]
             }
-            "secret" = {
-              "items" = [{
-                "key"  = "string"
-                "path" = "string"
-                "mode" = 0
+            secret = {
+              items = [{
+                key  = "string"
+                path = "string"
+                mode = 0
               }]
-              "name"     = "string"
-              "optional" = false
+              name     = "string"
+              optional = false
             }
-            "serviceAccountToken" = {
-              "path"              = "string"
-              "audience"          = "string"
-              "expirationSeconds" = 0
+            service_account_token = {
+              path               = "string"
+              audience           = "string"
+              expiration_seconds = 0
             }
           }]
-          "defaultMode" = 0
+          default_mode = 0
         }
-        "quobyte" = {
-          "registry" = "string"
-          "volume"   = "string"
-          "group"    = "string"
-          "readOnly" = false
-          "tenant"   = "string"
-          "user"     = "string"
+        quobyte = {
+          registry  = "string"
+          volume    = "string"
+          group     = "string"
+          read_only = false
+          tenant    = "string"
+          user      = "string"
         }
-        "rbd" = {
-          "image"    = "string"
-          "monitors" = ["string"]
-          "fsType"   = "string"
-          "keyring"  = "string"
-          "pool"     = "string"
-          "readOnly" = false
-          "secretRef" = {
-            "name" = "string"
+        rbd = {
+          image     = "string"
+          monitors  = ["string"]
+          fs_type   = "string"
+          keyring   = "string"
+          pool      = "string"
+          read_only = false
+          secret_ref = {
+            name = "string"
           }
-          "user" = "string"
+          user = "string"
         }
-        "scaleIO" = {
-          "gateway" = "string"
-          "secretRef" = {
-            "name" = "string"
+        scale_io = {
+          gateway = "string"
+          secret_ref = {
+            name = "string"
           }
-          "system"           = "string"
-          "fsType"           = "string"
-          "protectionDomain" = "string"
-          "readOnly"         = false
-          "sslEnabled"       = false
-          "storageMode"      = "string"
-          "storagePool"      = "string"
-          "volumeName"       = "string"
+          system            = "string"
+          fs_type           = "string"
+          protection_domain = "string"
+          read_only         = false
+          ssl_enabled       = false
+          storage_mode      = "string"
+          storage_pool      = "string"
+          volume_name       = "string"
         }
-        "secret" = {
-          "defaultMode" = 0
-          "items" = [{
-            "key"  = "string"
-            "path" = "string"
-            "mode" = 0
+        secret = {
+          default_mode = 0
+          items = [{
+            key  = "string"
+            path = "string"
+            mode = 0
           }]
-          "optional"   = false
-          "secretName" = "string"
+          optional    = false
+          secret_name = "string"
         }
-        "storageos" = {
-          "fsType"   = "string"
-          "readOnly" = false
-          "secretRef" = {
-            "name" = "string"
+        storageos = {
+          fs_type   = "string"
+          read_only = false
+          secret_ref = {
+            name = "string"
           }
-          "volumeName"      = "string"
-          "volumeNamespace" = "string"
+          volume_name      = "string"
+          volume_namespace = "string"
         }
-        "vsphereVolume" = {
-          "volumePath"        = "string"
-          "fsType"            = "string"
-          "storagePolicyID"   = "string"
-          "storagePolicyName" = "string"
+        vsphere_volume = {
+          volume_path         = "string"
+          fs_type             = "string"
+          storage_policy_id   = "string"
+          storage_policy_name = "string"
         }
       }]
     }
     status = {
       conditions = [{
-        "status"             = "string"
-        "type"               = "string"
-        "lastProbeTime"      = "string"
-        "lastTransitionTime" = "string"
-        "message"            = "string"
-        "reason"             = "string"
+        status               = "string"
+        type                 = "string"
+        last_probe_time      = "string"
+        last_transition_time = "string"
+        message              = "string"
+        reason               = "string"
       }]
       container_statuses = [{
-        "image"        = "string"
-        "imageID"      = "string"
-        "name"         = "string"
-        "ready"        = false
-        "restartCount" = 0
-        "containerID"  = "string"
-        "lastState" = {
-          "running" = {
-            "startedAt" = "string"
+        image         = "string"
+        image_id      = "string"
+        name          = "string"
+        ready         = false
+        restart_count = 0
+        container_id  = "string"
+        last_state = {
+          running = {
+            started_at = "string"
           }
-          "terminated" = {
-            "exitCode"    = 0
-            "containerID" = "string"
-            "finishedAt"  = "string"
-            "message"     = "string"
-            "reason"      = "string"
-            "signal"      = 0
-            "startedAt"   = "string"
+          terminated = {
+            exit_code    = 0
+            container_id = "string"
+            finished_at  = "string"
+            message      = "string"
+            reason       = "string"
+            signal       = 0
+            started_at   = "string"
           }
-          "waiting" = {
-            "message" = "string"
-            "reason"  = "string"
+          waiting = {
+            message = "string"
+            reason  = "string"
           }
         }
-        "started" = false
-        "state" = {
-          "running" = {
-            "startedAt" = "string"
+        started = false
+        state = {
+          running = {
+            started_at = "string"
           }
-          "terminated" = {
-            "exitCode"    = 0
-            "containerID" = "string"
-            "finishedAt"  = "string"
-            "message"     = "string"
-            "reason"      = "string"
-            "signal"      = 0
-            "startedAt"   = "string"
+          terminated = {
+            exit_code    = 0
+            container_id = "string"
+            finished_at  = "string"
+            message      = "string"
+            reason       = "string"
+            signal       = 0
+            started_at   = "string"
           }
-          "waiting" = {
-            "message" = "string"
-            "reason"  = "string"
+          waiting = {
+            message = "string"
+            reason  = "string"
           }
         }
       }]
       ephemeral_container_statuses = [{
-        "image"        = "string"
-        "imageID"      = "string"
-        "name"         = "string"
-        "ready"        = false
-        "restartCount" = 0
-        "containerID"  = "string"
-        "lastState" = {
-          "running" = {
-            "startedAt" = "string"
+        image         = "string"
+        image_id      = "string"
+        name          = "string"
+        ready         = false
+        restart_count = 0
+        container_id  = "string"
+        last_state = {
+          running = {
+            started_at = "string"
           }
-          "terminated" = {
-            "exitCode"    = 0
-            "containerID" = "string"
-            "finishedAt"  = "string"
-            "message"     = "string"
-            "reason"      = "string"
-            "signal"      = 0
-            "startedAt"   = "string"
+          terminated = {
+            exit_code    = 0
+            container_id = "string"
+            finished_at  = "string"
+            message      = "string"
+            reason       = "string"
+            signal       = 0
+            started_at   = "string"
           }
-          "waiting" = {
-            "message" = "string"
-            "reason"  = "string"
+          waiting = {
+            message = "string"
+            reason  = "string"
           }
         }
-        "started" = false
-        "state" = {
-          "running" = {
-            "startedAt" = "string"
+        started = false
+        state = {
+          running = {
+            started_at = "string"
           }
-          "terminated" = {
-            "exitCode"    = 0
-            "containerID" = "string"
-            "finishedAt"  = "string"
-            "message"     = "string"
-            "reason"      = "string"
-            "signal"      = 0
-            "startedAt"   = "string"
+          terminated = {
+            exit_code    = 0
+            container_id = "string"
+            finished_at  = "string"
+            message      = "string"
+            reason       = "string"
+            signal       = 0
+            started_at   = "string"
           }
-          "waiting" = {
-            "message" = "string"
-            "reason"  = "string"
+          waiting = {
+            message = "string"
+            reason  = "string"
           }
         }
       }]
       host_ip = "string"
       init_container_statuses = [{
-        "image"        = "string"
-        "imageID"      = "string"
-        "name"         = "string"
-        "ready"        = false
-        "restartCount" = 0
-        "containerID"  = "string"
-        "lastState" = {
-          "running" = {
-            "startedAt" = "string"
+        image         = "string"
+        image_id      = "string"
+        name          = "string"
+        ready         = false
+        restart_count = 0
+        container_id  = "string"
+        last_state = {
+          running = {
+            started_at = "string"
           }
-          "terminated" = {
-            "exitCode"    = 0
-            "containerID" = "string"
-            "finishedAt"  = "string"
-            "message"     = "string"
-            "reason"      = "string"
-            "signal"      = 0
-            "startedAt"   = "string"
+          terminated = {
+            exit_code    = 0
+            container_id = "string"
+            finished_at  = "string"
+            message      = "string"
+            reason       = "string"
+            signal       = 0
+            started_at   = "string"
           }
-          "waiting" = {
-            "message" = "string"
-            "reason"  = "string"
+          waiting = {
+            message = "string"
+            reason  = "string"
           }
         }
-        "started" = false
-        "state" = {
-          "running" = {
-            "startedAt" = "string"
+        started = false
+        state = {
+          running = {
+            started_at = "string"
           }
-          "terminated" = {
-            "exitCode"    = 0
-            "containerID" = "string"
-            "finishedAt"  = "string"
-            "message"     = "string"
-            "reason"      = "string"
-            "signal"      = 0
-            "startedAt"   = "string"
+          terminated = {
+            exit_code    = 0
+            container_id = "string"
+            finished_at  = "string"
+            message      = "string"
+            reason       = "string"
+            signal       = 0
+            started_at   = "string"
           }
-          "waiting" = {
-            "message" = "string"
-            "reason"  = "string"
+          waiting = {
+            message = "string"
+            reason  = "string"
           }
         }
       }]
@@ -5544,7 +5544,7 @@ resource "foo_component" "componentResource" {
       phase               = "string"
       pod_ip              = "string"
       pod_i_ps = [{
-        "ip" = "string"
+        ip = "string"
       }]
       qos_class  = "string"
       reason     = "string"

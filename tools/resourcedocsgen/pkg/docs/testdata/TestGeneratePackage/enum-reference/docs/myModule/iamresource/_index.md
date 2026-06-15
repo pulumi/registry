@@ -292,8 +292,8 @@ example, err := mymodule.NewIamResource(ctx, "iamResourceResource", &mymodule.Ia
 resource "example_mymodule_iamresource" "iamResourceResource" {
   config = {
     audit_log_configs = [{
-      "exemptedMembers" = ["string"]
-      "logType"         = "LOG_TYPE_UNSPECIFIED"
+      exempted_members = ["string"]
+      log_type         = "LOG_TYPE_UNSPECIFIED"
     }]
     service = "string"
   }

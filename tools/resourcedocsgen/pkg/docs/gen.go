@@ -2486,7 +2486,11 @@ func generateConstructorSyntaxData(pkg *schema.Package) *constructorSyntaxData {
 					func(line string) bool { return strings.HasSuffix(line, ");") })
 			}
 		case language.HCL:
-			files, diags, err := safeExtract(hcl_codegen.GenerateProgram)
+			// hcl_codegen.GenerateProgram now takes variadic options, so it no
+			// longer matches ProgramGenerator directly; wrap it in a closure.
+			files, diags, err := safeExtract(func(program *pcl.Program) (map[string][]byte, hcl.Diagnostics, error) {
+				return hcl_codegen.GenerateProgram(program)
+			})
 			if !diags.HasErrors() && err == nil {
 				program := string(files["main.hcl"])
 				constructorSyntax.hcl = extractConstructorSyntaxExamples(

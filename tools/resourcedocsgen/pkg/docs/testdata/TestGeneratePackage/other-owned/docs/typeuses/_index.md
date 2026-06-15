@@ -347,15 +347,15 @@ resource "example_typeuses" "typeUsesResource" {
   foo = {
     bar = "string"
     configs = [{
-      "config" = "string"
+      config = "string"
     }]
     foo = resource
     others = [[{
-      "baz" = "string"
+      baz = "string"
     }]]
     still_others = {
       "string" = [{
-        "baz" = "string"
+        baz = "string"
       }]
     }
   }

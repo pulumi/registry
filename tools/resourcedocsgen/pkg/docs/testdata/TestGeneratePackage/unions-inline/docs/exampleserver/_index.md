@@ -274,8 +274,8 @@ example, err := example.NewExampleServer(ctx, "exampleServerResource", &example.
 ```hcl
 resource "example_exampleserver" "exampleServerResource" {
   properties = {
-    "createMode" = "Replica"
-    "version"    = "string"
+    create_mode = "Replica"
+    version     = "string"
   }
 }
 ```

@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/rpothin/pulumi-powerplatform/v0.4.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/rpothin/pulumi-powerplatform/v0.4.1/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/rpothin/pulumi-powerplatform/blob/v0.4.0/docs/_index.md
+edit_url: https://github.com/rpothin/pulumi-powerplatform/blob/v0.4.1/docs/_index.md
 title: Power Platform
 meta_desc: The Pulumi Power Platform provider manages Microsoft Power Platform resources.
 layout: package

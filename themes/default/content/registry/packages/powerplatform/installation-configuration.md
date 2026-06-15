@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/rpothin/pulumi-powerplatform/v0.4.0/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/rpothin/pulumi-powerplatform/v0.4.1/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/rpothin/pulumi-powerplatform/blob/v0.4.0/docs/installation-configuration.md
+edit_url: https://github.com/rpothin/pulumi-powerplatform/blob/v0.4.1/docs/installation-configuration.md
 title: Power Platform Installation & Configuration
 meta_desc: How to install and configure the Pulumi Power Platform provider.
 layout: package

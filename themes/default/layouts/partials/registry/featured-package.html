@@ -1,7 +1,7 @@
 {{ $packageName := .package.name }}
 {{ $href := printf "/registry/packages/%s/" $packageName }}
 
-<div class="featured-package">
+<div class="featured-package card card-hover">
     <a href="{{ $href }}" title="{{ .package.title }}">
         <div class="package-logo">
             {{ partial "registry/package/icon.html" (dict "package" .package "lazy" false) }}

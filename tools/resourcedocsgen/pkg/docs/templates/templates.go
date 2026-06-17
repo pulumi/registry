@@ -98,6 +98,7 @@ func init() {
 		"lNodejs": func() language.Language { return language.NodeJS },
 		"lPython": func() language.Language { return language.Python },
 		"lYAML":   func() language.Language { return language.YAML },
+		"lHCL":    func() language.Language { return language.HCL },
 
 		"codeChooserFromLang": func(m map[language.Language]string) map[string]string {
 			dst := make(map[string]string, len(m))

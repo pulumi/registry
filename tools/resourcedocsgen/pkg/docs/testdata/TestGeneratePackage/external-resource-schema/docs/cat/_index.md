@@ -23,7 +23,7 @@ Resources are created with functions called constructors. To learn more about de
 
 ### Constructor syntax
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 
@@ -76,6 +76,14 @@ Resources are created with functions called constructors. To learn more about de
 <span class="p"></span><span class="p">options</span><span class="p">: </span><span class="c">#&nbsp;Bag of options to control resource&#39;s behavior.</span>
 <span class="p"></span>
 </code></pre></div></div>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<div class="no-copy"><div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">resource</span> <span class="s2">&#34;example_cat&#34;</span> <span class="s2">&#34;name&#34;</span> <span class="p">{</span>
+<span class="c">    # resource properties</span>
+<span class="p">}</span></code></pre></div></div>
 </pulumi-choosable>
 </div>
 
@@ -223,7 +231,7 @@ Resources are created with functions called constructors. To learn more about de
 
 The following reference example uses placeholder values for all [input properties](#inputs).
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 
@@ -287,6 +295,32 @@ example, err := example.NewCat(ctx, "catResource", &example.CatArgs{
 		},
 	},
 })
+```
+
+</pulumi-choosable>
+</div>
+
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+
+```hcl
+resource "example_cat" "catResource" {
+  age = 0
+  pet = {
+    required_name       = randomPet
+    required_name_array = [randomPet]
+    required_name_map = {
+      "string" = randomPet
+    }
+    age        = 0
+    name       = randomPet
+    name_array = [randomPet]
+    name_map = {
+      "string" = randomPet
+    }
+  }
+}
 ```
 
 </pulumi-choosable>
@@ -453,6 +487,28 @@ The Cat resource accepts the following [input](/docs/intro/concepts/inputs-outpu
 </div>
 
 <div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-optional"
+            title="Optional">
+        <span id="age_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#age_hcl" style="color: inherit; text-decoration: inherit;">age</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">number</span>
+    </dt>
+    <dd></dd><dt class="property-optional"
+            title="Optional">
+        <span id="pet_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#pet_hcl" style="color: inherit; text-decoration: inherit;">pet</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#pet">object</a></span>
+    </dt>
+    <dd></dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
 <pulumi-choosable type="language" values="java">
 <dl class="resources-properties"><dt class="property-optional"
             title="Optional">
@@ -583,6 +639,28 @@ All [input](#inputs) properties are implicitly available as output properties. A
             title="">
         <span id="name_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#name_go" style="color: inherit; text-decoration: inherit;">Name</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd></dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-"
+            title="">
+        <span id="id_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_hcl" style="color: inherit; text-decoration: inherit;">id</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>The provider-assigned unique ID for this managed resource.</dd><dt class="property-"
+            title="">
+        <span id="name_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#name_hcl" style="color: inherit; text-decoration: inherit;">name</a>
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
@@ -812,6 +890,68 @@ Pet<pulumi-choosable type="language" values="python,go" class="inline">, Pet<wbr
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">Random<wbr>Pet</span>
+    </dt>
+    <dd></dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-required"
+            title="Required">
+        <span id="required_name_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#required_name_hcl" style="color: inherit; text-decoration: inherit;">required_<wbr>name</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">random_<wbr>index_<wbr>randompet_<wbr>randompet</span>
+    </dt>
+    <dd>This type is defined in the <a href="/registry/packages/random">random</a> package.</dd><dt class="property-required"
+            title="Required">
+        <span id="required_name_array_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#required_name_array_hcl" style="color: inherit; text-decoration: inherit;">required_<wbr>name_<wbr>array</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">list(random_<wbr>index_<wbr>randompet_<wbr>randompet)</span>
+    </dt>
+    <dd></dd><dt class="property-required"
+            title="Required">
+        <span id="required_name_map_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#required_name_map_hcl" style="color: inherit; text-decoration: inherit;">required_<wbr>name_<wbr>map</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">map(random_<wbr>index_<wbr>randompet_<wbr>randompet)</span>
+    </dt>
+    <dd></dd><dt class="property-optional"
+            title="Optional">
+        <span id="age_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#age_hcl" style="color: inherit; text-decoration: inherit;">age</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">number</span>
+    </dt>
+    <dd></dd><dt class="property-optional"
+            title="Optional">
+        <span id="name_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#name_hcl" style="color: inherit; text-decoration: inherit;">name</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">random_<wbr>index_<wbr>randompet_<wbr>randompet</span>
+    </dt>
+    <dd>This type is defined in the <a href="/registry/packages/random">random</a> package.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="name_array_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#name_array_hcl" style="color: inherit; text-decoration: inherit;">name_<wbr>array</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">list(random_<wbr>index_<wbr>randompet_<wbr>randompet)</span>
+    </dt>
+    <dd></dd><dt class="property-optional"
+            title="Optional">
+        <span id="name_map_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#name_map_hcl" style="color: inherit; text-decoration: inherit;">name_<wbr>map</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">map(random_<wbr>index_<wbr>randompet_<wbr>randompet)</span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>

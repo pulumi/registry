@@ -5,6 +5,14 @@ node_modules
 themes/*/resources
 themes/default/assets/*
 !themes/default/assets/fingerprinted/
+!themes/default/assets/icons/
+# Ignore sync-generated icon assets (rebuilt by `make ensure`).
+themes/default/assets/icons/phosphor/
+themes/default/assets/icons/brand/
+themes/default/assets/icons/sprite.svg
+themes/default/assets/icons/sprite-manifest.json
+# Ignore the inbox for custom icon staging.
+themes/default/assets/icons/custom/_inbox/
 public
 .DS_Store
 .hugo_build.lock
@@ -28,4 +36,5 @@ themes/default/static/registry/packages/*/schema.json
 themes/default/static/registry/js/
 themes/default/static/registry/css/
 themes/default/data/asset_manifest.json
+themes/default/data/github_stars.yml
 themes/default/data/registry/package_versions/

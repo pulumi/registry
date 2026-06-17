@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/elastic/elasticstack/0.14.5/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/elastic/elasticstack/0.16.1/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Elasticstack Provider
@@ -318,9 +318,9 @@ public class App {
 {{< /chooser >}}
 ## Configuration Reference
 
-- `elasticsearch` (Block List, Max: 1) Elasticsearch connection configuration block. (see below for nested schema)
-- `fleet` (Block List, Max: 1) Fleet connection configuration block. (see below for nested schema)
-- `kibana` (Block List, Max: 1) Kibana connection configuration block. (see below for nested schema)
+- `elasticsearch` (Block List) Elasticsearch connection configuration block. (see below for nested schema)
+- `fleet` (Block List) Fleet connection configuration block. (see below for nested schema)
+- `kibana` (Block List) Kibana connection configuration block. (see below for nested schema)
 
 <a id="nestedblock--elasticsearch"></a>
 ### Nested Schema for `elasticsearch`

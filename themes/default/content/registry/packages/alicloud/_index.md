@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-alicloud/v3.101.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-alicloud/v3.103.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-alicloud/blob/v3.101.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-alicloud/blob/v3.103.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Alibaba Cloud Provider
 meta_desc: Provides an overview on how to configure the Pulumi Alibaba Cloud provider.
@@ -33,7 +33,7 @@ with the proper credentials before it can be used.
 Use the navigation on the left to read about the available resources.
 ## Example Usage
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
@@ -196,7 +196,7 @@ return await Deployment.RunAsync(() =>
 {
     var config = new Config();
     var name = config.Get("name") ?? "pulumi-example";
-    var @default = AliCloud.Index.GetZones.Invoke(new()
+    var @default = AliCloud.GetZones.Invoke(new()
     {
         AvailableDiskCategory = "cloud_efficiency",
         AvailableResourceCreation = "VSwitch",
@@ -308,7 +308,7 @@ if err != nil {
 return err
 }
 // Create a new ECS instance for VPC
-vpc, err := vpc.NewNetwork(ctx, "vpc", &vpc.NetworkArgs{
+vpc2, err := vpc.NewNetwork(ctx, "vpc", &vpc.NetworkArgs{
 VpcName: pulumi.String(pulumi.String(name)),
 CidrBlock: pulumi.String("172.16.0.0/16"),
 })
@@ -316,7 +316,7 @@ if err != nil {
 return err
 }
 vswitch, err := vpc.NewSwitch(ctx, "vswitch", &vpc.SwitchArgs{
-VpcId: vpc.ID(),
+VpcId: vpc2.ID(),
 CidrBlock: pulumi.String("172.16.0.0/24"),
 ZoneId: pulumi.String(pulumi.String(_default.Zones[0].Id)),
 VswitchName: pulumi.String(pulumi.String(name)),
@@ -328,7 +328,7 @@ return err
 group, err := ecs.NewSecurityGroup(ctx, "group", &ecs.SecurityGroupArgs{
 Name: pulumi.String(pulumi.String(name)),
 Description: pulumi.String("foo"),
-VpcId: vpc.ID(),
+VpcId: vpc2.ID(),
 })
 if err != nil {
 return err
@@ -431,8 +431,8 @@ import com.pulumi.alicloud.kms.KeyArgs;
 import com.pulumi.alicloud.ecs.Instance;
 import com.pulumi.alicloud.ecs.InstanceArgs;
 import com.pulumi.alicloud.ecs.inputs.InstanceDataDiskArgs;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;
@@ -500,6 +500,71 @@ public class App {
             .build());
 
     }
+}
+```
+
+{{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+pulumi {
+  required_providers {
+    alicloud = {
+      source = "pulumi/alicloud"
+    }
+  }
+}
+
+data "alicloud_getzones" "default" {
+  available_disk_category     = "cloud_efficiency"
+  available_resource_creation = "VSwitch"
+}
+
+# Create a new ECS instance for VPC
+resource "alicloud_vpc_network" "vpc" {
+  vpc_name   = var.name
+  cidr_block = "172.16.0.0/16"
+}
+resource "alicloud_vpc_switch" "vswitch" {
+  vpc_id       = alicloud_vpc_network.vpc.id
+  cidr_block   = "172.16.0.0/24"
+  zone_id      = data.alicloud_getzones.default.zones[0].id
+  vswitch_name = var.name
+}
+# Create a new Security in a VPC
+resource "alicloud_ecs_securitygroup" "group" {
+  name        = var.name
+  description = "foo"
+  vpc_id      = alicloud_vpc_network.vpc.id
+}
+# Create a kms to encrypt the disk
+resource "alicloud_kms_key" "key" {
+  description            = "Hello KMS"
+  pending_window_in_days = "7"
+  status                 = "Enabled"
+}
+resource "alicloud_ecs_instance" "instance" {
+  availability_zone          = data.alicloud_getzones.default.zones[0].id
+  security_groups            = [alicloud_ecs_securitygroup.group][*].id
+  instance_type              = "ecs.n4.large"
+  system_disk_category       = "cloud_efficiency"
+  system_disk_name           = var.name
+  system_disk_description    = "system_disk_description"
+  image_id                   = "ubuntu_18_04_64_20G_alibase_20190624.vhd"
+  instance_name              = var.name
+  vswitch_id                 = alicloud_vpc_switch.vswitch.id
+  internet_max_bandwidth_out = 10
+  data_disks {
+    name        = "data-disk"
+    size        = 20
+    category    = "cloud_efficiency"
+    description = "disk-description"
+    encrypted   = true
+    kms_key_id  = alicloud_kms_key.key.id
+  }
+}
+variable "name" {
+  type    = string
+  default = "pulumi-example"
 }
 ```
 
@@ -680,6 +745,21 @@ config:
         value: ~/.aliyun/config.json
 
 ```
+### Custom Product Sign Version
+
+Some Alibaba Cloud products support more than one API signature version. The provider lets you override the signature version per product through the `signVersion` block. Currently `oss` and `sls` are supported. Note that the OSS SDK client defaults to signature `v4` since v1.278.0 (it was `v1` in earlier versions); set `oss = "v1"` explicitly if you still need the legacy signature.
+
+Usage:
+
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime:
+config:
+    alicloud:region:
+        value: cn-hangzhou
+
+```
 ## Configuration Reference
 
 In addition to generic `provider` arguments
@@ -738,6 +818,8 @@ provider configuration:
 
 * `endpoints` - (Optional) An `endpoints` block to support custom endpoints.
 
+* `signVersion` - (Optional, Available since v1.215.0) A `signVersion` block to specify the signature version used for the API requests of certain cloud products (currently `oss` and `sls`). Only one `signVersion` block may be in the configuration.
+
 * `skipRegionValidation` - (Optional, Available since v1.52.0) Skip static validation of region ID. Used by users of alternative AlibabaCloud-like APIs or users w/ access to regions that are not public (yet).
 
 * `configurationSource` - (Optional, Available since v1.56.0) Use a string to mark a configuration file source, like `pulumi-alicloud-modules/pulumi-alicloud-ecs-instance` or `pulumi-provider-alicloud/examples/vpc`.
@@ -769,7 +851,7 @@ provider configuration:
 * `externalId` - (Optional, Available since v1.207.1) The external ID of the RAM role.
   This parameter is provided by an external party and is used to prevent the confused deputy problem.
   The value must be 2 to 1,224 characters in length and can contain letters, digits, and the following special characters:`= , . @ : / - _`.
-### assumeRoleWithOidc Configuration Block
+### `assumeRoleWithOidc` Configuration Block
 
 The `assumeRoleWithOidc` configuration block supports the following arguments:
 
@@ -783,6 +865,15 @@ The `assumeRoleWithOidc` configuration block supports the following arguments:
   Can also be set with the `ALIBABA_CLOUD_ROLE_SESSION_NAME` environment variable.
 * `sessionExpiration` - (Optional) The validity period of the STS token. Unit: seconds. Default value: 3600. Minimum value: 900. Maximum value: the value of the MaxSessionDuration parameter when creating a ram role.
 * `policy` - (Optional) The policy that specifies the permissions of the returned STS token. You can use this parameter to grant the STS token fewer permissions than the permissions granted to the RAM role.
+### `signVersion` Configuration Block
+
+The `signVersion` configuration block overrides the signature version used by the SDK client of specific cloud products. See Custom Product Sign Version for an example. The following configuration inputs are supported:
+
+* `oss` - (Optional) The signature version used by the OSS SDK client. Valid values: `v1`, `v4`. Starting from v1.278.0, the default value is changed from `v1` to `v4`; in earlier versions the default was `v1`. Set this field to `v1` explicitly if you need to keep using the legacy signature.
+
+->**NOTE:** `v2` is no longer accepted starting from v1.278.0; the value will be treated as the default and the client will fall back to `v4`.
+
+* `sls` - (Optional) The signature version used by the SLS (Log Service) SDK client. Valid values: `v1`, `v4`. Defaults to `v1`. Full v4 signature support across all `alicloud_sls_*` / `alicloud_log_*` resources is available since v1.276.0.
 ### `endpoints`
 
 **NOTE:** Due to certain API restrictions, the endpoints pointing to the area should be consistent with the `regionId`.

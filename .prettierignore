@@ -1,0 +1,3 @@
+# Hugo templates: prettier doesn't understand `{{ }}` directives and mangles
+# the control-flow indentation. Skip the layouts tree.
+themes/default/layouts/**/*.html

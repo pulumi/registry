@@ -8,7 +8,7 @@ logo_url: ""
 name: octopusdeploy
 native: false
 package_status: public_preview
-publisher: octopusdeploylabs
+publisher: DEPRECATED
 repo_url: https://github.com/octopusdeploylabs/terraform-provider-octopusdeploy
 schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/octopusdeploylabs/octopusdeploy/0.43.3/schema.json
 title: octopusdeploy

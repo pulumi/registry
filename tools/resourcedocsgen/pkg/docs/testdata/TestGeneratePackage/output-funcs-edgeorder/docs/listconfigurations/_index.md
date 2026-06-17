@@ -28,7 +28,7 @@ returns a Promise-wrapped result. The output form accepts
 Input-wrapped arguments and returns an Output-wrapped result.
 
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 
@@ -105,6 +105,15 @@ func </span>ListConfigurationsOutput<span class="p">(</span><span class="nx">ctx
 </div>
 
 
+<div>
+<pulumi-choosable type="language" values="hcl">
+<div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">data</span> <span class="s2">&#34;myedgeorder_listconfigurations&#34;</span> <span class="s2">&#34;name&#34;</span> <span class="p">{</span>
+<span class="c">    # arguments</span>
+<span class="p">}</span></code></pre></div>
+</pulumi-choosable>
+</div>
+
+
 
 The following arguments are supported:
 
@@ -161,6 +170,36 @@ The following arguments are supported:
             title="Optional">
         <span id="skiptoken_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#skiptoken_go" style="color: inherit; text-decoration: inherit;">Skip<wbr>Token</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>$skipToken is supported on list of configurations, which provides the next page in the list of configurations.</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-required"
+            title="Required">
+        <span id="configuration_filters_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#configuration_filters_hcl" style="color: inherit; text-decoration: inherit;">configuration_<wbr>filters</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#configurationfilters">list(object)</a></span>
+    </dt>
+    <dd>Holds details about product hierarchy information and filterable property.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="customer_subscription_details_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#customer_subscription_details_hcl" style="color: inherit; text-decoration: inherit;">customer_<wbr>subscription_<wbr>details</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#customersubscriptiondetails">object</a></span>
+    </dt>
+    <dd>Customer subscription properties. Clients can display available products to unregistered customers by explicitly passing subscription details</dd><dt class="property-optional"
+            title="Optional">
+        <span id="skip_token_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#skip_token_hcl" style="color: inherit; text-decoration: inherit;">skip_<wbr>token</a>
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
@@ -343,6 +382,28 @@ The following output properties are available:
 </div>
 
 <div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-"
+            title="">
+        <span id="value_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#value_hcl" style="color: inherit; text-decoration: inherit;">value</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#configurationresponse">list(object)</a></span>
+    </dt>
+    <dd>List of configurations.</dd><dt class="property-"
+            title="">
+        <span id="next_link_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#next_link_hcl" style="color: inherit; text-decoration: inherit;">next_<wbr>link</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Link for the next set of configurations.</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
 <pulumi-choosable type="language" values="java">
 <dl class="resources-properties"><dt class="property-"
             title="">
@@ -492,6 +553,36 @@ The following output properties are available:
             title="Required">
         <span id="disabledreasonmessage_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#disabledreasonmessage_go" style="color: inherit; text-decoration: inherit;">Disabled<wbr>Reason<wbr>Message</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Message for why the product is disabled.</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-required"
+            title="Required">
+        <span id="availability_stage_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#availability_stage_hcl" style="color: inherit; text-decoration: inherit;">availability_<wbr>stage</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Current availability stage of the product. Availability stage</dd><dt class="property-required"
+            title="Required">
+        <span id="disabled_reason_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#disabled_reason_hcl" style="color: inherit; text-decoration: inherit;">disabled_<wbr>reason</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Reason why the product is disabled.</dd><dt class="property-required"
+            title="Required">
+        <span id="disabled_reason_message_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#disabled_reason_message_hcl" style="color: inherit; text-decoration: inherit;">disabled_<wbr>reason_<wbr>message</a>
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
@@ -701,6 +792,44 @@ The following output properties are available:
 </div>
 
 <div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-required"
+            title="Required">
+        <span id="frequency_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#frequency_hcl" style="color: inherit; text-decoration: inherit;">frequency</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Frequency of recurrence</dd><dt class="property-required"
+            title="Required">
+        <span id="meter_details_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#meter_details_hcl" style="color: inherit; text-decoration: inherit;">meter_<wbr>details</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#pav2meterdetailsresponse">object</a> | <a href="#purchasemeterdetailsresponse">object</a></span>
+    </dt>
+    <dd>Represents MeterDetails</dd><dt class="property-required"
+            title="Required">
+        <span id="metering_type_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#metering_type_hcl" style="color: inherit; text-decoration: inherit;">metering_<wbr>type</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Represents Metering type (eg one-time or recurrent)</dd><dt class="property-required"
+            title="Required">
+        <span id="name_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#name_hcl" style="color: inherit; text-decoration: inherit;">name</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Represents Billing type name</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
 <pulumi-choosable type="language" values="java">
 <dl class="resources-properties"><dt class="property-required"
             title="Required">
@@ -895,6 +1024,28 @@ The following output properties are available:
 </span>
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#filterableproperty">[]Filterable<wbr>Property</a></span>
+    </dt>
+    <dd>Filters specific to product</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-required"
+            title="Required">
+        <span id="hierarchy_information_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#hierarchy_information_hcl" style="color: inherit; text-decoration: inherit;">hierarchy_<wbr>information</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#hierarchyinformation">object</a></span>
+    </dt>
+    <dd>Product hierarchy information</dd><dt class="property-optional"
+            title="Optional">
+        <span id="filterable_property_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#filterable_property_hcl" style="color: inherit; text-decoration: inherit;">filterable_<wbr>property</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#filterableproperty">list(object)</a></span>
     </dt>
     <dd>Filters specific to product</dd></dl>
 </pulumi-choosable>
@@ -1143,6 +1294,84 @@ The following output properties are available:
 </span>
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#specificationresponse">[]Specification<wbr>Response</a></span>
+    </dt>
+    <dd>Specifications of the configuration</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-required"
+            title="Required">
+        <span id="availability_information_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#availability_information_hcl" style="color: inherit; text-decoration: inherit;">availability_<wbr>information</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#availabilityinformationresponse">object</a></span>
+    </dt>
+    <dd>Availability information of the product system.</dd><dt class="property-required"
+            title="Required">
+        <span id="cost_information_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#cost_information_hcl" style="color: inherit; text-decoration: inherit;">cost_<wbr>information</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#costinformationresponse">object</a></span>
+    </dt>
+    <dd>Cost information for the product system.</dd><dt class="property-required"
+            title="Required">
+        <span id="description_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#description_hcl" style="color: inherit; text-decoration: inherit;">description</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#descriptionresponse">object</a></span>
+    </dt>
+    <dd>Description related to the product system.</dd><dt class="property-required"
+            title="Required">
+        <span id="dimensions_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#dimensions_hcl" style="color: inherit; text-decoration: inherit;">dimensions</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#dimensionsresponse">object</a></span>
+    </dt>
+    <dd>Dimensions of the configuration</dd><dt class="property-required"
+            title="Required">
+        <span id="display_name_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#display_name_hcl" style="color: inherit; text-decoration: inherit;">display_<wbr>name</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Display Name for the product system.</dd><dt class="property-required"
+            title="Required">
+        <span id="filterable_properties_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#filterable_properties_hcl" style="color: inherit; text-decoration: inherit;">filterable_<wbr>properties</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#filterablepropertyresponse">list(object)</a></span>
+    </dt>
+    <dd>list of filters supported for a product</dd><dt class="property-required"
+            title="Required">
+        <span id="hierarchy_information_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#hierarchy_information_hcl" style="color: inherit; text-decoration: inherit;">hierarchy_<wbr>information</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#hierarchyinformationresponse">object</a></span>
+    </dt>
+    <dd>Hierarchy information of a product.</dd><dt class="property-required"
+            title="Required">
+        <span id="image_information_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#image_information_hcl" style="color: inherit; text-decoration: inherit;">image_<wbr>information</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#imageinformationresponse">list(object)</a></span>
+    </dt>
+    <dd>Image information for the product system.</dd><dt class="property-required"
+            title="Required">
+        <span id="specifications_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#specifications_hcl" style="color: inherit; text-decoration: inherit;">specifications</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#specificationresponse">list(object)</a></span>
     </dt>
     <dd>Specifications of the configuration</dd></dl>
 </pulumi-choosable>
@@ -1509,6 +1738,28 @@ The following output properties are available:
 </div>
 
 <div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-required"
+            title="Required">
+        <span id="billing_info_url_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#billing_info_url_hcl" style="color: inherit; text-decoration: inherit;">billing_<wbr>info_<wbr>url</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Default url to display billing information</dd><dt class="property-required"
+            title="Required">
+        <span id="billing_meter_details_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#billing_meter_details_hcl" style="color: inherit; text-decoration: inherit;">billing_<wbr>meter_<wbr>details</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#billingmeterdetailsresponse">list(object)</a></span>
+    </dt>
+    <dd>Details on the various billing aspects for the product system.</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
 <pulumi-choosable type="language" values="java">
 <dl class="resources-properties"><dt class="property-required"
             title="Required">
@@ -1655,6 +1906,36 @@ The following output properties are available:
 </span>
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#customersubscriptionregisteredfeatures">[]Customer<wbr>Subscription<wbr>Registered<wbr>Features</a></span>
+    </dt>
+    <dd>List of registered feature flags for subscription</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-required"
+            title="Required">
+        <span id="quota_id_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#quota_id_hcl" style="color: inherit; text-decoration: inherit;">quota_<wbr>id</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Quota ID of a subscription</dd><dt class="property-optional"
+            title="Optional">
+        <span id="location_placement_id_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#location_placement_id_hcl" style="color: inherit; text-decoration: inherit;">location_<wbr>placement_<wbr>id</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Location placement Id of a subscription</dd><dt class="property-optional"
+            title="Optional">
+        <span id="registered_features_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#registered_features_hcl" style="color: inherit; text-decoration: inherit;">registered_<wbr>features</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#customersubscriptionregisteredfeatures">list(object)</a></span>
     </dt>
     <dd>List of registered feature flags for subscription</dd></dl>
 </pulumi-choosable>
@@ -1820,6 +2101,28 @@ The following output properties are available:
             title="Optional">
         <span id="state_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#state_go" style="color: inherit; text-decoration: inherit;">State</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>State of subscription registered feature</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-optional"
+            title="Optional">
+        <span id="name_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#name_hcl" style="color: inherit; text-decoration: inherit;">name</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Name of subscription registered feature</dd><dt class="property-optional"
+            title="Optional">
+        <span id="state_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#state_hcl" style="color: inherit; text-decoration: inherit;">state</a>
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
@@ -2020,6 +2323,60 @@ The following output properties are available:
             title="Required">
         <span id="shortdescription_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#shortdescription_go" style="color: inherit; text-decoration: inherit;">Short<wbr>Description</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Short description of the product system.</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-required"
+            title="Required">
+        <span id="attributes_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#attributes_hcl" style="color: inherit; text-decoration: inherit;">attributes</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">list(string)</span>
+    </dt>
+    <dd>Attributes for the product system.</dd><dt class="property-required"
+            title="Required">
+        <span id="description_type_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#description_type_hcl" style="color: inherit; text-decoration: inherit;">description_<wbr>type</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Type of description.</dd><dt class="property-required"
+            title="Required">
+        <span id="keywords_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#keywords_hcl" style="color: inherit; text-decoration: inherit;">keywords</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">list(string)</span>
+    </dt>
+    <dd>Keywords for the product system.</dd><dt class="property-required"
+            title="Required">
+        <span id="links_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#links_hcl" style="color: inherit; text-decoration: inherit;">links</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#linkresponse">list(object)</a></span>
+    </dt>
+    <dd>Links for the product system.</dd><dt class="property-required"
+            title="Required">
+        <span id="long_description_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#long_description_hcl" style="color: inherit; text-decoration: inherit;">long_<wbr>description</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Long description of the product system.</dd><dt class="property-required"
+            title="Required">
+        <span id="short_description_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#short_description_hcl" style="color: inherit; text-decoration: inherit;">short_<wbr>description</a>
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
@@ -2373,6 +2730,68 @@ The following output properties are available:
 </div>
 
 <div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-required"
+            title="Required">
+        <span id="depth_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#depth_hcl" style="color: inherit; text-decoration: inherit;">depth</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">number</span>
+    </dt>
+    <dd>Depth of the device.</dd><dt class="property-required"
+            title="Required">
+        <span id="height_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#height_hcl" style="color: inherit; text-decoration: inherit;">height</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">number</span>
+    </dt>
+    <dd>Height of the device.</dd><dt class="property-required"
+            title="Required">
+        <span id="length_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#length_hcl" style="color: inherit; text-decoration: inherit;">length</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">number</span>
+    </dt>
+    <dd>Length of the device.</dd><dt class="property-required"
+            title="Required">
+        <span id="length_height_unit_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#length_height_unit_hcl" style="color: inherit; text-decoration: inherit;">length_<wbr>height_<wbr>unit</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Unit for the dimensions of length, height and width.</dd><dt class="property-required"
+            title="Required">
+        <span id="weight_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#weight_hcl" style="color: inherit; text-decoration: inherit;">weight</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">number</span>
+    </dt>
+    <dd>Weight of the device.</dd><dt class="property-required"
+            title="Required">
+        <span id="weight_unit_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#weight_unit_hcl" style="color: inherit; text-decoration: inherit;">weight_<wbr>unit</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Unit for the dimensions of weight.</dd><dt class="property-required"
+            title="Required">
+        <span id="width_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#width_hcl" style="color: inherit; text-decoration: inherit;">width</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">number</span>
+    </dt>
+    <dd>Width of the device.</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
 <pulumi-choosable type="language" values="java">
 <dl class="resources-properties"><dt class="property-required"
             title="Required">
@@ -2669,6 +3088,28 @@ The following output properties are available:
 </div>
 
 <div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-required"
+            title="Required">
+        <span id="supported_values_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#supported_values_hcl" style="color: inherit; text-decoration: inherit;">supported_<wbr>values</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">list(string)</span>
+    </dt>
+    <dd>Values to be filtered.</dd><dt class="property-required"
+            title="Required">
+        <span id="type_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#type_hcl" style="color: inherit; text-decoration: inherit;">type</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string | <a href="#supportedfiltertypes">&#34;Ship<wbr>To<wbr>Countries&#34; | &#34;Double<wbr>Encryption<wbr>Status&#34;</a></span>
+    </dt>
+    <dd>Type of product filter.</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
 <pulumi-choosable type="language" values="java">
 <dl class="resources-properties"><dt class="property-required"
             title="Required">
@@ -2796,6 +3237,28 @@ The following output properties are available:
             title="Required">
         <span id="type_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#type_go" style="color: inherit; text-decoration: inherit;">Type</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Type of product filter.</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-required"
+            title="Required">
+        <span id="supported_values_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#supported_values_hcl" style="color: inherit; text-decoration: inherit;">supported_<wbr>values</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">list(string)</span>
+    </dt>
+    <dd>Values to be filtered.</dd><dt class="property-required"
+            title="Required">
+        <span id="type_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#type_hcl" style="color: inherit; text-decoration: inherit;">type</a>
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
@@ -2964,6 +3427,44 @@ The following output properties are available:
             title="Optional">
         <span id="productname_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#productname_go" style="color: inherit; text-decoration: inherit;">Product<wbr>Name</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Represents product name that uniquely identifies product</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-optional"
+            title="Optional">
+        <span id="configuration_name_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#configuration_name_hcl" style="color: inherit; text-decoration: inherit;">configuration_<wbr>name</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Represents configuration name that uniquely identifies configuration</dd><dt class="property-optional"
+            title="Optional">
+        <span id="product_family_name_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#product_family_name_hcl" style="color: inherit; text-decoration: inherit;">product_<wbr>family_<wbr>name</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Represents product family name that uniquely identifies product family</dd><dt class="property-optional"
+            title="Optional">
+        <span id="product_line_name_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#product_line_name_hcl" style="color: inherit; text-decoration: inherit;">product_<wbr>line_<wbr>name</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Represents product line name that uniquely identifies product line</dd><dt class="property-optional"
+            title="Optional">
+        <span id="product_name_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#product_name_hcl" style="color: inherit; text-decoration: inherit;">product_<wbr>name</a>
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
@@ -3205,6 +3706,44 @@ The following output properties are available:
 </div>
 
 <div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-optional"
+            title="Optional">
+        <span id="configuration_name_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#configuration_name_hcl" style="color: inherit; text-decoration: inherit;">configuration_<wbr>name</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Represents configuration name that uniquely identifies configuration</dd><dt class="property-optional"
+            title="Optional">
+        <span id="product_family_name_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#product_family_name_hcl" style="color: inherit; text-decoration: inherit;">product_<wbr>family_<wbr>name</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Represents product family name that uniquely identifies product family</dd><dt class="property-optional"
+            title="Optional">
+        <span id="product_line_name_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#product_line_name_hcl" style="color: inherit; text-decoration: inherit;">product_<wbr>line_<wbr>name</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Represents product line name that uniquely identifies product line</dd><dt class="property-optional"
+            title="Optional">
+        <span id="product_name_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#product_name_hcl" style="color: inherit; text-decoration: inherit;">product_<wbr>name</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Represents product name that uniquely identifies product</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
 <pulumi-choosable type="language" values="java">
 <dl class="resources-properties"><dt class="property-optional"
             title="Optional">
@@ -3405,6 +3944,28 @@ The following output properties are available:
 </div>
 
 <div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-required"
+            title="Required">
+        <span id="image_type_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#image_type_hcl" style="color: inherit; text-decoration: inherit;">image_<wbr>type</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Type of the image</dd><dt class="property-required"
+            title="Required">
+        <span id="image_url_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#image_url_hcl" style="color: inherit; text-decoration: inherit;">image_<wbr>url</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Url of the image</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
 <pulumi-choosable type="language" values="java">
 <dl class="resources-properties"><dt class="property-required"
             title="Required">
@@ -3532,6 +4093,28 @@ The following output properties are available:
             title="Required">
         <span id="linkurl_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#linkurl_go" style="color: inherit; text-decoration: inherit;">Link<wbr>Url</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Url of the link</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-required"
+            title="Required">
+        <span id="link_type_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#link_type_hcl" style="color: inherit; text-decoration: inherit;">link_<wbr>type</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Type of link</dd><dt class="property-required"
+            title="Required">
+        <span id="link_url_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#link_url_hcl" style="color: inherit; text-decoration: inherit;">link_<wbr>url</a>
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
@@ -3687,6 +4270,36 @@ The following output properties are available:
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">float64</span>
+    </dt>
+    <dd>Billing unit applicable for Pav2 billing</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-required"
+            title="Required">
+        <span id="charging_type_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#charging_type_hcl" style="color: inherit; text-decoration: inherit;">charging_<wbr>type</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Charging type.</dd><dt class="property-required"
+            title="Required">
+        <span id="meter_guid_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#meter_guid_hcl" style="color: inherit; text-decoration: inherit;">meter_<wbr>guid</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Validation status of requested data center and transport.</dd><dt class="property-required"
+            title="Required">
+        <span id="multiplier_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#multiplier_hcl" style="color: inherit; text-decoration: inherit;">multiplier</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">number</span>
     </dt>
     <dd>Billing unit applicable for Pav2 billing</dd></dl>
 </pulumi-choosable>
@@ -3900,6 +4513,52 @@ The following output properties are available:
             title="Required">
         <span id="termid_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#termid_go" style="color: inherit; text-decoration: inherit;">Term<wbr>Id</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Term Id</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-required"
+            title="Required">
+        <span id="charging_type_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#charging_type_hcl" style="color: inherit; text-decoration: inherit;">charging_<wbr>type</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Charging type.</dd><dt class="property-required"
+            title="Required">
+        <span id="multiplier_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#multiplier_hcl" style="color: inherit; text-decoration: inherit;">multiplier</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">number</span>
+    </dt>
+    <dd>Billing unit applicable for Pav2 billing</dd><dt class="property-required"
+            title="Required">
+        <span id="product_id_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#product_id_hcl" style="color: inherit; text-decoration: inherit;">product_<wbr>id</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Product Id</dd><dt class="property-required"
+            title="Required">
+        <span id="sku_id_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#sku_id_hcl" style="color: inherit; text-decoration: inherit;">sku_<wbr>id</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Sku Id</dd><dt class="property-required"
+            title="Required">
+        <span id="term_id_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#term_id_hcl" style="color: inherit; text-decoration: inherit;">term_<wbr>id</a>
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
@@ -4132,6 +4791,28 @@ The following output properties are available:
             title="Required">
         <span id="value_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#value_go" style="color: inherit; text-decoration: inherit;">Value</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Value of the specification</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-required"
+            title="Required">
+        <span id="name_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#name_hcl" style="color: inherit; text-decoration: inherit;">name</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Name of the specification</dd><dt class="property-required"
+            title="Required">
+        <span id="value_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#value_hcl" style="color: inherit; text-decoration: inherit;">value</a>
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">string</span>

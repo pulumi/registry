@@ -23,7 +23,7 @@ Resources are created with functions called constructors. To learn more about de
 
 ### Constructor syntax
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 
@@ -76,6 +76,14 @@ Resources are created with functions called constructors. To learn more about de
 <span class="p"></span><span class="p">options</span><span class="p">: </span><span class="c">#&nbsp;Bag of options to control resource&#39;s behavior.</span>
 <span class="p"></span>
 </code></pre></div></div>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<div class="no-copy"><div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">resource</span> <span class="s2">&#34;foo_component&#34;</span> <span class="s2">&#34;name&#34;</span> <span class="p">{</span>
+<span class="c">    # resource properties</span>
+<span class="p">}</span></code></pre></div></div>
 </pulumi-choosable>
 </div>
 
@@ -223,7 +231,7 @@ Resources are created with functions called constructors. To learn more about de
 
 The following reference example uses placeholder values for all [input properties](#inputs).
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 
@@ -4098,6 +4106,1452 @@ example, err := foo.NewComponent(ctx, "componentResource", &foo.ComponentArgs{
 		},
 	},
 })
+```
+
+</pulumi-choosable>
+</div>
+
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+
+```hcl
+resource "foo_component" "componentResource" {
+  eni_config = {
+    "string" = {
+      security_groups = ["string"]
+      subnet          = "string"
+    }
+  }
+  pod = {
+    api_version = "v1"
+    kind        = "Pod"
+    metadata = {
+      annotations = {
+        "string" = "string"
+      }
+      cluster_name                  = "string"
+      creation_timestamp            = "string"
+      deletion_grace_period_seconds = 0
+      deletion_timestamp            = "string"
+      finalizers                    = ["string"]
+      generate_name                 = "string"
+      generation                    = 0
+      labels = {
+        "string" = "string"
+      }
+      managed_fields = [{
+        "apiVersion"  = "string"
+        "fieldsType"  = "string"
+        "fieldsV1"    = "{}"
+        "manager"     = "string"
+        "operation"   = "string"
+        "subresource" = "string"
+        "time"        = "string"
+      }]
+      name      = "string"
+      namespace = "string"
+      owner_references = [{
+        "apiVersion"         = "string"
+        "kind"               = "string"
+        "name"               = "string"
+        "uid"                = "string"
+        "blockOwnerDeletion" = false
+        "controller"         = false
+      }]
+      resource_version = "string"
+      self_link        = "string"
+      uid              = "string"
+    }
+    spec = {
+      containers = [{
+        "name" = "string"
+        "readinessProbe" = {
+          "exec" = {
+            "command" = ["string"]
+          }
+          "failureThreshold" = 0
+          "httpGet" = {
+            "port" = 0
+            "host" = "string"
+            "httpHeaders" = [{
+              "name"  = "string"
+              "value" = "string"
+            }]
+            "path"   = "string"
+            "scheme" = "string"
+          }
+          "initialDelaySeconds" = 0
+          "periodSeconds"       = 0
+          "successThreshold"    = 0
+          "tcpSocket" = {
+            "port" = 0
+            "host" = "string"
+          }
+          "terminationGracePeriodSeconds" = 0
+          "timeoutSeconds"                = 0
+        }
+        "securityContext" = {
+          "allowPrivilegeEscalation" = false
+          "capabilities" = {
+            "add"  = ["string"]
+            "drop" = ["string"]
+          }
+          "privileged"             = false
+          "procMount"              = "string"
+          "readOnlyRootFilesystem" = false
+          "runAsGroup"             = 0
+          "runAsNonRoot"           = false
+          "runAsUser"              = 0
+          "seLinuxOptions" = {
+            "level" = "string"
+            "role"  = "string"
+            "type"  = "string"
+            "user"  = "string"
+          }
+          "seccompProfile" = {
+            "type"             = "string"
+            "localhostProfile" = "string"
+          }
+          "windowsOptions" = {
+            "gmsaCredentialSpec"     = "string"
+            "gmsaCredentialSpecName" = "string"
+            "hostProcess"            = false
+            "runAsUserName"          = "string"
+          }
+        }
+        "envFrom" = [{
+          "configMapRef" = {
+            "name"     = "string"
+            "optional" = false
+          }
+          "prefix" = "string"
+          "secretRef" = {
+            "name"     = "string"
+            "optional" = false
+          }
+        }]
+        "image"           = "string"
+        "imagePullPolicy" = "string"
+        "lifecycle" = {
+          "postStart" = {
+            "exec" = {
+              "command" = ["string"]
+            }
+            "httpGet" = {
+              "port" = 0
+              "host" = "string"
+              "httpHeaders" = [{
+                "name"  = "string"
+                "value" = "string"
+              }]
+              "path"   = "string"
+              "scheme" = "string"
+            }
+            "tcpSocket" = {
+              "port" = 0
+              "host" = "string"
+            }
+          }
+          "preStop" = {
+            "exec" = {
+              "command" = ["string"]
+            }
+            "httpGet" = {
+              "port" = 0
+              "host" = "string"
+              "httpHeaders" = [{
+                "name"  = "string"
+                "value" = "string"
+              }]
+              "path"   = "string"
+              "scheme" = "string"
+            }
+            "tcpSocket" = {
+              "port" = 0
+              "host" = "string"
+            }
+          }
+        }
+        "livenessProbe" = {
+          "exec" = {
+            "command" = ["string"]
+          }
+          "failureThreshold" = 0
+          "httpGet" = {
+            "port" = 0
+            "host" = "string"
+            "httpHeaders" = [{
+              "name"  = "string"
+              "value" = "string"
+            }]
+            "path"   = "string"
+            "scheme" = "string"
+          }
+          "initialDelaySeconds" = 0
+          "periodSeconds"       = 0
+          "successThreshold"    = 0
+          "tcpSocket" = {
+            "port" = 0
+            "host" = "string"
+          }
+          "terminationGracePeriodSeconds" = 0
+          "timeoutSeconds"                = 0
+        }
+        "command" = ["string"]
+        "ports" = [{
+          "containerPort" = 0
+          "hostIP"        = "string"
+          "hostPort"      = 0
+          "name"          = "string"
+          "protocol"      = "string"
+        }]
+        "args" = ["string"]
+        "env" = [{
+          "name"  = "string"
+          "value" = "string"
+          "valueFrom" = {
+            "configMapKeyRef" = {
+              "key"      = "string"
+              "name"     = "string"
+              "optional" = false
+            }
+            "fieldRef" = {
+              "fieldPath"  = "string"
+              "apiVersion" = "string"
+            }
+            "resourceFieldRef" = {
+              "resource"      = "string"
+              "containerName" = "string"
+              "divisor"       = "string"
+            }
+            "secretKeyRef" = {
+              "key"      = "string"
+              "name"     = "string"
+              "optional" = false
+            }
+          }
+        }]
+        "startupProbe" = {
+          "exec" = {
+            "command" = ["string"]
+          }
+          "failureThreshold" = 0
+          "httpGet" = {
+            "port" = 0
+            "host" = "string"
+            "httpHeaders" = [{
+              "name"  = "string"
+              "value" = "string"
+            }]
+            "path"   = "string"
+            "scheme" = "string"
+          }
+          "initialDelaySeconds" = 0
+          "periodSeconds"       = 0
+          "successThreshold"    = 0
+          "tcpSocket" = {
+            "port" = 0
+            "host" = "string"
+          }
+          "terminationGracePeriodSeconds" = 0
+          "timeoutSeconds"                = 0
+        }
+        "resources" = {
+          "limits" = {
+            "string" = "string"
+          }
+          "requests" = {
+            "string" = "string"
+          }
+        }
+        "stdin"                    = false
+        "stdinOnce"                = false
+        "terminationMessagePath"   = "string"
+        "terminationMessagePolicy" = "string"
+        "tty"                      = false
+        "volumeDevices" = [{
+          "devicePath" = "string"
+          "name"       = "string"
+        }]
+        "volumeMounts" = [{
+          "mountPath"        = "string"
+          "name"             = "string"
+          "mountPropagation" = "string"
+          "readOnly"         = false
+          "subPath"          = "string"
+          "subPathExpr"      = "string"
+        }]
+        "workingDir" = "string"
+      }]
+      node_selector = {
+        "string" = "string"
+      }
+      preemption_policy = "string"
+      affinity = {
+        node_affinity = {
+          preferred_during_scheduling_ignored_during_execution = [{
+            "preference" = {
+              "matchExpressions" = [{
+                "key"      = "string"
+                "operator" = "string"
+                "values"   = ["string"]
+              }]
+              "matchFields" = [{
+                "key"      = "string"
+                "operator" = "string"
+                "values"   = ["string"]
+              }]
+            }
+            "weight" = 0
+          }]
+          required_during_scheduling_ignored_during_execution = {
+            node_selector_terms = [{
+              "matchExpressions" = [{
+                "key"      = "string"
+                "operator" = "string"
+                "values"   = ["string"]
+              }]
+              "matchFields" = [{
+                "key"      = "string"
+                "operator" = "string"
+                "values"   = ["string"]
+              }]
+            }]
+          }
+        }
+        pod_affinity = {
+          preferred_during_scheduling_ignored_during_execution = [{
+            "podAffinityTerm" = {
+              "topologyKey" = "string"
+              "labelSelector" = {
+                "matchExpressions" = [{
+                  "key"      = "string"
+                  "operator" = "string"
+                  "values"   = ["string"]
+                }]
+                "matchLabels" = {
+                  "string" = "string"
+                }
+              }
+              "namespaceSelector" = {
+                "matchExpressions" = [{
+                  "key"      = "string"
+                  "operator" = "string"
+                  "values"   = ["string"]
+                }]
+                "matchLabels" = {
+                  "string" = "string"
+                }
+              }
+              "namespaces" = ["string"]
+            }
+            "weight" = 0
+          }]
+          required_during_scheduling_ignored_during_execution = [{
+            "topologyKey" = "string"
+            "labelSelector" = {
+              "matchExpressions" = [{
+                "key"      = "string"
+                "operator" = "string"
+                "values"   = ["string"]
+              }]
+              "matchLabels" = {
+                "string" = "string"
+              }
+            }
+            "namespaceSelector" = {
+              "matchExpressions" = [{
+                "key"      = "string"
+                "operator" = "string"
+                "values"   = ["string"]
+              }]
+              "matchLabels" = {
+                "string" = "string"
+              }
+            }
+            "namespaces" = ["string"]
+          }]
+        }
+        pod_anti_affinity = {
+          preferred_during_scheduling_ignored_during_execution = [{
+            "podAffinityTerm" = {
+              "topologyKey" = "string"
+              "labelSelector" = {
+                "matchExpressions" = [{
+                  "key"      = "string"
+                  "operator" = "string"
+                  "values"   = ["string"]
+                }]
+                "matchLabels" = {
+                  "string" = "string"
+                }
+              }
+              "namespaceSelector" = {
+                "matchExpressions" = [{
+                  "key"      = "string"
+                  "operator" = "string"
+                  "values"   = ["string"]
+                }]
+                "matchLabels" = {
+                  "string" = "string"
+                }
+              }
+              "namespaces" = ["string"]
+            }
+            "weight" = 0
+          }]
+          required_during_scheduling_ignored_during_execution = [{
+            "topologyKey" = "string"
+            "labelSelector" = {
+              "matchExpressions" = [{
+                "key"      = "string"
+                "operator" = "string"
+                "values"   = ["string"]
+              }]
+              "matchLabels" = {
+                "string" = "string"
+              }
+            }
+            "namespaceSelector" = {
+              "matchExpressions" = [{
+                "key"      = "string"
+                "operator" = "string"
+                "values"   = ["string"]
+              }]
+              "matchLabels" = {
+                "string" = "string"
+              }
+            }
+            "namespaces" = ["string"]
+          }]
+        }
+      }
+      dns_config = {
+        nameservers = ["string"]
+        options = [{
+          "name"  = "string"
+          "value" = "string"
+        }]
+        searches = ["string"]
+      }
+      dns_policy           = "string"
+      enable_service_links = false
+      ephemeral_containers = [{
+        "name" = "string"
+        "readinessProbe" = {
+          "exec" = {
+            "command" = ["string"]
+          }
+          "failureThreshold" = 0
+          "httpGet" = {
+            "port" = 0
+            "host" = "string"
+            "httpHeaders" = [{
+              "name"  = "string"
+              "value" = "string"
+            }]
+            "path"   = "string"
+            "scheme" = "string"
+          }
+          "initialDelaySeconds" = 0
+          "periodSeconds"       = 0
+          "successThreshold"    = 0
+          "tcpSocket" = {
+            "port" = 0
+            "host" = "string"
+          }
+          "terminationGracePeriodSeconds" = 0
+          "timeoutSeconds"                = 0
+        }
+        "securityContext" = {
+          "allowPrivilegeEscalation" = false
+          "capabilities" = {
+            "add"  = ["string"]
+            "drop" = ["string"]
+          }
+          "privileged"             = false
+          "procMount"              = "string"
+          "readOnlyRootFilesystem" = false
+          "runAsGroup"             = 0
+          "runAsNonRoot"           = false
+          "runAsUser"              = 0
+          "seLinuxOptions" = {
+            "level" = "string"
+            "role"  = "string"
+            "type"  = "string"
+            "user"  = "string"
+          }
+          "seccompProfile" = {
+            "type"             = "string"
+            "localhostProfile" = "string"
+          }
+          "windowsOptions" = {
+            "gmsaCredentialSpec"     = "string"
+            "gmsaCredentialSpecName" = "string"
+            "hostProcess"            = false
+            "runAsUserName"          = "string"
+          }
+        }
+        "envFrom" = [{
+          "configMapRef" = {
+            "name"     = "string"
+            "optional" = false
+          }
+          "prefix" = "string"
+          "secretRef" = {
+            "name"     = "string"
+            "optional" = false
+          }
+        }]
+        "image"           = "string"
+        "imagePullPolicy" = "string"
+        "lifecycle" = {
+          "postStart" = {
+            "exec" = {
+              "command" = ["string"]
+            }
+            "httpGet" = {
+              "port" = 0
+              "host" = "string"
+              "httpHeaders" = [{
+                "name"  = "string"
+                "value" = "string"
+              }]
+              "path"   = "string"
+              "scheme" = "string"
+            }
+            "tcpSocket" = {
+              "port" = 0
+              "host" = "string"
+            }
+          }
+          "preStop" = {
+            "exec" = {
+              "command" = ["string"]
+            }
+            "httpGet" = {
+              "port" = 0
+              "host" = "string"
+              "httpHeaders" = [{
+                "name"  = "string"
+                "value" = "string"
+              }]
+              "path"   = "string"
+              "scheme" = "string"
+            }
+            "tcpSocket" = {
+              "port" = 0
+              "host" = "string"
+            }
+          }
+        }
+        "livenessProbe" = {
+          "exec" = {
+            "command" = ["string"]
+          }
+          "failureThreshold" = 0
+          "httpGet" = {
+            "port" = 0
+            "host" = "string"
+            "httpHeaders" = [{
+              "name"  = "string"
+              "value" = "string"
+            }]
+            "path"   = "string"
+            "scheme" = "string"
+          }
+          "initialDelaySeconds" = 0
+          "periodSeconds"       = 0
+          "successThreshold"    = 0
+          "tcpSocket" = {
+            "port" = 0
+            "host" = "string"
+          }
+          "terminationGracePeriodSeconds" = 0
+          "timeoutSeconds"                = 0
+        }
+        "command" = ["string"]
+        "ports" = [{
+          "containerPort" = 0
+          "hostIP"        = "string"
+          "hostPort"      = 0
+          "name"          = "string"
+          "protocol"      = "string"
+        }]
+        "startupProbe" = {
+          "exec" = {
+            "command" = ["string"]
+          }
+          "failureThreshold" = 0
+          "httpGet" = {
+            "port" = 0
+            "host" = "string"
+            "httpHeaders" = [{
+              "name"  = "string"
+              "value" = "string"
+            }]
+            "path"   = "string"
+            "scheme" = "string"
+          }
+          "initialDelaySeconds" = 0
+          "periodSeconds"       = 0
+          "successThreshold"    = 0
+          "tcpSocket" = {
+            "port" = 0
+            "host" = "string"
+          }
+          "terminationGracePeriodSeconds" = 0
+          "timeoutSeconds"                = 0
+        }
+        "env" = [{
+          "name"  = "string"
+          "value" = "string"
+          "valueFrom" = {
+            "configMapKeyRef" = {
+              "key"      = "string"
+              "name"     = "string"
+              "optional" = false
+            }
+            "fieldRef" = {
+              "fieldPath"  = "string"
+              "apiVersion" = "string"
+            }
+            "resourceFieldRef" = {
+              "resource"      = "string"
+              "containerName" = "string"
+              "divisor"       = "string"
+            }
+            "secretKeyRef" = {
+              "key"      = "string"
+              "name"     = "string"
+              "optional" = false
+            }
+          }
+        }]
+        "resources" = {
+          "limits" = {
+            "string" = "string"
+          }
+          "requests" = {
+            "string" = "string"
+          }
+        }
+        "args"                     = ["string"]
+        "stdin"                    = false
+        "stdinOnce"                = false
+        "targetContainerName"      = "string"
+        "terminationMessagePath"   = "string"
+        "terminationMessagePolicy" = "string"
+        "tty"                      = false
+        "volumeDevices" = [{
+          "devicePath" = "string"
+          "name"       = "string"
+        }]
+        "volumeMounts" = [{
+          "mountPath"        = "string"
+          "name"             = "string"
+          "mountPropagation" = "string"
+          "readOnly"         = false
+          "subPath"          = "string"
+          "subPathExpr"      = "string"
+        }]
+        "workingDir" = "string"
+      }]
+      host_aliases = [{
+        "hostnames" = ["string"]
+        "ip"        = "string"
+      }]
+      host_ipc     = false
+      host_network = false
+      priority     = 0
+      hostname     = "string"
+      image_pull_secrets = [{
+        "name" = "string"
+      }]
+      init_containers = [{
+        "name" = "string"
+        "readinessProbe" = {
+          "exec" = {
+            "command" = ["string"]
+          }
+          "failureThreshold" = 0
+          "httpGet" = {
+            "port" = 0
+            "host" = "string"
+            "httpHeaders" = [{
+              "name"  = "string"
+              "value" = "string"
+            }]
+            "path"   = "string"
+            "scheme" = "string"
+          }
+          "initialDelaySeconds" = 0
+          "periodSeconds"       = 0
+          "successThreshold"    = 0
+          "tcpSocket" = {
+            "port" = 0
+            "host" = "string"
+          }
+          "terminationGracePeriodSeconds" = 0
+          "timeoutSeconds"                = 0
+        }
+        "securityContext" = {
+          "allowPrivilegeEscalation" = false
+          "capabilities" = {
+            "add"  = ["string"]
+            "drop" = ["string"]
+          }
+          "privileged"             = false
+          "procMount"              = "string"
+          "readOnlyRootFilesystem" = false
+          "runAsGroup"             = 0
+          "runAsNonRoot"           = false
+          "runAsUser"              = 0
+          "seLinuxOptions" = {
+            "level" = "string"
+            "role"  = "string"
+            "type"  = "string"
+            "user"  = "string"
+          }
+          "seccompProfile" = {
+            "type"             = "string"
+            "localhostProfile" = "string"
+          }
+          "windowsOptions" = {
+            "gmsaCredentialSpec"     = "string"
+            "gmsaCredentialSpecName" = "string"
+            "hostProcess"            = false
+            "runAsUserName"          = "string"
+          }
+        }
+        "envFrom" = [{
+          "configMapRef" = {
+            "name"     = "string"
+            "optional" = false
+          }
+          "prefix" = "string"
+          "secretRef" = {
+            "name"     = "string"
+            "optional" = false
+          }
+        }]
+        "image"           = "string"
+        "imagePullPolicy" = "string"
+        "lifecycle" = {
+          "postStart" = {
+            "exec" = {
+              "command" = ["string"]
+            }
+            "httpGet" = {
+              "port" = 0
+              "host" = "string"
+              "httpHeaders" = [{
+                "name"  = "string"
+                "value" = "string"
+              }]
+              "path"   = "string"
+              "scheme" = "string"
+            }
+            "tcpSocket" = {
+              "port" = 0
+              "host" = "string"
+            }
+          }
+          "preStop" = {
+            "exec" = {
+              "command" = ["string"]
+            }
+            "httpGet" = {
+              "port" = 0
+              "host" = "string"
+              "httpHeaders" = [{
+                "name"  = "string"
+                "value" = "string"
+              }]
+              "path"   = "string"
+              "scheme" = "string"
+            }
+            "tcpSocket" = {
+              "port" = 0
+              "host" = "string"
+            }
+          }
+        }
+        "livenessProbe" = {
+          "exec" = {
+            "command" = ["string"]
+          }
+          "failureThreshold" = 0
+          "httpGet" = {
+            "port" = 0
+            "host" = "string"
+            "httpHeaders" = [{
+              "name"  = "string"
+              "value" = "string"
+            }]
+            "path"   = "string"
+            "scheme" = "string"
+          }
+          "initialDelaySeconds" = 0
+          "periodSeconds"       = 0
+          "successThreshold"    = 0
+          "tcpSocket" = {
+            "port" = 0
+            "host" = "string"
+          }
+          "terminationGracePeriodSeconds" = 0
+          "timeoutSeconds"                = 0
+        }
+        "command" = ["string"]
+        "ports" = [{
+          "containerPort" = 0
+          "hostIP"        = "string"
+          "hostPort"      = 0
+          "name"          = "string"
+          "protocol"      = "string"
+        }]
+        "args" = ["string"]
+        "env" = [{
+          "name"  = "string"
+          "value" = "string"
+          "valueFrom" = {
+            "configMapKeyRef" = {
+              "key"      = "string"
+              "name"     = "string"
+              "optional" = false
+            }
+            "fieldRef" = {
+              "fieldPath"  = "string"
+              "apiVersion" = "string"
+            }
+            "resourceFieldRef" = {
+              "resource"      = "string"
+              "containerName" = "string"
+              "divisor"       = "string"
+            }
+            "secretKeyRef" = {
+              "key"      = "string"
+              "name"     = "string"
+              "optional" = false
+            }
+          }
+        }]
+        "startupProbe" = {
+          "exec" = {
+            "command" = ["string"]
+          }
+          "failureThreshold" = 0
+          "httpGet" = {
+            "port" = 0
+            "host" = "string"
+            "httpHeaders" = [{
+              "name"  = "string"
+              "value" = "string"
+            }]
+            "path"   = "string"
+            "scheme" = "string"
+          }
+          "initialDelaySeconds" = 0
+          "periodSeconds"       = 0
+          "successThreshold"    = 0
+          "tcpSocket" = {
+            "port" = 0
+            "host" = "string"
+          }
+          "terminationGracePeriodSeconds" = 0
+          "timeoutSeconds"                = 0
+        }
+        "resources" = {
+          "limits" = {
+            "string" = "string"
+          }
+          "requests" = {
+            "string" = "string"
+          }
+        }
+        "stdin"                    = false
+        "stdinOnce"                = false
+        "terminationMessagePath"   = "string"
+        "terminationMessagePolicy" = "string"
+        "tty"                      = false
+        "volumeDevices" = [{
+          "devicePath" = "string"
+          "name"       = "string"
+        }]
+        "volumeMounts" = [{
+          "mountPath"        = "string"
+          "name"             = "string"
+          "mountPropagation" = "string"
+          "readOnly"         = false
+          "subPath"          = "string"
+          "subPathExpr"      = "string"
+        }]
+        "workingDir" = "string"
+      }]
+      node_name                       = "string"
+      active_deadline_seconds         = 0
+      automount_service_account_token = false
+      overhead = {
+        "string" = "string"
+      }
+      host_pid            = false
+      priority_class_name = "string"
+      readiness_gates = [{
+        "conditionType" = "string"
+      }]
+      restart_policy     = "string"
+      runtime_class_name = "string"
+      scheduler_name     = "string"
+      security_context = {
+        fs_group               = 0
+        fs_group_change_policy = "string"
+        run_as_group           = 0
+        run_as_non_root        = false
+        run_as_user            = 0
+        se_linux_options = {
+          level = "string"
+          role  = "string"
+          type  = "string"
+          user  = "string"
+        }
+        seccomp_profile = {
+          type              = "string"
+          localhost_profile = "string"
+        }
+        supplemental_groups = [0]
+        sysctls = [{
+          "name"  = "string"
+          "value" = "string"
+        }]
+        windows_options = {
+          gmsa_credential_spec      = "string"
+          gmsa_credential_spec_name = "string"
+          host_process              = false
+          run_as_user_name          = "string"
+        }
+      }
+      service_account                  = "string"
+      service_account_name             = "string"
+      set_hostname_as_fqdn             = false
+      share_process_namespace          = false
+      subdomain                        = "string"
+      termination_grace_period_seconds = 0
+      tolerations = [{
+        "effect"            = "string"
+        "key"               = "string"
+        "operator"          = "string"
+        "tolerationSeconds" = 0
+        "value"             = "string"
+      }]
+      topology_spread_constraints = [{
+        "maxSkew"           = 0
+        "topologyKey"       = "string"
+        "whenUnsatisfiable" = "string"
+        "labelSelector" = {
+          "matchExpressions" = [{
+            "key"      = "string"
+            "operator" = "string"
+            "values"   = ["string"]
+          }]
+          "matchLabels" = {
+            "string" = "string"
+          }
+        }
+      }]
+      volumes = [{
+        "name" = "string"
+        "gitRepo" = {
+          "repository" = "string"
+          "directory"  = "string"
+          "revision"   = "string"
+        }
+        "persistentVolumeClaim" = {
+          "claimName" = "string"
+          "readOnly"  = false
+        }
+        "cephfs" = {
+          "monitors"   = ["string"]
+          "path"       = "string"
+          "readOnly"   = false
+          "secretFile" = "string"
+          "secretRef" = {
+            "name" = "string"
+          }
+          "user" = "string"
+        }
+        "cinder" = {
+          "volumeID" = "string"
+          "fsType"   = "string"
+          "readOnly" = false
+          "secretRef" = {
+            "name" = "string"
+          }
+        }
+        "configMap" = {
+          "defaultMode" = 0
+          "items" = [{
+            "key"  = "string"
+            "path" = "string"
+            "mode" = 0
+          }]
+          "name"     = "string"
+          "optional" = false
+        }
+        "csi" = {
+          "driver" = "string"
+          "fsType" = "string"
+          "nodePublishSecretRef" = {
+            "name" = "string"
+          }
+          "readOnly" = false
+          "volumeAttributes" = {
+            "string" = "string"
+          }
+        }
+        "downwardAPI" = {
+          "defaultMode" = 0
+          "items" = [{
+            "path" = "string"
+            "fieldRef" = {
+              "fieldPath"  = "string"
+              "apiVersion" = "string"
+            }
+            "mode" = 0
+            "resourceFieldRef" = {
+              "resource"      = "string"
+              "containerName" = "string"
+              "divisor"       = "string"
+            }
+          }]
+        }
+        "emptyDir" = {
+          "medium"    = "string"
+          "sizeLimit" = "string"
+        }
+        "ephemeral" = {
+          "readOnly" = false
+          "volumeClaimTemplate" = {
+            "spec" = {
+              "accessModes" = ["string"]
+              "dataSource" = {
+                "kind"     = "string"
+                "name"     = "string"
+                "apiGroup" = "string"
+              }
+              "dataSourceRef" = {
+                "kind"     = "string"
+                "name"     = "string"
+                "apiGroup" = "string"
+              }
+              "resources" = {
+                "limits" = {
+                  "string" = "string"
+                }
+                "requests" = {
+                  "string" = "string"
+                }
+              }
+              "selector" = {
+                "matchExpressions" = [{
+                  "key"      = "string"
+                  "operator" = "string"
+                  "values"   = ["string"]
+                }]
+                "matchLabels" = {
+                  "string" = "string"
+                }
+              }
+              "storageClassName" = "string"
+              "volumeMode"       = "string"
+              "volumeName"       = "string"
+            }
+            "metadata" = {
+              "annotations" = {
+                "string" = "string"
+              }
+              "clusterName"                = "string"
+              "creationTimestamp"          = "string"
+              "deletionGracePeriodSeconds" = 0
+              "deletionTimestamp"          = "string"
+              "finalizers"                 = ["string"]
+              "generateName"               = "string"
+              "generation"                 = 0
+              "labels" = {
+                "string" = "string"
+              }
+              "managedFields" = [{
+                "apiVersion"  = "string"
+                "fieldsType"  = "string"
+                "fieldsV1"    = "{}"
+                "manager"     = "string"
+                "operation"   = "string"
+                "subresource" = "string"
+                "time"        = "string"
+              }]
+              "name"      = "string"
+              "namespace" = "string"
+              "ownerReferences" = [{
+                "apiVersion"         = "string"
+                "kind"               = "string"
+                "name"               = "string"
+                "uid"                = "string"
+                "blockOwnerDeletion" = false
+                "controller"         = false
+              }]
+              "resourceVersion" = "string"
+              "selfLink"        = "string"
+              "uid"             = "string"
+            }
+          }
+        }
+        "fc" = {
+          "fsType"     = "string"
+          "lun"        = 0
+          "readOnly"   = false
+          "targetWWNs" = ["string"]
+          "wwids"      = ["string"]
+        }
+        "flexVolume" = {
+          "driver" = "string"
+          "fsType" = "string"
+          "options" = {
+            "string" = "string"
+          }
+          "readOnly" = false
+          "secretRef" = {
+            "name" = "string"
+          }
+        }
+        "flocker" = {
+          "datasetName" = "string"
+          "datasetUUID" = "string"
+        }
+        "gcePersistentDisk" = {
+          "pdName"    = "string"
+          "fsType"    = "string"
+          "partition" = 0
+          "readOnly"  = false
+        }
+        "awsElasticBlockStore" = {
+          "volumeID"  = "string"
+          "fsType"    = "string"
+          "partition" = 0
+          "readOnly"  = false
+        }
+        "azureFile" = {
+          "secretName" = "string"
+          "shareName"  = "string"
+          "readOnly"   = false
+        }
+        "iscsi" = {
+          "iqn"               = "string"
+          "lun"               = 0
+          "targetPortal"      = "string"
+          "chapAuthDiscovery" = false
+          "chapAuthSession"   = false
+          "fsType"            = "string"
+          "initiatorName"     = "string"
+          "iscsiInterface"    = "string"
+          "portals"           = ["string"]
+          "readOnly"          = false
+          "secretRef" = {
+            "name" = "string"
+          }
+        }
+        "glusterfs" = {
+          "endpoints" = "string"
+          "path"      = "string"
+          "readOnly"  = false
+        }
+        "azureDisk" = {
+          "diskName"    = "string"
+          "diskURI"     = "string"
+          "cachingMode" = "string"
+          "fsType"      = "string"
+          "kind"        = "string"
+          "readOnly"    = false
+        }
+        "nfs" = {
+          "path"     = "string"
+          "server"   = "string"
+          "readOnly" = false
+        }
+        "hostPath" = {
+          "path" = "string"
+          "type" = "string"
+        }
+        "photonPersistentDisk" = {
+          "pdID"   = "string"
+          "fsType" = "string"
+        }
+        "portworxVolume" = {
+          "volumeID" = "string"
+          "fsType"   = "string"
+          "readOnly" = false
+        }
+        "projected" = {
+          "sources" = [{
+            "configMap" = {
+              "items" = [{
+                "key"  = "string"
+                "path" = "string"
+                "mode" = 0
+              }]
+              "name"     = "string"
+              "optional" = false
+            }
+            "downwardAPI" = {
+              "items" = [{
+                "path" = "string"
+                "fieldRef" = {
+                  "fieldPath"  = "string"
+                  "apiVersion" = "string"
+                }
+                "mode" = 0
+                "resourceFieldRef" = {
+                  "resource"      = "string"
+                  "containerName" = "string"
+                  "divisor"       = "string"
+                }
+              }]
+            }
+            "secret" = {
+              "items" = [{
+                "key"  = "string"
+                "path" = "string"
+                "mode" = 0
+              }]
+              "name"     = "string"
+              "optional" = false
+            }
+            "serviceAccountToken" = {
+              "path"              = "string"
+              "audience"          = "string"
+              "expirationSeconds" = 0
+            }
+          }]
+          "defaultMode" = 0
+        }
+        "quobyte" = {
+          "registry" = "string"
+          "volume"   = "string"
+          "group"    = "string"
+          "readOnly" = false
+          "tenant"   = "string"
+          "user"     = "string"
+        }
+        "rbd" = {
+          "image"    = "string"
+          "monitors" = ["string"]
+          "fsType"   = "string"
+          "keyring"  = "string"
+          "pool"     = "string"
+          "readOnly" = false
+          "secretRef" = {
+            "name" = "string"
+          }
+          "user" = "string"
+        }
+        "scaleIO" = {
+          "gateway" = "string"
+          "secretRef" = {
+            "name" = "string"
+          }
+          "system"           = "string"
+          "fsType"           = "string"
+          "protectionDomain" = "string"
+          "readOnly"         = false
+          "sslEnabled"       = false
+          "storageMode"      = "string"
+          "storagePool"      = "string"
+          "volumeName"       = "string"
+        }
+        "secret" = {
+          "defaultMode" = 0
+          "items" = [{
+            "key"  = "string"
+            "path" = "string"
+            "mode" = 0
+          }]
+          "optional"   = false
+          "secretName" = "string"
+        }
+        "storageos" = {
+          "fsType"   = "string"
+          "readOnly" = false
+          "secretRef" = {
+            "name" = "string"
+          }
+          "volumeName"      = "string"
+          "volumeNamespace" = "string"
+        }
+        "vsphereVolume" = {
+          "volumePath"        = "string"
+          "fsType"            = "string"
+          "storagePolicyID"   = "string"
+          "storagePolicyName" = "string"
+        }
+      }]
+    }
+    status = {
+      conditions = [{
+        "status"             = "string"
+        "type"               = "string"
+        "lastProbeTime"      = "string"
+        "lastTransitionTime" = "string"
+        "message"            = "string"
+        "reason"             = "string"
+      }]
+      container_statuses = [{
+        "image"        = "string"
+        "imageID"      = "string"
+        "name"         = "string"
+        "ready"        = false
+        "restartCount" = 0
+        "containerID"  = "string"
+        "lastState" = {
+          "running" = {
+            "startedAt" = "string"
+          }
+          "terminated" = {
+            "exitCode"    = 0
+            "containerID" = "string"
+            "finishedAt"  = "string"
+            "message"     = "string"
+            "reason"      = "string"
+            "signal"      = 0
+            "startedAt"   = "string"
+          }
+          "waiting" = {
+            "message" = "string"
+            "reason"  = "string"
+          }
+        }
+        "started" = false
+        "state" = {
+          "running" = {
+            "startedAt" = "string"
+          }
+          "terminated" = {
+            "exitCode"    = 0
+            "containerID" = "string"
+            "finishedAt"  = "string"
+            "message"     = "string"
+            "reason"      = "string"
+            "signal"      = 0
+            "startedAt"   = "string"
+          }
+          "waiting" = {
+            "message" = "string"
+            "reason"  = "string"
+          }
+        }
+      }]
+      ephemeral_container_statuses = [{
+        "image"        = "string"
+        "imageID"      = "string"
+        "name"         = "string"
+        "ready"        = false
+        "restartCount" = 0
+        "containerID"  = "string"
+        "lastState" = {
+          "running" = {
+            "startedAt" = "string"
+          }
+          "terminated" = {
+            "exitCode"    = 0
+            "containerID" = "string"
+            "finishedAt"  = "string"
+            "message"     = "string"
+            "reason"      = "string"
+            "signal"      = 0
+            "startedAt"   = "string"
+          }
+          "waiting" = {
+            "message" = "string"
+            "reason"  = "string"
+          }
+        }
+        "started" = false
+        "state" = {
+          "running" = {
+            "startedAt" = "string"
+          }
+          "terminated" = {
+            "exitCode"    = 0
+            "containerID" = "string"
+            "finishedAt"  = "string"
+            "message"     = "string"
+            "reason"      = "string"
+            "signal"      = 0
+            "startedAt"   = "string"
+          }
+          "waiting" = {
+            "message" = "string"
+            "reason"  = "string"
+          }
+        }
+      }]
+      host_ip = "string"
+      init_container_statuses = [{
+        "image"        = "string"
+        "imageID"      = "string"
+        "name"         = "string"
+        "ready"        = false
+        "restartCount" = 0
+        "containerID"  = "string"
+        "lastState" = {
+          "running" = {
+            "startedAt" = "string"
+          }
+          "terminated" = {
+            "exitCode"    = 0
+            "containerID" = "string"
+            "finishedAt"  = "string"
+            "message"     = "string"
+            "reason"      = "string"
+            "signal"      = 0
+            "startedAt"   = "string"
+          }
+          "waiting" = {
+            "message" = "string"
+            "reason"  = "string"
+          }
+        }
+        "started" = false
+        "state" = {
+          "running" = {
+            "startedAt" = "string"
+          }
+          "terminated" = {
+            "exitCode"    = 0
+            "containerID" = "string"
+            "finishedAt"  = "string"
+            "message"     = "string"
+            "reason"      = "string"
+            "signal"      = 0
+            "startedAt"   = "string"
+          }
+          "waiting" = {
+            "message" = "string"
+            "reason"  = "string"
+          }
+        }
+      }]
+      message             = "string"
+      nominated_node_name = "string"
+      phase               = "string"
+      pod_ip              = "string"
+      pod_i_ps = [{
+        "ip" = "string"
+      }]
+      qos_class  = "string"
+      reason     = "string"
+      start_time = "string"
+    }
+  }
+}
 ```
 
 </pulumi-choosable>
@@ -9644,6 +11098,28 @@ The Component resource accepts the following [input](/docs/intro/concepts/inputs
 </div>
 
 <div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-optional"
+            title="Optional">
+        <span id="eni_config_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#eni_config_hcl" style="color: inherit; text-decoration: inherit;">eni_<wbr>config</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">map(object)</span>
+    </dt>
+    <dd></dd><dt class="property-optional"
+            title="Optional">
+        <span id="pod_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#pod_hcl" style="color: inherit; text-decoration: inherit;">pod</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#pod">object</a></span>
+    </dt>
+    <dd>This type is defined in the <a href="/registry/packages/kubernetes">Kubernetes</a> package.</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
 <pulumi-choosable type="language" values="java">
 <dl class="resources-properties"><dt class="property-optional"
             title="Optional">
@@ -9751,6 +11227,12 @@ All [input](#inputs) properties are implicitly available as output properties. A
 </div>
 
 <div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"></dl>
+</pulumi-choosable>
+</div>
+
+<div>
 <pulumi-choosable type="language" values="java">
 <dl class="resources-properties"></dl>
 </pulumi-choosable>
@@ -9824,6 +11306,28 @@ ENIConfig<wbr>Spec<pulumi-choosable type="language" values="python,go" class="in
             title="Optional">
         <span id="subnet_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#subnet_go" style="color: inherit; text-decoration: inherit;">Subnet</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd></dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-optional"
+            title="Optional">
+        <span id="security_groups_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#security_groups_hcl" style="color: inherit; text-decoration: inherit;">security_<wbr>groups</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">list(string)</span>
+    </dt>
+    <dd></dd><dt class="property-optional"
+            title="Optional">
+        <span id="subnet_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#subnet_hcl" style="color: inherit; text-decoration: inherit;">subnet</a>
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">string</span>

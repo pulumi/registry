@@ -22,7 +22,7 @@ Codegen demo with const inputs
 ## Using funcWithConstInput {#using}
 
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 
@@ -86,6 +86,15 @@ Codegen demo with const inputs
 </div>
 
 
+<div>
+<pulumi-choosable type="language" values="hcl">
+<div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">data</span> <span class="s2">&#34;mypkg_funcwithconstinput&#34;</span> <span class="s2">&#34;name&#34;</span> <span class="p">{</span>
+<span class="c">    # arguments</span>
+<span class="p">}</span></code></pre></div>
+</pulumi-choosable>
+</div>
+
+
 
 The following arguments are supported:
 
@@ -98,6 +107,12 @@ The following arguments are supported:
 
 <div>
 <pulumi-choosable type="language" values="go">
+<dl class="resources-properties"></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
 <dl class="resources-properties"></dl>
 </pulumi-choosable>
 </div>

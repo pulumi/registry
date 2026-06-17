@@ -32,6 +32,8 @@ import (
 	"github.com/pulumi/registry/tools/resourcedocsgen/pkg/docs/templates"
 	"github.com/pulumi/registry/tools/resourcedocsgen/pkg/util/language"
 
+	hcl_codegen "github.com/pulumi-labs/pulumi-hcl/pkg/codegen"
+	hcl_docs "github.com/pulumi-labs/pulumi-hcl/pkg/docs"
 	dotnet "github.com/pulumi/pulumi-dotnet/pulumi-language-dotnet/v3/codegen"
 	"github.com/pulumi/pulumi-java/pkg/codegen/java"
 	yaml "github.com/pulumi/pulumi-yaml/pkg/pulumiyaml/codegen"
@@ -164,6 +166,7 @@ type constructorSyntaxData struct {
 	csharp     *languageConstructorSyntax
 	java       *languageConstructorSyntax
 	yaml       *languageConstructorSyntax
+	hcl        *languageConstructorSyntax
 }
 
 func emptyLanguageConstructorSyntax() *languageConstructorSyntax {
@@ -181,6 +184,7 @@ func newConstructorSyntaxData() *constructorSyntaxData {
 		csharp:     emptyLanguageConstructorSyntax(),
 		java:       emptyLanguageConstructorSyntax(),
 		yaml:       emptyLanguageConstructorSyntax(),
+		hcl:        emptyLanguageConstructorSyntax(),
 	}
 }
 
@@ -229,6 +233,7 @@ func NewContext(tool string, pkg *schema.Package) *Context {
 			language.Python: &python.DocLanguageHelper{},
 			language.YAML:   &yaml.DocLanguageHelper{},
 			language.Java:   &java.DocLanguageHelper{},
+			language.HCL:    &hcl_docs.DocLanguageHelper{},
 		},
 		moduleConflictLinkMap: map[interface{}]string{},
 		constructorSyntaxData: generateConstructorSyntaxData(pkg),
@@ -337,7 +342,7 @@ type resourceDocArgs struct {
 
 	// LangChooserLanguages is a comma-separated list of languages to pass to the language chooser shortcode. Use this to
 	// customize the languages shown for a resource. By default, the language chooser will show all languages supported by
-	// Pulumi for all resources. Supported values are "typescript", "python", "go", "csharp", "java", "yaml"
+	// Pulumi for all resources. Supported values are "typescript", "python", "go", "csharp", "java", "yaml", "hcl"
 	LangChooserLanguages string
 
 	// CreationExampleSyntax is a map from language to the rendered HTML for the creation example syntax where the key is
@@ -944,6 +949,15 @@ func (mod *modContext) genConstructorYaml() []formalParam {
 	}
 }
 
+func (mod *modContext) genConstructorHCL() []formalParam {
+	return []formalParam{
+		{
+			Name:    "arguments",
+			Comment: ctorArgsArgComment,
+		},
+	}
+}
+
 func (mod *modContext) genConstructorJava(r *schema.Resource, argsOverload bool) []formalParam {
 	name := resourceName(r)
 
@@ -1368,6 +1382,9 @@ func (mod *modContext) genConstructors(
 		case language.YAML:
 			formalParams[lang] = formalConstructParams{Params: mod.genConstructorYaml()}
 			renderedParams[lang] = renderedConstructorParam{}
+		case language.HCL:
+			formalParams[lang] = formalConstructParams{Params: mod.genConstructorHCL()}
+			renderedParams[lang] = renderedConstructorParam{}
 		}
 	}
 
@@ -1405,6 +1422,13 @@ func (mod *modContext) getConstructorResourceInfo(resourceTypeName, tok string) 
 			resourceMap[lang] = propertyType{
 				Name:        resourceTypeName,
 				DisplayName: docLangHelper.GetTypeName(mod.pkg, &schema.ResourceType{Token: tok}, false, mod.mod),
+			}
+			continue
+		case language.HCL:
+			hclHelper := dctx.getLanguageDocHelper(language.HCL)
+			resourceMap[lang] = propertyType{
+				Name:        resourceTypeName,
+				DisplayName: hclHelper.GetTypeName(mod.pkg, &schema.ResourceType{Token: tok}, false, mod.mod),
 			}
 			continue
 		default:
@@ -1637,8 +1661,8 @@ func (mod *modContext) getLookupParams(lang language.Language, r *schema.Resourc
 		return mod.getJavaLookupParams(r, stateParam)
 	case language.Python:
 		return mod.getPythonLookupParams(r, stateParam)
-	case language.YAML, language.Java:
-		return nil // We don't render lookup parameters for Java and YAML
+	case language.YAML, language.Java, language.HCL:
+		return nil // We don't render lookup parameters for Java, YAML, or HCL
 	default:
 		contract.Failf("Unknown language %#v", lang)
 		return nil
@@ -1780,6 +1804,9 @@ func (mod *modContext) genResource(r *schema.Resource) resourceDocArgs {
 		}
 		if example, found := dctx.constructorSyntaxData.yaml.resources[collapseYAMLToken(r.Token)]; found {
 			creationExampleSyntax[language.YAML] = example
+		}
+		if example, found := dctx.constructorSyntaxData.hcl.resources[r.Token]; found {
+			creationExampleSyntax[language.HCL] = example
 		}
 	}
 
@@ -2457,6 +2484,16 @@ func generateConstructorSyntaxData(pkg *schema.Package) *constructorSyntaxData {
 					"        ", /* indentation to trim */
 					"//",       /* comment prefix */
 					func(line string) bool { return strings.HasSuffix(line, ");") })
+			}
+		case language.HCL:
+			files, diags, err := safeExtract(hcl_codegen.GenerateProgram)
+			if !diags.HasErrors() && err == nil {
+				program := string(files["main.hcl"])
+				constructorSyntax.hcl = extractConstructorSyntaxExamples(
+					program, /* program */
+					"",      /* indentation to trim */
+					"//",    /* comment prefix */
+					func(line string) bool { return line == "}" })
 			}
 		}
 	}

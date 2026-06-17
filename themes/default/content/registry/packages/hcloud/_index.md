@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-hcloud/v1.34.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-hcloud/v1.38.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-hcloud/blob/v1.34.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-hcloud/blob/v1.38.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Hcloud Provider
 meta_desc: Provides an overview on how to configure the Pulumi Hcloud provider.
@@ -25,7 +25,7 @@ The Hetzner Cloud (hcloud) provider is used to interact with the resources suppo
 Use the navigation to the left to read about the available resources.
 ## Example Usage
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
@@ -135,7 +135,7 @@ configuration:
   # Set the variable value in *.tfvars file
   # or using the -var="hcloud_token=..." CLI option
   hcloudToken:
-    type: dynamic
+    type: object
 ```
 
 {{% /choosable %}}
@@ -156,8 +156,8 @@ package generated_program;
 import com.pulumi.Context;
 import com.pulumi.Pulumi;
 import com.pulumi.core.Output;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;
@@ -172,6 +172,15 @@ public class App {
         final var config = ctx.config();
         final var hcloudToken = config.require("hcloudToken");
     }
+}
+```
+
+{{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+# Set the variable value in *.tfvars file
+# or using the -var="hcloud_token=..." CLI option
+variable "hcloudToken" {
 }
 ```
 

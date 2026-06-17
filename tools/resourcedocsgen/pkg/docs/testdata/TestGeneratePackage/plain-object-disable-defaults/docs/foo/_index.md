@@ -25,7 +25,7 @@ Resources are created with functions called constructors. To learn more about de
 
 ### Constructor syntax
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 
@@ -80,6 +80,14 @@ Resources are created with functions called constructors. To learn more about de
 <span class="p"></span><span class="p">options</span><span class="p">: </span><span class="c">#&nbsp;Bag of options to control resource&#39;s behavior.</span>
 <span class="p"></span>
 </code></pre></div></div>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<div class="no-copy"><div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">resource</span> <span class="s2">&#34;example_foo&#34;</span> <span class="s2">&#34;name&#34;</span> <span class="p">{</span>
+<span class="c">    # resource properties</span>
+<span class="p">}</span></code></pre></div></div>
 </pulumi-choosable>
 </div>
 
@@ -227,7 +235,7 @@ Resources are created with functions called constructors. To learn more about de
 
 The following reference example uses placeholder values for all [input properties](#inputs).
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 
@@ -300,6 +308,41 @@ Question: pulumi.String("string"),
 Recursive: pulumi.Any(layeredType),
 },
 })
+```
+
+</pulumi-choosable>
+</div>
+
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+
+```hcl
+resource "example_foo" "fooResource" {
+  backup_kube_client_settings = {
+    burst    = 0
+    qps      = 0
+    rec_test = kubeClientSettings
+  }
+  argument             = "string"
+  kube_client_settings = kubeClientSettings
+  settings = {
+    other = {
+      required_arg = "string"
+      driver       = "string"
+      plugins_path = "string"
+    }
+    thinker = "string"
+    answer  = 0
+    plain_other = {
+      required_arg = "string"
+      driver       = "string"
+      plugins_path = "string"
+    }
+    question  = "string"
+    recursive = layeredType
+  }
+}
 ```
 
 </pulumi-choosable>
@@ -535,6 +578,44 @@ The Foo resource accepts the following [input](/docs/intro/concepts/inputs-outpu
 </div>
 
 <div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-required"
+            title="Required">
+        <span id="backup_kube_client_settings_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#backup_kube_client_settings_hcl" style="color: inherit; text-decoration: inherit;">backup_<wbr>kube_<wbr>client_<wbr>settings</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#kubeclientsettings">object</a></span>
+    </dt>
+    <dd>Options for tuning the Kubernetes client used by a Provider.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="argument_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#argument_hcl" style="color: inherit; text-decoration: inherit;">argument</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd></dd><dt class="property-optional"
+            title="Optional">
+        <span id="kube_client_settings_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#kube_client_settings_hcl" style="color: inherit; text-decoration: inherit;">kube_<wbr>client_<wbr>settings</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#kubeclientsettings">object</a></span>
+    </dt>
+    <dd>Options for tuning the Kubernetes client used by a Provider.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="settings_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#settings_hcl" style="color: inherit; text-decoration: inherit;">settings</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#layeredtype">object</a></span>
+    </dt>
+    <dd>describing things</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
 <pulumi-choosable type="language" values="java">
 <dl class="resources-properties"><dt class="property-required"
             title="Required">
@@ -738,6 +819,28 @@ All [input](#inputs) properties are implicitly available as output properties. A
 </div>
 
 <div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-"
+            title="">
+        <span id="id_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_hcl" style="color: inherit; text-decoration: inherit;">id</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>The provider-assigned unique ID for this managed resource.</dd><dt class="property-"
+            title="">
+        <span id="default_kube_client_settings_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#default_kube_client_settings_hcl" style="color: inherit; text-decoration: inherit;">default_<wbr>kube_<wbr>client_<wbr>settings</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#kubeclientsettings">object</a></span>
+    </dt>
+    <dd>A test for plain types</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
 <pulumi-choosable type="language" values="java">
 <dl class="resources-properties"><dt class="property-"
             title="">
@@ -893,6 +996,36 @@ BETA FEATURE - Options to configure the Helm Release resource.
             title="Optional">
         <span id="pluginspath_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#pluginspath_go" style="color: inherit; text-decoration: inherit;">Plugins<wbr>Path</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>The path to the helm plugins directory.</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-required"
+            title="Required">
+        <span id="required_arg_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#required_arg_hcl" style="color: inherit; text-decoration: inherit;">required_<wbr>arg</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>to test required args</dd><dt class="property-optional"
+            title="Optional">
+        <span id="driver_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#driver_hcl" style="color: inherit; text-decoration: inherit;">driver</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>The backend storage driver for Helm. Values are: configmap, secret, memory, sql.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="plugins_path_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#plugins_path_hcl" style="color: inherit; text-decoration: inherit;">plugins_<wbr>path</a>
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
@@ -1082,6 +1215,36 @@ Options for tuning the Kubernetes client used by a Provider.
 </span>
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#kubeclientsettings">Kube<wbr>Client<wbr>Settings</a></span>
+    </dt>
+    <dd></dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-optional"
+            title="Optional">
+        <span id="burst_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#burst_hcl" style="color: inherit; text-decoration: inherit;">burst</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">number</span>
+    </dt>
+    <dd>Maximum burst for throttle. Default value is 10.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="qps_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#qps_hcl" style="color: inherit; text-decoration: inherit;">qps</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">number</span>
+    </dt>
+    <dd>Maximum queries per second (QPS) to the API server from this client. Default value is 5.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="rec_test_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#rec_test_hcl" style="color: inherit; text-decoration: inherit;">rec_<wbr>test</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#kubeclientsettings">object</a></span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>
@@ -1316,6 +1479,60 @@ Make sure that defaults propagate through types
 </span>
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#layeredtype">Layered<wbr>Type</a></span>
+    </dt>
+    <dd></dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-required"
+            title="Required">
+        <span id="other_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#other_hcl" style="color: inherit; text-decoration: inherit;">other</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#helmreleasesettings">object</a></span>
+    </dt>
+    <dd></dd><dt class="property-required"
+            title="Required">
+        <span id="thinker_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#thinker_hcl" style="color: inherit; text-decoration: inherit;">thinker</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>To ask and answer</dd><dt class="property-optional"
+            title="Optional">
+        <span id="answer_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#answer_hcl" style="color: inherit; text-decoration: inherit;">answer</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">number</span>
+    </dt>
+    <dd>The answer to the question</dd><dt class="property-optional"
+            title="Optional">
+        <span id="plain_other_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#plain_other_hcl" style="color: inherit; text-decoration: inherit;">plain_<wbr>other</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#helmreleasesettings">object</a></span>
+    </dt>
+    <dd>Test how plain types interact</dd><dt class="property-optional"
+            title="Optional">
+        <span id="question_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#question_hcl" style="color: inherit; text-decoration: inherit;">question</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>The question already answered</dd><dt class="property-optional"
+            title="Optional">
+        <span id="recursive_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#recursive_hcl" style="color: inherit; text-decoration: inherit;">recursive</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#layeredtype">object</a></span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>

@@ -23,7 +23,7 @@ Resources are created with functions called constructors. To learn more about de
 
 ### Constructor syntax
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 
@@ -74,6 +74,14 @@ Resources are created with functions called constructors. To learn more about de
 <span class="p"></span><span class="p">options</span><span class="p">: </span><span class="c">#&nbsp;Bag of options to control resource&#39;s behavior.</span>
 <span class="p"></span>
 </code></pre></div></div>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<div class="no-copy"><div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">resource</span> <span class="s2">&#34;example_cat&#34;</span> <span class="s2">&#34;name&#34;</span> <span class="p">{</span>
+<span class="c">    # resource properties</span>
+<span class="p">}</span></code></pre></div></div>
 </pulumi-choosable>
 </div>
 
@@ -221,7 +229,7 @@ Resources are created with functions called constructors. To learn more about de
 
 The following reference example uses placeholder values for all [input properties](#inputs).
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 
@@ -241,6 +249,19 @@ var catResource = new Example.Cat("catResource");
 
 ```go
 example, err := example.NewCat(ctx, "catResource", nil)
+```
+
+</pulumi-choosable>
+</div>
+
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+
+```hcl
+resource "example_cat" "catResource" {
+  replace_on_changes = ["foes.*.associated.color", "foes.*.color", "friends[*].associated.color", "friends[*].color", "name", "toy.color"]
+}
 ```
 
 </pulumi-choosable>
@@ -317,6 +338,12 @@ The Cat resource accepts the following [input](/docs/intro/concepts/inputs-outpu
 
 <div>
 <pulumi-choosable type="language" values="go">
+<dl class="resources-properties"></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
 <dl class="resources-properties"></dl>
 </pulumi-choosable>
 </div>
@@ -455,6 +482,60 @@ All [input](#inputs) properties are implicitly available as output properties. A
 </span>
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#toy">Toy</a></span>
+    </dt>
+    <dd></dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-"
+            title="">
+        <span id="id_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_hcl" style="color: inherit; text-decoration: inherit;">id</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>The provider-assigned unique ID for this managed resource.</dd><dt class="property-"
+            title="">
+        <span id="foes_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#foes_hcl" style="color: inherit; text-decoration: inherit;">foes</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">map(object)</span>
+    </dt>
+    <dd></dd><dt class="property-"
+            title="">
+        <span id="friends_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#friends_hcl" style="color: inherit; text-decoration: inherit;">friends</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#toy">list(object)</a></span>
+    </dt>
+    <dd></dd><dt class="property- property-replacement"
+            title="">
+        <span id="name_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#name_hcl" style="color: inherit; text-decoration: inherit;">name</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd></dd><dt class="property-"
+            title="">
+        <span id="other_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#other_hcl" style="color: inherit; text-decoration: inherit;">other</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">example_<wbr>god</span>
+    </dt>
+    <dd></dd><dt class="property-"
+            title="">
+        <span id="toy_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#toy_hcl" style="color: inherit; text-decoration: inherit;">toy</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#toy">object</a></span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>
@@ -747,6 +828,36 @@ This is a toy
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">float64</span>
+    </dt>
+    <dd></dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-optional"
+            title="Optional">
+        <span id="associated_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#associated_hcl" style="color: inherit; text-decoration: inherit;">associated</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#toy">object</a></span>
+    </dt>
+    <dd></dd><dt class="property-optional property-replacement"
+            title="Optional">
+        <span id="color_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#color_hcl" style="color: inherit; text-decoration: inherit;">color</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd></dd><dt class="property-optional"
+            title="Optional">
+        <span id="wear_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#wear_hcl" style="color: inherit; text-decoration: inherit;">wear</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">number</span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>

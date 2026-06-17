@@ -258,7 +258,7 @@ function getDefaultExcludedKeywords() {
         "https://github.com/marketplace*",
 
         // API base URL referenced in the airbyte provider's upstream README; 401s without auth.
-        "https://api.airbyte.com/",
+        "https://api.airbyte.com/*",
     ];
 }
 

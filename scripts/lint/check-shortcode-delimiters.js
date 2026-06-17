@@ -70,7 +70,9 @@ function main() {
 
     const problems = [];
     for (const file of files) {
-        const hits = findMalformedShortcodeDelimiters(fs.readFileSync(file, "utf8"));
+        const hits = findMalformedShortcodeDelimiters(
+            fs.readFileSync(file, "utf8"),
+        );
         for (const hit of hits) {
             problems.push(`${file}:${hit.line}: ${hit.text}`);
         }

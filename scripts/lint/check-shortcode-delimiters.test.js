@@ -3,7 +3,9 @@
 
 const { test } = require("node:test");
 const assert = require("node:assert");
-const { findMalformedShortcodeDelimiters } = require("./check-shortcode-delimiters.js");
+const {
+    findMalformedShortcodeDelimiters,
+} = require("./check-shortcode-delimiters.js");
 
 test("flags a malformed opening chooser delimiter", () => {
     const content = 'intro\n\n{{ < chooser language "typescript" >}}\nbody\n';
@@ -14,15 +16,17 @@ test("flags a malformed opening chooser delimiter", () => {
 });
 
 test("flags a malformed opening choosable delimiter", () => {
-    const hits = findMalformedShortcodeDelimiters("{{ % choosable language go %}}\n");
+    const hits = findMalformedShortcodeDelimiters(
+        "{{ % choosable language go %}}\n",
+    );
     assert.strictEqual(hits.length, 1);
     assert.strictEqual(hits[0].line, 1);
 });
 
 test("flags multiple malformed delimiters with correct line numbers", () => {
     const content =
-        "{{< chooser language \"typescript\" >}}\n" +
-        "{{ < chooser language \"go\" >}}\n" +
+        '{{< chooser language "typescript" >}}\n' +
+        '{{ < chooser language "go" >}}\n' +
         "ok\n" +
         "{{ % choosable language python %}}\n";
     const hits = findMalformedShortcodeDelimiters(content);
@@ -43,7 +47,9 @@ test("does not flag well-formed delimiters", () => {
 
 test("does not flag a Go template expression in prose", () => {
     assert.deepStrictEqual(
-        findMalformedShortcodeDelimiters("Use {{ .Value }} in your template.\n"),
+        findMalformedShortcodeDelimiters(
+            "Use {{ .Value }} in your template.\n",
+        ),
         [],
     );
 });

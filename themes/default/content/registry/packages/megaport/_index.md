@@ -2120,8 +2120,8 @@ If your Pulumi configurations or API scripts rely on a location name or code tha
 
 Examples:
 
-{{ < chooser language "typescript,python,go,csharp,java,yaml" >}}
-{{ % choosable language typescript %}}
+{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{% choosable language typescript %}}
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
 import * as megaport from "@pulumi/megaport";

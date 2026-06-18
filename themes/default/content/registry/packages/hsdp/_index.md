@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/philips-software/hsdp/1.2.2/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/philips-software/hsdp/1.3.1/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Hsdp Provider
@@ -259,9 +259,6 @@ arguments in its provider configuration. The following environment variables are
 |------------------------------|---------------------|----------|-------------|
 | HSDP_REGION                  | region              | Optional | us-east     |
 | HSDP_ENVIRONMENT             | environment         | Optional | client-test |
-| HSDP_CARTEL_HOST             | cartelHost         | Optional |             |
-| HSDP_CARTEL_SECRET           | cartelSecret       | Optional |             |
-| HSDP_CARTEL_TOKEN            | cartelToken        | Optional |             |
 | HSDP_IAM_SERVICE_ID          | serviceId          | Optional |             |
 | HSDP_IAM_SERVICE_PRIVATE_KEY | servicePrivateKey | Optional |             |
 | HSDP_IAM_ORG_ADMIN_USERNAME  | orgAdminUsername  | Optional |             |
@@ -283,7 +280,6 @@ In addition to generic provider arguments (e.g. alias and version), the followin
 * `credentials` - (Optional) Can point to a JSON file containing values for all fields here
 * `iamUrl` - (Optional) IAM API endpoint. Auto-discovered from region and environment.
 * `idmUrl` - (Optional) IDM API endpoint Auto-discovered from region and environment.
-* `notificationUrl` - (Optional) Notification service URL. Auto-discovered from region and environment.
 * `oauth2ClientId` - (Optional) The OAuth2 client ID as provided by HSDP
 * `oauth2Password` - (Optional) The OAuth2 password as provided by HSDP
 * `serviceId` - (Optional) The service ID to use for IAM org admin operations (conflicts with: `orgAdminUsername`)
@@ -296,9 +292,6 @@ In addition to generic provider arguments (e.g. alias and version), the followin
 * `mdmUrl` - (Optional) The base URL of the MDM service. Auto-discovered from region and environment.
 * `sharedKey` - (Optional) The shared key as provided by HSDP. Actions which require API signing will not work if this value is missing.
 * `secretKey` - (Optional) The secret key as provided by HSDP. Actions which require API signing will not work if this value is missing.
-* `cartelHost` - (Optional) The cartel host as provided by HSDP. Auto-discovered from region.
-* `cartelToken` - (Optional) The cartel token as provided by HSDP.
-* `cartelSecret` - (Optional) The cartel secret as provided by HSDP.
 * `retryMax` - (Optional) Integer, when > 0 will use a retry-able HTTP client and retry requests when applicable.
 * `debugLog` - (Optional) If set to a path, when debug is enabled outputs details to this file
 * `debugStderr` - (Optional) If set to true sends debug logs to `stderr`

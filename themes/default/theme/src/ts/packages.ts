@@ -10,19 +10,27 @@ const filterByTextAndTags = (filters, filterText) => {
     const noSelectedType = filters.find(f => f.group === "type") === undefined;
     const noSelectedCategory = filters.find(f => f.group === "category") === undefined;
 
-    if (filters.length > 0 || filterText) {
-        packages.forEach(pkg => pkg.classList.add("hidden"));
+    // "Deprecated" is a value in the type filter group. Deprecated packages stay
+    // hidden unless that option is selected.
+    const showDeprecated = !!filters.find(f => f.group === "type" && f.value === "deprecated");
 
-        packages.forEach(pkg => {
+    packages.forEach(pkg => pkg.classList.add("hidden"));
+
+    packages.forEach(pkg => {
             const el = pkg.querySelector("[data-category]") as HTMLElement;
             if (!el) return;
+
+            const packageIsDeprecated = el.getAttribute("data-deprecated") === "true";
+            if (packageIsDeprecated && !showDeprecated) return;
 
             const packageType = el.getAttribute("data-type");
             const packageCategory = el.getAttribute("data-category");
             let packageIsNative = packageType === "native-provider";
 
+            // A deprecated package that reaches this point was explicitly requested
+            // via the "Deprecated" type option, so treat it as a type match.
             const packageHasSelectedType =
-                !!filters.find(f => f.group === "type" && f.value === packageType) || (filters.find(f => f.group === "type" && f.value === "provider") && packageIsNative);
+                packageIsDeprecated || !!filters.find(f => f.group === "type" && f.value === packageType) || (filters.find(f => f.group === "type" && f.value === "provider") && packageIsNative);
             const packageHasSelectedCategory = !!filters.find(f => f.group === "category" && f.value === packageCategory);
 
             const packageTitle = el.getAttribute("data-title");
@@ -49,11 +57,34 @@ const filterByTextAndTags = (filters, filterText) => {
             if ((packageHasSelectedType || noSelectedType) && (packageHasSelectedCategory || noSelectedCategory) && (!filterText || packageIsAMatch)) {
                 pkg.classList.remove("hidden");
             }
-        });
-    } else {
-        packages.forEach(pkg => pkg.classList.remove("hidden"));
-    }
+    });
 }
+
+// Reads the currently active filter tags from the DOM.
+const getActiveFilters = () => {
+    const filters = [];
+    document.querySelectorAll("ul.active-tags li").forEach(tag => {
+        filters.push({
+            group: tag.getAttribute("data-filter-group"),
+            value: tag.getAttribute("data-filter-value"),
+            label: tag.getAttribute("data-filter-label"),
+        });
+    });
+    return filters;
+};
+
+// Reads the current free-text filter value from the search input.
+const getActiveFilterText = () => {
+    const searchElement = document.querySelector("pulumi-registry-list-search") as any;
+    const inputElement = searchElement?.querySelector(".registry-filter-input") as HTMLInputElement;
+    return inputElement?.value || "";
+};
+
+// Refreshes the visible-package count badges.
+const updateAllCount = () => {
+    const allCount = document.querySelectorAll(".all-packages .package:not(.hidden)").length;
+    document.querySelectorAll(".all-count").forEach(el => el.textContent = String(allCount));
+};
 
 document.querySelector(".section-registry")?.addEventListener("filterSelect", (event: CustomEvent) => {
     const source: any = event.target;
@@ -133,6 +164,11 @@ document.querySelector(".section-registry")?.addEventListener("packageSearch", (
     const allCount = document.querySelectorAll(".all-packages .package:not(.hidden)").length;
     document.querySelectorAll(".all-count").forEach(el => el.textContent = String(allCount));
 });
+
+// Apply the default filtering on initial load so deprecated packages start hidden,
+// and sync the count badges.
+filterByTextAndTags(getActiveFilters(), getActiveFilterText());
+updateAllCount();
 
 
 document.addEventListener("DOMContentLoaded", function () {

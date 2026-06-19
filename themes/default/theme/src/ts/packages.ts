@@ -124,8 +124,7 @@ document.querySelector(".section-registry")?.addEventListener("filterSelect", (e
         el.setAttribute("data-selected-categories", selectedCategories);
     });
 
-    const allCount = document.querySelectorAll(".all-packages .package:not(.hidden)").length;
-    document.querySelectorAll(".all-count").forEach(el => el.textContent = String(allCount));
+    updateAllCount();
 
     document.querySelectorAll("pulumi-filter-select-option-group").forEach((el: any) => el.close());
 });
@@ -141,8 +140,7 @@ document.querySelector(".section-registry .no-results .reset")?.addEventListener
 
     filterByTextAndTags([], "");
 
-    const allCount = document.querySelectorAll(".all-packages .package:not(.hidden)").length;
-    document.querySelectorAll(".all-count").forEach(el => el.textContent = String(allCount));
+    updateAllCount();
 });
 
 document.querySelector(".section-registry")?.addEventListener("packageSearch", (event: CustomEvent) => {
@@ -161,8 +159,7 @@ document.querySelector(".section-registry")?.addEventListener("packageSearch", (
 
     filterByTextAndTags(filters, filterText);
 
-    const allCount = document.querySelectorAll(".all-packages .package:not(.hidden)").length;
-    document.querySelectorAll(".all-count").forEach(el => el.textContent = String(allCount));
+    updateAllCount();
 });
 
 // Apply the default filtering on initial load so deprecated packages start hidden,

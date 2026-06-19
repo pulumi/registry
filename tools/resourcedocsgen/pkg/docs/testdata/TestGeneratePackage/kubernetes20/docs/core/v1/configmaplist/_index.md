@@ -476,7 +476,7 @@ resource "kubernetes_core_v1_configmaplist" "configMapListResource" {
 
 ```java
 var configMapListResource = new ConfigMapList("configMapListResource", ConfigMapListArgs.builder()
-    .items(ConfigMapArgs.builder()
+    .items(com.pulumi.kubernetes.core_v1.inputs.ConfigMapArgs.builder()
         .apiVersion("v1")
         .binaryData(Map.of("string", "string"))
         .data(Map.of("string", "string"))

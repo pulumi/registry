@@ -17,6 +17,7 @@ package docs
 import (
 	"encoding/json"
 	"fmt"
+	"log/slog"
 	"os"
 	"strings"
 
@@ -49,17 +50,86 @@ func getPulumiPackageFromSchema(
 		AllowDanglingReferences: true,
 	})
 	if err != nil {
-		if dErr, ok := err.(hcl.Diagnostics); ok {
-			writer := hcl.NewDiagnosticTextWriter(os.Stderr, nil, 80, true)
-			wErr := writer.WriteDiagnostics(dErr)
-			if wErr != nil {
-				err = wErr
+		if pkg, ok := bindGoogleNativeToleratingCycles(mainSpec, err); ok {
+			pulPkg = pkg
+		} else {
+			if dErr, ok := err.(hcl.Diagnostics); ok {
+				writer := hcl.NewDiagnosticTextWriter(os.Stderr, nil, 80, true)
+				wErr := writer.WriteDiagnostics(dErr)
+				if wErr != nil {
+					err = wErr
+				}
 			}
+			return nil, nil, fmt.Errorf("importing package spec: %w", err)
 		}
-		return nil, nil, fmt.Errorf("importing package spec: %w", err)
 	}
 
 	return pulPkg, docs.NewContext(tool, pulPkg), nil
+}
+
+// requiredCycleErrSummary is the fragment pulumi's schema binder puts in the
+// diagnostic summary for an unsatisfiable required-property cycle.
+const requiredCycleErrSummary = "unsatisfiable required-property cycle"
+
+// bindGoogleNativeToleratingCycles is a targeted workaround for the google-native
+// provider. As of pulumi/pulumi v3.237+ the schema binder rejects schemas with
+// "unsatisfiable required-property cycles" — a required property whose type
+// transitively requires itself, describing a value of infinite size (e.g.
+// google-native's bigquery/v2:StandardSqlDataTypeResponse referencing itself).
+// This is correct for SDK generation but fires even in ImportSpec, which docs
+// generation uses to load already-published schemas. google-native is archived
+// (last released v0.32.0 in 2023), so its schema will never be fixed upstream
+// (see pulumi/pulumi#22890 and pulumi/pulumi-google-native#1246).
+//
+// Such cycles only prevent *constructing* a value; they are harmless for
+// documenting types. So for google-native specifically — and only when every
+// binding error is one of these cycles — we re-bind with BindSpec, which (unlike
+// ImportSpec) returns a usable package alongside the non-fatal diagnostics, and
+// continue generating docs. Any other error, or any other package, is left to
+// fail as before so we never silently mask real schema problems.
+func bindGoogleNativeToleratingCycles(
+	spec pschema.PackageSpec, importErr error,
+) (*pschema.Package, bool) {
+	if spec.Name != "google-native" {
+		return nil, false
+	}
+	if !onlyRequiredCycleErrors(importErr) {
+		return nil, false
+	}
+
+	pkg, diags, err := pschema.BindSpec(spec, nil, pschema.ValidationOptions{
+		AllowDanglingReferences: true,
+	})
+	// BindSpec runs metaschema validation that ImportSpec skips; bail out if it
+	// surfaces anything beyond the expected required-property cycles.
+	if err != nil || pkg == nil || !onlyRequiredCycleErrors(diags) {
+		return nil, false
+	}
+
+	slog.Warn("Tolerating unsatisfiable required-property cycles in schema; generating docs anyway",
+		"package", spec.Name)
+	return pkg, true
+}
+
+// onlyRequiredCycleErrors reports whether every error-severity diagnostic in the
+// given value (an error returned by ImportSpec or an hcl.Diagnostics) is an
+// unsatisfiable required-property cycle.
+func onlyRequiredCycleErrors(v any) bool {
+	diags, ok := v.(hcl.Diagnostics)
+	if !ok {
+		return false
+	}
+	sawError := false
+	for _, d := range diags {
+		if d.Severity != hcl.DiagError {
+			continue
+		}
+		sawError = true
+		if !strings.Contains(d.Summary, requiredCycleErrSummary) {
+			return false
+		}
+	}
+	return sawError
 }
 
 func ResourceDocsCmd() *cobra.Command {

@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/redpanda-data/redpanda/2.0.0/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/redpanda-data/redpanda/2.1.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Redpanda Provider
@@ -494,6 +494,28 @@ const productSchema = new redpanda.Schema("product_schema", {
         writeRegistry,
     ],
 });
+const protobufRoundtrip = new redpanda.Schema("protobuf_roundtrip", {
+    clusterId: testCluster.id,
+    subject: `${topicName}-protobuf-value`,
+    schemaType: "PROTOBUF",
+    schema: protobufSchemaDefinition,
+    references: [],
+    allowDeletion: true,
+}, {
+    dependsOn: [
+        clusterAdmin,
+        schemaRegistryAdmin,
+        clusterAction,
+        topicAccess,
+        providerBootstrapSubject,
+        providerBootstrapRegistry,
+        allTestTopic,
+        describeRegistry,
+        alterConfigsRegistry,
+        readRegistry,
+        writeRegistry,
+    ],
+});
 const developer = new redpanda.Role("developer", {
     name: roleName,
     clusterApiUrl: testCluster.clusterApiUrl,
@@ -828,6 +850,26 @@ product_schema = redpanda.Schema("product_schema",
     schema_type=schema_type,
     schema=product_schema_definition,
     compatibility=compatibility_level,
+    allow_deletion=True,
+    opts = pulumi.ResourceOptions(depends_on=[
+            cluster_admin,
+            schema_registry_admin,
+            cluster_action,
+            topic_access,
+            provider_bootstrap_subject,
+            provider_bootstrap_registry,
+            all_test_topic,
+            describe_registry,
+            alter_configs_registry,
+            read_registry,
+            write_registry,
+        ]))
+protobuf_roundtrip = redpanda.Schema("protobuf_roundtrip",
+    cluster_id=test_cluster.id,
+    subject=f"{topic_name}-protobuf-value",
+    schema_type="PROTOBUF",
+    schema=protobuf_schema_definition,
+    references=[],
     allow_deletion=True,
     opts = pulumi.ResourceOptions(depends_on=[
             cluster_admin,
@@ -1265,6 +1307,32 @@ return await Deployment.RunAsync(() =>
         SchemaType = schemaType,
         Schema = productSchemaDefinition,
         Compatibility = compatibilityLevel,
+        AllowDeletion = true,
+    }, new CustomResourceOptions
+    {
+        DependsOn =
+        {
+            clusterAdmin,
+            schemaRegistryAdmin,
+            clusterAction,
+            topicAccess,
+            providerBootstrapSubject,
+            providerBootstrapRegistry,
+            allTestTopic,
+            describeRegistry,
+            alterConfigsRegistry,
+            readRegistry,
+            writeRegistry,
+        },
+    });
+
+    var protobufRoundtrip = new Redpanda.Schema("protobuf_roundtrip", new()
+    {
+        ClusterId = testCluster.Id,
+        Subject = $"{topicName}-protobuf-value",
+        SchemaType = "PROTOBUF",
+        Schema = protobufSchemaDefinition,
+        References = new[] {},
         AllowDeletion = true,
     }, new CustomResourceOptions
     {
@@ -1773,6 +1841,29 @@ func main() {
 		if err != nil {
 			return err
 		}
+		_, err = redpanda.NewSchema(ctx, "protobuf_roundtrip", &redpanda.SchemaArgs{
+			ClusterId:     testCluster.ID(),
+			Subject:       pulumi.Sprintf("%v-protobuf-value", topicName),
+			SchemaType:    pulumi.String("PROTOBUF"),
+			Schema:        pulumi.Any(protobufSchemaDefinition),
+			References:    redpanda.SchemaReferenceArray{},
+			AllowDeletion: pulumi.Bool(true),
+		}, pulumi.DependsOn([]pulumi.Resource{
+			clusterAdmin,
+			schemaRegistryAdmin,
+			clusterAction,
+			topicAccess,
+			providerBootstrapSubject,
+			providerBootstrapRegistry,
+			allTestTopic,
+			describeRegistry,
+			alterConfigsRegistry,
+			readRegistry,
+			writeRegistry,
+		}))
+		if err != nil {
+			return err
+		}
 		developer, err := redpanda.NewRole(ctx, "developer", &redpanda.RoleArgs{
 			Name:          pulumi.Any(roleName),
 			ClusterApiUrl: testCluster.ClusterApiUrl,
@@ -2237,6 +2328,28 @@ public class App {
                     writeRegistry)
                 .build());
 
+        var protobufRoundtrip = new Schema("protobufRoundtrip", SchemaArgs.builder()
+            .clusterId(testCluster.id())
+            .subject(String.format("%s-protobuf-value", topicName))
+            .schemaType("PROTOBUF")
+            .schema(protobufSchemaDefinition)
+            .references()
+            .allowDeletion(true)
+            .build(), CustomResourceOptions.builder()
+                .dependsOn(
+                    clusterAdmin,
+                    schemaRegistryAdmin,
+                    clusterAction,
+                    topicAccess,
+                    providerBootstrapSubject,
+                    providerBootstrapRegistry,
+                    allTestTopic,
+                    describeRegistry,
+                    alterConfigsRegistry,
+                    readRegistry,
+                    writeRegistry)
+                .build());
+
         var developer = new Role("developer", RoleArgs.builder()
             .name(roleName)
             .clusterApiUrl(testCluster.clusterApiUrl())
@@ -2613,6 +2726,28 @@ const productSchema = new redpanda.Schema("product_schema", {
         writeRegistry,
     ],
 });
+const protobufRoundtrip = new redpanda.Schema("protobuf_roundtrip", {
+    clusterId: testCluster.id,
+    subject: `${topicName}-protobuf-value`,
+    schemaType: "PROTOBUF",
+    schema: protobufSchemaDefinition,
+    references: [],
+    allowDeletion: true,
+}, {
+    dependsOn: [
+        clusterAdmin,
+        schemaRegistryAdmin,
+        clusterAction,
+        topicAccess,
+        providerBootstrapSubject,
+        providerBootstrapRegistry,
+        allTestTopic,
+        describeRegistry,
+        alterConfigsRegistry,
+        readRegistry,
+        writeRegistry,
+    ],
+});
 const developer = new redpanda.Role("developer", {
     name: roleName,
     clusterApiUrl: testCluster.clusterApiUrl,
@@ -2956,6 +3091,26 @@ product_schema = redpanda.Schema("product_schema",
     schema_type=schema_type,
     schema=product_schema_definition,
     compatibility=compatibility_level,
+    allow_deletion=True,
+    opts = pulumi.ResourceOptions(depends_on=[
+            cluster_admin,
+            schema_registry_admin,
+            cluster_action,
+            topic_access,
+            provider_bootstrap_subject,
+            provider_bootstrap_registry,
+            all_test_topic,
+            describe_registry,
+            alter_configs_registry,
+            read_registry,
+            write_registry,
+        ]))
+protobuf_roundtrip = redpanda.Schema("protobuf_roundtrip",
+    cluster_id=test_cluster.id,
+    subject=f"{topic_name}-protobuf-value",
+    schema_type="PROTOBUF",
+    schema=protobuf_schema_definition,
+    references=[],
     allow_deletion=True,
     opts = pulumi.ResourceOptions(depends_on=[
             cluster_admin,
@@ -3400,6 +3555,32 @@ return await Deployment.RunAsync(() =>
         SchemaType = schemaType,
         Schema = productSchemaDefinition,
         Compatibility = compatibilityLevel,
+        AllowDeletion = true,
+    }, new CustomResourceOptions
+    {
+        DependsOn =
+        {
+            clusterAdmin,
+            schemaRegistryAdmin,
+            clusterAction,
+            topicAccess,
+            providerBootstrapSubject,
+            providerBootstrapRegistry,
+            allTestTopic,
+            describeRegistry,
+            alterConfigsRegistry,
+            readRegistry,
+            writeRegistry,
+        },
+    });
+
+    var protobufRoundtrip = new Redpanda.Schema("protobuf_roundtrip", new()
+    {
+        ClusterId = testCluster.Id,
+        Subject = $"{topicName}-protobuf-value",
+        SchemaType = "PROTOBUF",
+        Schema = protobufSchemaDefinition,
+        References = new[] {},
         AllowDeletion = true,
     }, new CustomResourceOptions
     {
@@ -3915,6 +4096,29 @@ func main() {
 		if err != nil {
 			return err
 		}
+		_, err = redpanda.NewSchema(ctx, "protobuf_roundtrip", &redpanda.SchemaArgs{
+			ClusterId:     testCluster.ID(),
+			Subject:       pulumi.Sprintf("%v-protobuf-value", topicName),
+			SchemaType:    pulumi.String("PROTOBUF"),
+			Schema:        pulumi.Any(protobufSchemaDefinition),
+			References:    redpanda.SchemaReferenceArray{},
+			AllowDeletion: pulumi.Bool(true),
+		}, pulumi.DependsOn([]pulumi.Resource{
+			clusterAdmin,
+			schemaRegistryAdmin,
+			clusterAction,
+			topicAccess,
+			providerBootstrapSubject,
+			providerBootstrapRegistry,
+			allTestTopic,
+			describeRegistry,
+			alterConfigsRegistry,
+			readRegistry,
+			writeRegistry,
+		}))
+		if err != nil {
+			return err
+		}
 		developer, err := redpanda.NewRole(ctx, "developer", &redpanda.RoleArgs{
 			Name:          pulumi.Any(roleName),
 			ClusterApiUrl: testCluster.ClusterApiUrl,
@@ -4375,6 +4579,28 @@ public class App {
             .schemaType(schemaType)
             .schema(productSchemaDefinition)
             .compatibility(compatibilityLevel)
+            .allowDeletion(true)
+            .build(), CustomResourceOptions.builder()
+                .dependsOn(
+                    clusterAdmin,
+                    schemaRegistryAdmin,
+                    clusterAction,
+                    topicAccess,
+                    providerBootstrapSubject,
+                    providerBootstrapRegistry,
+                    allTestTopic,
+                    describeRegistry,
+                    alterConfigsRegistry,
+                    readRegistry,
+                    writeRegistry)
+                .build());
+
+        var protobufRoundtrip = new Schema("protobufRoundtrip", SchemaArgs.builder()
+            .clusterId(testCluster.id())
+            .subject(String.format("%s-protobuf-value", topicName))
+            .schemaType("PROTOBUF")
+            .schema(protobufSchemaDefinition)
+            .references()
             .allowDeletion(true)
             .build(), CustomResourceOptions.builder()
                 .dependsOn(

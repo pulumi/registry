@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-alicloud/v3.103.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-alicloud/v3.104.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-alicloud/blob/v3.103.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-alicloud/blob/v3.104.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Alibaba Cloud Provider
 meta_desc: Provides an overview on how to configure the Pulumi Alibaba Cloud provider.
@@ -309,7 +309,7 @@ return err
 }
 // Create a new ECS instance for VPC
 vpc2, err := vpc.NewNetwork(ctx, "vpc", &vpc.NetworkArgs{
-VpcName: pulumi.String(pulumi.String(name)),
+VpcName: pulumi.String(name),
 CidrBlock: pulumi.String("172.16.0.0/16"),
 })
 if err != nil {
@@ -318,15 +318,15 @@ return err
 vswitch, err := vpc.NewSwitch(ctx, "vswitch", &vpc.SwitchArgs{
 VpcId: vpc2.ID(),
 CidrBlock: pulumi.String("172.16.0.0/24"),
-ZoneId: pulumi.String(pulumi.String(_default.Zones[0].Id)),
-VswitchName: pulumi.String(pulumi.String(name)),
+ZoneId: pulumi.String(_default.Zones[0].Id),
+VswitchName: pulumi.String(name),
 })
 if err != nil {
 return err
 }
 // Create a new Security in a VPC
 group, err := ecs.NewSecurityGroup(ctx, "group", &ecs.SecurityGroupArgs{
-Name: pulumi.String(pulumi.String(name)),
+Name: pulumi.String(name),
 Description: pulumi.String("foo"),
 VpcId: vpc2.ID(),
 })
@@ -347,14 +347,14 @@ for _, val0 := range %!v(PANIC=Format method: fatal: An assertion has failed: to
 splat0 = append(splat0, val0.ID())
 }
 _, err = ecs.NewInstance(ctx, "instance", &ecs.InstanceArgs{
-AvailabilityZone: pulumi.String(pulumi.String(_default.Zones[0].Id)),
+AvailabilityZone: pulumi.String(_default.Zones[0].Id),
 SecurityGroups: splat0,
 InstanceType: pulumi.String("ecs.n4.large"),
 SystemDiskCategory: pulumi.String("cloud_efficiency"),
-SystemDiskName: pulumi.String(pulumi.String(name)),
+SystemDiskName: pulumi.String(name),
 SystemDiskDescription: pulumi.String("system_disk_description"),
 ImageId: pulumi.String("ubuntu_18_04_64_20G_alibase_20190624.vhd"),
-InstanceName: pulumi.String(pulumi.String(name)),
+InstanceName: pulumi.String(name),
 VswitchId: vswitch.ID(),
 InternetMaxBandwidthOut: pulumi.Int(10),
 DataDisks: ecs.InstanceDataDiskArray{

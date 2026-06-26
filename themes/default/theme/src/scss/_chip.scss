@@ -35,11 +35,6 @@
     }
 
     // Color variants
-    &.chip-purple {
-        &.chip-outline { @apply border-purple-800 text-purple-800; }
-        &.chip-filled { @apply bg-purple-200 text-purple-800; }
-    }
-
     &.chip-violet {
         &.chip-outline { @apply border-violet-800 text-violet-800; }
         &.chip-filled { @apply bg-violet-200 text-violet-800; }
@@ -48,16 +43,6 @@
     &.chip-blue {
         &.chip-outline { @apply border-blue-800 text-blue-800; }
         &.chip-filled { @apply bg-blue-200 text-blue-800; }
-    }
-
-    &.chip-fuchsia {
-        &.chip-outline { @apply border-fuchsia-800 text-fuchsia-800; }
-        &.chip-filled { @apply bg-fuchsia-200 text-fuchsia-800; }
-    }
-
-    &.chip-salmon {
-        &.chip-outline { @apply border-salmon-800 text-salmon-800; }
-        &.chip-filled { @apply bg-salmon-200 text-salmon-800; }
     }
 
     &.chip-orange {

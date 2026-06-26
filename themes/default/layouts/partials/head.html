@@ -22,7 +22,18 @@
 
     <!-- Preload critical fonts. -->
     <link rel="preload" href="/fonts/inter-regular.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/fonts/gilroy-bold.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/inter-semibold.woff2" as="font" type="font/woff2" crossorigin />
+
+    {{- /* Sets <html class="is-signed-in"> before first paint when the auth
+           cookie is present, so the header's Sign-in -> Dashboard swap doesn't
+           cause layout shift for logged-in users. Paired with CSS in main.scss. */ -}}
+    <script>
+      try {
+        var c = document.cookie.split("; ").find(function (s) { return s.indexOf("pulumi_web_user_info=") === 0; });
+        var v = c ? JSON.parse(decodeURIComponent(c.slice(c.indexOf("=") + 1)).slice(2)) : null;
+        if (v && v.userId) document.documentElement.classList.add("is-signed-in");
+      } catch (e) {}
+    </script>
 
     <!-- Our CSS and JS bundles. -->
     {{ partial "assets" . }}

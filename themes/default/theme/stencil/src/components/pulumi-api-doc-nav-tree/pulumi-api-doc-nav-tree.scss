@@ -62,17 +62,16 @@ $base-ch-width-xl: 24ch;
 $base-ch-width-l: 12ch;
 
 .nav-tree-item {
-    
     a {
         height: 100%;
         display: flex;
         align-items: center;
         text-decoration: none;
-        color: map-get($gray, 900);
         max-width: 24ch;
+        color: var(--color-gray-800);
 
         &:hover {
-            text-decoration: underline;
+            color: var(--color-service-black);
         }
     }
 
@@ -132,16 +131,16 @@ details {
             background-color: #f9f9f9;
         }
 
-        &.is-link:hover {
-            text-decoration: underline;
-        }
-
-         &[data-selected="true"] {
-            background-color: #e0e0e0;
+        &[data-selected="true"] {
+            background-color: var(--color-violet-100);
+            color: var(--color-service-black);
             font-weight: bold;
 
-            a:hover {
-                text-decoration: none;
+            a {
+                color: var(--color-service-black);
+                &:hover {
+                    color: var(--color-service-black);
+                }
             }
         }
 
@@ -156,10 +155,13 @@ details {
 
     &[data-expandable] {
         > summary::before {
-            font-family: "Font Awesome 5 Free";
-            font-weight: 900;
-            content: "\f0da";
+            content: "";
             display: inline-block;
+            width: 0;
+            height: 0;
+            border-top: 4px solid transparent;
+            border-bottom: 4px solid transparent;
+            border-left: 6px solid currentColor;
             cursor: none;
             visibility: hidden;
         }

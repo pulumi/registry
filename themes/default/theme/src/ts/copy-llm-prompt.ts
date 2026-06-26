@@ -79,7 +79,11 @@ const writeToClipboard = async (text: string): Promise<boolean> => {
 
 const bindCopyButton = (copyButton: HTMLButtonElement, prompt: string) => {
     const label = copyButton.querySelector<HTMLElement>(".copy-llm-prompt__item-label");
-    const icon = copyButton.querySelector<HTMLElement>(".copy-llm-prompt__item-icon i");
+    // Icon is now an SVG sprite reference (<svg><use href="…#p-copy-regular"/></svg>).
+    // Swap the symbol id between p-copy-regular and p-check-regular to flip the glyph.
+    const iconUse = copyButton.querySelector<SVGUseElement>(".copy-llm-prompt__item-icon svg use");
+    const originalHref = iconUse?.getAttribute("href") ?? "";
+    const checkHref = originalHref.replace(/#p-copy-/, "#p-check-");
     const originalLabel = label?.textContent ?? "";
 
     copyButton.addEventListener("click", async () => {
@@ -87,11 +91,11 @@ const bindCopyButton = (copyButton: HTMLButtonElement, prompt: string) => {
         if (!ok) return;
 
         if (label) label.textContent = "Copied!";
-        icon?.classList.replace("fa-copy", "fa-check");
+        if (iconUse && checkHref !== originalHref) iconUse.setAttribute("href", checkHref);
 
         setTimeout(() => {
             if (label) label.textContent = originalLabel;
-            icon?.classList.replace("fa-check", "fa-copy");
+            if (iconUse) iconUse.setAttribute("href", originalHref);
         }, 2000);
     });
 };

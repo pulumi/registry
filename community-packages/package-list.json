@@ -375,6 +375,14 @@
     {
       "repoSlug": "DefangLabs/pulumi-defang",
       "schemaFile": "provider/cmd/pulumi-resource-defang-azure/schema.json"
+    },
+    {
+      "repoSlug": "johnneerdael/pulumi-netskope-publisher",
+      "schemaFile": "schema.json"
+    },
+    {
+      "repoSlug": "rpothin/pulumi-powerplatform",
+      "schemaFile": "schema.json"
     }
   ]
 }

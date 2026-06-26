@@ -1,7 +1,7 @@
 <!--
-  This partial contains the tags to include the JS and CSS assets for the website.
-  You will need to include this partial in head of pages you want the CSS styles and/or
-  JS components.
+  Loads the JS and CSS bundle for /registry pages. This site only serves
+  /registry; the homepage redirects to /registry, and all marketing/blog
+  styles have been removed.
 -->
 
 {{ $manifest := .Site.Data.asset_manifest }}
@@ -9,23 +9,9 @@
   {{ errorf "Asset manifest not found. Run 'make build-assets' before 'make serve'." }}
 {{ end }}
 
-<script src="{{ index $manifest "bundle.js" }}" defer></script>
-
-<!--
-  Our marketing styles diverge a bit from the other parts of the website so we load
-  in a different bundle on our marketing pages.
--->
 {{- $bundleId := getenv "ASSET_BUNDLE_ID" -}}
 
-{{ $nonMarketingSections := slice "docs" "registry" "blog" "learn" "templates" "ai" "authors" "tags" "legal" }}
-{{ if in $nonMarketingSections .Section }}
-{{ else }}
-    {{- if $bundleId -}}
-        <link rel="stylesheet" href="/registry/css/marketing-registry.{{ $bundleId }}.css">
-    {{- else -}}
-        <link rel="stylesheet" href="{{ index $manifest "marketing.css" }}">
-    {{- end }}
-{{ end }}
+<script src="{{ index $manifest "bundle.js" }}" defer></script>
 
 {{- if $bundleId -}}
     <link rel="stylesheet" href="/registry/css/bundle-registry.{{ $bundleId }}.css">

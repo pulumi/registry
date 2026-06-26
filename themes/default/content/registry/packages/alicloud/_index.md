@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-alicloud/v3.102.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-alicloud/v3.104.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-alicloud/blob/v3.102.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-alicloud/blob/v3.104.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Alibaba Cloud Provider
 meta_desc: Provides an overview on how to configure the Pulumi Alibaba Cloud provider.
@@ -33,7 +33,7 @@ with the proper credentials before it can be used.
 Use the navigation on the left to read about the available resources.
 ## Example Usage
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
@@ -309,7 +309,7 @@ return err
 }
 // Create a new ECS instance for VPC
 vpc2, err := vpc.NewNetwork(ctx, "vpc", &vpc.NetworkArgs{
-VpcName: pulumi.String(pulumi.String(name)),
+VpcName: pulumi.String(name),
 CidrBlock: pulumi.String("172.16.0.0/16"),
 })
 if err != nil {
@@ -318,15 +318,15 @@ return err
 vswitch, err := vpc.NewSwitch(ctx, "vswitch", &vpc.SwitchArgs{
 VpcId: vpc2.ID(),
 CidrBlock: pulumi.String("172.16.0.0/24"),
-ZoneId: pulumi.String(pulumi.String(_default.Zones[0].Id)),
-VswitchName: pulumi.String(pulumi.String(name)),
+ZoneId: pulumi.String(_default.Zones[0].Id),
+VswitchName: pulumi.String(name),
 })
 if err != nil {
 return err
 }
 // Create a new Security in a VPC
 group, err := ecs.NewSecurityGroup(ctx, "group", &ecs.SecurityGroupArgs{
-Name: pulumi.String(pulumi.String(name)),
+Name: pulumi.String(name),
 Description: pulumi.String("foo"),
 VpcId: vpc2.ID(),
 })
@@ -347,14 +347,14 @@ for _, val0 := range %!v(PANIC=Format method: fatal: An assertion has failed: to
 splat0 = append(splat0, val0.ID())
 }
 _, err = ecs.NewInstance(ctx, "instance", &ecs.InstanceArgs{
-AvailabilityZone: pulumi.String(pulumi.String(_default.Zones[0].Id)),
+AvailabilityZone: pulumi.String(_default.Zones[0].Id),
 SecurityGroups: splat0,
 InstanceType: pulumi.String("ecs.n4.large"),
 SystemDiskCategory: pulumi.String("cloud_efficiency"),
-SystemDiskName: pulumi.String(pulumi.String(name)),
+SystemDiskName: pulumi.String(name),
 SystemDiskDescription: pulumi.String("system_disk_description"),
 ImageId: pulumi.String("ubuntu_18_04_64_20G_alibase_20190624.vhd"),
-InstanceName: pulumi.String(pulumi.String(name)),
+InstanceName: pulumi.String(name),
 VswitchId: vswitch.ID(),
 InternetMaxBandwidthOut: pulumi.Int(10),
 DataDisks: ecs.InstanceDataDiskArray{
@@ -500,6 +500,71 @@ public class App {
             .build());
 
     }
+}
+```
+
+{{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+pulumi {
+  required_providers {
+    alicloud = {
+      source = "pulumi/alicloud"
+    }
+  }
+}
+
+data "alicloud_getzones" "default" {
+  available_disk_category     = "cloud_efficiency"
+  available_resource_creation = "VSwitch"
+}
+
+# Create a new ECS instance for VPC
+resource "alicloud_vpc_network" "vpc" {
+  vpc_name   = var.name
+  cidr_block = "172.16.0.0/16"
+}
+resource "alicloud_vpc_switch" "vswitch" {
+  vpc_id       = alicloud_vpc_network.vpc.id
+  cidr_block   = "172.16.0.0/24"
+  zone_id      = data.alicloud_getzones.default.zones[0].id
+  vswitch_name = var.name
+}
+# Create a new Security in a VPC
+resource "alicloud_ecs_securitygroup" "group" {
+  name        = var.name
+  description = "foo"
+  vpc_id      = alicloud_vpc_network.vpc.id
+}
+# Create a kms to encrypt the disk
+resource "alicloud_kms_key" "key" {
+  description            = "Hello KMS"
+  pending_window_in_days = "7"
+  status                 = "Enabled"
+}
+resource "alicloud_ecs_instance" "instance" {
+  availability_zone          = data.alicloud_getzones.default.zones[0].id
+  security_groups            = [alicloud_ecs_securitygroup.group][*].id
+  instance_type              = "ecs.n4.large"
+  system_disk_category       = "cloud_efficiency"
+  system_disk_name           = var.name
+  system_disk_description    = "system_disk_description"
+  image_id                   = "ubuntu_18_04_64_20G_alibase_20190624.vhd"
+  instance_name              = var.name
+  vswitch_id                 = alicloud_vpc_switch.vswitch.id
+  internet_max_bandwidth_out = 10
+  data_disks {
+    name        = "data-disk"
+    size        = 20
+    category    = "cloud_efficiency"
+    description = "disk-description"
+    encrypted   = true
+    kms_key_id  = alicloud_kms_key.key.id
+  }
+}
+variable "name" {
+  type    = string
+  default = "pulumi-example"
 }
 ```
 

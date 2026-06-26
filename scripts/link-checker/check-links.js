@@ -247,6 +247,18 @@ function getDefaultExcludedKeywords() {
         "https://www.noaa.gov/information-technology/open-data-dissemination",
         "https://www.inc.com/inc5000/2023",
         "https://nodejs.org/en/download/package-manager",
+
+        // "Use with AI" deep links (copy-llm-prompt.html). These open a prefilled prompt in a
+        // browser chat session; the services reject the headless link checker with 403s.
+        "https://chatgpt.com/*",
+        "https://claude.ai/*",
+        "https://v0.dev/*",
+
+        // GitHub's own nav chrome on github.com/pulumi/pulumi, which the checker crawls directly.
+        "https://github.com/marketplace*",
+
+        // API base URL referenced in the airbyte provider's upstream README; 401s without auth.
+        "https://api.airbyte.com/*",
     ];
 }
 
@@ -261,6 +273,16 @@ function excludeAcceptable(links) {
                     !(
                         b.reason === "HTTP_429" &&
                         b.destination.match(/github.com|npmjs.com/)
+                    ),
+            )
+
+            // Ignore npm 403s. npm bot-blocks the checker; a genuinely missing package returns
+            // 404 (still reported), not 403.
+            .filter(
+                (b) =>
+                    !(
+                        b.reason === "HTTP_403" &&
+                        b.destination.match(/npmjs.com/)
                     ),
             )
 

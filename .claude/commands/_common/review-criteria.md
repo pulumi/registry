@@ -101,5 +101,5 @@ If any of the following files change, flag whether `BUILD-AND-DEPLOY.md` needs u
 - **Spelling and grammar**: Check non-generated content for typos and grammatical errors
 - **Link validation**: Verify URLs are well-formed; flag broken or placeholder links
 - **Newline endings**: Files should end with a trailing newline
-- **No generated content commits**: Never commit files from `themes/default/content/registry/packages/` (these are generated)
+- **Generated content commits**: The `api-docs/` subdirectories under `themes/default/content/registry/packages/<pkg>/` are git-ignored build output — never committed. The `_index.md` and `installation-configuration.md` landing pages there are committed metadata, maintained by the `generate-package-metadata.yml` workflow and bundled when onboarding a package, so committing them is expected; they must be `resourcedocsgen` output, never hand-edited
 - **No secrets**: Flag any file that appears to contain API keys, tokens, or credentials

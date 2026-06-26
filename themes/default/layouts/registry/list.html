@@ -1,57 +1,57 @@
 {{ define "main" }}
-    <div class="docs-list-main">
-        <div class="docs-main-nav-toggle-wrapper">
-            <div class="docs-main-nav-wrapper">
-                <div id="docs-main-nav" class="docs-main-nav">
-                    <nav class="main-nav">
-                        {{ partial "docs/search-only.html" . }}
-                        <div class="featured-packages">
-                            {{ $featuredPackages := slice }}
-                            {{ range site.Data.registry.packages }}
-                                {{ if .featured }}
-                                    {{ $featuredPackages = $featuredPackages | append . }}
-                                {{ end }}
+<div class="docs-list-main">
+    <div class="docs-main-nav-toggle-wrapper">
+        <div class="docs-main-nav-wrapper">
+            <div id="docs-main-nav" class="docs-main-nav">
+                <nav class="main-nav">
+                    {{ partial "docs/search-only.html" . }}
+                    <div class="featured-packages">
+                        {{ $featuredPackages := slice }} {{ range
+                        site.Data.registry.packages }} {{ if .featured }} {{
+                        $featuredPackages = $featuredPackages | append . }} {{
+                        end }} {{ end }}
+                        <h2 class="no-anchor featured-packages-heading">
+                            Featured packages
+                        </h2>
+                        <ul>
+                            {{ range $featuredPackages }}
+                            <li class="sidenav-topic">
+                                {{ $href := printf "/registry/packages/%s/"
+                                .name }}
+                                <a href="{{ $href }}">{{ .title }}</a>
+                            </li>
                             {{ end }}
-                            <h2 class="no-anchor featured-packages-heading">Featured packages</h2>
-                            <ul>
-                                {{ range $featuredPackages }}
-                                    <li class="sidenav-topic">
-                                        {{ $href := printf "/registry/packages/%s/" .name }}
-                                        <a href="{{ $href }}">{{ .title }}</a>
-                                    </li>
-                                {{ end }}
-                            </ul>
-                        </div>
-                        <div class="az-packages">
-                            <h2 class="no-anchor az-packages-heading">A - Z packages</h2>
-                            <ul>
-                                {{ range (sort site.Data.registry.packages "title") }}
-                                    <li class="sidenav-topic">
-                                        {{ $href := printf "/registry/packages/%s/" .name }}
-                                        <a href="{{ $href }}">{{ .title }}</a>
-                                    </li>
-                                {{ end }}
-                            </ul>
-                        </div>
-                    </nav>
-                </div>
-            </div>
-            <div class="docs-nav-toggle">
-                <div class="docs-nav-toggle-icon icon icon-24-24"></div>
+                        </ul>
+                    </div>
+                    <div class="az-packages">
+                        <h2 class="no-anchor az-packages-heading">
+                            A-Z packages
+                        </h2>
+                        <ul>
+                            {{ range (sort site.Data.registry.packages "title")
+                            }}
+                            <li class="sidenav-topic">
+                                {{ $href := printf "/registry/packages/%s/"
+                                .name }}
+                                <a href="{{ $href }}">{{ .title }}</a>
+                            </li>
+                            {{ end }}
+                        </ul>
+                    </div>
+                </nav>
             </div>
         </div>
-
-        <div class="docs-main-content-wrapper">
-            <div class="docs-main-content registry-package-list">
-                {{ if ne .RelPermalink "/registry/" }}
-                    {{ partial "registry/breadcrumb.html" . }}
-                {{ end }}
-                {{ partial "registry/package-list.html" . }}
-            </div>
+        <div class="docs-nav-toggle">
+            <div class="docs-nav-toggle-icon icon icon-24-24"></div>
         </div>
     </div>
-{{ end }}
 
-{{ define "footer" }}
-    {{ partial "docs/footer.html" . }}
-{{ end }}
+    <div class="docs-main-content-wrapper">
+        <div class="docs-main-content registry-package-list">
+            {{ if ne .RelPermalink "/registry/" }} {{ partial
+            "registry/breadcrumb.html" . }} {{ end }} {{ partial
+            "registry/package-list.html" . }}
+        </div>
+    </div>
+</div>
+{{ end }} {{ define "footer" }} {{ partial "docs/footer.html" . }} {{ end }}

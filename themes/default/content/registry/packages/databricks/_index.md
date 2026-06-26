@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-databricks/v1.92.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-databricks/v1.97.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-databricks/blob/v1.92.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-databricks/blob/v1.97.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Databricks Provider
 meta_desc: Provides an overview on how to configure the Pulumi Databricks provider.
@@ -23,7 +23,7 @@ The Databricks provider is available as a package in all Pulumi languages:
 Use the Databricks Pulumi provider to interact with almost all of [Databricks](http://databricks.com/) resources.
 ## Example Usage
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
@@ -380,6 +380,57 @@ display(spark.range(10))
 ```
 
 {{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+pulumi {
+  required_providers {
+    databricks = {
+      source = "pulumi/databricks"
+    }
+    std = {
+      source = "pulumi/std"
+    }
+  }
+}
+
+data "databricks_getcurrentuser" "me" {
+}
+data "databricks_getsparkversion" "latest" {
+}
+data "databricks_getnodetype" "smallest" {
+  local_disk = true
+}
+
+resource "databricks_notebook" "this" {
+  path           ="${data.databricks_getcurrentuser.me.home}/Pulumi"
+  language       = "PYTHON"
+  content_base64 = base64encode("# created from ${abspath(notImplemented("path.module"))}
+display(spark.range(10))
+")
+}
+resource "databricks_job" "this" {
+  name ="Pulumi Demo (${data.databricks_getcurrentuser.me.alphanumeric})"
+  tasks {
+    task_key = "task1"
+    notebook_task = {
+      notebook_path = databricks_notebook.this.path
+    }
+    new_cluster = {
+      num_workers   = 1
+      spark_version = data.databricks_getsparkversion.latest.id
+      node_type_id  = data.databricks_getnodetype.smallest.id
+    }
+  }
+}
+output "notebookUrl" {
+  value = databricks_notebook.this.url
+}
+output "jobUrl" {
+  value = databricks_job.this.url
+}
+```
+
+{{% /choosable %}}
 {{< /chooser >}}
 ## Configuration Reference
 
@@ -414,7 +465,7 @@ The provider supports additional configuration parameters not related to authent
 * `debugHeaders` - (optional, environment variable `DATABRICKS_DEBUG_HEADERS`) Applicable only when `TF_LOG=DEBUG` is set. Debug HTTP headers of requests made by the provider. Default is *false*. We recommend turning this flag on only under exceptional circumstances, when troubleshooting authentication issues. Turning this flag on will log first `debugTruncateBytes` of any HTTP header value in cleartext.
 * `skipVerify` - skips SSL certificate verification for HTTP calls. *Use at your own risk.* Default is *false* (don't skip verification).
 
-!> **Warning** Sensitive credentials are printed to the log when `debugHeaders` is `true`. Use it for troubleshooting purposes only.
+> **Warning** Sensitive credentials are printed to the log when `debugHeaders` is `true`. Use it for troubleshooting purposes only.
 ### `host` argument
 
 The `host` argument configures the endpoint that the Pulumi Provider for Databricks interacts with. This must be configured according to the following table:
@@ -496,7 +547,7 @@ To create resources at both the account and workspace levels, you can create two
 
 Next, you can specify the corresponding provider when creating the resource. For example, you can use the workspace provider to create a workspace group
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
@@ -614,6 +665,24 @@ public class App {
 ```
 
 {{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+pulumi {
+  required_providers {
+    databricks = {
+      source = "pulumi/databricks"
+    }
+  }
+}
+
+resource "databricks_group" "cluster_admin" {
+  display_name               = "cluster_admin"
+  allow_cluster_create       = true
+  allow_instance_pool_create = false
+}
+```
+
+{{% /choosable %}}
 {{< /chooser >}}
 ### Authenticating with hostname and token
 
@@ -665,7 +734,7 @@ config:
 ```
 ### Authenticating with Azure-managed Service Principal using GitHub OpenID Connect (OIDC)
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
@@ -971,6 +1040,31 @@ public class App {
 ```
 
 {{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+pulumi {
+  required_providers {
+    azure = {
+      source = "pulumi/azure"
+    }
+    databricks = {
+      source = "pulumi/databricks"
+    }
+  }
+}
+
+resource "azure_databricks_workspace" "this" {
+  location            = "centralus"
+  name                = "my-workspace-name"
+  resource_group_name = resourceGroup
+  sku                 = "premium"
+}
+resource "databricks_user" "my-user" {
+  user_name = "test-user@databricks.com"
+}
+```
+
+{{% /choosable %}}
 {{< /chooser >}}
 
 Follow the [Configuring OpenID Connect in Azure](https://docs.github.com/en/actions/security-for-github-actions/security-hardening-your-deployments/configuring-openid-connect-in-azure). You can then use the Azure service principal to authenticate in databricks.
@@ -982,7 +1076,7 @@ When a workspace is created using a service principal account, that service prin
 
 It's possible to use [Azure CLI](https://docs.microsoft.com/cli/azure/) authentication, where the provider would rely on access token cached by `az login` command so that local development scenarios are possible. Technically, the provider will call `az account get-access-token` each time before an access token is about to expire.
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
@@ -1201,10 +1295,36 @@ public class App {
 ```
 
 {{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+pulumi {
+  required_providers {
+    azure = {
+      source = "pulumi/azure"
+    }
+    databricks = {
+      source = "pulumi/databricks"
+    }
+  }
+}
+
+resource "azure_databricks_workspace" "this" {
+  location            = "centralus"
+  name                = "my-workspace-name"
+  resource_group_name = resourceGroup
+  sku                 = "premium"
+}
+resource "databricks_user" "my-user" {
+  user_name    = "test-user@databricks.com"
+  display_name = "Test User"
+}
+```
+
+{{% /choosable %}}
 {{< /chooser >}}
 ### Authenticating with Azure-managed Service Principal using Client Secret
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
@@ -1506,6 +1626,31 @@ public class App {
             .build());
 
     }
+}
+```
+
+{{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+pulumi {
+  required_providers {
+    azure = {
+      source = "pulumi/azure"
+    }
+    databricks = {
+      source = "pulumi/databricks"
+    }
+  }
+}
+
+resource "azure_databricks_workspace" "this" {
+  location            = "centralus"
+  name                = "my-workspace-name"
+  resource_group_name = resourceGroup
+  sku                 = "premium"
+}
+resource "databricks_user" "my-user" {
+  user_name = "test-user@databricks.com"
 }
 ```
 

@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi-labs/pulumi-nvidia-aicr/v0.1.7/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi-labs/pulumi-nvidia-aicr/v0.1.9/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi-labs/pulumi-nvidia-aicr/blob/v0.1.7/docs/_index.md
+edit_url: https://github.com/pulumi-labs/pulumi-nvidia-aicr/blob/v0.1.9/docs/_index.md
 title: NVIDIA AI Cluster Runtime (AICR) Provider
 meta_desc: Deploy validated NVIDIA AI Cluster Runtime (AICR) recipes on Kubernetes via a single Pulumi component.
 layout: package

@@ -70,9 +70,9 @@ Help me get started using this provider. Show me a complete Pulumi program that 
           data-role="trigger"
           aria-haspopup="true"
           aria-expanded="false">
-    <i class="fas fa-wand-magic-sparkles copy-llm-prompt__icon" aria-hidden="true"></i>
+    {{ partial "icon" (dict "name" "magic-wand" "class" "copy-llm-prompt__icon") }}
     <span class="copy-llm-prompt__text">Use with AI</span>
-    <i class="copy-llm-prompt__chevron fa fa-chevron-down" aria-hidden="true"></i>
+    {{ partial "icon" (dict "name" "caret-down" "class" "copy-llm-prompt__chevron") }}
   </button>
   <div class="copy-llm-prompt__dropdown" role="menu" data-role="dropdown" hidden>
     <a class="copy-llm-prompt__item"
@@ -102,7 +102,7 @@ Help me get started using this provider. Show me a complete Pulumi program that 
     <div class="copy-llm-prompt__divider"></div>
     <button type="button" class="copy-llm-prompt__item copy-llm-prompt__copy-action" role="menuitem" data-role="copy">
       <span class="copy-llm-prompt__item-icon" aria-hidden="true">
-        <i class="fas fa-copy" aria-hidden="true"></i>
+        {{ partial "icon" (dict "name" "copy") }}
       </span>
       <span class="copy-llm-prompt__item-label">Copy prompt</span>
     </button>

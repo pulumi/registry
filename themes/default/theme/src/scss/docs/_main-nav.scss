@@ -14,27 +14,25 @@ nav.main-nav {
         border-left: transparent 3px solid;
 
         &.active {
-            background-color: map-get($blue, 100);
-            border-left: map-get($blue, 750) 3px solid;
-            width: fit-content;
-    
+            background-color: var(--color-violet-100);
+            border-left: var(--color-violet-primary) 3px solid;
+            width: 100%;
+
             &:hover {
                 text-decoration: none;
-                background-color: map-get($blue, 250);
-                color: map-get($blue, 850);
-                border-left: map-get($blue, 850) 3px solid;
+                color: var(--color-violet-800);
             }
         }
     }
 
     a {
-        @apply py-0.5 px-1.5 rounded-sm;
-        color: map-get($blue, 750);
+        @apply py-1 px-1.5 rounded-sm w-full;
+        color: var(--color-violet-primary);
 
         &:hover {
-            text-decoration: map-get($gray, 450) solid underline;
+            text-decoration: var(--color-violet-primary) solid underline;
             text-underline-offset: 6px;
-            color: map-get($blue, 750);
+            color: var(--color-violet-primary);
         }
     }
 
@@ -54,15 +52,15 @@ nav.main-nav {
         border-radius: 0 2px 2px 0;
 
         &.active {
-            background-color: map-get($blue, 100);
-            border-left: map-get($blue, 750) 3px solid;
+            background-color: var(--color-violet-100);
+            border-left: var(--color-violet-primary) 3px solid;
             width: fit-content;
             text-decoration: none;
 
             &:hover {
-                background-color: map-get($blue, 250);
-                color: map-get($blue, 850);
-                border-left: map-get($blue, 850) 3px solid;
+                background-color: var(--color-violet-200);
+                color: var(--color-violet-800);
+                border-left: var(--color-violet-800) 3px solid;
             }
         }
     }
@@ -72,9 +70,6 @@ nav.main-nav {
         display: flex;
         align-items: center;
         font-size: 15px;
-        margin-left: 8px;
-        margin-bottom: 16px;
-        margin-top: 16px;
     }
 
     .sidenav-subsection {
@@ -88,7 +83,8 @@ nav.main-nav {
         margin-left: 8px;
     }
 
-    .toggleButton, .toggleButton-topLevel {
+    .toggleButton,
+    .toggleButton-topLevel {
         @apply cursor-pointer;
         color: map-get($gray, 950);
         font-size: 11px;

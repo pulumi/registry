@@ -17,21 +17,6 @@
 $sitenav-height: 90px;
 $sitenav-offset: calc($sitenav-height + 16px);
 
-// @utility declarations must be top-level (cannot be nested inside @layer).
-@utility btn {
-    transition: all 120ms linear;
-    @apply cursor-pointer text-sm whitespace-nowrap py-2 px-3 rounded inline-block;
-    @apply bg-blue-600 border border-blue-600 text-white text-center;
-}
-
-@utility btn-lg {
-    @apply py-3 px-5;
-}
-
-@utility btn-orange {
-    @apply bg-orange-500 border-orange-600;
-}
-
 // v4 layer placement: base styles go in @layer base so Tailwind utilities can override them.
 // Component styles go in @layer components for the same reason.
 @layer base {
@@ -63,12 +48,20 @@ $sitenav-offset: calc($sitenav-height + 16px);
     h4,
     h5,
     h6 {
-        @apply font-display text-gray-800 mb-2;
+        @apply font-display text-service-black mb-2;
+        font-weight: 600;
+        letter-spacing: -0.05em;
+        line-height: 1.1em;
 
         &:not(:first-child) {
+            // Don't apply top margin when one's being specified.
             &:not([class*="mt-"]):not([class*="m-"]) {
                 @apply mt-8;
             }
+        }
+
+        code {
+            letter-spacing: normal;
         }
     }
 
@@ -122,10 +115,10 @@ $sitenav-offset: calc($sitenav-height + 16px);
         blockquote,
         table {
             a {
-                @apply text-blue-600 break-words;
+                @apply text-violet-primary break-words;
 
                 &:hover {
-                    @apply text-blue-700;
+                    @apply text-violet-800 underline;
 
                     .section-docs &,
                     .section-blog &,
@@ -183,70 +176,44 @@ $sitenav-offset: calc($sitenav-height + 16px);
 }
 
 @layer components {
-    @import "about";
     @import "accordion";
     @import "algolia";
     @import "animation";
     @import "api-nodejs";
     @import "api-python";
     @import "api-symbol";
-    @import "marketing/automation-api";
     @import "badges";
     @import "chip";
-    @import "benefits";
     @import "breadcrumb";
-    @import "buttons";
+    @import "button";
     @import "card";
-    @import "marketing/cloud-engineering";
-    @import "marketing/dismissable-banner";
     @import "code";
     @import "container";
     @import "copy-button";
-    @import "docs/cloud-overview";
-    @import "docs/continuous-delivery";
     @import "docs/docs-main";
-    @import "docs/docs-top-nav";
     @import "docs/main-nav";
-    @import "docs/docs-home";
-    @import "customer-logo";
-    @import "marketing/developer-advocates";
     @import "docs/footer";
     @import "docs/icons";
-    @import "event-list";
-    @import "event-schedule";
     @import "fonts";
     @import "footer";
     @import "glossary";
     @import "header";
-    @import "hero";
-    @import "hubspot";
-    @import "icons";
-    @import "marketing/learn";
+    @import "phosphor";
     @import "lists";
     @import "no-select";
     @import "notes";
     @import "docs/packages";
     @import "pagination";
-    @import "marketing/pricing";
-    @import "marketing/product";
-    @import "marketing/pulumi-deployments";
-    @import "marketing/pulumi-up";
     @import "search";
     @import "section-nav";
-    @import "marketing/self-hosted";
-    @import "marketing/shape-backgrounds";
-    @import "marketing/signup";
-    @import "marketing/workshop-signup";
     @import "docs/registry";
     @import "tables";
     @import "tiles";
     @import "toggle";
     @import "tooltip";
-    @import "404";
 
     @import "components/chooser";
     @import "components/choosable";
-    @import "components/convert";
     @import "components/filter-select";
     @import "components/resource-links";
     @import "components/examples";
@@ -362,7 +329,15 @@ $sitenav-offset: calc($sitenav-height + 16px);
     }
 
     .rainbow-text {
-        background: linear-gradient(90deg, #f7bf2a 0%, #f26e7e 18.23%, #be5188 38.02%, #8a3391 53.65%, #805ac3 74.48%, #7682f4 100%);
+        background: linear-gradient(
+            90deg,
+            #f7bf2a 0%,
+            #f26e7e 18.23%,
+            #be5188 38.02%,
+            #8a3391 53.65%,
+            #805ac3 74.48%,
+            #7682f4 100%
+        );
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         -moz-background-clip: text;
@@ -397,5 +372,14 @@ $sitenav-offset: calc($sitenav-height + 16px);
     section.newsletter-input pulumi-hubspot-form input.hs-input {
         @apply rounded;
     }
+}
 
+// Auth-aware header swap. The inline script in head.html adds .is-signed-in
+// to <html> when the auth cookie is present, before first paint. These rules
+// live unlayered so they win against the buttons' display utilities.
+html:not(.is-signed-in) [data-nav-dashboard] {
+    display: none;
+}
+html.is-signed-in [data-nav-loggedout] {
+    display: none;
 }

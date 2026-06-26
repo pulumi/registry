@@ -80,7 +80,7 @@ Both are compiled to `bin/` by the Makefile. `mktutorial` is CI-only; it does no
 
 The CI build script (`scripts/ci/build.sh`) writes to **`themes/default/content/registry/packages/`**.
 
-This difference is intentional — local API doc generation stays out of the Hugo theme tree. Never commit generated content from `themes/default/content/registry/packages/`.
+This difference is intentional — local API doc generation stays out of the Hugo theme tree. Within `themes/default/content/registry/packages/<pkg>/`, the `api-docs/` subdirectory is regenerated on every build and is git-ignored, so never commit it. The `_index.md` and `installation-configuration.md` landing pages are different: they are committed and maintained by the `generate-package-metadata.yml` publish workflow, and are bundled when onboarding a package so it renders before the next nightly run. Do not hand-edit any of these files; regenerate them with `resourcedocsgen`.
 
 Additionally, `resourcedocsgen` writes **LLM docs** to **`llm-docs-out/registry/packages/`** (repo root, git-ignored). These are terminal-friendly markdown bundles (`llm-docs.json`) uploaded to S3 separately from the Hugo site. The LLM docs format is specified in `docs/llm-markdown-spec.md`.
 
@@ -110,5 +110,5 @@ The `push-registry.py` script publishes packages to the live Pulumi registry ser
 
 - **Package manager**: Yarn only. Do not use npm or pnpm.
 - **Go modules**: `tools/resourcedocsgen/` and `tools/mktutorial/` are separate Go modules. Run `go test ./...` and `golangci-lint run` from within those directories (or use the Makefile targets).
-- **Generated content**: `themes/default/content/registry/packages/` is generated — do not hand-edit files there.
+- **Generated content**: Files under `themes/default/content/registry/packages/` are generated — regenerate with `resourcedocsgen`, never hand-edit. The `api-docs/` subdirectories are git-ignored build output (never committed); the `_index.md` and `installation-configuration.md` pages are committed metadata maintained by the publish workflow.
 - **Branch naming**: Use `<GitHub Username>/<descriptive-name>` for branches in this repository.

@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-minio/v0.16.9/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-minio/v0.17.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-minio/blob/v0.16.9/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-minio/blob/v0.17.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Minio Provider
 meta_desc: Provides an overview on how to configure the Pulumi Minio provider.
@@ -82,7 +82,7 @@ $ export MINIO_PASSWORD="xgwgwqqwv"
 When using this method, you may omit the
 minio provider configuration entirely:
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
@@ -110,7 +110,7 @@ using Minio = Pulumi.Minio;
 
 return await Deployment.RunAsync(() =>
 {
-    var statePulumiS3 = new Minio.Index.S3Bucket("state_pulumi_s3");
+    var statePulumiS3 = new Minio.S3Bucket("state_pulumi_s3");
 
 });
 
@@ -155,8 +155,8 @@ import com.pulumi.Context;
 import com.pulumi.Pulumi;
 import com.pulumi.core.Output;
 import com.pulumi.minio.S3Bucket;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;
@@ -171,6 +171,21 @@ public class App {
         var statePulumiS3 = new S3Bucket("statePulumiS3");
 
     }
+}
+```
+
+{{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+pulumi {
+  required_providers {
+    minio = {
+      source = "pulumi/minio"
+    }
+  }
+}
+
+resource "minio_s3bucket" "state_pulumi_s3" {
 }
 ```
 

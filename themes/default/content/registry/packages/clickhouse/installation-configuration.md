@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-clickhouse/v2.0.1/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumiverse/pulumi-clickhouse/v2.0.4/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumiverse/pulumi-clickhouse/blob/v2.0.1/docs/installation-configuration.md
+edit_url: https://github.com/pulumiverse/pulumi-clickhouse/blob/v2.0.4/docs/installation-configuration.md
 title: Clickhouse Installation & Configuration
 meta_desc: Information on how to install the Clickhouse provider.
 layout: package
@@ -13,7 +13,7 @@ The Pulumi Clickhouse provider is available as a package in all Pulumi languages
 
 * JavaScript/TypeScript: [`@pulumiverse/clickhouse`](https://www.npmjs.com/package/@pulumiverse/clickhouse)
 * Python: [`pulumiverse_clickhouse`](https://pypi.org/project/pulumiverse_clickhouse/)
-* Go: [`github.com/pulumiverse/pulumi-clickhouse/sdk/go/clickhouse`](https://pkg.go.dev/github.com/pulumiverse/pulumi-clickhouse/sdk/go/clickhouse)
+* Go: [`github.com/pulumiverse/pulumi-clickhouse/sdk/v2/go/clickhouse`](https://pkg.go.dev/github.com/pulumiverse/pulumi-clickhouse/sdk/v2/go/clickhouse)
 * .NET: [`Pulumiverse.Clickhouse`](https://www.nuget.org/packages/Pulumiverse.Clickhouse)
 
 

@@ -108,6 +108,28 @@ export class LlmMenu {
     }
 
     render() {
+        const copyIcon = (
+            <svg class="llm-menu-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true">
+                <path d="M216,32H88a8,8,0,0,0-8,8V80H40a8,8,0,0,0-8,8V216a8,8,0,0,0,8,8H168a8,8,0,0,0,8-8V176h40a8,8,0,0,0,8-8V40A8,8,0,0,0,216,32ZM160,208H48V96H160Zm48-48H176V88a8,8,0,0,0-8-8H96V48H208Z" />
+            </svg>
+        );
+
+        const caretIcon = (
+            <svg class="llm-menu-caret" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true">
+                {this.isOpen ? (
+                    <path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z" />
+                ) : (
+                    <path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z" />
+                )}
+            </svg>
+        );
+
+        const externalIcon = (
+            <svg class="llm-menu-external" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true">
+                <path d="M224,104a8,8,0,0,1-16,0V59.32l-66.33,66.34a8,8,0,0,1-11.32-11.32L196.68,48H152a8,8,0,0,1,0-16h64a8,8,0,0,1,8,8Zm-40,24a8,8,0,0,0-8,8v72H48V80h72a8,8,0,0,0,0-16H48A16,16,0,0,0,32,80V208a16,16,0,0,0,16,16H176a16,16,0,0,0,16-16V136A8,8,0,0,0,184,128Z" />
+            </svg>
+        );
+
         const linkIcon = (
             <svg class="llm-menu-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
@@ -153,9 +175,9 @@ export class LlmMenu {
             <Host>
                 <div class="llm-menu-container">
                     <button class="llm-menu-trigger text-gray-600 hover:text-gray-700 text-xs" onClick={() => (this.isOpen = !this.isOpen)}>
-                        <i class="fas fa-copy mr-2" style={{ width: "14px" }}></i>
+                        {copyIcon}
                         Copy Page
-                        <i class={`fas fa-chevron-${this.isOpen ? "up" : "down"}`}></i>
+                        {caretIcon}
                     </button>
 
                     {this.isOpen && (
@@ -169,7 +191,7 @@ export class LlmMenu {
                                     </div>
                                 </button>
                                 <button class="llm-menu-item" onClick={() => this.copyPage()}>
-                                    <i class="fas fa-copy llm-menu-icon"></i>
+                                    {copyIcon}
                                     <div class="llm-menu-text">
                                         <div class="llm-menu-title">{this.copied === "page" ? "Copied!" : "Copy as Markdown"}</div>
                                         <div class="llm-menu-subtitle">Copy page for LLMs</div>
@@ -181,7 +203,7 @@ export class LlmMenu {
                                         <div class="llm-menu-title">View as Markdown</div>
                                         <div class="llm-menu-subtitle">Open Markdown in new tab</div>
                                     </div>
-                                    <i class="fas fa-external-link-alt llm-menu-external"></i>
+                                    {externalIcon}
                                 </button>
                                 <hr />
                                 <button class="llm-menu-item" onClick={() => this.openInChatGPT()}>
@@ -190,7 +212,7 @@ export class LlmMenu {
                                         <div class="llm-menu-title">Open in ChatGPT</div>
                                         <div class="llm-menu-subtitle">Ask ChatGPT about this page</div>
                                     </div>
-                                    <i class="fas fa-external-link-alt llm-menu-external"></i>
+                                    {externalIcon}
                                 </button>
                                 <button class="llm-menu-item" onClick={() => this.openInClaude()}>
                                     {claudeLogo}
@@ -198,7 +220,7 @@ export class LlmMenu {
                                         <div class="llm-menu-title">Open in Claude</div>
                                         <div class="llm-menu-subtitle">Ask Claude about this page</div>
                                     </div>
-                                    <i class="fas fa-external-link-alt llm-menu-external"></i>
+                                    {externalIcon}
                                 </button>
                             </div>
                         </div>

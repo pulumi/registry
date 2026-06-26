@@ -296,7 +296,7 @@ resource "example_person" "personResource" {
 ```java
 var personResource = new Person("personResource", PersonArgs.builder()
     .name("string")
-    .pets(PetArgs.builder()
+    .pets(com.pulumi.example.inputs.PetArgs.builder()
         .name("string")
         .build())
     .build());

@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/aptible/aptible/0.10.0/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/aptible/aptible/0.10.2/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Aptible Provider
@@ -1576,3 +1576,114 @@ public class App {
 ## Configuration Reference
 
 There are currently no arguments to provide directly to the provider
+## Timeouts
+
+Operations on most resources will time out after 90 minutes by default. You can override these values with a `timeouts` block:
+
+{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{% choosable language typescript %}}
+```typescript
+import * as pulumi from "@pulumi/pulumi";
+import * as aptible from "@pulumi/aptible";
+
+const exampleApp = new aptible.App("example_app", {
+    envId: 123,
+    handle: "example_app",
+});
+```
+{{% /choosable %}}
+{{% choosable language python %}}
+```python
+import pulumi
+import pulumi_aptible as aptible
+
+example_app = aptible.App("example_app",
+    env_id=123,
+    handle="example_app")
+```
+{{% /choosable %}}
+{{% choosable language csharp %}}
+```csharp
+using System.Collections.Generic;
+using System.Linq;
+using Pulumi;
+using Aptible = Pulumi.Aptible;
+
+return await Deployment.RunAsync(() =>
+{
+    var exampleApp = new Aptible.App("example_app", new()
+    {
+        EnvId = 123,
+        Handle = "example_app",
+    });
+
+});
+
+```
+{{% /choosable %}}
+{{% choosable language go %}}
+```go
+package main
+
+import (
+	"github.com/pulumi/pulumi-pulumi-provider/sdks/go/aptible/aptible"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		_, err := aptible.NewApp(ctx, "example_app", &aptible.AppArgs{
+			EnvId:  pulumi.Float64(123),
+			Handle: pulumi.String("example_app"),
+		})
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+}
+```
+{{% /choosable %}}
+{{% choosable language yaml %}}
+```yaml
+resources:
+  exampleApp:
+    type: aptible:App
+    name: example_app
+    properties:
+      envId: 123
+      handle: example_app
+```
+{{% /choosable %}}
+{{% choosable language java %}}
+```java
+package generated_program;
+
+import com.pulumi.Context;
+import com.pulumi.Pulumi;
+import com.pulumi.core.Output;
+import com.pulumi.aptible.App;
+import com.pulumi.aptible.AppArgs;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+public class App {
+    public static void main(String[] args) {
+        Pulumi.run(App::stack);
+    }
+
+    public static void stack(Context ctx) {
+        var exampleApp = new App("exampleApp", AppArgs.builder()
+            .envId(123.0)
+            .handle("example_app")
+            .build());
+
+    }
+}
+```
+{{% /choosable %}}
+{{< /chooser >}}

@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: pulumiverse
 repo_url: https://github.com/pulumiverse/pulumi-clickhouse
-schema_file_url: https://raw.githubusercontent.com/pulumiverse/pulumi-clickhouse/v2.0.1/provider/cmd/pulumi-resource-clickhouse/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumiverse/pulumi-clickhouse/v2.0.4/provider/cmd/pulumi-resource-clickhouse/schema.json
 title: Clickhouse
-updated_on: 1779389711
-version: v2.0.1
+updated_on: 1779464828
+version: v2.0.4

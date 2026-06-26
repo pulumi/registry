@@ -24,7 +24,7 @@
                         <div class="icon icon-18-18 expand-more-18-18"></div>
                     </div>
                 </label>
-                <div class="accordion-content flex">
+                <div class="accordion-content">
                     <div class="content">
                         <ul class="table-of-contents-list">
                             {{/* This will be populated dynamically with all H2s and H3s on the page; see ts/misc.ts */}}
@@ -74,7 +74,7 @@
                 href="{{ $editURL }}"
                 target="_blank"
             >
-                <i class="fas fa-edit mr-2" style="width: 14px"></i>Edit this Page
+                {{ partial "icon" (dict "name" "pencil-simple" "class" "mr-2") }}Edit this Page
             </a>
         </li>
     {{ end }}
@@ -85,7 +85,7 @@
             href="{{ $.Site.Params.contentRepositoryURL }}/issues/new?body=File: [{{ getenv "REPO_THEME_PATH" }}content/{{ .Path }}]({{ $.Page.Permalink }})"
             target="_blank"
         >
-            <i class="far fa-check-square mr-2" style="width: 14px"></i>Request a Change
+            {{ partial "icon" (dict "name" "check-square" "class" "mr-2") }}Request a Change
         </a>
     </li>
 </ul>

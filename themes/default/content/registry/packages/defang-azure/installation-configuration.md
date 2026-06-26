@@ -2,27 +2,23 @@
 # WARNING: this file was fetched from https://raw.githubusercontent.com/DefangLabs/pulumi-defang/v2.1.1/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
 edit_url: https://github.com/DefangLabs/pulumi-defang/blob/v2.1.1/docs/installation-configuration.md
-title: Defang Provider for Pulumi Installation & Configuration
-meta_desc: Provides an overview on how to configure the Pulumi Defang Provider.
+title: Defang Azure Provider Installation & Configuration
+meta_desc: Provides an overview on how to configure the Pulumi Defang Azure Provider.
 layout: package
 ---
 ## Installation
 
-The Pulumi Provider for [Defang](https://defang.io) — Take your app from Docker Compose to a secure and scalable cloud deployment with Pulumi.
+The Pulumi Provider for [Defang](https://defang.io) — Take your app from Docker Compose to a secure and scalable Azure deployment with Pulumi.
 
-The Defang Pulumi Provider is available as separate packages per cloud (AWS, GCP, Azure) in most Pulumi languages.
+The Defang Azure Pulumi Provider is available in most Pulumi languages:
 
-| Cloud | JavaScript/TypeScript | Python | Go | .NET |
-|-------|----------------------|--------|----|------|
-| AWS | [`@defang-io/pulumi-defang-aws`](https://www.npmjs.com/package/@defang-io/pulumi-defang-aws) | [`pulumi-defang-aws`](https://pypi.org/project/pulumi-defang-aws/) | [`github.com/DefangLabs/pulumi-defang/sdk/v2/go/defang-aws`](https://github.com/DefangLabs/pulumi-defang) | [`DefangLabs.DefangAws`](https://www.nuget.org/packages/DefangLabs.DefangAws/) |
-| GCP | [`@defang-io/pulumi-defang-gcp`](https://www.npmjs.com/package/@defang-io/pulumi-defang-gcp) | [`pulumi-defang-gcp`](https://pypi.org/project/pulumi-defang-gcp/) | [`github.com/DefangLabs/pulumi-defang/sdk/v2/go/defang-gcp`](https://github.com/DefangLabs/pulumi-defang) | [`DefangLabs.DefangGcp`](https://www.nuget.org/packages/DefangLabs.DefangGcp/) |
-| Azure | [`@defang-io/pulumi-defang-azure`](https://www.npmjs.com/package/@defang-io/pulumi-defang-azure) | [`pulumi-defang-azure`](https://pypi.org/project/pulumi-defang-azure/) | [`github.com/DefangLabs/pulumi-defang/sdk/v2/go/defang-azure`](https://github.com/DefangLabs/pulumi-defang) | [`DefangLabs.DefangAzure`](https://www.nuget.org/packages/DefangLabs.DefangAzure/) |
+* JavaScript/TypeScript: [`@defang-io/pulumi-defang-azure`](https://www.npmjs.com/package/@defang-io/pulumi-defang-azure)
+* Python: [`pulumi-defang-azure`](https://pypi.org/project/pulumi-defang-azure/)
+* .NET: [`DefangLabs.DefangAzure`](https://www.nuget.org/packages/DefangLabs.DefangAzure/)
 
-### Installing the Pulumi Plugins directly
+### Installing the Pulumi Plugin directly
 ```
-pulumi plugin install resource defang-aws --server github://api.github.com/DefangLabs
-pulumi plugin install resource defang-gcp --server github://api.github.com/DefangLabs
-pulumi plugin install resource defang-azure --server github://api.github.com/DefangLabs
+pulumi plugin install resource defang-azure v2.1.1 --server github://api.github.com/DefangLabs/pulumi-defang
 ```
 
 ## Authentication
@@ -33,20 +29,18 @@ Sign up for [Defang](https://defang.io) with your Github account.
 
 #### Authenticating in Github Actions workflows
 
-When run in a Github Actions workflow, the Defang Pulumi Provider will automatically use environment variables Github provides to authenticate your Github user with Defang if you give your workflow the [appropriate permissions](https://docs.github.com/en/actions/security-for-github-actions/security-hardening-your-deployments/about-security-hardening-with-openid-connect#adding-permissions-settings). Defang use the `ACTIONS_ID_TOKEN_REQUEST_URL` and `ACTIONS_ID_TOKEN_REQUEST_TOKEN` environment variables.
+When run in a Github Actions workflow, the Defang Pulumi Provider will automatically use environment variables Github provides to authenticate your Github user with Defang if you give your workflow the [appropriate permissions](https://docs.github.com/en/actions/security-for-github-actions/security-hardening-your-deployments/about-security-hardening-with-openid-connect#adding-permissions-settings). Defang uses the `ACTIONS_ID_TOKEN_REQUEST_URL` and `ACTIONS_ID_TOKEN_REQUEST_TOKEN` environment variables.
 
 #### Authenticating with `defang token`
 
 You can run `defang token --expires 30d` out of band with a reasonable duration and you can store the result in `DEFANG_ACCESS_TOKEN`.
 
-### Authenticating with your cloud provider
+### Authenticating with Azure
 
-You will also need to authenticate with your cloud provider.
+You will also need to authenticate with Azure. There are many ways to do this:
 
-* For AWS, there are many ways to authenticate
-    - Use the [`aws-actions/configure-aws-credentials`](https://github.com/aws-actions/configure-aws-credentials) Github Action
-    - Use AWS Access Keys by setting the `AWS_ACCESS_KEY_ID`, and `AWS_ACCESS_KEY_SECRET` env vars.
-* For Google Cloud, you may wish to use the [`google-github-actions/auth`](https://github.com/google-github-actions/auth) Github Action
+* Use the [`azure/login`](https://github.com/Azure/login) Github Action
+* Use a service principal by setting the `ARM_CLIENT_ID`, `ARM_CLIENT_SECRET`, `ARM_TENANT_ID`, and `ARM_SUBSCRIPTION_ID` env vars.
 
 ## Using Pulumi Cloud
 
@@ -57,4 +51,4 @@ Defang runs the Pulumi CLI in your cloud account. You can use [Pulumi Cloud](htt
 
 ## Reference
 
-For detailed reference documentation, please visit [the Pulumi registry](https://www.pulumi.com/registry/packages/defang/).
+For detailed reference documentation, please visit [the Pulumi registry](https://www.pulumi.com/registry/packages/defang-azure/).

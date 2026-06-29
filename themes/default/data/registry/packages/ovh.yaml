@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: OVHcloud
 repo_url: https://github.com/ovh/pulumi-ovh
-schema_file_url: https://raw.githubusercontent.com/ovh/pulumi-ovh/v2.14.0/provider/cmd/pulumi-resource-ovh/schema.json
+schema_file_url: https://raw.githubusercontent.com/ovh/pulumi-ovh/v2.15.0/provider/cmd/pulumi-resource-ovh/schema.json
 title: OVHCloud
-updated_on: 1781532642
-version: v2.14.0
+updated_on: 1782739024
+version: v2.15.0

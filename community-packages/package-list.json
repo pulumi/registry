@@ -379,6 +379,10 @@
     {
       "repoSlug": "rpothin/pulumi-powerplatform",
       "schemaFile": "schema.json"
+    },
+    {
+      "repoSlug": "atensecurity/pulumi-thoth",
+      "schemaFile": "provider/cmd/pulumi-resource-thoth/schema.json"
     }
   ]
 }

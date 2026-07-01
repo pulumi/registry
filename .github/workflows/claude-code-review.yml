@@ -71,7 +71,7 @@ jobs:
 
       - name: Checkout repository
         if: steps.should_review.outputs.should_run == 'true'
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           fetch-depth: 1
 

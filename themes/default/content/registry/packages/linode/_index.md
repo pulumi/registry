@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-linode/v5.14.1/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-linode/v6.0.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-linode/blob/v5.14.1/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-linode/blob/v6.0.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Linode Provider
 meta_desc: Provides an overview on how to configure the Pulumi Linode provider.
@@ -14,7 +14,7 @@ The Linode provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/linode`](https://www.npmjs.com/package/@pulumi/linode)
 * Python: [`pulumi-linode`](https://pypi.org/project/pulumi-linode/)
-* Go: [`github.com/pulumi/pulumi-linode/sdk/v5/go/linode`](https://github.com/pulumi/pulumi-linode)
+* Go: [`github.com/pulumi/pulumi-linode/sdk/v6/go/linode`](https://github.com/pulumi/pulumi-linode)
 * .NET: [`Pulumi.Linode`](https://www.nuget.org/packages/Pulumi.Linode)
 * Java: [`com.pulumi/linode`](https://central.sonatype.com/artifact/com.pulumi/linode)
 
@@ -96,7 +96,7 @@ runtime: go
 package main
 
 import (
-	"github.com/pulumi/pulumi-linode/sdk/v5/go/linode"
+	"github.com/pulumi/pulumi-linode/sdk/v6/go/linode"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 

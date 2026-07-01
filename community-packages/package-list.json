@@ -273,6 +273,10 @@
       "schemaFile": "provider/cmd/pulumi-resource-ctfd/schema.json"
     },
     {
+      "repoSlug": "dagster-io/pulumi-dagsterplus",
+      "schemaFile": "provider/cmd/pulumi-resource-dagsterplus/schema.json"
+    },
+    {
       "repoSlug": "pulumiverse/pulumi-fortios",
       "schemaFile": "provider/cmd/pulumi-resource-fortios/schema.json"
     },

@@ -334,7 +334,8 @@ func TestGeneratePackage(t *testing.T) {
 
 			// Create a test host/loader that offers schema for the providers/packages defined in testCaseProviders.
 			host := newHostWithTestProviders(schemaDir, testCaseProviders)
-			loader := schema.NewPluginLoader(host)
+			pctx := plugin.NewContextWithHost(context.Background(), nil, nil, host, "", "", nil)
+			loader := schema.NewPluginLoader(pctx)
 
 			// Bind the package specification (schema) we decoded against the loader/set of test providers.
 			pkg, diags, err := schema.BindSpec(pkgSpec, loader, schema.ValidationOptions{

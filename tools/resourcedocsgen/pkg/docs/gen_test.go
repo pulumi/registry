@@ -118,7 +118,7 @@ func newTestPackageSpec() schema.PackageSpec {
 				},
 			},
 		},
-		Provider: schema.ResourceSpec{
+		Provider: &schema.ResourceSpec{
 			ObjectTypeSpec: schema.ObjectTypeSpec{
 				Description: fmt.Sprintf("The provider type for the %s package.", providerPackage),
 				Type:        "object",

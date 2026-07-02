@@ -15,8 +15,11 @@
 package docs
 
 import (
+	"context"
 	"encoding/json"
+	stderrors "errors"
 	"fmt"
+	"io"
 	"log/slog"
 	"os"
 	"strings"
@@ -28,7 +31,13 @@ import (
 	"github.com/pulumi/registry/tools/resourcedocsgen/pkg/docs"
 	"github.com/spf13/cobra"
 
+	"github.com/pulumi/pulumi/pkg/v3/codegen/convert"
 	pschema "github.com/pulumi/pulumi/pkg/v3/codegen/schema"
+	pkghost "github.com/pulumi/pulumi/pkg/v3/host"
+	pkgWorkspace "github.com/pulumi/pulumi/pkg/v3/workspace"
+	"github.com/pulumi/pulumi/sdk/v3/go/common/diag"
+	"github.com/pulumi/pulumi/sdk/v3/go/common/diag/colors"
+	"github.com/pulumi/pulumi/sdk/v3/go/common/resource/plugin"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/util/contract"
 )
 
@@ -46,11 +55,15 @@ func getPulumiPackageFromSchema(
 		return nil, nil, errors.Wrapf(err, "deleting provider directory %v", docsOutDir)
 	}
 
-	pulPkg, err := pschema.ImportSpec(mainSpec, nil, pschema.ValidationOptions{
-		AllowDanglingReferences: true,
-	})
+	loader, closeLoader, err := newSchemaLoader(context.Background())
 	if err != nil {
-		if pkg, ok := bindGoogleNativeToleratingCycles(mainSpec, err); ok {
+		return nil, nil, errors.Wrap(err, "creating schema loader")
+	}
+	defer func() { contract.IgnoreError(closeLoader()) }()
+
+	pulPkg, err := bindSpec(mainSpec, loader)
+	if err != nil {
+		if pkg, ok := bindGoogleNativeToleratingCycles(mainSpec, loader, err); ok {
 			pulPkg = pkg
 		} else {
 			if dErr, ok := err.(hcl.Diagnostics); ok {
@@ -65,6 +78,50 @@ func getPulumiPackageFromSchema(
 	}
 
 	return pulPkg, docs.NewContext(tool, pulPkg), nil
+}
+
+// newSchemaLoader builds the same plugin loader that pulumi's schema binder
+// constructs when handed a nil loader. As of pulumi v3.247.0 that nil-loader
+// fallback creates its plugin host with nil diagnostic sinks, which panics
+// with a nil dereference as soon as binding downloads a referenced provider
+// plugin and logs progress — so we construct the loader ourselves with
+// (discarding, but non-nil) sinks. The returned close function releases the
+// plugin context and host once binding is done.
+func newSchemaLoader(ctx context.Context) (pschema.ReferenceLoader, func() error, error) {
+	sink := diag.DefaultSink(io.Discard, io.Discard, diag.FormatOptions{Color: colors.Never})
+	host, err := pkghost.New(ctx, sink, sink, nil, pkgWorkspace.EnsureLanguageInstalled)
+	if err != nil {
+		return nil, nil, err
+	}
+	cwd, err := os.Getwd()
+	if err != nil {
+		return nil, nil, stderrors.Join(err, host.Close())
+	}
+	pctx, err := plugin.NewContext(ctx, sink, sink, host, nil, cwd, nil, false, nil,
+		pschema.NewLoaderServerFromContext, convert.NewMapperServerFromContext)
+	if err != nil {
+		return nil, nil, stderrors.Join(err, host.Close())
+	}
+	return pschema.NewPluginLoader(pctx), func() error {
+		return stderrors.Join(pctx.Close(), host.Close())
+	}, nil
+}
+
+// bindSpec mirrors pschema.ImportSpec's contract (returns the binding
+// diagnostics as the error when they contain errors) while binding with an
+// explicit loader, which ImportSpec does not accept. Unlike ImportSpec,
+// pschema.BindSpec also validates the spec against the package metaschema.
+func bindSpec(spec pschema.PackageSpec, loader pschema.Loader) (*pschema.Package, error) {
+	pkg, diags, err := pschema.BindSpec(spec, loader, pschema.ValidationOptions{
+		AllowDanglingReferences: true,
+	})
+	if err != nil {
+		return nil, err
+	}
+	if diags.HasErrors() {
+		return nil, diags
+	}
+	return pkg, nil
 }
 
 // requiredCycleErrSummary is the fragment pulumi's schema binder puts in the
@@ -88,7 +145,7 @@ const requiredCycleErrSummary = "unsatisfiable required-property cycle"
 // continue generating docs. Any other error, or any other package, is left to
 // fail as before so we never silently mask real schema problems.
 func bindGoogleNativeToleratingCycles(
-	spec pschema.PackageSpec, importErr error,
+	spec pschema.PackageSpec, loader pschema.Loader, importErr error,
 ) (*pschema.Package, bool) {
 	if spec.Name != "google-native" {
 		return nil, false
@@ -97,7 +154,7 @@ func bindGoogleNativeToleratingCycles(
 		return nil, false
 	}
 
-	pkg, diags, err := pschema.BindSpec(spec, nil, pschema.ValidationOptions{
+	pkg, diags, err := pschema.BindSpec(spec, loader, pschema.ValidationOptions{
 		AllowDanglingReferences: true,
 	})
 	// BindSpec runs metaschema validation that ImportSpec skips; bail out if it

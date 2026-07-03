@@ -380,5 +380,10 @@
       "repoSlug": "rpothin/pulumi-powerplatform",
       "schemaFile": "schema.json"
     }
+    ,
+    {
+      "repoSlug": "OlivierPaquien/pulumi-freebox",
+      "schemaFile": "schema.json"
+    }
   ]
 }

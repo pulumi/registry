@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/opentelekomcloud/opentelekomcloud/1.36.70/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/opentelekomcloud/opentelekomcloud/1.37.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Opentelekomcloud Provider
@@ -754,6 +754,12 @@ Please note that MFA requires `userId` to be used. Setting `userName` won't work
 * `backoffRetryTimeout` - (Optional) Timeout in seconds for backoff retry due to reaching the rate limit.
   It can be set using the `OS_BACKOFF_RETRY_TIMEOUT` environment
   variable. If not set, default value is used.
+  Default: `60` seconds.
+
+* `requestTimeout` - (Optional) Timeout in seconds for HTTP connection setup,
+  TLS handshake, and response headers. This is not a total request deadline, so
+  large request bodies such as image uploads are not interrupted while streaming.
+  It can be set using the `OS_REQUEST_TIMEOUT` environment variable.
   Default: `60` seconds.
 
 * `enterpriseProjectId` - (Optional) Default Enterprise Project ID for supported resources.

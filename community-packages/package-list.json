@@ -379,6 +379,10 @@
     {
       "repoSlug": "rpothin/pulumi-powerplatform",
       "schemaFile": "schema.json"
+    },
+    {
+      "repoSlug": "firstatlast/pulumi-exedev",
+      "schemaFile": "provider/cmd/pulumi-resource-exedev/schema.json"
     }
   ]
 }

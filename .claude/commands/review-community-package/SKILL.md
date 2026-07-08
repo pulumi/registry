@@ -162,6 +162,8 @@ make bin/resourcedocsgen
 
 Output goes under `themes/default/content/registry/packages/<name>/` and `themes/default/data/registry/packages/<name>.yaml`. Don't commit. Offer to `make serve` so the user can click through the package's preview page locally.
 
+**Publisher allowlist (manual, easy to miss).** `resourcedocsgen` does NOT register the publisher — it only writes the `publisher:` value into the generated YAML. Read that value and confirm it exists as a key in [`tools/resourcedocsgen/pkg/publishers/publisher-names.json`](../../../tools/resourcedocsgen/pkg/publishers/publisher-names.json). If it's absent, add `"<Publisher>": "<slug>"` — single-username publishers map to themselves (`"AdrianSilaghi": "AdrianSilaghi"`), org publishers use a lowercase slug (`"OVHcloud": "ovhcloud"`). A publisher missing from this file fails the `Test Live Registry Publish` check with `publisher "<X>" not found, please add it to publisher-names.json`, so this edit MUST be bundled into the Close-and-continue commit alongside the regenerated metadata.
+
 ---
 
 ## Step 7: sandboxed install (auto-runs when Steps 2, 3, 4, and 5 are clean; container-only)
@@ -346,7 +348,8 @@ Steps:
     - `git checkout master && git pull --ff-only`
     - `git checkout -b <gh-username>/community-package-<provider-name>-continued`
     - Re-apply the `package-list.json` entry from the contributor's PR.
-    - If Step 6 produced files (`themes/default/content/registry/packages/<name>/*`, `themes/default/data/registry/packages/<name>.yaml`, possibly an entry in `tools/resourcedocsgen/pkg/publishers/publisher-names.json`), `git add` them.
+    - If Step 6 produced files (`themes/default/content/registry/packages/<name>/*`, `themes/default/data/registry/packages/<name>.yaml`), `git add` them.
+    - If the publisher was missing from `tools/resourcedocsgen/pkg/publishers/publisher-names.json` and you added it in Step 6, `git add` that too. This is a manual edit (`resourcedocsgen` never writes it), and omitting it fails the `Test Live Registry Publish` check on the continuation PR.
     - Commit. Message: `Continue #<orig-num>: add <provider-name> to community package list`.
     - Push: `git push -u origin HEAD`.
 3. Open the new PR: `gh pr create --base master --title "Add <provider-name> to community package list" --body "<body>"`. Body should include:

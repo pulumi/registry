@@ -78,16 +78,4 @@
             These are the docs for Azure Native v2. We recommend using the latest version, <a class="text-violet-primary hover:underline" href="/registry/packages/azure-native/">Azure Native v3</a>.
         </span>
     </div>
-    {{ else if (eq $package "pulumiservice") }}
-    <div class="note note-info">
-        <div class="icon-and-line">
-            {{ partial "icon" (dict "name" "info" "weight" "fill") }}
-            <div class="line"></div>
-        </div>
-        <div>
-            <p>
-                This provider is currently in preview.
-            </p>
-        </div>
-    </div>
 {{ end }}

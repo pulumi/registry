@@ -383,6 +383,10 @@
     {
       "repoSlug": "OlivierPaquien/pulumi-freebox",
       "schemaFile": "schema.json"
+    },
+    {
+      "repoSlug": "atensecurity/pulumi-thoth",
+      "schemaFile": "provider/cmd/pulumi-resource-thoth/schema.json"
     }
   ]
 }

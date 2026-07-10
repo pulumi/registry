@@ -12,8 +12,14 @@ lint: lint-go lint-markdown
 	yarn run lint
 
 .PHONY: lint-markdown
-lint-markdown:
+lint-markdown: lint-shortcode-delimiters
 	./scripts/lint/lint-markdown.js
+
+# The auto-generated provider _index.md pages are skipped by the front-matter
+# linter, yet a single malformed shortcode delimiter there fails the whole site build.
+.PHONY: lint-shortcode-delimiters
+lint-shortcode-delimiters:
+	./scripts/lint/check-shortcode-delimiters.js
 
 .PHONY: lint-go
 lint-go: lint-resourcedocsgen lint-mktutorial

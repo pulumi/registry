@@ -25,7 +25,9 @@ runs:
           commit-message: "Publish Package Metadata for ${{ inputs.provider_short_name }}@${{ inputs.provider_version }}"
           title: "Publish Package Metadata ${{ inputs.provider_short_name }}@${{ inputs.provider_version }}"
           body: ""
-          branch: "${{ inputs.provider_short_name }}/${{ github.run_id }}-${{ github.run_number }}"
+          # Stable per-provider branch so create-pull-request updates one PR per
+          # provider instead of opening a new one each run.
+          branch: "${{ inputs.provider_short_name }}/publish-metadata"
       - if: steps.create-pr.outputs.pull-request-operation == 'created'
         name: Set Automerge
         uses: peter-evans/enable-pull-request-automerge@v3

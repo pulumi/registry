@@ -113,9 +113,15 @@ body {
         .gs { font-weight: bold; color: #cd3131; }
     }
 
-    // Copy button: dark icon + faint hover on the light panel.
-    .copy-button-container:hover {
-        background: var(--color-violet-100);
+    // Copy button: dark icon on the light panel. Give the container the panel's own
+    // violet-50 so it's opaque (it blends in until hovered) rather than transparent,
+    // which would let scrolled code and the scrollbar show through beneath it.
+    .copy-button-container {
+        background: var(--color-violet-50);
+
+        &:hover {
+            background: var(--color-violet-100);
+        }
     }
 
     .copy-button {

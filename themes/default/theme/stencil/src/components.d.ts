@@ -154,6 +154,10 @@ export namespace Components {
      */
     interface PulumiTooltip {
         "hide": () => Promise<void>;
+        /**
+          * @default "top"
+         */
+        "position": "top" | "left";
         "show": () => Promise<void>;
     }
     interface PulumiTopButton {
@@ -543,6 +547,10 @@ declare namespace LocalJSX {
      * </pulumi-tooltip>
      */
     interface PulumiTooltip {
+        /**
+          * @default "top"
+         */
+        "position"?: "top" | "left";
     }
     interface PulumiTopButton {
     }
@@ -617,6 +625,9 @@ declare namespace LocalJSX {
         "moduleName": string;
         "resourceName": string;
     }
+    interface PulumiTooltipAttributes {
+        "position": "top" | "left";
+    }
     interface PulumiUserToggleAttributes {
         "userId": string;
     }
@@ -640,7 +651,7 @@ declare namespace LocalJSX {
         "pulumi-registry-list-search": PulumiRegistryListSearch;
         "pulumi-resource-links": Omit<PulumiResourceLinks, keyof PulumiResourceLinksAttributes> & { [K in keyof PulumiResourceLinks & keyof PulumiResourceLinksAttributes]?: PulumiResourceLinks[K] } & { [K in keyof PulumiResourceLinks & keyof PulumiResourceLinksAttributes as `attr:${K}`]?: PulumiResourceLinksAttributes[K] } & { [K in keyof PulumiResourceLinks & keyof PulumiResourceLinksAttributes as `prop:${K}`]?: PulumiResourceLinks[K] };
         "pulumi-root": PulumiRoot;
-        "pulumi-tooltip": PulumiTooltip;
+        "pulumi-tooltip": Omit<PulumiTooltip, keyof PulumiTooltipAttributes> & { [K in keyof PulumiTooltip & keyof PulumiTooltipAttributes]?: PulumiTooltip[K] } & { [K in keyof PulumiTooltip & keyof PulumiTooltipAttributes as `attr:${K}`]?: PulumiTooltipAttributes[K] } & { [K in keyof PulumiTooltip & keyof PulumiTooltipAttributes as `prop:${K}`]?: PulumiTooltip[K] };
         "pulumi-top-button": PulumiTopButton;
         "pulumi-user-toggle": Omit<PulumiUserToggle, keyof PulumiUserToggleAttributes> & { [K in keyof PulumiUserToggle & keyof PulumiUserToggleAttributes]?: PulumiUserToggle[K] } & { [K in keyof PulumiUserToggle & keyof PulumiUserToggleAttributes as `attr:${K}`]?: PulumiUserToggleAttributes[K] } & { [K in keyof PulumiUserToggle & keyof PulumiUserToggleAttributes as `prop:${K}`]?: PulumiUserToggle[K] };
     }

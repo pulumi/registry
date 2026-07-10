@@ -186,9 +186,8 @@ pulumi-chooser {
             border: none;
 
             .chooser-toolbar {
-                @apply  mb-0;
+                @apply mb-0;
 
-                //background: transparent;
                 border-bottom: 1px solid var(--docs-border, theme("colors.gray.200"));
             }
         }

@@ -9,7 +9,7 @@ export interface PreferencesState {
     cloud: CloudKey;
     persona: PersonaKey;
     backend: BackEndKey;
-    pythontoolchain: PythonToolchainKey
+    pythontoolchain: PythonToolchainKey;
 }
 
 export interface Banner {

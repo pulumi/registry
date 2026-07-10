@@ -71,7 +71,7 @@ export class Choosable {
         if (this.mode === "global") {
             this.storeUnsubscribe = store.mapStateToProps(this, (state: AppState): { selection: ChooserKey } => {
                 const {
-                    preferences: { language, k8sLanguage, os, cloud, persona, backend },
+                    preferences: { language, k8sLanguage, os, cloud, persona, backend, pythontoolchain },
                 } = state;
 
                 switch (this.type) {
@@ -87,6 +87,13 @@ export class Choosable {
                         return { selection: persona };
                     case "backend":
                         return { selection: backend };
+                    case "pythontoolchain":
+                        return { selection: pythontoolchain };
+                    default:
+                        // Returning an object unconditionally matters: @stencil/redux calls
+                        // Object.keys() on the result, so an undefined return would throw
+                        // inside the store's subscribe listener on every dispatch.
+                        return { selection: this.selection };
                 }
             });
         }

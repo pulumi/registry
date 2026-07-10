@@ -9,24 +9,32 @@ export const gb = new GrowthBook({
     enableDevMode: (window as any).growthbook_dev_mode,
 });
 
-gb.init({ streaming: true });
+// Only initialize when a client key is configured — pages without the injected
+// GrowthBook/analytics globals (e.g. component test pages) must not crash here,
+// since this module runs at load time for anything importing a util.
+if ((window as any).growthbook_sdk_key) {
+    gb.init({ streaming: true });
+}
 
 // Hook up GrowthBook to analytics when ready
-(window as any).analytics.ready(function() {
-    gb.setTrackingCallback((experiment, result) => {
-        (window as any).analytics.track("Experiment Viewed", {
-            experimentId: experiment.key,
-            variationId: result.key,
+const analytics = (window as any).analytics;
+if (analytics && typeof analytics.ready === "function") {
+    analytics.ready(function() {
+        gb.setTrackingCallback((experiment, result) => {
+            (window as any).analytics.track("Experiment Viewed", {
+                experimentId: experiment.key,
+                variationId: result.key,
+            });
         });
-    });
 
-    gb.setAttributes({
-    // Set Anon/UserId for GB
-    ...gb.getAttributes(),
-        id: (window as any).analytics.user().anonymousId(),
-        userId: (window as any).analytics.user().id(),
+        gb.setAttributes({
+        // Set Anon/UserId for GB
+        ...gb.getAttributes(),
+            id: (window as any).analytics.user().anonymousId(),
+            userId: (window as any).analytics.user().id(),
+        })
     })
-})
+}
 
 // Extracts a query string variable from the browser's location.
 export function getQueryVariable(paramKey: string): string | null {

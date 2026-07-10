@@ -15,4 +15,16 @@ pulumi-choosable {
             display: none;
         }
     }
+
+    // Adopted (standalone) language choosables: those rendered as siblings of a
+    // self-closing <pulumi-chooser> rather than nested inside it — how the API-doc
+    // examples are generated, which renders the chooser as a flat toolbar strip.
+    // Their first code block keeps its top margin, leaving it visibly detached
+    // from the toolbar above (the chooser card rules only reach code nested inside
+    // the chooser). Pull that first block flush so the toolbar and code read as one
+    // connected panel. `:not(pulumi-chooser *)` excludes the nested (overview-card)
+    // choosables, whose spacing the card rules already handle.
+    &[type="language"]:not(pulumi-chooser *) > div.active .highlight:first-child > pre {
+        @apply mt-0;
+    }
 }

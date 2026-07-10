@@ -13,11 +13,9 @@ layout: package
 <!-- To change it, please see https://github.com/pulumi/registry/tree/master/tools/mktutorial. -->
 
 <p class="mb-4 inline-flex items-center">
-    <a class="btn btn-primary no-underline mr-2" href="https://github.com/pulumi/examples/tree/master/azure-py-aks" target="_blank">
-        <span class="flex items-center">
-            <i class="fab fa-github pr-1.5"></i>
-            <span>View Code</span>
-        </span>
+    <a class="btn btn-primary no-underline mr-2 h-[46px] gap-2" href="https://github.com/pulumi/examples/tree/master/azure-py-aks" target="_blank">
+        <i class="fab fa-github"></i>
+        <span>View Code</span>
     </a>
     <a href="https://app.pulumi.com/new?template=https://github.com/pulumi/examples/blob/master/azure-py-aks/README.md" target="_blank">
         <img src="https://get.pulumi.com/new/button.svg" alt="Deploy this example with Pulumi">

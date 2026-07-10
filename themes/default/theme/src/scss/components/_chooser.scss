@@ -141,9 +141,12 @@ pulumi-chooser {
 
         // Code units (.highlight / .example-program) carry their spacing on the
         // wrapper and collapse it at the choosable's edges so the card padding isn't
-        // doubled (first → bottom only, last → top only).
+        // doubled (first → bottom only, last → top only). The pre itself stays
+        // margin-free vertically (my-0, not just mb-0): unlike docs, the registry's
+        // base pre has a top margin that would otherwise leak past the toolbar in the
+        // flush code-only case.
         pre {
-            @apply mb-0;
+            @apply my-0;
         }
 
         pulumi-choosable > div > .highlight,

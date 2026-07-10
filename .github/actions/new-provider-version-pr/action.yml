@@ -25,11 +25,8 @@ runs:
           commit-message: "Publish Package Metadata for ${{ inputs.provider_short_name }}@${{ inputs.provider_version }}"
           title: "Publish Package Metadata ${{ inputs.provider_short_name }}@${{ inputs.provider_version }}"
           body: ""
-          # Stable, per-provider branch so each run UPDATES the existing PR instead
-          # of opening a new one. Previously this embedded ${{ github.run_id }}, which
-          # produced a fresh branch+PR every run and let failing publishes pile up
-          # (e.g. 24 stacked megaport PRs). One open PR per provider, auto-replaced
-          # when a newer (or fixed) render is generated.
+          # Stable per-provider branch so create-pull-request updates one PR per
+          # provider instead of opening a new one each run.
           branch: "${{ inputs.provider_short_name }}/publish-metadata"
       - if: steps.create-pr.outputs.pull-request-operation == 'created'
         name: Set Automerge

@@ -23,8 +23,6 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-// readRemoteFile should ask intermediary caches/CDNs to revalidate, so the
-// publish pipeline is less likely to fetch a stale (e.g. corrupted) edge object.
 func TestReadRemoteFileSendsNoCacheHeaders(t *testing.T) {
 	t.Parallel()
 

@@ -425,7 +425,6 @@ func readRemoteFile(url, repoOwner string) ([]byte, error) {
 		return nil, errors.Wrapf(err, "creating request for %q", url)
 	}
 
-	// Ask intermediary caches/CDNs to revalidate rather than serve a stale copy.
 	// Mirror-hosted docs are occasionally re-rendered upstream; without this we can
 	// fetch a stale (e.g. corrupted) edge object even after the origin is fixed.
 	req.Header.Set("Cache-Control", "no-cache")

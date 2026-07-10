@@ -2,39 +2,17 @@
 "use strict";
 
 /**
- * Fails if any registry content contains a malformed Hugo shortcode opening
- * delimiter, e.g. "{{ < chooser" or "{{ % choosable" instead of "{{<" / "{{%".
- *
- * Hugo requires the marker ("<" for HTML/block shortcodes, "%" for markdown
- * shortcodes) to immediately follow "{{". A stray space makes Hugo stop
- * recognizing the opening tag while still recognizing the paired closing tag,
- * which aborts the ENTIRE site build:
- *
- *     shortcode "X" does not evaluate .Inner or .InnerDeindent, yet a closing
- *     tag was provided
- *
- * Because a single malformed page is fatal, and because the auto-generated
- * provider `_index.md` files (which carry the "fetched from" header) are skipped
- * by the front-matter linter, this dedicated check scans every markdown file so
- * the failure surfaces as a clear, local lint error instead of a cryptic
- * whole-site build abort. The matching mirrors resourcedocsgen's
- * sanitizeShortcodeDelimiters guard.
+ * A stray space in a shortcode delimiter ("{{ <" instead of "{{<") aborts the
+ * entire Hugo build. The front-matter linter skips the auto-generated provider
+ * `_index.md` files where this tends to appear, so scan every markdown file.
+ * Mirrors resourcedocsgen's sanitizeShortcodeDelimiters guard.
  */
 
 const fs = require("fs");
 const path = require("path");
 
-// Matches "{{" followed by one or more spaces/tabs and then a "<" or "%" marker.
-// Narrow on purpose: a space after "{{" followed by anything else (e.g. a Go
-// template expression "{{ .Value }}") is not matched, and the closing side
-// (the legitimate space in `... >}}`) is never touched.
 const MALFORMED_DELIMITER = /\{\{[ \t]+[<%]/;
 
-/**
- * Returns the malformed shortcode delimiters found in the given file content.
- * @param {string} content
- * @returns {{line: number, text: string}[]}
- */
 function findMalformedShortcodeDelimiters(content) {
     const hits = [];
     const lines = content.split("\n");
@@ -46,11 +24,6 @@ function findMalformedShortcodeDelimiters(content) {
     return hits;
 }
 
-/**
- * Recursively collects all `.md` files under a directory.
- * @param {string} dir
- * @returns {string[]}
- */
 function collectMarkdownFiles(dir) {
     const out = [];
     for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {

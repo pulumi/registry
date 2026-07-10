@@ -15,9 +15,8 @@ lint: lint-go lint-markdown
 lint-markdown: lint-shortcode-delimiters
 	./scripts/lint/lint-markdown.js
 
-# Fails fast on malformed Hugo shortcode delimiters ("{{ <" / "{{ %") in any
-# content file, including the auto-generated provider _index.md pages that the
-# front-matter linter skips. A single malformed delimiter fails the whole site build.
+# The auto-generated provider _index.md pages are skipped by the front-matter
+# linter, yet a single malformed shortcode delimiter there fails the whole site build.
 .PHONY: lint-shortcode-delimiters
 lint-shortcode-delimiters:
 	./scripts/lint/check-shortcode-delimiters.js

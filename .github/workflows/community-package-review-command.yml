@@ -31,7 +31,6 @@ jobs:
 
       - id: gate
         env:
-          GH_TOKEN: ${{ github.token }}
           GITHUB_TOKEN: ${{ github.token }}
           REPO: ${{ github.repository }}
           PR: ${{ github.event.issue.number }}
@@ -39,7 +38,7 @@ jobs:
           COMMENTER: ${{ github.event.comment.user.login }}
           COMMENT_ID: ${{ github.event.comment.id }}
           COOLDOWN_MINUTES: "15"
-        run: scripts/ci/community-package/review-command.sh
+        run: python3 scripts/ci/community-package/pipeline.py review-command
 
       - if: steps.gate.outputs.proceed == 'true'
         uses: anthropics/claude-code-action@v1

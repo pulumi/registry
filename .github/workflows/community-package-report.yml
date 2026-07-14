@@ -21,13 +21,13 @@ jobs:
 
       - uses: actions/download-artifact@v4
         with:
-          name: build-manifest
+          name: fact-sheets
           run-id: ${{ github.event.workflow_run.id }}
           github-token: ${{ github.token }}
 
       - name: Post the fact-sheet as a sticky PR comment
         env:
-          GH_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ github.token }}
           REPO: ${{ github.repository }}
           PR_HEAD: ${{ github.event.workflow_run.head_branch }}
-        run: scripts/ci/community-package/post-fact-sheet.sh
+        run: python3 scripts/ci/community-package/pipeline.py report

@@ -1,6 +1,5 @@
 __pycache__/
 .mypy_cache/
 *.pyc
-build-manifest-*.json
 *.factsheet.md
 review-input/

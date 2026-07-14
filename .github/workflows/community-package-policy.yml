@@ -1,7 +1,7 @@
-# Fails CI if any community-package workflow both holds a secret and runs a contributor's
-# code, since that combination would let a malicious package steal the secret. Runs on every
-# change to the pipeline and holds no secrets itself.
-name: Community package pipeline policy
+# Runs the community-package pipeline's unit tests and type-check on every change to it. The
+# tests include the guard that no workflow both holds a secret and runs a contributor's code
+# (SecretCodeSeparationTests). Holds no secrets itself.
+name: Community package tests
 
 on:
   pull_request:
@@ -13,12 +13,6 @@ permissions:
   contents: read
 
 jobs:
-  separation:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7
-      - run: scripts/ci/community-package/assert-secret-code-separation.sh
-
   test:
     runs-on: ubuntu-latest
     steps:

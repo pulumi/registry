@@ -24,14 +24,11 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Reject anything but the package-list entry
-        run: scripts/ci/community-package/assert-minimal-diff.sh origin/${{ github.base_ref }}
-
       - uses: actions/setup-go@v5
         with:
           go-version-file: tools/resourcedocsgen/go.mod
 
-      - name: Verify changed entries → build manifest + fact-sheet
+      - name: Verify the added entry and write the fact-sheet
         env:
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: python3 scripts/ci/community-package/pipeline.py check --diff "origin/${{ github.base_ref }}"
@@ -39,7 +36,5 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: build-manifest
-          path: |
-            build-manifest-*.json
-            *.factsheet.md
+          name: fact-sheets
+          path: "*.factsheet.md"

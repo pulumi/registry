@@ -7,6 +7,7 @@ Run: python3 -m unittest scripts/ci/community-package/test_pipeline.py -v
 """
 from __future__ import annotations
 
+import re
 import sys
 import unittest
 from typing import Any
@@ -175,6 +176,36 @@ class FactsheetTests(unittest.TestCase):
         # a doc containing a ``` fence must be wrapped in a longer fence
         self.assertEqual(p._fence_for("no ticks"), "```")
         self.assertEqual(p._fence_for("```go\nx\n```"), "````")
+
+
+class SecretCodeSeparationTests(unittest.TestCase):
+    """No community-package workflow may both hold a secret and run a contributor's code;
+    if one did, a malicious package could read the secret."""
+
+    EXEC = re.compile(r"pipeline\.py check(?![-\w])|npm (install|ci)|pip (install|download)"
+                      r"|go get|go mod download|pulumi plugin install")
+    SECRET = re.compile(r"secrets\.|ESC_ACTION|esc-action|ANTHROPIC_API_KEY|PULUMI_BOT_TOKEN|id-token: *write")
+
+    def _workflows(self) -> list[Path]:
+        wfs = sorted((Path(__file__).resolve().parents[3] / ".github/workflows").glob("community-package-*.yml"))
+        self.assertTrue(wfs, "no community-package workflows found")
+        return wfs
+
+    def test_no_secret_shares_a_job_with_contributor_code(self) -> None:
+        for wf in self._workflows():
+            text = wf.read_text()
+            mixes = bool(self.EXEC.search(text)) and bool(self.SECRET.search(text))
+            self.assertFalse(mixes, f"{wf.name} mixes secrets with contributor-code execution")
+
+    def test_no_pull_request_target(self) -> None:
+        for wf in self._workflows():
+            self.assertNotIn("pull_request_target", wf.read_text(), f"{wf.name} uses pull_request_target")
+
+    def test_secret_workflow_never_checks_out_the_pr_head(self) -> None:
+        for wf in self._workflows():
+            text = wf.read_text()
+            if self.SECRET.search(text):
+                self.assertNotRegex(text, r"ref:.*\.head\.", f"{wf.name} checks out the PR head with a secret present")
 
 
 if __name__ == "__main__":

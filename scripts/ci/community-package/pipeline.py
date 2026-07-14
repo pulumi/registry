@@ -1,16 +1,15 @@
 #!/usr/bin/env python3
-"""Data-processing core of the community package pipeline.
+"""The community package pipeline: one module behind every workflow.
 
-The JSON-assembly steps (verify, install-probe, doc-lint, manifest) live here in typed
-Python instead of bash + jq, which repeatedly mis-assembled JSON. The thin CLI glue
-(the comment commands and the secret-vs-code separation check) stays in bash.
-
-Subcommands: check (verify added entries, on the PR), publish (post-merge on master),
-docs (pre-fetch a provider's docs for /review). stdlib only; no third-party deps.
+check verifies an added entry (resolve the release, install-probe the SDKs, doc-lint) and
+writes a fact-sheet. report posts it as a sticky PR comment. check-command and
+review-command handle the /check and /review comments. publish rebuilds and locks after
+merge. Every GitHub call goes through the REST API over urllib; stdlib only, no deps.
 """
 from __future__ import annotations
 
 import argparse
+import base64
 import hashlib
 import json
 import os
@@ -20,7 +19,8 @@ import sys
 import tempfile
 import urllib.error
 import urllib.request
-from dataclasses import asdict, dataclass, field
+from dataclasses import dataclass, field
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Callable, Literal
 
@@ -115,8 +115,18 @@ def _fetch(url: str, token: str | None) -> bytes:
         return bytes(resp.read())
 
 
-def gh_api(path: str) -> Any:
-    return json.loads(_fetch(f"https://api.github.com{path}", os.environ.get("GITHUB_TOKEN")))
+def gh_api(path: str, method: str = "GET", data: dict[str, Any] | None = None) -> Any:
+    body = json.dumps(data).encode() if data is not None else None
+    req = urllib.request.Request(f"https://api.github.com{path}", data=body, method=method)
+    token = os.environ.get("GITHUB_TOKEN")
+    if token:
+        req.add_header("Authorization", f"Bearer {token}")
+    req.add_header("Accept", "application/vnd.github+json")
+    if body is not None:
+        req.add_header("Content-Type", "application/json")
+    with urllib.request.urlopen(req, timeout=30) as resp:
+        payload = resp.read()
+    return json.loads(payload) if payload else None
 
 
 def raw(slug: str, ref: str, path: str) -> bytes | None:
@@ -135,6 +145,67 @@ def resolve_commit_sha(slug: str, tag: str) -> str:
     if ref["type"] == "tag":  # annotated tag → dereference to the commit
         return str(gh_api(f"/repos/{slug}/git/tags/{ref['sha']}")["object"]["sha"])
     return str(ref["sha"])
+
+
+# ── comment commands (/check, /review) and the reporter ──────────────────────
+FACTSHEET_MARKER = "<!-- community-package-fact-sheet -->"
+
+
+def _repo() -> str:
+    return os.environ.get("REPO") or os.environ["GITHUB_REPOSITORY"]
+
+
+def react(comment_id: str, content: str) -> None:
+    try:
+        gh_api(f"/repos/{_repo()}/issues/comments/{comment_id}/reactions", "POST", {"content": content})
+    except Exception:
+        pass
+
+
+def say(pr: int, body: str) -> None:
+    gh_api(f"/repos/{_repo()}/issues/{pr}/comments", "POST", {"body": body})
+
+
+def pr_head(pr: int) -> tuple[str, str]:
+    d = gh_api(f"/repos/{_repo()}/pulls/{pr}")
+    return str(d["user"]["login"]), str(d["head"]["sha"])
+
+
+def authorized(mode: str, commenter: str, author: str, assoc: str) -> bool:
+    if mode == "author-or-maintainer" and commenter == author:
+        return True
+    return assoc in ("OWNER", "MEMBER", "COLLABORATOR")
+
+
+def minutes_since_last_run(sha: str, name_pattern: str) -> int | None:
+    matching = [r for r in gh_api(f"/repos/{_repo()}/commits/{sha}/check-runs")["check_runs"]
+                if re.search(name_pattern, r["name"])]
+    if not matching:
+        return None
+    last = max(matching, key=lambda r: str(r["started_at"]))["started_at"]
+    started = datetime.strptime(last, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
+    return int((datetime.now(timezone.utc) - started).total_seconds() // 60)
+
+
+def sticky_comment(pr: int) -> dict[str, Any] | None:
+    for c in gh_api(f"/repos/{_repo()}/issues/{pr}/comments"):
+        if FACTSHEET_MARKER in c["body"]:
+            return dict(c)
+    return None
+
+
+def prefetch_docs(base: str, head: str, out: Path) -> None:
+    """Fetch each added provider's docs, README, and schema for the /review AI step to read.
+    Downloads only; never executes provider code."""
+    for entry in diff_entries(base, head):
+        tag = latest_tag(entry.repoSlug)
+        sha = resolve_commit_sha(entry.repoSlug, tag)
+        dest = out / entry.repoSlug.split("/")[-1]
+        dest.mkdir(parents=True, exist_ok=True)
+        for path in ("docs/_index.md", "docs/installation-configuration.md", "README.md", entry.schemaFile):
+            data = raw(entry.repoSlug, sha, path)
+            if data is not None:
+                (dest / Path(path).name).write_bytes(data)
 
 
 # ── entries ─────────────────────────────────────────────────────────────────
@@ -468,29 +539,46 @@ def factsheet(m: Manifest) -> str:
 
 def _emit(m: Manifest, out_dir: Path, idx: int) -> None:
     out_dir.mkdir(parents=True, exist_ok=True)
-    (out_dir / f"build-manifest-{idx}.json").write_text(json.dumps(asdict(m), indent=2))
     fs = factsheet(m)
-    (out_dir / f"build-manifest-{idx}.factsheet.md").write_text(fs)
-    summary = os.environ.get("GITHUB_STEP_SUMMARY")
-    if summary:
-        with open(summary, "a") as fh:
-            fh.write(fs + "\n")
+    (out_dir / f"{idx}.factsheet.md").write_text(fs)
+    _write_summary(fs)
     print(fs)
 
 
 # ── cli ─────────────────────────────────────────────────────────────────────
+def _write_summary(text: str) -> None:
+    summary = os.environ.get("GITHUB_STEP_SUMMARY")
+    if summary:
+        with open(summary, "a") as fh:
+            fh.write(text + "\n")
+
+
+def _assert_entry_only(base_ref: str) -> None:
+    diff = subprocess.run(["git", "diff", "--name-only", f"{base_ref}...HEAD"],
+                          capture_output=True, text=True).stdout
+    offending = [f for f in diff.splitlines() if f and f != str(PACKAGE_LIST)]
+    if offending:
+        lines = [f"## ❌ This PR must change only `{PACKAGE_LIST}`", "",
+                 "The following files do not belong in a community package PR. They are",
+                 "generated and committed automatically after merge:", ""]
+        lines += [f"- `{f}`" for f in offending]
+        _write_summary("\n".join(lines))
+        raise SystemExit("PR changes files other than the package list")
+
+
 def _cmd_check(args: argparse.Namespace) -> int:
-    ensure_resourcedocsgen()
     out_dir = Path(args.out)
     if args.entry:
         entries = [Entry(args.entry[0], args.entry[1])]
     else:
+        _assert_entry_only(args.diff)
         base = subprocess.run(["git", "show", f"{args.diff}:{PACKAGE_LIST}"],
                               capture_output=True, text=True).stdout or '{"include":[]}'
         entries = diff_entries(base, PACKAGE_LIST.read_text())
     if not entries:
         print("no changed entries")
         return 0
+    ensure_resourcedocsgen()
     rc = 0
     for i, entry in enumerate(entries):
         m = verify(entry)
@@ -519,17 +607,85 @@ def _cmd_publish(args: argparse.Namespace) -> int:
     return 0
 
 
-def _cmd_docs(args: argparse.Namespace) -> int:
-    # Pre-fetch provider docs + schema for the /review AI step to Read (no execution).
-    for entry in diff_entries(Path(args.base).read_text(), Path(args.head).read_text()):
-        tag = latest_tag(entry.repoSlug)
-        sha = resolve_commit_sha(entry.repoSlug, tag)
-        dest = Path(args.out) / entry.repoSlug.split("/")[-1]
-        dest.mkdir(parents=True, exist_ok=True)
-        for path in ("docs/_index.md", "docs/installation-configuration.md", "README.md", entry.schemaFile):
-            data = raw(entry.repoSlug, sha, path)
-            if data is not None:
-                (dest / Path(path).name).write_bytes(data)
+def _cmd_report(args: argparse.Namespace) -> int:
+    head_ref = os.environ["PR_HEAD"]
+    match = next((p for p in gh_api(f"/repos/{_repo()}/pulls?state=open&per_page=100")
+                  if p["head"]["ref"] == head_ref), None)
+    if match is None:
+        print(f"no open PR for {head_ref}")
+        return 0
+    pr = int(match["number"])
+    sheets = [f.read_text() for f in sorted(Path(".").glob("*.factsheet.md"))]
+    body = FACTSHEET_MARKER + "\n\n" + "\n\n".join(sheets) + "\n"
+    existing = sticky_comment(pr)
+    if existing:
+        gh_api(f"/repos/{_repo()}/issues/comments/{existing['id']}", "PATCH", {"body": body})
+    else:
+        gh_api(f"/repos/{_repo()}/issues/{pr}/comments", "POST", {"body": body})
+    print(f"posted fact-sheet to PR #{pr}")
+    return 0
+
+
+def _rate_limited(pr: int, comment_id: str, sha: str, name: str, cooldown: int) -> bool:
+    elapsed = minutes_since_last_run(sha, name)
+    if elapsed is not None and elapsed < cooldown:
+        react(comment_id, "eyes")
+        say(pr, f"⏳ Rate limited. Last ran {elapsed} min ago; try again in {cooldown - elapsed} min.")
+        return True
+    return False
+
+
+def _cmd_check_command(args: argparse.Namespace) -> int:
+    pr, comment_id = int(os.environ["PR"]), os.environ["COMMENT_ID"]
+    commenter, assoc = os.environ["COMMENTER"], os.environ["ASSOC"]
+    cooldown = int(os.environ.get("COOLDOWN_MINUTES", "10"))
+    author, sha = pr_head(pr)
+    if not authorized("author-or-maintainer", commenter, author, assoc):
+        react(comment_id, "-1")
+        return 0
+    if _rate_limited(pr, comment_id, sha, "check", cooldown):
+        return 0
+    run = next(iter(gh_api(
+        f"/repos/{_repo()}/actions/workflows/community-package-check.yml/runs"
+        f"?event=pull_request&head_sha={sha}")["workflow_runs"]), None)
+    if run is None:
+        react(comment_id, "confused")
+        say(pr, f"No check run found for `{sha[:12]}`. Push any commit to trigger one.")
+        return 0
+    gh_api(f"/repos/{_repo()}/actions/runs/{run['id']}/rerun", "POST")
+    react(comment_id, "+1")
+    sticky = sticky_comment(pr)
+    if sticky:
+        say(pr, f"🔁 Re-checking `{sha[:12]}` against current upstream. "
+                f"The [fact-sheet]({sticky['html_url']}) updates in place when it finishes.")
+    else:
+        say(pr, f"🔁 Checking `{sha[:12]}`. A fact-sheet comment appears when it finishes.")
+    return 0
+
+
+def _review_gate(pr: int, comment_id: str, commenter: str, author: str, assoc: str, sha: str, cooldown: int) -> bool:
+    if not authorized("maintainer-only", commenter, author, assoc):
+        react(comment_id, "-1")
+        return False
+    if _rate_limited(pr, comment_id, sha, "review", cooldown):
+        return False
+    base = PACKAGE_LIST.read_text() if PACKAGE_LIST.exists() else '{"include":[]}'
+    head = base64.b64decode(gh_api(f"/repos/{_repo()}/contents/{PACKAGE_LIST}?ref={sha}")["content"]).decode()
+    prefetch_docs(base, head, Path("review-input"))
+    react(comment_id, "+1")
+    say(pr, "🔎 Running the AI documentation review. Findings post as a comment when it finishes.")
+    return True
+
+
+def _cmd_review_command(args: argparse.Namespace) -> int:
+    pr, comment_id = int(os.environ["PR"]), os.environ["COMMENT_ID"]
+    cooldown = int(os.environ.get("COOLDOWN_MINUTES", "15"))
+    author, sha = pr_head(pr)
+    proceed = _review_gate(pr, comment_id, os.environ["COMMENTER"], author, os.environ["ASSOC"], sha, cooldown)
+    out = os.environ.get("GITHUB_OUTPUT")
+    if out:
+        with open(out, "a") as fh:
+            fh.write(f"proceed={'true' if proceed else 'false'}\n")
     return 0
 
 
@@ -549,11 +705,9 @@ def main(argv: list[str]) -> int:
     pub.add_argument("--diff", metavar="BASEREF", required=True)
     pub.set_defaults(func=_cmd_publish)
 
-    dc = sub.add_parser("docs")
-    dc.add_argument("--base", required=True)
-    dc.add_argument("--head", required=True)
-    dc.add_argument("--out", default="review-input")
-    dc.set_defaults(func=_cmd_docs)
+    sub.add_parser("report").set_defaults(func=_cmd_report)
+    sub.add_parser("check-command").set_defaults(func=_cmd_check_command)
+    sub.add_parser("review-command").set_defaults(func=_cmd_review_command)
 
     args = p.parse_args(argv)
     return int(args.func(args))

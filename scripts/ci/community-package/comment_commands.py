@@ -4,7 +4,6 @@ import os
 from pathlib import Path
 
 import github_api
-import package_list
 
 
 def _authorized(mode: str, commenter: str, author: str, association: str) -> bool:
@@ -21,18 +20,6 @@ def _within_cooldown(pr: int, comment_id: str, sha: str, check_name: str, cooldo
                                     f"try again in {cooldown - elapsed} min.")
         return True
     return False
-
-
-def _prefetch_provider_docs(before: str, after: str, out: Path) -> None:
-    for entry in package_list.added_entries(before, after):
-        tag = github_api.latest_release_tag(entry.repoSlug)
-        sha = github_api.commit_sha_for_tag(entry.repoSlug, tag)
-        destination = out / entry.repoSlug.split("/")[-1]
-        destination.mkdir(parents=True, exist_ok=True)
-        for path in ("docs/_index.md", "docs/installation-configuration.md", "README.md", entry.schemaFile):
-            data = github_api.raw_file(entry.repoSlug, sha, path)
-            if data is not None:
-                (destination / Path(path).name).write_bytes(data)
 
 
 def check_command() -> int:
@@ -62,35 +49,6 @@ def check_command() -> int:
     else:
         github_api.post_comment(pr, f"🔁 Checking `{sha[:12]}`. A fact-sheet comment appears when it finishes.")
     return 0
-
-
-def review_command() -> int:
-    pr, comment_id = int(os.environ["PR"]), os.environ["COMMENT_ID"]
-    commenter, association = os.environ["COMMENTER"], os.environ["ASSOC"]
-    cooldown = int(os.environ.get("COOLDOWN_MINUTES", "15"))
-    author, sha = github_api.pull_request_head(pr)
-
-    proceed = _run_review_gate(pr, comment_id, commenter, author, association, sha, cooldown)
-    output = os.environ.get("GITHUB_OUTPUT")
-    if output:
-        with open(output, "a") as fh:
-            fh.write(f"proceed={'true' if proceed else 'false'}\n")
-    return 0
-
-
-def _run_review_gate(pr: int, comment_id: str, commenter: str, author: str,
-                     association: str, sha: str, cooldown: int) -> bool:
-    if not _authorized("maintainer-only", commenter, author, association):
-        github_api.add_reaction(comment_id, "-1")
-        return False
-    if _within_cooldown(pr, comment_id, sha, "review", cooldown):
-        return False
-    after = github_api.file_content_at(github_api.repo(), str(package_list.PATH), sha)
-    _prefetch_provider_docs(package_list.current(), after, Path("review-input"))
-    github_api.add_reaction(comment_id, "+1")
-    github_api.post_comment(pr, "🔎 Running the AI documentation review. "
-                                "Findings post as a comment when it finishes.")
-    return True
 
 
 def report() -> int:

@@ -2,12 +2,12 @@
 """Command-line entry point for the community package tooling. Each subcommand is one CI step:
 
     check           verify the added entry and write a fact-sheet (runs on the PR)
-    publish         rebuild and lock the entry after merge (runs on master)
+    publish         generate the entry's docs after merge (runs on master)
+    preview         materialize a fork PR's entry so its site preview can be built
     report          post the fact-sheet as a sticky PR comment
     check-command   handle a /check comment
-    review-command  gate a /review comment
 
-The logic lives in the sibling modules (verify_entry, post_merge_publish, fact_sheet, comment_commands, ...); stdlib
+The logic lives in the sibling modules (verify_entry, generate, fact_sheet, comment_commands, ...); stdlib
 only, no third-party dependencies.
 """
 from __future__ import annotations
@@ -20,11 +20,12 @@ from pathlib import Path
 
 import comment_commands
 import fact_sheet
+import generate
+import github_api
 import package_list
-import post_merge_publish
 import resourcedocsgen
 import verify_entry
-from models import Entry, Manifest
+from models import Manifest
 
 
 def _write_step_summary(text: str) -> None:
@@ -56,11 +57,8 @@ def _emit_fact_sheet(manifest: Manifest, out: Path, index: int) -> None:
 
 
 def run_check(args: argparse.Namespace) -> int:
-    if args.entry:
-        entries = [Entry(args.entry[0], args.entry[1])]
-    else:
-        _reject_non_entry_changes(args.diff)
-        entries = package_list.added_entries(package_list.at_ref(args.diff), package_list.current())
+    _reject_non_entry_changes(args.diff)
+    entries = package_list.added_entries(package_list.at_ref(args.diff), package_list.current())
     if not entries:
         print("no changed entries")
         return 0
@@ -69,7 +67,7 @@ def run_check(args: argparse.Namespace) -> int:
     for index, entry in enumerate(entries):
         manifest = verify_entry.verify(entry)
         _emit_fact_sheet(manifest, Path(args.out), index)
-        if not manifest.gate.verificationGreen and not args.no_fail:
+        if not manifest.green:
             failed = True
     return 1 if failed else 0
 
@@ -85,7 +83,7 @@ def publish_pr_title_and_branch(published: list[tuple[str, str]]) -> tuple[str, 
 def run_publish(args: argparse.Namespace) -> int:
     resourcedocsgen.ensure_built()
     entries = package_list.added_entries(package_list.at_ref(args.diff), package_list.current())
-    published = post_merge_publish.publish_entries(entries)
+    published = generate.metadata(entries)
     if not published:
         return 0
     title, branch = publish_pr_title_and_branch(published)
@@ -97,25 +95,39 @@ def run_publish(args: argparse.Namespace) -> int:
     return 0
 
 
+def run_preview(args: argparse.Namespace) -> int:
+    _, head_sha = github_api.pull_request_head(args.pr)
+    base = package_list.current()
+    head = github_api.file_content_at(github_api.repo(), str(package_list.PATH), head_sha)
+    package_list.PATH.write_text(head)  # bring the fork's entry into the tree so the site build sees it
+    entries = package_list.added_entries(base, head)
+    if not entries:
+        print("no added entries to preview")
+        return 0
+    resourcedocsgen.ensure_built()
+    generate.metadata(entries)
+    return 0
+
+
 def main(argv: list[str]) -> int:
     parser = argparse.ArgumentParser(prog="community-package")
     sub = parser.add_subparsers(dest="command", required=True)
 
     check = sub.add_parser("check")
-    source = check.add_mutually_exclusive_group(required=True)
-    source.add_argument("--entry", nargs=2, metavar=("SLUG", "SCHEMAFILE"))
-    source.add_argument("--diff", metavar="BASEREF")
+    check.add_argument("--diff", metavar="BASEREF", required=True)
     check.add_argument("--out", default=".")
-    check.add_argument("--no-fail", action="store_true", help="do not exit non-zero on a red gate")
     check.set_defaults(run=run_check)
 
     published = sub.add_parser("publish")
     published.add_argument("--diff", metavar="BASEREF", required=True)
     published.set_defaults(run=run_publish)
 
+    preview = sub.add_parser("preview")
+    preview.add_argument("--pr", type=int, required=True)
+    preview.set_defaults(run=run_preview)
+
     sub.add_parser("report").set_defaults(run=lambda _: comment_commands.report())
     sub.add_parser("check-command").set_defaults(run=lambda _: comment_commands.check_command())
-    sub.add_parser("review-command").set_defaults(run=lambda _: comment_commands.review_command())
 
     args = parser.parse_args(argv)
     return int(args.run(args))

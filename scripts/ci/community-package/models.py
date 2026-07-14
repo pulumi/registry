@@ -19,31 +19,10 @@ class Version:
 
 
 @dataclass
-class Content:
-    schemaSha256: str
-    docsSha256: str
-
-
-@dataclass
-class PackagePin:
-    tag: str
-    commitSha: str
-    providerName: str
-    schemaSha256: str
-
-
-@dataclass
-class Owner:
-    handle: str
-    alreadyListed: bool
-
-
-@dataclass
 class InstallResult:
     language: str
     command: str
     result: InstallOutcome
-    hash: str = ""
     blocking: bool = False
     error: str = ""
 
@@ -63,23 +42,14 @@ class DocFile:
 
 
 @dataclass
-class Gate:
-    verificationGreen: bool
-    blockingFailures: int
-    requiresMaintainerApproval: bool = True
-
-
-@dataclass
 class Manifest:
     repoSlug: str
     schemaFile: str
     providerName: str
     version: Version
-    content: Content
-    owner: Owner
-    toolchain: dict[str, str]
+    owner: str
     installMatrix: list[InstallResult]
-    docLint: dict[str, list[DocFinding]]
-    gate: Gate
-    docs: list[DocFile] = field(default_factory=list)
+    docLint: list[DocFinding]
+    green: bool
     generation: bool = True
+    docs: list[DocFile] = field(default_factory=list)

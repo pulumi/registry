@@ -25,7 +25,7 @@ def _fence_longer_than_any_run_in(text: str) -> str:
 
 
 def _verdict(manifest: Manifest) -> tuple[str, str]:
-    if manifest.gate.verificationGreen:
+    if manifest.green:
         return "✅", ("**Ready for approval.** All blocking checks passed; a `@pulumi/iac-cloud` "
                      "review is still required to merge.")
     return "❌", ("**Not ready.** A blocking check failed (see below). Fix upstream, then comment "
@@ -35,7 +35,6 @@ def _verdict(manifest: Manifest) -> tuple[str, str]:
 def render(manifest: Manifest) -> str:
     icon, verdict = _verdict(manifest)
     commit_url = f"https://github.com/{manifest.repoSlug}/commit/{manifest.version.commitSha}"
-    owner_note = "already listed" if manifest.owner.alreadyListed else "🆕 first-time contributor"
 
     lines = [
         f"## {icon} `{manifest.providerName}` · community package check",
@@ -52,10 +51,9 @@ def render(manifest: Manifest) -> str:
         label = "plugin install" if result.language == "plugin" else f"{result.language} SDK"
         command = f"`{result.command}`" if result.command else "_not advertised_"
         lines.append(f"| {label} | {_RESULT_ICON.get(result.result, result.result)} | {command} |")
-    lines += ["", f"Owner `{manifest.owner.handle}` · {owner_note} · "
-                  f"schema `sha256:{manifest.content.schemaSha256[:12]}…`"]
+    lines += ["", f"Owner `{manifest.owner}`"]
 
-    findings = manifest.docLint["findings"]
+    findings = manifest.docLint
     lines.append("")
     if findings:
         lines.append(f"**Doc-lint: {len(findings)} finding(s)** (advisory; these break the registry render surfaces):")

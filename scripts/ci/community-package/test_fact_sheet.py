@@ -6,14 +6,13 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 import fact_sheet  # noqa: E402
-from models import Content, DocFile, DocFinding, Gate, InstallResult, Manifest, Owner, Version  # noqa: E402
+from models import DocFile, DocFinding, InstallResult, Manifest, Version  # noqa: E402
 
 
 def _manifest(findings: list[DocFinding], installs: list[InstallResult]) -> Manifest:
     return Manifest(
         "x/pulumi-demo", "s.json", "demo", Version("v1.0.0", "0" * 40),
-        Content("abc123def456", "d"), Owner("x", False), {"resourcedocsgen": "go1.26"},
-        installs, {"findings": findings}, Gate(True, 0),
+        "x", installs, findings, green=True,
     )
 
 
@@ -38,7 +37,7 @@ class RenderTests(unittest.TestCase):
 
     def test_red_gate_shows_not_ready_verdict(self) -> None:
         manifest = _manifest([], [InstallResult("plugin", "pulumi …", "fail", blocking=True)])
-        manifest.gate = Gate(False, 1)
+        manifest.green = False
         out = fact_sheet.render(manifest)
         self.assertIn("❌", out.splitlines()[0])
         self.assertIn("Not ready", out)

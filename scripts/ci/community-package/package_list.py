@@ -30,7 +30,3 @@ def at_ref(ref: str) -> str:
 
 def current() -> str:
     return PATH.read_text() if PATH.exists() else EMPTY
-
-
-def listed_owners() -> set[str]:
-    return {e.repoSlug.split("/")[0] for e in added_entries(EMPTY, current())}

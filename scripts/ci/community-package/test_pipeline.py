@@ -127,6 +127,16 @@ class EntryAndDocTests(unittest.TestCase):
     def test_lint_clean_doc(self) -> None:
         self.assertEqual(p.lint_docs("all good\n[x](https://y)\n![a](https://y/z.png)\n"), [])
 
+    def test_lint_flags_md_suffixed_cross_link(self) -> None:
+        doc = (
+            "see [config](./installation-configuration.md).\n"
+            "ok [config](./installation-configuration)\n"
+            "abs [readme](https://github.com/a/b/blob/main/README.md)\n"
+        )
+        findings = p.lint_docs(doc)
+        self.assertEqual({f.line for f in findings}, {1})
+        self.assertEqual(findings[0].kind, "md-suffixed-link")
+
 
 class FactsheetTests(unittest.TestCase):
     def _manifest(self, findings: list[p.DocFinding], install: list[p.InstallResult]) -> p.Manifest:

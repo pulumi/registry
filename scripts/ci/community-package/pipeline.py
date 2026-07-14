@@ -233,6 +233,7 @@ _LINT = [
     (re.compile(r"<img[^>]+src='(\.|/|[^h])"), "relative-image"),
     (re.compile(r"!\[[^\]]*\]\((\.|/)"), "relative-image"),
     (re.compile(r'<a[^>]+href="(\.|/)'), "raw-relative-link"),
+    (re.compile(r"\]\((?!https?://)[^)]*\.md[)#]"), "md-suffixed-link"),
 ]
 
 

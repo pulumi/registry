@@ -9,6 +9,10 @@ module.exports = {
         const registryItems = [];
 
         registryPackageNames
+            // Versioned nav files (e.g. aws@6.x.json) belong to older package
+            // versions, which are canonicalized to the latest version and must
+            // not be indexed for search.
+            .filter((providerJSON) => !providerJSON.includes("@"))
             .map((providerJSON) => {
                 const providerName = providerJSON.replace(".json", "");
                 const providerResults = [];

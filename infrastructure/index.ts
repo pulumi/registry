@@ -15,6 +15,12 @@ const config = {
     websiteLogsBucketName: stackConfig.require("websiteLogsBucketName"),
     // e2eTestsBucketName is the S3 bucket stores the e2e test results.
     e2eTestsBucketName: stackConfig.require("e2eTestsBucketName"),
+    // versionedDocsStack is the fully qualified name of the stack that owns the
+    // permanent versioned-docs archive bucket (infrastructure/versioned-docs/,
+    // e.g. "pulumi/pulumi-registry-versioned/testing"). When unset — the default
+    // for dev/preview stacks — no archive origin or behaviors are added and the
+    // distribution is unchanged. See scripts/versioned-docs/README.md.
+    versionedDocsStack: stackConfig.get("versionedDocsStack") || undefined,
 };
 
 // Get role arns from datawarehouse stack.
@@ -177,6 +183,25 @@ const logsBucketDeliveryACL = new aws.s3.BucketAclV2("logs-bucket-delivery-acl",
     dependsOn: [logsBucketOwnershipControls],
 });
 
+// --- Versioned-docs archive wiring (optional) -------------------------------
+//
+// Historical provider API doc versions live as write-once snapshots in a
+// permanent S3 bucket owned by the infrastructure/versioned-docs/ stack.
+// Versioned pages share the /registry/packages/<pkg>@<slug>/ URL space with the
+// in-Hugo versioned docs: an origin group serves them from the per-deploy
+// bucket when present and fails over to the archive bucket on 403/404. That
+// way a version aging out of the in-Hugo window keeps its URL with no
+// redirects. Per-package version manifests are served from the archive only,
+// under /registry/versioned/<pkg>/versions.json.
+const archiveOriginId = "versioned-docs-archive";
+const versionedDocsOriginGroupId = "origin-group-versioned-docs";
+
+let archiveWebsiteEndpoint: pulumi.Output<string> | undefined;
+if (config.versionedDocsStack) {
+    const versionedDocsStackRef = new pulumi.StackReference(config.versionedDocsStack);
+    archiveWebsiteEndpoint = versionedDocsStackRef.getOutput("bucketWebsiteEndpoint").apply(v => <string>v);
+}
+
 const redirectFunction = new aws.cloudfront.Function("legacy-version-redirects", {
     runtime: "cloudfront-js-2.0",
     code: fs.readFileSync(`${__dirname}/redirects.js`, "utf-8"),
@@ -256,6 +281,66 @@ const immutableCachePolicy = new aws.cloudfront.ResponseHeadersPolicy("immutable
     },
 });
 
+// The archive origin, origin group, and cache behaviors are only present when
+// versionedDocsStack is configured, so dev/preview stacks are unaffected.
+const archiveOrigins: aws.types.input.cloudfront.DistributionOrigin[] = archiveWebsiteEndpoint ? [
+    {
+        originId: archiveOriginId,
+        domainName: archiveWebsiteEndpoint,
+        customOriginConfig: {
+            // S3 website endpoints only support HTTP (see the origin below).
+            originProtocolPolicy: "http-only",
+            httpPort: 80,
+            httpsPort: 443,
+            originSslProtocols: ["TLSv1.2"],
+        },
+    },
+] : [];
+
+const archiveOriginGroups: aws.types.input.cloudfront.DistributionOriginGroup[] = archiveWebsiteEndpoint ? [
+    {
+        originId: versionedDocsOriginGroupId,
+        failoverCriteria: {
+            // The S3 website error document responds with 404 (and 403 for
+            // permission edge cases); both mean "not in this deploy's bucket",
+            // i.e. the version is older than the in-Hugo window or belongs to a
+            // package that only has archived versions.
+            statusCodes: [403, 404],
+        },
+        members: [
+            { originId: originBucket.arn },
+            { originId: archiveOriginId },
+        ],
+    },
+] : [];
+
+const archiveCacheBehaviors = archiveWebsiteEndpoint ? [
+    // Versioned package docs. Served from the per-deploy bucket when present
+    // (in-Hugo versions, which change per deploy — hence the standard 5-minute
+    // TTLs), failing over to the permanent archive. The redirect function must
+    // be attached explicitly: ordered behaviors do not inherit the default
+    // behavior's function associations, and without it Accept-header
+    // normalization (markdown content negotiation) would fragment the cache.
+    {
+        ...baseCacheBehavior,
+        pathPattern: "/registry/packages/*@*",
+        targetOriginId: versionedDocsOriginGroupId,
+        functionAssociations: [
+            {
+                eventType: "viewer-request",
+                functionArn: redirectFunction.arn,
+            },
+        ],
+    },
+    // Per-package version manifests, served straight from the archive bucket.
+    // The 5-minute edge TTL matches the manifests' own Cache-Control.
+    {
+        ...baseCacheBehavior,
+        pathPattern: "/registry/versioned/*",
+        targetOriginId: archiveOriginId,
+    },
+] : [];
+
 // distributionArgs configures the CloudFront distribution. Relevant documentation:
 // https://www.terraform.io/docs/providers/aws/r/cloudfront_distribution.html
 // https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/distribution-web-values-specify.html
@@ -279,7 +364,10 @@ const distributionArgs: aws.cloudfront.DistributionArgs = {
                 originSslProtocols: ["TLSv1.2"],
             },
         },
+        ...archiveOrigins,
     ],
+
+    originGroups: archiveOriginGroups,
 
     // Default object to serve when no path is given.
     // https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/DefaultRootObject.html
@@ -314,6 +402,7 @@ const distributionArgs: aws.cloudfront.DistributionArgs = {
             maxTtl: oneYear,
             responseHeadersPolicyId: immutableCachePolicy.id,
         },
+        ...archiveCacheBehaviors,
     ],
 
     // "All" is the most broad distribution, and also the most expensive.
@@ -368,4 +457,7 @@ const cdn = new aws.cloudfront.Distribution(
 export const originBucketWebsiteDomain = originBucket.websiteDomain;
 export const originBucketWebsiteEndpoint = originBucket.websiteEndpoint;
 export const cloudFrontDomain = cdn.domainName;
+// Consumed by scripts/versioned-docs/* and the archive workflows to invalidate
+// the manifest after a publish.
+export const cloudFrontDistributionId = cdn.id;
 export const e2eTestsBucketName = e2eTestsBucket.bucket;

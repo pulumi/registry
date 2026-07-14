@@ -1,0 +1,261 @@
+name: Archive one package version
+
+# Builds and publishes ONE (package, version) API-docs snapshot to the
+# permanent versioned-docs archive bucket. Write-once: re-running for an
+# already-published version no-ops unless force is set. Self-activating: when
+# the pulumi/pulumi-registry-versioned/<env> stack doesn't exist (or exports no
+# bucket), the run exits successfully without publishing anything.
+#
+# See scripts/versioned-docs/README.md for the architecture.
+
+on:
+  workflow_dispatch:
+    inputs:
+      package:
+        description: Registry package name (metadata YAML filename stem)
+        required: true
+        type: string
+      version:
+        description: Version to archive (e.g. v6.30.0)
+        required: true
+        type: string
+      schema_url:
+        description: Version-pinned schema URL (discovered automatically when empty)
+        required: false
+        type: string
+        default: ""
+      target_env:
+        description: Target environment
+        required: false
+        type: choice
+        options: [testing, production]
+        default: testing
+      force:
+        description: Overwrite an existing published snapshot
+        required: false
+        type: boolean
+        default: false
+      runner:
+        description: Runner label (use pulumi-service-ubuntu-24.04-16core for aws/azure-native/gcp-sized packages)
+        required: false
+        type: string
+        default: ubuntu-latest
+  workflow_call:
+    inputs:
+      package:
+        required: true
+        type: string
+      version:
+        required: true
+        type: string
+      schema_url:
+        required: false
+        type: string
+        default: ""
+      target_env:
+        required: false
+        type: string
+        default: testing
+      force:
+        required: false
+        type: boolean
+        default: false
+      runner:
+        required: false
+        type: string
+        default: ubuntu-latest
+
+permissions:
+  id-token: write # OIDC: ESC auth + the versioned-docs publisher role
+  contents: read
+
+jobs:
+  publish:
+    name: Archive ${{ inputs.package }} ${{ inputs.version }} (${{ inputs.target_env }})
+    runs-on: ${{ inputs.runner }}
+    environment: ${{ inputs.target_env }}
+    env:
+      GOPATH: ${{ github.workspace }}/go
+      ESC_ACTION_OIDC_AUTH: true
+      ESC_ACTION_OIDC_ORGANIZATION: pulumi
+      ESC_ACTION_OIDC_REQUESTED_TOKEN_TYPE: urn:pulumi:token-type:access_token:organization
+    steps:
+      - name: Fetch secrets from ESC
+        id: esc-secrets
+        uses: pulumi/esc-action@8afe12bb7bb3df0a599e5309ee429ff1079ba85f # v3
+        with:
+          environment: github-secrets/pulumi-registry
+          export-environment-variables: false
+
+      - name: Check out branch
+        uses: actions/checkout@v7
+        with:
+          token: ${{ steps.esc-secrets.outputs.PULUMI_BOT_TOKEN }}
+          # Full history needed for registry-mirror-discover (blessed packages)
+          fetch-depth: 0
+
+      - name: Install Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: "24.x"
+          cache: "yarn"
+          cache-dependency-path: |
+            yarn.lock
+            themes/default/yarn.lock
+            themes/default/theme/yarn.lock
+            themes/default/theme/stencil/yarn.lock
+
+      - name: Install Go
+        uses: actions/setup-go@v6
+        with:
+          go-version: 1.26.x
+
+      - name: Install Hugo
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: "0.157.0"
+          extended: true
+
+      - name: Install yq
+        run: |
+          if ! command -v yq >/dev/null; then
+            sudo curl -fsSL -o /usr/local/bin/yq \
+              "https://github.com/mikefarah/yq/releases/download/v4.44.3/yq_linux_amd64"
+            sudo chmod +x /usr/local/bin/yq
+          fi
+
+      - name: Install Pulumi CLI
+        uses: pulumi/actions@8e5e406f4007fca908480587cb9893c07090f58d # v7
+
+      - name: Configure git for private Go modules
+        run: git config --global url."https://${{ steps.esc-secrets.outputs.PULUMI_BOT_TOKEN }}:x-oauth-basic@github.com/pulumi/registry-mirror-tools".insteadOf "https://github.com/pulumi/registry-mirror-tools"
+
+      - name: Cache provider schemas
+        uses: actions/cache@v6
+        with:
+          path: .cache/schemas
+          key: archive-schemas-${{ inputs.package }}-${{ inputs.version }}
+          restore-keys: |
+            archive-schemas-${{ inputs.package }}-
+            archive-schemas-
+
+      # Self-activation check: resolve the archive bucket + publisher role from
+      # the storage stack, and the CloudFront distribution id from the site
+      # stack. An absent stack (or empty bucket output) means the environment
+      # hasn't been stood up — exit cleanly so this workflow can be wired in
+      # before the infrastructure exists.
+      - name: Resolve versioned-docs publish target
+        id: target
+        env:
+          PULUMI_ACCESS_TOKEN: ${{ steps.esc-secrets.outputs.PULUMI_ACCESS_TOKEN }}
+        run: |
+          set -euo pipefail
+          STORAGE_STACK="pulumi/pulumi-registry-versioned/${{ inputs.target_env }}"
+          BUCKET=$(pulumi stack output bucketNameOutput --stack "$STORAGE_STACK" 2>/dev/null || true)
+          ROLE=$(pulumi stack output publisherRoleArn --stack "$STORAGE_STACK" 2>/dev/null || true)
+          DIST_ID=""
+          if [[ -n "${{ vars.PULUMI_STACK_NAME }}" ]]; then
+            DIST_ID=$(pulumi stack output cloudFrontDistributionId --stack "${{ vars.PULUMI_STACK_NAME }}" 2>/dev/null || true)
+          fi
+          if [[ -z "$BUCKET" || -z "$ROLE" ]]; then
+            echo "publish=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::Versioned-docs archive stack $STORAGE_STACK is not stood up; skipping publish."
+            exit 0
+          fi
+          {
+            echo "publish=true"
+            echo "bucket=$BUCKET"
+            echo "role=$ROLE"
+            echo "distribution_id=$DIST_ID"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Resolve schema URL
+        id: schema
+        if: steps.target.outputs.publish == 'true'
+        env:
+          GITHUB_TOKEN: ${{ steps.esc-secrets.outputs.PULUMI_BOT_TOKEN }}
+          PULUMI_ACCESS_TOKEN: ${{ steps.esc-secrets.outputs.PULUMI_ACCESS_TOKEN }}
+        run: |
+          set -euo pipefail
+          SCHEMA_URL="${{ inputs.schema_url }}"
+          if [[ -z "$SCHEMA_URL" ]]; then
+            BARE_VERSION="${{ inputs.version }}"
+            BARE_VERSION="${BARE_VERSION#v}"
+            DISCOVERY=$(./scripts/versioned-docs/discover-versions.sh "${{ inputs.package }}" --major-count 10)
+            SCHEMA_URL=$(printf '%s' "$DISCOVERY" | jq -r --arg v "$BARE_VERSION" \
+              '.versions[] | select(.version == $v) | .schema_url' | head -1)
+            if [[ -z "$SCHEMA_URL" || "$SCHEMA_URL" == "null" ]]; then
+              echo "::error::Could not discover a schema URL for ${{ inputs.package }} ${{ inputs.version }}"
+              printf '%s' "$DISCOVERY" | jq '.skipped' || true
+              exit 1
+            fi
+          fi
+          echo "url=$SCHEMA_URL" >> "$GITHUB_OUTPUT"
+
+      - name: Build snapshot
+        if: steps.target.outputs.publish == 'true'
+        env:
+          GITHUB_TOKEN: ${{ steps.esc-secrets.outputs.PULUMI_BOT_TOKEN }}
+          NODE_OPTIONS: "--max_old_space_size=8192"
+        run: |
+          ./scripts/versioned-docs/build-snapshot.sh \
+            --package "${{ inputs.package }}" \
+            --version "${{ inputs.version }}" \
+            --schema-url "${{ steps.schema.outputs.url }}" \
+            --out-dir out
+
+      - name: Assert injection points
+        if: steps.target.outputs.publish == 'true'
+        run: ./scripts/versioned-docs/assert-head-tag.sh out/snapshot
+
+      - name: Compute hugo-window manifest entries
+        id: hugo-window
+        if: steps.target.outputs.publish == 'true'
+        env:
+          GITHUB_TOKEN: ${{ steps.esc-secrets.outputs.PULUMI_BOT_TOKEN }}
+          PULUMI_ACCESS_TOKEN: ${{ steps.esc-secrets.outputs.PULUMI_ACCESS_TOKEN }}
+        run: |
+          set -euo pipefail
+          PLAN=$(./scripts/versioned-docs/reconcile-package.sh "${{ inputs.package }}")
+          echo "window=$(printf '%s' "$PLAN" | jq -c '.hugo_window')" >> "$GITHUB_OUTPUT"
+
+      - name: Configure AWS credentials (publisher role)
+        if: steps.target.outputs.publish == 'true'
+        uses: aws-actions/configure-aws-credentials@v6
+        with:
+          role-to-assume: ${{ steps.target.outputs.role }}
+          role-session-name: registry-versioned-docs-publish
+          aws-region: us-west-2
+
+      - name: Publish snapshot
+        if: steps.target.outputs.publish == 'true'
+        run: |
+          args=(
+            --package "${{ inputs.package }}"
+            --version "${{ inputs.version }}"
+            --src out/snapshot
+            --nav-file out/nav.json
+            --bucket "${{ steps.target.outputs.bucket }}"
+            --hugo-window '${{ steps.hugo-window.outputs.window }}'
+          )
+          if [[ -n "${{ steps.target.outputs.distribution_id }}" ]]; then
+            args+=(--distribution-id "${{ steps.target.outputs.distribution_id }}")
+          fi
+          if [[ "${{ inputs.force }}" == "true" ]]; then
+            args+=(--force)
+          fi
+          ./scripts/versioned-docs/publish-version.sh "${args[@]}"
+
+      - name: Summary
+        if: always()
+        run: |
+          {
+            echo "## Archive ${{ inputs.package }} ${{ inputs.version }} (${{ inputs.target_env }})"
+            if [[ "${{ steps.target.outputs.publish }}" != "true" ]]; then
+              echo "- Skipped: archive stack not stood up"
+            else
+              MAJOR="${{ inputs.version }}"; MAJOR="${MAJOR#v}"; MAJOR="${MAJOR%%.*}"
+              echo "- Schema: ${{ steps.schema.outputs.url }}"
+              echo "- URL: https://www.pulumi.com/registry/packages/${{ inputs.package }}@${MAJOR}.x/"
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"

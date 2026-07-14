@@ -42,6 +42,11 @@ let allObjects = [...filteredPageObjects, ...registryObjects];
 // https://github.com/pulumi/pulumi-azure-native/issues/3420
 allObjects = allObjects.filter((o) => !o.href.includes("azure-native-v2"));
 
+// Versioned package pages (e.g. /registry/packages/aws@6.x/...) are older
+// versions whose canonical URL points at the latest version, so they are
+// excluded from search entirely.
+allObjects = allObjects.filter((o) => !o.href.includes("@"));
+
 // Write the results, just so we have them.
 console.log(" ↳ Writing results...");
 fs.writeFileSync("./search-index.json", JSON.stringify(allObjects, null, 4));

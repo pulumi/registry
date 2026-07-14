@@ -455,7 +455,13 @@ Templates parse versioned package names to extract the base name and version slu
 {{ $basePackageName := cond $isVersioned (index (split $rawPackageName "@") 0) $rawPackageName }}
 ```
 
-The version selector dropdown appears on package pages when multiple versions exist, reading from `$.Site.Data.registry.package_versions`.
+The version selector dropdown appears on package pages when multiple versions exist, reading from `$.Site.Data.registry.package_versions`. A client-side loader (`/registry/js/versioned-docs.js`) additionally merges **archived** versions into the dropdown — see the next section.
+
+**Archived versioned docs (all other packages + older-than-window versions)**:
+
+The in-Hugo system above only covers blessed packages' last 3 majors. Everything else — every other package's older majors, and blessed majors that age out of the window — is served from a **write-once archive**: immutable HTML snapshots in a permanent S3 bucket (`pulumi-registry-versioned-{env}`, owned by `infrastructure/versioned-docs/`), reached through a CloudFront origin group on `/registry/packages/*@*` that fails over from the per-deploy origin bucket on 403/404 (so URLs never change when a version leaves the in-Hugo window). Per-package version manifests live at `/registry/versioned/<pkg>/versions.json`. Snapshots are produced by a targeted per-(package, version) Hugo build and published by the `archive-package-version.yml` / `archive-backfill.yml` / `archive-reconcile.yml` workflows.
+
+The full design, scripts, and runbooks are documented in [`scripts/versioned-docs/README.md`](scripts/versioned-docs/README.md).
 
 ### 4.7 Build Caching
 

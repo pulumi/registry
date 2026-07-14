@@ -15,7 +15,12 @@ module.exports = function (env, { mode }) {
             chunkFilename: "chunk-[id]-registry.[contenthash:8].js",
             path: path.resolve(__dirname, "../static/registry/js"),
             publicPath: "/registry/js/",
-            clean: true,
+            // The versioned-docs selector loader is committed source living in
+            // this output directory because /registry/js/versioned-docs.js is a
+            // permanent contract URL referenced by immutable archived doc
+            // snapshots (see scripts/versioned-docs/README.md). Keep it when
+            // cleaning stale bundles.
+            clean: { keep: /^versioned-docs\./ },
         },
         resolve: {
             extensions: [".ts", ".js"],

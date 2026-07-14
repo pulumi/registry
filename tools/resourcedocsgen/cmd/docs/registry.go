@@ -46,7 +46,9 @@ func getRepoSlug(repoURL string) (string, error) {
 		return "", errors.Wrapf(err, "parsing repo url %s", repoURL)
 	}
 
-	return u.Path, nil
+	// Trim slashes so callers interpolating the slug into URL templates don't
+	// produce a double slash (raw.githubusercontent.com rejects those).
+	return strings.Trim(u.Path, "/"), nil
 }
 
 func writeSchemaFile(baseSchemasOutDir, packageName string, schemaBytes []byte) error {

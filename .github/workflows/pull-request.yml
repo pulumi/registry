@@ -168,18 +168,94 @@ jobs:
     env:
       GOPATH: ${{ github.workspace }}/go
     steps:
+      - name: Fetch secrets from ESC
+        id: esc-secrets
+        uses: pulumi/esc-action@8afe12bb7bb3df0a599e5309ee429ff1079ba85f # v3
       - name: Check out branch
         uses: actions/checkout@v7
         with:
           # Full history needed for registry-mirror-discover to find package versions
           fetch-depth: 0
 
-      - uses: ./.github/actions/build-and-deploy-preview
+      - name: Install Node
+        uses: actions/setup-node@v6
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          pulumi_stack_name: ${{ vars.PULUMI_STACK_NAME }}
-          algolia_app_id: ${{ vars.ALGOLIA_APP_ID }}
-          algolia_app_search_key: ${{ vars.ALGOLIA_APP_SEARCH_KEY }}
+          node-version: "24.x"
+          cache: 'yarn'
+          cache-dependency-path: |
+            yarn.lock
+            infrastructure/yarn.lock
+            themes/default/yarn.lock
+            themes/default/theme/yarn.lock
+            themes/default/theme/stencil/yarn.lock
+
+      - name: Install Go
+        uses: actions/setup-go@v6
+        with:
+          go-version: 1.26.x
+
+      - name: Install Hugo
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: "0.157.0"
+          extended: true
+
+      - name: Validate JSON file syntax
+        uses: limitusus/json-syntax-check@v2
+        with:
+          pattern: "community-packages/package-list.json"
+
+      - name: Yarn Install
+        run: yarn install
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v6
+        with:
+          aws-region: us-west-2
+          role-to-assume: arn:aws:iam::571684982431:role/ContinuousDelivery
+          role-duration-seconds: 7200
+          role-session-name: PullRequestPreviewSession
+
+      - name: Install s5cmd for fast S3 uploads
+        run: |
+          S5CMD_VERSION="2.3.0"
+          S5CMD_SHA256="de0fdbfa3aceae55e069ba81a0fc17b2026567637603734a387b2fca06c299b4"
+          curl -fsSL -o /tmp/s5cmd.tar.gz "https://github.com/peak/s5cmd/releases/download/v${S5CMD_VERSION}/s5cmd_${S5CMD_VERSION}_Linux-64bit.tar.gz"
+          echo "${S5CMD_SHA256}  /tmp/s5cmd.tar.gz" | sha256sum --check --strict
+          sudo tar -xz -C /usr/local/bin s5cmd < /tmp/s5cmd.tar.gz
+
+      - name: Configure git for private Go modules
+        run: git config --global url."https://${{ steps.esc-secrets.outputs.PULUMI_BOT_TOKEN }}:x-oauth-basic@github.com/pulumi/registry-mirror-tools".insteadOf "https://github.com/pulumi/registry-mirror-tools"
+
+      - name: Cache provider schemas and generated docs
+        uses: actions/cache@v6
+        with:
+          path: |
+            .cache/schemas
+            .cache/versioned-docs
+            .cache/api-docs
+          key: docs-cache-${{ github.run_id }}
+          restore-keys: docs-cache-
+
+      - name: Get registry-mirror-discover version
+        id: mirror-version
+        run: echo "hash=$(grep 'REGISTRY_MIRROR_TOOLS_COMMIT=' scripts/generate-versioned-docs.sh | cut -d'"' -f2)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache registry-mirror-discover binary
+        uses: actions/cache@v6
+        with:
+          path: bin/registry-mirror-discover
+          key: registry-mirror-discover-${{ steps.mirror-version.outputs.hash }}
+
+      - name: Build and deploy preview
+        run: make ci-pull-request
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PULUMI_ACCESS_TOKEN: ${{ steps.esc-secrets.outputs.PULUMI_ACCESS_TOKEN }}
+          PULUMI_STACK_NAME: ${{ vars.PULUMI_STACK_NAME }}
+          NODE_OPTIONS: "--max_old_space_size=8192"
+          ALGOLIA_APP_ID: ${{ vars.ALGOLIA_APP_ID }}
+          ALGOLIA_APP_SEARCH_KEY: ${{ vars.ALGOLIA_APP_SEARCH_KEY }}
 
   notify:
     if: (github.event.pull_request.user.login == 'pulumi-bot') && failure()

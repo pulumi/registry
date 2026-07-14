@@ -33,4 +33,4 @@ jobs:
           COMMENTER: ${{ github.event.comment.user.login }}
           COMMENT_ID: ${{ github.event.comment.id }}
           COOLDOWN_MINUTES: "10"
-        run: python3 scripts/ci/community-package/pipeline.py check-command
+        run: python3 scripts/ci/community-package/cli.py check-command

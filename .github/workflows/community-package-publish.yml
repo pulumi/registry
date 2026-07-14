@@ -31,7 +31,7 @@ jobs:
 
       - name: Rebuild from pinned SHA, record lock, generate content
         id: build
-        run: python3 scripts/ci/community-package/pipeline.py publish --diff HEAD~1
+        run: python3 scripts/ci/community-package/cli.py publish --diff HEAD~1
 
       - name: Open the publish PR
         if: steps.build.outputs.name != ''

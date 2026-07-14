@@ -31,7 +31,7 @@ jobs:
       - name: Verify the added entry and write the fact-sheet
         env:
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
-        run: python3 scripts/ci/community-package/pipeline.py check --diff "origin/${{ github.base_ref }}"
+        run: python3 scripts/ci/community-package/cli.py check --diff "origin/${{ github.base_ref }}"
 
       - uses: actions/upload-artifact@v4
         if: always()

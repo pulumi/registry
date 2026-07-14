@@ -30,4 +30,4 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
           REPO: ${{ github.repository }}
           PR_HEAD: ${{ github.event.workflow_run.head_branch }}
-        run: python3 scripts/ci/community-package/pipeline.py report
+        run: python3 scripts/ci/community-package/cli.py report

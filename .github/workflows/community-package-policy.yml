@@ -18,8 +18,8 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - name: Unit tests (pure, no network)
-        run: python3 -m unittest -v test_pipeline
+        run: python3 -m unittest discover -p 'test_*.py'
         working-directory: scripts/ci/community-package
       - name: Type-check
-        run: pipx run mypy --strict pipeline.py test_pipeline.py
+        run: pipx run mypy --strict *.py
         working-directory: scripts/ci/community-package

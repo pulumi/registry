@@ -38,7 +38,7 @@ jobs:
           COMMENTER: ${{ github.event.comment.user.login }}
           COMMENT_ID: ${{ github.event.comment.id }}
           COOLDOWN_MINUTES: "15"
-        run: python3 scripts/ci/community-package/pipeline.py review-command
+        run: python3 scripts/ci/community-package/cli.py review-command
 
       - if: steps.gate.outputs.proceed == 'true'
         uses: anthropics/claude-code-action@v1

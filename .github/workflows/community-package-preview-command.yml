@@ -1,7 +1,7 @@
 # On-demand site preview for a community-package PR, including fork PRs. A fork's own
 # pull_request build gets no secrets, so a maintainer triggers this instead (a /preview comment
-# or a manual run). It runs in the base context, materializes the fork's entry and generates
-# its metadata as data (never runs the fork's code), then reuses the registry's preview build.
+# or a manual run). It reuses the registry's preview build (the build-and-deploy-preview
+# action), materializing the fork's entry as data first, and never runs the fork's code.
 name: Community package /preview command
 
 on:
@@ -34,75 +34,14 @@ jobs:
     env:
       GOPATH: ${{ github.workspace }}/go
     steps:
-      - name: Fetch secrets from ESC
-        id: esc-secrets
-        uses: pulumi/esc-action@8afe12bb7bb3df0a599e5309ee429ff1079ba85f # v3
-
       - uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-node@v6
+      - uses: ./.github/actions/build-and-deploy-preview
         with:
-          node-version: "24.x"
-          cache: yarn
-          cache-dependency-path: |
-            yarn.lock
-            infrastructure/yarn.lock
-            themes/default/yarn.lock
-            themes/default/theme/yarn.lock
-            themes/default/theme/stencil/yarn.lock
-      - uses: actions/setup-go@v6
-        with:
-          go-version: 1.26.x
-      - uses: peaceiris/actions-hugo@v3
-        with:
-          hugo-version: "0.157.0"
-          extended: true
-
-      # Fetch the PR, materialize its package-list entry into the tree, generate its metadata,
-      # and shim the event so `make ci-pull-request` keys the bucket, URL and PR comment to this
-      # PR the same way a normal pull_request build would.
-      - name: Materialize the PR entry and shim the event
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-          REPO: ${{ github.repository }}
-        run: |
-          PR="${{ github.event.issue.number || inputs.pr }}"
-          gh api "repos/$REPO/pulls/$PR" > /tmp/pr.json
-          jq -n --slurpfile pr /tmp/pr.json '{number: $pr[0].number, pull_request: $pr[0]}' > /tmp/pr-event.json
-          echo "GITHUB_EVENT_NAME=pull_request" >> "$GITHUB_ENV"
-          echo "GITHUB_EVENT_PATH=/tmp/pr-event.json" >> "$GITHUB_ENV"
-          python3 scripts/ci/community-package/cli.py preview --pr "$PR"
-
-      - name: Yarn Install
-        run: yarn install
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v6
-        with:
-          aws-region: us-west-2
-          role-to-assume: arn:aws:iam::571684982431:role/ContinuousDelivery
-          role-duration-seconds: 7200
-          role-session-name: CommunityPackagePreviewSession
-
-      - name: Install s5cmd for fast S3 uploads
-        run: |
-          S5CMD_VERSION="2.3.0"
-          S5CMD_SHA256="de0fdbfa3aceae55e069ba81a0fc17b2026567637603734a387b2fca06c299b4"
-          curl -fsSL -o /tmp/s5cmd.tar.gz "https://github.com/peak/s5cmd/releases/download/v${S5CMD_VERSION}/s5cmd_${S5CMD_VERSION}_Linux-64bit.tar.gz"
-          echo "${S5CMD_SHA256}  /tmp/s5cmd.tar.gz" | sha256sum --check --strict
-          sudo tar -xz -C /usr/local/bin s5cmd < /tmp/s5cmd.tar.gz
-
-      - name: Configure git for private Go modules
-        run: git config --global url."https://${{ steps.esc-secrets.outputs.PULUMI_BOT_TOKEN }}:x-oauth-basic@github.com/pulumi/registry-mirror-tools".insteadOf "https://github.com/pulumi/registry-mirror-tools"
-
-      - name: Build and deploy preview
-        run: make ci-pull-request
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PULUMI_ACCESS_TOKEN: ${{ steps.esc-secrets.outputs.PULUMI_ACCESS_TOKEN }}
-          PULUMI_STACK_NAME: ${{ vars.PULUMI_STACK_NAME }}
-          NODE_OPTIONS: "--max_old_space_size=8192"
-          ALGOLIA_APP_ID: ${{ vars.ALGOLIA_APP_ID }}
-          ALGOLIA_APP_SEARCH_KEY: ${{ vars.ALGOLIA_APP_SEARCH_KEY }}
+          pr: ${{ github.event.issue.number || inputs.pr }}
+          github_token: ${{ github.token }}
+          pulumi_stack_name: ${{ vars.PULUMI_STACK_NAME }}
+          algolia_app_id: ${{ vars.ALGOLIA_APP_ID }}
+          algolia_app_search_key: ${{ vars.ALGOLIA_APP_SEARCH_KEY }}

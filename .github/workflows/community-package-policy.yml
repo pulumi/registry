@@ -1,0 +1,31 @@
+# Fails CI if any community-package workflow both holds a secret and runs a contributor's
+# code, since that combination would let a malicious package steal the secret. Runs on every
+# change to the pipeline and holds no secrets itself.
+name: Community package pipeline policy
+
+on:
+  pull_request:
+    paths:
+      - .github/workflows/community-package-*.yml
+      - scripts/ci/community-package/**
+
+permissions:
+  contents: read
+
+jobs:
+  separation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - run: scripts/ci/community-package/assert-secret-code-separation.sh
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Unit tests (pure, no network)
+        run: python3 -m unittest -v test_pipeline
+        working-directory: scripts/ci/community-package
+      - name: Type-check
+        run: pipx run mypy --strict pipeline.py test_pipeline.py
+        working-directory: scripts/ci/community-package

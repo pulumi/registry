@@ -1,0 +1,33 @@
+# Runs after the check workflow finishes and posts its fact-sheet as a sticky PR comment.
+# The check workflow's own token is read-only so it cannot comment; this job can. It has a
+# write token but no secrets and runs none of the PR's code, so the write token is safe.
+name: Community package report
+
+on:
+  workflow_run:
+    workflows: ["Community package check"]
+    types: [completed]
+
+permissions:
+  contents: read
+  actions: read
+  pull-requests: write
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: build-manifest
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ github.token }}
+
+      - name: Post the fact-sheet as a sticky PR comment
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          PR_HEAD: ${{ github.event.workflow_run.head_branch }}
+        run: scripts/ci/community-package/post-fact-sheet.sh

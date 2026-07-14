@@ -1,0 +1,45 @@
+# Runs the checks on a contributor's PR, so it works on forks. It holds no secrets, and its
+# probes resolve and download the advertised SDKs without executing them (npm --ignore-scripts,
+# pip wheel-only, go module fetch, plugin download only), so a malicious package has nothing to
+# run and nothing to steal. community-package-policy.yml fails CI if a secret is added here.
+name: Community package check
+
+on:
+  pull_request:
+    paths:
+      - community-packages/package-list.json
+
+permissions:
+  contents: read
+
+concurrency:
+  group: community-check-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Reject anything but the package-list entry
+        run: scripts/ci/community-package/assert-minimal-diff.sh origin/${{ github.base_ref }}
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: tools/resourcedocsgen/go.mod
+
+      - name: Verify changed entries → build manifest + fact-sheet
+        env:
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: python3 scripts/ci/community-package/pipeline.py check --diff "origin/${{ github.base_ref }}"
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: build-manifest
+          path: |
+            build-manifest-*.json
+            *.factsheet.md

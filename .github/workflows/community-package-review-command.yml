@@ -1,0 +1,55 @@
+# Handles a `/review` comment: a maintainer-only AI review via anthropics/claude-code-action.
+# The model gets only Read/Glob/Grep and gh-pr tools (no general Bash or curl), so a prompt
+# injection in a provider's docs cannot read the API key or reach the network. The gate
+# pre-fetches the docs into ./review-input/. This job holds a secret and never runs the PR's
+# code; community-package-policy.yml enforces that separation.
+name: Community package /review command
+
+on:
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: read
+  pull-requests: write
+  id-token: write
+  actions: read
+
+concurrency:
+  group: review-command-${{ github.event.issue.number }}
+  cancel-in-progress: false
+
+jobs:
+  review:
+    if: >-
+      github.event.issue.pull_request != null &&
+      startsWith(github.event.comment.body, '/review')
+    runs-on: ubuntu-latest
+    environment: privileged
+    steps:
+      - uses: actions/checkout@v7  # base repo only; never check out the PR head
+
+      - id: gate
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          PR: ${{ github.event.issue.number }}
+          ASSOC: ${{ github.event.comment.author_association }}
+          COMMENTER: ${{ github.event.comment.user.login }}
+          COMMENT_ID: ${{ github.event.comment.id }}
+          COOLDOWN_MINUTES: "15"
+        run: scripts/ci/community-package/review-command.sh
+
+      - if: steps.gate.outputs.proceed == 'true'
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          model: claude-opus-4-6
+          prompt: |
+            Review community package PR #${{ github.event.issue.number }} by following the instructions in
+            .claude/commands/review-community-package/SKILL.md. The provider's pre-fetched docs, schema, and
+            README are under ./review-input/; read them with Read/Glob/Grep and do not fetch anything live.
+            Read the /check fact-sheet on the PR with `gh pr view`. Post one advisory comment with `gh pr comment`.
+            Do not perform any state-changing action.
+          claude_args: "--allowedTools 'Read,Glob,Grep,Bash(gh pr view:*),Bash(gh pr diff:*),Bash(gh pr comment:*)'"

@@ -4,7 +4,9 @@
 
 ## Adding a Package
 
-If you want to see a new package to the Pulumi Registry, open an issue requesting the addition using the ["New Package"](https://github.com/pulumi/registry/issues/new?template=new-package.yml) issue template. You can request either a [Pulumi Package](https://www.pulumi.com/docs/guides/pulumi-packages/) (Native, Bridged or Component) that you have written or any Terraform/OpenTofu provider present in the [opentofu package registry](https://search.opentofu.org).
+To add a community package, open a pull request that adds a single entry to [`community-packages/package-list.json`](https://github.com/pulumi/registry/blob/master/community-packages/package-list.json) (steps below). This is the path for a provider published as a [Pulumi Package](https://www.pulumi.com/docs/guides/pulumi-packages/) with a committed `schema.json`: Native, Component, or a statically bridged Terraform provider (one you have built into your own provider repo). Automated checks then post a fact-sheet on your PR and a Pulumi maintainer approves it; you do not need to file an issue first.
+
+A **dynamically bridged** Terraform provider is different: if you consume it with `pulumi package add terraform-provider <name>` and there is no provider repo or committed schema, it cannot be added by pull request, because those are listed through a separate Pulumi pipeline. Open a ["New Package"](https://github.com/pulumi/registry/issues/new?template=new-package.yml) issue to request one. Use the same issue to request a package you don't maintain, or to discuss before opening a PR.
 
 For assistance, please reach out on the [Pulumi community slack](https://slack.pulumi.com/) or get in touch with us via this [contact form](https://pulumi.com/contact/?form=registry).
 
@@ -18,6 +20,7 @@ To publish a community-maintained package on the Pulumi Registry as a community 
     * `docs/_index.md`, which should contain a summary of the provider's purpose (required) along with a code sample in each language (required). This file will render as the index page for your provider ([example](https://www.pulumi.com/registry/packages/aiven/)).
     * `docs/installation-configuration.md`, which should contain links to published SDKs in (Go, Typescript, C#, Python; required) along with instructions for configuring the provider (e.g., required credentials and/or environment variables). This file will render as the Installation & Configuration page for your provider ([example](https://www.pulumi.com/registry/packages/aiven/installation-configuration/)).
 1. Create a release of your provider in GitHub with a "v" + [Semver 2.0](https://semver.org) compliant tag (`vX.Y.Z`).
+1. Open a pull request that adds one entry to [`community-packages/package-list.json`](https://github.com/pulumi/registry/blob/master/community-packages/package-list.json), and nothing else. Automated checks post a fact-sheet on your PR; if anything is flagged, fix it in your provider repo and comment `/check` to re-run. A Pulumi maintainer then approves. After merge your docs are generated and published for you, so you do not commit generated files in this PR.
 
 ## Internal Process
 

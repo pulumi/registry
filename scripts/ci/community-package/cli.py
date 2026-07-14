@@ -74,15 +74,26 @@ def run_check(args: argparse.Namespace) -> int:
     return 1 if failed else 0
 
 
+def publish_pr_title_and_branch(published: list[tuple[str, str]]) -> tuple[str, str]:
+    if len(published) == 1:
+        name, version = published[0]
+        return f"Publish Package Metadata {name}@{version}", f"{name}/publish-metadata"
+    names = [name for name, _ in published]
+    return "Publish package metadata for " + ", ".join(names), "publish-metadata/" + "-".join(names)
+
+
 def run_publish(args: argparse.Namespace) -> int:
     resourcedocsgen.ensure_built()
     entries = package_list.added_entries(package_list.at_ref(args.diff), package_list.current())
+    published = post_merge_publish.publish_entries(entries)
+    if not published:
+        return 0
+    title, branch = publish_pr_title_and_branch(published)
+    print(title)
     output = os.environ.get("GITHUB_OUTPUT")
-    for name, tag in post_merge_publish.publish_entries(entries):
-        print(f"name={name}\nversion={tag}")
-        if output:
-            with open(output, "a") as fh:
-                fh.write(f"name={name}\nversion={tag}\n")
+    if output:
+        with open(output, "a") as fh:
+            fh.write(f"title={title}\nbranch={branch}\n")
     return 0
 
 

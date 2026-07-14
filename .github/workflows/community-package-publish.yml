@@ -33,10 +33,25 @@ jobs:
         id: build
         run: python3 scripts/ci/community-package/cli.py publish --diff HEAD~1
 
+      # One PR for the merge, titled for every entry it published. A single-entry PR keeps the
+      # same title and per-provider branch the nightly and first-party flows use.
       - name: Open the publish PR
-        if: steps.build.outputs.name != ''
-        uses: ./.github/actions/new-provider-version-pr
+        if: steps.build.outputs.title != ''
+        id: pr
+        uses: peter-evans/create-pull-request@v7
         with:
-          github_token: ${{ steps.esc-secrets.outputs.PULUMI_BOT_TOKEN }}
-          provider_short_name: ${{ steps.build.outputs.name }}
-          provider_version: ${{ steps.build.outputs.version }}
+          token: ${{ steps.esc-secrets.outputs.PULUMI_BOT_TOKEN }}
+          committer: Pulumi Bot <bot@pulumi.com>
+          author: Pulumi Bot <bot@pulumi.com>
+          commit-message: ${{ steps.build.outputs.title }}
+          title: ${{ steps.build.outputs.title }}
+          body: ""
+          branch: ${{ steps.build.outputs.branch }}
+
+      - if: steps.pr.outputs.pull-request-operation == 'created'
+        uses: peter-evans/enable-pull-request-automerge@v3
+        with:
+          merge-method: squash
+          pull-request-number: ${{ steps.pr.outputs.pull-request-number }}
+          repository: ${{ github.repository }}
+          token: ${{ steps.esc-secrets.outputs.PULUMI_BOT_TOKEN }}

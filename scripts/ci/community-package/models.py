@@ -25,6 +25,14 @@ class Content:
 
 
 @dataclass
+class PackagePin:
+    tag: str
+    commitSha: str
+    providerName: str
+    schemaSha256: str
+
+
+@dataclass
 class Owner:
     handle: str
     alreadyListed: bool

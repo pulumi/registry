@@ -5,6 +5,8 @@ import re
 import subprocess
 import sys
 import tempfile
+import urllib.error
+import urllib.request
 from typing import Any, Callable
 
 from models import InstallResult
@@ -27,6 +29,24 @@ def _run(cmd: list[str], cwd: str | None = None, env: dict[str, str] | None = No
         return False, f"timed out after 300s: {' '.join(cmd)}"
     except FileNotFoundError:
         return False, f"command not found: {cmd[0]}"
+
+
+def _pypi_version_exists(package: str, version: str) -> bool:
+    try:
+        with urllib.request.urlopen(f"https://pypi.org/pypi/{package}/{version}/json", timeout=30) as resp:
+            return bool(resp.status == 200)
+    except urllib.error.URLError:
+        return False
+
+
+def _python_resolves(package: str, version: str) -> tuple[bool, str]:
+    # --only-binary keeps pip from building an sdist, which would execute the package's setup code;
+    # when only an sdist is published, confirm the version exists from PyPI metadata instead.
+    ok, err = _run([sys.executable, "-m", "pip", "download", "--no-deps", "--only-binary", ":all:",
+                    "--dest", "/tmp/py", "--", f"{package}=={version}"])
+    if ok or _pypi_version_exists(package, version):
+        return True, ""
+    return False, err
 
 
 def _go_module_resolves(import_path: str, tag: str) -> tuple[bool, str]:
@@ -82,8 +102,7 @@ def probe_installs(name: str, tag: str, schema: dict[str, Any]) -> list[InstallR
 
     pypi_package = languages.get("python", {}).get("packageName") or f"pulumi_{schema.get('name', '')}"
     probe("python", pypi_package,
-          lambda: _run([sys.executable, "-m", "pip", "download", "--no-deps", "--only-binary", ":all:",
-                        "--dest", "/tmp/py", "--", f"{pypi_package}=={version}"]),
+          lambda: _python_resolves(pypi_package, version),
           f"pip download {pypi_package}=={version}")
 
     go_import = languages.get("go", {}).get("importBasePath")

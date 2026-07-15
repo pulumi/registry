@@ -20,7 +20,7 @@ jobs:
   rerun:
     if: >-
       github.event.issue.pull_request != null &&
-      startsWith(github.event.comment.body, '/check')
+      (github.event.comment.body == '/check' || startsWith(github.event.comment.body, '/check '))
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7

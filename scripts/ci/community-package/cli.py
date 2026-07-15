@@ -21,7 +21,6 @@ import fact_sheet
 import package_list
 import resourcedocsgen
 import verify_entry
-from models import Manifest
 
 
 def _write_step_summary(text: str) -> None:
@@ -31,38 +30,47 @@ def _write_step_summary(text: str) -> None:
             fh.write(text + "\n")
 
 
-def _reject_non_entry_changes(base_ref: str) -> None:
+def _offending_files(base_ref: str) -> list[str]:
     changed = subprocess.run(["git", "diff", "--name-only", f"{base_ref}...HEAD"],
                              capture_output=True, text=True).stdout
-    offending = [f for f in changed.splitlines() if f and f != str(package_list.PATH)]
-    if offending:
-        lines = [f"## ❌ This PR must change only `{package_list.PATH}`", "",
-                 "The following files do not belong in a community package PR. They are",
-                 "generated and committed automatically after merge:", ""]
-        lines += [f"- `{f}`" for f in offending]
-        _write_step_summary("\n".join(lines))
-        raise SystemExit("PR changes files other than the package list")
+    return [f for f in changed.splitlines() if f and f != str(package_list.PATH)]
 
 
-def _emit_fact_sheet(manifest: Manifest, out: Path, index: int) -> None:
+def _rejection_sheet(offending: list[str]) -> str:
+    lines = [f"## ❌ This PR must change only `{package_list.PATH}`", "",
+             "**Not ready.** The following files do not belong in a community package PR. They are",
+             "generated and committed automatically after merge, so remove them and push again:", ""]
+    lines += [f"- `{f}`" for f in offending]
+    return "\n".join(lines)
+
+
+def _nothing_to_check_sheet() -> str:
+    return (f"## ℹ️ Nothing to check\n\nNo entries were added to `{package_list.PATH}` in this PR. "
+            "A community package PR adds one entry to that file.")
+
+
+def _write_sheet(out: Path, name: str, sheet: str) -> None:
     out.mkdir(parents=True, exist_ok=True)
-    sheet = fact_sheet.render(manifest)
-    (out / f"{index}.factsheet.md").write_text(sheet)
+    (out / name).write_text(sheet)
     _write_step_summary(sheet)
     print(sheet)
 
 
 def run_check(args: argparse.Namespace) -> int:
-    _reject_non_entry_changes(args.diff)
+    out = Path(args.out)
+    offending = _offending_files(args.diff)
+    if offending:
+        _write_sheet(out, "000.factsheet.md", _rejection_sheet(offending))
+        return 1
     entries = package_list.added_entries(package_list.at_ref(args.diff), package_list.current())
     if not entries:
-        print("no changed entries")
+        _write_sheet(out, "000.factsheet.md", _nothing_to_check_sheet())
         return 0
     resourcedocsgen.ensure_built()
     failed = False
     for index, entry in enumerate(entries):
         manifest = verify_entry.verify(entry)
-        _emit_fact_sheet(manifest, Path(args.out), index)
+        _write_sheet(out, f"{index:03d}.factsheet.md", fact_sheet.render(manifest))
         if not manifest.green:
             failed = True
     return 1 if failed else 0

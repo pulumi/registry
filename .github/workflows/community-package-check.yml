@@ -28,6 +28,19 @@ jobs:
         with:
           go-version-file: tools/resourcedocsgen/go.mod
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install the Pulumi CLI (for the plugin install probe)
+        run: |
+          curl -fsSL https://get.pulumi.com | sh
+          echo "$HOME/.pulumi/bin" >> "$GITHUB_PATH"
+
       - name: Record the PR number so the reporter posts to the right PR
         run: echo "${{ github.event.pull_request.number }}" > pr-number.txt
 

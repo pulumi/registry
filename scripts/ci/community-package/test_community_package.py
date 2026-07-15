@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import Any
 
 sys.path.insert(0, str(Path(__file__).parent))
+import cli  # noqa: E402
 import comment_commands  # noqa: E402
 import doc_lint  # noqa: E402
 import fact_sheet  # noqa: E402
@@ -69,6 +70,47 @@ class InstallProbeTests(unittest.TestCase):
     def test_python_name_falls_back_to_pulumi_underscore(self) -> None:
         results = sdk_install_probe.probe_installs("thoth", "v1.0.0", {"name": "thoth", "language": {}})
         self.assertEqual(next(r for r in results if r.language == "python").command, "pip download pulumi_thoth==1.0.0")
+
+
+class PythonResolveTests(unittest.TestCase):
+    def setUp(self) -> None:
+        self._run, self._exists = sdk_install_probe._run, sdk_install_probe._pypi_version_exists
+
+        def failing_run(cmd: list[str], cwd: str | None = None, env: dict[str, str] | None = None) -> tuple[bool, str]:
+            return False, "ERROR: No matching distribution"
+
+        sdk_install_probe._run = failing_run
+
+    def tearDown(self) -> None:
+        sdk_install_probe._run = self._run
+        sdk_install_probe._pypi_version_exists = self._exists
+
+    def test_sdist_only_resolves_via_metadata(self) -> None:
+        def exists(package: str, version: str) -> bool:
+            return True
+
+        sdk_install_probe._pypi_version_exists = exists
+        self.assertEqual(sdk_install_probe._python_resolves("pkg", "1.0.0"), (True, ""))
+
+    def test_missing_package_still_fails(self) -> None:
+        def missing(package: str, version: str) -> bool:
+            return False
+
+        sdk_install_probe._pypi_version_exists = missing
+        ok, err = sdk_install_probe._python_resolves("pkg", "1.0.0")
+        self.assertFalse(ok)
+        self.assertIn("No matching distribution", err)
+
+
+class CliNoticeTests(unittest.TestCase):
+    def test_rejection_sheet_lists_offending_files(self) -> None:
+        out = cli._rejection_sheet(["themes/x.md", "sdk/y.go"])
+        self.assertIn("❌", out)
+        self.assertIn("Not ready", out)
+        self.assertIn("themes/x.md", out)
+
+    def test_nothing_to_check_sheet(self) -> None:
+        self.assertIn("Nothing to check", cli._nothing_to_check_sheet())
 
 
 class DocLintTests(unittest.TestCase):

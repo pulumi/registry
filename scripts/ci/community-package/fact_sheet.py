@@ -25,11 +25,15 @@ def _fence_longer_than_any_run_in(text: str) -> str:
 
 
 def _verdict(manifest: Manifest) -> tuple[str, str]:
-    if manifest.green:
-        return "✅", ("**Ready for approval.** All blocking checks passed; a `@pulumi/iac-cloud` "
-                     "review is still required to merge.")
-    return "❌", ("**Not ready.** A blocking check failed (see below). Fix upstream, then comment "
-                 "`/check` to re-run.")
+    if not manifest.green:
+        return "❌", ("**Not ready.** A required check failed (see below). Fix upstream, then comment "
+                     "`/check` to re-run.")
+    if manifest.warnings:
+        return "🟡", ("**Passes the required checks, but review the warnings.** The plugin installs and "
+                     "docs generate, but one or more advisory checks did not pass — see the SDK installs "
+                     "and doc-lint below before approving.")
+    return "✅", ("**Ready for approval.** All checks passed; a `@pulumi/iac-cloud` review is still "
+                 "required to merge.")
 
 
 def _stamp_lines() -> list[str]:

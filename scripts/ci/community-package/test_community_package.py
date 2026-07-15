@@ -67,9 +67,13 @@ class InstallProbeTests(unittest.TestCase):
         flat = [" ".join(c) for c in self.calls]
         self.assertTrue(any("--server github://api.github.com/o/r" in c for c in flat))
 
-    def test_python_name_falls_back_to_pulumi_underscore(self) -> None:
-        results = sdk_install_probe.probe_installs("thoth", "v1.0.0", {"name": "thoth", "language": {}})
+    def test_python_uses_pulumi_underscore_when_advertised_without_name(self) -> None:
+        results = sdk_install_probe.probe_installs("thoth", "v1.0.0", {"name": "thoth", "language": {"python": {}}})
         self.assertEqual(next(r for r in results if r.language == "python").command, "pip download pulumi_thoth==1.0.0")
+
+    def test_unadvertised_sdks_are_not_probed(self) -> None:
+        results = sdk_install_probe.probe_installs("thoth", "v1.0.0", {"name": "thoth", "language": {}})
+        self.assertEqual({r.language for r in results}, {"plugin"})
 
 
 class PythonResolveTests(unittest.TestCase):
@@ -180,10 +184,10 @@ class ReportTargetTests(unittest.TestCase):
             del os.environ["PR_HEAD"], os.environ["PR_HEAD_OWNER"]
 
 
-def _manifest(green: bool = True, findings: list[DocFinding] | None = None,
+def _manifest(green: bool = True, warnings: bool = False, findings: list[DocFinding] | None = None,
               installs: list[InstallResult] | None = None, docs: list[DocFile] | None = None) -> Manifest:
     return Manifest("x/pulumi-demo", "s.json", "demo", Version("v1.0.0", "0" * 40), "x",
-                    installs or [], findings or [], green=green, docs=docs or [])
+                    installs or [], findings or [], green=green, warnings=warnings, docs=docs or [])
 
 
 class FactSheetTests(unittest.TestCase):
@@ -211,6 +215,14 @@ class FactSheetTests(unittest.TestCase):
     def test_doc_fence_outgrows_backticks(self) -> None:
         self.assertEqual(fact_sheet._fence_longer_than_any_run_in("no ticks"), "```")
         self.assertEqual(fact_sheet._fence_longer_than_any_run_in("```go\nx\n```"), "````")
+
+    def test_warning_render_is_yellow(self) -> None:
+        out = fact_sheet.render(_manifest(
+            green=True, warnings=True,
+            installs=[InstallResult("nodejs", "npm install x@1", "fail", error="404")]))
+        self.assertIn("🟡", out.splitlines()[0])
+        self.assertIn("review the warnings", out.lower())
+        self.assertNotIn("Ready for approval", out)
 
     def test_error_render_is_compact_and_red(self) -> None:
         manifest = _manifest(green=False)

@@ -61,7 +61,9 @@ def verify(entry: Entry) -> Manifest:
     findings = doc_lint.find_issues(index.content if index else "")
 
     has_blocking_failure = any(r.blocking and r.result != "pass" for r in installs)
-    green = generated and not has_blocking_failure and index is not None
+    green = bool(generated and not has_blocking_failure and index is not None)
+    advisory_failure = any(not r.blocking and r.result not in ("pass", "absent") for r in installs)
+    warnings = green and (advisory_failure or bool(findings))
 
     return Manifest(
         repoSlug=entry.repoSlug,
@@ -72,6 +74,7 @@ def verify(entry: Entry) -> Manifest:
         installMatrix=installs,
         docLint=findings,
         green=green,
+        warnings=warnings,
         generation=generated,
         docs=docs,
     )

@@ -59,6 +59,7 @@ class Manifest:
     installMatrix: list[InstallResult]
     docLint: list[DocFinding]
     green: bool
+    warnings: bool = False
     generation: bool = True
     docs: list[DocFile] = field(default_factory=list)
     error: str = ""

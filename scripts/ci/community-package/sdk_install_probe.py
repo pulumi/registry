@@ -100,9 +100,10 @@ def probe_installs(name: str, tag: str, schema: dict[str, Any]) -> list[InstallR
                         "--prefix", "/tmp/nn", "--", f"{npm_package}@{version}"]),
           f"npm install {npm_package}@{version}")
 
-    pypi_package = languages.get("python", {}).get("packageName") or f"pulumi_{schema.get('name', '')}"
+    python = languages.get("python")
+    pypi_package = (python.get("packageName") or f"pulumi_{schema.get('name', '')}") if python is not None else None
     probe("python", pypi_package,
-          lambda: _python_resolves(pypi_package, version),
+          lambda: _python_resolves(pypi_package or "", version),
           f"pip download {pypi_package}=={version}")
 
     go_import = languages.get("go", {}).get("importBasePath")

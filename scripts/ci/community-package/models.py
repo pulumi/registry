@@ -1,9 +1,17 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Literal
+from typing import Any, Literal
 
 InstallOutcome = Literal["pass", "fail", "absent", "rejected"]
+
+
+def provider_name(slug: str, schema: dict[str, Any]) -> str:
+    named = schema.get("name")
+    if named:
+        return str(named)
+    repo = slug.split("/")[-1]
+    return repo.split("-", 1)[-1] if "-" in repo else repo
 
 
 @dataclass(frozen=True)

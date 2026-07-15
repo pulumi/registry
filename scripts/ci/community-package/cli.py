@@ -6,7 +6,7 @@
     report          post the fact-sheet as a sticky PR comment
     check-command   handle a /check comment
 
-The logic lives in the sibling modules (verify_entry, generate, fact_sheet, comment_commands, ...); stdlib
+The logic lives in the sibling modules (verify_entry, resourcedocsgen, fact_sheet, comment_commands, ...); stdlib
 only, no third-party dependencies.
 """
 from __future__ import annotations
@@ -19,7 +19,6 @@ from pathlib import Path
 
 import comment_commands
 import fact_sheet
-import generate
 import package_list
 import resourcedocsgen
 import verify_entry
@@ -81,7 +80,7 @@ def publish_pr_title_and_branch(published: list[tuple[str, str]]) -> tuple[str, 
 def run_publish(args: argparse.Namespace) -> int:
     resourcedocsgen.ensure_built()
     entries = package_list.added_entries(package_list.at_ref(args.diff), package_list.current())
-    published = generate.metadata(entries)
+    published = resourcedocsgen.publish(entries)
     if not published:
         return 0
     title, branch = publish_pr_title_and_branch(published)

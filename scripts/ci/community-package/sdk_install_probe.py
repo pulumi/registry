@@ -41,6 +41,8 @@ def _go_module_resolves(import_path: str, tag: str) -> tuple[bool, str]:
 
 
 def probe_installs(name: str, tag: str, schema: dict[str, Any]) -> list[InstallResult]:
+    if not SAFE_VERSION.match(tag):
+        return [InstallResult("plugin", "(rejected: unsafe version)", "rejected", blocking=True)]
     version = tag[1:] if tag.startswith("v") else tag
     languages = schema.get("language", {})
     results: list[InstallResult] = []
@@ -53,7 +55,7 @@ def probe_installs(name: str, tag: str, schema: dict[str, Any]) -> list[InstallR
         results.append(InstallResult(language, command, "pass" if ok else "fail",
                                      error="" if ok else error[-600:], blocking=blocking))
 
-    if SAFE_NAME.match(name) and SAFE_VERSION.match(tag):
+    if SAFE_NAME.match(name):
         command = ["pulumi", "plugin", "install", "resource", name, tag]
         url = schema.get("pluginDownloadURL", "")
         if url and SAFE_URL.match(url):

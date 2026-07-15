@@ -3,21 +3,12 @@ from __future__ import annotations
 import json
 import tempfile
 from pathlib import Path
-from typing import Any
 
 import doc_lint
 import github_api
 import sdk_install_probe
 import resourcedocsgen
-from models import DocFile, Entry, Manifest, Version
-
-
-def provider_name(slug: str, schema: dict[str, Any]) -> str:
-    named = schema.get("name")
-    if named:
-        return str(named)
-    repo = slug.split("/")[-1]
-    return repo.split("-", 1)[-1] if "-" in repo else repo
+from models import DocFile, Entry, Manifest, Version, provider_name
 
 
 def _doc_file(slug: str, sha: str, path: str) -> DocFile | None:

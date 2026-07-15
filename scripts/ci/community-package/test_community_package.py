@@ -12,8 +12,7 @@ import doc_lint  # noqa: E402
 import fact_sheet  # noqa: E402
 import package_list  # noqa: E402
 import sdk_install_probe  # noqa: E402
-import verify_entry  # noqa: E402
-from models import DocFile, DocFinding, InstallResult, Manifest, Version  # noqa: E402
+from models import DocFile, DocFinding, InstallResult, Manifest, Version, provider_name  # noqa: E402
 
 SCHEMA: dict[str, Any] = {
     "name": "time",
@@ -86,9 +85,9 @@ class PackageListTests(unittest.TestCase):
 
 class VerifyTests(unittest.TestCase):
     def test_provider_name_prefers_schema_then_repo_suffix(self) -> None:
-        self.assertEqual(verify_entry.provider_name("x/pulumi-thoth", {"name": "thoth"}), "thoth")
-        self.assertEqual(verify_entry.provider_name("x/pulumi-thoth", {}), "thoth")
-        self.assertEqual(verify_entry.provider_name("x/pulumi-provider-dex", {}), "provider-dex")
+        self.assertEqual(provider_name("x/pulumi-thoth", {"name": "thoth"}), "thoth")
+        self.assertEqual(provider_name("x/pulumi-thoth", {}), "thoth")
+        self.assertEqual(provider_name("x/pulumi-provider-dex", {}), "provider-dex")
 
 
 def _manifest(green: bool = True, findings: list[DocFinding] | None = None,

@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/ionos-cloud/pulumi-ionoscloud/v0.3.1/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/ionos-cloud/pulumi-ionoscloud/v0.3.2/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/ionos-cloud/pulumi-ionoscloud/blob/v0.3.1/docs/installation-configuration.md
+edit_url: https://github.com/ionos-cloud/pulumi-ionoscloud/blob/v0.3.2/docs/installation-configuration.md
 title: IONOS Cloud Installation & Configuration
 meta_desc: Information on how to install the IONOS Cloud provider.
 layout: installation

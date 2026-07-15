@@ -526,7 +526,11 @@ All workflow files live in `.github/workflows/`.
 | `check-go.yml` | Check Go | `workflow_call` (reusable) |
 | `check-links.yml` | Scheduled jobs: Check links | Every Monday 3:00 PM UTC |
 | `run-browser-tests.yml` | Scheduled jobs: Run browser tests | Daily 2:00 PM UTC |
-| `generate-package-metadata.yml` | Check for Community Package Updates | Daily 5:30 AM + 5:30 PM UTC |
+| `generate-package-metadata.yml` | Check for Community Package Updates | Daily 5:30 AM + 5:30 PM UTC + push to `master` touching `package-list.json` |
+| `community-package-check.yml` | Community package check | PR touching `community-packages/package-list.json` |
+| `community-package-report.yml` | Community package report | `workflow_run` after the check completes |
+| `community-package-check-command.yml` | Community package /check command | `/check` comment on a package PR |
+| `community-package-policy.yml` | Community package pipeline policy | PR touching the pipeline sources |
 | `publish-provider-update.yml` | provider docs build | `repository_dispatch` |
 | `bucket-cleanup.yml` | Scheduled jobs: Bucket cleanup | Daily 3:00 PM UTC |
 | `update-tutorials.yml` | Scheduled jobs: Update How To Guides | Daily 3:00 PM UTC |
@@ -716,6 +720,17 @@ Node version: 22.x; Hugo 0.157.0 installed.
 1. `generate-packages-list` job: Runs `python generate_package_list.py` in `community-packages/` to build a matrix of community provider repos to check.
 2. `check-for-package-update` job (matrix, max-parallel: 1): For each provider, runs `resourcedocsgen pkgversion` to check if a new version is available. If so, runs `resourcedocsgen metadata from-github` to generate updated metadata and opens a PR via `.github/actions/new-provider-version-pr`.
 3. PRs are skipped if an open PR already exists for that provider (deduplication check via `list_pull_requests` in `scripts/common.sh`).
+
+#### `community-package-*.yml` — Community Package Verified Check
+
+The check pipeline gives a contributor who adds one entry to `community-packages/package-list.json` an automated, security-reviewed fact-sheet before a maintainer approves. It runs in two planes that never share a job: a secret-free plane that touches contributor input, and a privileged plane that never runs contributor code. `community-package-policy.yml` fails CI if any workflow mixes the two (`SecretCodeSeparationTests`).
+
+- **`community-package-check.yml`** (secret-free, runs on forks): for each added entry, reads the package's schema and docs at its latest GitHub release, then probes without executing the package's code — installs the plugin (blocking), resolves the npm/PyPI/Go SDKs and lints the docs (advisory). Writes a fact-sheet artifact. The plugin install is the only blocking check, alongside successful docs generation and a present `docs/_index.md`.
+- **`community-package-report.yml`** (`workflow_run`, write token, no secrets, no contributor code): downloads the fact-sheet artifact and posts it as a sticky PR comment, keyed to the PR number recorded by the check.
+- **`community-package-check-command.yml`** (`issue_comment`): re-runs the check when the author or a maintainer comments `/check`, authorized and rate-limited.
+- **`community-package-policy.yml`**: runs the toolchain's unit tests and `mypy --strict`, including the plane-separation test, as a required check.
+
+After merge, `generate-package-metadata.yml` (above) generates and publishes the package's docs metadata.
 
 #### `publish-provider-update.yml` — Provider Doc Update via Repository Dispatch
 

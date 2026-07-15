@@ -8,9 +8,11 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thank you for your interest in adding a new package to the Pulumi Registry! Please fill out the following information to help us understand your request.
+        Thank you for your interest in adding a new package to the Pulumi Registry!
 
-        If you are the maintainer of the package, please also complete the [Pulumi Registry Onboarding form](https://docs.google.com/forms/d/e/1FAIpQLSe8ohRL1PP00KTXEGPYawjY-PgrbxCH6Z88wBqxEDMa4hw2qw/viewform).
+        **If your provider is published as a Pulumi package (a repo with a committed `schema.json`, including statically bridged Terraform providers), you don't need an issue: open a pull request directly.** See [Adding a Package](https://github.com/pulumi/registry#adding-a-package). It is a single-line entry in [`community-packages/package-list.json`](https://github.com/pulumi/registry/blob/master/community-packages/package-list.json); automated checks post a fact-sheet on the PR, and a Pulumi maintainer approves it.
+
+        Use this issue for a provider that cannot be added by pull request: a **dynamically bridged** Terraform provider (consumed with `pulumi package add terraform-provider <name>`, with no provider repo or committed schema), a package you don't maintain, or to discuss before opening a PR. If the provider is company-maintained, please also complete the [Pulumi Registry Onboarding form](https://docs.google.com/forms/d/e/1FAIpQLSe8ohRL1PP00KTXEGPYawjY-PgrbxCH6Z88wBqxEDMa4hw2qw/viewform).
   - type: dropdown
     id: PackageType
     attributes:

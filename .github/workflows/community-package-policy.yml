@@ -1,0 +1,25 @@
+# Runs the community-package pipeline's unit tests and type-check on every change to it. The
+# tests include the guard that no workflow both holds a secret and runs a contributor's code
+# (SecretCodeSeparationTests). Holds no secrets itself.
+name: Community package tests
+
+on:
+  pull_request:
+    paths:
+      - .github/workflows/community-package-*.yml
+      - scripts/ci/community-package/**
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Unit tests (pure, no network)
+        run: python3 -m unittest discover -p 'test_*.py'
+        working-directory: scripts/ci/community-package
+      - name: Type-check
+        run: pipx run mypy --strict *.py
+        working-directory: scripts/ci/community-package

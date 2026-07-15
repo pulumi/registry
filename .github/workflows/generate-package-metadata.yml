@@ -2,6 +2,10 @@ permissions: write-all # Equivalent to default permissions plus id-token: write
 name: Check for Community Package Updates
 on:
   workflow_dispatch: null
+  push:
+    branches: [master]
+    paths:
+      - community-packages/package-list.json
   schedule:
     # Every day at 5:30 and 17:30 UTC.
     - cron: '30 5,17 * * *'

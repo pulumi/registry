@@ -7,7 +7,6 @@ from pathlib import Path
 from typing import Any
 
 sys.path.insert(0, str(Path(__file__).parent))
-import cli  # noqa: E402
 import doc_lint  # noqa: E402
 import fact_sheet  # noqa: E402
 import package_list  # noqa: E402
@@ -121,14 +120,6 @@ class FactSheetTests(unittest.TestCase):
     def test_doc_fence_outgrows_backticks(self) -> None:
         self.assertEqual(fact_sheet._fence_longer_than_any_run_in("no ticks"), "```")
         self.assertEqual(fact_sheet._fence_longer_than_any_run_in("```go\nx\n```"), "````")
-
-
-class PublishTitleTests(unittest.TestCase):
-    def test_single_and_multi_entry_titles(self) -> None:
-        self.assertEqual(cli.publish_pr_title_and_branch([("thoth", "v0.1.1")]),
-                         ("Publish Package Metadata thoth@v0.1.1", "thoth/publish-metadata"))
-        self.assertEqual(cli.publish_pr_title_and_branch([("defang-aws", "v1"), ("defang-gcp", "v1")]),
-                         ("Publish package metadata for defang-aws, defang-gcp", "publish-metadata/defang-aws-defang-gcp"))
 
 
 _SECRET = re.compile(r"secrets\.|ESC_ACTION|esc-action|ANTHROPIC_API_KEY|PULUMI_BOT_TOKEN|id-token: *write")

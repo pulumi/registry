@@ -2,7 +2,6 @@
 """Command-line entry point for the community package tooling. Each subcommand is one CI step:
 
     check           verify the added entry and write a fact-sheet (runs on the PR)
-    publish         generate the entry's docs after merge (runs on master)
     report          post the fact-sheet as a sticky PR comment
     check-command   handle a /check comment
 
@@ -69,29 +68,6 @@ def run_check(args: argparse.Namespace) -> int:
     return 1 if failed else 0
 
 
-def publish_pr_title_and_branch(published: list[tuple[str, str]]) -> tuple[str, str]:
-    if len(published) == 1:
-        name, version = published[0]
-        return f"Publish Package Metadata {name}@{version}", f"{name}/publish-metadata"
-    names = [name for name, _ in published]
-    return "Publish package metadata for " + ", ".join(names), "publish-metadata/" + "-".join(names)
-
-
-def run_publish(args: argparse.Namespace) -> int:
-    resourcedocsgen.ensure_built()
-    entries = package_list.added_entries(package_list.at_ref(args.diff), package_list.current())
-    published = resourcedocsgen.publish(entries)
-    if not published:
-        return 0
-    title, branch = publish_pr_title_and_branch(published)
-    print(title)
-    output = os.environ.get("GITHUB_OUTPUT")
-    if output:
-        with open(output, "a") as fh:
-            fh.write(f"title={title}\nbranch={branch}\n")
-    return 0
-
-
 def main(argv: list[str]) -> int:
     parser = argparse.ArgumentParser(prog="community-package")
     sub = parser.add_subparsers(dest="command", required=True)
@@ -100,10 +76,6 @@ def main(argv: list[str]) -> int:
     check.add_argument("--diff", metavar="BASEREF", required=True)
     check.add_argument("--out", default=".")
     check.set_defaults(run=run_check)
-
-    published = sub.add_parser("publish")
-    published.add_argument("--diff", metavar="BASEREF", required=True)
-    published.set_defaults(run=run_publish)
 
     sub.add_parser("report").set_defaults(run=lambda _: comment_commands.report())
     sub.add_parser("check-command").set_defaults(run=lambda _: comment_commands.check_command())

@@ -19,13 +19,34 @@ def _doc_file(slug: str, sha: str, path: str) -> DocFile | None:
     return DocFile(path, text.count("\n") + 1, text)
 
 
+def _unverifiable(entry: Entry, reason: str) -> Manifest:
+    return Manifest(
+        repoSlug=entry.repoSlug,
+        schemaFile=entry.schemaFile,
+        providerName=provider_name(entry.repoSlug, {}),
+        version=Version("(none)", ""),
+        owner=entry.repoSlug.split("/")[0],
+        installMatrix=[],
+        docLint=[],
+        green=False,
+        generation=False,
+        docs=[],
+        error=reason,
+    )
+
+
 def verify(entry: Entry) -> Manifest:
     tag = github_api.latest_release_tag(entry.repoSlug)
+    if tag is None:
+        return _unverifiable(entry, f"`{entry.repoSlug}` has no published GitHub release. The check "
+                                    "reads the package at its latest release; publish a release (not "
+                                    "just a git tag or a prerelease) and re-run `/check`.")
     sha = github_api.commit_sha_for_tag(entry.repoSlug, tag)
 
     schema_bytes = github_api.raw_file(entry.repoSlug, sha, entry.schemaFile)
     if schema_bytes is None:
-        raise SystemExit(f"schema not found: {entry.repoSlug}@{sha}/{entry.schemaFile}")
+        return _unverifiable(entry, f"Schema not found at `{entry.schemaFile}` in `{entry.repoSlug}` "
+                                    f"at release `{tag}`. Check the `schemaFile` path in the package list.")
     schema = json.loads(schema_bytes)
     name = provider_name(entry.repoSlug, schema)
 

@@ -39,8 +39,13 @@ def raw_file(slug: str, ref: str, path: str) -> bytes | None:
         return None
 
 
-def latest_release_tag(slug: str) -> str:
-    return str(request(f"/repos/{slug}/releases/latest")["tag_name"])
+def latest_release_tag(slug: str) -> str | None:
+    try:
+        return str(request(f"/repos/{slug}/releases/latest")["tag_name"])
+    except urllib.error.HTTPError as e:
+        if e.code == 404:  # tags-only repo, or only prereleases: no "latest" release exists
+            return None
+        raise
 
 
 def commit_sha_for_tag(slug: str, tag: str) -> str:

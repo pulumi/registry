@@ -28,6 +28,9 @@ jobs:
         with:
           go-version-file: tools/resourcedocsgen/go.mod
 
+      - name: Record the PR number so the reporter posts to the right PR
+        run: echo "${{ github.event.pull_request.number }}" > pr-number.txt
+
       - name: Verify the added entry and write the fact-sheet
         env:
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
@@ -37,4 +40,6 @@ jobs:
         if: always()
         with:
           name: fact-sheets
-          path: "*.factsheet.md"
+          path: |
+            *.factsheet.md
+            pr-number.txt

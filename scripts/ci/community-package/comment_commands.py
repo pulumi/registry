@@ -31,7 +31,7 @@ def check_command() -> int:
     if not _authorized("author-or-maintainer", commenter, author, association):
         github_api.add_reaction(comment_id, "-1")
         return 0
-    if _within_cooldown(pr, comment_id, sha, "check", cooldown):
+    if _within_cooldown(pr, comment_id, sha, r"^check$", cooldown):
         return 0
 
     run_id = github_api.latest_check_workflow_run("community-package-check.yml", sha)
@@ -51,13 +51,27 @@ def check_command() -> int:
     return 0
 
 
+def _target_pr() -> int | None:
+    recorded = Path("pr-number.txt")
+    if recorded.exists() and recorded.read_text().strip():
+        return int(recorded.read_text().strip())
+    # Fork branch names collide (many first-time PRs share "master"/"patch-1"), so match the
+    # head repo owner too, not the ref alone.
+    head_ref = os.environ.get("PR_HEAD", "")
+    head_owner = os.environ.get("PR_HEAD_OWNER", "")
+    for pull in github_api.open_pull_requests():
+        head = pull["head"]
+        owner = (head.get("repo") or {}).get("owner", {}).get("login", "")
+        if head["ref"] == head_ref and (not head_owner or owner == head_owner):
+            return int(pull["number"])
+    return None
+
+
 def report() -> int:
-    head_ref = os.environ["PR_HEAD"]
-    pull = next((p for p in github_api.open_pull_requests() if p["head"]["ref"] == head_ref), None)
-    if pull is None:
-        print(f"no open PR for {head_ref}")
+    pr = _target_pr()
+    if pr is None:
+        print("no target PR for this run")
         return 0
-    pr = int(pull["number"])
     sheets = [f.read_text() for f in sorted(Path(".").glob("*.factsheet.md"))]
     body = github_api.FACT_SHEET_MARKER + "\n\n" + "\n\n".join(sheets) + "\n"
     existing = github_api.fact_sheet_comment(pr)

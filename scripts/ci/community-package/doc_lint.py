@@ -7,8 +7,8 @@ from models import DocFinding
 # Patterns that break on the registry render surfaces. See the review skill for why each one
 # matters; the citations there point at the PRs where they bit.
 _PATTERNS = [
-    (re.compile(r'<img[^>]+src="(\.|/|[^h])'), "relative-image"),
-    (re.compile(r"<img[^>]+src='(\.|/|[^h])"), "relative-image"),
+    (re.compile(r'<img[^>]+src="(\.|/|[^hH])'), "relative-image"),
+    (re.compile(r"<img[^>]+src='(\.|/|[^hH])"), "relative-image"),
     (re.compile(r"!\[[^\]]*\]\((\.|/)"), "relative-image"),
     (re.compile(r'<a[^>]+href="(\.|/)'), "raw-relative-link"),
     (re.compile(r"\]\((?!https?://)[^)]*\.md[)#]"), "md-suffixed-link"),

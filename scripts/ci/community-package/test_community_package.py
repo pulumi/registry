@@ -1,17 +1,22 @@
 from __future__ import annotations
 
+import os
 import re
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 from typing import Any
 
 sys.path.insert(0, str(Path(__file__).parent))
+import comment_commands  # noqa: E402
 import doc_lint  # noqa: E402
 import fact_sheet  # noqa: E402
+import github_api  # noqa: E402
 import package_list  # noqa: E402
 import sdk_install_probe  # noqa: E402
-from models import DocFile, DocFinding, InstallResult, Manifest, Version, provider_name  # noqa: E402
+import verify_entry  # noqa: E402
+from models import DocFile, DocFinding, Entry, InstallResult, Manifest, Version, provider_name  # noqa: E402
 
 SCHEMA: dict[str, Any] = {
     "name": "time",
@@ -71,6 +76,9 @@ class DocLintTests(unittest.TestCase):
     def test_clean_doc(self) -> None:
         self.assertEqual(doc_lint.find_issues("[x](https://y)\n![a](https://y/z.png)\n"), [])
 
+    def test_uppercase_scheme_is_absolute(self) -> None:
+        self.assertEqual(doc_lint.find_issues('<img src="HTTPS://e.com/a.png">\n'), [])
+
 
 class PackageListTests(unittest.TestCase):
     def test_added_entries(self) -> None:
@@ -87,6 +95,41 @@ class VerifyTests(unittest.TestCase):
         self.assertEqual(provider_name("x/pulumi-thoth", {"name": "thoth"}), "thoth")
         self.assertEqual(provider_name("x/pulumi-thoth", {}), "thoth")
         self.assertEqual(provider_name("x/pulumi-provider-dex", {}), "provider-dex")
+
+    def test_unverifiable_entry_is_red_with_reason(self) -> None:
+        manifest = verify_entry._unverifiable(Entry("x/pulumi-demo", "s.json"), "no release")
+        self.assertFalse(manifest.green)
+        self.assertEqual(manifest.error, "no release")
+        self.assertEqual(manifest.providerName, "demo")
+
+
+class ReportTargetTests(unittest.TestCase):
+    def test_prefers_recorded_pr_number(self) -> None:
+        with tempfile.TemporaryDirectory() as scratch:
+            cwd = os.getcwd()
+            os.chdir(scratch)
+            try:
+                Path("pr-number.txt").write_text("42\n")
+                self.assertEqual(comment_commands._target_pr(), 42)
+            finally:
+                os.chdir(cwd)
+
+    def test_falls_back_to_owner_and_ref(self) -> None:
+        pulls: list[dict[str, Any]] = [
+            {"number": 1, "head": {"ref": "patch-1", "repo": {"owner": {"login": "alice"}}}},
+            {"number": 2, "head": {"ref": "patch-1", "repo": {"owner": {"login": "bob"}}}}]
+        real = github_api.open_pull_requests
+
+        def fake() -> list[dict[str, Any]]:
+            return pulls
+
+        github_api.open_pull_requests = fake
+        os.environ.update(PR_HEAD="patch-1", PR_HEAD_OWNER="bob")
+        try:
+            self.assertEqual(comment_commands._target_pr(), 2)
+        finally:
+            github_api.open_pull_requests = real
+            del os.environ["PR_HEAD"], os.environ["PR_HEAD_OWNER"]
 
 
 def _manifest(green: bool = True, findings: list[DocFinding] | None = None,
@@ -120,6 +163,15 @@ class FactSheetTests(unittest.TestCase):
     def test_doc_fence_outgrows_backticks(self) -> None:
         self.assertEqual(fact_sheet._fence_longer_than_any_run_in("no ticks"), "```")
         self.assertEqual(fact_sheet._fence_longer_than_any_run_in("```go\nx\n```"), "````")
+
+    def test_error_render_is_compact_and_red(self) -> None:
+        manifest = _manifest(green=False)
+        manifest.error = "No published GitHub release."
+        out = fact_sheet.render(manifest)
+        self.assertIn("❌", out.splitlines()[0])
+        self.assertIn("Not ready", out)
+        self.assertIn("No published GitHub release.", out)
+        self.assertNotIn("docs generate", out)
 
 
 _SECRET = re.compile(r"secrets\.|ESC_ACTION|esc-action|ANTHROPIC_API_KEY|PULUMI_BOT_TOKEN|id-token: *write")

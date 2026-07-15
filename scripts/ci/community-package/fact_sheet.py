@@ -32,7 +32,27 @@ def _verdict(manifest: Manifest) -> tuple[str, str]:
                  "`/check` to re-run.")
 
 
+def _stamp_lines() -> list[str]:
+    stamp = []
+    head = (os.environ.get("HEAD_SHA") or os.environ.get("GITHUB_SHA") or "")[:12]
+    if head:
+        stamp.append(f"PR head `{head}`")
+    run = _run_link()
+    if run:
+        stamp.append(f"[full run & command output]({run})")
+    return ["", "_Checked " + " · ".join(stamp) + "_"] if stamp else []
+
+
 def render(manifest: Manifest) -> str:
+    if manifest.error:
+        return "\n".join([
+            f"## ❌ `{manifest.providerName}` · community package check",
+            "",
+            f"`{manifest.repoSlug}`",
+            "",
+            f"**Not ready.** {manifest.error}",
+        ] + _stamp_lines())
+
     icon, verdict = _verdict(manifest)
     commit_url = f"https://github.com/{manifest.repoSlug}/commit/{manifest.version.commitSha}"
 
@@ -93,14 +113,5 @@ def render(manifest: Manifest) -> str:
             "</details>",
         ]
 
-    stamp = []
-    head = (os.environ.get("HEAD_SHA") or os.environ.get("GITHUB_SHA") or "")[:12]
-    if head:
-        stamp.append(f"PR head `{head}`")
-    run = _run_link()
-    if run:
-        stamp.append(f"[full run & command output]({run})")
-    if stamp:
-        lines += ["", "_Checked " + " · ".join(stamp) + "_"]
-
+    lines += _stamp_lines()
     return "\n".join(lines)

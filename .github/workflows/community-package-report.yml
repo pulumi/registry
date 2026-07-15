@@ -30,4 +30,5 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
           REPO: ${{ github.repository }}
           PR_HEAD: ${{ github.event.workflow_run.head_branch }}
+          PR_HEAD_OWNER: ${{ github.event.workflow_run.head_repository.owner.login }}
         run: python3 scripts/ci/community-package/cli.py report

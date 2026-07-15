@@ -61,3 +61,4 @@ class Manifest:
     green: bool
     generation: bool = True
     docs: list[DocFile] = field(default_factory=list)
+    error: str = ""

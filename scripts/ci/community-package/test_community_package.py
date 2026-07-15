@@ -60,6 +60,12 @@ class InstallProbeTests(unittest.TestCase):
         self.assertEqual(results["nodejs"], "rejected")
         self.assertFalse(any(c and c[0] in ("npm", "pulumi") for c in self.calls))
 
+    def test_github_scheme_plugin_url_is_passed_as_server(self) -> None:
+        schema = {**SCHEMA, "pluginDownloadURL": "github://api.github.com/o/r"}
+        list(sdk_install_probe.probe_installs("time", "v0.1.1", schema))
+        flat = [" ".join(c) for c in self.calls]
+        self.assertTrue(any("--server github://api.github.com/o/r" in c for c in flat))
+
     def test_python_name_falls_back_to_pulumi_underscore(self) -> None:
         results = sdk_install_probe.probe_installs("thoth", "v1.0.0", {"name": "thoth", "language": {}})
         self.assertEqual(next(r for r in results if r.language == "python").command, "pip download pulumi_thoth==1.0.0")

@@ -14,7 +14,7 @@ from models import InstallResult
 # cannot inject a command.
 SAFE_NAME = re.compile(r"^[A-Za-z0-9._@/-]+$")
 SAFE_VERSION = re.compile(r"^[A-Za-z0-9._+-]+$")
-SAFE_URL = re.compile(r"^https://[A-Za-z0-9._~:/?#@!$&()*+,;=-]+$")
+SAFE_URL = re.compile(r"^(https|github|gitlab)://[A-Za-z0-9._~:/?#@!$&()*+,;=-]+$")
 
 
 def _run(cmd: list[str], cwd: str | None = None, env: dict[str, str] | None = None) -> tuple[bool, str]:

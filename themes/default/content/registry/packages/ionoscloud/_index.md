@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/ionos-cloud/pulumi-ionoscloud/v0.3.1/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/ionos-cloud/pulumi-ionoscloud/v0.3.2/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/ionos-cloud/pulumi-ionoscloud/blob/v0.3.1/docs/_index.md
+edit_url: https://github.com/ionos-cloud/pulumi-ionoscloud/blob/v0.3.2/docs/_index.md
 title: Ionoscloud
 meta_desc: Provides an overview of the Ionoscloud Provider for Pulumi.
 layout: overview
@@ -11,7 +11,7 @@ The `Ionoscloud` provider for Pulumi can be used to provision most of the resour
 
 The provider needs to be configured with proper credentials before it can be used.
 
-We strongly suggest to use token authentication for security purposes. You can find more information [here](https://docs.ionos.com/cloud/set-up-ionos-cloud/management/token-management).
+We strongly suggest to use token authentication for security purposes. You can find more information [here](https://docs.ionos.com/cloud/set-up-ionos-cloud/management/identity-access-management/token-manager).
 
 ## Example
 

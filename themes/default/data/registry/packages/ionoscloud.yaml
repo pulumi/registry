@@ -10,7 +10,7 @@ native: false
 package_status: public_preview
 publisher: ionos-cloud
 repo_url: https://github.com/ionos-cloud/pulumi-ionoscloud
-schema_file_url: https://raw.githubusercontent.com/ionos-cloud/pulumi-ionoscloud/v0.3.1/provider/cmd/pulumi-resource-ionoscloud/schema.json
+schema_file_url: https://raw.githubusercontent.com/ionos-cloud/pulumi-ionoscloud/v0.3.2/provider/cmd/pulumi-resource-ionoscloud/schema.json
 title: IonosCloud
-updated_on: 1781086561
-version: v0.3.1
+updated_on: 1784107442
+version: v0.3.2

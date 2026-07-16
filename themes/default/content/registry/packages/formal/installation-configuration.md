@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/formalco/pulumi-formal/v1.2.1/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/formalco/pulumi-formal/v1.2.2/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/formalco/pulumi-formal/blob/v1.2.1/docs/installation-configuration.md
+edit_url: https://github.com/formalco/pulumi-formal/blob/v1.2.2/docs/installation-configuration.md
 title: Formal Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Formal provider for Pulumi.
 layout: package

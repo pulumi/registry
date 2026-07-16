@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-postgresql/v3.16.3/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-postgresql/v3.18.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-postgresql/blob/v3.16.3/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-postgresql/blob/v3.18.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Postgresql Provider
 meta_desc: Provides an overview on how to configure the Pulumi Postgresql provider.
@@ -71,7 +71,7 @@ config:
 
 Configuring multiple servers can be done by specifying the alias option.
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
@@ -101,12 +101,12 @@ using PostgreSql = Pulumi.PostgreSql;
 
 return await Deployment.RunAsync(() =>
 {
-    var myDb1 = new PostgreSql.Index.Database("my_db1", new()
+    var myDb1 = new PostgreSql.Database("my_db1", new()
     {
         Name = "my_db1",
     });
 
-    var myDb2 = new PostgreSql.Index.Database("my_db2", new()
+    var myDb2 = new PostgreSql.Database("my_db2", new()
     {
         Name = "my_db2",
     });
@@ -170,8 +170,8 @@ import com.pulumi.Pulumi;
 import com.pulumi.core.Output;
 import com.pulumi.postgresql.Database;
 import com.pulumi.postgresql.DatabaseArgs;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;
@@ -192,6 +192,25 @@ public class App {
             .build());
 
     }
+}
+```
+
+{{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+pulumi {
+  required_providers {
+    postgresql = {
+      source = "pulumi/postgresql"
+    }
+  }
+}
+
+resource "postgresql_database" "my_db1" {
+  name = "my_db1"
+}
+resource "postgresql_database" "my_db2" {
+  name = "my_db2"
 }
 ```
 
@@ -349,7 +368,7 @@ config:
 
 Example with GCP resources:
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
@@ -476,7 +495,7 @@ return await Deployment.RunAsync(() =>
         Password = "xxxxxxxx",
     });
 
-    var testDb = new PostgreSql.Index.Database("test_db", new()
+    var testDb = new PostgreSql.Database("test_db", new()
     {
         Name = "test_db",
     });
@@ -620,8 +639,8 @@ import com.pulumi.gcp.sql.User;
 import com.pulumi.gcp.sql.UserArgs;
 import com.pulumi.postgresql.Database;
 import com.pulumi.postgresql.DatabaseArgs;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;
@@ -659,12 +678,46 @@ public class App {
 ```
 
 {{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+pulumi {
+  required_providers {
+    gcp = {
+      source = "pulumi/gcp"
+    }
+    postgresql = {
+      source = "pulumi/postgresql"
+    }
+  }
+}
+
+resource "gcp_sql_databaseinstance" "test" {
+  project          = "test-project"
+  name             = "test-instance"
+  database_version = "POSTGRES_13"
+  region           = "europe-west3"
+  settings = {
+    tier = "db-f1-micro"
+  }
+}
+resource "gcp_sql_user" "postgres" {
+  project  = "test-project"
+  name     = "postgres"
+  instance = gcp_sql_databaseinstance.test.name
+  password = "xxxxxxxx"
+}
+resource "postgresql_database" "test_db" {
+  name = "test_db"
+}
+```
+
+{{% /choosable %}}
 {{< /chooser >}}
 ### Azure
 
 To enable [passwordless authentication](https://learn.microsoft.com/en-us/azure/postgresql/flexible-server/how-to-configure-sign-in-azure-ad-authentication) with MS Azure set `azureIdentityAuth` to `true` and provide `azureTenantId`
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
@@ -872,7 +925,7 @@ func main() {
 			PrincipalType:     pulumi.String("Group"),
 			ResourceGroupName: pulumi.Any(rgName),
 			ServerName:        pgsql.Name,
-			TenantId:          pulumi.String(pulumi.String(current.TenantId)),
+			TenantId:          pulumi.String(current.TenantId),
 		})
 		if err != nil {
 			return err
@@ -969,8 +1022,8 @@ import com.pulumi.azure.postgresql.FlexibleServerArgs;
 import com.pulumi.azure.postgresql.inputs.FlexibleServerAuthenticationArgs;
 import com.pulumi.azure.postgresql.FlexibleServerActiveDirectoryAdministrator;
 import com.pulumi.azure.postgresql.FlexibleServerActiveDirectoryAdministratorArgs;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;
@@ -1004,6 +1057,39 @@ public class App {
             .build());
 
     }
+}
+```
+
+{{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+pulumi {
+  required_providers {
+    azure = {
+      source = "pulumi/azure"
+    }
+  }
+}
+
+data "azure_core_getclientconfig" "current" {
+}
+
+# https://registry.pulumi.io/providers/pulumi/azurerm/latest/docs/resources/postgresql_flexible_server
+resource "azure_postgresql_flexibleserver" "pgsql" {
+  authentication = {
+    active_directory_auth_enabled = true
+    password_auth_enabled         = false
+    tenant_id                     = data.azure_core_getclientconfig.current.tenant_id
+  }
+}
+# https://registry.pulumi.io/providers/pulumi/azurerm/latest/docs/resources/postgresql_flexible_server_active_directory_administrator
+resource "azure_postgresql_flexibleserveractivedirectoryadministrator" "administrators" {
+  object_id           = "00000000-0000-0000-0000-000000000000"
+  principal_name      = "Azure AD Admin Group"
+  principal_type      = "Group"
+  resource_group_name = rgName
+  server_name         = azure_postgresql_flexibleserver.pgsql.name
+  tenant_id           = data.azure_core_getclientconfig.current.tenant_id
 }
 ```
 

@@ -80,7 +80,6 @@ module.exports = {
         //             /^pulumi-chooser/,
         //             /^pulumi-tooltip/,
         //             /^pulumi-banner/,
-        //             /^pulumi-convert/,
         //             /^pulumi-greenhouse-jobs-list/,
         //             /^pulumi-audio/,
         //             /^pulumi-install/,

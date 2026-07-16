@@ -8,13 +8,11 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { APINavNode } from "./components/pulumi-api-doc-filterable-nav/pulumi-api-doc-filterable-nav";
 import { ChooserKey, ChooserMode, ChooserType } from "./components/chooser/chooser";
 import { ChooserKey as ChooserKey1, ChooserMode as ChooserMode1, ChooserOptionStyle, ChooserType as ChooserType1 } from "./components/chooser/chooser";
-import { SourceKind } from "./components/convert/convert";
 import { Filter } from "./components/filter-select/filter-select-option";
 import { MultiSelectFormItem } from "./components/pulumi-multi-select-form/pulumi-multi-select-form";
 export { APINavNode } from "./components/pulumi-api-doc-filterable-nav/pulumi-api-doc-filterable-nav";
 export { ChooserKey, ChooserMode, ChooserType } from "./components/chooser/chooser";
 export { ChooserKey as ChooserKey1, ChooserMode as ChooserMode1, ChooserOptionStyle, ChooserType as ChooserType1 } from "./components/chooser/chooser";
-export { SourceKind } from "./components/convert/convert";
 export { Filter } from "./components/filter-select/filter-select-option";
 export { MultiSelectFormItem } from "./components/pulumi-multi-select-form/pulumi-multi-select-form";
 export namespace Components {
@@ -77,15 +75,6 @@ export namespace Components {
         "items": string;
         "labelClass"?: string;
         "selectClass"?: string;
-    }
-    interface PulumiConvert {
-        "endpoint": string;
-        "examples": string;
-        "from": SourceKind;
-        /**
-          * @default ""
-         */
-        "theme": string;
     }
     interface PulumiExample {
     }
@@ -243,12 +232,6 @@ declare global {
         prototype: HTMLPulumiContactUsFormElement;
         new (): HTMLPulumiContactUsFormElement;
     };
-    interface HTMLPulumiConvertElement extends Components.PulumiConvert, HTMLStencilElement {
-    }
-    var HTMLPulumiConvertElement: {
-        prototype: HTMLPulumiConvertElement;
-        new (): HTMLPulumiConvertElement;
-    };
     interface HTMLPulumiExampleElement extends Components.PulumiExample, HTMLStencilElement {
     }
     var HTMLPulumiExampleElement: {
@@ -396,7 +379,6 @@ declare global {
         "pulumi-choosable": HTMLPulumiChoosableElement;
         "pulumi-chooser": HTMLPulumiChooserElement;
         "pulumi-contact-us-form": HTMLPulumiContactUsFormElement;
-        "pulumi-convert": HTMLPulumiConvertElement;
         "pulumi-example": HTMLPulumiExampleElement;
         "pulumi-examples": HTMLPulumiExamplesElement;
         "pulumi-filter-select": HTMLPulumiFilterSelectElement;
@@ -473,15 +455,6 @@ declare namespace LocalJSX {
         "items"?: string;
         "labelClass"?: string;
         "selectClass"?: string;
-    }
-    interface PulumiConvert {
-        "endpoint"?: string;
-        "examples"?: string;
-        "from"?: SourceKind;
-        /**
-          * @default ""
-         */
-        "theme"?: string;
     }
     interface PulumiExample {
     }
@@ -589,12 +562,6 @@ declare namespace LocalJSX {
         "selectClass": string;
         "labelClass": string;
     }
-    interface PulumiConvertAttributes {
-        "from": SourceKind;
-        "endpoint": string;
-        "examples": string;
-        "theme": string;
-    }
     interface PulumiFilterSelectOptionAttributes {
         "label": string;
         "value": string;
@@ -639,7 +606,6 @@ declare namespace LocalJSX {
         "pulumi-choosable": Omit<PulumiChoosable, keyof PulumiChoosableAttributes> & { [K in keyof PulumiChoosable & keyof PulumiChoosableAttributes]?: PulumiChoosable[K] } & { [K in keyof PulumiChoosable & keyof PulumiChoosableAttributes as `attr:${K}`]?: PulumiChoosableAttributes[K] } & { [K in keyof PulumiChoosable & keyof PulumiChoosableAttributes as `prop:${K}`]?: PulumiChoosable[K] };
         "pulumi-chooser": Omit<PulumiChooser, keyof PulumiChooserAttributes> & { [K in keyof PulumiChooser & keyof PulumiChooserAttributes]?: PulumiChooser[K] } & { [K in keyof PulumiChooser & keyof PulumiChooserAttributes as `attr:${K}`]?: PulumiChooserAttributes[K] } & { [K in keyof PulumiChooser & keyof PulumiChooserAttributes as `prop:${K}`]?: PulumiChooser[K] };
         "pulumi-contact-us-form": Omit<PulumiContactUsForm, keyof PulumiContactUsFormAttributes> & { [K in keyof PulumiContactUsForm & keyof PulumiContactUsFormAttributes]?: PulumiContactUsForm[K] } & { [K in keyof PulumiContactUsForm & keyof PulumiContactUsFormAttributes as `attr:${K}`]?: PulumiContactUsFormAttributes[K] } & { [K in keyof PulumiContactUsForm & keyof PulumiContactUsFormAttributes as `prop:${K}`]?: PulumiContactUsForm[K] };
-        "pulumi-convert": Omit<PulumiConvert, keyof PulumiConvertAttributes> & { [K in keyof PulumiConvert & keyof PulumiConvertAttributes]?: PulumiConvert[K] } & { [K in keyof PulumiConvert & keyof PulumiConvertAttributes as `attr:${K}`]?: PulumiConvertAttributes[K] } & { [K in keyof PulumiConvert & keyof PulumiConvertAttributes as `prop:${K}`]?: PulumiConvert[K] };
         "pulumi-example": PulumiExample;
         "pulumi-examples": PulumiExamples;
         "pulumi-filter-select": PulumiFilterSelect;
@@ -690,7 +656,6 @@ declare module "@stencil/core" {
              */
             "pulumi-chooser": LocalJSX.IntrinsicElements["pulumi-chooser"] & JSXBase.HTMLAttributes<HTMLPulumiChooserElement>;
             "pulumi-contact-us-form": LocalJSX.IntrinsicElements["pulumi-contact-us-form"] & JSXBase.HTMLAttributes<HTMLPulumiContactUsFormElement>;
-            "pulumi-convert": LocalJSX.IntrinsicElements["pulumi-convert"] & JSXBase.HTMLAttributes<HTMLPulumiConvertElement>;
             "pulumi-example": LocalJSX.IntrinsicElements["pulumi-example"] & JSXBase.HTMLAttributes<HTMLPulumiExampleElement>;
             "pulumi-examples": LocalJSX.IntrinsicElements["pulumi-examples"] & JSXBase.HTMLAttributes<HTMLPulumiExamplesElement>;
             "pulumi-filter-select": LocalJSX.IntrinsicElements["pulumi-filter-select"] & JSXBase.HTMLAttributes<HTMLPulumiFilterSelectElement>;

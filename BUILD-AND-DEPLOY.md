@@ -396,20 +396,19 @@ This is the master build script for CI runs. It accepts one argument: `preview` 
 **Steps executed by `build.sh`**:
 
 1. Calls `make build-assets` (theme CSS/JS compilation).
-2. Fetches the Pulumi conversion service URL from the `pulumi/tf2pulumi-service/production` stack output (`PULUMI_CONVERT_URL`).
-3. Fetches the Pulumi AI WebSocket URL from `pulumi/pulumigpt-api/corp` stack output (`PULUMI_AI_WS_URL`).
-4. Computes a `build_identifier` (for preview: `pr-<number>-<sha8>`; for push: `push-<sha8>`).
-5. Sets asset bundle paths:
+2. Fetches the Pulumi AI WebSocket URL from `pulumi/pulumigpt-api/corp` stack output (`PULUMI_AI_WS_URL`).
+3. Computes a `build_identifier` (for preview: `pr-<number>-<sha8>`; for push: `push-<sha8>`).
+4. Sets asset bundle paths:
    - `CSS_BUNDLE=static/css/styles.<id>.css`
    - `JS_BUNDLE=static/js/bundle.min.<id>.js`
-6. **Restores cached API docs** from `.cache/api-docs/` into the Hugo content/static trees (see section 4.7 for details).
-7. Runs `make api-docs`, which compiles `resourcedocsgen` and generates all provider API docs. The tool skips unchanged packages using sentinel files.
-8. **Saves API docs** output (including sentinel files) back to `.cache/api-docs/` for the next run. Versioned packages (`@`-suffixed) are excluded — they have their own cache. LLM docs from `llm-docs-out/` are also cached to `.cache/api-docs/llm-docs/` and restored on the next run.
-9. Runs `node ./scripts/apply-fixes.js`.
-10. Runs Hugo with `--minify --buildFuture --templateMetrics`:
+5. **Restores cached API docs** from `.cache/api-docs/` into the Hugo content/static trees (see section 4.7 for details).
+6. Runs `make api-docs`, which compiles `resourcedocsgen` and generates all provider API docs. The tool skips unchanged packages using sentinel files.
+7. **Saves API docs** output (including sentinel files) back to `.cache/api-docs/` for the next run. Versioned packages (`@`-suffixed) are excluded — they have their own cache. LLM docs from `llm-docs-out/` are also cached to `.cache/api-docs/llm-docs/` and restored on the next run.
+8. Runs `node ./scripts/apply-fixes.js`.
+9. Runs Hugo with `--minify --buildFuture --templateMetrics`:
     - `preview` mode: sets `HUGO_BASEURL` to the S3 website URL and uses `-e preview`
     - `update` mode: uses `-e production`
-11. Runs `yarn run minify-css` to purge and minify CSS.
+10. Runs `yarn run minify-css` to purge and minify CSS.
 
 ### 4.6 Versioned documentation
 
@@ -1057,7 +1056,6 @@ The `export-repo-secrets.yml` workflow provides a manual escape hatch to sync Gi
 | `NODE_OPTIONS` | Hardcoded | build, browser tests | `--max_old_space_size=8192` |
 | `SLACK_ACCESS_TOKEN` | ESC | link check, cleanup | Slack Web API token for posting messages |
 | `SLACK_WEBHOOK_URL` | ESC | notify jobs | Slack incoming webhook for failure alerts |
-| `PULUMI_CONVERT_URL` | Pulumi stack output | `build.sh` | URL for Pulumi conversion service |
 | `PULUMI_AI_WS_URL` | Pulumi stack output | `build.sh` | URL for Pulumi AI WebSocket |
 | `ASSET_BUNDLE_ID` | `build.sh` (computed) | Hugo templates | Unique suffix for CSS/JS cache-busting |
 | `CSS_BUNDLE` / `JS_BUNDLE` | `build.sh` (computed) | Hugo templates | Paths to versioned asset bundles |
@@ -1211,5 +1209,5 @@ Pulumi Cloud plays **four distinct roles** in this system:
 | **Registry API** | `api.pulumi.com/api/registry` | Stores published package versions; queried by the Pulumi CLI for package and plugin resolution |
 | **Secrets / ESC** | `github-secrets/pulumi-registry` environment | Provides CI secrets (tokens, keys) via OIDC; eliminates long-lived secrets in GitHub |
 | **IaC State Backend** | `pulumi/registry/testing` and `pulumi/registry/production` stacks | Stores Terraform-like state for the AWS infrastructure (CloudFront, S3, policies) managed by `infrastructure/index.ts` |
-| **Stack References** | `pulumi/tf2pulumi-service`, `pulumi/pulumigpt-api`, `pulumi/dwh-workflows-*` stacks | Exposes runtime service URLs and IAM role ARNs as stack outputs, consumed by the build and deploy pipeline |
+| **Stack References** | `pulumi/pulumigpt-api`, `pulumi/dwh-workflows-*` stacks | Exposes runtime service URLs and IAM role ARNs as stack outputs, consumed by the build and deploy pipeline |
 

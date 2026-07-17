@@ -148,3 +148,16 @@
   --shadow-3xl: 0 35px 70px -20px rgba(0, 0, 0, 0.5);
   --leading-extra-tight: 1.1;
 }
+
+// Code-chrome tint — the single source for the faint-violet framing on code
+// surfaces (chooser toolbars, tab strips, code-block cards). Every consumer
+// references these, never the raw violet steps, so the tint flips in one place.
+// The registry is light-only, so unlike the docs site there's no dark override.
+// --chrome-dots is defined for parity with the docs token layer but isn't
+// consumed here (no terminal title bar); wire it up if dots are ever added.
+:root {
+  --chrome-bg: var(--color-violet-100); /* #ebebff */
+  --chrome-border: var(--color-violet-200); /* #dedbff */
+  --chrome-border-hover: var(--color-violet-300); /* #c3bdff */
+  --chrome-dots: var(--color-violet-400); /* #a697fc */
+}

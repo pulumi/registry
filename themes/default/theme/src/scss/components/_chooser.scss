@@ -1,24 +1,24 @@
 pulumi-chooser {
-    // Standard (non-language) chooser: a gray strip of small tabs matching the
-    // language chooser's toolbar — surface background, rounded top, 1px bottom
-    // border that the active tab's underline sits on. --docs-* tokens (with
-    // non-docs fallbacks); the dark rule in _docs-theme.scss re-asserts the
-    // border colors the unlayered `*` border reset would otherwise override.
+    // Standard (non-language) chooser: a faint-violet strip of small tabs matching
+    // the language chooser's toolbar — --chrome-bg fill, rounded top, 1px --chrome-
+    // border bottom that the active tab's underline sits on. Chrome surfaces use the
+    // --chrome-* tint tokens (_theme.scss); tab *text* stays semantic gray and the
+    // active underline stays brand primary (--docs-link → violet-primary fallback).
     > ul {
         @apply m-0 mb-4 flex rounded-t-lg;
 
         padding: 0 !important;
         list-style-type: none !important;
 
-        background: var(--docs-surface, theme("colors.gray.100"));
-        border-bottom: 1px solid var(--docs-border, theme("colors.gray.200"));
+        background: var(--chrome-bg);
+        border-bottom: 1px solid var(--chrome-border);
 
         li {
             @apply font-display text-xs p-0 m-0 border-b-2 border-transparent transition text-center w-full;
             @include transition;
 
             &:hover {
-                border-bottom-color: var(--docs-border, theme("colors.gray.200"));
+                border-bottom-color: var(--chrome-border-hover);
             }
 
             &.active {
@@ -58,24 +58,24 @@ pulumi-chooser {
         }
     }
 
-    // Language chooser card: a bordered card wrapping a gray toolbar (active logo +
-    // name on the left, abbreviation tabs on the right) and the slotted code/prose.
-    // Skips headless choosers (option-style="none"). --docs-* tokens with literal
-    // fallbacks give dark mode on /docs and light defaults elsewhere. Padding lives
-    // on the card so all slotted content (including bare-text-node prose) is inset
-    // uniformly; the toolbar breaks out of it to stay flush at the top.
+    // Language chooser card: a --chrome-border card wrapping a --chrome-bg toolbar
+    // (active logo + name on the left, abbreviation tabs on the right) and the
+    // slotted code/prose. Skips headless choosers (option-style="none"). The card
+    // *body* keeps the page/card surface (white); only the frame carries the tint.
+    // Padding lives on the card so all slotted content (including bare-text-node
+    // prose) is inset uniformly; the toolbar breaks out of it to stay flush at top.
     &[type="language"]:not([option-style="none"]) {
         @apply block rounded-lg px-4 pb-4 mb-4 overflow-hidden;
 
         background: var(--docs-card, theme("colors.white"));
-        border: 1px solid var(--docs-border, theme("colors.gray.200"));
+        border: 1px solid var(--chrome-border);
 
         // Height comes from the label's padding; the tabs stretch to fill it so each
         // tab's bottom border sits flush with the toolbar's bottom edge.
         .chooser-toolbar {
             @apply -mx-4 mb-4 flex justify-between gap-2 px-4;
 
-            background: var(--docs-surface, theme("colors.gray.100"));
+            background: var(--chrome-bg);
 
             // On mobile the logo + name label is hidden and the tab row scrolls
             // horizontally; from md up the label returns and the tabs right-align.
@@ -108,7 +108,7 @@ pulumi-chooser {
                     @include transition;
 
                     &:hover {
-                        border-bottom-color: var(--docs-border, theme("colors.gray.200"));
+                        border-bottom-color: var(--chrome-border-hover);
                     }
 
                     &.active {
@@ -188,7 +188,7 @@ pulumi-chooser {
             .chooser-toolbar {
                 @apply mb-0;
 
-                border-bottom: 1px solid var(--docs-border, theme("colors.gray.200"));
+                border-bottom: 1px solid var(--chrome-border);
             }
         }
 

@@ -81,7 +81,7 @@ Resources are created with functions called constructors. To learn more about de
 
 <div>
 <pulumi-choosable type="language" values="hcl">
-<div class="no-copy"><div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">resource</span> <span class="s2">&#34;xyz_staticpage&#34;</span> <span class="s2">&#34;name&#34;</span> <span class="p">{</span>
+<div class="no-copy"><div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">resource</span> <span class="s2">&#34;xyz_static_page&#34;</span> <span class="s2">&#34;name&#34;</span> <span class="p">{</span>
 <span class="c">    # resource properties</span>
 <span class="p">}</span></code></pre></div></div>
 </pulumi-choosable>
@@ -273,7 +273,10 @@ example, err := xyz.NewStaticPage(ctx, "staticPageResource", &xyz.StaticPageArgs
 <pulumi-choosable type="language" values="hcl">
 
 ```hcl
-resource "xyz_staticpage" "staticPageResource" {
+resource "xyz_static_page" "staticPageResource" {
+  lifecycle {
+    create_before_destroy = true
+  }
   index_content = "string"
   foo = {
     a = false

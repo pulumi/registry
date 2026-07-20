@@ -279,6 +279,9 @@ example, err := example.NewPerson(ctx, "personResource", &example.PersonArgs{
 
 ```hcl
 resource "example_person" "personResource" {
+  lifecycle {
+    create_before_destroy = true
+  }
   name = "string"
   pets {
     name = "string"

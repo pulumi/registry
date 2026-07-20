@@ -306,6 +306,9 @@ example, err := example.NewCat(ctx, "catResource", &example.CatArgs{
 
 ```hcl
 resource "example_cat" "catResource" {
+  lifecycle {
+    create_before_destroy = true
+  }
   age = 0
   pet = {
     required_name       = randomPet
@@ -903,7 +906,7 @@ Pet<pulumi-choosable type="language" values="python,go" class="inline">, Pet<wbr
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#required_name_hcl" style="color: inherit; text-decoration: inherit;">required_<wbr>name</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">random_<wbr>index_<wbr>randompet_<wbr>randompet</span>
+        <span class="property-type">random_<wbr>index_<wbr>random_<wbr>pet_<wbr>random_<wbr>pet</span>
     </dt>
     <dd>This type is defined in the <a href="/registry/packages/random">random</a> package.</dd><dt class="property-required"
             title="Required">
@@ -911,7 +914,7 @@ Pet<pulumi-choosable type="language" values="python,go" class="inline">, Pet<wbr
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#required_name_array_hcl" style="color: inherit; text-decoration: inherit;">required_<wbr>name_<wbr>array</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">list(random_<wbr>index_<wbr>randompet_<wbr>randompet)</span>
+        <span class="property-type">list(random_<wbr>index_<wbr>random_<wbr>pet_<wbr>random_<wbr>pet)</span>
     </dt>
     <dd></dd><dt class="property-required"
             title="Required">
@@ -919,7 +922,7 @@ Pet<pulumi-choosable type="language" values="python,go" class="inline">, Pet<wbr
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#required_name_map_hcl" style="color: inherit; text-decoration: inherit;">required_<wbr>name_<wbr>map</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">map(random_<wbr>index_<wbr>randompet_<wbr>randompet)</span>
+        <span class="property-type">map(random_<wbr>index_<wbr>random_<wbr>pet_<wbr>random_<wbr>pet)</span>
     </dt>
     <dd></dd><dt class="property-optional"
             title="Optional">
@@ -935,7 +938,7 @@ Pet<pulumi-choosable type="language" values="python,go" class="inline">, Pet<wbr
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#name_hcl" style="color: inherit; text-decoration: inherit;">name</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">random_<wbr>index_<wbr>randompet_<wbr>randompet</span>
+        <span class="property-type">random_<wbr>index_<wbr>random_<wbr>pet_<wbr>random_<wbr>pet</span>
     </dt>
     <dd>This type is defined in the <a href="/registry/packages/random">random</a> package.</dd><dt class="property-optional"
             title="Optional">
@@ -943,7 +946,7 @@ Pet<pulumi-choosable type="language" values="python,go" class="inline">, Pet<wbr
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#name_array_hcl" style="color: inherit; text-decoration: inherit;">name_<wbr>array</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">list(random_<wbr>index_<wbr>randompet_<wbr>randompet)</span>
+        <span class="property-type">list(random_<wbr>index_<wbr>random_<wbr>pet_<wbr>random_<wbr>pet)</span>
     </dt>
     <dd></dd><dt class="property-optional"
             title="Optional">
@@ -951,7 +954,7 @@ Pet<pulumi-choosable type="language" values="python,go" class="inline">, Pet<wbr
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#name_map_hcl" style="color: inherit; text-decoration: inherit;">name_<wbr>map</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">map(random_<wbr>index_<wbr>randompet_<wbr>randompet)</span>
+        <span class="property-type">map(random_<wbr>index_<wbr>random_<wbr>pet_<wbr>random_<wbr>pet)</span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>

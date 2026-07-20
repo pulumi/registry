@@ -269,6 +269,9 @@ example, err := mod.NewComponent(ctx, "componentResource", &mod.ComponentArgs{
 
 ```hcl
 resource "example_mod_component" "componentResource" {
+  lifecycle {
+    create_before_destroy = true
+  }
   local = component2
   main  = mainComponent
 }
@@ -410,7 +413,7 @@ The Component resource accepts the following [input](/docs/intro/concepts/inputs
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#main_hcl" style="color: inherit; text-decoration: inherit;">main</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">example_<wbr>maincomponent</span>
+        <span class="property-type">example_<wbr>main_<wbr>component</span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>

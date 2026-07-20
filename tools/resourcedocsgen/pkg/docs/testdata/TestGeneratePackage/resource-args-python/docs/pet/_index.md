@@ -266,6 +266,9 @@ example, err := example.NewPet(ctx, "petResource", &example.PetArgs{
 
 ```hcl
 resource "example_pet" "petResource" {
+  lifecycle {
+    create_before_destroy = true
+  }
   name = "string"
 }
 ```

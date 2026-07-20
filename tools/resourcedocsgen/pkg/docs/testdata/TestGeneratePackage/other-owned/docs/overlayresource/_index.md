@@ -81,7 +81,7 @@ Resources are created with functions called constructors. To learn more about de
 
 <div>
 <pulumi-choosable type="language" values="hcl">
-<div class="no-copy"><div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">resource</span> <span class="s2">&#34;example_overlayresource&#34;</span> <span class="s2">&#34;name&#34;</span> <span class="p">{</span>
+<div class="no-copy"><div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">resource</span> <span class="s2">&#34;example_overlay_resource&#34;</span> <span class="s2">&#34;name&#34;</span> <span class="p">{</span>
 <span class="c">    # resource properties</span>
 <span class="p">}</span></code></pre></div></div>
 </pulumi-choosable>
@@ -273,7 +273,10 @@ example, err := example.NewOverlayResource(ctx, "overlayResourceResource", &exam
 <pulumi-choosable type="language" values="hcl">
 
 ```hcl
-resource "example_overlayresource" "overlayResourceResource" {
+resource "example_overlay_resource" "overlayResourceResource" {
+  lifecycle {
+    create_before_destroy = true
+  }
   bar = "SOME_ENUM_VALUE"
   foo = {
     config = "string"

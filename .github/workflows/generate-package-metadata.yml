@@ -21,7 +21,7 @@ jobs:
     steps:
       - name: Fetch secrets from ESC
         id: esc-secrets
-        uses: pulumi/esc-action@8afe12bb7bb3df0a599e5309ee429ff1079ba85f # v3
+        uses: pulumi/esc-action@3af4859af8a73a362fb599b944124097d4bb80c5 # v3
       - uses: actions/checkout@v7
       - id: set-matrix
         run: echo "matrix=$(python generate_package_list.py)" >> $GITHUB_OUTPUT
@@ -48,7 +48,7 @@ jobs:
     steps:
       - name: Fetch secrets from ESC
         id: esc-secrets
-        uses: pulumi/esc-action@8afe12bb7bb3df0a599e5309ee429ff1079ba85f # v3
+        uses: pulumi/esc-action@3af4859af8a73a362fb599b944124097d4bb80c5 # v3
       - name: Read package name from its schema
         id: package
         # Read the name from the schema (its source of truth, and its
@@ -123,7 +123,7 @@ jobs:
     steps:
       - name: Fetch secrets from ESC
         id: esc-secrets
-        uses: pulumi/esc-action@8afe12bb7bb3df0a599e5309ee429ff1079ba85f # v3
+        uses: pulumi/esc-action@3af4859af8a73a362fb599b944124097d4bb80c5 # v3
       - name: Slack Notification
         uses: docker://sholung/action-slack-notify:v2.3.0
         env:

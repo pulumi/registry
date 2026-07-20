@@ -84,7 +84,7 @@ Resources are created with functions called constructors. To learn more about de
 
 <div>
 <pulumi-choosable type="language" values="hcl">
-<div class="no-copy"><div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">resource</span> <span class="s2">&#34;plant_tree_v1_rubbertree&#34;</span> <span class="s2">&#34;name&#34;</span> <span class="p">{</span>
+<div class="no-copy"><div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">resource</span> <span class="s2">&#34;plant_tree_v1_rubber_tree&#34;</span> <span class="s2">&#34;name&#34;</span> <span class="p">{</span>
 <span class="c">    # resource properties</span>
 <span class="p">}</span></code></pre></div></div>
 </pulumi-choosable>
@@ -244,7 +244,7 @@ The following reference example uses placeholder values for all [input propertie
 ```csharp
 var rubberTreeResource = new Plant.Tree.V1.RubberTree("rubberTreeResource", new()
 {
-    Diameter = Plant.Tree.V1.Diameter.Sixinch,
+    Diameter = Other.Tree.V1.Diameter.Sixinch,
     Type = Plant.Tree.V1.RubberTreeVariety.Burgundy,
     Container = new Plant.Inputs.ContainerArgs
     {
@@ -267,7 +267,7 @@ var rubberTreeResource = new Plant.Tree.V1.RubberTree("rubberTreeResource", new(
 
 ```go
 example, err := v1.NewRubberTree(ctx, "rubberTreeResource", &v1.RubberTreeArgs{
-	Diameter: v1.DiameterSixinch,
+	Diameter: tree / v1.DiameterSixinch,
 	Type:     v1.RubberTreeVarietyBurgundy,
 	Container: &plant.ContainerArgs{
 		Size:       plant.ContainerSizeFourInch,
@@ -288,7 +288,10 @@ example, err := v1.NewRubberTree(ctx, "rubberTreeResource", &v1.RubberTreeArgs{
 <pulumi-choosable type="language" values="hcl">
 
 ```hcl
-resource "plant_tree_v1_rubbertree" "rubberTreeResource" {
+resource "plant_tree_v1_rubber_tree" "rubberTreeResource" {
+  lifecycle {
+    create_before_destroy = true
+  }
   diameter = 6
   type     = "Burgundy"
   container = {
@@ -333,7 +336,7 @@ var rubberTreeResource = new RubberTree("rubberTreeResource", RubberTreeArgs.bui
 
 ```python
 rubber_tree_resource = plant.tree.v1.RubberTree("rubberTreeResource",
-    diameter=plant.tree.v1.Diameter.SIXINCH,
+    diameter=other.tree.v1.Diameter.SIXINCH,
     type=plant.tree.v1.RubberTreeVariety.BURGUNDY,
     container={
         "size": plant.ContainerSize.FOUR_INCH,
@@ -354,7 +357,7 @@ rubber_tree_resource = plant.tree.v1.RubberTree("rubberTreeResource",
 
 ```typescript
 const rubberTreeResource = new plant.tree.v1.RubberTree("rubberTreeResource", {
-    diameter: plant.tree.v1.Diameter.Sixinch,
+    diameter: other.tree.v1.Diameter.Sixinch,
     type: plant.tree.v1.RubberTreeVariety.Burgundy,
     container: {
         size: plant.ContainerSize.FourInch,
@@ -894,7 +897,7 @@ Get an existing RubberTree resource's state with the given name, ID, and optiona
     <div class="no-copy">
       <div class="highlight">
         <pre tabindex="0" class="chroma"><code class="language-hcl" data-lang="hcl"><span class="line"><span class="cl"><span class="k">import</span> {
-</span></span><span class="line"><span class="cl">  <span class="n">to</span> <span class="o">=</span> <span class="nx">plant_tree_v1_rubbertree</span>.<span class="n">example</span>
+</span></span><span class="line"><span class="cl">  <span class="n">to</span> <span class="o">=</span> <span class="nx">plant_tree_v1_rubber_tree</span>.<span class="n">example</span>
 </span></span><span class="line"><span class="cl">  <span class="n">id</span> <span class="o">=</span> <span class="s2">&#34;${id}&#34;</span>
 </span></span><span class="line"><span class="cl">}
 </span></span></code></pre>

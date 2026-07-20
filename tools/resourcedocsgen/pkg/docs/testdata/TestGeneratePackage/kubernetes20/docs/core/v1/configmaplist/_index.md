@@ -18,7 +18,6 @@ A Kubernetes list resource.
 
 
 
-
 ## Create ConfigMapList Resource {#create}
 
 Resources are created with functions called constructors. To learn more about declaring and configuring resources, see [Resources](/docs/concepts/resources/).
@@ -83,7 +82,7 @@ Resources are created with functions called constructors. To learn more about de
 
 <div>
 <pulumi-choosable type="language" values="hcl">
-<div class="no-copy"><div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">resource</span> <span class="s2">&#34;kubernetes_core_v1_configmaplist&#34;</span> <span class="s2">&#34;name&#34;</span> <span class="p">{</span>
+<div class="no-copy"><div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">resource</span> <span class="s2">&#34;kubernetes_core_v1_config_map_list&#34;</span> <span class="s2">&#34;name&#34;</span> <span class="p">{</span>
 <span class="c">    # resource properties</span>
 <span class="p">}</span></code></pre></div></div>
 </pulumi-choosable>
@@ -407,7 +406,10 @@ example, err := corev1.NewConfigMapList(ctx, "configMapListResource", &corev1.Co
 <pulumi-choosable type="language" values="hcl">
 
 ```hcl
-resource "kubernetes_core_v1_configmaplist" "configMapListResource" {
+resource "kubernetes_core_v1_config_map_list" "configMapListResource" {
+  lifecycle {
+    create_before_destroy = true
+  }
   items {
     api_version = "v1"
     binary_data = {
@@ -433,23 +435,23 @@ resource "kubernetes_core_v1_configmaplist" "configMapListResource" {
         "string" = "string"
       }
       managed_fields = [{
-        "apiVersion"  = "string"
-        "fieldsType"  = "string"
-        "fieldsV1"    = "{}"
-        "manager"     = "string"
-        "operation"   = "string"
-        "subresource" = "string"
-        "time"        = "string"
+        api_version = "string"
+        fields_type = "string"
+        fields_v1   = "{}"
+        manager     = "string"
+        operation   = "string"
+        subresource = "string"
+        time        = "string"
       }]
       name      = "string"
       namespace = "string"
       owner_references = [{
-        "apiVersion"         = "string"
-        "kind"               = "string"
-        "name"               = "string"
-        "uid"                = "string"
-        "blockOwnerDeletion" = false
-        "controller"         = false
+        api_version          = "string"
+        kind                 = "string"
+        name                 = "string"
+        uid                  = "string"
+        block_owner_deletion = false
+        controller           = false
       }]
       resource_version = "string"
       self_link        = "string"

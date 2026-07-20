@@ -18,7 +18,6 @@ test new feature with resoruces
 
 
 
-
 ## Create Foo Resource {#create}
 
 Resources are created with functions called constructors. To learn more about declaring and configuring resources, see [Resources](/docs/concepts/resources/).
@@ -319,6 +318,9 @@ Recursive: pulumi.Any(layeredType),
 
 ```hcl
 resource "example_foo" "fooResource" {
+  lifecycle {
+    create_before_destroy = true
+  }
   backup_kube_client_settings = {
     burst    = 0
     qps      = 0

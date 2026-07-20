@@ -285,7 +285,7 @@ Resources are created with functions called constructors. To learn more about de
 
 <div>
 <pulumi-choosable type="language" values="hcl">
-<div class="no-copy"><div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">resource</span> <span class="s2">&#34;random_randompassword&#34;</span> <span class="s2">&#34;name&#34;</span> <span class="p">{</span>
+<div class="no-copy"><div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">resource</span> <span class="s2">&#34;random_random_password&#34;</span> <span class="s2">&#34;name&#34;</span> <span class="p">{</span>
 <span class="c">    # resource properties</span>
 <span class="p">}</span></code></pre></div></div>
 </pulumi-choosable>
@@ -495,7 +495,10 @@ example, err := random.NewRandomPassword(ctx, "randomPasswordResource", &random.
 <pulumi-choosable type="language" values="hcl">
 
 ```hcl
-resource "random_randompassword" "randomPasswordResource" {
+resource "random_random_password" "randomPasswordResource" {
+  lifecycle {
+    create_before_destroy = true
+  }
   length = 0
   keepers = {
     "string" = "string"
@@ -1631,7 +1634,7 @@ Get an existing RandomPassword resource's state with the given name, ID, and opt
     <div class="no-copy">
       <div class="highlight">
         <pre tabindex="0" class="chroma"><code class="language-hcl" data-lang="hcl"><span class="line"><span class="cl"><span class="k">import</span> {
-</span></span><span class="line"><span class="cl">  <span class="n">to</span> <span class="o">=</span> <span class="nx">random_randompassword</span>.<span class="n">example</span>
+</span></span><span class="line"><span class="cl">  <span class="n">to</span> <span class="o">=</span> <span class="nx">random_random_password</span>.<span class="n">example</span>
 </span></span><span class="line"><span class="cl">  <span class="n">id</span> <span class="o">=</span> <span class="s2">&#34;${id}&#34;</span>
 </span></span><span class="line"><span class="cl">}
 </span></span></code></pre>

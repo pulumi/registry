@@ -2486,9 +2486,11 @@ func generateConstructorSyntaxData(pkg *schema.Package) *constructorSyntaxData {
 					func(line string) bool { return strings.HasSuffix(line, ");") })
 			}
 		case language.HCL:
-			files, diags, err := safeExtract(hcl_codegen.GenerateProgram)
+			files, diags, err := safeExtract(func(program *pcl.Program) (map[string][]byte, hcl.Diagnostics, error) {
+				return hcl_codegen.GenerateProgram(program, hcl_codegen.SkipRequiredProvidersVersion())
+			})
 			if !diags.HasErrors() && err == nil {
-				program := string(files["main.hcl"])
+				program := string(files["main.tf"])
 				constructorSyntax.hcl = extractConstructorSyntaxExamples(
 					program, /* program */
 					"",      /* indentation to trim */

@@ -316,6 +316,9 @@ example, err := mypkg.NewResource(ctx, "resourceResource", &mypkg.ResourceArgs{
 
 ```hcl
 resource "mypkg_resource" "resourceResource" {
+  lifecycle {
+    create_before_destroy = true
+  }
   config = {
     foo = "string"
   }

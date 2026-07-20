@@ -271,6 +271,9 @@ example, err := credentials.NewUser(ctx, "userResource", &credentials.UserArgs{
 
 ```hcl
 resource "credentials_user" "userResource" {
+  lifecycle {
+    create_before_destroy = true
+  }
   shared = {
     foo = "string"
   }

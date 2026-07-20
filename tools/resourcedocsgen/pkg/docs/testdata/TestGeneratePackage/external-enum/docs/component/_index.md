@@ -269,6 +269,9 @@ example, err := example.NewComponent(ctx, "componentResource", &example.Componen
 
 ```hcl
 resource "example_component" "componentResource" {
+  lifecycle {
+    create_before_destroy = true
+  }
   local_enum  = 3.1415
   remote_enum = "MANAGEMENT_UNSPECIFIED"
 }

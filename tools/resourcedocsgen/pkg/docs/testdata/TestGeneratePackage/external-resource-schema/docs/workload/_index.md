@@ -260,6 +260,9 @@ example, err := example.NewWorkload(ctx, "workloadResource", nil)
 
 ```hcl
 resource "example_workload" "workloadResource" {
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 ```
 

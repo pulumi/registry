@@ -34,7 +34,13 @@ import "regexp"
 // between "{{" and a following "<" or "%". A space after "{{" followed by anything
 // else (e.g. a Go template expression "{{ .Value }}") is left untouched, and the
 // closing side (e.g. the legitimate space in `... yaml" >}}`) is never modified.
-var malformedShortcodeOpen = regexp.MustCompile(`\{\{[ \t]+([<%])`)
+//
+// The whitespace class is [\t\p{Zs}] rather than [ \t]: \p{Zs} matches every
+// Unicode space separator, so a non-breaking space (U+00A0) or other exotic
+// space that Hugo still rejects — and that renders indistinguishably from a
+// plain space — is repaired too. \p{Zs} excludes newlines, so a match never
+// spans lines.
+var malformedShortcodeOpen = regexp.MustCompile(`\{\{[\t\p{Zs}]+([<%])`)
 
 // sanitizeShortcodeDelimiters repairs malformed Hugo shortcode opening delimiters
 // of the form "{{ <" / "{{ %" back to the well-formed "{{<" / "{{%". It is a

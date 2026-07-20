@@ -2,6 +2,7 @@
 """Command-line entry point for the community package tooling. Each subcommand is one CI step:
 
     check           verify the added entry and write a fact-sheet (runs on the PR)
+    preview         materialize a fork PR's entry so its site preview can be built
     report          post the fact-sheet as a sticky PR comment
     check-command   handle a /check comment
 
@@ -18,6 +19,7 @@ from pathlib import Path
 
 import comment_commands
 import fact_sheet
+import github_api
 import package_list
 import resourcedocsgen
 import verify_entry
@@ -76,6 +78,25 @@ def run_check(args: argparse.Namespace) -> int:
     return 1 if failed else 0
 
 
+def run_preview(args: argparse.Namespace) -> int:
+    _, head_sha = github_api.pull_request_head(args.pr)
+    base = package_list.current()
+    head = github_api.file_content_at(github_api.repo(), str(package_list.PATH), head_sha)
+    package_list.PATH.write_text(head)  # bring the fork's entry into the tree so the site build sees it
+    entries = package_list.added_entries(base, head)
+    if not entries:
+        print("no added entries to preview")
+        return 0
+    resourcedocsgen.ensure_built()
+    for entry in entries:
+        tag = github_api.latest_release_tag(entry.repoSlug)
+        if tag is None:
+            print(f"no published release for {entry.repoSlug}; skipping its preview metadata")
+            continue
+        resourcedocsgen.generate_metadata(entry.repoSlug, entry.schemaFile, tag)
+    return 0
+
+
 def main(argv: list[str]) -> int:
     parser = argparse.ArgumentParser(prog="community-package")
     sub = parser.add_subparsers(dest="command", required=True)
@@ -84,6 +105,10 @@ def main(argv: list[str]) -> int:
     check.add_argument("--diff", metavar="BASEREF", required=True)
     check.add_argument("--out", default=".")
     check.set_defaults(run=run_check)
+
+    preview = sub.add_parser("preview")
+    preview.add_argument("--pr", type=int, required=True)
+    preview.set_defaults(run=run_preview)
 
     sub.add_parser("report").set_defaults(run=lambda _: comment_commands.report())
     sub.add_parser("check-command").set_defaults(run=lambda _: comment_commands.check_command())

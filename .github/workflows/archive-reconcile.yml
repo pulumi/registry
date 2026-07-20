@@ -1,0 +1,206 @@
+name: Archive reconcile
+
+# Keeps the versioned-docs archive in sync with version bumps. Every merge
+# that touches a package metadata YAML (the nightly community updates and the
+# first-party publish-provider-update dispatches both land that way):
+#
+#   1. refreshes the package's manifest hugo-window entries (the dropdown's
+#      "latest" changes on every bump, even minor ones), and
+#   2. archives any major that just left the retention window (typically only
+#      when a major version rolls).
+#
+# Never blocks deploys: this runs after the merge, entirely out-of-band, and
+# schema URLs are version-pinned/immutable so a missed run self-heals on the
+# next bump (or a manual dispatch / backfill run).
+#
+# See scripts/versioned-docs/README.md.
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - "themes/default/data/registry/packages/*.yaml"
+  workflow_dispatch:
+    inputs:
+      package:
+        description: Reconcile a single package by name
+        required: true
+        type: string
+      target_env:
+        description: Target environment
+        required: false
+        type: choice
+        options: [testing, production]
+        default: production
+
+concurrency:
+  group: archive-reconcile
+  cancel-in-progress: false
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  plan:
+    name: Reconcile manifests
+    runs-on: ubuntu-latest
+    # push events reconcile production (master == production deploys)
+    environment: ${{ inputs.target_env || 'production' }}
+    outputs:
+      matrix: ${{ steps.plan.outputs.matrix }}
+      count: ${{ steps.plan.outputs.count }}
+      target_env: ${{ steps.plan.outputs.target_env }}
+    env:
+      GOPATH: ${{ github.workspace }}/go
+      ESC_ACTION_OIDC_AUTH: true
+      ESC_ACTION_OIDC_ORGANIZATION: pulumi
+      ESC_ACTION_OIDC_REQUESTED_TOKEN_TYPE: urn:pulumi:token-type:access_token:organization
+    steps:
+      - name: Fetch secrets from ESC
+        id: esc-secrets
+        uses: pulumi/esc-action@8afe12bb7bb3df0a599e5309ee429ff1079ba85f # v3
+        with:
+          environment: github-secrets/pulumi-registry
+          export-environment-variables: false
+
+      - name: Check out branch
+        uses: actions/checkout@v7
+        with:
+          token: ${{ steps.esc-secrets.outputs.PULUMI_BOT_TOKEN }}
+          fetch-depth: 0
+
+      - name: Install Go
+        uses: actions/setup-go@v6
+        with:
+          go-version: 1.26.x
+
+      - name: Install yq
+        run: |
+          if ! command -v yq >/dev/null; then
+            sudo curl -fsSL -o /usr/local/bin/yq \
+              "https://github.com/mikefarah/yq/releases/download/v4.44.3/yq_linux_amd64"
+            sudo chmod +x /usr/local/bin/yq
+          fi
+
+      - name: Install Pulumi CLI
+        uses: pulumi/actions@8e5e406f4007fca908480587cb9893c07090f58d # v7
+
+      - name: Configure git for private Go modules
+        run: git config --global url."https://${{ steps.esc-secrets.outputs.PULUMI_BOT_TOKEN }}:x-oauth-basic@github.com/pulumi/registry-mirror-tools".insteadOf "https://github.com/pulumi/registry-mirror-tools"
+
+      - name: Determine changed packages
+        id: changed
+        run: |
+          set -euo pipefail
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            PKGS="${{ inputs.package }}"
+          else
+            PKGS=$(git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" -- \
+                'themes/default/data/registry/packages/*.yaml' 2>/dev/null \
+              | xargs -r -n1 basename | sed 's/\.yaml$//' | sort -u || true)
+            if [[ -z "$PKGS" ]]; then
+              # Fallback for force-pushes/new branches where `before` is unusable.
+              PKGS=$(git diff --name-only HEAD^ HEAD -- 'themes/default/data/registry/packages/*.yaml' \
+                | xargs -r -n1 basename | sed 's/\.yaml$//' | sort -u)
+            fi
+          fi
+          echo "Changed packages:"; echo "$PKGS"
+          { echo "packages<<EOF"; echo "$PKGS"; echo "EOF"; } >> "$GITHUB_OUTPUT"
+
+      - name: Resolve versioned-docs publish target
+        id: target
+        env:
+          PULUMI_ACCESS_TOKEN: ${{ steps.esc-secrets.outputs.PULUMI_ACCESS_TOKEN }}
+        run: |
+          set -euo pipefail
+          TARGET_ENV="${{ inputs.target_env || 'production' }}"
+          STORAGE_STACK="pulumi/pulumi-registry-versioned/${TARGET_ENV}"
+          BUCKET=$(pulumi stack output bucketNameOutput --stack "$STORAGE_STACK" 2>/dev/null || true)
+          ROLE=$(pulumi stack output publisherRoleArn --stack "$STORAGE_STACK" 2>/dev/null || true)
+          DIST_ID=""
+          if [[ -n "${{ vars.PULUMI_STACK_NAME }}" ]]; then
+            DIST_ID=$(pulumi stack output cloudFrontDistributionId --stack "${{ vars.PULUMI_STACK_NAME }}" 2>/dev/null || true)
+          fi
+          if [[ -z "$BUCKET" || -z "$ROLE" ]]; then
+            echo "publish=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::Archive stack $STORAGE_STACK is not stood up; nothing to reconcile."
+            exit 0
+          fi
+          {
+            echo "publish=true"
+            echo "bucket=$BUCKET"
+            echo "role=$ROLE"
+            echo "distribution_id=$DIST_ID"
+            echo "target_env=$TARGET_ENV"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Configure AWS credentials (publisher role)
+        if: steps.target.outputs.publish == 'true'
+        uses: aws-actions/configure-aws-credentials@v6
+        with:
+          role-to-assume: ${{ steps.target.outputs.role }}
+          role-session-name: registry-versioned-docs-reconcile
+          aws-region: us-west-2
+
+      - name: Reconcile changed packages
+        id: plan
+        if: steps.target.outputs.publish == 'true'
+        env:
+          GITHUB_TOKEN: ${{ steps.esc-secrets.outputs.PULUMI_BOT_TOKEN }}
+          PULUMI_ACCESS_TOKEN: ${{ steps.esc-secrets.outputs.PULUMI_ACCESS_TOKEN }}
+        run: |
+          set -euo pipefail
+          BUCKET="${{ steps.target.outputs.bucket }}"
+          DIST_ID="${{ steps.target.outputs.distribution_id }}"
+          BIG='^(aws|aws-native|azure-native|gcp|google-native|oci|fortios)$'
+
+          WORK='[]'
+          while read -r pkg; do
+            [[ -n "$pkg" ]] || continue
+            [[ -f "themes/default/data/registry/packages/${pkg}.yaml" ]] || { echo "::notice::$pkg YAML removed; skipping"; continue; }
+            echo "::group::$pkg"
+            args=("$pkg" --bucket "$BUCKET" --update-manifest)
+            [[ -n "$DIST_ID" ]] && args+=(--distribution-id "$DIST_ID")
+            if PLAN=$(./scripts/versioned-docs/reconcile-package.sh "${args[@]}"); then
+              WORK=$(jq -n --argjson w "$WORK" --argjson p "$PLAN" --arg big "$BIG" '
+                $w + ($p.archive
+                      | map(select(.published | not))
+                      | map({package: $p.package,
+                             version: .version,
+                             schema_url: .schema_url,
+                             runner: (if ($p.package | test($big)) then "pulumi-service-ubuntu-24.04-16core" else "ubuntu-latest" end)}))')
+            else
+              echo "::warning::reconcile failed for $pkg (will self-heal on the next bump)"
+            fi
+            echo "::endgroup::"
+          done <<< "${{ steps.changed.outputs.packages }}"
+
+          COUNT=$(jq -n --argjson w "$WORK" '$w | length')
+          { echo "matrix=$(jq -cn --argjson w "$WORK" '$w')"; echo "count=$COUNT"; echo "target_env=${{ steps.target.outputs.target_env }}"; } >> "$GITHUB_OUTPUT"
+          {
+            echo "## Archive reconcile"
+            echo "- Manifests refreshed for changed packages"
+            echo "- Snapshots to archive: $COUNT"
+            jq -rn --argjson w "$WORK" '$w[] | "  - \(.package) \(.version)"'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  publish:
+    name: Publish
+    needs: plan
+    if: ${{ needs.plan.outputs.count != '0' && needs.plan.outputs.count != '' }}
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        include: ${{ fromJSON(needs.plan.outputs.matrix) }}
+    permissions:
+      id-token: write
+      contents: read
+    uses: ./.github/workflows/archive-package-version.yml
+    with:
+      package: ${{ matrix.package }}
+      version: ${{ matrix.version }}
+      schema_url: ${{ matrix.schema_url }}
+      target_env: ${{ needs.plan.outputs.target_env }}
+      runner: ${{ matrix.runner }}

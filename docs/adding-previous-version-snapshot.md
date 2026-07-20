@@ -1,5 +1,14 @@
 # Adding a Previous Version Snapshot
 
+> **⚠️ Superseded.** This manual `<pkg>-v<major>` snapshot procedure is obsolete.
+> Versioned docs are now generated automatically: blessed first-party providers
+> get in-Hugo `<pkg>@<major>.x` pages on every build
+> (`scripts/generate-versioned-docs.sh`), and all other providers/versions are
+> published as write-once archive snapshots. See
+> [`scripts/versioned-docs/README.md`](../scripts/versioned-docs/README.md).
+> The legacy `aws-v6`/`azure-native-v2` URLs are redirected to the `@` scheme by
+> `infrastructure/redirects.js`. Do not follow the steps below for new versions.
+
 When creating a new major release of a tier-1 provider, we might want to keep the previous major version available in the Pulumi Registry for users who are not yet ready to upgrade to the new major version.
 
 1. Check out this repository locally.

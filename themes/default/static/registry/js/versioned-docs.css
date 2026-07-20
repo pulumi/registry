@@ -1,0 +1,15 @@
+/*
+ * Versioned provider API docs — loader chrome styles.
+ *
+ * PERMANENT CONTRACT URL: loaded by /registry/js/versioned-docs.js (which
+ * archived snapshots reference forever) as /registry/js/versioned-docs.css.
+ * Selector styling on both live and archived pages comes from the
+ * site/vendored CSS (.version-selector-wrapper / .version-selector); this file
+ * only styles elements the loader creates itself, so the archive back-catalog
+ * can be restyled without republishing.
+ */
+
+[data-vdocs-mount] select.version-selector {
+    max-width: 100%;
+    font: inherit;
+}

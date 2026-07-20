@@ -1,4 +1,12 @@
 #!/usr/bin/env bash
+#
+# Generates the in-Hugo versioned API docs (last MAJOR_COUNT majors, latest
+# minor of each) for blessed first-party providers. Runs after `make api-docs`
+# has generated the latest version of every package.
+#
+# Versions older than this window — and all versions of non-blessed packages —
+# are served from the write-once archive instead; see
+# scripts/versioned-docs/README.md.
 set -euo pipefail
 
 for cmd in jq yq curl; do
@@ -14,6 +22,10 @@ if [[ ! -x "$RESOURCEDOCSGEN" ]]; then
     echo "Building resourcedocsgen..."
     make -C "$REPO_ROOT" bin/resourcedocsgen
 fi
+
+# Shared per-(package, version) generation core.
+# shellcheck source=scripts/versioned-docs/lib.sh
+source "$SCRIPT_DIR/versioned-docs/lib.sh"
 
 # Install registry-mirror-discover (pinned commit for stability).
 # Cache the built binary to avoid recompiling on every build.
@@ -39,11 +51,9 @@ MINOR_COUNT=1
 MAX_PARALLEL="${MAX_PARALLEL:-8}"
 
 # Blessed packages are first-party providers that get versioned docs.
-# Fetch dynamically from ci-mgmt (pinned commit for stability):
-CI_MGMT_COMMIT="b3cede4113152996ec67c47a2ca0cef3c5aeb626"
-PROVIDERS_JSON_URL="https://raw.githubusercontent.com/pulumi/ci-mgmt/${CI_MGMT_COMMIT}/provider-ci/providers.json"
-PROVIDERS_JSON=$(curl -sfL "$PROVIDERS_JSON_URL") || { echo "Failed to fetch providers.json from ci-mgmt" >&2; exit 1; }
-mapfile -t BLESSED_PACKAGES < <(echo "$PROVIDERS_JSON" | jq -r '.[]')
+# The list comes from ci-mgmt (pinned commit defined in versioned-docs/lib.sh).
+mapfile -t BLESSED_PACKAGES < <(fetch_blessed_packages)
+(( ${#BLESSED_PACKAGES[@]} > 0 )) || { echo "Failed to fetch providers.json from ci-mgmt" >&2; exit 1; }
 
 is_blessed() {
     local pkg="$1"
@@ -62,46 +72,13 @@ else
     PACKAGES_TO_PROCESS=("${BLESSED_PACKAGES[@]}")
 fi
 
-# Derive index URL from schema URL.
-#
-# The _index.md URL is not stored in package metadata. For some packages (third-party providers
-# using the `from-urls` workflow), it's only passed during the CI publish workflow and discarded.
-# For versioned docs, we derive it from the schema URL pattern:
-#
-# 1. GitHub-hosted packages (Pulumi providers):
-#    Schema: https://raw.githubusercontent.com/pulumi/pulumi-aws/v7.20.0/provider/cmd/pulumi-resource-aws/schema.json
-#    Index:  https://raw.githubusercontent.com/pulumi/pulumi-aws/v7.20.0/docs/_index.md
-#
-# 2. CDN-hosted packages (bridged OpenTofu providers):
-#    Schema: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/elastic/elasticstack/0.14.3/schema.json
-#    Index:  https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/elastic/elasticstack/0.14.3/index.md
-#
-# If derivation fails or the URL returns 404, we fall back to copying the latest version's _index.md.
-derive_index_url() {
-    local schema_url="$1"
-
-    if [[ "$schema_url" == *"raw.githubusercontent.com"* ]]; then
-        # GitHub URL: extract base and replace path
-        # Example: https://raw.githubusercontent.com/pulumi/pulumi-aws/v7.20.0/provider/cmd/pulumi-resource-aws/schema.json
-        # Result: https://raw.githubusercontent.com/pulumi/pulumi-aws/v7.20.0/docs/_index.md
-        echo "$schema_url" | sed -E 's|^(https://raw\.githubusercontent\.com/[^/]+/[^/]+/[^/]+)/.*$|\1/docs/_index.md|'
-    elif [[ "$schema_url" == *"cloudfront.net"* ]]; then
-        # CDN URL: replace /schemas/ with /docs/ and schema.json with index.md
-        # Example: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/elastic/elasticstack/0.14.3/schema.json
-        # Result: https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/elastic/elasticstack/0.14.3/index.md
-        echo "$schema_url" | sed 's|/schemas/|/docs/|; s|schema\.json$|index.md|'
-    else
-        echo ""
-    fi
-}
-
 mkdir -p "$CONTENT_DIR" "$STATIC_DIR/navs" "$PACKAGE_VERSIONS_DIR"
 
 # Persistent cache for versioned docs output. In CI, this directory is preserved between
 # runs by actions/cache. On cache hit, the sentinel-based skip logic avoids regenerating
 # unchanged packages entirely. The cache stores only versioned (@-suffixed) content.
 VERSIONED_DOCS_CACHE="$REPO_ROOT/.cache/versioned-docs"
-mkdir -p "$VERSIONED_DOCS_CACHE/content" "$VERSIONED_DOCS_CACHE/navs" "$VERSIONED_DOCS_CACHE/metadata"
+mkdir -p "$VERSIONED_DOCS_CACHE/content" "$VERSIONED_DOCS_CACHE/navs" "$VERSIONED_DOCS_CACHE/metadata" "$VERSIONED_DOCS_CACHE/schemas"
 
 # Restore cached versioned docs into the output directories.
 restore_cache() {
@@ -127,6 +104,12 @@ restore_cache() {
         name=$(basename "$cached_meta")
         [[ -f "$PACKAGE_VERSIONS_DIR/$name" ]] || cp -a "$cached_meta" "$PACKAGE_VERSIONS_DIR/$name"
     done
+    for cached_schema_dir in "$VERSIONED_DOCS_CACHE/schemas/"*@*; do
+        [[ -d "$cached_schema_dir" ]] || continue
+        local name
+        name=$(basename "$cached_schema_dir")
+        [[ -d "$STATIC_DIR/$name" ]] || cp -a "$cached_schema_dir" "$STATIC_DIR/$name"
+    done
     if (( count > 0 )); then
         echo "Restored $count versioned doc sets from cache"
     fi
@@ -135,7 +118,7 @@ restore_cache() {
 # Save versioned docs output back to the cache for next run.
 save_cache() {
     # Clear stale cache entries and repopulate from current output.
-    rm -rf "$VERSIONED_DOCS_CACHE/content/"*@* "$VERSIONED_DOCS_CACHE/navs/"*@* "$VERSIONED_DOCS_CACHE/metadata/"*@*
+    rm -rf "$VERSIONED_DOCS_CACHE/content/"*@* "$VERSIONED_DOCS_CACHE/navs/"*@* "$VERSIONED_DOCS_CACHE/metadata/"*@* "$VERSIONED_DOCS_CACHE/schemas/"*@*
     for content_dir in "$CONTENT_DIR/"*@*; do
         [[ -d "$content_dir" ]] || continue
         cp -a "$content_dir" "$VERSIONED_DOCS_CACHE/content/"
@@ -147,6 +130,10 @@ save_cache() {
     for meta_file in "$PACKAGE_VERSIONS_DIR/"*@*.yaml; do
         [[ -f "$meta_file" ]] || continue
         cp -a "$meta_file" "$VERSIONED_DOCS_CACHE/metadata/"
+    done
+    for schema_dir in "$STATIC_DIR/"*@*; do
+        [[ -d "$schema_dir" ]] || continue
+        cp -a "$schema_dir" "$VERSIONED_DOCS_CACHE/schemas/"
     done
     echo "Saved versioned docs to cache"
 }
@@ -167,11 +154,6 @@ process_package() {
         echo "[$PACKAGE] Package YAML not found: $PACKAGE_YAML, skipping" >&2
         return 0
     fi
-
-    # Per-invocation temp dir for resourcedocsgen nav output
-    local NAV_TEMP_DIR
-    NAV_TEMP_DIR=$(mktemp -d)
-    trap 'rm -rf "$NAV_TEMP_DIR"' EXIT
 
     echo ""
     echo "========================================"
@@ -215,120 +197,14 @@ process_package() {
             continue
         fi
 
-        # Skip unchanged packages: if docs were already generated from this exact schema URL
-        # with this exact version of resourcedocsgen, reuse them.
-        local DOCS_OUT_DIR="$CONTENT_DIR/$VERSIONED_NAME"
-        local SENTINEL="$DOCS_OUT_DIR/.generated"
-        if [[ -f "$SENTINEL" ]] && grep -qF "$SCHEMA_URL" "$SENTINEL" 2>/dev/null; then
-            echo "[$PACKAGE] Skipping $VERSIONED_NAME (already generated, inputs unchanged)"
-            GENERATED_VERSIONS+=("$VERSIONED_NAME")
+        local rc=0
+        generate_version_content "$PACKAGE" "$VERSION" "$SCHEMA_URL" \
+            "$CONTENT_DIR" "$STATIC_DIR" "$PACKAGE_VERSIONS_DIR" || rc=$?
+        if (( rc != 0 )); then
+            echo "[$PACKAGE] Warning: Skipping $VERSIONED_NAME (generation failed with status $rc)"
             continue
         fi
 
-        echo ""
-        echo "[$PACKAGE] === Processing v$VERSION ($VERSION_SLUG) ==="
-
-        rm -rf "$DOCS_OUT_DIR"
-        mkdir -p "$DOCS_OUT_DIR"
-
-        # Download schema once and cache it (schemas can be 50MB+)
-        local SCHEMA_CACHE_DIR="$REPO_ROOT/.cache/schemas"
-        mkdir -p "$SCHEMA_CACHE_DIR"
-        local CACHED_SCHEMA="$SCHEMA_CACHE_DIR/${PACKAGE}-v${VERSION}.json"
-
-        if [[ ! -f "$CACHED_SCHEMA" ]]; then
-            echo "[$PACKAGE] Downloading schema from $SCHEMA_URL..."
-            if [[ "$SCHEMA_URL" == *.yaml || "$SCHEMA_URL" == *.yml ]]; then
-                if ! curl -sfL "$SCHEMA_URL" | yq -o json > "$CACHED_SCHEMA"; then
-                    echo "[$PACKAGE] Warning: Failed to download schema from $SCHEMA_URL, skipping"
-                    rm -f "$CACHED_SCHEMA"
-                    rm -rf "$DOCS_OUT_DIR"
-                    continue
-                fi
-            else
-                if ! curl -sfL "$SCHEMA_URL" -o "$CACHED_SCHEMA"; then
-                    echo "[$PACKAGE] Warning: Failed to download schema from $SCHEMA_URL, skipping"
-                    rm -f "$CACHED_SCHEMA"
-                    rm -rf "$DOCS_OUT_DIR"
-                    continue
-                fi
-            fi
-            if [[ ! -s "$CACHED_SCHEMA" ]]; then
-                echo "[$PACKAGE] Warning: Downloaded schema is empty, skipping"
-                rm -f "$CACHED_SCHEMA"
-                rm -rf "$DOCS_OUT_DIR"
-                continue
-            fi
-        else
-            echo "[$PACKAGE] Using cached schema: $CACHED_SCHEMA"
-        fi
-
-        # Fetch _index.md from derived URL, fall back to latest version's copy
-        local INDEX_URL
-        INDEX_URL=$(derive_index_url "$SCHEMA_URL")
-        if [[ -n "$INDEX_URL" ]]; then
-            echo "[$PACKAGE] Fetching _index.md from $INDEX_URL..."
-            if ! curl -sfL "$INDEX_URL" -o "$DOCS_OUT_DIR/_index.md" 2>/dev/null; then
-                echo "[$PACKAGE] Could not fetch _index.md from $INDEX_URL"
-                rm -f "$DOCS_OUT_DIR/_index.md"
-            fi
-        fi
-
-        if [[ ! -f "$DOCS_OUT_DIR/_index.md" ]]; then
-            local LATEST_INDEX="$REPO_ROOT/themes/default/content/registry/packages/$PACKAGE/_index.md"
-            if [[ -f "$LATEST_INDEX" ]]; then
-                echo "[$PACKAGE] Copying _index.md from latest version..."
-                cp "$LATEST_INDEX" "$DOCS_OUT_DIR/_index.md"
-            else
-                echo "[$PACKAGE] Warning: No _index.md available for $VERSIONED_NAME"
-            fi
-        fi
-
-        # Generate API docs using pre-built binary (output nav to per-invocation temp dir)
-        echo "[$PACKAGE] Generating API docs..."
-        if ! "$RESOURCEDOCSGEN" docs \
-            --schemaFile "$CACHED_SCHEMA" \
-            --version "v$VERSION" \
-            --docsOutDir "$DOCS_OUT_DIR/api-docs" \
-            --packageTreeJSONOutDir "$NAV_TEMP_DIR"; then
-            echo "[$PACKAGE] Warning: Failed to generate docs for $VERSIONED_NAME, skipping"
-            rm -rf "$DOCS_OUT_DIR"
-            continue
-        fi
-
-        # Move nav JSON to final versioned name
-        mv "$NAV_TEMP_DIR/${PACKAGE}.json" "$STATIC_DIR/navs/${VERSIONED_NAME}.json"
-
-        # Generate versioned metadata YAML from cached schema
-        # Use schema's displayName if available, otherwise fall back to latest package's title
-        local SCHEMA_TITLE PACKAGE_TITLE PACKAGE_PUBLISHER PACKAGE_REPO_URL
-        SCHEMA_TITLE=$(jq -r '.displayName // empty' "$CACHED_SCHEMA")
-        if [[ -n "$SCHEMA_TITLE" ]]; then
-            PACKAGE_TITLE="$SCHEMA_TITLE"
-        else
-            PACKAGE_TITLE=$(grep '^title:' "$PACKAGE_YAML" | head -1 | sed 's/^title: *//')
-        fi
-        PACKAGE_PUBLISHER=$(jq -r '.publisher // "Pulumi"' "$CACHED_SCHEMA")
-        PACKAGE_REPO_URL=$(jq -r '.repository // empty' "$CACHED_SCHEMA")
-        if [[ -z "$PACKAGE_REPO_URL" ]]; then
-            PACKAGE_REPO_URL=$(grep '^repo_url:' "$PACKAGE_YAML" | head -1 | sed 's/^repo_url: *//')
-        fi
-
-        cat > "$PACKAGE_VERSIONS_DIR/${VERSIONED_NAME}.yaml" <<YAML
-name: $PACKAGE
-title: $PACKAGE_TITLE
-version: v$VERSION
-version_slug: "$VERSION_SLUG"
-schema_file_url: $SCHEMA_URL
-repo_url: $PACKAGE_REPO_URL
-publisher: $PACKAGE_PUBLISHER
-updated_on: $(date +%s)
-YAML
-
-        # Write sentinel file to enable skip-if-unchanged on subsequent builds.
-        echo "$SCHEMA_URL" > "$SENTINEL"
-
-        echo "[$PACKAGE] Done with $VERSIONED_NAME"
         GENERATED_VERSIONS+=("$VERSIONED_NAME")
     done < <(echo "$VERSIONS_JSON" | jq -c '.[]')
 
@@ -350,6 +226,7 @@ YAML
             echo "[$PACKAGE] Removing old version: $existing_name"
             rm -rf "$existing"
             rm -f "$STATIC_DIR/navs/${existing_name}.json"
+            rm -rf "$STATIC_DIR/${existing_name}"
             rm -f "$PACKAGE_VERSIONS_DIR/${existing_name}.yaml"
         fi
     done

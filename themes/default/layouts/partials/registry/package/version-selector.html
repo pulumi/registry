@@ -22,13 +22,25 @@
 
 {{ $versions = sort $versions "sortKey" "desc" }}
 
-{{ if gt (len $versions) 1 }}
-<div class="version-selector-wrapper package-link">
+{{/*
+    The wrapper always renders (hidden when there's only one in-Hugo version)
+    so the versioned-docs loader has a mount point to merge archived versions
+    into — or to build the dropdown at, for packages whose only other versions
+    are archived. The loader fails silent when the package has no archive
+    manifest, leaving the page exactly as built.
+*/}}
+<div class="version-selector-wrapper package-link" data-vdocs-mount{{ if le (len $versions) 1 }} hidden{{ end }}>
     {{ partial "icon" (dict "name" "git-branch") }}
+    {{ if gt (len $versions) 1 }}
     <select class="version-selector" onchange="if(this.value) window.location.href=this.value">
         {{ range $versions }}
             <option value="{{ .url }}" {{ if eq .slug $currentVersionSlug }}selected{{ end }}>{{ .label }}</option>
         {{ end }}
     </select>
+    {{ end }}
 </div>
-{{ end }}
+<script async src="/registry/js/versioned-docs.js"
+    data-vdocs-pkg="{{ $basePackageName }}"
+    data-vdocs-mode="latest"
+    data-vdocs-slug="{{ $currentVersionSlug }}"
+    data-vdocs-live-root="/registry/packages/{{ $basePackageName }}/"></script>

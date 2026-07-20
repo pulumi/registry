@@ -1,0 +1,193 @@
+name: Archive backfill
+
+# Plans and publishes versioned-docs archive snapshots across the whole
+# package set (or a filtered subset). Safe to re-run: published versions
+# no-op (write-once refuse-overwrite), so repeated runs converge. Versions
+# whose historical schemas can't be fetched are reported and skipped, never
+# fatal.
+#
+# A single run publishes at most `limit` snapshots (GitHub matrix cap /
+# API-rate hygiene) — re-run until the plan reports no remaining work.
+#
+# See scripts/versioned-docs/README.md.
+
+on:
+  workflow_dispatch:
+    inputs:
+      package_filter:
+        description: Extended-regex filter on package names (grep -E)
+        required: false
+        type: string
+        default: ".*"
+      target_env:
+        description: Target environment
+        required: false
+        type: choice
+        options: [testing, production]
+        default: testing
+      limit:
+        description: Max snapshots to publish in this run
+        required: false
+        type: string
+        default: "200"
+      dry_run:
+        description: Plan only; publish nothing
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  plan:
+    name: Plan (${{ inputs.target_env }})
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.target_env }}
+    outputs:
+      matrix: ${{ steps.plan.outputs.matrix }}
+      count: ${{ steps.plan.outputs.count }}
+    env:
+      GOPATH: ${{ github.workspace }}/go
+      ESC_ACTION_OIDC_AUTH: true
+      ESC_ACTION_OIDC_ORGANIZATION: pulumi
+      ESC_ACTION_OIDC_REQUESTED_TOKEN_TYPE: urn:pulumi:token-type:access_token:organization
+    steps:
+      - name: Fetch secrets from ESC
+        id: esc-secrets
+        uses: pulumi/esc-action@8afe12bb7bb3df0a599e5309ee429ff1079ba85f # v3
+        with:
+          environment: github-secrets/pulumi-registry
+          export-environment-variables: false
+
+      - name: Check out branch
+        uses: actions/checkout@v7
+        with:
+          token: ${{ steps.esc-secrets.outputs.PULUMI_BOT_TOKEN }}
+          fetch-depth: 0
+
+      - name: Install Go
+        uses: actions/setup-go@v6
+        with:
+          go-version: 1.26.x
+
+      - name: Install yq
+        run: |
+          if ! command -v yq >/dev/null; then
+            sudo curl -fsSL -o /usr/local/bin/yq \
+              "https://github.com/mikefarah/yq/releases/download/v4.44.3/yq_linux_amd64"
+            sudo chmod +x /usr/local/bin/yq
+          fi
+
+      - name: Install Pulumi CLI
+        uses: pulumi/actions@8e5e406f4007fca908480587cb9893c07090f58d # v7
+
+      - name: Configure git for private Go modules
+        run: git config --global url."https://${{ steps.esc-secrets.outputs.PULUMI_BOT_TOKEN }}:x-oauth-basic@github.com/pulumi/registry-mirror-tools".insteadOf "https://github.com/pulumi/registry-mirror-tools"
+
+      - name: Resolve versioned-docs publish target
+        id: target
+        env:
+          PULUMI_ACCESS_TOKEN: ${{ steps.esc-secrets.outputs.PULUMI_ACCESS_TOKEN }}
+        run: |
+          set -euo pipefail
+          STORAGE_STACK="pulumi/pulumi-registry-versioned/${{ inputs.target_env }}"
+          BUCKET=$(pulumi stack output bucketNameOutput --stack "$STORAGE_STACK" 2>/dev/null || true)
+          ROLE=$(pulumi stack output publisherRoleArn --stack "$STORAGE_STACK" 2>/dev/null || true)
+          if [[ -z "$BUCKET" || -z "$ROLE" ]]; then
+            echo "publish=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::Archive stack $STORAGE_STACK is not stood up; nothing to plan."
+            exit 0
+          fi
+          { echo "publish=true"; echo "bucket=$BUCKET"; echo "role=$ROLE"; } >> "$GITHUB_OUTPUT"
+
+      - name: Configure AWS credentials (publisher role)
+        if: steps.target.outputs.publish == 'true'
+        uses: aws-actions/configure-aws-credentials@v6
+        with:
+          role-to-assume: ${{ steps.target.outputs.role }}
+          role-session-name: registry-versioned-docs-plan
+          aws-region: us-west-2
+
+      - name: Plan archive work
+        id: plan
+        if: steps.target.outputs.publish == 'true'
+        env:
+          GITHUB_TOKEN: ${{ steps.esc-secrets.outputs.PULUMI_BOT_TOKEN }}
+          PULUMI_ACCESS_TOKEN: ${{ steps.esc-secrets.outputs.PULUMI_ACCESS_TOKEN }}
+        run: |
+          set -euo pipefail
+          LIMIT="${{ inputs.limit }}"
+          BUCKET="${{ steps.target.outputs.bucket }}"
+          # Packages needing the big runner class for the snapshot Hugo build.
+          BIG='^(aws|aws-native|azure-native|gcp|google-native|oci|fortios)$'
+
+          WORK='[]'
+          SKIPPED='[]'
+          FAILED='[]'
+          for yaml in themes/default/data/registry/packages/*.yaml; do
+            pkg=$(basename "$yaml" .yaml)
+            echo "$pkg" | grep -qE '${{ inputs.package_filter }}' || continue
+            echo "::group::$pkg"
+            if PLAN=$(./scripts/versioned-docs/reconcile-package.sh "$pkg" --bucket "$BUCKET"); then
+              WORK=$(jq -n --argjson w "$WORK" --argjson p "$PLAN" --arg big "$BIG" '
+                $w + ($p.archive
+                      | map(select(.published | not))
+                      | map({package: $p.package,
+                             version: .version,
+                             schema_url: .schema_url,
+                             runner: (if ($p.package | test($big)) then "pulumi-service-ubuntu-24.04-16core" else "ubuntu-latest" end)}))')
+              SKIPPED=$(jq -n --argjson s "$SKIPPED" --argjson p "$PLAN" \
+                '$s + ($p.skipped | map({package: $p.package} + .))')
+            else
+              echo "::warning::reconcile failed for $pkg"
+              FAILED=$(jq -n --argjson f "$FAILED" --arg pkg "$pkg" '$f + [$pkg]')
+            fi
+            echo "::endgroup::"
+            sleep 1  # GitHub API rate hygiene across ~300 packages
+          done
+
+          TOTAL=$(jq -n --argjson w "$WORK" '$w | length')
+          TRUNCATED=$(jq -n --argjson w "$WORK" --argjson n "$LIMIT" '$w | .[0:$n]')
+          COUNT=$(jq -n --argjson w "$TRUNCATED" '$w | length')
+
+          { echo "matrix=$(jq -cn --argjson w "$TRUNCATED" '$w')"; echo "count=$COUNT"; } >> "$GITHUB_OUTPUT"
+          jq -n --argjson w "$WORK" --argjson s "$SKIPPED" --argjson f "$FAILED" \
+            '{work: $w, skipped: $s, failed_packages: $f}' > backfill-plan.json
+
+          {
+            echo "## Backfill plan (${{ inputs.target_env }})"
+            echo "- Total unpublished snapshots: $TOTAL"
+            echo "- Publishing this run: $COUNT (limit ${LIMIT})"
+            [[ "$TOTAL" -gt "$COUNT" ]] && echo "- **Re-run this workflow to continue** — publishing is write-once/idempotent."
+            echo "- Skipped versions (unfetchable schemas): $(jq -n --argjson s "$SKIPPED" '$s | length')"
+            echo "- Packages where planning failed: $(jq -n --argjson f "$FAILED" '$f | length')"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload plan artifact
+        if: steps.target.outputs.publish == 'true'
+        uses: actions/upload-artifact@v7
+        with:
+          name: backfill-plan
+          path: backfill-plan.json
+
+  publish:
+    name: Publish
+    needs: plan
+    if: ${{ !inputs.dry_run && needs.plan.outputs.count != '0' && needs.plan.outputs.count != '' }}
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        include: ${{ fromJSON(needs.plan.outputs.matrix) }}
+    permissions:
+      id-token: write
+      contents: read
+    uses: ./.github/workflows/archive-package-version.yml
+    with:
+      package: ${{ matrix.package }}
+      version: ${{ matrix.version }}
+      schema_url: ${{ matrix.schema_url }}
+      target_env: ${{ inputs.target_env }}
+      runner: ${{ matrix.runner }}

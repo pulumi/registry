@@ -271,6 +271,8 @@ process_package() {
             if ! curl -sfL "$INDEX_URL" -o "$DOCS_OUT_DIR/_index.md" 2>/dev/null; then
                 echo "[$PACKAGE] Could not fetch _index.md from $INDEX_URL"
                 rm -f "$DOCS_OUT_DIR/_index.md"
+            else
+                "$RESOURCEDOCSGEN" sanitize-docs --in-place "$DOCS_OUT_DIR/_index.md"
             fi
         fi
 

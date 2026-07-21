@@ -98,19 +98,41 @@ jobs:
       - name: Build resourcedocsgen
         if: env.PROVIDER_VERSION
         run: go build -C tools/resourcedocsgen
+      - name: Read package name at the release version
+        # The skip-dedup read above resolves the name at HEAD, because the
+        # release version isn't known yet at that point. Re-read it here pinned
+        # to the exact ref the metadata command downloads — the release tag — so
+        # a provider that renamed its schema between its latest release and HEAD
+        # can't trigger a spurious providerName/schema-name mismatch. Falls back
+        # to the HEAD-derived name.
+        if: env.PROVIDER_VERSION
+        id: package_at_version
+        run: |
+          package_name=""
+          if [[ "$SCHEMA_FILE" == *.json ]]; then
+            package_name=$(curl -fsSL "https://raw.githubusercontent.com/${REPO_SLUG}/${PROVIDER_VERSION}/${SCHEMA_FILE}" \
+              | jq -r '.name // empty' 2>/dev/null || true)
+          fi
+          echo "name=${package_name:-$FALLBACK_NAME}" >> $GITHUB_OUTPUT
+        env:
+          REPO_SLUG: ${{ matrix.repoSlug }}
+          SCHEMA_FILE: ${{ matrix.schemaFile }}
+          PROVIDER_VERSION: ${{ env.PROVIDER_VERSION }}
+          FALLBACK_NAME: ${{ steps.package.outputs.name }}
       - name: Generate Package Metadata
         if: env.PROVIDER_VERSION
         run: >-
           ./tools/resourcedocsgen/resourcedocsgen metadata from-github
-          --repoSlug   "${{ matrix.repoSlug      }}"
-          --schemaFile "${{ matrix.schemaFile    }}"
-          --version    "${{ env.PROVIDER_VERSION }}"
+          --repoSlug     "${{ matrix.repoSlug                 }}"
+          --schemaFile   "${{ matrix.schemaFile               }}"
+          --providerName "${{ steps.package_at_version.outputs.name }}"
+          --version      "${{ env.PROVIDER_VERSION            }}"
       - name: Create registry PR
         if: env.PROVIDER_VERSION
         uses: ./.github/actions/new-provider-version-pr
         with:
           github_token: ${{ steps.esc-secrets.outputs.PULUMI_BOT_TOKEN }}
-          provider_short_name: ${{ steps.package.outputs.name }}
+          provider_short_name: ${{ steps.package_at_version.outputs.name }}
           provider_version: ${{ env.PROVIDER_VERSION }}
 
   notify:

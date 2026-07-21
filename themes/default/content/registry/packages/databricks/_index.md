@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-databricks/v1.99.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-databricks/v1.100.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-databricks/blob/v1.99.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-databricks/blob/v1.100.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Databricks Provider
 meta_desc: Provides an overview on how to configure the Pulumi Databricks provider.
@@ -440,6 +440,7 @@ The provider configuration supports the following arguments:
 
 * `host` - (optional, environment variable `DATABRICKS_HOST`) The host of the Databricks account or workspace. See `host` argument for more information.
 * `accountId` - (required for account-level operations, environment variable `DATABRICKS_ACCOUNT_ID`) Account ID found in the top right corner of [Accounts Console](https://accounts.cloud.databricks.com/). **Note: do NOT set this variable when using a workspace-level provider. If set, you may see `...invalid Databricks Account configuration` errors**.
+* `workspaceId` - (optional, environment variable `DATABRICKS_WORKSPACE_ID`) Databricks Workspace ID used by workspace clients when working with unified hosts. Accepts either a classic numeric workspace ID or a CPDR connection ID; the server disambiguates.
 * `azureWorkspaceResourceId` - (optional, environment variable `DATABRICKS_AZURE_RESOURCE_ID`) `id` attribute of azurermDatabricksWorkspace resource. Combination of subscription id, resource group name, and workspace name. Required when authenticating using Azure MSI.
 
 The following arguments control the provider authentication:

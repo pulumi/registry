@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-terraform/v6.0.2/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-terraform/v6.1.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-terraform/blob/v6.0.2/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-terraform/blob/v6.1.0/docs/_index.md
 title: Terraform
 meta_desc: Consume Terraform state in Pulumi
 layout: package

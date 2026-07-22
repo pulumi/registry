@@ -240,7 +240,7 @@ The following reference example uses placeholder values for all [input propertie
 ```csharp
 var exampleServerResource = new Example.ExampleServer("exampleServerResource", new()
 {
-    PropertiesCollection = new[]
+    PropertiesCollection = 
     {
         new Example.Inputs.ServerPropertiesForReplicaArgs
         {

@@ -244,7 +244,7 @@ The following reference example uses placeholder values for all [input propertie
 var releaseResource = new Kubernetes.Helm.V3.Release("releaseResource", new()
 {
     Chart = "string",
-    ValueYamlFiles = new[]
+    ValueYamlFiles = 
     {
         new StringAsset("content"),
     },

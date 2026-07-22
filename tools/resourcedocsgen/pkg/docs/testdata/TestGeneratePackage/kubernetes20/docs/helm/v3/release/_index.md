@@ -18,7 +18,6 @@ A non-overlay, non-component, non-Kubernetes resource.
 
 
 
-
 ## Create Release Resource {#create}
 
 Resources are created with functions called constructors. To learn more about declaring and configuring resources, see [Resources](/docs/concepts/resources/).
@@ -284,6 +283,9 @@ example, err := helmv3.NewRelease(ctx, "releaseResource", &helmv3.ReleaseArgs{
 
 ```hcl
 resource "kubernetes_helm.sh_v3_release" "releaseResource" {
+  lifecycle {
+    create_before_destroy = true
+  }
   chart            = "string"
   value_yaml_files = [stringAsset("content")]
   values = {

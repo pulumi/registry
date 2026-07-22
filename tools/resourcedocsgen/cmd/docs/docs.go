@@ -34,10 +34,10 @@ import (
 	"github.com/pulumi/pulumi/pkg/v3/codegen/convert"
 	pschema "github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 	pkghost "github.com/pulumi/pulumi/pkg/v3/host"
+	"github.com/pulumi/pulumi/pkg/v3/resource/plugin"
 	pkgWorkspace "github.com/pulumi/pulumi/pkg/v3/workspace"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/diag"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/diag/colors"
-	"github.com/pulumi/pulumi/sdk/v3/go/common/resource/plugin"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/util/contract"
 )
 
@@ -80,16 +80,20 @@ func getPulumiPackageFromSchema(
 	return pulPkg, docs.NewContext(tool, pulPkg), nil
 }
 
-// newSchemaLoader builds the same plugin loader that pulumi's schema binder
-// constructs when handed a nil loader. As of pulumi v3.247.0 that nil-loader
-// fallback creates its plugin host with nil diagnostic sinks, which panics
-// with a nil dereference as soon as binding downloads a referenced provider
-// plugin and logs progress — so we construct the loader ourselves with
-// (discarding, but non-nil) sinks. The returned close function releases the
-// plugin context and host once binding is done.
+// newSchemaLoader builds the plugin loader that pulumi's schema binder uses to
+// resolve referenced provider schemas, constructing it ourselves rather than
+// relying on the binder's nil-loader fallback so that we control the diagnostic
+// sinks (discarding, but non-nil) and own the plugin host/context lifecycle. As
+// of pulumi v3.253.0 the loader, mapper, and resolver service factories are
+// supplied to the host (pkghost.New) rather than to plugin.NewContext; we pass
+// the loader and mapper factories and leave the package resolver unset (nil),
+// since schema loading downloads referenced providers via plugins and never
+// exercises the registry resolver service. The returned close function releases
+// the plugin context and host once binding is done.
 func newSchemaLoader(ctx context.Context) (pschema.ReferenceLoader, func() error, error) {
 	sink := diag.DefaultSink(io.Discard, io.Discard, diag.FormatOptions{Color: colors.Never})
-	host, err := pkghost.New(ctx, sink, sink, nil, pkgWorkspace.EnsureLanguageInstalled)
+	host, err := pkghost.New(ctx, sink, sink, nil, pkgWorkspace.EnsureLanguageInstalled,
+		pschema.NewLoaderServerFromContext, convert.NewMapperServerFromContext, nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -97,8 +101,7 @@ func newSchemaLoader(ctx context.Context) (pschema.ReferenceLoader, func() error
 	if err != nil {
 		return nil, nil, stderrors.Join(err, host.Close())
 	}
-	pctx, err := plugin.NewContext(ctx, sink, sink, host, nil, cwd, nil, false, nil,
-		pschema.NewLoaderServerFromContext, convert.NewMapperServerFromContext)
+	pctx, err := plugin.NewContext(ctx, sink, sink, host, nil, cwd, nil, false, nil)
 	if err != nil {
 		return nil, nil, stderrors.Join(err, host.Close())
 	}

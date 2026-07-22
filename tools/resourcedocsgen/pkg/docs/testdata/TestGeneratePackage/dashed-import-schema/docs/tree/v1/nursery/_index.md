@@ -279,6 +279,9 @@ example, err := v1.NewNursery(ctx, "nurseryResource", &v1.NurseryArgs{
 
 ```hcl
 resource "plant_tree_v1_nursery" "nurseryResource" {
+  lifecycle {
+    create_before_destroy = true
+  }
   varieties = ["Burgundy"]
   sizes = {
     "string" = "small"

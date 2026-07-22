@@ -19,7 +19,6 @@ Example: abs(1) returns 1, and abs(-1) would also return 1, whereas abs(-3.14) w
 
 
 
-
 ## Using Abs {#using}
 
 Two invocation forms are available. The direct form accepts plain

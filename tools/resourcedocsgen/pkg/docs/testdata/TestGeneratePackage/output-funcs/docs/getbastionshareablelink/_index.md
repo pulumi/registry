@@ -19,7 +19,6 @@ API Version: 2020-11-01.
 
 
 
-
 ## Using getBastionShareableLink {#using}
 
 Two invocation forms are available. The direct form accepts plain
@@ -107,7 +106,7 @@ func </span>GetBastionShareableLinkOutput<span class="p">(</span><span class="nx
 
 <div>
 <pulumi-choosable type="language" values="hcl">
-<div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">data</span> <span class="s2">&#34;mypkg_getbastionshareablelink&#34;</span> <span class="s2">&#34;name&#34;</span> <span class="p">{</span>
+<div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">data</span> <span class="s2">&#34;mypkg_get_bastion_shareable_link&#34;</span> <span class="s2">&#34;name&#34;</span> <span class="p">{</span>
 <span class="c">    # arguments</span>
 <span class="p">}</span></code></pre></div>
 </pulumi-choosable>

@@ -260,6 +260,9 @@ example, err := example.NewRec(ctx, "recResource", nil)
 
 ```hcl
 resource "example_rec" "recResource" {
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 ```
 

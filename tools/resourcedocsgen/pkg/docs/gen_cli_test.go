@@ -42,7 +42,7 @@ func TestGenerateCLIPackage(t *testing.T) {
 		},
 	}
 
-	schemaPkg, err := schema.ImportSpec(testPackageSpec, nil, schema.ValidationOptions{
+	schemaPkg, err := schema.ImportSpec(testPackageSpec, nil, schema.NewNullLoader(), schema.ValidationOptions{
 		AllowDanglingReferences: true,
 	})
 	require.NoError(t, err, "importing spec")

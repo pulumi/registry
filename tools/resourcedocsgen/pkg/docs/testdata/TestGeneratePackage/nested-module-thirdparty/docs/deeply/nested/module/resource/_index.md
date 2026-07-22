@@ -266,6 +266,9 @@ example, err := module.NewResource(ctx, "resourceResource", &module.ResourceArgs
 
 ```hcl
 resource "foo-bar_deeply_nested_module_resource" "resourceResource" {
+  lifecycle {
+    create_before_destroy = true
+  }
   baz = "string"
 }
 ```

@@ -18,7 +18,6 @@ It's fine to use urn and id as input properties
 
 
 
-
 ## Create Res Resource {#create}
 
 Resources are created with functions called constructors. To learn more about declaring and configuring resources, see [Resources](/docs/concepts/resources/).
@@ -271,6 +270,9 @@ example, err := urnid.NewRes(ctx, "resResource", &urnid.ResArgs{
 
 ```hcl
 resource "urnid_res" "resResource" {
+  lifecycle {
+    create_before_destroy = true
+  }
   id  = "string"
   urn = "string"
 }

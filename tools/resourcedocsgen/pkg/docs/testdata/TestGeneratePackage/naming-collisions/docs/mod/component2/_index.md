@@ -260,6 +260,9 @@ example, err := mod.NewComponent2(ctx, "component2Resource", nil)
 
 ```hcl
 resource "example_mod_component2" "component2Resource" {
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 ```
 

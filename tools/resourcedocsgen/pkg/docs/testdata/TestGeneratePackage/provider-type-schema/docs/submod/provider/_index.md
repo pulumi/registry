@@ -266,6 +266,9 @@ example, err := submod.NewProvider(ctx, "providerResource", &submod.ProviderArgs
 
 ```hcl
 resource "providerType_submod_provider" "providerResource" {
+  lifecycle {
+    create_before_destroy = true
+  }
   a = false
 }
 ```

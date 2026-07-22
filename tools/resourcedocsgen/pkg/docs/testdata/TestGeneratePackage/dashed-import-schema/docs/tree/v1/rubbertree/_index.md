@@ -84,7 +84,7 @@ Resources are created with functions called constructors. To learn more about de
 
 <div>
 <pulumi-choosable type="language" values="hcl">
-<div class="no-copy"><div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">resource</span> <span class="s2">&#34;plant_tree_v1_rubbertree&#34;</span> <span class="s2">&#34;name&#34;</span> <span class="p">{</span>
+<div class="no-copy"><div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">resource</span> <span class="s2">&#34;plant_tree_v1_rubber_tree&#34;</span> <span class="s2">&#34;name&#34;</span> <span class="p">{</span>
 <span class="c">    # resource properties</span>
 <span class="p">}</span></code></pre></div></div>
 </pulumi-choosable>
@@ -288,7 +288,10 @@ example, err := v1.NewRubberTree(ctx, "rubberTreeResource", &v1.RubberTreeArgs{
 <pulumi-choosable type="language" values="hcl">
 
 ```hcl
-resource "plant_tree_v1_rubbertree" "rubberTreeResource" {
+resource "plant_tree_v1_rubber_tree" "rubberTreeResource" {
+  lifecycle {
+    create_before_destroy = true
+  }
   diameter = 6
   type     = "Burgundy"
   container = {
@@ -894,7 +897,7 @@ Get an existing RubberTree resource's state with the given name, ID, and optiona
     <div class="no-copy">
       <div class="highlight">
         <pre tabindex="0" class="chroma"><code class="language-hcl" data-lang="hcl"><span class="line"><span class="cl"><span class="k">import</span> {
-</span></span><span class="line"><span class="cl">  <span class="n">to</span> <span class="o">=</span> <span class="nx">plant_tree_v1_rubbertree</span>.<span class="n">example</span>
+</span></span><span class="line"><span class="cl">  <span class="n">to</span> <span class="o">=</span> <span class="nx">plant_tree_v1_rubber_tree</span>.<span class="n">example</span>
 </span></span><span class="line"><span class="cl">  <span class="n">id</span> <span class="o">=</span> <span class="s2">&#34;${id}&#34;</span>
 </span></span><span class="line"><span class="cl">}
 </span></span></code></pre>

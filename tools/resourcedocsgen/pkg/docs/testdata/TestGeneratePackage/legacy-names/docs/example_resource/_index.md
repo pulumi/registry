@@ -286,6 +286,9 @@ example, err := legacy_names.Newexample_resource(ctx, "example_resourceResource"
 
 ```hcl
 resource "legacy_names_example_resource" "example_resourceResource" {
+  lifecycle {
+    create_before_destroy = true
+  }
   map_enum = [{
     "string" = "A"
   }]

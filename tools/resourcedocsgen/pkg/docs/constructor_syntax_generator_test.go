@@ -23,7 +23,7 @@ import (
 )
 
 func bindTestSchema(t *testing.T, spec schema.PackageSpec) *schema.Package {
-	pkg, diags, err := schema.BindSpec(spec, nil, schema.ValidationOptions{
+	pkg, diags, err := schema.BindSpec(spec, schema.NewNullLoader(), schema.ValidationOptions{
 		AllowDanglingReferences: true,
 	})
 	assert.Nil(t, diags)

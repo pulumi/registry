@@ -260,7 +260,12 @@ example, err := example.NewDog(ctx, "dogResource", nil)
 
 ```hcl
 resource "example_dog" "dogResource" {
-  replace_on_changes = ["bone"]
+  pulumi {
+    replace_on_changes = [bone]
+  }
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 ```
 

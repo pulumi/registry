@@ -366,7 +366,7 @@ func TestFunctionHeaders(t *testing.T) {
 
 	testPackageSpec := newTestPackageSpec()
 
-	schemaPkg, err := schema.ImportSpec(testPackageSpec, nil, schema.ValidationOptions{
+	schemaPkg, err := schema.ImportSpec(testPackageSpec, nil, schema.NewNullLoader(), schema.ValidationOptions{
 		AllowDanglingReferences: true,
 	})
 	assert.NoError(t, err, "importing spec")
@@ -423,7 +423,7 @@ func TestResourceDocHeader(t *testing.T) {
 
 	testPackageSpec := newTestPackageSpec()
 
-	schemaPkg, err := schema.ImportSpec(testPackageSpec, nil, schema.ValidationOptions{
+	schemaPkg, err := schema.ImportSpec(testPackageSpec, nil, schema.NewNullLoader(), schema.ValidationOptions{
 		AllowDanglingReferences: true,
 	})
 	assert.NoError(t, err, "importing spec")
@@ -483,7 +483,7 @@ func TestExamplesProcessing(t *testing.T) {
 
 	testPackageSpec := newTestPackageSpec()
 
-	schemaPkg, err := schema.ImportSpec(testPackageSpec, nil, schema.ValidationOptions{
+	schemaPkg, err := schema.ImportSpec(testPackageSpec, nil, schema.NewNullLoader(), schema.ValidationOptions{
 		AllowDanglingReferences: true,
 	})
 	assert.NoError(t, err, "importing spec")
@@ -596,7 +596,7 @@ func TestDecomposeDocstring(t *testing.T) {
 		" "
 
 	testPackageSpec := newTestPackageSpec()
-	schemaPkg, err := schema.ImportSpec(testPackageSpec, nil, schema.ValidationOptions{
+	schemaPkg, err := schema.ImportSpec(testPackageSpec, nil, schema.NewNullLoader(), schema.ValidationOptions{
 		AllowDanglingReferences: true,
 	})
 	assert.NoError(t, err, "importing spec")
@@ -609,42 +609,42 @@ func TestDecomposeDocstring(t *testing.T) {
 			{
 				Title: "Basic usage",
 				Snippets: map[language.Language]string{
-					language.CSharp: "```csharp\nBasic usage: csharp\n```\n",
-					language.Go:     "```go\nBasic usage: go\n```\n",
-					language.Java:   "```java\nBasic usage: java\n```\n",
-					language.Python: "```python\nBasic usage: python\n```\n",
-					language.NodeJS: "\n```typescript\nBasic usage: typescript\n```\n",
-					language.YAML:   "```yaml\nBasic usage: yaml\n```\n",
+					language.CSharp: "```csharp\nBasic usage: csharp\n```",
+					language.Go:     "```go\nBasic usage: go\n```",
+					language.Java:   "```java\nBasic usage: java\n```",
+					language.Python: "```python\nBasic usage: python\n```",
+					language.NodeJS: "\n```typescript\nBasic usage: typescript\n```",
+					language.YAML:   "```yaml\nBasic usage: yaml\n```",
 					language.HCL:    "Example coming soon!",
 				},
 			},
 			{
 				Title: "Basic usage with tags",
 				Snippets: map[language.Language]string{
-					language.CSharp: "```csharp\nBasic usage with tags: csharp\n```\n",
-					language.Go:     "```go\nBasic usage with tags: go\n```\n",
-					language.Java:   "```java\nBasic usage with tags: java\n```\n",
-					language.Python: "```python\nBasic usage with tags: python\n```\n",
-					language.NodeJS: "\n```typescript\nBasic usage with tags: typescript\n```\n",
-					language.YAML:   "```yaml\nBasic usage with tags: yaml\n```\n",
+					language.CSharp: "```csharp\nBasic usage with tags: csharp\n```",
+					language.Go:     "```go\nBasic usage with tags: go\n```",
+					language.Java:   "```java\nBasic usage with tags: java\n```",
+					language.Python: "```python\nBasic usage with tags: python\n```",
+					language.NodeJS: "\n```typescript\nBasic usage with tags: typescript\n```",
+					language.YAML:   "```yaml\nBasic usage with tags: yaml\n```",
 					language.HCL:    "Example coming soon!",
 				},
 			},
 			{
 				Title: "VPC with CIDR from AWS IPAM",
 				Snippets: map[language.Language]string{
-					language.CSharp: "```csharp\nVPC with CIDR from AWS IPAM: csharp\n```\n",
+					language.CSharp: "```csharp\nVPC with CIDR from AWS IPAM: csharp\n```",
 					language.Go:     "Example coming soon!",
-					language.Java:   "```java\nVPC with CIDR from AWS IPAM: java\n```\n",
-					language.Python: "```python\nVPC with CIDR from AWS IPAM: python\n```\n",
-					language.NodeJS: "\n```typescript\nVPC with CIDR from AWS IPAM: typescript\n```\n",
-					language.YAML:   "```yaml\nVPC with CIDR from AWS IPAM: yaml\n```\n",
+					language.Java:   "```java\nVPC with CIDR from AWS IPAM: java\n```",
+					language.Python: "```python\nVPC with CIDR from AWS IPAM: python\n```",
+					language.NodeJS: "\n```typescript\nVPC with CIDR from AWS IPAM: typescript\n```",
+					language.YAML:   "```yaml\nVPC with CIDR from AWS IPAM: yaml\n```",
 					language.HCL:    "Example coming soon!",
 				},
 			},
 		},
 		importDetails: "\n\nVPCs can be imported using the `vpc id`, e.g.,\n\n" +
-			"```sh\n $ pulumi import aws:ec2/vpc:Vpc test_vpc vpc-a01106c2\n```\n",
+			"```sh\n $ pulumi import aws:ec2/vpc:Vpc test_vpc vpc-a01106c2\n```",
 	},
 		info)
 }
@@ -702,7 +702,7 @@ func TestGenOverlayResource(t *testing.T) {
 			},
 		}
 
-		schemaPkg, err := schema.ImportSpec(testPackageSpec, nil, schema.ValidationOptions{
+		schemaPkg, err := schema.ImportSpec(testPackageSpec, nil, schema.NewNullLoader(), schema.ValidationOptions{
 			AllowDanglingReferences: true,
 		})
 		assert.NoError(t, err, "importing spec")
@@ -829,7 +829,7 @@ func TestGenOverlayFunction(t *testing.T) {
 			},
 		}
 
-		schemaPkg, err := schema.ImportSpec(testPackageSpec, nil, schema.ValidationOptions{
+		schemaPkg, err := schema.ImportSpec(testPackageSpec, nil, schema.NewNullLoader(), schema.ValidationOptions{
 			AllowDanglingReferences: true,
 		})
 		assert.NoError(t, err, "importing spec")

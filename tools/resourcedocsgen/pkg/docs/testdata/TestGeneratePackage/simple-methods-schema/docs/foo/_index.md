@@ -260,6 +260,9 @@ example, err := example.NewFoo(ctx, "fooResource", nil)
 
 ```hcl
 resource "example_foo" "fooResource" {
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 ```
 
@@ -427,7 +430,6 @@ All [input](#inputs) properties are implicitly available as output properties. A
 ### Bar Method {#method_Bar}
 
 A description of bar.
-
 
 
 #### Using Bar
@@ -709,7 +711,7 @@ The following arguments are supported:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#bar_arg_name_required_hcl" style="color: inherit; text-decoration: inherit;">name_<wbr>required</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">random_<wbr>index_<wbr>randompet_<wbr>randompet</span>
+        <span class="property-type">random_<wbr>index_<wbr>random_<wbr>pet_<wbr>random_<wbr>pet</span>
     </dt>
     <dd>This type is defined in the <a href="/registry/packages/random">random</a> package.</dd><dt class="property-required"
             title="Required">
@@ -757,7 +759,7 @@ The following arguments are supported:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#bar_arg_name_hcl" style="color: inherit; text-decoration: inherit;">name</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">random_<wbr>index_<wbr>randompet_<wbr>randompet</span>
+        <span class="property-type">random_<wbr>index_<wbr>random_<wbr>pet_<wbr>random_<wbr>pet</span>
     </dt>
     <dd>This type is defined in the <a href="/registry/packages/random">random</a> package.</dd><dt class="property-optional"
             title="Optional">
@@ -765,7 +767,7 @@ The following arguments are supported:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#bar_arg_name_plain_hcl" style="color: inherit; text-decoration: inherit;">name_<wbr>plain</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">random_<wbr>index_<wbr>randompet_<wbr>randompet</span>
+        <span class="property-type">random_<wbr>index_<wbr>random_<wbr>pet_<wbr>random_<wbr>pet</span>
     </dt>
     <dd>This type is defined in the <a href="/registry/packages/random">random</a> package.</dd><dt class="property-optional"
             title="Optional">
@@ -1346,7 +1348,6 @@ The following arguments are supported:
 ### GenerateKubeconfig Method {#method_GenerateKubeconfig}
 
 Do something with something else
-
 
 
 #### Using GenerateKubeconfig

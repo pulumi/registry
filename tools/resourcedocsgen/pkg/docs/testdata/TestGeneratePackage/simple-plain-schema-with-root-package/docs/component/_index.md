@@ -340,6 +340,9 @@ F: "string",
 
 ```hcl
 resource "example_component" "componentResource" {
+  lifecycle {
+    create_before_destroy = true
+  }
   a = false
   c = 0
   e = "string"

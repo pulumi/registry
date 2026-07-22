@@ -288,9 +288,8 @@ func (g *constructorSyntaxGenerator) bindProgram(loader schema.ReferenceLoader, 
 	}
 
 	bindOptions := make([]pcl.BindOption, 0)
-	bindOptions = append(bindOptions, pcl.Loader(loader))
 	bindOptions = append(bindOptions, pcl.NonStrictBindOptions()...)
-	boundProgram, diagnostics, err := pcl.BindProgram(parser.Files, bindOptions...)
+	boundProgram, diagnostics, err := pcl.BindProgram(parser.Files, loader, bindOptions...)
 	if err != nil {
 		return nil, fmt.Errorf("could not bind program: %w", err)
 	}

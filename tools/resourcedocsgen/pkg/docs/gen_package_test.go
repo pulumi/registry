@@ -28,7 +28,7 @@ import (
 	"github.com/blang/semver"
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 	"github.com/pulumi/pulumi/pkg/v3/resource/deploy/deploytest"
-	"github.com/pulumi/pulumi/sdk/v3/go/common/resource/plugin"
+	"github.com/pulumi/pulumi/pkg/v3/resource/plugin"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/tokens"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -334,7 +334,8 @@ func TestGeneratePackage(t *testing.T) {
 
 			// Create a test host/loader that offers schema for the providers/packages defined in testCaseProviders.
 			host := newHostWithTestProviders(schemaDir, testCaseProviders)
-			pctx := plugin.NewContextWithHost(context.Background(), nil, nil, host, "", "", nil)
+			pctx, err := plugin.NewContextWithHost(context.Background(), nil, nil, host, "", "", nil)
+			require.NoErrorf(t, err, "creating plugin context for schema %s", testCaseSchema)
 			loader := schema.NewPluginLoader(pctx)
 
 			// Bind the package specification (schema) we decoded against the loader/set of test providers.

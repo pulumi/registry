@@ -19,7 +19,6 @@ API Version: 2020-12-01-preview.
 
 
 
-
 ## Using listProductFamilies {#using}
 
 Two invocation forms are available. The direct form accepts plain
@@ -109,7 +108,7 @@ func </span>ListProductFamiliesOutput<span class="p">(</span><span class="nx">ct
 
 <div>
 <pulumi-choosable type="language" values="hcl">
-<div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">data</span> <span class="s2">&#34;myedgeorder_listproductfamilies&#34;</span> <span class="s2">&#34;name&#34;</span> <span class="p">{</span>
+<div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">data</span> <span class="s2">&#34;myedgeorder_list_product_families&#34;</span> <span class="s2">&#34;name&#34;</span> <span class="p">{</span>
 <span class="c">    # arguments</span>
 <span class="p">}</span></code></pre></div>
 </pulumi-choosable>

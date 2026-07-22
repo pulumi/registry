@@ -42,7 +42,7 @@ func TestProcessDescription(t *testing.T) {
 			input := readFile(t, filepath.Join("testdata", tt.prefix+".md"))
 
 			testPackageSpec := newTestPackageSpec()
-			schemaPkg, err := schema.ImportSpec(testPackageSpec, nil, schema.ValidationOptions{
+			schemaPkg, err := schema.ImportSpec(testPackageSpec, nil, schema.NewNullLoader(), schema.ValidationOptions{
 				AllowDanglingReferences: true,
 			})
 			require.NoError(t, err, "importing spec")
@@ -73,7 +73,7 @@ func TestDecomposeDocstringDescription(t *testing.T) {
 			input := readFile(t, filepath.Join("testdata", tt.prefix+".md"))
 
 			testPackageSpec := newTestPackageSpec()
-			schemaPkg, err := schema.ImportSpec(testPackageSpec, nil, schema.ValidationOptions{
+			schemaPkg, err := schema.ImportSpec(testPackageSpec, nil, schema.NewNullLoader(), schema.ValidationOptions{
 				AllowDanglingReferences: true,
 			})
 			require.NoError(t, err, "importing spec")

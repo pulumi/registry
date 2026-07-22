@@ -853,6 +853,9 @@ example, err := example.NewComponent(ctx, "componentResource", &example.Componen
 
 ```hcl
 resource "example_component" "componentResource" {
+  lifecycle {
+    create_before_destroy = true
+  }
   required_metadata = {
     annotations = {
       "string" = "string"
@@ -868,23 +871,23 @@ resource "example_component" "componentResource" {
       "string" = "string"
     }
     managed_fields = [{
-      "apiVersion"  = "string"
-      "fieldsType"  = "string"
-      "fieldsV1"    = "{}"
-      "manager"     = "string"
-      "operation"   = "string"
-      "subresource" = "string"
-      "time"        = "string"
+      api_version = "string"
+      fields_type = "string"
+      fields_v1   = "{}"
+      manager     = "string"
+      operation   = "string"
+      subresource = "string"
+      time        = "string"
     }]
     name      = "string"
     namespace = "string"
     owner_references = [{
-      "apiVersion"         = "string"
-      "kind"               = "string"
-      "name"               = "string"
-      "uid"                = "string"
-      "blockOwnerDeletion" = false
-      "controller"         = false
+      api_version          = "string"
+      kind                 = "string"
+      name                 = "string"
+      uid                  = "string"
+      block_owner_deletion = false
+      controller           = false
     }]
     resource_version = "string"
     self_link        = "string"
@@ -943,23 +946,23 @@ resource "example_component" "componentResource" {
         "string" = "string"
       }
       managed_fields = [{
-        "apiVersion"  = "string"
-        "fieldsType"  = "string"
-        "fieldsV1"    = "{}"
-        "manager"     = "string"
-        "operation"   = "string"
-        "subresource" = "string"
-        "time"        = "string"
+        api_version = "string"
+        fields_type = "string"
+        fields_v1   = "{}"
+        manager     = "string"
+        operation   = "string"
+        subresource = "string"
+        time        = "string"
       }]
       name      = "string"
       namespace = "string"
       owner_references = [{
-        "apiVersion"         = "string"
-        "kind"               = "string"
-        "name"               = "string"
-        "uid"                = "string"
-        "blockOwnerDeletion" = false
-        "controller"         = false
+        api_version          = "string"
+        kind                 = "string"
+        name                 = "string"
+        uid                  = "string"
+        block_owner_deletion = false
+        controller           = false
       }]
       resource_version = "string"
       self_link        = "string"
@@ -981,23 +984,23 @@ resource "example_component" "componentResource" {
       "string" = "string"
     }
     managed_fields = [{
-      "apiVersion"  = "string"
-      "fieldsType"  = "string"
-      "fieldsV1"    = "{}"
-      "manager"     = "string"
-      "operation"   = "string"
-      "subresource" = "string"
-      "time"        = "string"
+      api_version = "string"
+      fields_type = "string"
+      fields_v1   = "{}"
+      manager     = "string"
+      operation   = "string"
+      subresource = "string"
+      time        = "string"
     }]
     name      = "string"
     namespace = "string"
     owner_references = [{
-      "apiVersion"         = "string"
-      "kind"               = "string"
-      "name"               = "string"
-      "uid"                = "string"
-      "blockOwnerDeletion" = false
-      "controller"         = false
+      api_version          = "string"
+      kind                 = "string"
+      name                 = "string"
+      uid                  = "string"
+      block_owner_deletion = false
+      controller           = false
     }]
     resource_version = "string"
     self_link        = "string"
@@ -1056,23 +1059,23 @@ resource "example_component" "componentResource" {
         "string" = "string"
       }
       managed_fields = [{
-        "apiVersion"  = "string"
-        "fieldsType"  = "string"
-        "fieldsV1"    = "{}"
-        "manager"     = "string"
-        "operation"   = "string"
-        "subresource" = "string"
-        "time"        = "string"
+        api_version = "string"
+        fields_type = "string"
+        fields_v1   = "{}"
+        manager     = "string"
+        operation   = "string"
+        subresource = "string"
+        time        = "string"
       }]
       name      = "string"
       namespace = "string"
       owner_references = [{
-        "apiVersion"         = "string"
-        "kind"               = "string"
-        "name"               = "string"
-        "uid"                = "string"
-        "blockOwnerDeletion" = false
-        "controller"         = false
+        api_version          = "string"
+        kind                 = "string"
+        name                 = "string"
+        uid                  = "string"
+        block_owner_deletion = false
+        controller           = false
       }]
       resource_version = "string"
       self_link        = "string"
@@ -2477,7 +2480,7 @@ All [input](#inputs) properties are implicitly available as output properties. A
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#security_group_hcl" style="color: inherit; text-decoration: inherit;">security_<wbr>group</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">aws_<wbr>ec2_<wbr>securitygroup_<wbr>securitygroup</span>
+        <span class="property-type">aws_<wbr>ec2_<wbr>security_<wbr>group_<wbr>security_<wbr>group</span>
     </dt>
     <dd>This type is defined in the <a href="/registry/packages/aws">AWS Classic</a> package.</dd><dt class="property-"
             title="">
@@ -2485,7 +2488,7 @@ All [input](#inputs) properties are implicitly available as output properties. A
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#provider_hcl" style="color: inherit; text-decoration: inherit;">provider</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">pulumi_<wbr>kubernetes</span>
+        <span class="property-type">pulumi_<wbr>providers_<wbr>kubernetes</span>
     </dt>
     <dd>This type is defined in the <a href="/registry/packages/pulumi">pulumi</a> package.</dd><dt class="property-"
             title="">
@@ -2493,7 +2496,7 @@ All [input](#inputs) properties are implicitly available as output properties. A
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#storage_classes_hcl" style="color: inherit; text-decoration: inherit;">storage_<wbr>classes</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">map(kubernetes_<wbr>storage.k8s.io_<wbr>v1_<wbr>storageclass)</span>
+        <span class="property-type">map(kubernetes_<wbr>storage.k8s.io_<wbr>v1_<wbr>storage_<wbr>class)</span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>

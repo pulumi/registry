@@ -242,7 +242,7 @@ The following reference example uses placeholder values for all [input propertie
 ```csharp
 var configMapListResource = new Kubernetes.Core.V1.ConfigMapList("configMapListResource", new()
 {
-    Items = new[]
+    Items = 
     {
         new Kubernetes.Types.Inputs.Core.V1.ConfigMapArgs
         {

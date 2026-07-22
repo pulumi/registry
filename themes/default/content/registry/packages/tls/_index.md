@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-tls/v5.4.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-tls/v5.5.1/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-tls/blob/v5.4.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-tls/blob/v5.5.1/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Tls Provider
 meta_desc: Provides an overview on how to configure the Pulumi Tls provider.
@@ -37,7 +37,7 @@ services or that themselves provision TLS certificates.
 Use the navigation to the left to read about the available resources.
 ## Example Usage
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
@@ -341,10 +341,55 @@ public class App {
 ```
 
 {{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+pulumi {
+  required_providers {
+    aws = {
+      source = "pulumi/aws"
+    }
+    tls = {
+      source = "pulumi/tls"
+    }
+  }
+}
+
+# This example creates a self-signed certificate,
+# and uses it to create an AWS IAM Server certificate.
+#
+# THIS IS NOT RECOMMENDED FOR PRODUCTION SERVICES.
+# See the detailed documentation of each resource for further
+# security considerations and other practical tradeoffs.
+resource "tls_privatekey" "example" {
+  algorithm = "ECDSA"
+}
+resource "tls_selfsignedcert" "example" {
+  private_key_pem       = tls_privatekey.example.private_key_pem
+  validity_period_hours = 12
+  # Generate a new certificate if Pulumi is run within three
+  # hours of the certificate's expiration time.
+  early_renewal_hours = 3
+  # Reasonable set of uses for a server SSL certificate.
+  allowed_uses = ["key_encipherment", "digital_signature", "server_auth"]
+  dns_names    = ["example.com", "example.net"]
+  subject = {
+    common_name  = "example.com"
+    organization = "ACME Examples, Inc"
+  }
+}
+# For example, this can be used to populate an AWS IAM server certificate.
+resource "aws_iam_servercertificate" "example" {
+  name             = "example_self_signed_cert"
+  certificate_body = tls_selfsignedcert.example.cert_pem
+  private_key      = tls_privatekey.example.private_key_pem
+}
+```
+
+{{% /choosable %}}
 {{< /chooser >}}
 ### Configuring Proxy
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
@@ -488,12 +533,29 @@ public class App {
 
     }
 }
+```
+
+{{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+pulumi {
+  required_providers {
+    tls = {
+      source = "pulumi/tls"
+    }
+  }
+}
+
+data "tls_getcertificate" "test" {
+  url = "https://example.com"
+}
+
 ```
 
 {{% /choosable %}}
 {{< /chooser >}}
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
@@ -637,6 +699,23 @@ public class App {
 
     }
 }
+```
+
+{{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+pulumi {
+  required_providers {
+    tls = {
+      source = "pulumi/tls"
+    }
+  }
+}
+
+data "tls_getcertificate" "test" {
+  url = "https://example.com"
+}
+
 ```
 
 {{% /choosable %}}

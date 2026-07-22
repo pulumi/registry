@@ -92,6 +92,19 @@ func TestSanitizeShortcodeDelimiters(t *testing.T) {
 			expected: `{{% choosable language go %}}`,
 		},
 		{
+			// A non-breaking space (U+00A0) renders identically to a plain space
+			// but is not matched by [ \t]; Hugo still rejects it. This nbsp gap
+			// motivated widening the whitespace class to \p{Zs}.
+			name:     "non-breaking space (U+00A0) between braces and marker",
+			input:    "{{\u00a0< chooser language \"go\" >}}",
+			expected: `{{< chooser language "go" >}}`,
+		},
+		{
+			name:     "unicode en-quad (U+2000) between braces and marker",
+			input:    "{{\u2000% choosable language go %}}",
+			expected: `{{% choosable language go %}}`,
+		},
+		{
 			name:     "already well-formed is unchanged (idempotent)",
 			input:    `{{< chooser language "typescript" >}}`,
 			expected: `{{< chooser language "typescript" >}}`,

@@ -133,3 +133,37 @@ func TestSanitizeDocsCmd_InPlaceDirectoryNormalizesEveryFile(t *testing.T) {
 	assert.NotContains(t, string(got), "{{ <")
 	assert.Contains(t, string(got), `{{< chooser language "typescript" >}}`)
 }
+
+// --in-place must agree with --check on what counts as non-canonical: a doc that
+// is delimiter-canonical but uses CRLF (as mktutorial-generated how-to-guides do)
+// is left untouched, so the remediation command both --check and the guard print
+// does not rewrite files they report as clean.
+func TestSanitizeDocsCmd_InPlaceLeavesCRLFOnlyCanonicalFileUntouched(t *testing.T) {
+	t.Parallel()
+
+	dir := t.TempDir()
+	p := filepath.Join(dir, "guide.md")
+	crlf := []byte("# Title\r\n\r\n{{< chooser language \"go\" >}}\r\n{{< /chooser >}}\r\n")
+	require.NoError(t, os.WriteFile(p, crlf, 0o600))
+
+	cmd := SanitizeDocsCmd()
+	cmd.SetArgs([]string{"--in-place", dir})
+	require.NoError(t, cmd.Execute())
+
+	got, err := os.ReadFile(p)
+	require.NoError(t, err)
+	assert.Equal(t, crlf, got, "CRLF-only canonical file must be left untouched by --in-place")
+}
+
+// --check must likewise treat a CRLF-only canonical file as clean.
+func TestSanitizeDocsCmd_CheckPassesForCRLFOnlyCanonicalFile(t *testing.T) {
+	t.Parallel()
+
+	p := filepath.Join(t.TempDir(), "guide.md")
+	crlf := []byte("# Title\r\n\r\n{{< chooser language \"go\" >}}\r\n{{< /chooser >}}\r\n")
+	require.NoError(t, os.WriteFile(p, crlf, 0o600))
+
+	cmd := SanitizeDocsCmd()
+	cmd.SetArgs([]string{"--check", p})
+	assert.NoError(t, cmd.Execute())
+}

@@ -45,6 +45,9 @@ jobs:
     uses: ./.github/workflows/check-go.yml
     with:
       path: tools/resourcedocsgen/
+      # TestCommittedContentIsDelimiterCanonical walks the Hugo content tree, so it
+      # must be present in the otherwise module-only sparse checkout.
+      extra-sparse-checkout: themes/default/content
 
   mktutorial:
     uses: ./.github/workflows/check-go.yml

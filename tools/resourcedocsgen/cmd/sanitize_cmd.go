@@ -27,33 +27,23 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// docNeedsNormalizing reports whether a docs file's shortcode delimiters are not
-// in canonical form (and would therefore be changed by pkg.NormalizeDocs).
-//
-// It is deliberately tolerant of line endings: a pre-existing "\r\n" in
-// hand-authored content is not a broken-delimiter problem — Hugo handles CRLF
-// fine — so it compares NormalizeDocs's output against the input with only line
-// endings normalized. A file is flagged if and only if a shortcode delimiter is
-// malformed (stray whitespace outside a fence) or un-neutralized (a live
-// delimiter inside a code fence).
+// docNeedsNormalizing reports whether pkg.NormalizeDocs would change a doc's
+// shortcode delimiters. It compares against the input with only line endings
+// normalized, so a pre-existing CRLF is not by itself flagged: mktutorial-generated
+// how-to-guides carry CRLF and do not pass through NormalizeDocs, and Hugo handles
+// CRLF fine — the delimiters are what break the build. --check and --in-place both
+// use this predicate so they agree on what is non-canonical.
 func docNeedsNormalizing(content []byte) bool {
 	lineEndingsOnly := bytes.ReplaceAll(content, []byte("\r\n"), []byte("\n"))
 	return !bytes.Equal(pkg.NormalizeDocs(content), lineEndingsOnly)
 }
 
-// SanitizeDocsCmd exposes pkg.NormalizeDocs to callers that obtain docs by means
-// other than resourcedocsgen's own fetch. The versioned-docs build
-// (scripts/generate-versioned-docs.sh) downloads a package's _index.md with a
-// raw curl straight into the Hugo content tree, so it never passes through
-// readDocsFile's normalization. Piping that file through this command applies the
-// identical canonical normalization, so broken delimiters from any docs source
-// are handled once, in one place, rather than re-implemented per consumer.
-//
-// The argument may be a single file or a directory (which is walked for .md
-// files). Without a flag it writes the normalized single file/stdin to stdout;
-// --in-place rewrites files; --check reports any file that is not already
-// canonical and exits non-zero (the delimiter linter, sharing the generator's
-// exact logic so the two can never disagree).
+// SanitizeDocsCmd exposes pkg.NormalizeDocs — the single canonical delimiter
+// normalization — to callers that obtain docs by other means than resourcedocsgen's
+// own fetch (e.g. scripts/generate-versioned-docs.sh curls _index.md straight into
+// the content tree). The argument may be a file or a directory of .md files. With
+// no flag it writes the normalized file/stdin to stdout; --in-place rewrites files;
+// --check reports any non-canonical file and exits non-zero without writing.
 func SanitizeDocsCmd() *cobra.Command {
 	var inPlace, check bool
 	cmd := &cobra.Command{
@@ -106,6 +96,9 @@ func SanitizeDocsCmd() *cobra.Command {
 				return err
 			}
 
+			// Run NormalizeDocs once; --check and the write paths use the same result.
+			output := pkg.NormalizeDocs(input)
+
 			if check {
 				if docNeedsNormalizing(input) {
 					src := path
@@ -118,7 +111,6 @@ func SanitizeDocsCmd() *cobra.Command {
 				return nil
 			}
 
-			output := pkg.NormalizeDocs(input)
 			if inPlace {
 				return os.WriteFile(path, output, 0o600)
 			}
@@ -132,9 +124,10 @@ func SanitizeDocsCmd() *cobra.Command {
 	return cmd
 }
 
-// sanitizeTree walks root for .md files. With check, it collects every file that
-// is not already canonical and returns an error listing them; otherwise it
-// rewrites each non-canonical file in place.
+// sanitizeTree walks root for .md files. With check it collects every file that is
+// not already canonical and returns an error listing them; otherwise it rewrites
+// each non-canonical file in place. Both branches gate on docNeedsNormalizing, so a
+// canonical-but-CRLF file is neither reported nor rewritten.
 func sanitizeTree(root string, check bool) error {
 	var problems []string
 	err := filepath.WalkDir(root, func(p string, d fs.DirEntry, err error) error {
@@ -148,16 +141,14 @@ func sanitizeTree(root string, check bool) error {
 		if err != nil {
 			return err
 		}
-		if check {
-			if docNeedsNormalizing(content) {
-				problems = append(problems, p)
-			}
+		if !docNeedsNormalizing(content) {
 			return nil
 		}
-		if output := pkg.NormalizeDocs(content); !bytes.Equal(output, content) {
-			return os.WriteFile(p, output, 0o600)
+		if check {
+			problems = append(problems, p)
+			return nil
 		}
-		return nil
+		return os.WriteFile(p, pkg.NormalizeDocs(content), 0o600)
 	})
 	if err != nil {
 		return err

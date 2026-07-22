@@ -15,13 +15,7 @@ lint: lint-go lint-markdown lint-shortcode-delimiters
 lint-markdown:
 	./scripts/lint/lint-markdown.js
 
-# Malformed Hugo shortcode delimiters (e.g. "{{ <") abort the whole Hugo site
-# build, and the auto-generated provider _index.md pages are skipped by the
-# front-matter linter above. resourcedocsgen owns the canonical delimiter
-# normalization (pkg.NormalizeDocs), so it also owns the check — sharing that exact
-# logic means this lint can never drift from what the generator writes. It is also
-# enforced in CI by resourcedocsgen's Go test suite
-# (TestCommittedContentIsDelimiterCanonical), which runs in the resourcedocsgen job.
+# Local convenience; CI enforces this via resourcedocsgen's TestCommittedContentIsDelimiterCanonical.
 .PHONY: lint-shortcode-delimiters
 lint-shortcode-delimiters:
 	cd tools/resourcedocsgen && go run . sanitize-docs --check ../../themes/default/content

@@ -29,19 +29,12 @@ import (
 var hugoShortcodeDelim = regexp.MustCompile(`\{\{([%<])`)
 
 // wrappingShortcode matches a line that is a registry fence-wrapping block
-// shortcode delimiter — chooser / choosable / example(s) — opening or closing.
-//
-// These shortcodes wrap fenced code examples from the OUTSIDE and never
-// legitimately appear inside a code example, so they must never be neutralized.
-// A malformed upstream doc (e.g. registry.opentofu.org-mirrored provider docs
-// with a stray, unpaired code fence) can desync the fence tracker below and make
-// it believe such a line sits inside a fence. Neutralizing the delimiter there
-// aborts the Hugo build — the paired closing tag is still recognized — and trips
-// the shortcode-delimiter lint. Anchoring on these lines both preserves the
-// shortcode and re-syncs the tracker (see neutralizeHugoShortcodes).
-//
-// The match is anchored to the start of the (whitespace-trimmed) line so a
-// delimiter appearing mid-line inside genuine example code is still neutralized.
+// shortcode (chooser / choosable / example(s), opening or closing). These wrap
+// code examples from the OUTSIDE and never appear inside one, so they must never
+// be neutralized: a malformed upstream doc (e.g. a stray, unpaired code fence in
+// registry.opentofu.org-mirrored docs) can desync the fence tracker, and
+// neutralizing a real delimiter there aborts the Hugo build. Anchored to the start
+// of the trimmed line so a delimiter mid-line in example code is still neutralized.
 var wrappingShortcode = regexp.MustCompile(
 	`^\s*\{\{[%<]\s*/?(choosable-inline|choosable|chooser|examples|example)\b`)
 

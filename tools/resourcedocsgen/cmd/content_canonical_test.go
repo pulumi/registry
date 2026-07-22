@@ -4,7 +4,7 @@
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
-//     http://www.apache.org/licenses/LICENSE-2.0
+// http://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
@@ -25,12 +25,17 @@ import (
 )
 
 // TestCommittedContentIsDelimiterCanonical is the repo-wide guard for broken Hugo
-// shortcode delimiters. It runs in resourcedocsgen's existing Go test job — where
-// the Go toolchain and the canonical pkg.NormalizeDocs already live — and asserts
-// that every committed .md in the Hugo content tree is already in canonical
-// delimiter form. Because it reuses docNeedsNormalizing (hence pkg.NormalizeDocs),
-// this lint can never drift from the generator that produces the files, which is
-// exactly the failure mode of the previous standalone JS regex.
+// shortcode delimiters. It runs in resourcedocsgen's Go test job — where the Go
+// toolchain and the canonical pkg.NormalizeDocs already live — and asserts that
+// every committed .md in the Hugo content tree is already in canonical delimiter
+// form. Because it reuses docNeedsNormalizing (hence pkg.NormalizeDocs), this lint
+// can never drift from the generator that produces the files, which is exactly the
+// failure mode of the previous standalone JS regex.
+//
+// The content tree lives outside this Go module; the resourcedocsgen check-go job
+// must include it in its sparse checkout (see extra-sparse-checkout in
+// pull-request.yml). findRepoContentDir fails rather than skips under CI so a
+// broken checkout surfaces loudly instead of silently disabling the guard.
 func TestCommittedContentIsDelimiterCanonical(t *testing.T) {
 	t.Parallel()
 
@@ -65,10 +70,10 @@ func TestCommittedContentIsDelimiterCanonical(t *testing.T) {
 }
 
 // findRepoContentDir locates the Hugo content tree by walking up from the test's
-// working directory until it finds themes/default/content. It skips (rather than
-// fails) if the tree is absent, so running the tool's tests in isolation from the
-// repo does not spuriously fail; in CI and normal local checkouts the tree is
-// always present, so the guard runs.
+// working directory until it finds themes/default/content. Under CI (GITHUB_ACTIONS)
+// its absence is a hard failure, so a mis-scoped checkout can never silently disable
+// the guard; outside CI it skips, so running the module's tests in isolation from
+// the repo does not spuriously fail.
 func findRepoContentDir(t *testing.T) string {
 	t.Helper()
 
@@ -82,6 +87,10 @@ func findRepoContentDir(t *testing.T) string {
 		}
 		parent := filepath.Dir(dir)
 		if parent == dir {
+			if os.Getenv("GITHUB_ACTIONS") == "true" {
+				t.Fatal("themes/default/content not found under CI; the resourcedocsgen " +
+					"check-go job must sparse-checkout it (extra-sparse-checkout in pull-request.yml)")
+			}
 			t.Skip("repository content tree (themes/default/content) not found; skipping guard")
 		}
 		dir = parent

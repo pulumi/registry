@@ -93,17 +93,11 @@ func TestNeutralizeHugoShortcodes(t *testing.T) {
 }
 
 // TestNeutralizeHugoShortcodesResyncsOnMalformedUpstreamFence reproduces the
-// megaport@1.11.1 failure: the upstream (registry.opentofu.org-mirrored) docs
-// contained a stray, unpaired code fence, which desynced the fence tracker so
-// that real `{{< chooser >}}` / `{{% choosable %}}` wrapping shortcodes further
-// down the page were wrongly treated as fence interior and neutralized to
-// "{{ <" / "{{ %". That both aborts the Hugo build (the paired closing tag is
-// still recognized) and trips the shortcode-delimiter lint.
-//
-// A registry fence-wrapping shortcode never legitimately appears inside a code
-// example, so it must never be neutralized regardless of the (possibly
-// corrupt) fence state, and encountering one re-syncs the tracker so genuine
-// code-example delimiters after it are still disarmed.
+// megaport@1.11.1 failure: a stray, unpaired code fence in the upstream doc
+// desynced the fence tracker, so real chooser/choosable wrapping shortcodes below
+// it were wrongly neutralized to "{{ <" — aborting the Hugo build. They must be
+// preserved (and re-sync the tracker) while genuine in-fence delimiters after them
+// are still disarmed.
 func TestNeutralizeHugoShortcodesResyncsOnMalformedUpstreamFence(t *testing.T) {
 	t.Parallel()
 

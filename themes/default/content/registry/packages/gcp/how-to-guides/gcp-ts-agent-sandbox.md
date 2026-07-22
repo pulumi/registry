@@ -1,8 +1,8 @@
 ---
-title: "Kubernetes Agent Sandbox on GKE | TypeScript"
-h1: "Kubernetes Agent Sandbox on GKE"
-linktitle: "Kubernetes Agent Sandbox on GKE"
-meta_desc: "Kubernetes Agent Sandbox on GKE How-to Guide using TypeScript"
+title: "Per-Developer Agent Sandboxes on GKE with Pulumi | TypeScript"
+h1: "Per-Developer Agent Sandboxes on GKE with Pulumi"
+linktitle: "Per-Developer Agent Sandboxes on GKE with Pulumi"
+meta_desc: "Per-Developer Agent Sandboxes on GKE with Pulumi How-to Guide using TypeScript"
 no_edit_this_page: true
 cloud: gcp
 language: ts
@@ -23,6 +23,9 @@ layout: package
 </p>
 
 
+A section-by-section walkthrough of this example is in the Pulumi blog post
+[Kubernetes Agent Sandbox: what it is and how to deploy it with Pulumi](https://www.pulumi.com/blog/kubernetes-agent-sandbox/).
+
 This example deploys the [kubernetes-sigs/agent-sandbox](https://github.com/kubernetes-sigs/agent-sandbox)
 project onto a [Google Kubernetes Engine (GKE)](https://cloud.google.com/kubernetes-engine/) cluster and
 gives each developer a kernel-isolated, disposable coding-agent environment. It stands up:
@@ -39,10 +42,6 @@ gives each developer a kernel-isolated, disposable coding-agent environment. It 
 
 The tailnet ACL and the sandboxes are generated from the **same** `developers` list, so "who may open
 which box" cannot drift from "which boxes exist."
-
-This example accompanies the Pulumi blog post
-[Kubernetes Agent Sandbox: What It Is and How to Deploy It with Pulumi](https://www.pulumi.com/blog/kubernetes-agent-sandbox/),
-which walks through the code section by section.
 
 > **Note:** Agent Sandbox is pre-1.0 (SIG Apps). Pin `agentSandboxVersion` to a real
 > [release tag](https://github.com/kubernetes-sigs/agent-sandbox/releases).
@@ -143,7 +142,7 @@ $ npm install
 | `nodeMachineType`              | Machine type for the gVisor sandbox pool                           | `e2-standard-4`  |
 | `sandboxNodeCount`             | Nodes in the gVisor sandbox pool                                   | `1`              |
 | `systemNodeCount`              | Nodes in the default (controller/system) pool                     | `1`              |
-| `agentSandboxVersion`          | kubernetes-sigs/agent-sandbox release tag to install              | `v0.5.1`         |
+| `agentSandboxVersion`          | kubernetes-sigs/agent-sandbox release tag to install              | `v0.5.2`         |
 | `masterVersion`                | GKE control-plane version                                          | latest available |
 | `tailscaleOauthClientId/Secret`| Tailscale operator OAuth client (secret)                          | _(required)_     |
 | `tailscaleAclClientId/Secret`  | Tailscale ACL-editing OAuth client (secret)                       | _(required)_     |
@@ -159,4 +158,10 @@ $ pulumi stack rm dev
 
 `pulumi destroy` also restores Tailscale's default ACL, so the tailnet isn't left governed by the rules
 of a demo that no longer exists.
+
+## Learn More
+
+For the reasoning behind each piece of this program — why a container alone isn't a security boundary,
+what the `Sandbox` CRD actually gives you, and how the gVisor node pool and the tailnet ACL fit together —
+read [Kubernetes Agent Sandbox: what it is and how to deploy it with Pulumi](https://www.pulumi.com/blog/kubernetes-agent-sandbox/).
 

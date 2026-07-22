@@ -28,15 +28,42 @@ import (
 // hugoShortcodeDelim matches Hugo's shortcode delimiters `{{%` and `{{<`.
 var hugoShortcodeDelim = regexp.MustCompile(`\{\{([%<])`)
 
+// wrappingShortcode matches a line that is a registry fence-wrapping block
+// shortcode delimiter — chooser / choosable / example(s) — opening or closing.
+//
+// These shortcodes wrap fenced code examples from the OUTSIDE and never
+// legitimately appear inside a code example, so they must never be neutralized.
+// A malformed upstream doc (e.g. registry.opentofu.org-mirrored provider docs
+// with a stray, unpaired code fence) can desync the fence tracker below and make
+// it believe such a line sits inside a fence. Neutralizing the delimiter there
+// aborts the Hugo build — the paired closing tag is still recognized — and trips
+// the shortcode-delimiter lint. Anchoring on these lines both preserves the
+// shortcode and re-syncs the tracker (see neutralizeHugoShortcodes).
+//
+// The match is anchored to the start of the (whitespace-trimmed) line so a
+// delimiter appearing mid-line inside genuine example code is still neutralized.
+var wrappingShortcode = regexp.MustCompile(
+	`^\s*\{\{[%<]\s*/?(choosable-inline|choosable|chooser|examples|example)\b`)
+
 // neutralizeHugoShortcodes disarms Hugo shortcode delimiters inside fenced code
 // blocks, where Hugo would resolve them before Markdown rendering. Inline code
 // spans and indented code blocks are outside the current generator surface.
+//
+// Registry fence-wrapping shortcodes (chooser/choosable/example(s)) are never
+// neutralized: a line that is one of them is, by definition, outside a code
+// example, so encountering one re-syncs the fence tracker. This keeps a
+// malformed upstream fence from corrupting real shortcodes further down the page
+// while still disarming genuine code-example delimiters that follow.
 func neutralizeHugoShortcodes(contents []byte) []byte {
 	lines := strings.Split(string(contents), "\n")
 	inFence := false
 	var fenceChar byte
 	var fenceLen int
 	for i, line := range lines {
+		if wrappingShortcode.MatchString(line) {
+			inFence = false
+			continue
+		}
 		if c, n, rest := fenceRun(line); n > 0 {
 			switch {
 			case !inFence:
@@ -87,7 +114,7 @@ func EmitFile(outDir, relPath string, contents []byte) error {
 		return nil
 	}
 	if strings.HasSuffix(relPath, ".md") {
-		contents = neutralizeHugoShortcodes(contents)
+		contents = NormalizeDocs(contents)
 	}
 	p := path.Join(outDir, relPath)
 	if err := os.MkdirAll(path.Dir(p), 0o700); err != nil {

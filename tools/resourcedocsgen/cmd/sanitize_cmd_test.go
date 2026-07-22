@@ -73,3 +73,63 @@ func TestSanitizeDocsCmd_InPlaceRequiresFile(t *testing.T) {
 
 	assert.Error(t, cmd.Execute())
 }
+
+func TestSanitizeDocsCmd_CheckPassesForCanonicalFile(t *testing.T) {
+	t.Parallel()
+
+	path := filepath.Join(t.TempDir(), "_index.md")
+	canonical := "# Title\n\n{{< chooser language \"go\" >}}\n{{< /chooser >}}\n"
+	require.NoError(t, os.WriteFile(path, []byte(canonical), 0o600))
+
+	cmd := SanitizeDocsCmd()
+	cmd.SetArgs([]string{"--check", path})
+	assert.NoError(t, cmd.Execute())
+}
+
+func TestSanitizeDocsCmd_CheckFailsForMalformedFile(t *testing.T) {
+	t.Parallel()
+
+	path := filepath.Join(t.TempDir(), "_index.md")
+	require.NoError(t, os.WriteFile(path, []byte(malformedDocs), 0o600))
+
+	cmd := SanitizeDocsCmd()
+	cmd.SetArgs([]string{"--check", path})
+	cmd.SetErr(new(bytes.Buffer))
+	assert.Error(t, cmd.Execute())
+}
+
+func TestSanitizeDocsCmd_CheckDirectoryReportsOffender(t *testing.T) {
+	t.Parallel()
+
+	dir := t.TempDir()
+	require.NoError(t, os.WriteFile(filepath.Join(dir, "good.md"),
+		[]byte("{{< chooser language \"go\" >}}\n"), 0o600))
+	require.NoError(t, os.WriteFile(filepath.Join(dir, "bad.md"),
+		[]byte(malformedDocs), 0o600))
+
+	cmd := SanitizeDocsCmd()
+	cmd.SetArgs([]string{"--check", dir})
+	cmd.SetErr(new(bytes.Buffer))
+
+	err := cmd.Execute()
+	require.Error(t, err)
+	assert.Contains(t, err.Error(), "bad.md")
+	assert.NotContains(t, err.Error(), "good.md")
+}
+
+func TestSanitizeDocsCmd_InPlaceDirectoryNormalizesEveryFile(t *testing.T) {
+	t.Parallel()
+
+	dir := t.TempDir()
+	bad := filepath.Join(dir, "bad.md")
+	require.NoError(t, os.WriteFile(bad, []byte(malformedDocs), 0o600))
+
+	cmd := SanitizeDocsCmd()
+	cmd.SetArgs([]string{"--in-place", dir})
+	require.NoError(t, cmd.Execute())
+
+	got, err := os.ReadFile(bad)
+	require.NoError(t, err)
+	assert.NotContains(t, string(got), "{{ <")
+	assert.Contains(t, string(got), `{{< chooser language "typescript" >}}`)
+}

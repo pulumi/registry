@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/DefangLabs/pulumi-defang/v2.4.1/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/DefangLabs/pulumi-defang/v2.5.2/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/DefangLabs/pulumi-defang/blob/v2.4.1/docs/installation-configuration.md
+edit_url: https://github.com/DefangLabs/pulumi-defang/blob/v2.5.2/docs/installation-configuration.md
 title: Defang Provider for Pulumi Installation & Configuration
 meta_desc: Provides an overview on how to configure the Pulumi Defang Provider.
 layout: package

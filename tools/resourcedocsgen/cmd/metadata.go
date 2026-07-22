@@ -273,8 +273,7 @@ func packageMetadataFromGitHubCmd(metadataDir, packageDocsDir *string) *cobra.Co
 				continue
 			}
 
-			// Normalize end of line representation
-			content = bytes.ReplaceAll(content, []byte("\r\n"), []byte("\n"))
+			content = normalizeDocs(content)
 
 			frontmatter := []byte(`---
 # WARNING: this file was fetched from ` + url + `
@@ -678,13 +677,7 @@ func readDocsFile(url string) ([]byte, error) {
 		return nil, err
 	}
 
-	// Normalize end of line representation
-	content = bytes.ReplaceAll(content, []byte("\r\n"), []byte("\n"))
-
-	// Defensively repair malformed Hugo shortcode delimiters (e.g. "{{ <" -> "{{<").
-	// Upstream-generated docs occasionally emit these, and a single malformed
-	// delimiter fails the entire Hugo site build. See sanitizeShortcodeDelimiters.
-	content = sanitizeShortcodeDelimiters(content)
+	content = normalizeDocs(content)
 
 	rest, ok := bytes.CutPrefix(bytes.TrimLeft(content, "\n\t\r "), []byte("---\n"))
 	if !ok {

@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-rancher2/v12.0.1/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-rancher2/v12.1.1/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-rancher2/blob/v12.0.1/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-rancher2/blob/v12.1.1/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Rancher2 Provider
 meta_desc: Provides an overview on how to configure the Pulumi Rancher2 provider.
@@ -54,7 +54,7 @@ config:
 
 ```
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
@@ -196,6 +196,28 @@ public class App {
             .build());
 
     }
+}
+```
+
+{{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+pulumi {
+  required_providers {
+    rancher2 = {
+      source = "pulumi/rancher2"
+    }
+  }
+}
+
+# Create a new rancher2_bootstrap using bootstrap provider config
+resource "rancher2_bootstrap" "admin" {
+  password = "blahblah"
+}
+# Create a new rancher2 resource using admin provider config
+resource "rancher2_catalog" "foo" {
+  name = "test"
+  url  = "http://foo.com:8080"
 }
 ```
 

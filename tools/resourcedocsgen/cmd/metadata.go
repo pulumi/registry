@@ -273,7 +273,7 @@ func packageMetadataFromGitHubCmd(metadataDir, packageDocsDir *string) *cobra.Co
 				continue
 			}
 
-			content = pkg.NormalizeDocs(content)
+			content = normalizeDocs(content)
 
 			frontmatter := []byte(`---
 # WARNING: this file was fetched from ` + url + `
@@ -677,7 +677,7 @@ func readDocsFile(url string) ([]byte, error) {
 		return nil, err
 	}
 
-	content = pkg.NormalizeDocs(content)
+	content = normalizeDocs(content)
 
 	rest, ok := bytes.CutPrefix(bytes.TrimLeft(content, "\n\t\r "), []byte("---\n"))
 	if !ok {

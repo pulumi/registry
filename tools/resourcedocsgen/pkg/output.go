@@ -107,7 +107,7 @@ func EmitFile(outDir, relPath string, contents []byte) error {
 		return nil
 	}
 	if strings.HasSuffix(relPath, ".md") {
-		contents = NormalizeDocs(contents)
+		contents = neutralizeHugoShortcodes(contents)
 	}
 	p := path.Join(outDir, relPath)
 	if err := os.MkdirAll(path.Dir(p), 0o700); err != nil {

@@ -8,17 +8,18 @@ ensure:
 	$(MAKE) sync-icons
 
 .PHONY: lint
-lint: lint-go lint-markdown lint-shortcode-delimiters
+lint: lint-go lint-markdown
 	yarn run lint
 
 .PHONY: lint-markdown
-lint-markdown:
+lint-markdown: lint-shortcode-delimiters
 	./scripts/lint/lint-markdown.js
 
-# Local convenience; CI enforces this via resourcedocsgen's TestCommittedContentIsDelimiterCanonical.
+# The auto-generated provider _index.md pages are skipped by the front-matter
+# linter, yet a single malformed shortcode delimiter there fails the whole site build.
 .PHONY: lint-shortcode-delimiters
 lint-shortcode-delimiters:
-	cd tools/resourcedocsgen && go run . sanitize-docs --check ../../themes/default/content
+	./scripts/lint/check-shortcode-delimiters.js
 
 .PHONY: lint-go
 lint-go: lint-resourcedocsgen lint-mktutorial

@@ -12,14 +12,6 @@ on:
           	tools/resourcedocsgen/
 
           Path should be the root of a go module.
-      extra-sparse-checkout:
-        required: false
-        type: string
-        default: ""
-        description: |
-          Additional paths to include in the test job's sparse checkout, one per
-          line, for tests that read repository files outside the module. For
-          example, resourcedocsgen's delimiter guard reads themes/default/content.
 jobs:
   lint:
     name: Lint
@@ -51,7 +43,6 @@ jobs:
       with:
          sparse-checkout: |
            ${{ inputs.path }}
-           ${{ inputs.extra-sparse-checkout }}
     - name: Setup Go
       uses: actions/setup-go@v6
       with:

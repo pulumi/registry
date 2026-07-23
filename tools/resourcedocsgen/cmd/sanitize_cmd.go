@@ -18,77 +18,47 @@ import (
 	"bytes"
 	"fmt"
 	"io"
-	"io/fs"
 	"os"
-	"path/filepath"
-	"strings"
 
-	"github.com/pulumi/registry/tools/resourcedocsgen/pkg"
 	"github.com/spf13/cobra"
 )
 
-// docNeedsNormalizing reports whether pkg.NormalizeDocs would change a doc's
-// shortcode delimiters. It compares against the input with only line endings
-// normalized, so a pre-existing CRLF is not by itself flagged: mktutorial-generated
-// how-to-guides carry CRLF and do not pass through NormalizeDocs, and Hugo handles
-// CRLF fine — the delimiters are what break the build. --check and --in-place both
-// use this predicate so they agree on what is non-canonical.
-func docNeedsNormalizing(content []byte) bool {
-	lineEndingsOnly := bytes.ReplaceAll(content, []byte("\r\n"), []byte("\n"))
-	return !bytes.Equal(pkg.NormalizeDocs(content), lineEndingsOnly)
+// normalizeDocs applies the content repairs resourcedocsgen performs on every
+// docs file it writes: end-of-line normalization and malformed Hugo shortcode
+// delimiter repair. It is lenient and idempotent and never fails on content
+// shape, so callers on `set -e` paths can apply it unconditionally.
+func normalizeDocs(content []byte) []byte {
+	content = bytes.ReplaceAll(content, []byte("\r\n"), []byte("\n"))
+	return sanitizeShortcodeDelimiters(content)
 }
 
-// SanitizeDocsCmd exposes pkg.NormalizeDocs — the single canonical delimiter
-// normalization — to callers that obtain docs by other means than resourcedocsgen's
-// own fetch (e.g. scripts/generate-versioned-docs.sh curls _index.md straight into
-// the content tree). The argument may be a file or a directory of .md files. With
-// no flag it writes the normalized file/stdin to stdout; --in-place rewrites files;
-// --check reports any non-canonical file and exits non-zero without writing.
+// SanitizeDocsCmd exposes normalizeDocs to callers that obtain docs by means
+// other than resourcedocsgen's own fetch. The versioned-docs build
+// (scripts/generate-versioned-docs.sh) downloads a package's _index.md with a
+// raw curl straight into the Hugo content tree, so it never passes through
+// readDocsFile's repair. Piping that file through this command applies the
+// identical repair, so a malformed delimiter from any docs source is fixed
+// once, in one place, rather than re-implemented per consumer.
 func SanitizeDocsCmd() *cobra.Command {
-	var inPlace, check bool
+	var inPlace bool
 	cmd := &cobra.Command{
-		Use:   "sanitize-docs [path]",
-		Short: "Normalize Hugo shortcode delimiters in docs files",
-		Long: "Apply the canonical docs normalization (repair malformed \"{{ <\" / \"{{ %\" " +
-			"delimiters outside code fences, neutralize live delimiters inside them), which " +
-			"otherwise abort the Hugo site build. The path may be a file or a directory of " +
-			".md files. With no flag, writes the normalized file (or stdin) to stdout; " +
-			"--in-place rewrites in place; --check exits non-zero if anything is not already " +
-			"canonical without writing.",
+		Use:   "sanitize-docs [file]",
+		Short: "Repair malformed Hugo shortcode delimiters in a docs file",
+		Long: "Read a docs file (or stdin) and repair malformed Hugo shortcode opening " +
+			"delimiters (\"{{ <\" / \"{{ %\"), which otherwise abort the Hugo site build. " +
+			"Writes the result to stdout, or back to the file with --in-place.",
 		Args: cobra.MaximumNArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			if inPlace && check {
-				return fmt.Errorf("--in-place and --check are mutually exclusive")
-			}
-
-			var path string
-			if len(args) == 1 {
-				path = args[0]
-			}
-
-			if inPlace && path == "" {
-				return fmt.Errorf("--in-place requires a file or directory argument")
-			}
-
-			if path != "" {
-				info, err := os.Stat(path)
-				if err != nil {
-					return err
-				}
-				if info.IsDir() {
-					if !inPlace && !check {
-						return fmt.Errorf("a directory argument requires --in-place or --check")
-					}
-					return sanitizeTree(path, check)
-				}
+			if inPlace && len(args) != 1 {
+				return fmt.Errorf("--in-place requires a file argument")
 			}
 
 			var (
 				input []byte
 				err   error
 			)
-			if path != "" {
-				input, err = os.ReadFile(path)
+			if len(args) == 1 {
+				input, err = os.ReadFile(args[0])
 			} else {
 				input, err = io.ReadAll(cmd.InOrStdin())
 			}
@@ -96,67 +66,15 @@ func SanitizeDocsCmd() *cobra.Command {
 				return err
 			}
 
-			// Run NormalizeDocs once; --check and the write paths use the same result.
-			output := pkg.NormalizeDocs(input)
-
-			if check {
-				if docNeedsNormalizing(input) {
-					src := path
-					if src == "" {
-						src = "<stdin>"
-					}
-					return fmt.Errorf("%s: malformed Hugo shortcode delimiter(s); "+
-						"run `resourcedocsgen sanitize-docs --in-place %s`", src, src)
-				}
-				return nil
-			}
+			output := normalizeDocs(input)
 
 			if inPlace {
-				return os.WriteFile(path, output, 0o600)
+				return os.WriteFile(args[0], output, 0o600)
 			}
 			_, err = cmd.OutOrStdout().Write(output)
 			return err
 		},
 	}
-	cmd.Flags().BoolVar(&inPlace, "in-place", false, "Rewrite file(s) in place instead of writing to stdout")
-	cmd.Flags().BoolVar(&check, "check", false,
-		"Report files whose delimiters are not canonical and exit non-zero, without writing")
+	cmd.Flags().BoolVar(&inPlace, "in-place", false, "Rewrite the file in place instead of writing to stdout")
 	return cmd
-}
-
-// sanitizeTree walks root for .md files. With check it collects every file that is
-// not already canonical and returns an error listing them; otherwise it rewrites
-// each non-canonical file in place. Both branches gate on docNeedsNormalizing, so a
-// canonical-but-CRLF file is neither reported nor rewritten.
-func sanitizeTree(root string, check bool) error {
-	var problems []string
-	err := filepath.WalkDir(root, func(p string, d fs.DirEntry, err error) error {
-		if err != nil {
-			return err
-		}
-		if d.IsDir() || !strings.HasSuffix(p, ".md") {
-			return nil
-		}
-		content, err := os.ReadFile(p)
-		if err != nil {
-			return err
-		}
-		if !docNeedsNormalizing(content) {
-			return nil
-		}
-		if check {
-			problems = append(problems, p)
-			return nil
-		}
-		return os.WriteFile(p, pkg.NormalizeDocs(content), 0o600)
-	})
-	if err != nil {
-		return err
-	}
-	if check && len(problems) > 0 {
-		return fmt.Errorf("malformed Hugo shortcode delimiter(s) in %d file(s) "+
-			"(run `resourcedocsgen sanitize-docs --in-place %s` to fix):\n  %s",
-			len(problems), root, strings.Join(problems, "\n  "))
-	}
-	return nil
 }

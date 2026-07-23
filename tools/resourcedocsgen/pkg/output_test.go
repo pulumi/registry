@@ -91,3 +91,43 @@ func TestNeutralizeHugoShortcodes(t *testing.T) {
 		})
 	}
 }
+
+// TestNeutralizeHugoShortcodesResyncsOnMalformedUpstreamFence reproduces the
+// megaport@1.11.1 failure: a stray, unpaired code fence in the upstream doc
+// desynced the fence tracker, so real chooser/choosable wrapping shortcodes below
+// it were wrongly neutralized to "{{ <" — aborting the Hugo build. They must be
+// preserved (and re-sync the tracker) while genuine in-fence delimiters after them
+// are still disarmed.
+func TestNeutralizeHugoShortcodesResyncsOnMalformedUpstreamFence(t *testing.T) {
+	t.Parallel()
+
+	input := "```java\nx := 1\n```\n" +
+		"{{% /choosable %}}\n" +
+		"{{< /chooser >}}\n" +
+		"```\n" + // stray, unpaired fence from the malformed upstream doc
+		"\n" +
+		"Examples:\n" +
+		"{{< chooser language \"typescript,python\" >}}\n" + // real: must be preserved
+		"{{% choosable language typescript %}}\n" + // real: must be preserved
+		"```typescript\n" +
+		"const t = \"Bearer {{%s|token}}\";\n" + // genuine garbage: must be neutralized
+		"```\n" +
+		"{{% /choosable %}}\n" +
+		"{{< /chooser >}}"
+
+	want := "```java\nx := 1\n```\n" +
+		"{{% /choosable %}}\n" +
+		"{{< /chooser >}}\n" +
+		"```\n" +
+		"\n" +
+		"Examples:\n" +
+		"{{< chooser language \"typescript,python\" >}}\n" +
+		"{{% choosable language typescript %}}\n" +
+		"```typescript\n" +
+		"const t = \"Bearer {{ %s|token}}\";\n" +
+		"```\n" +
+		"{{% /choosable %}}\n" +
+		"{{< /chooser >}}"
+
+	assert.Equal(t, want, string(neutralizeHugoShortcodes([]byte(input))))
+}

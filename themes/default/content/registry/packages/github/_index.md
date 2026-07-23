@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-github/v6.13.1/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-github/v6.14.1/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-github/blob/v6.13.1/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-github/blob/v6.14.1/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Github Provider
 meta_desc: Provides an overview on how to configure the Pulumi Github provider.
@@ -30,7 +30,7 @@ Use the navigation to the left to read about the available resources.
 
 
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
@@ -82,7 +82,7 @@ using Github = Pulumi.Github;
 return await Deployment.RunAsync(() =>
 {
     // Add a user to the organization
-    var membershipForUserX = new Github.Index.Membership("membership_for_user_x");
+    var membershipForUserX = new Github.Membership("membership_for_user_x");
 
 });
 
@@ -150,8 +150,8 @@ import com.pulumi.Context;
 import com.pulumi.Pulumi;
 import com.pulumi.core.Output;
 import com.pulumi.github.Membership;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;
@@ -167,6 +167,22 @@ public class App {
         var membershipForUserX = new Membership("membershipForUserX");
 
     }
+}
+```
+
+{{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+pulumi {
+  required_providers {
+    github = {
+      source = "pulumi/github"
+    }
+  }
+}
+
+# Add a user to the organization
+resource "github_membership" "membership_for_user_x" {
 }
 ```
 
@@ -175,7 +191,7 @@ public class App {
 
 
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
@@ -227,7 +243,7 @@ using Github = Pulumi.Github;
 return await Deployment.RunAsync(() =>
 {
     // Add a user to the organization
-    var membershipForUserX = new Github.Index.Membership("membership_for_user_x");
+    var membershipForUserX = new Github.Membership("membership_for_user_x");
 
 });
 
@@ -295,8 +311,8 @@ import com.pulumi.Context;
 import com.pulumi.Pulumi;
 import com.pulumi.core.Output;
 import com.pulumi.github.Membership;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;
@@ -312,6 +328,22 @@ public class App {
         var membershipForUserX = new Membership("membershipForUserX");
 
     }
+}
+```
+
+{{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+pulumi {
+  required_providers {
+    github = {
+      source = "pulumi/github"
+    }
+  }
+}
+
+# Add a user to the organization
+resource "github_membership" "membership_for_user_x" {
 }
 ```
 

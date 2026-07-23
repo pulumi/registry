@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-slack/v0.4.16/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-slack/v0.5.1/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-slack/blob/v0.4.16/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-slack/blob/v0.5.1/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Slack Provider
 meta_desc: Provides an overview on how to configure the Pulumi Slack provider.
@@ -28,7 +28,7 @@ Use the navigation to the left to read about the available resources.
 
 
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
@@ -263,8 +263,8 @@ import com.pulumi.slack.Usergroup;
 import com.pulumi.slack.UsergroupArgs;
 import com.pulumi.slack.Conversation;
 import com.pulumi.slack.ConversationArgs;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;
@@ -301,6 +301,37 @@ public class App {
 ```
 
 {{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+pulumi {
+  required_providers {
+    slack = {
+      source = "pulumi/slack"
+    }
+  }
+}
+
+data "slack_getuser" "testUser00" {
+  name = "contact_test-user-ter"
+}
+
+# Create a User Group
+resource "slack_usergroup" "my_group" {
+  name        = "TestGroup"
+  handle      = "test"
+  description = "Test user group"
+  users       = [data.slack_getuser.testUser00.id]
+}
+# Create a Slack channel
+resource "slack_conversation" "test" {
+  name              = "my-channel"
+  topic             = "The topic for my channel"
+  permanent_members = slack_usergroup.my_group.users
+  is_private        = true
+}
+```
+
+{{% /choosable %}}
 {{< /chooser >}}
 ## Authentication
 
@@ -311,7 +342,7 @@ means:
 - Environment variables
 ### Static Token
 
-!> **Warning:** Hard-coding credentials into any Pulumi configuration is not
+> **Warning:** Hard-coding credentials into any Pulumi configuration is not
 recommended, and risks secret leakage should this file ever be committed to a
 public version control system.
 

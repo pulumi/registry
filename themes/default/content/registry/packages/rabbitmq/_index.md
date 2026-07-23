@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-rabbitmq/v3.4.3/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-rabbitmq/v3.5.1/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-rabbitmq/blob/v3.4.3/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-rabbitmq/blob/v3.5.1/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Rabbitmq Provider
 meta_desc: Provides an overview on how to configure the Pulumi Rabbitmq provider.
@@ -29,7 +29,7 @@ Use the navigation to the left to read about the available resources.
 
 The following is a minimal example:
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
@@ -102,7 +102,7 @@ using RabbitMQ = Pulumi.RabbitMQ;
 return await Deployment.RunAsync(() =>
 {
     // Create a virtual host
-    var vhost1 = new RabbitMQ.Index.VHost("vhost_1", new()
+    var vhost1 = new RabbitMQ.VHost("vhost_1", new()
     {
         Name = "vhost_1",
     });
@@ -199,8 +199,8 @@ import com.pulumi.Pulumi;
 import com.pulumi.core.Output;
 import com.pulumi.rabbitmq.VHost;
 import com.pulumi.rabbitmq.VHostArgs;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;
@@ -218,6 +218,23 @@ public class App {
             .build());
 
     }
+}
+```
+
+{{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+pulumi {
+  required_providers {
+    rabbitmq = {
+      source = "pulumi/rabbitmq"
+    }
+  }
+}
+
+# Create a virtual host
+resource "rabbitmq_vhost" "vhost_1" {
+  name = "vhost_1"
 }
 ```
 

@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/megaport/megaport/1.10.1/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/megaport/megaport/1.11.1/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Megaport Provider
@@ -205,6 +205,15 @@ public class App {
 ```
 {{% /choosable %}}
 {{< /chooser >}}
+### Provider Configuration Reference
+
+|        Argument         | Required |  Default  |                                                                    Description                                                                     |
+|-------------------------|----------|-----------|----------------------------------------------------------------------------------------------------------------------------------------------------|
+| `environment`           | No       | `staging` | Megaport API environment: `production`, `staging`, or `development`. Can also be set with `MEGAPORT_ENVIRONMENT`.                                  |
+| `accessKey`            | Yes      | —         | API access key. Can also be set with `MEGAPORT_ACCESS_KEY`.                                                                                        |
+| `secretKey`            | Yes      | —         | API secret key. Can also be set with `MEGAPORT_SECRET_KEY`.                                                                                        |
+| `acceptPurchaseTerms` | Yes      | `false`   | Acceptance of the Megaport API terms. Can also be set with `MEGAPORT_ACCEPT_PURCHASE_TERMS`.                                                       |
+| `waitTime`             | No       | `10`      | Minutes to wait for resources to finish provisioning during create and update. Minimum `1`. See Provisioning Wait Time. |
 ## 🚨 NEW FEATURE: MCR Prefix Filter List Resources
 ### Enhanced MCR Management with Standalone Resources
 
@@ -2319,6 +2328,63 @@ Example plan output:
 3. Review the plan to ensure it matches your expectations
 4. Run `pulumi up` to update the state
 5. Run `pulumi preview` again - should show no changes
+## Provisioning Wait Time
+
+Most Megaport resources are provisioned asynchronously. After Pulumi places an order, the service is deployed across the Megaport network before it becomes live. During `pulumi up`, the provider polls the Megaport API until the resource reaches its ready state before reporting the create or update as complete.
+
+The `waitTime` provider option controls how long, in minutes, the provider waits for a resource to finish provisioning. The default is `10` minutes and the minimum is `1`.
+
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime:
+config:
+    megaport:acceptPurchaseTerms:
+        value: true
+    megaport:accessKey:
+        value: your-access-key
+    megaport:environment:
+        value: production
+    megaport:secretKey:
+        value: your-secret-key
+    megaport:waitTime:
+        value: 30
+
+```
+
+`waitTime` is set once on the provider and applies to every resource it manages; it cannot currently be set per resource.
+### When to increase `waitTime`
+
+Ten minutes is enough for most resources, but some take longer and benefit from a higher value:
+
+- **Megaport Virtual Edges (MVEs)** — vendor appliances can take several minutes to boot and become reachable.
+- **VXCs to cloud providers** — provisioning on the cloud side (AWS, Azure, Google, Oracle, and others) can add delay outside Megaport's control.
+- **Large applies** — ordering many resources at once.
+
+If applies regularly time out while resources are still provisioning, raise `waitTime`.
+### What happens when the wait time is exceeded
+
+If a resource does not reach its ready state within `waitTime`, the apply fails with a timeout error such as:
+
+```
+Error: time expired waiting for Port [...] to provision
+```
+
+**The order has already been placed**, so the resource usually keeps provisioning in the Megaport portal and becomes live shortly after. However, because the apply failed before Pulumi could record the resource, **it is not saved to Pulumi state**. Running `pulumi up` again will try to create a *new* resource rather than adopt the one that is still provisioning.
+
+To recover, do one of the following before re-applying:
+
+1. **Import the resource** that was created, using its UID from the Megaport portal:
+
+   ```bash
+   pulumi import megaport_port.example <product-uid>
+   ```
+
+2. **Cancel the resource** in the Megaport portal, then re-run `pulumi up`.
+
+Setting `waitTime` high enough for your slowest-provisioning resources avoids this situation entirely.
+
+> **Note:** Internet Exchange (IX) resources use a fixed 10-minute provisioning wait and are not affected by `waitTime`.
 ## Resource Cancellation
 
 When Pulumi deletes a Megaport resource, the provider issues an immediate cancellation or deletion request to the Megaport API. Resources are removed from Pulumi state as soon as the API call returns successfully. For Ports and LAG Ports specifically, this is always a `CANCEL_NOW` action against the Megaport Products API.

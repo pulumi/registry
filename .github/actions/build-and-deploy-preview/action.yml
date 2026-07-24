@@ -55,13 +55,16 @@ runs:
         PR: ${{ inputs.pr }}
         GITHUB_TOKEN: ${{ inputs.github_token }}
         REPO: ${{ github.repository }}
+        EVENT_NAME: ${{ github.event_name }}
       run: |
-        # Bring the PR's package-list entry and generated metadata into the tree, and shim the
-        # event so `make ci-pull-request` keys the bucket, URL and PR comment to this PR.
-        gh api "repos/$REPO/pulls/$PR" > /tmp/pr.json
-        jq -n --slurpfile pr /tmp/pr.json '{number: $pr[0].number, pull_request: $pr[0]}' > /tmp/pr-event.json
-        echo "GITHUB_EVENT_NAME=pull_request" >> "$GITHUB_ENV"
-        echo "GITHUB_EVENT_PATH=/tmp/pr-event.json" >> "$GITHUB_ENV"
+        # A native pull_request run already keys `make ci-pull-request` to this PR; only the
+        # comment-triggered path (issue_comment / workflow_dispatch) needs the event shimmed.
+        if [ "$EVENT_NAME" != "pull_request" ]; then
+          gh api "repos/$REPO/pulls/$PR" > /tmp/pr.json
+          jq -n --slurpfile pr /tmp/pr.json '{number: $pr[0].number, pull_request: $pr[0]}' > /tmp/pr-event.json
+          echo "GITHUB_EVENT_NAME=pull_request" >> "$GITHUB_ENV"
+          echo "GITHUB_EVENT_PATH=/tmp/pr-event.json" >> "$GITHUB_ENV"
+        fi
         python3 scripts/ci/community-package/cli.py preview --pr "$PR"
 
     - name: Validate JSON file syntax

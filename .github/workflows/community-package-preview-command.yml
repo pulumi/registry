@@ -49,7 +49,7 @@ jobs:
         run: python3 scripts/ci/community-package/cli.py preview-command
 
       - uses: ./.github/actions/build-and-deploy-preview
-        if: steps.ack.outputs.should_build != 'false'
+        if: ${{ !cancelled() && steps.ack.outputs.should_build != 'false' }}
         with:
           pr: ${{ github.event.issue.number || inputs.pr }}
           github_token: ${{ github.token }}

@@ -224,6 +224,21 @@ func (dctx *Context) setModules(modules map[string]*modContext) {
 	dctx.internalModMap = m
 }
 
+// hclDocLanguageHelper adds the ResolveDocRef method that codegen.DocLanguageHelper gained in
+// pulumi/pulumi v3.254.0 to pulumi-hcl's helper. Drop this wrapper once pulumi-labs/pulumi-hcl
+// implements the method itself.
+type hclDocLanguageHelper struct {
+	hcl_docs.DocLanguageHelper
+}
+
+// ResolveDocRef is not implemented for HCL; returning false makes the caller fall back to the
+// default rendering, matching what the .NET and Java helpers do.
+func (hclDocLanguageHelper) ResolveDocRef(
+	pkg schema.PackageReference, selfRef, ref schema.DocRef,
+) (string, bool, error) {
+	return "", false, nil
+}
+
 func NewContext(tool string, pkg *schema.Package) *Context {
 	dctx := &Context{
 		docHelpers: map[language.Language]codegen.DocLanguageHelper{
@@ -233,7 +248,7 @@ func NewContext(tool string, pkg *schema.Package) *Context {
 			language.Python: &python.DocLanguageHelper{},
 			language.YAML:   &yaml.DocLanguageHelper{},
 			language.Java:   &java.DocLanguageHelper{},
-			language.HCL:    &hcl_docs.DocLanguageHelper{},
+			language.HCL:    &hclDocLanguageHelper{},
 		},
 		moduleConflictLinkMap: map[interface{}]string{},
 		constructorSyntaxData: generateConstructorSyntaxData(pkg),

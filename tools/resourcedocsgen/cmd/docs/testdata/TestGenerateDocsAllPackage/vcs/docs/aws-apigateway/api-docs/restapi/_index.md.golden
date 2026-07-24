@@ -363,7 +363,7 @@ example, err := awsapigateway.NewRestAPI(ctx, "restAPIResource", &awsapigateway.
 	Description:               pulumi.String("string"),
 	DisableExecuteApiEndpoint: pulumi.Bool(false),
 	GatewayResponses: map[string]apigateway.SwaggerGatewayResponseArgs{
-		"string": &apigateway.SwaggerGatewayResponseArgs{
+		"string": apigateway.SwaggerGatewayResponseArgs{
 			ResponseParameters: pulumi.StringMap{
 				"string": pulumi.String("string"),
 			},

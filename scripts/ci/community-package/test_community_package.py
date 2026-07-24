@@ -167,6 +167,14 @@ class VerifyTests(unittest.TestCase):
         self.assertEqual(manifest.error, "no release")
         self.assertEqual(manifest.providerName, "demo")
 
+    def test_publisher_known_only_when_listed(self) -> None:
+        names = {"Aten Security": "atensecurity", "aptible": "aptible"}
+        self.assertTrue(verify_entry._publisher_known("Aten Security", names))
+        self.assertFalse(verify_entry._publisher_known("Aten Security", {"aptible": "aptible"}))
+
+    def test_absent_publisher_is_not_flagged(self) -> None:
+        self.assertTrue(verify_entry._publisher_known("", {}))
+
 
 class ReportTargetTests(unittest.TestCase):
     def test_prefers_recorded_pr_number(self) -> None:
@@ -198,9 +206,11 @@ class ReportTargetTests(unittest.TestCase):
 
 
 def _manifest(green: bool = True, warnings: bool = False, findings: list[DocFinding] | None = None,
-              installs: list[InstallResult] | None = None, docs: list[DocFile] | None = None) -> Manifest:
+              installs: list[InstallResult] | None = None, docs: list[DocFile] | None = None,
+              publisher: str = "", publisherKnown: bool = True) -> Manifest:
     return Manifest("x/pulumi-demo", "s.json", "demo", Version("v1.0.0", "0" * 40), "x",
-                    installs or [], findings or [], green=green, warnings=warnings, docs=docs or [])
+                    installs or [], findings or [], green=green, warnings=warnings, docs=docs or [],
+                    publisher=publisher, publisherKnown=publisherKnown)
 
 
 class FactSheetTests(unittest.TestCase):
@@ -213,6 +223,17 @@ class FactSheetTests(unittest.TestCase):
         self.assertIn("docs/_index.md:12", out)
         self.assertIn("/blob/" + "0" * 40 + "/docs/_index.md", out)
         self.assertIn("# Title", out)
+
+    def test_unknown_publisher_is_flagged_in_the_sheet(self) -> None:
+        out = fact_sheet.render(_manifest(warnings=True, publisher="Aten Security", publisherKnown=False))
+        self.assertIn("publisher listed", out)
+        self.assertIn("⚠️", out)
+        self.assertIn("not in `publisher-names.json`", out)
+
+    def test_known_publisher_shows_row_without_warning_note(self) -> None:
+        out = fact_sheet.render(_manifest(publisher="Aten Security", publisherKnown=True))
+        self.assertIn("publisher listed", out)
+        self.assertNotIn("not in `publisher-names.json`", out)
 
     def test_red_render_with_install_failure(self) -> None:
         out = fact_sheet.render(_manifest(

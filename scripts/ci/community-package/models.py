@@ -63,3 +63,5 @@ class Manifest:
     generation: bool = True
     docs: list[DocFile] = field(default_factory=list)
     error: str = ""
+    publisher: str = ""
+    publisherKnown: bool = True

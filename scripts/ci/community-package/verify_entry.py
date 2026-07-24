@@ -10,6 +10,19 @@ import sdk_install_probe
 import resourcedocsgen
 from models import DocFile, Entry, Manifest, Version, provider_name
 
+PUBLISHER_NAMES_PATH = Path("tools/resourcedocsgen/pkg/publishers/publisher-names.json")
+
+
+def _load_publisher_names() -> dict[str, str]:
+    try:
+        return dict(json.loads(PUBLISHER_NAMES_PATH.read_text()))
+    except OSError:
+        return {}
+
+
+def _publisher_known(publisher: str, names: dict[str, str]) -> bool:
+    return not publisher or publisher in names
+
 
 def _doc_file(slug: str, sha: str, path: str) -> DocFile | None:
     data = github_api.raw_file(slug, sha, path)
@@ -49,6 +62,8 @@ def verify(entry: Entry) -> Manifest:
                                     f"at release `{tag}`. Check the `schemaFile` path in the package list.")
     schema = json.loads(schema_bytes)
     name = provider_name(entry.repoSlug, schema)
+    publisher = str(schema.get("publisher", "")).strip()
+    publisher_known = _publisher_known(publisher, _load_publisher_names())
 
     index = _doc_file(entry.repoSlug, sha, "docs/_index.md")
     install_doc = _doc_file(entry.repoSlug, sha, "docs/installation-configuration.md")
@@ -63,7 +78,7 @@ def verify(entry: Entry) -> Manifest:
     has_blocking_failure = any(r.blocking and r.result != "pass" for r in installs)
     green = bool(generated and not has_blocking_failure and index is not None)
     advisory_failure = any(not r.blocking and r.result not in ("pass", "absent") for r in installs)
-    warnings = green and (advisory_failure or bool(findings))
+    warnings = green and (advisory_failure or bool(findings) or (bool(publisher) and not publisher_known))
 
     return Manifest(
         repoSlug=entry.repoSlug,
@@ -77,4 +92,6 @@ def verify(entry: Entry) -> Manifest:
         warnings=warnings,
         generation=generated,
         docs=docs,
+        publisher=publisher,
+        publisherKnown=publisher_known,
     )

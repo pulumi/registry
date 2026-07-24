@@ -528,6 +528,7 @@ All workflow files live in `.github/workflows/`.
 | `community-package-check.yml` | Community package check | PR touching `community-packages/package-list.json` |
 | `community-package-report.yml` | Community package report | `workflow_run` after the check completes |
 | `community-package-check-command.yml` | Community package /check command | `/check` comment on a package PR |
+| `community-package-preview-command.yml` | Community package /preview command | `/preview` comment on a package PR |
 | `community-package-policy.yml` | Community package pipeline policy | PR touching the pipeline sources |
 | `publish-provider-update.yml` | provider docs build | `repository_dispatch` |
 | `bucket-cleanup.yml` | Scheduled jobs: Bucket cleanup | Daily 3:00 PM UTC |
@@ -726,6 +727,7 @@ The check pipeline gives a contributor who adds one entry to `community-packages
 - **`community-package-check.yml`** (secret-free, runs on forks): for each added entry, reads the package's schema and docs at its latest GitHub release, then probes without executing the package's code — installs the plugin (blocking), resolves the npm/PyPI/Go SDKs and lints the docs (advisory). Writes a fact-sheet artifact. The plugin install is the only blocking check, alongside successful docs generation and a present `docs/_index.md`.
 - **`community-package-report.yml`** (`workflow_run`, write token, no secrets, no contributor code): downloads the fact-sheet artifact and posts it as a sticky PR comment, keyed to the PR number recorded by the check.
 - **`community-package-check-command.yml`** (`issue_comment`): re-runs the check when the author or a maintainer comments `/check`, authorized and rate-limited.
+- **`community-package-preview-command.yml`** (`issue_comment`): builds an on-demand site preview when a maintainer comments `/preview`. A fork's own `pull_request` build gets no secrets, so this maintainer-triggered run stands in for it: it materializes the fork's entry as data and reuses the `build-and-deploy-preview` action, never running the fork's code.
 - **`community-package-policy.yml`**: runs the toolchain's unit tests and `mypy --strict`, including the plane-separation test, as a required check.
 
 After merge, `generate-package-metadata.yml` (above) generates and publishes the package's docs metadata.

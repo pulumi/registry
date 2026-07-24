@@ -75,7 +75,16 @@ def render(manifest: Manifest) -> str:
         label = "plugin install" if result.language == "plugin" else f"{result.language} SDK"
         command = f"`{result.command}`" if result.command else "_not advertised_"
         lines.append(f"| {label} | {_RESULT_ICON.get(result.result, result.result)} | {command} |")
+    if manifest.publisher:
+        lines.append(f"| publisher listed | {'✅' if manifest.publisherKnown else '⚠️'} "
+                     f"| `{manifest.publisher}` in publisher-names.json |")
     lines += ["", f"Owner `{manifest.owner}`"]
+
+    if manifest.publisher and not manifest.publisherKnown:
+        lines += ["", f"**Publisher** ⚠️ `{manifest.publisher}` is not in `publisher-names.json`. Add "
+                      f"`\"{manifest.publisher}\": \"<slug>\"` to "
+                      "`tools/resourcedocsgen/pkg/publishers/publisher-names.json` in this PR; without it the "
+                      "registry-backend schema fetch fails and falls back to VCS."]
 
     findings = manifest.docLint
     lines.append("")

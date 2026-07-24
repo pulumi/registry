@@ -78,6 +78,21 @@ def preview_command() -> int:
     return 0
 
 
+def _run_url() -> str:
+    server = os.environ.get("GITHUB_SERVER_URL", "https://github.com")
+    repo = os.environ.get("GITHUB_REPOSITORY") or os.environ.get("REPO", "")
+    return f"{server}/{repo}/actions/runs/{os.environ.get('GITHUB_RUN_ID', '')}"
+
+
+def preview_failed() -> int:
+    pr = int(os.environ["PR"])
+    github_api.post_comment(pr, f"❌ The preview build failed. See the [run log]({_run_url()}) for details.")
+    comment_id = os.environ.get("COMMENT_ID")
+    if comment_id:
+        github_api.add_reaction(comment_id, "-1")
+    return 0
+
+
 def _target_pr() -> int | None:
     recorded = Path("pr-number.txt")
     if recorded.exists() and recorded.read_text().strip():

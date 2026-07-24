@@ -41,6 +41,7 @@ jobs:
       - name: Acknowledge the comment and decide whether a preview is needed
         id: ack
         if: github.event_name == 'issue_comment'
+        continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ github.token }}
           REPO: ${{ github.repository }}
@@ -56,3 +57,15 @@ jobs:
           pulumi_stack_name: ${{ vars.PULUMI_STACK_NAME }}
           algolia_app_id: ${{ vars.ALGOLIA_APP_ID }}
           algolia_app_search_key: ${{ vars.ALGOLIA_APP_SEARCH_KEY }}
+
+      - name: Report a build failure on the PR
+        if: failure()
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          PR: ${{ github.event.issue.number || inputs.pr }}
+          COMMENT_ID: ${{ github.event.comment.id }}
+          GITHUB_SERVER_URL: ${{ github.server_url }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_RUN_ID: ${{ github.run_id }}
+        run: python3 scripts/ci/community-package/cli.py preview-failed

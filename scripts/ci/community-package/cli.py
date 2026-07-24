@@ -6,6 +6,7 @@
     report          post the fact-sheet as a sticky PR comment
     check-command   handle a /check comment
     preview-command handle a /preview comment
+    preview-failed  post a build-failure comment for a /preview run
 
 The logic lives in the sibling modules (verify_entry, resourcedocsgen, fact_sheet, comment_commands, ...); stdlib
 only, no third-party dependencies.
@@ -128,6 +129,7 @@ def main(argv: list[str]) -> int:
     sub.add_parser("report").set_defaults(run=lambda _: comment_commands.report())
     sub.add_parser("check-command").set_defaults(run=lambda _: comment_commands.check_command())
     sub.add_parser("preview-command").set_defaults(run=lambda _: comment_commands.preview_command())
+    sub.add_parser("preview-failed").set_defaults(run=lambda _: comment_commands.preview_failed())
 
     args = parser.parse_args(argv)
     return int(args.run(args))

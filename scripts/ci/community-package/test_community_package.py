@@ -126,6 +126,25 @@ class CliNoticeTests(unittest.TestCase):
         self.assertEqual(should_build, "true")
         self.assertEqual(reaction, "+1")
 
+    def test_preview_failure_comment_links_the_run(self) -> None:
+        posted: list[tuple[int, str]] = []
+        real = github_api.post_comment
+
+        def fake(pr: int, body: str) -> None:
+            posted.append((pr, body))
+
+        github_api.post_comment = fake
+        os.environ.update(PR="11661", GITHUB_SERVER_URL="https://github.com",
+                          GITHUB_REPOSITORY="pulumi/registry", GITHUB_RUN_ID="999")
+        os.environ.pop("COMMENT_ID", None)
+        try:
+            comment_commands.preview_failed()
+        finally:
+            github_api.post_comment = real
+        self.assertEqual(posted[0][0], 11661)
+        self.assertIn("actions/runs/999", posted[0][1])
+        self.assertIn("failed", posted[0][1])
+
     def test_package_list_and_publisher_allowlist_are_permitted(self) -> None:
         changed = ["community-packages/package-list.json",
                    "tools/resourcedocsgen/pkg/publishers/publisher-names.json"]

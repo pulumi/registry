@@ -116,6 +116,16 @@ class CliNoticeTests(unittest.TestCase):
     def test_nothing_to_check_sheet(self) -> None:
         self.assertIn("Nothing to check", cli._nothing_to_check_sheet())
 
+    def test_preview_reply_first_party_skips_build(self) -> None:
+        _, comment, should_build = comment_commands._preview_reply(first_party=True)
+        self.assertEqual(should_build, "false")
+        self.assertIn("automatically", comment)
+
+    def test_preview_reply_fork_builds(self) -> None:
+        reaction, _, should_build = comment_commands._preview_reply(first_party=False)
+        self.assertEqual(should_build, "true")
+        self.assertEqual(reaction, "+1")
+
     def test_package_list_and_publisher_allowlist_are_permitted(self) -> None:
         changed = ["community-packages/package-list.json",
                    "tools/resourcedocsgen/pkg/publishers/publisher-names.json"]

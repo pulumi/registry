@@ -51,6 +51,33 @@ def check_command() -> int:
     return 0
 
 
+def _set_output(name: str, value: str) -> None:
+    path = os.environ.get("GITHUB_OUTPUT")
+    if path:
+        with open(path, "a") as fh:
+            fh.write(f"{name}={value}\n")
+
+
+def _preview_reply(first_party: bool) -> tuple[str, str, str]:
+    if first_party:
+        return ("confused",
+                "ℹ️ This PR already builds a preview automatically, because its branch lives in this "
+                "repo. So `/preview` is not needed here; watch for the URL from the `Build and deploy "
+                "preview` check. The command is for fork PRs, whose automatic preview is skipped for "
+                "lack of secrets.",
+                "false")
+    return ("+1", "🔨 Building a preview. The URL will post here when it is ready.", "true")
+
+
+def preview_command() -> int:
+    pr, comment_id = int(os.environ["PR"]), os.environ["COMMENT_ID"]
+    reaction, comment, should_build = _preview_reply(github_api.pull_request_is_first_party(pr))
+    github_api.add_reaction(comment_id, reaction)
+    github_api.post_comment(pr, comment)
+    _set_output("should_build", should_build)
+    return 0
+
+
 def _target_pr() -> int | None:
     recorded = Path("pr-number.txt")
     if recorded.exists() and recorded.read_text().strip():

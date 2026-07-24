@@ -38,7 +38,18 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Acknowledge the comment and decide whether a preview is needed
+        id: ack
+        if: github.event_name == 'issue_comment'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          PR: ${{ github.event.issue.number }}
+          COMMENT_ID: ${{ github.event.comment.id }}
+        run: python3 scripts/ci/community-package/cli.py preview-command
+
       - uses: ./.github/actions/build-and-deploy-preview
+        if: steps.ack.outputs.should_build != 'false'
         with:
           pr: ${{ github.event.issue.number || inputs.pr }}
           github_token: ${{ github.token }}

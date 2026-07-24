@@ -65,6 +65,12 @@ def pull_request_head(pr: int) -> tuple[str, str]:
     return str(pull["user"]["login"]), str(pull["head"]["sha"])
 
 
+def pull_request_is_first_party(pr: int) -> bool:
+    pull = request(f"/repos/{repo()}/pulls/{pr}")
+    head_repo = (pull["head"].get("repo") or {}).get("full_name")
+    return bool(head_repo) and head_repo == pull["base"]["repo"]["full_name"]
+
+
 def open_pull_requests() -> list[dict[str, Any]]:
     return list(request(f"/repos/{repo()}/pulls?state=open&per_page=100"))
 

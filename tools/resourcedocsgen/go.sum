@@ -414,10 +414,10 @@ github.com/pulumi/inflector v0.2.1 h1:bqyiish3tq//vLeLiEstSFE5K7RNjy/ce47ed4QATu
 github.com/pulumi/inflector v0.2.1/go.mod h1:HUFCjcPTz96YtTuUlwG3i3EZG4WlniBvR9bd+iJxCUY=
 github.com/pulumi/providertest v0.7.0 h1:nXydemrnkJfil6sd8AtvO81gJOTzYc1wFfgtco4zWDc=
 github.com/pulumi/providertest v0.7.0/go.mod h1:R7nigJF1sE3yUtNQSozNSfsUl/gK4xIDW0Mxmacl6IY=
-github.com/pulumi/pulumi-dotnet/pulumi-language-dotnet/v3 v3.108.0 h1:TMHfHJWZaUSJ05F51FZZKJ+8UdRWHFZZfzZc42JwXvk=
-github.com/pulumi/pulumi-dotnet/pulumi-language-dotnet/v3 v3.108.0/go.mod h1:NJZ7SYFH3qbMtDKC5diKle3Of5nsE/bvC3/5gdpONfw=
-github.com/pulumi/pulumi-java v1.32.0 h1:QqmDIWvVCZE3nRyzJJzDcqTB7fcNOGCErDkDPO/S7mw=
-github.com/pulumi/pulumi-java v1.32.0/go.mod h1:BU7SuyickBmABNHJbN44a2YkMkhGCn6qmotkRDV74eg=
+github.com/pulumi/pulumi-dotnet/pulumi-language-dotnet/v3 v3.108.1-0.20260724095826-14b4c1b6c3e0 h1:1MM1kUokFucee7O6F4sCn5Q6s1gtFSSrqeygybkiAec=
+github.com/pulumi/pulumi-dotnet/pulumi-language-dotnet/v3 v3.108.1-0.20260724095826-14b4c1b6c3e0/go.mod h1:HfgmYdFb2WmlA1sgGNaWjQy/wdKSXze6xnVnxJJjYTU=
+github.com/pulumi/pulumi-java v1.33.0 h1:rZxzcOTJgBWx6OeeT7N4Mwip1fAqtKvRCB1Sn+r9gJI=
+github.com/pulumi/pulumi-java v1.33.0/go.mod h1:/tqIv+dbepDGuaGtlEOFb83Fgko4uE783VeGN7BVeg8=
 github.com/pulumi/pulumi-terraform-bridge/v3 v3.135.0 h1:HdWLOo8drGbQpu8IsLCy+PWVHT50aSk7eI00vqyM4ns=
 github.com/pulumi/pulumi-terraform-bridge/v3 v3.135.0/go.mod h1:UNZP9DEsX3bj3QIxSTExkFAM+diIx+CeYc44IfnjlCs=
 github.com/pulumi/pulumi-yaml v1.37.1-0.20260724100124-353b12dc9581 h1:zRNHm2XskLvYDDQ4u89q+yqPPCHtBajNoEx1wwYpDUw=

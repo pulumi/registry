@@ -273,21 +273,21 @@ var moduleTestResource = new Example.ModuleTest("moduleTestResource", new()
 
 ```go
 example, err := example.NewmoduleTest(ctx, "moduleTestResource", &example.moduleTestArgs{
-Mod1: &mod1.TypArgs{
-Val: pulumi.String("string"),
-},
-Val: &example.TypArgs{
-Mod1: &mod1.TypArgs{
-Val: pulumi.String("string"),
-},
-Mod2: &mod2.TypArgs{
-Mod1: &mod1.TypArgs{
-Val: pulumi.String("string"),
-},
-Val: pulumi.String("string"),
-},
-Val: pulumi.String("string"),
-},
+	Mod1: &mod1.TypArgs{
+		Val: pulumi.String("string"),
+	},
+	Val: &example.TypArgs{
+		Mod1: &mod1.TypArgs{
+			Val: pulumi.String("string"),
+		},
+		Mod2: &mod2.TypArgs{
+			Mod1: &mod1.TypArgs{
+				Val: pulumi.String("string"),
+			},
+			Val: pulumi.String("string"),
+		},
+		Val: pulumi.String("string"),
+	},
 })
 ```
 

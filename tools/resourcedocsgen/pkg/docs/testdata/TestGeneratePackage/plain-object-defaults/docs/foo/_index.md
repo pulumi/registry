@@ -283,29 +283,29 @@ var fooResource = new Example.Foo("fooResource", new()
 
 ```go
 example, err := example.NewFoo(ctx, "fooResource", &example.FooArgs{
-BackupKubeClientSettings: &example.KubeClientSettingsArgs{
-Burst: pulumi.Int(0),
-Qps: pulumi.Float64(0),
-RecTest: pulumi.Any(kubeClientSettings),
-},
-Argument: "string",
-KubeClientSettings: pulumi.Any(kubeClientSettings),
-Settings: &example.LayeredTypeArgs{
-Other: &example.HelmReleaseSettingsArgs{
-RequiredArg: pulumi.String("string"),
-Driver: pulumi.String("string"),
-PluginsPath: pulumi.String("string"),
-},
-Thinker: pulumi.String("string"),
-Answer: pulumi.Float64(0),
-PlainOther: interface{}{
-RequiredArg: pulumi.String("string"),
-Driver: pulumi.String("string"),
-PluginsPath: pulumi.String("string"),
-},
-Question: pulumi.String("string"),
-Recursive: pulumi.Any(layeredType),
-},
+	BackupKubeClientSettings: &example.KubeClientSettingsArgs{
+		Burst:   pulumi.Int(0),
+		Qps:     pulumi.Float64(0),
+		RecTest: pulumi.Any(kubeClientSettings),
+	},
+	Argument:           "string",
+	KubeClientSettings: pulumi.Any(kubeClientSettings),
+	Settings: &example.LayeredTypeArgs{
+		Other: &example.HelmReleaseSettingsArgs{
+			RequiredArg: pulumi.String("string"),
+			Driver:      pulumi.String("string"),
+			PluginsPath: pulumi.String("string"),
+		},
+		Thinker: pulumi.String("string"),
+		Answer:  pulumi.Float64(0),
+		PlainOther: example.HelmReleaseSettingsArgs{
+			RequiredArg: pulumi.String("string"),
+			Driver:      pulumi.String("string"),
+			PluginsPath: pulumi.String("string"),
+		},
+		Question:  pulumi.String("string"),
+		Recursive: pulumi.Any(layeredType),
+	},
 })
 ```
 

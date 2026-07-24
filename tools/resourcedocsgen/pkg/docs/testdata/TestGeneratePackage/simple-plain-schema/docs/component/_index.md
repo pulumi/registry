@@ -332,7 +332,7 @@ example, err := example.NewComponent(ctx, "componentResource", &example.Componen
 		},
 	},
 	BazMap: map[string]example.FooArgs{
-		"string": &example.FooArgs{
+		"string": example.FooArgs{
 			A: false,
 			C: 0,
 			E: "string",

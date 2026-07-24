@@ -395,6 +395,10 @@
     {
       "repoSlug": "DefangLabs/pulumi-defang",
       "schemaFile": "provider/cmd/pulumi-resource-defang-azure/schema.json"
+    },
+    {
+      "repoSlug": "atensecurity/pulumi-thoth",
+      "schemaFile": "provider/cmd/pulumi-resource-thoth/schema.json"
     }
   ]
 }

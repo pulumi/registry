@@ -116,6 +116,19 @@ class CliNoticeTests(unittest.TestCase):
     def test_nothing_to_check_sheet(self) -> None:
         self.assertIn("Nothing to check", cli._nothing_to_check_sheet())
 
+    def test_package_list_and_publisher_allowlist_are_permitted(self) -> None:
+        changed = ["community-packages/package-list.json",
+                   "tools/resourcedocsgen/pkg/publishers/publisher-names.json"]
+        self.assertEqual(cli._files_outside_allowlist(changed), [])
+
+    def test_generated_files_are_offending(self) -> None:
+        changed = ["community-packages/package-list.json",
+                   "themes/default/content/registry/packages/thoth/_index.md",
+                   "themes/default/data/registry/packages/thoth.yaml"]
+        self.assertEqual(cli._files_outside_allowlist(changed),
+                         ["themes/default/content/registry/packages/thoth/_index.md",
+                          "themes/default/data/registry/packages/thoth.yaml"])
+
 
 class DocLintTests(unittest.TestCase):
     def test_flags_broken_refs_and_ignores_absolute(self) -> None:

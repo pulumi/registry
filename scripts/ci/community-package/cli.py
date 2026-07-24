@@ -32,16 +32,28 @@ def _write_step_summary(text: str) -> None:
             fh.write(text + "\n")
 
 
+# The publisher allowlist is hand-maintained Go source embedded into resourcedocsgen, not
+# generated after merge, so a new publisher's entry has to ride along with the onboarding PR.
+PUBLISHER_NAMES_PATH = Path("tools/resourcedocsgen/pkg/publishers/publisher-names.json")
+ALLOWED_PATHS = {str(package_list.PATH), str(PUBLISHER_NAMES_PATH)}
+
+
+def _files_outside_allowlist(changed: list[str]) -> list[str]:
+    return [f for f in changed if f and f not in ALLOWED_PATHS]
+
+
 def _offending_files(base_ref: str) -> list[str]:
     changed = subprocess.run(["git", "diff", "--name-only", f"{base_ref}...HEAD"],
                              capture_output=True, text=True).stdout
-    return [f for f in changed.splitlines() if f and f != str(package_list.PATH)]
+    return _files_outside_allowlist(changed.splitlines())
 
 
 def _rejection_sheet(offending: list[str]) -> str:
-    lines = [f"## ❌ This PR must change only `{package_list.PATH}`", "",
-             "**Not ready.** The following files do not belong in a community package PR. They are",
-             "generated and committed automatically after merge, so remove them and push again:", ""]
+    lines = ["## ❌ This PR changes files outside the community package allowlist", "",
+             "**Not ready.** A community package PR may only touch the package list "
+             f"(`{package_list.PATH}`) and, when a new publisher needs onboarding, the publisher "
+             f"allowlist (`{PUBLISHER_NAMES_PATH}`). The following files are generated and committed "
+             "automatically after merge, so remove them and push again:", ""]
     lines += [f"- `{f}`" for f in offending]
     return "\n".join(lines)
 

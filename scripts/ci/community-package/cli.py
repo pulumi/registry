@@ -5,6 +5,8 @@
     preview         materialize a fork PR's entry so its site preview can be built
     report          post the fact-sheet as a sticky PR comment
     check-command   handle a /check comment
+    preview-command handle a /preview comment
+    preview-failed  post a build-failure comment for a /preview run
 
 The logic lives in the sibling modules (verify_entry, resourcedocsgen, fact_sheet, comment_commands, ...); stdlib
 only, no third-party dependencies.
@@ -91,10 +93,12 @@ def run_check(args: argparse.Namespace) -> int:
 
 
 def run_preview(args: argparse.Namespace) -> int:
-    _, head_sha = github_api.pull_request_head(args.pr)
-    base = package_list.current()
-    head = github_api.file_content_at(github_api.repo(), str(package_list.PATH), head_sha)
-    package_list.PATH.write_text(head)  # bring the fork's entry into the tree so the site build sees it
+    # Diff against the PR base by SHA, not the on-disk file: a native pull_request run is checked
+    # out at the head, where the on-disk list already contains the new entry.
+    pull = github_api.pull_request(args.pr)
+    base = github_api.file_content_at(github_api.repo(), str(package_list.PATH), pull["base"]["sha"])
+    head = github_api.file_content_at(github_api.repo(), str(package_list.PATH), pull["head"]["sha"])
+    package_list.PATH.write_text(head)  # bring the entry into the tree so the site build sees it
     entries = package_list.added_entries(base, head)
     if not entries:
         print("no added entries to preview")
@@ -124,6 +128,8 @@ def main(argv: list[str]) -> int:
 
     sub.add_parser("report").set_defaults(run=lambda _: comment_commands.report())
     sub.add_parser("check-command").set_defaults(run=lambda _: comment_commands.check_command())
+    sub.add_parser("preview-command").set_defaults(run=lambda _: comment_commands.preview_command())
+    sub.add_parser("preview-failed").set_defaults(run=lambda _: comment_commands.preview_failed())
 
     args = parser.parse_args(argv)
     return int(args.run(args))

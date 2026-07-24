@@ -60,9 +60,19 @@ def file_content_at(slug: str, path: str, ref: str) -> str:
     return base64.b64decode(encoded).decode()
 
 
+def pull_request(pr: int) -> dict[str, Any]:
+    return dict(request(f"/repos/{repo()}/pulls/{pr}"))
+
+
 def pull_request_head(pr: int) -> tuple[str, str]:
-    pull = request(f"/repos/{repo()}/pulls/{pr}")
+    pull = pull_request(pr)
     return str(pull["user"]["login"]), str(pull["head"]["sha"])
+
+
+def pull_request_is_first_party(pr: int) -> bool:
+    pull = pull_request(pr)
+    head_repo = (pull["head"].get("repo") or {}).get("full_name")
+    return bool(head_repo) and head_repo == pull["base"]["repo"]["full_name"]
 
 
 def open_pull_requests() -> list[dict[str, Any]]:

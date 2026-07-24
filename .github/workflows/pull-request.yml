@@ -176,6 +176,7 @@ jobs:
 
       - uses: ./.github/actions/build-and-deploy-preview
         with:
+          pr: ${{ github.event.pull_request.number }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
           pulumi_stack_name: ${{ vars.PULUMI_STACK_NAME }}
           algolia_app_id: ${{ vars.ALGOLIA_APP_ID }}

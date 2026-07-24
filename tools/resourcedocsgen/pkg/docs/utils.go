@@ -18,8 +18,8 @@ import (
 	"strings"
 	"unicode"
 
-	dotnet "github.com/pulumi/pulumi-dotnet/pulumi-language-dotnet/v3/codegen"
 	"github.com/pulumi/pulumi/pkg/v3/codegen"
+	"github.com/pulumi/pulumi/pkg/v3/codegen/cgstrings"
 	go_gen "github.com/pulumi/pulumi/pkg/v3/codegen/go"
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/slice"
@@ -93,7 +93,7 @@ func title(s string, lang language.Language) string {
 	case language.Go:
 		return go_gen.Title(s)
 	case language.CSharp:
-		return dotnet.Title(s)
+		return cgstrings.UppercaseFirst(s)
 	default:
 		//nolint:staticcheck
 		return strings.Title(s)
@@ -176,6 +176,8 @@ func convertMarkdownLanguage(s string) (language.Language, bool) {
 		return language.YAML, true
 	case "java":
 		return language.Java, true
+	case "hcl":
+		return language.HCL, true
 	default:
 		return language.Language{}, false
 	}

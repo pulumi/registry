@@ -23,7 +23,7 @@ Resources are created with functions called constructors. To learn more about de
 
 ### Constructor syntax
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 
@@ -76,6 +76,14 @@ Resources are created with functions called constructors. To learn more about de
 <span class="p"></span><span class="p">options</span><span class="p">: </span><span class="c">#&nbsp;Bag of options to control resource&#39;s behavior.</span>
 <span class="p"></span>
 </code></pre></div></div>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<div class="no-copy"><div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">resource</span> <span class="s2">&#34;example_module_test&#34;</span> <span class="s2">&#34;name&#34;</span> <span class="p">{</span>
+<span class="c">    # resource properties</span>
+<span class="p">}</span></code></pre></div></div>
 </pulumi-choosable>
 </div>
 
@@ -223,7 +231,7 @@ Resources are created with functions called constructors. To learn more about de
 
 The following reference example uses placeholder values for all [input properties](#inputs).
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 
@@ -265,22 +273,52 @@ var moduleTestResource = new Example.ModuleTest("moduleTestResource", new()
 
 ```go
 example, err := example.NewmoduleTest(ctx, "moduleTestResource", &example.moduleTestArgs{
-Mod1: &mod1.TypArgs{
-Val: pulumi.String("string"),
-},
-Val: &example.TypArgs{
-Mod1: &mod1.TypArgs{
-Val: pulumi.String("string"),
-},
-Mod2: &mod2.TypArgs{
-Mod1: &mod1.TypArgs{
-Val: pulumi.String("string"),
-},
-Val: pulumi.String("string"),
-},
-Val: pulumi.String("string"),
-},
+	Mod1: &mod1.TypArgs{
+		Val: pulumi.String("string"),
+	},
+	Val: &example.TypArgs{
+		Mod1: &mod1.TypArgs{
+			Val: pulumi.String("string"),
+		},
+		Mod2: &mod2.TypArgs{
+			Mod1: &mod1.TypArgs{
+				Val: pulumi.String("string"),
+			},
+			Val: pulumi.String("string"),
+		},
+		Val: pulumi.String("string"),
+	},
 })
+```
+
+</pulumi-choosable>
+</div>
+
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+
+```hcl
+resource "example_module_test" "moduleTestResource" {
+  lifecycle {
+    create_before_destroy = true
+  }
+  mod1 = {
+    val = "string"
+  }
+  val = {
+    mod1 = {
+      val = "string"
+    }
+    mod2 = {
+      mod1 = {
+        val = "string"
+      }
+      val = "string"
+    }
+    val = "string"
+  }
+}
 ```
 
 </pulumi-choosable>
@@ -292,15 +330,15 @@ Val: pulumi.String("string"),
 
 ```java
 var moduleTestResource = new ModuleTest("moduleTestResource", ModuleTestArgs.builder()
-    .mod1(TypArgs.builder()
+    .mod1(com.pulumi.example.mod1.inputs.TypArgs.builder()
         .val("string")
         .build())
-    .val(TypArgs.builder()
-        .mod1(TypArgs.builder()
+    .val(com.pulumi.example.inputs.TypArgs.builder()
+        .mod1(com.pulumi.example.mod1.inputs.TypArgs.builder()
             .val("string")
             .build())
-        .mod2(TypArgs.builder()
-            .mod1(TypArgs.builder()
+        .mod2(com.pulumi.example.mod2.inputs.TypArgs.builder()
+            .mod1(com.pulumi.example.mod1.inputs.TypArgs.builder()
                 .val("string")
                 .build())
             .val("string")
@@ -451,6 +489,28 @@ The ModuleTest resource accepts the following [input](/docs/intro/concepts/input
 </div>
 
 <div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-optional"
+            title="Optional">
+        <span id="mod1_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#mod1_hcl" style="color: inherit; text-decoration: inherit;">mod1</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#typ">object</a></span>
+    </dt>
+    <dd></dd><dt class="property-optional"
+            title="Optional">
+        <span id="val_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#val_hcl" style="color: inherit; text-decoration: inherit;">val</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#typ">object</a></span>
+    </dt>
+    <dd></dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
 <pulumi-choosable type="language" values="java">
 <dl class="resources-properties"><dt class="property-optional"
             title="Optional">
@@ -565,6 +625,20 @@ All [input](#inputs) properties are implicitly available as output properties. A
             title="">
         <span id="id_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_go" style="color: inherit; text-decoration: inherit;">Id</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>The provider-assigned unique ID for this managed resource.</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-"
+            title="">
+        <span id="id_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_hcl" style="color: inherit; text-decoration: inherit;">id</a>
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
@@ -697,6 +771,36 @@ A test for namespaces (mod main)
             title="Optional">
         <span id="val_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#val_go" style="color: inherit; text-decoration: inherit;">Val</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd></dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-optional"
+            title="Optional">
+        <span id="mod1_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#mod1_hcl" style="color: inherit; text-decoration: inherit;">mod1</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#typ">object</a></span>
+    </dt>
+    <dd></dd><dt class="property-optional"
+            title="Optional">
+        <span id="mod2_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#mod2_hcl" style="color: inherit; text-decoration: inherit;">mod2</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#typ">object</a></span>
+    </dt>
+    <dd></dd><dt class="property-optional"
+            title="Optional">
+        <span id="val_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#val_hcl" style="color: inherit; text-decoration: inherit;">val</a>
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
@@ -860,6 +964,20 @@ A test for namespaces (mod 1)
 </div>
 
 <div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-optional"
+            title="Optional">
+        <span id="val_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#val_hcl" style="color: inherit; text-decoration: inherit;">val</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd></dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
 <pulumi-choosable type="language" values="java">
 <dl class="resources-properties"><dt class="property-optional"
             title="Optional">
@@ -957,6 +1075,28 @@ A test for namespaces (mod 2)
             title="Optional">
         <span id="val_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#val_go" style="color: inherit; text-decoration: inherit;">Val</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd></dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-optional"
+            title="Optional">
+        <span id="mod1_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#mod1_hcl" style="color: inherit; text-decoration: inherit;">mod1</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#typ">object</a></span>
+    </dt>
+    <dd></dd><dt class="property-optional"
+            title="Optional">
+        <span id="val_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#val_hcl" style="color: inherit; text-decoration: inherit;">val</a>
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">string</span>

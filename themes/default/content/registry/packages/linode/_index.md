@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-linode/v5.11.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-linode/v6.1.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-linode/blob/v5.11.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-linode/blob/v6.1.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Linode Provider
 meta_desc: Provides an overview on how to configure the Pulumi Linode provider.
@@ -14,7 +14,7 @@ The Linode provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/linode`](https://www.npmjs.com/package/@pulumi/linode)
 * Python: [`pulumi-linode`](https://pypi.org/project/pulumi-linode/)
-* Go: [`github.com/pulumi/pulumi-linode/sdk/v5/go/linode`](https://github.com/pulumi/pulumi-linode)
+* Go: [`github.com/pulumi/pulumi-linode/sdk/v6/go/linode`](https://github.com/pulumi/pulumi-linode)
 * .NET: [`Pulumi.Linode`](https://www.nuget.org/packages/Pulumi.Linode)
 * Java: [`com.pulumi/linode`](https://central.sonatype.com/artifact/com.pulumi/linode)
 
@@ -25,7 +25,7 @@ The provider needs to be configured with the proper credentials before it can be
 
 Use the navigation to the left to read about the available functions.
 ## Example Usage
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
@@ -77,7 +77,7 @@ using Linode = Pulumi.Linode;
 return await Deployment.RunAsync(() =>
 {
     // Create a Linode
-    var foobar = new Linode.Index.Instance("foobar");
+    var foobar = new Linode.Instance("foobar");
 
 });
 
@@ -96,7 +96,7 @@ runtime: go
 package main
 
 import (
-	"github.com/pulumi/pulumi-linode/sdk/v5/go/linode"
+	"github.com/pulumi/pulumi-linode/sdk/v6/go/linode"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -144,8 +144,8 @@ import com.pulumi.Context;
 import com.pulumi.Pulumi;
 import com.pulumi.core.Output;
 import com.pulumi.linode.Instance;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;
@@ -161,6 +161,22 @@ public class App {
         var foobar = new Instance("foobar");
 
     }
+}
+```
+
+{{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+pulumi {
+  required_providers {
+    linode = {
+      source = "pulumi/linode"
+    }
+  }
+}
+
+# Create a Linode
+resource "linode_instance" "foobar" {
 }
 ```
 

@@ -10,7 +10,7 @@ native: false
 package_status: public_preview
 publisher: Pulumiverse
 repo_url: https://github.com/pulumiverse/pulumi-matchbox
-schema_file_url: https://raw.githubusercontent.com/pulumiverse/pulumi-matchbox/v0.2.0/provider/cmd/pulumi-resource-matchbox/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumiverse/pulumi-matchbox/v0.3.0/provider/cmd/pulumi-resource-matchbox/schema.json
 title: Matchbox
-updated_on: 1728639911
-version: v0.2.0
+updated_on: 1783518178
+version: v0.3.0

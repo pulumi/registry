@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/byteplus-sdk/pulumi-bytepluscc/v0.0.24/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/byteplus-sdk/pulumi-bytepluscc/v0.0.42/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/byteplus-sdk/pulumi-bytepluscc/blob/v0.0.24/docs/_index.md
+edit_url: https://github.com/byteplus-sdk/pulumi-bytepluscc/blob/v0.0.42/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Bytepluscc Provider
 meta_desc: Provides an overview on how to configure the Pulumi Bytepluscc provider.
@@ -53,7 +53,7 @@ config:
 
 ### Environment variables
 
-You can provide your credentials via `BYTEPLUS_ACCESS_KEY`, `BYTEPLUS_SECRET_KEY` environment variables. The Region can be set using the `BYTEPLUS_REGION` environment variables.
+You can provide your credentials via `BYTEPLUS_ACCESS_KEY`, `BYTEPLUS_SECRET_KEY` environment variables. The Region can be set using the `BYTEPLUS_REGION` environment variables. When using temporary STS credentials, set the session token via `BYTEPLUS_SESSION_TOKEN`.
 
 Usage:
 ```yaml
@@ -66,6 +66,7 @@ runtime:
 ```shell
 $ export BYTEPLUS_ACCESS_KEY="<Your-Access-Key-ID>"
 $ export BYTEPLUS_SECRET_KEY="<Your-Access-Key-Secret>"
+$ export BYTEPLUS_SESSION_TOKEN="<Your-Session-Token>"
 $ export BYTEPLUS_REGION="cn-beijing"
 ```
 
@@ -79,6 +80,7 @@ provider configuration:
 
 - `accessKey` (String) The Access Key for Byteplus Provider. It must be provided, but it can also be sourced from the `BYTEPLUS_ACCESS_KEY` environment variable
 - `secretKey` (String) he Secret Key for Byteplus Provider. It must be provided, but it can also be sourced from the `BYTEPLUS_SECRET_KEY` environment variable
+- `sessionToken` (String) The Session Token for Byteplus Provider. It is required when using temporary STS credentials, and can also be sourced from the `BYTEPLUS_SESSION_TOKEN` environment variable
 - `assumeRole` (Attributes) An `assume_role` block (documented below). Only one `assume_role` block may be in the configuration. (see [below for nested schema](#nestedatt--assume_role))
 - `customerHeaders` (String) CUSTOMER HEADERS for Byteplus Provider. The customer_headers field uses commas (,) to separate multiple headers, and colons (:) to separate each header key from its corresponding value.
 - `disableSsl` (Boolean) Disable SSL for Byteplus Provider

@@ -64,6 +64,7 @@ func markupBlock(block, supportedSnippetLanguages string) string {
 		{"csharp", "<div>\n<pulumi-choosable type=\"language\" values=\"csharp\">\n\n"},
 		{"java", "<div>\n<pulumi-choosable type=\"language\" values=\"java\">\n\n"},
 		{"yaml", "<div>\n<pulumi-choosable type=\"language\" values=\"yaml\">\n\n"},
+		{"hcl", "<div>\n<pulumi-choosable type=\"language\" values=\"hcl\">\n\n"},
 	}
 	const (
 		chooserStartFmt = "<div>\n<pulumi-chooser type=\"language\" options=\"%s\"></pulumi-chooser>\n</div>\n"

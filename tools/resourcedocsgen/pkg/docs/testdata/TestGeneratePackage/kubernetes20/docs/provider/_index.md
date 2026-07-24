@@ -18,14 +18,13 @@ The provider type for the kubernetes package.
 
 
 
-
 ## Create Provider Resource {#create}
 
 Resources are created with functions called constructors. To learn more about declaring and configuring resources, see [Resources](/docs/concepts/resources/).
 
 ### Constructor syntax
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 
@@ -79,6 +78,14 @@ Resources are created with functions called constructors. To learn more about de
 <span class="p"></span><span class="p">options</span><span class="p">: </span><span class="c">#&nbsp;Bag of options to control resource&#39;s behavior.</span>
 <span class="p"></span>
 </code></pre></div></div>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<div class="no-copy"><div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">resource</span> <span class="s2">&#34;pulumi_providers_kubernetes&#34;</span> <span class="s2">&#34;name&#34;</span> <span class="p">{</span>
+<span class="c">    # resource properties</span>
+<span class="p">}</span></code></pre></div></div>
 </pulumi-choosable>
 </div>
 
@@ -313,6 +320,43 @@ The Provider resource accepts the following [input](/docs/intro/concepts/inputs-
 </div>
 
 <div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-optional"
+            title="Optional">
+        <span id="kube_client_settings_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#kube_client_settings_hcl" style="color: inherit; text-decoration: inherit;">kube_<wbr>client_<wbr>settings</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#kubeclientsettings">object</a></span>
+    </dt>
+    <dd>Options for tuning the Kubernetes client used by a Provider.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="kubeconfig_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#kubeconfig_hcl" style="color: inherit; text-decoration: inherit;">kubeconfig</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>The contents of a kubeconfig file or the path to a kubeconfig file. It can also be sourced from the following environment variable: <code>KUBECONFIG</code></dd><dt class="property-optional"
+            title="Optional">
+        <span id="namespace_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#namespace_hcl" style="color: inherit; text-decoration: inherit;">namespace</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd><p>If present, the default namespace to use. This flag is ignored for cluster-scoped resources.</p>
+<p>A namespace can be specified in multiple places, and the precedence is as follows:</p>
+<ol>
+<li><code>.metadata.namespace</code> set on the resource.</li>
+<li>This <code>namespace</code> parameter.</li>
+<li><code>namespace</code> set for the active context in the kubeconfig.</li>
+</ol>
+</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
 <pulumi-choosable type="language" values="java">
 <dl class="resources-properties"><dt class="property-optional"
             title="Optional">
@@ -496,6 +540,20 @@ All [input](#inputs) properties are implicitly available as output properties. A
 </div>
 
 <div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-"
+            title="">
+        <span id="id_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_hcl" style="color: inherit; text-decoration: inherit;">id</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>The provider-assigned unique ID for this managed resource.</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
 <pulumi-choosable type="language" values="java">
 <dl class="resources-properties"><dt class="property-"
             title="">
@@ -590,6 +648,20 @@ Options for tuning the Kubernetes client used by a Provider.
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">int</span>
+    </dt>
+    <dd>Maximum time in seconds to wait before cancelling a HTTP request to the Kubernetes server. Default value is 32. It can also be sourced from the following environment variable: <code>PULUMI_K8S_CLIENT_TIMEOUT</code></dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-optional"
+            title="Optional">
+        <span id="timeout_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#timeout_hcl" style="color: inherit; text-decoration: inherit;">timeout</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">number</span>
     </dt>
     <dd>Maximum time in seconds to wait before cancelling a HTTP request to the Kubernetes server. Default value is 32. It can also be sourced from the following environment variable: <code>PULUMI_K8S_CLIENT_TIMEOUT</code></dd></dl>
 </pulumi-choosable>

@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-dnsimple/v5.1.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-dnsimple/v5.2.1/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-dnsimple/blob/v5.1.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-dnsimple/blob/v5.2.1/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: DNSimple Provider
 meta_desc: Provides an overview on how to configure the Pulumi DNSimple provider.
@@ -56,7 +56,7 @@ See the Configuration Reference section below for all configuration options.
 
 Configure the provider:
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
@@ -210,8 +210,8 @@ package generated_program;
 import com.pulumi.Context;
 import com.pulumi.Pulumi;
 import com.pulumi.core.Output;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;
@@ -231,13 +231,26 @@ public class App {
 ```
 
 {{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+variable "dnsimpleToken" {
+  type        = string
+  description = "DNSimple API Token"
+}
+variable "dnsimpleAccount" {
+  type        = string
+  description = "DNSimple Account ID"
+}
+```
+
+{{% /choosable %}}
 {{< /chooser >}}
 
 Now use the available resources to perform actions like managing DNS records or registering domains.
 
 To manage your DNS records:
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
@@ -296,13 +309,13 @@ using DNSimple = Pulumi.DNSimple;
 return await Deployment.RunAsync(() =>
 {
     // Create a zone
-    var example = new DNSimple.Index.Zone("example", new()
+    var example = new DNSimple.Zone("example", new()
     {
         Name = "example.com",
     });
 
     // Create DNS records
-    var www = new DNSimple.Index.ZoneRecord("www", new()
+    var www = new DNSimple.ZoneRecord("www", new()
     {
         ZoneName = example.Name,
         Name = "www",
@@ -311,7 +324,7 @@ return await Deployment.RunAsync(() =>
         Ttl = 3600,
     });
 
-    var apex = new DNSimple.Index.ZoneRecord("apex", new()
+    var apex = new DNSimple.ZoneRecord("apex", new()
     {
         ZoneName = example.Name,
         Name = "",
@@ -409,8 +422,8 @@ import com.pulumi.dnsimple.Zone;
 import com.pulumi.dnsimple.ZoneArgs;
 import com.pulumi.dnsimple.ZoneRecord;
 import com.pulumi.dnsimple.ZoneRecordArgs;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;
@@ -449,11 +462,43 @@ public class App {
 ```
 
 {{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+pulumi {
+  required_providers {
+    dnsimple = {
+      source = "pulumi/dnsimple"
+    }
+  }
+}
+
+# Create a zone
+resource "dnsimple_zone" "example" {
+  name = "example.com"
+}
+# Create DNS records
+resource "dnsimple_zonerecord" "www" {
+  zone_name = dnsimple_zone.example.name
+  name      = "www"
+  value     = "192.0.2.1"
+  type      = "A"
+  ttl       = 3600
+}
+resource "dnsimple_zonerecord" "apex" {
+  zone_name = dnsimple_zone.example.name
+  name      = ""
+  value     = "192.0.2.1"
+  type      = "A"
+  ttl       = 3600
+}
+```
+
+{{% /choosable %}}
 {{< /chooser >}}
 
 To register a domain:
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
@@ -476,7 +521,7 @@ const registrant = new dnsimple.Contact("registrant", {
 // Register a domain
 const exampleCom = new dnsimple.RegisteredDomain("example_com", {
     name: "example.com",
-    contactId: registrant.id,
+    contactId: registrant.id.apply(x =>Number(x)),
     autoRenewEnabled: true,
     whoisPrivacyEnabled: true,
     transferLockEnabled: true,
@@ -505,7 +550,7 @@ registrant = dnsimple.Contact("registrant",
 # Register a domain
 example_com = dnsimple.RegisteredDomain("example_com",
     name="example.com",
-    contact_id=registrant.id,
+    contact_id=registrant.id.apply(lambda x: int(x)),
     auto_renew_enabled=True,
     whois_privacy_enabled=True,
     transfer_lock_enabled=True)
@@ -522,7 +567,7 @@ using DNSimple = Pulumi.DNSimple;
 return await Deployment.RunAsync(() =>
 {
     // Create a contact for domain registration
-    var registrant = new DNSimple.Index.Contact("registrant", new()
+    var registrant = new DNSimple.Contact("registrant", new()
     {
         Label = "Main Contact",
         FirstName = "John",
@@ -538,7 +583,7 @@ return await Deployment.RunAsync(() =>
     });
 
     // Register a domain
-    var exampleCom = new DNSimple.Index.RegisteredDomain("example_com", new()
+    var exampleCom = new DNSimple.RegisteredDomain("example_com", new()
     {
         Name = "example.com",
         ContactId = registrant.Id,
@@ -639,8 +684,8 @@ import com.pulumi.dnsimple.Contact;
 import com.pulumi.dnsimple.ContactArgs;
 import com.pulumi.dnsimple.RegisteredDomain;
 import com.pulumi.dnsimple.RegisteredDomainArgs;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;
@@ -677,6 +722,41 @@ public class App {
             .build());
 
     }
+}
+```
+
+{{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+pulumi {
+  required_providers {
+    dnsimple = {
+      source = "pulumi/dnsimple"
+    }
+  }
+}
+
+# Create a contact for domain registration
+resource "dnsimple_contact" "registrant" {
+  label             = "Main Contact"
+  first_name        = "John"
+  last_name         = "Doe"
+  organization_name = "Example Inc"
+  address1          = "123 Main Street"
+  city              = "San Francisco"
+  state_province    = "California"
+  postal_code       = "94105"
+  country           = "US"
+  phone             = "+1.4155551234"
+  email             = "john@example.com"
+}
+# Register a domain
+resource "dnsimple_registereddomain" "example_com" {
+  name                  = "example.com"
+  contact_id            = dnsimple_contact.registrant.id
+  auto_renew_enabled    = true
+  whois_privacy_enabled = true
+  transfer_lock_enabled = true
 }
 ```
 

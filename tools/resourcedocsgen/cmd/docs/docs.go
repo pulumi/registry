@@ -15,8 +15,12 @@
 package docs
 
 import (
+	"context"
 	"encoding/json"
+	stderrors "errors"
 	"fmt"
+	"io"
+	"log/slog"
 	"os"
 	"strings"
 
@@ -27,7 +31,13 @@ import (
 	"github.com/pulumi/registry/tools/resourcedocsgen/pkg/docs"
 	"github.com/spf13/cobra"
 
+	"github.com/pulumi/pulumi/pkg/v3/codegen/convert"
 	pschema "github.com/pulumi/pulumi/pkg/v3/codegen/schema"
+	pkghost "github.com/pulumi/pulumi/pkg/v3/host"
+	"github.com/pulumi/pulumi/pkg/v3/resource/plugin"
+	pkgWorkspace "github.com/pulumi/pulumi/pkg/v3/workspace"
+	"github.com/pulumi/pulumi/sdk/v3/go/common/diag"
+	"github.com/pulumi/pulumi/sdk/v3/go/common/diag/colors"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/util/contract"
 )
 
@@ -45,21 +55,141 @@ func getPulumiPackageFromSchema(
 		return nil, nil, errors.Wrapf(err, "deleting provider directory %v", docsOutDir)
 	}
 
-	pulPkg, err := pschema.ImportSpec(mainSpec, nil, pschema.ValidationOptions{
-		AllowDanglingReferences: true,
-	})
+	loader, closeLoader, err := newSchemaLoader(context.Background())
 	if err != nil {
-		if dErr, ok := err.(hcl.Diagnostics); ok {
-			writer := hcl.NewDiagnosticTextWriter(os.Stderr, nil, 80, true)
-			wErr := writer.WriteDiagnostics(dErr)
-			if wErr != nil {
-				err = wErr
+		return nil, nil, errors.Wrap(err, "creating schema loader")
+	}
+	defer func() { contract.IgnoreError(closeLoader()) }()
+
+	pulPkg, err := bindSpec(mainSpec, loader)
+	if err != nil {
+		if pkg, ok := bindGoogleNativeToleratingCycles(mainSpec, loader, err); ok {
+			pulPkg = pkg
+		} else {
+			if dErr, ok := err.(hcl.Diagnostics); ok {
+				writer := hcl.NewDiagnosticTextWriter(os.Stderr, nil, 80, true)
+				wErr := writer.WriteDiagnostics(dErr)
+				if wErr != nil {
+					err = wErr
+				}
 			}
+			return nil, nil, fmt.Errorf("importing package spec: %w", err)
 		}
-		return nil, nil, fmt.Errorf("importing package spec: %w", err)
 	}
 
 	return pulPkg, docs.NewContext(tool, pulPkg), nil
+}
+
+// newSchemaLoader builds the plugin loader that pulumi's schema binder uses to
+// resolve referenced provider schemas, constructing it ourselves rather than
+// relying on the binder's nil-loader fallback so that we control the diagnostic
+// sinks (discarding, but non-nil) and own the plugin host/context lifecycle. As
+// of pulumi v3.253.0 the loader, mapper, and resolver service factories are
+// supplied to the host (pkghost.New) rather than to plugin.NewContext; we pass
+// the loader and mapper factories and leave the package resolver unset (nil),
+// since schema loading downloads referenced providers via plugins and never
+// exercises the registry resolver service. The returned close function releases
+// the plugin context and host once binding is done.
+func newSchemaLoader(ctx context.Context) (pschema.ReferenceLoader, func() error, error) {
+	sink := diag.DefaultSink(io.Discard, io.Discard, diag.FormatOptions{Color: colors.Never})
+	host, err := pkghost.New(ctx, sink, sink, nil, pkgWorkspace.EnsureLanguageInstalled,
+		pschema.NewLoaderServerFromContext, convert.NewMapperServerFromContext, nil)
+	if err != nil {
+		return nil, nil, err
+	}
+	cwd, err := os.Getwd()
+	if err != nil {
+		return nil, nil, stderrors.Join(err, host.Close())
+	}
+	pctx, err := plugin.NewContext(ctx, sink, sink, host, nil, cwd, nil, false, nil)
+	if err != nil {
+		return nil, nil, stderrors.Join(err, host.Close())
+	}
+	return pschema.NewPluginLoader(pctx), func() error {
+		return stderrors.Join(pctx.Close(), host.Close())
+	}, nil
+}
+
+// bindSpec mirrors pschema.ImportSpec's contract (returns the binding
+// diagnostics as the error when they contain errors) while binding with an
+// explicit loader, which ImportSpec does not accept. Unlike ImportSpec,
+// pschema.BindSpec also validates the spec against the package metaschema.
+func bindSpec(spec pschema.PackageSpec, loader pschema.Loader) (*pschema.Package, error) {
+	pkg, diags, err := pschema.BindSpec(spec, loader, pschema.ValidationOptions{
+		AllowDanglingReferences: true,
+	})
+	if err != nil {
+		return nil, err
+	}
+	if diags.HasErrors() {
+		return nil, diags
+	}
+	return pkg, nil
+}
+
+// requiredCycleErrSummary is the fragment pulumi's schema binder puts in the
+// diagnostic summary for an unsatisfiable required-property cycle.
+const requiredCycleErrSummary = "unsatisfiable required-property cycle"
+
+// bindGoogleNativeToleratingCycles is a targeted workaround for the google-native
+// provider. As of pulumi/pulumi v3.237+ the schema binder rejects schemas with
+// "unsatisfiable required-property cycles" — a required property whose type
+// transitively requires itself, describing a value of infinite size (e.g.
+// google-native's bigquery/v2:StandardSqlDataTypeResponse referencing itself).
+// This is correct for SDK generation but fires even in ImportSpec, which docs
+// generation uses to load already-published schemas. google-native is archived
+// (last released v0.32.0 in 2023), so its schema will never be fixed upstream
+// (see pulumi/pulumi#22890 and pulumi/pulumi-google-native#1246).
+//
+// Such cycles only prevent *constructing* a value; they are harmless for
+// documenting types. So for google-native specifically — and only when every
+// binding error is one of these cycles — we re-bind with BindSpec, which (unlike
+// ImportSpec) returns a usable package alongside the non-fatal diagnostics, and
+// continue generating docs. Any other error, or any other package, is left to
+// fail as before so we never silently mask real schema problems.
+func bindGoogleNativeToleratingCycles(
+	spec pschema.PackageSpec, loader pschema.Loader, importErr error,
+) (*pschema.Package, bool) {
+	if spec.Name != "google-native" {
+		return nil, false
+	}
+	if !onlyRequiredCycleErrors(importErr) {
+		return nil, false
+	}
+
+	pkg, diags, err := pschema.BindSpec(spec, loader, pschema.ValidationOptions{
+		AllowDanglingReferences: true,
+	})
+	// BindSpec runs metaschema validation that ImportSpec skips; bail out if it
+	// surfaces anything beyond the expected required-property cycles.
+	if err != nil || pkg == nil || !onlyRequiredCycleErrors(diags) {
+		return nil, false
+	}
+
+	slog.Warn("Tolerating unsatisfiable required-property cycles in schema; generating docs anyway",
+		"package", spec.Name)
+	return pkg, true
+}
+
+// onlyRequiredCycleErrors reports whether every error-severity diagnostic in the
+// given value (an error returned by ImportSpec or an hcl.Diagnostics) is an
+// unsatisfiable required-property cycle.
+func onlyRequiredCycleErrors(v any) bool {
+	diags, ok := v.(hcl.Diagnostics)
+	if !ok {
+		return false
+	}
+	sawError := false
+	for _, d := range diags {
+		if d.Severity != hcl.DiagError {
+			continue
+		}
+		sawError = true
+		if !strings.Contains(d.Summary, requiredCycleErrSummary) {
+			return false
+		}
+	}
+	return sawError
 }
 
 func ResourceDocsCmd() *cobra.Command {

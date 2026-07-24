@@ -20,8 +20,8 @@ jobs:
     steps:
       - name: Fetch secrets from ESC
         id: esc-secrets
-        uses: pulumi/esc-action@6cf9520e68354d86f81c455e8d43eabd58f5c9f5 # v1
-      - uses: actions/checkout@v6
+        uses: pulumi/esc-action@3af4859af8a73a362fb599b944124097d4bb80c5 # v3
+      - uses: actions/checkout@v7
         with:
           # Full history needed for registry-mirror-discover to find package versions
           fetch-depth: 0
@@ -69,7 +69,7 @@ jobs:
         run: git config --global url."https://${{ steps.esc-secrets.outputs.PULUMI_BOT_TOKEN }}:x-oauth-basic@github.com/pulumi/registry-mirror-tools".insteadOf "https://github.com/pulumi/registry-mirror-tools"
 
       - name: Cache provider schemas and generated docs
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: |
             .cache/schemas
@@ -83,7 +83,7 @@ jobs:
         run: echo "hash=$(grep 'REGISTRY_MIRROR_TOOLS_COMMIT=' scripts/generate-versioned-docs.sh | cut -d'"' -f2)" >> "$GITHUB_OUTPUT"
 
       - name: Cache registry-mirror-discover binary
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: bin/registry-mirror-discover
           key: registry-mirror-discover-${{ steps.mirror-version.outputs.hash }}
@@ -116,7 +116,7 @@ jobs:
     steps:
       - name: Fetch secrets from ESC
         id: esc-secrets
-        uses: pulumi/esc-action@6cf9520e68354d86f81c455e8d43eabd58f5c9f5 # v1
+        uses: pulumi/esc-action@3af4859af8a73a362fb599b944124097d4bb80c5 # v3
       - name: Slack Notification
         uses: docker://sholung/action-slack-notify:v2.3.0
         env:

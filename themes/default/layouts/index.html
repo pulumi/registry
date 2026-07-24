@@ -1,56 +1,13 @@
-{{ define "hero" }}
-    <header class="home-page-hero shadow">
-        <div class="home-page-hero-background">
-            <div class="flex">
-                <div class="w-full p-6 home-page-hero-text lg:pt-14">
-                    <h1 class="flex flex-col items-center">
-                        <span class="inline-block mb-3 text-center" data-text="{{ index (.Params.hero.title) 0 }}"><span class="rainbow-text">{{ index (.Params.hero.title) 0 }}</span></span>
-                        <span class="inline-block text-center" data-text="{{ index (.Params.hero.title) 1 }}">{{ index (.Params.hero.title) 1 }}</span>
-                    </h1>
-
-                    <p class="mt-6 text-center leading-7">{{ .Params.hero.description | markdownify }}</p>
-
-                    <div class="relative z-10 overlay-middle mt-8 flex text-center justify-center items-center flex-col mx-auto lg:mx-0 md:flex-row">
-                        <a class="home-hero-btn-primary mr-0 md:mr-4 mb-3 md:mb-0" href="{{ .Params.hero.cta_link }}">{{ .Params.hero.cta_text }}</a>
-                        <a class="btn-secondary home-hero-btn-secondary rounded-full cursor-pointer" href="{{ .Params.hero.secondary_cta_link }}">{{ .Params.hero.secondary_cta_text }}</a>
-                    </div>
-                </div>
-
-                <!--<div class="hidden lg:block lg:w-1/2 p-6 flex justify-center align-center">
-                    <img src="/images/home/dancing-music.svg" />
-                </div>-->
-            </div>
-        </div>
-    </header>
-{{ end }}
-
-{{ define "main" }}
-    <!--
-        NOTE: This homepage is NOT rendered in production. The registry repository
-        combines with the docs repository at pulumi.com, and the docs repo provides
-        the actual homepage. This template only exists for local development.
-    -->
-
-    <!-- CTAs -->
-    <section class="container mx-auto my-24 px-6">
-        <div class="flex justify-center">
-            <div class="card ready-cta w-full rounded-xl p-1 gradient">
-                <div class="flex justify-center rounded-xl bg-purple-100">
-                    <div class="p-8 md:p-16 lg:pt-28 lg:pb-28 inline-flex flex-col items-center">
-                        <h2 class="mb-12 text-center">Ready to try Pulumi?</h2>
-                        <div class="flex flex-col lg:flex-row self-stretch items-center lg:justify-between">
-                            <div class="flex flex-col justify-center align-center text-center lg:ml-14 lg:mr-4 mb-14 lg:mb-0 z-0">
-                                <a href="/docs/get-started/" class="btn-primary py-3">Get Started</a>
-                                <p class="text-xs pt-1 my-0">Follow the step-by-step guide</p>
-                            </div>
-                            <div class="flex flex-col justify-center align-center text-center lg:mr-14 lg:ml-4">
-                                <a href="docs/install/" class="btn-secondary py-3 px-6 whitespace-nowrap">Download Open Source</a>
-                                <p class="text-xs pt-1 my-0">Download our open source SDK</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-{{ end }}
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="refresh" content="0; url=/registry/" />
+        <meta name="robots" content="noindex" />
+        <title>Pulumi Registry</title>
+        <link rel="canonical" href="/registry/" />
+    </head>
+    <body>
+        <p>This page has moved. <a href="/registry/">Go to the Pulumi Registry</a>.</p>
+    </body>
+</html>

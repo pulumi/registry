@@ -23,7 +23,7 @@ Resources are created with functions called constructors. To learn more about de
 
 ### Constructor syntax
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 
@@ -76,6 +76,14 @@ Resources are created with functions called constructors. To learn more about de
 <span class="p"></span><span class="p">options</span><span class="p">: </span><span class="c">#&nbsp;Bag of options to control resource&#39;s behavior.</span>
 <span class="p"></span>
 </code></pre></div></div>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<div class="no-copy"><div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">resource</span> <span class="s2">&#34;foo_component&#34;</span> <span class="s2">&#34;name&#34;</span> <span class="p">{</span>
+<span class="c">    # resource properties</span>
+<span class="p">}</span></code></pre></div></div>
 </pulumi-choosable>
 </div>
 
@@ -223,7 +231,7 @@ Resources are created with functions called constructors. To learn more about de
 
 The following reference example uses placeholder values for all [input properties](#inputs).
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 
@@ -4098,6 +4106,1455 @@ example, err := foo.NewComponent(ctx, "componentResource", &foo.ComponentArgs{
 		},
 	},
 })
+```
+
+</pulumi-choosable>
+</div>
+
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+
+```hcl
+resource "foo_component" "componentResource" {
+  lifecycle {
+    create_before_destroy = true
+  }
+  eni_config = {
+    "string" = {
+      security_groups = ["string"]
+      subnet          = "string"
+    }
+  }
+  pod = {
+    api_version = "v1"
+    kind        = "Pod"
+    metadata = {
+      annotations = {
+        "string" = "string"
+      }
+      cluster_name                  = "string"
+      creation_timestamp            = "string"
+      deletion_grace_period_seconds = 0
+      deletion_timestamp            = "string"
+      finalizers                    = ["string"]
+      generate_name                 = "string"
+      generation                    = 0
+      labels = {
+        "string" = "string"
+      }
+      managed_fields = [{
+        api_version = "string"
+        fields_type = "string"
+        fields_v1   = "{}"
+        manager     = "string"
+        operation   = "string"
+        subresource = "string"
+        time        = "string"
+      }]
+      name      = "string"
+      namespace = "string"
+      owner_references = [{
+        api_version          = "string"
+        kind                 = "string"
+        name                 = "string"
+        uid                  = "string"
+        block_owner_deletion = false
+        controller           = false
+      }]
+      resource_version = "string"
+      self_link        = "string"
+      uid              = "string"
+    }
+    spec = {
+      containers = [{
+        name = "string"
+        readiness_probe = {
+          exec = {
+            command = ["string"]
+          }
+          failure_threshold = 0
+          http_get = {
+            port = 0
+            host = "string"
+            http_headers = [{
+              name  = "string"
+              value = "string"
+            }]
+            path   = "string"
+            scheme = "string"
+          }
+          initial_delay_seconds = 0
+          period_seconds        = 0
+          success_threshold     = 0
+          tcp_socket = {
+            port = 0
+            host = "string"
+          }
+          termination_grace_period_seconds = 0
+          timeout_seconds                  = 0
+        }
+        security_context = {
+          allow_privilege_escalation = false
+          capabilities = {
+            add  = ["string"]
+            drop = ["string"]
+          }
+          privileged                = false
+          proc_mount                = "string"
+          read_only_root_filesystem = false
+          run_as_group              = 0
+          run_as_non_root           = false
+          run_as_user               = 0
+          se_linux_options = {
+            level = "string"
+            role  = "string"
+            type  = "string"
+            user  = "string"
+          }
+          seccomp_profile = {
+            type              = "string"
+            localhost_profile = "string"
+          }
+          windows_options = {
+            gmsa_credential_spec      = "string"
+            gmsa_credential_spec_name = "string"
+            host_process              = false
+            run_as_user_name          = "string"
+          }
+        }
+        env_from = [{
+          config_map_ref = {
+            name     = "string"
+            optional = false
+          }
+          prefix = "string"
+          secret_ref = {
+            name     = "string"
+            optional = false
+          }
+        }]
+        image             = "string"
+        image_pull_policy = "string"
+        lifecycle = {
+          post_start = {
+            exec = {
+              command = ["string"]
+            }
+            http_get = {
+              port = 0
+              host = "string"
+              http_headers = [{
+                name  = "string"
+                value = "string"
+              }]
+              path   = "string"
+              scheme = "string"
+            }
+            tcp_socket = {
+              port = 0
+              host = "string"
+            }
+          }
+          pre_stop = {
+            exec = {
+              command = ["string"]
+            }
+            http_get = {
+              port = 0
+              host = "string"
+              http_headers = [{
+                name  = "string"
+                value = "string"
+              }]
+              path   = "string"
+              scheme = "string"
+            }
+            tcp_socket = {
+              port = 0
+              host = "string"
+            }
+          }
+        }
+        liveness_probe = {
+          exec = {
+            command = ["string"]
+          }
+          failure_threshold = 0
+          http_get = {
+            port = 0
+            host = "string"
+            http_headers = [{
+              name  = "string"
+              value = "string"
+            }]
+            path   = "string"
+            scheme = "string"
+          }
+          initial_delay_seconds = 0
+          period_seconds        = 0
+          success_threshold     = 0
+          tcp_socket = {
+            port = 0
+            host = "string"
+          }
+          termination_grace_period_seconds = 0
+          timeout_seconds                  = 0
+        }
+        command = ["string"]
+        ports = [{
+          container_port = 0
+          host_ip        = "string"
+          host_port      = 0
+          name           = "string"
+          protocol       = "string"
+        }]
+        args = ["string"]
+        env = [{
+          name  = "string"
+          value = "string"
+          value_from = {
+            config_map_key_ref = {
+              key      = "string"
+              name     = "string"
+              optional = false
+            }
+            field_ref = {
+              field_path  = "string"
+              api_version = "string"
+            }
+            resource_field_ref = {
+              resource       = "string"
+              container_name = "string"
+              divisor        = "string"
+            }
+            secret_key_ref = {
+              key      = "string"
+              name     = "string"
+              optional = false
+            }
+          }
+        }]
+        startup_probe = {
+          exec = {
+            command = ["string"]
+          }
+          failure_threshold = 0
+          http_get = {
+            port = 0
+            host = "string"
+            http_headers = [{
+              name  = "string"
+              value = "string"
+            }]
+            path   = "string"
+            scheme = "string"
+          }
+          initial_delay_seconds = 0
+          period_seconds        = 0
+          success_threshold     = 0
+          tcp_socket = {
+            port = 0
+            host = "string"
+          }
+          termination_grace_period_seconds = 0
+          timeout_seconds                  = 0
+        }
+        resources = {
+          limits = {
+            "string" = "string"
+          }
+          requests = {
+            "string" = "string"
+          }
+        }
+        stdin                      = false
+        stdin_once                 = false
+        termination_message_path   = "string"
+        termination_message_policy = "string"
+        tty                        = false
+        volume_devices = [{
+          device_path = "string"
+          name        = "string"
+        }]
+        volume_mounts = [{
+          mount_path        = "string"
+          name              = "string"
+          mount_propagation = "string"
+          read_only         = false
+          sub_path          = "string"
+          sub_path_expr     = "string"
+        }]
+        working_dir = "string"
+      }]
+      node_selector = {
+        "string" = "string"
+      }
+      preemption_policy = "string"
+      affinity = {
+        node_affinity = {
+          preferred_during_scheduling_ignored_during_execution = [{
+            preference = {
+              match_expressions = [{
+                key      = "string"
+                operator = "string"
+                values   = ["string"]
+              }]
+              match_fields = [{
+                key      = "string"
+                operator = "string"
+                values   = ["string"]
+              }]
+            }
+            weight = 0
+          }]
+          required_during_scheduling_ignored_during_execution = {
+            node_selector_terms = [{
+              match_expressions = [{
+                key      = "string"
+                operator = "string"
+                values   = ["string"]
+              }]
+              match_fields = [{
+                key      = "string"
+                operator = "string"
+                values   = ["string"]
+              }]
+            }]
+          }
+        }
+        pod_affinity = {
+          preferred_during_scheduling_ignored_during_execution = [{
+            pod_affinity_term = {
+              topology_key = "string"
+              label_selector = {
+                match_expressions = [{
+                  key      = "string"
+                  operator = "string"
+                  values   = ["string"]
+                }]
+                match_labels = {
+                  "string" = "string"
+                }
+              }
+              namespace_selector = {
+                match_expressions = [{
+                  key      = "string"
+                  operator = "string"
+                  values   = ["string"]
+                }]
+                match_labels = {
+                  "string" = "string"
+                }
+              }
+              namespaces = ["string"]
+            }
+            weight = 0
+          }]
+          required_during_scheduling_ignored_during_execution = [{
+            topology_key = "string"
+            label_selector = {
+              match_expressions = [{
+                key      = "string"
+                operator = "string"
+                values   = ["string"]
+              }]
+              match_labels = {
+                "string" = "string"
+              }
+            }
+            namespace_selector = {
+              match_expressions = [{
+                key      = "string"
+                operator = "string"
+                values   = ["string"]
+              }]
+              match_labels = {
+                "string" = "string"
+              }
+            }
+            namespaces = ["string"]
+          }]
+        }
+        pod_anti_affinity = {
+          preferred_during_scheduling_ignored_during_execution = [{
+            pod_affinity_term = {
+              topology_key = "string"
+              label_selector = {
+                match_expressions = [{
+                  key      = "string"
+                  operator = "string"
+                  values   = ["string"]
+                }]
+                match_labels = {
+                  "string" = "string"
+                }
+              }
+              namespace_selector = {
+                match_expressions = [{
+                  key      = "string"
+                  operator = "string"
+                  values   = ["string"]
+                }]
+                match_labels = {
+                  "string" = "string"
+                }
+              }
+              namespaces = ["string"]
+            }
+            weight = 0
+          }]
+          required_during_scheduling_ignored_during_execution = [{
+            topology_key = "string"
+            label_selector = {
+              match_expressions = [{
+                key      = "string"
+                operator = "string"
+                values   = ["string"]
+              }]
+              match_labels = {
+                "string" = "string"
+              }
+            }
+            namespace_selector = {
+              match_expressions = [{
+                key      = "string"
+                operator = "string"
+                values   = ["string"]
+              }]
+              match_labels = {
+                "string" = "string"
+              }
+            }
+            namespaces = ["string"]
+          }]
+        }
+      }
+      dns_config = {
+        nameservers = ["string"]
+        options = [{
+          name  = "string"
+          value = "string"
+        }]
+        searches = ["string"]
+      }
+      dns_policy           = "string"
+      enable_service_links = false
+      ephemeral_containers = [{
+        name = "string"
+        readiness_probe = {
+          exec = {
+            command = ["string"]
+          }
+          failure_threshold = 0
+          http_get = {
+            port = 0
+            host = "string"
+            http_headers = [{
+              name  = "string"
+              value = "string"
+            }]
+            path   = "string"
+            scheme = "string"
+          }
+          initial_delay_seconds = 0
+          period_seconds        = 0
+          success_threshold     = 0
+          tcp_socket = {
+            port = 0
+            host = "string"
+          }
+          termination_grace_period_seconds = 0
+          timeout_seconds                  = 0
+        }
+        security_context = {
+          allow_privilege_escalation = false
+          capabilities = {
+            add  = ["string"]
+            drop = ["string"]
+          }
+          privileged                = false
+          proc_mount                = "string"
+          read_only_root_filesystem = false
+          run_as_group              = 0
+          run_as_non_root           = false
+          run_as_user               = 0
+          se_linux_options = {
+            level = "string"
+            role  = "string"
+            type  = "string"
+            user  = "string"
+          }
+          seccomp_profile = {
+            type              = "string"
+            localhost_profile = "string"
+          }
+          windows_options = {
+            gmsa_credential_spec      = "string"
+            gmsa_credential_spec_name = "string"
+            host_process              = false
+            run_as_user_name          = "string"
+          }
+        }
+        env_from = [{
+          config_map_ref = {
+            name     = "string"
+            optional = false
+          }
+          prefix = "string"
+          secret_ref = {
+            name     = "string"
+            optional = false
+          }
+        }]
+        image             = "string"
+        image_pull_policy = "string"
+        lifecycle = {
+          post_start = {
+            exec = {
+              command = ["string"]
+            }
+            http_get = {
+              port = 0
+              host = "string"
+              http_headers = [{
+                name  = "string"
+                value = "string"
+              }]
+              path   = "string"
+              scheme = "string"
+            }
+            tcp_socket = {
+              port = 0
+              host = "string"
+            }
+          }
+          pre_stop = {
+            exec = {
+              command = ["string"]
+            }
+            http_get = {
+              port = 0
+              host = "string"
+              http_headers = [{
+                name  = "string"
+                value = "string"
+              }]
+              path   = "string"
+              scheme = "string"
+            }
+            tcp_socket = {
+              port = 0
+              host = "string"
+            }
+          }
+        }
+        liveness_probe = {
+          exec = {
+            command = ["string"]
+          }
+          failure_threshold = 0
+          http_get = {
+            port = 0
+            host = "string"
+            http_headers = [{
+              name  = "string"
+              value = "string"
+            }]
+            path   = "string"
+            scheme = "string"
+          }
+          initial_delay_seconds = 0
+          period_seconds        = 0
+          success_threshold     = 0
+          tcp_socket = {
+            port = 0
+            host = "string"
+          }
+          termination_grace_period_seconds = 0
+          timeout_seconds                  = 0
+        }
+        command = ["string"]
+        ports = [{
+          container_port = 0
+          host_ip        = "string"
+          host_port      = 0
+          name           = "string"
+          protocol       = "string"
+        }]
+        startup_probe = {
+          exec = {
+            command = ["string"]
+          }
+          failure_threshold = 0
+          http_get = {
+            port = 0
+            host = "string"
+            http_headers = [{
+              name  = "string"
+              value = "string"
+            }]
+            path   = "string"
+            scheme = "string"
+          }
+          initial_delay_seconds = 0
+          period_seconds        = 0
+          success_threshold     = 0
+          tcp_socket = {
+            port = 0
+            host = "string"
+          }
+          termination_grace_period_seconds = 0
+          timeout_seconds                  = 0
+        }
+        env = [{
+          name  = "string"
+          value = "string"
+          value_from = {
+            config_map_key_ref = {
+              key      = "string"
+              name     = "string"
+              optional = false
+            }
+            field_ref = {
+              field_path  = "string"
+              api_version = "string"
+            }
+            resource_field_ref = {
+              resource       = "string"
+              container_name = "string"
+              divisor        = "string"
+            }
+            secret_key_ref = {
+              key      = "string"
+              name     = "string"
+              optional = false
+            }
+          }
+        }]
+        resources = {
+          limits = {
+            "string" = "string"
+          }
+          requests = {
+            "string" = "string"
+          }
+        }
+        args                       = ["string"]
+        stdin                      = false
+        stdin_once                 = false
+        target_container_name      = "string"
+        termination_message_path   = "string"
+        termination_message_policy = "string"
+        tty                        = false
+        volume_devices = [{
+          device_path = "string"
+          name        = "string"
+        }]
+        volume_mounts = [{
+          mount_path        = "string"
+          name              = "string"
+          mount_propagation = "string"
+          read_only         = false
+          sub_path          = "string"
+          sub_path_expr     = "string"
+        }]
+        working_dir = "string"
+      }]
+      host_aliases = [{
+        hostnames = ["string"]
+        ip        = "string"
+      }]
+      host_ipc     = false
+      host_network = false
+      priority     = 0
+      hostname     = "string"
+      image_pull_secrets = [{
+        name = "string"
+      }]
+      init_containers = [{
+        name = "string"
+        readiness_probe = {
+          exec = {
+            command = ["string"]
+          }
+          failure_threshold = 0
+          http_get = {
+            port = 0
+            host = "string"
+            http_headers = [{
+              name  = "string"
+              value = "string"
+            }]
+            path   = "string"
+            scheme = "string"
+          }
+          initial_delay_seconds = 0
+          period_seconds        = 0
+          success_threshold     = 0
+          tcp_socket = {
+            port = 0
+            host = "string"
+          }
+          termination_grace_period_seconds = 0
+          timeout_seconds                  = 0
+        }
+        security_context = {
+          allow_privilege_escalation = false
+          capabilities = {
+            add  = ["string"]
+            drop = ["string"]
+          }
+          privileged                = false
+          proc_mount                = "string"
+          read_only_root_filesystem = false
+          run_as_group              = 0
+          run_as_non_root           = false
+          run_as_user               = 0
+          se_linux_options = {
+            level = "string"
+            role  = "string"
+            type  = "string"
+            user  = "string"
+          }
+          seccomp_profile = {
+            type              = "string"
+            localhost_profile = "string"
+          }
+          windows_options = {
+            gmsa_credential_spec      = "string"
+            gmsa_credential_spec_name = "string"
+            host_process              = false
+            run_as_user_name          = "string"
+          }
+        }
+        env_from = [{
+          config_map_ref = {
+            name     = "string"
+            optional = false
+          }
+          prefix = "string"
+          secret_ref = {
+            name     = "string"
+            optional = false
+          }
+        }]
+        image             = "string"
+        image_pull_policy = "string"
+        lifecycle = {
+          post_start = {
+            exec = {
+              command = ["string"]
+            }
+            http_get = {
+              port = 0
+              host = "string"
+              http_headers = [{
+                name  = "string"
+                value = "string"
+              }]
+              path   = "string"
+              scheme = "string"
+            }
+            tcp_socket = {
+              port = 0
+              host = "string"
+            }
+          }
+          pre_stop = {
+            exec = {
+              command = ["string"]
+            }
+            http_get = {
+              port = 0
+              host = "string"
+              http_headers = [{
+                name  = "string"
+                value = "string"
+              }]
+              path   = "string"
+              scheme = "string"
+            }
+            tcp_socket = {
+              port = 0
+              host = "string"
+            }
+          }
+        }
+        liveness_probe = {
+          exec = {
+            command = ["string"]
+          }
+          failure_threshold = 0
+          http_get = {
+            port = 0
+            host = "string"
+            http_headers = [{
+              name  = "string"
+              value = "string"
+            }]
+            path   = "string"
+            scheme = "string"
+          }
+          initial_delay_seconds = 0
+          period_seconds        = 0
+          success_threshold     = 0
+          tcp_socket = {
+            port = 0
+            host = "string"
+          }
+          termination_grace_period_seconds = 0
+          timeout_seconds                  = 0
+        }
+        command = ["string"]
+        ports = [{
+          container_port = 0
+          host_ip        = "string"
+          host_port      = 0
+          name           = "string"
+          protocol       = "string"
+        }]
+        args = ["string"]
+        env = [{
+          name  = "string"
+          value = "string"
+          value_from = {
+            config_map_key_ref = {
+              key      = "string"
+              name     = "string"
+              optional = false
+            }
+            field_ref = {
+              field_path  = "string"
+              api_version = "string"
+            }
+            resource_field_ref = {
+              resource       = "string"
+              container_name = "string"
+              divisor        = "string"
+            }
+            secret_key_ref = {
+              key      = "string"
+              name     = "string"
+              optional = false
+            }
+          }
+        }]
+        startup_probe = {
+          exec = {
+            command = ["string"]
+          }
+          failure_threshold = 0
+          http_get = {
+            port = 0
+            host = "string"
+            http_headers = [{
+              name  = "string"
+              value = "string"
+            }]
+            path   = "string"
+            scheme = "string"
+          }
+          initial_delay_seconds = 0
+          period_seconds        = 0
+          success_threshold     = 0
+          tcp_socket = {
+            port = 0
+            host = "string"
+          }
+          termination_grace_period_seconds = 0
+          timeout_seconds                  = 0
+        }
+        resources = {
+          limits = {
+            "string" = "string"
+          }
+          requests = {
+            "string" = "string"
+          }
+        }
+        stdin                      = false
+        stdin_once                 = false
+        termination_message_path   = "string"
+        termination_message_policy = "string"
+        tty                        = false
+        volume_devices = [{
+          device_path = "string"
+          name        = "string"
+        }]
+        volume_mounts = [{
+          mount_path        = "string"
+          name              = "string"
+          mount_propagation = "string"
+          read_only         = false
+          sub_path          = "string"
+          sub_path_expr     = "string"
+        }]
+        working_dir = "string"
+      }]
+      node_name                       = "string"
+      active_deadline_seconds         = 0
+      automount_service_account_token = false
+      overhead = {
+        "string" = "string"
+      }
+      host_pid            = false
+      priority_class_name = "string"
+      readiness_gates = [{
+        condition_type = "string"
+      }]
+      restart_policy     = "string"
+      runtime_class_name = "string"
+      scheduler_name     = "string"
+      security_context = {
+        fs_group               = 0
+        fs_group_change_policy = "string"
+        run_as_group           = 0
+        run_as_non_root        = false
+        run_as_user            = 0
+        se_linux_options = {
+          level = "string"
+          role  = "string"
+          type  = "string"
+          user  = "string"
+        }
+        seccomp_profile = {
+          type              = "string"
+          localhost_profile = "string"
+        }
+        supplemental_groups = [0]
+        sysctls = [{
+          name  = "string"
+          value = "string"
+        }]
+        windows_options = {
+          gmsa_credential_spec      = "string"
+          gmsa_credential_spec_name = "string"
+          host_process              = false
+          run_as_user_name          = "string"
+        }
+      }
+      service_account                  = "string"
+      service_account_name             = "string"
+      set_hostname_as_fqdn             = false
+      share_process_namespace          = false
+      subdomain                        = "string"
+      termination_grace_period_seconds = 0
+      tolerations = [{
+        effect             = "string"
+        key                = "string"
+        operator           = "string"
+        toleration_seconds = 0
+        value              = "string"
+      }]
+      topology_spread_constraints = [{
+        max_skew           = 0
+        topology_key       = "string"
+        when_unsatisfiable = "string"
+        label_selector = {
+          match_expressions = [{
+            key      = "string"
+            operator = "string"
+            values   = ["string"]
+          }]
+          match_labels = {
+            "string" = "string"
+          }
+        }
+      }]
+      volumes = [{
+        name = "string"
+        git_repo = {
+          repository = "string"
+          directory  = "string"
+          revision   = "string"
+        }
+        persistent_volume_claim = {
+          claim_name = "string"
+          read_only  = false
+        }
+        cephfs = {
+          monitors    = ["string"]
+          path        = "string"
+          read_only   = false
+          secret_file = "string"
+          secret_ref = {
+            name = "string"
+          }
+          user = "string"
+        }
+        cinder = {
+          volume_id = "string"
+          fs_type   = "string"
+          read_only = false
+          secret_ref = {
+            name = "string"
+          }
+        }
+        config_map = {
+          default_mode = 0
+          items = [{
+            key  = "string"
+            path = "string"
+            mode = 0
+          }]
+          name     = "string"
+          optional = false
+        }
+        csi = {
+          driver  = "string"
+          fs_type = "string"
+          node_publish_secret_ref = {
+            name = "string"
+          }
+          read_only = false
+          volume_attributes = {
+            "string" = "string"
+          }
+        }
+        downward_api = {
+          default_mode = 0
+          items = [{
+            path = "string"
+            field_ref = {
+              field_path  = "string"
+              api_version = "string"
+            }
+            mode = 0
+            resource_field_ref = {
+              resource       = "string"
+              container_name = "string"
+              divisor        = "string"
+            }
+          }]
+        }
+        empty_dir = {
+          medium     = "string"
+          size_limit = "string"
+        }
+        ephemeral = {
+          read_only = false
+          volume_claim_template = {
+            spec = {
+              access_modes = ["string"]
+              data_source = {
+                kind      = "string"
+                name      = "string"
+                api_group = "string"
+              }
+              data_source_ref = {
+                kind      = "string"
+                name      = "string"
+                api_group = "string"
+              }
+              resources = {
+                limits = {
+                  "string" = "string"
+                }
+                requests = {
+                  "string" = "string"
+                }
+              }
+              selector = {
+                match_expressions = [{
+                  key      = "string"
+                  operator = "string"
+                  values   = ["string"]
+                }]
+                match_labels = {
+                  "string" = "string"
+                }
+              }
+              storage_class_name = "string"
+              volume_mode        = "string"
+              volume_name        = "string"
+            }
+            metadata = {
+              annotations = {
+                "string" = "string"
+              }
+              cluster_name                  = "string"
+              creation_timestamp            = "string"
+              deletion_grace_period_seconds = 0
+              deletion_timestamp            = "string"
+              finalizers                    = ["string"]
+              generate_name                 = "string"
+              generation                    = 0
+              labels = {
+                "string" = "string"
+              }
+              managed_fields = [{
+                api_version = "string"
+                fields_type = "string"
+                fields_v1   = "{}"
+                manager     = "string"
+                operation   = "string"
+                subresource = "string"
+                time        = "string"
+              }]
+              name      = "string"
+              namespace = "string"
+              owner_references = [{
+                api_version          = "string"
+                kind                 = "string"
+                name                 = "string"
+                uid                  = "string"
+                block_owner_deletion = false
+                controller           = false
+              }]
+              resource_version = "string"
+              self_link        = "string"
+              uid              = "string"
+            }
+          }
+        }
+        fc = {
+          fs_type      = "string"
+          lun          = 0
+          read_only    = false
+          target_ww_ns = ["string"]
+          wwids        = ["string"]
+        }
+        flex_volume = {
+          driver  = "string"
+          fs_type = "string"
+          options = {
+            "string" = "string"
+          }
+          read_only = false
+          secret_ref = {
+            name = "string"
+          }
+        }
+        flocker = {
+          dataset_name = "string"
+          dataset_uuid = "string"
+        }
+        gce_persistent_disk = {
+          pd_name   = "string"
+          fs_type   = "string"
+          partition = 0
+          read_only = false
+        }
+        aws_elastic_block_store = {
+          volume_id = "string"
+          fs_type   = "string"
+          partition = 0
+          read_only = false
+        }
+        azure_file = {
+          secret_name = "string"
+          share_name  = "string"
+          read_only   = false
+        }
+        iscsi = {
+          iqn                 = "string"
+          lun                 = 0
+          target_portal       = "string"
+          chap_auth_discovery = false
+          chap_auth_session   = false
+          fs_type             = "string"
+          initiator_name      = "string"
+          iscsi_interface     = "string"
+          portals             = ["string"]
+          read_only           = false
+          secret_ref = {
+            name = "string"
+          }
+        }
+        glusterfs = {
+          endpoints = "string"
+          path      = "string"
+          read_only = false
+        }
+        azure_disk = {
+          disk_name    = "string"
+          disk_uri     = "string"
+          caching_mode = "string"
+          fs_type      = "string"
+          kind         = "string"
+          read_only    = false
+        }
+        nfs = {
+          path      = "string"
+          server    = "string"
+          read_only = false
+        }
+        host_path = {
+          path = "string"
+          type = "string"
+        }
+        photon_persistent_disk = {
+          pd_id   = "string"
+          fs_type = "string"
+        }
+        portworx_volume = {
+          volume_id = "string"
+          fs_type   = "string"
+          read_only = false
+        }
+        projected = {
+          sources = [{
+            config_map = {
+              items = [{
+                key  = "string"
+                path = "string"
+                mode = 0
+              }]
+              name     = "string"
+              optional = false
+            }
+            downward_api = {
+              items = [{
+                path = "string"
+                field_ref = {
+                  field_path  = "string"
+                  api_version = "string"
+                }
+                mode = 0
+                resource_field_ref = {
+                  resource       = "string"
+                  container_name = "string"
+                  divisor        = "string"
+                }
+              }]
+            }
+            secret = {
+              items = [{
+                key  = "string"
+                path = "string"
+                mode = 0
+              }]
+              name     = "string"
+              optional = false
+            }
+            service_account_token = {
+              path               = "string"
+              audience           = "string"
+              expiration_seconds = 0
+            }
+          }]
+          default_mode = 0
+        }
+        quobyte = {
+          registry  = "string"
+          volume    = "string"
+          group     = "string"
+          read_only = false
+          tenant    = "string"
+          user      = "string"
+        }
+        rbd = {
+          image     = "string"
+          monitors  = ["string"]
+          fs_type   = "string"
+          keyring   = "string"
+          pool      = "string"
+          read_only = false
+          secret_ref = {
+            name = "string"
+          }
+          user = "string"
+        }
+        scale_io = {
+          gateway = "string"
+          secret_ref = {
+            name = "string"
+          }
+          system            = "string"
+          fs_type           = "string"
+          protection_domain = "string"
+          read_only         = false
+          ssl_enabled       = false
+          storage_mode      = "string"
+          storage_pool      = "string"
+          volume_name       = "string"
+        }
+        secret = {
+          default_mode = 0
+          items = [{
+            key  = "string"
+            path = "string"
+            mode = 0
+          }]
+          optional    = false
+          secret_name = "string"
+        }
+        storageos = {
+          fs_type   = "string"
+          read_only = false
+          secret_ref = {
+            name = "string"
+          }
+          volume_name      = "string"
+          volume_namespace = "string"
+        }
+        vsphere_volume = {
+          volume_path         = "string"
+          fs_type             = "string"
+          storage_policy_id   = "string"
+          storage_policy_name = "string"
+        }
+      }]
+    }
+    status = {
+      conditions = [{
+        status               = "string"
+        type                 = "string"
+        last_probe_time      = "string"
+        last_transition_time = "string"
+        message              = "string"
+        reason               = "string"
+      }]
+      container_statuses = [{
+        image         = "string"
+        image_id      = "string"
+        name          = "string"
+        ready         = false
+        restart_count = 0
+        container_id  = "string"
+        last_state = {
+          running = {
+            started_at = "string"
+          }
+          terminated = {
+            exit_code    = 0
+            container_id = "string"
+            finished_at  = "string"
+            message      = "string"
+            reason       = "string"
+            signal       = 0
+            started_at   = "string"
+          }
+          waiting = {
+            message = "string"
+            reason  = "string"
+          }
+        }
+        started = false
+        state = {
+          running = {
+            started_at = "string"
+          }
+          terminated = {
+            exit_code    = 0
+            container_id = "string"
+            finished_at  = "string"
+            message      = "string"
+            reason       = "string"
+            signal       = 0
+            started_at   = "string"
+          }
+          waiting = {
+            message = "string"
+            reason  = "string"
+          }
+        }
+      }]
+      ephemeral_container_statuses = [{
+        image         = "string"
+        image_id      = "string"
+        name          = "string"
+        ready         = false
+        restart_count = 0
+        container_id  = "string"
+        last_state = {
+          running = {
+            started_at = "string"
+          }
+          terminated = {
+            exit_code    = 0
+            container_id = "string"
+            finished_at  = "string"
+            message      = "string"
+            reason       = "string"
+            signal       = 0
+            started_at   = "string"
+          }
+          waiting = {
+            message = "string"
+            reason  = "string"
+          }
+        }
+        started = false
+        state = {
+          running = {
+            started_at = "string"
+          }
+          terminated = {
+            exit_code    = 0
+            container_id = "string"
+            finished_at  = "string"
+            message      = "string"
+            reason       = "string"
+            signal       = 0
+            started_at   = "string"
+          }
+          waiting = {
+            message = "string"
+            reason  = "string"
+          }
+        }
+      }]
+      host_ip = "string"
+      init_container_statuses = [{
+        image         = "string"
+        image_id      = "string"
+        name          = "string"
+        ready         = false
+        restart_count = 0
+        container_id  = "string"
+        last_state = {
+          running = {
+            started_at = "string"
+          }
+          terminated = {
+            exit_code    = 0
+            container_id = "string"
+            finished_at  = "string"
+            message      = "string"
+            reason       = "string"
+            signal       = 0
+            started_at   = "string"
+          }
+          waiting = {
+            message = "string"
+            reason  = "string"
+          }
+        }
+        started = false
+        state = {
+          running = {
+            started_at = "string"
+          }
+          terminated = {
+            exit_code    = 0
+            container_id = "string"
+            finished_at  = "string"
+            message      = "string"
+            reason       = "string"
+            signal       = 0
+            started_at   = "string"
+          }
+          waiting = {
+            message = "string"
+            reason  = "string"
+          }
+        }
+      }]
+      message             = "string"
+      nominated_node_name = "string"
+      phase               = "string"
+      pod_ip              = "string"
+      pod_i_ps = [{
+        ip = "string"
+      }]
+      qos_class  = "string"
+      reason     = "string"
+      start_time = "string"
+    }
+  }
+}
 ```
 
 </pulumi-choosable>
@@ -9644,6 +11101,28 @@ The Component resource accepts the following [input](/docs/intro/concepts/inputs
 </div>
 
 <div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-optional"
+            title="Optional">
+        <span id="eni_config_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#eni_config_hcl" style="color: inherit; text-decoration: inherit;">eni_<wbr>config</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">map(object)</span>
+    </dt>
+    <dd></dd><dt class="property-optional"
+            title="Optional">
+        <span id="pod_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#pod_hcl" style="color: inherit; text-decoration: inherit;">pod</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#pod">object</a></span>
+    </dt>
+    <dd>This type is defined in the <a href="/registry/packages/kubernetes">Kubernetes</a> package.</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
 <pulumi-choosable type="language" values="java">
 <dl class="resources-properties"><dt class="property-optional"
             title="Optional">
@@ -9751,6 +11230,12 @@ All [input](#inputs) properties are implicitly available as output properties. A
 </div>
 
 <div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"></dl>
+</pulumi-choosable>
+</div>
+
+<div>
 <pulumi-choosable type="language" values="java">
 <dl class="resources-properties"></dl>
 </pulumi-choosable>
@@ -9824,6 +11309,28 @@ ENIConfig<wbr>Spec<pulumi-choosable type="language" values="python,go" class="in
             title="Optional">
         <span id="subnet_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#subnet_go" style="color: inherit; text-decoration: inherit;">Subnet</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd></dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-optional"
+            title="Optional">
+        <span id="security_groups_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#security_groups_hcl" style="color: inherit; text-decoration: inherit;">security_<wbr>groups</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">list(string)</span>
+    </dt>
+    <dd></dd><dt class="property-optional"
+            title="Optional">
+        <span id="subnet_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#subnet_hcl" style="color: inherit; text-decoration: inherit;">subnet</a>
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">string</span>

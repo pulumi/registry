@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: vmware
 repo_url: https://github.com/vmware/terraform-provider-vcd
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/vmware/vcd/3.14.1/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/vmware/vcd/3.14.2/schema.json
 title: vcd
-updated_on: 1744673804
-version: 3.14.1
+updated_on: 1783812970
+version: 3.14.2

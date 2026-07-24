@@ -1,136 +1,17 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/DefangLabs/pulumi-defang/v1.0.0/docs/_index.md
-# Do not edit by hand unless you're certain you know what you are doing!
-title: Defang Provider
-meta_desc: Take your app from Docker Compose to a secure and scalable cloud deployment with Pulumi.
+title: Defang (Deprecated)
+meta_desc: The Defang provider has been split into cloud-specific packages for AWS, GCP, and Azure.
 layout: package
 ---
-# Defang Pulumi Provider
 
-![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/DefangLabs/pulumi-defang?label=Version)
+{{% notes type="info" %}}
+This package has been split into three cloud-specific providers. Choose the one for your target cloud:
 
-The Pulumi Provider for [Defang](https://defang.io) — Take your app from Docker Compose to a secure and scalable cloud deployment with Pulumi.
+- [`defang-aws`](/registry/packages/defang-aws/): deploy containerized services to AWS.
+- [`defang-gcp`](/registry/packages/defang-gcp/): deploy containerized services to GCP.
+- [`defang-azure`](/registry/packages/defang-azure/): deploy containerized services to Azure.
+{{% /notes %}}
 
-## Example usage
+The original `defang` provider deployed Docker Compose projects to any supported cloud through a single package with a `providerID` input. It has been replaced by one provider package per cloud, each with the same Compose-shaped inputs, so you pick the cloud you target at install time rather than at configuration time.
 
-You can find complete working TypeScript, Python, Go, .NET, and Yaml code samples in the [`./examples`](https://github.com/DefangLabs/pulumi-defang/tree/main/examples) directory, and some example snippets below:
-
-{{< chooser language "typescript,python,go,dotnet,yaml" >}}
-{{% choosable language typescript %}}
-```typescript
-import * as pulumi from "@pulumi/pulumi";
-import * as defang from "@defang-io/pulumi-defang";
-
-const myProject = new defang.Project("myProject", {
-    providerID: "aws",
-    configPaths: ["compose.yaml"],
-});
-export const output = {
-    albArn: myProject.albArn,
-    etag: myProject.etag,
-};
-```
-
-{{% /choosable %}}
-
-{{% choosable language python %}}
-```python
-import pulumi
-import pulumi_defang as defang
-
-my_project = defang.Project("myProject",
-    provider_id="aws",
-    config_paths=["compose.yaml"])
-pulumi.export("output", {
-    "albArn": my_project.alb_arn,
-    "etag": my_project.etag,
-})
-```
-
-{{% /choosable %}}
-
-{{% choosable language go %}}
-```go
-package main
-
-import (
-	"example.com/pulumi-defang/sdk/go/defang"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-)
-
-func main() {
-	pulumi.Run(func(ctx *pulumi.Context) error {
-		myProject, err := defang.NewProject(ctx, "myProject", &defang.ProjectArgs{
-			ProviderID: pulumi.String("aws"),
-			ConfigPaths: pulumi.StringArray{
-				pulumi.String("compose.yaml"),
-			},
-		})
-		if err != nil {
-			return err
-		}
-		ctx.Export("output", pulumi.StringMap{
-			"albArn": myProject.AlbArn,
-			"etag":   myProject.Etag,
-		})
-		return nil
-	})
-}
-```
-
-{{% /choosable %}}
-
-{{% choosable language dotnet %}}
-```dotnet
-using System.Collections.Generic;
-using System.Linq;
-using Pulumi;
-using Defang = DefangLabs.Defang;
-
-return await Deployment.RunAsync(() =>
-{
-    var myProject = new Defang.Project("myProject", new()
-    {
-        ProviderID = "aws",
-        ConfigPaths = new[]
-        {
-            "./compose.yaml",
-        },
-    });
-
-    return new Dictionary<string, object?>
-    {
-        ["output"] =
-        {
-            { "albArn", myProject.AlbArn },
-            { "etag", myProject.Etag },
-        },
-    };
-});
-
-```
-
-{{% /choosable %}}
-
-{{% choosable language yaml %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: yaml
-config:
-    defang:Project:
-        providerID: aws
-        configPaths:
-            - ./compose.yaml
-```
-
-{{% /choosable %}}
-{{< /chooser >}}
-
-## Installation and Configuration
-
-See our [Installation and Configuration](https://pulumi.com/registry/packages/defang/installation-configuration/) docs
-
-## Development
-
-See the [Contributing](https://github.com/DefangLabs/pulumi-defang/blob/main/CONTRIBUTING.md) doc.
+To migrate, install the package for your cloud (for example `@defang-io/pulumi-defang-aws`) and construct a `Project` resource with your services. See the per-cloud package pages linked above for installation and examples in every supported language.

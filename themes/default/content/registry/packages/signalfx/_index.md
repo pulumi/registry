@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-signalfx/v7.25.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-signalfx/v7.28.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-signalfx/blob/v7.25.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-signalfx/blob/v7.28.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Signalfx Provider
 meta_desc: Provides an overview on how to configure the Pulumi Signalfx provider.
@@ -51,7 +51,7 @@ A Service account is term used when a user is created within organization that c
 
 The following example shows how to configure the Splunk Observability Cloud provider for Pulumi:
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
@@ -116,10 +116,10 @@ using SignalFx = Pulumi.SignalFx;
 return await Deployment.RunAsync(() =>
 {
     // Create a new detector
-    var @default = new SignalFx.Index.Detector("default");
+    var @default = new SignalFx.Detector("default");
 
     // Create a new dashboard
-    var defaultDashboard = new SignalFx.Index.Dashboard("default");
+    var defaultDashboard = new SignalFx.Dashboard("default");
 
 });
 
@@ -205,8 +205,8 @@ import com.pulumi.Pulumi;
 import com.pulumi.core.Output;
 import com.pulumi.signalfx.Detector;
 import com.pulumi.signalfx.Dashboard;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;
@@ -225,6 +225,25 @@ public class App {
         var defaultDashboard = new Dashboard("defaultDashboard");
 
     }
+}
+```
+
+{{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+pulumi {
+  required_providers {
+    signalfx = {
+      source = "pulumi/signalfx"
+    }
+  }
+}
+
+# Create a new detector
+resource "signalfx_detector" "default" {
+}
+# Create a new dashboard
+resource "signalfx_dashboard" "default" {
 }
 ```
 

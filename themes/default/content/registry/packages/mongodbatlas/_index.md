@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-mongodbatlas/v4.8.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-mongodbatlas/v4.12.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-mongodbatlas/blob/v4.8.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-mongodbatlas/blob/v4.12.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Mongodbatlas Provider
 meta_desc: Provides an overview on how to configure the Pulumi Mongodbatlas provider.
@@ -25,7 +25,7 @@ The MongoDB Atlas provider is used to interact with the resources supported by [
 
 This example shows how to set up the MongoDB Atlas provider and create a cluster:
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
@@ -130,14 +130,14 @@ using Mongodbatlas = Pulumi.Mongodbatlas;
 return await Deployment.RunAsync(() =>
 {
     // Create a project
-    var @this = new Mongodbatlas.Index.Project("this", new()
+    var @this = new Mongodbatlas.Project("this", new()
     {
         Name = "my-project",
         OrgId = orgId,
     });
 
     // Create a cluster
-    var thisAdvancedCluster = new Mongodbatlas.Index.AdvancedCluster("this", new()
+    var thisAdvancedCluster = new Mongodbatlas.AdvancedCluster("this", new()
     {
         ProjectId = @this.Id,
         Name = "my-cluster",
@@ -294,8 +294,10 @@ import com.pulumi.mongodbatlas.ProjectArgs;
 import com.pulumi.mongodbatlas.AdvancedCluster;
 import com.pulumi.mongodbatlas.AdvancedClusterArgs;
 import com.pulumi.mongodbatlas.inputs.AdvancedClusterReplicationSpecArgs;
-import java.util.List;
+import com.pulumi.mongodbatlas.inputs.AdvancedClusterReplicationSpecRegionConfigArgs;
+import com.pulumi.mongodbatlas.inputs.AdvancedClusterReplicationSpecRegionConfigElectableSpecsArgs;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;
@@ -332,6 +334,41 @@ public class App {
             .build());
 
     }
+}
+```
+
+{{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+pulumi {
+  required_providers {
+    mongodbatlas = {
+      source = "pulumi/mongodbatlas"
+    }
+  }
+}
+
+# Create a project
+resource "mongodbatlas_project" "this" {
+  name   = "my-project"
+  org_id = orgId
+}
+# Create a cluster
+resource "mongodbatlas_advancedcluster" "this" {
+  project_id   = mongodbatlas_project.this.id
+  name         = "my-cluster"
+  cluster_type = "REPLICASET"
+  replication_specs {
+    region_configs {
+      region_name   = "US_EAST_1"
+      priority      = 7
+      provider_name = "AWS"
+      electable_specs = {
+        instance_size = "M10"
+        node_count    = 3
+      }
+    }
+  }
 }
 ```
 

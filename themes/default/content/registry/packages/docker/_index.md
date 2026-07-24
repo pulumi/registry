@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-docker/v5.0.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-docker/v5.1.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-docker/blob/v5.0.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-docker/blob/v5.1.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Docker Provider
 meta_desc: Provides an overview on how to configure the Pulumi Docker provider.
@@ -31,7 +31,7 @@ Use the navigation to the left to read about the available resources.
 
 
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
@@ -101,13 +101,13 @@ using Docker = Pulumi.Docker;
 return await Deployment.RunAsync(() =>
 {
     // Pulls the image
-    var ubuntu = new Docker.Index.RemoteImage("ubuntu", new()
+    var ubuntu = new Docker.RemoteImage("ubuntu", new()
     {
         Name = "ubuntu:latest",
     });
 
     // Create a container
-    var foo = new Docker.Index.Container("foo", new()
+    var foo = new Docker.Container("foo", new()
     {
         Image = ubuntu.ImageId,
         Name = "foo",
@@ -208,8 +208,8 @@ import com.pulumi.docker.RemoteImage;
 import com.pulumi.docker.RemoteImageArgs;
 import com.pulumi.docker.Container;
 import com.pulumi.docker.ContainerArgs;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;
@@ -233,6 +233,28 @@ public class App {
             .build());
 
     }
+}
+```
+
+{{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+pulumi {
+  required_providers {
+    docker = {
+      source = "pulumi/docker"
+    }
+  }
+}
+
+# Pulls the image
+resource "docker_remoteimage" "ubuntu" {
+  name = "ubuntu:latest"
+}
+# Create a container
+resource "docker_container" "foo" {
+  image = docker_remoteimage.ubuntu.image_id
+  name  = "foo"
 }
 ```
 

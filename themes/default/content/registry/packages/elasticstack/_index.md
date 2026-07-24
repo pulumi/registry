@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/elastic/elasticstack/0.14.5/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/elastic/elasticstack/0.16.3/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Elasticstack Provider
@@ -184,6 +184,7 @@ For Elasticsearch resources, you can use the following variables:
 - `ELASTICSEARCH_API_KEY` - An Elasticsearch API key to use instead of `ELASTICSEARCH_USERNAME` and `ELASTICSEARCH_PASSWORD`
 - `ELASTICSEARCH_BEARER_TOKEN` - A bearer token to use for Elasticsearch authorization header.
 - `ELASTICSEARCH_ES_CLIENT_AUTHENTICATION` - The shared secret for the Elasticsearch authorization header.
+- `ELASTICSEARCH_CA_FINGERPRINT` - SHA-256 hex fingerprint (64 hexadecimal characters, no colons or separators) of the server TLS certificate used to pin the connection instead of a full CA chain.
 
 Kibana resources will re-use any Elasticsearch credentials specified, these may be overridden with the following variables:
 - `KIBANA_USERNAME` - The username to use for Kibana authentication
@@ -318,9 +319,9 @@ public class App {
 {{< /chooser >}}
 ## Configuration Reference
 
-- `elasticsearch` (Block List, Max: 1) Elasticsearch connection configuration block. (see below for nested schema)
-- `fleet` (Block List, Max: 1) Fleet connection configuration block. (see below for nested schema)
-- `kibana` (Block List, Max: 1) Kibana connection configuration block. (see below for nested schema)
+- `elasticsearch` (Block List) Elasticsearch connection configuration block. (see below for nested schema)
+- `fleet` (Block List) Fleet connection configuration block. (see below for nested schema)
+- `kibana` (Block List) Kibana connection configuration block. (see below for nested schema)
 
 <a id="nestedblock--elasticsearch"></a>
 ### Nested Schema for `elasticsearch`
@@ -331,6 +332,7 @@ Optional:
 - `bearerToken` (String, Sensitive) Bearer Token to use for authentication to Elasticsearch
 - `caData` (String) PEM-encoded custom Certificate Authority certificate
 - `caFile` (String) Path to a custom Certificate Authority certificate
+- `caFingerprint` (String) SHA-256 hex fingerprint (64 hexadecimal characters, no colons or separators) of the server TLS certificate used to pin the connection instead of a full CA chain
 - `certData` (String) PEM encoded certificate for client auth
 - `certFile` (String) Path to a file containing the PEM encoded certificate for client auth
 - `endpoints` (List of String, Sensitive) A list of endpoints where the pulumi provider will point to, this must include the http(s) schema and port number.

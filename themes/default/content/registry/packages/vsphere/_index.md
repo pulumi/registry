@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-vsphere/v4.16.5/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-vsphere/v4.17.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-vsphere/blob/v4.16.5/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-vsphere/blob/v4.17.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Vsphere Provider
 meta_desc: Provides an overview on how to configure the Pulumi Vsphere provider.
@@ -50,7 +50,7 @@ The datacenter, datastore, resource pool, and network are discovered using the
 [`vsphere.ResourcePool`](https://www.terraform.io/docs/providers/vsphere/d/resource_pool.html), and
 [`vsphere.getNetwork`](https://www.terraform.io/docs/providers/vsphere/d/network.html) functions respectively.
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
@@ -263,7 +263,7 @@ import (
 
 func main() {
 	pulumi.Run(func(ctx *pulumi.Context) error {
-		datacenter, err := vsphere.LookupDatacenter(ctx, &vsphere.LookupDatacenterArgs{
+		datacenter, err := vsphere.GetDatacenter(ctx, &vsphere.LookupDatacenterArgs{
 			Name: pulumi.StringRef("dc-01"),
 		}, nil)
 		if err != nil {
@@ -276,7 +276,7 @@ func main() {
 		if err != nil {
 			return err
 		}
-		cluster, err := vsphere.LookupComputeCluster(ctx, &vsphere.LookupComputeClusterArgs{
+		cluster, err := vsphere.GetComputeCluster(ctx, &vsphere.LookupComputeClusterArgs{
 			Name:         "cluster-01",
 			DatacenterId: pulumi.StringRef(datacenter.Id),
 		}, nil)
@@ -414,8 +414,8 @@ import com.pulumi.vsphere.VirtualMachine;
 import com.pulumi.vsphere.VirtualMachineArgs;
 import com.pulumi.vsphere.inputs.VirtualMachineNetworkInterfaceArgs;
 import com.pulumi.vsphere.inputs.VirtualMachineDiskArgs;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;
@@ -463,6 +463,50 @@ public class App {
             .build());
 
     }
+}
+```
+
+{{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+pulumi {
+  required_providers {
+    vsphere = {
+      source = "pulumi/vsphere"
+    }
+  }
+}
+
+data "vsphere_getdatacenter" "datacenter" {
+  name = "dc-01"
+}
+data "vsphere_getdatastore" "datastore" {
+  name          = "datastore-01"
+  datacenter_id = data.vsphere_getdatacenter.datacenter.id
+}
+data "vsphere_getcomputecluster" "cluster" {
+  name          = "cluster-01"
+  datacenter_id = data.vsphere_getdatacenter.datacenter.id
+}
+data "vsphere_getnetwork" "network" {
+  name          = "VM Network"
+  datacenter_id = data.vsphere_getdatacenter.datacenter.id
+}
+
+resource "vsphere_virtualmachine" "vm" {
+  name             = "foo"
+  resource_pool_id = data.vsphere_getcomputecluster.cluster.resource_pool_id
+  datastore_id     = data.vsphere_getdatastore.datastore.id
+  num_cpus         = 1
+  memory           = 1024
+  guest_id         = "otherLinux64Guest"
+  network_interfaces {
+    network_id = data.vsphere_getnetwork.network.id
+  }
+  disks {
+    label = "disk0"
+    size  = 20
+  }
 }
 ```
 
@@ -525,6 +569,13 @@ The session format used to save VIM SOAP sessions is the same used
 with [`vmware/govc`](https://github.com/vmware/govmomi/tree/main/govc). If you use `govc` as part of your provisioning
 process, Pulumi will use the saved session if present and if
 `persistSession` is enabled.
+#### Concurrent Session Limits
+
+The provider does not close any sessions when its process is terminated.
+If session persistence is not configured you may reach the limits for concurrent sessions in vCenter.
+This will cause the provider to crash due to its inability to communicate with vCenter.
+
+> **NOTE:** Consult the product documentation for your version of vCenter for the applicable limits on concurrent sessions.
 ## Notes on Required Privileges
 
 When using a non-administrator account to perform provider operations, consider

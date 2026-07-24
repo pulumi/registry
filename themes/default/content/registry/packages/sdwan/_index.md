@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-sdwan/v0.8.1/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-sdwan/v0.9.1/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-sdwan/blob/v0.8.1/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-sdwan/blob/v0.9.1/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Cisco Catalyst SD-WAN Provider
 meta_desc: Provides an overview on how to configure the Pulumi Cisco Catalyst SD-WAN provider.
@@ -31,6 +31,7 @@ All resources and functions have been tested with the following releases.
 
 **Please note**: We no longer support or test UX 2.0 resources against 20.12.
 ## Example Usage
+### Username/Password Authentication
 
 ```yaml
 # Pulumi.yaml provider configuration file
@@ -45,8 +46,24 @@ config:
         value: admin
 
 ```
+### API Token Authentication
+
+Alternatively, you can use an API token for authentication:
+
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime:
+config:
+    sdwan:apiToken:
+        value: my-api-token
+    sdwan:url:
+        value: https://10.1.1.1
+
+```
 ## Configuration Reference
 
+- `apiToken` (String, Sensitive) API Token for the SD-WAN Manager. Can be used instead of username and password. This can also be set as the `SDWAN_API_TOKEN` environment variable.
 - `insecure` (Boolean) Allow insecure HTTPS client. This can also be set as the `SDWAN_INSECURE` environment variable. Defaults to `true`.
 - `password` (String, Sensitive) Password for the SD-WAN Manager account. This can also be set as the `SDWAN_PASSWORD` environment variable.
 - `retries` (Number) Number of retries for REST API calls. This can also be set as the `SDWAN_RETRIES` environment variable. Defaults to `3`.

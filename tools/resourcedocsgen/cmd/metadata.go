@@ -273,8 +273,7 @@ func packageMetadataFromGitHubCmd(metadataDir, packageDocsDir *string) *cobra.Co
 				continue
 			}
 
-			// Normalize end of line representation
-			content = bytes.ReplaceAll(content, []byte("\r\n"), []byte("\n"))
+			content = normalizeDocs(content)
 
 			frontmatter := []byte(`---
 # WARNING: this file was fetched from ` + url + `
@@ -424,6 +423,11 @@ func readRemoteFile(url, repoOwner string) ([]byte, error) {
 	if err != nil {
 		return nil, errors.Wrapf(err, "creating request for %q", url)
 	}
+
+	// Mirror-hosted docs are occasionally re-rendered upstream; without this we can
+	// fetch a stale (e.g. corrupted) edge object even after the origin is fixed.
+	req.Header.Set("Cache-Control", "no-cache")
+	req.Header.Set("Pragma", "no-cache")
 
 	pkg.AddGitHubAuthHeaders(req)
 
@@ -673,8 +677,7 @@ func readDocsFile(url string) ([]byte, error) {
 		return nil, err
 	}
 
-	// Normalize end of line representation
-	content = bytes.ReplaceAll(content, []byte("\r\n"), []byte("\n"))
+	content = normalizeDocs(content)
 
 	rest, ok := bytes.CutPrefix(bytes.TrimLeft(content, "\n\t\r "), []byte("---\n"))
 	if !ok {

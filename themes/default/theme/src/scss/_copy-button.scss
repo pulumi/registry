@@ -8,7 +8,6 @@ div.highlight {
         flex: 1;
     }
 
-
     .copy-button-container {
         display: none;
 
@@ -18,29 +17,16 @@ div.highlight {
 
         flex-direction: row;
         width: fit-content;
-        margin: 5px 3px 0 0;
-        background: #4d5bd9;
-        
-        box-shadow: 0px 0px 12px #364098;
+        background: transparent;
+
         border-radius: 4px;
-        padding: 3px 7px 5px 7px;
         position: absolute;
         top: 0;
         right: 0;
+        cursor: pointer;
 
         &:hover {
-            background: #4552c3;
-            box-shadow: 0px 0px 12px #364098;
-        }
-
-        &:active {
-            background: #4d5bd9;
-            box-shadow: 0px 0px 12px #364098;
-        }
-
-
-        .code-mode-dark & {
-            background: #4d5bd9;
+            background: color-mix(in oklch, var(--color-white) 8%, transparent);
         }
 
         button.copy-button {
@@ -49,7 +35,7 @@ div.highlight {
             gap: 4px;
         }
 
-        // Use a slightly narrower tooltip for these.
+        // Narrower tooltip; left placement is set via position="left" in copybutton.ts.
         pulumi-tooltip {
             .tooltip-content {
                 @apply w-auto whitespace-nowrap;
@@ -60,7 +46,7 @@ div.highlight {
             display: flex;
         }
 
-        @media(min-width: 1024px) {
+        @media (min-width: 1024px) {
             i.copy {
                 display: flex;
             }
@@ -69,16 +55,14 @@ div.highlight {
 
     .copy-button {
         @include transition;
-        color: #fff;
-        font-size: 12px;
-        font-family: 'Inter';
+        // Muted icon on the dark panel; the docs-light theme darkens it.
+        color: var(--color-gray-400);
+        font-size: 14px;
+        font-family: var(--font-body);
+        padding: 8px 8px 8px 10px;
 
-        .code-mode-dark & {
-            @apply text-gray-600;
-
-            &:hover {
-                @apply text-gray-500;
-            }
+        &:hover {
+            color: var(--color-gray-200);
         }
     }
 }

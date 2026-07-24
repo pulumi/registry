@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-pagerduty/v4.31.4/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-pagerduty/v4.34.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-pagerduty/blob/v4.31.4/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-pagerduty/blob/v4.34.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Pagerduty Provider
 meta_desc: Provides an overview on how to configure the Pulumi Pagerduty provider.
@@ -25,7 +25,7 @@ The Pagerduty provider is available as a package in all Pulumi languages:
 Use the navigation to the left to read about the available resources.
 ## Example Usage
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
@@ -109,21 +109,21 @@ using Pagerduty = Pulumi.Pagerduty;
 return await Deployment.RunAsync(() =>
 {
     // Create a PagerDuty team
-    var engineering = new Pagerduty.Index.Team("engineering", new()
+    var engineering = new Pagerduty.Team("engineering", new()
     {
         Name = "Engineering",
         Description = "All engineering",
     });
 
     // Create a PagerDuty user
-    var earline = new Pagerduty.Index.User("earline", new()
+    var earline = new Pagerduty.User("earline", new()
     {
         Name = "Earline Greenholt",
         Email = "125.greenholt.earline@graham.name",
     });
 
     // Create a team membership
-    var earlineEngineering = new Pagerduty.Index.TeamMembership("earline_engineering", new()
+    var earlineEngineering = new Pagerduty.TeamMembership("earline_engineering", new()
     {
         UserId = earline.Id,
         TeamId = engineering.Id,
@@ -243,8 +243,8 @@ import com.pulumi.pagerduty.User;
 import com.pulumi.pagerduty.UserArgs;
 import com.pulumi.pagerduty.TeamMembership;
 import com.pulumi.pagerduty.TeamMembershipArgs;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;
@@ -275,6 +275,34 @@ public class App {
             .build());
 
     }
+}
+```
+
+{{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+pulumi {
+  required_providers {
+    pagerduty = {
+      source = "pulumi/pagerduty"
+    }
+  }
+}
+
+# Create a PagerDuty team
+resource "pagerduty_team" "engineering" {
+  name        = "Engineering"
+  description = "All engineering"
+}
+# Create a PagerDuty user
+resource "pagerduty_user" "earline" {
+  name  = "Earline Greenholt"
+  email = "125.greenholt.earline@graham.name"
+}
+# Create a team membership
+resource "pagerduty_teammembership" "earline_engineering" {
+  user_id = pagerduty_user.earline.id
+  team_id = pagerduty_team.engineering.id
 }
 ```
 
@@ -299,7 +327,7 @@ The `useAppOauthScopedToken` input has the following nested fields:
 * `pdSubdomain` - (Required) Your PagerDuty account subdomain; i.e: If the *URL* shown by the Browser when you are in your PagerDuty account is some like: <https://acme.pagerduty.com>, then your PagerDuty subdomain is `acme`. It can also be sourced from the `PAGERDUTY_SUBDOMAIN` environment variable.
 ## Example using App Oauth scoped token
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
@@ -374,21 +402,21 @@ using Pagerduty = Pulumi.Pagerduty;
 return await Deployment.RunAsync(() =>
 {
     // Create a PagerDuty team
-    var engineering = new Pagerduty.Index.Team("engineering", new()
+    var engineering = new Pagerduty.Team("engineering", new()
     {
         Name = "Engineering",
         Description = "All engineering",
     });
 
     // Create a PagerDuty user
-    var earline = new Pagerduty.Index.User("earline", new()
+    var earline = new Pagerduty.User("earline", new()
     {
         Name = "Earline Greenholt",
         Email = "125.greenholt.earline@graham.name",
     });
 
     // Create a team membership
-    var earlineEngineering = new Pagerduty.Index.TeamMembership("earline_engineering", new()
+    var earlineEngineering = new Pagerduty.TeamMembership("earline_engineering", new()
     {
         UserId = earline.Id,
         TeamId = engineering.Id,
@@ -499,8 +527,8 @@ import com.pulumi.pagerduty.User;
 import com.pulumi.pagerduty.UserArgs;
 import com.pulumi.pagerduty.TeamMembership;
 import com.pulumi.pagerduty.TeamMembershipArgs;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;
@@ -531,6 +559,34 @@ public class App {
             .build());
 
     }
+}
+```
+
+{{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+pulumi {
+  required_providers {
+    pagerduty = {
+      source = "pulumi/pagerduty"
+    }
+  }
+}
+
+# Create a PagerDuty team
+resource "pagerduty_team" "engineering" {
+  name        = "Engineering"
+  description = "All engineering"
+}
+# Create a PagerDuty user
+resource "pagerduty_user" "earline" {
+  name  = "Earline Greenholt"
+  email = "125.greenholt.earline@graham.name"
+}
+# Create a team membership
+resource "pagerduty_teammembership" "earline_engineering" {
+  user_id = pagerduty_user.earline.id
+  team_id = pagerduty_team.engineering.id
 }
 ```
 

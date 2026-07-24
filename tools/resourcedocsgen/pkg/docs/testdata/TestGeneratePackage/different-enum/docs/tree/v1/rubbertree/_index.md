@@ -23,7 +23,7 @@ Resources are created with functions called constructors. To learn more about de
 
 ### Constructor syntax
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 
@@ -79,6 +79,14 @@ Resources are created with functions called constructors. To learn more about de
 <span class="p"></span><span class="p">options</span><span class="p">: </span><span class="c">#&nbsp;Bag of options to control resource&#39;s behavior.</span>
 <span class="p"></span>
 </code></pre></div></div>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<div class="no-copy"><div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">resource</span> <span class="s2">&#34;plant_tree_v1_rubber_tree&#34;</span> <span class="s2">&#34;name&#34;</span> <span class="p">{</span>
+<span class="c">    # resource properties</span>
+<span class="p">}</span></code></pre></div></div>
 </pulumi-choosable>
 </div>
 
@@ -226,7 +234,7 @@ Resources are created with functions called constructors. To learn more about de
 
 The following reference example uses placeholder values for all [input properties](#inputs).
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 
@@ -236,7 +244,7 @@ The following reference example uses placeholder values for all [input propertie
 ```csharp
 var rubberTreeResource = new Plant.Tree.V1.RubberTree("rubberTreeResource", new()
 {
-    Diameter = Plant.Tree.V1.Diameter.Sixinch,
+    Diameter = Other.Tree.V1.Diameter.Sixinch,
     Type = Plant.Tree.V1.RubberTreeVariety.Burgundy,
     Container = new Plant.Inputs.ContainerArgs
     {
@@ -259,7 +267,7 @@ var rubberTreeResource = new Plant.Tree.V1.RubberTree("rubberTreeResource", new(
 
 ```go
 example, err := v1.NewRubberTree(ctx, "rubberTreeResource", &v1.RubberTreeArgs{
-	Diameter: v1.DiameterSixinch,
+	Diameter: tree / v1.DiameterSixinch,
 	Type:     v1.RubberTreeVarietyBurgundy,
 	Container: &plant.ContainerArgs{
 		Size:       plant.ContainerSizeFourInch,
@@ -270,6 +278,31 @@ example, err := v1.NewRubberTree(ctx, "rubberTreeResource", &v1.RubberTreeArgs{
 	Farm: pulumi.String(v1.Farm_Pulumi_Planters_Inc_),
 	Size: v1.TreeSizeSmall,
 })
+```
+
+</pulumi-choosable>
+</div>
+
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+
+```hcl
+resource "plant_tree_v1_rubber_tree" "rubberTreeResource" {
+  lifecycle {
+    create_before_destroy = true
+  }
+  diameter = 6
+  type     = "Burgundy"
+  container = {
+    size       = 4
+    brightness = 0.1
+    color      = "red"
+    material   = "string"
+  }
+  farm = "Pulumi Planters Inc."
+  size = "small"
+}
 ```
 
 </pulumi-choosable>
@@ -303,7 +336,7 @@ var rubberTreeResource = new RubberTree("rubberTreeResource", RubberTreeArgs.bui
 
 ```python
 rubber_tree_resource = plant.tree.v1.RubberTree("rubberTreeResource",
-    diameter=plant.tree.v1.Diameter.SIXINCH,
+    diameter=other.tree.v1.Diameter.SIXINCH,
     type=plant.tree.v1.RubberTreeVariety.BURGUNDY,
     container={
         "size": plant.ContainerSize.FOUR_INCH,
@@ -324,7 +357,7 @@ rubber_tree_resource = plant.tree.v1.RubberTree("rubberTreeResource",
 
 ```typescript
 const rubberTreeResource = new plant.tree.v1.RubberTree("rubberTreeResource", {
-    diameter: plant.tree.v1.Diameter.Sixinch,
+    diameter: other.tree.v1.Diameter.Sixinch,
     type: plant.tree.v1.RubberTreeVariety.Burgundy,
     container: {
         size: plant.ContainerSize.FourInch,
@@ -466,6 +499,52 @@ The RubberTree resource accepts the following [input](/docs/intro/concepts/input
 </span>
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#treesize">Tree<wbr>Size</a></span>
+    </dt>
+    <dd></dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-required"
+            title="Required">
+        <span id="diameter_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#diameter_hcl" style="color: inherit; text-decoration: inherit;">diameter</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#diameter">6 | 12</a></span>
+    </dt>
+    <dd></dd><dt class="property-required"
+            title="Required">
+        <span id="type_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#type_hcl" style="color: inherit; text-decoration: inherit;">type</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#rubbertreevariety">&#34;Burgundy&#34; | &#34;Ruby&#34; | &#34;Tineke&#34;</a></span>
+    </dt>
+    <dd></dd><dt class="property-optional"
+            title="Optional">
+        <span id="container_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#container_hcl" style="color: inherit; text-decoration: inherit;">container</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#container">object</a></span>
+    </dt>
+    <dd></dd><dt class="property-optional"
+            title="Optional">
+        <span id="farm_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#farm_hcl" style="color: inherit; text-decoration: inherit;">farm</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#farm">&#34;Pulumi Planters Inc.&#34; | &#34;Plants&#39;R&#39;Us&#34;</a> | string</span>
+    </dt>
+    <dd></dd><dt class="property-optional"
+            title="Optional">
+        <span id="size_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#size_hcl" style="color: inherit; text-decoration: inherit;">size</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#treesize">&#34;small&#34; | &#34;medium&#34; | &#34;large&#34;</a></span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>
@@ -691,6 +770,20 @@ All [input](#inputs) properties are implicitly available as output properties. A
 </div>
 
 <div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-"
+            title="">
+        <span id="id_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_hcl" style="color: inherit; text-decoration: inherit;">id</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>The provider-assigned unique ID for this managed resource.</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
 <pulumi-choosable type="language" values="java">
 <dl class="resources-properties"><dt class="property-"
             title="">
@@ -752,7 +845,7 @@ All [input](#inputs) properties are implicitly available as output properties. A
 
 Get an existing RubberTree resource's state with the given name, ID, and optional extra properties used to qualify the lookup.
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 <div>
@@ -794,6 +887,20 @@ Get an existing RubberTree resource's state with the given name, ID, and optiona
     <div class="no-copy">
       <div class="highlight">
         <pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">resources</span><span class="p">:</span><span class="w"></span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">_</span><span class="p">:</span><span class="w"></span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l"><span class="nx">plant:tree/v1:RubberTree</span></span><span class="w"></span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">get</span><span class="p">:</span><span class="w"></span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l">${id}</span><span class="w"></span></span></span></code></pre>
+      </div>
+    </div>
+  </pulumi-choosable>
+</div>
+
+<div>
+  <pulumi-choosable type="language" values="hcl">
+    <div class="no-copy">
+      <div class="highlight">
+        <pre tabindex="0" class="chroma"><code class="language-hcl" data-lang="hcl"><span class="line"><span class="cl"><span class="k">import</span> {
+</span></span><span class="line"><span class="cl">  <span class="n">to</span> <span class="o">=</span> <span class="nx">plant_tree_v1_rubber_tree</span>.<span class="n">example</span>
+</span></span><span class="line"><span class="cl">  <span class="n">id</span> <span class="o">=</span> <span class="s2">&#34;${id}&#34;</span>
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre>
       </div>
     </div>
   </pulumi-choosable>
@@ -966,6 +1073,20 @@ The following state arguments are supported:
 </div>
 
 <div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-optional"
+            title="Optional">
+        <span id="state_farm_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#state_farm_hcl" style="color: inherit; text-decoration: inherit;">farm</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#farm">&#34;Pulumi Planters Inc.&#34; | &#34;Plants&#39;R&#39;Us&#34;</a> | string</span>
+    </dt>
+    <dd></dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
 <pulumi-choosable type="language" values="java">
 <dl class="resources-properties"><dt class="property-optional"
             title="Optional">
@@ -1104,6 +1225,44 @@ Container<pulumi-choosable type="language" values="python,go" class="inline">, C
             title="Optional">
         <span id="material_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#material_go" style="color: inherit; text-decoration: inherit;">Material</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd></dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-required"
+            title="Required">
+        <span id="size_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#size_hcl" style="color: inherit; text-decoration: inherit;">size</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#containersize">4 | 6 | 8</a></span>
+    </dt>
+    <dd></dd><dt class="property-optional"
+            title="Optional">
+        <span id="brightness_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#brightness_hcl" style="color: inherit; text-decoration: inherit;">brightness</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#containerbrightness">0.1 | 1</a></span>
+    </dt>
+    <dd></dd><dt class="property-optional"
+            title="Optional">
+        <span id="color_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#color_hcl" style="color: inherit; text-decoration: inherit;">color</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#containercolor">&#34;red&#34; | &#34;blue&#34; | &#34;yellow&#34;</a> | string</span>
+    </dt>
+    <dd></dd><dt class="property-optional"
+            title="Optional">
+        <span id="material_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#material_hcl" style="color: inherit; text-decoration: inherit;">material</a>
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
@@ -1285,6 +1444,14 @@ Container<wbr>Brightness<pulumi-choosable type="language" values="python,go" cla
 </div>
 
 <div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="tabular"><dt>%!q(float64=0.1)</dt>
+    <dd><code>0.1</code></dd><dt>%!q(float64=1)</dt>
+    <dd><code>1</code></dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
 <pulumi-choosable type="language" values="java">
 <dl class="tabular"><dt>Zero<wbr>Point<wbr>One</dt>
     <dd><code>0.1</code></dd><dt>One</dt>
@@ -1334,6 +1501,15 @@ Container<wbr>Color<pulumi-choosable type="language" values="python,go" class="i
 <dl class="tabular"><dt>Container<wbr>Color<wbr>Red</dt>
     <dd><code>red</code></dd><dt>Container<wbr>Color<wbr>Blue</dt>
     <dd><code>blue</code></dd><dt>Container<wbr>Color<wbr>Yellow</dt>
+    <dd><code>yellow</code></dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="tabular"><dt>"red"</dt>
+    <dd><code>red</code></dd><dt>"blue"</dt>
+    <dd><code>blue</code></dd><dt>"yellow"</dt>
     <dd><code>yellow</code></dd></dl>
 </pulumi-choosable>
 </div>
@@ -1397,6 +1573,15 @@ Container<wbr>Size<pulumi-choosable type="language" values="python,go" class="in
 </div>
 
 <div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="tabular"><dt>'\x04'</dt>
+    <dd><code>4</code></dd><dt>'\x06'</dt>
+    <dd><code>6</code></dd><dt class="property-deprecated">'\b'</dt>
+    <dd><code>8</code><p class="property-message">Deprecated: Eight inch pots are no longer supported.</p></dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
 <pulumi-choosable type="language" values="java">
 <dl class="tabular"><dt>Four<wbr>Inch</dt>
     <dd><code>4</code></dd><dt>Six<wbr>Inch</dt>
@@ -1453,6 +1638,14 @@ Diameter<pulumi-choosable type="language" values="python,go" class="inline">, Di
 </div>
 
 <div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="tabular"><dt>%!q(float64=6)</dt>
+    <dd><code>6</code></dd><dt>%!q(float64=12)</dt>
+    <dd><code>12</code></dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
 <pulumi-choosable type="language" values="java">
 <dl class="tabular"><dt>Sixinch</dt>
     <dd><code>6</code></dd><dt>Twelveinch</dt>
@@ -1500,6 +1693,14 @@ Farm<pulumi-choosable type="language" values="python,go" class="inline">, Farm<w
 <pulumi-choosable type="language" values="go">
 <dl class="tabular"><dt>Farm_Pulumi_Planters_Inc_</dt>
     <dd><code>Pulumi Planters Inc.</code></dd><dt>Farm_Plants_R_Us</dt>
+    <dd><code>Plants'R'Us</code></dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="tabular"><dt>"Pulumi Planters Inc."</dt>
+    <dd><code>Pulumi Planters Inc.</code></dd><dt>"Plants'R'Us"</dt>
     <dd><code>Plants'R'Us</code></dd></dl>
 </pulumi-choosable>
 </div>
@@ -1559,6 +1760,15 @@ Rubber<wbr>Tree<wbr>Variety<pulumi-choosable type="language" values="python,go" 
 </div>
 
 <div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="tabular"><dt>"Burgundy"</dt>
+    <dd><code>Burgundy</code> A burgundy rubber tree.</dd><dt>"Ruby"</dt>
+    <dd><code>Ruby</code> A ruby rubber tree.</dd><dt>"Tineke"</dt>
+    <dd><code>Tineke</code> A tineke rubber tree.</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
 <pulumi-choosable type="language" values="java">
 <dl class="tabular"><dt>Burgundy</dt>
     <dd><code>Burgundy</code> A burgundy rubber tree.</dd><dt>Ruby</dt>
@@ -1612,6 +1822,15 @@ Tree<wbr>Size<pulumi-choosable type="language" values="python,go" class="inline"
 <dl class="tabular"><dt>Tree<wbr>Size<wbr>Small</dt>
     <dd><code>small</code></dd><dt>Tree<wbr>Size<wbr>Medium</dt>
     <dd><code>medium</code></dd><dt>Tree<wbr>Size<wbr>Large</dt>
+    <dd><code>large</code></dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="tabular"><dt>"small"</dt>
+    <dd><code>small</code></dd><dt>"medium"</dt>
+    <dd><code>medium</code></dd><dt>"large"</dt>
     <dd><code>large</code></dd></dl>
 </pulumi-choosable>
 </div>

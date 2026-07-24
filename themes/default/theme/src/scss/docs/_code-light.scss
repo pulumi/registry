@@ -1,0 +1,186 @@
+// Min Light code theme, site-wide — the light-mode counterpart to the global
+// Min Dark theme (_chroma.scss), on a faint-violet card per the Pulumi brand
+// "Code highlighting" guideline: the fill is Violet 50 at 50% opacity (page
+// showing through), and a standalone block gets a --chrome-border frame (rule at
+// the foot of this file) so it reads as a bordered card like the chooser chrome.
+// Ported from docs, where it's gated on `html:not([data-theme="dark"])
+// body.section-docs`; the registry has no theme toggle, so it's gated on `body`
+// and applies everywhere. Imported unlayered so it beats the layered component
+// rules. Comments are bumped from Min Light's #c2c3c5 (unreadable on the tint) to
+// #6e7781; the rest is the canonical palette.
+body {
+    // Flip the dark code surface + text (set in _chroma.scss / _code.scss). The
+    // fill is the code-area violet step at 50% opacity so the page shows through
+    // the rest — the block reads as a faint-violet card (the standalone border
+    // rule at the bottom of this file supplies its frame).
+    pre {
+        background: color-mix(in srgb, var(--color-violet-50) 50%, transparent);
+        color: #212121;
+    }
+
+    .chroma,
+    .bg {
+        background-color: color-mix(in srgb, var(--color-violet-50) 50%, transparent);
+        color: #212121;
+    }
+
+    .chroma {
+        .x { color: #212121; }
+        .err { color: #cd3131; }
+        .hl { background-color: var(--color-violet-100); }
+
+        // Keywords / storage
+        .k,
+        .kd,
+        .kn,
+        .kr,
+        .kt,
+        .nn,
+        .ow { color: #D32F2F; }
+
+        // Constants, numbers, builtins, variables (Min Light blue)
+        .kc,
+        .kp,
+        .m,
+        .mb,
+        .mf,
+        .mh,
+        .mi,
+        .il,
+        .mo,
+        .nb,
+        .bp,
+        .no,
+        .nl,
+        .nv,
+        .vc,
+        .vg,
+        .vi,
+        .vm { color: #1976D2; }
+
+        // Functions, types, classes, decorators, attributes (Min Light purple)
+        .n,
+        .na,
+        .nc,
+        .nd,
+        .ne,
+        .nf,
+        .fm,
+        .ni,
+        .nx { color: #6f42c1; }
+
+        // Properties + punctuation render as base text in Min Light
+        .py,
+        .p { color: #212121; }
+        .o { color: #24292e; }
+
+        // Strings
+        .l,
+        .ld,
+        .s,
+        .sa,
+        .sb,
+        .sc,
+        .dl,
+        .s2,
+        .se,
+        .sh,
+        .si,
+        .sx,
+        .sr,
+        .s1,
+        .ss { color: #2b5581; }
+
+        // Tags
+        .nt { color: #22863a; }
+
+        // Comments (bumped from #c2c3c5 for contrast — see header)
+        .c,
+        .ch,
+        .cm,
+        .c1,
+        .cs,
+        .cp,
+        .cpf { color: #6e7781; font-style: italic; }
+
+        // Docstrings track the comment color
+        .sd { color: #6e7781; font-style: italic; }
+
+        // Generic / diff
+        .gd { color: #b31d28; background-color: #ffeef0; }
+        .gi { color: #22863a; background-color: #e6ffed; }
+        .gh { color: #1976D2; font-weight: bold; }
+        .gu { color: #1976D2; }
+        .gp { color: #6e7781; font-weight: bold; }
+        .go { color: #6e7781; }
+        .gr,
+        .gt { color: #cd3131; }
+        .gs { font-weight: bold; color: #cd3131; }
+    }
+
+    // Copy button: dark icon on the light panel. The container must be opaque so
+    // scrolled code and the scrollbar don't show through beneath it, but the panel
+    // fill is now half-transparent violet-50 over the white page — so mix the same
+    // step over white (not transparent) to get an opaque color that matches the
+    // panel and blends in until hovered.
+    .copy-button-container {
+        background: color-mix(in srgb, var(--color-violet-50) 50%, var(--color-white));
+
+        &:hover {
+            background: var(--color-violet-100);
+        }
+    }
+
+    .copy-button {
+        color: var(--color-gray-700);
+
+        &:hover {
+            color: var(--color-gray-900);
+        }
+    }
+
+    // example-program footer (the code panel's bottom lip).
+    .example-program .example-program-footer {
+        background: color-mix(in srgb, var(--color-violet-50) 50%, transparent);
+
+        a {
+            color: var(--color-gray-700);
+
+            &:hover {
+                color: var(--color-gray-900);
+            }
+        }
+    }
+
+    // code-tabbed (interactive multi-language demo).
+    .code-tabbed {
+        .code-tabbed-tabs,
+        .code-tabbed-content,
+        .code-tabbed-status {
+            background: color-mix(in srgb, var(--color-violet-50) 50%, transparent);
+        }
+
+        .code-tabbed-tab {
+            .code-tabbed-tab-label {
+                color: var(--color-gray-600);
+            }
+
+            &:hover .code-tabbed-tab-label {
+                color: var(--color-gray-800);
+            }
+
+            &.active .code-tabbed-tab-label {
+                color: var(--color-gray-900);
+            }
+        }
+    }
+}
+
+// Standalone code block → bordered card. A fenced block that isn't already inside
+// its own frame (a chooser card, an example-program panel, a code-chrome terminal,
+// or a code-tabbed demo) gets a 1px --chrome-border so it matches the chooser
+// chrome. The :not() list excludes the surfaces that supply their own frame;
+// pre.mermaid is excluded so diagram canvases stay unframed.
+.highlight:not(pulumi-chooser *, .example-program *, .code-chrome *, .code-tabbed *) pre:not(.mermaid) {
+    border: 1px solid var(--chrome-border);
+}

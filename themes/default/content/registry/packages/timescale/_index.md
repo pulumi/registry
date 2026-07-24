@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/timescale/timescale/2.11.1/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/timescale/timescale/2.13.3/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Timescale Provider
@@ -751,6 +751,14 @@ Please reference the [docs](https://docs.tigerdata.com/use-timescale/latest/regi
 ✅ Metric exporters <br />
 ✅ Log exporters <br />
 ✅ S3 connector <br />
+## Troubleshooting
+### `missing project permission: PROJECT_PERMISSION_READ for project ...`
+
+Provider versions **< 2.4.0** did not scope the VPC lookup by project, so reading a
+`timescale.Vpcs` or `timescale.PeeringConnection` resource could fail this permission
+check when the credentials' default project differs from the project the VPC belongs to.
+This was fixed in **v2.4.0** (#274).
+If you hit this error, upgrade to any provider version ≥ 2.4.0.
 ## Billing
 Services are currently billed for hourly usage. If a service is running for less than an hour,
 it will still be charged for the full hour of usage.

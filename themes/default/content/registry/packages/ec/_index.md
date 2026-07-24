@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-ec/v0.10.11/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-ec/v0.12.2/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-ec/blob/v0.10.11/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-ec/blob/v0.12.2/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: ElasticCloud (EC) Provider
 meta_desc: Provides an overview on how to configure the Pulumi ElasticCloud (EC) provider.
@@ -36,7 +36,7 @@ The Elastic Cloud Pulumi provider offers two methods of authentication against t
 
 Elasticsearch Service (ESS) only supports `apikey`. Elastic Cloud Enterprise (ECE) supports `apikey` or a combination of `username` and `password`.
 
-!> **Warning:** Hard-coding credentials into a Pulumi configuration is not recommended, and risks secret leakage should this file ever be committed to a public version control system.
+> **Warning:** Hard-coding credentials into a Pulumi configuration is not recommended, and risks secret leakage should this file ever be committed to a public version control system.
 ### API key authentication (recommended)
 
 API keys are the recommended authentication method. They can be used to authenticate against Elasticsearch Service or Elastic Cloud Enterprise.

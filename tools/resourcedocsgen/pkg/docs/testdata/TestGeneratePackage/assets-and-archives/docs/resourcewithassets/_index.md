@@ -23,7 +23,7 @@ Resources are created with functions called constructors. To learn more about de
 
 ### Constructor syntax
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 
@@ -77,6 +77,14 @@ Resources are created with functions called constructors. To learn more about de
 <span class="p"></span><span class="p">options</span><span class="p">: </span><span class="c">#&nbsp;Bag of options to control resource&#39;s behavior.</span>
 <span class="p"></span>
 </code></pre></div></div>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<div class="no-copy"><div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">resource</span> <span class="s2">&#34;example_resource_with_assets&#34;</span> <span class="s2">&#34;name&#34;</span> <span class="p">{</span>
+<span class="c">    # resource properties</span>
+<span class="p">}</span></code></pre></div></div>
 </pulumi-choosable>
 </div>
 
@@ -224,7 +232,7 @@ Resources are created with functions called constructors. To learn more about de
 
 The following reference example uses placeholder values for all [input properties](#inputs).
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 
@@ -264,6 +272,29 @@ example, err := example.NewResourceWithAssets(ctx, "resourceWithAssetsResource",
 		PlainAsset:   pulumi.NewStringAsset("content"),
 	},
 })
+```
+
+</pulumi-choosable>
+</div>
+
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+
+```hcl
+resource "example_resource_with_assets" "resourceWithAssetsResource" {
+  lifecycle {
+    create_before_destroy = true
+  }
+  source  = stringAsset("content")
+  archive = fileArchive("./path/to/archive")
+  nested = {
+    asset         = stringAsset("content")
+    plain_archive = fileArchive("./path/to/archive")
+    archive       = fileArchive("./path/to/archive")
+    plain_asset   = stringAsset("content")
+  }
+}
 ```
 
 </pulumi-choosable>
@@ -432,6 +463,36 @@ The ResourceWithAssets resource accepts the following [input](/docs/intro/concep
 </div>
 
 <div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-required"
+            title="Required">
+        <span id="source_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#source_hcl" style="color: inherit; text-decoration: inherit;">source</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">asset</span>
+    </dt>
+    <dd></dd><dt class="property-optional"
+            title="Optional">
+        <span id="archive_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#archive_hcl" style="color: inherit; text-decoration: inherit;">archive</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">archive</span>
+    </dt>
+    <dd></dd><dt class="property-optional"
+            title="Optional">
+        <span id="nested_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#nested_hcl" style="color: inherit; text-decoration: inherit;">nested</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#typewithassets">object</a></span>
+    </dt>
+    <dd></dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
 <pulumi-choosable type="language" values="java">
 <dl class="resources-properties"><dt class="property-required"
             title="Required">
@@ -594,6 +655,28 @@ All [input](#inputs) properties are implicitly available as output properties. A
             title="">
         <span id="id_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_go" style="color: inherit; text-decoration: inherit;">Id</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>The provider-assigned unique ID for this managed resource.</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-"
+            title="">
+        <span id="asset_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#asset_hcl" style="color: inherit; text-decoration: inherit;">asset</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">asset</span>
+    </dt>
+    <dd></dd><dt class="property-"
+            title="">
+        <span id="id_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_hcl" style="color: inherit; text-decoration: inherit;">id</a>
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
@@ -775,6 +858,44 @@ Type<wbr>With<wbr>Assets<pulumi-choosable type="language" values="python,go" cla
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">pulumi.<wbr>Asset<wbr>Or<wbr>Archive</span>
+    </dt>
+    <dd></dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-required"
+            title="Required">
+        <span id="asset_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#asset_hcl" style="color: inherit; text-decoration: inherit;">asset</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">asset</span>
+    </dt>
+    <dd></dd><dt class="property-required"
+            title="Required">
+        <span id="plain_archive_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#plain_archive_hcl" style="color: inherit; text-decoration: inherit;">plain_<wbr>archive</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">archive</span>
+    </dt>
+    <dd></dd><dt class="property-optional"
+            title="Optional">
+        <span id="archive_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#archive_hcl" style="color: inherit; text-decoration: inherit;">archive</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">archive</span>
+    </dt>
+    <dd></dd><dt class="property-optional"
+            title="Optional">
+        <span id="plain_asset_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#plain_asset_hcl" style="color: inherit; text-decoration: inherit;">plain_<wbr>asset</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">asset</span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>

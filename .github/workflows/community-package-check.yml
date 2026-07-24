@@ -1,0 +1,58 @@
+# Runs the checks on a contributor's PR, so it works on forks. It holds no secrets, and its
+# probes resolve and download the advertised SDKs without executing them (npm --ignore-scripts,
+# pip wheel-only, go module fetch, plugin download only), so a malicious package has nothing to
+# run and nothing to steal. community-package-policy.yml fails CI if a secret is added here.
+name: Community package check
+
+on:
+  pull_request:
+    paths:
+      - community-packages/package-list.json
+
+permissions:
+  contents: read
+
+concurrency:
+  group: community-check-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: tools/resourcedocsgen/go.mod
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install the Pulumi CLI (for the plugin install probe)
+        run: |
+          curl -fsSL https://get.pulumi.com | sh
+          echo "$HOME/.pulumi/bin" >> "$GITHUB_PATH"
+
+      - name: Record the PR number so the reporter posts to the right PR
+        run: echo "${{ github.event.pull_request.number }}" > pr-number.txt
+
+      - name: Verify the added entry and write the fact-sheet
+        env:
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: python3 scripts/ci/community-package/cli.py check --diff "origin/${{ github.base_ref }}"
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: fact-sheets
+          path: |
+            *.factsheet.md
+            pr-number.txt

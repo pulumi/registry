@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-gitlab/v9.11.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-gitlab/v10.1.1/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-gitlab/blob/v9.11.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-gitlab/blob/v10.1.1/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Gitlab Provider
 meta_desc: Provides an overview on how to configure the Pulumi Gitlab provider.
@@ -14,7 +14,7 @@ The Gitlab provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/gitlab`](https://www.npmjs.com/package/@pulumi/gitlab)
 * Python: [`pulumi-gitlab`](https://pypi.org/project/pulumi-gitlab/)
-* Go: [`github.com/pulumi/pulumi-gitlab/sdk/v9/go/gitlab`](https://github.com/pulumi/pulumi-gitlab)
+* Go: [`github.com/pulumi/pulumi-gitlab/sdk/v10/go/gitlab`](https://github.com/pulumi/pulumi-gitlab)
 * .NET: [`Pulumi.Gitlab`](https://www.nuget.org/packages/Pulumi.Gitlab)
 * Java: [`com.pulumi/gitlab`](https://central.sonatype.com/artifact/com.pulumi/gitlab)
 
@@ -62,7 +62,7 @@ which are applied in the following order:
 3. (experimental) Configuration file (see <https://gitlab.com/gitlab-org/api/client-go#use-the-config-package-experimental>)
 ## Example Usage
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
@@ -106,7 +106,7 @@ const sampleGroup = new gitlab.Group("sample_group", {
 // Add a project to the group - example/example
 const sampleGroupProject = new gitlab.Project("sample_group_project", {
     name: "example",
-    namespaceId: sampleGroup.id,
+    namespaceId: sampleGroup.id.apply(x =>Number(x)),
 });
 ```
 
@@ -150,7 +150,7 @@ sample_group = gitlab.Group("sample_group",
 # Add a project to the group - example/example
 sample_group_project = gitlab.Project("sample_group_project",
     name="example",
-    namespace_id=sample_group.id)
+    namespace_id=sample_group.id.apply(lambda x: int(x)))
 ```
 
 {{% /choosable %}}
@@ -174,20 +174,20 @@ using GitLab = Pulumi.GitLab;
 return await Deployment.RunAsync(() =>
 {
     // Add a project owned by the user
-    var sampleProject = new GitLab.Index.Project("sample_project", new()
+    var sampleProject = new GitLab.Project("sample_project", new()
     {
         Name = "example",
     });
 
     // Add a hook to the project
-    var sampleProjectHook = new GitLab.Index.ProjectHook("sample_project_hook", new()
+    var sampleProjectHook = new GitLab.ProjectHook("sample_project_hook", new()
     {
         Project = sampleProject.Id,
         Url = "https://example.com/project_hook",
     });
 
     // Add a variable to the project
-    var sampleProjectVariable = new GitLab.Index.ProjectVariable("sample_project_variable", new()
+    var sampleProjectVariable = new GitLab.ProjectVariable("sample_project_variable", new()
     {
         Project = sampleProject.Id,
         Key = "project_variable_key",
@@ -195,7 +195,7 @@ return await Deployment.RunAsync(() =>
     });
 
     // Add a deploy key to the project
-    var sampleDeployKey = new GitLab.Index.DeployKey("sample_deploy_key", new()
+    var sampleDeployKey = new GitLab.DeployKey("sample_deploy_key", new()
     {
         Project = sampleProject.Id,
         Title = "pulumi example",
@@ -203,7 +203,7 @@ return await Deployment.RunAsync(() =>
     });
 
     // Add a group
-    var sampleGroup = new GitLab.Index.Group("sample_group", new()
+    var sampleGroup = new GitLab.Group("sample_group", new()
     {
         Name = "example",
         Path = "example",
@@ -211,7 +211,7 @@ return await Deployment.RunAsync(() =>
     });
 
     // Add a project to the group - example/example
-    var sampleGroupProject = new GitLab.Index.Project("sample_group_project", new()
+    var sampleGroupProject = new GitLab.Project("sample_group_project", new()
     {
         Name = "example",
         NamespaceId = sampleGroup.Id,
@@ -237,7 +237,7 @@ config:
 package main
 
 import (
-	"github.com/pulumi/pulumi-gitlab/sdk/v9/go/gitlab"
+	"github.com/pulumi/pulumi-gitlab/sdk/v10/go/gitlab"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -386,8 +386,8 @@ import com.pulumi.gitlab.DeployKey;
 import com.pulumi.gitlab.DeployKeyArgs;
 import com.pulumi.gitlab.Group;
 import com.pulumi.gitlab.GroupArgs;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;
@@ -438,6 +438,51 @@ public class App {
             .build());
 
     }
+}
+```
+
+{{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+pulumi {
+  required_providers {
+    gitlab = {
+      source = "pulumi/gitlab"
+    }
+  }
+}
+
+# Add a project owned by the user
+resource "gitlab_project" "sample_project" {
+  name = "example"
+}
+# Add a hook to the project
+resource "gitlab_projecthook" "sample_project_hook" {
+  project = gitlab_project.sample_project.id
+  url     = "https://example.com/project_hook"
+}
+# Add a variable to the project
+resource "gitlab_projectvariable" "sample_project_variable" {
+  project = gitlab_project.sample_project.id
+  key     = "project_variable_key"
+  value   = "project_variable_value"
+}
+# Add a deploy key to the project
+resource "gitlab_deploykey" "sample_deploy_key" {
+  project = gitlab_project.sample_project.id
+  title   = "pulumi example"
+  key     = "ssh-ed25519 AAAA..."
+}
+# Add a group
+resource "gitlab_group" "sample_group" {
+  name        = "example"
+  path        = "example"
+  description = "An example group"
+}
+# Add a project to the group - example/example
+resource "gitlab_project" "sample_group_project" {
+  name         = "example"
+  namespace_id = gitlab_group.sample_group.id
 }
 ```
 

@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-vault/v7.8.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-vault/v7.11.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-vault/blob/v7.8.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-vault/blob/v7.11.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: HashiCorp Vault Provider
 meta_desc: Provides an overview on how to configure the Pulumi HashiCorp Vault provider.
@@ -527,7 +527,7 @@ The path-based `authLogin` configuration block accepts the following arguments:
   to see what can go here.
 ## Example Usage
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
@@ -634,7 +634,7 @@ func main() {
 		json0 := string(tmpJSON0)
 		_, err = generic.NewSecret(ctx, "example", &generic.SecretArgs{
 			Path:     pulumi.String("secret/foo"),
-			DataJson: pulumi.String(pulumi.String(json0)),
+			DataJson: pulumi.String(json0),
 		})
 		if err != nil {
 			return err
@@ -683,8 +683,8 @@ import com.pulumi.core.Output;
 import com.pulumi.vault.generic.Secret;
 import com.pulumi.vault.generic.SecretArgs;
 import static com.pulumi.codegen.internal.Serialization.*;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;
@@ -710,11 +710,31 @@ public class App {
 ```
 
 {{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+pulumi {
+  required_providers {
+    vault = {
+      source = "pulumi/vault"
+    }
+  }
+}
+
+resource "vault_generic_secret" "example" {
+  path = "secret/foo"
+  data_json = jsonencode({
+    "foo"   = "bar"
+    "pizza" = "cheese"
+  })
+}
+```
+
+{{% /choosable %}}
 {{< /chooser >}}
 ### Example `authLogin` Usage
 With the `userpass` backend:
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
@@ -791,8 +811,10 @@ import (
 func main() {
 	pulumi.Run(func(ctx *pulumi.Context) error {
 		cfg := config.New(ctx, "")
-		loginUsername := cfg.RequireObject("loginUsername")
-		loginPassword := cfg.RequireObject("loginPassword")
+		var loginUsername interface{}
+		cfg.RequireObject("loginUsername", &loginUsername)
+		var loginPassword interface{}
+		cfg.RequireObject("loginPassword", &loginPassword)
 		return nil
 	})
 }
@@ -810,9 +832,9 @@ runtime: yaml
 ```yaml
 configuration:
   loginUsername:
-    type: dynamic
+    type: object
   loginPassword:
-    type: dynamic
+    type: object
 ```
 
 {{% /choosable %}}
@@ -830,8 +852,8 @@ package generated_program;
 import com.pulumi.Context;
 import com.pulumi.Pulumi;
 import com.pulumi.core.Output;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;
@@ -851,11 +873,20 @@ public class App {
 ```
 
 {{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+variable "loginUsername" {
+}
+variable "loginPassword" {
+}
+```
+
+{{% /choosable %}}
 {{< /chooser >}}
 
 Or, using `approle`:
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
@@ -932,8 +963,10 @@ import (
 func main() {
 	pulumi.Run(func(ctx *pulumi.Context) error {
 		cfg := config.New(ctx, "")
-		loginApproleRoleId := cfg.RequireObject("loginApproleRoleId")
-		loginApproleSecretId := cfg.RequireObject("loginApproleSecretId")
+		var loginApproleRoleId interface{}
+		cfg.RequireObject("loginApproleRoleId", &loginApproleRoleId)
+		var loginApproleSecretId interface{}
+		cfg.RequireObject("loginApproleSecretId", &loginApproleSecretId)
 		return nil
 	})
 }
@@ -951,9 +984,9 @@ runtime: yaml
 ```yaml
 configuration:
   loginApproleRoleId:
-    type: dynamic
+    type: object
   loginApproleSecretId:
-    type: dynamic
+    type: object
 ```
 
 {{% /choosable %}}
@@ -971,8 +1004,8 @@ package generated_program;
 import com.pulumi.Context;
 import com.pulumi.Pulumi;
 import com.pulumi.core.Output;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;
@@ -988,6 +1021,15 @@ public class App {
         final var loginApproleRoleId = config.require("loginApproleRoleId");
         final var loginApproleSecretId = config.require("loginApproleSecretId");
     }
+}
+```
+
+{{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+variable "loginApproleRoleId" {
+}
+variable "loginApproleSecretId" {
 }
 ```
 

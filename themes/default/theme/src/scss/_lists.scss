@@ -41,7 +41,7 @@ dl {
         dd {
             @apply bg-white rounded-none text-base font-normal leading-6 break-words;
 
-            font-family: "Inter";
+            font-family: var(--font-body);
             color: map-get($gray, 950);
 
             p {

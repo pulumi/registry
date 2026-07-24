@@ -36,7 +36,7 @@ type functionDocArgs struct {
 	// customize the languages shown for a function. By default, the language chooser will show all languages supported by
 	// Pulumi.
 	//
-	// Supported values are "typescript", "python", "go", "csharp", "java", "yaml"
+	// Supported values are "typescript", "python", "go", "csharp", "java", "yaml", "hcl"
 	LangChooserLanguages string
 
 	DeprecationMessage string
@@ -112,6 +112,8 @@ func (mod *modContext) getFunctionResourceInfo(
 		case language.Java:
 			resultTypeName = docLangHelper.GetResourceFunctionResultName(mod.mod, f)
 		case language.YAML:
+			resultTypeName = docLangHelper.GetResourceFunctionResultName(mod.mod, f)
+		case language.HCL:
 			resultTypeName = docLangHelper.GetResourceFunctionResultName(mod.mod, f)
 		default:
 			panic(fmt.Errorf("cannot generate function resource info for unhandled language %#v", lang))
@@ -357,7 +359,7 @@ func (mod *modContext) genFunctionParams(
 		return mod.genFunctionParamsJava(f, funcName)
 	case language.Python:
 		return mod.genFunctionParamsPython(f, funcName, outputVersion)
-	case language.YAML: // Left blank
+	case language.YAML, language.HCL: // Left blank
 		return nil
 	default:
 		contract.Failf("Unknown %#v", lang)
@@ -395,7 +397,7 @@ func (mod *modContext) genFunctionOutputVersionMap(f *schema.Function) map[langu
 		switch lang {
 		case language.Go:
 			hasOutputVersion = go_gen.NeedsGoOutputVersion(f)
-		case language.YAML:
+		case language.YAML, language.HCL:
 			hasOutputVersion = false
 		}
 		result[lang] = hasOutputVersion

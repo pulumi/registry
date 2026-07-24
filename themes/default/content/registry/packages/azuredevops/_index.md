@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-azuredevops/v3.14.1/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-azuredevops/v3.16.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-azuredevops/blob/v3.14.1/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-azuredevops/blob/v3.16.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Azure DevOps Provider
 meta_desc: Provides an overview on how to configure the Pulumi Azure DevOps provider.
@@ -27,7 +27,7 @@ Use the navigation to the left to read about the available resources.
 Interested in the provider's latest features, or want to make sure you're up to date? Check out the changelog for version information and release notes.
 ## Example Usage
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
@@ -60,7 +60,7 @@ using AzureDevOps = Pulumi.AzureDevOps;
 
 return await Deployment.RunAsync(() =>
 {
-    var project = new AzureDevOps.Index.Project("project", new()
+    var project = new AzureDevOps.Project("project", new()
     {
         Name = "Project Name",
         Description = "Project Description",
@@ -115,8 +115,8 @@ import com.pulumi.Pulumi;
 import com.pulumi.core.Output;
 import com.pulumi.azuredevops.Project;
 import com.pulumi.azuredevops.ProjectArgs;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;
@@ -134,6 +134,23 @@ public class App {
             .build());
 
     }
+}
+```
+
+{{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+pulumi {
+  required_providers {
+    azuredevops = {
+      source = "pulumi/azuredevops"
+    }
+  }
+}
+
+resource "azuredevops_project" "project" {
+  name        = "Project Name"
+  description = "Project Description"
 }
 ```
 
@@ -157,12 +174,12 @@ The following configuration inputs are supported in the provider configuration:
 - `clientIdFilePath` - The path to a file containing a client id to authenticate. It can also be sourced from the `ARM_CLIENT_ID_FILE_PATH` environment variable.
 
 - `tenantId` - The tenant id used when authenticating to a service principal.
-  It can also be sourced from the `ARM_TENANT_ID` environment variable.
+  It can also be sourced from the `ARM_TENANT_ID` or `AZURE_TENANT_ID` environment variable.
 
 - `auxiliaryTenantIds` - List of auxiliary Tenant IDs required for multi-tenancy and cross-tenant scenarios. This can also be sourced from the `ARM_AUXILIARY_TENANT_IDS` environment variable.
 
 - `clientSecret` - The client secret used to authenticate to a service principal.
-  It can also be sourced from the `ARM_CLIENT_SECRET` environment variable.
+  It can also be sourced from the `ARM_CLIENT_SECRET` or `AZURE_CLIENT_SECRET` environment variable.
 
 - `clientSecretPath` - The path to a file containing a client secret to authenticate to a service principal.
   It can also be sourced from the `ARM_CLIENT_SECRET_PATH` or `ARM_CLIENT_SECRET_FILE_PATH` environment variable.

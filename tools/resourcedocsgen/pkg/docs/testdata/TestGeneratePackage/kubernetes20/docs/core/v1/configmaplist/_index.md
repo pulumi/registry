@@ -18,14 +18,13 @@ A Kubernetes list resource.
 
 
 
-
 ## Create ConfigMapList Resource {#create}
 
 Resources are created with functions called constructors. To learn more about declaring and configuring resources, see [Resources](/docs/concepts/resources/).
 
 ### Constructor syntax
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 
@@ -78,6 +77,14 @@ Resources are created with functions called constructors. To learn more about de
 <span class="p"></span><span class="p">options</span><span class="p">: </span><span class="c">#&nbsp;Bag of options to control resource&#39;s behavior.</span>
 <span class="p"></span>
 </code></pre></div></div>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<div class="no-copy"><div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">resource</span> <span class="s2">&#34;kubernetes_core_v1_config_map_list&#34;</span> <span class="s2">&#34;name&#34;</span> <span class="p">{</span>
+<span class="c">    # resource properties</span>
+<span class="p">}</span></code></pre></div></div>
 </pulumi-choosable>
 </div>
 
@@ -225,7 +232,7 @@ Resources are created with functions called constructors. To learn more about de
 
 The following reference example uses placeholder values for all [input properties](#inputs).
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 
@@ -235,7 +242,7 @@ The following reference example uses placeholder values for all [input propertie
 ```csharp
 var configMapListResource = new Kubernetes.Core.V1.ConfigMapList("configMapListResource", new()
 {
-    Items = new[]
+    Items = 
     {
         new Kubernetes.Types.Inputs.Core.V1.ConfigMapArgs
         {
@@ -396,11 +403,82 @@ example, err := corev1.NewConfigMapList(ctx, "configMapListResource", &corev1.Co
 
 
 <div>
+<pulumi-choosable type="language" values="hcl">
+
+```hcl
+resource "kubernetes_core_v1_config_map_list" "configMapListResource" {
+  lifecycle {
+    create_before_destroy = true
+  }
+  items {
+    api_version = "v1"
+    binary_data = {
+      "string" = "string"
+    }
+    data = {
+      "string" = "string"
+    }
+    immutable = false
+    kind      = "ConfigMap"
+    metadata = {
+      annotations = {
+        "string" = "string"
+      }
+      cluster_name                  = "string"
+      creation_timestamp            = "string"
+      deletion_grace_period_seconds = 0
+      deletion_timestamp            = "string"
+      finalizers                    = ["string"]
+      generate_name                 = "string"
+      generation                    = 0
+      labels = {
+        "string" = "string"
+      }
+      managed_fields = [{
+        api_version = "string"
+        fields_type = "string"
+        fields_v1   = "{}"
+        manager     = "string"
+        operation   = "string"
+        subresource = "string"
+        time        = "string"
+      }]
+      name      = "string"
+      namespace = "string"
+      owner_references = [{
+        api_version          = "string"
+        kind                 = "string"
+        name                 = "string"
+        uid                  = "string"
+        block_owner_deletion = false
+        controller           = false
+      }]
+      resource_version = "string"
+      self_link        = "string"
+      uid              = "string"
+    }
+  }
+  api_version = "string"
+  kind        = "string"
+  metadata = {
+    continue             = "string"
+    remaining_item_count = 0
+    resource_version     = "string"
+    self_link            = "string"
+  }
+}
+```
+
+</pulumi-choosable>
+</div>
+
+
+<div>
 <pulumi-choosable type="language" values="java">
 
 ```java
 var configMapListResource = new ConfigMapList("configMapListResource", ConfigMapListArgs.builder()
-    .items(ConfigMapArgs.builder()
+    .items(com.pulumi.kubernetes.core_v1.inputs.ConfigMapArgs.builder()
         .apiVersion("v1")
         .binaryData(Map.of("string", "string"))
         .data(Map.of("string", "string"))
@@ -712,6 +790,28 @@ The ConfigMapList resource accepts the following [input](/docs/intro/concepts/in
 </div>
 
 <div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-required"
+            title="Required">
+        <span id="items_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#items_hcl" style="color: inherit; text-decoration: inherit;">items</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#configmap">list(object)</a></span>
+    </dt>
+    <dd>Items is the list of ConfigMaps.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="metadata_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#metadata_hcl" style="color: inherit; text-decoration: inherit;">metadata</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#listmeta">object</a></span>
+    </dt>
+    <dd>More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
 <pulumi-choosable type="language" values="java">
 <dl class="resources-properties"><dt class="property-required"
             title="Required">
@@ -826,6 +926,20 @@ All [input](#inputs) properties are implicitly available as output properties. A
             title="">
         <span id="id_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_go" style="color: inherit; text-decoration: inherit;">Id</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>The provider-assigned unique ID for this managed resource.</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-"
+            title="">
+        <span id="id_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_hcl" style="color: inherit; text-decoration: inherit;">id</a>
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
@@ -977,6 +1091,44 @@ ConfigMap holds configuration data for pods to consume.
 </span>
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#objectmeta">Object<wbr>Meta</a></span>
+    </dt>
+    <dd>Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-optional"
+            title="Optional">
+        <span id="binary_data_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#binary_data_hcl" style="color: inherit; text-decoration: inherit;">binary_<wbr>data</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">map(string)</span>
+    </dt>
+    <dd>BinaryData contains the binary data. Each key must consist of alphanumeric characters, '-', '_' or '.'. BinaryData can contain byte sequences that are not in the UTF-8 range. The keys stored in BinaryData must not overlap with the ones in the Data field, this is enforced during validation process. Using this field will require 1.10+ apiserver and kubelet.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="data_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#data_hcl" style="color: inherit; text-decoration: inherit;">data</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">map(string)</span>
+    </dt>
+    <dd>Data contains the configuration data. Each key must consist of alphanumeric characters, '-', '_' or '.'. Values with non-UTF-8 byte sequences must use the BinaryData field. The keys stored in Data must not overlap with the keys in the BinaryData field, this is enforced during validation process.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="immutable_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#immutable_hcl" style="color: inherit; text-decoration: inherit;">immutable</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">bool</span>
+    </dt>
+    <dd>Immutable, if set to true, ensures that data stored in the ConfigMap cannot be updated (only object metadata can be modified). If not set to true, the field can be modified at any time. Defaulted to nil.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="metadata_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#metadata_hcl" style="color: inherit; text-decoration: inherit;">metadata</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#objectmeta">object</a></span>
     </dt>
     <dd>Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata</dd></dl>
 </pulumi-choosable>
@@ -1208,6 +1360,44 @@ ListMeta describes metadata that synthetic resources must have, including lists 
             title="Optional">
         <span id="selflink_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#selflink_go" style="color: inherit; text-decoration: inherit;">Self<wbr>Link</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Deprecated: selfLink is a legacy read-only field that is no longer populated by the system.</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-optional"
+            title="Optional">
+        <span id="continue_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#continue_hcl" style="color: inherit; text-decoration: inherit;">continue</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>continue may be set if the user set a limit on the number of items returned, and indicates that the server has more data available. The value is opaque and may be used to issue another request to the endpoint that served this list to retrieve the next set of available objects. Continuing a consistent list may not be possible if the server configuration has changed or more than a few minutes have passed. The resourceVersion field returned when using this continue value will be identical to the value in the first response, unless you have received this token from an error message.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="remaining_item_count_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#remaining_item_count_hcl" style="color: inherit; text-decoration: inherit;">remaining_<wbr>item_<wbr>count</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">number</span>
+    </dt>
+    <dd>remainingItemCount is the number of subsequent items in the list which are not included in this list response. If the list request contained label or field selectors, then the number of remaining items is unknown and the field will be left unset and omitted during serialization. If the list is complete (either because it is not chunking or because this is the last chunk), then there are no more remaining items and this field will be left unset and omitted during serialization. Servers older than v1.15 do not set this field. The intended use of the remainingItemCount is <em>estimating</em> the size of a collection. Clients should not rely on the remainingItemCount to be set or to be exact.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="resource_version_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#resource_version_hcl" style="color: inherit; text-decoration: inherit;">resource_<wbr>version</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>String that identifies the server's internal version of this object that can be used by clients to determine when objects have changed. Value must be treated as opaque by clients and passed unmodified back to the server. Populated by the system. Read-only. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency</dd><dt class="property-optional"
+            title="Optional">
+        <span id="self_link_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#self_link_hcl" style="color: inherit; text-decoration: inherit;">self_<wbr>link</a>
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
@@ -1490,6 +1680,68 @@ ManagedFieldsEntry is a workflow-id, a FieldSet and the group version of the res
             title="Optional">
         <span id="time_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#time_go" style="color: inherit; text-decoration: inherit;">Time</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Time is the timestamp of when the ManagedFields entry was added. The timestamp will also be updated if a field is added, the manager changes any of the owned fields value or removes a field. The timestamp does not update when a field is removed from the entry because another manager took it over.</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-optional"
+            title="Optional">
+        <span id="api_version_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#api_version_hcl" style="color: inherit; text-decoration: inherit;">api_<wbr>version</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>APIVersion defines the version of this resource that this field set applies to. The format is &quot;group/version&quot; just like the top-level APIVersion field. It is necessary to track the version of a field set because it cannot be automatically converted.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="fields_type_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#fields_type_hcl" style="color: inherit; text-decoration: inherit;">fields_<wbr>type</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>FieldsType is the discriminator for the different fields format and version. There is currently only one possible value: &quot;FieldsV1&quot;</dd><dt class="property-optional"
+            title="Optional">
+        <span id="fields_v1_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#fields_v1_hcl" style="color: inherit; text-decoration: inherit;">fields_<wbr>v1</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">any</span>
+    </dt>
+    <dd>FieldsV1 holds the first JSON version format as described in the &quot;FieldsV1&quot; type.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="manager_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#manager_hcl" style="color: inherit; text-decoration: inherit;">manager</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Manager is an identifier of the workflow managing these fields.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="operation_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#operation_hcl" style="color: inherit; text-decoration: inherit;">operation</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Operation is the type of operation which lead to this ManagedFieldsEntry being created. The only valid values for this field are 'Apply' and 'Update'.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="subresource_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#subresource_hcl" style="color: inherit; text-decoration: inherit;">subresource</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Subresource is the name of the subresource used to update that object, or empty string if the object was updated through the main resource. The value of this field is used to distinguish between managers, even if they share the same name. For example, a status update will be distinct from a regular update using the same manager name. Note that the APIVersion field is not related to the Subresource field and it always corresponds to the version of the main resource.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="time_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#time_hcl" style="color: inherit; text-decoration: inherit;">time</a>
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
@@ -2036,6 +2288,153 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
             title="Optional">
         <span id="uid_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#uid_go" style="color: inherit; text-decoration: inherit;">Uid</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd><p>UID is the unique in time and space value for this object. It is typically generated by the server on successful creation of a resource and is not allowed to change on PUT operations.</p>
+<p>Populated by the system. Read-only. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids</p>
+</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-optional"
+            title="Optional">
+        <span id="annotations_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#annotations_hcl" style="color: inherit; text-decoration: inherit;">annotations</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">map(string)</span>
+    </dt>
+    <dd>Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations</dd><dt class="property-optional"
+            title="Optional">
+        <span id="cluster_name_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#cluster_name_hcl" style="color: inherit; text-decoration: inherit;">cluster_<wbr>name</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>The name of the cluster which the object belongs to. This is used to distinguish resources with same name and namespace in different clusters. This field is not set anywhere right now and apiserver is going to ignore it if set in create or update request.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="creation_timestamp_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#creation_timestamp_hcl" style="color: inherit; text-decoration: inherit;">creation_<wbr>timestamp</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd><p>CreationTimestamp is a timestamp representing the server time when this object was created. It is not guaranteed to be set in happens-before order across separate operations. Clients may not set this value. It is represented in RFC3339 form and is in UTC.</p>
+<p>Populated by the system. Read-only. Null for lists. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata</p>
+</dd><dt class="property-optional"
+            title="Optional">
+        <span id="deletion_grace_period_seconds_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#deletion_grace_period_seconds_hcl" style="color: inherit; text-decoration: inherit;">deletion_<wbr>grace_<wbr>period_<wbr>seconds</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">number</span>
+    </dt>
+    <dd>Number of seconds allowed for this object to gracefully terminate before it will be removed from the system. Only set when deletionTimestamp is also set. May only be shortened. Read-only.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="deletion_timestamp_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#deletion_timestamp_hcl" style="color: inherit; text-decoration: inherit;">deletion_<wbr>timestamp</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd><p>DeletionTimestamp is RFC 3339 date and time at which this resource will be deleted. This field is set by the server when a graceful deletion is requested by the user, and is not directly settable by a client. The resource is expected to be deleted (no longer visible from resource lists, and not reachable by name) after the time in this field, once the finalizers list is empty. As long as the finalizers list contains items, deletion is blocked. Once the deletionTimestamp is set, this value may not be unset or be set further into the future, although it may be shortened or the resource may be deleted prior to this time. For example, a user may request that a pod is deleted in 30 seconds. The Kubelet will react by sending a graceful termination signal to the containers in the pod. After that 30 seconds, the Kubelet will send a hard termination signal (SIGKILL) to the container and after cleanup, remove the pod from the API. In the presence of network partitions, this object may still exist after this timestamp, until an administrator or automated process can determine the resource is fully terminated. If not set, graceful deletion of the object has not been requested.</p>
+<p>Populated by the system when a graceful deletion is requested. Read-only. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata</p>
+</dd><dt class="property-optional"
+            title="Optional">
+        <span id="finalizers_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#finalizers_hcl" style="color: inherit; text-decoration: inherit;">finalizers</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">list(string)</span>
+    </dt>
+    <dd>Must be empty before the object is deleted from the registry. Each entry is an identifier for the responsible component that will remove the entry from the list. If the deletionTimestamp of the object is non-nil, entries in this list can only be removed. Finalizers may be processed and removed in any order.  Order is NOT enforced because it introduces significant risk of stuck finalizers. finalizers is a shared field, any actor with permission can reorder it. If the finalizer list is processed in order, then this can lead to a situation in which the component responsible for the first finalizer in the list is waiting for a signal (field value, external system, or other) produced by a component responsible for a finalizer later in the list, resulting in a deadlock. Without enforced ordering finalizers are free to order amongst themselves and are not vulnerable to ordering changes in the list.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="generate_name_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#generate_name_hcl" style="color: inherit; text-decoration: inherit;">generate_<wbr>name</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd><p>GenerateName is an optional prefix, used by the server, to generate a unique name ONLY IF the Name field has not been provided. If this field is used, the name returned to the client will be different than the name passed. This value will also be combined with a unique suffix. The provided value has the same validation rules as the Name field, and may be truncated by the length of the suffix required to make the value unique on the server.</p>
+<p>If this field is specified and the generated name exists, the server will return a 409.</p>
+<p>Applied only if Name is not specified. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#idempotency</p>
+</dd><dt class="property-optional"
+            title="Optional">
+        <span id="generation_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#generation_hcl" style="color: inherit; text-decoration: inherit;">generation</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">number</span>
+    </dt>
+    <dd>A sequence number representing a specific generation of the desired state. Populated by the system. Read-only.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="labels_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#labels_hcl" style="color: inherit; text-decoration: inherit;">labels</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">map(string)</span>
+    </dt>
+    <dd>Map of string keys and values that can be used to organize and categorize (scope and select) objects. May match selectors of replication controllers and services. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels</dd><dt class="property-optional"
+            title="Optional">
+        <span id="managed_fields_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#managed_fields_hcl" style="color: inherit; text-decoration: inherit;">managed_<wbr>fields</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#managedfieldsentry">list(object)</a></span>
+    </dt>
+    <dd>ManagedFields maps workflow-id and version to the set of fields that are managed by that workflow. This is mostly for internal housekeeping, and users typically shouldn't need to set or understand this field. A workflow can be the user's name, a controller's name, or the name of a specific apply path like &quot;ci-cd&quot;. The set of fields is always in the version that the workflow used when modifying the object.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="name_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#name_hcl" style="color: inherit; text-decoration: inherit;">name</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Name must be unique within a namespace. Is required when creating resources, although some resources may allow a client to request the generation of an appropriate name automatically. Name is primarily intended for creation idempotence and configuration definition. Cannot be updated. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names</dd><dt class="property-optional"
+            title="Optional">
+        <span id="namespace_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#namespace_hcl" style="color: inherit; text-decoration: inherit;">namespace</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd><p>Namespace defines the space within which each name must be unique. An empty namespace is equivalent to the &quot;default&quot; namespace, but &quot;default&quot; is the canonical representation. Not all objects are required to be scoped to a namespace - the value of this field for those objects will be empty.</p>
+<p>Must be a DNS_LABEL. Cannot be updated. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces</p>
+</dd><dt class="property-optional"
+            title="Optional">
+        <span id="owner_references_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#owner_references_hcl" style="color: inherit; text-decoration: inherit;">owner_<wbr>references</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#ownerreference">list(object)</a></span>
+    </dt>
+    <dd>List of objects depended by this object. If ALL objects in the list have been deleted, this object will be garbage collected. If this object is managed by a controller, then an entry in this list will point to this controller, with the controller field set to true. There cannot be more than one managing controller.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="resource_version_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#resource_version_hcl" style="color: inherit; text-decoration: inherit;">resource_<wbr>version</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd><p>An opaque value that represents the internal version of this object that can be used by clients to determine when objects have changed. May be used for optimistic concurrency, change detection, and the watch operation on a resource or set of resources. Clients must treat these values as opaque and passed unmodified back to the server. They may only be valid for a particular resource or set of resources.</p>
+<p>Populated by the system. Read-only. Value must be treated as opaque by clients and . More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency</p>
+</dd><dt class="property-optional"
+            title="Optional">
+        <span id="self_link_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#self_link_hcl" style="color: inherit; text-decoration: inherit;">self_<wbr>link</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Deprecated: selfLink is a legacy read-only field that is no longer populated by the system.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="uid_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#uid_hcl" style="color: inherit; text-decoration: inherit;">uid</a>
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
@@ -2740,6 +3139,60 @@ OwnerReference contains enough information to let you identify an owning object.
             title="Optional">
         <span id="controller_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#controller_go" style="color: inherit; text-decoration: inherit;">Controller</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">bool</span>
+    </dt>
+    <dd>If true, this reference points to the managing controller.</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-required"
+            title="Required">
+        <span id="api_version_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#api_version_hcl" style="color: inherit; text-decoration: inherit;">api_<wbr>version</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>API version of the referent.</dd><dt class="property-required"
+            title="Required">
+        <span id="kind_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#kind_hcl" style="color: inherit; text-decoration: inherit;">kind</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Kind of the referent. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds</dd><dt class="property-required"
+            title="Required">
+        <span id="name_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#name_hcl" style="color: inherit; text-decoration: inherit;">name</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names</dd><dt class="property-required"
+            title="Required">
+        <span id="uid_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#uid_hcl" style="color: inherit; text-decoration: inherit;">uid</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids</dd><dt class="property-optional"
+            title="Optional">
+        <span id="block_owner_deletion_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#block_owner_deletion_hcl" style="color: inherit; text-decoration: inherit;">block_<wbr>owner_<wbr>deletion</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">bool</span>
+    </dt>
+    <dd>If true, AND if the owner has the &quot;foregroundDeletion&quot; finalizer, then the owner cannot be deleted from the key-value store until this reference is removed. See https://kubernetes.io/docs/concepts/architecture/garbage-collection/#foreground-deletion for how the garbage collector interacts with this field and enforces the foreground deletion. Defaults to false. To set this field, a user needs &quot;delete&quot; permission of the owner, otherwise 422 (Unprocessable Entity) will be returned.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="controller_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#controller_hcl" style="color: inherit; text-decoration: inherit;">controller</a>
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">bool</span>

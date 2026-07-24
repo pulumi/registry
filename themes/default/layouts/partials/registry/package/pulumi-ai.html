@@ -21,14 +21,14 @@
       <path d="M6.0724 6.96056C8.60619 3.37283 14.1943 2.97551 17.3147 6.1546C17.6483 6.49456 17.997 6.94229 18.2409 7.31522C18.3625 7.50115 18.4611 7.67233 18.5185 7.80455C18.5418 7.8584 18.5575 7.91162 18.5668 7.95875C18.0636 7.85223 17.5492 7.7632 17.0279 7.69044L17.0238 7.68325C16.656 7.14537 15.9305 6.46038 15.3358 6.09086C13.3041 4.82861 10.2662 4.93255 8.32271 6.33142C8.09824 6.49305 7.78331 6.77966 7.49825 7.07056C7.22189 7.35259 6.98461 7.62887 6.8835 7.79222C6.37979 7.85924 5.92247 7.93033 5.52242 7.99988C5.52157 7.98464 5.52178 7.97044 5.52344 7.95875C5.52768 7.92902 5.53721 7.8958 5.54914 7.86315C5.57352 7.79653 5.61432 7.71169 5.66428 7.61746C5.76481 7.4279 5.91145 7.1885 6.0724 6.96056Z" fill="currentColor"/>
     </svg>
     <span class="pulumi-ai-menu__trigger-text">Explore with Neo</span>
-    <i class="pulumi-ai-menu__chevron fa fa-chevron-down" aria-hidden="true"></i>
+    {{ partial "icon" (dict "name" "caret-down" "class" "pulumi-ai-menu__chevron") }}
   </button>
   <div class="pulumi-ai-menu__dropdown" role="menu" data-role="dropdown" hidden>
     <a class="pulumi-ai-menu__item"
       href="https://app.pulumi.com/neo?prompt={{ $explainPrompt | urlquery }}&prefer_signup=true" target="_blank"
       rel="noopener" role="menuitem">
       <span class="pulumi-ai-menu__item-icon pulumi-ai-menu__item-icon--document" aria-hidden="true">
-        <i class="pulumi-ai-menu__item-icon-symbol fa fa-file-alt" aria-hidden="true"></i>
+        {{ partial "icon" (dict "name" "file-text" "class" "pulumi-ai-menu__item-icon-symbol") }}
       </span>
       <span class="pulumi-ai-menu__item-copy">
         <span class="pulumi-ai-menu__item-title">Explain this resource</span>
@@ -39,7 +39,7 @@
       href="https://app.pulumi.com/neo?prompt={{ $scenariosPrompt | urlquery }}&prefer_signup=true" target="_blank"
       rel="noopener" role="menuitem">
       <span class="pulumi-ai-menu__item-icon pulumi-ai-menu__item-icon--list" aria-hidden="true">
-        <i class="pulumi-ai-menu__item-icon-symbol fa fa-list-ul" aria-hidden="true"></i>
+        {{ partial "icon" (dict "name" "list-bullets" "class" "pulumi-ai-menu__item-icon-symbol") }}
       </span>
       <span class="pulumi-ai-menu__item-copy">
         <span class="pulumi-ai-menu__item-title">Show real-world scenarios</span>
@@ -50,7 +50,7 @@
       href="https://app.pulumi.com/neo?prompt={{ $provisionPrompt | urlquery }}&prefer_signup=true" target="_blank"
       rel="noopener" role="menuitem">
       <span class="pulumi-ai-menu__item-icon pulumi-ai-menu__item-icon--sparkle" aria-hidden="true">
-        <i class="pulumi-ai-menu__item-icon-symbol fa fa-code" aria-hidden="true"></i>
+        {{ partial "icon" (dict "name" "code" "class" "pulumi-ai-menu__item-icon-symbol") }}
       </span>
       <span class="pulumi-ai-menu__item-copy">
         <span class="pulumi-ai-menu__item-title">Provision a new instance</span>

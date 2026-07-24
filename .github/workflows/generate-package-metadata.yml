@@ -2,6 +2,10 @@ permissions: write-all # Equivalent to default permissions plus id-token: write
 name: Check for Community Package Updates
 on:
   workflow_dispatch: null
+  push:
+    branches: [master]
+    paths:
+      - community-packages/package-list.json
   schedule:
     # Every day at 5:30 and 17:30 UTC.
     - cron: '30 5,17 * * *'
@@ -17,8 +21,8 @@ jobs:
     steps:
       - name: Fetch secrets from ESC
         id: esc-secrets
-        uses: pulumi/esc-action@6cf9520e68354d86f81c455e8d43eabd58f5c9f5 # v1
-      - uses: actions/checkout@v6
+        uses: pulumi/esc-action@3af4859af8a73a362fb599b944124097d4bb80c5 # v3
+      - uses: actions/checkout@v7
       - id: set-matrix
         run: echo "matrix=$(python generate_package_list.py)" >> $GITHUB_OUTPUT
         working-directory: community-packages
@@ -31,7 +35,7 @@ jobs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
       prs: ${{ steps.list.outputs.titles }}
   check-for-package-update:
-    name: ${{ matrix.repoSlug }}
+    name: ${{ matrix.repoSlug }} (${{ matrix.schemaFile }})
     needs: generate-packages-list
     runs-on: ubuntu-latest
     strategy:
@@ -44,25 +48,38 @@ jobs:
     steps:
       - name: Fetch secrets from ESC
         id: esc-secrets
-        uses: pulumi/esc-action@6cf9520e68354d86f81c455e8d43eabd58f5c9f5 # v1
-      - name: Get provider short name
-        id: regex-prov
+        uses: pulumi/esc-action@3af4859af8a73a362fb599b944124097d4bb80c5 # v3
+      - name: Read package name from its schema
+        id: package
+        # Read the name from the schema (its source of truth, and its
+        # <name>.yaml filename) rather than deriving it from the repo, so the
+        # several packages a single repo can publish get distinct update PRs.
         run: |
+          package_name_from_schema=""
+          if [[ "$SCHEMA_FILE" == *.json ]]; then
+            package_name_from_schema=$(curl -fsSL "https://raw.githubusercontent.com/${REPO_SLUG}/HEAD/${SCHEMA_FILE}" \
+              | jq -r '.name // empty' 2>/dev/null || true)
+          fi
+          package_name_from_repo=""
           if [[ "$REPO_SLUG" =~ (\/[^-]*-)(.*?$) ]]; then
-            echo "group2=${BASH_REMATCH[2]}" >> $GITHUB_OUTPUT
-          else
-            echo "Regex pattern match error."
+            package_name_from_repo="${BASH_REMATCH[2]}"
+          fi
+          package_name="${package_name_from_schema:-$package_name_from_repo}"
+          if [[ -z "$package_name" ]]; then
+            echo "Could not determine package name from schema or repoSlug."
             exit 1
           fi
+          echo "name=$package_name" >> $GITHUB_OUTPUT
         env:
           REPO_SLUG: ${{ matrix.repoSlug }}
-      - name: Check if there is already an open PR
-        if: contains(needs.generate-packages-list.outputs.prs, steps.regex-prov.outputs.group2 )
+          SCHEMA_FILE: ${{ matrix.schemaFile }}
+      - name: Skip if this package already has an open update PR
+        if: contains(needs.generate-packages-list.outputs.prs, steps.package.outputs.name )
         id: skip-run
         run: echo "skip=1" >> $GITHUB_OUTPUT
       - name: Check out registry repo
         if: steps.skip-run.outputs.skip != 1
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Sleep to prevent hitting secondary rate limits
         if: steps.skip-run.outputs.skip != 1
         run: sleep 1
@@ -81,19 +98,41 @@ jobs:
       - name: Build resourcedocsgen
         if: env.PROVIDER_VERSION
         run: go build -C tools/resourcedocsgen
+      - name: Read package name at the release version
+        # The skip-dedup read above resolves the name at HEAD, because the
+        # release version isn't known yet at that point. Re-read it here pinned
+        # to the exact ref the metadata command downloads — the release tag — so
+        # a provider that renamed its schema between its latest release and HEAD
+        # can't trigger a spurious providerName/schema-name mismatch. Falls back
+        # to the HEAD-derived name.
+        if: env.PROVIDER_VERSION
+        id: package_at_version
+        run: |
+          package_name=""
+          if [[ "$SCHEMA_FILE" == *.json ]]; then
+            package_name=$(curl -fsSL "https://raw.githubusercontent.com/${REPO_SLUG}/${PROVIDER_VERSION}/${SCHEMA_FILE}" \
+              | jq -r '.name // empty' 2>/dev/null || true)
+          fi
+          echo "name=${package_name:-$FALLBACK_NAME}" >> $GITHUB_OUTPUT
+        env:
+          REPO_SLUG: ${{ matrix.repoSlug }}
+          SCHEMA_FILE: ${{ matrix.schemaFile }}
+          PROVIDER_VERSION: ${{ env.PROVIDER_VERSION }}
+          FALLBACK_NAME: ${{ steps.package.outputs.name }}
       - name: Generate Package Metadata
         if: env.PROVIDER_VERSION
         run: >-
           ./tools/resourcedocsgen/resourcedocsgen metadata from-github
-          --repoSlug   "${{ matrix.repoSlug      }}"
-          --schemaFile "${{ matrix.schemaFile    }}"
-          --version    "${{ env.PROVIDER_VERSION }}"
+          --repoSlug     "${{ matrix.repoSlug                 }}"
+          --schemaFile   "${{ matrix.schemaFile               }}"
+          --providerName "${{ steps.package_at_version.outputs.name }}"
+          --version      "${{ env.PROVIDER_VERSION            }}"
       - name: Create registry PR
         if: env.PROVIDER_VERSION
         uses: ./.github/actions/new-provider-version-pr
         with:
           github_token: ${{ steps.esc-secrets.outputs.PULUMI_BOT_TOKEN }}
-          provider_short_name: ${{ steps.regex-prov.outputs.group2 }}
+          provider_short_name: ${{ steps.package_at_version.outputs.name }}
           provider_version: ${{ env.PROVIDER_VERSION }}
 
   notify:
@@ -106,7 +145,7 @@ jobs:
     steps:
       - name: Fetch secrets from ESC
         id: esc-secrets
-        uses: pulumi/esc-action@6cf9520e68354d86f81c455e8d43eabd58f5c9f5 # v1
+        uses: pulumi/esc-action@3af4859af8a73a362fb599b944124097d4bb80c5 # v3
       - name: Slack Notification
         uses: docker://sholung/action-slack-notify:v2.3.0
         env:

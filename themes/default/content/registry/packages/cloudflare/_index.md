@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-cloudflare/v6.15.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-cloudflare/v6.18.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-cloudflare/blob/v6.15.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-cloudflare/blob/v6.18.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Cloudflare Provider
 meta_desc: Provides an overview on how to configure the Pulumi Cloudflare provider.
@@ -25,7 +25,7 @@ Cloudflare. The provider needs to be configured with the proper credentials
 before it can be used.
 ## Example Usage
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
@@ -86,7 +86,7 @@ using Cloudflare = Pulumi.Cloudflare;
 return await Deployment.RunAsync(() =>
 {
     // Create a DNS record
-    var www = new Cloudflare.Index.DnsRecord("www");
+    var www = new Cloudflare.DnsRecord("www");
 
 });
 
@@ -162,8 +162,8 @@ import com.pulumi.Context;
 import com.pulumi.Pulumi;
 import com.pulumi.core.Output;
 import com.pulumi.cloudflare.DnsRecord;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;
@@ -179,6 +179,22 @@ public class App {
         var www = new DnsRecord("www");
 
     }
+}
+```
+
+{{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+pulumi {
+  required_providers {
+    cloudflare = {
+      source = "pulumi/cloudflare"
+    }
+  }
+}
+
+# Create a DNS record
+resource "cloudflare_dnsrecord" "www" {
 }
 ```
 

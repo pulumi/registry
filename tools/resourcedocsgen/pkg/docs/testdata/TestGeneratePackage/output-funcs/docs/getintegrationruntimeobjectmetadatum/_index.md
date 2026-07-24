@@ -19,7 +19,6 @@ API Version: 2018-06-01.
 
 
 
-
 ## Using getIntegrationRuntimeObjectMetadatum {#using}
 
 Two invocation forms are available. The direct form accepts plain
@@ -28,7 +27,7 @@ returns a Promise-wrapped result. The output form accepts
 Input-wrapped arguments and returns an Output-wrapped result.
 
 <div>
-<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java"></pulumi-chooser>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
 </div>
 
 
@@ -107,6 +106,15 @@ func </span>GetIntegrationRuntimeObjectMetadatumOutput<span class="p">(</span><s
 </div>
 
 
+<div>
+<pulumi-choosable type="language" values="hcl">
+<div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">data</span> <span class="s2">&#34;mypkg_get_integration_runtime_object_metadatum&#34;</span> <span class="s2">&#34;name&#34;</span> <span class="p">{</span>
+<span class="c">    # arguments</span>
+<span class="p">}</span></code></pre></div>
+</pulumi-choosable>
+</div>
+
+
 
 The following arguments are supported:
 
@@ -179,6 +187,44 @@ The following arguments are supported:
             title="Optional">
         <span id="metadatapath_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#metadatapath_go" style="color: inherit; text-decoration: inherit;">Metadata<wbr>Path</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Metadata path.</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-required"
+            title="Required">
+        <span id="factory_name_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#factory_name_hcl" style="color: inherit; text-decoration: inherit;">factory_<wbr>name</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>The factory name.</dd><dt class="property-required"
+            title="Required">
+        <span id="integration_runtime_name_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#integration_runtime_name_hcl" style="color: inherit; text-decoration: inherit;">integration_<wbr>runtime_<wbr>name</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>The integration runtime name.</dd><dt class="property-required"
+            title="Required">
+        <span id="resource_group_name_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#resource_group_name_hcl" style="color: inherit; text-decoration: inherit;">resource_<wbr>group_<wbr>name</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>The resource group name.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="metadata_path_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#metadata_path_hcl" style="color: inherit; text-decoration: inherit;">metadata_<wbr>path</a>
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
@@ -393,6 +439,28 @@ The following output properties are available:
 </div>
 
 <div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-"
+            title="">
+        <span id="next_link_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#next_link_hcl" style="color: inherit; text-decoration: inherit;">next_<wbr>link</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>The link to the next page of results, if any remaining results exist.</dd><dt class="property-"
+            title="">
+        <span id="value_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#value_hcl" style="color: inherit; text-decoration: inherit;">value</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">list(object | object | object | object)</span>
+    </dt>
+    <dd>List of SSIS object metadata.</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
 <pulumi-choosable type="language" values="java">
 <dl class="resources-properties"><dt class="property-"
             title="">
@@ -558,6 +626,44 @@ The following output properties are available:
             title="Optional">
         <span id="referencetype_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#referencetype_go" style="color: inherit; text-decoration: inherit;">Reference<wbr>Type</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Reference type</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-optional"
+            title="Optional">
+        <span id="environment_folder_name_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#environment_folder_name_hcl" style="color: inherit; text-decoration: inherit;">environment_<wbr>folder_<wbr>name</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Environment folder name.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="environment_name_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#environment_name_hcl" style="color: inherit; text-decoration: inherit;">environment_<wbr>name</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Environment name.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="id_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_hcl" style="color: inherit; text-decoration: inherit;">id</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">number</span>
+    </dt>
+    <dd>Environment reference id.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="reference_type_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#reference_type_hcl" style="color: inherit; text-decoration: inherit;">reference_<wbr>type</a>
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
@@ -815,6 +921,52 @@ The following output properties are available:
 </div>
 
 <div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-optional"
+            title="Optional">
+        <span id="description_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#description_hcl" style="color: inherit; text-decoration: inherit;">description</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Metadata description.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="folder_id_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#folder_id_hcl" style="color: inherit; text-decoration: inherit;">folder_<wbr>id</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">number</span>
+    </dt>
+    <dd>Folder id which contains environment.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="id_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_hcl" style="color: inherit; text-decoration: inherit;">id</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">number</span>
+    </dt>
+    <dd>Metadata id.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="name_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#name_hcl" style="color: inherit; text-decoration: inherit;">name</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Metadata name.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="variables_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#variables_hcl" style="color: inherit; text-decoration: inherit;">variables</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#ssisvariableresponse">list(object)</a></span>
+    </dt>
+    <dd>Variable in environment</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
 <pulumi-choosable type="language" values="java">
 <dl class="resources-properties"><dt class="property-optional"
             title="Optional">
@@ -1054,6 +1206,36 @@ The following output properties are available:
             title="Optional">
         <span id="name_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#name_go" style="color: inherit; text-decoration: inherit;">Name</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Metadata name.</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-optional"
+            title="Optional">
+        <span id="description_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#description_hcl" style="color: inherit; text-decoration: inherit;">description</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Metadata description.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="id_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_hcl" style="color: inherit; text-decoration: inherit;">id</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">number</span>
+    </dt>
+    <dd>Metadata id.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="name_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#name_hcl" style="color: inherit; text-decoration: inherit;">name</a>
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
@@ -1305,6 +1487,68 @@ The following output properties are available:
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">float64</span>
+    </dt>
+    <dd>Project version which contains package.</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-optional"
+            title="Optional">
+        <span id="description_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#description_hcl" style="color: inherit; text-decoration: inherit;">description</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Metadata description.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="folder_id_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#folder_id_hcl" style="color: inherit; text-decoration: inherit;">folder_<wbr>id</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">number</span>
+    </dt>
+    <dd>Folder id which contains package.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="id_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_hcl" style="color: inherit; text-decoration: inherit;">id</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">number</span>
+    </dt>
+    <dd>Metadata id.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="name_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#name_hcl" style="color: inherit; text-decoration: inherit;">name</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Metadata name.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="parameters_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#parameters_hcl" style="color: inherit; text-decoration: inherit;">parameters</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#ssisparameterresponse">list(object)</a></span>
+    </dt>
+    <dd>Parameters in package</dd><dt class="property-optional"
+            title="Optional">
+        <span id="project_id_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#project_id_hcl" style="color: inherit; text-decoration: inherit;">project_<wbr>id</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">number</span>
+    </dt>
+    <dd>Project id which contains package.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="project_version_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#project_version_hcl" style="color: inherit; text-decoration: inherit;">project_<wbr>version</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">number</span>
     </dt>
     <dd>Project version which contains package.</dd></dl>
 </pulumi-choosable>
@@ -1758,6 +2002,108 @@ The following output properties are available:
             title="Optional">
         <span id="variable_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#variable_go" style="color: inherit; text-decoration: inherit;">Variable</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Parameter reference variable.</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-optional"
+            title="Optional">
+        <span id="data_type_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#data_type_hcl" style="color: inherit; text-decoration: inherit;">data_<wbr>type</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Parameter type.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="default_value_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#default_value_hcl" style="color: inherit; text-decoration: inherit;">default_<wbr>value</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Default value of parameter.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="description_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#description_hcl" style="color: inherit; text-decoration: inherit;">description</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Parameter description.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="design_default_value_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#design_default_value_hcl" style="color: inherit; text-decoration: inherit;">design_<wbr>default_<wbr>value</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Design default value of parameter.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="id_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_hcl" style="color: inherit; text-decoration: inherit;">id</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">number</span>
+    </dt>
+    <dd>Parameter id.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="name_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#name_hcl" style="color: inherit; text-decoration: inherit;">name</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Parameter name.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="required_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#required_hcl" style="color: inherit; text-decoration: inherit;">required</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">bool</span>
+    </dt>
+    <dd>Whether parameter is required.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="sensitive_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#sensitive_hcl" style="color: inherit; text-decoration: inherit;">sensitive</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">bool</span>
+    </dt>
+    <dd>Whether parameter is sensitive.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="sensitive_default_value_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#sensitive_default_value_hcl" style="color: inherit; text-decoration: inherit;">sensitive_<wbr>default_<wbr>value</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Default sensitive value of parameter.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="value_set_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#value_set_hcl" style="color: inherit; text-decoration: inherit;">value_<wbr>set</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">bool</span>
+    </dt>
+    <dd>Parameter value set.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="value_type_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#value_type_hcl" style="color: inherit; text-decoration: inherit;">value_<wbr>type</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Parameter value type.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="variable_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#variable_hcl" style="color: inherit; text-decoration: inherit;">variable</a>
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
@@ -2303,6 +2649,68 @@ The following output properties are available:
 </div>
 
 <div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-optional"
+            title="Optional">
+        <span id="description_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#description_hcl" style="color: inherit; text-decoration: inherit;">description</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Metadata description.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="environment_refs_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#environment_refs_hcl" style="color: inherit; text-decoration: inherit;">environment_<wbr>refs</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#ssisenvironmentreferenceresponse">list(object)</a></span>
+    </dt>
+    <dd>Environment reference in project</dd><dt class="property-optional"
+            title="Optional">
+        <span id="folder_id_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#folder_id_hcl" style="color: inherit; text-decoration: inherit;">folder_<wbr>id</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">number</span>
+    </dt>
+    <dd>Folder id which contains project.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="id_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_hcl" style="color: inherit; text-decoration: inherit;">id</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">number</span>
+    </dt>
+    <dd>Metadata id.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="name_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#name_hcl" style="color: inherit; text-decoration: inherit;">name</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Metadata name.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="parameters_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#parameters_hcl" style="color: inherit; text-decoration: inherit;">parameters</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="#ssisparameterresponse">list(object)</a></span>
+    </dt>
+    <dd>Parameters in project</dd><dt class="property-optional"
+            title="Optional">
+        <span id="version_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#version_hcl" style="color: inherit; text-decoration: inherit;">version</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">number</span>
+    </dt>
+    <dd>Project version.</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
 <pulumi-choosable type="language" values="java">
 <dl class="resources-properties"><dt class="property-optional"
             title="Optional">
@@ -2670,6 +3078,68 @@ The following output properties are available:
             title="Optional">
         <span id="value_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#value_go" style="color: inherit; text-decoration: inherit;">Value</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Variable value.</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="resources-properties"><dt class="property-optional"
+            title="Optional">
+        <span id="data_type_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#data_type_hcl" style="color: inherit; text-decoration: inherit;">data_<wbr>type</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Variable type.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="description_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#description_hcl" style="color: inherit; text-decoration: inherit;">description</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Variable description.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="id_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#id_hcl" style="color: inherit; text-decoration: inherit;">id</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">number</span>
+    </dt>
+    <dd>Variable id.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="name_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#name_hcl" style="color: inherit; text-decoration: inherit;">name</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Variable name.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="sensitive_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#sensitive_hcl" style="color: inherit; text-decoration: inherit;">sensitive</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">bool</span>
+    </dt>
+    <dd>Whether variable is sensitive.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="sensitive_value_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#sensitive_value_hcl" style="color: inherit; text-decoration: inherit;">sensitive_<wbr>value</a>
+</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>Variable sensitive value.</dd><dt class="property-optional"
+            title="Optional">
+        <span id="value_hcl">
+<a data-swiftype-name="resource-property" data-swiftype-type="text" href="#value_hcl" style="color: inherit; text-decoration: inherit;">value</a>
 </span>
         <span class="property-indicator"></span>
         <span class="property-type">string</span>

@@ -396,20 +396,18 @@ This is the master build script for CI runs. It accepts one argument: `preview` 
 **Steps executed by `build.sh`**:
 
 1. Calls `make build-assets` (theme CSS/JS compilation).
-2. Fetches the Pulumi conversion service URL from the `pulumi/tf2pulumi-service/production` stack output (`PULUMI_CONVERT_URL`).
-3. Fetches the Pulumi AI WebSocket URL from `pulumi/pulumigpt-api/corp` stack output (`PULUMI_AI_WS_URL`).
-4. Computes a `build_identifier` (for preview: `pr-<number>-<sha8>`; for push: `push-<sha8>`).
-5. Sets asset bundle paths:
+2. Computes a `build_identifier` (for preview: `pr-<number>-<sha8>`; for push: `push-<sha8>`).
+3. Sets asset bundle paths:
    - `CSS_BUNDLE=static/css/styles.<id>.css`
    - `JS_BUNDLE=static/js/bundle.min.<id>.js`
-6. **Restores cached API docs** from `.cache/api-docs/` into the Hugo content/static trees (see section 4.7 for details).
-7. Runs `make api-docs`, which compiles `resourcedocsgen` and generates all provider API docs. The tool skips unchanged packages using sentinel files.
-8. **Saves API docs** output (including sentinel files) back to `.cache/api-docs/` for the next run. Versioned packages (`@`-suffixed) are excluded — they have their own cache. LLM docs from `llm-docs-out/` are also cached to `.cache/api-docs/llm-docs/` and restored on the next run.
-9. Runs `node ./scripts/apply-fixes.js`.
-10. Runs Hugo with `--minify --buildFuture --templateMetrics`:
+4. **Restores cached API docs** from `.cache/api-docs/` into the Hugo content/static trees (see section 4.7 for details).
+5. Runs `make api-docs`, which compiles `resourcedocsgen` and generates all provider API docs. The tool skips unchanged packages using sentinel files.
+6. **Saves API docs** output (including sentinel files) back to `.cache/api-docs/` for the next run. Versioned packages (`@`-suffixed) are excluded — they have their own cache. LLM docs from `llm-docs-out/` are also cached to `.cache/api-docs/llm-docs/` and restored on the next run.
+7. Runs `node ./scripts/apply-fixes.js`.
+8. Runs Hugo with `--minify --buildFuture --templateMetrics`:
     - `preview` mode: sets `HUGO_BASEURL` to the S3 website URL and uses `-e preview`
     - `update` mode: uses `-e production`
-11. Runs `yarn run minify-css` to purge and minify CSS.
+9. Runs `yarn run minify-css` to purge and minify CSS.
 
 ### 4.6 Versioned documentation
 
@@ -526,7 +524,12 @@ All workflow files live in `.github/workflows/`.
 | `check-go.yml` | Check Go | `workflow_call` (reusable) |
 | `check-links.yml` | Scheduled jobs: Check links | Every Monday 3:00 PM UTC |
 | `run-browser-tests.yml` | Scheduled jobs: Run browser tests | Daily 2:00 PM UTC |
-| `generate-package-metadata.yml` | Check for Community Package Updates | Daily 5:30 AM + 5:30 PM UTC |
+| `generate-package-metadata.yml` | Check for Community Package Updates | Daily 5:30 AM + 5:30 PM UTC + push to `master` touching `package-list.json` |
+| `community-package-check.yml` | Community package check | PR touching `community-packages/package-list.json` |
+| `community-package-report.yml` | Community package report | `workflow_run` after the check completes |
+| `community-package-check-command.yml` | Community package /check command | `/check` comment on a package PR |
+| `community-package-preview-command.yml` | Community package /preview command | `/preview` comment on a package PR |
+| `community-package-policy.yml` | Community package pipeline policy | PR touching the pipeline sources |
 | `publish-provider-update.yml` | provider docs build | `repository_dispatch` |
 | `bucket-cleanup.yml` | Scheduled jobs: Bucket cleanup | Daily 3:00 PM UTC |
 | `update-tutorials.yml` | Scheduled jobs: Update How To Guides | Daily 3:00 PM UTC |
@@ -716,6 +719,18 @@ Node version: 22.x; Hugo 0.157.0 installed.
 1. `generate-packages-list` job: Runs `python generate_package_list.py` in `community-packages/` to build a matrix of community provider repos to check.
 2. `check-for-package-update` job (matrix, max-parallel: 1): For each provider, runs `resourcedocsgen pkgversion` to check if a new version is available. If so, runs `resourcedocsgen metadata from-github` to generate updated metadata and opens a PR via `.github/actions/new-provider-version-pr`.
 3. PRs are skipped if an open PR already exists for that provider (deduplication check via `list_pull_requests` in `scripts/common.sh`).
+
+#### `community-package-*.yml` — Community Package Verified Check
+
+The check pipeline gives a contributor who adds one entry to `community-packages/package-list.json` an automated, security-reviewed fact-sheet before a maintainer approves. It runs in two planes that never share a job: a secret-free plane that touches contributor input, and a privileged plane that never runs contributor code. `community-package-policy.yml` fails CI if any workflow mixes the two (`SecretCodeSeparationTests`).
+
+- **`community-package-check.yml`** (secret-free, runs on forks): for each added entry, reads the package's schema and docs at its latest GitHub release, then probes without executing the package's code — installs the plugin (blocking), resolves the npm/PyPI/Go SDKs and lints the docs (advisory). Writes a fact-sheet artifact. The plugin install is the only blocking check, alongside successful docs generation and a present `docs/_index.md`.
+- **`community-package-report.yml`** (`workflow_run`, write token, no secrets, no contributor code): downloads the fact-sheet artifact and posts it as a sticky PR comment, keyed to the PR number recorded by the check.
+- **`community-package-check-command.yml`** (`issue_comment`): re-runs the check when the author or a maintainer comments `/check`, authorized and rate-limited.
+- **`community-package-preview-command.yml`** (`issue_comment`): builds an on-demand site preview when a maintainer comments `/preview`. A fork's own `pull_request` build gets no secrets, so this maintainer-triggered run stands in for it: it materializes the fork's entry as data and reuses the `build-and-deploy-preview` action, never running the fork's code.
+- **`community-package-policy.yml`**: runs the toolchain's unit tests and `mypy --strict`, including the plane-separation test, as a required check.
+
+After merge, `generate-package-metadata.yml` (above) generates and publishes the package's docs metadata.
 
 #### `publish-provider-update.yml` — Provider Doc Update via Repository Dispatch
 
@@ -1042,8 +1057,6 @@ The `export-repo-secrets.yml` workflow provides a manual escape hatch to sync Gi
 | `NODE_OPTIONS` | Hardcoded | build, browser tests | `--max_old_space_size=8192` |
 | `SLACK_ACCESS_TOKEN` | ESC | link check, cleanup | Slack Web API token for posting messages |
 | `SLACK_WEBHOOK_URL` | ESC | notify jobs | Slack incoming webhook for failure alerts |
-| `PULUMI_CONVERT_URL` | Pulumi stack output | `build.sh` | URL for Pulumi conversion service |
-| `PULUMI_AI_WS_URL` | Pulumi stack output | `build.sh` | URL for Pulumi AI WebSocket |
 | `ASSET_BUNDLE_ID` | `build.sh` (computed) | Hugo templates | Unique suffix for CSS/JS cache-busting |
 | `CSS_BUNDLE` / `JS_BUNDLE` | `build.sh` (computed) | Hugo templates | Paths to versioned asset bundles |
 
@@ -1196,5 +1209,5 @@ Pulumi Cloud plays **four distinct roles** in this system:
 | **Registry API** | `api.pulumi.com/api/registry` | Stores published package versions; queried by the Pulumi CLI for package and plugin resolution |
 | **Secrets / ESC** | `github-secrets/pulumi-registry` environment | Provides CI secrets (tokens, keys) via OIDC; eliminates long-lived secrets in GitHub |
 | **IaC State Backend** | `pulumi/registry/testing` and `pulumi/registry/production` stacks | Stores Terraform-like state for the AWS infrastructure (CloudFront, S3, policies) managed by `infrastructure/index.ts` |
-| **Stack References** | `pulumi/tf2pulumi-service`, `pulumi/pulumigpt-api`, `pulumi/dwh-workflows-*` stacks | Exposes runtime service URLs and IAM role ARNs as stack outputs, consumed by the build and deploy pipeline |
+| **Stack References** | `pulumi/dwh-workflows-*` stacks | Exposes runtime service URLs and IAM role ARNs as stack outputs, consumed by the build and deploy pipeline |
 

@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: timescale
 repo_url: https://github.com/timescale/terraform-provider-timescale
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/timescale/timescale/2.11.1/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/timescale/timescale/2.13.3/schema.json
 title: timescale
-updated_on: 1777937751
-version: 2.11.1
+updated_on: 1781739365
+version: 2.13.3

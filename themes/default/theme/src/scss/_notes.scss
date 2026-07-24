@@ -20,22 +20,26 @@
     :last-child {
         margin-bottom: 0;
     }
-
+    
     a {
         &:hover {
             text-decoration: underline;
         }
     }
 
-    i {
-        font-size: 15px;
-        margin-top: 2px;
-    }
-
     div.icon-and-line {
         display: flex;
         flex-direction: column;
         align-items: center;
+        gap: 4px;
+
+        svg.ph-icon, i {
+            font-size: 15px;
+            width: 20px;
+            height: 20px;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
     }
 
     div.line {
@@ -44,7 +48,7 @@
         border-radius: 100px;
         margin-top: 4px;
         position: absolute;
-        top: 28px;
+        top: 34px;
         height: calc(100% - 46px);
     }
 
@@ -58,43 +62,74 @@
     }
 
     &.note-info {
-        background: #f6f7fd;
+        background: var(--color-blue-background);
 
-        a, 
+        a,
         i {
-            color: #4d5bd9;
+            color: var(--color-blue-primary);
+        }
+
+        div.icon-and-line svg.ph-icon {
+            color: var(--color-blue-primary);
         }
 
         div.line {
-            background-color: #a6adec;
+            background-color: var(--color-blue-muted);
         }
 
         code {
-            background-color: #ebedfb;
+            background-color: var(--color-blue-muted);
+        }
+    }
+
+    &.note-tip {
+        background: var(--color-green-background);
+
+        a,
+        i {
+            color: var(--color-green-primary);
+        }
+
+        div.icon-and-line svg.ph-icon {
+            color: var(--color-green-primary);
+        }
+
+        div.line {
+            background-color: var(--color-green-muted);
+        }
+
+        code {
+            background-color: var(--color-green-muted);
         }
     }
 
     &.note-warning {
-        background: #fcf2e9;
+        background: var(--color-orange-background);
 
-        a {
-            color: #9D5314;
+        a,
+        i {
+            color: var(--color-orange-primary);
         }
 
-        i {
-            color: #e0771c;
+        div.icon-and-line svg.ph-icon {
+            color: var(--color-orange-primary);
         }
 
         div.line {
-            background-color: #ecad77;
+            background-color: var(--color-orange-muted);
         }
 
         code {
-            background: #f9e6d4;
+            background: var(--color-orange-muted);
         }
     }
 
-    div.highlight div.copy-button-container button.copy-button i {
-        color: #fff;
+}
+
+section.docs-content div.note {
+    // Tighten the last content block (scoped to the content's direct children so it
+    // doesn't reach deeply-nested last children like the copy button).
+    div.content > :last-child {
+        padding-bottom: 0;
     }
 }

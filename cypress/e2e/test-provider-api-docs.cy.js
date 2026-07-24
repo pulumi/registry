@@ -1,5 +1,18 @@
 describe("Test Provider", () => {
 
+    // The chooser redesign renders each language tab using a short label -- the
+    // uppercased file extension (TS, PY, GO, ...) or an explicit override like "C#" --
+    // rather than the full language name, which now appears only in the toolbar label.
+    // Map the full name we assert on to the label we actually click.
+    const languageTabLabel = {
+        "TypeScript": "TS",
+        "Python": "PY",
+        "Go": "GO",
+        "C#": "C#",
+        "Java": "JAVA",
+        "YAML": "YAML",
+    };
+
     [
         // Resource page that uses <!--Start PulumiCodeChooser --> fences
         {
@@ -95,7 +108,7 @@ describe("Test Provider", () => {
 
                     // Then check each an example exists for each language
                     languages.forEach(language => {
-                        cy.get("pulumi-chooser li a").contains(language).first().click();
+                        cy.get("pulumi-chooser li a").contains(languageTabLabel[language]).first().click();
 
                         // Find the appropriate pulumi-choosable based on language
                         let selector;
@@ -144,7 +157,7 @@ describe("Test Provider", () => {
 
                     // Then check each language
                     languages.forEach(language => {
-                        cy.get("pulumi-chooser li a").contains(language).first().click();
+                        cy.get("pulumi-chooser li a").contains(languageTabLabel[language]).first().click();
 
                         // Get the appropriate pulumi-choosable based on language
                         let selector;
@@ -220,7 +233,7 @@ describe("Test Provider", () => {
                                 .and('include', 'yaml');
 
                             languages.forEach(language => {
-                                cy.get("pulumi-chooser li a").contains(language).first().click();
+                                cy.get("pulumi-chooser li a").contains(languageTabLabel[language]).first().click();
                                 cy.log(`Checking ${language} supporting types...`);
 
                                 // Get the appropriate pulumi-choosable based on language

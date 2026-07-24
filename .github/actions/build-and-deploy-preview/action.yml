@@ -1,0 +1,130 @@
+name: Build and deploy registry preview
+description: >-
+  Build the registry site and deploy a preview to S3. Shared by the pull_request preview job
+  and the community-package /preview command. Pass `pr` to first materialize that PR's
+  community-package entry (used for fork PRs, whose own pull_request build gets no secrets).
+
+inputs:
+  github_token:
+    required: true
+  pulumi_stack_name:
+    required: true
+  algolia_app_id:
+    required: true
+  algolia_app_search_key:
+    required: true
+  pr:
+    description: Community-package PR to materialize before building (fork previews).
+    required: false
+    default: ""
+
+runs:
+  using: composite
+  steps:
+    - name: Fetch secrets from ESC
+      id: esc-secrets
+      uses: pulumi/esc-action@3af4859af8a73a362fb599b944124097d4bb80c5 # v3
+
+    - name: Install Node
+      uses: actions/setup-node@v6
+      with:
+        node-version: "24.x"
+        cache: 'yarn'
+        cache-dependency-path: |
+          yarn.lock
+          infrastructure/yarn.lock
+          themes/default/yarn.lock
+          themes/default/theme/yarn.lock
+          themes/default/theme/stencil/yarn.lock
+
+    - name: Install Go
+      uses: actions/setup-go@v6
+      with:
+        go-version: 1.26.x
+
+    - name: Install Hugo
+      uses: peaceiris/actions-hugo@v3
+      with:
+        hugo-version: "0.157.0"
+        extended: true
+
+    - name: Materialize the community-package PR entry
+      if: inputs.pr != ''
+      shell: bash
+      env:
+        PR: ${{ inputs.pr }}
+        GITHUB_TOKEN: ${{ inputs.github_token }}
+        REPO: ${{ github.repository }}
+        EVENT_NAME: ${{ github.event_name }}
+      run: |
+        # A native pull_request run already keys `make ci-pull-request` to this PR; only the
+        # comment-triggered path (issue_comment / workflow_dispatch) needs the event shimmed.
+        if [ "$EVENT_NAME" != "pull_request" ]; then
+          gh api "repos/$REPO/pulls/$PR" > /tmp/pr.json
+          jq -n --slurpfile pr /tmp/pr.json '{number: $pr[0].number, pull_request: $pr[0]}' > /tmp/pr-event.json
+          echo "GITHUB_EVENT_NAME=pull_request" >> "$GITHUB_ENV"
+          echo "GITHUB_EVENT_PATH=/tmp/pr-event.json" >> "$GITHUB_ENV"
+        fi
+        python3 scripts/ci/community-package/cli.py preview --pr "$PR"
+
+    - name: Validate JSON file syntax
+      uses: limitusus/json-syntax-check@v2
+      with:
+        pattern: "community-packages/package-list.json"
+
+    - name: Yarn Install
+      shell: bash
+      run: yarn install
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v6
+      with:
+        aws-region: us-west-2
+        role-to-assume: arn:aws:iam::571684982431:role/ContinuousDelivery
+        role-duration-seconds: 7200
+        role-session-name: RegistryPreviewSession
+
+    - name: Install s5cmd for fast S3 uploads
+      shell: bash
+      run: |
+        S5CMD_VERSION="2.3.0"
+        S5CMD_SHA256="de0fdbfa3aceae55e069ba81a0fc17b2026567637603734a387b2fca06c299b4"
+        curl -fsSL -o /tmp/s5cmd.tar.gz "https://github.com/peak/s5cmd/releases/download/v${S5CMD_VERSION}/s5cmd_${S5CMD_VERSION}_Linux-64bit.tar.gz"
+        echo "${S5CMD_SHA256}  /tmp/s5cmd.tar.gz" | sha256sum --check --strict
+        sudo tar -xz -C /usr/local/bin s5cmd < /tmp/s5cmd.tar.gz
+
+    - name: Configure git for private Go modules
+      shell: bash
+      run: git config --global url."https://${{ steps.esc-secrets.outputs.PULUMI_BOT_TOKEN }}:x-oauth-basic@github.com/pulumi/registry-mirror-tools".insteadOf "https://github.com/pulumi/registry-mirror-tools"
+
+    - name: Cache provider schemas and generated docs
+      uses: actions/cache@v6
+      with:
+        path: |
+          .cache/schemas
+          .cache/versioned-docs
+          .cache/api-docs
+        key: docs-cache-${{ github.run_id }}
+        restore-keys: docs-cache-
+
+    - name: Get registry-mirror-discover version
+      id: mirror-version
+      shell: bash
+      run: echo "hash=$(grep 'REGISTRY_MIRROR_TOOLS_COMMIT=' scripts/generate-versioned-docs.sh | cut -d'"' -f2)" >> "$GITHUB_OUTPUT"
+
+    - name: Cache registry-mirror-discover binary
+      uses: actions/cache@v6
+      with:
+        path: bin/registry-mirror-discover
+        key: registry-mirror-discover-${{ steps.mirror-version.outputs.hash }}
+
+    - name: Build and deploy preview
+      shell: bash
+      run: make ci-pull-request
+      env:
+        GITHUB_TOKEN: ${{ inputs.github_token }}
+        PULUMI_ACCESS_TOKEN: ${{ steps.esc-secrets.outputs.PULUMI_ACCESS_TOKEN }}
+        PULUMI_STACK_NAME: ${{ inputs.pulumi_stack_name }}
+        NODE_OPTIONS: "--max_old_space_size=8192"
+        ALGOLIA_APP_ID: ${{ inputs.algolia_app_id }}
+        ALGOLIA_APP_SEARCH_KEY: ${{ inputs.algolia_app_search_key }}

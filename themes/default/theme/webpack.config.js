@@ -9,7 +9,6 @@ module.exports = function (env, { mode }) {
         mode: mode || "development",
         entry: {
             bundle: "./src/ts/main.ts",
-            marketing: "./src/ts/marketing.ts",
         },
         output: {
             filename: "[name]-registry.[contenthash:8].js",

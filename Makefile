@@ -5,14 +5,21 @@ clean:
 .PHONY: ensure
 ensure:
 	./scripts/ensure.sh
+	$(MAKE) sync-icons
 
 .PHONY: lint
 lint: lint-go lint-markdown
 	yarn run lint
 
 .PHONY: lint-markdown
-lint-markdown:
+lint-markdown: lint-shortcode-delimiters
 	./scripts/lint/lint-markdown.js
+
+# The auto-generated provider _index.md pages are skipped by the front-matter
+# linter, yet a single malformed shortcode delimiter there fails the whole site build.
+.PHONY: lint-shortcode-delimiters
+lint-shortcode-delimiters:
+	./scripts/lint/check-shortcode-delimiters.js
 
 .PHONY: lint-go
 lint-go: lint-resourcedocsgen lint-mktutorial
@@ -120,8 +127,20 @@ serve-assets:
 serve-all:
 	./node_modules/.bin/concurrently --kill-others -r "${HUGO_SERVE}" "yarn --cwd ./themes/default/theme run start"
 
+.PHONY: sync-icons
+sync-icons:
+	node scripts/sync-icons.js
+
+.PHONY: build-icon-sprite
+build-icon-sprite:
+	node scripts/build-icon-sprite.js
+
+.PHONY: fetch-github-stars
+fetch-github-stars:
+	node scripts/fetch-github-stars.js
+
 .PHONY: build-assets
-build-assets: ensure
+build-assets: ensure build-icon-sprite fetch-github-stars
 	yarn --cwd ./themes/default/theme run build
 
 .PHONY: ci_bucket_cleanup

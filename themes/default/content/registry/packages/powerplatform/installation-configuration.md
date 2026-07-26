@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/rpothin/pulumi-powerplatform/v0.4.3/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/rpothin/pulumi-powerplatform/v0.4.5/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/rpothin/pulumi-powerplatform/blob/v0.4.3/docs/installation-configuration.md
+edit_url: https://github.com/rpothin/pulumi-powerplatform/blob/v0.4.5/docs/installation-configuration.md
 title: Power Platform Installation & Configuration
 meta_desc: How to install and configure the Pulumi Power Platform provider.
 layout: package
@@ -163,3 +163,55 @@ pulumi config set --secret powerplatform:clientSecret <AZURE_CLIENT_SECRET>
   `https://api.powerplatform.com/.default`
 - Pulumi CLI v3 or later
 - Python 3.10 or later available on `PATH`
+
+### Registering the service principal as a Power Platform application user
+
+Most resources and invoke functions in this provider only need the app
+registration to be registered as a Power Platform "application user" —
+typically done with:
+
+```bash
+pac admin application register --application-id <AZURE_CLIENT_ID>
+```
+
+> [!IMPORTANT]
+> `pac admin application register` (and holding the basic
+> `https://api.powerplatform.com/.default` API permission) is **not**
+> sufficient for every operation. A small number of tenant-wide governance
+> calls require the service principal to additionally hold a
+> **Microsoft Entra ID directory role**, which is a materially higher
+> privilege than an application-user registration. See the next section for
+> which operations need this and how to grant it.
+
+### Elevated permission required for `getDlpPolicies`
+
+`powerplatform:index:getDlpPolicies` (list all DLP policies in the tenant)
+calls the governance API's tenant-wide "list rule-based policies" endpoint
+with no policy ID. Unlike every other DLP-related operation in this
+provider — `DlpPolicy` create/read/update/delete and
+`getDlpPolicyMigrationConfig`, which all operate on a single policy via its
+ID — this tenant-wide list requires the app registration's service
+principal to hold the **Power Platform Administrator** Microsoft Entra ID
+directory role as an **active** assignment (not merely PIM-eligible, and
+not a Dataverse security role).
+
+Without this role, the call fails with a bare `403 Forbidden` and no
+response body, which gives no indication of what's missing.
+
+To grant it:
+
+1. In the Microsoft Entra admin center, go to **Roles and administrators**.
+2. Select **Power Platform Administrator**.
+3. Add an assignment for the app registration's service principal, as an
+   **active** assignment (not eligible/PIM).
+
+See Microsoft's guidance on
+[assigning Microsoft Entra roles to an app registration](https://learn.microsoft.com/entra/identity/role-based-access-control/manage-roles-portal#assign-roles-with-app-registration-scope)
+and on
+[Power Platform admin roles](https://learn.microsoft.com/power-platform/admin/use-service-admin-role-manage-tenant)
+for background on this specific role.
+
+As of this writing, `getDlpPolicies` is the only function or resource in
+this provider confirmed to require this elevated role — everything else,
+including the AVM components, works with a standard application-user
+registration.

@@ -1,6 +1,6 @@
 ---
 title: "mypkg"
-title_tag: "mypkg.mypkg"
+title_tag: "mypkg Package"
 meta_desc: ""
 layout: api
 no_edit_this_page: true

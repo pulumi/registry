@@ -1,6 +1,6 @@
 ---
 title: "urnid"
-title_tag: "urnid.urnid"
+title_tag: "urnid Package"
 meta_desc: "Test urn and id in valid locations"
 layout: api
 no_edit_this_page: true

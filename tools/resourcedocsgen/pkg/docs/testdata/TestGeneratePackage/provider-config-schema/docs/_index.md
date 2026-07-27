@@ -14,11 +14,6 @@ outputs:
 
 
 
-<h2 id="modules">Modules</h2>
-<ul class="api">
-    <li><a href="config/" title="config">config</a></li>
-</ul>
-
 <h2 id="resources">Resources</h2>
 <ul class="api">
     <li><a href="provider/" title="Provider">Provider</a></li>

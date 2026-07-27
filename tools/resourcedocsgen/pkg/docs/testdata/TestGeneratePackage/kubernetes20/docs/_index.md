@@ -18,7 +18,6 @@ A Pulumi package for creating and managing Kubernetes resources.
 <ul class="api">
     <li><a href="core/" title="core">core</a></li>
     <li><a href="helm/" title="helm">helm</a></li>
-    <li><a href="meta/" title="meta">meta</a></li>
     <li><a href="yaml/" title="yaml">yaml</a></li>
 </ul>
 

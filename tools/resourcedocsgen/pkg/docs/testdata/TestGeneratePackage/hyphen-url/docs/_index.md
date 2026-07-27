@@ -1,6 +1,6 @@
 ---
 title: "registrygeoreplication"
-title_tag: "registrygeoreplication.registrygeoreplication"
+title_tag: "registrygeoreplication Package"
 meta_desc: ""
 layout: api
 no_edit_this_page: true

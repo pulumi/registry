@@ -1,6 +1,6 @@
 ---
 title: "MongoDB Atlas"
-title_tag: "mongodbatlas.MongoDB Atlas"
+title_tag: "MongoDB Atlas Package"
 meta_desc: ""
 layout: api
 no_edit_this_page: true

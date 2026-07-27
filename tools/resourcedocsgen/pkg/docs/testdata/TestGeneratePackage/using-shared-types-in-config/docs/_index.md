@@ -1,6 +1,6 @@
 ---
 title: "credentials"
-title_tag: "credentials.credentials"
+title_tag: "credentials Package"
 meta_desc: ""
 layout: api
 no_edit_this_page: true

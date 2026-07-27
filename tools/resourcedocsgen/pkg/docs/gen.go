@@ -2104,10 +2104,10 @@ func (mod *modContext) gen(fs codegen.Fs) error {
 
 	var modTitleTag string
 	var packageDescription string
-	// The same index.tmpl template is used for both top level package and module pages, if modules not present, assume
-	// top level package index page when formatting title tags otherwise, if contains modules, assume modules top level
-	// page when generating title tags.
-	if len(modules) > 0 {
+	// The same index.tmpl template is used for both the top level package page and module pages, so the title tag is
+	// formatted based on which one this is. Note that a package page may well have no submodules to list — either
+	// because the package declares none, or because the ones it declared were empty and got pruned.
+	if mod.mod == "" {
 		modTitleTag = getPackageDisplayName(modTitle) + " Package"
 	} else {
 		modTitleTag = fmt.Sprintf("%s.%s", mod.pkg.Name(), modTitle)
@@ -2380,7 +2380,67 @@ func (dctx *Context) generateModulesFromSchemaPackage(tool string, pkg *schema.P
 		}
 	}
 
+	pruneEmptyModules(modules)
+
 	return modules
+}
+
+// hasContent reports whether a module contributes anything to the generated docs: resources or functions of its own,
+// or a descendant module that has some. The memo is keyed by module so shared or deep trees are only walked once.
+func hasContent(mod *modContext, memo map[*modContext]bool) bool {
+	if content, ok := memo[mod]; ok {
+		return content
+	}
+	// Seed the memo so a cycle in the module tree terminates instead of recursing forever.
+	memo[mod] = false
+
+	content := len(mod.resources) > 0 || len(mod.functions) > 0
+	if !content {
+		for _, child := range mod.children {
+			if hasContent(child, memo) {
+				content = true
+				break
+			}
+		}
+	}
+
+	memo[mod] = content
+	return content
+}
+
+// pruneEmptyModules drops modules that have no resources, no functions, and no non-empty descendants. A module can end
+// up in the map purely because it holds object types shared across other modules (e.g. awsx's `awsx` module), and the
+// module index template renders modules, resources, and functions only — so such a module's page is empty by
+// construction. Pruning here, at the single place the module map and the parent/child links are built, keeps the page,
+// the left nav, the parent's module list, and the CLI/LLM docs bundle consistent.
+//
+// The types themselves are unaffected: they render inline as "Supporting Types" on the resource pages that reference
+// them, which reads the schema directly rather than the module map.
+func pruneEmptyModules(modules map[string]*modContext) {
+	memo := map[*modContext]bool{}
+	for name, mod := range modules {
+		// The root module is always kept: a package whose root has no resources or functions of its own still needs
+		// its top-level API docs index page.
+		if name == "" {
+			continue
+		}
+		if !hasContent(mod, memo) {
+			delete(modules, name)
+		}
+	}
+
+	for _, mod := range modules {
+		if len(mod.children) == 0 {
+			continue
+		}
+		children := slice.Prealloc[*modContext](len(mod.children))
+		for _, child := range mod.children {
+			if hasContent(child, memo) {
+				children = append(children, child)
+			}
+		}
+		mod.children = children
+	}
 }
 
 // generateModules generates constructor syntax examples for all resources of the input the package in the given input

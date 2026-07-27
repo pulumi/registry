@@ -14,11 +14,6 @@ outputs:
 
 
 
-<h2 id="modules">Modules</h2>
-<ul class="api">
-    <li><a href="crd.k8s.amazonaws.com/" title="crd.k8s.amazonaws.com">crd.k8s.amazonaws.com</a></li>
-</ul>
-
 <h2 id="resources">Resources</h2>
 <ul class="api">
     <li><a href="component/" title="Component">Component</a></li>

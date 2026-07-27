@@ -1,6 +1,6 @@
 ---
 title: "example"
-title_tag: "example.example"
+title_tag: "example Package"
 meta_desc: ""
 layout: api
 no_edit_this_page: true

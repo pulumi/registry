@@ -1,6 +1,6 @@
 ---
 title: "StandardLibrary"
-title_tag: "std.StandardLibrary"
+title_tag: "StandardLibrary Package"
 meta_desc: "Standard library functions"
 layout: api
 no_edit_this_page: true

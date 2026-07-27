@@ -1,6 +1,6 @@
 ---
 title: "foobar"
-title_tag: "foobar.foobar"
+title_tag: "foobar Package"
 meta_desc: ""
 layout: api
 no_edit_this_page: true

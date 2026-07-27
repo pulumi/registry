@@ -1,6 +1,6 @@
 ---
 title: "metaprovider"
-title_tag: "metaprovider.metaprovider"
+title_tag: "metaprovider Package"
 meta_desc: ""
 layout: api
 no_edit_this_page: true

@@ -1,6 +1,6 @@
 ---
 title: "xyz"
-title_tag: "xyz.xyz"
+title_tag: "xyz Package"
 meta_desc: ""
 layout: api
 no_edit_this_page: true

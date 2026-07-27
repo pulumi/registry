@@ -1,6 +1,6 @@
 ---
 title: "myedgeorder"
-title_tag: "myedgeorder.myedgeorder"
+title_tag: "myedgeorder Package"
 meta_desc: ""
 layout: api
 no_edit_this_page: true

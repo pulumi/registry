@@ -243,7 +243,7 @@ var componentResource = new Foo.Component("componentResource", new()
 {
     EniConfig = 
     {
-        { "string", new Kubernetes.Types.Inputs.Crd.k8s.amazonaws.com.V1alpha1.ENIConfigSpecArgs
+        { "string", new Foo.Crd.k8s.amazonaws.com.V1alpha1.Inputs.ENIConfigSpecArgs
         {
             SecurityGroups = new[]
             {

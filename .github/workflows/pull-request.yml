@@ -104,6 +104,8 @@ jobs:
 
   test-live-publish:
     name: Test Live Registry Publish
+    # OIDC isn't granted to pull_request runs from forks, so this job can't authenticate to ESC. Skip on fork PRs (sentinel/preview already follow the same pattern).
+    if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     steps:
       - name: Fetch secrets from ESC

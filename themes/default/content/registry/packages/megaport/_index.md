@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/megaport/megaport/1.12.0/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/megaport/megaport/1.13.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Megaport Provider
@@ -207,13 +207,14 @@ public class App {
 {{< /chooser >}}
 ### Provider Configuration Reference
 
-|        Argument         | Required |  Default  |                                                                    Description                                                                     |
-|-------------------------|----------|-----------|----------------------------------------------------------------------------------------------------------------------------------------------------|
-| `environment`           | No       | `staging` | Megaport API environment: `production`, `staging`, or `development`. Can also be set with `MEGAPORT_ENVIRONMENT`.                                  |
-| `accessKey`            | Yes      | —         | API access key. Can also be set with `MEGAPORT_ACCESS_KEY`.                                                                                        |
-| `secretKey`            | Yes      | —         | API secret key. Can also be set with `MEGAPORT_SECRET_KEY`.                                                                                        |
-| `acceptPurchaseTerms` | Yes      | `false`   | Acceptance of the Megaport API terms. Can also be set with `MEGAPORT_ACCEPT_PURCHASE_TERMS`.                                                       |
-| `waitTime`             | No       | `10`      | Minutes to wait for resources to finish provisioning during create and update. Minimum `1`. See Provisioning Wait Time. |
+|        Argument         | Required |  Default  |                                                                       Description                                                                        |
+|-------------------------|----------|-----------|----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `environment`           | No       | `staging` | Megaport API environment: `production`, `staging`, or `development`. Can also be set with `MEGAPORT_ENVIRONMENT`.                                        |
+| `accessKey`            | Yes      | —         | API access key. Can also be set with `MEGAPORT_ACCESS_KEY`.                                                                                              |
+| `secretKey`            | Yes      | —         | API secret key. Can also be set with `MEGAPORT_SECRET_KEY`.                                                                                              |
+| `acceptPurchaseTerms` | Yes      | `false`   | Acceptance of the Megaport API terms. Can also be set with `MEGAPORT_ACCEPT_PURCHASE_TERMS`.                                                             |
+| `waitTime`             | No       | `10`      | Minutes to wait for resources to finish provisioning during create and update. Minimum `1`. See Provisioning Wait Time.       |
+| `managedAccountUid`   | No       | —         | UID of a managed account to act on behalf of when provisioning resources with your own credentials. Can also be set with `MEGAPORT_MANAGED_ACCOUNT_UID`. |
 ## 🚨 NEW FEATURE: MCR Prefix Filter List Resources
 ### Enhanced MCR Management with Standalone Resources
 

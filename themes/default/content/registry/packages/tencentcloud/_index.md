@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/tencentcloudstack/tencentcloud/1.83.16/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/tencentcloudstack/tencentcloud/1.83.17/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Tencentcloud Provider
@@ -22,6 +22,8 @@ The provider needs to be configured with the proper credentials before it can be
 Use the navigation on the left to read about the available resources.
 
 > **Note:** Pulumi 0.12.x supported began with provider version 1.9.0 (June 18, 2019).
+
+> **Note:** When managing tag fields such as [`tag`, `tags`, `tagList`...] for all of the Tencent Cloud resources, avoid using system-reserved fields, such as: [`qcs:`, `project_`, `项目`]. for details, please refer to the [Use Limits](https://www.tencentcloud.com/document/product/651/13354?lang=en&pg=).
 ## Example Usage
 
 {{< chooser language "typescript,python,go,csharp,java,yaml" >}}

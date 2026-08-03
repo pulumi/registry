@@ -77,16 +77,27 @@ def analyze_page(path):
     }
 
 
-def analyze_extras(content_dir):
-    extras = []
+# Packages whose how-to-guides are refreshed in CI from pulumi/examples
+# (scripts/ci/mktutorial.sh); guides in any other package are hand-committed
+# and have no update pipeline.
+MKTUTORIAL_PACKAGES = {"aws", "aws-apigateway", "azure", "azure-native", "gcp", "kubernetes"}
+
+
+def analyze_extras(content_dir, slug):
+    extras = {"howto_guides": 0, "howto_ci_refreshed": slug in MKTUTORIAL_PACKAGES,
+              "migration_dirs": [], "other_files": []}
     if content_dir.is_dir():
         for child in sorted(content_dir.iterdir()):
             if child.name in ("_index.md", "installation-configuration.md"):
                 continue
             if child.is_dir():
-                extras.append(child.name + "/ (%d files)" % len(list(child.rglob("*.md"))))
+                count = len(list(child.rglob("*.md")))
+                if child.name == "how-to-guides":
+                    extras["howto_guides"] = count
+                else:
+                    extras["migration_dirs"].append("%s (%d)" % (child.name, count))
             else:
-                extras.append(child.name)
+                extras["other_files"].append(child.name)
     return extras
 
 
@@ -154,7 +165,7 @@ def main():
             "has_install_config_page": (content / "installation-configuration.md").exists(),
             "overview_page": analyze_page(content / "_index.md"),
             "install_page": analyze_page(content / "installation-configuration.md"),
-            "extras": analyze_extras(content),
+            "extras": analyze_extras(content, path.stem),
             "registry_url": f"https://www.pulumi.com/registry/packages/{path.stem}/",
         })
 

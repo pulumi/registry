@@ -24,6 +24,72 @@ CONTENT_DIR = REPO_ROOT / "themes/default/content/registry/packages"
 COMMUNITY_LIST = REPO_ROOT / "community-packages/package-list.json"
 
 
+SECTION_CONCEPTS = [
+    ("example", r"example|usage"),
+    ("installation", r"install"),
+    ("auth", r"credential|auth|token|api.key|service.account|logging in"),
+    ("configuration", r"configur|setup|settings"),
+    ("prerequisites", r"prerequisit|getting started|quick.?start|before you begin"),
+    ("migration", r"migrat|from v\d|upgrad"),
+    ("reference", r"reference|input propert|outputs"),
+    ("development", r"develop|contribut|building"),
+]
+
+CHOOSER_LANGS = ["typescript", "javascript", "python", "go", "csharp", "java", "yaml"]
+
+
+def analyze_page(path):
+    """Fence-aware structural analysis of a content markdown page."""
+    import re
+    if not path.exists():
+        return None
+    text = path.read_text(errors="replace")
+    frontmatter = {}
+    body = text
+    m_fm = re.match(r"\A(?:<!--.*?-->\s*)?---\n(.*?)\n---\n(.*)\Z", text, re.S)
+    if m_fm:
+        try:
+            frontmatter = yaml.safe_load(m_fm.group(1)) or {}
+        except yaml.YAMLError:
+            frontmatter = {}
+        body = m_fm.group(2)
+    headings, fence = [], False
+    for line in body.splitlines():
+        if line.startswith("```"):
+            fence = not fence
+            continue
+        m = re.match(r"^(#{1,4})\s+(.*)", line) if not fence else None
+        if m:
+            headings.append((len(m.group(1)), m.group(2).strip()))
+    joined = " | ".join(h[1].lower() for h in headings)
+    concepts = [c for c, pat in SECTION_CONCEPTS if re.search(pat, joined)]
+    langs = sorted({l for l in CHOOSER_LANGS
+                    if re.search(r"choosable\s+language\s+%s\b" % l, body)})
+    words = len(re.sub(r"```.*?```", " ", body, flags=re.S).split())
+    return {
+        "layout": frontmatter.get("layout", ""),
+        "words": words,
+        "headings": [h[1] for h in headings],
+        "concepts": concepts,
+        "has_code": "```" in body,
+        "chooser_langs": langs,
+        "vendor_fetched": "this file was fetched" in text[:400],
+    }
+
+
+def analyze_extras(content_dir):
+    extras = []
+    if content_dir.is_dir():
+        for child in sorted(content_dir.iterdir()):
+            if child.name in ("_index.md", "installation-configuration.md"):
+                continue
+            if child.is_dir():
+                extras.append(child.name + "/ (%d files)" % len(list(child.rglob("*.md"))))
+            else:
+                extras.append(child.name)
+    return extras
+
+
 def load_community_slugs():
     slugs = set()
     if COMMUNITY_LIST.exists():
@@ -86,6 +152,9 @@ def main():
             "in_community_list": path.stem in community_slugs,
             "has_index_page": (content / "_index.md").exists(),
             "has_install_config_page": (content / "installation-configuration.md").exists(),
+            "overview_page": analyze_page(content / "_index.md"),
+            "install_page": analyze_page(content / "installation-configuration.md"),
+            "extras": analyze_extras(content),
             "registry_url": f"https://www.pulumi.com/registry/packages/{path.stem}/",
         })
 

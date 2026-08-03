@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/incident-io/incident/5.46.1/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/incident-io/incident/6.0.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Incident Provider
@@ -24,6 +24,13 @@ custom fields and more inside of your incident.io account.
 To view the full documentation of this provider, we recommend reading the
 documentation on the Pulumi
 Registry.
+## Supported Pulumi versions
+
+From v6.0.0 this provider supports Pulumi 1.14 and above, and is tested
+against the Pulumi versions HashiCorp still patch. It is also tested directly
+against OpenTofu. Older Pulumi releases are no longer tested, and while the
+provider may continue to work with them we won't be fixing issues that only
+reproduce there. Pin to v5.x if you need to stay on an older CLI.
 ## Example Usage
 
 ```yaml

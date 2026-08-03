@@ -78,3 +78,9 @@
         {{ partial "registry/left-nav.html" . }}
     </ul>
 </nav>
+
+{{- /* Sibling of nav.main-nav, inside #docs-main-nav — pins to the bottom of the
+       sidebar. Rendered here rather than in each of registry/{overview,package,api,
+       installation}.html, which all reach the sidebar through this partial. The
+       list page has its own inline nav and calls the toggle directly. */ -}}
+{{ partial "docs/theme-toggle.html" . }}

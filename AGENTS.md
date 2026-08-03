@@ -106,6 +106,38 @@ The `push-registry.py` script publishes packages to the live Pulumi registry ser
 
 ---
 
+## Dark Mode
+
+The registry has a light/dark/system theme toggle, pinned to the bottom of the left sidebar. Dark is **light-first**: light is the baseline and dark is a pure override. The whole system lives in `themes/default/theme/src/scss/docs/_docs-theme.scss` (read its header comment first) and is driven by semantic `--docs-*` tokens defined on `body.section-registry` and re-pointed under `html[data-theme="dark"]`.
+
+The preference is stored under the **same `localStorage` key as `pulumi.com/docs`** (`pulumi-docs-theme`), so it is one setting across pulumi.com. Picking dark on `/docs` flips the registry too.
+
+| File | Role |
+|---|---|
+| `theme/src/scss/docs/_docs-theme.scss` | Token layer + every dark override + the toggle's own styles |
+| `theme/src/scss/docs/_code-light.scss` | Min Light code theme, gated on `html:not([data-theme="dark"])` |
+| `theme/src/ts/docs-theme.ts` | Toggle behavior, `system` tracking |
+| `layouts/partials/head.html` | Pre-paint inline script (writes `data-theme` on `<html>`; prevents FOUC) |
+| `layouts/partials/docs/theme-toggle.html` | The three-button control |
+| `scripts/generate-dark-logos.py` | Generates `-on-dark.svg` variants of local package logos |
+| `scripts/classify-external-logos.py` | Decides which external `logo_url` marks need a light chip |
+
+**You must check both modes whenever you add or restyle a visible element** — new partials, cards, callouts, buttons, icons, or any markup that introduces its own colors, backgrounds, borders, or images. Pure content changes (prose, YAML metadata, code samples) don't need a dark-mode pass.
+
+When something needs dark-mode work, prefer the existing levers over hand-written one-off colors:
+
+- **Use the semantic tokens.** Paint with `var(--docs-fg)`, `--docs-fg-muted`, `--docs-bg`, `--docs-bg-alt`, `--docs-surface`, `--docs-border`, `--docs-card`, `--docs-card-border`, `--docs-link`, `--docs-ring` rather than raw `--color-*` scales or hex literals — they flip automatically. For selectors also used outside the registry section, use the `var(--docs-TOKEN, ORIGINAL)` fallback form so light stays untouched.
+- **Use Tailwind `dark:` variants.** The `dark:` variant is wired to `data-theme` (`@custom-variant dark` in `theme/src/scss/main.scss`), so `dark:bg-gray-900`, `dark:text-white`, etc. work directly in templates. `bg-docs-bg` / `text-docs-fg` / `border-docs-border` utilities are generated too.
+- **Lean on the automatic flips.** Brand violet (`--color-violet-primary` and every `text-violet-primary` / `bg-violet-primary` / `border-violet-primary` utility) and the default border color are already remapped in the dark block, so markup authored with those gets dark mode for free. Surfaces styled via `@apply` (the `.btn-*` variants, for example) carry no literal utility class and need their own override in `_docs-theme.scss`.
+- **Package logos** are handled in two tiers by `layouts/partials/registry/package/icon.html`, and neither tier is hand-maintained:
+  - *Local marks.* The partial looks for `themes/default/assets/fingerprinted/logos/pkg/<name>-on-dark.svg` and, when it finds one, emits both images with the `docs-logo-light` / `docs-logo-dark` classes the theme swaps. Run `python3 scripts/generate-dark-logos.py` after adding or replacing a local mark; it lightens only the paints that are too dark for the dark page and skips full-color marks entirely. `--check` reports staleness without writing.
+  - *External `logo_url` marks.* These can't be recolored, so the ones that would disappear get a near-white chip instead. Which ones those are is measured by `python3 scripts/classify-external-logos.py`, which downloads each logo, samples it, and writes `themes/default/data/registry/external_logo_treatment.yaml`. Re-run it when you add a package with a `logo_url` or when a vendor changes their logo (`--check` in CI-style mode). Don't apply the chip by hand or across the board — it hides light marks and boxes in full-color ones.
+- **Masked icons** in `docs/_icons.scss` tint with `background: var(--docs-fg-muted)`; `background: url()` colored marks do not and need a per-asset variant.
+
+Note that `_docs-theme.scss` is imported **unlayered**, after everything else, so its rules beat anything in `@layer components` or `@layer utilities` regardless of specificity. That is deliberate (much of the chrome is painted with Tailwind utilities), but it means a dark rule there can't be walked back by a more specific layered rule.
+
+---
+
 ## Conventions
 
 - **Package manager**: Yarn only. Do not use npm or pnpm.

@@ -14,6 +14,7 @@ import "./toc";
 import "./pulumi-ai-menu";
 import "./copy-llm-prompt";
 import "./docs-main";
+import "./docs-theme";
 import "./algolia/autocomplete";
 import "./consent-manager";
 

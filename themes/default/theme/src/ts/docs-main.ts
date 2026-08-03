@@ -52,12 +52,23 @@ function setTableOfContentsVisibility() {
     }
 }
 
+// Size the sticky sidebar to exactly the viewport space below the top nav, so its
+// bottom edge always lands on the fold. The nav bar scrolls away, so the amount to
+// subtract shrinks to zero as the page scrolls — hence the recalculation on scroll
+// as well as on resize. Mirrors the `height: calc(100vh - 65px)` fallback in
+// docs/_docs-main.scss, which holds until this runs.
+//
+// This has to be exact rather than generous: the sidebar is a flex column whose
+// last child is the theme toggle (partials/docs/theme-toggle.html), and any excess
+// height pushes that control off the bottom of the screen.
 function setMainNavHeight() {
     const docsMainNav = document.querySelector<HTMLElement>(".docs-main-nav");
-    const docsFooter = document.querySelector<HTMLElement>(".docs-footer");
-    if (docsMainNav && docsFooter) {
-        docsMainNav.style.height = (docsFooter.offsetHeight + window.innerHeight) + "px";
+    if (!docsMainNav) {
+        return;
     }
+    const topNav = document.querySelector<HTMLElement>("header.docs-top-nav");
+    const topNavBottom = topNav ? Math.max(topNav.getBoundingClientRect().bottom, 0) : 0;
+    docsMainNav.style.height = (window.innerHeight - topNavBottom) + "px";
 }
 
 function handleResize() {
@@ -66,8 +77,13 @@ function handleResize() {
     setMainNavHeight();
 }
 
+function handleScroll() {
+    setDocsMainNavPosition();
+    setMainNavHeight();
+}
+
 window.addEventListener("resize", handleResize);
-window.addEventListener("scroll", setDocsMainNavPosition);
+window.addEventListener("scroll", handleScroll);
 window.addEventListener("load", handleResize);
 handleResize();
 

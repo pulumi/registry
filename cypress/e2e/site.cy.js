@@ -19,7 +19,14 @@ describe("www.pulumi.com/registry", () => {
 
     describe("registry home page", () => {
         beforeEach(() => {
-            cy.visit("/registry/");
+            // Pin the color theme to light. The default preference is "system", so
+            // without this the assertion below depends on the OS appearance of
+            // whatever machine is running the suite.
+            cy.visit("/registry/", {
+                onBeforeLoad(win) {
+                    win.localStorage.setItem("pulumi-docs-theme", "light");
+                },
+            });
         });
 
         it("loads and applies CSS", () => {

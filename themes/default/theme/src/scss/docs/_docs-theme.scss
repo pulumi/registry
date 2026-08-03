@@ -285,6 +285,20 @@ html[data-theme="dark"] body.section-registry {
     footer.docs-footer div.icon-pulumi-logo {
         background: url(/images/docs/footer/pulumi-light-logo.svg);
     }
+
+    // Footer text. It has to be re-muted here rather than by pointing
+    // docs/_footer.scss at --docs-fg-muted: that file is inside @layer components,
+    // so the blanket `p { color: var(--docs-fg) }` above outranks it whatever its
+    // specificity, and the paragraphs would come out at full brightness. Declaring
+    // it in this (unlayered) file is the only place it sticks — and it keeps the
+    // light greys in _footer.scss exactly as they were.
+    footer.docs-footer {
+        div.heading p.open-source,
+        div.heading p.copyright,
+        ul li {
+            color: var(--docs-fg-muted);
+        }
+    }
 }
 
 // ---------------------------------------------------------------------------
@@ -1020,6 +1034,15 @@ html[data-theme="dark"] body.section-registry {
     pulumi-registry-list-search .clear-filter-button {
         background: var(--color-gray-800);
         color: var(--docs-fg-muted);
+    }
+
+    // The mobile accordion's own background is written as an inline style by
+    // docs-main.ts every time it's toggled, so no rule here can override it. These
+    // two properties are what that inline style resolves instead; light mode never
+    // declares them and falls back to the original #fff / #f9f9f9 in the script.
+    div#accordion-package-card {
+        --docs-accordion-bg-open: var(--docs-card);
+        --docs-accordion-bg-closed: var(--color-gray-950);
     }
 
     // Package card (right rail + the mobile accordion at the top of the page).

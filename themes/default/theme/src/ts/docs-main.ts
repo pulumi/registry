@@ -52,6 +52,17 @@ function setTableOfContentsVisibility() {
     }
 }
 
+// Document-relative bottom edge of the top nav. The bar isn't sticky, so its
+// viewport-relative bottom is just this minus the scroll offset — which keeps
+// getBoundingClientRect(), and the layout flush it forces, off the scroll path.
+// Re-measured on resize and load, the only times the bar's own geometry moves.
+let topNavBottomInDocument = 0;
+
+function measureTopNav() {
+    const topNav = document.querySelector<HTMLElement>("header.docs-top-nav");
+    topNavBottomInDocument = topNav ? topNav.getBoundingClientRect().bottom + window.scrollY : 0;
+}
+
 // Size the sticky sidebar to exactly the viewport space below the top nav, so its
 // bottom edge always lands on the fold. The nav bar scrolls away, so the amount to
 // subtract shrinks to zero as the page scrolls — hence the recalculation on scroll
@@ -66,14 +77,19 @@ function setMainNavHeight() {
     if (!docsMainNav) {
         return;
     }
-    const topNav = document.querySelector<HTMLElement>("header.docs-top-nav");
-    const topNavBottom = topNav ? Math.max(topNav.getBoundingClientRect().bottom, 0) : 0;
-    docsMainNav.style.height = (window.innerHeight - topNavBottom) + "px";
+    const topNavBottom = Math.max(topNavBottomInDocument - window.scrollY, 0);
+    const height = (window.innerHeight - topNavBottom) + "px";
+    // Past the nav bar the value stops changing, so skip the write (and the style
+    // invalidation it costs) for the rest of the page.
+    if (docsMainNav.style.height !== height) {
+        docsMainNav.style.height = height;
+    }
 }
 
 function handleResize() {
     setDocsMainNavPosition();
     setTableOfContentsVisibility();
+    measureTopNav();
     setMainNavHeight();
 }
 
@@ -103,8 +119,15 @@ handleResize();
     const packageCardBackground = document.getElementById("accordion-package-card") as HTMLElement;
 
     if (packageCardCheckbox && packageCardBackground) {
+        // Written as custom properties rather than literal hexes so the accordion
+        // follows the color theme: docs/_docs-theme.scss declares both under
+        // html[data-theme="dark"], and light mode leaves them undefined and falls
+        // back to the original values here. An inline style can't be overridden
+        // from a stylesheet, so the indirection has to live on this side.
         packageCardCheckbox.addEventListener("change", function () {
-            packageCardBackground.style.background = packageCardCheckbox.checked ? "#fff" : "#f9f9f9";
+            packageCardBackground.style.background = packageCardCheckbox.checked
+                ? "var(--docs-accordion-bg-open, #fff)"
+                : "var(--docs-accordion-bg-closed, #f9f9f9)";
         });
     }
 

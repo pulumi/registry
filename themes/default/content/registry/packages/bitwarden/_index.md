@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/maxlaverse/bitwarden/0.17.6/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/maxlaverse/bitwarden/0.18.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Bitwarden Provider
@@ -19,6 +19,8 @@ pulumi package add terraform-provider maxlaverse/bitwarden
 Use the Bitwarden provider to manage your [Password Manager](https://bitwarden.com/products/personal/) Logins and Secure Notes, and [Secrets Manager](https://bitwarden.com/products/secrets-manager/) Secrets.
 You must configure the provider with proper credentials before you can use it.
 If you're not using the `embeddedClient` implementation, you also need a [Password Manager CLI](https://bitwarden.com/help/article/cli/#download-and-install) or [Secrets Manager CLI](https://bitwarden.com/help/article/cli/#download-and-install) installed locally.
+
+> **Note:** This provider requires Pulumi or OpenTofu 1.1.5 or later (Protocol 6).
 ## Example Usage
 
 {{< chooser language "typescript,python,go,csharp,java,yaml" >}}
@@ -208,16 +210,16 @@ export BW_CLIENTSECRET="my-client-secret"
 ```
 ## Configuration Reference
 
-- `accessToken` (String) Machine Account Access Token (env: `BWS_ACCESS_TOKEN`)).
+- `accessToken` (String, Sensitive) Machine Account Access Token (env: `BWS_ACCESS_TOKEN`)).
 - `clientId` (String) Client ID (env: `BW_CLIENTID`)
 - `clientImplementation` (String) Client implementation type. Valid values are "embedded" (use embedded client) or "cli" (use CLI binaries, default).
-- `clientSecret` (String) Client Secret (env: `BW_CLIENTSECRET`). Do not commit this information in Git unless you know what you're doing. Prefer using a Pulumi `variable {}` in order to inject this value from the environment.
+- `clientSecret` (String, Sensitive) Client Secret (env: `BW_CLIENTSECRET`). Do not commit this information in Git unless you know what you're doing. Prefer using a Pulumi `variable {}` in order to inject this value from the environment.
 - `email` (String) Login Email of the Vault (env: `BW_EMAIL`).
 - `experimental` (Block Set) Enable experimental features. (see below for nested schema)
 - `extraCaCerts` (String) Extends the well known 'root' CAs (like VeriSign) with the extra certificates in file (env: `NODE_EXTRA_CA_CERTS`, doesn't work with embedded client).
-- `masterPassword` (String) Master password of the Vault (env: `BW_PASSWORD`). Do not commit this information in Git unless you know what you're doing. Prefer using a Pulumi `variable {}` in order to inject this value from the environment.
+- `masterPassword` (String, Sensitive) Master password of the Vault (env: `BW_PASSWORD`). Do not commit this information in Git unless you know what you're doing. Prefer using a Pulumi `variable {}` in order to inject this value from the environment.
 - `server` (String) Bitwarden Server URL (default: `https://vault.bitwarden.com`, env: `BW_URL` or `BWS_SERVER_URL`).
-- `sessionKey` (String) A Bitwarden Session Key (env: `BW_SESSION`)
+- `sessionKey` (String, Sensitive) A Bitwarden Session Key (env: `BW_SESSION`)
 - `vaultPath` (String) Alternative directory for storing the Vault locally (default: `.bitwarden/`, env: `BITWARDENCLI_APPDATA_DIR`; set to empty string to use CLI default).
 
 <a id="nestedblock--experimental"></a>

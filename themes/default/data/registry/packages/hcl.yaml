@@ -4,13 +4,13 @@ category: Cloud
 component: false
 description: Instantiate a Terraform/OpenTofu module as a Pulumi component.
 featured: false
-logo_url: https://raw.githubusercontent.com/pulumi-labs/pulumi-hcl/master/assets/logo.svg
+logo_url: https://raw.githubusercontent.com/pulumi/pulumi-hcl/master/assets/logo.svg
 name: hcl
 native: true
 package_status: public_preview
 publisher: Pulumi
-repo_url: https://github.com/pulumi-labs/pulumi-hcl
-schema_file_url: https://raw.githubusercontent.com/pulumi-labs/pulumi-hcl/10e04685d06c0eabbb4c614614b2a8e6f640df4d/registry/schema.json
+repo_url: https://github.com/pulumi/pulumi-hcl
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-hcl/8a02f4df24f9a62e35338756bd33f6fae50d86fc/registry/schema.json
 title: Any HCL Module
-updated_on: 1785233353
-version: 0.12.0
+updated_on: 1785866844
+version: 0.13.0

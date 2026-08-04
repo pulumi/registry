@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi-labs/pulumi-hcl/10e04685d06c0eabbb4c614614b2a8e6f640df4d/registry/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-hcl/8a02f4df24f9a62e35338756bd33f6fae50d86fc/registry/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi-labs/pulumi-hcl/blob/10e04685d06c0eabbb4c614614b2a8e6f640df4d/registry/_index.md
+edit_url: https://github.com/pulumi/pulumi-hcl/blob/8a02f4df24f9a62e35338756bd33f6fae50d86fc/registry/_index.md
 title: Any HCL Module
 meta_desc: Instantiate any Terraform or OpenTofu module as a Pulumi component resource
 layout: package
@@ -29,7 +29,7 @@ module and exports the resulting VPC id.
 
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
-import * as hcl from "@pulumi-labs/hcl";
+import * as hcl from "@pulumi/hcl";
 
 const vpc = new hcl.Module("vpc", {
     source: "terraform-aws-modules/vpc/aws",
@@ -49,7 +49,7 @@ export const vpcId = vpc.outputs.apply(o => o["vpc_id"]);
 
 ```python
 import pulumi
-import pulumi_labs_hcl as hcl
+import pulumi_hcl as hcl
 
 vpc = hcl.Module("vpc",
     source="terraform-aws-modules/vpc/aws",
@@ -70,7 +70,7 @@ pulumi.export("vpc_id", vpc.outputs["vpc_id"])
 package main
 
 import (
-	"github.com/pulumi-labs/pulumi-hcl/sdk/go/hcl"
+	"github.com/pulumi/pulumi-hcl/sdk/go/hcl"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -100,7 +100,7 @@ func main() {
 ```csharp
 using System.Collections.Generic;
 using Pulumi;
-using Pulumi.Labs.Hcl;
+using Pulumi.Hcl;
 
 return await Deployment.RunAsync(() =>
 {

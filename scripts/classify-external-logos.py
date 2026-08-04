@@ -29,8 +29,12 @@ stale, which is what `--check` is for. Re-run after adding packages with a
     python3 scripts/classify-external-logos.py            # refresh the data file
     python3 scripts/classify-external-logos.py --check    # fail if it's stale
 
-Non-PNG rasters are normalized with `sips` (macOS). Anything that can't be decoded
-is reported and left out of the list — i.e. it gets no chip, the safer default.
+Non-PNG rasters are normalized with `sips`, which is macOS-only. Anything that can't
+be decoded — including every non-PNG raster on a Linux box — is reported and left
+out of the list, i.e. it gets no chip, the safer default. `--check` refuses to
+compare at all when anything was undecidable (exit 2), so a machine without `sips`,
+or one flaky download, reports "unknown" rather than falsely calling the committed
+file stale.
 """
 
 import argparse
@@ -79,7 +83,8 @@ LOGO_URL_RE = re.compile(r"^logo_url:\s*(.+)$", re.M)
 # Pillow isn't a dependency of this repo and this keeps the script standalone.
 
 def _read_png(path):
-    data = open(path, "rb").read()
+    with open(path, "rb") as handle:
+        data = handle.read()
     if data[:8] != b"\x89PNG\r\n\x1a\n":
         raise ValueError("not a PNG")
     pos, idat, plte, trns = 8, b"", None, None
@@ -213,7 +218,8 @@ def svg_shares(path):
     lost" rather than "how much of the area" — close enough for flat vector marks,
     which is what these are.
     """
-    source = open(path, encoding="utf-8", errors="replace").read()
+    with open(path, encoding="utf-8", errors="replace") as handle:
+        source = handle.read()
     colors = {m.group(0).lower() for m in HEX_RE.finditer(source)}
     if re.search(r'(fill|stroke|stop-color)\s*[=:]\s*["\']?black\b', source):
         colors.add("#000000")
@@ -249,8 +255,8 @@ def needs_chip(shares):
 def external_logo_urls():
     urls = {}
     for path in sorted(glob.glob(os.path.join(PACKAGE_DIR, "*.yaml"))):
-        source = open(path, encoding="utf-8").read()
-        match = LOGO_URL_RE.search(source)
+        with open(path, encoding="utf-8") as handle:
+            match = LOGO_URL_RE.search(handle.read())
         if not match:
             continue
         url = match.group(1).strip().strip('"').strip("'")
@@ -260,24 +266,47 @@ def external_logo_urls():
 
 
 def fetch(url, dest):
+    # --fail matters: without it a 404 writes the host's HTML error page to `dest`
+    # and reports success, and the classifier then measures the error page.
     result = subprocess.run(
-        ["curl", "-sL", "--max-time", "30", "-o", dest, url], capture_output=True
+        ["curl", "-sL", "--fail", "--max-time", "30", "-o", dest, url],
+        capture_output=True,
     )
     return result.returncode == 0 and os.path.exists(dest) and os.path.getsize(dest) > 0
 
 
+def is_svg(path):
+    r"""True for an SVG, whether or not the URL carried a .svg extension.
+
+    Sniffing the first tag rather than the first five bytes: real files start
+    `<svg\n  xmlns=…>`, `<!DOCTYPE svg …>`, or with a UTF-8 BOM, and any of those
+    would otherwise fall through to the raster path and fail to decode.
+    """
+    if path.lower().endswith(".svg"):
+        return True
+    with open(path, "rb") as handle:
+        head = handle.read(400).lstrip(b"\xef\xbb\xbf")
+    return bool(re.match(rb"\s*(<\?xml|<!DOCTYPE\s+svg|<svg\b)", head))
+
+
 def to_png(path, workdir, name):
     """Return a decodable PNG path, converting with sips when needed."""
-    head = open(path, "rb").read(8)
+    with open(path, "rb") as handle:
+        head = handle.read(8)
     if head.startswith(b"\x89PNG\r\n\x1a\n"):
         return path
     converted = os.path.join(workdir, name + ".converted.png")
-    result = subprocess.run(
-        ["sips", "-s", "format", "png", path, "--out", converted],
-        capture_output=True,
-    )
+    try:
+        result = subprocess.run(
+            ["sips", "-s", "format", "png", path, "--out", converted],
+            capture_output=True,
+        )
+    except FileNotFoundError:
+        raise ValueError(
+            "cannot decode: `sips` is macOS-only and isn't installed"
+        ) from None
     if result.returncode != 0 or not os.path.exists(converted):
-        raise ValueError("could not convert to PNG (is `sips` available?)")
+        raise ValueError("could not convert to PNG")
     return converted
 
 
@@ -322,9 +351,7 @@ def main():
                 skipped.append((name, "download failed"))
                 continue
             try:
-                if raw.endswith(".svg") or open(raw, "rb").read(400).lstrip()[:5] in (
-                    b"<svg ", b"<?xml"
-                ):
+                if is_svg(raw):
                     shares = svg_shares(raw)
                 else:
                     shares = raster_shares(to_png(raw, workdir, name))
@@ -344,7 +371,21 @@ def main():
     rendered = render(chips)
 
     if args.check:
-        current = open(OUT_PATH, encoding="utf-8").read() if os.path.exists(OUT_PATH) else ""
+        # A logo we couldn't measure isn't evidence the committed file is wrong —
+        # it's a missing measurement. One flaky curl (or a Linux runner with no
+        # `sips`) would otherwise drop that package from `chips`, fail the
+        # comparison, and tell the operator to re-run a generator that would commit
+        # the regression. Report and bail out as "unknown" instead of "stale".
+        if skipped:
+            print("Could not classify %d logo(s); not comparing:" % len(skipped))
+            for name, why in skipped:
+                print("  %-24s %s" % (name, why))
+            return 2
+
+        current = ""
+        if os.path.exists(OUT_PATH):
+            with open(OUT_PATH, encoding="utf-8") as handle:
+                current = handle.read()
         if current != rendered:
             print("external_logo_treatment.yaml is out of date.")
             print("Run: python3 scripts/classify-external-logos.py")

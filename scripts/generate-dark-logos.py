@@ -20,6 +20,9 @@ Rules:
     inherits. Roots that already declare a fill are left alone.
   * Marks with no dark paints (full-color logos, light logos) are skipped — they
     read fine as-is and a variant would only be one more file to keep in sync.
+  * Packages whose YAML declares a `logo_url` are skipped too: icon.html short-
+    circuits on that before it looks for a local mark, so the variant could never
+    be served. Those go through scripts/classify-external-logos.py instead.
 
 `layouts/partials/registry/package/icon.html` picks the variant up automatically;
 there is nothing to register. Re-run after adding or replacing a local logo:
@@ -30,14 +33,18 @@ there is nothing to register. Re-run after adding or replacing a local logo:
 
 import argparse
 import colorsys
+import glob
 import os
 import re
 import sys
 
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 LOGO_DIR = os.path.join(
-    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-    "themes", "default", "assets", "fingerprinted", "logos", "pkg",
+    ROOT, "themes", "default", "assets", "fingerprinted", "logos", "pkg",
 )
+
+PACKAGE_DIR = os.path.join(ROOT, "themes", "default", "data", "registry", "packages")
 
 SUFFIX = "-on-dark.svg"
 
@@ -65,6 +72,17 @@ HEX_RE = re.compile(r"#(?:[0-9a-fA-F]{8}|[0-9a-fA-F]{6}|[0-9a-fA-F]{3,4})\b")
 KEYWORDS = {"black": "#000000"}
 
 PAINTABLE = ("path", "circle", "rect", "polygon", "polyline", "ellipse", "line", "text")
+
+LOGO_URL_RE = re.compile(r"^logo_url:\s*(.+)$", re.M)
+
+# `fill` as an attribute, not as the prefix of fill-rule / fill-opacity.
+FILL_ATTR_RE = re.compile(r"\bfill\s*=")
+
+# A shape faint enough to be shading rather than ink. These inherit the black
+# default like any other unpainted shape, but they aren't what makes the mark
+# legible — Cloud Run's 7% drop shadow, for instance — so they don't earn a variant.
+OPACITY_RE = re.compile(r'\b(?:fill-)?opacity\s*=\s*["\']?([0-9.]+)')
+FAINT_MAX = 0.5
 
 
 def expand(hex_str):
@@ -118,14 +136,21 @@ def has_unpainted_shapes(svg):
     """
     for match in re.finditer(r"<(%s)\b([^>]*)>" % "|".join(PAINTABLE), svg):
         attrs = match.group(2)
-        if "fill" not in attrs and "class" not in attrs and "style" not in attrs:
+        opacity = OPACITY_RE.search(attrs)
+        if opacity and float(opacity.group(1)) < FAINT_MAX:
+            continue
+        if (
+            not FILL_ATTR_RE.search(attrs)
+            and not re.search(r"\bclass\s*=", attrs)
+            and not re.search(r"\bstyle\s*=", attrs)
+        ):
             return True
     return False
 
 
 def root_declares_fill(svg):
     match = re.search(r"<svg\b[^>]*>", svg)
-    return bool(match) and "fill" in match.group(0)
+    return bool(match) and bool(FILL_ATTR_RE.search(match.group(0)))
 
 
 def add_root_fill(svg, color):
@@ -156,7 +181,14 @@ def convert(svg):
         rgb, alpha = paints[token]
         new_token = "#" + replacements[token] + alpha
         if token in KEYWORDS:
-            out = re.sub(r"\b%s\b" % token, new_token, out)
+            # Scope the keyword to the same paint positions collect_paints matched.
+            # A bare \bblack\b would also rewrite class="black-mark", id="black" and
+            # <title>Black wordmark</title>.
+            out = re.sub(
+                r'((?:fill|stroke|stop-color)\s*[=:]\s*["\']?)%s\b' % token,
+                r"\g<1>" + new_token,
+                out,
+            )
         else:
             out = re.sub(re.escape(token) + r"\b", new_token, out)
 
@@ -164,6 +196,22 @@ def convert(svg):
         out = add_root_fill(out, "#" + lighten("000000"))
 
     return out
+
+
+def packages_with_logo_url():
+    """Package names whose YAML points `logo_url` at an image we don't host.
+
+    icon.html short-circuits on `logo_url` before it ever looks for a local mark, so
+    a variant generated for one of these could never be served. Those logos are
+    handled by scripts/classify-external-logos.py instead.
+    """
+    external = set()
+    for path in sorted(glob.glob(os.path.join(PACKAGE_DIR, "*.yaml"))):
+        with open(path, encoding="utf-8") as fh:
+            match = LOGO_URL_RE.search(fh.read())
+        if match and match.group(1).strip().strip('"').strip("'"):
+            external.add(os.path.basename(path)[:-len(".yaml")])
+    return external
 
 
 def main():
@@ -179,6 +227,7 @@ def main():
         f for f in os.listdir(LOGO_DIR)
         if f.endswith(".svg") and not f.endswith(SUFFIX)
     )
+    external = packages_with_logo_url()
 
     written, removed, skipped, stale = [], [], [], []
 
@@ -190,7 +239,7 @@ def main():
         with open(src_path, encoding="utf-8") as fh:
             svg = fh.read()
 
-        variant = convert(svg)
+        variant = None if base in external else convert(svg)
 
         if variant is None:
             skipped.append(name)
@@ -230,7 +279,7 @@ def main():
     print("sources:  %d" % len(sources))
     print("written:  %d" % len(written))
     print("removed:  %d" % len(removed))
-    print("skipped:  %d (no dark paints)" % len(skipped))
+    print("skipped:  %d (no dark paints, or an external logo_url)" % len(skipped))
     return 0
 
 

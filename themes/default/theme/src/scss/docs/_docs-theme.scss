@@ -22,6 +22,21 @@
 // and match /docs exactly. Raw `--color-*` scales never invert; only these semantic
 // aliases re-point per mode.
 
+// Tell the UA which palette the page is painted in, so the chrome it draws itself
+// — scrollbars, the native <select> popup the version selector opens, text carets,
+// autofill — follows the theme instead of staying light. Scrollbars paint from the
+// root element, so this has to sit on <html> rather than on the body scope the rest
+// of the file uses. That's safe here: head.html writes data-theme on <html> without
+// a section gate, and every page this repo serves either is the registry or is the
+// 404 page, both of which go dark.
+html:not([data-theme="dark"]) {
+    color-scheme: light;
+}
+
+html[data-theme="dark"] {
+    color-scheme: dark;
+}
+
 // Light — the default baseline. These equal the colors the registry already
 // renders, so light mode is unchanged. Note what is deliberately NOT here: a
 // `color` declaration on the body. The registry's base body color is gray-800
@@ -92,6 +107,45 @@ html[data-theme="dark"] body.section-registry {
 }
 
 // ---------------------------------------------------------------------------
+// Default border color.
+//
+// main.scss @layer base restores the Tailwind v3 default border-color (gray-200) so
+// bare `border` / `border-t` utilities render. Flip that default to the dark
+// hairline — but do it INSIDE @layer base, which is the one rule in this file that
+// must NOT be unlayered. Unlayered, `*` outranks @layer utilities as well, so it
+// flattens every *colored* border a template authored: the blue-600 ring on the
+// github-buttons shortcode (live on the committed how-to guides and everything
+// mktutorial generates), the purple-700 tab underlines in partials/carousel.html.
+// In @layer base it still beats the gray-200 default it means to replace (same
+// layer, higher specificity) while anything layered that declares its own border
+// color — component styles, `dark:` variants, colored utilities — keeps it.
+//
+// Deliberately NOT extended to ::before/::after: the API nav tree draws its
+// disclosure caret as a CSS triangle (two transparent borders plus one colored one
+// on `summary::before`), and repainting the transparent pair turns every caret into
+// a square.
+// ---------------------------------------------------------------------------
+@layer base {
+    html[data-theme="dark"] body.section-registry * {
+        border-color: var(--docs-border);
+    }
+}
+
+// The layered reset above leaves colored border utilities alone, which is the
+// point — but it leaves the light-gray ones alone too, and a gray-300 hairline on a
+// dark page is the same bug in the other direction. Re-point just the light steps,
+// unlayered so it clears @layer utilities. gray-800/900/950 already read as a
+// hairline in dark and are left as authored.
+html[data-theme="dark"] body.section-registry {
+    .border-gray-100,
+    .border-gray-200,
+    .border-gray-300,
+    .border-gray-500 {
+        border-color: var(--docs-border);
+    }
+}
+
+// ---------------------------------------------------------------------------
 // Base content chrome.
 // ---------------------------------------------------------------------------
 html[data-theme="dark"] body.section-registry {
@@ -112,38 +166,6 @@ html[data-theme="dark"] body.section-registry {
     h6,
     p {
         color: var(--docs-fg);
-    }
-
-    // main.scss @layer base restores the Tailwind v3 default border-color (gray-200)
-    // so bare `border` / `border-t` utilities render. Flip that default to the dark
-    // hairline. Deliberately NOT extended to ::before/::after: the API nav tree draws
-    // its disclosure caret as a CSS triangle (two transparent borders plus one
-    // colored one on `summary::before`), and repainting the transparent pair turns
-    // every caret into a square.
-    * {
-        border-color: var(--docs-border);
-    }
-
-    // The reset above is blunt — it also repaints borders that are transparent *on
-    // purpose*: layout borders that only exist to reserve space, and the "rail" and
-    // "underline" patterns where transparent is the resting state and a color is the
-    // active state. Put those back. The meaningful colors are re-asserted after
-    // this, either here or in the per-surface blocks further down.
-    .btn,
-    .chip,
-    .docs-theme-toggle__btn,
-    .aa-DetachedFormContainer,
-    .aa-SourceHeader ul li,
-    nav.main-nav li,
-    nav.main-nav div.toc-header {
-        border-color: transparent;
-    }
-
-    // Sidebar active rail (docs/_main-nav.scss pins violet-primary, which the token
-    // remap has already flipped to lavender — it just loses to the `*` reset).
-    nav.main-nav li.active,
-    nav.main-nav div.toc-header.active {
-        border-left-color: var(--color-violet-primary);
     }
 
     // Solid primary buttons keep brand violet-700 (the --color-violet-primary remap
@@ -652,47 +674,19 @@ html[data-theme="dark"] body.section-registry {
         }
     }
 
-    // --- Chooser chrome: the violet card border, standard-strip bottom border, and
-    //     standalone-toolbar bottom border are all flattened to --docs-border by the
-    //     `*` border reset above; re-assert the --chrome-border step so the dark
-    //     chrome stays violet. (Backgrounds flip automatically — --chrome-* is a
-    //     per-mode custom property and `*` only resets border-color.)
-    pulumi-chooser > ul {
-        border-bottom-color: var(--chrome-border);
-    }
-
-    pulumi-chooser[type="language"]:not([option-style="none"]) {
-        border-color: var(--chrome-border);
-
-        .chooser-toolbar {
-            border-bottom-color: var(--chrome-border);
-        }
-    }
-
-    // --- Chooser tabs + language toolbar tabs: re-assert the underline colors
-    //     (inactive = transparent, hover = chrome-border-hover, active = link) so
-    //     the `*` border reset above doesn't override them. Tab *text* already
-    //     resolves --docs-fg / --docs-fg-muted directly. -----------------------
-    pulumi-chooser > ul li,
-    .chooser-toolbar > ul li {
-        border-bottom-color: transparent;
-
-        &:hover {
-            border-bottom-color: var(--chrome-border-hover);
-        }
-
-        &.active {
-            border-bottom-color: var(--docs-link);
-        }
-    }
+    // --- Chooser chrome + tabs: nothing here. components/_chooser.scss already
+    //     paints every edge with --chrome-border / --chrome-border-hover /
+    //     --docs-link, all of which re-point per mode, so the whole component
+    //     follows the theme on its own now that the default-border reset above is
+    //     layered and no longer flattens it. Backgrounds do the same via --chrome-bg.
 
     // --- Code panels (dark): mirror the light treatment in _code-light.scss — wash
     //     the code surface with the darkest violet step at 50% opacity (the page
     //     shows through the rest) and give standalone fenced blocks the chooser's
     //     --chrome-border, so a lone block reads as a bordered card. The solid
     //     violet-950 surface + Min Dark syntax colors come from _code.scss /
-    //     _chroma.scss. The border shorthand also restores the width/style the `*`
-    //     reset (color-only) can't touch. --------------------------------------
+    //     _chroma.scss. The border shorthand is deliberate: the light block has no
+    //     border at all, so the width and style have to be declared here too.  ---
     pre:not(.mermaid),
     .chroma,
     .bg {
@@ -1446,9 +1440,8 @@ html[data-theme="dark"] body:not([class*="section-"]) {
 // Override the Algolia Autocomplete classic theme's built-in dark palette and
 // re-skin the parts we style by hand. The search modal is rendered at <body> level,
 // detached from the page DOM — but <body> IS body.section-registry here, so the
-// normal scope reaches it and everything stays at a specificity that clears the
-// `*` border reset above. (Scoping on body[data-theme="dark"], as docs does, would
-// sit *below* that reset and lose the tab underlines to it.)
+// normal scope reaches it and these stay consistent with the rest of the file
+// rather than needing the body[data-theme="dark"] scope docs uses.
 html[data-theme="dark"] body.section-registry {
     // Drive the whole widget off our brand tokens rather than the classic theme's
     // dark defaults (which leave the panel near-black-blue, the input almost pure
@@ -1498,9 +1491,9 @@ html[data-theme="dark"] body.section-registry {
                     color: var(--color-gray-300);
                 }
 
-                // Resting/hover/active underline. The resting state is transparent
-                // (restored alongside the other layout borders above); these two put
-                // the meaningful colors back on top of it.
+                // Resting/hover/active underline. The resting state stays the
+                // transparent one _algolia.scss sets; these two give the lit states
+                // their dark-mode steps.
                 &:hover:not(.disabled) {
                     border-bottom-color: var(--color-violet-400);
                 }
@@ -1530,7 +1523,8 @@ html[data-theme="dark"] body.section-registry {
                     color: var(--color-white);
 
                     // The source pill ("docs" / "packages"). Its hue is the only
-                    // thing distinguishing the two, and the `*` reset flattens it.
+                    // thing distinguishing the two; lift both to their 400 steps so
+                    // they stay legible on the dark card.
                     .label {
                         color: var(--color-gray-300);
 
@@ -1650,22 +1644,13 @@ html[data-theme="dark"] body.section-registry {
 }
 
 // Active state. Driven by data-theme-pref so the highlight is correct pre-paint
-// (before the JS bundle loads); aria-pressed mirrors it once JS runs.
-//
-// The `body` in each selector isn't decoration: in dark mode these compete with the
-// transparent-border restore (`html[data-theme="dark"] body.section-registry
-// .docs-theme-toggle__btn`), and without it they'd lose on specificity and the
-// active button would have no visible edge.
-html[data-theme-pref="light"]
-    body
-    .docs-theme-toggle__btn[data-theme-set="light"],
-html[data-theme-pref="dark"]
-    body
-    .docs-theme-toggle__btn[data-theme-set="dark"],
-html[data-theme-pref="system"]
-    body
-    .docs-theme-toggle__btn[data-theme-set="system"],
-html body .docs-theme-toggle__btn[aria-pressed="true"] {
+// (before the JS bundle loads); aria-pressed mirrors it once JS runs. The `html`
+// prefix keeps these above the resting `.docs-theme-toggle__btn` rule above, which
+// is unlayered too and would otherwise win on source order.
+html[data-theme-pref="light"] .docs-theme-toggle__btn[data-theme-set="light"],
+html[data-theme-pref="dark"] .docs-theme-toggle__btn[data-theme-set="dark"],
+html[data-theme-pref="system"] .docs-theme-toggle__btn[data-theme-set="system"],
+html .docs-theme-toggle__btn[aria-pressed="true"] {
     color: var(--docs-link, var(--color-violet-primary));
     background-color: var(--docs-surface, var(--color-gray-100));
     border-color: var(--docs-border, var(--color-gray-200));

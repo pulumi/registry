@@ -8,8 +8,16 @@ ensure:
 	$(MAKE) sync-icons
 
 .PHONY: lint
-lint: lint-go lint-markdown
+lint: lint-go lint-markdown lint-dark-logos
 	yarn run lint
+
+# The `-on-dark.svg` package marks are generated, so a new or replaced logo silently
+# leaves them stale. This check is deterministic and offline, so it belongs here;
+# its sibling scripts/classify-external-logos.py needs the network and is not run by
+# `make lint`. See the "Dark Mode" section of AGENTS.md.
+.PHONY: lint-dark-logos
+lint-dark-logos:
+	python3 ./scripts/generate-dark-logos.py --check
 
 .PHONY: lint-markdown
 lint-markdown: lint-shortcode-delimiters

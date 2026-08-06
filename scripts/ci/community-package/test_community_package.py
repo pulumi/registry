@@ -204,6 +204,17 @@ class VerifyTests(unittest.TestCase):
     def test_absent_publisher_is_not_flagged(self) -> None:
         self.assertTrue(verify_entry._publisher_known("", {}))
 
+    def test_schema_version_matches_tag_without_prefix(self) -> None:
+        self.assertTrue(verify_entry._schema_version_matches("0.4.5", "v0.4.5"))
+        self.assertTrue(verify_entry._schema_version_matches("0.4.5", "0.4.5"))
+
+    def test_placeholder_schema_version_does_not_match(self) -> None:
+        self.assertFalse(verify_entry._schema_version_matches("0.0.0", "v0.4.5"))
+        self.assertFalse(verify_entry._schema_version_matches("0.0.0-dev", "v1.3.0"))
+
+    def test_absent_schema_version_is_not_flagged(self) -> None:
+        self.assertTrue(verify_entry._schema_version_matches("", "v1.3.0"))
+
 
 class ReportTargetTests(unittest.TestCase):
     def test_prefers_recorded_pr_number(self) -> None:
@@ -236,10 +247,12 @@ class ReportTargetTests(unittest.TestCase):
 
 def _manifest(green: bool = True, warnings: bool = False, findings: list[DocFinding] | None = None,
               installs: list[InstallResult] | None = None, docs: list[DocFile] | None = None,
-              publisher: str = "", publisherKnown: bool = True) -> Manifest:
+              publisher: str = "", publisherKnown: bool = True,
+              schemaVersion: str = "", schemaVersionMatches: bool = True) -> Manifest:
     return Manifest("x/pulumi-demo", "s.json", "demo", Version("v1.0.0", "0" * 40), "x",
                     installs or [], findings or [], green=green, warnings=warnings, docs=docs or [],
-                    publisher=publisher, publisherKnown=publisherKnown)
+                    publisher=publisher, publisherKnown=publisherKnown,
+                    schemaVersion=schemaVersion, schemaVersionMatches=schemaVersionMatches)
 
 
 class FactSheetTests(unittest.TestCase):
@@ -263,6 +276,17 @@ class FactSheetTests(unittest.TestCase):
         out = fact_sheet.render(_manifest(publisher="Aten Security", publisherKnown=True))
         self.assertIn("publisher listed", out)
         self.assertNotIn("not in `publisher-names.json`", out)
+
+    def test_mismatched_schema_version_is_flagged_in_the_sheet(self) -> None:
+        out = fact_sheet.render(_manifest(green=False, schemaVersion="0.0.0", schemaVersionMatches=False))
+        self.assertIn("❌", out.splitlines()[0])
+        self.assertIn("schema version", out)
+        self.assertIn("declares version `0.0.0`", out)
+
+    def test_matching_schema_version_shows_row_without_note(self) -> None:
+        out = fact_sheet.render(_manifest(schemaVersion="1.0.0"))
+        self.assertIn("schema version", out)
+        self.assertNotIn("declares version", out)
 
     def test_red_render_with_install_failure(self) -> None:
         out = fact_sheet.render(_manifest(

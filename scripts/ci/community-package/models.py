@@ -65,3 +65,5 @@ class Manifest:
     error: str = ""
     publisher: str = ""
     publisherKnown: bool = True
+    schemaVersion: str = ""
+    schemaVersionMatches: bool = True

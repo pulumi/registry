@@ -11,7 +11,7 @@ require (
 	github.com/pkg/errors v0.9.1
 	github.com/pulumi-labs/pulumi-hcl v0.10.0
 	github.com/pulumi/pulumi-dotnet/pulumi-language-dotnet/v3 v3.110.0
-	github.com/pulumi/pulumi-java v1.34.0
+	github.com/pulumi/pulumi-java v1.35.0
 	github.com/pulumi/pulumi-yaml v1.38.1
 	github.com/pulumi/pulumi/pkg/v3 v3.256.0
 	github.com/pulumi/pulumi/sdk/v3 v3.256.0

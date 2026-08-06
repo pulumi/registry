@@ -234,8 +234,10 @@ pulumi-chooser {
         }
     }
 
-    // The registry has no dark docs theme, so hide the dark-variant logo that
-    // renderToolbarLogo emits for YAML (in docs, _docs-theme.scss swaps the two).
+    // Hide the dark-variant logo that renderToolbarLogo emits for YAML. Redundant
+    // with the site-wide `.docs-logo-dark { display: none }` default in
+    // docs/_docs-theme.scss (which also owns the dark-mode swap), but kept so the
+    // chooser's own stylesheet stays self-contained.
     .docs-logo-dark {
         display: none;
     }

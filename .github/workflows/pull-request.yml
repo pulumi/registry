@@ -24,6 +24,7 @@ jobs:
     - mktutorial
     - lint-markdown
     - lint-scripts
+    - lint-dark-logos
     - test-provider-api-docs
     - preview
     - test-live-publish
@@ -86,6 +87,20 @@ jobs:
         run: yarn install
       - name: Run Linter
         run: yarn run lint
+
+  lint-dark-logos:
+    name: Lint Dark Logo Variants
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out branch
+        uses: actions/checkout@v7
+
+      # The `-on-dark.svg` package marks are generated from their light siblings by
+      # scripts/generate-dark-logos.py, so adding or replacing a local logo leaves
+      # them stale unless someone remembers to re-run it. The check is deterministic
+      # and offline (stdlib only, no network), so it can just run here.
+      - name: Check dark logo variants
+        run: make lint-dark-logos
 
   test-infra:
     name: Test Infrastructure Functions

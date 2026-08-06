@@ -53,6 +53,21 @@ div.highlight {
         }
     }
 
+    // Align the button with the code panel, not with the .highlight box.
+    //
+    // A standalone fenced block keeps the `my-4` that _code.scss puts on every
+    // `pre`. Because .highlight is a flex container, that margin sits *inside* it,
+    // so the panel's top edge is 1rem below .highlight's — and the button, pinned
+    // to `top: 0`, floats in the gap above the panel. Blocks that sit inside their
+    // own frame (a chooser card, an example-program panel, a code-chrome terminal,
+    // or a code-tabbed demo) zero that margin and are already flush, so the
+    // :not() list here is the same one _code-light.scss uses to decide which
+    // blocks get their own border.
+    &:not(pulumi-chooser *, .example-program *, .code-chrome *, .code-tabbed *)
+        > .copy-button-container {
+        top: 1rem;
+    }
+
     .copy-button {
         @include transition;
         // Muted icon on the dark panel; the docs-light theme darkens it.

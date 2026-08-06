@@ -31,9 +31,10 @@ This document describes the build, test, and deployment system for the `pulumi/r
    - [8.2 Go Linting](#82-go-linting)
    - [8.3 Markdown Linting](#83-markdown-linting)
    - [8.4 Script Linting](#84-script-linting)
-   - [8.5 Provider API Docs Tests](#85-provider-api-docs-tests)
-   - [8.6 Browser Tests (Cypress)](#86-browser-tests-cypress)
-   - [8.7 Link Checking](#87-link-checking)
+   - [8.5 Dark Logo Variants](#85-dark-logo-variants)
+   - [8.6 Provider API Docs Tests](#86-provider-api-docs-tests)
+   - [8.7 Browser Tests (Cypress)](#87-browser-tests-cypress)
+   - [8.8 Link Checking](#88-link-checking)
 9. [Environment & Secret Management](#environment--secret-management)
    - [9.1 Pulumi ESC](#91-pulumi-esc)
    - [9.2 Environment Variables Reference](#92-environment-variables-reference)
@@ -562,6 +563,9 @@ PR opened / committed
         ├── lint-scripts
         │       └── yarn install → yarn run lint
         │
+        ├── lint-dark-logos
+        │       └── make lint-dark-logos
+        │
         ├── test-live-publish
         │       └── uv run push-registry.py --dry-run
         │
@@ -969,7 +973,31 @@ yarn run format
 # Runs: prettier scripts --write
 ```
 
-### 8.5 Provider API Docs Tests
+### 8.5 Dark Logo Variants
+
+```bash
+make lint-dark-logos
+# Runs: python3 scripts/generate-dark-logos.py --check
+```
+
+The dark-mode package marks under `themes/default/assets/fingerprinted/logos/pkg/`
+(`<name>-on-dark.svg`) are generated from their light siblings, so adding or
+replacing a local logo leaves them stale. The check is deterministic, offline and
+stdlib-only, and runs in PR CI as the `lint-dark-logos` job. Regenerate with:
+
+```bash
+python3 scripts/generate-dark-logos.py
+```
+
+Its sibling, `scripts/classify-external-logos.py`, decides which packages with a
+third-party `logo_url` need a light chip in dark mode and writes
+`themes/default/data/registry/external_logo_treatment.yaml`. It downloads every
+external logo (and shells out to macOS `sips` for non-PNG rasters), so it is **not**
+wired into CI — run it by hand after adding a package with a `logo_url`, or when a
+vendor changes their logo. Its `--check` mode exits 2, rather than claiming the file
+is stale, if any logo could not be measured.
+
+### 8.6 Provider API Docs Tests
 
 ```bash
 make test_provider_api_docs
@@ -980,7 +1008,7 @@ Requires: `ensure`, `build-assets`, and `bin/resourcedocsgen` to have been built
 
 Node version in CI: 23.x. Go version: stable (latest).
 
-### 8.6 Browser Tests (Cypress)
+### 8.7 Browser Tests (Cypress)
 
 ```bash
 make run-browser-tests
@@ -998,7 +1026,7 @@ Browser tests are run:
 1. **As a smoke test inside `scripts/ci/sync.sh`** after each S3 deploy (both preview and production), using the deployed S3 website URL.
 2. **Daily at 2:00 PM UTC** via `run-browser-tests.yml` against the live production site.
 
-### 8.7 Link Checking
+### 8.8 Link Checking
 
 ```bash
 make check_links

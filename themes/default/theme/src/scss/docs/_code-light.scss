@@ -1,21 +1,32 @@
-// Min Light code theme, site-wide — the light-mode counterpart to the global
-// Min Dark theme (_chroma.scss), on a faint-violet card per the Pulumi brand
-// "Code highlighting" guideline: the fill is Violet 50 at 50% opacity (page
-// showing through), and a standalone block gets a --chrome-border frame (rule at
-// the foot of this file) so it reads as a bordered card like the chooser chrome.
-// Ported from docs, where it's gated on `html:not([data-theme="dark"])
-// body.section-docs`; the registry has no theme toggle, so it's gated on `body`
-// and applies everywhere. Imported unlayered so it beats the layered component
+// Min Light code theme — the light-mode counterpart to the global Min Dark theme
+// (_chroma.scss), on a faint-violet card per the Pulumi brand "Code highlighting"
+// guideline: the fill is Violet 50 at 50% opacity (page showing through), and a
+// standalone block gets a --chrome-border frame so it reads as a bordered card
+// like the chooser chrome.
+// Ported from docs and gated the same way — `html:not([data-theme="dark"])` — so
+// the Min Dark theme in _chroma.scss / _code.scss comes back when the toggle is on
+// dark. Unlike docs there's no `body.section-docs` half to the gate: the whole
+// registry site is in scope. Imported unlayered so it beats the layered component
 // rules. Comments are bumped from Min Light's #c2c3c5 (unreadable on the tint) to
 // #6e7781; the rest is the canonical palette.
-body {
+html:not([data-theme="dark"]) body {
     // Flip the dark code surface + text (set in _chroma.scss / _code.scss). The
     // fill is the code-area violet step at 50% opacity so the page shows through
     // the rest — the block reads as a faint-violet card (the standalone border
-    // rule at the bottom of this file supplies its frame).
+    // rule below supplies its frame).
     pre {
         background: color-mix(in srgb, var(--color-violet-50) 50%, transparent);
         color: #212121;
+    }
+
+    // Standalone code block → bordered card. A fenced block that isn't already
+    // inside its own frame (a chooser card, an example-program panel, a code-chrome
+    // terminal, or a code-tabbed demo) gets a 1px --chrome-border so it matches the
+    // chooser chrome. The :not() list excludes the surfaces that supply their own
+    // frame; pre.mermaid is excluded so diagram canvases stay unframed. Lives inside
+    // the light gate so the dark half in _docs-theme.scss owns the dark border.
+    .highlight:not(pulumi-chooser *, .example-program *, .code-chrome *, .code-tabbed *) pre:not(.mermaid) {
+        border: 1px solid var(--chrome-border);
     }
 
     .chroma,
@@ -174,13 +185,4 @@ body {
             }
         }
     }
-}
-
-// Standalone code block → bordered card. A fenced block that isn't already inside
-// its own frame (a chooser card, an example-program panel, a code-chrome terminal,
-// or a code-tabbed demo) gets a 1px --chrome-border so it matches the chooser
-// chrome. The :not() list excludes the surfaces that supply their own frame;
-// pre.mermaid is excluded so diagram canvases stay unframed.
-.highlight:not(pulumi-chooser *, .example-program *, .code-chrome *, .code-tabbed *) pre:not(.mermaid) {
-    border: 1px solid var(--chrome-border);
 }

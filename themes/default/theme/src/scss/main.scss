@@ -1,5 +1,12 @@
 @import "tailwindcss";
 
+// Drive the `dark:` variant off the theme attribute instead of the v4 default
+// (prefers-color-scheme). This is the standard Tailwind v4 mechanism for
+// attribute/selector-based dark mode. The inline head script writes data-theme on
+// <html> before first paint, and the toggle tracks the three-state preference
+// (system resolves to dark there). Mirrors pulumi/docs.
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
 // Tell Tailwind v4 where to scan for utility class usage in templates.
 // Paths are relative to this file (theme/src/scss/).
 @source "../../../layouts/**/*.html";
@@ -373,9 +380,16 @@ $sitenav-offset: calc($sitenav-height + 16px);
     }
 }
 
-// Light code theme, site-wide. Imported unlayered so it beats the layered dark
-// rules in _chroma.scss/_code.scss (including .code-mode-dark variants).
+// Light code theme. Imported unlayered so it beats the layered dark rules in
+// _chroma.scss/_code.scss (including .code-mode-dark variants). Gated on
+// `html:not([data-theme="dark"])` so the Min Dark theme comes back in dark mode.
 @import "docs/code-light";
+
+// Light/dark semantic token layer + the full dark override pass. Also unlayered:
+// @layer utilities beats @layer components regardless of specificity, and much of
+// the registry chrome is painted with Tailwind utilities, so only unlayered rules
+// reliably win. Must come after code-light so the dark code-panel rules land last.
+@import "docs/docs-theme";
 
 // Auth-aware header swap. The inline script in head.html adds .is-signed-in
 // to <html> when the auth cookie is present, before first paint. These rules

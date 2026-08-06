@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-coreweave/v1.0.1/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-coreweave/v1.0.2/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-coreweave/blob/v1.0.1/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-coreweave/blob/v1.0.2/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: CoreWeave Provider
 meta_desc: Provides an overview on how to configure the Pulumi CoreWeave provider.
@@ -20,7 +20,7 @@ The CoreWeave provider is available as a package in all Pulumi languages:
 
 ## Example Usage
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
@@ -180,7 +180,7 @@ func main() {
 			Name:            pulumi.String("default"),
 			Version:         pulumi.String("v1.35"),
 			Zone:            pulumi.String("US-EAST-04A"),
-			VpcId:           _default.ID(),
+			VpcId:           _default.ID().ToIDOutput().ToStringOutput(),
 			Public:          pulumi.Bool(true),
 			PodCidrName:     pulumi.String("pod cidr"),
 			ServiceCidrName: pulumi.String("service cidr"),
@@ -240,8 +240,8 @@ import com.pulumi.coreweave.NetworkingVpcArgs;
 import com.pulumi.coreweave.inputs.NetworkingVpcVpcPrefixArgs;
 import com.pulumi.coreweave.CksCluster;
 import com.pulumi.coreweave.CksClusterArgs;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;
@@ -283,6 +283,45 @@ public class App {
             .build());
 
     }
+}
+```
+
+{{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+pulumi {
+  required_providers {
+    coreweave = {
+      source = "pulumi/coreweave"
+    }
+  }
+}
+
+resource "coreweave_networkingvpc" "default" {
+  name = "default"
+  zone = "US-EAST-04A"
+  vpc_prefixes {
+    name  = "pod cidr"
+    value = "10.0.0.0/13"
+  }
+  vpc_prefixes {
+    name  = "service cidr"
+    value = "10.16.0.0/22"
+  }
+  vpc_prefixes {
+    name  = "internal lb cidr"
+    value = "10.32.4.0/22"
+  }
+}
+resource "coreweave_ckscluster" "default" {
+  name                   = "default"
+  version                = "v1.35"
+  zone                   = "US-EAST-04A"
+  vpc_id                 = coreweave_networkingvpc.default.id
+  public                 = true
+  pod_cidr_name          = "pod cidr"
+  service_cidr_name      = "service cidr"
+  internal_lb_cidr_names = ["internal lb cidr"]
 }
 ```
 

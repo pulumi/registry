@@ -116,7 +116,7 @@ jobs:
           path: origin-bucket-metadata.json
       - name: Install uv for publish
         uses: astral-sh/setup-uv@v7
-      - name: Publish to registry (primary)
+      - name: Publish to registry
         id: mirror-publish
         continue-on-error: true
         run: uv run --with pyyaml scripts/ci/publish_to_registry.py
@@ -125,22 +125,14 @@ jobs:
           PULUMI_API_URL: https://api.pulumi.com
           GITHUB_TOKEN: ${{ steps.esc-secrets.outputs.PULUMI_BOT_TOKEN }}
 
-      - name: Push to the Live Registry (legacy fallback)
-        id: legacy-publish
-        if: steps.mirror-publish.outcome == 'failure'
-        continue-on-error: true
-        run: uv run --with requests,pyyaml ./scripts/ci/push-registry.py
-        env:
-          PULUMI_ACCESS_TOKEN: ${{ steps.esc-secrets.outputs.PULUMI_ACCESS_TOKEN }}
-
       - name: Notify on publish failure
-        if: steps.mirror-publish.outcome == 'failure' && steps.legacy-publish.outcome == 'failure'
+        if: steps.mirror-publish.outcome == 'failure'
         uses: docker://sholung/action-slack-notify:v2.3.0
         env:
           SLACK_CHANNEL: registry-ops
           SLACK_COLOR: "#F54242"
           SLACK_MESSAGE: |
-            Registry publish failed (both primary and fallback) for ${{ github.sha }}
+            Registry publish failed for ${{ github.sha }}
 
             To manually publish, see https://github.com/pulumi/registry-mirror-tools#examples
             ```

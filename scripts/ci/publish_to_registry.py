@@ -13,9 +13,13 @@ Usage:
 import argparse
 import json
 import os
+import re
 import subprocess
 import sys
 import time
+import urllib.error
+import urllib.parse
+import urllib.request
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -170,13 +174,83 @@ def ensure_tools_installed(repo_root: Path) -> tuple[Path, Path]:
     return discover_bin, publish_bin
 
 
+@dataclass
+class PackageFailure:
+    """A package registry-mirror-publish reported as failed."""
+
+    spec: str
+    reason: str
+    status_code: int | None
+
+    @property
+    def permanent(self) -> bool:
+        """A 4xx on a well-formed request fails identically however often we retry.
+
+        The canonical case is a schema whose version field disagrees with the
+        version being published. Retrying that is noise, not resilience.
+        """
+        return self.status_code is not None and 400 <= self.status_code < 500
+
+
+@dataclass
+class PublishOutcome:
+    succeeded: bool
+    failures: list[PackageFailure]
+    parsed: bool
+
+    @property
+    def permanent_failures(self) -> list[PackageFailure]:
+        return [f for f in self.failures if f.permanent]
+
+    @property
+    def worth_retrying(self) -> bool:
+        """Retry unless every failure is one we know will recur.
+
+        Unparsed output is retried, so a change to the tool's output format
+        degrades to the old behaviour rather than skipping the retries.
+        """
+        if not self.parsed or not self.failures:
+            return True
+        return any(not f.permanent for f in self.failures)
+
+
+def parse_publish_output(stdout: str) -> tuple[list[PackageFailure], bool]:
+    """Read the per-package JSON that registry-mirror-publish emits.
+
+    Returns the failures and whether any structured output was found at all.
+    """
+    failures = []
+    parsed_any = False
+    for line in stdout.splitlines():
+        marker = line.find("[output] ")
+        if marker < 0:
+            continue
+        try:
+            record = json.loads(line[marker + len("[output] "):])
+        except json.JSONDecodeError:
+            continue
+        parsed_any = True
+        if record.get("status") != "failed":
+            continue
+        reason = str(record.get("reason", "")).strip()
+        spec = (f"{record.get('source')}/{record.get('publisher')}/"
+                f"{record.get('package')}@{record.get('version')}")
+        failures.append(PackageFailure(spec, reason, http_status_in(reason)))
+    return failures, parsed_any
+
+
+def http_status_in(reason: str) -> int | None:
+    match = re.search(r"\b([45]\d{2})\b", reason)
+    return int(match.group(1)) if match else None
+
+
 def publish_specs(
     specs: list[str],
     repo_root: Path,
     discover_bin: Path,
     publish_bin: Path,
     dry_run: bool = False,
-) -> bool:
+) -> PublishOutcome:
     """Run discover and publish pipeline for the given specs."""
     specs_input = "\n".join(specs)
 
@@ -194,6 +268,7 @@ def publish_specs(
     publish = subprocess.Popen(
         publish_cmd,
         stdin=discover.stdout,
+        stdout=subprocess.PIPE,
         text=True,
     )
 
@@ -201,10 +276,90 @@ def publish_specs(
     discover.stdin.close()
     discover.stdout.close()
 
-    publish.wait()
+    stdout, _ = publish.communicate()
     discover.wait()
+    print(stdout, end="")
 
-    return discover.returncode == 0 and publish.returncode == 0
+    failures, parsed = parse_publish_output(stdout)
+    succeeded = discover.returncode == 0 and publish.returncode == 0
+    return PublishOutcome(succeeded, failures, parsed)
+
+
+ISSUE_TITLE = "Registry publish rejected: {package}"
+ISSUE_LABEL = "registry-publish-failure"
+
+
+def github_api(method: str, path: str, token: str, payload: dict | None = None) -> dict | list | None:
+    request = urllib.request.Request(
+        f"https://api.github.com{path}",
+        method=method,
+        data=json.dumps(payload).encode() if payload else None,
+        headers={
+            "Authorization": f"Bearer {token}",
+            "Accept": "application/vnd.github+json",
+            "Content-Type": "application/json",
+            "User-Agent": "pulumi-registry-publish",
+        },
+    )
+    try:
+        with urllib.request.urlopen(request, timeout=30) as response:
+            return json.loads(response.read() or "null")
+    except (urllib.error.URLError, OSError, json.JSONDecodeError) as err:
+        print(f"GitHub API {method} {path} failed: {err}")
+        return None
+
+
+def issue_body(failure: PackageFailure, commit: str) -> str:
+    return "\n".join([
+        f"`{failure.spec}` was rejected by the registry service:",
+        "",
+        "```text",
+        failure.reason,
+        "```",
+        "",
+        f"Published from {commit}." if commit else "",
+        "",
+        "This is a permanent rejection, not a flake: the publish retries were skipped because the "
+        "same request will be rejected identically every time. The package will keep failing on "
+        "every release until its upstream repository is fixed.",
+        "",
+        "The usual cause is a schema whose `version` field disagrees with the version being "
+        "published. Providers should either omit the field, which is what bridged providers do so "
+        "the service takes the version from the publish request, or stamp the real version at "
+        "release time.",
+    ])
+
+
+def report_permanent_failures(failures: list[PackageFailure]) -> None:
+    """Open one issue per permanently failing package, reusing an open one if present."""
+    token = os.environ.get("GITHUB_TOKEN")
+    repo = os.environ.get("GITHUB_REPOSITORY")
+    if not token or not repo:
+        print("GITHUB_TOKEN or GITHUB_REPOSITORY unset, skipping issue reporting")
+        return
+
+    commit = os.environ.get("PUBLISH_COMMIT_SHA", "")
+    for failure in failures:
+        package = failure.spec.split("/")[-1].split("@")[0]
+        title = ISSUE_TITLE.format(package=package)
+        query = urllib.parse.quote(f'repo:{repo} is:issue is:open in:title "{title}"')
+        found = github_api("GET", f"/search/issues?q={query}", token)
+
+        existing = (found or {}).get("items") if isinstance(found, dict) else None
+        if existing:
+            number = existing[0]["number"]
+            print(f"Issue #{number} already open for {package}, adding a comment")
+            github_api("POST", f"/repos/{repo}/issues/{number}/comments", token,
+                       {"body": issue_body(failure, commit)})
+            continue
+
+        created = github_api("POST", f"/repos/{repo}/issues", token, {
+            "title": title,
+            "body": issue_body(failure, commit),
+            "labels": [ISSUE_LABEL],
+        })
+        if created:
+            print(f"Opened issue #{created.get('number')} for {package}")
 
 
 def publish_with_retry(specs: list[str], config: Config) -> bool:
@@ -220,17 +375,28 @@ def publish_with_retry(specs: list[str], config: Config) -> bool:
     print()
 
     backoff = config.initial_backoff
+    outcome = None
     for attempt in range(1, config.max_retries + 1):
         print(f"Attempt {attempt} of {config.max_retries}...")
 
-        if publish_specs(specs, config.repo_root, discover_bin, publish_bin, config.dry_run):
+        outcome = publish_specs(specs, config.repo_root, discover_bin, publish_bin, config.dry_run)
+        if outcome.succeeded:
             print("Successfully published packages")
             return True
+
+        if not outcome.worth_retrying:
+            print("Every failure is a permanent rejection, not retrying:")
+            for failure in outcome.permanent_failures:
+                print(f"  {failure.spec}: {failure.reason}")
+            break
 
         if attempt < config.max_retries:
             print(f"Publish failed, retrying in {backoff}s...")
             time.sleep(backoff)
             backoff = min(backoff * 2, config.max_backoff)
+
+    if outcome and outcome.permanent_failures and not config.dry_run:
+        report_permanent_failures(outcome.permanent_failures)
 
     print(f"Failed to publish after {config.max_retries} attempts")
     return False

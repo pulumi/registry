@@ -115,6 +115,47 @@ jobs:
         with:
           name: origin-bucket-metadata
           path: origin-bucket-metadata.json
+
+  # Publishing reads the package YAML and the committed _index.md from the
+  # checkout, and fetches schemas over HTTP. It needs no build output, so it
+  # does not depend on the build job: a flake in the site build must not stop
+  # a released package version from reaching the registry.
+  publish:
+    name: Publish to registry
+    env:
+      GOPATH: ${{ github.workspace }}/go
+      ESC_ACTION_OIDC_AUTH: true
+      ESC_ACTION_OIDC_ORGANIZATION: pulumi
+      ESC_ACTION_OIDC_REQUESTED_TOKEN_TYPE: urn:pulumi:token-type:access_token:organization
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Fetch secrets from ESC
+        id: esc-secrets
+        uses: pulumi/esc-action@3af4859af8a73a362fb599b944124097d4bb80c5 # v3
+        with:
+          environment: github-secrets/pulumi-registry
+          export-environment-variables: false
+      - name: Check out branch
+        uses: actions/checkout@v7
+        with:
+          token: ${{ steps.esc-secrets.outputs.PULUMI_BOT_TOKEN }}
+          # Full history needed for registry-mirror-discover to find package versions
+          fetch-depth: 0
+      - name: Install Go
+        uses: actions/setup-go@v6
+        with:
+          go-version: 1.26.x
+      - name: Configure git for private Go modules
+        run: git config --global url."https://${{ steps.esc-secrets.outputs.PULUMI_BOT_TOKEN }}:x-oauth-basic@github.com/pulumi/registry-mirror-tools".insteadOf "https://github.com/pulumi/registry-mirror-tools"
+      - name: Get registry-mirror-discover version
+        id: mirror-version
+        run: echo "hash=$(grep 'REGISTRY_MIRROR_TOOLS_COMMIT=' scripts/generate-versioned-docs.sh | cut -d'"' -f2)" >> "$GITHUB_OUTPUT"
+      - name: Cache registry-mirror-discover binary
+        uses: actions/cache@v6
+        with:
+          path: bin/registry-mirror-discover
+          key: registry-mirror-discover-${{ steps.mirror-version.outputs.hash }}
       - name: Install uv for publish
         uses: astral-sh/setup-uv@v7
       - name: Publish to registry (primary)
@@ -125,6 +166,8 @@ jobs:
           PULUMI_ACCESS_TOKEN: ${{ steps.esc-secrets.outputs.PULUMI_ACCESS_TOKEN }}
           PULUMI_API_URL: https://api.pulumi.com
           GITHUB_TOKEN: ${{ steps.esc-secrets.outputs.PULUMI_BOT_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          PUBLISH_COMMIT_SHA: ${{ github.sha }}
 
       - name: Push to the Live Registry (legacy fallback)
         id: legacy-publish

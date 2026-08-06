@@ -62,7 +62,7 @@ Hugo reads from `themes/default/`:
 Every package in the registry is described by a YAML file at `themes/default/data/registry/packages/<name>.yaml`. These files drive:
 
 - API doc generation (`resourcedocsgen`)
-- Registry publication (`scripts/ci/push-registry.py`)
+- Registry publication (`scripts/ci/publish_to_registry.py`)
 - The nightly community package update workflow
 
 ### Go Tools
@@ -102,7 +102,7 @@ To add or update a community provider package:
 2. The nightly `generate-package-metadata.yml` workflow handles version bumps automatically for community packages tracked in `community-packages/package-list.json`.
 3. First-party Pulumi provider repos trigger `publish-provider-update.yml` via `repository_dispatch`.
 
-The `push-registry.py` script publishes packages to the live Pulumi registry service on every push to `master`.
+The `publish_to_registry.py` script publishes packages to the live Pulumi registry service on every push to `master`, using `registry-mirror-publish` from pulumi/registry-mirror-tools.
 
 ---
 

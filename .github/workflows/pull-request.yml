@@ -106,16 +106,11 @@ jobs:
     name: Test Live Registry Publish
     runs-on: ubuntu-latest
     steps:
-      - name: Fetch secrets from ESC
-        id: esc-secrets
-        uses: pulumi/esc-action@3af4859af8a73a362fb599b944124097d4bb80c5 # v3
       - name: Check out branch
         uses: actions/checkout@v7
       - name: Install uv
         uses: astral-sh/setup-uv@v7
-      - run: uv run --with requests,pyyaml scripts/ci/push-registry.py --dry-run
-        env:
-          PULUMI_ACCESS_TOKEN: ${{ steps.esc-secrets.outputs.PULUMI_ACCESS_TOKEN }}
+      - run: uv run --with pyyaml scripts/ci/publish_to_registry.py --validate-all
 
   test-provider-api-docs:
     name: Test Provider API Docs

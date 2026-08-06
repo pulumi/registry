@@ -68,6 +68,14 @@ jobs:
       - run: echo "Building ${{ env.PROVIDER_SHORT_NAME }} docs @ ${{ env.PROVIDER_VERSION }}"
       - name: checkout registry repo
         uses: actions/checkout@v7
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+      - name: Validate the schema version
+        run: >-
+          uv run --with pyyaml scripts/ci/validate_schema_version.py
+          --package "${{ env.PROVIDER_SHORT_NAME }}"
+          --version "${{ env.PROVIDER_VERSION }}"
+          --schema-url "https://raw.githubusercontent.com/pulumi/pulumi-${{ env.PROVIDER_SHORT_NAME }}/${{ env.PROVIDER_VERSION }}/${{ env.PROVIDER_SCHEMA_PATH }}"
       - name: Build resourcedocsgen
         run: go build -C tools/resourcedocsgen
       - name: Generate Package Metadata

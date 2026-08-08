@@ -406,8 +406,8 @@ github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 h1:Jamvg5psRI
 github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/posener/complete v1.2.3 h1:NP0eAhjcjImqslEwo/1hq7gpajME0fTLTezBKDqfXqo=
 github.com/posener/complete v1.2.3/go.mod h1:WZIdtGGp+qx0sLrYKtIRAruyNpv6hFCicSgv7Sy7s/s=
-github.com/pulumi-labs/pulumi-hcl v0.10.0 h1:ky+YaDWyksmBlpGJJ1tDj2JI6mOgYiSimTNPu8MpcJI=
-github.com/pulumi-labs/pulumi-hcl v0.10.0/go.mod h1:SApsRXtQUt7/zZ7p4/H9ImLjb1WT01pw8KWNNae5tZk=
+github.com/pulumi-labs/pulumi-hcl v0.12.0 h1:5XxxlgsjDNTo29cpHSQLbgaKDLv9WLKqujWfCawF/vY=
+github.com/pulumi-labs/pulumi-hcl v0.12.0/go.mod h1:74lvyZDj0ypa8Qx61O3EI75FgsT5Jedp3VKSxEO7EH0=
 github.com/pulumi/appdash v0.0.0-20231130102222-75f619a67231 h1:vkHw5I/plNdTr435cARxCW6q9gc0S/Yxz7Mkd38pOb0=
 github.com/pulumi/appdash v0.0.0-20231130102222-75f619a67231/go.mod h1:murToZ2N9hNJzewjHBgfFdXhZKjY3z5cYC1VXk+lbFE=
 github.com/pulumi/inflector v0.2.1 h1:bqyiish3tq//vLeLiEstSFE5K7RNjy/ce47ed4QATu8=

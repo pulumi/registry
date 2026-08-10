@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/megaport/megaport/1.13.0/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/megaport/megaport/1.13.1/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Megaport Provider
@@ -2384,8 +2384,6 @@ To recover, do one of the following before re-applying:
 2. **Cancel the resource** in the Megaport portal, then re-run `pulumi up`.
 
 Setting `waitTime` high enough for your slowest-provisioning resources avoids this situation entirely.
-
-> **Note:** Internet Exchange (IX) resources use a fixed 10-minute provisioning wait and are not affected by `waitTime`.
 ## Resource Cancellation
 
 When Pulumi deletes a Megaport resource, the provider issues an immediate cancellation or deletion request to the Megaport API. Resources are removed from Pulumi state as soon as the API call returns successfully. For Ports and LAG Ports specifically, this is always a `CANCEL_NOW` action against the Megaport Products API.

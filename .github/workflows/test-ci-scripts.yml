@@ -3,11 +3,13 @@ on:
   pull_request:
     paths:
       - 'scripts/ci/*.py'
+      - 'scripts/*.py'
   push:
     branches:
       - master
     paths:
       - 'scripts/ci/*.py'
+      - 'scripts/*.py'
 
 permissions:
   id-token: write
@@ -51,3 +53,5 @@ jobs:
         run: pip install pyyaml
       - name: Run tests
         run: python -m unittest discover -s scripts/ci -p 'test_*.py' -v
+      - name: Run scripts/ tests
+        run: python -m unittest discover -s scripts -p 'test_*.py' -v

@@ -6,12 +6,17 @@ cross-references the committed content pages under
 themes/default/content/registry/packages/ and the community package list in
 community-packages/package-list.json, and writes a single JSON inventory.
 
+Can be run without preinstalled dependencies with
+
+	uv run --with pyyaml scripts/provider_inventory.py
+
 Usage:
-    python3 scripts/provider-inventory.py [-o OUTPUT.json]
+    python3 scripts/provider_inventory.py [-o OUTPUT.json]
 """
 
 import argparse
 import json
+import re
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -35,12 +40,12 @@ SECTION_CONCEPTS = [
     ("development", r"develop|contribut|building"),
 ]
 
-CHOOSER_LANGS = ["typescript", "javascript", "python", "go", "csharp", "java", "yaml"]
+# Hugo shortcode: {{% choosable language go %}} or {{% choosable language "a,b" %}}
+CHOOSER_RE = r'choosable\s+language\s+"?([a-z0-9,\s.-]+?)"?\s*%'
 
 
 def analyze_page(path):
     """Fence-aware structural analysis of a content markdown page."""
-    import re
     if not path.exists():
         return None
     text = path.read_text(errors="replace")
@@ -49,8 +54,10 @@ def analyze_page(path):
     m_fm = re.match(r"\A(?:<!--.*?-->\s*)?---\n(.*?)\n---\n(.*)\Z", text, re.S)
     if m_fm:
         try:
-            frontmatter = yaml.safe_load(m_fm.group(1)) or {}
+            frontmatter = yaml.safe_load(m_fm.group(1))
         except yaml.YAMLError:
+            frontmatter = {}
+        if not isinstance(frontmatter, dict):
             frontmatter = {}
         body = m_fm.group(2)
     headings, fence = [], False
@@ -63,8 +70,11 @@ def analyze_page(path):
             headings.append((len(m.group(1)), m.group(2).strip()))
     joined = " | ".join(h[1].lower() for h in headings)
     concepts = [c for c, pat in SECTION_CONCEPTS if re.search(pat, joined)]
-    langs = sorted({l for l in CHOOSER_LANGS
-                    if re.search(r"choosable\s+language\s+%s\b" % l, body)})
+    # Extract the languages actually offered rather than probing a fixed list,
+    # so quoted forms, comma-separated groups, and languages beyond the Pulumi
+    # SDK set (hcl, nodejs, dotnet) are all counted.
+    langs = sorted({part.strip() for m in re.finditer(CHOOSER_RE, body)
+                    for part in m.group(1).split(",") if part.strip()})
     words = len(re.sub(r"```.*?```", " ", body, flags=re.S).split())
     return {
         "layout": frontmatter.get("layout", ""),
@@ -77,9 +87,11 @@ def analyze_page(path):
     }
 
 
-# Packages whose how-to-guides are refreshed in CI from pulumi/examples
-# (scripts/ci/mktutorial.sh); guides in any other package are hand-committed
-# and have no update pipeline.
+# Packages whose how-to-guides are copied from pulumi/examples on every CI run
+# (scripts/ci/mktutorial.sh). That script also prunes stale guides from the
+# versioned slugs aws-v6 and azure-native-v2, but never copies new ones there,
+# and neither slug exists in the tree today. Guides in any other package are
+# hand-committed and are not refreshed from pulumi/examples.
 MKTUTORIAL_PACKAGES = {"aws", "aws-apigateway", "azure", "azure-native", "gcp", "kubernetes"}
 
 
@@ -91,27 +103,45 @@ def analyze_extras(content_dir, slug):
             if child.name in ("_index.md", "installation-configuration.md"):
                 continue
             if child.is_dir():
+                # api-docs/ is git-ignored build output present only on a built
+                # tree; skipping it keeps the inventory identical across checkouts.
+                if child.name == "api-docs":
+                    continue
                 count = len(list(child.rglob("*.md")))
                 if child.name == "how-to-guides":
                     extras["howto_guides"] = count
                 else:
-                    extras["migration_dirs"].append("%s (%d)" % (child.name, count))
+                    extras["migration_dirs"].append(f"{child.name} ({count})")
             else:
                 extras["other_files"].append(child.name)
     return extras
 
 
 def load_community_slugs():
-    slugs = set()
+    """Return (package slugs, repo slugs) derived from the community package list.
+
+    Repo name and package name diverge often enough that stripping the
+    "pulumi-" prefix alone is wrong: runpod/pulumi-runpod-native publishes
+    "runpod", and DefangLabs/pulumi-defang publishes three separate packages.
+    The schemaFile path carries the canonical package name; repo slugs cover
+    the rest.
+    """
+    slugs, repos = set(), set()
     if COMMUNITY_LIST.exists():
         data = json.loads(COMMUNITY_LIST.read_text())
         for entry in data.get("include", []):
             repo = entry.get("repoSlug", "")
+            if repo:
+                repos.add(repo.lower())
+            m = re.search(r"pulumi-resource-([^/]+)/", entry.get("schemaFile", ""))
+            if m:
+                slugs.add(m.group(1))
+                continue
             name = repo.split("/")[-1]
             if name.startswith("pulumi-"):
                 name = name[len("pulumi-"):]
             slugs.add(name)
-    return slugs
+    return slugs, repos
 
 
 def main():
@@ -119,13 +149,17 @@ def main():
     parser.add_argument("-o", "--output", default="provider-inventory.json")
     args = parser.parse_args()
 
-    community_slugs = load_community_slugs()
+    community_slugs, community_repos = load_community_slugs()
     now = datetime.now(timezone.utc)
     packages = []
     all_keys = set()
 
     for path in sorted(PACKAGES_DIR.glob("*.yaml")):
-        data = yaml.safe_load(path.read_text())
+        try:
+            data = yaml.safe_load(path.read_text())
+        except yaml.YAMLError as err:
+            print(f"WARN: {path.name} could not be parsed: {err}", file=sys.stderr)
+            continue
         if not isinstance(data, dict):
             print(f"WARN: {path.name} did not parse to a mapping", file=sys.stderr)
             continue
@@ -136,12 +170,14 @@ def main():
         updated_on = data.get("updated_on")
         age_days = None
         if isinstance(updated_on, int):
-            age_days = round((now - datetime.fromtimestamp(updated_on, tz=timezone.utc)).days)
+            age_days = (now - datetime.fromtimestamp(updated_on, tz=timezone.utc)).days
 
         repo_url = data.get("repo_url") or ""
         org = ""
         if "github.com/" in repo_url:
             org = repo_url.split("github.com/")[1].split("/")[0]
+
+        repo_slug = repo_url.rstrip("/").split("github.com/")[-1].lower()
 
         packages.append({
             "name": name,
@@ -160,7 +196,8 @@ def main():
             "description": data.get("description", ""),
             "updated_on": updated_on,
             "age_days": age_days,
-            "in_community_list": path.stem in community_slugs,
+            "in_community_list": (path.stem in community_slugs
+                                  or repo_slug in community_repos),
             "has_index_page": (content / "_index.md").exists(),
             "has_install_config_page": (content / "installation-configuration.md").exists(),
             "overview_page": analyze_page(content / "_index.md"),

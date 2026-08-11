@@ -24,7 +24,8 @@ This document describes the build, test, and deployment system for the `pulumi/r
    - [6.1 Pulumi IaC](#61-pulumi-iac)
    - [6.2 AWS Resources](#62-aws-resources)
    - [6.3 S3 Preview Bucket Lifecycle](#63-s3-preview-bucket-lifecycle)
-   - [6.4 Custom Redirects](#64-custom-redirects)
+   - [6.4 The Pinned Preview Comment](#64-the-pinned-preview-comment)
+   - [6.5 Custom Redirects](#65-custom-redirects)
 7. [Registry Publication (push-registry.py)](#registry-publication-push-registrypy)
 8. [Testing Strategy](#testing-strategy)
    - [8.1 Go Unit Tests](#81-go-unit-tests)
@@ -588,7 +589,7 @@ PR opened / committed
         │                       ├── s5cmd sync llm-docs-out/ → bucket (Content-Encoding: gzip)
         │                       ├── Run browser tests (Cypress smoke test)
         │                       ├── Write origin-bucket-metadata.json
-        │                       └── Post PR comment with preview URL
+        │                       └── Update the pinned PR comment (preview URL + changed pages)
         │
         └── sentinel (depends on all jobs above)
                 └── Writes "Sentinel" GitHub status check = success
@@ -858,7 +859,7 @@ scripts/ci/sync.sh preview
   4. Run Cypress smoke tests
   5. Write origin-bucket-metadata.json
   6. aws ssm put-parameter /registry/commits/<sha>/bucket = <bucket-name>
-  7. Post PR comment: "Your preview is ready at http://..."
+  7. Create or update the pinned PR comment with the preview URL and changed pages
 
 PR merged or closed
        │
@@ -876,7 +877,47 @@ Daily bucket-cleanup.yml (3:00 PM UTC)
   - Deletes bucket after 48+ hours in cleanup state
 ```
 
-### 6.4 Custom Redirects
+### 6.4 The Pinned Preview Comment
+
+Each preview build maintains a **single** comment on the PR rather than adding one per commit.
+The comment is written by `post_preview_comment` in `scripts/ci/sync.sh`, and carries:
+
+1. The preview URL for the current commit (`<bucket-website>/registry/`).
+2. A **Changed pages** list — direct links to the pages the PR changed, so a reviewer lands on
+   them instead of navigating the preview by hand.
+
+**How it stays pinned**: the body opens with the HTML marker `<!-- registry-preview-link -->`.
+`upsert_github_pr_comment` (`scripts/ci/common.sh`) pages through the PR's comments looking for
+that marker on a comment authored by `github-actions[bot]` or `pulumi-bot`, then `PATCH`es that
+comment; it only `POST`s a new one when no match exists. Matching on the author as well as the
+marker means a contributor can't redirect the pinned comment by quoting the marker. The
+comment list is paginated deliberately — GitHub returns 30 comments per page by default, and an
+unpaginated search would miss the marker on a long PR and post a duplicate on every build.
+
+**How changed pages are resolved**: the changed-file list comes from the GitHub API
+(`/pulls/<n>/files`), not a local `git diff`, so it works identically for the `pull_request`
+build and the maintainer-triggered `/preview` command. Each path is mapped to a URL by
+`changed_paths_to_urls` (`scripts/ci/common.sh`) under two rules:
+
+| Changed path | URL |
+|---|---|
+| `themes/default/content/**/*.md` | Hugo's own rules (`content_path_to_url`) |
+| `themes/default/data/registry/packages/<pkg>.yaml` | `/registry/packages/<pkg>/` |
+
+The YAML rule is the one that matters most here: the generated `api-docs/` content is
+gitignored and never appears in a PR diff, so without it the list would be empty on most
+registry PRs. Results are de-duplicated, then filtered to URLs that actually rendered
+(`public/<url>index.html` exists), which drops removed files and `url:`/alias overrides rather
+than linking them as dead URLs. The list is capped at 50 entries with an "…and N more" line.
+
+The whole block is reporting, not deployment: it is invoked as `post_preview_comment || log …`
+so a GitHub API hiccup can never fail an otherwise-good build. Conversely, because `sync.sh`
+runs under `set -o errexit` after the Cypress smoke test, a **failed** build posts nothing.
+
+`make test-preview-comment` (`scripts/ci/test-preview-comment.sh`) covers the mapping, the
+de-duplication, and the existence gate offline; it runs in the `Lint Scripts` PR job.
+
+### 6.5 Custom Redirects
 
 **Source files**: `scripts/redirects/` — pipe-delimited text files with `key | location` entries.
 

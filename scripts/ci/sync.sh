@@ -155,12 +155,102 @@ aws s3 cp "$metadata_file" "${destination_bucket_uri}/registry/metadata.json" --
 # Persist an association between the current commit and the bucket we just deployed to.
 set_bucket_for_commit "$(git_sha)" "$destination_bucket" "$(aws_region)"
 
-# Finally, post a comment to the PR that directs the user to the resulting bucket URL.
+# The marker that makes the preview comment pinned: every build finds the comment carrying it
+# and rewrites that one, instead of leaving a fresh comment per commit.
+PREVIEW_COMMENT_MARKER="<!-- registry-preview-link -->"
+
+# Builds the "Changed pages" section: direct links to the pages this PR changed, so a reviewer
+# lands on them instead of hunting through the site.
+#
+# The base branch isn't reliably available locally (the /preview command path checks out
+# differently from the pull_request path), so we ask the GitHub API which files changed rather
+# than diffing. Each changed path is mapped to the URL it renders, then kept only if it
+# actually rendered to a page in this build -- that drops removed files, non-page sources, and
+# url:/alias overrides rather than linking them as dead URLs.
+changed_pages_section() {
+    local repo_api_url=$1
+    local pr_number=$2
+
+    local max_listed_pages=50   # Cap the rendered list so huge PRs stay readable.
+    local max_files_pages=10    # Cap API pagination (10 * 100 = up to 1000 files).
+    local changed_pages=()
+    local page files_json page_count url
+
+    for page in $(seq 1 "$max_files_pages"); do
+        files_json=$(curl -s \
+            -H "Authorization: token ${GITHUB_TOKEN}" \
+            "${repo_api_url}/pulls/${pr_number}/files?per_page=100&page=${page}")
+
+        while IFS= read -r url; do
+            [[ -z "$url" ]] && continue
+            if [[ -f "${build_dir}${url}index.html" ]]; then
+                changed_pages+=("- [${url}](${s3_website_url}${url})")
+            fi
+        done < <(echo "$files_json" \
+            | jq -r '.[] | select(.status != "removed") | .filename' 2>/dev/null \
+            | changed_paths_to_urls)
+
+        # Stop on the last (short) page, or if the response wasn't an array (e.g. a transient
+        # API error), which yields 0 and breaks cleanly.
+        page_count="$(echo "$files_json" | jq -r 'if type == "array" then length else 0 end' 2>/dev/null)"
+        if [[ "${page_count:-0}" -lt 100 ]]; then
+            break
+        fi
+    done
+
+    if [[ "${#changed_pages[@]}" -eq 0 ]]; then
+        return 0
+    fi
+
+    local listed
+    listed=$(printf '%s\n' "${changed_pages[@]:0:$max_listed_pages}")
+    printf '\n\n**Changed pages:**\n%s' "$listed"
+    if [[ "${#changed_pages[@]}" -gt "$max_listed_pages" ]]; then
+        printf '\n- …and %s more' "$(( ${#changed_pages[@]} - max_listed_pages ))"
+    fi
+}
+
+# Posts (or updates) the pinned preview comment on the PR.
+post_preview_comment() {
+    if [[ -z "${GITHUB_EVENT_PATH:-}" || ! -f "${GITHUB_EVENT_PATH}" || -z "${GITHUB_TOKEN:-}" ]]; then
+        log "No GitHub event or token available; skipping the preview comment."
+        return 0
+    fi
+
+    local event pr_comment_api_url repo_api_url pr_number
+    event="$(cat "$GITHUB_EVENT_PATH")"
+    pr_comment_api_url="$(echo "$event" | jq -r '.pull_request._links.comments.href // empty')"
+    repo_api_url="$(echo "$event" | jq -r '.pull_request.base.repo.url // empty')"
+    pr_number="$(echo "$event" | jq -r '.number // empty')"
+
+    if [[ -z "$pr_comment_api_url" || -z "$repo_api_url" || -z "$pr_number" ]]; then
+        log "Event payload is missing pull request details; skipping the preview comment."
+        return 0
+    fi
+
+    local body
+    body="${PREVIEW_COMMENT_MARKER}
+Your site preview for commit $(git_sha_short) is ready! :tada:
+
+${preview_url}$(changed_pages_section "$repo_api_url" "$pr_number")"
+
+    upsert_github_pr_comment \
+        "$PREVIEW_COMMENT_MARKER" \
+        "$body" \
+        "$pr_comment_api_url" \
+        "$repo_api_url"
+}
+
+# Finally, for previews, point the PR at the resulting bucket URL. Everything below is
+# reporting, not deployment, so it must never fail the build -- hence the `|| log`.
 if [[ "$1" == "preview" ]]; then
-    pr_comment_api_url="$(cat "$GITHUB_EVENT_PATH" | jq -r ".pull_request._links.comments.href")"
-    post_github_pr_comment \
-        "Your site preview for commit $(git_sha_short) is ready! :tada:\n\n${s3_website_url}/registry." \
-        $pr_comment_api_url
+    preview_url="${s3_website_url}/registry/"
+
+    if [[ -n "${GITHUB_STEP_SUMMARY:-}" ]]; then
+        echo "Site preview for commit $(git_sha_short): ${preview_url}" >> "$GITHUB_STEP_SUMMARY" || true
+    fi
+
+    post_preview_comment || log "Failed to post the preview comment; continuing."
 fi
 
 log "Done! The bucket website is now built and available at ${s3_website_url}."

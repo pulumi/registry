@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import os
 import re
 import sys
@@ -7,6 +8,7 @@ import tempfile
 import unittest
 from pathlib import Path
 from typing import Any
+from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).parent))
 import cli  # noqa: E402
@@ -316,6 +318,96 @@ class SecretCodeSeparationTests(unittest.TestCase):
             self.assertNotIn("pull_request_target", text, name)
             if holds_secret:
                 self.assertNotRegex(text, r"ref:.*\.head\.", f"{name}: secret job checks out the PR head")
+
+
+class VerifyPackageYamlTests(unittest.TestCase):
+    def _tree(self, root: Path, name: str, data: dict[str, Any], index: str | None = "# Stripe\n") -> Path:
+        yaml_dir = root / "themes/default/data/registry/packages"
+        yaml_dir.mkdir(parents=True, exist_ok=True)
+        yaml_path = yaml_dir / f"{name}.yaml"
+        yaml_path.write_text(json.dumps(data))
+        if index is not None:
+            index_dir = root / "themes/default/content/registry/packages" / name
+            index_dir.mkdir(parents=True, exist_ok=True)
+            (index_dir / "_index.md").write_text(index)
+        return yaml_path
+
+    def _verify(self, data: dict[str, Any], index: str | None = "# Stripe\n",
+                publishers: dict[str, str] | None = None) -> Manifest:
+        names = {"stripe": "stripe"} if publishers is None else publishers
+        with tempfile.TemporaryDirectory() as scratch:
+            root = Path(scratch)
+            yaml_path = self._tree(root, "stripe", data, index)
+            with patch.object(verify_entry, "_load_publisher_names", return_value=names):
+                return verify_entry.verify_package_yaml(yaml_path, root)
+
+    def test_registered_publisher_is_green(self) -> None:
+        manifest = self._verify({"name": "stripe", "publisher": "stripe", "version": "0.4.0"})
+        self.assertTrue(manifest.green)
+        self.assertEqual(manifest.version.tag, "0.4.0")
+
+    def test_a_prerelease_version_is_accepted(self) -> None:
+        manifest = self._verify({"name": "stripe", "publisher": "stripe", "version": "0.3.0-beta.4"})
+        self.assertTrue(manifest.green)
+
+    def test_unregistered_publisher_blocks(self) -> None:
+        manifest = self._verify({"name": "stripe", "publisher": "stripe", "version": "0.4.0"}, publishers={})
+        self.assertFalse(manifest.green)
+        self.assertFalse(manifest.publisherKnown)
+
+    def test_missing_version_is_unverifiable(self) -> None:
+        manifest = self._verify({"name": "stripe", "publisher": "stripe"})
+        self.assertFalse(manifest.green)
+        self.assertIn("no `version`", manifest.error)
+
+    def test_missing_index_blocks_and_says_why(self) -> None:
+        manifest = self._verify({"name": "stripe", "publisher": "stripe", "version": "0.4.0"}, index=None)
+        self.assertFalse(manifest.green)
+        self.assertIn("landing page", manifest.error)
+
+    def test_doc_lint_findings_are_advisory(self) -> None:
+        manifest = self._verify({"name": "stripe", "publisher": "stripe", "version": "0.4.0"},
+                                index="# Stripe\n\n![diagram](./img/arch.png)\n")
+        self.assertTrue(manifest.green)
+        self.assertTrue(manifest.warnings)
+        self.assertTrue(manifest.docLint)
+
+    def test_delisted_package_is_skipped(self) -> None:
+        manifest = self._verify({"name": "stripe", "publisher": "DEPRECATED", "version": "0.4.0"},
+                                index=None, publishers={})
+        self.assertTrue(manifest.delisted)
+        self.assertTrue(manifest.green)
+
+    def test_no_network_calls(self) -> None:
+        import urllib.request
+        with patch.object(urllib.request, "urlopen", side_effect=AssertionError("network call")):
+            manifest = self._verify({"name": "stripe", "publisher": "stripe", "version": "0.4.0"})
+        self.assertTrue(manifest.green)
+
+    def test_sheet_renders_without_a_commit(self) -> None:
+        manifest = self._verify({"name": "stripe", "publisher": "stripe", "version": "0.4.0"}, publishers={})
+        sheet = fact_sheet.render(manifest)
+        self.assertIn("not in `publisher-names.json`", sheet)
+        self.assertNotIn("/commit/", sheet)
+
+
+class ChangedPackageYamlTests(unittest.TestCase):
+    def _changed(self, paths: list[str]) -> list[Path]:
+        completed = type("R", (), {"stdout": "\n".join(paths)})()
+        with patch("cli.subprocess.run", return_value=completed):
+            return cli._changed_package_yamls("origin/master")
+
+    def test_selects_only_package_yamls(self) -> None:
+        changed = self._changed([
+            "themes/default/data/registry/packages/stripe.yaml",
+            "themes/default/content/registry/packages/stripe/_index.md",
+            "themes/default/data/registry/package_versions/stripe.yaml",
+            "community-packages/package-list.json",
+        ])
+        self.assertEqual(changed, [Path("themes/default/data/registry/packages/stripe.yaml")])
+
+    def test_no_package_change_is_empty(self) -> None:
+        self.assertEqual(self._changed(["README.md"]), [])
 
 
 if __name__ == "__main__":

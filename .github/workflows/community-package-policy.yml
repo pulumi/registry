@@ -21,5 +21,7 @@ jobs:
         run: python3 -m unittest discover -p 'test_*.py'
         working-directory: scripts/ci/community-package
       - name: Type-check
-        run: pipx run mypy --strict *.py
+        run: |
+          pip install mypy types-PyYAML
+          mypy --strict *.py
         working-directory: scripts/ci/community-package

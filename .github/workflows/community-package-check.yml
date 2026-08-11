@@ -36,6 +36,9 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Install dependencies
+        run: pip install pyyaml
+
       - name: Install the Pulumi CLI (for the plugin install probe)
         run: |
           curl -fsSL https://get.pulumi.com | sh

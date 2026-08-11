@@ -86,12 +86,26 @@ jobs:
       - name: Check for a new version
         if: steps.skip-run.outputs.skip != 1
         id: version
+        env:
+          REPO_SLUG: ${{ matrix.repoSlug }}
         run: |
-          echo 'PROVIDER_VERSION<<EOF' >> $GITHUB_ENV
-          go build -C tools/resourcedocsgen
-          ./tools/resourcedocsgen/resourcedocsgen pkgversion --repoSlug ${{ matrix.repoSlug }} \
-          >> $GITHUB_ENV
-          echo 'EOF' >> $GITHUB_ENV
+          max_attempts=3
+          for attempt in $(seq "$max_attempts"); do
+            if go build -C tools/resourcedocsgen &&
+              provider_version=$(./tools/resourcedocsgen/resourcedocsgen pkgversion --repoSlug "$REPO_SLUG"); then
+              {
+                echo 'PROVIDER_VERSION<<EOF'
+                echo "$provider_version"
+                echo 'EOF'
+              } >> "$GITHUB_ENV"
+              exit 0
+            fi
+            if [ "$attempt" -lt "$max_attempts" ]; then
+              sleep $((attempt * 5))
+            fi
+          done
+          echo "Could not check $REPO_SLUG for a new version after $max_attempts attempts."
+          exit 1
       - name: Display new version
         if: env.PROVIDER_VERSION
         run: echo ${{ env.PROVIDER_VERSION}}

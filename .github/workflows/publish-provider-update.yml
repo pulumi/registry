@@ -111,6 +111,20 @@ jobs:
       - run: echo "Building ${{ env.PROVIDER_SHORT_NAME }} docs @ ${{ env.PROVIDER_VERSION }}"
       - name: checkout registry repo
         uses: actions/checkout@v7
+      - name: Check the publisher is registered
+        env:
+          PUBLISHER_NAMES: tools/resourcedocsgen/pkg/publishers/publisher-names.json
+        run: |
+          publisher=$(jq --raw-output '.publisher // empty' "${{ runner.temp }}/schema.json")
+          if [ -z "$publisher" ]; then
+            exit 0
+          fi
+          if jq --exit-status --arg p "$publisher" 'has($p)' "$PUBLISHER_NAMES" > /dev/null; then
+            exit 0
+          fi
+          echo "Publisher \"$publisher\" is not in $PUBLISHER_NAMES."
+          echo "Add \"$publisher\": \"<slug>\" to that file, then re-run this workflow."
+          exit 1
       - name: Build resourcedocsgen
         run: go build -C tools/resourcedocsgen
       - name: Generate Package Metadata

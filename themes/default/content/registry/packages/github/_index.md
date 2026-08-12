@@ -1,437 +1,793 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-github/v6.14.1/docs/_index.md
-# Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-github/blob/v6.14.1/docs/_index.md
-# *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
-title: Github Provider
-meta_desc: Provides an overview on how to configure the Pulumi Github provider.
+title: GitHub
+meta_desc: Install and configure the Pulumi GitHub provider — SDK installation for every language, CLI, personal access token and GitHub App credentials, and every configuration option.
 layout: package
+aliases:
+    - /registry/packages/github/installation-configuration/
 ---
+
+The Pulumi GitHub provider manages [GitHub](https://github.com/) resources — repositories, teams, organization membership, branch protection rules, actions secrets and more. It must be configured with credentials before it can be used.
+
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" / >}}
+
+{{% choosable language typescript %}}
+
+```typescript
+import * as github from "@pulumi/github";
+
+const repo = new github.Repository("example", {
+    name: "pulumi-example",
+    description: "Managed by Pulumi",
+    visibility: "private",
+});
+
+export const repoUrl = repo.htmlUrl;
+```
+
+{{% /choosable %}}
+
+{{% choosable language python %}}
+
+```python
+import pulumi
+import pulumi_github as github
+
+repo = github.Repository("example",
+    name="pulumi-example",
+    description="Managed by Pulumi",
+    visibility="private")
+
+pulumi.export("repoUrl", repo.html_url)
+```
+
+{{% /choosable %}}
+
+{{% choosable language go %}}
+
+```go
+package main
+
+import (
+	"github.com/pulumi/pulumi-github/sdk/v6/go/github"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		repo, err := github.NewRepository(ctx, "example", &github.RepositoryArgs{
+			Name:        pulumi.String("pulumi-example"),
+			Description: pulumi.String("Managed by Pulumi"),
+			Visibility:  pulumi.String("private"),
+		})
+		if err != nil {
+			return err
+		}
+
+		ctx.Export("repoUrl", repo.HtmlUrl)
+		return nil
+	})
+}
+```
+
+{{% /choosable %}}
+
+{{% choosable language csharp %}}
+
+```csharp
+using System.Collections.Generic;
+using Pulumi;
+using Github = Pulumi.Github;
+
+return await Deployment.RunAsync(() =>
+{
+    var repo = new Github.Repository("example", new()
+    {
+        Name = "pulumi-example",
+        Description = "Managed by Pulumi",
+        Visibility = "private",
+    });
+
+    return new Dictionary<string, object?>
+    {
+        ["repoUrl"] = repo.HtmlUrl,
+    };
+});
+```
+
+{{% /choosable %}}
+
+{{% choosable language java %}}
+
+```java
+import com.pulumi.Context;
+import com.pulumi.Pulumi;
+import com.pulumi.github.Repository;
+import com.pulumi.github.RepositoryArgs;
+
+public class App {
+    public static void main(String[] args) {
+        Pulumi.run(App::stack);
+    }
+
+    private static void stack(Context ctx) {
+        var repo = new Repository("example", RepositoryArgs.builder()
+            .name("pulumi-example")
+            .description("Managed by Pulumi")
+            .visibility("private")
+            .build());
+
+        ctx.export("repoUrl", repo.htmlUrl());
+    }
+}
+```
+
+{{% /choosable %}}
+
+{{% choosable language yaml %}}
+
+```yaml
+name: github-example
+runtime: yaml
+resources:
+  example:
+    type: github:Repository
+    properties:
+      name: pulumi-example
+      description: Managed by Pulumi
+      visibility: private
+outputs:
+  repoUrl: ${example.htmlUrl}
+```
+
+{{% /choosable %}}
+
+{{% choosable language hcl %}}
+
+```hcl
+resource "github_repository" "example" {
+  name        = "pulumi-example"
+  description = "Managed by Pulumi"
+  visibility  = "private"
+}
+
+output "repo_url" {
+  value = github_repository.example.html_url
+}
+```
+
+{{% /choosable %}}
 
 ## Installation
 
-The Github provider is available as a package in all Pulumi languages:
+The GitHub provider publishes an SDK for every language. Add it to an existing Pulumi project with your language's package manager; YAML and HCL projects use [`pulumi package add`](/docs/iac/cli/commands/pulumi_package_add/) instead:
 
-* JavaScript/TypeScript: [`@pulumi/github`](https://www.npmjs.com/package/@pulumi/github)
-* Python: [`pulumi-github`](https://pypi.org/project/pulumi-github/)
-* Go: [`github.com/pulumi/pulumi-github/sdk/v6/go/github`](https://github.com/pulumi/pulumi-github)
-* .NET: [`Pulumi.Github`](https://www.nuget.org/packages/Pulumi.Github)
-* Java: [`com.pulumi/github`](https://central.sonatype.com/artifact/com.pulumi/github)
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" / >}}
 
-## Overview
-
-The GitHub provider is used to interact with GitHub resources.
-
-The provider allows you to manage your GitHub organization's members and teams easily.
-It needs to be configured with the proper credentials before it can be used.
-
-Use the navigation to the left to read about the available resources.
-## Example Usage
-
-
-
-{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: nodejs
 
-```
-
-```typescript
-import * as pulumi from "@pulumi/pulumi";
-import * as github from "@pulumi/github";
-
-// Add a user to the organization
-const membershipForUserX = new github.Membership("membership_for_user_x", {});
+```bash
+npm install @pulumi/github
 ```
 
 {{% /choosable %}}
+
 {{% choosable language python %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: python
 
-```
-
-```python
-import pulumi
-import pulumi_github as github
-
-# Add a user to the organization
-membership_for_user_x = github.Membership("membership_for_user_x")
+```bash
+pip install pulumi-github
 ```
 
 {{% /choosable %}}
-{{% choosable language csharp %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: dotnet
 
-```
-
-```csharp
-using System.Collections.Generic;
-using System.Linq;
-using Pulumi;
-using Github = Pulumi.Github;
-
-return await Deployment.RunAsync(() =>
-{
-    // Add a user to the organization
-    var membershipForUserX = new Github.Membership("membership_for_user_x");
-
-});
-
-```
-
-{{% /choosable %}}
 {{% choosable language go %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: go
 
+```bash
+go get github.com/pulumi/pulumi-github/sdk/v6
 ```
 
-```go
-package main
-
-import (
-	"github.com/pulumi/pulumi-github/sdk/v6/go/github"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-)
-
-func main() {
-	pulumi.Run(func(ctx *pulumi.Context) error {
-		// Add a user to the organization
-		_, err := github.NewMembership(ctx, "membership_for_user_x", nil)
-		if err != nil {
-			return err
-		}
-		return nil
-	})
-}
-```
+Import it in your program with `import "github.com/pulumi/pulumi-github/sdk/v6/go/github"`.
 
 {{% /choosable %}}
-{{% choosable language yaml %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: yaml
 
-```
-
-```yaml
-resources:
-  # Add a user to the organization
-  membershipForUserX:
-    type: github:Membership
-    name: membership_for_user_x
-```
-
-{{% /choosable %}}
-{{% choosable language java %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: java
-
-```
-
-```java
-package generated_program;
-
-import com.pulumi.Context;
-import com.pulumi.Pulumi;
-import com.pulumi.core.Output;
-import com.pulumi.github.Membership;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Map;
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
-public class App {
-    public static void main(String[] args) {
-        Pulumi.run(App::stack);
-    }
-
-    public static void stack(Context ctx) {
-        // Add a user to the organization
-        var membershipForUserX = new Membership("membershipForUserX");
-
-    }
-}
-```
-
-{{% /choosable %}}
-{{% choosable language hcl %}}
-```hcl
-pulumi {
-  required_providers {
-    github = {
-      source = "pulumi/github"
-    }
-  }
-}
-
-# Add a user to the organization
-resource "github_membership" "membership_for_user_x" {
-}
-```
-
-{{% /choosable %}}
-{{< /chooser >}}
-
-
-
-{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
-{{% choosable language typescript %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: nodejs
-
-```
-
-```typescript
-import * as pulumi from "@pulumi/pulumi";
-import * as github from "@pulumi/github";
-
-// Add a user to the organization
-const membershipForUserX = new github.Membership("membership_for_user_x", {});
-```
-
-{{% /choosable %}}
-{{% choosable language python %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: python
-
-```
-
-```python
-import pulumi
-import pulumi_github as github
-
-# Add a user to the organization
-membership_for_user_x = github.Membership("membership_for_user_x")
-```
-
-{{% /choosable %}}
 {{% choosable language csharp %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: dotnet
 
-```
-
-```csharp
-using System.Collections.Generic;
-using System.Linq;
-using Pulumi;
-using Github = Pulumi.Github;
-
-return await Deployment.RunAsync(() =>
-{
-    // Add a user to the organization
-    var membershipForUserX = new Github.Membership("membership_for_user_x");
-
-});
-
+```bash
+dotnet add package Pulumi.Github
 ```
 
 {{% /choosable %}}
-{{% choosable language go %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: go
 
-```
-
-```go
-package main
-
-import (
-	"github.com/pulumi/pulumi-github/sdk/v6/go/github"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-)
-
-func main() {
-	pulumi.Run(func(ctx *pulumi.Context) error {
-		// Add a user to the organization
-		_, err := github.NewMembership(ctx, "membership_for_user_x", nil)
-		if err != nil {
-			return err
-		}
-		return nil
-	})
-}
-```
-
-{{% /choosable %}}
-{{% choosable language yaml %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: yaml
-
-```
-
-```yaml
-resources:
-  # Add a user to the organization
-  membershipForUserX:
-    type: github:Membership
-    name: membership_for_user_x
-```
-
-{{% /choosable %}}
 {{% choosable language java %}}
-```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime: java
 
+Add the dependency to your build file. For Maven, in `pom.xml`:
+
+```xml
+<dependency>
+    <groupId>com.pulumi</groupId>
+    <artifactId>github</artifactId>
+    <version>6.14.1</version>
+</dependency>
 ```
 
-```java
-package generated_program;
+For Gradle, in `build.gradle`:
 
-import com.pulumi.Context;
-import com.pulumi.Pulumi;
-import com.pulumi.core.Output;
-import com.pulumi.github.Membership;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Map;
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
-public class App {
-    public static void main(String[] args) {
-        Pulumi.run(App::stack);
-    }
-
-    public static void stack(Context ctx) {
-        // Add a user to the organization
-        var membershipForUserX = new Membership("membershipForUserX");
-
-    }
-}
+```groovy
+implementation 'com.pulumi:github:6.14.1'
 ```
 
 {{% /choosable %}}
+
+{{% choosable language yaml %}}
+
+```bash
+pulumi package add github
+```
+
+Reference resources by their type token, for example `github:Repository`. Omit the version to add the latest, or append `@6.14.1` to pin one.
+
+{{% /choosable %}}
+
 {{% choosable language hcl %}}
-```hcl
-pulumi {
-  required_providers {
-    github = {
-      source = "pulumi/github"
-    }
-  }
-}
 
-# Add a user to the organization
-resource "github_membership" "membership_for_user_x" {
-}
+```bash
+pulumi package add github
+```
+
+This makes the `github_*` resource types available to your converted HCL. Omit the version to add the latest, or append `@6.14.1` to pin one.
+
+{{% /choosable %}}
+
+To install everything a project already declares — after cloning it from source control, for example — run [`pulumi install`](/docs/iac/cli/commands/pulumi_install/).
+
+## Configuration
+
+Provider settings can come from any of three places:
+
+- A [Pulumi ESC](/docs/pulumi-cloud/esc/) environment, under `pulumiConfig`.
+- [Stack configuration](/docs/iac/concepts/config/), set with `pulumi config set` and stored in `Pulumi.<stack-name>.yaml`.
+- An explicit `github.Provider` instance, constructed in your program and passed to the resources that should use it.
+
+See [Configuration](/docs/concepts/config/) for how these sources combine. Some options can also be read from environment variables, noted in their descriptions in the Reference.
+
+The provider offers three ways to authenticate. Whichever you choose, set `owner` to the organization or user account you want to manage — without it, and with a token available, the provider falls back to the account that owns the token.
+
+### Examples
+
+Every example below is shown two ways: as a [Pulumi ESC](/docs/pulumi-cloud/esc/) environment, and as [stack configuration](/docs/iac/concepts/config/) — the `Pulumi.<stack-name>.yaml` file alongside your project. Pick whichever you use; the choice follows you down the page and across providers.
+
+#### GitHub CLI
+
+If you are already signed in with the [GitHub CLI](https://cli.github.com/), the provider picks up the token issued by [`gh auth login`](https://cli.github.com/manual/gh_auth_login) automatically — there are no credentials to configure, only the account to manage.
+
+```bash
+$ gh auth login
+```
+
+{{< chooser configsource "esc,stack" / >}}
+
+{{% choosable configsource esc %}}
+
+Set it with the CLI:
+
+```bash
+$ pulumi env set myorg/github-dev pulumiConfig.github:owner my-org
+```
+
+That produces the following environment definition in `environments/github-dev.yaml`:
+
+```yaml
+values:
+  pulumiConfig:
+    github:owner: my-org
 ```
 
 {{% /choosable %}}
-{{< /chooser >}}
-## Authentication
 
-The GitHub provider offers multiple ways to authenticate with GitHub API.
-### GitHub CLI
+{{% choosable configsource stack %}}
 
-The GitHub provider taps into [GitHub CLI](https://cli.github.com/) authentication, where it picks up the token issued by [`gh auth login`](https://cli.github.com/manual/gh_auth_login) command. It is possible to specify the path to the `gh` executable in the `GH_PATH` environment variable, which is useful for when the GitHub Pulumi provider can not properly determine its the path to GitHub CLI such as in the cygwin terminal.
-### OAuth / Personal Access Token
+Set it with the CLI:
 
-To authenticate using OAuth tokens, ensure that the `token` argument or the `GITHUB_TOKEN` environment variable is set.
+```bash
+$ pulumi config set github:owner my-org
+```
+
+That writes the following into `Pulumi.dev.yaml`:
 
 ```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime:
 config:
+  github:owner: my-org
+```
+
+{{% /choosable %}}
+
+Set `GH_PATH` if the provider cannot locate the `gh` executable on its own — for example under a cygwin terminal.
+
+#### Personal access token
+
+The most common choice for CI. Create a [personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) with the scopes your program needs.
+
+{{< chooser configsource "esc,stack" / >}}
+
+{{% choosable configsource esc %}}
+
+Set it with the CLI:
+
+```bash
+$ pulumi env set myorg/github-dev pulumiConfig.github:owner my-org
+$ pulumi env set --secret myorg/github-dev pulumiConfig.github:token ghp_xxxxxxxxxxxxxxxxxxxx
+```
+
+That produces the following environment definition in `environments/github-dev.yaml`:
+
+```yaml
+values:
+  pulumiConfig:
+    github:owner: my-org
     github:token:
-        value: 'TODO: var.token'
-
+      fn::secret: ghp_xxxxxxxxxxxxxxxxxxxx
 ```
-### GitHub App Installation
 
-To authenticate using a GitHub App installation, ensure that arguments in the `appAuth` block or the `GITHUB_APP_XXX` environment variables are set.
-The `owner` parameter required in this situation. Leaving out will throw a `403 "Resource not accessible by integration"` error.
+{{% /choosable %}}
 
-Some API operations may not be available when using a GitHub App installation configuration. For more information, refer to the list of [supported endpoints](https://docs.github.com/en/rest/overview/endpoints-available-for-github-apps).
+{{% choosable configsource stack %}}
+
+Set it with the CLI:
+
+```bash
+$ pulumi config set github:owner my-org
+$ pulumi config set --secret github:token ghp_xxxxxxxxxxxxxxxxxxxx
+```
+
+That writes the following into `Pulumi.dev.yaml`:
 
 ```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime:
 config:
-    github:owner:
-        value: 'TODO: var.github_organization'
-
+  github:owner: my-org
+  github:token:
+    secure: AAABAOWyM7t3q1u...KpR8Nx1yVCjKPB2nJWg==
 ```
+
+{{% /choosable %}}
+
+The token can also come from the `GITHUB_TOKEN` environment variable. With no token at all, the provider can only reach resources available anonymously.
+
+#### GitHub App installation
+
+Authenticate as a [GitHub App installation](https://docs.github.com/en/apps/creating-github-apps) rather than as a user. All three `appAuth` fields are required, and `owner` is mandatory here — leaving it out produces a `403 "Resource not accessible by integration"` error.
+
+{{< chooser configsource "esc,stack" / >}}
+
+{{% choosable configsource esc %}}
+
+Set it with the CLI:
+
+```bash
+$ pulumi env set myorg/github-dev pulumiConfig.github:appAuth.id 123456
+$ pulumi env set myorg/github-dev pulumiConfig.github:appAuth.installationId 78901234
+$ pulumi env set --secret myorg/github-dev pulumiConfig.github:appAuth.pemFile "$(cat app.pem)"
+```
+
+That produces the following environment definition in `environments/github-dev.yaml`:
 
 ```yaml
-# Pulumi.yaml provider configuration file
-name: configuration-example
-runtime:
-config:
-    github:owner:
-        value: 'TODO: var.github_organization'
-
+values:
+  pulumiConfig:
+    github:owner: my-org
+    github:appAuth:
+      id: "123456"
+      installationId: "78901234"
+      pemFile:
+        fn::secret: |
+          -----BEGIN RSA PRIVATE KEY-----
+          MIIEowIBAAKCAQEA...
+          -----END RSA PRIVATE KEY-----
 ```
-## Configuration Reference
 
-The following configuration inputs are supported in the provider configuration:
+{{% /choosable %}}
 
-* `token` - (Optional) A GitHub OAuth / Personal Access Token. When not provided or made available via the `GITHUB_TOKEN` environment variable, the provider can only access resources available anonymously.
+{{% choosable configsource stack %}}
 
-* `baseUrl` - (Optional) This is the target GitHub base API endpoint. Providing a value is a requirement when working with GitHub Enterprise. It is optional to provide this value and it can also be sourced from the `GITHUB_BASE_URL` environment variable. The value must end with a slash, for example: `https://pulumitesting-ghe.westus.cloudapp.azure.com/`
+Set it with the CLI:
 
-* `owner` - (Optional) This is the target GitHub organization or individual user account to manage. For example, `torvalds` and `github` are valid owners. It is optional to provide this value and it can also be sourced from the `GITHUB_OWNER` environment variable. When not provided and a `token` is available, the individual user account owning the `token` will be used. When not provided and no `token` is available, the provider may not function correctly. It is required in case of GitHub App Installation.
+```bash
+$ pulumi config set github:owner my-org
+$ pulumi config set --path github:appAuth.id 123456
+$ pulumi config set --path github:appAuth.installationId 78901234
+$ pulumi config set --path --secret github:appAuth.pemFile "$(cat app.pem)"
+```
 
-* `organization` - (Deprecated) This behaves the same as `owner`, which should be used instead. This value can also be sourced from the `GITHUB_ORGANIZATION` environment variable.
+That writes the following into `Pulumi.dev.yaml`:
 
-* `appAuth` - (Optional) Configuration block to use GitHub App installation token. When not provided, the provider can only access resources available anonymously.
-  * `id` - (Required) This is the ID of the GitHub App. It can sourced from the `GITHUB_APP_ID` environment variable.
-  * `installationId` - (Required) This is the ID of the GitHub App installation. It can sourced from the `GITHUB_APP_INSTALLATION_ID` environment variable.
-  * `pemFile` - (Required) This is the contents of the GitHub App private key PEM file. It can also be sourced from the `GITHUB_APP_PEM_FILE` environment variable and may use `\n` instead of actual new lines.
+```yaml
+config:
+  github:owner: my-org
+  github:appAuth:
+    id: "123456"
+    installationId: "78901234"
+    pemFile:
+      secure: AAABAJ4nQm1xPz9...8sVdK2eLhTgYbXc5Rq==
+```
 
-* `writeDelayMs` - (Optional) The number of milliseconds to sleep in between write operations in order to satisfy the GitHub API rate limits. Note that requests to the GraphQL API are implemented as `POST` requests under the hood, so this setting affects those calls as well. Defaults to 1000ms or 1 second if not provided.
+{{% /choosable %}}
 
-* `retryDelayMs` - (Optional) Amount of time in milliseconds to sleep in between requests to GitHub API after an error response. Defaults to 1000ms or 1 second if not provided, the maxRetries must be set to greater than zero.
+These can also come from the `GITHUB_APP_ID`, `GITHUB_APP_INSTALLATION_ID` and `GITHUB_APP_PEM_FILE` environment variables. Some API operations are unavailable to App installations — see GitHub's list of [supported endpoints](https://docs.github.com/en/rest/overview/endpoints-available-for-github-apps).
 
-* `readDelayMs` - (Optional) The number of milliseconds to sleep in between non-write operations in order to satisfy the GitHub API rate limits. Defaults to 0ms.
+#### GitHub Enterprise
 
-* `retryableErrors` - (Optional) "Allow the provider to retry after receiving an error status code, the maxRetries should be set for this to work. Defaults to [500, 502, 503, 504]
+Point the provider at your own GitHub Enterprise instance. The value must end with a slash.
 
-* `maxRetries` - (Optional) Number of times to retry a request after receiving an error status code. Defaults to 3
+{{< chooser configsource "esc,stack" / >}}
 
-Note: If you have a PEM file on disk, you can pass it in via `pemFile = file("path/to/file.pem")`.
+{{% choosable configsource esc %}}
 
-For backwards compatibility, if more than one of `owner`, `organization`,
-`GITHUB_OWNER` and `GITHUB_ORGANIZATION` are set, the first in this
-list takes priority.
+Set it with the CLI:
 
-1. Setting `organization` in the GitHub provider configuration.
-2. Setting the `GITHUB_ORGANIZATION` environment variable.
-3. Setting the `GITHUB_OWNER` environment variable.
-4. Setting `owner` in the GitHub provider configuration.
+```bash
+$ pulumi env set myorg/github-dev pulumiConfig.github:baseUrl https://github.example.com/api/v3/
+$ pulumi env set --secret myorg/github-dev pulumiConfig.github:token ghp_xxxxxxxxxxxxxxxxxxxx
+```
 
-> It is a bug that `GITHUB_OWNER` takes precedence over `owner`, which may
-be fixed in a future major release. For compatibility with future releases,
-please set only one of `GITHUB_OWNER` and `owner`.
+That produces the following environment definition in `environments/github-dev.yaml`:
+
+```yaml
+values:
+  pulumiConfig:
+    github:baseUrl: https://github.example.com/api/v3/
+    github:owner: my-org
+    github:token:
+      fn::secret: ghp_xxxxxxxxxxxxxxxxxxxx
+```
+
+{{% /choosable %}}
+
+{{% choosable configsource stack %}}
+
+Set it with the CLI:
+
+```bash
+$ pulumi config set github:baseUrl https://github.example.com/api/v3/
+$ pulumi config set github:owner my-org
+$ pulumi config set --secret github:token ghp_xxxxxxxxxxxxxxxxxxxx
+```
+
+That writes the following into `Pulumi.dev.yaml`:
+
+```yaml
+config:
+  github:baseUrl: https://github.example.com/api/v3/
+  github:owner: my-org
+  github:token:
+    secure: AAABAOWyM7t3q1u...KpR8Nx1yVCjKPB2nJWg==
+```
+
+{{% /choosable %}}
+
+### Reference
+
+Every configuration option accepted by the provider. Project any of them from an ESC environment under `pulumiConfig`, set them with `pulumi config set`, or pass them to an explicit [`github.Provider`](/registry/packages/github/api-docs/provider/). Nested objects are shown flattened, using [structured configuration](/docs/concepts/config#structured-configuration) paths.
+
+{{% notes type="warning" %}}
+`organization` is deprecated — use `owner` instead. For backwards compatibility, when more than one of `organization`, `GITHUB_ORGANIZATION`, `GITHUB_OWNER` and `owner` is set, the **first** in that list wins. That `GITHUB_OWNER` outranks `owner` is a known bug that may be fixed in a future major release; set only one of the four to stay compatible.
+{{% /notes %}}
+
+<div class="api-params">
+<div class="api-param">
+<h3 class="api-param-name" id="appauth-id" data-link-title="appAuth.id"><span class="api-param-nested-indicator">&#8627;</span>appAuth.id<a class="api-param-anchor" href="#appauth-id" aria-label="Link to this option">#</a></h3>
+<div class="api-param-header">
+<span class="api-param-badge api-param-type">string</span>
+<span class="api-param-badge api-param-required is-required">required</span>
+</div>
+<div class="api-param-description">
+<p>The GitHub App ID.</p>
+<p class="api-param-meta">Config key: <code>github:appAuth.id</code></p>
+<pulumi-chooser type="configsource" options="esc,stack">
+<pulumi-choosable type="configsource" values="esc">
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ pulumi env <span class="nb">set</span> myorg/myproject/dev pulumiConfig.github:appAuth.id 123456
+</span></span></code></pre></div>
+</pulumi-choosable>
+<pulumi-choosable type="configsource" values="stack">
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ pulumi config <span class="nb">set</span> --path github:appAuth.id 123456
+</span></span></code></pre></div>
+</pulumi-choosable>
+</pulumi-chooser>
+</div>
+</div>
+<div class="api-param">
+<h3 class="api-param-name" id="appauth-installationid" data-link-title="appAuth.installationId"><span class="api-param-nested-indicator">&#8627;</span>appAuth.installationId<a class="api-param-anchor" href="#appauth-installationid" aria-label="Link to this option">#</a></h3>
+<div class="api-param-header">
+<span class="api-param-badge api-param-type">string</span>
+<span class="api-param-badge api-param-required is-required">required</span>
+</div>
+<div class="api-param-description">
+<p>The GitHub App installation instance ID.</p>
+<p class="api-param-meta">Config key: <code>github:appAuth.installationId</code></p>
+<pulumi-chooser type="configsource" options="esc,stack">
+<pulumi-choosable type="configsource" values="esc">
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ pulumi env <span class="nb">set</span> myorg/myproject/dev pulumiConfig.github:appAuth.installationId 78901234
+</span></span></code></pre></div>
+</pulumi-choosable>
+<pulumi-choosable type="configsource" values="stack">
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ pulumi config <span class="nb">set</span> --path github:appAuth.installationId 78901234
+</span></span></code></pre></div>
+</pulumi-choosable>
+</pulumi-chooser>
+</div>
+</div>
+<div class="api-param">
+<h3 class="api-param-name" id="appauth-pemfile" data-link-title="appAuth.pemFile"><span class="api-param-nested-indicator">&#8627;</span>appAuth.pemFile<a class="api-param-anchor" href="#appauth-pemfile" aria-label="Link to this option">#</a></h3>
+<div class="api-param-header">
+<span class="api-param-badge api-param-type">string</span>
+<span class="api-param-badge api-param-required is-required">required</span>
+<span class="api-param-badge api-param-secret">secret</span>
+</div>
+<div class="api-param-description">
+<p>The GitHub App PEM file contents.</p>
+<p class="api-param-meta">Config key: <code>github:appAuth.pemFile</code></p>
+<pulumi-chooser type="configsource" options="esc,stack">
+<pulumi-choosable type="configsource" values="esc">
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ pulumi env <span class="nb">set</span> --secret myorg/myproject/dev pulumiConfig.github:appAuth.pemFile $(cat app.pem)
+</span></span></code></pre></div>
+</pulumi-choosable>
+<pulumi-choosable type="configsource" values="stack">
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ pulumi config <span class="nb">set</span> --path --secret github:appAuth.pemFile $(cat app.pem)
+</span></span></code></pre></div>
+</pulumi-choosable>
+</pulumi-chooser>
+</div>
+</div>
+<div class="api-param">
+<h3 class="api-param-name" id="baseurl" data-link-title="baseUrl">baseUrl<a class="api-param-anchor" href="#baseurl" aria-label="Link to this option">#</a></h3>
+<div class="api-param-header">
+<span class="api-param-badge api-param-type">string</span>
+<span class="api-param-badge api-param-required">optional</span>
+<span class="api-param-badge api-param-in">GITHUB_BASE_URL</span>
+</div>
+<div class="api-param-description">
+<p>The GitHub Base API URL</p>
+<p class="api-param-meta">Config key: <code>github:baseUrl</code></p>
+<pulumi-chooser type="configsource" options="esc,stack">
+<pulumi-choosable type="configsource" values="esc">
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ pulumi env <span class="nb">set</span> myorg/myproject/dev pulumiConfig.github:baseUrl https://github.example.com/api/v3/
+</span></span></code></pre></div>
+</pulumi-choosable>
+<pulumi-choosable type="configsource" values="stack">
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ pulumi config <span class="nb">set</span> github:baseUrl https://github.example.com/api/v3/
+</span></span></code></pre></div>
+</pulumi-choosable>
+</pulumi-chooser>
+</div>
+</div>
+<div class="api-param">
+<h3 class="api-param-name" id="insecure" data-link-title="insecure">insecure<a class="api-param-anchor" href="#insecure" aria-label="Link to this option">#</a></h3>
+<div class="api-param-header">
+<span class="api-param-badge api-param-type">boolean</span>
+<span class="api-param-badge api-param-required">optional</span>
+</div>
+<div class="api-param-description">
+<p>Enable <code>insecure</code> mode for testing purposes</p>
+<p class="api-param-meta">Config key: <code>github:insecure</code></p>
+<pulumi-chooser type="configsource" options="esc,stack">
+<pulumi-choosable type="configsource" values="esc">
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ pulumi env <span class="nb">set</span> myorg/myproject/dev pulumiConfig.github:insecure true
+</span></span></code></pre></div>
+</pulumi-choosable>
+<pulumi-choosable type="configsource" values="stack">
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ pulumi config <span class="nb">set</span> github:insecure true
+</span></span></code></pre></div>
+</pulumi-choosable>
+</pulumi-chooser>
+</div>
+</div>
+<div class="api-param">
+<h3 class="api-param-name" id="maxperpage" data-link-title="maxPerPage">maxPerPage<a class="api-param-anchor" href="#maxperpage" aria-label="Link to this option">#</a></h3>
+<div class="api-param-header">
+<span class="api-param-badge api-param-type">integer</span>
+<span class="api-param-badge api-param-required">optional</span>
+</div>
+<div class="api-param-description">
+<p>Number of items per page for paginationDefaults to 100</p>
+<p class="api-param-meta">Config key: <code>github:maxPerPage</code></p>
+<pulumi-chooser type="configsource" options="esc,stack">
+<pulumi-choosable type="configsource" values="esc">
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ pulumi env <span class="nb">set</span> myorg/myproject/dev pulumiConfig.github:maxPerPage 3
+</span></span></code></pre></div>
+</pulumi-choosable>
+<pulumi-choosable type="configsource" values="stack">
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ pulumi config <span class="nb">set</span> github:maxPerPage 3
+</span></span></code></pre></div>
+</pulumi-choosable>
+</pulumi-chooser>
+</div>
+</div>
+<div class="api-param">
+<h3 class="api-param-name" id="maxretries" data-link-title="maxRetries">maxRetries<a class="api-param-anchor" href="#maxretries" aria-label="Link to this option">#</a></h3>
+<div class="api-param-header">
+<span class="api-param-badge api-param-type">integer</span>
+<span class="api-param-badge api-param-required">optional</span>
+</div>
+<div class="api-param-description">
+<p>Number of times to retry a request after receiving an error status codeDefaults to 3</p>
+<p class="api-param-meta">Config key: <code>github:maxRetries</code></p>
+<pulumi-chooser type="configsource" options="esc,stack">
+<pulumi-choosable type="configsource" values="esc">
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ pulumi env <span class="nb">set</span> myorg/myproject/dev pulumiConfig.github:maxRetries 3
+</span></span></code></pre></div>
+</pulumi-choosable>
+<pulumi-choosable type="configsource" values="stack">
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ pulumi config <span class="nb">set</span> github:maxRetries 3
+</span></span></code></pre></div>
+</pulumi-choosable>
+</pulumi-chooser>
+</div>
+</div>
+<div class="api-param">
+<h3 class="api-param-name" id="organization" data-link-title="organization">organization<a class="api-param-anchor" href="#organization" aria-label="Link to this option">#</a></h3>
+<div class="api-param-header">
+<span class="api-param-badge api-param-type">string</span>
+<span class="api-param-badge api-param-required">optional</span>
+</div>
+<div class="api-param-description">
+<p>The GitHub organization name to manage. Use this field instead of <code>owner</code> when managing organization accounts.</p>
+<p class="api-param-meta">Config key: <code>github:organization</code></p>
+<pulumi-chooser type="configsource" options="esc,stack">
+<pulumi-choosable type="configsource" values="esc">
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ pulumi env <span class="nb">set</span> myorg/myproject/dev pulumiConfig.github:organization my-org
+</span></span></code></pre></div>
+</pulumi-choosable>
+<pulumi-choosable type="configsource" values="stack">
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ pulumi config <span class="nb">set</span> github:organization my-org
+</span></span></code></pre></div>
+</pulumi-choosable>
+</pulumi-chooser>
+</div>
+</div>
+<div class="api-param">
+<h3 class="api-param-name" id="owner" data-link-title="owner">owner<a class="api-param-anchor" href="#owner" aria-label="Link to this option">#</a></h3>
+<div class="api-param-header">
+<span class="api-param-badge api-param-type">string</span>
+<span class="api-param-badge api-param-required">optional</span>
+</div>
+<div class="api-param-description">
+<p>The GitHub owner name to manage. Use this field instead of <code>organization</code> when managing individual accounts.</p>
+<p class="api-param-meta">Config key: <code>github:owner</code></p>
+<pulumi-chooser type="configsource" options="esc,stack">
+<pulumi-choosable type="configsource" values="esc">
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ pulumi env <span class="nb">set</span> myorg/myproject/dev pulumiConfig.github:owner my-org
+</span></span></code></pre></div>
+</pulumi-choosable>
+<pulumi-choosable type="configsource" values="stack">
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ pulumi config <span class="nb">set</span> github:owner my-org
+</span></span></code></pre></div>
+</pulumi-choosable>
+</pulumi-chooser>
+</div>
+</div>
+<div class="api-param">
+<h3 class="api-param-name" id="parallelrequests" data-link-title="parallelRequests">parallelRequests<a class="api-param-anchor" href="#parallelrequests" aria-label="Link to this option">#</a></h3>
+<div class="api-param-header">
+<span class="api-param-badge api-param-type">boolean</span>
+<span class="api-param-badge api-param-required">optional</span>
+</div>
+<div class="api-param-description">
+<p>Allow the provider to make parallel API calls to GitHub. You may want to set it to true when you have a private Github Enterprise without strict rate limits. While it is possible to enable this setting on github.com, github.com's best practices recommend using serialization to avoid hitting abuse rate limitsDefaults to false if not set</p>
+<p class="api-param-meta">Config key: <code>github:parallelRequests</code></p>
+<pulumi-chooser type="configsource" options="esc,stack">
+<pulumi-choosable type="configsource" values="esc">
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ pulumi env <span class="nb">set</span> myorg/myproject/dev pulumiConfig.github:parallelRequests true
+</span></span></code></pre></div>
+</pulumi-choosable>
+<pulumi-choosable type="configsource" values="stack">
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ pulumi config <span class="nb">set</span> github:parallelRequests true
+</span></span></code></pre></div>
+</pulumi-choosable>
+</pulumi-chooser>
+</div>
+</div>
+<div class="api-param">
+<h3 class="api-param-name" id="readdelayms" data-link-title="readDelayMs">readDelayMs<a class="api-param-anchor" href="#readdelayms" aria-label="Link to this option">#</a></h3>
+<div class="api-param-header">
+<span class="api-param-badge api-param-type">integer</span>
+<span class="api-param-badge api-param-required">optional</span>
+</div>
+<div class="api-param-description">
+<p>Amount of time in milliseconds to sleep in between non-write requests to GitHub API. Defaults to 0ms if not set.</p>
+<p class="api-param-meta">Config key: <code>github:readDelayMs</code></p>
+<pulumi-chooser type="configsource" options="esc,stack">
+<pulumi-choosable type="configsource" values="esc">
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ pulumi env <span class="nb">set</span> myorg/myproject/dev pulumiConfig.github:readDelayMs 3
+</span></span></code></pre></div>
+</pulumi-choosable>
+<pulumi-choosable type="configsource" values="stack">
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ pulumi config <span class="nb">set</span> github:readDelayMs 3
+</span></span></code></pre></div>
+</pulumi-choosable>
+</pulumi-chooser>
+</div>
+</div>
+<div class="api-param">
+<h3 class="api-param-name" id="retrydelayms" data-link-title="retryDelayMs">retryDelayMs<a class="api-param-anchor" href="#retrydelayms" aria-label="Link to this option">#</a></h3>
+<div class="api-param-header">
+<span class="api-param-badge api-param-type">integer</span>
+<span class="api-param-badge api-param-required">optional</span>
+</div>
+<div class="api-param-description">
+<p>Amount of time in milliseconds to sleep in between requests to GitHub API after an error response. Defaults to 1000ms or 1s if not set, the maxRetries must be set to greater than zero.</p>
+<p class="api-param-meta">Config key: <code>github:retryDelayMs</code></p>
+<pulumi-chooser type="configsource" options="esc,stack">
+<pulumi-choosable type="configsource" values="esc">
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ pulumi env <span class="nb">set</span> myorg/myproject/dev pulumiConfig.github:retryDelayMs 3
+</span></span></code></pre></div>
+</pulumi-choosable>
+<pulumi-choosable type="configsource" values="stack">
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ pulumi config <span class="nb">set</span> github:retryDelayMs 3
+</span></span></code></pre></div>
+</pulumi-choosable>
+</pulumi-chooser>
+</div>
+</div>
+<div class="api-param">
+<h3 class="api-param-name" id="retryableerrors" data-link-title="retryableErrors">retryableErrors<a class="api-param-anchor" href="#retryableerrors" aria-label="Link to this option">#</a></h3>
+<div class="api-param-header">
+<span class="api-param-badge api-param-type">list&lt;integer&gt;</span>
+<span class="api-param-badge api-param-required">optional</span>
+</div>
+<div class="api-param-description">
+<p>Allow the provider to retry after receiving an error status code, the maxRetries should be set for this to workDefaults to [500, 502, 503, 504]</p>
+<p class="api-param-meta">Config key: <code>github:retryableErrors</code></p>
+<pulumi-chooser type="configsource" options="esc,stack">
+<pulumi-choosable type="configsource" values="esc">
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ pulumi env <span class="nb">set</span> myorg/myproject/dev pulumiConfig.github:retryableErrors &lt;value&gt;
+</span></span></code></pre></div>
+</pulumi-choosable>
+<pulumi-choosable type="configsource" values="stack">
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ pulumi config <span class="nb">set</span> github:retryableErrors &lt;value&gt;
+</span></span></code></pre></div>
+</pulumi-choosable>
+</pulumi-chooser>
+</div>
+</div>
+<div class="api-param">
+<h3 class="api-param-name" id="token" data-link-title="token">token<a class="api-param-anchor" href="#token" aria-label="Link to this option">#</a></h3>
+<div class="api-param-header">
+<span class="api-param-badge api-param-type">string</span>
+<span class="api-param-badge api-param-required">optional</span>
+<span class="api-param-badge api-param-secret">secret</span>
+<span class="api-param-badge api-param-in">GITHUB_TOKEN</span>
+</div>
+<div class="api-param-description">
+<p>The OAuth token used to connect to GitHub. Anonymous mode is enabled if both <code>token</code> and <code>appAuth</code> are not set.</p>
+<p class="api-param-meta">Config key: <code>github:token</code></p>
+<pulumi-chooser type="configsource" options="esc,stack">
+<pulumi-choosable type="configsource" values="esc">
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ pulumi env <span class="nb">set</span> --secret myorg/myproject/dev pulumiConfig.github:token ghp_xxxxxxxxxxxxxxxxxxxx
+</span></span></code></pre></div>
+</pulumi-choosable>
+<pulumi-choosable type="configsource" values="stack">
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ pulumi config <span class="nb">set</span> --secret github:token ghp_xxxxxxxxxxxxxxxxxxxx
+</span></span></code></pre></div>
+</pulumi-choosable>
+</pulumi-chooser>
+</div>
+</div>
+<div class="api-param">
+<h3 class="api-param-name" id="writedelayms" data-link-title="writeDelayMs">writeDelayMs<a class="api-param-anchor" href="#writedelayms" aria-label="Link to this option">#</a></h3>
+<div class="api-param-header">
+<span class="api-param-badge api-param-type">integer</span>
+<span class="api-param-badge api-param-required">optional</span>
+</div>
+<div class="api-param-description">
+<p>Amount of time in milliseconds to sleep in between writes to GitHub API. Defaults to 1000ms or 1s if not set.</p>
+<p class="api-param-meta">Config key: <code>github:writeDelayMs</code></p>
+<pulumi-chooser type="configsource" options="esc,stack">
+<pulumi-choosable type="configsource" values="esc">
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ pulumi env <span class="nb">set</span> myorg/myproject/dev pulumiConfig.github:writeDelayMs 3
+</span></span></code></pre></div>
+</pulumi-choosable>
+<pulumi-choosable type="configsource" values="stack">
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ pulumi config <span class="nb">set</span> github:writeDelayMs 3
+</span></span></code></pre></div>
+</pulumi-choosable>
+</pulumi-chooser>
+</div>
+</div>
+</div>

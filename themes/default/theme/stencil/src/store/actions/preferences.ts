@@ -1,5 +1,5 @@
 import { TypeKeys } from "./index";
-import { LanguageKey, K8sLanguageKey, OSKey, CloudKey, PersonaKey, BackEndKey, PythonToolchainKey } from "../../components/chooser/chooser";
+import { LanguageKey, K8sLanguageKey, OSKey, CloudKey, PersonaKey, BackEndKey, PythonToolchainKey, ConfigSourceKey } from "../../components/chooser/chooser";
 
 export interface SetLanguage {
     type: TypeKeys.SET_LANGUAGE;
@@ -29,6 +29,11 @@ export interface SetPersona {
 export interface SetBackEnd {
     type: TypeKeys.SET_BACKEND;
     key: BackEndKey;
+}
+
+export interface SetConfigSource {
+    type: TypeKeys.SET_CONFIGSOURCE;
+    key: ConfigSourceKey;
 }
 
 export interface SetPythonToolchain {
@@ -78,4 +83,10 @@ export const setBackEnd = (key: BackEndKey) => dispatchAction<SetBackEnd>({
 export const setPythonToolchain = (key: PythonToolchainKey) => dispatchAction<SetPythonToolchain>({
     key,
     type: TypeKeys.SET_PYTHONTOOLCHAIN,
+});
+
+// Set the currently selected configuration source (Pulumi ESC or stack config).
+export const setConfigSource = (key: ConfigSourceKey) => dispatchAction<SetConfigSource>({
+    key,
+    type: TypeKeys.SET_CONFIGSOURCE,
 });

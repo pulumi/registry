@@ -1,0 +1,155 @@
+// Parameter reference lists, in the style of the Cloud REST API docs.
+//
+// Ported from pulumi/docs `assets/fingerprinted/css/openapi.css` (.api-param* rules),
+// which is what /docs/reference/cloud-rest-api/ renders its request parameters with.
+// The registry has no equivalent, so provider configuration references in
+// themes/default/content/registry/packages/ hand-write this markup:
+//
+//     <div class="api-params">
+//       <div class="api-param">
+//         <h3 class="api-param-name" id="region">region</h3>
+//         <div class="api-param-header">
+//           <span class="api-param-badge api-param-type">string</span>
+//           <span class="api-param-badge api-param-required is-required">required</span>
+//         </div>
+//         <div class="api-param-description">…</div>
+//       </div>
+//     </div>
+//
+// The docs original keys its colors off --docs-* custom properties. The registry
+// doesn't define those, so every one here carries a Tailwind fallback, the same
+// convention components/_chooser.scss uses.
+
+.api-params {
+    @apply mt-4 mb-8;
+
+    border-top: 1px solid var(--docs-border, theme("colors.gray.300"));
+}
+
+.api-param {
+    @apply py-3;
+
+    border-bottom: 1px solid var(--docs-border, theme("colors.gray.300"));
+
+    &:has(> h3:target) {
+        background: var(--color-violet-100);
+        border-radius: 3px;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+}
+
+.api-param-header {
+    @apply flex flex-wrap items-center gap-2 mb-1;
+}
+
+// The "#" permalink for an option. Kept faint until the row is hovered so 50 of
+// them don't turn the page into a field of hashes.
+.api-param-anchor {
+    @apply font-mono font-normal no-underline opacity-0 transition;
+
+    color: var(--docs-fg-muted, theme("colors.gray.600"));
+
+    .api-param:hover &,
+    &:focus {
+        @apply opacity-100;
+    }
+}
+
+// The option name is a real <h3> so it lands in the right-rail "On this page"
+// list (ts/misc.ts scans the DOM for h2/h3 with an id). Dial the theme's heading
+// size right down -- fifty of these at normal h3 scale would read as fifty
+// sections rather than fifty rows.
+h3.api-param-name {
+    @apply font-mono font-semibold mt-0 mb-2 flex items-center gap-2;
+
+    font-size: 1rem !important;
+    line-height: 1.3;
+    background: none;
+    color: var(--docs-fg, theme("colors.gray.900"));
+
+    // Keep the row clear of the sticky page header when it's the jump target.
+    scroll-margin-top: 6rem;
+}
+
+.api-param-badge {
+    @apply inline-block font-mono rounded-sm whitespace-nowrap;
+
+    font-size: 0.75rem;
+    line-height: 1;
+    padding: 0.25rem 0.5rem;
+    background: var(--docs-surface, theme("colors.gray.100"));
+    color: var(--docs-fg-muted, theme("colors.gray.600"));
+}
+
+.api-param-type {
+    background: var(--color-blue-100);
+    color: var(--color-blue-700);
+}
+
+// The provider-config analog of the REST docs' `in` badge (query/path/header):
+// where the value comes from — an environment variable, or a secret.
+.api-param-in {
+    background: var(--color-violet-100);
+    color: var(--color-violet-700);
+}
+
+.api-param-secret {
+    background: var(--color-yellow-100);
+    color: var(--color-yellow-700);
+}
+
+.api-param-required {
+    background: var(--docs-surface, theme("colors.gray.100"));
+    color: var(--color-gray-500);
+}
+
+.api-param-required.is-required {
+    background: var(--color-red-100);
+    color: var(--color-red-700);
+}
+
+// Marks a value the schema cannot tell us — see the callouts in the mockup pages.
+// Rendered as a hint rather than an assertion so it reads as "we don't know".
+.api-param-required.is-unknown {
+    background: transparent;
+    color: var(--color-gray-500);
+    border: 1px dashed var(--docs-border, theme("colors.gray.300"));
+}
+
+.api-param-description {
+    @apply max-w-full;
+
+    color: var(--docs-fg-muted, theme("colors.gray.600"));
+    font-size: 0.925rem;
+    line-height: 1.5;
+
+    p:last-child {
+        @apply mb-0;
+    }
+
+    // Command examples sit inside the description; tighten the default code-block
+    // margins so a parameter row stays compact.
+    .highlight {
+        @apply my-1;
+    }
+}
+
+.api-param-meta {
+    @apply mt-1 mb-0;
+
+    font-size: 0.825rem;
+    color: var(--docs-fg-muted, theme("colors.gray.600"));
+
+    code {
+        font-size: 0.825rem;
+    }
+}
+
+// Nested object fields (aws:assumeRoles[].roleArn) are flattened rather than
+// nested, but keep the REST docs' turnstile so the hierarchy still reads.
+.api-param-nested-indicator {
+    color: var(--color-gray-400);
+    font-size: 0.9em;
+    margin-right: 0.1rem;
+}

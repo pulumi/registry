@@ -1,6 +1,7 @@
 {{ $rawPackageName := index (split .Page.File.Path "/") 2 }}
 {{ $packageUrl := printf "%s/" (path.Join "/registry/packages" $rawPackageName) }}
 {{ $installPath := printf "%s/" (path.Join $packageUrl "installation-configuration") }}
+{{ $configRefPath := printf "%s/" (path.Join $packageUrl "configuration-reference") }}
 {{ $howToPath := printf "%s/" (path.Join $packageUrl "how-to-guides/") }}
 {{ $versionGuidePath := printf "%s/" (path.Join $packageUrl "version-guide") }}
 {{ $migratePath := printf "%s/" (path.Join $packageUrl "from-classic") }}
@@ -27,6 +28,13 @@
             {{ $sidenav_selected = cond (eq .Page.RelPermalink $installPath) "active" "" }}
             <li class="sidenav-topic {{ $sidenav_selected }}">
                 <a href="{{ $installPath }}">Install & config</a>
+            </li>
+        {{ end }}
+        {{ $configRefFile := printf "%s/%s" $packageUrl "configuration-reference.md" }}
+        {{ if fileExists $configRefFile }}
+            {{ $sidenav_selected = cond (eq .Page.RelPermalink $configRefPath) "active" "" }}
+            <li class="sidenav-topic {{ $sidenav_selected }}">
+                <a href="{{ $configRefPath }}">Config reference</a>
             </li>
         {{ end }}
         {{ $sidenav_selected = cond (eq .Page.RelPermalink $howToPath) "active" "" }}

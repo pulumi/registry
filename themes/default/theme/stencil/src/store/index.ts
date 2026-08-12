@@ -85,6 +85,7 @@ export function normalizeState(persistedState: any): Partial<AppState> {
                 persona: persistedState.preferences.persona || "developer",
                 backend: persistedState.backend || "service",
                 pythontoolchain: persistedState.preferences.pythontoolchain || "pip",
+                configsource: persistedState.preferences.configsource || "esc",
             };
         }
     } catch (e) {

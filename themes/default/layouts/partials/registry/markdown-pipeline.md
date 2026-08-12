@@ -10,8 +10,8 @@
 {{- $content = replaceRE `<pulumi-choosable[^>]*values="([^",]*)[^"]*"[^>]*>` "\n<!-- option: $1 -->\n" $content -}}
 {{- $content = replaceRE `</pulumi-choosable>` "\n<!-- /option -->\n" $content -}}
 {{- /* Phase 1c: Convert definition lists to markdown before stripping */ -}}
-{{- $content = replaceRE `<dt>([^<]*)</dt>` "\n**$1:** " $content -}}
-{{- $content = replaceRE `</?d[dl][^>]*>` "" $content -}}
+{{- $content = replaceRE `<dt[^>]*>([^<]*)</dt>` "\n**$1:** " $content -}}
+{{- $content = replaceRE `</?d[dlt][^>]*>` "" $content -}}
 {{- /* Phase 1d: Convert list items to markdown bullets before stripping */ -}}
 {{- $content = replaceRE `<li[^>]*>` "\n- " $content -}}
 {{- $content = replaceRE `</li>` "" $content -}}
@@ -33,7 +33,7 @@
 {{- /* Collapse whitespace inside markdown link brackets (from multi-line <a> tags) */ -}}
 {{- $content = replaceRE `\[\s+` "[" $content -}}
 {{- $content = replaceRE `\s+\]\(` "](" $content -}}
-{{- $content = replaceRE `<code>([^<]*)</code>` "`$1`" $content -}}
+{{- $content = replaceRE `<code[^>]*>([^<]*)</code>` "`$1`" $content -}}
 {{- $content = replaceRE `<strong>([^<]*)</strong>` "**$1**" $content -}}
 {{- $content = replaceRE `<em>([^<]*)</em>` "*$1*" $content -}}
 {{- /* Phase 5: Convert heading tags to markdown headings */ -}}
@@ -45,8 +45,10 @@
 {{- $content = replaceRE `<h6[^>]*>([^<]*)</h6>` "\n###### $1\n" $content -}}
 {{- /* Strip any remaining HTML tags not yet handled */ -}}
 {{- $content = replaceRE `</?a[^>]*>` "" $content -}}
-{{- /* Strip lone +/- lines left from accordion toggle spans */ -}}
-{{- $content = replaceRE `(?m)^[+\-]\n` "" $content -}}
+{{- /* Strip lone +/- lines left from accordion toggle spans, and the empty
+     bullets left by list items whose content was all block-level markup
+     (e.g. <li class="api-param"><div>…</div></li> in a config reference). */ -}}
+{{- $content = replaceRE `(?m)^[+\-][ \t]*\n` "" $content -}}
 {{- /* Phase 6: Decode HTML entities and final cleanup */ -}}
 {{- $content = $content | htmlUnescape -}}
 {{- $content = replaceRE `\n{3,}` "\n\n" $content -}}

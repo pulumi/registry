@@ -1,7 +1,7 @@
 import { Component, Element, Host, h, Listen, Prop, State } from "@stencil/core";
 import { store, Unsubscribe } from "@stencil/redux";
 import { AppState } from "../../store/state";
-import { setLanguage, setK8sLanguage, setOS, setCloud, setPersona, setBackEnd, setPythonToolchain } from "../../store/actions/preferences";
+import { setLanguage, setK8sLanguage, setOS, setCloud, setPersona, setBackEnd, setPythonToolchain, setConfigSource } from "../../store/actions/preferences";
 
 export type LanguageKey = "javascript" | "typescript" | "python" | "go" | "csharp" | "fsharp" | "visualbasic" | "java" | "yaml" | "hcl" | "opa";
 export type K8sLanguageKey = "typescript" | "yaml" | "typescript-kx";
@@ -10,12 +10,13 @@ export type CloudKey = "aws" | "azure" | "gcp" | "kubernetes" | "digitalocean" |
 export type PersonaKey = "developer" | "devops" | "security" | "leader";
 export type BackEndKey = "service" | "self-managed";
 export type PythonToolchainKey = "pip" | "uv" | "poetry";
+export type ConfigSourceKey = "esc" | "stack";
 
 export type ChooserMode = "local" | "global";
 export type ChooserOptionStyle = "tabbed" | "none";
-export type ChooserType = "language" | "k8s-language" | "os" | "cloud" | "persona" | "backend" | "pythontoolchain";
-export type ChooserKey = LanguageKey | K8sLanguageKey | OSKey | CloudKey | PersonaKey | BackEndKey | PythonToolchainKey;
-export type ChooserOption = SupportedLanguage | SupportedK8sLanguage | SupportedOS | SupportedCloud | SupportedPersona | SupportedBackEnd | SupportedPythonToolchain;
+export type ChooserType = "language" | "k8s-language" | "os" | "cloud" | "persona" | "backend" | "pythontoolchain" | "configsource";
+export type ChooserKey = LanguageKey | K8sLanguageKey | OSKey | CloudKey | PersonaKey | BackEndKey | PythonToolchainKey | ConfigSourceKey;
+export type ChooserOption = SupportedLanguage | SupportedK8sLanguage | SupportedOS | SupportedCloud | SupportedPersona | SupportedBackEnd | SupportedPythonToolchain | SupportedConfigSource;
 
 export interface SupportedLanguage {
     key: LanguageKey;
@@ -64,6 +65,15 @@ interface SupportedBackEnd {
 
 interface SupportedPythonToolchain {
     key: PythonToolchainKey;
+    name: string;
+    preview: boolean;
+}
+
+// Where a configuration value is set: a Pulumi ESC environment, or the stack's own
+// configuration. Used to show the ESC and stack-config forms of the same setting
+// side by side without duplicating them on the page.
+interface SupportedConfigSource {
+    key: ConfigSourceKey;
     name: string;
     preview: boolean;
 }
@@ -139,6 +149,7 @@ export class Chooser {
     setPersona: typeof setPersona;
     setBackEnd: typeof setBackEnd;
     setPythonToolchain: typeof setPythonToolchain;
+    setConfigSource: typeof setConfigSource;
 
     componentWillLoad() {
         // By default, choosers act globally and use a tabbed layout.
@@ -157,6 +168,7 @@ export class Chooser {
             setPersona,
             setBackEnd,
             setPythonToolchain,
+            setConfigSource,
         });
 
         // Try to subscribe immediately if the store is ready.
@@ -194,7 +206,7 @@ export class Chooser {
         // Map currently selected values from the store, so we can use them in this component.
         this.storeUnsubscribe = store.mapStateToProps(this, (state: AppState) => {
             const {
-                preferences: { language, k8sLanguage, os, cloud, persona, backend, pythontoolchain },
+                preferences: { language, k8sLanguage, os, cloud, persona, backend, pythontoolchain, configsource },
             } = state;
 
             // In some cases, the user's preferred (i.e., most recently selected) choice
@@ -235,6 +247,8 @@ export class Chooser {
                     return preferredOrDefault(backend);
                 case "pythontoolchain":
                     return preferredOrDefault(pythontoolchain);
+                case "configsource":
+                    return preferredOrDefault(configsource);
                 default:
                     return {};
             }
@@ -391,6 +405,9 @@ export class Chooser {
             case "pythontoolchain":
                 options = this.supportedPythonToolchains;
                 break;
+            case "configsource":
+                options = this.supportedConfigSources;
+                break;
         }
 
         this.currentOptions = options.filter(opt => keys.includes(opt.key));
@@ -453,6 +470,9 @@ export class Chooser {
                 case "pythontoolchain":
                     this.setPythonToolchain(key as PythonToolchainKey);
                     break;
+                case "configsource":
+                    this.setConfigSource(key as ConfigSourceKey);
+                    break;
             }
         }
     }
@@ -511,6 +531,7 @@ export class Chooser {
             key: "typescript",
             name: "TypeScript",
             extension: "ts",
+            tabLabel: "TypeScript",
             logo: "/images/docs/icons/languages/typescript-color-32-32.svg",
             preview: false,
         },
@@ -525,6 +546,7 @@ export class Chooser {
             key: "python",
             name: "Python",
             extension: "py",
+            tabLabel: "Python",
             logo: "/images/docs/icons/languages/python-color-32-32.svg",
             preview: false,
         },
@@ -532,6 +554,7 @@ export class Chooser {
             key: "go",
             name: "Go",
             extension: "go",
+            tabLabel: "Go",
             logo: "/images/docs/icons/languages/go-color-32-32.svg",
             preview: false,
         },
@@ -539,7 +562,7 @@ export class Chooser {
             key: "csharp",
             name: "C#",
             extension: "cs",
-            tabLabel: "C#",
+            tabLabel: ".NET",
             logo: "/images/docs/icons/languages/csharp-color-32-32.svg",
             preview: false,
         },
@@ -562,6 +585,7 @@ export class Chooser {
             key: "java",
             name: "Java",
             extension: "java",
+            tabLabel: "Java",
             // Mark-only Java cup (no "Java" wordmark), already used elsewhere in docs.
             logo: "/images/docs/icons/languages/java-color-32-32.svg",
             preview: false,
@@ -570,6 +594,7 @@ export class Chooser {
             key: "yaml",
             name: "YAML",
             extension: "yaml",
+            tabLabel: "YAML",
             // Matched light/dark pair (the -on-dark recolor keeps the black wordmark
             // legible on dark).
             logo: "/images/docs/icons/languages/yaml-color-32-32.svg",
@@ -580,6 +605,7 @@ export class Chooser {
             key: "hcl",
             name: "HCL",
             extension: "hcl",
+            tabLabel: "HCL",
             logo: "/images/docs/icons/languages/hcl-color-32-32.svg",
             preview: false,
         },
@@ -684,6 +710,22 @@ export class Chooser {
         {
             key: "poetry",
             name: "poetry",
+            preview: false,
+        },
+    ];
+
+    // The list of supported configuration sources.
+    // Order matters: mapOptions filters this array, so tabs render in the order
+    // declared here, not the order given in a chooser's `options` attribute.
+    private supportedConfigSources: SupportedConfigSource[] = [
+        {
+            key: "esc",
+            name: "Pulumi ESC",
+            preview: false,
+        },
+        {
+            key: "stack",
+            name: "Stack configuration",
             preview: false,
         },
     ];

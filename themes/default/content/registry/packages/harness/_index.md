@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-harness/v0.15.5/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-harness/v0.15.6/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-harness/blob/v0.15.5/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-harness/blob/v0.15.6/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Harness Provider
 meta_desc: Provides an overview on how to configure the Pulumi Harness provider.
@@ -52,9 +52,13 @@ config:
         value: '......'
 
 ```
+### FME Admin API Endpoint
+
+Use the optional `fmeAdminApiEndpoint` provider attribute or the `FME_ADMIN_API_ENDPOINT` environment variable to set the FME admin API endpoint explicitly. When neither is set, the provider derives it from `endpoint` by trimming trailing slashes and replacing a trailing `/gateway` with `/fme`.
 ## Configuration Reference
 
 - `accountId` (String) The Harness account id. This can also be set using the `HARNESS_ACCOUNT_ID` environment variable.
 - `apiKey` (String) The Harness API key. This can also be set using the `HARNESS_API_KEY` environment variable. For more information to create an API key in FirstGen, see <https://docs.harness.io/article/smloyragsm-api-keys#create_an_api_key>.
 - `endpoint` (String) The URL of the Harness API endpoint. The default is `https://app.harness.io/gateway`. This can also be set using the `HARNESS_ENDPOINT` environment variable.
+- `fmeAdminApiEndpoint` (String) The URL of the Harness FME admin API endpoint. This can also be set using the `FME_ADMIN_API_ENDPOINT` environment variable.
 - `platformApiKey` (String) The API key for the Harness next gen platform. This can also be set using the `HARNESS_PLATFORM_API_KEY` environment variable. For more information to create an API key in NextGen, see <https://docs.harness.io/article/tdoad7xrh9-add-and-manage-api-keys>.

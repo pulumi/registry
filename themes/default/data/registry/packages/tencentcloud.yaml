@@ -10,7 +10,7 @@ native: false
 package_status: ga
 publisher: tencentcloudstack
 repo_url: https://github.com/tencentcloudstack/terraform-provider-tencentcloud
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/tencentcloudstack/tencentcloud/1.83.21/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/tencentcloudstack/tencentcloud/1.83.22/schema.json
 title: tencentcloud
-updated_on: 1786102807
-version: 1.83.21
+updated_on: 1786534899
+version: 1.83.22

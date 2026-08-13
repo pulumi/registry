@@ -65,10 +65,11 @@ jobs:
           node-version: "24.x"
           cache: 'yarn'
 
+      - name: Yarn Install
+        uses: ./.github/actions/yarn-install
+
       - name: Lint Markdown
-        run: |
-          yarn install
-          make lint-markdown
+        run: make lint-markdown
 
   lint-scripts:
     name: Lint Scripts
@@ -84,7 +85,7 @@ jobs:
           cache: 'yarn'
 
       - name: Yarn Install
-        run: yarn install
+        uses: ./.github/actions/yarn-install
       - name: Run Linter
         run: yarn run lint
 

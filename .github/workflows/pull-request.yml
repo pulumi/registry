@@ -28,6 +28,7 @@ jobs:
     - test-provider-api-docs
     - preview
     - test-live-publish
+    - check-publish
     runs-on: ubuntu-latest
     steps:
     - uses: guibranco/github-status-action-v2@77639353504055053524efa7a3719aaf0b731ce9 # v1.2.4
@@ -41,6 +42,44 @@ jobs:
         # Write to the PR commit SHA if it's available as we don't want the merge commit sha,
         # otherwise use the current SHA for any other type of build.
         sha: ${{ github.event.pull_request.head.sha || github.sha }}
+
+  check-publish:
+    name: Check published packages
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Check out branch
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install pyyaml
+
+      - name: Check the packages this PR publishes
+        id: check
+        run: >-
+          python3 scripts/ci/community-package/cli.py check-publish
+          --diff "origin/${{ github.base_ref }}"
+          --out "${{ runner.temp }}/factsheets"
+
+      - name: Post the fact-sheet
+        if: always() && github.event.pull_request.head.repo.full_name == github.repository
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR: ${{ github.event.pull_request.number }}
+        run: |
+          shopt -s nullglob
+          sheets=("${RUNNER_TEMP}"/factsheets/*.factsheet.md)
+          [ ${#sheets[@]} -eq 0 ] && exit 0
+          cat "${sheets[@]}" > "${RUNNER_TEMP}/comment.md"
+          gh pr comment "$PR" --edit-last --create-if-none --body-file "${RUNNER_TEMP}/comment.md"
 
   resourcedocsgen:
     uses: ./.github/workflows/check-go.yml

@@ -65,3 +65,5 @@ class Manifest:
     error: str = ""
     publisher: str = ""
     publisherKnown: bool = True
+    docSourceURL: str = ""
+    delisted: bool = False

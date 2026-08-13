@@ -22,6 +22,7 @@ from pathlib import Path
 import yaml
 
 REGISTRY_MIRROR_TOOLS_COMMIT = "dda1dfd85d540fab45a0d19060e963564d0b36aa"
+PUBLISHER_NAMES_RELPATH = "tools/resourcedocsgen/pkg/publishers/publisher-names.json"
 
 @dataclass
 class Config:
@@ -50,7 +51,7 @@ def get_changed_packages(repo_root: Path) -> list[str]:
 
 def load_publishers(repo_root: Path) -> dict[str, str]:
     """Load publisher display name to slug mapping."""
-    publishers_path = repo_root / "tools/resourcedocsgen/pkg/publishers/publisher-names.json"
+    publishers_path = repo_root / PUBLISHER_NAMES_RELPATH
     with open(publishers_path) as f:
         return json.load(f)
 
@@ -109,7 +110,16 @@ def build_package_spec(
     if not version:
         return SpecResult(None, error=f"{yaml_file} has no version field")
 
-    publisher = publishers.get(publisher_display, "pulumi")
+    if not publisher_display:
+        return SpecResult(None, error=f"{yaml_file} has no publisher field")
+
+    if publisher_display not in publishers:
+        return SpecResult(None, error=(
+            f'{yaml_file} has publisher "{publisher_display}", which is not in '
+            f"{PUBLISHER_NAMES_RELPATH}"
+        ))
+
+    publisher = publishers[publisher_display]
     source = "opentofu" if schema_url and "opentofu" in schema_url else "pulumi"
     version = version.lstrip("v")
 

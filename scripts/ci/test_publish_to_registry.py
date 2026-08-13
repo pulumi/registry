@@ -13,6 +13,7 @@ from publish_to_registry import (
     build_package_spec,
     build_specs,
     get_changed_packages,
+    load_publishers,
     publish_with_retry,
 )
 
@@ -134,6 +135,39 @@ publisher: DEPRECATED
         self.assertIsNone(result.spec)
         self.assertIsNone(result.error)
         self.assertTrue(result.skipped)
+
+    def test_errors_on_unregistered_publisher(self):
+        self._write_yaml("stripe", """
+version: "0.3.0-beta.4"
+publisher: stripe
+schema_file_url: "https://example.com/registry.opentofu.org/schema.json"
+""")
+
+        result = build_package_spec(
+            "themes/default/data/registry/packages/stripe.yaml",
+            self.repo_root,
+            self.publishers,
+        )
+
+        self.assertIsNone(result.spec)
+        self.assertFalse(result.skipped)
+        self.assertIn("stripe", result.error)
+        self.assertIn("publisher-names.json", result.error)
+
+    def test_errors_on_absent_publisher_field(self):
+        self._write_yaml("nameless", """
+version: "1.0.0"
+""")
+
+        result = build_package_spec(
+            "themes/default/data/registry/packages/nameless.yaml",
+            self.repo_root,
+            self.publishers,
+        )
+
+        self.assertIsNone(result.spec)
+        self.assertFalse(result.skipped)
+        self.assertIn("no publisher field", result.error)
 
     def test_errors_on_missing_version(self):
         self._write_yaml("broken", """
@@ -351,6 +385,27 @@ class TestPublishSpecsIntegration(unittest.TestCase):
         finally:
             os.environ.clear()
             os.environ.update(env_backup)
+
+
+class TestEveryPackageResolves(unittest.TestCase):
+    """Every committed package must build a spec, or the publish job fails after merge."""
+
+    def test_every_package_yaml_resolves_a_publisher(self):
+        repo_root = Path(__file__).resolve().parents[2]
+        packages = repo_root / "themes/default/data/registry/packages"
+        publishers = load_publishers(repo_root)
+
+        errors, resolved = [], 0
+        for yaml_path in sorted(packages.glob("*.yaml")):
+            result = build_package_spec(
+                str(yaml_path.relative_to(repo_root)), repo_root, publishers)
+            if result.error:
+                errors.append(result.error)
+            elif result.spec:
+                resolved += 1
+
+        self.assertEqual(errors, [])
+        self.assertGreater(resolved, 200, "the package directory should not be empty")
 
 
 if __name__ == "__main__":

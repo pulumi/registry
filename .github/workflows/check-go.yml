@@ -24,7 +24,7 @@ jobs:
            ${{ inputs.path }}
            .golangci.yml
     - name: Setup Go
-      uses: actions/setup-go@v6
+      uses: actions/setup-go@v7
       with:
         go-version-file: '${{ inputs.path }}/go.mod'
     - name: golangci-lint
@@ -44,7 +44,7 @@ jobs:
          sparse-checkout: |
            ${{ inputs.path }}
     - name: Setup Go
-      uses: actions/setup-go@v6
+      uses: actions/setup-go@v7
       with:
         go-version-file: '${{ inputs.path }}/go.mod'
     - name: Run Tests

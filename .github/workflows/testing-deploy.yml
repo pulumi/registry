@@ -26,7 +26,7 @@ jobs:
           # Full history needed for registry-mirror-discover to find package versions
           fetch-depth: 0
 
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: "24.x"
           cache: 'yarn'
@@ -37,7 +37,7 @@ jobs:
             themes/default/theme/yarn.lock
             themes/default/theme/stencil/yarn.lock
 
-      - uses: actions/setup-go@v6
+      - uses: actions/setup-go@v7
         with:
           go-version: 1.26.x
 

@@ -93,6 +93,11 @@
                     "type": "string",
                     "description": "The unique identifier for the resource."
                 },
+                "token": {
+                    "type": "string",
+                    "description": "A generated access token.",
+                    "secret": true
+                },
                 "nested": {
                     "$ref": "#/types/testprovider:index:NestedType",
                     "description": "A nested object property."
@@ -166,6 +171,11 @@
                 "id": {
                     "type": "string",
                     "description": "The unique identifier for the resource."
+                },
+                "token": {
+                    "type": "string",
+                    "description": "A generated access token.",
+                    "secret": true
                 },
                 "nested": {
                     "$ref": "#/types/testprovider:index:NestedType",

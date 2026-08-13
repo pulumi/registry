@@ -286,6 +286,7 @@ type property struct {
 	IsRequired         bool
 	IsInput            bool
 	IsReplaceOnChanges bool
+	IsSecret           bool
 }
 
 // enum represents an enum.
@@ -1289,6 +1290,7 @@ func (mod *modContext) getPropertiesWithIDPrefixAndExclude(
 			// a) we will force the replace at the engine level
 			// b) we are told that the provider will require a replace
 			IsReplaceOnChanges: prop.ReplaceOnChanges || prop.WillReplaceOnChanges,
+			IsSecret:           prop.Secret,
 			Link:               link,
 			Types:              propTypes,
 		})

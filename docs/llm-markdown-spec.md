@@ -153,7 +153,7 @@ Constructor syntax is a fenced code block. Parameters are a markdown list with b
 
 <!-- chooser: language -->
 <!-- option: typescript -->
-- **bucketName** (string) *(required)*
+- **bucketName** (string) *(required)* *(replaces on change)*
   The name of the bucket.
 - **acl** (string | CannedAcl)
   The canned ACL to apply.
@@ -169,6 +169,8 @@ Constructor syntax is a fenced code block. Parameters are a markdown list with b
   The ARN of the bucket.
 - **id** (string)
   The provider-assigned unique ID.
+- **accessKeySecret** (string) *(secret)*
+  The generated secret access key.
 <!-- /option -->
 ...
 <!-- /chooser -->
@@ -177,7 +179,10 @@ Constructor syntax is a fenced code block. Parameters are a markdown list with b
 Each property is a markdown list item:
 - `**{name}** ({type1} | {type2})` — bold name, types in parens (pipe-separated if union)
 - ` *(required)*` suffix if required
+- ` *(secret)*` suffix if the schema marks the property secret
+- ` *(replaces on change)*` suffix if changing the property replaces the resource
 - ` *(deprecated)*` suffix if deprecated
+- Suffixes appear in that order, and a property may carry several
 - Description on the next line, indented with 2 spaces
 
 ### 4. Methods (optional)

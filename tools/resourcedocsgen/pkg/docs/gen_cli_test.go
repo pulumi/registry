@@ -42,6 +42,27 @@ func TestGenerateCLIPackage(t *testing.T) {
 		},
 	}
 
+	// Add a resource whose properties carry the flags the property list annotates.
+	testPackageSpec.Resources["prov:module/flaggedResource:FlaggedResource"] = schema.ResourceSpec{
+		ObjectTypeSpec: schema.ObjectTypeSpec{
+			Description: "This resource has flagged properties.",
+			Properties: map[string]schema.PropertySpec{
+				"token": {
+					Description: "A secret output.",
+					TypeSpec:    schema.TypeSpec{Type: "string"},
+					Secret:      true,
+				},
+			},
+		},
+		InputProperties: map[string]schema.PropertySpec{
+			"name": {
+				Description:      "An input that forces replacement.",
+				TypeSpec:         schema.TypeSpec{Type: "string"},
+				ReplaceOnChanges: true,
+			},
+		},
+	}
+
 	schemaPkg, err := schema.ImportSpec(testPackageSpec, nil, schema.NewNullLoader(), schema.ValidationOptions{
 		AllowDanglingReferences: true,
 	})
@@ -106,6 +127,22 @@ func TestGenerateCLIPackage(t *testing.T) {
 			}
 		}
 		assert.True(t, found, "should have found the deprecated resource entry")
+	})
+
+	t.Run("FlaggedPropertiesAreAnnotated", func(t *testing.T) {
+		t.Parallel()
+		var found bool
+		for key, entry := range bundle.Resources {
+			if strings.Contains(key, "flagged") {
+				found = true
+				assert.Contains(t, entry.Content, "*(secret)*",
+					"content for %s should annotate the secret property", key)
+				assert.Contains(t, entry.Content, "*(replaces on change)*",
+					"content for %s should annotate the replace-on-change property", key)
+				break
+			}
+		}
+		assert.True(t, found, "should have found the flagged resource entry")
 	})
 
 	t.Run("OverviewIsPopulated", func(t *testing.T) {

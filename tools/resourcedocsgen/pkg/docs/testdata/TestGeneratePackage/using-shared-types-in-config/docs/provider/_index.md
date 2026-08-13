@@ -271,7 +271,7 @@ The Provider resource accepts the following [input](/docs/intro/concepts/inputs-
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
     </dt>
-    <dd>The username. Its important but not secret.</dd><dt class="property-optional"
+    <dd>The username. Its important but not secret.</dd><dt class="property-optional property-secret"
             title="Optional">
         <span id="password_csharp">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#password_csharp" style="color: inherit; text-decoration: inherit;">Password</a>
@@ -309,7 +309,7 @@ The Provider resource accepts the following [input](/docs/intro/concepts/inputs-
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
     </dt>
-    <dd>The username. Its important but not secret.</dd><dt class="property-optional"
+    <dd>The username. Its important but not secret.</dd><dt class="property-optional property-secret"
             title="Optional">
         <span id="password_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#password_go" style="color: inherit; text-decoration: inherit;">Password</a>
@@ -347,7 +347,7 @@ The Provider resource accepts the following [input](/docs/intro/concepts/inputs-
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
     </dt>
-    <dd>The username. Its important but not secret.</dd><dt class="property-optional"
+    <dd>The username. Its important but not secret.</dd><dt class="property-optional property-secret"
             title="Optional">
         <span id="password_hcl">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#password_hcl" style="color: inherit; text-decoration: inherit;">password</a>
@@ -385,7 +385,7 @@ The Provider resource accepts the following [input](/docs/intro/concepts/inputs-
         <span class="property-indicator"></span>
         <span class="property-type">String</span>
     </dt>
-    <dd>The username. Its important but not secret.</dd><dt class="property-optional"
+    <dd>The username. Its important but not secret.</dd><dt class="property-optional property-secret"
             title="Optional">
         <span id="password_java">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#password_java" style="color: inherit; text-decoration: inherit;">password</a>
@@ -423,7 +423,7 @@ The Provider resource accepts the following [input](/docs/intro/concepts/inputs-
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
     </dt>
-    <dd>The username. Its important but not secret.</dd><dt class="property-optional"
+    <dd>The username. Its important but not secret.</dd><dt class="property-optional property-secret"
             title="Optional">
         <span id="password_nodejs">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#password_nodejs" style="color: inherit; text-decoration: inherit;">password</a>
@@ -461,7 +461,7 @@ The Provider resource accepts the following [input](/docs/intro/concepts/inputs-
         <span class="property-indicator"></span>
         <span class="property-type">str</span>
     </dt>
-    <dd>The username. Its important but not secret.</dd><dt class="property-optional"
+    <dd>The username. Its important but not secret.</dd><dt class="property-optional property-secret"
             title="Optional">
         <span id="password_python">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#password_python" style="color: inherit; text-decoration: inherit;">password</a>
@@ -499,7 +499,7 @@ The Provider resource accepts the following [input](/docs/intro/concepts/inputs-
         <span class="property-indicator"></span>
         <span class="property-type">String</span>
     </dt>
-    <dd>The username. Its important but not secret.</dd><dt class="property-optional"
+    <dd>The username. Its important but not secret.</dd><dt class="property-optional property-secret"
             title="Optional">
         <span id="password_yaml">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#password_yaml" style="color: inherit; text-decoration: inherit;">password</a>

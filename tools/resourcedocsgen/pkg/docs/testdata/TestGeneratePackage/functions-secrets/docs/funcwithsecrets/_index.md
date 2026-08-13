@@ -123,7 +123,7 @@ The following arguments are supported:
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
     </dt>
-    <dd></dd><dt class="property-required"
+    <dd></dd><dt class="property-required property-secret"
             title="Required">
         <span id="plaintext_csharp">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#plaintext_csharp" style="color: inherit; text-decoration: inherit;">Plaintext</a>
@@ -145,7 +145,7 @@ The following arguments are supported:
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
     </dt>
-    <dd></dd><dt class="property-required"
+    <dd></dd><dt class="property-required property-secret"
             title="Required">
         <span id="plaintext_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#plaintext_go" style="color: inherit; text-decoration: inherit;">Plaintext</a>
@@ -167,7 +167,7 @@ The following arguments are supported:
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
     </dt>
-    <dd></dd><dt class="property-required"
+    <dd></dd><dt class="property-required property-secret"
             title="Required">
         <span id="plaintext_hcl">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#plaintext_hcl" style="color: inherit; text-decoration: inherit;">plaintext</a>
@@ -189,7 +189,7 @@ The following arguments are supported:
         <span class="property-indicator"></span>
         <span class="property-type">String</span>
     </dt>
-    <dd></dd><dt class="property-required"
+    <dd></dd><dt class="property-required property-secret"
             title="Required">
         <span id="plaintext_java">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#plaintext_java" style="color: inherit; text-decoration: inherit;">plaintext</a>
@@ -211,7 +211,7 @@ The following arguments are supported:
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
     </dt>
-    <dd></dd><dt class="property-required"
+    <dd></dd><dt class="property-required property-secret"
             title="Required">
         <span id="plaintext_nodejs">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#plaintext_nodejs" style="color: inherit; text-decoration: inherit;">plaintext</a>
@@ -233,7 +233,7 @@ The following arguments are supported:
         <span class="property-indicator"></span>
         <span class="property-type">str</span>
     </dt>
-    <dd></dd><dt class="property-required"
+    <dd></dd><dt class="property-required property-secret"
             title="Required">
         <span id="plaintext_python">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#plaintext_python" style="color: inherit; text-decoration: inherit;">plaintext</a>
@@ -255,7 +255,7 @@ The following arguments are supported:
         <span class="property-indicator"></span>
         <span class="property-type">String</span>
     </dt>
-    <dd></dd><dt class="property-required"
+    <dd></dd><dt class="property-required property-secret"
             title="Required">
         <span id="plaintext_yaml">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#plaintext_yaml" style="color: inherit; text-decoration: inherit;">plaintext</a>
@@ -302,7 +302,7 @@ The following output properties are available:
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
     </dt>
-    <dd></dd><dt class="property-"
+    <dd></dd><dt class="property- property-secret"
             title="">
         <span id="plaintext_csharp">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#plaintext_csharp" style="color: inherit; text-decoration: inherit;">Plaintext</a>
@@ -340,7 +340,7 @@ The following output properties are available:
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
     </dt>
-    <dd></dd><dt class="property-"
+    <dd></dd><dt class="property- property-secret"
             title="">
         <span id="plaintext_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#plaintext_go" style="color: inherit; text-decoration: inherit;">Plaintext</a>
@@ -378,7 +378,7 @@ The following output properties are available:
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
     </dt>
-    <dd></dd><dt class="property-"
+    <dd></dd><dt class="property- property-secret"
             title="">
         <span id="plaintext_hcl">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#plaintext_hcl" style="color: inherit; text-decoration: inherit;">plaintext</a>
@@ -416,7 +416,7 @@ The following output properties are available:
         <span class="property-indicator"></span>
         <span class="property-type">String</span>
     </dt>
-    <dd></dd><dt class="property-"
+    <dd></dd><dt class="property- property-secret"
             title="">
         <span id="plaintext_java">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#plaintext_java" style="color: inherit; text-decoration: inherit;">plaintext</a>
@@ -454,7 +454,7 @@ The following output properties are available:
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
     </dt>
-    <dd></dd><dt class="property-"
+    <dd></dd><dt class="property- property-secret"
             title="">
         <span id="plaintext_nodejs">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#plaintext_nodejs" style="color: inherit; text-decoration: inherit;">plaintext</a>
@@ -492,7 +492,7 @@ The following output properties are available:
         <span class="property-indicator"></span>
         <span class="property-type">str</span>
     </dt>
-    <dd></dd><dt class="property-"
+    <dd></dd><dt class="property- property-secret"
             title="">
         <span id="plaintext_python">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#plaintext_python" style="color: inherit; text-decoration: inherit;">plaintext</a>
@@ -530,7 +530,7 @@ The following output properties are available:
         <span class="property-indicator"></span>
         <span class="property-type">String</span>
     </dt>
-    <dd></dd><dt class="property-"
+    <dd></dd><dt class="property- property-secret"
             title="">
         <span id="plaintext_yaml">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#plaintext_yaml" style="color: inherit; text-decoration: inherit;">plaintext</a>

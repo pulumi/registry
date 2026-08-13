@@ -344,7 +344,7 @@ The Resource resource accepts the following [input](/docs/intro/concepts/inputs-
 
 <div>
 <pulumi-choosable type="language" values="csharp">
-<dl class="resources-properties"><dt class="property-optional"
+<dl class="resources-properties"><dt class="property-optional property-secret"
             title="Optional">
         <span id="bar_csharp">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#bar_csharp" style="color: inherit; text-decoration: inherit;">Bar</a>
@@ -358,7 +358,7 @@ The Resource resource accepts the following [input](/docs/intro/concepts/inputs-
 
 <div>
 <pulumi-choosable type="language" values="go">
-<dl class="resources-properties"><dt class="property-optional"
+<dl class="resources-properties"><dt class="property-optional property-secret"
             title="Optional">
         <span id="bar_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#bar_go" style="color: inherit; text-decoration: inherit;">Bar</a>
@@ -372,7 +372,7 @@ The Resource resource accepts the following [input](/docs/intro/concepts/inputs-
 
 <div>
 <pulumi-choosable type="language" values="hcl">
-<dl class="resources-properties"><dt class="property-optional"
+<dl class="resources-properties"><dt class="property-optional property-secret"
             title="Optional">
         <span id="bar_hcl">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#bar_hcl" style="color: inherit; text-decoration: inherit;">bar</a>
@@ -386,7 +386,7 @@ The Resource resource accepts the following [input](/docs/intro/concepts/inputs-
 
 <div>
 <pulumi-choosable type="language" values="java">
-<dl class="resources-properties"><dt class="property-optional"
+<dl class="resources-properties"><dt class="property-optional property-secret"
             title="Optional">
         <span id="bar_java">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#bar_java" style="color: inherit; text-decoration: inherit;">bar</a>
@@ -400,7 +400,7 @@ The Resource resource accepts the following [input](/docs/intro/concepts/inputs-
 
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
-<dl class="resources-properties"><dt class="property-optional"
+<dl class="resources-properties"><dt class="property-optional property-secret"
             title="Optional">
         <span id="bar_nodejs">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#bar_nodejs" style="color: inherit; text-decoration: inherit;">bar</a>
@@ -414,7 +414,7 @@ The Resource resource accepts the following [input](/docs/intro/concepts/inputs-
 
 <div>
 <pulumi-choosable type="language" values="python">
-<dl class="resources-properties"><dt class="property-optional"
+<dl class="resources-properties"><dt class="property-optional property-secret"
             title="Optional">
         <span id="bar_python">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#bar_python" style="color: inherit; text-decoration: inherit;">bar</a>
@@ -428,7 +428,7 @@ The Resource resource accepts the following [input](/docs/intro/concepts/inputs-
 
 <div>
 <pulumi-choosable type="language" values="yaml">
-<dl class="resources-properties"><dt class="property-optional"
+<dl class="resources-properties"><dt class="property-optional property-secret"
             title="Optional">
         <span id="bar_yaml">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#bar_yaml" style="color: inherit; text-decoration: inherit;">bar</a>

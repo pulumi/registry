@@ -22,11 +22,14 @@ import (
 	"github.com/pkg/errors"
 )
 
-func GetGitHubAPI(path string) (*http.Response, error) {
+type HTTPDoer interface {
+	Do(req *http.Request) (*http.Response, error)
+}
+
+func GetGitHubAPI(client HTTPDoer, path string) (*http.Response, error) {
 	token := os.Getenv("GITHUB_TOKEN")
 	url := "https://api.github.com" + path
 
-	client := &http.Client{}
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, errors.Wrap(err, "creating request")

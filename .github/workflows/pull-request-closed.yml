@@ -16,6 +16,7 @@ jobs:
     if: github.event.pull_request.head.repo.full_name == github.repository
     name: Find and remove buckets
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     steps:
       - name: Fetch secrets from ESC
         id: esc-secrets

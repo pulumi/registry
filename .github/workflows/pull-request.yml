@@ -30,6 +30,7 @@ jobs:
     - test-live-publish
     - check-publish
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
     - uses: guibranco/github-status-action-v2@77639353504055053524efa7a3719aaf0b731ce9 # v1.2.4
       with:
@@ -46,6 +47,7 @@ jobs:
   check-publish:
     name: Check published packages
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     permissions:
       contents: read
       pull-requests: write
@@ -94,6 +96,7 @@ jobs:
   lint-markdown:
     name: Lint Markdown
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: Check out branch
         uses: actions/checkout@v7
@@ -113,6 +116,7 @@ jobs:
   lint-scripts:
     name: Lint Scripts
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: Check out branch
         uses: actions/checkout@v7
@@ -131,6 +135,7 @@ jobs:
   lint-dark-logos:
     name: Lint Dark Logo Variants
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: Check out branch
         uses: actions/checkout@v7
@@ -145,6 +150,7 @@ jobs:
   test-infra:
     name: Test Infrastructure Functions
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: Check out branch
         uses: actions/checkout@v7
@@ -160,6 +166,7 @@ jobs:
   test-live-publish:
     name: Test Live Registry Publish
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: Fetch secrets from ESC
         id: esc-secrets
@@ -175,6 +182,7 @@ jobs:
   test-provider-api-docs:
     name: Test Provider API Docs
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - name: Check out branch
         uses: actions/checkout@v7
@@ -219,6 +227,7 @@ jobs:
     # PRs with the automation/tfgen-provider-docs label contain only metadata file changes and don't need a PR build.
     if: github.event.pull_request.head.repo.full_name == github.repository && contains(github.event.pull_request.labels.*.name, 'automation/tfgen-provider-docs') != true
     runs-on: pulumi-service-ubuntu-24.04-16core
+    timeout-minutes: 45
     environment: testing
     env:
       GOPATH: ${{ github.workspace }}/go
@@ -241,6 +250,7 @@ jobs:
     if: (github.event.pull_request.user.login == 'pulumi-bot') && failure()
     name: Send slack notification
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     needs: [preview]
     steps:
       - name: Fetch secrets from ESC

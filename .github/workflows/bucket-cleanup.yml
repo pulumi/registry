@@ -21,6 +21,7 @@ jobs:
     name: Bucket cleanup
     environment: production
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - name: Fetch secrets from ESC
         id: esc-secrets

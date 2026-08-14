@@ -14,6 +14,7 @@ on:
 jobs:
   add-to-project:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: Fetch secrets from ESC
         id: esc-secrets

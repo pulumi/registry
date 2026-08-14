@@ -14,6 +14,7 @@ jobs:
   merge:
     name: Update tutorials
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - name: Fetch secrets from ESC
         id: esc-secrets
@@ -63,6 +64,7 @@ jobs:
     if: failure()
     name: Send slack notification
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     needs: [merge]
     permissions:
       id-token: write

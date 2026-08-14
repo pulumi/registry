@@ -67,7 +67,7 @@ func writeSchemaFile(baseSchemasOutDir, packageName string, schemaBytes []byte) 
 }
 
 func genResourceDocsForPackageFromRegistryMetadata(
-	metadata pkg.PackageMeta, yamlBytes []byte,
+	client HTTPDoer, metadata pkg.PackageMeta, yamlBytes []byte,
 	docsOutDir, packageTreeJSONOutDir, schemasOutDir, cliDocsOutDir string,
 ) error {
 	// Skip unchanged packages: if the YAML metadata and tool version match
@@ -86,7 +86,7 @@ func genResourceDocsForPackageFromRegistryMetadata(
 	}
 
 	slog.Info("Reading remote schema file from registry")
-	schemaBytes, err := getSchemaFromRegistry(metadata, schemaFileURL)
+	schemaBytes, err := getSchemaFromRegistry(client, metadata, schemaFileURL)
 	if err != nil {
 		if errors.Is(err, ErrPackageNotFound) {
 			slog.Info(err.Error())
@@ -95,7 +95,7 @@ func genResourceDocsForPackageFromRegistryMetadata(
 		}
 
 		slog.Info("Falling back to reading remote schema file from VCS")
-		schemaBytes, err = getSchemaFromVCS(metadata, schemaFileURL)
+		schemaBytes, err = getSchemaFromVCS(client, metadata, schemaFileURL)
 		if err != nil {
 			return fmt.Errorf("getting schema from VCS for %q: %w", metadata.Name, err)
 		}
@@ -155,7 +155,11 @@ func genResourceDocsForPackageFromRegistryMetadata(
 
 var ErrPackageNotFound = errors.New("package not found")
 
-func getSchemaFromRegistry(metadata pkg.PackageMeta, schemaURL string) ([]byte, error) {
+type HTTPDoer interface {
+	Do(req *http.Request) (*http.Response, error)
+}
+
+func getSchemaFromRegistry(client HTTPDoer, metadata pkg.PackageMeta, schemaURL string) ([]byte, error) {
 	backendURL := os.Getenv("PULUMI_BACKEND_URL")
 	if backendURL == "" {
 		backendURL = "https://api.pulumi.com/api"
@@ -186,8 +190,12 @@ func getSchemaFromRegistry(metadata pkg.PackageMeta, schemaURL string) ([]byte, 
 	apiURL := fmt.Sprintf("%s/registry/packages/%s/%s/%s/versions/%s",
 		backendURL, source, publisher, metadata.Name, version)
 
-	//nolint:gosec // We're constructing the URL based on a predefined pattern.
-	metadataResp, err := http.Get(apiURL)
+	metadataReq, err := http.NewRequest("GET", apiURL, nil)
+	if err != nil {
+		return nil, errors.Wrapf(err, "creating request for %q", apiURL)
+	}
+
+	metadataResp, err := client.Do(metadataReq)
 	if err != nil {
 		return nil, errors.Wrapf(err, "retrieving package metadata for %q", apiURL)
 	}
@@ -209,7 +217,12 @@ func getSchemaFromRegistry(metadata pkg.PackageMeta, schemaURL string) ([]byte, 
 		return nil, errors.Wrap(err, "unmarshalling response body")
 	}
 
-	schemaResp, err := http.Get(response.SchemaURL)
+	schemaReq, err := http.NewRequest("GET", response.SchemaURL, nil)
+	if err != nil {
+		return nil, errors.Wrapf(err, "creating request for %q", response.SchemaURL)
+	}
+
+	schemaResp, err := client.Do(schemaReq)
 	if err != nil {
 		return nil, errors.Wrapf(err, "retrieving schema file from %q", response.SchemaURL)
 	}
@@ -222,14 +235,14 @@ func getSchemaFromRegistry(metadata pkg.PackageMeta, schemaURL string) ([]byte, 
 	return io.ReadAll(schemaResp.Body)
 }
 
-func getSchemaFromVCS(metadata pkg.PackageMeta, schemaFileURL string) ([]byte, error) {
+func getSchemaFromVCS(client HTTPDoer, metadata pkg.PackageMeta, schemaFileURL string) ([]byte, error) {
 	req, err := http.NewRequest("GET", schemaFileURL, nil)
 	if err != nil {
 		return nil, errors.Wrapf(err, "creating request for %q", schemaFileURL)
 	}
 
 	pkg.AddGitHubAuthHeaders(req)
-	resp, err := http.DefaultClient.Do(req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, errors.Wrapf(err, "reading schema file from VCS %s", schemaFileURL)
 	}
@@ -286,6 +299,7 @@ func getRegistryPackagesPath(repoPath string) string {
 }
 
 func genResourceDocsForAllRegistryPackages(
+	client HTTPDoer,
 	registryRepoPath, baseDocsOutDir, basePackageTreeJSONOutDir, baseSchemasOutDir, baseLLMDocsOutDir string,
 ) error {
 	registryPackagesPath := getRegistryPackagesPath(registryRepoPath)
@@ -314,7 +328,7 @@ func genResourceDocsForAllRegistryPackages(
 
 			docsOutDir := filepath.Join(baseDocsOutDir, metadata.Name, "api-docs")
 			err = genResourceDocsForPackageFromRegistryMetadata(
-				metadata, b, docsOutDir, basePackageTreeJSONOutDir, baseSchemasOutDir, baseLLMDocsOutDir,
+				client, metadata, b, docsOutDir, basePackageTreeJSONOutDir, baseSchemasOutDir, baseLLMDocsOutDir,
 			)
 			if err != nil {
 				return errors.Wrapf(err, "generating resource docs using metadata file info %s", f.Name())
@@ -328,7 +342,7 @@ func genResourceDocsForAllRegistryPackages(
 	return pool.Wait()
 }
 
-func resourceDocsFromRegistryCmd() *cobra.Command {
+func resourceDocsFromRegistryCmd(client HTTPDoer) *cobra.Command {
 	var baseDocsOutDir string
 	var basePackageTreeJSONOutDir string
 	var baseSchemasOutDir string
@@ -364,7 +378,7 @@ func resourceDocsFromRegistryCmd() *cobra.Command {
 				docsOutDir := filepath.Join(baseDocsOutDir, metadata.Name, "api-docs")
 
 				err = genResourceDocsForPackageFromRegistryMetadata(
-					metadata, b, docsOutDir, basePackageTreeJSONOutDir, baseSchemasOutDir, baseLLMDocsOutDir,
+					client, metadata, b, docsOutDir, basePackageTreeJSONOutDir, baseSchemasOutDir, baseLLMDocsOutDir,
 				)
 				if err != nil {
 					return errors.Wrapf(err, "generating docs for package %q from registry metadata", pkgName)
@@ -372,7 +386,7 @@ func resourceDocsFromRegistryCmd() *cobra.Command {
 			} else {
 				slog.Info("Generating docs for all packages in the registry...")
 				err := genResourceDocsForAllRegistryPackages(
-					registryDir, baseDocsOutDir, basePackageTreeJSONOutDir, baseSchemasOutDir, baseLLMDocsOutDir,
+					client, registryDir, baseDocsOutDir, basePackageTreeJSONOutDir, baseSchemasOutDir, baseLLMDocsOutDir,
 				)
 				if err != nil {
 					return errors.Wrap(err, "generating docs for all packages from registry metadata")

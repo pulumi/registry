@@ -13,6 +13,7 @@ jobs:
       GOPATH: ${{ github.workspace }}/go
     name: Run browser tests
     runs-on: pulumi-ubuntu-8core
+    timeout-minutes: 150
     steps:
       - uses: actions/checkout@v7
 

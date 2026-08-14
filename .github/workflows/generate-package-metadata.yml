@@ -18,6 +18,7 @@ env:
 jobs:
   generate-packages-list:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - name: Fetch secrets from ESC
         id: esc-secrets
@@ -38,6 +39,7 @@ jobs:
     name: ${{ matrix.repoSlug }} (${{ matrix.schemaFile }})
     needs: generate-packages-list
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     strategy:
       fail-fast: false
       # GitHub recommends only issuing 1 API request per second, and never
@@ -153,6 +155,7 @@ jobs:
     if: failure()
     name: Send slack notification
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     needs: [check-for-package-update, generate-packages-list]
     permissions:
       id-token: write

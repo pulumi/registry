@@ -894,10 +894,12 @@ marker means a contributor can't redirect the pinned comment by quoting the mark
 comment list is paginated deliberately — GitHub returns 30 comments per page by default, and an
 unpaginated search would miss the marker on a long PR and post a duplicate on every build.
 
-**How changed pages are resolved**: the changed-file list comes from the GitHub API
-(`/pulls/<n>/files`), not a local `git diff`, so it works identically for the `pull_request`
-build and the maintainer-triggered `/preview` command. Each path is mapped to a URL by
-`changed_paths_to_urls` (`scripts/ci/common.sh`) under two rules:
+**How changed pages are resolved**: `changed_pages_section` (`scripts/ci/common.sh`) reads the
+changed-file list from the GitHub API (`/pulls/<n>/files`), not a local `git diff`, so it works
+identically for the `pull_request` build and the maintainer-triggered `/preview` command. It
+collects every API page before mapping — `changed_paths_to_urls` de-duplicates only within a
+single invocation, so mapping page by page would double-list a package whose YAML and landing
+page straddle the 100-file page boundary. Each path is mapped under two rules:
 
 | Changed path | URL |
 |---|---|

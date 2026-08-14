@@ -74,17 +74,22 @@ upsert_github_pr_comment() {
     local existing_comment_id=""
     local page comments_json page_count
     for page in $(seq 1 "$max_comment_pages"); do
-        comments_json=$(curl -s \
+        comments_json=$(curl -s --max-time 30 \
             -H "Authorization: token ${GITHUB_TOKEN}" \
             "${pr_comment_api_url}?per_page=100&page=${page}")
 
+        # The `if type == "array"` guard is load-bearing, not decoration: jq's `.[]` iterates an
+        # object's values as readily as an array's elements, so on an error payload
+        # ({"message": "Bad credentials", ...}) it would yield strings and `.body` would then
+        # be a hard jq error rather than an empty result.
         local found
         found=$(echo "$comments_json" | jq -r \
             --arg marker "$marker" \
             --argjson logins "$(pr_comment_author_logins)" \
-            '[.[] | select((.body // "") | contains($marker))
-                  | select(.user.login as $l | $logins | index($l))] | last | .id // empty' \
-            2>/dev/null)
+            'if type == "array" then
+                 [.[] | select((.body // "") | contains($marker))
+                      | select(.user.login as $l | $logins | index($l))] | last | .id // empty
+             else empty end')
         if [[ -n "$found" ]]; then
             existing_comment_id="$found"
         fi
@@ -97,20 +102,28 @@ upsert_github_pr_comment() {
         fi
     done
 
+    # curl exits 0 on a 4xx/5xx, so check the status explicitly. The comment is best-effort and
+    # deliberately doesn't fail the build, but a silently dropped one is very hard to diagnose
+    # from a green job -- so at minimum say so in the log.
+    local method url status
     if [[ -n "$existing_comment_id" ]]; then
-        curl -s \
-            -X PATCH \
-            -H "Authorization: token ${GITHUB_TOKEN}" \
-            -H "Content-Type: application/json" \
-            -d "$payload" \
-            "${repo_api_url}/issues/comments/${existing_comment_id}" > /dev/null
+        method="PATCH"
+        url="${repo_api_url}/issues/comments/${existing_comment_id}"
     else
-        curl -s \
-            -X POST \
-            -H "Authorization: token ${GITHUB_TOKEN}" \
-            -H "Content-Type: application/json" \
-            -d "$payload" \
-            "$pr_comment_api_url" > /dev/null
+        method="POST"
+        url="$pr_comment_api_url"
+    fi
+
+    status=$(curl -s --max-time 30 -o /dev/null -w '%{http_code}' \
+        -X "$method" \
+        -H "Authorization: token ${GITHUB_TOKEN}" \
+        -H "Content-Type: application/json" \
+        -d "$payload" \
+        "$url")
+
+    if [[ ! "$status" =~ ^2[0-9][0-9]$ ]]; then
+        log "GitHub returned HTTP ${status:-000} for ${method} ${url}; the comment was not saved."
+        return 1
     fi
 }
 
@@ -184,6 +197,73 @@ changed_paths_to_urls() {
         seen[$url]=1
         echo "$url"
     done
+}
+
+# Builds the "Changed pages" section of the preview comment: direct links to the pages this PR
+# changed, so a reviewer lands on them instead of hunting through the site. Emits nothing when
+# no changed file resolves to a rendered page.
+#
+# The base branch isn't reliably available locally (the /preview command path checks out
+# differently from the pull_request path), so we ask the GitHub API which files changed rather
+# than diffing. Each changed path is mapped to the URL it renders, then kept only if it
+# actually rendered to a page in this build -- that drops removed files, non-page sources, and
+# url:/alias overrides rather than linking them as dead URLs.
+#
+# Usage: changed_pages_section <repo-api-url> <pr-number> <build-dir> <site-base-url>
+changed_pages_section() {
+    local repo_api_url=$1
+    local pr_number=$2
+    local build_dir=$3
+    local base_url=$4
+
+    local max_listed_urls=50    # Cap the rendered list so huge PRs stay readable.
+    local max_files_pages=10    # Cap API pagination (10 * 100 = up to 1000 files).
+    local changed_files=()
+    local changed_pages=()
+    local page files_json page_count path url
+
+    # Collect the changed filenames across every page first, and map them in a single pass
+    # afterwards. changed_paths_to_urls only de-duplicates within one invocation, so mapping
+    # page by page would emit /registry/packages/aws/ twice on a PR big enough to split
+    # aws.yaml and aws/_index.md across two pages.
+    for page in $(seq 1 "$max_files_pages"); do
+        files_json=$(curl -s --max-time 30 \
+            -H "Authorization: token ${GITHUB_TOKEN}" \
+            "${repo_api_url}/pulls/${pr_number}/files?per_page=100&page=${page}")
+
+        while IFS= read -r path; do
+            if [[ -n "$path" ]]; then
+                changed_files+=("$path")
+            fi
+        done < <(echo "$files_json" \
+            | jq -r 'if type == "array" then .[] | select(.status != "removed") | .filename else empty end')
+
+        # Stop on the last (short) page, or if the response wasn't an array (e.g. a transient
+        # API error), which yields 0 and breaks cleanly.
+        page_count="$(echo "$files_json" | jq -r 'if type == "array" then length else 0 end' 2>/dev/null)"
+        if [[ "${page_count:-0}" -lt 100 ]]; then
+            break
+        fi
+    done
+
+    if [[ "${#changed_files[@]}" -gt 0 ]]; then
+        while IFS= read -r url; do
+            if [[ -n "$url" && -f "${build_dir}${url}index.html" ]]; then
+                changed_pages+=("- [${url}](${base_url}${url})")
+            fi
+        done < <(printf '%s\n' "${changed_files[@]}" | changed_paths_to_urls)
+    fi
+
+    if [[ "${#changed_pages[@]}" -eq 0 ]]; then
+        return 0
+    fi
+
+    local listed
+    listed=$(printf '%s\n' "${changed_pages[@]:0:$max_listed_urls}")
+    printf '\n\n**Changed pages:**\n%s' "$listed"
+    if [[ "${#changed_pages[@]}" -gt "$max_listed_urls" ]]; then
+        printf '\n- …and %s more' "$(( ${#changed_pages[@]} - max_listed_urls ))"
+    fi
 }
 
 # Returns the Git SHA of the HEAD commit. For pull requests, we take this from GitHub event metadata, since in that case, the HEAD commit will contain the SHA of the merge commit with the base branch.

@@ -117,6 +117,126 @@ expect "only rendered pages survive" \
     "$(printf '%s\n' "${rendered[@]}")"
 
 echo
+echo "== changed_pages_section =="
+
+# The files API is paged at 100. changed_paths_to_urls only de-duplicates within a single
+# invocation, so the section has to collect every page before mapping -- otherwise a package's
+# YAML on page one and its landing page on page two each produce a link to the same URL.
+# Stub two full pages that straddle exactly that split.
+page_one='[{"status": "modified", "filename": "themes/default/data/registry/packages/aws.yaml"}'
+for i in $(seq 1 99); do
+    page_one+=",{\"status\": \"modified\", \"filename\": \"docs/filler-${i}.md\"}"
+done
+page_one+=']'
+page_two='[{"status": "modified", "filename": "themes/default/content/registry/packages/aws/_index.md"}]'
+
+curl() {
+    local url=""
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            -H|--max-time) shift 2;;
+            -s) shift;;
+            *) url="$1"; shift;;
+        esac
+    done
+    if [[ "$url" == *"page=1"* ]]; then echo "$page_one"; else echo "$page_two"; fi
+}
+
+expect "a page-straddling package lists once, not twice" \
+    "$(printf '\n\n**Changed pages:**\n- [/registry/packages/aws/](http://preview.example/registry/packages/aws/)')" \
+    "$(changed_pages_section "https://api.github.com/repos/pulumi/registry" 42 "$build_dir" "http://preview.example")"
+
+curl() { echo '{"message": "Bad credentials", "status": "401"}'; }
+
+expect "an API error payload yields no section rather than a broken one" \
+    "" \
+    "$(changed_pages_section "https://api.github.com/repos/pulumi/registry" 42 "$build_dir" "http://preview.example")"
+
+unset -f curl
+
+echo
+echo "== upsert_github_pr_comment =="
+
+# upsert_github_pr_comment talks to nothing but curl, so shadowing curl drives the whole
+# find-or-create decision offline. $stub_comments is the canned comments-list response;
+# $stub_calls records what the function asked for.
+comments_url="https://api.github.com/repos/pulumi/registry/issues/42/comments"
+repo_url="https://api.github.com/repos/pulumi/registry"
+marker="<!-- registry-preview-link -->"
+export GITHUB_TOKEN=stub-token
+
+curl() {
+    local url="" method="GET" write_out=""
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            -X) method="$2"; shift 2;;
+            -w) write_out="$2"; shift 2;;
+            -d|-H|-o|--max-time) shift 2;;
+            -s) shift;;
+            *) url="$1"; shift;;
+        esac
+    done
+
+    if [[ "$method" != "GET" ]]; then
+        echo "${method} ${url}" >> "$stub_calls"
+        # Mimic -w '%{http_code}' so the status check in upsert_github_pr_comment sees a 2xx.
+        [[ -n "$write_out" ]] && echo "201"
+        return 0
+    fi
+
+    # Only page one carries anything; later pages come back empty so the loop terminates.
+    if [[ "$url" == *"page=1"* ]]; then
+        echo "$stub_comments"
+    else
+        echo '[]'
+    fi
+}
+
+# Usage: run_upsert <comments-list-json>
+run_upsert() {
+    stub_comments=$1
+    stub_calls=$(mktemp)
+    upsert_github_pr_comment "$marker" "a body" "$comments_url" "$repo_url" || true
+    cat "$stub_calls"
+    rm -f "$stub_calls"
+}
+
+expect "no existing comment creates one" \
+    "POST ${comments_url}" \
+    "$(run_upsert '[]')"
+
+expect "an existing pinned comment is updated in place" \
+    "PATCH ${repo_url}/issues/comments/222" \
+    "$(run_upsert '[
+        {"id": 111, "user": {"login": "github-actions[bot]"}, "body": "unrelated"},
+        {"id": 222, "user": {"login": "github-actions[bot]"}, "body": "<!-- registry-preview-link -->\nold"}
+     ]')"
+
+# The marker alone must not be enough to redirect the pinned comment, or any contributor could
+# take it over by quoting it.
+expect "a marker from another author is ignored" \
+    "POST ${comments_url}" \
+    "$(run_upsert '[
+        {"id": 333, "user": {"login": "some-contributor"}, "body": "<!-- registry-preview-link --> hijack"}
+     ]')"
+
+expect "the bot comment wins even when a decoy sorts after it" \
+    "PATCH ${repo_url}/issues/comments/444" \
+    "$(run_upsert '[
+        {"id": 444, "user": {"login": "pulumi-bot"}, "body": "<!-- registry-preview-link -->\nold"},
+        {"id": 555, "user": {"login": "some-contributor"}, "body": "<!-- registry-preview-link --> hijack"}
+     ]')"
+
+# jq's .[] iterates an object's values as readily as an array's elements, so an error payload
+# would blow up the marker filter unless the type is checked first. Falling back to a fresh
+# comment is the right failure mode; erroring out and posting nothing is not.
+expect "an API error payload falls back to creating a comment" \
+    "POST ${comments_url}" \
+    "$(run_upsert '{"message": "Bad credentials", "status": "401"}')"
+
+unset -f curl
+
+echo
 if [[ "$failures" -gt 0 ]]; then
     echo "${failures} test(s) failed."
     exit 1

@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-ise/v0.4.2/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-ise/v0.5.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-ise/blob/v0.4.2/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-ise/blob/v0.5.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Cisco ISE Provider
 meta_desc: Provides an overview on how to configure the Pulumi Cisco ISE provider.
@@ -26,12 +26,11 @@ This provider uses both, the ERS and Open API. Instructions on how to enable API
 
 All resources and functions have been tested with the following releases.
 
-| Platform |    Version    |
-|----------|---------------|
-| ISE      | 3.2.0 Patch 4 |
-| ISE      | 3.3.0         |
-| ISE      | 3.4.0         |
-| ISE      | 3.5.0         |
+| Platform | Version |
+|----------|---------|
+| ISE      | 3.3.0   |
+| ISE      | 3.4.0   |
+| ISE      | 3.5.0   |
 ## Example Usage
 
 ```yaml

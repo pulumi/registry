@@ -534,6 +534,7 @@ All workflow files live in `.github/workflows/`.
 | `publish-provider-update.yml` | provider docs build | `repository_dispatch` |
 | `bucket-cleanup.yml` | Scheduled jobs: Bucket cleanup | Daily 3:00 PM UTC |
 | `update-tutorials.yml` | Scheduled jobs: Update How To Guides | Daily 3:00 PM UTC |
+| `priority-digest.yml` | Scheduled jobs: Priority digest | Daily 3:00 PM UTC |
 | `export-repo-secrets.yml` | Export secrets to ESC | `workflow_dispatch` |
 | `add-triage-label.yml` | Add triage label to new issues | Issue opened / reopened |
 | `add-to-project.yml` | Add issues to project | Issue opened / reopened |
@@ -774,6 +775,14 @@ Runs in the production environment (`388588623842:role/ContinuousDelivery`). Nod
 3. Opens or updates a PR on branch `tutorials/refresh` via `peter-evans/create-pull-request@v7`.
 
 Auto-merge is currently disabled (commented out in the workflow).
+
+#### `priority-digest.yml` — Post Open P0 and P1 Issues to Slack
+
+**Trigger**: Daily at 3:00 PM UTC; also `workflow_dispatch` with a `dry-run` input
+
+Runs `scripts/ci/priority_digest.py`, which searches GitHub for open issues labelled `p0` or `p1` across `pulumi/registry` and `pulumi/terraform-to-pulumi-registry-pipeline`, then posts them to #team-iac-cloud, oldest first, with each issue's age and assignee.
+
+Replaces a Metabase subscription that posted the same query as a screenshot. Uses `PULUMI_BOT_TOKEN` and `SLACK_WEBHOOK_URL` from ESC; no other configuration. `--dry-run` prints the message to the job log instead of posting.
 
 #### `export-repo-secrets.yml` — Sync GitHub Secrets → ESC
 
@@ -1084,7 +1093,7 @@ The `export-repo-secrets.yml` workflow provides a manual escape hatch to sync Gi
 | `DEPLOYMENT_ENVIRONMENT` | GitHub var | build, cleanup | e.g., `testing` or `production` |
 | `NODE_OPTIONS` | Hardcoded | build, browser tests | `--max_old_space_size=8192` |
 | `SLACK_ACCESS_TOKEN` | ESC | link check, cleanup | Slack Web API token for posting messages |
-| `SLACK_WEBHOOK_URL` | ESC | notify jobs | Slack incoming webhook for failure alerts |
+| `SLACK_WEBHOOK_URL` | ESC | notify jobs, priority digest | Slack incoming webhook for failure alerts and the daily digest |
 | `ASSET_BUNDLE_ID` | `build.sh` (computed) | Hugo templates | Unique suffix for CSS/JS cache-busting |
 | `CSS_BUNDLE` / `JS_BUNDLE` | `build.sh` (computed) | Hugo templates | Paths to versioned asset bundles |
 
@@ -1111,6 +1120,7 @@ Note: `mise.toml` specifies Node 20 for local development, while CI workflows us
 | Link check | 3:00 PM every Monday | `check-links.yml` | `make check_links` |
 | Browser tests (scheduled) | 2:00 PM daily | `run-browser-tests.yml` | `make run-browser-tests` |
 | Stale bucket cleanup | 3:00 PM daily | `bucket-cleanup.yml` | `make ci_bucket_cleanup` |
+| Open P0 and P1 issue digest | 3:00 PM daily | `priority-digest.yml` | `scripts/ci/priority_digest.py` |
 
 ---
 

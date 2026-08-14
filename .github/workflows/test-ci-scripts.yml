@@ -51,7 +51,7 @@ jobs:
           GOBIN="$PWD/bin" go install "github.com/pulumi/registry-mirror-tools/cmd/registry-mirror-discover@$COMMIT"
           GOBIN="$PWD/bin" go install "github.com/pulumi/registry-mirror-tools/cmd/registry-mirror-publish@$COMMIT"
       - name: Install dependencies
-        run: pip install pyyaml
+        run: pip install pyyaml requests
       - name: Run tests
         run: python -m unittest discover -s scripts/ci -p 'test_*.py' -v
       - name: Run scripts/ tests

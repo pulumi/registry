@@ -70,6 +70,11 @@ jobs:
       - run: echo "Building ${{ env.PROVIDER_SHORT_NAME }} docs @ ${{ env.PROVIDER_VERSION }}"
       - name: checkout registry repo
         uses: actions/checkout@v7
+      - name: Set up Go
+        uses: actions/setup-go@v6
+        with:
+          go-version-file: tools/resourcedocsgen/go.mod
+          cache-dependency-path: tools/resourcedocsgen/go.sum
       - name: Build resourcedocsgen
         run: go build -C tools/resourcedocsgen
       - name: Generate Package Metadata
@@ -114,6 +119,11 @@ jobs:
       - run: echo "Building ${{ env.PROVIDER_SHORT_NAME }} docs @ ${{ env.PROVIDER_VERSION }}"
       - name: checkout registry repo
         uses: actions/checkout@v7
+      - name: Set up Go
+        uses: actions/setup-go@v6
+        with:
+          go-version-file: tools/resourcedocsgen/go.mod
+          cache-dependency-path: tools/resourcedocsgen/go.sum
       - name: Check the publisher is registered
         env:
           PUBLISHER_NAMES: tools/resourcedocsgen/pkg/publishers/publisher-names.json

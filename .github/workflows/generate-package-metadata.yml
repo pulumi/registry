@@ -82,6 +82,12 @@ jobs:
       - name: Check out registry repo
         if: steps.skip-run.outputs.skip != 1
         uses: actions/checkout@v7
+      - name: Set up Go
+        if: steps.skip-run.outputs.skip != 1
+        uses: actions/setup-go@v6
+        with:
+          go-version-file: tools/resourcedocsgen/go.mod
+          cache-dependency-path: tools/resourcedocsgen/go.sum
       - name: Sleep to prevent hitting secondary rate limits
         if: steps.skip-run.outputs.skip != 1
         run: sleep 1

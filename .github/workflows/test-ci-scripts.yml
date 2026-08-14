@@ -37,19 +37,37 @@ jobs:
         uses: actions/setup-python@v6
         with:
           python-version: '3.12'
-      - name: Set up Go
+      - name: Set up Go, opting out of the repo-root module cache key
         uses: actions/setup-go@v6
         with:
           go-version: '1.26'
+          cache: false
+      - name: Get registry-mirror-tools version
+        id: mirror-version
+        run: |
+          hash="$(grep 'REGISTRY_MIRROR_TOOLS_COMMIT=' scripts/generate-versioned-docs.sh | cut -d'"' -f2)"
+          if [ -z "$hash" ]; then
+            echo "Could not read REGISTRY_MIRROR_TOOLS_COMMIT from scripts/generate-versioned-docs.sh" >&2
+            exit 1
+          fi
+          echo "hash=$hash" >> "$GITHUB_OUTPUT"
+      - name: Cache the registry-mirror-tools binaries
+        uses: actions/cache@v6
+        with:
+          path: |
+            bin/registry-mirror-discover
+            bin/registry-mirror-publish
+          key: registry-mirror-tools-bins-${{ runner.os }}-${{ steps.mirror-version.outputs.hash }}
       - name: Configure git for private Go modules
         run: git config --global url."https://${{ steps.esc-secrets.outputs.PULUMI_BOT_TOKEN }}:x-oauth-basic@github.com/pulumi/registry-mirror-tools".insteadOf "https://github.com/pulumi/registry-mirror-tools"
       - name: Install registry-mirror-tools
         env:
           GOPRIVATE: github.com/pulumi/registry-mirror-tools
         run: |
-          COMMIT="dda1dfd85d540fab45a0d19060e963564d0b36aa"
-          GOBIN="$PWD/bin" go install "github.com/pulumi/registry-mirror-tools/cmd/registry-mirror-discover@$COMMIT"
-          GOBIN="$PWD/bin" go install "github.com/pulumi/registry-mirror-tools/cmd/registry-mirror-publish@$COMMIT"
+          COMMIT="${{ steps.mirror-version.outputs.hash }}"
+          for cmd in registry-mirror-discover registry-mirror-publish; do
+            [ -x "bin/$cmd" ] || GOBIN="$PWD/bin" go install "github.com/pulumi/registry-mirror-tools/cmd/$cmd@$COMMIT"
+          done
       - name: Install dependencies
         run: pip install pyyaml requests
       - name: Run tests

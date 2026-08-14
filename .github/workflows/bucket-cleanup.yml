@@ -32,9 +32,11 @@ jobs:
         with:
           node-version: '24.x'
 
-      - uses: actions/setup-go@v6
+      - name: Set up Go, opting out of the repo-root module cache key
+        uses: actions/setup-go@v6
         with:
           go-version: 1.26.x
+          cache: false
 
       - name: Configure Git
         run: |

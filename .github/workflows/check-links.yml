@@ -18,6 +18,7 @@ jobs:
       GOPATH: ${{ github.workspace }}/go
     name: Check links
     runs-on: ubuntu-latest
+    timeout-minutes: 240
     steps:
       - name: Fetch secrets from ESC
         id: esc-secrets

@@ -47,7 +47,7 @@ var featuredPackages = []string{
 	"kubernetes",
 }
 
-func PackageMetadataCmd() *cobra.Command {
+func PackageMetadataCmd(client HTTPDoer) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "metadata <args>",
 		Short: "Generate package metadata from Pulumi schema",
@@ -61,14 +61,14 @@ func PackageMetadataCmd() *cobra.Command {
 			"structure that the registry expects (themes/default/content/registry/packages/<provider-name>)")
 
 	cmd.AddCommand(
-		packageMetadataFromGitHubCmd(metadataDir, packageDocsDir),
-		packageMetadataFromURLsCmd(metadataDir, packageDocsDir),
+		packageMetadataFromGitHubCmd(client, metadataDir, packageDocsDir),
+		packageMetadataFromURLsCmd(client, metadataDir, packageDocsDir),
 	)
 
 	return cmd
 }
 
-func packageMetadataFromURLsCmd(metadataDir, packageDocsDir *string) *cobra.Command {
+func packageMetadataFromURLsCmd(client HTTPDoer, metadataDir, packageDocsDir *string) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:          "from-urls <args>",
 		Short:        "Generate package metadata from a Pulumi schema",
@@ -117,7 +117,7 @@ func packageMetadataFromURLsCmd(metadataDir, packageDocsDir *string) *cobra.Comm
 
 		// Get the schema.
 
-		mainSpec, err := readRemoteSchemaFile(schemaFileURL, "")
+		mainSpec, err := readRemoteSchemaFile(client, schemaFileURL, "")
 		if err != nil {
 			return errors.WithMessage(err, "unable to read remote schema file")
 		}
@@ -136,7 +136,7 @@ func packageMetadataFromURLsCmd(metadataDir, packageDocsDir *string) *cobra.Comm
 		}
 
 		var errs []error
-		index, err := readDocsFile(indexFileURL)
+		index, err := readDocsFile(client, indexFileURL)
 		if err != nil {
 			errs = append(errs, err)
 		} else {
@@ -144,7 +144,7 @@ func packageMetadataFromURLsCmd(metadataDir, packageDocsDir *string) *cobra.Comm
 		}
 
 		if installationConfigurationURL != "" {
-			installationConfiguration, err := readDocsFile(installationConfigurationURL)
+			installationConfiguration, err := readDocsFile(client, installationConfigurationURL)
 			if err != nil {
 				errs = append(errs, err)
 			} else {
@@ -158,7 +158,7 @@ func packageMetadataFromURLsCmd(metadataDir, packageDocsDir *string) *cobra.Comm
 	return cmd
 }
 
-func packageMetadataFromGitHubCmd(metadataDir, packageDocsDir *string) *cobra.Command {
+func packageMetadataFromGitHubCmd(client HTTPDoer, metadataDir, packageDocsDir *string) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:          "from-github <args>",
 		Short:        "Generate package metadata from Pulumi schema",
@@ -208,7 +208,7 @@ func packageMetadataFromGitHubCmd(metadataDir, packageDocsDir *string) *cobra.Co
 
 		publishedDate := time.Now()
 		// try and get the version release data using the github releases API
-		if pd, ok, err := inferPublishDate(repoSlug, version); err != nil {
+		if pd, ok, err := inferPublishDate(client, repoSlug, version); err != nil {
 			return errors.WithMessage(err, "failed to infer publish date")
 		} else if ok {
 			publishedDate = pd
@@ -219,7 +219,7 @@ func packageMetadataFromGitHubCmd(metadataDir, packageDocsDir *string) *cobra.Co
 		schemaURL := fmt.Sprintf("https://raw.githubusercontent.com/%s/%s/%s",
 			repoSlug, version, schemaFile)
 
-		mainSpec, err := readRemoteSchemaFile(schemaURL, repoSlug.owner)
+		mainSpec, err := readRemoteSchemaFile(client, schemaURL, repoSlug.owner)
 		if err != nil {
 			return errors.WithMessage(err, "unable to read remote schema file")
 		}
@@ -265,7 +265,7 @@ func packageMetadataFromGitHubCmd(metadataDir, packageDocsDir *string) *cobra.Co
 
 		for _, remoteFile := range remoteFiles {
 			url := "https://raw.githubusercontent.com/" + repoSlug.String() + "/" + mainSpec.Version + "/docs/" + remoteFile.name
-			content, err := readRemoteFile(url, repoSlug.owner)
+			content, err := readRemoteFile(client, url, repoSlug.owner)
 			if err != nil {
 				return err
 			}
@@ -418,7 +418,7 @@ func getLegacyPublisher(repoSlug repoSlug) string {
 	return cases.Title(language.Und, cases.NoLower).String(repoSlug.owner)
 }
 
-func readRemoteFile(url, repoOwner string) ([]byte, error) {
+func readRemoteFile(client HTTPDoer, url, repoOwner string) ([]byte, error) {
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, errors.Wrapf(err, "creating request for %q", url)
@@ -431,7 +431,7 @@ func readRemoteFile(url, repoOwner string) ([]byte, error) {
 
 	pkg.AddGitHubAuthHeaders(req)
 
-	resp, err := http.DefaultClient.Do(req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("downloading remote file from %s: %w", url, err)
 	}
@@ -532,9 +532,9 @@ func getTagFromKeywords(keywords []string, tag string) *string {
 	return nil
 }
 
-func getGitHubTags(repoSlug string) ([]pkg.GitHubTag, error) {
+func getGitHubTags(client HTTPDoer, repoSlug string) ([]pkg.GitHubTag, error) {
 	path := fmt.Sprintf("/repos/%s/tags", repoSlug)
-	tagsResp, err := pkg.GetGitHubAPI(path)
+	tagsResp, err := pkg.GetGitHubAPI(client, path)
 	if err != nil {
 		return nil, fmt.Errorf("getting tags info for %s: %w", repoSlug, err)
 	}
@@ -594,8 +594,8 @@ func (s *repoSlug) Set(input string) error {
 
 func (s repoSlug) Type() string { return "repo slug" }
 
-func readRemoteSchemaFile(schemaFileURL, repoOwner string) (*schema.PackageSpec, error) {
-	schemaBytes, err := readRemoteFile(schemaFileURL, repoOwner)
+func readRemoteSchemaFile(client HTTPDoer, schemaFileURL, repoOwner string) (*schema.PackageSpec, error) {
+	schemaBytes, err := readRemoteFile(client, schemaFileURL, repoOwner)
 	if err != nil {
 		return nil, err
 	}
@@ -620,9 +620,9 @@ func readRemoteSchemaFile(schemaFileURL, repoOwner string) (*schema.PackageSpec,
 	return spec, nil
 }
 
-func inferPublishDate(repo repoSlug, version string) (time.Time, bool, error) {
+func inferPublishDate(client HTTPDoer, repo repoSlug, version string) (time.Time, bool, error) {
 	// try and get the version release data using the github releases API
-	tags, err := getGitHubTags(repo.String())
+	tags, err := getGitHubTags(client, repo.String())
 	if err != nil {
 		return time.Time{}, false, errors.Wrap(err, "github tags")
 	}
@@ -646,7 +646,7 @@ func inferPublishDate(repo repoSlug, version string) (time.Time, bool, error) {
 	}
 
 	pkg.AddGitHubAuthHeaders(req)
-	commitResp, err := http.DefaultClient.Do(req)
+	commitResp, err := client.Do(req)
 	if err != nil {
 		return time.Time{}, false, fmt.Errorf("getting release info for %s: %w", repo, err)
 	}
@@ -671,8 +671,8 @@ func computeEditURLFromGitHubUserContentURL(url string) string {
 // readDocsFile is a specialized version of [readRemoteFile] for docs files.
 //
 // Docs files are expected to be markdown and have a YAML frontmatter.
-func readDocsFile(url string) ([]byte, error) {
-	content, err := readRemoteFile(url, "")
+func readDocsFile(client HTTPDoer, url string) ([]byte, error) {
+	content, err := readRemoteFile(client, url, "")
 	if err != nil {
 		return nil, err
 	}

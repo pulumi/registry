@@ -26,6 +26,7 @@ import (
 	"github.com/blang/semver"
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 	"github.com/pulumi/registry/tools/resourcedocsgen/internal/tests/util"
+	"github.com/pulumi/registry/tools/resourcedocsgen/pkg"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -231,7 +232,7 @@ func defaultAssert(t *testing.T, metadataDir, packageDocsDir string, opts ...uti
 
 func testMetadata(t *testing.T, args testMetadataArgs) {
 	t.Helper()
-	cmd := PackageMetadataCmd()
+	cmd := PackageMetadataCmd(pkg.NewHTTPClient())
 	metadataDir := t.TempDir()
 	packageDocsDir := t.TempDir()
 

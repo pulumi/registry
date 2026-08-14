@@ -16,6 +16,7 @@ jobs:
       GOPATH: ${{ github.workspace }}/go
     name: Install deps and build site
     runs-on: pulumi-service-ubuntu-24.04-16core
+    timeout-minutes: 60
     environment: testing
     steps:
       - name: Fetch secrets from ESC
@@ -110,6 +111,7 @@ jobs:
     if: (github.ref == 'refs/heads/master' || (github.event_name == 'pull_request' && github.event.pull_request.user.login == 'pulumi-bot')) && failure()
     name: Send slack notification
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     needs: [buildSite]
     permissions:
       id-token: write

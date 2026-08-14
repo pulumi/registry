@@ -28,7 +28,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func CheckVersion() *cobra.Command {
+func CheckVersion(client HTTPDoer) *cobra.Command {
 	var repoSlug string
 	cmd := &cobra.Command{
 		Use:   "pkgversion",
@@ -53,7 +53,7 @@ The version in the registry is defined in the YAML file at:
 				repoName = githubSlugParts[1]
 			}
 
-			version, err := getLatestVersion(repoSlug)
+			version, err := getLatestVersion(client, repoSlug)
 			if err != nil {
 				return err
 			}
@@ -62,7 +62,7 @@ The version in the registry is defined in the YAML file at:
 			pkgMetadata := fmt.Sprintf(
 				"https://raw.githubusercontent.com/pulumi/registry/master/themes/default/data/registry/packages/%s.yaml",
 				pkgName)
-			regVersion, err := getRegistryVersion(pkgMetadata)
+			regVersion, err := getRegistryVersion(client, pkgMetadata)
 			if err != nil {
 				return err
 			}
@@ -82,9 +82,9 @@ The version in the registry is defined in the YAML file at:
 	return cmd
 }
 
-func getLatestVersion(repoSlug string) (string, error) {
+func getLatestVersion(client HTTPDoer, repoSlug string) (string, error) {
 	path := fmt.Sprintf("/repos/%s/releases/latest", repoSlug)
-	resp, err := pkg.GetGitHubAPI(path)
+	resp, err := pkg.GetGitHubAPI(client, path)
 	if err != nil {
 		return "", fmt.Errorf("getting latest version from https://api.github.com%s: %w", path, err)
 	}
@@ -108,14 +108,14 @@ func getLatestVersion(repoSlug string) (string, error) {
 	return tag.Name, nil
 }
 
-func getRegistryVersion(url string) (string, error) {
+func getRegistryVersion(client HTTPDoer, url string) (string, error) {
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return "", fmt.Errorf("creating request for %q: %w", url, err)
 	}
 
 	pkg.AddGitHubAuthHeaders(req)
-	resp, err := http.DefaultClient.Do(req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return "", fmt.Errorf("getting latest version from %s: %w", url, err)
 	}

@@ -15,6 +15,7 @@ jobs:
       ESC_ACTION_OIDC_ORGANIZATION: pulumi
       ESC_ACTION_OIDC_REQUESTED_TOKEN_TYPE: urn:pulumi:token-type:access_token:organization
     runs-on: pulumi-service-ubuntu-24.04-16core
+    timeout-minutes: 90
     environment: production
     steps:
       - name: Fetch secrets from ESC
@@ -154,6 +155,7 @@ jobs:
     if: failure()
     name: Send slack notification
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     needs: [build]
     permissions:
       id-token: write

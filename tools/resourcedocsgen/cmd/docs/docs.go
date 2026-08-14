@@ -192,7 +192,7 @@ func onlyRequiredCycleErrors(v any) bool {
 	return sawError
 }
 
-func ResourceDocsCmd() *cobra.Command {
+func ResourceDocsCmd(client HTTPDoer) *cobra.Command {
 	var schemaFile string
 	var version string
 	var docsOutDir string
@@ -257,7 +257,7 @@ func ResourceDocsCmd() *cobra.Command {
 	contract.AssertNoErrorf(cmd.MarkFlagRequired("schemaFile"), "could not find schemaFile")
 	contract.AssertNoErrorf(cmd.MarkFlagRequired("version"), "could not find version")
 
-	cmd.AddCommand(resourceDocsFromRegistryCmd())
+	cmd.AddCommand(resourceDocsFromRegistryCmd(client))
 
 	return cmd
 }

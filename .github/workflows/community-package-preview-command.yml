@@ -30,6 +30,7 @@ jobs:
        (github.event.comment.body == '/preview' || startsWith(github.event.comment.body, '/preview ')) &&
        contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association))
     runs-on: pulumi-service-ubuntu-24.04-16core
+    timeout-minutes: 60
     environment: testing
     env:
       GOPATH: ${{ github.workspace }}/go

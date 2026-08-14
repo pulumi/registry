@@ -50,6 +50,7 @@ jobs:
   unknown-event-type:
     if: ${{ github.event.action != 'resource-provider' && github.event.action != 'push-provider-update' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - name: Fetch secrets from ESC
         id: esc-secrets
@@ -61,6 +62,7 @@ jobs:
   build-resource-provider-docs:
     if: ${{ github.event.action == 'resource-provider' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - name: Fetch secrets from ESC
         id: esc-secrets
@@ -90,6 +92,7 @@ jobs:
   build-provider-docs:
     if: ${{ github.event.action == 'push-provider-update' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - name: Fetch secrets from ESC
         id: esc-secrets
@@ -146,6 +149,7 @@ jobs:
     if: failure()
     name: Send slack notification
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     needs:
       - build-resource-provider-docs
       - build-provider-docs

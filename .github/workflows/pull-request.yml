@@ -131,6 +131,8 @@ jobs:
         uses: ./.github/actions/yarn-install
       - name: Run Linter
         run: yarn run lint
+      - name: Test preview comment
+        run: make test-preview-comment
 
   lint-dark-logos:
     name: Lint Dark Logo Variants

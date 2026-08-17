@@ -1052,7 +1052,7 @@ This is a toy
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#toy">Toy</a></span>
     </dt>
-    <dd></dd><dt class="property-optional property-replacement"
+    <dd></dd><dt class="property-optional property-replacement property-secret"
             title="Optional">
         <span id="color_csharp">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#color_csharp" style="color: inherit; text-decoration: inherit;">Color</a>
@@ -1082,7 +1082,7 @@ This is a toy
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#toy">Toy</a></span>
     </dt>
-    <dd></dd><dt class="property-optional property-replacement"
+    <dd></dd><dt class="property-optional property-replacement property-secret"
             title="Optional">
         <span id="color_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#color_go" style="color: inherit; text-decoration: inherit;">Color</a>
@@ -1112,7 +1112,7 @@ This is a toy
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#toy">object</a></span>
     </dt>
-    <dd></dd><dt class="property-optional property-replacement"
+    <dd></dd><dt class="property-optional property-replacement property-secret"
             title="Optional">
         <span id="color_hcl">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#color_hcl" style="color: inherit; text-decoration: inherit;">color</a>
@@ -1142,7 +1142,7 @@ This is a toy
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#toy">Toy</a></span>
     </dt>
-    <dd></dd><dt class="property-optional property-replacement"
+    <dd></dd><dt class="property-optional property-replacement property-secret"
             title="Optional">
         <span id="color_java">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#color_java" style="color: inherit; text-decoration: inherit;">color</a>
@@ -1172,7 +1172,7 @@ This is a toy
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#toy">Toy</a></span>
     </dt>
-    <dd></dd><dt class="property-optional property-replacement"
+    <dd></dd><dt class="property-optional property-replacement property-secret"
             title="Optional">
         <span id="color_nodejs">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#color_nodejs" style="color: inherit; text-decoration: inherit;">color</a>
@@ -1202,7 +1202,7 @@ This is a toy
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#toy">Toy</a></span>
     </dt>
-    <dd></dd><dt class="property-optional property-replacement"
+    <dd></dd><dt class="property-optional property-replacement property-secret"
             title="Optional">
         <span id="color_python">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#color_python" style="color: inherit; text-decoration: inherit;">color</a>
@@ -1232,7 +1232,7 @@ This is a toy
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#toy">Property Map</a></span>
     </dt>
-    <dd></dd><dt class="property-optional property-replacement"
+    <dd></dd><dt class="property-optional property-replacement property-secret"
             title="Optional">
         <span id="color_yaml">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#color_yaml" style="color: inherit; text-decoration: inherit;">color</a>

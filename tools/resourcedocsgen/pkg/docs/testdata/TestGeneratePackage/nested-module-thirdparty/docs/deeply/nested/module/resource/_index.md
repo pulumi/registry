@@ -344,7 +344,7 @@ The Resource resource accepts the following [input](/docs/intro/concepts/inputs-
 
 <div>
 <pulumi-choosable type="language" values="csharp">
-<dl class="resources-properties"><dt class="property-optional"
+<dl class="resources-properties"><dt class="property-optional property-secret"
             title="Optional">
         <span id="baz_csharp">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#baz_csharp" style="color: inherit; text-decoration: inherit;">Baz</a>
@@ -358,7 +358,7 @@ The Resource resource accepts the following [input](/docs/intro/concepts/inputs-
 
 <div>
 <pulumi-choosable type="language" values="go">
-<dl class="resources-properties"><dt class="property-optional"
+<dl class="resources-properties"><dt class="property-optional property-secret"
             title="Optional">
         <span id="baz_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#baz_go" style="color: inherit; text-decoration: inherit;">Baz</a>
@@ -372,7 +372,7 @@ The Resource resource accepts the following [input](/docs/intro/concepts/inputs-
 
 <div>
 <pulumi-choosable type="language" values="hcl">
-<dl class="resources-properties"><dt class="property-optional"
+<dl class="resources-properties"><dt class="property-optional property-secret"
             title="Optional">
         <span id="baz_hcl">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#baz_hcl" style="color: inherit; text-decoration: inherit;">baz</a>
@@ -386,7 +386,7 @@ The Resource resource accepts the following [input](/docs/intro/concepts/inputs-
 
 <div>
 <pulumi-choosable type="language" values="java">
-<dl class="resources-properties"><dt class="property-optional"
+<dl class="resources-properties"><dt class="property-optional property-secret"
             title="Optional">
         <span id="baz_java">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#baz_java" style="color: inherit; text-decoration: inherit;">baz</a>
@@ -400,7 +400,7 @@ The Resource resource accepts the following [input](/docs/intro/concepts/inputs-
 
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
-<dl class="resources-properties"><dt class="property-optional"
+<dl class="resources-properties"><dt class="property-optional property-secret"
             title="Optional">
         <span id="baz_nodejs">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#baz_nodejs" style="color: inherit; text-decoration: inherit;">baz</a>
@@ -414,7 +414,7 @@ The Resource resource accepts the following [input](/docs/intro/concepts/inputs-
 
 <div>
 <pulumi-choosable type="language" values="python">
-<dl class="resources-properties"><dt class="property-optional"
+<dl class="resources-properties"><dt class="property-optional property-secret"
             title="Optional">
         <span id="baz_python">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#baz_python" style="color: inherit; text-decoration: inherit;">baz</a>
@@ -428,7 +428,7 @@ The Resource resource accepts the following [input](/docs/intro/concepts/inputs-
 
 <div>
 <pulumi-choosable type="language" values="yaml">
-<dl class="resources-properties"><dt class="property-optional"
+<dl class="resources-properties"><dt class="property-optional property-secret"
             title="Optional">
         <span id="baz_yaml">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#baz_yaml" style="color: inherit; text-decoration: inherit;">baz</a>

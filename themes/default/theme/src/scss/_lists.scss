@@ -80,7 +80,7 @@ dl {
             &.property-required,
             &.property-deprecated {
                 .property-indicator {
-                    @apply ml-1 cursor-pointer;
+                    @apply cursor-pointer;
                     font-size: 0.6em;
                 }
             }
@@ -89,16 +89,6 @@ dl {
                 .property-indicator {
                     @apply text-red-500;
                     @include fa-glyph("\f069");
-                }
-            }
-
-            &.property-replacement {
-                .property-indicator-replacement {
-                    img {
-                        @apply mr-1 ml-1 inline;
-                        height: 18px;
-                        width: 18px;
-                    }
                 }
             }
 
@@ -114,15 +104,23 @@ dl {
                 }
             }
 
-            .multi-property-container {
-                @apply inline-flex items-center;
+            // Badge cluster injected by ts/misc.ts, one <pulumi-tooltip> per property-*
+            // flag on the dt. A single inline-flex row so required / replacement / secret
+            // lay out identically in any combination -- `gap` does the spacing that the
+            // old hand-tuned two-badge markup carried as per-badge margins.
+            //
+            // align-middle is set explicitly: the `dt span` rule below doesn't reach this
+            // wrapper, which is a div.
+            .property-badges {
+                @apply inline-flex items-center gap-1 ml-1 align-middle;
 
-                .replacement-container {
-                    @apply ml-14;
-
-                    @include screen-sm {
-                        @apply ml-0;
-                    }
+                // The icon badges are inline currentColor SVGs precisely so they can be
+                // tinted here -- and --docs-fg-muted re-points per theme, so this one
+                // declaration covers light (gray-700) and dark (gray-300) both.
+                .property-indicator-replacement,
+                .property-indicator-secret {
+                    @apply inline-flex items-center;
+                    color: var(--docs-fg-muted);
                 }
             }
 

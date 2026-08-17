@@ -1355,7 +1355,7 @@ All [input](#inputs) properties are implicitly available as output properties. A
 
 <div>
 <pulumi-choosable type="language" values="csharp">
-<dl class="resources-properties"><dt class="property-"
+<dl class="resources-properties"><dt class="property- property-secret"
             title="">
         <span id="bcrypthash_csharp">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#bcrypthash_csharp" style="color: inherit; text-decoration: inherit;">Bcrypt<wbr>Hash</a>
@@ -1371,7 +1371,7 @@ All [input](#inputs) properties are implicitly available as output properties. A
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
     </dt>
-    <dd>The provider-assigned unique ID for this managed resource.</dd><dt class="property-"
+    <dd>The provider-assigned unique ID for this managed resource.</dd><dt class="property- property-secret"
             title="">
         <span id="result_csharp">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#result_csharp" style="color: inherit; text-decoration: inherit;">Result</a>
@@ -1385,7 +1385,7 @@ All [input](#inputs) properties are implicitly available as output properties. A
 
 <div>
 <pulumi-choosable type="language" values="go">
-<dl class="resources-properties"><dt class="property-"
+<dl class="resources-properties"><dt class="property- property-secret"
             title="">
         <span id="bcrypthash_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#bcrypthash_go" style="color: inherit; text-decoration: inherit;">Bcrypt<wbr>Hash</a>
@@ -1401,7 +1401,7 @@ All [input](#inputs) properties are implicitly available as output properties. A
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
     </dt>
-    <dd>The provider-assigned unique ID for this managed resource.</dd><dt class="property-"
+    <dd>The provider-assigned unique ID for this managed resource.</dd><dt class="property- property-secret"
             title="">
         <span id="result_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#result_go" style="color: inherit; text-decoration: inherit;">Result</a>
@@ -1415,7 +1415,7 @@ All [input](#inputs) properties are implicitly available as output properties. A
 
 <div>
 <pulumi-choosable type="language" values="hcl">
-<dl class="resources-properties"><dt class="property-"
+<dl class="resources-properties"><dt class="property- property-secret"
             title="">
         <span id="bcrypt_hash_hcl">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#bcrypt_hash_hcl" style="color: inherit; text-decoration: inherit;">bcrypt_<wbr>hash</a>
@@ -1431,7 +1431,7 @@ All [input](#inputs) properties are implicitly available as output properties. A
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
     </dt>
-    <dd>The provider-assigned unique ID for this managed resource.</dd><dt class="property-"
+    <dd>The provider-assigned unique ID for this managed resource.</dd><dt class="property- property-secret"
             title="">
         <span id="result_hcl">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#result_hcl" style="color: inherit; text-decoration: inherit;">result</a>
@@ -1445,7 +1445,7 @@ All [input](#inputs) properties are implicitly available as output properties. A
 
 <div>
 <pulumi-choosable type="language" values="java">
-<dl class="resources-properties"><dt class="property-"
+<dl class="resources-properties"><dt class="property- property-secret"
             title="">
         <span id="bcrypthash_java">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#bcrypthash_java" style="color: inherit; text-decoration: inherit;">bcrypt<wbr>Hash</a>
@@ -1461,7 +1461,7 @@ All [input](#inputs) properties are implicitly available as output properties. A
         <span class="property-indicator"></span>
         <span class="property-type">String</span>
     </dt>
-    <dd>The provider-assigned unique ID for this managed resource.</dd><dt class="property-"
+    <dd>The provider-assigned unique ID for this managed resource.</dd><dt class="property- property-secret"
             title="">
         <span id="result_java">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#result_java" style="color: inherit; text-decoration: inherit;">result</a>
@@ -1475,7 +1475,7 @@ All [input](#inputs) properties are implicitly available as output properties. A
 
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
-<dl class="resources-properties"><dt class="property-"
+<dl class="resources-properties"><dt class="property- property-secret"
             title="">
         <span id="bcrypthash_nodejs">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#bcrypthash_nodejs" style="color: inherit; text-decoration: inherit;">bcrypt<wbr>Hash</a>
@@ -1491,7 +1491,7 @@ All [input](#inputs) properties are implicitly available as output properties. A
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
     </dt>
-    <dd>The provider-assigned unique ID for this managed resource.</dd><dt class="property-"
+    <dd>The provider-assigned unique ID for this managed resource.</dd><dt class="property- property-secret"
             title="">
         <span id="result_nodejs">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#result_nodejs" style="color: inherit; text-decoration: inherit;">result</a>
@@ -1505,7 +1505,7 @@ All [input](#inputs) properties are implicitly available as output properties. A
 
 <div>
 <pulumi-choosable type="language" values="python">
-<dl class="resources-properties"><dt class="property-"
+<dl class="resources-properties"><dt class="property- property-secret"
             title="">
         <span id="bcrypt_hash_python">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#bcrypt_hash_python" style="color: inherit; text-decoration: inherit;">bcrypt_<wbr>hash</a>
@@ -1521,7 +1521,7 @@ All [input](#inputs) properties are implicitly available as output properties. A
         <span class="property-indicator"></span>
         <span class="property-type">str</span>
     </dt>
-    <dd>The provider-assigned unique ID for this managed resource.</dd><dt class="property-"
+    <dd>The provider-assigned unique ID for this managed resource.</dd><dt class="property- property-secret"
             title="">
         <span id="result_python">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#result_python" style="color: inherit; text-decoration: inherit;">result</a>
@@ -1535,7 +1535,7 @@ All [input](#inputs) properties are implicitly available as output properties. A
 
 <div>
 <pulumi-choosable type="language" values="yaml">
-<dl class="resources-properties"><dt class="property-"
+<dl class="resources-properties"><dt class="property- property-secret"
             title="">
         <span id="bcrypthash_yaml">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#bcrypthash_yaml" style="color: inherit; text-decoration: inherit;">bcrypt<wbr>Hash</a>
@@ -1551,7 +1551,7 @@ All [input](#inputs) properties are implicitly available as output properties. A
         <span class="property-indicator"></span>
         <span class="property-type">String</span>
     </dt>
-    <dd>The provider-assigned unique ID for this managed resource.</dd><dt class="property-"
+    <dd>The provider-assigned unique ID for this managed resource.</dd><dt class="property- property-secret"
             title="">
         <span id="result_yaml">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#result_yaml" style="color: inherit; text-decoration: inherit;">result</a>
@@ -1783,7 +1783,7 @@ The following state arguments are supported:
 
 <div>
 <pulumi-choosable type="language" values="csharp">
-<dl class="resources-properties"><dt class="property-optional"
+<dl class="resources-properties"><dt class="property-optional property-secret"
             title="Optional">
         <span id="state_bcrypthash_csharp">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#state_bcrypthash_csharp" style="color: inherit; text-decoration: inherit;">Bcrypt<wbr>Hash</a>
@@ -1871,7 +1871,7 @@ The following state arguments are supported:
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
     </dt>
-    <dd>Supply your own list of special characters to use for string generation.  This overrides the default character list in the special argument.  The <code>special</code> argument must still be set to true for any overwritten characters to be used in generation.</dd><dt class="property-optional"
+    <dd>Supply your own list of special characters to use for string generation.  This overrides the default character list in the special argument.  The <code>special</code> argument must still be set to true for any overwritten characters to be used in generation.</dd><dt class="property-optional property-secret"
             title="Optional">
         <span id="state_result_csharp">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#state_result_csharp" style="color: inherit; text-decoration: inherit;">Result</a>
@@ -1901,7 +1901,7 @@ The following state arguments are supported:
 
 <div>
 <pulumi-choosable type="language" values="go">
-<dl class="resources-properties"><dt class="property-optional"
+<dl class="resources-properties"><dt class="property-optional property-secret"
             title="Optional">
         <span id="state_bcrypthash_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#state_bcrypthash_go" style="color: inherit; text-decoration: inherit;">Bcrypt<wbr>Hash</a>
@@ -1989,7 +1989,7 @@ The following state arguments are supported:
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
     </dt>
-    <dd>Supply your own list of special characters to use for string generation.  This overrides the default character list in the special argument.  The <code>special</code> argument must still be set to true for any overwritten characters to be used in generation.</dd><dt class="property-optional"
+    <dd>Supply your own list of special characters to use for string generation.  This overrides the default character list in the special argument.  The <code>special</code> argument must still be set to true for any overwritten characters to be used in generation.</dd><dt class="property-optional property-secret"
             title="Optional">
         <span id="state_result_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#state_result_go" style="color: inherit; text-decoration: inherit;">Result</a>
@@ -2019,7 +2019,7 @@ The following state arguments are supported:
 
 <div>
 <pulumi-choosable type="language" values="hcl">
-<dl class="resources-properties"><dt class="property-optional"
+<dl class="resources-properties"><dt class="property-optional property-secret"
             title="Optional">
         <span id="state_bcrypt_hash_hcl">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#state_bcrypt_hash_hcl" style="color: inherit; text-decoration: inherit;">bcrypt_<wbr>hash</a>
@@ -2107,7 +2107,7 @@ The following state arguments are supported:
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
     </dt>
-    <dd>Supply your own list of special characters to use for string generation.  This overrides the default character list in the special argument.  The <code>special</code> argument must still be set to true for any overwritten characters to be used in generation.</dd><dt class="property-optional"
+    <dd>Supply your own list of special characters to use for string generation.  This overrides the default character list in the special argument.  The <code>special</code> argument must still be set to true for any overwritten characters to be used in generation.</dd><dt class="property-optional property-secret"
             title="Optional">
         <span id="state_result_hcl">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#state_result_hcl" style="color: inherit; text-decoration: inherit;">result</a>
@@ -2137,7 +2137,7 @@ The following state arguments are supported:
 
 <div>
 <pulumi-choosable type="language" values="java">
-<dl class="resources-properties"><dt class="property-optional"
+<dl class="resources-properties"><dt class="property-optional property-secret"
             title="Optional">
         <span id="state_bcrypthash_java">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#state_bcrypthash_java" style="color: inherit; text-decoration: inherit;">bcrypt<wbr>Hash</a>
@@ -2225,7 +2225,7 @@ The following state arguments are supported:
         <span class="property-indicator"></span>
         <span class="property-type">String</span>
     </dt>
-    <dd>Supply your own list of special characters to use for string generation.  This overrides the default character list in the special argument.  The <code>special</code> argument must still be set to true for any overwritten characters to be used in generation.</dd><dt class="property-optional"
+    <dd>Supply your own list of special characters to use for string generation.  This overrides the default character list in the special argument.  The <code>special</code> argument must still be set to true for any overwritten characters to be used in generation.</dd><dt class="property-optional property-secret"
             title="Optional">
         <span id="state_result_java">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#state_result_java" style="color: inherit; text-decoration: inherit;">result</a>
@@ -2255,7 +2255,7 @@ The following state arguments are supported:
 
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
-<dl class="resources-properties"><dt class="property-optional"
+<dl class="resources-properties"><dt class="property-optional property-secret"
             title="Optional">
         <span id="state_bcrypthash_nodejs">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#state_bcrypthash_nodejs" style="color: inherit; text-decoration: inherit;">bcrypt<wbr>Hash</a>
@@ -2343,7 +2343,7 @@ The following state arguments are supported:
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
     </dt>
-    <dd>Supply your own list of special characters to use for string generation.  This overrides the default character list in the special argument.  The <code>special</code> argument must still be set to true for any overwritten characters to be used in generation.</dd><dt class="property-optional"
+    <dd>Supply your own list of special characters to use for string generation.  This overrides the default character list in the special argument.  The <code>special</code> argument must still be set to true for any overwritten characters to be used in generation.</dd><dt class="property-optional property-secret"
             title="Optional">
         <span id="state_result_nodejs">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#state_result_nodejs" style="color: inherit; text-decoration: inherit;">result</a>
@@ -2373,7 +2373,7 @@ The following state arguments are supported:
 
 <div>
 <pulumi-choosable type="language" values="python">
-<dl class="resources-properties"><dt class="property-optional"
+<dl class="resources-properties"><dt class="property-optional property-secret"
             title="Optional">
         <span id="state_bcrypt_hash_python">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#state_bcrypt_hash_python" style="color: inherit; text-decoration: inherit;">bcrypt_<wbr>hash</a>
@@ -2461,7 +2461,7 @@ The following state arguments are supported:
         <span class="property-indicator"></span>
         <span class="property-type">str</span>
     </dt>
-    <dd>Supply your own list of special characters to use for string generation.  This overrides the default character list in the special argument.  The <code>special</code> argument must still be set to true for any overwritten characters to be used in generation.</dd><dt class="property-optional"
+    <dd>Supply your own list of special characters to use for string generation.  This overrides the default character list in the special argument.  The <code>special</code> argument must still be set to true for any overwritten characters to be used in generation.</dd><dt class="property-optional property-secret"
             title="Optional">
         <span id="state_result_python">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#state_result_python" style="color: inherit; text-decoration: inherit;">result</a>
@@ -2491,7 +2491,7 @@ The following state arguments are supported:
 
 <div>
 <pulumi-choosable type="language" values="yaml">
-<dl class="resources-properties"><dt class="property-optional"
+<dl class="resources-properties"><dt class="property-optional property-secret"
             title="Optional">
         <span id="state_bcrypthash_yaml">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#state_bcrypthash_yaml" style="color: inherit; text-decoration: inherit;">bcrypt<wbr>Hash</a>
@@ -2579,7 +2579,7 @@ The following state arguments are supported:
         <span class="property-indicator"></span>
         <span class="property-type">String</span>
     </dt>
-    <dd>Supply your own list of special characters to use for string generation.  This overrides the default character list in the special argument.  The <code>special</code> argument must still be set to true for any overwritten characters to be used in generation.</dd><dt class="property-optional"
+    <dd>Supply your own list of special characters to use for string generation.  This overrides the default character list in the special argument.  The <code>special</code> argument must still be set to true for any overwritten characters to be used in generation.</dd><dt class="property-optional property-secret"
             title="Optional">
         <span id="state_result_yaml">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#state_result_yaml" style="color: inherit; text-decoration: inherit;">result</a>

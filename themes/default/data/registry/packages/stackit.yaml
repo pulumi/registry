@@ -10,7 +10,7 @@ native: false
 package_status: public_preview
 publisher: stackitcloud
 repo_url: https://github.com/stackitcloud/pulumi-stackit
-schema_file_url: https://raw.githubusercontent.com/stackitcloud/pulumi-stackit/v0.0.6/provider/cmd/pulumi-resource-stackit/schema.json
+schema_file_url: https://raw.githubusercontent.com/stackitcloud/pulumi-stackit/v0.0.7/provider/cmd/pulumi-resource-stackit/schema.json
 title: stackit
-updated_on: 1778073063
-version: v0.0.6
+updated_on: 1786969384
+version: v0.0.7

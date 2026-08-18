@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/chainguard-dev/cosign/0.4.15/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/chainguard-dev/cosign/0.4.16/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Cosign Provider
@@ -366,11 +366,12 @@ public class App {
 {{< /chooser >}}
 ## Environment Variables
 
-|          Name           |              Default               |                                          Description                                           |
-|-------------------------|------------------------------------|------------------------------------------------------------------------------------------------|
-| TF_COSIGN_LOCAL         |                                    | Enables interative signing with Cosign locally (browser based flow only).                      |
-| TF_COSIGN_CONNECTOR_ID  |                                    | Configures Sigstore Connector ID for local based signing.                                      |
-| TF_COSIGN_ISSUER        | <https://oauth2.sigstore.dev/auth> | Configures Sigstore token issuer.                                                              |
-| TF_COSIGN_CLIENT_SECRET |                                    | Configures Sigstore OAuth Client Secret.                                                       |
-| TF_COSIGN_REDIRECT_URL  |                                    | Configures Sigstore interactive OAuth redirect URL. If empty, a random localhost port is used. |
-| TF_COSIGN_DISABLE       |                                    | Disables all cosign operations.                                                                |
+|               Name               |              Default               |                                                                                                                Description                                                                                                                 |
+|----------------------------------|------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| TF_COSIGN_LOCAL                  |                                    | Enables interative signing with Cosign locally (browser based flow only).                                                                                                                                                                  |
+| TF_COSIGN_CONNECTOR_ID           |                                    | Configures Sigstore Connector ID for local based signing.                                                                                                                                                                                  |
+| TF_COSIGN_ISSUER                 | <https://oauth2.sigstore.dev/auth> | Configures Sigstore token issuer.                                                                                                                                                                                                          |
+| TF_COSIGN_CLIENT_SECRET          |                                    | Configures Sigstore OAuth Client Secret.                                                                                                                                                                                                   |
+| TF_COSIGN_REDIRECT_URL           |                                    | Configures Sigstore interactive OAuth redirect URL. If empty, a random localhost port is used.                                                                                                                                             |
+| TF_COSIGN_DISABLE                |                                    | Disables all cosign operations.                                                                                                                                                                                                            |
+| TF_COSIGN_CHAINGUARD_TOKEN_CACHE |                                    | Sources OIDC tokens from the Chainguard token cache (`<user cache dir>/chainguard/<audience>/oidc-token`); an absolute path value overrides the cache root. When set, an unreadable token fails the operation instead of skipping signing. |

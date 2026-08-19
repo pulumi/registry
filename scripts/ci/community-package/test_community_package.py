@@ -10,6 +10,8 @@ from pathlib import Path
 from typing import Any
 from unittest.mock import patch
 
+import yaml
+
 sys.path.insert(0, str(Path(__file__).parent))
 import cli  # noqa: E402
 import comment_commands  # noqa: E402
@@ -299,6 +301,107 @@ class FactSheetTests(unittest.TestCase):
         self.assertNotIn("docs generate", out)
 
 
+class SweepTests(unittest.TestCase):
+    def _sweep(self, status: str | None, files: list[str] | None = None,
+               already: bool = False) -> list[tuple[str, dict[str, str]]]:
+        dispatched: list[tuple[str, dict[str, str]]] = []
+        with patch.object(github_api, "open_pull_requests",
+                          lambda: [{"number": 7, "head": {"sha": "a" * 40}}]), \
+             patch.object(github_api, "pull_request_files",
+                          lambda pr: files if files is not None else [comment_commands.PACKAGE_LIST]), \
+             patch.object(github_api, "pull_request_run_status", lambda w, s: status), \
+             patch.object(github_api, "dispatch_exists", lambda w, label: already), \
+             patch.object(github_api, "dispatch_workflow",
+                          lambda w, inputs: dispatched.append((w, inputs))):
+            comment_commands.sweep()
+        return dispatched
+
+    def test_dispatches_when_github_parked_the_run(self) -> None:
+        self.assertEqual(self._sweep("action_required"),
+                         [(comment_commands.CHECK_WORKFLOW, {"pr": "7", "head": "a" * 40})])
+
+    def test_dispatches_when_no_run_exists(self) -> None:
+        self.assertEqual(len(self._sweep(None)), 1)
+
+    def test_skips_a_run_that_started_on_its_own(self) -> None:
+        self.assertEqual(self._sweep("in_progress"), [])
+        self.assertEqual(self._sweep("completed"), [])
+
+    def test_skips_a_pr_that_does_not_touch_the_package_list(self) -> None:
+        self.assertEqual(self._sweep("action_required", files=["README.md"]), [])
+
+    def test_dispatches_each_head_once(self) -> None:
+        self.assertEqual(self._sweep("action_required", already=True), [])
+
+    def test_run_label_is_stable_per_head(self) -> None:
+        self.assertEqual(github_api.dispatch_run_label(7, "a" * 40),
+                         "Community package check · PR #7 · " + "a" * 12)
+
+
+class CommandInvocationTests(unittest.TestCase):
+    def test_a_bare_command_invokes(self) -> None:
+        self.assertTrue(comment_commands._invokes("/check", "/check"))
+
+    def test_a_command_on_its_own_line_invokes(self) -> None:
+        self.assertTrue(comment_commands._invokes("- [x] SDKs published\n\n/check\n", "/check"))
+
+    def test_arguments_after_the_command_invoke(self) -> None:
+        self.assertTrue(comment_commands._invokes("/check please", "/check"))
+
+    def test_the_fact_sheet_mentioning_the_command_does_not_invoke(self) -> None:
+        self.assertFalse(comment_commands._invokes(
+            "**Not ready.** Fix upstream, then comment `/check` to re-run.", "/check"))
+
+    def test_a_fenced_command_does_not_invoke(self) -> None:
+        self.assertFalse(comment_commands._invokes("Run this:\n```\n/check\n```\n", "/check"))
+
+    def test_a_quoted_command_does_not_invoke(self) -> None:
+        self.assertFalse(comment_commands._invokes("> /check\n\nI already tried that.", "/check"))
+
+
+class CheckCommandTests(unittest.TestCase):
+    def _run(self, minutes_check: int | None, minutes_dispatch: int | None) -> list[dict[str, str]]:
+        dispatched: list[dict[str, str]] = []
+        os.environ.update(PR="7", COMMENT_ID="1", COMMENTER="ren", ASSOC="NONE", COMMENT_BODY="/check")
+        with patch.object(github_api, "pull_request_head", lambda pr: ("ren", "b" * 40)), \
+             patch.object(github_api, "minutes_since_check_run", lambda s, n: minutes_check), \
+             patch.object(github_api, "minutes_since_dispatch", lambda w, pr: minutes_dispatch), \
+             patch.object(github_api, "add_reaction", lambda *a: None), \
+             patch.object(github_api, "post_comment", lambda *a: None), \
+             patch.object(github_api, "fact_sheet_comment", lambda pr: None), \
+             patch.object(github_api, "dispatch_workflow",
+                          lambda w, inputs: dispatched.append(inputs)):
+            comment_commands.check_command()
+        for name in ("PR", "COMMENT_ID", "COMMENTER", "ASSOC", "COMMENT_BODY"):
+            del os.environ[name]
+        return dispatched
+
+    def test_author_dispatches_a_check(self) -> None:
+        self.assertEqual(self._run(None, None), [{"pr": "7", "head": "b" * 40}])
+
+    def test_a_recent_dispatch_rate_limits(self) -> None:
+        self.assertEqual(self._run(None, 2), [])
+
+    def test_a_recent_automatic_run_rate_limits(self) -> None:
+        self.assertEqual(self._run(2, None), [])
+
+    def test_an_old_check_does_not_rate_limit(self) -> None:
+        self.assertEqual(len(self._run(60, 90)), 1)
+
+
+class ChangedFilesTests(unittest.TestCase):
+    def test_a_listing_replaces_the_git_diff(self) -> None:
+        with tempfile.TemporaryDirectory() as scratch:
+            listing = Path(scratch) / "changed.txt"
+            listing.write_text("community-packages/package-list.json\nREADME.md\n")
+            self.assertEqual(cli._changed_files("origin/master", str(listing)),
+                             ["community-packages/package-list.json", "README.md"])
+
+
+def _community_workflows() -> list[Path]:
+    return sorted((Path(__file__).resolve().parents[3] / ".github/workflows").glob("community-package-*.yml"))
+
+
 _SECRET = re.compile(r"secrets\.|ESC_ACTION|esc-action|ANTHROPIC_API_KEY|PULUMI_BOT_TOKEN|id-token: *write")
 _RUNS_CODE = re.compile(
     r"cli\.py check(?![-\w])|npm (install|ci)|pip (install|download)|go get|go mod download|pulumi plugin install")
@@ -308,8 +411,17 @@ class SecretCodeSeparationTests(unittest.TestCase):
     """No community-package workflow may both hold a secret and run a contributor's code, or a
     malicious package could read the secret."""
 
+    def test_no_step_holds_a_token_beside_contributor_code(self) -> None:
+        for workflow in _community_workflows():
+            for job in yaml.safe_load(workflow.read_text())["jobs"].values():
+                for step in job.get("steps", []):
+                    if "GITHUB_TOKEN" not in (step.get("env") or {}):
+                        continue
+                    self.assertNotRegex(step.get("run", ""), _RUNS_CODE,
+                                        f"{workflow.name}: step '{step.get('name')}' holds a token and runs code")
+
     def test_no_workflow_mixes_secrets_with_contributor_code(self) -> None:
-        workflows = sorted((Path(__file__).resolve().parents[3] / ".github/workflows").glob("community-package-*.yml"))
+        workflows = _community_workflows()
         self.assertTrue(workflows, "no community-package workflows found")
         for workflow in workflows:
             text, name = workflow.read_text(), workflow.name

@@ -101,21 +101,50 @@ def fact_sheet_comment(pr: int) -> dict[str, Any] | None:
     return None
 
 
+def _minutes_since(timestamp: str) -> int:
+    moment = datetime.strptime(timestamp, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
+    return int((datetime.now(timezone.utc) - moment).total_seconds() // 60)
+
+
 def minutes_since_check_run(sha: str, name_pattern: str) -> int | None:
     runs = [r for r in request(f"/repos/{repo()}/commits/{sha}/check-runs")["check_runs"]
             if re.search(name_pattern, r["name"])]
     if not runs:
         return None
-    most_recent = max(runs, key=lambda r: str(r["started_at"]))["started_at"]
-    started = datetime.strptime(most_recent, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
-    return int((datetime.now(timezone.utc) - started).total_seconds() // 60)
+    return _minutes_since(str(max(runs, key=lambda r: str(r["started_at"]))["started_at"]))
 
 
-def latest_check_workflow_run(workflow_file: str, sha: str) -> int | None:
+def pull_request_files(pr: int) -> list[str]:
+    return [str(f["filename"]) for f in request(f"/repos/{repo()}/pulls/{pr}/files?per_page=100")]
+
+
+def dispatch_run_label(pr: int, sha: str) -> str:
+    return f"Community package check · PR #{pr} · {sha[:12]}"
+
+
+def _dispatched_runs(workflow_file: str) -> list[dict[str, Any]]:
+    return list(request(f"/repos/{repo()}/actions/workflows/{workflow_file}/runs"
+                        f"?event=workflow_dispatch&per_page=100")["workflow_runs"])
+
+
+def dispatch_exists(workflow_file: str, label: str) -> bool:
+    return any(str(run.get("name", "")) == label for run in _dispatched_runs(workflow_file))
+
+
+def minutes_since_dispatch(workflow_file: str, pr: int) -> int | None:
+    mine = [r for r in _dispatched_runs(workflow_file) if f"PR #{pr} ·" in str(r.get("name", ""))]
+    if not mine:
+        return None
+    return _minutes_since(str(max(mine, key=lambda r: str(r["created_at"]))["created_at"]))
+
+
+def pull_request_run_status(workflow_file: str, sha: str) -> str | None:
     runs = request(f"/repos/{repo()}/actions/workflows/{workflow_file}/runs"
                    f"?event=pull_request&head_sha={sha}")["workflow_runs"]
-    return int(runs[0]["id"]) if runs else None
+    return str(runs[0]["status"]) if runs else None
 
 
-def rerun_workflow(run_id: int) -> None:
-    request(f"/repos/{repo()}/actions/runs/{run_id}/rerun", "POST")
+def dispatch_workflow(workflow_file: str, inputs: dict[str, str]) -> None:
+    ref = os.environ.get("DEFAULT_BRANCH") or "master"
+    request(f"/repos/{repo()}/actions/workflows/{workflow_file}/dispatches", "POST",
+            {"ref": ref, "inputs": inputs})

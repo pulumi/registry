@@ -236,6 +236,21 @@ def publish_with_retry(specs: list[str], config: Config) -> bool:
     return False
 
 
+def validate_all(repo_root: Path) -> int:
+    package_dir = repo_root / "themes/default/data/registry/packages"
+    yaml_files = sorted(str(p.relative_to(repo_root)) for p in package_dir.glob("*.yaml"))
+    specs, errors = build_specs(yaml_files, repo_root)
+
+    print(f"{len(yaml_files)} package YAML files, {len(specs)} publishable specs")
+    if not errors:
+        return 0
+
+    print(f"\n{len(errors)} package(s) could not be turned into a publish spec:")
+    for error in errors:
+        print(f"  - {error}")
+    return 1
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(
         description="Publish changed packages to the registry"
@@ -262,7 +277,15 @@ def main() -> int:
         nargs="*",
         help="Package specs to publish (default: detect from git diff)",
     )
+    parser.add_argument(
+        "--validate-all",
+        action="store_true",
+        help="Build a spec for every package YAML and report errors without publishing",
+    )
     args = parser.parse_args()
+
+    if args.validate_all:
+        return validate_all(args.repo_root.resolve())
 
     if not os.environ.get("PULUMI_API_URL"):
         print("Error: PULUMI_API_URL environment variable is required")

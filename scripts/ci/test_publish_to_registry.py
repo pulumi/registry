@@ -15,6 +15,7 @@ from publish_to_registry import (
     get_changed_packages,
     load_publishers,
     publish_with_retry,
+    validate_all,
 )
 
 
@@ -237,6 +238,39 @@ publisher: Pulumi
         self.assertIsNone(result.spec)
         self.assertIsNotNone(result.error)
         self.assertIn("Failed to parse", result.error)
+
+
+class TestValidateAll(unittest.TestCase):
+    def _repo_with_packages(self, scratch: str, names: list[str]) -> Path:
+        repo_root = Path(scratch)
+        package_dir = repo_root / "themes/default/data/registry/packages"
+        package_dir.mkdir(parents=True)
+        for name in names:
+            (package_dir / f"{name}.yaml").write_text("")
+        return repo_root
+
+    @patch("publish_to_registry.build_specs")
+    def test_passes_when_every_package_builds_a_spec(self, mock_build_specs):
+        mock_build_specs.return_value = (["pulumi/pulumi/aws@6.50.0"], [])
+        with tempfile.TemporaryDirectory() as scratch:
+            self.assertEqual(validate_all(self._repo_with_packages(scratch, ["aws"])), 0)
+
+    @patch("publish_to_registry.build_specs")
+    def test_fails_when_a_package_cannot_build_a_spec(self, mock_build_specs):
+        mock_build_specs.return_value = ([], ["broken.yaml: missing version"])
+        with tempfile.TemporaryDirectory() as scratch:
+            self.assertEqual(validate_all(self._repo_with_packages(scratch, ["broken"])), 1)
+
+    @patch("publish_to_registry.build_specs")
+    def test_checks_every_package_yaml_not_just_changed_ones(self, mock_build_specs):
+        mock_build_specs.return_value = ([], [])
+        with tempfile.TemporaryDirectory() as scratch:
+            validate_all(self._repo_with_packages(scratch, ["gcp", "aws"]))
+        changed_files = mock_build_specs.call_args.args[0]
+        self.assertEqual(changed_files, [
+            "themes/default/data/registry/packages/aws.yaml",
+            "themes/default/data/registry/packages/gcp.yaml",
+        ])
 
 
 class TestBuildSpecs(unittest.TestCase):

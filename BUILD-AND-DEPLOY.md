@@ -531,7 +531,8 @@ All workflow files live in `.github/workflows/`.
 | `check-links.yml` | Scheduled jobs: Check links | Every Monday 3:00 PM UTC |
 | `run-browser-tests.yml` | Scheduled jobs: Run browser tests | Daily 2:00 PM UTC |
 | `generate-package-metadata.yml` | Check for Community Package Updates | Daily 5:30 AM + 5:30 PM UTC + push to `master` touching `package-list.json` |
-| `community-package-check.yml` | Community package check | PR touching `community-packages/package-list.json` |
+| `community-package-check.yml` | Community package check | PR touching `community-packages/package-list.json`, or a `workflow_dispatch` naming a PR |
+| `community-package-sweep.yml` | Community package check sweep | Every 15 minutes |
 | `community-package-report.yml` | Community package report | `workflow_run` after the check completes |
 | `community-package-check-command.yml` | Community package /check command | `/check` comment on a package PR |
 | `community-package-preview-command.yml` | Community package /preview command | `/preview` comment on a package PR |
@@ -736,7 +737,8 @@ The check pipeline gives a contributor who adds one entry to `community-packages
 
 - **`community-package-check.yml`** (secret-free, runs on forks): for each added entry, reads the package's schema and docs at its latest GitHub release, then probes without executing the package's code — installs the plugin (blocking), resolves the npm/PyPI/Go SDKs and lints the docs (advisory). Writes a fact-sheet artifact. The plugin install is the only blocking check, alongside successful docs generation and a present `docs/_index.md`.
 - **`community-package-report.yml`** (`workflow_run`, write token, no secrets, no contributor code): downloads the fact-sheet artifact and posts it as a sticky PR comment, keyed to the PR number recorded by the check.
-- **`community-package-check-command.yml`** (`issue_comment`): re-runs the check when the author or a maintainer comments `/check`, authorized and rate-limited.
+- **`community-package-check-command.yml`** (`issue_comment`): dispatches a fresh check run when the author or a maintainer comments `/check` on its own line, authorized and rate-limited. It dispatches rather than re-runs, so the check also reaches a PR whose own run GitHub parked.
+- **`community-package-sweep.yml`** (schedule, every 15 minutes): a fork PR from a first-time contributor parks its `pull_request` run in `action_required` until a maintainer approves it, which leaves the contributor with no fact-sheet and nothing for `/check` to re-run. The sweep dispatches a check for any open package-list PR whose run GitHub refused to start, once per head commit. A dispatched run starts in the base repo, so GitHub does not gate it, and it carries the same permissions and produces the same fact-sheet as the gated one. The sweep only dispatches: it never runs a contributor's code.
 - **`community-package-preview-command.yml`** (`issue_comment`): builds an on-demand site preview when a maintainer comments `/preview`. A fork's own `pull_request` build gets no secrets, so this maintainer-triggered run stands in for it: it materializes the fork's entry as data and reuses the `build-and-deploy-preview` action, never running the fork's code.
 - **`community-package-policy.yml`**: runs the toolchain's unit tests and `mypy --strict`, including the plane-separation test, as a required check.
 

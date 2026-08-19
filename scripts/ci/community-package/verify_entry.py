@@ -74,7 +74,8 @@ def verify(entry: Entry) -> Manifest:
     docs = [d for d in (index, install_doc) if d is not None]
 
     with tempfile.TemporaryDirectory() as scratch:
-        generated = resourcedocsgen.generate_metadata(entry.repoSlug, entry.schemaFile, tag, into=Path(scratch))
+        generated, generation_error = resourcedocsgen.generate_metadata(
+            entry.repoSlug, entry.schemaFile, tag, into=Path(scratch))
 
     installs = sdk_install_probe.probe_installs(name, tag, schema)
     findings = doc_lint.find_issues(index.content if index else "")
@@ -96,6 +97,8 @@ def verify(entry: Entry) -> Manifest:
         warnings=warnings,
         generation=generated,
         docs=docs,
+        generationError=generation_error,
+        indexPresent=index is not None,
         publisher=publisher,
         publisherKnown=publisher_known,
     )

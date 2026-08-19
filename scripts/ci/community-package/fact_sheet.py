@@ -92,19 +92,27 @@ def render(manifest: Manifest) -> str:
             listed = "✅"
         else:
             listed = "⚠️" if manifest.green else "❌"
-        lines.append(f"| publisher listed | {listed} | `{manifest.publisher}` in publisher-names.json |")
+        lines.append(f"| publisher listed | {listed} | `{manifest.publisher}` is a key in publisher-names.json |")
     lines += ["", f"Owner `{manifest.owner}`"]
 
     if manifest.publisher and not manifest.publisherKnown:
-        lines += ["", f"**Publisher** ❌ `{manifest.publisher}` is not in `publisher-names.json`. Add "
+        lines += ["", f"**Publisher** ❌ no entry for `{manifest.publisher}`. `publisher-names.json` maps the "
+                      "`publisher` string in a provider's schema (the key) to that publisher's slug in the "
+                      "registry backend (the value, which goes into an API path). Add "
                       f"`\"{manifest.publisher}\": \"<slug>\"` to "
-                      "`tools/resourcedocsgen/pkg/publishers/publisher-names.json` in this PR; without it the "
-                      "registry-backend schema fetch fails and falls back to VCS. If this publisher already "
-                      "ships under a different slug, use that slug as the value so the two do not split."]
+                      "`tools/resourcedocsgen/pkg/publishers/publisher-names.json` in this PR; the key and the "
+                      "value are usually the same. If this publisher already ships under a slug, use that one "
+                      "so the two do not split. Without the entry the schema fetch from the registry backend "
+                      "fails and falls back to VCS."]
 
     findings = manifest.docLint
     lines.append("")
-    if findings:
+    if not manifest.indexPresent:
+        lines.append("**Doc-lint** ❌ the provider repo has no `docs/_index.md` at the reviewed commit. "
+                     "It is the package's front page in the registry, so it is required, and "
+                     "`resourcedocsgen` cannot generate metadata without it. Add it upstream, cut a "
+                     "release, then comment `/check`.")
+    elif findings:
         lines.append(f"**Doc-lint: {len(findings)} finding(s)** (advisory; these break the registry render surfaces):")
         lines += [f"- `docs/_index.md:{f.line}` {f.kind}: `{f.text}`" for f in findings]
     else:
@@ -129,6 +137,19 @@ def render(manifest: Manifest) -> str:
                 fence,
                 "</details>",
             ]
+
+    if not manifest.generation and manifest.generationError:
+        lines += [
+            "",
+            "<details><summary>❌ docs generate failed</summary>",
+            "",
+            "`resourcedocsgen metadata from-github`",
+            "",
+            "```",
+            manifest.generationError.replace("```", "ˋˋˋ"),
+            "```",
+            "</details>",
+        ]
 
     for result in [r for r in manifest.installMatrix if r.result == "fail" and r.error]:
         escaped = result.error.replace("```", "ˋˋˋ")

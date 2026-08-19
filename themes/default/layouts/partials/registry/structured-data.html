@@ -70,14 +70,22 @@
 
 {{/* ---------- BreadcrumbList (every registry page) ---------- */}}
 {{ $crumbs := slice (dict "@type" "ListItem" "position" 1 "name" "Registry" "item" (absURL "registry/")) }}
+{{/*
+    Mirrors the visible trail rendered by registry/breadcrumb.html:
+    Registry > Packages > <package> > <section>. The Packages crumb is keyed off
+    the URL rather than $pkg so the /registry/packages/ index gets it too.
+*/}}
+{{ if and (ge $segCount 2) (eq (index $segments 0) "registry") (eq (index $segments 1) "packages") }}
+    {{ $crumbs = $crumbs | append (dict "@type" "ListItem" "position" 2 "name" "Packages" "item" (absURL "registry/packages/")) }}
+{{ end }}
 {{ if $pkg }}
-    {{ $crumbs = $crumbs | append (dict "@type" "ListItem" "position" 2 "name" $pkg.title "item" (printf "%sregistry/packages/%s/" (absURL "") $packageName)) }}
+    {{ $crumbs = $crumbs | append (dict "@type" "ListItem" "position" 3 "name" $pkg.title "item" (printf "%sregistry/packages/%s/" (absURL "") $packageName)) }}
     {{ if or (eq $kind "api-docs-root") (eq $kind "api-docs-leaf") }}
-        {{ $crumbs = $crumbs | append (dict "@type" "ListItem" "position" 3 "name" "API Docs" "item" (printf "%sregistry/packages/%s/api-docs/" (absURL "") $packageName)) }}
+        {{ $crumbs = $crumbs | append (dict "@type" "ListItem" "position" 4 "name" "API Docs" "item" (printf "%sregistry/packages/%s/api-docs/" (absURL "") $packageName)) }}
     {{ else if eq $kind "install" }}
-        {{ $crumbs = $crumbs | append (dict "@type" "ListItem" "position" 3 "name" "Installation & Configuration" "item" (printf "%sregistry/packages/%s/installation-configuration/" (absURL "") $packageName)) }}
+        {{ $crumbs = $crumbs | append (dict "@type" "ListItem" "position" 4 "name" "Installation & Configuration" "item" (printf "%sregistry/packages/%s/installation-configuration/" (absURL "") $packageName)) }}
     {{ else if eq $kind "how-to" }}
-        {{ $crumbs = $crumbs | append (dict "@type" "ListItem" "position" 3 "name" "How-to Guides" "item" (printf "%sregistry/packages/%s/how-to-guides/" (absURL "") $packageName)) }}
+        {{ $crumbs = $crumbs | append (dict "@type" "ListItem" "position" 4 "name" "How-to Guides" "item" (printf "%sregistry/packages/%s/how-to-guides/" (absURL "") $packageName)) }}
     {{ end }}
 {{ end }}
 {{ $breadcrumb := dict "@context" "https://schema.org" "@type" "BreadcrumbList" "itemListElement" $crumbs }}

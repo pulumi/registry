@@ -25,9 +25,10 @@ jobs:
           REPO: ${{ github.repository }}
           HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
         run: |
-          pr="$(gh api "repos/$REPO/commits/$HEAD_SHA/pulls" --jq '.[0].number // empty')"
+          pr="$(gh api --paginate "repos/$REPO/pulls?state=open&per_page=100" \
+            --jq ".[] | select(.head.sha == \"$HEAD_SHA\") | .number" | head -1)"
           if [ -z "$pr" ]; then
-            echo "No pull request for $HEAD_SHA."
+            echo "No open pull request has $HEAD_SHA as its head."
             exit 1
           fi
           changed="$(gh api "repos/$REPO/pulls/$pr/files?per_page=100" --jq '.[].filename')"

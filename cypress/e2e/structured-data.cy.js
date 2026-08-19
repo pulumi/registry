@@ -107,8 +107,10 @@ describe("Registry", () => {
                     expect(crumb, "BreadcrumbList block").to.exist;
                     const names = crumb.itemListElement.map(i => i.name);
                     // Literal equality proves no embedded quote characters.
+                    // The trail mirrors the visible breadcrumb: Registry > Packages > <package>.
                     expect(names[0]).to.equal("Registry");
-                    expect(names[1]).to.equal("AWS");
+                    expect(names[1]).to.equal("Packages");
+                    expect(names[2]).to.equal("AWS");
                 });
             });
         });

@@ -399,6 +399,10 @@
     {
       "repoSlug": "atensecurity/pulumi-thoth",
       "schemaFile": "provider/cmd/pulumi-resource-thoth/schema.json"
+    },
+    {
+      "repoSlug": "shirasakaren/pulumi-biznetgio",
+      "schemaFile": "provider/cmd/pulumi-resource-biznetgio/schema.json"
     }
   ]
 }

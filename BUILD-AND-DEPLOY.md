@@ -651,10 +651,19 @@ Push to master
                 │       │           (reads origin-bucket-metadata.json, updates CloudFront)
                 │       └── scripts/ci/make-s3-redirects.sh
                 │               └── Apply 301 redirects from scripts/redirects/
-                ├── Archive origin-bucket-metadata.json as artifact
-                └── uv run push-registry.py
-                        └── Publish new provider versions to registry service
+                └── Archive origin-bucket-metadata.json as artifact
+
+publish (independent job, does not need build)
+    └── uv run publish_to_registry.py
+            └── Publish new provider versions to the registry service
+                └── on a permanent rejection, open an issue instead of retrying
 ```
+
+The `publish` job deliberately has no `needs:`. Publishing reads the package YAML and the
+committed `_index.md` from the checkout and fetches schemas over HTTP, so it needs no build
+output. Keeping it independent means a flake in the site build cannot stop a released package
+version from reaching the registry. See `docs/registry-publish-drift.md` for the failures that
+motivated this.
 
 **Runner**: `pulumi-service-ubuntu-24.04-16core`
 

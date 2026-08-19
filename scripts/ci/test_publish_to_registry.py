@@ -9,12 +9,16 @@ from unittest.mock import MagicMock, patch
 
 from publish_to_registry import (
     Config,
+    PackageFailure,
+    PublishOutcome,
     SpecResult,
     build_package_spec,
     build_specs,
     get_changed_packages,
     load_publishers,
+    parse_publish_output,
     publish_with_retry,
+    report_permanent_failures,
 )
 
 
@@ -268,12 +272,16 @@ class TestBuildSpecs(unittest.TestCase):
         self.assertEqual(errors, ["missing version"])
 
 
+def _outcome(succeeded, failures=None, parsed=False):
+    return PublishOutcome(succeeded, failures or [], parsed)
+
+
 class TestPublishWithRetry(unittest.TestCase):
     @patch("publish_to_registry.ensure_tools_installed")
     @patch("publish_to_registry.publish_specs")
     def test_succeeds_on_first_attempt(self, mock_publish, mock_tools):
         mock_tools.return_value = (Path("/bin/discover"), Path("/bin/publish"))
-        mock_publish.return_value = True
+        mock_publish.return_value = _outcome(True)
         config = Config(repo_root=Path("/repo"))
 
         result = publish_with_retry(["pulumi/pulumi/aws@6.50.0"], config)
@@ -286,7 +294,7 @@ class TestPublishWithRetry(unittest.TestCase):
     @patch("publish_to_registry.time.sleep")
     def test_retries_on_failure(self, mock_sleep, mock_publish, mock_tools):
         mock_tools.return_value = (Path("/bin/discover"), Path("/bin/publish"))
-        mock_publish.side_effect = [False, False, True]
+        mock_publish.side_effect = [_outcome(False), _outcome(False), _outcome(True)]
         config = Config(repo_root=Path("/repo"), max_retries=3, initial_backoff=1)
 
         result = publish_with_retry(["pulumi/pulumi/aws@6.50.0"], config)
@@ -300,7 +308,7 @@ class TestPublishWithRetry(unittest.TestCase):
     @patch("publish_to_registry.time.sleep")
     def test_fails_after_max_retries(self, mock_sleep, mock_publish, mock_tools):
         mock_tools.return_value = (Path("/bin/discover"), Path("/bin/publish"))
-        mock_publish.return_value = False
+        mock_publish.return_value = _outcome(False)
         config = Config(repo_root=Path("/repo"), max_retries=3, initial_backoff=1)
 
         result = publish_with_retry(["pulumi/pulumi/aws@6.50.0"], config)
@@ -313,7 +321,7 @@ class TestPublishWithRetry(unittest.TestCase):
     @patch("publish_to_registry.time.sleep")
     def test_exponential_backoff(self, mock_sleep, mock_publish, mock_tools):
         mock_tools.return_value = (Path("/bin/discover"), Path("/bin/publish"))
-        mock_publish.side_effect = [False, False, False]
+        mock_publish.side_effect = [_outcome(False), _outcome(False), _outcome(False)]
         config = Config(
             repo_root=Path("/repo"),
             max_retries=3,
@@ -331,7 +339,7 @@ class TestPublishWithRetry(unittest.TestCase):
     @patch("publish_to_registry.time.sleep")
     def test_backoff_capped_at_max(self, mock_sleep, mock_publish, mock_tools):
         mock_tools.return_value = (Path("/bin/discover"), Path("/bin/publish"))
-        mock_publish.side_effect = [False, False, False, False]
+        mock_publish.side_effect = [_outcome(False)] * 4
         config = Config(
             repo_root=Path("/repo"),
             max_retries=4,
@@ -410,3 +418,133 @@ class TestEveryPackageResolves(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+REJECTION = (
+    'publish_failed: complete publish failed: 400: {"code":400,"message":'
+    '"Bad Request: Schema version (0.0.0-dev) must match query parameter version (1.3.0)"}'
+)
+
+
+def _output_line(status, reason=""):
+    return "2026-08-04T17:13:16Z [output] " + json.dumps({
+        "source": "pulumi", "publisher": "pulumi", "package": "terraform-provider",
+        "version": "1.3.0", "status": status, "reason": reason,
+    })
+
+
+class TestParsePublishOutput(unittest.TestCase):
+    def test_reads_failures_and_their_status_code(self):
+        failures, parsed = parse_publish_output(_output_line("failed", REJECTION))
+        self.assertTrue(parsed)
+        self.assertEqual(len(failures), 1)
+        self.assertEqual(failures[0].spec, "pulumi/pulumi/terraform-provider@1.3.0")
+        self.assertEqual(failures[0].status_code, 400)
+        self.assertTrue(failures[0].permanent)
+
+    def test_published_packages_are_not_failures(self):
+        failures, parsed = parse_publish_output(_output_line("published"))
+        self.assertTrue(parsed)
+        self.assertEqual(failures, [])
+
+    def test_output_without_json_is_not_parsed(self):
+        failures, parsed = parse_publish_output("Done. Published: 0, Skipped: 0, Failed: 1")
+        self.assertFalse(parsed)
+        self.assertEqual(failures, [])
+
+    def test_malformed_json_is_skipped(self):
+        failures, parsed = parse_publish_output("[output] {not json")
+        self.assertFalse(parsed)
+        self.assertEqual(failures, [])
+
+
+class TestFailureClassification(unittest.TestCase):
+    def test_server_errors_are_retried(self):
+        outcome = PublishOutcome(False, [PackageFailure("a@1", "503: upstream", 503)], parsed=True)
+        self.assertTrue(outcome.worth_retrying)
+        self.assertEqual(outcome.permanent_failures, [])
+
+    def test_client_errors_are_not_retried(self):
+        outcome = PublishOutcome(False, [PackageFailure("a@1", REJECTION, 400)], parsed=True)
+        self.assertFalse(outcome.worth_retrying)
+        self.assertEqual(len(outcome.permanent_failures), 1)
+
+    def test_a_single_transient_failure_still_retries(self):
+        outcome = PublishOutcome(False, [
+            PackageFailure("a@1", REJECTION, 400),
+            PackageFailure("b@2", "502: bad gateway", 502),
+        ], parsed=True)
+        self.assertTrue(outcome.worth_retrying)
+
+    def test_unparsed_output_falls_back_to_retrying(self):
+        outcome = PublishOutcome(False, [], parsed=False)
+        self.assertTrue(outcome.worth_retrying)
+
+    def test_failure_without_a_status_code_is_retried(self):
+        outcome = PublishOutcome(False, [PackageFailure("a@1", "connection reset", None)], parsed=True)
+        self.assertTrue(outcome.worth_retrying)
+
+
+class TestRetrySkipsPermanentFailures(unittest.TestCase):
+    @patch("publish_to_registry.report_permanent_failures")
+    @patch("publish_to_registry.ensure_tools_installed")
+    @patch("publish_to_registry.publish_specs")
+    @patch("publish_to_registry.time.sleep")
+    def test_permanent_rejection_stops_after_one_attempt(self, mock_sleep, mock_publish,
+                                                        mock_tools, mock_report):
+        mock_tools.return_value = (Path("/bin/discover"), Path("/bin/publish"))
+        failure = PackageFailure("pulumi/pulumi/terraform-provider@1.3.0", REJECTION, 400)
+        mock_publish.return_value = PublishOutcome(False, [failure], parsed=True)
+
+        result = publish_with_retry(["pulumi/pulumi/terraform-provider@1.3.0"],
+                                    Config(repo_root=Path("/repo"), max_retries=3))
+
+        self.assertFalse(result)
+        self.assertEqual(mock_publish.call_count, 1)
+        self.assertEqual(mock_sleep.call_count, 0)
+        mock_report.assert_called_once_with([failure])
+
+    @patch("publish_to_registry.report_permanent_failures")
+    @patch("publish_to_registry.ensure_tools_installed")
+    @patch("publish_to_registry.publish_specs")
+    @patch("publish_to_registry.time.sleep")
+    def test_dry_run_does_not_file_issues(self, mock_sleep, mock_publish, mock_tools, mock_report):
+        mock_tools.return_value = (Path("/bin/discover"), Path("/bin/publish"))
+        mock_publish.return_value = PublishOutcome(
+            False, [PackageFailure("a@1", REJECTION, 400)], parsed=True)
+
+        publish_with_retry(["a@1"], Config(repo_root=Path("/repo"), dry_run=True))
+
+        mock_report.assert_not_called()
+
+
+class TestReportPermanentFailures(unittest.TestCase):
+    def setUp(self):
+        self.env = {"GITHUB_TOKEN": "t", "GITHUB_REPOSITORY": "pulumi/registry"}
+
+    @patch("publish_to_registry.github_api")
+    def test_opens_an_issue_when_none_is_open(self, mock_api):
+        mock_api.side_effect = [{"items": []}, {"number": 7}]
+        with patch.dict("os.environ", self.env, clear=True):
+            report_permanent_failures([PackageFailure(
+                "pulumi/pulumi/terraform-provider@1.3.0", REJECTION, 400)])
+
+        method, path = mock_api.call_args_list[1][0][0], mock_api.call_args_list[1][0][1]
+        self.assertEqual((method, path), ("POST", "/repos/pulumi/registry/issues"))
+        self.assertIn("terraform-provider", mock_api.call_args_list[1][0][3]["title"])
+
+    @patch("publish_to_registry.github_api")
+    def test_comments_instead_of_opening_a_duplicate(self, mock_api):
+        mock_api.side_effect = [{"items": [{"number": 42}]}, {}]
+        with patch.dict("os.environ", self.env, clear=True):
+            report_permanent_failures([PackageFailure(
+                "pulumi/pulumi/terraform-provider@1.3.0", REJECTION, 400)])
+
+        method, path = mock_api.call_args_list[1][0][0], mock_api.call_args_list[1][0][1]
+        self.assertEqual((method, path), ("POST", "/repos/pulumi/registry/issues/42/comments"))
+
+    @patch("publish_to_registry.github_api")
+    def test_without_a_token_nothing_is_filed(self, mock_api):
+        with patch.dict("os.environ", {}, clear=True):
+            report_permanent_failures([PackageFailure("a@1", REJECTION, 400)])
+        mock_api.assert_not_called()

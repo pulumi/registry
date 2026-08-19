@@ -26,7 +26,7 @@ This document describes the build, test, and deployment system for the `pulumi/r
    - [6.3 S3 Preview Bucket Lifecycle](#63-s3-preview-bucket-lifecycle)
    - [6.4 The Pinned Preview Comment](#64-the-pinned-preview-comment)
    - [6.5 Custom Redirects](#65-custom-redirects)
-7. [Registry Publication (push-registry.py)](#registry-publication-push-registrypy)
+7. [Registry Publication (publish_to_registry.py)](#registry-publication-publish_to_registrypy)
 8. [Testing Strategy](#testing-strategy)
    - [8.1 Go Unit Tests](#81-go-unit-tests)
    - [8.2 Go Linting](#82-go-linting)
@@ -44,7 +44,7 @@ This document describes the build, test, and deployment system for the `pulumi/r
 11. [Troubleshooting](#troubleshooting)
 12. [Pulumi Cloud Service Integration](#pulumi-cloud-service-integration)
    - [12.1 Two Parallel Systems](#121-two-parallel-systems)
-   - [12.2 How push-registry.py Bridges Them](#122-how-push-registrypy-bridges-them)
+   - [12.2 How publish_to_registry.py Bridges Them](#122-how-publish_to_registrypy-bridges-them)
    - [12.3 Pulumi Cloud Roles Summary](#123-pulumi-cloud-roles-summary)
 
 ---
@@ -569,7 +569,7 @@ PR opened / committed
         │       └── make lint-dark-logos
         │
         ├── test-live-publish
-        │       └── uv run push-registry.py --dry-run
+        │       └── uv run publish_to_registry.py --validate-all
         │
         ├── test-provider-api-docs
         │       └── make ensure build-assets → make test_provider_api_docs
@@ -947,39 +947,39 @@ de-duplication, and the existence gate offline; it runs in the `Lint Scripts` PR
 
 ---
 
-## Registry Publication (`push-registry.py`)
+## Registry Publication (`publish_to_registry.py`)
 
-**Location**: `scripts/ci/push-registry.py`
+**Location**: `scripts/ci/publish_to_registry.py`
 
-**Runtime**: Python 3 (via `uv run --with requests,pyyaml`)
+**Runtime**: Python 3 (via `uv run --with pyyaml`)
 
 **Invoked**:
 
 - On every push to `master` (in `push.yml`, after the build+deploy completes)
-- In dry-run mode on every PR (in `pull-request.yml`, `test-live-publish` job)
+- In `--validate-all` mode on every PR (in `pull-request.yml`, `test-live-publish` job)
 
 **What it does**:
 
-1. Reads all YAML files from `themes/default/data/registry/packages/*.yaml`.
-2. For each package:
+1. Reads the package YAML files changed by the last commit (`git diff HEAD~1`).
+2. For each changed package, builds a spec of the form `{source}/{publisher}/{name}@{version}`:
    - Skips packages where `publisher == "DEPRECATED"`.
-   - Skips packages whose name matches `azure-native-v*` (except `azure-native` itself) — these are aliases.
-   - Skips packages whose name matches `aws-v<N>` — these are legacy versioned packages.
-   - Calls the Pulumi registry API (`https://api.pulumi.com/api/registry/packages/{source}/{publisher}/{name}/versions/{version}`) to check if this version already exists.
-   - If it does not exist (404): downloads the schema from the provider repo or `schema_file_url`, corrects the version field if needed, and calls `pulumi package publish`.
-   - If `--installation-configuration` exists (`_installation-configuration.md`), passes it to `pulumi package publish`.
-3. In `--dry-run` mode: prints the `pulumi package publish` command instead of running it.
+   - Skips packages whose name matches `azure-native-v*` or `aws-v<N>` — these are aliases and legacy versioned packages.
+   - Records an error for a package that does not parse or has no `version`.
+3. Installs `registry-mirror-discover` and `registry-mirror-publish` from [pulumi/registry-mirror-tools](https://github.com/pulumi/registry-mirror-tools), pinned to `REGISTRY_MIRROR_TOOLS_COMMIT`.
+4. Pipes the specs through `registry-mirror-discover | registry-mirror-publish`, retrying up to three times with exponential backoff.
+5. In `--dry-run` mode: passes `--dry-run` to `registry-mirror-publish`.
+6. In `--validate-all` mode: builds a spec for every package YAML and reports errors without installing tools or touching the network.
 
-**Required environment variable**: `PULUMI_ACCESS_TOKEN`
+**Required environment variables**: `PULUMI_ACCESS_TOKEN`, `PULUMI_API_URL`, `GITHUB_TOKEN`
 
-**Optional**: `PULUMI_BACKEND_URL` (defaults to `https://api.pulumi.com/api`)
+**Package source**: Determined by `schema_file_url`:
 
-**Package source**: Determined by `schema_url`:
-
-- Contains `registry.opentofu.org` → `source = "opentofu"`
+- Contains `opentofu` → `source = "opentofu"`
 - Otherwise → `source = "pulumi"`
 
-**Publisher lookup**: `tools/resourcedocsgen/pkg/publishers/publisher-names.json` maps display names (as in YAML) to canonical publisher IDs.
+**Publisher lookup**: `tools/resourcedocsgen/pkg/publishers/publisher-names.json` maps display names (as in YAML) to canonical publisher IDs. An unlisted publisher falls back to `pulumi`.
+
+**Schema versions**: `registry-mirror-publish` uploads the provider schema exactly as it is fetched from the release tag. The registry service rejects a schema whose own `version` field disagrees with the version being published, so a placeholder like `0.0.0` fails every release. Providers should either omit the field, which is what bridged providers do, or stamp the real version at release time.
 
 ---
 
@@ -1229,9 +1229,9 @@ This is set automatically in CI. If local builds still fail, consider increasing
 
 **Fix**: Ensure `PULUMI_STACK_NAME` is set correctly in the GitHub Actions environment variables for the relevant environment (testing or production). The stack must exist in the Pulumi Cloud org. Run `pulumi -C infrastructure stack ls` locally (with correct credentials) to confirm available stacks.
 
-### `push-registry.py` publisher not found
+### `publish_to_registry.py` publisher not found
 
-**Symptom**: `push-registry.py` raises `Exception: Missing publisher entry for "<publisher-name>"`.
+**Symptom**: a package publishes under the wrong publisher because its display name is missing from `publisher-names.json` and falls back to `pulumi`.
 
 **Cause**: A package YAML file references a `publisher` display name that is not listed in `tools/resourcedocsgen/pkg/publishers/publisher-names.json`.
 
@@ -1252,28 +1252,28 @@ The Pulumi Registry is actually **two separate but tightly coupled systems** tha
 
 These two systems are **not the same thing and do not share a data store**. The static site is rebuilt from YAML files on every push to `master`; it does not query the Pulumi Cloud API at runtime. The Pulumi Cloud API is a live service that stores package metadata independently.
 
-The bridge between them is `scripts/ci/push-registry.py`, which runs after every production build and publishes any new package versions to the Pulumi Cloud API.
+The bridge between them is `scripts/ci/publish_to_registry.py`, which runs after every production build and publishes any new package versions to the Pulumi Cloud API.
 
 ```
 YAML files in repo                            Pulumi Cloud Registry API
 (source of truth for                          (source of truth for CLI
  the static Hugo site)                         package resolution)
         │                                               │
-        │  scripts/ci/push-registry.py                  │
+        │  scripts/ci/publish_to_registry.py            │
         │  (runs on every production push)              │
         └──────────────────────────────────────────────►│
-                  pulumi package publish                │
+                  registry-mirror-publish               │
 ```
 
-**Consequence**: If `push-registry.py` fails silently on a particular package, the Hugo site will show the package correctly but the Pulumi CLI will not be able to resolve it. The two systems can drift.
+**Consequence**: If `publish_to_registry.py` fails on a particular package, the Hugo site will show the package correctly but the Pulumi CLI will not be able to resolve it. The two systems can drift. A failure posts to `#registry-ops` in Slack.
 
 **Consequence**: The static site does not support version browsing (no "select a version" dropdown) because Hugo generates a fixed set of pages from a fixed set of YAML files. Versioned snapshots (e.g., `aws-v6`) are implemented as entirely separate YAML files, separate Hugo pages, and separate API publication entries — not as a first-class versioned concept.
 
 ---
 
-### 12.2 How push-registry.py Bridges Them
+### 12.2 How publish_to_registry.py Bridges Them
 
-`scripts/ci/push-registry.py` is the synchronization mechanism. On every push to `master`, after the Hugo site is built and deployed, this script:
+`scripts/ci/publish_to_registry.py` is the synchronization mechanism. On every push to `master`, after the Hugo site is built and deployed, this script:
 
 1. Reads every YAML file from `themes/default/data/registry/packages/`.
 2. For each package, queries `GET /api/registry/packages/{source}/{publisher}/{name}/versions/{version}` to check whether this exact version already exists in the API.
@@ -1284,7 +1284,7 @@ YAML files in repo                            Pulumi Cloud Registry API
 4. If it **does** exist (200): no-op.
 5. Skips deprecated packages, `azure-native-v*` aliases, and `aws-v*` legacy versioned packages.
 
-**Important**: `push-registry.py` is also run in **dry-run mode** on every PR (`--dry-run` flag) as the `test-live-publish` CI job. This validates that all YAML files are parseable, all publishers are known, and the `pulumi package publish` invocation would be valid — without actually touching the production API.
+**Important**: `publish_to_registry.py` is also run in **validate mode** on every PR (`--validate-all` flag) as the `test-live-publish` CI job. This validates that every YAML file is parseable and yields a well-formed publish spec — without installing the publish tools or touching the production API.
 
 **Required credential**: `PULUMI_ACCESS_TOKEN` must be set. This is sourced from Pulumi ESC in CI.
 

@@ -3,11 +3,11 @@
 Publish changed packages to the Pulumi registry using registry-mirror-tools.
 
 Runs registry-mirror-discover and registry-mirror-publish with retry logic.
-Falls back to push-registry.py on failure.
 
 Usage:
     uv run --with pyyaml scripts/ci/publish_to_registry.py
     uv run --with pyyaml scripts/ci/publish_to_registry.py --dry-run
+    uv run --with pyyaml scripts/ci/publish_to_registry.py --validate-all
 """
 
 import argparse
@@ -402,6 +402,21 @@ def publish_with_retry(specs: list[str], config: Config) -> bool:
     return False
 
 
+def validate_all(repo_root: Path) -> int:
+    package_dir = repo_root / "themes/default/data/registry/packages"
+    yaml_files = sorted(str(p.relative_to(repo_root)) for p in package_dir.glob("*.yaml"))
+    specs, errors = build_specs(yaml_files, repo_root)
+
+    print(f"{len(yaml_files)} package YAML files, {len(specs)} publishable specs")
+    if not errors:
+        return 0
+
+    print(f"\n{len(errors)} package(s) could not be turned into a publish spec:")
+    for error in errors:
+        print(f"  - {error}")
+    return 1
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(
         description="Publish changed packages to the registry"
@@ -428,7 +443,15 @@ def main() -> int:
         nargs="*",
         help="Package specs to publish (default: detect from git diff)",
     )
+    parser.add_argument(
+        "--validate-all",
+        action="store_true",
+        help="Build a spec for every package YAML and report errors without publishing",
+    )
     args = parser.parse_args()
+
+    if args.validate_all:
+        return validate_all(args.repo_root.resolve())
 
     if not os.environ.get("PULUMI_API_URL"):
         print("Error: PULUMI_API_URL environment variable is required")
@@ -458,7 +481,7 @@ def main() -> int:
 
     if specs:
         if not publish_with_retry(specs, config):
-            print("registry-mirror-publish failed, push-registry.py will attempt fallback")
+            print("registry-mirror-publish failed")
             return 1
     else:
         print("No packages to publish")

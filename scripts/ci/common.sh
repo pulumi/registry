@@ -268,7 +268,9 @@ changed_pages_section() {
 
 # Returns the Git SHA of the HEAD commit. For pull requests, we take this from GitHub event metadata, since in that case, the HEAD commit will contain the SHA of the merge commit with the base branch.
 git_sha() {
-    if [[ "$GITHUB_EVENT_NAME" == "pull_request" && ! -z "$GITHUB_EVENT_PATH" ]]; then
+    if [[ -n "${PREVIEW_HEAD_SHA:-}" ]]; then
+        echo "$PREVIEW_HEAD_SHA"
+    elif [[ "$GITHUB_EVENT_NAME" == "pull_request" && ! -z "$GITHUB_EVENT_PATH" ]]; then
         echo "$(cat "$GITHUB_EVENT_PATH" | jq -r ".pull_request.head.sha")"
     else
         echo "$(git rev-parse HEAD)"
@@ -300,10 +302,9 @@ origin_bucket_metadata_filepath() {
 build_identifier() {
     local identifier
 
-    # For CI builds, we use the GitHub Actions event to generate more readable identifiers.
-    # - For pull_request actions, return "pr-<number>-<git-sha>"
-    # - For others, return "<event-name>-<git-sha>".
-    if [[ ! -z "$GITHUB_EVENT_NAME" && ! -z "$GITHUB_EVENT_PATH" ]]; then
+    if [[ -n "${PREVIEW_PR:-}" ]]; then
+        identifier="pr-${PREVIEW_PR}-$(git_sha_short)"
+    elif [[ ! -z "$GITHUB_EVENT_NAME" && ! -z "$GITHUB_EVENT_PATH" ]]; then
         identifier="$GITHUB_EVENT_NAME"
 
         if [ "$GITHUB_EVENT_NAME" == "pull_request" ]; then

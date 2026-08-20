@@ -74,6 +74,11 @@ type functionDocArgs struct {
 	// Same as FunctionResult, but specific to the Output version of the function. In languages like Go, `Output<Result>`
 	// gets a dedicated nominal type to emulate generics, which will be passed in here.
 	FunctionResultOutputVersion map[language.Language]propertyType
+
+	// FunctionArgsOutputOptions is the Output version's `InvokeOutputOptions` overload. Only C# and Java emit that as a
+	// separate overload; TypeScript and Python fold it into their single Output-version signature, and Go keeps its
+	// variadic `pulumi.InvokeOption`. Languages without such an overload have no entry.
+	FunctionArgsOutputOptions map[language.Language]string
 }
 
 // getFunctionResourceInfo returns a map of per-language information about the resource being looked-up using a static
@@ -154,12 +159,17 @@ func (mod *modContext) genFunctionParamsTS(f *schema.Function, funcName string, 
 	}
 	def, err := mod.pkg.Definition()
 	contract.AssertNoErrorf(err, "failed to get definition for package %q", mod.pkg.Name())
+	// The Output version accepts `InvokeOutputOptions`, which extends `InvokeOptions` with `dependsOn`.
+	optsType := "InvokeOptions"
+	if outputVersion {
+		optsType = "InvokeOutputOptions"
+	}
 	params = append(params, formalParam{
 		Name:         "opts",
 		OptionalFlag: "?",
 		Type: propertyType{
-			Name: "InvokeOptions",
-			Link: docLangHelper.GetDocLinkForPulumiType(def, "InvokeOptions"),
+			Name: optsType,
+			Link: docLangHelper.GetDocLinkForPulumiType(def, optsType),
 		},
 	})
 
@@ -206,7 +216,12 @@ func (mod *modContext) genFunctionParamsGo(f *schema.Function, funcName string, 
 	return params
 }
 
-func (mod *modContext) genFunctionParamsCS(f *schema.Function, funcName string, outputVersion bool) []formalParam {
+// genFunctionParamsCS renders the parameters of a .NET invoke. The Output version has two overloads: one taking an
+// optional `InvokeOptions` and one taking a required `InvokeOutputOptions`. Pass outputOptions to render the latter; it
+// is only meaningful when outputVersion is also set.
+func (mod *modContext) genFunctionParamsCS(
+	f *schema.Function, funcName string, outputVersion, outputOptions bool,
+) []formalParam {
 	dctx := mod.context
 
 	argsTypeSuffix := "Args"
@@ -230,6 +245,18 @@ func (mod *modContext) genFunctionParamsCS(f *schema.Function, funcName string, 
 
 	def, err := mod.pkg.Definition()
 	contract.AssertNoErrorf(err, "failed to get definition for package %q", mod.pkg.Name())
+	if outputOptions {
+		// The `InvokeOutputOptions` overload takes the options argument by value so that it can be told apart from the
+		// `InvokeOptions` one, so it is neither nullable nor defaulted.
+		params = append(params, formalParam{
+			Name: "opts",
+			Type: propertyType{
+				Name: "InvokeOutputOptions",
+				Link: docLangHelper.GetDocLinkForPulumiType(def, "Pulumi.InvokeOutputOptions"),
+			},
+		})
+		return params
+	}
 	params = append(params, formalParam{
 		Name:         "opts",
 		OptionalFlag: "?",
@@ -242,7 +269,10 @@ func (mod *modContext) genFunctionParamsCS(f *schema.Function, funcName string, 
 	return params
 }
 
-func (mod *modContext) genFunctionParamsJava(f *schema.Function, funcName string) []formalParam {
+// genFunctionParamsJava renders the parameters of a Java invoke. As in .NET, the Output version has both an
+// `InvokeOptions` and an `InvokeOutputOptions` overload; pass outputOptions to render the latter. Java uses the same
+// args type for both the regular and Output versions, so no outputVersion flag is needed.
+func (mod *modContext) genFunctionParamsJava(f *schema.Function, funcName string, outputOptions bool) []formalParam {
 	dctx := mod.context
 
 	// java uses the same args type for both the regular and output versions of the function
@@ -264,12 +294,16 @@ func (mod *modContext) genFunctionParamsJava(f *schema.Function, funcName string
 	def, err := mod.pkg.Definition()
 	contract.AssertNoErrorf(err, "failed to get definition for package %q", mod.pkg.Name())
 
+	optsType := "InvokeOptions"
+	if outputOptions {
+		optsType = "InvokeOutputOptions"
+	}
 	params = append(params, formalParam{
 		Name:         "options",
 		OptionalFlag: "@Nullable",
 		Type: propertyType{
-			Name: "InvokeOptions",
-			Link: docLangHelper.GetDocLinkForPulumiType(def, "InvokeOptions"),
+			Name: optsType,
+			Link: docLangHelper.GetDocLinkForPulumiType(def, optsType),
 		},
 	})
 	return params
@@ -311,12 +345,19 @@ func (mod *modContext) genFunctionParamsPython(f *schema.Function, _ string, out
 		params = slice.Prealloc[formalParam](1)
 	}
 
+	// The Output version accepts `InvokeOutputOptions`, which extends `InvokeOptions` with `depends_on`.
+	optsName := "Optional[InvokeOptions]"
+	optsLink := "/docs/reference/pkg/python/pulumi/#pulumi.InvokeOptions"
+	if outputVersion {
+		optsName = "Optional[InvokeOutputOptions]"
+		optsLink = "/docs/reference/pkg/python/pulumi/#pulumi.InvokeOutputOptions"
+	}
 	params = append(params, formalParam{
 		Name:         "opts",
 		DefaultValue: " = None",
 		Type: propertyType{
-			Name: "Optional[InvokeOptions]",
-			Link: "/docs/reference/pkg/python/pulumi/#pulumi.InvokeOptions",
+			Name: optsName,
+			Link: optsLink,
 		},
 	})
 
@@ -343,6 +384,27 @@ func (mod *modContext) genFunctionArgs(
 	return functionParams
 }
 
+// genFunctionArgsOutputOptions renders the Output version's `InvokeOutputOptions` overload, which only C# and Java
+// emit as a signature distinct from the `InvokeOptions` one. Languages without such an overload get no entry.
+func (mod *modContext) genFunctionArgsOutputOptions(
+	f *schema.Function,
+	funcNameMap map[language.Language]string,
+) map[language.Language]string {
+	functionParams := make(map[language.Language]string)
+
+	// The .NET SDK skips this overload for multi-argument inputs: making `options` required would force every preceding
+	// argument to be required too.
+	if !f.MultiArgumentInputs {
+		params := mod.genFunctionParamsCS(f, funcNameMap[language.CSharp], true /*outputVersion*/, true /*outputOptions*/)
+		functionParams[language.CSharp] = renderParams(language.CSharp, params, "")
+	}
+
+	params := mod.genFunctionParamsJava(f, funcNameMap[language.Java], true /*outputOptions*/)
+	functionParams[language.Java] = renderParams(language.Java, params, "")
+
+	return functionParams
+}
+
 func (mod *modContext) genFunctionParams(
 	lang language.Language, f *schema.Function,
 	funcNameMap map[language.Language]string, outputVersion bool,
@@ -354,9 +416,9 @@ func (mod *modContext) genFunctionParams(
 	case language.Go:
 		return mod.genFunctionParamsGo(f, funcName, outputVersion)
 	case language.CSharp:
-		return mod.genFunctionParamsCS(f, funcName, outputVersion)
+		return mod.genFunctionParamsCS(f, funcName, outputVersion, false /*outputOptions*/)
 	case language.Java:
-		return mod.genFunctionParamsJava(f, funcName)
+		return mod.genFunctionParamsJava(f, funcName, false /*outputOptions*/)
 	case language.Python:
 		return mod.genFunctionParamsPython(f, funcName, outputVersion)
 	case language.YAML, language.HCL: // Left blank
@@ -481,6 +543,7 @@ func (mod *modContext) genFunction(f *schema.Function) functionDocArgs {
 
 	if f.NeedsOutputVersion() {
 		args.FunctionArgsOutputVersion = mod.genFunctionArgs(f, funcNameMap, true /*outputVersion*/)
+		args.FunctionArgsOutputOptions = mod.genFunctionArgsOutputOptions(f, funcNameMap)
 		args.FunctionResultOutputVersion = mod.getFunctionResourceInfo(f, true /*outputVersion*/)
 	}
 

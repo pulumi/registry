@@ -35,7 +35,7 @@ Input-wrapped arguments and returns an Output-wrapped result.
 ><pre class="chroma"><code class="language-typescript" data-lang="typescript"
 ><span class="k">function </span>getAssets<span class="p">(</span><span class="nx">args</span><span class="p">:</span> <span class="nx">GetAssetsArgs</span><span class="p">,</span> <span class="nx">opts</span><span class="p">?:</span> <span class="nx"><a href="/docs/reference/pkg/nodejs/pulumi/pulumi/#InvokeOptions">InvokeOptions</a></span><span class="p">): Promise&lt;<span class="nx"><a href="#result">GetAssetsResult</a></span>></span
 ><span class="k">
-function </span>getAssetsOutput<span class="p">(</span><span class="nx">args</span><span class="p">:</span> <span class="nx">GetAssetsOutputArgs</span><span class="p">,</span> <span class="nx">opts</span><span class="p">?:</span> <span class="nx"><a href="/docs/reference/pkg/nodejs/pulumi/pulumi/#InvokeOptions">InvokeOptions</a></span><span class="p">): Output&lt;<span class="nx"><a href="#result">GetAssetsResult</a></span>></span
+function </span>getAssetsOutput<span class="p">(</span><span class="nx">args</span><span class="p">:</span> <span class="nx">GetAssetsOutputArgs</span><span class="p">,</span> <span class="nx">opts</span><span class="p">?:</span> <span class="nx"><a href="/docs/reference/pkg/nodejs/pulumi/pulumi/#InvokeOutputOptions">InvokeOutputOptions</a></span><span class="p">): Output&lt;<span class="nx"><a href="#result">GetAssetsResult</a></span>></span
 ></code></pre></div>
 </pulumi-choosable>
 </div>
@@ -50,7 +50,7 @@ function </span>getAssetsOutput<span class="p">(</span><span class="nx">args</sp
 ><span class="k">
 def </span>get_assets_output<span class="p">(</span><span class="nx">archive</span><span class="p">:</span> <span class="nx">pulumi.Input[Optional[pulumi.Archive]]</span> = None<span class="p">,</span>
                <span class="nx">source</span><span class="p">:</span> <span class="nx">pulumi.Input[Optional[Union[pulumi.Asset, pulumi.Archive]]]</span> = None<span class="p">,</span>
-               <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.InvokeOptions">Optional[InvokeOptions]</a></span> = None<span class="p">) -&gt;</span> <span>Output[GetAssetsResult]</span
+               <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.InvokeOutputOptions">Optional[InvokeOutputOptions]</a></span> = None<span class="p">) -&gt;</span> <span>Output[GetAssetsResult]</span
 ></code></pre></div>
 </pulumi-choosable>
 </div>
@@ -73,7 +73,8 @@ func </span>GetAssetsOutput<span class="p">(</span><span class="nx">ctx</span><s
 <div class="highlight"><pre class="chroma"><code class="language-csharp" data-lang="csharp"><span class="k">public static class </span><span class="nx">GetAssets </span><span class="p">
 {</span><span class="k">
     public static </span>Task&lt;<span class="nx"><a href="#result">GetAssetsResult</a></span>> <span class="p">InvokeAsync(</span><span class="nx">GetAssetsArgs</span><span class="p"> </span><span class="nx">args<span class="p">,</span> <span class="nx"><a href="/docs/reference/pkg/dotnet/Pulumi/Pulumi.InvokeOptions.html">InvokeOptions</a></span><span class="p">? </span><span class="nx">opts = null<span class="p">)</span><span class="k">
-    public static </span>Output&lt;<span class="nx"><a href="#result">GetAssetsResult</a></span>> <span class="p">Invoke(</span><span class="nx">GetAssetsInvokeArgs</span><span class="p"> </span><span class="nx">args<span class="p">,</span> <span class="nx"><a href="/docs/reference/pkg/dotnet/Pulumi/Pulumi.InvokeOptions.html">InvokeOptions</a></span><span class="p">? </span><span class="nx">opts = null<span class="p">)</span><span class="p">
+    public static </span>Output&lt;<span class="nx"><a href="#result">GetAssetsResult</a></span>> <span class="p">Invoke(</span><span class="nx">GetAssetsInvokeArgs</span><span class="p"> </span><span class="nx">args<span class="p">,</span> <span class="nx"><a href="/docs/reference/pkg/dotnet/Pulumi/Pulumi.InvokeOptions.html">InvokeOptions</a></span><span class="p">? </span><span class="nx">opts = null<span class="p">)</span><span class="k">
+    public static </span>Output&lt;<span class="nx"><a href="#result">GetAssetsResult</a></span>> <span class="p">Invoke(</span><span class="nx">GetAssetsInvokeArgs</span><span class="p"> </span><span class="nx">args<span class="p">,</span> <span class="nx"><a href="/docs/reference/pkg/dotnet/Pulumi/Pulumi.InvokeOutputOptions.html">InvokeOutputOptions</a></span><span class="p"> </span><span class="nx">opts<span class="p">)</span><span class="p">
 }</span></code></pre></div>
 </pulumi-choosable>
 </div>
@@ -83,6 +84,7 @@ func </span>GetAssetsOutput<span class="p">(</span><span class="nx">ctx</span><s
 <pulumi-choosable type="language" values="java">
 <div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="k">public static CompletableFuture&lt;<span class="nx"><a href="#result">GetAssetsResult</a></span>> </span>getAssets<span class="p">(</span><span class="nx">GetAssetsArgs</span><span class="p"> </span><span class="nx">args<span class="p">,</span> <span class="nx">InvokeOptions</span><span class="p"> </span><span class="nx">options<span class="p">)</span>
 <span class="k">public static Output&lt;<span class="nx"><a href="#result">GetAssetsResult</a></span>> </span>getAssets<span class="p">(</span><span class="nx">GetAssetsArgs</span><span class="p"> </span><span class="nx">args<span class="p">,</span> <span class="nx">InvokeOptions</span><span class="p"> </span><span class="nx">options<span class="p">)</span>
+<span class="k">public static Output&lt;<span class="nx"><a href="#result">GetAssetsResult</a></span>> </span>getAssets<span class="p">(</span><span class="nx">GetAssetsArgs</span><span class="p"> </span><span class="nx">args<span class="p">,</span> <span class="nx">InvokeOutputOptions</span><span class="p"> </span><span class="nx">options<span class="p">)</span>
 </code></pre></div>
 </pulumi-choosable>
 </div>

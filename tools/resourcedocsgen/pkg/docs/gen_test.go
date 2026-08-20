@@ -941,3 +941,64 @@ func TestOversizedCreationExampleKeepsCLIConstructorSection(t *testing.T) {
 	assert.Contains(t, content, "## Create OversizedResource Resource")
 	assert.Contains(t, content, "### Parameters")
 }
+
+// TestFunctionInvokeOptionsTypes pins the options type rendered on each of a function's signatures. The Output version
+// accepts `InvokeOutputOptions` (which adds `dependsOn`), but how that surfaces differs per language: TypeScript and
+// Python swap the type outright, Go keeps its variadic `pulumi.InvokeOption`, and C# and Java gain a second overload.
+func TestFunctionInvokeOptionsTypes(t *testing.T) {
+	t.Parallel()
+
+	schemaPkg, err := schema.ImportSpec(newTestPackageSpec(), nil, schema.NewNullLoader(), schema.ValidationOptions{
+		AllowDanglingReferences: true,
+	})
+	require.NoError(t, err, "importing spec")
+
+	dctx := NewContext("test", schemaPkg)
+	mod, ok := dctx.generateModulesFromSchemaPackage("test", schemaPkg)["module"]
+	require.True(t, ok, "could not find the module 'module' in modules map")
+
+	f := getFunctionFromModule("getModuleResource", mod)
+	require.NotNil(t, f, "could not find getModuleResource in module")
+	require.True(t, f.NeedsOutputVersion(), "test function is expected to have an Output version")
+
+	args := mod.genFunction(f)
+
+	// optsType returns everything after the `opts` parameter name, which for the languages that put the type after the
+	// name is the type itself plus any default value.
+	optsType := func(rendered string) string {
+		_, opts, found := strings.Cut(stripHTML(rendered), "opts")
+		require.True(t, found, "no opts parameter in %q", rendered)
+		return strings.TrimSpace(opts)
+	}
+
+	t.Run("direct form", func(t *testing.T) {
+		t.Parallel()
+		assert.Equal(t, "?: InvokeOptions", optsType(args.FunctionArgs[language.NodeJS]))
+		assert.Equal(t, ": Optional[InvokeOptions] = None", optsType(args.FunctionArgs[language.Python]))
+		assert.Equal(t, "...InvokeOption", optsType(args.FunctionArgs[language.Go]))
+		// C# and Java put the type ahead of the parameter name.
+		assert.Contains(t, stripHTML(args.FunctionArgs[language.CSharp]), "InvokeOptions? opts = null")
+		assert.Contains(t, stripHTML(args.FunctionArgs[language.Java]), "InvokeOptions options")
+	})
+
+	t.Run("output form", func(t *testing.T) {
+		t.Parallel()
+		assert.Equal(t, "?: InvokeOutputOptions", optsType(args.FunctionArgsOutputVersion[language.NodeJS]))
+		assert.Equal(t, ": Optional[InvokeOutputOptions] = None", optsType(args.FunctionArgsOutputVersion[language.Python]))
+		// Go's Output version keeps the variadic `pulumi.InvokeOption`; it builds the InvokeOutputOptions internally.
+		assert.Equal(t, "...InvokeOption", optsType(args.FunctionArgsOutputVersion[language.Go]))
+		// C# and Java keep the InvokeOptions overload and add a second one below.
+		assert.Contains(t, stripHTML(args.FunctionArgsOutputVersion[language.CSharp]), "InvokeOptions? opts = null")
+		assert.Contains(t, stripHTML(args.FunctionArgsOutputVersion[language.Java]), "InvokeOptions options")
+	})
+
+	t.Run("output form InvokeOutputOptions overload", func(t *testing.T) {
+		t.Parallel()
+		assert.Contains(t, stripHTML(args.FunctionArgsOutputOptions[language.CSharp]), "InvokeOutputOptions opts")
+		assert.Contains(t, stripHTML(args.FunctionArgsOutputOptions[language.Java]), "InvokeOutputOptions options")
+		// Only C# and Java render this as a distinct overload.
+		assert.NotContains(t, args.FunctionArgsOutputOptions, language.NodeJS)
+		assert.NotContains(t, args.FunctionArgsOutputOptions, language.Python)
+		assert.NotContains(t, args.FunctionArgsOutputOptions, language.Go)
+	})
+}

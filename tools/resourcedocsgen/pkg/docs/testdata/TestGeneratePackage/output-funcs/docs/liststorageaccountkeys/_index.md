@@ -37,7 +37,7 @@ Input-wrapped arguments and returns an Output-wrapped result.
 ><pre class="chroma"><code class="language-typescript" data-lang="typescript"
 ><span class="k">function </span>listStorageAccountKeys<span class="p">(</span><span class="nx">args</span><span class="p">:</span> <span class="nx">ListStorageAccountKeysArgs</span><span class="p">,</span> <span class="nx">opts</span><span class="p">?:</span> <span class="nx"><a href="/docs/reference/pkg/nodejs/pulumi/pulumi/#InvokeOptions">InvokeOptions</a></span><span class="p">): Promise&lt;<span class="nx"><a href="#result">ListStorageAccountKeysResult</a></span>></span
 ><span class="k">
-function </span>listStorageAccountKeysOutput<span class="p">(</span><span class="nx">args</span><span class="p">:</span> <span class="nx">ListStorageAccountKeysOutputArgs</span><span class="p">,</span> <span class="nx">opts</span><span class="p">?:</span> <span class="nx"><a href="/docs/reference/pkg/nodejs/pulumi/pulumi/#InvokeOptions">InvokeOptions</a></span><span class="p">): Output&lt;<span class="nx"><a href="#result">ListStorageAccountKeysResult</a></span>></span
+function </span>listStorageAccountKeysOutput<span class="p">(</span><span class="nx">args</span><span class="p">:</span> <span class="nx">ListStorageAccountKeysOutputArgs</span><span class="p">,</span> <span class="nx">opts</span><span class="p">?:</span> <span class="nx"><a href="/docs/reference/pkg/nodejs/pulumi/pulumi/#InvokeOutputOptions">InvokeOutputOptions</a></span><span class="p">): Output&lt;<span class="nx"><a href="#result">ListStorageAccountKeysResult</a></span>></span
 ></code></pre></div>
 </pulumi-choosable>
 </div>
@@ -54,7 +54,7 @@ function </span>listStorageAccountKeysOutput<span class="p">(</span><span class=
 def </span>list_storage_account_keys_output<span class="p">(</span><span class="nx">account_name</span><span class="p">:</span> <span class="nx">pulumi.Input[Optional[str]]</span> = None<span class="p">,</span>
                               <span class="nx">expand</span><span class="p">:</span> <span class="nx">pulumi.Input[Optional[str]]</span> = None<span class="p">,</span>
                               <span class="nx">resource_group_name</span><span class="p">:</span> <span class="nx">pulumi.Input[Optional[str]]</span> = None<span class="p">,</span>
-                              <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.InvokeOptions">Optional[InvokeOptions]</a></span> = None<span class="p">) -&gt;</span> <span>Output[ListStorageAccountKeysResult]</span
+                              <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.InvokeOutputOptions">Optional[InvokeOutputOptions]</a></span> = None<span class="p">) -&gt;</span> <span>Output[ListStorageAccountKeysResult]</span
 ></code></pre></div>
 </pulumi-choosable>
 </div>
@@ -79,7 +79,8 @@ func </span>ListStorageAccountKeysOutput<span class="p">(</span><span class="nx"
 <div class="highlight"><pre class="chroma"><code class="language-csharp" data-lang="csharp"><span class="k">public static class </span><span class="nx">ListStorageAccountKeys </span><span class="p">
 {</span><span class="k">
     public static </span>Task&lt;<span class="nx"><a href="#result">ListStorageAccountKeysResult</a></span>> <span class="p">InvokeAsync(</span><span class="nx">ListStorageAccountKeysArgs</span><span class="p"> </span><span class="nx">args<span class="p">,</span> <span class="nx"><a href="/docs/reference/pkg/dotnet/Pulumi/Pulumi.InvokeOptions.html">InvokeOptions</a></span><span class="p">? </span><span class="nx">opts = null<span class="p">)</span><span class="k">
-    public static </span>Output&lt;<span class="nx"><a href="#result">ListStorageAccountKeysResult</a></span>> <span class="p">Invoke(</span><span class="nx">ListStorageAccountKeysInvokeArgs</span><span class="p"> </span><span class="nx">args<span class="p">,</span> <span class="nx"><a href="/docs/reference/pkg/dotnet/Pulumi/Pulumi.InvokeOptions.html">InvokeOptions</a></span><span class="p">? </span><span class="nx">opts = null<span class="p">)</span><span class="p">
+    public static </span>Output&lt;<span class="nx"><a href="#result">ListStorageAccountKeysResult</a></span>> <span class="p">Invoke(</span><span class="nx">ListStorageAccountKeysInvokeArgs</span><span class="p"> </span><span class="nx">args<span class="p">,</span> <span class="nx"><a href="/docs/reference/pkg/dotnet/Pulumi/Pulumi.InvokeOptions.html">InvokeOptions</a></span><span class="p">? </span><span class="nx">opts = null<span class="p">)</span><span class="k">
+    public static </span>Output&lt;<span class="nx"><a href="#result">ListStorageAccountKeysResult</a></span>> <span class="p">Invoke(</span><span class="nx">ListStorageAccountKeysInvokeArgs</span><span class="p"> </span><span class="nx">args<span class="p">,</span> <span class="nx"><a href="/docs/reference/pkg/dotnet/Pulumi/Pulumi.InvokeOutputOptions.html">InvokeOutputOptions</a></span><span class="p"> </span><span class="nx">opts<span class="p">)</span><span class="p">
 }</span></code></pre></div>
 </pulumi-choosable>
 </div>
@@ -89,6 +90,7 @@ func </span>ListStorageAccountKeysOutput<span class="p">(</span><span class="nx"
 <pulumi-choosable type="language" values="java">
 <div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="k">public static CompletableFuture&lt;<span class="nx"><a href="#result">ListStorageAccountKeysResult</a></span>> </span>listStorageAccountKeys<span class="p">(</span><span class="nx">ListStorageAccountKeysArgs</span><span class="p"> </span><span class="nx">args<span class="p">,</span> <span class="nx">InvokeOptions</span><span class="p"> </span><span class="nx">options<span class="p">)</span>
 <span class="k">public static Output&lt;<span class="nx"><a href="#result">ListStorageAccountKeysResult</a></span>> </span>listStorageAccountKeys<span class="p">(</span><span class="nx">ListStorageAccountKeysArgs</span><span class="p"> </span><span class="nx">args<span class="p">,</span> <span class="nx">InvokeOptions</span><span class="p"> </span><span class="nx">options<span class="p">)</span>
+<span class="k">public static Output&lt;<span class="nx"><a href="#result">ListStorageAccountKeysResult</a></span>> </span>listStorageAccountKeys<span class="p">(</span><span class="nx">ListStorageAccountKeysArgs</span><span class="p"> </span><span class="nx">args<span class="p">,</span> <span class="nx">InvokeOutputOptions</span><span class="p"> </span><span class="nx">options<span class="p">)</span>
 </code></pre></div>
 </pulumi-choosable>
 </div>

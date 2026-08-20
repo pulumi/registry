@@ -35,7 +35,7 @@ Input-wrapped arguments and returns an Output-wrapped result.
 ><pre class="chroma"><code class="language-typescript" data-lang="typescript"
 ><span class="k">function </span>argFunction<span class="p">(</span><span class="nx">args</span><span class="p">:</span> <span class="nx">ArgFunctionArgs</span><span class="p">,</span> <span class="nx">opts</span><span class="p">?:</span> <span class="nx"><a href="/docs/reference/pkg/nodejs/pulumi/pulumi/#InvokeOptions">InvokeOptions</a></span><span class="p">): Promise&lt;<span class="nx"><a href="#result">ArgFunctionResult</a></span>></span
 ><span class="k">
-function </span>argFunctionOutput<span class="p">(</span><span class="nx">args</span><span class="p">:</span> <span class="nx">ArgFunctionOutputArgs</span><span class="p">,</span> <span class="nx">opts</span><span class="p">?:</span> <span class="nx"><a href="/docs/reference/pkg/nodejs/pulumi/pulumi/#InvokeOptions">InvokeOptions</a></span><span class="p">): Output&lt;<span class="nx"><a href="#result">ArgFunctionResult</a></span>></span
+function </span>argFunctionOutput<span class="p">(</span><span class="nx">args</span><span class="p">:</span> <span class="nx">ArgFunctionOutputArgs</span><span class="p">,</span> <span class="nx">opts</span><span class="p">?:</span> <span class="nx"><a href="/docs/reference/pkg/nodejs/pulumi/pulumi/#InvokeOutputOptions">InvokeOutputOptions</a></span><span class="p">): Output&lt;<span class="nx"><a href="#result">ArgFunctionResult</a></span>></span
 ></code></pre></div>
 </pulumi-choosable>
 </div>
@@ -48,7 +48,7 @@ function </span>argFunctionOutput<span class="p">(</span><span class="nx">args</
                  <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.InvokeOptions">Optional[InvokeOptions]</a></span> = None<span class="p">) -&gt;</span> <span>ArgFunctionResult</span
 ><span class="k">
 def </span>arg_function_output<span class="p">(</span><span class="nx">name</span><span class="p">:</span> <span class="nx">pulumi.Input[Optional[pulumi_random.RandomPet]]</span> = None<span class="p">,</span>
-                 <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.InvokeOptions">Optional[InvokeOptions]</a></span> = None<span class="p">) -&gt;</span> <span>Output[ArgFunctionResult]</span
+                 <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.InvokeOutputOptions">Optional[InvokeOutputOptions]</a></span> = None<span class="p">) -&gt;</span> <span>Output[ArgFunctionResult]</span
 ></code></pre></div>
 </pulumi-choosable>
 </div>
@@ -73,7 +73,8 @@ func </span>ArgFunctionOutput<span class="p">(</span><span class="nx">ctx</span>
 <div class="highlight"><pre class="chroma"><code class="language-csharp" data-lang="csharp"><span class="k">public static class </span><span class="nx">ArgFunction </span><span class="p">
 {</span><span class="k">
     public static </span>Task&lt;<span class="nx"><a href="#result">ArgFunctionResult</a></span>> <span class="p">InvokeAsync(</span><span class="nx">ArgFunctionArgs</span><span class="p"> </span><span class="nx">args<span class="p">,</span> <span class="nx"><a href="/docs/reference/pkg/dotnet/Pulumi/Pulumi.InvokeOptions.html">InvokeOptions</a></span><span class="p">? </span><span class="nx">opts = null<span class="p">)</span><span class="k">
-    public static </span>Output&lt;<span class="nx"><a href="#result">ArgFunctionResult</a></span>> <span class="p">Invoke(</span><span class="nx">ArgFunctionInvokeArgs</span><span class="p"> </span><span class="nx">args<span class="p">,</span> <span class="nx"><a href="/docs/reference/pkg/dotnet/Pulumi/Pulumi.InvokeOptions.html">InvokeOptions</a></span><span class="p">? </span><span class="nx">opts = null<span class="p">)</span><span class="p">
+    public static </span>Output&lt;<span class="nx"><a href="#result">ArgFunctionResult</a></span>> <span class="p">Invoke(</span><span class="nx">ArgFunctionInvokeArgs</span><span class="p"> </span><span class="nx">args<span class="p">,</span> <span class="nx"><a href="/docs/reference/pkg/dotnet/Pulumi/Pulumi.InvokeOptions.html">InvokeOptions</a></span><span class="p">? </span><span class="nx">opts = null<span class="p">)</span><span class="k">
+    public static </span>Output&lt;<span class="nx"><a href="#result">ArgFunctionResult</a></span>> <span class="p">Invoke(</span><span class="nx">ArgFunctionInvokeArgs</span><span class="p"> </span><span class="nx">args<span class="p">,</span> <span class="nx"><a href="/docs/reference/pkg/dotnet/Pulumi/Pulumi.InvokeOutputOptions.html">InvokeOutputOptions</a></span><span class="p"> </span><span class="nx">opts<span class="p">)</span><span class="p">
 }</span></code></pre></div>
 </pulumi-choosable>
 </div>
@@ -83,6 +84,7 @@ func </span>ArgFunctionOutput<span class="p">(</span><span class="nx">ctx</span>
 <pulumi-choosable type="language" values="java">
 <div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="k">public static CompletableFuture&lt;<span class="nx"><a href="#result">ArgFunctionResult</a></span>> </span>argFunction<span class="p">(</span><span class="nx">ArgFunctionArgs</span><span class="p"> </span><span class="nx">args<span class="p">,</span> <span class="nx">InvokeOptions</span><span class="p"> </span><span class="nx">options<span class="p">)</span>
 <span class="k">public static Output&lt;<span class="nx"><a href="#result">ArgFunctionResult</a></span>> </span>argFunction<span class="p">(</span><span class="nx">ArgFunctionArgs</span><span class="p"> </span><span class="nx">args<span class="p">,</span> <span class="nx">InvokeOptions</span><span class="p"> </span><span class="nx">options<span class="p">)</span>
+<span class="k">public static Output&lt;<span class="nx"><a href="#result">ArgFunctionResult</a></span>> </span>argFunction<span class="p">(</span><span class="nx">ArgFunctionArgs</span><span class="p"> </span><span class="nx">args<span class="p">,</span> <span class="nx">InvokeOutputOptions</span><span class="p"> </span><span class="nx">options<span class="p">)</span>
 </code></pre></div>
 </pulumi-choosable>
 </div>

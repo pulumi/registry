@@ -750,7 +750,7 @@ Used by first-party Pulumi provider repos to trigger documentation regeneration 
 | `push-provider-update` | Opaque provider (no assumed GitHub structure) | `project-shortname`, `schema-url`, `index-url` |
 
 For `resource-provider`: Calls `resourcedocsgen metadata from-github` → creates a PR.
-For `push-provider-update`: Downloads schema from `schema-url`, extracts version from schema, calls `resourcedocsgen metadata from-urls` → creates a PR.
+For `push-provider-update`: Downloads schema from `schema-url`, extracts version from schema, calls `resourcedocsgen metadata from-urls` → creates a PR. This is the path used by the AnyTF pipeline; if the schema doesn't set a `publisher`, `from-urls` defaults it to `Pulumi` (see [pulumi/registry#12073](https://github.com/pulumi/registry/issues/12073)) rather than requiring it be set explicitly.
 
 #### `bucket-cleanup.yml` — Remove Stale S3 Preview Buckets
 

@@ -28,6 +28,7 @@ jobs:
       uses: actions/setup-go@v6
       with:
         go-version-file: '${{ inputs.path }}/go.mod'
+        cache-dependency-path: '${{ inputs.path }}/go.sum'
     - name: golangci-lint
       uses: golangci/golangci-lint-action@v9
       with:
@@ -49,6 +50,7 @@ jobs:
       uses: actions/setup-go@v6
       with:
         go-version-file: '${{ inputs.path }}/go.mod'
+        cache-dependency-path: '${{ inputs.path }}/go.sum'
     - name: Run Tests
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

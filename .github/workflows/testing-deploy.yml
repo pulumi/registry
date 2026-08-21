@@ -40,7 +40,8 @@ jobs:
 
       - uses: actions/setup-go@v6
         with:
-          go-version: 1.26.x
+          go-version-file: tools/resourcedocsgen/go.mod
+          cache-dependency-path: tools/resourcedocsgen/go.sum
 
       - uses: peaceiris/actions-hugo@v3
         with:

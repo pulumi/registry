@@ -19,15 +19,16 @@ jobs:
       - name: Fetch secrets from ESC
         id: esc-secrets
         uses: pulumi/esc-action@3af4859af8a73a362fb599b944124097d4bb80c5 # v3
-      - name: Install Go
-        uses: actions/setup-go@v6
-        with:
-          go-version: 1.26.x
-
       - name: Check out the repo
         uses: actions/checkout@v7
         with:
           token: ${{ steps.esc-secrets.outputs.PULUMI_BOT_TOKEN }}
+
+      - name: Install Go
+        uses: actions/setup-go@v6
+        with:
+          go-version: 1.26.x
+          cache-dependency-path: tools/mktutorial/go.sum
 
       - name: Checkout examples repo
         id: checkout-examples

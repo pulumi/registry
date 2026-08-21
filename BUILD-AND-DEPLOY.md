@@ -466,11 +466,15 @@ CI builds use multiple cache layers to avoid redundant work. All caches are stor
 | Cache | Key | Paths | What it stores |
 |---|---|---|---|
 | Node/Yarn | `node-cache-Linux-x64-yarn-<yarn.lock hash>` | `~/.cache/yarn/v6` | Yarn package cache |
-| Go | `setup-go-...-<go.sum hash>` | `GOMODCACHE`, `GOCACHE` | Go module and build cache |
+| Go (resourcedocsgen) | `setup-go-...-<tools/resourcedocsgen/go.sum hash>` | `GOMODCACHE`, `GOCACHE` | Go module and build cache |
+| Go (mktutorial) | `setup-go-...-<tools/mktutorial/go.sum hash>` | `GOMODCACHE`, `GOCACHE` | Go module and build cache |
+| registry-mirror-tools binaries | `registry-mirror-tools-bins-<os>-<commit hash>` | `bin/registry-mirror-discover`, `bin/registry-mirror-publish` | Pre-built binaries for `test-ci-scripts.yml` |
 | Docs + schemas | `docs-cache-<run_id>` (restore key: `docs-cache-`) | `.cache/schemas`, `.cache/versioned-docs`, `.cache/api-docs` | API docs output, versioned docs, provider schemas, LLM docs JSON |
 | registry-mirror-discover | `registry-mirror-discover-<commit hash>` | `bin/registry-mirror-discover` | Pre-built binary for versioned docs discovery |
 
 The docs cache uses `restore-keys: docs-cache-` so it falls back to the most recent previous run's cache when an exact match isn't found (the key includes `run_id`, so it's always unique).
+
+Each Go job keys on the `go.sum` of the module it compiles, via `cache-dependency-path`. Keep it that way: one key per module, never one key listing both. `setup-go` restores on an exact primary-key match and exposes no `restore-keys`, so a single shared key means the first job to finish decides what every later job restores — and if that is a `mktutorial` check, the jobs building `resourcedocsgen` stay cold. Jobs that compile neither module set `cache: false` rather than falling back to the repo-root `go.mod`, which describes the Hugo theme module and never changes.
 
 #### Incremental API docs generation
 
@@ -1145,7 +1149,7 @@ The `export-repo-secrets.yml` workflow provides a manual escape hatch to sync Gi
 | Tool | `mise.toml` | `pull-request.yml` (preview) | `push.yml` (production) | `testing-deploy.yml` |
 |---|---|---|---|---|
 | Node.js | 20 | 22.x | 22.x | 22.x |
-| Go | 1.26 | 1.26.x | 1.26.x | 1.21.x |
+| Go | 1.26 | `tools/resourcedocsgen/go.mod` | `tools/resourcedocsgen/go.mod` | `tools/resourcedocsgen/go.mod` |
 | Hugo | 0.157 | 0.157.0 | 0.157.0 | 0.157.0 |
 | golangci-lint | 2.1.6 | v2.1.6 (check-go.yml) | — | — |
 | s5cmd | — | v2.3.0 | v2.3.0 | v2.3.0 |

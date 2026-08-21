@@ -139,6 +139,47 @@ layout: package
 	})
 }
 
+// TestFromURLsDefaultsPublisherToPulumi verifies that `metadata from-urls` (used by
+// the AnyTF pipeline) defaults an empty publisher to "Pulumi" rather than failing
+// validation. See https://github.com/pulumi/registry/issues/12073.
+func TestFromURLsDefaultsPublisherToPulumi(t *testing.T) {
+	t.Parallel()
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch r.URL.Path {
+		case "/schema.json":
+			schema := &schema.Package{
+				Name:       "test",
+				Version:    ref(semver.MustParse("1.0.0")),
+				Repository: "https://github.com/pulumi/pulumi-test",
+				Provider:   &schema.Resource{},
+			}
+			bytes, err := schema.MarshalJSON()
+			require.NoError(t, err)
+			_, err = w.Write(bytes)
+			require.NoError(t, err)
+		case "/docs/_index.md":
+			_, err := w.Write([]byte(`---
+layout: package
+---
+
+# some docs`))
+			require.NoError(t, err)
+		default:
+			assert.Failf(t, "unknown path %s", r.URL.Path)
+			w.WriteHeader(http.StatusUnauthorized)
+		}
+	}))
+	defer server.Close()
+	testMetadata(t, testMetadataArgs{
+		providerName:  "test",
+		schemaFileURL: server.URL + "/schema.json",
+		indexFileURL:  server.URL + "/docs/_index.md",
+		assertOptions: []util.AssertOption{
+			util.AssertOptionsPreCompareTransform("[0-9]{5}", "*****"),
+		},
+	})
+}
+
 func TestMissingMetadataFile(t *testing.T) {
 	t.Parallel()
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

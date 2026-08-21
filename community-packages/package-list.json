@@ -403,6 +403,10 @@
     {
       "repoSlug": "shirasakaren/pulumi-biznetgio",
       "schemaFile": "provider/cmd/pulumi-resource-biznetgio/schema.json"
+    },
+    {
+      "repoSlug": "jschady/pulumi-filescom",
+      "schemaFile": "provider/cmd/pulumi-resource-filescom/schema.json"
     }
   ]
 }

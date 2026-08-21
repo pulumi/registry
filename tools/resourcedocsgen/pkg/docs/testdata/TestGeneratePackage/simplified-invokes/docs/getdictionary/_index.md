@@ -35,7 +35,7 @@ Input-wrapped arguments and returns an Output-wrapped result.
 ><pre class="chroma"><code class="language-typescript" data-lang="typescript"
 ><span class="k">function </span>getDictionary<span class="p">(</span><span class="nx">args</span><span class="p">:</span> <span class="nx">GetDictionaryArgs</span><span class="p">,</span> <span class="nx">opts</span><span class="p">?:</span> <span class="nx"><a href="/docs/reference/pkg/nodejs/pulumi/pulumi/#InvokeOptions">InvokeOptions</a></span><span class="p">): Promise&lt;<span class="nx"><a href="#result">GetDictionaryResult</a></span>></span
 ><span class="k">
-function </span>getDictionaryOutput<span class="p">(</span><span class="nx">args</span><span class="p">:</span> <span class="nx">GetDictionaryOutputArgs</span><span class="p">,</span> <span class="nx">opts</span><span class="p">?:</span> <span class="nx"><a href="/docs/reference/pkg/nodejs/pulumi/pulumi/#InvokeOptions">InvokeOptions</a></span><span class="p">): Output&lt;<span class="nx"><a href="#result">GetDictionaryResult</a></span>></span
+function </span>getDictionaryOutput<span class="p">(</span><span class="nx">args</span><span class="p">:</span> <span class="nx">GetDictionaryOutputArgs</span><span class="p">,</span> <span class="nx">opts</span><span class="p">?:</span> <span class="nx"><a href="/docs/reference/pkg/nodejs/pulumi/pulumi/#InvokeOutputOptions">InvokeOutputOptions</a></span><span class="p">): Output&lt;<span class="nx"><a href="#result">GetDictionaryResult</a></span>></span
 ></code></pre></div>
 </pulumi-choosable>
 </div>
@@ -48,7 +48,7 @@ function </span>getDictionaryOutput<span class="p">(</span><span class="nx">args
                    <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.InvokeOptions">Optional[InvokeOptions]</a></span> = None<span class="p">) -&gt;</span> <span>GetDictionaryResult</span
 ><span class="k">
 def </span>get_dictionary_output<span class="p">(</span><span class="nx">a</span><span class="p">:</span> <span class="nx">pulumi.Input[Optional[float]]</span> = None<span class="p">,</span>
-                   <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.InvokeOptions">Optional[InvokeOptions]</a></span> = None<span class="p">) -&gt;</span> <span>Output[GetDictionaryResult]</span
+                   <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.InvokeOutputOptions">Optional[InvokeOutputOptions]</a></span> = None<span class="p">) -&gt;</span> <span>Output[GetDictionaryResult]</span
 ></code></pre></div>
 </pulumi-choosable>
 </div>
@@ -81,6 +81,7 @@ func </span>GetDictionaryOutput<span class="p">(</span><span class="nx">ctx</spa
 <pulumi-choosable type="language" values="java">
 <div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="k">public static CompletableFuture&lt;<span class="nx"><a href="#result">GetDictionaryResult</a></span>> </span>getDictionary<span class="p">(</span><span class="nx">GetDictionaryArgs</span><span class="p"> </span><span class="nx">args<span class="p">,</span> <span class="nx">InvokeOptions</span><span class="p"> </span><span class="nx">options<span class="p">)</span>
 <span class="k">public static Output&lt;<span class="nx"><a href="#result">GetDictionaryResult</a></span>> </span>getDictionary<span class="p">(</span><span class="nx">GetDictionaryArgs</span><span class="p"> </span><span class="nx">args<span class="p">,</span> <span class="nx">InvokeOptions</span><span class="p"> </span><span class="nx">options<span class="p">)</span>
+<span class="k">public static Output&lt;<span class="nx"><a href="#result">GetDictionaryResult</a></span>> </span>getDictionary<span class="p">(</span><span class="nx">GetDictionaryArgs</span><span class="p"> </span><span class="nx">args<span class="p">,</span> <span class="nx">InvokeOutputOptions</span><span class="p"> </span><span class="nx">options<span class="p">)</span>
 </code></pre></div>
 </pulumi-choosable>
 </div>

@@ -21,13 +21,13 @@ jobs:
     steps:
       - name: Fetch secrets from ESC
         id: esc-secrets
-        uses: pulumi/esc-action@3af4859af8a73a362fb599b944124097d4bb80c5 # v3
+        uses: pulumi/esc-action@32dda43ffe7a2ab21e6bce11c781b44a3e5623cf # v3
       - uses: actions/checkout@v7
         with:
           # Full history needed for registry-mirror-discover to find package versions
           fetch-depth: 0
 
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: "24.x"
           cache: 'yarn'
@@ -38,7 +38,7 @@ jobs:
             themes/default/theme/yarn.lock
             themes/default/theme/stencil/yarn.lock
 
-      - uses: actions/setup-go@v6
+      - uses: actions/setup-go@v7
         with:
           go-version-file: tools/resourcedocsgen/go.mod
           cache-dependency-path: tools/resourcedocsgen/go.sum
@@ -119,7 +119,7 @@ jobs:
     steps:
       - name: Fetch secrets from ESC
         id: esc-secrets
-        uses: pulumi/esc-action@3af4859af8a73a362fb599b944124097d4bb80c5 # v3
+        uses: pulumi/esc-action@32dda43ffe7a2ab21e6bce11c781b44a3e5623cf # v3
       - name: Slack Notification
         uses: docker://sholung/action-slack-notify:v2.3.0
         env:

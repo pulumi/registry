@@ -24,6 +24,19 @@ jobs:
         id: esc-secrets
         uses: pulumi/esc-action@3af4859af8a73a362fb599b944124097d4bb80c5 # v3
       - uses: actions/checkout@v7
+      - name: Set up Go
+        uses: actions/setup-go@v6
+        with:
+          go-version-file: tools/resourcedocsgen/go.mod
+          cache-dependency-path: tools/resourcedocsgen/go.sum
+      - name: Build resourcedocsgen once for the whole matrix
+        run: go build -C tools/resourcedocsgen
+      - name: Upload resourcedocsgen for the matrix jobs
+        uses: actions/upload-artifact@v7
+        with:
+          name: resourcedocsgen
+          path: tools/resourcedocsgen/resourcedocsgen
+          retention-days: 1
       - id: set-matrix
         run: echo "matrix=$(python generate_package_list.py)" >> $GITHUB_OUTPUT
         working-directory: community-packages
@@ -42,10 +55,9 @@ jobs:
     timeout-minutes: 20
     strategy:
       fail-fast: false
-      # GitHub recommends only issuing 1 API request per second, and never
-      # concurrently.  For more information, see:
+      # Bounded to stay inside GitHub's secondary rate limits:
       # https://docs.github.com/en/rest/guides/best-practices-for-integrators#dealing-with-secondary-rate-limits
-      max-parallel: 1
+      max-parallel: 8
       matrix: ${{fromJson(needs.generate-packages-list.outputs.matrix)}}
     steps:
       - name: Fetch secrets from ESC
@@ -82,15 +94,15 @@ jobs:
       - name: Check out registry repo
         if: steps.skip-run.outputs.skip != 1
         uses: actions/checkout@v7
-      - name: Set up Go
+      - name: Download resourcedocsgen
         if: steps.skip-run.outputs.skip != 1
-        uses: actions/setup-go@v6
+        uses: actions/download-artifact@v8
         with:
-          go-version-file: tools/resourcedocsgen/go.mod
-          cache-dependency-path: tools/resourcedocsgen/go.sum
-      - name: Sleep to prevent hitting secondary rate limits
+          name: resourcedocsgen
+          path: tools/resourcedocsgen
+      - name: Restore the executable bit the artifact upload drops
         if: steps.skip-run.outputs.skip != 1
-        run: sleep 1
+        run: chmod +x tools/resourcedocsgen/resourcedocsgen
       - name: Check for a new version
         if: steps.skip-run.outputs.skip != 1
         id: version
@@ -99,8 +111,7 @@ jobs:
         run: |
           max_attempts=3
           for attempt in $(seq "$max_attempts"); do
-            if go build -C tools/resourcedocsgen &&
-              provider_version=$(./tools/resourcedocsgen/resourcedocsgen pkgversion --repoSlug "$REPO_SLUG"); then
+            if provider_version=$(./tools/resourcedocsgen/resourcedocsgen pkgversion --repoSlug "$REPO_SLUG"); then
               {
                 echo 'PROVIDER_VERSION<<EOF'
                 echo "$provider_version"
@@ -117,9 +128,6 @@ jobs:
       - name: Display new version
         if: env.PROVIDER_VERSION
         run: echo ${{ env.PROVIDER_VERSION}}
-      - name: Build resourcedocsgen
-        if: env.PROVIDER_VERSION
-        run: go build -C tools/resourcedocsgen
       - name: Read package name at the release version
         # The skip-dedup read above resolves the name at HEAD, because the
         # release version isn't known yet at that point. Re-read it here pinned

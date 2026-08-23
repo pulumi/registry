@@ -2,7 +2,7 @@
 ---
 title: "getClientConfig"
 title_tag: "mypkg.getClientConfig"
-meta_desc: "Documentation for the mypkg.getClientConfig function with examples, input properties, output properties, and supporting types."
+meta_desc: "Failing example taken from azure-native. Original doc: Use this function to access the current configuration of the native Azure provider."
 layout: api
 no_edit_this_page: true
 outputs:

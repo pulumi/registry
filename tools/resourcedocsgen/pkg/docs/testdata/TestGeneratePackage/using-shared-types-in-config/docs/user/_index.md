@@ -2,7 +2,7 @@
 ---
 title: "User"
 title_tag: "credentials.User"
-meta_desc: "Documentation for the credentials.User resource with examples, input properties, output properties, lookup functions, and supporting types."
+meta_desc: "Create and manage credentials.User with Pulumi. Full API reference with input and output properties, lookup functions, and examples in TypeScript, Python, Go, C#, Java, and YAML."
 layout: api
 no_edit_this_page: true
 outputs:

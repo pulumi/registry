@@ -2,7 +2,7 @@
 ---
 title: "funcWithSecrets"
 title_tag: "mypkg.funcWithSecrets"
-meta_desc: "Documentation for the mypkg.funcWithSecrets function with examples, input properties, output properties, and supporting types."
+meta_desc: "Use mypkg.funcWithSecrets with Pulumi. Full API reference with input and output properties and examples in TypeScript, Python, Go, C#, Java, and YAML."
 layout: api
 no_edit_this_page: true
 outputs:

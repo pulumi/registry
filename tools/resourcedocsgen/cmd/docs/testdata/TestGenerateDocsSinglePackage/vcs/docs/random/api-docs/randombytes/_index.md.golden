@@ -2,7 +2,7 @@
 ---
 title: "RandomBytes"
 title_tag: "random.RandomBytes"
-meta_desc: "Documentation for the random.RandomBytes resource with examples, input properties, output properties, lookup functions, and supporting types."
+meta_desc: "The resource random.RandomBytes generates random bytes that are intended to be used as a secret, or key. Use this in preference to random.RandomId when."
 layout: api
 no_edit_this_page: true
 outputs:

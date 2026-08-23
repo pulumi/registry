@@ -2,7 +2,7 @@
 ---
 title: "AbsMultiArgsReducedOutputSwapped"
 title_tag: "std.AbsMultiArgsReducedOutputSwapped"
-meta_desc: "Documentation for the std.AbsMultiArgsReducedOutputSwapped function with examples, input properties, output properties, and supporting types."
+meta_desc: "Returns the absolute value of a given float. Example: abs(1) returns 1, and abs(-1) would also return 1, whereas abs(-3.14) would return 3.14."
 layout: api
 no_edit_this_page: true
 outputs:

@@ -82,8 +82,13 @@ test("removed install-config page: .md suffix beats the markdown rewrite", () =>
 
 test("every removed install-config package redirects to its own Overview", () => {
     const packages = [
+        // #12225 -- wholly duplicated by the Overview.
         "aiven", "alicloud", "artifactory", "auth0", "cloudinit", "consul",
         "dbtcloud", "digitalocean", "random", "tailscale", "tls",
+        // #12226 -- substantially duplicated; unique content verified obsolete.
+        "azuredevops", "cloudamqp", "cloudflare", "dnsimple", "docker", "kafka",
+        "linode", "meraki", "nomad", "okta", "postgresql", "spotinst", "vault",
+        "vsphere",
     ];
     for (const pkg of packages) {
         const result = handler(request(`/registry/packages/${pkg}/installation-configuration/`));
@@ -102,6 +107,16 @@ test("removed-package rule does not match a look-alike prefix", () => {
     // "randomly" must not be caught by the "random" alternative.
     const result = handler(request("/registry/packages/randomly/installation-configuration/"));
     assertPassThrough(result, "/registry/packages/randomly/installation-configuration/");
+});
+
+test("removed-package rule does not match a hyphenated sibling package", () => {
+    // "docker-build" and "kafka-connect" are real packages that still have an
+    // Install & config page. The rule's alternatives are followed by "/", so
+    // the "docker" and "kafka" entries must not swallow them.
+    for (const pkg of ["docker-build", "kafka-connect"]) {
+        const result = handler(request(`/registry/packages/${pkg}/installation-configuration/`));
+        assertPassThrough(result, `/registry/packages/${pkg}/installation-configuration/`);
+    }
 });
 
 test("removed-package rule does not match a look-alike page name", () => {

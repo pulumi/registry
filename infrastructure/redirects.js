@@ -28,7 +28,10 @@ var PREFIX_REDIRECTS = [
 
     // Packages whose Install & config page was deleted because the Overview
     // beside it already carried every section, near-verbatim and fresher --
-    // see pulumi/registry#12225. The deleted pages were hand-written in
+    // see pulumi/registry#12225 (wholly duplicated) and #12226 (substantially
+    // duplicated; its unique content was verified obsolete before deletion --
+    // e.g. cloudflare and azuredevops each listed config options removed in a
+    // major-version rewrite, which the Overview correctly omits). The deleted pages were hand-written in
     // pulumi/registry (no upstream docs/installation-configuration.md exists
     // for any of these providers), so the URLs are gone for good rather than
     // pending regeneration. Send them to the package Overview.
@@ -43,7 +46,7 @@ var PREFIX_REDIRECTS = [
     // negotiation. Markdown clients keep their Accept header across the 301
     // and get the Overview's markdown from the redirect target.
     {
-        match: /^\/registry\/packages\/(aiven|alicloud|artifactory|auth0|cloudinit|consul|dbtcloud|digitalocean|random|tailscale|tls)\/installation-configuration(?:\.md|\/.*)?$/,
+        match: /^\/registry\/packages\/(aiven|alicloud|artifactory|auth0|azuredevops|cloudamqp|cloudflare|cloudinit|consul|dbtcloud|digitalocean|dnsimple|docker|kafka|linode|meraki|nomad|okta|postgresql|random|spotinst|tailscale|tls|vault|vsphere)\/installation-configuration(?:\.md|\/.*)?$/,
         replace: "/registry/packages/$1/",
     },
 ];

@@ -785,9 +785,9 @@ Auto-merge is currently disabled (commented out in the workflow).
 
 **Trigger**: Daily at 3:00 PM UTC; also `workflow_dispatch` with a `dry-run` input
 
-Runs `scripts/ci/priority_digest.py`, which searches GitHub for open issues labelled `p0` or `p1` across `pulumi/registry` and `pulumi/terraform-to-pulumi-registry-pipeline`, then posts them to #team-iac-cloud, oldest first, with each issue's age and assignee.
+Runs `scripts/ci/priority_digest.py`, which searches GitHub for open issues labelled `p0` or `p1` across `pulumi/registry` and `pulumi/terraform-to-pulumi-registry-pipeline`, then posts them to Slack, oldest first, with each issue's age and assignee.
 
-Replaces a Metabase subscription that posted the same query as a screenshot. Uses `PULUMI_BOT_TOKEN` and `SLACK_WEBHOOK_URL` from ESC; no other configuration. `--dry-run` prints the message to the job log instead of posting.
+Replaces a Metabase subscription that posted the same query as a screenshot. Uses `PULUMI_BOT_TOKEN` and `SLACK_ACCESS_TOKEN` from ESC and posts via `chat.postMessage` to the channel ID in the `SLACK_TEAM_CHANNEL` repository variable; the bot must be a member of that channel. `--dry-run` prints the message to the job log instead of posting.
 
 #### `export-repo-secrets.yml` — Sync GitHub Secrets → ESC
 
@@ -1139,8 +1139,9 @@ The `export-repo-secrets.yml` workflow provides a manual escape hatch to sync Gi
 | `PULUMI_DOCS_STACK_NAME` | GitHub var | build | Pulumi docs stack reference |
 | `DEPLOYMENT_ENVIRONMENT` | GitHub var | build, cleanup | e.g., `testing` or `production` |
 | `NODE_OPTIONS` | Hardcoded | build, browser tests | `--max_old_space_size=8192` |
-| `SLACK_ACCESS_TOKEN` | ESC | link check, cleanup | Slack Web API token for posting messages |
-| `SLACK_WEBHOOK_URL` | ESC | notify jobs, priority digest | Slack incoming webhook for failure alerts and the daily digest |
+| `SLACK_ACCESS_TOKEN` | ESC | link check, cleanup, priority digest | Slack Web API token for posting messages |
+| `SLACK_WEBHOOK_URL` | ESC | notify jobs | Slack incoming webhook for failure alerts |
+| `SLACK_TEAM_CHANNEL` | GitHub var | priority digest | Slack channel ID the digest posts to |
 | `ASSET_BUNDLE_ID` | `build.sh` (computed) | Hugo templates | Unique suffix for CSS/JS cache-busting |
 | `CSS_BUNDLE` / `JS_BUNDLE` | `build.sh` (computed) | Hugo templates | Paths to versioned asset bundles |
 

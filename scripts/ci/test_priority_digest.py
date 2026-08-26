@@ -6,6 +6,8 @@ import unittest
 from datetime import datetime, timezone
 from unittest import mock
 
+import requests
+
 from priority_digest import describe, escape, post, render, repository_of
 
 
@@ -100,6 +102,8 @@ class TestPost(unittest.TestCase):
         self.assertEqual(kwargs["headers"]["Authorization"], "Bearer xoxb-test")
         self.assertEqual(kwargs["json"]["channel"], "C0123456789")
         self.assertEqual(kwargs["json"]["text"], "hello")
+        self.assertIs(kwargs["json"]["mrkdwn"], True)
+        self.assertIs(kwargs["json"]["unfurl_links"], False)
 
     @mock.patch("priority_digest.requests.post")
     def test_fails_with_the_error_slack_gives(self, post_mock):
@@ -109,6 +113,23 @@ class TestPost(unittest.TestCase):
             post("C0123456789", "hello")
 
         self.assertIn("not_in_channel", str(raised.exception))
+
+    @mock.patch("priority_digest.requests.post")
+    def test_falls_back_to_the_raw_response_when_slack_gives_no_error(self, post_mock):
+        post_mock.return_value.json.return_value = {"ok": False}
+        post_mock.return_value.text = "  bad gateway  "
+
+        with self.assertRaises(SystemExit) as raised:
+            post("C0123456789", "hello")
+
+        self.assertIn("bad gateway", str(raised.exception))
+
+    @mock.patch("priority_digest.requests.post")
+    def test_raises_on_http_errors(self, post_mock):
+        post_mock.return_value.raise_for_status.side_effect = requests.HTTPError("503 Server Error")
+
+        with self.assertRaises(requests.HTTPError):
+            post("C0123456789", "hello")
 
 
 if __name__ == "__main__":

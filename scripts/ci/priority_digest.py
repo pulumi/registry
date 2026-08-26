@@ -106,7 +106,7 @@ def post(channel, message):
     response.raise_for_status()
     body = response.json()
     if not body.get("ok"):
-        sys.exit(f"Slack rejected the message: {body.get('error')}")
+        sys.exit(f"Slack rejected the message: {body.get('error') or response.text.strip()}")
 
 
 def main():

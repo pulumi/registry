@@ -95,9 +95,29 @@ describe("Registry", () => {
                     expect(ssc, "SoftwareSourceCode block").to.exist;
                     expect(ssc.name).to.equal("AWS Pulumi Provider");
                     expect(ssc.alternateName).to.equal("AWS");
-                    expect(ssc.publisher).to.deep.include({ "@type": "Organization", name: "Pulumi" });
+                    // publisher/isPartOf reference the page's own Organization/WebSite
+                    // nodes by @id rather than re-declaring an anonymous stub, so this
+                    // entity resolves to the site's one canonical Organization.
+                    expect(ssc.publisher).to.deep.equal({ "@id": "https://www.pulumi.com/#organization" });
+                    expect(ssc.isPartOf).to.deep.equal({ "@id": "https://www.pulumi.com/#website" });
                     expect(ssc.dateModified, "dateModified should be present and parseable").to.match(/^\d{4}-\d{2}-\d{2}T/);
                     expect(new Date(ssc.dateModified).toString()).to.not.equal("Invalid Date");
+                });
+            });
+
+            it("emits a resolvable Organization and WebSite entity graph", () => {
+                getJsonLdBlocks().then(blocks => {
+                    const registryBlocks = filterRegistryBlocks(blocks);
+                    const org = registryBlocks.find(b => Array.isArray(b["@type"]) && b["@type"].includes("Organization"));
+                    const site = registryBlocks.find(b => b["@type"] === "WebSite");
+                    expect(org, "Organization block").to.exist;
+                    expect(org["@id"]).to.equal("https://www.pulumi.com/#organization");
+                    expect(org.name).to.equal("Pulumi Corporation");
+                    expect(org.alternateName).to.equal("Pulumi");
+                    expect(org.sameAs, "sameAs links").to.be.an("array").that.is.not.empty;
+                    expect(site, "WebSite block").to.exist;
+                    expect(site["@id"]).to.equal("https://www.pulumi.com/#website");
+                    expect(site.publisher).to.deep.equal({ "@id": "https://www.pulumi.com/#organization" });
                 });
             });
 
@@ -194,6 +214,18 @@ describe("Registry", () => {
                         b["@type"].includes("APIReference"));
                     expect(hasBreadcrumb, "BreadcrumbList block").to.be.true;
                     expect(hasTechArticle, "TechArticle/APIReference block").to.be.true;
+                });
+            });
+
+            it("TechArticle.publisher references the canonical Organization by @id", () => {
+                getJsonLdBlocks().then(blocks => {
+                    const article = filterRegistryBlocks(blocks).find(b =>
+                        Array.isArray(b["@type"]) && b["@type"].includes("TechArticle"));
+                    expect(article, "TechArticle block").to.exist;
+                    expect(article.publisher).to.deep.equal({ "@id": "https://www.pulumi.com/#organization" });
+                    // author stays the package's own maintainer (e.g. a third-party
+                    // provider publisher), which must not be conflated with Pulumi.
+                    expect(article.author).to.deep.equal({ "@type": "Organization", name: "Pulumi" });
                 });
             });
 

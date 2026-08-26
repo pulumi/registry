@@ -35,9 +35,9 @@ Use this when you're changing a provider and want to see how its API docs will r
     make bin/resourcedocsgen
     ```
 
-2. Generate your provider's schema in the provider repo. For a bridged provider that's usually `make generate_schema`, which writes `provider/cmd/pulumi-resource-<name>/schema.json`.
+1. Generate your provider's schema in the provider repo. For a bridged provider that's usually `make generate_schema`, which writes `provider/cmd/pulumi-resource-<name>/schema.json`.
 
-3. From the root of this repository, run `resourcedocsgen docs` against that file, writing into the two locations Hugo serves from:
+1. From the root of this repository, run `resourcedocsgen docs` against that file, writing into the two locations Hugo serves from:
 
     ```bash
     ./bin/resourcedocsgen docs \
@@ -49,9 +49,9 @@ Use this when you're changing a provider and want to see how its API docs will r
 
     `--version` is required and must be valid semver. Use a dummy version higher than anything published so it's obvious in the rendered page that you're looking at a local build.
 
-4. The package's landing pages (`_index.md` and `installation-configuration.md`) are committed under `themes/default/content/registry/packages/<package>/` and are used as-is. If you're previewing a package that isn't in the registry yet, create that directory and add the two files by hand, copying them from your provider repo's `docs/` folder.
+1. The package's landing pages (`_index.md` and `installation-configuration.md`) are committed under `themes/default/content/registry/packages/<package>/` and are used as-is. If you're previewing a package that isn't in the registry yet, create that directory and add the two files by hand, copying them from your provider repo's `docs/` folder.
 
-5. Serve the site:
+1. Serve the site:
 
     ```bash
     make serve
@@ -86,14 +86,14 @@ Use this when you want the full registry pipeline — metadata, nav tree, publis
 
 1. Publish the schema to a public URL. For most providers the schema is committed, so pushing your branch is enough; the raw URL looks like `https://raw.githubusercontent.com/<org>/<repo>/<branch>/provider/cmd/pulumi-resource-<name>/schema.json`. For providers whose schema is too large to commit (Azure Native, for example), upload it to S3 or any other public host.
 
-2. Edit `themes/default/data/registry/packages/<package>.yaml`:
+1. Edit `themes/default/data/registry/packages/<package>.yaml`:
 
     - Set `schema_file_url` to the URL from step 1.
     - Set `version` to a semver version that has **not** been published to the Pulumi Registry service — a bumped dummy version such as `v9.9.9`.
 
     Both edits are required. `resourcedocsgen` asks `api.pulumi.com` for the package at `version` first and only falls back to `schema_file_url` when that lookup 404s. If you leave `version` at a published value you'll silently get the published schema and none of your changes.
 
-3. Generate and serve:
+1. Generate and serve:
 
     ```bash
     make SKIP_VERSIONED_DOCS=1 api-docs/<package>

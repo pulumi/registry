@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/redpanda-data/redpanda/2.2.1/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/redpanda-data/redpanda/2.3.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Redpanda Provider
@@ -246,7 +246,7 @@ const testCluster = new redpanda.Cluster("test", {
     },
     tags: clusterTags,
     timeouts: {
-        create: "90m",
+        create: "150m",
     },
 });
 const testTopic = new redpanda.Topic("test", {
@@ -369,7 +369,7 @@ test_cluster = redpanda.Cluster("test",
     },
     tags=cluster_tags,
     timeouts={
-        "create": "90m",
+        "create": "150m",
     })
 test_topic = redpanda.Topic("test",
     name=topic_name,
@@ -500,7 +500,7 @@ return await Deployment.RunAsync(() =>
         Tags = clusterTags,
         Timeouts = new Redpanda.Inputs.ClusterTimeoutsArgs
         {
-            Create = "90m",
+            Create = "150m",
         },
     });
 
@@ -669,7 +669,7 @@ func main() {
 			},
 			Tags: pulumi.Any(clusterTags),
 			Timeouts: &redpanda.ClusterTimeoutsArgs{
-				Create: pulumi.String("90m"),
+				Create: pulumi.String("150m"),
 			},
 		})
 		if err != nil {
@@ -882,7 +882,7 @@ public class App {
                 .build())
             .tags(clusterTags)
             .timeouts(ClusterTimeoutsArgs.builder()
-                .create("90m")
+                .create("150m")
                 .build())
             .build());
 
@@ -1016,7 +1016,7 @@ const testCluster = new redpanda.Cluster("test", {
     },
     tags: clusterTags,
     timeouts: {
-        create: "90m",
+        create: "150m",
     },
 });
 const testTopic = new redpanda.Topic("test", {
@@ -1132,7 +1132,7 @@ test_cluster = redpanda.Cluster("test",
     },
     tags=cluster_tags,
     timeouts={
-        "create": "90m",
+        "create": "150m",
     })
 test_topic = redpanda.Topic("test",
     name=topic_name,
@@ -1256,7 +1256,7 @@ return await Deployment.RunAsync(() =>
         Tags = clusterTags,
         Timeouts = new Redpanda.Inputs.ClusterTimeoutsArgs
         {
-            Create = "90m",
+            Create = "150m",
         },
     });
 
@@ -1418,7 +1418,7 @@ func main() {
 			},
 			Tags: pulumi.Any(clusterTags),
 			Timeouts: &redpanda.ClusterTimeoutsArgs{
-				Create: pulumi.String("90m"),
+				Create: pulumi.String("150m"),
 			},
 		})
 		if err != nil {
@@ -1618,7 +1618,7 @@ public class App {
                 .build())
             .tags(clusterTags)
             .timeouts(ClusterTimeoutsArgs.builder()
-                .create("90m")
+                .create("150m")
                 .build())
             .build());
 

@@ -37,7 +37,8 @@ jobs:
           ${{ inputs.dry-run && '--dry-run' || '' }}
         env:
           GITHUB_TOKEN: ${{ steps.esc-secrets.outputs.PULUMI_BOT_TOKEN }}
-          SLACK_WEBHOOK_URL: ${{ steps.esc-secrets.outputs.SLACK_WEBHOOK_URL }}
+          SLACK_ACCESS_TOKEN: ${{ steps.esc-secrets.outputs.SLACK_ACCESS_TOKEN }}
+          SLACK_CHANNEL: ${{ vars.SLACK_TEAM_CHANNEL }}
 
   notify:
     if: failure()

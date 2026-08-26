@@ -98,19 +98,15 @@ def log_counts(issues):
 
 def post(channel, message):
     response = requests.post(
-        require_env("SLACK_WEBHOOK_URL"),
-        json={
-            "channel": channel,
-            "text": message,
-            "username": "registrybot",
-            "icon_url": "https://www.pulumi.com/logos/brand/avatar-on-white.png",
-            "mrkdwn": True,
-            "unfurl_links": False,
-        },
+        "https://slack.com/api/chat.postMessage",
+        headers={"Authorization": f"Bearer {require_env('SLACK_ACCESS_TOKEN')}"},
+        json={"channel": channel, "text": message, "mrkdwn": True, "unfurl_links": False},
         timeout=30,
     )
-    if response.status_code != 200 or response.text.strip() != "ok":
-        sys.exit(f"Slack rejected the message: {response.status_code} {response.text.strip()}")
+    response.raise_for_status()
+    body = response.json()
+    if not body.get("ok"):
+        sys.exit(f"Slack rejected the message: {body.get('error')}")
 
 
 def main():
@@ -119,13 +115,11 @@ def main():
         description="""Post the open P0 and P1 registry issues to Slack, oldest first
 
         GITHUB_TOKEN must be set to read issues.
-        SLACK_WEBHOOK_URL must be set to post.
-        SLACK_CHANNEL may be set. Defaults to #team-iac-cloud.
+        SLACK_ACCESS_TOKEN and SLACK_CHANNEL must be set to post.
         """,
         epilog="This is a Pulumi internal tool - it is not intended for external use")
     parser.add_argument("--dry-run", action="store_true", help="Print the message instead of posting it")
-    parser.add_argument("--channel", default=os.getenv("SLACK_CHANNEL", "#team-iac-cloud"),
-                        help="Slack channel to post to, as #name.")
+    parser.add_argument("--channel", default=os.getenv("SLACK_CHANNEL"), help="Slack channel ID.")
 
     args = parser.parse_args()
 
@@ -136,7 +130,7 @@ def main():
     if args.dry_run:
         print(message)
     else:
-        post(args.channel, message)
+        post(args.channel or require_env("SLACK_CHANNEL"), message)
 
 
 if __name__ == "__main__":

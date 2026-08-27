@@ -26,13 +26,17 @@ The supported parameters are:
 |---|---|---|
 | `crd-manifest` | Yes | Path to a YAML or JSON file containing one or more CustomResourceDefinitions. Repeat the key to supply several files. |
 | `name` | No | Name of the generated package. Defaults to the first manifest's file name without its extension, falling back to `crds`. |
-| `version` | No | Version of the generated package. A CRD bundle has no inherent version, so this only needs to be stable. Defaults to `1.0.0`. |
+| `version` | No | Version of the generated package. A CRD bundle has no inherent version, so any value works as long as it stays stable across runs. Defaults to `1.0.0`. |
 
-A single manifest may contain multiple CRDs, and documents that are not CustomResourceDefinitions are skipped.
+A single manifest may contain multiple CRDs, and documents that are not CustomResourceDefinitions are skipped. To supply several manifests, repeat the `crd-manifest` key inside the same quoted string:
+
+```bash
+pulumi package add kubernetes --extension "name=gateway-networking crd-manifest=gateway-api-crds.yaml crd-manifest=extra-crds.yaml"
+```
 
 ## Using the generated SDK
 
-Extension resources are tokenized under the extension's package name, in the form `<name>:<group>/<version>:<Kind>`.
+Extension resources are tokenized under the extension's package name, in the form `<name>:<group>/<version>:<Kind>`. In the generated SDKs the module name is the group's first segment, so `gateway.networking.k8s.io/v1` becomes the `gateway.v1` module.
 
 {{< chooser language "typescript,python,go,csharp,java,yaml" >}}
 
@@ -73,7 +77,7 @@ gateway_class = gateway_networking.gateway.v1.GatewayClass(
 
 {{% choosable language go %}}
 
-The import path is rooted at the module name in the generated SDK's `go.mod`, which defaults to the extension name.
+The import path is rooted at the module name in the generated SDK's `go.mod`, which defaults to the extension name. Below that root, packages are laid out as `kubernetes/<group>/<version>`.
 
 ```go
 package main
@@ -181,7 +185,7 @@ Generate the extension package from the same CRD manifests you passed to `crd2pu
 pulumi package add kubernetes --extension "name=gateway-networking crd-manifest=gateway-api-crds.yaml"
 ```
 
-Then update your imports. Resource names, property names and nesting are unchanged, so your call sites stay as they are.
+Then update your imports. Resource names, property names, and nesting are unchanged, so your call sites stay as they are.
 
 {{< chooser language "typescript,python,go,csharp,java" >}}
 

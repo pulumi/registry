@@ -14,11 +14,15 @@ This is the recommended approach for typed custom resources. If you are using [`
 
 ## Usage
 
+The examples below use the [Gateway API](https://gateway-api.sigs.k8s.io/) CRDs.
+
 ```bash
 pulumi package add kubernetes --extension "name=gateway-networking crd-manifest=gateway-api-crds.yaml"
 ```
 
 This generates an SDK under `sdks/gateway-networking` and records the package in `Pulumi.yaml`, so subsequent `pulumi up` runs reconstruct the same schema without re-reading the manifest.
+
+The generated SDK draws shared types such as `ObjectMeta` from the base `kubernetes` package, so your project also needs the `pulumi-kubernetes` SDK as a dependency.
 
 The supported parameters are:
 

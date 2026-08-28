@@ -66,6 +66,19 @@ func summarizeForMetaDescription(comment string) string {
 	s = markdownLinkRegex.ReplaceAllString(s, "$1")
 	s = htmlTagRegex.ReplaceAllString(s, "")
 	s = strings.NewReplacer("`", "", "**", "", "*", "").Replace(s)
+
+	// Some upstream (typically Terraform-bridged) descriptions carry
+	// backslash-escaped quotes as literal text (e.g. `\"true\"`). The
+	// generated front matter template renders this field through
+	// html/template, which HTML-escapes the quote character to `&#34;`
+	// but leaves any pre-existing backslash untouched, producing the
+	// invalid YAML escape sequence `\&#34;` and breaking the Hugo build.
+	// Drop stray backslashes and normalize straight quotes to a form
+	// that's always safe inside a double-quoted YAML scalar, regardless
+	// of how the surrounding template escapes it.
+	s = strings.ReplaceAll(s, `\`, "")
+	s = strings.ReplaceAll(s, `"`, "'")
+
 	s = metaDescWhitespaceRegex.ReplaceAllString(s, " ")
 	s = strings.TrimSpace(s)
 

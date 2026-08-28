@@ -101,21 +101,86 @@ def fact_sheet_comment(pr: int) -> dict[str, Any] | None:
     return None
 
 
+def _minutes_since(timestamp: str) -> int:
+    moment = datetime.strptime(timestamp, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
+    return int((datetime.now(timezone.utc) - moment).total_seconds() // 60)
+
+
 def minutes_since_check_run(sha: str, name_pattern: str) -> int | None:
     runs = [r for r in request(f"/repos/{repo()}/commits/{sha}/check-runs")["check_runs"]
             if re.search(name_pattern, r["name"])]
     if not runs:
         return None
-    most_recent = max(runs, key=lambda r: str(r["started_at"]))["started_at"]
-    started = datetime.strptime(most_recent, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
-    return int((datetime.now(timezone.utc) - started).total_seconds() // 60)
+    return _minutes_since(str(max(runs, key=lambda r: str(r["started_at"]))["started_at"]))
 
 
-def latest_check_workflow_run(workflow_file: str, sha: str) -> int | None:
+def pull_request_files(pr: int) -> list[str]:
+    # The allowlist gate reads this list, so a truncated first page would let unlisted files
+    # through unseen. Walk every page.
+    names: list[str] = []
+    page = 1
+    while True:
+        batch = request(f"/repos/{repo()}/pulls/{pr}/files?per_page=100&page={page}")
+        names += [str(f["filename"]) for f in batch]
+        if len(batch) < 100:
+            return names
+        page += 1
+
+
+def _short(sha: str) -> str:
+    return sha[:12]
+
+
+def dispatch_run_label(pr: int, sha: str) -> str:
+    return f"Community package check · PR #{pr} · {_short(sha)}"
+
+
+def dispatch_check(workflow_file: str, pr: int, sha: str) -> None:
+    """Dispatch a check named exactly `dispatch_run_label`, which is the sweep's dedupe key.
+
+    The workflow interpolates the `head` input into its `run-name`, so the input has to carry
+    the same short sha the label does; otherwise no run ever matches and the sweep dispatches
+    the same check again on every pass.
+    """
+    dispatch_workflow(workflow_file, {"pr": str(pr), "head": _short(sha)})
+
+
+def _dispatched_runs(workflow_file: str) -> list[dict[str, Any]]:
+    return list(request(f"/repos/{repo()}/actions/workflows/{workflow_file}/runs"
+                        f"?event=workflow_dispatch&per_page=100")["workflow_runs"])
+
+
+def _run_title(run: dict[str, Any]) -> str:
+    # `name` is the workflow's own name; an evaluated `run-name:` arrives as `display_title`.
+    return str(run.get("display_title") or run.get("name") or "")
+
+
+def dispatch_exists(workflow_file: str, label: str) -> bool:
+    return any(_run_title(run) == label for run in _dispatched_runs(workflow_file))
+
+
+def minutes_since_dispatch(workflow_file: str, pr: int) -> int | None:
+    mine = [r for r in _dispatched_runs(workflow_file) if f"PR #{pr} ·" in _run_title(r)]
+    if not mine:
+        return None
+    return _minutes_since(str(max(mine, key=lambda r: str(r["created_at"]))["created_at"]))
+
+
+def pull_request_run_status(workflow_file: str, sha: str) -> str | None:
+    """The run's live status, or its conclusion once it has one.
+
+    An approval-gated run surfaces either as `status: action_required` or, once GitHub closes
+    it out, as `status: completed` with `conclusion: action_required`. The sweep has to see
+    both, or it skips forever exactly the PRs it exists to unblock.
+    """
     runs = request(f"/repos/{repo()}/actions/workflows/{workflow_file}/runs"
                    f"?event=pull_request&head_sha={sha}")["workflow_runs"]
-    return int(runs[0]["id"]) if runs else None
+    if not runs:
+        return None
+    return str(runs[0].get("conclusion") or runs[0]["status"])
 
 
-def rerun_workflow(run_id: int) -> None:
-    request(f"/repos/{repo()}/actions/runs/{run_id}/rerun", "POST")
+def dispatch_workflow(workflow_file: str, inputs: dict[str, str]) -> None:
+    ref = os.environ.get("DEFAULT_BRANCH") or "master"
+    request(f"/repos/{repo()}/actions/workflows/{workflow_file}/dispatches", "POST",
+            {"ref": ref, "inputs": inputs})

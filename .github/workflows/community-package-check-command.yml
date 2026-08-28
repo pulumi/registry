@@ -1,6 +1,6 @@
-# Handles a `/check` comment by re-triggering the check workflow against current upstream.
+# Handles a `/check` comment by dispatching the check workflow against current upstream.
 # This job runs with the base repo's permissions, so it must never check out or run the PR's
-# code; it only kicks off the rerun. Allowed for the PR author or a maintainer, with a cooldown.
+# code; it only starts the check. Allowed for the PR author or a maintainer, with a cooldown.
 name: Community package /check command
 
 on:
@@ -17,21 +17,24 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  rerun:
+  dispatch:
     if: >-
       github.event.issue.pull_request != null &&
-      (github.event.comment.body == '/check' || startsWith(github.event.comment.body, '/check '))
+      github.event.comment.user.type != 'Bot' &&
+      contains(github.event.comment.body, '/check')
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v7
-      - name: Authorize, rate-limit, rerun
+      - name: Authorize, rate-limit, dispatch
         env:
           GITHUB_TOKEN: ${{ github.token }}
           REPO: ${{ github.repository }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
           PR: ${{ github.event.issue.number }}
           ASSOC: ${{ github.event.comment.author_association }}
           COMMENTER: ${{ github.event.comment.user.login }}
           COMMENT_ID: ${{ github.event.comment.id }}
+          COMMENT_BODY: ${{ github.event.comment.body }}
           COOLDOWN_MINUTES: "10"
         run: python3 scripts/ci/community-package/cli.py check-command

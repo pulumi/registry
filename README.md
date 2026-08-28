@@ -8,7 +8,7 @@ To add a community package, open a pull request that adds a single entry to [`co
 
 A **dynamically bridged** Terraform provider is different: if you consume it with `pulumi package add terraform-provider <name>` and there is no provider repo or committed schema, it cannot be added by pull request, because those are listed through a separate Pulumi pipeline. Open a ["New Package"](https://github.com/pulumi/registry/issues/new?template=new-package.yml) issue to request one. Use the same issue to request a package you don't maintain, or to discuss before opening a PR.
 
-For assistance, please reach out on the [Pulumi community slack](https://slack.pulumi.com/) or get in touch with us via this [contact form](https://pulumi.com/contact/?form=registry).
+For assistance, please reach out on the [Pulumi community Slack](https://slack.pulumi.com/) or get in touch with us via this [contact form](https://pulumi.com/contact/?form=registry).
 
 ### Adding a Pulumi Package that you have authored
 
@@ -18,9 +18,9 @@ To publish a community-maintained package on the Pulumi Registry as a community 
 
 1. Ensure your provider repo has the following files:
     * `docs/_index.md`, which should contain a summary of the provider's purpose (required) along with a code sample in each language (required). This file will render as the index page for your provider ([example](https://www.pulumi.com/registry/packages/aiven/)).
-    * `docs/installation-configuration.md`, which should contain links to published SDKs in (Go, Typescript, C#, Python; required) along with instructions for configuring the provider (e.g., required credentials and/or environment variables). This file will render as the Installation & Configuration page for your provider ([example](https://www.pulumi.com/registry/packages/aiven/installation-configuration/)).
+    * `docs/installation-configuration.md`, which should contain links to published SDKs in (Go, Typescript, C#, Python; required) along with instructions for configuring the provider (e.g., required credentials and/or environment variables). This file will render as the Installation & Configuration page for your provider ([example](https://www.pulumi.com/registry/packages/aws/installation-configuration/)).
 1. Create a release of your provider in GitHub with a "v" + [Semver 2.0](https://semver.org) compliant tag (`vX.Y.Z`).
-1. Open a pull request that adds one entry to [`community-packages/package-list.json`](https://github.com/pulumi/registry/blob/master/community-packages/package-list.json). That single entry is the whole registration: your docs and metadata are generated and published for you after merge, so do not commit generated files here. The one exception is a brand-new publisher, whose display name may be added to [`publisher-names.json`](https://github.com/pulumi/registry/blob/master/tools/resourcedocsgen/pkg/publishers/publisher-names.json) in the same PR. Automated checks then post a fact-sheet on your PR; if anything is flagged, fix it in your provider repo and comment `/check` to re-run (the checks read your live upstream, so you do not push here to re-validate). A maintainer can comment `/preview` to build a live preview of your package's pages, then reviews the fact-sheet and approves. Nothing merges automatically.
+1. Open a pull request that adds one entry to [`community-packages/package-list.json`](https://github.com/pulumi/registry/blob/master/community-packages/package-list.json). That single entry is the whole registration: your docs and metadata are generated and published for you after merge, so do not commit generated files here. The one exception is a brand-new publisher, whose display name must be added to [`publisher-names.json`](https://github.com/pulumi/registry/blob/master/tools/resourcedocsgen/pkg/publishers/publisher-names.json) in the same PR, because publishing fails without it. Automated checks then post a fact-sheet on your PR; if anything is flagged, fix it in your provider repo and comment `/check` to re-run (the checks read your live upstream, so you do not push here to re-validate). A maintainer can comment `/preview` to build a live preview of your package's pages, then reviews the fact-sheet and approves. Nothing merges automatically.
 
 ## Internal Process
 
@@ -28,9 +28,9 @@ Pulumi maintainers should follow the [adding a new package guide](./docs/adding-
 
 ## About this repository
 
-This repository is a [Hugo module](https://gohugo.io/hugo-modules/) that doubles as a development server to make it easier to work on the pages that make up Pulumi Registry. It contains all of the Hugo `content` and `layouts` files, JavaScript, CSS, and web components. comprising what you see at <https://pulumi.com/registry>
+This repository is a [Hugo module](https://gohugo.io/hugo-modules/) that doubles as a local development server, making it easier to work on the pages of the Pulumi Registry. It contains everything behind what you see at <https://pulumi.com/registry>: the Hugo `content` and `layouts` files, along with the JavaScript, CSS, and web components.
 
-We build the JavaScript and CSS bundles that power the Pulumi Registry here, under the `themes/default/theme` directory. If you are making styling changes along-side content changes, use `make serve-all` to enable hot reloading of both the pages and CSS/JS assets.
+We build the JavaScript and CSS bundles that power the Pulumi Registry here, under the `themes/default/theme` directory. If you are making styling changes alongside content changes, use `make serve-all` to enable hot reloading of both the pages and CSS/JS assets.
 
 ## Using this repository
 
@@ -54,7 +54,7 @@ The prerequisites listed above need to be installed on your machine in order to 
  make ensure
  ```
 
-1. Once that succeeds, run `make build_assets` to build the assets the site depends on. This needs to be done before the first time you serve this repo so the assets exist on your local machine.
+1. Once that succeeds, run `make build-assets` to build the assets the site depends on. This needs to be done before the first time you serve this repo so the assets exist on your local machine.
 
  ```
  make build-assets
@@ -93,6 +93,6 @@ make lint
 When you're ready to submit a pull request, make sure you've removed anything that doesn't seem to belong (`go.mod`/`go.sum` changes, etc.) and submit the PR in the usual way.
 
 > [!NOTE]
-> It currently requires a machine with a minimum of 32 GB of memory (64 GB preferred) to build the registry in its entirety including *all* pacakges.
+> It currently requires a machine with a minimum of 32 GB of memory (64 GB preferred) to build the registry in its entirety including *all* packages.
 
 Once your PR is approved and merged into the default branch of this repository, it will be deployed to the registry site (<https://pulumi.com/registry>).

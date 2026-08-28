@@ -16,6 +16,7 @@ jobs:
   lint:
     name: Lint
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
     - name: Checkout Repo
       uses: actions/checkout@v7
@@ -24,9 +25,10 @@ jobs:
            ${{ inputs.path }}
            .golangci.yml
     - name: Setup Go
-      uses: actions/setup-go@v6
+      uses: actions/setup-go@v7
       with:
         go-version-file: '${{ inputs.path }}/go.mod'
+        cache-dependency-path: '${{ inputs.path }}/go.sum'
     - name: golangci-lint
       uses: golangci/golangci-lint-action@v9
       with:
@@ -37,6 +39,7 @@ jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
     - name: Checkout Repo
       uses: actions/checkout@v7
@@ -44,9 +47,10 @@ jobs:
          sparse-checkout: |
            ${{ inputs.path }}
     - name: Setup Go
-      uses: actions/setup-go@v6
+      uses: actions/setup-go@v7
       with:
         go-version-file: '${{ inputs.path }}/go.mod'
+        cache-dependency-path: '${{ inputs.path }}/go.sum'
     - name: Run Tests
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

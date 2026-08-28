@@ -6,7 +6,7 @@
 <pulumi-choosable type="language" values="{{- if eq $lang lNodejs -}}{{ print "javascript,typescript" }}{{- else -}}{{ print $lang }}{{- end -}}">
 <dl class="resources-properties">
 {{- range . -}}
-    <dt class="property-{{- if .IsInput -}}{{- if .IsRequired -}}required{{- else -}}optional{{- end -}}{{- end -}}{{ if .DeprecationMessage }} property-deprecated{{- end -}}{{ if .IsReplaceOnChanges }} property-replacement{{- end -}}"
+    <dt class="property-{{- if .IsInput -}}{{- if .IsRequired -}}required{{- else -}}optional{{- end -}}{{- end -}}{{ if .DeprecationMessage }} property-deprecated{{- end -}}{{ if .IsReplaceOnChanges }} property-replacement{{- end -}}{{ if .IsSecret }} property-secret{{- end -}}"
             title="{{ if .IsInput -}}{{- if .IsRequired -}}Required{{- else -}}Optional{{- end -}}{{- end -}}{{- if .DeprecationMessage -}}, Deprecated{{- end -}}">
         <span id="{{ htmlSafe .ID }}">{{ template "linkify_wo_style" . }}</span>
         <span class="property-indicator"></span>

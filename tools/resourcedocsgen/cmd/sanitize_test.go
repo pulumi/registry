@@ -42,7 +42,7 @@ func TestReadDocsFileSanitizesShortcodeDelimiters(t *testing.T) {
 	}))
 	defer server.Close()
 
-	got, err := readDocsFile(server.URL)
+	got, err := readDocsFile(server.Client(), server.URL)
 	require.NoError(t, err)
 
 	assert.NotContains(t, string(got), "{{ <", "malformed opening delimiter must be repaired")

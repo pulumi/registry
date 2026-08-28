@@ -24,16 +24,18 @@ This document describes the build, test, and deployment system for the `pulumi/r
    - [6.1 Pulumi IaC](#61-pulumi-iac)
    - [6.2 AWS Resources](#62-aws-resources)
    - [6.3 S3 Preview Bucket Lifecycle](#63-s3-preview-bucket-lifecycle)
-   - [6.4 Custom Redirects](#64-custom-redirects)
+   - [6.4 The Pinned Preview Comment](#64-the-pinned-preview-comment)
+   - [6.5 Custom Redirects](#65-custom-redirects)
 7. [Registry Publication (push-registry.py)](#registry-publication-push-registrypy)
 8. [Testing Strategy](#testing-strategy)
    - [8.1 Go Unit Tests](#81-go-unit-tests)
    - [8.2 Go Linting](#82-go-linting)
    - [8.3 Markdown Linting](#83-markdown-linting)
    - [8.4 Script Linting](#84-script-linting)
-   - [8.5 Provider API Docs Tests](#85-provider-api-docs-tests)
-   - [8.6 Browser Tests (Cypress)](#86-browser-tests-cypress)
-   - [8.7 Link Checking](#87-link-checking)
+   - [8.5 Dark Logo Variants](#85-dark-logo-variants)
+   - [8.6 Provider API Docs Tests](#86-provider-api-docs-tests)
+   - [8.7 Browser Tests (Cypress)](#87-browser-tests-cypress)
+   - [8.8 Link Checking](#88-link-checking)
 9. [Environment & Secret Management](#environment--secret-management)
    - [9.1 Pulumi ESC](#91-pulumi-esc)
    - [9.2 Environment Variables Reference](#92-environment-variables-reference)
@@ -464,11 +466,15 @@ CI builds use multiple cache layers to avoid redundant work. All caches are stor
 | Cache | Key | Paths | What it stores |
 |---|---|---|---|
 | Node/Yarn | `node-cache-Linux-x64-yarn-<yarn.lock hash>` | `~/.cache/yarn/v6` | Yarn package cache |
-| Go | `setup-go-...-<go.sum hash>` | `GOMODCACHE`, `GOCACHE` | Go module and build cache |
+| Go (resourcedocsgen) | `setup-go-...-<tools/resourcedocsgen/go.sum hash>` | `GOMODCACHE`, `GOCACHE` | Go module and build cache |
+| Go (mktutorial) | `setup-go-...-<tools/mktutorial/go.sum hash>` | `GOMODCACHE`, `GOCACHE` | Go module and build cache |
+| registry-mirror-tools binaries | `registry-mirror-tools-bins-<os>-<commit hash>` | `bin/registry-mirror-discover`, `bin/registry-mirror-publish` | Pre-built binaries for `test-ci-scripts.yml` |
 | Docs + schemas | `docs-cache-<run_id>` (restore key: `docs-cache-`) | `.cache/schemas`, `.cache/versioned-docs`, `.cache/api-docs` | API docs output, versioned docs, provider schemas, LLM docs JSON |
 | registry-mirror-discover | `registry-mirror-discover-<commit hash>` | `bin/registry-mirror-discover` | Pre-built binary for versioned docs discovery |
 
 The docs cache uses `restore-keys: docs-cache-` so it falls back to the most recent previous run's cache when an exact match isn't found (the key includes `run_id`, so it's always unique).
+
+Each Go job keys on the `go.sum` of the module it compiles, via `cache-dependency-path`. Keep it that way: one key per module, never one key listing both. `setup-go` restores on an exact primary-key match and exposes no `restore-keys`, so a single shared key means the first job to finish decides what every later job restores — and if that is a `mktutorial` check, the jobs building `resourcedocsgen` stay cold. Jobs that compile neither module set `cache: false` rather than falling back to the repo-root `go.mod`, which describes the Hugo theme module and never changes.
 
 #### Incremental API docs generation
 
@@ -525,7 +531,8 @@ All workflow files live in `.github/workflows/`.
 | `check-links.yml` | Scheduled jobs: Check links | Every Monday 3:00 PM UTC |
 | `run-browser-tests.yml` | Scheduled jobs: Run browser tests | Daily 2:00 PM UTC |
 | `generate-package-metadata.yml` | Check for Community Package Updates | Daily 5:30 AM + 5:30 PM UTC + push to `master` touching `package-list.json` |
-| `community-package-check.yml` | Community package check | PR touching `community-packages/package-list.json` |
+| `community-package-check.yml` | Community package check | PR touching `community-packages/package-list.json`, or a `workflow_dispatch` naming a PR |
+| `community-package-sweep.yml` | Community package check sweep | Every 15 minutes |
 | `community-package-report.yml` | Community package report | `workflow_run` after the check completes |
 | `community-package-check-command.yml` | Community package /check command | `/check` comment on a package PR |
 | `community-package-preview-command.yml` | Community package /preview command | `/preview` comment on a package PR |
@@ -533,6 +540,7 @@ All workflow files live in `.github/workflows/`.
 | `publish-provider-update.yml` | provider docs build | `repository_dispatch` |
 | `bucket-cleanup.yml` | Scheduled jobs: Bucket cleanup | Daily 3:00 PM UTC |
 | `update-tutorials.yml` | Scheduled jobs: Update How To Guides | Daily 3:00 PM UTC |
+| `priority-digest.yml` | Scheduled jobs: Priority digest | Daily 3:00 PM UTC |
 | `export-repo-secrets.yml` | Export secrets to ESC | `workflow_dispatch` |
 | `add-triage-label.yml` | Add triage label to new issues | Issue opened / reopened |
 | `add-to-project.yml` | Add issues to project | Issue opened / reopened |
@@ -562,6 +570,9 @@ PR opened / committed
         ├── lint-scripts
         │       └── yarn install → yarn run lint
         │
+        ├── lint-dark-logos
+        │       └── make lint-dark-logos
+        │
         ├── test-live-publish
         │       └── uv run push-registry.py --dry-run
         │
@@ -584,7 +595,7 @@ PR opened / committed
         │                       ├── s5cmd sync llm-docs-out/ → bucket (Content-Encoding: gzip)
         │                       ├── Run browser tests (Cypress smoke test)
         │                       ├── Write origin-bucket-metadata.json
-        │                       └── Post PR comment with preview URL
+        │                       └── Update the pinned PR comment (preview URL + changed pages)
         │
         └── sentinel (depends on all jobs above)
                 └── Writes "Sentinel" GitHub status check = success
@@ -726,7 +737,8 @@ The check pipeline gives a contributor who adds one entry to `community-packages
 
 - **`community-package-check.yml`** (secret-free, runs on forks): for each added entry, reads the package's schema and docs at its latest GitHub release, then probes without executing the package's code — installs the plugin (blocking), resolves the npm/PyPI/Go SDKs and lints the docs (advisory). Writes a fact-sheet artifact. The plugin install is the only blocking check, alongside successful docs generation and a present `docs/_index.md`.
 - **`community-package-report.yml`** (`workflow_run`, write token, no secrets, no contributor code): downloads the fact-sheet artifact and posts it as a sticky PR comment, keyed to the PR number recorded by the check.
-- **`community-package-check-command.yml`** (`issue_comment`): re-runs the check when the author or a maintainer comments `/check`, authorized and rate-limited.
+- **`community-package-check-command.yml`** (`issue_comment`): dispatches a fresh check run when the author or a maintainer comments `/check` on its own line, authorized and rate-limited. It dispatches rather than re-runs, so the check also reaches a PR whose own run GitHub parked.
+- **`community-package-sweep.yml`** (schedule, every 15 minutes): a fork PR from a first-time contributor parks its `pull_request` run in `action_required` until a maintainer approves it, which leaves the contributor with no fact-sheet and nothing for `/check` to re-run. The sweep dispatches a check for any open package-list PR whose run GitHub refused to start, once per head commit. A dispatched run starts in the base repo, so GitHub does not gate it, and it carries the same permissions and produces the same fact-sheet as the gated one. The sweep only dispatches: it never runs a contributor's code.
 - **`community-package-preview-command.yml`** (`issue_comment`): builds an on-demand site preview when a maintainer comments `/preview`. A fork's own `pull_request` build gets no secrets, so this maintainer-triggered run stands in for it: it materializes the fork's entry as data and reuses the `build-and-deploy-preview` action, never running the fork's code.
 - **`community-package-policy.yml`**: runs the toolchain's unit tests and `mypy --strict`, including the plane-separation test, as a required check.
 
@@ -770,6 +782,14 @@ Runs in the production environment (`388588623842:role/ContinuousDelivery`). Nod
 3. Opens or updates a PR on branch `tutorials/refresh` via `peter-evans/create-pull-request@v7`.
 
 Auto-merge is currently disabled (commented out in the workflow).
+
+#### `priority-digest.yml` — Post Open P0 and P1 Issues to Slack
+
+**Trigger**: Daily at 3:00 PM UTC; also `workflow_dispatch` with a `dry-run` input
+
+Runs `scripts/ci/priority_digest.py`, which searches GitHub for open issues labelled `p0` or `p1` across `pulumi/registry` and `pulumi/terraform-to-pulumi-registry-pipeline`, then posts them to Slack, oldest first, with each issue's age and assignee.
+
+Replaces a Metabase subscription that posted the same query as a screenshot. Uses `PULUMI_BOT_TOKEN` and `SLACK_ACCESS_TOKEN` from ESC and posts via `chat.postMessage` to the channel ID in the `SLACK_TEAM_CHANNEL` repository variable; the bot must be a member of that channel. `--dry-run` prints the message to the job log instead of posting.
 
 #### `export-repo-secrets.yml` — Sync GitHub Secrets → ESC
 
@@ -854,7 +874,7 @@ scripts/ci/sync.sh preview
   4. Run Cypress smoke tests
   5. Write origin-bucket-metadata.json
   6. aws ssm put-parameter /registry/commits/<sha>/bucket = <bucket-name>
-  7. Post PR comment: "Your preview is ready at http://..."
+  7. Create or update the pinned PR comment with the preview URL and changed pages
 
 PR merged or closed
        │
@@ -872,7 +892,49 @@ Daily bucket-cleanup.yml (3:00 PM UTC)
   - Deletes bucket after 48+ hours in cleanup state
 ```
 
-### 6.4 Custom Redirects
+### 6.4 The Pinned Preview Comment
+
+Each preview build maintains a **single** comment on the PR rather than adding one per commit.
+The comment is written by `post_preview_comment` in `scripts/ci/sync.sh`, and carries:
+
+1. The preview URL for the current commit (`<bucket-website>/registry/`).
+2. A **Changed pages** list — direct links to the pages the PR changed, so a reviewer lands on
+   them instead of navigating the preview by hand.
+
+**How it stays pinned**: the body opens with the HTML marker `<!-- registry-preview-link -->`.
+`upsert_github_pr_comment` (`scripts/ci/common.sh`) pages through the PR's comments looking for
+that marker on a comment authored by `github-actions[bot]` or `pulumi-bot`, then `PATCH`es that
+comment; it only `POST`s a new one when no match exists. Matching on the author as well as the
+marker means a contributor can't redirect the pinned comment by quoting the marker. The
+comment list is paginated deliberately — GitHub returns 30 comments per page by default, and an
+unpaginated search would miss the marker on a long PR and post a duplicate on every build.
+
+**How changed pages are resolved**: `changed_pages_section` (`scripts/ci/common.sh`) reads the
+changed-file list from the GitHub API (`/pulls/<n>/files`), not a local `git diff`, so it works
+identically for the `pull_request` build and the maintainer-triggered `/preview` command. It
+collects every API page before mapping — `changed_paths_to_urls` de-duplicates only within a
+single invocation, so mapping page by page would double-list a package whose YAML and landing
+page straddle the 100-file page boundary. Each path is mapped under two rules:
+
+| Changed path | URL |
+|---|---|
+| `themes/default/content/**/*.md` | Hugo's own rules (`content_path_to_url`) |
+| `themes/default/data/registry/packages/<pkg>.yaml` | `/registry/packages/<pkg>/` |
+
+The YAML rule is the one that matters most here: the generated `api-docs/` content is
+gitignored and never appears in a PR diff, so without it the list would be empty on most
+registry PRs. Results are de-duplicated, then filtered to URLs that actually rendered
+(`public/<url>index.html` exists), which drops removed files and `url:`/alias overrides rather
+than linking them as dead URLs. The list is capped at 50 entries with an "…and N more" line.
+
+The whole block is reporting, not deployment: it is invoked as `post_preview_comment || log …`
+so a GitHub API hiccup can never fail an otherwise-good build. Conversely, because `sync.sh`
+runs under `set -o errexit` after the Cypress smoke test, a **failed** build posts nothing.
+
+`make test-preview-comment` (`scripts/ci/test-preview-comment.sh`) covers the mapping, the
+de-duplication, and the existence gate offline; it runs in the `Lint Scripts` PR job.
+
+### 6.5 Custom Redirects
 
 **Source files**: `scripts/redirects/` — pipe-delimited text files with `key | location` entries.
 
@@ -969,7 +1031,31 @@ yarn run format
 # Runs: prettier scripts --write
 ```
 
-### 8.5 Provider API Docs Tests
+### 8.5 Dark Logo Variants
+
+```bash
+make lint-dark-logos
+# Runs: python3 scripts/generate-dark-logos.py --check
+```
+
+The dark-mode package marks under `themes/default/assets/fingerprinted/logos/pkg/`
+(`<name>-on-dark.svg`) are generated from their light siblings, so adding or
+replacing a local logo leaves them stale. The check is deterministic, offline and
+stdlib-only, and runs in PR CI as the `lint-dark-logos` job. Regenerate with:
+
+```bash
+python3 scripts/generate-dark-logos.py
+```
+
+Its sibling, `scripts/classify-external-logos.py`, decides which packages with a
+third-party `logo_url` need a light chip in dark mode and writes
+`themes/default/data/registry/external_logo_treatment.yaml`. It downloads every
+external logo (and shells out to macOS `sips` for non-PNG rasters), so it is **not**
+wired into CI — run it by hand after adding a package with a `logo_url`, or when a
+vendor changes their logo. Its `--check` mode exits 2, rather than claiming the file
+is stale, if any logo could not be measured.
+
+### 8.6 Provider API Docs Tests
 
 ```bash
 make test_provider_api_docs
@@ -980,7 +1066,7 @@ Requires: `ensure`, `build-assets`, and `bin/resourcedocsgen` to have been built
 
 Node version in CI: 23.x. Go version: stable (latest).
 
-### 8.6 Browser Tests (Cypress)
+### 8.7 Browser Tests (Cypress)
 
 ```bash
 make run-browser-tests
@@ -998,7 +1084,7 @@ Browser tests are run:
 1. **As a smoke test inside `scripts/ci/sync.sh`** after each S3 deploy (both preview and production), using the deployed S3 website URL.
 2. **Daily at 2:00 PM UTC** via `run-browser-tests.yml` against the live production site.
 
-### 8.7 Link Checking
+### 8.8 Link Checking
 
 ```bash
 make check_links
@@ -1055,8 +1141,9 @@ The `export-repo-secrets.yml` workflow provides a manual escape hatch to sync Gi
 | `PULUMI_DOCS_STACK_NAME` | GitHub var | build | Pulumi docs stack reference |
 | `DEPLOYMENT_ENVIRONMENT` | GitHub var | build, cleanup | e.g., `testing` or `production` |
 | `NODE_OPTIONS` | Hardcoded | build, browser tests | `--max_old_space_size=8192` |
-| `SLACK_ACCESS_TOKEN` | ESC | link check, cleanup | Slack Web API token for posting messages |
+| `SLACK_ACCESS_TOKEN` | ESC | link check, cleanup, priority digest | Slack Web API token for posting messages |
 | `SLACK_WEBHOOK_URL` | ESC | notify jobs | Slack incoming webhook for failure alerts |
+| `SLACK_TEAM_CHANNEL` | GitHub var | priority digest | Slack channel ID the digest posts to |
 | `ASSET_BUNDLE_ID` | `build.sh` (computed) | Hugo templates | Unique suffix for CSS/JS cache-busting |
 | `CSS_BUNDLE` / `JS_BUNDLE` | `build.sh` (computed) | Hugo templates | Paths to versioned asset bundles |
 
@@ -1065,7 +1152,7 @@ The `export-repo-secrets.yml` workflow provides a manual escape hatch to sync Gi
 | Tool | `mise.toml` | `pull-request.yml` (preview) | `push.yml` (production) | `testing-deploy.yml` |
 |---|---|---|---|---|
 | Node.js | 20 | 22.x | 22.x | 22.x |
-| Go | 1.26 | 1.26.x | 1.26.x | 1.21.x |
+| Go | 1.26 | `tools/resourcedocsgen/go.mod` | `tools/resourcedocsgen/go.mod` | `tools/resourcedocsgen/go.mod` |
 | Hugo | 0.157 | 0.157.0 | 0.157.0 | 0.157.0 |
 | golangci-lint | 2.1.6 | v2.1.6 (check-go.yml) | — | — |
 | s5cmd | — | v2.3.0 | v2.3.0 | v2.3.0 |
@@ -1083,6 +1170,7 @@ Note: `mise.toml` specifies Node 20 for local development, while CI workflows us
 | Link check | 3:00 PM every Monday | `check-links.yml` | `make check_links` |
 | Browser tests (scheduled) | 2:00 PM daily | `run-browser-tests.yml` | `make run-browser-tests` |
 | Stale bucket cleanup | 3:00 PM daily | `bucket-cleanup.yml` | `make ci_bucket_cleanup` |
+| Open P0 and P1 issue digest | 3:00 PM daily | `priority-digest.yml` | `scripts/ci/priority_digest.py` |
 
 ---
 

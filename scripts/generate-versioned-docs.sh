@@ -38,12 +38,22 @@ MINOR_COUNT=1
 # Maximum number of packages to process in parallel.
 MAX_PARALLEL="${MAX_PARALLEL:-8}"
 
+CURL_NETWORK_OPTS=(
+    --connect-timeout 15
+    --speed-limit 1024
+    --speed-time 60
+    --retry 3
+    --retry-delay 2
+)
+
 # Blessed packages are first-party providers that get versioned docs.
 # Fetch dynamically from ci-mgmt (pinned commit for stability):
 CI_MGMT_COMMIT="b3cede4113152996ec67c47a2ca0cef3c5aeb626"
 PROVIDERS_JSON_URL="https://raw.githubusercontent.com/pulumi/ci-mgmt/${CI_MGMT_COMMIT}/provider-ci/providers.json"
-PROVIDERS_JSON=$(curl -sfL "$PROVIDERS_JSON_URL") || { echo "Failed to fetch providers.json from ci-mgmt" >&2; exit 1; }
-mapfile -t BLESSED_PACKAGES < <(echo "$PROVIDERS_JSON" | jq -r '.[]')
+PROVIDERS_JSON_FILE=$(mktemp)
+curl -sfL "${CURL_NETWORK_OPTS[@]}" "$PROVIDERS_JSON_URL" -o "$PROVIDERS_JSON_FILE" || { echo "Failed to fetch providers.json from ci-mgmt" >&2; exit 1; }
+mapfile -t BLESSED_PACKAGES < <(jq -r '.[]' < "$PROVIDERS_JSON_FILE")
+rm -f "$PROVIDERS_JSON_FILE"
 
 is_blessed() {
     local pkg="$1"
@@ -239,14 +249,22 @@ process_package() {
         if [[ ! -f "$CACHED_SCHEMA" ]]; then
             echo "[$PACKAGE] Downloading schema from $SCHEMA_URL..."
             if [[ "$SCHEMA_URL" == *.yaml || "$SCHEMA_URL" == *.yml ]]; then
-                if ! curl -sfL "$SCHEMA_URL" | yq -o json > "$CACHED_SCHEMA"; then
+                local DOWNLOADED_SCHEMA="$CACHED_SCHEMA.yaml"
+                if ! curl -sfL "${CURL_NETWORK_OPTS[@]}" "$SCHEMA_URL" -o "$DOWNLOADED_SCHEMA"; then
                     echo "[$PACKAGE] Warning: Failed to download schema from $SCHEMA_URL, skipping"
-                    rm -f "$CACHED_SCHEMA"
+                    rm -f "$DOWNLOADED_SCHEMA" "$CACHED_SCHEMA"
                     rm -rf "$DOCS_OUT_DIR"
                     continue
                 fi
+                if ! yq -o json "$DOWNLOADED_SCHEMA" > "$CACHED_SCHEMA"; then
+                    echo "[$PACKAGE] Warning: Failed to convert schema from $SCHEMA_URL, skipping"
+                    rm -f "$DOWNLOADED_SCHEMA" "$CACHED_SCHEMA"
+                    rm -rf "$DOCS_OUT_DIR"
+                    continue
+                fi
+                rm -f "$DOWNLOADED_SCHEMA"
             else
-                if ! curl -sfL "$SCHEMA_URL" -o "$CACHED_SCHEMA"; then
+                if ! curl -sfL "${CURL_NETWORK_OPTS[@]}" "$SCHEMA_URL" -o "$CACHED_SCHEMA"; then
                     echo "[$PACKAGE] Warning: Failed to download schema from $SCHEMA_URL, skipping"
                     rm -f "$CACHED_SCHEMA"
                     rm -rf "$DOCS_OUT_DIR"
@@ -268,7 +286,7 @@ process_package() {
         INDEX_URL=$(derive_index_url "$SCHEMA_URL")
         if [[ -n "$INDEX_URL" ]]; then
             echo "[$PACKAGE] Fetching _index.md from $INDEX_URL..."
-            if ! curl -sfL "$INDEX_URL" -o "$DOCS_OUT_DIR/_index.md" 2>/dev/null; then
+            if ! curl -sfL "${CURL_NETWORK_OPTS[@]}" "$INDEX_URL" -o "$DOCS_OUT_DIR/_index.md" 2>/dev/null; then
                 echo "[$PACKAGE] Could not fetch _index.md from $INDEX_URL"
                 rm -f "$DOCS_OUT_DIR/_index.md"
             else

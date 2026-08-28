@@ -35,7 +35,7 @@ Input-wrapped arguments and returns an Output-wrapped result.
 ><pre class="chroma"><code class="language-typescript" data-lang="typescript"
 ><span class="k">function </span>overlayFunction<span class="p">(</span><span class="nx">args</span><span class="p">:</span> <span class="nx">OverlayFunctionArgs</span><span class="p">,</span> <span class="nx">opts</span><span class="p">?:</span> <span class="nx"><a href="/docs/reference/pkg/nodejs/pulumi/pulumi/#InvokeOptions">InvokeOptions</a></span><span class="p">): Promise&lt;<span class="nx"><a href="#result">OverlayFunctionResult</a></span>></span
 ><span class="k">
-function </span>overlayFunctionOutput<span class="p">(</span><span class="nx">args</span><span class="p">:</span> <span class="nx">OverlayFunctionOutputArgs</span><span class="p">,</span> <span class="nx">opts</span><span class="p">?:</span> <span class="nx"><a href="/docs/reference/pkg/nodejs/pulumi/pulumi/#InvokeOptions">InvokeOptions</a></span><span class="p">): Output&lt;<span class="nx"><a href="#result">OverlayFunctionResult</a></span>></span
+function </span>overlayFunctionOutput<span class="p">(</span><span class="nx">args</span><span class="p">:</span> <span class="nx">OverlayFunctionOutputArgs</span><span class="p">,</span> <span class="nx">opts</span><span class="p">?:</span> <span class="nx"><a href="/docs/reference/pkg/nodejs/pulumi/pulumi/#InvokeOutputOptions">InvokeOutputOptions</a></span><span class="p">): Output&lt;<span class="nx"><a href="#result">OverlayFunctionResult</a></span>></span
 ></code></pre></div>
 </pulumi-choosable>
 </div>
@@ -48,7 +48,7 @@ function </span>overlayFunctionOutput<span class="p">(</span><span class="nx">ar
                      <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.InvokeOptions">Optional[InvokeOptions]</a></span> = None<span class="p">) -&gt;</span> <span>OverlayFunctionResult</span
 ><span class="k">
 def </span>overlay_function_output<span class="p">(</span><span class="nx">arg1</span><span class="p">:</span> <span class="nx">pulumi.Input[Optional[str]]</span> = None<span class="p">,</span>
-                     <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.InvokeOptions">Optional[InvokeOptions]</a></span> = None<span class="p">) -&gt;</span> <span>Output[OverlayFunctionResult]</span
+                     <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.InvokeOutputOptions">Optional[InvokeOutputOptions]</a></span> = None<span class="p">) -&gt;</span> <span>Output[OverlayFunctionResult]</span
 ></code></pre></div>
 </pulumi-choosable>
 </div>
@@ -71,7 +71,8 @@ func </span>OverlayFunctionOutput<span class="p">(</span><span class="nx">ctx</s
 <div class="highlight"><pre class="chroma"><code class="language-csharp" data-lang="csharp"><span class="k">public static class </span><span class="nx">OverlayFunction </span><span class="p">
 {</span><span class="k">
     public static </span>Task&lt;<span class="nx"><a href="#result">OverlayFunctionResult</a></span>> <span class="p">InvokeAsync(</span><span class="nx">OverlayFunctionArgs</span><span class="p"> </span><span class="nx">args<span class="p">,</span> <span class="nx"><a href="/docs/reference/pkg/dotnet/Pulumi/Pulumi.InvokeOptions.html">InvokeOptions</a></span><span class="p">? </span><span class="nx">opts = null<span class="p">)</span><span class="k">
-    public static </span>Output&lt;<span class="nx"><a href="#result">OverlayFunctionResult</a></span>> <span class="p">Invoke(</span><span class="nx">OverlayFunctionInvokeArgs</span><span class="p"> </span><span class="nx">args<span class="p">,</span> <span class="nx"><a href="/docs/reference/pkg/dotnet/Pulumi/Pulumi.InvokeOptions.html">InvokeOptions</a></span><span class="p">? </span><span class="nx">opts = null<span class="p">)</span><span class="p">
+    public static </span>Output&lt;<span class="nx"><a href="#result">OverlayFunctionResult</a></span>> <span class="p">Invoke(</span><span class="nx">OverlayFunctionInvokeArgs</span><span class="p"> </span><span class="nx">args<span class="p">,</span> <span class="nx"><a href="/docs/reference/pkg/dotnet/Pulumi/Pulumi.InvokeOptions.html">InvokeOptions</a></span><span class="p">? </span><span class="nx">opts = null<span class="p">)</span><span class="k">
+    public static </span>Output&lt;<span class="nx"><a href="#result">OverlayFunctionResult</a></span>> <span class="p">Invoke(</span><span class="nx">OverlayFunctionInvokeArgs</span><span class="p"> </span><span class="nx">args<span class="p">,</span> <span class="nx"><a href="/docs/reference/pkg/dotnet/Pulumi/Pulumi.InvokeOutputOptions.html">InvokeOutputOptions</a></span><span class="p"> </span><span class="nx">opts<span class="p">)</span><span class="p">
 }</span></code></pre></div>
 </pulumi-choosable>
 </div>
@@ -81,6 +82,7 @@ func </span>OverlayFunctionOutput<span class="p">(</span><span class="nx">ctx</s
 <pulumi-choosable type="language" values="java">
 <div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="k">public static CompletableFuture&lt;<span class="nx"><a href="#result">OverlayFunctionResult</a></span>> </span>overlayFunction<span class="p">(</span><span class="nx">OverlayFunctionArgs</span><span class="p"> </span><span class="nx">args<span class="p">,</span> <span class="nx">InvokeOptions</span><span class="p"> </span><span class="nx">options<span class="p">)</span>
 <span class="k">public static Output&lt;<span class="nx"><a href="#result">OverlayFunctionResult</a></span>> </span>overlayFunction<span class="p">(</span><span class="nx">OverlayFunctionArgs</span><span class="p"> </span><span class="nx">args<span class="p">,</span> <span class="nx">InvokeOptions</span><span class="p"> </span><span class="nx">options<span class="p">)</span>
+<span class="k">public static Output&lt;<span class="nx"><a href="#result">OverlayFunctionResult</a></span>> </span>overlayFunction<span class="p">(</span><span class="nx">OverlayFunctionArgs</span><span class="p"> </span><span class="nx">args<span class="p">,</span> <span class="nx">InvokeOutputOptions</span><span class="p"> </span><span class="nx">options<span class="p">)</span>
 </code></pre></div>
 </pulumi-choosable>
 </div>

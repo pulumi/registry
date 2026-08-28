@@ -5,6 +5,7 @@ on: pull_request
 jobs:
   auto-approve:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     permissions:
       pull-requests: write
     if: (github.event.pull_request.user.login == 'pulumi-bot') && (github.event.pull_request.head.repo.full_name == github.repository)

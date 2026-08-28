@@ -25,7 +25,7 @@ import (
 
 var verbose int
 
-func RootCmd() *cobra.Command {
+func RootCmd(client HTTPDoer) *cobra.Command {
 	rootCmd := &cobra.Command{
 		Use:   "resourcedocsgen",
 		Short: "Generate Pulumi resource docs",
@@ -44,9 +44,9 @@ func RootCmd() *cobra.Command {
 	rootCmd.PersistentFlags().IntVarP(&verbose, "verbose", "v", 0,
 		"Enable verbose logging (any value > 0 enables debug-level logs)")
 
-	rootCmd.AddCommand(docs.ResourceDocsCmd())
-	rootCmd.AddCommand(PackageMetadataCmd())
-	rootCmd.AddCommand(CheckVersion())
+	rootCmd.AddCommand(docs.ResourceDocsCmd(client))
+	rootCmd.AddCommand(PackageMetadataCmd(client))
+	rootCmd.AddCommand(CheckVersion(client))
 	rootCmd.AddCommand(SanitizeDocsCmd())
 
 	return rootCmd

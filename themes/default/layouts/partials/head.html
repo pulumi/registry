@@ -35,6 +35,32 @@
       } catch (e) {}
     </script>
 
+    {{- /* Dark mode: apply the saved (or system) theme before first paint so
+           there's no flash. Unlike docs there's no section gate — the whole
+           registry site is in scope. The key is shared with /docs on purpose, so
+           the preference carries across pulumi.com. Paired with
+           theme/src/scss/docs/_docs-theme.scss (CSS, scoped to
+           body.section-registry) and theme/src/ts/docs-theme.ts (toggle behavior).
+           data-theme = effective light|dark; data-theme-pref = the raw choice, so
+           the toggle can show the active state pre-paint. */ -}}
+    <script>
+        (function () {
+            try {
+                var pref = localStorage.getItem("pulumi-docs-theme") || "system";
+                var el = document.documentElement;
+                el.dataset.themePref = pref;
+                var dark =
+                    pref === "dark" ||
+                    (pref === "system" &&
+                        window.matchMedia &&
+                        window.matchMedia("(prefers-color-scheme: dark)").matches);
+                if (dark) {
+                    el.dataset.theme = "dark";
+                }
+            } catch (e) {}
+        })();
+    </script>
+
     <!-- Our CSS and JS bundles. -->
     {{ partial "assets" . }}
 

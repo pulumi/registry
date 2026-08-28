@@ -3,7 +3,11 @@
 }
 
 nav.main-nav {
-    @apply text-sm pb-8;
+    // No bottom padding: this is the scroll container, and the theme toggle sits
+    // directly beneath it as the sidebar's last flex child (its own top padding
+    // and border supply the separation). Padding here would just be dead space at
+    // the end of the list.
+    @apply text-sm;
 
     ul {
         @apply list-none p-0;

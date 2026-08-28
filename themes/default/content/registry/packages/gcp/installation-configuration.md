@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-gcp/v9.33.0/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-gcp/v9.35.1/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-gcp/blob/v9.33.0/docs/installation-configuration.md
+edit_url: https://github.com/pulumi/pulumi-gcp/blob/v9.35.1/docs/installation-configuration.md
 title: Google Cloud (GCP) Classic Installation & Configuration
 meta_desc: How to set up credentials to use the Pulumi GCP Provider and choose configuration options to tailor the provider to suit your use case.
 layout: package
@@ -13,7 +13,7 @@ The Google Cloud (GCP) Classic provider is available as a package in all Pulumi 
 
 * JavaScript/TypeScript: [`@pulumi/gcp`](https://www.npmjs.com/package/@pulumi/gcp)
 * Python: [`pulumi-gcp`](https://pypi.org/project/pulumi-gcp/)
-* Go: [`github.com/pulumi/pulumi-gcp/sdk/v7/go/gcp`](https://github.com/pulumi/pulumi-gcp)
+* Go: [`github.com/pulumi/pulumi-gcp/sdk/v9/go/gcp`](https://github.com/pulumi/pulumi-gcp)
 * .NET: [`Pulumi.Gcp`](https://www.nuget.org/packages/Pulumi.Gcp)
 * Java: [`com.pulumi.gcp`](https://search.maven.org/search?q=com.pulumi.gcp)
 

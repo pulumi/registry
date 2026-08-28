@@ -22,6 +22,7 @@ from pathlib import Path
 import yaml
 
 REGISTRY_MIRROR_TOOLS_COMMIT = "dda1dfd85d540fab45a0d19060e963564d0b36aa"
+PUBLISHER_NAMES_RELPATH = "tools/resourcedocsgen/pkg/publishers/publisher-names.json"
 
 @dataclass
 class Config:
@@ -50,7 +51,7 @@ def get_changed_packages(repo_root: Path) -> list[str]:
 
 def load_publishers(repo_root: Path) -> dict[str, str]:
     """Load publisher display name to slug mapping."""
-    publishers_path = repo_root / "tools/resourcedocsgen/pkg/publishers/publisher-names.json"
+    publishers_path = repo_root / PUBLISHER_NAMES_RELPATH
     with open(publishers_path) as f:
         return json.load(f)
 
@@ -109,7 +110,16 @@ def build_package_spec(
     if not version:
         return SpecResult(None, error=f"{yaml_file} has no version field")
 
-    publisher = publishers.get(publisher_display, "pulumi")
+    if not publisher_display:
+        return SpecResult(None, error=f"{yaml_file} has no publisher field")
+
+    if publisher_display not in publishers:
+        return SpecResult(None, error=(
+            f'{yaml_file} has publisher "{publisher_display}", which is not in '
+            f"{PUBLISHER_NAMES_RELPATH}"
+        ))
+
+    publisher = publishers[publisher_display]
     source = "opentofu" if schema_url and "opentofu" in schema_url else "pulumi"
     version = version.lstrip("v")
 
@@ -226,6 +236,21 @@ def publish_with_retry(specs: list[str], config: Config) -> bool:
     return False
 
 
+def validate_all(repo_root: Path) -> int:
+    package_dir = repo_root / "themes/default/data/registry/packages"
+    yaml_files = sorted(str(p.relative_to(repo_root)) for p in package_dir.glob("*.yaml"))
+    specs, errors = build_specs(yaml_files, repo_root)
+
+    print(f"{len(yaml_files)} package YAML files, {len(specs)} publishable specs")
+    if not errors:
+        return 0
+
+    print(f"\n{len(errors)} package(s) could not be turned into a publish spec:")
+    for error in errors:
+        print(f"  - {error}")
+    return 1
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(
         description="Publish changed packages to the registry"
@@ -252,7 +277,15 @@ def main() -> int:
         nargs="*",
         help="Package specs to publish (default: detect from git diff)",
     )
+    parser.add_argument(
+        "--validate-all",
+        action="store_true",
+        help="Build a spec for every package YAML and report errors without publishing",
+    )
     args = parser.parse_args()
+
+    if args.validate_all:
+        return validate_all(args.repo_root.resolve())
 
     if not os.environ.get("PULUMI_API_URL"):
         print("Error: PULUMI_API_URL environment variable is required")

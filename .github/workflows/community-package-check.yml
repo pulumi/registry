@@ -8,33 +8,54 @@ on:
   pull_request:
     paths:
       - community-packages/package-list.json
+  workflow_dispatch:
+    inputs:
+      pr:
+        description: The pull request to check
+        required: true
+      head:
+        description: >-
+          The head commit of that pull request, abbreviated to 12 characters. It only names the
+          run, and the sweep matches that name to avoid dispatching the same check twice, so it
+          has to stay exactly what github_api.dispatch_run_label builds.
+        required: true
+
+run-name: >-
+  ${{ inputs.pr && format('Community package check · PR #{0} · {1}', inputs.pr, inputs.head)
+  || 'Community package check' }}
 
 permissions:
   contents: read
+  pull-requests: read  # the dispatched run reads the PR's package list over the API
 
 concurrency:
-  group: community-check-${{ github.event.pull_request.number }}
+  group: community-check-${{ github.event.pull_request.number || inputs.pr }}
   cancel-in-progress: true
 
 jobs:
   check:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@v7
         with:
           go-version-file: tools/resourcedocsgen/go.mod
+          cache-dependency-path: tools/resourcedocsgen/go.sum
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: "20"
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install pyyaml
 
       - name: Install the Pulumi CLI (for the plugin install probe)
         run: |
@@ -42,14 +63,35 @@ jobs:
           echo "$HOME/.pulumi/bin" >> "$GITHUB_PATH"
 
       - name: Record the PR number so the reporter posts to the right PR
-        run: echo "${{ github.event.pull_request.number }}" > pr-number.txt
+        env:
+          PR: ${{ github.event.pull_request.number || inputs.pr }}
+        run: echo "$PR" > pr-number.txt
+
+      - name: Fetch the pull request's package list
+        if: inputs.pr
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          PR: ${{ inputs.pr }}
+        run: |
+          python3 scripts/ci/community-package/cli.py fetch-pr --pr "$PR" \
+            --changed-files pr-changed-files.txt
 
       - name: Verify the added entry and write the fact-sheet
         env:
-          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
-        run: python3 scripts/ci/community-package/cli.py check --diff "origin/${{ github.base_ref }}"
+          HEAD_SHA: ${{ github.event.pull_request.head.sha || inputs.head }}
+          REPO: ${{ github.repository }}
+          PR: ${{ inputs.pr }}
+          BASE_REF: ${{ github.base_ref || github.event.repository.default_branch }}
+        run: |
+          if [ -n "$PR" ]; then
+            python3 scripts/ci/community-package/cli.py check --diff "origin/$BASE_REF" \
+              --changed-files pr-changed-files.txt
+          else
+            python3 scripts/ci/community-package/cli.py check --diff "origin/$BASE_REF"
+          fi
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: fact-sheets

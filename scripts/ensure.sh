@@ -33,9 +33,25 @@ if [[ -z "$(which yarn)" ]]; then
     exit 1
 fi
 
+# Yarn retries dropped connections and timeouts on its own, but treats an HTTP status from
+# the registry as final, so a 502 on any one tarball ends the whole install.
+retry_yarn() {
+    local max_attempts=3 attempt
+    for attempt in $(seq "$max_attempts"); do
+        if yarn "$@" --network-timeout 300000; then
+            return 0
+        fi
+        if [[ "$attempt" -lt "$max_attempts" ]]; then
+            sleep $((attempt * 10))
+        fi
+    done
+    echo "yarn $* failed after $max_attempts attempts."
+    return 1
+}
+
 echo "Installing Node.js modules..."
-yarn install
-yarn --cwd infrastructure install
-yarn --cwd ./themes/default/theme install
-yarn --cwd ./themes/default/theme/stencil install
+retry_yarn install
+retry_yarn --cwd infrastructure install
+retry_yarn --cwd ./themes/default/theme install
+retry_yarn --cwd ./themes/default/theme/stencil install
 

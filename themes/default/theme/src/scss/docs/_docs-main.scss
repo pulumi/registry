@@ -192,12 +192,15 @@ body.section-registry {
             border: none;
             display: flex;
             flex-direction: column;
-            padding-bottom: 24px;
             flex-shrink: 0;
             margin: 0;
             width: 32px;
             flex-basis: 32px;
-            height: calc(100vh - 38px);
+            // Fill the viewport below the top nav (h-16 + 1px border). The column
+            // starts at y=65 until it sticks, so anything taller than this hangs
+            // below the fold at rest — which used to clip the end of the nav list
+            // and now would hide the theme toggle pinned beneath it.
+            height: calc(100vh - 65px);
             position: sticky;
             left: 0;
             top: 0;
@@ -342,15 +345,14 @@ body.section-registry {
             .docs-main-nav-wrapper .docs-main-nav {
                 width: 240px;
                 flex-basis: 240px;
-                height: calc(100vh);
+                // Same reasoning as the resting column above: the drawer opens
+                // below the top nav, so a full 100vh puts its last child (the
+                // theme toggle) off-screen.
+                height: calc(100vh - 65px);
                 padding-left: 16px;
                 background-color: $white;
                 box-shadow: 6px 0px 36px rgba(0, 0, 0, 0.08);
                 justify-content: space-between;
-
-                @media (min-width: 768) {
-                    height: calc(100vh - 38px);
-                }
             }
 
             nav.main-nav {

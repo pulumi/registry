@@ -16,11 +16,14 @@ package docs
 
 import (
 	"fmt"
+	"regexp"
+	"strings"
 	"testing"
 
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 	"github.com/pulumi/registry/tools/resourcedocsgen/pkg/util/language"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 const (
@@ -883,4 +886,119 @@ func TestGenOverlayFunction(t *testing.T) {
 			assert.Equal(t, test.ExpectedLangChooserLanguages, resourceDocs.LangChooserLanguages)
 		})
 	}
+}
+
+func TestHasOversizedCreationExample(t *testing.T) {
+	t.Parallel()
+
+	small := strings.Repeat("x", maxCreationExampleSyntaxBytes)
+	tooBig := strings.Repeat("x", maxCreationExampleSyntaxBytes+1)
+
+	assert.False(t, hasOversizedCreationExample(nil))
+	assert.False(t, hasOversizedCreationExample(map[language.Language]string{
+		language.Go:     small,
+		language.Python: small,
+	}))
+	assert.True(t, hasOversizedCreationExample(map[language.Language]string{
+		language.Go:     small,
+		language.Python: tooBig,
+	}))
+}
+
+func TestOversizedCreationExampleKeepsCLIConstructorSection(t *testing.T) {
+	t.Parallel()
+
+	spec := newTestPackageSpec()
+	inputs := map[string]schema.PropertySpec{}
+	for i := range 800 {
+		name := fmt.Sprintf("configurationPropertyWithALongName%03d", i)
+		inputs[name] = schema.PropertySpec{TypeSpec: schema.TypeSpec{Type: "string"}}
+	}
+	spec.Resources["prov:module/oversizedResource:OversizedResource"] = schema.ResourceSpec{
+		ObjectTypeSpec:  schema.ObjectTypeSpec{Description: "Resource whose constructor example exceeds the size limit."},
+		InputProperties: inputs,
+	}
+
+	schemaPkg, err := schema.ImportSpec(spec, nil, schema.NewNullLoader(), schema.ValidationOptions{
+		AllowDanglingReferences: true,
+	})
+	require.NoError(t, err, "importing spec")
+
+	bundle, err := NewContext("test", schemaPkg).GenerateCLIPackage()
+	require.NoError(t, err, "generating CLI package")
+
+	var content string
+	for key, entry := range bundle.Resources {
+		if strings.Contains(strings.ToLower(key), "oversizedresource") {
+			content = entry.Content
+			break
+		}
+	}
+	require.NotEmpty(t, content, "expected an entry for the oversized resource")
+
+	assert.Regexp(t, regexp.MustCompile("(?m)^"+regexp.QuoteMeta(codeFence)+`\w*\n\n`+regexp.QuoteMeta(codeFence)+"$"),
+		content, "constructor syntax should be blank")
+	assert.Contains(t, content, "## Create OversizedResource Resource")
+	assert.Contains(t, content, "### Parameters")
+}
+
+// TestFunctionInvokeOptionsTypes pins the options type rendered on each of a function's signatures. The Output version
+// accepts `InvokeOutputOptions` (which adds `dependsOn`), but how that surfaces differs per language: TypeScript and
+// Python swap the type outright, Go keeps its variadic `pulumi.InvokeOption`, and C# and Java gain a second overload.
+func TestFunctionInvokeOptionsTypes(t *testing.T) {
+	t.Parallel()
+
+	schemaPkg, err := schema.ImportSpec(newTestPackageSpec(), nil, schema.NewNullLoader(), schema.ValidationOptions{
+		AllowDanglingReferences: true,
+	})
+	require.NoError(t, err, "importing spec")
+
+	dctx := NewContext("test", schemaPkg)
+	mod, ok := dctx.generateModulesFromSchemaPackage("test", schemaPkg)["module"]
+	require.True(t, ok, "could not find the module 'module' in modules map")
+
+	f := getFunctionFromModule("getModuleResource", mod)
+	require.NotNil(t, f, "could not find getModuleResource in module")
+	require.True(t, f.NeedsOutputVersion(), "test function is expected to have an Output version")
+
+	args := mod.genFunction(f)
+
+	// optsType returns everything after the `opts` parameter name, which for the languages that put the type after the
+	// name is the type itself plus any default value.
+	optsType := func(rendered string) string {
+		_, opts, found := strings.Cut(stripHTML(rendered), "opts")
+		require.True(t, found, "no opts parameter in %q", rendered)
+		return strings.TrimSpace(opts)
+	}
+
+	t.Run("direct form", func(t *testing.T) {
+		t.Parallel()
+		assert.Equal(t, "?: InvokeOptions", optsType(args.FunctionArgs[language.NodeJS]))
+		assert.Equal(t, ": Optional[InvokeOptions] = None", optsType(args.FunctionArgs[language.Python]))
+		assert.Equal(t, "...InvokeOption", optsType(args.FunctionArgs[language.Go]))
+		// C# and Java put the type ahead of the parameter name.
+		assert.Contains(t, stripHTML(args.FunctionArgs[language.CSharp]), "InvokeOptions? opts = null")
+		assert.Contains(t, stripHTML(args.FunctionArgs[language.Java]), "InvokeOptions options")
+	})
+
+	t.Run("output form", func(t *testing.T) {
+		t.Parallel()
+		assert.Equal(t, "?: InvokeOutputOptions", optsType(args.FunctionArgsOutputVersion[language.NodeJS]))
+		assert.Equal(t, ": Optional[InvokeOutputOptions] = None", optsType(args.FunctionArgsOutputVersion[language.Python]))
+		// Go's Output version keeps the variadic `pulumi.InvokeOption`; it builds the InvokeOutputOptions internally.
+		assert.Equal(t, "...InvokeOption", optsType(args.FunctionArgsOutputVersion[language.Go]))
+		// C# and Java keep the InvokeOptions overload and add a second one below.
+		assert.Contains(t, stripHTML(args.FunctionArgsOutputVersion[language.CSharp]), "InvokeOptions? opts = null")
+		assert.Contains(t, stripHTML(args.FunctionArgsOutputVersion[language.Java]), "InvokeOptions options")
+	})
+
+	t.Run("output form InvokeOutputOptions overload", func(t *testing.T) {
+		t.Parallel()
+		assert.Contains(t, stripHTML(args.FunctionArgsOutputOptions[language.CSharp]), "InvokeOutputOptions opts")
+		assert.Contains(t, stripHTML(args.FunctionArgsOutputOptions[language.Java]), "InvokeOutputOptions options")
+		// Only C# and Java render this as a distinct overload.
+		assert.NotContains(t, args.FunctionArgsOutputOptions, language.NodeJS)
+		assert.NotContains(t, args.FunctionArgsOutputOptions, language.Python)
+		assert.NotContains(t, args.FunctionArgsOutputOptions, language.Go)
+	})
 }

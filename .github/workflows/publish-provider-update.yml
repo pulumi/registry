@@ -50,10 +50,11 @@ jobs:
   unknown-event-type:
     if: ${{ github.event.action != 'resource-provider' && github.event.action != 'push-provider-update' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - name: Fetch secrets from ESC
         id: esc-secrets
-        uses: pulumi/esc-action@3af4859af8a73a362fb599b944124097d4bb80c5 # v3
+        uses: pulumi/esc-action@32dda43ffe7a2ab21e6bce11c781b44a3e5623cf # v3
       - run: printf "Unknown event type '%s'\n" "${{ github.event.action}}"
       - name: fail
         run: exit 1
@@ -61,13 +62,19 @@ jobs:
   build-resource-provider-docs:
     if: ${{ github.event.action == 'resource-provider' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - name: Fetch secrets from ESC
         id: esc-secrets
-        uses: pulumi/esc-action@3af4859af8a73a362fb599b944124097d4bb80c5 # v3
+        uses: pulumi/esc-action@32dda43ffe7a2ab21e6bce11c781b44a3e5623cf # v3
       - run: echo "Building ${{ env.PROVIDER_SHORT_NAME }} docs @ ${{ env.PROVIDER_VERSION }}"
       - name: checkout registry repo
         uses: actions/checkout@v7
+      - name: Set up Go
+        uses: actions/setup-go@v7
+        with:
+          go-version-file: tools/resourcedocsgen/go.mod
+          cache-dependency-path: tools/resourcedocsgen/go.sum
       - name: Build resourcedocsgen
         run: go build -C tools/resourcedocsgen
       - name: Generate Package Metadata
@@ -90,10 +97,11 @@ jobs:
   build-provider-docs:
     if: ${{ github.event.action == 'push-provider-update' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - name: Fetch secrets from ESC
         id: esc-secrets
-        uses: pulumi/esc-action@3af4859af8a73a362fb599b944124097d4bb80c5 # v3
+        uses: pulumi/esc-action@32dda43ffe7a2ab21e6bce11c781b44a3e5623cf # v3
       - name: Validate Inputs
         run: |
           should_not_set() {
@@ -111,6 +119,25 @@ jobs:
       - run: echo "Building ${{ env.PROVIDER_SHORT_NAME }} docs @ ${{ env.PROVIDER_VERSION }}"
       - name: checkout registry repo
         uses: actions/checkout@v7
+      - name: Set up Go
+        uses: actions/setup-go@v7
+        with:
+          go-version-file: tools/resourcedocsgen/go.mod
+          cache-dependency-path: tools/resourcedocsgen/go.sum
+      - name: Check the publisher is registered
+        env:
+          PUBLISHER_NAMES: tools/resourcedocsgen/pkg/publishers/publisher-names.json
+        run: |
+          publisher=$(jq --raw-output '.publisher // empty' "${{ runner.temp }}/schema.json")
+          if [ -z "$publisher" ]; then
+            exit 0
+          fi
+          if jq --exit-status --arg p "$publisher" 'has($p)' "$PUBLISHER_NAMES" > /dev/null; then
+            exit 0
+          fi
+          echo "Publisher \"$publisher\" is not in $PUBLISHER_NAMES."
+          echo "Add \"$publisher\": \"<slug>\" to that file, then re-run this workflow."
+          exit 1
       - name: Build resourcedocsgen
         run: go build -C tools/resourcedocsgen
       - name: Generate Package Metadata
@@ -132,6 +159,7 @@ jobs:
     if: failure()
     name: Send slack notification
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     needs:
       - build-resource-provider-docs
       - build-provider-docs
@@ -141,7 +169,7 @@ jobs:
     steps:
       - name: Fetch secrets from ESC
         id: esc-secrets
-        uses: pulumi/esc-action@3af4859af8a73a362fb599b944124097d4bb80c5 # v3
+        uses: pulumi/esc-action@32dda43ffe7a2ab21e6bce11c781b44a3e5623cf # v3
       - name: Slack Notification
         uses: docker://sholung/action-slack-notify:v2.3.0
         env:

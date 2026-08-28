@@ -286,6 +286,7 @@ type property struct {
 	IsRequired         bool
 	IsInput            bool
 	IsReplaceOnChanges bool
+	IsSecret           bool
 }
 
 // enum represents an enum.
@@ -1289,6 +1290,7 @@ func (mod *modContext) getPropertiesWithIDPrefixAndExclude(
 			// a) we will force the replace at the engine level
 			// b) we are told that the provider will require a replace
 			IsReplaceOnChanges: prop.ReplaceOnChanges || prop.WillReplaceOnChanges,
+			IsSecret:           prop.Secret,
 			Link:               link,
 			Types:              propTypes,
 		})
@@ -1724,6 +1726,17 @@ func (mod *modContext) genResourceHeader(r *schema.Resource) header {
 }
 
 // genResource is the entrypoint for generating a doc for a resource from its Pulumi schema.
+const maxCreationExampleSyntaxBytes = 20000
+
+func hasOversizedCreationExample(examples map[language.Language]string) bool {
+	for _, example := range examples {
+		if len(example) > maxCreationExampleSyntaxBytes {
+			return true
+		}
+	}
+	return false
+}
+
 func (mod *modContext) genResource(r *schema.Resource) resourceDocArgs {
 	dctx := mod.context
 	// Create a resource module file into which all of this resource's types will go.
@@ -1822,6 +1835,12 @@ func (mod *modContext) genResource(r *schema.Resource) resourceDocArgs {
 		}
 		if example, found := dctx.constructorSyntaxData.hcl.resources[r.Token]; found {
 			creationExampleSyntax[language.HCL] = example
+		}
+
+		if hasOversizedCreationExample(creationExampleSyntax) {
+			for lang := range creationExampleSyntax {
+				creationExampleSyntax[lang] = ""
+			}
 		}
 	}
 

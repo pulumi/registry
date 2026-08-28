@@ -3,11 +3,13 @@ on:
   pull_request:
     paths:
       - 'scripts/ci/*.py'
+      - 'scripts/*.py'
   push:
     branches:
       - master
     paths:
       - 'scripts/ci/*.py'
+      - 'scripts/*.py'
 
 permissions:
   id-token: write
@@ -16,6 +18,7 @@ permissions:
 jobs:
   test:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     env:
       ESC_ACTION_OIDC_AUTH: true
       ESC_ACTION_OIDC_ORGANIZATION: pulumi
@@ -23,7 +26,7 @@ jobs:
     steps:
       - name: Fetch secrets from ESC
         id: esc-secrets
-        uses: pulumi/esc-action@3af4859af8a73a362fb599b944124097d4bb80c5 # v3
+        uses: pulumi/esc-action@32dda43ffe7a2ab21e6bce11c781b44a3e5623cf # v3
         with:
           environment: github-secrets/pulumi-registry
           export-environment-variables: false
@@ -31,23 +34,43 @@ jobs:
         with:
           fetch-depth: 0
       - name: Set up Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v7
         with:
           python-version: '3.12'
-      - name: Set up Go
-        uses: actions/setup-go@v6
+      - name: Set up Go, opting out of the repo-root module cache key
+        uses: actions/setup-go@v7
         with:
           go-version: '1.26'
+          cache: false
+      - name: Get registry-mirror-tools version
+        id: mirror-version
+        run: |
+          hash="$(grep 'REGISTRY_MIRROR_TOOLS_COMMIT=' scripts/generate-versioned-docs.sh | cut -d'"' -f2)"
+          if [ -z "$hash" ]; then
+            echo "Could not read REGISTRY_MIRROR_TOOLS_COMMIT from scripts/generate-versioned-docs.sh" >&2
+            exit 1
+          fi
+          echo "hash=$hash" >> "$GITHUB_OUTPUT"
+      - name: Cache the registry-mirror-tools binaries
+        uses: actions/cache@v6
+        with:
+          path: |
+            bin/registry-mirror-discover
+            bin/registry-mirror-publish
+          key: registry-mirror-tools-bins-${{ runner.os }}-${{ steps.mirror-version.outputs.hash }}
       - name: Configure git for private Go modules
         run: git config --global url."https://${{ steps.esc-secrets.outputs.PULUMI_BOT_TOKEN }}:x-oauth-basic@github.com/pulumi/registry-mirror-tools".insteadOf "https://github.com/pulumi/registry-mirror-tools"
       - name: Install registry-mirror-tools
         env:
           GOPRIVATE: github.com/pulumi/registry-mirror-tools
         run: |
-          COMMIT="dda1dfd85d540fab45a0d19060e963564d0b36aa"
-          GOBIN="$PWD/bin" go install "github.com/pulumi/registry-mirror-tools/cmd/registry-mirror-discover@$COMMIT"
-          GOBIN="$PWD/bin" go install "github.com/pulumi/registry-mirror-tools/cmd/registry-mirror-publish@$COMMIT"
+          COMMIT="${{ steps.mirror-version.outputs.hash }}"
+          for cmd in registry-mirror-discover registry-mirror-publish; do
+            [ -x "bin/$cmd" ] || GOBIN="$PWD/bin" go install "github.com/pulumi/registry-mirror-tools/cmd/$cmd@$COMMIT"
+          done
       - name: Install dependencies
-        run: pip install pyyaml
+        run: pip install pyyaml requests
       - name: Run tests
         run: python -m unittest discover -s scripts/ci -p 'test_*.py' -v
+      - name: Run scripts/ tests
+        run: python -m unittest discover -s scripts -p 'test_*.py' -v

@@ -8,8 +8,16 @@ ensure:
 	$(MAKE) sync-icons
 
 .PHONY: lint
-lint: lint-go lint-markdown
+lint: lint-go lint-markdown lint-dark-logos
 	yarn run lint
+
+# The `-on-dark.svg` package marks are generated, so a new or replaced logo silently
+# leaves them stale. This check is deterministic and offline, so it belongs here;
+# its sibling scripts/classify-external-logos.py needs the network and is not run by
+# `make lint`. See the "Dark Mode" section of AGENTS.md.
+.PHONY: lint-dark-logos
+lint-dark-logos:
+	python3 ./scripts/generate-dark-logos.py --check
 
 .PHONY: lint-markdown
 lint-markdown: lint-shortcode-delimiters
@@ -33,12 +41,18 @@ lint-mktutorial:
 	cd tools/mktutorial/ && golangci-lint run --config ../../.golangci.yml
 
 .PHONY: test
-test: test-infra
+test: test-infra test-preview-comment
 	cd ./tools/resourcedocsgen && go test ./...
 
 .PHONY: test-infra
 test-infra:
 	cd infrastructure && node --test redirects.test.js
+
+# Covers the URL mapping behind the pinned preview comment in scripts/ci/sync.sh. Offline
+# and dependency-free, so it runs alongside the script linter in PR CI.
+.PHONY: test-preview-comment
+test-preview-comment:
+	./scripts/ci/test-preview-comment.sh
 
 .PHONY: build
 build: build-assets

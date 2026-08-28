@@ -148,6 +148,20 @@ describe("Test Provider", () => {
                     });
                 });
 
+                // The test schema marks the `token` output secret, so every language's
+                // output list should carry exactly one badged property.
+                it("badges secret properties", () => {
+                    cy.get(container).find(`${propertyLists} dt.property-secret`)
+                        .should("have.length.at.least", 1)
+                        .first()
+                        .within(() => {
+                            cy.get(".property-badges .property-indicator-secret svg").should("exist");
+                            cy.get(".property-badges [slot='content']")
+                                .invoke("text")
+                                .should("contain", "encrypted in state");
+                        });
+                });
+
                 // Verify that the inputs section contains the properties for all languages
                 it("contains input types for all languages", () => {
                     const languages = ["TypeScript", "Python", "Go", "C#", "Java", "YAML"];

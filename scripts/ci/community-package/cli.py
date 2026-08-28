@@ -2,14 +2,17 @@
 """Command-line entry point for the community package tooling. Each subcommand is one CI step:
 
     check           verify the added entry and write a fact-sheet (runs on the PR)
+    fetch-pr        bring a dispatched PR's package list into the tree, before the token-free check
+    sweep           dispatch a check for PRs whose own check GitHub would not start
+    check-publish   verify the packages a publish PR writes (runs on every publish path)
     preview         materialize a fork PR's entry so its site preview can be built
     report          post the fact-sheet as a sticky PR comment
     check-command   handle a /check comment
     preview-command handle a /preview comment
     preview-failed  post a build-failure comment for a /preview run
 
-The logic lives in the sibling modules (verify_entry, resourcedocsgen, fact_sheet, comment_commands, ...); stdlib
-only, no third-party dependencies.
+The logic lives in the sibling modules (verify_entry, resourcedocsgen, fact_sheet, comment_commands, ...).
+PyYAML is the only third-party dependency.
 """
 from __future__ import annotations
 
@@ -44,10 +47,11 @@ def _files_outside_allowlist(changed: list[str]) -> list[str]:
     return [f for f in changed if f and f not in ALLOWED_PATHS]
 
 
-def _offending_files(base_ref: str) -> list[str]:
-    changed = subprocess.run(["git", "diff", "--name-only", f"{base_ref}...HEAD"],
-                             capture_output=True, text=True).stdout
-    return _files_outside_allowlist(changed.splitlines())
+def _changed_files(base_ref: str, listed_in: str | None) -> list[str]:
+    if listed_in:
+        return Path(listed_in).read_text().splitlines()
+    return subprocess.run(["git", "diff", "--name-only", f"{base_ref}...HEAD"],
+                          capture_output=True, text=True).stdout.splitlines()
 
 
 def _rejection_sheet(offending: list[str]) -> str:
@@ -74,7 +78,7 @@ def _write_sheet(out: Path, name: str, sheet: str) -> None:
 
 def run_check(args: argparse.Namespace) -> int:
     out = Path(args.out)
-    offending = _offending_files(args.diff)
+    offending = _files_outside_allowlist(_changed_files(args.diff, args.changed_files))
     if offending:
         _write_sheet(out, "000.factsheet.md", _rejection_sheet(offending))
         return 1
@@ -113,20 +117,75 @@ def run_preview(args: argparse.Namespace) -> int:
     return 0
 
 
+def run_fetch_pr(args: argparse.Namespace) -> int:
+    pull = github_api.pull_request(args.pr)
+    head = github_api.file_content_at(github_api.repo(), str(package_list.PATH), str(pull["head"]["sha"]))
+    package_list.PATH.write_text(head)
+    Path(args.changed_files).write_text("\n".join(github_api.pull_request_files(args.pr)) + "\n")
+    return 0
+
+
+PACKAGE_YAML_DIR = Path("themes/default/data/registry/packages")
+
+
+def _changed_package_yamls(base_ref: str) -> list[Path]:
+    changed = subprocess.run(["git", "diff", "--name-only", f"{base_ref}...HEAD"],
+                             capture_output=True, text=True).stdout
+    return [Path(f) for f in changed.splitlines()
+            if f.endswith(".yaml") and Path(f).parent == PACKAGE_YAML_DIR]
+
+
+def run_check_publish(args: argparse.Namespace) -> int:
+    """Check the packages a publish PR writes, whatever opened it.
+
+    Every publish path ends in a PR that writes a package YAML, so checking the PR covers
+    the dispatches and the nightly bump alike without touching either workflow.
+    """
+    out = Path(args.out)
+    changed = _changed_package_yamls(args.diff)
+    if not changed:
+        print("no package YAML changed in this PR")
+        return 0
+
+    repo_root = Path.cwd()
+    failed = False
+    for index, yaml_path in enumerate(sorted(changed)):
+        manifest = verify_entry.verify_package_yaml(yaml_path, repo_root)
+        if manifest.delisted:
+            print(f"{manifest.providerName} is delisted; nothing to check")
+            continue
+        _write_sheet(out, f"{index:03d}.factsheet.md", fact_sheet.render(manifest))
+        if not manifest.green:
+            failed = True
+    return 1 if failed else 0
+
+
 def main(argv: list[str]) -> int:
     parser = argparse.ArgumentParser(prog="community-package")
     sub = parser.add_subparsers(dest="command", required=True)
 
     check = sub.add_parser("check")
     check.add_argument("--diff", metavar="BASEREF", required=True)
+    check.add_argument("--changed-files", metavar="PATH")
     check.add_argument("--out", default=".")
     check.set_defaults(run=run_check)
+
+    fetch_pr = sub.add_parser("fetch-pr")
+    fetch_pr.add_argument("--pr", type=int, required=True)
+    fetch_pr.add_argument("--changed-files", metavar="PATH", required=True)
+    fetch_pr.set_defaults(run=run_fetch_pr)
+
+    check_publish = sub.add_parser("check-publish")
+    check_publish.add_argument("--diff", metavar="BASEREF", required=True)
+    check_publish.add_argument("--out", default=".")
+    check_publish.set_defaults(run=run_check_publish)
 
     preview = sub.add_parser("preview")
     preview.add_argument("--pr", type=int, required=True)
     preview.set_defaults(run=run_preview)
 
     sub.add_parser("report").set_defaults(run=lambda _: comment_commands.report())
+    sub.add_parser("sweep").set_defaults(run=lambda _: comment_commands.sweep())
     sub.add_parser("check-command").set_defaults(run=lambda _: comment_commands.check_command())
     sub.add_parser("preview-command").set_defaults(run=lambda _: comment_commands.preview_command())
     sub.add_parser("preview-failed").set_defaults(run=lambda _: comment_commands.preview_failed())

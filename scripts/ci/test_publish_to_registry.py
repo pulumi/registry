@@ -13,7 +13,9 @@ from publish_to_registry import (
     build_package_spec,
     build_specs,
     get_changed_packages,
+    load_publishers,
     publish_with_retry,
+    validate_all,
 )
 
 
@@ -135,6 +137,39 @@ publisher: DEPRECATED
         self.assertIsNone(result.error)
         self.assertTrue(result.skipped)
 
+    def test_errors_on_unregistered_publisher(self):
+        self._write_yaml("stripe", """
+version: "0.3.0-beta.4"
+publisher: stripe
+schema_file_url: "https://example.com/registry.opentofu.org/schema.json"
+""")
+
+        result = build_package_spec(
+            "themes/default/data/registry/packages/stripe.yaml",
+            self.repo_root,
+            self.publishers,
+        )
+
+        self.assertIsNone(result.spec)
+        self.assertFalse(result.skipped)
+        self.assertIn("stripe", result.error)
+        self.assertIn("publisher-names.json", result.error)
+
+    def test_errors_on_absent_publisher_field(self):
+        self._write_yaml("nameless", """
+version: "1.0.0"
+""")
+
+        result = build_package_spec(
+            "themes/default/data/registry/packages/nameless.yaml",
+            self.repo_root,
+            self.publishers,
+        )
+
+        self.assertIsNone(result.spec)
+        self.assertFalse(result.skipped)
+        self.assertIn("no publisher field", result.error)
+
     def test_errors_on_missing_version(self):
         self._write_yaml("broken", """
 publisher: Pulumi
@@ -203,6 +238,39 @@ publisher: Pulumi
         self.assertIsNone(result.spec)
         self.assertIsNotNone(result.error)
         self.assertIn("Failed to parse", result.error)
+
+
+class TestValidateAll(unittest.TestCase):
+    def _repo_with_packages(self, scratch: str, names: list[str]) -> Path:
+        repo_root = Path(scratch)
+        package_dir = repo_root / "themes/default/data/registry/packages"
+        package_dir.mkdir(parents=True)
+        for name in names:
+            (package_dir / f"{name}.yaml").write_text("")
+        return repo_root
+
+    @patch("publish_to_registry.build_specs")
+    def test_passes_when_every_package_builds_a_spec(self, mock_build_specs):
+        mock_build_specs.return_value = (["pulumi/pulumi/aws@6.50.0"], [])
+        with tempfile.TemporaryDirectory() as scratch:
+            self.assertEqual(validate_all(self._repo_with_packages(scratch, ["aws"])), 0)
+
+    @patch("publish_to_registry.build_specs")
+    def test_fails_when_a_package_cannot_build_a_spec(self, mock_build_specs):
+        mock_build_specs.return_value = ([], ["broken.yaml: missing version"])
+        with tempfile.TemporaryDirectory() as scratch:
+            self.assertEqual(validate_all(self._repo_with_packages(scratch, ["broken"])), 1)
+
+    @patch("publish_to_registry.build_specs")
+    def test_checks_every_package_yaml_not_just_changed_ones(self, mock_build_specs):
+        mock_build_specs.return_value = ([], [])
+        with tempfile.TemporaryDirectory() as scratch:
+            validate_all(self._repo_with_packages(scratch, ["gcp", "aws"]))
+        changed_files = mock_build_specs.call_args.args[0]
+        self.assertEqual(changed_files, [
+            "themes/default/data/registry/packages/aws.yaml",
+            "themes/default/data/registry/packages/gcp.yaml",
+        ])
 
 
 class TestBuildSpecs(unittest.TestCase):
@@ -351,6 +419,27 @@ class TestPublishSpecsIntegration(unittest.TestCase):
         finally:
             os.environ.clear()
             os.environ.update(env_backup)
+
+
+class TestEveryPackageResolves(unittest.TestCase):
+    """Every committed package must build a spec, or the publish job fails after merge."""
+
+    def test_every_package_yaml_resolves_a_publisher(self):
+        repo_root = Path(__file__).resolve().parents[2]
+        packages = repo_root / "themes/default/data/registry/packages"
+        publishers = load_publishers(repo_root)
+
+        errors, resolved = [], 0
+        for yaml_path in sorted(packages.glob("*.yaml")):
+            result = build_package_spec(
+                str(yaml_path.relative_to(repo_root)), repo_root, publishers)
+            if result.error:
+                errors.append(result.error)
+            elif result.spec:
+                resolved += 1
+
+        self.assertEqual(errors, [])
+        self.assertGreater(resolved, 200, "the package directory should not be empty")
 
 
 if __name__ == "__main__":

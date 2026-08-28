@@ -19,6 +19,7 @@ import (
 	"testing"
 
 	"github.com/pulumi/registry/tools/resourcedocsgen/internal/tests/util"
+	"github.com/pulumi/registry/tools/resourcedocsgen/pkg"
 	"github.com/stretchr/testify/require"
 )
 
@@ -50,7 +51,7 @@ schema_file_path: does/not/exist/schema.json`)
 		basePackageTreeJSONOutDir := t.TempDir()
 		baseDocsOutDir := t.TempDir()
 
-		cmd := resourceDocsFromRegistryCmd()
+		cmd := resourceDocsFromRegistryCmd(pkg.NewHTTPClient())
 		cmd.SetArgs([]string{
 			"random", /* pkgName */
 			"--baseDocsOutDir", baseDocsOutDir,
@@ -76,7 +77,7 @@ publisher: "contains-invalid-chars!!!"
 		basePackageTreeJSONOutDir := t.TempDir()
 		baseDocsOutDir := t.TempDir()
 
-		cmd := resourceDocsFromRegistryCmd()
+		cmd := resourceDocsFromRegistryCmd(pkg.NewHTTPClient())
 		cmd.SetArgs([]string{
 			"random", /* pkgName */
 			"--baseDocsOutDir", baseDocsOutDir,
@@ -98,7 +99,7 @@ schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-random/v4.18.2/
 			basePackageTreeJSONOutDirV2 := t.TempDir()
 			baseDocsOutDirV2 := t.TempDir()
 
-			cmd := resourceDocsFromRegistryCmd()
+			cmd := resourceDocsFromRegistryCmd(pkg.NewHTTPClient())
 			cmd.SetArgs([]string{
 				"random", /* pkgName */
 				"--baseDocsOutDir", baseDocsOutDirV2,
@@ -160,7 +161,7 @@ schema_file_path: does/not/exist/schema.json`)
 		basePackageTreeJSONOutDir := t.TempDir()
 		baseDocsOutDir := t.TempDir()
 
-		cmd := resourceDocsFromRegistryCmd()
+		cmd := resourceDocsFromRegistryCmd(pkg.NewHTTPClient())
 		cmd.SetArgs([]string{
 			"--baseDocsOutDir", baseDocsOutDir,
 			"--basePackageTreeJSONOutDir", basePackageTreeJSONOutDir,
@@ -185,7 +186,7 @@ publisher: "contains-invalid-chars!!!"`)
 		basePackageTreeJSONOutDir := t.TempDir()
 		baseDocsOutDir := t.TempDir()
 
-		cmd := resourceDocsFromRegistryCmd()
+		cmd := resourceDocsFromRegistryCmd(pkg.NewHTTPClient())
 		cmd.SetArgs([]string{
 			"--baseDocsOutDir", baseDocsOutDir,
 			"--basePackageTreeJSONOutDir", basePackageTreeJSONOutDir,

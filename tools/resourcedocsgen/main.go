@@ -19,10 +19,11 @@ import (
 	"os"
 
 	"github.com/pulumi/registry/tools/resourcedocsgen/cmd"
+	"github.com/pulumi/registry/tools/resourcedocsgen/pkg"
 )
 
 func main() {
-	if err := cmd.RootCmd().Execute(); err != nil {
+	if err := cmd.RootCmd(pkg.NewHTTPClient()).Execute(); err != nil {
 		slog.Error("Failed to execute command", "err", err)
 		os.Exit(1)
 	}

@@ -1,0 +1,46 @@
+name: Sentinel for fork pull requests
+
+on:
+  workflow_run:
+    workflows: ["Pull request"]
+    types: [completed]
+
+permissions:
+  contents: read
+  pull-requests: read
+  statuses: write
+
+jobs:
+  report:
+    if: >-
+      github.event.workflow_run.event == 'pull_request' &&
+      github.event.workflow_run.head_repository.full_name != github.repository &&
+      github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Refuse a pull request that could have rewritten the run it is reporting
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+        run: |
+          pr="$(gh api --paginate "repos/$REPO/pulls?state=open&per_page=100" \
+            --jq ".[] | select(.head.sha == \"$HEAD_SHA\") | .number" | head -1)"
+          if [ -z "$pr" ]; then
+            echo "No open pull request has $HEAD_SHA as its head."
+            exit 1
+          fi
+          changed="$(gh api "repos/$REPO/pulls/$pr/files?per_page=100" --jq '.[].filename')"
+          if echo "$changed" | grep -qE '^(\.github/|scripts/ci/|Makefile$)'; then
+            echo "PR #$pr changes CI, so its own run cannot vouch for it. Not writing Sentinel."
+            exit 1
+          fi
+
+      - uses: guibranco/github-status-action-v2@77639353504055053524efa7a3719aaf0b731ce9 # v1.2.4
+        with:
+          authToken: ${{ secrets.GITHUB_TOKEN }}
+          context: 'Sentinel'
+          description: 'All required checks passed'
+          state: 'success'
+          sha: ${{ github.event.workflow_run.head_sha }}

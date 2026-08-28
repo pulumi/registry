@@ -35,7 +35,7 @@ Input-wrapped arguments and returns an Output-wrapped result.
 ><pre class="chroma"><code class="language-typescript" data-lang="typescript"
 ><span class="k">function </span>getArchive<span class="p">(</span><span class="nx">args</span><span class="p">:</span> <span class="nx">GetArchiveArgs</span><span class="p">,</span> <span class="nx">opts</span><span class="p">?:</span> <span class="nx"><a href="/docs/reference/pkg/nodejs/pulumi/pulumi/#InvokeOptions">InvokeOptions</a></span><span class="p">): Promise&lt;<span class="nx"><a href="#result">GetArchiveResult</a></span>></span
 ><span class="k">
-function </span>getArchiveOutput<span class="p">(</span><span class="nx">args</span><span class="p">:</span> <span class="nx">GetArchiveOutputArgs</span><span class="p">,</span> <span class="nx">opts</span><span class="p">?:</span> <span class="nx"><a href="/docs/reference/pkg/nodejs/pulumi/pulumi/#InvokeOptions">InvokeOptions</a></span><span class="p">): Output&lt;<span class="nx"><a href="#result">GetArchiveResult</a></span>></span
+function </span>getArchiveOutput<span class="p">(</span><span class="nx">args</span><span class="p">:</span> <span class="nx">GetArchiveOutputArgs</span><span class="p">,</span> <span class="nx">opts</span><span class="p">?:</span> <span class="nx"><a href="/docs/reference/pkg/nodejs/pulumi/pulumi/#InvokeOutputOptions">InvokeOutputOptions</a></span><span class="p">): Output&lt;<span class="nx"><a href="#result">GetArchiveResult</a></span>></span
 ></code></pre></div>
 </pulumi-choosable>
 </div>
@@ -48,7 +48,7 @@ function </span>getArchiveOutput<span class="p">(</span><span class="nx">args</s
                 <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.InvokeOptions">Optional[InvokeOptions]</a></span> = None<span class="p">) -&gt;</span> <span>GetArchiveResult</span
 ><span class="k">
 def </span>get_archive_output<span class="p">(</span><span class="nx">a</span><span class="p">:</span> <span class="nx">pulumi.Input[Optional[float]]</span> = None<span class="p">,</span>
-                <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.InvokeOptions">Optional[InvokeOptions]</a></span> = None<span class="p">) -&gt;</span> <span>Output[GetArchiveResult]</span
+                <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.InvokeOutputOptions">Optional[InvokeOutputOptions]</a></span> = None<span class="p">) -&gt;</span> <span>Output[GetArchiveResult]</span
 ></code></pre></div>
 </pulumi-choosable>
 </div>
@@ -81,6 +81,7 @@ func </span>GetArchiveOutput<span class="p">(</span><span class="nx">ctx</span><
 <pulumi-choosable type="language" values="java">
 <div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="k">public static CompletableFuture&lt;<span class="nx"><a href="#result">GetArchiveResult</a></span>> </span>getArchive<span class="p">(</span><span class="nx">GetArchiveArgs</span><span class="p"> </span><span class="nx">args<span class="p">,</span> <span class="nx">InvokeOptions</span><span class="p"> </span><span class="nx">options<span class="p">)</span>
 <span class="k">public static Output&lt;<span class="nx"><a href="#result">GetArchiveResult</a></span>> </span>getArchive<span class="p">(</span><span class="nx">GetArchiveArgs</span><span class="p"> </span><span class="nx">args<span class="p">,</span> <span class="nx">InvokeOptions</span><span class="p"> </span><span class="nx">options<span class="p">)</span>
+<span class="k">public static Output&lt;<span class="nx"><a href="#result">GetArchiveResult</a></span>> </span>getArchive<span class="p">(</span><span class="nx">GetArchiveArgs</span><span class="p"> </span><span class="nx">args<span class="p">,</span> <span class="nx">InvokeOutputOptions</span><span class="p"> </span><span class="nx">options<span class="p">)</span>
 </code></pre></div>
 </pulumi-choosable>
 </div>

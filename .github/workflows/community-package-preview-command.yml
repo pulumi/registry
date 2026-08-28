@@ -18,6 +18,12 @@ permissions:
   pull-requests: write
   id-token: write
 
+env:
+  ESC_ACTION_OIDC_AUTH: true
+  ESC_ACTION_OIDC_ORGANIZATION: pulumi
+  ESC_ACTION_OIDC_REQUESTED_TOKEN_TYPE: urn:pulumi:token-type:access_token:organization
+  ESC_ACTION_ENVIRONMENT: github-secrets/pulumi-registry
+
 concurrency:
   group: community-package-preview-${{ github.event.issue.number || inputs.pr }}
   cancel-in-progress: true
@@ -30,6 +36,7 @@ jobs:
        (github.event.comment.body == '/preview' || startsWith(github.event.comment.body, '/preview ')) &&
        contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association))
     runs-on: pulumi-service-ubuntu-24.04-16core
+    timeout-minutes: 60
     environment: testing
     env:
       GOPATH: ${{ github.workspace }}/go

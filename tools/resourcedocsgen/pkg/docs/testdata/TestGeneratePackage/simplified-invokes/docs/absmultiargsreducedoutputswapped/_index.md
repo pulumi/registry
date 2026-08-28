@@ -37,7 +37,7 @@ Input-wrapped arguments and returns an Output-wrapped result.
 ><pre class="chroma"><code class="language-typescript" data-lang="typescript"
 ><span class="k">function </span>absMultiArgsReducedOutputSwapped<span class="p">(</span><span class="nx">args</span><span class="p">:</span> <span class="nx">AbsMultiArgsReducedOutputSwappedArgs</span><span class="p">,</span> <span class="nx">opts</span><span class="p">?:</span> <span class="nx"><a href="/docs/reference/pkg/nodejs/pulumi/pulumi/#InvokeOptions">InvokeOptions</a></span><span class="p">): Promise&lt;<span class="nx"><a href="#result">AbsMultiArgsReducedOutputSwappedResult</a></span>></span
 ><span class="k">
-function </span>absMultiArgsReducedOutputSwappedOutput<span class="p">(</span><span class="nx">args</span><span class="p">:</span> <span class="nx">AbsMultiArgsReducedOutputSwappedOutputArgs</span><span class="p">,</span> <span class="nx">opts</span><span class="p">?:</span> <span class="nx"><a href="/docs/reference/pkg/nodejs/pulumi/pulumi/#InvokeOptions">InvokeOptions</a></span><span class="p">): Output&lt;<span class="nx"><a href="#result">AbsMultiArgsReducedOutputSwappedResult</a></span>></span
+function </span>absMultiArgsReducedOutputSwappedOutput<span class="p">(</span><span class="nx">args</span><span class="p">:</span> <span class="nx">AbsMultiArgsReducedOutputSwappedOutputArgs</span><span class="p">,</span> <span class="nx">opts</span><span class="p">?:</span> <span class="nx"><a href="/docs/reference/pkg/nodejs/pulumi/pulumi/#InvokeOutputOptions">InvokeOutputOptions</a></span><span class="p">): Output&lt;<span class="nx"><a href="#result">AbsMultiArgsReducedOutputSwappedResult</a></span>></span
 ></code></pre></div>
 </pulumi-choosable>
 </div>
@@ -52,7 +52,7 @@ function </span>absMultiArgsReducedOutputSwappedOutput<span class="p">(</span><s
 ><span class="k">
 def </span>abs_multi_args_reduced_output_swapped_output<span class="p">(</span><span class="nx">b</span><span class="p">:</span> <span class="nx">pulumi.Input[Optional[float]]</span> = None<span class="p">,</span>
                                           <span class="nx">a</span><span class="p">:</span> <span class="nx">pulumi.Input[Optional[float]]</span> = None<span class="p">,</span>
-                                          <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.InvokeOptions">Optional[InvokeOptions]</a></span> = None<span class="p">) -&gt;</span> <span>Output[AbsMultiArgsReducedOutputSwappedResult]</span
+                                          <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.InvokeOutputOptions">Optional[InvokeOutputOptions]</a></span> = None<span class="p">) -&gt;</span> <span>Output[AbsMultiArgsReducedOutputSwappedResult]</span
 ></code></pre></div>
 </pulumi-choosable>
 </div>
@@ -85,6 +85,7 @@ func </span>AbsMultiArgsReducedOutputSwappedOutput<span class="p">(</span><span 
 <pulumi-choosable type="language" values="java">
 <div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="k">public static CompletableFuture&lt;<span class="nx"><a href="#result">AbsMultiArgsReducedOutputSwappedResult</a></span>> </span>absMultiArgsReducedOutputSwapped<span class="p">(</span><span class="nx">AbsMultiArgsReducedOutputSwappedArgs</span><span class="p"> </span><span class="nx">args<span class="p">,</span> <span class="nx">InvokeOptions</span><span class="p"> </span><span class="nx">options<span class="p">)</span>
 <span class="k">public static Output&lt;<span class="nx"><a href="#result">AbsMultiArgsReducedOutputSwappedResult</a></span>> </span>absMultiArgsReducedOutputSwapped<span class="p">(</span><span class="nx">AbsMultiArgsReducedOutputSwappedArgs</span><span class="p"> </span><span class="nx">args<span class="p">,</span> <span class="nx">InvokeOptions</span><span class="p"> </span><span class="nx">options<span class="p">)</span>
+<span class="k">public static Output&lt;<span class="nx"><a href="#result">AbsMultiArgsReducedOutputSwappedResult</a></span>> </span>absMultiArgsReducedOutputSwapped<span class="p">(</span><span class="nx">AbsMultiArgsReducedOutputSwappedArgs</span><span class="p"> </span><span class="nx">args<span class="p">,</span> <span class="nx">InvokeOutputOptions</span><span class="p"> </span><span class="nx">options<span class="p">)</span>
 </code></pre></div>
 </pulumi-choosable>
 </div>

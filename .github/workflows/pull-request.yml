@@ -24,10 +24,13 @@ jobs:
     - mktutorial
     - lint-markdown
     - lint-scripts
+    - lint-dark-logos
     - test-provider-api-docs
     - preview
     - test-live-publish
+    - check-publish
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
     - uses: guibranco/github-status-action-v2@77639353504055053524efa7a3719aaf0b731ce9 # v1.2.4
       with:
@@ -40,6 +43,45 @@ jobs:
         # Write to the PR commit SHA if it's available as we don't want the merge commit sha,
         # otherwise use the current SHA for any other type of build.
         sha: ${{ github.event.pull_request.head.sha || github.sha }}
+
+  check-publish:
+    name: Check published packages
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Check out branch
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install pyyaml
+
+      - name: Check the packages this PR publishes
+        id: check
+        run: >-
+          python3 scripts/ci/community-package/cli.py check-publish
+          --diff "origin/${{ github.base_ref }}"
+          --out "${{ runner.temp }}/factsheets"
+
+      - name: Post the fact-sheet
+        if: always() && github.event.pull_request.head.repo.full_name == github.repository
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR: ${{ github.event.pull_request.number }}
+        run: |
+          shopt -s nullglob
+          sheets=("${RUNNER_TEMP}"/factsheets/*.factsheet.md)
+          [ ${#sheets[@]} -eq 0 ] && exit 0
+          cat "${sheets[@]}" > "${RUNNER_TEMP}/comment.md"
+          gh pr comment "$PR" --edit-last --create-if-none --body-file "${RUNNER_TEMP}/comment.md"
 
   resourcedocsgen:
     uses: ./.github/workflows/check-go.yml
@@ -54,48 +96,69 @@ jobs:
   lint-markdown:
     name: Lint Markdown
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: Check out branch
         uses: actions/checkout@v7
 
       - name: Install Node
-        uses: actions/setup-node@v6
-        with:
-          node-version: "24.x"
-          cache: 'yarn'
-
-      - name: Lint Markdown
-        run: |
-          yarn install
-          make lint-markdown
-
-  lint-scripts:
-    name: Lint Scripts
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out branch
-        uses: actions/checkout@v7
-
-      - name: Install Node
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: "24.x"
           cache: 'yarn'
 
       - name: Yarn Install
-        run: yarn install
-      - name: Run Linter
-        run: yarn run lint
+        uses: ./.github/actions/yarn-install
 
-  test-infra:
-    name: Test Infrastructure Functions
+      - name: Lint Markdown
+        run: make lint-markdown
+
+  lint-scripts:
+    name: Lint Scripts
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: Check out branch
         uses: actions/checkout@v7
 
       - name: Install Node
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
+        with:
+          node-version: "24.x"
+          cache: 'yarn'
+
+      - name: Yarn Install
+        uses: ./.github/actions/yarn-install
+      - name: Run Linter
+        run: yarn run lint
+      - name: Test preview comment
+        run: make test-preview-comment
+
+  lint-dark-logos:
+    name: Lint Dark Logo Variants
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out branch
+        uses: actions/checkout@v7
+
+      # The `-on-dark.svg` package marks are generated from their light siblings by
+      # scripts/generate-dark-logos.py, so adding or replacing a local logo leaves
+      # them stale unless someone remembers to re-run it. The check is deterministic
+      # and offline (stdlib only, no network), so it can just run here.
+      - name: Check dark logo variants
+        run: make lint-dark-logos
+
+  test-infra:
+    name: Test Infrastructure Functions
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out branch
+        uses: actions/checkout@v7
+
+      - name: Install Node
+        uses: actions/setup-node@v7
         with:
           node-version: "24.x"
 
@@ -105,27 +168,24 @@ jobs:
   test-live-publish:
     name: Test Live Registry Publish
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
-      - name: Fetch secrets from ESC
-        id: esc-secrets
-        uses: pulumi/esc-action@3af4859af8a73a362fb599b944124097d4bb80c5 # v3
       - name: Check out branch
         uses: actions/checkout@v7
       - name: Install uv
         uses: astral-sh/setup-uv@v7
-      - run: uv run --with requests,pyyaml scripts/ci/push-registry.py --dry-run
-        env:
-          PULUMI_ACCESS_TOKEN: ${{ steps.esc-secrets.outputs.PULUMI_ACCESS_TOKEN }}
+      - run: uv run --with pyyaml scripts/ci/publish_to_registry.py --validate-all
 
   test-provider-api-docs:
     name: Test Provider API Docs
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - name: Check out branch
         uses: actions/checkout@v7
 
       - name: Install Node
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: "24.x"
           cache: 'yarn'
@@ -137,9 +197,10 @@ jobs:
             themes/default/theme/stencil/yarn.lock
 
       - name: Install Go
-        uses: actions/setup-go@v6
+        uses: actions/setup-go@v7
         with:
-          go-version: 1.26.x
+          go-version-file: tools/resourcedocsgen/go.mod
+          cache-dependency-path: tools/resourcedocsgen/go.sum
 
       - name: Install Hugo
         uses: peaceiris/actions-hugo@v3
@@ -164,6 +225,7 @@ jobs:
     # PRs with the automation/tfgen-provider-docs label contain only metadata file changes and don't need a PR build.
     if: github.event.pull_request.head.repo.full_name == github.repository && contains(github.event.pull_request.labels.*.name, 'automation/tfgen-provider-docs') != true
     runs-on: pulumi-service-ubuntu-24.04-16core
+    timeout-minutes: 45
     environment: testing
     env:
       GOPATH: ${{ github.workspace }}/go
@@ -186,11 +248,12 @@ jobs:
     if: (github.event.pull_request.user.login == 'pulumi-bot') && failure()
     name: Send slack notification
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     needs: [preview]
     steps:
       - name: Fetch secrets from ESC
         id: esc-secrets
-        uses: pulumi/esc-action@3af4859af8a73a362fb599b944124097d4bb80c5 # v3
+        uses: pulumi/esc-action@32dda43ffe7a2ab21e6bce11c781b44a3e5623cf # v3
       - name: Slack Notification
         uses: docker://sholung/action-slack-notify:v2.3.0
         env:

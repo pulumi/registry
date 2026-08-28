@@ -155,12 +155,57 @@ aws s3 cp "$metadata_file" "${destination_bucket_uri}/registry/metadata.json" --
 # Persist an association between the current commit and the bucket we just deployed to.
 set_bucket_for_commit "$(git_sha)" "$destination_bucket" "$(aws_region)"
 
-# Finally, post a comment to the PR that directs the user to the resulting bucket URL.
+# The marker that makes the preview comment pinned: every build finds the comment carrying it
+# and rewrites that one, instead of leaving a fresh comment per commit.
+PREVIEW_COMMENT_MARKER="<!-- registry-preview-link -->"
+
+# Posts (or updates) the pinned preview comment on the PR.
+post_preview_comment() {
+    if [[ -z "${GITHUB_TOKEN:-}" ]]; then
+        log "No GitHub token available; skipping the preview comment."
+        return 0
+    fi
+
+    local event pr_comment_api_url repo_api_url pr_number
+    if [[ -n "${PREVIEW_PR:-}" ]]; then
+        pr_number="$PREVIEW_PR"
+        repo_api_url="${GITHUB_API_URL:-https://api.github.com}/repos/${GITHUB_REPOSITORY}"
+        pr_comment_api_url="${repo_api_url}/issues/${pr_number}/comments"
+    elif [[ -n "${GITHUB_EVENT_PATH:-}" && -f "${GITHUB_EVENT_PATH}" ]]; then
+        event="$(cat "$GITHUB_EVENT_PATH")"
+        pr_comment_api_url="$(echo "$event" | jq -r '.pull_request._links.comments.href // empty')"
+        repo_api_url="$(echo "$event" | jq -r '.pull_request.base.repo.url // empty')"
+        pr_number="$(echo "$event" | jq -r '.number // empty')"
+    fi
+
+    if [[ -z "$pr_comment_api_url" || -z "$repo_api_url" || -z "$pr_number" ]]; then
+        log "No pull request to comment on; skipping the preview comment."
+        return 0
+    fi
+
+    local body
+    body="${PREVIEW_COMMENT_MARKER}
+Your site preview for commit $(git_sha_short) is ready! :tada:
+
+${preview_url}$(changed_pages_section "$repo_api_url" "$pr_number" "$build_dir" "$s3_website_url")"
+
+    upsert_github_pr_comment \
+        "$PREVIEW_COMMENT_MARKER" \
+        "$body" \
+        "$pr_comment_api_url" \
+        "$repo_api_url"
+}
+
+# Finally, for previews, point the PR at the resulting bucket URL. Everything below is
+# reporting, not deployment, so it must never fail the build -- hence the `|| log`.
 if [[ "$1" == "preview" ]]; then
-    pr_comment_api_url="$(cat "$GITHUB_EVENT_PATH" | jq -r ".pull_request._links.comments.href")"
-    post_github_pr_comment \
-        "Your site preview for commit $(git_sha_short) is ready! :tada:\n\n${s3_website_url}/registry." \
-        $pr_comment_api_url
+    preview_url="${s3_website_url}/registry/"
+
+    if [[ -n "${GITHUB_STEP_SUMMARY:-}" ]]; then
+        echo "Site preview for commit $(git_sha_short): ${preview_url}" >> "$GITHUB_STEP_SUMMARY" || true
+    fi
+
+    post_preview_comment || log "Failed to post the preview comment; continuing."
 fi
 
 log "Done! The bucket website is now built and available at ${s3_website_url}."

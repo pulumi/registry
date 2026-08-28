@@ -1,0 +1,22 @@
+name: Yarn install
+description: >-
+  Install node dependencies, retrying when the npm registry answers with an HTTP status.
+  Yarn retries dropped connections and timeouts itself, but treats a 502 as final.
+
+runs:
+  using: composite
+  steps:
+    - name: Install node dependencies
+      shell: bash
+      run: |
+        max_attempts=3
+        for attempt in $(seq "$max_attempts"); do
+          if yarn install --network-timeout 300000; then
+            exit 0
+          fi
+          if [ "$attempt" -lt "$max_attempts" ]; then
+            sleep $((attempt * 10))
+          fi
+        done
+        echo "yarn install failed after $max_attempts attempts."
+        exit 1

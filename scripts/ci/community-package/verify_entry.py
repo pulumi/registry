@@ -28,6 +28,10 @@ def _publisher_known(publisher: str, names: dict[str, str]) -> bool:
     return not publisher or publisher in names
 
 
+def _schema_version_matches(schema_version: str, tag: str) -> bool:
+    return not schema_version or schema_version == tag.lstrip("v")
+
+
 def _doc_file(slug: str, sha: str, path: str) -> DocFile | None:
     data = github_api.raw_file(slug, sha, path)
     if data is None:
@@ -68,6 +72,8 @@ def verify(entry: Entry) -> Manifest:
     name = provider_name(entry.repoSlug, schema)
     publisher = str(schema.get("publisher", "")).strip()
     publisher_known = _publisher_known(publisher, _load_publisher_names())
+    schema_version = str(schema.get("version", "")).strip()
+    schema_version_matches = _schema_version_matches(schema_version, tag)
 
     index = _doc_file(entry.repoSlug, sha, "docs/_index.md")
     install_doc = _doc_file(entry.repoSlug, sha, "docs/installation-configuration.md")
@@ -81,7 +87,7 @@ def verify(entry: Entry) -> Manifest:
     findings = doc_lint.find_issues(index.content if index else "")
 
     has_blocking_failure = any(r.blocking and r.result != "pass" for r in installs)
-    green = bool(generated and not has_blocking_failure and index is not None)
+    green = bool(generated and not has_blocking_failure and index is not None and schema_version_matches)
     advisory_failure = any(not r.blocking and r.result not in ("pass", "absent") for r in installs)
     warnings = green and (advisory_failure or bool(findings) or (bool(publisher) and not publisher_known))
 
@@ -101,6 +107,8 @@ def verify(entry: Entry) -> Manifest:
         indexPresent=index is not None,
         publisher=publisher,
         publisherKnown=publisher_known,
+        schemaVersion=schema_version,
+        schemaVersionMatches=schema_version_matches,
     )
 
 

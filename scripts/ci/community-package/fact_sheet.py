@@ -93,6 +93,9 @@ def render(manifest: Manifest) -> str:
         else:
             listed = "⚠️" if manifest.green else "❌"
         lines.append(f"| publisher listed | {listed} | `{manifest.publisher}` is a key in publisher-names.json |")
+    if manifest.schemaVersion:
+        lines.append(f"| schema version | {'✅' if manifest.schemaVersionMatches else '❌'} "
+                     f"| `{manifest.schemaVersion}` in `{manifest.schemaFile}` |")
     lines += ["", f"Owner `{manifest.owner}`"]
 
     if manifest.publisher and not manifest.publisherKnown:
@@ -104,6 +107,14 @@ def render(manifest: Manifest) -> str:
                       "value are usually the same. If this publisher already ships under a slug, use that one "
                       "so the two do not split. Without the entry the schema fetch from the registry backend "
                       "fails and falls back to VCS."]
+
+    if not manifest.schemaVersionMatches:
+        lines += ["", f"**Schema version** ❌ `{manifest.schemaFile}` declares version "
+                      f"`{manifest.schemaVersion}`, but the release is `{manifest.version.tag}`. The registry "
+                      "publishes the schema straight from the release tag and rejects a version that does not "
+                      "match. Either omit the `version` key entirely, which is what bridged providers do so the "
+                      "registry takes the version from the publish request, or stamp the real version at "
+                      "release time."]
 
     findings = manifest.docLint
     lines.append("")

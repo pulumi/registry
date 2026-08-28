@@ -69,3 +69,5 @@ class Manifest:
     publisherKnown: bool = True
     docSourceURL: str = ""
     delisted: bool = False
+    schemaVersion: str = ""
+    schemaVersionMatches: bool = True

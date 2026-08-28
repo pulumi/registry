@@ -14,7 +14,7 @@ This is the recommended approach for typed custom resources. If you are using [`
 
 ## Usage
 
-The examples below use the [Gateway API](https://gateway-api.sigs.k8s.io/) CRDs.
+Place a CRD manifest in your program. The examples below use the [Gateway API](https://gateway-api.sigs.k8s.io/) CRDs.
 
 ```bash
 pulumi package add kubernetes --extension "name=gateway-networking crd-manifest=gateway-api-crds.yaml"
@@ -181,7 +181,7 @@ resources:
 
 ## Migrating from crd2pulumi
 
-The extension logic includes token aliasing for crd2pulumi-style `kubernetes:`-namespaced tokens. This means that your state will not be affected by switching over to the new extension provider.
+The provider registers aliases for the crd2pulumi-style `kubernetes:`-namespaced tokens, so existing resources are adopted rather than replaced.
 
 Generate the extension package from the same CRD manifests you passed to `crd2pulumi`:
 

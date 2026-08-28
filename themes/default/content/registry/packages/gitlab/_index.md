@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-gitlab/v10.1.1/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-gitlab/v10.2.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-gitlab/blob/v10.1.1/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-gitlab/blob/v10.2.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Gitlab Provider
 meta_desc: Provides an overview on how to configure the Pulumi Gitlab provider.
@@ -237,6 +237,8 @@ config:
 package main
 
 import (
+	"strconv"
+
 	"github.com/pulumi/pulumi-gitlab/sdk/v10/go/gitlab"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
@@ -252,7 +254,7 @@ func main() {
 		}
 		// Add a hook to the project
 		_, err = gitlab.NewProjectHook(ctx, "sample_project_hook", &gitlab.ProjectHookArgs{
-			Project: sampleProject.ID(),
+			Project: sampleProject.ID().ToIDOutput().ToStringOutput(),
 			Url:     pulumi.String("https://example.com/project_hook"),
 		})
 		if err != nil {
@@ -260,7 +262,7 @@ func main() {
 		}
 		// Add a variable to the project
 		_, err = gitlab.NewProjectVariable(ctx, "sample_project_variable", &gitlab.ProjectVariableArgs{
-			Project: sampleProject.ID(),
+			Project: sampleProject.ID().ToIDOutput().ToStringOutput(),
 			Key:     pulumi.String("project_variable_key"),
 			Value:   pulumi.String("project_variable_value"),
 		})
@@ -269,7 +271,7 @@ func main() {
 		}
 		// Add a deploy key to the project
 		_, err = gitlab.NewDeployKey(ctx, "sample_deploy_key", &gitlab.DeployKeyArgs{
-			Project: sampleProject.ID(),
+			Project: sampleProject.ID().ToIDOutput().ToStringOutput(),
 			Title:   pulumi.String("pulumi example"),
 			Key:     pulumi.String("ssh-ed25519 AAAA..."),
 		})
@@ -288,7 +290,7 @@ func main() {
 		// Add a project to the group - example/example
 		_, err = gitlab.NewProject(ctx, "sample_group_project", &gitlab.ProjectArgs{
 			Name:        pulumi.String("example"),
-			NamespaceId: sampleGroup.ID(),
+			NamespaceId: sampleGroup.ID().ToIDOutput().ApplyT(func(id pulumi.ID) (int, error) { return strconv.Atoi(string(id)) }).(pulumi.IntOutput),
 		})
 		if err != nil {
 			return err

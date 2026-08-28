@@ -53,6 +53,87 @@ test("legacy prefix redirect: azure-native-v2 -> azure-native@2.x", () => {
     assertRedirect(result, "/registry/packages/azure-native@2.x/");
 });
 
+test("removed install-config page: trailing slash -> package Overview", () => {
+    const result = handler(request("/registry/packages/aiven/installation-configuration/"));
+    assertRedirect(result, "/registry/packages/aiven/");
+});
+
+test("removed install-config page: no trailing slash -> package Overview", () => {
+    const result = handler(request("/registry/packages/tls/installation-configuration"));
+    assertRedirect(result, "/registry/packages/tls/");
+});
+
+test("removed install-config page: /index.html -> package Overview", () => {
+    const result = handler(request("/registry/packages/digitalocean/installation-configuration/index.html"));
+    assertRedirect(result, "/registry/packages/digitalocean/");
+});
+
+test("removed install-config page: /index.md -> package Overview", () => {
+    // The markdown variant redirects too; the client's Accept header survives
+    // the 301, so the Overview is served as markdown at the target.
+    const result = handler(request("/registry/packages/consul/installation-configuration/index.md", "text/markdown"));
+    assertRedirect(result, "/registry/packages/consul/");
+});
+
+test("removed install-config page: .md suffix beats the markdown rewrite", () => {
+    const result = handler(request("/registry/packages/random/installation-configuration.md"));
+    assertRedirect(result, "/registry/packages/random/");
+});
+
+test("every removed install-config package redirects to its own Overview", () => {
+    const packages = [
+        // #12225 -- wholly duplicated by the Overview.
+        "aiven", "alicloud", "artifactory", "auth0", "cloudinit", "consul",
+        "dbtcloud", "digitalocean", "random", "tailscale", "tls",
+        // #12226 -- substantially duplicated; unique content verified obsolete.
+        "azuredevops", "cloudamqp", "cloudflare", "dnsimple", "docker", "kafka",
+        "linode", "meraki", "nomad", "okta", "postgresql", "spotinst", "vault",
+        "vsphere",
+    ];
+    for (const pkg of packages) {
+        const result = handler(request(`/registry/packages/${pkg}/installation-configuration/`));
+        assertRedirect(result, `/registry/packages/${pkg}/`);
+    }
+});
+
+test("install-config page of a package that still has one -> untouched", () => {
+    // Only the packages listed in the rule were deleted; every other package's
+    // Install & config page must still serve normally.
+    const result = handler(request("/registry/packages/aws/installation-configuration/"));
+    assertPassThrough(result, "/registry/packages/aws/installation-configuration/");
+});
+
+test("removed-package rule does not match a look-alike prefix", () => {
+    // "randomly" must not be caught by the "random" alternative.
+    const result = handler(request("/registry/packages/randomly/installation-configuration/"));
+    assertPassThrough(result, "/registry/packages/randomly/installation-configuration/");
+});
+
+test("removed-package rule does not match a hyphenated sibling package", () => {
+    // "docker-build" and "kafka-connect" are real packages that still have an
+    // Install & config page. The rule's alternatives are followed by "/", so
+    // the "docker" and "kafka" entries must not swallow them.
+    for (const pkg of ["docker-build", "kafka-connect"]) {
+        const result = handler(request(`/registry/packages/${pkg}/installation-configuration/`));
+        assertPassThrough(result, `/registry/packages/${pkg}/installation-configuration/`);
+    }
+});
+
+test("removed-package rule does not match a look-alike page name", () => {
+    const result = handler(request("/registry/packages/random/installation-configuration-old/"));
+    assertPassThrough(result, "/registry/packages/random/installation-configuration-old/");
+});
+
+test("removed-package rule leaves the package Overview alone", () => {
+    const result = handler(request("/registry/packages/random/"));
+    assertPassThrough(result, "/registry/packages/random/");
+});
+
+test("removed-package rule leaves that package's api-docs alone", () => {
+    const result = handler(request("/registry/packages/random/api-docs/randompet/"));
+    assertPassThrough(result, "/registry/packages/random/api-docs/randompet/");
+});
+
 test("Accept: text/markdown on directory URL -> URI rewrite to /index.md", () => {
     const result = handler(request("/registry/packages/aws/", "text/markdown"));
     assertPassThrough(result, "/registry/packages/aws/index.md");

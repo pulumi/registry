@@ -244,7 +244,7 @@ The following reference example uses placeholder values for all [input propertie
 ```csharp
 var rubberTreeResource = new Plant.Tree.V1.RubberTree("rubberTreeResource", new()
 {
-    Diameter = Other.Tree.V1.Diameter.Sixinch,
+    Diameter = Plant.Tree.V1.Diameter.Sixinch,
     Type = Plant.Tree.V1.RubberTreeVariety.Burgundy,
     Container = new Plant.Inputs.ContainerArgs
     {
@@ -267,7 +267,7 @@ var rubberTreeResource = new Plant.Tree.V1.RubberTree("rubberTreeResource", new(
 
 ```go
 example, err := v1.NewRubberTree(ctx, "rubberTreeResource", &v1.RubberTreeArgs{
-	Diameter: tree / v1.DiameterSixinch,
+	Diameter: v1.DiameterSixinch,
 	Type:     v1.RubberTreeVarietyBurgundy,
 	Container: &plant.ContainerArgs{
 		Size:       plant.ContainerSizeFourInch,
@@ -336,7 +336,7 @@ var rubberTreeResource = new RubberTree("rubberTreeResource", RubberTreeArgs.bui
 
 ```python
 rubber_tree_resource = plant.tree.v1.RubberTree("rubberTreeResource",
-    diameter=other.tree.v1.Diameter.SIXINCH,
+    diameter=plant.tree.v1.Diameter.SIXINCH,
     type=plant.tree.v1.RubberTreeVariety.BURGUNDY,
     container={
         "size": plant.ContainerSize.FOUR_INCH,
@@ -357,7 +357,7 @@ rubber_tree_resource = plant.tree.v1.RubberTree("rubberTreeResource",
 
 ```typescript
 const rubberTreeResource = new plant.tree.v1.RubberTree("rubberTreeResource", {
-    diameter: other.tree.v1.Diameter.Sixinch,
+    diameter: plant.tree.v1.Diameter.Sixinch,
     type: plant.tree.v1.RubberTreeVariety.Burgundy,
     container: {
         size: plant.ContainerSize.FourInch,

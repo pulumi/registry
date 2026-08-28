@@ -1,10 +1,14 @@
 #!/usr/bin/env python3
 """Unit tests for priority_digest.py"""
 
+import os
 import unittest
 from datetime import datetime, timezone
+from unittest import mock
 
-from priority_digest import describe, escape, render, repository_of
+import requests
+
+from priority_digest import describe, escape, post, render, repository_of
 
 
 NOW = datetime(2026, 8, 14, 12, 0, 0, tzinfo=timezone.utc)
@@ -79,6 +83,53 @@ class TestRender(unittest.TestCase):
     def test_counts_every_issue_in_the_header(self):
         message = render([issue(number=n) for n in range(25)], NOW)
         self.assertIn("|25 open>", message)
+
+
+class TestPost(unittest.TestCase):
+    def setUp(self):
+        environment = mock.patch.dict(os.environ, {"SLACK_ACCESS_TOKEN": "xoxb-test"})
+        environment.start()
+        self.addCleanup(environment.stop)
+
+    @mock.patch("priority_digest.requests.post")
+    def test_posts_through_the_web_api_as_the_bot(self, post_mock):
+        post_mock.return_value.json.return_value = {"ok": True}
+
+        post("C0123456789", "hello")
+
+        (url,), kwargs = post_mock.call_args
+        self.assertEqual(url, "https://slack.com/api/chat.postMessage")
+        self.assertEqual(kwargs["headers"]["Authorization"], "Bearer xoxb-test")
+        self.assertEqual(kwargs["json"]["channel"], "C0123456789")
+        self.assertEqual(kwargs["json"]["text"], "hello")
+        self.assertIs(kwargs["json"]["mrkdwn"], True)
+        self.assertIs(kwargs["json"]["unfurl_links"], False)
+
+    @mock.patch("priority_digest.requests.post")
+    def test_fails_with_the_error_slack_gives(self, post_mock):
+        post_mock.return_value.json.return_value = {"ok": False, "error": "not_in_channel"}
+
+        with self.assertRaises(SystemExit) as raised:
+            post("C0123456789", "hello")
+
+        self.assertIn("not_in_channel", str(raised.exception))
+
+    @mock.patch("priority_digest.requests.post")
+    def test_falls_back_to_the_raw_response_when_slack_gives_no_error(self, post_mock):
+        post_mock.return_value.json.return_value = {"ok": False}
+        post_mock.return_value.text = "  bad gateway  "
+
+        with self.assertRaises(SystemExit) as raised:
+            post("C0123456789", "hello")
+
+        self.assertIn("bad gateway", str(raised.exception))
+
+    @mock.patch("priority_digest.requests.post")
+    def test_raises_on_http_errors(self, post_mock):
+        post_mock.return_value.raise_for_status.side_effect = requests.HTTPError("503 Server Error")
+
+        with self.assertRaises(requests.HTTPError):
+            post("C0123456789", "hello")
 
 
 if __name__ == "__main__":

@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-gcp/v9.34.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-gcp/v9.35.1/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-gcp/blob/v9.34.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-gcp/blob/v9.35.1/docs/_index.md
 title: Google Cloud (GCP) Classic
 meta_desc: Learn how to use Pulumi's GCP Provider to reduce the complexity of managing and provisioning GCP resources.
 layout: package
@@ -53,7 +53,7 @@ bucket = storage.Bucket('my-bucket')
 ```go
 import (
     "github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-    "github.com/pulumi/pulumi-gcp/sdk/v7/go/gcp/storage"
+    "github.com/pulumi/pulumi-gcp/sdk/v9/go/gcp/storage"
 )
 
 func main() {

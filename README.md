@@ -8,7 +8,7 @@ To add a community package, open a pull request that adds a single entry to [`co
 
 A **dynamically bridged** Terraform provider is different: if you consume it with `pulumi package add terraform-provider <name>` and there is no provider repo or committed schema, it cannot be added by pull request, because those are listed through a separate Pulumi pipeline. Open a ["New Package"](https://github.com/pulumi/registry/issues/new?template=new-package.yml) issue to request one. Use the same issue to request a package you don't maintain, or to discuss before opening a PR.
 
-For assistance, please reach out on the [Pulumi community Slack](https://slack.pulumi.com/) or get in touch with us via this [contact form](https://pulumi.com/contact/?form=registry).
+For assistance, please reach out on the [Pulumi community Slack](https://slack.pulumi.com/) or get in touch via this [contact form](https://pulumi.com/contact/?form=registry).
 
 ### Adding a Pulumi Package that you have authored
 

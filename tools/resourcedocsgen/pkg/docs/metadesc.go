@@ -1,3 +1,4 @@
+// Copyright 2026, Pulumi Corporation.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -75,15 +76,15 @@ func summarizeForMetaDescription(comment string) string {
 	return truncateMetaDescription(s, maxMetaDescLength)
 }
 
-// truncateMetaDescription trims s to at most max characters, breaking on a
-// word boundary and ending on a clean sentence-like stop rather than
+// truncateMetaDescription trims s to at most maxLen characters, breaking on
+// a word boundary and ending on a clean sentence-like stop rather than
 // mid-word.
-func truncateMetaDescription(s string, max int) string {
-	if len(s) <= max {
+func truncateMetaDescription(s string, maxLen int) string {
+	if len(s) <= maxLen {
 		return s
 	}
 
-	truncated := s[:max]
+	truncated := s[:maxLen]
 	if idx := strings.LastIndex(truncated, " "); idx > 0 {
 		truncated = truncated[:idx]
 	}

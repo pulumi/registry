@@ -238,10 +238,12 @@ class ReportTargetTests(unittest.TestCase):
 
 def _manifest(green: bool = True, warnings: bool = False, findings: list[DocFinding] | None = None,
               installs: list[InstallResult] | None = None, docs: list[DocFile] | None = None,
-              publisher: str = "", publisherKnown: bool = True) -> Manifest:
+              publisher: str = "", publisherKnown: bool = True, generation: bool = True,
+              generationError: str = "", indexPresent: bool = True) -> Manifest:
     return Manifest("x/pulumi-demo", "s.json", "demo", Version("v1.0.0", "0" * 40), "x",
-                    installs or [], findings or [], green=green, warnings=warnings, docs=docs or [],
-                    publisher=publisher, publisherKnown=publisherKnown)
+                    installs or [], findings or [], green=green, warnings=warnings,
+                    generation=generation, docs=docs or [], generationError=generationError,
+                    indexPresent=indexPresent, publisher=publisher, publisherKnown=publisherKnown)
 
 
 class FactSheetTests(unittest.TestCase):
@@ -259,12 +261,12 @@ class FactSheetTests(unittest.TestCase):
         out = fact_sheet.render(_manifest(warnings=True, publisher="Aten Security", publisherKnown=False))
         self.assertIn("publisher listed", out)
         self.assertIn("⚠️", out)
-        self.assertIn("not in `publisher-names.json`", out)
+        self.assertIn("no entry for `Aten Security`", out)
 
     def test_known_publisher_shows_row_without_warning_note(self) -> None:
         out = fact_sheet.render(_manifest(publisher="Aten Security", publisherKnown=True))
         self.assertIn("publisher listed", out)
-        self.assertNotIn("not in `publisher-names.json`", out)
+        self.assertNotIn("no entry for", out)
 
     def test_red_render_with_install_failure(self) -> None:
         out = fact_sheet.render(_manifest(
@@ -276,6 +278,22 @@ class FactSheetTests(unittest.TestCase):
         self.assertIn("pip download x==1", out)
         self.assertIn("No matching distribution", out)
         self.assertIn("<details>", out)
+
+    def test_generation_failure_shows_the_generator_output(self) -> None:
+        out = fact_sheet.render(_manifest(
+            green=False, generation=False,
+            generationError="finding remote file at .../docs/_index.md: 404 Not Found"))
+        self.assertIn("docs generate failed", out)
+        self.assertIn("404 Not Found", out)
+
+    def test_generation_failure_without_output_adds_no_empty_block(self) -> None:
+        out = fact_sheet.render(_manifest(green=False, generation=False))
+        self.assertNotIn("docs generate failed", out)
+
+    def test_missing_index_is_reported_instead_of_a_clean_doc_lint(self) -> None:
+        out = fact_sheet.render(_manifest(green=False, generation=False, indexPresent=False))
+        self.assertIn("no `docs/_index.md`", out)
+        self.assertNotIn("Doc-lint** ✅ clean", out)
 
     def test_doc_fence_outgrows_backticks(self) -> None:
         self.assertEqual(fact_sheet._fence_longer_than_any_run_in("no ticks"), "```")
@@ -387,7 +405,7 @@ class VerifyPackageYamlTests(unittest.TestCase):
     def test_sheet_renders_without_a_commit(self) -> None:
         manifest = self._verify({"name": "stripe", "publisher": "stripe", "version": "0.4.0"}, publishers={})
         sheet = fact_sheet.render(manifest)
-        self.assertIn("not in `publisher-names.json`", sheet)
+        self.assertIn("no entry for `stripe`", sheet)
         self.assertNotIn("/commit/", sheet)
 
 

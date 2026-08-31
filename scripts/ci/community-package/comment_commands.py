@@ -4,6 +4,7 @@ import os
 from pathlib import Path
 
 import github_api
+import package_list
 
 
 def _authorized(mode: str, commenter: str, author: str, association: str) -> bool:
@@ -13,7 +14,9 @@ def _authorized(mode: str, commenter: str, author: str, association: str) -> boo
 
 
 CHECK_WORKFLOW = "community-package-check.yml"
-PACKAGE_LIST = "community-packages/package-list.json"
+SWEEP_FAILURE_MARKER = "<!-- community-package-sweep-failure -->"
+SWEEP_FAILURE_LABEL = "p1"
+PACKAGE_LIST = str(package_list.PATH)
 
 
 def _invokes(body: str, command: str) -> bool:
@@ -28,15 +31,8 @@ def _invokes(body: str, command: str) -> bool:
     return False
 
 
-def _minutes_since_last_check(pr: int, sha: str) -> int | None:
-    elapsed = [minutes for minutes in (github_api.minutes_since_check_run(sha, r"^check$"),
-                                       github_api.minutes_since_dispatch(CHECK_WORKFLOW, pr))
-               if minutes is not None]
-    return min(elapsed) if elapsed else None
-
-
-def _within_cooldown(pr: int, comment_id: str, sha: str, cooldown: int) -> bool:
-    elapsed = _minutes_since_last_check(pr, sha)
+def _within_cooldown(pr: int, comment_id: str, cooldown: int) -> bool:
+    elapsed = github_api.minutes_since_dispatch(CHECK_WORKFLOW, pr)
     if elapsed is not None and elapsed < cooldown:
         github_api.add_reaction(comment_id, "eyes")
         github_api.post_comment(pr, f"⏳ Rate limited. Last ran {elapsed} min ago; "
@@ -56,7 +52,7 @@ def check_command() -> int:
     if not _authorized("author-or-maintainer", commenter, author, association):
         github_api.add_reaction(comment_id, "-1")
         return 0
-    if _within_cooldown(pr, comment_id, sha, cooldown):
+    if _within_cooldown(pr, comment_id, cooldown):
         return 0
 
     github_api.dispatch_check(CHECK_WORKFLOW, pr, sha)
@@ -70,22 +66,10 @@ def check_command() -> int:
     return 0
 
 
-def _github_started_the_check(status: str | None) -> bool:
-    return status is not None and status != "action_required"
-
-
 def sweep() -> int:
-    """Dispatch a check for every community package PR whose own check GitHub would not start.
-
-    A fork PR from a first-time contributor leaves its `pull_request` run in `action_required`
-    until a maintainer approves it. A `workflow_dispatch` run is not gated, holds no more
-    privilege than the gated one, and produces the same fact-sheet.
-    """
     for pull in github_api.open_pull_requests():
         pr, sha = int(pull["number"]), str(pull["head"]["sha"])
         if PACKAGE_LIST not in github_api.pull_request_files(pr):
-            continue
-        if _github_started_the_check(github_api.pull_request_run_status(CHECK_WORKFLOW, sha)):
             continue
         if github_api.dispatch_exists(CHECK_WORKFLOW, github_api.dispatch_run_label(pr, sha)):
             continue
@@ -127,6 +111,21 @@ def _run_url() -> str:
     return f"{server}/{repo}/actions/runs/{os.environ.get('GITHUB_RUN_ID', '')}"
 
 
+def sweep_failed() -> int:
+    open_already = github_api.open_issue_with_marker(SWEEP_FAILURE_MARKER, SWEEP_FAILURE_LABEL)
+    if open_already:
+        print(f"issue #{open_already['number']} is already open")
+        return 0
+    github_api.create_issue(
+        "The community package sweep is failing",
+        f"{SWEEP_FAILURE_MARKER}\n\nNo community package pull request is being checked while "
+        f"this is broken, and a contributor sees no fact-sheet. See the [run log]({_run_url()}).\n\n"
+        "Close this once a sweep run succeeds.",
+        [SWEEP_FAILURE_LABEL])
+    print("opened a failure issue")
+    return 0
+
+
 def preview_failed() -> int:
     pr = int(os.environ["PR"])
     github_api.post_comment(pr, f"❌ The preview build failed. See the [run log]({_run_url()}) for details.")
@@ -136,29 +135,20 @@ def preview_failed() -> int:
     return 0
 
 
-def _target_pr() -> int | None:
-    recorded = Path("pr-number.txt")
-    if recorded.exists() and recorded.read_text().strip():
-        return int(recorded.read_text().strip())
-    # Fork branch names collide (many first-time PRs share "master"/"patch-1"), so match the
-    # head repo owner too, not the ref alone.
-    head_ref = os.environ.get("PR_HEAD", "")
-    head_owner = os.environ.get("PR_HEAD_OWNER", "")
-    for pull in github_api.open_pull_requests():
-        head = pull["head"]
-        owner = (head.get("repo") or {}).get("owner", {}).get("login", "")
-        if head["ref"] == head_ref and (not head_owner or owner == head_owner):
-            return int(pull["number"])
-    return None
+def _unfinished_sheet() -> str:
+    return ("## ❌ The check did not finish\n\n"
+            "It wrote no fact-sheet, so this package is still unverified. The fault is in the "
+            f"check, not in the package. A maintainer has to read the [run log]({_run_url()}).")
+
+
+def fact_sheet_body(sheets: list[str]) -> str:
+    return github_api.FACT_SHEET_MARKER + "\n\n" + "\n\n".join(sheets or [_unfinished_sheet()]) + "\n"
 
 
 def report() -> int:
-    pr = _target_pr()
-    if pr is None:
-        print("no target PR for this run")
-        return 0
+    pr = int(os.environ["PR"])
     sheets = [f.read_text() for f in sorted(Path(".").glob("*.factsheet.md"))]
-    body = github_api.FACT_SHEET_MARKER + "\n\n" + "\n\n".join(sheets) + "\n"
+    body = fact_sheet_body(sheets)
     existing = github_api.fact_sheet_comment(pr)
     if existing:
         github_api.edit_comment(int(existing["id"]), body)

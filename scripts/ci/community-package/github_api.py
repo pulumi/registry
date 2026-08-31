@@ -3,7 +3,6 @@ from __future__ import annotations
 import base64
 import json
 import os
-import re
 import urllib.error
 import urllib.request
 from datetime import datetime, timezone
@@ -39,18 +38,24 @@ def raw_file(slug: str, ref: str, path: str) -> bytes | None:
         return None
 
 
+NO_LATEST_RELEASE = 404
+
+
 def latest_release_tag(slug: str) -> str | None:
     try:
         return str(request(f"/repos/{slug}/releases/latest")["tag_name"])
     except urllib.error.HTTPError as e:
-        if e.code == 404:  # tags-only repo, or only prereleases: no "latest" release exists
+        if e.code == NO_LATEST_RELEASE:
             return None
         raise
 
 
+ANNOTATED_TAG = "tag"
+
+
 def commit_sha_for_tag(slug: str, tag: str) -> str:
     ref = request(f"/repos/{slug}/git/refs/tags/{tag}")["object"]
-    if ref["type"] == "tag":  # annotated tag, one more hop to reach the commit
+    if ref["type"] == ANNOTATED_TAG:
         return str(request(f"/repos/{slug}/git/tags/{ref['sha']}")["object"]["sha"])
     return str(ref["sha"])
 
@@ -77,6 +82,18 @@ def pull_request_is_first_party(pr: int) -> bool:
 
 def open_pull_requests() -> list[dict[str, Any]]:
     return list(request(f"/repos/{repo()}/pulls?state=open&per_page=100"))
+
+
+def open_issue_with_marker(marker: str, label: str) -> dict[str, Any] | None:
+    listed = request(f"/repos/{repo()}/issues?state=open&labels={label}&per_page=100")
+    for issue in listed:
+        if "pull_request" not in issue and marker in (issue.get("body") or ""):
+            return dict(issue)
+    return None
+
+
+def create_issue(title: str, body: str, labels: list[str]) -> None:
+    request(f"/repos/{repo()}/issues", "POST", {"title": title, "body": body, "labels": labels})
 
 
 def add_reaction(comment_id: str, content: str) -> None:
@@ -106,17 +123,7 @@ def _minutes_since(timestamp: str) -> int:
     return int((datetime.now(timezone.utc) - moment).total_seconds() // 60)
 
 
-def minutes_since_check_run(sha: str, name_pattern: str) -> int | None:
-    runs = [r for r in request(f"/repos/{repo()}/commits/{sha}/check-runs")["check_runs"]
-            if re.search(name_pattern, r["name"])]
-    if not runs:
-        return None
-    return _minutes_since(str(max(runs, key=lambda r: str(r["started_at"]))["started_at"]))
-
-
 def pull_request_files(pr: int) -> list[str]:
-    # The allowlist gate reads this list, so a truncated first page would let unlisted files
-    # through unseen. Walk every page.
     names: list[str] = []
     page = 1
     while True:
@@ -136,12 +143,6 @@ def dispatch_run_label(pr: int, sha: str) -> str:
 
 
 def dispatch_check(workflow_file: str, pr: int, sha: str) -> None:
-    """Dispatch a check named exactly `dispatch_run_label`, which is the sweep's dedupe key.
-
-    The workflow interpolates the `head` input into its `run-name`, so the input has to carry
-    the same short sha the label does; otherwise no run ever matches and the sweep dispatches
-    the same check again on every pass.
-    """
     dispatch_workflow(workflow_file, {"pr": str(pr), "head": _short(sha)})
 
 
@@ -151,7 +152,6 @@ def _dispatched_runs(workflow_file: str) -> list[dict[str, Any]]:
 
 
 def _run_title(run: dict[str, Any]) -> str:
-    # `name` is the workflow's own name; an evaluated `run-name:` arrives as `display_title`.
     return str(run.get("display_title") or run.get("name") or "")
 
 
@@ -164,20 +164,6 @@ def minutes_since_dispatch(workflow_file: str, pr: int) -> int | None:
     if not mine:
         return None
     return _minutes_since(str(max(mine, key=lambda r: str(r["created_at"]))["created_at"]))
-
-
-def pull_request_run_status(workflow_file: str, sha: str) -> str | None:
-    """The run's live status, or its conclusion once it has one.
-
-    An approval-gated run surfaces either as `status: action_required` or, once GitHub closes
-    it out, as `status: completed` with `conclusion: action_required`. The sweep has to see
-    both, or it skips forever exactly the PRs it exists to unblock.
-    """
-    runs = request(f"/repos/{repo()}/actions/workflows/{workflow_file}/runs"
-                   f"?event=pull_request&head_sha={sha}")["workflow_runs"]
-    if not runs:
-        return None
-    return str(runs[0].get("conclusion") or runs[0]["status"])
 
 
 def dispatch_workflow(workflow_file: str, inputs: dict[str, str]) -> None:

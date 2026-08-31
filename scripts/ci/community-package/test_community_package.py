@@ -1,8 +1,10 @@
 from __future__ import annotations
 
+import argparse
 import json
 import os
 import re
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -19,6 +21,7 @@ import doc_lint  # noqa: E402
 import fact_sheet  # noqa: E402
 import github_api  # noqa: E402
 import package_list  # noqa: E402
+import resourcedocsgen  # noqa: E402
 import sdk_install_probe  # noqa: E402
 import verify_entry  # noqa: E402
 from models import DocFile, DocFinding, Entry, InstallResult, Manifest, Version, provider_name  # noqa: E402
@@ -152,13 +155,13 @@ class CliNoticeTests(unittest.TestCase):
     def test_package_list_and_publisher_allowlist_are_permitted(self) -> None:
         changed = ["community-packages/package-list.json",
                    "tools/resourcedocsgen/pkg/publishers/publisher-names.json"]
-        self.assertEqual(cli._files_outside_allowlist(changed), [])
+        self.assertEqual(package_list.files_outside_allowlist(changed), [])
 
     def test_generated_files_are_offending(self) -> None:
         changed = ["community-packages/package-list.json",
                    "themes/default/content/registry/packages/thoth/_index.md",
                    "themes/default/data/registry/packages/thoth.yaml"]
-        self.assertEqual(cli._files_outside_allowlist(changed),
+        self.assertEqual(package_list.files_outside_allowlist(changed),
                          ["themes/default/content/registry/packages/thoth/_index.md",
                           "themes/default/data/registry/packages/thoth.yaml"])
 
@@ -218,35 +221,6 @@ class VerifyTests(unittest.TestCase):
 
     def test_absent_schema_version_is_not_flagged(self) -> None:
         self.assertTrue(verify_entry._schema_version_matches("", "v1.3.0"))
-
-
-class ReportTargetTests(unittest.TestCase):
-    def test_prefers_recorded_pr_number(self) -> None:
-        with tempfile.TemporaryDirectory() as scratch:
-            cwd = os.getcwd()
-            os.chdir(scratch)
-            try:
-                Path("pr-number.txt").write_text("42\n")
-                self.assertEqual(comment_commands._target_pr(), 42)
-            finally:
-                os.chdir(cwd)
-
-    def test_falls_back_to_owner_and_ref(self) -> None:
-        pulls: list[dict[str, Any]] = [
-            {"number": 1, "head": {"ref": "patch-1", "repo": {"owner": {"login": "alice"}}}},
-            {"number": 2, "head": {"ref": "patch-1", "repo": {"owner": {"login": "bob"}}}}]
-        real = github_api.open_pull_requests
-
-        def fake() -> list[dict[str, Any]]:
-            return pulls
-
-        github_api.open_pull_requests = fake
-        os.environ.update(PR_HEAD="patch-1", PR_HEAD_OWNER="bob")
-        try:
-            self.assertEqual(comment_commands._target_pr(), 2)
-        finally:
-            github_api.open_pull_requests = real
-            del os.environ["PR_HEAD"], os.environ["PR_HEAD_OWNER"]
 
 
 def _manifest(green: bool = True, warnings: bool = False, findings: list[DocFinding] | None = None,
@@ -344,36 +318,28 @@ class FactSheetTests(unittest.TestCase):
 
 
 class SweepTests(unittest.TestCase):
-    def _sweep(self, status: str | None, files: list[str] | None = None,
+    def _sweep(self, files: list[str] | None = None,
                already: bool = False) -> list[tuple[str, dict[str, str]]]:
         dispatched: list[tuple[str, dict[str, str]]] = []
         with patch.object(github_api, "open_pull_requests",
                           lambda: [{"number": 7, "head": {"sha": "a" * 40}}]), \
              patch.object(github_api, "pull_request_files",
                           lambda pr: files if files is not None else [comment_commands.PACKAGE_LIST]), \
-             patch.object(github_api, "pull_request_run_status", lambda w, s: status), \
              patch.object(github_api, "dispatch_exists", lambda w, label: already), \
              patch.object(github_api, "dispatch_workflow",
                           lambda w, inputs: dispatched.append((w, inputs))):
             comment_commands.sweep()
         return dispatched
 
-    def test_dispatches_when_github_parked_the_run(self) -> None:
-        self.assertEqual(self._sweep("action_required"),
+    def test_dispatches_a_check_for_a_package_pr(self) -> None:
+        self.assertEqual(self._sweep(),
                          [(comment_commands.CHECK_WORKFLOW, {"pr": "7", "head": "a" * 12})])
 
-    def test_dispatches_when_no_run_exists(self) -> None:
-        self.assertEqual(len(self._sweep(None)), 1)
-
-    def test_skips_a_run_that_started_on_its_own(self) -> None:
-        self.assertEqual(self._sweep("in_progress"), [])
-        self.assertEqual(self._sweep("completed"), [])
-
     def test_skips_a_pr_that_does_not_touch_the_package_list(self) -> None:
-        self.assertEqual(self._sweep("action_required", files=["README.md"]), [])
+        self.assertEqual(self._sweep(files=["README.md"]), [])
 
     def test_dispatches_each_head_once(self) -> None:
-        self.assertEqual(self._sweep("action_required", already=True), [])
+        self.assertEqual(self._sweep(already=True), [])
 
     def test_run_label_is_stable_per_head(self) -> None:
         self.assertEqual(github_api.dispatch_run_label(7, "a" * 40),
@@ -381,7 +347,6 @@ class SweepTests(unittest.TestCase):
 
 
 class DispatchLabelTests(unittest.TestCase):
-    """The run name is the only dedupe key the sweep has, so the two halves must agree."""
 
     def _dispatched(self) -> dict[str, str]:
         sent: list[dict[str, str]] = []
@@ -389,10 +354,13 @@ class DispatchLabelTests(unittest.TestCase):
             github_api.dispatch_check("w.yml", 7, "a" * 40)
         return sent[0]
 
-    def test_the_dispatched_head_reproduces_the_label(self) -> None:
+    def test_the_workflow_names_its_run_exactly_as_the_sweep_looks_it_up(self) -> None:
+        workflow = Path(__file__).resolve().parents[3] / ".github/workflows/community-package-check.yml"
+        template = str(yaml.safe_load(workflow.read_text())["run-name"])
         inputs = self._dispatched()
-        run_name = f"Community package check · PR #{inputs['pr']} · {inputs['head']}"
-        self.assertEqual(run_name, github_api.dispatch_run_label(7, "a" * 40))
+        for field, value in inputs.items():
+            template = template.replace("${{ inputs.%s }}" % field, value)
+        self.assertEqual(template, github_api.dispatch_run_label(7, "a" * 40))
 
     def test_a_run_is_matched_by_its_display_title(self) -> None:
         label = github_api.dispatch_run_label(7, "a" * 40)
@@ -407,26 +375,6 @@ class DispatchLabelTests(unittest.TestCase):
         with patch.object(github_api, "_dispatched_runs", lambda w: runs):
             self.assertFalse(github_api.dispatch_exists("w.yml", github_api.dispatch_run_label(7, "a" * 40)))
             self.assertIsNone(github_api.minutes_since_dispatch("w.yml", 7))
-
-
-class WorkflowRunStatusTests(unittest.TestCase):
-    def _status(self, run: dict[str, Any] | None) -> str | None:
-        with patch.object(github_api, "repo", lambda: "x/y"), \
-             patch.object(github_api, "request", lambda p: {"workflow_runs": [run] if run else []}):
-            return github_api.pull_request_run_status("w.yml", "a" * 40)
-
-    def test_a_parked_run_is_reported_from_its_status(self) -> None:
-        self.assertEqual(self._status({"status": "action_required"}), "action_required")
-
-    def test_a_parked_run_is_reported_from_its_conclusion(self) -> None:
-        self.assertEqual(self._status({"status": "completed", "conclusion": "action_required"}),
-                         "action_required")
-
-    def test_a_running_check_is_not_parked(self) -> None:
-        self.assertEqual(self._status({"status": "in_progress", "conclusion": None}), "in_progress")
-
-    def test_no_run_reports_none(self) -> None:
-        self.assertIsNone(self._status(None))
 
 
 class PullRequestFilesTests(unittest.TestCase):
@@ -464,11 +412,10 @@ class CommandInvocationTests(unittest.TestCase):
 
 
 class CheckCommandTests(unittest.TestCase):
-    def _run(self, minutes_check: int | None, minutes_dispatch: int | None) -> list[dict[str, str]]:
+    def _run(self, minutes_dispatch: int | None) -> list[dict[str, str]]:
         dispatched: list[dict[str, str]] = []
         os.environ.update(PR="7", COMMENT_ID="1", COMMENTER="ren", ASSOC="NONE", COMMENT_BODY="/check")
         with patch.object(github_api, "pull_request_head", lambda pr: ("ren", "b" * 40)), \
-             patch.object(github_api, "minutes_since_check_run", lambda s, n: minutes_check), \
              patch.object(github_api, "minutes_since_dispatch", lambda w, pr: minutes_dispatch), \
              patch.object(github_api, "add_reaction", lambda *a: None), \
              patch.object(github_api, "post_comment", lambda *a: None), \
@@ -481,25 +428,30 @@ class CheckCommandTests(unittest.TestCase):
         return dispatched
 
     def test_author_dispatches_a_check(self) -> None:
-        self.assertEqual(self._run(None, None), [{"pr": "7", "head": "b" * 12}])
+        self.assertEqual(self._run(None), [{"pr": "7", "head": "b" * 12}])
 
     def test_a_recent_dispatch_rate_limits(self) -> None:
-        self.assertEqual(self._run(None, 2), [])
+        self.assertEqual(self._run(2), [])
 
-    def test_a_recent_automatic_run_rate_limits(self) -> None:
-        self.assertEqual(self._run(2, None), [])
-
-    def test_an_old_check_does_not_rate_limit(self) -> None:
-        self.assertEqual(len(self._run(60, 90)), 1)
+    def test_an_old_dispatch_does_not_rate_limit(self) -> None:
+        self.assertEqual(len(self._run(90)), 1)
 
 
-class ChangedFilesTests(unittest.TestCase):
-    def test_a_listing_replaces_the_git_diff(self) -> None:
+class CheckAllowlistTests(unittest.TestCase):
+    def _check(self, changed: str) -> tuple[int, str]:
         with tempfile.TemporaryDirectory() as scratch:
             listing = Path(scratch) / "changed.txt"
-            listing.write_text("community-packages/package-list.json\nREADME.md\n")
-            self.assertEqual(cli._changed_files("origin/master", str(listing)),
-                             ["community-packages/package-list.json", "README.md"])
+            listing.write_text(changed)
+            code = cli._check(argparse.Namespace(diff="origin/master", out=scratch,
+                                                 changed_files=str(listing)))
+            sheet = Path(scratch) / "000.factsheet.md"
+            return code, sheet.read_text() if sheet.exists() else ""
+
+    def test_the_check_refuses_a_file_the_gate_would_have_refused(self) -> None:
+        code, sheet = self._check("community-packages/package-list.json\nREADME.md\n")
+        self.assertEqual(code, 1)
+        self.assertIn("outside the community package allowlist", sheet)
+        self.assertIn("README.md", sheet)
 
 
 def _community_workflows() -> list[Path]:
@@ -512,8 +464,6 @@ _RUNS_CODE = re.compile(
 
 
 class SecretCodeSeparationTests(unittest.TestCase):
-    """No community-package workflow may both hold a secret and run a contributor's code, or a
-    malicious package could read the secret."""
 
     def test_no_step_holds_a_token_beside_contributor_code(self) -> None:
         for workflow in _community_workflows():
@@ -534,6 +484,115 @@ class SecretCodeSeparationTests(unittest.TestCase):
             self.assertNotIn("pull_request_target", text, name)
             if holds_secret:
                 self.assertNotRegex(text, r"ref:.*\.head\.", f"{name}: secret job checks out the PR head")
+
+
+def _steps(job: dict[str, Any]) -> list[dict[str, Any]]:
+    return list(job.get("steps", []))
+
+
+def _job_writes(job: dict[str, Any]) -> bool:
+    permissions = job.get("permissions") or {}
+    return any(value == "write" for value in permissions.values())
+
+
+class ContributorCodeIsolationTests(unittest.TestCase):
+
+    def _jobs_running_code(self) -> list[tuple[str, str, dict[str, Any]]]:
+        found = []
+        for workflow in _community_workflows():
+            for name, job in yaml.safe_load(workflow.read_text())["jobs"].items():
+                if any(_RUNS_CODE.search(step.get("run", "")) for step in _steps(job)):
+                    found.append((workflow.name, name, job))
+        return found
+
+    def test_a_job_that_runs_a_package_exists(self) -> None:
+        self.assertTrue(self._jobs_running_code())
+
+    def test_a_job_that_runs_a_package_cannot_write(self) -> None:
+        for workflow, name, job in self._jobs_running_code():
+            self.assertFalse(_job_writes(job), f"{workflow}: job '{name}' runs a package and can write")
+
+
+class TokenReachTests(unittest.TestCase):
+
+    def _check_job(self) -> dict[str, Any]:
+        workflow = Path(__file__).resolve().parents[3] / ".github/workflows/community-package-check.yml"
+        return dict(yaml.safe_load(workflow.read_text())["jobs"]["check"])
+
+    def test_the_job_holds_no_token_for_every_step(self) -> None:
+        self.assertNotIn("GITHUB_TOKEN", self._check_job().get("env") or {})
+
+    def test_the_checkout_leaves_no_credential_behind(self) -> None:
+        checkouts = [s for s in _steps(self._check_job()) if "actions/checkout" in s.get("uses", "")]
+        self.assertTrue(checkouts)
+        for step in checkouts:
+            self.assertIs(step["with"]["persist-credentials"], False)
+
+    def test_one_step_holds_the_token_and_it_is_the_gate(self) -> None:
+        holders = [s["name"] for s in _steps(self._check_job())
+                   if "GITHUB_TOKEN" in (s.get("env") or {})]
+        self.assertEqual(len(holders), 1)
+        self.assertIn("refuse", holders[0])
+
+
+class AllowlistGateTests(unittest.TestCase):
+    def _fetch(self, changed: list[str]) -> tuple[int, list[str], str]:
+        written: list[str] = []
+
+        def fetched(slug: str, path: str, ref: str) -> str:
+            written.append(path)
+            return "{}"
+
+        with tempfile.TemporaryDirectory() as scratch:
+            root = Path(scratch)
+            for path in package_list.ALLOWED_PATHS:
+                (root / path).parent.mkdir(parents=True, exist_ok=True)
+            cwd = os.getcwd()
+            os.chdir(root)
+            try:
+                args = argparse.Namespace(pr=7, changed_files="c.txt", out=".")
+                with patch.object(github_api, "pull_request_files", lambda pr: changed), \
+                     patch.object(github_api, "repo", lambda: "x/y"), \
+                     patch.object(github_api, "pull_request",
+                                  lambda pr: {"head": {"sha": "c" * 40}}), \
+                     patch.object(github_api, "file_content_at", fetched):
+                    code = cli.run_fetch_pr(args)
+                sheet = Path("000.factsheet.md")
+                return code, written, sheet.read_text() if sheet.exists() else ""
+            finally:
+                os.chdir(cwd)
+
+    def test_an_allowlisted_pull_request_passes_the_gate(self) -> None:
+        code, written, sheet = self._fetch([str(package_list.PATH)])
+        self.assertEqual(code, 0)
+        self.assertEqual(len(written), len(package_list.ALLOWED_PATHS))
+        self.assertEqual(sheet, "")
+
+    def test_any_other_file_stops_before_the_package_is_touched(self) -> None:
+        code, written, sheet = self._fetch([str(package_list.PATH), ".github/workflows/push.yml"])
+        self.assertEqual(code, 1)
+        self.assertEqual(written, [])
+        self.assertIn("outside the community package allowlist", sheet)
+        self.assertIn("push.yml", sheet)
+
+
+class CheckStepOrderTests(unittest.TestCase):
+
+    def _run_index(self, needle: str) -> int:
+        workflow = Path(__file__).resolve().parents[3] / ".github/workflows/community-package-check.yml"
+        steps = _steps(yaml.safe_load(workflow.read_text())["jobs"]["check"])
+        return next(i for i, step in enumerate(steps) if needle in step.get("run", ""))
+
+    def test_the_pull_requests_files_arrive_before_the_check_reads_them(self) -> None:
+        self.assertLess(self._run_index("cli.py fetch-pr"), self._run_index("cli.py check"))
+
+    def test_the_gate_runs_before_the_package_does(self) -> None:
+        steps = _steps(yaml.safe_load(
+            (Path(__file__).resolve().parents[3]
+             / ".github/workflows/community-package-check.yml").read_text())["jobs"]["check"])
+        gate = next(i for i, s in enumerate(steps) if "GITHUB_TOKEN" in (s.get("env") or {}))
+        package = next(i for i, s in enumerate(steps) if "cli.py check" in s.get("run", ""))
+        self.assertLess(gate, package)
 
 
 class VerifyPackageYamlTests(unittest.TestCase):
@@ -628,3 +687,160 @@ class ChangedPackageYamlTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class ProviderNameFlagTests(unittest.TestCase):
+
+    def _args(self) -> list[str]:
+        seen: list[list[str]] = []
+
+        class Done:
+            returncode = 0
+            stdout = ""
+            stderr = ""
+
+        def fake(args: list[str], **kwargs: Any) -> Done:
+            seen.append(args)
+            return Done()
+
+        with patch.object(subprocess, "run", fake):
+            resourcedocsgen.generate_metadata("incsteps/pulumi-provider-multipass", "schema.json",
+                                              "v0.1.0", "multipass")
+        return seen[0]
+
+    def test_the_schema_name_is_passed_not_the_repo_name(self) -> None:
+        args = self._args()
+        self.assertIn("--providerName", args)
+        self.assertEqual(args[args.index("--providerName") + 1], "multipass")
+
+    def test_a_repo_named_for_neither_still_generates(self) -> None:
+        self.assertNotIn("provider-multipass", self._args())
+
+
+class GenerationErrorTests(unittest.TestCase):
+    def test_the_first_line_survives_truncation(self) -> None:
+        message = "Error: --providerName doesn't match the schema name\n" + "stack\n" * 500
+
+        class Failed:
+            returncode = 1
+            stdout = ""
+            stderr = message
+
+        with patch.object(subprocess, "run", lambda *a, **k: Failed()):
+            generated, output = resourcedocsgen.generate_metadata("o/r", "schema.json", "v1", "r")
+        self.assertFalse(generated)
+        self.assertIn("--providerName doesn't match the schema name", output)
+
+
+class SchemaVersionTests(unittest.TestCase):
+    def test_a_v_prefixed_schema_version_matches_a_v_prefixed_tag(self) -> None:
+        self.assertTrue(verify_entry._schema_version_matches("v0.1.0", "v0.1.0"))
+
+    def test_a_bare_schema_version_still_matches(self) -> None:
+        self.assertTrue(verify_entry._schema_version_matches("0.1.0", "v0.1.0"))
+
+    def test_a_different_version_still_fails(self) -> None:
+        self.assertFalse(verify_entry._schema_version_matches("v0.2.0", "v0.1.0"))
+
+
+class FetchPrTests(unittest.TestCase):
+    def test_every_allowlisted_file_arrives_at_the_pr_head(self) -> None:
+        contents = {str(package_list.PATH): '{"include":[]}',
+                    str(package_list.PUBLISHER_NAMES_PATH): '{"Incremental Steps": "incsteps"}'}
+        with tempfile.TemporaryDirectory() as scratch:
+            root = Path(scratch)
+            for path in package_list.ALLOWED_PATHS:
+                (root / path).parent.mkdir(parents=True, exist_ok=True)
+            cwd = os.getcwd()
+            os.chdir(root)
+            try:
+                with patch.object(github_api, "pull_request",
+                                  lambda pr: {"head": {"sha": "c" * 40}}), \
+                     patch.object(github_api, "repo", lambda: "x/y"), \
+                     patch.object(github_api, "file_content_at",
+                                  lambda slug, path, ref: contents[path]), \
+                     patch.object(github_api, "pull_request_files",
+                                  lambda pr: [str(p) for p in package_list.ALLOWED_PATHS]):
+                    cli.run_fetch_pr(argparse.Namespace(pr=7, changed_files="changed.txt", out="."))
+                for name, body in contents.items():
+                    self.assertEqual(Path(name).read_text(), body)
+            finally:
+                os.chdir(cwd)
+
+
+class CheckCrashTests(unittest.TestCase):
+    def test_a_broken_check_is_not_a_verdict(self) -> None:
+        with tempfile.TemporaryDirectory() as scratch:
+            args = argparse.Namespace(diff="origin/master", changed_files=None, out=scratch)
+            with patch.object(cli, "_check", side_effect=RuntimeError("the network went away")):
+                self.assertEqual(cli.run_check(args), 2)
+            sheet = (Path(scratch) / "000.factsheet.md").read_text()
+        self.assertIn("could not run", sheet)
+        self.assertIn("the network went away", sheet)
+
+    def test_a_red_package_keeps_its_own_exit_code(self) -> None:
+        with tempfile.TemporaryDirectory() as scratch:
+            args = argparse.Namespace(diff="origin/master", changed_files=None, out=scratch)
+            with patch.object(cli, "_check", lambda a: 1):
+                self.assertEqual(cli.run_check(args), 1)
+
+
+class ReportTests(unittest.TestCase):
+    def _report(self, sheets: dict[str, str], existing: dict[str, Any] | None = None) -> str:
+        written: list[str] = []
+        with tempfile.TemporaryDirectory() as scratch:
+            root = Path(scratch)
+            for name, body in sheets.items():
+                (root / name).write_text(body)
+            cwd = os.getcwd()
+            os.chdir(root)
+            try:
+                os.environ.update(PR="7", GITHUB_RUN_ID="42", GITHUB_REPOSITORY="x/y")
+                with patch.object(github_api, "fact_sheet_comment", lambda pr: existing), \
+                     patch.object(github_api, "post_comment", lambda pr, body: written.append(body)), \
+                     patch.object(github_api, "edit_comment", lambda cid, body: written.append(body)):
+                    comment_commands.report()
+            finally:
+                os.chdir(cwd)
+        return written[0]
+
+    def test_a_written_sheet_is_posted(self) -> None:
+        self.assertIn("## ✅ ready", self._report({"000.factsheet.md": "## ✅ ready"}))
+
+    def test_no_sheet_replaces_the_comment_with_a_failure_notice(self) -> None:
+        body = self._report({}, existing={"id": 1, "body": "old fact-sheet"})
+        self.assertIn("did not finish", body)
+        self.assertIn("/actions/runs/42", body)
+
+
+class SweepFailureIssueTests(unittest.TestCase):
+    def _alert(self, listed: list[dict[str, Any]]) -> list[dict[str, Any]]:
+        created: list[dict[str, Any]] = []
+        os.environ.update(REPO="x/y", GITHUB_RUN_ID="42", GITHUB_REPOSITORY="x/y")
+        with patch.object(github_api, "request", lambda p, *a, **k: listed), \
+             patch.object(github_api, "create_issue",
+                          lambda title, body, labels: created.append(
+                              {"title": title, "body": body, "labels": labels})):
+            comment_commands.sweep_failed()
+        return created
+
+    def _issue(self, body: str) -> dict[str, Any]:
+        return {"number": 5, "body": body}
+
+    def test_the_first_failure_opens_one_issue(self) -> None:
+        created = self._alert([])
+        self.assertEqual(len(created), 1)
+        self.assertEqual(created[0]["labels"], [comment_commands.SWEEP_FAILURE_LABEL])
+        self.assertIn(comment_commands.SWEEP_FAILURE_MARKER, created[0]["body"])
+        self.assertIn("/actions/runs/42", created[0]["body"])
+
+    def test_every_later_failure_opens_nothing(self) -> None:
+        marked = self._issue(comment_commands.SWEEP_FAILURE_MARKER + "\nstill broken")
+        self.assertEqual(self._alert([marked]), [])
+
+    def test_an_unrelated_p1_issue_does_not_suppress_the_alert(self) -> None:
+        self.assertEqual(len(self._alert([self._issue("some other p1 problem")])), 1)
+
+    def test_a_pull_request_is_never_mistaken_for_the_issue(self) -> None:
+        pr = {"number": 6, "body": comment_commands.SWEEP_FAILURE_MARKER, "pull_request": {}}
+        self.assertEqual(len(self._alert([pr])), 1)

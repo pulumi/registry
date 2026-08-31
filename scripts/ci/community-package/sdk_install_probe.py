@@ -11,9 +11,6 @@ from typing import Any, Callable
 
 from models import InstallResult
 
-# The provider supplies the package name, version, and plugin URL. We validate each against a
-# strict allowlist and pass it as an argv argument, never through a shell, so a crafted name
-# cannot inject a command.
 SAFE_NAME = re.compile(r"^[A-Za-z0-9._@/-]+$")
 SAFE_VERSION = re.compile(r"^[A-Za-z0-9._+-]+$")
 SAFE_URL = re.compile(r"^(https|github|gitlab)://[A-Za-z0-9._~:/?#@!$&()*+,;=-]+$")
@@ -39,10 +36,11 @@ def _pypi_version_exists(package: str, version: str) -> bool:
         return False
 
 
+NEVER_BUILD_FROM_SOURCE = ["--only-binary", ":all:"]
+
+
 def _python_resolves(package: str, version: str) -> tuple[bool, str]:
-    # --only-binary keeps pip from building an sdist, which would execute the package's setup code;
-    # when only an sdist is published, confirm the version exists from PyPI metadata instead.
-    ok, err = _run([sys.executable, "-m", "pip", "download", "--no-deps", "--only-binary", ":all:",
+    ok, err = _run([sys.executable, "-m", "pip", "download", "--no-deps", *NEVER_BUILD_FROM_SOURCE,
                     "--dest", "/tmp/py", "--", f"{package}=={version}"])
     if ok or _pypi_version_exists(package, version):
         return True, ""
@@ -50,14 +48,18 @@ def _python_resolves(package: str, version: str) -> tuple[bool, str]:
 
 
 def _go_module_resolves(import_path: str, tag: str) -> tuple[bool, str]:
-    # An SDK is a library, so `go install` won't work. Resolve it inside a throwaway module
-    # with `go get`, which downloads and records it without building a main package.
     with tempfile.TemporaryDirectory() as td:
         ok, err = _run(["go", "mod", "init", "probe"], cwd=td)
         if not ok:
             return False, err
         return _run(["go", "get", "--", f"{import_path}@{tag}"], cwd=td,
                     env={**os.environ, "GOFLAGS": "-mod=mod"})
+
+
+def _echo_to_the_run_log(heading: str, body: str) -> None:
+    print(f"::group::{heading}", file=sys.stderr)
+    print(body, file=sys.stderr)
+    print("::endgroup::", file=sys.stderr)
 
 
 def probe_installs(name: str, tag: str, schema: dict[str, Any]) -> list[InstallResult]:
@@ -68,10 +70,8 @@ def probe_installs(name: str, tag: str, schema: dict[str, Any]) -> list[InstallR
     results: list[InstallResult] = []
 
     def record(language: str, command: str, ok: bool, error: str, blocking: bool = False) -> None:
-        if not ok and error:  # echo to the Actions log so the run link holds the evidence
-            print(f"::group::install {language} FAILED, {command}", file=sys.stderr)
-            print(error, file=sys.stderr)
-            print("::endgroup::", file=sys.stderr)
+        if not ok and error:
+            _echo_to_the_run_log(f"install {language} FAILED, {command}", error)
         results.append(InstallResult(language, command, "pass" if ok else "fail",
                                      error="" if ok else error[-600:], blocking=blocking))
 

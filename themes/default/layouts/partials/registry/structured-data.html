@@ -84,11 +84,9 @@
 {{ end }}
 
 {{/* ---------- Organization (every registry page) ----------
-    Identity fields mirror the canonical https://www.pulumi.com/#organization
-    node defined by pulumi.com's own docs/blog/marketing pages, so the
-    registry never asserts a second, conflicting description of "Pulumi" the
-    company. Kept lean (no founders/address/contactPoint/numberOfEmployees/
-    award, which those pages carry) since this node's job here is entity
+    Mirrors the canonical https://www.pulumi.com/#organization node defined
+    in pulumi/docs at layouts/partials/schema/graph-builder.html. Kept lean
+    (identity fields only) since this node's job here is entity
     identification and disambiguation, not a full corporate profile. */}}
 {{ $orgMinimal := dict
     "@context" "https://schema.org"
@@ -99,9 +97,9 @@
     "url" "https://www.pulumi.com"
     "logo" (dict
         "@type" "ImageObject"
-        "url" "https://www.pulumi.com/logos/brand/logo.png"
-        "width" 600
-        "height" 60
+        "url" "https://brand.pulumi.com/media/images/logos/horizontal-1200w.png"
+        "width" 1200
+        "height" 299
     )
     "description" "Pulumi enables cloud infrastructure teams to define, deploy, and manage cloud resources using familiar programming languages."
     "foundingDate" "2017"

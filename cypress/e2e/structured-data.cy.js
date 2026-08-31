@@ -47,14 +47,25 @@ describe("Registry", () => {
 
         // Collect all application/ld+json blocks on the current page, parse
         // them, and hand them off to the caller for assertions.
+        //
+        // The registry partial emits its nodes as a single @graph document
+        // inside one <script> block (Google only resolves @id references
+        // within one JSON-LD document, never across separate <script> tags --
+        // see the partial's header comment). Flatten that document into its
+        // individual nodes here so the by-@type lookups below keep working
+        // unchanged. Any other <script> block on the page (e.g. head.html's
+        // standalone Corporation block) has no @graph and passes through as
+        // a single node, same as before.
         const getJsonLdBlocks = () => {
             return cy.get('script[type="application/ld+json"]').then($scripts => {
-                return Array.from($scripts).map(s => {
+                return Array.from($scripts).flatMap(s => {
+                    let parsed;
                     try {
-                        return JSON.parse(s.textContent);
+                        parsed = JSON.parse(s.textContent);
                     } catch (e) {
                         throw new Error(`Invalid JSON in ld+json block: ${e.message}\n${s.textContent}`);
                     }
+                    return Array.isArray(parsed["@graph"]) ? parsed["@graph"] : [parsed];
                 });
             });
         };
@@ -91,13 +102,32 @@ describe("Registry", () => {
 
             it("renders the SoftwareSourceCode fields correctly", () => {
                 getJsonLdBlocks().then(blocks => {
-                    const ssc = filterRegistryBlocks(blocks).find(b => b["@type"] === "SoftwareSourceCode");
+                    const registryBlocks = filterRegistryBlocks(blocks);
+                    const ssc = registryBlocks.find(b => b["@type"] === "SoftwareSourceCode");
                     expect(ssc, "SoftwareSourceCode block").to.exist;
                     expect(ssc.name).to.equal("AWS Pulumi Provider");
                     expect(ssc.alternateName).to.equal("AWS");
-                    expect(ssc.publisher).to.deep.include({ "@type": "Organization", name: "Pulumi" });
+                    // publisher is now an @id reference into the shared Organization
+                    // node rather than a repeated inline literal -- resolve it and
+                    // assert against the node it points at.
+                    expect(ssc.publisher).to.deep.equal({ "@id": "https://www.pulumi.com/#organization" });
+                    const org = registryBlocks.find(b => b["@id"] === ssc.publisher["@id"]);
+                    expect(org, "Organization node referenced by publisher").to.exist;
+                    expect(org["@type"]).to.equal("Organization");
+                    expect(org.name).to.equal("Pulumi");
                     expect(ssc.dateModified, "dateModified should be present and parseable").to.match(/^\d{4}-\d{2}-\d{2}T/);
                     expect(new Date(ssc.dateModified).toString()).to.not.equal("Invalid Date");
+                });
+            });
+
+            it("shares one canonical Organization @id with the docs site", () => {
+                getJsonLdBlocks().then(blocks => {
+                    const org = filterRegistryBlocks(blocks).find(b => b["@type"] === "Organization");
+                    expect(org, "Organization node").to.exist;
+                    // Must match the docs site's own canonical identifier
+                    // (layouts/partials/schema/graph-builder.html) so the two
+                    // properties describe one entity, not two.
+                    expect(org["@id"]).to.equal("https://www.pulumi.com/#organization");
                 });
             });
 

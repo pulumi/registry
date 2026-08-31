@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/juju/juju/2.2.1/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/juju/juju/2.3.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Juju Provider
@@ -1333,6 +1333,24 @@ public class App {
 ```
 {{% /choosable %}}
 {{< /chooser >}}
+### Default timeouts
+
+The provider exposes a `defaultTimeouts` block that controls how long the
+provider waits for resources to reach a ready state after create, update, or
+delete operations. These defaults apply to every resource that does not
+override them with its own `timeouts` block.
+
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime:
+
+```
+
+Precedence order:
+- Resource-level `timeouts` block
+- Global `defaultTimeouts` block
+- Built-in defaults (30 minutes for create/update, 15 minutes for delete).
 ## Configuration Reference
 
 - `caCertificate` (String) If the controller was deployed with a self-signed certificate: This is the certificate to use for identification. This can also be set by the `JUJU_CA_CERT` environment variable
@@ -1340,10 +1358,22 @@ public class App {
 - `clientSecret` (String, Sensitive) If using JAAS: This is the client secret (OAuth2.0, created by the external identity provider) to be used. This can also be set by the `JUJU_CLIENT_SECRET` environment variable
 - `controllerAddresses` (String) This is the controller addresses to connect to, defaults to localhost:17070, multiple addresses can be provided in this format: <host>:<port>,<host>:<port>,.... This can also be set by the `JUJU_CONTROLLER_ADDRESSES` environment variable.
 - `controllerMode` (Boolean) If set to true, the provider will only allow managing `juju.Controller` resources.
+- `defaultTimeouts` (Block, Optional) Default timeouts for resource operations. These apply to all resources unless overridden by a resource-level `timeouts` block. Values are duration strings, e.g. "60m". (see below for nested schema)
+- `lazyApiCheck` (Boolean) If set to true, the provider will not connect to the controller during planning for creation. This allows for planning the creation of resources without a live controller. However, the provider will still connect to the controller when planning for updates. Note that the validators/checks will not be run until apply time - this is relevant for some resources that are only valid with JAAS.
 - `offeringControllers` (Attributes Map) Additional controller details for cross-model integrations. The map key is the controller name. (see below for nested schema)
 - `password` (String, Sensitive) This is the password of the username to be used. This can also be set by the `JUJU_PASSWORD` environment variable
 - `skipFailedDeletion` (Boolean) Whether to issue a warning instead of an error and continue if a resource deletion fails. This can also be set by the `JUJU_SKIP_FAILED_DELETION` environment variable. Defaults to false.
 - `username` (String) This is the username registered with the controller to be used. This can also be set by the `JUJU_USERNAME` environment variable
+
+<a id="nestedblock--default_timeouts"></a>
+### Nested Schema for `defaultTimeouts`
+
+Optional:
+
+- `create` (String) Default maximum time to wait for resources to become ready after creation. Defaults to 30 minutes.
+- `delete` (String) Default maximum time to wait for resources to be deleted. Defaults to 15 minutes.
+- `read` (String) Default maximum time to wait for function reads. Defaults to 30 minutes.
+- `update` (String) Default maximum time to wait for resources to become ready after an update. Defaults to 30 minutes.
 
 <a id="nestedatt--offering_controllers"></a>
 ### Nested Schema for `offeringControllers`

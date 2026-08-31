@@ -11,17 +11,18 @@
     repeated inline literal instead of a pointer to one entity.
 
     Graph always includes:
-      - Organization, a minimal node identified by the SAME `@id`
+      - Organization, identified by the SAME `@id`
         (https://www.pulumi.com/#organization) the docs site's own
         graph-builder partial uses for the canonical Pulumi entity. Every
         "publisher" field below that represents Pulumi itself (not a
         third-party provider) points at this node by `@id` instead of
         repeating an inline literal. This is a single-source-of-truth /
         entity-consistency fix, not a claimed ranking or AI-citation lever.
+      - WebSite, mirroring the sitewide https://www.pulumi.com/#website node
+        so registry pages resolve to the same site as the rest of pulumi.com.
       - BreadcrumbList, for every registry page.
 
     Conditionally includes:
-      - WebSite for the registry index page.
       - SoftwareSourceCode for the package overview page. Matches npmjs.com's
         convention for a provider library / SDK consumed by Pulumi.
       - HowTo for installation-configuration pages.
@@ -78,29 +79,55 @@
     {{ end }}
 {{ end }}
 
-{{/* Canonical Pulumi entity identifier, shared with the docs site's own
-     graph-builder partial (layouts/partials/schema/graph-builder.html), so
-     the two properties describe one real-world entity with one identifier
-     instead of two. Kept minimal here on purpose: the full description,
-     logo, address, and sameAs list live where the entity is actually
-     defined (the docs site's home page graph); this is a reference node. */}}
+{{/* ---------- Organization (every registry page) ----------
+    Mirrors the canonical https://www.pulumi.com/#organization node defined
+    in pulumi/docs at layouts/partials/schema/graph-builder.html. Kept lean
+    (identity fields only) since this node's job here is entity
+    identification and disambiguation, not a full corporate profile. */}}
 {{ $orgID := "https://www.pulumi.com/#organization" }}
 {{ $orgRef := dict "@id" $orgID }}
-{{ $graph := slice (dict "@type" "Organization" "@id" $orgID "name" "Pulumi" "url" "https://www.pulumi.com/") }}
+{{ $org := dict
+    "@type" (slice "Organization" "Corporation")
+    "@id" $orgID
+    "name" "Pulumi Corporation"
+    "alternateName" "Pulumi"
+    "url" "https://www.pulumi.com"
+    "logo" (dict
+        "@type" "ImageObject"
+        "url" "https://brand.pulumi.com/media/images/logos/horizontal-1200w.png"
+        "width" 1200
+        "height" 299
+    )
+    "description" "Pulumi enables cloud infrastructure teams to define, deploy, and manage cloud resources using familiar programming languages."
+    "foundingDate" "2017"
+    "sameAs" (slice
+        "https://github.com/pulumi"
+        "https://twitter.com/PulumiCorp"
+        "https://x.com/PulumiCorp"
+        "https://www.linkedin.com/company/pulumi"
+        "https://www.youtube.com/channel/UC2Dhyn4Ev52YSbcpfnfP0Mw"
+        "https://www.wikidata.org/wiki/Q122864080"
+        "https://en.wikipedia.org/wiki/Pulumi"
+        "https://www.crunchbase.com/organization/pulumi-corporation"
+    )
+}}
+{{ $graph := slice $org }}
 
-{{/* ---------- WebSite (registry index page only) ---------- */}}
-{{ if eq $rel "/registry/" }}
-    {{ $website := dict
-        "@type" "WebSite"
-        "@id" (printf "%s#website" (absURL "registry/"))
-        "name" "Pulumi Registry"
-        "url" (absURL "registry/")
-        "description" "The public index of Pulumi packages — find providers, components, and cloud infrastructure building blocks."
-        "inLanguage" "en-US"
-        "publisher" $orgRef
-    }}
-    {{ $graph = $graph | append $website }}
-{{ end }}
+{{/* ---------- WebSite (every registry page) ----------
+    Mirrors the sitewide https://www.pulumi.com/#website node's identity
+    fields so the registry is recognized as part of the same site, not a
+    second WebSite entity scoped to /registry/. */}}
+{{ $website := dict
+    "@type" "WebSite"
+    "@id" "https://www.pulumi.com/#website"
+    "url" "https://www.pulumi.com"
+    "name" "Pulumi"
+    "alternateName" "Pulumi IaC Platform"
+    "description" "Infrastructure as Code platform with AI. Deploy to any cloud using TypeScript, Python, Go, C#, Java, or YAML."
+    "inLanguage" "en-US"
+    "publisher" $orgRef
+}}
+{{ $graph = $graph | append $website }}
 
 {{/* ---------- BreadcrumbList (every registry page) ---------- */}}
 {{ $crumbs := slice (dict "@type" "ListItem" "position" 1 "name" "Registry" "item" (absURL "registry/")) }}
@@ -169,7 +196,7 @@
         "inLanguage" "en-US"
         "programmingLanguage" (slice "TypeScript" "Python" "Go" "C#" "Java" "YAML")
         "runtimePlatform" "Pulumi"
-        "isPartOf" (dict "@type" "SoftwareSourceCode" "name" "Pulumi" "url" "https://www.pulumi.com/")
+        "isPartOf" (dict "@id" "https://www.pulumi.com/#website")
         "author" (dict "@type" "Organization" "name" $pkg.publisher)
         "publisher" $orgRef
     }}

@@ -82,6 +82,35 @@
     {{ $crumbs = $crumbs | append (dict "@type" "ListItem" "position" 3 "name" $pkg.title "item" (printf "%sregistry/packages/%s/" (absURL "") $packageName)) }}
     {{ if or (eq $kind "api-docs-root") (eq $kind "api-docs-leaf") }}
         {{ $crumbs = $crumbs | append (dict "@type" "ListItem" "position" 4 "name" "API Docs" "item" (printf "%sregistry/packages/%s/api-docs/" (absURL "") $packageName)) }}
+        {{/*
+            api-docs-leaf covers every page below the api-docs section root:
+            module index pages (aws/api-docs/s3/), resource pages nested one or
+            more modules deep (aws/api-docs/s3/bucket/,
+            kubernetes/api-docs/helm/v3/release/), and top-level resources with
+            no module (aws/api-docs/provider/). The 4 crumbs above are
+            identical for all of them, which truncates the structured
+            breadcrumb short of what registrybreadcrumbnav (breadcrumb.html)
+            already renders in the visible nav. Walk the page's own ancestry
+            to append one ListItem per remaining path segment so the two
+            breadcrumbs match, per Google's guidance that structured and
+            visible breadcrumbs should agree.
+        */}}
+        {{ if eq $kind "api-docs-leaf" }}
+            {{ $apiDocsRoot := printf "/registry/packages/%s/api-docs/" $packageName }}
+            {{ $extra := slice . }}
+            {{ range .Ancestors }}
+                {{ if eq .RelPermalink $apiDocsRoot }}
+                    {{ break }}
+                {{ end }}
+                {{ $extra = $extra | append . }}
+            {{ end }}
+            {{ $extra = $extra | collections.Reverse }}
+            {{ $pos := add (len $crumbs) 1 }}
+            {{ range $extra }}
+                {{ $crumbs = $crumbs | append (dict "@type" "ListItem" "position" $pos "name" .LinkTitle "item" .Permalink) }}
+                {{ $pos = add $pos 1 }}
+            {{ end }}
+        {{ end }}
     {{ else if eq $kind "install" }}
         {{ $crumbs = $crumbs | append (dict "@type" "ListItem" "position" 4 "name" "Installation & Configuration" "item" (printf "%sregistry/packages/%s/installation-configuration/" (absURL "") $packageName)) }}
     {{ else if eq $kind "how-to" }}

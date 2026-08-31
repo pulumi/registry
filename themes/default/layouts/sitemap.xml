@@ -41,6 +41,31 @@
       {{ end }}
     {{ end }}
   {{ end }}
+  {{- /*
+      The /registry/ landing page itself (segments == ["registry"]) is a
+      section page backed by themes/default/content/registry/_index.md.
+      That markdown is edited rarely -- its git history is dominated by
+      unrelated repo-wide changes (e.g. #10718's markdown-negotiation
+      change) -- while the rendered page is a live package/provider list
+      (registry/list.html + partials/registry/package-list.html) whose
+      cards print each package's own updated_on-derived version and
+      publish date (partials/registry/package/package-card.html). The
+      page's main content changes every time any package's updated_on
+      moves, so .Lastmod alone understates it, sometimes by months.
+      Take the max of the page's own git lastmod and the newest
+      updated_on across every listed package, mirroring the fallback
+      already used for api-docs pages above.
+  */ -}}
+  {{ if eq (len $segments) 1 }}
+    {{ range .Site.Data.registry.packages }}
+      {{ with .updated_on }}
+        {{ $pkgLastmod := time . }}
+        {{ if or $lastmod.IsZero (gt $pkgLastmod.Unix $lastmod.Unix) }}
+          {{ $lastmod = $pkgLastmod }}
+        {{ end }}
+      {{ end }}
+    {{ end }}
+  {{ end }}
   <url>
     <loc>{{ .Site.Params.canonicalURL }}{{ .RelPermalink }}</loc>{{ if not $lastmod.IsZero }}
     <lastmod>{{ safeHTML ( $lastmod.Format "2006-01-02T15:04:05-07:00" ) }}</lastmod>{{ end }}{{ with .Sitemap.ChangeFreq }}

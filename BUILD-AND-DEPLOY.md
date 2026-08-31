@@ -531,7 +531,8 @@ All workflow files live in `.github/workflows/`.
 | `check-links.yml` | Scheduled jobs: Check links | Every Monday 3:00 PM UTC |
 | `run-browser-tests.yml` | Scheduled jobs: Run browser tests | Daily 2:00 PM UTC |
 | `generate-package-metadata.yml` | Check for Community Package Updates | Daily 5:30 AM + 5:30 PM UTC + push to `master` touching `package-list.json` |
-| `community-package-check.yml` | Community package check | PR touching `community-packages/package-list.json` |
+| `community-package-check.yml` | Community package check | PR touching `community-packages/package-list.json`, or a `workflow_dispatch` naming a PR |
+| `community-package-sweep.yml` | Community package check sweep | Every 15 minutes |
 | `community-package-report.yml` | Community package report | `workflow_run` after the check completes |
 | `community-package-check-command.yml` | Community package /check command | `/check` comment on a package PR |
 | `community-package-preview-command.yml` | Community package /preview command | `/preview` comment on a package PR |
@@ -736,7 +737,8 @@ The check pipeline gives a contributor who adds one entry to `community-packages
 
 - **`community-package-check.yml`** (secret-free, runs on forks): for each added entry, reads the package's schema and docs at its latest GitHub release, then probes without executing the package's code — installs the plugin (blocking), resolves the npm/PyPI/Go SDKs and lints the docs (advisory). Writes a fact-sheet artifact. The plugin install is the only blocking check, alongside successful docs generation and a present `docs/_index.md`.
 - **`community-package-report.yml`** (`workflow_run`, write token, no secrets, no contributor code): downloads the fact-sheet artifact and posts it as a sticky PR comment, keyed to the PR number recorded by the check.
-- **`community-package-check-command.yml`** (`issue_comment`): re-runs the check when the author or a maintainer comments `/check`, authorized and rate-limited.
+- **`community-package-check-command.yml`** (`issue_comment`): dispatches a fresh check run when the author or a maintainer comments `/check` on its own line, authorized and rate-limited. It dispatches rather than re-runs, so the check also reaches a PR whose own run GitHub parked.
+- **`community-package-sweep.yml`** (schedule, every 15 minutes): a fork PR from a first-time contributor parks its `pull_request` run in `action_required` until a maintainer approves it, which leaves the contributor with no fact-sheet and nothing for `/check` to re-run. The sweep dispatches a check for any open package-list PR whose run GitHub refused to start, once per head commit. A dispatched run starts in the base repo, so GitHub does not gate it, and it carries the same permissions and produces the same fact-sheet as the gated one. The sweep only dispatches: it never runs a contributor's code.
 - **`community-package-preview-command.yml`** (`issue_comment`): builds an on-demand site preview when a maintainer comments `/preview`. A fork's own `pull_request` build gets no secrets, so this maintainer-triggered run stands in for it: it materializes the fork's entry as data and reuses the `build-and-deploy-preview` action, never running the fork's code.
 - **`community-package-policy.yml`**: runs the toolchain's unit tests and `mypy --strict`, including the plane-separation test, as a required check.
 
@@ -785,9 +787,9 @@ Auto-merge is currently disabled (commented out in the workflow).
 
 **Trigger**: Daily at 3:00 PM UTC; also `workflow_dispatch` with a `dry-run` input
 
-Runs `scripts/ci/priority_digest.py`, which searches GitHub for open issues labelled `p0` or `p1` across `pulumi/registry` and `pulumi/terraform-to-pulumi-registry-pipeline`, then posts them to #team-iac-cloud, oldest first, with each issue's age and assignee.
+Runs `scripts/ci/priority_digest.py`, which searches GitHub for open issues labelled `p0` or `p1` across `pulumi/registry` and `pulumi/terraform-to-pulumi-registry-pipeline`, then posts them to Slack, oldest first, with each issue's age and assignee.
 
-Replaces a Metabase subscription that posted the same query as a screenshot. Uses `PULUMI_BOT_TOKEN` and `SLACK_WEBHOOK_URL` from ESC; no other configuration. `--dry-run` prints the message to the job log instead of posting.
+Replaces a Metabase subscription that posted the same query as a screenshot. Uses `PULUMI_BOT_TOKEN` and `SLACK_ACCESS_TOKEN` from ESC and posts via `chat.postMessage` to the channel ID in the `SLACK_TEAM_CHANNEL` repository variable; the bot must be a member of that channel. `--dry-run` prints the message to the job log instead of posting.
 
 #### `export-repo-secrets.yml` — Sync GitHub Secrets → ESC
 
@@ -1139,8 +1141,9 @@ The `export-repo-secrets.yml` workflow provides a manual escape hatch to sync Gi
 | `PULUMI_DOCS_STACK_NAME` | GitHub var | build | Pulumi docs stack reference |
 | `DEPLOYMENT_ENVIRONMENT` | GitHub var | build, cleanup | e.g., `testing` or `production` |
 | `NODE_OPTIONS` | Hardcoded | build, browser tests | `--max_old_space_size=8192` |
-| `SLACK_ACCESS_TOKEN` | ESC | link check, cleanup | Slack Web API token for posting messages |
-| `SLACK_WEBHOOK_URL` | ESC | notify jobs, priority digest | Slack incoming webhook for failure alerts and the daily digest |
+| `SLACK_ACCESS_TOKEN` | ESC | link check, cleanup, priority digest | Slack Web API token for posting messages |
+| `SLACK_WEBHOOK_URL` | ESC | notify jobs | Slack incoming webhook for failure alerts |
+| `SLACK_TEAM_CHANNEL` | GitHub var | priority digest | Slack channel ID the digest posts to |
 | `ASSET_BUNDLE_ID` | `build.sh` (computed) | Hugo templates | Unique suffix for CSS/JS cache-busting |
 | `CSS_BUNDLE` / `JS_BUNDLE` | `build.sh` (computed) | Hugo templates | Paths to versioned asset bundles |
 

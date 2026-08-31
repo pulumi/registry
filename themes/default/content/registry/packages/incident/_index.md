@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/incident-io/incident/6.5.0/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/incident-io/incident/6.9.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Incident Provider
@@ -46,3 +46,4 @@ config:
 
 - `apiKey` (String, Sensitive) API key for incident.io (<https://app.incident.io/settings/api-keys)>. Sourced from the `INCIDENT_API_KEY` environment variable, if set.
 - `endpoint` (String) URL of the incident.io API
+- `markImportedResourcesAsManaged` (Boolean) Whether importing a resource claims it as managed by Pulumi, which is what stops people editing it in the incident.io dashboard. Defaults to `true`. Pulumi runs imports during `plan` rather than apply, so this claim is a write to your account during an operation you may expect to be read-only: set this to `false` if plans must leave your account untouched. Creating or updating a resource claims it regardless of this setting, so a resource imported with this off is claimed by the first apply that changes it. It stays editable in the dashboard until then, and indefinitely if its configuration already matches the account and so never produces a change to apply.

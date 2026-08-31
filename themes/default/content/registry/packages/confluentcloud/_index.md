@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-confluentcloud/v2.79.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-confluentcloud/v2.81.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-confluentcloud/blob/v2.79.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-confluentcloud/blob/v2.81.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Confluent Provider
 meta_desc: Provides an overview on how to configure the Pulumi Confluent provider.
@@ -276,7 +276,6 @@ provider "confluent" {
 Complete examples (with Okta and Microsoft Azure Entra ID as identity provider) for using OAuth credentials with the Confluent Pulumi Provider can be found here.
 
 > **Note:** You still need `cloudApiKey` and `cloudApiSecret` to manage below Confluent Cloud resources/data-sources as they are not supported with OAuth credentials yet:
-* `confluentcloud.ApiKey` resource.
 * `confluentcloud.CatalogIntegration` resource and data-source.
 * `confluentcloud.CustomConnectorPlugin` resource.
 * `confluentcloud.FlinkArtifact` resource.

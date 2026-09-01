@@ -28,13 +28,16 @@ var PREFIX_REDIRECTS = [
 
     // Packages whose Install & config page was deleted because the Overview
     // beside it already carried every section, near-verbatim and fresher --
-    // see pulumi/registry#12225 (wholly duplicated) and #12226 (substantially
-    // duplicated; its unique content was verified obsolete before deletion --
-    // e.g. cloudflare and azuredevops each listed config options removed in a
-    // major-version rewrite, which the Overview correctly omits). The deleted pages were hand-written in
-    // pulumi/registry (no upstream docs/installation-configuration.md exists
-    // for any of these providers), so the URLs are gone for good rather than
-    // pending regeneration. Send them to the package Overview.
+    // see pulumi/registry#12225 (wholly duplicated), #12226 (substantially
+    // duplicated) and #12227 (the install list only). For the latter two the
+    // page's unique content was verified obsolete before deletion -- e.g.
+    // cloudflare and azuredevops each listed config options removed in a
+    // major-version rewrite, and minio, snowflake and newrelic each taught
+    // credentials the provider has since renamed, gated or retired, all of
+    // which the Overview correctly omits. The deleted pages were hand-written
+    // in pulumi/registry (no upstream docs/installation-configuration.md
+    // exists for any of these providers), so the URLs are gone for good rather
+    // than pending regeneration. Send them to the package Overview.
     //
     // Hugo `aliases:` would be the usual mechanism, but resourcedocsgen
     // rewrites each _index.md wholesale on every provider release, so an
@@ -46,7 +49,7 @@ var PREFIX_REDIRECTS = [
     // negotiation. Markdown clients keep their Accept header across the 301
     // and get the Overview's markdown from the redirect target.
     {
-        match: /^\/registry\/packages\/(aiven|alicloud|artifactory|auth0|azuredevops|cloudamqp|cloudflare|cloudinit|consul|dbtcloud|digitalocean|dnsimple|docker|kafka|linode|meraki|nomad|okta|postgresql|random|spotinst|tailscale|tls|vault|vsphere)\/installation-configuration(?:\.md|\/.*)?$/,
+        match: /^\/registry\/packages\/(aiven|alicloud|artifactory|auth0|azuredevops|cloudamqp|cloudflare|cloudinit|confluentcloud|consul|databricks|datadog|dbtcloud|digitalocean|dnsimple|docker|f5bigip|fastly|github|gitlab|hcloud|kafka|keycloak|kong|linode|mailgun|meraki|minio|mongodbatlas|mysql|newrelic|nomad|ns1|okta|opsgenie|pagerduty|postgresql|rabbitmq|rancher2|random|signalfx|snowflake|splunk|spotinst|tailscale|tls|vault|venafi|vsphere)\/installation-configuration(?:\.md|\/.*)?$/,
         replace: "/registry/packages/$1/",
     },
 ];

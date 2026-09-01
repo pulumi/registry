@@ -29,15 +29,17 @@ var PREFIX_REDIRECTS = [
     // Packages whose Install & config page was deleted because the Overview
     // beside it already carried every section, near-verbatim and fresher --
     // see pulumi/registry#12225 (wholly duplicated), #12226 (substantially
-    // duplicated) and #12227 (the install list only). For the latter two the
-    // page's unique content was verified obsolete before deletion -- e.g.
-    // cloudflare and azuredevops each listed config options removed in a
-    // major-version rewrite, and minio, snowflake and newrelic each taught
-    // credentials the provider has since renamed, gated or retired, all of
-    // which the Overview correctly omits. The deleted pages were hand-written
-    // in pulumi/registry (no upstream docs/installation-configuration.md
-    // exists for any of these providers), so the URLs are gone for good rather
-    // than pending regeneration. Send them to the package Overview.
+    // duplicated) and #12227 (the install list duplicated; the credential
+    // prose beside it is on the Overview already, usually in more detail).
+    // For the latter two, anything the Overview did not already carry was
+    // verified obsolete before deletion -- e.g. cloudflare and azuredevops
+    // each listed config options removed in a major-version rewrite, and
+    // minio, snowflake and newrelic each taught credentials the provider has
+    // since renamed, gated or retired, all of which the Overview correctly
+    // omits. The deleted pages were hand-written in pulumi/registry (no
+    // upstream docs/installation-configuration.md exists for any of these
+    // providers), so the URLs are gone for good rather than pending
+    // regeneration. Send them to the package Overview.
     //
     // Hugo `aliases:` would be the usual mechanism, but resourcedocsgen
     // rewrites each _index.md wholesale on every provider release, so an

@@ -2,7 +2,7 @@
 ---
 title: "listConfigurations"
 title_tag: "myedgeorder.listConfigurations"
-meta_desc: "Documentation for the myedgeorder.listConfigurations function with examples, input properties, output properties, and supporting types."
+meta_desc: "The list of configurations. API Version: 2020-12-01-preview."
 layout: api
 no_edit_this_page: true
 outputs:

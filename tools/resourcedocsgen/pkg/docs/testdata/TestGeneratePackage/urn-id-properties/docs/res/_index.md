@@ -2,7 +2,7 @@
 ---
 title: "Res"
 title_tag: "urnid.Res"
-meta_desc: "Documentation for the urnid.Res resource with examples, input properties, output properties, lookup functions, and supporting types."
+meta_desc: "It&#39;s fine to use urn and id as input properties"
 layout: api
 no_edit_this_page: true
 outputs:

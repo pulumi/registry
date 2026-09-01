@@ -2,7 +2,7 @@
 ---
 title: "funcWithAllOptionalInputs"
 title_tag: "example.funcWithAllOptionalInputs"
-meta_desc: "Documentation for the example.funcWithAllOptionalInputs function with examples, input properties, output properties, and supporting types."
+meta_desc: "Check codegen of functions with all optional inputs."
 layout: api
 no_edit_this_page: true
 outputs:

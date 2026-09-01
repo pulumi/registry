@@ -4,8 +4,6 @@ import re
 
 from models import DocFinding
 
-# Patterns that break on the registry render surfaces. See the review skill for why each one
-# matters; the citations there point at the PRs where they bit.
 _PATTERNS = [
     (re.compile(r'<img[^>]+src="(\.|/|[^hH])'), "relative-image"),
     (re.compile(r"<img[^>]+src='(\.|/|[^hH])"), "relative-image"),

@@ -8,7 +8,14 @@ from typing import Any
 from models import Entry
 
 PATH = Path("community-packages/package-list.json")
+PUBLISHER_NAMES_PATH = Path("tools/resourcedocsgen/pkg/publishers/publisher-names.json")
+ALLOWED_PATHS = (PATH, PUBLISHER_NAMES_PATH)
 EMPTY = '{"include":[]}'
+
+
+def files_outside_allowlist(changed: list[str]) -> list[str]:
+    allowed = {str(path) for path in ALLOWED_PATHS}
+    return [f for f in changed if f and f not in allowed]
 
 
 def _entries(document: Any) -> list[dict[str, str]]:

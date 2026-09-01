@@ -1,30 +1,18 @@
 #!/usr/bin/env python3
-"""Command-line entry point for the community package tooling. Each subcommand is one CI step:
-
-    check           verify the added entry and write a fact-sheet (runs on the PR)
-    fetch-pr        bring a dispatched PR's package list into the tree, before the token-free check
-    sweep           dispatch a check for PRs whose own check GitHub would not start
-    check-publish   verify the packages a publish PR writes (runs on every publish path)
-    preview         materialize a fork PR's entry so its site preview can be built
-    report          post the fact-sheet as a sticky PR comment
-    check-command   handle a /check comment
-    preview-command handle a /preview comment
-    preview-failed  post a build-failure comment for a /preview run
-
-The logic lives in the sibling modules (verify_entry, resourcedocsgen, fact_sheet, comment_commands, ...).
-PyYAML is the only third-party dependency.
-"""
 from __future__ import annotations
 
 import argparse
+import json
 import os
 import subprocess
 import sys
+import traceback
 from pathlib import Path
 
 import comment_commands
 import fact_sheet
 import github_api
+import models
 import package_list
 import resourcedocsgen
 import verify_entry
@@ -37,29 +25,12 @@ def _write_step_summary(text: str) -> None:
             fh.write(text + "\n")
 
 
-# The publisher allowlist is hand-maintained Go source embedded into resourcedocsgen, not
-# generated after merge, so a new publisher's entry has to ride along with the onboarding PR.
-PUBLISHER_NAMES_PATH = Path("tools/resourcedocsgen/pkg/publishers/publisher-names.json")
-ALLOWED_PATHS = {str(package_list.PATH), str(PUBLISHER_NAMES_PATH)}
-
-
-def _files_outside_allowlist(changed: list[str]) -> list[str]:
-    return [f for f in changed if f and f not in ALLOWED_PATHS]
-
-
-def _changed_files(base_ref: str, listed_in: str | None) -> list[str]:
-    if listed_in:
-        return Path(listed_in).read_text().splitlines()
-    return subprocess.run(["git", "diff", "--name-only", f"{base_ref}...HEAD"],
-                          capture_output=True, text=True).stdout.splitlines()
-
-
 def _rejection_sheet(offending: list[str]) -> str:
     lines = ["## ❌ This PR changes files outside the community package allowlist", "",
              "**Not ready.** A community package PR may only touch the package list "
              f"(`{package_list.PATH}`) and, when a new publisher needs onboarding, the publisher "
-             f"allowlist (`{PUBLISHER_NAMES_PATH}`). The following files are generated and committed "
-             "automatically after merge, so remove them and push again:", ""]
+             f"allowlist (`{package_list.PUBLISHER_NAMES_PATH}`). The following files are generated and "
+             "committed automatically after merge, so remove them and push again:", ""]
     lines += [f"- `{f}`" for f in offending]
     return "\n".join(lines)
 
@@ -76,9 +47,25 @@ def _write_sheet(out: Path, name: str, sheet: str) -> None:
     print(sheet)
 
 
+def _crash_sheet(failure: BaseException) -> str:
+    return ("## ❌ The check could not run\n\n**Not ready.** The check itself failed before it "
+            "could reach a verdict, so this package is unverified. The fault is in the check, "
+            f"not in the package.\n\n```\n{failure}\n```")
+
+
 def run_check(args: argparse.Namespace) -> int:
+    try:
+        return _check(args)
+    except Exception as failure:
+        _write_sheet(Path(args.out), "000.factsheet.md", _crash_sheet(failure))
+        traceback.print_exc()
+        return 2
+
+
+def _check(args: argparse.Namespace) -> int:
     out = Path(args.out)
-    offending = _files_outside_allowlist(_changed_files(args.diff, args.changed_files))
+    offending = package_list.files_outside_allowlist(
+        Path(args.changed_files).read_text().splitlines())
     if offending:
         _write_sheet(out, "000.factsheet.md", _rejection_sheet(offending))
         return 1
@@ -97,12 +84,10 @@ def run_check(args: argparse.Namespace) -> int:
 
 
 def run_preview(args: argparse.Namespace) -> int:
-    # Diff against the PR base by SHA, not the on-disk file: a native pull_request run is checked
-    # out at the head, where the on-disk list already contains the new entry.
     pull = github_api.pull_request(args.pr)
     base = github_api.file_content_at(github_api.repo(), str(package_list.PATH), pull["base"]["sha"])
     head = github_api.file_content_at(github_api.repo(), str(package_list.PATH), pull["head"]["sha"])
-    package_list.PATH.write_text(head)  # bring the entry into the tree so the site build sees it
+    package_list.PATH.write_text(head)
     entries = package_list.added_entries(base, head)
     if not entries:
         print("no added entries to preview")
@@ -113,15 +98,27 @@ def run_preview(args: argparse.Namespace) -> int:
         if tag is None:
             print(f"no published release for {entry.repoSlug}; skipping its preview metadata")
             continue
-        resourcedocsgen.generate_metadata(entry.repoSlug, entry.schemaFile, tag)
+        resourcedocsgen.generate_metadata(entry.repoSlug, entry.schemaFile, tag,
+                                          _schema_name(entry, tag))
     return 0
 
 
+def _schema_name(entry: models.Entry, tag: str) -> str:
+    schema = github_api.raw_file(entry.repoSlug, tag, entry.schemaFile)
+    return models.provider_name(entry.repoSlug, json.loads(schema) if schema else {})
+
+
 def run_fetch_pr(args: argparse.Namespace) -> int:
-    pull = github_api.pull_request(args.pr)
-    head = github_api.file_content_at(github_api.repo(), str(package_list.PATH), str(pull["head"]["sha"]))
-    package_list.PATH.write_text(head)
-    Path(args.changed_files).write_text("\n".join(github_api.pull_request_files(args.pr)) + "\n")
+    out = Path(args.out)
+    changed = github_api.pull_request_files(args.pr)
+    Path(args.changed_files).write_text("\n".join(changed) + "\n")
+    offending = package_list.files_outside_allowlist(changed)
+    if offending:
+        _write_sheet(out, "000.factsheet.md", _rejection_sheet(offending))
+        return 1
+    head = str(github_api.pull_request(args.pr)["head"]["sha"])
+    for path in package_list.ALLOWED_PATHS:
+        path.write_text(github_api.file_content_at(github_api.repo(), str(path), head))
     return 0
 
 
@@ -136,11 +133,6 @@ def _changed_package_yamls(base_ref: str) -> list[Path]:
 
 
 def run_check_publish(args: argparse.Namespace) -> int:
-    """Check the packages a publish PR writes, whatever opened it.
-
-    Every publish path ends in a PR that writes a package YAML, so checking the PR covers
-    the dispatches and the nightly bump alike without touching either workflow.
-    """
     out = Path(args.out)
     changed = _changed_package_yamls(args.diff)
     if not changed:
@@ -166,13 +158,14 @@ def main(argv: list[str]) -> int:
 
     check = sub.add_parser("check")
     check.add_argument("--diff", metavar="BASEREF", required=True)
-    check.add_argument("--changed-files", metavar="PATH")
+    check.add_argument("--changed-files", metavar="PATH", required=True)
     check.add_argument("--out", default=".")
     check.set_defaults(run=run_check)
 
     fetch_pr = sub.add_parser("fetch-pr")
     fetch_pr.add_argument("--pr", type=int, required=True)
     fetch_pr.add_argument("--changed-files", metavar="PATH", required=True)
+    fetch_pr.add_argument("--out", default=".")
     fetch_pr.set_defaults(run=run_fetch_pr)
 
     check_publish = sub.add_parser("check-publish")
@@ -188,6 +181,7 @@ def main(argv: list[str]) -> int:
     sub.add_parser("sweep").set_defaults(run=lambda _: comment_commands.sweep())
     sub.add_parser("check-command").set_defaults(run=lambda _: comment_commands.check_command())
     sub.add_parser("preview-command").set_defaults(run=lambda _: comment_commands.preview_command())
+    sub.add_parser("sweep-failed").set_defaults(run=lambda _: comment_commands.sweep_failed())
     sub.add_parser("preview-failed").set_defaults(run=lambda _: comment_commands.preview_failed())
 
     args = parser.parse_args(argv)

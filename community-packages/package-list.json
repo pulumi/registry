@@ -405,6 +405,10 @@
       "schemaFile": "provider/cmd/pulumi-resource-biznetgio/schema.json"
     },
     {
+      "repoSlug": "matthiashamacher/pulumi-ohdear",
+      "schemaFile": "schema.json"
+    },
+    {
       "repoSlug": "jschady/pulumi-filescom",
       "schemaFile": "provider/cmd/pulumi-resource-filescom/schema.json"
     }

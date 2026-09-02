@@ -4,6 +4,8 @@ category: Infrastructure
 component: false
 description: A Pulumi package for creating and managing Control Plane (cpln) resources.
 featured: false
+keywords:
+- cpln
 logo_url: https://raw.githubusercontent.com/pulumiverse/pulumi-cpln/main/docs/logo.png
 name: cpln
 native: false

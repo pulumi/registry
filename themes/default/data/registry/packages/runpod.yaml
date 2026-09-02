@@ -5,6 +5,11 @@ component: false
 description: The Runpod Pulumi provider provides resources to interact with Runpod's
   native APIs.
 featured: false
+keywords:
+- runpod
+- gpus
+- ml
+- ai
 logo_url: https://avatars.githubusercontent.com/u/95939477?s=200&v=4
 name: runpod
 native: true

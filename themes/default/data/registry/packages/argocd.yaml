@@ -4,6 +4,8 @@ category: Cloud
 component: false
 description: A Pulumi package for creating and managing Argo CD resources.
 featured: false
+keywords:
+- argocd
 logo_url: https://argo-cd.readthedocs.io/en/stable/assets/logo.png
 name: argocd
 native: false

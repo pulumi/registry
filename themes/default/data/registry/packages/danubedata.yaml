@@ -4,6 +4,8 @@ category: Cloud
 component: false
 description: A Pulumi provider for managing DanubeData cloud infrastructure resources.
 featured: false
+keywords:
+- danubedata
 logo_url: ""
 name: danubedata
 native: true

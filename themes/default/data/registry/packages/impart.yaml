@@ -4,6 +4,8 @@ category: Infrastructure
 component: false
 description: A Pulumi package for creating and managing Impart resources.
 featured: false
+keywords:
+- impart
 logo_url: https://console.impartsecurity.net/logomark-brand-background.png
 name: impart
 native: false

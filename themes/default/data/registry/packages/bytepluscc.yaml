@@ -4,6 +4,9 @@ category: Cloud
 component: false
 description: A Pulumi package to safely use byteplus Resource in Pulumi programs.
 featured: false
+keywords:
+- byteplus
+- bytepluscc
 logo_url: https://avatars.githubusercontent.com/u/67365215
 name: bytepluscc
 native: false

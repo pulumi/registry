@@ -4,6 +4,8 @@ category: Cloud
 component: false
 description: A Pulumi package for creating and managing CloudAMQP resources.
 featured: false
+keywords:
+- cloudamqp
 logo_url: ""
 name: cloudamqp
 native: false

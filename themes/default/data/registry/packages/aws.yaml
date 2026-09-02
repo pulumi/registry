@@ -5,6 +5,8 @@ component: false
 description: A Pulumi package for creating and managing Amazon Web Services (AWS)
   cloud resources.
 featured: true
+keywords:
+- aws
 logo_url: ""
 name: aws
 native: false

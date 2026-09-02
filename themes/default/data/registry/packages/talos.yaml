@@ -4,6 +4,8 @@ category: Infrastructure
 component: false
 description: A Pulumi package for creating and managing Talos Linux machines and clusters.
 featured: false
+keywords:
+- talos
 logo_url: https://raw.githubusercontent.com/pulumiverse/pulumi-talos/refs/heads/main/assets/talos-logo.png
 name: talos
 native: false

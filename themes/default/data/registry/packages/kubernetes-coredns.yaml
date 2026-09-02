@@ -4,6 +4,9 @@ category: Infrastructure
 component: true
 description: Strongly-typed CoreDNS installation
 featured: false
+keywords:
+- kubernetes
+- coredns
 logo_url: ""
 name: kubernetes-coredns
 native: false

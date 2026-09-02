@@ -4,6 +4,9 @@ category: Cloud
 component: false
 description: A Pulumi package for creating and managing Scaleway cloud resources.
 featured: false
+keywords:
+- scaleway
+- pulumiverse
 logo_url: https://raw.githubusercontent.com/pulumiverse/pulumi-scaleway/master/assets/scaleway.png
 name: scaleway
 native: false

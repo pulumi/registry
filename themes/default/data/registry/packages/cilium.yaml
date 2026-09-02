@@ -4,6 +4,8 @@ category: Network
 component: false
 description: A Pulumi package for creating and managing Cilium resources
 featured: false
+keywords:
+- cilium
 logo_url: https://raw.githubusercontent.com/littlejo/pulumi-cilium/main/docs/cilium.png
 name: cilium
 native: false

@@ -4,6 +4,8 @@ category: Utility
 component: false
 description: A Pulumi package for creating and managing Time resources
 featured: false
+keywords:
+- time
 logo_url: https://raw.githubusercontent.com/pulumiverse/pulumi-time/main/docs/clock-svgrepo-com.png
 name: time
 native: false

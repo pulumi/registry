@@ -4,6 +4,8 @@ category: Cloud
 component: false
 description: A Pulumi package for creating and managing Tailscale cloud resources.
 featured: false
+keywords:
+- tailscale
 logo_url: ""
 name: tailscale
 native: false

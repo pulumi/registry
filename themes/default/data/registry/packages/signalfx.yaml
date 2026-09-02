@@ -4,6 +4,8 @@ category: Monitoring
 component: false
 description: A Pulumi package for creating and managing SignalFx resources.
 featured: false
+keywords:
+- signalfx
 logo_url: ""
 name: signalfx
 native: false

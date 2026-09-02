@@ -4,6 +4,10 @@ category: Cloud
 component: false
 description: Chronosphere Pulumi Provider
 featured: false
+keywords:
+- chronosphere
+- observability
+- prometheus
 logo_url: ""
 name: chronosphere
 native: false

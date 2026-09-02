@@ -4,6 +4,8 @@ category: Infrastructure
 component: false
 description: A Pulumi package for creating and managing CrowdStrike resources
 featured: false
+keywords:
+- crowdstrike
 logo_url: https://raw.githubusercontent.com/crowdstrike/pulumi-crowdstrike/main/docs/crowdstrike.png
 name: crowdstrike
 native: false

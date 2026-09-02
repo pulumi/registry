@@ -4,6 +4,8 @@ category: Cloud
 component: false
 description: A Pulumi package for creating and managing Sentry resources.
 featured: false
+keywords:
+- sentry
 logo_url: https://raw.githubusercontent.com/pulumiverse/pulumi-sentry/main/sentry.svg
 name: sentry
 native: false

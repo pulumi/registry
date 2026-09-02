@@ -4,6 +4,8 @@ category: Monitoring
 component: false
 description: A Pulumi package for creating and managing Checkly monitoring resources.
 featured: false
+keywords:
+- checkly
 logo_url: https://raw.githubusercontent.com/checkly/pulumi-checkly/main/assets/checkly.png
 name: checkly
 native: false

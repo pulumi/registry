@@ -4,6 +4,8 @@ category: Cloud
 component: false
 description: A Pulumi package for creating and managing OVH resources.
 featured: false
+keywords:
+- ovh
 logo_url: ""
 name: ovh
 native: false

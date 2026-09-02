@@ -4,6 +4,8 @@ category: Cloud
 component: false
 description: A Pulumi package for creating and managing OpenStack cloud resources.
 featured: false
+keywords:
+- openstack
 logo_url: ""
 name: openstack
 native: false

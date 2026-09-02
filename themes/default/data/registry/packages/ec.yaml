@@ -4,6 +4,12 @@ category: Cloud
 component: false
 description: A Pulumi package for creating and managing ElasticCloud resources.
 featured: false
+keywords:
+- ec
+- elasticsearch
+- es
+- elastic
+- elasticcloud
 logo_url: ""
 name: ec
 native: false

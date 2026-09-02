@@ -4,6 +4,8 @@ category: Infrastructure
 component: false
 description: A Pulumi package for creating and managing databricks cloud resources.
 featured: false
+keywords:
+- databricks
 logo_url: ""
 name: databricks
 native: false

@@ -4,6 +4,8 @@ category: Infrastructure
 component: false
 description: A Pulumi package for creating and managing Azure DevOps.
 featured: false
+keywords:
+- azuredevops
 logo_url: ""
 name: azuredevops
 native: false

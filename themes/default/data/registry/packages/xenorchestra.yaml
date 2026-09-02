@@ -4,6 +4,8 @@ category: Cloud
 component: false
 description: A Pulumi package for creating and managing Xen Orchestra cloud resources.
 featured: false
+keywords:
+- xenorchestra
 logo_url: https://raw.githubusercontent.com/vatesfr/pulumi-xenorchestra/8c71624229d953d4fb7d4843d5483e53e21b9459/logo_xo.png
 name: xenorchestra
 native: false

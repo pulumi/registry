@@ -4,6 +4,8 @@ category: Cloud
 component: false
 description: A Pulumi package for creating and managing stackit resources.
 featured: false
+keywords:
+- stackit
 logo_url: https://raw.githubusercontent.com/stackitcloud/pulumi-stackit/main/.github/images/stackit-logo.svg
 name: stackit
 native: false

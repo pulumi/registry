@@ -8,6 +8,35 @@ description: Pulumi components for provisioning Netskope Private Access Publishe
   Equinix Metal, Outscale, OpenTelekomCloud, TencentCloud, Yandex, and experimental
   Hyper-V.
 featured: false
+keywords:
+- netskope
+- npa
+- publisher
+- aws
+- azure
+- gcp
+- kubernetes
+- vsphere
+- esxi
+- hcloud
+- nutanix
+- openstack
+- ovh
+- scaleway
+- oci
+- alicloud
+- proxmoxve
+- proxmox
+- digitalocean
+- vultr
+- exoscale
+- upcloud
+- stackit
+- equinix
+- outscale
+- opentelekomcloud
+- tencentcloud
+- yandex
 logo_url: https://raw.githubusercontent.com/johnneerdael/pulumi-netskope-publisher/main/site/source/images/netskope-logo.png
 name: netskope-publisher
 native: false

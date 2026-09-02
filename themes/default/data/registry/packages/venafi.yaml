@@ -4,6 +4,8 @@ category: Infrastructure
 component: false
 description: A Pulumi package for creating and managing venafi cloud resources.
 featured: false
+keywords:
+- venafi
 logo_url: ""
 name: venafi
 native: false

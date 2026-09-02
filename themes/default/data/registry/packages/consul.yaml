@@ -4,6 +4,8 @@ category: Infrastructure
 component: false
 description: A Pulumi package for creating and managing consul resources.
 featured: false
+keywords:
+- consul
 logo_url: ""
 name: consul
 native: false

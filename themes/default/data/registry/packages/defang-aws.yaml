@@ -5,6 +5,13 @@ component: false
 description: Deploy Compose projects to AWS with Pulumi. Part of the Defang multi-cloud
   provider family — also available for GCP (defang-gcp) and Azure (defang-azure).
 featured: false
+keywords:
+- defang
+- docker
+- cloud
+- aws
+- ecs
+- fargate
 logo_url: https://raw.githubusercontent.com/DefangLabs/pulumi-defang/refs/heads/main/docs/logo.png
 name: defang-aws
 native: true

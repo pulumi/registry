@@ -4,6 +4,8 @@ category: Infrastructure
 component: false
 description: A Pulumi package for creating and managing Kong resources.
 featured: false
+keywords:
+- kong
 logo_url: ""
 name: kong
 native: false

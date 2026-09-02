@@ -4,6 +4,8 @@ category: Cloud
 component: false
 description: A Pulumi package for creating and managing upstash cloud resources.
 featured: false
+keywords:
+- upstash
 logo_url: https://upstash.com/static/logo/logo-light.svg
 name: upstash
 native: false

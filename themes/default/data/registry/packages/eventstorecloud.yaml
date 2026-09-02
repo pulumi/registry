@@ -4,6 +4,8 @@ category: Cloud
 component: false
 description: A Pulumi package for creating and managing Event Store Cloud resources.
 featured: false
+keywords:
+- eventstorecloud
 logo_url: ""
 name: eventstorecloud
 native: false

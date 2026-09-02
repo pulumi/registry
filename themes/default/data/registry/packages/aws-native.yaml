@@ -5,6 +5,11 @@ component: false
 description: A native Pulumi package for creating and managing Amazon Web Services
   (AWS) resources.
 featured: false
+keywords:
+- aws
+- aws-native
+- cloud control
+- ccapi
 logo_url: ""
 name: aws-native
 native: true

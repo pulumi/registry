@@ -4,6 +4,8 @@ category: Infrastructure
 component: false
 description: A Pulumi package for creating and managing okta resources.
 featured: false
+keywords:
+- okta
 logo_url: ""
 name: okta
 native: false

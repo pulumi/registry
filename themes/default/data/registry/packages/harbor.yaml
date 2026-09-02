@@ -4,6 +4,8 @@ category: Utility
 component: false
 description: A Pulumi package for creating and managing Harbor resources.
 featured: false
+keywords:
+- harbor
 logo_url: ""
 name: harbor
 native: false

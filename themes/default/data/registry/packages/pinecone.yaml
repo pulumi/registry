@@ -4,6 +4,8 @@ category: Utility
 component: false
 description: A Pulumi package for creating and managing Pinecone resources.
 featured: false
+keywords:
+- pinecone
 logo_url: ""
 name: pinecone
 native: true

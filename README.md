@@ -4,41 +4,13 @@
 
 ## Adding a Package
 
-To add a community package, open a pull request that adds a single entry to [`community-packages/package-list.json`](https://github.com/pulumi/registry/blob/master/community-packages/package-list.json) (steps below). This is the path for a provider published as a [Pulumi Package](https://www.pulumi.com/docs/guides/pulumi-packages/) with a committed `schema.json`: Native, Component, or a statically bridged Terraform provider (one you have built into your own provider repo). Automated checks then post a fact-sheet on your PR and a Pulumi maintainer approves it; you do not need to file an issue first.
+Adding a community package is one pull request that adds a single entry to [`community-packages/package-list.json`](https://github.com/pulumi/registry/blob/master/community-packages/package-list.json). Your provider repo supplies a `docs/_index.md` and a `v`-prefixed release; the docs and metadata are generated and published for you after merge, so you never commit generated files here. Automated checks post a fact-sheet on the PR, and a Pulumi maintainer reviews it. You do not need to file an issue first.
 
-A **dynamically bridged** Terraform provider is different: if you consume it with `pulumi package add terraform-provider <name>` and there is no provider repo or committed schema, it cannot be added by pull request, because those are listed through a separate Pulumi pipeline. Open a ["New Package"](https://github.com/pulumi/registry/issues/new?template=new-package.yml) issue to request one. Use the same issue to request a package you don't maintain, or to discuss before opening a PR.
+**[Adding a new package](./docs/adding-a-new-package.md) has the complete instructions** — what the page must contain, the User-Agent your provider should set, how to re-run the checks, and the checklist a maintainer works through before merging. Read it before opening a PR.
+
+One exception: a **dynamically bridged** Terraform provider, consumed with `pulumi package add terraform-provider <name>` and having no provider repo or committed schema, cannot be added by pull request. Open a ["New Package"](https://github.com/pulumi/registry/issues/new?template=new-package.yml) issue instead.
 
 For assistance, please reach out on the [Pulumi community Slack](https://slack.pulumi.com/) or get in touch with us via this [contact form](https://pulumi.com/contact/?form=registry).
-
-### Adding a Pulumi Package that you have authored
-
-We’re always eager to expand that index with new [Pulumi Packages](https://www.pulumi.com/docs/guides/pulumi-packages/). To get started, use our [guide on authoring a Pulumi Package](https://www.pulumi.com/docs/guides/pulumi-packages/how-to-author/) of your own.
-
-To publish a community-maintained package on the Pulumi Registry as a community member:
-
-1. Ensure your provider repo has the following files:
-    * `docs/_index.md`, which should contain a summary of the provider's purpose (required) along with a code sample in each language (required). This file will render as the index page for your provider ([rendered example](https://www.pulumi.com/registry/packages/aiven/), [its source](https://github.com/pulumi/pulumi-aiven/blob/master/docs/_index.md)).
-    * `docs/installation-configuration.md`, which should contain links to published SDKs in (Go, Typescript, C#, Python; required) along with instructions for configuring the provider (e.g., required credentials and/or environment variables). This file will render as the Installation & Configuration page for your provider ([rendered example](https://www.pulumi.com/registry/packages/aws/installation-configuration/), [its source](https://github.com/pulumi/pulumi-aws/blob/master/docs/installation-configuration.md)).
-
-    Both files must **begin** with YAML front matter, before any other text. Doc generation rejects a file that does not, and your package will not publish. Use exactly these three keys, and keep `layout: package`:
-
-    ```markdown
-    ---
-    title: Example Provider
-    meta_desc: Provides an overview of the Example provider for Pulumi.
-    layout: package
-    ---
-
-    ## Overview
-
-    What this provider manages, in a paragraph or two.
-    ```
-1. Create a release of your provider in GitHub with a "v" + [Semver 2.0](https://semver.org) compliant tag (`vX.Y.Z`).
-1. Open a pull request that adds one entry to [`community-packages/package-list.json`](https://github.com/pulumi/registry/blob/master/community-packages/package-list.json). That single entry is the whole registration: your docs and metadata are generated and published for you after merge, so do not commit generated files here. The one exception is a brand-new publisher, whose display name must be added to [`publisher-names.json`](https://github.com/pulumi/registry/blob/master/tools/resourcedocsgen/pkg/publishers/publisher-names.json) in the same PR, because publishing fails without it. Automated checks then post a fact-sheet on your PR; if anything is flagged, fix it in your provider repo and comment `/check` to re-run (the checks read your live upstream, so you do not push here to re-validate). A maintainer can comment `/preview` to build a live preview of your package's pages, then reviews the fact-sheet and approves. Nothing merges automatically.
-
-## Internal Process
-
-Pulumi maintainers should follow the [adding a new package guide](./docs/adding-a-new-package.md).
 
 ## About this repository
 

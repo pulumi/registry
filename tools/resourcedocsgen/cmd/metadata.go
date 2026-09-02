@@ -255,16 +255,16 @@ func packageMetadataFromGitHubCmd(client HTTPDoer, metadataDir, packageDocsDir *
 			packageDocsDir = "themes/default/content/registry/packages/" + mainSpec.Name
 		}
 
-		remoteFiles := []struct {
-			name     string
-			required bool
-		}{
-			{"_index.md", true},
-			{"installation-configuration.md", false},
-		}
+		// _index.md is the only page a package is required to have;
+		// installation-configuration.md is an optional split of its
+		// installation and configuration content. Neither is fetched
+		// unconditionally here: a page the provider does not publish is simply
+		// skipped below. The _index.md requirement is enforced against the
+		// committed content by scripts/ci/validate-packages.sh.
+		remoteFiles := []string{"_index.md", "installation-configuration.md"}
 
 		for _, remoteFile := range remoteFiles {
-			url := "https://raw.githubusercontent.com/" + repoSlug.String() + "/" + mainSpec.Version + "/docs/" + remoteFile.name
+			url := "https://raw.githubusercontent.com/" + repoSlug.String() + "/" + mainSpec.Version + "/docs/" + remoteFile
 			content, err := readRemoteFile(client, url, repoSlug.owner)
 			if err != nil {
 				return err
@@ -292,8 +292,8 @@ func packageMetadataFromGitHubCmd(client HTTPDoer, metadataDir, packageDocsDir *
 					url, strings.Split(string(content), "\n")[0])
 			}
 
-			if err := pkg.EmitFile(packageDocsDir, remoteFile.name, content); err != nil {
-				return errors.Wrapf(err, "writing %s file", remoteFile.name)
+			if err := pkg.EmitFile(packageDocsDir, remoteFile, content); err != nil {
+				return errors.Wrapf(err, "writing %s file", remoteFile)
 			}
 		}
 

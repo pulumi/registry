@@ -754,8 +754,7 @@ Used by first-party Pulumi provider repos to trigger documentation regeneration 
 | `resource-provider` | GitHub-hosted provider (Pulumi repo) | `project-shortname`, `ref` (version tag) |
 | `push-provider-update` | Opaque provider (no assumed GitHub structure) | `project-shortname`, `schema-url`, `index-url` |
 
-For `resource-provider`: Calls `resourcedocsgen metadata from-github` → creates a PR.
-For `push-provider-update`: Downloads schema from `schema-url`, extracts version from schema, calls `resourcedocsgen metadata from-urls` → creates a PR.
+For `resource-provider`: Calls `resourcedocsgen metadata from-github` → creates a PR. For `push-provider-update`: Downloads schema from `schema-url`, extracts version from schema, calls `resourcedocsgen metadata from-urls` → creates a PR.
 
 #### `bucket-cleanup.yml` — Remove Stale S3 Preview Buckets
 
@@ -893,45 +892,25 @@ Daily bucket-cleanup.yml (3:00 PM UTC)
 
 ### 6.4 The Pinned Preview Comment
 
-Each preview build maintains a **single** comment on the PR rather than adding one per commit.
-The comment is written by `post_preview_comment` in `scripts/ci/sync.sh`, and carries:
+Each preview build maintains a **single** comment on the PR rather than adding one per commit. The comment is written by `post_preview_comment` in `scripts/ci/sync.sh`, and carries:
 
 1. The preview URL for the current commit (`<bucket-website>/registry/`).
-2. A **Changed pages** list — direct links to the pages the PR changed, so a reviewer lands on
-   them instead of navigating the preview by hand.
+2. A **Changed pages** list — direct links to the pages the PR changed, so a reviewer lands on them instead of navigating the preview by hand.
 
-**How it stays pinned**: the body opens with the HTML marker `<!-- registry-preview-link -->`.
-`upsert_github_pr_comment` (`scripts/ci/common.sh`) pages through the PR's comments looking for
-that marker on a comment authored by `github-actions[bot]` or `pulumi-bot`, then `PATCH`es that
-comment; it only `POST`s a new one when no match exists. Matching on the author as well as the
-marker means a contributor can't redirect the pinned comment by quoting the marker. The
-comment list is paginated deliberately — GitHub returns 30 comments per page by default, and an
-unpaginated search would miss the marker on a long PR and post a duplicate on every build.
+**How it stays pinned**: the body opens with the HTML marker `<!-- registry-preview-link -->`. `upsert_github_pr_comment` (`scripts/ci/common.sh`) pages through the PR's comments looking for that marker on a comment authored by `github-actions[bot]` or `pulumi-bot`, then `PATCH`es that comment; it only `POST`s a new one when no match exists. Matching on the author as well as the marker means a contributor can't redirect the pinned comment by quoting the marker. The comment list is paginated deliberately — GitHub returns 30 comments per page by default, and an unpaginated search would miss the marker on a long PR and post a duplicate on every build.
 
-**How changed pages are resolved**: `changed_pages_section` (`scripts/ci/common.sh`) reads the
-changed-file list from the GitHub API (`/pulls/<n>/files`), not a local `git diff`, so it works
-identically for the `pull_request` build and the maintainer-triggered `/preview` command. It
-collects every API page before mapping — `changed_paths_to_urls` de-duplicates only within a
-single invocation, so mapping page by page would double-list a package whose YAML and landing
-page straddle the 100-file page boundary. Each path is mapped under two rules:
+**How changed pages are resolved**: `changed_pages_section` (`scripts/ci/common.sh`) reads the changed-file list from the GitHub API (`/pulls/<n>/files`), not a local `git diff`, so it works identically for the `pull_request` build and the maintainer-triggered `/preview` command. It collects every API page before mapping — `changed_paths_to_urls` de-duplicates only within a single invocation, so mapping page by page would double-list a package whose YAML and landing page straddle the 100-file page boundary. Each path is mapped under two rules:
 
 | Changed path | URL |
 |---|---|
 | `themes/default/content/**/*.md` | Hugo's own rules (`content_path_to_url`) |
 | `themes/default/data/registry/packages/<pkg>.yaml` | `/registry/packages/<pkg>/` |
 
-The YAML rule is the one that matters most here: the generated `api-docs/` content is
-gitignored and never appears in a PR diff, so without it the list would be empty on most
-registry PRs. Results are de-duplicated, then filtered to URLs that actually rendered
-(`public/<url>index.html` exists), which drops removed files and `url:`/alias overrides rather
-than linking them as dead URLs. The list is capped at 50 entries with an "…and N more" line.
+The YAML rule is the one that matters most here: the generated `api-docs/` content is gitignored and never appears in a PR diff, so without it the list would be empty on most registry PRs. Results are de-duplicated, then filtered to URLs that actually rendered (`public/<url>index.html` exists), which drops removed files and `url:`/alias overrides rather than linking them as dead URLs. The list is capped at 50 entries with an "…and N more" line.
 
-The whole block is reporting, not deployment: it is invoked as `post_preview_comment || log …`
-so a GitHub API hiccup can never fail an otherwise-good build. Conversely, because `sync.sh`
-runs under `set -o errexit` after the Cypress smoke test, a **failed** build posts nothing.
+The whole block is reporting, not deployment: it is invoked as `post_preview_comment || log …` so a GitHub API hiccup can never fail an otherwise-good build. Conversely, because `sync.sh` runs under `set -o errexit` after the Cypress smoke test, a **failed** build posts nothing.
 
-`make test-preview-comment` (`scripts/ci/test-preview-comment.sh`) covers the mapping, the
-de-duplication, and the existence gate offline; it runs in the `Lint Scripts` PR job.
+`make test-preview-comment` (`scripts/ci/test-preview-comment.sh`) covers the mapping, the de-duplication, and the existence gate offline; it runs in the `Lint Scripts` PR job.
 
 ### 6.5 Custom Redirects
 
@@ -963,7 +942,7 @@ de-duplication, and the existence gate offline; it runs in the `Lint Scripts` PR
    - Skips packages whose name matches `aws-v<N>` — these are legacy versioned packages.
    - Calls the Pulumi registry API (`https://api.pulumi.com/api/registry/packages/{source}/{publisher}/{name}/versions/{version}`) to check if this version already exists.
    - If it does not exist (404): downloads the schema from the provider repo or `schema_file_url`, corrects the version field if needed, and calls `pulumi package publish`.
-   - If `--installation-configuration` exists (`_installation-configuration.md`), passes it to `pulumi package publish`.
+   - If the package has an `installation-configuration.md` page (it is optional — only `_index.md` is required), passes it to `pulumi package publish` as `--installation-configuration`.
 3. In `--dry-run` mode: prints the `pulumi package publish` command instead of running it.
 
 **Required environment variable**: `PULUMI_ACCESS_TOKEN`
@@ -1037,22 +1016,13 @@ make lint-dark-logos
 # Runs: python3 scripts/generate-dark-logos.py --check
 ```
 
-The dark-mode package marks under `themes/default/assets/fingerprinted/logos/pkg/`
-(`<name>-on-dark.svg`) are generated from their light siblings, so adding or
-replacing a local logo leaves them stale. The check is deterministic, offline and
-stdlib-only, and runs in PR CI as the `lint-dark-logos` job. Regenerate with:
+The dark-mode package marks under `themes/default/assets/fingerprinted/logos/pkg/` (`<name>-on-dark.svg`) are generated from their light siblings, so adding or replacing a local logo leaves them stale. The check is deterministic, offline and stdlib-only, and runs in PR CI as the `lint-dark-logos` job. Regenerate with:
 
 ```bash
 python3 scripts/generate-dark-logos.py
 ```
 
-Its sibling, `scripts/classify-external-logos.py`, decides which packages with a
-third-party `logo_url` need a light chip in dark mode and writes
-`themes/default/data/registry/external_logo_treatment.yaml`. It downloads every
-external logo (and shells out to macOS `sips` for non-PNG rasters), so it is **not**
-wired into CI — run it by hand after adding a package with a `logo_url`, or when a
-vendor changes their logo. Its `--check` mode exits 2, rather than claiming the file
-is stale, if any logo could not be measured.
+Its sibling, `scripts/classify-external-logos.py`, decides which packages with a third-party `logo_url` need a light chip in dark mode and writes `themes/default/data/registry/external_logo_treatment.yaml`. It downloads every external logo (and shells out to macOS `sips` for non-PNG rasters), so it is **not** wired into CI — run it by hand after adding a package with a `logo_url`, or when a vendor changes their logo. Its `--check` mode exits 2, rather than claiming the file is stale, if any logo could not be measured.
 
 ### 8.6 Provider API Docs Tests
 
@@ -1106,8 +1076,7 @@ Runs every Monday at 3:00 PM UTC in CI.
 
 ### 9.1 Pulumi ESC
 
-**Organization**: `pulumi`
-**Environment**: `github-secrets/pulumi-registry`
+**Organization**: `pulumi` **Environment**: `github-secrets/pulumi-registry`
 
 All workflows use OIDC token exchange to authenticate with Pulumi ESC — no long-lived secrets are stored in GitHub Actions secrets directly (except for `AWS_ACCESS_KEY_ID` / `AWS_SECRET_ACCESS_KEY` used in the testing environment for PR preview deploys).
 

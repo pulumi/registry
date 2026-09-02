@@ -59,10 +59,10 @@ ls -l "themes/default/data/registry/packages" | tail -n +2 | awk '{print $9}' | 
         exit 1;
     fi
 
-    install_path="themes/default/content/registry/packages/$pkg/installation-configuration.md"
-    if [ ! -f "$install_path" ]; then
-        echo "WARN: '$install_path' does not exist. Package will be displayed with a single overview file."
-    fi
+    # Note: installation-configuration.md is deliberately not checked here.
+    # _index.md is the only page a package is required to have; a package that
+    # keeps its installation and configuration content in the overview is
+    # complete, and renders as a single page.
 
 done;
 

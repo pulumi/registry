@@ -102,9 +102,7 @@ Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
 
 Generate 3 options:
 
-**Option 1**: Conventional commit with prefix (if applicable) + body if helpful
-**Option 2**: Repository style (plain imperative, matches recent commits)
-**Option 3**: Alternative phrasing (different emphasis, same meaning)
+**Option 1**: Conventional commit with prefix (if applicable) + body if helpful **Option 2**: Repository style (plain imperative, matches recent commits) **Option 3**: Alternative phrasing (different emphasis, same meaning)
 
 Consider:
 

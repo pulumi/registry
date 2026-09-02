@@ -174,17 +174,31 @@ func TestStripHTMLCollapsesInlineChoosables(t *testing.T) {
 	// Simulate the divergent-ref markup emitted by refs.renderRef: several
 	// <pulumi-choosable> elements in a row with different inner text. Without
 	// collapsing them first, stripHTML would concatenate every language's name
-	// end-to-end.
+	// end-to-end. The TypeScript element is the one that should survive, even
+	// though it is not first in the run.
 	in := `See also ` +
-		`<pulumi-choosable type="language" values="csharp">CsName</pulumi-choosable>` +
-		`<pulumi-choosable type="language" values="go">GoName</pulumi-choosable>` +
-		`<pulumi-choosable type="language" values="javascript,typescript">TsName</pulumi-choosable>` +
+		`<pulumi-choosable type="language" values="csharp" class="inline">CsName</pulumi-choosable>` +
+		`<pulumi-choosable type="language" values="go" class="inline">GoName</pulumi-choosable>` +
+		`<pulumi-choosable type="language" values="javascript,typescript" class="inline">TsName</pulumi-choosable>` +
 		` for details.`
 
 	got := stripHTML(in)
-	assert.Equal(t, "See also CsName for details.", got)
+	assert.Equal(t, "See also TsName for details.", got)
+	assert.NotContains(t, got, "CsName")
 	assert.NotContains(t, got, "GoName")
-	assert.NotContains(t, got, "TsName")
+}
+
+func TestStripHTMLCollapsesInlineChoosablesWithoutTypeScript(t *testing.T) {
+	t.Parallel()
+
+	// A run with no TypeScript element falls back to the first element rather
+	// than dropping the text.
+	in := `See also ` +
+		`<pulumi-choosable type="language" values="csharp,yaml,java,hcl" class="inline">Name</pulumi-choosable>` +
+		`<pulumi-choosable type="language" values="go" class="inline">GoName</pulumi-choosable>` +
+		` for details.`
+
+	assert.Equal(t, "See also Name for details.", stripHTML(in))
 }
 
 func TestNormalizeWhitespace(t *testing.T) {

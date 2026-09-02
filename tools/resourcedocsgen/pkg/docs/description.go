@@ -101,6 +101,11 @@ func markupBlock(block, supportedSnippetLanguages string) string {
 func (dctx *Context) processDescription(description, supportedSnippetLanguages string) docInfo {
 	// Resolve refs up front so downstream code chooser markup runs on a
 	// ref-free string and never round-trips through goldmark.
+	//
+	// In production this is a no-op second pass: decomposeDocstring, the only
+	// caller, has already resolved them. It is kept for tests and any future
+	// caller that reaches processDescription directly, and the marker guard in
+	// transformRefs makes the extra pass free.
 	description = dctx.resolveRefs(description)
 
 	importDetails := ""

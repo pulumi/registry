@@ -7,6 +7,8 @@ description: A Pulumi package for creating and managing Microsoft Azure cloud re
   to provision Azure infrastructure. Azure Native provides complete coverage of Azure
   resources and same-day access to new resources and resource updates.
 featured: false
+keywords:
+- azure
 logo_url: ""
 name: azure
 native: false

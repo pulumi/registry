@@ -4,6 +4,8 @@ category: Monitoring
 component: false
 description: A Pulumi package for creating and managing New Relic resources.
 featured: false
+keywords:
+- new relic
 logo_url: ""
 name: newrelic
 native: false

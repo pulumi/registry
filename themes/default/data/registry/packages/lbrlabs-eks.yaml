@@ -4,6 +4,11 @@ category: Cloud
 component: true
 description: A batteries included EKS cluster following best practices.
 featured: false
+keywords:
+- eks
+- kubernetes
+- aws
+- lbrlabs
 logo_url: https://raw.githubusercontent.com/lbrlabs/pulumi-lbrlabs-eks/main/assets/amazon-eks.png
 name: lbrlabs-eks
 native: false

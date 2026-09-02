@@ -4,6 +4,8 @@ category: Utility
 component: false
 description: A Pulumi native provider for making API calls
 featured: false
+keywords:
+- command
 logo_url: ""
 name: purrl
 native: true

@@ -4,6 +4,8 @@ category: Cloud
 component: false
 description: A Pulumi package for creating and managing Formal resources.
 featured: false
+keywords:
+- formal
 logo_url: https://avatars3.githubusercontent.com/formalco
 name: formal
 native: false

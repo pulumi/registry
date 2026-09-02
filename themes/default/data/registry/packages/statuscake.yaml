@@ -4,6 +4,8 @@ category: Cloud
 component: false
 description: A Pulumi package for creating and managing Statuscake resources.
 featured: false
+keywords:
+- statuscake
 logo_url: https://raw.githubusercontent.com/pulumiverse/pulumi-statuscake/main/statuscake.svg
 name: statuscake
 native: false

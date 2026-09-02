@@ -4,6 +4,8 @@ category: Cloud
 component: false
 description: A Pulumi package for creating and managing DigitalOcean cloud resources.
 featured: false
+keywords:
+- digitalocean
 logo_url: ""
 name: digitalocean
 native: false

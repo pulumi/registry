@@ -4,6 +4,8 @@ category: Cloud
 component: false
 description: A Pulumi package for creating and managing fastly cloud resources.
 featured: false
+keywords:
+- fastly
 logo_url: ""
 name: fastly
 native: false

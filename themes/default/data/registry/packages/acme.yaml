@@ -4,6 +4,8 @@ category: Cloud
 component: false
 description: A Pulumi package for creating and managing ACME cloud resources.
 featured: false
+keywords:
+- acme
 logo_url: ""
 name: acme
 native: false

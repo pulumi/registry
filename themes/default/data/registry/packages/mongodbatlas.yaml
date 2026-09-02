@@ -4,6 +4,8 @@ category: Database
 component: false
 description: A Pulumi package for creating and managing mongodbatlas cloud resources.
 featured: false
+keywords:
+- mongodbatlas
 logo_url: ""
 name: mongodbatlas
 native: false

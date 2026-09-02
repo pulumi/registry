@@ -4,6 +4,8 @@ category: Infrastructure
 component: false
 description: A Pulumi package for creating and managing auth0 cloud resources.
 featured: false
+keywords:
+- auth0
 logo_url: ""
 name: auth0
 native: false

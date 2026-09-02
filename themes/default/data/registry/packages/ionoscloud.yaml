@@ -4,6 +4,9 @@ category: Cloud
 component: false
 description: A Pulumi package for creating and managing ionoscloud cloud resources.
 featured: false
+keywords:
+- ionos-cloud
+- ionoscloud
 logo_url: https://raw.githubusercontent.com/ionos-cloud/pulumi-ionoscloud/refs/heads/main/.github/LOGO_IONOS_Blue_RGB.png
 name: ionoscloud
 native: false

@@ -4,6 +4,9 @@ category: Infrastructure
 component: true
 description: Strongly-typed NGINX Ingress Controller installation
 featured: false
+keywords:
+- kubernetes
+- nginx
 logo_url: ""
 name: kubernetes-ingress-nginx
 native: false

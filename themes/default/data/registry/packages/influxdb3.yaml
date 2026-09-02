@@ -4,6 +4,8 @@ category: Database
 component: false
 description: A Pulumi package for creating and managing InfluxDB V3 resources.
 featured: false
+keywords:
+- influxdb3
 logo_url: https://avatars.githubusercontent.com/u/5713248?s=200&v=4
 name: influxdb3
 native: false

@@ -4,6 +4,8 @@ category: Cloud
 component: false
 description: A Pulumi package for creating and managing heroku cloud resources.
 featured: false
+keywords:
+- heroku
 logo_url: ""
 name: heroku
 native: false

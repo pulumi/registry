@@ -4,6 +4,8 @@ category: Cloud
 component: false
 description: A Pulumi package for creating and managing Google Cloud Platform resources.
 featured: true
+keywords:
+- gcp
 logo_url: ""
 name: gcp
 native: false

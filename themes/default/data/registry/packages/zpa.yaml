@@ -5,6 +5,9 @@ component: false
 description: A Pulumi package for creating and managing Zscaler Private Access (ZPA)
   cloud resources.
 featured: false
+keywords:
+- zpa
+- zscaler
 logo_url: https://raw.githubusercontent.com/zscaler/pulumi-zpa/master/assets/zscaler.png
 name: zpa
 native: false

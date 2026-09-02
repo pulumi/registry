@@ -4,6 +4,8 @@ category: Infrastructure
 component: false
 description: A Pulumi package for creating and managing Kafka.
 featured: false
+keywords:
+- kafka
 logo_url: ""
 name: kafka
 native: false

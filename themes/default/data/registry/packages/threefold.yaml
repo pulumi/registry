@@ -4,6 +4,9 @@ category: Infrastructure
 component: false
 description: The Pulumi Resource Provider for the Threefold Grid.
 featured: false
+keywords:
+- grid
+- threefold
 logo_url: https://www.threefold.io/images/black_threefold.png
 name: threefold
 native: true

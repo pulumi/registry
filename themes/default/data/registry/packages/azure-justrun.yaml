@@ -4,6 +4,11 @@ category: Cloud
 component: true
 description: Provides some simple components to run azure apps
 featured: false
+keywords:
+- azure
+- containerapps
+- appservice
+- web
 logo_url: ""
 name: azure-justrun
 native: false

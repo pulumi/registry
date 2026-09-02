@@ -4,6 +4,8 @@ category: Network
 component: false
 description: A Pulumi package for creating and managing ns1 cloud resources.
 featured: false
+keywords:
+- ns1
 logo_url: ""
 name: ns1
 native: false

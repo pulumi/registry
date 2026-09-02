@@ -4,6 +4,9 @@ category: Cloud
 component: true
 description: Pulumi Amazon Web Services (AWS) EKS Components.
 featured: false
+keywords:
+- aws
+- eks
 logo_url: ""
 name: eks
 native: false

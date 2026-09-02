@@ -4,6 +4,8 @@ category: Utility
 component: false
 description: A Pulumi package for creating and managing Vultr cloud resources.
 featured: false
+keywords:
+- vultr
 logo_url: ""
 name: vultr
 native: false

@@ -4,6 +4,8 @@ category: Cloud
 component: false
 description: A Pulumi package for creating and managing rootly cloud resources.
 featured: false
+keywords:
+- rootly
 logo_url: https://raw.githubusercontent.com/rootlyhq/pulumi-rootly/master/logos/rootly.svg
 name: rootly
 native: false

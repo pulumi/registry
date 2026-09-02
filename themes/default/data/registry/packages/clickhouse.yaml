@@ -4,6 +4,8 @@ category: Cloud
 component: false
 description: A Pulumi package for creating and managing Clickhouse Cloud resources
 featured: false
+keywords:
+- clickhouse
 logo_url: https://avatars3.githubusercontent.com/ClickHouse
 name: clickhouse
 native: false

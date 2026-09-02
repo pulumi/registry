@@ -4,6 +4,8 @@ category: Network
 component: false
 description: A Pulumi package for creating and managing akamai cloud resources.
 featured: false
+keywords:
+- akamai
 logo_url: ""
 name: akamai
 native: false

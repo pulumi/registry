@@ -4,6 +4,8 @@ category: Cloud
 component: false
 description: A Pulumi package for creating and managing Statsig resources.
 featured: false
+keywords:
+- statsig
 logo_url: https://statsig-aws-marketplace-asset.s3.us-west-1.amazonaws.com/statsig-logo.png
 name: statsig
 native: false

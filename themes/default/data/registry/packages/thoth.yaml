@@ -4,6 +4,11 @@ category: Utility
 component: false
 description: Pulumi provider for Aten Security Thoth AI governance control plane.
 featured: false
+keywords:
+- thoth
+- atensecurity
+- governance
+- ai
 logo_url: https://raw.githubusercontent.com/atensecurity/pulumi-thoth/main/docs/logo.png
 name: thoth
 native: false

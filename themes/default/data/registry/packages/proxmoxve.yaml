@@ -5,6 +5,9 @@ component: false
 description: A Pulumi package for creating and managing Proxmox Virtual Environment
   cloud resources.
 featured: false
+keywords:
+- proxmox
+- proxmoxve
 logo_url: https://raw.githubusercontent.com/muhlba91/pulumi-proxmoxve/main/assets/proxmox-logo.png
 name: proxmoxve
 native: false

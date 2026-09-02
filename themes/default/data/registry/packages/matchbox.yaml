@@ -4,6 +4,8 @@ category: Network
 component: false
 description: A Pulumi package for creating and managing the Matchbox iPXE server.
 featured: false
+keywords:
+- matchbox
 logo_url: ""
 name: matchbox
 native: false

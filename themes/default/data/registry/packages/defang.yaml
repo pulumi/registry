@@ -9,6 +9,16 @@ description: |-
   - [`defang-gcp`](/registry/packages/defang-gcp/): Deploy containerized services to GCP.
   - [`defang-azure`](/registry/packages/defang-azure/): Deploy containerized services to Azure.
 featured: false
+keywords:
+- categoryinfrastructure
+- defang
+- docker
+- docker compose
+- cloud
+- aws
+- azure
+- gcp
+- digital ocean
 logo_url: https://raw.githubusercontent.com/DefangLabs/pulumi-defang/refs/heads/main/docs/logo.svg
 name: defang
 native: true

@@ -4,6 +4,8 @@ category: Cloud
 component: false
 description: ""
 featured: false
+keywords:
+- vercel
 logo_url: ""
 name: vercel
 native: false

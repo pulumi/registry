@@ -4,6 +4,8 @@ category: Cloud
 component: false
 description: A Pulumi package for creating and managing volcengine cloud resources.
 featured: false
+keywords:
+- volcengine
 logo_url: https://avatars.githubusercontent.com/u/67365215
 name: volcengine
 native: false

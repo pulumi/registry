@@ -4,6 +4,8 @@ category: Database
 component: false
 description: A Pulumi package for creating and managing CrateDB resources.
 featured: false
+keywords:
+- cratedb
 logo_url: https://avatars.githubusercontent.com/u/4048232?s=48&v=4
 name: cratedb
 native: false

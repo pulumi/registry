@@ -4,6 +4,8 @@ category: Cloud
 component: false
 description: A Pulumi package for creating and managing Azapi resources
 featured: false
+keywords:
+- azapi
 logo_url: ""
 name: azapi
 native: false

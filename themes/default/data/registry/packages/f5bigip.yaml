@@ -4,6 +4,9 @@ category: Network
 component: false
 description: A Pulumi package for creating and managing F5 BigIP resources.
 featured: false
+keywords:
+- f5
+- bigip
 logo_url: ""
 name: f5bigip
 native: false

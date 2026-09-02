@@ -4,6 +4,8 @@ category: Network
 component: false
 description: A Pulumi package for creating and managing Unifi network resources.
 featured: false
+keywords:
+- unifi
 logo_url: ""
 name: unifi
 native: false

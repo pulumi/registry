@@ -4,6 +4,8 @@ category: Database
 component: false
 description: A Pulumi package for creating and managing postgresql cloud resources.
 featured: false
+keywords:
+- postgresql
 logo_url: ""
 name: postgresql
 native: false

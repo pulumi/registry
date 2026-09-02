@@ -4,6 +4,8 @@ category: Database
 component: false
 description: A Pulumi package for creating and managing mysql cloud resources.
 featured: false
+keywords:
+- mysql
 logo_url: ""
 name: mysql
 native: false

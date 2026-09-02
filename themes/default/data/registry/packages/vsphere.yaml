@@ -4,6 +4,8 @@ category: Cloud
 component: false
 description: A Pulumi package for creating vsphere resources
 featured: false
+keywords:
+- vsphere
 logo_url: ""
 name: vsphere
 native: false

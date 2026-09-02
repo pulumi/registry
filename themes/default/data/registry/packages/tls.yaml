@@ -4,6 +4,8 @@ category: Utility
 component: false
 description: A Pulumi package to create TLS resources in Pulumi programs.
 featured: false
+keywords:
+- tls
 logo_url: ""
 name: tls
 native: false

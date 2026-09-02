@@ -4,6 +4,8 @@ category: Cloud
 component: false
 description: A Pulumi package for creating and managing hcloud cloud resources.
 featured: false
+keywords:
+- hcloud
 logo_url: ""
 name: hcloud
 native: false

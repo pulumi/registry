@@ -4,6 +4,8 @@ category: Infrastructure
 component: false
 description: A Pulumi package for creating and managing minio cloud resources.
 featured: false
+keywords:
+- minio
 logo_url: ""
 name: minio
 native: false

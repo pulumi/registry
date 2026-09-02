@@ -4,6 +4,8 @@ category: Cloud
 component: false
 description: A Pulumi package for creating and managing zitadel cloud resources.
 featured: false
+keywords:
+- zitadel
 logo_url: ""
 name: zitadel
 native: false

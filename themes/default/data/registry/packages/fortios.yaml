@@ -4,6 +4,8 @@ category: Cloud
 component: false
 description: A Pulumi package for creating and managing Fortios resources
 featured: false
+keywords:
+- fortios
 logo_url: https://raw.githubusercontent.com/pulumiverse/pulumi-fortios/main/docs/fortios.png
 name: fortios
 native: false

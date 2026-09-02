@@ -4,6 +4,9 @@ category: Cloud
 component: true
 description: Pulumi Amazon Web Services (AWS) AWSX Components.
 featured: false
+keywords:
+- aws
+- awsx
 logo_url: ""
 name: awsx
 native: false

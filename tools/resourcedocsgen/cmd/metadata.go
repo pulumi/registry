@@ -371,8 +371,24 @@ func writePackageMetadata(
 		Category:  category,
 		Component: component,
 		Featured:  isFeaturedPackage(spec.Name),
+		Keywords:  searchKeywords(spec.Keywords),
 		Native:    native,
 	}, metadataDir)
+}
+
+// searchKeywords returns the schema keywords that are search terms. The "pulumi"
+// keyword and tags such as "category/network" or "kind/native" are not.
+func searchKeywords(keywords []string) []string {
+	var result []string
+	for _, k := range keywords {
+		if strings.EqualFold(k, "pulumi") ||
+			strings.HasPrefix(k, "category/") ||
+			strings.HasPrefix(k, "kind/") {
+			continue
+		}
+		result = append(result, k)
+	}
+	return result
 }
 
 // legacyNameRuleException prevents the registry from rejecting previously acceptable

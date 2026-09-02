@@ -64,3 +64,9 @@ When a community member requests adding a provider to the registry, a Pulumi sta
 In pulumi/docs, a [scheduled task](https://github.com/pulumi/docs/actions/workflows/update-theme.yml) runs hourly and will pick up any changes in this repo, generate files from the provider schema and `data/registry/${PROVIDER}.yaml`, and publish to pulumi.com.
 
   This scheduled task currently lacks adequate monitoring, and **should be watched to ensure that it runs correctly to completion**. (If it fails, it will block all updates to pulumi.com, including marketing and manually maintained docs pages.)
+
+## Search keywords
+
+The filter box on the registry index page matches a package by its title, its name, and its keywords. The keywords come from the `keywords` field of the provider schema. `resourcedocsgen` copies them into `themes/default/data/registry/packages/<name>.yaml`, without the `pulumi` keyword and without tags such as `category/network` or `kind/native`.
+
+To make a package findable by a new term, add the term to the `keywords` field in the provider schema and release a new version. The next metadata publish picks it up. Do not edit the package YAML file by hand.

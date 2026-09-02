@@ -4,6 +4,8 @@ category: Network
 component: false
 description: A Pulumi package for creating and managing Cloudflare cloud resources.
 featured: false
+keywords:
+- cloudflare
 logo_url: ""
 name: cloudflare
 native: false

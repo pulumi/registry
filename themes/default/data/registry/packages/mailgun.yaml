@@ -4,6 +4,8 @@ category: Infrastructure
 component: false
 description: A Pulumi package for creating and managing Mailgun resources.
 featured: false
+keywords:
+- mailgun
 logo_url: ""
 name: mailgun
 native: false

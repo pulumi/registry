@@ -4,6 +4,8 @@ category: Cloud
 component: false
 description: A Pulumi package for creating and managing UpCloud resources.
 featured: false
+keywords:
+- upcloud
 logo_url: https://raw.githubusercontent.com/UpCloudLtd/.github/refs/heads/main/profile/logo.png
 name: upcloud
 native: false

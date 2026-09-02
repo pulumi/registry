@@ -4,6 +4,8 @@ category: Version Control System
 component: false
 description: A Pulumi package for creating and managing GitLab resources.
 featured: false
+keywords:
+- gitlab
 logo_url: ""
 name: gitlab
 native: false

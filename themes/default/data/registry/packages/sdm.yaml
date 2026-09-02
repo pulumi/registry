@@ -4,6 +4,8 @@ category: Cloud
 component: false
 description: A Pulumi package for creating and managing StrongDM cloud resources.
 featured: false
+keywords:
+- sdm
 logo_url: https://raw.githubusercontent.com/pierskarsenbarg/pulumi-sdm/main/docs/strongdm-logo.png
 name: sdm
 native: false

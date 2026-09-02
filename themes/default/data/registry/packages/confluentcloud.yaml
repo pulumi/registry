@@ -4,6 +4,8 @@ category: Cloud
 component: false
 description: A Pulumi package for creating and managing Confluent cloud resources.
 featured: false
+keywords:
+- confluentcloud
 logo_url: ""
 name: confluentcloud
 native: false

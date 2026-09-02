@@ -5,6 +5,9 @@ component: false
 description: A Pulumi package for creating and managing Oracle Cloud Infrastructure
   resources.
 featured: false
+keywords:
+- oci
+- oracle
 logo_url: ""
 name: oci
 native: false

@@ -4,6 +4,9 @@ category: Cloud
 component: false
 description: A native Pulumi package for creating and managing Azure resources.
 featured: true
+keywords:
+- azure
+- azure-native
 logo_url: ""
 name: azure-native
 native: true

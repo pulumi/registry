@@ -5,6 +5,11 @@ component: false
 description: 'A Pulumi provider for Oh Dear: manage monitors, status pages, tags,
   and notification destinations.'
 featured: false
+keywords:
+- ohdear
+- monitoring
+- uptime
+- status-page
 logo_url: https://raw.githubusercontent.com/matthiashamacher/pulumi-ohdear/main/assets/logo.png
 name: ohdear
 native: true

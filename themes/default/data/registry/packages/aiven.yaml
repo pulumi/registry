@@ -4,6 +4,8 @@ category: Infrastructure
 component: false
 description: A Pulumi package for creating and managing Aiven cloud resources.
 featured: false
+keywords:
+- aiven
 logo_url: ""
 name: aiven
 native: false

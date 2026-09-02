@@ -1,0 +1,8 @@
+Provides a resource for referencing a bucket.
+
+See also {{% ref #/resources/aws:s3/bucket:Bucket %}} for the bucket resource,
+and {{% ref #/types/aws:s3/BucketV2:BucketV2 %}} for the v2 type.
+
+## Example Usage
+
+Refer to {{% ref #/resources/aws:s3/bucketPolicy:BucketPolicy %}} for policy configuration.

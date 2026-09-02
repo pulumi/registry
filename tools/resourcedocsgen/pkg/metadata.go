@@ -68,6 +68,10 @@ type PackageMeta struct {
 	// a provider.
 	Component bool `json:"component"`
 
+	// Keywords are the search terms for the package. They come from the schema
+	// keywords, minus the "pulumi" keyword and the "category/" and "kind/" tags.
+	Keywords []string `json:"keywords,omitempty"`
+
 	// SchemaFilePath is the path to the package's schema file (json or yaml)
 	// relative to the root of that package's repo.
 	//

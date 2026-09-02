@@ -33,11 +33,14 @@ const filterByTextAndTags = (filters, filterText) => {
                 packageIsDeprecated || !!filters.find(f => f.group === "type" && f.value === packageType) || (filters.find(f => f.group === "type" && f.value === "provider") && packageIsNative);
             const packageHasSelectedCategory = !!filters.find(f => f.group === "category" && f.value === packageCategory);
 
-            const packageTitle = el.getAttribute("data-title");
-            const downcasedPackageTitle = packageTitle.toLowerCase();
+            // Free text matches when every whitespace-separated token appears in the
+            // package title, name, or keywords.
+            const haystack = [
+                el.getAttribute("data-title"),
+                el.getAttribute("data-name"),
+                el.getAttribute("data-keywords"),
+            ].join(" ").toLowerCase();
             let downcasedFilterText = filterText?.trim().toLowerCase();
-
-            let packageIsAMatch;
 
             // hack to include anything marked as native as responsive to a filter text including the word "native"
             // see https://github.com/pulumi/registry/issues/5715 for reasoning
@@ -46,12 +49,13 @@ const filterByTextAndTags = (filters, filterText) => {
                 packageIsNative = true;
             }
 
+            let packageIsAMatch;
             if (downcasedFilterText === AMAZON_STRING || downcasedFilterText === AWS_STRING){
-                packageIsAMatch = downcasedPackageTitle.includes(AMAZON_STRING) || downcasedPackageTitle.includes(AWS_STRING);
+                packageIsAMatch = haystack.includes(AMAZON_STRING) || haystack.includes(AWS_STRING);
             } else if (downcasedFilterText === GOOGLE_CLOUD_STRING || downcasedFilterText === GCP_STRING || downcasedFilterText === GOOGLE_STRING){
-                packageIsAMatch = downcasedPackageTitle.includes(GOOGLE_CLOUD_STRING) || downcasedPackageTitle.includes(GCP_STRING) || downcasedPackageTitle.includes(GOOGLE_STRING);
+                packageIsAMatch = haystack.includes(GOOGLE_CLOUD_STRING) || haystack.includes(GCP_STRING) || haystack.includes(GOOGLE_STRING);
             } else {
-                packageIsAMatch = downcasedPackageTitle.includes(downcasedFilterText);
+                packageIsAMatch = downcasedFilterText.split(/\s+/).filter(Boolean).every(token => haystack.includes(token));
             }
 
             if ((packageHasSelectedType || noSelectedType) && (packageHasSelectedCategory || noSelectedCategory) && (!filterText || packageIsAMatch)) {

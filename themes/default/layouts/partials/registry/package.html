@@ -15,6 +15,8 @@ $packageType := "provider" }} {{ $packageTypeName := "Provider" }} {{ if
                 data-type="{{ $packageType }}"
                 data-category="{{ $packageCategory }}"
                 data-title="{{ .package.title }}"
+                data-name="{{ $packageName }}"
+                data-keywords="{{ with .package.keywords }}{{ delimit . " " }}{{ end }}"
                 data-deprecated="{{ $isDeprecated }}"
             >
                 <div class="flex flex-wrap">

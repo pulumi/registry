@@ -89,6 +89,13 @@ test("every removed install-config package redirects to its own Overview", () =>
         "azuredevops", "cloudamqp", "cloudflare", "dnsimple", "docker", "kafka",
         "linode", "meraki", "nomad", "okta", "postgresql", "spotinst", "vault",
         "vsphere",
+        // #12227 -- the install list duplicated; the credential prose beside it
+        // is on the Overview already, or names credentials the provider has
+        // since renamed, gated or retired.
+        "confluentcloud", "databricks", "datadog", "f5bigip", "fastly", "github",
+        "gitlab", "hcloud", "keycloak", "kong", "mailgun", "minio",
+        "mongodbatlas", "mysql", "newrelic", "ns1", "opsgenie", "pagerduty",
+        "rabbitmq", "rancher2", "signalfx", "snowflake", "splunk", "venafi",
     ];
     for (const pkg of packages) {
         const result = handler(request(`/registry/packages/${pkg}/installation-configuration/`));

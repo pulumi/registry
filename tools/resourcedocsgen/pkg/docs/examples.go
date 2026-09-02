@@ -183,8 +183,8 @@ func (dctx *Context) decomposeDocstring(docstring, supportedSnippetLanguages str
 	description = parts[0] + "\n"
 
 	return docInfo{
-		description:   description,
+		description:   dctx.resolveRefs(description, schema.DocRef{}),
 		examples:      examples,
-		importDetails: importDetails,
+		importDetails: dctx.resolveRefs(importDetails, schema.DocRef{}),
 	}
 }

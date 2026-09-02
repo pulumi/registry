@@ -192,6 +192,10 @@ func newConstructorSyntaxData() *constructorSyntaxData {
 type Context struct {
 	internalModMap map[string]*modContext
 
+	// pkg is the schema package these docs are being generated for. It is used
+	// for `{{% ref %}}` shortcode resolution via schema.InterpretPulumiRefs.
+	pkg *schema.Package
+
 	docHelpers map[language.Language]codegen.DocLanguageHelper
 
 	// The language-specific info objects for a certain package (provider).
@@ -241,6 +245,7 @@ func (hclDocLanguageHelper) ResolveDocRef(
 
 func NewContext(tool string, pkg *schema.Package) *Context {
 	dctx := &Context{
+		pkg: pkg,
 		docHelpers: map[language.Language]codegen.DocLanguageHelper{
 			language.CSharp: &dotnet.DocLanguageHelper{},
 			language.Go:     &go_gen.DocLanguageHelper{},

@@ -18,6 +18,7 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/util/contract"
 )
 
@@ -122,7 +123,7 @@ func (dctx *Context) processDescription(description, supportedSnippetLanguages s
 	markedUpDescription += description[startIndex:]
 
 	return docInfo{
-		description:   markedUpDescription,
-		importDetails: importDetails,
+		description:   dctx.resolveRefs(markedUpDescription, schema.DocRef{}),
+		importDetails: dctx.resolveRefs(importDetails, schema.DocRef{}),
 	}
 }

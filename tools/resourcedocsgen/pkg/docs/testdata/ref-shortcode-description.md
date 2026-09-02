@@ -1,8 +1,11 @@
-Provides a resource for referencing a bucket.
+Provides a resource used to demonstrate ref shortcodes.
 
-See also {{% ref #/resources/aws:s3/bucket:Bucket %}} for the bucket resource,
-and {{% ref #/types/aws:s3/BucketV2:BucketV2 %}} for the v2 type.
+See also {{% ref #/resources/prov:module%2Fresource:Resource %}} for the primary resource,
+and {{% ref #/types/prov:module%2FResourceOptions:ResourceOptions %}} for its options type.
+
+Refer to the {{% ref #/resources/prov:module%2Fresource:Resource/inputProperties/integerProp %}} property
+and to the {{% ref #/types/prov:module%2FResourceOptions:ResourceOptions/properties/stringProp %}} field for details.
 
 ## Example Usage
 
-Refer to {{% ref #/resources/aws:s3/bucketPolicy:BucketPolicy %}} for policy configuration.
+Example content follows.

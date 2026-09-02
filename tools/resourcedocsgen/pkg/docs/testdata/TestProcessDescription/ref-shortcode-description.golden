@@ -1,8 +1,11 @@
-Provides a resource for referencing a bucket.
+Provides a resource used to demonstrate ref shortcodes.
 
-See also {{% ref #/resources/aws:s3/bucket:Bucket %}} for the bucket resource,
-and {{% ref #/types/aws:s3/BucketV2:BucketV2 %}} for the v2 type.
+See also <pulumi-choosable type="language" values="csharp">prov:module/resource:Resource</pulumi-choosable><pulumi-choosable type="language" values="go">module.Resource</pulumi-choosable><pulumi-choosable type="language" values="javascript,typescript">Resource</pulumi-choosable><pulumi-choosable type="language" values="python">_module.Resource</pulumi-choosable><pulumi-choosable type="language" values="yaml">prov:module:Resource</pulumi-choosable><pulumi-choosable type="language" values="java">prov:module/resource:Resource</pulumi-choosable><pulumi-choosable type="language" values="hcl">prov:module/resource:Resource</pulumi-choosable> for the primary resource,
+and <pulumi-choosable type="language" values="csharp">prov:module/ResourceOptions:ResourceOptions</pulumi-choosable><pulumi-choosable type="language" values="go">module.ResourceOptions</pulumi-choosable><pulumi-choosable type="language" values="javascript,typescript">ResourceOptions</pulumi-choosable><pulumi-choosable type="language" values="python">ResourceOptionsArgs</pulumi-choosable><pulumi-choosable type="language" values="yaml">prov:module/ResourceOptions:ResourceOptions</pulumi-choosable><pulumi-choosable type="language" values="java">prov:module/ResourceOptions:ResourceOptions</pulumi-choosable><pulumi-choosable type="language" values="hcl">prov:module/ResourceOptions:ResourceOptions</pulumi-choosable> for its options type.
+
+Refer to the <pulumi-choosable type="language" values="csharp">integerProp</pulumi-choosable><pulumi-choosable type="language" values="go">module.ResourceArgs.IntegerProp</pulumi-choosable><pulumi-choosable type="language" values="javascript,typescript">ResourceArgs.integerProp</pulumi-choosable><pulumi-choosable type="language" values="python">_module.ResourceArgs.integer_prop</pulumi-choosable><pulumi-choosable type="language" values="yaml">integerProp</pulumi-choosable><pulumi-choosable type="language" values="java">integerProp</pulumi-choosable><pulumi-choosable type="language" values="hcl">integerProp</pulumi-choosable> property
+and to the <pulumi-choosable type="language" values="csharp">stringProp</pulumi-choosable><pulumi-choosable type="language" values="go">module.ResourceOptions.StringProp</pulumi-choosable><pulumi-choosable type="language" values="javascript,typescript">ResourceOptions.stringProp</pulumi-choosable><pulumi-choosable type="language" values="python">ResourceOptionsArgs.string_prop</pulumi-choosable><pulumi-choosable type="language" values="yaml">stringProp</pulumi-choosable><pulumi-choosable type="language" values="java">stringProp</pulumi-choosable><pulumi-choosable type="language" values="hcl">stringProp</pulumi-choosable> field for details.
 
 ## Example Usage
 
-Refer to {{% ref #/resources/aws:s3/bucketPolicy:BucketPolicy %}} for policy configuration.
+Example content follows.

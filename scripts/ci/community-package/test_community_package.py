@@ -184,8 +184,9 @@ class CliNoticeTests(unittest.TestCase):
         posted: list[tuple[int, str]] = []
         real = github_api.post_comment
 
-        def fake(pr: int, body: str) -> None:
+        def fake(pr: int, body: str) -> dict[str, Any]:
             posted.append((pr, body))
+            return {}
 
         github_api.post_comment = fake
         os.environ.update(PR="11661", GITHUB_SERVER_URL="https://github.com",
@@ -464,29 +465,41 @@ class CommandInvocationTests(unittest.TestCase):
 
 
 class CheckCommandTests(unittest.TestCase):
-    def _run(self, minutes_dispatch: int | None) -> list[dict[str, str]]:
+    def _run(self, minutes_dispatch: int | None,
+             sheet: dict[str, Any] | None = None) -> tuple[list[dict[str, str]], list[str]]:
         dispatched: list[dict[str, str]] = []
+        posted: list[str] = []
+
+        def record_post(pr: int, body: str) -> dict[str, Any]:
+            posted.append(body)
+            return {}
+
         os.environ.update(PR="7", COMMENT_ID="1", COMMENTER="ren", ASSOC="NONE", COMMENT_BODY="/check")
         with patch.object(github_api, "pull_request_head", lambda pr: ("ren", "b" * 40)), \
              patch.object(github_api, "minutes_since_dispatch", lambda w, pr: minutes_dispatch), \
              patch.object(github_api, "add_reaction", lambda *a: None), \
-             patch.object(github_api, "post_comment", lambda *a: None), \
-             patch.object(github_api, "fact_sheet_comment", lambda pr: None), \
+             patch.object(github_api, "post_comment", record_post), \
+             patch.object(github_api, "fact_sheet_comment", lambda pr: sheet), \
              patch.object(github_api, "dispatch_workflow",
                           lambda w, inputs: dispatched.append(inputs)):
             comment_commands.check_command()
         for name in ("PR", "COMMENT_ID", "COMMENTER", "ASSOC", "COMMENT_BODY"):
             del os.environ[name]
-        return dispatched
+        return dispatched, posted
 
     def test_author_dispatches_a_check(self) -> None:
-        self.assertEqual(self._run(None), [{"pr": "7", "head": "b" * 12}])
+        self.assertEqual(self._run(None)[0], [{"pr": "7", "head": "b" * 12}])
 
     def test_a_recent_dispatch_rate_limits(self) -> None:
-        self.assertEqual(self._run(2), [])
+        self.assertEqual(self._run(2)[0], [])
 
     def test_an_old_dispatch_does_not_rate_limit(self) -> None:
-        self.assertEqual(len(self._run(90)), 1)
+        self.assertEqual(len(self._run(90)[0]), 1)
+
+    def test_rate_limiting_says_when_to_try_again(self) -> None:
+        _, posted = self._run(2)
+        self.assertIn("Rate limited", posted[0])
+        self.assertIn("8 min", posted[0])
 
 
 class CheckAllowlistTests(unittest.TestCase):
@@ -837,32 +850,161 @@ class CheckCrashTests(unittest.TestCase):
                 self.assertEqual(cli.run_check(args), 1)
 
 
-class ReportTests(unittest.TestCase):
-    def _report(self, sheets: dict[str, str], existing: dict[str, Any] | None = None) -> str:
-        written: list[str] = []
-        with tempfile.TemporaryDirectory() as scratch:
-            root = Path(scratch)
-            for name, body in sheets.items():
-                (root / name).write_text(body)
-            cwd = os.getcwd()
-            os.chdir(root)
-            try:
-                os.environ.update(PR="7", GITHUB_RUN_ID="42", GITHUB_REPOSITORY="x/y")
-                with patch.object(github_api, "fact_sheet_comment", lambda pr: existing), \
-                     patch.object(github_api, "post_comment", lambda pr, body: written.append(body)), \
-                     patch.object(github_api, "edit_comment", lambda cid, body: written.append(body)):
-                    comment_commands.report()
-            finally:
-                os.chdir(cwd)
-        return written[0]
+def _run_report(sheets: dict[str, str], existing: dict[str, Any] | None = None,
+                posted: dict[str, Any] | None = None) -> list[str]:
+    written: list[str] = []
 
+    def post(pr: int, body: str) -> dict[str, Any]:
+        written.append(body)
+        return posted or {}
+    with tempfile.TemporaryDirectory() as scratch:
+        root = Path(scratch)
+        for name, body in sheets.items():
+            (root / name).write_text(body)
+        cwd = os.getcwd()
+        os.chdir(root)
+        try:
+            os.environ.update(PR="7", GITHUB_RUN_ID="42", GITHUB_REPOSITORY="x/y",
+                              HEAD_SHA="d" * 40)
+            with patch.object(github_api, "fact_sheet_comment", lambda pr: existing), \
+                 patch.object(github_api, "post_comment", post), \
+                 patch.object(github_api, "edit_comment", lambda cid, body: written.append(body)):
+                comment_commands.report()
+        finally:
+            os.chdir(cwd)
+    return written
+
+
+def _notice_for(verdict: str | None, sheet_url: str = "https://c/1") -> str:
+    sheets = {"000.factsheet.md": "## ✅ ready"}
+    if verdict is not None:
+        sheets[comment_commands.VERDICT_FILE] = verdict
+    return _run_report(sheets, existing={"id": 1, "html_url": sheet_url})[-1]
+
+
+class ReportTests(unittest.TestCase):
     def test_a_written_sheet_is_posted(self) -> None:
-        self.assertIn("## ✅ ready", self._report({"000.factsheet.md": "## ✅ ready"}))
+        self.assertIn("## ✅ ready", _run_report({"000.factsheet.md": "## ✅ ready"})[0])
 
     def test_no_sheet_replaces_the_comment_with_a_failure_notice(self) -> None:
-        body = self._report({}, existing={"id": 1, "body": "old fact-sheet"})
-        self.assertIn("did not finish", body)
-        self.assertIn("/actions/runs/42", body)
+        written = _run_report({}, existing={"id": 1, "body": "old fact-sheet"})
+        self.assertIn("did not finish", written[0])
+        self.assertIn("/actions/runs/42", written[0])
+
+
+class VerdictNoticeTests(unittest.TestCase):
+    _notice = staticmethod(_notice_for)
+
+    def test_the_verdict_is_a_new_comment_beside_the_edited_sheet(self) -> None:
+        written = _run_report(
+            {"000.factsheet.md": "## ✅ ready", comment_commands.VERDICT_FILE: "pass"},
+            existing={"id": 1, "html_url": "https://c/1"})
+        self.assertEqual(len(written), 2)
+        self.assertIn("https://c/1", written[1])
+
+    def test_a_pass_says_nothing_more_is_required(self) -> None:
+        self.assertIn("nothing more is required", self._notice("pass"))
+
+    def test_a_warning_names_the_advisory_checks(self) -> None:
+        self.assertIn("advisory", self._notice("warn"))
+
+    def test_a_failure_asks_for_a_re_run(self) -> None:
+        notice = self._notice("fail")
+        self.assertIn("did not pass", notice)
+        self.assertIn("/check", notice)
+
+    def test_every_notice_links_the_fact_sheet(self) -> None:
+        for verdict in ("pass", "warn", "fail", "nothing"):
+            self.assertIn("https://c/1", self._notice(verdict))
+
+    def test_every_notice_names_the_head_it_checked(self) -> None:
+        for verdict in ("pass", "warn", "fail", "nothing", None):
+            self.assertIn("d" * 12, self._notice(verdict))
+
+    def test_a_missing_verdict_blames_the_check_not_the_package(self) -> None:
+        notice = self._notice(None)
+        self.assertIn("did not finish", notice)
+        self.assertIn("/actions/runs/42", notice)
+
+    def test_a_crash_is_told_apart_from_a_lost_artifact(self) -> None:
+        self.assertIn("crashed", self._notice("broken"))
+        self.assertNotIn("crashed", self._notice(None))
+
+    def test_no_fact_sheet_url_leaves_no_link_to_nowhere(self) -> None:
+        for verdict in ("pass", "warn", "fail", "nothing", "broken", None):
+            notice = self._notice(verdict, sheet_url="")
+            self.assertNotIn("]()", notice)
+            self.assertNotIn("fact-sheet", notice)
+
+    def test_a_new_sticky_takes_its_url_from_the_post_response(self) -> None:
+        written = _run_report(
+            {"000.factsheet.md": "## ✅ ready", comment_commands.VERDICT_FILE: "pass"},
+            posted={"id": 9, "html_url": "https://c/9"})
+        self.assertIn("https://c/9", written[-1])
+
+
+class VerdictFileTests(unittest.TestCase):
+    def _verdict(self, manifests: list[Manifest]) -> str:
+        entries = [Entry("x/pulumi-demo", "s.json")] * len(manifests)
+        pending = list(manifests)
+        with tempfile.TemporaryDirectory() as scratch:
+            changed = Path(scratch, "changed.txt")
+            changed.write_text(str(package_list.PATH))
+            with patch.object(package_list, "at_ref", lambda ref: "{}"), \
+                 patch.object(package_list, "current", lambda: "{}"), \
+                 patch.object(package_list, "added_entries", lambda base, head: entries), \
+                 patch.object(resourcedocsgen, "ensure_built", lambda: None), \
+                 patch.object(verify_entry, "verify", lambda e: pending.pop(0)):
+                cli._check(argparse.Namespace(diff="origin/master", out=scratch,
+                                              changed_files=str(changed)))
+            return Path(scratch, comment_commands.VERDICT_FILE).read_text()
+
+    def test_a_green_package_writes_pass(self) -> None:
+        self.assertEqual(self._verdict([_manifest(green=True)]), "pass")
+
+    def test_a_green_package_with_advisories_writes_warn(self) -> None:
+        self.assertEqual(self._verdict([_manifest(green=True, warnings=True)]), "warn")
+
+    def test_a_red_package_writes_fail(self) -> None:
+        self.assertEqual(self._verdict([_manifest(green=False)]), "fail")
+
+    def test_one_red_package_outweighs_a_green_one(self) -> None:
+        self.assertEqual(self._verdict([_manifest(green=True), _manifest(green=False)]), "fail")
+
+    def test_a_crash_records_a_verdict_of_its_own(self) -> None:
+        with tempfile.TemporaryDirectory() as scratch:
+            args = argparse.Namespace(diff="origin/master", changed_files=None, out=scratch)
+            with patch.object(cli, "_check", side_effect=RuntimeError("the network went away")):
+                cli.run_check(args)
+            self.assertEqual(Path(scratch, comment_commands.VERDICT_FILE).read_text(), "broken")
+
+    def test_a_red_package_outranks_a_warning(self) -> None:
+        self.assertEqual(cli.verdict_for([_manifest(green=False, warnings=True)]), "fail")
+
+
+class CommentPaginationTests(unittest.TestCase):
+    def _paged(self, total: int) -> list[dict[str, Any]]:
+        pages = [[{"id": n, "body": "..."} for n in range(start, min(start + 100, total))]
+                 for start in range(0, max(total, 1), 100)]
+        marker = github_api.FACT_SHEET_MARKER
+        if total:
+            pages[-1][-1]["body"] = marker + " newest"
+
+        def request(path: str, method: str = "GET", body: Any = None) -> Any:
+            page = int(path.split("&page=")[1])
+            return pages[page - 1] if page <= len(pages) else []
+
+        with patch.object(github_api, "request", request), \
+             patch.object(github_api, "repo", lambda: "x/y"):
+            return github_api.issue_comments(7)
+
+    def test_every_page_is_read(self) -> None:
+        self.assertEqual(len(self._paged(250)), 250)
+
+    def test_a_marker_past_the_first_page_is_still_found(self) -> None:
+        marker = github_api.FACT_SHEET_MARKER
+        found = [c for c in self._paged(250) if marker in c["body"]]
+        self.assertEqual([c["id"] for c in found], [249])
 
 
 class SweepFailureIssueTests(unittest.TestCase):

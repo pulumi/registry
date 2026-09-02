@@ -74,7 +74,9 @@ jobs:
         if: always()
         with:
           name: fact-sheets
-          path: "*.factsheet.md"
+          path: |
+            *.factsheet.md
+            verdict.txt
 
   report:
     needs: check
@@ -93,9 +95,10 @@ jobs:
         with:
           name: fact-sheets
 
-      - name: Post the fact-sheet as a sticky PR comment
+      - name: Post the fact-sheet as a sticky PR comment, and announce the verdict
         env:
           GITHUB_TOKEN: ${{ github.token }}
           REPO: ${{ github.repository }}
           PR: ${{ inputs.pr }}
+          HEAD_SHA: ${{ inputs.head }}
         run: python3 scripts/ci/community-package/cli.py report

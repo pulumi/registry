@@ -32,7 +32,7 @@ def _verdict(manifest: Manifest) -> tuple[str, str]:
         return "🟡", ("**Passes the required checks, but review the warnings.** The plugin installs and "
                      "docs generate, but one or more advisory checks did not pass — see the SDK installs "
                      "and doc-lint below before approving.")
-    return "✅", ("**Ready for approval.** All checks passed; a `@pulumi/iac-cloud` review is still "
+    return "✅", ("**Ready for approval.** All checks passed; a maintainer's review is still "
                  "required to merge.")
 
 

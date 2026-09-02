@@ -340,3 +340,59 @@ func TestComputeEditURLFromGitHubUserContentURL(t *testing.T) {
 		})
 	}
 }
+
+func TestReadRemoteFileNotFound(t *testing.T) {
+	t.Parallel()
+
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusNotFound)
+	}))
+	// Not defer: the parallel subtests below run after this function returns,
+	// so the server has to outlive it.
+	t.Cleanup(server.Close)
+
+	tests := []struct {
+		name      string
+		repoOwner string
+		required  bool
+		wantErr   bool
+	}{
+		{
+			// The case this exists for: a community provider that keeps its
+			// installation and configuration content in _index.md and never
+			// publishes docs/installation-configuration.md.
+			name:      "optional file, community owner, is skipped",
+			repoOwner: "example-org",
+			required:  false,
+			wantErr:   false,
+		},
+		{
+			name:      "required file, community owner, is an error",
+			repoOwner: "example-org",
+			required:  true,
+			wantErr:   true,
+		},
+		{
+			// Pre-existing behavior: pulumi repos fall back on the top-level
+			// config files already committed here rather than failing.
+			name:      "required file, pulumi owner, is skipped",
+			repoOwner: "pulumi",
+			required:  true,
+			wantErr:   false,
+		},
+	}
+
+	for _, tt := range tests {
+		tt := tt // capture range variable
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			content, err := readRemoteFile(server.Client(), server.URL, tt.repoOwner, tt.required)
+			if tt.wantErr {
+				require.ErrorContains(t, err, "finding remote file at")
+				return
+			}
+			require.NoError(t, err)
+			assert.Nil(t, content)
+		})
+	}
+}

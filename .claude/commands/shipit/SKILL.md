@@ -283,8 +283,7 @@ Commands that will run:
 **If PR creation fails**:
 - Display error (auth issues, network, etc.)
 - Note that changes are still committed and pushed
-- Suggest manual PR creation with URL:
-  `https://github.com/pulumi/registry/pull/new/{branch-name}`
+- Suggest manual PR creation with URL: `https://github.com/pulumi/registry/pull/new/{branch-name}`
 
 ---
 

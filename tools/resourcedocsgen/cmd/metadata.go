@@ -255,6 +255,13 @@ func packageMetadataFromGitHubCmd(client HTTPDoer, metadataDir, packageDocsDir *
 			packageDocsDir = "themes/default/content/registry/packages/" + mainSpec.Name
 		}
 
+		// _index.md is the only page a package is required to have;
+		// installation-configuration.md is an optional split of its
+		// installation and configuration content. Both are fetched
+		// unconditionally; readRemoteFile skips an optional page the provider
+		// does not publish, while a missing _index.md is fatal for a non-pulumi
+		// repo. The _index.md requirement is also enforced against the
+		// committed content by scripts/ci/validate-packages.sh.
 		remoteFiles := []struct {
 			name     string
 			required bool
@@ -265,7 +272,7 @@ func packageMetadataFromGitHubCmd(client HTTPDoer, metadataDir, packageDocsDir *
 
 		for _, remoteFile := range remoteFiles {
 			url := "https://raw.githubusercontent.com/" + repoSlug.String() + "/" + mainSpec.Version + "/docs/" + remoteFile.name
-			content, err := readRemoteFile(client, url, repoSlug.owner)
+			content, err := readRemoteFile(client, url, repoSlug.owner, remoteFile.required)
 			if err != nil {
 				return err
 			}
@@ -434,7 +441,11 @@ func getLegacyPublisher(repoSlug repoSlug) string {
 	return cases.Title(language.Und, cases.NoLower).String(repoSlug.owner)
 }
 
-func readRemoteFile(client HTTPDoer, url, repoOwner string) ([]byte, error) {
+// readRemoteFile fetches url. A 404 on a file that is not required returns
+// (nil, nil) so the caller can skip it; see the repoOwner note on the status
+// check below for the separate, pulumi-only tolerance of a missing required
+// file.
+func readRemoteFile(client HTTPDoer, url, repoOwner string, required bool) ([]byte, error) {
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, errors.Wrapf(err, "creating request for %q", url)
@@ -454,10 +465,15 @@ func readRemoteFile(client HTTPDoer, url, repoOwner string) ([]byte, error) {
 
 	defer resp.Body.Close()
 	if resp.StatusCode < 200 || resp.StatusCode > 299 {
+		// An optional page the provider simply doesn't publish is not an error,
+		// whoever owns the repo. installation-configuration.md is the case that
+		// matters: a package may keep its installation and configuration content
+		// in _index.md instead, and most do.
+		//
 		// For pulumi repos, we have hard coded top-level config files in the registry.
 		// To avoid overwriting them prematurely while we migrate, we default to returning nil, which will allow the
 		// registry to fall back on top-level config files already in existence since we won't write empty content.
-		if repoOwner == "pulumi" && resp.StatusCode == 404 {
+		if (!required || repoOwner == "pulumi") && resp.StatusCode == 404 {
 			return nil, nil
 		}
 		// For third-level providers, send an error if files could not be found.
@@ -611,7 +627,7 @@ func (s *repoSlug) Set(input string) error {
 func (s repoSlug) Type() string { return "repo slug" }
 
 func readRemoteSchemaFile(client HTTPDoer, schemaFileURL, repoOwner string) (*schema.PackageSpec, error) {
-	schemaBytes, err := readRemoteFile(client, schemaFileURL, repoOwner)
+	schemaBytes, err := readRemoteFile(client, schemaFileURL, repoOwner, true)
 	if err != nil {
 		return nil, err
 	}
@@ -688,7 +704,7 @@ func computeEditURLFromGitHubUserContentURL(url string) string {
 //
 // Docs files are expected to be markdown and have a YAML frontmatter.
 func readDocsFile(client HTTPDoer, url string) ([]byte, error) {
-	content, err := readRemoteFile(client, url, "")
+	content, err := readRemoteFile(client, url, "", true)
 	if err != nil {
 		return nil, err
 	}

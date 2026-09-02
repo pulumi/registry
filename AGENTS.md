@@ -63,7 +63,7 @@ Hugo reads from `themes/default/`:
 Every package in the registry is described by a YAML file at `themes/default/data/registry/packages/<name>.yaml`. These files drive:
 
 - API doc generation (`resourcedocsgen`)
-- Registry publication (`scripts/ci/push-registry.py`)
+- Registry publication (`scripts/ci/publish_to_registry.py`, with `scripts/ci/push-registry.py` as a fallback)
 - The nightly community package update workflow
 
 ### Go Tools
@@ -81,7 +81,7 @@ Both are compiled to `bin/` by the Makefile. `mktutorial` is CI-only; it does no
 
 The CI build script (`scripts/ci/build.sh`) writes to **`themes/default/content/registry/packages/`**.
 
-This difference is intentional — local API doc generation stays out of the Hugo theme tree. Within `themes/default/content/registry/packages/<pkg>/`, the `api-docs/` subdirectory is regenerated on every build and is git-ignored, so never commit it. The `_index.md` and `installation-configuration.md` landing pages are different: they are committed and maintained by the `generate-package-metadata.yml` publish workflow, and are bundled when onboarding a package so it renders before the next nightly run. Do not hand-edit any of these files; regenerate them with `resourcedocsgen`.
+This difference is intentional — local API doc generation stays out of the Hugo theme tree. Within `themes/default/content/registry/packages/<pkg>/`, the `api-docs/` subdirectory is regenerated on every build and is git-ignored, so never commit it. The landing pages are different: `_index.md` — plus `installation-configuration.md` for the packages that have one, which is optional, since only `_index.md` is required — is committed and maintained by the `generate-package-metadata.yml` publish workflow, and bundled when onboarding a package so it renders before the next nightly run. Do not hand-edit any of these files; regenerate them with `resourcedocsgen`.
 
 Additionally, `resourcedocsgen` writes **LLM docs** to **`llm-docs-out/registry/packages/`** (repo root, git-ignored). These are terminal-friendly markdown bundles (`llm-docs.json`) uploaded to S3 separately from the Hugo site. The LLM docs format is specified in `docs/llm-markdown-spec.md`.
 
@@ -103,7 +103,7 @@ To add or update a community provider package:
 2. The nightly `generate-package-metadata.yml` workflow handles version bumps automatically for community packages tracked in `community-packages/package-list.json`.
 3. First-party Pulumi provider repos trigger `publish-provider-update.yml` via `repository_dispatch`.
 
-The `push-registry.py` script publishes packages to the live Pulumi registry service on every push to `master`.
+On every push to `master`, `publish_to_registry.py` publishes packages to the live Pulumi registry service — the Pulumi Cloud store behind `pulumi package add`, which is separate from the rendered site. `push-registry.py` runs only if that step fails.
 
 ---
 
@@ -147,5 +147,6 @@ The one deliberate exception is the dark default border color, which sits in `@l
 
 - **Package manager**: Yarn only. Do not use npm or pnpm.
 - **Go modules**: `tools/resourcedocsgen/` and `tools/mktutorial/` are separate Go modules. Run `go test ./...` and `golangci-lint run` from within those directories (or use the Makefile targets).
-- **Generated content**: Files under `themes/default/content/registry/packages/` are generated — regenerate with `resourcedocsgen`, never hand-edit. The `api-docs/` subdirectories are git-ignored build output (never committed); the `_index.md` and `installation-configuration.md` pages are committed metadata maintained by the publish workflow.
+- **Generated content**: Files under `themes/default/content/registry/packages/` are generated — regenerate with `resourcedocsgen`, never hand-edit. The `api-docs/` subdirectories are git-ignored build output (never committed); the `_index.md` page — and `installation-configuration.md`, when the package has one — is committed metadata maintained by the publish workflow. Only `_index.md` is required; a package with just an overview is complete.
+- **Markdown line wrapping**: Put each paragraph and each list item on a **single line**. Do not hard-wrap prose to a column — let the editor soft-wrap it. A hard-wrapped paragraph re-flows when you change a word in the middle, so a one-word edit shows up as a multi-line diff and reviewers can't see what actually changed. This applies to every hand-written Markdown file in the repo: `README.md`, `AGENTS.md`, `BUILD-AND-DEPLOY.md`, everything under `docs/`, the PR and issue templates, and the skill files under `.claude/commands/`. Code inside fences, tables, and front matter keep whatever line structure they need; `CODE-OF-CONDUCT.md` is imported upstream and is left as-is.
 - **Branch naming**: Use `<GitHub Username>/<descriptive-name>` for branches in this repository.

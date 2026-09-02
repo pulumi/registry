@@ -32,7 +32,8 @@ func TestProcessDescription(t *testing.T) {
 	}{
 		{"lambda-description"},
 		{"scaleway-k8s-cluster-description"}, // Repro: https://github.com/pulumi/registry/issues/4202
-		{"ref-shortcode-description"},        // renders {{% ref %}} shortcodes
+		{"ref-shortcode-description"},         // renders {{% ref %}} shortcodes
+		{"ref-and-code-chooser-description"}, // refs interleaved with a PulumiCodeChooser block
 	}
 
 	for _, tt := range tests {

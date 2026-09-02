@@ -1151,7 +1151,7 @@ func (mod *modContext) genNestedTypes(member interface{}, resourceType, isProvid
 				typs = append(typs, docNestedType{
 					Name:        wbr(name),
 					AnchorID:    strings.ToLower(name),
-					Description: sanitizeDescription(typ.Comment),
+					Description: dctx.resolveRefs(sanitizeDescription(typ.Comment)),
 					Properties:  props,
 				})
 			case *schema.EnumType:
@@ -1177,7 +1177,7 @@ func (mod *modContext) genNestedTypes(member interface{}, resourceType, isProvid
 							DisplayName:        wbr(enumName),
 							Name:               enumName,
 							Value:              fmt.Sprintf("%v", e.Value),
-							Comment:            sanitizeDescription(e.Comment),
+							Comment:            dctx.resolveRefsForLanguage(sanitizeDescription(e.Comment), lang),
 							DeprecationMessage: sanitizeDescription(e.DeprecationMessage),
 						})
 					}
@@ -1253,7 +1253,7 @@ func (mod *modContext) getPropertiesWithIDPrefixAndExclude(
 			propTypes = append(propTypes, mod.typeString(prop.Type, lang, characteristics, true))
 		}
 
-		comment := sanitizeDescription(prop.Comment)
+		comment := dctx.resolveRefsForLanguage(sanitizeDescription(prop.Comment), lang)
 		link := "#" + propID
 
 		// Check if type is defined in a package external to the current package. If it is external, update comment to

@@ -53,6 +53,8 @@ func (dctx *Context) decomposeDocstring(docstring, supportedSnippetLanguages str
 	if docstring == "" {
 		return docInfo{}
 	}
+	// Resolve refs up front so both paths below operate on a ref-free string.
+	docstring = dctx.resolveRefs(docstring)
 	if strings.Contains(docstring, beginCodeBlock) {
 		return dctx.processDescription(docstring, supportedSnippetLanguages)
 	}
@@ -183,8 +185,8 @@ func (dctx *Context) decomposeDocstring(docstring, supportedSnippetLanguages str
 	description = parts[0] + "\n"
 
 	return docInfo{
-		description:   dctx.resolveRefs(description, schema.DocRef{}),
+		description:   description,
 		examples:      examples,
-		importDetails: dctx.resolveRefs(importDetails, schema.DocRef{}),
+		importDetails: importDetails,
 	}
 }

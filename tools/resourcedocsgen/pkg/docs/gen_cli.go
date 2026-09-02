@@ -24,7 +24,35 @@ import (
 // stripHTML removes HTML tags from a string, leaving just the text content.
 var htmlTagRe = regexp.MustCompile(`<[^>]*>`)
 
+// inlineChoosableRe matches a single inline <pulumi-choosable> element (as
+// emitted by refs.go for divergent ref renderings). A description may contain
+// several of these in a row — one per language — and stripping their tags with
+// the generic htmlTagRe would concatenate every language's text with no
+// separator. We instead keep the first element's inner content per run and
+// discard the rest.
+var inlineChoosableRunRe = regexp.MustCompile(
+	`(?s)(<pulumi-choosable\b[^>]*>.*?</pulumi-choosable>)+`)
+var inlineChoosableRe = regexp.MustCompile(
+	`(?s)<pulumi-choosable\b[^>]*>(.*?)</pulumi-choosable>`)
+
+// collapseInlineChoosables replaces each consecutive run of <pulumi-choosable>
+// elements with the content of the first element in the run, so terminal /
+// LLM-facing markdown shows one rendering rather than every language's name
+// concatenated together.
+func collapseInlineChoosables(s string) string {
+	return inlineChoosableRunRe.ReplaceAllStringFunc(s, func(run string) string {
+		m := inlineChoosableRe.FindStringSubmatch(run)
+		if len(m) == 2 {
+			return m[1]
+		}
+		return ""
+	})
+}
+
 func stripHTML(s string) string {
+	// Collapse inline <pulumi-choosable> runs first so we don't smash every
+	// language's rendering together when the generic tag stripper runs.
+	s = collapseInlineChoosables(s)
 	// Replace <br> and <br/> with newlines
 	s = strings.ReplaceAll(s, "<br>", "\n")
 	s = strings.ReplaceAll(s, "<br/>", "\n")

@@ -17,8 +17,22 @@ We’re always eager to expand that index with new [Pulumi Packages](https://www
 To publish a community-maintained package on the Pulumi Registry as a community member:
 
 1. Ensure your provider repo has the following files:
-    * `docs/_index.md`, which should contain a summary of the provider's purpose (required) along with a code sample in each language (required). This file will render as the index page for your provider ([example](https://www.pulumi.com/registry/packages/aiven/)).
-    * `docs/installation-configuration.md`, which should contain links to published SDKs in (Go, Typescript, C#, Python; required) along with instructions for configuring the provider (e.g., required credentials and/or environment variables). This file will render as the Installation & Configuration page for your provider ([example](https://www.pulumi.com/registry/packages/aws/installation-configuration/)).
+    * `docs/_index.md`, which should contain a summary of the provider's purpose (required) along with a code sample in each language (required). This file will render as the index page for your provider ([rendered example](https://www.pulumi.com/registry/packages/aiven/), [its source](https://github.com/pulumi/pulumi-aiven/blob/master/docs/_index.md)).
+    * `docs/installation-configuration.md`, which should contain links to published SDKs in (Go, Typescript, C#, Python; required) along with instructions for configuring the provider (e.g., required credentials and/or environment variables). This file will render as the Installation & Configuration page for your provider ([rendered example](https://www.pulumi.com/registry/packages/aws/installation-configuration/), [its source](https://github.com/pulumi/pulumi-aws/blob/master/docs/installation-configuration.md)).
+
+    Both files must **begin** with YAML front matter, before any other text. Doc generation rejects a file that does not, and your package will not publish. Use exactly these three keys, and keep `layout: package`:
+
+    ```markdown
+    ---
+    title: Example Provider
+    meta_desc: Provides an overview of the Example provider for Pulumi.
+    layout: package
+    ---
+
+    ## Overview
+
+    What this provider manages, in a paragraph or two.
+    ```
 1. Create a release of your provider in GitHub with a "v" + [Semver 2.0](https://semver.org) compliant tag (`vX.Y.Z`).
 1. Open a pull request that adds one entry to [`community-packages/package-list.json`](https://github.com/pulumi/registry/blob/master/community-packages/package-list.json). That single entry is the whole registration: your docs and metadata are generated and published for you after merge, so do not commit generated files here. The one exception is a brand-new publisher, whose display name must be added to [`publisher-names.json`](https://github.com/pulumi/registry/blob/master/tools/resourcedocsgen/pkg/publishers/publisher-names.json) in the same PR, because publishing fails without it. Automated checks then post a fact-sheet on your PR; if anything is flagged, fix it in your provider repo and comment `/check` to re-run (the checks read your live upstream, so you do not push here to re-validate). A maintainer can comment `/preview` to build a live preview of your package's pages, then reviews the fact-sheet and approves. Nothing merges automatically.
 

@@ -116,6 +116,9 @@ def render(manifest: Manifest) -> str:
                       "registry takes the version from the publish request, or stamp the real version at "
                       "release time."]
 
+    for result in [r for r in manifest.installMatrix if r.result == "rejected" and r.error]:
+        lines += ["", f"**{result.language}** 🚫 {result.error}"]
+
     findings = manifest.docLint
     lines.append("")
     if not manifest.indexPresent:

@@ -32,6 +32,7 @@ var htmlTagRe = regexp.MustCompile(`<[^>]*>`)
 // discard the rest.
 var inlineChoosableRunRe = regexp.MustCompile(
 	`(?s)(<pulumi-choosable\b[^>]*>.*?</pulumi-choosable>)+`)
+
 var inlineChoosableRe = regexp.MustCompile(
 	`(?s)<pulumi-choosable\b[^>]*>(.*?)</pulumi-choosable>`)
 

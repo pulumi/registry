@@ -81,6 +81,12 @@ jobs:
           sheets=("${RUNNER_TEMP}"/factsheets/*.factsheet.md)
           [ ${#sheets[@]} -eq 0 ] && exit 0
           cat "${sheets[@]}" > "${RUNNER_TEMP}/comment.md"
+          # GitHub rejects a comment body over 65536 characters.
+          if [ "$(wc -c < "${RUNNER_TEMP}/comment.md")" -gt 60000 ]; then
+            head -c 60000 "${RUNNER_TEMP}/comment.md" > "${RUNNER_TEMP}/truncated.md"
+            printf '\n\n_Truncated: this PR publishes %d packages. The full fact-sheets are in the "Check published packages" job log._\n' "${#sheets[@]}" >> "${RUNNER_TEMP}/truncated.md"
+            mv "${RUNNER_TEMP}/truncated.md" "${RUNNER_TEMP}/comment.md"
+          fi
           gh pr comment "$PR" --edit-last --create-if-none --body-file "${RUNNER_TEMP}/comment.md"
 
   resourcedocsgen:

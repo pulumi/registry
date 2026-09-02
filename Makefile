@@ -108,7 +108,7 @@ api-docs/%: .make/content/registry/packages/$$*/api-docs ;
 		--baseSchemasOutDir ./static/registry/packages \
 		--baseLLMDocsOutDir ./llm-docs-out/registry/packages \
 		$*
-	CONTENT_DIR=$(CURDIR)/content/registry/packages STATIC_DIR=$(CURDIR)/static/registry/packages ./scripts/generate-versioned-docs.sh $*
+	$(if $(SKIP_VERSIONED_DOCS),,CONTENT_DIR=$(CURDIR)/content/registry/packages STATIC_DIR=$(CURDIR)/static/registry/packages ./scripts/generate-versioned-docs.sh $*)
 	@mkdir -p "$(@D)"
 	@touch $@
 

@@ -1,0 +1,78 @@
+## Installation
+
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
+{{% choosable language typescript %}}
+
+```bash
+npm install @pulumi/ise
+```
+
+{{% /choosable %}}
+{{% choosable language python %}}
+
+```bash
+pip install pulumi-ise
+```
+
+{{% /choosable %}}
+{{% choosable language go %}}
+
+```bash
+go get github.com/pulumi/pulumi-ise/sdk/go/ise
+```
+
+{{% /choosable %}}
+{{% choosable language csharp %}}
+
+```bash
+dotnet add package Pulumi.Ise
+```
+
+{{% /choosable %}}
+{{% choosable language java %}}
+
+Maven:
+
+```xml
+<dependency>
+    <groupId>com.pulumi</groupId>
+    <artifactId>ise</artifactId>
+    <version>0.5.0</version>
+</dependency>
+```
+
+Gradle:
+
+```groovy
+implementation 'com.pulumi:ise:0.5.0'
+```
+
+{{% /choosable %}}
+{{% choosable language yaml %}}
+
+```bash
+pulumi package add ise
+```
+
+{{% /choosable %}}
+{{% choosable language hcl %}}
+
+Declare the provider in your program, then run `pulumi install`:
+
+```hcl
+terraform {
+  required_providers {
+    ise = {
+      source  = "pulumi/ise"
+      version = "0.5.0"
+    }
+  }
+}
+```
+
+```bash
+pulumi install
+```
+
+{{% /choosable %}}
+{{< /chooser >}}

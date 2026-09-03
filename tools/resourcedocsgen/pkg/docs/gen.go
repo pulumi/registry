@@ -192,6 +192,10 @@ func newConstructorSyntaxData() *constructorSyntaxData {
 type Context struct {
 	internalModMap map[string]*modContext
 
+	// pkg is the schema package these docs are being generated for. It is used
+	// for `{{% ref %}}` shortcode resolution via schema.InterpretPulumiRefs.
+	pkg *schema.Package
+
 	docHelpers map[language.Language]codegen.DocLanguageHelper
 
 	// The language-specific info objects for a certain package (provider).
@@ -241,6 +245,7 @@ func (hclDocLanguageHelper) ResolveDocRef(
 
 func NewContext(tool string, pkg *schema.Package) *Context {
 	dctx := &Context{
+		pkg: pkg,
 		docHelpers: map[language.Language]codegen.DocLanguageHelper{
 			language.CSharp: &dotnet.DocLanguageHelper{},
 			language.Go:     &go_gen.DocLanguageHelper{},
@@ -1146,7 +1151,7 @@ func (mod *modContext) genNestedTypes(member interface{}, resourceType, isProvid
 				typs = append(typs, docNestedType{
 					Name:        wbr(name),
 					AnchorID:    strings.ToLower(name),
-					Description: sanitizeDescription(typ.Comment),
+					Description: dctx.resolveRefs(sanitizeDescription(typ.Comment)),
 					Properties:  props,
 				})
 			case *schema.EnumType:
@@ -1167,13 +1172,14 @@ func (mod *modContext) genNestedTypes(member interface{}, resourceType, isProvid
 							panic(err)
 						}
 						enumID := strings.ToLower(name + propertyLangSeparator + lang.String())
+						deprecation := sanitizeDescription(e.DeprecationMessage)
 						langEnumValues = append(langEnumValues, enum{
 							ID:                 enumID,
 							DisplayName:        wbr(enumName),
 							Name:               enumName,
 							Value:              fmt.Sprintf("%v", e.Value),
-							Comment:            sanitizeDescription(e.Comment),
-							DeprecationMessage: sanitizeDescription(e.DeprecationMessage),
+							Comment:            dctx.resolveRefsForLanguage(sanitizeDescription(e.Comment), lang),
+							DeprecationMessage: dctx.resolveRefsForLanguage(deprecation, lang),
 						})
 					}
 					enums[lang] = langEnumValues
@@ -1248,7 +1254,7 @@ func (mod *modContext) getPropertiesWithIDPrefixAndExclude(
 			propTypes = append(propTypes, mod.typeString(prop.Type, lang, characteristics, true))
 		}
 
-		comment := sanitizeDescription(prop.Comment)
+		comment := dctx.resolveRefsForLanguage(sanitizeDescription(prop.Comment), lang)
 		link := "#" + propID
 
 		// Check if type is defined in a package external to the current package. If it is external, update comment to
@@ -1283,7 +1289,7 @@ func (mod *modContext) getPropertiesWithIDPrefixAndExclude(
 			DisplayName:        wbr(propLangName),
 			Name:               propLangName,
 			Comment:            comment,
-			DeprecationMessage: sanitizeDescription(prop.DeprecationMessage),
+			DeprecationMessage: dctx.resolveRefsForLanguage(sanitizeDescription(prop.DeprecationMessage), lang),
 			IsRequired:         prop.IsRequired(),
 			IsInput:            input,
 			// We indicate that a property will replace if either
@@ -1867,7 +1873,7 @@ func (mod *modContext) genResource(r *schema.Resource) resourceDocArgs {
 		Tool: mod.tool,
 
 		Comment:            docInfo.description,
-		DeprecationMessage: sanitizeDescription(r.DeprecationMessage),
+		DeprecationMessage: dctx.resolveRefs(sanitizeDescription(r.DeprecationMessage)),
 		ExamplesSection: examplesSection{
 			Examples:             docInfo.examples,
 			LangChooserLanguages: supportedSnippetLanguages,
@@ -2148,7 +2154,7 @@ func (mod *modContext) gen(fs codegen.Fs) error {
 
 	// If this is the root module, write out the package description.
 	if mod.mod == "" {
-		idxData.PackageDescription = mod.pkg.Description()
+		idxData.PackageDescription = mod.context.resolveRefs(mod.pkg.Description())
 	}
 
 	return addFileTemplated("", templates.Index, idxData)
@@ -2723,8 +2729,10 @@ func (mod *modContext) genCLIOverview(pkgVersion string) (string, error) {
 
 	var b strings.Builder
 
-	// Package description.
-	desc := stripHTML(mod.pkg.Description())
+	// Package description. Refs are resolved before stripHTML so the choosable
+	// markup they may produce is collapsed to a single language rather than
+	// having its tags stripped and every language's name run together.
+	desc := stripHTML(mod.context.resolveRefs(mod.pkg.Description()))
 	if desc != "" {
 		b.WriteString(desc)
 		b.WriteString("\n")

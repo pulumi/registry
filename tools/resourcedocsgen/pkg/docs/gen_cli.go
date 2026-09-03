@@ -24,7 +24,50 @@ import (
 // stripHTML removes HTML tags from a string, leaving just the text content.
 var htmlTagRe = regexp.MustCompile(`<[^>]*>`)
 
+// inlineChoosableRunRe matches a consecutive run of inline <pulumi-choosable>
+// elements, as emitted by refs.go for a ref that renders differently per
+// language. Stripping their tags with the generic htmlTagRe would concatenate
+// every language's text with no separator, so runs are collapsed to a single
+// rendering first.
+var inlineChoosableRunRe = regexp.MustCompile(
+	`(?s)(<pulumi-choosable\b[^>]*>.*?</pulumi-choosable>)+`)
+
+// inlineChoosableRe matches one <pulumi-choosable> element within a run,
+// capturing its attributes and its inner text.
+var inlineChoosableRe = regexp.MustCompile(
+	`(?s)<pulumi-choosable\b([^>]*)>(.*?)</pulumi-choosable>`)
+
+// cliRefLanguageTag is the language whose rendering survives collapsing. The
+// CLI bundle's own examples lead with TypeScript, and picking it explicitly
+// beats keeping whichever element happens to come first (C#, which is also the
+// one language whose helper has no ResolveDocRef and so always falls back).
+const cliRefLanguageTag = "typescript"
+
+// collapseInlineChoosables replaces each consecutive run of <pulumi-choosable>
+// elements with the content of a single element, so terminal / LLM-facing
+// markdown shows one rendering rather than every language's name concatenated
+// together.
+func collapseInlineChoosables(s string) string {
+	return inlineChoosableRunRe.ReplaceAllStringFunc(s, func(run string) string {
+		matches := inlineChoosableRe.FindAllStringSubmatch(run, -1)
+		if len(matches) == 0 {
+			// Unreachable given inlineChoosableRunRe matched, but leaving the
+			// run untouched fails safer than silently deleting the text.
+			return run
+		}
+		for _, m := range matches {
+			if strings.Contains(m[1], cliRefLanguageTag) {
+				return m[2]
+			}
+		}
+		return matches[0][2]
+	})
+}
+
 func stripHTML(s string) string {
+	// Collapse inline <pulumi-choosable> runs first so we don't smash every
+	// language's rendering together when the generic tag stripper runs.
+	s = collapseInlineChoosables(s)
 	// Replace <br> and <br/> with newlines
 	s = strings.ReplaceAll(s, "<br>", "\n")
 	s = strings.ReplaceAll(s, "<br/>", "\n")

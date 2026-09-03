@@ -518,7 +518,7 @@ func (mod *modContext) genFunction(f *schema.Function) functionDocArgs {
 		FunctionResult: mod.getFunctionResourceInfo(f, false /*outputVersion*/),
 
 		Comment:            docInfo.description,
-		DeprecationMessage: sanitizeDescription(f.DeprecationMessage),
+		DeprecationMessage: dctx.resolveRefs(sanitizeDescription(f.DeprecationMessage)),
 		ExamplesSection: examplesSection{
 			Examples:             docInfo.examples,
 			LangChooserLanguages: supportedSnippetLanguages,

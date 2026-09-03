@@ -116,7 +116,7 @@ func (mod *modContext) genMethod(r *schema.Resource, m *schema.Method) methodDoc
 		MethodResult: mod.getMethodResult(r, m),
 
 		Comment:            docInfo.description,
-		DeprecationMessage: f.DeprecationMessage,
+		DeprecationMessage: dctx.resolveRefs(f.DeprecationMessage),
 		ExamplesSection: examplesSection{
 			Examples:             docInfo.examples,
 			LangChooserLanguages: resourceSnippetLanguages,

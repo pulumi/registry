@@ -1,0 +1,11 @@
+Provides a resource used to demonstrate ref shortcodes.
+
+See also <pulumi-choosable type="language" values="csharp,javascript,typescript,java,hcl" class="inline">Resource</pulumi-choosable><pulumi-choosable type="language" values="go" class="inline">module.Resource</pulumi-choosable><pulumi-choosable type="language" values="python" class="inline">_module.Resource</pulumi-choosable><pulumi-choosable type="language" values="yaml" class="inline">prov:module:Resource</pulumi-choosable> for the primary resource,
+and <pulumi-choosable type="language" values="csharp,javascript,typescript,yaml,java,hcl" class="inline">ResourceOptions</pulumi-choosable><pulumi-choosable type="language" values="go" class="inline">module.ResourceOptions</pulumi-choosable><pulumi-choosable type="language" values="python" class="inline">ResourceOptionsArgs</pulumi-choosable> for its options type.
+
+Refer to the <pulumi-choosable type="language" values="csharp,yaml,java,hcl" class="inline">integerProp</pulumi-choosable><pulumi-choosable type="language" values="go" class="inline">module.ResourceArgs.IntegerProp</pulumi-choosable><pulumi-choosable type="language" values="javascript,typescript" class="inline">ResourceArgs.integerProp</pulumi-choosable><pulumi-choosable type="language" values="python" class="inline">_module.ResourceArgs.integer_prop</pulumi-choosable> property
+and to the <pulumi-choosable type="language" values="csharp,yaml,java,hcl" class="inline">stringProp</pulumi-choosable><pulumi-choosable type="language" values="go" class="inline">module.ResourceOptions.StringProp</pulumi-choosable><pulumi-choosable type="language" values="javascript,typescript" class="inline">ResourceOptions.stringProp</pulumi-choosable><pulumi-choosable type="language" values="python" class="inline">ResourceOptionsArgs.string_prop</pulumi-choosable> field for details.
+
+## Example Usage
+
+Example content follows.

@@ -30,15 +30,11 @@ lint-shortcode-delimiters:
 	./scripts/lint/check-shortcode-delimiters.js
 
 .PHONY: lint-go
-lint-go: lint-resourcedocsgen lint-mktutorial
+lint-go: lint-resourcedocsgen
 
 .PHONY: lint-resourcedocsgen
 lint-resourcedocsgen:
 	cd tools/resourcedocsgen/ && golangci-lint run --config ../../.golangci.yml
-
-.PHONY: lint-mktutorial
-lint-mktutorial:
-	cd tools/mktutorial/ && golangci-lint run --config ../../.golangci.yml
 
 .PHONY: test
 test: test-infra test-preview-comment
@@ -77,9 +73,6 @@ DOCSGEN_SRC_HASH := $(shell find tools/resourcedocsgen -name '*.go' -o -name '*.
 
 bin/resourcedocsgen: $(shell ${HELPMAKEGO} tools/resourcedocsgen)
 	go build -C tools/resourcedocsgen -ldflags "-X github.com/pulumi/registry/tools/resourcedocsgen/cmd/docs.sourceHash=$(DOCSGEN_SRC_HASH)" -o ../../bin ./...
-
-bin/mktutorial: $(shell ${HELPMAKEGO} tools/mktutorial)
-	go build -C tools/mktutorial -o ../../bin ./...
 
 # Generate API docs for all packages, then versioned docs for blessed packages.
 # Set SKIP_VERSIONED_DOCS=1 to skip versioned docs generation (e.g. when running in a parallel CI job).

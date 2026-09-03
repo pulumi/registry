@@ -71,9 +71,8 @@ Every package in the registry is described by a YAML file at `themes/default/dat
 | Tool | Location | Purpose |
 |---|---|---|
 | `resourcedocsgen` | `tools/resourcedocsgen/` | Generates provider API reference docs and LLM-friendly JSON bundles (`llm-docs.json`) from Pulumi provider schemas |
-| `mktutorial` | `tools/mktutorial/` | Generates how-to guides from `pulumi/examples` |
 
-Both are compiled to `bin/` by the Makefile. `mktutorial` is CI-only; it does not run in local builds.
+`resourcedocsgen` is compiled to `bin/` by the Makefile.
 
 ### Content Generation: Local vs. CI
 
@@ -146,7 +145,7 @@ The one deliberate exception is the dark default border color, which sits in `@l
 ## Conventions
 
 - **Package manager**: Yarn only. Do not use npm or pnpm.
-- **Go modules**: `tools/resourcedocsgen/` and `tools/mktutorial/` are separate Go modules. Run `go test ./...` and `golangci-lint run` from within those directories (or use the Makefile targets).
+- **Go modules**: `tools/resourcedocsgen/` is a separate Go module. Run `go test ./...` and `golangci-lint run` from within that directory (or use the Makefile targets).
 - **Generated content**: Files under `themes/default/content/registry/packages/` are generated — regenerate with `resourcedocsgen`, never hand-edit. The `api-docs/` subdirectories are git-ignored build output (never committed); the `_index.md` page — and `installation-configuration.md`, when the package has one — is committed metadata maintained by the publish workflow. Only `_index.md` is required; a package with just an overview is complete.
 - **Markdown line wrapping**: Put each paragraph and each list item on a **single line**. Do not hard-wrap prose to a column — let the editor soft-wrap it. A hard-wrapped paragraph re-flows when you change a word in the middle, so a one-word edit shows up as a multi-line diff and reviewers can't see what actually changed. This applies to every hand-written Markdown file in the repo: `README.md`, `AGENTS.md`, `BUILD-AND-DEPLOY.md`, everything under `docs/`, the PR and issue templates, and the skill files under `.claude/commands/`. Code inside fences, tables, and front matter keep whatever line structure they need; `CODE-OF-CONDUCT.md` is imported upstream and is left as-is.
 - **Branch naming**: Use `<GitHub Username>/<descriptive-name>` for branches in this repository.

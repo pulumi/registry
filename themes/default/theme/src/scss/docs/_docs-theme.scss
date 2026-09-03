@@ -114,8 +114,8 @@ html[data-theme="dark"] body.section-registry {
 // hairline — but do it INSIDE @layer base, which is the one rule in this file that
 // must NOT be unlayered. Unlayered, `*` outranks @layer utilities as well, so it
 // flattens every *colored* border a template authored: the blue-600 ring on the
-// github-buttons shortcode (live on the committed how-to guides and everything
-// mktutorial generates), the purple-700 tab underlines in partials/carousel.html.
+// github-buttons shortcode (live on the committed how-to guides), the
+// purple-700 tab underlines in partials/carousel.html.
 // In @layer base it still beats the gray-200 default it means to replace (same
 // layer, higher specificity) while anything layered that declares its own border
 // color — component styles, `dark:` variants, colored utilities — keeps it.

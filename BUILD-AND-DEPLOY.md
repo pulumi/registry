@@ -13,9 +13,8 @@ This document describes the build, test, and deployment system for the `pulumi/r
    - [4.1 Makefile Targets](#41-makefile-targets)
    - [4.2 Hugo Build](#42-hugo-build)
    - [4.3 resourcedocsgen Tool](#43-resourcedocsgen-tool)
-   - [4.4 mktutorial Tool](#44-mktutorial-tool)
-   - [4.5 CI Build Script](#45-ci-build-script-scriptscibuilds)
-   - [4.6 Versioned Documentation](#46-versioned-documentation)
+   - [4.4 CI Build Script](#44-ci-build-script-scriptscibuilds)
+   - [4.5 Versioned Documentation](#45-versioned-documentation)
 5. [GitHub Actions Workflows](#github-actions-workflows)
    - [5.1 pull-request.yml — PR Validation + Preview Deploy](#51-pull-requestyml--pr-validation--preview-deploy)
    - [5.2 push.yml — Production Build + Deploy](#52-pushyml--production-build--deploy)
@@ -78,7 +77,6 @@ This document describes the build, test, and deployment system for the `pulumi/r
 - **Pulumi ESC (Environments, Secrets, and Configuration)**: Used for OIDC-based secret exchange; no long-lived secrets are stored directly in GitHub.
 - **resourcedocsgen**: A Go tool (in `tools/resourcedocsgen/`) that generates provider API documentation from Pulumi provider schemas.
 - **S3 origin bucket model**: Each build produces its own uniquely-named S3 bucket. A Pulumi IaC program reads a metadata file to determine which bucket to point CloudFront at. This means each PR commit gets its own preview URL, and production deploys atomically swap the CloudFront origin.
-- **mktutorial**: A Go tool (in `tools/mktutorial/`) that generates how-to guide content from the `pulumi/examples` repository.
 
 ### Prerequisites
 
@@ -157,7 +155,6 @@ mise trust && mise install
 |---|---|
 | Hugo 0.157 (extended) | Static site generation from templates and content |
 | resourcedocsgen | Generates provider API reference docs from Pulumi schemas |
-| mktutorial | Generates how-to guides from `pulumi/examples` |
 | Pulumi IaC | Manages AWS resources; reads metadata file to update CloudFront origin |
 | Algolia | Search index; updated as part of production deploys via `scripts/search/main.js` |
 | AWS S3 | Hosts built site content as a static website origin |
@@ -167,7 +164,6 @@ mise trust && mise install
 ### Multi-Repo Touchpoints
 
 - **`pulumi/pulumi-*` provider repos**: Trigger `publish-provider-update.yml` via `repository_dispatch` when a new provider version is released.
-- **`pulumi/examples`**: Source of how-to guide content; pulled nightly by `update-tutorials.yml`.
 
 ---
 
@@ -278,11 +274,9 @@ All targets are defined in the repository root `Makefile`.
 | `serve-all` | Concurrent Hugo serve + asset watch |
 | `api-docs/<pkg>` | Build API docs for a single package via `resourcedocsgen` |
 | `bin/resourcedocsgen` | Compile resourcedocsgen from `tools/resourcedocsgen/` |
-| `bin/mktutorial` | Compile mktutorial from `tools/mktutorial/` |
 | `lint` | `lint-go` + `lint-markdown` + `yarn run lint` |
-| `lint-go` | `lint-resourcedocsgen` + `lint-mktutorial` |
+| `lint-go` | `lint-resourcedocsgen` |
 | `lint-resourcedocsgen` | `golangci-lint run` in `tools/resourcedocsgen/` |
-| `lint-mktutorial` | `golangci-lint run` in `tools/mktutorial/` |
 | `lint-markdown` | `scripts/lint/lint-markdown.js` |
 | `test` | `go test ./...` in `tools/resourcedocsgen/` |
 | `test_provider_api_docs` | `ensure` + `build-assets` + `bin/resourcedocsgen` → `scripts/ci/run-provider-tests.sh` |
@@ -373,25 +367,7 @@ When `<package-name>` is omitted, all packages listed in `themes/default/data/re
 
 The format of `llm-docs.json` is specified in `docs/llm-markdown-spec.md`.
 
-### 4.4 mktutorial Tool
-
-**Location**: `tools/mktutorial/`
-
-**Building**:
-
-```bash
-make bin/mktutorial
-```
-
-**Purpose**: Generates how-to guide (tutorial) content from the `pulumi/examples` repository for the following clouds: `aws-apigateway`, `aws`, `classic-azure` (mapped to `azure`), `azure` (mapped to `azure-native`), `gcp`, and `kubernetes`.
-
-**Output**: Content written to `themes/default/content/registry/packages/<cloud>/how-to-guides/`.
-
-Versioned packages (`aws-v6`, `azure-native-v2`) are also cleaned of stale tutorials.
-
-**Used only in CI** via `scripts/ci/mktutorial.sh`. Not used in local builds.
-
-### 4.5 CI Build Script (`scripts/ci/build.sh`)
+### 4.4 CI Build Script (`scripts/ci/build.sh`)
 
 This is the master build script for CI runs. It accepts one argument: `preview` or `update`.
 
@@ -411,7 +387,7 @@ This is the master build script for CI runs. It accepts one argument: `preview` 
     - `update` mode: uses `-e production`
 9. Runs `yarn run minify-css` to purge and minify CSS.
 
-### 4.6 Versioned documentation
+### 4.5 Versioned documentation
 
 **Location**: `scripts/generate-versioned-docs.sh`
 
@@ -467,14 +443,13 @@ CI builds use multiple cache layers to avoid redundant work. All caches are stor
 |---|---|---|---|
 | Node/Yarn | `node-cache-Linux-x64-yarn-<yarn.lock hash>` | `~/.cache/yarn/v6` | Yarn package cache |
 | Go (resourcedocsgen) | `setup-go-...-<tools/resourcedocsgen/go.sum hash>` | `GOMODCACHE`, `GOCACHE` | Go module and build cache |
-| Go (mktutorial) | `setup-go-...-<tools/mktutorial/go.sum hash>` | `GOMODCACHE`, `GOCACHE` | Go module and build cache |
 | registry-mirror-tools binaries | `registry-mirror-tools-bins-<os>-<commit hash>` | `bin/registry-mirror-discover`, `bin/registry-mirror-publish` | Pre-built binaries for `test-ci-scripts.yml` |
 | Docs + schemas | `docs-cache-<run_id>` (restore key: `docs-cache-`) | `.cache/schemas`, `.cache/versioned-docs`, `.cache/api-docs` | API docs output, versioned docs, provider schemas, LLM docs JSON |
 | registry-mirror-discover | `registry-mirror-discover-<commit hash>` | `bin/registry-mirror-discover` | Pre-built binary for versioned docs discovery |
 
 The docs cache uses `restore-keys: docs-cache-` so it falls back to the most recent previous run's cache when an exact match isn't found (the key includes `run_id`, so it's always unique).
 
-Each Go job keys on the `go.sum` of the module it compiles, via `cache-dependency-path`. Keep it that way: one key per module, never one key listing both. `setup-go` restores on an exact primary-key match and exposes no `restore-keys`, so a single shared key means the first job to finish decides what every later job restores — and if that is a `mktutorial` check, the jobs building `resourcedocsgen` stay cold. Jobs that compile neither module set `cache: false` rather than falling back to the repo-root `go.mod`, which describes the Hugo theme module and never changes.
+The `resourcedocsgen` Go job keys on the `go.sum` of the module it compiles, via `cache-dependency-path`. `setup-go` restores on an exact primary-key match and exposes no `restore-keys`. Jobs that compile no Go module set `cache: false` rather than falling back to the repo-root `go.mod`, which describes the Hugo theme module and never changes.
 
 #### Incremental API docs generation
 
@@ -538,7 +513,6 @@ All workflow files live in `.github/workflows/`.
 | `community-package-policy.yml` | Community package pipeline policy | PR touching the pipeline sources |
 | `publish-provider-update.yml` | provider docs build | `repository_dispatch` |
 | `bucket-cleanup.yml` | Scheduled jobs: Bucket cleanup | Daily 3:00 PM UTC |
-| `update-tutorials.yml` | Scheduled jobs: Update How To Guides | Daily 3:00 PM UTC |
 | `priority-digest.yml` | Scheduled jobs: Priority digest | Daily 3:00 PM UTC |
 | `export-repo-secrets.yml` | Export secrets to ESC | `workflow_dispatch` |
 | `add-triage-label.yml` | Add triage label to new issues | Issue opened / reopened |
@@ -558,10 +532,6 @@ PR opened / committed
         ├── resourcedocsgen (calls check-go.yml)
         │       ├── lint (golangci-lint)
         │       └── test (go test ./...)
-        │
-        ├── mktutorial (calls check-go.yml)
-        │       ├── lint
-        │       └── test
         │
         ├── lint-markdown
         │       └── yarn install → make lint-markdown
@@ -699,7 +669,7 @@ Requires: ESC secrets + AWS credentials (testing account role via `AWS_CI_ROLE_A
 
 #### `check-go.yml` — Reusable Go Lint + Test
 
-A reusable `workflow_call` workflow. Called by `pull-request.yml` for both `tools/resourcedocsgen/` and `tools/mktutorial/`.
+A reusable `workflow_call` workflow. Called by `pull-request.yml` for `tools/resourcedocsgen/`.
 
 Jobs:
 
@@ -772,16 +742,6 @@ For each deletable bucket (associated with a closed PR):
 4. Gives up (with an error) if cleanup has been stalled for 7+ days.
 
 Runs in the production environment (`388588623842:role/ContinuousDelivery`). Node 18.x / Go 1.20.x (older versions pinned in this workflow).
-
-#### `update-tutorials.yml` — Regenerate Tutorials from Examples
-
-**Trigger**: Daily at 3:00 PM UTC; also `workflow_dispatch`
-
-1. Checks out both `pulumi/registry` and `pulumi/examples` (into `examples/`).
-2. Runs `scripts/ci/mktutorial.sh $GITHUB_WORKSPACE/examples`.
-3. Opens or updates a PR on branch `tutorials/refresh` via `peter-evans/create-pull-request@v7`.
-
-Auto-merge is currently disabled (commented out in the workflow).
 
 #### `priority-digest.yml` — Post Open P0 and P1 Issues to Slack
 
@@ -991,15 +951,14 @@ make test
 # Runs: cd tools/resourcedocsgen && go test ./...
 ```
 
-Also run in CI via `check-go.yml` for both `tools/resourcedocsgen/` and `tools/mktutorial/`.
+Also run in CI via `check-go.yml` for `tools/resourcedocsgen/`.
 
 ### 8.2 Go Linting
 
 ```bash
 make lint-go
-# Runs golangci-lint in both:
+# Runs golangci-lint in:
 #   tools/resourcedocsgen/
-#   tools/mktutorial/
 ```
 
 Config: `.golangci.yml` (repo root).
@@ -1125,7 +1084,7 @@ The `export-repo-secrets.yml` workflow provides a manual escape hatch to sync Gi
 | `AWS_SECRET_ACCESS_KEY` | GitHub secret | preview (testing) | Initial AWS auth for testing environment |
 | `AWS_CI_ROLE_ARN` | ESC | preview, cleanup | IAM role to assume in testing account |
 | `GITHUB_TOKEN` | GitHub Actions | build, preview, cleanup, metadata | GitHub API access |
-| `PULUMI_BOT_TOKEN` | ESC | push checkout, tutorials, metadata PRs | Bot token for PR creation |
+| `PULUMI_BOT_TOKEN` | ESC | push checkout, metadata PRs | Bot token for PR creation |
 | `ALGOLIA_APP_ID` | GitHub var | build, preview | Algolia application ID |
 | `ALGOLIA_APP_SEARCH_KEY` | GitHub var | build, preview | Algolia public search key |
 | `ALGOLIA_APP_ADMIN_KEY` | ESC | production build | Algolia admin key (index writes) |
@@ -1158,7 +1117,6 @@ Note: `mise.toml` specifies Node 20 for local development, while CI workflows us
 | Task | Schedule (UTC) | Workflow | Key Command |
 |---|---|---|---|
 | Community package metadata check | 5:30 AM + 5:30 PM daily | `generate-package-metadata.yml` | `python generate_package_list.py` → `resourcedocsgen pkgversion` / `metadata from-github` |
-| Tutorial refresh from examples | 3:00 PM daily | `update-tutorials.yml` | `scripts/ci/mktutorial.sh` → PR on branch `tutorials/refresh` |
 | Link check | 3:00 PM every Monday | `check-links.yml` | `make check_links` |
 | Browser tests (scheduled) | 2:00 PM daily | `run-browser-tests.yml` | `make run-browser-tests` |
 | Stale bucket cleanup | 3:00 PM daily | `bucket-cleanup.yml` | `make ci_bucket_cleanup` |

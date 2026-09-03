@@ -9,13 +9,13 @@ Shared criteria used by `/registry-review`, `/pr-review`, and other review skill
 
 ---
 
-## Go Code (`tools/resourcedocsgen/`, `tools/mktutorial/`)
+## Go Code (`tools/resourcedocsgen/`)
 
 - **Idiomatic Go**: Follow Go conventions (naming, error handling, package structure)
 - **Error handling**: All errors must be checked and handled; no silently ignored errors
 - **Test coverage**: New functionality should include tests; modifications should not break existing tests
 - **Lint compliance**: Must pass `golangci-lint run` (run via `make lint-go`)
-- **Module boundaries**: `tools/resourcedocsgen/` and `tools/mktutorial/` are separate Go modules — changes should respect module boundaries
+- **Module boundaries**: `tools/resourcedocsgen/` is a separate Go module — changes should respect module boundaries
 
 ## CI Workflows (`.github/workflows/`)
 

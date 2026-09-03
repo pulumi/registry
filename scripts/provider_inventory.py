@@ -87,17 +87,10 @@ def analyze_page(path):
     }
 
 
-# Packages whose how-to-guides are copied from pulumi/examples on every CI run
-# (scripts/ci/mktutorial.sh). That script also prunes stale guides from the
-# versioned slugs aws-v6 and azure-native-v2, but never copies new ones there,
-# and neither slug exists in the tree today. Guides in any other package are
-# hand-committed and are not refreshed from pulumi/examples.
-MKTUTORIAL_PACKAGES = {"aws", "aws-apigateway", "azure", "azure-native", "gcp", "kubernetes"}
-
-
-def analyze_extras(content_dir, slug):
-    extras = {"howto_guides": 0, "howto_ci_refreshed": slug in MKTUTORIAL_PACKAGES,
-              "migration_dirs": [], "other_files": []}
+def analyze_extras(content_dir):
+    # How-to guides are no longer generated; the only ones in the tree are the
+    # hand-committed migration guides under a few packages' how-to-guides/ dirs.
+    extras = {"howto_guides": 0, "migration_dirs": [], "other_files": []}
     if content_dir.is_dir():
         for child in sorted(content_dir.iterdir()):
             if child.name in ("_index.md", "installation-configuration.md"):
@@ -202,7 +195,7 @@ def main():
             "has_install_config_page": (content / "installation-configuration.md").exists(),
             "overview_page": analyze_page(content / "_index.md"),
             "install_page": analyze_page(content / "installation-configuration.md"),
-            "extras": analyze_extras(content, path.stem),
+            "extras": analyze_extras(content),
             "registry_url": f"https://www.pulumi.com/registry/packages/{path.stem}/",
         })
 

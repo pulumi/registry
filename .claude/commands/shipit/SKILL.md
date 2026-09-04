@@ -46,7 +46,7 @@ Finalizes your current work by running quality checks, committing changes, pushi
 3. Scan last 5 conversation messages for "next steps" or "TODO" mentions
 4. Categorize changed files:
    - Package YAML (`themes/default/data/registry/packages/`)
-   - Go tools (`tools/resourcedocsgen/`, `tools/mktutorial/`)
+   - Go tools (`tools/resourcedocsgen/`)
    - CI workflows (`.github/workflows/`)
    - Build scripts (`Makefile`, `scripts/`)
    - Infrastructure (`infrastructure/`)

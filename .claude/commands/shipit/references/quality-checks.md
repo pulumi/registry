@@ -10,7 +10,7 @@ Quick reference for quality check procedures in the `/shipit` skill.
 
 | Content Changed | Mandatory Checks | Optional Suggestions |
 |-------------------|------------------|---------------------|
-| Go code (`tools/resourcedocsgen/`, `tools/mktutorial/`) | `make lint-go`, `make test` | - |
+| Go code (`tools/resourcedocsgen/`) | `make lint-go`, `make test` | - |
 | Package YAML (`themes/default/data/registry/packages/`) | YAML validity, required fields check | `/validate-package <name>` |
 | Markdown files | `make lint-markdown` | `/registry-review` |
 | Theme JS/CSS (`themes/default/theme/`) | `make build-assets` | - |

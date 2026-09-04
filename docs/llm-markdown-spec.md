@@ -345,7 +345,7 @@ The `llm-sitemap.json` file describes the navigable pages for a package.
 - Only the "API Docs" entry has `hasChildren` and `children`.
 - Children list the top-level modules/sections under API docs. Individual resources and functions within modules are not listed in the sitemap — they are discoverable from the module pages or by constructing URLs from the provider schema.
 - The sitemap is only generated for package root pages. Requesting `llm-sitemap.json` for a subpage returns an empty JSON object `{}`.
-- "Installation & Configuration" and "How-to Guides" entries are only present if those pages exist for the package.
+- "Installation & Configuration" and "How-to Guides" entries are only present if those pages exist for the package. Only a handful of packages have "How-to Guides" pages today — they are the hand-maintained migration guides (for example, under `aws`, `gcp`, `eks`, and `kubernetes`).
 
 ---
 

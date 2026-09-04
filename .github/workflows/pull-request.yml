@@ -21,7 +21,6 @@ jobs:
       statuses: write
     needs:
     - resourcedocsgen
-    - mktutorial
     - lint-markdown
     - lint-scripts
     - lint-dark-logos
@@ -94,11 +93,6 @@ jobs:
     uses: ./.github/workflows/check-go.yml
     with:
       path: tools/resourcedocsgen/
-
-  mktutorial:
-    uses: ./.github/workflows/check-go.yml
-    with:
-      path: tools/mktutorial/
 
   lint-markdown:
     name: Lint Markdown

@@ -50,7 +50,7 @@ Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
 - `Fix {package} metadata`
 - Example: `Update datarobot to v0.10.30`
 
-**Go tools** (`tools/resourcedocsgen/`, `tools/mktutorial/`):
+**Go tools** (`tools/resourcedocsgen/`):
 
 - `Fix {issue} in resourcedocsgen`
 - `Add {feature} to doc generation`

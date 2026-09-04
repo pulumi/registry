@@ -9,4 +9,4 @@
 CODEOWNERS @komalali @mjeffryes @iwahbe
 
 # Community packages.
-/community-packages/ @pulumi/iac-cloud
+/community-packages/ @pulumi/pulumi-platform

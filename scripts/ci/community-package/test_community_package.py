@@ -1038,3 +1038,75 @@ class SweepFailureIssueTests(unittest.TestCase):
     def test_a_pull_request_is_never_mistaken_for_the_issue(self) -> None:
         pr = {"number": 6, "body": comment_commands.SWEEP_FAILURE_MARKER, "pull_request": {}}
         self.assertEqual(len(self._alert([pr])), 1)
+
+
+class JavaProbeTests(unittest.TestCase):
+    def _probe(self, schema: dict[str, Any], exists: bool = True) -> list[InstallResult]:
+        seen: list[str] = []
+
+        def fake(base: str, artifact: str, version: str) -> tuple[bool, str]:
+            seen.append(f"{base}:{artifact}:{version}")
+            return (True, "") if exists else (False, "404")
+
+        with patch.object(sdk_install_probe, "_maven_artifact_exists", fake), \
+             patch.object(sdk_install_probe, "_run", lambda *a, **k: (True, "")), \
+             patch.object(sdk_install_probe, "_python_resolves", lambda *a: (True, "")), \
+             patch.object(sdk_install_probe, "_go_module_resolves", lambda *a: (True, "")):
+            results = sdk_install_probe.probe_installs("ovh", "v2.19.1", schema)
+        self.seen = seen
+        return results
+
+    def _row(self, results: list[InstallResult], language: str) -> InstallResult | None:
+        return next((r for r in results if r.language == language), None)
+
+    def test_a_declared_base_package_is_looked_up_on_maven_central(self) -> None:
+        results = self._probe({"name": "ovh", "language": {"java": {"basePackage": "com.ovhcloud.pulumi"}}})
+        self.assertEqual(self.seen, ["com.ovhcloud.pulumi:ovh:2.19.1"])
+        row = self._row(results, "java")
+        self.assertIsNotNone(row)
+        self.assertEqual(row.result if row else "", "pass")
+        self.assertFalse(row.blocking if row else True)
+
+    def test_an_unpublished_java_sdk_fails_without_blocking(self) -> None:
+        results = self._probe({"name": "ovh", "language": {"java": {"basePackage": "com.pulumiverse"}}},
+                              exists=False)
+        row = self._row(results, "java")
+        self.assertEqual(row.result if row else "", "fail")
+        self.assertFalse(row.blocking if row else True)
+
+    def test_an_empty_base_package_is_not_probed(self) -> None:
+        results = self._probe({"name": "ovh", "language": {"java": {"basePackage": ""}}})
+        self.assertEqual(self.seen, [])
+        self.assertIsNone(self._row(results, "java"))
+
+    def test_a_crafted_base_package_is_rejected_without_a_request(self) -> None:
+        results = self._probe({"name": "ovh", "language": {"java": {"basePackage": "com.x/../etc"}}})
+        self.assertEqual(self.seen, [])
+        self.assertEqual((self._row(results, "java") or InstallResult("", "", "pass")).result, "rejected")
+
+
+class DotnetRowTests(unittest.TestCase):
+    def _results(self, languages: dict[str, Any]) -> list[InstallResult]:
+        with patch.object(sdk_install_probe, "_run", lambda *a, **k: (True, "")):
+            return sdk_install_probe.probe_installs("demo", "v1.0.0", {"name": "demo", "language": languages})
+
+    def test_a_declared_dotnet_sdk_is_shown_as_untestable(self) -> None:
+        row = next(r for r in self._results({"csharp": {"respectSchemaVersion": True}})
+                   if r.language == "dotnet")
+        self.assertEqual(row.result, "absent")
+        self.assertIn("no package id", row.command)
+
+    def test_no_dotnet_row_when_the_schema_does_not_declare_it(self) -> None:
+        self.assertNotIn("dotnet", [r.language for r in self._results({})])
+
+
+class ProbedLanguagesNoteTests(unittest.TestCase):
+    def test_the_sheet_names_what_it_probed(self) -> None:
+        sheet = fact_sheet.render(_manifest(installs=[
+            InstallResult("plugin", "pulumi plugin install", "pass", blocking=True),
+            InstallResult("nodejs", "npm install x", "pass"),
+            InstallResult("java", "a:b:1 on Maven Central", "fail"),
+            InstallResult("dotnet", "(no package id in the schema to check)", "absent"),
+        ]))
+        self.assertIn("it probed nodejs and java", sheet)
+        self.assertIn("carries no coordinate", sheet)

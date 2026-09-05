@@ -1,0 +1,76 @@
+## Installation
+
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
+{{% choosable language typescript %}}
+
+No SDK is published for this language. Run the following command from your Pulumi project to generate one locally and record it in `Pulumi.yaml`:
+
+```bash
+pulumi package add terraform-provider chainguard-dev/cosign
+```
+
+{{% /choosable %}}
+{{% choosable language python %}}
+
+No SDK is published for this language. Run the following command from your Pulumi project to generate one locally and record it in `Pulumi.yaml`:
+
+```bash
+pulumi package add terraform-provider chainguard-dev/cosign
+```
+
+{{% /choosable %}}
+{{% choosable language go %}}
+
+No SDK is published for this language. Run the following command from your Pulumi project to generate one locally and record it in `Pulumi.yaml`:
+
+```bash
+pulumi package add terraform-provider chainguard-dev/cosign
+```
+
+{{% /choosable %}}
+{{% choosable language csharp %}}
+
+No SDK is published for this language. Run the following command from your Pulumi project to generate one locally and record it in `Pulumi.yaml`:
+
+```bash
+pulumi package add terraform-provider chainguard-dev/cosign
+```
+
+{{% /choosable %}}
+{{% choosable language java %}}
+
+No SDK is published for this language. Run the following command from your Pulumi project to generate one locally and record it in `Pulumi.yaml`:
+
+```bash
+pulumi package add terraform-provider chainguard-dev/cosign
+```
+
+{{% /choosable %}}
+{{% choosable language yaml %}}
+
+```bash
+pulumi package add terraform-provider chainguard-dev/cosign
+```
+
+{{% /choosable %}}
+{{% choosable language hcl %}}
+
+Declare the provider in your program, then run `pulumi install`:
+
+```hcl
+terraform {
+  required_providers {
+    cosign = {
+      source  = "chainguard-dev/cosign"
+      version = "0.4.19"
+    }
+  }
+}
+```
+
+```bash
+pulumi install
+```
+
+{{% /choosable %}}
+{{< /chooser >}}

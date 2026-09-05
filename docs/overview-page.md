@@ -52,7 +52,7 @@ Keep it to a short paragraph. The detail goes in the sections below.
 
 Give the installation command for **each language the package supports**. A command is more useful than a link, because a reader can copy it and run it.
 
-Wrap them in the site's language chooser so a reader sees only the language they use. The chooser is a pair of Hugo shortcodes — `chooser` with angle-bracket delimiters, `choosable` with percent delimiters — and the language keys are `typescript`, `python`, `go`, `csharp`, `java`, `yaml` and `hcl`. List in the `chooser` tag only the languages your package actually supports:
+Wrap them in the site's language chooser so a reader sees only the language they use. The chooser is a pair of Hugo shortcodes — `chooser` with angle-bracket delimiters, `choosable` with percent delimiters — and the language keys are `typescript`, `python`, `go`, `csharp`, `java`, `yaml` and `hcl`. List all seven — a language you publish no SDK for still gets a tab, carrying `pulumi package add` (see the notes below):
 
 ````markdown
 ## Installation
@@ -114,28 +114,106 @@ pulumi package add your-package
 {{% /choosable %}}
 {{% choosable language hcl %}}
 
+Declare the provider in your program, then run `pulumi install`:
+
+```hcl
+terraform {
+  required_providers {
+    your-package = {
+      source  = "pulumi/your-package"
+      version = "1.2.3"
+    }
+  }
+}
+```
+
 ```bash
-pulumi package add your-package
+pulumi install
 ```
 
 {{% /choosable %}}
 {{< /chooser >}}
 ````
 
+`resourcedocsgen gen-install --schemaFile <your schema.json>` (experimental) generates this whole block from your schema. It cannot tell which SDKs you actually publish — that is not in the schema — so pass `--languages` to correct it, or `--languages none` if you publish none. Languages you leave out still get a tab showing `pulumi package add`.
+
 Notes:
 
 - **Mind the delimiters.** `{{< chooser >}}` and `{{< /chooser >}}` use angle brackets; `{{% choosable %}}` and `{{% /choosable %}}` use percent signs. Mixing them silently breaks the rendered page, and CI checks for it (`make lint-markdown` runs a malformed-delimiter check over published content).
-- **YAML and HCL use `pulumi package add`.** They consume the package directly rather than through a per-language SDK.
-- **If you publish no SDKs at all**, `pulumi package add` *is* your installation section — one command, and no chooser needed. Many bridged providers currently title this section "Generate Provider"; `## Installation` is the preferred heading.
+- **Give every language a tab, not only the ones you publish an SDK for.** A reader who picks C# and finds an empty panel has been told nothing. For a language with no published SDK, `pulumi package add <name>` generates one locally: it takes the SDK language from the `runtime` in the reader's `Pulumi.yaml`, records the package there, and prints the import line — so the command reads the same for every language. Run outside a project it needs `--language nodejs|python|go|dotnet|java`. (`pulumi package gen-sdk` is the lower-level form, writing an SDK to `./sdk` without recording it; show `add` unless you mean the difference.)
+- **YAML uses `pulumi package add`** for the same reason: it consumes the package directly rather than through a per-language SDK.
+- **HCL does not use `pulumi package add` at all.** An HCL program names the provider in its own `required_providers` block and `pulumi install` fetches it. A source prefixed with `pulumi/` resolves to the native Pulumi provider and must be pinned to an **exact** semver version, not a constraint; any other source is bridged from its Terraform provider, so a package that wraps one (`pulumi package add terraform-provider <ns>/<name>` elsewhere) uses that same upstream address here. See the [Pulumi HCL reference](https://www.pulumi.com/docs/iac/languages-sdks/hcl/hcl-language-reference/).
+- **If you publish no SDKs at all**, every tab still earns its place: the SDK languages and YAML share one `pulumi package add` command, and HCL differs. Many bridged providers currently title this section "Generate Provider"; `## Installation` is the preferred heading.
+- **Local SDK generation needs a `version` in your schema.** Without one, `pulumi package add` fails outright with `version must be provided when package supports packing`.
 - **Java has no one-line install command**, so give the Maven and Gradle dependency coordinates, as above.
 - **Links to package feeds** (npm, PyPI, NuGet, pkg.go.dev, Maven Central) are accepted, and many existing packages use them instead. Prefer commands; add links alongside them if you like.
-- **If your provider ships a plugin binary** users must install separately, give the `pulumi plugin install resource <name> <version> --server <url>` command here too.
+- **You almost certainly do not need a `pulumi plugin install` command.** If your schema sets `pluginDownloadURL`, that value is compiled into every SDK you publish and the engine downloads the plugin binary on first use. Give the `pulumi plugin install resource <name> <version> --server <url>` command only if you know a reader must run it by hand.
 
 ### `## Example Usage`
 
 Provide a **complete, minimal Pulumi program** — one that declares a single resource from your provider — **in every language you support**. It needs the imports and enough surrounding code to actually run. A bare resource declaration on its own is not enough.
 
-Alongside the program, give the **full configuration** needed to run it, as `pulumi config set` commands:
+Wrap the programs in the same language chooser the Installation section uses, so a reader sees only their own language rather than scrolling past five copies of the same program. Use the same language keys, and list only the languages you support:
+
+````markdown
+## Example Usage
+
+{{< chooser language "typescript,python,go" >}}
+{{% choosable language typescript %}}
+
+```typescript
+import * as pulumi from "@pulumi/pulumi";
+import * as yourpackage from "@your-org/your-package";
+
+const example = new yourpackage.Widget("example", {size: "small"});
+
+export const widgetId = example.id;
+```
+
+{{% /choosable %}}
+{{% choosable language python %}}
+
+```python
+import pulumi
+import your_org_your_package as yourpackage
+
+example = yourpackage.Widget("example", size="small")
+
+pulumi.export("widgetId", example.id)
+```
+
+{{% /choosable %}}
+{{% choosable language go %}}
+
+```go
+package main
+
+import (
+	"github.com/your-org/pulumi-your-package/sdk/go/yourpackage"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		example, err := yourpackage.NewWidget(ctx, "example", &yourpackage.WidgetArgs{
+			Size: pulumi.String("small"),
+		})
+		if err != nil {
+			return err
+		}
+		ctx.Export("widgetId", example.ID())
+		return nil
+	})
+}
+```
+
+{{% /choosable %}}
+{{< /chooser >}}
+````
+
+The delimiter rule from the Installation section applies here too: `{{< chooser >}}` takes angle brackets, `{{% choosable %}}` takes percent signs.
+
+Alongside the programs, give the **full configuration** needed to run them, as `pulumi config set` commands:
 
 ```bash
 pulumi config set --secret your-package:apiToken <your-token>
@@ -156,6 +234,24 @@ Document every configuration parameter the provider accepts. For each one give:
 - **Required?** — whether the provider works without it
 - **Secret?** — whether it should be set with `pulumi config set --secret`
 - **Description** — what it does and what a valid value looks like
+
+A bullet list is the preferred shape. It is what most existing packages use, and it keeps long descriptions readable where a table column squeezes them:
+
+```markdown
+- `apiToken` (Required, Secret) — The API token used to authenticate. May also be set with the `YOURPACKAGE_API_TOKEN` environment variable.
+- `region` (Optional) — The region to operate in, e.g. `us-east-1`. Defaults to `us-east-1`.
+```
+
+A table carrying the same four fields is equally acceptable, and gives requiredness and secrecy their own columns to scan:
+
+```markdown
+| Name | Required | Secret | Description |
+|---|---|---|---|
+| `apiToken` | Yes | Yes | The API token used to authenticate. May also be set with the `YOURPACKAGE_API_TOKEN` environment variable. |
+| `region` | No | No | The region to operate in, e.g. `us-east-1`. Defaults to `us-east-1`. |
+```
+
+`resourcedocsgen gen-config --schemaFile <your schema.json>` (experimental) generates either form from your schema's `config` block, as a starting point to edit. It emits the list by default; `--style table` selects the second.
 
 Two things routinely get missed here, because they are not derivable from your schema. Put them in the parameter descriptions:
 

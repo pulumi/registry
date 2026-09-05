@@ -365,6 +365,6 @@ func TestSanitizeDescription(t *testing.T) {
 
 - And that is all.`
 
-	actual := sanitizeDescription(input)
+	actual := SanitizeDescription(input)
 	assert.Equal(t, expected, actual)
 }

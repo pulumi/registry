@@ -1,0 +1,10 @@
+## Configuration
+
+| Name | Required | Secret | Description |
+|---|---|---|---|
+| `apiKey` | No | Yes | Bearer token. If omitted, the LOGFIRE_API_KEY environment variable is used. |
+| `baseUrl` | No | No | Base URL for the Logfire API. If omitted, the provider uses LOGFIRE_BASE_URL or infers the SaaS endpoint from the api_key region. Self-hosted customers should set this explicitly. |
+| `customHeaders` | No | Yes | Additional HTTP headers to include on every Logfire API request. Intended for proxy, gateway, or edge authentication. Provider-managed headers cannot be overridden. |
+
+<!-- TODO: Environment-variable fallbacks. A parameter's environment-variable fallback is often read by the vendor SDK a layer beneath the schema, so it cannot be generated. Where a parameter can be supplied by an environment variable, name the variable in its description. -->
+<!-- TODO: Mutually exclusive options. If setting one parameter forbids or overrides another, or if a group of parameters must be supplied together, say so in the description of every parameter involved. Nothing else in the docs will surface that constraint. -->

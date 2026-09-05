@@ -48,6 +48,8 @@ func RootCmd(client HTTPDoer) *cobra.Command {
 	rootCmd.AddCommand(PackageMetadataCmd(client))
 	rootCmd.AddCommand(CheckVersion(client))
 	rootCmd.AddCommand(SanitizeDocsCmd())
+	rootCmd.AddCommand(GenInstallCmd(client))
+	rootCmd.AddCommand(GenConfigCmd(client))
 
 	return rootCmd
 }

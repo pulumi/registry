@@ -1146,7 +1146,7 @@ func (mod *modContext) genNestedTypes(member interface{}, resourceType, isProvid
 				typs = append(typs, docNestedType{
 					Name:        wbr(name),
 					AnchorID:    strings.ToLower(name),
-					Description: sanitizeDescription(typ.Comment),
+					Description: SanitizeDescription(typ.Comment),
 					Properties:  props,
 				})
 			case *schema.EnumType:
@@ -1172,8 +1172,8 @@ func (mod *modContext) genNestedTypes(member interface{}, resourceType, isProvid
 							DisplayName:        wbr(enumName),
 							Name:               enumName,
 							Value:              fmt.Sprintf("%v", e.Value),
-							Comment:            sanitizeDescription(e.Comment),
-							DeprecationMessage: sanitizeDescription(e.DeprecationMessage),
+							Comment:            SanitizeDescription(e.Comment),
+							DeprecationMessage: SanitizeDescription(e.DeprecationMessage),
 						})
 					}
 					enums[lang] = langEnumValues
@@ -1248,7 +1248,7 @@ func (mod *modContext) getPropertiesWithIDPrefixAndExclude(
 			propTypes = append(propTypes, mod.typeString(prop.Type, lang, characteristics, true))
 		}
 
-		comment := sanitizeDescription(prop.Comment)
+		comment := SanitizeDescription(prop.Comment)
 		link := "#" + propID
 
 		// Check if type is defined in a package external to the current package. If it is external, update comment to
@@ -1283,7 +1283,7 @@ func (mod *modContext) getPropertiesWithIDPrefixAndExclude(
 			DisplayName:        wbr(propLangName),
 			Name:               propLangName,
 			Comment:            comment,
-			DeprecationMessage: sanitizeDescription(prop.DeprecationMessage),
+			DeprecationMessage: SanitizeDescription(prop.DeprecationMessage),
 			IsRequired:         prop.IsRequired(),
 			IsInput:            input,
 			// We indicate that a property will replace if either
@@ -1860,14 +1860,14 @@ func (mod *modContext) genResource(r *schema.Resource) resourceDocArgs {
 	}
 
 	supportedSnippetLanguages := mod.context.getSupportedSnippetLanguages(r.IsOverlay, r.OverlaySupportedLanguages)
-	docInfo := dctx.decomposeDocstring(sanitizeDescription(r.Comment), supportedSnippetLanguages)
+	docInfo := dctx.decomposeDocstring(SanitizeDescription(r.Comment), supportedSnippetLanguages)
 	data := resourceDocArgs{
 		Header: mod.genResourceHeader(r),
 
 		Tool: mod.tool,
 
 		Comment:            docInfo.description,
-		DeprecationMessage: sanitizeDescription(r.DeprecationMessage),
+		DeprecationMessage: SanitizeDescription(r.DeprecationMessage),
 		ExamplesSection: examplesSection{
 			Examples:             docInfo.examples,
 			LangChooserLanguages: supportedSnippetLanguages,

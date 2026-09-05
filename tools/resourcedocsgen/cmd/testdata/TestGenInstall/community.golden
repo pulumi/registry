@@ -1,0 +1,70 @@
+## Installation
+
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
+{{% choosable language typescript %}}
+
+```bash
+npm install @pydantic/pulumi-logfire
+```
+
+{{% /choosable %}}
+{{% choosable language python %}}
+
+```bash
+pip install pulumi-logfire
+```
+
+{{% /choosable %}}
+{{% choosable language go %}}
+
+```bash
+go get github.com/pydantic/pulumi-logfire/sdk/go/logfire
+```
+
+{{% /choosable %}}
+{{% choosable language csharp %}}
+
+No SDK is published for this language. Run the following command from your Pulumi project to generate one locally and record it in `Pulumi.yaml`:
+
+```bash
+pulumi package add logfire
+```
+
+{{% /choosable %}}
+{{% choosable language java %}}
+
+No SDK is published for this language. Run the following command from your Pulumi project to generate one locally and record it in `Pulumi.yaml`:
+
+```bash
+pulumi package add logfire
+```
+
+{{% /choosable %}}
+{{% choosable language yaml %}}
+
+```bash
+pulumi package add logfire
+```
+
+{{% /choosable %}}
+{{% choosable language hcl %}}
+
+Declare the provider in your program, then run `pulumi install`:
+
+```hcl
+terraform {
+  required_providers {
+    logfire = {
+      source  = "pulumi/logfire"
+      version = "0.1.19"
+    }
+  }
+}
+```
+
+```bash
+pulumi install
+```
+
+{{% /choosable %}}
+{{< /chooser >}}

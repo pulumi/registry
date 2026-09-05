@@ -19,13 +19,13 @@ import (
 	"strings"
 )
 
-// sanitizeDescription cleans up common markdown issues found in upstream
+// SanitizeDescription cleans up common markdown issues found in upstream
 // provider schema descriptions (typically from Terraform-bridged providers).
 //
 // Some upstream providers use non-standard markdown patterns that render
 // correctly in the Terraform Registry but break under goldmark (CommonMark).
 // This function normalizes those patterns before doc generation.
-func sanitizeDescription(s string) string {
+func SanitizeDescription(s string) string {
 	s = stripLangSpans(s)
 	s = stripTerraformArgSections(s)
 	s = fixHTMLBullets(s)

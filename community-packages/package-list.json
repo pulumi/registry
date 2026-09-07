@@ -407,6 +407,10 @@
     {
       "repoSlug": "matthiashamacher/pulumi-ohdear",
       "schemaFile": "schema.json"
+    },
+    {
+      "repoSlug": "incsteps/pulumi-provider-multipass",
+      "schemaFile": "schema.json"
     }
   ]
 }

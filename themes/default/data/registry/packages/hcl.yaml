@@ -10,7 +10,7 @@ native: true
 package_status: public_preview
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-hcl
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-hcl/81200c94f7d2a92127e05cb057d07330f5ed2778/registry/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-hcl/5ba490ba634595a103e6685e0b02baee85285082/registry/schema.json
 title: Any HCL Module
-updated_on: 1788168674
-version: 0.16.2
+updated_on: 1788871980
+version: 0.17.0

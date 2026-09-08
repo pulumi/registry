@@ -121,6 +121,7 @@ export namespace Components {
         "selectClass"?: string;
     }
     interface PulumiRegistryListSearch {
+        "reset": () => Promise<void>;
     }
     interface PulumiResourceLinks {
         "moduleName": string;

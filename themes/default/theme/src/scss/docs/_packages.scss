@@ -9,6 +9,48 @@
         }
     }
 
+    // Any Terraform Provider suggestions in the empty state. Light values only —
+    // the dark half lives in _docs-theme.scss, which is unlayered and so beats
+    // anything written here. The injected `div.highlight > pre` command blocks
+    // need no rules at all: _code-light.scss and _docs-theme.scss already paint
+    // them in both modes.
+    .no-results {
+        .tf-suggest:empty {
+            @apply hidden;
+        }
+
+        // Marks the boundary between the Pulumi Registry results above and the
+        // OpenTofu registry results below. Colourless `border-t` picks up the
+        // default border, which the dark base rule already remaps.
+        .tf-suggest-divider {
+            @apply border-0 border-t my-6;
+        }
+
+        .tf-suggest-message {
+            @apply text-base font-semibold mb-3;
+        }
+
+        .tf-suggest-list {
+            @apply list-none p-0 m-0;
+        }
+
+        .tf-suggest-item {
+            @apply mb-4;
+        }
+
+        .tf-suggest-header {
+            @apply flex items-baseline gap-3 mb-1;
+        }
+
+        .tf-suggest-meta {
+            @apply text-sm text-gray-700;
+        }
+
+        .tf-suggest-fallback {
+            @apply text-sm mt-6;
+        }
+    }
+
     .package-tags {
         @apply inline-flex flex-wrap list-none p-0;
         max-width: 430px;

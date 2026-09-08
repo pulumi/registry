@@ -1030,6 +1030,20 @@ html[data-theme="dark"] body.section-registry {
         color: var(--docs-fg-muted);
     }
 
+    // Empty-state Any Terraform Provider suggestions. The command blocks inside
+    // are plain `div.highlight > pre`, already handled above, so only the text and
+    // link colors need naming here.
+    .all-packages .no-results {
+        .tf-suggest-meta,
+        .tf-suggest-fallback {
+            color: var(--docs-fg-muted);
+        }
+
+        .tf-suggest a {
+            color: var(--docs-link);
+        }
+    }
+
     // The mobile accordion's own background is written as an inline style by
     // docs-main.ts every time it's toggled, so no rule here can override it. These
     // two properties are what that inline style resolves instead; light mode never

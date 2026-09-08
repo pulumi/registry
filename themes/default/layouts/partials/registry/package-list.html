@@ -137,12 +137,34 @@ append . }} {{ end }} {{ end }}
             <!-- Capture the current (i.e., Page) context so it can be passed into the partial, allowing the partial to build proper relrefs. -->
             {{ $page := . }} {{ range (sort $allPackages "title") }} {{ partial
             "registry/package" (dict "package" . "page" $page) }} {{ end }}
-            <div class="no-results px-4">
-                <p>
+            <div class="no-results w-full px-4">
+                <p class="no-results-message">
                     Looks like we don't have any packages that match your
                     filters. Adjust or clear the filters and try again.
                 </p>
-                <button class="reset btn btn-lg">Clear all filters</button>
+
+                <!--
+                    Owned by opentofu-suggest.ts. Server-rendered empty so the live
+                    region exists in the DOM before anything is injected into it.
+                -->
+                <div class="tf-suggest" role="status" aria-live="polite"></div>
+
+                <!--
+                    Static fallback. Always present, so a failed (or absent) OpenTofu
+                    lookup still leaves the user with a way forward.
+                -->
+                <p class="tf-suggest-fallback">
+                    Pulumi can use <strong>any</strong> Terraform or OpenTofu
+                    provider, even one with no Pulumi package.
+                    <a
+                        href="/docs/iac/concepts/providers/any-terraform-provider/"
+                        >Learn how to use any Terraform provider</a
+                    >.
+                </p>
+
+                <button class="reset btn btn-secondary btn-lg">
+                    Clear all filters
+                </button>
             </div>
         </div>
     </section>

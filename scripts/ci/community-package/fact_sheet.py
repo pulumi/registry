@@ -7,6 +7,12 @@ from models import Manifest
 _RESULT_ICON = {"pass": "✅", "fail": "❌", "absent": "➖", "rejected": "🚫"}
 
 
+def _english_list(items: list[str]) -> str:
+    if len(items) == 1:
+        return items[0]
+    return ", ".join(items[:-1]) + " and " + items[-1]
+
+
 def _run_link() -> str | None:
     run_id = os.environ.get("GITHUB_RUN_ID")
     if not run_id:
@@ -96,6 +102,12 @@ def render(manifest: Manifest) -> str:
     if manifest.schemaVersion:
         lines.append(f"| schema version | {'✅' if manifest.schemaVersionMatches else '❌'} "
                      f"| `{manifest.schemaVersion}` in `{manifest.schemaFile}` |")
+    probed = [r.language for r in manifest.installMatrix
+              if r.language != "plugin" and r.result in ("pass", "fail")]
+    if probed:
+        lines += ["", "The check resolves an SDK only when the schema names where to find it, so "
+                      f"it probed {_english_list(probed)}. A `➖` row means the schema advertises "
+                      "that SDK but carries no coordinate to look up."]
     lines += ["", f"Owner `{manifest.owner}`"]
 
     if manifest.publisher and not manifest.publisherKnown:

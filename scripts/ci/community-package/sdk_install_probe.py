@@ -47,6 +47,26 @@ def _python_resolves(package: str, version: str) -> tuple[bool, str]:
     return False, err
 
 
+SAFE_COORDINATE = re.compile(r"^[A-Za-z0-9._-]+$")
+MAVEN_CENTRAL = "https://repo1.maven.org/maven2"
+
+
+def _maven_artifact_exists(base_package: str, artifact: str, version: str) -> tuple[bool, str]:
+    group = base_package.replace(".", "/")
+    url = f"{MAVEN_CENTRAL}/{group}/{artifact}/{version}/"
+    try:
+        with urllib.request.urlopen(url, timeout=30) as resp:
+            if resp.status == 200:
+                return True, ""
+    except urllib.error.HTTPError as e:
+        return False, (f"{url} returned {e.code}. The schema advertises a Java SDK at "
+                       f"{base_package}:{artifact}, but Maven Central does not carry that version. "
+                       "Publish it there, or drop the `java` block from the schema.")
+    except urllib.error.URLError as e:
+        return False, f"could not reach Maven Central: {e.reason}"
+    return False, f"{url} did not return 200"
+
+
 def _go_module_resolves(import_path: str, tag: str) -> tuple[bool, str]:
     with tempfile.TemporaryDirectory() as td:
         ok, err = _run(["go", "mod", "init", "probe"], cwd=td)
@@ -127,5 +147,15 @@ def probe_installs(name: str, tag: str, schema: dict[str, Any]) -> list[InstallR
     go_import = languages.get("go", {}).get("importBasePath")
     probe("go", "the go importBasePath", go_import,
           lambda: _go_module_resolves(go_import, tag), f"go get {go_import}@{tag}")
+
+    base_package = (languages.get("java") or {}).get("basePackage") or ""
+    if base_package and SAFE_COORDINATE.match(base_package) and SAFE_COORDINATE.match(name):
+        ok, error = _maven_artifact_exists(base_package, name, version)
+        record("java", f"{base_package}:{name}:{version} on Maven Central", ok, error)
+    elif base_package:
+        results.append(InstallResult("java", "(rejected: unsafe coordinate)", "rejected"))
+
+    if "csharp" in languages:
+        results.append(InstallResult("dotnet", "(no package id in the schema to check)", "absent"))
 
     return results

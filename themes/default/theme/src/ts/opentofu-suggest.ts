@@ -18,6 +18,13 @@ const PROVIDER_BASE = "https://search.opentofu.org/provider/";
 const MIN_QUERY_LENGTH = 2;
 const MAX_RESULTS = 5;
 const TIMEOUT_MS = 5000;
+// How long a lookup may run before we admit to the user that it is running. Matches
+// the search component's own 300ms debounce (pulumi-registry-list-search.tsx), so a
+// lookup that resolves at typing speed never paints an intermediate state at all.
+const LOADING_DELAY_MS = 300;
+// How much of the user's query we echo back in a heading. One value for every
+// message, so the Pulumi and OpenTofu lines truncate at the same point.
+const QUERY_ECHO_MAX = 60;
 
 const DEFAULT_MESSAGE =
     "Looks like we don't have any packages that match your filters. " +
@@ -49,7 +56,9 @@ let renderedKey: string | null = null; // what is currently painted
 const formatStars = (n: number): string => {
     if (n < 1000) return String(n);
     if (n < 100000) return `${(n / 1000).toFixed(1).replace(/\.0$/, "")}K`;
-    if (n < 1000000) return `${Math.round(n / 1000)}K`;
+    // 999500 rather than 1000000: that is the exact point where Math.round(n / 1000)
+    // reaches 1000, and "1000K" is not a thing anyone writes.
+    if (n < 999500) return `${Math.round(n / 1000)}K`;
     return `${(n / 1000000).toFixed(1).replace(/\.0$/, "")}M`;
 };
 
@@ -105,6 +114,12 @@ const normalizeResults = (body: any[]): TofuProvider[] =>
                 Number(isVendorNamespace(b)) - Number(isVendorNamespace(a)) ||
                 a.addr.localeCompare(b.addr),
         )
+        // Defensive: the endpoint appears to return one row per documentation page,
+        // so a provider with more than one published version could plausibly yield
+        // several type:"provider" rows for the same addr and eat several of the five
+        // slots. Unconfirmed against the live API, but cheap to make impossible.
+        // Runs after the sort, so the survivor of each addr is its best-ranked row.
+        .filter((p, i, all) => all.findIndex(o => o.addr === p.addr) === i)
         .slice(0, MAX_RESULTS);
 
 const buildCommand = (provider: TofuProvider): HTMLElement => {
@@ -185,7 +200,10 @@ const openSection = (region: HTMLElement, message: string): void => {
 };
 
 const renderLoading = (region: HTMLElement, query: string): void => {
-    openSection(region, `Searching the OpenTofu registry for "${truncate(query, 60)}"…`);
+    openSection(
+        region,
+        `Searching the OpenTofu registry for "${truncate(query, QUERY_ECHO_MAX)}"…`,
+    );
 };
 
 const render = (
@@ -195,7 +213,7 @@ const render = (
     query: string,
 ): void => {
     renderedKey = key;
-    const shown = `"${truncate(query, 60)}"`;
+    const shown = `"${truncate(query, QUERY_ECHO_MAX)}"`;
 
     if (providers.length === 0) {
         // Said explicitly rather than left blank: we told the user we were looking,
@@ -227,8 +245,21 @@ const fetchAndRender = async (
     inFlight = controller;
     const timer = window.setTimeout(() => controller.abort(), TIMEOUT_MS);
 
-    renderLoading(region, query);
+    // Drop the previous query's results right away — the Pulumi message above has
+    // already been rewritten for the new query, so leaving them would put a heading
+    // naming one query above results for another. Removing nodes from a live region
+    // announces nothing, and .tf-suggest:empty collapses the panel.
+    clear(region);
     renderedKey = null;
+
+    // Painting "Searching…" into a role="status" region on every debounced keystroke
+    // makes a screen reader read a run of "Searching… / 5 providers match /
+    // Searching… / 2 providers match". Defer it: a lookup that settles inside
+    // LOADING_DELAY_MS paints and announces nothing but its result. Slow lookups
+    // still get the heading, which is the case where it earns its keep.
+    const loadingTimer = window.setTimeout(() => {
+        if (key === currentKey) renderLoading(region, query);
+    }, LOADING_DELAY_MS);
 
     try {
         const res = await fetch(API + encodeURIComponent(query), {
@@ -246,13 +277,17 @@ const fetchAndRender = async (
     } catch (e) {
         // Aborted, offline, non-200, or malformed. Degrade quietly: the static
         // fallback paragraph below is server-rendered and still on screen. An error
-        // banner in an already-frustrating dead end is worse than nothing. Failures
-        // are deliberately not cached, so the next keystroke retries.
+        // banner in an already-frustrating dead end is worse than nothing.
+        //
+        // renderedKey is set so that the repeated syncEmptyState calls a single query
+        // produces don't re-fire the request. The result itself is never cached, so
+        // once anything else has been rendered, coming back to this query does retry.
         if (key !== currentKey) return;
         clear(region);
         renderedKey = key;
     } finally {
         window.clearTimeout(timer);
+        window.clearTimeout(loadingTimer);
         if (inFlight === controller) inFlight = null;
     }
 };
@@ -292,7 +327,7 @@ export const syncEmptyState = (visibleCount: number, filterText: string): void =
     if (message) {
         message.textContent =
             query.length > 0
-                ? `No packages in the Pulumi Registry match "${truncate(query, 80)}".`
+                ? `No packages in the Pulumi Registry match "${truncate(query, QUERY_ECHO_MAX)}".`
                 : DEFAULT_MESSAGE;
     }
 

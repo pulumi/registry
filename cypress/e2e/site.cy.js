@@ -110,10 +110,23 @@ describe("www.pulumi.com/registry", () => {
         };
 
         // Types into the filter and waits for the empty state to actually be reached,
-        // so assertions don't race the search component's 300ms debounce.
+        // so assertions don't race the search component's 300ms debounce. The
+        // zero-visible-packages assertion is retried, and it can't pass until
+        // filterByTextAndTags -> updateAllCount -> syncEmptyState has run, which is
+        // what makes the "did we fetch?" assertions below deterministic.
         const filterToEmpty = (query) => {
             cy.get(".registry-filter-input").clear().type(query);
             cy.get(".all-packages .package:not(.hidden)").should("have.length", 0);
+        };
+
+        // Ticks a tag filter. The option checkboxes live in shadow DOM behind an
+        // opacity-transitioned menu, so this drives pulumi-filter-select's own
+        // select() @Method() instead. The should() retries until Stencil has
+        // upgraded the element and put the method on it.
+        const selectFilter = (value) => {
+            cy.get("pulumi-filter-select")
+                .should(($el) => expect($el[0].select).to.be.a("function"))
+                .then(($el) => $el[0].select({ value }));
         };
 
         beforeEach(() => {
@@ -153,6 +166,46 @@ describe("www.pulumi.com/registry", () => {
                     "have.text",
                     "$ pulumi package add terraform-provider carlpett/sops 1.4.1",
                 );
+        });
+
+        it("collapses repeated rows for the same provider", () => {
+            // The endpoint looks like one row per documentation page, so a provider
+            // could plausibly return several type:"provider" rows and eat several of
+            // the five slots. Only the best-ranked row for each addr survives.
+            stubTofu({
+                body: [
+                    { type: "provider", addr: "carlpett/sops", version: "v1.4.1", popularity: 584 },
+                    { type: "provider", addr: "carlpett/sops", version: "v1.3.0", popularity: 584 },
+                    { type: "provider", addr: "nobbs/sops", version: "v0.3.3", popularity: 18 },
+                ],
+            });
+            filterToEmpty("sops");
+            cy.wait("@tofu");
+
+            cy.get(".tf-suggest .tf-suggest-item").should("have.length", 2);
+            cy.get(".tf-suggest .tf-suggest-item")
+                .first()
+                .find("code")
+                .should("contain.text", "carlpett/sops 1.4.1");
+        });
+
+        it("announces the search only once the lookup is visibly slow", () => {
+            // The loading heading is deferred so a lookup that resolves at typing
+            // speed never paints an intermediate state into the aria-live region.
+            // A slow one still says what it is doing.
+            cy.intercept("GET", TOFU_API, { body: twoProviders, delay: 1500 }).as("tofu");
+            filterToEmpty("sops");
+
+            cy.get(".tf-suggest .tf-suggest-message").should(
+                "contain.text",
+                "Searching the OpenTofu registry",
+            );
+
+            cy.wait("@tofu");
+            cy.get(".tf-suggest .tf-suggest-message").should(
+                "contain.text",
+                "2 providers in the OpenTofu registry",
+            );
         });
 
         it("prefers the vendor's own namespace when stars tie", () => {
@@ -267,29 +320,33 @@ describe("www.pulumi.com/registry", () => {
             cy.get(".tf-suggest hr.tf-suggest-divider").should("exist");
         });
 
-        it("shows no rule or OpenTofu message when it never searched", () => {
+        it("does not query OpenTofu for a single-character query", () => {
             cy.intercept("GET", TOFU_API, { body: [] }).as("tofu");
-            cy.get(".registry-filter-input").clear().type("q");
-            cy.wait(500);
+
+            // "~" appears in no package name, title, or keyword, so the empty state
+            // is genuinely reached and MIN_QUERY_LENGTH is what suppresses the
+            // lookup. A letter would not test that: "q" alone matches equinix,
+            // mssql, mysql, postgresql, qdrant-cloud and five more, so the panel
+            // would stay CSS-hidden and syncEmptyState would bail on visibleCount
+            // long before reaching the guard.
+            filterToEmpty("~");
+
             cy.get(".tf-suggest").should("be.empty");
             cy.get("@tofu.all").should("have.length", 0);
         });
 
         it("does not query OpenTofu when only tag filters are applied", () => {
             cy.intercept("GET", TOFU_API, { body: [] }).as("tofu");
-            cy.visit("/registry/");
 
-            // Deprecated + a category that has no deprecated packages yields an empty
-            // list with an empty search box.
-            cy.get(".registry-filter-input").clear();
+            // Deprecated + Version Control: both version-control packages are
+            // current, so the pair yields an empty list while the search box stays
+            // empty -- there is no query to send.
+            selectFilter("deprecated");
+            selectFilter("version control system");
+
+            cy.get(".all-packages .package:not(.hidden)").should("have.length", 0);
+            cy.get(".registry-filter-input").should("have.value", "");
             cy.get(".tf-suggest").should("be.empty");
-            cy.get("@tofu.all").should("have.length", 0);
-        });
-
-        it("does not query OpenTofu for a single-character query", () => {
-            cy.intercept("GET", TOFU_API, { body: [] }).as("tofu");
-            cy.get(".registry-filter-input").clear().type("q");
-            cy.wait(500);
             cy.get("@tofu.all").should("have.length", 0);
         });
 

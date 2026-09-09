@@ -46,8 +46,11 @@
             @apply text-sm text-gray-700;
         }
 
+        // Same weight as .tf-suggest-meta above: both are secondary notes beside
+        // the results, and the dark override in _docs-theme.scss already paints
+        // the pair with --docs-fg-muted (which is gray-700's counterpart).
         .tf-suggest-fallback {
-            @apply text-sm mt-6;
+            @apply text-sm text-gray-700 mt-6;
         }
     }
 

@@ -8,7 +8,6 @@ keywords:
 - command
 logo_url: ""
 name: purrl
-native: true
 package_status: public_preview
 publisher: Pulumiverse
 repo_url: https://github.com/pulumiverse/pulumi-purrl

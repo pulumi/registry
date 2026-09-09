@@ -8,7 +8,6 @@ keywords:
 - openstack
 logo_url: ""
 name: openstack
-native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-openstack

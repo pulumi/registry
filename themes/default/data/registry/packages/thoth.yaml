@@ -11,7 +11,6 @@ keywords:
 - ai
 logo_url: https://raw.githubusercontent.com/atensecurity/pulumi-thoth/main/docs/logo.png
 name: thoth
-native: false
 package_status: public_preview
 publisher: Aten Security
 repo_url: https://github.com/atensecurity/pulumi-thoth

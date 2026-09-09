@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from awx.
 featured: false
 logo_url: ""
 name: awx
-native: false
 package_status: public_preview
 publisher: denouche
 repo_url: https://github.com/denouche/terraform-provider-awx

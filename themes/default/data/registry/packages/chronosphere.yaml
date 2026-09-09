@@ -10,7 +10,6 @@ keywords:
 - prometheus
 logo_url: ""
 name: chronosphere
-native: false
 package_status: public_preview
 publisher: Chronosphere
 repo_url: https://github.com/chronosphereio/pulumi-chronosphere

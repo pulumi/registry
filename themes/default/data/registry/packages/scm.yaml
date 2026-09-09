@@ -9,7 +9,6 @@ keywords:
 - paloaltonetworks
 logo_url: https://raw.githubusercontent.com/pulumi/pulumi-scm/main/docs/logo.png
 name: scm
-native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-scm

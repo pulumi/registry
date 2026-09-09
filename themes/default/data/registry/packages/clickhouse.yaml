@@ -8,7 +8,6 @@ keywords:
 - clickhouse
 logo_url: https://avatars3.githubusercontent.com/ClickHouse
 name: clickhouse
-native: false
 package_status: ga
 publisher: pulumiverse
 repo_url: https://github.com/pulumiverse/pulumi-clickhouse

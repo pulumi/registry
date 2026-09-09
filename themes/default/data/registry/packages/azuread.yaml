@@ -9,7 +9,6 @@ keywords:
 - azuread
 logo_url: ""
 name: azuread
-native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-azuread

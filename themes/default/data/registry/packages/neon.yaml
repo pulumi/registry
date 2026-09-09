@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from neon.
 featured: false
 logo_url: ""
 name: neon
-native: false
 package_status: public_preview
 publisher: kislerdm
 repo_url: https://github.com/kislerdm/terraform-provider-neon

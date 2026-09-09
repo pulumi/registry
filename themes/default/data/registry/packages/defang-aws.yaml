@@ -14,7 +14,6 @@ keywords:
 - fargate
 logo_url: https://raw.githubusercontent.com/DefangLabs/pulumi-defang/refs/heads/main/docs/logo.png
 name: defang-aws
-native: true
 package_status: ga
 publisher: Defang
 repo_url: https://github.com/DefangLabs/pulumi-defang

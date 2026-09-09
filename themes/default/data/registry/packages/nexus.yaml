@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from nexus.
 featured: false
 logo_url: ""
 name: nexus
-native: false
 package_status: ga
 publisher: datadrivers
 repo_url: https://github.com/datadrivers/terraform-provider-nexus

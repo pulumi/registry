@@ -9,7 +9,6 @@ keywords:
 - eks
 logo_url: ""
 name: eks
-native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-eks

@@ -8,7 +8,6 @@ keywords:
 - acme
 logo_url: ""
 name: acme
-native: false
 package_status: public_preview
 publisher: Pulumiverse
 repo_url: https://github.com/pulumiverse/pulumi-acme

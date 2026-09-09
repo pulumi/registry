@@ -8,7 +8,6 @@ keywords:
 - eventstorecloud
 logo_url: ""
 name: eventstorecloud
-native: false
 package_status: public_preview
 publisher: EventStore
 repo_url: https://github.com/EventStore/pulumi-eventstorecloud

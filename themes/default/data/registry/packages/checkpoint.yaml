@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from checkpoint.
 featured: false
 logo_url: ""
 name: checkpoint
-native: false
 package_status: ga
 publisher: checkpointsw
 repo_url: https://github.com/checkpointsw/terraform-provider-checkpoint

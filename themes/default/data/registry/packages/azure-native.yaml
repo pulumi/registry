@@ -9,7 +9,6 @@ keywords:
 - azure-native
 logo_url: ""
 name: azure-native
-native: true
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-azure-native

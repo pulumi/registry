@@ -9,7 +9,6 @@ keywords:
 - pulumiverse
 logo_url: https://raw.githubusercontent.com/pulumiverse/pulumi-dynatrace/master/assets/logo.png
 name: dynatrace
-native: false
 package_status: public_preview
 publisher: Pulumiverse
 repo_url: https://github.com/pulumiverse/pulumi-dynatrace

@@ -8,7 +8,6 @@ keywords:
 - koyeb
 logo_url: ""
 name: koyeb
-native: false
 package_status: public_preview
 publisher: Koyeb
 repo_url: https://github.com/koyeb/pulumi-koyeb

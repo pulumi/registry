@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from onelogin.
 featured: false
 logo_url: ""
 name: onelogin
-native: false
 package_status: ga
 publisher: onelogin
 repo_url: https://github.com/onelogin/terraform-provider-onelogin

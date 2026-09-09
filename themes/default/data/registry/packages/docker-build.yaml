@@ -10,7 +10,6 @@ keywords:
 - buildx
 logo_url: ""
 name: docker-build
-native: true
 package_status: public_preview
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-docker-build

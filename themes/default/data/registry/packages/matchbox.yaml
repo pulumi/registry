@@ -8,7 +8,6 @@ keywords:
 - matchbox
 logo_url: ""
 name: matchbox
-native: false
 package_status: public_preview
 publisher: Pulumiverse
 repo_url: https://github.com/pulumiverse/pulumi-matchbox

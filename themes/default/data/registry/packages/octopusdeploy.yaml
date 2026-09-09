@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from octopusdeploy.
 featured: false
 logo_url: ""
 name: octopusdeploy
-native: false
 package_status: public_preview
 publisher: DEPRECATED
 repo_url: https://github.com/octopusdeploylabs/terraform-provider-octopusdeploy

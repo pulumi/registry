@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from tencentcloud.
 featured: false
 logo_url: ""
 name: tencentcloud
-native: false
 package_status: ga
 publisher: tencentcloudstack
 repo_url: https://github.com/tencentcloudstack/terraform-provider-tencentcloud

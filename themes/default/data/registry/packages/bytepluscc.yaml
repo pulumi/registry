@@ -9,7 +9,6 @@ keywords:
 - bytepluscc
 logo_url: https://avatars.githubusercontent.com/u/67365215
 name: bytepluscc
-native: false
 package_status: public_preview
 publisher: Byteplus
 repo_url: https://github.com/byteplus-sdk/pulumi-bytepluscc

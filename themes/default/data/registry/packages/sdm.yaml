@@ -8,7 +8,6 @@ keywords:
 - sdm
 logo_url: https://raw.githubusercontent.com/pierskarsenbarg/pulumi-sdm/main/docs/strongdm-logo.png
 name: sdm
-native: false
 package_status: ga
 publisher: Piers Karsenbarg
 repo_url: https://github.com/pierskarsenbarg/pulumi-sdm

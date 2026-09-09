@@ -8,7 +8,6 @@ keywords:
 - minio
 logo_url: ""
 name: minio
-native: false
 package_status: public_preview
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-minio

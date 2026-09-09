@@ -8,7 +8,6 @@ keywords:
 - argocd
 logo_url: https://argo-cd.readthedocs.io/en/stable/assets/logo.png
 name: argocd
-native: false
 package_status: ga
 publisher: Three141
 repo_url: https://github.com/three141/pulumi-argocd

@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from athenz.
 featured: false
 logo_url: ""
 name: athenz
-native: false
 package_status: ga
 publisher: athenz
 repo_url: https://github.com/athenz/terraform-provider-athenz

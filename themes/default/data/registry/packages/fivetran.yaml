@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from fivetran.
 featured: false
 logo_url: ""
 name: fivetran
-native: false
 package_status: ga
 publisher: fivetran
 repo_url: https://github.com/fivetran/terraform-provider-fivetran

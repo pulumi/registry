@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from glesys.
 featured: false
 logo_url: ""
 name: glesys
-native: false
 package_status: public_preview
 publisher: glesys
 repo_url: https://github.com/glesys/terraform-provider-glesys

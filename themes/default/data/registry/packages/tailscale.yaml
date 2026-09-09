@@ -8,7 +8,6 @@ keywords:
 - tailscale
 logo_url: ""
 name: tailscale
-native: false
 package_status: public_preview
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-tailscale

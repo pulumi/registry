@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from cosign.
 featured: false
 logo_url: ""
 name: cosign
-native: false
 package_status: public_preview
 publisher: chainguard-dev
 repo_url: https://github.com/chainguard-dev/terraform-provider-cosign

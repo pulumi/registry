@@ -8,7 +8,6 @@ keywords:
 - checkly
 logo_url: https://raw.githubusercontent.com/checkly/pulumi-checkly/main/assets/checkly.png
 name: checkly
-native: false
 package_status: ga
 publisher: Checkly
 repo_url: https://github.com/checkly/pulumi-checkly

@@ -8,7 +8,6 @@ keywords:
 - danubedata
 logo_url: ""
 name: danubedata
-native: true
 package_status: public_preview
 publisher: AdrianSilaghi
 repo_url: https://github.com/AdrianSilaghi/pulumi-danubedata

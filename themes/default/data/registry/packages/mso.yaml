@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from mso.
 featured: false
 logo_url: ""
 name: mso
-native: false
 package_status: ga
 publisher: ciscodevnet
 repo_url: https://github.com/ciscodevnet/terraform-provider-mso

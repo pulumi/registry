@@ -10,7 +10,6 @@ keywords:
 - proxmoxve
 logo_url: https://raw.githubusercontent.com/muhlba91/pulumi-proxmoxve/main/assets/proxmox-logo.png
 name: proxmoxve
-native: false
 package_status: ga
 publisher: Daniel Muehlbachler-Pietrzykowski
 repo_url: https://github.com/muhlba91/pulumi-proxmoxve

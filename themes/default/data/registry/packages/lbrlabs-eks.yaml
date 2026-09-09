@@ -11,7 +11,6 @@ keywords:
 - lbrlabs
 logo_url: https://raw.githubusercontent.com/lbrlabs/pulumi-lbrlabs-eks/main/assets/amazon-eks.png
 name: lbrlabs-eks
-native: false
 package_status: ga
 publisher: lbrlabs
 repo_url: https://github.com/lbrlabs/pulumi-lbrlabs-eks

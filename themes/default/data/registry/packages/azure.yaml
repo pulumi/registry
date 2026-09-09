@@ -11,7 +11,6 @@ keywords:
 - azure
 logo_url: ""
 name: azure
-native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-azure

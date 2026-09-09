@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from propelauth.
 featured: false
 logo_url: ""
 name: propelauth
-native: false
 package_status: public_preview
 publisher: propelauth
 repo_url: https://github.com/propelauth/terraform-provider-propelauth

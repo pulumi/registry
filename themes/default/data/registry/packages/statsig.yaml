@@ -8,7 +8,6 @@ keywords:
 - statsig
 logo_url: https://statsig-aws-marketplace-asset.s3.us-west-1.amazonaws.com/statsig-logo.png
 name: statsig
-native: false
 package_status: public_preview
 publisher: Statsig
 repo_url: https://github.com/statsig-io/pulumi-statsig

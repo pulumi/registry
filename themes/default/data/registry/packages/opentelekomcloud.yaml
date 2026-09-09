@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from opentelekomcloud.
 featured: false
 logo_url: ""
 name: opentelekomcloud
-native: false
 package_status: ga
 publisher: opentelekomcloud
 repo_url: https://github.com/opentelekomcloud/terraform-provider-opentelekomcloud

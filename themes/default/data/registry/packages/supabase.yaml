@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from supabase.
 featured: false
 logo_url: https://raw.githubusercontent.com/supabase/terraform-provider-supabase/refs/heads/main/assets/supabase-logo-wordmark--light.svg
 name: supabase
-native: false
 package_status: ga
 publisher: supabase
 repo_url: https://github.com/supabase/terraform-provider-supabase

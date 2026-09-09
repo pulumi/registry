@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from powerdns.
 featured: false
 logo_url: ""
 name: powerdns
-native: false
 package_status: ga
 publisher: pan-net
 repo_url: https://github.com/pan-net/terraform-provider-powerdns

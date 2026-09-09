@@ -9,7 +9,6 @@ keywords:
 - files.com
 logo_url: https://raw.githubusercontent.com/jschady/pulumi-filescom/main/docs/logo.svg
 name: filescom
-native: false
 package_status: public_preview
 publisher: jschady
 repo_url: https://github.com/jschady/pulumi-filescom

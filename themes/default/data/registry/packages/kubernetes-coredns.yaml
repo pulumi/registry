@@ -9,7 +9,6 @@ keywords:
 - coredns
 logo_url: ""
 name: kubernetes-coredns
-native: false
 package_status: public_preview
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-kubernetes-coredns

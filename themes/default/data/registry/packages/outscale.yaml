@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from outscale.
 featured: false
 logo_url: ""
 name: outscale
-native: false
 package_status: ga
 publisher: outscale
 repo_url: https://github.com/outscale/terraform-provider-outscale

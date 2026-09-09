@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from elasticstack.
 featured: false
 logo_url: ""
 name: elasticstack
-native: false
 package_status: public_preview
 publisher: elastic
 repo_url: https://github.com/elastic/terraform-provider-elasticstack

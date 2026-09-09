@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from incapsula.
 featured: false
 logo_url: ""
 name: incapsula
-native: false
 package_status: ga
 publisher: imperva
 repo_url: https://github.com/imperva/terraform-provider-incapsula

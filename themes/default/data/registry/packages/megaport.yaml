@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from megaport.
 featured: false
 logo_url: ""
 name: megaport
-native: false
 package_status: ga
 publisher: megaport
 repo_url: https://github.com/megaport/terraform-provider-megaport

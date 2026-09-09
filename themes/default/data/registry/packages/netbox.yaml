@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from netbox.
 featured: false
 logo_url: ""
 name: netbox
-native: false
 package_status: ga
 publisher: e-breuninger
 repo_url: https://github.com/e-breuninger/terraform-provider-netbox

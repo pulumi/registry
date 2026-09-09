@@ -8,7 +8,6 @@ keywords:
 - port
 logo_url: ""
 name: port
-native: false
 package_status: ga
 publisher: port-labs
 repo_url: https://github.com/port-labs/pulumi-port

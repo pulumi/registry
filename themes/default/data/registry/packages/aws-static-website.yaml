@@ -6,7 +6,6 @@ description: A Pulumi component to deploy a static website to AWS
 featured: false
 logo_url: ""
 name: aws-static-website
-native: false
 package_status: public_preview
 publisher: DEPRECATED
 repo_url: https://github.com/pulumi/pulumi-aws-static-website

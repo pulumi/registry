@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from fortimanager.
 featured: false
 logo_url: ""
 name: fortimanager
-native: false
 package_status: ga
 publisher: fortinetdev
 repo_url: https://github.com/fortinetdev/terraform-provider-fortimanager

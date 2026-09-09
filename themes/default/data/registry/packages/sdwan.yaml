@@ -8,7 +8,6 @@ keywords:
 - sdwan
 logo_url: https://raw.githubusercontent.com/pulumi/pulumi-sdwan/main/docs/logo.png
 name: sdwan
-native: false
 package_status: public_preview
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-sdwan

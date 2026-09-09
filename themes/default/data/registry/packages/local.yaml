@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from local.
 featured: false
 logo_url: ""
 name: local
-native: false
 package_status: ga
 publisher: hashicorp
 repo_url: https://github.com/hashicorp/terraform-provider-local

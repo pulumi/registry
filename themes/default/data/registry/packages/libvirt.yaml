@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from libvirt.
 featured: false
 logo_url: ""
 name: libvirt
-native: false
 package_status: public_preview
 publisher: dmacvicar
 repo_url: https://github.com/dmacvicar/terraform-provider-libvirt

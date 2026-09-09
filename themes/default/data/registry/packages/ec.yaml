@@ -12,7 +12,6 @@ keywords:
 - elasticcloud
 logo_url: ""
 name: ec
-native: false
 package_status: public_preview
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-ec

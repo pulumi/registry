@@ -8,7 +8,6 @@ keywords:
 - exoscale
 logo_url: ""
 name: exoscale
-native: false
 package_status: public_preview
 publisher: Pulumiverse
 repo_url: https://github.com/pulumiverse/pulumi-exoscale

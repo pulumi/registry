@@ -12,7 +12,6 @@ keywords:
 - ccapi
 logo_url: ""
 name: aws-native
-native: true
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-aws-native

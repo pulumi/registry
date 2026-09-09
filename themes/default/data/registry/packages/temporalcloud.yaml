@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from temporalcloud.
 featured: false
 logo_url: ""
 name: temporalcloud
-native: false
 package_status: ga
 publisher: temporalio
 repo_url: https://github.com/temporalio/terraform-provider-temporalcloud

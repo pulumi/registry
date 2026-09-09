@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from juju.
 featured: false
 logo_url: ""
 name: juju
-native: false
 package_status: ga
 publisher: juju
 repo_url: https://github.com/juju/terraform-provider-juju

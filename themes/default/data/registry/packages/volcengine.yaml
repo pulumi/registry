@@ -8,7 +8,6 @@ keywords:
 - volcengine
 logo_url: https://avatars.githubusercontent.com/u/67365215
 name: volcengine
-native: false
 package_status: public_preview
 publisher: Volcengine
 repo_url: https://github.com/volcengine/pulumi-volcengine

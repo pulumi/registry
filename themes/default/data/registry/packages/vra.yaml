@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from vra.
 featured: false
 logo_url: ""
 name: vra
-native: false
 package_status: public_preview
 publisher: vmware
 repo_url: https://github.com/vmware/terraform-provider-vra

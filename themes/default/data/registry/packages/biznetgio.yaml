@@ -12,7 +12,6 @@ keywords:
 - neo
 logo_url: https://raw.githubusercontent.com/shirasakaren/pulumi-biznetgio/main/assets/logo.png
 name: biznetgio
-native: true
 package_status: public_preview
 publisher: shirasakaren
 repo_url: https://github.com/shirasakaren/pulumi-biznetgio

@@ -9,7 +9,6 @@ keywords:
 - ai
 logo_url: https://raw.githubusercontent.com/datarobot-community/pulumi-datarobot/main/assets/datarobot-logo.png
 name: datarobot
-native: false
 package_status: public_preview
 publisher: DataRobot, Inc.
 repo_url: https://github.com/datarobot-community/pulumi-datarobot

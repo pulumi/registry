@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from gcorelabs.
 featured: false
 logo_url: ""
 name: gcorelabs
-native: false
 package_status: public_preview
 publisher: g-core
 repo_url: https://github.com/g-core/terraform-provider-gcorelabs

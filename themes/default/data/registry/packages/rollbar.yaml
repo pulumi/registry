@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from rollbar.
 featured: false
 logo_url: ""
 name: rollbar
-native: false
 package_status: ga
 publisher: rollbar
 repo_url: https://github.com/rollbar/terraform-provider-rollbar

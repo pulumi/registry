@@ -9,7 +9,6 @@ keywords:
 - volcenginecc
 logo_url: https://avatars.githubusercontent.com/u/67365215
 name: volcenginecc
-native: false
 package_status: public_preview
 publisher: Volcengine
 repo_url: https://github.com/volcengine/pulumi-volcenginecc

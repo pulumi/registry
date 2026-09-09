@@ -8,7 +8,6 @@ keywords:
 - formal
 logo_url: https://avatars3.githubusercontent.com/formalco
 name: formal
-native: false
 package_status: ga
 publisher: Formal
 repo_url: https://github.com/formalco/pulumi-formal

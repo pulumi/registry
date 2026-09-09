@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from civo.
 featured: false
 logo_url: ""
 name: civo
-native: false
 package_status: ga
 publisher: civo
 repo_url: https://github.com/civo/terraform-provider-civo

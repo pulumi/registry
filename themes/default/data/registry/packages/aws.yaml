@@ -9,7 +9,6 @@ keywords:
 - aws
 logo_url: ""
 name: aws
-native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-aws

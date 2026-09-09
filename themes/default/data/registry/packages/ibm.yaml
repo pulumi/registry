@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from ibm.
 featured: false
 logo_url: ""
 name: ibm
-native: false
 package_status: ga
 publisher: ibm-cloud
 repo_url: https://github.com/ibm-cloud/terraform-provider-ibm

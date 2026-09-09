@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from vkcs.
 featured: false
 logo_url: ""
 name: vkcs
-native: false
 package_status: public_preview
 publisher: vk-cs
 repo_url: https://github.com/vk-cs/terraform-provider-vkcs

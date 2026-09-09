@@ -8,7 +8,6 @@ keywords:
 - vultr
 logo_url: ""
 name: vultr
-native: false
 package_status: ga
 publisher: dirien
 repo_url: https://github.com/dirien/pulumi-vultr

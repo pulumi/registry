@@ -8,7 +8,6 @@ keywords:
 - azuredevops
 logo_url: ""
 name: azuredevops
-native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-azuredevops

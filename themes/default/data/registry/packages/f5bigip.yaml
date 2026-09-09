@@ -9,7 +9,6 @@ keywords:
 - bigip
 logo_url: ""
 name: f5bigip
-native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-f5bigip

@@ -8,7 +8,6 @@ keywords:
 - impart
 logo_url: https://console.impartsecurity.net/logomark-brand-background.png
 name: impart
-native: false
 package_status: public_preview
 publisher: Impart Security
 repo_url: https://github.com/impart-security/pulumi-impart

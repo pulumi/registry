@@ -8,7 +8,6 @@ keywords:
 - pinecone
 logo_url: ""
 name: pinecone
-native: true
 package_status: ga
 publisher: pinecone-io
 repo_url: https://github.com/pinecone-io/pulumi-pinecone

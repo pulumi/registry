@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from incident.
 featured: false
 logo_url: ""
 name: incident
-native: false
 package_status: ga
 publisher: incident-io
 repo_url: https://github.com/incident-io/terraform-provider-incident

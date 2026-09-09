@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from planetscale.
 featured: false
 logo_url: ""
 name: planetscale
-native: false
 package_status: ga
 publisher: planetscale
 repo_url: https://github.com/planetscale/terraform-provider-planetscale

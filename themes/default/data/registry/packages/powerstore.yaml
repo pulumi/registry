@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from powerstore.
 featured: false
 logo_url: ""
 name: powerstore
-native: false
 package_status: ga
 publisher: dell
 repo_url: https://github.com/dell/terraform-provider-powerstore

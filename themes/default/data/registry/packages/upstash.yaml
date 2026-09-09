@@ -8,7 +8,6 @@ keywords:
 - upstash
 logo_url: https://upstash.com/static/logo/logo-light.svg
 name: upstash
-native: false
 package_status: public_preview
 publisher: Upstash
 repo_url: https://github.com/upstash/pulumi-upstash

@@ -8,7 +8,6 @@ keywords:
 - pagerduty
 logo_url: ""
 name: pagerduty
-native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-pagerduty

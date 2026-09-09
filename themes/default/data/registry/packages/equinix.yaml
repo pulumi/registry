@@ -8,7 +8,6 @@ keywords:
 - equinix
 logo_url: https://raw.githubusercontent.com/equinix/pulumi-equinix/main/assets/logo.png
 name: equinix
-native: false
 package_status: public_preview
 publisher: Equinix
 repo_url: https://github.com/equinix/pulumi-equinix

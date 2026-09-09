@@ -11,7 +11,6 @@ keywords:
 - gcp
 logo_url: https://raw.githubusercontent.com/pulumi/pulumi-synced-folder/main/assets/synced-folder.png
 name: synced-folder
-native: false
 package_status: public_preview
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-synced-folder

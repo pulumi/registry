@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from algolia.
 featured: false
 logo_url: ""
 name: algolia
-native: false
 package_status: public_preview
 publisher: k-yomo
 repo_url: https://github.com/k-yomo/terraform-provider-algolia

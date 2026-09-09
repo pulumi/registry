@@ -9,7 +9,6 @@ keywords:
 - kafkaconnect
 logo_url: https://raw.githubusercontent.com/azaurus1/pulumi-kafka-connect/refs/heads/main/.github/images/kafka-logo.png
 name: kafka-connect
-native: true
 package_status: public_preview
 publisher: azaurus1
 repo_url: https://github.com/azaurus1/pulumi-kafka-connect

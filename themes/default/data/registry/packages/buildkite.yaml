@@ -8,7 +8,6 @@ keywords:
 - buildkite
 logo_url: https://raw.githubusercontent.com/pulumiverse/pulumi-buildkite/main/assets/buildkite-logo.png
 name: buildkite
-native: false
 package_status: ga
 publisher: Pulumiverse
 repo_url: https://github.com/pulumiverse/pulumi-buildkite

@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from authentik.
 featured: false
 logo_url: ""
 name: authentik
-native: false
 package_status: ga
 publisher: goauthentik
 repo_url: https://github.com/goauthentik/terraform-provider-authentik

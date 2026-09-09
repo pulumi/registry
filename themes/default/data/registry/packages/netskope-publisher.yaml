@@ -39,7 +39,6 @@ keywords:
 - yandex
 logo_url: https://raw.githubusercontent.com/johnneerdael/pulumi-netskope-publisher/main/site/source/images/netskope-logo.png
 name: netskope-publisher
-native: false
 package_status: public_preview
 publisher: johnneerdael
 repo_url: https://github.com/johnneerdael/pulumi-netskope-publisher

@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from hsdp.
 featured: false
 logo_url: ""
 name: hsdp
-native: false
 package_status: ga
 publisher: philips-software
 repo_url: https://github.com/philips-software/terraform-provider-hsdp

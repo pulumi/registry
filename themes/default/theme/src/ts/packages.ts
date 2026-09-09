@@ -25,12 +25,11 @@ const filterByTextAndTags = (filters, filterText) => {
 
             const packageType = el.getAttribute("data-type");
             const packageCategory = el.getAttribute("data-category");
-            let packageIsNative = packageType === "native-provider";
 
             // A deprecated package that reaches this point was explicitly requested
             // via the "Deprecated" type option, so treat it as a type match.
             const packageHasSelectedType =
-                packageIsDeprecated || !!filters.find(f => f.group === "type" && f.value === packageType) || (filters.find(f => f.group === "type" && f.value === "provider") && packageIsNative);
+                packageIsDeprecated || !!filters.find(f => f.group === "type" && f.value === packageType);
             const packageHasSelectedCategory = !!filters.find(f => f.group === "category" && f.value === packageCategory);
 
             // Free text matches when every whitespace-separated token appears in the
@@ -42,11 +41,12 @@ const filterByTextAndTags = (filters, filterText) => {
             ].join(" ").toLowerCase();
             let downcasedFilterText = filterText?.trim().toLowerCase();
 
-            // hack to include anything marked as native as responsive to a filter text including the word "native"
-            // see https://github.com/pulumi/registry/issues/5715 for reasoning
+            // Searching for "native aws" should still turn up both aws and aws-native.
+            // The "kind/native" schema tag is stripped out of data-keywords by
+            // resourcedocsgen, so drop the word from the query rather than fail to
+            // match it. See https://github.com/pulumi/registry/issues/5715.
             if (downcasedFilterText.includes("native")) {
                 downcasedFilterText = downcasedFilterText.replace(/native/g, "");
-                packageIsNative = true;
             }
 
             let packageIsAMatch;

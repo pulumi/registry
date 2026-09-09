@@ -54,14 +54,6 @@
             }
         }
 
-        &[data-filter-value="native-provider"] {
-            @apply border-violet-300;
-
-            [data-selected-types*="native-provider"] & {
-                @apply bg-violet-300;
-            }
-        }
-
         &[data-filter-value="component"] {
             @apply border-violet-300;
 

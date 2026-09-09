@@ -49,7 +49,7 @@ Use this when you're changing a provider and want to see how its API docs will r
 
     `--version` is required and must be valid semver. Use a dummy version higher than anything published so it's obvious in the rendered page that you're looking at a local build.
 
-1. The package's landing pages (`_index.md` and `installation-configuration.md`) are committed under `themes/default/content/registry/packages/<package>/` and are used as-is. If you're previewing a package that isn't in the registry yet, create that directory and add the two files by hand, copying them from your provider repo's `docs/` folder.
+1. The package's landing pages are committed under `themes/default/content/registry/packages/<package>/` and are used as-is. Only `_index.md` is required; `installation-configuration.md` is an optional split for packages whose install and config content outgrows the overview — see [The Overview page](./overview-page.md). If you're previewing a package that isn't in the registry yet, create that directory and copy `_index.md` into it from your provider repo's `docs/` folder. `resourcedocsgen docs` doesn't write these pages — `resourcedocsgen metadata from-urls` fetches them from the provider repo, and the publish workflow is what runs it.
 
 1. Serve the site:
 

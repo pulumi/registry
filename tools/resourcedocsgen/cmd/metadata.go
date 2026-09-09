@@ -361,7 +361,6 @@ func writePackageMetadata(
 	}
 
 	component := isComponent(spec.Keywords)
-	native := !component && (spec.Attribution == "" || isNative(spec.Keywords))
 	return emitPackageMetadata(pkg.PackageMeta{
 		Name:        spec.Name,
 		Description: spec.Description,
@@ -379,7 +378,6 @@ func writePackageMetadata(
 		Component: component,
 		Featured:  isFeaturedPackage(spec.Name),
 		Keywords:  searchKeywords(spec.Keywords),
-		Native:    native,
 	}, metadataDir)
 }
 
@@ -536,10 +534,6 @@ func isComponent(keywords []string) bool {
 
 func isFeaturedPackage(pkgName string) bool {
 	return slices.Contains(featuredPackages, pkgName)
-}
-
-func isNative(keywords []string) bool {
-	return getTagFromKeywords(keywords, "kind/native") != nil
 }
 
 func getTagWithPrefixFromKeywords(keywords []string, tagPrefix string) *string {

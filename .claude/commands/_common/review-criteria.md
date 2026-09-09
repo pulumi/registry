@@ -50,7 +50,6 @@ Every package YAML file must include:
 | `schema_file_url` | string | URL to the provider's schema JSON |
 | `category` | string | One of the valid categories (see below) |
 | `component` | boolean | Whether this is a component provider |
-| `native` | boolean | Whether this is a native provider |
 | `package_status` | string | `ga` or `public_preview` |
 
 ### Valid Categories
@@ -62,7 +61,7 @@ Every package YAML file must include:
 - `version` must match semver pattern: `v\d+\.\d+\.\d+` (with optional pre-release suffix)
 - `repo_url` must be a valid GitHub URL: `https://github.com/{owner}/{repo}`
 - `schema_file_url` must be a valid URL pointing to a JSON file
-- `component` and `native` must be boolean (`true` or `false`)
+- `component` must be boolean (`true` or `false`)
 - `package_status` must be `ga` or `public_preview`
 
 ## Infrastructure (`infrastructure/`)

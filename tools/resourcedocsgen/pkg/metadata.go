@@ -62,8 +62,6 @@ type PackageMeta struct {
 	// Featured indicates whether or not a package is highlighted as
 	// a featured package.
 	Featured bool `json:"featured"`
-	// Native is true if the package does not use the TF bridge.
-	Native bool `json:"native"`
 	// Component indicates if the package is a component and not
 	// a provider.
 	Component bool `json:"component"`

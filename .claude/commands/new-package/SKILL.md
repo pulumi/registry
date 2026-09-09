@@ -58,9 +58,8 @@ Use `AskUserQuestion` to collect the following (ask in sequence, one at a time):
 
 For community packages, also ask:
 8. **Is this a component provider?** (yes/no)
-9. **Is this a native provider?** (yes/no)
 
-For first-party packages, default `component: false` and `native: false` (can be overridden).
+For first-party packages, default `component: false` (can be overridden).
 
 ---
 

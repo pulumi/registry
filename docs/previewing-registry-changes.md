@@ -1,17 +1,24 @@
-# Previewing Registry Changes
+# Previewing registry changes
 
-Registry pages are generated from provider schemas and from this repository's templates, so a change to either isn't visible until it's published. You can render the affected pages locally first, or have a preview site built from a pull request.
+Every package page under `pulumi.com/registry` is assembled at build time from these sources:
 
-Pick the section that matches what you changed:
+- **Provider schemas**, downloaded during the build, which become the API docs — a page per resource and function, plus the nav tree beside them.
+- **`docs/_index.md` from each provider's repo**, fetched at publish time and committed here under `themes/default/content/registry/packages/<package>/`, which becomes the package's Overview page. An `installation-configuration.md` beside it, where a package has one, becomes the Install & config page.
+- **Guides written directly in this repository**, under that same directory's `how-to-guides/`, which become the How-to guides section — the AWS migration guides, the Kubernetes FAQ, and so on.
+- **Per-package metadata**, at `themes/default/data/registry/packages/<package>.yaml`, which records each package's version, schema URL, title, publisher, logo, and category.
+- **This repository's layouts, templates, and theme**, which render every one of those into the pages readers see.
 
-- [Local preview from a schema file](#local-preview-from-a-schema-file) — a provider schema you have on disk that isn't released yet.
-- [Local preview of a published package](#local-preview-of-a-published-package) — a package already in the registry: a docs template, a Hugo layout, the theme, or a package's YAML metadata.
-- [Local preview from a branch schema](#local-preview-from-a-branch-schema) — a provider schema you can put at a public URL, such as a branch on GitHub.
-- [Pull request preview](#pull-request-preview) — anything you're ready to push to `pulumi/registry`.
+A build of this repository produces the whole registry, not one package: `make api-docs` regenerates every package's API docs from its current schema, and Hugo renders all of them into a single site. CI caches per-package output, so packages whose metadata hasn't changed are restored from the previous build rather than regenerated — but the site it publishes always contains every package. That's why a change to a shared layout or theme file lands on all 300-odd packages at once.
+
+Your change reaches the live site when it merges to `master`: the push workflow rebuilds the site and swaps the CloudFront origin to the new build — see [Publish](./architecture.md#publish).
+
+Until then, `make serve` on its own won't show you much. The Overview pages and guides are committed, but every API docs page is generated during the build and isn't in your checkout, so the packages you most want to look at have nothing under them. This document covers how to generate one locally and how to get a shareable preview from a pull request.
+
+If you're a package author who wants to see how your next release will render, see [Previewing your package's docs](./previewing-package-docs.md) instead.
 
 ## Prerequisites
 
-The local sections below assume you've set the repository up once:
+You need a working checkout, which you set up once by following [Using this repository](../README.md#using-this-repository) in the README:
 
 ```bash
 mise trust && mise install
@@ -19,111 +26,59 @@ make ensure
 make build-assets
 ```
 
-See [the README](../README.md#using-this-repository) for details.
+## Render a package locally
 
-## Local preview from a schema file
-
-Use this when you're changing a provider and want to see how its API docs will render before you cut a release.
-
-1. Build the docs generator:
-
-    ```bash
-    make bin/resourcedocsgen
-    ```
-
-1. Generate your provider's schema in the provider repo. For a bridged provider that's usually `make schema`, which writes `provider/cmd/pulumi-resource-<name>/schema.json`.
-
-1. From the root of this repository, run `resourcedocsgen docs` against that file, writing into the two locations Hugo serves from:
-
-    ```bash
-    ./bin/resourcedocsgen docs \
-        --schemaFile ../pulumi-aws/provider/cmd/pulumi-resource-aws/schema.json \
-        --version v9.9.9 \
-        --docsOutDir ./content/registry/packages/aws/api-docs \
-        --packageTreeJSONOutDir ./static/registry/packages/navs
-    ```
-
-    `--version` is required and must be valid semver. Use a dummy version higher than anything published so it's obvious in the rendered page that you're looking at a local build.
-
-    Both output directories are git-ignored, so nothing you generate here can end up in a commit.
-
-1. The package's landing pages are committed under `themes/default/content/registry/packages/<package>/` and are used as-is. Only `_index.md` is required; `installation-configuration.md` is an optional split for packages whose install and config content outgrows the overview — see [The Overview page](./overview-page.md) and [Publishing packages](https://www.pulumi.com/docs/iac/guides/building-extending/packages/publishing-packages/#overview-installation--configuration). If you're previewing a package that isn't in the registry yet, create that directory and copy `_index.md` into it from your provider repo's `docs/` folder. `resourcedocsgen docs` doesn't write these pages — `resourcedocsgen metadata from-urls` fetches them from the provider repo, and the publish workflow is what runs it.
-
-1. Serve the site:
-
-    ```bash
-    make serve
-    ```
-
-    Your pages are at `http://localhost:1313/registry/packages/<package>/api-docs/`.
-
-Re-run step 3 after each schema change; the running Hugo server picks up the new files. If you're also changing CSS or JavaScript under `themes/default/theme`, use `make serve-all` instead so assets rebuild too.
-
-## Local preview of a published package
-
-Use this when the schema is already published and you're changing something on this side — a docs template, a Hugo layout, the theme, or a package's YAML metadata.
+Pick a package that exercises what you changed, generate its docs, and serve the site:
 
 ```bash
 make SKIP_VERSIONED_DOCS=1 api-docs/aws
 make serve
 ```
 
-`make api-docs/<package>` reads `themes/default/data/registry/packages/<package>.yaml`, fetches the corresponding schema, and writes to `content/registry/packages/<package>/` at the repository root, which is git-ignored. `make serve` then serves the whole site as usual, so the package lands at `http://localhost:1313/registry/packages/<package>/` — see [Troubleshooting](#troubleshooting) if that port doesn't answer.
+The `api-docs/<package>` target reads `themes/default/data/registry/packages/<package>.yaml`, downloads the schema that file points at, and writes the pages to `content/registry/packages/<package>/api-docs` and the nav tree to `static/registry/packages/navs/<package>.json`. Hugo serves this repository's root `content/` and `static/` directories alongside the theme's, which is why generated pages appear on the local site; both are git-ignored, so nothing you generate can end up in a commit. Your package is then at `http://localhost:1313/registry/packages/<package>/`.
 
-`SKIP_VERSIONED_DOCS=1` skips generating the older-major-version snapshots, which requires a Pulumi-internal tool that most contributors can't install. Leave it set unless you are specifically working on versioned docs.
+`SKIP_VERSIONED_DOCS=1` skips generating the older-major-version snapshots, which needs a Pulumi-internal tool that most contributors can't install. Leave it set unless you're specifically working on versioned docs.
+
+Generation takes a while for large packages, so generate one small package plus one large one rather than the whole registry — `make build` rebuilds everything, but it needs 32 GB of RAM and a lot of patience. `random` and `aws` are a reasonable pair.
+
+If you're changing CSS or JavaScript under `themes/default/theme`, use `make serve-all` in place of `make serve` so assets rebuild as you edit.
 
 ### Forcing a rebuild
 
-`resourcedocsgen` caches on the package YAML plus its own build identity, recorded in a `.generated` file next to the output. A schema that changed behind an unchanged `schema_file_url` therefore looks fresh to it, and it logs `Skipping (output is fresh)` instead of regenerating.
+`resourcedocsgen` won't regenerate output it believes is current. It records what it generated from in a `.generated` file next to the pages — the contents of the package YAML, plus the generator's own build — and skips the package when neither has changed, logging `Skipping (output is fresh)`. Editing the generator invalidates that, but editing a schema behind an unchanged URL doesn't.
 
-`make -B` does not help here: the Make target's sentinel is an intermediate file that Make deletes after each run, so the recipe already re-runs every time and the skip happens inside the generator. Delete the sentinel and re-run:
+`make -B` doesn't fix this. The target's sentinel is an intermediate file that Make deletes after each run, so the recipe already re-runs every time; the skip happens inside the generator. Delete the `.generated` file instead:
 
 ```bash
 rm content/registry/packages/aws/api-docs/.generated
 make SKIP_VERSIONED_DOCS=1 api-docs/aws
 ```
 
-## Local preview from a branch schema
+Changes to layouts, templates, and theme assets don't need any of this. Hugo re-renders those from the pages you've already generated.
 
-Use this when you want the full registry pipeline — metadata, nav tree, published schema file, and all — but against a schema that only exists on a branch.
+## Preview a pull request
 
-1. Publish the schema to a public URL. For most providers the schema is committed, so pushing your branch is enough; the raw URL looks like `https://raw.githubusercontent.com/<org>/<repo>/<branch>/provider/cmd/pulumi-resource-<name>/schema.json`. For providers whose schema is too large to commit (Azure Native, for example), upload it to S3 or any other public host.
+A pull request whose branch lives in `pulumi/registry` gets a full site build — every package, generated the same way `master` generates them — published to a per-commit S3 bucket. CI keeps a single pinned comment on the PR holding the preview URL for the current commit and a **Changed pages** list linking straight to the pages your PR affects. That comment is updated in place on each build rather than added per commit, and the bucket is deleted when the PR closes.
 
-1. Edit `themes/default/data/registry/packages/<package>.yaml`:
+This is the only practical way to check a change against the whole registry rather than the handful of packages you generated locally, so it's worth pushing a draft PR early for anything touching shared layouts or the theme.
 
-    - Set `schema_file_url` to the URL from step 1.
-    - Set `version` to a semver version that has **not** been published to the Pulumi Registry service — a bumped dummy version such as `v9.9.9`.
-
-    Both edits are required. `resourcedocsgen` asks `api.pulumi.com` for the package at `version` first and only falls back to `schema_file_url` when that lookup 404s. If you leave `version` at a published value you'll silently get the published schema and none of your changes.
-
-1. Generate and serve:
-
-    ```bash
-    make SKIP_VERSIONED_DOCS=1 api-docs/<package>
-    make serve
-    ```
-
-Revert the YAML edit before committing.
-
-## Pull request preview
-
-A pull request whose branch lives in `pulumi/registry` gets a full site build published to a per-commit S3 bucket. CI maintains a single pinned comment on the PR containing:
-
-- the preview URL for the current commit, and
-- a **Changed pages** list linking directly to the pages your PR affects.
-
-The comment is updated in place on each build rather than added per commit, and the preview buckets are deleted when the PR closes.
-
-**Pull requests from forks don't get this automatically.** The preview job only runs for branches pushed to this repository, so if you're contributing from a fork, use the local sections above. A Pulumi maintainer can build you one on demand by commenting `/preview` on the pull request.
-
-If your change is in a provider repo rather than here, you can still get a preview by opening a PR against this repository with the [branch schema](#local-preview-from-a-branch-schema) edits applied — the same YAML change works in CI. Don't merge that PR; it exists to produce the preview.
+Pull requests from forks don't get a preview automatically, because the preview job only runs for branches pushed to this repository. If you're contributing from a fork, preview locally, or ask a Pulumi maintainer to build you one by commenting `/preview` on the pull request.
 
 ## Troubleshooting
 
-**`registry-mirror-discover ... Repository not found`** — `make api-docs/<package>` tried to build the versioned-docs tool, which lives in a Pulumi-internal repository. Re-run with `SKIP_VERSIONED_DOCS=1`.
+**`make api-docs/<package>` fails with `registry-mirror-discover ... Repository not found`.** The build tried to generate versioned docs, which uses a tool that lives in a Pulumi-internal repository. Re-run with `SKIP_VERSIONED_DOCS=1`.
 
-**`Skipping (output is fresh)` and your changes don't appear** — see [Forcing a rebuild](#forcing-a-rebuild).
+**The generator logs `Skipping (output is fresh)` and your changes don't appear.** Its output cache thinks the pages are current. See [Forcing a rebuild](#forcing-a-rebuild).
 
-**Pages 404 in the local server** — check that the nav tree JSON was written to `static/registry/packages/navs/<package>.json` and that `themes/default/content/registry/packages/<package>/_index.md` exists. The API docs pages hang off that landing page.
+**The API docs render, but the nav on the left is empty.** That nav is fetched in the browser from `/registry/packages/navs/<package>.json`, and it fails quietly when the file is missing. Confirm `static/registry/packages/navs/<package>.json` exists.
 
-**Hugo isn't on port 1313** — `make serve` doesn't pass `--port`, so Hugo binds a random free port when 1313 is already taken. Read the port off the server's own startup output rather than assuming it.
+**A package page is empty apart from its Overview.** Its API docs haven't been generated in this checkout. Run `make SKIP_VERSIONED_DOCS=1 api-docs/<package>`.
+
+**Hugo isn't on port 1313.** `make serve` doesn't pass `--port`, so Hugo binds a random free port when 1313 is already taken. Read the port off the server's own startup output rather than assuming it.
+
+## Learn more
+
+- [Architecture](./architecture.md) — where each source of registry content comes from, and how a build reaches production.
+- [Using this repository](../README.md#using-this-repository) — one-time setup and the everyday build commands.
+- [`resourcedocsgen`](../tools/resourcedocsgen/README.md) — every flag the generator accepts.
+- [Previewing your package's docs](./previewing-package-docs.md) — the other direction: publishing a package and checking it before release.

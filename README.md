@@ -70,7 +70,7 @@ make SKIP_VERSIONED_DOCS=1 api-docs/<package_name>
 
 Run `make bin/resourcedocsgen && ./bin/resourcedocsgen --help` for help regarding its use or [see the `resourcedocsgen` README](tools/resourcedocsgen/README.md).
 
-To preview a provider whose schema changes aren't published yet, or to see your changes on a live preview site, see [Previewing Registry Changes](./docs/previewing-registry-changes.md).
+Two guides cover previewing in more depth: [Previewing your package's docs](./docs/previewing-package-docs.md), if you're publishing a package and want to see how a release will render beforehand, and [Previewing registry changes](./docs/previewing-registry-changes.md), if you're changing this repository and want to check it against published packages.
 
 ## Submitting, merging and releasing
 

@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from dome9.
 featured: false
 logo_url: ""
 name: dome9
-native: false
 package_status: ga
 publisher: dome9
 repo_url: https://github.com/dome9/terraform-provider-dome9

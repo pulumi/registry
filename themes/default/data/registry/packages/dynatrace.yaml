@@ -4,9 +4,11 @@ category: Infrastructure
 component: false
 description: A Pulumi package for creating and managing Dynatrace cloud resources.
 featured: false
+keywords:
+- dynatrace
+- pulumiverse
 logo_url: https://raw.githubusercontent.com/pulumiverse/pulumi-dynatrace/master/assets/logo.png
 name: dynatrace
-native: false
 package_status: public_preview
 publisher: Pulumiverse
 repo_url: https://github.com/pulumiverse/pulumi-dynatrace

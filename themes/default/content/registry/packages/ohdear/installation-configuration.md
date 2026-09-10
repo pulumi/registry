@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/matthiashamacher/pulumi-ohdear/v0.1.10/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/matthiashamacher/pulumi-ohdear/v1.0.0/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/matthiashamacher/pulumi-ohdear/blob/v0.1.10/docs/installation-configuration.md
+edit_url: https://github.com/matthiashamacher/pulumi-ohdear/blob/v1.0.0/docs/installation-configuration.md
 title: Oh Dear Installation & Configuration
 meta_desc: How to install the Pulumi Oh Dear provider and authenticate it with an Oh Dear API token.
 layout: installation

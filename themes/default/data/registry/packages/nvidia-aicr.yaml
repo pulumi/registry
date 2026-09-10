@@ -5,9 +5,13 @@ component: false
 description: Deploy validated NVIDIA AI Cluster Runtime (AICR) recipes for GPU-accelerated
   Kubernetes clusters.
 featured: false
+keywords:
+- nvidia
+- aicr
+- gpu
+- kubernetes
 logo_url: https://raw.githubusercontent.com/pulumi-labs/pulumi-nvidia-aicr/main/sdk/dotnet/logo.png
 name: nvidia-aicr
-native: true
 package_status: public_preview
 publisher: Pulumi Labs
 repo_url: https://github.com/pulumi-labs/pulumi-nvidia-aicr

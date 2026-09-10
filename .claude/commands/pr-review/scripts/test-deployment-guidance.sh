@@ -50,7 +50,7 @@ while IFS= read -r file; do
   case "$file" in
     themes/default/data/registry/packages/*.yaml)
       PACKAGE_YAML+=("$file") ;;
-    tools/resourcedocsgen/*|tools/mktutorial/*)
+    tools/resourcedocsgen/*)
       GO_TOOLS+=("$file") ;;
     .github/workflows/*)
       CI_WORKFLOWS+=("$file") ;;

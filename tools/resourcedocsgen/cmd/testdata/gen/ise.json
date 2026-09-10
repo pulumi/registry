@@ -1,0 +1,76 @@
+{
+  "config": {
+    "variables": {
+      "insecure": {
+        "description": "Allow insecure HTTPS client. This can also be set as the ISE_INSECURE environment variable. Defaults to <span pulumi-lang-nodejs=\"`true`\" pulumi-lang-dotnet=\"`True`\" pulumi-lang-go=\"`true`\" pulumi-lang-python=\"`true`\" pulumi-lang-yaml=\"`true`\" pulumi-lang-java=\"`true`\" pulumi-lang-hcl=\"`true`\">`true`</span>.",
+        "type": "boolean"
+      },
+      "password": {
+        "description": "Password for the ISE instance. This can also be set as the ISE_PASSWORD environment variable.",
+        "secret": true,
+        "type": "string"
+      },
+      "url": {
+        "description": "URL of the Cisco ISE instance. This can also be set as the ISE_URL environment variable.",
+        "type": "string"
+      },
+      "username": {
+        "description": "Username for the ISE instance. This can also be set as the ISE_USERNAME environment variable.",
+        "type": "string"
+      }
+    }
+  },
+  "displayName": "Cisco ISE",
+  "language": {
+    "csharp": {
+      "compatibility": "tfbridge20",
+      "namespaces": {
+        "deviceadmin": "DeviceAdmin",
+        "identitymanagement": "IdentityManagement",
+        "network": "Network",
+        "networkaccess": "NetworkAccess",
+        "profiling": "Profiling",
+        "system": "System",
+        "trustsec": "TrustSec"
+      },
+      "packageReferences": {
+        "Pulumi": "3.*"
+      },
+      "respectSchemaVersion": true
+    },
+    "go": {
+      "generateExtraInputTypes": true,
+      "generateResourceContainerTypes": true,
+      "importBasePath": "github.com/pulumi/pulumi-ise/sdk/go/ise",
+      "respectSchemaVersion": true
+    },
+    "java": {
+      "basePackage": "com.pulumi",
+      "buildFiles": "",
+      "gradleNexusPublishPluginVersion": "",
+      "gradleTest": ""
+    },
+    "nodejs": {
+      "compatibility": "tfbridge20",
+      "devDependencies": {
+        "@types/mime": "^2.0.0",
+        "@types/node": "^10.0.0"
+      },
+      "disableUnionOutputTypes": true,
+      "packageDescription": "A Pulumi package for managing resources on a Cisco ISE (Identity Service Engine) instance.. Based on terraform-provider-ise: version v0.2.1",
+      "packageName": "@pulumi/ise",
+      "readme": "> This provider is a derived work of the [Terraform Provider](https://github.com/CiscoDevNet/terraform-provider-ise)\n> distributed under [MPL 2.0](https://www.mozilla.org/en-US/MPL/2.0/). If you encounter a bug or missing feature,\n> first check the [`pulumi-ise` repo](https://github.com/pulumi/pulumi-ise/issues); however, if that doesn't turn up anything,\n> please consult the source [`terraform-provider-ise` repo](https://github.com/CiscoDevNet/terraform-provider-ise/issues).",
+      "respectSchemaVersion": true
+    },
+    "python": {
+      "compatibility": "tfbridge20",
+      "pyproject": {
+        "enabled": true
+      },
+      "readme": "> This provider is a derived work of the [Terraform Provider](https://github.com/CiscoDevNet/terraform-provider-ise)\n> distributed under [MPL 2.0](https://www.mozilla.org/en-US/MPL/2.0/). If you encounter a bug or missing feature,\n> first check the [`pulumi-ise` repo](https://github.com/pulumi/pulumi-ise/issues); however, if that doesn't turn up anything,\n> please consult the source [`terraform-provider-ise` repo](https://github.com/CiscoDevNet/terraform-provider-ise/issues).",
+      "respectSchemaVersion": true
+    }
+  },
+  "name": "ise",
+  "repository": "https://github.com/pulumi/pulumi-ise"
+}

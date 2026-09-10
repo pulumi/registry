@@ -4,13 +4,15 @@ category: Cloud
 component: false
 description: A Pulumi package to safely use volcengine resource in Pulumi programs.
 featured: false
+keywords:
+- volcengine
+- volcenginecc
 logo_url: https://avatars.githubusercontent.com/u/67365215
 name: volcenginecc
-native: false
 package_status: public_preview
 publisher: Volcengine
 repo_url: https://github.com/volcengine/pulumi-volcenginecc
-schema_file_url: https://raw.githubusercontent.com/volcengine/pulumi-volcenginecc/v0.0.59/provider/cmd/pulumi-resource-volcenginecc/schema.json
+schema_file_url: https://raw.githubusercontent.com/volcengine/pulumi-volcenginecc/v0.0.60/provider/cmd/pulumi-resource-volcenginecc/schema.json
 title: volcenginecc
-updated_on: 1788169802
-version: v0.0.59
+updated_on: 1788440237
+version: v0.0.60

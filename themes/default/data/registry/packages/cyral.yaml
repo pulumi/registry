@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from cyral.
 featured: false
 logo_url: ""
 name: cyral
-native: false
 package_status: ga
 publisher: cyralinc
 repo_url: https://github.com/cyralinc/terraform-provider-cyral

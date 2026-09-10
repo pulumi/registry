@@ -25,33 +25,37 @@ const filterByTextAndTags = (filters, filterText) => {
 
             const packageType = el.getAttribute("data-type");
             const packageCategory = el.getAttribute("data-category");
-            let packageIsNative = packageType === "native-provider";
 
             // A deprecated package that reaches this point was explicitly requested
             // via the "Deprecated" type option, so treat it as a type match.
             const packageHasSelectedType =
-                packageIsDeprecated || !!filters.find(f => f.group === "type" && f.value === packageType) || (filters.find(f => f.group === "type" && f.value === "provider") && packageIsNative);
+                packageIsDeprecated || !!filters.find(f => f.group === "type" && f.value === packageType);
             const packageHasSelectedCategory = !!filters.find(f => f.group === "category" && f.value === packageCategory);
 
-            const packageTitle = el.getAttribute("data-title");
-            const downcasedPackageTitle = packageTitle.toLowerCase();
+            // Free text matches when every whitespace-separated token appears in the
+            // package title, name, or keywords.
+            const haystack = [
+                el.getAttribute("data-title"),
+                el.getAttribute("data-name"),
+                el.getAttribute("data-keywords"),
+            ].join(" ").toLowerCase();
             let downcasedFilterText = filterText?.trim().toLowerCase();
 
-            let packageIsAMatch;
-
-            // hack to include anything marked as native as responsive to a filter text including the word "native"
-            // see https://github.com/pulumi/registry/issues/5715 for reasoning
+            // Searching for "native aws" should still turn up both aws and aws-native.
+            // The "kind/native" schema tag is stripped out of data-keywords by
+            // resourcedocsgen, so drop the word from the query rather than fail to
+            // match it. See https://github.com/pulumi/registry/issues/5715.
             if (downcasedFilterText.includes("native")) {
                 downcasedFilterText = downcasedFilterText.replace(/native/g, "");
-                packageIsNative = true;
             }
 
+            let packageIsAMatch;
             if (downcasedFilterText === AMAZON_STRING || downcasedFilterText === AWS_STRING){
-                packageIsAMatch = downcasedPackageTitle.includes(AMAZON_STRING) || downcasedPackageTitle.includes(AWS_STRING);
+                packageIsAMatch = haystack.includes(AMAZON_STRING) || haystack.includes(AWS_STRING);
             } else if (downcasedFilterText === GOOGLE_CLOUD_STRING || downcasedFilterText === GCP_STRING || downcasedFilterText === GOOGLE_STRING){
-                packageIsAMatch = downcasedPackageTitle.includes(GOOGLE_CLOUD_STRING) || downcasedPackageTitle.includes(GCP_STRING) || downcasedPackageTitle.includes(GOOGLE_STRING);
+                packageIsAMatch = haystack.includes(GOOGLE_CLOUD_STRING) || haystack.includes(GCP_STRING) || haystack.includes(GOOGLE_STRING);
             } else {
-                packageIsAMatch = downcasedPackageTitle.includes(downcasedFilterText);
+                packageIsAMatch = downcasedFilterText.split(/\s+/).filter(Boolean).every(token => haystack.includes(token));
             }
 
             if ((packageHasSelectedType || noSelectedType) && (packageHasSelectedCategory || noSelectedCategory) && (!filterText || packageIsAMatch)) {

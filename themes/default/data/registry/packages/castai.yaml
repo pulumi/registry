@@ -4,9 +4,11 @@ category: Cloud
 component: false
 description: A Pulumi package for creating and managing CAST AI cloud resources.
 featured: false
+keywords:
+- castai
+- kubernetes
 logo_url: https://raw.githubusercontent.com/castai/pulumi-castai/main/docs/images/castai-logo.png
 name: castai
-native: false
 package_status: ga
 publisher: CAST AI
 repo_url: https://github.com/castai/pulumi-castai

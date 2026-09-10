@@ -4,9 +4,10 @@ category: Cloud
 component: false
 description: ""
 featured: false
+keywords:
+- vercel
 logo_url: ""
 name: vercel
-native: false
 package_status: ga
 publisher: Pulumiverse
 repo_url: https://github.com/pulumiverse/pulumi-vercel

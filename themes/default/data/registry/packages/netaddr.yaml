@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from netaddr.
 featured: false
 logo_url: ""
 name: netaddr
-native: false
 package_status: public_preview
 publisher: ferlab-ste-justine
 repo_url: https://github.com/ferlab-ste-justine/terraform-provider-netaddr

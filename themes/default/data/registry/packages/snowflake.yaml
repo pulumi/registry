@@ -4,9 +4,10 @@ category: Infrastructure
 component: false
 description: A Pulumi package for creating and managing snowflake cloud resources.
 featured: false
+keywords:
+- snowflake
 logo_url: ""
 name: snowflake
-native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-snowflake

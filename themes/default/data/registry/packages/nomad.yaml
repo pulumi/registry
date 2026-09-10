@@ -4,9 +4,10 @@ category: Infrastructure
 component: false
 description: A Pulumi package for creating and managing nomad cloud resources.
 featured: false
+keywords:
+- nomad
 logo_url: ""
 name: nomad
-native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-nomad

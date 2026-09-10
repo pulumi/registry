@@ -40,6 +40,17 @@ def _nothing_to_check_sheet() -> str:
             "A community package PR adds one entry to that file.")
 
 
+def verdict_for(manifests: list[models.Manifest]) -> str:
+    if any(not m.green for m in manifests):
+        return "fail"
+    return "warn" if any(m.warnings for m in manifests) else "pass"
+
+
+def _write_verdict(out: Path, verdict: str) -> None:
+    out.mkdir(parents=True, exist_ok=True)
+    (out / comment_commands.VERDICT_FILE).write_text(verdict)
+
+
 def _write_sheet(out: Path, name: str, sheet: str) -> None:
     out.mkdir(parents=True, exist_ok=True)
     (out / name).write_text(sheet)
@@ -58,6 +69,7 @@ def run_check(args: argparse.Namespace) -> int:
         return _check(args)
     except Exception as failure:
         _write_sheet(Path(args.out), "000.factsheet.md", _crash_sheet(failure))
+        _write_verdict(Path(args.out), "broken")
         traceback.print_exc()
         return 2
 
@@ -68,19 +80,21 @@ def _check(args: argparse.Namespace) -> int:
         Path(args.changed_files).read_text().splitlines())
     if offending:
         _write_sheet(out, "000.factsheet.md", _rejection_sheet(offending))
+        _write_verdict(out, "fail")
         return 1
     entries = package_list.added_entries(package_list.at_ref(args.diff), package_list.current())
     if not entries:
         _write_sheet(out, "000.factsheet.md", _nothing_to_check_sheet())
+        _write_verdict(out, "nothing")
         return 0
     resourcedocsgen.ensure_built()
-    failed = False
+    manifests = []
     for index, entry in enumerate(entries):
         manifest = verify_entry.verify(entry)
         _write_sheet(out, f"{index:03d}.factsheet.md", fact_sheet.render(manifest))
-        if not manifest.green:
-            failed = True
-    return 1 if failed else 0
+        manifests.append(manifest)
+    _write_verdict(out, verdict_for(manifests))
+    return 1 if any(not m.green for m in manifests) else 0
 
 
 def run_preview(args: argparse.Namespace) -> int:
@@ -115,6 +129,7 @@ def run_fetch_pr(args: argparse.Namespace) -> int:
     offending = package_list.files_outside_allowlist(changed)
     if offending:
         _write_sheet(out, "000.factsheet.md", _rejection_sheet(offending))
+        _write_verdict(out, "fail")
         return 1
     head = str(github_api.pull_request(args.pr)["head"]["sha"])
     for path in package_list.ALLOWED_PATHS:

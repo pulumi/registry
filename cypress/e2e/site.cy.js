@@ -42,4 +42,51 @@ describe("www.pulumi.com/registry", () => {
             cy.get(".docs-main-nav").should("have.attr", "style").and("match", /height:\s*\d+px/);
         });
     });
+
+    describe("package list filter", () => {
+        beforeEach(() => {
+            cy.visit("/registry/");
+        });
+
+        const filterBy = (query) => {
+            cy.get(".registry-filter-input").clear().type(query);
+            // The search component debounces its event. The random package matches
+            // none of the queries below, so wait until it is hidden before asserting
+            // on the result.
+            cy.get(".all-packages .package.hidden [data-name='random']").should("exist");
+        };
+
+        const expectShown = (name) => {
+            cy.get(`.all-packages .package:not(.hidden) [data-name='${name}']`).should("exist");
+        };
+
+        it("matches the package name", () => {
+            filterBy("scm");
+            expectShown("scm");
+        });
+
+        it("matches every token against the package keywords", () => {
+            filterBy("palo alto");
+            expectShown("scm");
+            filterBy("alto palo");
+            expectShown("scm");
+        });
+
+        it("matches the title after the native hack strips the word", () => {
+            filterBy("native aws");
+            expectShown("aws-native");
+            expectShown("aws");
+        });
+
+        it("treats amazon as a synonym for aws", () => {
+            filterBy("amazon");
+            expectShown("aws");
+            expectShown("eks");
+        });
+
+        it("hides every package when nothing matches", () => {
+            filterBy("no-such-package");
+            cy.get(".all-packages .package:not(.hidden)").should("have.length", 0);
+        });
+    });
 });

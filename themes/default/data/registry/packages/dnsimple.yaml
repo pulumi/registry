@@ -4,9 +4,10 @@ category: Network
 component: false
 description: A Pulumi package for creating and managing dnsimple cloud resources.
 featured: false
+keywords:
+- dnsimple
 logo_url: ""
 name: dnsimple
-native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-dnsimple

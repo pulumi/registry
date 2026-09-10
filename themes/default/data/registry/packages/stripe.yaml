@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from stripe.
 featured: false
 logo_url: ""
 name: stripe
-native: false
 package_status: public_preview
 publisher: Pulumi
 repo_url: https://github.com/stripe/terraform-provider-stripe

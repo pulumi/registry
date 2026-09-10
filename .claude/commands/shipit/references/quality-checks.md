@@ -10,7 +10,7 @@ Quick reference for quality check procedures in the `/shipit` skill.
 
 | Content Changed | Mandatory Checks | Optional Suggestions |
 |-------------------|------------------|---------------------|
-| Go code (`tools/resourcedocsgen/`, `tools/mktutorial/`) | `make lint-go`, `make test` | - |
+| Go code (`tools/resourcedocsgen/`) | `make lint-go`, `make test` | - |
 | Package YAML (`themes/default/data/registry/packages/`) | YAML validity, required fields check | `/validate-package <name>` |
 | Markdown files | `make lint-markdown` | `/registry-review` |
 | Theme JS/CSS (`themes/default/theme/`) | `make build-assets` | - |
@@ -39,7 +39,7 @@ Scan last 10 conversation messages for:
 
 For package YAML files, perform a quick inline check:
 
-1. Verify required fields are present: `name`, `title`, `description`, `publisher`, `repo_url`, `version`, `schema_file_url`, `category`, `component`, `native`, `package_status`
+1. Verify required fields are present: `name`, `title`, `description`, `publisher`, `repo_url`, `version`, `schema_file_url`, `category`, `component`, `package_status`
 2. Verify `category` is one of: `Cloud`, `Database`, `Infrastructure`, `Monitoring`, `Network`, `Utility`, `Version Control System`
 3. Verify `version` matches semver: `v\d+\.\d+\.\d+`
 4. Verify `package_status` is `ga` or `public_preview`

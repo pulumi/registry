@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from logzio.
 featured: false
 logo_url: ""
 name: logzio
-native: false
 package_status: ga
 publisher: logzio
 repo_url: https://github.com/logzio/terraform-provider-logzio

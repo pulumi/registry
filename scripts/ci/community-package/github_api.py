@@ -103,18 +103,29 @@ def add_reaction(comment_id: str, content: str) -> None:
         pass
 
 
-def post_comment(pr: int, body: str) -> None:
-    request(f"/repos/{repo()}/issues/{pr}/comments", "POST", {"body": body})
+def post_comment(pr: int, body: str) -> dict[str, Any]:
+    return dict(request(f"/repos/{repo()}/issues/{pr}/comments", "POST", {"body": body}) or {})
 
 
 def edit_comment(comment_id: int, body: str) -> None:
     request(f"/repos/{repo()}/issues/comments/{comment_id}", "PATCH", {"body": body})
 
 
+def issue_comments(pr: int) -> list[dict[str, Any]]:
+    comments: list[dict[str, Any]] = []
+    page = 1
+    while True:
+        batch = request(f"/repos/{repo()}/issues/{pr}/comments?per_page=100&page={page}")
+        comments += [dict(c) for c in batch]
+        if len(batch) < 100:
+            return comments
+        page += 1
+
+
 def fact_sheet_comment(pr: int) -> dict[str, Any] | None:
-    for comment in request(f"/repos/{repo()}/issues/{pr}/comments"):
-        if FACT_SHEET_MARKER in comment["body"]:
-            return dict(comment)
+    for comment in issue_comments(pr):
+        if FACT_SHEET_MARKER in (comment.get("body") or ""):
+            return comment
     return None
 
 

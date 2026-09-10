@@ -4,13 +4,14 @@ category: Cloud
 component: false
 description: A Pulumi package for creating and managing Harness  resources.
 featured: false
+keywords:
+- harness
 logo_url: https://raw.githubusercontent.com/pulumi/pulumi-harness/main/assets/logo.png
 name: harness
-native: false
 package_status: public_preview
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-harness
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-harness/v0.16.3/provider/cmd/pulumi-resource-harness/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-harness/v0.16.4/provider/cmd/pulumi-resource-harness/schema.json
 title: Harness
-updated_on: 1787807184
-version: v0.16.3
+updated_on: 1788410667
+version: v0.16.4

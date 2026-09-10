@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/matthiashamacher/pulumi-ohdear/v0.1.10/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/matthiashamacher/pulumi-ohdear/v1.0.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/matthiashamacher/pulumi-ohdear/blob/v0.1.10/docs/_index.md
+edit_url: https://github.com/matthiashamacher/pulumi-ohdear/blob/v1.0.0/docs/_index.md
 title: Oh Dear
 meta_desc: Manage Oh Dear website monitoring — monitors, status pages, tags, and notification destinations — as Pulumi resources.
 layout: package
@@ -68,10 +68,11 @@ const alerts = new ohdear.NotificationDestination("email", {
 | Resource | Purpose |
 | --- | --- |
 | `Monitor` | A monitored URL or host (`http`, `ping`, `tcp`, `ai`) and its checks. |
+| `CronCheck` | A cron job monitor on a `Monitor`; ping its URL on each successful run. |
+| `RecurringMaintenancePeriod` | A recurring maintenance schedule (daily, weekly or monthly) for a `Monitor`. |
 | `Tag` | A tag used to organize monitors. Create-only upstream. |
 | `TagGroup` | A named group of tags, with wildcard matching. |
 | `StatusPage` | A public status page and the monitors shown on it. |
-| `StatusPageUpdateTemplate` | A reusable status-page update message. |
 | `NotificationDestination` | Where alerts are delivered, scoped to a team, monitor, tag or tag group. |
 
 See the **Installation & Configuration** tab for setup and the API Docs tab for

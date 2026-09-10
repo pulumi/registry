@@ -17,6 +17,7 @@ CHECK_WORKFLOW = "community-package-check.yml"
 SWEEP_FAILURE_MARKER = "<!-- community-package-sweep-failure -->"
 SWEEP_FAILURE_LABEL = "p1"
 PACKAGE_LIST = str(package_list.PATH)
+VERDICT_FILE = "verdict.txt"
 
 
 def _invokes(body: str, command: str) -> bool:
@@ -33,12 +34,12 @@ def _invokes(body: str, command: str) -> bool:
 
 def _within_cooldown(pr: int, comment_id: str, cooldown: int) -> bool:
     elapsed = github_api.minutes_since_dispatch(CHECK_WORKFLOW, pr)
-    if elapsed is not None and elapsed < cooldown:
-        github_api.add_reaction(comment_id, "eyes")
-        github_api.post_comment(pr, f"⏳ Rate limited. Last ran {elapsed} min ago; "
-                                    f"try again in {cooldown - elapsed} min.")
-        return True
-    return False
+    if elapsed is None or elapsed >= cooldown:
+        return False
+    github_api.add_reaction(comment_id, "eyes")
+    github_api.post_comment(pr, f"⏳ Rate limited. Last ran {elapsed} min ago; "
+                                f"try again in {cooldown - elapsed} min.")
+    return True
 
 
 def check_command() -> int:
@@ -57,12 +58,8 @@ def check_command() -> int:
 
     github_api.dispatch_check(CHECK_WORKFLOW, pr, sha)
     github_api.add_reaction(comment_id, "+1")
-    sticky = github_api.fact_sheet_comment(pr)
-    if sticky:
-        github_api.post_comment(pr, f"🔁 Re-checking `{sha[:12]}` against current upstream. "
-                                    f"The [fact-sheet]({sticky['html_url']}) updates in place when it finishes.")
-    else:
-        github_api.post_comment(pr, f"🔁 Checking `{sha[:12]}`. A fact-sheet comment appears when it finishes.")
+    github_api.post_comment(pr, f"🔁 Checking `{sha[:12]}` against current upstream. "
+                                "The result posts here when it finishes.")
     return 0
 
 
@@ -145,6 +142,30 @@ def fact_sheet_body(sheets: list[str]) -> str:
     return github_api.FACT_SHEET_MARKER + "\n\n" + "\n\n".join(sheets or [_unfinished_sheet()]) + "\n"
 
 
+_VERDICT_NOTICE = {
+    "pass": ("✅ The check passed on `{head}`. {sheet} Merging still needs a maintainer's review, "
+             "so nothing more is required of you."),
+    "warn": ("🟡 The check passed on `{head}`, with warnings. {sheet} The required checks are "
+             "green, but some advisory ones are not."),
+    "fail": ("❌ The check did not pass on `{head}`. {sheet} Fix what it reports, then comment "
+             "`/check` here to re-run it."),
+    "nothing": "ℹ️ There was nothing to check on `{head}`. {sheet}",
+    "broken": ("❌ The check crashed on `{head}`, so this package is unverified. {sheet} The fault is in "
+               "the check, not in your package; a maintainer has to read the "
+               "[run log]({run})."),
+}
+
+_NO_VERDICT_NOTICE = ("❌ The check did not finish on `{head}` and reported no verdict, so this "
+                      "package is unverified. The fault is in the check, not in your package; a "
+                      "maintainer has to read the [run log]({run}).")
+
+
+def _verdict_notice(verdict: str, head: str, sheet_url: str) -> str:
+    sheet = f"Read the [fact-sheet]({sheet_url})." if sheet_url else ""
+    template = _VERDICT_NOTICE.get(verdict, _NO_VERDICT_NOTICE)
+    return " ".join(template.format(head=head, sheet=sheet, run=_run_url()).split())
+
+
 def report() -> int:
     pr = int(os.environ["PR"])
     sheets = [f.read_text() for f in sorted(Path(".").glob("*.factsheet.md"))]
@@ -152,7 +173,11 @@ def report() -> int:
     existing = github_api.fact_sheet_comment(pr)
     if existing:
         github_api.edit_comment(int(existing["id"]), body)
+        sheet_url = str(existing.get("html_url", ""))
     else:
-        github_api.post_comment(pr, body)
+        sheet_url = str(github_api.post_comment(pr, body).get("html_url", ""))
     print(f"posted fact-sheet to PR #{pr}")
+
+    verdict = Path(VERDICT_FILE).read_text().strip() if Path(VERDICT_FILE).exists() else ""
+    github_api.post_comment(pr, _verdict_notice(verdict, os.environ.get("HEAD_SHA", "")[:12], sheet_url))
     return 0

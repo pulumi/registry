@@ -1152,7 +1152,7 @@ func (mod *modContext) genNestedTypes(member interface{}, resourceType, isProvid
 				typs = append(typs, docNestedType{
 					Name:        wbr(name),
 					AnchorID:    strings.ToLower(name),
-					Description: dctx.resolveRefs(selfRef, sanitizeDescription(typ.Comment)),
+					Description: dctx.resolveRefs(selfRef, SanitizeDescription(typ.Comment)),
 					Properties:  props,
 				})
 			case *schema.EnumType:
@@ -1179,8 +1179,8 @@ func (mod *modContext) genNestedTypes(member interface{}, resourceType, isProvid
 							DisplayName:        wbr(enumName),
 							Name:               enumName,
 							Value:              fmt.Sprintf("%v", e.Value),
-							Comment:            dctx.resolveRefsForLanguage(selfRef, sanitizeDescription(e.Comment), lang),
-							DeprecationMessage: sanitizeDescription(e.DeprecationMessage),
+							Comment:            dctx.resolveRefsForLanguage(selfRef, SanitizeDescription(e.Comment), lang),
+							DeprecationMessage: SanitizeDescription(e.DeprecationMessage),
 						})
 					}
 					enums[lang] = langEnumValues
@@ -1257,7 +1257,7 @@ func (mod *modContext) getPropertiesWithIDPrefixAndExclude(
 			propTypes = append(propTypes, mod.typeString(prop.Type, lang, characteristics, true))
 		}
 
-		comment := dctx.resolveRefsForLanguage(selfRef, sanitizeDescription(prop.Comment), lang)
+		comment := dctx.resolveRefsForLanguage(selfRef, SanitizeDescription(prop.Comment), lang)
 		link := "#" + propID
 
 		// Check if type is defined in a package external to the current package. If it is external, update comment to
@@ -1292,7 +1292,7 @@ func (mod *modContext) getPropertiesWithIDPrefixAndExclude(
 			DisplayName:        wbr(propLangName),
 			Name:               propLangName,
 			Comment:            comment,
-			DeprecationMessage: sanitizeDescription(prop.DeprecationMessage),
+			DeprecationMessage: SanitizeDescription(prop.DeprecationMessage),
 			IsRequired:         prop.IsRequired(),
 			IsInput:            input,
 			// We indicate that a property will replace if either
@@ -1870,14 +1870,14 @@ func (mod *modContext) genResource(r *schema.Resource) resourceDocArgs {
 	}
 
 	supportedSnippetLanguages := mod.context.getSupportedSnippetLanguages(r.IsOverlay, r.OverlaySupportedLanguages)
-	docInfo := dctx.decomposeDocstring(selfRef, sanitizeDescription(r.Comment), supportedSnippetLanguages)
+	docInfo := dctx.decomposeDocstring(selfRef, SanitizeDescription(r.Comment), supportedSnippetLanguages)
 	data := resourceDocArgs{
 		Header: mod.genResourceHeader(r),
 
 		Tool: mod.tool,
 
 		Comment:            docInfo.description,
-		DeprecationMessage: sanitizeDescription(r.DeprecationMessage),
+		DeprecationMessage: SanitizeDescription(r.DeprecationMessage),
 		ExamplesSection: examplesSection{
 			Examples:             docInfo.examples,
 			LangChooserLanguages: supportedSnippetLanguages,

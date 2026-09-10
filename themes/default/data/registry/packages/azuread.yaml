@@ -5,13 +5,14 @@ component: false
 description: A Pulumi package for creating and managing Azure Active Directory (Azure
   AD) cloud resources.
 featured: false
+keywords:
+- azuread
 logo_url: ""
 name: azuread
-native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-azuread
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-azuread/v6.10.0/provider/cmd/pulumi-resource-azuread/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-azuread/v6.10.1/provider/cmd/pulumi-resource-azuread/schema.json
 title: Azure Active Directory (Azure AD)
-updated_on: 1783675257
-version: v6.10.0
+updated_on: 1788873655
+version: v6.10.1

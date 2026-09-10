@@ -4,9 +4,12 @@ category: Network
 component: false
 description: A Pulumi package for creating and managing Cloud NGFW for AWS resources.
 featured: false
+keywords:
+- cloudngfwaws
+- Palo Alto Networks
+- ngfw
 logo_url: https://avatars.githubusercontent.com/u/4855743?s=200&v=4
 name: cloudngfwaws
-native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-cloudngfwaws

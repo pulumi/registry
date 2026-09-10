@@ -4,9 +4,10 @@ category: Infrastructure
 component: false
 description: A Pulumi package for creating and managing RabbitMQ resources.
 featured: false
+keywords:
+- rabbitmq
 logo_url: ""
 name: rabbitmq
-native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-rabbitmq

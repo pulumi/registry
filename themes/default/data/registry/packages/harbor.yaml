@@ -4,9 +4,10 @@ category: Utility
 component: false
 description: A Pulumi package for creating and managing Harbor resources.
 featured: false
+keywords:
+- harbor
 logo_url: ""
 name: harbor
-native: false
 package_status: ga
 publisher: Pulumiverse
 repo_url: https://github.com/pulumiverse/pulumi-harbor

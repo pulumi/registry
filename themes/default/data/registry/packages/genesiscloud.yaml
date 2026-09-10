@@ -4,9 +4,10 @@ category: Cloud
 component: false
 description: A Pulumi package for creating and managing genesiscloud cloud resources.
 featured: false
+keywords:
+- genesiscloud
 logo_url: https://avatars.githubusercontent.com/u/38134186?s=200&v=4
 name: genesiscloud
-native: false
 package_status: public_preview
 publisher: Genesiscloud
 repo_url: https://github.com/genesiscloud/pulumi-genesiscloud

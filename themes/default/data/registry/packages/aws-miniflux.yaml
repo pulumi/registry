@@ -4,7 +4,6 @@ description: ""
 featured: false
 logo_url: ""
 name: aws-miniflux
-native: false
 package_status: public_preview
 publisher: Christian Nunciato
 repo_url: "https://github.com/pulumi/pulumi-aws-miniflux"

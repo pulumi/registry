@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from platform.
 featured: false
 logo_url: ""
 name: platform
-native: false
 package_status: ga
 publisher: jfrog
 repo_url: https://github.com/jfrog/terraform-provider-platform

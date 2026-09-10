@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from edgecenter.
 featured: false
 logo_url: ""
 name: edgecenter
-native: false
 package_status: public_preview
 publisher: edge-center
 repo_url: https://github.com/edge-center/terraform-provider-edgecenter

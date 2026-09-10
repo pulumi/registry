@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from bitbucket.
 featured: false
 logo_url: ""
 name: bitbucket
-native: false
 package_status: ga
 publisher: drfaust92
 repo_url: https://github.com/drfaust92/terraform-provider-bitbucket

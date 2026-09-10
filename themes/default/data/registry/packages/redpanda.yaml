@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from redpanda.
 featured: false
 logo_url: ""
 name: redpanda
-native: false
 package_status: ga
 publisher: redpanda-data
 repo_url: https://github.com/redpanda-data/terraform-provider-redpanda

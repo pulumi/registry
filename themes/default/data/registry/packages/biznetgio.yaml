@@ -5,9 +5,13 @@ component: false
 description: Unofficial Pulumi provider for Biznet GIO cloud by Shirasaka Ren - NEO
   Metal, NEO Lite/Lite Pro, NEO GPU, and Object Storage.
 featured: false
+keywords:
+- biznetgio
+- cloud
+- indonesia
+- neo
 logo_url: https://raw.githubusercontent.com/shirasakaren/pulumi-biznetgio/main/assets/logo.png
 name: biznetgio
-native: true
 package_status: public_preview
 publisher: shirasakaren
 repo_url: https://github.com/shirasakaren/pulumi-biznetgio

@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from restapi.
 featured: false
 logo_url: ""
 name: restapi
-native: false
 package_status: ga
 publisher: mastercard
 repo_url: https://github.com/mastercard/terraform-provider-restapi

@@ -1,0 +1,11 @@
+## Configuration
+
+- `address` (Optional) — URL of the root of the target Vault server.
+- `authLogin` (Optional) — Login to vault with an existing auth method using auth/<mount>/login
+- `maxLeaseTtlSeconds` (Optional) — Maximum TTL for secret leases requested by this provider. May also be set with the `TERRAFORM_VAULT_MAX_TTL` environment variable.
+- `namespace` (Optional) — The namespace to use. Available only for Vault Enterprise.
+- `skipTlsVerify` (Optional) — Set this to true only if the target Vault server is an insecure development instance. May also be set with the `VAULT_SKIP_VERIFY` environment variable.
+- `token` (Optional) — Token to use to authenticate to Vault.
+
+<!-- TODO: Environment-variable fallbacks. A parameter's environment-variable fallback is often read by the vendor SDK a layer beneath the schema, so it cannot be generated. Where a parameter can be supplied by an environment variable, name the variable in its description. -->
+<!-- TODO: Mutually exclusive options. If setting one parameter forbids or overrides another, or if a group of parameters must be supplied together, say so in the description of every parameter involved. Nothing else in the docs will surface that constraint. -->

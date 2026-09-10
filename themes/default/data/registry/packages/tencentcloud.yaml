@@ -6,11 +6,10 @@ description: A Pulumi provider dynamically bridged from tencentcloud.
 featured: false
 logo_url: ""
 name: tencentcloud
-native: false
 package_status: ga
 publisher: tencentcloudstack
 repo_url: https://github.com/tencentcloudstack/terraform-provider-tencentcloud
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/tencentcloudstack/tencentcloud/1.83.27/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/tencentcloudstack/tencentcloud/1.83.30/schema.json
 title: tencentcloud
-updated_on: 1787960358
-version: 1.83.27
+updated_on: 1788997163
+version: 1.83.30

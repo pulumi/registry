@@ -6,11 +6,10 @@ description: A Pulumi provider dynamically bridged from vkcs.
 featured: false
 logo_url: ""
 name: vkcs
-native: false
 package_status: public_preview
 publisher: vk-cs
 repo_url: https://github.com/vk-cs/terraform-provider-vkcs
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/vk-cs/vkcs/0.17.2/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/vk-cs/vkcs/0.17.3/schema.json
 title: vkcs
-updated_on: 1788262516
-version: 0.17.2
+updated_on: 1788910525
+version: 0.17.3

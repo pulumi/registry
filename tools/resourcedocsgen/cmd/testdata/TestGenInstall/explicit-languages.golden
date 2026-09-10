@@ -1,0 +1,78 @@
+## Installation
+
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
+{{% choosable language typescript %}}
+
+```bash
+npm install @pulumi/vault
+```
+
+{{% /choosable %}}
+{{% choosable language python %}}
+
+```bash
+pip install pulumi-vault
+```
+
+{{% /choosable %}}
+{{% choosable language go %}}
+
+```bash
+go get github.com/pulumi/pulumi-vault/sdk/v7/go/vault
+```
+
+{{% /choosable %}}
+{{% choosable language csharp %}}
+
+```bash
+dotnet add package Pulumi.Vault
+```
+
+{{% /choosable %}}
+{{% choosable language java %}}
+
+Maven:
+
+```xml
+<dependency>
+    <groupId>com.pulumi</groupId>
+    <artifactId>vault</artifactId>
+    <version>7.12.0</version>
+</dependency>
+```
+
+Gradle:
+
+```groovy
+implementation 'com.pulumi:vault:7.12.0'
+```
+
+{{% /choosable %}}
+{{% choosable language yaml %}}
+
+```bash
+pulumi package add vault
+```
+
+{{% /choosable %}}
+{{% choosable language hcl %}}
+
+Declare the provider in your program, then run `pulumi install`:
+
+```hcl
+terraform {
+  required_providers {
+    vault = {
+      source  = "pulumi/vault"
+      version = "7.12.0"
+    }
+  }
+}
+```
+
+```bash
+pulumi install
+```
+
+{{% /choosable %}}
+{{< /chooser >}}

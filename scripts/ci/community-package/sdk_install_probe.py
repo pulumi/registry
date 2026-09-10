@@ -62,9 +62,22 @@ def _echo_to_the_run_log(heading: str, body: str) -> None:
     print("::endgroup::", file=sys.stderr)
 
 
+def _rejected(language: str, kind: str, value: str, allowed: str,
+              blocking: bool = False) -> InstallResult:
+    shown = repr(value[:80]).replace("`", "'")
+    cell = shown.replace("|", r"\|")
+    return InstallResult(
+        language, f"(not run: {kind} is {cell})", "rejected", blocking=blocking,
+        error=f"The schema gives {kind} as `{shown}`. The check builds install commands from "
+              f"strings in your schema, so it accepts only {allowed}, and skips the probe instead "
+              f"of passing anything else to a shell. Fix the value in your schema, or say so on "
+              f"this PR if you believe it is correct.")
+
+
 def probe_installs(name: str, tag: str, schema: dict[str, Any]) -> list[InstallResult]:
     if not SAFE_VERSION.match(tag):
-        return [InstallResult("plugin", "(rejected: unsafe version)", "rejected", blocking=True)]
+        return [_rejected("plugin", "the release tag", tag,
+                          "letters, digits, and . _ + -", blocking=True)]
     version = tag[1:] if tag.startswith("v") else tag
     languages = schema.get("language", {})
     results: list[InstallResult] = []
@@ -83,30 +96,36 @@ def probe_installs(name: str, tag: str, schema: dict[str, Any]) -> list[InstallR
         ok, error = _run(command)
         record("plugin", f"pulumi plugin install resource {name} {tag}", ok, error, blocking=True)
     else:
-        results.append(InstallResult("plugin", "(rejected: unsafe identifier)", "rejected", blocking=True))
+        results.append(_rejected("plugin", "the provider name", name,
+                                 "letters, digits, and . _ @ / -", blocking=True))
 
-    def probe(language: str, package: str | None, runner: Callable[[], tuple[bool, str]], command: str) -> None:
+    def probe(language: str, kind: str, package: str | None,
+              runner: Callable[[], tuple[bool, str]], command: str) -> None:
         if not package:
             return
         if not SAFE_NAME.match(package):
-            results.append(InstallResult(language, "(rejected: unsafe name)", "rejected"))
+            results.append(_rejected(language, kind, package, "letters, digits, and . _ @ / -"))
             return
         ok, error = runner()
         record(language, command, ok, error)
 
     npm_package = languages.get("nodejs", {}).get("packageName")
-    probe("nodejs", npm_package,
+    probe("nodejs", "the nodejs packageName", npm_package,
           lambda: _run(["npm", "install", "--ignore-scripts", "--no-audit", "--no-fund",
                         "--prefix", "/tmp/nn", "--", f"{npm_package}@{version}"]),
           f"npm install {npm_package}@{version}")
 
     python = languages.get("python")
     pypi_package = (python.get("packageName") or f"pulumi_{schema.get('name', '')}") if python is not None else None
-    probe("python", pypi_package,
+    python_kind = ("the python packageName" if (python or {}).get("packageName")
+                   else "the python package name, taken from the schema name because python "
+                        "advertises no packageName")
+    probe("python", python_kind, pypi_package,
           lambda: _python_resolves(pypi_package or "", version),
           f"pip download {pypi_package}=={version}")
 
     go_import = languages.get("go", {}).get("importBasePath")
-    probe("go", go_import, lambda: _go_module_resolves(go_import, tag), f"go get {go_import}@{tag}")
+    probe("go", "the go importBasePath", go_import,
+          lambda: _go_module_resolves(go_import, tag), f"go get {go_import}@{tag}")
 
     return results

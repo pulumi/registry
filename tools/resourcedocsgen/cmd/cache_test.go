@@ -35,7 +35,7 @@ func TestReadRemoteFileSendsNoCacheHeaders(t *testing.T) {
 	}))
 	defer server.Close()
 
-	_, err := readRemoteFile(server.Client(), server.URL, "")
+	_, err := readRemoteFile(server.Client(), server.URL, "", true)
 	require.NoError(t, err)
 
 	assert.Equal(t, "no-cache", gotCacheControl)

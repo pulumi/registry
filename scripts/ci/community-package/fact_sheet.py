@@ -32,7 +32,7 @@ def _verdict(manifest: Manifest) -> tuple[str, str]:
         return "🟡", ("**Passes the required checks, but review the warnings.** The plugin installs and "
                      "docs generate, but one or more advisory checks did not pass — see the SDK installs "
                      "and doc-lint below before approving.")
-    return "✅", ("**Ready for approval.** All checks passed; a `@pulumi/iac-cloud` review is still "
+    return "✅", ("**Ready for approval.** All checks passed; a maintainer's review is still "
                  "required to merge.")
 
 
@@ -115,6 +115,9 @@ def render(manifest: Manifest) -> str:
                       "match. Either omit the `version` key entirely, which is what bridged providers do so the "
                       "registry takes the version from the publish request, or stamp the real version at "
                       "release time."]
+
+    for result in [r for r in manifest.installMatrix if r.result == "rejected" and r.error]:
+        lines += ["", f"**{result.language}** 🚫 {result.error}"]
 
     findings = manifest.docLint
     lines.append("")

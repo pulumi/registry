@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from vmc.
 featured: false
 logo_url: ""
 name: vmc
-native: false
 package_status: ga
 publisher: vmware
 repo_url: https://github.com/vmware/terraform-provider-vmc

@@ -4,9 +4,10 @@ category: Version Control System
 component: false
 description: A Pulumi package for creating and managing github cloud resources.
 featured: false
+keywords:
+- github
 logo_url: ""
 name: github
-native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-github

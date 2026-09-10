@@ -1,0 +1,153 @@
+{
+  "config": {
+    "variables": {
+      "address": {
+        "description": "URL of the root of the target Vault server.",
+        "type": "string"
+      },
+      "authLogin": {
+        "$ref": "#/types/vault:config/authLogin:authLogin",
+        "description": "Login to vault with an existing auth method using auth/<mount>/login"
+      },
+      "maxLeaseTtlSeconds": {
+        "default": 1200,
+        "defaultInfo": {
+          "environment": [
+            "TERRAFORM_VAULT_MAX_TTL"
+          ]
+        },
+        "description": "Maximum TTL for secret leases requested by this provider.",
+        "type": "integer"
+      },
+      "namespace": {
+        "description": "The namespace to use. Available only for Vault Enterprise.",
+        "type": "string"
+      },
+      "skipTlsVerify": {
+        "defaultInfo": {
+          "environment": [
+            "VAULT_SKIP_VERIFY"
+          ]
+        },
+        "description": "Set this to true only if the target Vault server is an insecure development instance.",
+        "type": "boolean"
+      },
+      "token": {
+        "description": "Token to use to authenticate to Vault.",
+        "type": "string"
+      }
+    }
+  },
+  "displayName": "HashiCorp Vault",
+  "language": {
+    "csharp": {
+      "compatibility": "tfbridge20",
+      "namespaces": {
+        "ad": "AD",
+        "alicloud": "AliCloud",
+        "appRole": "AppRole",
+        "aws": "Aws",
+        "azure": "Azure",
+        "cf": "Cf",
+        "config": "Config",
+        "consul": "Consul",
+        "database": "Database",
+        "gcp": "Gcp",
+        "generic": "Generic",
+        "github": "GitHub",
+        "identity": "Identity",
+        "index": "index",
+        "jwt": "Jwt",
+        "keymgmt": "KeyMgmt",
+        "kmip": "Kmip",
+        "kubernetes": "Kubernetes",
+        "kv": "kv",
+        "ldap": "Ldap",
+        "managed": "Managed",
+        "mongodbatlas": "MongoDBAtlas",
+        "okta": "Okta",
+        "os": "Os",
+        "pkiSecret": "PkiSecret",
+        "pkiexternalca": "PkiExternalCa",
+        "rabbitMq": "RabbitMQ",
+        "radius": "Radius",
+        "saml": "Saml",
+        "secrets": "Secrets",
+        "spiffe": "Spiffe",
+        "ssh": "Ssh",
+        "terraformcloud": "TerraformCloud",
+        "tokenauth": "TokenAuth",
+        "transform": "Transform",
+        "transit": "Transit",
+        "vault": "Vault"
+      },
+      "packageReferences": {
+        "Pulumi": "3.*"
+      },
+      "respectSchemaVersion": true
+    },
+    "go": {
+      "generateExtraInputTypes": true,
+      "generateResourceContainerTypes": true,
+      "importBasePath": "github.com/pulumi/pulumi-vault/sdk/v7/go/vault",
+      "respectSchemaVersion": true
+    },
+    "nodejs": {
+      "compatibility": "tfbridge20",
+      "devDependencies": {
+        "@types/mime": "^2.0.0",
+        "@types/node": "^10.0.0"
+      },
+      "disableUnionOutputTypes": true,
+      "packageDescription": "A Pulumi package for creating and managing HashiCorp Vault cloud resources.",
+      "readme": "> This provider is a derived work of the [Terraform Provider](https://github.com/hashicorp/terraform-provider-vault)\n> distributed under [MPL 2.0](https://www.mozilla.org/en-US/MPL/2.0/). If you encounter a bug or missing feature,\n> first check the [`pulumi-vault` repo](https://github.com/pulumi/pulumi-vault/issues); however, if that doesn't turn up anything,\n> please consult the source [`terraform-provider-vault` repo](https://github.com/hashicorp/terraform-provider-vault/issues).",
+      "respectSchemaVersion": true
+    },
+    "python": {
+      "compatibility": "tfbridge20",
+      "pyproject": {
+        "enabled": true
+      },
+      "readme": "> This provider is a derived work of the [Terraform Provider](https://github.com/hashicorp/terraform-provider-vault)\n> distributed under [MPL 2.0](https://www.mozilla.org/en-US/MPL/2.0/). If you encounter a bug or missing feature,\n> first check the [`pulumi-vault` repo](https://github.com/pulumi/pulumi-vault/issues); however, if that doesn't turn up anything,\n> please consult the source [`terraform-provider-vault` repo](https://github.com/hashicorp/terraform-provider-vault/issues).",
+      "respectSchemaVersion": true
+    }
+  },
+  "name": "vault",
+  "repository": "https://github.com/pulumi/pulumi-vault",
+  "types": {
+    "vault:config/authLogin:authLogin": {
+      "language": {
+        "nodejs": {
+          "requiredInputs": []
+        }
+      },
+      "properties": {
+        "method": {
+          "type": "string"
+        },
+        "namespace": {
+          "description": "The authentication engine's namespace. Conflicts with use_root_namespace\n",
+          "type": "string"
+        },
+        "parameters": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "secret": true,
+          "type": "object"
+        },
+        "path": {
+          "type": "string"
+        },
+        "useRootNamespace": {
+          "description": "Authenticate to the root Vault namespace. Conflicts with namespace\n",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "type": "object"
+    }
+  }
+}

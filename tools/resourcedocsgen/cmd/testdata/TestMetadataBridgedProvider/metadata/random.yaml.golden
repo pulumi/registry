@@ -4,9 +4,10 @@ category: Utility
 component: false
 description: A Pulumi package to safely use randomness in Pulumi programs.
 featured: false
+keywords:
+- random
 logo_url: ""
 name: random
-native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-random

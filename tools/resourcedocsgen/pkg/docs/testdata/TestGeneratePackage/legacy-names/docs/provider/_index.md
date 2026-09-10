@@ -2,7 +2,7 @@
 ---
 title: "Provider"
 title_tag: "legacy_names.Provider"
-meta_desc: "Documentation for the legacy_names.Provider resource with examples, input properties, output properties, lookup functions, and supporting types."
+meta_desc: "Create and manage legacy_names.Provider with Pulumi. Full API reference with input and output properties, lookup functions, and examples in TypeScript, Python, Go, C#, Java, and YAML."
 layout: api
 no_edit_this_page: true
 outputs:

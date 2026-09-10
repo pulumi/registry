@@ -1704,18 +1704,21 @@ func filterOutputProperties(inputProps []*schema.Property, props []*schema.Prope
 
 func (mod *modContext) genResourceHeader(r *schema.Resource) header {
 	resourceName := resourceName(r)
-	var metaDescription string
+	var qualifiedName string
 	var titleTag string
 	if mod.mod == "" {
-		metaDescription = fmt.Sprintf("Documentation for the %s.%s resource "+
-			"with examples, input properties, output properties, "+
-			"lookup functions, and supporting types.", mod.pkg.Name(), resourceName)
-		titleTag = fmt.Sprintf("%s.%s", mod.pkg.Name(), resourceName)
+		qualifiedName = fmt.Sprintf("%s.%s", mod.pkg.Name(), resourceName)
+		titleTag = qualifiedName
 	} else {
-		metaDescription = fmt.Sprintf("Documentation for the %s.%s.%s resource "+
-			"with examples, input properties, output properties, "+
-			"lookup functions, and supporting types.", mod.pkg.Name(), mod.mod, resourceName)
-		titleTag = fmt.Sprintf("%s.%s.%s", mod.pkg.Name(), mod.mod, resourceName)
+		qualifiedName = fmt.Sprintf("%s.%s.%s", mod.pkg.Name(), mod.mod, resourceName)
+		titleTag = qualifiedName
+	}
+
+	metaDescription := summarizeForMetaDescription(r.Comment)
+	if metaDescription == "" {
+		metaDescription = fmt.Sprintf("Create and manage %s with Pulumi. Full API reference with "+
+			"input and output properties, lookup functions, and examples in TypeScript, Python, Go, "+
+			"C#, Java, and YAML.", qualifiedName)
 	}
 
 	return header{

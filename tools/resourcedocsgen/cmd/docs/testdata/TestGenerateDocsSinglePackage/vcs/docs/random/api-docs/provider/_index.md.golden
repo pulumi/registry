@@ -2,7 +2,7 @@
 ---
 title: "Provider"
 title_tag: "random.Provider"
-meta_desc: "Documentation for the random.Provider resource with examples, input properties, output properties, lookup functions, and supporting types."
+meta_desc: "The provider type for the random package. By default, resources use package-wide configuration settings, however an explicit Provider instance may be."
 layout: api
 no_edit_this_page: true
 outputs:

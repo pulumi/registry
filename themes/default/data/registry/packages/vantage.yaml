@@ -9,7 +9,7 @@ name: vantage
 package_status: public_preview
 publisher: vantage-sh
 repo_url: https://github.com/vantage-sh/terraform-provider-vantage
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/vantage-sh/vantage/0.3.18/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/vantage-sh/vantage/0.3.19/schema.json
 title: vantage
-updated_on: 1788478595
-version: 0.3.18
+updated_on: 1789040112
+version: 0.3.19

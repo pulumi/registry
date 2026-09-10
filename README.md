@@ -63,10 +63,14 @@ This repository does not contain the content of the API docs packages. We genera
 To build the API docs for a single package, run:
 
 ``` bash
-make .make/content/registry/packages/<package_name>/api-docs
+make SKIP_VERSIONED_DOCS=1 api-docs/<package_name>
 ```
 
+`SKIP_VERSIONED_DOCS=1` skips generating the older-major-version snapshots, which requires a Pulumi-internal tool. Leave it set unless you are specifically working on versioned docs.
+
 Run `make bin/resourcedocsgen && ./bin/resourcedocsgen --help` for help regarding its use or [see the `resourcedocsgen` README](tools/resourcedocsgen/README.md).
+
+Two guides cover previewing in more depth: [Previewing your package's docs](./docs/previewing-package-docs.md), if you're publishing a package and want to see how a release will render beforehand, and [Previewing registry changes](./docs/previewing-registry-changes.md), if you're changing this repository and want to check it against published packages.
 
 ## Submitting, merging and releasing
 

@@ -5,7 +5,7 @@ featured: false
 logo_url: ""
 name: gcp-global-cloudrun
 package_status: public_preview
-publisher: Paul Stack
+publisher: DEPRECATED
 repo_url: "https://github.com/pulumi/pulumi-gcp-global-cloudrun"
 schema_file_path: /provider/cmd/pulumi-resource-gcp-global-cloudrun/schema.json
 title: GCP Global CloudRun

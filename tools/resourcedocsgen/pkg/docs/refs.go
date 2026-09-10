@@ -16,6 +16,7 @@ package docs
 
 import (
 	"fmt"
+	"html"
 	"log/slog"
 	"regexp"
 	"strings"
@@ -147,8 +148,11 @@ func (dctx *Context) renderRef(selfRef, ref schema.DocRef) string {
 
 	var b strings.Builder
 	for i, entry := range refChoosableValues {
+		// entry.values is a compile-time constant so it needs no escaping, but
+		// names[i] comes from a DocLanguageHelper and may contain angle
+		// brackets or ampersands (e.g. generic type params like Map<K,V>).
 		fmt.Fprintf(&b, `<pulumi-choosable type="language" values=%q>%s</pulumi-choosable>`,
-			entry.values, names[i])
+			entry.values, html.EscapeString(names[i]))
 	}
 	return b.String()
 }

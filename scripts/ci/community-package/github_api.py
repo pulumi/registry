@@ -3,6 +3,8 @@ from __future__ import annotations
 import base64
 import json
 import os
+import sys
+import time
 import urllib.error
 import urllib.request
 from datetime import datetime, timezone
@@ -10,9 +12,35 @@ from typing import Any
 
 FACT_SHEET_MARKER = "<!-- community-package-fact-sheet -->"
 
+TIMEOUT_SECONDS = 30
+ATTEMPTS = 4
+TRANSIENT_STATUSES = frozenset({500, 502, 503, 504})
+NOT_FOUND = 404
+
 
 def repo() -> str:
     return os.environ.get("REPO") or os.environ["GITHUB_REPOSITORY"]
+
+
+def _retryable(req: urllib.request.Request, error: OSError) -> bool:
+    if req.get_method() != "GET":
+        return False
+    if isinstance(error, urllib.error.HTTPError):
+        return error.code in TRANSIENT_STATUSES
+    return isinstance(error, (TimeoutError, ConnectionError, urllib.error.URLError))
+
+
+def _read(req: urllib.request.Request) -> bytes:
+    for attempt in range(ATTEMPTS):
+        try:
+            with urllib.request.urlopen(req, timeout=TIMEOUT_SECONDS) as resp:
+                return bytes(resp.read())
+        except OSError as e:
+            if attempt == ATTEMPTS - 1 or not _retryable(req, e):
+                raise
+            print(f"{req.full_url}: {e}; retrying", file=sys.stderr)
+            time.sleep(2 ** attempt)
+    raise AssertionError("the last attempt returns or raises")
 
 
 def request(path: str, method: str = "GET", body: dict[str, Any] | None = None) -> Any:
@@ -24,28 +52,25 @@ def request(path: str, method: str = "GET", body: dict[str, Any] | None = None) 
     req.add_header("Accept", "application/vnd.github+json")
     if encoded is not None:
         req.add_header("Content-Type", "application/json")
-    with urllib.request.urlopen(req, timeout=30) as resp:
-        payload = resp.read()
+    payload = _read(req)
     return json.loads(payload) if payload else None
 
 
 def raw_file(slug: str, ref: str, path: str) -> bytes | None:
     url = f"https://raw.githubusercontent.com/{slug}/{ref}/{path}"
     try:
-        with urllib.request.urlopen(urllib.request.Request(url), timeout=30) as resp:
-            return bytes(resp.read())
-    except urllib.error.HTTPError:
-        return None
-
-
-NO_LATEST_RELEASE = 404
+        return _read(urllib.request.Request(url))
+    except urllib.error.HTTPError as e:
+        if e.code == NOT_FOUND:
+            return None
+        raise
 
 
 def latest_release_tag(slug: str) -> str | None:
     try:
         return str(request(f"/repos/{slug}/releases/latest")["tag_name"])
     except urllib.error.HTTPError as e:
-        if e.code == NO_LATEST_RELEASE:
+        if e.code == NOT_FOUND:
             return None
         raise
 

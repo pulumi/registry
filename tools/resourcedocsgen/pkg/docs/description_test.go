@@ -50,7 +50,7 @@ func TestProcessDescription(t *testing.T) {
 			require.NoError(t, err, "importing spec")
 
 			dctx := NewContext("test", schemaPkg)
-			actual := dctx.processDescription(input, dctx.getSupportedSnippetLanguages(false, nil)).description
+			actual := dctx.decomposeDocstring(schema.DocRef{}, input, dctx.getSupportedSnippetLanguages(false, nil)).description
 
 			autogold.ExpectFile(t, autogold.Raw(actual))
 		})
@@ -82,7 +82,7 @@ func TestDecomposeDocstringDescription(t *testing.T) {
 			require.NoError(t, err, "importing spec")
 
 			dctx := NewContext("test", schemaPkg)
-			actual := dctx.decomposeDocstring(input, dctx.getSupportedSnippetLanguages(false, nil)).description
+			actual := dctx.decomposeDocstring(schema.DocRef{}, input, dctx.getSupportedSnippetLanguages(false, nil)).description
 
 			autogold.ExpectFile(t, autogold.Raw(actual))
 		})

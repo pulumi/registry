@@ -68,20 +68,20 @@ var refShortcodeMarker = regexp.MustCompile(`\{\{%\s*ref[\s%]`)
 // or processDescription (resources, functions, methods). Property comments,
 // nested type descriptions, and enum value comments are single-language and
 // go through [resolveRefsForLanguage] instead.
-func (dctx *Context) resolveRefs(description string) string {
+func (dctx *Context) resolveRefs(selfRef schema.DocRef, description string) string {
 	return dctx.transformRefs(description, func(ref schema.DocRef) string {
-		return dctx.renderRef(ref)
+		return dctx.renderRef(selfRef, ref)
 	})
 }
 
 // resolveRefsForLanguage replaces every `{{% ref %}}` shortcode with the name
 // produced by lang's DocLanguageHelper. Intended for comments that are
 // already rendered per-language (property/enum/nested-type descriptions).
-func (dctx *Context) resolveRefsForLanguage(description string, lang language.Language) string {
+func (dctx *Context) resolveRefsForLanguage(selfRef schema.DocRef, description string, lang language.Language) string {
 	pkgRef := dctx.pkg.Reference()
 	helper := dctx.getLanguageDocHelper(lang)
 	return dctx.transformRefs(description, func(ref schema.DocRef) string {
-		name, ok, err := helper.ResolveDocRef(pkgRef, schema.DocRef{}, ref)
+		name, ok, err := helper.ResolveDocRef(pkgRef, selfRef, ref)
 		if err != nil {
 			slog.Warn("resolving ref via language helper",
 				"pkg", dctx.pkg.Name, "lang", lang.String(), "ref", ref.Ref, "err", err)
@@ -118,14 +118,14 @@ func (dctx *Context) transformRefs(description string, substitute func(schema.Do
 // renderRef resolves ref via every language's DocLanguageHelper and returns
 // either the shared name (when all languages agree) or a sequence of inline
 // <pulumi-choosable> elements — one per language, in language.All() order.
-func (dctx *Context) renderRef(ref schema.DocRef) string {
+func (dctx *Context) renderRef(selfRef, ref schema.DocRef) string {
 	pkgRef := dctx.pkg.Reference()
 	names := make([]string, 0, len(refChoosableValues))
 	var shared string
 	first, allSame := true, true
 	for _, entry := range refChoosableValues {
 		helper := dctx.getLanguageDocHelper(entry.lang)
-		name, ok, err := helper.ResolveDocRef(pkgRef, schema.DocRef{}, ref)
+		name, ok, err := helper.ResolveDocRef(pkgRef, selfRef, ref)
 		if err != nil {
 			slog.Warn("resolving ref via language helper",
 				"pkg", dctx.pkg.Name, "lang", entry.lang.String(), "ref", ref.Ref, "err", err)

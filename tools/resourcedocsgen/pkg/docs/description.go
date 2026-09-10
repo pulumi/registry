@@ -99,10 +99,6 @@ func markupBlock(block, supportedSnippetLanguages string) string {
 }
 
 func (dctx *Context) processDescription(description, supportedSnippetLanguages string) docInfo {
-	// Resolve refs up front so downstream code chooser markup runs on a
-	// ref-free string and never round-trips through goldmark.
-	description = dctx.resolveRefs(description)
-
 	importDetails := ""
 	parts := strings.Split(description, "\n\n## Import")
 	if len(parts) > 1 {

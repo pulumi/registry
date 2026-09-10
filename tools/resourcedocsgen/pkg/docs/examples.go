@@ -49,12 +49,12 @@ type docInfo struct {
 	importDetails string
 }
 
-func (dctx *Context) decomposeDocstring(docstring, supportedSnippetLanguages string) docInfo {
+func (dctx *Context) decomposeDocstring(selfRef schema.DocRef, docstring, supportedSnippetLanguages string) docInfo {
 	if docstring == "" {
 		return docInfo{}
 	}
 	// Resolve refs up front so both paths below operate on a ref-free string.
-	docstring = dctx.resolveRefs(docstring)
+	docstring = dctx.resolveRefs(selfRef, docstring)
 	if strings.Contains(docstring, beginCodeBlock) {
 		return dctx.processDescription(docstring, supportedSnippetLanguages)
 	}

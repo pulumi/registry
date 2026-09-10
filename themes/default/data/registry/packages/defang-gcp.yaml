@@ -16,7 +16,7 @@ name: defang-gcp
 package_status: ga
 publisher: Defang
 repo_url: https://github.com/DefangLabs/pulumi-defang
-schema_file_url: https://raw.githubusercontent.com/DefangLabs/pulumi-defang/v2.7.2/provider/cmd/pulumi-resource-defang-gcp/schema.json
+schema_file_url: https://raw.githubusercontent.com/DefangLabs/pulumi-defang/v2.8.0/provider/cmd/pulumi-resource-defang-gcp/schema.json
 title: Defang GCP
-updated_on: 1788930187
-version: v2.7.2
+updated_on: 1789007814
+version: v2.8.0

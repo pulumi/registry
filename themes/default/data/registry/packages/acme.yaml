@@ -11,7 +11,7 @@ name: acme
 package_status: public_preview
 publisher: Pulumiverse
 repo_url: https://github.com/pulumiverse/pulumi-acme
-schema_file_url: https://raw.githubusercontent.com/pulumiverse/pulumi-acme/v0.16.3/provider/cmd/pulumi-resource-acme/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumiverse/pulumi-acme/v0.17.0/provider/cmd/pulumi-resource-acme/schema.json
 title: ACME
-updated_on: 1783763448
-version: v0.16.3
+updated_on: 1788983063
+version: v0.17.0

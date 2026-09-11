@@ -1,13 +1,19 @@
 from __future__ import annotations
 
 import argparse
+import contextlib
+import email.message
+import io
 import json
 import os
 import re
 import subprocess
 import sys
 import tempfile
+import time
 import unittest
+import urllib.error
+import urllib.request
 from pathlib import Path
 from typing import Any
 from unittest.mock import patch
@@ -1038,3 +1044,49 @@ class SweepFailureIssueTests(unittest.TestCase):
     def test_a_pull_request_is_never_mistaken_for_the_issue(self) -> None:
         pr = {"number": 6, "body": comment_commands.SWEEP_FAILURE_MARKER, "pull_request": {}}
         self.assertEqual(len(self._alert([pr])), 1)
+
+
+class TransientFailureTests(unittest.TestCase):
+    def _http_error(self, code: int) -> urllib.error.HTTPError:
+        return urllib.error.HTTPError("https://api.github.com/x", code, "boom",
+                                      email.message.Message(), None)
+
+    def _call(self, outcomes: list[Any], method: str = "GET") -> Any:
+        attempts = iter(outcomes)
+
+        def urlopen(req: Any, timeout: int = 0) -> Any:
+            outcome = next(attempts)
+            if isinstance(outcome, Exception):
+                raise outcome
+            return contextlib.closing(io.BytesIO(outcome))
+
+        with patch.object(urllib.request, "urlopen", urlopen), \
+             patch.object(time, "sleep", lambda seconds: None):
+            return github_api.request("/x", method, {"body": "hi"} if method == "POST" else None)
+
+    def test_a_gateway_timeout_is_retried_until_it_succeeds(self) -> None:
+        self.assertEqual(self._call([self._http_error(504), b'{"ok": true}']), {"ok": True})
+
+    def test_a_dropped_connection_is_retried(self) -> None:
+        self.assertEqual(self._call([ConnectionResetError("reset"), b'{"ok": true}']), {"ok": True})
+
+    def test_a_transient_failure_that_never_clears_is_raised(self) -> None:
+        with self.assertRaises(urllib.error.HTTPError):
+            self._call([self._http_error(503)] * github_api.ATTEMPTS)
+
+    def test_a_rejection_is_not_retried(self) -> None:
+        with self.assertRaises(urllib.error.HTTPError):
+            self._call([self._http_error(422), b"{}"])
+
+    def test_a_write_is_never_retried(self) -> None:
+        with self.assertRaises(urllib.error.HTTPError):
+            self._call([self._http_error(504), b"{}"], "POST")
+
+    def test_a_missing_raw_file_reads_as_missing(self) -> None:
+        with patch.object(github_api, "_read", side_effect=self._http_error(404)):
+            self.assertIsNone(github_api.raw_file("o/r", "sha", "schema.json"))
+
+    def test_an_unfetchable_raw_file_is_not_reported_as_missing(self) -> None:
+        with patch.object(github_api, "_read", side_effect=self._http_error(500)):
+            with self.assertRaises(urllib.error.HTTPError):
+                github_api.raw_file("o/r", "sha", "schema.json")

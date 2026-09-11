@@ -63,13 +63,15 @@ func (mod *modContext) genMethods(r *schema.Resource) []methodDocArgs {
 func (mod *modContext) genMethod(r *schema.Resource, m *schema.Method) methodDocArgs {
 	dctx := mod.context
 	f := m.Function
+	selfRef := schema.DocRefForFunction(f)
 	inputProps, outputProps := make(map[language.Language][]property), make(map[language.Language][]property)
 	for lang := range language.All() {
 		if f.Inputs != nil {
 			exclude := func(name string) bool {
 				return name == "__self__"
 			}
-			props := mod.getPropertiesWithIDPrefixAndExclude(f.Inputs.Properties, lang, true, false, false,
+			props := mod.getPropertiesWithIDPrefixAndExclude(
+				selfRef, f.Inputs.Properties, lang, true, false, false,
 				m.Name+"_arg_", exclude)
 			if len(props) > 0 {
 				inputProps[lang] = props
@@ -77,7 +79,8 @@ func (mod *modContext) genMethod(r *schema.Resource, m *schema.Method) methodDoc
 		}
 		if f.ReturnType != nil {
 			if objectType, ok := f.ReturnType.(*schema.ObjectType); ok && objectType != nil {
-				outputProps[lang] = mod.getPropertiesWithIDPrefixAndExclude(objectType.Properties, lang, false, false, false,
+				outputProps[lang] = mod.getPropertiesWithIDPrefixAndExclude(
+					selfRef, objectType.Properties, lang, false, false, false,
 					m.Name+"_result_", nil)
 			}
 		}
@@ -105,7 +108,7 @@ func (mod *modContext) genMethod(r *schema.Resource, m *schema.Method) methodDoc
 		)
 	}
 
-	docInfo := dctx.decomposeDocstring(f.Comment, resourceSnippetLanguages)
+	docInfo := dctx.decomposeDocstring(schema.DocRefForFunction(f), f.Comment, resourceSnippetLanguages)
 	args := methodDocArgs{
 		Title: strings.Title(m.Name), //nolint:staticcheck // Maintain usage of strings.Title for backwards compatibility.
 

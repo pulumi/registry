@@ -192,6 +192,10 @@ func newConstructorSyntaxData() *constructorSyntaxData {
 type Context struct {
 	internalModMap map[string]*modContext
 
+	// pkg is the schema package these docs are being generated for. It is used
+	// for `{{% ref %}}` shortcode resolution via schema.InterpretPulumiRefs.
+	pkg *schema.Package
+
 	docHelpers map[language.Language]codegen.DocLanguageHelper
 
 	// The language-specific info objects for a certain package (provider).
@@ -241,6 +245,7 @@ func (hclDocLanguageHelper) ResolveDocRef(
 
 func NewContext(tool string, pkg *schema.Package) *Context {
 	dctx := &Context{
+		pkg: pkg,
 		docHelpers: map[language.Language]codegen.DocLanguageHelper{
 			language.CSharp: &dotnet.DocLanguageHelper{},
 			language.Go:     &go_gen.DocLanguageHelper{},
@@ -1135,10 +1140,11 @@ func (mod *modContext) genNestedTypes(member interface{}, resourceType, isProvid
 					continue
 				}
 
+				selfRef := schema.DocRefForType(typ)
 				// Create a map to hold the per-language properties of this object.
 				props := make(map[language.Language][]property)
 				for lang := range language.All() {
-					props[lang] = mod.getProperties(typ.Properties, lang, true, true, isProvider)
+					props[lang] = mod.getProperties(selfRef, typ.Properties, lang, true, true, isProvider)
 				}
 
 				//nolint:staticcheck
@@ -1146,7 +1152,7 @@ func (mod *modContext) genNestedTypes(member interface{}, resourceType, isProvid
 				typs = append(typs, docNestedType{
 					Name:        wbr(name),
 					AnchorID:    strings.ToLower(name),
-					Description: SanitizeDescription(typ.Comment),
+					Description: dctx.resolveRefs(selfRef, SanitizeDescription(typ.Comment)),
 					Properties:  props,
 				})
 			case *schema.EnumType:
@@ -1155,6 +1161,7 @@ func (mod *modContext) genNestedTypes(member interface{}, resourceType, isProvid
 				}
 				//nolint:staticcheck
 				name := strings.Title(tokenToName(typ.Token))
+				selfRef := schema.DocRefForType(typ)
 
 				enums := make(map[language.Language][]enum)
 				for lang := range language.All() {
@@ -1172,7 +1179,7 @@ func (mod *modContext) genNestedTypes(member interface{}, resourceType, isProvid
 							DisplayName:        wbr(enumName),
 							Name:               enumName,
 							Value:              fmt.Sprintf("%v", e.Value),
-							Comment:            SanitizeDescription(e.Comment),
+							Comment:            dctx.resolveRefsForLanguage(selfRef, SanitizeDescription(e.Comment), lang),
 							DeprecationMessage: SanitizeDescription(e.DeprecationMessage),
 						})
 					}
@@ -1198,12 +1205,14 @@ func (mod *modContext) genNestedTypes(member interface{}, resourceType, isProvid
 // getProperties returns a slice of properties that can be rendered for docs for the provided slice of properties in the
 // schema.
 func (mod *modContext) getProperties(
+	selfRef schema.DocRef,
 	properties []*schema.Property, lang language.Language, input, nested, isProvider bool,
 ) []property {
-	return mod.getPropertiesWithIDPrefixAndExclude(properties, lang, input, nested, isProvider, "", nil)
+	return mod.getPropertiesWithIDPrefixAndExclude(selfRef, properties, lang, input, nested, isProvider, "", nil)
 }
 
 func (mod *modContext) getPropertiesWithIDPrefixAndExclude(
+	selfRef schema.DocRef,
 	properties []*schema.Property, lang language.Language, input, nested, isProvider bool,
 	idPrefix string, exclude func(name string) bool,
 ) []property {
@@ -1248,7 +1257,7 @@ func (mod *modContext) getPropertiesWithIDPrefixAndExclude(
 			propTypes = append(propTypes, mod.typeString(prop.Type, lang, characteristics, true))
 		}
 
-		comment := SanitizeDescription(prop.Comment)
+		comment := dctx.resolveRefsForLanguage(selfRef, SanitizeDescription(prop.Comment), lang)
 		link := "#" + propID
 
 		// Check if type is defined in a package external to the current package. If it is external, update comment to
@@ -1761,14 +1770,15 @@ func (mod *modContext) genResource(r *schema.Resource) resourceDocArgs {
 		})
 	}
 
+	selfRef := schema.DocRefForResource(r)
 	for lang := range language.All() {
-		inputProps[lang] = mod.getProperties(r.InputProperties, lang, true, false, r.IsProvider)
-		outputProps[lang] = mod.getProperties(filteredOutputProps, lang, false, false, r.IsProvider)
+		inputProps[lang] = mod.getProperties(selfRef, r.InputProperties, lang, true, false, r.IsProvider)
+		outputProps[lang] = mod.getProperties(selfRef, filteredOutputProps, lang, false, false, r.IsProvider)
 		if r.IsProvider {
 			continue
 		}
 		if r.StateInputs != nil {
-			stateProps := mod.getProperties(r.StateInputs.Properties, lang, true, false, r.IsProvider)
+			stateProps := mod.getProperties(selfRef, r.StateInputs.Properties, lang, true, false, r.IsProvider)
 			for i := 0; i < len(stateProps); i++ {
 				id := "state_" + stateProps[i].ID
 				stateProps[i].ID = id
@@ -1860,7 +1870,7 @@ func (mod *modContext) genResource(r *schema.Resource) resourceDocArgs {
 	}
 
 	supportedSnippetLanguages := mod.context.getSupportedSnippetLanguages(r.IsOverlay, r.OverlaySupportedLanguages)
-	docInfo := dctx.decomposeDocstring(SanitizeDescription(r.Comment), supportedSnippetLanguages)
+	docInfo := dctx.decomposeDocstring(selfRef, SanitizeDescription(r.Comment), supportedSnippetLanguages)
 	data := resourceDocArgs{
 		Header: mod.genResourceHeader(r),
 

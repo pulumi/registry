@@ -471,15 +471,16 @@ func (mod *modContext) genFunctionOutputVersionMap(f *schema.Function) map[langu
 // the `function.tmpl` doc template.
 func (mod *modContext) genFunction(f *schema.Function) functionDocArgs {
 	dctx := mod.context
+	selfRef := schema.DocRefForFunction(f)
 	inputProps := make(map[language.Language][]property)
 	outputProps := make(map[language.Language][]property)
 	for lang := range language.All() {
 		if f.Inputs != nil {
-			inputProps[lang] = mod.getProperties(f.Inputs.Properties, lang, true, false, false)
+			inputProps[lang] = mod.getProperties(selfRef, f.Inputs.Properties, lang, true, false, false)
 		}
 		if f.ReturnType != nil {
 			if objectObject, ok := f.ReturnType.(*schema.ObjectType); ok {
-				outputProps[lang] = mod.getProperties(objectObject.Properties,
+				outputProps[lang] = mod.getProperties(selfRef, objectObject.Properties,
 					lang, false, false, false)
 			}
 		}
@@ -506,7 +507,8 @@ func (mod *modContext) genFunction(f *schema.Function) functionDocArgs {
 	}
 
 	supportedSnippetLanguages := mod.context.getSupportedSnippetLanguages(f.IsOverlay, f.OverlaySupportedLanguages)
-	docInfo := dctx.decomposeDocstring(SanitizeDescription(f.Comment), supportedSnippetLanguages)
+	docInfo := dctx.decomposeDocstring(
+		schema.DocRefForFunction(f), SanitizeDescription(f.Comment), supportedSnippetLanguages)
 	args := functionDocArgs{
 		Header: mod.genFunctionHeader(f),
 

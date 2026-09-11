@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/incident-io/incident/6.13.0/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/incident-io/incident/7.0.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Incident Provider
@@ -24,6 +24,15 @@ custom fields and more inside of your incident.io account.
 To view the full documentation of this provider, we recommend reading the
 documentation on the Pulumi
 Registry.
+## Upgrading to v7
+
+v7 promotes the beta resources to the names they keep. A configuration on the
+`_beta` names needs nothing: they still work, deprecated, until v8. A
+configuration on the v6 schemas keeps its state but needs rewriting, because
+`rotations`, `path` and `template` are no longer attributes.
+Nothing in your account is recreated either way: read
+Migrating to v7
+for what changed and how to move.
 ## Supported Pulumi versions
 
 From v6.0.0 this provider supports Pulumi 1.14 and above, and is tested

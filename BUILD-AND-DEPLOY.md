@@ -13,8 +13,9 @@ This document describes the build, test, and deployment system for the `pulumi/r
    - [4.1 Makefile Targets](#41-makefile-targets)
    - [4.2 Hugo Build](#42-hugo-build)
    - [4.3 resourcedocsgen Tool](#43-resourcedocsgen-tool)
-   - [4.4 CI Build Script](#44-ci-build-script-scriptscibuilds)
+   - [4.4 CI Build Script](#44-ci-build-script-scriptscibuildsh)
    - [4.5 Versioned Documentation](#45-versioned-documentation)
+   - [4.7 Build Caching](#47-build-caching)
 5. [GitHub Actions Workflows](#github-actions-workflows)
    - [5.1 pull-request.yml — PR Validation + Preview Deploy](#51-pull-requestyml--pr-validation--preview-deploy)
    - [5.2 push.yml — Production Build + Deploy](#52-pushyml--production-build--deploy)
@@ -85,10 +86,10 @@ The canonical tool versions are tracked in `mise.toml`:
 | Tool | Version |
 |---|---|
 | Go | 1.26 |
-| Node.js | 20 |
+| Node.js | 24 |
 | Yarn | 1.22.22 |
 | Hugo | 0.157 (extended) |
-| golangci-lint | 2.1.6 |
+| golangci-lint | 2.10.1 |
 | yq | latest |
 
 Install and manage all tools via [mise](https://mise.jdx.dev/):
@@ -156,14 +157,20 @@ mise trust && mise install
 | Hugo 0.157 (extended) | Static site generation from templates and content |
 | resourcedocsgen | Generates provider API reference docs from Pulumi schemas |
 | Pulumi IaC | Manages AWS resources; reads metadata file to update CloudFront origin |
-| Algolia | Search index; updated as part of production deploys via `scripts/search/main.js` |
+| Algolia | Search index; production deploys build `search-index.json` with `scripts/search/main.js` and upload it to the origin bucket (`scripts/generate-search-index.sh`) for the search index update job to load |
 | AWS S3 | Hosts built site content as a static website origin |
 | AWS CloudFront | CDN serving the site; origin pointed at S3 bucket by Pulumi IaC |
 | AWS SSM Parameter Store | Maps commit SHAs to their corresponding S3 origin buckets |
 
 ### Multi-Repo Touchpoints
 
-- **`pulumi/pulumi-*` provider repos**: Trigger `publish-provider-update.yml` via `repository_dispatch` when a new provider version is released.
+- **`pulumi/pulumi-*` provider repos**: Trigger `publish-provider-update.yml` via a `resource-provider` `repository_dispatch` when a new provider version is released. Most get that step from `pulumi/ci-mgmt` templates.
+- **`pulumi/terraform-to-pulumi-registry-pipeline`** (internal): Watches dynamically bridged Terraform providers, stores their generated schemas in S3, and triggers `publish-provider-update.yml` via a `push-provider-update` `repository_dispatch`.
+- **Partner and community package repos**: Listed in `community-packages/package-list.json`. `generate-package-metadata.yml` reads their latest GitHub release, schema, and `docs/`.
+- **`pulumi/ci-mgmt`**: Provider CI templates that send the `resource-provider` dispatch, and the source of `provider-ci/providers.json`, which `scripts/generate-versioned-docs.sh` reads.
+- **`pulumi/registry-mirror-tools`**: Tools used by `scripts/generate-versioned-docs.sh` and `scripts/ci/publish_to_registry.py`.
+
+See [docs/architecture.md](./docs/architecture.md) for how these fit together.
 
 ---
 
@@ -548,9 +555,15 @@ PR opened / committed
         ├── test-provider-api-docs
         │       └── make ensure build-assets → make test_provider_api_docs
         │
+        ├── test-infra
+        │       └── make test-infra
+        │
+        ├── check-publish
+        │       └── python3 scripts/ci/community-package/cli.py check-publish → post fact-sheet
+        │
         ├── preview  (skipped for fork PRs; skipped for automation/tfgen-provider-docs label)
         │       ├── Fetch ESC secrets
-        │       ├── Install Node 22, Go 1.26, Hugo 0.157
+        │       ├── Install Node 24, Go 1.26, Hugo 0.157
         │       ├── Validate community-packages/package-list.json
         │       ├── Configure AWS credentials → assume testing account role
         │       ├── Install s5cmd v2.3.0
@@ -572,7 +585,7 @@ PR opened / committed
 
 **Skipping preview for fork PRs**: Fork PRs are excluded at the workflow level. The `preview` job has an `if:` condition that only allows it to run when `github.event.pull_request.head.repo.full_name == github.repository`, so the job is never scheduled for PRs from forks. `pull-request.sh` also contains a defensive credential check (for `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, and `PULUMI_ACCESS_TOKEN`) as a fallback, but this code path is not expected to be reached in practice.
 
-**The `sentinel` job**: The sentinel job creates a GitHub status check called `"Sentinel"` only after all required jobs pass. This single required check simplifies branch protection rules. The sentinel job runs for non-fork PRs and for `repository_dispatch` events (condition: `github.event_name == 'repository_dispatch' || github.event.pull_request.head.repo.full_name == github.repository`).
+**The `sentinel` job**: The sentinel job creates a GitHub status check called `"Sentinel"` only after all required jobs pass. This single required check simplifies branch protection rules. The sentinel job runs only for PRs from branches in this repository (condition: `github.event.pull_request.head.repo.full_name == github.repository`).
 
 **Key environment variables in `preview` job**:
 
@@ -600,7 +613,7 @@ Push to master
         │
         └── build job
                 ├── Fetch ESC secrets (OIDC)
-                ├── Install Node 22, Go 1.26, Hugo 0.157
+                ├── Install Node 24, Go 1.26, Hugo 0.157
                 ├── Checkout (using PULUMI_BOT_TOKEN for private module access)
                 ├── Configure AWS credentials
                 │       └── Assume arn:aws:iam::388588623842:role/ContinuousDelivery
@@ -623,6 +636,8 @@ Push to master
                 │       ├── scripts/ci/run-pulumi.sh update
                 │       │       └── pulumi -C infrastructure update --yes
                 │       │           (reads origin-bucket-metadata.json, updates CloudFront)
+                │       ├── scripts/ci/invalidate-docs-cdn.sh
+                │       │       └── Invalidate /registry/* on the www.pulumi.com CloudFront distribution
                 │       └── scripts/ci/make-s3-redirects.sh
                 │               └── Apply 301 redirects from scripts/redirects/
                 ├── Archive origin-bucket-metadata.json as artifact
@@ -652,7 +667,7 @@ Push to master
 
 #### `testing-deploy.yml` — Manual Test Environment Deploy
 
-Identical to `push.yml` but triggered manually via `workflow_dispatch` and deploys to the testing environment (account `571684982431`, role `arn:aws:iam::571684982431:role/ContinuousDelivery`). Uses Go 1.21.x (note: older than production).
+Identical to `push.yml` but triggered manually via `workflow_dispatch` and deploys to the testing environment (account `571684982431`, role `arn:aws:iam::571684982431:role/ContinuousDelivery`). Reads its Go version from `tools/resourcedocsgen/go.mod`, like production.
 
 #### `pull-request-closed.yml` — PR Preview Cleanup
 
@@ -673,7 +688,7 @@ A reusable `workflow_call` workflow. Called by `pull-request.yml` for `tools/res
 
 Jobs:
 
-- **lint**: Sparse checkout → golangci-lint v2.1.6 with `--config .golangci.yml`
+- **lint**: Sparse checkout → golangci-lint v2.10.1 with `--config .golangci.yml`
 - **test**: Sparse checkout → `go test ./... -v`
 
 #### `check-links.yml` — Link Validation
@@ -682,7 +697,7 @@ Jobs:
 
 Runs `make check_links` which calls `yarn run check-links`, which runs `node scripts/link-checker/check-links.js "https://www.pulumi.com/registry" 2` (2 retries on failure). Broken links are reported to the `#registry-ops` Slack channel.
 
-Node version: 22.x; Hugo 0.157.0 installed but not explicitly used.
+Node version: 24.x; Hugo 0.157.0 installed but not explicitly used.
 
 #### `run-browser-tests.yml` — Scheduled Browser Tests
 
@@ -690,16 +705,16 @@ Node version: 22.x; Hugo 0.157.0 installed but not explicitly used.
 
 Runs `make run-browser-tests` on a `pulumi-ubuntu-8core` runner. Assumes the production AWS role (`388588623842:role/ContinuousDelivery`) to be able to reach the live site.
 
-Node version: 22.x; Hugo 0.157.0 installed.
+Node version: 24.x; Hugo 0.157.0 installed.
 
-#### `generate-package-metadata.yml` — Nightly Community Package Check
+#### `generate-package-metadata.yml` — Scheduled Community Package Check
 
-**Trigger**: Daily at 5:30 AM UTC and 5:30 PM UTC; also `workflow_dispatch`
+**Trigger**: Daily at 5:30 AM UTC and 5:30 PM UTC; also `workflow_dispatch`, and a push to `master` that changes `community-packages/package-list.json`
 
 **Flow**:
 
 1. `generate-packages-list` job: Runs `python generate_package_list.py` in `community-packages/` to build a matrix of community provider repos to check.
-2. `check-for-package-update` job (matrix, max-parallel: 1): For each provider, runs `resourcedocsgen pkgversion` to check if a new version is available. If so, runs `resourcedocsgen metadata from-github` to generate updated metadata and opens a PR via `.github/actions/new-provider-version-pr`.
+2. `check-for-package-update` job (matrix, max-parallel: 8): For each provider, runs `resourcedocsgen pkgversion` to check if a new version is available. If so, runs `resourcedocsgen metadata from-github` to generate updated metadata and opens a PR via `.github/actions/new-provider-version-pr`.
 3. PRs are skipped if an open PR already exists for that provider (deduplication check via `list_pull_requests` in `scripts/common.sh`).
 
 #### `community-package-*.yml` — Community Package Verified Check
@@ -719,14 +734,14 @@ After merge, `generate-package-metadata.yml` (above) generates and publishes the
 
 **Trigger**: `repository_dispatch` with event types `resource-provider` or `push-provider-update`
 
-Used by first-party Pulumi provider repos to trigger documentation regeneration when a new provider version is released.
+Used by first-party Pulumi provider repos, and by `pulumi/terraform-to-pulumi-registry-pipeline` for dynamically bridged Terraform providers, to trigger documentation regeneration when a new provider version is released.
 
-| Event type | Use case | Required inputs |
-|---|---|---|
-| `resource-provider` | GitHub-hosted provider (Pulumi repo) | `project-shortname`, `ref` (version tag) |
-| `push-provider-update` | Opaque provider (no assumed GitHub structure) | `project-shortname`, `schema-url`, `index-url` |
+| Event type | Use case | Required inputs | Optional inputs |
+|---|---|---|---|
+| `resource-provider` | GitHub-hosted provider (Pulumi repo) | `project-shortname`, `ref` (version tag) | `schema-path` |
+| `push-provider-update` | Opaque provider (no assumed GitHub structure) | `project-shortname`, `schema-url`, `index-url` | — |
 
-For `resource-provider`: Calls `resourcedocsgen metadata from-github` → creates a PR. For `push-provider-update`: Downloads schema from `schema-url`, extracts version from schema, calls `resourcedocsgen metadata from-urls` → creates a PR.
+For `resource-provider`: Calls `resourcedocsgen metadata from-github` → creates a PR. For `push-provider-update`: Downloads schema from `schema-url`, extracts version from schema, checks the schema's publisher is in `publisher-names.json`, calls `resourcedocsgen metadata from-urls` → creates a PR.
 
 #### `bucket-cleanup.yml` — Remove Stale S3 Preview Buckets
 
@@ -1102,13 +1117,13 @@ The `export-repo-secrets.yml` workflow provides a manual escape hatch to sync Gi
 
 | Tool | `mise.toml` | `pull-request.yml` (preview) | `push.yml` (production) | `testing-deploy.yml` |
 |---|---|---|---|---|
-| Node.js | 20 | 22.x | 22.x | 22.x |
+| Node.js | 24 | 24.x | 24.x | 24.x |
 | Go | 1.26 | `tools/resourcedocsgen/go.mod` | `tools/resourcedocsgen/go.mod` | `tools/resourcedocsgen/go.mod` |
 | Hugo | 0.157 | 0.157.0 | 0.157.0 | 0.157.0 |
-| golangci-lint | 2.1.6 | v2.1.6 (check-go.yml) | — | — |
+| golangci-lint | 2.10.1 | v2.10.1 (check-go.yml) | — | — |
 | s5cmd | — | v2.3.0 | v2.3.0 | v2.3.0 |
 
-Note: `mise.toml` specifies Node 20 for local development, while CI workflows use Node 22. The `lint-markdown` and `lint-scripts` jobs in `pull-request.yml` use Node 23.x. The `bucket-cleanup.yml` workflow uses Node 18.x.
+Note: `mise.toml` and the CI workflows use Node 24, including `bucket-cleanup.yml` and every job in `pull-request.yml`. The exception is `community-package-check.yml`, which pins Node 20.
 
 ---
 

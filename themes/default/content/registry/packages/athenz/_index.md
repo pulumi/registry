@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/athenz/athenz/1.0.52/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/athenz/athenz/1.0.53/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Athenz Provider
@@ -57,3 +57,4 @@ button on top right hand side.
 - `resourceOwner` (String) Resource owner. Default is "TF"
 - `roleMetaResourceState` (Number) Bitmask of object state flags controlling role behavior when creating or destroying roleMeta resources. 0x01: create the role if not already present, 0x02: always delete the role when destroying the resource. Default value is 1. The value is used when the resourceState attribute at the athenz.RoleMeta level is set to -1
 - `groupMetaResourceState` (Number) Bitmask of object state flags controlling group behavior when creating or destroying groupMeta resources. 0x01: create the group if not already present, 0x02: always delete the group when destroying the resource. Default value is 1. The value is used when the resourceState attribute at the athenz.GroupMeta level is set to -1
+- `auditRef` (String) Default audit reference used for a resource's update/delete operations when that resource's own `auditRef` attribute is empty in state, e.g. for resources imported via `pulumi import`. Default is "done by pulumi provider"

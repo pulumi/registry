@@ -11,7 +11,7 @@ name: hcloud
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-hcloud
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-hcloud/v1.41.0/provider/cmd/pulumi-resource-hcloud/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-hcloud/v1.42.0/provider/cmd/pulumi-resource-hcloud/schema.json
 title: Hetzner Cloud
-updated_on: 1785298468
-version: v1.41.0
+updated_on: 1789183229
+version: v1.42.0

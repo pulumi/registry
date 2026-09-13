@@ -9,7 +9,7 @@ name: elasticstack
 package_status: public_preview
 publisher: elastic
 repo_url: https://github.com/elastic/terraform-provider-elasticstack
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/elastic/elasticstack/0.16.4/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/elastic/elasticstack/0.16.5/schema.json
 title: elasticstack
-updated_on: 1787657724
-version: 0.16.4
+updated_on: 1789342526
+version: 0.16.5

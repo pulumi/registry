@@ -680,9 +680,13 @@ Jobs:
 
 **Trigger**: Every Monday at 3:00 PM UTC (cron: `0 15 * * MON`); also `workflow_dispatch`
 
-Runs `make check_links` which calls `yarn run check-links`, which runs `node scripts/link-checker/check-links.js "https://www.pulumi.com/registry" 2` (2 retries on failure). Broken links are reported to the `#registry-ops` Slack channel.
+Runs `make check_links` which calls `yarn run check-links`, which runs `node scripts/link-checker/check-links.js "https://www.pulumi.com/registry" 2` (2 retries on failure). The checker writes its filtered results to `.broken-links.json` (git-ignored; `internal` and `external` lists) and no longer posts to Slack itself.
 
-Node version: 22.x; Hugo 0.157.0 installed but not explicitly used.
+If that file lists anything, the workflow hands it to `anthropics/claude-code-action`, which follows `.claude/commands/fix-broken-links/SKILL.md`: re-verify each link (the crawler has false positives), skip anything already covered by an open PR or issue, then triage the rest -- S3 redirect, source edit, exclusion-list entry, an upstream issue in a first-party `pulumi/*` provider repo, or "third-party / not actioned" for community-maintained packages -- and open a ready PR on `fix/broken-links-<date>` whose description audits every decision. The action writes the PR link to `.broken-links-pr.txt`, and the last step posts that to `#registry-ops`. On a clean run both steps are skipped, so nothing is posted.
+
+The ESC step runs before checkout and the checkout and Claude steps use `PULUMI_BOT_TOKEN`, so the PR is opened by `pulumi-bot` and triggers `pull-request.yml` like a human-authored PR would.
+
+Node version: 24.x; Hugo 0.157.0 installed (required by `scripts/ensure.sh`, which `make check_links` depends on).
 
 #### `run-browser-tests.yml` — Scheduled Browser Tests
 
@@ -1048,6 +1052,8 @@ make check_links
 - Excludes API docs pages, SDK reference pages, and install/versions pages.
 - Uses `broken-link-checker` with `filterLevel: 1` and GET requests.
 - Up to 2 retries if broken links are found.
+- Filters transient and bot-protection failures (`excludeAcceptable()`): all `429`s, `502`/`503`, and `401`/`403` on external hosts, among others. Known-noisy hosts (Maven Central, npm, Docker Hub, status pages, GitHub's own chrome on `github.com/pulumi/pulumi`) are in `getDefaultExcludedKeywords()`.
+- Writes `.broken-links.json` (`{ generated, internal, external }`) at the repo root. In CI, `check-links.yml` feeds that file to the `fix-broken-links` skill, which opens a fix PR; see the workflow section above.
 - Reports broken links to the `#registry-ops` Slack channel via `SLACK_ACCESS_TOKEN`.
 - Many known-flaky domains are excluded (LinkedIn, YouTube, Twitter, etc.).
 

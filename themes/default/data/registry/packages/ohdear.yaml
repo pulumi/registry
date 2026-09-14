@@ -15,7 +15,7 @@ name: ohdear
 package_status: ga
 publisher: Matthias Hamacher
 repo_url: https://github.com/matthiashamacher/pulumi-ohdear
-schema_file_url: https://raw.githubusercontent.com/matthiashamacher/pulumi-ohdear/v1.0.0/schema.json
+schema_file_url: https://raw.githubusercontent.com/matthiashamacher/pulumi-ohdear/v1.0.6/schema.json
 title: Oh Dear
-updated_on: 1788262114
-version: v1.0.0
+updated_on: 1789393157
+version: v1.0.6

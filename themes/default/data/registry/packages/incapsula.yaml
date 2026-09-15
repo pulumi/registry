@@ -9,7 +9,7 @@ name: incapsula
 package_status: ga
 publisher: imperva
 repo_url: https://github.com/imperva/terraform-provider-incapsula
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/imperva/incapsula/3.39.3/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/imperva/incapsula/3.40.0/schema.json
 title: incapsula
-updated_on: 1787139370
-version: 3.39.3
+updated_on: 1789515314
+version: 3.40.0

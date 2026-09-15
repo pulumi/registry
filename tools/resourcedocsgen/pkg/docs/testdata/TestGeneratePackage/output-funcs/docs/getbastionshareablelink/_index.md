@@ -2,7 +2,7 @@
 ---
 title: "getBastionShareableLink"
 title_tag: "mypkg.getBastionShareableLink"
-meta_desc: "Documentation for the mypkg.getBastionShareableLink function with examples, input properties, output properties, and supporting types."
+meta_desc: "Response for all the Bastion Shareable Link endpoints. API Version: 2020-11-01."
 layout: api
 no_edit_this_page: true
 outputs:

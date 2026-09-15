@@ -2,7 +2,7 @@
 ---
 title: "getAmiIds"
 title_tag: "mypkg.getAmiIds"
-meta_desc: "Documentation for the mypkg.getAmiIds function with examples, input properties, output properties, and supporting types."
+meta_desc: "Taken from pulumi-AWS to regress an issue"
 layout: api
 no_edit_this_page: true
 outputs:

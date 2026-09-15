@@ -2,7 +2,7 @@
 ---
 title: "DomainService"
 title_tag: "azure-native.aad.DomainService"
-meta_desc: "Documentation for the azure-native.aad.DomainService resource with examples, input properties, output properties, lookup functions, and supporting types."
+meta_desc: "Domain service. Azure REST API version: 2022-12-01. Prior API version in Azure Native 1.x: 2021-03-01."
 layout: api
 no_edit_this_page: true
 outputs:

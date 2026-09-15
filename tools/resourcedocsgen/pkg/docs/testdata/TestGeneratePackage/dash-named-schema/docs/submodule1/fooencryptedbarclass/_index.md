@@ -2,7 +2,7 @@
 ---
 title: "FOOEncryptedBarClass"
 title_tag: "foo-bar.submodule1.FOOEncryptedBarClass"
-meta_desc: "Documentation for the foo-bar.submodule1.FOOEncryptedBarClass resource with examples, input properties, output properties, lookup functions, and supporting types."
+meta_desc: "Create and manage foo-bar.submodule1.FOOEncryptedBarClass with Pulumi. Full API reference with input and output properties, lookup functions, and examples in TypeScript, Python, Go, C#, Java, and YAML."
 layout: api
 no_edit_this_page: true
 outputs:

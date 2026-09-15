@@ -2,7 +2,7 @@
 ---
 title: "funcWithListParam"
 title_tag: "mypkg.funcWithListParam"
-meta_desc: "Documentation for the mypkg.funcWithListParam function with examples, input properties, output properties, and supporting types."
+meta_desc: "Check codegen of functions with a List parameter."
 layout: api
 no_edit_this_page: true
 outputs:

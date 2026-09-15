@@ -2,7 +2,7 @@
 ---
 title: "listStorageAccountKeys"
 title_tag: "mypkg.listStorageAccountKeys"
-meta_desc: "Documentation for the mypkg.listStorageAccountKeys function with examples, input properties, output properties, and supporting types."
+meta_desc: "The response from the ListKeys operation. API Version: 2021-02-01."
 layout: api
 no_edit_this_page: true
 outputs:

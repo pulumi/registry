@@ -431,18 +431,20 @@ func (mod *modContext) genFunctionParams(
 
 func (mod *modContext) genFunctionHeader(f *schema.Function) header {
 	funcName := tokenToName(f.Token)
-	var baseDescription string
+	var qualifiedName string
 	var titleTag string
 	if mod.mod == "" {
-		baseDescription = fmt.Sprintf("Documentation for the %s.%s function "+
-			"with examples, input properties, output properties, "+
-			"and supporting types.", mod.pkg.Name(), funcName)
-		titleTag = fmt.Sprintf("%s.%s", mod.pkg.Name(), funcName)
+		qualifiedName = fmt.Sprintf("%s.%s", mod.pkg.Name(), funcName)
+		titleTag = qualifiedName
 	} else {
-		baseDescription = fmt.Sprintf("Documentation for the %s.%s.%s function "+
-			"with examples, input properties, output properties, "+
-			"and supporting types.", mod.pkg.Name(), mod.mod, funcName)
-		titleTag = fmt.Sprintf("%s.%s.%s", mod.pkg.Name(), mod.mod, funcName)
+		qualifiedName = fmt.Sprintf("%s.%s.%s", mod.pkg.Name(), mod.mod, funcName)
+		titleTag = qualifiedName
+	}
+
+	baseDescription := summarizeForMetaDescription(f.Comment)
+	if baseDescription == "" {
+		baseDescription = fmt.Sprintf("Use %s with Pulumi. Full API reference with input and output "+
+			"properties and examples in TypeScript, Python, Go, C#, Java, and YAML.", qualifiedName)
 	}
 
 	return header{

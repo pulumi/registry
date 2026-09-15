@@ -2,7 +2,7 @@
 ---
 title: "Release"
 title_tag: "kubernetes.helm.sh/v3.Release"
-meta_desc: "Documentation for the kubernetes.helm.sh/v3.Release resource with examples, input properties, output properties, lookup functions, and supporting types."
+meta_desc: "A non-overlay, non-component, non-Kubernetes resource."
 layout: api
 no_edit_this_page: true
 outputs:

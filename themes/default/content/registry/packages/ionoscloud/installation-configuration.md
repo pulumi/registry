@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/ionos-cloud/pulumi-ionoscloud/v0.3.2/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/ionos-cloud/pulumi-ionoscloud/v0.3.3/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/ionos-cloud/pulumi-ionoscloud/blob/v0.3.2/docs/installation-configuration.md
+edit_url: https://github.com/ionos-cloud/pulumi-ionoscloud/blob/v0.3.3/docs/installation-configuration.md
 title: IONOS Cloud Installation & Configuration
 meta_desc: Information on how to install the IONOS Cloud provider.
 layout: installation
@@ -64,11 +64,11 @@ Before you can provision resources, you must configure the provider with your IO
 
 ### Required Credentials
 
-You need either:
-
-- **Username and Password** or **API Token**
+Authenticate with an **API Token**. This is the recommended method.
 
 See [Token Management](https://docs.ionos.com/cloud/set-up-ionos-cloud/management/identity-access-management/token-manager) for details on generating a token.
+
+**Username and Password** is also supported as an alternative.
 
 ### Setting Credentials
 
@@ -79,7 +79,7 @@ You can provide credentials using environment variables (recommended for securit
 | `IONOS_USERNAME`        | Username for IONOS Cloud API authentication                                                                                                                              |
 | `IONOS_PASSWORD`        | Password for IONOS Cloud API authentication                                                                                                                              |
 | `IONOS_TOKEN`           | API token for authentication (alternative to username/password)                                                                    |
-| `IONOS_API_URL`         | API endpoint URL (default: `api.ionos.com`). Override only if necessary.                                                          |
+| `IONOS_API_URL`         | **DO NOT USE unless for testing.** API endpoint URL (default: `api.ionos.com`).                                                   |
 | `IONOS_LOG_LEVEL`       | Log level: `Off`, `Debug`, or `Trace` (default: `Off`)                                                                           |
 | `IONOS_PINNED_CERT`     | SHA-256 public fingerprint for certificate pinning                                                                                |
 | `IONOS_CONTRACT_NUMBER` | Contract number (for reseller accounts only)                                                                                      |
@@ -89,10 +89,10 @@ You can provide credentials using environment variables (recommended for securit
 
 Example (Linux/macOS):
 ```bash
+export IONOS_TOKEN="your-api-token"
+# or, alternatively
 export IONOS_USERNAME="your-username"
 export IONOS_PASSWORD="your-password"
-# or
-export IONOS_TOKEN="your-api-token"
 ```
 
 ---

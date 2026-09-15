@@ -57,7 +57,7 @@ var metaDescWhitespaceRegex = regexp.MustCompile(`\s+`)
 // summary (empty, or too short after cleanup), signaling the caller should
 // fall back to a generic templated description instead.
 func summarizeForMetaDescription(comment string) string {
-	s := sanitizeDescription(comment)
+	s := SanitizeDescription(comment)
 
 	if loc := metaDescCutRegex.FindStringIndex(s); loc != nil {
 		s = s[:loc[0]]

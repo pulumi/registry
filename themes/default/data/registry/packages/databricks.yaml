@@ -11,7 +11,7 @@ name: databricks
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-databricks
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-databricks/v1.109.0/provider/cmd/pulumi-resource-databricks/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-databricks/v1.110.0/provider/cmd/pulumi-resource-databricks/schema.json
 title: Databricks
-updated_on: 1788837964
-version: v1.109.0
+updated_on: 1789442966
+version: v1.110.0

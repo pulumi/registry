@@ -168,6 +168,25 @@ func TestGenerateCLIPackage(t *testing.T) {
 	})
 }
 
+func TestStripHTMLCollapsesInlineChoosables(t *testing.T) {
+	t.Parallel()
+
+	// Simulate the divergent-ref markup emitted by refs.renderRef: several
+	// <pulumi-choosable> elements in a row with different inner text. Without
+	// collapsing them first, stripHTML would concatenate every language's name
+	// end-to-end.
+	in := `See also ` +
+		`<pulumi-choosable type="language" values="csharp">CsName</pulumi-choosable>` +
+		`<pulumi-choosable type="language" values="go">GoName</pulumi-choosable>` +
+		`<pulumi-choosable type="language" values="javascript,typescript">TsName</pulumi-choosable>` +
+		` for details.`
+
+	got := stripHTML(in)
+	assert.Equal(t, "See also CsName for details.", got)
+	assert.NotContains(t, got, "GoName")
+	assert.NotContains(t, got, "TsName")
+}
+
 func TestNormalizeWhitespace(t *testing.T) {
 	t.Parallel()
 

@@ -2,7 +2,7 @@
 ---
 title: "ResourceInput"
 title_tag: "example.ResourceInput"
-meta_desc: "Create and manage example.ResourceInput with Pulumi. Full API reference with input and output properties, lookup functions, and examples in TypeScript, Python, Go, C#, Java, and YAML."
+meta_desc: "Documentation for the example.ResourceInput resource with examples, input properties, output properties, lookup functions, and supporting types."
 layout: api
 no_edit_this_page: true
 outputs:

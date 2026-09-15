@@ -2,7 +2,7 @@
 ---
 title: "GetArrayCustomResult"
 title_tag: "std.GetArrayCustomResult"
-meta_desc: "Use std.GetArrayCustomResult with Pulumi. Full API reference with input and output properties and examples in TypeScript, Python, Go, C#, Java, and YAML."
+meta_desc: "Documentation for the std.GetArrayCustomResult function with examples, input properties, output properties, and supporting types."
 layout: api
 no_edit_this_page: true
 outputs:

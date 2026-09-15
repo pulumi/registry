@@ -2,7 +2,7 @@
 ---
 title: "ConfigGroup"
 title_tag: "kubernetes.yaml.ConfigGroup"
-meta_desc: "Create and manage kubernetes.yaml.ConfigGroup with Pulumi. Full API reference with input and output properties, lookup functions, and examples in TypeScript, Python, Go, C#, Java, and YAML."
+meta_desc: "Documentation for the kubernetes.yaml.ConfigGroup resource with examples, input properties, output properties, lookup functions, and supporting types."
 layout: api
 no_edit_this_page: true
 outputs:

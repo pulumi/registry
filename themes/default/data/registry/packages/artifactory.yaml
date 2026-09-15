@@ -4,9 +4,10 @@ category: Cloud
 component: false
 description: A Pulumi package for creating and managing artifactory cloud resources.
 featured: false
+keywords:
+- artifactory
 logo_url: ""
 name: artifactory
-native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-artifactory

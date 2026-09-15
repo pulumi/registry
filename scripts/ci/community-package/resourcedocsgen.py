@@ -13,9 +13,11 @@ def ensure_built() -> None:
         subprocess.run(["go", "build", "-C", "tools/resourcedocsgen"], check=True)
 
 
-def generate_metadata(slug: str, schema_file: str, tag: str, into: Path | None = None) -> tuple[bool, str]:
+def generate_metadata(slug: str, schema_file: str, tag: str, provider_name: str,
+                      into: Path | None = None) -> tuple[bool, str]:
     args = [str(BINARY), "metadata", "from-github",
-            "--repoSlug", slug, "--schemaFile", schema_file, "--version", tag]
+            "--repoSlug", slug, "--schemaFile", schema_file, "--version", tag,
+            "--providerName", provider_name]
     if into is not None:
         args += ["--metadataDir", str(into / "data"), "--packageDocsDir", str(into / "content")]
     run = subprocess.run(args, capture_output=True, text=True)
@@ -25,4 +27,4 @@ def generate_metadata(slug: str, schema_file: str, tag: str, into: Path | None =
     print(f"::group::docs generate FAILED, resourcedocsgen metadata from-github {slug}@{tag}", file=sys.stderr)
     print(output, file=sys.stderr)
     print("::endgroup::", file=sys.stderr)
-    return False, output[-600:]
+    return False, output[:600]

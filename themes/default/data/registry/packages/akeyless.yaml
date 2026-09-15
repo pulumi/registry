@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from akeyless.
 featured: false
 logo_url: ""
 name: akeyless
-native: false
 package_status: ga
 publisher: akeyless-community
 repo_url: https://github.com/akeyless-community/terraform-provider-akeyless

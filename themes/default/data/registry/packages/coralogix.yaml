@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from coralogix.
 featured: false
 logo_url: ""
 name: coralogix
-native: false
 package_status: ga
 publisher: coralogix
 repo_url: https://github.com/coralogix/terraform-provider-coralogix

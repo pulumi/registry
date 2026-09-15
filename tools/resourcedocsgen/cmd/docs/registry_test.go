@@ -31,7 +31,6 @@ description: A Pulumi package to safely use randomness in Pulumi programs.
 featured: false
 logo_url: ""
 name: random
-native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-random
@@ -123,7 +122,6 @@ description: A Pulumi package to safely use randomness in Pulumi programs.
 featured: false
 logo_url: ""
 name: random
-native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-random
@@ -137,7 +135,6 @@ description: Pulumi Amazon Web Services (AWS) API Gateway Components.
 featured: false
 logo_url: https://raw.githubusercontent.com/pulumi/pulumi-aws-apigateway/main/assets/logo.png
 name: aws-apigateway
-native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-aws-apigateway

@@ -7,7 +7,6 @@ description: VMWare ESXi provider to provision VMs directly on an ESXi hyperviso
 featured: false
 logo_url: https://raw.githubusercontent.com/pulumiverse/pulumi-esxi-native/main/docs/esxi-logo.png
 name: esxi-native
-native: true
 package_status: ga
 publisher: pulumiverse
 repo_url: https://github.com/pulumiverse/pulumi-esxi-native

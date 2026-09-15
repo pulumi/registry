@@ -1,7 +1,3 @@
-# On-demand site preview for a community-package PR, including fork PRs. A fork's own
-# pull_request build gets no secrets, so a maintainer triggers this instead (a /preview comment
-# or a manual run). It reuses the registry's preview build (the build-and-deploy-preview
-# action), materializing the fork's entry as data first, and never runs the fork's code.
 name: Community package /preview command
 
 on:

@@ -4,9 +4,10 @@ category: Infrastructure
 component: false
 description: A Pulumi package for creating and managing Kafka.
 featured: false
+keywords:
+- kafka
 logo_url: ""
 name: kafka
-native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-kafka

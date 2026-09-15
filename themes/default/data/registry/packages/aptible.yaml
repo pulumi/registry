@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from aptible.
 featured: false
 logo_url: ""
 name: aptible
-native: false
 package_status: public_preview
 publisher: aptible
 repo_url: https://github.com/aptible/terraform-provider-aptible

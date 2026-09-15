@@ -4,9 +4,10 @@ category: Monitoring
 component: false
 description: A Pulumi package for creating and managing Datadog resources.
 featured: false
+keywords:
+- datadog
 logo_url: ""
 name: datadog
-native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-datadog

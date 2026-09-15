@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from vcd.
 featured: false
 logo_url: ""
 name: vcd
-native: false
 package_status: ga
 publisher: vmware
 repo_url: https://github.com/vmware/terraform-provider-vcd

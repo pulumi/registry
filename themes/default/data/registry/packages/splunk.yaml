@@ -4,9 +4,10 @@ category: Infrastructure
 component: false
 description: A Pulumi package for creating and managing splunk cloud resources.
 featured: false
+keywords:
+- splunk
 logo_url: ""
 name: splunk
-native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-splunk

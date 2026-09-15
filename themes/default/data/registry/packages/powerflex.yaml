@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from powerflex.
 featured: false
 logo_url: ""
 name: powerflex
-native: false
 package_status: ga
 publisher: dell
 repo_url: https://github.com/dell/terraform-provider-powerflex

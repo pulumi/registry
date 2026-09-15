@@ -1,3 +1,5 @@
+import { syncEmptyState } from "./opentofu-suggest";
+
 const filterByTextAndTags = (filters, filterText) => {
     const AMAZON_STRING: string = "amazon";
     const AWS_STRING: string = "aws";
@@ -25,33 +27,37 @@ const filterByTextAndTags = (filters, filterText) => {
 
             const packageType = el.getAttribute("data-type");
             const packageCategory = el.getAttribute("data-category");
-            let packageIsNative = packageType === "native-provider";
 
             // A deprecated package that reaches this point was explicitly requested
             // via the "Deprecated" type option, so treat it as a type match.
             const packageHasSelectedType =
-                packageIsDeprecated || !!filters.find(f => f.group === "type" && f.value === packageType) || (filters.find(f => f.group === "type" && f.value === "provider") && packageIsNative);
+                packageIsDeprecated || !!filters.find(f => f.group === "type" && f.value === packageType);
             const packageHasSelectedCategory = !!filters.find(f => f.group === "category" && f.value === packageCategory);
 
-            const packageTitle = el.getAttribute("data-title");
-            const downcasedPackageTitle = packageTitle.toLowerCase();
+            // Free text matches when every whitespace-separated token appears in the
+            // package title, name, or keywords.
+            const haystack = [
+                el.getAttribute("data-title"),
+                el.getAttribute("data-name"),
+                el.getAttribute("data-keywords"),
+            ].join(" ").toLowerCase();
             let downcasedFilterText = filterText?.trim().toLowerCase();
 
-            let packageIsAMatch;
-
-            // hack to include anything marked as native as responsive to a filter text including the word "native"
-            // see https://github.com/pulumi/registry/issues/5715 for reasoning
+            // Searching for "native aws" should still turn up both aws and aws-native.
+            // The "kind/native" schema tag is stripped out of data-keywords by
+            // resourcedocsgen, so drop the word from the query rather than fail to
+            // match it. See https://github.com/pulumi/registry/issues/5715.
             if (downcasedFilterText.includes("native")) {
                 downcasedFilterText = downcasedFilterText.replace(/native/g, "");
-                packageIsNative = true;
             }
 
+            let packageIsAMatch;
             if (downcasedFilterText === AMAZON_STRING || downcasedFilterText === AWS_STRING){
-                packageIsAMatch = downcasedPackageTitle.includes(AMAZON_STRING) || downcasedPackageTitle.includes(AWS_STRING);
+                packageIsAMatch = haystack.includes(AMAZON_STRING) || haystack.includes(AWS_STRING);
             } else if (downcasedFilterText === GOOGLE_CLOUD_STRING || downcasedFilterText === GCP_STRING || downcasedFilterText === GOOGLE_STRING){
-                packageIsAMatch = downcasedPackageTitle.includes(GOOGLE_CLOUD_STRING) || downcasedPackageTitle.includes(GCP_STRING) || downcasedPackageTitle.includes(GOOGLE_STRING);
+                packageIsAMatch = haystack.includes(GOOGLE_CLOUD_STRING) || haystack.includes(GCP_STRING) || haystack.includes(GOOGLE_STRING);
             } else {
-                packageIsAMatch = downcasedPackageTitle.includes(downcasedFilterText);
+                packageIsAMatch = downcasedFilterText.split(/\s+/).filter(Boolean).every(token => haystack.includes(token));
             }
 
             if ((packageHasSelectedType || noSelectedType) && (packageHasSelectedCategory || noSelectedCategory) && (!filterText || packageIsAMatch)) {
@@ -80,10 +86,16 @@ const getActiveFilterText = () => {
     return inputElement?.value || "";
 };
 
-// Refreshes the visible-package count badges.
-const updateAllCount = () => {
+// Refreshes the visible-package count badges and the empty-results panel.
+//
+// Callers pass the filter text they already hold rather than letting this read the
+// DOM, because the Stencil search component re-renders asynchronously: right after
+// reset() or onClearFilter(), .registry-filter-input still holds the *old* query.
+// getActiveFilterText() is only the fallback for callers that have nothing better.
+const updateAllCount = (filterText?: string) => {
     const allCount = document.querySelectorAll(".all-packages .package:not(.hidden)").length;
     document.querySelectorAll(".all-count").forEach(el => el.textContent = String(allCount));
+    syncEmptyState(allCount, filterText !== undefined ? filterText : getActiveFilterText());
 };
 
 document.querySelector(".section-registry")?.addEventListener("filterSelect", (event: CustomEvent) => {
@@ -124,23 +136,29 @@ document.querySelector(".section-registry")?.addEventListener("filterSelect", (e
         el.setAttribute("data-selected-categories", selectedCategories);
     });
 
-    updateAllCount();
+    updateAllCount(filterText);
 
     document.querySelectorAll("pulumi-filter-select-option-group").forEach((el: any) => el.close());
 });
 
-document.querySelector(".section-registry .no-results .reset")?.addEventListener("click", event => {
+document.querySelector(".section-registry .no-results .reset")?.addEventListener("click", async event => {
     event.stopPropagation();
 
+    // Both of these are Stencil @Method()s, so they resolve asynchronously — and
+    // pulumi-filter-select.reset() emits filterSelect, whose handler re-filters using
+    // whatever the search input currently reads. Awaiting them lets that emit land
+    // first, so the authoritative "show everything" pass below is what wins. Without
+    // the awaits the emit arrives afterwards, re-filtering against the stale query
+    // text and leaving every package hidden.
     const search = document.querySelector("pulumi-registry-list-search") as any;
-    search?.reset();
+    await search?.reset();
 
     const fs = document.querySelector("pulumi-filter-select") as any;
-    fs?.reset();
+    await fs?.reset();
 
     filterByTextAndTags([], "");
 
-    updateAllCount();
+    updateAllCount("");
 });
 
 document.querySelector(".section-registry")?.addEventListener("packageSearch", (event: CustomEvent) => {
@@ -159,7 +177,7 @@ document.querySelector(".section-registry")?.addEventListener("packageSearch", (
 
     filterByTextAndTags(filters, filterText);
 
-    updateAllCount();
+    updateAllCount(filterText);
 });
 
 // Apply the default filtering on initial load so deprecated packages start hidden,

@@ -4,7 +4,6 @@ description: ""
 featured: false
 logo_url: ""
 name: azure-quickstart-acr-geo-replication
-native: false
 package_status: public_preview
 publisher: Ian Wahbe
 repo_url: "https://github.com/pulumi/pulumi-azure-quickstart-acr-geo-replication"

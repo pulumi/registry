@@ -46,7 +46,7 @@ Finalizes your current work by running quality checks, committing changes, pushi
 3. Scan last 5 conversation messages for "next steps" or "TODO" mentions
 4. Categorize changed files:
    - Package YAML (`themes/default/data/registry/packages/`)
-   - Go tools (`tools/resourcedocsgen/`, `tools/mktutorial/`)
+   - Go tools (`tools/resourcedocsgen/`)
    - CI workflows (`.github/workflows/`)
    - Build scripts (`Makefile`, `scripts/`)
    - Infrastructure (`infrastructure/`)
@@ -283,8 +283,7 @@ Commands that will run:
 **If PR creation fails**:
 - Display error (auth issues, network, etc.)
 - Note that changes are still committed and pushed
-- Suggest manual PR creation with URL:
-  `https://github.com/pulumi/registry/pull/new/{branch-name}`
+- Suggest manual PR creation with URL: `https://github.com/pulumi/registry/pull/new/{branch-name}`
 
 ---
 

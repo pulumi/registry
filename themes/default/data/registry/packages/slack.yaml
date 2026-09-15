@@ -4,9 +4,10 @@ category: Utility
 component: false
 description: A Pulumi package for managing Slack workspaces.
 featured: false
+keywords:
+- slack
 logo_url: ""
 name: slack
-native: false
 package_status: public_preview
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-slack

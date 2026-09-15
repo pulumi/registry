@@ -4,7 +4,6 @@ description: "A Pulumi component for deploying Metabase."
 featured: false
 logo_url: ""
 name: metabase
-native: false
 package_status: public_preview
 publisher: DEPRECATED
 repo_url: https://github.com/pulumi/pulumi-metabase

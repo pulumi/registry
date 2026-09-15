@@ -4,13 +4,14 @@ category: Cloud
 component: false
 description: A Pulumi package for creating and managing Kubernetes resources.
 featured: true
+keywords:
+- kubernetes
 logo_url: ""
 name: kubernetes
-native: true
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-kubernetes
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-kubernetes/v4.34.0/provider/cmd/pulumi-resource-kubernetes/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-kubernetes/v4.34.1/provider/cmd/pulumi-resource-kubernetes/schema.json
 title: Kubernetes
-updated_on: 1787865913
-version: v4.34.0
+updated_on: 1788907142
+version: v4.34.1

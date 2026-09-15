@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from netlify.
 featured: false
 logo_url: ""
 name: netlify
-native: false
 package_status: public_preview
 publisher: netlify
 repo_url: https://github.com/netlify/terraform-provider-netlify

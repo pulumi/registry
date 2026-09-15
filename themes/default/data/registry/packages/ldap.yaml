@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from ldap.
 featured: false
 logo_url: ""
 name: ldap
-native: false
 package_status: ga
 publisher: elastic-infra
 repo_url: https://github.com/elastic-infra/terraform-provider-ldap

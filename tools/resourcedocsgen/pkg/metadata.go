@@ -62,11 +62,13 @@ type PackageMeta struct {
 	// Featured indicates whether or not a package is highlighted as
 	// a featured package.
 	Featured bool `json:"featured"`
-	// Native is true if the package does not use the TF bridge.
-	Native bool `json:"native"`
 	// Component indicates if the package is a component and not
 	// a provider.
 	Component bool `json:"component"`
+
+	// Keywords are the search terms for the package. They come from the schema
+	// keywords, minus the "pulumi" keyword and the "category/" and "kind/" tags.
+	Keywords []string `json:"keywords,omitempty"`
 
 	// SchemaFilePath is the path to the package's schema file (json or yaml)
 	// relative to the root of that package's repo.

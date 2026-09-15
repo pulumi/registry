@@ -4,9 +4,10 @@ category: Cloud
 component: false
 description: A Pulumi package for creating and managing AliCloud resources.
 featured: false
+keywords:
+- alicloud
 logo_url: ""
 name: alicloud
-native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-alicloud

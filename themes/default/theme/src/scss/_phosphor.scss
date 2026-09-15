@@ -14,12 +14,11 @@
 // the secondary <path> inside each <symbol>. Host-page CSS targeting
 // .duotone-primary / .duotone-secondary cannot reach into <use> shadow DOM.
 
-// Shim for legacy FontAwesome icons hard-coded into generated content.
-// The how-to-guide markdown files (output of tools/mktutorial) ship with
-// <i class="fab fa-github"></i> next to "View Code" links. We can't rewrite
-// every generated file from a styling refactor, so render those <i> tags as
-// the GitHub SVG via mask-image. Add more entries if other fa-* names appear
-// in content.
+// Shim for legacy FontAwesome icons hard-coded into content. Some committed
+// how-to-guide markdown files ship with <i class="fab fa-github"></i> next to
+// "View Code" links. We can't rewrite every file from a styling refactor, so
+// render those <i> tags as the GitHub SVG via mask-image. Add more entries if
+// other fa-* names appear in content.
 //
 // The mask is an inline data URI rather than a hosted path (e.g. /icons/github.svg):
 // the registry's static assets under that path are not served on the merged

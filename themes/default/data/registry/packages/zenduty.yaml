@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from zenduty.
 featured: false
 logo_url: ""
 name: zenduty
-native: false
 package_status: ga
 publisher: zenduty
 repo_url: https://github.com/zenduty/terraform-provider-zenduty

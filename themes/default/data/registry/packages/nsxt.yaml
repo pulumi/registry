@@ -6,11 +6,10 @@ description: A Pulumi provider dynamically bridged from nsxt.
 featured: false
 logo_url: ""
 name: nsxt
-native: false
 package_status: ga
 publisher: vmware
 repo_url: https://github.com/vmware/terraform-provider-nsxt
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/vmware/nsxt/3.12.0/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/vmware/nsxt/3.12.1/schema.json
 title: nsxt
-updated_on: 1779104170
-version: 3.12.0
+updated_on: 1789126591
+version: 3.12.1

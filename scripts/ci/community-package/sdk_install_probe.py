@@ -11,9 +11,6 @@ from typing import Any, Callable
 
 from models import InstallResult
 
-# The provider supplies the package name, version, and plugin URL. We validate each against a
-# strict allowlist and pass it as an argv argument, never through a shell, so a crafted name
-# cannot inject a command.
 SAFE_NAME = re.compile(r"^[A-Za-z0-9._@/-]+$")
 SAFE_VERSION = re.compile(r"^[A-Za-z0-9._+-]+$")
 SAFE_URL = re.compile(r"^(https|github|gitlab)://[A-Za-z0-9._~:/?#@!$&()*+,;=-]+$")
@@ -39,10 +36,11 @@ def _pypi_version_exists(package: str, version: str) -> bool:
         return False
 
 
+NEVER_BUILD_FROM_SOURCE = ["--only-binary", ":all:"]
+
+
 def _python_resolves(package: str, version: str) -> tuple[bool, str]:
-    # --only-binary keeps pip from building an sdist, which would execute the package's setup code;
-    # when only an sdist is published, confirm the version exists from PyPI metadata instead.
-    ok, err = _run([sys.executable, "-m", "pip", "download", "--no-deps", "--only-binary", ":all:",
+    ok, err = _run([sys.executable, "-m", "pip", "download", "--no-deps", *NEVER_BUILD_FROM_SOURCE,
                     "--dest", "/tmp/py", "--", f"{package}=={version}"])
     if ok or _pypi_version_exists(package, version):
         return True, ""
@@ -50,8 +48,6 @@ def _python_resolves(package: str, version: str) -> tuple[bool, str]:
 
 
 def _go_module_resolves(import_path: str, tag: str) -> tuple[bool, str]:
-    # An SDK is a library, so `go install` won't work. Resolve it inside a throwaway module
-    # with `go get`, which downloads and records it without building a main package.
     with tempfile.TemporaryDirectory() as td:
         ok, err = _run(["go", "mod", "init", "probe"], cwd=td)
         if not ok:
@@ -60,18 +56,35 @@ def _go_module_resolves(import_path: str, tag: str) -> tuple[bool, str]:
                     env={**os.environ, "GOFLAGS": "-mod=mod"})
 
 
+def _echo_to_the_run_log(heading: str, body: str) -> None:
+    print(f"::group::{heading}", file=sys.stderr)
+    print(body, file=sys.stderr)
+    print("::endgroup::", file=sys.stderr)
+
+
+def _rejected(language: str, kind: str, value: str, allowed: str,
+              blocking: bool = False) -> InstallResult:
+    shown = repr(value[:80]).replace("`", "'")
+    cell = shown.replace("|", r"\|")
+    return InstallResult(
+        language, f"(not run: {kind} is {cell})", "rejected", blocking=blocking,
+        error=f"The schema gives {kind} as `{shown}`. The check builds install commands from "
+              f"strings in your schema, so it accepts only {allowed}, and skips the probe instead "
+              f"of passing anything else to a shell. Fix the value in your schema, or say so on "
+              f"this PR if you believe it is correct.")
+
+
 def probe_installs(name: str, tag: str, schema: dict[str, Any]) -> list[InstallResult]:
     if not SAFE_VERSION.match(tag):
-        return [InstallResult("plugin", "(rejected: unsafe version)", "rejected", blocking=True)]
+        return [_rejected("plugin", "the release tag", tag,
+                          "letters, digits, and . _ + -", blocking=True)]
     version = tag[1:] if tag.startswith("v") else tag
     languages = schema.get("language", {})
     results: list[InstallResult] = []
 
     def record(language: str, command: str, ok: bool, error: str, blocking: bool = False) -> None:
-        if not ok and error:  # echo to the Actions log so the run link holds the evidence
-            print(f"::group::install {language} FAILED, {command}", file=sys.stderr)
-            print(error, file=sys.stderr)
-            print("::endgroup::", file=sys.stderr)
+        if not ok and error:
+            _echo_to_the_run_log(f"install {language} FAILED, {command}", error)
         results.append(InstallResult(language, command, "pass" if ok else "fail",
                                      error="" if ok else error[-600:], blocking=blocking))
 
@@ -83,30 +96,36 @@ def probe_installs(name: str, tag: str, schema: dict[str, Any]) -> list[InstallR
         ok, error = _run(command)
         record("plugin", f"pulumi plugin install resource {name} {tag}", ok, error, blocking=True)
     else:
-        results.append(InstallResult("plugin", "(rejected: unsafe identifier)", "rejected", blocking=True))
+        results.append(_rejected("plugin", "the provider name", name,
+                                 "letters, digits, and . _ @ / -", blocking=True))
 
-    def probe(language: str, package: str | None, runner: Callable[[], tuple[bool, str]], command: str) -> None:
+    def probe(language: str, kind: str, package: str | None,
+              runner: Callable[[], tuple[bool, str]], command: str) -> None:
         if not package:
             return
         if not SAFE_NAME.match(package):
-            results.append(InstallResult(language, "(rejected: unsafe name)", "rejected"))
+            results.append(_rejected(language, kind, package, "letters, digits, and . _ @ / -"))
             return
         ok, error = runner()
         record(language, command, ok, error)
 
     npm_package = languages.get("nodejs", {}).get("packageName")
-    probe("nodejs", npm_package,
+    probe("nodejs", "the nodejs packageName", npm_package,
           lambda: _run(["npm", "install", "--ignore-scripts", "--no-audit", "--no-fund",
                         "--prefix", "/tmp/nn", "--", f"{npm_package}@{version}"]),
           f"npm install {npm_package}@{version}")
 
     python = languages.get("python")
     pypi_package = (python.get("packageName") or f"pulumi_{schema.get('name', '')}") if python is not None else None
-    probe("python", pypi_package,
+    python_kind = ("the python packageName" if (python or {}).get("packageName")
+                   else "the python package name, taken from the schema name because python "
+                        "advertises no packageName")
+    probe("python", python_kind, pypi_package,
           lambda: _python_resolves(pypi_package or "", version),
           f"pip download {pypi_package}=={version}")
 
     go_import = languages.get("go", {}).get("importBasePath")
-    probe("go", go_import, lambda: _go_module_resolves(go_import, tag), f"go get {go_import}@{tag}")
+    probe("go", "the go importBasePath", go_import,
+          lambda: _go_module_resolves(go_import, tag), f"go get {go_import}@{tag}")
 
     return results

@@ -1,0 +1,52 @@
+{
+  "config": {
+    "variables": {
+      "apiKey": {
+        "description": "Bearer token. If omitted, the LOGFIRE_API_KEY environment variable is used.",
+        "secret": true,
+        "type": "string"
+      },
+      "baseUrl": {
+        "description": "Base URL for the Logfire API. If omitted, the provider uses LOGFIRE_BASE_URL or infers the SaaS endpoint from the<span pulumi-lang-nodejs=\" apiKey \" pulumi-lang-dotnet=\" ApiKey \" pulumi-lang-go=\" apiKey \" pulumi-lang-python=\" api_key \" pulumi-lang-yaml=\" apiKey \" pulumi-lang-java=\" apiKey \"> api_key </span>region. Self-hosted customers should set this explicitly.",
+        "type": "string"
+      },
+      "customHeaders": {
+        "additionalProperties": {
+          "type": "string"
+        },
+        "description": "Additional HTTP headers to include on every Logfire API request. Intended for proxy, gateway, or edge authentication. Provider-managed headers cannot be overridden.",
+        "secret": true,
+        "type": "object"
+      }
+    }
+  },
+  "displayName": "Logfire",
+  "language": {
+    "go": {
+      "generateExtraInputTypes": true,
+      "generateResourceContainerTypes": true,
+      "importBasePath": "github.com/pydantic/pulumi-logfire/sdk/go/logfire",
+      "respectSchemaVersion": true
+    },
+    "nodejs": {
+      "compatibility": "tfbridge20",
+      "disableUnionOutputTypes": true,
+      "packageDescription": "A Pulumi package for creating and managing logfire cloud resources.",
+      "packageName": "@pydantic/pulumi-logfire",
+      "readme": "> This provider is a derived work of the [Terraform Provider](https://github.com/pydantic/terraform-provider-logfire)\n> distributed under [MPL 2.0](https://www.mozilla.org/en-US/MPL/2.0/). If you encounter a bug or missing feature,\n> first check the [`pulumi-logfire` repo](https://github.com/pydantic/pulumi-logfire/issues); however, if that doesn't turn up anything,\n> please consult the source [`terraform-provider-logfire` repo](https://github.com/pydantic/terraform-provider-logfire/issues).",
+      "respectSchemaVersion": true
+    },
+    "python": {
+      "compatibility": "tfbridge20",
+      "packageName": "pulumi_logfire",
+      "pyproject": {
+        "enabled": true
+      },
+      "readme": "> This provider is a derived work of the [Terraform Provider](https://github.com/pydantic/terraform-provider-logfire)\n> distributed under [MPL 2.0](https://www.mozilla.org/en-US/MPL/2.0/). If you encounter a bug or missing feature,\n> first check the [`pulumi-logfire` repo](https://github.com/pydantic/pulumi-logfire/issues); however, if that doesn't turn up anything,\n> please consult the source [`terraform-provider-logfire` repo](https://github.com/pydantic/terraform-provider-logfire/issues).",
+      "respectSchemaVersion": true
+    }
+  },
+  "name": "logfire",
+  "pluginDownloadURL": "github://api.github.com/pydantic/pulumi-logfire",
+  "repository": "https://github.com/pydantic/pulumi-logfire"
+}

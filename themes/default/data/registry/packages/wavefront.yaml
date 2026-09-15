@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from wavefront.
 featured: false
 logo_url: ""
 name: wavefront
-native: false
 package_status: ga
 publisher: DEPRECATED
 repo_url: https://github.com/vmware/terraform-provider-wavefront

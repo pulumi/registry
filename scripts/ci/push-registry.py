@@ -129,7 +129,9 @@ for filename in os.listdir(yaml_db_path):
             "--publisher", publisher,
         ]
 
-        if os.path.isfile(os.path.join(docs_path, name, "_installation-configuration.md")):
+        # installation-configuration.md is optional: a package may put its
+        # installation and configuration content in _index.md instead.
+        if os.path.isfile(os.path.join(docs_path, name, "installation-configuration.md")):
             cmd.extend(["--installation-configuration", f"{docs_path}/{name}/installation-configuration.md"])
 
         if args.dry_run:

@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from opensearch.
 featured: false
 logo_url: ""
 name: opensearch
-native: false
 package_status: ga
 publisher: opensearch-project
 repo_url: https://github.com/opensearch-project/terraform-provider-opensearch

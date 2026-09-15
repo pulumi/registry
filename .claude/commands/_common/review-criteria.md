@@ -9,13 +9,13 @@ Shared criteria used by `/registry-review`, `/pr-review`, and other review skill
 
 ---
 
-## Go Code (`tools/resourcedocsgen/`, `tools/mktutorial/`)
+## Go Code (`tools/resourcedocsgen/`)
 
 - **Idiomatic Go**: Follow Go conventions (naming, error handling, package structure)
 - **Error handling**: All errors must be checked and handled; no silently ignored errors
 - **Test coverage**: New functionality should include tests; modifications should not break existing tests
 - **Lint compliance**: Must pass `golangci-lint run` (run via `make lint-go`)
-- **Module boundaries**: `tools/resourcedocsgen/` and `tools/mktutorial/` are separate Go modules — changes should respect module boundaries
+- **Module boundaries**: `tools/resourcedocsgen/` is a separate Go module — changes should respect module boundaries
 
 ## CI Workflows (`.github/workflows/`)
 
@@ -50,7 +50,6 @@ Every package YAML file must include:
 | `schema_file_url` | string | URL to the provider's schema JSON |
 | `category` | string | One of the valid categories (see below) |
 | `component` | boolean | Whether this is a component provider |
-| `native` | boolean | Whether this is a native provider |
 | `package_status` | string | `ga` or `public_preview` |
 
 ### Valid Categories
@@ -62,7 +61,7 @@ Every package YAML file must include:
 - `version` must match semver pattern: `v\d+\.\d+\.\d+` (with optional pre-release suffix)
 - `repo_url` must be a valid GitHub URL: `https://github.com/{owner}/{repo}`
 - `schema_file_url` must be a valid URL pointing to a JSON file
-- `component` and `native` must be boolean (`true` or `false`)
+- `component` must be boolean (`true` or `false`)
 - `package_status` must be `ga` or `public_preview`
 
 ## Infrastructure (`infrastructure/`)
@@ -101,5 +100,5 @@ If any of the following files change, flag whether `BUILD-AND-DEPLOY.md` needs u
 - **Spelling and grammar**: Check non-generated content for typos and grammatical errors
 - **Link validation**: Verify URLs are well-formed; flag broken or placeholder links
 - **Newline endings**: Files should end with a trailing newline
-- **Generated content commits**: The `api-docs/` subdirectories under `themes/default/content/registry/packages/<pkg>/` are git-ignored build output — never committed. The `_index.md` and `installation-configuration.md` landing pages there are committed metadata, maintained by the `generate-package-metadata.yml` workflow and bundled when onboarding a package, so committing them is expected; they must be `resourcedocsgen` output, never hand-edited
+- **Generated content commits**: The `api-docs/` subdirectories under `themes/default/content/registry/packages/<pkg>/` are git-ignored build output — never committed. The `_index.md` landing page there — and `installation-configuration.md`, for the packages that have one — is committed metadata, maintained by the `generate-package-metadata.yml` workflow and bundled when onboarding a package, so committing them is expected; they must be `resourcedocsgen` output, never hand-edited. Only `_index.md` is required: do not flag a package that ships an overview and no install page
 - **No secrets**: Flag any file that appears to contain API keys, tokens, or credentials

@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from netapp-cloudmanager.
 featured: false
 logo_url: ""
 name: netapp-cloudmanager
-native: false
 package_status: ga
 publisher: netapp
 repo_url: https://github.com/netapp/terraform-provider-netapp-cloudmanager

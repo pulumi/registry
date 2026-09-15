@@ -4,9 +4,10 @@ category: Infrastructure
 component: false
 description: A Pulumi package for creating and managing rancher2 resources.
 featured: false
+keywords:
+- rancher2
 logo_url: ""
 name: rancher2
-native: false
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-rancher2

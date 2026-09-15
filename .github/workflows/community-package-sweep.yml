@@ -1,11 +1,8 @@
-# Dispatches the check workflow for community package PRs whose own check GitHub refused to
-# start. This job only dispatches: it never runs a contributor's code, and it holds no secrets.
-# community-package-policy.yml fails CI if a secret is added here.
 name: Community package check sweep
 
 on:
   schedule:
-    - cron: "*/15 * * * *"
+    - cron: "*/5 * * * *"
   workflow_dispatch:
 
 permissions:
@@ -30,3 +27,21 @@ jobs:
           REPO: ${{ github.repository }}
           DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
         run: python3 scripts/ci/community-package/cli.py sweep
+
+  report-failure:
+    if: failure()
+    name: Open a p1 issue for the daily digest
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    needs: [sweep]
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - uses: actions/checkout@v7
+      - name: Open the failure issue, or leave the open one alone
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          GITHUB_SERVER_URL: ${{ github.server_url }}
+        run: python3 scripts/ci/community-package/cli.py sweep-failed

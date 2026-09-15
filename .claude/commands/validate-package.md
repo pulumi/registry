@@ -51,7 +51,6 @@ Check that all required fields are present:
 | `schema_file_url` | Yes | string |
 | `category` | Yes | string |
 | `component` | Yes | boolean |
-| `native` | Yes | boolean |
 | `package_status` | Yes | string |
 
 Optional fields: `logo_url`, `featured`, `updated_on`
@@ -62,7 +61,7 @@ Optional fields: `logo_url`, `featured`, `updated_on`
 - **`package_status`**: Must be `ga` or `public_preview`
 - **`version`**: Must match semver pattern `v\d+\.\d+\.\d+` (optional pre-release suffix like `-alpha.1`)
 - **`repo_url`**: Must be a valid GitHub URL (`https://github.com/{owner}/{repo}`)
-- **`component`** and **`native`**: Must be boolean (`true` or `false`)
+- **`component`**: Must be boolean (`true` or `false`)
 - **`name`**: Must be lowercase, alphanumeric with hyphens only
 - **`schema_file_url`**: Must be a valid URL
 

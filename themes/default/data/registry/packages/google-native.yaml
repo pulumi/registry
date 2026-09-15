@@ -4,7 +4,6 @@ description: A native Pulumi package for creating and managing Google Cloud reso
 featured: false
 logo_url: ""
 name: google-native
-native: true
 package_status: public_preview
 publisher: DEPRECATED
 repo_url: https://github.com/pulumi/pulumi-google-native

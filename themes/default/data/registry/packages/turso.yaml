@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from turso.
 featured: false
 logo_url: ""
 name: turso
-native: false
 package_status: public_preview
 publisher: DEPRECATED
 repo_url: https://github.com/celest-dev/terraform-provider-turso

@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from qdrant-cloud.
 featured: false
 logo_url: ""
 name: qdrant-cloud
-native: false
 package_status: ga
 publisher: qdrant
 repo_url: https://github.com/qdrant/terraform-provider-qdrant-cloud

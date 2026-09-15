@@ -244,6 +244,10 @@
             {{ if strings.Contains .RelPermalink "@" }}
                 {{ $version := replaceRE `.*@(\d+)\..*` "$1" .RelPermalink }}
                 <title>{{ $registryTitle }} (v{{ $version }}) | Pulumi Registry</title>
+            {{ else if eq $registryTitle "Pulumi Registry" }}
+                <!-- The registry section landing page's own title is already "Pulumi Registry";
+                     avoid rendering the duplicated "Pulumi Registry | Pulumi Registry". -->
+                <title>{{ $registryTitle }}</title>
             {{ else }}
                 <title>{{ $registryTitle }} | Pulumi Registry</title>
             {{ end }}

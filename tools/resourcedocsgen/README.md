@@ -21,10 +21,11 @@ go build -o "${GOPATH}/bin/resourcedocsgen" .
 
 Then you can run any of the available commands using `resourcedocsgen <command> <flags>`. Run `resourcedocsgen --help` to see the available commands.
 
-As of this writing, the tool supports two main purposes:
+As of this writing, the tool supports three main purposes:
 
 * Generate the registry metadata
 * Generate API docs and the package nav tree
+* Generate Overview page snippets a package author pastes into their own `docs/_index.md`
 
 ### Generating package metadata
 
@@ -45,6 +46,29 @@ for a certain package (or all packages) within the registry repo for development
 
 For both of the above commands, the default location for generating the API docs is `content/registry/packages/<package name>/api-docs`
 and for the nav tree it is `static/registry/packages/navs/<package name>.json`.
+
+### Generating Overview page sections
+
+**These commands are experimental.** They are new, no CI depends on them, and their output shape and flags may change as we learn what package authors actually need. Nothing in the build calls them.
+
+Two sections of a package's Overview page — `## Installation` and the configuration parameters reference under `## Configuration`, both specified in [`docs/overview-page.md`](../../docs/overview-page.md) — are derivable from the package's schema. `gen-install` and `gen-config` derive them and print markdown to stdout.
+
+These commands are **advisory**. The Overview page is authored in the provider's own repository and fetched from its release tag by `metadata from-github`, so these generate a snippet to paste and edit, not a page. Point them at a local schema, or at the `schema_file_url` from a package's YAML in `themes/default/data/registry/packages/`:
+
+```bash
+resourcedocsgen gen-install --schemaFile provider/cmd/pulumi-resource-example/schema.json --version v1.2.3
+resourcedocsgen gen-config  --schemaFile provider/cmd/pulumi-resource-example/schema.json --style table
+```
+
+A schema cannot say which SDKs a package actually publishes: the `language` blob is written by the code generator, not by the release pipeline. `pulumi-vault` declares no `java` block yet publishes `com.pulumi/vault`, and the roughly hundred bridged providers that publish no SDKs at all still declare four or five language blocks. So `gen-install` guesses from the schema and takes `--languages` as the correction, including `--languages none` for a package whose installation section is a single `pulumi package add` command.
+
+Every one of the seven chooser languages gets a tab either way. A language with a published SDK gets its package-manager command; one without gets `pulumi package add <name>`, which generates an SDK locally, taking its language from the `runtime` in the reader's `Pulumi.yaml`. That is why the command reads identically for C#, Java and YAML on a package that publishes only TypeScript, Python and Go SDKs.
+
+HCL is the exception and never uses `pulumi package add`: its tab emits a `required_providers` block plus `pulumi install`. A native Pulumi provider is sourced as `pulumi/<name>` and pinned to an exact semver version; a package parameterized over a Terraform provider reuses that provider's upstream source and version instead. Because HCL always differs, the chooser is emitted even for a package with no SDKs at all.
+
+A parameterized provider is the one case the schema answers on its own — it is consumed as a local package, so the other tabs default to `pulumi package add terraform-provider <namespace>/<name>`.
+
+`gen-config` reads the schema's provider `config` block and emits a bullet list by default, matching what most existing Overview pages use; `--style table` emits a GFM table instead. Two things the standard requires cannot come from a schema — environment-variable fallbacks (usually read by the vendor SDK a layer beneath it) and mutually exclusive options — so its output ends with a reminder to add them by hand. Requiredness and secrecy come straight from the schema and are only as accurate as the schema is: `pulumi-vault` marks neither its required parameters nor its `token` as secret.
 
 ### Updating the API docs templates
 

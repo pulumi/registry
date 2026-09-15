@@ -47,14 +47,25 @@ describe("Registry", () => {
 
         // Collect all application/ld+json blocks on the current page, parse
         // them, and hand them off to the caller for assertions.
+        //
+        // The registry partial emits its nodes as a single @graph document
+        // inside one <script> block (Google only resolves @id references
+        // within one JSON-LD document, never across separate <script> tags --
+        // see the partial's header comment). Flatten that document into its
+        // individual nodes here so the by-@type lookups below keep working
+        // unchanged. Any other <script> block on the page (e.g. head.html's
+        // standalone Corporation block) has no @graph and passes through as
+        // a single node, same as before.
         const getJsonLdBlocks = () => {
             return cy.get('script[type="application/ld+json"]').then($scripts => {
-                return Array.from($scripts).map(s => {
+                return Array.from($scripts).flatMap(s => {
+                    let parsed;
                     try {
-                        return JSON.parse(s.textContent);
+                        parsed = JSON.parse(s.textContent);
                     } catch (e) {
                         throw new Error(`Invalid JSON in ld+json block: ${e.message}\n${s.textContent}`);
                     }
+                    return Array.isArray(parsed["@graph"]) ? parsed["@graph"] : [parsed];
                 });
             });
         };
@@ -91,13 +102,39 @@ describe("Registry", () => {
 
             it("renders the SoftwareSourceCode fields correctly", () => {
                 getJsonLdBlocks().then(blocks => {
-                    const ssc = filterRegistryBlocks(blocks).find(b => b["@type"] === "SoftwareSourceCode");
+                    const registryBlocks = filterRegistryBlocks(blocks);
+                    const ssc = registryBlocks.find(b => b["@type"] === "SoftwareSourceCode");
                     expect(ssc, "SoftwareSourceCode block").to.exist;
                     expect(ssc.name).to.equal("AWS Pulumi Provider");
                     expect(ssc.alternateName).to.equal("AWS");
-                    expect(ssc.publisher).to.deep.include({ "@type": "Organization", name: "Pulumi" });
+                    // publisher/isPartOf are @id references into the shared
+                    // Organization/WebSite nodes rather than repeated inline
+                    // literals -- verify the publisher reference resolves.
+                    expect(ssc.publisher).to.deep.equal({ "@id": "https://www.pulumi.com/#organization" });
+                    const org = registryBlocks.find(b => b["@id"] === ssc.publisher["@id"]);
+                    expect(org, "Organization node referenced by publisher").to.exist;
+                    expect(ssc.isPartOf).to.deep.equal({ "@id": "https://www.pulumi.com/#website" });
                     expect(ssc.dateModified, "dateModified should be present and parseable").to.match(/^\d{4}-\d{2}-\d{2}T/);
                     expect(new Date(ssc.dateModified).toString()).to.not.equal("Invalid Date");
+                });
+            });
+
+            it("emits a resolvable Organization and WebSite entity graph", () => {
+                getJsonLdBlocks().then(blocks => {
+                    const registryBlocks = filterRegistryBlocks(blocks);
+                    const org = registryBlocks.find(b => Array.isArray(b["@type"]) && b["@type"].includes("Organization"));
+                    const site = registryBlocks.find(b => b["@type"] === "WebSite");
+                    // @ids must match the docs site's own canonical identifiers
+                    // (layouts/partials/schema/graph-builder.html) so the two
+                    // properties describe one entity, not two.
+                    expect(org, "Organization node").to.exist;
+                    expect(org["@id"]).to.equal("https://www.pulumi.com/#organization");
+                    expect(org.name).to.equal("Pulumi Corporation");
+                    expect(org.alternateName).to.equal("Pulumi");
+                    expect(org.sameAs, "sameAs links").to.be.an("array").that.is.not.empty;
+                    expect(site, "WebSite node").to.exist;
+                    expect(site["@id"]).to.equal("https://www.pulumi.com/#website");
+                    expect(site.publisher).to.deep.equal({ "@id": "https://www.pulumi.com/#organization" });
                 });
             });
 
@@ -194,6 +231,18 @@ describe("Registry", () => {
                         b["@type"].includes("APIReference"));
                     expect(hasBreadcrumb, "BreadcrumbList block").to.be.true;
                     expect(hasTechArticle, "TechArticle/APIReference block").to.be.true;
+                });
+            });
+
+            it("TechArticle.publisher references the canonical Organization by @id", () => {
+                getJsonLdBlocks().then(blocks => {
+                    const article = filterRegistryBlocks(blocks).find(b =>
+                        Array.isArray(b["@type"]) && b["@type"].includes("TechArticle"));
+                    expect(article, "TechArticle block").to.exist;
+                    expect(article.publisher).to.deep.equal({ "@id": "https://www.pulumi.com/#organization" });
+                    // author stays the package's own maintainer (e.g. a third-party
+                    // provider publisher), which must not be conflated with Pulumi.
+                    expect(article.author).to.deep.equal({ "@type": "Organization", name: "Pulumi" });
                 });
             });
 

@@ -4,7 +4,6 @@ description: ""
 featured: false
 logo_url: ""
 name: nuage
-native: false
 package_status: public_preview
 publisher: Nuage-Studio
 repo_url: https://github.com/nuage-studio/pulumi-nuage

@@ -167,9 +167,9 @@ body.section-registry {
         }
     }
 
-    // Hide these imported buttons (from pulumi/examples READMEs), as we don't
-    // want to display them directly. (The mktutorial script walks the README
-    // looking for these URLs and builds its own Deploy with Pulumi buttons.)
+    // Hide these imported buttons (from pulumi/examples READMEs that were
+    // historically imported as how-to guides), as we don't want to display
+    // them directly.
 
     a[href$="#gh-dark-mode-only"] {
         display: none;

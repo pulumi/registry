@@ -4,7 +4,6 @@ description: A Pulumi package for creating and managing symbiosis cloud resource
 featured: false
 logo_url: ""
 name: symbiosis
-native: false
 package_status: ga
 publisher: Symbiosis
 repo_url: https://github.com/symbiosis-cloud/pulumi-symbiosis

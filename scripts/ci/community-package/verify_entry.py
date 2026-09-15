@@ -8,18 +8,17 @@ import yaml
 
 import doc_lint
 import github_api
+import package_list
 import sdk_install_probe
 import resourcedocsgen
 from models import DocFile, Entry, Manifest, Version, provider_name
-
-PUBLISHER_NAMES_PATH = Path("tools/resourcedocsgen/pkg/publishers/publisher-names.json")
 
 DELISTED_PUBLISHER = "DEPRECATED"
 
 
 def _load_publisher_names() -> dict[str, str]:
     try:
-        return dict(json.loads(PUBLISHER_NAMES_PATH.read_text()))
+        return dict(json.loads(package_list.PUBLISHER_NAMES_PATH.read_text()))
     except OSError:
         return {}
 
@@ -29,7 +28,7 @@ def _publisher_known(publisher: str, names: dict[str, str]) -> bool:
 
 
 def _schema_version_matches(schema_version: str, tag: str) -> bool:
-    return not schema_version or schema_version == tag.lstrip("v")
+    return not schema_version or schema_version.lstrip("v") == tag.lstrip("v")
 
 
 def _doc_file(slug: str, sha: str, path: str) -> DocFile | None:
@@ -81,7 +80,7 @@ def verify(entry: Entry) -> Manifest:
 
     with tempfile.TemporaryDirectory() as scratch:
         generated, generation_error = resourcedocsgen.generate_metadata(
-            entry.repoSlug, entry.schemaFile, tag, into=Path(scratch))
+            entry.repoSlug, entry.schemaFile, tag, name, into=Path(scratch))
 
     installs = sdk_install_probe.probe_installs(name, tag, schema)
     findings = doc_lint.find_issues(index.content if index else "")
@@ -146,16 +145,6 @@ def _delisted(name: str, yaml_path: str, version: str) -> Manifest:
 
 
 def verify_package_yaml(yaml_path: Path, repo_root: Path) -> Manifest:
-    """Verify a package from the registry PR that publishes it.
-
-    Every publish path ends in a PR that writes the package YAML and its `_index.md`,
-    so both files are in the tree and this runs without a single network call.
-
-    The install probes are deliberately absent. `pulumi package add terraform-provider`
-    runs the upstream provider binary to read its schema, and this job runs in a
-    workflow that holds PULUMI_BOT_TOKEN, so probing here would put third-party code
-    next to a write token.
-    """
     name = yaml_path.stem
     try:
         data = yaml.safe_load(yaml_path.read_text()) or {}

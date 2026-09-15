@@ -94,7 +94,7 @@ function normalizeText(lang, text) {
     return text;
 }
 
-function addCopyButton(container: HTMLElement) {
+export function addCopyButton(container: HTMLElement) {
     var tooltipText = "Copy";
     var copyIconSvg =
         '<svg xmlns="http://www.w3.org/2000/svg" class="ph-icon ph-icon--regular copy" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true" focusable="false">' +

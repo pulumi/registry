@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-okta/v6.11.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-okta/v7.0.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-okta/blob/v6.11.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-okta/blob/v7.0.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Okta Provider
 meta_desc: Provides an overview on how to configure the Pulumi Okta provider.
@@ -14,7 +14,7 @@ The Okta provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/okta`](https://www.npmjs.com/package/@pulumi/okta)
 * Python: [`pulumi-okta`](https://pypi.org/project/pulumi-okta/)
-* Go: [`github.com/pulumi/pulumi-okta/sdk/v6/go/okta`](https://github.com/pulumi/pulumi-okta)
+* Go: [`github.com/pulumi/pulumi-okta/sdk/v7/go/okta`](https://github.com/pulumi/pulumi-okta)
 * .NET: [`Pulumi.Okta`](https://www.nuget.org/packages/Pulumi.Okta)
 * Java: [`com.pulumi/okta`](https://central.sonatype.com/artifact/com.pulumi/okta)
 

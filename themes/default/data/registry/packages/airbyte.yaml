@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from airbyte.
 featured: false
 logo_url: https://raw.githubusercontent.com/airbytehq/airbyte/1c4ad4d536c44942b42225bf8af5bbef7e7409a4/docs/platform/assets/airbyte_new_logo.svg
 name: airbyte
-native: false
 package_status: ga
 publisher: airbytehq
 repo_url: https://github.com/airbytehq/terraform-provider-airbyte

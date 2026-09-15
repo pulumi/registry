@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from flexibleengine.
 featured: false
 logo_url: ""
 name: flexibleengine
-native: false
 package_status: ga
 publisher: flexibleenginecloud
 repo_url: https://github.com/flexibleenginecloud/terraform-provider-flexibleengine

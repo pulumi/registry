@@ -4,9 +4,10 @@ category: Network
 component: false
 description: A Pulumi package for creating and managing Unifi network resources.
 featured: false
+keywords:
+- unifi
 logo_url: ""
 name: unifi
-native: false
 package_status: public_preview
 publisher: Pulumiverse
 repo_url: https://github.com/pulumiverse/pulumi-unifi

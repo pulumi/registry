@@ -1,4 +1,4 @@
-import { Component, h, State, EventEmitter, Event } from "@stencil/core";
+import { Component, h, State, EventEmitter, Event, Method } from "@stencil/core";
 import { debounce } from "lodash";
 
 @Component({
@@ -38,7 +38,12 @@ export class PulumiRegistryListSearch {
     // When a user selects the reset button that appears if there are no matched
     // results for any filters/search.  No need to emit the event, because this starts
     // over with all packages.
-    reset() {
+    //
+    // @Method() is what puts this on the host element; without it packages.ts calls
+    // search.reset() on an element that has no such method and throws, which silently
+    // broke the whole "Clear all filters" handler. Stencil requires these to be async.
+    @Method()
+    async reset() {
       this.filterContent = "";
     }
 

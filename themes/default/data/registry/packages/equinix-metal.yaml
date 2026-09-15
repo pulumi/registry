@@ -6,7 +6,6 @@ description: A Pulumi package for creating and managing equinix-metal cloud reso
 featured: false
 logo_url: ""
 name: equinix-metal
-native: false
 package_status: ga
 publisher: DEPRECATED
 repo_url: https://github.com/pulumi/pulumi-equinix-metal

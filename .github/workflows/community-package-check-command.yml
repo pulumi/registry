@@ -1,6 +1,3 @@
-# Handles a `/check` comment by dispatching the check workflow against current upstream.
-# This job runs with the base repo's permissions, so it must never check out or run the PR's
-# code; it only starts the check. Allowed for the PR author or a maintainer, with a cooldown.
 name: Community package /check command
 
 on:

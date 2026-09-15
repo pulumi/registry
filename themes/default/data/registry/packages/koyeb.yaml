@@ -4,9 +4,10 @@ category: Cloud
 component: false
 description: A Pulumi package for creating and managing koyeb cloud resources.
 featured: false
+keywords:
+- koyeb
 logo_url: ""
 name: koyeb
-native: false
 package_status: public_preview
 publisher: Koyeb
 repo_url: https://github.com/koyeb/pulumi-koyeb

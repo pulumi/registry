@@ -16,7 +16,6 @@ description: "{description}"
 featured: false
 logo_url: ""
 name: {name}
-native: {native}
 package_status: ga
 publisher: {publisher}
 repo_url: {repo_url}
@@ -36,7 +35,6 @@ version: {version}
 | `featured` | Whether to feature on registry homepage (set to `false` for new packages) | `false` |
 | `logo_url` | URL to provider logo (leave empty if none) | `""` |
 | `name` | Package short name (lowercase, alphanumeric + hyphens) | `example-provider` |
-| `native` | Whether this is a native provider (not bridged from Terraform) | `false` |
 | `package_status` | Release status | `ga` |
 | `publisher` | Organization or individual publishing the provider | `pulumiverse` |
 | `repo_url` | GitHub repository URL | `https://github.com/pulumiverse/pulumi-example` |

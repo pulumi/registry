@@ -7,7 +7,6 @@ description: A Pulumi provider for Freebox (port forwarding, VMs, VPN, LAN, DHCP
 featured: false
 logo_url: https://raw.githubusercontent.com/OlivierPaquien/pulumi-freebox/main/docs/logo.png
 name: freebox
-native: true
 package_status: public_preview
 publisher: OlivierPaquien
 repo_url: https://github.com/OlivierPaquien/pulumi-freebox

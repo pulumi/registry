@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from commercetools.
 featured: false
 logo_url: ""
 name: commercetools
-native: false
 package_status: ga
 publisher: labd
 repo_url: https://github.com/labd/terraform-provider-commercetools

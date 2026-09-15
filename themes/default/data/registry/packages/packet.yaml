@@ -4,7 +4,6 @@ description: A Pulumi package for creating and managing Packet cloud resources.
 featured: false
 logo_url: ""
 name: packet
-native: false
 package_status: ga
 publisher: DEPRECATED
 repo_url: https://github.com/pulumi/pulumi-packet

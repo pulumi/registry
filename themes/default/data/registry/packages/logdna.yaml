@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from logdna.
 featured: false
 logo_url: ""
 name: logdna
-native: false
 package_status: ga
 publisher: logdna
 repo_url: https://github.com/logdna/terraform-provider-logdna

@@ -6,11 +6,10 @@ description: A Pulumi provider dynamically bridged from logzio.
 featured: false
 logo_url: ""
 name: logzio
-native: false
 package_status: ga
 publisher: logzio
 repo_url: https://github.com/logzio/terraform-provider-logzio
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/logzio/logzio/1.27.0/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/logzio/logzio/1.28.2/schema.json
 title: logzio
-updated_on: 1771544144
-version: 1.27.0
+updated_on: 1789428914
+version: 1.28.2

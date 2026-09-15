@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from konnect.
 featured: false
 logo_url: ""
 name: konnect
-native: false
 package_status: ga
 publisher: kong
 repo_url: https://github.com/kong/terraform-provider-konnect

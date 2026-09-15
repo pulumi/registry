@@ -114,8 +114,8 @@ html[data-theme="dark"] body.section-registry {
 // hairline — but do it INSIDE @layer base, which is the one rule in this file that
 // must NOT be unlayered. Unlayered, `*` outranks @layer utilities as well, so it
 // flattens every *colored* border a template authored: the blue-600 ring on the
-// github-buttons shortcode (live on the committed how-to guides and everything
-// mktutorial generates), the purple-700 tab underlines in partials/carousel.html.
+// github-buttons shortcode (live on the committed how-to guides), the
+// purple-700 tab underlines in partials/carousel.html.
 // In @layer base it still beats the gray-200 default it means to replace (same
 // layer, higher specificity) while anything layered that declares its own border
 // color — component styles, `dark:` variants, colored utilities — keeps it.
@@ -956,7 +956,7 @@ html[data-theme="dark"] body.section-registry {
         color: var(--docs-fg-muted);
     }
 
-    // A–Z count pill (bg-gray-100).
+    // Packages count pill (bg-gray-100).
     .all-packages .all-count {
         background-color: var(--docs-surface);
         color: var(--docs-fg);
@@ -1028,6 +1028,20 @@ html[data-theme="dark"] body.section-registry {
     pulumi-registry-list-search .clear-filter-button {
         background: var(--color-gray-800);
         color: var(--docs-fg-muted);
+    }
+
+    // Empty-state Any Terraform Provider suggestions. The command blocks inside
+    // are plain `div.highlight > pre`, already handled above, so only the text and
+    // link colors need naming here.
+    .all-packages .no-results {
+        .tf-suggest-meta,
+        .tf-suggest-fallback {
+            color: var(--docs-fg-muted);
+        }
+
+        .tf-suggest a {
+            color: var(--docs-link);
+        }
     }
 
     // The mobile accordion's own background is written as an inline style by

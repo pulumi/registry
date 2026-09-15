@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from rke.
 featured: false
 logo_url: ""
 name: rke
-native: false
 package_status: ga
 publisher: rancher
 repo_url: https://github.com/rancher/terraform-provider-rke

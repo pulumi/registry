@@ -1,0 +1,11 @@
+{
+  "config": {},
+  "language": {
+    "nodejs": {
+      "packageName": "@example/greetings"
+    }
+  },
+  "name": "greetings",
+  "repository": "https://github.com/example/pulumi-greetings",
+  "version": "1.2.3"
+}

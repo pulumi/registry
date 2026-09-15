@@ -6,7 +6,6 @@ description: A native Pulumi provider for Zscaler Internet Access (ZIA).
 featured: false
 logo_url: ""
 name: zia
-native: true
 package_status: ga
 publisher: Zscaler
 repo_url: https://github.com/zscaler/pulumi-zia

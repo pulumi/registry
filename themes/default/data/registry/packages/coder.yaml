@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from coder.
 featured: false
 logo_url: ""
 name: coder
-native: false
 package_status: ga
 publisher: coder
 repo_url: https://github.com/coder/terraform-provider-coder

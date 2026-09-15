@@ -6,7 +6,6 @@ description: A Pulumi provider dynamically bridged from prefect.
 featured: false
 logo_url: ""
 name: prefect
-native: false
 package_status: ga
 publisher: prefecthq
 repo_url: https://github.com/prefecthq/terraform-provider-prefect

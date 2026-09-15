@@ -1,0 +1,60 @@
+{
+  "config": {
+    "variables": {
+      "timeout": {
+        "description": "Timeout for signing and attestation operations, as a Go duration string (e.g. '5m', '10m'). Defaults to '3m'.",
+        "type": "string"
+      },
+      "useRekorV2": {
+        "description": "When true, the bundle signing path targets Rekor v2 by loading the Rekor v2 SigningConfig from TUF instead of the default. Only affects 'bundle' and 'both' signing; ignored for 'legacy'.",
+        "type": "boolean"
+      }
+    }
+  },
+  "language": {
+    "csharp": {
+      "compatibility": "tfbridge20",
+      "liftSingleValueMethodReturns": true,
+      "respectSchemaVersion": true
+    },
+    "go": {
+      "generateExtraInputTypes": true,
+      "importBasePath": "github.com/pulumi/pulumi-terraform-provider/sdks/go/cosign/cosign",
+      "liftSingleValueMethodReturns": true,
+      "respectSchemaVersion": true,
+      "rootPackageName": "cosign"
+    },
+    "java": {
+      "basePackage": "",
+      "buildFiles": "",
+      "gradleNexusPublishPluginVersion": "",
+      "gradleTest": ""
+    },
+    "nodejs": {
+      "compatibility": "tfbridge20",
+      "disableUnionOutputTypes": true,
+      "liftSingleValueMethodReturns": true,
+      "packageDescription": "A Pulumi provider dynamically bridged from cosign.",
+      "readme": "> This provider is a derived work of the [Terraform Provider](https://github.com/chainguard-dev/terraform-provider-cosign)\n> distributed under [MPL 2.0](https://www.mozilla.org/en-US/MPL/2.0/). If you encounter a bug or missing feature,\n> please consult the source [`terraform-provider-cosign` repo](https://github.com/chainguard-dev/terraform-provider-cosign/issues).",
+      "respectSchemaVersion": true
+    },
+    "python": {
+      "compatibility": "tfbridge20",
+      "pyproject": {
+        "enabled": true
+      },
+      "readme": "> This provider is a derived work of the [Terraform Provider](https://github.com/chainguard-dev/terraform-provider-cosign)\n> distributed under [MPL 2.0](https://www.mozilla.org/en-US/MPL/2.0/). If you encounter a bug or missing feature,\n> please consult the source [`terraform-provider-cosign` repo](https://github.com/chainguard-dev/terraform-provider-cosign/issues).",
+      "respectSchemaVersion": true
+    }
+  },
+  "name": "cosign",
+  "parameterization": {
+    "baseProvider": {
+      "name": "terraform-provider",
+      "version": "1.0.1"
+    },
+    "parameter": "eyJyZW1vdGUiOnsidXJsIjoicmVnaXN0cnkub3BlbnRvZnUub3JnL2NoYWluZ3VhcmQtZGV2L2Nvc2lnbiIsInZlcnNpb24iOiIwLjQuMTkifX0="
+  },
+  "repository": "https://github.com/chainguard-dev/terraform-provider-cosign",
+  "version": "0.4.19"
+}

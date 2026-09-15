@@ -1,10 +1,57 @@
 const fs = require("fs");
 const path = require("path");
-const { SitemapAndIndexStream, SitemapStream } = require("sitemap");
+const { SitemapIndexStream, SitemapStream } = require("sitemap");
 
 const SITEMAP_PATH = path.resolve("public/sitemap.xml");
 const OUTPUT_DIR = path.resolve("public/registry");
 const CANONICAL_URL = "https://www.pulumi.com";
+// Matches the "sitemap" package's own DEFAULT_SITEMAP_ITEM_LIMIT. Chunking is
+// done by hand here (rather than via SitemapAndIndexStream) so that each
+// shard's <lastmod> in the index can be computed from the items actually
+// written into it -- SitemapAndIndexStream asks for a shard's IndexItem
+// before any of that shard's items are known, so it cannot supply this.
+const ITEMS_PER_SITEMAP = 45000;
+
+function waitForFinish(stream) {
+    return new Promise((resolve, reject) => {
+        stream.on("finish", resolve);
+        stream.on("error", reject);
+    });
+}
+
+// Newest ISO-8601 lastmod across a shard's items, or undefined if none of
+// the items in the shard carry a lastmod. A shard's own modification time is
+// exactly when its newest contained URL last changed, so this is an honest
+// (not fabricated) value -- consistent with only emitting <lastmod> where it
+// can be computed truthfully.
+function maxLastmod(items) {
+    let max;
+    for (const item of items) {
+        if (!item.lastmod) {
+            continue;
+        }
+        const d = new Date(item.lastmod);
+        if (Number.isNaN(d.getTime())) {
+            continue;
+        }
+        if (!max || d > max) {
+            max = d;
+        }
+    }
+    return max ? max.toISOString() : undefined;
+}
+
+async function writeShard(filename, items) {
+    const filePath = path.join(OUTPUT_DIR, filename);
+    const ws = fs.createWriteStream(filePath);
+    const smStream = new SitemapStream({ hostname: CANONICAL_URL });
+    smStream.pipe(ws);
+    for (const item of items) {
+        smStream.write(item);
+    }
+    smStream.end();
+    await Promise.all([waitForFinish(smStream), waitForFinish(ws)]);
+}
 
 async function splitSitemap() {
     if (!fs.existsSync(SITEMAP_PATH)) {
@@ -53,40 +100,36 @@ async function splitSitemap() {
 
     fs.mkdirSync(OUTPUT_DIR, { recursive: true });
 
-    // Track created sub-sitemap filenames for logging.
-    const sitemapFiles = [];
-
-    // SitemapAndIndexStream calls getSitemapStream each time it needs a new
-    // sub-sitemap file (i.e. when the item limit is reached).
-    const sms = new SitemapAndIndexStream({
-        getSitemapStream(i) {
-            const filename = `sitemap-${i}.xml`;
-            const filePath = path.join(OUTPUT_DIR, filename);
-            const ws = fs.createWriteStream(filePath);
-            const smStream = new SitemapStream({
-                hostname: CANONICAL_URL,
-            });
-            smStream.pipe(ws);
-            sitemapFiles.push(filename);
-            return [`${CANONICAL_URL}/registry/${filename}`, smStream, ws];
-        },
-    });
-
-    // Pipe the sitemap index output to replace the original sitemap file.
-    const indexWs = fs.createWriteStream(SITEMAP_PATH);
-    sms.pipe(indexWs);
-
-    // Feed all parsed items into the stream.
-    for (const item of items) {
-        sms.write(item);
+    // Chunk items into shards up front so each shard's max lastmod is known
+    // before we write its index entry.
+    const chunks = [];
+    for (let i = 0; i < items.length; i += ITEMS_PER_SITEMAP) {
+        chunks.push(items.slice(i, i + ITEMS_PER_SITEMAP));
     }
 
-    // Wait for everything to finish.
-    await new Promise((resolve, reject) => {
-        indexWs.on("finish", resolve);
-        indexWs.on("error", reject);
-        sms.end();
-    });
+    const sitemapFiles = [];
+    const indexItems = [];
+    for (let i = 0; i < chunks.length; i++) {
+        const filename = `sitemap-${i}.xml`;
+        await writeShard(filename, chunks[i]);
+        sitemapFiles.push(filename);
+        const indexItem = { url: `${CANONICAL_URL}/registry/${filename}` };
+        const lastmod = maxLastmod(chunks[i]);
+        if (lastmod) {
+            indexItem.lastmod = lastmod;
+        }
+        indexItems.push(indexItem);
+    }
+
+    // Write the sitemap index, replacing the original flat sitemap file.
+    const indexStream = new SitemapIndexStream();
+    const indexWs = fs.createWriteStream(SITEMAP_PATH);
+    indexStream.pipe(indexWs);
+    for (const indexItem of indexItems) {
+        indexStream.write(indexItem);
+    }
+    indexStream.end();
+    await Promise.all([waitForFinish(indexStream), waitForFinish(indexWs)]);
 
     console.log(
         `Split ${items.length} URLs into ${sitemapFiles.length} sitemap(s): ${sitemapFiles.join(", ")}`,

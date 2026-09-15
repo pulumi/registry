@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-splunk/v1.4.2/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-splunk/v1.4.3/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-splunk/blob/v1.4.2/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-splunk/blob/v1.4.3/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Splunk Provider
 meta_desc: Provides an overview on how to configure the Pulumi Splunk provider.
@@ -44,8 +44,8 @@ Below arguments for the provider can also be set as environment variables.
 
 * `url` or `SPLUNK_URL` - (Required) The URL for the Splunk instance to be configured. (The provider uses `https` as the default schema as prefix to the URL)
 * `username` or `SPLUNK_USERNAME`  - (Optional) The username to access the Splunk instance to be configured.
-* `password` or `SPLUNK_PASSWORD` - (Optional) The password to access the Splunk instance to be configured.
-* `authToken` or `SPLUNK_AUTH_TOKEN` - (Optional) Use auth token instead of username and password to configure Splunk instance.
+* `password` or `SPLUNK_PASSWORD` - (Optional, Sensitive) The password to access the Splunk instance to be configured.
+* `authToken` or `SPLUNK_AUTH_TOKEN` - (Optional, Sensitive) Use auth token instead of username and password to configure Splunk instance.
   If specified, auth token takes priority over username/password.
 * `insecureSkipVerify` or `SPLUNK_INSECURE_SKIP_VERIFY` - (Optional) Insecure skip verification flag (Defaults to `true`)
 * `timeout` or `SPLUNK_TIMEOUT` -  (Optional) Timeout when making calls to Splunk server. (Defaults to `60 seconds`)

@@ -247,7 +247,7 @@ var fooResource = new Example.Foo("fooResource", new()
     BackupKubeClientSettings = new Example.Inputs.KubeClientSettingsArgs
     {
         Burst = 0,
-        Qps = 0,
+        Qps = 0.0,
         RecTest = kubeClientSettings,
     },
     Argument = "string",
@@ -261,7 +261,7 @@ var fooResource = new Example.Foo("fooResource", new()
             PluginsPath = "string",
         },
         Thinker = "string",
-        Answer = 0,
+        Answer = 0.0,
         PlainOther = 
         {
             { "requiredArg", "string" },

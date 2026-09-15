@@ -236,6 +236,25 @@ expect "an API error payload falls back to creating a comment" \
 
 unset -f curl
 
+echo "== preview identity =="
+
+expect "an explicit preview PR names the bucket after it" \
+    "pr-12144-abcdef12" \
+    "$(PREVIEW_PR=12144 PREVIEW_HEAD_SHA=abcdef1234567890 build_identifier)"
+
+expect "an explicit head sha wins over the checked-out commit" \
+    "abcdef1234567890" \
+    "$(PREVIEW_HEAD_SHA=abcdef1234567890 git_sha)"
+
+pr_event_file="$(mktemp)"
+echo '{"pull_request": {"head": {"sha": "0123456789abcdef"}}}' > "$pr_event_file"
+
+expect "without one, a pull_request event still decides the sha" \
+    "0123456789abcdef" \
+    "$(GITHUB_EVENT_NAME=pull_request GITHUB_EVENT_PATH="$pr_event_file" git_sha)"
+
+rm -f "$pr_event_file"
+
 echo
 if [[ "$failures" -gt 0 ]]; then
     echo "${failures} test(s) failed."

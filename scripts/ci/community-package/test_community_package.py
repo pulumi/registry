@@ -10,6 +10,8 @@ from pathlib import Path
 from typing import Any
 from unittest.mock import patch
 
+import yaml
+
 sys.path.insert(0, str(Path(__file__).parent))
 import cli  # noqa: E402
 import comment_commands  # noqa: E402
@@ -206,6 +208,17 @@ class VerifyTests(unittest.TestCase):
     def test_absent_publisher_is_not_flagged(self) -> None:
         self.assertTrue(verify_entry._publisher_known("", {}))
 
+    def test_schema_version_matches_tag_without_prefix(self) -> None:
+        self.assertTrue(verify_entry._schema_version_matches("0.4.5", "v0.4.5"))
+        self.assertTrue(verify_entry._schema_version_matches("0.4.5", "0.4.5"))
+
+    def test_placeholder_schema_version_does_not_match(self) -> None:
+        self.assertFalse(verify_entry._schema_version_matches("0.0.0", "v0.4.5"))
+        self.assertFalse(verify_entry._schema_version_matches("0.0.0-dev", "v1.3.0"))
+
+    def test_absent_schema_version_is_not_flagged(self) -> None:
+        self.assertTrue(verify_entry._schema_version_matches("", "v1.3.0"))
+
 
 class ReportTargetTests(unittest.TestCase):
     def test_prefers_recorded_pr_number(self) -> None:
@@ -238,10 +251,14 @@ class ReportTargetTests(unittest.TestCase):
 
 def _manifest(green: bool = True, warnings: bool = False, findings: list[DocFinding] | None = None,
               installs: list[InstallResult] | None = None, docs: list[DocFile] | None = None,
-              publisher: str = "", publisherKnown: bool = True) -> Manifest:
+              publisher: str = "", publisherKnown: bool = True, generation: bool = True,
+              generationError: str = "", indexPresent: bool = True,
+              schemaVersion: str = "", schemaVersionMatches: bool = True) -> Manifest:
     return Manifest("x/pulumi-demo", "s.json", "demo", Version("v1.0.0", "0" * 40), "x",
-                    installs or [], findings or [], green=green, warnings=warnings, docs=docs or [],
-                    publisher=publisher, publisherKnown=publisherKnown)
+                    installs or [], findings or [], green=green, warnings=warnings,
+                    generation=generation, docs=docs or [], generationError=generationError,
+                    indexPresent=indexPresent, publisher=publisher, publisherKnown=publisherKnown,
+                    schemaVersion=schemaVersion, schemaVersionMatches=schemaVersionMatches)
 
 
 class FactSheetTests(unittest.TestCase):
@@ -259,12 +276,23 @@ class FactSheetTests(unittest.TestCase):
         out = fact_sheet.render(_manifest(warnings=True, publisher="Aten Security", publisherKnown=False))
         self.assertIn("publisher listed", out)
         self.assertIn("⚠️", out)
-        self.assertIn("not in `publisher-names.json`", out)
+        self.assertIn("no entry for `Aten Security`", out)
 
     def test_known_publisher_shows_row_without_warning_note(self) -> None:
         out = fact_sheet.render(_manifest(publisher="Aten Security", publisherKnown=True))
         self.assertIn("publisher listed", out)
-        self.assertNotIn("not in `publisher-names.json`", out)
+        self.assertNotIn("no entry for", out)
+
+    def test_mismatched_schema_version_is_flagged_in_the_sheet(self) -> None:
+        out = fact_sheet.render(_manifest(green=False, schemaVersion="0.0.0", schemaVersionMatches=False))
+        self.assertIn("❌", out.splitlines()[0])
+        self.assertIn("schema version", out)
+        self.assertIn("declares version `0.0.0`", out)
+
+    def test_matching_schema_version_shows_row_without_note(self) -> None:
+        out = fact_sheet.render(_manifest(schemaVersion="1.0.0"))
+        self.assertIn("schema version", out)
+        self.assertNotIn("declares version", out)
 
     def test_red_render_with_install_failure(self) -> None:
         out = fact_sheet.render(_manifest(
@@ -276,6 +304,22 @@ class FactSheetTests(unittest.TestCase):
         self.assertIn("pip download x==1", out)
         self.assertIn("No matching distribution", out)
         self.assertIn("<details>", out)
+
+    def test_generation_failure_shows_the_generator_output(self) -> None:
+        out = fact_sheet.render(_manifest(
+            green=False, generation=False,
+            generationError="finding remote file at .../docs/_index.md: 404 Not Found"))
+        self.assertIn("docs generate failed", out)
+        self.assertIn("404 Not Found", out)
+
+    def test_generation_failure_without_output_adds_no_empty_block(self) -> None:
+        out = fact_sheet.render(_manifest(green=False, generation=False))
+        self.assertNotIn("docs generate failed", out)
+
+    def test_missing_index_is_reported_instead_of_a_clean_doc_lint(self) -> None:
+        out = fact_sheet.render(_manifest(green=False, generation=False, indexPresent=False))
+        self.assertIn("no `docs/_index.md`", out)
+        self.assertNotIn("Doc-lint** ✅ clean", out)
 
     def test_doc_fence_outgrows_backticks(self) -> None:
         self.assertEqual(fact_sheet._fence_longer_than_any_run_in("no ticks"), "```")
@@ -299,6 +343,169 @@ class FactSheetTests(unittest.TestCase):
         self.assertNotIn("docs generate", out)
 
 
+class SweepTests(unittest.TestCase):
+    def _sweep(self, status: str | None, files: list[str] | None = None,
+               already: bool = False) -> list[tuple[str, dict[str, str]]]:
+        dispatched: list[tuple[str, dict[str, str]]] = []
+        with patch.object(github_api, "open_pull_requests",
+                          lambda: [{"number": 7, "head": {"sha": "a" * 40}}]), \
+             patch.object(github_api, "pull_request_files",
+                          lambda pr: files if files is not None else [comment_commands.PACKAGE_LIST]), \
+             patch.object(github_api, "pull_request_run_status", lambda w, s: status), \
+             patch.object(github_api, "dispatch_exists", lambda w, label: already), \
+             patch.object(github_api, "dispatch_workflow",
+                          lambda w, inputs: dispatched.append((w, inputs))):
+            comment_commands.sweep()
+        return dispatched
+
+    def test_dispatches_when_github_parked_the_run(self) -> None:
+        self.assertEqual(self._sweep("action_required"),
+                         [(comment_commands.CHECK_WORKFLOW, {"pr": "7", "head": "a" * 12})])
+
+    def test_dispatches_when_no_run_exists(self) -> None:
+        self.assertEqual(len(self._sweep(None)), 1)
+
+    def test_skips_a_run_that_started_on_its_own(self) -> None:
+        self.assertEqual(self._sweep("in_progress"), [])
+        self.assertEqual(self._sweep("completed"), [])
+
+    def test_skips_a_pr_that_does_not_touch_the_package_list(self) -> None:
+        self.assertEqual(self._sweep("action_required", files=["README.md"]), [])
+
+    def test_dispatches_each_head_once(self) -> None:
+        self.assertEqual(self._sweep("action_required", already=True), [])
+
+    def test_run_label_is_stable_per_head(self) -> None:
+        self.assertEqual(github_api.dispatch_run_label(7, "a" * 40),
+                         "Community package check · PR #7 · " + "a" * 12)
+
+
+class DispatchLabelTests(unittest.TestCase):
+    """The run name is the only dedupe key the sweep has, so the two halves must agree."""
+
+    def _dispatched(self) -> dict[str, str]:
+        sent: list[dict[str, str]] = []
+        with patch.object(github_api, "dispatch_workflow", lambda w, inputs: sent.append(inputs)):
+            github_api.dispatch_check("w.yml", 7, "a" * 40)
+        return sent[0]
+
+    def test_the_dispatched_head_reproduces_the_label(self) -> None:
+        inputs = self._dispatched()
+        run_name = f"Community package check · PR #{inputs['pr']} · {inputs['head']}"
+        self.assertEqual(run_name, github_api.dispatch_run_label(7, "a" * 40))
+
+    def test_a_run_is_matched_by_its_display_title(self) -> None:
+        label = github_api.dispatch_run_label(7, "a" * 40)
+        runs = [{"name": "Community package check", "display_title": label,
+                 "created_at": "2020-01-01T00:00:00Z"}]
+        with patch.object(github_api, "_dispatched_runs", lambda w: runs):
+            self.assertTrue(github_api.dispatch_exists("w.yml", label))
+            self.assertIsNotNone(github_api.minutes_since_dispatch("w.yml", 7))
+
+    def test_a_run_for_another_pr_is_not_matched(self) -> None:
+        runs = [{"display_title": github_api.dispatch_run_label(8, "a" * 40)}]
+        with patch.object(github_api, "_dispatched_runs", lambda w: runs):
+            self.assertFalse(github_api.dispatch_exists("w.yml", github_api.dispatch_run_label(7, "a" * 40)))
+            self.assertIsNone(github_api.minutes_since_dispatch("w.yml", 7))
+
+
+class WorkflowRunStatusTests(unittest.TestCase):
+    def _status(self, run: dict[str, Any] | None) -> str | None:
+        with patch.object(github_api, "repo", lambda: "x/y"), \
+             patch.object(github_api, "request", lambda p: {"workflow_runs": [run] if run else []}):
+            return github_api.pull_request_run_status("w.yml", "a" * 40)
+
+    def test_a_parked_run_is_reported_from_its_status(self) -> None:
+        self.assertEqual(self._status({"status": "action_required"}), "action_required")
+
+    def test_a_parked_run_is_reported_from_its_conclusion(self) -> None:
+        self.assertEqual(self._status({"status": "completed", "conclusion": "action_required"}),
+                         "action_required")
+
+    def test_a_running_check_is_not_parked(self) -> None:
+        self.assertEqual(self._status({"status": "in_progress", "conclusion": None}), "in_progress")
+
+    def test_no_run_reports_none(self) -> None:
+        self.assertIsNone(self._status(None))
+
+
+class PullRequestFilesTests(unittest.TestCase):
+    def test_every_page_is_read(self) -> None:
+        pages = {1: [{"filename": f"f{i}"} for i in range(100)],
+                 2: [{"filename": "last"}]}
+
+        def fake(path: str) -> list[dict[str, Any]]:
+            return pages[int(path.rsplit("page=", 1)[1])]
+
+        with patch.object(github_api, "repo", lambda: "x/y"), \
+             patch.object(github_api, "request", fake):
+            self.assertEqual(len(github_api.pull_request_files(7)), 101)
+
+
+class CommandInvocationTests(unittest.TestCase):
+    def test_a_bare_command_invokes(self) -> None:
+        self.assertTrue(comment_commands._invokes("/check", "/check"))
+
+    def test_a_command_on_its_own_line_invokes(self) -> None:
+        self.assertTrue(comment_commands._invokes("- [x] SDKs published\n\n/check\n", "/check"))
+
+    def test_arguments_after_the_command_invoke(self) -> None:
+        self.assertTrue(comment_commands._invokes("/check please", "/check"))
+
+    def test_the_fact_sheet_mentioning_the_command_does_not_invoke(self) -> None:
+        self.assertFalse(comment_commands._invokes(
+            "**Not ready.** Fix upstream, then comment `/check` to re-run.", "/check"))
+
+    def test_a_fenced_command_does_not_invoke(self) -> None:
+        self.assertFalse(comment_commands._invokes("Run this:\n```\n/check\n```\n", "/check"))
+
+    def test_a_quoted_command_does_not_invoke(self) -> None:
+        self.assertFalse(comment_commands._invokes("> /check\n\nI already tried that.", "/check"))
+
+
+class CheckCommandTests(unittest.TestCase):
+    def _run(self, minutes_check: int | None, minutes_dispatch: int | None) -> list[dict[str, str]]:
+        dispatched: list[dict[str, str]] = []
+        os.environ.update(PR="7", COMMENT_ID="1", COMMENTER="ren", ASSOC="NONE", COMMENT_BODY="/check")
+        with patch.object(github_api, "pull_request_head", lambda pr: ("ren", "b" * 40)), \
+             patch.object(github_api, "minutes_since_check_run", lambda s, n: minutes_check), \
+             patch.object(github_api, "minutes_since_dispatch", lambda w, pr: minutes_dispatch), \
+             patch.object(github_api, "add_reaction", lambda *a: None), \
+             patch.object(github_api, "post_comment", lambda *a: None), \
+             patch.object(github_api, "fact_sheet_comment", lambda pr: None), \
+             patch.object(github_api, "dispatch_workflow",
+                          lambda w, inputs: dispatched.append(inputs)):
+            comment_commands.check_command()
+        for name in ("PR", "COMMENT_ID", "COMMENTER", "ASSOC", "COMMENT_BODY"):
+            del os.environ[name]
+        return dispatched
+
+    def test_author_dispatches_a_check(self) -> None:
+        self.assertEqual(self._run(None, None), [{"pr": "7", "head": "b" * 12}])
+
+    def test_a_recent_dispatch_rate_limits(self) -> None:
+        self.assertEqual(self._run(None, 2), [])
+
+    def test_a_recent_automatic_run_rate_limits(self) -> None:
+        self.assertEqual(self._run(2, None), [])
+
+    def test_an_old_check_does_not_rate_limit(self) -> None:
+        self.assertEqual(len(self._run(60, 90)), 1)
+
+
+class ChangedFilesTests(unittest.TestCase):
+    def test_a_listing_replaces_the_git_diff(self) -> None:
+        with tempfile.TemporaryDirectory() as scratch:
+            listing = Path(scratch) / "changed.txt"
+            listing.write_text("community-packages/package-list.json\nREADME.md\n")
+            self.assertEqual(cli._changed_files("origin/master", str(listing)),
+                             ["community-packages/package-list.json", "README.md"])
+
+
+def _community_workflows() -> list[Path]:
+    return sorted((Path(__file__).resolve().parents[3] / ".github/workflows").glob("community-package-*.yml"))
+
+
 _SECRET = re.compile(r"secrets\.|ESC_ACTION|esc-action|ANTHROPIC_API_KEY|PULUMI_BOT_TOKEN|id-token: *write")
 _RUNS_CODE = re.compile(
     r"cli\.py check(?![-\w])|npm (install|ci)|pip (install|download)|go get|go mod download|pulumi plugin install")
@@ -308,8 +515,17 @@ class SecretCodeSeparationTests(unittest.TestCase):
     """No community-package workflow may both hold a secret and run a contributor's code, or a
     malicious package could read the secret."""
 
+    def test_no_step_holds_a_token_beside_contributor_code(self) -> None:
+        for workflow in _community_workflows():
+            for job in yaml.safe_load(workflow.read_text())["jobs"].values():
+                for step in job.get("steps", []):
+                    if "GITHUB_TOKEN" not in (step.get("env") or {}):
+                        continue
+                    self.assertNotRegex(step.get("run", ""), _RUNS_CODE,
+                                        f"{workflow.name}: step '{step.get('name')}' holds a token and runs code")
+
     def test_no_workflow_mixes_secrets_with_contributor_code(self) -> None:
-        workflows = sorted((Path(__file__).resolve().parents[3] / ".github/workflows").glob("community-package-*.yml"))
+        workflows = _community_workflows()
         self.assertTrue(workflows, "no community-package workflows found")
         for workflow in workflows:
             text, name = workflow.read_text(), workflow.name
@@ -387,7 +603,7 @@ class VerifyPackageYamlTests(unittest.TestCase):
     def test_sheet_renders_without_a_commit(self) -> None:
         manifest = self._verify({"name": "stripe", "publisher": "stripe", "version": "0.4.0"}, publishers={})
         sheet = fact_sheet.render(manifest)
-        self.assertIn("not in `publisher-names.json`", sheet)
+        self.assertIn("no entry for `stripe`", sheet)
         self.assertNotIn("/commit/", sheet)
 
 

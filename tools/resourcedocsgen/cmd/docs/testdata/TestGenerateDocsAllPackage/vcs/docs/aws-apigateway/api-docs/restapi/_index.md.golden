@@ -274,7 +274,7 @@ var restAPIResource = new AwsApiGateway.RestAPI("restAPIResource", new()
             {
                 { "string", "string" },
             },
-            StatusCode = 0,
+            StatusCode = 0.0,
         } },
     },
     RequestValidator = AwsApiGateway.RequestValidator.ALL,
@@ -298,7 +298,7 @@ var restAPIResource = new AwsApiGateway.RestAPI("restAPIResource", new()
                     ParameterName = "string",
                     AuthType = "string",
                     AuthorizerName = "string",
-                    AuthorizerResultTtlInSeconds = 0,
+                    AuthorizerResultTtlInSeconds = 0.0,
                     Handler = function,
                     IdentitySource = new()
                     {

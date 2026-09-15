@@ -63,7 +63,11 @@ class Manifest:
     generation: bool = True
     docs: list[DocFile] = field(default_factory=list)
     error: str = ""
+    generationError: str = ""
+    indexPresent: bool = True
     publisher: str = ""
     publisherKnown: bool = True
     docSourceURL: str = ""
     delisted: bool = False
+    schemaVersion: str = ""
+    schemaVersionMatches: bool = True

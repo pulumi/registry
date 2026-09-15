@@ -54,7 +54,7 @@ jobs:
     steps:
       - name: Fetch secrets from ESC
         id: esc-secrets
-        uses: pulumi/esc-action@3af4859af8a73a362fb599b944124097d4bb80c5 # v3
+        uses: pulumi/esc-action@32dda43ffe7a2ab21e6bce11c781b44a3e5623cf # v3
       - run: printf "Unknown event type '%s'\n" "${{ github.event.action}}"
       - name: fail
         run: exit 1
@@ -66,12 +66,12 @@ jobs:
     steps:
       - name: Fetch secrets from ESC
         id: esc-secrets
-        uses: pulumi/esc-action@3af4859af8a73a362fb599b944124097d4bb80c5 # v3
+        uses: pulumi/esc-action@32dda43ffe7a2ab21e6bce11c781b44a3e5623cf # v3
       - run: echo "Building ${{ env.PROVIDER_SHORT_NAME }} docs @ ${{ env.PROVIDER_VERSION }}"
       - name: checkout registry repo
         uses: actions/checkout@v7
       - name: Set up Go
-        uses: actions/setup-go@v6
+        uses: actions/setup-go@v7
         with:
           go-version-file: tools/resourcedocsgen/go.mod
           cache-dependency-path: tools/resourcedocsgen/go.sum
@@ -101,7 +101,7 @@ jobs:
     steps:
       - name: Fetch secrets from ESC
         id: esc-secrets
-        uses: pulumi/esc-action@3af4859af8a73a362fb599b944124097d4bb80c5 # v3
+        uses: pulumi/esc-action@32dda43ffe7a2ab21e6bce11c781b44a3e5623cf # v3
       - name: Validate Inputs
         run: |
           should_not_set() {
@@ -120,7 +120,7 @@ jobs:
       - name: checkout registry repo
         uses: actions/checkout@v7
       - name: Set up Go
-        uses: actions/setup-go@v6
+        uses: actions/setup-go@v7
         with:
           go-version-file: tools/resourcedocsgen/go.mod
           cache-dependency-path: tools/resourcedocsgen/go.sum
@@ -169,7 +169,7 @@ jobs:
     steps:
       - name: Fetch secrets from ESC
         id: esc-secrets
-        uses: pulumi/esc-action@3af4859af8a73a362fb599b944124097d4bb80c5 # v3
+        uses: pulumi/esc-action@32dda43ffe7a2ab21e6bce11c781b44a3e5623cf # v3
       - name: Slack Notification
         uses: docker://sholung/action-slack-notify:v2.3.0
         env:

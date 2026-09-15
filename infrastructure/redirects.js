@@ -1,7 +1,8 @@
 // CloudFront Function (viewer-request) for registry URL rewriting.
 //
 // Responsibilities, in order:
-//   1. Legacy versioned package URL 301 redirects (e.g. aws-v6 -> aws@6.x).
+//   1. 301 redirects for package URLs that no longer exist: legacy versioned
+//      packages (e.g. aws-v6 -> aws@6.x) and removed Install & config pages.
 //   2. Normalize the Accept header to two buckets -- "text/markdown" if the
 //      client accepts markdown, otherwise the header is removed. The default
 //      cache behavior includes Accept in the cache key, so normalization
@@ -24,6 +25,30 @@ var EXACT_REDIRECTS = [
 var PREFIX_REDIRECTS = [
     { match: /^\/registry\/packages\/aws-v6\/?(.*)/, replace: "/registry/packages/aws@6.x/$1" },
     { match: /^\/registry\/packages\/azure-native-v2\/?(.*)/, replace: "/registry/packages/azure-native@2.x/$1" },
+
+    // Packages whose Install & config page was deleted because the Overview
+    // beside it already carried every section, near-verbatim and fresher --
+    // see pulumi/registry#12225 (wholly duplicated) and #12226 (substantially
+    // duplicated; its unique content was verified obsolete before deletion --
+    // e.g. cloudflare and azuredevops each listed config options removed in a
+    // major-version rewrite, which the Overview correctly omits). The deleted pages were hand-written in
+    // pulumi/registry (no upstream docs/installation-configuration.md exists
+    // for any of these providers), so the URLs are gone for good rather than
+    // pending regeneration. Send them to the package Overview.
+    //
+    // Hugo `aliases:` would be the usual mechanism, but resourcedocsgen
+    // rewrites each _index.md wholesale on every provider release, so an
+    // alias in front matter is erased at the next release. This table is not
+    // generated, so a rule here survives.
+    //
+    // The suffix group matches every form the page's URL can arrive in: bare,
+    // trailing slash, /index.html, and /index.md or .md from markdown content
+    // negotiation. Markdown clients keep their Accept header across the 301
+    // and get the Overview's markdown from the redirect target.
+    {
+        match: /^\/registry\/packages\/(aiven|alicloud|artifactory|auth0|azuredevops|cloudamqp|cloudflare|cloudinit|consul|dbtcloud|digitalocean|dnsimple|docker|kafka|linode|meraki|nomad|okta|postgresql|random|spotinst|tailscale|tls|vault|vsphere)\/installation-configuration(?:\.md|\/.*)?$/,
+        replace: "/registry/packages/$1/",
+    },
 ];
 
 function redirect(location) {

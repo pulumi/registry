@@ -12,8 +12,31 @@ def _authorized(mode: str, commenter: str, author: str, association: str) -> boo
     return association in ("OWNER", "MEMBER", "COLLABORATOR")
 
 
-def _within_cooldown(pr: int, comment_id: str, sha: str, check_name: str, cooldown: int) -> bool:
-    elapsed = github_api.minutes_since_check_run(sha, check_name)
+CHECK_WORKFLOW = "community-package-check.yml"
+PACKAGE_LIST = "community-packages/package-list.json"
+
+
+def _invokes(body: str, command: str) -> bool:
+    fenced = False
+    for raw in body.splitlines():
+        line = raw.strip()
+        if line.startswith("```"):
+            fenced = not fenced
+        elif not fenced and not line.startswith(">"):
+            if line == command or line.startswith(command + " "):
+                return True
+    return False
+
+
+def _minutes_since_last_check(pr: int, sha: str) -> int | None:
+    elapsed = [minutes for minutes in (github_api.minutes_since_check_run(sha, r"^check$"),
+                                       github_api.minutes_since_dispatch(CHECK_WORKFLOW, pr))
+               if minutes is not None]
+    return min(elapsed) if elapsed else None
+
+
+def _within_cooldown(pr: int, comment_id: str, sha: str, cooldown: int) -> bool:
+    elapsed = _minutes_since_last_check(pr, sha)
     if elapsed is not None and elapsed < cooldown:
         github_api.add_reaction(comment_id, "eyes")
         github_api.post_comment(pr, f"⏳ Rate limited. Last ran {elapsed} min ago; "
@@ -26,21 +49,17 @@ def check_command() -> int:
     pr, comment_id = int(os.environ["PR"]), os.environ["COMMENT_ID"]
     commenter, association = os.environ["COMMENTER"], os.environ["ASSOC"]
     cooldown = int(os.environ.get("COOLDOWN_MINUTES", "10"))
+    if not _invokes(os.environ.get("COMMENT_BODY", ""), "/check"):
+        return 0
     author, sha = github_api.pull_request_head(pr)
 
     if not _authorized("author-or-maintainer", commenter, author, association):
         github_api.add_reaction(comment_id, "-1")
         return 0
-    if _within_cooldown(pr, comment_id, sha, r"^check$", cooldown):
+    if _within_cooldown(pr, comment_id, sha, cooldown):
         return 0
 
-    run_id = github_api.latest_check_workflow_run("community-package-check.yml", sha)
-    if run_id is None:
-        github_api.add_reaction(comment_id, "confused")
-        github_api.post_comment(pr, f"No check run found for `{sha[:12]}`. Push any commit to trigger one.")
-        return 0
-
-    github_api.rerun_workflow(run_id)
+    github_api.dispatch_check(CHECK_WORKFLOW, pr, sha)
     github_api.add_reaction(comment_id, "+1")
     sticky = github_api.fact_sheet_comment(pr)
     if sticky:
@@ -48,6 +67,30 @@ def check_command() -> int:
                                     f"The [fact-sheet]({sticky['html_url']}) updates in place when it finishes.")
     else:
         github_api.post_comment(pr, f"🔁 Checking `{sha[:12]}`. A fact-sheet comment appears when it finishes.")
+    return 0
+
+
+def _github_started_the_check(status: str | None) -> bool:
+    return status is not None and status != "action_required"
+
+
+def sweep() -> int:
+    """Dispatch a check for every community package PR whose own check GitHub would not start.
+
+    A fork PR from a first-time contributor leaves its `pull_request` run in `action_required`
+    until a maintainer approves it. A `workflow_dispatch` run is not gated, holds no more
+    privilege than the gated one, and produces the same fact-sheet.
+    """
+    for pull in github_api.open_pull_requests():
+        pr, sha = int(pull["number"]), str(pull["head"]["sha"])
+        if PACKAGE_LIST not in github_api.pull_request_files(pr):
+            continue
+        if _github_started_the_check(github_api.pull_request_run_status(CHECK_WORKFLOW, sha)):
+            continue
+        if github_api.dispatch_exists(CHECK_WORKFLOW, github_api.dispatch_run_label(pr, sha)):
+            continue
+        github_api.dispatch_check(CHECK_WORKFLOW, pr, sha)
+        print(f"dispatched a check for PR #{pr} at {sha[:12]}")
     return 0
 
 

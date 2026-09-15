@@ -161,19 +161,25 @@ PREVIEW_COMMENT_MARKER="<!-- registry-preview-link -->"
 
 # Posts (or updates) the pinned preview comment on the PR.
 post_preview_comment() {
-    if [[ -z "${GITHUB_EVENT_PATH:-}" || ! -f "${GITHUB_EVENT_PATH}" || -z "${GITHUB_TOKEN:-}" ]]; then
-        log "No GitHub event or token available; skipping the preview comment."
+    if [[ -z "${GITHUB_TOKEN:-}" ]]; then
+        log "No GitHub token available; skipping the preview comment."
         return 0
     fi
 
     local event pr_comment_api_url repo_api_url pr_number
-    event="$(cat "$GITHUB_EVENT_PATH")"
-    pr_comment_api_url="$(echo "$event" | jq -r '.pull_request._links.comments.href // empty')"
-    repo_api_url="$(echo "$event" | jq -r '.pull_request.base.repo.url // empty')"
-    pr_number="$(echo "$event" | jq -r '.number // empty')"
+    if [[ -n "${PREVIEW_PR:-}" ]]; then
+        pr_number="$PREVIEW_PR"
+        repo_api_url="${GITHUB_API_URL:-https://api.github.com}/repos/${GITHUB_REPOSITORY}"
+        pr_comment_api_url="${repo_api_url}/issues/${pr_number}/comments"
+    elif [[ -n "${GITHUB_EVENT_PATH:-}" && -f "${GITHUB_EVENT_PATH}" ]]; then
+        event="$(cat "$GITHUB_EVENT_PATH")"
+        pr_comment_api_url="$(echo "$event" | jq -r '.pull_request._links.comments.href // empty')"
+        repo_api_url="$(echo "$event" | jq -r '.pull_request.base.repo.url // empty')"
+        pr_number="$(echo "$event" | jq -r '.number // empty')"
+    fi
 
     if [[ -z "$pr_comment_api_url" || -z "$repo_api_url" || -z "$pr_number" ]]; then
-        log "Event payload is missing pull request details; skipping the preview comment."
+        log "No pull request to comment on; skipping the preview comment."
         return 0
     fi
 

@@ -1,0 +1,32 @@
+# Dispatches the check workflow for community package PRs whose own check GitHub refused to
+# start. This job only dispatches: it never runs a contributor's code, and it holds no secrets.
+# community-package-policy.yml fails CI if a secret is added here.
+name: Community package check sweep
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+
+permissions:
+  actions: write
+  pull-requests: read
+  contents: read
+
+concurrency:
+  group: community-check-sweep
+  cancel-in-progress: false
+
+jobs:
+  sweep:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Dispatch a check for every unchecked community package PR
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+        run: python3 scripts/ci/community-package/cli.py sweep

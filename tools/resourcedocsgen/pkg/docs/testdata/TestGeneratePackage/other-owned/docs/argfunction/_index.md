@@ -2,7 +2,7 @@
 ---
 title: "argFunction"
 title_tag: "example.argFunction"
-meta_desc: "Use example.argFunction with Pulumi. Full API reference with input and output properties and examples in TypeScript, Python, Go, C#, Java, and YAML."
+meta_desc: "Documentation for the example.argFunction function with examples, input properties, output properties, and supporting types."
 layout: api
 no_edit_this_page: true
 outputs:

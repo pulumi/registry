@@ -1716,9 +1716,9 @@ func (mod *modContext) genResourceHeader(r *schema.Resource) header {
 
 	metaDescription := summarizeForMetaDescription(r.Comment)
 	if metaDescription == "" {
-		metaDescription = fmt.Sprintf("Create and manage %s with Pulumi. Full API reference with "+
-			"input and output properties, lookup functions, and examples in TypeScript, Python, Go, "+
-			"C#, Java, and YAML.", qualifiedName)
+		metaDescription = fmt.Sprintf("Documentation for the %s resource "+
+			"with examples, input properties, output properties, "+
+			"lookup functions, and supporting types.", qualifiedName)
 	}
 
 	return header{

@@ -389,15 +389,15 @@ func TestFunctionHeaders(t *testing.T) {
 			ExpectedTitleTag: "prov.getPackageResource",
 			// The schema description is too short to stand alone as a meta description, so
 			// this falls back to the generic template.
-			ExpectedMetaDesc: "Use prov.getPackageResource with Pulumi. Full API reference with input" +
-				" and output properties and examples in TypeScript, Python, Go, C#, Java, and YAML.",
+			ExpectedMetaDesc: "Documentation for the prov.getPackageResource function with examples," +
+				" input properties, output properties, and supporting types.",
 		},
 		{
 			FunctionName:     "getModuleResource",
 			ModuleName:       "module",
 			ExpectedTitleTag: "prov.module.getModuleResource",
-			ExpectedMetaDesc: "Use prov.module.getModuleResource with Pulumi. Full API reference with" +
-				" input and output properties and examples in TypeScript, Python, Go, C#, Java, and YAML.",
+			ExpectedMetaDesc: "Documentation for the prov.module.getModuleResource function with examples," +
+				" input properties, output properties, and supporting types.",
 		},
 	}
 
@@ -450,9 +450,8 @@ func TestResourceDocHeader(t *testing.T) {
 			ExpectedTitleTag: "prov.PackageLevelResource",
 			// The schema description is too short to stand alone as a meta description, so
 			// this falls back to the generic template.
-			ExpectedMetaDesc: "Create and manage prov.PackageLevelResource with Pulumi. Full API reference" +
-				" with input and output properties, lookup functions, and examples in TypeScript, Python," +
-				" Go, C#, Java, and YAML.",
+			ExpectedMetaDesc: "Documentation for the prov.PackageLevelResource resource with examples," +
+				" input properties, output properties, lookup functions, and supporting types.",
 		},
 		{
 			Name:             "ModuleLevelResourceHeader",

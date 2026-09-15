@@ -443,8 +443,9 @@ func (mod *modContext) genFunctionHeader(f *schema.Function) header {
 
 	baseDescription := summarizeForMetaDescription(f.Comment)
 	if baseDescription == "" {
-		baseDescription = fmt.Sprintf("Use %s with Pulumi. Full API reference with input and output "+
-			"properties and examples in TypeScript, Python, Go, C#, Java, and YAML.", qualifiedName)
+		baseDescription = fmt.Sprintf("Documentation for the %s function "+
+			"with examples, input properties, output properties, "+
+			"and supporting types.", qualifiedName)
 	}
 
 	return header{

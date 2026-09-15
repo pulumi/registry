@@ -11,7 +11,7 @@ name: rootly
 package_status: ga
 publisher: rootlyhq
 repo_url: https://github.com/rootlyhq/pulumi-rootly
-schema_file_url: https://raw.githubusercontent.com/rootlyhq/pulumi-rootly/v3.8.0/provider/cmd/pulumi-resource-rootly/schema.json
+schema_file_url: https://raw.githubusercontent.com/rootlyhq/pulumi-rootly/v4.0.0/provider/cmd/pulumi-resource-rootly/schema.json
 title: Rootly
-updated_on: 1785453451
-version: v3.8.0
+updated_on: 1789433708
+version: v4.0.0

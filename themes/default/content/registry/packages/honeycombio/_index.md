@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/honeycombio/honeycombio/0.53.0/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/honeycombio/honeycombio/0.54.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Honeycombio Provider
@@ -274,9 +274,16 @@ runtime:
 
 The `features` block supports the following:
 
+* `client` - (Optional) A `client` block as defined below.
 * `column` - (Optional) A `column` block as defined below.
 * `dataset` - (Optional) A `dataset` block as defined below.
 * `intelligence` - (Optional) An `intelligence` block as defined below.
+
+---
+The `client` block supports the following:
+* `readCaching` - (Optional) Set to `true` to serve reads of supported resource types from a short-lived (60 second) cache of the containing collection, so configurations managing many resources of the same type don't issue one API request per resource read. Defaults to `false`.
+  Reads confirm not-found results directly against the API, so drift is still detected. The trade-off is that a resource changed outside of Pulumi within the cache window may be read stale for up to 60 seconds.
+  Currently supported resource types: derived columns.
 
 ---
 The `column` block supports the following:

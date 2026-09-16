@@ -12,7 +12,7 @@ name: scaleway
 package_status: ga
 publisher: pulumiverse
 repo_url: https://github.com/pulumiverse/pulumi-scaleway
-schema_file_url: https://raw.githubusercontent.com/pulumiverse/pulumi-scaleway/v1.55.1/provider/cmd/pulumi-resource-scaleway/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumiverse/pulumi-scaleway/v1.56.0/provider/cmd/pulumi-resource-scaleway/schema.json
 title: Scaleway
-updated_on: 1788941623
-version: v1.55.1
+updated_on: 1789561710
+version: v1.56.0

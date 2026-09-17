@@ -11,7 +11,7 @@ name: cpln
 package_status: public_preview
 publisher: pulumiverse
 repo_url: https://github.com/pulumiverse/pulumi-cpln
-schema_file_url: https://raw.githubusercontent.com/pulumiverse/pulumi-cpln/v0.0.89/provider/cmd/pulumi-resource-cpln/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumiverse/pulumi-cpln/v0.0.90/provider/cmd/pulumi-resource-cpln/schema.json
 title: Control Plane
-updated_on: 1782862769
-version: v0.0.89
+updated_on: 1789590773
+version: v0.0.90

@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-random/v4.21.1/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-random/v4.21.2/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-random/blob/v4.21.1/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-random/blob/v4.21.2/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Random Provider
 meta_desc: Provides an overview on how to configure the Pulumi Random provider.
@@ -157,9 +157,9 @@ func main() {
 					return fmt.Sprintf("web-server %v", hex), nil
 				}).(pulumi.StringOutput),
 			},
-			Ami: pulumi.String(server.Keepers.ApplyT(func(keepers map[string]string) (*string, error) {
+			Ami: server.Keepers.ApplyT(func(keepers map[string]string) (*string, error) {
 				return &keepers.AmiId, nil
-			}).(pulumi.StringPtrOutput)),
+			}).(pulumi.StringPtrOutput),
 		})
 		if err != nil {
 			return err

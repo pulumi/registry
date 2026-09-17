@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-ise/v0.5.1/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-ise/v0.6.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-ise/blob/v0.5.1/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-ise/blob/v0.6.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Cisco ISE Provider
 meta_desc: Provides an overview on how to configure the Pulumi Cisco ISE provider.
@@ -31,6 +31,11 @@ All resources and functions have been tested with the following releases.
 | ISE      | 3.3.0   |
 | ISE      | 3.4.0   |
 | ISE      | 3.5.0   |
+## Requirements
+
+- Pulumi >= 1.11
+
+Resources that manage secrets expose them as write-only arguments (the `*_wo` attributes), which are only supported in Pulumi 1.11 and later.
 ## Example Usage
 
 ```yaml

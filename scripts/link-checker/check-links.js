@@ -1,7 +1,32 @@
 const { HtmlUrlChecker } = require("broken-link-checker");
-const { WebClient, LogLevel } = require("@slack/web-api");
 const Sitemapper = require("sitemapper");
+const fs = require("fs");
 const sitemap = new Sitemapper();
+
+// Internal domain for separating internal vs external broken links.
+const INTERNAL_DOMAIN = "pulumi.com";
+// CDN subdomains serve binary downloads, not documentation, and the link checker
+// cannot reliably handle CDN redirects for binary files.
+const CDN_SUBDOMAINS = ["get.pulumi.com"];
+
+// Returns true when a URL points at pulumi.com (or a non-CDN subdomain of it).
+function isInternalLink(url) {
+    try {
+        const urlObj = new URL(url);
+        if (CDN_SUBDOMAINS.includes(urlObj.hostname)) return false;
+        return (
+            urlObj.hostname === INTERNAL_DOMAIN ||
+            urlObj.hostname.endsWith(`.${INTERNAL_DOMAIN}`)
+        );
+    } catch {
+        return false;
+    }
+}
+
+// Path of the file the checker writes its final results to. Downstream tooling
+// (the fix-broken-links step of check-links.yml) reads this and hands it to the
+// Claude Code action.
+const RESULTS_FILE = ".broken-links.json";
 
 /**
  *  This script uses the programmatic API of https://github.com/stevenvachon/broken-link-checker
@@ -9,7 +34,11 @@ const sitemap = new Sitemapper();
     or for a whole site. Usage:
 
     # Log successes as well as failures.
-    $ DEBUG=1 node scripts/check-links.js "https://www.pulumi.com"
+    $ DEBUG=1 node scripts/link-checker/check-links.js "https://www.pulumi.com/registry"
+
+    Results are written to .broken-links.json at the repo root (see RESULTS_FILE);
+    the check-links workflow reads that file and hands it to the fix-broken-links
+    skill, which triages the list and opens a PR.
  */
 
 let [baseURL, maxRetries] = process.argv.slice(2);
@@ -140,29 +169,50 @@ function onPage(error, pageURL, brokenLinks) {
 
 // Handles the BLC 'complete' event, which is raised at the end of a run.
 async function onComplete(brokenLinks) {
-    const filtered = excludeAcceptable(brokenLinks);
+    // Split broken links into internal and external, then drop the transient
+    // and bot-protection failures from each group.
+    const internal = excludeAcceptable(
+        brokenLinks.filter((link) => isInternalLink(link.destination)),
+    );
+    const external = excludeAcceptable(
+        brokenLinks.filter((link) => !isInternalLink(link.destination)),
+    );
 
-    if (filtered.length > 0) {
-        // If we failed and a retry count was provided, retry. Note that retry count !==
-        // run count, so a retry count of 1 means run once, then retry once, which means a
-        // total run count of two.
-        if (maxRetries > 0 && retryCount < maxRetries) {
-            retryCount += 1;
-            console.log(`Retrying (${retryCount} of ${maxRetries})...`);
-            checkLinks();
-            return;
-        }
-
-        const list = filtered
-            .map(
-                (link) =>
-                    `:link: <${link.source}|${new URL(link.source).pathname}> → ${link.destination} (${link.reason})`,
-            )
-            .join("\n");
-
-        // Post the results to Slack.
-        await postToSlack("registry-ops", list);
+    // If we failed and a retry count was provided, retry. Note that retry count !==
+    // run count, so a retry count of 1 means run once, then retry once, which means a
+    // total run count of two.
+    if (
+        internal.length + external.length > 0 &&
+        maxRetries > 0 &&
+        retryCount < maxRetries
+    ) {
+        retryCount += 1;
+        console.log(`Retrying (${retryCount} of ${maxRetries})...`);
+        checkLinks();
+        return;
     }
+
+    // Write the final results to disk for downstream tooling. We write on every
+    // final pass -- including clean runs, which produce empty lists -- so the
+    // workflow can branch on the contents and stay silent when nothing is
+    // broken. Slack posting happens at the workflow level (the link-fix PR
+    // link), not here. Broken links are already logged to the console as
+    // they're found, in onLink.
+    writeResults(internal, external);
+}
+
+// Writes the final broken-link results to RESULTS_FILE in the shape downstream
+// tooling expects: a generation timestamp plus separate internal/external lists.
+function writeResults(internal, external) {
+    const results = {
+        generated: new Date().toISOString(),
+        internal,
+        external,
+    };
+    fs.writeFileSync(RESULTS_FILE, JSON.stringify(results, null, 2) + "\n");
+    console.log(
+        `Wrote ${internal.length + external.length} broken link(s) to ${RESULTS_FILE}.`,
+    );
 }
 
 /**
@@ -255,7 +305,29 @@ function getDefaultExcludedKeywords() {
         "https://v0.dev/*",
 
         // GitHub's own nav chrome on github.com/pulumi/pulumi, which the checker crawls directly.
-        "https://github.com/marketplace*",
+        "https://github.com/marketplace", // (no trailing wildcard: BLC globs need at least one character after `*`, so `marketplace*` never matched the bare URL)
+        "https://github.com/pulumi/pulumi/projects", // deprecated /projects tab returns HTTP 400
+        "https://github.com/pulumi/pulumi/stargazers", // GitHub 404s the anonymous /stargazers view; valid in a browser
+        "https://github.com/pulumi/pulumi/watchers", // same as /stargazers
+        "https://github.com/signup", // logged-out header sign-up link; 403s automated clients
+        "https://www.githubstatus.com/", // bot-protected
+
+        // Pulumi status pages: AWS WAF returns 405 with a captcha to every automated client.
+        "https://pulumi.statuspage.io/",
+        "https://status.pulumi.com",
+
+        // Package registries and vendor doc sites with aggressive bot protection. A
+        // genuinely missing package/page on these still can't be told apart from the
+        // block, so skip them entirely rather than chase the noise.
+        "https://search.maven.org/", // 403s every automated request (aws, aws-native, azure-native installation pages)
+        "https://central.sonatype.com/", // same operator as search.maven.org
+        "https://www.npmjs.com/",
+        "https://npmjs.com/",
+        "https://hub.docker.com/",
+        "https://docs.microsoft.com/", // redirects to learn.microsoft.com and bot-protects
+        "https://developer.hashicorp.com/", // HashiCorp maintains redirects when reorganizing docs
+        "https://www.hashicorp.com/",
+        "https://x.com*",
 
         // API base URL referenced in the airbyte provider's upstream README; 401s without auth.
         "https://api.airbyte.com/*",
@@ -264,28 +336,17 @@ function getDefaultExcludedKeywords() {
 
 // Filters out transient errors that needn't fail a link-check run.
 function excludeAcceptable(links) {
+    // HTTP status codes to filter out for external sites (bot protection, auth walls,
+    // timeouts). Internal links with these codes are still reported.
+    const externalErrorReasons = [
+        "HTTP_403",
+        "HTTP_401",
+        "HTTP_202",
+        "HTTP_undefined",
+    ];
+
     return (
         links
-            // Ignore GitHub and npm 429s (rate-limited). We should really be handling these more
-            // intelligently, but we can come back to that in a follow up.
-            .filter(
-                (b) =>
-                    !(
-                        b.reason === "HTTP_429" &&
-                        b.destination.match(/github.com|npmjs.com/)
-                    ),
-            )
-
-            // Ignore npm 403s. npm bot-blocks the checker; a genuinely missing package returns
-            // 404 (still reported), not 403.
-            .filter(
-                (b) =>
-                    !(
-                        b.reason === "HTTP_403" &&
-                        b.destination.match(/npmjs.com/)
-                    ),
-            )
-
             // Ignore remote disconnects.
             .filter((b) => b.reason !== "ERRNO_ECONNRESET")
 
@@ -301,6 +362,25 @@ function excludeAcceptable(links) {
             // Ignore HTTP 503s.
             .filter((b) => b.reason !== "HTTP_503")
 
+            // Ignore HTTP 502s (Bad Gateway - transient server errors).
+            .filter((b) => b.reason !== "HTTP_502")
+
+            // Ignore HTTP 415s (Unsupported Media Type - often bot protection).
+            .filter((b) => b.reason !== "HTTP_415")
+
+            // Ignore all HTTP 429s (rate limiting, bot protection).
+            .filter((b) => b.reason !== "HTTP_429")
+
+            // Filter errors from external sites (bot protection, auth walls, connection
+            // issues). A third-party site that blocks the checker isn't a broken link.
+            .filter(
+                (b) =>
+                    !(
+                        externalErrorReasons.includes(b.reason) &&
+                        !isInternalLink(b.destination)
+                    ),
+            )
+
             // Ignore complaints about MIME types. BLC currently hard-codes an expectation of
             // type text/html, which causes it to fail on direct links to images, PDFs, and
             // other media.
@@ -308,25 +388,6 @@ function excludeAcceptable(links) {
             // https://github.com/stevenvachon/broken-link-checker/blob/43770535ad7b84cadec9dc54c5140694389e33dc/lib/internal/streamHTML.js#L36-L39
             .filter((b) => !b.reason.startsWith(`Expected type "text/html"`))
     );
-}
-
-// Posts a message to the designated Slack channel.
-async function postToSlack(channel, text) {
-    const token = process.env.SLACK_ACCESS_TOKEN;
-
-    if (!token) {
-        console.warn("No SLACK_ACCESS_TOKEN on the environment. Skipping.");
-        return;
-    }
-
-    const client = new WebClient(token, { logLevel: LogLevel.ERROR });
-    return await client.chat.postMessage({
-        text,
-        channel: `#${channel}`,
-        as_user: true,
-        mrkdwn: true,
-        unfurl_links: false,
-    });
 }
 
 // Adds a broken link to the running list.

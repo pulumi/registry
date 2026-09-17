@@ -411,6 +411,10 @@
     {
       "repoSlug": "jschady/pulumi-filescom",
       "schemaFile": "provider/cmd/pulumi-resource-filescom/schema.json"
+    },
+    {
+      "repoSlug": "htmlcsstoimage/pulumi-html-css-to-image",
+      "schemaFile": "internal/provider/schema.json"
     }
   ]
 }

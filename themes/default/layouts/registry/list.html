@@ -50,7 +50,9 @@
     <div class="docs-main-content-wrapper">
         <div class="docs-main-content registry-package-list">
             {{ if ne .RelPermalink "/registry/" }} {{ partial
-            "registry/breadcrumb.html" . }} {{ end }} {{ partial
+            "registry/breadcrumb.html" . }} {{ end }}
+            <h1 class="sr-only">{{ .Title }}</h1>
+            {{ partial
             "registry/package-list.html" . }}
         </div>
     </div>

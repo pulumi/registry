@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-hcl/a747eab3b4208867e8138c48465cb5970121fac7/registry/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-hcl/0ff33decf4747d2c4dd5fa7808c361dbaa517973/registry/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-hcl/blob/a747eab3b4208867e8138c48465cb5970121fac7/registry/_index.md
+edit_url: https://github.com/pulumi/pulumi-hcl/blob/0ff33decf4747d2c4dd5fa7808c361dbaa517973/registry/_index.md
 title: Any HCL Module
 meta_desc: Instantiate any Terraform or OpenTofu module as a Pulumi component resource
 layout: package

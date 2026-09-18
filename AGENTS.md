@@ -64,7 +64,7 @@ Every package in the registry is described by a YAML file at `themes/default/dat
 
 - API doc generation (`resourcedocsgen`)
 - Registry publication (`scripts/ci/publish_to_registry.py`, with `scripts/ci/push-registry.py` as a fallback)
-- The nightly community package update workflow
+- The scheduled community package update workflow
 
 ### Go Tools
 
@@ -80,7 +80,7 @@ Every package in the registry is described by a YAML file at `themes/default/dat
 
 The CI build script (`scripts/ci/build.sh`) writes to **`themes/default/content/registry/packages/`**.
 
-This difference is intentional — local API doc generation stays out of the Hugo theme tree. Within `themes/default/content/registry/packages/<pkg>/`, the `api-docs/` subdirectory is regenerated on every build and is git-ignored, so never commit it. The landing pages are different: `_index.md` — plus `installation-configuration.md` for the packages that have one, which is optional, since only `_index.md` is required — is committed and maintained by the `generate-package-metadata.yml` publish workflow, and bundled when onboarding a package so it renders before the next nightly run. Do not hand-edit any of these files; regenerate them with `resourcedocsgen`.
+This difference is intentional — local API doc generation stays out of the Hugo theme tree. Within `themes/default/content/registry/packages/<pkg>/`, the `api-docs/` subdirectory is regenerated on every build and is git-ignored, so never commit it. The landing pages are different: `_index.md` — plus `installation-configuration.md` for the packages that have one, which is optional, since only `_index.md` is required — is committed and maintained by the `generate-package-metadata.yml` publish workflow, and bundled when onboarding a package so it renders before the next scheduled run. Do not hand-edit any of these files; regenerate them with `resourcedocsgen`.
 
 Additionally, `resourcedocsgen` writes **LLM docs** to **`llm-docs-out/registry/packages/`** (repo root, git-ignored). These are terminal-friendly markdown bundles (`llm-docs.json`) uploaded to S3 separately from the Hugo site. The LLM docs format is specified in `docs/llm-markdown-spec.md`.
 
@@ -99,7 +99,7 @@ Each CI build syncs to a uniquely named S3 bucket. A Pulumi IaC program in `infr
 To add or update a community provider package:
 
 1. Edit (or create) its YAML file in `themes/default/data/registry/packages/`.
-2. The nightly `generate-package-metadata.yml` workflow handles version bumps automatically for community packages tracked in `community-packages/package-list.json`.
+2. The scheduled `generate-package-metadata.yml` workflow handles version bumps automatically for community packages tracked in `community-packages/package-list.json`.
 3. First-party Pulumi provider repos trigger `publish-provider-update.yml` via `repository_dispatch`.
 
 On every push to `master`, `publish_to_registry.py` publishes packages to the live Pulumi registry service — the Pulumi Cloud store behind `pulumi package add`, which is separate from the rendered site. `push-registry.py` runs only if that step fails.

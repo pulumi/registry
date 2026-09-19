@@ -166,5 +166,5 @@
     "vmware": "vmware",
     "wavefront": "wavefront",
     "zenduty": "zenduty",
-    "Incremental Steps": "incsteps"
+    "incsteps": "incsteps"
 }

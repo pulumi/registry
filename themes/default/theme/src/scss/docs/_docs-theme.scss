@@ -697,7 +697,6 @@ html[data-theme="dark"] body.section-registry {
         );
     }
 
-    .example-program .example-program-footer,
     .code-tabbed .code-tabbed-tabs,
     .code-tabbed .code-tabbed-content,
     .code-tabbed .code-tabbed-status {
@@ -708,12 +707,7 @@ html[data-theme="dark"] body.section-registry {
         );
     }
 
-    .highlight:not(
-            pulumi-chooser *,
-            .example-program *,
-            .code-chrome *,
-            .code-tabbed *
-        )
+    .highlight:not(pulumi-chooser *, .code-chrome *, .code-tabbed *)
         pre:not(.mermaid) {
         border: 1px solid var(--chrome-border);
     }

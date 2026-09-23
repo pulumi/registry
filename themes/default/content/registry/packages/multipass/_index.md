@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/incsteps/pulumi-provider-multipass/v0.3.2/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/incsteps/pulumi-provider-multipass/v0.3.3/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/incsteps/pulumi-provider-multipass/blob/v0.3.2/docs/_index.md
+edit_url: https://github.com/incsteps/pulumi-provider-multipass/blob/v0.3.3/docs/_index.md
 title: Multipass Provider
 meta_desc: Provides an overview of the Pulumi Multipass provider, including installation and usage examples.
 layout: overview
@@ -14,13 +14,11 @@ This provider turns Multipass VMs into first-class Pulumi resources, allowing yo
 
 ## Installation
 
-The Multipass provider is distributed as GitHub releases. Install the resource plugin using the Pulumi CLI:
+Install the resource plugin using the Pulumi CLI:
 
 ```bash
-pulumi plugin install resource multipass v0.3.1 --server github://api.github.com/incsteps/pulumi-provider-multipass
+pulumi plugin install resource incsteps/multipass
 ```
-
-    Once the provider will be included as part of the Pulumi Community Registry, this step will be unnecessary.
 
 Then add the SDK to your project:
 

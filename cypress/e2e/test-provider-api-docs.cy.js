@@ -286,4 +286,60 @@ describe("Test Provider", () => {
             });
         });
     });
+
+    describe("API docs navigation", () => {
+        const base = "/registry/packages/test-provider/api-docs/";
+        const sidebar = "#docs-main-nav nav.main-nav";
+        const treeLink = page => `pulumi-api-doc-filterable-nav a[href="${base}${page}/"]`;
+
+        // A link's top edge, relative to the top of the sidebar's scroll viewport.
+        const offsetWithin = (nav, link) => link.getBoundingClientRect().top - nav.getBoundingClientRect().top;
+
+        beforeEach(() => {
+            // Wide enough for the desktop sidebar, and short enough that the API tree
+            // overflows it, so where the sidebar is scrolled to actually matters.
+            cy.viewport(1400, 500);
+        });
+
+        it("scrolls the current page's link into view", () => {
+            cy.visit(`${base}testresourceexamplesfence/`);
+            cy.get(sidebar).should($nav => {
+                const nav = $nav[0];
+                const link = nav.querySelector(treeLink("testresourceexamplesfence"));
+                expect(link).to.exist;
+                expect(nav.scrollTop).to.be.greaterThan(0);
+                expect(offsetWithin(nav, link) + link.offsetHeight).to.be.at.most(nav.clientHeight);
+            });
+        });
+
+        it("keeps a clicked link in the same place on the page it opens", () => {
+            cy.visit(`${base}testresourcecommentfence/`);
+
+            // Wait for the sidebar to reveal this page's link, so that doesn't undo
+            // the scroll position set below.
+            cy.get(sidebar).should($nav => {
+                expect($nav[0].querySelector(treeLink("testresourcecommentfence"))).to.exist;
+                expect($nav[0].scrollTop).to.be.greaterThan(0);
+            });
+
+            cy.get(sidebar).then($nav => {
+                const nav = $nav[0];
+                const link = nav.querySelector(treeLink("testresourceexamplesfence"));
+
+                // Park the link on the sidebar's bottom edge. Resetting the sidebar
+                // would push it out of view, and revealing it would center it, so
+                // only keeping it in place passes.
+                nav.scrollTop += offsetWithin(nav, link) + link.offsetHeight - nav.clientHeight;
+                const before = offsetWithin(nav, link);
+
+                cy.wrap(link).click({ scrollBehavior: false });
+                cy.location("pathname").should("eq", `${base}testresourceexamplesfence/`);
+                cy.get(sidebar).should($next => {
+                    const next = $next[0].querySelector(treeLink("testresourceexamplesfence"));
+                    expect(next).to.exist;
+                    expect(offsetWithin($next[0], next)).to.be.closeTo(before, 1);
+                });
+            });
+        });
+    });
 });

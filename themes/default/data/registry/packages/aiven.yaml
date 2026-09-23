@@ -11,7 +11,7 @@ name: aiven
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-aiven
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-aiven/v6.59.0/provider/cmd/pulumi-resource-aiven/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-aiven/v6.60.0/provider/cmd/pulumi-resource-aiven/schema.json
 title: Aiven
-updated_on: 1789644869
-version: v6.59.0
+updated_on: 1790134110
+version: v6.60.0

@@ -11,7 +11,7 @@ name: equinix
 package_status: public_preview
 publisher: Equinix
 repo_url: https://github.com/equinix/pulumi-equinix
-schema_file_url: https://raw.githubusercontent.com/equinix/pulumi-equinix/v0.31.0/provider/cmd/pulumi-resource-equinix/schema.json
+schema_file_url: https://raw.githubusercontent.com/equinix/pulumi-equinix/v0.32.0/provider/cmd/pulumi-resource-equinix/schema.json
 title: Equinix
-updated_on: 1783356773
-version: v0.31.0
+updated_on: 1790145683
+version: v0.32.0

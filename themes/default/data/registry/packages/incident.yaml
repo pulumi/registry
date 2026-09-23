@@ -2,14 +2,17 @@
 # Do not edit by hand unless you're certain you know what you are doing!
 category: Cloud
 component: false
-description: A Pulumi provider dynamically bridged from incident.
+description: A Pulumi package for managing incident.io resources.
 featured: false
-logo_url: ""
+keywords:
+- incident
+- incident-io
+logo_url: https://raw.githubusercontent.com/incident-io/pulumi-incident/master/logos/incident.svg
 name: incident
-package_status: ga
+package_status: public_preview
 publisher: incident-io
-repo_url: https://github.com/incident-io/terraform-provider-incident
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/incident-io/incident/7.2.0/schema.json
-title: incident
-updated_on: 1790120121
-version: 7.2.0
+repo_url: https://github.com/incident-io/pulumi-incident
+schema_file_url: https://raw.githubusercontent.com/incident-io/pulumi-incident/v0.1.2/provider/cmd/pulumi-resource-incident/schema.json
+title: incident.io
+updated_on: 1790170486
+version: v0.1.2

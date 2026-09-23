@@ -415,6 +415,10 @@
     {
       "repoSlug": "jschady/pulumi-filescom",
       "schemaFile": "provider/cmd/pulumi-resource-filescom/schema.json"
+    },
+    {
+      "repoSlug": "incident-io/pulumi-incident",
+      "schemaFile": "provider/cmd/pulumi-resource-incident/schema.json"
     }
   ]
 }

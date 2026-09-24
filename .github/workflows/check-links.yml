@@ -1,4 +1,10 @@
 name: "Scheduled jobs: Check links"
+env:
+  ESC_ACTION_OIDC_AUTH: true
+  ESC_ACTION_OIDC_ORGANIZATION: pulumi
+  ESC_ACTION_OIDC_REQUESTED_TOKEN_TYPE: urn:pulumi:token-type:access_token:organization
+  ESC_ACTION_ENVIRONMENT: github-secrets/pulumi-registry
+  ESC_ACTION_EXPORT_ENVIRONMENT_VARIABLES: false
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string.
@@ -66,9 +72,9 @@ jobs:
             echo "No broken links."
           fi
       # Hand the broken-link list to the Claude Code action, which follows the
-      # fix-broken-links skill: triage each link, fix in-repo, file upstream
-      # issues for first-party provider breakage, open a ready PR, and write the
-      # PR link to .broken-links-pr.txt for the Slack step.
+      # fix-broken-links skill: triage each link, fix what this repo owns, list
+      # upstream-owned breakage without filing issues, open a ready PR, and write
+      # the PR link to .broken-links-pr.txt for the Slack step.
       - name: Run Claude Code
         if: steps.detect.outputs.has_broken == 'true'
         id: claude
@@ -95,38 +101,41 @@ jobs:
                (non-duplicate) links:
             4. Create a branch `fix/broken-links-${{ steps.detect.outputs.date }}`.
             5. Triage and fix each broken link using the strategies in the skill
-               (S3 redirect, source edit, exclusion, upstream issue for
-               first-party providers, or third-party/not actioned).
-            6. File a GitHub issue for each new first-party upstream item (reuse
-               the existing issue for duplicates). Never file issues in
-               third-party repositories.
-            7. Run `yarn run lint` and `make lint-markdown`; resolve anything
+               (source edit for pages maintained in this repo, S3 redirect, or
+               exclusion). Links on pages fetched from a provider repo are
+               recorded in the PR description, never filed as issues.
+            6. Run `yarn run lint` and `make lint-markdown`; resolve anything
                they surface.
-            8. Open a **ready** (non-draft) PR to `master` with the auditable
+            7. Open a **ready** (non-draft) PR to `master` with the auditable
                description the skill describes (every link -> strategy ->
-               reasoning, plus Verification, False positives, Already tracked,
-               Third-party packages, and Upstream/filed-issues sections).
-            9. Write the final PR URL and a one-line summary to
+               reasoning, plus Verification, False positives, Upstream-owned
+               pages, Needs a human, and Already tracked sections).
+            8. Write the final PR URL and a one-line summary to
                `.broken-links-pr.txt` for the Slack notification.
+          # The tool grant is the real boundary: the agent reads third-party pages
+          # while holding the bot token, so it gets no `gh api`, no `curl`, and no
+          # `gh issue create` -- nothing the skill doesn't need.
           claude_args: |
             --model claude-opus-5 --effort low
-            --allowed-tools "Read,Write,Edit,Glob,Grep,Agent,WebFetch,WebSearch,Bash(make lint-markdown:*),Bash(make ensure:*),Bash(yarn run lint:*),Bash(yarn run format:*),Bash(gh pr create:*),Bash(gh pr view:*),Bash(gh pr list:*),Bash(gh pr diff:*),Bash(gh issue create:*),Bash(gh issue list:*),Bash(gh search:*),Bash(gh api:*),Bash(git:*),Bash(cd:*),Bash(cat:*),Bash(head:*),Bash(tail:*),Bash(wc:*),Bash(ls:*),Bash(grep:*),Bash(find:*),Bash(rg:*),Bash(awk:*),Bash(sed:*),Bash(jq:*),Bash(yq:*),Bash(echo:*),Bash(printf:*),Bash(tee:*),Bash(date:*),Bash(test:*),Bash(curl:*)"
-      # Post the PR link to #registry-ops. Gated on the results file the Claude
-      # step writes, so a run where Claude couldn't open a PR stays silent rather
-      # than posting an empty message.
-      - name: Post PR link to Slack
-        if: steps.detect.outputs.has_broken == 'true' && hashFiles('.broken-links-pr.txt') != ''
+            --allowed-tools "Read,Write,Edit,Glob,Grep,Agent,WebFetch,WebSearch,Bash(make lint-markdown:*),Bash(make ensure:*),Bash(yarn run lint:*),Bash(yarn run format:*),Bash(gh pr create:*),Bash(gh pr view:*),Bash(gh pr list:*),Bash(gh pr diff:*),Bash(gh issue list:*),Bash(gh search:*),Bash(git:*),Bash(cat:*),Bash(head:*),Bash(tail:*),Bash(wc:*),Bash(ls:*),Bash(grep:*),Bash(find:*),Bash(rg:*),Bash(awk:*),Bash(sed:*),Bash(jq:*),Bash(yq:*),Bash(echo:*),Bash(printf:*),Bash(tee:*),Bash(date:*),Bash(test:*)"
+      # Post the PR link to #registry-ops. `always()` keeps a failed fix step
+      # (API error, timeout, lint it couldn't resolve) from going silent: without
+      # a results file, post the broken-link count and the run link instead.
+      - name: Post to Slack
+        if: always() && steps.detect.outputs.has_broken == 'true'
         env:
           SLACK_ACCESS_TOKEN: ${{ steps.esc-secrets.outputs.SLACK_ACCESS_TOKEN }}
+          COUNT: ${{ steps.detect.outputs.count }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
-          curl -s -X POST https://slack.com/api/chat.postMessage \
+          if [ -s .broken-links-pr.txt ]; then
+            TEXT="$(cat .broken-links-pr.txt)"
+          else
+            TEXT=":warning: Registry link check found ${COUNT} broken link(s), but the fix step did not finish. Run: ${RUN_URL}"
+          fi
+          curl -sS --fail-with-body -X POST https://slack.com/api/chat.postMessage \
             -H "Authorization: Bearer ${SLACK_ACCESS_TOKEN}" \
             -H "Content-type: application/json; charset=utf-8" \
-            --data "$(jq -n --arg ch "#registry-ops" --rawfile txt .broken-links-pr.txt \
-              '{channel: $ch, text: $txt, unfurl_links: true}')"
-env:
-  ESC_ACTION_OIDC_AUTH: true
-  ESC_ACTION_OIDC_ORGANIZATION: pulumi
-  ESC_ACTION_OIDC_REQUESTED_TOKEN_TYPE: urn:pulumi:token-type:access_token:organization
-  ESC_ACTION_ENVIRONMENT: github-secrets/pulumi-registry
-  ESC_ACTION_EXPORT_ENVIRONMENT_VARIABLES: false
+            --data "$(jq -n --arg ch "#registry-ops" --arg txt "$TEXT" \
+              '{channel: $ch, text: $txt, unfurl_links: true}')" \
+            | jq -e '.ok' > /dev/null

@@ -305,7 +305,10 @@ function getDefaultExcludedKeywords() {
         "https://v0.dev/*",
 
         // GitHub's own nav chrome on github.com/pulumi/pulumi, which the checker crawls directly.
-        "https://github.com/marketplace", // (no trailing wildcard: BLC globs need at least one character after `*`, so `marketplace*` never matched the bare URL)
+        // No trailing `*`: a keyword containing `*` is matched as a whole-URL glob in
+        // which `*` must consume at least one character, so `marketplace*` never
+        // matched the bare URL. A keyword without `*` is a plain substring match.
+        "https://github.com/marketplace",
         "https://github.com/pulumi/pulumi/projects", // deprecated /projects tab returns HTTP 400
         "https://github.com/pulumi/pulumi/stargazers", // GitHub 404s the anonymous /stargazers view; valid in a browser
         "https://github.com/pulumi/pulumi/watchers", // same as /stargazers

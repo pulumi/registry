@@ -695,9 +695,13 @@ Jobs:
 
 **Trigger**: Every Monday at 3:00 PM UTC (cron: `0 15 * * MON`); also `workflow_dispatch`
 
-Runs `make check_links` which calls `yarn run check-links`, which runs `node scripts/link-checker/check-links.js "https://www.pulumi.com/registry" 2` (2 retries on failure). Broken links are reported to the `#registry-ops` Slack channel.
+Runs `make check_links` which calls `yarn run check-links`, which runs `node scripts/link-checker/check-links.js "https://www.pulumi.com/registry" 2` (2 retries on failure). The checker writes its filtered results to `.broken-links.json` (git-ignored; `internal` and `external` lists) and no longer posts to Slack itself.
 
-Node version: 24.x; Hugo 0.157.0 installed but not explicitly used.
+If that file lists anything, the workflow hands it to `anthropics/claude-code-action`, which follows `.claude/commands/fix-broken-links/SKILL.md`: re-verify each link (the crawler has false positives), skip anything already covered by an open PR or issue, then triage the rest -- source edit (for pages maintained in this repo), S3 redirect, or exclusion-list entry -- and open a ready PR on `fix/broken-links-<date>` whose description audits every decision. Breakage on pages fetched from a provider repo is listed in the PR, grouped by first-party and third-party packages, but never filed as an issue: those links can't be fixed from here, and a weekly issue per provider would only pile up. The action writes the PR link to `.broken-links-pr.txt`, and the last step posts that to `#registry-ops`. If the fix step fails, the Slack step still posts the broken-link count and a link to the run, so a failed week is never silent. On a clean run both steps are skipped, so nothing is posted.
+
+The ESC step runs before checkout and the checkout and Claude steps use `PULUMI_BOT_TOKEN`, so the PR is opened by `pulumi-bot` and triggers `pull-request.yml` like a human-authored PR would.
+
+Node version: 24.x; Hugo 0.157.0 installed (required by `scripts/ensure.sh`, which `make check_links` depends on).
 
 #### `run-browser-tests.yml` — Scheduled Browser Tests
 
@@ -1063,7 +1067,8 @@ make check_links
 - Excludes API docs pages, SDK reference pages, and install/versions pages.
 - Uses `broken-link-checker` with `filterLevel: 1` and GET requests.
 - Up to 2 retries if broken links are found.
-- Reports broken links to the `#registry-ops` Slack channel via `SLACK_ACCESS_TOKEN`.
+- Filters transient and bot-protection failures (`excludeAcceptable()`): all `429`s, `502`/`503`, and `401`/`403` on external hosts, among others. Known-noisy hosts (Maven Central, npm, Docker Hub, status pages, GitHub's own chrome on `github.com/pulumi/pulumi`) are in `getDefaultExcludedKeywords()`.
+- Writes `.broken-links.json` (`{ generated, internal, external }`) at the repo root. In CI, `check-links.yml` feeds that file to the `fix-broken-links` skill, which opens a fix PR; see the workflow section above.
 - Many known-flaky domains are excluded (LinkedIn, YouTube, Twitter, etc.).
 
 Runs every Monday at 3:00 PM UTC in CI.

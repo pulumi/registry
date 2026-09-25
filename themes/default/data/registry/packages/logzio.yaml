@@ -9,7 +9,7 @@ name: logzio
 package_status: ga
 publisher: logzio
 repo_url: https://github.com/logzio/terraform-provider-logzio
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/logzio/logzio/1.28.2/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/logzio/logzio/1.29.0/schema.json
 title: logzio
-updated_on: 1789428914
-version: 1.28.2
+updated_on: 1790379315
+version: 1.29.0

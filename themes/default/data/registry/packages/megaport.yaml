@@ -9,7 +9,7 @@ name: megaport
 package_status: ga
 publisher: megaport
 repo_url: https://github.com/megaport/terraform-provider-megaport
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/megaport/megaport/1.18.7/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/megaport/megaport/1.19.0/schema.json
 title: megaport
-updated_on: 1790292938
-version: 1.18.7
+updated_on: 1790336115
+version: 1.19.0

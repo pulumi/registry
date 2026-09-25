@@ -11,7 +11,7 @@ name: logfire
 package_status: public_preview
 publisher: Pydantic
 repo_url: https://github.com/pydantic/pulumi-logfire
-schema_file_url: https://raw.githubusercontent.com/pydantic/pulumi-logfire/v0.2.0/provider/cmd/pulumi-resource-logfire/schema.json
+schema_file_url: https://raw.githubusercontent.com/pydantic/pulumi-logfire/v0.2.1/provider/cmd/pulumi-resource-logfire/schema.json
 title: Logfire
-updated_on: 1790257457
-version: v0.2.0
+updated_on: 1790272578
+version: v0.2.1

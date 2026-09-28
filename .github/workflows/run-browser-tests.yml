@@ -36,7 +36,17 @@ jobs:
           hugo-version: "0.157.0"
           extended: true
 
+      # Specs that check third-party services rather than the change in a PR, so they don't
+      # belong in the preview smoke test in scripts/ci/sync.sh. Don't point Cypress at
+      # www.pulumi.com here: its WAF blocks an IP after 500 requests in 5 minutes, and serves
+      # the block as a 404.
+      - name: Run scheduled Cypress specs
+        run: |
+          make ensure
+          ./scripts/run-browser-tests.sh "https://www.pulumi.com" "opentofu-contract.cy.js"
+
       - name: Run browser tests
+        if: ${{ !cancelled() }}
         run: make run-browser-tests
         env:
           NODE_OPTIONS: "--max_old_space_size=8192"

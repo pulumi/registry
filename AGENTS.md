@@ -36,7 +36,7 @@ Common commands (all defined in the root `Makefile`):
 | Run Markdown linter only | `make lint-markdown` |
 | Check the generated dark logo variants | `make lint-dark-logos` |
 | Run provider API docs tests | `make test_provider_api_docs` |
-| Run browser tests | `make run-browser-tests` |
+| Run the API docs crawl (mocha, not Cypress) | `make run-browser-tests` |
 
 `make lint` must pass before merging. `make build` requires 32 GB+ RAM for a complete build; for single-provider work, use `make api-docs/<package>` instead.
 

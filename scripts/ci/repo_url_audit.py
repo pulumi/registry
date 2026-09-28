@@ -140,7 +140,9 @@ def render(findings):
     if by_kind["archived"]:
         lines += ["", "## Archived upstream", "",
                   "Still listed, but the repo is archived. Re-point it to a maintained successor, or delist it "
-                  "with `/delist-package <name>`.", "",
+                  "with `/delist-package <name>`. For a dynamically bridged package, start in "
+                  f"`{PIPELINE_REPO}`: re-point its `fqtp`, or remove it from `watched-providers` before delisting "
+                  "it here, since the pipeline's next push relists a package that is only delisted here.", "",
                   "| Package | Current `repo_url` | Now at | Fix in |", "|---|---|---|---|"]
         lines += [f"| {f['name']} | `{f['slug']}` | {f'`{m}`' if (m := f['moved_to']) else 'unchanged'} "
                   f"| {_where(f)} |" for f in by_kind["archived"]]

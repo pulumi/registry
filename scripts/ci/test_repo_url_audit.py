@@ -126,6 +126,10 @@ class TestRender(unittest.TestCase):
         self.assertIn("| c | `pulumiverse/pulumi-doppler` | unchanged | `pulumi/terraform-to-pulumi-registry-pipeline`"
                       " (dynamically bridged) |", body)
 
+    def test_archived_guidance_sends_bridged_delistings_through_the_pipeline_first(self):
+        body = render([self.finding("archived", bridged=True)])
+        self.assertIn("remove it from `watched-providers` before delisting it here", body)
+
     def test_is_deterministic(self):
         findings = [self.finding("missing"), self.finding("invalid", repo_url="")]
         self.assertEqual(render(findings), render(findings))

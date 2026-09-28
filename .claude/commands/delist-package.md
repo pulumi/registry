@@ -36,14 +36,21 @@ Read `community-packages/package-list.json` and check if the package's repo slug
 - If found, remove the entry from the JSON array
 - If not found, skip this step
 
-### Step 4: Verify Changes
+### Step 4: Check for a Dynamically Bridged Provider
+
+If the YAML's `schema_file_url` contains `registry.opentofu.org`, the package is a dynamically bridged Terraform provider fed by the internal `pulumi/terraform-to-pulumi-registry-pipeline` repo. Setting `publisher: DEPRECATED` here is not enough on its own: the next time the provider ships a version, the pipeline regenerates the YAML and relists it.
+
+- Tell the user the package also has to be removed from `watched-providers` in that repo's `Pulumi.yaml`, and offer to file an issue there
+- If the URL doesn't contain `registry.opentofu.org`, skip this step
+
+### Step 5: Verify Changes
 
 Run `git diff` to confirm:
 
 - The `publisher` field in the YAML was changed to `DEPRECATED`
 - The community packages list entry was removed (if applicable)
 
-### Step 5: Report Results
+### Step 6: Report Results
 
 Present a summary:
 
@@ -54,6 +61,8 @@ Package Delisted: <package-name>
 Changes:
   ✓ Set publisher to DEPRECATED in <package-name>.yaml
   ✓ Removed from community-packages/package-list.json (if applicable)
+  ! Dynamically bridged: remove from watched-providers in
+    pulumi/terraform-to-pulumi-registry-pipeline (if applicable)
 
 Note: The package YAML file is kept in the repo but will be
 skipped by the publishing scripts (push-registry.py and

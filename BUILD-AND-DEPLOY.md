@@ -521,6 +521,7 @@ All workflow files live in `.github/workflows/`.
 | `publish-provider-update.yml` | provider docs build | `repository_dispatch` |
 | `bucket-cleanup.yml` | Scheduled jobs: Bucket cleanup | Daily 3:00 PM UTC |
 | `priority-digest.yml` | Scheduled jobs: Priority digest | Daily 3:00 PM UTC |
+| `repo-url-audit.yml` | Scheduled jobs: Repo URL audit | Every Monday 2:00 PM UTC |
 | `export-repo-secrets.yml` | Export secrets to ESC | `workflow_dispatch` |
 | `add-triage-label.yml` | Add triage label to new issues | Issue opened / reopened |
 | `add-to-project.yml` | Add issues to project | Issue opened / reopened |
@@ -765,6 +766,14 @@ Runs in the production environment (`388588623842:role/ContinuousDelivery`). Nod
 Runs `scripts/ci/priority_digest.py`, which searches GitHub for open issues labelled `p0` or `p1` across `pulumi/registry` and `pulumi/terraform-to-pulumi-registry-pipeline`, then posts them to Slack, oldest first, with each issue's age and assignee.
 
 Replaces a Metabase subscription that posted the same query as a screenshot. Uses `PULUMI_BOT_TOKEN` and `SLACK_ACCESS_TOKEN` from ESC and posts via `chat.postMessage` to the channel ID in the `SLACK_TEAM_CHANNEL` repository variable; the bot must be a member of that channel. `--dry-run` prints the message to the job log instead of posting.
+
+#### `repo-url-audit.yml` — Track Package Repo URL Drift
+
+**Trigger**: Every Monday at 2:00 PM UTC; also `workflow_dispatch` with a `dry-run` input
+
+Runs `scripts/ci/repo_url_audit.py`, which asks the GitHub API about every listed (non-`DEPRECATED`) package's `repo_url`. The API follows renames and transfers, and a package is reported when its repo has moved to a new owner or name, been archived, or returns 404. Case-only differences are ignored, since GitHub slugs are case-insensitive. The report is kept in a single open `kind/chore` issue, found by a `<!-- repo-url-audit -->` marker in its body: the job rewrites the issue on each run, and closes it once nothing is left to fix. Each row says where the fix goes: the package YAML, the YAML plus `repoSlug` in `community-packages/package-list.json` (which `metadata from-github` rebuilds `repo_url` from), or `pulumi/terraform-to-pulumi-registry-pipeline` for dynamically bridged providers.
+
+Uses the workflow's own `GITHUB_TOKEN` with `issues: write`. `--dry-run` prints the report to the job log instead of filing it.
 
 #### `export-repo-secrets.yml` — Sync GitHub Secrets → ESC
 
@@ -1136,6 +1145,7 @@ Note: `mise.toml` and the CI workflows use Node 24, including `bucket-cleanup.ym
 | Browser tests (scheduled) | 2:00 PM daily | `run-browser-tests.yml` | `make run-browser-tests` |
 | Stale bucket cleanup | 3:00 PM daily | `bucket-cleanup.yml` | `make ci_bucket_cleanup` |
 | Open P0 and P1 issue digest | 3:00 PM daily | `priority-digest.yml` | `scripts/ci/priority_digest.py` |
+| Package repo URL drift | 2:00 PM every Monday | `repo-url-audit.yml` | `scripts/ci/repo_url_audit.py` |
 
 ---
 

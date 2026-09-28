@@ -66,25 +66,48 @@ func TestSummarizeForMetaDescription(t *testing.T) {
 		require.True(t, strings.HasSuffix(got, "."))
 	})
 
-	// Regression test: Terraform-bridged provider descriptions frequently
-	// open with a markdown blockquote callout ("> Note ..." or "> If
-	// ..."). Left in place, the literal ">" gets HTML-escaped once when
-	// MetaDesc is written into the generated front matter and escaped
-	// again when Hugo renders it into the page's meta/og description
-	// tags and JSON-LD, producing a literal "&amp;gt;" in front of
-	// visitors and in what answer engines ingest (observed live on
-	// registry pages for random.RandomPassword, snowflake.Database,
-	// tls.PrivateKey, and others). The marker must come out as plain
-	// prose.
-	t.Run("strips a leading blockquote marker", func(t *testing.T) {
+	// Regression test (updated after review on PR #12638, cnunciato): a
+	// leading blockquote callout is not the resource's description, it's
+	// a caveat about something else entirely. Observed live on
+	// random.RandomPassword: the generated meta description was the
+	// caveat "If the managed resource supports a write-only attribute
+	// for the password ... then the ephemeral variant ... should be
+	// used", which describes a *different* resource variant, while the
+	// real description -- "Identical to random.RandomString with the
+	// exception that the result is treated as sensitive ..." -- was
+	// sitting right after it, unused. Stripping the ">" marker in place
+	// (the original fix for the double-escaping bug) fixed the escaping
+	// but still presented the caveat as if it were the description. The
+	// summary must skip past a leading caveat and use the real
+	// description paragraph that follows it.
+	t.Run("skips a leading blockquote caveat and uses the real description that follows", func(t *testing.T) {
+		t.Parallel()
+		got := summarizeForMetaDescription(
+			"> If the managed resource supports a write-only attribute for the password " +
+				"(first introduced in Terraform 1.11), then the ephemeral variant of this resource " +
+				"should be used, when possible, to avoid storing the password in the plan or state file.\n\n" +
+				"Identical to random.RandomString with the exception that the result is treated as " +
+				"sensitive and, thus, not displayed in console output. Read more about sensitive data " +
+				"handling in the Terraform documentation.",
+		)
+		require.NotContains(t, got, ">")
+		require.NotContains(t, got, "ephemeral variant")
+		require.NotContains(t, got, "write-only attribute")
+		require.True(t, strings.HasPrefix(got, "Identical to random.RandomString"))
+	})
+
+	// When the entire description is a leading caveat with no real
+	// paragraph after it, there's nothing honest to summarize: the
+	// caller should fall back to the generic templated description
+	// rather than present the caveat as the resource's description.
+	t.Run("returns empty when the whole description is a leading blockquote with nothing after it", func(t *testing.T) {
 		t.Parallel()
 		got := summarizeForMetaDescription(
 			"> If the managed resource supports a write-only attribute for the password " +
 				"(first introduced in Terraform 1.11), then the ephemeral variant of this resource " +
 				"should be used instead.",
 		)
-		require.NotContains(t, got, ">")
-		require.True(t, strings.HasPrefix(got, "If the managed resource"))
+		require.Empty(t, got)
 	})
 
 	t.Run("strips a blockquote marker mid-description without disturbing the rest", func(t *testing.T) {

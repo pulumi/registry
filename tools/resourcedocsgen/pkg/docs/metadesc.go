@@ -49,6 +49,45 @@ var htmlTagRegex = regexp.MustCompile(`<[^>]+>`)
 // must come out as plain prose rather than markdown syntax.
 var blockquoteMarkerRegex = regexp.MustCompile(`(?m)^[ \t]*>[ \t]?`)
 
+// isBlockquoteParagraphStart reports whether s begins (after leading
+// whitespace) with a markdown blockquote marker.
+func isBlockquoteParagraphStart(s string) bool {
+	return strings.HasPrefix(strings.TrimLeft(s, " \t"), ">")
+}
+
+// skipLeadingBlockquoteParagraphs advances past any blockquote paragraph(s)
+// found at the very start of s, returning the text starting at the first
+// paragraph that isn't a blockquote (or "" if the whole remaining text is
+// blockquoted).
+//
+// Terraform-bridged provider descriptions frequently open with a "> Note
+// ..." or "> If ..." caveat before the actual resource description.
+// Observed live on random.RandomPassword: the generated meta description
+// was "If the managed resource supports a write-only attribute for the
+// password ...", a caveat about an unrelated ephemeral variant, instead of
+// the resource's real description, "Identical to random.RandomString with
+// the exception that the result is treated as sensitive ...". Simply
+// stripping the "> " marker in place (as blockquoteMarkerRegex does)
+// leaves that caveat looking like ordinary prose and presents it as the
+// resource's description, which misrepresents the resource. This looks
+// past a *leading* caveat for the real opening summary instead. A
+// blockquote that appears after the real description (a supplementary
+// note, as on aws.s3.Bucket) is left alone by this function; only a
+// blockquote at the very start is skipped.
+func skipLeadingBlockquoteParagraphs(s string) string {
+	for {
+		trimmed := strings.TrimLeft(s, "\n")
+		if !isBlockquoteParagraphStart(trimmed) {
+			return trimmed
+		}
+		idx := strings.Index(trimmed, "\n\n")
+		if idx == -1 {
+			return ""
+		}
+		s = trimmed[idx+2:]
+	}
+}
+
 // metaDescWhitespaceRegex collapses any run of whitespace (including
 // newlines) down to a single space.
 var metaDescWhitespaceRegex = regexp.MustCompile(`\s+`)
@@ -66,6 +105,7 @@ var metaDescWhitespaceRegex = regexp.MustCompile(`\s+`)
 // fall back to a generic templated description instead.
 func summarizeForMetaDescription(comment string) string {
 	s := SanitizeDescription(comment)
+	s = skipLeadingBlockquoteParagraphs(s)
 
 	if loc := metaDescCutRegex.FindStringIndex(s); loc != nil {
 		s = s[:loc[0]]

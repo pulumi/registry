@@ -95,7 +95,7 @@ This works because `resourcedocsgen metadata from-github` skips a missing `docs/
 - If one of these repositories adds a `docs/_index.md` or `docs/installation-configuration.md`, the next release overwrites the copy here. Once that happens, make your edits in the provider repository and remove the package from this table.
 - These pages have no per-version copies. When [`scripts/generate-versioned-docs.sh`](../scripts/generate-versioned-docs.sh) builds an older major version, such as `kubernetes@3.x`, it can't fetch that release's `docs/_index.md`, so it falls back to the current page here.
 
-Pages for deprecated packages also lack the `fetched from` comment. They're frozen snapshots, not exceptions, so they aren't listed here.
+A few other pages also lack the `fetched from` comment but aren't exceptions, so they aren't listed here: pages for deprecated packages, and pages for packages that haven't released since the comment was introduced in November 2024, such as `aws-miniflux` and `astra`.
 
 ### Terraform providers
 

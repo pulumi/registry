@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/fortinetdev/fortimanager/1.18.0/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/fortinetdev/fortimanager/1.18.1/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Fortimanager Provider
@@ -455,5 +455,5 @@ To help you get the most out of your FortiManager products, maximize performance
 Fortinet also provides a developer community to help administrators and advanced users enhance and increase the effectiveness of Fortinet products. The [Fortinet Developer Network (FNDN)](https://fndn.fortinet.net/) provides the official documentation and advanced tools for developing custom solutions using Fortinet products.
 ## Versioning
 
-The provider can cover FortiManager 6.4 to 7.4 versions, the configuration of all parameters should be based on the relevant FortiManager version manual and FortiManager API guide.
+The provider can cover FortiManager >= 6.4 versions, the configuration of all parameters should be based on the relevant FortiManager version manual and FortiManager API guide.
 ```

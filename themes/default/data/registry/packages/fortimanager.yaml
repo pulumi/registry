@@ -9,7 +9,7 @@ name: fortimanager
 package_status: ga
 publisher: fortinetdev
 repo_url: https://github.com/fortinetdev/terraform-provider-fortimanager
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/fortinetdev/fortimanager/1.18.0/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/fortinetdev/fortimanager/1.18.1/schema.json
 title: fortimanager
-updated_on: 1785541024
-version: 1.18.0
+updated_on: 1789688172
+version: 1.18.1

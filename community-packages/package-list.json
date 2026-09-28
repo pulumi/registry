@@ -409,8 +409,16 @@
       "schemaFile": "schema.json"
     },
     {
+      "repoSlug": "incsteps/pulumi-provider-multipass",
+      "schemaFile": "schema.json"
+    },
+    {
       "repoSlug": "jschady/pulumi-filescom",
       "schemaFile": "provider/cmd/pulumi-resource-filescom/schema.json"
+    },
+    {
+      "repoSlug": "incident-io/pulumi-incident",
+      "schemaFile": "provider/cmd/pulumi-resource-incident/schema.json"
     },
     {
       "repoSlug": "htmlcsstoimage/pulumi-html-css-to-image",

@@ -11,7 +11,7 @@ name: openstack
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-openstack
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-openstack/v5.5.1/provider/cmd/pulumi-resource-openstack/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-openstack/v5.5.2/provider/cmd/pulumi-resource-openstack/schema.json
 title: OpenStack
-updated_on: 1784745929
-version: v5.5.1
+updated_on: 1790071783
+version: v5.5.2

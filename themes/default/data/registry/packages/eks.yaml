@@ -12,7 +12,7 @@ name: eks
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-eks
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-eks/v4.3.0/provider/cmd/pulumi-resource-eks/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-eks/v4.4.0/provider/cmd/pulumi-resource-eks/schema.json
 title: Amazon EKS
-updated_on: 1785225253
-version: v4.3.0
+updated_on: 1790354051
+version: v4.4.0

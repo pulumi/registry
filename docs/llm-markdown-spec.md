@@ -77,7 +77,7 @@ All multi-language content in `cli.md` files is wrapped in **chooser comments**.
 
 1. A `<!-- chooser: language -->` block always ends with `<!-- /chooser -->`.
 2. Each `<!-- option: {tag} -->` block ends with `<!-- /option -->`.
-3. Language tags are: `typescript`, `python`, `go`, `csharp`, `java`, `yaml`.
+3. Language tags are: `typescript`, `python`, `go`, `csharp`, `java`, `yaml`, `hcl`.
    - Note: TypeScript is used for Node.js (the tag is `typescript`, not `nodejs`).
 4. Not all languages are present in every chooser block. A language is omitted if the provider doesn't support it or if no data exists for that language.
 5. Chooser blocks can appear anywhere in the document: examples, constructors, properties, methods, etc.

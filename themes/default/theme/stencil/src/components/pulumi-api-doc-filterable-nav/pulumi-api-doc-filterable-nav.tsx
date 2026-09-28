@@ -1,4 +1,4 @@
-import { Component, h, Prop, State } from "@stencil/core";
+import { Component, Event, EventEmitter, h, Prop, State } from "@stencil/core";
 import { debounce } from "lodash";
 export interface APINavNode {
     // The below properties come from the JSON data.
@@ -46,6 +46,8 @@ export class PulumiApiDocFilterableNav {
             // Before the user interacts with the filter, the nodes to render should be the full nav tree.
             this.currentlyRenderedNodes = this.parsedNodes;
         } catch (error) {
+            // Nothing will render, so release anyone waiting on the tree.
+            this.emitReady();
             return;
         }
 
@@ -69,6 +71,31 @@ export class PulumiApiDocFilterableNav {
 
     @State()
     filterContent: string = "";
+
+    // Fired once the nav has settled: after the fetched tree has rendered in full,
+    // or as soon as fetching it fails. The tree arrives asynchronously, so anything
+    // that measures the sidebar (such as keeping the current page's link in view)
+    // has to wait for this rather than for load.
+    @Event({ bubbles: true, composed: true })
+    apiDocNavReady: EventEmitter<void>;
+
+    private hasEmittedReady = false;
+
+    private emitReady() {
+        if (!this.hasEmittedReady) {
+            this.hasEmittedReady = true;
+            this.apiDocNavReady.emit();
+        }
+    }
+
+    // Stencil defers a parent's componentDidRender until every child component
+    // created by that render has rendered, so the whole visible tree is in the
+    // DOM by the time this runs.
+    componentDidRender() {
+        if (!this.isLoading && this.parsedNodes) {
+            this.emitReady();
+        }
+    }
 
     filterTreeToMatchingContent(nodesToRender: APINavNode[], nodesToSearch: APINavNode[], rootNode?: APINavNode, directParentNode?: APINavNode) {
         // call recursive helper method, only setting this.currentlyRenderedNodes once at the end to trigger re-painting the DOM.

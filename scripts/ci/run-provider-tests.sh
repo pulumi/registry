@@ -10,6 +10,12 @@ bin/resourcedocsgen docs --schemaFile scripts/tests/schema.json \
     --docsOutDir themes/default/content/registry/packages/test-provider/api-docs \
     --packageTreeJSONOutDir "themes/default/static/registry/packages/navs"
 
+# The API nav fetches navs/<package directory>.json, but the tree is written under
+# the schema's package name, and here the two differ. Without this the API nav
+# never renders in these tests.
+mv themes/default/static/registry/packages/navs/testprovider.json \
+    themes/default/static/registry/packages/navs/test-provider.json
+
 make serve &
 
 sleep 10

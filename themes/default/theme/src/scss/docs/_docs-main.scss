@@ -547,7 +547,17 @@ body.section-registry {
             .docs-table-of-contents {
                 margin-top: 38px;
                 padding: 16px 0 16px 0;
+                // The rail scrolls on its own when the TOC, related resources, and
+                // ad outgrow the viewport, but a permanent second scrollbar beside
+                // the page's reads as broken. Keep a thin bar's gutter reserved (so
+                // nothing shifts) and only paint it while the pointer is over the
+                // rail, which is when it can be used.
                 overflow-y: auto;
+                scrollbar-width: thin;
+                scrollbar-color: transparent transparent;
+                &:hover {
+                    scrollbar-color: var(--docs-border) transparent;
+                }
                 height: 90vh;
                 position: sticky;
                 top: 94px;

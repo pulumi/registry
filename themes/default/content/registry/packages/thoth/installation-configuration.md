@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/atensecurity/pulumi-thoth/v0.1.15/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/atensecurity/pulumi-thoth/v0.1.16/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/atensecurity/pulumi-thoth/blob/v0.1.15/docs/installation-configuration.md
+edit_url: https://github.com/atensecurity/pulumi-thoth/blob/v0.1.16/docs/installation-configuration.md
 title: Thoth Installation & Configuration
 meta_desc: Install and configure the Thoth Pulumi provider for runtime authorization of AI agents.
 layout: package
@@ -43,7 +43,7 @@ Pulumi installs plugins automatically during `pulumi up`, but you can install
 the provider plugin manually:
 
 ```bash
-pulumi plugin install resource thoth 0.1.15 --server github://api.github.com/atensecurity/pulumi-thoth
+pulumi plugin install resource thoth 0.1.16 --server github://api.github.com/atensecurity/pulumi-thoth
 ```
 
 ## Configure provider credentials

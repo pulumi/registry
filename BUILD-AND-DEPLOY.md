@@ -715,7 +715,7 @@ Node version: 24.x; Hugo 0.157.0 installed.
 
 1. `generate-packages-list` job: Runs `python generate_package_list.py` in `community-packages/` to build a matrix of community provider repos to check.
 2. `check-for-package-update` job (matrix, max-parallel: 8): For each provider, runs `resourcedocsgen pkgversion` to check if a new version is available. If so, runs `resourcedocsgen metadata from-github` to generate updated metadata and opens a PR via `.github/actions/new-provider-version-pr`.
-3. PRs are skipped if an open PR already exists for that provider (deduplication check via `list_pull_requests` in `scripts/common.sh`).
+3. Each provider publishes from a stable `<name>/publish-metadata` branch, so a provider with an open update PR gets that PR updated in place rather than a second one opened.
 
 #### `community-package-*.yml` — Community Package Verified Check
 

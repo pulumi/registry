@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/dell/powerflex/1.8.0/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/dell/powerflex/1.9.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Powerflex Provider
@@ -937,7 +937,7 @@ public class App {
             .name("volume1")
             .protectionDomainId(pd.id())
             .storagePoolId(sp.id())
-            .size(16)
+            .size(16.0)
             .volumeType("ThinProvisioned")
             .build(), CustomResourceOptions.builder()
                 .dependsOn(
@@ -950,8 +950,8 @@ public class App {
             .sdcVolumesMappingId("e3d105e900000005")
             .volumeLists(SdcVolumesMappingVolumeListArgs.builder()
                 .volumeId(volume.id())
-                .limitIops(140)
-                .limitBwInMbps(19)
+                .limitIops(140.0)
+                .limitBwInMbps(19.0)
                 .accessMode("ReadOnly")
                 .build())
             .build(), CustomResourceOptions.builder()
@@ -1107,11 +1107,9 @@ public class App {
 {{% /choosable %}}
 {{< /chooser >}}
 ## Configuration Reference
-### Required
 
-- `endpoint` (String) The PowerFlex Gateway server URL (inclusive of the port).
-- `password` (String, Sensitive) The password required for the authentication.
-- `username` (String) The username required for authentication.
-
-- `insecure` (Boolean) Specifies if the user wants to skip SSL verification.
-- `timeout` (Number) HTTPS timeout.
+- `endpoint` (String) The PowerFlex Gateway server URL (inclusive of the port). This can also be set using the environment variable POWERFLEX_ENDPOINT
+- `insecure` (Boolean) Specifies if the user wants to skip SSL verification. This can also be set using the environment variable POWERFLEX_INSECURE
+- `password` (String, Sensitive) The password required for the authentication. This can also be set using the environment variable POWERFLEX_PASSWORD
+- `timeout` (Number) HTTPS timeout. This can also be set using the environment variable POWERFLEX_TIMEOUT
+- `username` (String) The username required for authentication. This can also be set using the environment variable POWERFLEX_USERNAME

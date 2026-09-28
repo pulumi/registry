@@ -34,9 +34,9 @@ Input-wrapped arguments and returns an Output-wrapped result.
 <pulumi-choosable type="language" values="javascript,typescript">
 <div class="highlight"
 ><pre class="chroma"><code class="language-typescript" data-lang="typescript"
-><span class="k">function </span>test<span class="p">(</span><span class="nx">args</span><span class="p">:</span> <span class="nx">TestArgs</span><span class="p">,</span> <span class="nx">opts</span><span class="p">?:</span> <span class="nx"><a href="/docs/reference/pkg/nodejs/pulumi/pulumi/#InvokeOptions">InvokeOptions</a></span><span class="p">): Promise&lt;<span class="nx"><a href="#result">TestResult</a></span>></span
+><span class="k">function </span>test<span class="p">(</span><span class="nx">args</span><span class="p">:</span> <span class="nx">TestArgs</span><span class="p">,</span> <span class="nx">opts</span><span class="p">?:</span> <span class="nx"><a href="/docs/reference/pkg/nodejs/pulumi/pulumi/interfaces/InvokeOptions.html">InvokeOptions</a></span><span class="p">): Promise&lt;<span class="nx"><a href="#result">TestResult</a></span>></span
 ><span class="k">
-function </span>testOutput<span class="p">(</span><span class="nx">args</span><span class="p">:</span> <span class="nx">TestOutputArgs</span><span class="p">,</span> <span class="nx">opts</span><span class="p">?:</span> <span class="nx"><a href="/docs/reference/pkg/nodejs/pulumi/pulumi/#InvokeOutputOptions">InvokeOutputOptions</a></span><span class="p">): Output&lt;<span class="nx"><a href="#result">TestResult</a></span>></span
+function </span>testOutput<span class="p">(</span><span class="nx">args</span><span class="p">:</span> <span class="nx">TestOutputArgs</span><span class="p">,</span> <span class="nx">opts</span><span class="p">?:</span> <span class="nx"><a href="/docs/reference/pkg/nodejs/pulumi/pulumi/interfaces/InvokeOutputOptions.html">InvokeOutputOptions</a></span><span class="p">): Output&lt;<span class="nx"><a href="#result">TestResult</a></span>></span
 ></code></pre></div>
 </pulumi-choosable>
 </div>

@@ -8,7 +8,7 @@ logo_url: ""
 name: wavefront
 package_status: ga
 publisher: DEPRECATED
-repo_url: https://github.com/vmware/terraform-provider-wavefront
+repo_url: https://github.com/vmware-archive/terraform-provider-wavefront
 schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/vmware/wavefront/5.1.0/schema.json
 title: wavefront
 updated_on: 1769038544

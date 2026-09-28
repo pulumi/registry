@@ -34,6 +34,7 @@ Use semantic search and file tools to thoroughly investigate:
 - Review related files for consistency
 - Search for similar patterns elsewhere in the codebase that might have the same issue
 - Check if the issue affects generated content vs. source files
+- Check whether the package is dynamically bridged (its YAML's `schema_file_url` contains `registry.opentofu.org`). If it is, a fix to its upstream, version, or listing usually belongs in `pulumi/terraform-to-pulumi-registry-pipeline`, not here (see "Adding or Updating a Provider" in `AGENTS.md`)
 
 ### 3. Review guidelines
 

@@ -42,6 +42,8 @@ Use `AskUserQuestion` to ask:
 
 Store the selection for later steps.
 
+If the request is for a **dynamically bridged** Terraform provider (consumed with `pulumi package add terraform-provider <name>`, with no provider repo or committed schema), stop: it can't be added in this repo. It is added to `watched-providers` in the internal `pulumi/terraform-to-pulumi-registry-pipeline` repo, so file the request there.
+
 ---
 
 ## **[Step 2/7] Gather Package Information**

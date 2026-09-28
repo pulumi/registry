@@ -11,7 +11,7 @@ logo_url: https://www.threefold.io/images/black_threefold.png
 name: threefold
 package_status: public_preview
 publisher: Threefold
-repo_url: https://github.com/threefoldtech/pulumi-threefold
+repo_url: https://github.com/threefoldtech/grid_pulumi
 schema_file_url: https://raw.githubusercontent.com/threefoldtech/pulumi-threefold/v0.8.4/provider/cmd/pulumi-resource-threefold/schema.json
 title: Threefold Grid
 updated_on: 1774532393

@@ -9,7 +9,7 @@
       "schemaFile": "provider/cmd/pulumi-resource-time/schema.json"
     },
     {
-      "repoSlug": "pulumiverse/pulumi-doppler",
+      "repoSlug": "DopplerHQ/pulumi-doppler",
       "schemaFile": "provider/cmd/pulumi-resource-doppler/schema.json"
     },
     {
@@ -21,7 +21,7 @@
       "schemaFile": "provider/cmd/pulumi-resource-checkly/schema.json"
     },
     {
-      "repoSlug": "EventStore/pulumi-eventstorecloud",
+      "repoSlug": "kurrent-io/pulumi-eventstorecloud",
       "schemaFile": "provider/cmd/pulumi-resource-eventstorecloud/schema.json"
     },
     {
@@ -233,7 +233,7 @@
       "schemaFile": "provider/cmd/pulumi-resource-acme/schema.json"
     },
     {
-      "repoSlug": "threefoldtech/pulumi-threefold",
+      "repoSlug": "threefoldtech/grid_pulumi",
       "schemaFile": "provider/cmd/pulumi-resource-threefold/schema.json"
     },
     {

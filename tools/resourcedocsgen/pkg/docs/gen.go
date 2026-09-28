@@ -554,7 +554,8 @@ var nodejsPulumiTypeKinds = map[string]string{
 // nodejsPulumiTypeLink returns the TypeDoc page for a `@pulumi/pulumi` type. It replaces
 // nodejs.DocLanguageHelper.GetDocLinkForPulumiType, which links to anchors on the index page
 // that TypeDoc does not generate (https://github.com/pulumi/registry/issues/12168). Unknown
-// types link to the index page itself rather than to a dead anchor.
+// types link to the index page itself rather than to a dead anchor. Remove once
+// https://github.com/pulumi/pulumi/issues/24927 is fixed upstream.
 func nodejsPulumiTypeLink(typeName string) string {
 	typeName = strings.ReplaceAll(typeName, "?", "")
 	kind, ok := nodejsPulumiTypeKinds[typeName]

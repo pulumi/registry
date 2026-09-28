@@ -79,6 +79,24 @@ The event's `client_payload` carries:
 
 Because the repository is derived from `project-shortname`, this path only works for providers that live at `pulumi/pulumi-<name>`. A Pulumi-maintained package that doesn't match that pattern can be listed in `package-list.json` instead, which puts it on the [partner and community path](#partner-and-community-packages).
 
+#### Overview pages kept in this repository
+
+For most Pulumi packages, the provider repository's `docs/` folder is the source of truth, and the copy in this repository starts with a `# WARNING: this file was fetched from …` comment. The packages below are exceptions. Their `_index.md`, and `installation-configuration.md` where they have one, live only in this repository under `themes/default/content/registry/packages/<name>/`, and you edit them here directly. This is intentional: it lets us improve these pages without waiting for a provider release.
+
+| Package | Why it isn't sourced from its repository |
+|---|---|
+| `akamai`, `oci` | Bridged providers whose upstream Terraform provider keeps its docs on the vendor's site, so there's no upstream index to generate `docs/_index.md` from. Left out of the automated rollout in [pulumi/home#3598](https://github.com/pulumi/home/issues/3598). |
+| `azuread` | Bridged provider whose upstream index doesn't hold the installation content. Left out of the same rollout. |
+| `azure-native`, `aws-native`, `kubernetes`, `pulumiservice` | Native providers. The `registryDocs` automation in `pulumi/ci-mgmt` only exists for bridged providers, and these pages were never moved by hand. |
+| `awsx`, `eks`, `aws-apigateway`, `synced-folder`, `kubernetes-cert-manager`, `kubernetes-coredns`, `kubernetes-ingress-nginx` | Component packages, in the same position as the native providers. |
+
+This works because `resourcedocsgen metadata from-github` skips a missing `docs/_index.md` for repositories in the `pulumi` GitHub organization instead of failing, so the committed page stays in place across releases. Two consequences:
+
+- If one of these repositories adds a `docs/_index.md` or `docs/installation-configuration.md`, the next release overwrites the copy here. Once that happens, make your edits in the provider repository and remove the package from this table.
+- These pages have no per-version copies. When [`scripts/generate-versioned-docs.sh`](../scripts/generate-versioned-docs.sh) builds an older major version, such as `kubernetes@3.x`, it can't fetch that release's `docs/_index.md`, so it falls back to the current page here.
+
+Pages for deprecated packages also lack the `fetched from` comment. They're frozen snapshots, not exceptions, so they aren't listed here.
+
 ### Terraform providers
 
 Dynamically bridged Terraform providers, the ones you use with `pulumi package add terraform-provider <name>`, have no provider repository of their own and no release workflow to notify the registry. A pipeline in AWS watches for their releases instead. It's defined in [`pulumi/terraform-to-pulumi-registry-pipeline`](https://github.com/pulumi/terraform-to-pulumi-registry-pipeline), which is internal, so links into it only work for members of the Pulumi GitHub organization.

@@ -468,9 +468,11 @@ func readRemoteFile(client HTTPDoer, url, repoOwner string, required bool) ([]by
 		// matters: a package may keep its installation and configuration content
 		// in _index.md instead, and most do.
 		//
-		// For pulumi repos, we have hard coded top-level config files in the registry.
-		// To avoid overwriting them prematurely while we migrate, we default to returning nil, which will allow the
-		// registry to fall back on top-level config files already in existence since we won't write empty content.
+		// Some pulumi repos intentionally have no docs/ pages: their landing pages
+		// live only in the registry and are edited there. Returning nil writes
+		// nothing, so the committed pages stay in place. The list of these
+		// packages, and why, is in docs/architecture.md ("Overview pages kept in
+		// this repository").
 		if (!required || repoOwner == "pulumi") && resp.StatusCode == 404 {
 			return nil, nil
 		}

@@ -2,14 +2,16 @@
 
 
 CYPRESS_BASE_URL="${1:-https://www.pulumi.com}"
-SPEC_FILE="${2:-site.cy.js}"
+# One spec, or a comma-separated list of them, relative to cypress/e2e/.
+SPEC_FILES="${2:-site.cy.js}"
 MAX_RETRIES="${3:-3}"
+SPEC_PATHS="$(echo "$SPEC_FILES" | sed -E 's#(^|,)#\1cypress/e2e/#g')"
 
 # Retry on errors up to `MAX_RETRIES` with a 10 second sleep in between.
 RETRY_COUNT=0
 run_tests() {
     while true; do
-        CYPRESS_BASE_URL="$CYPRESS_BASE_URL" yarn run cypress run --headless --spec "cypress/e2e/${SPEC_FILE}"
+        CYPRESS_BASE_URL="$CYPRESS_BASE_URL" yarn run cypress run --headless --spec "${SPEC_PATHS}"
 
         # Alternatively, to run Cypress in a browser (which makes debugging much easier), you can run `cypress open`.
         # CYPRESS_BASE_URL="$CYPRESS_BASE_URL" yarn run cypress open

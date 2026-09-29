@@ -128,7 +128,7 @@ fi
 
 # Smoke test the deployed website.
 log "Running browser tests on $s3_website_url..."
-./scripts/run-browser-tests.sh "$s3_website_url"
+./scripts/run-browser-tests.sh "$s3_website_url" "site.cy.js,structured-data.cy.js"
 
 # At this point, we have a bucket that's suitable for deployment. As a result of this run,
 # we leave a file in the project root indicating the name of the bucket that was generated

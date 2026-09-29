@@ -35,6 +35,7 @@ This document describes the build, test, and deployment system for the `pulumi/r
    - [8.5 Dark Logo Variants](#85-dark-logo-variants)
    - [8.6 Provider API Docs Tests](#86-provider-api-docs-tests)
    - [8.7 Browser Tests (Cypress)](#87-browser-tests-cypress)
+     - [8.7.1 API Docs Crawl (mocha)](#871-api-docs-crawl-mocha)
    - [8.8 Link Checking](#88-link-checking)
 9. [Environment & Secret Management](#environment--secret-management)
    - [9.1 Pulumi ESC](#91-pulumi-esc)
@@ -1035,21 +1036,28 @@ Node version in CI: 23.x. Go version: stable (latest).
 
 ### 8.7 Browser Tests (Cypress)
 
+**Config**: `cypress.config.js` — default base URL is `http://localhost:1313`. Specs live in `cypress/e2e/`.
+
+**Reporters**: `cypress-multi-reporters` (config in `reporter-config.json`).
+
+`scripts/run-browser-tests.sh <base-url> <specs> [retries]` runs one spec, or a comma-separated list, relative to `cypress/e2e/`. Every spec runs somewhere in CI:
+
+| Spec | Runs in | Against |
+|---|---|---|
+| `site.cy.js`, `structured-data.cy.js` | The smoke test in `scripts/ci/sync.sh`, after each preview and production S3 deploy | The deployed S3 website URL |
+| `test-provider-api-docs.cy.js` | The `test-provider-api-docs` PR job (`make test_provider_api_docs`, see 8.6) | A local Hugo server |
+| `opentofu-contract.cy.js` | `run-browser-tests.yml`, daily at 2:00 PM UTC | The live OpenTofu search API (the specs in `site.cy.js` stub it) |
+
+Don't point a large spec at `https://www.pulumi.com`. The CloudFront WAF blocks an IP after 500 requests in 5 minutes, and the distribution serves that block as the site's 404 page, so it looks like missing pages rather than rate limiting.
+
+#### 8.7.1 API Docs Crawl (mocha)
+
 ```bash
 make run-browser-tests
 # Runs: scripts/run-api-docs-tests.sh
 ```
 
-**Config**: `cypress.config.js` — default base URL is `http://localhost:1313`.
-
-**Test location**: `cypress/` directory.
-
-**Reporters**: `cypress-multi-reporters` (config in `reporter-config.json`).
-
-Browser tests are run:
-
-1. **As a smoke test inside `scripts/ci/sync.sh`** after each S3 deploy (both preview and production), using the deployed S3 website URL.
-2. **Daily at 2:00 PM UTC** via `run-browser-tests.yml` against the live production site.
+Despite the target name, this is not Cypress. It downloads the current production registry bucket to `public/` and runs the mocha suite in `scripts/tests/` over every package's API docs. It runs daily in `run-browser-tests.yml`, after the Cypress step, and takes roughly 40–60 minutes.
 
 ### 8.8 Link Checking
 

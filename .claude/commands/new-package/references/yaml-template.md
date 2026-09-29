@@ -33,7 +33,7 @@ version: {version}
 | `component` | Whether this is a component provider | `false` |
 | `description` | Brief description of the provider | `"A Pulumi package for managing Example resources"` |
 | `featured` | Whether to feature on registry homepage (set to `false` for new packages) | `false` |
-| `logo_url` | URL to provider logo (leave empty if none) | `""` |
+| `logo_url` | URL to the provider logo, taken from the schema's `logoUrl` | `https://raw.githubusercontent.com/...` |
 | `name` | Package short name (lowercase, alphanumeric + hyphens) | `example-provider` |
 | `package_status` | Release status | `ga` |
 | `publisher` | Organization or individual publishing the provider | `pulumiverse` |
@@ -72,4 +72,4 @@ Common schema file paths:
 - `updated_on` should be set to the current Unix timestamp: `date +%s`
 - `version` should match the latest release tag from the repository
 - `featured: false` for all new packages (featuring is a manual editorial decision)
-- `logo_url` can be left empty — it will be populated later if a logo is available
+- `logo_url` comes from the schema's `logoUrl`; ask the author to set it to a web-accessible SVG (a wordmark, with surrounding whitespace removed) rather than leaving it empty, or the listing renders a generic placeholder icon. For a dynamically bridged provider, set `logoURL` on its `watched-providers` entry in `pulumi/terraform-to-pulumi-registry-pipeline` instead, then run `python3 scripts/classify-external-logos.py`

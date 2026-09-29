@@ -2,7 +2,7 @@
 ---
 title: "{{ .Title }}"
 title_tag: "{{ .TitleTag }}"
-meta_desc: "{{ .MetaDesc }}"
+meta_desc: "{{ .MetaDesc | htmlSafe }}"
 layout: api
 no_edit_this_page: true
 outputs:

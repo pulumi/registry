@@ -65,6 +65,63 @@ func TestSummarizeForMetaDescription(t *testing.T) {
 		require.LessOrEqual(t, len(got), maxMetaDescLength+1) // +1 for the trailing period
 		require.True(t, strings.HasSuffix(got, "."))
 	})
+
+	// Regression test (updated after review on PR #12638, cnunciato): a
+	// leading blockquote callout is not the resource's description, it's
+	// a caveat about something else entirely. Observed live on
+	// random.RandomPassword: the generated meta description was the
+	// caveat "If the managed resource supports a write-only attribute
+	// for the password ... then the ephemeral variant ... should be
+	// used", which describes a *different* resource variant, while the
+	// real description -- "Identical to random.RandomString with the
+	// exception that the result is treated as sensitive ..." -- was
+	// sitting right after it, unused. Stripping the ">" marker in place
+	// (the original fix for the double-escaping bug) fixed the escaping
+	// but still presented the caveat as if it were the description. The
+	// summary must skip past a leading caveat and use the real
+	// description paragraph that follows it.
+	t.Run("skips a leading blockquote caveat and uses the real description that follows", func(t *testing.T) {
+		t.Parallel()
+		got := summarizeForMetaDescription(
+			"> If the managed resource supports a write-only attribute for the password " +
+				"(first introduced in Terraform 1.11), then the ephemeral variant of this resource " +
+				"should be used, when possible, to avoid storing the password in the plan or state file.\n\n" +
+				"Identical to random.RandomString with the exception that the result is treated as " +
+				"sensitive and, thus, not displayed in console output. Read more about sensitive data " +
+				"handling in the Terraform documentation.",
+		)
+		require.NotContains(t, got, ">")
+		require.NotContains(t, got, "ephemeral variant")
+		require.NotContains(t, got, "write-only attribute")
+		require.True(t, strings.HasPrefix(got, "Identical to random.RandomString"))
+	})
+
+	// When the entire description is a leading caveat with no real
+	// paragraph after it, there's nothing honest to summarize: the
+	// caller should fall back to the generic templated description
+	// rather than present the caveat as the resource's description.
+	t.Run("returns empty when the whole description is a leading blockquote with nothing after it", func(t *testing.T) {
+		t.Parallel()
+		got := summarizeForMetaDescription(
+			"> If the managed resource supports a write-only attribute for the password " +
+				"(first introduced in Terraform 1.11), then the ephemeral variant of this resource " +
+				"should be used instead.",
+		)
+		require.Empty(t, got)
+	})
+
+	t.Run("strips a blockquote marker mid-description without disturbing the rest", func(t *testing.T) {
+		t.Parallel()
+		got := summarizeForMetaDescription(
+			"Provides a S3 bucket resource.\n\n" +
+				"> This resource provides functionality for managing S3 general purpose buckets " +
+				"in an AWS Partition. To manage Amazon S3 directory buckets in the Availability " +
+				"Zone or Local Zone, see the aws.s3.DirectoryBucket resource.",
+		)
+		require.NotContains(t, got, ">")
+		require.Contains(t, got, "Provides a S3 bucket resource.")
+		require.Contains(t, got, "This resource provides functionality for managing S3 general purpose buckets")
+	})
 }
 
 func TestTruncateMetaDescription(t *testing.T) {

@@ -89,7 +89,8 @@ func markupBlock(block, supportedSnippetLanguages string) string {
 			// find end index - this is the next code fence.
 			endLangBlock := start + len("```"+lang.tag) + strings.Index(block[start+len("```"+lang.tag):], "```")
 			// append code to block, and include code fences
-			markedUpBlock.WriteString(block[start : endLangBlock+len("```")])
+			fence := block[start : endLangBlock+len("```")]
+			markedUpBlock.WriteString(dedentContinuationLines(fence, len(lineIndent(block, start))))
 			markedUpBlock.WriteRune('\n')
 		}
 		// add closing choosable
@@ -114,8 +115,8 @@ func (dctx *Context) processDescription(description, supportedSnippetLanguages s
 		// append text
 		markedUpDescription += description[startIndex:block.open]
 		codeBlock := description[block.open:block.close]
-		// append marked up block
-		markedUpDescription += markupBlock(codeBlock, supportedSnippetLanguages)
+		markedUp := markupBlock(codeBlock, supportedSnippetLanguages)
+		markedUpDescription += indentContinuationLines(markedUp, lineIndent(description, block.open))
 		startIndex = block.close + len(endCodeBlock)
 	}
 	// append remainder of description, if any
@@ -125,4 +126,37 @@ func (dctx *Context) processDescription(description, supportedSnippetLanguages s
 		description:   markedUpDescription,
 		importDetails: importDetails,
 	}
+}
+
+func lineIndent(s string, offset int) string {
+	prefix := s[strings.LastIndexByte(s[:offset], '\n')+1 : offset]
+	if strings.TrimLeft(prefix, " \t") != "" {
+		return ""
+	}
+	return prefix
+}
+
+func indentContinuationLines(s string, prefix string) string {
+	if prefix == "" {
+		return s
+	}
+	lines := strings.Split(s, "\n")
+	for i := 1; i < len(lines); i++ {
+		if lines[i] != "" {
+			lines[i] = prefix + lines[i]
+		}
+	}
+	return strings.Join(lines, "\n")
+}
+
+func dedentContinuationLines(s string, n int) string {
+	if n == 0 {
+		return s
+	}
+	lines := strings.Split(s, "\n")
+	for i := 1; i < len(lines); i++ {
+		width := len(lines[i]) - len(strings.TrimLeft(lines[i], " \t"))
+		lines[i] = lines[i][min(width, n):]
+	}
+	return strings.Join(lines, "\n")
 }

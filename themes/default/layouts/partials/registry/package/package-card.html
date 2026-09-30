@@ -14,9 +14,20 @@
 {{ $iconData := index site.Data.registry.packages $basePackageName }}
 
 <div class="package-card card">
+    {{- /* The title sits beside the logo because most logos don't carry the name:
+           some are icon-only, and packages without a logo fall back to a generic
+           glyph. It's dropped only for the logos listed in
+           data/registry/logo_wordmarks.yaml, which already spell it out. */ -}}
     {{ with $iconData }}
-        <div>
+        {{ $hasWordmark := false }}
+        {{ with site.Data.registry.logo_wordmarks }}
+            {{ $hasWordmark = in (default slice .wordmark) $basePackageName }}
+        {{ end }}
+        <div class="package-card-header">
             {{ partial "registry/package/icon.html" (dict "package" . "lazy" false) }}
+            {{ if not $hasWordmark }}
+                <span class="package-title">{{ .title }}</span>
+            {{ end }}
         </div>
     {{ end }}
 

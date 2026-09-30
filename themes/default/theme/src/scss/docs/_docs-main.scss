@@ -632,6 +632,30 @@ body.section-registry {
             height: 24px;
         }
 
+        div.package-card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 0;
+
+            // Only leave room for the title when there is one; a wordmark logo
+            // shown alone keeps the full width it had before.
+            &:has(.package-title) img {
+                flex-shrink: 0;
+                max-width: 60%;
+                object-fit: contain;
+                object-position: left;
+            }
+        }
+
+        span.package-title {
+            font-family: var(--font-body);
+            font-weight: 600;
+            font-size: 14px;
+            color: #131314;
+            overflow-wrap: anywhere;
+        }
+
         .note {
             margin: 0;
         }

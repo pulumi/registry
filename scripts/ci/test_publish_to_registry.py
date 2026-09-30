@@ -121,10 +121,11 @@ publisher: Pulumi
 
         self.assertEqual(result.spec, "pulumi/pulumi/random@4.16.0")
 
-    def test_skips_deprecated_publisher(self):
+    def test_skips_deprecated_package(self):
         self._write_yaml("old", """
 version: "1.0.0"
-publisher: DEPRECATED
+publisher: Unregistered Publisher
+deprecated: true
 """)
 
         result = build_package_spec(

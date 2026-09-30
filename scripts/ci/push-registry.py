@@ -72,7 +72,7 @@ for filename in os.listdir(yaml_db_path):
     publisher_display = data.get('publisher')
 
 
-    if publisher_display == "DEPRECATED":
+    if data.get('deprecated'):
         continue
     elif publisher_display not in publishers:
         raise Exception(f'Missing publisher entry for "{publisher_display}"')

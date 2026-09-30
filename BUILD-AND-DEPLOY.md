@@ -920,7 +920,7 @@ There are two publishers, a primary and a fallback.
 **What it does**:
 
 1. Reads the package YAMLs changed in the last commit (`git diff --name-only HEAD~1` against `themes/default/data/registry/packages/*.yaml`).
-2. Turns each into a `{source}/{publisher}/{name}@{version}` spec, skipping `DEPRECATED` publishers and the `azure-native-v*` / `aws-v<N>` legacy aliases.
+2. Turns each into a `{source}/{publisher}/{name}@{version}` spec, skipping packages with `deprecated: true` and the `azure-native-v*` / `aws-v<N>` legacy aliases.
 3. Pipes those specs through `registry-mirror-discover | registry-mirror-publish`, both installed with `go install` from `github.com/pulumi/registry-mirror-tools` at the commit pinned in `REGISTRY_MIRROR_TOOLS_COMMIT`. Retries up to 3 times with exponential backoff (10s to 30s).
 
 ### Fallback: `push-registry.py`
@@ -935,7 +935,7 @@ There are two publishers, a primary and a fallback.
 
 1. Reads all YAML files from `themes/default/data/registry/packages/*.yaml`.
 2. For each package:
-   - Skips packages where `publisher == "DEPRECATED"`.
+   - Skips packages with `deprecated: true`.
    - Skips packages whose name matches `azure-native-v*` (except `azure-native` itself) — these are aliases.
    - Skips packages whose name matches `aws-v<N>` — these are legacy versioned packages.
    - Calls the registry API above to check if this version already exists.

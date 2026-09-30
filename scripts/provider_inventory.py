@@ -179,6 +179,7 @@ def main():
             "category": data.get("category", ""),
             "publisher": data.get("publisher", ""),
             "component": bool(data.get("component", False)),
+            "deprecated": bool(data.get("deprecated", False)),
             "native": bool(data.get("native", False)),
             "package_status": data.get("package_status", ""),
             "featured": bool(data.get("featured", False)),

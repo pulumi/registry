@@ -12,7 +12,7 @@ name: filescom
 package_status: public_preview
 publisher: jschady
 repo_url: https://github.com/jschady/pulumi-filescom
-schema_file_url: https://raw.githubusercontent.com/jschady/pulumi-filescom/v0.1.1/provider/cmd/pulumi-resource-filescom/schema.json
+schema_file_url: https://raw.githubusercontent.com/jschady/pulumi-filescom/v0.2.0/provider/cmd/pulumi-resource-filescom/schema.json
 title: Files.com
-updated_on: 1787269546
-version: v0.1.1
+updated_on: 1790736693
+version: v0.2.0

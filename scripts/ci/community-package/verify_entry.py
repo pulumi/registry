@@ -125,7 +125,7 @@ def _unverifiable_package(name: str, yaml_path: str, reason: str) -> Manifest:
     )
 
 
-def _delisted(name: str, yaml_path: str, version: str, publisher: str) -> Manifest:
+def _delisted(name: str, yaml_path: str, version: str) -> Manifest:
     return Manifest(
         repoSlug="",
         schemaFile=yaml_path,
@@ -137,7 +137,6 @@ def _delisted(name: str, yaml_path: str, version: str, publisher: str) -> Manife
         green=True,
         generation=True,
         docs=[],
-        publisher=publisher,
         delisted=True,
     )
 
@@ -156,7 +155,7 @@ def verify_package_yaml(yaml_path: Path, repo_root: Path) -> Manifest:
 
     publisher = str(data.get("publisher", "")).strip()
     if data.get("deprecated"):
-        return _delisted(name, str(yaml_path), version, publisher)
+        return _delisted(name, str(yaml_path), version)
 
     publisher_known = _publisher_known(publisher, _load_publisher_names())
 

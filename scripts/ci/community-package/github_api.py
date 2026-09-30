@@ -156,6 +156,17 @@ def fact_sheet_comment(pr: int) -> dict[str, Any] | None:
     return None
 
 
+def checked_marker(sha: str) -> str:
+    return f"<!-- community-package-checked: {_short(sha)} -->"
+
+
+def fact_sheet_reports(pr: int, sha: str) -> bool:
+    comment = fact_sheet_comment(pr)
+    if comment is None:
+        return False
+    return checked_marker(sha) in str(comment.get("body") or "")
+
+
 def _minutes_since(timestamp: str) -> int:
     moment = datetime.strptime(timestamp, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
     return int((datetime.now(timezone.utc) - moment).total_seconds() // 60)
@@ -191,10 +202,6 @@ def _dispatched_runs(workflow_file: str) -> list[dict[str, Any]]:
 
 def _run_title(run: dict[str, Any]) -> str:
     return str(run.get("display_title") or run.get("name") or "")
-
-
-def dispatch_exists(workflow_file: str, label: str) -> bool:
-    return any(_run_title(run) == label for run in _dispatched_runs(workflow_file))
 
 
 def minutes_since_dispatch(workflow_file: str, pr: int) -> int | None:

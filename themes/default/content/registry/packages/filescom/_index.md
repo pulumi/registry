@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/jschady/pulumi-filescom/v0.1.1/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/jschady/pulumi-filescom/v0.2.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/jschady/pulumi-filescom/blob/v0.1.1/docs/_index.md
+edit_url: https://github.com/jschady/pulumi-filescom/blob/v0.2.0/docs/_index.md
 title: Files.com
 meta_desc: Provides an overview of the Files.com provider for Pulumi.
 layout: package
@@ -122,7 +122,8 @@ Files.com assigns a decimal id to each object it stores. The provider reports th
 
 ## Import of an existing object
 
-You can adopt a Files.com object that Pulumi did not create. The provider reads the object, and
+You can adopt a Files.com object that Pulumi did not create, except some
+[behaviors](#import-of-a-behavior). The provider reads the object, and
 `pulumi import` writes the properties of the answer into a generated declaration.
 
 **Warning:** `pulumi import` protects the resource, and `pulumi destroy` refuses a protected
@@ -145,16 +146,82 @@ a property whose value is one of these, and the plan after the import stays empt
 - zero
 - null
 
+## Upgrade from 0.1.x to 0.2.0
+
+Files.com retired projects and messages, so 0.2.0 drops these resources and their `get` functions:
+
+- `Message`
+- `MessageComment`
+- `MessageCommentReaction`
+- `MessageReaction`
+- `Project`
+
+Pulumi cannot delete these resources: 0.1.x gets a 404 from Files.com, and 0.2.0 no longer knows
+the types. Nothing is left on Files.com, so remove each one from the state instead:
+
+1. Remove the resource from your program.
+2. Find its URN:
+
+   ```bash
+   pulumi stack --show-urns
+   ```
+
+3. Remove it from the state, dependents first (a message before its project), or add
+   `--target-dependents`:
+
+   ```bash
+   pulumi state delete '<urn>'
+   ```
+
+Version 0.2.0 also warns about every unwrapped behavior `value`.
+A `value` that 0.1.x wrote as a JSON string fails every preview until you wrap it. Either way,
+wrap the value as [Value of a behavior](#value-of-a-behavior) shows.
+Pulumi updates the behavior in place.
+
 ## Limitations
 
 ### Value of a behavior
 
-**Warning:** If you write the `value` property of a behavior as a JSON-encoded string, every later
-plan fails. Write the value as nested JSON.
+Wrap `value` under the behavior name and keep the API's snake_case keys:
 
-The Files.com documentation offers both encodings. Only nested JSON works here, because the property
-cannot change its runtime type between two plans. Track the defect at
-[pulumi/pulumi-terraform-bridge#3122](https://github.com/pulumi/pulumi-terraform-bridge/issues/3122).
+```typescript
+new filescom.Behavior("retention", {
+    path: "reports",
+    behavior: "file_expiration",
+    value: { file_expiration: { days_to_retain: 30, delete_empty_folders: false } },
+});
+```
+
+An unwrapped value or a JSON string still works, with a warning. Files.com plans to drop both on
+March 1, 2027.
+
+If 0.2.0 wrote `value` as a JSON string, changing it to an object fails every preview with
+`can't unmarshal ... into *string`
+([pulumi/pulumi-terraform-bridge#3122](https://github.com/pulumi/pulumi-terraform-bridge/issues/3122)).
+To make the change:
+
+1. Change `value` to the wrapped object.
+2. Add the `deleteBeforeReplace` resource option (`delete_before_replace` in Python). Without it,
+   Files.com can refuse the replacement with `Behavior is already set for this folder`.
+3. Replace the behavior. It gets a new id.
+
+   ```bash
+   pulumi up --replace '<urn>'
+   ```
+
+4. Optionally, remove the option. The next preview shows no change.
+
+### Plan of a behavior
+
+Every update plan and every replace plan for a behavior drops 3 computed outputs: `inherited`,
+`managed`, and `rootBehaviorSiteAdminOnly`. The apply returns all 3. The preview right after an
+apply is clean, so this is not drift.
+
+### Import of a behavior
+
+Importing a behavior crashes the provider if its `value` holds a nested object, such as webhook
+`headers`. Other behaviors import, but the generated declaration leaves `value` unwrapped. Wrap it,
+and Pulumi updates the behavior in place.
 
 ### Path of an API key
 
@@ -176,12 +243,6 @@ If you change the order of `userIds` on a group, Pulumi plans an update. The set
 same, and the plan still shows the change. The plan path in the upstream framework never calls the
 semantic-equality check that treats the two orders as equal. Write `userIds` in a stable order to
 keep the plan empty.
-
-### Plan of a behavior
-
-Every update plan and every replace plan for a behavior drops 3 computed outputs: `inherited`,
-`managed`, and `rootBehaviorSiteAdminOnly`. The apply returns all 3. The preview right after an
-apply is clean, so this is not drift.
 
 ### Properties without a description
 

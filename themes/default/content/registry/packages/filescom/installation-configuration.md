@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/jschady/pulumi-filescom/v0.1.1/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/jschady/pulumi-filescom/v0.2.0/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/jschady/pulumi-filescom/blob/v0.1.1/docs/installation-configuration.md
+edit_url: https://github.com/jschady/pulumi-filescom/blob/v0.2.0/docs/installation-configuration.md
 title: Files.com Installation & Configuration
 meta_desc: Provides an overview on how to configure the Pulumi Files.com provider.
 layout: package

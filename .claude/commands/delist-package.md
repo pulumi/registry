@@ -42,7 +42,7 @@ Read `community-packages/package-list.json` and check if the package's repo slug
 
 ### Step 4: Check for a Dynamically Bridged Provider
 
-If the YAML's `schema_file_url` contains `registry.opentofu.org` (its `description` will also read `A Pulumi provider dynamically bridged from <name>.`), the package is a dynamically bridged Terraform provider fed by the internal `pulumi/terraform-to-pulumi-registry-pipeline` repo. Setting `deprecated: true` here is not enough on its own: the next time the provider ships a version, the pipeline regenerates the YAML and relists it.
+If the YAML's `schema_file_url` contains `registry.opentofu.org` (its `description` will also read `A Pulumi provider dynamically bridged from <name>.`), the package is a dynamically bridged Terraform provider fed by the internal `pulumi/terraform-to-pulumi-registry-pipeline` repo. `resourcedocsgen metadata` leaves a delisted package's files alone, but as long as the provider stays on the pipeline's list, every new version it ships posts a warning in this repo's workflow runs.
 
 - Tell the user the package also has to be removed from `watched-providers` in that repo's `Pulumi.yaml`, and offer to file an issue there
 - If the URL doesn't contain `registry.opentofu.org`, skip this step
@@ -78,4 +78,4 @@ publish_to_registry.py) on the next deploy.
 
 ## Background
 
-Delisting works by setting `deprecated: true` in the package YAML. Both publishing scripts (`scripts/ci/push-registry.py` and `scripts/ci/publish_to_registry.py`) skip packages with this field set, effectively removing them from the live registry without deleting the metadata files. On the site, the package gets a "Deprecated" badge in the package list (where it's hidden unless the Deprecated filter is on), a deprecation banner on its pages, and " (Deprecated)" after its title.
+Delisting works by setting `deprecated: true` in the package YAML. `resourcedocsgen metadata` then skips the package with a warning instead of regenerating its YAML and docs, since a delisted package shouldn't receive updates. Both publishing scripts (`scripts/ci/push-registry.py` and `scripts/ci/publish_to_registry.py`) skip packages with this field set, effectively removing them from the live registry without deleting the metadata files. On the site, the package gets a "Deprecated" badge in the package list (where it's hidden unless the Deprecated filter is on), a deprecation banner on its pages, and " (Deprecated)" after its title.

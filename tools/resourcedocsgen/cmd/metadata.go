@@ -20,8 +20,11 @@ import (
 	stderrors "errors"
 	"fmt"
 	"io"
+	"io/fs"
 	"log/slog"
 	"net/http"
+	"os"
+	"path/filepath"
 	"slices"
 	"strings"
 	"time"
@@ -120,6 +123,10 @@ func packageMetadataFromURLsCmd(client HTTPDoer, metadataDir, packageDocsDir *st
 		mainSpec, err := readRemoteSchemaFile(client, schemaFileURL, "")
 		if err != nil {
 			return errors.WithMessage(err, "unable to read remote schema file")
+		}
+
+		if skip, err := skipDelistedPackage(cmd, metadataDir, mainSpec.Name, mainSpec.Version); err != nil || skip {
+			return err
 		}
 
 		err = writePackageMetadata(mainSpec, providerName, schemaFileURL, metadataDir, time.Now(), nil)
@@ -226,6 +233,10 @@ func packageMetadataFromGitHubCmd(client HTTPDoer, metadataDir, packageDocsDir *
 
 		contract.Assertf(version != "", "version is a required field")
 		mainSpec.Version = version
+
+		if skip, err := skipDelistedPackage(cmd, metadataDir, mainSpec.Name, version); err != nil || skip {
+			return err
+		}
 
 		mainSpec.Repository = "https://github.com/" + repoSlug.String()
 
@@ -725,6 +736,39 @@ func readDocsFile(client HTTPDoer, url string) ([]byte, error) {
 # WARNING: this file was fetched from `+url+`
 # Do not edit by hand unless you're certain you know what you are doing!
 `), rest...), nil
+}
+
+// skipDelistedPackage reports whether the package's existing metadata file marks
+// it `deprecated: true`, and warns if so. A delisted package should never receive
+// updates, so a new release of one is unexpected. It isn't worth failing the
+// workflow over, but regenerating the metadata would drop the deprecation fields
+// and relist the package, so the metadata and docs are left as they are.
+func skipDelistedPackage(cmd *cobra.Command, metadataDir, name, version string) (bool, error) {
+	path := filepath.Join(metadataDir, name+".yaml")
+	b, err := os.ReadFile(path)
+	if stderrors.Is(err, fs.ErrNotExist) {
+		return false, nil
+	} else if err != nil {
+		return false, errors.Wrapf(err, "reading existing metadata file %s", path)
+	}
+
+	var existing struct {
+		Deprecated bool `json:"deprecated"`
+	}
+	if err := yaml.Unmarshal(b, &existing); err != nil {
+		return false, errors.Wrapf(err, "parsing existing metadata file %s", path)
+	}
+	if !existing.Deprecated {
+		return false, nil
+	}
+
+	msg := fmt.Sprintf("%s is delisted (deprecated: true in %s), so %s was not published. "+
+		"Delisted packages should not receive updates.", name, path, version)
+	slog.Warn(msg)
+	if os.Getenv("GITHUB_ACTIONS") == "true" {
+		fmt.Fprintf(cmd.OutOrStdout(), "::warning title=Delisted package::%s\n", msg)
+	}
+	return true, nil
 }
 
 func emitPackageMetadata(pm pkg.PackageMeta, metadataDir string) error {

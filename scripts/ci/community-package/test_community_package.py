@@ -378,18 +378,30 @@ class FactSheetTests(unittest.TestCase):
 
 
 class SweepTests(unittest.TestCase):
-    def _sweep(self, files: list[str] | None = None,
-               already: bool = False) -> list[tuple[str, dict[str, str]]]:
+    def _run(self, files: list[str] | None = None,
+             reported: bool = False) -> tuple[list[tuple[str, dict[str, str]]], list[str]]:
         dispatched: list[tuple[str, dict[str, str]]] = []
+        claimed: list[str] = []
+
+        def claim(pr: int, body: str) -> dict[str, Any]:
+            claimed.append(body)
+            return {}
+
         with patch.object(github_api, "open_pull_requests",
                           lambda: [{"number": 7, "head": {"sha": "a" * 40}}]), \
              patch.object(github_api, "pull_request_files",
                           lambda pr: files if files is not None else [comment_commands.PACKAGE_LIST]), \
-             patch.object(github_api, "dispatch_exists", lambda w, label: already), \
+             patch.object(github_api, "fact_sheet_reports", lambda pr, sha: reported), \
+             patch.object(github_api, "fact_sheet_comment", lambda pr: None), \
+             patch.object(github_api, "post_comment", claim), \
              patch.object(github_api, "dispatch_workflow",
                           lambda w, inputs: dispatched.append((w, inputs))):
             comment_commands.sweep()
-        return dispatched
+        return dispatched, claimed
+
+    def _sweep(self, files: list[str] | None = None,
+               reported: bool = False) -> list[tuple[str, dict[str, str]]]:
+        return self._run(files=files, reported=reported)[0]
 
     def test_dispatches_a_check_for_a_package_pr(self) -> None:
         self.assertEqual(self._sweep(),
@@ -398,8 +410,21 @@ class SweepTests(unittest.TestCase):
     def test_skips_a_pr_that_does_not_touch_the_package_list(self) -> None:
         self.assertEqual(self._sweep(files=["README.md"]), [])
 
-    def test_dispatches_each_head_once(self) -> None:
-        self.assertEqual(self._sweep(already=True), [])
+    def test_a_head_already_claimed_is_not_dispatched_again(self) -> None:
+        self.assertEqual(self._sweep(reported=True), [])
+
+    def test_a_dispatched_head_is_claimed_before_the_check_reports(self) -> None:
+        dispatched, claimed = self._run()
+        self.assertEqual(len(dispatched), 1)
+        self.assertEqual(len(claimed), 1)
+        with patch.object(github_api, "fact_sheet_comment", lambda pr: {"id": 1, "body": claimed[0]}):
+            self.assertTrue(github_api.fact_sheet_reports(7, "a" * 40))
+            self.assertFalse(github_api.fact_sheet_reports(7, "b" * 40))
+
+    def test_the_claim_tells_the_contributor_what_to_wait_for(self) -> None:
+        claim = self._run()[1][0]
+        self.assertIn("a" * 12, claim)
+        self.assertIn("/check", claim)
 
     def test_run_label_is_stable_per_head(self) -> None:
         self.assertEqual(github_api.dispatch_run_label(7, "a" * 40),
@@ -422,18 +447,16 @@ class DispatchLabelTests(unittest.TestCase):
             template = template.replace("${{ inputs.%s }}" % field, value)
         self.assertEqual(template, github_api.dispatch_run_label(7, "a" * 40))
 
-    def test_a_run_is_matched_by_its_display_title(self) -> None:
+    def test_a_run_is_found_by_its_display_title(self) -> None:
         label = github_api.dispatch_run_label(7, "a" * 40)
         runs = [{"name": "Community package check", "display_title": label,
                  "created_at": "2020-01-01T00:00:00Z"}]
         with patch.object(github_api, "_dispatched_runs", lambda w: runs):
-            self.assertTrue(github_api.dispatch_exists("w.yml", label))
             self.assertIsNotNone(github_api.minutes_since_dispatch("w.yml", 7))
 
-    def test_a_run_for_another_pr_is_not_matched(self) -> None:
+    def test_a_run_for_another_pr_is_not_found(self) -> None:
         runs = [{"display_title": github_api.dispatch_run_label(8, "a" * 40)}]
         with patch.object(github_api, "_dispatched_runs", lambda w: runs):
-            self.assertFalse(github_api.dispatch_exists("w.yml", github_api.dispatch_run_label(7, "a" * 40)))
             self.assertIsNone(github_api.minutes_since_dispatch("w.yml", 7))
 
 
@@ -948,6 +971,28 @@ class VerdictNoticeTests(unittest.TestCase):
             {"000.factsheet.md": "## ✅ ready", comment_commands.VERDICT_FILE: "pass"},
             posted={"id": 9, "html_url": "https://c/9"})
         self.assertIn("https://c/9", written[-1])
+
+
+class CheckedHeadTests(unittest.TestCase):
+    def _sheet(self) -> dict[str, Any]:
+        return {"id": 1, "body": _run_report({"000.factsheet.md": "## ✅ ready"})[0]}
+
+    def test_the_sweep_reads_the_head_the_report_recorded(self) -> None:
+        sheet = self._sheet()
+        with patch.object(github_api, "fact_sheet_comment", lambda pr: sheet):
+            self.assertTrue(github_api.fact_sheet_reports(7, "d" * 40))
+
+    def test_another_head_is_not_taken_as_checked(self) -> None:
+        sheet = self._sheet()
+        with patch.object(github_api, "fact_sheet_comment", lambda pr: sheet):
+            self.assertFalse(github_api.fact_sheet_reports(7, "e" * 40))
+
+    def test_a_pr_without_a_fact_sheet_has_nothing_checked(self) -> None:
+        with patch.object(github_api, "fact_sheet_comment", lambda pr: None):
+            self.assertFalse(github_api.fact_sheet_reports(7, "d" * 40))
+
+    def test_the_sheet_is_still_found_by_its_own_marker(self) -> None:
+        self.assertIn(github_api.FACT_SHEET_MARKER, self._sheet()["body"])
 
 
 class VerdictFileTests(unittest.TestCase):

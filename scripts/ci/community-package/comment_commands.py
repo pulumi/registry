@@ -68,9 +68,10 @@ def sweep() -> int:
         pr, sha = int(pull["number"]), str(pull["head"]["sha"])
         if PACKAGE_LIST not in github_api.pull_request_files(pr):
             continue
-        if github_api.dispatch_exists(CHECK_WORKFLOW, github_api.dispatch_run_label(pr, sha)):
+        if github_api.fact_sheet_reports(pr, sha):
             continue
         github_api.dispatch_check(CHECK_WORKFLOW, pr, sha)
+        _upsert_fact_sheet(pr, fact_sheet_body([_pending_sheet(sha[:12])], sha))
         print(f"dispatched a check for PR #{pr} at {sha[:12]}")
     return 0
 
@@ -138,8 +139,22 @@ def _unfinished_sheet() -> str:
             f"check, not in the package. A maintainer has to read the [run log]({_run_url()}).")
 
 
-def fact_sheet_body(sheets: list[str]) -> str:
-    return github_api.FACT_SHEET_MARKER + "\n\n" + "\n\n".join(sheets or [_unfinished_sheet()]) + "\n"
+def _pending_sheet(head: str) -> str:
+    return (f"## ⏳ Checking `{head}`\n\nThe fact-sheet replaces this when the check finishes. "
+            "If it does not, comment `/check` to run it again.")
+
+
+def _upsert_fact_sheet(pr: int, body: str) -> str:
+    existing = github_api.fact_sheet_comment(pr)
+    if existing:
+        github_api.edit_comment(int(existing["id"]), body)
+        return str(existing.get("html_url", ""))
+    return str(github_api.post_comment(pr, body).get("html_url", ""))
+
+
+def fact_sheet_body(sheets: list[str], head: str) -> str:
+    header = github_api.FACT_SHEET_MARKER + "\n" + github_api.checked_marker(head)
+    return header + "\n\n" + "\n\n".join(sheets or [_unfinished_sheet()]) + "\n"
 
 
 _VERDICT_NOTICE = {
@@ -167,17 +182,11 @@ def _verdict_notice(verdict: str, head: str, sheet_url: str) -> str:
 
 
 def report() -> int:
-    pr = int(os.environ["PR"])
+    pr, head = int(os.environ["PR"]), os.environ.get("HEAD_SHA", "")
     sheets = [f.read_text() for f in sorted(Path(".").glob("*.factsheet.md"))]
-    body = fact_sheet_body(sheets)
-    existing = github_api.fact_sheet_comment(pr)
-    if existing:
-        github_api.edit_comment(int(existing["id"]), body)
-        sheet_url = str(existing.get("html_url", ""))
-    else:
-        sheet_url = str(github_api.post_comment(pr, body).get("html_url", ""))
+    sheet_url = _upsert_fact_sheet(pr, fact_sheet_body(sheets, head))
     print(f"posted fact-sheet to PR #{pr}")
 
     verdict = Path(VERDICT_FILE).read_text().strip() if Path(VERDICT_FILE).exists() else ""
-    github_api.post_comment(pr, _verdict_notice(verdict, os.environ.get("HEAD_SHA", "")[:12], sheet_url))
+    github_api.post_comment(pr, _verdict_notice(verdict, head[:12], sheet_url))
     return 0

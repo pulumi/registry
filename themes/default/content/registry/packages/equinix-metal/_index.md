@@ -5,7 +5,7 @@ layout: package
 ---
 
 {{% notes type="info" %}}
-This provider has been deprecated since April 2023, and Equinix has since shut down the Equinix Metal service, so there is no replacement provider for the resources it managed.
+This provider has been deprecated since April 2023. There is no replacement provider for the resources it managed.
 {{% /notes %}}
 
 The Equinix Metal provider for Pulumi can be used to provision any of the cloud resources available in [Equinix Metal](https://metal.equinix.com/).

@@ -12,7 +12,7 @@ Azure Native must be configured with credentials to deploy and update resources 
 
 ## Example
 
-{{< chooser language "typescript,python,csharp,go,java,yaml" >}}
+{{< chooser language "typescript,python,csharp,go,java,yaml,hcl" >}}
 
 {{% choosable language typescript %}}
 
@@ -98,6 +98,23 @@ public class App {
 resources:
   resourceGroup:
     type: azure-native:resources:ResourceGroup
+```
+
+{{% /choosable %}}
+
+{{% choosable language hcl %}}
+
+```hcl
+terraform {
+  required_providers {
+    azure-native = {
+      source = "pulumi/azure-native"
+    }
+  }
+}
+
+resource "azure-native_resources_resource_group" "resourceGroup" {
+}
 ```
 
 {{% /choosable %}}

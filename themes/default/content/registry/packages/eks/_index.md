@@ -13,7 +13,7 @@ Amazon EKS must be configured with credentials to deploy and update resources in
 <!---
 javascript removed
 --->
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 
 {{% choosable language typescript %}}
 
@@ -117,7 +117,28 @@ resources:
   eks-cluster:
     type: eks:Cluster
 outputs:
-  kubeconfig: ${cluster.kubeconfig}
+  kubeconfig: ${eks-cluster.kubeconfig}
+```
+
+{{% /choosable %}}
+
+{{% choosable language hcl %}}
+
+```hcl
+terraform {
+  required_providers {
+    eks = {
+      source = "pulumi/eks"
+    }
+  }
+}
+
+resource "eks_cluster" "eks-cluster" {
+}
+
+output "kubeconfig" {
+  value = eks_cluster.eks-cluster.kubeconfig
+}
 ```
 
 {{% /choosable %}}

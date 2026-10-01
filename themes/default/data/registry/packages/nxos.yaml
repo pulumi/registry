@@ -1,5 +1,7 @@
 category: Utility
 component: false
+deprecated: true
+deprecation_reason: Active development has stopped.
 description: A Pulumi package for creating and managing Cisco nxos XE Devices.
 featured: false
 logo_url: "https://www.pulumi.com/logos/tech/cisco.svg"

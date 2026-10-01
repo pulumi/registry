@@ -1053,6 +1053,7 @@ html[data-theme="dark"] body.section-registry {
         background: var(--docs-card);
 
         div.version-info,
+        span.package-title,
         .note {
             color: var(--docs-fg);
         }

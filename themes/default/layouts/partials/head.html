@@ -221,7 +221,7 @@
     {{ if .IsHome }}
         <title>{{ .Site.Title }}</title>
     {{ else if .Title }}
-        {{ $title := .Title }}
+        {{ $title := partial "registry/package/title.html" . }}
         {{ if .Params.title_tag }}
             {{ $title = .Params.title_tag }}
         {{ end }}

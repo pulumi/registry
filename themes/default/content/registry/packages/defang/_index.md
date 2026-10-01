@@ -1,5 +1,5 @@
 ---
-title: Defang (Deprecated)
+title: Defang
 meta_desc: The Defang provider has been split into cloud-specific packages for AWS, GCP, and Azure.
 layout: package
 ---

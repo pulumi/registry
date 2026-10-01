@@ -2,8 +2,7 @@
 "/registry/packages/%s/" $packageName) }} {{ $packageCategory := lower
 .package.category }} {{ $packageCategoryName := .package.category }} {{
 $packageType := "provider" }} {{ if .package.component }} {{ $packageType =
-"component" }} {{ end }} {{ $isDeprecated := eq .package.publisher "DEPRECATED"
-}}
+"component" }} {{ end }} {{ $isDeprecated := .package.deprecated }}
 
 <div class="package my-1.5 w-full md:w-1/2 lg:w-1/3 px-3">
     <a href="{{ $href }}" title="{{ .package.title }}">
@@ -15,14 +14,28 @@ $packageType := "provider" }} {{ if .package.component }} {{ $packageType =
                 data-title="{{ .package.title }}"
                 data-name="{{ $packageName }}"
                 data-keywords="{{ with .package.keywords }}{{ delimit . " " }}{{ end }}"
-                data-deprecated="{{ $isDeprecated }}"
+                data-deprecated="{{ if $isDeprecated }}true{{ else }}false{{ end }}"
             >
                 <div class="flex flex-wrap">
                     <div
                         class="flex w-full justify-between items-start flex-wrap gap-4 mb-4"
                     >
                         {{ partial "registry/package/icon.html" (dict "package"
-                        .package "lazy" true) }} {{ if and
+                        .package "lazy" true) }} {{ if $isDeprecated }} {{
+                        $deprecationTip := "This package is deprecated." }} {{
+                        with .package.deprecation_reason }} {{ $deprecationTip =
+                        printf "%s %s" $deprecationTip . }} {{ end }} {{ with
+                        index site.Data.registry.packages
+                        ($.package.superseded_by | default "") }} {{
+                        $deprecationTip = printf "%s Use %s instead."
+                        $deprecationTip .title }} {{ end }}
+                        <div
+                            class="chip chip-outline chip-orange chip-small"
+                            title="{{ $deprecationTip }}"
+                        >
+                            Deprecated
+                        </div>
+                        {{ else if and
                         .package.schema_file_url (hasPrefix (urls.Parse
                         .package.schema_file_url).Path
                         "/schemas/registry.opentofu.org/") }}

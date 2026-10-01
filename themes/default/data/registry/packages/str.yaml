@@ -1,11 +1,12 @@
 category: Cloud
 component: false
+deprecated: true
 description: Basic string manipulation functions
 featured: false
 logo_url: ""
 name: str
 package_status: ga
-publisher: DEPRECATED
+publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-str
 schema_file_path: sdk/schema.json
 title: String

@@ -1,11 +1,13 @@
 category: Cloud
 component: false
+deprecated: true
+deprecation_reason: Packet became Equinix Metal, which Equinix has since shut down.
 description: A Pulumi package for creating and managing Packet cloud resources.
 featured: false
 logo_url: ""
 name: packet
 package_status: ga
-publisher: DEPRECATED
+publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-packet
 schema_file_path: /provider/cmd/pulumi-resource-packet/schema.json
 title: Packet

@@ -13,8 +13,6 @@ import sdk_install_probe
 import resourcedocsgen
 from models import DocFile, Entry, Manifest, Version, provider_name
 
-DELISTED_PUBLISHER = "DEPRECATED"
-
 
 def _load_publisher_names() -> dict[str, str]:
     try:
@@ -139,7 +137,6 @@ def _delisted(name: str, yaml_path: str, version: str) -> Manifest:
         green=True,
         generation=True,
         docs=[],
-        publisher=DELISTED_PUBLISHER,
         delisted=True,
     )
 
@@ -157,7 +154,7 @@ def verify_package_yaml(yaml_path: Path, repo_root: Path) -> Manifest:
         return _unverifiable_package(name, str(yaml_path), f"`{yaml_path}` declares no `version`.")
 
     publisher = str(data.get("publisher", "")).strip()
-    if publisher == DELISTED_PUBLISHER:
+    if data.get("deprecated"):
         return _delisted(name, str(yaml_path), version)
 
     publisher_known = _publisher_known(publisher, _load_publisher_names())

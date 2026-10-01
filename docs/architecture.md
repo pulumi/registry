@@ -164,6 +164,8 @@ All three paths open their pull requests with the same composite action, [`.gith
 
 The action turns on squash auto-merge when it creates the pull request, and [`auto-approve-for-auto-merge.yml`](../.github/workflows/auto-approve-for-auto-merge.yml) approves pull requests from `pulumi-bot`. The pull request then merges on its own once the `Sentinel` status passes. [`pull-request.yml`](../.github/workflows/pull-request.yml) reports that status only after every required job succeeds, including linting, the Go and infrastructure tests, a full preview build of the site, and a check that every package's metadata can be turned into a Registry API publish request. An update that would break the build stays open for a maintainer to look at.
 
+No pull request is opened for a delisted package, one whose YAML has `deprecated: true`. A delisted package shouldn't receive updates, so `resourcedocsgen metadata` leaves its files unchanged and posts a warning on the workflow run instead of failing it.
+
 If either update workflow fails, it posts to the `#registry-ops` Slack channel. For the full list of pull request checks, see [`pull-request.yml` in BUILD-AND-DEPLOY.md](../BUILD-AND-DEPLOY.md#51-pull-requestyml--pr-validation--preview-deploy).
 
 ## Publish

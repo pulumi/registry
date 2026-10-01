@@ -52,7 +52,7 @@ $packageName := index $directories 2 }} {{ $packageHome := path.Join
                     <h1>{{ .Params.h1 }}</h1>
                     {{ else if and (ne .Title "") (not .Params.notitle) (not (in
                     .Page.File.Path "how-to-guides/_index.md")) }}
-                    <h1>{{ .Title }}</h1>
+                    <h1>{{ partial "registry/package/title.html" . }}</h1>
                     {{ end }} {{ end }}
                 </div>
 

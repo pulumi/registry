@@ -10,7 +10,7 @@ A Pulumi component that synchronizes the contents of a local folder to any Amazo
 
 ### Sync to Amazon S3
 
-{{< chooser language "typescript,python,go,csharp,yaml" / >}}
+{{< chooser language "typescript,python,go,csharp,yaml,hcl" / >}}
 
 {{% choosable language typescript %}}
 
@@ -136,9 +136,36 @@ resources:
 
 {{% /choosable %}}
 
+{{% choosable language hcl %}}
+
+```hcl
+terraform {
+  required_providers {
+    aws = {
+      source = "pulumi/aws"
+    }
+    synced-folder = {
+      source = "pulumi/synced-folder"
+    }
+  }
+}
+
+resource "aws_s3_bucket" "my-bucket" {
+  acl = "public-read"
+}
+
+resource "synced-folder_s3_bucket_folder" "synced-folder" {
+  path        = "./my-folder"
+  bucket_name = aws_s3_bucket.my-bucket.bucket
+  acl         = "public-read"
+}
+```
+
+{{% /choosable %}}
+
 ### Sync to Azure Blob Storage
 
-{{< chooser language "typescript,python,go,csharp,yaml" / >}}
+{{< chooser language "typescript,python,go,csharp,yaml,hcl" / >}}
 
 {{% choosable language typescript %}}
 
@@ -337,9 +364,49 @@ resources:
 
 {{% /choosable %}}
 
+{{% choosable language hcl %}}
+
+```hcl
+terraform {
+  required_providers {
+    azure-native = {
+      source = "pulumi/azure-native"
+    }
+    synced-folder = {
+      source = "pulumi/synced-folder"
+    }
+  }
+}
+
+resource "azure-native_resources_resource_group" "resourceGroup" {
+}
+
+resource "azure-native_storage_storage_account" "account" {
+  resource_group_name = azure-native_resources_resource_group.resourceGroup.name
+  kind                = "StorageV2"
+  sku = {
+    name = "Standard_LRS"
+  }
+}
+
+resource "azure-native_storage_blob_container" "container" {
+  resource_group_name = azure-native_resources_resource_group.resourceGroup.name
+  account_name        = azure-native_storage_storage_account.account.name
+}
+
+resource "synced-folder_azure_blob_folder" "folder" {
+  resource_group_name  = azure-native_resources_resource_group.resourceGroup.name
+  storage_account_name = azure-native_storage_storage_account.account.name
+  container_name       = azure-native_storage_blob_container.container.name
+  path                 = "./my-folder"
+}
+```
+
+{{% /choosable %}}
+
 ### Sync to Google Cloud Storage
 
-{{< chooser language "typescript,python,go,csharp,yaml" / >}}
+{{< chooser language "typescript,python,go,csharp,yaml,hcl" / >}}
 
 {{% choosable language typescript %}}
 
@@ -506,13 +573,45 @@ resources:
 
 {{% /choosable %}}
 
+{{% choosable language hcl %}}
+
+```hcl
+terraform {
+  required_providers {
+    gcp = {
+      source = "pulumi/gcp"
+    }
+    synced-folder = {
+      source = "pulumi/synced-folder"
+    }
+  }
+}
+
+resource "gcp_storage_bucket" "bucket" {
+  location = "US"
+}
+
+resource "gcp_storage_bucket_iam_binding" "binding" {
+  bucket  = gcp_storage_bucket.bucket.name
+  role    = "roles/storage.objectViewer"
+  members = ["allUsers"]
+}
+
+resource "synced-folder_google_cloud_folder" "folder" {
+  bucket_name = gcp_storage_bucket.bucket.name
+  path        = "./my-folder"
+}
+```
+
+{{% /choosable %}}
+
 ## Notes
 
 ### Managed and unmanaged file objects
 
 By default, the Synced Folder component manages your files as individual Pulumi cloud resources (for example, as multiple `aws:S3:BucketObject`s), but you can opt out of this behavior by using the component's `managedObjects` property:
 
-{{< chooser language "typescript,python,go,csharp,yaml" / >}}
+{{< chooser language "typescript,python,go,csharp,yaml,hcl" / >}}
 
 {{% choosable language typescript %}}
 
@@ -586,6 +685,21 @@ folder:
 
     # Set this property to false to manage files outside Pulumi.
     managedObjects: false
+```
+
+{{% /choosable %}}
+
+{{% choosable language hcl %}}
+
+```hcl
+resource "synced-folder_s3_bucket_folder" "synced-folder" {
+  path        = "./my-folder"
+  bucket_name = aws_s3_bucket.my-bucket.bucket
+  acl         = "public-read"
+
+  # Set this property to false to manage files outside Pulumi.
+  managed_objects = false
+}
 ```
 
 {{% /choosable %}}

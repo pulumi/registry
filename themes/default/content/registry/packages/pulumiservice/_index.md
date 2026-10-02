@@ -9,7 +9,7 @@ This provider must be configured with credentials to deploy and update resources
 
 ## Example
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 
 ```typescript
@@ -122,4 +122,25 @@ resources:
 ```
 
 {{% /choosable %}}
+{{% choosable language hcl %}}
+
+```hcl
+terraform {
+  required_providers {
+    pulumiservice = {
+      source = "pulumi/pulumiservice"
+    }
+  }
+}
+
+resource "pulumiservice_webhook" "webhook" {
+  active            = true
+  display_name      = "webhook example"
+  organization_name = "example"
+  payload_url       = "https://example.com/webhook"
+}
+```
+
+{{% /choosable %}}
+
 {{< /chooser >}}

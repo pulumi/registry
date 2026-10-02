@@ -8,7 +8,7 @@ Easily create AWS API Gateway REST APIs using Pulumi. This component provides hi
 
 ## Example:
 
-{{< chooser language "typescript,python,csharp,go" >}}
+{{< chooser language "typescript,python,csharp,go,java,yaml,hcl" >}}
 
 {{% choosable language typescript %}}
 
@@ -250,7 +250,75 @@ func main() {
 {{% choosable language java %}}
 
 ```java
+import com.pulumi.Context;
+import com.pulumi.Pulumi;
+import com.pulumi.asset.FileArchive;
+import com.pulumi.aws.iam.Role;
+import com.pulumi.aws.iam.RoleArgs;
+import com.pulumi.aws.iam.RolePolicy;
+import com.pulumi.aws.iam.RolePolicyArgs;
+import com.pulumi.aws.lambda.Function;
+import com.pulumi.aws.lambda.FunctionArgs;
+import com.pulumi.awsapigateway.RestAPI;
+import com.pulumi.awsapigateway.RestAPIArgs;
+import com.pulumi.awsapigateway.enums.Method;
+import com.pulumi.awsapigateway.inputs.RouteArgs;
+import com.pulumi.resources.CustomResourceOptions;
 
+public class App {
+    public static void main(String[] args) {
+        Pulumi.run(App::stack);
+    }
+
+    public static void stack(Context ctx) {
+        var role = new Role("mylambda-role", RoleArgs.builder()
+            .assumeRolePolicy("{"
+                + "\"Version\": \"2012-10-17\","
+                + "\"Statement\": [{"
+                + "\"Effect\": \"Allow\","
+                + "\"Principal\": { \"Service\": \"lambda.amazonaws.com\" },"
+                + "\"Action\": \"sts:AssumeRole\""
+                + "}]"
+                + "}")
+            .build());
+
+        var policy = new RolePolicy("mylambda-policy", RolePolicyArgs.builder()
+            .role(role.id())
+            .policy("{"
+                + "\"Version\": \"2012-10-17\","
+                + "\"Statement\": [{"
+                + "\"Action\": [\"logs:*\", \"cloudwatch:*\"],"
+                + "\"Resource\": \"*\","
+                + "\"Effect\": \"Allow\""
+                + "}]"
+                + "}")
+            .build());
+
+        // Closure serialization is not supported in multi-lang components
+        // so we need to provide a handler function explicitly from the file-system.
+        // Refer to https://github.com/pulumi/pulumi-aws-apigateway/tree/main/examples/simple-py/handler
+        // for an example handler.
+        var f = new Function("mylambda", FunctionArgs.builder()
+            .runtime("python3.12")
+            .code(new FileArchive("./handler"))
+            .timeout(300)
+            .handler("handler.handler")
+            .role(role.arn())
+            .build(), CustomResourceOptions.builder()
+                .dependsOn(policy)
+                .build());
+
+        var api = new RestAPI("api", RestAPIArgs.builder()
+            .routes(RouteArgs.builder()
+                .path("/")
+                .method(Method.GET)
+                .eventHandler(f)
+                .build())
+            .build());
+
+        ctx.export("url", api.url());
+    }
+}
 ```
 
 {{% /choosable %}}
@@ -258,9 +326,126 @@ func main() {
 {{% choosable language yaml %}}
 
 ```yaml
-
+resources:
+  mylambda-role:
+    type: aws:iam:Role
+    properties:
+      assumeRolePolicy:
+        fn::toJSON:
+          Version: 2012-10-17
+          Statement:
+            - Effect: Allow
+              Principal:
+                Service: lambda.amazonaws.com
+              Action: sts:AssumeRole
+  mylambda-policy:
+    type: aws:iam:RolePolicy
+    properties:
+      role: ${mylambda-role.id}
+      policy:
+        fn::toJSON:
+          Version: 2012-10-17
+          Statement:
+            - Action:
+                - logs:*
+                - cloudwatch:*
+              Resource: "*"
+              Effect: Allow
+  # Closure serialization is not supported in multi-lang components
+  # so we need to provide a handler function explicitly from the file-system.
+  # Refer to https://github.com/pulumi/pulumi-aws-apigateway/tree/main/examples/simple-py/handler
+  # for an example handler.
+  mylambda:
+    type: aws:lambda:Function
+    properties:
+      runtime: python3.12
+      code:
+        fn::fileArchive: ./handler
+      timeout: 300
+      handler: handler.handler
+      role: ${mylambda-role.arn}
+    options:
+      dependsOn:
+        - ${mylambda-policy}
+  api:
+    type: aws-apigateway:RestAPI
+    properties:
+      routes:
+        - path: /
+          method: GET
+          eventHandler: ${mylambda}
+outputs:
+  url: ${api.url}
 ```
 
 {{% /choosable %}}
 
-{{% /chooser %}}
+{{% choosable language hcl %}}
+
+```hcl
+terraform {
+  required_providers {
+    aws = {
+      source = "pulumi/aws"
+    }
+    aws-apigateway = {
+      source = "pulumi/aws-apigateway"
+    }
+  }
+}
+
+resource "aws_iam_role" "mylambda-role" {
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Effect = "Allow"
+      Principal = {
+        Service = "lambda.amazonaws.com"
+      }
+      Action = "sts:AssumeRole"
+    }]
+  })
+}
+
+resource "aws_iam_role_policy" "mylambda-policy" {
+  role = aws_iam_role.mylambda-role.id
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Action   = ["logs:*", "cloudwatch:*"]
+      Resource = "*"
+      Effect   = "Allow"
+    }]
+  })
+}
+
+# Closure serialization is not supported in multi-lang components
+# so we need to provide a handler function explicitly from the file-system.
+# Refer to https://github.com/pulumi/pulumi-aws-apigateway/tree/main/examples/simple-py/handler
+# for an example handler.
+resource "aws_lambda_function" "mylambda" {
+  runtime  = "python3.12"
+  filename = filearchive("./handler")
+  timeout  = 300
+  handler  = "handler.handler"
+  role     = aws_iam_role.mylambda-role.arn
+
+  depends_on = [aws_iam_role_policy.mylambda-policy]
+}
+
+resource "aws-apigateway_rest_api" "api" {
+  routes {
+    path          = "/"
+    method        = "GET"
+    event_handler = aws_lambda_function.mylambda
+  }
+}
+
+output "url" {
+  value = aws-apigateway_rest_api.api.url
+}
+```
+
+{{% /choosable %}}
+
+{{< /chooser >}}

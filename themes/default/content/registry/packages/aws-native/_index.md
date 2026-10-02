@@ -23,7 +23,7 @@ AWS Cloud Control must be configured with credentials to deploy and update resou
 
 Create an Object Lambda access point that transforms object requests to a bucket:
 
-{{< chooser language "typescript,python,csharp,go,java,yaml" >}}
+{{< chooser language "typescript,python,csharp,go,java,yaml,hcl" >}}
 
 {{% choosable language typescript %}}
 
@@ -242,6 +242,46 @@ resources:
 
 {{% /choosable %}}
 
+{{% choosable language hcl %}}
+
+```hcl
+terraform {
+  required_providers {
+    aws-native = {
+      source = "pulumi/aws-native"
+    }
+  }
+}
+
+# The ARN of the Lambda function that transforms objects.
+variable "function_arn" {
+  type = string
+}
+
+resource "aws-native_s3_bucket" "myBucket" {
+}
+
+resource "aws-native_s3_access_point" "ap" {
+  bucket = aws-native_s3_bucket.myBucket.id
+}
+
+resource "aws-native_s3objectlambda_access_point" "action" {
+  object_lambda_configuration = {
+    supporting_access_point = aws-native_s3_access_point.ap.arn
+    transformation_configurations = [{
+      actions = ["GetObject"]
+      content_transformation = {
+        aws_lambda = {
+          function_arn = var.function_arn
+        }
+      }
+    }]
+  }
+}
+```
+
+{{% /choosable %}}
+
 {{% /chooser %}}
 
 ## Third Party Resources
@@ -252,7 +292,7 @@ If you want to manage resources using Pulumi's AWS Cloud Control Provider which 
 
 Here's a very simple demonstration of using the ExtensionResource to create an S3 bucket:
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" / >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" / >}}
 
 {{% choosable language "typescript" %}}
 
@@ -381,6 +421,27 @@ resources:
       type: 'AWS::S3::Bucket'
       properties:
         BucketName: my-bucket
+```
+
+{{% /choosable %}}
+
+{{% choosable language hcl %}}
+
+```hcl
+terraform {
+  required_providers {
+    aws-native = {
+      source = "pulumi/aws-native"
+    }
+  }
+}
+
+resource "aws-native_extension_resource" "myBucket" {
+  type = "AWS::S3::Bucket"
+  properties = {
+    BucketName = "my-bucket"
+  }
+}
 ```
 
 {{% /choosable %}}

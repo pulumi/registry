@@ -293,10 +293,6 @@
       "schemaFile": "provider/cmd/pulumi-resource-aem/schema.json"
     },
     {
-      "repoSlug": "crowdstrike/pulumi-crowdstrike",
-      "schemaFile": "provider/cmd/pulumi-resource-crowdstrike/schema.json"
-    },
-    {
       "repoSlug": "azaurus1/pulumi-kafka-connect",
       "schemaFile": "provider/cmd/pulumi-resource-kafkaconnect/schema.json"
     },

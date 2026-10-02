@@ -10,7 +10,6 @@
         "@octokit/auth-action": "^5.0.0",
         "@octokit/graphql": "^7.0.0",
         "@octokit/rest": "^21.0.0",
-        "@slack/web-api": "^7.19.0",
         "beasties": "^0.4.3",
         "broken-link-checker": "^0.7.8",
         "cheerio": "^1.2.0",

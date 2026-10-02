@@ -45,3 +45,7 @@ themes/default/data/registry/package_versions/
 provider-inventory.json
 __pycache__/
 *.pyc
+
+# Link checker output (check-links.yml / fix-broken-links skill)
+/.broken-links.json
+/.broken-links-pr.txt

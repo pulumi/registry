@@ -395,6 +395,10 @@
     {
       "repoSlug": "incident-io/pulumi-incident",
       "schemaFile": "provider/cmd/pulumi-resource-incident/schema.json"
+    },
+    {
+      "repoSlug": "htmlcsstoimage/pulumi-html-css-to-image",
+      "schemaFile": "internal/provider/schema.json"
     }
   ]
 }

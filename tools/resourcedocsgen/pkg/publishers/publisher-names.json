@@ -87,6 +87,7 @@
     "hashicorp": "hashicorp",
     "honeycombio": "honeycomb",
     "hpe": "hpe",
+    "htmlcsstoimage": "htmlcsstoimage",
     "ibm-cloud": "ibm-cloud",
     "imperva": "imperva",
     "incident-io": "incident_io",

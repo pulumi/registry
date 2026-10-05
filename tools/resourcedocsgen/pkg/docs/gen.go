@@ -95,7 +95,7 @@ func titleLookup(shortName string) (string, bool) {
 		"equinix-metal":                        "Equinix Metal",
 		"f5bigip":                              "f5 BIG-IP",
 		"fastly":                               "Fastly",
-		"gcp":                                  "Google Cloud (GCP) Classic",
+		"gcp":                                  "Google Cloud (GCP)",
 		"gcp-global-cloudrun":                  "Google Global Cloud Run",
 		"gcp-project-scaffold":                 "Google Project Scaffolding",
 		"google-native":                        "Google Cloud Native",

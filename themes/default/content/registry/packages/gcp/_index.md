@@ -2,7 +2,7 @@
 # WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-gcp/v10.0.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 edit_url: https://github.com/pulumi/pulumi-gcp/blob/v10.0.0/docs/_index.md
-title: Google Cloud (GCP) Classic
+title: Google Cloud (GCP)
 meta_desc: Learn how to use Pulumi's GCP Provider to reduce the complexity of managing and provisioning GCP resources.
 layout: package
 ---

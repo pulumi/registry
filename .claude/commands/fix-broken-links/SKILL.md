@@ -78,9 +78,11 @@ Classify each confirmed-broken link as **actionable** (no open PR covers it) or 
    - `/registry/packages/<name>/api-docs/...` → generated from the provider schema by `resourcedocsgen`; nothing here to edit.
    - `/registry/` and any other non-package page → Grep under `themes/default/layouts/`, `themes/default/content/`, and `themes/default/data/` for the link text.
    - `https://github.com/pulumi/pulumi` → the checker crawls this page directly as an additional route; links on it are GitHub's own chrome, not ours. An exclusion-list entry at most.
-4. **Decide who owns that file by reading its first lines, not by the package.**
+4. **Decide who owns that file.** Apply the first rule that matches:
    - It starts with a `# WARNING: this file was fetched from <raw URL>` comment and has an `edit_url:` key → **upstream-owned**. The publish workflow overwrites it on every release. Never edit it here.
-   - No such header → **maintained in this repo**. Fix it at source like any other hand-written page. Many packages, first-party ones included, have their overview here, and every guide-style sub-page (migration guides, FAQs, version tables) is maintained here.
+   - It's a guide-style sub-page (anything other than `_index.md` and `installation-configuration.md`: migration guides, FAQs, version tables) → **maintained in this repo**. Fix it at source.
+   - It's an `_index.md` or `installation-configuration.md` for a package listed in the "Overview pages kept in this repository" table in `docs/architecture.md` → **maintained in this repo**. Fix it at source.
+   - Any other landing page without the header → **not yours to edit**. These are deprecated packages, or packages that haven't released since the header was introduced, so the next release would overwrite an edit made here. Treat it as upstream-owned and record it like one.
 5. For upstream-owned pages only, note whether the upstream is **first-party** (`repo_url` under `https://github.com/pulumi/`) or **third-party** (anything else), so the PR can group them.
 
 ## Per-link triage
@@ -90,7 +92,7 @@ Apply the first row that matches.
 | Situation | Strategy | Mechanism |
 |---|---|---|
 | Internal `destination` is a retired registry path with a clear successor (renamed API-docs module, `how-to-guides` page that moved to `/dev/examples/`, deleted sub-page with an obvious parent) | **S3 redirect** | Add a line to the topic-appropriate file in `scripts/redirects/` |
-| Broken link on a page **maintained in this repo** (no fetched-from header, or a layout/data file) | **Edit at source** | Fix it in place |
+| Broken link on a page **maintained in this repo** (see step 4 of the mapping above), or in a layout or data file | **Edit at source** | Fix it in place |
 | Broken link on an **upstream-owned** page | **Upstream-owned / not actioned** | Record it in the PR description's **Upstream-owned pages** section. No edit, no issue |
 | Dead / transient / bot-protected **external** link that recurs | **Exclusion list** | Add the URL to `getDefaultExcludedKeywords()` in `check-links.js` with an inline `//` comment naming the reason + package |
 | Redirect **loop** or a redirect line pointing at a dead target | **Repair** | Fix or remove the stale line in `scripts/redirects/` |

@@ -539,6 +539,32 @@ func (dctx *Context) getLanguageDocHelper(lang language.Language) codegen.DocLan
 	panic(fmt.Errorf("could not find a doc lang helper for %s", lang))
 }
 
+// nodejsPulumiTypeRoot is the TypeDoc reference for the `@pulumi/pulumi` package.
+const nodejsPulumiTypeRoot = "/docs/reference/pkg/nodejs/pulumi/pulumi/"
+
+// nodejsPulumiTypeKinds maps linked `@pulumi/pulumi` types to their TypeDoc kind directory.
+var nodejsPulumiTypeKinds = map[string]string{
+	"ComponentResourceOptions": "interfaces",
+	"CustomResourceOptions":    "interfaces",
+	"InvokeOptions":            "interfaces",
+	"InvokeOutputOptions":      "interfaces",
+	"ID":                       "types",
+}
+
+// nodejsPulumiTypeLink returns the TypeDoc page for a `@pulumi/pulumi` type. It replaces
+// nodejs.DocLanguageHelper.GetDocLinkForPulumiType, which links to anchors on the index page
+// that TypeDoc does not generate (https://github.com/pulumi/registry/issues/12168). Unknown
+// types link to the index page itself rather than to a dead anchor. Remove once
+// https://github.com/pulumi/pulumi/issues/24927 is fixed upstream.
+func nodejsPulumiTypeLink(typeName string) string {
+	typeName = strings.ReplaceAll(typeName, "?", "")
+	kind, ok := nodejsPulumiTypeKinds[typeName]
+	if !ok {
+		return nodejsPulumiTypeRoot
+	}
+	return nodejsPulumiTypeRoot + kind + "/" + typeName + ".html"
+}
+
 type propertyCharacteristics struct {
 	// input is a flag indicating if the property is an input type.
 	input bool
@@ -791,7 +817,6 @@ const (
 
 func (mod *modContext) genConstructorTS(r *schema.Resource, argsOptional bool) []formalParam {
 	name := resourceName(r)
-	docLangHelper := mod.context.getLanguageDocHelper(language.NodeJS)
 
 	var argsType string
 
@@ -822,9 +847,6 @@ func (mod *modContext) genConstructorTS(r *schema.Resource, argsOptional bool) [
 		argsFlag = "?"
 	}
 
-	def, err := mod.pkg.Definition()
-	contract.AssertNoErrorf(err, "failed to get definition for package %q", mod.pkg.Name())
-
 	return []formalParam{
 		{
 			Name: "name",
@@ -847,7 +869,7 @@ func (mod *modContext) genConstructorTS(r *schema.Resource, argsOptional bool) [
 			OptionalFlag: "?",
 			Type: propertyType{
 				Name: optsType,
-				Link: docLangHelper.GetDocLinkForPulumiType(def, optsType),
+				Link: nodejsPulumiTypeLink(optsType),
 			},
 			Comment: ctorOptsArgComment,
 		},
@@ -1474,11 +1496,6 @@ func (mod *modContext) getConstructorResourceInfo(resourceTypeName, tok string) 
 }
 
 func (mod *modContext) getTSLookupParams(r *schema.Resource, stateParam string) []formalParam {
-	dctx := mod.context
-	docLangHelper := dctx.getLanguageDocHelper(language.NodeJS)
-	def, err := mod.pkg.Definition()
-	contract.AssertNoErrorf(err, "failed to get definition for package %q", mod.pkg.Name())
-
 	return []formalParam{
 		{
 			Name: "name",
@@ -1491,7 +1508,7 @@ func (mod *modContext) getTSLookupParams(r *schema.Resource, stateParam string) 
 			Name: "id",
 			Type: propertyType{
 				Name: "Input<ID>",
-				Link: docLangHelper.GetDocLinkForPulumiType(def, "ID"),
+				Link: nodejsPulumiTypeLink("ID"),
 			},
 		},
 		{
@@ -1506,7 +1523,7 @@ func (mod *modContext) getTSLookupParams(r *schema.Resource, stateParam string) 
 			OptionalFlag: "?",
 			Type: propertyType{
 				Name: "CustomResourceOptions",
-				Link: docLangHelper.GetDocLinkForPulumiType(def, "CustomResourceOptions"),
+				Link: nodejsPulumiTypeLink("CustomResourceOptions"),
 			},
 		},
 	}

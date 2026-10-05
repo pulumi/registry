@@ -7,9 +7,7 @@ layout: package
 
 # Pulumi GCP Provider Version Upgrade Guide
 
-Version 10.0.0 of the GCP provider for Pulumi is a major release and includes changes that you need to consider when upgrading. This guide will help with that process and focuses only on changes from version 9.x to version 10.0.0. See the [Version 9 Upgrade Guide](https://www.pulumi.com/registry/packages/gcp/how-to-guides/9-0-migration) for information on upgrading from 8.x to version 9.0.0. Version 10.0.0 tracks the upstream Terraform provider's v8 release, so the [google-beta v8 upgrade guide](https://registry.terraform.io/providers/hashicorp/google-beta/latest/docs/guides/version_8_upgrade) is the companion document; each breaking change below links to the upstream section it comes from, where there is one.
-
-Version 10.0.0 tracks the upstream `terraform-provider-google-beta` v8.5.0 release.
+Version 10.0.0 of the GCP provider for Pulumi is a major release and includes changes that you need to consider when upgrading. This guide will help with that process and focuses only on changes from version 9.x to version 10.0.0. See the [Version 9 Upgrade Guide](https://www.pulumi.com/registry/packages/gcp/how-to-guides/9-0-migration) for information on upgrading from 8.x to version 9.0.0. Version 10.0.0 tracks the upstream `terraform-provider-google-beta` v8.5.0 release, so the [google-beta v8 upgrade guide](https://registry.terraform.io/providers/hashicorp/google-beta/latest/docs/guides/version_8_upgrade) is the companion document; each breaking change below links to the upstream section it comes from, where there is one.
 
 ## How to upgrade
 
@@ -46,8 +44,10 @@ pip install --upgrade 'pulumi-gcp>=10.0.0,<11.0.0'
 {{% choosable language go %}}
 
 ```bash
-go get github.com/pulumi/pulumi-gcp/sdk/v10@latest
+go get github.com/pulumi/pulumi-gcp/sdk/v10@v10.0.0
 ```
+
+Then change every import from `github.com/pulumi/pulumi-gcp/sdk/v9/...` to `github.com/pulumi/pulumi-gcp/sdk/v10/...` and run `go mod tidy` to drop the v9 module.
 
 {{% /choosable %}}
 
@@ -74,7 +74,7 @@ dotnet add package Pulumi.Gcp --version 10.*
 {{% choosable language yaml %}}
 
 ```bash
-pulumi package add gcp 10.0.0
+pulumi package add gcp@10.0.0
 ```
 
 {{% /choosable %}}
@@ -577,24 +577,24 @@ No output means the stack holds nothing from the removed namespace and you are n
 
 1. Migrate the instance at the GCP level first. A legacy notebook is served by `notebooks.googleapis.com/v1` and a Workbench instance by `/v2`, so until it is migrated `gcp.workbench.Instance` cannot see it.
 
-```bash
-curl -X POST -H "Authorization: Bearer $(gcloud auth print-access-token)" \
-  "https://notebooks.googleapis.com/v1/projects/PROJECT/locations/ZONE/instances/NAME:migrate"
-```
+   ```bash
+   curl -X POST -H "Authorization: Bearer $(gcloud auth print-access-token)" \
+     "https://notebooks.googleapis.com/v1/projects/PROJECT/locations/ZONE/instances/NAME:migrate"
+   ```
 
 2. Drop the legacy entries from Pulumi's state. This edits state only and leaves the machine running. Delete the IAM resources before the instance they point at.
 
-```bash
-pulumi state delete 'urn:pulumi:dev::my-stack::gcp:notebooks/instanceIamMember:InstanceIamMember::legacy-notebook-viewer'
-pulumi state delete 'urn:pulumi:dev::my-stack::gcp:notebooks/instance:Instance::legacy-notebook'
-```
+   ```bash
+   pulumi state delete 'urn:pulumi:dev::my-stack::gcp:notebooks/instanceIamMember:InstanceIamMember::legacy-notebook-viewer'
+   pulumi state delete 'urn:pulumi:dev::my-stack::gcp:notebooks/instance:Instance::legacy-notebook'
+   ```
 
 3. Rewrite the code against `gcp.workbench` (below), then adopt the migrated machine rather than creating a second one.
 
-```bash
-pulumi import gcp:workbench/instance:Instance legacy-notebook \
-  projects/PROJECT/locations/ZONE/instances/NAME
-```
+   ```bash
+   pulumi import gcp:workbench/instance:Instance legacy-notebook \
+     projects/PROJECT/locations/ZONE/instances/NAME
+   ```
 
 **If you are content to recreate**, change the types and run `pulumi up`. The legacy instance is destroyed and a new Workbench instance is created; disk contents do not carry over. The machine settings move under `gceSetup`, the disk sizes become strings, and the IAM resource's `instanceName` becomes `name`.
 
@@ -1144,7 +1144,7 @@ Writing `defaultCollation: ""` explicitly already cleared the collation on v9.21
 
 The change affects a dataset only if BigQuery has a collation for it and your program declares none. That happens when the collation was set outside Pulumi, or when a `defaultCollation` line was deleted from the program and v9 went on reading the old value back.
 
-**Code that reads the `defaultCollation` output** now has to handle an absent value: a build failure where types are checked, and otherwise visible only under a type checker.
+**Code that reads the `defaultCollation` output** now has to handle an absent value. Where types are checked, an unguarded read fails to build. Elsewhere the value is simply missing at run time.
 
 #### Am I affected?
 
@@ -1283,7 +1283,7 @@ resources:
 
 {{< /chooser >}}
 
-**If your code reads the `defaultCollation` output**, give it a fallback. Setting it was always optional; reading it was not. Because the provider always filled it in, the output was typed `string` on v9 and is `string | undefined` on v10, so an unguarded read stops compiling.
+**If your code reads the `defaultCollation` output**, give it a fallback. Because the provider always filled it in, the output was typed `string` on v9 and is `string | undefined` on v10, so an unguarded read stops compiling.
 
 ```typescript
 // v9
@@ -1311,7 +1311,7 @@ export const ciCollationUpper = ci.defaultCollation.apply(c => (c ?? "").toUpper
 
 Run the following command against each stack. It reads state and changes nothing.
 
-``` sh
+```bash
 pulumi stack export | jq -r '
   .deployment.resources[]
   | select(.type == "gcp:secretmanager/secretVersion:SecretVersion")
@@ -1323,7 +1323,7 @@ pulumi stack export | jq -r '
 
 Output from a v9 stack with one of each: a resource that set `secretDataWoVersion`, and one that omitted it.
 
-``` text
+```text
 urn:pulumi:dev::my-stack::gcp:secretmanager/secretVersion:SecretVersion::pinned-payload
     secretDataWoVersion = 1 (number)
 urn:pulumi:dev::my-stack::gcp:secretmanager/secretVersion:SecretVersion::unpinned-payload
@@ -1341,7 +1341,7 @@ Reading it:
 
 **If `secretDataWoVersion` was set to a number**, quote it.
 
-``` ts
+```typescript
 const pinned = new gcp.secretmanager.SecretVersion("pinned-payload", {
     secret: secret.id,
     secretDataWo: "payload-pinned-v1",
@@ -1357,7 +1357,7 @@ const pinned = new gcp.secretmanager.SecretVersion("pinned-payload", {
 
 v9:
 
-``` ts
+```typescript
 const unpinned = new gcp.secretmanager.SecretVersion("unpinned-payload", {
     secret: secret.id,
     secretDataWo: "payload-unpinned",
@@ -1366,7 +1366,7 @@ const unpinned = new gcp.secretmanager.SecretVersion("unpinned-payload", {
 
 v10:
 
-``` ts
+```typescript
 const unpinned = new gcp.secretmanager.SecretVersion("unpinned-payload", {
     secret: secret.id,
     secretDataWo: "payload-unpinned",
@@ -1510,15 +1510,15 @@ Google has always rejected a workflow with no source code, so the change turns a
 
 #### Impact/Risk
 
-N/A
+None. Google already rejected a workflow without source code, so a program that deploys today already sets `sourceContents`.
 
 #### Am I affected?
 
-N/A
+No, unless a program that has never deployed omits `sourceContents`.
 
 #### Remediation
 
-N/A
+No action needed.
 
 ### `gcp.cloudrunv2.WorkerPool`: probe header fields changed
 
@@ -1536,7 +1536,7 @@ N/A
 
 **If you set `customAudiences`**, delete the line. Cloud Run worker pools never accepted the field: on v9 the API returned an empty list and the worker pool ran exactly as if it had not been set. Deleting it **replaces nothing**. A value read back from `customAudiences`, on the resource or on the `gcp.cloudrunv2.getWorkerPool` data source, is gone as well.
 
-**If you set `httpGet.httpHeaders.port`, or left `httpGet.httpHeaders.name` unset**, that worker pool does not exist: GCP rejects both with a 400 at create time. Delete the `port`, give the header a `name`.
+**If you set `httpGet.httpHeaders.port`, or left `httpGet.httpHeaders.name` unset**, that worker pool does not exist: GCP rejects both with a 400 at create time. Delete the `port` and give the header a `name`.
 
 #### Am I affected?
 
@@ -2130,7 +2130,7 @@ Nothing in this section breaks on v10. These are warnings you may start seeing a
 An instance whose `metadata` carries the container declaration that the VM startup agent consumes:
 
 ```python
-instance = compute.Instance(
+instance = gcp.compute.Instance(
     "poc",
     machine_type="f1-micro",
     metadata={"gce-container-declaration": container_declaration},
@@ -2139,7 +2139,7 @@ instance = compute.Instance(
 
 now previews with:
 
-```
+```text
 warning: verification warning: property "metadata" is deprecated: The option to deploy a container
 during VM creation using the container startup agent is deprecated. Use alternative services to run
 containers on your VMs.

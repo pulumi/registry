@@ -395,6 +395,10 @@
     {
       "repoSlug": "incident-io/pulumi-incident",
       "schemaFile": "provider/cmd/pulumi-resource-incident/schema.json"
+    },
+    {
+      "repoSlug": "kurrent-io/pulumi-kurrentcloud",
+      "schemaFile": "provider/cmd/pulumi-resource-kurrentcloud/schema.json"
     }
   ]
 }

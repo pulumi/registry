@@ -35,6 +35,7 @@ chip:
   - ionoscloud
   - iosxe
   - kafka-connect
+  - kurrentcloud
   - launchdarkly
   - ngrok
   - nutanix

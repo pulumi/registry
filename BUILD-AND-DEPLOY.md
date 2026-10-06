@@ -466,6 +466,7 @@ The `resourcedocsgen` tool skips unchanged packages using sentinel files. Each g
 - **SHA-256 of the package YAML metadata** — changes when the package version or config is updated.
 - **Go toolchain version** — changes on Go upgrades.
 - **Source hash** — a SHA-256 of all `.go`, `.tmpl`, and `go.sum` files in `tools/resourcedocsgen/`, injected at build time via `-ldflags`. Changes when the doc generation logic or templates change.
+- **SHA-256 of the schema**, only when the schema URL isn't pinned. A URL is pinned when one of its path segments is the package version (with or without a leading `v`) or a full commit SHA, which is true of every package in the registry. Pinned packages are checked before any download. An unpinned URL, such as a branch used to preview unreleased docs, can serve a new schema while the YAML stays the same, so `resourcedocsgen` downloads it first and adds its hash to the key.
 
 On each run, `resourcedocsgen` compares the computed cache key against the sentinel. If they match and the expected output files (api-docs, nav JSON, schema JSON) all exist, the package is skipped. Otherwise it regenerates.
 

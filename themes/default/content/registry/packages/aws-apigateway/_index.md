@@ -8,7 +8,7 @@ Easily create AWS API Gateway REST APIs using Pulumi. This component provides hi
 
 ## Example:
 
-The TypeScript example defines the Lambda handler inline with `aws.lambda.CallbackFunction`, which serializes the callback into the function's code. That only works in Node.js, so the other languages package a handler from the `./handler` directory instead.
+The TypeScript example defines the Lambda handler inline with `aws.lambda.CallbackFunction`, which [serializes the callback](/docs/iac/concepts/functions/function-serialization/) into the function's code. Other languages package the handler from a `./handler` directory.
 
 {{< chooser language "typescript,python,csharp,go,java,yaml,hcl" >}}
 

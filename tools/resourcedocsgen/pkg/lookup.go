@@ -164,8 +164,8 @@ var TitleLookup = map[string]string{
 	"eks":                                 "Amazon EKS",
 	"equinix-metal":                       "Equinix Metal",
 	"f5bigip":                             "f5 BIG-IP",
-	"fastly":                              "Fastly",               // https://github.com/pulumi/pulumi-fastly/pull/693
-	"gcp":                                 "Google Cloud Classic", // https://github.com/pulumi/pulumi-gcp/pull/2745
+	"fastly":                              "Fastly",       // https://github.com/pulumi/pulumi-fastly/pull/693
+	"gcp":                                 "Google Cloud", // https://github.com/pulumi/pulumi-gcp/pull/2745
 	"gcp-cloudrun-multi-region":           "Google Cloud Run Multi-Region",
 	"gcp-project-scaffold":                "Google Project Scaffolding",
 	"google-native":                       "Google Cloud Native",

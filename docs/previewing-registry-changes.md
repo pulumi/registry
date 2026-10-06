@@ -45,7 +45,7 @@ If you're changing CSS or JavaScript under `themes/default/theme`, use `make ser
 
 ### Forcing a rebuild
 
-`resourcedocsgen` won't regenerate output it believes is current. It records what it generated from in a `.generated` file next to the pages — the contents of the package YAML, plus the generator's own build — and skips the package when neither has changed, logging `Skipping (output is fresh)`. Editing the generator invalidates that, but editing a schema behind an unchanged URL doesn't.
+`resourcedocsgen` won't regenerate output it believes is current. It records what it generated from in a `.generated` file next to the pages — the contents of the package YAML, plus the generator's own build — and skips the package when neither has changed, logging `Skipping (output is fresh)`. When `schema_file_url` isn't pinned to a version (a branch, for example), the record also includes the schema itself, which is downloaded on every run, so pushing a new schema is enough to regenerate. The case it can't detect is a schema replaced at a URL that does contain the version, such as a re-uploaded file on a versioned S3 path.
 
 `make -B` doesn't fix this. The target's sentinel is an intermediate file that Make deletes after each run, so the recipe already re-runs every time; the skip happens inside the generator. Delete the `.generated` file instead:
 

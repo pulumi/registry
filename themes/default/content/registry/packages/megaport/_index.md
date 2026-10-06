@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/megaport/megaport/1.20.0/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/megaport/megaport/1.20.3/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Megaport Provider
@@ -1266,9 +1266,9 @@ const production = new megaport.Mcr("production", {
     locationId: 1,
     contractTermMonths: 12,
     resourceTags: {
-        Environment: "production",
-        Owner: "network-team",
-        Purpose: "multi-cloud-connectivity",
+        environment: "production",
+        owner: "network-team",
+        purpose: "multi-cloud-connectivity",
     },
 });
 // Allow internal corporate networks
@@ -1329,9 +1329,9 @@ production = megaport.Mcr("production",
     location_id=1,
     contract_term_months=12,
     resource_tags={
-        "Environment": "production",
-        "Owner": "network-team",
-        "Purpose": "multi-cloud-connectivity",
+        "environment": "production",
+        "owner": "network-team",
+        "purpose": "multi-cloud-connectivity",
     })
 # Allow internal corporate networks
 corporate_networks = megaport.McrPrefixFilterList("corporate_networks",
@@ -1394,9 +1394,9 @@ return await Deployment.RunAsync(() =>
         ContractTermMonths = 12,
         ResourceTags =
         {
-            { "Environment", "production" },
-            { "Owner", "network-team" },
-            { "Purpose", "multi-cloud-connectivity" },
+            { "environment", "production" },
+            { "owner", "network-team" },
+            { "purpose", "multi-cloud-connectivity" },
         },
     });
 
@@ -1483,9 +1483,9 @@ func main() {
 			LocationId:         pulumi.Float64(1),
 			ContractTermMonths: pulumi.Float64(12),
 			ResourceTags: pulumi.StringMap{
-				"Environment": pulumi.String("production"),
-				"Owner":       pulumi.String("network-team"),
-				"Purpose":     pulumi.String("multi-cloud-connectivity"),
+				"environment": pulumi.String("production"),
+				"owner":       pulumi.String("network-team"),
+				"purpose":     pulumi.String("multi-cloud-connectivity"),
 			},
 		})
 		if err != nil {
@@ -1565,9 +1565,9 @@ resources:
       locationId: 1 # Use stable location ID
       contractTermMonths: 12
       resourceTags:
-        Environment: production
-        Owner: network-team
-        Purpose: multi-cloud-connectivity
+        environment: production
+        owner: network-team
+        purpose: multi-cloud-connectivity
   # Allow internal corporate networks
   corporateNetworks:
     type: megaport:McrPrefixFilterList
@@ -1645,9 +1645,9 @@ public class App {
             .locationId(1.0)
             .contractTermMonths(12.0)
             .resourceTags(Map.ofEntries(
-                Map.entry("Environment", "production"),
-                Map.entry("Owner", "network-team"),
-                Map.entry("Purpose", "multi-cloud-connectivity")
+                Map.entry("environment", "production"),
+                Map.entry("owner", "network-team"),
+                Map.entry("purpose", "multi-cloud-connectivity")
             ))
             .build());
 

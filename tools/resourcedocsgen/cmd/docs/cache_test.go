@@ -19,7 +19,6 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"path/filepath"
-	"strings"
 	"sync"
 	"sync/atomic"
 	"testing"
@@ -41,8 +40,6 @@ const cacheTestSchemaFormat = `{
   }
 }`
 
-// schemaServer serves a cachetest schema whose resource description the test can change,
-// and counts the requests it receives.
 type schemaServer struct {
 	*httptest.Server
 	mu          sync.Mutex
@@ -68,16 +65,13 @@ func (s *schemaServer) setDescription(description string) {
 	s.description = description
 }
 
-// runCacheTestGeneration runs `docs registry cachetest` against a package YAML pointing
-// at schemaURL and returns the generated resource page.
 func runCacheTestGeneration(t *testing.T, registryDir, docsOutDir, navOutDir, schemaURL string) string {
-	// The invalid publisher makes the registry API lookup fail before any request,
-	// so the schema can only come from schema_file_url.
+	publisherThatFailsRegistryLookup := "contains-invalid-chars!!!"
 	util.WriteFile(t,
 		filepath.Join(registryDir, "themes", "default", "data", "registry", "packages", "cachetest.yaml"),
 		`name: cachetest
 title: cachetest
-publisher: "contains-invalid-chars!!!"
+publisher: "`+publisherThatFailsRegistryLookup+`"
 repo_url: https://github.com/example/pulumi-cachetest
 version: v9.9.9
 schema_file_url: `+schemaURL+"\n")
@@ -93,41 +87,54 @@ schema_file_url: `+schemaURL+"\n")
 	return util.ReadFile(t, filepath.Join(docsOutDir, "cachetest", "api-docs", "thing", "_index.md"))
 }
 
-// A schema_file_url that points at a branch can change while the package YAML doesn't.
-// The second run must pick up the new schema rather than reuse the cached output.
+//nolint:paralleltest // subtests are ordered steps against one cache
 func TestCacheMutableSchemaURL(t *testing.T) {
 	t.Parallel()
 	server := newSchemaServer(t, "Description A.")
 	schemaURL := server.URL + "/my-branch/schema.json"
 	registryDir, docsOutDir, navOutDir := t.TempDir(), t.TempDir(), t.TempDir()
+	run := func(t *testing.T) string {
+		return runCacheTestGeneration(t, registryDir, docsOutDir, navOutDir, schemaURL)
+	}
 
-	page := runCacheTestGeneration(t, registryDir, docsOutDir, navOutDir, schemaURL)
-	require.Contains(t, page, "Description A.")
+	t.Run("first run renders the schema", func(t *testing.T) {
+		require.Contains(t, run(t), "Description A.", "first run did not render the schema's description")
+		require.Equal(t, int32(1), server.requests.Load(), "first run should download the schema once")
+	})
 
-	server.setDescription("Description B.")
-	page = runCacheTestGeneration(t, registryDir, docsOutDir, navOutDir, schemaURL)
-	assert.True(t, strings.Contains(page, "Description B."), "second run reused output generated from the old schema")
-	assert.Equal(t, int32(2), server.requests.Load())
+	t.Run("schema changed behind the same URL regenerates", func(t *testing.T) {
+		server.setDescription("Description B.")
+		require.Contains(t, run(t), "Description B.",
+			"second run reused output generated from the old schema even though the branch URL now serves a new one")
+		require.Equal(t, int32(2), server.requests.Load(), "an unpinned schema URL should be downloaded on every run")
+	})
 
-	// With the schema unchanged, a third run downloads it again but skips generation.
-	page = runCacheTestGeneration(t, registryDir, docsOutDir, navOutDir, schemaURL)
-	assert.True(t, strings.Contains(page, "Description B."))
-	assert.Equal(t, int32(3), server.requests.Load())
+	t.Run("unchanged schema is downloaded again and output kept", func(t *testing.T) {
+		require.Contains(t, run(t), "Description B.", "third run lost the output for the unchanged schema")
+		require.Equal(t, int32(3), server.requests.Load(), "an unpinned schema URL should be downloaded on every run")
+	})
 }
 
-// A schema_file_url pinned to the package's version is immutable, so a rerun with
-// unchanged YAML must not touch the network at all.
+//nolint:paralleltest // subtests are ordered steps against one cache
 func TestCachePinnedSchemaURLSkipsFetch(t *testing.T) {
 	t.Parallel()
 	server := newSchemaServer(t, "Description A.")
 	schemaURL := server.URL + "/v9.9.9/schema.json"
 	registryDir, docsOutDir, navOutDir := t.TempDir(), t.TempDir(), t.TempDir()
+	run := func(t *testing.T) string {
+		return runCacheTestGeneration(t, registryDir, docsOutDir, navOutDir, schemaURL)
+	}
 
-	runCacheTestGeneration(t, registryDir, docsOutDir, navOutDir, schemaURL)
-	require.Equal(t, int32(1), server.requests.Load())
+	t.Run("first run downloads the schema", func(t *testing.T) {
+		run(t)
+		require.Equal(t, int32(1), server.requests.Load(), "first run should download the schema once")
+	})
 
-	runCacheTestGeneration(t, registryDir, docsOutDir, navOutDir, schemaURL)
-	assert.Equal(t, int32(1), server.requests.Load(), "pinned schema was fetched again")
+	t.Run("rerun with unchanged YAML makes no request", func(t *testing.T) {
+		run(t)
+		require.Equal(t, int32(1), server.requests.Load(),
+			"a schema URL pinned to the package version is immutable, so a rerun with unchanged YAML should not fetch it again")
+	})
 }
 
 func TestIsPinnedSchemaURL(t *testing.T) {

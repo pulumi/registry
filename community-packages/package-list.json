@@ -21,8 +21,8 @@
       "schemaFile": "provider/cmd/pulumi-resource-checkly/schema.json"
     },
     {
-      "repoSlug": "EventStore/pulumi-eventstorecloud",
-      "schemaFile": "provider/cmd/pulumi-resource-eventstorecloud/schema.json"
+      "repoSlug": "kurrent-io/pulumi-kurrentcloud",
+      "schemaFile": "provider/cmd/pulumi-resource-kurrentcloud/schema.json"
     },
     {
       "repoSlug": "pulumiverse/pulumi-buildkite",

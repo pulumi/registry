@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/incident-io/pulumi-incident/v0.1.2/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/incident-io/pulumi-incident/v0.3.0/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/incident-io/pulumi-incident/blob/v0.1.2/docs/installation-configuration.md
+edit_url: https://github.com/incident-io/pulumi-incident/blob/v0.3.0/docs/installation-configuration.md
 title: incident.io Installation & Configuration
 meta_desc: How to install the incident.io Pulumi provider and authenticate it against your account.
 layout: package

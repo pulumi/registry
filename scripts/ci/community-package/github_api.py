@@ -101,10 +101,13 @@ def pull_request_head(pr: int) -> tuple[str, str]:
     return str(pull["user"]["login"]), str(pull["head"]["sha"])
 
 
-def pull_request_is_first_party(pr: int) -> bool:
-    pull = pull_request(pr)
+def is_first_party(pull: dict[str, Any]) -> bool:
     head_repo = (pull["head"].get("repo") or {}).get("full_name")
     return bool(head_repo) and head_repo == pull["base"]["repo"]["full_name"]
+
+
+def pull_request_is_first_party(pr: int) -> bool:
+    return is_first_party(pull_request(pr))
 
 
 def open_pull_requests() -> list[dict[str, Any]]:

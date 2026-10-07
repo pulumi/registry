@@ -22,7 +22,7 @@ jobs:
     steps:
       - name: Fetch secrets from ESC
         id: esc-secrets
-        uses: pulumi/esc-action@32dda43ffe7a2ab21e6bce11c781b44a3e5623cf # v3
+        uses: pulumi/esc-action@57e332b6dfb0d7edcf6cb813ee9a98b9665f12c2 # v3.2.1
       - uses: actions/checkout@v7
       - name: Set up Go
         uses: actions/setup-go@v7
@@ -40,14 +40,8 @@ jobs:
       - id: set-matrix
         run: echo "matrix=$(python generate_package_list.py)" >> $GITHUB_OUTPUT
         working-directory: community-packages
-      - name: List open pull requests
-        id: list
-        run: source ./scripts/common.sh && echo "titles=$(list_pull_requests)" >> $GITHUB_OUTPUT
-        env:
-          GITHUB_TOKEN: ${{ steps.esc-secrets.outputs.PULUMI_BOT_TOKEN }}
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
-      prs: ${{ steps.list.outputs.titles }}
   check-for-package-update:
     name: ${{ matrix.repoSlug }} (${{ matrix.schemaFile }})
     needs: generate-packages-list
@@ -62,7 +56,7 @@ jobs:
     steps:
       - name: Fetch secrets from ESC
         id: esc-secrets
-        uses: pulumi/esc-action@32dda43ffe7a2ab21e6bce11c781b44a3e5623cf # v3
+        uses: pulumi/esc-action@57e332b6dfb0d7edcf6cb813ee9a98b9665f12c2 # v3.2.1
       - name: Read package name from its schema
         id: package
         # Read the name from the schema (its source of truth, and its
@@ -87,24 +81,16 @@ jobs:
         env:
           REPO_SLUG: ${{ matrix.repoSlug }}
           SCHEMA_FILE: ${{ matrix.schemaFile }}
-      - name: Skip if this package already has an open update PR
-        if: contains(needs.generate-packages-list.outputs.prs, steps.package.outputs.name )
-        id: skip-run
-        run: echo "skip=1" >> $GITHUB_OUTPUT
       - name: Check out registry repo
-        if: steps.skip-run.outputs.skip != 1
         uses: actions/checkout@v7
       - name: Download resourcedocsgen
-        if: steps.skip-run.outputs.skip != 1
         uses: actions/download-artifact@v8
         with:
           name: resourcedocsgen
           path: tools/resourcedocsgen
       - name: Restore the executable bit the artifact upload drops
-        if: steps.skip-run.outputs.skip != 1
         run: chmod +x tools/resourcedocsgen/resourcedocsgen
       - name: Check for a new version
-        if: steps.skip-run.outputs.skip != 1
         id: version
         env:
           REPO_SLUG: ${{ matrix.repoSlug }}
@@ -129,8 +115,8 @@ jobs:
         if: env.PROVIDER_VERSION
         run: echo ${{ env.PROVIDER_VERSION}}
       - name: Read package name at the release version
-        # The skip-dedup read above resolves the name at HEAD, because the
-        # release version isn't known yet at that point. Re-read it here pinned
+        # The read above resolves the name at HEAD, because the release
+        # version isn't known yet at that point. Re-read it here pinned
         # to the exact ref the metadata command downloads — the release tag — so
         # a provider that renamed its schema between its latest release and HEAD
         # can't trigger a spurious providerName/schema-name mismatch. Falls back
@@ -176,7 +162,7 @@ jobs:
     steps:
       - name: Fetch secrets from ESC
         id: esc-secrets
-        uses: pulumi/esc-action@32dda43ffe7a2ab21e6bce11c781b44a3e5623cf # v3
+        uses: pulumi/esc-action@57e332b6dfb0d7edcf6cb813ee9a98b9665f12c2 # v3.2.1
       - name: Slack Notification
         uses: docker://sholung/action-slack-notify:v2.3.0
         env:

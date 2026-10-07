@@ -1,11 +1,12 @@
 category: Network
 component: true
+deprecated: true
 description: ""
 featured: false
 logo_url: ""
 name: aws-quickstart-vpc
 package_status: public_preview
-publisher: DEPRECATED
+publisher: Pulumi
 repo_url: "https://github.com/pulumi/pulumi-aws-quickstart-vpc"
 schema_file_path: /schema.yaml
 title: AWS QuickStart VPC

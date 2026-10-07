@@ -137,8 +137,6 @@ func (mod *modContext) getFunctionResourceInfo(
 }
 
 func (mod *modContext) genFunctionParamsTS(f *schema.Function, funcName string, outputVersion bool) []formalParam {
-	dctx := mod.context
-
 	argsTypeSuffix := "Args"
 	if outputVersion {
 		argsTypeSuffix = "OutputArgs"
@@ -146,7 +144,6 @@ func (mod *modContext) genFunctionParamsTS(f *schema.Function, funcName string, 
 
 	argsType := title(fmt.Sprintf("%s%s", funcName, argsTypeSuffix), language.NodeJS)
 
-	docLangHelper := dctx.getLanguageDocHelper(language.NodeJS)
 	var params []formalParam
 	if f.Inputs != nil {
 		params = append(params, formalParam{
@@ -157,8 +154,6 @@ func (mod *modContext) genFunctionParamsTS(f *schema.Function, funcName string, 
 			},
 		})
 	}
-	def, err := mod.pkg.Definition()
-	contract.AssertNoErrorf(err, "failed to get definition for package %q", mod.pkg.Name())
 	// The Output version accepts `InvokeOutputOptions`, which extends `InvokeOptions` with `dependsOn`.
 	optsType := "InvokeOptions"
 	if outputVersion {
@@ -169,7 +164,7 @@ func (mod *modContext) genFunctionParamsTS(f *schema.Function, funcName string, 
 		OptionalFlag: "?",
 		Type: propertyType{
 			Name: optsType,
-			Link: docLangHelper.GetDocLinkForPulumiType(def, optsType),
+			Link: nodejsPulumiTypeLink(optsType),
 		},
 	})
 

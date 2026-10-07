@@ -1,0 +1,112 @@
+# Packages whose logo already spells out the package's name, so the package card
+# shows the logo alone instead of repeating the name beside it. Every package not
+# listed gets its title next to the logo, which is the safe default: forgetting an
+# entry repeats the name, while a wrong entry leaves an icon with no name at all.
+#
+# Hand-maintained; unlike external_logo_treatment.yaml there's no script to check
+# it. List a package only when its logo reads, at 24px tall, as this package's own
+# name. A parent brand's wordmark doesn't count when the package is a product
+# under it (the "aws" mark on aws-native, the Zscaler mark on zpa and zia), and
+# neither does text too small to read at card size.
+wordmark:
+  - airbyte
+  - aiven
+  - akamai
+  - alicloud
+  - artifactory
+  - astra
+  - auth0
+  - aviatrix
+  - aws
+  - azure
+  - azuread
+  - biznetgio
+  - buildkite
+  - civo
+  - cloudamqp
+  - cloudflare
+  - cloudinit
+  - confluentcloud
+  - consul
+  - crowdstrike
+  - databricks
+  - datadog
+  - datarobot
+  - digitalocean
+  - dnsimple
+  - docker
+  - ec
+  - exoscale
+  - fastly
+  - flux
+  - gandi
+  - gcp
+  - github
+  - gitlab
+  - harbor
+  - harness
+  - hcl
+  - hcloud
+  - hcp
+  - heroku
+  - ionoscloud
+  - kafka
+  - keycloak
+  - kong
+  - koyeb
+  - kubernetes
+  - kubernetes-cert-manager
+  - kubernetes-coredns
+  - libvirt
+  - linode
+  - mailgun
+  - meraki
+  - minio
+  - mongodbatlas
+  - mysql
+  - newrelic
+  - ngrok
+  - nomad
+  - ns1
+  - nuage
+  - oci
+  - ohdear
+  - okta
+  - onelogin
+  - onepassword
+  - openstack
+  - opsgenie
+  - ovh
+  - pagerduty
+  - pinecone
+  - port
+  - postgresql
+  - proxmoxve
+  - pulumiservice
+  - rabbitmq
+  - rancher2
+  - rke
+  - scaleway
+  - sdm
+  - sentry
+  - signalfx
+  - slack
+  - snowflake
+  - splunk
+  - spotinst
+  - stackit
+  - statsig
+  - statuscake
+  - sumologic
+  - supabase
+  - symbiosis
+  - tailscale
+  - terraform
+  - twingate
+  - upstash
+  - vault
+  - venafi
+  - vercel
+  - vsphere
+  - vultr
+  - zitadel

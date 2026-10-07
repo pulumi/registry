@@ -1,6 +1,10 @@
 {
   "include": [
     {
+      "repoSlug": "dimeskigj/pulumi-dokploy",
+      "schemaFile": "provider/cmd/pulumi-resource-dokploy/schema.json"
+    },
+    {
       "repoSlug": "koyeb/pulumi-koyeb",
       "schemaFile": "provider/cmd/pulumi-resource-koyeb/schema.json"
     },
@@ -21,8 +25,8 @@
       "schemaFile": "provider/cmd/pulumi-resource-checkly/schema.json"
     },
     {
-      "repoSlug": "EventStore/pulumi-eventstorecloud",
-      "schemaFile": "provider/cmd/pulumi-resource-eventstorecloud/schema.json"
+      "repoSlug": "kurrent-io/pulumi-kurrentcloud",
+      "schemaFile": "provider/cmd/pulumi-resource-kurrentcloud/schema.json"
     },
     {
       "repoSlug": "pulumiverse/pulumi-buildkite",
@@ -83,10 +87,6 @@
     {
       "repoSlug": "pulumiverse/pulumi-grafana",
       "schemaFile": "provider/cmd/pulumi-resource-grafana/schema.json"
-    },
-    {
-      "repoSlug": "lbrlabs/pulumi-harness",
-      "schemaFile": "provider/cmd/pulumi-resource-harness/schema.json"
     },
     {
       "repoSlug": "pulumi/pulumi-synced-folder",
@@ -181,10 +181,6 @@
       "schemaFile": "provider/cmd/pulumi-resource-matchbox/schema.json"
     },
     {
-      "repoSlug": "lbrlabs/pulumi-lbrlabs-eks",
-      "schemaFile": "schema.yaml"
-    },
-    {
       "repoSlug": "pulumiverse/pulumi-cockroach",
       "schemaFile": "provider/cmd/pulumi-resource-cockroach/schema.json"
     },
@@ -221,24 +217,12 @@
       "schemaFile": "provider/cmd/pulumi-resource-esxi-native/schema.json"
     },
     {
-      "repoSlug": "lbrlabs/pulumi-iosxe",
-      "schemaFile": "provider/cmd/pulumi-resource-iosxe/schema.json"
-    },
-    {
-      "repoSlug": "lbrlabs/pulumi-nxos",
-      "schemaFile": "provider/cmd/pulumi-resource-nxos/schema.json"
-    },
-    {
       "repoSlug": "pulumiverse/pulumi-acme",
       "schemaFile": "provider/cmd/pulumi-resource-acme/schema.json"
     },
     {
       "repoSlug": "threefoldtech/pulumi-threefold",
       "schemaFile": "provider/cmd/pulumi-resource-threefold/schema.json"
-    },
-    {
-      "repoSlug": "lbrlabs/pulumi-awscontroltower",
-      "schemaFile": "provider/cmd/pulumi-resource-awscontroltower/schema.json"
     },
     {
       "repoSlug": "pulumiverse/pulumi-talos",
@@ -311,10 +295,6 @@
     {
       "repoSlug": "wttech/pulumi-aem",
       "schemaFile": "provider/cmd/pulumi-resource-aem/schema.json"
-    },
-    {
-      "repoSlug": "crowdstrike/pulumi-crowdstrike",
-      "schemaFile": "provider/cmd/pulumi-resource-crowdstrike/schema.json"
     },
     {
       "repoSlug": "azaurus1/pulumi-kafka-connect",

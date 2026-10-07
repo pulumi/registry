@@ -743,7 +743,7 @@ class VerifyPackageYamlTests(unittest.TestCase):
         self.assertTrue(manifest.docLint)
 
     def test_delisted_package_is_skipped(self) -> None:
-        manifest = self._verify({"name": "stripe", "publisher": "DEPRECATED", "version": "0.4.0"},
+        manifest = self._verify({"name": "stripe", "publisher": "stripe", "version": "0.4.0", "deprecated": True},
                                 index=None, publishers={})
         self.assertTrue(manifest.delisted)
         self.assertTrue(manifest.green)

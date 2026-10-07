@@ -29,7 +29,7 @@ Codegen demo with const inputs
 <pulumi-choosable type="language" values="javascript,typescript">
 <div class="highlight"
 ><pre class="chroma"><code class="language-typescript" data-lang="typescript"
-><span class="k">function </span>funcWithConstInput<span class="p">(</span><span class="nx">args</span><span class="p">:</span> <span class="nx">FuncWithConstInputArgs</span><span class="p">,</span> <span class="nx">opts</span><span class="p">?:</span> <span class="nx"><a href="/docs/reference/pkg/nodejs/pulumi/pulumi/#InvokeOptions">InvokeOptions</a></span><span class="p">): Promise&lt;<span class="nx"><a href="#result">FuncWithConstInputResult</a></span>></span
+><span class="k">function </span>funcWithConstInput<span class="p">(</span><span class="nx">args</span><span class="p">:</span> <span class="nx">FuncWithConstInputArgs</span><span class="p">,</span> <span class="nx">opts</span><span class="p">?:</span> <span class="nx"><a href="/docs/reference/pkg/nodejs/pulumi/pulumi/interfaces/InvokeOptions.html">InvokeOptions</a></span><span class="p">): Promise&lt;<span class="nx"><a href="#result">FuncWithConstInputResult</a></span>></span
 ></code></pre></div>
 </pulumi-choosable>
 </div>

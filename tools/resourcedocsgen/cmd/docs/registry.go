@@ -70,35 +70,39 @@ func genResourceDocsForPackageFromRegistryMetadata(
 	client HTTPDoer, metadata pkg.PackageMeta, yamlBytes []byte,
 	docsOutDir, packageTreeJSONOutDir, schemasOutDir, cliDocsOutDir string,
 ) error {
-	// Skip unchanged packages: if the YAML metadata and tool version match
-	// what was used to generate the existing output, reuse it.
-	cacheKey := buildCacheKey(yamlBytes)
-	if isFresh(docsOutDir, packageTreeJSONOutDir, schemasOutDir, metadata.Name, cacheKey) {
-		slog.Info("Skipping (output is fresh)", "package", metadata.Name)
-		return nil
-	}
-
-	slog.Info("Generating docs", "package", metadata.Name)
-
 	schemaFileURL, err := getSchemaFileURL(metadata)
 	if err != nil {
 		return fmt.Errorf("failed to get schema_file_url: %w", err)
 	}
 
-	slog.Info("Reading remote schema file from registry")
-	schemaBytes, err := getSchemaFromRegistry(client, metadata, schemaFileURL)
-	if err != nil {
-		if errors.Is(err, ErrPackageNotFound) {
-			slog.Info(err.Error())
-		} else {
-			slog.Warn("Error getting schema from registry", "err", err)
+	// Skip unchanged packages: if the YAML metadata and tool version match
+	// what was used to generate the existing output, reuse it.
+	//
+	// That's only enough when the schema URL is pinned to a version. Otherwise
+	// the schema can change behind an unchanged URL (a branch, say), so fetch it
+	// first and fold its contents into the key.
+	cacheKey := buildCacheKey(yamlBytes)
+	pinned := isPinnedSchemaURL(schemaFileURL, metadata.Version)
+	var schemaBytes []byte
+	if !pinned {
+		if schemaBytes, err = fetchSchema(client, metadata, schemaFileURL); err != nil {
+			return err
 		}
+		cacheKey = withSchemaHash(cacheKey, schemaBytes)
+	}
+	if isFresh(docsOutDir, packageTreeJSONOutDir, schemasOutDir, metadata.Name, cacheKey) {
+		slog.Info("Skipping (output is fresh)", "package", metadata.Name)
+		return nil
+	}
 
-		slog.Info("Falling back to reading remote schema file from VCS")
-		schemaBytes, err = getSchemaFromVCS(client, metadata, schemaFileURL)
-		if err != nil {
-			return fmt.Errorf("getting schema from VCS for %q: %w", metadata.Name, err)
+	if pinned {
+		slog.Info("Generating docs", "package", metadata.Name)
+		if schemaBytes, err = fetchSchema(client, metadata, schemaFileURL); err != nil {
+			return err
 		}
+	} else {
+		slog.Info("Generating docs (schema URL isn't pinned to a version, and the schema or metadata changed)",
+			"package", metadata.Name, "schemaFileURL", schemaFileURL)
 	}
 
 	// Write the schema.json file if schemasOutDir is provided
@@ -151,6 +155,28 @@ func genResourceDocsForPackageFromRegistryMetadata(
 	}
 
 	return nil
+}
+
+// fetchSchema reads the package's schema from the registry API, falling back to
+// schemaFileURL when the registry doesn't have it.
+func fetchSchema(client HTTPDoer, metadata pkg.PackageMeta, schemaFileURL string) ([]byte, error) {
+	slog.Info("Reading remote schema file from registry")
+	schemaBytes, err := getSchemaFromRegistry(client, metadata, schemaFileURL)
+	if err == nil {
+		return schemaBytes, nil
+	}
+	if errors.Is(err, ErrPackageNotFound) {
+		slog.Info(err.Error())
+	} else {
+		slog.Warn("Error getting schema from registry", "err", err)
+	}
+
+	slog.Info("Falling back to reading remote schema file from VCS")
+	schemaBytes, err = getSchemaFromVCS(client, metadata, schemaFileURL)
+	if err != nil {
+		return nil, fmt.Errorf("getting schema from VCS for %q: %w", metadata.Name, err)
+	}
+	return schemaBytes, nil
 }
 
 var ErrPackageNotFound = errors.New("package not found")

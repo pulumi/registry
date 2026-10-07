@@ -1,11 +1,12 @@
 category: Cloud
 component: true
+deprecated: true
 description: ""
 featured: false
 logo_url: ""
 name: gcp-global-cloudrun
 package_status: public_preview
-publisher: DEPRECATED
+publisher: Paul Stack
 repo_url: "https://github.com/pulumi/pulumi-gcp-global-cloudrun"
 schema_file_path: /provider/cmd/pulumi-resource-gcp-global-cloudrun/schema.json
 title: GCP Global CloudRun

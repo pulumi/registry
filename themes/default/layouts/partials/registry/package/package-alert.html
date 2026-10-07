@@ -1,6 +1,27 @@
 {{ $package := .Scratch.Get "package" }}
+{{ $packageData := index site.Data.registry.packages $package }}
 
-{{ if (eq $package "aws-native") }}
+{{ if and $packageData $packageData.deprecated }}
+    <div class="note note-warning">
+        <div class="icon-and-line">
+            {{ partial "icon" (dict "name" "warning" "weight" "fill") }}
+            <div class="line"></div>
+        </div>
+        <div>
+            <p>
+                This package is deprecated.
+                {{ with $packageData.deprecation_reason }}{{ . }}{{ end }}
+                {{ with $packageData.superseded_by }}
+                    {{ $replacement := index site.Data.registry.packages . }}
+                    {{ if not $replacement }}
+                        {{ errorf "package %q: superseded_by %q is not a registry package" $package . }}
+                    {{ end }}
+                    We recommend using the <a href="/registry/packages/{{ . }}/">{{ $replacement.title }}</a> package instead.
+                {{ end }}
+            </p>
+        </div>
+    </div>
+{{ else if (eq $package "aws-native") }}
     <div class="note note-info">
         <div class="icon-and-line">
             {{ partial "icon" (dict "name" "info" "weight" "fill") }}
@@ -22,45 +43,6 @@
         <div>
             <p>
                 We recommend using <a href="/registry/packages/azure-native/">Azure Native</a>.
-            </p>
-        </div>
-    </div>
-{{ else if (eq $package "google-native") }}
-    <div class="note note-info">
-        <div class="icon-and-line">
-            {{ partial "icon" (dict "name" "info" "weight" "fill") }}
-            <div class="line"></div>
-        </div>
-        <div>
-            <p>
-                Google Cloud Native is in preview.
-                <a href="/registry/packages/gcp/">Google Cloud Classic</a> is fully supported.
-            </p>
-        </div>
-    </div>
-{{ else if (eq $package "confluent") }}
-    <div class="note note-warning">
-        <div class="icon-and-line">
-            {{ partial "icon" (dict "name" "warning" "weight" "fill") }}
-            <div class="line"></div>
-        </div>
-        <div>
-            <p>
-                This package is deprecated. We recommend using the
-                <a href="/registry/packages/confluentcloud/">new Confluent Cloud package</a>.
-            </p>
-        </div>
-    </div>
-{{ else if (eq $package "equinix-metal") }}
-    <div class="note note-warning">
-        <div class="icon-and-line">
-            {{ partial "icon" (dict "name" "warning" "weight" "fill") }}
-            <div class="line"></div>
-        </div>
-        <div>
-            <p>
-                This package is deprecated.
-                We recommend using the <a href="/registry/packages/equinix/">new Equinix package</a>.
             </p>
         </div>
     </div>

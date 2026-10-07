@@ -12,7 +12,7 @@ The AWSx provider must be configured with credentials to deploy and update resou
 
 ## Example
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 
 {{% choosable language typescript %}}
 
@@ -138,6 +138,36 @@ outputs:
   privateSubnetIds: ${vpc.privateSubnetIds}
   publicSubnetIds: ${vpc.publicSubnetIds}
 
+```
+
+{{% /choosable %}}
+
+{{% choosable language hcl %}}
+
+```hcl
+terraform {
+  required_providers {
+    awsx = {
+      source = "pulumi/awsx"
+    }
+  }
+}
+
+# Allocate a new VPC with the default settings:
+resource "awsx_ec2_vpc" "vpc" {
+}
+
+output "vpcId" {
+  value = awsx_ec2_vpc.vpc.vpc_id
+}
+
+output "privateSubnetIds" {
+  value = awsx_ec2_vpc.vpc.private_subnet_ids
+}
+
+output "publicSubnetIds" {
+  value = awsx_ec2_vpc.vpc.public_subnet_ids
+}
 ```
 
 {{% /choosable %}}

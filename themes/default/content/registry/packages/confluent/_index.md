@@ -1,5 +1,5 @@
 ---
-title: Confluent Cloud (Deprecated)
+title: Confluent Cloud
 meta_desc: Provides an overview of the Confluent Provider for Pulumi.
 layout: package
 ---

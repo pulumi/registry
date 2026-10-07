@@ -290,3 +290,6 @@ registry/packages/kubernetes/how-to-guides/typed-customresources-with-provider-e
 registry/packages/kubernetes/how-to-guides/choosing-the-right-helm-resource-for-your-use-case/index.html|https://www.pulumi.com/dev/tutorials/choosing-the-right-helm-resource/
 registry/packages/kubernetes/how-to-guides/deleting-helm-chart-default-values/index.html|https://www.pulumi.com/dev/tutorials/deleting-helm-chart-default-values/
 registry/packages/azure/how-to-guides/container-webserver/index.html|https://www.pulumi.com/dev/examples/azure-ts-aci/
+registry/packages/azure/how-to-guides/index.html|https://www.pulumi.com/dev/tutorials/
+registry/packages/azure-native/how-to-guides/index.html|https://www.pulumi.com/dev/tutorials/
+registry/packages/azuread/how-to-guides/index.html|https://www.pulumi.com/dev/tutorials/

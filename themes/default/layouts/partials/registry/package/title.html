@@ -1,0 +1,18 @@
+{{/*
+    Returns the page's title. On the landing page of a package whose YAML sets
+    `deprecated: true`, appends " (Deprecated)" so the suffix follows the
+    package metadata instead of being typed into each _index.md.
+*/}}
+{{ $title := .Title }}
+{{ with .File }}
+    {{ $parts := split .Path "/" }}
+    {{ if and (eq (len $parts) 4) (eq (index $parts 0) "registry") (eq (index $parts 1) "packages") (eq (index $parts 3) "_index.md") }}
+        {{ $name := index (split (index $parts 2) "@") 0 }}
+        {{ with index site.Data.registry.packages $name }}
+            {{ if .deprecated }}
+                {{ $title = printf "%s (Deprecated)" $title }}
+            {{ end }}
+        {{ end }}
+    {{ end }}
+{{ end }}
+{{ return $title }}

@@ -104,7 +104,7 @@ def build_package_spec(
     publisher_display = data.get("publisher")
     schema_url = data.get("schema_file_url")
 
-    if publisher_display == "DEPRECATED":
+    if data.get("deprecated"):
         return SpecResult(None, skipped=True)
 
     if not version:

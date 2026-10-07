@@ -1,11 +1,12 @@
 category: Database
 component: true
+deprecated: true
 description: ""
 featured: false
 logo_url: ""
 name: aws-quickstart-aurora-postgres
 package_status: public_preview
-publisher: DEPRECATED
+publisher: Pulumi
 repo_url: "https://github.com/pulumi/pulumi-aws-quickstart-aurora-postgres"
 schema_file_path: /schema.yaml
 title: AWS QuickStart Aurora Postgres

@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/juju/juju/2.3.1/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/juju/juju/2.4.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Juju Provider
@@ -42,7 +42,8 @@ and refer to the following via functions:
 Work is ongoing to include support for more of the juju CLIs capabilities within this provider.
 ## Prerequisites
 
-* [Juju](https://juju.is "Juju | An open source application orchestration engine") `2.9.49+`
+* [Juju](https://juju.is "Juju | An open source application orchestration engine") `3.x` or higher
+* If using [JAAS](https://documentation.ubuntu.com/jaas/ "JAAS | An enterprise gateway into your Juju estate"), Juju controller `3.6.5` or higher
 ## Authentication
 
 There are 3 ways to define credentials for authentication with the Juju controller you wish to target.

@@ -350,16 +350,13 @@ var moduleResourceResource = new ModuleResource("moduleResourceResource", Module
     .requiredBool(false)
     .plainRequiredString("string")
     .plainRequiredNumber(0.0)
-    .plainRequiredConst("string")
     .optionalString("string")
     .plainOptionalString("string")
     .plainOptionalNumber(0.0)
-    .plainOptionalConst("string")
     .plainOptionalBool(false)
     .optionalBool(false)
     .optionalNumber(0.0)
     .optionalEnum(4)
-    .optionalConst("string")
     .build());
 ```
 

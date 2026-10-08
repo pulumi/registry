@@ -330,7 +330,7 @@ function getDefaultExcludedKeywords() {
         "https://docs.microsoft.com/", // redirects to learn.microsoft.com and bot-protects
         "https://developer.hashicorp.com/", // HashiCorp maintains redirects when reorganizing docs
         "https://www.hashicorp.com/",
-        "https://x.com*",
+        "https://x.com/",
 
         // API base URL referenced in the airbyte provider's upstream README; 401s without auth.
         "https://api.airbyte.com/*",

@@ -50,15 +50,13 @@ Before triaging anything internal, check for this:
 2. Spot-check two or three of those well-known destinations with `WebFetch`. If they load now, the crawl was throttled. If they still 404, the throttle may still be active; don't read that as proof they're broken.
 3. If the run was throttled, **action no internal link**: no edits, no redirects, no exclusions. External links are unaffected, so triage those as usual. Put one line at the top of the PR description, and in `.broken-links-pr.txt`, saying the crawl was rate-limited and internal results were skipped. If no external link needs a fix either, open no PR and just write that summary.
 
-The reliable way to re-check a registry page is the production origin bucket's S3 website endpoint, which sits behind CloudFront without the WAF. When `.broken-links.json` carries an `originStatus` on an internal entry, trust it over any re-check through `www.pulumi.com`: a 2xx or 3xx there means the page exists and the 404 was the WAF.
-
 Only links you've confirmed broken proceed to triage below.
 
 ## Skip links already being handled (deduplication)
 
 Broken links persist for weeks, so the same ones surface in consecutive runs while a fix is already in flight. **Before actioning a confirmed-broken link, check whether an open PR already covers it** — never open a second PR for a fix that's pending.
 
-List candidates with `gh pr list --state open --search "broken link" --json number,title,url,headRefName` (prior runs use the `fix/broken-links-*` branch pattern). For a likely match, confirm with `gh pr view <n>` / `gh pr diff <n>` that it actually covers this link (same source file, redirect, or exclusion entry). If a human has already filed an issue for a link, `gh issue list` / `gh search issues` will find it; link it in the PR, but don't file one yourself.
+Earlier runs open their PRs from `fix/broken-links-<date>` branches; list the open ones with `gh pr list --state open --limit 100 --json number,title,url,headRefName --jq '.[] | select(.headRefName | startswith("fix/broken-links-"))'`. A human may also have a fix in flight, so search open PRs for the broken URL or the source file's path too (`gh pr list --state open --search "<url or path>"`). For a likely match, confirm with `gh pr view <n>` / `gh pr diff <n>` that it actually covers this link (same source file, redirect, or exclusion entry). An open issue doesn't make a link a duplicate, since it isn't a fix; if a human has filed one, `gh issue list` / `gh search issues` will find it, and you link it in your PR. Don't file one yourself.
 
 Classify each confirmed-broken link as **actionable** (no open PR covers it) or **duplicate** (one does — capture the PR URL). Then:
 
@@ -141,7 +139,7 @@ Otherwise:
 1. Create a branch `fix/broken-links-<date>` (date from the workflow, e.g. `fix/broken-links-2026-09-14`).
 2. Make the fixes, grouping related changes into clear commits.
 3. Run `yarn run lint` and `make lint-markdown`; fix anything they surface.
-4. Open a **ready** (non-draft) PR to `master`.
+4. Open a **ready** (non-draft) PR to `master` titled `Fix broken links found <date>`.
 5. Write the final PR URL plus a one-line summary to `.broken-links-pr.txt` for the workflow's Slack step, e.g.: `:link: Fixed 4 broken links — <PR URL> (2 source edits, 1 redirect, 1 exclusion; 6 upstream-owned, 5 false positives)`
 
 ## PR description contract (auditability)
@@ -151,6 +149,6 @@ The reviewer must be able to audit every decision without re-deriving it. Includ
 - **A table or list of every broken link you fixed** → the strategy applied → one line of non-obvious reasoning (why a redirect vs. a source edit, why excluded, etc.).
 - A **Verification** section: confirm `yarn run lint` and `make lint-markdown` passed, and note that each link was re-checked before fixing.
 - A **False positives / not actioned** section listing every reported link you confirmed was actually fine, with its reason code and why (so the reviewer knows it was checked, not missed).
-- An **Upstream-owned pages** section: every confirmed-broken link on a fetched page, grouped into **First-party** and **Third-party**, one line each with the package, the broken URL, and the page's `edit_url`. Collapse it in a `<details>` block when it runs long.
+- An **Upstream-owned pages** section: every confirmed-broken link on a fetched page, grouped into **First-party** and **Third-party**, one line each with the package, the broken URL, and the page's `edit_url` (or the package's `repo_url` for a landing page that has none). Collapse it in a `<details>` block when it runs long.
 - A **Needs a human** section, when any link on a page this repo maintains couldn't be fixed mechanically (a missing asset, a target with no clear successor): one line each saying what's missing.
-- An **Already tracked** section, when any link was skipped as a duplicate: one succinct line per link linking the existing PR (or a human-filed issue, if you found one).
+- An **Already tracked** section, when any link was skipped as a duplicate: one succinct line per link linking the existing PR.

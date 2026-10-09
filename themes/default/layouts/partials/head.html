@@ -6,6 +6,7 @@
     <!-- GrowthBook / Segment keys -->
     <script>
         {{- if eq hugo.Environment "production" }}
+        {{ partial "gravity.html" . }}
             var segmentWriteKey = "UK90Ofwacetj5VCPJ7cUgkbNcKLSHO3u";
             var snippetName = "C8Y429BDEy/06ujkUhzfL.min.js";
             window.growthbook_sdk_key="sdk-psPofGr6jFV2ja9O";

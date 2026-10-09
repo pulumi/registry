@@ -489,15 +489,17 @@ gcp:iap/client:Client
 
 Reading it:
 
-- a `gcp:iap/client:Client` line — remove it from state before your next `pulumi up`, or that OAuth client is deleted in Google Cloud. See the Remediation section below and follow it in order.
-- a `gcp:iap/brand:Brand` line — remove it from state too, see the Remediation section below. Nothing in Google Cloud is lost either way.
+- a `gcp:iap/client:Client` line — remove it from state before your next `pulumi up`, or have Pulumi retain it on delete as described in the Remediation section below. Otherwise, that OAuth client is deleted in Google Cloud.
+- a `gcp:iap/brand:Brand` line — remove it from state too, or have Pulumi retain it on delete as described in the Remediation section below. Nothing in Google Cloud is lost either way.
 - no output at all — no IAP brand or client is under management in this stack, so you are not affected.
 
 The command cannot see `gcp.iap.getClient`, because a data source is never written to state. Search your program for it separately.
 
 #### Remediation
 
-First take the resources out of state. Neither command calls Google Cloud, so the brand and the OAuth client stay exactly as they are. Delete the client before the brand, because the brand cannot go while something still references it.
+You have two safe options. Use the state option for a one-off migration, or use `retainOnDelete` if you need the migration to run through normal CI/CD without an out-of-band `pulumi state` command.
+
+**Option 1: remove the resources from state.** Neither command calls Google Cloud, so the brand and the OAuth client stay exactly as they are. Delete the client before the brand, because the brand cannot go while something still references it.
 
 ```bash
 pulumi state delete 'urn:pulumi:dev::my-stack::gcp:iap/client:Client::iap-client'
@@ -513,7 +515,21 @@ error: urn:pulumi:dev::...::gcp:iap/brand:Brand::iap-brand can't be safely delet
 Delete those resources first or pass --target-dependents.
 ```
 
-Then delete every `gcp.iap.Brand` and `gcp.iap.Client` from your program. Nothing takes their place; Pulumi just stops managing resources that go on existing in Google Cloud.
+**Option 2: set `retainOnDelete` before upgrading.** While your program still uses `@pulumi/gcp` v9, add the [`retainOnDelete` resource option](https://www.pulumi.com/docs/iac/concepts/resources/options/retainondelete/) to each `gcp.iap.Brand` and `gcp.iap.Client`, then run `pulumi up`. This records the option in the stack state without changing the Google Cloud resources.
+
+```typescript
+const brand = new gcp.iap.Brand("iap-brand", {
+    // existing arguments
+}, { retainOnDelete: true });
+
+const client = new gcp.iap.Client("iap-client", {
+    // existing arguments
+}, { retainOnDelete: true });
+```
+
+Then upgrade to `@pulumi/gcp` v10 and delete every `gcp.iap.Brand` and `gcp.iap.Client` from your program. Pulumi removes the state entries but, because `retainOnDelete` is already recorded, it does not call the old provider to delete the OAuth client. Do not wait until after the v10 upgrade to add this option, because the resources no longer exist in the v10 SDK.
+
+With either option, nothing takes their place; Pulumi just stops managing resources that go on existing in Google Cloud.
 
 **If you read an existing client with the `gcp.iap.getClient` data source**, you will need to read the client from the IAP Console and keep it in config; there is no replacement data source. Google documents the credentials themselves in [Use custom OAuth clients with IAP](https://cloud.google.com/iap/docs/custom-oauth-configuration):
 

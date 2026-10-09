@@ -9,7 +9,7 @@ name: planetscale
 package_status: ga
 publisher: planetscale
 repo_url: https://github.com/planetscale/terraform-provider-planetscale
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/planetscale/planetscale/1.11.1/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/planetscale/planetscale/1.12.0/schema.json
 title: planetscale
-updated_on: 1790897715
-version: 1.11.1
+updated_on: 1791243326
+version: 1.12.0

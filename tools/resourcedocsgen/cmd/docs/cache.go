@@ -17,8 +17,10 @@ package docs
 import (
 	"crypto/sha256"
 	"fmt"
+	"net/url"
 	"os"
 	"path/filepath"
+	"regexp"
 	"runtime/debug"
 	"strings"
 )
@@ -30,6 +32,36 @@ const sentinelFileName = ".generated"
 func buildCacheKey(yamlBytes []byte) string {
 	yamlHash := sha256.Sum256(yamlBytes)
 	return fmt.Sprintf("%x\t%s", yamlHash, getToolBuildID())
+}
+
+// withSchemaHash extends a cache key with a hash of the schema it was generated from.
+// It's used for schema URLs that aren't pinned to a version, where the YAML alone
+// doesn't say whether the schema behind the URL has changed.
+func withSchemaHash(cacheKey string, schemaBytes []byte) string {
+	return fmt.Sprintf("%s\t%x", cacheKey, sha256.Sum256(schemaBytes))
+}
+
+var commitSHARegexp = regexp.MustCompile(`^[0-9a-f]{40}$`)
+
+// isPinnedSchemaURL reports whether schemaURL names an immutable schema: one with
+// a path segment equal to the package version (with or without a leading "v"), or
+// to a full commit SHA. A URL that isn't pinned, such as one pointing at a branch,
+// can serve a different schema without the package YAML changing.
+func isPinnedSchemaURL(schemaURL, version string) bool {
+	u, err := url.Parse(schemaURL)
+	if err != nil {
+		return false
+	}
+	version = strings.TrimPrefix(version, "v")
+	for _, segment := range strings.Split(u.Path, "/") {
+		if version != "" && strings.TrimPrefix(segment, "v") == version {
+			return true
+		}
+		if commitSHARegexp.MatchString(segment) {
+			return true
+		}
+	}
+	return false
 }
 
 // sourceHash is set at build time via -ldflags to a hash of the

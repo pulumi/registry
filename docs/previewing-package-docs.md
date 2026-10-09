@@ -138,14 +138,13 @@ git checkout -- "themes/default/data/registry/packages/$PKG.yaml"
 
 ### Picking up a new commit on your branch
 
-`resourcedocsgen` won't regenerate output it believes is current. It records what it generated from in a `.generated` file next to the pages — the contents of the package YAML, plus the generator's own build — and skips the package when neither has changed, logging `Skipping (output is fresh)`. Push a new commit to your branch and the schema behind `schema_file_url` changes while the YAML doesn't, so it skips and you keep reading the old docs.
-
-`make -B` doesn't fix this. The target's sentinel is an intermediate file that Make deletes after each run, so the recipe already re-runs every time; the skip happens inside the generator. Delete the `.generated` file instead:
+Push the commit and re-run the same command:
 
 ```bash
-rm "content/registry/packages/$PKG/api-docs/.generated"
 make SKIP_VERSIONED_DOCS=1 "api-docs/$PKG"
 ```
+
+`resourcedocsgen` normally skips a package whose YAML hasn't changed, logging `Skipping (output is fresh)`. A branch URL isn't pinned to a version, though, so it downloads the schema on every run and regenerates the pages whenever the schema differs from the one they were built from. The same applies to a preview pull request: re-run its build after pushing to your branch and the preview picks up the new schema. `raw.githubusercontent.com` caches files for about five minutes, so a run immediately after a push can still see the previous schema.
 
 ## Share a preview
 
@@ -167,7 +166,7 @@ Neither kind of pull request gets a preview from a fork, because the preview job
 
 **`make api-docs/<package>` fails with `registry-mirror-discover ... Repository not found`.** The build tried to generate versioned docs, which uses a tool that lives in a Pulumi-internal repository. Re-run with `SKIP_VERSIONED_DOCS=1`.
 
-**The generator logs `Skipping (output is fresh)` and your changes don't appear.** Its output cache thinks the pages are current. See [Picking up a new commit on your branch](#picking-up-a-new-commit-on-your-branch).
+**The generator logs `Skipping (output is fresh)` and your changes don't appear.** The schema it downloaded is the one the pages were already built from. Check that your commit is pushed, and that `schema_file_url` names your branch rather than a release tag: a URL containing the package version is treated as immutable and isn't downloaded again. If you need to force a rebuild anyway, see [Forcing a rebuild](./previewing-registry-changes.md#forcing-a-rebuild).
 
 **Hugo isn't on port 1313.** `make serve` doesn't pass `--port`, so Hugo binds a random free port when 1313 is already taken. Read the port off the server's own startup output rather than assuming it.
 

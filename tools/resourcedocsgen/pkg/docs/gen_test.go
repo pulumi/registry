@@ -1007,3 +1007,22 @@ func TestFunctionInvokeOptionsTypes(t *testing.T) {
 		assert.NotContains(t, args.FunctionArgsOutputOptions, language.Go)
 	})
 }
+
+func TestNodejsPulumiTypeLink(t *testing.T) {
+	t.Parallel()
+
+	const root = "/docs/reference/pkg/nodejs/pulumi/pulumi/"
+	tests := map[string]string{
+		"ComponentResourceOptions": root + "interfaces/ComponentResourceOptions.html",
+		"CustomResourceOptions":    root + "interfaces/CustomResourceOptions.html",
+		"InvokeOptions":            root + "interfaces/InvokeOptions.html",
+		"InvokeOutputOptions":      root + "interfaces/InvokeOutputOptions.html",
+		"ID":                       root + "types/ID.html",
+		"ID?":                      root + "types/ID.html",
+		// Unknown types link to the index page rather than to an anchor it doesn't have.
+		"Unknown": root,
+	}
+	for typeName, expected := range tests {
+		assert.Equal(t, expected, nodejsPulumiTypeLink(typeName), typeName)
+	}
+}

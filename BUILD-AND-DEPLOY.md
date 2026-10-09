@@ -466,6 +466,7 @@ The `resourcedocsgen` tool skips unchanged packages using sentinel files. Each g
 - **SHA-256 of the package YAML metadata** — changes when the package version or config is updated.
 - **Go toolchain version** — changes on Go upgrades.
 - **Source hash** — a SHA-256 of all `.go`, `.tmpl`, and `go.sum` files in `tools/resourcedocsgen/`, injected at build time via `-ldflags`. Changes when the doc generation logic or templates change.
+- **SHA-256 of the schema**, only when the schema URL isn't pinned. A URL is pinned when one of its path segments is the package version (with or without a leading `v`) or a full commit SHA, which is true of every package in the registry. Pinned packages are checked before any download. An unpinned URL, such as a branch used to preview unreleased docs, can serve a new schema while the YAML stays the same, so `resourcedocsgen` downloads it first and adds its hash to the key.
 
 On each run, `resourcedocsgen` compares the computed cache key against the sentinel. If they match and the expected output files (api-docs, nav JSON, schema JSON) all exist, the package is skipped. Otherwise it regenerates.
 
@@ -522,6 +523,7 @@ All workflow files live in `.github/workflows/`.
 | `publish-provider-update.yml` | provider docs build | `repository_dispatch` |
 | `bucket-cleanup.yml` | Scheduled jobs: Bucket cleanup | Daily 3:00 PM UTC |
 | `priority-digest.yml` | Scheduled jobs: Priority digest | Daily 3:00 PM UTC |
+| `repo-url-audit.yml` | Scheduled jobs: Repo URL audit | Every Monday 2:00 PM UTC |
 | `export-repo-secrets.yml` | Export secrets to ESC | `workflow_dispatch` |
 | `add-triage-label.yml` | Add triage label to new issues | Issue opened / reopened |
 | `add-to-project.yml` | Add issues to project | Issue opened / reopened |
@@ -716,7 +718,7 @@ Node version: 24.x; Hugo 0.157.0 installed.
 
 1. `generate-packages-list` job: Runs `python generate_package_list.py` in `community-packages/` to build a matrix of community provider repos to check.
 2. `check-for-package-update` job (matrix, max-parallel: 8): For each provider, runs `resourcedocsgen pkgversion` to check if a new version is available. If so, runs `resourcedocsgen metadata from-github` to generate updated metadata and opens a PR via `.github/actions/new-provider-version-pr`.
-3. PRs are skipped if an open PR already exists for that provider (deduplication check via `list_pull_requests` in `scripts/common.sh`).
+3. Each provider publishes from a stable `<name>/publish-metadata` branch, so a provider with an open update PR gets that PR updated in place rather than a second one opened.
 
 #### `community-package-*.yml` — Community Package Verified Check
 
@@ -725,7 +727,7 @@ The check pipeline gives a contributor who adds one entry to `community-packages
 - **`community-package-check.yml`** (`workflow_dispatch`, two jobs): its `check` job is the secret-free plane. It fetches the PR's file list with a read-only token, refuses the PR outright if it touches anything outside the allowlist, then reads the package's schema and docs at its latest GitHub release and probes without executing the package's code — installs the plugin (blocking), resolves the npm/PyPI/Go SDKs and lints the docs (advisory). It writes a fact-sheet artifact and a one-word verdict. The plugin install is the only blocking check, alongside successful docs generation and a present `docs/_index.md`.
 - Its `report` job (write token, no secrets, no contributor code) downloads that artifact and does two things: it edits the pinned fact-sheet comment in place, stamping it with the head it checked, and it posts the verdict as a new comment. Editing notifies nobody, so without that second comment a contributor has to keep refreshing the page to learn the result.
 - **`community-package-check-command.yml`** (`issue_comment`): dispatches a fresh check run when the author or a maintainer comments `/check` on its own line, authorized and rate-limited. It dispatches rather than re-runs, so the check also reaches a pull request whose own run GitHub parked.
-- **`community-package-sweep.yml`** (schedule, every 5 minutes): the check has no `pull_request` trigger, because a fork PR from a first-time contributor parks such a run in `action_required` until a maintainer approves it, leaving the contributor with no fact-sheet and nothing for `/check` to re-run. The sweep is the automatic trigger instead: it dispatches a check for every open package-list PR, once per head commit. It claims a head the moment it dispatches, by stamping the fact-sheet comment with it and leaving `⏳ Checking <head>` there until the check reports, and it skips a head that is already stamped. The claim lives on the pull request, which answers consistently. The Actions run list does not: while the sweep used that list as its record, matched by run title, it dropped a dispatched run often enough to re-check the same head hours later and post a second and third verdict comment. A dispatched run starts in the base repo, so GitHub does not gate it. The sweep only dispatches: it never runs a contributor's code. If the sweep itself fails, it opens a `p1` issue that the daily priority digest surfaces, and leaves the existing one alone if there already is one.
+- **`community-package-sweep.yml`** (schedule, every 5 minutes): the check has no `pull_request` trigger, because a fork PR from a first-time contributor parks such a run in `action_required` until a maintainer approves it, leaving the contributor with no fact-sheet and nothing for `/check` to re-run. The sweep is the automatic trigger instead: it dispatches a check for every open fork PR that changes the package list, once per head commit. It skips a PR whose branch lives in this repo: those are maintainer changes, such as a rename or a delist, that hand-edit package YAML the check would reject as generated, and a maintainer who wants the check on one can still run `/check`. It claims a head the moment it dispatches, by stamping the fact-sheet comment with it and leaving `⏳ Checking <head>` there until the check reports, and it skips a head that is already stamped. The claim lives on the pull request, which answers consistently. The Actions run list does not: while the sweep used that list as its record, matched by run title, it dropped a dispatched run often enough to re-check the same head hours later and post a second and third verdict comment. A dispatched run starts in the base repo, so GitHub does not gate it. The sweep only dispatches: it never runs a contributor's code. If the sweep itself fails, it opens a `p1` issue that the daily priority digest surfaces, and leaves the existing one alone if there already is one.
 - **`community-package-preview-command.yml`** (`issue_comment`): builds an on-demand site preview when a maintainer comments `/preview`. A fork's own `pull_request` build gets no secrets, so this maintainer-triggered run stands in for it: it materializes the fork's entry as data and reuses the `build-and-deploy-preview` action, never running the fork's code.
 - **`community-package-policy.yml`**: runs the toolchain's unit tests and `mypy --strict`, including the plane-separation test, on any PR touching the pipeline sources. It is not among `Sentinel Tower`'s `needs`, so it does not gate a merge today.
 
@@ -766,6 +768,14 @@ Runs in the production environment (`388588623842:role/ContinuousDelivery`). Nod
 Runs `scripts/ci/priority_digest.py`, which searches GitHub for open issues labelled `p0` or `p1` across `pulumi/registry` and `pulumi/terraform-to-pulumi-registry-pipeline`, then posts them to Slack, oldest first, with each issue's age and assignee.
 
 Replaces a Metabase subscription that posted the same query as a screenshot. Uses `PULUMI_BOT_TOKEN` and `SLACK_ACCESS_TOKEN` from ESC and posts via `chat.postMessage` to the channel ID in the `SLACK_TEAM_CHANNEL` repository variable; the bot must be a member of that channel. `--dry-run` prints the message to the job log instead of posting.
+
+#### `repo-url-audit.yml` — Track Package Repo URL Drift
+
+**Trigger**: Every Monday at 2:00 PM UTC; also `workflow_dispatch` with a `dry-run` input
+
+Runs `scripts/ci/repo_url_audit.py`, which asks the GitHub API about every listed (non-`DEPRECATED`) package's `repo_url`. The API follows renames and transfers, and a package is reported when its repo has moved to a new owner or name, been archived, or returns 404. Case-only differences are ignored, since GitHub slugs are case-insensitive. The report is kept in a single open `kind/chore` issue, found by a `<!-- repo-url-audit -->` marker in its body: the job rewrites the issue on each run, and closes it once nothing is left to fix. Each row says where the fix goes: the package YAML, the YAML plus `repoSlug` in `community-packages/package-list.json` (which `metadata from-github` rebuilds `repo_url` from), or `pulumi/terraform-to-pulumi-registry-pipeline` for dynamically bridged providers.
+
+Uses the workflow's own `GITHUB_TOKEN` with `issues: write`. `--dry-run` prints the report to the job log instead of filing it.
 
 #### `export-repo-secrets.yml` — Sync GitHub Secrets → ESC
 
@@ -1144,6 +1154,7 @@ Note: `mise.toml` and the CI workflows use Node 24, including `bucket-cleanup.ym
 | Browser tests (scheduled) | 2:00 PM daily | `run-browser-tests.yml` | `make run-browser-tests` |
 | Stale bucket cleanup | 3:00 PM daily | `bucket-cleanup.yml` | `make ci_bucket_cleanup` |
 | Open P0 and P1 issue digest | 3:00 PM daily | `priority-digest.yml` | `scripts/ci/priority_digest.py` |
+| Package repo URL drift | 2:00 PM every Monday | `repo-url-audit.yml` | `scripts/ci/repo_url_audit.py` |
 
 ---
 

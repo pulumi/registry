@@ -35,9 +35,9 @@ Input-wrapped arguments and returns an Output-wrapped result.
 <pulumi-choosable type="language" values="javascript,typescript">
 <div class="highlight"
 ><pre class="chroma"><code class="language-typescript" data-lang="typescript"
-><span class="k">function </span>getIntegrationRuntimeObjectMetadatum<span class="p">(</span><span class="nx">args</span><span class="p">:</span> <span class="nx">GetIntegrationRuntimeObjectMetadatumArgs</span><span class="p">,</span> <span class="nx">opts</span><span class="p">?:</span> <span class="nx"><a href="/docs/reference/pkg/nodejs/pulumi/pulumi/#InvokeOptions">InvokeOptions</a></span><span class="p">): Promise&lt;<span class="nx"><a href="#result">GetIntegrationRuntimeObjectMetadatumResult</a></span>></span
+><span class="k">function </span>getIntegrationRuntimeObjectMetadatum<span class="p">(</span><span class="nx">args</span><span class="p">:</span> <span class="nx">GetIntegrationRuntimeObjectMetadatumArgs</span><span class="p">,</span> <span class="nx">opts</span><span class="p">?:</span> <span class="nx"><a href="/docs/reference/pkg/nodejs/pulumi/pulumi/interfaces/InvokeOptions.html">InvokeOptions</a></span><span class="p">): Promise&lt;<span class="nx"><a href="#result">GetIntegrationRuntimeObjectMetadatumResult</a></span>></span
 ><span class="k">
-function </span>getIntegrationRuntimeObjectMetadatumOutput<span class="p">(</span><span class="nx">args</span><span class="p">:</span> <span class="nx">GetIntegrationRuntimeObjectMetadatumOutputArgs</span><span class="p">,</span> <span class="nx">opts</span><span class="p">?:</span> <span class="nx"><a href="/docs/reference/pkg/nodejs/pulumi/pulumi/#InvokeOutputOptions">InvokeOutputOptions</a></span><span class="p">): Output&lt;<span class="nx"><a href="#result">GetIntegrationRuntimeObjectMetadatumResult</a></span>></span
+function </span>getIntegrationRuntimeObjectMetadatumOutput<span class="p">(</span><span class="nx">args</span><span class="p">:</span> <span class="nx">GetIntegrationRuntimeObjectMetadatumOutputArgs</span><span class="p">,</span> <span class="nx">opts</span><span class="p">?:</span> <span class="nx"><a href="/docs/reference/pkg/nodejs/pulumi/pulumi/interfaces/InvokeOutputOptions.html">InvokeOutputOptions</a></span><span class="p">): Output&lt;<span class="nx"><a href="#result">GetIntegrationRuntimeObjectMetadatumResult</a></span>></span
 ></code></pre></div>
 </pulumi-choosable>
 </div>
@@ -522,7 +522,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#value_python" style="color: inherit; text-decoration: inherit;">value</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">Sequence[Any]</span>
+        <span class="property-type">Sequence[Union[Ssis<wbr>Environment<wbr>Response, Ssis<wbr>Folder<wbr>Response, Ssis<wbr>Package<wbr>Response, Ssis<wbr>Project<wbr>Response]]</span>
     </dt>
     <dd>List of SSIS object metadata.</dd></dl>
 </pulumi-choosable>

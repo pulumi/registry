@@ -33,9 +33,9 @@ Input-wrapped arguments and returns an Output-wrapped result.
 <pulumi-choosable type="language" values="javascript,typescript">
 <div class="highlight"
 ><pre class="chroma"><code class="language-typescript" data-lang="typescript"
-><span class="k">function </span>overlayFunction<span class="p">(</span><span class="nx">args</span><span class="p">:</span> <span class="nx">OverlayFunctionArgs</span><span class="p">,</span> <span class="nx">opts</span><span class="p">?:</span> <span class="nx"><a href="/docs/reference/pkg/nodejs/pulumi/pulumi/#InvokeOptions">InvokeOptions</a></span><span class="p">): Promise&lt;<span class="nx"><a href="#result">OverlayFunctionResult</a></span>></span
+><span class="k">function </span>overlayFunction<span class="p">(</span><span class="nx">args</span><span class="p">:</span> <span class="nx">OverlayFunctionArgs</span><span class="p">,</span> <span class="nx">opts</span><span class="p">?:</span> <span class="nx"><a href="/docs/reference/pkg/nodejs/pulumi/pulumi/interfaces/InvokeOptions.html">InvokeOptions</a></span><span class="p">): Promise&lt;<span class="nx"><a href="#result">OverlayFunctionResult</a></span>></span
 ><span class="k">
-function </span>overlayFunctionOutput<span class="p">(</span><span class="nx">args</span><span class="p">:</span> <span class="nx">OverlayFunctionOutputArgs</span><span class="p">,</span> <span class="nx">opts</span><span class="p">?:</span> <span class="nx"><a href="/docs/reference/pkg/nodejs/pulumi/pulumi/#InvokeOutputOptions">InvokeOutputOptions</a></span><span class="p">): Output&lt;<span class="nx"><a href="#result">OverlayFunctionResult</a></span>></span
+function </span>overlayFunctionOutput<span class="p">(</span><span class="nx">args</span><span class="p">:</span> <span class="nx">OverlayFunctionOutputArgs</span><span class="p">,</span> <span class="nx">opts</span><span class="p">?:</span> <span class="nx"><a href="/docs/reference/pkg/nodejs/pulumi/pulumi/interfaces/InvokeOutputOptions.html">InvokeOutputOptions</a></span><span class="p">): Output&lt;<span class="nx"><a href="#result">OverlayFunctionResult</a></span>></span
 ></code></pre></div>
 </pulumi-choosable>
 </div>

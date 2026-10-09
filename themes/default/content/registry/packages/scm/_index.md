@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-scm/v1.1.2/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-scm/v1.2.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-scm/blob/v1.1.2/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-scm/blob/v1.2.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Strata Cloud Manager Provider
 meta_desc: Provides an overview on how to configure the Pulumi Strata Cloud Manager provider.
@@ -24,12 +24,227 @@ The `scm` provider provides resources and functions to manage and query Strata C
 
 This provider covers the following aspects of Strata Cloud Manager:
 * NGFW & Prisma Access
+* ZTNA Connector
 ## Release Notes
+### v1.0.13
+
+* ZTNA Connector support is introduced in this release under a new ztna_* resource prefix,
+  separate from the existing scm_* resources. All resources and functions below target
+  the ZTNA Connector API v2.0.
+#### Resources
+
+* resources/ztna_connector_group: Added support, examples and tests (resource, data-source)
+* resources/ztna_connector: Added support, examples and tests (resource, data-source)
+* resources/ztna_fqdn_application: Added support, examples and tests (resource, data-source)
+* resources/ztna_subnet: Added support, examples and tests (resource, data-source)
+* resources/ztna_wildcard: Added support, examples and tests (resource, data-source)
+* resources/ztna_connector_group_scheduled_upgrade: Added support and examples(resource, data-source)
+* resources/ztna_connector_scheduled_upgrade: Added support and examples(resource, data-source)
+* resource/scm_layer3_subinterface: Added support for `pppoe` configuration (#133)
+* resource/scm_layer3_subinterface: Added support for `adjustTcpMss` configuration (#130)
+* resource/scm_aggregate_interface: Added support for `adjustTcpMss` configuration (#130)
+* resource/scm_loopback_interface: Added support for `adjustTcpMss` configuration (#130)
+* resource/scm_vlan_interface: Added support for `adjustTcpMss` configuration (#130)
+* resource/ztna_connector_quiesce: Added support and examples (resource, data-source)
+* resource/scm_route_access_list: Added examples (resources)
+#### Functions
+
+* data-source/ztna_connector_group: Added support, examples and tests
+* data-source/ztna_connector_group_list: Added support, examples and tests
+* data-source/ztna_connector: Added support, examples and tests
+* data-source/ztna_connector_list: Added support, examples and tests
+* data-source/ztna_fqdn_application: Added support, examples and tests
+* data-source/ztna_fqdn_application_list: Added support, examples and tests
+* data-source/ztna_subnet: Added support, examples and tests
+* data-source/ztna_subnet_list: Added support, examples and tests
+* data-source/ztna_wildcard: Added support, examples and tests
+* data-source/ztna_wildcard_list: Added support, examples and tests
+* data-source/scm_location_list: Added support, examples and tests
+* data-source/ztna_license: Added support and examples
+* data-source/ztna_tenant_status: Added support and examples
+* data-source/ztna_connector_group_connectors: Added support and examples
+* data-source/ztna_connector_group_fqdn_rules: Added support and examples
+* data-source/ztna_connector_group_subnet_rules: Added support and examples
+* data-source/ztna_connector_group_wildcards: Added support and examples
+* data-source/ztna_connector_group_filters: Added support and examples
+* data-source/ztna_connector_images: Added support and examples
+* data-source/ztna_connector_filters: Added support and examples
+* data-source/ztna_application_filters: Added support and examples
+* data-source/ztna_subnet_filters: Added support and examples
+* data-source/ztna_wildcard_filters: Added support and examples
+* data-source/ztna_discovered_application_filters: Added support and examples
+* data-source/ztna_connector_quiesce: Added support and examples
+* data-source/ztna_connector_group_upgrade_status: Added support and examples
+* data-source/ztna_connector_group_scheduled_upgrade: Added support and examples
+* data-source/ztna_connector_upgrade_status: Added support and examples
+* data-source/ztna_connector_scheduled_upgrade: Added support and examples
+#### Actions
+* actions/scm_application_defaults: Bootstrap Prisma Access application defaults (certificates, config nodes) on a fresh tenant
+* actions/ztna_tenant_start_onboarding: Initiates ZTNA tenant onboarding
+* actions/ztna_tenant_start_offboarding: Initiates ZTNA tenant deletion and cleanup
+#### BUG FIXES
+
+* resource/scm_ike_crypto_profile: Added support for `group21` for dhGroup property
+* resource/scm_ipsec_crypto_profile: Added support for `group21` for dhGroup property
+* resource/scm_bgp_route_map: Fixed int32 overflow for large BGP AS numbers in `aspathPrepend` and `aspathExclude` fields (now uses int64)
+* resource/scm_service_connection: Resolved model issue with secondary bgp settings (#128)
+* resource/scm_ethernet_interface: Added missing lldp support for `layer3` interface (#126)
+* resource/scm_aggregate_interface: Added missing lldp support for `layer2` and `layer3` interface (#126)
+* resource/scm_pbf_rule: Added missing `negateSource` and `negateDestination` flags (#118)
+* resources/scm_security_rule: Corrected docs for `targetRule`. Ref-by-name is not supported (#125)
+* resources/scm_folder: Resolved apply error caused by unset `labels` property (#116)
+* Fixed ZTNA x-panw-region header propagation (#129)
+* resource/scm_route_prefix_list: Fixed Response Type (#136)
+* resource/scm_route_access_list: Fixed Response Type (#134)
+* actions/scm_config_push: Fixed incorrect `folders` property name (#135)
+* /resource/: Improved non zero referential error logging (#122)
+#### ENHANCEMENTS
+
+* Added possible values to `enum` properties across >500 resources (#86)
+* Consolidated `oneOf` requirements for optional `resource` properties in pulumi docs across all `resources`
+### v1.0.12
+
+* This version release is skipped due to operational maintainability of Go updates.
+### v1.0.12-beta.5
+#### FEATURES
+
+* actions/ztna_tenant_start_onboarding: Initiates ZTNA tenant onboarding
+* actions/ztna_tenant_start_offboarding: Initiates ZTNA tenant deletion and cleanup
+* resource/ztna_connector_quiesce: Added support and examples (resource, data-source)
+* resource/scm_route_access_list: Added examples (resources)
+* data-source/ztna_license: Added support and examples
+* data-source/ztna_tenant_status: Added support and examples
+* data-source/ztna_connector_group_connectors: Added support and examples
+* data-source/ztna_connector_group_fqdn_rules: Added support and examples
+* data-source/ztna_connector_group_subnet_rules: Added support and examples
+* data-source/ztna_connector_group_wildcards: Added support and examples
+* data-source/ztna_connector_group_filters: Added support and examples
+* data-source/ztna_connector_images: Added support and examples
+* data-source/ztna_connector_filters: Added support and examples
+* data-source/ztna_application_filters: Added support and examples
+* data-source/ztna_subnet_filters: Added support and examples
+* data-source/ztna_wildcard_filters: Added support and examples
+* data-source/ztna_discovered_application_filters: Added support and examples
+* data-source/ztna_connector_quiesce: Added support and examples
+* data-source/ztna_connector_group_upgrade_status: Added support and examples
+* data-source/ztna_connector_group_scheduled_upgrade: Added support and examples
+* data-source/ztna_connector_upgrade_status: Added support and examples
+* data-source/ztna_connector_scheduled_upgrade: Added support and examples
+#### ENHANCEMENTS
+
+* resource/scm_layer3_subinterface: Added support for `pppoe` configuration (#133)
+* resource/scm_layer3_subinterface: Added support for `adjustTcpMss` configuration (#130)
+* resource/scm_aggregate_interface: Added support for `adjustTcpMss` configuration (#130)
+* resource/scm_loopback_interface: Added support for `adjustTcpMss` configuration (#130)
+* resource/scm_vlan_interface: Added support for `adjustTcpMss` configuration (#130)
+#### BUG FIXES
+
+* Fixed ZTNA x-panw-region header propagation (#129)
+* resource/scm_route_prefix_list: Fixed Response Type (#136)
+* resource/scm_route_access_list: Fixed Response Type (#134)
+* actions/scm_config_push: Fixed incorrect `folders` property name (#135)
+* /resource/: Improved non zero referential error logging (#122)
+#### NOTES
+
+* This is a beta release for the SCM Pulumi Provider.
+* Customers must explicitly opt-in by specifying version = "1.0.12-beta.5"
+### v1.0.12-beta.4
+#### FEATURES
+
+* data-source/scm_location_list: Added support, examples and tests
+* actions/scm_application_defaults: Bootstrap Prisma Access application defaults (certificates, config nodes) on a fresh tenant
+#### BUG FIXES
+
+* resource/scm_bgp_route_map: Fixed int32 overflow for large BGP AS numbers in `aspathPrepend` and `aspathExclude` fields (now uses int64)
+* resource/scm_service_connection: Resolved model issue with secondary bgp settings (#128)
+* resource/scm_ethernet_interface: Added missing lldp support for `layer3` interface (#126)
+* resource/scm_aggregate_interface: Added missing lldp support for `layer2` and `layer3` interface (#126)
+* resource/scm_pbf_rule: Added missing `negateSource` and `negateDestination` flags (#118)
+* resources/scm_security_rule: Corrected docs for `targetRule`. Ref-by-name is not supported (#125)
+* resources/scm_folder: Resolved apply error caused by unset `labels` property (#116)
+#### ENHANCEMENTS
+
+* Added possible values to `enum` properties across >500 resources (#86)
+* Consolidated `oneOf` requirements for optional `resource` properties in pulumi docs across all `resources`
+#### NOTES
+
+* This is a beta release for ZTNA Connector support
+* Customers must explicitly opt-in by specifying version = "1.0.12-beta.4"
+### v1.0.12-beta.3
+
+* Fixed ZTNA documentation display in Pulumi Registry and added clarification of
+  current functionality.
+#### NOTES
+
+* This is a beta release for ZTNA Connector support
+* Customers must explicitly opt-in by specifying version = "1.0.12-beta.3"
+### v1.0.12-beta.2
+
+* Fixed ZTNA documentation display in Pulumi Registry
+#### NOTES
+
+* This is a beta release for ZTNA Connector support
+* Customers must explicitly opt-in by specifying version = "1.0.12-beta.2"
+### v1.0.12-beta.1
+#### FEATURES
+
+* ZTNA Connector support is introduced in this release under a new ztna_* resource prefix,
+  separate from the existing scm_* resources. All resources and functions below target
+  the ZTNA Connector API v2.0.
+#### Resources (Supported — fully tested with examples)
+
+* resources/ztna_connector_group: Added support, examples and tests (resource, data-source)
+* resources/ztna_connector: Added support, examples and tests (resource, data-source)
+* resources/ztna_fqdn_application: Added support, examples and tests (resource, data-source)
+* resources/ztna_subnet: Added support, examples and tests (resource, data-source)
+* resources/ztna_wildcard: Added support, examples and tests (resource, data-source)
+* resources/ztna_connector_group_scheduled_upgrade: Added support and examples(resource, data-source)
+* resources/ztna_connector_scheduled_upgrade: Added support and examples(resource, data-source)
+#### Functions (Supported — fully tested with examples)
+
+* data-source/ztna_connector_group: Added support, examples and tests
+* data-source/ztna_connector_group_list: Added support, examples and tests
+* data-source/ztna_connector: Added support, examples and tests
+* data-source/ztna_connector_list: Added support, examples and tests
+* data-source/ztna_fqdn_application: Added support, examples and tests
+* data-source/ztna_fqdn_application_list: Added support, examples and tests
+* data-source/ztna_subnet: Added support, examples and tests
+* data-source/ztna_subnet_list: Added support, examples and tests
+* data-source/ztna_wildcard: Added support, examples and tests
+* data-source/ztna_wildcard_list: Added support, examples and tests
+#### NOTES
+
+* This is a beta release for ZTNA Connector support
+* Customers must explicitly opt-in by specifying version = "1.0.12-beta.1"
 ### v1.0.11
 #### FEATURES
 
 * Introduced beta release stream for early access to new features
 * Beta versions (v1.0.11-beta.1) are now available for testing before GA release
+### v1.0.11-beta.1
+#### FEATURES
+
+* actions/scm_config_push: Push candidate configuration to devices (action)
+* actions/scm_config_load: Load configuration versions (action)
+* actions/scm_snippet_snapshot_publish: Publish snippet snapshots (action)
+* actions/scm_snippet_snapshot_compare: Compare snippet snapshots (action)
+* actions/scm_snippet_snapshot_diff: Diff snippet snapshots (action)
+* actions/scm_snippet_snapshot_load: Load snippet snapshots (action)
+* actions/scm_snippet_snapshot_save: Save snippet snapshots (action)
+* actions/scm_snippet_snapshot_convert: Convert snippet snapshots (action)
+* actions/scm_snippet_snapshot_updates: Update snippet snapshots (action)
+* actions/scm_certificate_import: Import certificates (action)
+* actions/scm_certificate_export: Export certificates (action)
+* actions/scm_auto_vpn_push: Push Auto VPN configurations (action)
+* actions/scm_trust_validation: Validate trust (action)
+* actions/scm_shared_snippets_load: Load shared snippets (action)
+#### BUG FIXES
+
+* api/config-operations.yaml: Fixed devices field type (changed from number to string)
+#### NOTES
+
+* This is a beta release for testing Pulumi Actions functionality
+* Customers must explicitly opt-in by specifying version = "1.0.11-beta.1"
 ### v1.0.10
 #### FEATURES
 * resources/scm_forwarding_profile: Added Support, examples and tests (resources, data-source)
@@ -491,3 +706,5 @@ There are multiple ways to specify the provider's parameters.  If overlapping va
 - `port` (Number) The port number to use for API commands, if non-standard for the given protocol. Environment variable: `SCM_PORT`. JSON config file variable: `port`.
 - `protocol` (String) The protocol to use for SCM. This should be 'http' or 'https'. Default: `https`. Environment variable: `SCM_PROTOCOL`. JSON config file variable: `protocol`.
 - `scope` (String) The client scope. Environment variable: `SCM_SCOPE`. JSON config file variable: `scope`.
+- `xPanwRegion` (String) The region for ZTNA Connector API requests (x-panw-region header). Required when using ztna_* resources. Valid values: ae, americas, au, br, ca, ch, cn, de, es, europe, fr, id, il, in, it, jp, kr, pl, qa, sa, sg, tw, uk, za. Environment variable: `X_PANW_REGION`. JSON config file variable: `xPanwRegion`.
+- `ztnaHost` (String) The hostname of the ZTNA Connector API. Required when using ztna_* resources. Default: `api.sase.paloaltonetworks.com`. Environment variable: `ZTNA_HOST`. JSON config file variable: `ztnaHost`.

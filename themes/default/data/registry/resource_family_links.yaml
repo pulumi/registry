@@ -1,0 +1,5 @@
+# Packages whose api-docs leaf pages render a "Related resources and functions" block
+# linking each resource to its own data source (get<X>), IAM variants, and v2 variant.
+packages:
+  - aws
+  - gcp

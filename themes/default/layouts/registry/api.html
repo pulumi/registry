@@ -87,6 +87,7 @@
                 {{ end }}
                 {{ else }}
                 {{ .Content }}
+                {{ partial "registry/package/resource-family-links.html" . }}
                 {{ end }}
             </section>
         </div>

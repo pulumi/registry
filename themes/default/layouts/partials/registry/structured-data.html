@@ -28,6 +28,11 @@
       - HowTo for installation-configuration pages.
       - TechArticle / APIReference for individual API doc pages (not the
         api-docs section index, which only gets a BreadcrumbList).
+      - TechArticle for individual how-to-guide pages (not the how-to-guides
+        section index, mirroring the api-docs root/leaf split above). These
+        are Pulumi-authored migration/practitioner guides, not third-party
+        API reference material, so author/publisher are both the Pulumi
+        Organization node rather than $pkg.publisher.
       - FAQPage for pages whose front matter sets `faq: true`.
 
     Note: "author" fields on SoftwareSourceCode/TechArticle name the
@@ -75,7 +80,11 @@
             {{ $kind = "api-docs-leaf" }}
         {{ end }}
     {{ else if eq (index $segments 3) "how-to-guides" }}
-        {{ $kind = "how-to" }}
+        {{ if eq $segCount 4 }}
+            {{ $kind = "how-to-root" }}
+        {{ else }}
+            {{ $kind = "how-to-leaf" }}
+        {{ end }}
     {{ end }}
 {{ end }}
 
@@ -174,8 +183,30 @@
         {{ end }}
     {{ else if eq $kind "install" }}
         {{ $crumbs = $crumbs | append (dict "@type" "ListItem" "position" 4 "name" "Installation & Configuration" "item" (printf "%sregistry/packages/%s/installation-configuration/" (absURL "") $packageName)) }}
-    {{ else if eq $kind "how-to" }}
+    {{ else if or (eq $kind "how-to-root") (eq $kind "how-to-leaf") }}
         {{ $crumbs = $crumbs | append (dict "@type" "ListItem" "position" 4 "name" "How-to Guides" "item" (printf "%sregistry/packages/%s/how-to-guides/" (absURL "") $packageName)) }}
+        {{/*
+            Mirrors the api-docs-leaf ancestor walk above: a leaf guide page
+            (e.g. how-to-guides/6-0-migration/) needs its own crumb appended
+            so the structured breadcrumb matches the visible nav instead of
+            truncating at the section index, same rationale as api-docs-leaf.
+        */}}
+        {{ if eq $kind "how-to-leaf" }}
+            {{ $howToRoot := printf "/registry/packages/%s/how-to-guides/" $packageName }}
+            {{ $extra := slice . }}
+            {{ range .Ancestors }}
+                {{ if eq .RelPermalink $howToRoot }}
+                    {{ break }}
+                {{ end }}
+                {{ $extra = $extra | append . }}
+            {{ end }}
+            {{ $extra = $extra | collections.Reverse }}
+            {{ $pos := add (len $crumbs) 1 }}
+            {{ range $extra }}
+                {{ $crumbs = $crumbs | append (dict "@type" "ListItem" "position" $pos "name" .LinkTitle "item" .Permalink) }}
+                {{ $pos = add $pos 1 }}
+            {{ end }}
+        {{ end }}
     {{ end }}
 {{ end }}
 {{ $breadcrumb := dict "@type" "BreadcrumbList" "@id" (printf "%s#breadcrumb" .Permalink) "itemListElement" $crumbs }}
@@ -265,6 +296,31 @@
     {{ with $pkg.updated_on }}{{ $article = merge $article (dict "dateModified" (time . | time.Format "2006-01-02T15:04:05Z")) }}{{ end }}
     {{ if not $.PublishDate.IsZero }}{{ $article = merge $article (dict "datePublished" (time.Format "2006-01-02T15:04:05Z" $.PublishDate)) }}{{ end }}
     {{ $graph = $graph | append $article }}
+{{ end }}
+
+{{/* ---------- TechArticle (individual how-to-guide pages only) ---------- */}}
+{{ if eq $kind "how-to-leaf" }}
+    {{ $guideArticle := dict
+        "@type" "TechArticle"
+        "@id" (printf "%s#article" .Permalink)
+        "headline" .Title
+        "name" .Title
+        "url" .Permalink
+        "mainEntityOfPage" .Permalink
+        "inLanguage" "en-US"
+        "articleSection" "How-to Guides"
+        "about" (dict
+            "@type" "SoftwareSourceCode"
+            "name" (printf "%s Pulumi Provider" $pkg.title)
+            "url" (printf "%sregistry/packages/%s/" (absURL "") $packageName)
+        )
+        "author" (dict "@type" "Organization" "name" "Pulumi")
+        "publisher" $orgRef
+    }}
+    {{ with .Params.meta_desc }}{{ $guideArticle = merge $guideArticle (dict "description" .) }}{{ end }}
+    {{ with $pkg.updated_on }}{{ $guideArticle = merge $guideArticle (dict "dateModified" (time . | time.Format "2006-01-02T15:04:05Z")) }}{{ end }}
+    {{ if not $.PublishDate.IsZero }}{{ $guideArticle = merge $guideArticle (dict "datePublished" (time.Format "2006-01-02T15:04:05Z" $.PublishDate)) }}{{ end }}
+    {{ $graph = $graph | append $guideArticle }}
 {{ end }}
 
 {{/* ---------- FAQPage (pages with faq: true in front matter) ---------- */}}

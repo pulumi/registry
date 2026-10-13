@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-azuredevops/v3.16.1/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-azuredevops/v3.16.2/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-azuredevops/blob/v3.16.1/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-azuredevops/blob/v3.16.2/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Azure DevOps Provider
 meta_desc: Provides an overview on how to configure the Pulumi Azure DevOps provider.
@@ -140,7 +140,7 @@ public class App {
 {{% /choosable %}}
 {{% choosable language hcl %}}
 ```hcl
-pulumi {
+terraform {
   required_providers {
     azuredevops = {
       source = "pulumi/azuredevops"
@@ -149,6 +149,9 @@ pulumi {
 }
 
 resource "azuredevops_project" "project" {
+  lifecycle {
+    create_before_destroy = true
+  }
   name        = "Project Name"
   description = "Project Description"
 }

@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-rancher2/v13.0.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-rancher2/v13.0.1/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-rancher2/blob/v13.0.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-rancher2/blob/v13.0.1/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Rancher2 Provider
 meta_desc: Provides an overview on how to configure the Pulumi Rancher2 provider.
@@ -208,7 +208,7 @@ public class App {
 {{% /choosable %}}
 {{% choosable language hcl %}}
 ```hcl
-pulumi {
+terraform {
   required_providers {
     rancher2 = {
       source = "pulumi/rancher2"
@@ -218,10 +218,16 @@ pulumi {
 
 # Create a new rancher2_bootstrap using bootstrap provider config
 resource "rancher2_bootstrap" "admin" {
+  lifecycle {
+    create_before_destroy = true
+  }
   password = "blahblah"
 }
 # Create a new rancher2 resource using admin provider config
-resource "rancher2_catalogv2" "foo" {
+resource "rancher2_catalog_v2" "foo" {
+  lifecycle {
+    create_before_destroy = true
+  }
   cluster_id = "<CLUSTER_ID>"
   name       = "test"
   url        = "http://foo.com:8080"

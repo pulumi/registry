@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-gitlab/v10.3.1/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-gitlab/v10.3.2/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-gitlab/blob/v10.3.1/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-gitlab/blob/v10.3.2/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Gitlab Provider
 meta_desc: Provides an overview on how to configure the Pulumi Gitlab provider.
@@ -94,7 +94,7 @@ const sampleProjectVariable = new gitlab.ProjectVariable("sample_project_variabl
 // Add a deploy key to the project
 const sampleDeployKey = new gitlab.DeployKey("sample_deploy_key", {
     project: sampleProject.id,
-    title: "pulumi example",
+    title: "terraform example",
     key: "ssh-ed25519 AAAA...",
 });
 // Add a group
@@ -140,7 +140,7 @@ sample_project_variable = gitlab.ProjectVariable("sample_project_variable",
 # Add a deploy key to the project
 sample_deploy_key = gitlab.DeployKey("sample_deploy_key",
     project=sample_project.id,
-    title="pulumi example",
+    title="terraform example",
     key="ssh-ed25519 AAAA...")
 # Add a group
 sample_group = gitlab.Group("sample_group",
@@ -198,7 +198,7 @@ return await Deployment.RunAsync(() =>
     var sampleDeployKey = new GitLab.DeployKey("sample_deploy_key", new()
     {
         Project = sampleProject.Id,
-        Title = "pulumi example",
+        Title = "terraform example",
         Key = "ssh-ed25519 AAAA...",
     });
 
@@ -214,7 +214,7 @@ return await Deployment.RunAsync(() =>
     var sampleGroupProject = new GitLab.Project("sample_group_project", new()
     {
         Name = "example",
-        NamespaceId = sampleGroup.Id,
+        NamespaceId = sampleGroup.Id.Apply(x => int.Parse(x, System.Globalization.CultureInfo.InvariantCulture)),
     });
 
 });
@@ -272,7 +272,7 @@ func main() {
 		// Add a deploy key to the project
 		_, err = gitlab.NewDeployKey(ctx, "sample_deploy_key", &gitlab.DeployKeyArgs{
 			Project: sampleProject.ID().ToIDOutput().ToStringOutput(),
-			Title:   pulumi.String("pulumi example"),
+			Title:   pulumi.String("terraform example"),
 			Key:     pulumi.String("ssh-ed25519 AAAA..."),
 		})
 		if err != nil {
@@ -341,7 +341,7 @@ resources:
     name: sample_deploy_key
     properties:
       project: ${sampleProject.id}
-      title: pulumi example
+      title: terraform example
       key: ssh-ed25519 AAAA...
   # Add a group
   sampleGroup:
@@ -422,7 +422,7 @@ public class App {
         // Add a deploy key to the project
         var sampleDeployKey = new DeployKey("sampleDeployKey", DeployKeyArgs.builder()
             .project(sampleProject.id())
-            .title("pulumi example")
+            .title("terraform example")
             .key("ssh-ed25519 AAAA...")
             .build());
 
@@ -446,7 +446,7 @@ public class App {
 {{% /choosable %}}
 {{% choosable language hcl %}}
 ```hcl
-pulumi {
+terraform {
   required_providers {
     gitlab = {
       source = "pulumi/gitlab"
@@ -456,33 +456,51 @@ pulumi {
 
 # Add a project owned by the user
 resource "gitlab_project" "sample_project" {
+  lifecycle {
+    create_before_destroy = true
+  }
   name = "example"
 }
 # Add a hook to the project
-resource "gitlab_projecthook" "sample_project_hook" {
+resource "gitlab_project_hook" "sample_project_hook" {
+  lifecycle {
+    create_before_destroy = true
+  }
   project = gitlab_project.sample_project.id
   url     = "https://example.com/project_hook"
 }
 # Add a variable to the project
-resource "gitlab_projectvariable" "sample_project_variable" {
+resource "gitlab_project_variable" "sample_project_variable" {
+  lifecycle {
+    create_before_destroy = true
+  }
   project = gitlab_project.sample_project.id
   key     = "project_variable_key"
   value   = "project_variable_value"
 }
 # Add a deploy key to the project
-resource "gitlab_deploykey" "sample_deploy_key" {
+resource "gitlab_deploy_key" "sample_deploy_key" {
+  lifecycle {
+    create_before_destroy = true
+  }
   project = gitlab_project.sample_project.id
-  title   = "pulumi example"
+  title   = "terraform example"
   key     = "ssh-ed25519 AAAA..."
 }
 # Add a group
 resource "gitlab_group" "sample_group" {
+  lifecycle {
+    create_before_destroy = true
+  }
   name        = "example"
   path        = "example"
   description = "An example group"
 }
 # Add a project to the group - example/example
 resource "gitlab_project" "sample_group_project" {
+  lifecycle {
+    create_before_destroy = true
+  }
   name         = "example"
   namespace_id = gitlab_group.sample_group.id
 }

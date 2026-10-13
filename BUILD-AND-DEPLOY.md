@@ -608,6 +608,8 @@ PR opened / committed
 
 **Trigger**: Push to `master`
 
+**Concurrency**: `registry-production-deploy`, `cancel-in-progress: false`. One deploy runs at a time; while it runs, GitHub keeps only the newest pending run and cancels older pending ones. Each deploy builds the whole site from `master`, so the newest commit covers the skipped ones. Package publishing is in `publish.yml`, which is not in this group.
+
 **ESC environment**: `github-secrets/pulumi-registry` (OIDC via `id-token: write`)
 
 **Flow**:
@@ -636,7 +638,6 @@ Push to master
                 │       │       └── Write origin-bucket-metadata.json
                 │       ├── scripts/generate-search-index.sh
                 │       │       └── Upload search-index.json to S3
-                │       ├── node scripts/await-in-progress.js
                 │       ├── scripts/ci/run-pulumi.sh update
                 │       │       └── pulumi -C infrastructure update --yes
                 │       │           (reads origin-bucket-metadata.json, updates CloudFront)

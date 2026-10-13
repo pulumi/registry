@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-artifactory/v8.11.7/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-artifactory/v8.11.8/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-artifactory/blob/v8.11.7/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-artifactory/blob/v8.11.8/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Artifactory Provider
 meta_desc: Provides an overview on how to configure the Pulumi Artifactory provider.
@@ -234,7 +234,7 @@ public class App {
 {{% /choosable %}}
 {{% choosable language hcl %}}
 ```hcl
-pulumi {
+terraform {
   required_providers {
     artifactory = {
       source = "pulumi/artifactory"
@@ -243,7 +243,10 @@ pulumi {
 }
 
 # Create a new repository
-resource "artifactory_localpypirepository" "pypi-libs" {
+resource "artifactory_local_pypi_repository" "pypi-libs" {
+  lifecycle {
+    create_before_destroy = true
+  }
   key             = "pypi-libs"
   repo_layout_ref = "simple-default"
   description     = "A pypi repository for python packages"

@@ -3,9 +3,11 @@
 category: Infrastructure
 component: false
 description: Pulumi provider for managing Dokploy projects, environments, applications,
-  Compose stacks, Postgres, MySQL, MariaDB, MongoDB, and Redis databases, domains,
-  SSH keys, registries, tags, project-tag associations, mounts, backup destinations,
-  database backups, and volume backups.
+  application ports, Compose stacks, Postgres, MySQL, MariaDB, MongoDB, and Redis
+  databases, domains, SSH keys, registries, tags, project-tag associations, mounts,
+  schedules, notifications, servers, backup destinations, database backups, and volume
+  backups. Read-only lookups reference existing projects, environments, workloads,
+  databases, servers, registries, and SSH keys by ID without managing their lifecycle.
 featured: false
 keywords:
 - dokploy
@@ -17,7 +19,7 @@ name: dokploy
 package_status: public_preview
 publisher: dimeskigj
 repo_url: https://github.com/dimeskigj/pulumi-dokploy
-schema_file_url: https://raw.githubusercontent.com/dimeskigj/pulumi-dokploy/v0.3.1/provider/cmd/pulumi-resource-dokploy/schema.json
+schema_file_url: https://raw.githubusercontent.com/dimeskigj/pulumi-dokploy/v0.4.0/provider/cmd/pulumi-resource-dokploy/schema.json
 title: Dokploy
-updated_on: 1790716015
-version: v0.3.1
+updated_on: 1791822439
+version: v0.4.0

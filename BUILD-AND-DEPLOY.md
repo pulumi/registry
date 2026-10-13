@@ -938,7 +938,7 @@ There are two publishers, a primary and a fallback.
 
 **Runtime**: Python 3 (via `uv run --with requests,pyyaml`)
 
-**Invoked**: only when the primary publisher fails — `publish.yml`'s `Push to the Live Registry (legacy fallback)` step is gated on `steps.mirror-publish.outcome == 'failure'`. It is also `continue-on-error: true`; if both publishers fail, a Slack notification goes to `#registry-ops`. Nothing runs it on a PR.
+**Invoked**: only when the primary publisher fails on a `push` — `publish.yml`'s `Push to the Live Registry (legacy fallback)` step never runs for a manual dispatch. It is also `continue-on-error: true`; when the primary fails and the fallback doesn't succeed, a Slack notification goes to `#registry-ops` (except on a dry run), and the job-level `notify` alerts if the publish job fails, is cancelled or times out. Nothing runs it on a PR.
 
 **What it does**:
 

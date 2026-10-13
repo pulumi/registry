@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-fastly/v12.8.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-fastly/v12.8.1/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-fastly/blob/v12.8.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-fastly/blob/v12.8.1/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Fastly Provider
 meta_desc: Provides an overview on how to configure the Pulumi Fastly provider.
@@ -199,7 +199,7 @@ public class App {
 {{% /choosable %}}
 {{% choosable language hcl %}}
 ```hcl
-pulumi {
+terraform {
   required_providers {
     fastly = {
       source = "pulumi/fastly"
@@ -208,7 +208,10 @@ pulumi {
 }
 
 # Create a Service
-resource "fastly_servicevcl" "myservice" {
+resource "fastly_service_vcl" "myservice" {
+  lifecycle {
+    create_before_destroy = true
+  }
   name = "myawesometestservice"
 }
 ```
@@ -386,7 +389,7 @@ public class App {
 {{% /choosable %}}
 {{% choosable language hcl %}}
 ```hcl
-pulumi {
+terraform {
   required_providers {
     fastly = {
       source = "pulumi/fastly"
@@ -394,7 +397,10 @@ pulumi {
   }
 }
 
-resource "fastly_servicevcl" "myservice" {
+resource "fastly_service_vcl" "myservice" {
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 ```
 
@@ -501,7 +507,7 @@ public class App {
 {{% /choosable %}}
 {{% choosable language hcl %}}
 ```hcl
-pulumi {
+terraform {
   required_providers {
     fastly = {
       source = "pulumi/fastly"
@@ -509,7 +515,10 @@ pulumi {
   }
 }
 
-resource "fastly_servicevcl" "myservice" {
+resource "fastly_service_vcl" "myservice" {
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 ```
 

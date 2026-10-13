@@ -85,7 +85,7 @@ jobs:
           PULUMI_ACCESS_TOKEN: ${{ steps.esc-secrets.outputs.PULUMI_ACCESS_TOKEN }}
 
       - name: Notify on publish failure
-        if: steps.mirror-publish.outcome == 'failure' && steps.legacy-publish.outcome != 'success'
+        if: steps.mirror-publish.outcome == 'failure' && steps.legacy-publish.outcome != 'success' && !inputs.dry-run
         uses: docker://sholung/action-slack-notify:v2.3.0
         env:
           SLACK_CHANNEL: registry-ops

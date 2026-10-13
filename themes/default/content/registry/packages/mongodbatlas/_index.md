@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-mongodbatlas/v4.17.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-mongodbatlas/v4.17.1/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-mongodbatlas/blob/v4.17.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-mongodbatlas/blob/v4.17.1/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Mongodbatlas Provider
 meta_desc: Provides an overview on how to configure the Pulumi Mongodbatlas provider.
@@ -340,7 +340,7 @@ public class App {
 {{% /choosable %}}
 {{% choosable language hcl %}}
 ```hcl
-pulumi {
+terraform {
   required_providers {
     mongodbatlas = {
       source = "pulumi/mongodbatlas"
@@ -350,11 +350,17 @@ pulumi {
 
 # Create a project
 resource "mongodbatlas_project" "this" {
+  lifecycle {
+    create_before_destroy = true
+  }
   name   = "my-project"
   org_id = orgId
 }
 # Create a cluster
-resource "mongodbatlas_advancedcluster" "this" {
+resource "mongodbatlas_advanced_cluster" "this" {
+  lifecycle {
+    create_before_destroy = true
+  }
   project_id   = mongodbatlas_project.this.id
   name         = "my-cluster"
   cluster_type = "REPLICASET"

@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-hcloud/v1.43.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-hcloud/v1.43.1/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-hcloud/blob/v1.43.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-hcloud/blob/v1.43.1/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Hcloud Provider
 meta_desc: Provides an overview on how to configure the Pulumi Hcloud provider.
@@ -170,7 +170,7 @@ public class App {
 
     public static void stack(Context ctx) {
         final var config = ctx.config();
-        final var hcloudToken = config.require("hcloudToken");
+        final var hcloudToken = config.requireObject("hcloudToken", com.pulumi.core.TypeShape.map(String.class, Object.class));
     }
 }
 ```
@@ -181,6 +181,7 @@ public class App {
 # Set the variable value in *.tfvars file
 # or using the -var="hcloud_token=..." CLI option
 variable "hcloudToken" {
+  type = any
 }
 ```
 

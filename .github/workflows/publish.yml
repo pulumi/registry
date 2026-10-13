@@ -56,11 +56,13 @@ jobs:
         id: mirror-version
         run: echo "hash=$(grep 'REGISTRY_MIRROR_TOOLS_COMMIT=' scripts/generate-versioned-docs.sh | cut -d'"' -f2)" >> "$GITHUB_OUTPUT"
 
-      - name: Cache registry-mirror-discover binary
+      - name: Cache registry-mirror binaries
         uses: actions/cache@v6
         with:
-          path: bin/registry-mirror-discover
-          key: registry-mirror-discover-${{ steps.mirror-version.outputs.hash }}
+          path: |
+            bin/registry-mirror-discover
+            bin/registry-mirror-publish
+          key: registry-mirror-tools-${{ steps.mirror-version.outputs.hash }}
 
       - name: Install uv for publish
         uses: astral-sh/setup-uv@v7

@@ -509,6 +509,7 @@ All workflow files live in `.github/workflows/`.
 |---|---|---|
 | `pull-request.yml` | Pull request | PR to `master` |
 | `push.yml` | Build and deploy | Push to `master` |
+| `publish.yml` | Publish to registry | Push to `master` |
 | `testing-deploy.yml` | Build and deploy - test environment | `workflow_dispatch` |
 | `pull-request-closed.yml` | Close pull request | PR closed |
 | `check-go.yml` | Check Go | `workflow_call` (reusable) |
@@ -643,11 +644,7 @@ Push to master
                 │       │       └── Invalidate /registry/* on the www.pulumi.com CloudFront distribution
                 │       └── scripts/ci/make-s3-redirects.sh
                 │               └── Apply 301 redirects from scripts/redirects/
-                ├── Archive origin-bucket-metadata.json as artifact
-                ├── uv run publish_to_registry.py
-                │       └── Publish new provider versions to registry service
-                └── uv run push-registry.py   (only if the above failed)
-                        └── Legacy fallback publisher
+                └── Archive origin-bucket-metadata.json as artifact
 ```
 
 **Runner**: `pulumi-service-ubuntu-24.04-16core`
@@ -924,7 +921,7 @@ There are two publishers, a primary and a fallback.
 
 **Invoked**:
 
-- On every push to `master` (in `push.yml`, `Publish to registry (primary)`, after the build+deploy completes). `continue-on-error: true`, so its failure hands off to the fallback rather than failing the job.
+- On every push to `master` (in `publish.yml`, `Publish to registry (primary)`). That workflow runs separately from `push.yml` and has no concurrency group, so every commit publishes its own package even when deploys are queued. `continue-on-error: true`, so its failure hands off to the fallback rather than failing the job.
 - In `--validate-all` mode on every PR (in `pull-request.yml`, `test-live-publish` job). That mode only turns every package YAML into a publish spec and reports the ones it cannot; it publishes nothing.
 
 **What it does**:
@@ -939,7 +936,7 @@ There are two publishers, a primary and a fallback.
 
 **Runtime**: Python 3 (via `uv run --with requests,pyyaml`)
 
-**Invoked**: only when the primary publisher fails — `push.yml`'s `Push to the Live Registry (legacy fallback)` step is gated on `steps.mirror-publish.outcome == 'failure'`. It is also `continue-on-error: true`; if both publishers fail, a Slack notification goes to `#registry-ops`. Nothing runs it on a PR.
+**Invoked**: only when the primary publisher fails — `publish.yml`'s `Push to the Live Registry (legacy fallback)` step is gated on `steps.mirror-publish.outcome == 'failure'`. It is also `continue-on-error: true`; if both publishers fail, a Slack notification goes to `#registry-ops`. Nothing runs it on a PR.
 
 **What it does**:
 
@@ -1234,7 +1231,7 @@ The Pulumi Registry is actually **two separate but tightly coupled systems** tha
 
 These two systems are **not the same thing and do not share a data store**. The static site is rebuilt from YAML files on every push to `master`; it does not query the Pulumi Cloud API at runtime. The Pulumi Cloud API is a live service that stores package metadata independently.
 
-The bridge between them is the publish step that runs after every production build: `scripts/ci/publish_to_registry.py` primarily, with `scripts/ci/push-registry.py` as a fallback if that fails. Either one publishes new package versions to the Pulumi Cloud API.
+The bridge between them is the publish workflow (`publish.yml`) that runs on every push to `master`: `scripts/ci/publish_to_registry.py` primarily, with `scripts/ci/push-registry.py` as a fallback if that fails. Either one publishes new package versions to the Pulumi Cloud API.
 
 ```
 YAML files in repo                            Pulumi Cloud Registry API
@@ -1256,7 +1253,7 @@ YAML files in repo                            Pulumi Cloud Registry API
 
 ### 12.2 How the Publishers Bridge Them
 
-On every push to `master`, after the Hugo site is built and deployed, `scripts/ci/publish_to_registry.py` reads the package YAMLs changed in the last commit, turns each into a `{source}/{publisher}/{name}@{version}` spec, and pipes those through `registry-mirror-discover | registry-mirror-publish`.
+On every push to `master`, `publish.yml` runs `scripts/ci/publish_to_registry.py`, which reads the package YAMLs changed in the last commit, turns each into a `{source}/{publisher}/{name}@{version}` spec, and pipes those through `registry-mirror-discover | registry-mirror-publish`.
 
 If that step fails, `scripts/ci/push-registry.py` runs as the legacy fallback. It sweeps every package rather than just the changed ones:
 

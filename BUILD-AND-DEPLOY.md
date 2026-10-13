@@ -923,6 +923,7 @@ There are two publishers, a primary and a fallback.
 **Invoked**:
 
 - On every push to `master` (in `publish.yml`, `Publish to registry (primary)`). That workflow runs separately from `push.yml` and has no concurrency group, so every commit publishes its own package even when deploys are queued. `continue-on-error: true`, so its failure hands off to the fallback rather than failing the job.
+- On demand, by running `publish.yml` from the Actions tab with a space-separated `specs` input (e.g. `pulumi/pulumi/meraki@0.5.3 pulumi/pulumi/sdwan@0.9.5`) and optionally `dry-run`. Use this to backfill versions a failed run never published. The legacy fallback does not run for a manual dispatch, because it would republish every package rather than the requested specs.
 - In `--validate-all` mode on every PR (in `pull-request.yml`, `test-live-publish` job). That mode only turns every package YAML into a publish spec and reports the ones it cannot; it publishes nothing.
 
 **What it does**:

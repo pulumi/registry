@@ -3,12 +3,24 @@ on:
   push:
     branches:
       - master
+  workflow_dispatch:
+    inputs:
+      specs:
+        description: "Space-separated package specs to publish, e.g. pulumi/pulumi/meraki@0.5.3 (default: the last commit's changed packages)"
+        type: string
+        required: false
+      dry-run:
+        description: "Show what would be published without publishing"
+        type: boolean
+        default: false
 permissions:
   id-token: write # This is required for requesting the JWT
   contents: read
 jobs:
   publish:
     name: Publish
+    # A dispatch can pick any branch; only run master's reviewed publish code with production credentials.
+    if: github.ref == 'refs/heads/master'
     env:
       GOPATH: ${{ github.workspace }}/go
       ESC_ACTION_OIDC_AUTH: true
@@ -55,22 +67,25 @@ jobs:
       - name: Publish to registry (primary)
         id: mirror-publish
         continue-on-error: true
-        run: uv run --with pyyaml scripts/ci/publish_to_registry.py
+        run: uv run --with pyyaml scripts/ci/publish_to_registry.py ${DRY_RUN:+--dry-run} ${SPECS:+--specs $SPECS}
         env:
+          SPECS: ${{ inputs.specs }}
+          DRY_RUN: ${{ inputs.dry-run && 'true' || '' }}
           PULUMI_ACCESS_TOKEN: ${{ steps.esc-secrets.outputs.PULUMI_ACCESS_TOKEN }}
           PULUMI_API_URL: https://api.pulumi.com
           GITHUB_TOKEN: ${{ steps.esc-secrets.outputs.PULUMI_BOT_TOKEN }}
 
       - name: Push to the Live Registry (legacy fallback)
         id: legacy-publish
-        if: steps.mirror-publish.outcome == 'failure'
+        # It republishes every package's current YAML version, ignoring the requested specs.
+        if: steps.mirror-publish.outcome == 'failure' && github.event_name == 'push'
         continue-on-error: true
         run: uv run --with requests,pyyaml ./scripts/ci/push-registry.py
         env:
           PULUMI_ACCESS_TOKEN: ${{ steps.esc-secrets.outputs.PULUMI_ACCESS_TOKEN }}
 
       - name: Notify on publish failure
-        if: steps.mirror-publish.outcome == 'failure' && steps.legacy-publish.outcome == 'failure'
+        if: steps.mirror-publish.outcome == 'failure' && steps.legacy-publish.outcome != 'success'
         uses: docker://sholung/action-slack-notify:v2.3.0
         env:
           SLACK_CHANNEL: registry-ops
@@ -87,7 +102,7 @@ jobs:
           SLACK_ICON: https://www.pulumi.com/logos/brand/avatar-on-white.png
 
   notify:
-    if: always() && needs.publish.result != 'success'
+    if: always() && (needs.publish.result == 'failure' || needs.publish.result == 'cancelled')
     name: Send slack notification
     runs-on: ubuntu-latest
     timeout-minutes: 5

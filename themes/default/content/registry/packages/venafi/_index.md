@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-venafi/v1.13.2/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-venafi/v1.13.3/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-venafi/blob/v1.13.2/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-venafi/blob/v1.13.3/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Venafi Provider
 meta_desc: Provides an overview on how to configure the Pulumi Venafi provider.
@@ -216,7 +216,7 @@ public class App {
 {{% /choosable %}}
 {{% choosable language hcl %}}
 ```hcl
-pulumi {
+terraform {
   required_providers {
     venafi = {
       source = "pulumi/venafi"
@@ -226,6 +226,9 @@ pulumi {
 
 # Generate a key pair and request a certificate
 resource "venafi_certificate" "webserver" {
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 ```
 
@@ -417,7 +420,7 @@ public class App {
 {{% /choosable %}}
 {{% choosable language hcl %}}
 ```hcl
-pulumi {
+terraform {
   required_providers {
     venafi = {
       source = "pulumi/venafi"
@@ -427,6 +430,9 @@ pulumi {
 
 # Generate a key pair and request a certificate
 resource "venafi_certificate" "webserver" {
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 ```
 
@@ -618,7 +624,7 @@ public class App {
 {{% /choosable %}}
 {{% choosable language hcl %}}
 ```hcl
-pulumi {
+terraform {
   required_providers {
     venafi = {
       source = "pulumi/venafi"
@@ -628,6 +634,9 @@ pulumi {
 
 # Generate a key pair and request a certificate
 resource "venafi_certificate" "webserver" {
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 ```
 
@@ -819,7 +828,7 @@ public class App {
 {{% /choosable %}}
 {{% choosable language hcl %}}
 ```hcl
-pulumi {
+terraform {
   required_providers {
     venafi = {
       source = "pulumi/venafi"
@@ -829,6 +838,9 @@ pulumi {
 
 # Generate a key pair and request a certificate
 resource "venafi_certificate" "webserver" {
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 ```
 
@@ -1020,7 +1032,7 @@ public class App {
 {{% /choosable %}}
 {{% choosable language hcl %}}
 ```hcl
-pulumi {
+terraform {
   required_providers {
     venafi = {
       source = "pulumi/venafi"
@@ -1030,6 +1042,9 @@ pulumi {
 
 # Generate a key pair and request a certificate
 resource "venafi_certificate" "webserver" {
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 ```
 
@@ -1221,7 +1236,7 @@ public class App {
 {{% /choosable %}}
 {{% choosable language hcl %}}
 ```hcl
-pulumi {
+terraform {
   required_providers {
     venafi = {
       source = "pulumi/venafi"
@@ -1231,6 +1246,9 @@ pulumi {
 
 # Generate a key pair and request a certificate
 resource "venafi_certificate" "webserver" {
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 ```
 
@@ -1263,7 +1281,7 @@ config:
     venafi:url:
         value: https://tpp.venafi.example
     venafi:zone:
-        value: DevOps\Pulumi
+        value: DevOps\Terraform
 
 ```
 
@@ -1289,7 +1307,7 @@ config:
     venafi:url:
         value: https://tpp.venafi.example
     venafi:zone:
-        value: DevOps\Pulumi
+        value: DevOps\Terraform
 
 ```
 
@@ -1315,7 +1333,7 @@ config:
     venafi:url:
         value: https://tpp.venafi.example
     venafi:zone:
-        value: DevOps\Pulumi
+        value: DevOps\Terraform
 
 ```
 
@@ -1348,7 +1366,7 @@ config:
     venafi:url:
         value: https://tpp.venafi.example
     venafi:zone:
-        value: DevOps\Pulumi
+        value: DevOps\Terraform
 
 ```
 
@@ -1386,7 +1404,7 @@ config:
     venafi:url:
         value: https://tpp.venafi.example
     venafi:zone:
-        value: DevOps\Pulumi
+        value: DevOps\Terraform
 
 ```
 
@@ -1411,7 +1429,7 @@ config:
     venafi:url:
         value: https://tpp.venafi.example
     venafi:zone:
-        value: DevOps\Pulumi
+        value: DevOps\Terraform
 
 ```
 
@@ -1445,7 +1463,7 @@ public class App {
 {{% /choosable %}}
 {{% choosable language hcl %}}
 ```hcl
-pulumi {
+terraform {
   required_providers {
     venafi = {
       source = "pulumi/venafi"
@@ -1455,6 +1473,9 @@ pulumi {
 
 # Generate a key pair and request a certificate
 resource "venafi_certificate" "webserver" {
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 ```
 
@@ -1682,7 +1703,7 @@ public class App {
 {{% /choosable %}}
 {{% choosable language hcl %}}
 ```hcl
-pulumi {
+terraform {
   required_providers {
     venafi = {
       source = "pulumi/venafi"
@@ -1692,6 +1713,9 @@ pulumi {
 
 # Generate a key pair and request a certificate
 resource "venafi_certificate" "webserver" {
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 ```
 

@@ -14,6 +14,7 @@ from publish_to_registry import (
     build_specs,
     get_changed_packages,
     load_publishers,
+    main,
     publish_with_retry,
     validate_all,
 )
@@ -51,6 +52,35 @@ class TestGetChangedPackages(unittest.TestCase):
         result = get_changed_packages(Path("/repo"))
 
         self.assertEqual(result, [])
+
+    @patch("publish_to_registry.subprocess.run")
+    def test_diffs_base_against_head(self, mock_run):
+        mock_run.return_value = MagicMock(stdout="", returncode=0)
+
+        get_changed_packages(Path("/repo"), "abc123")
+
+        args = mock_run.call_args[0][0]
+        self.assertEqual(args[:5], ["git", "diff", "--name-only", "abc123", "HEAD"])
+
+
+class TestMainBase(unittest.TestCase):
+    @patch.dict("os.environ", {"PULUMI_API_URL": "https://api.example.com"})
+    @patch("publish_to_registry.get_changed_packages")
+    @patch("publish_to_registry.commit_exists", return_value=False)
+    def test_fails_when_base_missing_from_clone(self, mock_exists, mock_changed):
+        with patch("sys.argv", ["publish_to_registry.py", "--base", "abc123"]):
+            self.assertEqual(main(), 1)
+
+        mock_changed.assert_not_called()
+
+    @patch.dict("os.environ", {"PULUMI_API_URL": "https://api.example.com"})
+    @patch("publish_to_registry.get_changed_packages", return_value=[])
+    @patch("publish_to_registry.commit_exists", return_value=True)
+    def test_diffs_against_supplied_base(self, mock_exists, mock_changed):
+        with patch("sys.argv", ["publish_to_registry.py", "--base", "abc123"]):
+            self.assertEqual(main(), 0)
+
+        self.assertEqual(mock_changed.call_args[0][1], "abc123")
 
 
 class TestBuildPackageSpec(unittest.TestCase):

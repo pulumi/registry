@@ -69,9 +69,11 @@ jobs:
       - name: Publish to registry (primary)
         id: mirror-publish
         continue-on-error: true
-        run: uv run --with pyyaml scripts/ci/publish_to_registry.py ${DRY_RUN:+--dry-run} ${SPECS:+--specs $SPECS}
+        run: uv run --with pyyaml scripts/ci/publish_to_registry.py ${DRY_RUN:+--dry-run} ${SPECS:+--specs $SPECS} ${BASE_SHA:+--base $BASE_SHA}
         env:
           SPECS: ${{ inputs.specs }}
+          # A push can carry several commits (e.g. a merge queue batch); diff all of them, not just HEAD~1.
+          BASE_SHA: ${{ github.event.before }}
           DRY_RUN: ${{ inputs.dry-run && 'true' || '' }}
           PULUMI_ACCESS_TOKEN: ${{ steps.esc-secrets.outputs.PULUMI_ACCESS_TOKEN }}
           PULUMI_API_URL: https://api.pulumi.com

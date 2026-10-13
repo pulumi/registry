@@ -928,7 +928,7 @@ There are two publishers, a primary and a fallback.
 
 **What it does**:
 
-1. Reads the package YAMLs changed in the last commit (`git diff --name-only HEAD~1` against `themes/default/data/registry/packages/*.yaml`).
+1. Reads the package YAMLs changed by the push (`git diff --name-only <before> HEAD` against `themes/default/data/registry/packages/*.yaml`, where `<before>` is `github.event.before`). This covers every commit in a multi-commit push. A manual dispatch has no `before` and diffs against `HEAD~1`. If the `before` commit is missing from the clone (e.g. after a force push), the publisher fails so the legacy fallback republishes everything.
 2. Turns each into a `{source}/{publisher}/{name}@{version}` spec, skipping packages with `deprecated: true` and the `azure-native-v*` / `aws-v<N>` legacy aliases.
 3. Pipes those specs through `registry-mirror-discover | registry-mirror-publish`, both installed with `go install` from `github.com/pulumi/registry-mirror-tools` at the commit pinned in `REGISTRY_MIRROR_TOOLS_COMMIT`. Retries up to 3 times with exponential backoff (10s to 30s).
 
@@ -1255,7 +1255,7 @@ YAML files in repo                            Pulumi Cloud Registry API
 
 ### 12.2 How the Publishers Bridge Them
 
-On every push to `master`, `publish.yml` runs `scripts/ci/publish_to_registry.py`, which reads the package YAMLs changed in the last commit, turns each into a `{source}/{publisher}/{name}@{version}` spec, and pipes those through `registry-mirror-discover | registry-mirror-publish`.
+On every push to `master`, `publish.yml` runs `scripts/ci/publish_to_registry.py`, which reads the package YAMLs changed by the push, turns each into a `{source}/{publisher}/{name}@{version}` spec, and pipes those through `registry-mirror-discover | registry-mirror-publish`.
 
 If that step fails, `scripts/ci/push-registry.py` runs as the legacy fallback. It sweeps every package rather than just the changed ones:
 

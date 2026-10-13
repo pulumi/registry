@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-openstack/v5.5.2/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-openstack/v5.5.3/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-openstack/blob/v5.5.2/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-openstack/blob/v5.5.3/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Openstack Provider
 meta_desc: Provides an overview on how to configure the Pulumi Openstack provider.
@@ -235,7 +235,7 @@ public class App {
 {{% /choosable %}}
 {{% choosable language hcl %}}
 ```hcl
-pulumi {
+terraform {
   required_providers {
     openstack = {
       source = "pulumi/openstack"
@@ -245,6 +245,9 @@ pulumi {
 
 # Create a web server
 resource "openstack_compute_instance" "test-server" {
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 ```
 
@@ -690,7 +693,7 @@ public class App {
 {{% /choosable %}}
 {{% choosable language hcl %}}
 ```hcl
-pulumi {
+terraform {
   required_providers {
     openstack = {
       source = "pulumi/openstack"
@@ -699,6 +702,9 @@ pulumi {
 }
 
 resource "openstack_compute_instance" "my_instance" {
+  lifecycle {
+    create_before_destroy = true
+  }
   name      = "my_instance"
   region    = "DFW"
   image_id  = "fabe045f-43f8-4991-9e6c-5cabd617538c"

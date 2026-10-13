@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-slack/v0.5.2/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-slack/v0.5.3/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-slack/blob/v0.5.2/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-slack/blob/v0.5.3/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Slack Provider
 meta_desc: Provides an overview on how to configure the Pulumi Slack provider.
@@ -303,7 +303,7 @@ public class App {
 {{% /choosable %}}
 {{% choosable language hcl %}}
 ```hcl
-pulumi {
+terraform {
   required_providers {
     slack = {
       source = "pulumi/slack"
@@ -311,19 +311,25 @@ pulumi {
   }
 }
 
-data "slack_getuser" "testUser00" {
+data "slack_user" "testUser00" {
   name = "contact_test-user-ter"
 }
 
 # Create a User Group
 resource "slack_usergroup" "my_group" {
+  lifecycle {
+    create_before_destroy = true
+  }
   name        = "TestGroup"
   handle      = "test"
   description = "Test user group"
-  users       = [data.slack_getuser.testUser00.id]
+  users       = [data.slack_user.testUser00.id]
 }
 # Create a Slack channel
 resource "slack_conversation" "test" {
+  lifecycle {
+    create_before_destroy = true
+  }
   name              = "my-channel"
   topic             = "The topic for my channel"
   permanent_members = slack_usergroup.my_group.users

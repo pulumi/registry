@@ -316,8 +316,12 @@ def main() -> int:
         specs = args.specs
     else:
         if not commit_exists(config.repo_root, args.base):
-            # Diffing a narrower range could report success while skipping packages; failing hands off to the full legacy sweep.
-            print(f"Error: base commit {args.base} is not in the clone (force push?)")
+            # Diffing a narrower range could report success while skipping packages, so fail and let the operator name the specs.
+            print(
+                f"Error: base commit {args.base} is not in the clone (force push?), "
+                f"so the packages changed in {args.base}..HEAD can't be detected. "
+                "Re-run publish.yml via workflow_dispatch with the changed packages as specs."
+            )
             return 1
         changed_files = get_changed_packages(config.repo_root, args.base)
         if not changed_files:

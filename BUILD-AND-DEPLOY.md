@@ -928,7 +928,7 @@ There are two publishers, a primary and a fallback.
 
 **What it does**:
 
-1. Reads the package YAMLs changed by the push (`git diff --name-only <before> HEAD` against `themes/default/data/registry/packages/*.yaml`, where `<before>` is `github.event.before`). This covers every commit in a multi-commit push. A manual dispatch has no `before` and diffs against `HEAD~1`. If the `before` commit is missing from the clone (e.g. after a force push), the publisher fails so the legacy fallback republishes everything.
+1. Reads the package YAMLs changed by the push (`git diff --name-only <before> HEAD` against `themes/default/data/registry/packages/*.yaml`, where `<before>` is `github.event.before`). This covers every commit in a multi-commit push. A manual dispatch has no `before` and diffs against `HEAD~1`. If the `before` commit is missing from the clone (e.g. after a force push), the publisher fails rather than diff a narrower range and silently skip packages; publish the missed packages with a manual dispatch that names them in `specs`. Master's ruleset blocks force pushes, so this only happens through a ruleset bypass.
 2. Turns each into a `{source}/{publisher}/{name}@{version}` spec, skipping packages with `deprecated: true` and the `azure-native-v*` / `aws-v<N>` legacy aliases.
 3. Pipes those specs through `registry-mirror-discover | registry-mirror-publish`, both installed with `go install` from `github.com/pulumi/registry-mirror-tools` at the commit pinned in `REGISTRY_MIRROR_TOOLS_COMMIT`. Retries up to 3 times with exponential backoff (10s to 30s).
 

@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-databricks/v1.115.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-databricks/v1.115.1/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-databricks/blob/v1.115.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-databricks/blob/v1.115.1/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Databricks Provider
 meta_desc: Provides an overview on how to configure the Pulumi Databricks provider.
@@ -382,7 +382,7 @@ display(spark.range(10))
 {{% /choosable %}}
 {{% choosable language hcl %}}
 ```hcl
-pulumi {
+terraform {
   required_providers {
     databricks = {
       source = "pulumi/databricks"
@@ -393,23 +393,31 @@ pulumi {
   }
 }
 
-data "databricks_getcurrentuser" "me" {
+data "databricks_current_user" "me" {
 }
-data "databricks_getsparkversion" "latest" {
+data "databricks_spark_version" "latest" {
 }
-data "databricks_getnodetype" "smallest" {
+data "databricks_node_type" "smallest" {
   local_disk = true
 }
 
 resource "databricks_notebook" "this" {
-  path           ="${data.databricks_getcurrentuser.me.home}/Pulumi"
+  lifecycle {
+    create_before_destroy = true
+  }
+  path           ="${data.databricks_current_user.me.home}/Pulumi"
   language       = "PYTHON"
-  content_base64 = base64encode("# created from ${abspath(notImplemented("path.module"))}
+  content_base64 = base64encode(<<-EOT
+# created from ${abspath(notImplemented("path.module"))}
 display(spark.range(10))
-")
+EOT
+)
 }
 resource "databricks_job" "this" {
-  name ="Pulumi Demo (${data.databricks_getcurrentuser.me.alphanumeric})"
+  lifecycle {
+    create_before_destroy = true
+  }
+  name ="Pulumi Demo (${data.databricks_current_user.me.alphanumeric})"
   tasks {
     task_key = "task1"
     notebook_task = {
@@ -417,8 +425,8 @@ resource "databricks_job" "this" {
     }
     new_cluster = {
       num_workers   = 1
-      spark_version = data.databricks_getsparkversion.latest.id
-      node_type_id  = data.databricks_getnodetype.smallest.id
+      spark_version = data.databricks_spark_version.latest.id
+      node_type_id  = data.databricks_node_type.smallest.id
     }
   }
 }
@@ -668,7 +676,7 @@ public class App {
 {{% /choosable %}}
 {{% choosable language hcl %}}
 ```hcl
-pulumi {
+terraform {
   required_providers {
     databricks = {
       source = "pulumi/databricks"
@@ -677,6 +685,9 @@ pulumi {
 }
 
 resource "databricks_group" "cluster_admin" {
+  lifecycle {
+    create_before_destroy = true
+  }
   display_name               = "cluster_admin"
   allow_cluster_create       = true
   allow_instance_pool_create = false
@@ -1043,7 +1054,7 @@ public class App {
 {{% /choosable %}}
 {{% choosable language hcl %}}
 ```hcl
-pulumi {
+terraform {
   required_providers {
     azure = {
       source = "pulumi/azure"
@@ -1055,12 +1066,18 @@ pulumi {
 }
 
 resource "azure_databricks_workspace" "this" {
+  lifecycle {
+    create_before_destroy = true
+  }
   location            = "centralus"
   name                = "my-workspace-name"
   resource_group_name = resourceGroup
   sku                 = "premium"
 }
 resource "databricks_user" "my-user" {
+  lifecycle {
+    create_before_destroy = true
+  }
   user_name = "test-user@databricks.com"
 }
 ```
@@ -1298,7 +1315,7 @@ public class App {
 {{% /choosable %}}
 {{% choosable language hcl %}}
 ```hcl
-pulumi {
+terraform {
   required_providers {
     azure = {
       source = "pulumi/azure"
@@ -1310,12 +1327,18 @@ pulumi {
 }
 
 resource "azure_databricks_workspace" "this" {
+  lifecycle {
+    create_before_destroy = true
+  }
   location            = "centralus"
   name                = "my-workspace-name"
   resource_group_name = resourceGroup
   sku                 = "premium"
 }
 resource "databricks_user" "my-user" {
+  lifecycle {
+    create_before_destroy = true
+  }
   user_name    = "test-user@databricks.com"
   display_name = "Test User"
 }
@@ -1633,7 +1656,7 @@ public class App {
 {{% /choosable %}}
 {{% choosable language hcl %}}
 ```hcl
-pulumi {
+terraform {
   required_providers {
     azure = {
       source = "pulumi/azure"
@@ -1645,12 +1668,18 @@ pulumi {
 }
 
 resource "azure_databricks_workspace" "this" {
+  lifecycle {
+    create_before_destroy = true
+  }
   location            = "centralus"
   name                = "my-workspace-name"
   resource_group_name = resourceGroup
   sku                 = "premium"
 }
 resource "databricks_user" "my-user" {
+  lifecycle {
+    create_before_destroy = true
+  }
   user_name = "test-user@databricks.com"
 }
 ```

@@ -12,7 +12,7 @@ name: bytepluscc
 package_status: public_preview
 publisher: Byteplus
 repo_url: https://github.com/byteplus-sdk/pulumi-bytepluscc
-schema_file_url: https://raw.githubusercontent.com/byteplus-sdk/pulumi-bytepluscc/v0.0.54/provider/cmd/pulumi-resource-bytepluscc/schema.json
+schema_file_url: https://raw.githubusercontent.com/byteplus-sdk/pulumi-bytepluscc/v0.0.55/provider/cmd/pulumi-resource-bytepluscc/schema.json
 title: bytepluscc
-updated_on: 1791789065
-version: v0.0.54
+updated_on: 1792059304
+version: v0.0.55

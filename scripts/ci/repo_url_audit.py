@@ -52,11 +52,11 @@ def session():
 
 
 def load_packages(packages_dir=PACKAGES_DIR):
-    """Listed packages only: a DEPRECATED package is already off the registry."""
+    """Listed packages only: a `deprecated: true` package is already off the registry."""
     packages = []
     for path in sorted(packages_dir.glob("*.yaml")):
         data = yaml.safe_load(path.read_text()) or {}
-        if data.get("publisher") == "DEPRECATED":
+        if data.get("deprecated"):
             continue
         packages.append({
             "name": path.stem,

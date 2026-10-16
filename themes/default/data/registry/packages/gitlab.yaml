@@ -11,7 +11,7 @@ name: gitlab
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-gitlab
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-gitlab/v10.3.2/provider/cmd/pulumi-resource-gitlab/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-gitlab/v10.4.0/provider/cmd/pulumi-resource-gitlab/schema.json
 title: GitLab
-updated_on: 1791908386
-version: v10.3.2
+updated_on: 1792121272
+version: v10.4.0

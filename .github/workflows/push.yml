@@ -6,6 +6,9 @@ on:
 permissions:
   id-token: write # This is required for requesting the JWT
   contents: read # This is required for actions/checkout
+concurrency:
+  group: registry-production-deploy
+  cancel-in-progress: false
 jobs:
   build:
     name: Build
@@ -29,6 +32,8 @@ jobs:
         uses: actions/checkout@v7
         with:
           token: ${{ steps.esc-secrets.outputs.PULUMI_BOT_TOKEN }}
+          # A re-run of an older commit can take the pending concurrency slot, so deploy the tip.
+          ref: master
           # Full history needed for registry-mirror-discover to find package versions
           fetch-depth: 0
 
@@ -116,41 +121,6 @@ jobs:
         with:
           name: origin-bucket-metadata
           path: origin-bucket-metadata.json
-      - name: Install uv for publish
-        uses: astral-sh/setup-uv@v7
-      - name: Publish to registry (primary)
-        id: mirror-publish
-        continue-on-error: true
-        run: uv run --with pyyaml scripts/ci/publish_to_registry.py
-        env:
-          PULUMI_ACCESS_TOKEN: ${{ steps.esc-secrets.outputs.PULUMI_ACCESS_TOKEN }}
-          PULUMI_API_URL: https://api.pulumi.com
-          GITHUB_TOKEN: ${{ steps.esc-secrets.outputs.PULUMI_BOT_TOKEN }}
-
-      - name: Push to the Live Registry (legacy fallback)
-        id: legacy-publish
-        if: steps.mirror-publish.outcome == 'failure'
-        continue-on-error: true
-        run: uv run --with requests,pyyaml ./scripts/ci/push-registry.py
-        env:
-          PULUMI_ACCESS_TOKEN: ${{ steps.esc-secrets.outputs.PULUMI_ACCESS_TOKEN }}
-
-      - name: Notify on publish failure
-        if: steps.mirror-publish.outcome == 'failure' && steps.legacy-publish.outcome == 'failure'
-        uses: docker://sholung/action-slack-notify:v2.3.0
-        env:
-          SLACK_CHANNEL: registry-ops
-          SLACK_COLOR: "#F54242"
-          SLACK_MESSAGE: |
-            Registry publish failed (both primary and fallback) for ${{ github.sha }}
-
-            To manually publish, see https://github.com/pulumi/registry-mirror-tools#examples
-            ```
-            echo 'pulumi/pulumi/aws@6.50.0' | ./bin/registry-mirror-discover ./registry | ./bin/registry-mirror-publish
-            ```
-          SLACK_USERNAME: registrybot
-          SLACK_WEBHOOK: ${{ steps.esc-secrets.outputs.SLACK_WEBHOOK_URL }}
-          SLACK_ICON: https://www.pulumi.com/logos/brand/avatar-on-white.png
 
   notify:
     if: failure()

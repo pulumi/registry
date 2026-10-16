@@ -1,0 +1,135 @@
+name: Publish to registry
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+    inputs:
+      specs:
+        description: "Space-separated package specs to publish, e.g. pulumi/pulumi/meraki@0.5.3 (default: the last commit's changed packages)"
+        type: string
+        required: false
+      dry-run:
+        description: "Show what would be published without publishing"
+        type: boolean
+        default: false
+permissions:
+  id-token: write # This is required for requesting the JWT
+  contents: read
+jobs:
+  publish:
+    name: Publish
+    # A dispatch can pick any branch; only run master's reviewed publish code with production credentials.
+    if: github.ref == 'refs/heads/master'
+    env:
+      GOPATH: ${{ github.workspace }}/go
+      ESC_ACTION_OIDC_AUTH: true
+      ESC_ACTION_OIDC_ORGANIZATION: pulumi
+      ESC_ACTION_OIDC_REQUESTED_TOKEN_TYPE: urn:pulumi:token-type:access_token:organization
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: production
+    steps:
+      - name: Fetch secrets from ESC
+        id: esc-secrets
+        uses: pulumi/esc-action@57e332b6dfb0d7edcf6cb813ee9a98b9665f12c2 # v3.2.1
+        with:
+          environment: github-secrets/pulumi-registry
+          export-environment-variables: false
+      - name: Check out branch
+        uses: actions/checkout@v7
+        with:
+          token: ${{ steps.esc-secrets.outputs.PULUMI_BOT_TOKEN }}
+          # Full history needed for registry-mirror-discover to find package versions
+          fetch-depth: 0
+
+      - name: Install Go
+        uses: actions/setup-go@v7
+        with:
+          go-version-file: tools/resourcedocsgen/go.mod
+          cache-dependency-path: tools/resourcedocsgen/go.sum
+
+      - name: Configure git for private Go modules
+        run: git config --global url."https://${{ steps.esc-secrets.outputs.PULUMI_BOT_TOKEN }}:x-oauth-basic@github.com/pulumi/registry-mirror-tools".insteadOf "https://github.com/pulumi/registry-mirror-tools"
+
+      - name: Get registry-mirror-discover version
+        id: mirror-version
+        run: echo "hash=$(grep 'REGISTRY_MIRROR_TOOLS_COMMIT=' scripts/generate-versioned-docs.sh | cut -d'"' -f2)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache registry-mirror binaries
+        uses: actions/cache@v6
+        with:
+          path: |
+            bin/registry-mirror-discover
+            bin/registry-mirror-publish
+          key: registry-mirror-tools-${{ steps.mirror-version.outputs.hash }}
+
+      - name: Install uv for publish
+        uses: astral-sh/setup-uv@v7
+      - name: Publish to registry (primary)
+        id: mirror-publish
+        continue-on-error: true
+        run: uv run --with pyyaml scripts/ci/publish_to_registry.py ${DRY_RUN:+--dry-run} ${SPECS:+--specs $SPECS} ${BASE_SHA:+--base $BASE_SHA}
+        env:
+          SPECS: ${{ inputs.specs }}
+          # A push can carry several commits (e.g. a merge queue batch); diff all of them, not just HEAD~1.
+          BASE_SHA: ${{ github.event.before }}
+          DRY_RUN: ${{ inputs.dry-run && 'true' || '' }}
+          PULUMI_ACCESS_TOKEN: ${{ steps.esc-secrets.outputs.PULUMI_ACCESS_TOKEN }}
+          PULUMI_API_URL: https://api.pulumi.com
+          GITHUB_TOKEN: ${{ steps.esc-secrets.outputs.PULUMI_BOT_TOKEN }}
+
+      - name: Push to the Live Registry (legacy fallback)
+        id: legacy-publish
+        # It republishes every package's current YAML version, ignoring the requested specs.
+        if: steps.mirror-publish.outcome == 'failure' && github.event_name == 'push'
+        continue-on-error: true
+        run: uv run --with requests,pyyaml ./scripts/ci/push-registry.py
+        env:
+          PULUMI_ACCESS_TOKEN: ${{ steps.esc-secrets.outputs.PULUMI_ACCESS_TOKEN }}
+
+      - name: Notify on publish failure
+        if: steps.mirror-publish.outcome == 'failure' && steps.legacy-publish.outcome != 'success' && !inputs.dry-run
+        uses: docker://sholung/action-slack-notify:v2.3.0
+        env:
+          SLACK_CHANNEL: registry-ops
+          SLACK_COLOR: "#F54242"
+          SLACK_MESSAGE: |
+            Registry publish failed for ${{ github.sha }}
+
+            To manually publish, see https://github.com/pulumi/registry-mirror-tools#examples
+            ```
+            echo 'pulumi/pulumi/aws@6.50.0' | ./bin/registry-mirror-discover ./registry | ./bin/registry-mirror-publish
+            ```
+          SLACK_USERNAME: registrybot
+          SLACK_WEBHOOK: ${{ steps.esc-secrets.outputs.SLACK_WEBHOOK_URL }}
+          SLACK_ICON: https://www.pulumi.com/logos/brand/avatar-on-white.png
+
+  notify:
+    if: always() && (needs.publish.result == 'failure' || needs.publish.result == 'cancelled')
+    name: Send slack notification
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    needs: [publish]
+    permissions:
+      id-token: write
+    env:
+      ESC_ACTION_OIDC_AUTH: true
+      ESC_ACTION_OIDC_ORGANIZATION: pulumi
+      ESC_ACTION_OIDC_REQUESTED_TOKEN_TYPE: urn:pulumi:token-type:access_token:organization
+    steps:
+      - name: Fetch secrets from ESC
+        id: esc-secrets
+        uses: pulumi/esc-action@57e332b6dfb0d7edcf6cb813ee9a98b9665f12c2 # v3.2.1
+        with:
+          environment: github-secrets/pulumi-registry
+          export-environment-variables: false
+      - name: Slack Notification
+        uses: docker://sholung/action-slack-notify:v2.3.0
+        env:
+          SLACK_CHANNEL: registry-ops
+          SLACK_COLOR: "#F54242"
+          SLACK_MESSAGE: "Registry publish job failed for ${{ github.sha }}; package versions from this commit may be missing from the registry API :meow_sad:"
+          SLACK_USERNAME: registrybot
+          SLACK_WEBHOOK: ${{ steps.esc-secrets.outputs.SLACK_WEBHOOK_URL }}
+          SLACK_ICON: https://www.pulumi.com/logos/brand/avatar-on-white.png

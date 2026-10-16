@@ -33,11 +33,20 @@ class Config:
     dry_run: bool = False
 
 
-def get_changed_packages(repo_root: Path) -> list[str]:
+def commit_exists(repo_root: Path, rev: str) -> bool:
+    result = subprocess.run(
+        ["git", "cat-file", "-e", f"{rev}^{{commit}}"],
+        cwd=repo_root,
+        capture_output=True,
+    )
+    return result.returncode == 0
+
+
+def get_changed_packages(repo_root: Path, base: str = "HEAD~1") -> list[str]:
     """Get list of changed package YAML files from git diff."""
     try:
         result = subprocess.run(
-            ["git", "diff", "--name-only", "HEAD~1", "--",
+            ["git", "diff", "--name-only", base, "HEAD", "--",
              "themes/default/data/registry/packages/*.yaml"],
             cwd=repo_root,
             capture_output=True,
@@ -278,6 +287,11 @@ def main() -> int:
         help="Package specs to publish (default: detect from git diff)",
     )
     parser.add_argument(
+        "--base",
+        default="HEAD~1",
+        help="Commit to diff HEAD against when detecting changed packages (default: HEAD~1)",
+    )
+    parser.add_argument(
         "--validate-all",
         action="store_true",
         help="Build a spec for every package YAML and report errors without publishing",
@@ -301,7 +315,15 @@ def main() -> int:
     if args.specs:
         specs = args.specs
     else:
-        changed_files = get_changed_packages(config.repo_root)
+        if not commit_exists(config.repo_root, args.base):
+            # Diffing a narrower range could report success while skipping packages, so fail and let the operator name the specs.
+            print(
+                f"Error: base commit {args.base} is not in the clone (force push?), "
+                f"so the packages changed in {args.base}..HEAD can't be detected. "
+                "Re-run publish.yml via workflow_dispatch with the changed packages as specs."
+            )
+            return 1
+        changed_files = get_changed_packages(config.repo_root, args.base)
         if not changed_files:
             print("No package YAML files changed")
             return 0

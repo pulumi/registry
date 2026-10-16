@@ -66,7 +66,7 @@ Remove the following from your provider configuration—they are no longer suppo
 
 ## Enhanced Region Support
 
-Version 7.0.0 adds `region` to most resources making it significantly easier to manage infrastructure across AWS Regions without requiring multiple provider configurations. See [Enhanced Region Support](https://www.pulumi.com/registry/packages/aws/how-to-guides/aws-enhanced-region-support/).
+Version 7.0.0 adds `region` to most resources making it significantly easier to manage infrastructure across AWS Regions without requiring multiple provider configurations. See [Enhanced Region Support](https://www.pulumi.com/dev/tutorials/aws-enhanced-region-support/).
 
 ## Provider role chaining
 
@@ -2342,7 +2342,7 @@ Remove `tagsAll`—it is no longer supported.
 
 ## Function `aws.s3.getBucket`
 
-`bucketRegion` has been added and should be used instead of `region`, which is now used for [Enhanced Region Support](./enhanced-region-support.md).
+`bucketRegion` has been added and should be used instead of `region`, which is now used for [Enhanced Region Support](https://www.pulumi.com/dev/tutorials/aws-enhanced-region-support/).
 
 ## Function `aws.service.getDiscoveryService`
 
@@ -3234,7 +3234,7 @@ The resource configuration itself does not change. However, now, include an inde
 
 ## Resource `aws.s3.Bucket`
 
-`bucketRegion` has been added and should be used instead of `region`, which is now used for [Enhanced Region Support](enhanced-region-support.html).
+`bucketRegion` has been added and should be used instead of `region`, which is now used for [Enhanced Region Support](https://www.pulumi.com/dev/tutorials/aws-enhanced-region-support/).
 
 ## Resource `aws.sagemaker.ImageVersion`
 

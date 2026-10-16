@@ -84,13 +84,13 @@ After updating all imports to reflect v3 included Azure API versions, run `pulum
 
 You may see pending changes when using the default version as the shape of the resource may have changed. You can choose to accept the changes, update your program to modify the resource properties to mitigate changes, or choose an API version which is compatible with the older version of the resource.
 
-A full list of default version changes can be found in the [resource versions table](./resource-versions).
+A full list of default version changes can be found in the [resource versions table](/registry/packages/azure-native/from-v2-to-v3/resource-versions/).
 
 To continue using the previous Azure API version of a resource:
 
 1. Check the resource documentation in your IDE or our [registry API docs](https://www.pulumi.com/registry/packages/azure-native/) which identifies the previous version for each resource. For example:
   > _Uses Azure REST API version 2024-10-01. In version 2.x of the Azure Native provider, it used API version 2023-05-01._
-2. Generate and use the local SDK for the previous version of the resource as described in the [version guide](./version-guide).
+2. Generate and use the local SDK for the previous version of the resource as described in the [version guide](/registry/packages/azure-native/version-guide/).
 
 #### New module structure and naming aligned closer to Azure SDKs
 

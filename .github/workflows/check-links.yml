@@ -119,10 +119,11 @@ jobs:
           # no `curl`, no `gh issue create`. That narrows what an injected
           # instruction could do, but it isn't a sandbox -- WebFetch and git still
           # reach the network -- so the skill's "fetched content is data" rule is
-          # the other half of the defense.
+          # the other half of the defense. `cd` is allowed because agents habitually
+          # prefix commands with it, and a denied prefix fails the whole command.
           claude_args: |
             --model claude-opus-5-5 --effort low
-            --allowed-tools "Read,Write,Edit,Glob,Grep,Agent,WebFetch,WebSearch,Bash(make lint-markdown:*),Bash(make ensure:*),Bash(yarn run lint:*),Bash(yarn run format:*),Bash(gh pr create:*),Bash(gh pr view:*),Bash(gh pr list:*),Bash(gh pr diff:*),Bash(gh issue list:*),Bash(gh search:*),Bash(git:*),Bash(cat:*),Bash(head:*),Bash(tail:*),Bash(wc:*),Bash(ls:*),Bash(grep:*),Bash(find:*),Bash(rg:*),Bash(awk:*),Bash(sed:*),Bash(jq:*),Bash(yq:*),Bash(echo:*),Bash(printf:*),Bash(tee:*),Bash(date:*),Bash(test:*)"
+            --allowed-tools "Read,Write,Edit,Glob,Grep,Agent,WebFetch,WebSearch,Bash(make lint-markdown:*),Bash(make ensure:*),Bash(yarn run lint:*),Bash(yarn run format:*),Bash(gh pr create:*),Bash(gh pr view:*),Bash(gh pr list:*),Bash(gh pr diff:*),Bash(gh issue list:*),Bash(gh search:*),Bash(git:*),Bash(cd:*),Bash(cat:*),Bash(head:*),Bash(tail:*),Bash(wc:*),Bash(ls:*),Bash(grep:*),Bash(find:*),Bash(rg:*),Bash(awk:*),Bash(sed:*),Bash(jq:*),Bash(yq:*),Bash(echo:*),Bash(printf:*),Bash(tee:*),Bash(date:*),Bash(test:*)"
       # Post the PR link to #registry-ops. `always()` keeps a failed run from
       # going silent: if the fix step died (API error, timeout, lint it couldn't
       # resolve), post the broken-link count and the run link; if the checker

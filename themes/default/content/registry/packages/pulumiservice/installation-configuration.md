@@ -16,14 +16,21 @@ The Pulumi Service provider is available as a package in all Pulumi languages:
 
 ## Setup
 
-To provision resources with the Pulumi Service provider, you must have Pulumi Cloud credentials. Pulumi Cloud maintains documentation on creating [access tokens](https://www.pulumi.com/docs/intro/pulumi-cloud/accounts/#access-tokens).
+To provision resources with the Pulumi Service provider, you need Pulumi Cloud credentials. The provider looks for an [access token](/docs/administration/concepts/access-tokens/) in this order:
+
+1. The `pulumiservice:accessToken` configuration option.
+2. The `PULUMI_ACCESS_TOKEN` environment variable.
+3. The account you're logged in to with `pulumi login`.
+
+If you've already run `pulumi login`, you don't need to configure anything else.
+
 {{% notes "info" %}}
-While you can use this provider to provision access tokens, you'll still need to have an access token available to generate an access token with the provider.
+The provider takes the token from your `pulumi login`, but not the API URL, which defaults to `https://api.pulumi.com`. If you're logged in to a self-hosted Pulumi Cloud, also set `PULUMI_BACKEND_URL` or the `apiUrl` option.
 {{% /notes %}}
 
 ### Set environment variables
 
-Once you have an access token, its easy to set the environment variables. The Pulumi Service Provider uses the same environment variables as Pulumi does.
+To use a different token than your `pulumi login`, or to run without logging in (for example in CI), set the environment variables. The Pulumi Service provider uses the same environment variables as the Pulumi CLI.
 
 {{< chooser os "linux,macos,windows" >}}
 {{% choosable os linux %}}
@@ -63,5 +70,5 @@ Use `pulumi config set pulumiservice:<option>` or pass options to the [construct
 
 | Option | Required? | Description |
 |-----|------|----|
-| `accessToken`| Required | [Pulumi Cloud Access Tokens](/docs/pulumi-cloud/accounts/#personal-access-tokens) |
+| `accessToken`| Optional | [Pulumi Cloud access token](/docs/administration/concepts/access-tokens/). Defaults to `PULUMI_ACCESS_TOKEN`, then to your `pulumi login` credentials. |
 | `apiUrl`| Optional | Allows overriding default [Pulumi Cloud API URL](/docs/pulumi-cloud/cloud-rest-api/) for [self hosted customers](/docs/pulumi-cloud/self-hosted/).

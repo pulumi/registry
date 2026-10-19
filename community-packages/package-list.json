@@ -403,6 +403,10 @@
     {
       "repoSlug": "htmlcsstoimage/pulumi-html-css-to-image",
       "schemaFile": "internal/provider/schema.json"
+    },
+    {
+      "repoSlug": "asyntai/pulumi-asyntai",
+      "schemaFile": "provider/cmd/pulumi-resource-asyntai/schema.json"
     }
   ]
 }

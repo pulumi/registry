@@ -71,4 +71,4 @@ Use `pulumi config set pulumiservice:<option>` or pass options to the [construct
 | Option | Required? | Description |
 |-----|------|----|
 | `accessToken`| Optional | [Pulumi Cloud access token](/docs/administration/concepts/access-tokens/). Defaults to `PULUMI_ACCESS_TOKEN`, then to your `pulumi login` credentials. |
-| `apiUrl`| Optional | Allows overriding default [Pulumi Cloud API URL](/docs/pulumi-cloud/cloud-rest-api/) for [self hosted customers](/docs/pulumi-cloud/self-hosted/).
+| `apiUrl`| Optional | Allows overriding default [Pulumi Cloud API URL](/docs/pulumi-cloud/cloud-rest-api/) for [self hosted customers](/docs/pulumi-cloud/self-hosted/). Defaults to `PULUMI_BACKEND_URL`, then `PULUMI_API`, then `https://api.pulumi.com`. |

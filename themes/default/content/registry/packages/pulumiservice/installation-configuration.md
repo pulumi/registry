@@ -26,7 +26,7 @@ If you've already run `pulumi login`, you don't need to configure anything else.
 
 ### Set environment variables
 
-To use a different token than your `pulumi login`, or to run without logging in (for example in CI), set the environment variables. The Pulumi Service provider uses the same environment variables as the Pulumi CLI.
+To override the token from your `pulumi login`, or to run without logging in (for example, in CI), set these environment variables. The Pulumi Service provider uses the same environment variables as the Pulumi CLI.
 
 {{< chooser os "linux,macos,windows" >}}
 {{% choosable os linux %}}

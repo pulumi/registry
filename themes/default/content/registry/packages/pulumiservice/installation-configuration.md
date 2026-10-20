@@ -24,6 +24,10 @@ To provision resources with the Pulumi Service provider, you need Pulumi Cloud c
 
 If you've already run `pulumi login`, you don't need to configure anything else.
 
+{{% notes "info" %}}
+The provider gets your login's API URL from the Pulumi CLI, which only passes it with CLI v3.247.0 or later and when your stack's state is stored in Pulumi Cloud. With an older CLI, or with a [DIY backend](/docs/iac/concepts/state-and-backends/#using-a-diy-backend), the provider calls `https://api.pulumi.com`. If you're logged in to a self-hosted Pulumi Cloud in either case, set the `apiUrl` option. If you set `PULUMI_BACKEND_URL` to a DIY backend, also set `apiUrl`, since the provider otherwise uses the DIY backend's URL as its API URL ([pulumi/pulumi-pulumiservice#1253](https://github.com/pulumi/pulumi-pulumiservice/issues/1253)).
+{{% /notes %}}
+
 ### Set environment variables
 
 To override the token from your `pulumi login`, or to run without logging in (for example, in CI), set these environment variables. The Pulumi Service provider uses the same environment variables as the Pulumi CLI.

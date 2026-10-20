@@ -24,10 +24,6 @@ To provision resources with the Pulumi Service provider, you need Pulumi Cloud c
 
 If you've already run `pulumi login`, you don't need to configure anything else.
 
-{{% notes "info" %}}
-The provider takes the token from your `pulumi login`, but not the API URL, which defaults to `https://api.pulumi.com`. If you're logged in to a self-hosted Pulumi Cloud, also set `PULUMI_BACKEND_URL` or the `apiUrl` option.
-{{% /notes %}}
-
 ### Set environment variables
 
 To use a different token than your `pulumi login`, or to run without logging in (for example in CI), set the environment variables. The Pulumi Service provider uses the same environment variables as the Pulumi CLI.
@@ -37,7 +33,7 @@ To use a different token than your `pulumi login`, or to run without logging in 
 
 ```bash
 $ export PULUMI_ACCESS_TOKEN=<PULUMI_ACCESS_TOKEN>
-# For self hosted customers. defaults to https://api.pulumi.com
+# For self-hosted customers. Defaults to https://api.pulumi.com
 $ export PULUMI_BACKEND_URL=<PULUMI_BACKEND_URL>
 ```
 
@@ -47,7 +43,7 @@ $ export PULUMI_BACKEND_URL=<PULUMI_BACKEND_URL>
 
 ```bash
 $ export PULUMI_ACCESS_TOKEN=<PULUMI_ACCESS_TOKEN>
-# For self hosted customers. defaults to https://api.pulumi.com
+# For self-hosted customers. Defaults to https://api.pulumi.com
 $ export PULUMI_BACKEND_URL=<PULUMI_BACKEND_URL>
 ```
 
@@ -57,7 +53,7 @@ $ export PULUMI_BACKEND_URL=<PULUMI_BACKEND_URL>
 
 ```powershell
 > $env:PULUMI_ACCESS_TOKEN = "<PULUMI_ACCESS_TOKEN>"
-# For self hosted customers. defaults to https://api.pulumi.com
+# For self-hosted customers. Defaults to https://api.pulumi.com
 > $env:PULUMI_BACKEND_URL = "<PULUMI_BACKEND_URL>"
 ```
 
@@ -71,4 +67,4 @@ Use `pulumi config set pulumiservice:<option>` or pass options to the [construct
 | Option | Required? | Description |
 |-----|------|----|
 | `accessToken`| Optional | [Pulumi Cloud access token](/docs/administration/concepts/access-tokens/). Defaults to `PULUMI_ACCESS_TOKEN`, then to your `pulumi login` credentials. |
-| `apiUrl`| Optional | Allows overriding default [Pulumi Cloud API URL](/docs/pulumi-cloud/cloud-rest-api/) for [self hosted customers](/docs/pulumi-cloud/self-hosted/). Defaults to `PULUMI_BACKEND_URL`, then `PULUMI_API`, then `https://api.pulumi.com`. |
+| `apiUrl`| Optional | Allows overriding default [Pulumi Cloud API URL](/docs/pulumi-cloud/cloud-rest-api/) for [self-hosted customers](/docs/pulumi-cloud/self-hosted/). Defaults to `PULUMI_BACKEND_URL`, then `PULUMI_API`, then `https://api.pulumi.com`. |

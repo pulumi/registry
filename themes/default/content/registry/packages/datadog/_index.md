@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-datadog/v5.15.1/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-datadog/v5.16.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-datadog/blob/v5.15.1/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-datadog/blob/v5.16.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Datadog Provider
 meta_desc: Provides an overview on how to configure the Pulumi Datadog provider.
@@ -23,11 +23,14 @@ The Datadog provider is available as a package in all Pulumi languages:
 The [Datadog](https://www.datadoghq.com) provider is used to interact with the resources supported by Datadog. The provider needs to be configured with the proper credentials before it can be used. 
 
 Use the navigation to the left to read about the available resources.
+## Pulumi Dynamic Provider Credentials
+
+For HCP Pulumi, the provider discovers Pulumi-issued workload identity tokens and exchanges them through Datadog Workload Identity Federation when authentication is not explicitly configured in the provider configuration. Use `workloadIdentityTokenTag` to select a distinct token for each provider configuration. Configure the WIF persona mapping and workspace audience as described in the Dynamic Provider Credentials guide.
 ## Configuration Reference
 
-- `apiKey` (String, Sensitive) (Required unless validate is false) Datadog API key. This can also be set via the DD_API_KEY environment variable.
+- `apiKey` (String, Sensitive) Datadog API key. Required when `validate` is true unless authentication uses AWS WIF, a bearer token, or Pulumi Dynamic Provider Credentials. This can also be set via the `DD_API_KEY` environment variable.
 - `apiUrl` (String) The API URL. This can also be set via the DD_HOST environment variable, and defaults to `https://api.datadoghq.com`. Note that this URL must not end with the `/api/` path. For example, `https://api.datadoghq.com/` is a correct value, while `https://api.datadoghq.com/api/` is not. And if you're working with "EU" version of Datadog, use `https://api.datadoghq.eu/`. Other Datadog region examples: `https://api.us5.datadoghq.com/`, `https://api.us3.datadoghq.com/` and `https://api.ddog-gov.com/`. See <https://docs.datadoghq.com/getting_started/site/> for all available regions.
-- `appKey` (String, Sensitive) (Required unless validate is false) Datadog APP key. This can also be set via the DD_APP_KEY environment variable.
+- `appKey` (String, Sensitive) Datadog application key. Required when `validate` is true unless authentication uses AWS WIF, a bearer token, or Pulumi Dynamic Provider Credentials. This can also be set via the `DD_APP_KEY` environment variable.
 - `awsAccessKeyId` (String, Sensitive) The AWS access key ID; used for cloud-provider-based authentication. This can also be set using the `AWS_ACCESS_KEY_ID` environment variable. Required when using `cloudProviderType` set to `aws`.
 - `awsSecretAccessKey` (String, Sensitive) The AWS secret access key; used for cloud-provider-based authentication. This can also be set using the `AWS_SECRET_ACCESS_KEY` environment variable. Required when using `cloudProviderType` set to `aws`.
 - `awsSessionToken` (String, Sensitive) The AWS session token; used for cloud-provider-based authentication. This can also be set using the `AWS_SESSION_TOKEN` environment variable. Required when using `cloudProviderType` set to `aws` and using temporary credentials.
@@ -42,8 +45,9 @@ Use the navigation to the left to read about the available resources.
 - `httpClientRetryMaxRetries` (Number) The HTTP request maximum retry number. Defaults to 3.
 - `httpClientRetryTimeout` (Number) The HTTP request retry timeout period. Defaults to 60 seconds.
 - `ignoreTagKeys` (Set of String) [Experimental - Monitors and Service Level Objectives only] Tag keys whose drift Pulumi should ignore across all resources that support `ignoreTagKeys`. A resource's own `ignoreTagKeys` is merged with this list for that resource. Any `:value` suffix is ignored.
-- `orgUuid` (String) The organization UUID; used for cloud-provider-based authentication. This can also be set using the `DD_ORG_UUID` environment variable. See the [Datadog API documentation](https://docs.datadoghq.com/api/v1/organizations/) for more information.
-- `validate` (String) Enables validation of the provided API key during provider initialization. Valid values are [`true`, `false`]. Default is true. When false, apiKey won't be checked.
+- `orgUuid` (String) The organization UUID; required for AWS WIF. Optional for Pulumi Dynamic Provider Credentials, but when configured it must match the organization UUID in the token audience. This can also be set using the `DD_ORG_UUID` environment variable. See the [Datadog API documentation](https://docs.datadoghq.com/api/v1/organizations/) for more information.
+- `validate` (String) Enables credential validation during provider initialization. Valid values are [`true`, `false`]. Default is true. When false, initial credential validation is skipped.
+- `workloadIdentityTokenTag` (String) Selects the HCP Pulumi workload identity token tag for this provider configuration, for example DATADOG_ORG_A selects TFC_WORKLOAD_IDENTITY_TOKEN_DATADOG_ORG_A. When set, that token must be present and have a valid Datadog audience; no other token or environment authentication is used as fallback. Explicit API/application keys, bearer_token, or cloudProviderType take precedence. When unset or empty, automatically tries the DATADOG tag and then the untagged token. Tags may contain only letters, numbers, and underscores; TYPE is reserved.
 
 <a id="nestedblock--default_tags"></a>
 ### Nested Schema for `defaultTags`

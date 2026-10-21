@@ -85,7 +85,7 @@ pulumi install
 {{% /choosable %}}
 {{< /chooser >}}
 
-## Example
+## Example Usage
 
 {{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}

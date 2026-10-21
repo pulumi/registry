@@ -39,6 +39,7 @@ runs:
 
     - name: Install Go
       uses: actions/setup-go@v6
+      id: setup-go
       with:
         go-version-file: tools/resourcedocsgen/go.mod
         cache-dependency-path: tools/resourcedocsgen/go.sum
@@ -111,7 +112,7 @@ runs:
       uses: actions/cache@v6
       with:
         path: bin/registry-mirror-discover
-        key: registry-mirror-discover-${{ steps.mirror-version.outputs.hash }}
+        key: registry-mirror-discover-${{ steps.mirror-version.outputs.hash }}-go${{ steps.setup-go.outputs.go-version }}
 
     - name: Build and deploy preview
       shell: bash

@@ -93,6 +93,8 @@ The canonical tool versions are tracked in `mise.toml`:
 | golangci-lint | 2.10.1 |
 | yq | latest |
 
+Go and Node.js are pinned to exact patch releases, in `mise.toml` and in every `setup-go` / `setup-node` step, since the eMudhra CA incident (#13055). Dependabot does not bump these, so when either upstream ships a security release, bump the pin by hand; `setup-go` reads the `toolchain` line in `tools/resourcedocsgen/go.mod`, and the `registry-mirror-*` binary caches are keyed on the resolved Go version so they rebuild with it.
+
 Install and manage all tools via [mise](https://mise.jdx.dev/):
 
 ```bash

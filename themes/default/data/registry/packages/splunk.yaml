@@ -11,7 +11,7 @@ name: splunk
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-splunk
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-splunk/v1.5.0/provider/cmd/pulumi-resource-splunk/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-splunk/v1.5.1/provider/cmd/pulumi-resource-splunk/schema.json
 title: Splunk
-updated_on: 1791948249
-version: v1.5.0
+updated_on: 1792466644
+version: v1.5.1

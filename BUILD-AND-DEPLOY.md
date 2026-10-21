@@ -86,12 +86,14 @@ The canonical tool versions are tracked in `mise.toml`:
 
 | Tool | Version |
 |---|---|
-| Go | 1.26 |
-| Node.js | 24 |
+| Go | 1.26.10 |
+| Node.js | 24.22.1 |
 | Yarn | 1.22.22 |
 | Hugo | 0.157 (extended) |
 | golangci-lint | 2.10.1 |
 | yq | latest |
+
+Go and Node.js are pinned to exact patch releases, in `mise.toml` and in every `setup-go` / `setup-node` step, since the eMudhra CA incident (#13055). Dependabot does not bump these, so when either upstream ships a security release, bump the pin by hand; `setup-go` reads the `toolchain` line in `tools/resourcedocsgen/go.mod`, and the `registry-mirror-*` binary caches are keyed on the resolved Go version so they rebuild with it.
 
 Install and manage all tools via [mise](https://mise.jdx.dev/):
 
@@ -1139,8 +1141,8 @@ The `export-repo-secrets.yml` workflow provides a manual escape hatch to sync Gi
 
 | Tool | `mise.toml` | `pull-request.yml` (preview) | `push.yml` (production) | `testing-deploy.yml` |
 |---|---|---|---|---|
-| Node.js | 24 | 24.x | 24.x | 24.x |
-| Go | 1.26 | `tools/resourcedocsgen/go.mod` | `tools/resourcedocsgen/go.mod` | `tools/resourcedocsgen/go.mod` |
+| Node.js | 24.22.1 | 24.22.1 | 24.22.1 | 24.22.1 |
+| Go | 1.26.10 | `tools/resourcedocsgen/go.mod` | `tools/resourcedocsgen/go.mod` | `tools/resourcedocsgen/go.mod` |
 | Hugo | 0.157 | 0.157.0 | 0.157.0 | 0.157.0 |
 | golangci-lint | 2.10.1 | v2.10.1 (check-go.yml) | — | — |
 | s5cmd | — | v2.3.0 | v2.3.0 | v2.3.0 |

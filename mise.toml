@@ -1,6 +1,6 @@
 [tools]
-golang = '1.26'
-node = '24'
+golang = '1.26.10'
+node = '24.22.1'
 
 yarn = '1.22.22'
 hugo = '0.157'

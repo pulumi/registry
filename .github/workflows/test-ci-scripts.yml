@@ -39,8 +39,9 @@ jobs:
           python-version: '3.12'
       - name: Set up Go, opting out of the repo-root module cache key
         uses: actions/setup-go@v7
+        id: setup-go
         with:
-          go-version: '1.26'
+          go-version-file: tools/resourcedocsgen/go.mod
           cache: false
       - name: Get registry-mirror-tools version
         id: mirror-version
@@ -57,7 +58,7 @@ jobs:
           path: |
             bin/registry-mirror-discover
             bin/registry-mirror-publish
-          key: registry-mirror-tools-bins-${{ runner.os }}-${{ steps.mirror-version.outputs.hash }}
+          key: registry-mirror-tools-bins-${{ runner.os }}-${{ steps.mirror-version.outputs.hash }}-go${{ steps.setup-go.outputs.go-version }}
       - name: Configure git for private Go modules
         run: git config --global url."https://${{ steps.esc-secrets.outputs.PULUMI_BOT_TOKEN }}:x-oauth-basic@github.com/pulumi/registry-mirror-tools".insteadOf "https://github.com/pulumi/registry-mirror-tools"
       - name: Install registry-mirror-tools

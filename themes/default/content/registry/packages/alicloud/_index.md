@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-alicloud/v3.109.1/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-alicloud/v4.0.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-alicloud/blob/v3.109.1/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-alicloud/blob/v4.0.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Alibaba Cloud Provider
 meta_desc: Provides an overview on how to configure the Pulumi Alibaba Cloud provider.
@@ -14,7 +14,7 @@ The Alibaba Cloud provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/alicloud`](https://www.npmjs.com/package/@pulumi/alicloud)
 * Python: [`pulumi-alicloud`](https://pypi.org/project/pulumi-alicloud/)
-* Go: [`github.com/pulumi/pulumi-alicloud/sdk/v3/go/alicloud`](https://github.com/pulumi/pulumi-alicloud)
+* Go: [`github.com/pulumi/pulumi-alicloud/sdk/v4/go/alicloud`](https://github.com/pulumi/pulumi-alicloud)
 * .NET: [`Pulumi.Alicloud`](https://www.nuget.org/packages/Pulumi.Alicloud)
 * Java: [`com.pulumi/alicloud`](https://central.sonatype.com/artifact/com.pulumi/alicloud)
 
@@ -286,10 +286,10 @@ config:
 package main
 
 import (
-	"github.com/pulumi/pulumi-alicloud/sdk/v3/go/alicloud"
-	"github.com/pulumi/pulumi-alicloud/sdk/v3/go/alicloud/ecs"
-	"github.com/pulumi/pulumi-alicloud/sdk/v3/go/alicloud/kms"
-	"github.com/pulumi/pulumi-alicloud/sdk/v3/go/alicloud/vpc"
+	"github.com/pulumi/pulumi-alicloud/sdk/v4/go/alicloud"
+	"github.com/pulumi/pulumi-alicloud/sdk/v4/go/alicloud/ecs"
+	"github.com/pulumi/pulumi-alicloud/sdk/v4/go/alicloud/kms"
+	"github.com/pulumi/pulumi-alicloud/sdk/v4/go/alicloud/vpc"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config"
 )

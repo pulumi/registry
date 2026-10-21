@@ -6,6 +6,15 @@ layout: package
 
 The Pulumi Service provider for Pulumi can be used to provision resources available in [Pulumi Cloud](https://app.pulumi.com/).
 
+## Resource namespaces
+
+The provider has two sets of resources:
+
+- `pulumiservice:index:*` (for example, `pulumiservice.Webhook`) are designed and maintained by hand.
+- `pulumiservice:api:*` (for example, `pulumiservice.api.OrganizationWebhook`) are generated from the [Pulumi Cloud REST API](/docs/reference/cloud-rest-api/) specification and cover more of the API.
+
+The `api` namespace is in preview. Its resource shapes and module layout may change before general availability.
+
 ## Installation
 
 {{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}

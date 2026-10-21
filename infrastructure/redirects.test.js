@@ -96,6 +96,8 @@ test("every removed install-config package redirects to its own Overview", () =>
         "gitlab", "hcloud", "keycloak", "kong", "mailgun", "minio",
         "mongodbatlas", "mysql", "newrelic", "ns1", "opsgenie", "pagerduty",
         "rabbitmq", "rancher2", "signalfx", "snowflake", "splunk", "venafi",
+        // Merged into the Overview.
+        "pulumiservice",
     ];
     for (const pkg of packages) {
         const result = handler(request(`/registry/packages/${pkg}/installation-configuration/`));

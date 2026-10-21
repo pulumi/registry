@@ -2,6 +2,8 @@ module github.com/pulumi/registry/tools/resourcedocsgen
 
 go 1.26.6
 
+toolchain go1.26.10
+
 require (
 	github.com/blang/semver v3.5.1+incompatible
 	github.com/ghodss/yaml v1.0.0

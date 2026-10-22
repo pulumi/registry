@@ -7,7 +7,7 @@ layout: package
 {{< notes >}}
 Google Cloud Native is available in developer preview. While upstream changes continue to be delivered, active development is paused. Breaking changes may be introduced in minor version releases.
 
-[Google Cloud Classic](/registry/packages/gcp) remains fully supported and recommended for production use.
+[Google Cloud (GCP)](/registry/packages/gcp) remains fully supported and recommended for production use.
 {{< /notes >}}
 
 The Google Cloud Native provider for Pulumi can provision many of the cloud resources available in [Google Cloud](https://cloud.google.com/).

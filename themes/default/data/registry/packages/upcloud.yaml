@@ -11,7 +11,7 @@ name: upcloud
 package_status: public_preview
 publisher: UpCloudLtd
 repo_url: https://github.com/UpCloudLtd/pulumi-upcloud
-schema_file_url: https://raw.githubusercontent.com/UpCloudLtd/pulumi-upcloud/v0.22.0/provider/cmd/pulumi-resource-upcloud/schema.json
+schema_file_url: https://raw.githubusercontent.com/UpCloudLtd/pulumi-upcloud/v0.23.0/provider/cmd/pulumi-resource-upcloud/schema.json
 title: UpCloud
-updated_on: 1791861988
-version: v0.22.0
+updated_on: 1792675465
+version: v0.23.0

@@ -6,8 +6,8 @@
     "author": "Christian Nunciato <c@nunciato.org>",
     "license": "Apache-2.0",
     "dependencies": {
-        "@aws-sdk/client-s3": "^3.1103.0",
-        "beasties": "^0.4.3",
+        "@aws-sdk/client-s3": "^3.1150.0",
+        "beasties": "^0.5.5",
         "broken-link-checker": "^0.7.8",
         "cheerio": "^1.2.0",
         "concurrently": "^6.0.0",
@@ -20,7 +20,7 @@
         "jsdom": "^22.0.0",
         "markdownlint": "^0.41.1",
         "mocha": "^10.8.2",
-        "postcss": "^8.5.25",
+        "postcss": "^8.5.30",
         "postcss-cli": "^11.0.0",
         "sitemap": "^9.0.1",
         "sitemapper": "^3.2.24",
@@ -41,8 +41,8 @@
         "cypress-multi-reporters": "^1.6.4",
         "eslint": "^9.39.5",
         "globals": "^15.15.0",
-        "mocha-ctrf-json-reporter": "^0.0.11",
-        "prettier": "3.9.6",
+        "mocha-ctrf-json-reporter": "^0.2.0",
+        "prettier": "3.9.10",
         "simple-icons": "^13.21.0"
     }
 }

@@ -1,6 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/1Password/pulumi-onepassword/v1.1.4/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/1Password/pulumi-onepassword/v1.2.1/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
+edit_url: https://github.com/1Password/pulumi-onepassword/blob/v1.2.1/docs/_index.md
 title: 1Password
 meta_desc: Provides an overview of the 1Password Provider for Pulumi.
 layout: package
@@ -11,8 +12,21 @@ You'll need to configure the 1Password provider with credentials to access and m
 
 ## Example
 
-{{< chooser language "typescript,python,go" >}}
+{{< chooser language "javascript,typescript,python,go" >}}
 
+{{% choosable language javascript %}}
+
+```javascript
+const pulumi = require("@pulumi/pulumi");
+const onepassword = require("@1password/pulumi-onepassword");
+
+const example = onepassword.getItem({
+    vault: data.onepassword_vault.example.uuid,
+    uuid: onepassword_item.demo_sections.uuid,
+});
+```
+
+{{% /choosable %}}
 {{% choosable language typescript %}}
 
 ```typescript

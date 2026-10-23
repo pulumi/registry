@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/selectel/selectel/8.6.0/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/selectel/selectel/9.4.1/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Selectel Provider
@@ -16,9 +16,11 @@ pulumi package add terraform-provider selectel/selectel
 ```
 ## Overview
 
-Use the Selectel provider to manage Selectel products.
+To manage Selectel product resources, use the Selectel provider.
 
-To manage resources available via OpenStack API, use OpenStack Pulumi provider.
+Starting with version 9.1.0, we recommend using the OpenStack Pulumi provider only for resources that are not yet available in the Selectel provider.
+
+Backward compatibility is not guaranteed. Some Selectel functionality may be unavailable or implemented differently in the OpenStack Pulumi provider. If you are upgrading to version 9.1.0 or later, follow our guides for example upgrading to version 9.1 to migrate your resources to the Selectel provider.
 ## Authentication (6.0.0 and later)
 
 ```yaml

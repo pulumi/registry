@@ -2,6 +2,8 @@
 # Do not edit by hand unless you're certain you know what you are doing!
 category: Infrastructure
 component: false
+deprecated: true
+deprecation_reason: The upstream Terraform provider is archived, and RKE1 has reached end of life.
 description: A Pulumi provider dynamically bridged from rke.
 featured: false
 logo_url: ""

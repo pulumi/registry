@@ -2,6 +2,8 @@
 # Do not edit by hand unless you're certain you know what you are doing!
 category: Cloud
 component: false
+deprecated: true
+deprecation_reason: The upstream Terraform provider is archived.
 description: A Pulumi provider dynamically bridged from neon.
 featured: false
 logo_url: ""

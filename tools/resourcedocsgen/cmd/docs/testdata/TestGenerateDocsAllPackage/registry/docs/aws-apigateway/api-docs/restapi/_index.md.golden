@@ -553,14 +553,13 @@ var restAPIResource = new RestAPI("restAPIResource", RestAPIArgs.builder()
             .in("string")
             .name("string")
             .build())
-        .target(Map.ofEntries(
-            Map.entry("type", "aws"),
-            Map.entry("connectionId", "string"),
-            Map.entry("connectionType", "INTERNET"),
-            Map.entry("httpMethod", "ANY"),
-            Map.entry("passthroughBehaviour", "when_no_match"),
-            Map.entry("uri", "string")
-        ))
+        .target(TargetArgs.builder()
+            .type("aws")
+            .connectionId("string")
+            .connectionType("INTERNET")
+            .passthroughBehaviour("when_no_match")
+            .uri("string")
+            .build())
         .build())
     .stageName("string")
     .staticRoutesBucket(bucket)

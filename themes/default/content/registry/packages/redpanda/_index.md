@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/redpanda-data/redpanda/2.5.0/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/redpanda-data/redpanda/2.6.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Redpanda Provider
@@ -54,6 +54,37 @@ daily token-issuance quota.
 - **Clear:** delete the file (`rm <user-cache-dir>/redpanda/provider/creds-cache.json`).
   Useful if a server-side secret rotation invalidates the cached token before
   its local expiry.
+## Authentication with Azure for BYOC clusters
+
+Creating or destroying an Azure BYOC cluster runs the Redpanda BYOC agent
+with your Azure credentials. The provider reads the same environment variables
+as the `azurerm` provider, so a job that already authenticates `azurerm` needs
+no extra configuration. `azureSubscriptionId` (or `ARM_SUBSCRIPTION_ID`) is
+always required. `azureTenantId` (or `ARM_TENANT_ID`) and `azureClientId`
+(or `ARM_CLIENT_ID`) are required for the client secret, client certificate,
+OIDC, and workload identity methods; for the Azure CLI and managed identity
+methods the tenant is optional but saves the agent a lookup.
+
+|           Method            |                                                                       Set                                                                       |                                                                                                                                                                                                                                                                               Notes                                                                                                                                                                                                                                                                                |
+|-----------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Client secret               | `azureClientId` and `azureClientSecret`, or `ARM_CLIENT_ID` and `ARM_CLIENT_SECRET`                                                         | A client certificate (`ARM_CLIENT_CERTIFICATE`, a base64 PKCS#12 bundle, or `ARM_CLIENT_CERTIFICATE_PATH`) works the same way.                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| OIDC with a federated token | `ARM_USE_OIDC=true`, a client ID (`azureClientId`, `ARM_CLIENT_ID`, or `AZURE_CLIENT_ID`), and `ARM_OIDC_TOKEN` or `ARM_OIDC_TOKEN_FILE_PATH` | Uses workload identity federation. No client secret is needed. `AZURE_FEDERATED_TOKEN_FILE` is read only with `ARM_USE_AKS_WORKLOAD_IDENTITY`, as the azurerm provider reads it.                                                                                                                                                                                                                                                                                                                                                                                   |
+| OIDC in GitHub Actions      | `ARM_USE_OIDC=true`, a client ID, and `azure/login`                                                                                             | The agent runs on the Azure CLI session from `azure/login` or `az login`, whose access token outlasts the agent's stages. Without a session, the provider requests the federated token from the GitHub Actions ID-token endpoint (`ACTIONS_ID_TOKEN_REQUEST_URL`, or `ARM_OIDC_REQUEST_URL` with `ARM_OIDC_REQUEST_TOKEN`) and keeps it refreshed, but the agent holds the token it first read for ten minutes while GitHub's lives five, so a long agent stage fails; use `azure/login` until the agent refreshes the token itself. With neither, the plan fails. |
+| Azure CLI                   | `ARM_USE_CLI=true`, or nothing else set                                                                                                         | Uses the account from `az login`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| Managed identity            | `ARM_USE_MSI=true`                                                                                                                              |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| AKS workload identity       | `ARM_USE_AKS_WORKLOAD_IDENTITY=true`                                                                                                            |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+
+Set only one of `ARM_USE_OIDC`, `ARM_USE_CLI`, `ARM_USE_MSI`, and
+`ARM_USE_AKS_WORKLOAD_IDENTITY`. For every method except client secret, the
+provider also sets `AZURE_TOKEN_CREDENTIALS` so that the agent's fallback
+credential lookups use the same method. A value you set yourself is kept.
+
+To see which credential was used, run Pulumi with `TF_LOG=DEBUG`. The
+provider logs the method it selected and why (`byoc plugin Azure
+authentication`). To also see the agent's Azure SDK credential attempts,
+including why a credential was skipped or failed, set
+`AZURE_SDK_GO_LOGGING=all` in the environment; they appear as
+`rpk: azure Authentication:` lines.
 ## Example Provider Configuration
 
 Pulumi 1.0 or later:

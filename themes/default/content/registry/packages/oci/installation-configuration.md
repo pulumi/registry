@@ -52,7 +52,51 @@ pulumi config set oci:region "us-ashburn-1"
 cat "~/.oci/oci_api_key.pem" | pulumi config set oci:privateKey --secret
 ```
 
-Remember to pass `--secret` when setting `oci:secretKey` so that it is properly encrypted.
+Remember to pass `--secret` when setting `oci:privateKey` so that it is properly encrypted.
+
+### Pulumi ESC
+
+[Pulumi ESC](/docs/esc/) lets you store your OCI credentials in one environment and share them across stacks and teammates, instead of setting them on every stack. [Create an environment](/docs/esc/get-started/create-environment/) with a definition like the following:
+
+```yaml
+values:
+  oci:
+    tenancyOcid: ocid1.tenancy.oc1..<unique_ID>
+    userOcid: ocid1.user.oc1..<unique_ID>
+    fingerprint: <key_fingerprint>
+    region: us-ashburn-1
+    privateKey:
+      fn::secret: |
+        -----BEGIN PRIVATE KEY-----
+        <key_content>
+        -----END PRIVATE KEY-----
+  pulumiConfig:
+    oci:tenancyOcid: ${oci.tenancyOcid}
+    oci:userOcid: ${oci.userOcid}
+    oci:fingerprint: ${oci.fingerprint}
+    oci:region: ${oci.region}
+    oci:privateKey: ${oci.privateKey}
+```
+
+Enter the private key in the environment's YAML editor in Pulumi Cloud, or with `esc env edit`, rather than in the table view or with `esc env set`. The `|` block scalar keeps the key's line breaks intact; without them, the OCI SDK can't parse the key.
+
+Then import the environment in your stack configuration file (for example, `Pulumi.dev.yaml`):
+
+```yaml
+environment:
+  - <your-project>/<your-environment>
+```
+
+If you also run the OCI CLI or `kubectl` against an OKE cluster, add the same values under `environmentVariables` so that `esc run` and `pulumi env run` expose them to those tools:
+
+```yaml
+  environmentVariables:
+    OCI_CLI_TENANCY: ${oci.tenancyOcid}
+    OCI_CLI_USER: ${oci.userOcid}
+    OCI_CLI_FINGERPRINT: ${oci.fingerprint}
+    OCI_CLI_REGION: ${oci.region}
+    OCI_CLI_KEY_CONTENT: ${oci.privateKey}
+```
 
 ## Configuration options
 

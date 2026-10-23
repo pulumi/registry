@@ -24,7 +24,7 @@ jobs:
     steps:
       - name: Fetch secrets from ESC
         id: esc-secrets
-        uses: pulumi/esc-action@57e332b6dfb0d7edcf6cb813ee9a98b9665f12c2 # v3.2.1
+        uses: pulumi/esc-action@b061167a29bad21ea5ff1fca900addb89227c49b # v3.2.2
       - uses: actions/checkout@v7
         with:
           # Full history needed for registry-mirror-discover to find package versions
@@ -123,7 +123,7 @@ jobs:
     steps:
       - name: Fetch secrets from ESC
         id: esc-secrets
-        uses: pulumi/esc-action@57e332b6dfb0d7edcf6cb813ee9a98b9665f12c2 # v3.2.1
+        uses: pulumi/esc-action@b061167a29bad21ea5ff1fca900addb89227c49b # v3.2.2
       - name: Slack Notification
         uses: docker://sholung/action-slack-notify:v2.3.0
         env:

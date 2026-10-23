@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-vault/v7.13.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-vault/v7.14.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-vault/blob/v7.13.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-vault/blob/v7.14.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: HashiCorp Vault Provider
 meta_desc: Provides an overview on how to configure the Pulumi HashiCorp Vault provider.
@@ -712,7 +712,7 @@ public class App {
 {{% /choosable %}}
 {{% choosable language hcl %}}
 ```hcl
-pulumi {
+terraform {
   required_providers {
     vault = {
       source = "pulumi/vault"
@@ -721,6 +721,9 @@ pulumi {
 }
 
 resource "vault_generic_secret" "example" {
+  lifecycle {
+    create_before_destroy = true
+  }
   path = "secret/foo"
   data_json = jsonencode({
     "foo"   = "bar"
@@ -866,8 +869,8 @@ public class App {
 
     public static void stack(Context ctx) {
         final var config = ctx.config();
-        final var loginUsername = config.require("loginUsername");
-        final var loginPassword = config.require("loginPassword");
+        final var loginUsername = config.requireObject("loginUsername", com.pulumi.core.TypeShape.map(String.class, Object.class));
+        final var loginPassword = config.requireObject("loginPassword", com.pulumi.core.TypeShape.map(String.class, Object.class));
     }
 }
 ```
@@ -876,8 +879,10 @@ public class App {
 {{% choosable language hcl %}}
 ```hcl
 variable "loginUsername" {
+  type = any
 }
 variable "loginPassword" {
+  type = any
 }
 ```
 
@@ -1018,8 +1023,8 @@ public class App {
 
     public static void stack(Context ctx) {
         final var config = ctx.config();
-        final var loginApproleRoleId = config.require("loginApproleRoleId");
-        final var loginApproleSecretId = config.require("loginApproleSecretId");
+        final var loginApproleRoleId = config.requireObject("loginApproleRoleId", com.pulumi.core.TypeShape.map(String.class, Object.class));
+        final var loginApproleSecretId = config.requireObject("loginApproleSecretId", com.pulumi.core.TypeShape.map(String.class, Object.class));
     }
 }
 ```
@@ -1028,8 +1033,10 @@ public class App {
 {{% choosable language hcl %}}
 ```hcl
 variable "loginApproleRoleId" {
+  type = any
 }
 variable "loginApproleSecretId" {
+  type = any
 }
 ```
 

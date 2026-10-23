@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-linode/v6.7.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-linode/v6.8.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-linode/blob/v6.7.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-linode/blob/v6.8.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Linode Provider
 meta_desc: Provides an overview on how to configure the Pulumi Linode provider.
@@ -167,7 +167,7 @@ public class App {
 {{% /choosable %}}
 {{% choosable language hcl %}}
 ```hcl
-pulumi {
+terraform {
   required_providers {
     linode = {
       source = "pulumi/linode"
@@ -177,6 +177,9 @@ pulumi {
 
 # Create a Linode
 resource "linode_instance" "foobar" {
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 ```
 

@@ -522,7 +522,7 @@ The following output properties are available:
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#value_python" style="color: inherit; text-decoration: inherit;">value</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">Sequence[Any]</span>
+        <span class="property-type">Sequence[Union[Ssis<wbr>Environment<wbr>Response, Ssis<wbr>Folder<wbr>Response, Ssis<wbr>Package<wbr>Response, Ssis<wbr>Project<wbr>Response]]</span>
     </dt>
     <dd>List of SSIS object metadata.</dd></dl>
 </pulumi-choosable>

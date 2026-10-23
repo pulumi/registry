@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-postgresql/v3.18.1/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-postgresql/v3.18.2/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-postgresql/blob/v3.18.1/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-postgresql/blob/v3.18.2/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Postgresql Provider
 meta_desc: Provides an overview on how to configure the Pulumi Postgresql provider.
@@ -198,7 +198,7 @@ public class App {
 {{% /choosable %}}
 {{% choosable language hcl %}}
 ```hcl
-pulumi {
+terraform {
   required_providers {
     postgresql = {
       source = "pulumi/postgresql"
@@ -207,9 +207,15 @@ pulumi {
 }
 
 resource "postgresql_database" "my_db1" {
+  lifecycle {
+    create_before_destroy = true
+  }
   name = "my_db1"
 }
 resource "postgresql_database" "my_db2" {
+  lifecycle {
+    create_before_destroy = true
+  }
   name = "my_db2"
 }
 ```
@@ -526,7 +532,7 @@ config:
 package main
 
 import (
-	"github.com/pulumi/pulumi-gcp/sdk/v9/go/gcp/sql"
+	"github.com/pulumi/pulumi-gcp/sdk/v10/go/gcp/sql"
 	"github.com/pulumi/pulumi-postgresql/sdk/v3/go/postgresql"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
@@ -680,7 +686,7 @@ public class App {
 {{% /choosable %}}
 {{% choosable language hcl %}}
 ```hcl
-pulumi {
+terraform {
   required_providers {
     gcp = {
       source = "pulumi/gcp"
@@ -691,7 +697,10 @@ pulumi {
   }
 }
 
-resource "gcp_sql_databaseinstance" "test" {
+resource "gcp_sql_database_instance" "test" {
+  lifecycle {
+    create_before_destroy = true
+  }
   project          = "test-project"
   name             = "test-instance"
   database_version = "POSTGRES_13"
@@ -701,12 +710,18 @@ resource "gcp_sql_databaseinstance" "test" {
   }
 }
 resource "gcp_sql_user" "postgres" {
+  lifecycle {
+    create_before_destroy = true
+  }
   project  = "test-project"
   name     = "postgres"
-  instance = gcp_sql_databaseinstance.test.name
+  instance = gcp_sql_database_instance.test.name
   password = "xxxxxxxx"
 }
 resource "postgresql_database" "test_db" {
+  lifecycle {
+    create_before_destroy = true
+  }
   name = "test_db"
 }
 ```
@@ -1063,7 +1078,7 @@ public class App {
 {{% /choosable %}}
 {{% choosable language hcl %}}
 ```hcl
-pulumi {
+terraform {
   required_providers {
     azure = {
       source = "pulumi/azure"
@@ -1071,25 +1086,31 @@ pulumi {
   }
 }
 
-data "azure_core_getclientconfig" "current" {
+data "azure_core_client_config" "current" {
 }
 
 # https://registry.pulumi.io/providers/pulumi/azurerm/latest/docs/resources/postgresql_flexible_server
-resource "azure_postgresql_flexibleserver" "pgsql" {
+resource "azure_postgresql_flexible_server" "pgsql" {
+  lifecycle {
+    create_before_destroy = true
+  }
   authentication = {
     active_directory_auth_enabled = true
     password_auth_enabled         = false
-    tenant_id                     = data.azure_core_getclientconfig.current.tenant_id
+    tenant_id                     = data.azure_core_client_config.current.tenant_id
   }
 }
 # https://registry.pulumi.io/providers/pulumi/azurerm/latest/docs/resources/postgresql_flexible_server_active_directory_administrator
-resource "azure_postgresql_flexibleserveractivedirectoryadministrator" "administrators" {
+resource "azure_postgresql_flexible_server_active_directory_administrator" "administrators" {
+  lifecycle {
+    create_before_destroy = true
+  }
   object_id           = "00000000-0000-0000-0000-000000000000"
   principal_name      = "Azure AD Admin Group"
   principal_type      = "Group"
   resource_group_name = rgName
-  server_name         = azure_postgresql_flexibleserver.pgsql.name
-  tenant_id           = data.azure_core_getclientconfig.current.tenant_id
+  server_name         = azure_postgresql_flexible_server.pgsql.name
+  tenant_id           = data.azure_core_client_config.current.tenant_id
 }
 ```
 

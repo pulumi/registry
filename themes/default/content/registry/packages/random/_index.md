@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-random/v4.21.2/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-random/v4.21.4/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-random/blob/v4.21.2/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-random/blob/v4.21.4/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Random Provider
 meta_desc: Provides an overview on how to configure the Pulumi Random provider.
@@ -220,7 +220,7 @@ public class App {
 
         var serverInstance = new Instance("serverInstance", InstanceArgs.builder()
             .tags(Map.of("Name", server.hex().applyValue(_hex -> String.format("web-server %s", _hex))))
-            .ami(server.keepers().applyValue(_keepers -> _keepers.amiId()))
+            .ami(server.keepers().applyValue(_keepers -> _keepers.get("amiId")))
             .build());
 
     }
@@ -230,7 +230,7 @@ public class App {
 {{% /choosable %}}
 {{% choosable language hcl %}}
 ```hcl
-pulumi {
+terraform {
   required_providers {
     aws = {
       source = "pulumi/aws"
@@ -241,17 +241,23 @@ pulumi {
   }
 }
 
-resource "random_randomid" "server" {
+resource "random_random_id" "server" {
+  lifecycle {
+    create_before_destroy = true
+  }
   keepers = {
     "ami_id" = amiId
   }
   byte_length = 8
 }
 resource "aws_ec2_instance" "server" {
-  tags = {
-    "Name" ="web-server ${random_randomid.server.hex}"
+  lifecycle {
+    create_before_destroy = true
   }
-  ami = random_randomid.server.keepers.amiId
+  tags = {
+    "Name" ="web-server ${random_random_id.server.hex}"
+  }
+  ami = random_random_id.server.keepers.amiId
 }
 ```
 

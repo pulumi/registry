@@ -86,12 +86,14 @@ The canonical tool versions are tracked in `mise.toml`:
 
 | Tool | Version |
 |---|---|
-| Go | 1.26 |
-| Node.js | 24 |
+| Go | 1.26.10 |
+| Node.js | 24.22.1 |
 | Yarn | 1.22.22 |
 | Hugo | 0.157 (extended) |
 | golangci-lint | 2.10.1 |
 | yq | latest |
+
+Go and Node.js are pinned to exact patch releases, in `mise.toml` and in every `setup-go` / `setup-node` step, since the eMudhra CA incident (#13055). Dependabot does not bump these, so when either upstream ships a security release, bump the pin by hand; `setup-go` reads the `toolchain` line in `tools/resourcedocsgen/go.mod`, and the `registry-mirror-*` binary caches are keyed on the resolved Go version so they rebuild with it.
 
 Install and manage all tools via [mise](https://mise.jdx.dev/):
 
@@ -509,6 +511,7 @@ All workflow files live in `.github/workflows/`.
 |---|---|---|
 | `pull-request.yml` | Pull request | PR to `master` |
 | `push.yml` | Build and deploy | Push to `master` |
+| `publish.yml` | Publish to registry | Push to `master` |
 | `testing-deploy.yml` | Build and deploy - test environment | `workflow_dispatch` |
 | `pull-request-closed.yml` | Close pull request | PR closed |
 | `check-go.yml` | Check Go | `workflow_call` (reusable) |
@@ -607,6 +610,8 @@ PR opened / committed
 
 **Trigger**: Push to `master`
 
+**Concurrency**: `registry-production-deploy`, `cancel-in-progress: false`. One deploy runs at a time; while it runs, GitHub keeps only the newest pending run and cancels older pending ones. Each deploy builds the whole site from `master`, so the newest commit covers the skipped ones. Package publishing is in `publish.yml`, which is not in this group.
+
 **ESC environment**: `github-secrets/pulumi-registry` (OIDC via `id-token: write`)
 
 **Flow**:
@@ -635,7 +640,6 @@ Push to master
                 │       │       └── Write origin-bucket-metadata.json
                 │       ├── scripts/generate-search-index.sh
                 │       │       └── Upload search-index.json to S3
-                │       ├── node scripts/await-in-progress.js
                 │       ├── scripts/ci/run-pulumi.sh update
                 │       │       └── pulumi -C infrastructure update --yes
                 │       │           (reads origin-bucket-metadata.json, updates CloudFront)
@@ -643,11 +647,7 @@ Push to master
                 │       │       └── Invalidate /registry/* on the www.pulumi.com CloudFront distribution
                 │       └── scripts/ci/make-s3-redirects.sh
                 │               └── Apply 301 redirects from scripts/redirects/
-                ├── Archive origin-bucket-metadata.json as artifact
-                ├── uv run publish_to_registry.py
-                │       └── Publish new provider versions to registry service
-                └── uv run push-registry.py   (only if the above failed)
-                        └── Legacy fallback publisher
+                └── Archive origin-bucket-metadata.json as artifact
 ```
 
 **Runner**: `pulumi-service-ubuntu-24.04-16core`
@@ -698,9 +698,13 @@ Jobs:
 
 **Trigger**: Every Monday at 3:00 PM UTC (cron: `0 15 * * MON`); also `workflow_dispatch`
 
-Runs `make check_links` which calls `yarn run check-links`, which runs `node scripts/link-checker/check-links.js "https://www.pulumi.com/registry" 2` (2 retries on failure). Broken links are reported to the `#registry-ops` Slack channel.
+Runs `make check_links` which calls `yarn run check-links`, which runs `node scripts/link-checker/check-links.js "https://www.pulumi.com/registry" 2` (2 retries on failure). The checker writes its filtered results to `.broken-links.json` (git-ignored; `internal` and `external` lists) and no longer posts to Slack itself.
 
-Node version: 24.x; Hugo 0.157.0 installed but not explicitly used.
+If that file lists anything, the workflow hands it to `anthropics/claude-code-action`, which follows `.claude/commands/fix-broken-links/SKILL.md`: re-verify each link (the crawler has false positives), skip anything already covered by an open PR, then triage the rest -- source edit (for pages maintained in this repo), S3 redirect, or exclusion-list entry -- and open a ready PR on `fix/broken-links-<date>` whose description audits every decision. Breakage on pages fetched from a provider repo is listed in the PR, grouped by first-party and third-party packages, but never filed as an issue: those links can't be fixed from here, and a weekly issue per provider would only pile up. The action writes the PR link to `.broken-links-pr.txt`, and the last step posts that to `#registry-ops`. If the fix step fails, the Slack step still posts the broken-link count and a link to the run, and a checker that fails outright gets its own warning, so a failed week is never silent. On a clean run both steps are skipped, so nothing is posted.
+
+The ESC step runs before checkout and the checkout and Claude steps use `PULUMI_BOT_TOKEN`, so the PR is opened by `pulumi-bot` and triggers `pull-request.yml` like a human-authored PR would.
+
+Node version: 24.x; Hugo 0.157.0 installed (required by `scripts/ensure.sh`, which `make check_links` depends on).
 
 #### `run-browser-tests.yml` — Scheduled Browser Tests
 
@@ -727,7 +731,7 @@ The check pipeline gives a contributor who adds one entry to `community-packages
 - **`community-package-check.yml`** (`workflow_dispatch`, two jobs): its `check` job is the secret-free plane. It fetches the PR's file list with a read-only token, refuses the PR outright if it touches anything outside the allowlist, then reads the package's schema and docs at its latest GitHub release and probes without executing the package's code — installs the plugin (blocking), resolves the npm/PyPI/Go SDKs and lints the docs (advisory). It writes a fact-sheet artifact and a one-word verdict. The plugin install is the only blocking check, alongside successful docs generation and a present `docs/_index.md`.
 - Its `report` job (write token, no secrets, no contributor code) downloads that artifact and does two things: it edits the pinned fact-sheet comment in place, stamping it with the head it checked, and it posts the verdict as a new comment. Editing notifies nobody, so without that second comment a contributor has to keep refreshing the page to learn the result.
 - **`community-package-check-command.yml`** (`issue_comment`): dispatches a fresh check run when the author or a maintainer comments `/check` on its own line, authorized and rate-limited. It dispatches rather than re-runs, so the check also reaches a pull request whose own run GitHub parked.
-- **`community-package-sweep.yml`** (schedule, every 5 minutes): the check has no `pull_request` trigger, because a fork PR from a first-time contributor parks such a run in `action_required` until a maintainer approves it, leaving the contributor with no fact-sheet and nothing for `/check` to re-run. The sweep is the automatic trigger instead: it dispatches a check for every open package-list PR, once per head commit. It claims a head the moment it dispatches, by stamping the fact-sheet comment with it and leaving `⏳ Checking <head>` there until the check reports, and it skips a head that is already stamped. The claim lives on the pull request, which answers consistently. The Actions run list does not: while the sweep used that list as its record, matched by run title, it dropped a dispatched run often enough to re-check the same head hours later and post a second and third verdict comment. A dispatched run starts in the base repo, so GitHub does not gate it. The sweep only dispatches: it never runs a contributor's code. If the sweep itself fails, it opens a `p1` issue that the daily priority digest surfaces, and leaves the existing one alone if there already is one.
+- **`community-package-sweep.yml`** (schedule, every 5 minutes): the check has no `pull_request` trigger, because a fork PR from a first-time contributor parks such a run in `action_required` until a maintainer approves it, leaving the contributor with no fact-sheet and nothing for `/check` to re-run. The sweep is the automatic trigger instead: it dispatches a check for every open fork PR that changes the package list, once per head commit. It skips a PR whose branch lives in this repo: those are maintainer changes, such as a rename or a delist, that hand-edit package YAML the check would reject as generated, and a maintainer who wants the check on one can still run `/check`. It claims a head the moment it dispatches, by stamping the fact-sheet comment with it and leaving `⏳ Checking <head>` there until the check reports, and it skips a head that is already stamped. The claim lives on the pull request, which answers consistently. The Actions run list does not: while the sweep used that list as its record, matched by run title, it dropped a dispatched run often enough to re-check the same head hours later and post a second and third verdict comment. A dispatched run starts in the base repo, so GitHub does not gate it. The sweep only dispatches: it never runs a contributor's code. If the sweep itself fails, it opens a `p1` issue that the daily priority digest surfaces, and leaves the existing one alone if there already is one.
 - **`community-package-preview-command.yml`** (`issue_comment`): builds an on-demand site preview when a maintainer comments `/preview`. A fork's own `pull_request` build gets no secrets, so this maintainer-triggered run stands in for it: it materializes the fork's entry as data and reuses the `build-and-deploy-preview` action, never running the fork's code.
 - **`community-package-policy.yml`**: runs the toolchain's unit tests and `mypy --strict`, including the plane-separation test, on any PR touching the pipeline sources. It is not among `Sentinel Tower`'s `needs`, so it does not gate a merge today.
 
@@ -924,12 +928,13 @@ There are two publishers, a primary and a fallback.
 
 **Invoked**:
 
-- On every push to `master` (in `push.yml`, `Publish to registry (primary)`, after the build+deploy completes). `continue-on-error: true`, so its failure hands off to the fallback rather than failing the job.
+- On every push to `master` (in `publish.yml`, `Publish to registry (primary)`). That workflow runs separately from `push.yml` and has no concurrency group, so every commit publishes its own package even when deploys are queued. `continue-on-error: true`, so its failure hands off to the fallback rather than failing the job.
+- On demand, by running `publish.yml` from the Actions tab with a space-separated `specs` input (e.g. `pulumi/pulumi/meraki@0.5.3 pulumi/pulumi/sdwan@0.9.5`) and optionally `dry-run`. Use this to backfill versions a failed run never published. The legacy fallback does not run for a manual dispatch, because it would republish every package rather than the requested specs.
 - In `--validate-all` mode on every PR (in `pull-request.yml`, `test-live-publish` job). That mode only turns every package YAML into a publish spec and reports the ones it cannot; it publishes nothing.
 
 **What it does**:
 
-1. Reads the package YAMLs changed in the last commit (`git diff --name-only HEAD~1` against `themes/default/data/registry/packages/*.yaml`).
+1. Reads the package YAMLs changed by the push (`git diff --name-only <before> HEAD` against `themes/default/data/registry/packages/*.yaml`, where `<before>` is `github.event.before`). This covers every commit in a multi-commit push. A manual dispatch has no `before` and diffs against `HEAD~1`. If the `before` commit is missing from the clone (e.g. after a force push), the publisher fails rather than diff a narrower range and silently skip packages; publish the missed packages with a manual dispatch that names them in `specs`. Master's ruleset blocks force pushes, so this only happens through a ruleset bypass.
 2. Turns each into a `{source}/{publisher}/{name}@{version}` spec, skipping packages with `deprecated: true` and the `azure-native-v*` / `aws-v<N>` legacy aliases.
 3. Pipes those specs through `registry-mirror-discover | registry-mirror-publish`, both installed with `go install` from `github.com/pulumi/registry-mirror-tools` at the commit pinned in `REGISTRY_MIRROR_TOOLS_COMMIT`. Retries up to 3 times with exponential backoff (10s to 30s).
 
@@ -939,7 +944,7 @@ There are two publishers, a primary and a fallback.
 
 **Runtime**: Python 3 (via `uv run --with requests,pyyaml`)
 
-**Invoked**: only when the primary publisher fails — `push.yml`'s `Push to the Live Registry (legacy fallback)` step is gated on `steps.mirror-publish.outcome == 'failure'`. It is also `continue-on-error: true`; if both publishers fail, a Slack notification goes to `#registry-ops`. Nothing runs it on a PR.
+**Invoked**: only when the primary publisher fails on a `push` — `publish.yml`'s `Push to the Live Registry (legacy fallback)` step never runs for a manual dispatch. It is also `continue-on-error: true`; when the primary fails and the fallback doesn't succeed, a Slack notification goes to `#registry-ops` (except on a dry run), and the job-level `notify` alerts if the publish job fails, is cancelled or times out. Nothing runs it on a PR.
 
 **What it does**:
 
@@ -1081,7 +1086,8 @@ make check_links
 - Excludes API docs pages, SDK reference pages, and install/versions pages.
 - Uses `broken-link-checker` with `filterLevel: 1` and GET requests.
 - Up to 2 retries if broken links are found.
-- Reports broken links to the `#registry-ops` Slack channel via `SLACK_ACCESS_TOKEN`.
+- Filters transient and bot-protection failures (`excludeAcceptable()`): all `429`s, `502`/`503`, and `401`/`403` on external hosts, among others. Known-noisy hosts (Maven Central, npm, Docker Hub, status pages, GitHub's own chrome on `github.com/pulumi/pulumi`) are in `getDefaultExcludedKeywords()`.
+- Writes `.broken-links.json` (`{ generated, internal, external }`) at the repo root. In CI, `check-links.yml` feeds that file to the `fix-broken-links` skill, which opens a fix PR; see the workflow section above.
 - Many known-flaky domains are excluded (LinkedIn, YouTube, Twitter, etc.).
 
 Runs every Monday at 3:00 PM UTC in CI.
@@ -1135,8 +1141,8 @@ The `export-repo-secrets.yml` workflow provides a manual escape hatch to sync Gi
 
 | Tool | `mise.toml` | `pull-request.yml` (preview) | `push.yml` (production) | `testing-deploy.yml` |
 |---|---|---|---|---|
-| Node.js | 24 | 24.x | 24.x | 24.x |
-| Go | 1.26 | `tools/resourcedocsgen/go.mod` | `tools/resourcedocsgen/go.mod` | `tools/resourcedocsgen/go.mod` |
+| Node.js | 24.22.1 | 24.22.1 | 24.22.1 | 24.22.1 |
+| Go | 1.26.10 | `tools/resourcedocsgen/go.mod` | `tools/resourcedocsgen/go.mod` | `tools/resourcedocsgen/go.mod` |
 | Hugo | 0.157 | 0.157.0 | 0.157.0 | 0.157.0 |
 | golangci-lint | 2.10.1 | v2.10.1 (check-go.yml) | — | — |
 | s5cmd | — | v2.3.0 | v2.3.0 | v2.3.0 |
@@ -1234,7 +1240,7 @@ The Pulumi Registry is actually **two separate but tightly coupled systems** tha
 
 These two systems are **not the same thing and do not share a data store**. The static site is rebuilt from YAML files on every push to `master`; it does not query the Pulumi Cloud API at runtime. The Pulumi Cloud API is a live service that stores package metadata independently.
 
-The bridge between them is the publish step that runs after every production build: `scripts/ci/publish_to_registry.py` primarily, with `scripts/ci/push-registry.py` as a fallback if that fails. Either one publishes new package versions to the Pulumi Cloud API.
+The bridge between them is the publish workflow (`publish.yml`) that runs on every push to `master`: `scripts/ci/publish_to_registry.py` primarily, with `scripts/ci/push-registry.py` as a fallback if that fails. Either one publishes new package versions to the Pulumi Cloud API.
 
 ```
 YAML files in repo                            Pulumi Cloud Registry API
@@ -1256,7 +1262,7 @@ YAML files in repo                            Pulumi Cloud Registry API
 
 ### 12.2 How the Publishers Bridge Them
 
-On every push to `master`, after the Hugo site is built and deployed, `scripts/ci/publish_to_registry.py` reads the package YAMLs changed in the last commit, turns each into a `{source}/{publisher}/{name}@{version}` spec, and pipes those through `registry-mirror-discover | registry-mirror-publish`.
+On every push to `master`, `publish.yml` runs `scripts/ci/publish_to_registry.py`, which reads the package YAMLs changed by the push, turns each into a `{source}/{publisher}/{name}@{version}` spec, and pipes those through `registry-mirror-discover | registry-mirror-publish`.
 
 If that step fails, `scripts/ci/push-registry.py` runs as the legacy fallback. It sweeps every package rather than just the changed ones:
 

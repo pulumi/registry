@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-dnsimple/v5.3.1/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-dnsimple/v5.3.2/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-dnsimple/blob/v5.3.1/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-dnsimple/blob/v5.3.2/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: DNSimple Provider
 meta_desc: Provides an overview on how to configure the Pulumi DNSimple provider.
@@ -464,7 +464,7 @@ public class App {
 {{% /choosable %}}
 {{% choosable language hcl %}}
 ```hcl
-pulumi {
+terraform {
   required_providers {
     dnsimple = {
       source = "pulumi/dnsimple"
@@ -474,17 +474,26 @@ pulumi {
 
 # Create a zone
 resource "dnsimple_zone" "example" {
+  lifecycle {
+    create_before_destroy = true
+  }
   name = "example.com"
 }
 # Create DNS records
-resource "dnsimple_zonerecord" "www" {
+resource "dnsimple_zone_record" "www" {
+  lifecycle {
+    create_before_destroy = true
+  }
   zone_name = dnsimple_zone.example.name
   name      = "www"
   value     = "192.0.2.1"
   type      = "A"
   ttl       = 3600
 }
-resource "dnsimple_zonerecord" "apex" {
+resource "dnsimple_zone_record" "apex" {
+  lifecycle {
+    create_before_destroy = true
+  }
   zone_name = dnsimple_zone.example.name
   name      = ""
   value     = "192.0.2.1"
@@ -586,7 +595,7 @@ return await Deployment.RunAsync(() =>
     var exampleCom = new DNSimple.RegisteredDomain("example_com", new()
     {
         Name = "example.com",
-        ContactId = registrant.Id,
+        ContactId = registrant.Id.Apply(x => int.Parse(x, System.Globalization.CultureInfo.InvariantCulture)),
         AutoRenewEnabled = true,
         WhoisPrivacyEnabled = true,
         TransferLockEnabled = true,
@@ -730,7 +739,7 @@ public class App {
 {{% /choosable %}}
 {{% choosable language hcl %}}
 ```hcl
-pulumi {
+terraform {
   required_providers {
     dnsimple = {
       source = "pulumi/dnsimple"
@@ -740,6 +749,9 @@ pulumi {
 
 # Create a contact for domain registration
 resource "dnsimple_contact" "registrant" {
+  lifecycle {
+    create_before_destroy = true
+  }
   label             = "Main Contact"
   first_name        = "John"
   last_name         = "Doe"
@@ -753,7 +765,10 @@ resource "dnsimple_contact" "registrant" {
   email             = "john@example.com"
 }
 # Register a domain
-resource "dnsimple_registereddomain" "example_com" {
+resource "dnsimple_registered_domain" "example_com" {
+  lifecycle {
+    create_before_destroy = true
+  }
   name                  = "example.com"
   contact_id            = dnsimple_contact.registrant.id
   auto_renew_enabled    = true

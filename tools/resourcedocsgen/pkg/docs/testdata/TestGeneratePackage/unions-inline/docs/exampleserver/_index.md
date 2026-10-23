@@ -293,7 +293,6 @@ resource "example_example_server" "exampleServerResource" {
 ```java
 var exampleServerResource = new ExampleServer("exampleServerResource", ExampleServerArgs.builder()
     .properties(ServerPropertiesForReplicaArgs.builder()
-        .createMode("Replica")
         .version("string")
         .build())
     .build());

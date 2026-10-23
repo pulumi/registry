@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-mysql/v3.3.2/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-mysql/v3.3.3/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-mysql/blob/v3.3.2/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-mysql/blob/v3.3.3/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Mysql Provider
 meta_desc: Provides an overview on how to configure the Pulumi Mysql provider.
@@ -223,7 +223,7 @@ public class App {
 {{% /choosable %}}
 {{% choosable language hcl %}}
 ```hcl
-pulumi {
+terraform {
   required_providers {
     mysql = {
       source = "pulumi/mysql"
@@ -233,6 +233,9 @@ pulumi {
 
 # Create a Database
 resource "mysql_database" "app" {
+  lifecycle {
+    create_before_destroy = true
+  }
   name = "my_awesome_app"
 }
 ```
@@ -510,7 +513,7 @@ public class App {
 {{% /choosable %}}
 {{% choosable language hcl %}}
 ```hcl
-pulumi {
+terraform {
   required_providers {
     aws = {
       source = "pulumi/aws"
@@ -523,6 +526,9 @@ pulumi {
 
 # Create a database server
 resource "aws_rds_instance" "default" {
+  lifecycle {
+    create_before_destroy = true
+  }
   engine         = "mysql"
   engine_version = "5.6.17"
   instance_class = "db.t1.micro"
@@ -533,6 +539,9 @@ resource "aws_rds_instance" "default" {
 # Create a second database, in addition to the "initial_db" created
 # by the aws_db_instance resource above.
 resource "mysql_database" "app" {
+  lifecycle {
+    create_before_destroy = true
+  }
   name = "another_db"
 }
 ```

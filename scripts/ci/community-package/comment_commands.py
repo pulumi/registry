@@ -65,6 +65,8 @@ def check_command() -> int:
 
 def sweep() -> int:
     for pull in github_api.open_pull_requests():
+        if github_api.is_first_party(pull):
+            continue
         pr, sha = int(pull["number"]), str(pull["head"]["sha"])
         if PACKAGE_LIST not in github_api.pull_request_files(pr):
             continue

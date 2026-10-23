@@ -13,6 +13,13 @@
     {{ $level = add .Level 1 }}
 {{ end }}
 
+<!-- Long camelCase names (function and type names in API docs) break at word boundaries.
+     Headings that contain markup are left alone so attributes aren't touched. -->
+{{ $text := .Text }}
+{{ if not (strings.Contains $text "<") }}
+    {{ $text = replaceRE `([a-z])([A-Z])` "$1<wbr>$2" $text }}
+{{ end }}
+
 <h{{ $level }} id="{{ .Anchor | safeURL }}">
-    {{ .Text | safeHTML }}
+    {{ $text | safeHTML }}
 </h{{ $level }}>

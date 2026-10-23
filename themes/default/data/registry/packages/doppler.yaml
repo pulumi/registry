@@ -4,11 +4,11 @@ category: Cloud
 component: false
 description: A Pulumi package for creating and managing doppler cloud resources.
 featured: false
-logo_url: https://raw.githubusercontent.com/pulumiverse/pulumi-doppler/main/docs/logo.png
+logo_url: https://raw.githubusercontent.com/DopplerHQ/pulumi-doppler/main/docs/logo.png
 name: doppler
 package_status: public_preview
 publisher: Pulumiverse
-repo_url: https://github.com/pulumiverse/pulumi-doppler
+repo_url: https://github.com/DopplerHQ/pulumi-doppler
 schema_file_path: provider/cmd/pulumi-resource-doppler/schema.json
 title: Doppler
 updated_on: 1724743924

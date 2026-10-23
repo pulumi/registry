@@ -378,8 +378,8 @@ class FactSheetTests(unittest.TestCase):
 
 
 class SweepTests(unittest.TestCase):
-    def _run(self, files: list[str] | None = None,
-             reported: bool = False) -> tuple[list[tuple[str, dict[str, str]]], list[str]]:
+    def _run(self, files: list[str] | None = None, reported: bool = False,
+             first_party: bool = False) -> tuple[list[tuple[str, dict[str, str]]], list[str]]:
         dispatched: list[tuple[str, dict[str, str]]] = []
         claimed: list[str] = []
 
@@ -388,7 +388,7 @@ class SweepTests(unittest.TestCase):
             return {}
 
         with patch.object(github_api, "open_pull_requests",
-                          lambda: [{"number": 7, "head": {"sha": "a" * 40}}]), \
+                          lambda: [self._pull(first_party)]), \
              patch.object(github_api, "pull_request_files",
                           lambda pr: files if files is not None else [comment_commands.PACKAGE_LIST]), \
              patch.object(github_api, "fact_sheet_reports", lambda pr, sha: reported), \
@@ -399,9 +399,15 @@ class SweepTests(unittest.TestCase):
             comment_commands.sweep()
         return dispatched, claimed
 
-    def _sweep(self, files: list[str] | None = None,
-               reported: bool = False) -> list[tuple[str, dict[str, str]]]:
-        return self._run(files=files, reported=reported)[0]
+    @staticmethod
+    def _pull(first_party: bool) -> dict[str, Any]:
+        head_repo = "pulumi/registry" if first_party else "contributor/registry"
+        return {"number": 7, "head": {"sha": "a" * 40, "repo": {"full_name": head_repo}},
+                "base": {"repo": {"full_name": "pulumi/registry"}}}
+
+    def _sweep(self, files: list[str] | None = None, reported: bool = False,
+               first_party: bool = False) -> list[tuple[str, dict[str, str]]]:
+        return self._run(files=files, reported=reported, first_party=first_party)[0]
 
     def test_dispatches_a_check_for_a_package_pr(self) -> None:
         self.assertEqual(self._sweep(),
@@ -409,6 +415,14 @@ class SweepTests(unittest.TestCase):
 
     def test_skips_a_pr_that_does_not_touch_the_package_list(self) -> None:
         self.assertEqual(self._sweep(files=["README.md"]), [])
+
+    def test_skips_a_pr_whose_branch_is_in_this_repo(self) -> None:
+        self.assertEqual(self._sweep(first_party=True), [])
+
+    def test_a_pr_from_a_deleted_fork_is_not_first_party(self) -> None:
+        pull = self._pull(first_party=False)
+        pull["head"]["repo"] = None
+        self.assertFalse(github_api.is_first_party(pull))
 
     def test_a_head_already_claimed_is_not_dispatched_again(self) -> None:
         self.assertEqual(self._sweep(reported=True), [])

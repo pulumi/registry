@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-rabbitmq/v3.5.2/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-rabbitmq/v3.5.3/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-rabbitmq/blob/v3.5.2/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-rabbitmq/blob/v3.5.3/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Rabbitmq Provider
 meta_desc: Provides an overview on how to configure the Pulumi Rabbitmq provider.
@@ -224,7 +224,7 @@ public class App {
 {{% /choosable %}}
 {{% choosable language hcl %}}
 ```hcl
-pulumi {
+terraform {
   required_providers {
     rabbitmq = {
       source = "pulumi/rabbitmq"
@@ -233,7 +233,10 @@ pulumi {
 }
 
 # Create a virtual host
-resource "rabbitmq_vhost" "vhost_1" {
+resource "rabbitmq_v_host" "vhost_1" {
+  lifecycle {
+    create_before_destroy = true
+  }
   name = "vhost_1"
 }
 ```

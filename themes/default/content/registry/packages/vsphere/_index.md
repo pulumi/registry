@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-vsphere/v4.18.1/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-vsphere/v4.18.2/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-vsphere/blob/v4.18.1/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-vsphere/blob/v4.18.2/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Vsphere Provider
 meta_desc: Provides an overview on how to configure the Pulumi Vsphere provider.
@@ -469,7 +469,7 @@ public class App {
 {{% /choosable %}}
 {{% choosable language hcl %}}
 ```hcl
-pulumi {
+terraform {
   required_providers {
     vsphere = {
       source = "pulumi/vsphere"
@@ -477,31 +477,34 @@ pulumi {
   }
 }
 
-data "vsphere_getdatacenter" "datacenter" {
+data "vsphere_datacenter" "datacenter" {
   name = "dc-01"
 }
-data "vsphere_getdatastore" "datastore" {
+data "vsphere_datastore" "datastore" {
   name          = "datastore-01"
-  datacenter_id = data.vsphere_getdatacenter.datacenter.id
+  datacenter_id = data.vsphere_datacenter.datacenter.id
 }
-data "vsphere_getcomputecluster" "cluster" {
+data "vsphere_compute_cluster" "cluster" {
   name          = "cluster-01"
-  datacenter_id = data.vsphere_getdatacenter.datacenter.id
+  datacenter_id = data.vsphere_datacenter.datacenter.id
 }
-data "vsphere_getnetwork" "network" {
+data "vsphere_network" "network" {
   name          = "VM Network"
-  datacenter_id = data.vsphere_getdatacenter.datacenter.id
+  datacenter_id = data.vsphere_datacenter.datacenter.id
 }
 
-resource "vsphere_virtualmachine" "vm" {
+resource "vsphere_virtual_machine" "vm" {
+  lifecycle {
+    create_before_destroy = true
+  }
   name             = "foo"
-  resource_pool_id = data.vsphere_getcomputecluster.cluster.resource_pool_id
-  datastore_id     = data.vsphere_getdatastore.datastore.id
+  resource_pool_id = data.vsphere_compute_cluster.cluster.resource_pool_id
+  datastore_id     = data.vsphere_datastore.datastore.id
   num_cpus         = 1
   memory           = 1024
   guest_id         = "otherLinux64Guest"
   network_interfaces {
-    network_id = data.vsphere_getnetwork.network.id
+    network_id = data.vsphere_network.network.id
   }
   disks {
     label = "disk0"

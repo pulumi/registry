@@ -10,6 +10,9 @@ on:
 permissions:
   id-token: write # This is required for requesting the JWT
   contents: read # This is required for actions/checkout
+concurrency:
+  group: registry-testing-deploy
+  cancel-in-progress: false
 jobs:
   buildSite:
     env:
@@ -21,7 +24,7 @@ jobs:
     steps:
       - name: Fetch secrets from ESC
         id: esc-secrets
-        uses: pulumi/esc-action@32dda43ffe7a2ab21e6bce11c781b44a3e5623cf # v3
+        uses: pulumi/esc-action@57e332b6dfb0d7edcf6cb813ee9a98b9665f12c2 # v3.2.1
       - uses: actions/checkout@v7
         with:
           # Full history needed for registry-mirror-discover to find package versions
@@ -29,7 +32,7 @@ jobs:
 
       - uses: actions/setup-node@v7
         with:
-          node-version: "24.x"
+          node-version: "24.22.1"
           cache: 'yarn'
           cache-dependency-path: |
             yarn.lock
@@ -39,6 +42,7 @@ jobs:
             themes/default/theme/stencil/yarn.lock
 
       - uses: actions/setup-go@v7
+        id: setup-go
         with:
           go-version-file: tools/resourcedocsgen/go.mod
           cache-dependency-path: tools/resourcedocsgen/go.sum
@@ -88,7 +92,7 @@ jobs:
         uses: actions/cache@v6
         with:
           path: bin/registry-mirror-discover
-          key: registry-mirror-discover-${{ steps.mirror-version.outputs.hash }}
+          key: registry-mirror-discover-${{ steps.mirror-version.outputs.hash }}-go${{ steps.setup-go.outputs.go-version }}
 
       - name: Build and deploy
         run: make ci_push
@@ -119,7 +123,7 @@ jobs:
     steps:
       - name: Fetch secrets from ESC
         id: esc-secrets
-        uses: pulumi/esc-action@32dda43ffe7a2ab21e6bce11c781b44a3e5623cf # v3
+        uses: pulumi/esc-action@57e332b6dfb0d7edcf6cb813ee9a98b9665f12c2 # v3.2.1
       - name: Slack Notification
         uses: docker://sholung/action-slack-notify:v2.3.0
         env:

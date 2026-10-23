@@ -87,7 +87,7 @@ class TestLoading(unittest.TestCase):
             d = Path(tmp)
             (d / "a.yaml").write_text("publisher: Acme\nrepo_url: https://github.com/acme/a\n"
                                       "schema_file_url: https://x.cloudfront.net/schemas/registry.opentofu.org/acme/a/1/schema.json\n")
-            (d / "b.yaml").write_text("publisher: DEPRECATED\nrepo_url: https://github.com/acme/b\n")
+            (d / "b.yaml").write_text("deprecated: true\npublisher: Acme\nrepo_url: https://github.com/acme/b\n")
             (d / "c.yaml").write_text('publisher: Acme\nrepo_url: "https://github.com/acme/c"\n')
             packages = load_packages(d)
         self.assertEqual([p["name"] for p in packages], ["a", "c"])

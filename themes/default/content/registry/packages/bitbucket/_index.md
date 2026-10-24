@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/drfaust92/bitbucket/2.53.0/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/drfaust92/bitbucket/2.54.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Bitbucket Provider
@@ -52,9 +52,12 @@ The following configuration inputs are supported in the provider configuration:
   You can also set this via the `BITBUCKET_OAUTH_CLIENT_SECRET` environment
   variable. If configured, requires `oauthClientId` to be configured as well.
 
-* `oauthToken` - (Optional) An OAuth access token used for authentication via
-  [OAuth](https://developer.atlassian.com/cloud/bitbucket/rest/intro/#oauth-2-0).
-  You can also set this via the `BITBUCKET_OAUTH_TOKEN` environment variable.
+* `oauthToken` - (Optional) An OAuth access token, or a workspace, project or
+  repository [access token](https://support.atlassian.com/bitbucket-cloud/docs/access-tokens/),
+  sent as a bearer token. You can also set this via the `BITBUCKET_OAUTH_TOKEN`
+  or `BITBUCKET_ACCESS_TOKEN` environment variable. Access tokens are not tied
+  to a user, so `bitbucket.getCurrentUser`, the group resources and functions,
+  and deploy keys don't work with them.
 ## Permission Scopes
 
 To interact with the Bitbucket API, an [API Token](https://support.atlassian.com/bitbucket-cloud/docs/api-tokens/)

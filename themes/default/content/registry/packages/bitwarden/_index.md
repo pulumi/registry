@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/maxlaverse/bitwarden/0.21.0/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/maxlaverse/bitwarden/0.22.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Bitwarden Provider
@@ -18,9 +18,10 @@ pulumi package add terraform-provider maxlaverse/bitwarden
 
 Use the Bitwarden provider to manage your [Password Manager](https://bitwarden.com/products/personal/) Logins and Secure Notes, and [Secrets Manager](https://bitwarden.com/products/secrets-manager/) Secrets.
 You must configure the provider with proper credentials before you can use it.
-If you're not using the `embeddedClient` implementation, you also need a [Password Manager CLI](https://bitwarden.com/help/article/cli/#download-and-install) or [Secrets Manager CLI](https://bitwarden.com/help/article/cli/#download-and-install) installed locally.
+If you're not using `clientImplementation = "embedded"`, you also need a [Password Manager CLI](https://bitwarden.com/help/article/cli/#download-and-install) or [Secrets Manager CLI](https://bitwarden.com/help/secrets-manager-cli/) installed locally.
+Secrets Manager secrets can be read with the `bitwarden.Secret` function or, without storing values in plan or state, with the `bitwarden.Secret` ephemeral resource.
 
-> **Note:** This provider requires Pulumi or OpenTofu 1.1.5 or later (Protocol 6).
+> **Note:**  or OpenTofu 1.12 or later (Protocol 6).
 ## Example Usage
 
 {{< chooser language "typescript,python,go,csharp,java,yaml" >}}
@@ -113,18 +114,20 @@ Example currently unavailable in this language
 
 The Bitwarden provider offers two client implementations to interact with your Vault:
 ### Official Bitwarden CLIs (Default)
-By default, the provider uses the official Bitwarden command-line tools ([Bitwarden CLI](https://bitwarden.com/help/article/cli/#download-and-install) for Password Manager and [BWS CLI](https://bitwarden.com/help/article/cli/#download-and-install) for Secrets Manager). This approach leverages the battle-tested reliability of Bitwarden's own tooling, backed by their engineering team and security expertise.
+By default, the provider uses the official Bitwarden command-line tools ([Bitwarden CLI](https://bitwarden.com/help/article/cli/#download-and-install) for Password Manager and [BWS CLI](https://bitwarden.com/help/secrets-manager-cli/) for Secrets Manager). This approach leverages the battle-tested reliability of Bitwarden's own tooling, backed by their engineering team and security expertise.
 
 The trade-off is that you need to pre-install the appropriate CLI tools in your Pulumi environment. Additionally, the Password Manager CLI (requiring Node.js) can create performance bottlenecks when managing many resources due to process spawning overhead.
 ### Embedded Client
-The provider also includes an embedded client that communicates directly with Bitwarden servers without external dependencies. This eliminates the need to install separate CLI tools and provides better performance by avoiding external process spawning, making it particularly beneficial for managing large resource sets.
+The provider also includes an embedded client that communicates directly with Bitwarden servers without external dependencies. Set `clientImplementation = "embedded"` to use it. This eliminates the need to install separate CLI tools and provides better performance by avoiding external process spawning, making it particularly beneficial for managing large resource sets.
 
 However, this implementation is developed and maintained by a single person as a community project without company resources. While effort goes into ensuring security and correctness, it lacks the extensive security review, testing infrastructure, and dedicated security team that backs Bitwarden's official tools.
+
+When using the embedded client in CI or containers, the provider stores a device identifier in `.bitwarden/device_identifier`. If that file is missing, a new one is generated each run and Bitwarden may send "new device logged in" emails. To avoid that, persist `.bitwarden/device_identifier` (e.g. in a secret or volume) and restore it before running Pulumi.
 ### Choosing Your Implementation
 
 The choice depends on your needs: the official CLIs leverage Bitwarden's proven tooling, while the embedded client is a community project offering performance benefits and zero external dependencies. The embedded client aims for security and correctness, and code reviews are always welcome to help improve it.
 ## Authentication
-Depending on the type of credentials you use, you'll be able to connect either with a Password Manager or Secret Manager.
+Depending on the type of credentials you use, you'll be able to connect either with a Password Manager or Secrets Manager.
 If you want your workspace to interact with both, have a look at [provider aliases](https://developer.pulumi.com/pulumi/language/providers/configuration#alias-multiple-provider-configurations).
 ### Password Manager
 The Password Manager accepts different combinations of credentials to authenticate:
@@ -160,6 +163,7 @@ BITWARDENCLI_APPDATA_DIR=<vault_path> bw login
 A Session Key is bound to a local copy of a Vault. It's therefore important that you set the right `BITWARDENCLI_APPDATA_DIR` to the path where your Vault is stored.
 ### Secrets Manager
 The Secrets Manager only accepts [Access Tokens](https://bitwarden.com/help/access-tokens/) (requires `accessToken` to be set).
+To read an existing secret without storing it in plan or state, use the `bitwarden.Secret` ephemeral resource instead of the function.
 
 In order to generate an Access Token you need to:
 1. Connect to your Vault on <https://vault.bitwarden.com>
@@ -171,8 +175,6 @@ In order to generate an Access Token you need to:
 7. Created a new Access Token and save it somewhere safe
 
 > **Note:** By default, new machine accounts are not assigned to any projects. After creating a machine account, make sure it is added to the project(s) you want to access, with either "Can Read" or "Can Read & Write" permissions. If the machine account does not have access to the project, you will encounter an `Error: object not found` when attempting to use/create secrets from that project.
-
-> **Note:** When using the embedded client in ephemeral environments (CI, containers), the provider stores a device identifier in `.bitwarden/device_identifier`. If that file is missing, a new one is generated each run and Bitwarden may send "new device logged in" emails. To avoid that, persist `.bitwarden/device_identifier` (e.g. in a secret or volume) and restore it before running Pulumi.
 ## Configuration
 Configuration for the Bitwarden Provider can be derived from two sources:
 * Parameters in the provider configuration

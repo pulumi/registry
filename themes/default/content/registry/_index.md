@@ -1,5 +1,6 @@
 ---
 title: Pulumi Registry
+title_tag: Infrastructure as Code Providers and Components
 notitle: true
 linktitle: Pulumi Registry
 meta_desc: The Pulumi Registry hosts Providers that give direct access to all of a cloud provider’s resources and Components for common cloud architectures.

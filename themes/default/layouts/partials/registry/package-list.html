@@ -4,6 +4,9 @@ $allPackages }} {{ if .featured }} {{ $featuredPackages = $featuredPackages |
 append . }} {{ end }} {{ end }}
 
 <div class="packages">
+    {{ if eq .RelPermalink "/registry/" }}
+    <h1 class="registry-landing-title">Pulumi Registry</h1>
+    {{ end }}
     <section class="featured-packages">
         <h2>Featured packages</h2>
         <div class="featured-packages-content">

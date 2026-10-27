@@ -11,7 +11,7 @@ name: azuredevops
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-azuredevops
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-azuredevops/v3.16.2/provider/cmd/pulumi-resource-azuredevops/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-azuredevops/v3.16.3/provider/cmd/pulumi-resource-azuredevops/schema.json
 title: Azure DevOps
-updated_on: 1791907678
-version: v3.16.2
+updated_on: 1793125344
+version: v3.16.3

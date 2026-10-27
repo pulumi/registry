@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-mongodbatlas/v4.17.1/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-mongodbatlas/v4.18.1/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-mongodbatlas/blob/v4.17.1/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-mongodbatlas/blob/v4.18.1/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Mongodbatlas Provider
 meta_desc: Provides an overview on how to configure the Pulumi Mongodbatlas provider.
@@ -202,7 +202,7 @@ func main() {
 		}
 		// Create a cluster
 		_, err = mongodbatlas.NewAdvancedCluster(ctx, "this", &mongodbatlas.AdvancedClusterArgs{
-			ProjectId:   this.ID().ToIDOutput().ToStringOutput(),
+			ProjectId:   this.ID(),
 			Name:        pulumi.String("my-cluster"),
 			ClusterType: pulumi.String("REPLICASET"),
 			ReplicationSpecs: mongodbatlas.AdvancedClusterReplicationSpecArray{
@@ -364,8 +364,8 @@ resource "mongodbatlas_advanced_cluster" "this" {
   project_id   = mongodbatlas_project.this.id
   name         = "my-cluster"
   cluster_type = "REPLICASET"
-  replication_specs {
-    region_configs {
+  replication_specs = [{
+    region_configs = [{
       region_name   = "US_EAST_1"
       priority      = 7
       provider_name = "AWS"
@@ -373,8 +373,8 @@ resource "mongodbatlas_advanced_cluster" "this" {
         instance_size = "M10"
         node_count    = 3
       }
-    }
-  }
+    }]
+  }]
 }
 ```
 

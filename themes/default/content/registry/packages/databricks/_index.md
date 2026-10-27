@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-databricks/v1.118.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-databricks/v1.118.1/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-databricks/blob/v1.118.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-databricks/blob/v1.118.1/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Databricks Provider
 meta_desc: Provides an overview on how to configure the Pulumi Databricks provider.
@@ -418,12 +418,12 @@ resource "databricks_job" "this" {
     create_before_destroy = true
   }
   name ="Pulumi Demo (${data.databricks_current_user.me.alphanumeric})"
-  tasks {
+  task {
     task_key = "task1"
-    notebook_task = {
+    notebook_task {
       notebook_path = databricks_notebook.this.path
     }
-    new_cluster = {
+    new_cluster {
       num_workers   = 1
       spark_version = data.databricks_spark_version.latest.id
       node_type_id  = data.databricks_node_type.smallest.id

@@ -11,7 +11,7 @@ name: signalfx
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-signalfx
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-signalfx/v7.30.2/provider/cmd/pulumi-resource-signalfx/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-signalfx/v7.30.3/provider/cmd/pulumi-resource-signalfx/schema.json
 title: SignalFx
-updated_on: 1791908998
-version: v7.30.2
+updated_on: 1793126718
+version: v7.30.3

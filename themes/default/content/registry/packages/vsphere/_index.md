@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-vsphere/v4.18.2/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-vsphere/v4.18.3/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-vsphere/blob/v4.18.2/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-vsphere/blob/v4.18.3/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Vsphere Provider
 meta_desc: Provides an overview on how to configure the Pulumi Vsphere provider.
@@ -503,10 +503,10 @@ resource "vsphere_virtual_machine" "vm" {
   num_cpus         = 1
   memory           = 1024
   guest_id         = "otherLinux64Guest"
-  network_interfaces {
+  network_interface {
     network_id = data.vsphere_network.network.id
   }
-  disks {
+  disk {
     label = "disk0"
     size  = 20
   }

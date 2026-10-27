@@ -9,7 +9,7 @@ name: commercetools
 package_status: ga
 publisher: labd
 repo_url: https://github.com/labd/terraform-provider-commercetools
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/labd/commercetools/1.23.1/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/labd/commercetools/1.23.2/schema.json
 title: commercetools
-updated_on: 1793057765
-version: 1.23.1
+updated_on: 1793144120
+version: 1.23.2

@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-nomad/v2.6.1/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-nomad/v2.6.2/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-nomad/blob/v2.6.1/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-nomad/blob/v2.6.2/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Nomad Provider
 meta_desc: Provides an overview on how to configure the Pulumi Nomad provider.
@@ -26,7 +26,7 @@ Nomad provider exposes resources to interact with a Nomad cluster.
 Use the navigation to the left to read about the available resources.
 ## Example Usage
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 ```yaml
 # Pulumi.yaml provider configuration file
@@ -45,7 +45,7 @@ import * as pulumi from "@pulumi/pulumi";
 import * as nomad from "@pulumi/nomad";
 import * as std from "@pulumi/std";
 
-function notImplemented(message: string) {
+function notImplemented(message: string): any {
     throw new Error(message);
 }
 
@@ -112,9 +112,9 @@ object NotImplemented(string errorMessage)
 return await Deployment.RunAsync(() =>
 {
     // Register a job
-    var monitoring = new Nomad.Index.Job("monitoring", new()
+    var monitoring = new Nomad.Job("monitoring", new()
     {
-        Jobspec = Std.Index.File.Invoke(new()
+        Jobspec = Std.File.Invoke(new()
         {
             Input = $"{NotImplemented("path.module")}/jobspec.hcl",
         }).Apply(invoke => invoke.Result),
@@ -149,7 +149,7 @@ import (
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
-func notImplemented(message string) pulumi.AnyOutput {
+func notImplemented(message string) any {
 	panic(message)
 }
 
@@ -215,8 +215,8 @@ import com.pulumi.nomad.Job;
 import com.pulumi.nomad.JobArgs;
 import com.pulumi.std.StdFunctions;
 import com.pulumi.std.inputs.FileArgs;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.io.File;
 import java.nio.file.Files;
@@ -236,6 +236,29 @@ public class App {
             .build());
 
     }
+}
+```
+
+{{% /choosable %}}
+{{% choosable language hcl %}}
+```hcl
+terraform {
+  required_providers {
+    nomad = {
+      source = "pulumi/nomad"
+    }
+    std = {
+      source = "pulumi/std"
+    }
+  }
+}
+
+# Register a job
+resource "nomad_job" "monitoring" {
+  lifecycle {
+    create_before_destroy = true
+  }
+  jobspec = file("${notImplemented("path.module")}/jobspec.hcl")
 }
 ```
 

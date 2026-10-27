@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/descope/pulumi-descope/v0.3.16/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/descope/pulumi-descope/v1.0.1/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/descope/pulumi-descope/blob/v0.3.16/docs/_index.md
+edit_url: https://github.com/descope/pulumi-descope/blob/v1.0.1/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Descope Provider
 meta_desc: Provides an overview on how to configure the Pulumi Descope provider.
@@ -25,7 +25,8 @@ The [Descope](https://www.descope.com) Pulumi Provider lets you manage your Desc
 Descope is an authentication and user management platform. The Pulumi provider manages *project configuration* (how your project behaves), not users or tenants (use the [Descope Management API](https://docs.descope.com/api/openapi) or [SDKs](https://docs.descope.com) for those).
 ## Requirements
 
-- Pulumi 1.0 or later
+- Pulumi 1.0 or later, or 1.5 or later to adopt an existing project
+  with `import` blocks
 - A Descope **Pro or Enterprise** plan
 - A **Management Key** from [Company Settings](https://app.descope.com/settings/company) in the Descope console
 ## Authentication
@@ -478,14 +479,25 @@ variable "descopeManagementKey" {
 {{< /chooser >}}
 ## Resources
 
-|                       Resource                       |                                  Description                                  |
-|------------------------------------------------------|-------------------------------------------------------------------------------|
-| `descope.Project`               | Full project configuration: authentication, RBAC, connectors, flows, and more |
-| `descope.ManagementKey` | Programmatic management keys with scoped permissions                          |
-| `descope.Descoper`             | Descope console user accounts with role assignments                           |
+`descope.Project` manages the project itself: its name, environment, tags and deletion protection. Everything inside
+the project is managed by its own resource, which references the project with a `projectId` attribute.
+
+|             Area              |                                                                                                                                                                                                                                                                                            Resources                                                                                                                                                                                                                                                                                             |
+|-------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Project                       | `descope.Project`, `descope.ProjectSettings`, `descope.SessionSettings`, `descope.SessionMigration`, `descope.InviteSettings`, `descope.AdminPortal`                                                                                                                                                                                                                                                                 |
+| Authentication methods        | `descope.PasswordSettings`, `descope.OtpSettings`, `descope.MagiclinkSettings`, `descope.EnchantedlinkSettings`, `descope.EmbeddedlinkSettings`, `descope.PasskeySettings`, `descope.TotpSettings`, `descope.SsoSettings`, `descope.OauthSettings`, `descope.OauthProvider` |
+| Messaging                     | `descope.EmailTemplate`, `descope.TextTemplate`, `descope.VoiceTemplate`                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| Authorization                 | `descope.Role`, `descope.Permission`, `descope.FgaSchema`                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| Attributes                    | `descope.UserAttribute`, `descope.TenantAttribute`, `descope.AccessKeyAttribute`                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| Applications                  | `descope.OidcApp`, `descope.SamlApp`, `descope.WsfedApp`, `descope.InboundApp`, `descope.OutboundApp`, `descope.AppRole`, `descope.AppPermission`                                                                                                                                                                                                                                                                 |
+| Flows and styles              | `descope.Flow`, `descope.Widget`, `descope.Styles`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| Access keys, tokens and lists | `descope.AccessKey`, `descope.JwtTemplate`, `descope.List`                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| Connectors                    | One resource per connector type, named after it, e.g. `descope.HttpConnector` or `descope.SendgridConnector`, and `descope.Engine` to run connector actions inside your own network                                                                                                                                                                                                                                                                                                                            |
+| Company                       | `descope.ManagementKey`, `descope.Descoper`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
 ## Guides
 
-- Quickstart – Set up the provider and manage your first project
+- Quickstart - Set up the provider and manage your first project
+- Upgrading from v0.3.x - Adopt a project managed by v0.3.x into the standalone resources
 ## Configuration Reference
 
 - `baseUrl` (String) An optional base URL for the Descope API

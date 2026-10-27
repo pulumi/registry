@@ -637,9 +637,9 @@
     resolve "^1.7.1"
 
 "@pulumi/aws@^7.0.0", "@pulumi/aws@^7.43.0":
-  version "7.51.1"
-  resolved "https://registry.yarnpkg.com/@pulumi/aws/-/aws-7.51.1.tgz#7fdaa9c3f36ba383fda7ed59afa0af75d1005fd1"
-  integrity sha512-uJBvElDsU2UVZOwFT3VBprUhc1i1WeHi8MAbbw4mag4okzZDfarHwfSimoMiBkO4XfdQScdY7rDI0g6xIZiosA==
+  version "7.52.0"
+  resolved "https://registry.yarnpkg.com/@pulumi/aws/-/aws-7.52.0.tgz#2a4721f106694da2b39706c4ff1d283a24605d2c"
+  integrity sha512-GEUXasvdlUy1fweJ+IHG0zm+L25cIJWAfwNQG5kSmaNLzPRuqRzW8DcJdBgm0kW3stoGilP6yMH1ofGhyPAhQw==
   dependencies:
     "@pulumi/pulumi" "^3.142.0"
     mime "^2.0.0"
@@ -941,9 +941,9 @@ base64-js@^1.0.2:
   integrity sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==
 
 bin-links@^6.0.0:
-  version "6.0.2"
-  resolved "https://registry.yarnpkg.com/bin-links/-/bin-links-6.0.2.tgz#8ec24630f62e9d2108398c591c717c672d01f5bc"
-  integrity sha512-frE1t78WOwJ45PKV2cF2tNPjTcs9L1J9s6VkrV59wanRP4GlaomuxYPVma7BwthMg8WnfSory4w5PTE6FZZ81w==
+  version "6.0.3"
+  resolved "https://registry.yarnpkg.com/bin-links/-/bin-links-6.0.3.tgz#e10131f58f05a6131b9283f59dd586e1be08def5"
+  integrity sha512-Qg5FD7/YSReWJB1zaM8VIi1l4O637JKK/WPaF/JzJGy/9FcMDWtSklF0dOX5S9X2OMrPGhifIHIKuwtHG0IGFg==
   dependencies:
     cmd-shim "^8.0.0"
     npm-normalize-package-bin "^5.0.0"
@@ -1180,7 +1180,7 @@ es-errors@^1.3.0:
   resolved "https://registry.yarnpkg.com/es-errors/-/es-errors-1.3.0.tgz#05f75a25dab98e4fb1dcd5e1472c0546d5057c8f"
   integrity sha512-Zf5H2Kxt2xjTvbJvP2ZWLEICxA6j+hAmMzIlypy4xcBg1vKVnx89Wy0GbS+kf5cwCVFFzdCFh2XSCFNULS6csw==
 
-es-module-lexer@^3.0.2:
+es-module-lexer@^3.0.3:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/es-module-lexer/-/es-module-lexer-3.0.4.tgz#157174100418c206cd1c5d142e5a3be849b845b9"
   integrity sha512-BldNY5mwkVu+cQ5Ymn3e6hB9Sx8XHx4ZevWbiUyZbfKxJxYO27Hf0wfzkxIaD5CAJMaGl3YspKELj0ff/7nCMA==
@@ -1463,12 +1463,12 @@ ignore-walk@^8.0.0:
     minimatch "^10.0.3"
 
 import-in-the-middle@^3.0.0:
-  version "3.5.2"
-  resolved "https://registry.yarnpkg.com/import-in-the-middle/-/import-in-the-middle-3.5.2.tgz#c017ecf4fe1f83da743793ea9321519131cd3135"
-  integrity sha512-WseIA/4o56+GYO3RmlOPvejYi771OFeJEeK/ejROsr9bdjW+E5NXTOD1Di8TL40Qgg3JJX9aa97Hf8iiSVIKZw==
+  version "3.5.3"
+  resolved "https://registry.yarnpkg.com/import-in-the-middle/-/import-in-the-middle-3.5.3.tgz#38e851186999ac64754c90b5edf70a90a62139b8"
+  integrity sha512-usm/IiY63VtOyx/dm7uEoZV+EsanCDmwRUroQZIkFLGu1NVXZ8mZqIOhaN4QIJ7EsbMTuQbJXwCySCx+ozMA8g==
   dependencies:
     cjs-module-lexer "^2.2.0"
-    es-module-lexer "^3.0.2"
+    es-module-lexer "^3.0.3"
     module-details-from-path "^1.0.4"
 
 inflight@^1.0.4:
@@ -1504,9 +1504,9 @@ internal-slot@^1.0.5:
     side-channel "^1.0.4"
 
 ip-address@^10.1.1:
-  version "10.7.4"
-  resolved "https://registry.yarnpkg.com/ip-address/-/ip-address-10.7.4.tgz#a5e493fabce725c5d4b8b8f4d2ebb9009fbcf2e8"
-  integrity sha512-DWBMKyeM25D70nrIiTkgQth59/G+naKOTep6huF9j+GmeK3DMD60Zvxg5d5qQnz+38AHgou6ean2LECX+lrKDg==
+  version "10.7.5"
+  resolved "https://registry.yarnpkg.com/ip-address/-/ip-address-10.7.5.tgz#4c4c423f6477d0b0b5c2ea59ac77e93eff49003e"
+  integrity sha512-t2v0rkILYv9WXmSL7TpAaU3HXgaFYOPUcH3QHgwQ++gpJuH3bqyMy4Fvt/DJCTKwzH3Cf+bAp5W/mFL39KPLzA==
 
 is-arguments@^1.0.4:
   version "1.1.1"

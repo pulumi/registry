@@ -8,10 +8,10 @@ keywords:
 - descope
 logo_url: https://avatars3.githubusercontent.com/descope
 name: descope
-package_status: public_preview
+package_status: ga
 publisher: Descope
 repo_url: https://github.com/descope/pulumi-descope
-schema_file_url: https://raw.githubusercontent.com/descope/pulumi-descope/v0.3.16/provider/cmd/pulumi-resource-descope/schema.json
+schema_file_url: https://raw.githubusercontent.com/descope/pulumi-descope/v1.0.1/provider/cmd/pulumi-resource-descope/schema.json
 title: Descope
-updated_on: 1785739226
-version: v0.3.16
+updated_on: 1791702223
+version: v1.0.1

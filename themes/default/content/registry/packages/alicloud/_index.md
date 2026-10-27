@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-alicloud/v4.0.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-alicloud/v4.0.1/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-alicloud/blob/v4.0.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-alicloud/blob/v4.0.1/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Alibaba Cloud Provider
 meta_desc: Provides an overview on how to configure the Pulumi Alibaba Cloud provider.
@@ -316,7 +316,7 @@ if err != nil {
 return err
 }
 vswitch, err := vpc.NewSwitch(ctx, "vswitch", &vpc.SwitchArgs{
-VpcId: vpc2.ID().ToIDOutput().ToStringOutput(),
+VpcId: vpc2.ID(),
 CidrBlock: pulumi.String("172.16.0.0/24"),
 ZoneId: pulumi.String(_default.Zones[0].Id),
 VswitchName: pulumi.String(name),
@@ -328,7 +328,7 @@ return err
 group, err := ecs.NewSecurityGroup(ctx, "group", &ecs.SecurityGroupArgs{
 Name: pulumi.String(name),
 Description: pulumi.String("foo"),
-VpcId: vpc2.ID().ToIDOutput().ToStringOutput(),
+VpcId: vpc2.ID(),
 })
 if err != nil {
 return err
@@ -355,7 +355,7 @@ SystemDiskName: pulumi.String(name),
 SystemDiskDescription: pulumi.String("system_disk_description"),
 ImageId: pulumi.String("ubuntu_22_04_x64_20G_alibase_20260828.vhd"),
 InstanceName: pulumi.String(name),
-VswitchId: vswitch.ID().ToIDOutput().ToStringOutput(),
+VswitchId: vswitch.ID(),
 InternetMaxBandwidthOut: pulumi.Int(10),
 DataDisks: ecs.InstanceDataDiskArray{
 &ecs.InstanceDataDiskArgs{
@@ -364,7 +364,7 @@ Size: pulumi.Int(20),
 Category: pulumi.String("cloud_essd"),
 Description: pulumi.String("disk-description"),
 Encrypted: pulumi.Bool(true),
-KmsKeyId: key.ID().ToIDOutput().ToStringOutput(),
+KmsKeyId: key.ID(),
 },
 },
 })
@@ -566,7 +566,7 @@ resource "alicloud_ecs_instance" "instance" {
     create_before_destroy = true
   }
   availability_zone          = data.alicloud_zones.default.zones[0].id
-  security_groups            = [alicloud_ecs_security_group.group][*].id
+  security_groups            = alicloud_ecs_security_group.group[*].id
   instance_type              = "ecs.n4.large"
   system_disk_category       = "cloud_essd"
   system_disk_name           = var.name

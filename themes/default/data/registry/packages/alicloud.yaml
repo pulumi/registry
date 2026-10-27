@@ -11,7 +11,7 @@ name: alicloud
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-alicloud
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-alicloud/v4.0.0/provider/cmd/pulumi-resource-alicloud/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-alicloud/v4.0.1/provider/cmd/pulumi-resource-alicloud/schema.json
 title: Alibaba Cloud
-updated_on: 1792524276
-version: v4.0.0
+updated_on: 1793126253
+version: v4.0.1

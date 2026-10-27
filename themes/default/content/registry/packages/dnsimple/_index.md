@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-dnsimple/v5.3.2/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-dnsimple/v5.3.3/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-dnsimple/blob/v5.3.2/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-dnsimple/blob/v5.3.3/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: DNSimple Provider
 meta_desc: Provides an overview on how to configure the Pulumi DNSimple provider.
@@ -639,7 +639,7 @@ func main() {
 		// Register a domain
 		_, err = dnsimple.NewRegisteredDomain(ctx, "example_com", &dnsimple.RegisteredDomainArgs{
 			Name:                pulumi.String("example.com"),
-			ContactId:           registrant.ID().ToIDOutput().ApplyT(func(id pulumi.ID) (int, error) { return strconv.Atoi(string(id)) }).(pulumi.IntOutput),
+			ContactId:           registrant.ID().ToStringOutput().ApplyT(strconv.Atoi).(pulumi.IntOutput),
 			AutoRenewEnabled:    pulumi.Bool(true),
 			WhoisPrivacyEnabled: pulumi.Bool(true),
 			TransferLockEnabled: pulumi.Bool(true),

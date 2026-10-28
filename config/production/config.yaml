@@ -1,3 +1,8 @@
 baseURL: https://www.pulumi.com/
 
 refLinksErrorLevel: WARNING
+
+# Production keeps the existing Segment consent manager. The OneTrust production
+# cutover is a separate, separately-approved change.
+params:
+    consentProvider: segment

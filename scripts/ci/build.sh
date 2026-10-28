@@ -120,6 +120,14 @@ case ${1} in
         hugo --minify --buildFuture --templateMetrics -e preview
         ;;
     update)
+        # testing-deploy.yml builds www.pulumi-test.io with the production Hugo
+        # environment, so the OneTrust staging rollout is switched on here, from
+        # the deploy's DEPLOYMENT_ENVIRONMENT, rather than in config/production.
+        # The "-test" domain script id must never reach the production deploy.
+        if [[ "${DEPLOYMENT_ENVIRONMENT}" == "testing" ]]; then
+            export HUGO_PARAMS_CONSENTPROVIDER="onetrust"
+            export HUGO_PARAMS_ONETRUSTDOMAINSCRIPT="01a130f0-6a68-7792-88bc-358bc07fe42b-test"
+        fi
         hugo --minify --buildFuture --templateMetrics -e production
         ;;
     *)

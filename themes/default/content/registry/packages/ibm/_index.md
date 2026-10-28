@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/ibm-cloud/ibm/2.8.0/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/ibm-cloud/ibm/2.8.1/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Ibm Provider
@@ -861,13 +861,6 @@ The following configuration inputs are supported in the provider configuration:
 * `iamProfileName` - (optional) The IBM Cloud IAM trusted profile name. You must either add it as a credential in the provider configuration or source it from the `IC_IAM_PROFILE_NAME`  or `IBMCLOUD_IAM_PROFILE_NAME` environment variable.
 
 * `ibmcloudAccountId` -  - (optional) The IBM Cloud IAM trusted profile name. You must either add it as a credential in the provider configuration or source it from the `IC_ACCOUNT_ID`  or `IBMCLOUD_IAM_PROFILE_NAME` environment variable.
-
-***Note***
-The CloudFoundry endpoint has been updated in this release of IBM Cloud Pulumi provider v0.17.4.  If you are using an earlier version of IBM Cloud Pulumi provider, export the `IBMCLOUD_UAA_ENDPOINT` to the new authentication endpoint, as illustrated below
-
-```shell
-export IBMCLOUD_UAA_ENDPOINT="https://iam.cloud.ibm.com/cloudfoundry/login/<region>/"
-```
 ## References
 
 * IBM Cloud Pulumi Docs

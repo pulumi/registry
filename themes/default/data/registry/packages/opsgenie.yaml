@@ -11,7 +11,7 @@ name: opsgenie
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-opsgenie
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-opsgenie/v1.4.3/provider/cmd/pulumi-resource-opsgenie/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-opsgenie/v1.4.4/provider/cmd/pulumi-resource-opsgenie/schema.json
 title: Opsgenie
-updated_on: 1792081046
-version: v1.4.3
+updated_on: 1793168846
+version: v1.4.4

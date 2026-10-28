@@ -9,7 +9,7 @@ name: terraform-provider
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-terraform-provider
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-terraform-provider/v1.5.0/assets/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-terraform-provider/v1.5.1/assets/schema.json
 title: Any Terraform Provider
-updated_on: 1788341518
-version: v1.5.0
+updated_on: 1793203628
+version: v1.5.1

@@ -30,7 +30,7 @@ Common commands (all defined in the root `Makefile`):
 | Dev server + asset hot reload | `make serve-all` |
 | Generate API docs for one provider | `make api-docs/<package>` |
 | Full local build (all providers) | `make build` |
-| Run Go unit tests | `make test` |
+| Run Go, infrastructure, preview-comment, and theme unit tests (needs `make ensure` first) | `make test` |
 | Run all linters | `make lint` |
 | Run Go linter only | `make lint-go` |
 | Run Markdown linter only | `make lint-markdown` |

@@ -61,7 +61,7 @@ This document describes the build, test, and deployment system for the `pulumi/r
 | Local development server | `make serve` |
 | Full local dev (Hugo + asset watch) | `make serve-all` |
 | Generate API docs for one provider | `make api-docs/<package>` |
-| Run Go tests | `make test` |
+| Run Go, infrastructure, preview-comment, and theme unit tests (needs `make ensure` first) | `make test` |
 | Run all linters | `make lint` |
 | Run Markdown linter | `make lint-markdown` |
 | Run Go linter | `make lint-go` |
@@ -550,7 +550,7 @@ PR opened / committed
         │       └── yarn install → make lint-markdown
         │
         ├── lint-scripts
-        │       └── yarn install → yarn run lint
+        │       └── yarn install → yarn run lint → make test-preview-comment → theme yarn install → make test-theme
         │
         ├── lint-dark-logos
         │       └── make lint-dark-logos
@@ -671,6 +671,8 @@ Push to master
 #### `testing-deploy.yml` — Manual Test Environment Deploy
 
 Identical to `push.yml` but triggered manually via `workflow_dispatch` and deploys to the testing environment (account `571684982431`, role `arn:aws:iam::571684982431:role/ContinuousDelivery`). Reads its Go version from `tools/resourcedocsgen/go.mod`, like production.
+
+Both this deploy and production build with `hugo -e production`, but the output differs in one way: when `DEPLOYMENT_ENVIRONMENT=testing`, `scripts/ci/build.sh` sets `HUGO_PARAMS_CONSENTPROVIDER=onetrust` and `HUGO_PARAMS_ONETRUSTDOMAINSCRIPT` (the OneTrust test domain script id), so www.pulumi-test.io loads OneTrust instead of the Segment consent manager. Production keeps `consentProvider: segment` from `config/production/config.yaml`. `layouts/partials/head.html` fails the build if `onetrust` is selected without a domain script id.
 
 #### `pull-request-closed.yml` — PR Preview Cleanup
 
@@ -979,10 +981,12 @@ There are two publishers, a primary and a fallback.
 
 ```bash
 make test
-# Runs: cd tools/resourcedocsgen && go test ./...
+# Runs: make test-infra test-preview-comment test-theme, then cd tools/resourcedocsgen && go test ./...
 ```
 
-Also run in CI via `check-go.yml` for `tools/resourcedocsgen/`.
+`test-theme` runs the theme's TypeScript unit tests (the OneTrust consent bridge, consent-gated YouTube embeds, and the Algolia insights gate). It needs both the root `yarn install` (for `jsdom`) and the theme `yarn install` (for `tsc`), so run `make ensure` before `make test`.
+
+The Go tests also run in CI via `check-go.yml` for `tools/resourcedocsgen/`; `test-preview-comment` and `test-theme` run in the `lint-scripts` PR job.
 
 ### 8.2 Go Linting
 

@@ -6,6 +6,9 @@ export interface ConsentManagerConfig {
     bannerText: string;
     preferencesDialogTitle: string;
     preferencesDialogContent: string;
+    // "segment" (default) or "onetrust". Set by layouts/partials/head.html from
+    // the consentProvider site param.
+    provider?: "segment" | "onetrust";
 }
 
 export interface Destination {
@@ -25,6 +28,15 @@ declare global {
         consentManagerConfig?: ConsentManagerConfig;
         consentManager?: { openConsentManager: () => void };
         analytics?: SegmentAnalytics;
+        // OneTrust bridge (see consent-manager/onetrust.ts). The inline
+        // bootstrap in head.html installs runWithPulumiConsent before the
+        // bundle loads; the bundle replaces it with the full engine.
+        runWithPulumiConsent?: (category: string, callback: () => void) => void;
+        __pulumiConsentQueue?: { category: string; callback: () => void }[];
+        OnetrustActiveGroups?: string;
+        OptanonActiveGroups?: string;
+        OptanonWrapper?: () => void;
+        OneTrust?: { ToggleInfoDisplay?: () => void };
     }
 }
 

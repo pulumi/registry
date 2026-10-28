@@ -18,6 +18,7 @@ import "./sidebar-position";
 import "./docs-theme";
 import "./algolia/autocomplete";
 import "./consent-manager";
+import "./consent-media";
 
 // Register all Stencil components.
 defineCustomElements();

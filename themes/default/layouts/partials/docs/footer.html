@@ -12,5 +12,9 @@
         <li><a href="/acceptable-use/">Acceptable use policy</a></li>
         <li><a href="/trademark/">Trademark usage</a></li>
         <li><a href="/professional-services-agreement/">Professional services agreement</a></li>
+        {{- /* Opens the OneTrust preference center (consent-manager/index.ts). */}}
+        {{- if eq site.Params.consentProvider "onetrust" }}
+        <li><a href="#" role="button" onclick="window.consentManager && window.consentManager.openConsentManager(); return false;">Cookie settings</a></li>
+        {{- end }}
     </ul>
 </footer>

@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-cloudamqp/v3.36.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-cloudamqp/v3.36.1/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-cloudamqp/blob/v3.36.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-cloudamqp/blob/v3.36.1/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: CloudAMQP Provider
 meta_desc: Provides an overview on how to configure the Pulumi CloudAMQP provider.
@@ -49,10 +49,10 @@ import * as cloudamqp from "@pulumi/cloudamqp";
 
 // Create a new cloudamqp instance
 const instance = new cloudamqp.Instance("instance", {
-    name: "pulumi-cloudamqp-instance",
+    name: "terraform-cloudamqp-instance",
     plan: "penguin-1",
     region: "amazon-web-services::us-west-1",
-    tags: ["pulumi"],
+    tags: ["terraform"],
 });
 // New recipient to receieve notifications
 const recipient01 = new cloudamqp.Notification("recipient_01", {
@@ -72,12 +72,12 @@ const cpuAlarm = new cloudamqp.Alarm("cpu_alarm", {
 });
 // Configure firewall
 const firewall = new cloudamqp.SecurityFirewall("firewall", {
-    instanceId: instance.id.apply(x =>Number(x)),
     rules: [{
         ip: "10.54.72.0/0",
         ports: [4567],
         services: ["AMQPS"],
     }],
+    instanceId: instance.id.apply(x =>Number(x)),
 });
 // Cloudwatch metrics integration
 const cloudwatch = new cloudamqp.IntegrationMetric("cloudwatch", {
@@ -109,10 +109,10 @@ import pulumi_cloudamqp as cloudamqp
 
 # Create a new cloudamqp instance
 instance = cloudamqp.Instance("instance",
-    name="pulumi-cloudamqp-instance",
+    name="terraform-cloudamqp-instance",
     plan="penguin-1",
     region="amazon-web-services::us-west-1",
-    tags=["pulumi"])
+    tags=["terraform"])
 # New recipient to receieve notifications
 recipient01 = cloudamqp.Notification("recipient_01",
     instance_id=instance.id.apply(lambda x: int(x)),
@@ -129,12 +129,12 @@ cpu_alarm = cloudamqp.Alarm("cpu_alarm",
     recipients=[recipient01.id.apply(lambda x: int(x))])
 # Configure firewall
 firewall = cloudamqp.SecurityFirewall("firewall",
-    instance_id=instance.id.apply(lambda x: int(x)),
     rules=[{
         "ip": "10.54.72.0/0",
         "ports": [4567],
         "services": ["AMQPS"],
-    }])
+    }],
+    instance_id=instance.id.apply(lambda x: int(x)))
 # Cloudwatch metrics integration
 cloudwatch = cloudamqp.IntegrationMetric("cloudwatch",
     instance_id=instance.id.apply(lambda x: int(x)),
@@ -169,19 +169,19 @@ return await Deployment.RunAsync(() =>
     // Create a new cloudamqp instance
     var instance = new CloudAmqp.Instance("instance", new()
     {
-        Name = "pulumi-cloudamqp-instance",
+        Name = "terraform-cloudamqp-instance",
         Plan = "penguin-1",
         Region = "amazon-web-services::us-west-1",
         Tags = new[]
         {
-            "pulumi",
+            "terraform",
         },
     });
 
     // New recipient to receieve notifications
     var recipient01 = new CloudAmqp.Notification("recipient_01", new()
     {
-        InstanceId = instance.Id,
+        InstanceId = instance.Id.Apply(x => int.Parse(x, System.Globalization.CultureInfo.InvariantCulture)),
         Type = "email",
         Value = "alarm@example.com",
         Name = "alarm",
@@ -190,21 +190,20 @@ return await Deployment.RunAsync(() =>
     // New cpu alarm
     var cpuAlarm = new CloudAmqp.Alarm("cpu_alarm", new()
     {
-        InstanceId = instance.Id,
+        InstanceId = instance.Id.Apply(x => int.Parse(x, System.Globalization.CultureInfo.InvariantCulture)),
         Type = "cpu",
         ValueThreshold = 90,
         TimeThreshold = 600,
         Enabled = true,
         Recipients = new[]
         {
-            recipient01.Id,
+            recipient01.Id.Apply(x => int.Parse(x, System.Globalization.CultureInfo.InvariantCulture)),
         },
     });
 
     // Configure firewall
     var firewall = new CloudAmqp.SecurityFirewall("firewall", new()
     {
-        InstanceId = instance.Id,
         Rules = new[]
         {
             new CloudAmqp.Inputs.SecurityFirewallRuleArgs
@@ -220,12 +219,13 @@ return await Deployment.RunAsync(() =>
                 },
             },
         },
+        InstanceId = instance.Id.Apply(x => int.Parse(x, System.Globalization.CultureInfo.InvariantCulture)),
     });
 
     // Cloudwatch metrics integration
     var cloudwatch = new CloudAmqp.IntegrationMetric("cloudwatch", new()
     {
-        InstanceId = instance.Id,
+        InstanceId = instance.Id.Apply(x => int.Parse(x, System.Globalization.CultureInfo.InvariantCulture)),
         Name = "cloudwatch",
         AccessKeyId = awsAccessKey,
         SecretAccessKey = awsSecretKey,
@@ -264,11 +264,11 @@ func main() {
 	pulumi.Run(func(ctx *pulumi.Context) error {
 		// Create a new cloudamqp instance
 		instance, err := cloudamqp.NewInstance(ctx, "instance", &cloudamqp.InstanceArgs{
-			Name:   pulumi.String("pulumi-cloudamqp-instance"),
+			Name:   pulumi.String("terraform-cloudamqp-instance"),
 			Plan:   pulumi.String("penguin-1"),
 			Region: pulumi.String("amazon-web-services::us-west-1"),
 			Tags: pulumi.StringArray{
-				pulumi.String("pulumi"),
+				pulumi.String("terraform"),
 			},
 		})
 		if err != nil {
@@ -276,7 +276,7 @@ func main() {
 		}
 		// New recipient to receieve notifications
 		recipient01, err := cloudamqp.NewNotification(ctx, "recipient_01", &cloudamqp.NotificationArgs{
-			InstanceId: instance.ID().ToIDOutput().ApplyT(func(id pulumi.ID) (int, error) { return strconv.Atoi(string(id)) }).(pulumi.IntOutput),
+			InstanceId: instance.ID().ToStringOutput().ApplyT(strconv.Atoi).(pulumi.IntOutput),
 			Type:       pulumi.String("email"),
 			Value:      pulumi.String("alarm@example.com"),
 			Name:       pulumi.String("alarm"),
@@ -286,13 +286,13 @@ func main() {
 		}
 		// New cpu alarm
 		_, err = cloudamqp.NewAlarm(ctx, "cpu_alarm", &cloudamqp.AlarmArgs{
-			InstanceId:     instance.ID().ToIDOutput().ApplyT(func(id pulumi.ID) (int, error) { return strconv.Atoi(string(id)) }).(pulumi.IntOutput),
+			InstanceId:     instance.ID().ToStringOutput().ApplyT(strconv.Atoi).(pulumi.IntOutput),
 			Type:           pulumi.String("cpu"),
 			ValueThreshold: pulumi.Int(90),
 			TimeThreshold:  pulumi.Int(600),
 			Enabled:        pulumi.Bool(true),
 			Recipients: pulumi.IntArray{
-				recipient01.ID().ToIDOutput().ApplyT(func(id pulumi.ID) (int, error) { return strconv.Atoi(string(id)) }).(pulumi.IntOutput),
+				recipient01.ID().ToStringOutput().ApplyT(strconv.Atoi).(pulumi.IntOutput),
 			},
 		})
 		if err != nil {
@@ -300,7 +300,6 @@ func main() {
 		}
 		// Configure firewall
 		_, err = cloudamqp.NewSecurityFirewall(ctx, "firewall", &cloudamqp.SecurityFirewallArgs{
-			InstanceId: instance.ID().ToIDOutput().ApplyT(func(id pulumi.ID) (int, error) { return strconv.Atoi(string(id)) }).(pulumi.IntOutput),
 			Rules: cloudamqp.SecurityFirewallRuleArray{
 				&cloudamqp.SecurityFirewallRuleArgs{
 					Ip: pulumi.String("10.54.72.0/0"),
@@ -312,13 +311,14 @@ func main() {
 					},
 				},
 			},
+			InstanceId: instance.ID().ToStringOutput().ApplyT(strconv.Atoi).(pulumi.IntOutput),
 		})
 		if err != nil {
 			return err
 		}
 		// Cloudwatch metrics integration
 		_, err = cloudamqp.NewIntegrationMetric(ctx, "cloudwatch", &cloudamqp.IntegrationMetricArgs{
-			InstanceId:      instance.ID().ToIDOutput().ApplyT(func(id pulumi.ID) (int, error) { return strconv.Atoi(string(id)) }).(pulumi.IntOutput),
+			InstanceId:      instance.ID().ToStringOutput().ApplyT(strconv.Atoi).(pulumi.IntOutput),
 			Name:            pulumi.String("cloudwatch"),
 			AccessKeyId:     pulumi.Any(awsAccessKey),
 			SecretAccessKey: pulumi.Any(awsSecretKey),
@@ -352,11 +352,11 @@ resources:
   instance:
     type: cloudamqp:Instance
     properties:
-      name: pulumi-cloudamqp-instance
+      name: terraform-cloudamqp-instance
       plan: penguin-1
       region: amazon-web-services::us-west-1
       tags:
-        - pulumi
+        - terraform
   # New recipient to receieve notifications
   recipient01:
     type: cloudamqp:Notification
@@ -382,13 +382,13 @@ resources:
   firewall:
     type: cloudamqp:SecurityFirewall
     properties:
-      instanceId: ${instance.id}
       rules:
         - ip: 10.54.72.0/0
           ports:
             - 4567
           services:
             - AMQPS
+      instanceId: ${instance.id}
   # Cloudwatch metrics integration
   cloudwatch:
     type: cloudamqp:IntegrationMetric
@@ -446,10 +446,10 @@ public class App {
     public static void stack(Context ctx) {
         // Create a new cloudamqp instance
         var instance = new Instance("instance", InstanceArgs.builder()
-            .name("pulumi-cloudamqp-instance")
+            .name("terraform-cloudamqp-instance")
             .plan("penguin-1")
             .region("amazon-web-services::us-west-1")
-            .tags("pulumi")
+            .tags("terraform")
             .build());
 
         // New recipient to receieve notifications
@@ -472,12 +472,12 @@ public class App {
 
         // Configure firewall
         var firewall = new SecurityFirewall("firewall", SecurityFirewallArgs.builder()
-            .instanceId(instance.id())
             .rules(SecurityFirewallRuleArgs.builder()
                 .ip("10.54.72.0/0")
                 .ports(4567)
                 .services("AMQPS")
                 .build())
+            .instanceId(instance.id())
             .build());
 
         // Cloudwatch metrics integration
@@ -496,7 +496,7 @@ public class App {
 {{% /choosable %}}
 {{% choosable language hcl %}}
 ```hcl
-pulumi {
+terraform {
   required_providers {
     cloudamqp = {
       source = "pulumi/cloudamqp"
@@ -506,13 +506,19 @@ pulumi {
 
 # Create a new cloudamqp instance
 resource "cloudamqp_instance" "instance" {
-  name   = "pulumi-cloudamqp-instance"
+  lifecycle {
+    create_before_destroy = true
+  }
+  name   = "terraform-cloudamqp-instance"
   plan   = "penguin-1"
   region = "amazon-web-services::us-west-1"
-  tags   = ["pulumi"]
+  tags   = ["terraform"]
 }
 # New recipient to receieve notifications
 resource "cloudamqp_notification" "recipient_01" {
+  lifecycle {
+    create_before_destroy = true
+  }
   instance_id = cloudamqp_instance.instance.id
   type        = "email"
   value       = "alarm@example.com"
@@ -520,6 +526,9 @@ resource "cloudamqp_notification" "recipient_01" {
 }
 # New cpu alarm
 resource "cloudamqp_alarm" "cpu_alarm" {
+  lifecycle {
+    create_before_destroy = true
+  }
   instance_id     = cloudamqp_instance.instance.id
   type            = "cpu"
   value_threshold = 90
@@ -528,16 +537,22 @@ resource "cloudamqp_alarm" "cpu_alarm" {
   recipients      = [cloudamqp_notification.recipient_01.id]
 }
 # Configure firewall
-resource "cloudamqp_securityfirewall" "firewall" {
-  instance_id = cloudamqp_instance.instance.id
+resource "cloudamqp_security_firewall" "firewall" {
+  lifecycle {
+    create_before_destroy = true
+  }
   rules {
     ip       = "10.54.72.0/0"
     ports    = [4567]
     services = ["AMQPS"]
   }
+  instance_id = cloudamqp_instance.instance.id
 }
 # Cloudwatch metrics integration
-resource "cloudamqp_integrationmetric" "cloudwatch" {
+resource "cloudamqp_integration_metric" "cloudwatch" {
+  lifecycle {
+    create_before_destroy = true
+  }
   instance_id       = cloudamqp_instance.instance.id
   name              = "cloudwatch"
   access_key_id     = awsAccessKey

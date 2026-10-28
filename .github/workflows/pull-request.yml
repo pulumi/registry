@@ -134,6 +134,10 @@ jobs:
         run: yarn run lint
       - name: Test preview comment
         run: make test-preview-comment
+      - name: Test consent scripts
+        run: |
+          yarn --cwd themes/default/theme install --frozen-lockfile --network-timeout 300000
+          make test-theme
 
   lint-dark-logos:
     name: Lint Dark Logo Variants

@@ -37,12 +37,18 @@ lint-resourcedocsgen:
 	cd tools/resourcedocsgen/ && golangci-lint run --config ../../.golangci.yml
 
 .PHONY: test
-test: test-infra test-preview-comment
+test: test-infra test-preview-comment test-theme
 	cd ./tools/resourcedocsgen && go test ./...
 
 .PHONY: test-infra
 test-infra:
 	cd infrastructure && node --test redirects.test.js
+
+# Unit tests for the OneTrust consent bridge and consent-gated YouTube embeds. jsdom comes
+# from the root package.json, so the root and theme `yarn install`s must both have run.
+.PHONY: test-theme
+test-theme:
+	yarn --cwd ./themes/default/theme run test
 
 # Covers the URL mapping behind the pinned preview comment in scripts/ci/sync.sh. Offline
 # and dependency-free, so it runs alongside the script linter in PR CI.

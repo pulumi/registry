@@ -35,6 +35,7 @@
     "scripts": {
         "build": "yarn run webpack --mode production",
         "start": "yarn run concurrently 'yarn --cwd stencil run start' 'yarn run webpack --watch' --raw --kill-others",
+        "test": "tsc -p tsconfig.test.json && node --test \"bin-test/**/*.test.js\"",
         "lint": "prettier --check .",
         "lint-fix": "prettier --write ."
     }

@@ -672,7 +672,7 @@ Push to master
 
 Identical to `push.yml` but triggered manually via `workflow_dispatch` and deploys to the testing environment (account `571684982431`, role `arn:aws:iam::571684982431:role/ContinuousDelivery`). Reads its Go version from `tools/resourcedocsgen/go.mod`, like production.
 
-Both this deploy and production build with `hugo -e production`, but the output differs in one way: when `DEPLOYMENT_ENVIRONMENT=testing`, `scripts/ci/build.sh` sets `HUGO_PARAMS_CONSENTPROVIDER=onetrust` and `HUGO_PARAMS_ONETRUSTDOMAINSCRIPT` (the OneTrust test domain script id), so www.pulumi-test.io loads OneTrust instead of the Segment consent manager. Production keeps `consentProvider: segment` from `config/production/config.yaml`. `layouts/partials/head.html` fails the build if `onetrust` is selected without a domain script id.
+Both this deploy and production build with `hugo -e production`, but the output differs in one way: when `DEPLOYMENT_ENVIRONMENT=testing`, `scripts/ci/build.sh` sets `HUGO_PARAMS_CONSENTPROVIDER=onetrust` and `HUGO_PARAMS_ONETRUSTDOMAINSCRIPT` (the OneTrust test domain script id), so www.pulumi-test.io loads OneTrust instead of the Segment consent manager. Production uses `consentProvider: onetrust` with the www.pulumi.com script id from `config/production/config.yaml`. `layouts/partials/head.html` fails the build if `onetrust` is selected without a domain script id.
 
 #### `pull-request-closed.yml` — PR Preview Cleanup
 

@@ -403,6 +403,10 @@
     {
       "repoSlug": "htmlcsstoimage/pulumi-html-css-to-image",
       "schemaFile": "internal/provider/schema.json"
+    },
+    {
+      "repoSlug": "sgomezsal/nixos-vps",
+      "schemaFile": "packages/nixos-vps-provider/schema.json"
     }
   ]
 }

@@ -18,3 +18,9 @@ import "./commands";
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+
+// Mark the OneTrust cookie banner as already dismissed, so it can't cover elements
+// the specs interact with on production builds.
+beforeEach(() => {
+    cy.setCookie("OptanonAlertBoxClosed", new Date().toISOString());
+});

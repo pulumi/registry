@@ -40,9 +40,10 @@
     {{- end }}
     <!-- OneTrust CMP (loaded before Segment and all optional integrations).
          Auto-Blocking stays off; consent is enforced by explicit checks in the
-         site code via runWithPulumiConsent. The domain script id comes from the
-         build (oneTrustDomainScript) and is never stored in the default or
-         production config. -->
+         site code via runWithPulumiConsent. The domain script id comes from
+         params.oneTrustDomainScript: config/production sets the www.pulumi.com
+         id, and scripts/ci/build.sh overrides it with the test id for the
+         www.pulumi-test.io deploy. -->
     <link rel="preconnect" href="https://cdn.cookielaw.org" crossorigin />
     <script
         src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js"
@@ -439,10 +440,9 @@
         <meta name="facebook-domain-verification" content="phlf6qes2bxa9ufzk8zt2es0qivg8j" />
     {{- end }}
 
-    {{- /* Common Room. Rendered in production (Segment provider) and wherever the
-           OneTrust provider is selected, so it can be exercised during staging
-           QA. Under OneTrust it is gated on C0004 Targeting; under Segment it
-           loads immediately, as before. */ -}}
+    {{- /* Common Room. Rendered in production and wherever the OneTrust
+           provider is selected. Under OneTrust it is gated on C0004 Targeting;
+           under Segment it loads immediately. */ -}}
     {{- if or (eq $consentProvider "onetrust") (eq hugo.Environment "production") }}
         <!-- Common Room-->
         <script>

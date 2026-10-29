@@ -111,10 +111,10 @@ params:
     # Consent provider for cookie/consent management. "segment" uses the custom
     # Segment consent manager (theme/src/ts/consent-manager); "onetrust" loads
     # the OneTrust SDK and bridges its consent decision into Segment and the
-    # directly-loaded integrations. The default (and production) is "segment".
-    # scripts/ci/build.sh switches the www.pulumi-test.io deploy to "onetrust"
-    # and supplies the OneTrust test script id, which is intentionally not
-    # stored in any config file here.
+    # directly-loaded integrations. The default is "segment"; production sets
+    # "onetrust" with the www.pulumi.com script id in config/production.
+    # scripts/ci/build.sh swaps in the OneTrust test script id for the
+    # www.pulumi-test.io deploy.
     consentProvider: segment
     canonicalURL: https://www.pulumi.com
     contentRepositoryURL: https://github.com/pulumi/registry

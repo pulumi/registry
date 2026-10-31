@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-ec/v0.12.5/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-ec/v0.13.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-ec/blob/v0.12.5/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-ec/blob/v0.13.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: ElasticCloud (EC) Provider
 meta_desc: Provides an overview on how to configure the Pulumi ElasticCloud (EC) provider.
@@ -90,13 +90,37 @@ config:
         value: my-username
 
 ```
+### Mutual TLS (mTLS)
+
+For an endpoint that requires client certificates, configure `tlsCert` and `tlsKey` together. Set `caCert` to trust a private CA in addition to the system certificates. These settings take paths to PEM-encoded files and apply to both hosted and serverless API clients. Server certificate verification remains enabled unless `insecure` is set to `true`.
+
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime:
+config:
+    ec:caCert:
+        value: /path/to/ca.pem
+    ec:endpoint:
+        value: https://my.ece-environment.corp
+    ec:tlsCert:
+        value: /path/to/client.pem
+    ec:tlsKey:
+        value: /path/to/client-key.pem
+
+```
+
+Alternatively, set `EC_CA_CERT`, `EC_TLS_CERT`, and `EC_TLS_KEY`. Explicit provider values take precedence over environment variables, and setting one of these attributes to an empty string disables its environment fallback. API authentication is still required; for example, set `EC_API_KEY` alongside these TLS settings.
 ## Configuration Reference
 
 - `apikey` (String, Sensitive) API Key to use for API authentication. The only valid authentication mechanism for the Elasticsearch Service.
+- `caCert` (String) Path to a PEM-encoded CA certificate bundle to trust in addition to the system certificates. Can also be set with EC_CA_CERT; set to an empty string to ignore the environment variable.
 - `endpoint` (String) Endpoint where the pulumi provider will point to. Defaults to "https://api.elastic-cloud.com".
 - `insecure` (Boolean) Allow the provider to skip TLS validation on its outgoing HTTP calls.
 - `password` (String, Sensitive) Password to use for API authentication. Available only when targeting ECE Installations or Elasticsearch Service Private.
 - `timeout` (String) Timeout used for individual HTTP calls. Defaults to "1m".
+- `tlsCert` (String) Path to a PEM-encoded client certificate for mutual TLS. Must be configured together with tls_key. Can also be set with EC_TLS_CERT; set to an empty string to ignore the environment variable.
+- `tlsKey` (String) Path to the PEM-encoded private key for the mutual TLS client certificate. Must be configured together with tls_cert. Can also be set with EC_TLS_KEY; set to an empty string to ignore the environment variable.
 - `username` (String) Username to use for API authentication. Available only when targeting ECE Installations or Elasticsearch Service Private.
 - `verbose` (Boolean) When set, a "request.log" file will be written with all outgoing HTTP requests. Defaults to "false".
 - `verboseCredentials` (Boolean) When set with verbose, the contents of the Authorization header will not be redacted. Defaults to "false".

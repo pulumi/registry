@@ -19,7 +19,7 @@ name: dokploy
 package_status: public_preview
 publisher: dimeskigj
 repo_url: https://github.com/dimeskigj/pulumi-dokploy
-schema_file_url: https://raw.githubusercontent.com/dimeskigj/pulumi-dokploy/v0.4.2/provider/cmd/pulumi-resource-dokploy/schema.json
+schema_file_url: https://raw.githubusercontent.com/dimeskigj/pulumi-dokploy/v0.4.3/provider/cmd/pulumi-resource-dokploy/schema.json
 title: Dokploy
-updated_on: 1793249977
-version: v0.4.2
+updated_on: 1793376778
+version: v0.4.3

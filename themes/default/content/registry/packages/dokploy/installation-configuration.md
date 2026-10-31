@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/dimeskigj/pulumi-dokploy/v0.4.2/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/dimeskigj/pulumi-dokploy/v0.4.3/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/dimeskigj/pulumi-dokploy/blob/v0.4.2/docs/installation-configuration.md
+edit_url: https://github.com/dimeskigj/pulumi-dokploy/blob/v0.4.3/docs/installation-configuration.md
 layout: package
 title: Installation and configuration
 meta_desc: Install and configure the community-maintained Pulumi Dokploy provider.

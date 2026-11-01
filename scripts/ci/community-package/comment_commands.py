@@ -14,8 +14,6 @@ def _authorized(mode: str, commenter: str, author: str, association: str) -> boo
 
 
 CHECK_WORKFLOW = "community-package-check.yml"
-SWEEP_FAILURE_MARKER = "<!-- community-package-sweep-failure -->"
-SWEEP_FAILURE_LABEL = "p1"
 PACKAGE_LIST = str(package_list.PATH)
 VERDICT_FILE = "verdict.txt"
 
@@ -109,21 +107,6 @@ def _run_url() -> str:
     server = os.environ.get("GITHUB_SERVER_URL", "https://github.com")
     repo = os.environ.get("GITHUB_REPOSITORY") or os.environ.get("REPO", "")
     return f"{server}/{repo}/actions/runs/{os.environ.get('GITHUB_RUN_ID', '')}"
-
-
-def sweep_failed() -> int:
-    open_already = github_api.open_issue_with_marker(SWEEP_FAILURE_MARKER, SWEEP_FAILURE_LABEL)
-    if open_already:
-        print(f"issue #{open_already['number']} is already open")
-        return 0
-    github_api.create_issue(
-        "The community package sweep is failing",
-        f"{SWEEP_FAILURE_MARKER}\n\nNo community package pull request is being checked while "
-        f"this is broken, and a contributor sees no fact-sheet. See the [run log]({_run_url()}).\n\n"
-        "Close this once a sweep run succeeds.",
-        [SWEEP_FAILURE_LABEL])
-    print("opened a failure issue")
-    return 0
 
 
 def preview_failed() -> int:

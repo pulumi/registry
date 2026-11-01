@@ -525,7 +525,6 @@ All workflow files live in `.github/workflows/`.
 | `community-package-policy.yml` | Community package pipeline policy | PR touching the pipeline sources |
 | `publish-provider-update.yml` | provider docs build | `repository_dispatch` |
 | `bucket-cleanup.yml` | Scheduled jobs: Bucket cleanup | Daily 3:00 PM UTC |
-| `priority-digest.yml` | Scheduled jobs: Priority digest | Daily 3:00 PM UTC |
 | `repo-url-audit.yml` | Scheduled jobs: Repo URL audit | Every Monday 2:00 PM UTC |
 | `export-repo-secrets.yml` | Export secrets to ESC | `workflow_dispatch` |
 | `add-triage-label.yml` | Add triage label to new issues | Issue opened / reopened |
@@ -733,7 +732,7 @@ The check pipeline gives a contributor who adds one entry to `community-packages
 - **`community-package-check.yml`** (`workflow_dispatch`, two jobs): its `check` job is the secret-free plane. It fetches the PR's file list with a read-only token, refuses the PR outright if it touches anything outside the allowlist, then reads the package's schema and docs at its latest GitHub release and probes without executing the package's code — installs the plugin (blocking), resolves the npm/PyPI/Go SDKs and lints the docs (advisory). It writes a fact-sheet artifact and a one-word verdict. The plugin install is the only blocking check, alongside successful docs generation and a present `docs/_index.md`.
 - Its `report` job (write token, no secrets, no contributor code) downloads that artifact and does two things: it edits the pinned fact-sheet comment in place, stamping it with the head it checked, and it posts the verdict as a new comment. Editing notifies nobody, so without that second comment a contributor has to keep refreshing the page to learn the result.
 - **`community-package-check-command.yml`** (`issue_comment`): dispatches a fresh check run when the author or a maintainer comments `/check` on its own line, authorized and rate-limited. It dispatches rather than re-runs, so the check also reaches a pull request whose own run GitHub parked.
-- **`community-package-sweep.yml`** (schedule, every 5 minutes): the check has no `pull_request` trigger, because a fork PR from a first-time contributor parks such a run in `action_required` until a maintainer approves it, leaving the contributor with no fact-sheet and nothing for `/check` to re-run. The sweep is the automatic trigger instead: it dispatches a check for every open fork PR that changes the package list, once per head commit. It skips a PR whose branch lives in this repo: those are maintainer changes, such as a rename or a delist, that hand-edit package YAML the check would reject as generated, and a maintainer who wants the check on one can still run `/check`. It claims a head the moment it dispatches, by stamping the fact-sheet comment with it and leaving `⏳ Checking <head>` there until the check reports, and it skips a head that is already stamped. The claim lives on the pull request, which answers consistently. The Actions run list does not: while the sweep used that list as its record, matched by run title, it dropped a dispatched run often enough to re-check the same head hours later and post a second and third verdict comment. A dispatched run starts in the base repo, so GitHub does not gate it. The sweep only dispatches: it never runs a contributor's code. If the sweep itself fails, it opens a `p1` issue that the daily priority digest surfaces, and leaves the existing one alone if there already is one.
+- **`community-package-sweep.yml`** (schedule, every 5 minutes): the check has no `pull_request` trigger, because a fork PR from a first-time contributor parks such a run in `action_required` until a maintainer approves it, leaving the contributor with no fact-sheet and nothing for `/check` to re-run. The sweep is the automatic trigger instead: it dispatches a check for every open fork PR that changes the package list, once per head commit. It skips a PR whose branch lives in this repo: those are maintainer changes, such as a rename or a delist, that hand-edit package YAML the check would reject as generated, and a maintainer who wants the check on one can still run `/check`. It claims a head the moment it dispatches, by stamping the fact-sheet comment with it and leaving `⏳ Checking <head>` there until the check reports, and it skips a head that is already stamped. The claim lives on the pull request, which answers consistently. The Actions run list does not: while the sweep used that list as its record, matched by run title, it dropped a dispatched run often enough to re-check the same head hours later and post a second and third verdict comment. A dispatched run starts in the base repo, so GitHub does not gate it. The sweep only dispatches: it never runs a contributor's code. If the sweep itself fails, no community package pull request is checked and contributors get no fact-sheet until it recovers; the failed run is filed in Linear as a workflow failure like any other.
 - **`community-package-preview-command.yml`** (`issue_comment`): builds an on-demand site preview when a maintainer comments `/preview`. A fork's own `pull_request` build gets no secrets, so this maintainer-triggered run stands in for it: it materializes the fork's entry as data and reuses the `build-and-deploy-preview` action, never running the fork's code.
 - **`community-package-policy.yml`**: runs the toolchain's unit tests and `mypy --strict`, including the plane-separation test, on any PR touching the pipeline sources. It is not among `Sentinel Tower`'s `needs`, so it does not gate a merge today.
 
@@ -766,14 +765,6 @@ For each deletable bucket (associated with a closed PR):
 4. Gives up (with an error) if cleanup has been stalled for 7+ days.
 
 Runs in the production environment (`388588623842:role/ContinuousDelivery`). Node 18.x / Go 1.20.x (older versions pinned in this workflow).
-
-#### `priority-digest.yml` — Post Open P0 and P1 Issues to Slack
-
-**Trigger**: Daily at 3:00 PM UTC; also `workflow_dispatch` with a `dry-run` input
-
-Runs `scripts/ci/priority_digest.py`, which searches GitHub for open issues labelled `p0` or `p1` across `pulumi/registry` and `pulumi/terraform-to-pulumi-registry-pipeline`, then posts them to Slack, oldest first, with each issue's age and assignee.
-
-Replaces a Metabase subscription that posted the same query as a screenshot. Uses `PULUMI_BOT_TOKEN` and `SLACK_ACCESS_TOKEN` from ESC and posts via `chat.postMessage` to the channel ID in the `SLACK_TEAM_CHANNEL` repository variable; the bot must be a member of that channel. `--dry-run` prints the message to the job log instead of posting.
 
 #### `repo-url-audit.yml` — Track Package Repo URL Drift
 
@@ -1135,9 +1126,8 @@ The `export-repo-secrets.yml` workflow provides a manual escape hatch to sync Gi
 | `PULUMI_DOCS_STACK_NAME` | GitHub var | build | Pulumi docs stack reference |
 | `DEPLOYMENT_ENVIRONMENT` | GitHub var | build, cleanup | e.g., `testing` or `production` |
 | `NODE_OPTIONS` | Hardcoded | build, browser tests | `--max_old_space_size=8192` |
-| `SLACK_ACCESS_TOKEN` | ESC | link check, cleanup, priority digest | Slack Web API token for posting messages |
+| `SLACK_ACCESS_TOKEN` | ESC | link check, cleanup | Slack Web API token for posting messages |
 | `SLACK_WEBHOOK_URL` | ESC | notify jobs | Slack incoming webhook for failure alerts |
-| `SLACK_TEAM_CHANNEL` | GitHub var | priority digest | Slack channel ID the digest posts to |
 | `ASSET_BUNDLE_ID` | `build.sh` (computed) | Hugo templates | Unique suffix for CSS/JS cache-busting |
 | `CSS_BUNDLE` / `JS_BUNDLE` | `build.sh` (computed) | Hugo templates | Paths to versioned asset bundles |
 
@@ -1163,7 +1153,6 @@ Note: `mise.toml` and the CI workflows use Node 24, including `bucket-cleanup.ym
 | Link check | 3:00 PM every Monday | `check-links.yml` | `make check_links` |
 | Browser tests (scheduled) | 2:00 PM daily | `run-browser-tests.yml` | `make run-browser-tests` |
 | Stale bucket cleanup | 3:00 PM daily | `bucket-cleanup.yml` | `make ci_bucket_cleanup` |
-| Open P0 and P1 issue digest | 3:00 PM daily | `priority-digest.yml` | `scripts/ci/priority_digest.py` |
 | Package repo URL drift | 2:00 PM every Monday | `repo-url-audit.yml` | `scripts/ci/repo_url_audit.py` |
 
 ---

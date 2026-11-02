@@ -637,9 +637,9 @@
     resolve "^1.7.1"
 
 "@pulumi/aws@^7.0.0", "@pulumi/aws@^7.43.0":
-  version "7.52.1"
-  resolved "https://registry.yarnpkg.com/@pulumi/aws/-/aws-7.52.1.tgz#f065577ecfd880c3778e4e2350a1447fa1cc9077"
-  integrity sha512-EkiZJacWBqwxq+LLeiDA131OWaoFGAnPKKx8aCpcn6lWKyYNqdZIgUhY8OrHefYtirWL5rnabDuPJ9YuluTPQQ==
+  version "7.53.0"
+  resolved "https://registry.yarnpkg.com/@pulumi/aws/-/aws-7.53.0.tgz#9006254f388d0f9a3a6efe149c159a1f09a3c395"
+  integrity sha512-qHijd0MQTZhGb3Z1WJzmrqfK8Vxz3WkyUkfTXm/7nWTmyWAdLgshyDwzbHxyGEsPbEVjLpgx+3mjPmY9HIGLrw==
   dependencies:
     "@pulumi/pulumi" "^3.142.0"
     mime "^2.0.0"
@@ -2231,9 +2231,9 @@ sax@>=0.6.0:
   integrity sha512-cBznnQ9KjJqU67B52RMC65CMarK2600WFnbkcaiwWq3xy/5haFJlshgnpjovMVJ+Hff49d8GEn0b87C5pDQ10g==
 
 semver@^7.1.1, semver@^7.3.5, semver@^7.3.7, semver@^7.5.2, semver@^7.5.3:
-  version "7.8.5"
-  resolved "https://registry.yarnpkg.com/semver/-/semver-7.8.5.tgz#39b646037dd50c14fb451e7e4cac58ed8b863f69"
-  integrity sha512-Y7/KDsb8LjooZpwaqGyulO6DQlksgCncchHGk+sZIY4SBvUocMBEFH5Ur1fI4dV+Jvl0w6cjvucaIi40puRioA==
+  version "7.8.6"
+  resolved "https://registry.yarnpkg.com/semver/-/semver-7.8.6.tgz#67c0cda133a3ceb6f70b803e67625bf969000424"
+  integrity sha512-9lpSSU4Mly3mrtruwLs1eLK6+gzbzqeBFwRNjIjE+9LuDpWdYctrQlQ3ej1Ilgi7gknpsTRnPoLP8DpCHqHIJw==
 
 shebang-command@^2.0.0:
   version "2.0.0"

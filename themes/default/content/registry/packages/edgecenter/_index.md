@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/edge-center/edgecenter/0.17.1/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/edge-center/edgecenter/0.18.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Edgecenter Provider
@@ -1425,6 +1425,7 @@ public class App {
 - `edgecenterProtectionApi` (String) Protection API (define only if you want to override Protection API endpoint)
 - `edgecenterRmonApi` (String) RMON API
 - `edgecenterStorageApi` (String) Storage API (define only if you want to override Storage API endpoint)
+- `edgecenterWebsecApi` (String) WebSec API (define only if you want to override WebSec API endpoint)
 - `ignoreCredsAuthError` (Boolean, Deprecated) Should be set to true when you are gonna to use storage resource with permanent API-token only.
 - `password` (String, Deprecated)
 - `permanentApiToken` (String, Sensitive) A permanent [API-token](https://support.edgecenter.ru/knowledge_base/item/257788)

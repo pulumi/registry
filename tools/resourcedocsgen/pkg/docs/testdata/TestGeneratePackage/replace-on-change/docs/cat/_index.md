@@ -260,9 +260,6 @@ example, err := example.NewCat(ctx, "catResource", nil)
 
 ```hcl
 resource "example_cat" "catResource" {
-  pulumi {
-    replace_on_changes = [foes.*.associated.color, foes.*.color, friends[*].associated.color, friends[*].color, name, toy.color]
-  }
   lifecycle {
     create_before_destroy = true
   }

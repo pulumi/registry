@@ -286,13 +286,13 @@ resource "example_resource_with_assets" "resourceWithAssetsResource" {
   lifecycle {
     create_before_destroy = true
   }
-  source  = stringAsset("content")
-  archive = fileArchive("./path/to/archive")
+  source  = stringasset("content")
+  archive = filearchive("./path/to/archive")
   nested = {
-    asset         = stringAsset("content")
-    plain_archive = fileArchive("./path/to/archive")
-    archive       = fileArchive("./path/to/archive")
-    plain_asset   = stringAsset("content")
+    asset         = stringasset("content")
+    plain_archive = filearchive("./path/to/archive")
+    archive       = filearchive("./path/to/archive")
+    plain_asset   = stringasset("content")
   }
 }
 ```

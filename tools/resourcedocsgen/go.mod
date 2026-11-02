@@ -10,8 +10,8 @@ require (
 	github.com/hexops/autogold/v2 v2.3.1
 	github.com/pgavlin/goldmark v1.1.33-0.20200616210433-b5eb04559386
 	github.com/pkg/errors v0.9.1
-	github.com/pulumi-labs/pulumi-hcl v0.10.0
 	github.com/pulumi/pulumi-dotnet/pulumi-language-dotnet/v3 v3.117.0
+	github.com/pulumi/pulumi-hcl v0.19.1
 	github.com/pulumi/pulumi-java v1.39.0
 	github.com/pulumi/pulumi-yaml v1.38.16
 	github.com/pulumi/pulumi/pkg/v3 v3.273.0
@@ -117,7 +117,7 @@ require (
 	github.com/pulumi/appdash v0.0.0-20231130102222-75f619a67231 // indirect
 	github.com/pulumi/inflector v0.2.1 // indirect
 	github.com/pulumi/pulumi-cloud-sdk/go v1.20261030.1400 // indirect
-	github.com/pulumi/pulumi-terraform-bridge/v3 v3.135.0 // indirect
+	github.com/pulumi/pulumi-terraform-bridge/v3 v3.138.0 // indirect
 	github.com/rivo/uniseg v0.4.7 // indirect
 	github.com/rogpeppe/go-internal v1.14.1 // indirect
 	github.com/sabhiram/go-gitignore v0.0.0-20210923224102-525f6e181f06 // indirect

@@ -2598,8 +2598,9 @@ func generateConstructorSyntaxData(pkg *schema.Package) *constructorSyntaxData {
 			}
 		case language.HCL:
 			files, diags, err := safeExtract(func(program *pcl.Program) (map[string][]byte, hcl.Diagnostics, error) {
-				// No bridge mapping is available here, so the resolver falls back to
-				// convention-based TF-type resolution, as pulumi-hcl's own tests do.
+				// Without the provider's bridge mapping, pulumi-hcl guesses Terraform field
+				// names and block shapes from the Pulumi schema, which is wrong for bridged
+				// providers. See https://github.com/pulumi/registry/issues/13321.
 				return hcl_codegen.GenerateProgram(context.Background(), program,
 					hcl_packages.NewResolver(nil, nil, nil, nil), hcl_codegen.SkipRequiredProvidersVersion())
 			})

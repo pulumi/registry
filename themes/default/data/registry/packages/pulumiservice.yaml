@@ -9,7 +9,7 @@ name: pulumiservice
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-pulumiservice
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-pulumiservice/v1.5.0/provider/cmd/pulumi-resource-pulumiservice/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-pulumiservice/v1.6.0/provider/cmd/pulumi-resource-pulumiservice/schema.json
 title: Pulumi Cloud
-updated_on: 1792432767
-version: v1.5.0
+updated_on: 1793637013
+version: v1.6.0

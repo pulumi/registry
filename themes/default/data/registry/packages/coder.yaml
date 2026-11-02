@@ -9,7 +9,7 @@ name: coder
 package_status: ga
 publisher: coder
 repo_url: https://github.com/coder/terraform-provider-coder
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/coder/coder/2.19.0/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/coder/coder/2.20.0/schema.json
 title: coder
-updated_on: 1785238572
-version: 2.19.0
+updated_on: 1793662517
+version: 2.20.0

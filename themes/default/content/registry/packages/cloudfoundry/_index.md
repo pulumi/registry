@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/cloudfoundry-community/cloudfoundry/0.54.0/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/cloudfoundry/cloudfoundry/1.18.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Cloudfoundry Provider
@@ -12,15 +12,11 @@ layout: package
 The Cloudfoundry provider must be installed as a Local Package by following the [instructions for Any Terraform Provider](https://www.pulumi.com/registry/packages/terraform-provider/):
 
 ```bash
-pulumi package add terraform-provider cloudfoundry-community/cloudfoundry
+pulumi package add terraform-provider cloudfoundry/cloudfoundry
 ```
 ## Overview
 
-The Cloud Foundry (cloudfoundry) provider is used to interact with a
-Cloud Foundry target to perform administrative configuration of platform
-resources, or user actions (such as pushing a cf app).
-
-Use the navigation to the left to read about the available resources.
+The Cloud Foundry Pulumi plugin is an integration that allows users to leverage Pulumi, an infrastructure as code tool, to define and provision infrastructure resources within the Cloud Foundry platform.
 ## Example Usage
 
 {{< chooser language "typescript,python,go,csharp,java,yaml" >}}
@@ -31,17 +27,9 @@ name: configuration-example
 runtime: nodejs
 config:
     cloudfoundry:apiUrl:
-        value: 'TODO: var.api_url'
-    cloudfoundry:appLogsMax:
-        value: 30
+        value: https://api.cf.example.com
     cloudfoundry:password:
-        value: 'TODO: var.password'
-    cloudfoundry:skipSslValidation:
-        value: true
-    cloudfoundry:uaaClientId:
         value: admin
-    cloudfoundry:uaaClientSecret:
-        value: 'TODO: var.uaa_admin_client_secret'
     cloudfoundry:user:
         value: admin
 
@@ -49,10 +37,6 @@ config:
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
 
-const config = new pulumi.Config();
-const apiUrl = config.requireObject("apiUrl");
-const password = config.requireObject("password");
-const uaaAdminClientSecret = config.requireObject("uaaAdminClientSecret");
 ```
 {{% /choosable %}}
 {{% choosable language python %}}
@@ -62,17 +46,9 @@ name: configuration-example
 runtime: python
 config:
     cloudfoundry:apiUrl:
-        value: 'TODO: var.api_url'
-    cloudfoundry:appLogsMax:
-        value: 30
+        value: https://api.cf.example.com
     cloudfoundry:password:
-        value: 'TODO: var.password'
-    cloudfoundry:skipSslValidation:
-        value: true
-    cloudfoundry:uaaClientId:
         value: admin
-    cloudfoundry:uaaClientSecret:
-        value: 'TODO: var.uaa_admin_client_secret'
     cloudfoundry:user:
         value: admin
 
@@ -80,10 +56,6 @@ config:
 ```python
 import pulumi
 
-config = pulumi.Config()
-api_url = config.require_object("apiUrl")
-password = config.require_object("password")
-uaa_admin_client_secret = config.require_object("uaaAdminClientSecret")
 ```
 {{% /choosable %}}
 {{% choosable language csharp %}}
@@ -93,17 +65,9 @@ name: configuration-example
 runtime: dotnet
 config:
     cloudfoundry:apiUrl:
-        value: 'TODO: var.api_url'
-    cloudfoundry:appLogsMax:
-        value: 30
+        value: https://api.cf.example.com
     cloudfoundry:password:
-        value: 'TODO: var.password'
-    cloudfoundry:skipSslValidation:
-        value: true
-    cloudfoundry:uaaClientId:
         value: admin
-    cloudfoundry:uaaClientSecret:
-        value: 'TODO: var.uaa_admin_client_secret'
     cloudfoundry:user:
         value: admin
 
@@ -115,10 +79,6 @@ using Pulumi;
 
 return await Deployment.RunAsync(() =>
 {
-    var config = new Config();
-    var apiUrl = config.RequireObject<dynamic>("apiUrl");
-    var password = config.RequireObject<dynamic>("password");
-    var uaaAdminClientSecret = config.RequireObject<dynamic>("uaaAdminClientSecret");
 });
 
 ```
@@ -130,17 +90,9 @@ name: configuration-example
 runtime: go
 config:
     cloudfoundry:apiUrl:
-        value: 'TODO: var.api_url'
-    cloudfoundry:appLogsMax:
-        value: 30
+        value: https://api.cf.example.com
     cloudfoundry:password:
-        value: 'TODO: var.password'
-    cloudfoundry:skipSslValidation:
-        value: true
-    cloudfoundry:uaaClientId:
         value: admin
-    cloudfoundry:uaaClientSecret:
-        value: 'TODO: var.uaa_admin_client_secret'
     cloudfoundry:user:
         value: admin
 
@@ -150,15 +102,10 @@ package main
 
 import (
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config"
 )
 
 func main() {
 	pulumi.Run(func(ctx *pulumi.Context) error {
-		cfg := config.New(ctx, "")
-		apiUrl := cfg.RequireObject("apiUrl")
-		password := cfg.RequireObject("password")
-		uaaAdminClientSecret := cfg.RequireObject("uaaAdminClientSecret")
 		return nil
 	})
 }
@@ -171,31 +118,15 @@ name: configuration-example
 runtime: yaml
 config:
     cloudfoundry:apiUrl:
-        value: 'TODO: var.api_url'
-    cloudfoundry:appLogsMax:
-        value: 30
+        value: https://api.cf.example.com
     cloudfoundry:password:
-        value: 'TODO: var.password'
-    cloudfoundry:skipSslValidation:
-        value: true
-    cloudfoundry:uaaClientId:
         value: admin
-    cloudfoundry:uaaClientSecret:
-        value: 'TODO: var.uaa_admin_client_secret'
     cloudfoundry:user:
         value: admin
 
 ```
 ```yaml
-configuration:
-  # Set the variable values in *.tfvars file
-  # or using -var="api_url=..." CLI option
-  apiUrl:
-    type: dynamic
-  password:
-    type: dynamic
-  uaaAdminClientSecret:
-    type: dynamic
+{}
 ```
 {{% /choosable %}}
 {{% choosable language java %}}
@@ -205,17 +136,9 @@ name: configuration-example
 runtime: java
 config:
     cloudfoundry:apiUrl:
-        value: 'TODO: var.api_url'
-    cloudfoundry:appLogsMax:
-        value: 30
+        value: https://api.cf.example.com
     cloudfoundry:password:
-        value: 'TODO: var.password'
-    cloudfoundry:skipSslValidation:
-        value: true
-    cloudfoundry:uaaClientId:
         value: admin
-    cloudfoundry:uaaClientSecret:
-        value: 'TODO: var.uaa_admin_client_secret'
     cloudfoundry:user:
         value: admin
 
@@ -239,10 +162,6 @@ public class App {
     }
 
     public static void stack(Context ctx) {
-        final var config = ctx.config();
-        final var apiUrl = config.get("apiUrl");
-        final var password = config.get("password");
-        final var uaaAdminClientSecret = config.get("uaaAdminClientSecret");
     }
 }
 ```
@@ -250,49 +169,52 @@ public class App {
 {{< /chooser >}}
 ## Configuration Reference
 
-The following configuration inputs are supported:
+- `accessToken` (String, Sensitive) OAuth token to authenticate with Cloud Foundry
+- `apiUrl` (String) Specific URL representing the entry point for communication between the client and a Cloud Foundry instance.
+- `assertionToken` (String, Sensitive) OAuth JWT assertion token. Used for OAuth 2.0 JWT Bearer Assertion Grant flow to authenticate with Cloud Foundry. Typically used with a custom origin.
+- `cfClientId` (String) Unique identifier for a client application used in authentication and authorization processes
+- `cfClientSecret` (String, Sensitive) A confidential string used by a client application for secure authentication and authorization, requires cfClientId to authenticate
+- `origin` (String) Indicates the identity provider to be used for login
+- `password` (String, Sensitive) A confidential alphanumeric code associated with a user account on the Cloud Foundry platform, requires user to authenticate.
+- `refreshToken` (String, Sensitive) Token to refresh the access token, requires accessToken
+- `skipSslValidation` (Boolean) Allows the client to disregard SSL certificate validation when connecting to the Cloud Foundry API
+- `user` (String) A unique identifier associated with an individual or entity for authentication & authorization purposes.
 
-* `apiUrl` - (Required) API endpoint (e.g. [https://api.local.pcfdev.io](https://api.local.pcfdev.io)). This can also be specified
-  with the `CF_API_URL` shell environment variable.
+**Note**
 
-* `origin` - (Optional) Indicates the identity provider to be used for login. This can also be specified
-  with the `CF_ORIGIN` shell environment variable.
+All parameter values for the provider can be injected by setting environment variables `CF_API_URL`, `CF_USER`, `CF_PASSWORD`, `CF_ORIGIN`, `CF_CLIENT_ID`, `CF_CLIENT_SECRET`, `CF_ACCESS_TOKEN`, `CF_REFRESH_TOKEN`.
+Alternatively, one can even log in to their CF landscape via CF-CLI and the provider will pick the credentials from the config.json present in CF Home in case no attributes are given in the provider configuration or if no environment variables are set.
+## Custom User-Agent Information
 
-* `user` - (Optional) Cloud Foundry user. Defaults to "admin". This can also be specified
-  with the `CF_USER` shell environment variable. Unless mentionned explicitly in a resource, CF admin permissions are not required.
+By default, the underlying Cloud Foundry client used by the Pulumi Cloud Foundry Provider creates requests with User-Agent headers that include information about Pulumi and Cloud Foundry Pulumi provider versions. To add more details to the User-Agent headers, the `CF_APPEND_USER_AGENT` environment variable can be set, and its value will be directly added to HTTP requests. E.g.,
 
-* `password` - (Optional) Cloud Foundry user's password. This can also be specified
-  with the `CF_PASSWORD` shell environment variable.
+```bash
+% export CF_APPEND_USER_AGENT="Optional_Extra_Information"
+```
+## Enabling Application Log Tracing
 
-* `ssoPasscode` - (Optional) A passcode provided by UAA single sign on. The equivalent of `cf login --sso-passcode`. This can also be specified
-  with the `CF_SSO_PASSCODE` shell environment variable.
+To assist with debugging application failures, you can enable log tracing by setting the following environment variable:
 
-* `cfClientId` - (Optional) The cf client ID to make request with a client instead of user. This can also be specified
-  with the `CF_CLIENT_ID` shell environment variable.
+```bash
+% export ENABLE_CF_APP_LOG_TRACE="true"
+```
+When enabled, recent error logs from the application will be printed to the console if a deployment of application fails.
+## Get Started
 
-* `cfClientSecret` - (Optional) The cf client secret to make request with a client instead of user. This can also be specified
-  with the `CF_CLIENT_SECRET` shell environment variable.
+If you're not familiar with Pulumi yet, see the Fundamentals section with a lot of helpful tutorials.
+## Migration Guide
 
-* `uaaClientId` - (Optional) The UAA admin client ID. Defaults to "admin". This can also be specified
-  with the `CF_UAA_CLIENT_ID` shell environment variable.
+The newer v3 APIs have brought several changes to  many of the resources created. Some are even deprecated and replaced by
+different resources.
 
-* `uaaClientSecret` - (Optional) This secret of the UAA admin client. This can also be specified
-  with the `CF_UAA_CLIENT_SECRET` shell environment variable.
+Please refer to the migration guide to help transitioning from the existing community CF provider to the current CF provider. The migration guide
+highlights the differences and maps to the equivalent resources/functions as well.
+## Best Practices
 
-* `skipSslValidation` - (Optional) Skip verification of the API endpoint - Not recommended!. Defaults to "false". This can also be specified
-  with the `CF_SKIP_SSL_VALIDATION` shell environment variable.
+For the best experience using the Cloud Foundry provider, we recommend applying the common best practices for Pulumi adoption as described in the Pulumi documentation. For example, see Phases of Pulumi Adoption.
+## Drift Detection
 
-* `defaultQuotaName` - (Optional, Default: `default`) Change the name of your default quota . This can also be specified
-  with the `CF_DEFAULT_QUOTA_NAME` shell environment variable.
+You find further information on drift detection in the Pulumi provider repository.
+## Import
 
-* `appLogsMax` - (Optional) Number of logs message which can be see when app creation is errored (-1 means all messages stored). Defaults to "30". This can also be specified
-  with the `CF_APP_LOGS_MAX` shell environment variable.
-
-* `purgeWhenDelete` - (Optional) Set to true to purge when deleting a resource (e.g.: service instance, service broker) . This can also be specified
-  with the `CF_PURGE_WHEN_DELETE` shell environment variable.
-
-* `storeTokensPath` - (Optional) Path to a file to store tokens used for login. (this is useful for sso, this avoid
-  requiring each time sso passcode) . This can also be specified with the `CF_STORE_TOKENS_PATH` shell environment variable.
-
-* `forceBrokerNotFailWhenCatalogNotAccessible` (Optional) Set to true to enforce `failWhenCatalogNotAccessible` to `true` to all broker for avoiding being
-  stuck if broker has been deleted for example. This can also be specified with the `CF_FORCE_BROKER_NOT_FAIL_CATALOG` shell environment variable.
+The documentation of each resource shows if the resource can be imported, and which keys are needed. To provide a quick overview we listed the resources in the Pulumi provider repository. To import a resource whose ID contains commas or other special characters, you should consider to use the import block with a resource identity if the resource supports identity-based import.

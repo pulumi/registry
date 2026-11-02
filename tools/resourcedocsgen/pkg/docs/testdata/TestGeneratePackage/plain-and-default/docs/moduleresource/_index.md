@@ -346,7 +346,7 @@ var moduleResourceResource = new ModuleResource("moduleResourceResource", Module
     .plainRequiredBool(false)
     .requiredString("string")
     .requiredNumber(0.0)
-    .requiredEnum(4)
+    .requiredEnum(com.pulumi.foobar.enums.EnumThing.Four)
     .requiredBool(false)
     .plainRequiredString("string")
     .plainRequiredNumber(0.0)
@@ -356,7 +356,7 @@ var moduleResourceResource = new ModuleResource("moduleResourceResource", Module
     .plainOptionalBool(false)
     .optionalBool(false)
     .optionalNumber(0.0)
-    .optionalEnum(4)
+    .optionalEnum(com.pulumi.foobar.enums.EnumThing.Four)
     .build());
 ```
 

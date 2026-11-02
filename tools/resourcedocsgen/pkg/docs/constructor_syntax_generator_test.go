@@ -213,9 +213,9 @@ properties: {}
 	equalPrograms(constructorSyntax.java, "test:index:First", `
 var firstResource = new First("firstResource", FirstArgs.builder()
     .fooBool(false)
-    .fooEnum("first")
+    .fooEnum(com.pulumi.test.enums.ExampleEnum.First)
     .fooInt(0)
-    .fooNumericEnum(10)
+    .fooNumericEnum(com.pulumi.test.enums.ExampleNumericEnum.First)
     .fooString("string")
     .build());`)
 }

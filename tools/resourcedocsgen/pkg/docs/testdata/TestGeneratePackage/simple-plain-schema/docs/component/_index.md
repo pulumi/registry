@@ -313,7 +313,7 @@ example, err := example.NewComponent(ctx, "componentResource", &example.Componen
 	C: 0,
 	E: "string",
 	B: false,
-	Bar: example.FooArgs{
+	Bar: *example.FooArgs{
 		A: false,
 		C: 0,
 		E: "string",

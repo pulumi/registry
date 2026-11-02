@@ -293,7 +293,7 @@ resource "example_resource" "resourceResource" {
 
 ```java
 var resourceResource = new Resource("resourceResource", ResourceArgs.builder()
-    .bar("SOME_ENUM_VALUE")
+    .bar(com.pulumi.example.enums.EnumOverlay.SomeEnumValue)
     .foo(ConfigMapOverlayArgs.builder()
         .config("string")
         .build())

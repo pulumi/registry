@@ -259,7 +259,7 @@ var staticPageResource = new Xyz.StaticPage("staticPageResource", new()
 ```go
 example, err := xyz.NewStaticPage(ctx, "staticPageResource", &xyz.StaticPageArgs{
 	IndexContent: pulumi.String("string"),
-	Foo: xyz.FooArgs{
+	Foo: *xyz.FooArgs{
 		A: pulumi.Bool(false),
 	},
 })

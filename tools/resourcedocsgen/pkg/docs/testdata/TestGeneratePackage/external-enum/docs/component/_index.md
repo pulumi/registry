@@ -286,8 +286,8 @@ resource "example_component" "componentResource" {
 
 ```java
 var componentResource = new Component("componentResource", ComponentArgs.builder()
-    .localEnum(3.1415)
-    .remoteEnum("MANAGEMENT_UNSPECIFIED")
+    .localEnum(com.pulumi.example.local.enums.MyEnum.Pi)
+    .remoteEnum(com.pulumi.googlenative.accesscontextmanager_v1.enums.DevicePolicyAllowedDeviceManagementLevelsItem.ManagementUnspecified)
     .build());
 ```
 

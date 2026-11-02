@@ -398,7 +398,7 @@ var typeUsesResource = new TypeUses("typeUsesResource", TypeUsesArgs.builder()
             .baz("string")
             .build())))
         .build())
-    .qux("Burgundy")
+    .qux(com.pulumi.example.enums.RubberTreeVariety.Burgundy)
     .build());
 ```
 

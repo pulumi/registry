@@ -300,7 +300,7 @@ A: false,
 C: 0,
 E: "string",
 B: false,
-Bar: .FooArgs{
+Bar: *.FooArgs{
 A: false,
 C: 0,
 E: "string",

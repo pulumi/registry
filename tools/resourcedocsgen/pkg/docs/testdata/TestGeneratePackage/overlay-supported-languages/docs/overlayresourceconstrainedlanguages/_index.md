@@ -293,7 +293,7 @@ resource "example_overlay_resource_constrained_languages" "overlayResourceConstr
 
 ```java
 var overlayResourceConstrainedLanguagesResource = new OverlayResourceConstrainedLanguages("overlayResourceConstrainedLanguagesResource", OverlayResourceConstrainedLanguagesArgs.builder()
-    .bar("SOME_ENUM_VALUE")
+    .bar(com.pulumi.example.enums.EnumOverlay.SomeEnumValue)
     .foo(ConfigMapOverlayArgs.builder()
         .config("string")
         .build())

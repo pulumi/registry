@@ -315,7 +315,7 @@ var iamResourceResource = new IamResource("iamResourceResource", IamResourceArgs
     .config(AuditConfigArgs.builder()
         .auditLogConfigs(AuditLogConfigArgs.builder()
             .exemptedMembers("string")
-            .logType("LOG_TYPE_UNSPECIFIED")
+            .logType(com.pulumi.googlenative.iam_v1.enums.AuditLogConfigLogType.LogTypeUnspecified)
             .build())
         .service("string")
         .build())

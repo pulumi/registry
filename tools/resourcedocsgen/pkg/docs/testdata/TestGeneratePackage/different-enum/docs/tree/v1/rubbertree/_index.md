@@ -314,16 +314,16 @@ resource "plant_tree_v1_rubber_tree" "rubberTreeResource" {
 
 ```java
 var rubberTreeResource = new RubberTree("rubberTreeResource", RubberTreeArgs.builder()
-    .diameter(6)
-    .type("Burgundy")
+    .diameter(com.pulumi.other.tree_v1.enums.Diameter.Sixinch)
+    .type(com.pulumi.plant.tree_v1.enums.RubberTreeVariety.Burgundy)
     .container(ContainerArgs.builder()
-        .size(4)
-        .brightness(0.1)
-        .color("red")
+        .size(com.pulumi.plant.enums.ContainerSize.FourInch)
+        .brightness(com.pulumi.plant.enums.ContainerBrightness.ZeroPointOne)
+        .color(com.pulumi.plant.enums.ContainerColor.Red)
         .material("string")
         .build())
-    .farm("Pulumi Planters Inc.")
-    .size("small")
+    .farm(com.pulumi.plant.tree_v1.enums.Farm.Pulumi_Planters_Inc_)
+    .size(com.pulumi.plant.tree_v1.enums.TreeSize.Small)
     .build());
 ```
 

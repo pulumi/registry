@@ -2496,7 +2496,7 @@ All [input](#inputs) properties are implicitly available as output properties. A
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#storage_classes_hcl" style="color: inherit; text-decoration: inherit;">storage_<wbr>classes</a>
 </span>
         <span class="property-indicator"></span>
-        <span class="property-type">map(kubernetes_<wbr>storage.k8s.io_<wbr>v1_<wbr>storage_<wbr>class)</span>
+        <span class="property-type">map(kubernetes_<wbr>storage_<wbr>k8s_<wbr>io_<wbr>v1_<wbr>storage_<wbr>class)</span>
     </dt>
     <dd></dd></dl>
 </pulumi-choosable>

@@ -260,9 +260,6 @@ example, err := example.NewNoRecursive(ctx, "noRecursiveResource", nil)
 
 ```hcl
 resource "example_no_recursive" "noRecursiveResource" {
-  pulumi {
-    replace_on_changes = [replace_me]
-  }
   lifecycle {
     create_before_destroy = true
   }

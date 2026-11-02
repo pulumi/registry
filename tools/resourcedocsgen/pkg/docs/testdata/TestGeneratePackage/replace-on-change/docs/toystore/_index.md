@@ -260,9 +260,6 @@ example, err := example.NewToyStore(ctx, "toyStoreResource", nil)
 
 ```hcl
 resource "example_toy_store" "toyStoreResource" {
-  pulumi {
-    replace_on_changes = [chew.owner, laser.batteries, stuff[*].associated.color, stuff[*].color, wanted[*]]
-  }
   lifecycle {
     create_before_destroy = true
   }

@@ -18,6 +18,7 @@ package docs
 
 import (
 	"bytes"
+	"context"
 	"errors"
 	"fmt"
 	"go/format"
@@ -32,9 +33,10 @@ import (
 	"github.com/pulumi/registry/tools/resourcedocsgen/pkg/docs/templates"
 	"github.com/pulumi/registry/tools/resourcedocsgen/pkg/util/language"
 
-	hcl_codegen "github.com/pulumi-labs/pulumi-hcl/pkg/codegen"
-	hcl_docs "github.com/pulumi-labs/pulumi-hcl/pkg/docs"
 	dotnet "github.com/pulumi/pulumi-dotnet/pulumi-language-dotnet/v3/codegen"
+	hcl_codegen "github.com/pulumi/pulumi-hcl/pkg/codegen"
+	hcl_docs "github.com/pulumi/pulumi-hcl/pkg/docs"
+	hcl_packages "github.com/pulumi/pulumi-hcl/pkg/hcl/packages"
 	"github.com/pulumi/pulumi-java/pkg/codegen/java"
 	yaml "github.com/pulumi/pulumi-yaml/pkg/pulumiyaml/codegen"
 	"github.com/pulumi/pulumi/pkg/v3/codegen"
@@ -228,21 +230,6 @@ func (dctx *Context) setModules(modules map[string]*modContext) {
 	dctx.internalModMap = m
 }
 
-// hclDocLanguageHelper adds the ResolveDocRef method that codegen.DocLanguageHelper gained in
-// pulumi/pulumi v3.254.0 to pulumi-hcl's helper. Drop this wrapper once pulumi-labs/pulumi-hcl
-// implements the method itself.
-type hclDocLanguageHelper struct {
-	hcl_docs.DocLanguageHelper
-}
-
-// ResolveDocRef is not implemented for HCL; returning false makes the caller fall back to the
-// default rendering, matching what the .NET and Java helpers do.
-func (hclDocLanguageHelper) ResolveDocRef(
-	pkg schema.PackageReference, selfRef, ref schema.DocRef,
-) (string, bool, error) {
-	return "", false, nil
-}
-
 func NewContext(tool string, pkg *schema.Package) *Context {
 	dctx := &Context{
 		pkg: pkg,
@@ -253,7 +240,7 @@ func NewContext(tool string, pkg *schema.Package) *Context {
 			language.Python: &python.DocLanguageHelper{},
 			language.YAML:   &yaml.DocLanguageHelper{},
 			language.Java:   &java.DocLanguageHelper{},
-			language.HCL:    &hclDocLanguageHelper{},
+			language.HCL:    &hcl_docs.DocLanguageHelper{},
 		},
 		moduleConflictLinkMap: map[interface{}]string{},
 		constructorSyntaxData: generateConstructorSyntaxData(pkg),
@@ -2611,7 +2598,11 @@ func generateConstructorSyntaxData(pkg *schema.Package) *constructorSyntaxData {
 			}
 		case language.HCL:
 			files, diags, err := safeExtract(func(program *pcl.Program) (map[string][]byte, hcl.Diagnostics, error) {
-				return hcl_codegen.GenerateProgram(program, hcl_codegen.SkipRequiredProvidersVersion())
+				// Without the provider's bridge mapping, pulumi-hcl guesses Terraform field
+				// names and block shapes from the Pulumi schema, which is wrong for bridged
+				// providers. See https://github.com/pulumi/registry/issues/13321.
+				return hcl_codegen.GenerateProgram(context.Background(), program,
+					hcl_packages.NewResolver(nil, nil, nil, nil), hcl_codegen.SkipRequiredProvidersVersion())
 			})
 			if !diags.HasErrors() && err == nil {
 				program := string(files["main.tf"])

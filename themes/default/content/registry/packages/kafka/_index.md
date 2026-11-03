@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-kafka/v3.13.4/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-kafka/v3.13.5/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-kafka/blob/v3.13.4/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-kafka/blob/v3.13.5/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Kafka Provider
 meta_desc: Provides an overview on how to configure the Pulumi Kafka provider.
@@ -631,25 +631,25 @@ config:
 - `caCertFile` (String, Deprecated) Path to a CA certificate file to validate the server's certificate.
 - `clientCert` (String) The client certificate.
 - `clientCertFile` (String, Deprecated) Path to a file containing the client certificate.
-- `clientKey` (String) The private key that the certificate was issued for.
-- `clientKeyFile` (String, Deprecated) Path to a file containing the private key that the certificate was issued for.
-- `clientKeyPassphrase` (String) The passphrase for the private key that the certificate was issued for.
+- `clientKey` (String, Sensitive) The private key that the certificate was issued for.
+- `clientKeyFile` (String, Sensitive, Deprecated) Path to a file containing the private key that the certificate was issued for.
+- `clientKeyPassphrase` (String, Sensitive) The passphrase for the private key that the certificate was issued for.
 - `kafkaVersion` (String) The version of Kafka protocol to use in `$MAJOR.$MINOR.$PATCH` format. Some features may not be available on older versions. Default is 2.7.0.
-- `saslAwsAccessKey` (String) The AWS access key.
+- `saslAwsAccessKey` (String, Sensitive) The AWS access key.
 - `saslAwsContainerAuthorizationTokenFile` (String) Path to a file containing the AWS pod identity authorization token
-- `saslAwsContainerCredentialsFullUri` (String) URI to retrieve AWS credentials from
+- `saslAwsContainerCredentialsFullUri` (String, Sensitive) URI to retrieve AWS credentials from
 - `saslAwsCredsDebug` (Boolean) Set this to true to turn AWS credentials debug.
-- `saslAwsExternalId` (String) External ID of the AWS IAM role to assume
+- `saslAwsExternalId` (String, Sensitive) External ID of the AWS IAM role to assume
 - `saslAwsProfile` (String) AWS profile name to use
 - `saslAwsRegion` (String) AWS region where MSK is deployed.
 - `saslAwsRoleArn` (String) Arn of an AWS IAM role to assume
-- `saslAwsSecretKey` (String) The AWS secret key.
+- `saslAwsSecretKey` (String, Sensitive) The AWS secret key.
 - `saslAwsSharedConfigFiles` (List of String) List of paths to AWS shared config files.
-- `saslAwsToken` (String) The AWS session token. Only required if you are using temporary security credentials.
+- `saslAwsToken` (String, Sensitive) The AWS session token. Only required if you are using temporary security credentials.
 - `saslMechanism` (String) SASL mechanism, can be plain, scram-sha512, scram-sha256, aws-iam
 - `saslOauthScopes` (List of String) OAuth scopes to request when using the oauthbearer mechanism
-- `saslPassword` (String) Password for SASL authentication.
-- `saslTokenUrl` (String) The url to retrieve oauth2 tokens from, when using sasl mechanism oauthbearer
+- `saslPassword` (String, Sensitive) Password for SASL authentication.
+- `saslTokenUrl` (String, Sensitive) The url to retrieve oauth2 tokens from, when using sasl mechanism oauthbearer
 - `saslUsername` (String) Username for SASL authentication.
 - `skipTlsVerify` (Boolean) Set this to true only if the target Kafka server is an insecure development instance.
 - `timeout` (Number) Timeout in seconds

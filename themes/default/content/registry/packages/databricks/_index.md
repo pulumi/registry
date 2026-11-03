@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-databricks/v1.118.1/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-databricks/v1.119.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-databricks/blob/v1.118.1/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-databricks/blob/v1.119.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Databricks Provider
 meta_desc: Provides an overview on how to configure the Pulumi Databricks provider.
@@ -479,16 +479,16 @@ The provider supports additional configuration parameters not related to authent
 
 The `host` argument configures the endpoint that the Pulumi Provider for Databricks interacts with. This must be configured according to the following table:
 
-|              Environment               |                   `host`                    |
-|----------------------------------------|---------------------------------------------|
-| Databricks Account on AWS              | `https://accounts.cloud.databricks.com`     |
-| Databricks Account on AWS GovCloud     | `https://accounts.cloud.databricks.us`      |
-| Databricks Account on AWS GovCloud DOD | `https://accounts-dod.cloud.databricks.mil` |
-| Azure Databricks Account               | `https://accounts.azuredatabricks.net`      |
-| Azure Databricks Account (US Gov)      | `https://accounts.azuredatabricks.us`       |
-| Azure Databricks Account (China)       | `https://accounts.azuredatabricks.cn`       |
-| Databricks Account on GCP              | `https://accounts.gcp.databricks.com`       |
-| Databricks Workspace (any cloud)       | `https://<workspace hostname>`              |
+|              Environment               |                    `host`                    |
+|----------------------------------------|----------------------------------------------|
+| Databricks Account on AWS              | `https://accounts.cloud.databricks.com`      |
+| Databricks Account on AWS GovCloud     | `https://accounts.cloud.databricks.us`       |
+| Databricks Account on AWS GovCloud DOD | `https://accounts-dod.cloud.databricks.mil`  |
+| Azure Databricks Account               | `https://accounts.azuredatabricks.net`       |
+| Azure Databricks Account (US Gov)      | `https://accounts.usgov.databricks.azure.us` |
+| Azure Databricks Account (China)       | `https://accounts.azuredatabricks.cn`        |
+| Databricks Account on GCP              | `https://accounts.gcp.databricks.com`        |
+| Databricks Workspace (any cloud)       | `https://<workspace hostname>`               |
 ## Authentication
 
 There are currently a number of supported methods to [authenticate](https://docs.databricks.com/dev-tools/api/latest/authentication.html) into the Databricks platform to create resources:

@@ -33,7 +33,7 @@ jobs:
       - name: Install Hugo
         uses: peaceiris/actions-hugo@v3
         with:
-          hugo-version: "0.157.0"
+          hugo-version: "0.169.0"
           extended: true
 
       # Specs that check third-party services rather than the change in a PR, so they don't

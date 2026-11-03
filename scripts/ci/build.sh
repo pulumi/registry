@@ -126,7 +126,7 @@ case ${1} in
         # DEPLOYMENT_ENVIRONMENT. The "-test" id must never reach production.
         if [[ "${DEPLOYMENT_ENVIRONMENT}" == "testing" ]]; then
             export HUGO_PARAMS_CONSENTPROVIDER="onetrust"
-            export HUGO_PARAMS_ONETRUSTDOMAINSCRIPT="01a130f0-6a68-7792-88bc-358bc07fe42b-test"
+            export HUGO_PARAMS_ONETRUSTDOMAINSCRIPT="01a090cf-8fe9-7448-94a1-4b90a7c501d4-test"
         fi
         hugo --minify --buildFuture --templateMetrics -e production
         ;;

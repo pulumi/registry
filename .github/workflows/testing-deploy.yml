@@ -69,7 +69,7 @@ jobs:
           sudo tar -xz -C /usr/local/bin s5cmd < /tmp/s5cmd.tar.gz
 
       - name: Install Pulumi CLI
-        uses: pulumi/actions@8e5e406f4007fca908480587cb9893c07090f58d # v7
+        uses: pulumi/actions@96c7761824268174e0d2a4e8c7d75671eebd24a7 # v7
 
       - name: Configure git for private Go modules
         run: git config --global url."https://${{ steps.esc-secrets.outputs.PULUMI_BOT_TOKEN }}:x-oauth-basic@github.com/pulumi/registry-mirror-tools".insteadOf "https://github.com/pulumi/registry-mirror-tools"

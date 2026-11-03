@@ -89,7 +89,7 @@ The canonical tool versions are tracked in `mise.toml`:
 | Go | 1.26.10 |
 | Node.js | 24.22.1 |
 | Yarn | 1.22.22 |
-| Hugo | 0.157 (extended) |
+| Hugo | 0.169 (extended) |
 | golangci-lint | 2.10.1 |
 | yq | latest |
 
@@ -157,7 +157,7 @@ mise trust && mise install
 
 | Component | Role |
 |---|---|
-| Hugo 0.157 (extended) | Static site generation from templates and content |
+| Hugo 0.169 (extended) | Static site generation from templates and content |
 | resourcedocsgen | Generates provider API reference docs from Pulumi schemas |
 | Pulumi IaC | Manages AWS resources; reads metadata file to update CloudFront origin |
 | Algolia | Search index; production deploys build `search-index.json` with `scripts/search/main.js` and upload it to the origin bucket (`scripts/generate-search-index.sh`) for the search index update job to load |
@@ -569,7 +569,7 @@ PR opened / committed
         │
         ├── preview  (skipped for fork PRs; skipped for automation/tfgen-provider-docs label)
         │       ├── Fetch ESC secrets
-        │       ├── Install Node 24, Go 1.26, Hugo 0.157
+        │       ├── Install Node 24, Go 1.26, Hugo 0.169
         │       ├── Validate community-packages/package-list.json
         │       ├── Configure AWS credentials → assume testing account role
         │       ├── Install s5cmd v2.3.0
@@ -621,7 +621,7 @@ Push to master
         │
         └── build job
                 ├── Fetch ESC secrets (OIDC)
-                ├── Install Node 24, Go 1.26, Hugo 0.157
+                ├── Install Node 24, Go 1.26, Hugo 0.169
                 ├── Checkout (using PULUMI_BOT_TOKEN for private module access)
                 ├── Configure AWS credentials
                 │       └── Assume arn:aws:iam::388588623842:role/ContinuousDelivery
@@ -706,7 +706,7 @@ If that file lists anything, the workflow hands it to `anthropics/claude-code-ac
 
 The ESC step runs before checkout and the checkout and Claude steps use `PULUMI_BOT_TOKEN`, so the PR is opened by `pulumi-bot` and triggers `pull-request.yml` like a human-authored PR would.
 
-Node version: 24.x; Hugo 0.157.0 installed (required by `scripts/ensure.sh`, which `make check_links` depends on).
+Node version: 24.x; Hugo 0.169.0 installed (required by `scripts/ensure.sh`, which `make check_links` depends on).
 
 #### `run-browser-tests.yml` — Scheduled Browser Tests
 
@@ -714,7 +714,7 @@ Node version: 24.x; Hugo 0.157.0 installed (required by `scripts/ensure.sh`, whi
 
 Runs `make run-browser-tests` on a `pulumi-ubuntu-8core` runner. Assumes the production AWS role (`388588623842:role/ContinuousDelivery`) to be able to reach the live site.
 
-Node version: 24.x; Hugo 0.157.0 installed.
+Node version: 24.x; Hugo 0.169.0 installed.
 
 #### `generate-package-metadata.yml` — Scheduled Community Package Check
 
@@ -1147,7 +1147,7 @@ The `export-repo-secrets.yml` workflow provides a manual escape hatch to sync Gi
 |---|---|---|---|---|
 | Node.js | 24.22.1 | 24.22.1 | 24.22.1 | 24.22.1 |
 | Go | 1.26.10 | `tools/resourcedocsgen/go.mod` | `tools/resourcedocsgen/go.mod` | `tools/resourcedocsgen/go.mod` |
-| Hugo | 0.157 | 0.157.0 | 0.157.0 | 0.157.0 |
+| Hugo | 0.169 | 0.169.0 | 0.169.0 | 0.169.0 |
 | golangci-lint | 2.10.1 | v2.10.1 (check-go.yml) | — | — |
 | s5cmd | — | v2.3.0 | v2.3.0 | v2.3.0 |
 
@@ -1174,7 +1174,7 @@ Note: `mise.toml` and the CI workflows use Node 24, including `bucket-cleanup.ym
 
 **Symptom**: Build fails with template errors or unexpected output.
 
-**Fix**: Ensure you are using Hugo 0.157 extended. Check with `hugo version`. If using mise: `mise install` will install the correct version. Ensure you have the **extended** variant (required for SCSS processing).
+**Fix**: Ensure you are using Hugo 0.169 extended. Check with `hugo version`. If using mise: `mise install` will install the correct version. Ensure you have the **extended** variant (required for SCSS processing).
 
 ### Node out-of-memory error
 

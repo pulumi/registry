@@ -43,7 +43,7 @@ jobs:
       - name: Install Hugo
         uses: peaceiris/actions-hugo@v3
         with:
-          hugo-version: "0.157.0"
+          hugo-version: "0.169.0"
           extended: true
       # No SLACK_ACCESS_TOKEN in env: the checker no longer posts to Slack. It
       # writes its results to .broken-links.json, and Slack posting (the PR

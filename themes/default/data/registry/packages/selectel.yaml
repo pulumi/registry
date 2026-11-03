@@ -9,7 +9,7 @@ name: selectel
 package_status: ga
 publisher: selectel
 repo_url: https://github.com/selectel/terraform-provider-selectel
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/selectel/selectel/9.5.0/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/selectel/selectel/9.6.0/schema.json
 title: selectel
-updated_on: 1793403328
-version: 9.5.0
+updated_on: 1793748915
+version: 9.6.0

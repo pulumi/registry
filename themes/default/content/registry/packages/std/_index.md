@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-std/v2.3.2/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-std/v2.3.3/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-std/blob/v2.3.2/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-std/blob/v2.3.3/docs/_index.md
 title: Standard Library
 meta_desc: The Pulumi Standard Library provider provides a set of simple functions accessible from all languages (including Pulumi YAML).
 layout: overview

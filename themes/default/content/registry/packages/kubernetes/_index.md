@@ -8,7 +8,7 @@ layout: package
 [Kubernetes][k8s] is an open source project for running and managing containerized applications
 on a cluster of machines.
 
-[Pulumi](/docs/get-started) is an infrastructure-as-code tool that exposes the Kubernetes resource API as an
+[Pulumi](/up/) is an infrastructure-as-code tool that exposes the Kubernetes resource API as an
 SDK, alongside other SDKs which span common cloud native utilities, cloud
 provider IaaS offerings, and their catalog of services - managed Kubernetes included.
 
@@ -37,7 +37,7 @@ The Kubernetes provider for Pulumi can be used to provision any resources availa
 
 ### Getting Started
 
-The quickest way to get started with Kubernetes is to follow the [Get Started](/docs/get-started/kubernetes) guide.
+The quickest way to get started with Kubernetes is to follow the [Get Started](/up/) guide.
 
 ## Additional Pulumi Packages for Kubernetes Users
 

@@ -8,7 +8,7 @@ The Azure Native provider for Pulumi can be used to provision all of the cloud r
 
 Azure Native must be configured with credentials to deploy and update resources in Azure; see [Installation & Configuration](./installation-configuration) for instructions.
 
-**New to Pulumi and Azure?** [Get started with Azure using our tutorial](/docs/get-started/azure)
+**New to Pulumi and Azure?** [Get started with Azure using our tutorial](/up/)
 
 ## Example
 

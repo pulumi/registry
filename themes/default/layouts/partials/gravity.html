@@ -1,0 +1,21 @@
+{{- /*
+  Gravity ad pixel — https://trygravity.com
+  Targeting (C0004) consent-gated through runWithPulumiConsent, the shared gate
+  from the OneTrust bridge (same as Common Room here and the OpenAI pixel and
+  Floqer on www). Runs at most once per page and fails closed: if C0004 is never
+  granted, the pixel never loads. Deferred to window.load to avoid blocking first
+  paint. Browser code carries only the advertiser ID, never the CAPI key.
+  Included from head.html inside the production-only block.
+*/ -}}
+<script>
+    window.addEventListener("load", function () {
+        window.runWithPulumiConsent("C0004", function () {
+            if (window.GravityPixelObject || window.gravity) return;
+            !function(w,d,t,u,n,a,m){w['GravityPixelObject']=n;w[n]=w[n]||function(){
+            (w[n].q=w[n].q||[]).push(arguments)},w[n].l=1*new Date();a=d.createElement(t),
+            m=d.getElementsByTagName(t)[0];a.async=1;a.src=u;m.parentNode.insertBefore(a,m)
+            }(window,document,'script','https://code.trygravity.com/gr-pix.js','gravity');
+            window.gravity('init', 'f9505c8e-5d0b-4159-88b8-53bd2d5f2c8a');
+        });
+    });
+</script>

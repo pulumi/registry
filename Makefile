@@ -37,10 +37,14 @@ lint-resourcedocsgen:
 	cd tools/resourcedocsgen/ && golangci-lint run --config ../../.golangci.yml
 
 .PHONY: test
-test: test-infra test-preview-comment test-theme
+test: test-infra test-preview-comment test-theme test-gravity
 	cd ./tools/resourcedocsgen && go test ./...
 
 .PHONY: test-infra
+.PHONY: test-gravity
+test-gravity:
+	node --test scripts/gravity.test.js
+
 test-infra:
 	cd infrastructure && node --test redirects.test.js
 

@@ -440,6 +440,9 @@
                 document.head.appendChild(script);
             });
         </script>
+
+        <!-- Gravity ad pixel (deferred to window.load) — Targeting (C0004) consent-gated (see partials/gravity.html). -->
+        {{ partial "gravity.html" . }}
     {{- end }}
 
 

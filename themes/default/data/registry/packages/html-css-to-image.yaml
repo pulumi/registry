@@ -2,8 +2,8 @@
 # Do not edit by hand unless you're certain you know what you are doing!
 category: Utility
 component: false
-description: Create images and manage templates, API keys, storage destinations, proxies,
-  and Open Graph configurations with the HTML/CSS to Image provider for Pulumi.
+description: Create images and manage templates, API keys, webhooks, storage destinations,
+  proxies, and Open Graph configurations with the HTML/CSS to Image provider for Pulumi.
 featured: false
 keywords:
 - html
@@ -18,7 +18,7 @@ name: html-css-to-image
 package_status: public_preview
 publisher: htmlcsstoimage
 repo_url: https://github.com/htmlcsstoimage/pulumi-html-css-to-image
-schema_file_url: https://raw.githubusercontent.com/htmlcsstoimage/pulumi-html-css-to-image/v0.2.0/internal/provider/schema.json
+schema_file_url: https://raw.githubusercontent.com/htmlcsstoimage/pulumi-html-css-to-image/v0.3.0/internal/provider/schema.json
 title: HTML/CSS to Image
-updated_on: 1790699782
-version: v0.2.0
+updated_on: 1793805199
+version: v0.3.0

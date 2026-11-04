@@ -3,19 +3,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 
-    {{- $consentProvider := site.Params.consentProvider | default "segment" }}
-
     {{- /* Consent gate bootstrap (all environments). Defines
            window.runWithPulumiConsent before any integration (Segment, Common
            Room, YouTube) can initialize, so an early caller is captured rather
-           than lost. Under "segment" the gate runs the callback immediately
-           (today's behavior); under "onetrust" it queues until the bundle's
-           OneTrust bridge drains the queue once OneTrust resolves the visitor's
-           categories. Mirrors pulumi/docs so consent behaves the same across
-           www.pulumi.com. See theme/src/ts/consent-manager/onetrust.ts. */ -}}
+           than lost. It queues until the bundle's OneTrust bridge drains the
+           queue once OneTrust resolves the visitor's categories. Mirrors
+           pulumi/docs so consent behaves the same across www.pulumi.com.
+           See theme/src/ts/consent-manager/onetrust.ts. */ -}}
     <script>
         (function () {
-            {{- if eq $consentProvider "onetrust" }}
             var queue = (window.__pulumiConsentQueue = window.__pulumiConsentQueue || []);
             window.runWithPulumiConsent = function (category, callback) {
                 queue.push({ category: category, callback: callback });
@@ -26,22 +22,17 @@
             window.OptanonWrapper = function () {
                 window.dispatchEvent(new Event("OneTrustGroupsUpdated"));
             };
-            {{- else }}
-            window.runWithPulumiConsent = function (category, callback) {
-                callback();
-            };
-            {{- end }}
         })();
     </script>
 
-    {{- if eq $consentProvider "onetrust" }}
     {{- if not site.Params.oneTrustDomainScript }}
-        {{- errorf "consentProvider is \"onetrust\" but params.oneTrustDomainScript is not set" }}
+        {{- errorf "params.oneTrustDomainScript is not set" }}
     {{- end }}
     <!-- OneTrust CMP (loaded before Segment and all optional integrations).
          Auto-Blocking stays off; consent is enforced by explicit checks in the
          site code via runWithPulumiConsent. The domain script id comes from
-         params.oneTrustDomainScript: config/production sets the www.pulumi.com
+         params.oneTrustDomainScript: config/_default sets the pulumi.com test
+         id (PR previews, local builds), config/production sets the production
          id, and scripts/ci/build.sh overrides it with the test id for the
          www.pulumi-test.io deploy. Its scripts load without CORS and its JSON
          with CORS, so each kind of connection gets a preconnect. -->
@@ -53,7 +44,6 @@
         type="text/javascript"
         charset="UTF-8"
         data-domain-script="{{ site.Params.oneTrustDomainScript }}"></script>
-    {{- end }}
 
     <!-- GrowthBook / Segment keys -->
     <script>
@@ -411,42 +401,24 @@
             })();
         </script>
 
-    {{- if eq $consentProvider "onetrust" }}
-        <!-- OneTrust provider: OneTrust owns the banner and the decision; the
-             bundle's consent manager drives the Segment loader from the OneTrust
-             categories (theme/src/ts/consent-manager/index.ts). -->
-        <script>
-            window.consentManagerConfig = {
-                provider: "onetrust",
-                writeKey: segmentWriteKey,
-                cdnHost: "evs.analytics.pulumi.com",
-                container: "#segment-consent-manager"
-            };
-        </script>
-    {{- else }}
-        <!-- Segment Consent Manager -->
-        <script>
-            window.consentManagerConfig = {
-                writeKey: segmentWriteKey,
-                cdnHost: "evs.analytics.pulumi.com",
-                container: "#segment-consent-manager",
-                privacyPolicyUrl: "/privacy/",
-                bannerText: "We use cookies (and other similar technologies) to collect data to improve your experience on our site. By using our website, you\u02BCre agreeing to the collection of data as described in our",
-                preferencesDialogTitle: "Website Data Collection Preferences",
-                preferencesDialogContent: "We use data collected by cookies and JavaScript libraries to improve your browsing experience, analyze site traffic, deliver personalized advertisements, and increase the overall performance of our site."
-            };
-        </script>
-    {{- end }}
+    <!-- OneTrust owns the banner and the decision; the bundle's consent
+         manager drives the Segment loader from the OneTrust categories
+         (theme/src/ts/consent-manager/index.ts). -->
+    <script>
+        window.consentManagerConfig = {
+            writeKey: segmentWriteKey,
+            cdnHost: "evs.analytics.pulumi.com"
+        };
+    </script>
 
     {{- if eq hugo.Environment "production" }}
         <!-- Facebook Domain Verification -->
         <meta name="facebook-domain-verification" content="phlf6qes2bxa9ufzk8zt2es0qivg8j" />
     {{- end }}
 
-    {{- /* Common Room. Rendered in production and wherever the OneTrust
-           provider is selected. Under OneTrust it is gated on C0004 Targeting;
-           under Segment it loads immediately. */ -}}
-    {{- if or (eq $consentProvider "onetrust") (eq hugo.Environment "production") }}
+    {{- /* Common Room, gated on C0004 Targeting. Production only: its site id is
+           the production one, and other builds have no separate id. */ -}}
+    {{- if eq hugo.Environment "production" }}
         <!-- Common Room-->
         <script>
             window.runWithPulumiConsent("C0004", function() {
@@ -468,7 +440,6 @@
                 document.head.appendChild(script);
             });
         </script>
-
     {{- end }}
 
 

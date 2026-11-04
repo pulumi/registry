@@ -672,7 +672,7 @@ Push to master
 
 Identical to `push.yml` but triggered manually via `workflow_dispatch` and deploys to the testing environment (account `571684982431`, role `arn:aws:iam::571684982431:role/ContinuousDelivery`). Reads its Go version from `tools/resourcedocsgen/go.mod`, like production.
 
-Both this deploy and production build with `hugo -e production`, and both load OneTrust, but the output differs in one way: production uses the www.pulumi.com domain script id from `config/production/config.yaml`, while for `DEPLOYMENT_ENVIRONMENT=testing` `scripts/ci/build.sh` exports `HUGO_PARAMS_ONETRUSTDOMAINSCRIPT` (the OneTrust test domain script id, ending in `-test`), so www.pulumi-test.io loads the test script. PR previews (`-e preview`) keep the default Segment consent manager. `layouts/partials/head.html` fails the build if `onetrust` is selected without a domain script id.
+Both this deploy and production build with `hugo -e production`, and both load OneTrust, but the output differs in one way: production uses the pulumi.com domain script id from `config/production/config.yaml`, while for `DEPLOYMENT_ENVIRONMENT=testing` `scripts/ci/build.sh` exports `HUGO_PARAMS_ONETRUSTDOMAINSCRIPT` (the OneTrust test domain script id, ending in `-test`), so www.pulumi-test.io loads the test script. PR previews (`-e preview`) and local builds use the test id from `config/_default/config.yml`. `layouts/partials/head.html` fails the build if no domain script id is set.
 
 #### `pull-request-closed.yml` — PR Preview Cleanup
 

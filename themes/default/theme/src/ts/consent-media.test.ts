@@ -3,7 +3,7 @@
 //
 //     yarn test
 //
-// The page is built the way head.html builds it under the onetrust provider:
+// The page is built the way head.html builds it:
 // the inline bootstrap queues runWithPulumiConsent calls, and
 // installOneTrustBridge() takes over and replays them. Consent changes are
 // driven through OneTrust's own globals and the OneTrustGroupsUpdated event.

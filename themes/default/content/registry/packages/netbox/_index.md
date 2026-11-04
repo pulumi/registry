@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/e-breuninger/netbox/5.8.0/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/e-breuninger/netbox/6.0.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Netbox Provider
@@ -16,14 +16,19 @@ pulumi package add terraform-provider e-breuninger/netbox
 ```
 ## Overview
 
-The Pulumi Netbox provider is a plugin for Pulumi that allows for the full lifecycle management of [Netbox](https://netboxlabs.com/docs/netbox/) resources.
+The NetBox provider manages objects in [NetBox](https://netboxlabs.com/docs/netbox/) through its REST API.
+## Requirements
 
-Use the navigation to the left to read about the available resources.
+- Pulumi 1.0 or newer.
+- A NetBox version the provider was tested against.
 ## Supported Netbox versions
-Netbox often makes breaking API changes even in non-major releases. Check the table below to see which version this provider is compatible with your Netbox version. It is generally recommended to use the provider version matching your Netbox version.
+Netbox often makes breaking API changes even in non-major releases.
+Check the table below to see which version this provider is compatible with your Netbox version.
+It is generally recommended to use the provider version matching your Netbox version.
 
 | Netbox version  | Provider version |
 |-----------------|------------------|
+| v4.6.8 - 4.6.10 | v6.0.0 and up    |
 | v4.3.0 - 4.6.5  | v5.6.1 and up    |
 | v4.3.0 - 4.4.10 | v5.0.0 - 5.6.0   |
 | v4.2.2 - 4.2.9  | v4.0.0 - 4.3.1   |
@@ -42,9 +47,8 @@ Netbox often makes breaking API changes even in non-major releases. Check the ta
 | v2.10.10        | v0.2.x           |
 | v2.9            | v0.1.x           |
 
-Additionally, since version 1.6.6, each version of the provider has a built-in list of all Netbox versions it supports at release time. Upon initialization, the provider will probe your Netbox version and include a (non-blocking) warning if the used Netbox version is not supported.
-## Configuration
-You must configure the provider with proper credentials before you can use it. You can configure the provider via attributes in the provider configuration or via environment variables. See Schema for all configuration options
+Each version of the provider has a built-in list of all Netbox versions it supports at release time.
+Upon initialization, the provider will probe your Netbox version and include a (non-blocking) warning if the used Netbox version is not supported.
 ## Example Usage
 
 {{< chooser language "typescript,python,go,csharp,java,yaml" >}}
@@ -55,9 +59,9 @@ name: configuration-example
 runtime: nodejs
 config:
     netbox:apiToken:
-        value: <your api key>
+        value: <your api token>
     netbox:serverUrl:
-        value: https://demo.netbox.dev
+        value: https://netbox.example.com
 
 ```
 ```typescript
@@ -72,9 +76,9 @@ name: configuration-example
 runtime: python
 config:
     netbox:apiToken:
-        value: <your api key>
+        value: <your api token>
     netbox:serverUrl:
-        value: https://demo.netbox.dev
+        value: https://netbox.example.com
 
 ```
 ```python
@@ -89,9 +93,9 @@ name: configuration-example
 runtime: dotnet
 config:
     netbox:apiToken:
-        value: <your api key>
+        value: <your api token>
     netbox:serverUrl:
-        value: https://demo.netbox.dev
+        value: https://netbox.example.com
 
 ```
 ```csharp
@@ -112,9 +116,9 @@ name: configuration-example
 runtime: go
 config:
     netbox:apiToken:
-        value: <your api key>
+        value: <your api token>
     netbox:serverUrl:
-        value: https://demo.netbox.dev
+        value: https://netbox.example.com
 
 ```
 ```go
@@ -138,9 +142,9 @@ name: configuration-example
 runtime: yaml
 config:
     netbox:apiToken:
-        value: <your api key>
+        value: <your api token>
     netbox:serverUrl:
-        value: https://demo.netbox.dev
+        value: https://netbox.example.com
 
 ```
 ```yaml
@@ -154,9 +158,9 @@ name: configuration-example
 runtime: java
 config:
     netbox:apiToken:
-        value: <your api key>
+        value: <your api token>
     netbox:serverUrl:
-        value: https://demo.netbox.dev
+        value: https://netbox.example.com
 
 ```
 ```java
@@ -184,15 +188,13 @@ public class App {
 {{% /choosable %}}
 {{< /chooser >}}
 ## Configuration Reference
-### Required
 
-- `apiToken` (String) Netbox API authentication token. Supports both v1 tokens (`Authorization: Token <key>`) and v2 tokens (`Authorization: Bearer nbt_<key>.<token>`). V2 tokens are auto-detected by their `nbt_` prefix. Can be set via the `NETBOX_API_TOKEN` environment variable.
-- `serverUrl` (String) Location of Netbox server including scheme (http or https) and optional port. Can be set via the `NETBOX_SERVER_URL` environment variable.
-
-- `allowInsecureHttps` (Boolean) Flag to set whether to allow https with invalid certificates. Can be set via the `NETBOX_ALLOW_INSECURE_HTTPS` environment variable. Defaults to `false`.
-- `caCertFile` (String) Path to a PEM-encoded CA certificate for verifying the Netbox server certificate. Can be set via the `NETBOX_CA_CERT_FILE` environment variable.
-- `defaultTags` (Set of String) Tags to add to every resource managed by this provider.
-- `headers` (Map of String) Set these header on all requests to Netbox. Can be set via the `NETBOX_HEADERS` environment variable.
-- `requestTimeout` (Number) Netbox API HTTP request timeout in seconds. Can be set via the `NETBOX_REQUEST_TIMEOUT` environment variable.
-- `skipVersionCheck` (Boolean) If true, do not try to determine the running Netbox version at provider startup. Disables warnings about possibly unsupported Netbox version. Also useful for local testing on pulumi plans. Can be set via the `NETBOX_SKIP_VERSION_CHECK` environment variable. Defaults to `false`.
-- `stripTrailingSlashesFromUrl` (Boolean) If true, strip trailing slashes from the `serverUrl` parameter and print a warning when doing so. Note that using trailing slashes in the `serverUrl` parameter will usually lead to errors. Can be set via the `NETBOX_STRIP_TRAILING_SLASHES_FROM_URL` environment variable. Defaults to `true`.
+- `allowInsecureHttps` (Boolean) Flag to set whether to allow https with invalid certificates. Can be set via the NETBOX_ALLOW_INSECURE_HTTPS environment variable. Defaults to false.
+- `apiToken` (String, Sensitive) Netbox API authentication token. Supports both v1 tokens and v2 tokens. Can be set via the NETBOX_API_TOKEN environment variable.
+- `caCertFile` (String) Path to a PEM-encoded CA certificate for verifying the Netbox server certificate. Can be set via the NETBOX_CA_CERT_FILE environment variable.
+- `defaultTags` (Set of String) Slugs of tags to add to every resource managed by this provider.
+- `headers` (Map of String) Set these header on all requests to Netbox. Can be set via the NETBOX_HEADERS environment variable (a JSON object).
+- `requestTimeout` (Number) Netbox API HTTP request timeout in seconds. Can be set via the NETBOX_REQUEST_TIMEOUT environment variable. Defaults to 10.
+- `serverUrl` (String) URL of the NetBox instance (e.g. <https://netbox.example.com>). The /api path is added automatically). Falls back to the NETBOX_SERVER_URL environment variable.
+- `skipVersionCheck` (Boolean) If true, do not try to determine the running Netbox version at provider startup. Can be set via the NETBOX_SKIP_VERSION_CHECK environment variable. Defaults to false.
+- `stripTrailingSlashesFromUrl` (Boolean) If true, strip trailing slashes from the serverUrl parameter and print a warning when doing so. Note that using trailing slashes in the serverUrl parameter will usually lead to errors. Can be set via the NETBOX_STRIP_TRAILING_SLASHES_FROM_URL environment variable. Defaults to true.

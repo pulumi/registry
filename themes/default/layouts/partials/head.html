@@ -8,7 +8,8 @@
            Room, YouTube) can initialize, so an early caller is captured rather
            than lost. It queues until the bundle's OneTrust bridge drains the
            queue once OneTrust resolves the visitor's categories. Mirrors
-           pulumi/docs so consent behaves the same across www.pulumi.com. See theme/src/ts/consent-manager/onetrust.ts. */ -}}
+           pulumi/docs so consent behaves the same across www.pulumi.com.
+           See theme/src/ts/consent-manager/onetrust.ts. */ -}}
     <script>
         (function () {
             var queue = (window.__pulumiConsentQueue = window.__pulumiConsentQueue || []);
@@ -415,7 +416,9 @@
         <meta name="facebook-domain-verification" content="phlf6qes2bxa9ufzk8zt2es0qivg8j" />
     {{- end }}
 
-    {{- /* Common Room, gated on C0004 Targeting. */ -}}
+    {{- /* Common Room, gated on C0004 Targeting. Production only: its site id is
+           the production one, and other builds have no separate id. */ -}}
+    {{- if eq hugo.Environment "production" }}
         <!-- Common Room-->
         <script>
             window.runWithPulumiConsent("C0004", function() {
@@ -437,6 +440,7 @@
                 document.head.appendChild(script);
             });
         </script>
+    {{- end }}
 
 
     <!-- Apply anchor links to headings in the docs, blog and taxonomy pages. -->

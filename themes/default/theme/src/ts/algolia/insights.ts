@@ -1,9 +1,8 @@
 // Algolia search analytics (the "viewed" and "clicked" events Autocomplete sends
 // to insights.algolia.io) is Performance tracking, so it waits for C0002. Until
 // then, setup calls are queued and events are dropped; search itself doesn't
-// depend on it. Under the Segment provider runWithPulumiConsent runs right away,
-// so behavior there is unchanged. createConsentGatedInsightsClient is a copy of
-// the one in pulumi/docs; keep the two in sync.
+// depend on it. createConsentGatedInsightsClient is a copy of the one in
+// pulumi/docs; keep the two in sync.
 
 type InsightsClient = ((...args: any[]) => unknown) & { version?: string };
 

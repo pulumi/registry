@@ -1,13 +1,13 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/htmlcsstoimage/pulumi-html-css-to-image/v0.2.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/htmlcsstoimage/pulumi-html-css-to-image/v0.3.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/htmlcsstoimage/pulumi-html-css-to-image/blob/v0.2.0/docs/_index.md
+edit_url: https://github.com/htmlcsstoimage/pulumi-html-css-to-image/blob/v0.3.0/docs/_index.md
 title: HTML/CSS to Image
-meta_desc: Use the HTML/CSS to Image provider for Pulumi to create images and manage templates, API keys, storage destinations, proxies, and Open Graph configurations.
+meta_desc: Use the HTML/CSS to Image provider for Pulumi to create images and manage templates, API keys, webhooks, storage destinations, proxies, and Open Graph configurations.
 layout: package
 ---
 
-The HTML/CSS to Image provider for Pulumi manages [HTML/CSS to Image](https://htmlcsstoimage.com) images, reusable templates, API keys, storage destinations, proxies, and Open Graph configurations alongside your application's infrastructure.
+The HTML/CSS to Image provider for Pulumi manages [HTML/CSS to Image](https://htmlcsstoimage.com) images, reusable templates, API keys, webhooks, storage destinations, proxies, and Open Graph configurations alongside your application's infrastructure.
 
 ## Installation
 
@@ -48,14 +48,14 @@ Maven:
 <dependency>
     <groupId>com.htmlcsstoimage</groupId>
     <artifactId>pulumi</artifactId>
-    <version>0.2.0</version>
+    <version>0.3.0</version>
 </dependency>
 ```
 
 Gradle:
 
 ```groovy
-implementation 'com.htmlcsstoimage:pulumi:0.2.0'
+implementation 'com.htmlcsstoimage:pulumi:0.3.0'
 ```
 
 {{% /choosable %}}

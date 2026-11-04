@@ -11,7 +11,7 @@ name: port
 package_status: ga
 publisher: port-labs
 repo_url: https://github.com/port-labs/pulumi-port
-schema_file_url: https://raw.githubusercontent.com/port-labs/pulumi-port/v2.34.0/provider/cmd/pulumi-resource-port/schema.json
+schema_file_url: https://raw.githubusercontent.com/port-labs/pulumi-port/v2.34.3/provider/cmd/pulumi-resource-port/schema.json
 title: Port
-updated_on: 1793639042
-version: v2.34.0
+updated_on: 1793799873
+version: v2.34.3

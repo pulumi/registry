@@ -1,26 +1,12 @@
 export interface ConsentManagerConfig {
     writeKey: string;
     cdnHost: string;
-    container: string;
-    privacyPolicyUrl: string;
-    bannerText: string;
-    preferencesDialogTitle: string;
-    preferencesDialogContent: string;
-    // "segment" (default) or "onetrust". Set by layouts/partials/head.html from
-    // the consentProvider site param.
-    provider?: "segment" | "onetrust";
 }
 
 export interface Destination {
     id: string;
     name: string;
     category?: string;
-}
-
-export interface TrackingPreferences {
-    version: number;
-    destinations: Record<string, boolean>;
-    custom?: Record<string, boolean | null>;
 }
 
 declare global {
@@ -43,7 +29,6 @@ declare global {
 export interface SegmentAnalytics {
     load: (writeKey: string, options?: { integrations?: Record<string, boolean> }) => void;
     addSourceMiddleware: (middleware: (args: MiddlewareArgs) => void) => void;
-    identify: (traits: Record<string, unknown>) => void;
     initialized?: boolean;
 }
 

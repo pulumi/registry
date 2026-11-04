@@ -19,7 +19,7 @@ import "./commands";
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
 
-// Production builds load the OneTrust consent banner, which covers controls at the
+// Every build loads the OneTrust consent banner, which covers controls at the
 // bottom of the page. Mark it as already dismissed so tests can click them.
 beforeEach(() => {
     cy.setCookie("OptanonAlertBoxClosed", new Date().toISOString());

@@ -1,3 +1,8 @@
+# Every entry carries a second group with `applies-to: security-updates`.
+# Security updates ignore `schedule` and `open-pull-requests-limit`, and a
+# group without `applies-to` covers only version updates, so without it each
+# advisory opens one PR per affected package per manifest.
+
 version: 2
 updates:
   # Root package.json
@@ -10,6 +15,9 @@ updates:
     open-pull-requests-limit: 1
     groups:
       all-dependencies:
+        patterns: ["*"]
+      security:
+        applies-to: security-updates
         patterns: ["*"]
     ignore:
       - dependency-name: "*"
@@ -28,6 +36,9 @@ updates:
     open-pull-requests-limit: 1
     groups:
       all-dependencies:
+        patterns: ["*"]
+      security:
+        applies-to: security-updates
         patterns: ["*"]
     ignore:
       - dependency-name: "tailwindcss"
@@ -48,6 +59,9 @@ updates:
     groups:
       all-dependencies:
         patterns: ["*"]
+      security:
+        applies-to: security-updates
+        patterns: ["*"]
     ignore:
       - dependency-name: "*"
         update-types: ["version-update:semver-major"]
@@ -65,6 +79,9 @@ updates:
     open-pull-requests-limit: 1
     groups:
       all-dependencies:
+        patterns: ["*"]
+      security:
+        applies-to: security-updates
         patterns: ["*"]
     ignore:
       - dependency-name: "*"
@@ -84,6 +101,9 @@ updates:
     groups:
       all-actions:
         patterns: ["*"]
+      security:
+        applies-to: security-updates
+        patterns: ["*"]
     labels: ["dependencies"]
     commit-message:
       prefix: "ci"
@@ -98,6 +118,9 @@ updates:
     open-pull-requests-limit: 1
     groups:
       all-go-dependencies:
+        patterns: ["*"]
+      security:
+        applies-to: security-updates
         patterns: ["*"]
     ignore:
       - dependency-name: "*"

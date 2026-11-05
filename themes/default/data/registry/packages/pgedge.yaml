@@ -2,6 +2,8 @@
 # Do not edit by hand unless you're certain you know what you are doing!
 category: Cloud
 component: false
+deprecated: true
+deprecation_reason: The upstream provider is archived and no longer maintained.
 description: A Pulumi package for creating and managing pgedge cloud resources.
 featured: false
 keywords:

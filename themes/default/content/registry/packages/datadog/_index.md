@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-datadog/v5.18.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-datadog/v5.19.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-datadog/blob/v5.18.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-datadog/blob/v5.19.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Datadog Provider
 meta_desc: Provides an overview on how to configure the Pulumi Datadog provider.
@@ -23,6 +23,22 @@ The Datadog provider is available as a package in all Pulumi languages:
 The [Datadog](https://www.datadoghq.com) provider is used to interact with the resources supported by Datadog. The provider needs to be configured with the proper credentials before it can be used. 
 
 Use the navigation to the left to read about the available resources.
+## AWS Workload Identity Federation
+
+Organizations configured for AWS Workload Identity Federation can authenticate
+without Datadog API or application keys and without passing AWS credentials to
+Pulumi:
+
+The provider uses the AWS SDK default credential chain. This includes standard
+sources such as environment credentials, shared configuration and credential
+files, IAM Identity Center (SSO), web identity, ECS task roles, EC2 instance
+roles, and assume-role profiles. For example, after logging in locally with
+`aws sso login --profile sandbox`, run Pulumi with `AWS_PROFILE=sandbox`.
+
+Explicit `awsAccessKeyId`, `awsSecretAccessKey`, and `awsSessionToken`
+values remain supported but are not required. Workload Identity Federation must
+be enabled for the Datadog organization, and its identity or intake mapping must
+match the AWS identity resolved by the credential chain.
 ## Pulumi Dynamic Provider Credentials
 
 For HCP Pulumi, the provider discovers Pulumi-issued workload identity tokens and exchanges them through Datadog Workload Identity Federation when authentication is not explicitly configured in the provider configuration. Use `workloadIdentityTokenTag` to select a distinct token for each provider configuration. Configure the WIF persona mapping and workspace audience as described in the Dynamic Provider Credentials guide.
@@ -31,11 +47,11 @@ For HCP Pulumi, the provider discovers Pulumi-issued workload identity tokens an
 - `apiKey` (String, Sensitive) Datadog API key. Required when `validate` is true unless authentication uses AWS WIF, a bearer token, or Pulumi Dynamic Provider Credentials. This can also be set via the `DD_API_KEY` environment variable.
 - `apiUrl` (String) The API URL. This can also be set via the DD_HOST environment variable, and defaults to `https://api.datadoghq.com`. Note that this URL must not end with the `/api/` path. For example, `https://api.datadoghq.com/` is a correct value, while `https://api.datadoghq.com/api/` is not. And if you're working with "EU" version of Datadog, use `https://api.datadoghq.eu/`. Other Datadog region examples: `https://api.us5.datadoghq.com/`, `https://api.us3.datadoghq.com/` and `https://api.ddog-gov.com/`. See <https://docs.datadoghq.com/getting_started/site/> for all available regions.
 - `appKey` (String, Sensitive) Datadog application key. Required when `validate` is true unless authentication uses AWS WIF, a bearer token, or Pulumi Dynamic Provider Credentials. This can also be set via the `DD_APP_KEY` environment variable.
-- `awsAccessKeyId` (String, Sensitive) The AWS access key ID; used for cloud-provider-based authentication. This can also be set using the `AWS_ACCESS_KEY_ID` environment variable. Required when using `cloudProviderType` set to `aws`.
-- `awsSecretAccessKey` (String, Sensitive) The AWS secret access key; used for cloud-provider-based authentication. This can also be set using the `AWS_SECRET_ACCESS_KEY` environment variable. Required when using `cloudProviderType` set to `aws`.
-- `awsSessionToken` (String, Sensitive) The AWS session token; used for cloud-provider-based authentication. This can also be set using the `AWS_SESSION_TOKEN` environment variable. Required when using `cloudProviderType` set to `aws` and using temporary credentials.
+- `awsAccessKeyId` (String, Sensitive) An optional explicit AWS access key ID used for cloud-provider-based authentication. This can also be set using the `AWS_ACCESS_KEY_ID` environment variable. When explicit credentials are omitted, the AWS SDK default credential chain is used.
+- `awsSecretAccessKey` (String, Sensitive) An optional explicit AWS secret access key used for cloud-provider-based authentication. This can also be set using the `AWS_SECRET_ACCESS_KEY` environment variable. It must be provided together with `awsAccessKeyId`. Omit both fields to use the AWS SDK default credential chain.
+- `awsSessionToken` (String, Sensitive) An optional AWS session token used with explicit temporary credentials for cloud-provider-based authentication. This can also be set using the `AWS_SESSION_TOKEN` environment variable.
 - `bearerToken` (String, Sensitive) Datadog credential sent in the `Authorization: Bearer <token>` header. Accepts personal access tokens (`ddpat_*`) and service-account access tokens (`ddsat_*`). When set, the provider authenticates with `Authorization: Bearer <token>` instead of the `DD-API-KEY` / `DD-APPLICATION-KEY` headers. This can also be set via the `DD_BEARER_TOKEN` or `DATADOG_BEARER_TOKEN` environment variable.
-- `cloudProviderRegion` (String) The cloud provider region specifier; used for cloud-provider-based authentication. For example, `us-east-1` for AWS.
+- `cloudProviderRegion` (String) The cloud provider region specifier; used for cloud-provider-based authentication. For example, `us-east-1` for AWS. When omitted for AWS, the region is loaded from the AWS SDK default configuration chain.
 - `cloudProviderType` (String) Specifies the cloud provider used for cloud-provider-based authentication, enabling keyless access without API or app keys. Only [`aws`] is supported. This can also be set using the `DD_CLOUD_PROVIDER_TYPE` environment variable. This feature is in Preview. If you'd like to enable it for your organization, contact [support](https://docs.datadoghq.com/help/).
 - `defaultTags` (Block List, Max: 1) [Experimental - Action Connections, Logs Indexes, Logs Pipelines, Monitors, Security Monitoring Rules, and Service Level Objectives only] Configuration block containing settings to apply default resource tags across all resources. (see below for nested schema)
 - `httpClientRetryBackoffBase` (Number) The HTTP request retry back off base. Defaults to 2.

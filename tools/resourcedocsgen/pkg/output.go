@@ -38,9 +38,13 @@ var hugoShortcodeDelim = regexp.MustCompile(`\{\{([%<])`)
 var wrappingShortcode = regexp.MustCompile(
 	`^\s*\{\{[%<]\s*/?(choosable-inline|choosable|chooser|examples|example)\b`)
 
+// htmlCodeSpan matches an HTML code span on a single line, capturing its contents.
+var htmlCodeSpan = regexp.MustCompile(`(<code(?:\s[^>]*)?>)(.*?)(</code>)`)
+
 // neutralizeHugoShortcodes disarms Hugo shortcode delimiters inside fenced code
-// blocks, where Hugo would resolve them before Markdown rendering. Inline code
-// spans and indented code blocks are outside the current generator surface.
+// blocks and HTML <code> spans, where Hugo would resolve them before Markdown
+// rendering. Markdown backtick code spans and indented code blocks are outside the
+// current generator surface.
 //
 // Registry fence-wrapping shortcodes (chooser/choosable/example(s)) are never
 // neutralized: a line that is one of them is, by definition, outside a code
@@ -69,9 +73,31 @@ func neutralizeHugoShortcodes(contents []byte) []byte {
 		}
 		if inFence {
 			lines[i] = hugoShortcodeDelim.ReplaceAllString(line, "{{ $1")
+		} else if strings.Contains(line, "{{") {
+			lines[i] = htmlCodeSpan.ReplaceAllStringFunc(line, neutralizeHTMLCodeSpan)
 		}
 	}
 	return []byte(strings.Join(lines, "\n"))
+}
+
+// neutralizeHTMLCodeSpan disarms "{{" inside a <code> span when it is followed by
+// "<" or "%", including a "{{" at the end of the span, which forms "{{</code>" with
+// the closing tag. The first brace becomes an HTML entity so the page still shows
+// exactly "{{", which inserting a space (as in fenced code) would not.
+func neutralizeHTMLCodeSpan(span string) string {
+	m := htmlCodeSpan.FindStringSubmatch(span)
+	open, body, closing := m[1], m[2], m[3]
+	tail := body + "<"
+	var b strings.Builder
+	for i := 0; i < len(body); i++ {
+		if body[i] == '{' && tail[i+1] == '{' && (tail[i+2] == '<' || tail[i+2] == '%') {
+			b.WriteString("&#123;{")
+			i++
+			continue
+		}
+		b.WriteByte(body[i])
+	}
+	return open + b.String() + closing
 }
 
 // fenceRun returns the fence char, run length, and trailing text if the line

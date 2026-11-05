@@ -78,6 +78,36 @@ func TestNeutralizeHugoShortcodes(t *testing.T) {
 			want:  "````markdown\n``` {{ %s|token}}\n~~~ {{ <ref>}}\n````",
 		},
 		{
+			name:  "braces ending an HTML code span do not form a closing shortcode with the tag",
+			input: "<p>A placeholder is <code>{{</code>, optional whitespace, and <code>}}</code>.</p>",
+			want:  "<p>A placeholder is <code>&#123;{</code>, optional whitespace, and <code>}}</code>.</p>",
+		},
+		{
+			name:  "percent opener inside an HTML code span is disarmed",
+			input: `<dd>Use <code>Bearer {{%s|token}}</code> or <code class="x">{{<ref>}}</code>.</dd>`,
+			want:  `<dd>Use <code>Bearer &#123;{%s|token}}</code> or <code class="x">&#123;{<ref>}}</code>.</dd>`,
+		},
+		{
+			name:  "template placeholders in an HTML code span are left alone",
+			input: "<code>{{budget.name}}</code> and <code>{{ .Value }}</code>",
+			want:  "<code>{{budget.name}}</code> and <code>{{ .Value }}</code>",
+		},
+		{
+			name:  "shortcodes next to but outside an HTML code span are preserved",
+			input: "{{% notes %}} <code>x</code> {{< /chooser >}}",
+			want:  "{{% notes %}} <code>x</code> {{< /chooser >}}",
+		},
+		{
+			name:  "idempotent: already-neutralized HTML code span is unchanged",
+			input: "<code>&#123;{</code> <code>&#123;{%s}}</code>",
+			want:  "<code>&#123;{</code> <code>&#123;{%s}}</code>",
+		},
+		{
+			name:  "HTML code span inside a fence gets the fence treatment only",
+			input: "```html\n<code>{{%s}}</code>\n```",
+			want:  "```html\n<code>{{ %s}}</code>\n```",
+		},
+		{
 			name:  "four-space indented delimiter inside a fence does not close it",
 			input: "```markdown\n    ```\n{{%s|token}}\n```",
 			want:  "```markdown\n    ```\n{{ %s|token}}\n```",

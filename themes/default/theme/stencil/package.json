@@ -12,8 +12,8 @@
         "postinstall": "node scripts/patch-stencil-redux.js"
     },
     "dependencies": {
-        "@growthbook/growthbook": "^1.7.0",
-        "@stencil/core": "^4.45.1",
+        "@growthbook/growthbook": "^1.8.0",
+        "@stencil/core": "^4.45.2",
         "@stencil/redux": "^0.2.0",
         "@stencil/sass": "^3.3.3",
         "@types/codemirror": "^0.0.109",

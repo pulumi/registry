@@ -157,12 +157,18 @@ def render(findings):
 
 
 def find_open_issue(s):
-    response = s.get(f"https://api.github.com/repos/{REPO}/issues",
-                     params={"state": "open", "labels": LABEL, "per_page": 100}, timeout=30)
-    response.raise_for_status()
-    for issue in response.json():
-        if "pull_request" not in issue and MARKER in (issue.get("body") or ""):
-            return issue
+    # Match on the marker alone: LABEL is only applied at creation, and filtering on it
+    # loses the issue (and opens a duplicate) as soon as someone relabels it.
+    url = f"https://api.github.com/repos/{REPO}/issues"
+    params = {"state": "open", "per_page": 100}
+    while url:
+        response = s.get(url, params=params, timeout=30)
+        response.raise_for_status()
+        for issue in response.json():
+            if "pull_request" not in issue and MARKER in (issue.get("body") or ""):
+                return issue
+        url = response.links.get("next", {}).get("url")
+        params = None
     return None
 
 

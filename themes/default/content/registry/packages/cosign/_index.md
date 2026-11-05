@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/chainguard-dev/cosign/0.5.9/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/chainguard-dev/cosign/0.5.10/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Cosign Provider
@@ -64,7 +64,7 @@ Example currently unavailable in this language
 - `defaultAttestationEntryType` (String) Default Rekor entry type to use for attestations. Valid values are 'intoto' (default) or 'dsse'.
 - `defaultSignatureFormat` (String) Default signature format to use for signing. Valid values are 'legacy' (default), 'bundle', or 'both'. Can be overridden per-resource.
 - `timeout` (String) Timeout for signing and attestation operations, as a Go duration string (e.g. '5m', '10m'). Defaults to '3m'.
-- `useRekorV2` (Boolean) When true, the bundle signing path targets Rekor v2 by loading the Rekor v2 SigningConfig from TUF instead of the default. Only affects 'bundle' and 'both' signing; ignored for 'legacy'.
+- `useRekorV2` (Boolean) When true, the bundle signing path targets Rekor v2 by loading the Rekor v2 SigningConfig from TUF instead of the default. Only affects 'bundle' and 'both' signing; ignored for 'legacy'. Cannot be combined with a non-default fulcioUrl or rekorUrl on a resource.
 ## Sign
 
 This provider also exposes `cosign.Sign` and `cosign.Attest` resources that will

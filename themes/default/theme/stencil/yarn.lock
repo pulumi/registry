@@ -320,10 +320,10 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@growthbook/growthbook@^1.7.0":
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/@growthbook/growthbook/-/growthbook-1.7.0.tgz#4507d6ca08c9e9c8fa311b708292181d37ac1a17"
-  integrity sha512-Vmad3fWRh1XaFH4q+AS62ofX6Q3IxSTD7sBGuhEHCaad8VyZerxrVdojucjzlnJDUocfrnZFUSpEkR6R/wCV+A==
+"@growthbook/growthbook@^1.8.0":
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/@growthbook/growthbook/-/growthbook-1.8.0.tgz#a3e54c94492630900fe3637c747fc7c3d5ced092"
+  integrity sha512-WlS5bCwm0EJQDdTNkiPGE1X9EdvU7BIaAbHP8pg/5xP1stRyUI7sPQMpC21p6B2c/VvgxatGn/tM+r0SYnhfQw==
   dependencies:
     dom-mutator "^0.6.0"
 
@@ -763,10 +763,10 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@stencil/core@^4.45.1":
-  version "4.45.1"
-  resolved "https://registry.yarnpkg.com/@stencil/core/-/core-4.45.1.tgz#04d51b9ae1559d992fd31f3c6e269688f197e396"
-  integrity sha512-/b8CItmSwOzZwafxXwomJnN9X/Ic/Fxum9ka/RDHmADVf4DA4152uY7zitzLV+vk8JdXxKA7FKyLT3GKNo9R3A==
+"@stencil/core@^4.45.2":
+  version "4.45.2"
+  resolved "https://registry.yarnpkg.com/@stencil/core/-/core-4.45.2.tgz#0b87cc4533a0a832d4830a17ee8385293d8b14ce"
+  integrity sha512-CNkPVZsqyNMjFMX9bEkMJsvBbQxjLw480OaoamoqiLPdQCFjJQReeOjnWX1A5ivSn3UYEIJ6MoN5VXDkaHGt8Q==
   optionalDependencies:
     "@rollup/rollup-darwin-arm64" "4.44.0"
     "@rollup/rollup-darwin-x64" "4.44.0"

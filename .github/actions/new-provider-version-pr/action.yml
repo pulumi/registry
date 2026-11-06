@@ -28,11 +28,18 @@ runs:
           # Stable per-provider branch so create-pull-request updates one PR per
           # provider instead of opening a new one each run.
           branch: "${{ inputs.provider_short_name }}/publish-metadata"
-      - if: steps.create-pr.outputs.pull-request-operation == 'created'
+      # Whenever the PR is open, not only when this run created it: if enabling automerge failed
+      # then, a later run is the only thing that will retry it. `gh pr merge --auto` also merges a
+      # PR whose checks have already passed, where enabling automerge would be refused.
+      - if: steps.create-pr.outputs.pull-request-number != ''
         name: Set Automerge
-        uses: peter-evans/enable-pull-request-automerge@v3
-        with:
-          merge-method: squash
-          pull-request-number: ${{ steps.create-pr.outputs.pull-request-number }}
-          repository: ${{ github.repository }}
-          token: ${{ inputs.GITHUB_TOKEN }}
+        shell: bash
+        env:
+          GH_TOKEN: ${{ inputs.GITHUB_TOKEN }}
+          PR: ${{ steps.create-pr.outputs.pull-request-number }}
+        run: |
+          if [ "$(gh pr view "$PR" --repo "$GITHUB_REPOSITORY" --json autoMergeRequest --jq '.autoMergeRequest != null')" = true ]; then
+            echo "Automerge is already enabled on #$PR."
+            exit 0
+          fi
+          gh pr merge "$PR" --repo "$GITHUB_REPOSITORY" --squash --auto

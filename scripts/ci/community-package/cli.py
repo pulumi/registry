@@ -196,7 +196,6 @@ def main(argv: list[str]) -> int:
     sub.add_parser("sweep").set_defaults(run=lambda _: comment_commands.sweep())
     sub.add_parser("check-command").set_defaults(run=lambda _: comment_commands.check_command())
     sub.add_parser("preview-command").set_defaults(run=lambda _: comment_commands.preview_command())
-    sub.add_parser("sweep-failed").set_defaults(run=lambda _: comment_commands.sweep_failed())
     sub.add_parser("preview-failed").set_defaults(run=lambda _: comment_commands.preview_failed())
 
     args = parser.parse_args(argv)

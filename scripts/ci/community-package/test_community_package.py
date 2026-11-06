@@ -558,7 +558,7 @@ class CheckAllowlistTests(unittest.TestCase):
 
     def test_the_check_refuses_a_file_the_gate_would_have_refused(self) -> None:
         code, sheet = self._check("community-packages/package-list.json\nREADME.md\n")
-        self.assertEqual(code, 1)
+        self.assertEqual(code, 0, "a rejection is a verdict, so the run must not fail")
         self.assertIn("outside the community package allowlist", sheet)
         self.assertIn("README.md", sheet)
 
@@ -679,7 +679,7 @@ class AllowlistGateTests(unittest.TestCase):
 
     def test_any_other_file_stops_before_the_package_is_touched(self) -> None:
         code, written, sheet = self._fetch([str(package_list.PATH), ".github/workflows/push.yml"])
-        self.assertEqual(code, 1)
+        self.assertEqual(code, 0, "a rejection is a verdict, so the run must not fail")
         self.assertEqual(written, [])
         self.assertIn("outside the community package allowlist", sheet)
         self.assertIn("push.yml", sheet)
@@ -887,12 +887,6 @@ class CheckCrashTests(unittest.TestCase):
         self.assertIn("could not run", sheet)
         self.assertIn("the network went away", sheet)
 
-    def test_a_red_package_keeps_its_own_exit_code(self) -> None:
-        with tempfile.TemporaryDirectory() as scratch:
-            args = argparse.Namespace(diff="origin/master", changed_files=None, out=scratch)
-            with patch.object(cli, "_check", lambda a: 1):
-                self.assertEqual(cli.run_check(args), 1)
-
 
 def _run_report(sheets: dict[str, str], existing: dict[str, Any] | None = None,
                 posted: dict[str, Any] | None = None) -> list[str]:
@@ -1021,8 +1015,8 @@ class VerdictFileTests(unittest.TestCase):
                  patch.object(package_list, "added_entries", lambda base, head: entries), \
                  patch.object(resourcedocsgen, "ensure_built", lambda: None), \
                  patch.object(verify_entry, "verify", lambda e: pending.pop(0)):
-                cli._check(argparse.Namespace(diff="origin/master", out=scratch,
-                                              changed_files=str(changed)))
+                self.exit_code = cli._check(argparse.Namespace(diff="origin/master", out=scratch,
+                                                               changed_files=str(changed)))
             return Path(scratch, comment_commands.VERDICT_FILE).read_text()
 
     def test_a_green_package_writes_pass(self) -> None:
@@ -1033,6 +1027,10 @@ class VerdictFileTests(unittest.TestCase):
 
     def test_a_red_package_writes_fail(self) -> None:
         self.assertEqual(self._verdict([_manifest(green=False)]), "fail")
+
+    def test_a_red_package_does_not_fail_the_run(self) -> None:
+        self._verdict([_manifest(green=False)])
+        self.assertEqual(self.exit_code, 0)
 
     def test_one_red_package_outweighs_a_green_one(self) -> None:
         self.assertEqual(self._verdict([_manifest(green=True), _manifest(green=False)]), "fail")

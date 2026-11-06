@@ -25,7 +25,7 @@ REPO = "pulumi/registry"
 PACKAGES_DIR = Path("themes/default/data/registry/packages")
 PACKAGE_LIST = Path("community-packages/package-list.json")
 MARKER = "<!-- repo-url-audit -->"
-LABEL = "kind/chore"
+ISSUE_TYPE = "Task"
 TITLE = "Package repo URLs have drifted from GitHub"
 PIPELINE_REPO = "pulumi/terraform-to-pulumi-registry-pipeline"
 
@@ -157,12 +157,18 @@ def render(findings):
 
 
 def find_open_issue(s):
-    response = s.get(f"https://api.github.com/repos/{REPO}/issues",
-                     params={"state": "open", "labels": LABEL, "per_page": 100}, timeout=30)
-    response.raise_for_status()
-    for issue in response.json():
-        if "pull_request" not in issue and MARKER in (issue.get("body") or ""):
-            return issue
+    # Match on the marker alone: labels and types are edited during triage, and filtering
+    # on either loses the issue (and opens a duplicate) as soon as someone changes it.
+    url = f"https://api.github.com/repos/{REPO}/issues"
+    params = {"state": "open", "per_page": 100}
+    while url:
+        response = s.get(url, params=params, timeout=30)
+        response.raise_for_status()
+        for issue in response.json():
+            if "pull_request" not in issue and MARKER in (issue.get("body") or ""):
+                return issue
+        url = response.links.get("next", {}).get("url")
+        params = None
     return None
 
 
@@ -188,9 +194,13 @@ def sync_issue(s, body):
         else:
             print(f"#{issue['number']} is already current")
         return
-    created = s.post(api, json={"title": TITLE, "body": body, "labels": [LABEL]}, timeout=30)
+    created = s.post(api, json={"title": TITLE, "body": body, "type": ISSUE_TYPE}, timeout=30)
     created.raise_for_status()
-    print(f"opened #{created.json()['number']}")
+    issue = created.json()
+    print(f"opened #{issue['number']}")
+    # GitHub silently drops the type when the token lacks push access, so say so in the log.
+    if not issue.get("type"):
+        print(f"::warning::#{issue['number']} was opened without the {ISSUE_TYPE} issue type")
 
 
 def main():

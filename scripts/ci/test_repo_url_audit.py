@@ -136,9 +136,10 @@ class TestRender(unittest.TestCase):
         self.assertIn("`(empty)`", render(findings))
 
 
-def response(payload=None):
+def response(payload=None, next_url=None):
     r = mock.Mock()
     r.json.return_value = payload
+    r.links = {"next": {"url": next_url}} if next_url else {}
     return r
 
 
@@ -155,7 +156,23 @@ class TestSyncIssue(unittest.TestCase):
         sync_issue(s, MARKER + "\nbody")
         s.post.assert_called_once()
         self.assertEqual(s.post.call_args.kwargs["json"]["body"], MARKER + "\nbody")
+        self.assertEqual(s.post.call_args.kwargs["json"]["type"], "Task")
+        self.assertNotIn("labels", s.post.call_args.kwargs["json"])
         s.patch.assert_not_called()
+
+    def test_warns_when_github_drops_the_issue_type(self):
+        s = self.session([])
+        with mock.patch("builtins.print") as printed:
+            sync_issue(s, MARKER + "\nbody")
+        self.assertIn("::warning::#99 was opened without the Task issue type",
+                      [c.args[0] for c in printed.call_args_list])
+
+    def test_does_not_warn_when_the_issue_type_is_set(self):
+        s = self.session([])
+        s.post.return_value = response({"number": 99, "type": {"name": "Task"}})
+        with mock.patch("builtins.print") as printed:
+            sync_issue(s, MARKER + "\nbody")
+        self.assertEqual([c.args[0] for c in printed.call_args_list], ["opened #99"])
 
     def test_rewrites_the_open_issue_in_place(self):
         s = self.session([{"number": 5, "body": MARKER + "\nold"}])
@@ -175,6 +192,21 @@ class TestSyncIssue(unittest.TestCase):
                           {"number": 2, "body": MARKER, "pull_request": {}}])
         sync_issue(s, MARKER + "\nbody")
         s.post.assert_called_once()
+
+    def test_finds_the_issue_without_filtering_on_its_label(self):
+        s = self.session([{"number": 5, "body": MARKER + "\nold", "labels": []}])
+        sync_issue(s, MARKER + "\nnew")
+        self.assertNotIn("labels", s.get.call_args.kwargs["params"])
+        s.post.assert_not_called()
+
+    def test_finds_the_issue_on_a_later_page(self):
+        s = self.session([])
+        s.get.side_effect = [response([{"number": 1, "body": "unrelated"}], next_url="https://next"),
+                             response([{"number": 5, "body": MARKER + "\nold"}])]
+        sync_issue(s, MARKER + "\nnew")
+        self.assertEqual(s.get.call_args.args[0], "https://next")
+        self.assertEqual(s.patch.call_args.args[0].rsplit("/", 1)[1], "5")
+        s.post.assert_not_called()
 
     def test_closes_the_open_issue_once_nothing_is_left(self):
         s = self.session([{"number": 5, "body": MARKER + "\nold"}])

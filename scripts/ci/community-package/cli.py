@@ -74,6 +74,8 @@ def run_check(args: argparse.Namespace) -> int:
         return 2
 
 
+# A rejected package exits 0: the verdict reaches the PR through verdict.txt, and a non-zero exit
+# would file a workflow-failure issue for a check that worked. Only a crash exits non-zero.
 def _check(args: argparse.Namespace) -> int:
     out = Path(args.out)
     offending = package_list.files_outside_allowlist(
@@ -81,7 +83,7 @@ def _check(args: argparse.Namespace) -> int:
     if offending:
         _write_sheet(out, "000.factsheet.md", _rejection_sheet(offending))
         _write_verdict(out, "fail")
-        return 1
+        return 0
     entries = package_list.added_entries(package_list.at_ref(args.diff), package_list.current())
     if not entries:
         _write_sheet(out, "000.factsheet.md", _nothing_to_check_sheet())
@@ -94,7 +96,7 @@ def _check(args: argparse.Namespace) -> int:
         _write_sheet(out, f"{index:03d}.factsheet.md", fact_sheet.render(manifest))
         manifests.append(manifest)
     _write_verdict(out, verdict_for(manifests))
-    return 1 if any(not m.green for m in manifests) else 0
+    return 0
 
 
 def run_preview(args: argparse.Namespace) -> int:
@@ -130,7 +132,7 @@ def run_fetch_pr(args: argparse.Namespace) -> int:
     if offending:
         _write_sheet(out, "000.factsheet.md", _rejection_sheet(offending))
         _write_verdict(out, "fail")
-        return 1
+        return 0
     head = str(github_api.pull_request(args.pr)["head"]["sha"])
     for path in package_list.ALLOWED_PATHS:
         path.write_text(github_api.file_content_at(github_api.repo(), str(path), head))

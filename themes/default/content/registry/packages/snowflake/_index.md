@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-snowflake/v2.22.2/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-snowflake/v2.23.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-snowflake/blob/v2.22.2/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-snowflake/blob/v2.23.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Snowflake Provider
 meta_desc: Provides an overview on how to configure the Pulumi Snowflake provider.
@@ -320,8 +320,8 @@ config:
 - `disableTelemetry` (Boolean, Deprecated) This field is deprecated. It will be removed in the next major release. Use `params` to set `CLIENT_TELEMETRY_ENABLED` session parameter instead. Setting this field adds `CLIENT_TELEMETRY_ENABLED` with value `false` to `params`. Disables telemetry in the driver. Can also be sourced from the `DISABLE_TELEMETRY` environment variable.
 - `driverTracing` (String) Specifies the logging level to be used by the driver. Valid options are (case-insensitive): `TRACE` | `DEBUG` | `INFO` | `WARN` | `ERROR` | `FATAL` | `OFF`. The following values are deprecated and will be removed in v3: `WARNING` (uses `WARN` instead), `PRINT` (uses `INFO` instead), `PANIC` (uses `FATAL` instead). Can also be sourced from the `SNOWFLAKE_DRIVER_TRACING` environment variable.
 - `enableSingleUseRefreshTokens` (Boolean) Enables single use refresh tokens for Snowflake IdP. Can also be sourced from the `SNOWFLAKE_ENABLE_SINGLE_USE_REFRESH_TOKENS` environment variable.
-- `experimentalFeaturesDisabled` (Set of String) A list of experimental features to disable. Use this to opt out of experiments that are enabled by default (current default behavior, not preview features). This field can not be set with environmental variables. Check more details in the experimental features section. Experiments you can disable are: `WAREHOUSE_SHOW_IMPROVED_PERFORMANCE` | `GRANTS_STRICT_PRIVILEGE_MANAGEMENT` | `PARAMETERS_IGNORE_VALUE_CHANGES_IF_NOT_ON_OBJECT_LEVEL` | `GRANTS_IMPORT_VALIDATION` | `IMPORT_BOOLEAN_DEFAULT` | `GRANTS_SAFE_DESTROY` | `TAG_ASSOCIATION_SAFE_DESTROY` | `GRANT_ACCOUNT_ROLE_SAFE_PUBLIC_ROLE` | `INHERITED_GRANTS`. Promoted and discontinued experiment names are still accepted as no-ops.
-- `experimentalFeaturesEnabled` (Set of String) A list of opt-in experimental features to enable. Opt-in experiments are not yet stable; enabling one is still considered a preview feature, even when applied to a stable resource. Experiments that are already enabled by default are not preview — listing them here is redundant. These switches offer experiments altering the provider behavior. This field can not be set with environmental variables. Check more details in the experimental features section. Opt-in experiments you can enable are: `PARAMETERS_REDUCED_OUTPUT` | `USER_ENABLE_DEFAULT_WORKLOAD_IDENTITY` | `TAGS_ALLOW_EMPTY_ALLOWED_VALUES` | `GRANT_ACCOUNT_ROLE_SHOW_CACHING` | `ACCOUNT_ROLE_SHOW_CACHING` | `GRANTS_SHOW_CACHING` | `HIERARCHY_RENAMES` | `OBJECT_PARAMETER_UNSET_ON_DELETE` | `AUTHENTICATOR_EXPLICIT_ONLY` | `PROVIDER_CONFIGURATION_ACCOUNT_FALLBACK` | `ACCOUNT_PARAMETER_CATALOG_WRITE_PATH`. Names of experiments that are enabled by default, promoted, or discontinued are still accepted (listing them is redundant or a no-op; see the experimental features section).
+- `experimentalFeaturesDisabled` (Set of String) A list of experimental features to disable. Use this to opt out of experiments that are enabled by default (current default behavior, not preview features). This field can not be set with environmental variables. Check more details in the experimental features section. Experiments you can disable are: `WAREHOUSE_SHOW_IMPROVED_PERFORMANCE` | `GRANTS_STRICT_PRIVILEGE_MANAGEMENT` | `PARAMETERS_IGNORE_VALUE_CHANGES_IF_NOT_ON_OBJECT_LEVEL` | `USER_ENABLE_DEFAULT_WORKLOAD_IDENTITY` | `GRANTS_IMPORT_VALIDATION` | `GRANTS_SAFE_DESTROY` | `TAG_ASSOCIATION_SAFE_DESTROY` | `GRANT_ACCOUNT_ROLE_SAFE_PUBLIC_ROLE` | `INHERITED_GRANTS`. Promoted and discontinued experiment names are still accepted as no-ops. Opt-in experiment names are accepted with a warning: opt-in experiments are disabled unless listed in `experimentalFeaturesEnabled`, so they don't need to be listed here.
+- `experimentalFeaturesEnabled` (Set of String) A list of opt-in experimental features to enable. Opt-in experiments are not yet stable; enabling one is still considered a preview feature, even when applied to a stable resource. Experiments that are already enabled by default are not preview — listing them here is redundant. These switches offer experiments altering the provider behavior. This field can not be set with environmental variables. Check more details in the experimental features section. Opt-in experiments you can enable are: `PARAMETERS_REDUCED_OUTPUT` | `TAGS_ALLOW_EMPTY_ALLOWED_VALUES` | `IMPORT_BOOLEAN_DEFAULT` | `IMPORT_PERMISSIVE_MODE` | `GRANT_ACCOUNT_ROLE_SHOW_CACHING` | `ACCOUNT_ROLE_SHOW_CACHING` | `GRANTS_SHOW_CACHING` | `HIERARCHY_RENAMES` | `OBJECT_PARAMETER_UNSET_ON_DELETE` | `OBJECT_PARAMETER_PARSE_ON_SET` | `AUTHENTICATOR_EXPLICIT_ONLY` | `PROVIDER_CONFIGURATION_ACCOUNT_FALLBACK` | `ACCOUNT_PARAMETER_CATALOG_WRITE_PATH` | `WRITE_ONLY_ATTRIBUTES`. Names of experiments that are enabled by default, promoted, or discontinued are still accepted (listing them is redundant or a no-op; see the experimental features section).
 - `externalBrowserTimeout` (Number) The timeout in seconds for the external browser to complete the authentication. Can also be sourced from the `SNOWFLAKE_EXTERNAL_BROWSER_TIMEOUT` environment variable.
 - `host` (String) Specifies a custom host value used by the driver for privatelink connections. Can also be sourced from the `SNOWFLAKE_HOST` environment variable.
 - `includeRetryReason` (String) Should retried request contain retry reason. Can also be sourced from the `SNOWFLAKE_INCLUDE_RETRY_REASON` environment variable.
@@ -348,7 +348,7 @@ config:
 - `passcodeInPassword` (Boolean) False by default. Set to true if the MFA passcode is embedded to the configured password. Can also be sourced from the `SNOWFLAKE_PASSCODE_IN_PASSWORD` environment variable.
 - `password` (String, Sensitive) Password for user + password or [token](https://docs.snowflake.com/en/user-guide/programmatic-access-tokens#generating-a-programmatic-access-token) for [PAT auth](https://docs.snowflake.com/en/user-guide/programmatic-access-tokens). Cannot be used with `privateKey` and `privateKeyPassphrase`. Can also be sourced from the `SNOWFLAKE_PASSWORD` environment variable.
 - `port` (Number) Specifies a custom port value used by the driver for privatelink connections. Can also be sourced from the `SNOWFLAKE_PORT` environment variable.
-- `previewFeaturesEnabled` (Set of String) A list of preview features that are handled by the provider. See preview features list. Preview features may have breaking changes in future releases, even without raising the major version. This field can not be set with environmental variables. Preview features that can be enabled are: <code>snowflake_account_password_policy_attachment_resource</code> | <code>snowflake_alert_resource</code> | <code>snowflake_alerts_datasource</code> | <code>snowflake_api_integration_resource</code> | <code>snowflake_cortex_search_service_resource</code> | <code>snowflake_cortex_search_services_datasource</code> | <code>snowflake_current_account_datasource</code> | <code>snowflake_database_datasource</code> | <code>snowflake_database_role_datasource</code> | <code>snowflake_dynamic_table_resource</code> | <code>snowflake_dynamic_tables_datasource</code> | <code>snowflake_external_access_integration_resource</code> | <code>snowflake_external_access_integrations_datasource</code> | <code>snowflake_external_function_resource</code> | <code>snowflake_external_functions_datasource</code> | <code>snowflake_external_table_resource</code> | <code>snowflake_external_tables_datasource</code> | <code>snowflake_failover_group_resource</code> | <code>snowflake_failover_groups_datasource</code> | <code>snowflake_file_format_resource</code> | <code>snowflake_function_java_resource</code> | <code>snowflake_function_javascript_resource</code> | <code>snowflake_function_python_resource</code> | <code>snowflake_function_scala_resource</code> | <code>snowflake_function_sql_resource</code> | <code>snowflake_functions_datasource</code> | <code>snowflake_hybrid_table_resource</code> | <code>snowflake_hybrid_tables_datasource</code> | <code>snowflake_iceberg_table_resource</code> | <code>snowflake_iceberg_table_from_aws_glue_resource</code> | <code>snowflake_iceberg_table_from_delta_files_resource</code> | <code>snowflake_iceberg_table_from_files_resource</code> | <code>snowflake_iceberg_table_from_rest_resource</code> | <code>snowflake_iceberg_tables_datasource</code> | <code>snowflake_intelligence_cortex_agent_attachment_resource</code> | <code>snowflake_job_service_resource</code> | <code>snowflake_managed_account_resource</code> | <code>snowflake_materialized_view_resource</code> | <code>snowflake_materialized_views_datasource</code> | <code>snowflake_network_policy_attachment_resource</code> | <code>snowflake_notebook_resource</code> | <code>snowflake_notebooks_datasource</code> | <code>snowflake_email_notification_integration_resource</code> | <code>snowflake_notification_integration_resource</code> | <code>snowflake_object_parameter_resource</code> | <code>snowflake_openflow_connector_definitions_datasource</code> | <code>snowflake_openflow_connector_resource</code> | <code>snowflake_openflow_connectors_datasource</code> | <code>snowflake_openflow_deployment_byoc_resource</code> | <code>snowflake_openflow_deployment_snowflake_managed_resource</code> | <code>snowflake_openflow_deployments_datasource</code> | <code>snowflake_openflow_runtime_resource</code> | <code>snowflake_openflow_runtimes_datasource</code> | <code>snowflake_pipe_resource</code> | <code>snowflake_pipes_datasource</code> | <code>snowflake_postgres_instance_resource</code> | <code>snowflake_current_role_datasource</code> | <code>snowflake_semantic_view_resource</code> | <code>snowflake_semantic_views_datasource</code> | <code>snowflake_sequence_resource</code> | <code>snowflake_sequences_datasource</code> | <code>snowflake_share_resource</code> | <code>snowflake_shares_datasource</code> | <code>snowflake_parameters_datasource</code> | <code>snowflake_procedure_java_resource</code> | <code>snowflake_procedure_javascript_resource</code> | <code>snowflake_procedure_python_resource</code> | <code>snowflake_procedure_scala_resource</code> | <code>snowflake_procedure_sql_resource</code> | <code>snowflake_procedures_datasource</code> | <code>snowflake_stage_resource</code> | <code>snowflake_stages_datasource</code> | <code>snowflake_storage_integration_resource</code> | <code>snowflake_system_generate_scim_access_token_datasource</code> | <code>snowflake_system_get_aws_sns_iam_policy_datasource</code> | <code>snowflake_system_get_privatelink_config_datasource</code> | <code>snowflake_system_get_snowflake_platform_info_datasource</code> | <code>snowflake_table_column_masking_policy_application_resource</code> | <code>snowflake_table_constraint_resource</code> | <code>snowflake_table_resource</code> | <code>snowflake_tables_datasource</code> | <code>snowflake_user_password_policy_attachment_resource</code> | <code>snowflake_user_public_keys_resource</code>. Promoted features that are stable and are enabled by default are: <code>snowflake_account_authentication_policy_attachment_resource</code> | <code>snowflake_account_session_policy_attachment_resource</code> | <code>snowflake_api_integration_amazon_api_gateway_resource</code> | <code>snowflake_api_integration_azure_api_management_resource</code> | <code>snowflake_api_integration_external_mcp_dynamic_client_resource</code> | <code>snowflake_api_integration_external_mcp_oauth2_resource</code> | <code>snowflake_api_integration_git_repository_github_app_resource</code> | <code>snowflake_api_integration_git_repository_oauth2_resource</code> | <code>snowflake_api_integration_git_repository_private_link_resource</code> | <code>snowflake_api_integration_git_repository_token_resource</code> | <code>snowflake_api_integration_google_cloud_api_gateway_resource</code> | <code>snowflake_api_integrations_datasource</code> | <code>snowflake_authentication_policies_datasource</code> | <code>snowflake_authentication_policy_resource</code> | <code>snowflake_catalog_integration_aws_glue_resource</code> | <code>snowflake_catalog_integration_iceberg_rest_resource</code> | <code>snowflake_catalog_integration_object_storage_resource</code> | <code>snowflake_catalog_integration_open_catalog_resource</code> | <code>snowflake_catalog_integrations_datasource</code> | <code>snowflake_compute_pool_resource</code> | <code>snowflake_compute_pools_datasource</code> | <code>snowflake_cortex_agent_resource</code> | <code>snowflake_cortex_agents_datasource</code> | <code>snowflake_current_account_resource</code> | <code>snowflake_current_organization_account_resource</code> | <code>snowflake_stage_external_azure_resource</code> | <code>snowflake_stage_external_gcs_resource</code> | <code>snowflake_stage_external_s3_compatible_resource</code> | <code>snowflake_stage_external_s3_resource</code> | <code>snowflake_external_volume_resource</code> | <code>snowflake_external_volumes_datasource</code> | <code>snowflake_file_format_avro_resource</code> | <code>snowflake_file_format_csv_resource</code> | <code>snowflake_file_format_json_resource</code> | <code>snowflake_file_format_orc_resource</code> | <code>snowflake_file_format_parquet_resource</code> | <code>snowflake_file_format_xml_resource</code> | <code>snowflake_file_formats_datasource</code> | <code>snowflake_git_repositories_datasource</code> | <code>snowflake_git_repository_resource</code> | <code>snowflake_image_repositories_datasource</code> | <code>snowflake_image_repository_resource</code> | <code>snowflake_stage_internal_resource</code> | <code>snowflake_listing_resource</code> | <code>snowflake_listings_datasource</code> | <code>snowflake_mcp_server_resource</code> | <code>snowflake_mcp_servers_datasource</code> | <code>snowflake_network_rule_resource</code> | <code>snowflake_network_rules_datasource</code> | <code>snowflake_password_policies_datasource</code> | <code>snowflake_password_policy_resource</code> | <code>snowflake_service_resource</code> | <code>snowflake_services_datasource</code> | <code>snowflake_session_policies_datasource</code> | <code>snowflake_session_policy_resource</code> | <code>snowflake_storage_integration_aws_resource</code> | <code>snowflake_storage_integration_azure_resource</code> | <code>snowflake_storage_integration_gcs_resource</code> | <code>snowflake_storage_integrations_datasource</code> | <code>snowflake_storage_lifecycle_policies_datasource</code> | <code>snowflake_storage_lifecycle_policy_resource</code> | <code>snowflake_table_storage_lifecycle_policy_attachment_resource</code> | <code>snowflake_user_authentication_policy_attachment_resource</code> | <code>snowflake_user_programmatic_access_token_resource</code> | <code>snowflake_user_programmatic_access_tokens_datasource</code> | <code>snowflake_user_session_policy_attachment_resource</code> | <code>snowflake_warehouse_adaptive_resource</code> | <code>snowflake_warehouse_interactive_resource</code>. Promoted features can be safely removed from this field. They will be removed in the next major version.
+- `previewFeaturesEnabled` (Set of String) A list of preview features that are handled by the provider. See preview features list. Preview features may have breaking changes in future releases, even without raising the major version. This field can not be set with environmental variables. Preview features that can be enabled are: <code>snowflake_account_password_policy_attachment_resource</code> | <code>snowflake_alert_resource</code> | <code>snowflake_alerts_datasource</code> | <code>snowflake_api_integration_resource</code> | <code>snowflake_backup_policies_datasource</code> | <code>snowflake_backup_policy_resource</code> | <code>snowflake_code_bundle_resource</code> | <code>snowflake_code_bundles_datasource</code> | <code>snowflake_cortex_search_service_resource</code> | <code>snowflake_cortex_search_services_datasource</code> | <code>snowflake_current_account_datasource</code> | <code>snowflake_database_datasource</code> | <code>snowflake_database_role_datasource</code> | <code>snowflake_dynamic_table_resource</code> | <code>snowflake_dynamic_tables_datasource</code> | <code>snowflake_external_access_integration_resource</code> | <code>snowflake_external_access_integrations_datasource</code> | <code>snowflake_external_function_resource</code> | <code>snowflake_external_functions_datasource</code> | <code>snowflake_external_table_resource</code> | <code>snowflake_external_tables_datasource</code> | <code>snowflake_failover_group_resource</code> | <code>snowflake_failover_groups_datasource</code> | <code>snowflake_file_format_resource</code> | <code>snowflake_function_java_resource</code> | <code>snowflake_function_javascript_resource</code> | <code>snowflake_function_python_resource</code> | <code>snowflake_function_scala_resource</code> | <code>snowflake_function_sql_resource</code> | <code>snowflake_functions_datasource</code> | <code>snowflake_hybrid_table_resource</code> | <code>snowflake_hybrid_tables_datasource</code> | <code>snowflake_iceberg_table_resource</code> | <code>snowflake_iceberg_table_from_aws_glue_resource</code> | <code>snowflake_iceberg_table_from_delta_files_resource</code> | <code>snowflake_iceberg_table_from_files_resource</code> | <code>snowflake_iceberg_table_from_rest_resource</code> | <code>snowflake_iceberg_tables_datasource</code> | <code>snowflake_intelligence_cortex_agent_attachment_resource</code> | <code>snowflake_job_service_resource</code> | <code>snowflake_managed_account_resource</code> | <code>snowflake_materialized_view_resource</code> | <code>snowflake_materialized_views_datasource</code> | <code>snowflake_network_policy_attachment_resource</code> | <code>snowflake_notebook_resource</code> | <code>snowflake_notebooks_datasource</code> | <code>snowflake_email_notification_integration_resource</code> | <code>snowflake_notification_integration_resource</code> | <code>snowflake_object_parameter_resource</code> | <code>snowflake_pipe_resource</code> | <code>snowflake_pipes_datasource</code> | <code>snowflake_postgres_instance_resource</code> | <code>snowflake_postgres_mirror_resource</code> | <code>snowflake_postgres_mirrors_datasource</code> | <code>snowflake_current_role_datasource</code> | <code>snowflake_semantic_view_resource</code> | <code>snowflake_semantic_views_datasource</code> | <code>snowflake_sequence_resource</code> | <code>snowflake_sequences_datasource</code> | <code>snowflake_share_resource</code> | <code>snowflake_shares_datasource</code> | <code>snowflake_parameters_datasource</code> | <code>snowflake_procedure_java_resource</code> | <code>snowflake_procedure_javascript_resource</code> | <code>snowflake_procedure_python_resource</code> | <code>snowflake_procedure_scala_resource</code> | <code>snowflake_procedure_sql_resource</code> | <code>snowflake_procedures_datasource</code> | <code>snowflake_projection_policies_datasource</code> | <code>snowflake_projection_policy_resource</code> | <code>snowflake_replication_group_resource</code> | <code>snowflake_replication_group_secondary_resource</code> | <code>snowflake_replication_groups_datasource</code> | <code>snowflake_stage_resource</code> | <code>snowflake_stages_datasource</code> | <code>snowflake_storage_integration_resource</code> | <code>snowflake_system_generate_scim_access_token_datasource</code> | <code>snowflake_system_get_aws_sns_iam_policy_datasource</code> | <code>snowflake_system_get_privatelink_config_datasource</code> | <code>snowflake_system_get_snowflake_platform_info_datasource</code> | <code>snowflake_table_column_masking_policy_application_resource</code> | <code>snowflake_table_constraint_resource</code> | <code>snowflake_table_resource</code> | <code>snowflake_tables_datasource</code> | <code>snowflake_user_password_policy_attachment_resource</code> | <code>snowflake_user_public_keys_resource</code>. Promoted features that are stable and are enabled by default are: <code>snowflake_account_authentication_policy_attachment_resource</code> | <code>snowflake_account_session_policy_attachment_resource</code> | <code>snowflake_api_integration_amazon_api_gateway_resource</code> | <code>snowflake_api_integration_azure_api_management_resource</code> | <code>snowflake_api_integration_external_mcp_dynamic_client_resource</code> | <code>snowflake_api_integration_external_mcp_oauth2_resource</code> | <code>snowflake_api_integration_git_repository_github_app_resource</code> | <code>snowflake_api_integration_git_repository_oauth2_resource</code> | <code>snowflake_api_integration_git_repository_private_link_resource</code> | <code>snowflake_api_integration_git_repository_token_resource</code> | <code>snowflake_api_integration_google_cloud_api_gateway_resource</code> | <code>snowflake_api_integrations_datasource</code> | <code>snowflake_authentication_policies_datasource</code> | <code>snowflake_authentication_policy_resource</code> | <code>snowflake_catalog_integration_aws_glue_resource</code> | <code>snowflake_catalog_integration_iceberg_rest_resource</code> | <code>snowflake_catalog_integration_object_storage_resource</code> | <code>snowflake_catalog_integration_open_catalog_resource</code> | <code>snowflake_catalog_integrations_datasource</code> | <code>snowflake_compute_pool_resource</code> | <code>snowflake_compute_pools_datasource</code> | <code>snowflake_cortex_agent_resource</code> | <code>snowflake_cortex_agents_datasource</code> | <code>snowflake_current_account_resource</code> | <code>snowflake_current_organization_account_resource</code> | <code>snowflake_stage_external_azure_resource</code> | <code>snowflake_stage_external_gcs_resource</code> | <code>snowflake_stage_external_s3_compatible_resource</code> | <code>snowflake_stage_external_s3_resource</code> | <code>snowflake_external_volume_resource</code> | <code>snowflake_external_volumes_datasource</code> | <code>snowflake_file_format_avro_resource</code> | <code>snowflake_file_format_csv_resource</code> | <code>snowflake_file_format_json_resource</code> | <code>snowflake_file_format_orc_resource</code> | <code>snowflake_file_format_parquet_resource</code> | <code>snowflake_file_format_xml_resource</code> | <code>snowflake_file_formats_datasource</code> | <code>snowflake_git_repositories_datasource</code> | <code>snowflake_git_repository_resource</code> | <code>snowflake_image_repositories_datasource</code> | <code>snowflake_image_repository_resource</code> | <code>snowflake_stage_internal_resource</code> | <code>snowflake_listing_resource</code> | <code>snowflake_listings_datasource</code> | <code>snowflake_mcp_server_resource</code> | <code>snowflake_mcp_servers_datasource</code> | <code>snowflake_network_rule_resource</code> | <code>snowflake_network_rules_datasource</code> | <code>snowflake_openflow_connector_definitions_datasource</code> | <code>snowflake_openflow_connector_resource</code> | <code>snowflake_openflow_connectors_datasource</code> | <code>snowflake_openflow_deployment_byoc_resource</code> | <code>snowflake_openflow_deployment_snowflake_managed_resource</code> | <code>snowflake_openflow_deployments_datasource</code> | <code>snowflake_openflow_runtime_resource</code> | <code>snowflake_openflow_runtimes_datasource</code> | <code>snowflake_password_policies_datasource</code> | <code>snowflake_password_policy_resource</code> | <code>snowflake_service_resource</code> | <code>snowflake_services_datasource</code> | <code>snowflake_session_policies_datasource</code> | <code>snowflake_session_policy_resource</code> | <code>snowflake_storage_integration_aws_resource</code> | <code>snowflake_storage_integration_azure_resource</code> | <code>snowflake_storage_integration_gcs_resource</code> | <code>snowflake_storage_integrations_datasource</code> | <code>snowflake_storage_lifecycle_policies_datasource</code> | <code>snowflake_storage_lifecycle_policy_resource</code> | <code>snowflake_table_storage_lifecycle_policy_attachment_resource</code> | <code>snowflake_user_authentication_policy_attachment_resource</code> | <code>snowflake_user_programmatic_access_token_resource</code> | <code>snowflake_user_programmatic_access_tokens_datasource</code> | <code>snowflake_user_session_policy_attachment_resource</code> | <code>snowflake_warehouse_adaptive_resource</code> | <code>snowflake_warehouse_interactive_resource</code>. Promoted features can be safely removed from this field. They will be removed in the next major version.
 - `privateKey` (String, Sensitive) Private Key for username+private-key auth. Must be PEM-encoded with literal newlines (escaped `\n` sequences are not supported). See the authentication methods guide. Cannot be used with `password`. Can also be sourced from the `SNOWFLAKE_PRIVATE_KEY` environment variable.
 - `privateKeyPassphrase` (String, Sensitive) Supports the encryption ciphers aes-128-cbc, aes-128-gcm, aes-192-cbc, aes-192-gcm, aes-256-cbc, aes-256-gcm, and des-ede3-cbc. Can also be sourced from the `SNOWFLAKE_PRIVATE_KEY_PASSPHRASE` environment variable.
 - `profile` (String) Sets the profile to read from ~/.snowflake/config file. Can also be sourced from the `SNOWFLAKE_PROFILE` environment variable.
@@ -365,6 +365,7 @@ config:
 - `tmpDirectoryPath` (String) Sets temporary directory used by the driver for operations like encrypting, compressing etc. Can also be sourced from the `SNOWFLAKE_TMP_DIRECTORY_PATH` environment variable.
 - `token` (String, Sensitive) Token to use for OAuth and other forms of token based auth. When this field is set here, or in the TOML file, the provider sets the `authenticator` to `OAUTH`. Optionally, set the `authenticator` field to the authenticator you want to use. Can also be sourced from the `SNOWFLAKE_TOKEN` environment variable.
 - `tokenAccessor` (Block List, Max: 1) If you are using the OAuth authentication flows, use the dedicated `authenticator` and `oauth...` fields instead. See our authentication methods guide for more information. (see below for nested schema)
+- `tokenFilePath` (String) Path to a file containing the token for OAuth, programmatic access token, and OIDC workload identity authentication. The driver re-reads this file on every new connection. Cannot be set together with `token`, including when `token` comes from a TOML profile. AWS, GCP, and Azure workload identity do not read this file. Can also be sourced from the `SNOWFLAKE_TOKEN_FILE_PATH` environment variable.
 - `useLegacyTomlFile` (Boolean) False by default. When this is set to true, the provider expects the legacy TOML format. Otherwise, it expects the new format. See more in the section below Can also be sourced from the `SNOWFLAKE_USE_LEGACY_TOML_FILE` environment variable.
 - `user` (String) Username. Required unless using `profile`. Can also be sourced from the `SNOWFLAKE_USER` environment variable.
 - `validateDefaultParameters` (String) True by default. If false, disables the validation checks for Database, Schema, Warehouse and Role at the time a connection is established. Can also be sourced from the `SNOWFLAKE_VALIDATE_DEFAULT_PARAMETERS` environment variable.
@@ -382,6 +383,10 @@ Required:
 - `redirectUri` (String, Sensitive) The redirect URI for the OAuth provider when using a refresh token to renew access token. Can also be sourced from the `SNOWFLAKE_TOKEN_ACCESSOR_REDIRECT_URI` environment variable.
 - `refreshToken` (String, Sensitive) The refresh token for the OAuth provider when using a refresh token to renew access token. Can also be sourced from the `SNOWFLAKE_TOKEN_ACCESSOR_REFRESH_TOKEN` environment variable.
 - `tokenEndpoint` (String, Sensitive) The token endpoint for the OAuth provider e.g. https://{yourDomain}/oauth/token when using a refresh token to renew access token. Can also be sourced from the `SNOWFLAKE_TOKEN_ACCESSOR_TOKEN_ENDPOINT` environment variable.
+
+Optional:
+
+- `minTlsVersion` (String) Specifies the minimum TLS version for the HTTP client this block uses to exchange a refresh token. The Snowflake driver connection uses `SNOWFLAKE_MIN_TLS_VERSION`, which the driver reads itself. Valid options are: `1.2` | `1.3`. The value is case-insensitive. This does not handle driver connections. If you want to set a minimum TLS version for the Snowflake driver connection, read the [driver documentation](https://pkg.go.dev/github.com/snowflakedb/gosnowflake/v2). Can also be sourced from the `SNOWFLAKE_TOKEN_ACCESSOR_MIN_TLS_VERSION` environment variable.
 ## Authentication
 
 The Snowflake provider supports multiple ways to authenticate:
@@ -461,6 +466,7 @@ export SNOWFLAKE_TOKEN_ACCESSOR_CLIENT_ID='...'
 export SNOWFLAKE_TOKEN_ACCESSOR_CLIENT_SECRET='...'
 export SNOWFLAKE_TOKEN_ACCESSOR_TOKEN_ENDPOINT='...'
 export SNOWFLAKE_TOKEN_ACCESSOR_REDIRECT_URI='https://localhost.com'
+export SNOWFLAKE_TOKEN_ACCESSOR_MIN_TLS_VERSION='1.3' # Optional
 ```
 
 Note because access token have a short life; typically 10 minutes, by passing refresh token new access token will be generated.
@@ -2115,6 +2121,10 @@ To use them, add the relevant feature name to the `previewFeaturesEnabled` field
 - snowflake.NetworkRule
 - snowflake.OauthIntegrationForCustomClients
 - snowflake.OauthIntegrationForPartnerApplications
+- snowflake.OpenflowConnector
+- snowflake.OpenflowDeploymentByoc
+- snowflake.OpenflowDeploymentSnowflakeManaged
+- snowflake.OpenflowRuntime
 - snowflake.PasswordPolicy
 - snowflake.PrimaryConnection
 - snowflake.ResourceMonitor
@@ -2182,6 +2192,10 @@ To use them, add the relevant feature name to the `previewFeaturesEnabled` field
 - snowflake.getMcpServers
 - snowflake.getNetworkPolicies
 - snowflake.getNetworkRules
+- snowflake.getOpenflowConnectorDefinitions
+- snowflake.getOpenflowConnectors
+- snowflake.getOpenflowDeployments
+- snowflake.getOpenflowRuntimes
 - snowflake.getPasswordPolicies
 - snowflake.getResourceMonitors
 - snowflake.getRowAccessPolicies
@@ -2207,6 +2221,8 @@ To use them, add the relevant feature name to the `previewFeaturesEnabled` field
 - snowflake.AccountPasswordPolicyAttachment
 - snowflake.Alert
 - snowflake.ApiIntegration
+- snowflake.BackupPolicy
+- snowflake.CodeBundle
 - snowflake.CortexSearchService
 - snowflake.DynamicTable
 - snowflake.EmailNotificationIntegration
@@ -2234,17 +2250,17 @@ To use them, add the relevant feature name to the `previewFeaturesEnabled` field
 - snowflake.Notebook
 - snowflake.NotificationIntegration
 - snowflake.ObjectParameter
-- snowflake.OpenflowConnector
-- snowflake.OpenflowDeploymentByoc
-- snowflake.OpenflowDeploymentSnowflakeManaged
-- snowflake.OpenflowRuntime
 - snowflake.Pipe
 - snowflake.PostgresInstance
+- snowflake.PostgresMirror
 - snowflake.ProcedureJava
 - snowflake.ProcedureJavascript
 - snowflake.ProcedurePython
 - snowflake.ProcedureScala
 - snowflake.ProcedureSql
+- snowflake.ProjectionPolicy
+- snowflake.ReplicationGroup
+- snowflake.ReplicationGroupSecondary
 - snowflake.SemanticView
 - snowflake.Sequence
 - snowflake.Share
@@ -2260,6 +2276,8 @@ To use them, add the relevant feature name to the `previewFeaturesEnabled` field
 ### Currently preview functions
 
 - snowflake.getAlerts
+- snowflake.getBackupPolicies
+- snowflake.getCodeBundles
 - snowflake.getCortexSearchServices
 - snowflake.CurrentAccount
 - snowflake.getCurrentRole
@@ -2275,13 +2293,12 @@ To use them, add the relevant feature name to the `previewFeaturesEnabled` field
 - snowflake.getIcebergTables
 - snowflake.getMaterializedViews
 - snowflake.getNotebooks
-- snowflake.getOpenflowConnectorDefinitions
-- snowflake.getOpenflowConnectors
-- snowflake.getOpenflowDeployments
-- snowflake.getOpenflowRuntimes
 - snowflake.getParameters
 - snowflake.getPipes
+- snowflake.getPostgresMirrors
 - snowflake.getProcedures
+- snowflake.getProjectionPolicies
+- snowflake.getReplicationGroups
 - snowflake.getSemanticViews
 - snowflake.getSequences
 - snowflake.getShares
@@ -2330,16 +2347,28 @@ Currently, the `parameters` field in various resources contains a verbatim outpu
 To mitigate the problem, we are adding this option to reduce the output to only `value` and `level` fields, which should significantly reduce the state size. **Note**: it's also affecting the `parameters` output for functions.
 
 We considered the option to remove the `parameters` output completely, however, we plan to change the external change logic detection to use it (to make it consistent with other attributes using `showOutput` and because we won't be able to implement the current logic when switching to the Pulumi Plugin Framework) and it still allows referencing the parameter value/level from other parts of the configuration.
-#### USER_ENABLE_DEFAULT_WORKLOAD_IDENTITY
-The new `defaultWorkloadIdentityFederation` field was added to the `snowflake.LegacyServiceUser` and `snowflake.ServiceUser` resources. This field allows for managing WIFs. Due to feature complexity, it requires enabling this experiment.
-
-Read more in our migration guide.
 #### TAGS_ALLOW_EMPTY_ALLOWED_VALUES
 Enables behavior changes for the `allowedValues` field in the `snowflake.Tag` resource.
 
 When enabled, the three possible states in Snowflake for allowed values will be supported: `nil` (any value is allowed; whenever `allowedValues` are empty), `empty` (no value is allowed; handled by the `noAllowedValues` field), and `set` (all values defined in `allowedValues` are allowed).
 
 Otherwise, the `noAllowedValues` field will be ignored (explicit changes will cause updates, but without any effect) and the `allowedValues` field will follow the old behavior: `nil` (any value is allowed; only available whenever tag resource is created without `allowedValues`), `empty` (no value is allowed; always set when updating from filled `allowedValues` set to empty one or completely removed from config), `set` (all values defined in `allowedValues` are allowed).
+#### IMPORT_BOOLEAN_DEFAULT
+This experiment is deprecated in favor of `IMPORT_PERMISSIVE_MODE`. Resources are migrated to `IMPORT_PERMISSIVE_MODE` gradually; when all of them are migrated, this experiment will be discontinued.
+
+Changes import behavior for boolean fields using the special `"default"` value.
+
+When enabled, boolean fields using the special `"default"` value are set to `"default"` during import instead of the actual Snowflake value (e.g., `"false"`). This prevents unavoidable diffs on every plan after import.
+
+Note: this is supported on all stage resources (`snowflake.StageExternalS3`, `snowflake.StageExternalAzure`, `snowflake.StageExternalGcs`, `snowflake.StageExternalS3Compatible`, and `snowflake.StageInternal`), stream resources (`snowflake.StreamOnTable` and `snowflake.StreamOnView`), and storage integration resources (`snowflake.StorageIntegrationAws` and `snowflake.StorageIntegrationAzure`).
+#### IMPORT_PERMISSIVE_MODE
+Switches imports to the permissive mode.
+
+By default, imports use the enforcing mode: the plan after import shows a change for every attribute that the configuration omits but that has a value in Snowflake. Applying that plan resets these attributes to their Snowflake defaults.
+
+When enabled, the provider accepts the values the object already has for the attributes that the configuration omits, so the plan after import shows no change for them. This applies only to the import itself: external changes made after the import are detected as usual.
+
+Note: this is currently supported on the `snowflake.AuthenticationPolicy`, `snowflake.BackupPolicy`, `snowflakeBackupSet`, `snowflake.CatalogIntegrationAwsGlue`, `snowflake.CatalogIntegrationIcebergRest`, `snowflake.CatalogIntegrationObjectStorage`, `snowflake.CatalogIntegrationOpenCatalog`, `snowflake.ComputePool`, `snowflake.ExternalVolume`, `snowflake.Pipe`, `snowflake.PostgresMirror`, `snowflake.Share`, `snowflake.Warehouse`, `snowflake.WarehouseAdaptive`, and `snowflake.WarehouseInteractive` resources.
 #### GRANT_ACCOUNT_ROLE_SHOW_CACHING
 Enables per-plan in-memory caching of `SHOW GRANTS OF ROLE` results for the `snowflake.GrantAccountRole` resource.
 
@@ -2375,9 +2404,9 @@ Intended for large configurations (thousands of grant resources) where plan and 
 #### HIERARCHY_RENAMES
 When enabled, allows in-place handling of hierarchy renames and moves for supported resources.
 
-Currently supported by: `snowflake.Schema`, `snowflake.Table`.
+Currently supported by: `snowflake.AuthenticationPolicy`, `snowflake.BackupPolicy`, `snowflakeBackupSet`, `snowflake.HybridTable`, `snowflake.ProjectionPolicy`, `snowflake.Schema`, `snowflake.Table`.
 
-Without this experiment, changing the `database` field on `snowflake.Schema` or the `database`/`schema` fields on `snowflake.Table` forces resource recreation. With this experiment, the provider detects whether the parent was renamed or the object should be moved, and handles it without recreation.
+Without this experiment, changing the `database` field on `snowflake.Schema` or the `database`/`schema` fields on the other supported resources forces resource recreation. With this experiment, the provider detects whether the parent was renamed or the object should be moved, and handles it without recreation.
 
 For more information, see the object renaming guide.
 #### OBJECT_PARAMETER_UNSET_ON_DELETE
@@ -2386,6 +2415,16 @@ Changes the delete behavior of the `snowflake.ObjectParameter` resource to use `
 Without this experiment, deleting the resource fetches the parameter's default value and explicitly sets it back, which is fragile and doesn't truly remove the object-level override.
 
 When enabled, the parameter is properly unset, allowing the inherited value from the higher hierarchy level to take effect.
+#### OBJECT_PARAMETER_PARSE_ON_SET
+Changes how `snowflake.ObjectParameter` handles the `value` field for covered parameters.
+
+Without this experiment, `value` is sent as a raw SQL token. You supply any quoting, and a value that does not match the parameter is not checked by the provider.
+
+With this experiment, covered parameters are parsed with the same rules as the typed SDK fields. A value that does not match the parameter fails in the provider. String values are quoted by the provider, so a configuration such as `DEFAULT_DDL_COLLATION = "en-ci-upper"` is stored as written. Identifier parameters stay a bare name in configuration. Numeric and boolean values need no quoting either way.
+
+Covered today: account-level (`onAccount = true`) parameters and Database, Schema, Warehouse, User, Task, Service, Hybrid Table, and Iceberg Table. Account-level parameters already parse values this way. A parameter or object type that is not covered yet keeps the previous behavior, including Function and Procedure, because this resource does not capture argument types. An enum value the catalog does not recognize is logged and also keeps the previous behavior.
+
+See the migration guide for a detailed view: <https://github.com/snowflakedb/pulumi-provider-snowflake/blob/dev/MIGRATION_GUIDE.md#opt-in-experiment-parse-snowflake_object_parameter-values-on-set>.
 #### AUTHENTICATOR_EXPLICIT_ONLY
 Removes implicit authenticator derivation from other provider configuration fields.
 
@@ -2404,6 +2443,12 @@ Changes how `snowflake.AccountParameter` builds the SQL it sends for the `value`
 String-typed parameter values no longer need to be manually wrapped in single quotes within `value` — quoting is now handled internally. Identifier-typed parameters (e.g. referencing a network policy by name) require no `value` change, but are now sent as a quoted identifier instead of a single-quoted string literal.
 
 This experiment is also the first step toward forward-compatible parameter support (new Snowflake parameters usable without a provider upgrade); for now it only changes how existing parameters are written. See the migration guide for a detailed, before/after view of the configuration changes: <https://github.com/snowflakedb/pulumi-provider-snowflake/blob/dev/MIGRATION_GUIDE.md#opt-in-experiment-internal-quoting-for-snowflake_account_parameter>.
+#### WRITE_ONLY_ATTRIBUTES
+Enables write-only attributes. Their values are never saved in the pulumi preview or state, so they can be set from an ephemeral resource. They require Pulumi 1.11 or later.
+
+Currently supported by: `rsaPublicKeyWo` and `rsaPublicKey2Wo`, with their `rsaPublicKeyWoVersion` and `rsaPublicKey2WoVersion` version counters, on `snowflake.User`, `snowflake.ServiceUser`, and `snowflake.LegacyServiceUser`.
+
+Without this experiment, using a write-only attribute that is behind it results in an error.
 ### Experiments enabled by default
 
 The following experiments are enabled by default. They are the provider's current default behavior and are no longer preview features. You can opt out by listing them in `experimentalFeaturesDisabled`. They will be promoted (and the opt-out removed) in the listed versions.
@@ -2441,22 +2486,22 @@ When enabled, the provider ignores changes to the parameter value happening on t
 This experiment is enabled by default. Opt out by listing it in `experimentalFeaturesDisabled`.
 
 It will be promoted in v2.23.0 or v2.24.0.
+#### USER_ENABLE_DEFAULT_WORKLOAD_IDENTITY
+The `defaultWorkloadIdentity` field on the `snowflake.LegacyServiceUser` and `snowflake.ServiceUser` resources manages workload identity federation (WIF).
+
+When the field is omitted, a workload identity configured outside Pulumi is unset on the next apply.
+
+Read more in our migration guide.
+
+This experiment is enabled by default. Opt out by listing it in `experimentalFeaturesDisabled`.
+
+It will be promoted in v2.24.0 or v2.25.0.
 #### GRANTS_IMPORT_VALIDATION
 Enables import validation for the `snowflake.GrantPrivilegesToAccountRole` resource.
 
 When enabled, importing a grant resource with a fixed set of privileges (`privileges` field) will validate that the specified privileges actually exist in Snowflake with the correct `withGrantOption` setting, and error immediately if they don't match.
 
 This feature works independently of the `GRANTS_STRICT_PRIVILEGE_MANAGEMENT` flag.
-
-This experiment is enabled by default. Opt out by listing it in `experimentalFeaturesDisabled`.
-
-It will be promoted in v2.23.0 or v2.24.0.
-#### IMPORT_BOOLEAN_DEFAULT
-Changes import behavior for boolean fields using the special `"default"` value.
-
-When enabled, boolean fields using the special `"default"` value are set to `"default"` during import instead of the actual Snowflake value (e.g., `"false"`). This prevents unavoidable diffs on every plan after import.
-
-Note: this is supported on all stage resources (`snowflake.StageExternalS3`, `snowflake.StageExternalAzure`, `snowflake.StageExternalGcs`, `snowflake.StageExternalS3Compatible`, and `snowflake.StageInternal`) and stream resources (`snowflake.StreamOnTable` and `snowflake.StreamOnView`).
 
 This experiment is enabled by default. Opt out by listing it in `experimentalFeaturesDisabled`.
 

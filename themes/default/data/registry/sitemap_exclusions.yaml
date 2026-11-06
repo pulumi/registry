@@ -1,0 +1,27 @@
+# Registry packages omitted from /registry/sitemap.xml.
+#
+# Effect: the package's URLs are not listed in the XML sitemap. Nothing else
+# changes. Pages stay crawlable, indexable, linked from the registry, and
+# present in the LLM sitemap (package.llmsitemap.json). There is no noindex
+# and no robots.txt change.
+#
+# Rollback: delete a line (or revert the PR). The package returns to the
+# sitemap on the next registry deploy.
+#
+# Context: low-demand provider packages with no sitemap-worthy traffic;
+# see the registry crawl-budget program. Review 28 days after deploy.
+packages:
+  - bytepluscc
+  - checkpoint
+  - flexibleengine
+  - fortimanager
+  - fortios
+  - ibm
+  - intersight
+  - nsxt
+  - nutanix
+  - opentelekomcloud
+  - sdwan
+  - tencentcloud
+  - volcengine
+  - volcenginecc

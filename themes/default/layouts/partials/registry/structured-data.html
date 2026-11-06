@@ -23,6 +23,8 @@
       - BreadcrumbList, for every registry page.
 
     Conditionally includes:
+      - CollectionPage for the registry landing page (/registry/), so it has
+        a page-level node like the WebPage node docs pages carry.
       - SoftwareSourceCode for the package overview page. Matches npmjs.com's
         convention for a provider library / SDK consumed by Pulumi.
       - HowTo for installation-configuration pages.
@@ -180,6 +182,22 @@
 {{ end }}
 {{ $breadcrumb := dict "@type" "BreadcrumbList" "@id" (printf "%s#breadcrumb" .Permalink) "itemListElement" $crumbs }}
 {{ $graph = $graph | append $breadcrumb }}
+
+{{/* ---------- CollectionPage (registry landing page only) ---------- */}}
+{{ if eq $rel "/registry/" }}
+    {{ $landing := dict
+        "@type" "CollectionPage"
+        "@id" (printf "%s#webpage" .Permalink)
+        "url" .Permalink
+        "name" "Pulumi Registry"
+        "description" .Params.meta_desc
+        "inLanguage" "en-US"
+        "isPartOf" (dict "@id" "https://www.pulumi.com/#website")
+        "publisher" $orgRef
+        "breadcrumb" (dict "@id" (printf "%s#breadcrumb" .Permalink))
+    }}
+    {{ $graph = $graph | append $landing }}
+{{ end }}
 
 {{ if $pkg }}
 

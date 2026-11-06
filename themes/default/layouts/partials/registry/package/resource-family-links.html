@@ -1,0 +1,31 @@
+{{- /*
+  Related resources and functions for an api-docs leaf page (aws, gcp).
+  Links a resource to its data source (get<X>), IAM variants, and v2 variant so
+  related pages reinforce each other instead of hanging off one long alphabetical list.
+*/ -}}
+{{- $cfg := site.Data.registry.resource_family_links -}}
+{{- $parts := split (strings.Trim .RelPermalink "/") "/" -}}
+{{- if and $cfg (ge (len $parts) 5) (eq (index $parts 0) "registry") (eq (index $parts 1) "packages") (eq (index $parts 3) "api-docs") (in $cfg.packages (index $parts 2)) (not (strings.Contains .RelPermalink "@")) -}}
+  {{- with .Parent -}}
+    {{- if and .Parent .Parent.File (strings.HasSuffix .Parent.File.Path "api-docs/_index.md") -}}
+      {{- $self := $.RelPermalink -}}
+      {{- $base := lower (index $parts (sub (len $parts) 1)) -}}
+      {{- if and (strings.HasPrefix $base "get") (gt (len $base) 3) -}}{{- $base = strings.TrimPrefix "get" $base -}}{{- end -}}
+      {{- $base = replaceRE "(iambinding|iammember|iampolicy)$" "" $base -}}
+      {{- if and (strings.HasSuffix $base "v2") (gt (len $base) 2) -}}{{- $base = strings.TrimSuffix "v2" $base -}}{{- end -}}
+      {{- $map := partialCached "registry/package/resource-family-links-map.html" . .RelPermalink -}}
+      {{- $family := slice -}}
+      {{- range index $map $base | default slice -}}
+        {{- if ne .RelPermalink $self -}}{{- $family = $family | append . -}}{{- end -}}
+      {{- end -}}
+      {{- if $family -}}
+<h2 id="related-resources">Related resources and functions</h2>
+<ul>
+        {{- range first 12 (sort $family "Title") }}
+    <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+        {{- end }}
+</ul>
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}

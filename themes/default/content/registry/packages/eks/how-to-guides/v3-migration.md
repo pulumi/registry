@@ -280,7 +280,7 @@ All properties of components in the Node.js SDK are now wrapped in `Output`. Thi
 Accessing those optional resource outputs now requires using `apply`.
 
 We added convenient access properties for frequently used outputs:
-- Creating an IRSA based IAM role now requires using `apply` for accessing the cluster's OIDC provider ARN and URL. Alternatively, use the new top level properties `oidcProviderArn` and `oidcIssuer`. An example can be found [here](https://github.com/pulumi/pulumi-eks/blob/release-3.x.x/examples/oidc-iam-sa/index.ts).
+- Creating an IRSA based IAM role now requires using `apply` for accessing the cluster's OIDC provider ARN and URL. Alternatively, use the new top level properties `oidcProviderArn` and `oidcIssuer`. An example can be found [here](https://github.com/pulumi/pulumi-eks/blob/master/examples/oidc-iam-sa/index.ts).
 - Accessing a cluster's `clusterSecurityGroup`, `nodeSecurityGroup`, and `eksClusterIngressRule` requires using `apply`. Alternatively, use the new top-level properties. The `NodeGroup` and `NodeGroupV2` components were updated to also take those new top-level properties as inputs.
   - Use the following top-level properties of the `Cluster` component:
     - `clusterSecurityGroupId` instead of `cluster.clusterSecurityGroup.id`

@@ -2,7 +2,6 @@ name: New Package
 description: Request to add a new package to the registry.
 type: Task
 labels:
-  - needs-triage
   - kind/package
 body:
   - type: markdown

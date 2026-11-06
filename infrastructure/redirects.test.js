@@ -252,3 +252,12 @@ test("Accept normalization: missing Accept stays missing", () => {
     handler(event);
     assert.equal(event.request.headers["accept"], undefined);
 });
+
+// index.ts ships this file verbatim as CloudFront Function code. CloudFront
+// rejects functions over 10 KB, but only at `pulumi up`, which runs post-merge
+// after the full site build. 9,000 bytes keeps a margin under the stricter
+// reading of "10 KB" (10,000 bytes).
+test("redirects.js stays under the CloudFront Function size limit", () => {
+    const bytes = Buffer.byteLength(source, "utf8");
+    assert.ok(bytes <= 9000, `redirects.js is ${bytes} bytes; keep it at or under 9,000 (CloudFront caps function code at 10 KB)`);
+});

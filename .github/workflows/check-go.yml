@@ -33,6 +33,9 @@ jobs:
       uses: golangci/golangci-lint-action@v9
       with:
         version: v2.10.1
+        # The schema check downloads the schema from golangci-lint.run and often times out.
+        # golangci-lint still fails on a config it cannot load.
+        verify: false
         working-directory: ${{ inputs.path }}
         args: --config $GITHUB_WORKSPACE/.golangci.yml
 

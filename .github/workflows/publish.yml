@@ -9,6 +9,10 @@ on:
         description: "Space-separated package specs to publish, e.g. pulumi/pulumi/meraki@0.5.3 (default: the last commit's changed packages)"
         type: string
         required: false
+      reconcile:
+        description: "Publish every package version on master since the reconcile floor that the registry is missing (ignores specs)"
+        type: boolean
+        default: false
       dry-run:
         description: "Show what would be published without publishing"
         type: boolean
@@ -69,9 +73,16 @@ jobs:
         uses: astral-sh/setup-uv@v7
       - name: Publish to registry (primary)
         id: mirror-publish
-        continue-on-error: true
-        run: uv run --with pyyaml scripts/ci/publish_to_registry.py ${DRY_RUN:+--dry-run} ${SPECS:+--specs $SPECS} ${BASE_SHA:+--base $BASE_SHA}
+        # Reconcile has no fallback, so its failure must fail the run.
+        continue-on-error: ${{ !inputs.reconcile }}
+        run: |
+          if [ -n "$RECONCILE" ]; then
+            uv run --with pyyaml scripts/ci/publish_to_registry.py --reconcile ${DRY_RUN:+--dry-run}
+          else
+            uv run --with pyyaml scripts/ci/publish_to_registry.py ${DRY_RUN:+--dry-run} ${SPECS:+--specs $SPECS} ${BASE_SHA:+--base $BASE_SHA}
+          fi
         env:
+          RECONCILE: ${{ inputs.reconcile && 'true' || '' }}
           SPECS: ${{ inputs.specs }}
           # A push can carry several commits (e.g. a merge queue batch); diff all of them, not just HEAD~1.
           BASE_SHA: ${{ github.event.before }}
@@ -107,7 +118,7 @@ jobs:
           SLACK_ICON: https://www.pulumi.com/logos/brand/avatar-on-white.png
 
   notify:
-    if: always() && (needs.publish.result == 'failure' || needs.publish.result == 'cancelled')
+    if: always() && (needs.publish.result == 'failure' || needs.publish.result == 'cancelled') && !inputs.dry-run
     name: Send slack notification
     runs-on: ubuntu-latest
     timeout-minutes: 5

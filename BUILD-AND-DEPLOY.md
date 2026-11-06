@@ -527,7 +527,6 @@ All workflow files live in `.github/workflows/`.
 | `bucket-cleanup.yml` | Scheduled jobs: Bucket cleanup | Daily 3:00 PM UTC |
 | `repo-url-audit.yml` | Scheduled jobs: Repo URL audit | Every Monday 2:00 PM UTC |
 | `export-repo-secrets.yml` | Export secrets to ESC | `workflow_dispatch` |
-| `add-to-project.yml` | Add issues to project | Issue opened / reopened |
 
 ### 5.1 `pull-request.yml` — PR Validation + Preview Deploy
 
@@ -778,12 +777,6 @@ Uses the workflow's own `GITHUB_TOKEN` with `issues: write`. `--dry-run` prints 
 **Trigger**: `workflow_dispatch` only
 
 Exports all GitHub repository secrets (except `EXPORT_SECRETS_PRIVATE_KEY`) to the `github-secrets/pulumi-registry` ESC environment using the `pulumi/esc-export-secrets-action`.
-
-#### `add-to-project.yml` — Add Issues to GitHub Project
-
-**Trigger**: Issue opened or reopened
-
-Adds new issues to the Pulumi Docs GitHub project (project #79) using `PULUMI_BOT_GHA_MARKETING` token from ESC.
 
 ---
 

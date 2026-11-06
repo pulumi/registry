@@ -1,9 +1,6 @@
 name: "Scheduled jobs: Check links"
 env:
-  ESC_ACTION_OIDC_AUTH: true
-  ESC_ACTION_OIDC_ORGANIZATION: pulumi
-  ESC_ACTION_OIDC_REQUESTED_TOKEN_TYPE: urn:pulumi:token-type:access_token:organization
-  ESC_ACTION_ENVIRONMENT: github-secrets/pulumi-registry
+  ESC_ACTION_ENVIRONMENT: pulumi/github-secrets/pulumi-registry
   ESC_ACTION_EXPORT_ENVIRONMENT_VARIABLES: false
 on:
   schedule:
@@ -30,9 +27,18 @@ jobs:
       # checkout -- the PR opened by claude-code-action later then goes out as
       # pulumi-bot rather than github-actions[bot], which is what lets
       # downstream workflows (pull-request.yml, the review, etc.) fire on it.
+      - name: Authenticate to Pulumi Cloud
+        id: pulumi-auth
+        uses: pulumi/auth-actions@v2
+        with:
+          organization: pulumi
+          requested-token-type: urn:pulumi:token-type:access_token:organization
+          export-environment-variables: false
       - name: Fetch secrets from ESC
         id: esc-secrets
-        uses: pulumi/esc-action@b061167a29bad21ea5ff1fca900addb89227c49b # v3.2.2
+        uses: pulumi/esc-action@v4
+        with:
+          pulumi-access-token: ${{ steps.pulumi-auth.outputs.pulumi-access-token }}
       - uses: actions/checkout@v7
         with:
           token: ${{ steps.esc-secrets.outputs.PULUMI_BOT_TOKEN }}

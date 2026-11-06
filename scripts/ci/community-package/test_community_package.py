@@ -1073,39 +1073,6 @@ class CommentPaginationTests(unittest.TestCase):
         self.assertEqual([c["id"] for c in found], [249])
 
 
-class SweepFailureIssueTests(unittest.TestCase):
-    def _alert(self, listed: list[dict[str, Any]]) -> list[dict[str, Any]]:
-        created: list[dict[str, Any]] = []
-        os.environ.update(REPO="x/y", GITHUB_RUN_ID="42", GITHUB_REPOSITORY="x/y")
-        with patch.object(github_api, "request", lambda p, *a, **k: listed), \
-             patch.object(github_api, "create_issue",
-                          lambda title, body, labels: created.append(
-                              {"title": title, "body": body, "labels": labels})):
-            comment_commands.sweep_failed()
-        return created
-
-    def _issue(self, body: str) -> dict[str, Any]:
-        return {"number": 5, "body": body}
-
-    def test_the_first_failure_opens_one_issue(self) -> None:
-        created = self._alert([])
-        self.assertEqual(len(created), 1)
-        self.assertEqual(created[0]["labels"], [comment_commands.SWEEP_FAILURE_LABEL])
-        self.assertIn(comment_commands.SWEEP_FAILURE_MARKER, created[0]["body"])
-        self.assertIn("/actions/runs/42", created[0]["body"])
-
-    def test_every_later_failure_opens_nothing(self) -> None:
-        marked = self._issue(comment_commands.SWEEP_FAILURE_MARKER + "\nstill broken")
-        self.assertEqual(self._alert([marked]), [])
-
-    def test_an_unrelated_p1_issue_does_not_suppress_the_alert(self) -> None:
-        self.assertEqual(len(self._alert([self._issue("some other p1 problem")])), 1)
-
-    def test_a_pull_request_is_never_mistaken_for_the_issue(self) -> None:
-        pr = {"number": 6, "body": comment_commands.SWEEP_FAILURE_MARKER, "pull_request": {}}
-        self.assertEqual(len(self._alert([pr])), 1)
-
-
 class TransientFailureTests(unittest.TestCase):
     def _http_error(self, code: int) -> urllib.error.HTTPError:
         return urllib.error.HTTPError("https://api.github.com/x", code, "boom",

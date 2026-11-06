@@ -114,18 +114,6 @@ def open_pull_requests() -> list[dict[str, Any]]:
     return list(request(f"/repos/{repo()}/pulls?state=open&per_page=100"))
 
 
-def open_issue_with_marker(marker: str, label: str) -> dict[str, Any] | None:
-    listed = request(f"/repos/{repo()}/issues?state=open&labels={label}&per_page=100")
-    for issue in listed:
-        if "pull_request" not in issue and marker in (issue.get("body") or ""):
-            return dict(issue)
-    return None
-
-
-def create_issue(title: str, body: str, labels: list[str]) -> None:
-    request(f"/repos/{repo()}/issues", "POST", {"title": title, "body": body, "labels": labels})
-
-
 def add_reaction(comment_id: str, content: str) -> None:
     try:
         request(f"/repos/{repo()}/issues/comments/{comment_id}/reactions", "POST", {"content": content})

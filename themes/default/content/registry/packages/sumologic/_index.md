@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/sumologic/sumologic/3.3.6/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/sumologic/sumologic/3.3.7/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Sumologic Provider
@@ -64,6 +64,8 @@ $ pulumi preview
 - `accessId` - (Required) This is the Sumo Logic Access ID. It must be provided, but it can also be source from the SUMOLOGIC_ACCESSID environment variable.
 - `accessKey` - (Required) This is the Sumo Logic Access Key. It must be provided, but it can also be sourced from the SUMOLOGIC_ACCESSKEY variable.
 - `environment` - (Required) This is the API endpoint to use. See the [Sumo Logic documentation](https://help.sumologic.com/APIs/General_API_Information/Sumo_Logic_Endpoints_and_Firewall_Security) for details on which environment you should use. It must be provided, but it can be sourced from the SUMOLOGIC_ENVIRONMENT variable.
+- `baseUrl` - (Optional) The base URL of the Sumo Logic API. Use this to override the URL derived from `environment`. It can also be sourced from the SUMOLOGIC_BASE_URL environment variable.
+- `adminMode` - (Optional) Set to `true` to run the provider in Admin Mode. In Admin Mode, requests are sent with administrator privileges, which lets you manage Content Library items owned by other users (for example, folders under the Admin Recommended Folder). The authenticated user must have the Content Admin capability (Manage Content) for these requests to succeed. Defaults to `false`. To use both modes in one configuration, define a second provider configuration with `adminMode = true` and an `alias`, then reference it with `provider = sumologic.<alias>` on the resources that need it. See the Example Usage above.
 ## Common Source Properties
 
 The following properties are common to ALL sources and can be used to configure each source.

@@ -23,18 +23,23 @@ jobs:
     if: github.ref == 'refs/heads/master'
     env:
       GOPATH: ${{ github.workspace }}/go
-      ESC_ACTION_OIDC_AUTH: true
-      ESC_ACTION_OIDC_ORGANIZATION: pulumi
-      ESC_ACTION_OIDC_REQUESTED_TOKEN_TYPE: urn:pulumi:token-type:access_token:organization
     runs-on: ubuntu-latest
     timeout-minutes: 20
     environment: production
     steps:
+      - name: Authenticate to Pulumi Cloud
+        id: pulumi-auth
+        uses: pulumi/auth-actions@273044cc19e63ea565285da8edd4e059126a0bdb # v2.1.2
+        with:
+          organization: pulumi
+          requested-token-type: urn:pulumi:token-type:access_token:organization
+          export-environment-variables: false
       - name: Fetch secrets from ESC
         id: esc-secrets
-        uses: pulumi/esc-action@b061167a29bad21ea5ff1fca900addb89227c49b # v3.2.2
+        uses: pulumi/esc-action@eec71a90d9989af7ff14bd700b83fc72fae36119 # v4.0.0
         with:
-          environment: github-secrets/pulumi-registry
+          pulumi-access-token: ${{ steps.pulumi-auth.outputs.pulumi-access-token }}
+          environment: pulumi/github-secrets/pulumi-registry
           export-environment-variables: false
       - name: Check out branch
         uses: actions/checkout@v7
@@ -64,6 +69,9 @@ jobs:
             bin/registry-mirror-discover
             bin/registry-mirror-publish
           key: registry-mirror-tools-${{ steps.mirror-version.outputs.hash }}-go${{ steps.setup-go.outputs.go-version }}
+
+      - name: Install Pulumi CLI for the legacy fallback
+        uses: pulumi/actions@96c7761824268174e0d2a4e8c7d75671eebd24a7 # v7
 
       - name: Install uv for publish
         uses: astral-sh/setup-uv@v7
@@ -114,16 +122,20 @@ jobs:
     needs: [publish]
     permissions:
       id-token: write
-    env:
-      ESC_ACTION_OIDC_AUTH: true
-      ESC_ACTION_OIDC_ORGANIZATION: pulumi
-      ESC_ACTION_OIDC_REQUESTED_TOKEN_TYPE: urn:pulumi:token-type:access_token:organization
     steps:
+      - name: Authenticate to Pulumi Cloud
+        id: pulumi-auth
+        uses: pulumi/auth-actions@273044cc19e63ea565285da8edd4e059126a0bdb # v2.1.2
+        with:
+          organization: pulumi
+          requested-token-type: urn:pulumi:token-type:access_token:organization
+          export-environment-variables: false
       - name: Fetch secrets from ESC
         id: esc-secrets
-        uses: pulumi/esc-action@b061167a29bad21ea5ff1fca900addb89227c49b # v3.2.2
+        uses: pulumi/esc-action@eec71a90d9989af7ff14bd700b83fc72fae36119 # v4.0.0
         with:
-          environment: github-secrets/pulumi-registry
+          pulumi-access-token: ${{ steps.pulumi-auth.outputs.pulumi-access-token }}
+          environment: pulumi/github-secrets/pulumi-registry
           export-environment-variables: false
       - name: Slack Notification
         uses: docker://sholung/action-slack-notify:v2.3.0

@@ -14,19 +14,23 @@ jobs:
     name: Build
     env:
       GOPATH: ${{ github.workspace }}/go
-      ESC_ACTION_OIDC_AUTH: true
-      ESC_ACTION_OIDC_ORGANIZATION: pulumi
-      ESC_ACTION_OIDC_REQUESTED_TOKEN_TYPE: urn:pulumi:token-type:access_token:organization
     runs-on: pulumi-service-ubuntu-24.04-16core
     timeout-minutes: 90
     environment: production
     steps:
+      - name: Authenticate to Pulumi Cloud
+        id: pulumi-auth
+        uses: pulumi/auth-actions@273044cc19e63ea565285da8edd4e059126a0bdb # v2.1.2
+        with:
+          organization: pulumi
+          requested-token-type: urn:pulumi:token-type:access_token:organization
+          export-environment-variables: false
       - name: Fetch secrets from ESC
         id: esc-secrets
-        uses: pulumi/esc-action@b061167a29bad21ea5ff1fca900addb89227c49b # v3.2.2
+        uses: pulumi/esc-action@eec71a90d9989af7ff14bd700b83fc72fae36119 # v4.0.0
         with:
-          # Note: This authenticates using OIDC token
-          environment: github-secrets/pulumi-registry
+          pulumi-access-token: ${{ steps.pulumi-auth.outputs.pulumi-access-token }}
+          environment: pulumi/github-secrets/pulumi-registry
           export-environment-variables: false
       - name: Check out branch
         uses: actions/checkout@v7
@@ -131,16 +135,20 @@ jobs:
     needs: [build]
     permissions:
       id-token: write
-    env:
-      ESC_ACTION_OIDC_AUTH: true
-      ESC_ACTION_OIDC_ORGANIZATION: pulumi
-      ESC_ACTION_OIDC_REQUESTED_TOKEN_TYPE: urn:pulumi:token-type:access_token:organization
     steps:
+      - name: Authenticate to Pulumi Cloud
+        id: pulumi-auth
+        uses: pulumi/auth-actions@273044cc19e63ea565285da8edd4e059126a0bdb # v2.1.2
+        with:
+          organization: pulumi
+          requested-token-type: urn:pulumi:token-type:access_token:organization
+          export-environment-variables: false
       - name: Fetch secrets from ESC
         id: esc-secrets
-        uses: pulumi/esc-action@b061167a29bad21ea5ff1fca900addb89227c49b # v3.2.2
+        uses: pulumi/esc-action@eec71a90d9989af7ff14bd700b83fc72fae36119 # v4.0.0
         with:
-          environment: github-secrets/pulumi-registry
+          pulumi-access-token: ${{ steps.pulumi-auth.outputs.pulumi-access-token }}
+          environment: pulumi/github-secrets/pulumi-registry
           export-environment-variables: false
       - name: Slack Notification
         uses: docker://sholung/action-slack-notify:v2.3.0

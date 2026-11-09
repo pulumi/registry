@@ -1079,19 +1079,35 @@ Runs every Monday at 3:00 PM UTC in CI.
 
 ### 9.1 Pulumi ESC
 
-**Organization**: `pulumi` **Environment**: `github-secrets/pulumi-registry`
+**Environment**: `pulumi/github-secrets/pulumi-registry`
 
 All workflows use OIDC token exchange to authenticate with Pulumi ESC — no long-lived secrets are stored in GitHub Actions secrets directly (except for `AWS_ACCESS_KEY_ID` / `AWS_SECRET_ACCESS_KEY` used in the testing environment for PR preview deploys).
 
-The ESC action is configured via workflow-level environment variables:
+Each job that reads secrets runs `pulumi/auth-actions` to exchange its OIDC token for a Pulumi organization token, then passes that token to `pulumi/esc-action`. The job needs `id-token: write`. The auth step sets `export-environment-variables: false` so the token is available only to the ESC step, not to later steps in the job:
 
 ```yaml
-ESC_ACTION_OIDC_AUTH: true
-ESC_ACTION_OIDC_ORGANIZATION: pulumi
-ESC_ACTION_OIDC_REQUESTED_TOKEN_TYPE: urn:pulumi:token-type:access_token:organization
-ESC_ACTION_ENVIRONMENT: github-secrets/pulumi-registry
+- name: Authenticate to Pulumi Cloud
+  id: pulumi-auth
+  uses: pulumi/auth-actions@<sha> # v2.x.y
+  with:
+    organization: pulumi
+    requested-token-type: urn:pulumi:token-type:access_token:organization
+    export-environment-variables: false
+- name: Fetch secrets from ESC
+  id: esc-secrets
+  uses: pulumi/esc-action@<sha> # v4.x.y
+  with:
+    pulumi-access-token: ${{ steps.pulumi-auth.outputs.pulumi-access-token }}
+```
+
+The environment and the variables to export come from workflow-level environment variables. `pulumi/esc-action` v4 requires the full `<org>/<project>/<environment>` name:
+
+```yaml
+ESC_ACTION_ENVIRONMENT: pulumi/github-secrets/pulumi-registry
 ESC_ACTION_EXPORT_ENVIRONMENT_VARIABLES: false  # (or a specific mapping)
 ```
+
+`pulumi/esc-action` v4 doesn't install the Pulumi CLI. Jobs that run `pulumi` (`push.yml`, `testing-deploy.yml`, `publish.yml`) install it with `pulumi/actions`.
 
 The `export-repo-secrets.yml` workflow provides a manual escape hatch to sync GitHub repository secrets into ESC.
 

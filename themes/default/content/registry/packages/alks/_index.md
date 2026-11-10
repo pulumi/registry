@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/cox-automotive/alks/2.8.4/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/cox-automotive/alks/2.9.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Alks Provider
@@ -302,7 +302,9 @@ config:
 
 ```
 ### Environment variables
-You can provide your credentials via the `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` and `AWS_SESSION_TOKEN` environment variables. If you need to pass multiple AWS credentials (when using a combination of Roles, like PowerUser and IAMAdmin) you can use the ALKS_ prefix in place of AWS_ (ex: ALKS_ACCESS_KEY_ID) as these are prioritized over the AWS_ prefixed environment varaibles for the provider.
+You can provide your credentials via the `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` and `AWS_SESSION_TOKEN` environment variables. The `ALKS_` names (for example `ALKS_ACCESS_KEY_ID`) are also read, but only when the matching `AWS_` name is not set: `AWS_*` takes precedence. If you need the ALKS provider to use different credentials from other AWS tooling in the same shell (for example PowerUser for the AWS provider and IAMAdmin for ALKS), use the `ALKSTFP_` names (for example `ALKSTFP_ACCESS_KEY_ID`), which take precedence over `AWS_*` for this provider only. See Environment variables for every variable.
+
+> **Changed in 2.9.0:** earlier versions of this page said `ALKS_` credentials take priority over `AWS_`. The provider has always used `AWS_` first; the page was wrong, and the behaviour is unchanged.
 
 Pulumi file:
 ```yaml
@@ -802,12 +804,14 @@ public class App {
 
 In addition to generic `provider` arguments (e.g. `alias` and `version`), the following arguments are supported in the ALKS provider configuration:
 
-* `url` - (Required) The URL to your ALKS server. Also read from ENV.ALKS_URL
-* `accessKey` - (Optional) The access key from a valid STS session. Also read from ENV.ALKS_ACCESS_KEY_ID and ENV.AWS_ACCESS_KEY_ID.
-* `secretKey` - (Optional) The secret key from a valid STS session. Also read from ENV.ALKS_SECRET_ACCESS_KEY and ENV.AWS_SECRET_ACCESS_KEY.
-* `token` - (Optional) The session token from a valid STS session. Also read from ENV.ALKS_SESSION_TOKEN and ENV.AWS_SESSION_TOKEN.
-* `sharedCredentialsFile` - (Optional) The the path to the shared credentials file. Also read from ENV.AWS_SHARED_CREDENTIALS_FILE.
-* `profile` - (Optional) This is the AWS profile name as set in the shared credentials file. Also read from ENV.AWS_PROFILE.
+* `url` - (Required) The URL to your ALKS server. Also read from ENV.ALKSTFP_URL or ENV.ALKS_URL
+* `accessKey` - (Optional) The access key from a valid STS session. Also read from ENV.ALKSTFP_ACCESS_KEY_ID, ENV.AWS_ACCESS_KEY_ID and ENV.ALKS_ACCESS_KEY_ID, in that order.
+* `secretKey` - (Optional) The secret key from a valid STS session. Also read from ENV.ALKSTFP_SECRET_ACCESS_KEY, ENV.AWS_SECRET_ACCESS_KEY and ENV.ALKS_SECRET_ACCESS_KEY, in that order.
+* `token` - (Optional) The session token from a valid STS session. Also read from ENV.ALKSTFP_SESSION_TOKEN, ENV.AWS_SESSION_TOKEN and ENV.ALKS_SESSION_TOKEN, in that order.
+* `sharedCredentialsFile` - (Optional) The the path to the shared credentials file. Also read from ENV.ALKSTFP_SHARED_CREDENTIALS_FILE, ENV.AWS_SHARED_CREDENTIALS_FILE and ENV.ALKS_SHARED_CREDENTIALS_FILE, in that order.
+* `profile` - (Optional) This is the AWS profile name as set in the shared credentials file. Also read from ENV.ALKSTFP_PROFILE, ENV.AWS_PROFILE and ENV.ALKS_PROFILE, in that order.
+* `proxyMode` - (Optional) How ALKS requests choose a proxy: `auto` (default), `environment` or `none`. See Proxies. Applies to ALKS requests only, never to AWS calls. Added in 2.9.0.
+* `proxyUrl` - (Optional) Send every ALKS request through this proxy, for example `http://host.docker.internal:9000`. `NO_PROXY` does not apply to it. Cannot be combined with `proxyMode = "none"`. The URL has no path, query or fragment; percent-encode `/`, `?`, `#` and `@` in a proxy password. Added in 2.9.0.
 * `assumeRole` - (Optional) This is the role information to assume before making calling ALKS. This feature works the same as the assumeRole feature of the AWS Pulumi Provider.
   * `roleArn` - (Required) The Role ARN to assume for calling the ALKS API.
   * `sessionName` - (Optional) The session name to provide to AWS when creating STS credentials. Please see the AWS SDK documentation for more information.
@@ -820,6 +824,80 @@ In addition to generic `provider` arguments (e.g. `alias` and `version`), the fo
   * `keyPrefixes` - (Optional) List of key prefixes to ignore. Any key starting with a string in this list will be ignored.
 
 ---
+### Environment variables reference
+
+Every provider argument can also come from the environment. **A value in the provider configuration wins for that argument**, and then that argument's environment variables are not read. Otherwise the first variable that is set wins, left to right. This is decided argument by argument, not for the identity as a whole: for example, a `profile` in the provider configuration does not stop `AWS_ACCESS_KEY_ID` from being used, because access keys take precedence over a profile.
+
+|         Argument          |                                    Environment variables, in                                     |
+
+|                           |                                         precedence order                                         |
+|---------------------------|--------------------------------------------------------------------------------------------------|
+| `url`                     | `ALKSTFP_URL`, `ALKS_URL`                                                                        |
+| `accessKey`              | `ALKSTFP_ACCESS_KEY_ID`, `AWS_ACCESS_KEY_ID`, `ALKS_ACCESS_KEY_ID`                               |
+| `secretKey`              | `ALKSTFP_SECRET_ACCESS_KEY`, `AWS_SECRET_ACCESS_KEY`, `ALKS_SECRET_ACCESS_KEY`                   |
+| `token`                   | `ALKSTFP_SESSION_TOKEN`, `AWS_SESSION_TOKEN`, `ALKS_SESSION_TOKEN`                               |
+| `profile`                 | `ALKSTFP_PROFILE`, `AWS_PROFILE`, `ALKS_PROFILE`                                                 |
+| `sharedCredentialsFile` | `ALKSTFP_SHARED_CREDENTIALS_FILE`, `AWS_SHARED_CREDENTIALS_FILE`, `ALKS_SHARED_CREDENTIALS_FILE` |
+| `account`                 | `ALKSTFP_ACCOUNT`, `ALKS_ACCOUNT`, `Account`                                                     |
+| `role`                    | `ALKSTFP_ROLE`, `ALKS_ROLE`, `Role`                                                              |
+| `proxyMode`              | `ALKSTFP_PROXY_MODE`, `ALKS_PROXY_MODE`                                                          |
+| `proxyUrl`               | `ALKSTFP_PROXY_URL`, `ALKS_PROXY_URL`                                                            |
+
+**Conflicts are errors.** If two of the provider's own names for the same argument are set (`ALKSTFP_*`, `ALKS_*`, or the legacy `Account`/`Role`), the provider stops with an error naming them, even if their values are equal. Unset one, or set the argument in the provider configuration. `AWS_*` names are not part of this check, so `AWS_ACCESS_KEY_ID` and `ALKS_ACCESS_KEY_ID` together is fine; `AWS_*` wins.
+
+**Newly read in 2.9.0:** `ALKS_PROFILE`, `ALKS_SHARED_CREDENTIALS_FILE`, `ALKS_ACCOUNT` and `ALKS_ROLE` were ignored before 2.9.0. If your shell already exports them for other ALKS tooling, the provider now uses them. `ALKS_ACCOUNT` with `ALKS_ROLE` switches it to that account and role. Unset them, or set the argument in the provider configuration, to keep the earlier result.
+
+`Account` and `Role` are the original names and keep working. On macOS and Linux they are case-sensitive (`ACCOUNT` is a different variable).
+
+**`ALKSTFP_*` gives this provider its own identity.**
+- **Credentials are a set.** If any of `ALKSTFP_ACCESS_KEY_ID`, `ALKSTFP_SECRET_ACCESS_KEY` or `ALKSTFP_SESSION_TOKEN` is set, all three come from `ALKSTFP_`. A missing one stays empty; it is never filled from `AWS_*` or `ALKS_*`, so a key pair from one session is never combined with another session's token.
+- **Not mixed with the provider configuration.** Setting `accessKey`, `secretKey` or `token` in the provider configuration while an `ALKSTFP_` credential variable is set is an error. Put all the credentials in one place.
+- **An incomplete set is an error.** If an `ALKSTFP_` credential is set but the access key or secret key is still missing, and no profile is set, the provider stops with an error. It does not fall back to `AWS_*` keys, `AWS_PROFILE` or the default profile. While an `ALKSTFP_` credential is set, the profile comes only from `ALKSTFP_PROFILE` (or the provider configuration), never from `AWS_PROFILE` or `ALKS_PROFILE`.
+- **The profile wins.** If `ALKSTFP_PROFILE` is set, `AWS_*` and `ALKS_*` keys exported for other tooling are ignored, so the profile is used.
+- **Scope.** These rules apply only when the `ALKSTFP_` variables are used. Otherwise the behaviour is as in earlier versions, where access keys, including `AWS_*`, take precedence over a profile, as in the AWS provider. A value in the provider configuration wins for its own argument.
+- **`sharedCredentialsFile` is honoured throughout.** When a credentials file is given in the provider configuration or through `ALKSTFP_`/`ALKS_`, profiles are read only from that file, and a file that cannot be read is an error. Profiles are never silently read from the default `~/.aws/credentials`.
+
+`accessKey`, `secretKey`, `token` and `proxyUrl` are marked sensitive, so Pulumi does not show them.
+### Proxies
+
+From 2.9.0 the provider finds a proxy for its **ALKS** requests the way a browser does. It never changes how it calls AWS. With the default, `proxyMode = "auto"`, each ALKS request uses:
+
+1. `HTTPS_PROXY`, unless `NO_PROXY` matches the ALKS host. This is the same as earlier versions.
+2. Otherwise the operating system's proxy settings: on **macOS** the system proxy and PAC file; on **Windows** the WinHTTP / Internet Options settings, PAC file and automatic detection. Linux has no OS step.
+3. Otherwise a direct connection.
+
+Rules:
+- Only the first entry of a PAC answer is used. If that proxy does not answer, the request fails with an error naming it.
+- `NO_PROXY` also exempts hosts from an OS proxy.
+- `localhost` is never proxied.
+
+This means Zscaler laptops that only route proxy-aware applications reach ALKS with nothing to configure.
+
+|   `proxyMode`   |                             Behaviour                             |
+|------------------|-------------------------------------------------------------------|
+| `auto` (default) | As above                                                          |
+| `environment`    | `HTTPS_PROXY`/`NO_PROXY` only: exactly the behaviour before 2.9.0 |
+| `none`           | Always direct, ignoring every proxy setting                       |
+
+`proxyUrl` forces one proxy for every ALKS request.
+
+**In a container** the host's proxy settings are not visible, so `auto` falls back to `HTTPS_PROXY`, or direct. With Docker Desktop, the Zscaler local proxy is reachable as `host.docker.internal`:
+
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime:
+config:
+    alks:proxyUrl:
+        value: http://host.docker.internal:9000
+    alks:url:
+        value: https://alks.example.com/rest
+
+```
+
+`127.0.0.1:9000` does not work inside a container: it is the container itself. Setting `HTTPS_PROXY` instead also sends AWS calls through the proxy. `proxyUrl`/`ALKS_PROXY_URL` affect ALKS only.
+
+**Debugging:** with `TF_LOG=DEBUG`, the log has one line per client with the proxy decision, for example `alks-go: proxy mode=auto source=pac proxy=http://127.0.0.1:9000`. It never contains credentials.
 ### Supported Versions
 
 |    Pulumi 0.10.x    |    Pulumi 0.11.x     |  Pulumi 0.12.x - Pulumi  | Pulumi 1.0.x |

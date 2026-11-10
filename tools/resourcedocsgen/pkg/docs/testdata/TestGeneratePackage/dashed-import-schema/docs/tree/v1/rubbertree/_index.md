@@ -1429,57 +1429,99 @@ Container<wbr>Brightness<pulumi-choosable type="language" values="python,go" cla
 
 <div>
 <pulumi-choosable type="language" values="csharp">
-<dl class="tabular"><dt>Zero<wbr>Point<wbr>One</dt>
-    <dd><code>0.1</code></dd><dt>One</dt>
-    <dd><code>1</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Zero<wbr>Point<wbr>One</td><td><code>0.1</code></td></tr>
+<tr><td>One</td><td><code>1</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="go">
-<dl class="tabular"><dt>Container<wbr>Brightness<wbr>Zero<wbr>Point<wbr>One</dt>
-    <dd><code>0.1</code></dd><dt>Container<wbr>Brightness<wbr>One</dt>
-    <dd><code>1</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Container<wbr>Brightness<wbr>Zero<wbr>Point<wbr>One</td><td><code>0.1</code></td></tr>
+<tr><td>Container<wbr>Brightness<wbr>One</td><td><code>1</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="hcl">
-<dl class="tabular"><dt>%!q(float64=0.1)</dt>
-    <dd><code>0.1</code></dd><dt>%!q(float64=1)</dt>
-    <dd><code>1</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Value</th></tr></thead>
+<tbody>
+<tr><td><code>0.1</code></td></tr>
+<tr><td><code>1</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="java">
-<dl class="tabular"><dt>Zero<wbr>Point<wbr>One</dt>
-    <dd><code>0.1</code></dd><dt>One</dt>
-    <dd><code>1</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Zero<wbr>Point<wbr>One</td><td><code>0.1</code></td></tr>
+<tr><td>One</td><td><code>1</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
-<dl class="tabular"><dt>Zero<wbr>Point<wbr>One</dt>
-    <dd><code>0.1</code></dd><dt>One</dt>
-    <dd><code>1</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Zero<wbr>Point<wbr>One</td><td><code>0.1</code></td></tr>
+<tr><td>One</td><td><code>1</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="python">
-<dl class="tabular"><dt>ZERO_POINT_ONE</dt>
-    <dd><code>0.1</code></dd><dt>ONE</dt>
-    <dd><code>1</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>ZERO_POINT_ONE</td><td><code>0.1</code></td></tr>
+<tr><td>ONE</td><td><code>1</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="yaml">
-<dl class="tabular"><dt>%!q(float64=0.1)</dt>
-    <dd><code>0.1</code></dd><dt>%!q(float64=1)</dt>
-    <dd><code>1</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Value</th></tr></thead>
+<tbody>
+<tr><td><code>0.1</code></td></tr>
+<tr><td><code>1</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
@@ -1489,64 +1531,106 @@ Container<wbr>Color<pulumi-choosable type="language" values="python,go" class="i
 
 <div>
 <pulumi-choosable type="language" values="csharp">
-<dl class="tabular"><dt>Red</dt>
-    <dd><code>red</code></dd><dt>Blue</dt>
-    <dd><code>blue</code></dd><dt>Yellow</dt>
-    <dd><code>yellow</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Red</td><td><code>red</code></td></tr>
+<tr><td>Blue</td><td><code>blue</code></td></tr>
+<tr><td>Yellow</td><td><code>yellow</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="go">
-<dl class="tabular"><dt>Container<wbr>Color<wbr>Red</dt>
-    <dd><code>red</code></dd><dt>Container<wbr>Color<wbr>Blue</dt>
-    <dd><code>blue</code></dd><dt>Container<wbr>Color<wbr>Yellow</dt>
-    <dd><code>yellow</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Container<wbr>Color<wbr>Red</td><td><code>red</code></td></tr>
+<tr><td>Container<wbr>Color<wbr>Blue</td><td><code>blue</code></td></tr>
+<tr><td>Container<wbr>Color<wbr>Yellow</td><td><code>yellow</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="hcl">
-<dl class="tabular"><dt>"red"</dt>
-    <dd><code>red</code></dd><dt>"blue"</dt>
-    <dd><code>blue</code></dd><dt>"yellow"</dt>
-    <dd><code>yellow</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Value</th></tr></thead>
+<tbody>
+<tr><td><code>red</code></td></tr>
+<tr><td><code>blue</code></td></tr>
+<tr><td><code>yellow</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="java">
-<dl class="tabular"><dt>Red</dt>
-    <dd><code>red</code></dd><dt>Blue</dt>
-    <dd><code>blue</code></dd><dt>Yellow</dt>
-    <dd><code>yellow</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Red</td><td><code>red</code></td></tr>
+<tr><td>Blue</td><td><code>blue</code></td></tr>
+<tr><td>Yellow</td><td><code>yellow</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
-<dl class="tabular"><dt>Red</dt>
-    <dd><code>red</code></dd><dt>Blue</dt>
-    <dd><code>blue</code></dd><dt>Yellow</dt>
-    <dd><code>yellow</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Red</td><td><code>red</code></td></tr>
+<tr><td>Blue</td><td><code>blue</code></td></tr>
+<tr><td>Yellow</td><td><code>yellow</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="python">
-<dl class="tabular"><dt>RED</dt>
-    <dd><code>red</code></dd><dt>BLUE</dt>
-    <dd><code>blue</code></dd><dt>YELLOW</dt>
-    <dd><code>yellow</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>RED</td><td><code>red</code></td></tr>
+<tr><td>BLUE</td><td><code>blue</code></td></tr>
+<tr><td>YELLOW</td><td><code>yellow</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="yaml">
-<dl class="tabular"><dt>"red"</dt>
-    <dd><code>red</code></dd><dt>"blue"</dt>
-    <dd><code>blue</code></dd><dt>"yellow"</dt>
-    <dd><code>yellow</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Value</th></tr></thead>
+<tbody>
+<tr><td><code>red</code></td></tr>
+<tr><td><code>blue</code></td></tr>
+<tr><td><code>yellow</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
@@ -1556,64 +1640,106 @@ Container<wbr>Size<pulumi-choosable type="language" values="python,go" class="in
 
 <div>
 <pulumi-choosable type="language" values="csharp">
-<dl class="tabular"><dt>Four<wbr>Inch</dt>
-    <dd><code>4</code></dd><dt>Six<wbr>Inch</dt>
-    <dd><code>6</code></dd><dt class="property-deprecated">Eight<wbr>Inch</dt>
-    <dd><code>8</code><p class="property-message">Deprecated: Eight inch pots are no longer supported.</p></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>Four<wbr>Inch</td><td><code>4</code></td><td></td></tr>
+<tr><td>Six<wbr>Inch</td><td><code>6</code></td><td></td></tr>
+<tr class="enum-deprecated"><td>Eight<wbr>Inch</td><td><code>8</code></td><td><p class="property-message">Deprecated: Eight inch pots are no longer supported.</p></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="go">
-<dl class="tabular"><dt>Container<wbr>Size<wbr>Four<wbr>Inch</dt>
-    <dd><code>4</code></dd><dt>Container<wbr>Size<wbr>Six<wbr>Inch</dt>
-    <dd><code>6</code></dd><dt class="property-deprecated">Container<wbr>Size<wbr>Eight<wbr>Inch</dt>
-    <dd><code>8</code><p class="property-message">Deprecated: Eight inch pots are no longer supported.</p></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>Container<wbr>Size<wbr>Four<wbr>Inch</td><td><code>4</code></td><td></td></tr>
+<tr><td>Container<wbr>Size<wbr>Six<wbr>Inch</td><td><code>6</code></td><td></td></tr>
+<tr class="enum-deprecated"><td>Container<wbr>Size<wbr>Eight<wbr>Inch</td><td><code>8</code></td><td><p class="property-message">Deprecated: Eight inch pots are no longer supported.</p></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="hcl">
-<dl class="tabular"><dt>'\x04'</dt>
-    <dd><code>4</code></dd><dt>'\x06'</dt>
-    <dd><code>6</code></dd><dt class="property-deprecated">'\b'</dt>
-    <dd><code>8</code><p class="property-message">Deprecated: Eight inch pots are no longer supported.</p></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Value</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>4</code></td><td></td></tr>
+<tr><td><code>6</code></td><td></td></tr>
+<tr class="enum-deprecated"><td><code>8</code></td><td><p class="property-message">Deprecated: Eight inch pots are no longer supported.</p></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="java">
-<dl class="tabular"><dt>Four<wbr>Inch</dt>
-    <dd><code>4</code></dd><dt>Six<wbr>Inch</dt>
-    <dd><code>6</code></dd><dt class="property-deprecated">Eight<wbr>Inch</dt>
-    <dd><code>8</code><p class="property-message">Deprecated: Eight inch pots are no longer supported.</p></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>Four<wbr>Inch</td><td><code>4</code></td><td></td></tr>
+<tr><td>Six<wbr>Inch</td><td><code>6</code></td><td></td></tr>
+<tr class="enum-deprecated"><td>Eight<wbr>Inch</td><td><code>8</code></td><td><p class="property-message">Deprecated: Eight inch pots are no longer supported.</p></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
-<dl class="tabular"><dt>Four<wbr>Inch</dt>
-    <dd><code>4</code></dd><dt>Six<wbr>Inch</dt>
-    <dd><code>6</code></dd><dt class="property-deprecated">Eight<wbr>Inch</dt>
-    <dd><code>8</code><p class="property-message">Deprecated: Eight inch pots are no longer supported.</p></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>Four<wbr>Inch</td><td><code>4</code></td><td></td></tr>
+<tr><td>Six<wbr>Inch</td><td><code>6</code></td><td></td></tr>
+<tr class="enum-deprecated"><td>Eight<wbr>Inch</td><td><code>8</code></td><td><p class="property-message">Deprecated: Eight inch pots are no longer supported.</p></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="python">
-<dl class="tabular"><dt>FOUR_INCH</dt>
-    <dd><code>4</code></dd><dt>SIX_INCH</dt>
-    <dd><code>6</code></dd><dt class="property-deprecated">EIGHT_INCH</dt>
-    <dd><code>8</code><p class="property-message">Deprecated: Eight inch pots are no longer supported.</p></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>FOUR_INCH</td><td><code>4</code></td><td></td></tr>
+<tr><td>SIX_INCH</td><td><code>6</code></td><td></td></tr>
+<tr class="enum-deprecated"><td>EIGHT_INCH</td><td><code>8</code></td><td><p class="property-message">Deprecated: Eight inch pots are no longer supported.</p></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="yaml">
-<dl class="tabular"><dt>'\x04'</dt>
-    <dd><code>4</code></dd><dt>'\x06'</dt>
-    <dd><code>6</code></dd><dt class="property-deprecated">'\b'</dt>
-    <dd><code>8</code><p class="property-message">Deprecated: Eight inch pots are no longer supported.</p></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Value</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>4</code></td><td></td></tr>
+<tr><td><code>6</code></td><td></td></tr>
+<tr class="enum-deprecated"><td><code>8</code></td><td><p class="property-message">Deprecated: Eight inch pots are no longer supported.</p></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
@@ -1623,57 +1749,99 @@ Diameter<pulumi-choosable type="language" values="python,go" class="inline">, Di
 
 <div>
 <pulumi-choosable type="language" values="csharp">
-<dl class="tabular"><dt>Sixinch</dt>
-    <dd><code>6</code></dd><dt>Twelveinch</dt>
-    <dd><code>12</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Sixinch</td><td><code>6</code></td></tr>
+<tr><td>Twelveinch</td><td><code>12</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="go">
-<dl class="tabular"><dt>Diameter<wbr>Sixinch</dt>
-    <dd><code>6</code></dd><dt>Diameter<wbr>Twelveinch</dt>
-    <dd><code>12</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Diameter<wbr>Sixinch</td><td><code>6</code></td></tr>
+<tr><td>Diameter<wbr>Twelveinch</td><td><code>12</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="hcl">
-<dl class="tabular"><dt>%!q(float64=6)</dt>
-    <dd><code>6</code></dd><dt>%!q(float64=12)</dt>
-    <dd><code>12</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Value</th></tr></thead>
+<tbody>
+<tr><td><code>6</code></td></tr>
+<tr><td><code>12</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="java">
-<dl class="tabular"><dt>Sixinch</dt>
-    <dd><code>6</code></dd><dt>Twelveinch</dt>
-    <dd><code>12</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Sixinch</td><td><code>6</code></td></tr>
+<tr><td>Twelveinch</td><td><code>12</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
-<dl class="tabular"><dt>Sixinch</dt>
-    <dd><code>6</code></dd><dt>Twelveinch</dt>
-    <dd><code>12</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Sixinch</td><td><code>6</code></td></tr>
+<tr><td>Twelveinch</td><td><code>12</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="python">
-<dl class="tabular"><dt>SIXINCH</dt>
-    <dd><code>6</code></dd><dt>TWELVEINCH</dt>
-    <dd><code>12</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>SIXINCH</td><td><code>6</code></td></tr>
+<tr><td>TWELVEINCH</td><td><code>12</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="yaml">
-<dl class="tabular"><dt>%!q(float64=6)</dt>
-    <dd><code>6</code></dd><dt>%!q(float64=12)</dt>
-    <dd><code>12</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Value</th></tr></thead>
+<tbody>
+<tr><td><code>6</code></td></tr>
+<tr><td><code>12</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
@@ -1683,57 +1851,99 @@ Farm<pulumi-choosable type="language" values="python,go" class="inline">, Farm<w
 
 <div>
 <pulumi-choosable type="language" values="csharp">
-<dl class="tabular"><dt>Pulumi_Planters_Inc_</dt>
-    <dd><code>Pulumi Planters Inc.</code></dd><dt>Plants_R_Us</dt>
-    <dd><code>Plants'R'Us</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Pulumi_Planters_Inc_</td><td><code>Pulumi Planters Inc.</code></td></tr>
+<tr><td>Plants_R_Us</td><td><code>Plants'R'Us</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="go">
-<dl class="tabular"><dt>Farm_Pulumi_Planters_Inc_</dt>
-    <dd><code>Pulumi Planters Inc.</code></dd><dt>Farm_Plants_R_Us</dt>
-    <dd><code>Plants'R'Us</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Farm_Pulumi_Planters_Inc_</td><td><code>Pulumi Planters Inc.</code></td></tr>
+<tr><td>Farm_Plants_R_Us</td><td><code>Plants'R'Us</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="hcl">
-<dl class="tabular"><dt>"Pulumi Planters Inc."</dt>
-    <dd><code>Pulumi Planters Inc.</code></dd><dt>"Plants'R'Us"</dt>
-    <dd><code>Plants'R'Us</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Value</th></tr></thead>
+<tbody>
+<tr><td><code>Pulumi Planters Inc.</code></td></tr>
+<tr><td><code>Plants'R'Us</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="java">
-<dl class="tabular"><dt>Pulumi_Planters_Inc_</dt>
-    <dd><code>Pulumi Planters Inc.</code></dd><dt>Plants_R_Us</dt>
-    <dd><code>Plants'R'Us</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Pulumi_Planters_Inc_</td><td><code>Pulumi Planters Inc.</code></td></tr>
+<tr><td>Plants_R_Us</td><td><code>Plants'R'Us</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
-<dl class="tabular"><dt>Pulumi_Planters_Inc_</dt>
-    <dd><code>Pulumi Planters Inc.</code></dd><dt>Plants_R_Us</dt>
-    <dd><code>Plants'R'Us</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Pulumi_Planters_Inc_</td><td><code>Pulumi Planters Inc.</code></td></tr>
+<tr><td>Plants_R_Us</td><td><code>Plants'R'Us</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="python">
-<dl class="tabular"><dt>PULUMI_PLANTERS_INC_</dt>
-    <dd><code>Pulumi Planters Inc.</code></dd><dt>PLANTS_R_US</dt>
-    <dd><code>Plants'R'Us</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>PULUMI_PLANTERS_INC_</td><td><code>Pulumi Planters Inc.</code></td></tr>
+<tr><td>PLANTS_R_US</td><td><code>Plants'R'Us</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="yaml">
-<dl class="tabular"><dt>"Pulumi Planters Inc."</dt>
-    <dd><code>Pulumi Planters Inc.</code></dd><dt>"Plants'R'Us"</dt>
-    <dd><code>Plants'R'Us</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Value</th></tr></thead>
+<tbody>
+<tr><td><code>Pulumi Planters Inc.</code></td></tr>
+<tr><td><code>Plants'R'Us</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
@@ -1743,64 +1953,106 @@ Rubber<wbr>Tree<wbr>Variety<pulumi-choosable type="language" values="python,go" 
 
 <div>
 <pulumi-choosable type="language" values="csharp">
-<dl class="tabular"><dt>Burgundy</dt>
-    <dd><code>Burgundy</code> A burgundy rubber tree.</dd><dt>Ruby</dt>
-    <dd><code>Ruby</code> A ruby rubber tree.</dd><dt>Tineke</dt>
-    <dd><code>Tineke</code> A tineke rubber tree.</dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>Burgundy</td><td><code>Burgundy</code></td><td>A burgundy rubber tree.</td></tr>
+<tr><td>Ruby</td><td><code>Ruby</code></td><td>A ruby rubber tree.</td></tr>
+<tr><td>Tineke</td><td><code>Tineke</code></td><td>A tineke rubber tree.</td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="go">
-<dl class="tabular"><dt>Rubber<wbr>Tree<wbr>Variety<wbr>Burgundy</dt>
-    <dd><code>Burgundy</code> A burgundy rubber tree.</dd><dt>Rubber<wbr>Tree<wbr>Variety<wbr>Ruby</dt>
-    <dd><code>Ruby</code> A ruby rubber tree.</dd><dt>Rubber<wbr>Tree<wbr>Variety<wbr>Tineke</dt>
-    <dd><code>Tineke</code> A tineke rubber tree.</dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>Rubber<wbr>Tree<wbr>Variety<wbr>Burgundy</td><td><code>Burgundy</code></td><td>A burgundy rubber tree.</td></tr>
+<tr><td>Rubber<wbr>Tree<wbr>Variety<wbr>Ruby</td><td><code>Ruby</code></td><td>A ruby rubber tree.</td></tr>
+<tr><td>Rubber<wbr>Tree<wbr>Variety<wbr>Tineke</td><td><code>Tineke</code></td><td>A tineke rubber tree.</td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="hcl">
-<dl class="tabular"><dt>"Burgundy"</dt>
-    <dd><code>Burgundy</code> A burgundy rubber tree.</dd><dt>"Ruby"</dt>
-    <dd><code>Ruby</code> A ruby rubber tree.</dd><dt>"Tineke"</dt>
-    <dd><code>Tineke</code> A tineke rubber tree.</dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Value</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>Burgundy</code></td><td>A burgundy rubber tree.</td></tr>
+<tr><td><code>Ruby</code></td><td>A ruby rubber tree.</td></tr>
+<tr><td><code>Tineke</code></td><td>A tineke rubber tree.</td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="java">
-<dl class="tabular"><dt>Burgundy</dt>
-    <dd><code>Burgundy</code> A burgundy rubber tree.</dd><dt>Ruby</dt>
-    <dd><code>Ruby</code> A ruby rubber tree.</dd><dt>Tineke</dt>
-    <dd><code>Tineke</code> A tineke rubber tree.</dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>Burgundy</td><td><code>Burgundy</code></td><td>A burgundy rubber tree.</td></tr>
+<tr><td>Ruby</td><td><code>Ruby</code></td><td>A ruby rubber tree.</td></tr>
+<tr><td>Tineke</td><td><code>Tineke</code></td><td>A tineke rubber tree.</td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
-<dl class="tabular"><dt>Burgundy</dt>
-    <dd><code>Burgundy</code> A burgundy rubber tree.</dd><dt>Ruby</dt>
-    <dd><code>Ruby</code> A ruby rubber tree.</dd><dt>Tineke</dt>
-    <dd><code>Tineke</code> A tineke rubber tree.</dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>Burgundy</td><td><code>Burgundy</code></td><td>A burgundy rubber tree.</td></tr>
+<tr><td>Ruby</td><td><code>Ruby</code></td><td>A ruby rubber tree.</td></tr>
+<tr><td>Tineke</td><td><code>Tineke</code></td><td>A tineke rubber tree.</td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="python">
-<dl class="tabular"><dt>BURGUNDY</dt>
-    <dd><code>Burgundy</code> A burgundy rubber tree.</dd><dt>RUBY</dt>
-    <dd><code>Ruby</code> A ruby rubber tree.</dd><dt>TINEKE</dt>
-    <dd><code>Tineke</code> A tineke rubber tree.</dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>BURGUNDY</td><td><code>Burgundy</code></td><td>A burgundy rubber tree.</td></tr>
+<tr><td>RUBY</td><td><code>Ruby</code></td><td>A ruby rubber tree.</td></tr>
+<tr><td>TINEKE</td><td><code>Tineke</code></td><td>A tineke rubber tree.</td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="yaml">
-<dl class="tabular"><dt>"Burgundy"</dt>
-    <dd><code>Burgundy</code> A burgundy rubber tree.</dd><dt>"Ruby"</dt>
-    <dd><code>Ruby</code> A ruby rubber tree.</dd><dt>"Tineke"</dt>
-    <dd><code>Tineke</code> A tineke rubber tree.</dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Value</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>Burgundy</code></td><td>A burgundy rubber tree.</td></tr>
+<tr><td><code>Ruby</code></td><td>A ruby rubber tree.</td></tr>
+<tr><td><code>Tineke</code></td><td>A tineke rubber tree.</td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
@@ -1810,64 +2062,106 @@ Tree<wbr>Size<pulumi-choosable type="language" values="python,go" class="inline"
 
 <div>
 <pulumi-choosable type="language" values="csharp">
-<dl class="tabular"><dt>Small</dt>
-    <dd><code>small</code></dd><dt>Medium</dt>
-    <dd><code>medium</code></dd><dt>Large</dt>
-    <dd><code>large</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Small</td><td><code>small</code></td></tr>
+<tr><td>Medium</td><td><code>medium</code></td></tr>
+<tr><td>Large</td><td><code>large</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="go">
-<dl class="tabular"><dt>Tree<wbr>Size<wbr>Small</dt>
-    <dd><code>small</code></dd><dt>Tree<wbr>Size<wbr>Medium</dt>
-    <dd><code>medium</code></dd><dt>Tree<wbr>Size<wbr>Large</dt>
-    <dd><code>large</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Tree<wbr>Size<wbr>Small</td><td><code>small</code></td></tr>
+<tr><td>Tree<wbr>Size<wbr>Medium</td><td><code>medium</code></td></tr>
+<tr><td>Tree<wbr>Size<wbr>Large</td><td><code>large</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="hcl">
-<dl class="tabular"><dt>"small"</dt>
-    <dd><code>small</code></dd><dt>"medium"</dt>
-    <dd><code>medium</code></dd><dt>"large"</dt>
-    <dd><code>large</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Value</th></tr></thead>
+<tbody>
+<tr><td><code>small</code></td></tr>
+<tr><td><code>medium</code></td></tr>
+<tr><td><code>large</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="java">
-<dl class="tabular"><dt>Small</dt>
-    <dd><code>small</code></dd><dt>Medium</dt>
-    <dd><code>medium</code></dd><dt>Large</dt>
-    <dd><code>large</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Small</td><td><code>small</code></td></tr>
+<tr><td>Medium</td><td><code>medium</code></td></tr>
+<tr><td>Large</td><td><code>large</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
-<dl class="tabular"><dt>Small</dt>
-    <dd><code>small</code></dd><dt>Medium</dt>
-    <dd><code>medium</code></dd><dt>Large</dt>
-    <dd><code>large</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Small</td><td><code>small</code></td></tr>
+<tr><td>Medium</td><td><code>medium</code></td></tr>
+<tr><td>Large</td><td><code>large</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="python">
-<dl class="tabular"><dt>SMALL</dt>
-    <dd><code>small</code></dd><dt>MEDIUM</dt>
-    <dd><code>medium</code></dd><dt>LARGE</dt>
-    <dd><code>large</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>SMALL</td><td><code>small</code></td></tr>
+<tr><td>MEDIUM</td><td><code>medium</code></td></tr>
+<tr><td>LARGE</td><td><code>large</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="yaml">
-<dl class="tabular"><dt>"small"</dt>
-    <dd><code>small</code></dd><dt>"medium"</dt>
-    <dd><code>medium</code></dd><dt>"large"</dt>
-    <dd><code>large</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Value</th></tr></thead>
+<tbody>
+<tr><td><code>small</code></td></tr>
+<tr><td><code>medium</code></td></tr>
+<tr><td><code>large</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 

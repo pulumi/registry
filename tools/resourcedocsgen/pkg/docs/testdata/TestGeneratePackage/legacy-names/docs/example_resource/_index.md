@@ -778,71 +778,113 @@ Enum_XYZ<pulumi-choosable type="language" values="python,go" class="inline">, En
 
 <div>
 <pulumi-choosable type="language" values="csharp">
-<dl class="tabular"><dt>Plain</dt>
-    <dd><code>A</code></dd><dt>Snake_<wbr>case</dt>
-    <dd><code>B</code></dd><dt>SHA256</dt>
-    <dd><code>C</code></dd><dt>SHA256_<wbr>hash</dt>
-    <dd><code>D</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Plain</td><td><code>A</code></td></tr>
+<tr><td>Snake_<wbr>case</td><td><code>B</code></td></tr>
+<tr><td>SHA256</td><td><code>C</code></td></tr>
+<tr><td>SHA256_<wbr>hash</td><td><code>D</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="go">
-<dl class="tabular"><dt>Enum_XYZPlain</dt>
-    <dd><code>A</code></dd><dt>Enum_XYZ_Snake_<wbr>case</dt>
-    <dd><code>B</code></dd><dt>Enum_XYZSHA256</dt>
-    <dd><code>C</code></dd><dt>Enum_XYZ_SHA256_<wbr>hash</dt>
-    <dd><code>D</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Enum_XYZPlain</td><td><code>A</code></td></tr>
+<tr><td>Enum_XYZ_Snake_<wbr>case</td><td><code>B</code></td></tr>
+<tr><td>Enum_XYZSHA256</td><td><code>C</code></td></tr>
+<tr><td>Enum_XYZ_SHA256_<wbr>hash</td><td><code>D</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="hcl">
-<dl class="tabular"><dt>"A"</dt>
-    <dd><code>A</code></dd><dt>"B"</dt>
-    <dd><code>B</code></dd><dt>"C"</dt>
-    <dd><code>C</code></dd><dt>"D"</dt>
-    <dd><code>D</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Value</th></tr></thead>
+<tbody>
+<tr><td><code>A</code></td></tr>
+<tr><td><code>B</code></td></tr>
+<tr><td><code>C</code></td></tr>
+<tr><td><code>D</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="java">
-<dl class="tabular"><dt>Plain</dt>
-    <dd><code>A</code></dd><dt>Snake_<wbr>case</dt>
-    <dd><code>B</code></dd><dt>SHA256</dt>
-    <dd><code>C</code></dd><dt>SHA256_<wbr>hash</dt>
-    <dd><code>D</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Plain</td><td><code>A</code></td></tr>
+<tr><td>Snake_<wbr>case</td><td><code>B</code></td></tr>
+<tr><td>SHA256</td><td><code>C</code></td></tr>
+<tr><td>SHA256_<wbr>hash</td><td><code>D</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
-<dl class="tabular"><dt>Plain</dt>
-    <dd><code>A</code></dd><dt>Snake_<wbr>case</dt>
-    <dd><code>B</code></dd><dt>SHA256</dt>
-    <dd><code>C</code></dd><dt>SHA256_<wbr>hash</dt>
-    <dd><code>D</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Plain</td><td><code>A</code></td></tr>
+<tr><td>Snake_<wbr>case</td><td><code>B</code></td></tr>
+<tr><td>SHA256</td><td><code>C</code></td></tr>
+<tr><td>SHA256_<wbr>hash</td><td><code>D</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="python">
-<dl class="tabular"><dt>PLAIN</dt>
-    <dd><code>A</code></dd><dt>SNAKE_CASE</dt>
-    <dd><code>B</code></dd><dt>SHA256</dt>
-    <dd><code>C</code></dd><dt>SHA256_HASH</dt>
-    <dd><code>D</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>PLAIN</td><td><code>A</code></td></tr>
+<tr><td>SNAKE_CASE</td><td><code>B</code></td></tr>
+<tr><td>SHA256</td><td><code>C</code></td></tr>
+<tr><td>SHA256_HASH</td><td><code>D</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="yaml">
-<dl class="tabular"><dt>"A"</dt>
-    <dd><code>A</code></dd><dt>"B"</dt>
-    <dd><code>B</code></dd><dt>"C"</dt>
-    <dd><code>C</code></dd><dt>"D"</dt>
-    <dd><code>D</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Value</th></tr></thead>
+<tbody>
+<tr><td><code>A</code></td></tr>
+<tr><td><code>B</code></td></tr>
+<tr><td><code>C</code></td></tr>
+<tr><td><code>D</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 

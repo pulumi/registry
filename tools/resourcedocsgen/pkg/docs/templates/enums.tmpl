@@ -1,15 +1,27 @@
 {{ define "enums" }}
 
 {{- range $lang, $enums := . }}
+{{- /* In HCL and YAML the name is the quoted value, so a separate name column would repeat it. */ -}}
+{{- $showName := not (or (eq $lang lHCL) (eq $lang lYAML)) }}
+{{- $showDesc := false }}
+{{- range $enums }}{{ if or .Comment .DeprecationMessage }}{{ $showDesc = true }}{{ end }}{{ end }}
 
 <div>
 <pulumi-choosable type="language" values="{{- if eq $lang lNodejs -}}{{ print "javascript,typescript" }}{{- else -}}{{ print $lang }}{{- end -}}">
-<dl class="tabular">
-{{- range . -}}
-    <dt {{- if .DeprecationMessage }} class="property-deprecated"{{- end -}}>{{- htmlSafe .DisplayName -}}</dt>
-    <dd><code>{{- htmlSafe .Value }}</code>{{ if .Comment }} {{ markdownify .Comment }}{{ end }}{{- if .DeprecationMessage }}<p class="property-message">Deprecated: {{ markdownify .DeprecationMessage -}}</p>{{- end -}}</dd>
-{{- end -}}
-</dl>
+<div class="enum-values">
+<table>
+<thead><tr>{{ if $showName }}<th>Name</th>{{ end }}<th>Value</th>{{ if $showDesc }}<th>Description</th>{{ end }}</tr></thead>
+<tbody>
+{{- range $enums }}
+<tr{{ if .DeprecationMessage }} class="enum-deprecated"{{ end }}>
+{{- if $showName }}<td>{{ htmlSafe .DisplayName }}</td>{{ end -}}
+<td><code>{{ htmlSafe .Value }}</code></td>
+{{- if $showDesc }}<td>{{ if .Comment }}{{ markdownify .Comment }}{{ end }}{{ if .DeprecationMessage }}<p class="property-message">Deprecated: {{ markdownify .DeprecationMessage }}</p>{{ end }}</td>{{ end -}}
+</tr>
+{{- end }}
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 

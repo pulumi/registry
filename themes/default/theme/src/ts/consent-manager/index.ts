@@ -1,6 +1,6 @@
 import { ConsentManagerConfig, Destination } from "./types";
 import { fetchDestinations, conditionallyLoadAnalytics } from "./analytics";
-import { installOneTrustBridge, getActiveGroups, destinationPreferencesFromGroups, hasRevokedGroup } from "./onetrust";
+import { installOneTrustBridge, getActiveGroups, destinationPreferencesFromGroups, hasRevokedGroup, PERFORMANCE } from "./onetrust";
 
 // OneTrust owns the banner and the consent decision. We install the
 // runWithPulumiConsent bridge (for directly-loaded integrations) and drive the
@@ -39,8 +39,9 @@ async function init(cfg: ConsentManagerConfig) {
     let segmentLoaded = false;
     const loadSegment = () => {
         if (segmentLoaded) return;
-        const prefs = destinationPreferencesFromGroups(fetchedDestinations, getActiveGroups());
-        conditionallyLoadAnalytics(cfg.writeKey, fetchedDestinations, prefs);
+        const active = getActiveGroups();
+        const prefs = destinationPreferencesFromGroups(fetchedDestinations, active);
+        conditionallyLoadAnalytics(cfg.writeKey, fetchedDestinations, prefs, active.has(PERFORMANCE));
         segmentLoaded = Object.keys(prefs).some((id) => prefs[id]);
     };
 

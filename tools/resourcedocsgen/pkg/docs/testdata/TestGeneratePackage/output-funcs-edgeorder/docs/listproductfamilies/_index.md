@@ -6026,6 +6026,62 @@ The following output properties are available:
 
 
 
+<div>
+<pulumi-choosable type="language" values="csharp">
+<dl class="tabular"><dt>Ship<wbr>To<wbr>Countries</dt>
+    <dd><code>ShipToCountries</code> Ship to country</dd><dt>Double<wbr>Encryption<wbr>Status</dt>
+    <dd><code>DoubleEncryptionStatus</code> Double encryption status</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="go">
+<dl class="tabular"><dt>Supported<wbr>Filter<wbr>Types<wbr>Ship<wbr>To<wbr>Countries</dt>
+    <dd><code>ShipToCountries</code> Ship to country</dd><dt>Supported<wbr>Filter<wbr>Types<wbr>Double<wbr>Encryption<wbr>Status</dt>
+    <dd><code>DoubleEncryptionStatus</code> Double encryption status</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<dl class="tabular"><dt>"Ship<wbr>To<wbr>Countries"</dt>
+    <dd><code>ShipToCountries</code> Ship to country</dd><dt>"Double<wbr>Encryption<wbr>Status"</dt>
+    <dd><code>DoubleEncryptionStatus</code> Double encryption status</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="java">
+<dl class="tabular"><dt>Ship<wbr>To<wbr>Countries</dt>
+    <dd><code>ShipToCountries</code> Ship to country</dd><dt>Double<wbr>Encryption<wbr>Status</dt>
+    <dd><code>DoubleEncryptionStatus</code> Double encryption status</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="javascript,typescript">
+<dl class="tabular"><dt>Ship<wbr>To<wbr>Countries</dt>
+    <dd><code>ShipToCountries</code> Ship to country</dd><dt>Double<wbr>Encryption<wbr>Status</dt>
+    <dd><code>DoubleEncryptionStatus</code> Double encryption status</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="python">
+<dl class="tabular"><dt>SHIP_TO_COUNTRIES</dt>
+    <dd><code>ShipToCountries</code> Ship to country</dd><dt>DOUBLE_ENCRYPTION_STATUS</dt>
+    <dd><code>DoubleEncryptionStatus</code> Double encryption status</dd></dl>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="yaml">
+<dl class="tabular"><dt>"Ship<wbr>To<wbr>Countries"</dt>
+    <dd><code>ShipToCountries</code> Ship to country</dd><dt>"Double<wbr>Encryption<wbr>Status"</dt>
+    <dd><code>DoubleEncryptionStatus</code> Double encryption status</dd></dl>
+</pulumi-choosable>
+</div>
+
 
 
 

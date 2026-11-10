@@ -134,7 +134,8 @@ The following output properties are available:
 {{ range .NestedTypes }}
 <h4 id="{{ .AnchorID }}">{{ htmlSafe .Name }}</h4>
 
-{{ template "properties" .Properties }}
+{{ if .Properties }}{{ template "properties" .Properties }}{{ end }}
+{{- if .EnumValues }}{{ template "enums" .EnumValues }}{{ end }}
 {{ end }}
 
 {{ end }}

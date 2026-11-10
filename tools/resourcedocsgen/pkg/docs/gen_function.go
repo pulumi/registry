@@ -144,6 +144,11 @@ func (mod *modContext) genFunctionParamsTS(f *schema.Function, funcName string, 
 
 	argsType := title(fmt.Sprintf("%s%s", funcName, argsTypeSuffix), language.NodeJS)
 
+	docLangHelper := mod.context.getLanguageDocHelper(language.NodeJS)
+
+	def, err := mod.pkg.Definition()
+	contract.AssertNoErrorf(err, "failed to get definition for package %q", mod.pkg.Name())
+
 	var params []formalParam
 	if f.Inputs != nil {
 		params = append(params, formalParam{
@@ -164,7 +169,7 @@ func (mod *modContext) genFunctionParamsTS(f *schema.Function, funcName string, 
 		OptionalFlag: "?",
 		Type: propertyType{
 			Name: optsType,
-			Link: nodejsPulumiTypeLink(optsType),
+			Link: docLangHelper.GetDocLinkForPulumiType(def, optsType),
 		},
 	})
 

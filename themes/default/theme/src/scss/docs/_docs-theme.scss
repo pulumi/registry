@@ -535,6 +535,14 @@ html[data-theme="dark"] body.section-registry {
     .enum-values .property-message {
         background-color: var(--color-orange-950);
         color: var(--color-orange-300);
+
+        code {
+            background-color: color-mix(
+                in oklch,
+                var(--color-orange-300) 22%,
+                transparent
+            );
+        }
     }
 
     // --- Definition-list "tables" (_lists.scss) — the API property tables. Same

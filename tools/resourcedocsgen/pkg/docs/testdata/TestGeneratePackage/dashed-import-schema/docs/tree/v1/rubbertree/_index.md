@@ -1646,7 +1646,7 @@ Container<wbr>Size<pulumi-choosable type="language" values="python,go" class="in
 <tbody>
 <tr><td>Four<wbr>Inch</td><td><code>4</code></td><td></td></tr>
 <tr><td>Six<wbr>Inch</td><td><code>6</code></td><td></td></tr>
-<tr class="enum-deprecated"><td>Eight<wbr>Inch</td><td><code>8</code></td><td><p class="property-message">Deprecated: Eight inch pots are no longer supported.</p></td></tr>
+<tr class="enum-deprecated"><td><pulumi-tooltip>Eight<wbr>Inch<span slot="content">This value is deprecated.</span></pulumi-tooltip></td><td><pulumi-tooltip><code>8</code><span slot="content">This value is deprecated.</span></pulumi-tooltip></td><td><p class="property-message">Deprecated: Eight inch pots are no longer supported.</p></td></tr>
 </tbody>
 </table>
 </div>
@@ -1661,7 +1661,7 @@ Container<wbr>Size<pulumi-choosable type="language" values="python,go" class="in
 <tbody>
 <tr><td>Container<wbr>Size<wbr>Four<wbr>Inch</td><td><code>4</code></td><td></td></tr>
 <tr><td>Container<wbr>Size<wbr>Six<wbr>Inch</td><td><code>6</code></td><td></td></tr>
-<tr class="enum-deprecated"><td>Container<wbr>Size<wbr>Eight<wbr>Inch</td><td><code>8</code></td><td><p class="property-message">Deprecated: Eight inch pots are no longer supported.</p></td></tr>
+<tr class="enum-deprecated"><td><pulumi-tooltip>Container<wbr>Size<wbr>Eight<wbr>Inch<span slot="content">This value is deprecated.</span></pulumi-tooltip></td><td><pulumi-tooltip><code>8</code><span slot="content">This value is deprecated.</span></pulumi-tooltip></td><td><p class="property-message">Deprecated: Eight inch pots are no longer supported.</p></td></tr>
 </tbody>
 </table>
 </div>
@@ -1676,7 +1676,7 @@ Container<wbr>Size<pulumi-choosable type="language" values="python,go" class="in
 <tbody>
 <tr><td><code>4</code></td><td></td></tr>
 <tr><td><code>6</code></td><td></td></tr>
-<tr class="enum-deprecated"><td><code>8</code></td><td><p class="property-message">Deprecated: Eight inch pots are no longer supported.</p></td></tr>
+<tr class="enum-deprecated"><td><pulumi-tooltip><code>8</code><span slot="content">This value is deprecated.</span></pulumi-tooltip></td><td><p class="property-message">Deprecated: Eight inch pots are no longer supported.</p></td></tr>
 </tbody>
 </table>
 </div>
@@ -1691,7 +1691,7 @@ Container<wbr>Size<pulumi-choosable type="language" values="python,go" class="in
 <tbody>
 <tr><td>Four<wbr>Inch</td><td><code>4</code></td><td></td></tr>
 <tr><td>Six<wbr>Inch</td><td><code>6</code></td><td></td></tr>
-<tr class="enum-deprecated"><td>Eight<wbr>Inch</td><td><code>8</code></td><td><p class="property-message">Deprecated: Eight inch pots are no longer supported.</p></td></tr>
+<tr class="enum-deprecated"><td><pulumi-tooltip>Eight<wbr>Inch<span slot="content">This value is deprecated.</span></pulumi-tooltip></td><td><pulumi-tooltip><code>8</code><span slot="content">This value is deprecated.</span></pulumi-tooltip></td><td><p class="property-message">Deprecated: Eight inch pots are no longer supported.</p></td></tr>
 </tbody>
 </table>
 </div>
@@ -1706,7 +1706,7 @@ Container<wbr>Size<pulumi-choosable type="language" values="python,go" class="in
 <tbody>
 <tr><td>Four<wbr>Inch</td><td><code>4</code></td><td></td></tr>
 <tr><td>Six<wbr>Inch</td><td><code>6</code></td><td></td></tr>
-<tr class="enum-deprecated"><td>Eight<wbr>Inch</td><td><code>8</code></td><td><p class="property-message">Deprecated: Eight inch pots are no longer supported.</p></td></tr>
+<tr class="enum-deprecated"><td><pulumi-tooltip>Eight<wbr>Inch<span slot="content">This value is deprecated.</span></pulumi-tooltip></td><td><pulumi-tooltip><code>8</code><span slot="content">This value is deprecated.</span></pulumi-tooltip></td><td><p class="property-message">Deprecated: Eight inch pots are no longer supported.</p></td></tr>
 </tbody>
 </table>
 </div>
@@ -1721,7 +1721,7 @@ Container<wbr>Size<pulumi-choosable type="language" values="python,go" class="in
 <tbody>
 <tr><td>FOUR_INCH</td><td><code>4</code></td><td></td></tr>
 <tr><td>SIX_INCH</td><td><code>6</code></td><td></td></tr>
-<tr class="enum-deprecated"><td>EIGHT_INCH</td><td><code>8</code></td><td><p class="property-message">Deprecated: Eight inch pots are no longer supported.</p></td></tr>
+<tr class="enum-deprecated"><td><pulumi-tooltip>EIGHT_INCH<span slot="content">This value is deprecated.</span></pulumi-tooltip></td><td><pulumi-tooltip><code>8</code><span slot="content">This value is deprecated.</span></pulumi-tooltip></td><td><p class="property-message">Deprecated: Eight inch pots are no longer supported.</p></td></tr>
 </tbody>
 </table>
 </div>
@@ -1736,7 +1736,7 @@ Container<wbr>Size<pulumi-choosable type="language" values="python,go" class="in
 <tbody>
 <tr><td><code>4</code></td><td></td></tr>
 <tr><td><code>6</code></td><td></td></tr>
-<tr class="enum-deprecated"><td><code>8</code></td><td><p class="property-message">Deprecated: Eight inch pots are no longer supported.</p></td></tr>
+<tr class="enum-deprecated"><td><pulumi-tooltip><code>8</code><span slot="content">This value is deprecated.</span></pulumi-tooltip></td><td><p class="property-message">Deprecated: Eight inch pots are no longer supported.</p></td></tr>
 </tbody>
 </table>
 </div>

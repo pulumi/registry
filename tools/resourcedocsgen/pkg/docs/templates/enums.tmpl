@@ -14,8 +14,9 @@
 <tbody>
 {{- range $enums }}
 <tr{{ if .DeprecationMessage }} class="enum-deprecated"{{ end }}>
-{{- if $showName }}<td>{{ htmlSafe .DisplayName }}</td>{{ end -}}
-<td><code>{{ htmlSafe .Value }}</code></td>
+{{- /* Deprecated values are struck through in CSS; the tooltip says why, since strikethrough alone is easy to misread. */ -}}
+{{- if $showName }}<td>{{ if .DeprecationMessage }}<pulumi-tooltip>{{ htmlSafe .DisplayName }}<span slot="content">This value is deprecated.</span></pulumi-tooltip>{{ else }}{{ htmlSafe .DisplayName }}{{ end }}</td>{{ end -}}
+<td>{{ if .DeprecationMessage }}<pulumi-tooltip><code>{{ htmlSafe .Value }}</code><span slot="content">This value is deprecated.</span></pulumi-tooltip>{{ else }}<code>{{ htmlSafe .Value }}</code>{{ end }}</td>
 {{- if $showDesc }}<td>{{ if .Comment }}{{ markdownify .Comment }}{{ end }}{{ if .DeprecationMessage }}<p class="property-message">Deprecated: {{ markdownify .DeprecationMessage }}</p>{{ end }}</td>{{ end -}}
 </tr>
 {{- end }}

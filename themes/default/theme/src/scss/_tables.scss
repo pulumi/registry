@@ -36,6 +36,11 @@ table {
         }
     }
 
+    // Only the tooltip target, so the bubble's own text isn't struck through.
+    .enum-deprecated .tooltip-target {
+        @apply line-through;
+    }
+
     .property-message {
         @apply bg-orange-200 text-orange-600 mt-2 px-3 py-2 rounded;
 

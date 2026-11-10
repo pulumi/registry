@@ -4,6 +4,7 @@
     "provider/_index.md",
     "tree/_index.md",
     "tree/v1/_index.md",
+    "tree/v1/getrubbertree/_index.md",
     "tree/v1/nursery/_index.md",
     "tree/v1/rubbertree/_index.md"
   ]

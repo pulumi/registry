@@ -4,6 +4,8 @@ meta_desc: How to set up credentials to use the Pulumi AWSx Component library an
 layout: package
 ---
 
+<!-- Generated from docs/source/installation-configuration.md; do not edit directly. -->
+
 <!-- markdownlint-disable url -->
 [iam-user-console]: https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html#id_users_create_console
 [iam-manage-keys]: https://docs.aws.amazon.com/general/latest/gr/managing-aws-access-keys.html

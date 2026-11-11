@@ -153,6 +153,8 @@ details {
         }
     }
 
+    // Leaf items keep the hidden caret and its margin so their icons line up
+    // with items that can be expanded.
     &[data-expandable] {
         > summary::before {
             content: "";
@@ -162,6 +164,7 @@ details {
             border-top: 4px solid transparent;
             border-bottom: 4px solid transparent;
             border-left: 6px solid currentColor;
+            margin-right: 0.5rem;
             cursor: none;
             visibility: hidden;
         }
@@ -169,7 +172,6 @@ details {
 
     &[data-expandable="true"] {
         > summary::before {
-            margin-right: 0.5rem;
             cursor: pointer;
             visibility: visible;
         }

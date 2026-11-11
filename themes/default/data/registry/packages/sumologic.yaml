@@ -9,7 +9,7 @@ name: sumologic
 package_status: ga
 publisher: sumologic
 repo_url: https://github.com/sumologic/terraform-provider-sumologic
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/sumologic/sumologic/3.3.7/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/sumologic/sumologic/3.3.8/schema.json
 title: sumologic
-updated_on: 1794267338
-version: 3.3.7
+updated_on: 1794440190
+version: 3.3.8

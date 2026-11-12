@@ -11,7 +11,7 @@ name: docker
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-docker
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-docker/v5.2.2/provider/cmd/pulumi-resource-docker/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-docker/v5.3.0/provider/cmd/pulumi-resource-docker/schema.json
 title: Docker
-updated_on: 1793836397
-version: v5.2.2
+updated_on: 1794453939
+version: v5.3.0
